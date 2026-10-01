@@ -1,0 +1,172 @@
+START convert_masters.py
+{
+  "entities": [
+    {
+      "entity": "categories",
+      "source_count": 49,
+      "converted_count": 49,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "colors",
+      "source_count": 182,
+      "converted_count": 182,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "sizes",
+      "source_count": 240,
+      "converted_count": 240,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "fits",
+      "source_count": 11,
+      "converted_count": 11,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "departments",
+      "source_count": 58,
+      "converted_count": 58,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "employees",
+      "source_count": 99,
+      "converted_count": 99,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "parties",
+      "source_count": 485,
+      "converted_count": 485,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "customers",
+      "source_count": 484,
+      "converted_count": 484,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "suppliers",
+      "source_count": 451,
+      "converted_count": 451,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "warehouses",
+      "source_count": 51,
+      "converted_count": 51,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "halls",
+      "source_count": 47,
+      "converted_count": 47,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "payment_methods",
+      "source_count": 11,
+      "converted_count": 11,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "payment_methods_derived",
+      "source_count": 1,
+      "converted_count": 1,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "fund_accounts",
+      "source_count": 80,
+      "converted_count": 80,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "products",
+      "source_count": 2941,
+      "converted_count": 2941,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "size_groups",
+      "source_count": 15,
+      "converted_count": 15,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "product_barcodes",
+      "source_count": 2943,
+      "converted_count": 2943,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    },
+    {
+      "entity": "units",
+      "source_count": 10,
+      "converted_count": 10,
+      "duplicate_count": 0,
+      "missing_fk_count": 0
+    }
+  ],
+  "fkErrors": 0,
+  "classificationPending": 0,
+  "executed": false
+}
+PASS convert_masters.py
+START convert_sales.py
+{"result":"PASS","entities":[{"entity":"sales_documents","source_count":27903,"converted_count":27903,"rejected_count":0,"quarantined_count":0,"duplicate_count":0,"missing_fk_count":9,"source_missing_fk_count":9,"unresolved_fk_count":0,"source_missing_fk_by_field":{"employeeId":8,"departmentId":1},"missing_fk_count_basis":"missing_or_unresolved_reference_fields_on_this_output_entity","duplicate_count_basis":"exact_source_row_excess_preserved_not_deleted","output_count":27903,"unique_key_conflict_count":0,"conservation":"source_count = converted_count + quarantined_count + rejected_count","all_source_rows_preserved":true},{"entity":"sales_lines","source_count":79508,"converted_count":79508,"rejected_count":0,"quarantined_count":0,"duplicate_count":140,"missing_fk_count":15,"source_missing_fk_count":15,"unresolved_fk_count":0,"source_missing_fk_by_field":{"employeeId":14,"departmentId":1},"missing_fk_count_basis":"missing_or_unresolved_reference_fields_on_this_output_entity","duplicate_count_basis":"exact_source_row_excess_preserved_not_deleted","output_count":79508,"unique_key_conflict_count":0,"conservation":"source_count = converted_count + quarantined_count + rejected_count","all_source_rows_preserved":true},{"entity":"sales_funds","source_count":25416,"converted_count":25416,"rejected_count":0,"quarantined_count":0,"duplicate_count":1,"missing_fk_count":0,"source_missing_fk_count":0,"unresolved_fk_count":0,"source_missing_fk_by_field":{},"missing_fk_count_basis":"missing_or_unresolved_reference_fields_on_this_output_entity","duplicate_count_basis":"exact_source_row_excess_preserved_not_deleted","output_count":25416,"unique_key_conflict_count":0,"conservation":"source_count = converted_count + quarantined_count + rejected_count","all_source_rows_preserved":true},{"entity":"independent_receipt_documents","source_count":25155,"converted_count":0,"rejected_count":0,"quarantined_count":25155,"duplicate_count":0,"missing_fk_count":438,"source_missing_fk_count":438,"unresolved_fk_count":0,"source_missing_fk_by_field":{"employeeId":224,"departmentId":214},"missing_fk_count_basis":"missing_or_unresolved_reference_fields_on_this_output_entity","duplicate_count_basis":"exact_source_row_excess_preserved_not_deleted","output_count":25155,"unique_key_conflict_count":0,"conservation":"source_count = converted_count + quarantined_count + rejected_count","all_source_rows_preserved":true},{"entity":"independent_receipt_lines","source_count":25622,"converted_count":0,"rejected_count":0,"quarantined_count":25622,"duplicate_count":1,"missing_fk_count":449,"source_missing_fk_count":449,"unresolved_fk_count":0,"source_missing_fk_by_field":{"employeeId":230,"departmentId":219},"missing_fk_count_basis":"missing_or_unresolved_reference_fields_on_this_output_entity","duplicate_count_basis":"exact_source_row_excess_preserved_not_deleted","output_count":25622,"unique_key_conflict_count":0,"conservation":"source_count = converted_count + quarantined_count + rejected_count","all_source_rows_preserved":true}],"totals":{"sales_amount":"23659584.19","sales_quantity":"70992","funds_amount":"22462044.59","sales_rounding":"9111","receipt_amount":"24307370.65"},"diagnostics":{"missing_fk":911,"employee_current_department_difference":5663,"duplicates_preserved":142,"line_amount_difference":5,"functional_department":2975,"source_purpose":70,"settlement_difference":21,"unique_key_conflicts":0,"header_conflicts":0}}
+PASS convert_sales.py
+START convert_movements.py
+master keys and exact color/size dictionaries read
+进货单 source reread complete 49127 rows 2172 documents
+purchases converted 2172 49127 quantity 151786 amount 10222329.75
+其他出库单 source rows reread 50000
+其他出库单 source rows reread 100000
+其他出库单 source rows reread 150000
+其他出库单 source rows reread 200000
+其他出库单 source rows reread 250000
+其他出库单 source reread complete 298921 rows 13998 documents
+其他入库单 source rows reread 50000
+其他入库单 source rows reread 100000
+其他入库单 source rows reread 150000
+其他入库单 source rows reread 200000
+其他入库单 source rows reread 250000
+其他入库单 source reread complete 298917 rows 14025 documents
+all transfer pairs independently revalidated 13946 source type subset 1
+transfer documents/derived lines written 2000 46380
+transfer documents/derived lines written 4000 70417
+transfer documents/derived lines written 6000 111969
+transfer documents/derived lines written 8000 149631
+transfer documents/derived lines written 10000 188980
+transfer documents/derived lines written 12000 217503
+MOVEMENTS COMPLETE {"purchase_documents": 2172, "purchase_lines": 49127, "transfer_documents": 13946, "transfer_lines": 254519, "quarantine_documents": 131, "quarantine_lines": 88800, "missing_fk": 0}
+PASS convert_movements.py
+START build_inventory.py
+purchase 49127 stock_keys 38618
+sale 79508 stock_keys 71103
+transfer 254519 stock_keys 137940
+{"entities":[{"entity":"skus","source_count":14864,"converted_count":14864,"rejected_count":0,"quarantined_count":0,"duplicate_count":0,"missing_fk_count":0,"grain":"distinct observed original-product/color/size identities","source_observation_count":504384,"repeated_observation_count":489520,"identity_conflict_count":0},{"entity":"reconstructed_stock","source_count":137940,"converted_count":137940,"rejected_count":0,"quarantined_count":0,"duplicate_count":0,"missing_fk_count":0,"grain":"trusted-transaction warehouse+SKU keys","source_event_count":637673,"positive_count":34201,"negative_count":1231,"zero_count":102508},{"entity":"rebuild_events","source_count":637673,"converted_count":637673,"rejected_count":0,"quarantined_count":0,"duplicate_count":0,"missing_fk_count":0,"grain":"one signed warehouse effect; transfer has exactly two legs"},{"entity":"inventory_snapshot_diagnostic","source_count":32430,"converted_count":32430,"rejected_count":0,"quarantined_count":0,"duplicate_count":0,"missing_fk_count":0,"grain":"nonempty source quantity cells","participates_in_business_calculation":false,"source_matrix_rows":8602,"blank_cells":819168}],"checks":{"sku_identity_conflicts_zero":true,"purchase_lines_match_converted":true,"sales_lines_match_converted":true,"transfer_lines_match_converted":true,"quarantined_lines_match_converted":true,"event_count_matches_components":true,"rebuilt_total_matches_components":true,"snapshot_is_excluded":true,"transfer_net_zero":true},"all_pass":true,"totals":{"rebuilt_quantity_control_total":"80794","unit_totals":{"个":"1","件":"59900","双":"1917","套":"98","张":"84","把":"3","条":"18971","次":"-180"},"quantity_unit_note":"Mixed source main units; do not label total as pieces.","stock_keys":137940,"stock_positive_rows":34201,"stock_negative_rows":1231,"stock_zero_rows":102508,"warehouse_count":51,"warehouses_with_transactions":49,"snapshot_quantity_control_total":"80776","snapshot_minus_rebuild_global_diagnostic":"-18","snapshot_print_date":"2026-09-10","snapshot_compared_cell_difference_total":"2501"},"sku_counts":{"total":14864,"included_transaction_observed":14851,"only_noncomputational_evidence":13},"reconciliation_counts":{"rebuild_only":105806,"both":32134,"compared_equal":30139,"compared_different":2291,"snapshot_only":296},"source_observation_counts":{"observations":504384,"purchase_lines":49127,"sale_lines":79508,"transfer_lines":254519,"quarantined_lines_observed":88800},"zero_policy":"Only transaction-touched keys that net to zero are explicit rows; no warehouse×SKU expansion.","reconciliation_policy":"Snapshot missing values remain null; comparisons never alter stock or history."}
+PASS build_inventory.py
+START validate_package.py
+{"all_pass":true,"checks":{"persisted_primary_identity_unique":true,"no_unresolved_populated_foreign_keys":true,"all_user_product_assignments_applied":true,"143_allowed_parent_product_assignments":true,"historical_states_not_fabricated":true,"transfer_two_sided_lineage_complete":true,"source_line_sku_identity_and_unit_match":true,"sales_header_amount_equals_original_lines":true,"independent_stock_key_quantities_equal":true,"stock_identities_units_components_match":true,"stock_units_unambiguous":true,"only_included_sources_in_rebuild":true,"transfers_rebuild_exact_zero":true,"sales_quantity_matches_source":true,"sales_amount_matches_source":true,"funds_amount_matches_source":true,"purchase_quantity_matches_source":true,"purchase_amount_matches_source":true,"transfer_quantity_matches_source":true,"transfer_amount_matches_source":true,"multi_cash_matches_source":true,"sales_funds_parent_count_matches_source":true,"event_count_matches_converted_lines":true,"rounding_matches_source":true,"stock_total_matches_rebuild":true,"all_domain_file_counts_match_controls":true,"all_source_authority_runtime_files_unchanged":true,"inventory_domain_checks":true,"masters_domain_checks":true,"sales_domain_checks":true,"movements_domain_checks":true,"no_source_rejected":true},"file_counts":{"data/master/categories.jsonl":49,"data/master/colors.jsonl":182,"data/master/customers.jsonl":484,"data/master/departments.jsonl":58,"data/master/employees.jsonl":99,"data/master/fits.jsonl":11,"data/master/fund_accounts.jsonl":80,"data/master/halls.jsonl":47,"data/master/parties.jsonl":485,"data/master/payment_methods.jsonl":11,"data/master/payment_methods_derived.jsonl":1,"data/master/product_barcodes.jsonl":2943,"data/master/products.jsonl":2941,"data/master/size_groups.jsonl":15,"data/master/sizes.jsonl":240,"data/master/skus.jsonl":14864,"data/master/suppliers.jsonl":451,"data/master/units.jsonl":10,"data/master/warehouses.jsonl":51,"data/history/purchase_documents.jsonl":2172,"data/history/purchase_lines.jsonl":49127,"data/history/sales_documents.jsonl":27903,"data/history/sales_funds.jsonl":25416,"data/history/sales_lines.jsonl":79508,"data/history/transfer_documents.jsonl":13946,"data/history/transfer_lines.jsonl":254519,"quarantine/independent_receipt_documents.jsonl":25155,"quarantine/independent_receipt_lines.jsonl":25622,"quarantine/unmatched_transfer_documents.jsonl":131,"quarantine/unmatched_transfer_lines.jsonl":88800,"data/inventory/rebuilt_stock.jsonl":137940,"data/inventory/rebuild_events.jsonl":637673,"diagnostics/snapshot_stock.jsonl":32430},"unresolved_fk_count":0,"duplicate_identity_count":0,"nullable_fk_absences_by_field":{"departments.parentDepartmentId":11,"departments.hallId":11,"employees.hallId":12,"fund_accounts.sourceDepartmentId":2,"halls.defaultWarehouseId":47,"parties.managedEmployeeId":393,"parties.managedDepartmentId":184,"parties.settlementCustomerId":1,"product_barcodes.skuId":2943,"products.fitId":2934,"products.defaultWarehouseId":2941,"products.supplierId":1809,"skus.fitId":14767,"warehouses.hallId":2,"purchase_documents.employeeId":257,"sales_documents.hallId":2299,"sales_documents.employeeId":8,"sales_documents.departmentId":1,"sales_lines.hallId":12095,"sales_lines.employeeId":14,"sales_lines.departmentId":1,"transfer_documents.partyId":13946,"transfer_documents.employeeId":13946,"transfer_documents.departmentId":13946,"independent_receipt_documents.employeeId":224,"independent_receipt_documents.departmentId":214,"independent_receipt_documents.hallId":891,"independent_receipt_lines.employeeId":230,"independent_receipt_lines.departmentId":219,"independent_receipt_lines.hallId":898,"unmatched_transfer_documents.partyId":131,"unmatched_transfer_documents.employeeId":131,"unmatched_transfer_documents.departmentId":131},"historical_state_errors":[],"transfer_lineage_errors":[],"source_identity_error_count":0,"event_error_count":0,"stock_identity_error_count":0,"document_rounding_total":"9111","protected_file_count":107,"changed_protected_files":[],"runtime_store_written":false,"source_and_final_decisions_changed":false,"inventory_total":"80794"}
+PASS validate_package.py

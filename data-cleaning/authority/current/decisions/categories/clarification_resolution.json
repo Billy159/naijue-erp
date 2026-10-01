@@ -1,0 +1,103 @@
+[
+  {
+    "resolved_question_id": "Q-CAT-01",
+    "batch_id": "P01",
+    "count": 3,
+    "codes": [
+      "D1230153",
+      "D5312302-黑色",
+      "D5312302-灰色"
+    ],
+    "names": [
+      "打底衫",
+      "打底衫",
+      "打底衫"
+    ],
+    "source_rows": [
+      2529,
+      2530,
+      2531
+    ],
+    "previous_reason": "P01原表另含3款打底衫，原拟长袖T恤；本轮“针织衫统一毛衫”未明确覆盖打底衫，不擅自扩大。",
+    "previous_proposal": "长袖T恤",
+    "final_target": "毛衫",
+    "status": "用户已明确接受，已收口",
+    "decision_source": "用户本轮最后7款补充裁决"
+  },
+  {
+    "resolved_question_id": "Q-CAT-02",
+    "batch_id": "P13",
+    "count": 1,
+    "codes": [
+      "000KZ0000009"
+    ],
+    "names": [
+      "样品裤子（长裤、中裤）"
+    ],
+    "source_rows": [
+      1284
+    ],
+    "previous_reason": "名称“样品裤子（长裤、中裤）”主品类只有裤子，长裤与中裤并列；名称优先仍无法唯一。",
+    "previous_proposal": null,
+    "final_target": "长裤",
+    "status": "用户已明确接受，已收口",
+    "decision_source": "用户本轮最后7款补充裁决"
+  },
+  {
+    "resolved_question_id": "Q-CAT-03",
+    "batch_id": "P13",
+    "count": 1,
+    "codes": [
+      "0002"
+    ],
+    "names": [
+      "样衣（棉衣  羽绒服）"
+    ],
+    "source_rows": [
+      1552
+    ],
+    "previous_reason": "名称“样衣（棉衣  羽绒服）”没有括号外的主体品类，棉衣与羽绒服并列。",
+    "previous_proposal": null,
+    "final_target": "羽绒服",
+    "status": "用户已明确接受，已收口",
+    "decision_source": "用户本轮最后7款补充裁决"
+  },
+  {
+    "resolved_question_id": "Q-CAT-04",
+    "batch_id": "P13",
+    "count": 1,
+    "codes": [
+      "710MP5538851"
+    ],
+    "names": [
+      "毛皮服装"
+    ],
+    "source_rows": [
+      926
+    ],
+    "previous_reason": "主名称毛皮服装是当前父级；本轮允许直挂父级仅西服、皮革服装、长裤，不包括毛皮服装。",
+    "previous_proposal": null,
+    "final_target": "毛皮服装",
+    "status": "用户已明确接受，已收口",
+    "decision_source": "用户本轮最后7款补充裁决"
+  },
+  {
+    "resolved_question_id": "Q-CAT-05",
+    "batch_id": "P13",
+    "count": 1,
+    "codes": [
+      "753MJ5386312"
+    ],
+    "names": [
+      "马夹"
+    ],
+    "source_rows": [
+      2847
+    ],
+    "previous_reason": "主名马夹没有材质/用途类别；P10全6款归羽绒服有明确原组边界，不能自动扩到此款。",
+    "previous_proposal": null,
+    "final_target": "羽绒服",
+    "status": "用户已明确接受，已收口",
+    "decision_source": "用户本轮最后7款补充裁决"
+  }
+]

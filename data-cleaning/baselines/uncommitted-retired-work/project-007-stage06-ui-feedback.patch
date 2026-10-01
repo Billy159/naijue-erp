@@ -1,0 +1,1497 @@
+diff --git a/apps/web/src/stage05/app/AppShell.tsx b/apps/web/src/stage05/app/AppShell.tsx
+index 12dd64e..c2daa9f 100644
+--- a/apps/web/src/stage05/app/AppShell.tsx
++++ b/apps/web/src/stage05/app/AppShell.tsx
+@@ -1,22 +1,21 @@
+ import type { ReactNode } from "react";
+-import { useState } from "react";
++import { useEffect, useState } from "react";
+ import { Breadcrumb, Button, Layout, Menu, Space, Typography } from "@arco-design/web-react";
+-import { IconMenuFold, IconMenuUnfold } from "@arco-design/web-react/icon";
+ import { routeManifest, pathFor, type RouteDefinition, type RouteId } from "../contracts/route";
+ import type { Session } from "../contracts/session";
+ import { navigate } from "./router";
+ 
+ type NavItem = { id: RouteId; label: string };
+-type NavGroupItem = { title: string; items: NavItem[] };
++type NavGroupItem = { key: string; title: string; items: NavItem[] };
+ type NavGroup = { key: string; title: string; items: (NavItem | NavGroupItem)[] };
+ 
+ const navigation: NavGroup[] = [
+   { key: "inventory-group", title: "库存管理", items: [
+     { id: "inventory", label: "库存状况表" },
+-    { title: "调拨单", items: [{ id: "transfers", label: "调拨单列表" }, { id: "transfers-new", label: "新增调拨单" }] },
++    { key: "transfers-menu", title: "调拨单", items: [{ id: "transfers", label: "调拨单列表" }, { id: "transfers-new", label: "新增调拨单" }] },
+   ] },
+   { key: "sales-group", title: "销售管理", items: [
+-    { id: "sales", label: "销货单" },
++    { key: "sales-menu", title: "销货单", items: [{ id: "sales", label: "销货单列表" }, { id: "sales-new", label: "新增销货单" }] },
+   ] },
+   { key: "products-group", title: "商品管理", items: [
+     { id: "products", label: "商品信息" },
+@@ -50,6 +49,7 @@ function breadcrumbs(route: RouteDefinition): RouteDefinition[] {
+ 
+ function navigationSelection(route: RouteDefinition): RouteId {
+   if (route.id === "transfers-new") return route.id;
++  if (route.id === "sales-new") return route.id;
+   if (route.id.startsWith("sales")) return "sales";
+   if (route.id.startsWith("transfers")) return "transfers";
+   if (route.id === "products-detail" || route.id === "products-new") return "products";
+@@ -63,32 +63,39 @@ export function AppShell({ route, session, onLogout, children, routeParams }: {
+   children: ReactNode;
+   routeParams: Record<string, string>;
+ }) {
+-  const [collapsed, setCollapsed] = useState(false);
+   const crumbs = breadcrumbs(route);
+   const selected = navigationSelection(route);
++  const [openKeys, setOpenKeys] = useState<string[]>(() => ["transfers-menu", ...(selected === "sales" || selected === "sales-new" ? ["sales-menu"] : [])]);
++  useEffect(() => {
++    const branch = selected === "sales" || selected === "sales-new" ? "sales-menu" : selected === "transfers" || selected === "transfers-new" ? "transfers-menu" : null;
++    if (branch) setOpenKeys(keys => keys.includes(branch) ? keys : [...keys, branch]);
++  }, [selected]);
+   return <Layout className="s05-shell">
+     <Layout.Header className="s05-header">
+-      <Space size="medium" className="s05-header-left">
+-        <Button className="s05-header-control" type="text" icon={collapsed ? <IconMenuUnfold /> : <IconMenuFold />} aria-label={collapsed ? "展开导航" : "收起导航"} onClick={() => setCollapsed(!collapsed)} />
+-        <div className="s05-header-identity"><span className="s05-brand-mark">奈</span><Typography.Text className="s05-header-brand">奈爵服饰</Typography.Text></div>
+-      </Space>
+-      <Space size="medium" className="s05-header-right"><Typography.Text className="s05-header-user">{session.operator.name}</Typography.Text><Button className="s05-header-control" type="text" onClick={onLogout}>退出</Button></Space>
++      <div className="s05-header-rail">
++        <div className="s05-header-left">
++          <div className="s05-header-identity"><span className="s05-brand-mark">奈</span><Typography.Text className="s05-header-brand">奈爵服饰</Typography.Text></div>
++        </div>
++      </div>
++      <div className="s05-header-main">
++        <Breadcrumb className="s05-breadcrumb"><Breadcrumb.Item key="group">{route.group || "系统"}</Breadcrumb.Item>{crumbs.map((item, index) => <Breadcrumb.Item key={item.id}>{index < crumbs.length - 1 ? <a href={pathFor(item.id, routeParams)} onClick={event => { event.preventDefault(); navigate(pathFor(item.id, routeParams)); }}>{item.title}</a> : item.title}</Breadcrumb.Item>)}</Breadcrumb>
++        <Space size="medium" className="s05-header-right"><Typography.Text className="s05-header-user">{session.operator.name}</Typography.Text><Button className="s05-header-control" type="outline" onClick={onLogout}>退出</Button></Space>
++      </div>
+     </Layout.Header>
+     <Layout className="s05-body">
+-      <Layout.Sider collapsible breakpoint="md" collapsed={collapsed} onCollapse={next => setCollapsed(next)} width={194} collapsedWidth={0} trigger={null} className="s05-sider">
+-        <Menu levelIndent={28} selectedKeys={[selected]} defaultOpenKeys={navigation.map(group => group.key)} className="s05-menu" onClickMenuItem={key => {
++      <Layout.Sider width="var(--s05-sidebar-width)" className="s05-sider">
++        <Menu levelIndent={0} selectedKeys={[selected]} openKeys={openKeys} onClickSubMenu={(_, keys) => setOpenKeys(keys)} className="s05-menu" onClickMenuItem={key => {
+           const target = routeManifest.find(item => item.id === key);
+           if (target) navigate(pathFor(target.id));
+         }}>
+-          {navigation.map(group => <Menu.SubMenu key={group.key} title={<span className="s05-menu-root-label">{group.title}</span>}>
++          {navigation.map(group => <Menu.ItemGroup key={group.key} title={group.title}>
+             {group.items.map(item => isGroupItem(item)
+-              ? <Menu.ItemGroup key={item.title} title={item.title}>{item.items.map(entry => <Menu.Item key={entry.id}>{entry.label}</Menu.Item>)}</Menu.ItemGroup>
+-              : <Menu.Item key={item.id}>{item.label}</Menu.Item>)}
+-          </Menu.SubMenu>)}
++              ? <Menu.SubMenu key={item.key} title={item.title} selectable={false}>{item.items.map(entry => <Menu.Item key={entry.id} className="s05-menu-nested-item">{entry.label}</Menu.Item>)}</Menu.SubMenu>
++              : <Menu.Item key={item.id} className="s05-menu-direct-item">{item.label}</Menu.Item>)}
++          </Menu.ItemGroup>)}
+         </Menu>
+       </Layout.Sider>
+       <Layout.Content className="s05-content">
+-        <Breadcrumb className="s05-breadcrumb"><Breadcrumb.Item key="group">{route.group || "系统"}</Breadcrumb.Item>{crumbs.map((item, index) => <Breadcrumb.Item key={item.id}>{index < crumbs.length - 1 ? <a href={pathFor(item.id, routeParams)} onClick={event => { event.preventDefault(); navigate(pathFor(item.id, routeParams)); }}>{item.title}</a> : item.title}</Breadcrumb.Item>)}</Breadcrumb>
+         <div className="s05-content-inner">{children}</div>
+       </Layout.Content>
+     </Layout>
+diff --git a/apps/web/src/stage05/app/router.ts b/apps/web/src/stage05/app/router.ts
+index 0d74514..6b6bcd5 100644
+--- a/apps/web/src/stage05/app/router.ts
++++ b/apps/web/src/stage05/app/router.ts
+@@ -22,11 +22,11 @@ export function loginTarget(requested:string):string {
+ export function afterLogin(locationSearch:string):string {
+   return safeReturnPath(new URLSearchParams(locationSearch).get("returnTo")) || pathFor("inventory");
+ }
+-export interface ListReturnContext { url:string; applied:Record<string,unknown>; scrollY:number }
++export interface ListReturnContext { url:string; applied:Record<string,unknown>; scrollY:number; scrollAreaY?:number }
+ const key=(id:RouteId)=>"stage05:list:"+id;
+-export function saveListReturn(id:RouteId,applied:Record<string,unknown>,scrollY=window.scrollY) {
++export function saveListReturn(id:RouteId,applied:Record<string,unknown>,scrollY=window.scrollY,scrollAreaY?:number) {
+   if(!matchRoute(window.location.pathname)) throw new Error("UNKNOWN_ROUTE");
+-  sessionStorage.setItem(key(id),JSON.stringify({url:locationSnapshot(),applied,scrollY} satisfies ListReturnContext));
++  sessionStorage.setItem(key(id),JSON.stringify({url:locationSnapshot(),applied,scrollY,...(scrollAreaY===undefined?{}:{scrollAreaY})} satisfies ListReturnContext));
+ }
+ export function readListReturn(id:RouteId):ListReturnContext | null {
+   const raw=sessionStorage.getItem(key(id));if(!raw)return null;
+diff --git a/apps/web/src/stage05/data/client.test.ts b/apps/web/src/stage05/data/client.test.ts
+index c7fa701..da582c3 100644
+--- a/apps/web/src/stage05/data/client.test.ts
++++ b/apps/web/src/stage05/data/client.test.ts
+@@ -80,6 +80,17 @@ describe("8878 thin client",()=>{
+     await expect(unsafe.listInventory({page:1,pageSize:100,productCodes:[],warehouseIds:[]}))
+       .rejects.toMatchObject({kind:"server"});
+   });
++  it("accepts zero-only color subtotals with no ranked inventory row",async()=>{
++    const client=new Stage05ApiClient("",async()=>runtime({
++      rows:[{code:"P1",color_id:"stocked",warehouse_id:"W",values:{size:1},total:1,index:0}],
++      rowCount:1,productCount:1,total:1,
++      products:[{code:"P1",cols:{size:1},first:0,last:0}],
++      colors:[{code:"P1",color_id:"stocked",cols:{size:1},first:0,last:0},
++        {code:"P1",color_id:"zero",cols:{size:0},first:null,last:null}],
++    }));
++    expect((await client.listInventory({page:1,pageSize:200,productCodes:["P1"],warehouseIds:["W"]})).colors)
++      .toMatchObject([{first:0,last:0},{first:null,last:null,cols:{size:"0"}}]);
++  });
+   it("normalizes exact ledger quantities and preserves historical missing operator facts",async()=>{
+     const client=new Stage05ApiClient("",async()=>runtime({items:[{
+       id:"source:1",time:"2025-01-02",type:"销货",delta:-1.25,before:2,after:0.75,
+@@ -96,4 +107,18 @@ describe("8878 thin client",()=>{
+     expect(JSON.parse(new URL(requested,"http://local").searchParams.get("query")!)).toEqual({page:1,size:200,filters:{q:"P1",categories:["C"]}});
+     expect(endpointModes.runtimeProducts).toBe("paged");
+   });
++  it("sends category descendants, supplier, fit and season to the formal product query",async()=>{
++    let requested="";
++    const client=new Stage05ApiClient("",async url=>{requested=String(url);return runtime({codes:[],total:0});});
++    await client.listRuntimeProductCodes({page:1,pageSize:200,categoryCodes:["parent","child"],supplierId:"supplier",fitId:"B",season:"春"});
++    expect(JSON.parse(new URL(requested,"http://local").searchParams.get("query")!)).toEqual({page:1,size:200,
++      filters:{categories:["parent","child"],supplierId:"supplier",fitId:"B",seasons:["春"]}});
++  });
++  it("sends multi-supplier, fit and season choices to the formal product query",async()=>{
++    let requested="";
++    const client=new Stage05ApiClient("",async url=>{requested=String(url);return runtime({codes:[],total:0});});
++    await client.listRuntimeProductCodes({page:1,pageSize:200,supplierIds:["supplier-a","supplier-b"],fitCodes:["A","B"],seasons:["春","秋"]});
++    expect(JSON.parse(new URL(requested,"http://local").searchParams.get("query")!)).toEqual({page:1,size:200,
++      filters:{supplierIds:["supplier-a","supplier-b"],fitCodes:["A","B"],seasons:["春","秋"]}});
++  });
+ });
+diff --git a/apps/web/src/stage05/data/client.ts b/apps/web/src/stage05/data/client.ts
+index dfaecdf..4327064 100644
+--- a/apps/web/src/stage05/data/client.ts
++++ b/apps/web/src/stage05/data/client.ts
+@@ -34,7 +34,7 @@ export interface PagedApiResponse<T> extends PageResponse<T> { page:number; size
+ export interface RuntimeInventoryRow {
+   code:string; color_id:string; warehouse_id:string; values:Record<string,string>; total:string; index:number;
+ }
+-export interface RuntimeInventorySubtotal { code:string; color_id?:string; cols:Record<string,string>; first:number; last:number }
++export interface RuntimeInventorySubtotal { code:string; color_id?:string; cols:Record<string,string>; first:number|null; last:number|null }
+ export interface RuntimeInventoryPage {
+   rows:RuntimeInventoryRow[]; rowCount:number; productCount:number; total:string;
+   products:RuntimeInventorySubtotal[]; colors:RuntimeInventorySubtotal[];
+@@ -58,9 +58,12 @@ function normalizedInventorySubtotals(value:unknown,withColor:boolean):RuntimeIn
+   return value.map(raw=>{
+     if(!raw||typeof raw!=="object"||Array.isArray(raw))throw Error("INVALID_INVENTORY_SUBTOTAL");
+     const row=raw as Record<string,unknown>;
+-    if(typeof row.code!=="string"||(withColor&&typeof row.color_id!=="string")||
+-      !Number.isSafeInteger(row.first)||!Number.isSafeInteger(row.last))throw Error("INVALID_INVENTORY_SUBTOTAL");
+-    return {code:row.code,...(withColor?{color_id:row.color_id as string}:{}),cols:normalizedQuantityMap(row.cols),first:row.first as number,last:row.last as number};
++    const hasIndices=Number.isSafeInteger(row.first)&&Number.isSafeInteger(row.last);
++    const hasNoRows=row.first===null&&row.last===null;
++    if(typeof row.code!=="string"||(withColor&&typeof row.color_id!=="string")||(!hasIndices&&!hasNoRows))throw Error("INVALID_INVENTORY_SUBTOTAL");
++    const cols=normalizedQuantityMap(row.cols);
++    if(hasNoRows&&Object.values(cols).some(value=>parseSignedQuantity(value)!==0n))throw Error("INVALID_INVENTORY_SUBTOTAL");
++    return {code:row.code,...(withColor?{color_id:row.color_id as string}:{}),cols,first:row.first as number|null,last:row.last as number|null};
+   });
+ }
+ function normalizeInventoryPage(value:unknown):RuntimeInventoryPage {
+@@ -179,8 +182,12 @@ export class Stage05ApiClient {
+     return this.request<unknown>("/runtime/inventory"+params({page:query.page,size:query.pageSize}),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({products:query.productCodes,warehouses:query.warehouseIds}),signal:signal??null},"runtime")
+       .then(normalizeInventoryPage);
+   }
+-  listRuntimeProductCodes(query:{page:number;pageSize:20|50|100|200;q?:string;categoryCode?:string},signal?:AbortSignal):Promise<{codes:string[];total:number}> {
+-    const filters={...(query.q?.trim()?{q:query.q.trim()}:{}),...(query.categoryCode?{categories:[query.categoryCode]}:{})};
++  listRuntimeProductCodes(query:{page:number;pageSize:20|50|100|200;q?:string;categoryCode?:string;categoryCodes?:readonly string[];supplierId?:string;fitId?:string;season?:string;supplierIds?:readonly string[];fitCodes?:readonly string[];seasons?:readonly string[]},signal?:AbortSignal):Promise<{codes:string[];total:number}> {
++    const categories=query.categoryCodes?.length?query.categoryCodes:query.categoryCode?[query.categoryCode]:[];
++    const filters={...(query.q?.trim()?{q:query.q.trim()}:{}),...(categories.length?{categories}:{}),
++      ...(query.supplierIds?.length?{supplierIds:[...query.supplierIds]}:query.supplierId?{supplierId:query.supplierId}:{}),
++      ...(query.fitCodes?.length?{fitCodes:[...query.fitCodes]}:query.fitId?{fitId:query.fitId}:{}),
++      ...(query.seasons?.length?{seasons:[...query.seasons]}:query.season?{seasons:[query.season]}:{})};
+     return this.request<unknown>("/runtime/products"+params({query:JSON.stringify({page:query.page,size:query.pageSize,filters})}),{signal:signal??null},"runtime")
+       .then(value=>{
+         if(!value||typeof value!=="object"||Array.isArray(value))throw new ApiError("server","商品范围分页格式不正确");
+diff --git a/apps/web/src/stage05/features/catalog-settings/ProductSettingsRoute.tsx b/apps/web/src/stage05/features/catalog-settings/ProductSettingsRoute.tsx
+index 52890e6..9ff95ad 100644
+--- a/apps/web/src/stage05/features/catalog-settings/ProductSettingsRoute.tsx
++++ b/apps/web/src/stage05/features/catalog-settings/ProductSettingsRoute.tsx
+@@ -1,8 +1,9 @@
+ import { useEffect, useState } from "react";
+-import { Alert, Button, Descriptions, Drawer, Empty, Pagination, Space, Table, Tabs, Tag } from "@arco-design/web-react";
++import { Alert, Button, Descriptions, Drawer, Empty, Pagination, Table, Tabs } from "@arco-design/web-react";
+ import type { TableProps } from "@arco-design/web-react";
+ import { ErrorState, LoadingState, PageContainer, readSpecReferenceDictionary, type SkuLookup, type SpecReferenceRecord } from "@stage05";
+ import { loadSkuProjection } from "../products/skuRepository";
++import { BUSINESS_SIZE_GROUPS, type BusinessSizeGroup } from "../../shared/sku/businessSizes";
+ import { readObservedProductAttributeValues, type ObservedProductAttributeValue } from "../products/data";
+ import "../products/products.css";
+ 
+@@ -13,6 +14,7 @@ interface HistoricalSize {
+   mappings: string[];
+   skuCount: number;
+ }
++export { BUSINESS_SIZE_GROUPS } from "../../shared/sku/businessSizes";
+ interface SettingsReadModel {
+   colors: { colorId: string; sourceName: string; sourceCode: string | null; skuCount: number }[];
+   groups: { name: string; columns: string[]; skuCount: number; sourceSizeCount: number }[];
+@@ -67,10 +69,19 @@ export function makeReadModel(lookup: SkuLookup): SettingsReadModel {
+   };
+ }
+ 
++export function historicalSizeRows(dictionary: readonly SpecReferenceRecord[], used: readonly HistoricalSize[]): HistoricalSize[] {
++  const usedById = new Map(used.map(row => [row.sizeId, row]));
++  return dictionary.map(row => ({
++    sizeId: row.id, sourceName: row.name, sourceCode: row.code,
++    mappings: usedById.get(row.id)?.mappings || [], skuCount: usedById.get(row.id)?.skuCount || 0,
++  }));
++}
++
+ export function ProductSettingsRoute() {
+   const [state, setState] = useState<SettingsState>({ kind: "loading" });
+   const [retryVersion, setRetryVersion] = useState(0);
+   const [historicalVisible, setHistoricalVisible] = useState(false);
++  const [selectedBusinessGroup, setSelectedBusinessGroup] = useState<BusinessSizeGroup | null>(null);
+   const [historyPage, setHistoryPage] = useState(1);
+   const [historyPageSize, setHistoryPageSize] = useState(50);
+ 
+@@ -99,11 +110,9 @@ export function ProductSettingsRoute() {
+     { title: "SKU数", dataIndex: "skuCount", key: "skuCount", align: "right", width: 110 },
+   ];
+   const sizeColumns: NonNullable<TableProps["columns"]> = [
+-    { title: "展示尺码组", dataIndex: "name", key: "name", width: 190 },
+-    { title: "展示列", key: "columns", render: (_value, raw) => (raw as SettingsReadModel["groups"][number]).columns.join(" · ") },
+-    { title: "原尺码身份数", dataIndex: "sourceSizeCount", key: "sourceSizeCount", align: "right", width: 130 },
+-    { title: "SKU数", dataIndex: "skuCount", key: "skuCount", align: "right", width: 100 },
+-    { title: "历史尺码", key: "history", width: 120, render: () => <Button type="text" onClick={() => setHistoricalVisible(true)}>查看 240 条</Button> },
++    { title: "尺码组名称", dataIndex: "name", key: "name", width: 170 },
++    { title: "包含尺码", key: "sizes", render: (_value, raw) => (raw as BusinessSizeGroup).sizes.join("、") },
++    { title: "操作", key: "action", width: 90, render: (_value, raw) => <Button type="text" size="small" onClick={() => setSelectedBusinessGroup(raw as BusinessSizeGroup)}>查看</Button> },
+   ];
+   const fitColumns: NonNullable<TableProps["columns"]> = [
+     { title: "版型代码", dataIndex: "code", key: "code", width: 150 },
+@@ -119,11 +128,7 @@ export function ProductSettingsRoute() {
+   if (state.kind === "loading") return <PageContainer title="商品设置"><LoadingState text="正在读取 S1 规格身份与商品来源属性值" /></PageContainer>;
+   if (state.kind === "error") return <PageContainer title="商品设置"><ErrorState message={state.message} onRetry={() => setRetryVersion(value => value + 1)} /></PageContainer>;
+ 
+-  const usedSizeById = new Map(state.model.sizes.map(row => [row.sizeId, row]));
+-  const historicalSizes: HistoricalSize[] = state.dictionaries.sizes.map(row => ({
+-    sizeId: row.id, sourceName: row.name, sourceCode: row.code,
+-    mappings: usedSizeById.get(row.id)?.mappings || [], skuCount: usedSizeById.get(row.id)?.skuCount || 0,
+-  }));
++  const historicalSizes = historicalSizeRows(state.dictionaries.sizes, state.model.sizes);
+   const colorUseById = new Map(state.model.colors.map(row => [row.colorId, row]));
+   const colors = state.dictionaries.colors.map(row => ({
+     colorId: row.id, sourceName: row.name, sourceCode: row.code, skuCount: colorUseById.get(row.id)?.skuCount || 0,
+@@ -136,7 +141,7 @@ export function ProductSettingsRoute() {
+   const historicalColumns: NonNullable<TableProps["columns"]> = [
+     { title: "来源尺码", dataIndex: "sourceName", key: "sourceName", width: 180 },
+     { title: "来源编码", dataIndex: "sourceCode", key: "sourceCode", width: 120, render: (_value, raw) => (raw as HistoricalSize).sourceCode || "来源未提供" },
+-    { title: "已应用展示映射", key: "mapping", width: 240, render: (_value, raw) => (raw as HistoricalSize).mappings.join("；") || "尚无展示投影" },
++    { title: "当前展示映射", key: "mapping", width: 240, render: (_value, raw) => (raw as HistoricalSize).mappings.join("；") || "尚无当前展示映射" },
+     { title: "SKU数", dataIndex: "skuCount", key: "skuCount", width: 90, align: "right" },
+   ];
+ 
+@@ -147,12 +152,10 @@ export function ProductSettingsRoute() {
+           <Tabs.TabPane key="colors" title={`颜色 · ${colors.length}`}>
+             {colors.length ? <div className="product-source-table"><Table rowKey="colorId" columns={colorsColumns} data={colors} size="small" pagination={{ pageSize: 50 }} scroll={{ x: 420 }} /></div> : <Empty description="来源颜色字典为空" />}
+           </Tabs.TabPane>
+-          <Tabs.TabPane key="sizes" title={`尺码组 · ${state.model.groups.length}`}>
++          <Tabs.TabPane key="sizes" title="尺码组">
+             <div className="product-section-stack">
+-              <div className="products-readonly-note">展示尺码组 {state.model.groups.length} 个 · 历史尺码 {historicalSizes.length} 条</div>
+-              <Space wrap><Tag color="arcoblue">规格：{state.lookup.sourceSkuCount.toLocaleString("zh-CN")}</Tag><Tag color="gray">实际使用尺码：{state.model.sizes.length}</Tag><Button onClick={() => setHistoricalVisible(true)}>查看完整 {historicalSizes.length} 条历史尺码</Button></Space>
+-              <div className="product-source-table"><Table rowKey="name" columns={sizeColumns} data={state.model.groups} pagination={false} scroll={{ x: 820 }} /></div>
+-              <div className="product-source-table"><Table rowKey="id" columns={sourceColumns} data={state.dictionaries.groups} size="small" pagination={false} scroll={{ x: 420 }} /></div>
++              <div className="product-size-groups-heading"><strong>正式业务尺码组</strong><Button size="small" onClick={() => setHistoricalVisible(true)}>历史尺码资料</Button></div>
++              <div className="product-source-table"><Table rowKey="key" columns={sizeColumns} data={[...BUSINESS_SIZE_GROUPS]} size="small" pagination={false} scroll={{ x: 760 }} /></div>
+             </div>
+           </Tabs.TabPane>
+           <Tabs.TabPane key="fits" title={`版型 · ${state.model.fits.length}`}>
+@@ -177,17 +180,20 @@ export function ProductSettingsRoute() {
+     </div>
+     <Drawer
+       visible={historicalVisible}
+-      title={`完整历史尺码字典 · ${historicalSizes.length}`}
++      title={`历史尺码资料 · ${historicalSizes.length} 条`}
+       width="min(1080px, calc(100vw - 32px))"
+       autoFocus={false}
+       onCancel={() => setHistoricalVisible(false)}
+       footer={<Button onClick={() => setHistoricalVisible(false)}>关闭</Button>}
+     >
+       <div className="product-section-stack">
++        <div className="products-readonly-note">历史来源尺码用于追溯、历史条码兼容及已确认的展示映射。</div>
+         <div className="product-source-table"><Table rowKey="sizeId" columns={historicalColumns} data={historicalSizes.slice((historyPage - 1) * historyPageSize, historyPage * historyPageSize)} size="small" pagination={false} scroll={{ x: 650 }} /></div>
+         <Pagination current={historyPage} pageSize={historyPageSize} total={historicalSizes.length} showTotal sizeCanChange sizeOptions={[25, 50, 100]} onChange={setHistoryPage} onPageSizeChange={size => { setHistoryPageSize(size); setHistoryPage(1); }} />
+-        <Descriptions column={{ xs: 1, sm: 1, md: 2 }} data={[{ label: "当前规格使用尺码", value: state.model.sizes.length }, { label: "完整历史尺码字典", value: historicalSizes.length }, { label: "对应规格", value: state.lookup.sourceSkuCount.toLocaleString("zh-CN") }]} />
+       </div>
+     </Drawer>
++    <Drawer visible={selectedBusinessGroup !== null} title={selectedBusinessGroup?.name} width="min(520px, calc(100vw - 32px))" footer={null} onCancel={() => setSelectedBusinessGroup(null)}>
++      {selectedBusinessGroup && <Descriptions column={1} data={[{ label: "包含尺码", value: selectedBusinessGroup.sizes.join("、") }]} />}
++    </Drawer>
+   </PageContainer>;
+ }
+diff --git a/apps/web/src/stage05/features/catalog-settings/catalog-settings.test.tsx b/apps/web/src/stage05/features/catalog-settings/catalog-settings.test.tsx
+index f9649a1..5c82de9 100644
+--- a/apps/web/src/stage05/features/catalog-settings/catalog-settings.test.tsx
++++ b/apps/web/src/stage05/features/catalog-settings/catalog-settings.test.tsx
+@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
+ import { readFileSync } from "node:fs";
+ import { fileURLToPath } from "node:url";
+ import type { SkuLookup } from "@stage05";
+-import { makeReadModel, ProductSettingsRoute } from "./ProductSettingsRoute";
++import { BUSINESS_SIZE_GROUPS, historicalSizeRows, makeReadModel, ProductSettingsRoute } from "./ProductSettingsRoute";
+ import { treeForCategories } from "./CatalogCategoriesRoute";
+ import { BarcodeSchemesRoute } from "./BarcodeSchemesRoute";
+ const featureCss = readFileSync(fileURLToPath(new URL("../products/products.css", import.meta.url)), "utf8");
+@@ -32,6 +32,29 @@ describe("catalog settings read models and presentation", () => {
+     expect(model.fits.map(fit => fit.code)).toEqual(["A", "B"]);
+   });
+ 
++  it("defines only the five current business size groups, including boundary sizes", () => {
++    expect(BUSINESS_SIZE_GROUPS.map(group => [group.name, group.sizes])).toEqual([
++      ["上衣尺码", ["160/XS", "165/S", "170/M", "175/L", "180/XL", "185/2XL", "190/3XL", "195/4XL", "200/5XL", "205/6XL", "无尺码"]],
++      ["裤子尺码", ["29", "30", "31", "32", "33", "34", "35", "36", "38", "40", "无尺码"]],
++      ["鞋码", ["38", "39", "40", "41", "42", "43", "44"]],
++      ["童装尺码", ["90", "100", "110", "120", "130", "140"]],
++      ["配饰均码", ["无尺码", "均码"]],
++    ]);
++  });
++
++  it("shows historical mappings only for matching source IDs", () => {
++    const rows = historicalSizeRows([
++      { id: "size-a", name: "165/88A", code: "301", enabled: true },
++      { id: "size-b", name: "165/88A", code: "302", enabled: true },
++      { id: "unused", name: "165/88A", code: "303", enabled: true },
++    ], makeReadModel(lookupFixture()).sizes);
++    expect(rows.map(row => [row.sizeId, row.mappings, row.skuCount])).toEqual([
++      ["size-a", ["男装上衣 165/S"], 1],
++      ["size-b", ["男装裤子 30"], 1],
++      ["unused", [], 0],
++    ]);
++  });
++
+   it("keeps directly selectable parent categories in the tree", () => {
+     const tree = treeForCategories([
+       { id: "parent", code: "P", name: "西服", parent_id: null },
+diff --git a/apps/web/src/stage05/features/inventory/InventoryRoute.tsx b/apps/web/src/stage05/features/inventory/InventoryRoute.tsx
+index 6b23fb6..fbd3c0d 100644
+--- a/apps/web/src/stage05/features/inventory/InventoryRoute.tsx
++++ b/apps/web/src/stage05/features/inventory/InventoryRoute.tsx
+@@ -1,15 +1,42 @@
+-import { useEffect, useMemo, useRef, useState } from "react";
+-import { Alert, Button, Card, Empty, Input, Pagination, Select, Space, Spin, Table, Tag, Tooltip, Typography } from "@arco-design/web-react";
++import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
++import type { ClipboardEvent } from "react";
++import { Alert, AutoComplete, Button, Card, Checkbox, Empty, Input, Modal, Pagination, Popover, Select, Space, Spin, Table, Tooltip, TreeSelect } from "@arco-design/web-react";
+ import type { TableProps } from "@arco-design/web-react";
+-import { PageContainer, api, navigate, parseSignedQuantity, readListReturn, safeReturnPath, saveListReturn, usePagedQuery, type RuntimeLedgerEntry, type SkuCell, type SkuLookup } from "@stage05";
++import { PageContainer, navigate, readListReturn, safeReturnPath, saveListReturn, usePagedQuery, type RuntimeLedgerEntry, type SkuCell, type SkuLookup } from "@stage05";
++import { inventorySizeGroupLabel } from "../../shared/sku/businessSizes";
+ import { loadSkuProjection } from "../products/skuRepository";
+-import { inventoryReferences, fetchInventory, locateSkuPage, type InventoryMeta } from "./data";
+-import { EMPTY_FILTER, INVENTORY_PAGE_SIZES, inventoryFromLocation, inventoryLocation, type InventoryFilter, type InventoryPageSize, type InventoryViewRow } from "./model";
++import { inventoryReferences, fetchInventory, type InventoryMeta } from "./data";
++import { EMPTY_FILTER, INVENTORY_PAGE_SIZES, inventoryFromLocation, inventoryLocation, parseBatchCodes, type InventoryFilter, type InventoryPageSize, type InventoryViewRow } from "./model";
++import { DEFAULT_DISPLAY, inventoryCategoryTree, inventorySegments, type InventoryDisplayRow, type InventoryDisplaySettings, type InventorySegment } from "./presentation";
+ import { InventoryLedgerDrawer, type LedgerTarget } from "./InventoryLedgerDrawer";
+ import "./inventory.css";
+ 
+-interface Dictionary {lookup:SkuLookup;warehouses:readonly {id:string;name?:string;code?:string}[];categories:readonly {id:string;name?:string;code?:string;parent_code?:string|null}[]}
++interface Dictionary {lookup:SkuLookup;warehouses:readonly {id:string;name?:string;code?:string}[];categories:readonly {id:string;name?:string;code?:string;parent_id?:string|null;parent_code?:string|null}[];suppliers:readonly {id:string;name?:string;code?:string}[]}
+ const initialLocation=()=>inventoryFromLocation(typeof window==="undefined"?"":window.location.search);
++const displayOptions:[keyof InventoryDisplaySettings,string][]=[
++  ["category","分类"],["supplier","供应商"],["fit","版型"],["sizeGroup","尺码组"],["season","季节"],
++  ["colorSubtotal","颜色小计"],["productTotal","商品合计"],["sizeGroupNote","尺码组说明"],
++];
++const FIT_OPTIONS=[
++  {value:"Y",label:"Y版（修身）"},{value:"A",label:"A版（标准）"},{value:"B",label:"B版（宽松）"},
++  {value:"C",label:"C版（加肥）"},{value:"D",label:"D版（加肥加大）"},{value:"E",label:"E版（特体）"},
++];
++const SEASONS=["春","夏","秋","冬"];
++function initialDisplay():InventoryDisplaySettings {
++  try {
++    const saved=JSON.parse(sessionStorage.getItem("stage06:inventory-display")||"null");
++    if(saved&&typeof saved==="object")return Object.fromEntries(displayOptions.map(([key])=>[key,typeof saved[key]==="boolean"?saved[key]:DEFAULT_DISPLAY[key]])) as unknown as InventoryDisplaySettings;
++  } catch { /* Browser storage may be unavailable. */ }
++  return {...DEFAULT_DISPLAY};
++}
++function initialRecent():string[]{
++  try {const value=JSON.parse(sessionStorage.getItem("stage06:inventory-recent")||"[]");return Array.isArray(value)?value.filter(item=>typeof item==="string").slice(0,8):[];}catch{return [];}
++}
++function printableCell(entry:SkuCell):string {
++  if(!entry.exists)return "—";
++  const source=entry.originalIdentity.sourceSizeName||entry.originalIdentity.sourceSizeCode||"原规格";
++  return `${source}: ${entry.displayValue??"未读取"}`;
++}
+ 
+ export function InventoryRoute() {
+   const initial=useMemo(initialLocation,[]);
+@@ -18,43 +45,97 @@ export function InventoryRoute() {
+   const [dictionary,setDictionary]=useState<Dictionary|null>(null);
+   const [dictionaryError,setDictionaryError]=useState<string|null>(null);
+   const [ledger,setLedger]=useState<LedgerTarget|null>(initial.ledger);
+-  const [barcode,setBarcode]=useState("");
+-  const [barcodeMessage,setBarcodeMessage]=useState<{type:"info"|"warning"|"error";text:string}|null>(null);
+-  const [selectedSkuId,setSelectedSkuId]=useState<string|null>(null);
+-  const [scanPending,setScanPending]=useState(false);
+-  const scanAbort=useRef<AbortController|null>(null);
++  const [moreFilters,setMoreFilters]=useState(Boolean(initial.filter.supplierIds.length||initial.filter.fitCodes.length||initial.filter.seasons.length));
++  const [batchOpen,setBatchOpen]=useState(false);
++  const [batchSearch,setBatchSearch]=useState("");
++  const [batchSelection,setBatchSelection]=useState<string[]>([]);
++  const [batchError,setBatchError]=useState("");
++  const [warehouseSearch,setWarehouseSearch]=useState("");
++  const [supplierSearch,setSupplierSearch]=useState("");
++  const [recentSearches,setRecentSearches]=useState(initialRecent);
++  const [display,setDisplay]=useState<InventoryDisplaySettings>(initialDisplay);
++  const [collapsedProducts,setCollapsedProducts]=useState<ReadonlySet<string>>(()=>new Set());
++  const [tableHeight,setTableHeight]=useState(360);
+   const scrolled=useRef(false);
++  const restoredArea=useRef(false);
+   const ledgerTrigger=useRef<HTMLElement|null>(null);
++  const tableSlot=useRef<HTMLDivElement|null>(null);
+ 
+   useEffect(()=>{
+     const abort=new AbortController();
+     void Promise.all([loadSkuProjection(),inventoryReferences(abort.signal)]).then(([lookup,references])=>{
+       if(abort.signal.aborted)return;
+-      setDictionary({lookup,warehouses:references.warehouses,categories:references.categories});
+-      if(initial.executed)void controller.restore(initial.filter,initial.page,initial.pageSize);
++      setDictionary({lookup,...references});
++      void controller.restore(initial.filter,initial.page,initial.pageSize);
+     }).catch(error=>{if(!abort.signal.aborted)setDictionaryError(error instanceof Error?error.message:"库存基础资料读取失败");});
+-    return ()=>{abort.abort();scanAbort.current?.abort();};
++    return ()=>abort.abort();
+   },[controller,initial]);
+ 
+   useEffect(()=>{
+     if(!state.hasExecuted)return;
+     window.history.replaceState({},"",currentInventoryUrl());
+   },[state.applied,state.page,state.pageSize,state.hasExecuted,ledger,returnPath]);
+-
+   useEffect(()=>{
+     if(scrolled.current||!state.hasExecuted||state.loading!=="idle")return;
+     scrolled.current=true;
+     const saved=readListReturn("inventory");
+     if(saved?.url===window.location.pathname+window.location.search)requestAnimationFrame(()=>window.scrollTo({top:saved.scrollY}));
+   },[state.hasExecuted,state.loading]);
++  useEffect(()=>{try{sessionStorage.setItem("stage06:inventory-display",JSON.stringify(display));}catch{/* Storage is optional. */}},[display]);
++  useEffect(()=>{setCollapsedProducts(new Set());},[state.applied,state.page,state.pageSize]);
++  useEffect(()=>{
++    if(!tableSlot.current||!state.hasExecuted||state.loading!=="idle"||state.error)return;
++    const saved=!restoredArea.current?readListReturn("inventory"):null;
++    restoredArea.current=true;
++    tableSlot.current.scrollTop=saved?.url===window.location.pathname+window.location.search?Math.max(0,saved.scrollAreaY||0):0;
++  },[state.items,state.hasExecuted,state.loading,state.error]);
++  useLayoutEffect(()=>{
++    const update=()=>{
++      if(!tableSlot.current)return;
++      const top=tableSlot.current.getBoundingClientRect().top;
++      const next=Math.max(72,Math.floor(window.innerHeight-top-107));
++      setTableHeight(previous=>previous===next?previous:next);
++    };
++    update();
++    const observer=new ResizeObserver(update);
++    const filter=document.querySelector(".s05-inventory-filter");
++    if(filter)observer.observe(filter);
++    window.addEventListener("resize",update);
++    return ()=>{observer.disconnect();window.removeEventListener("resize",update);};
++  },[state.hasExecuted,state.total,moreFilters,dictionary]);
+ 
+   const warehouseNames=useMemo(()=>new Map(dictionary?.warehouses.map(row=>[row.id,row.name||row.code||row.id] as const)||[]),[dictionary]);
+   const categoryNames=useMemo(()=>new Map(dictionary?.categories.map(row=>[row.code||row.id,row.name||row.code||row.id] as const)||[]),[dictionary]);
++  const supplierNames=useMemo(()=>new Map(dictionary?.suppliers.map(row=>[row.id,row.name||row.code||row.id] as const)||[]),[dictionary]);
++  const categoryTree=useMemo(()=>inventoryCategoryTree(dictionary?.categories||[]),[dictionary]);
++  const knownCodes=useMemo(()=>new Set(dictionary?.lookup.products.map(product=>product.sourceCode)||[]),[dictionary]);
++  const suggestions=useMemo(()=>{
++    const lookup=dictionary?.lookup;
++    if(!lookup)return [];
++    const query=state.draft.q.trim().toLocaleLowerCase();
++    const codes=query?lookup.products.filter(product=>`${product.sourceCode} ${lookup.productNameByCode(product.sourceCode)||""}`.toLocaleLowerCase().includes(query)).slice(0,18).map(product=>product.sourceCode):state.draft.batchCodes.length?[]:recentSearches.filter(code=>lookup.productByCode(code));
++    return codes.map(code=>({value:code,name:`${code}　${lookup.productNameByCode(code)||"名称未提供"}`}));
++  },[dictionary,state.draft.q,state.draft.batchCodes,recentSearches]);
++  const pickerMatches=useMemo(()=>{
++    const lookup=dictionary?.lookup,query=batchSearch.trim().toLocaleLowerCase();
++    if(!lookup||!query)return [];
++    return lookup.products.filter(product=>`${product.sourceCode} ${lookup.productNameByCode(product.sourceCode)||""}`.toLocaleLowerCase().includes(query)).slice(0,100);
++  },[dictionary,batchSearch]);
+   const dirty=JSON.stringify(state.draft)!==JSON.stringify(state.applied);
+   const resultFilter=state.meta?.applied||state.applied;
+-  const scope=[resultFilter.productCode?`商品 ${resultFilter.productCode}`:resultFilter.q?`关键词 ${resultFilter.q}`:"全部商品",
+-    resultFilter.categoryCode?`分类 ${categoryNames.get(resultFilter.categoryCode)||resultFilter.categoryCode}`:"全部分类",
+-    resultFilter.warehouseId?`仓库 ${warehouseNames.get(resultFilter.warehouseId)||resultFilter.warehouseId}`:"全部仓库"];
++  const selectedWarehouses=resultFilter.warehouseIds.length||dictionary?.warehouses.length||0;
++  const scope=[
++    resultFilter.batchCodes.length?`已选 ${resultFilter.batchCodes.length} 款`:resultFilter.productCode?`商品 ${resultFilter.productCode}`:resultFilter.q?`关键词 ${resultFilter.q}`:"",
++    resultFilter.categoryCode?`分类 ${categoryNames.get(resultFilter.categoryCode)||resultFilter.categoryCode}`:"",
++    resultFilter.warehouseIds.length?`仓库 ${resultFilter.warehouseIds.length} 个`:"",
++    resultFilter.supplierIds.length?`供应商 ${resultFilter.supplierIds.length} 个`:"",
++    resultFilter.fitCodes.length?`版型 ${resultFilter.fitCodes.join("、")}`:"",
++    resultFilter.seasons.length?`季节 ${resultFilter.seasons.join("、")}`:"",
++  ].filter(Boolean);
++  if(!scope.length)scope.push("全部库存");
++  const segments=useMemo(()=>inventorySegments(state.items,display,collapsedProducts),[state.items,display,collapsedProducts]);
++  const warehouseMatches=useMemo(()=>dictionary?.warehouses.filter(row=>`${row.name||""} ${row.code||""} ${row.id}`.toLowerCase().includes(warehouseSearch.trim().toLowerCase()))||[],[dictionary,warehouseSearch]);
++  const supplierMatches=useMemo(()=>dictionary?.suppliers.filter(row=>`${row.name||""} ${row.code||""} ${row.id}`.toLowerCase().includes(supplierSearch.trim().toLowerCase()))||[],[dictionary,supplierSearch]);
+ 
+   function currentInventoryUrl(){
+     const path=inventoryLocation(state.applied,state.page,state.pageSize as InventoryPageSize,true,ledger);
+@@ -63,135 +144,201 @@ export function InventoryRoute() {
+     url.searchParams.set("returnTo",returnPath);
+     return url.pathname+url.search;
+   }
+-
+-  function apply(){setSelectedSkuId(null);setBarcodeMessage(null);void controller.apply();}
+-  function reset(){setSelectedSkuId(null);setBarcodeMessage(null);controller.setDraft(EMPTY_FILTER);void controller.reset();}
++  function rememberSearch(value:string){
++    const query=value.trim();if(!query)return;
++    const next=[query,...recentSearches.filter(item=>item!==query)].slice(0,8);
++    setRecentSearches(next);
++    try{sessionStorage.setItem("stage06:inventory-recent",JSON.stringify(next));}catch{/* Optional session history. */}
++  }
++  function apply(){rememberSearch(controller.getSnapshot().draft.q);void controller.apply();}
++  function reset(){setBatchError("");controller.setDraft(EMPTY_FILTER);void controller.reset();}
+   function openLedger(skuId:string,warehouseId:string){ledgerTrigger.current=document.activeElement instanceof HTMLElement?document.activeElement:null;setLedger({skuId,warehouseId,range:"recent"});}
+   function closeLedger(){setLedger(null);requestAnimationFrame(()=>ledgerTrigger.current?.focus());}
+   function openProduct(row:InventoryViewRow){
+     const returnUrl=currentInventoryUrl();
+-    saveListReturn("inventory",{filter:state.applied,page:state.page,pageSize:state.pageSize},window.scrollY);
++    saveListReturn("inventory",{filter:state.applied,page:state.page,pageSize:state.pageSize},window.scrollY,tableSlot.current?.scrollTop||0);
+     navigate(`/products/${encodeURIComponent(row.code)}?returnTo=${encodeURIComponent(returnUrl)}`);
+   }
+   function openSource(entry:RuntimeLedgerEntry){
+     if((entry.documentType!=="SALE"&&entry.documentType!=="TRANSFER")||!entry.documentId)return;
+     const returnUrl=currentInventoryUrl();
+     window.history.replaceState({},"",returnUrl);
+-    saveListReturn("inventory",{filter:state.applied,page:state.page,pageSize:state.pageSize},window.scrollY);
++    saveListReturn("inventory",{filter:state.applied,page:state.page,pageSize:state.pageSize},window.scrollY,tableSlot.current?.scrollTop||0);
+     navigate(`/${entry.documentType==="SALE"?"sales":"transfers"}/${encodeURIComponent(entry.documentId)}?returnTo=${encodeURIComponent(returnUrl)}`);
+   }
+-
+-  async function locateBarcode(value:string){
+-    const code=value.trim();
+-    if(!code)return;
+-    if(!dictionary){setBarcodeMessage({type:"error",text:"规格目录尚未读取完成，请稍后重试"});return;}
+-    const result=dictionary.lookup.barcode(code);
+-    if(result.kind==="not-found"){
+-      setBarcodeMessage({type:"warning",text:"未找到该条码；未生成条码的规格不会根据码形推测 SKU。"});
+-      return;
+-    }
+-    if(result.kind==="ambiguous"){
+-      setBarcodeMessage({type:"warning",text:`条码对应 ${result.skuIds.length} 个 SKU、${result.productIds.length} 件商品，需核对来源后再定位。`});
+-      return;
+-    }
+-    if(result.kind==="product-only"){
+-      if(result.productIds.length!==1){setBarcodeMessage({type:"warning",text:"商品级条码关联多个商品，请先明确款号。"});return;}
+-      const product=dictionary.lookup.productById(result.productIds[0]!);
+-      if(!product){setBarcodeMessage({type:"error",text:"商品条码来源身份未匹配"});return;}
+-      const filter={...EMPTY_FILTER,q:product.sourceCode,productCode:product.sourceCode};
+-      setSelectedSkuId(null);
+-      setBarcodeMessage({type:"info",text:`已定位商品 ${product.sourceCode}；此条码没有唯一 SKU 绑定，请在矩阵中选择规格。`});
+-      void controller.restore(filter,1,state.pageSize);
+-      return;
+-    }
+-    scanAbort.current?.abort();
+-    const abort=new AbortController();scanAbort.current=abort;
+-    setScanPending(true);
+-    const sku=result.sku;
+-    const filter={...EMPTY_FILTER,q:sku.product.sourceCode,productCode:sku.product.sourceCode};
+-    try {
+-      const page=await locateSkuPage(sku.identity.skuId,"",state.pageSize as InventoryPageSize,abort.signal);
+-      if(abort.signal.aborted)return;
+-      setSelectedSkuId(sku.identity.skuId);
+-      setBarcodeMessage({type:page?"info":"warning",text:page?`已定位原 SKU：${sku.product.sourceCode} / ${sku.color.name} / ${sku.column.name}。带边框数量可打开流水。`:`已识别原 SKU ${sku.product.sourceCode} / ${sku.column.name}，但非零库存列表中没有该规格的仓库行；不推测数量。`});
+-      void controller.restore(filter,page||1,state.pageSize);
+-    }catch(error){if(!abort.signal.aborted)setBarcodeMessage({type:"error",text:error instanceof Error?error.message:"条码定位失败"});}
+-    finally{if(!abort.signal.aborted)setScanPending(false);}
++  function openBatch(){setBatchSelection([...state.draft.batchCodes]);setBatchSearch("");setBatchError("");setBatchOpen(true);}
++  function acceptBatch(){
++    if(!batchSelection.length){setBatchError("请至少选择一款商品");return;}
++    controller.setDraft({...state.draft,q:"",productCode:"",batchCodes:[...new Set(batchSelection)]});
++    setBatchError("");setBatchOpen(false);
+   }
+-
+-  const columns:NonNullable<TableProps["columns"]>=[
+-    {title:"商品",key:"product",width:145,fixed:"left",render:(_value,raw)=>{
+-      const row=raw as InventoryViewRow;
+-      return <div className="s05-inventory-product"><Button type="text" size="mini" title={`查看商品 ${row.code}`} onClick={()=>openProduct(row)}>{row.code}</Button><Tooltip content={row.productName}><span>{row.productName}</span></Tooltip></div>;
++  function pasteCodes(event:ClipboardEvent<HTMLInputElement>){
++    const pasted=event.clipboardData.getData("text");
++    if(pasted.split(/[\s,，;；、]+/).filter(Boolean).length<2)return;
++    event.preventDefault();
++    const parsed=parseBatchCodes(pasted,knownCodes);
++    if(parsed.codes.length>3000){setBatchError("单次最多查询 3000 个款号");return;}
++    if(parsed.codes.length)controller.setDraft({...state.draft,q:"",productCode:"",batchCodes:parsed.codes});
++    setBatchError(parsed.unknown.length?`未找到 ${parsed.unknown.length} 个款号：${parsed.unknown.slice(0,8).join("、")}${parsed.unknown.length>8?"…":""}`:parsed.codes.length?"":"粘贴内容中没有有效款号");
++  }
++  function toggleBatchCode(code:string){setBatchSelection(previous=>previous.includes(code)?previous.filter(item=>item!==code):[...previous,code]);}
++  function selectWarehouseMatches(){
++    const selected=new Set(state.draft.warehouseIds);
++    for(const row of warehouseMatches)selected.add(row.id);
++    controller.setDraft({...state.draft,warehouseIds:[...selected]});
++  }
++  function selectSupplierMatches(){
++    const selected=new Set(state.draft.supplierIds);
++    for(const row of supplierMatches)selected.add(row.id);
++    controller.setDraft({...state.draft,supplierIds:[...selected]});
++  }
++  function toggleProduct(code:string){
++    setCollapsedProducts(previous=>{const next=new Set(previous);if(next.has(code))next.delete(code);else next.add(code);return next;});
++  }
++  function syncSegmentScroll(event:React.UIEvent<HTMLElement>){
++    const source=event.target as HTMLElement;
++    if(!source.classList.contains("arco-table-content-inner"))return;
++    const segment=source.closest(".s05-inventory-segment");
++    const peer=segment?.querySelector<HTMLElement>(source.closest(".s05-inventory-segment-columns")?".s05-inventory-segment-body .arco-table-content-inner":".s05-inventory-segment-columns .arco-table-content-inner");
++    if(peer&&peer.scrollLeft!==source.scrollLeft)peer.scrollLeft=source.scrollLeft;
++  }
++  function renderSize(row:InventoryDisplayRow,columnKey:string){
++    if(row.kind!=="stock")return null;
++    const cell=row.section.row.cells.find(item=>item.column.key===columnKey);
++    if(!cell)return <span className="s05-inventory-missing">—</span>;
++    return <div className="s05-inventory-cell-values">{cell.entries.map((entry,index)=><MatrixValue key={entry.skuId||`${columnKey}:${index}`} entry={entry} many={cell.entries.length>1} warehouseId={row.stock.warehouseId} onOpen={openLedger} />)}</div>;
++  }
++  const fixedColumns:NonNullable<TableProps["columns"]>=[
++    {title:"商品",key:"product",width:210,fixed:"left",render:(_value,raw)=>{
++      const item=raw as InventoryDisplayRow,row=item.stock;
++      if(item.kind!=="stock")return item.kind==="productTotal"?<strong>商品合计 · {row.code}</strong>:null;
++      return <div className="s05-inventory-product">
++        {item.firstInPage&&item.groupCount>1&&<Button type="text" size="mini" className="s05-inventory-fold" aria-label={`${collapsedProducts.has(row.code)?"展开":"折叠"} ${row.code} 当前页仓库行`} onClick={()=>toggleProduct(row.code)}>{collapsedProducts.has(row.code)?"▸":"▾"}</Button>}
++        <Button type="text" size="mini" title={`查看商品 ${row.code}`} onClick={()=>openProduct(row)}>{row.code}</Button>
++        <Tooltip content={row.productName}><span>{row.productName}</span></Tooltip>
++        {item.firstInPage&&collapsedProducts.has(row.code)&&<small>本页 {item.groupCount} 行</small>}
++      </div>;
++    }},
++    {title:"颜色",key:"color",width:86,fixed:"left",render:(_value,raw)=>{
++      const item=raw as InventoryDisplayRow;
++      return item.kind==="productTotal"?null:item.stock.colorName;
+     }},
+-    {title:"颜色",key:"color",width:85,fixed:"left",render:(_value,raw)=><span>{(raw as InventoryViewRow).colorName}</span>},
+-    {title:"仓库",key:"warehouse",width:135,fixed:"left",render:(_value,raw)=><Tooltip content={(raw as InventoryViewRow).warehouseName}><span>{(raw as InventoryViewRow).warehouseName}</span></Tooltip>},
+-    {title:"分仓合计",key:"total",width:90,align:"right",render:(_value,raw)=>{
+-      const row=raw as InventoryViewRow;
+-      return <Space size="mini">{row.offset&&<Tag color="orange">正负相抵</Tag>}{signed(row.total)}</Space>;
++    {title:"仓库",key:"warehouse",width:112,fixed:"left",render:(_value,raw)=>{
++      const item=raw as InventoryDisplayRow;
++      if(item.kind==="colorSubtotal")return <strong>颜色小计</strong>;
++      if(item.kind==="productTotal")return null;
++      return <Tooltip content={item.stock.warehouseName}><span className="s05-inventory-ellipsis">{item.stock.warehouseName}</span></Tooltip>;
+     }},
+-    {title:"商品合计",key:"productTotal",width:90,align:"right",render:(_value,raw)=>signed((raw as InventoryViewRow).productTotal)},
+-    {title:"规格矩阵 · 点数量查流水",key:"matrix",width:660,render:(_value,raw)=><Matrix row={raw as InventoryViewRow} selectedSkuId={selectedSkuId} onOpen={openLedger} />},
+   ];
++  function columnsFor(segment:InventorySegment):{columns:NonNullable<TableProps["columns"]>;width:number}{
++    const metadataColumns:NonNullable<TableProps["columns"]>=[
++    ...(display.category?[{title:"分类",key:"category",width:118,render:(_value:unknown,raw:unknown)=>{const item=raw as InventoryDisplayRow;return item.kind==="stock"?categoryNames.get(item.stock.categoryCode)||item.stock.categoryCode||"—":null;}}]:[]),
++    ...(display.supplier?[{title:"供应商",key:"supplier",width:138,render:(_value:unknown,raw:unknown)=>{const item=raw as InventoryDisplayRow;return item.kind==="stock"?supplierNames.get(item.stock.supplierId)||item.stock.supplierId||"—":null;}}]:[]),
++    ...(display.fit?[{title:"版型",key:"fit",width:58,render:(_value:unknown,raw:unknown)=>{const item=raw as InventoryDisplayRow;return item.kind==="stock"?item.stock.fitCode||"—":null;}}]:[]),
++    ...(display.season?[{title:"季节",key:"season",width:88,render:(_value:unknown,raw:unknown)=>{const item=raw as InventoryDisplayRow;return item.kind==="stock"?item.stock.season||"—":null;}}]:[]),
++    ...(display.sizeGroup?[{title:"尺码组",key:"sizeGroup",width:132,render:(_value:unknown,raw:unknown)=>{const item=raw as InventoryDisplayRow;return item.kind==="stock"?segment.title:null;}}]:[]),
++    ];
++    const sizeColumns:NonNullable<TableProps["columns"]>=segment.group.columns.map(column=>({
++      title:column.name,key:`size:${column.key}`,width:62,align:"center" as const,
++      render:(_value:unknown,raw:unknown)=>renderSize(raw as InventoryDisplayRow,column.key),
++    }));
++    const columns:NonNullable<TableProps["columns"]>=[...fixedColumns,...metadataColumns,...sizeColumns,
++      {title:"合计",key:"total",width:72,align:"right",fixed:"right",render:(_value,raw)=>{
++        const item=raw as InventoryDisplayRow;
++        return <span className="s05-inventory-number">{item.kind==="stock"?item.section.total:item.total}</span>;
++      }},
++    ];
++    const width=fixedColumns.reduce((sum,col)=>sum+Number(col.width||0),0)+metadataColumns.reduce((sum,col)=>sum+Number(col.width||0),0)+segment.group.columns.length*62+72;
++    return {columns,width};
++  }
+ 
+   function exportCurrentPage(){
+     if(!state.items.length)return;
+     const rows=[["款号","商品名称","颜色","仓库","规格组","显示尺码","版型","原尺码","原SKU ID","数量","范围"]];
+     for(const item of state.items)for(const section of item.sections)for(const cell of section.row.cells)for(const entry of cell.entries){
+       if(!entry.exists)continue;
+-      rows.push([item.code,item.productName,item.colorName,item.warehouseName,section.group.name,cell.column.name,entry.fit?.code||"未提供",entry.originalIdentity.sourceSizeName||"未提供",entry.skuId||"",entry.displayValue??"未读取","当前已查询页"]);
++      rows.push([item.code,item.productName,item.colorName,item.warehouseName,inventorySizeGroupLabel(section.group.name).title,cell.column.name,entry.fit?.code||"未提供",entry.originalIdentity.sourceSizeName||"未提供",entry.skuId||"",entry.displayValue??"未读取","当前已查询页"]);
+     }
+     const csv="\ufeff"+rows.map(row=>row.map(value=>`"${String(value).replaceAll('"','""')}"`).join(",")).join("\r\n");
+     const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+     const link=document.createElement("a");link.href=url;link.download=`inventory-page-${state.page}.csv`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+   }
+ 
+-  return <PageContainer title="库存状况" actions={<Space wrap>{returnPath?.startsWith("/products/")&&<Button onClick={()=>navigate(returnPath)}>返回商品详情</Button>}<Button disabled={!state.hasExecuted||!state.items.length} onClick={exportCurrentPage}>导出当前已查询页</Button></Space>}>
++  return <PageContainer title="库存状况表" actions={<Space wrap>{returnPath?.startsWith("/products/")&&<Button onClick={()=>navigate(returnPath)}>返回商品详情</Button>}<Button className="s05-inventory-page-action" type="outline" disabled={!state.hasExecuted||!state.items.length} onClick={exportCurrentPage}>导出当前页</Button><Button className="s05-inventory-page-action" type="text" disabled={!state.hasExecuted||!state.items.length} onClick={()=>window.print()}>打印当前页</Button><Button className="s05-inventory-page-action" type="text" disabled={!state.hasExecuted||state.loading!=="idle"} onClick={()=>void controller.reload()}>刷新</Button></Space>}>
+     <div className="s05-inventory-page">
+-      <Card bordered className="s05-inventory-filter"><div className="s05-inventory-filter-grid">
+-        <label className="s05-inventory-field"><span>商品关键词 / 款号</span><Input.Search aria-label="商品关键词或款号" value={state.draft.q} allowClear placeholder="输入款号、名称后查询" onChange={q=>controller.setDraft({...state.draft,q,productCode:""})} onSearch={apply} onPressEnter={apply} /></label>
+-        <label className="s05-inventory-field"><span>分类</span><Select aria-label="分类" value={state.draft.categoryCode} allowClear showSearch placeholder="全部分类" options={dictionary?.categories.filter(row=>row.code).map(row=>({label:row.name||row.code||row.id,value:row.code!}))||[]} onChange={value=>controller.setDraft({...state.draft,categoryCode:String(value||""),productCode:""})} /></label>
+-        <label className="s05-inventory-field"><span>仓库</span><Select aria-label="仓库" value={state.draft.warehouseId} allowClear showSearch placeholder="全部仓库" options={dictionary?.warehouses.map(row=>({label:row.name||row.code||row.id,value:row.id}))||[]} onChange={value=>controller.setDraft({...state.draft,warehouseId:String(value||"")})} /></label>
+-        <div className="s05-inventory-actions"><Button type="primary" loading={state.loading!=="idle"} onClick={apply}>查询</Button><Button onClick={reset}>重置</Button></div>
+-      </div>
+-      {dirty&&<Alert type="info" showIcon content="条件已修改，尚未查询；当前结果仍按上次已执行条件展示。" />}
+-      <div className="s05-inventory-scan"><Input.Search aria-label="库存扫码定位" value={barcode} onChange={setBarcode} onSearch={value=>void locateBarcode(value)} onPressEnter={()=>void locateBarcode(barcode)} placeholder="扫描或输入已有条码，仅用于查询定位" style={{maxWidth:420}} /><Button loading={scanPending} onClick={()=>void locateBarcode(barcode)}>定位条码</Button></div>
+-      {barcodeMessage&&<Alert type={barcodeMessage.type} showIcon content={barcodeMessage.text} />}
+-      {dictionaryError&&<Alert type="error" showIcon title="库存目录读取失败" content={dictionaryError} />}
++      <Card bordered={false} className="s05-inventory-filter">
++        <div className="s05-inventory-filter-grid">
++          <div className="s05-inventory-search"><AutoComplete
++            data={suggestions} filterOption={false} defaultActiveFirstOption={false} value={state.draft.q} allowClear
++            placeholder={state.draft.batchCodes.length?"输入关键词可切换查询":"输入款号 / 名称；可直接粘贴多个款号"}
++            inputProps={{
++              "aria-label":"商品关键词或款号",
++              prefix:state.draft.batchCodes.length?<Button type="text" size="mini" className="s05-inventory-batch-count" onMouseDown={event=>event.preventDefault()} onClick={openBatch}>已选 {state.draft.batchCodes.length} 款</Button>:undefined,
++              suffix:<Button type="text" size="small" className="s05-inventory-batch-action" onMouseDown={event=>event.preventDefault()} onClick={openBatch}>批量选择</Button>,
++              onPaste:pasteCodes,
++            }}
++            onChange={(q,option)=>{if(!option){setBatchError("");controller.setDraft({...state.draft,q,productCode:"",batchCodes:[]});}}}
++            onSelect={code=>{controller.setDraft({...state.draft,q:code,productCode:code,batchCodes:[]});rememberSearch(code);void controller.apply();}}
++            onPressEnter={(event,activeOption)=>{event.preventDefault();if(!activeOption)apply();}}
++          /></div>
++          <label className="s05-inventory-inline-field"><span>分类</span><TreeSelect aria-label="分类" {...(state.draft.categoryCode?{value:state.draft.categoryCode}:{})} allowClear showSearch placeholder="全部分类" treeData={categoryTree} onChange={value=>controller.setDraft({...state.draft,categoryCode:String(value||""),productCode:""})} /></label>
++          <label className="s05-inventory-inline-field"><span>仓库{state.draft.warehouseIds.length?`（${state.draft.warehouseIds.length}）`:""}</span><Select aria-label="仓库" mode="multiple" maxTagCount={1} value={[...state.draft.warehouseIds]} allowClear showSearch placeholder="全部仓库" options={dictionary?.warehouses.map(row=>({label:row.name||row.code||row.id,value:row.id}))||[]} onInputValueChange={value=>setWarehouseSearch(value)} onVisibleChange={visible=>{if(!visible)setWarehouseSearch("");}} dropdownRender={menu=><div>{menu}<div className="s05-inventory-select-actions"><Button size="mini" type="text" disabled={!warehouseMatches.length} onMouseDown={event=>event.preventDefault()} onClick={selectWarehouseMatches}>全选当前匹配 {warehouseMatches.length} 个</Button><Button size="mini" type="text" onMouseDown={event=>event.preventDefault()} onClick={()=>controller.setDraft({...state.draft,warehouseIds:[]})}>清空</Button></div></div>} onChange={value=>controller.setDraft({...state.draft,warehouseIds:Array.isArray(value)?value.map(String):[]})} /></label>
++          <div className="s05-inventory-actions"><Button type="text" size="small" onClick={()=>setMoreFilters(value=>!value)}>{moreFilters?"收起筛选":"更多筛选"}</Button><Button type="primary" size="small" loading={state.loading!=="idle"} onClick={apply}>查询</Button><Button size="small" onClick={reset}>重置</Button>{dirty&&<span className="s05-inventory-dirty">条件已修改 · 尚未查询</span>}</div>
++        </div>
++        {moreFilters&&<div className="s05-inventory-more">
++          <label className="s05-inventory-inline-field"><span>供应商{state.draft.supplierIds.length?`（${state.draft.supplierIds.length}）`:""}</span><Select aria-label="供应商" mode="multiple" maxTagCount={1} showSearch allowClear value={[...state.draft.supplierIds]} placeholder="不限" options={dictionary?.suppliers.map(row=>({label:<Checkbox checked={state.draft.supplierIds.includes(row.id)} className="s05-inventory-select-checkbox">{row.name||row.code||row.id}</Checkbox>,value:row.id}))||[]} renderFormat={option=>supplierNames.get(String(option?.value))||String(option?.value||"")} filterOption={(input,option)=>(supplierNames.get(String((option as {props:{value:unknown}}).props.value))||"").toLocaleLowerCase().includes(input.toLocaleLowerCase())} onInputValueChange={value=>setSupplierSearch(value)} onVisibleChange={visible=>{if(!visible)setSupplierSearch("");}} dropdownRender={menu=><div>{menu}<div className="s05-inventory-select-actions"><Button size="mini" type="text" disabled={!supplierMatches.length} onMouseDown={event=>event.preventDefault()} onClick={selectSupplierMatches}>全选当前匹配 {supplierMatches.length} 个</Button><Button size="mini" type="text" onMouseDown={event=>event.preventDefault()} onClick={()=>controller.setDraft({...state.draft,supplierIds:[]})}>清空</Button></div></div>} onChange={value=>controller.setDraft({...state.draft,supplierIds:Array.isArray(value)?value.map(String):[]})} /></label>
++          <label className="s05-inventory-inline-field"><span>版型{state.draft.fitCodes.length?`（${state.draft.fitCodes.length}）`:""}</span><Select aria-label="版型" mode="multiple" maxTagCount={1} showSearch allowClear value={[...state.draft.fitCodes]} placeholder="不限" options={FIT_OPTIONS} onChange={value=>controller.setDraft({...state.draft,fitCodes:Array.isArray(value)?value.map(String):[]})} /></label>
++          <label className="s05-inventory-inline-field"><span>季节{state.draft.seasons.length?`（${state.draft.seasons.length}）`:""}</span><Select aria-label="季节" mode="multiple" maxTagCount={1} showSearch allowClear value={[...state.draft.seasons]} placeholder="不限" options={SEASONS.map(value=>({label:value,value}))} onChange={value=>controller.setDraft({...state.draft,seasons:Array.isArray(value)?value.map(String):[]})} /></label>
++        </div>}
++        {batchError&&<div className="s05-inventory-batch-error" role="alert">{batchError}</div>}
++        {dictionaryError&&<Alert type="error" showIcon title="库存目录读取失败" content={dictionaryError} />}
+       </Card>
+ 
+-      <Card bordered className="s05-inventory-results">
+-        {!state.hasExecuted&&state.loading==="idle"?<div className="s05-inventory-empty"><Empty description="选择条件后查询" /></div>:null}
+-        {state.loading==="initial"&&<div className="s05-inventory-empty"><Spin size={28} /><span>正在查询真实库存</span></div>}
+-        {state.loading==="refresh"&&<Alert type="info" showIcon title="正在刷新" content="暂时保留上次已查询结果。" />}
++      <Card bordered={false} className="s05-inventory-results">
++        {!state.hasExecuted&&state.loading==="idle"&&!dictionaryError?<div className="s05-inventory-empty"><Spin size={28} /><span>正在准备库存数据</span></div>:null}
++        {state.loading==="initial"&&<div className="s05-inventory-empty"><Spin size={28} /><span>正在查询库存</span></div>}
+         {state.error&&<Alert type="error" showIcon title={state.stale?"库存未刷新":"库存查询失败"} content={<Space direction="vertical"><span>{state.error.message}</span><Button size="small" onClick={()=>void controller.reload()}>重试</Button></Space>} />}
+         {state.hasExecuted&&(!state.error||state.stale)&&<>
+           <div className="s05-inventory-summary">
+-            <div className="s05-inventory-scope"><Typography.Text type="secondary">当前已执行范围</Typography.Text><Space wrap size="mini">{scope.map(text=><Tag key={text}>{text}</Tag>)}</Space></div>
+-            <div className="s05-inventory-stats"><div><small>库存对象行</small><strong>{state.total}</strong></div><div><small>商品数</small><strong>{state.meta?.productCount??"未读取"}</strong></div><div><small>查询范围总量</small><strong>{state.meta?signed(state.meta.queryTotal):"未读取"}</strong></div><div><small>本页小计</small><strong>{state.meta?signed(state.meta.pageTotal):"未读取"}</strong></div></div>
++            <div className="s05-inventory-business-stats"><span className="s05-inventory-scope-label">当前结果：{scope.join(" · ")}</span><strong>共 {state.meta?.productCount??"未读取"} 款</strong><span>{selectedWarehouses} 个仓库</span><span>库存合计 <strong>{state.meta?.queryTotal??"未读取"}</strong></span></div>
++            {state.total>0&&<Space size="mini" className="s05-inventory-result-tools"><Button type="text" size="small" onClick={()=>setCollapsedProducts(new Set())}>展开全部</Button><Button type="text" size="small" onClick={()=>setCollapsedProducts(new Set(state.items.map(row=>row.code)))}>折叠全部</Button><Popover trigger="click" position="bl" title="显示设置" content={<div className="s05-inventory-display-options">{displayOptions.map(([key,label])=><Checkbox key={key} checked={display[key]} onChange={checked=>setDisplay(previous=>({...previous,[key]:checked}))}>{label}</Checkbox>)}</div>}><Button type="text" size="small">显示设置</Button></Popover>{state.loading==="refresh"&&<span className="s05-inventory-refreshing">正在刷新…</span>}</Space>}
+           </div>
+-          {state.total===0&&!state.error?<div className="s05-inventory-empty"><Empty description={resultFilter.productCode?`商品 ${resultFilter.productCode} 在当前仓库范围没有非零库存行；不存在的规格与已记录的零数量须在有数据的矩阵中区分。`:"当前查询条件下无库存结果"} /><Button onClick={reset}>清空筛选并查询</Button></div>:null}
+-          {state.total>0&&<><div className="s05-inventory-table"><Table rowKey="key" columns={columns} data={state.items} pagination={false} size="small" scroll={{x:1205}} /></div><div className="s05-inventory-footer"><Typography.Text type="secondary">服务端共 {state.total} 行 · 当前第 {state.page} 页 {state.items.length} 行；本页小计仅包含当前页。</Typography.Text><Pagination current={state.page} pageSize={state.pageSize} total={state.total} showTotal sizeCanChange sizeOptions={[...INVENTORY_PAGE_SIZES]} onChange={page=>void controller.setPage(page)} onPageSizeChange={size=>void controller.setPageSize(size)} /></div></>}
++          {state.total===0&&!state.error?<div className="s05-inventory-empty"><Empty description={resultFilter.productCode?`商品 ${resultFilter.productCode} 在当前仓库范围无库存结果`:"当前查询条件下无库存结果"} /><Button onClick={reset}>清空筛选并查询</Button></div>:null}
++          {state.total>0&&<>
++            <div ref={tableSlot} className={`s05-inventory-table ${segments.length>1||display.sizeGroupNote?"has-segment-head":""}`} style={{height:tableHeight}}>
++              {segments.map(segment=>{
++                const table=columnsFor(segment);
++                return <section key={segment.key} className="s05-inventory-segment" onScrollCapture={syncSegmentScroll}>
++                  {(segments.length>1||display.sizeGroupNote)&&<div className="s05-inventory-segment-head"><strong>{segment.title}商品</strong>{display.sizeGroupNote&&<span>{segment.historical?"沿用已确认的历史展示尺码列":"按当前业务尺码列显示"}</span>}</div>}
++                  <div className="s05-inventory-segment-columns"><Table rowKey="key" columns={table.columns} data={[]} pagination={false} size="mini" scroll={{x:Math.max(table.width,760)}} /></div>
++                  <div className="s05-inventory-segment-body"><Table rowKey="key" rowClassName={raw=>`s05-inventory-row-${(raw as InventoryDisplayRow).kind}`} columns={table.columns} data={segment.rows} pagination={false} size="mini" showHeader={false} scroll={{x:Math.max(table.width,760)}} /></div>
++                </section>;
++              })}
++            </div>
++            <div className="s05-inventory-footer"><Pagination size="small" current={state.page} pageSize={state.pageSize} total={state.total} showTotal={(total,range)=>`第 ${range[0]}–${range[1]} 条，共 ${total} 条`} showJumper sizeCanChange sizeOptions={[...INVENTORY_PAGE_SIZES]} onChange={page=>void controller.setPage(page)} onPageSizeChange={size=>void controller.setPageSize(size)} /></div>
++          </>}
+         </>}
+       </Card>
++      {state.hasExecuted&&state.items.length>0&&<section className="s05-inventory-print" aria-hidden="true"><h1>库存状况 · 当前第 {state.page} 页</h1><p>{scope.join(" · ")} · 第 {(state.page-1)*state.pageSize+1}–{(state.page-1)*state.pageSize+state.items.length} 条，共 {state.total} 条</p><table><thead><tr><th>款号 / 商品</th><th>颜色</th><th>仓库</th><th>规格与数量</th><th>合计</th></tr></thead><tbody>{state.items.map(row=><tr key={row.key}><td>{row.code}<br/>{row.productName}</td><td>{row.colorName}</td><td>{row.warehouseName}</td><td>{row.sections.flatMap(section=>section.row.cells.map(cell=>`${inventorySizeGroupLabel(section.group.name).title} ${cell.column.name} [${cell.entries.map(printableCell).join(" / ")}]`)).join("；")}</td><td>{row.total}</td></tr>)}</tbody></table></section>}
+     </div>
++    <Modal title="批量选择" visible={batchOpen} onOk={acceptBatch} onCancel={()=>setBatchOpen(false)} okText="确定" unmountOnExit>
++      <div className="s05-inventory-batch-picker">
++        <Input.Search aria-label="搜索可选商品" value={batchSearch} onChange={value=>{setBatchSearch(value);setBatchError("");}} placeholder="搜索款号或商品名" allowClear />
++        <div className="s05-inventory-batch-status">已选 {batchSelection.length} 款{batchSearch&&` · 匹配 ${pickerMatches.length} 款`}</div>
++        <div className="s05-inventory-batch-matches">
++          {!batchSearch.trim()?<Empty description="输入款号或商品名后勾选" />:pickerMatches.length?pickerMatches.map(product=><Checkbox key={product.sourceCode} checked={batchSelection.includes(product.sourceCode)} onChange={()=>toggleBatchCode(product.sourceCode)}><strong>{product.sourceCode}</strong><span>{dictionary?.lookup.productNameByCode(product.sourceCode)||"名称未提供"}</span></Checkbox>):<Empty description="没有匹配商品" />}
++        </div>
++        {batchSelection.length>0&&<div className="s05-inventory-batch-selected"><span>已选：</span>{batchSelection.slice(0,60).map(code=><Button type="text" size="mini" key={code} onClick={()=>toggleBatchCode(code)} title={`移除 ${code}`}>{code} ×</Button>)}{batchSelection.length>60&&<span>另有 {batchSelection.length-60} 款，可搜索后取消勾选</span>}</div>}
++        {batchError&&<Alert type="error" content={batchError} />}
++      </div>
++    </Modal>
+     <InventoryLedgerDrawer target={ledger} onClose={closeLedger} onRangeChange={range=>setLedger(current=>current?{...current,range}:current)} onOpenSource={openSource} />
+   </PageContainer>;
+ }
+ 
+-function signed(value:string){return <span className={`s05-inventory-number${parseSignedQuantity(value)<0n?" is-negative":""}`}>{value}</span>}
+-function Matrix({row,selectedSkuId,onOpen}:{row:InventoryViewRow;selectedSkuId:string|null;onOpen:(skuId:string,warehouseId:string)=>void}){
+-  const [collapsed,setCollapsed]=useState<ReadonlySet<string>>(()=>new Set());
+-  return <div className="s05-inventory-matrix">{row.sections.map(section=><div className="s05-inventory-matrix-section" key={section.group.name}>
+-    <div className="s05-inventory-matrix-group"><strong>{section.group.name}</strong><span>该组 {section.row.subtotal.signedQuantity}</span><Button type="text" size="mini" aria-label={`${collapsed.has(section.group.name)?"展开":"收起"} ${section.group.name} 规格`} onClick={()=>setCollapsed(previous=>{const next=new Set(previous);if(next.has(section.group.name))next.delete(section.group.name);else next.add(section.group.name);return next;})}>{collapsed.has(section.group.name)?"展开":"收起"}</Button></div>
+-    {!collapsed.has(section.group.name)&&<div className="s05-inventory-matrix-scroll"><div className="s05-inventory-matrix-grid" style={{gridTemplateColumns:`repeat(${section.group.columns.length}, minmax(60px, 1fr))`}}>
+-      {section.row.cells.map(cell=><div className="s05-inventory-matrix-cell" key={cell.column.key}><div className="s05-inventory-matrix-label">{cell.column.name}</div><div className="s05-inventory-matrix-values">{cell.entries.map((entry,index)=><MatrixValue key={entry.skuId||`${cell.column.key}:${index}`} entry={entry} many={cell.entries.length>1} selected={entry.skuId===selectedSkuId} warehouseId={row.warehouseId} onOpen={onOpen} />)}</div></div>)}
+-    </div></div>}
+-  </div>)}</div>;
+-}
+-function MatrixValue({entry,many,selected,warehouseId,onOpen}:{entry:SkuCell;many:boolean;selected:boolean;warehouseId:string;onOpen:(skuId:string,warehouseId:string)=>void}){
+-  if(!entry.exists)return <Tooltip content="该商品颜色没有此规格"><span className="s05-inventory-missing" aria-label="无此规格">—</span></Tooltip>;
++function MatrixValue({entry,many,warehouseId,onOpen}:{entry:SkuCell;many:boolean;warehouseId:string;onOpen:(skuId:string,warehouseId:string)=>void}){
++  if(!entry.exists)return <span className="s05-inventory-missing" aria-label="无此规格">—</span>;
+   const source=many?<small>{entry.originalIdentity.sourceSizeName||entry.originalIdentity.sourceSizeCode||"原规格"}</small>:null;
+   if(entry.displayValue===null)return <span className="s05-inventory-unknown">{source}未读取</span>;
+-  return <Button type="text" size="small" className={`s05-inventory-cell-button${selected?" is-selected":""}`} aria-label={`${entry.column.name} ${entry.displayValue}，查看库存流水`} onClick={()=>entry.skuId&&onOpen(entry.skuId,warehouseId)}>{source}{signed(entry.displayValue)}</Button>;
++  return <Button type="text" size="mini" className="s05-inventory-cell-button" aria-label={`${entry.column.name} ${entry.displayValue}，查看库存流水`} onClick={()=>entry.skuId&&onOpen(entry.skuId,warehouseId)}>{source}<span className="s05-inventory-number">{entry.displayValue}</span></Button>;
+ }
+diff --git a/apps/web/src/stage05/features/inventory/data.ts b/apps/web/src/stage05/features/inventory/data.ts
+index 1065f21..013023f 100644
+--- a/apps/web/src/stage05/features/inventory/data.ts
++++ b/apps/web/src/stage05/features/inventory/data.ts
+@@ -2,6 +2,7 @@ import { api, type PageFetcher, type ProductRecord, type SkuLookup } from "@stag
+ import { readAllReferences, type ReferenceRecord } from "../products/data";
+ import { loadSkuProjection } from "../products/skuRepository";
+ import { projectInventoryPage, type InventoryFilter, type InventoryPageSize, type InventoryViewRow } from "./model";
++import { categoryScope } from "./presentation";
+ 
+ export interface InventoryMeta {productCount:number;queryTotal:string;pageTotal:string;applied:InventoryFilter}
+ 
+@@ -11,28 +12,37 @@ if(typeof window!=="undefined"){
+   window.addEventListener("pagehide",()=>productCache.clear());
+ }
+ 
+-export async function inventoryReferences(signal:AbortSignal):Promise<{warehouses:ReferenceRecord[];categories:ReferenceRecord[]}> {
+-  const [warehouses,categories]=await Promise.all([
+-    readAllReferences("warehouses",signal),readAllReferences("categories",signal),
++export async function inventoryReferences(signal:AbortSignal):Promise<{warehouses:ReferenceRecord[];categories:ReferenceRecord[];suppliers:ReferenceRecord[]}> {
++  const [warehouses,categories,suppliers]=await Promise.all([
++    readAllReferences("warehouses",signal),readAllReferences("categories",signal),readAllReferences("suppliers",signal),
+   ]);
+-  return {warehouses,categories};
++  return {warehouses,categories,suppliers};
+ }
+ 
+ export async function inventoryProductCodes(filter:InventoryFilter,lookup:SkuLookup,signal:AbortSignal):Promise<string[]> {
+   const exact=filter.productCode||filter.q.trim();
+-  if(!filter.categoryCode&&lookup.productByCode(exact))return [exact];
+-  if(!filter.q.trim()&&!filter.categoryCode)return lookup.products.map(product=>product.sourceCode);
++  const restricted=Boolean(filter.categoryCode||filter.supplierIds.length||filter.fitCodes.length||filter.seasons.length);
++  if(filter.batchCodes.length>3000)throw Error("批量款号超出服务端查询上限");
++  if(filter.batchCodes.some(code=>!lookup.productByCode(code)))throw Error("批量款号含有未匹配的商品");
++  if(!restricted&&filter.batchCodes.length)return [...new Set(filter.batchCodes)];
++  if(!restricted&&lookup.productByCode(exact))return [exact];
++  if(!filter.q.trim()&&!restricted)return lookup.products.map(product=>product.sourceCode);
++  const categories=filter.categoryCode?await readAllReferences("categories",signal):[];
++  const categoryCodes=categoryScope(filter.categoryCode,categories);
+   const codes:string[]=[],seen=new Set<string>();
+   let total:number|null=null;
+   for(let page=1;;page++){
+     if(signal.aborted)throw new DOMException("Aborted","AbortError");
+-    const response=await api.listRuntimeProductCodes({page,pageSize:200,q:filter.q,categoryCode:filter.categoryCode},signal);
++    const response=await api.listRuntimeProductCodes({page,pageSize:200,q:filter.batchCodes.length?"":filter.q,categoryCodes,
++      supplierIds:filter.supplierIds,fitCodes:filter.fitCodes,seasons:filter.seasons},signal);
+     if(total!==null&&response.total!==total)throw Error("商品筛选范围在读取过程中发生变化");
+     total=response.total;
+     for(const code of response.codes){if(seen.has(code)||!lookup.productByCode(code))throw Error("商品范围出现重复或未知来源身份");seen.add(code);codes.push(code);}
+     if(codes.length===total)break;
+     if(response.codes.length===0||codes.length>lookup.products.length)throw Error("商品范围分页不完整");
+   }
++  if(filter.batchCodes.length){const matching=new Set(codes);return [...new Set(filter.batchCodes)].filter(code=>matching.has(code));}
++  if(filter.productCode)return codes.includes(filter.productCode)?[filter.productCode]:[];
+   return codes;
+ }
+ 
+@@ -57,7 +67,7 @@ export const fetchInventory:PageFetcher<InventoryFilter,InventoryViewRow,Invento
+   if(!([100,200,500] as number[]).includes(pageSize))throw Error("库存每页数量不受支持");
+   const [lookup,warehouses]=await Promise.all([loadSkuProjection(),readAllReferences("warehouses",signal)]);
+   const productCodes=await inventoryProductCodes(applied,lookup,signal);
+-  const warehouseIds=applied.warehouseId?[applied.warehouseId]:warehouses.map(row=>row.id);
++  const warehouseIds=applied.warehouseIds.length?[...new Set(applied.warehouseIds)]:warehouses.map(row=>row.id);
+   if(warehouseIds.some(id=>!warehouses.some(row=>row.id===id)))throw Error("仓库筛选身份不存在");
+   const source=await api.listInventory({page,pageSize:pageSize as InventoryPageSize,productCodes,warehouseIds},signal);
+   const productRecords=await currentPageProducts([...new Set(source.rows.map(row=>row.code))],lookup,signal);
+@@ -66,18 +76,3 @@ export const fetchInventory:PageFetcher<InventoryFilter,InventoryViewRow,Invento
+   const view=projectInventoryPage(source,lookup,productRecords,warehouseNames);
+   return {items:view.rows,total:view.rowCount,meta:{productCount:view.productCount,queryTotal:view.queryTotal,pageTotal:view.pageTotal,applied}};
+ };
+-
+-/** SKU scan examines only one product through bounded server pages to find its real row. */
+-export async function locateSkuPage(skuId:string,warehouseId:string,pageSize:InventoryPageSize,signal:AbortSignal):Promise<number|null> {
+-  const [lookup,warehouses]=await Promise.all([loadSkuProjection(),readAllReferences("warehouses",signal)]);
+-  const sku=lookup.skuById(skuId);
+-  if(!sku)throw Error("扫码SKU来源身份不存在");
+-  const warehouseIds=warehouseId?[warehouseId]:warehouses.map(row=>row.id);
+-  for(let page=1;;page++){
+-    const response=await api.listInventory({page,pageSize:500,productCodes:[sku.product.sourceCode],warehouseIds},signal);
+-    const found=response.rows.find(row=>row.color_id===sku.identity.colorId&&
+-      Object.prototype.hasOwnProperty.call(row.values,sku.identity.sizeId));
+-    if(found)return Math.floor(found.index/pageSize)+1;
+-    if(page*500>=response.rowCount)return null;
+-  }
+-}
+diff --git a/apps/web/src/stage05/features/inventory/inventory.css b/apps/web/src/stage05/features/inventory/inventory.css
+index dc2b0b9..e468a6b 100644
+--- a/apps/web/src/stage05/features/inventory/inventory.css
++++ b/apps/web/src/stage05/features/inventory/inventory.css
+@@ -1,49 +1,98 @@
+-.s05-inventory-page{display:grid;gap:8px;min-width:0}
++.s05-inventory-page{display:grid;gap:4px;min-width:0}
++.s05-content .s05-page-head .s05-inventory-page-action:not(:disabled){color:var(--color-text-2)}
++.s05-content .s05-page-head .s05-inventory-page-action.arco-btn-outline{border-color:var(--color-border-3)}
+ .s05-inventory-filter,.s05-inventory-results{min-width:0}
+-.s05-inventory-filter .arco-card-body,.s05-inventory-results .arco-card-body{min-width:0}
+-.s05-inventory-filter-grid{display:grid;grid-template-columns:minmax(220px,2fr) minmax(150px,1fr) minmax(180px,1fr) auto;gap:8px;align-items:end}
+-.s05-inventory-field{display:flex;flex-direction:column;gap:6px;min-width:0;color:var(--color-text-2);font-size:13px}
+-.s05-inventory-field .arco-select,.s05-inventory-field .arco-input-search{width:100%}
+-.s05-inventory-actions{display:flex;gap:8px;white-space:nowrap}
+-.s05-inventory-filter .arco-alert{margin-top:12px}
+-.s05-inventory-scan{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0 0}
+-.s05-inventory-scan .arco-input-search{width:min(420px,100%)}
+-.s05-inventory-summary{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+-.s05-inventory-scope{display:flex;align-items:center;gap:6px;min-width:220px}
+-.s05-inventory-stats{display:flex;gap:12px;flex-wrap:wrap}
+-.s05-inventory-stats>div{display:flex;align-items:baseline;gap:4px;min-width:0}
+-.s05-inventory-stats small{color:var(--color-text-3);font-size:12px}
+-.s05-inventory-stats strong{font-size:14px;font-variant-numeric:tabular-nums}
+-.s05-inventory-empty{min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+-.s05-inventory-table{width:100%;min-width:0;overflow-x:auto}
++.s05-inventory-filter .arco-card-body,.s05-inventory-results .arco-card-body{min-width:0;padding:0}
++.s05-inventory-filter-grid{display:grid;grid-template-columns:minmax(260px,2fr) minmax(170px,1fr) minmax(180px,1.1fr) auto;gap:8px;align-items:center}
++.s05-inventory-search{display:flex;align-items:center;min-width:0}
++.s05-inventory-search .arco-select,.s05-inventory-search .arco-autocomplete{width:100%;min-width:0}
++.s05-inventory-search .arco-input-wrapper{width:100%;height:32px}
++.s05-inventory-search .arco-input-prefix,.s05-inventory-search .arco-input-suffix{margin:0}
++.s05-inventory-search .s05-inventory-batch-action{height:25px;min-height:25px;padding:0 8px;color:var(--color-text-2);border-left:1px solid var(--color-border-2);border-radius:0}
++.s05-inventory-search .s05-inventory-batch-count{height:22px;min-height:22px;padding:0 5px;color:rgb(var(--primary-6));background:var(--color-primary-light-1)}
++.s05-inventory-inline-field{display:flex;align-items:center;gap:6px;min-width:0;color:var(--color-text-2);font-size:13px;font-weight:500;white-space:nowrap}
++.s05-inventory-inline-field .arco-select,.s05-inventory-inline-field .arco-tree-select{flex:1;min-width:0;width:100%}
++.s05-inventory-inline-field .arco-select-view{height:32px;overflow:hidden}
++.s05-inventory-actions{display:flex;align-items:center;gap:7px;white-space:nowrap;min-height:32px}
++.s05-inventory-dirty{font-size:12px;color:rgb(var(--warning-6))}
++.s05-inventory-batch-error{font-size:12px;color:rgb(var(--danger-6));padding-top:5px}
++.s05-inventory-more{display:grid;grid-template-columns:repeat(3,minmax(150px,1fr));max-width:980px;gap:8px;margin-top:7px}
++.s05-inventory-filter .arco-alert{margin-top:8px}
++.s05-inventory-select-actions{display:flex;justify-content:space-between;gap:6px;padding:4px 6px;border-top:1px solid var(--color-border-2)}
++.s05-inventory-select-checkbox{pointer-events:none}
++.s05-inventory-summary{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;min-height:31px;margin-bottom:4px}
++.s05-inventory-business-stats{display:flex;align-items:center;gap:13px;min-width:0;white-space:nowrap;font-size:13px;color:var(--color-text-2)}
++.s05-inventory-business-stats strong{font-size:13px;font-weight:600;color:var(--color-text-1);font-variant-numeric:tabular-nums}
++.s05-inventory-scope-label{max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;font-weight:500}
++.s05-inventory-empty{min-height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
++.s05-inventory-result-tools{display:flex;align-items:center;flex:none;gap:4px}
++.s05-inventory-result-tools .arco-btn{padding:0 4px;color:var(--color-text-2);font-weight:500}
++.s05-inventory-refreshing{color:var(--color-text-3);font-size:12px}
++.s05-inventory-display-options{display:grid;gap:6px;min-width:128px}
++.s05-inventory-table{width:100%;min-width:0;overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--color-border-2);border-radius:4px 4px 0 0}
++.s05-inventory-segment+.s05-inventory-segment{border-top:1px solid var(--color-border-3)}
++.s05-inventory-segment-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:10px;min-height:26px;padding:3px 9px;background:var(--color-fill-1);border-bottom:1px solid var(--color-border-2);font-size:12px;color:var(--color-text-1)}
++.s05-inventory-segment-head span{font-size:11px;font-weight:400;color:var(--color-text-3)}
++.s05-inventory-segment-columns{position:sticky;top:0;z-index:3;background:var(--color-bg-1)}
++.s05-inventory-table.has-segment-head .s05-inventory-segment-columns{top:26px}
++.s05-inventory-segment-columns .arco-table-no-data{display:none}
++.s05-inventory-segment-columns .arco-table{border-bottom:0}
++.s05-inventory-segment-body .arco-table{border-top:0}
+ .s05-inventory-table .arco-table-container{max-width:100%}
+-.s05-inventory-product{display:flex;flex-direction:column;gap:3px;min-width:0}
+-.s05-inventory-product .arco-btn{align-self:flex-start;max-width:100%;height:18px;padding:0;font-weight:600;overflow:hidden;text-overflow:ellipsis}
+-.s05-inventory-product strong,.s05-inventory-product span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+-.s05-inventory-product span{font-size:12px;color:var(--color-text-3)}
++.s05-inventory-table .arco-table-th,.s05-inventory-table .arco-table-td{padding:3px 6px;font-size:13px;line-height:18px}
++.s05-content .s05-inventory-table .arco-btn.arco-btn-size-mini{min-height:20px;height:20px;font-size:12px}
++.s05-inventory-table .arco-table-th{white-space:nowrap}
++.s05-inventory-table .arco-table-td{height:28px}
++.s05-inventory-table .arco-table-tr:hover .arco-table-td{background:var(--color-fill-1)}
++.s05-inventory-row-colorSubtotal .arco-table-td,.s05-inventory-row-productTotal .arco-table-td{background:var(--color-fill-1);font-weight:600}
++.s05-inventory-row-productTotal .arco-table-td{border-top:1px solid var(--color-border-2)}
++.s05-inventory-product{display:flex;align-items:center;gap:4px;min-width:0;white-space:nowrap}
++.s05-inventory-product .arco-btn{padding:0;max-width:112px;height:20px;min-height:20px;font-weight:600;color:var(--color-text-1);overflow:hidden;text-overflow:ellipsis}
++.s05-inventory-product .s05-inventory-fold{flex:none;width:15px;max-width:15px;color:var(--color-text-2);font-size:13px}
++.s05-inventory-product span{font-size:12px;color:var(--color-text-2);overflow:hidden;text-overflow:ellipsis}
++.s05-inventory-product small{font-size:10px;color:var(--color-text-3)}
++.s05-inventory-ellipsis{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .s05-inventory-number{font-variant-numeric:tabular-nums;white-space:nowrap}
+-.s05-inventory-number.is-negative{color:rgb(var(--danger-6));font-weight:600}
+-.s05-inventory-matrix{display:grid;gap:3px;min-width:0}
+-.s05-inventory-matrix-section{min-width:0}
+-.s05-inventory-matrix-group{display:flex;gap:7px;align-items:center;color:var(--color-text-2);font-size:12px;margin-bottom:1px}
+-.s05-inventory-matrix-group span{color:var(--color-text-3)}
+-.s05-inventory-matrix-scroll{max-width:100%;overflow-x:auto}
+-.s05-inventory-matrix-grid{display:grid;width:max-content;min-width:100%;border:1px solid var(--color-border-2);border-radius:var(--border-radius-small)}
+-.s05-inventory-matrix-cell{min-width:60px;border-right:1px solid var(--color-border-2);text-align:center}
+-.s05-inventory-matrix-cell:last-child{border-right:0}
+-.s05-inventory-matrix-label{background:var(--color-fill-1);border-bottom:1px solid var(--color-border-2);padding:1px 4px;font-size:12px;color:var(--color-text-2);white-space:nowrap}
+-.s05-inventory-matrix-values{display:flex;flex-direction:column;align-items:stretch;min-height:24px;justify-content:center}
+-.s05-inventory-cell-button{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;height:auto;min-height:23px;padding:1px 3px}
+-.s05-inventory-cell-button small{font-size:10px;line-height:12px;color:var(--color-text-3);white-space:normal}
+-.s05-inventory-cell-button.is-selected{outline:2px solid rgb(var(--primary-6));outline-offset:-2px;border-radius:var(--border-radius-small)}
+-.s05-inventory-missing,.s05-inventory-unknown{display:block;padding:5px 2px;color:var(--color-text-3);font-size:12px}
+-.s05-inventory-unknown small{display:block;font-size:10px}
+-.s05-inventory-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px}
++.s05-inventory-cell-values{display:flex;flex-direction:column;align-items:stretch;justify-content:center;min-height:20px}
++.s05-inventory-cell-button{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:2px;width:100%;height:20px;min-height:20px;padding:0 2px;line-height:18px}
++.s05-content .s05-inventory-cell-button.arco-btn{color:var(--color-text-2);font-weight:500}
++.s05-content .s05-inventory-cell-button.arco-btn:hover{color:rgb(var(--primary-6))}
++.s05-inventory-cell-button small{font-size:10px;line-height:12px;color:var(--color-text-3);overflow:hidden;text-overflow:ellipsis}
++.s05-inventory-missing,.s05-inventory-unknown{display:block;text-align:center;color:var(--color-text-3);font-size:11px;white-space:nowrap}
++.s05-inventory-unknown small{font-size:10px;margin-right:2px}
++.s05-inventory-footer{position:sticky;bottom:0;z-index:3;display:flex;align-items:center;justify-content:flex-end;gap:12px;min-height:43px;padding:6px 2px;background:var(--color-bg-1);border-top:1px solid var(--color-border-2);white-space:nowrap;font-size:12px}
++.s05-inventory-footer .arco-pagination{display:flex;align-items:center;gap:4px;flex-wrap:wrap;width:100%}
++.s05-inventory-footer .arco-pagination-option{order:-2}
++.s05-inventory-footer .arco-pagination-total-text{order:-1;margin-right:auto}
++.s05-inventory-batch-status{margin-top:8px;color:var(--color-text-3);font-size:12px}
++.s05-inventory-batch-picker{display:grid;gap:8px}
++.s05-inventory-batch-picker .s05-inventory-batch-status{margin:0}
++.s05-inventory-batch-matches{display:grid;align-content:start;gap:2px;max-height:240px;min-height:120px;overflow-y:auto;border:1px solid var(--color-border-2);border-radius:4px;padding:5px}
++.s05-inventory-batch-matches .arco-checkbox{display:flex;align-items:center;gap:7px;padding:4px 6px;min-height:30px}
++.s05-inventory-batch-matches .arco-checkbox strong{font-weight:600;margin-right:7px}
++.s05-inventory-batch-matches .arco-checkbox span{color:var(--color-text-2)}
++.s05-inventory-batch-selected{display:flex;align-items:center;flex-wrap:wrap;gap:3px;max-height:105px;overflow-y:auto;font-size:12px;color:var(--color-text-3)}
++.s05-inventory-print{display:none}
+ .s05-inventory-ledger{display:grid;gap:16px;min-width:0}
+ .s05-inventory-ledger-head{position:sticky;top:0;z-index:2;background:var(--color-bg-1);padding:4px 0 12px;border-bottom:1px solid var(--color-border-2)}
+ .s05-inventory-ledger-toolbar{display:flex;align-items:center}
+ .s05-inventory-ledger-loading,.s05-inventory-ledger-empty{min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+ .s05-inventory-ledger-table{max-width:100%;overflow-x:auto}
+ .s05-inventory-ledger-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+-@media(max-width:1250px){.s05-inventory-filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.s05-inventory-actions{align-self:end}}
+-@media(max-width:700px){.s05-inventory-filter-grid{grid-template-columns:1fr}.s05-inventory-stats{gap:10px}.s05-inventory-stats>div{min-width:70px}.s05-inventory-scan .arco-input-search{width:100%}}
++@media(max-width:1320px){.s05-inventory-filter-grid{grid-template-columns:minmax(230px,2fr) repeat(2,minmax(150px,1fr))}.s05-inventory-actions{grid-column:1/-1}.s05-inventory-summary{flex-wrap:wrap;gap:2px}.s05-inventory-result-tools{margin-left:auto}}
++@media(max-width:760px){.s05-inventory-filter-grid{grid-template-columns:1fr 1fr}.s05-inventory-search,.s05-inventory-actions{grid-column:1/-1}.s05-inventory-more{grid-template-columns:1fr}.s05-inventory-business-stats{flex-wrap:wrap;gap:7px}.s05-inventory-footer{flex-wrap:wrap;justify-content:flex-start}}
++@media print{
++  @page{size:A4 landscape;margin:10mm}
++  body *{visibility:hidden!important}
++  .s05-inventory-print,.s05-inventory-print *{visibility:visible!important}
++  .s05-inventory-print{display:block!important;position:absolute;left:0;top:0;width:100%;color:#111;background:#fff;font:10px/1.3 sans-serif}
++  .s05-inventory-print h1{font-size:16px;margin:0 0 5mm}
++  .s05-inventory-print p{margin:0 0 4mm}
++  .s05-inventory-print table{border-collapse:collapse;width:100%;table-layout:fixed}
++  .s05-inventory-print th,.s05-inventory-print td{border:1px solid #bbb;padding:2mm;vertical-align:top;overflow-wrap:anywhere}
++  .s05-inventory-print th:nth-child(1){width:16%}
++  .s05-inventory-print th:nth-child(2){width:10%}
++  .s05-inventory-print th:nth-child(3){width:10%}
++  .s05-inventory-print th:nth-child(5){width:7%}
++  .s05-inventory-print tr{break-inside:avoid}
++}
+diff --git a/apps/web/src/stage05/features/inventory/inventory.live.test.ts b/apps/web/src/stage05/features/inventory/inventory.live.test.ts
+index dc2d444..9de33c6 100644
+--- a/apps/web/src/stage05/features/inventory/inventory.live.test.ts
++++ b/apps/web/src/stage05/features/inventory/inventory.live.test.ts
+@@ -4,7 +4,7 @@ import { loadSkuProjection } from "../../data/identity/catalog";
+ import { parseSignedQuantity,formatSignedQuantity,type SkuLookup } from "../../shared/sku";
+ import { projectInventoryPage } from "./model";
+ 
+-const base="http://127.0.0.1:8878",origin="http://127.0.0.1:8877";
++const base=process.env.STAGE05_REAL_API_BASE||"http://127.0.0.1:8878",origin="http://127.0.0.1:8877";
+ let client:Stage05ApiClient,lookup:SkuLookup,warehouseIds:string[],warehouseNames:Map<string,string>;
+ const inventory=(code:string,page=1,pageSize:100|200|500=100)=>client.listInventory({page,pageSize,productCodes:[code],warehouseIds});
+ 
+diff --git a/apps/web/src/stage05/features/inventory/model.test.ts b/apps/web/src/stage05/features/inventory/model.test.ts
+index 724eae0..55e5e67 100644
+--- a/apps/web/src/stage05/features/inventory/model.test.ts
++++ b/apps/web/src/stage05/features/inventory/model.test.ts
+@@ -2,11 +2,12 @@ import { describe,expect,it } from "vitest";
+ import { SkuLookup } from "../../shared/sku";
+ import type { RuntimeIdentityCatalog } from "../../data/identity/catalog";
+ import type { ProductRecord,RuntimeInventoryPage } from "../../data/client";
+-import { inventoryFromLocation,inventoryLocation,projectInventoryPage,sumQuantities } from "./model";
++import { EMPTY_FILTER,inventoryFromLocation,inventoryLocation,parseBatchCodes,projectInventoryPage,sumQuantities } from "./model";
++import { DEFAULT_DISPLAY,categoryScope,inventorySegments } from "./presentation";
+ 
+ const product={id:"P",code:"P-1",name:"测试商品",enabled:true,fit_id:null,fit_name:null,source_size_group_id:null,attributes:{}};
+ const other={...product,id:"Q",code:"Q-1",name:"另一件商品"};
+-function sourceSku(id:string,productId:string,sizeId:string,sizeName:string,group="上衣"){
++function sourceSku(id:string,productId:string,sizeId:string,sizeName:string,group="2026年男装上衣尺码组"){
+   return {id,product_id:productId,enabled:true,options:{
+     COLOR:{id:"C",code:"001",name:"蓝色"},
+     SIZE:{id:sizeId,code:sizeName,name:sizeName,sourceCode:sizeId,sourceName:sizeId,standardGroup:group,standardFit:"A版"},
+@@ -14,7 +15,7 @@ function sourceSku(id:string,productId:string,sizeId:string,sizeName:string,grou
+ }
+ const catalog:RuntimeIdentityCatalog={products:[product,other],skus:[
+   sourceSku("A","P","source-A","170/M"),sourceSku("B","P","source-B","170/M"),
+-  sourceSku("C","P","source-C","32","裤子"),sourceSku("D","P","source-D","175/L"),
++  sourceSku("C","P","source-C","32","男装裤子尺码组"),sourceSku("D","P","source-D","175/L"),
+   sourceSku("E","Q","source-E","180/XL"),
+ ],barcodes:[]};
+ const lookup=new SkuLookup(catalog);
+@@ -30,12 +31,12 @@ describe("INV01 source-SKU matrix",()=>{
+     expect(result).toMatchObject({rowCount:1,queryTotal:"0",pageTotal:"0"});
+     const row=result.rows[0]!;
+     expect(row).toMatchObject({total:"0",offset:true,negativeCount:1,productTotal:"0",warehouseName:"真实仓库"});
+-    const top=row.sections.find(section=>section.group.name==="上衣")!;
++    const top=row.sections.find(section=>section.group.name==="2026年男装上衣尺码组")!;
+     const shared=top.row.cells.find(cell=>cell.column.name==="170/M")!;
+     expect(shared.entries.map(cell=>[cell.skuId,cell.displayValue])).toEqual([["A","1"],["B","-1"]]);
+     expect(top.row.cells.find(cell=>cell.column.name==="175/L")!.entries[0]!.displayValue).toBeNull();
+     expect(top.row.cells.find(cell=>cell.column.name==="180/XL")!.entries[0]!.exists).toBe(false);
+-    const pants=row.sections.find(section=>section.group.name==="裤子")!;
++    const pants=row.sections.find(section=>section.group.name==="男装裤子尺码组")!;
+     expect(pants.row.cells.find(cell=>cell.column.name==="32")!.entries[0]!.displayValue).toBe("0");
+     expect(pants.row.subtotal.signedQuantity).toBe("0");
+   });
+@@ -45,6 +46,29 @@ describe("INV01 source-SKU matrix",()=>{
+   it("keeps a query-wide total separate from the page subtotal",()=>{
+     expect(projectInventoryPage({...page,total:"80794",rowCount:9863,productCount:2288},lookup,products,warehouses)).toMatchObject({queryTotal:"80794",pageTotal:"0",rowCount:9863});
+   });
++  it("adds subtotal rows only where the server says a color or product ends",()=>{
++    const projected=projectInventoryPage(page,lookup,products,warehouses).rows;
++    const withSubtotals={...DEFAULT_DISPLAY,colorSubtotal:true,productTotal:true};
++    expect(inventorySegments(projected,withSubtotals,new Set()).map(segment=>segment.rows.map(row=>row.kind))).toEqual([
++      ["stock","colorSubtotal","productTotal"],["stock","colorSubtotal","productTotal"],
++    ]);
++    expect(inventorySegments(projected,DEFAULT_DISPLAY,new Set()).map(segment=>segment.rows.map(row=>row.kind))).toEqual([
++      ["stock","productTotal"],["stock","productTotal"],
++    ]);
++    const partial=projectInventoryPage({...page,products:[{...page.products[0]!,last:2}],colors:[{...page.colors[0]!,last:2}]},lookup,products,warehouses).rows;
++    expect(inventorySegments(partial,withSubtotals,new Set()).map(segment=>segment.rows.map(row=>row.kind))).toEqual([["stock"],["stock"]]);
++  });
++  it("shows each size group in its own business segment without duplicating its signed total",()=>{
++    const multi={...page,rows:[{...page.rows[0]!,values:{"source-A":"1","source-B":"-1","source-C":"4"},total:"4"}],
++      products:[{...page.products[0]!,cols:{"source-A":"1","source-B":"-1","source-C":"4"}}],
++      colors:[{...page.colors[0]!,cols:{"source-A":"1","source-B":"-1","source-C":"4"}}],total:"4"};
++    const rows=projectInventoryPage(multi,lookup,products,warehouses).rows;
++    expect(rows[0]!.sections.map(section=>[section.group.name,section.total,section.productTotal])).toEqual([["2026年男装上衣尺码组","0","0"],["男装裤子尺码组","4","4"]]);
++    const segments=inventorySegments(rows,DEFAULT_DISPLAY,new Set());
++    expect(segments.map(segment=>[segment.title,segment.rows.filter(row=>row.kind==="stock").map(row=>row.section.total)])).toEqual([
++      ["上衣尺码",["0"]],["裤子尺码",["4"]],
++    ]);
++  });
+   it("accepts product subtotals that span warehouse rows outside the current page",()=>{
+     const outside={...page,total:"10",rowCount:3,
+       products:[{...page.products[0]!,cols:{"source-A":"2","source-B":"1"}}],
+@@ -58,17 +82,34 @@ describe("INV01 source-SKU matrix",()=>{
+   it("keeps four-decimal signed quantity precision",()=>{
+     expect(sumQuantities(["1.2500","-0.125","0"])).toBe("1.125");
+   });
++  it("shows the mapped fit and source historical season used by server filters",()=>{
++    const withSeason=new Map([["P-1",{...record,attributes:{historicalCategory:"2020年春季上衣",fitCode:"01"}}]]);
++    expect(projectInventoryPage(page,lookup,withSeason,warehouses).rows[0]).toMatchObject({fitCode:"A",season:"春"});
++  });
+ });
+ 
+ describe("inventory return context",()=>{
+   it("round-trips exact product, server page size and open ledger",()=>{
+-    const url=inventoryLocation({q:"P-1",productCode:"P-1",categoryCode:"",warehouseId:"W"},3,200,true,{skuId:"A",warehouseId:"W",range:"all"});
++    const url=inventoryLocation({...EMPTY_FILTER,q:"P-1",productCode:"P-1",warehouseIds:["W"]},3,200,true,{skuId:"A",warehouseId:"W",range:"all"});
+     expect(inventoryFromLocation(new URL(url,"http://local").search)).toEqual({
+-      filter:{q:"P-1",productCode:"P-1",categoryCode:"",warehouseId:"W"},page:3,pageSize:200,executed:true,
++      filter:{...EMPTY_FILTER,q:"P-1",productCode:"P-1",warehouseIds:["W"]},page:3,pageSize:200,executed:true,
+       ledger:{skuId:"A",warehouseId:"W",range:"all"},
+     });
+   });
+-  it("starts without a false zero-result query",()=>{
+-    expect(inventoryFromLocation("")).toMatchObject({executed:false,page:1,pageSize:100,ledger:null});
++  it("round-trips batch codes, multiple warehouses and advanced server filters",()=>{
++    const filter={...EMPTY_FILTER,batchCodes:["P-1","Q-1"],warehouseIds:["W","W2"],categoryCode:"parent",supplierIds:["supplier-a","supplier-b"],fitCodes:["A","B"],seasons:["春","秋"]};
++    const url=inventoryLocation(filter,2,500,true);
++    expect(inventoryFromLocation(new URL(url,"http://local").search)).toMatchObject({filter,page:2,pageSize:500,executed:true});
++  });
++  it("opens the first page as an applied inventory query",()=>{
++    expect(inventoryFromLocation("")).toMatchObject({executed:true,page:1,pageSize:200,ledger:null});
++  });
++  it("deduplicates pasted codes and reports unknown codes",()=>{
++    expect(parseBatchCodes("P-1, Q-1\nP-1；missing",new Set(["P-1","Q-1"]))).toEqual({codes:["P-1","Q-1"],duplicates:["P-1"],unknown:["missing"]});
++  });
++  it("includes directly attached parent goods and descendants in the server category scope",()=>{
++    expect(categoryScope("parent",[
++      {id:"1",code:"parent",name:"上衣"},{id:"2",code:"child",parent_code:"parent"},{id:"3",code:"grand",parent_id:"2"},
++    ])).toEqual(["parent","child","grand"]);
+   });
+ });
+diff --git a/apps/web/src/stage05/features/inventory/model.ts b/apps/web/src/stage05/features/inventory/model.ts
+index cabcc88..4af86fd 100644
+--- a/apps/web/src/stage05/features/inventory/model.ts
++++ b/apps/web/src/stage05/features/inventory/model.ts
+@@ -4,18 +4,26 @@ import type { ProductRecord, RuntimeInventoryPage, RuntimeInventoryRow } from ".
+ export interface InventoryFilter {
+   q: string;
+   productCode: string;
++  batchCodes: readonly string[];
+   categoryCode: string;
+-  warehouseId: string;
++  warehouseIds: readonly string[];
++  supplierIds: readonly string[];
++  fitCodes: readonly string[];
++  seasons: readonly string[];
+ }
+-export const EMPTY_FILTER:InventoryFilter={q:"",productCode:"",categoryCode:"",warehouseId:""};
++export const EMPTY_FILTER:InventoryFilter={q:"",productCode:"",batchCodes:[],categoryCode:"",warehouseIds:[],supplierIds:[],fitCodes:[],seasons:[]};
+ export const INVENTORY_PAGE_SIZES=[100,200,500] as const;
+ export type InventoryPageSize=(typeof INVENTORY_PAGE_SIZES)[number];
+-export interface InventoryMatrixSection {group:DisplaySizeGroup;row:SkuMatrixRow}
++export interface InventoryMatrixSection {group:DisplaySizeGroup;row:SkuMatrixRow;total:string;colorTotal:string;productTotal:string}
+ export interface InventoryViewRow {
+   key:string;
+   index:number;
+   code:string;
+   productName:string;
++  categoryCode:string;
++  supplierId:string;
++  fitCode:string;
++  season:string;
+   colorId:string;
+   colorName:string;
+   warehouseId:string;
+@@ -25,6 +33,8 @@ export interface InventoryViewRow {
+   colorTotal:string;
+   negativeCount:number;
+   offset:boolean;
++  colorEnd:boolean;
++  productEnd:boolean;
+   sections:readonly InventoryMatrixSection[];
+ }
+ export interface InventoryViewPage {
+@@ -48,13 +58,31 @@ export function projectInventoryPage(
+ ):InventoryViewPage {
+   const productTotals=new Map(page.products.map(row=>[row.code,sumQuantities(Object.values(row.cols))]));
+   const colorTotals=new Map(page.colors.map(row=>[`${row.code}\u0000${row.color_id}`,sumQuantities(Object.values(row.cols))]));
++  const groupProductAmounts=new Map<string,string[]>(),groupColorAmounts=new Map<string,string[]>();
++  for(const color of page.colors){
++    const product=lookup.productByCode(color.code);
++    if(!product)throw Error(`库存商品来源身份未匹配：${color.code}`);
++    const bySize=new Map(lookup.skusForProduct(product.productId).filter(sku=>sku.identity.colorId===color.color_id).map(sku=>[sku.identity.sizeId,sku] as const));
++    for(const [sizeId,quantity] of Object.entries(color.cols)){
++      const sku=bySize.get(sizeId);
++      if(!sku)throw Error("库存颜色小计规格未匹配原SKU身份");
++      const productKey=`${color.code}\u0000${sku.groupName}`,colorKey=`${color.code}\u0000${color.color_id}\u0000${sku.groupName}`;
++      groupProductAmounts.set(productKey,[...(groupProductAmounts.get(productKey)||[]),quantity]);
++      groupColorAmounts.set(colorKey,[...(groupColorAmounts.get(colorKey)||[]),quantity]);
++    }
++  }
++  const groupProductTotals=new Map([...groupProductAmounts].map(([key,values])=>[key,sumQuantities(values)]));
++  const groupColorTotals=new Map([...groupColorAmounts].map(([key,values])=>[key,sumQuantities(values)]));
++  const productEnds=new Map(page.products.map(row=>[row.code,row.last]));
++  const colorEnds=new Map(page.colors.map(row=>[`${row.code}\u0000${row.color_id}`,row.last]));
+   // `total` covers the whole query. Product/color subtotals cover every
+   // warehouse for product codes on this page; rows cover this page only.
+   // These scopes differ when a product spans several pages.
+   const pageTotal=sumQuantities(page.rows.map(row=>row.total));
+   if(sumQuantities(productTotals.values())!==sumQuantities(colorTotals.values()))
+     throw Error("库存商品与颜色小计不一致");
+-  const rows=page.rows.map(row=>projectRow(row,lookup,products,warehouses,productTotals,colorTotals));
++  if(sumQuantities(groupProductTotals.values())!==sumQuantities(productTotals.values()))throw Error("库存尺码组与商品小计不一致");
++  const rows=page.rows.map(row=>projectRow(row,lookup,products,warehouses,productTotals,colorTotals,groupProductTotals,groupColorTotals,productEnds,colorEnds));
+   return {rows,rowCount:page.rowCount,productCount:page.productCount,
+     queryTotal:page.total,pageTotal};
+ }
+@@ -62,6 +90,8 @@ export function projectInventoryPage(
+ function projectRow(
+   row:RuntimeInventoryRow,lookup:SkuLookup,products:ReadonlyMap<string,ProductRecord>,
+   warehouses:ReadonlyMap<string,string>,productTotals:ReadonlyMap<string,string>,colorTotals:ReadonlyMap<string,string>,
++  groupProductTotals:ReadonlyMap<string,string>,groupColorTotals:ReadonlyMap<string,string>,
++  productEnds:ReadonlyMap<string,number|null>,colorEnds:ReadonlyMap<string,number|null>,
+ ):InventoryViewRow {
+   const product=lookup.productByCode(row.code);
+   if(!product)throw Error(`库存商品来源身份未匹配：${row.code}`);
+@@ -83,27 +113,52 @@ function projectRow(
+   const matrix=lookup.matrixForProduct(product.productId,quantities);
+   const sections=matrix.sections.flatMap(section=>section.rows
+     .filter(matrixRow=>matrixRow.color.colorId===row.color_id)
+-    .map(matrixRow=>({group:section.group,row:matrixRow})));
+-  const productTotal=productTotals.get(row.code),colorTotal=colorTotals.get(`${row.code}\u0000${row.color_id}`);
+-  if(productTotal===undefined||colorTotal===undefined)throw Error("库存服务缺少查询范围小计");
++    .map(matrixRow=>({group:section.group,row:matrixRow,total:matrixRow.subtotal.signedQuantity,
++      colorTotal:groupColorTotals.get(`${row.code}\u0000${row.color_id}\u0000${section.group.name}`)||"0",
++      productTotal:groupProductTotals.get(`${row.code}\u0000${section.group.name}`)||"0"})));
++  const colorKey=`${row.code}\u0000${row.color_id}`;
++  const productTotal=productTotals.get(row.code),colorTotal=colorTotals.get(colorKey);
++  if(productTotal===undefined||colorTotal===undefined||productEnds.get(row.code)===undefined||colorEnds.get(colorKey)===undefined)throw Error("库存服务缺少查询范围小计");
+   const positive=[...quantities.values()].some(value=>parseSignedQuantity(value)>0n);
+   const negative=[...quantities.values()].some(value=>parseSignedQuantity(value)<0n);
++  const explicitSeason=record.attributes.season;
++  const historicalCategory=record.attributes.historicalCategory;
++  const season=typeof explicitSeason==="string"&&explicitSeason.trim()?explicitSeason.trim():
++    typeof historicalCategory==="string"?[..."春夏秋冬"].filter(value=>historicalCategory.includes(value)).join("/"):"";
+   return {key:String(row.index),index:row.index,code:row.code,productName:record.name||"名称未提供",
++    categoryCode:String(record.attributes.categoryId||""),supplierId:record.counterparty_id||"",
++    fitCode:sourceSkus[0]!.fit.code,season,
+     colorId:row.color_id,colorName:sourceSkus[0]!.color.name,warehouseId:row.warehouse_id,warehouseName,
+     total:row.total,productTotal,colorTotal,
+     negativeCount:[...quantities.values()].filter(value=>parseSignedQuantity(value)<0n).length,
+-    offset:row.total==="0"&&positive&&negative,sections};
++    offset:row.total==="0"&&positive&&negative,
++    colorEnd:colorEnds.get(colorKey)===row.index,productEnd:productEnds.get(row.code)===row.index,sections};
++}
++
++/** Batch input stays a finite product-code list. Unknown codes never reach the inventory endpoint. */
++export function parseBatchCodes(input:string,knownCodes:ReadonlySet<string>):{codes:string[];duplicates:string[];unknown:string[]} {
++  const codes:string[]=[],duplicates:string[]=[],unknown:string[]=[],seen=new Set<string>();
++  for(const code of input.split(/[\s,，;；、]+/).map(value=>value.trim()).filter(Boolean)){
++    if(seen.has(code)){if(!duplicates.includes(code))duplicates.push(code);continue;}
++    seen.add(code);
++    if(knownCodes.has(code))codes.push(code);else unknown.push(code);
++  }
++  return {codes,duplicates,unknown};
+ }
+ 
+ export function inventoryLocation(filter:InventoryFilter,page:number,pageSize:InventoryPageSize,executed:boolean,ledger?:{skuId:string;warehouseId:string;range:"recent"|"all"}|null):string {
+   const params=new URLSearchParams();
+-  if(filter.productCode)params.set("product",filter.productCode);
++  if(filter.batchCodes.length)for(const code of filter.batchCodes)params.append("batch",code);
++  else if(filter.productCode)params.set("product",filter.productCode);
+   else if(filter.q)params.set("q",filter.q);
+   if(filter.categoryCode)params.set("category",filter.categoryCode);
+-  if(filter.warehouseId)params.set("warehouse",filter.warehouseId);
++  for(const id of filter.warehouseIds)params.append("warehouse",id);
++  for(const id of filter.supplierIds)params.append("supplier",id);
++  for(const code of filter.fitCodes)params.append("fit",code);
++  for(const season of filter.seasons)params.append("season",season);
+   if(executed)params.set("run","1");
+   if(page!==1)params.set("page",String(page));
+-  if(pageSize!==100)params.set("size",String(pageSize));
++  if(pageSize!==200)params.set("size",String(pageSize));
+   if(ledger){params.set("ledgerSku",ledger.skuId);params.set("ledgerWarehouse",ledger.warehouseId);if(ledger.range==="all")params.set("ledgerDates","all");}
+   return "/inventory"+(params.size?`?${params.toString()}`:"");
+ }
+@@ -114,9 +169,12 @@ export function inventoryFromLocation(search:string):{filter:InventoryFilter;pag
+   const rawPage=Number(params.get("page"));
+   const rawSize=Number(params.get("size"));
+   const skuId=params.get("ledgerSku"),warehouseId=params.get("ledgerWarehouse");
+-  return {filter:{q:productCode||params.get("q")||"",productCode,categoryCode:params.get("category")||"",warehouseId:params.get("warehouse")||""},
++  const batchCodes=[...new Set(params.getAll("batch").map(code=>code.trim()).filter(Boolean))];
++  return {filter:{q:batchCodes.length?"":productCode||params.get("q")||"",productCode:batchCodes.length?"":productCode,batchCodes,
++      categoryCode:params.get("category")||"",warehouseIds:[...new Set(params.getAll("warehouse").filter(Boolean))],
++      supplierIds:[...new Set(params.getAll("supplier").filter(Boolean))],fitCodes:[...new Set(params.getAll("fit").filter(Boolean))],seasons:[...new Set(params.getAll("season").filter(Boolean))]},
+     page:Number.isSafeInteger(rawPage)&&rawPage>0?rawPage:1,
+-    pageSize:INVENTORY_PAGE_SIZES.includes(rawSize as InventoryPageSize)?rawSize as InventoryPageSize:100,
+-    executed:params.get("run")==="1"||Boolean(productCode),
++    pageSize:INVENTORY_PAGE_SIZES.includes(rawSize as InventoryPageSize)?rawSize as InventoryPageSize:200,
++    executed:true,
+     ledger:skuId&&warehouseId?{skuId,warehouseId,range:params.get("ledgerDates")==="all"?"all":"recent"}:null};
+ }
+diff --git a/apps/web/src/stage05/features/products/products.css b/apps/web/src/stage05/features/products/products.css
+index aa8474c..b016084 100644
+--- a/apps/web/src/stage05/features/products/products.css
++++ b/apps/web/src/stage05/features/products/products.css
+@@ -112,6 +112,15 @@
+   gap: 8px;
+ }
+ 
++.product-size-groups-heading {
++  display: flex;
++  align-items: center;
++  justify-content: space-between;
++  gap: 8px;
++  min-height: 30px;
++  font-size: 13px;
++}
++
+ .product-section-title {
+   margin: 0 0 12px !important;
+ }
+diff --git a/apps/web/src/stage05/shared/sku/projection.live.test.ts b/apps/web/src/stage05/shared/sku/projection.live.test.ts
+index f8eb494..850d4c7 100644
+--- a/apps/web/src/stage05/shared/sku/projection.live.test.ts
++++ b/apps/web/src/stage05/shared/sku/projection.live.test.ts
+@@ -34,6 +34,7 @@ describe.runIf(process.env.STAGE05_REAL_API === "1")("S1 live 8878 SKU identity"
+     expect(lookup.skus).toHaveLength(14864);
+     expect(new Set(catalog.skus.map(sku => sku.id)).size).toBe(14864);
+     expect(new Set(lookup.skus.map(sku => sku.identity.skuId)).size).toBe(14864);
++    expect(new Set(lookup.skus.map(sku => sku.identity.sizeId)).size).toBe(108);
+     const matrix = lookup.matrixForProducts(lookup.products.map(product => product.productId));
+     expect(matrix.sourceSkuCount).toBe(14864);
+     expect(matrix.total.sourceSkuCount).toBe(14864);
+diff --git a/apps/web/src/stage05/shared/sku/projection.ts b/apps/web/src/stage05/shared/sku/projection.ts
+index 5e58dd3..c285866 100644
+--- a/apps/web/src/stage05/shared/sku/projection.ts
++++ b/apps/web/src/stage05/shared/sku/projection.ts
+@@ -62,6 +62,7 @@ export class SkuLookup {
+   readonly sourceSkuCount: number;
+   private readonly productsById = new Map<string, ProductIdentity>();
+   private readonly productsByCode = new Map<string, ProductIdentity>();
++  private readonly productNamesByCode = new Map<string, string>();
+   private readonly skusById = new Map<string, DisplaySku>();
+   private readonly skusByProduct = new Map<string, DisplaySku[]>();
+   private readonly barcodeIndex = new Map<string, BarcodeEntry>();
+@@ -87,6 +88,7 @@ export class SkuLookup {
+       rawProducts.set(productId, row);
+       this.productsById.set(productId, identity);
+       this.productsByCode.set(sourceCode, identity);
++      this.productNamesByCode.set(sourceCode, row.name);
+     }
+     this.products = [...this.productsById.values()];
+ 
+@@ -172,6 +174,7 @@ export class SkuLookup {
+ 
+   productById(productId: string): ProductIdentity | undefined { return this.productsById.get(productId); }
+   productByCode(sourceCode: string): ProductIdentity | undefined { return this.productsByCode.get(sourceCode); }
++  productNameByCode(sourceCode: string): string | undefined { return this.productNamesByCode.get(sourceCode); }
+   skuById(skuId: string): DisplaySku | undefined { return this.skusById.get(skuId); }
+   skusForProduct(productId: string): readonly DisplaySku[] { return this.skusByProduct.get(productId) ?? []; }
+   barcodesForSku(skuId: string): readonly string[] { return this.barcodesBySku.get(skuId) ?? []; }
+diff --git a/apps/web/src/stage05/tokens/content-density.css b/apps/web/src/stage05/tokens/content-density.css
+index 512544b..24ca188 100644
+--- a/apps/web/src/stage05/tokens/content-density.css
++++ b/apps/web/src/stage05/tokens/content-density.css
+@@ -1,7 +1,13 @@
+-/* S5 desktop ERP density. All selectors stay inside the main content area;
+-   the frozen sidebar, brand area and menu are intentionally untouched. */
++/* Stage06 topbar, old-version navigation proportions, and content density. */
++.s05-shell{--s05-sidebar-width:208px}
++.s05-header{padding:0}
++.s05-header-rail{display:flex;align-items:center;flex:0 0 var(--s05-sidebar-width);width:var(--s05-sidebar-width);height:44px;padding:0 10px 0 15px;background:var(--color-fill-2);border-right:1px solid var(--color-border-2);overflow:hidden}
++.s05-header-main{display:flex;align-items:center;flex:1;min-width:0;height:44px;gap:8px;padding:0 16px;border-bottom:1px solid var(--color-border-2)}
++.s05-header-main .s05-breadcrumb{flex:1;min-width:0;margin:0;overflow:hidden;white-space:nowrap;font-size:13px}
++.s05-header-main .s05-header-right{flex:none}
++.s05-header-main .s05-header-control.arco-btn-outline{border-color:var(--color-border-3)}
+ .s05-content{padding:12px 16px 20px}
+-.s05-content .s05-breadcrumb{margin-bottom:8px;font-size:12px}
++.s05-content .s05-content-inner{max-width:none}
+ .s05-content .s05-page-head{align-items:center;gap:8px;margin-bottom:10px}
+ .s05-content .s05-page-title{font-size:17px;line-height:24px;margin:0!important;font-weight:600}
+ .s05-content .s05-page-head .arco-typography-secondary{font-size:12px;line-height:18px}
+@@ -19,5 +25,6 @@
+ .s05-content .arco-alert{padding:7px 10px;font-size:12px;line-height:18px}
+ .s05-content .arco-tabs-header{margin-bottom:8px}
+ .s05-content .arco-pagination{font-size:12px}
+-@media(max-width:1100px){.s05-content{padding:10px 12px 16px}}
+-@media(max-width:700px){.s05-content{padding:8px 10px 14px}}
++@media(max-width:1100px){.s05-shell{--s05-sidebar-width:184px}.s05-content{padding:10px 12px 16px}}
++@media(max-width:760px){.s05-shell{--s05-sidebar-width:156px}.s05-header-brand{display:inline}}
++@media(max-width:700px){.s05-content{padding:8px 10px 14px}.s05-header-main{padding:0 10px}.s05-header-main .s05-header-user{display:none}}
+diff --git a/apps/web/src/stage05/tokens/style.css b/apps/web/src/stage05/tokens/style.css
+index 382af1e..62b7aa3 100644
+--- a/apps/web/src/stage05/tokens/style.css
++++ b/apps/web/src/stage05/tokens/style.css
+@@ -2,8 +2,9 @@
+ html,body,#root{margin:0;min-height:100%;font-family:var(--s05-theme-font);background:var(--color-fill-1)}
+ *{box-sizing:border-box}
+ .s05-shell{min-height:100vh;background:var(--color-fill-1)}
+-.s05-header{height:60px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;background:var(--color-bg-1);color:var(--color-text-1);border-bottom:1px solid var(--color-border-2)}
++.s05-header{height:44px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;background:var(--color-bg-1);color:var(--color-text-1)}
+ .s05-header-left,.s05-header-right{min-width:0}
++.s05-header-left{display:flex;align-items:center;justify-content:space-between;width:100%;gap:4px}
+ .s05-header-identity{display:flex;align-items:center;gap:10px;white-space:nowrap}
+ .s05-brand-mark{display:inline-flex;align-items:center;justify-content:center;flex:0 0 32px;width:32px;height:32px;border-radius:var(--border-radius-medium);background:rgb(var(--primary-6));color:var(--color-bg-1);font-weight:700}
+ .s05-header .s05-header-brand,.s05-header .s05-header-user{color:var(--color-text-1)}
+@@ -11,19 +12,18 @@ html,body,#root{margin:0;min-height:100%;font-family:var(--s05-theme-font);backg
+ .s05-header .s05-header-control,.s05-header .s05-header-control:hover,.s05-header .s05-header-control:focus-visible{color:var(--color-text-1)}
+ .s05-header .s05-header-control:hover{background:var(--color-fill-2)}
+ .s05-body{min-width:0;align-items:stretch}
+-.s05-sider{height:calc(100vh - 60px);position:sticky;top:0;overflow-y:auto;background:var(--color-fill-2);border-top:1px solid var(--color-border-2)}
++.s05-sider{height:calc(100vh - 44px);min-width:0;position:sticky;top:0;overflow-y:auto;background:var(--color-fill-2);border-right:1px solid var(--color-border-2);box-shadow:none}
+ .s05-menu{width:100%;border:0;padding:0;background:var(--color-fill-2)}
+-.s05-menu .arco-menu-inner{padding:6px 0 4px 10px}
+-.s05-menu .arco-menu-inline-header{height:32px;min-height:32px;margin-bottom:4px;padding-left:6px;background:var(--color-fill-2);color:var(--color-text-1);font-size:14px;font-weight:500;display:flex;align-items:center}
+-.s05-menu .arco-menu-item{height:30px;min-height:30px;margin-bottom:6px;padding-left:10px;background:var(--color-fill-2);color:var(--color-text-1);font-size:13px;display:flex;align-items:center}
+-.s05-menu .arco-menu-item-inner{height:30px;line-height:30px;font-size:13px;color:inherit}
+-.s05-menu .arco-menu-group .arco-menu-item-inner{padding-left:24px}
+-.s05-menu-root-label{padding-left:30px}
+-.s05-menu .arco-menu-group-title{height:30px;min-height:30px;margin-bottom:6px;padding:0 12px 0 10px;background:var(--color-fill-2);color:var(--color-text-3);font-size:13px;line-height:30px}
+-.s05-menu .arco-menu-inline-header.arco-menu-selected{color:rgb(var(--primary-6))}
+-.s05-menu .arco-menu-item.arco-menu-selected{background:var(--color-fill-3);color:rgb(var(--primary-6));font-weight:500}
+-.s05-menu .arco-menu-item:hover:not(.arco-menu-selected){background:var(--color-fill-3)}
+-.s05-content{min-width:0;min-height:calc(100vh - 60px);padding:20px 24px 32px;overflow-x:hidden;background:var(--color-fill-1)}
++.s05-menu .arco-menu-inner{padding:0 10px 4px}
++.s05-menu .arco-menu-group-title{height:32px;min-height:32px;margin:5px 0 1px;padding:0 12px;background:transparent;color:var(--color-text-1);font-size:13px;font-weight:600;line-height:32px;border-radius:3px}
++.s05-menu .arco-menu-item,.s05-menu .arco-menu-inline-header{height:32px;min-height:32px;margin:1px 0;padding:0 12px 0 28px;background:transparent;color:var(--color-text-2);font-size:13px;font-weight:400;line-height:32px;display:flex;align-items:center;border-radius:3px}
++.s05-menu .arco-menu-item.s05-menu-nested-item{padding-left:42px}
++.s05-menu .arco-menu-indent{display:none}
++.s05-menu .arco-menu-item-inner{height:auto;line-height:inherit;font-size:inherit;font-weight:inherit;color:inherit}
++.s05-menu .arco-menu-inline-header.arco-menu-selected{color:var(--color-text-2);font-weight:400}
++.s05-menu .arco-menu-item.arco-menu-selected{background:var(--color-primary-light-1);color:rgb(var(--primary-7));font-weight:600;box-shadow:inset 3px 0 rgb(var(--primary-6))}
++.s05-menu .arco-menu-item:hover:not(.arco-menu-selected),.s05-menu .arco-menu-inline-header:hover{background:var(--color-fill-3)}
++.s05-content{min-width:0;min-height:calc(100vh - 44px);padding:20px 24px 32px;overflow-x:hidden;background:var(--color-fill-1)}
+ .s05-breadcrumb{margin-bottom:16px}
+ .s05-content-inner{min-width:0;max-width:1600px;margin:0 auto}
+ .s05-page{min-width:0}
+diff --git a/apps/web/vite.config.ts b/apps/web/vite.config.ts
+index e3e8cf6..043ce02 100644
+--- a/apps/web/vite.config.ts
++++ b/apps/web/vite.config.ts
+@@ -10,7 +10,7 @@ export default defineConfig({
+     strictPort: true,
+     proxy: {
+       "/stage05-api": {
+-        target: "http://127.0.0.1:8878",
++        target: "http://127.0.0.1:8879",
+         changeOrigin: true,
+         rewrite: (path) => path.replace(/^\/stage05-api/, ""),
+         cookiePathRewrite: { "/runtime/": "/stage05-api/runtime/" },
+diff --git a/migration/legacy-real-data-bridge/runtime/products.ts b/migration/legacy-real-data-bridge/runtime/products.ts
+index 48b5e11..114fdca 100644
+--- a/migration/legacy-real-data-bridge/runtime/products.ts
++++ b/migration/legacy-real-data-bridge/runtime/products.ts
+@@ -4,11 +4,17 @@ export async function products(input:any){
+  const {filters:f={}}=input,page=Number(input.page||1),size=Number(input.size||50);
+  if(!Number.isSafeInteger(page)||page<1||![20,50,100,200].includes(size))throw Error('INVALID_PAGE');
+  const args:any[]=[],terms:string[]=[];const add=(sql:string,value:any)=>{args.push(value);terms.push(sql.replaceAll('?',`$${args.length}`));};
++ const list=(key:string,max:number):string[]=>{const values=f[key];if(values===undefined)return [];if(!Array.isArray(values)||values.length>max||values.some(value=>typeof value!=='string'||!value.trim()))throw Error('INVALID_PRODUCT_FILTER');return [...new Set(values)];};
++ const supplierIds=list('supplierIds',451),fitCodes=list('fitCodes',6),seasons=list('seasons',4);
++ if(fitCodes.some(code=>!['Y','A','B','C','D','E'].includes(code))||seasons.some(season=>!['春','夏','秋','冬'].includes(season)))throw Error('INVALID_PRODUCT_FILTER');
++ const fitCode=`CASE fit.code WHEN '04' THEN 'Y' WHEN '06' THEN 'Y' WHEN '09' THEN 'Y' WHEN '02' THEN 'B' WHEN '05' THEN 'B' WHEN '10' THEN 'B' WHEN '11' THEN 'B' WHEN '03' THEN 'C' ELSE 'A' END`;
+  if(f.q)add(`(position(lower(?) in lower(p.code||' '||p.name||' '||coalesce(s.source_payload->>'defaultBarcode','')))>0 OR EXISTS(SELECT 1 FROM ${SOURCE}.tplus_product_barcode b WHERE b.product_id=p.id AND b.barcode=?))`,f.q.trim());
+  if(f.years?.length)add(`coalesce(s.source_payload->>'year',substring(s.source_payload->'source'->>'所属类别' from '(19[0-9]{2}|20[0-9]{2})')) IN (SELECT jsonb_array_elements_text(?::jsonb))`,JSON.stringify(f.years));
+  if(f.categories?.length)add(`c.code IN (SELECT jsonb_array_elements_text(?::jsonb))`,JSON.stringify(f.categories));
+- if(f.seasons?.length)add(`EXISTS(SELECT 1 FROM jsonb_array_elements_text(?::jsonb) season WHERE position(season in coalesce(s.source_payload->>'season',s.source_payload->'source'->>'所属类别',''))>0)`,JSON.stringify(f.seasons));
++ if(seasons.length)add(`EXISTS(SELECT 1 FROM jsonb_array_elements_text(?::jsonb) season WHERE position(season in coalesce(s.source_payload->>'season',s.source_payload->'source'->>'所属类别',''))>0)`,JSON.stringify(seasons));
++ if(supplierIds.length)add(`p.counterparty_id::text IN (SELECT jsonb_array_elements_text(?::jsonb))`,JSON.stringify(supplierIds));
++ if(fitCodes.length)add(`${fitCode} IN (SELECT jsonb_array_elements_text(?::jsonb))`,JSON.stringify(fitCodes));
+  for(const key of ['supplierId','thickness','shapeCode','schemeId'])if(f[key])add((key==='supplierId'?'p.counterparty_id::text':key==='fitId'?'p.fit_id::text':`s.source_payload->>'${key}'`)+'=?',f[key]);
+- if(f.fitId)add(`CASE fit.code WHEN '04' THEN 'Y' WHEN '06' THEN 'Y' WHEN '09' THEN 'Y' WHEN '02' THEN 'B' WHEN '05' THEN 'B' WHEN '10' THEN 'B' WHEN '11' THEN 'B' WHEN '03' THEN 'C' ELSE 'A' END=?`,f.fitId);
++ if(f.fitId)add(`${fitCode}=?`,f.fitId);
+  return transaction(RUNTIME,async tx=>(await tx.query(`WITH matches AS (SELECT p.code FROM ${SOURCE}.product p JOIN ${SOURCE}.tplus_product_source s ON s.product_id=p.id JOIN ${SOURCE}.category c ON c.id=p.category_id LEFT JOIN ${SOURCE}.fit fit ON fit.id=p.fit_id ${terms.length?'WHERE '+terms.join(' AND '):''}),slice AS (SELECT code FROM matches ORDER BY code LIMIT ${size} OFFSET ${(page-1)*size}) SELECT json_build_object('codes',coalesce((SELECT json_agg(code) FROM slice),'[]'::json),'total',(SELECT count(*) FROM matches)) data`,args)).rows[0].data);
+ }

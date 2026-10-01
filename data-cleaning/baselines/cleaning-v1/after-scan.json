@@ -1,0 +1,3137 @@
+{
+  "workbooks": 74,
+  "sheets": 99,
+  "nonemptyRows": 807728,
+  "counts": {
+    "numeric_text_candidate": 2684479,
+    "fullwidth_character": 102802,
+    "empty_string": 1891313,
+    "embedded_linebreak_or_tab": 178,
+    "date_text_candidate": 791,
+    "nbsp": 52,
+    "outer_whitespace": 12
+  },
+  "byField": [
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/其他出库单.xlsx",
+      "sheet": "其他出库单",
+      "field": "业务类型编码",
+      "count": 298921
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/其他出库单.xlsx",
+      "sheet": "其他出库单",
+      "field": "仓库编码",
+      "count": 298921
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/其他入库单.xlsx",
+      "sheet": "其他入库单",
+      "field": "业务类型编码",
+      "count": 298917
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/其他入库单.xlsx",
+      "sheet": "其他入库单",
+      "field": "仓库编码",
+      "count": 298917
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/其他出库单.xlsx",
+      "sheet": "其他出库单",
+      "field": "出库类别编码",
+      "count": 298598
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/其他入库单.xlsx",
+      "sheet": "其他入库单",
+      "field": "入库类别编码",
+      "count": 298594
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/其他出库单.xlsx",
+      "sheet": "其他出库单",
+      "field": "备注",
+      "count": 287499
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/其他入库单.xlsx",
+      "sheet": "其他入库单",
+      "field": "备注",
+      "count": 287495
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/其他入库单.xlsx",
+      "sheet": "其他入库单",
+      "field": "规格型号",
+      "count": 101739
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/其他出库单.xlsx",
+      "sheet": "其他出库单",
+      "field": "规格型号",
+      "count": 101724
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "业务类型编码",
+      "count": 79508
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "发票号码",
+      "count": 79508
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "送货地址",
+      "count": 79508
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "司机姓名",
+      "count": 79508
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "司机电话",
+      "count": 79508
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "车辆信息",
+      "count": 79508
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "联系人",
+      "count": 79508
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "联系电话",
+      "count": 79508
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "出库类别编码",
+      "count": 79508
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "外部单据号",
+      "count": 79508
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "客户备注",
+      "count": 79508
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "仓库编码",
+      "count": 79508
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "部门编码",
+      "count": 79507
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "业务员编码",
+      "count": 79494
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "客户手机号",
+      "count": 79401
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "备注",
+      "count": 77266
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "业务类型编码",
+      "count": 49127
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "部门编码",
+      "count": 49127
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "仓库编码",
+      "count": 49127
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/其他出库单.xlsx",
+      "sheet": "其他出库单",
+      "field": "尺码",
+      "count": 41127
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/其他入库单.xlsx",
+      "sheet": "其他入库单",
+      "field": "尺码",
+      "count": 41110
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/其他出库单.xlsx",
+      "sheet": "其他出库单",
+      "field": "存货名称",
+      "count": 40109
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/其他入库单.xlsx",
+      "sheet": "其他入库单",
+      "field": "存货名称",
+      "count": 40074
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/收款单.xlsx",
+      "sheet": "收款单",
+      "field": "业务类型编码",
+      "count": 25622
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/收款单.xlsx",
+      "sheet": "收款单",
+      "field": "结算方式编码",
+      "count": 25622
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "发票号",
+      "count": 25604
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "到货地址",
+      "count": 25604
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "联系人",
+      "count": 25604
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "联系电话",
+      "count": 25604
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "入库类别编码",
+      "count": 25604
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "现结",
+      "field": "结算方式编码",
+      "count": 25416
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/收款单.xlsx",
+      "sheet": "收款单",
+      "field": "部门编码",
+      "count": 25403
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/收款单.xlsx",
+      "sheet": "收款单",
+      "field": "业务员编码",
+      "count": 25392
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/收款单.xlsx",
+      "sheet": "收款单",
+      "field": "备注",
+      "count": 24956
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "备注",
+      "count": 24714
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "业务员编码",
+      "count": 16238
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "尺码",
+      "count": 12854
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "客户存货名称",
+      "count": 11290
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "客户存货编码",
+      "count": 11290
+    },
+    {
+      "issue": "empty_string",
+      "file": "库存状况表.xlsx",
+      "sheet": "第一页",
+      "field": "品牌",
+      "count": 8602
+    },
+    {
+      "issue": "empty_string",
+      "file": "库存状况表.xlsx",
+      "sheet": "第一页",
+      "field": "版型",
+      "count": 8562
+    },
+    {
+      "issue": "empty_string",
+      "file": "库存状况表.xlsx",
+      "sheet": "第一页",
+      "field": "领型或脚口",
+      "count": 8562
+    },
+    {
+      "issue": "empty_string",
+      "file": "库存状况表.xlsx",
+      "sheet": "第一页",
+      "field": "衣长或裤长",
+      "count": 8562
+    },
+    {
+      "issue": "empty_string",
+      "file": "库存状况表.xlsx",
+      "sheet": "第一页",
+      "field": "门襟",
+      "count": 8562
+    },
+    {
+      "issue": "empty_string",
+      "file": "库存状况表.xlsx",
+      "sheet": "第一页",
+      "field": "风格",
+      "count": 8562
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "存货名称",
+      "count": 7449
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "存货名称",
+      "count": 6949
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "尺码",
+      "count": 5518
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/费用单.xlsx",
+      "sheet": "费用单",
+      "field": "业务类型编码",
+      "count": 4919
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/费用单.xlsx",
+      "sheet": "费用单",
+      "field": "关联单号",
+      "count": 4919
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/费用单.xlsx",
+      "sheet": "费用单",
+      "field": "费用编码",
+      "count": 4919
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/费用单.xlsx",
+      "sheet": "费用单",
+      "field": "部门编码",
+      "count": 3669
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/费用单.xlsx",
+      "sheet": "现结",
+      "field": "结算方式编码",
+      "count": 3545
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "条码方案识别码",
+      "count": 2941
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "最低售价",
+      "count": 2925
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "最低售价",
+      "count": 2925
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "采购价",
+      "count": 2863
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "采购价",
+      "count": 2863
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货条形码.xlsx",
+      "sheet": "存货条形码",
+      "field": "条形码",
+      "count": 2766
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "默认条码",
+      "count": 2765
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "六级批发价",
+      "count": 2277
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "七级批发价",
+      "count": 2277
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "六级批发价（贴牌价）",
+      "count": 2277
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "七级批发价（批发价）",
+      "count": 2277
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "五级批发价",
+      "count": 2276
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "八级批发价",
+      "count": 2276
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "五级批发价(工厂店供货价）",
+      "count": 2276
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "八级批发价（代理商供货价）",
+      "count": 2276
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "十级批发价",
+      "count": 2274
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "十级批发价（葛玉珠）",
+      "count": 2274
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "九级批发价",
+      "count": 2237
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "九级批发价（工厂店零售价）",
+      "count": 2237
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "客户",
+      "count": 1867
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "结算客户",
+      "count": 1867
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/其他入库单.xlsx",
+      "sheet": "其他入库单",
+      "field": "备注",
+      "count": 1146
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/其他出库单.xlsx",
+      "sheet": "其他出库单",
+      "field": "备注",
+      "count": 1146
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/费用单.xlsx",
+      "sheet": "费用单",
+      "field": "备注",
+      "count": 1114
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "库存状况表.xlsx",
+      "sheet": "第一页",
+      "field": "存货",
+      "count": 975
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "存货描述",
+      "count": 656
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/存货条形码.xlsx",
+      "sheet": "存货条形码",
+      "field": "规格型号",
+      "count": 649
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "规格型号",
+      "count": 647
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "版型",
+      "count": 647
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "领型或脚口",
+      "count": 647
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "衣长或裤长",
+      "count": 647
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "门襟",
+      "count": 647
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "风格",
+      "count": 647
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "开票规格型号",
+      "count": 647
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "税收分类名称",
+      "count": 647
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "税收分类简称",
+      "count": 647
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/付款单.xlsx",
+      "sheet": "付款单",
+      "field": "业务类型编码",
+      "count": 624
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/付款单.xlsx",
+      "sheet": "付款单",
+      "field": "结算方式编码",
+      "count": 624
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/付款单.xlsx",
+      "sheet": "付款单",
+      "field": "部门编码",
+      "count": 557
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "税率%",
+      "count": 478
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "税率%",
+      "count": 472
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/收入单.xlsx",
+      "sheet": "收入单",
+      "field": "业务类型编码",
+      "count": 461
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/收入单.xlsx",
+      "sheet": "收入单",
+      "field": "收入编码",
+      "count": 461
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "所属类别编码",
+      "count": 458
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/付款单.xlsx",
+      "sheet": "付款单",
+      "field": "采购订单号",
+      "count": 411
+    },
+    {
+      "issue": "date_text_candidate",
+      "file": "单据数据/其他入库单.xlsx",
+      "sheet": "其他入库单",
+      "field": "备注",
+      "count": 395
+    },
+    {
+      "issue": "date_text_candidate",
+      "file": "单据数据/其他出库单.xlsx",
+      "sheet": "其他出库单",
+      "field": "备注",
+      "count": 395
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "普通客户价",
+      "count": 320
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/收入单.xlsx",
+      "sheet": "现结",
+      "field": "结算方式编码",
+      "count": 320
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "普通客户价",
+      "count": 320
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/其他出库单.xlsx",
+      "sheet": "其他出库单",
+      "field": "存货编码",
+      "count": 313
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/其他入库单.xlsx",
+      "sheet": "其他入库单",
+      "field": "存货编码",
+      "count": 309
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "分管部门编码",
+      "count": 301
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "一级批发价",
+      "count": 254
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "会员价",
+      "count": 254
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "供应商",
+      "count": 247
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/尺码.xlsx",
+      "sheet": "尺码",
+      "field": "编码",
+      "count": 240
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/费用单.xlsx",
+      "sheet": "费用单",
+      "field": "费用名称",
+      "count": 238
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/收款单.xlsx",
+      "sheet": "收款单",
+      "field": "销售订单号",
+      "count": 222
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "电子发票接收邮件",
+      "count": 186
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "电子发票接收手机",
+      "count": 186
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "法人代表",
+      "count": 186
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "纳税号",
+      "count": 186
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "电商账号",
+      "count": 186
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "开票地址",
+      "count": 186
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "开票电话",
+      "count": 186
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "客户地址电话",
+      "count": 182
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/颜色.xlsx",
+      "sheet": "颜色",
+      "field": "编码",
+      "count": 182
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/付款单.xlsx",
+      "sheet": "付款单",
+      "field": "备注",
+      "count": 160
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/费用.xlsx",
+      "sheet": "费用",
+      "field": "费用编码",
+      "count": 159
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/费用.xlsx",
+      "sheet": "费用",
+      "field": "上级费用编码",
+      "count": 150
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/付款单.xlsx",
+      "sheet": "付款单",
+      "field": "业务员编码",
+      "count": 149
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "备注",
+      "count": 145
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "存货描述",
+      "count": 142
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/费用单.xlsx",
+      "sheet": "费用单",
+      "field": "用途",
+      "count": 139
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "单据编号",
+      "count": 130
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "地区编码",
+      "count": 118
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "会员编号",
+      "count": 115
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "会员卡号",
+      "count": 115
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "存货编码",
+      "count": 109
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "客户编码",
+      "count": 107
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "结算客户编码",
+      "count": 107
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "客户手机号",
+      "count": 107
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "供应商客户账号",
+      "count": 102
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "员工编码",
+      "count": 99
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "所属部门编码",
+      "count": 99
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/费用单.xlsx",
+      "sheet": "费用单",
+      "field": "用途",
+      "count": 96
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "分管人员编码",
+      "count": 92
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "存货名称",
+      "count": 82
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "存货名称",
+      "count": 82
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "助记码",
+      "count": 82
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "开票名称",
+      "count": 82
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/存货条形码.xlsx",
+      "sheet": "存货条形码",
+      "field": "存货名称",
+      "count": 82
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "账号编码",
+      "count": 79
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "使用部门编码",
+      "count": 78
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/收款单.xlsx",
+      "sheet": "收款单",
+      "field": "结算客户",
+      "count": 72
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "客户号",
+      "count": 67
+    },
+    {
+      "issue": "embedded_linebreak_or_tab",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "存货描述",
+      "count": 66
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/收款单.xlsx",
+      "sheet": "收款单",
+      "field": "备注",
+      "count": 60
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/部门.xlsx",
+      "sheet": "部门",
+      "field": "部门编码",
+      "count": 58
+    },
+    {
+      "issue": "nbsp",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "存货描述",
+      "count": 52
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/仓库.xlsx",
+      "sheet": "仓库",
+      "field": "仓库编码",
+      "count": 51
+    },
+    {
+      "issue": "embedded_linebreak_or_tab",
+      "file": "单据数据/费用单.xlsx",
+      "sheet": "费用单",
+      "field": "备注",
+      "count": 48
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/部门.xlsx",
+      "sheet": "部门",
+      "field": "上级部门编码",
+      "count": 47
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "备注",
+      "count": 45
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/收款单.xlsx",
+      "sheet": "收款单",
+      "field": "结算客户编码",
+      "count": 43
+    },
+    {
+      "issue": "embedded_linebreak_or_tab",
+      "file": "单据数据/收入单.xlsx",
+      "sheet": "收入单",
+      "field": "备注",
+      "count": 41
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "籍贯",
+      "count": 40
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "证件号码",
+      "count": 40
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "办公电话",
+      "count": 40
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "家庭电话",
+      "count": 40
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "Email",
+      "count": 40
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "QQ号",
+      "count": 40
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "MSN号",
+      "count": 40
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "微信号",
+      "count": 40
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "邮政编码",
+      "count": 40
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "地址",
+      "count": 40
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "银行账号",
+      "count": 40
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "库存状况表.xlsx",
+      "sheet": "第一页",
+      "field": "版型",
+      "count": 40
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "期初数据/往来期初余额.xlsx",
+      "sheet": "应付期初",
+      "field": "部门编码",
+      "count": 39
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/其他入库单.xlsx",
+      "sheet": "其他入库单",
+      "field": "备注",
+      "count": 38
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/其他出库单.xlsx",
+      "sheet": "其他出库单",
+      "field": "备注",
+      "count": 38
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "库存状况表.xlsx",
+      "sheet": "第一页",
+      "field": "存货编码",
+      "count": 38
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "手机",
+      "count": 37
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/生产厂家.xlsx",
+      "sheet": "生产厂家",
+      "field": "编码",
+      "count": 36
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "存货编码",
+      "count": 35
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "单据编号",
+      "count": 30
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/员工.xlsx",
+      "sheet": "员工",
+      "field": "手机",
+      "count": 29
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "会员编号",
+      "count": 28
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "会员卡号",
+      "count": 28
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "会员类型编码",
+      "count": 28
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "手机号",
+      "count": 28
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "存货编码",
+      "count": 27
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "存货编码",
+      "count": 27
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货条形码.xlsx",
+      "sheet": "存货条形码",
+      "field": "存货编码",
+      "count": 27
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "库存状况表.xlsx",
+      "sheet": "第一页",
+      "field": "门襟",
+      "count": 27
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "往来单位编码",
+      "count": 26
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "结算客户编码",
+      "count": 26
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "地区编码",
+      "count": 25
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "联系方式",
+      "field": "所属往来单位编码",
+      "count": 25
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "联系方式",
+      "field": "编码",
+      "count": 25
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "联系方式",
+      "field": "手机号",
+      "count": 25
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/出入库类别.xlsx",
+      "sheet": "出入库类别",
+      "field": "出入库类别编码",
+      "count": 24
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "联系方式",
+      "field": "国家编码",
+      "count": 24
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "对应客户编码",
+      "count": 23
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/出入库类别.xlsx",
+      "sheet": "出入库类别",
+      "field": "上级类别编码",
+      "count": 23
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/地区.xlsx",
+      "sheet": "地区",
+      "field": "地区编码",
+      "count": 23
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "助记码",
+      "count": 23
+    },
+    {
+      "issue": "embedded_linebreak_or_tab",
+      "file": "单据数据/付款单.xlsx",
+      "sheet": "付款单",
+      "field": "备注",
+      "count": 22
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "往来单位名称",
+      "count": 22
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "简称",
+      "count": 22
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "结算客户",
+      "count": 22
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/收入单.xlsx",
+      "sheet": "收入单",
+      "field": "备注",
+      "count": 20
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货条码方案.xlsx",
+      "sheet": "条码段信息",
+      "field": "所属存货条码方案编码",
+      "count": 20
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货条码方案.xlsx",
+      "sheet": "条码段信息",
+      "field": "表示信息编码",
+      "count": 20
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/尺码.xlsx",
+      "sheet": "Sheet1",
+      "field": "新尺码",
+      "count": 20
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/付款单.xlsx",
+      "sheet": "付款单",
+      "field": "供应商",
+      "count": 19
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "单据数据/费用单.xlsx",
+      "sheet": "费用单",
+      "field": "用途",
+      "count": 18
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/现金流量项目.xlsx",
+      "sheet": "现金流量项目",
+      "field": "现金流量项目编码",
+      "count": 18
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/现金流量项目.xlsx",
+      "sheet": "现金流量项目",
+      "field": "所属类别编码",
+      "count": 18
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "期初数据/现金流量期初.xlsx",
+      "sheet": "现金流量期初",
+      "field": "编号",
+      "count": 18
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/仓库.xlsx",
+      "sheet": "仓库",
+      "field": "备注",
+      "count": 17
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/仓库.xlsx",
+      "sheet": "仓库",
+      "field": "仓库地址",
+      "count": 17
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/领型或裤脚口.xlsx",
+      "sheet": "领型或裤脚口",
+      "field": "编码",
+      "count": 15
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/费用单.xlsx",
+      "sheet": "费用单",
+      "field": "备注",
+      "count": 14
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "默认供应商",
+      "count": 14
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/常用摘要.xlsx",
+      "sheet": "常用摘要",
+      "field": "编码",
+      "count": 14
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/常用摘要.xlsx",
+      "sheet": "常用摘要",
+      "field": "所属类别编码",
+      "count": 14
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "期初数据/往来期初余额.xlsx",
+      "sheet": "应付期初",
+      "field": "业务员编码",
+      "count": 13
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/衣长或裤长.xlsx",
+      "sheet": "衣长或裤长",
+      "field": "编码",
+      "count": 13
+    },
+    {
+      "issue": "outer_whitespace",
+      "file": "基础档案/物流公司.xlsx",
+      "sheet": "枚举档案",
+      "field": "__column_6",
+      "count": 12
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/收入单.xlsx",
+      "sheet": "收入单",
+      "field": "部门编码",
+      "count": 11
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位分类.xlsx",
+      "sheet": "往来单位分类",
+      "field": "分类编码",
+      "count": 11
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/结算方式.xlsx",
+      "sheet": "结算方式",
+      "field": "结算方式编码",
+      "count": 11
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "客户号",
+      "count": 11
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/版型.xlsx",
+      "sheet": "版型",
+      "field": "编码",
+      "count": 11
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/付款单.xlsx",
+      "sheet": "付款单",
+      "field": "备注",
+      "count": 10
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "进货单",
+      "field": "备注",
+      "count": 10
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "库存状况表.xlsx",
+      "sheet": "第一页",
+      "field": "衣长或裤长",
+      "count": 10
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/尺码.xlsx",
+      "sheet": "Sheet1",
+      "field": "",
+      "count": 10
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "枚举档案",
+      "field": "__column_72",
+      "count": 9
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "期初数据/库存期初余额.xlsx",
+      "sheet": "枚举档案",
+      "field": "__column_14",
+      "count": 9
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/尺码.xlsx",
+      "sheet": "尺码",
+      "field": "名称",
+      "count": 9
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "枚举档案/衣长或裤长.xlsx",
+      "sheet": "衣长或裤长",
+      "field": "名称",
+      "count": 9
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "开卡业务员编码",
+      "count": 8
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/开户银行.xlsx",
+      "sheet": "开户银行",
+      "field": "编码",
+      "count": 8
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "现结",
+      "field": "结算方式编码",
+      "count": 7
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "联系电话",
+      "count": 7
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "版型",
+      "count": 7
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "期初数据/往来期初余额.xlsx",
+      "sheet": "应收期初",
+      "field": "部门编码",
+      "count": 7
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "枚举档案/版型.xlsx",
+      "sheet": "版型",
+      "field": "名称",
+      "count": 7
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "职务",
+      "count": 6
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "职业",
+      "count": 6
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "证件号码",
+      "count": 6
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "电子邮件",
+      "count": 6
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "QQ",
+      "count": 6
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "MSN",
+      "count": 6
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "通讯地址",
+      "count": 6
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "邮政编码",
+      "count": 6
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/学历.xlsx",
+      "sheet": "学历",
+      "field": "编码",
+      "count": 6
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/门襟.xlsx",
+      "sheet": "门襟",
+      "field": "编码",
+      "count": 6
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/风格.xlsx",
+      "sheet": "风格",
+      "field": "编码",
+      "count": 6
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/会员档案.xlsx",
+      "sheet": "会员档案",
+      "field": "备注",
+      "count": 5
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货条码方案.xlsx",
+      "sheet": "存货条码方案",
+      "field": "方案识别码",
+      "count": 5
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/收入.xlsx",
+      "sheet": "收入",
+      "field": "收入编码",
+      "count": 5
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/费用.xlsx",
+      "sheet": "费用",
+      "field": "费用名称",
+      "count": 5
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/税率%.xlsx",
+      "sheet": "税率%",
+      "field": "编码",
+      "count": 5
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/税率%.xlsx",
+      "sheet": "税率%",
+      "field": "名称",
+      "count": 5
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "销货单",
+      "field": "备注",
+      "count": 4
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "门襟",
+      "count": 4
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/常用摘要分类.xlsx",
+      "sheet": "常用摘要分类",
+      "field": "摘要分类编码",
+      "count": 4
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/现金流量项目分类.xlsx",
+      "sheet": "现金流量项目分类",
+      "field": "现金流量分类编码",
+      "count": 4
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "期初数据/往来期初余额.xlsx",
+      "sheet": "应收期初",
+      "field": "客户",
+      "count": 4
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "期初数据/往来期初余额.xlsx",
+      "sheet": "应收期初",
+      "field": "结算客户",
+      "count": 4
+    },
+    {
+      "issue": "empty_string",
+      "file": "期初数据/现金流量期初.xlsx",
+      "sheet": "现金流量期初",
+      "field": "编号",
+      "count": 4
+    },
+    {
+      "issue": "empty_string",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "二级批发价",
+      "count": 3
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/费用单.xlsx",
+      "sheet": "费用单",
+      "field": "业务员编码",
+      "count": 3
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "二级批发价",
+      "count": 3
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/费用.xlsx",
+      "sheet": "费用",
+      "field": "扣除率%",
+      "count": 3
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/职务.xlsx",
+      "sheet": "职务",
+      "field": "编码",
+      "count": 3
+    },
+    {
+      "issue": "empty_string",
+      "file": "单据数据/收入单.xlsx",
+      "sheet": "收入单",
+      "field": "备注",
+      "count": 2
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/销货单.xlsx",
+      "sheet": "现结",
+      "field": "所属销货单单据编号",
+      "count": 2
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "衣长或裤长",
+      "count": 2
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "往来单位名称",
+      "count": 2
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "简称",
+      "count": 2
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "结算客户",
+      "count": 2
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "助记码",
+      "count": 2
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "联系方式",
+      "field": "联系电话",
+      "count": 2
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/物流公司.xlsx",
+      "sheet": "枚举档案",
+      "field": "__column_6",
+      "count": 2
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "支付宝AppID",
+      "count": 2
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "支付宝公钥",
+      "count": 2
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "商户公钥",
+      "count": 2
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "商户私钥",
+      "count": 2
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "商户授权令牌",
+      "count": 2
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "支付宝服务商pid",
+      "count": 2
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "商户号",
+      "count": 2
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "微信服务商商户号",
+      "count": 2
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "微信服务商APPID",
+      "count": 2
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "微信AppID",
+      "count": 2
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/账号.xlsx",
+      "sheet": "账号",
+      "field": "微信支付密钥",
+      "count": 2
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "二级批发价",
+      "count": 1
+    },
+    {
+      "issue": "empty_string",
+      "file": "价格本/存货价格本.xlsx",
+      "sheet": "存货价格本",
+      "field": "五级批发价",
+      "count": 1
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/收款单.xlsx",
+      "sheet": "收款单",
+      "field": "备注",
+      "count": 1
+    },
+    {
+      "issue": "embedded_linebreak_or_tab",
+      "file": "单据数据/收款单.xlsx",
+      "sheet": "收款单",
+      "field": "备注",
+      "count": 1
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "单据数据/进货单.xlsx",
+      "sheet": "现结",
+      "field": "所属进货单单据编号",
+      "count": 1
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "风格",
+      "count": 1
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "二级批发价",
+      "count": 1
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "五级批发价(工厂店供货价）",
+      "count": 1
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/存货.xlsx",
+      "sheet": "存货",
+      "field": "默认供应商",
+      "count": 1
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/存货条码方案.xlsx",
+      "sheet": "存货条码方案",
+      "field": "备注",
+      "count": 1
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "客户地址电话",
+      "count": 1
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "往来单位",
+      "field": "所属类别",
+      "count": 1
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "联系方式",
+      "field": "到货地址",
+      "count": 1
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "联系方式",
+      "field": "电子邮件",
+      "count": 1
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "联系方式",
+      "field": "QQ号",
+      "count": 1
+    },
+    {
+      "issue": "empty_string",
+      "file": "基础档案/往来单位.xlsx",
+      "sheet": "联系方式",
+      "field": "MSN地址",
+      "count": 1
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "基础档案/往来单位分类.xlsx",
+      "sheet": "往来单位分类",
+      "field": "分类名称",
+      "count": 1
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "库存状况表.xlsx",
+      "sheet": "第一页",
+      "field": "风格",
+      "count": 1
+    },
+    {
+      "issue": "date_text_candidate",
+      "file": "库存状况表.xlsx",
+      "sheet": "第一页",
+      "field": "主计量",
+      "count": 1
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "期初数据/往来期初余额.xlsx",
+      "sheet": "应收期初",
+      "field": "业务员编码",
+      "count": 1
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "期初数据/往来期初余额.xlsx",
+      "sheet": "应付期初",
+      "field": "供应商",
+      "count": 1
+    },
+    {
+      "issue": "numeric_text_candidate",
+      "file": "枚举档案/证件类型.xlsx",
+      "sheet": "证件类型",
+      "field": "编码",
+      "count": 1
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "枚举档案/门襟.xlsx",
+      "sheet": "门襟",
+      "field": "名称",
+      "count": 1
+    },
+    {
+      "issue": "fullwidth_character",
+      "file": "枚举档案/风格.xlsx",
+      "sheet": "风格",
+      "field": "名称",
+      "count": 1
+    }
+  ],
+  "examples": {
+    "numeric_text_candidate": [
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 2,
+        "column": "B",
+        "field": "存货编码",
+        "value": "00005"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 2,
+        "column": "E",
+        "field": "采购价",
+        "value": "25.00"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 2,
+        "column": "T",
+        "field": "最低售价",
+        "value": "1.00"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 3,
+        "column": "B",
+        "field": "存货编码",
+        "value": "0002"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 3,
+        "column": "T",
+        "field": "最低售价",
+        "value": "1.00"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 4,
+        "column": "E",
+        "field": "采购价",
+        "value": "35.00"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 4,
+        "column": "T",
+        "field": "最低售价",
+        "value": "1.00"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 5,
+        "column": "E",
+        "field": "采购价",
+        "value": "70.00"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 5,
+        "column": "T",
+        "field": "最低售价",
+        "value": "1.00"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 6,
+        "column": "E",
+        "field": "采购价",
+        "value": "35.00"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 6,
+        "column": "T",
+        "field": "最低售价",
+        "value": "1.00"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 7,
+        "column": "E",
+        "field": "采购价",
+        "value": "4.00"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 7,
+        "column": "T",
+        "field": "最低售价",
+        "value": "1.00"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 8,
+        "column": "E",
+        "field": "采购价",
+        "value": "4.00"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 8,
+        "column": "T",
+        "field": "最低售价",
+        "value": "1.00"
+      }
+    ],
+    "fullwidth_character": [
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 3,
+        "column": "C",
+        "field": "存货名称",
+        "value": "样衣（棉衣  羽绒服）"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 4,
+        "column": "C",
+        "field": "存货名称",
+        "value": "样品衬衫（样衣）"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 5,
+        "column": "C",
+        "field": "存货名称",
+        "value": "样品薄茄克（茄克、风衣）"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 6,
+        "column": "C",
+        "field": "存货名称",
+        "value": "样品裤子（长裤、中裤）"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 9,
+        "column": "C",
+        "field": "存货名称",
+        "value": "样品毛衫（样衣）"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 10,
+        "column": "C",
+        "field": "存货名称",
+        "value": "样品T恤（样衣）"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 12,
+        "column": "C",
+        "field": "存货名称",
+        "value": "样品西服（样衣）"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 13,
+        "column": "C",
+        "field": "存货名称",
+        "value": "样品棉服（棉衣、羽绒服）"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 57,
+        "column": "C",
+        "field": "存货名称",
+        "value": "短袖翻领T恤衫（POLO衫）"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 58,
+        "column": "C",
+        "field": "存货名称",
+        "value": "短袖翻领T恤衫（POLO衫）"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 59,
+        "column": "C",
+        "field": "存货名称",
+        "value": "短袖翻领T恤衫（POLO衫）"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 60,
+        "column": "C",
+        "field": "存货名称",
+        "value": "短袖翻领T恤衫（POLO衫）"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 61,
+        "column": "C",
+        "field": "存货名称",
+        "value": "短袖翻领T恤衫（POLO衫）"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 62,
+        "column": "C",
+        "field": "存货名称",
+        "value": "短袖翻领T恤衫（POLO衫）"
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 63,
+        "column": "C",
+        "field": "存货名称",
+        "value": "短袖翻领T恤衫（POLO衫）"
+      }
+    ],
+    "empty_string": [
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 784,
+        "column": "J",
+        "field": "二级批发价",
+        "value": ""
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 847,
+        "column": "J",
+        "field": "二级批发价",
+        "value": ""
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 944,
+        "column": "J",
+        "field": "二级批发价",
+        "value": ""
+      },
+      {
+        "file": "价格本/存货价格本.xlsx",
+        "sheet": "存货价格本",
+        "row": 2798,
+        "column": "M",
+        "field": "五级批发价",
+        "value": ""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 21,
+        "column": "N",
+        "field": "采购订单号",
+        "value": ""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 22,
+        "column": "N",
+        "field": "采购订单号",
+        "value": ""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 23,
+        "column": "N",
+        "field": "采购订单号",
+        "value": ""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 24,
+        "column": "N",
+        "field": "采购订单号",
+        "value": ""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 25,
+        "column": "N",
+        "field": "采购订单号",
+        "value": ""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 26,
+        "column": "N",
+        "field": "采购订单号",
+        "value": ""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 27,
+        "column": "N",
+        "field": "采购订单号",
+        "value": ""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 28,
+        "column": "N",
+        "field": "采购订单号",
+        "value": ""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 29,
+        "column": "N",
+        "field": "采购订单号",
+        "value": ""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 30,
+        "column": "N",
+        "field": "采购订单号",
+        "value": ""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 31,
+        "column": "N",
+        "field": "采购订单号",
+        "value": ""
+      }
+    ],
+    "embedded_linebreak_or_tab": [
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 131,
+        "column": "O",
+        "field": "备注",
+        "value": "支付尖嘴鳄（石狮）服饰有限公司\t货款"
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 191,
+        "column": "O",
+        "field": "备注",
+        "value": "支付濮院聚财羊 桐乡博澳针织服饰 王红梅货款（桐乡博合服饰有限公司\t）单价错，结清"
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 271,
+        "column": "O",
+        "field": "备注",
+        "value": "支付尖嘴鳄（石狮）服饰有限公司\t货款"
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 294,
+        "column": "O",
+        "field": "备注",
+        "value": "\"支付尖嘴鳄（石狮）服饰有限公司\t\" 货款"
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 387,
+        "column": "O",
+        "field": "备注",
+        "value": "支付莱特卡丹货款\t\"瑞安市创维制衣有限公司\t\""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 405,
+        "column": "O",
+        "field": "备注",
+        "value": "\"支付普宁市堡狮王服饰货款\t\""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 434,
+        "column": "O",
+        "field": "备注",
+        "value": "\"江苏豪威堡服饰实业有限公司\t\""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 457,
+        "column": "O",
+        "field": "备注",
+        "value": "\"付款-泉州市圣吉奥服饰实业有限公司\t\""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 458,
+        "column": "O",
+        "field": "备注",
+        "value": "支付货款-\"浙江帝森服饰股份有限公司\t\""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 462,
+        "column": "O",
+        "field": "备注",
+        "value": "\"尖嘴鳄（石狮）服饰有限公司\t\""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 508,
+        "column": "O",
+        "field": "备注",
+        "value": "支付郑向琴货款-\"江苏明赛服饰科技有限公司\t\""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 518,
+        "column": "O",
+        "field": "备注",
+        "value": "支付\"桐乡市翩翩公子服饰有限公司\t\"货款"
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 522,
+        "column": "O",
+        "field": "备注",
+        "value": "\"江苏豪威堡服饰实业有限公司\t\""
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 523,
+        "column": "O",
+        "field": "备注",
+        "value": "\"苏州宏添纺织有限公司\t\"（奥伯特）"
+      },
+      {
+        "file": "单据数据/付款单.xlsx",
+        "sheet": "付款单",
+        "row": 529,
+        "column": "O",
+        "field": "备注",
+        "value": "支付杰朗顿货款（常熟市宾利服饰有限公司\t）"
+      }
+    ],
+    "date_text_candidate": [
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82798,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      },
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82799,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      },
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82800,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      },
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82801,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      },
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82802,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      },
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82803,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      },
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82804,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      },
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82805,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      },
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82806,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      },
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82807,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      },
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82808,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      },
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82809,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      },
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82810,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      },
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82811,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      },
+      {
+        "file": "单据数据/其他入库单.xlsx",
+        "sheet": "其他入库单",
+        "row": 82812,
+        "column": "M",
+        "field": "备注",
+        "value": "2024-11-28"
+      }
+    ],
+    "nbsp": [
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 549,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "其乐2626-黑色  咖色 短款立领轻薄羽绒服，春亚纺面料，全身压双线菱形状，肩部打断拼接，上无袋，下1字斜插袋，袋眉中订磁铁扣，宽门襟加5号拉链加四合扣，下摆2厘米打断拼接加半松紧加袖袢加四合扣；面"
+      },
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 647,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "丛林狼25868-红色  灰色  含麻长袖衬衫，含麻天丝棉布面料，领角订扣，明抽，前胸不绣标；"
+      },
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 680,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "鲨旗顿2513-灰色平板涤棉5分裤，前插袋+绣“TR+WFHFSG”+假门襟，后一字带，全松紧腰  成分：77%锦纶23%氨纶（配料及装饰品除外）"
+      },
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 752,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "杰朗顿25-630卡其色带可脱卸帽立领夹克，牛奶丝面料，上无袋，1/3打断拼接，下拉链开1字袋，袖口半松紧加袖袢加魔术贴，后背上部1/3处打断拼接，下摆压线1.8厘米，里左右片印花里布，后背复合   "
+      },
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 1336,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "双鹏2298-藏青色中长款翻领风衣，暗门襟纽扣版，上无袋，下斜插袋；737FY5366161-藏青色成分：         面料：76%聚酯纤维22%粘纤2%氨纶                   "
+      },
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 1337,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "喜登博82535-1深藏青色连帽摇粒绒面料茄克，上无袋，下压线袋痕迹，下摆、袖口压线2厘米；（同厂家原版）成分:面料1：上层：94%聚酯纤维6%锦纶                   下层：94%聚"
+      },
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 1339,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "双鹏38833-哈青色棒球领夹克，面料成份：83%锦纶 17%氨纶里料成份：100%聚酯纤维配料针织：98%聚酯纤维 2%氨纶    填充物： 100%聚酯纤维                    "
+      },
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 1347,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "凯萨名勒506-蓝色长袖加绒衬衫，约1厘米竖条面料：100%聚酯纤维   里料：90.5%聚酯纤维9.5%氨纶"
+      },
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 1350,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "双鹏J-23577-深蓝色翻领夹克，左胸压明袋痕，下斜一字插袋加拉链，门襟四合扣，格子里布；737JK5366122-深蓝色成分：         面料面布：81.1%锦纶18.9%氨纶（非纤维物质除"
+      },
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 1355,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "九州王905KZ6569371-深蓝色加绒大版裤，锦氨面料复合加绒，前插袋，后一字袋；成分：面布：62%棉24%粘纤14%氨纶  底布：95%聚酯纤维5%氨纶"
+      },
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 1356,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "九州王8528-1黑色加绒大版裤，化纤面料复合加绒裤，前插袋，后一字袋；905KZ6569372-黑色成分：面布：45.4%粘纤30.6%聚酯纤维17.2%锦纶6.8%氨纶  底布：95%聚酯纤维5%"
+      },
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 1357,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "莱特卡丹2D-89268灰色磨毛竖条套西的裤子，面料：65.9%聚酯纤维30.8%粘纤3.3%氨纶      里料：100%聚酯纤维"
+      },
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 1358,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "莱特卡丹2D-88002黑色细斜纹套西的裤子面料：80%聚酯纤维18%粘纤2%氨纶      里料：100%聚酯纤维"
+      },
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 1360,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "李雪梅2205-黑色平纹套西的上衣，平驳头，上手巾袋，一字袋，门襟一粒扣，袖口四粒扣，单开叉；501XF3365095-黑色面料：72%聚酯纤维25%粘纤3%氨纶      里料：100%聚酯纤维"
+      },
+      {
+        "file": "基础档案/存货.xlsx",
+        "sheet": "存货",
+        "row": 1362,
+        "column": "AI",
+        "field": "存货描述",
+        "value": "李雪梅23901-灰色约1.8厘米宽竖条套西的裤子面料：66%聚酯纤维30%粘纤4%氨纶      里料：100%聚酯纤维"
+      }
+    ],
+    "outer_whitespace": [
+      {
+        "file": "基础档案/物流公司.xlsx",
+        "sheet": "枚举档案",
+        "row": 31,
+        "column": "F",
+        "field": "__column_6",
+        "value": "八达通  "
+      },
+      {
+        "file": "基础档案/物流公司.xlsx",
+        "sheet": "枚举档案",
+        "row": 36,
+        "column": "F",
+        "field": "__column_6",
+        "value": "贝海国际 "
+      },
+      {
+        "file": "基础档案/物流公司.xlsx",
+        "sheet": "枚举档案",
+        "row": 63,
+        "column": "F",
+        "field": "__column_6",
+        "value": "富腾达  "
+      },
+      {
+        "file": "基础档案/物流公司.xlsx",
+        "sheet": "枚举档案",
+        "row": 67,
+        "column": "F",
+        "field": "__column_6",
+        "value": "冠达   "
+      },
+      {
+        "file": "基础档案/物流公司.xlsx",
+        "sheet": "枚举档案",
+        "row": 70,
+        "column": "F",
+        "field": "__column_6",
+        "value": "广通       "
+      },
+      {
+        "file": "基础档案/物流公司.xlsx",
+        "sheet": "枚举档案",
+        "row": 81,
+        "column": "F",
+        "field": "__column_6",
+        "value": "环球速运  "
+      },
+      {
+        "file": "基础档案/物流公司.xlsx",
+        "sheet": "枚举档案",
+        "row": 83,
+        "column": "F",
+        "field": "__column_6",
+        "value": "豪翔物流 "
+      },
+      {
+        "file": "基础档案/物流公司.xlsx",
+        "sheet": "枚举档案",
+        "row": 92,
+        "column": "F",
+        "field": "__column_6",
+        "value": "捷安达  "
+      },
+      {
+        "file": "基础档案/物流公司.xlsx",
+        "sheet": "枚举档案",
+        "row": 110,
+        "column": "F",
+        "field": "__column_6",
+        "value": "美快    "
+      },
+      {
+        "file": "基础档案/物流公司.xlsx",
+        "sheet": "枚举档案",
+        "row": 152,
+        "column": "F",
+        "field": "__column_6",
+        "value": "万家康  "
+      },
+      {
+        "file": "基础档案/物流公司.xlsx",
+        "sheet": "枚举档案",
+        "row": 159,
+        "column": "F",
+        "field": "__column_6",
+        "value": "迅驰物流  "
+      },
+      {
+        "file": "基础档案/物流公司.xlsx",
+        "sheet": "枚举档案",
+        "row": 167,
+        "column": "F",
+        "field": "__column_6",
+        "value": "易达通  "
+      }
+    ]
+  }
+}

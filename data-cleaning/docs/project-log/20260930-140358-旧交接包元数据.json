@@ -1,0 +1,10 @@
+{
+  "archive": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/outputs/account-handoff-20260929/ERP-8877-account-handoff-20260929-2284028.zip",
+  "sha256": "c3ffd6d402f21327703e135bc99f34480725e92e147d8f265ae890babe3126c2",
+  "commit": "2284028b20a675c791ca5908c47fb77852846a70",
+  "metadata": {
+    "COMMIT.txt": "branch: codex/demo-8877-mainline\ncommit: 2284028b20a675c791ca5908c47fb77852846a70\ncreated_at: 2026-09-29T19:21:22+08:00\nremote: none configured\ncheckpoint: local Git commit; no push\nsource_archive: git archive HEAD (tracked snapshot, no .git history)\n",
+    "MANIFEST.json": "{\n  \"kind\": \"full-source\",\n  \"commit\": \"2284028b20a675c791ca5908c47fb77852846a70\",\n  \"branch\": \"codex/demo-8877-mainline\",\n  \"created_at\": \"2026-09-29T19:21:22+08:00\",\n  \"source_root\": \"repo/\",\n  \"excluded\": [\n    \".git\",\n    \"node_modules\",\n    \".env\",\n    \"PostgreSQL data\",\n    \"T+数据 raw files\",\n    \"browser cookies\"\n  ]\n}\n",
+    "HANDOFF_START_HERE.md": "# 8877 Demo 新账号交接\n\n本检查点：`2284028b20a675c791ca5908c47fb77852846a70`（分支 `codex/demo-8877-mainline`，本地提交，未推送）。\n\n- 同一台电脑继续：打开 `/Users/billy/Desktop/Workspace/project-007-业务管理系统`，先读 `work/account-handoff-20260929/HANDOFF.md` 和 `CONTEXT.md`。\n- 只有本 ZIP：先读 `HANDOFF.md`、`RECENT_DECISIONS.md`、两份 `USER_*.txt`。\n- 完整源码 ZIP 包含 `repo/` 已提交快照；简版 ZIP 仅包含交接资料。\n- 本机数据库、原始 T+ 文件、密码、Cookie、依赖及 Git 历史不在 ZIP 中。\n- 不要把旧文档中的 DONE 当成当前全部需求已验收；按新用户任务逐页复查。\n"
+  }
+}

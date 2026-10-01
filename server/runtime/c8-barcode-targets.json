@@ -1,0 +1,986 @@
+{
+  "source": "outputs/tplus-size-conflict-review-20260928/T+C8-条码例外163条核对表-20260928.xlsx",
+  "sourceSha256": "a7324dcdf74933339be2b9992602265ad1c6af412b7f8e89c2886a7fbc254e32",
+  "review": "C8",
+  "count": 163,
+  "records": [
+    {
+      "reviewId": "H001",
+      "skuId": "8da98af8-ec31-7f7b-a325-39d4f18f7bd1",
+      "group": "货号段130条",
+      "sourceProduct": "00005"
+    },
+    {
+      "reviewId": "H002",
+      "skuId": "6ab32ed1-093f-fc13-f316-28ee219e3475",
+      "group": "货号段130条",
+      "sourceProduct": "0002"
+    },
+    {
+      "reviewId": "H003",
+      "skuId": "2d98ab78-9515-fc2a-30fd-f3a567683a97",
+      "group": "货号段130条",
+      "sourceProduct": "0002"
+    },
+    {
+      "reviewId": "H004",
+      "skuId": "b5aad6dd-027f-16f8-a8fe-98a076df63ef",
+      "group": "货号段130条",
+      "sourceProduct": "0002"
+    },
+    {
+      "reviewId": "H005",
+      "skuId": "37f7bd84-b5ba-7263-722c-f88029495576",
+      "group": "货号段130条",
+      "sourceProduct": "15272"
+    },
+    {
+      "reviewId": "H006",
+      "skuId": "486e9f42-2cfc-acba-ca87-7023de6e47b1",
+      "group": "货号段130条",
+      "sourceProduct": "15272-1"
+    },
+    {
+      "reviewId": "H007",
+      "skuId": "8aefa768-cb2c-91e5-21c2-ffd9bdb6520e",
+      "group": "货号段130条",
+      "sourceProduct": "15272-1"
+    },
+    {
+      "reviewId": "H008",
+      "skuId": "89647fe3-54d3-a3f2-a8ec-69a9c3a398ad",
+      "group": "货号段130条",
+      "sourceProduct": "15272-1"
+    },
+    {
+      "reviewId": "H009",
+      "skuId": "a547de81-008e-abdf-ead3-da38a8ab0c7e",
+      "group": "货号段130条",
+      "sourceProduct": "16582-红色"
+    },
+    {
+      "reviewId": "H010",
+      "skuId": "bf255ebb-12db-db39-f748-2170d3220b45",
+      "group": "货号段130条",
+      "sourceProduct": "16582-红色"
+    },
+    {
+      "reviewId": "H011",
+      "skuId": "7074b235-d8d4-2fe8-6be1-451998006c1f",
+      "group": "货号段130条",
+      "sourceProduct": "16582-红色"
+    },
+    {
+      "reviewId": "H012",
+      "skuId": "e4ba6a3a-fb60-0880-ec68-a6c9f4aac315",
+      "group": "货号段130条",
+      "sourceProduct": "200017"
+    },
+    {
+      "reviewId": "H013",
+      "skuId": "759a20c9-edc4-51ed-7f58-46c70e3f0f43",
+      "group": "货号段130条",
+      "sourceProduct": "200017"
+    },
+    {
+      "reviewId": "H014",
+      "skuId": "c0f385b5-cfe4-446e-144f-af0dfcd87b57",
+      "group": "货号段130条",
+      "sourceProduct": "200017"
+    },
+    {
+      "reviewId": "H015",
+      "skuId": "16c257d4-c33c-387b-bb81-50dce321cab1",
+      "group": "货号段130条",
+      "sourceProduct": "200017"
+    },
+    {
+      "reviewId": "H016",
+      "skuId": "ce819ecb-f530-a18a-7759-17f5bdb02062",
+      "group": "货号段130条",
+      "sourceProduct": "200017"
+    },
+    {
+      "reviewId": "H017",
+      "skuId": "06bbb131-d757-c4db-e651-971a9f1e0d56",
+      "group": "货号段130条",
+      "sourceProduct": "200017"
+    },
+    {
+      "reviewId": "H018",
+      "skuId": "55620d56-d582-dcde-2682-3c0cd41343fd",
+      "group": "货号段130条",
+      "sourceProduct": "200017"
+    },
+    {
+      "reviewId": "H019",
+      "skuId": "0d0df43c-3043-4512-06eb-beb5310be323",
+      "group": "货号段130条",
+      "sourceProduct": "200017"
+    },
+    {
+      "reviewId": "H020",
+      "skuId": "24a2cba3-a7e5-09ed-a14c-d01cf2f90c10",
+      "group": "货号段130条",
+      "sourceProduct": "200017"
+    },
+    {
+      "reviewId": "H021",
+      "skuId": "28b6ebfc-ddf5-aabf-5b32-c7875182d7ce",
+      "group": "货号段130条",
+      "sourceProduct": "200017"
+    },
+    {
+      "reviewId": "H022",
+      "skuId": "3209e062-f4fa-d8da-1e69-96b07324d6dc",
+      "group": "货号段130条",
+      "sourceProduct": "7690"
+    },
+    {
+      "reviewId": "H023",
+      "skuId": "99ef9982-941a-4733-79bd-2bed77b996ec",
+      "group": "货号段130条",
+      "sourceProduct": "7690"
+    },
+    {
+      "reviewId": "H024",
+      "skuId": "685993cd-3e28-d859-35ae-f878b962c341",
+      "group": "货号段130条",
+      "sourceProduct": "7690"
+    },
+    {
+      "reviewId": "H025",
+      "skuId": "27ecff81-f7d8-9ac8-675b-8df03c997b7f",
+      "group": "货号段130条",
+      "sourceProduct": "81209"
+    },
+    {
+      "reviewId": "H026",
+      "skuId": "c989907d-f840-5019-1f0a-3097920b21df",
+      "group": "货号段130条",
+      "sourceProduct": "81209"
+    },
+    {
+      "reviewId": "H027",
+      "skuId": "9dd4c83a-63bf-c314-cce4-7ab0d2b686a2",
+      "group": "货号段130条",
+      "sourceProduct": "81209"
+    },
+    {
+      "reviewId": "H028",
+      "skuId": "a2676dfb-9dc9-171f-d447-c94dfc6ac42c",
+      "group": "货号段130条",
+      "sourceProduct": "81209"
+    },
+    {
+      "reviewId": "H029",
+      "skuId": "a18c7fe6-8275-b80b-b43e-bb4fb8b1befe",
+      "group": "货号段130条",
+      "sourceProduct": "81209"
+    },
+    {
+      "reviewId": "H030",
+      "skuId": "c41a6aea-5afd-6c17-7b38-39afcb111689",
+      "group": "货号段130条",
+      "sourceProduct": "81209"
+    },
+    {
+      "reviewId": "H031",
+      "skuId": "ca32ca9d-babd-0921-5dcc-d4064bdb076a",
+      "group": "货号段130条",
+      "sourceProduct": "81215"
+    },
+    {
+      "reviewId": "H032",
+      "skuId": "095735f8-b18c-8ec2-8e8e-6e9f32d6c735",
+      "group": "货号段130条",
+      "sourceProduct": "81215"
+    },
+    {
+      "reviewId": "H033",
+      "skuId": "ac8abff3-42e3-0ead-e111-87c66d35455d",
+      "group": "货号段130条",
+      "sourceProduct": "81218"
+    },
+    {
+      "reviewId": "H034",
+      "skuId": "07231f79-adb9-8c70-19ad-4a902c8cd7e3",
+      "group": "货号段130条",
+      "sourceProduct": "81218"
+    },
+    {
+      "reviewId": "H035",
+      "skuId": "a06a53b9-16bf-27a9-ce55-a773d2192b49",
+      "group": "货号段130条",
+      "sourceProduct": "81218"
+    },
+    {
+      "reviewId": "H036",
+      "skuId": "c878fe6a-f828-a3fe-9045-4f5666bd635d",
+      "group": "货号段130条",
+      "sourceProduct": "81218"
+    },
+    {
+      "reviewId": "H037",
+      "skuId": "d4727ac7-128d-89c8-7be9-85fcc30352b9",
+      "group": "货号段130条",
+      "sourceProduct": "81218"
+    },
+    {
+      "reviewId": "H038",
+      "skuId": "489e91ce-3d40-e504-c0ff-458eaf104687",
+      "group": "货号段130条",
+      "sourceProduct": "81218"
+    },
+    {
+      "reviewId": "H039",
+      "skuId": "3657ac40-687f-dbf1-69ee-7fda4e3fb6a5",
+      "group": "货号段130条",
+      "sourceProduct": "81218"
+    },
+    {
+      "reviewId": "H040",
+      "skuId": "d07f8e9b-49ba-a1ed-70c9-48f4a8d50138",
+      "group": "货号段130条",
+      "sourceProduct": "81218"
+    },
+    {
+      "reviewId": "H041",
+      "skuId": "52761efc-3741-356d-0a56-70edf1ec30b2",
+      "group": "货号段130条",
+      "sourceProduct": "81218"
+    },
+    {
+      "reviewId": "H042",
+      "skuId": "0f9f5852-1ae1-cd54-631b-b8a54a3568f9",
+      "group": "货号段130条",
+      "sourceProduct": "81219"
+    },
+    {
+      "reviewId": "H043",
+      "skuId": "be3ed809-ef5f-181e-b215-bf4dfd733198",
+      "group": "货号段130条",
+      "sourceProduct": "81219"
+    },
+    {
+      "reviewId": "H044",
+      "skuId": "ec0c0749-fdbf-419e-cf09-bc9942136b68",
+      "group": "货号段130条",
+      "sourceProduct": "81219"
+    },
+    {
+      "reviewId": "H045",
+      "skuId": "76f98b04-0103-9adc-3141-696e99ee82af",
+      "group": "货号段130条",
+      "sourceProduct": "81219"
+    },
+    {
+      "reviewId": "H046",
+      "skuId": "48c068d8-5e20-3907-82be-46c8271c96a3",
+      "group": "货号段130条",
+      "sourceProduct": "81219"
+    },
+    {
+      "reviewId": "H047",
+      "skuId": "791cd8cf-a380-5ba3-edd9-6576c5b10b10",
+      "group": "货号段130条",
+      "sourceProduct": "81219"
+    },
+    {
+      "reviewId": "H048",
+      "skuId": "c089f4ff-edb0-5e4e-d523-001f7ae27186",
+      "group": "货号段130条",
+      "sourceProduct": "81244"
+    },
+    {
+      "reviewId": "H049",
+      "skuId": "da4668cf-fe3d-c35a-8cb5-de7013fc98bf",
+      "group": "货号段130条",
+      "sourceProduct": "81244"
+    },
+    {
+      "reviewId": "H050",
+      "skuId": "3ec63e62-fd21-ea64-81a6-1654f41e6e32",
+      "group": "货号段130条",
+      "sourceProduct": "81244"
+    },
+    {
+      "reviewId": "H051",
+      "skuId": "ec5a43e4-e7d4-0f55-d631-bace7f8081a6",
+      "group": "货号段130条",
+      "sourceProduct": "81244"
+    },
+    {
+      "reviewId": "H052",
+      "skuId": "882f59a2-f3b0-9a92-7cf4-213e681809cb",
+      "group": "货号段130条",
+      "sourceProduct": "81244"
+    },
+    {
+      "reviewId": "H053",
+      "skuId": "f24349ec-b3f7-2ba2-c2ed-5d3cffe13635",
+      "group": "货号段130条",
+      "sourceProduct": "81244"
+    },
+    {
+      "reviewId": "H054",
+      "skuId": "73572acc-2cbd-c643-ef5f-0b8aab442a92",
+      "group": "货号段130条",
+      "sourceProduct": "81244"
+    },
+    {
+      "reviewId": "H055",
+      "skuId": "c5c72d9e-ea19-47b5-a645-0f0b3717c1c9",
+      "group": "货号段130条",
+      "sourceProduct": "81244"
+    },
+    {
+      "reviewId": "H056",
+      "skuId": "ad19aef4-434d-0541-bc62-b3e9d661e9ee",
+      "group": "货号段130条",
+      "sourceProduct": "81244"
+    },
+    {
+      "reviewId": "H057",
+      "skuId": "9ecff93d-63c6-2480-7511-c6db5d1e5294",
+      "group": "货号段130条",
+      "sourceProduct": "81257"
+    },
+    {
+      "reviewId": "H058",
+      "skuId": "c87cc414-a411-8a6e-e512-00ed51535070",
+      "group": "货号段130条",
+      "sourceProduct": "81257"
+    },
+    {
+      "reviewId": "H059",
+      "skuId": "c22cb38f-7542-3157-b6cd-14e8c22ab055",
+      "group": "货号段130条",
+      "sourceProduct": "81257"
+    },
+    {
+      "reviewId": "H060",
+      "skuId": "64a558b2-0d84-90fb-4bdb-2e816bd955ec",
+      "group": "货号段130条",
+      "sourceProduct": "81257"
+    },
+    {
+      "reviewId": "H061",
+      "skuId": "b39fbec7-a50f-7073-8e3f-ebd1c2a16763",
+      "group": "货号段130条",
+      "sourceProduct": "81257"
+    },
+    {
+      "reviewId": "H062",
+      "skuId": "0fab9ed9-3a23-5891-6ef1-37e40a9b4022",
+      "group": "货号段130条",
+      "sourceProduct": "81257"
+    },
+    {
+      "reviewId": "H063",
+      "skuId": "575531e7-af06-6119-ea27-3d206538310e",
+      "group": "货号段130条",
+      "sourceProduct": "81261"
+    },
+    {
+      "reviewId": "H064",
+      "skuId": "2829fdf5-293c-7485-2337-a4fde2e5128c",
+      "group": "货号段130条",
+      "sourceProduct": "81261"
+    },
+    {
+      "reviewId": "H065",
+      "skuId": "5c15b46f-7ee5-34f2-1fcc-3cc145aa9a31",
+      "group": "货号段130条",
+      "sourceProduct": "81261"
+    },
+    {
+      "reviewId": "H066",
+      "skuId": "24ce22ce-2d7e-0f5a-0a44-cbc2f93a4c2c",
+      "group": "货号段130条",
+      "sourceProduct": "81261"
+    },
+    {
+      "reviewId": "H067",
+      "skuId": "1a534908-9e3a-064e-31a6-5e9aad5157e6",
+      "group": "货号段130条",
+      "sourceProduct": "81261"
+    },
+    {
+      "reviewId": "H068",
+      "skuId": "905b2015-ae51-1b16-a059-5f24bcba8823",
+      "group": "货号段130条",
+      "sourceProduct": "81261"
+    },
+    {
+      "reviewId": "H069",
+      "skuId": "153c7a2e-d889-fe9e-b6dc-c69783dd5232",
+      "group": "货号段130条",
+      "sourceProduct": "81261"
+    },
+    {
+      "reviewId": "H070",
+      "skuId": "cfc645a1-ec97-4651-7801-01acbfa2bc43",
+      "group": "货号段130条",
+      "sourceProduct": "81261"
+    },
+    {
+      "reviewId": "H071",
+      "skuId": "59f4e03d-3b80-b46b-7595-bdc7cf1a8f4e",
+      "group": "货号段130条",
+      "sourceProduct": "81261"
+    },
+    {
+      "reviewId": "H072",
+      "skuId": "93776049-12db-2081-9b2f-679df28ec9a4",
+      "group": "货号段130条",
+      "sourceProduct": "81261"
+    },
+    {
+      "reviewId": "H073",
+      "skuId": "fc76b17f-2901-237c-5bcc-5e428e5b3cab",
+      "group": "货号段130条",
+      "sourceProduct": "81261"
+    },
+    {
+      "reviewId": "H074",
+      "skuId": "465733a5-9d4b-19a2-ec18-815cfe46dc65",
+      "group": "货号段130条",
+      "sourceProduct": "81262"
+    },
+    {
+      "reviewId": "H075",
+      "skuId": "bfb627ec-c04f-a492-6120-b0aa3f8f5f7b",
+      "group": "货号段130条",
+      "sourceProduct": "81262"
+    },
+    {
+      "reviewId": "H076",
+      "skuId": "a1daf8e5-e6f8-903c-ff6b-33b7261c29c9",
+      "group": "货号段130条",
+      "sourceProduct": "81262"
+    },
+    {
+      "reviewId": "H077",
+      "skuId": "c23697ca-6dc1-7eea-505c-f6c1bf884e60",
+      "group": "货号段130条",
+      "sourceProduct": "81262"
+    },
+    {
+      "reviewId": "H078",
+      "skuId": "8d70bac4-fd14-d456-a7db-8e3d8795cee7",
+      "group": "货号段130条",
+      "sourceProduct": "81262"
+    },
+    {
+      "reviewId": "H079",
+      "skuId": "29c0ba25-edcb-6e4c-7bee-5ab8444316a3",
+      "group": "货号段130条",
+      "sourceProduct": "81262"
+    },
+    {
+      "reviewId": "H080",
+      "skuId": "41150ea4-70fa-9a10-ffe1-b6985cce0e81",
+      "group": "货号段130条",
+      "sourceProduct": "81262"
+    },
+    {
+      "reviewId": "H081",
+      "skuId": "a7b6bd3b-a8be-fa41-e631-80ec1afa79ce",
+      "group": "货号段130条",
+      "sourceProduct": "81267"
+    },
+    {
+      "reviewId": "H082",
+      "skuId": "3067cd54-8d6f-79de-7c34-728b41b8cf97",
+      "group": "货号段130条",
+      "sourceProduct": "81267"
+    },
+    {
+      "reviewId": "H083",
+      "skuId": "2892ef8d-2383-bcf9-a03f-3a04d522f20c",
+      "group": "货号段130条",
+      "sourceProduct": "81267"
+    },
+    {
+      "reviewId": "H084",
+      "skuId": "26a6efed-c1c1-5ae2-2125-fe77b012871a",
+      "group": "货号段130条",
+      "sourceProduct": "81272"
+    },
+    {
+      "reviewId": "H085",
+      "skuId": "91f839ea-744f-0496-875e-6933894e96fb",
+      "group": "货号段130条",
+      "sourceProduct": "81272"
+    },
+    {
+      "reviewId": "H086",
+      "skuId": "a88dcb75-3d41-ede7-9979-f58a1b1cf304",
+      "group": "货号段130条",
+      "sourceProduct": "81272"
+    },
+    {
+      "reviewId": "H087",
+      "skuId": "97f52345-2a56-384d-f6a2-c323993eaeb9",
+      "group": "货号段130条",
+      "sourceProduct": "81272"
+    },
+    {
+      "reviewId": "H088",
+      "skuId": "2cd4cdb3-96af-00b4-a0b6-699e2a277225",
+      "group": "货号段130条",
+      "sourceProduct": "81272"
+    },
+    {
+      "reviewId": "H089",
+      "skuId": "fd18ef26-52b2-6690-e7e4-3a1a972c8204",
+      "group": "货号段130条",
+      "sourceProduct": "81272"
+    },
+    {
+      "reviewId": "H090",
+      "skuId": "26c987a1-cf06-bd1b-b279-6debac3bd2c6",
+      "group": "货号段130条",
+      "sourceProduct": "81272"
+    },
+    {
+      "reviewId": "H091",
+      "skuId": "27616f0a-83ff-f6c6-4cf3-b41332eca744",
+      "group": "货号段130条",
+      "sourceProduct": "81272"
+    },
+    {
+      "reviewId": "H092",
+      "skuId": "203e91ec-7e43-177f-a0f1-4adbac263bdb",
+      "group": "货号段130条",
+      "sourceProduct": "81272"
+    },
+    {
+      "reviewId": "H093",
+      "skuId": "eafd55c7-ad4a-a3bb-05bd-c1004d4a03e7",
+      "group": "货号段130条",
+      "sourceProduct": "81272"
+    },
+    {
+      "reviewId": "H094",
+      "skuId": "87aaae94-c78f-2861-8e03-eb23d496e7d1",
+      "group": "货号段130条",
+      "sourceProduct": "8809 样衣"
+    },
+    {
+      "reviewId": "H095",
+      "skuId": "41f57693-01b0-444d-1304-d1831c4f650c",
+      "group": "货号段130条",
+      "sourceProduct": "补差价"
+    },
+    {
+      "reviewId": "H096",
+      "skuId": "f6d7249e-72c1-86cc-9f80-a329aed39bdf",
+      "group": "货号段130条",
+      "sourceProduct": "补差价"
+    },
+    {
+      "reviewId": "H097",
+      "skuId": "9c7057da-2d82-ec49-c969-47008a882043",
+      "group": "货号段130条",
+      "sourceProduct": "发票"
+    },
+    {
+      "reviewId": "H098",
+      "skuId": "822a3892-a9f1-768b-dc17-dc2011c7ca82",
+      "group": "货号段130条",
+      "sourceProduct": "发票"
+    },
+    {
+      "reviewId": "H099",
+      "skuId": "ad0e5fb2-55bc-ed00-364a-1971e094b4a0",
+      "group": "货号段130条",
+      "sourceProduct": "发票"
+    },
+    {
+      "reviewId": "H100",
+      "skuId": "7978de2e-8dc1-66bd-9c20-8b06738e5bba",
+      "group": "货号段130条",
+      "sourceProduct": "发票"
+    },
+    {
+      "reviewId": "H101",
+      "skuId": "74615c6a-867c-d57e-4cbe-78219faefa1c",
+      "group": "货号段130条",
+      "sourceProduct": "发票"
+    },
+    {
+      "reviewId": "H102",
+      "skuId": "745fcbe6-d029-f9cc-a8f8-e3364fb11bf8",
+      "group": "货号段130条",
+      "sourceProduct": "发票"
+    },
+    {
+      "reviewId": "H103",
+      "skuId": "e320e15d-b7fd-a73d-3ed5-7f1bfcdce208",
+      "group": "货号段130条",
+      "sourceProduct": "虚拟袜子"
+    },
+    {
+      "reviewId": "H104",
+      "skuId": "2bb16d98-9258-69b9-4c02-0b3b49ea647d",
+      "group": "货号段130条",
+      "sourceProduct": "运费"
+    },
+    {
+      "reviewId": "H105",
+      "skuId": "696617c5-bc15-8d1a-9fab-e4c7bf215dc3",
+      "group": "货号段130条",
+      "sourceProduct": "运费"
+    },
+    {
+      "reviewId": "H106",
+      "skuId": "68e7c537-34b4-bcf1-42bd-b44d0f640c59",
+      "group": "货号段130条",
+      "sourceProduct": "运费"
+    },
+    {
+      "reviewId": "H107",
+      "skuId": "357a4fda-1ece-6024-7cb6-bb5538bf9833",
+      "group": "货号段130条",
+      "sourceProduct": "CS0015531175"
+    },
+    {
+      "reviewId": "H108",
+      "skuId": "26fe41c6-7602-6f26-0ad2-9caccc2db603",
+      "group": "货号段130条",
+      "sourceProduct": "CS5825331188-1"
+    },
+    {
+      "reviewId": "H109",
+      "skuId": "ca450727-403e-83c3-e705-8e8bc62dec00",
+      "group": "货号段130条",
+      "sourceProduct": "CS5825331188-1"
+    },
+    {
+      "reviewId": "H110",
+      "skuId": "c5b11259-bdd8-9c7c-9fd8-edee2ab87366",
+      "group": "货号段130条",
+      "sourceProduct": "CS5825331188-1"
+    },
+    {
+      "reviewId": "H111",
+      "skuId": "442aacac-ba73-9ac7-2351-e65d683d103c",
+      "group": "货号段130条",
+      "sourceProduct": "JK80966"
+    },
+    {
+      "reviewId": "H112",
+      "skuId": "2382fbcf-8233-1599-6d7d-c27ec321f2f0",
+      "group": "货号段130条",
+      "sourceProduct": "JK80966"
+    },
+    {
+      "reviewId": "H113",
+      "skuId": "c9e28b6c-6240-b916-31a7-a4dee31db4d3",
+      "group": "货号段130条",
+      "sourceProduct": "JK80966"
+    },
+    {
+      "reviewId": "H114",
+      "skuId": "61bab0a8-586a-db41-4817-0d91f858c11c",
+      "group": "货号段130条",
+      "sourceProduct": "L1618-紫"
+    },
+    {
+      "reviewId": "H115",
+      "skuId": "2fc4223d-8202-dc6a-36de-c21fabb96422",
+      "group": "货号段130条",
+      "sourceProduct": "L1618-紫"
+    },
+    {
+      "reviewId": "H116",
+      "skuId": "e3770ea0-2aff-2f9f-3fc8-7b9c64a16b4e",
+      "group": "货号段130条",
+      "sourceProduct": "L1618-紫"
+    },
+    {
+      "reviewId": "H117",
+      "skuId": "42e96b35-01cd-a781-d0d3-96df02754d0e",
+      "group": "货号段130条",
+      "sourceProduct": "SK928-酒红"
+    },
+    {
+      "reviewId": "H118",
+      "skuId": "5a0af9d2-9034-07c3-4744-9f9bd0957ba5",
+      "group": "货号段130条",
+      "sourceProduct": "SK928-酒红"
+    },
+    {
+      "reviewId": "H119",
+      "skuId": "65187664-72d9-c125-9894-509cbd8ccaa6",
+      "group": "货号段130条",
+      "sourceProduct": "SK928-酒红"
+    },
+    {
+      "reviewId": "H120",
+      "skuId": "10c08785-0c64-c116-8c3c-2da7ec2a013e",
+      "group": "货号段130条",
+      "sourceProduct": "Y208-墨绿"
+    },
+    {
+      "reviewId": "H121",
+      "skuId": "5f4256d3-9694-3279-a897-675c8bc05c9b",
+      "group": "货号段130条",
+      "sourceProduct": "Y208-中驼"
+    },
+    {
+      "reviewId": "H122",
+      "skuId": "1efd4a40-864b-1a0a-b0c7-f02b061ea344",
+      "group": "货号段130条",
+      "sourceProduct": "Y208-中驼"
+    },
+    {
+      "reviewId": "H123",
+      "skuId": "1b87fdfa-6686-3781-e0dd-0e3db4a34a23",
+      "group": "货号段130条",
+      "sourceProduct": "Y208-紫红"
+    },
+    {
+      "reviewId": "H124",
+      "skuId": "5894791f-7992-50d8-8637-99fcbff19b58",
+      "group": "货号段130条",
+      "sourceProduct": "Y208-紫红"
+    },
+    {
+      "reviewId": "H125",
+      "skuId": "8d3f0470-036a-3aec-69fb-9633c00c1b4c",
+      "group": "货号段130条",
+      "sourceProduct": "Y208-紫红"
+    },
+    {
+      "reviewId": "H126",
+      "skuId": "c30b4a9a-0a25-4081-3960-5de209371dd9",
+      "group": "货号段130条",
+      "sourceProduct": "Y208-紫红"
+    },
+    {
+      "reviewId": "H127",
+      "skuId": "e32120a5-8404-f0d7-95ed-4d5f627919cd",
+      "group": "货号段130条",
+      "sourceProduct": "ZM776驼色"
+    },
+    {
+      "reviewId": "H128",
+      "skuId": "47381558-a486-db1d-e252-de5f3416f470",
+      "group": "货号段130条",
+      "sourceProduct": "ZM776驼色"
+    },
+    {
+      "reviewId": "H129",
+      "skuId": "7a3a84ab-dde4-5ee1-4aa4-7b545eb00625",
+      "group": "货号段130条",
+      "sourceProduct": "ZM776驼色"
+    },
+    {
+      "reviewId": "H130",
+      "skuId": "f9033015-4dea-4672-d28c-1c7fb073729a",
+      "group": "货号段130条",
+      "sourceProduct": "ZM776紫红"
+    },
+    {
+      "reviewId": "C001",
+      "skuId": "87ff2a97-9a79-62cf-1ae4-e681a50b1f02",
+      "group": "颜色码19条",
+      "sourceProduct": "A1612202-红色"
+    },
+    {
+      "reviewId": "C002",
+      "skuId": "6a8fb1ed-ab01-b962-c07a-0770778205b9",
+      "group": "颜色码19条",
+      "sourceProduct": "A1612202-红色"
+    },
+    {
+      "reviewId": "C003",
+      "skuId": "1077b0a2-1dc5-9eb5-54a2-a90916c7745f",
+      "group": "颜色码19条",
+      "sourceProduct": "A1612202-红色"
+    },
+    {
+      "reviewId": "C004",
+      "skuId": "aee0ad64-deaf-90cd-ac5f-d5122e4bffae",
+      "group": "颜色码19条",
+      "sourceProduct": "A1612202-红色"
+    },
+    {
+      "reviewId": "C005",
+      "skuId": "2f046da5-6a07-9a55-cfb6-4ce5fa7b92fb",
+      "group": "颜色码19条",
+      "sourceProduct": "A1612202-红色"
+    },
+    {
+      "reviewId": "C006",
+      "skuId": "a4ee12c4-aa6a-d2ea-8fe2-feca38ed647f",
+      "group": "颜色码19条",
+      "sourceProduct": "A1916021"
+    },
+    {
+      "reviewId": "C007",
+      "skuId": "f037384c-2e43-99ee-c4fc-e0a5978a9cf9",
+      "group": "颜色码19条",
+      "sourceProduct": "A1916021"
+    },
+    {
+      "reviewId": "C008",
+      "skuId": "73a5f0ba-ea4c-9693-40ff-b91aac1c96d5",
+      "group": "颜色码19条",
+      "sourceProduct": "A1922506-蓝色"
+    },
+    {
+      "reviewId": "C009",
+      "skuId": "28958321-20d5-96d3-6c7b-00a18cb1b47c",
+      "group": "颜色码19条",
+      "sourceProduct": "A1922506-蓝色"
+    },
+    {
+      "reviewId": "C010",
+      "skuId": "553c9907-1469-9dfe-c795-e15619c73127",
+      "group": "颜色码19条",
+      "sourceProduct": "A1922506-蓝色"
+    },
+    {
+      "reviewId": "C011",
+      "skuId": "d6ece18a-60e7-48f2-66c2-5bbe768a41ac",
+      "group": "颜色码19条",
+      "sourceProduct": "A1922506-蓝色"
+    },
+    {
+      "reviewId": "C012",
+      "skuId": "b2f4918a-e5de-f42c-ed1c-5967e7d86571",
+      "group": "颜色码19条",
+      "sourceProduct": "A1922506-蓝色"
+    },
+    {
+      "reviewId": "C013",
+      "skuId": "a7aaba03-0f50-f134-c824-d72028375ba6",
+      "group": "颜色码19条",
+      "sourceProduct": "A1922506-蓝色"
+    },
+    {
+      "reviewId": "C014",
+      "skuId": "bf5b40e5-4725-fdcc-af42-fe63dac7679c",
+      "group": "颜色码19条",
+      "sourceProduct": "A1922506-蓝色"
+    },
+    {
+      "reviewId": "C015",
+      "skuId": "5223bc61-6a84-b1af-ec13-ba74b172adc6",
+      "group": "颜色码19条",
+      "sourceProduct": "B0102153-粉色"
+    },
+    {
+      "reviewId": "C016",
+      "skuId": "ae5bb7af-9875-c714-4a56-79033652ea6e",
+      "group": "颜色码19条",
+      "sourceProduct": "B0203211-白色"
+    },
+    {
+      "reviewId": "C017",
+      "skuId": "9e2c1ab4-1bc0-7756-8d91-5101399a253a",
+      "group": "颜色码19条",
+      "sourceProduct": "B0213701-黑色"
+    },
+    {
+      "reviewId": "C018",
+      "skuId": "b7f4a750-ce4c-7063-cf3c-d6d6b2a453eb",
+      "group": "颜色码19条",
+      "sourceProduct": "B0302396-灰色"
+    },
+    {
+      "reviewId": "C019",
+      "skuId": "ff271321-bc2b-907e-aa01-bf8d0f73d15b",
+      "group": "颜色码19条",
+      "sourceProduct": "B0321602-黑色"
+    },
+    {
+      "reviewId": "S001",
+      "skuId": "8e40f6d0-df0f-d062-fb1b-5361238137c1",
+      "group": "尺码码14条",
+      "sourceProduct": "000LD9000002"
+    },
+    {
+      "reviewId": "S002",
+      "skuId": "ae2872e8-aae3-d16e-25a9-f7fd24b7b952",
+      "group": "尺码码14条",
+      "sourceProduct": "000LJ9000005"
+    },
+    {
+      "reviewId": "S003",
+      "skuId": "7e52518c-771e-9af2-f614-00bbe8fc5850",
+      "group": "尺码码14条",
+      "sourceProduct": "000YS9000001"
+    },
+    {
+      "reviewId": "S004",
+      "skuId": "c80277f8-a8b9-c27c-16cd-533e8f58af08",
+      "group": "尺码码14条",
+      "sourceProduct": "040KZ5139400"
+    },
+    {
+      "reviewId": "S005",
+      "skuId": "0627f1d1-b54d-923b-b2d7-5618556633a8",
+      "group": "尺码码14条",
+      "sourceProduct": "040KZ5139400"
+    },
+    {
+      "reviewId": "S006",
+      "skuId": "6c02af8c-dc84-c03c-f72c-98f8e5748621",
+      "group": "尺码码14条",
+      "sourceProduct": "040KZ5139400"
+    },
+    {
+      "reviewId": "S007",
+      "skuId": "70a824b9-599d-4e27-653d-eac6d3c94996",
+      "group": "尺码码14条",
+      "sourceProduct": "040KZ5139400"
+    },
+    {
+      "reviewId": "S008",
+      "skuId": "3bcb2d44-a4b1-3541-4513-21b5dfba5733",
+      "group": "尺码码14条",
+      "sourceProduct": "次品"
+    },
+    {
+      "reviewId": "S009",
+      "skuId": "0aa94759-4f13-9b0d-52b3-d76036dcddea",
+      "group": "尺码码14条",
+      "sourceProduct": "次品"
+    },
+    {
+      "reviewId": "S010",
+      "skuId": "d6657810-c0d2-95ee-bf8f-aa01fdd4c191",
+      "group": "尺码码14条",
+      "sourceProduct": "次品"
+    },
+    {
+      "reviewId": "S011",
+      "skuId": "de6a639b-aad5-5fe9-1a43-b2e1634f65e4",
+      "group": "尺码码14条",
+      "sourceProduct": "运费"
+    },
+    {
+      "reviewId": "S012",
+      "skuId": "c7460ad1-cd0c-716e-e3b0-3035d3ae59ef",
+      "group": "尺码码14条",
+      "sourceProduct": "PD0809018"
+    },
+    {
+      "reviewId": "S013",
+      "skuId": "779f8e93-8f1f-df61-dd64-d6fc26875f4a",
+      "group": "尺码码14条",
+      "sourceProduct": "PD0809018"
+    },
+    {
+      "reviewId": "S014",
+      "skuId": "c4b898c9-ae96-f9e8-434c-fded05fefe64",
+      "group": "尺码码14条",
+      "sourceProduct": "PD0809018"
+    }
+  ]
+}

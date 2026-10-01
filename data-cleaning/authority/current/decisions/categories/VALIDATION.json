@@ -1,0 +1,221 @@
+{
+  "all_pass": true,
+  "counts": {
+    "source_products": 2941,
+    "original_reliable_preserved": 2040,
+    "direct_evidence_preserved": 8,
+    "manual_scope": 893,
+    "manual_resolved": 893,
+    "manual_unresolved": 0,
+    "original_901_resolved": 901,
+    "full_resolved": 2941,
+    "minimal_questions": 0,
+    "closed_clarification_products": 7,
+    "parent_assignments": {
+      "西服": 121,
+      "皮革服装": 11,
+      "毛皮服装": 1,
+      "长裤": 10
+    }
+  },
+  "checks": {
+    "901_original_members_exact": true,
+    "2941_full_unique": true,
+    "zero_unresolved": true,
+    "5_questions_7_products_closed": true,
+    "893_manual_all_resolved": true,
+    "901_all_resolved": true,
+    "2941_all_resolved": true,
+    "8_auto_unchanged": true,
+    "2040_reliable_unchanged": true,
+    "original_names_unchanged": true,
+    "original_descriptions_unchanged": true,
+    "only_existing_categories": true,
+    "parents_limited_to_four": true,
+    "P02_36_and_196": true,
+    "P03_80_and_59": true,
+    "P10_6_down_including_wool_vest": true,
+    "P13_special_suit_scoped": true,
+    "P13_main_name_two_specific": true,
+    "P01_base_layers_final_sweaters": true,
+    "final_7_targets_exact": true,
+    "no_runtime_application": true,
+    "saved_csv_json_identity_and_targets_match": true,
+    "saved_unresolved_csv_empty": true,
+    "all_input_hashes_unchanged": true
+  },
+  "input_sha256": {
+    "work/TPLUS-DECISIONS-20260922/categories/groups.json": "1af10e0501dedb48c80c84bef6c58348fb66e783c063860b53b2c014824234a1",
+    "work/TPLUS-DECISIONS-20260922/categories/batches.json": "de11ae5379241695c468e230362e02f0c7fa5a6a2a3a6a0387e87d0b9ad10907",
+    "work/TPLUS-DECISIONS-20260922/categories/members.csv": "6eb5366bacec7e211da5cb776dd75b79b883475517af729c0d4aa9b1c609ef36",
+    "work/TPLUS-DECISIONS-20260922/categories/auto_resolved.json": "8868d0740d5141a50311d64ed435d1c0ea71c4e2440250fed7a3f85581e62daa",
+    "work/TPLUS-DECISIONS-20260922/categories/source_detail_901.json": "2b4e1f763d860543a9a3301ce8bd700f0f4c0c4c2e703a009f9e7cf2fc6b7ad1",
+    "work/TPLUS-AUDIT-20260922/products/taxonomy.json": "8d2facb3f812e2f7efbc86880003351bcc5edafefb1060aea08fd568cb48f231",
+    "work/TPLUS-AUDIT-20260922/products/category_reliable.csv": "b8c7587c1793e4b77fd49fad382beb8f444551b17d52091e9da6c33ba22e3937",
+    "work/TPLUS-AUDIT-20260922/products/category_ambiguous.csv": "c4ff8a43f93512aa3a49c073ade2b35e1581778f857d3a334bc9870629c5c6d6",
+    "work/TPLUS-AUDIT-20260922/products/category_unidentified.csv": "c0d374b20faf8d45c168f978941354a9b32ab36a5d23f239f898b94f0afca3e0",
+    "T+数据/基础档案/存货.xlsx": "78150bd202c0ec6af7750f2dc572bdff261ca7b4cac3babb8a237ad8fa8c9efd"
+  },
+  "batch_summary": [
+    {
+      "batch_id": "P01",
+      "batch_name": "针织与打底",
+      "count": 187,
+      "resolved": 187,
+      "unresolved": 0,
+      "target_counts": {
+        "毛衫": 187
+      },
+      "decision_rule": "针织类统一毛衫；用户随后明确3款打底衫也归毛衫，因此本项187款全部毛衫。"
+    },
+    {
+      "batch_id": "P02",
+      "batch_name": "夹克细类",
+      "count": 232,
+      "resolved": 232,
+      "unresolved": 0,
+      "target_counts": {
+        "夹克": 196,
+        "毛呢夹克": 36
+      },
+      "decision_rule": "原有毛呢/羊毛证据36款归毛呢夹克，其余196款（含原6款未知）归夹克。"
+    },
+    {
+      "batch_id": "P03",
+      "batch_name": "大衣细类",
+      "count": 139,
+      "resolved": 139,
+      "unresolved": 0,
+      "target_counts": {
+        "大衣": 59,
+        "毛呢大衣": 80
+      },
+      "decision_rule": "80款毛呢大衣，59款大衣。"
+    },
+    {
+      "batch_id": "P04",
+      "batch_name": "套西或单西",
+      "count": 134,
+      "resolved": 134,
+      "unresolved": 0,
+      "target_counts": {
+        "西服": 121,
+        "套西": 6,
+        "单西": 7
+      },
+      "decision_rule": "原6套西、7单西保留；原121款未知直挂父级西服。"
+    },
+    {
+      "batch_id": "P05",
+      "batch_name": "衬衫/T恤袖长",
+      "count": 71,
+      "resolved": 71,
+      "unresolved": 0,
+      "target_counts": {
+        "长袖衬衫": 43,
+        "短袖T恤": 17,
+        "长袖T恤": 7,
+        "短袖衬衫": 4
+      },
+      "decision_rule": "旧资料明确28款按原提案；其余43款中T恤默认短袖、衬衫/衬衣默认长袖。"
+    },
+    {
+      "batch_id": "P06",
+      "batch_name": "风衣细类",
+      "count": 37,
+      "resolved": 37,
+      "unresolved": 0,
+      "target_counts": {
+        "风衣": 37
+      },
+      "decision_rule": "37款风衣。"
+    },
+    {
+      "batch_id": "P07",
+      "batch_name": "派克细类",
+      "count": 14,
+      "resolved": 14,
+      "unresolved": 0,
+      "target_counts": {
+        "派克": 9,
+        "毛呢派克": 5
+      },
+      "decision_rule": "5款毛呢派克、9款派克。"
+    },
+    {
+      "batch_id": "P08",
+      "batch_name": "皮革材质",
+      "count": 12,
+      "resolved": 12,
+      "unresolved": 0,
+      "target_counts": {
+        "皮革服装": 11,
+        "PU服装": 1
+      },
+      "decision_rule": "1款PU服装；其余11款直挂父级皮革服装。"
+    },
+    {
+      "batch_id": "P09",
+      "batch_name": "裤装细类",
+      "count": 9,
+      "resolved": 9,
+      "unresolved": 0,
+      "target_counts": {
+        "长裤": 9
+      },
+      "decision_rule": "9款未知裤装直挂父级长裤。"
+    },
+    {
+      "batch_id": "P10",
+      "batch_name": "马夹/皮羽绒",
+      "count": 6,
+      "resolved": 6,
+      "unresolved": 0,
+      "target_counts": {
+        "羽绒服": 6
+      },
+      "decision_rule": "原P10全部6款归羽绒服，包括327MS5353633羊毛马夹；这是本轮业务分类裁决，不改品名、不反推真实材质。"
+    },
+    {
+      "batch_id": "P11",
+      "batch_name": "旧泛称与无独立类别",
+      "count": 27,
+      "resolved": 27,
+      "unresolved": 0,
+      "target_counts": {
+        "其他辅料": 27
+      },
+      "decision_rule": "原P11全部27款归其他辅料。"
+    },
+    {
+      "batch_id": "P12",
+      "batch_name": "非服装历史存货",
+      "count": 3,
+      "resolved": 3,
+      "unresolved": 0,
+      "target_counts": {
+        "其他辅料": 3
+      },
+      "decision_rule": "运费、补差价、发票3款归其他辅料；只裁定商品分类，不扩展其库存或资金规则。"
+    },
+    {
+      "batch_id": "P13",
+      "batch_name": "名称/描述冲突与混合样衣",
+      "count": 22,
+      "resolved": 22,
+      "unresolved": 0,
+      "target_counts": {
+        "羽绒服": 3,
+        "夹克": 9,
+        "风衣": 5,
+        "毛皮服装": 1,
+        "长裤": 1,
+        "棉服": 1,
+        "套西": 1,
+        "毛衫": 1
+      },
+      "decision_rule": "限原P13范围，按商品主名称优先；501XF5365887按本轮尺码组冲突专项裁决归套西，不推广到全库西裤；用户随后明确样品裤子归父级长裤、混合样衣与泛马夹归羽绒服、毛皮服装直挂同名父级，并授权第4个父级直挂。"
+    }
+  ],
+  "source_rules": "本轮用户正式裁决及最后7款明确收口，由主代理传达；不含导入/运行代码修改授权。"
+}

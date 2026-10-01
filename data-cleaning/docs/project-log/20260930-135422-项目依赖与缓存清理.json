@@ -1,0 +1,170 @@
+{
+  "started_at": "2026-09-30T13:53:06+08:00",
+  "completed_at": "2026-09-30T13:54:22+08:00",
+  "authorization": "User said 删了吧 after the audit; scope is the recommended first batch (first two rows).",
+  "exact_targets": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-legacy-interaction-react-rebuild/node_modules",
+      "allocated_bytes": 218968064
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-design-audit/node_modules",
+      "allocated_bytes": 218918912
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-s2-integrated/node_modules",
+      "allocated_bytes": 218927104
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-s2-products-integrated/node_modules",
+      "allocated_bytes": 218939392
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-shared-basic-integration/node_modules",
+      "allocated_bytes": 218927104
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-core/node_modules",
+      "allocated_bytes": 218935296
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s1-sku/node_modules",
+      "allocated_bytes": 218935296
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s2-sales/node_modules",
+      "allocated_bytes": 218939392
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s3-inventory/node_modules",
+      "allocated_bytes": 218935296
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s4-transfers/node_modules",
+      "allocated_bytes": 218943488
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s5-final/node_modules",
+      "allocated_bytes": 218935296
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05c-luna-basic-data/node_modules",
+      "allocated_bytes": 218939392
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05c-luna-products/node_modules",
+      "allocated_bytes": 218943488
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage06-ui-feedback/node_modules",
+      "allocated_bytes": 218951680
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/node_modules/.pnpm-store",
+      "allocated_bytes": 387846144
+    }
+  ],
+  "removed": [
+    "/Users/billy/Desktop/Workspace/project-007-legacy-interaction-react-rebuild/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05-design-audit/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05-s2-integrated/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05-s2-products-integrated/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05-shared-basic-integration/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-core/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s1-sku/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s2-sales/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s3-inventory/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s4-transfers/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s5-final/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05c-luna-basic-data/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05c-luna-products/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage06-ui-feedback/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/node_modules/.pnpm-store"
+  ],
+  "failures": [],
+  "protected_files": 21189,
+  "protected_files_changed": [],
+  "before_available_bytes": 1669419008,
+  "after_available_bytes": 1803407360,
+  "net_available_increase_bytes": 133988352,
+  "net_available_increase_GiB": 0.125,
+  "after_available_GiB": 1.68,
+  "active_dependency_retained": true,
+  "cleaning_worktree_dependency_link_retained": true,
+  "service_checks": [
+    {
+      "url": "http://127.0.0.1:8877/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8878/health",
+      "status": 200,
+      "body": {
+        "ok": true,
+        "source": "REAL_TPLUS_HISTORY",
+        "readonly": true,
+        "database": "business_management",
+        "schema": "tplus_demo_20260922_a2",
+        "batch": "TPLUS-20260922-A2",
+        "data": {
+          "database": "business_management",
+          "schema": "tplus_demo_20260922_a2",
+          "transactionReadOnly": "on",
+          "batch": {
+            "batch_id": "TPLUS-20260922-A2",
+            "status": "COMMITTED",
+            "success_count": 613553,
+            "failure_count": 0
+          },
+          "categories": 50,
+          "products": 2941,
+          "skus": 14864,
+          "productBarcodes": 2943,
+          "purchases": 2172,
+          "purchaseLines": 49127,
+          "sales": 27903,
+          "saleLines": 79508,
+          "funds": 25416,
+          "multiFundSales": 470,
+          "transfers": 13946,
+          "transferLines": 254519,
+          "inventoryKeys": 137940,
+          "inventoryTotal": "80794.0000",
+          "negativeKeys": 1231,
+          "inventoryPosting": 0,
+          "inventoryMovement": 0,
+          "quarantine": [
+            {
+              "dataset_path": "quarantine/independent_receipt_documents.jsonl",
+              "record_count": 25155,
+              "status": "QUARANTINED"
+            },
+            {
+              "dataset_path": "quarantine/independent_receipt_lines.jsonl",
+              "record_count": 25622,
+              "status": "QUARANTINED"
+            },
+            {
+              "dataset_path": "quarantine/unmatched_transfer_documents.jsonl",
+              "record_count": 131,
+              "status": "QUARANTINED"
+            },
+            {
+              "dataset_path": "quarantine/unmatched_transfer_lines.jsonl",
+              "record_count": 88800,
+              "status": "QUARANTINED"
+            }
+          ],
+          "unresolved": 0,
+          "unsafeHistory": 0,
+          "unsafeFunds": 0,
+          "inventoryDifferences": 0
+        }
+      }
+    }
+  ],
+  "retained_other_candidates": [
+    "Old cleaning preflight data and diagnostics",
+    "Older handoff ZIP"
+  ]
+}

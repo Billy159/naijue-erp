@@ -1,0 +1,13 @@
+(node:16818) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "schema": "v2_runtime_test_manual_alias_ccfac66a41fd42dca0e0c565e583094b",
+  "results": [
+    "manual old barcode on Excel-managed SKU saves and reloads exact string, note and original identity",
+    "catalog read exposes manual aliases, retains approved primary codes and excludes retired inferred aliases",
+    "later product save retains the existing alias without duplicating it",
+    "duplicate main/other-SKU codes, wrong ownership, blank/long codes and stale saves are rejected atomically",
+    "manual alias removal works; protected main codes, authority records, source SKUs and stock remain identical"
+  ]
+}
+Isolated manual-alias schema removed

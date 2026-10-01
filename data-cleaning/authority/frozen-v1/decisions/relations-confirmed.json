@@ -1,0 +1,1911 @@
+{
+  "warehouses": [
+    {
+      "code": "10001",
+      "name": "多立方总仓",
+      "source_row": 2,
+      "status": "自动拟采用",
+      "target_department": "",
+      "target_name": "公共仓",
+      "reason": "总仓明确命名，历史销货跨15个已填部门及1个部门缺失，拟作公共仓不挂营业厅",
+      "historical_department_docs": {
+        "005": 852,
+        "003": 1280,
+        "": 1,
+        "004": 16,
+        "008": 10,
+        "001": 13,
+        "93108": 2,
+        "002": 8,
+        "91101": 1,
+        "007": 3,
+        "91201": 2,
+        "91109": 1,
+        "92106": 3,
+        "91118": 1,
+        "91108": 1,
+        "91102": 1
+      }
+    },
+    {
+      "code": "91101",
+      "name": "大西洋银泰ST仓库",
+      "source_row": 3,
+      "status": "自动拟采用",
+      "target_department": "91101",
+      "target_name": "大西洋银泰ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91101": 2079
+      }
+    },
+    {
+      "code": "91102",
+      "name": "金华银泰仓ST仓库",
+      "source_row": 4,
+      "status": "自动拟采用",
+      "target_department": "91102",
+      "target_name": "金华银泰仓ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91102": 1821
+      }
+    },
+    {
+      "code": "91105",
+      "name": "宁海国购ST仓库",
+      "source_row": 5,
+      "status": "自动拟采用",
+      "target_department": "91105",
+      "target_name": "宁海国购ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91105": 1214
+      }
+    },
+    {
+      "code": "91111",
+      "name": "永康南龙ST仓库",
+      "source_row": 6,
+      "status": "自动拟采用",
+      "target_department": "91111",
+      "target_name": "永康南龙ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91111": 37
+      }
+    },
+    {
+      "code": "91112",
+      "name": "长兴中百ST仓库",
+      "source_row": 7,
+      "status": "自动拟采用",
+      "target_department": "91112",
+      "target_name": "长兴中百ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91112": 242
+      }
+    },
+    {
+      "code": "91109",
+      "name": "嘉兴江南大厦ST仓库",
+      "source_row": 8,
+      "status": "自动拟采用",
+      "target_department": "91109",
+      "target_name": "嘉兴江南大厦ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91109": 360
+      }
+    },
+    {
+      "code": "93103",
+      "name": "新东方边厅XM仓库",
+      "source_row": 9,
+      "status": "自动拟采用",
+      "target_department": "93103",
+      "target_name": "新东方边厅XM",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "93103": 563
+      }
+    },
+    {
+      "code": "91201",
+      "name": "银泰文化店ST仓库",
+      "source_row": 10,
+      "status": "自动拟采用",
+      "target_department": "91201",
+      "target_name": "银泰文化店ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91201": 2253
+      }
+    },
+    {
+      "code": "91103",
+      "name": "柯桥银泰ST仓库",
+      "source_row": 11,
+      "status": "自动拟采用",
+      "target_department": "91103",
+      "target_name": "柯桥银泰ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91103": 36
+      }
+    },
+    {
+      "code": "91115",
+      "name": "舟山一百ST仓库",
+      "source_row": 12,
+      "status": "自动拟采用",
+      "target_department": "91115",
+      "target_name": "舟山一百ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91115": 1488
+      }
+    },
+    {
+      "code": "91106",
+      "name": "舟山银泰ST仓库",
+      "source_row": 13,
+      "status": "自动拟采用",
+      "target_department": "91106",
+      "target_name": "舟山银泰ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91106": 905
+      }
+    },
+    {
+      "code": "96111",
+      "name": "长兴浙北ST特卖仓库",
+      "source_row": 14,
+      "status": "自动拟采用",
+      "target_department": "91107",
+      "target_name": "长兴浙北ST",
+      "reason": "仓名唯一指向同名营业厅且全部历史销售仅属该厅",
+      "historical_department_docs": {
+        "91107": 79
+      }
+    },
+    {
+      "code": "91113",
+      "name": "六安百大解放路ST仓库",
+      "source_row": 15,
+      "status": "自动拟采用",
+      "target_department": "91113",
+      "target_name": "六安百大解放路ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91113": 370,
+        "93111": 1
+      }
+    },
+    {
+      "code": "93102",
+      "name": "武林银泰XM仓库",
+      "source_row": 16,
+      "status": "自动拟采用",
+      "target_department": "93102",
+      "target_name": "武林银泰XM",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "93102": 108
+      }
+    },
+    {
+      "code": "93108",
+      "name": "诸暨一百XM仓库",
+      "source_row": 17,
+      "status": "自动拟采用",
+      "target_department": "93108",
+      "target_name": "诸暨一百XM",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "93108": 364
+      }
+    },
+    {
+      "code": "93106",
+      "name": "长兴中百XM仓库",
+      "source_row": 18,
+      "status": "自动拟采用",
+      "target_department": "93106",
+      "target_name": "长兴中百XM",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "93106": 476
+      }
+    },
+    {
+      "code": "93113",
+      "name": "舟山银泰XM仓库",
+      "source_row": 19,
+      "status": "自动拟采用",
+      "target_department": "93113",
+      "target_name": "舟山银泰XM",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "93113": 281
+      }
+    },
+    {
+      "code": "93105",
+      "name": "新东方中岛XM仓库",
+      "source_row": 20,
+      "status": "自动拟采用",
+      "target_department": "93105",
+      "target_name": "新东方中岛XM",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "93105": 224
+      }
+    },
+    {
+      "code": "93111",
+      "name": "下沙银泰XM仓库",
+      "source_row": 21,
+      "status": "自动拟采用",
+      "target_department": "93111",
+      "target_name": "下沙银泰XM",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "93111": 2119
+      }
+    },
+    {
+      "code": "93112",
+      "name": "余姚金泰XM仓库",
+      "source_row": 22,
+      "status": "自动拟采用",
+      "target_department": "93112",
+      "target_name": "余姚金泰XM",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "93112": 824
+      }
+    },
+    {
+      "code": "93109",
+      "name": "金华万泰XM仓库",
+      "source_row": 23,
+      "status": "自动拟采用",
+      "target_department": "93109",
+      "target_name": "金华万泰XM",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "93109": 255
+      }
+    },
+    {
+      "code": "92102",
+      "name": "舟山银泰AMJ仓库",
+      "source_row": 24,
+      "status": "自动拟采用",
+      "target_department": "92102",
+      "target_name": "舟山银泰AMJ",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "92102": 637,
+        "91106": 55
+      }
+    },
+    {
+      "code": "92101",
+      "name": "舟山一百AMJ仓库",
+      "source_row": 25,
+      "status": "自动拟采用",
+      "target_department": "92101",
+      "target_name": "舟山一百AMJ",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "92101": 849,
+        "93115": 2,
+        "003": 1
+      }
+    },
+    {
+      "code": "93101",
+      "name": "丁桥店XM仓库",
+      "source_row": 26,
+      "status": "自动拟采用",
+      "target_department": "93101",
+      "target_name": "丁桥店XM",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "93101": 492
+      }
+    },
+    {
+      "code": "93110",
+      "name": "嵊州国商XM仓库",
+      "source_row": 27,
+      "status": "自动拟采用",
+      "target_department": "93110",
+      "target_name": "嵊州国商XM",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "93110": 763
+      }
+    },
+    {
+      "code": "96103",
+      "name": "金华银泰仓特卖仓库",
+      "source_row": 28,
+      "status": "自动拟采用",
+      "target_department": "96103",
+      "target_name": "金华银泰仓ST特卖",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "96103": 95,
+        "91102": 12
+      }
+    },
+    {
+      "code": "96109",
+      "name": "诸暨一百XM特卖仓库",
+      "source_row": 29,
+      "status": "自动拟采用",
+      "target_department": "96109",
+      "target_name": "诸暨一百XM特卖",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "93108": 377,
+        "96109": 3
+      }
+    },
+    {
+      "code": "96101",
+      "name": "嘉兴江南大厦ST特卖仓库",
+      "source_row": 30,
+      "status": "自动拟采用",
+      "target_department": "96101",
+      "target_name": "嘉兴江南大厦ST特卖",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91109": 61,
+        "96101": 5
+      }
+    },
+    {
+      "code": "96107",
+      "name": "银泰文化店ST特卖仓库",
+      "source_row": 31,
+      "status": "自动拟采用",
+      "target_department": "96107",
+      "target_name": "银泰文化店ST特卖",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {}
+    },
+    {
+      "code": "96105",
+      "name": "宁海大厦ST特卖仓库",
+      "source_row": 32,
+      "status": "自动拟采用",
+      "target_department": "96105",
+      "target_name": "宁海大厦ST特卖",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91116": 48,
+        "96105": 1
+      }
+    },
+    {
+      "code": "96108",
+      "name": "舟山银泰外场特卖仓库",
+      "source_row": 33,
+      "status": "自动拟采用",
+      "target_department": "96108",
+      "target_name": "舟山银泰外场特卖",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91106": 58,
+        "96108": 2
+      }
+    },
+    {
+      "code": "96102",
+      "name": "庆春银泰特卖仓库",
+      "source_row": 34,
+      "status": "用户已确认",
+      "target_department": "91118",
+      "target_name": "庆春银泰ST",
+      "reason": "用户补充明确归91118庆春银泰ST；保留96102仓库编码及庆春银泰特卖仓库原名，不按同码96102部门误挂金华。",
+      "historical_department_docs": {
+        "96102": 6,
+        "91118": 1
+      }
+    },
+    {
+      "code": "91116",
+      "name": "宁海大厦ST仓库",
+      "source_row": 35,
+      "status": "自动拟采用",
+      "target_department": "91116",
+      "target_name": "宁海大厦ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91116": 1286
+      }
+    },
+    {
+      "code": "91110",
+      "name": "江阴国购ST仓库",
+      "source_row": 36,
+      "status": "自动拟采用",
+      "target_department": "91110",
+      "target_name": "江阴国购ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91110": 146
+      }
+    },
+    {
+      "code": "91108",
+      "name": "宜兴八佰伴ST仓库",
+      "source_row": 37,
+      "status": "自动拟采用",
+      "target_department": "91108",
+      "target_name": "宜兴八佰伴ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91108": 262
+      }
+    },
+    {
+      "code": "96106",
+      "name": "宜兴八佰伴ST特卖仓库",
+      "source_row": 38,
+      "status": "自动拟采用",
+      "target_department": "96106",
+      "target_name": "宜兴八佰伴ST特卖",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {}
+    },
+    {
+      "code": "93115",
+      "name": "舟山一百XM仓库",
+      "source_row": 39,
+      "status": "自动拟采用",
+      "target_department": "93115",
+      "target_name": "舟山一百XM",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "93115": 299,
+        "92101": 34
+      }
+    },
+    {
+      "code": "91118",
+      "name": "庆春银泰ST仓库",
+      "source_row": 40,
+      "status": "自动拟采用",
+      "target_department": "91118",
+      "target_name": "庆春银泰ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91118": 620
+      }
+    },
+    {
+      "code": "91117",
+      "name": "兰溪嘉泰ST仓库",
+      "source_row": 41,
+      "status": "自动拟采用",
+      "target_department": "91117",
+      "target_name": "兰溪嘉泰ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91117": 882
+      }
+    },
+    {
+      "code": "96110",
+      "name": "舟山一百外场特卖仓库",
+      "source_row": 42,
+      "status": "用户已确认",
+      "target_department": "",
+      "target_name": "舟山一百AMJ与舟山一百ST轮用仓",
+      "reason": "用户明确一个月给舟山一百AMJ使用，另一个月给舟山一百ST使用；没有提供起始月份，不生成奇偶月日历、不拆仓、不改历史单据部门。",
+      "historical_department_docs": {
+        "92101": 33,
+        "91115": 3
+      },
+      "related_departments": [
+        "92101",
+        "91115"
+      ],
+      "usage_mode": "两营业厅轮流使用同一个源仓库",
+      "monthly_schedule": null
+    },
+    {
+      "code": "93116",
+      "name": "兰溪今朝仓库",
+      "source_row": 43,
+      "status": "自动拟采用",
+      "target_department": "93116",
+      "target_name": "兰溪今朝",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "002": 85,
+        "91117": 1
+      }
+    },
+    {
+      "code": "91107",
+      "name": "长兴浙北ST仓库",
+      "source_row": 44,
+      "status": "自动拟采用",
+      "target_department": "91107",
+      "target_name": "长兴浙北ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91107": 327
+      }
+    },
+    {
+      "code": "96112",
+      "name": "兰溪嘉泰特卖仓库",
+      "source_row": 45,
+      "status": "自动拟采用",
+      "target_department": "91117",
+      "target_name": "兰溪嘉泰ST",
+      "reason": "仓名唯一指向同名营业厅且全部历史销售仅属该厅",
+      "historical_department_docs": {
+        "91117": 55
+      }
+    },
+    {
+      "code": "92103",
+      "name": "绍兴国商AMJ仓库",
+      "source_row": 46,
+      "status": "自动拟采用",
+      "target_department": "92103",
+      "target_name": "绍兴国商AMJ",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "92103": 226
+      }
+    },
+    {
+      "code": "91202",
+      "name": "普陀天地仓库",
+      "source_row": 47,
+      "status": "自动拟采用",
+      "target_department": "91202",
+      "target_name": "普陀天地ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91202": 392
+      }
+    },
+    {
+      "code": "91203",
+      "name": "东阳好乐多仓库",
+      "source_row": 48,
+      "status": "自动拟采用",
+      "target_department": "91203",
+      "target_name": "东阳好乐多",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91203": 348
+      }
+    },
+    {
+      "code": "91119",
+      "name": "临平银泰ST仓库",
+      "source_row": 49,
+      "status": "自动拟采用",
+      "target_department": "91119",
+      "target_name": "临平银泰ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91119": 309,
+        "003": 3
+      }
+    },
+    {
+      "code": "92105",
+      "name": "戴梦得AMJ",
+      "source_row": 50,
+      "status": "自动拟采用",
+      "target_department": "92105",
+      "target_name": "戴梦得AMJ",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "92105": 253
+      }
+    },
+    {
+      "code": "92106",
+      "name": "金华之心AMJ",
+      "source_row": 51,
+      "status": "自动拟采用",
+      "target_department": "92106",
+      "target_name": "金华之心AMJ",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "92106": 338
+      }
+    },
+    {
+      "code": "91120",
+      "name": "义乌银泰ST仓库",
+      "source_row": 52,
+      "status": "自动拟采用",
+      "target_department": "91120",
+      "target_name": "义乌银泰ST",
+      "reason": "同码且名称无实质冲突",
+      "historical_department_docs": {
+        "91120": 212,
+        "003": 27
+      }
+    }
+  ],
+  "customers": [
+    {
+      "department": "91101",
+      "department_name": "大西洋银泰ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 4,
+        "code": "AC-05-91101",
+        "name": "大西洋银泰ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 4,
+          "code": "AC-05-91101",
+          "name": "大西洋银泰ST零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91101": 2080
+      }
+    },
+    {
+      "department": "91102",
+      "department_name": "金华银泰仓ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 366,
+        "code": "AC-05-91102",
+        "name": "金华银泰仓ST 零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 366,
+          "code": "AC-05-91102",
+          "name": "金华银泰仓ST 零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91102": 1834
+      }
+    },
+    {
+      "department": "91103",
+      "department_name": "柯桥银泰ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 129,
+        "code": "AC-05-91103",
+        "name": "柯桥银泰ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 129,
+          "code": "AC-05-91103",
+          "name": "柯桥银泰ST零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91103": 36
+      }
+    },
+    {
+      "department": "91105",
+      "department_name": "宁海国购ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 368,
+        "code": "AC-05-91105",
+        "name": "宁海国购ST 零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 368,
+          "code": "AC-05-91105",
+          "name": "宁海国购ST 零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91105": 1214
+      }
+    },
+    {
+      "department": "91106",
+      "department_name": "舟山银泰ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 108,
+        "code": "AC-05-91106",
+        "name": "舟山银泰ST 零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 108,
+          "code": "AC-05-91106",
+          "name": "舟山银泰ST 零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91106": 1018
+      }
+    },
+    {
+      "department": "91107",
+      "department_name": "长兴浙北ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 110,
+        "code": "AC-05-91107",
+        "name": "长兴浙北ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 110,
+          "code": "AC-05-91107",
+          "name": "长兴浙北ST零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91107": 406
+      }
+    },
+    {
+      "department": "91108",
+      "department_name": "宜兴八佰伴ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 5,
+        "code": "AC-05-91108",
+        "name": "宜兴八佰伴ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 5,
+          "code": "AC-05-91108",
+          "name": "宜兴八佰伴ST零售客户",
+          "category": "商场收银"
+        },
+        {
+          "row": 471,
+          "code": "13968897155",
+          "name": "15968897155",
+          "category": "会员"
+        }
+      ],
+      "reason": "唯一营业厅零售客户；其他是具名会员/内部人员，不混作默认零售客户",
+      "historical_customer_docs": {
+        "AC-05-91108": 263
+      }
+    },
+    {
+      "department": "91109",
+      "department_name": "嘉兴江南大厦ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 45,
+        "code": "AC-05-91109",
+        "name": "嘉兴江南大厦ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 45,
+          "code": "AC-05-91109",
+          "name": "嘉兴江南大厦ST零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91109": 422
+      }
+    },
+    {
+      "department": "91110",
+      "department_name": "江阴国购ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 46,
+        "code": "AC-05-91110",
+        "name": "江阴国购ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 46,
+          "code": "AC-05-91110",
+          "name": "江阴国购ST零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91110": 146
+      }
+    },
+    {
+      "department": "91111",
+      "department_name": "永康南龙ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 51,
+        "code": "AC-05-91111",
+        "name": "永康南龙ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 51,
+          "code": "AC-05-91111",
+          "name": "永康南龙ST零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91111": 37
+      }
+    },
+    {
+      "department": "91112",
+      "department_name": "长兴中百ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 53,
+        "code": "AC-05-91112",
+        "name": "长兴中百ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 53,
+          "code": "AC-05-91112",
+          "name": "长兴中百ST零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91112": 242
+      }
+    },
+    {
+      "department": "91113",
+      "department_name": "六安百大解放路ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 54,
+        "code": "AC-05-91113",
+        "name": "六安百大解放路ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 54,
+          "code": "AC-05-91113",
+          "name": "六安百大解放路ST零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91113": 370
+      }
+    },
+    {
+      "department": "91115",
+      "department_name": "舟山一百ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 57,
+        "code": "AC-05-91115",
+        "name": "舟山一百ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 57,
+          "code": "AC-05-91115",
+          "name": "舟山一百ST零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91115": 1491
+      }
+    },
+    {
+      "department": "91116",
+      "department_name": "宁海大厦ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 10,
+        "code": "AC-05-91116",
+        "name": "宁海大厦ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 10,
+          "code": "AC-05-91116",
+          "name": "宁海大厦ST零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91116": 1334
+      }
+    },
+    {
+      "department": "91117",
+      "department_name": "兰溪嘉泰ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 93,
+        "code": "AC-05-91117",
+        "name": "兰溪嘉泰ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 93,
+          "code": "AC-05-91117",
+          "name": "兰溪嘉泰ST零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91117": 938
+      }
+    },
+    {
+      "department": "91118",
+      "department_name": "庆春银泰ST",
+      "status": "用户已确认",
+      "customer": {
+        "row": 92,
+        "code": "AC-05-93107",
+        "name": "庆春银泰ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 92,
+          "code": "AC-05-93107",
+          "name": "庆春银泰ST零售客户",
+          "category": "商场收银"
+        },
+        {
+          "row": 424,
+          "code": "AC-05-96110",
+          "name": "庆春银泰特卖ST零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "用户D01明确选择庆春银泰ST零售客户；另一个特卖零售客户保留，不合并。",
+      "historical_customer_docs": {
+        "AC-05-93107": 621,
+        "AC-05-96110": 1
+      }
+    },
+    {
+      "department": "91119",
+      "department_name": "临平银泰ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 469,
+        "code": "AC-05-91119",
+        "name": "临平银泰ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 469,
+          "code": "AC-05-91119",
+          "name": "临平银泰ST零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "全档唯一对应编码及明确零售名称；原分管部门为空或职能部门，不把分管关系误当默认客户限制",
+      "historical_customer_docs": {
+        "AC-05-91119": 309
+      }
+    },
+    {
+      "department": "91120",
+      "department_name": "义乌银泰ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 439,
+        "code": "AC-05-91120",
+        "name": "义乌银泰零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 439,
+          "code": "AC-05-91120",
+          "name": "义乌银泰零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "全档唯一对应编码及明确零售名称；原分管部门为空或职能部门，不把分管关系误当默认客户限制",
+      "historical_customer_docs": {
+        "AC-05-91120": 212
+      }
+    },
+    {
+      "department": "91201",
+      "department_name": "银泰文化店ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 111,
+        "code": "AC-05-91201",
+        "name": "银泰文化店ST零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 111,
+          "code": "AC-05-91201",
+          "name": "银泰文化店ST零售客户",
+          "category": "商场收银"
+        },
+        {
+          "row": 132,
+          "code": "AC-09-0061",
+          "name": "杨小菊（文化营业员）",
+          "category": "内部人员"
+        }
+      ],
+      "reason": "唯一营业厅零售客户；其他是具名会员/内部人员，不混作默认零售客户",
+      "historical_customer_docs": {
+        "AC-05-91201": 2255
+      }
+    },
+    {
+      "department": "91202",
+      "department_name": "普陀天地ST",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 467,
+        "code": "AC-05-91202",
+        "name": "普陀天地零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 467,
+          "code": "AC-05-91202",
+          "name": "普陀天地零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91202": 392
+      }
+    },
+    {
+      "department": "91203",
+      "department_name": "东阳好乐多",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 468,
+        "code": "AC-05-91203",
+        "name": "东阳好乐多零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 468,
+          "code": "AC-05-91203",
+          "name": "东阳好乐多零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-91203": 348
+      }
+    },
+    {
+      "department": "92101",
+      "department_name": "舟山一百AMJ",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 6,
+        "code": "AC-05-92101",
+        "name": "舟山一百AMJ零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 6,
+          "code": "AC-05-92101",
+          "name": "舟山一百AMJ零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-92101": 916
+      }
+    },
+    {
+      "department": "92102",
+      "department_name": "舟山银泰AMJ",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 7,
+        "code": "AC-05-92102",
+        "name": "舟山银泰AMJ零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 7,
+          "code": "AC-05-92102",
+          "name": "舟山银泰AMJ零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-92102": 637
+      }
+    },
+    {
+      "department": "92103",
+      "department_name": "绍兴国商AMJ",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 101,
+        "code": "AC-05-92103",
+        "name": "绍兴国商AMJ零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 101,
+          "code": "AC-05-92103",
+          "name": "绍兴国商AMJ零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-92103": 226
+      }
+    },
+    {
+      "department": "92105",
+      "department_name": "戴梦得AMJ",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 472,
+        "code": "AC-05-92105",
+        "name": "戴梦得AMJ零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 148,
+          "code": "13736429257",
+          "name": "凌金英",
+          "category": "会员"
+        },
+        {
+          "row": 472,
+          "code": "AC-05-92105",
+          "name": "戴梦得AMJ零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "唯一营业厅零售客户；其他是具名会员/内部人员，不混作默认零售客户",
+      "historical_customer_docs": {
+        "AC-05-92105": 253
+      }
+    },
+    {
+      "department": "92106",
+      "department_name": "金华之心AMJ",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 473,
+        "code": "AC-05-92106",
+        "name": "金华之心AMJ零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 427,
+          "code": "13600692329",
+          "name": "金",
+          "category": "会员"
+        },
+        {
+          "row": 431,
+          "code": "18958077689",
+          "name": "陈春祥1",
+          "category": "会员"
+        },
+        {
+          "row": 432,
+          "code": "18357956907",
+          "name": "刘进",
+          "category": "会员"
+        },
+        {
+          "row": 433,
+          "code": "17621963599",
+          "name": "吴军受",
+          "category": "会员"
+        },
+        {
+          "row": 434,
+          "code": "13625899886",
+          "name": "盛敏",
+          "category": "会员"
+        },
+        {
+          "row": 435,
+          "code": "13735675848",
+          "name": "陶永水",
+          "category": "会员"
+        },
+        {
+          "row": 436,
+          "code": "15067908789",
+          "name": "杨爽",
+          "category": "会员"
+        },
+        {
+          "row": 437,
+          "code": "15105795570",
+          "name": "朱孝琴",
+          "category": "会员"
+        },
+        {
+          "row": 438,
+          "code": "13867963481",
+          "name": "叶萍",
+          "category": "会员"
+        },
+        {
+          "row": 440,
+          "code": "15825763235",
+          "name": "周小辉",
+          "category": "会员"
+        },
+        {
+          "row": 441,
+          "code": "18857996200",
+          "name": "祝金阳",
+          "category": "会员"
+        },
+        {
+          "row": 442,
+          "code": "13757983161",
+          "name": "翁云",
+          "category": "会员"
+        },
+        {
+          "row": 445,
+          "code": "17701605966",
+          "name": "孙艳",
+          "category": "会员"
+        },
+        {
+          "row": 446,
+          "code": "13738994191",
+          "name": "王菊红",
+          "category": "会员"
+        },
+        {
+          "row": 447,
+          "code": "13605793737",
+          "name": "吉金苏",
+          "category": "会员"
+        },
+        {
+          "row": 448,
+          "code": "15024387012",
+          "name": "张芹芬",
+          "category": "会员"
+        },
+        {
+          "row": 449,
+          "code": "13905794841",
+          "name": "陈志松",
+          "category": "会员"
+        },
+        {
+          "row": 451,
+          "code": "13058961348",
+          "name": "陈敏",
+          "category": "会员"
+        },
+        {
+          "row": 452,
+          "code": "13064652130",
+          "name": "张晓华",
+          "category": "会员"
+        },
+        {
+          "row": 453,
+          "code": "13566770133",
+          "name": "徐冬梅",
+          "category": "会员"
+        },
+        {
+          "row": 454,
+          "code": "18069941981",
+          "name": "冯爱丽",
+          "category": "会员"
+        },
+        {
+          "row": 461,
+          "code": "13588619866",
+          "name": "应华珍",
+          "category": "会员"
+        },
+        {
+          "row": 473,
+          "code": "AC-05-92106",
+          "name": "金华之心AMJ零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "唯一营业厅零售客户；其他是具名会员/内部人员，不混作默认零售客户",
+      "historical_customer_docs": {
+        "AC-05-92106": 293,
+        "18357956907": 3,
+        "17621963599": 1,
+        "13625899886": 2,
+        "13735675848": 11,
+        "13867963481": 7,
+        "15825763235": 1,
+        "18857996200": 1,
+        "13757983161": 5,
+        "17701605966": 1,
+        "13738994191": 3,
+        "13605793737": 3,
+        "13058961348": 1,
+        "15024387012": 1,
+        "13064652130": 2,
+        "13566770133": 2,
+        "18069941981": 1,
+        "13588619866": 1,
+        "AC-09-0006": 2
+      }
+    },
+    {
+      "department": "93101",
+      "department_name": "丁桥店XM",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 397,
+        "code": "AC-05-93101",
+        "name": "丁桥店XM零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 397,
+          "code": "AC-05-93101",
+          "name": "丁桥店XM零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-93101": 492
+      }
+    },
+    {
+      "department": "93102",
+      "department_name": "武林银泰XM",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 399,
+        "code": "AC-05-93102",
+        "name": "武",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 399,
+          "code": "AC-05-93102",
+          "name": "武",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-93102": 108
+      }
+    },
+    {
+      "department": "93103",
+      "department_name": "新东方边厅XM",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 11,
+        "code": "AC-05-93103",
+        "name": "新东方边厅XM零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 11,
+          "code": "AC-05-93103",
+          "name": "新东方边厅XM零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-93103": 563
+      }
+    },
+    {
+      "department": "93105",
+      "department_name": "新东方中岛XM",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 12,
+        "code": "AC-05-93105",
+        "name": "新东方中岛XM",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 12,
+          "code": "AC-05-93105",
+          "name": "新东方中岛XM",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-93105": 224
+      }
+    },
+    {
+      "department": "93106",
+      "department_name": "长兴中百XM",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 385,
+        "code": "AC-05-93106",
+        "name": "长兴中百XM零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 385,
+          "code": "AC-05-93106",
+          "name": "长兴中百XM零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-93106": 476
+      }
+    },
+    {
+      "department": "93108",
+      "department_name": "诸暨一百XM",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 13,
+        "code": "AC-05-93108",
+        "name": "诸暨一百XM零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 13,
+          "code": "AC-05-93108",
+          "name": "诸暨一百XM零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-93108": 743
+      }
+    },
+    {
+      "department": "93109",
+      "department_name": "金华万泰XM",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 14,
+        "code": "AC-05-93109",
+        "name": "金华万泰XM零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 14,
+          "code": "AC-05-93109",
+          "name": "金华万泰XM零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-93109": 255
+      }
+    },
+    {
+      "department": "93110",
+      "department_name": "嵊州国商XM",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 39,
+        "code": "AC-05-93110",
+        "name": "嵊州国商XM零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 39,
+          "code": "AC-05-93110",
+          "name": "嵊州国商XM零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-93110": 763
+      }
+    },
+    {
+      "department": "93111",
+      "department_name": "下沙银泰XM",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 40,
+        "code": "AC-05-93111",
+        "name": "下沙银泰XM零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 40,
+          "code": "AC-05-93111",
+          "name": "下沙银泰XM零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-93111": 2120
+      }
+    },
+    {
+      "department": "93112",
+      "department_name": "余姚金泰XM",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 404,
+        "code": "AC-05-93112",
+        "name": "余姚金泰XM零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 404,
+          "code": "AC-05-93112",
+          "name": "余姚金泰XM零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-93112": 824
+      }
+    },
+    {
+      "department": "93113",
+      "department_name": "舟山银泰XM",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 387,
+        "code": "AC-05-93113",
+        "name": "舟山银泰XM零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 387,
+          "code": "AC-05-93113",
+          "name": "舟山银泰XM零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-93113": 281
+      }
+    },
+    {
+      "department": "93115",
+      "department_name": "舟山一百XM",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 90,
+        "code": "AC-05-93115",
+        "name": "舟山一百XM零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 90,
+          "code": "AC-05-93115",
+          "name": "舟山一百XM零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-93115": 301
+      }
+    },
+    {
+      "department": "93116",
+      "department_name": "兰溪今朝",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 96,
+        "code": "AC-05-93116",
+        "name": "兰溪今朝零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 96,
+          "code": "AC-05-93116",
+          "name": "兰溪今朝零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "全档唯一对应编码及明确零售名称；原分管部门为空或职能部门，不把分管关系误当默认客户限制",
+      "historical_customer_docs": {}
+    },
+    {
+      "department": "96101",
+      "department_name": "嘉兴江南大厦ST特卖",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 41,
+        "code": "AC-05-96101",
+        "name": "嘉兴江南大厦ST特卖零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 41,
+          "code": "AC-05-96101",
+          "name": "嘉兴江南大厦ST特卖零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-96101": 5
+      }
+    },
+    {
+      "department": "96102",
+      "department_name": "金华万泰XM特卖场",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 390,
+        "code": "AC-05-96102",
+        "name": "金华万泰XM特卖场零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 390,
+          "code": "AC-05-96102",
+          "name": "金华万泰XM特卖场零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-96102": 6
+      }
+    },
+    {
+      "department": "96103",
+      "department_name": "金华银泰仓ST特卖",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 406,
+        "code": "AC-05-96103",
+        "name": "金华银泰仓ST特卖零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 406,
+          "code": "AC-05-96103",
+          "name": "金华银泰仓ST特卖零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-96103": 95
+      }
+    },
+    {
+      "department": "96105",
+      "department_name": "宁海大厦ST特卖",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 42,
+        "code": "AC-05-96105",
+        "name": "宁海大厦ST特卖零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 42,
+          "code": "AC-05-96105",
+          "name": "宁海大厦ST特卖零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-96105": 1
+      }
+    },
+    {
+      "department": "96106",
+      "department_name": "宜兴八佰伴ST特卖",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 410,
+        "code": "AC-05-96106",
+        "name": "宜兴八佰伴ST特卖零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 410,
+          "code": "AC-05-96106",
+          "name": "宜兴八佰伴ST特卖零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {}
+    },
+    {
+      "department": "96107",
+      "department_name": "银泰文化店ST特卖",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 112,
+        "code": "AC-05-96107",
+        "name": "银泰文化店ST特卖零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 112,
+          "code": "AC-05-96107",
+          "name": "银泰文化店ST特卖零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {}
+    },
+    {
+      "department": "96108",
+      "department_name": "舟山银泰外场特卖",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 113,
+        "code": "AC-05-96108",
+        "name": "舟山银泰外场特卖零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 113,
+          "code": "AC-05-96108",
+          "name": "舟山银泰外场特卖零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-96108": 2
+      }
+    },
+    {
+      "department": "96109",
+      "department_name": "诸暨一百XM特卖",
+      "status": "自动拟采用",
+      "customer": {
+        "row": 391,
+        "code": "AC-05-96109",
+        "name": "诸暨一百XM特卖零售客户",
+        "category": "商场收银"
+      },
+      "candidates": [
+        {
+          "row": 391,
+          "code": "AC-05-96109",
+          "name": "诸暨一百XM特卖零售客户",
+          "category": "商场收银"
+        }
+      ],
+      "reason": "同部门下唯一客户",
+      "historical_customer_docs": {
+        "AC-05-96109": 3
+      }
+    }
+  ],
+  "counts": {
+    "warehouses_total": 51,
+    "warehouses_auto_adopted": 49,
+    "warehouses_user_confirmed": 2,
+    "warehouse_pending": 0,
+    "customer_halls_total": 47,
+    "customer_auto_adopted": 46,
+    "customer_user_confirmed": 1,
+    "customer_pending": 0
+  },
+  "scope": "映射裁决记录，未导入、未修改实际配置。轮用仓关系不等于已实现按月切换或新增权限模型。"
+}

@@ -1,0 +1,170 @@
+{
+  "status": "COMPLETE",
+  "approvedAt": "2026-10-01T15:36:27.249415+08:00",
+  "authorization": "用户明确回复：批准按清单删除",
+  "retainedProject": "/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo",
+  "latestBackupSha256": "741f1da7125ee2d4a27bbe59ef3045c2724446f8e0c99aae593ead97f55a701c",
+  "deleted": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F",
+      "allocatedKiB": 0,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 0,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-legacy-interaction-react-rebuild",
+      "allocatedKiB": 228036,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 228036,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-preexisting-backup-20260925",
+      "allocatedKiB": 6891012,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 6891012,
+      "allocatedKiBAtResume": 6293548,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-design-audit",
+      "allocatedKiB": 165476,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 165476,
+      "allocatedKiBAtResume": 165528,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-s2-integrated",
+      "allocatedKiB": 182564,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 182564,
+      "allocatedKiBAtResume": 182564,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-s2-products-integrated",
+      "allocatedKiB": 180240,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 180240,
+      "allocatedKiBAtResume": 180240,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-shared-basic-integration",
+      "allocatedKiB": 175636,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 175636,
+      "allocatedKiBAtResume": 175636,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-core",
+      "allocatedKiB": 166864,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 166864,
+      "allocatedKiBAtResume": 166864,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s1-sku",
+      "allocatedKiB": 166924,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 166924,
+      "allocatedKiBAtResume": 166924,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s2-sales",
+      "allocatedKiB": 167268,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 167268,
+      "allocatedKiBAtResume": 167320,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s3-inventory",
+      "allocatedKiB": 181904,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 181904,
+      "allocatedKiBAtResume": 181904,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s4-transfers",
+      "allocatedKiB": 189188,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 189188,
+      "allocatedKiBAtResume": 189188,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s5-final",
+      "allocatedKiB": 204680,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 204680,
+      "allocatedKiBAtResume": 204680,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05c-luna-basic-data",
+      "allocatedKiB": 172048,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 172048,
+      "allocatedKiBAtResume": 172048,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05c-luna-products",
+      "allocatedKiB": 175776,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 175776,
+      "allocatedKiBAtResume": 175796,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage06-ui-feedback",
+      "allocatedKiB": 204700,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 204700,
+      "allocatedKiBAtResume": 204760,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-tplus-data-cleaning-v1",
+      "allocatedKiB": 449032,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 449032,
+      "allocatedKiBAtResume": 449032,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/backup/business-management-latest-20261001.dump",
+      "allocatedKiB": 274752,
+      "type": "preexisting-superseded-backup",
+      "allocatedKiBBeforeDeletion": 274752,
+      "allocatedKiBAtResume": 274752,
+      "removed": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统",
+      "allocatedKiB": 11943368,
+      "type": "retired-project-or-worktree",
+      "allocatedKiBBeforeDeletion": 11943368,
+      "allocatedKiBAtResume": 11939160,
+      "removed": true
+    }
+  ],
+  "filesystemBefore": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   239362496 199810896  14040532    94% 1564590 140405320    1%   /System/Volumes/Data\n",
+  "interruption": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-preexisting-backup-20260925",
+    "reason": "Directory not empty in retired chrome-profile during first recursive deletion",
+    "openFilesAtResume": 0,
+    "resumeAt": "2026-10-01T15:43:27.850604+08:00"
+  },
+  "completedAt": "2026-10-01T15:43:53.537335+08:00",
+  "deletedPaths": 19,
+  "listedAllocatedKiB": 22119468,
+  "filesystemAfter": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   239362496 178007924  35843504    84% 1472538 358435040    0%   /System/Volumes/Data\n"
+}

@@ -1,0 +1,64 @@
+PASS employee-permissions.cjs
+Client three-role routes/functions and restored-session overlay race: passed
+
+PASS shared-login-tabs.cjs
+Shared login, cross-tab logout, and legacy session migration: passed
+
+PASS basic-settings-refactor.cjs
+basic settings model regression passed
+
+PASS transfer-acceptance-core.cjs
+24 checks PASS
+
+PASS transfer-reliability.cjs
+24 checks PASS
+
+PASS transfer-history-cells.cjs
+{
+  "passed": 9,
+  "checks": [
+    "历史尺码映射同一列时只显示一个数量入口",
+    "显示合计但保留各历史 SKU 数量",
+    "编辑明细包含原尺码及独立数量，打开不改草稿",
+    "非法数量或已变化的源值不允许覆盖",
+    "确认只修改对应原 SKU，不重新分摊或合并",
+    "行修改中的原尺码数量先暂存，取消整行保留原值",
+    "新增行按原尺码同时录入，保留各 SKU 并只加入一行",
+    "已审核仍可查看原尺码，不能改数量",
+    "打印和导出按尺码汇总，原数量总计保持正确"
+  ]
+}
+
+PASS transfer-scan-drawer.cjs
+transfer scan drawer acceptance PASS
+
+PASS sales-core.cjs
+20 core checks PASS
+
+PASS sales-inline-payment.cjs
+sales inline payment policy: PASS
+
+PASS sales-line-merge.cjs
+sales-line-merge: OK
+
+PASS product-list-history.cjs
+Product list order, filters, columns, actions, and historical SKU detail: passed
+
+PASS product-profile-current-selection.cjs
+Current selection save, empty selection rejection, immutable draft, and retained historical photos: passed
+
+PASS ledger-local-date.cjs
+Inventory ledger local day and midnight refresh: PASS
+
+PASS business-fit-roundtrip.mjs
+Sales/transfer fit SKU roundtrip, immutable canonical identity and discount reference snapshot: PASS
+
+PASS sales-print-payments.cjs
+Saved mixed payments, refunds, original fit/size and readonly print: PASS
+
+PASS recommendation-cache.cjs
+Recommendation request race, current waiter and sale reversal: PASS
+
+PASS sales-commit-state.cjs
+Sales commit pending write/readback and failure state: PASS
+

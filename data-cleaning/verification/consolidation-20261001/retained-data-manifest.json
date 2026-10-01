@@ -1,0 +1,1297 @@
+[
+  {
+    "path": "inputs/库存状况表.xlsx",
+    "bytes": 4246013,
+    "sha256": "c40cdf7380be75104fb989d9d75fab3e6bd086fe57faa855f7b046641bfd292f"
+  },
+  {
+    "path": "inputs/20260910-终审要求与最新业务裁决.txt",
+    "bytes": 30424,
+    "sha256": "ae4c976e3dd8f81da5f23026aeece0b00c59c951f7a6572b7883fec4ec4af0b1"
+  },
+  {
+    "path": "inputs/20260911-模型额度优化要求.txt",
+    "bytes": 10048,
+    "sha256": "194eee81a68bcb92394e4d4ef1ace3a52d96ad779bae079691c411eaf634d132"
+  },
+  {
+    "path": "inputs/product-media/026MS5133001_import-manifest.json",
+    "bytes": 44037,
+    "sha256": "cd13a543e58a1f1d297c257df305ea29d29f6143ca5497bdc96462dcd610c37f"
+  },
+  {
+    "path": "inputs/product-media/026MS5133001_图片素材.zip",
+    "bytes": 49268962,
+    "sha256": "79895c2b5c63d1c3cb5120a7fce3d14359c1f581f825dbadccc7f12489188e95"
+  },
+  {
+    "path": "inputs/tplus-current/库存状况表.xlsx",
+    "bytes": 4246013,
+    "sha256": "c40cdf7380be75104fb989d9d75fab3e6bd086fe57faa855f7b046641bfd292f"
+  },
+  {
+    "path": "inputs/tplus-current/调拨单导出.xlsx",
+    "bytes": 14819613,
+    "sha256": "2476f388189b68d771911e1381856d27a000d7cf600fbdd4d087d151f3432cdb"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/销货单_杰威亚服饰销货单（小间距）.bof",
+    "bytes": 5475,
+    "sha256": "621345567f4c06130e12a3c970c511e37148eb91e5e415a9b76b63f661995213"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/进货单_新杰威亚进货单.bof",
+    "bytes": 4579,
+    "sha256": "d404a9a49d82162f08b338a5b518adebd97e308b5c7bb01d9a202f15fb7ff458"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/其他出库单_其他出库单(移动仓管).bof",
+    "bytes": 5330,
+    "sha256": "5af2cc29ada3abd54cd51ca87c7c19eb6305caba2f38ad7ccb7367a8eb0f9983"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/材料出库单_材料出库单(移动仓管).bof",
+    "bytes": 5301,
+    "sha256": "612681b31eaec6f3e2fd140513a4a4e64b21145a3ed17e2e050efd0dbc12a60b"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/产成品入库单_产成品入库单(移动仓管)..bof",
+    "bytes": 5297,
+    "sha256": "29f6937a54d8af17023accff98fde2855e3de5433c5735923c099eff53153a55"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/库存状况表_银泰.bof",
+    "bytes": 3744,
+    "sha256": "77f4e192282b354b817f12e4cc6f6c36618e3bd3ed16190866d5874041b018ee"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/进货单_jinhuodan.bof",
+    "bytes": 4563,
+    "sha256": "a0f24e649fac81f8dfc308b37c42a90053398b7f81c875b8f17d38f581e7f832"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/销货单_销货单(移动仓管).bof",
+    "bytes": 6107,
+    "sha256": "203581710a4335e644c1a53a7deeef6d1a8c0288c4727d744f25b3375c1acf64"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/调拨单_银泰商品入库信息表（调拨单）.bof",
+    "bytes": 4591,
+    "sha256": "6427c078a81016fa96565fbe00d98dd5fa75cc7186170943de4ab565181e9b42"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/进货单_进货单(移动仓管).bof",
+    "bytes": 5882,
+    "sha256": "08f4c5458b722714f58b08e2de5c4bd1cb55188b3d1c920dafa7890069d2c7b1"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/盘点单_银泰模板.bof",
+    "bytes": 4921,
+    "sha256": "fe2d894084da5246be2e8e881ace60cfb52087a533fa0f02392d8c9bcb4bf83b"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/销货单_杰威亚服饰销货单.bof",
+    "bytes": 5511,
+    "sha256": "eb7356f678cec7d26ec5d953794f346dcba9102fb74eb620e63680596f9cb5c1"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/其他入库单_其他入库单(移动仓管).bof",
+    "bytes": 5376,
+    "sha256": "a9d6d385617143870017469b2e19292adcdf3df0bd23fccff6a97dcb6a55bf3a"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/进货单_杰威亚进货单.bof",
+    "bytes": 4648,
+    "sha256": "307793fff30670f3bdc5e51aaf24d05c907da09e4b19f3612228bba08aff115e"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/调拨单_杰威亚服饰发货单（调拨单）.bof",
+    "bytes": 4475,
+    "sha256": "7b5f1299e5ebf41275d16022fd5f0178044f7d566be71ef82f6b036dd63e53a2"
+  },
+  {
+    "path": "inputs/tplus-current/打印模版/进货单_1.bof",
+    "bytes": 4651,
+    "sha256": "73f8a4562f0a4be97b7beac1da7b1ff7a8599783ee18ad71ce85832262cbd944"
+  },
+  {
+    "path": "inputs/tplus-current/价格本/存货数量档位价格.xlsx",
+    "bytes": 9703,
+    "sha256": "18b3626ba355f6d5c84526eb9f0370c70d5d8e1f509cd3f3f56c83cc8cbc34c6"
+  },
+  {
+    "path": "inputs/tplus-current/价格本/供应商价格本.xlsx",
+    "bytes": 10939,
+    "sha256": "8a31583c5a8437c3d593076731e2eede6e92bd0bb43e77d0949c89b96fc59961"
+  },
+  {
+    "path": "inputs/tplus-current/价格本/存货价格本.xlsx",
+    "bytes": 354488,
+    "sha256": "85fc2d665286cdfcaaf7402278ca464637e47de772b9b91ec05cf3d2fbae2764"
+  },
+  {
+    "path": "inputs/tplus-current/价格本/客户价格本.xlsx",
+    "bytes": 10402,
+    "sha256": "fc0a52a7a6f35fd4d0eed866bd27a7a82c58ace80cdb805830e1882322fb604e"
+  },
+  {
+    "path": "inputs/tplus-current/价格本/部门价格本.xlsx",
+    "bytes": 10080,
+    "sha256": "55308df8f5e62c4739de588137c03dbaf9dd92dced2758f705a71da35cb6641e"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/门襟.xlsx",
+    "bytes": 9383,
+    "sha256": "4be79e7019b542c16317695971c4200d21e53fbf97df29d2209fcec1b72913de"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/学历.xlsx",
+    "bytes": 9347,
+    "sha256": "16fbd16261f74ee38adff2c4e37ccce5459141143692749aa0d5203abc985a70"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/版型.xlsx",
+    "bytes": 9566,
+    "sha256": "1bb2fb6b0079de8a1f0778c6bf6607b4105c342063eb4bb949ef98823c40f3a6"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/颜色.xlsx",
+    "bytes": 13497,
+    "sha256": "df2eb818a8468f2e9fbae0b312860c58dfa2a87e8273a7fd6022052fe7aa62a3"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/品牌.xlsx",
+    "bytes": 9154,
+    "sha256": "88642ee55cf7b1f9f361c7276fd72fd3743399ef768945033bd264699084b691"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/生产厂家.xlsx",
+    "bytes": 10335,
+    "sha256": "ef479cd4b77bd8b699fc2eccdd5f757acf13a3676888d2184635c6c3969840cf"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/衣长或裤长.xlsx",
+    "bytes": 9626,
+    "sha256": "58aee6e6d2737ea312228370de25b4c8e0fd9b4526e0e6931bd2ee7cb3cd09fd"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/风格.xlsx",
+    "bytes": 9381,
+    "sha256": "77d401d523ba27a1b6dcd02529ae90d4725961789f759e252bf413de9115db13"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/开户银行.xlsx",
+    "bytes": 9438,
+    "sha256": "ff1dd14e6a281a5032045f4950915a16adfa70a45e4bb9ad81e12d466b11c191"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/职务.xlsx",
+    "bytes": 9259,
+    "sha256": "cc541216c4f7b38fc9f7d3bcaa9b1a88d94544f6fb07e1e1f5e62565c3e03eac"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/尺码.xlsx",
+    "bytes": 18404,
+    "sha256": "24ee3b7898da757b08021abcafb14df7fed4c1608773e1b06251feb39217c54b"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/证件类型.xlsx",
+    "bytes": 9217,
+    "sha256": "3a074401aa858bbe90a853b70beb202fab0391ac5a862c85e8f8f7a9c94aa4e5"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/领型或裤脚口.xlsx",
+    "bytes": 9630,
+    "sha256": "5f469cf67b00088534dbd92dd9a9976856627d4a105fed4ccdb2f21384dbcf52"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/税率%.xlsx",
+    "bytes": 9300,
+    "sha256": "5fe6412e9779c78cfa0ef497013bab6adeb96fcae97231641c3d8a66c9d61315"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/.~尺码.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-current/枚举档案/运输方式.xlsx",
+    "bytes": 9165,
+    "sha256": "f497f016defe1a6786b1d1412a65f0c61b61da9d86f205215d0bc989d62be3e5"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/其他入库单.xlsx",
+    "bytes": 26251920,
+    "sha256": "fca93187d1c603f3fbe61d059651f78b2bb2e0f6c7e0e52bc62a491be5de3d5c"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/产成品入库单.xlsx",
+    "bytes": 12543,
+    "sha256": "0380fc28d8195669f0d0ffdc8264ae8dded70f7797d4b14b5b7b11de8c8efac4"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/销售订单.xlsx",
+    "bytes": 17183,
+    "sha256": "f39005408172cdaf509466e2fe7d8f37bee55c84b1824a55771679f0f03cda4b"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/收入单.xlsx",
+    "bytes": 69340,
+    "sha256": "ca615792fe437026f5b2e96c152f526d83ee27b42752bfcf65e39b8b7e1114ea"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/.~收款单.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/其他出库单.xlsx",
+    "bytes": 27923568,
+    "sha256": "f235b42c2a3472486e8d4ad2aa964a05eac8c73245e3e8ab45d584e220dd0c1f"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/要货单.xlsx",
+    "bytes": 12254,
+    "sha256": "2813ae861e4476630d29b5f0826b67557bae4348e6056cce911182b4d9ae6021"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/凭证导入导出.xlsx",
+    "bytes": 13573,
+    "sha256": "b722fae6712949e2445c0700bb5924006bbcf8391e19e0bc37664d9172345b0a"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/销货单.xlsx",
+    "bytes": 23760165,
+    "sha256": "b2972944e35eb026e27bdce76fc77cd0a5447928d05bcb57e9d0112762b99ef3"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/.~费用单.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/自定义结转.xlsx",
+    "bytes": 10888,
+    "sha256": "bd70f92d3fb9be155636ce26f52e4b72b7b311278b0fee9e6307fd0f808e8361"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/收款单.xlsx",
+    "bytes": 2494624,
+    "sha256": "292d83cac65acf3ea314af84e274aa91c080c38f8ede876310a0cbd3b9dfb6f4"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/付款单.xlsx",
+    "bytes": 84061,
+    "sha256": "8c208dea9cbb2ccdccde0f1463217acc2ca767ffa36eb4febffc77ab3a12aa9f"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/费用单.xlsx",
+    "bytes": 715462,
+    "sha256": "15d203c02f587b0371154d8b39a58cc5ab08e7d08a64c9478f8968efac891bf7"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/.~销货单.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/.~其他入库单.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/请购单.xlsx",
+    "bytes": 12158,
+    "sha256": "eca4d589e984205edf347046f3abc123ab5dda7ce23c72be3ad5c3cf8e40c8f9"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/采购订单.xlsx",
+    "bytes": 15987,
+    "sha256": "cd66e256772f96ec2041cd57d8e7bda7b9ef79f54bbc96407ff05fa8933246f9"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/材料出库单.xlsx",
+    "bytes": 12300,
+    "sha256": "fb5a9338625756e6f57078422a686642ac7e95656f7edaeca3623e9810b10052"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/进货单.xlsx",
+    "bytes": 7806388,
+    "sha256": "f4bfacf6c1eb06e5ff9aa691fc75eee317c8c31de2cdad1aeb5af2e5156d283d"
+  },
+  {
+    "path": "inputs/tplus-current/单据数据/.~其他出库单.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-current/期初数据/往来期初明细.xlsx",
+    "bytes": 10581,
+    "sha256": "0a77e89c77ff2dbbf3c88e116bbfe0c69482c0c35f094410fff5a418222a0bfb"
+  },
+  {
+    "path": "inputs/tplus-current/期初数据/现金银行期初余额.xlsx",
+    "bytes": 12492,
+    "sha256": "b336c3f0ef31ae4c44c1e0ca954b91f656c96edfd8965ca91bcdfe1e1e42d080"
+  },
+  {
+    "path": "inputs/tplus-current/期初数据/往来期初余额.xlsx",
+    "bytes": 24308,
+    "sha256": "45d98d283d833840dd640ebf710ab054a4e66b5463a5e8757c3dd3f6ff6f7c52"
+  },
+  {
+    "path": "inputs/tplus-current/期初数据/库存期初余额.xlsx",
+    "bytes": 17680,
+    "sha256": "28f0ea6748e1500354285ea1f8ca42c4f719d8fa0067d1ada5df88677f44bf90"
+  },
+  {
+    "path": "inputs/tplus-current/期初数据/辅助核算期初.xlsx",
+    "bytes": 9767,
+    "sha256": "9b8d8210ea94befd8e123a9ed978099c4e7af7a2e9f6121ac02840c8d56765b0"
+  },
+  {
+    "path": "inputs/tplus-current/期初数据/现金流量期初.xlsx",
+    "bytes": 10255,
+    "sha256": "326b16cc808729058996354403a6cdaf6e751b1fe75c3873e98a72e2257f70c1"
+  },
+  {
+    "path": "inputs/tplus-current/期初数据/科目期初余额.xlsx",
+    "bytes": 9749,
+    "sha256": "25bb4217681a063a03b4d5f71e597eb4cf491079bdbaee4020eca2ade09d1d8f"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/往来单位存货设置.xlsx",
+    "bytes": 9893,
+    "sha256": "af6c0be80ff58091f3cefb37947c4fc12fb2477785fce6819de9607c7344a95d"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/物流网点.xlsx",
+    "bytes": 16262,
+    "sha256": "193e70124ee18016156d12674caaca99a86a5e5ae36a905462e04c584ee5c46f"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/.~往来单位.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/费用.xlsx",
+    "bytes": 18564,
+    "sha256": "5777439bb15c17d38ba9d8d788afc159560f4e8e7022eeb2b7aa0bf2b704112f"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/存货分类.xlsx",
+    "bytes": 19220,
+    "sha256": "c5a726bb835046aac984ec02233ec2dde29b351868ea8f5082602b82f4022765"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/往来单位分类.xlsx",
+    "bytes": 9647,
+    "sha256": "d8661c0cd111141cfff3255c67b794c9d5f123c50ecc99f42a69cd203fbd3d91"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/常用摘要.xlsx",
+    "bytes": 10089,
+    "sha256": "d099254f11e154536e3354f0c90e62ed301227406867f8e7ba831f9905303238"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/.~账号.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/结算方式.xlsx",
+    "bytes": 9785,
+    "sha256": "ae15f5b7e2bb043941ebcb1ad5a6f3524063b4ab8516c1ed8c31f2003c698385"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/.~员工.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/存货条码方案.xlsx",
+    "bytes": 23818,
+    "sha256": "650d0ca80f1ab1174362ab0f16de4a57d797c1a43f8fcf4d73181006eae4b411"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/.~存货分类.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/项目分类.xlsx",
+    "bytes": 9393,
+    "sha256": "7963adfebe42a97b9522bd69a26dd547d33633964f5109356314c6fed02bc18e"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/现金流量项目.xlsx",
+    "bytes": 11338,
+    "sha256": "f6fa1de440a7cec6daff6c2604aae7b05c44267d094a20cb5bfc91f32861460c"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/计量单位.xlsx",
+    "bytes": 15734,
+    "sha256": "1f36021a3849813a8155664fa674e5f39244bef127c7c602571e3f69df84b452"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/会员档案.xlsx",
+    "bytes": 17002,
+    "sha256": "49028db5dab80e17122e6e3090050ed4131f10b2f282cfc04086358c5dfa88ab"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/存货.xlsx",
+    "bytes": 1272173,
+    "sha256": "78150bd202c0ec6af7750f2dc572bdff261ca7b4cac3babb8a237ad8fa8c9efd"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/往来单位.xlsx",
+    "bytes": 147610,
+    "sha256": "55f8bbcb10cef88a23f8fb84677245d145cd61dbbe51c20851b228b8a04b2f96"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/.~存货条码方案.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/收入.xlsx",
+    "bytes": 10395,
+    "sha256": "ae6866e9fbc8d6c662789b78be9ffe58308db58c17d1626be43339a3e9e3bf63"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/仓库.xlsx",
+    "bytes": 12935,
+    "sha256": "9f78e451cb6649c17edda15729d63f3ada5740859c594a5cd3daa7fd9d074da6"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/项目.xlsx",
+    "bytes": 9392,
+    "sha256": "aadb10db9e6290f6a8cd0babffc12bfee28a56d275e1012ae2d6ad3860c5db29"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/地区.xlsx",
+    "bytes": 9883,
+    "sha256": "ed87e532f53efeef6301da40fcde706bb40eadb7365a82f68d5bc9a6f76ff6e5"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/现金流量项目分类.xlsx",
+    "bytes": 9429,
+    "sha256": "72653296f590f0e35ed39fe449f7f069459b56dac324a2d18835465b05d711de"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/替代方案.xlsx",
+    "bytes": 14434,
+    "sha256": "6bd068a82958338d7967f53045f7a01ef0389e40f7329c401b5568475f078209"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/常用摘要分类.xlsx",
+    "bytes": 9422,
+    "sha256": "e0801f88d112b1d77524b7e937b08e788aeb8d8f6786da5767b7b253b51d9fd5"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/科目.xlsx",
+    "bytes": 11244,
+    "sha256": "664bdc6056ad85d7099c1a3b9dfb145badae05cc5b50550f002480af95a037ef"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/物流公司.xlsx",
+    "bytes": 14301,
+    "sha256": "114a4c571ad310f6b0e8ce5c3e7c38a1e7bcbc61deae23deeb1f4b1c9c8a976b"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/.~现金流量项目分类.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/出入库类别.xlsx",
+    "bytes": 10753,
+    "sha256": "d5cdb31893191b326c5af0f024924a292cf903417a3c74660cf4675941ba0f9d"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/物料清单.xlsx",
+    "bytes": 15308,
+    "sha256": "01abcd4692746c6080255961b25a120b6c17c7dab46b1c54e396365bc403ed49"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/.~存货.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/凭证类别.xlsx",
+    "bytes": 9382,
+    "sha256": "e7eb89f071e2750878ffec1450c27a61365aa8f865de9c3087fd1d2cc7ce62db"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/存货条形码.xlsx",
+    "bytes": 122093,
+    "sha256": "e961b423a0d6925c76c27a630bd1fa7619fef97b9c023fbb8a127e3322b432bd"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/部门.xlsx",
+    "bytes": 11894,
+    "sha256": "0603255119903738e1d78fcb97d147c548e6e8278ed22776102d1d7c3391d8f9"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/账号.xlsx",
+    "bytes": 19844,
+    "sha256": "5fc651fafc3d6d48facb5859ec4e9b3f710eaa4c4bc2932cf81d885280a86388"
+  },
+  {
+    "path": "inputs/tplus-current/基础档案/员工.xlsx",
+    "bytes": 26966,
+    "sha256": "c96f8081de262dedbd53754a48639e757773cc45bf7ca62afe4571519f23cf36"
+  },
+  {
+    "path": "inputs/T+系统截图/调拨单1.png",
+    "bytes": 488788,
+    "sha256": "0117996baa27bd774654294609a3852233c6f9d55c27a2e1252c07d88a5de8c8"
+  },
+  {
+    "path": "inputs/T+系统截图/调拨单2.png",
+    "bytes": 707104,
+    "sha256": "1cc55532d713a3d0d2ebb9a6e3eb20591504af146a0ed4ddf24ca340e9acceea"
+  },
+  {
+    "path": "inputs/T+系统截图/存货1.png",
+    "bytes": 839358,
+    "sha256": "df9de5cb984ec376a1a213d7abc8ab08b750181971f72ed3a5ed1d9975e53aee"
+  },
+  {
+    "path": "inputs/T+系统截图/销货单2.png",
+    "bytes": 570196,
+    "sha256": "9e328b62ef503eb0f3f74e56dbcdd662cb823a8cf5b4a247b2149dc52264e660"
+  },
+  {
+    "path": "inputs/T+系统截图/存货2.png",
+    "bytes": 675751,
+    "sha256": "ec93086eecc2b8f14552eee70e422e95a6c236e5c7cd789facf04f90ebcbee2b"
+  },
+  {
+    "path": "inputs/T+系统截图/销货单1.png",
+    "bytes": 544201,
+    "sha256": "614ba9a1ae91211f36a3dcf9448be44d584573d29608014995dedc41bf443060"
+  },
+  {
+    "path": "inputs/T+系统截图/存货3.png",
+    "bytes": 673230,
+    "sha256": "f39d685d8e75bc5d40842b954b3bf4490531275528a32424692e9f0cd80128d4"
+  },
+  {
+    "path": "inputs/T+系统截图/存货7.png",
+    "bytes": 666418,
+    "sha256": "a52f69b09acbb73261585bc668373b61d9f6e28391c44f2022e41ff281299df6"
+  },
+  {
+    "path": "inputs/T+系统截图/存货6.png",
+    "bytes": 669070,
+    "sha256": "724c680585f9b9af6534da398f4618e269374e873643dd586c05097f757989c0"
+  },
+  {
+    "path": "inputs/T+系统截图/存货4.png",
+    "bytes": 669366,
+    "sha256": "9f8ba045cae26018a0b9e4b9b15374b168f80e1c78c74e70e8ce55faf08208bc"
+  },
+  {
+    "path": "inputs/T+系统截图/存货5.png",
+    "bytes": 662015,
+    "sha256": "a07ae5c14e53b42b47b131b7f2ea0b894cd9afa0c092f4d42cbf56a5cd91bd2c"
+  },
+  {
+    "path": "inputs/T+系统截图/库存状况表1.png",
+    "bytes": 409586,
+    "sha256": "15ece234d420b37ba5df2987ab683b71f064250f816ab0d30628b1afdeccb8fa"
+  },
+  {
+    "path": "inputs/T+系统截图/库存状况表2.png",
+    "bytes": 518636,
+    "sha256": "daad15811844f4784a75eb1bdb93a41aa577b62dbf3254cd5b7759535d6e467f"
+  },
+  {
+    "path": "inputs/T+系统截图/库存状况表3.png",
+    "bytes": 453019,
+    "sha256": "d8ad90466d2341e4e42b35bd9c99d78381cebe8b519bbac77df09dda299cb20c"
+  },
+  {
+    "path": "inputs/T+系统截图/库存状况表6.png",
+    "bytes": 709895,
+    "sha256": "c4b4e6bee127b70e4635169aec0473fc7891e8df71f2d16004f1d717532db62d"
+  },
+  {
+    "path": "inputs/T+系统截图/库存状况表5.png",
+    "bytes": 741104,
+    "sha256": "6f934baf2c3552e4c00fad1bbc30c751cce8052a43563928caafa9898e254094"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/.DS_Store",
+    "bytes": 6148,
+    "sha256": "9ff0fa3918449275d412cd27173a5bde2f71812a297306fedf3145158296a568"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/库存状况表.xlsx",
+    "bytes": 4246013,
+    "sha256": "c40cdf7380be75104fb989d9d75fab3e6bd086fe57faa855f7b046641bfd292f"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/销货单_杰威亚服饰销货单（小间距）.bof",
+    "bytes": 5475,
+    "sha256": "621345567f4c06130e12a3c970c511e37148eb91e5e415a9b76b63f661995213"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/进货单_新杰威亚进货单.bof",
+    "bytes": 4579,
+    "sha256": "d404a9a49d82162f08b338a5b518adebd97e308b5c7bb01d9a202f15fb7ff458"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/其他出库单_其他出库单(移动仓管).bof",
+    "bytes": 5330,
+    "sha256": "5af2cc29ada3abd54cd51ca87c7c19eb6305caba2f38ad7ccb7367a8eb0f9983"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/材料出库单_材料出库单(移动仓管).bof",
+    "bytes": 5301,
+    "sha256": "612681b31eaec6f3e2fd140513a4a4e64b21145a3ed17e2e050efd0dbc12a60b"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/产成品入库单_产成品入库单(移动仓管)..bof",
+    "bytes": 5297,
+    "sha256": "29f6937a54d8af17023accff98fde2855e3de5433c5735923c099eff53153a55"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/库存状况表_银泰.bof",
+    "bytes": 3744,
+    "sha256": "77f4e192282b354b817f12e4cc6f6c36618e3bd3ed16190866d5874041b018ee"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/进货单_jinhuodan.bof",
+    "bytes": 4563,
+    "sha256": "a0f24e649fac81f8dfc308b37c42a90053398b7f81c875b8f17d38f581e7f832"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/销货单_销货单(移动仓管).bof",
+    "bytes": 6107,
+    "sha256": "203581710a4335e644c1a53a7deeef6d1a8c0288c4727d744f25b3375c1acf64"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/调拨单_银泰商品入库信息表（调拨单）.bof",
+    "bytes": 4591,
+    "sha256": "6427c078a81016fa96565fbe00d98dd5fa75cc7186170943de4ab565181e9b42"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/进货单_进货单(移动仓管).bof",
+    "bytes": 5882,
+    "sha256": "08f4c5458b722714f58b08e2de5c4bd1cb55188b3d1c920dafa7890069d2c7b1"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/盘点单_银泰模板.bof",
+    "bytes": 4921,
+    "sha256": "fe2d894084da5246be2e8e881ace60cfb52087a533fa0f02392d8c9bcb4bf83b"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/销货单_杰威亚服饰销货单.bof",
+    "bytes": 5511,
+    "sha256": "eb7356f678cec7d26ec5d953794f346dcba9102fb74eb620e63680596f9cb5c1"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/其他入库单_其他入库单(移动仓管).bof",
+    "bytes": 5376,
+    "sha256": "a9d6d385617143870017469b2e19292adcdf3df0bd23fccff6a97dcb6a55bf3a"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/进货单_杰威亚进货单.bof",
+    "bytes": 4648,
+    "sha256": "307793fff30670f3bdc5e51aaf24d05c907da09e4b19f3612228bba08aff115e"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/调拨单_杰威亚服饰发货单（调拨单）.bof",
+    "bytes": 4475,
+    "sha256": "7b5f1299e5ebf41275d16022fd5f0178044f7d566be71ef82f6b036dd63e53a2"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/打印模版/进货单_1.bof",
+    "bytes": 4651,
+    "sha256": "73f8a4562f0a4be97b7beac1da7b1ff7a8599783ee18ad71ce85832262cbd944"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/价格本/存货数量档位价格.xlsx",
+    "bytes": 9703,
+    "sha256": "18b3626ba355f6d5c84526eb9f0370c70d5d8e1f509cd3f3f56c83cc8cbc34c6"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/价格本/供应商价格本.xlsx",
+    "bytes": 10939,
+    "sha256": "8a31583c5a8437c3d593076731e2eede6e92bd0bb43e77d0949c89b96fc59961"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/价格本/存货价格本.xlsx",
+    "bytes": 354488,
+    "sha256": "85fc2d665286cdfcaaf7402278ca464637e47de772b9b91ec05cf3d2fbae2764"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/价格本/客户价格本.xlsx",
+    "bytes": 10402,
+    "sha256": "fc0a52a7a6f35fd4d0eed866bd27a7a82c58ace80cdb805830e1882322fb604e"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/价格本/部门价格本.xlsx",
+    "bytes": 10080,
+    "sha256": "55308df8f5e62c4739de588137c03dbaf9dd92dced2758f705a71da35cb6641e"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/门襟.xlsx",
+    "bytes": 9383,
+    "sha256": "4be79e7019b542c16317695971c4200d21e53fbf97df29d2209fcec1b72913de"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/学历.xlsx",
+    "bytes": 9347,
+    "sha256": "16fbd16261f74ee38adff2c4e37ccce5459141143692749aa0d5203abc985a70"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/版型.xlsx",
+    "bytes": 9566,
+    "sha256": "1bb2fb6b0079de8a1f0778c6bf6607b4105c342063eb4bb949ef98823c40f3a6"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/颜色.xlsx",
+    "bytes": 13497,
+    "sha256": "df2eb818a8468f2e9fbae0b312860c58dfa2a87e8273a7fd6022052fe7aa62a3"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/品牌.xlsx",
+    "bytes": 9154,
+    "sha256": "88642ee55cf7b1f9f361c7276fd72fd3743399ef768945033bd264699084b691"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/生产厂家.xlsx",
+    "bytes": 10335,
+    "sha256": "ef479cd4b77bd8b699fc2eccdd5f757acf13a3676888d2184635c6c3969840cf"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/衣长或裤长.xlsx",
+    "bytes": 9626,
+    "sha256": "58aee6e6d2737ea312228370de25b4c8e0fd9b4526e0e6931bd2ee7cb3cd09fd"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/风格.xlsx",
+    "bytes": 9381,
+    "sha256": "77d401d523ba27a1b6dcd02529ae90d4725961789f759e252bf413de9115db13"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/开户银行.xlsx",
+    "bytes": 9438,
+    "sha256": "ff1dd14e6a281a5032045f4950915a16adfa70a45e4bb9ad81e12d466b11c191"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/职务.xlsx",
+    "bytes": 9259,
+    "sha256": "cc541216c4f7b38fc9f7d3bcaa9b1a88d94544f6fb07e1e1f5e62565c3e03eac"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/尺码.xlsx",
+    "bytes": 19849,
+    "sha256": "86f691fee142b7d725548f07f0f4fd2215c1317274b7c9d4421221d61de4e518"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/证件类型.xlsx",
+    "bytes": 9217,
+    "sha256": "3a074401aa858bbe90a853b70beb202fab0391ac5a862c85e8f8f7a9c94aa4e5"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/领型或裤脚口.xlsx",
+    "bytes": 9630,
+    "sha256": "5f469cf67b00088534dbd92dd9a9976856627d4a105fed4ccdb2f21384dbcf52"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/税率%.xlsx",
+    "bytes": 9300,
+    "sha256": "5fe6412e9779c78cfa0ef497013bab6adeb96fcae97231641c3d8a66c9d61315"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/枚举档案/运输方式.xlsx",
+    "bytes": 9165,
+    "sha256": "f497f016defe1a6786b1d1412a65f0c61b61da9d86f205215d0bc989d62be3e5"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/其他入库单.xlsx",
+    "bytes": 26251920,
+    "sha256": "fca93187d1c603f3fbe61d059651f78b2bb2e0f6c7e0e52bc62a491be5de3d5c"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/产成品入库单.xlsx",
+    "bytes": 12543,
+    "sha256": "0380fc28d8195669f0d0ffdc8264ae8dded70f7797d4b14b5b7b11de8c8efac4"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/销售订单.xlsx",
+    "bytes": 17183,
+    "sha256": "f39005408172cdaf509466e2fe7d8f37bee55c84b1824a55771679f0f03cda4b"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/收入单.xlsx",
+    "bytes": 69340,
+    "sha256": "ca615792fe437026f5b2e96c152f526d83ee27b42752bfcf65e39b8b7e1114ea"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/.~收款单.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/其他出库单.xlsx",
+    "bytes": 27923568,
+    "sha256": "f235b42c2a3472486e8d4ad2aa964a05eac8c73245e3e8ab45d584e220dd0c1f"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/要货单.xlsx",
+    "bytes": 12254,
+    "sha256": "2813ae861e4476630d29b5f0826b67557bae4348e6056cce911182b4d9ae6021"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/凭证导入导出.xlsx",
+    "bytes": 13573,
+    "sha256": "b722fae6712949e2445c0700bb5924006bbcf8391e19e0bc37664d9172345b0a"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/销货单.xlsx",
+    "bytes": 23760165,
+    "sha256": "b2972944e35eb026e27bdce76fc77cd0a5447928d05bcb57e9d0112762b99ef3"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/.~费用单.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/自定义结转.xlsx",
+    "bytes": 10888,
+    "sha256": "bd70f92d3fb9be155636ce26f52e4b72b7b311278b0fee9e6307fd0f808e8361"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/收款单.xlsx",
+    "bytes": 2494624,
+    "sha256": "292d83cac65acf3ea314af84e274aa91c080c38f8ede876310a0cbd3b9dfb6f4"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/付款单.xlsx",
+    "bytes": 84061,
+    "sha256": "8c208dea9cbb2ccdccde0f1463217acc2ca767ffa36eb4febffc77ab3a12aa9f"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/费用单.xlsx",
+    "bytes": 715462,
+    "sha256": "15d203c02f587b0371154d8b39a58cc5ab08e7d08a64c9478f8968efac891bf7"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/.~销货单.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/.~其他入库单.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/请购单.xlsx",
+    "bytes": 12158,
+    "sha256": "eca4d589e984205edf347046f3abc123ab5dda7ce23c72be3ad5c3cf8e40c8f9"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/采购订单.xlsx",
+    "bytes": 15987,
+    "sha256": "cd66e256772f96ec2041cd57d8e7bda7b9ef79f54bbc96407ff05fa8933246f9"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/材料出库单.xlsx",
+    "bytes": 12300,
+    "sha256": "fb5a9338625756e6f57078422a686642ac7e95656f7edaeca3623e9810b10052"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/进货单.xlsx",
+    "bytes": 7806388,
+    "sha256": "f4bfacf6c1eb06e5ff9aa691fc75eee317c8c31de2cdad1aeb5af2e5156d283d"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/单据数据/.~其他出库单.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/期初数据/往来期初明细.xlsx",
+    "bytes": 10581,
+    "sha256": "0a77e89c77ff2dbbf3c88e116bbfe0c69482c0c35f094410fff5a418222a0bfb"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/期初数据/现金银行期初余额.xlsx",
+    "bytes": 12492,
+    "sha256": "b336c3f0ef31ae4c44c1e0ca954b91f656c96edfd8965ca91bcdfe1e1e42d080"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/期初数据/往来期初余额.xlsx",
+    "bytes": 24308,
+    "sha256": "45d98d283d833840dd640ebf710ab054a4e66b5463a5e8757c3dd3f6ff6f7c52"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/期初数据/库存期初余额.xlsx",
+    "bytes": 17680,
+    "sha256": "28f0ea6748e1500354285ea1f8ca42c4f719d8fa0067d1ada5df88677f44bf90"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/期初数据/辅助核算期初.xlsx",
+    "bytes": 9767,
+    "sha256": "9b8d8210ea94befd8e123a9ed978099c4e7af7a2e9f6121ac02840c8d56765b0"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/期初数据/现金流量期初.xlsx",
+    "bytes": 10255,
+    "sha256": "326b16cc808729058996354403a6cdaf6e751b1fe75c3873e98a72e2257f70c1"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/期初数据/科目期初余额.xlsx",
+    "bytes": 9749,
+    "sha256": "25bb4217681a063a03b4d5f71e597eb4cf491079bdbaee4020eca2ade09d1d8f"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/往来单位存货设置.xlsx",
+    "bytes": 9893,
+    "sha256": "af6c0be80ff58091f3cefb37947c4fc12fb2477785fce6819de9607c7344a95d"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/物流网点.xlsx",
+    "bytes": 16262,
+    "sha256": "193e70124ee18016156d12674caaca99a86a5e5ae36a905462e04c584ee5c46f"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/.~往来单位.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/费用.xlsx",
+    "bytes": 18564,
+    "sha256": "5777439bb15c17d38ba9d8d788afc159560f4e8e7022eeb2b7aa0bf2b704112f"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/存货分类.xlsx",
+    "bytes": 19220,
+    "sha256": "c5a726bb835046aac984ec02233ec2dde29b351868ea8f5082602b82f4022765"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/往来单位分类.xlsx",
+    "bytes": 9647,
+    "sha256": "d8661c0cd111141cfff3255c67b794c9d5f123c50ecc99f42a69cd203fbd3d91"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/常用摘要.xlsx",
+    "bytes": 10089,
+    "sha256": "d099254f11e154536e3354f0c90e62ed301227406867f8e7ba831f9905303238"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/.~账号.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/结算方式.xlsx",
+    "bytes": 9785,
+    "sha256": "ae15f5b7e2bb043941ebcb1ad5a6f3524063b4ab8516c1ed8c31f2003c698385"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/存货条码方案.xlsx",
+    "bytes": 23818,
+    "sha256": "650d0ca80f1ab1174362ab0f16de4a57d797c1a43f8fcf4d73181006eae4b411"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/.~存货分类.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/项目分类.xlsx",
+    "bytes": 9393,
+    "sha256": "7963adfebe42a97b9522bd69a26dd547d33633964f5109356314c6fed02bc18e"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/现金流量项目.xlsx",
+    "bytes": 11338,
+    "sha256": "f6fa1de440a7cec6daff6c2604aae7b05c44267d094a20cb5bfc91f32861460c"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/计量单位.xlsx",
+    "bytes": 15734,
+    "sha256": "1f36021a3849813a8155664fa674e5f39244bef127c7c602571e3f69df84b452"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/会员档案.xlsx",
+    "bytes": 17002,
+    "sha256": "49028db5dab80e17122e6e3090050ed4131f10b2f282cfc04086358c5dfa88ab"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/存货.xlsx",
+    "bytes": 1272173,
+    "sha256": "78150bd202c0ec6af7750f2dc572bdff261ca7b4cac3babb8a237ad8fa8c9efd"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/往来单位.xlsx",
+    "bytes": 147610,
+    "sha256": "55f8bbcb10cef88a23f8fb84677245d145cd61dbbe51c20851b228b8a04b2f96"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/收入.xlsx",
+    "bytes": 10395,
+    "sha256": "ae6866e9fbc8d6c662789b78be9ffe58308db58c17d1626be43339a3e9e3bf63"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/仓库.xlsx",
+    "bytes": 12935,
+    "sha256": "9f78e451cb6649c17edda15729d63f3ada5740859c594a5cd3daa7fd9d074da6"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/项目.xlsx",
+    "bytes": 9392,
+    "sha256": "aadb10db9e6290f6a8cd0babffc12bfee28a56d275e1012ae2d6ad3860c5db29"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/地区.xlsx",
+    "bytes": 9883,
+    "sha256": "ed87e532f53efeef6301da40fcde706bb40eadb7365a82f68d5bc9a6f76ff6e5"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/现金流量项目分类.xlsx",
+    "bytes": 9429,
+    "sha256": "72653296f590f0e35ed39fe449f7f069459b56dac324a2d18835465b05d711de"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/替代方案.xlsx",
+    "bytes": 14434,
+    "sha256": "6bd068a82958338d7967f53045f7a01ef0389e40f7329c401b5568475f078209"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/常用摘要分类.xlsx",
+    "bytes": 9422,
+    "sha256": "e0801f88d112b1d77524b7e937b08e788aeb8d8f6786da5767b7b253b51d9fd5"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/科目.xlsx",
+    "bytes": 11244,
+    "sha256": "664bdc6056ad85d7099c1a3b9dfb145badae05cc5b50550f002480af95a037ef"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/物流公司.xlsx",
+    "bytes": 14301,
+    "sha256": "114a4c571ad310f6b0e8ce5c3e7c38a1e7bcbc61deae23deeb1f4b1c9c8a976b"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/.~现金流量项目分类.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/出入库类别.xlsx",
+    "bytes": 10753,
+    "sha256": "d5cdb31893191b326c5af0f024924a292cf903417a3c74660cf4675941ba0f9d"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/物料清单.xlsx",
+    "bytes": 15308,
+    "sha256": "01abcd4692746c6080255961b25a120b6c17c7dab46b1c54e396365bc403ed49"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/.~存货.xlsx",
+    "bytes": 165,
+    "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/凭证类别.xlsx",
+    "bytes": 9382,
+    "sha256": "e7eb89f071e2750878ffec1450c27a61365aa8f865de9c3087fd1d2cc7ce62db"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/存货条形码.xlsx",
+    "bytes": 122093,
+    "sha256": "e961b423a0d6925c76c27a630bd1fa7619fef97b9c023fbb8a127e3322b432bd"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/部门.xlsx",
+    "bytes": 11894,
+    "sha256": "0603255119903738e1d78fcb97d147c548e6e8278ed22776102d1d7c3391d8f9"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/账号.xlsx",
+    "bytes": 19844,
+    "sha256": "5fc651fafc3d6d48facb5859ec4e9b3f710eaa4c4bc2932cf81d885280a86388"
+  },
+  {
+    "path": "inputs/tplus-frozen-v1/基础档案/员工.xlsx",
+    "bytes": 26966,
+    "sha256": "c96f8081de262dedbd53754a48639e757773cc45bf7ca62afe4571519f23cf36"
+  },
+  {
+    "path": "inputs/tplus-barcode-authority-20260930/基本数据对照表.xls",
+    "bytes": 3462144,
+    "sha256": "e25346dbb719114138a547faeb0e57df24a81ba8346dc0985417d7560e35178a"
+  },
+  {
+    "path": "inputs/transfer-print-reference-20261001/商品汇总参考.png",
+    "bytes": 526118,
+    "sha256": "bd98062d405c4109aaacf69dabe2988e220764b8d1932e6fda43a6a620f612f6"
+  },
+  {
+    "path": "inputs/TPLUS-SIZE-RULE-AUDIT-20261001/现存尺码映射与2.0差异对照-20261001.xlsx",
+    "bytes": 89002,
+    "sha256": "d25884b1c59caf4d9c46f4112c041ed5f6b49cff0d96ef5e81d3dfb8e3f83faa"
+  },
+  {
+    "path": "inputs/TPLUS-SIZE-RULE-AUDIT-20261001/新老尺码对照表2.0(2).xlsx",
+    "bytes": 35198,
+    "sha256": "91d64b13880aac00087e22c79d509aa169fbec4d4b09de8275283cc9737ddf0d"
+  },
+  {
+    "path": "inputs/tplus-scheme-supplement-20260930/存货条码方案.xlsx",
+    "bytes": 23818,
+    "sha256": "650d0ca80f1ab1174362ab0f16de4a57d797c1a43f8fcf4d73181006eae4b411"
+  },
+  {
+    "path": "backup/business-management-current-20261001.dump",
+    "bytes": 281330547,
+    "sha256": "741f1da7125ee2d4a27bbe59ef3045c2724446f8e0c99aae593ead97f55a701c"
+  },
+  {
+    "path": "data-cleaning/baselines/TPLUS-20260922-A2.tar.gz",
+    "bytes": 156222539,
+    "sha256": "f57c6a0a988d0f667b66d970ee2c1dc61c530f74df2e8b91aed96f5261451523"
+  },
+  {
+    "path": "data-cleaning/baselines/retired-tests/README.md",
+    "bytes": 417,
+    "sha256": "2f2b47b56e64198000c75924a376f4691944e9d20f01ba61621f481c61e8ac47"
+  },
+  {
+    "path": "data-cleaning/baselines/retired-tests/read-boundaries.pre-employee-auth.test.ts",
+    "bytes": 6030,
+    "sha256": "6249378543f88eb845d84223cec33e4d5b253fdd156d61a3980f180b21912868"
+  },
+  {
+    "path": "data-cleaning/baselines/uncommitted-retired-work/project-007-stage06-ui-feedback-source.tar.gz",
+    "bytes": 2763,
+    "sha256": "2c567d32a7a2bb98abbb3e03b0f341660a2beca4befe2bd1d37bdb6e806138de"
+  },
+  {
+    "path": "data-cleaning/baselines/uncommitted-retired-work/project-007-legacy-interaction-react-rebuild-source.tar.gz",
+    "bytes": 152941,
+    "sha256": "c8b9b2c93f9fb04f85cb256ed9ac65797b511291e9d1665ba1159ae5e79c38fb"
+  },
+  {
+    "path": "data-cleaning/baselines/uncommitted-retired-work/project-007-legacy-interaction-react-rebuild.patch",
+    "bytes": 10505,
+    "sha256": "bb58828c864290b5b63ddc31c6caa6b0b0cd50ddb1056ed7a828a63adfdf8ae5"
+  },
+  {
+    "path": "data-cleaning/baselines/uncommitted-retired-work/manifest.json",
+    "bytes": 21048,
+    "sha256": "f0f7af331eb48399933546578ab203d097f6ac79bc226532279aa96c4911b3ff"
+  },
+  {
+    "path": "data-cleaning/baselines/uncommitted-retired-work/project-007-stage06-ui-feedback.patch",
+    "bytes": 130060,
+    "sha256": "9c1985697b42f55b2db5975e4c16aca8f32a9475f859d3267949082a72c4bc84"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/RUN_ALL_RESULT.json",
+    "bytes": 543,
+    "sha256": "a9e3a7c5f26903b4a97cad7a4a260ea98a0d73e788dd7d029c610e5dce8f6fd1"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/RUN_META.json",
+    "bytes": 23025,
+    "sha256": "a568db5b05bc051e9a1ef6a83e6b7bbd35283d931e45e8c2dcfc977daa6afddf"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/TPLUS_CLEAN_IMPORT_REPORT.md",
+    "bytes": 1121,
+    "sha256": "d1e7d0e9041755628a43f494d92dba7826d35085cfa98bddae9e73447636dd09"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/CLEANING_AFTER_PROFILE.md",
+    "bytes": 1315,
+    "sha256": "a3461b53c05005ae25196c9cd6ab74d3ffb99898b808eb2d75ff6f59b2f520c4"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/PREFLIGHT_SUMMARY.json",
+    "bytes": 2044,
+    "sha256": "1408b5edb82c68ad299606f9e16f5e6cfa175e76a1910656a2a8da518c8220a2"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/before-scan.json",
+    "bytes": 82551,
+    "sha256": "6cfc6f7bbd919070998b17c7e911c6ccc571403bcec3818d265a3aa5ffe8c57b"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/cleaning_changes.jsonl",
+    "bytes": 1336,
+    "sha256": "6a8f08444080a20bf1f6307a05572b029ba9d60513db0516924a21843085d01e"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/TPLUS_BATCH_DIFF_REPORT.json",
+    "bytes": 7981,
+    "sha256": "dd38e7c962b667d13b90ab30ae82598df26d6e6a565bc615ed3e1eff61f49b17"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/CLEANING_DIFF_REPORT.md",
+    "bytes": 496,
+    "sha256": "adebfe9a948fe3b126901e3374b3c551774a9b2086527401ae63779e9ad84f36"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/TPLUS_MANUAL_REVIEW_QUEUE.md",
+    "bytes": 132,
+    "sha256": "36bca92d4553d739ece6f74c81acc4a4d64841f853183138d10dc7ca6bd8ef13"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/CLEANING_BEFORE_PROFILE.md",
+    "bytes": 1428,
+    "sha256": "41ad919415f6e3e447b3a84240665631c07263c4eb203e5369dbac741e95ec36"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/TPLUS_BATCH_DIFF_REPORT.md",
+    "bytes": 555,
+    "sha256": "6f18f7d0455c56d8138982af5aba86f8006af4846906d63b11e8eb9e502c8dba"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/after-scan.json",
+    "bytes": 81944,
+    "sha256": "ac9ed7f13ece4e9b22cb300f832a89774d5cdeafd20e81a3a3e65e1775d910a7"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/TPLUS_CLEANING_RUN_REPORT.md",
+    "bytes": 1578,
+    "sha256": "c54b0812f822fb17890897e73c4ce6e3e476447b7b062fc103aa26cb18dee603"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/TPLUS_MANUAL_REVIEW_QUEUE.csv",
+    "bytes": 5129,
+    "sha256": "f26b9872493f1f1191292c74d657ec4d017c34440ad8bd543cb3b8ed421367ef"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/TPLUS_CLEAN_VERIFY_REPORT.md",
+    "bytes": 589,
+    "sha256": "a4171afe31d065fec382b7dae3e986684e530b565cdcfb70275e5f4411ecca23"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/OLD_DB_BASELINE.json",
+    "bytes": 316,
+    "sha256": "586c9e234c3811d9f0096e6a26f3fdc21158c290a7bdaf8674d1898b7943ce68"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/TPLUS_CLEAN_VERIFY_REPORT.json",
+    "bytes": 2588,
+    "sha256": "f2d0e60f50b458658609bd5c1b8de891db74feb197b9da853767acc4e6324615"
+  },
+  {
+    "path": "data-cleaning/baselines/cleaning-v1/DYNAMIC_PREFLIGHT_SMOKE.json",
+    "bytes": 1758,
+    "sha256": "e1e46099278e3b2c0c1c3e0ad1a28626546e45aa16775c037322656bbab351a1"
+  }
+]

@@ -1,0 +1,107 @@
+{
+  "url": "http://127.0.0.1:8877/?v=document-exports-20261001b#transfer/new",
+  "ready": true,
+  "blocked": "",
+  "blockedCode": "",
+  "lease": true,
+  "date": true,
+  "warehouses": [
+    {
+      "field": "from",
+      "mounted": true
+    },
+    {
+      "field": "to",
+      "mounted": true
+    }
+  ],
+  "creator": true,
+  "header": "单据日期 *\n调出仓库 *\n调入仓库 *\n单号\n保存后生成\n创建者 *\n乌建红\n何叶方、钱文军\n何玲红\n何玲红\n冯秀琴\n冯秀琴 八佰伴\n凌金英\n刘小芳\n单莉黎\n吕卓颖\n吴 吉\n吴笑燕\n吴红娟\n周春娣\n夏苏芬\n孙丽燕\n孙敏娟\n孙敏娟\n孙静媛\n宋海英\n小方\n尚婷\n张名亚\n张建妹\n张海娟\n张海娟\n张生萍\n张红蕾\n张红蕾\n张红蕾\n徐云霞\n徐利芳\n徐国琴\n徐意芬\n徐茜\n徐萍\n曾玲\n朱孝琴\n朱小华\n朱小玲\n李丽\n李萍美\n李雪儿\n李雪儿\n杨小菊\n杨萍\n林伊\n林慧娟\n林贤芬\n梁波\n毛彩娣\n水筱芳\n沈彩娣\n王丽君\n王君\n王月珍\n王水姣\n王祝飞\n王红仙\n王群英\n祖夏云\n章玉仙\n缪丽华\n胡勇芳\n胡荣珍\n胡蓉\n范其芳 八佰伴\n董玲燕\n蒋丽英\n褚春燕\n褚素月\n谭丽虹\n赵珍红\n邹颖\n金凤\n钱文军\n陆春燕\n陈卫娣\n陈彩玉\n陈志芬\n陈景芳\n陈泽浩\n陈选娅\n顾雪美\n演示管理员\n扫码录入",
+  "lines": true,
+  "draftSaved": false,
+  "text": "新增调拨单\n未审核\n· 未保存\n返回列表\n保存\n审核\n导出\n打印\n操作历史\n单据日期 *\n调出仓库 *\n调入仓库 *\n单号\n保存后生成\n创建者 *\n乌建红\n何叶方、钱文军\n何玲红\n何玲红\n冯秀琴\n冯秀琴 八佰伴\n凌金英\n刘小芳\n单莉黎\n吕卓颖\n吴 吉\n吴笑燕\n吴红娟\n周春娣\n夏苏芬\n孙丽燕\n孙敏娟\n孙敏娟\n孙静媛\n宋海英\n小方\n尚婷\n张名亚\n张建妹\n张海娟\n张海娟\n张生萍\n张红蕾\n张红蕾\n张红蕾\n徐云霞\n徐利芳\n徐国琴\n徐意芬\n徐茜\n徐萍\n曾玲\n朱孝琴\n朱小华\n朱小玲\n李丽\n李萍美\n李雪儿\n李雪儿\n杨小菊\n杨萍\n林伊\n林慧娟\n林贤芬\n梁波\n毛彩娣\n水筱芳\n沈彩娣\n王丽君\n王君\n王月珍\n王水姣\n王祝飞\n王红仙\n王群英\n祖夏云\n章玉仙\n缪丽华\n胡勇芳\n胡荣珍\n胡蓉\n范其芳 八佰伴\n董玲燕\n蒋丽英\n褚春燕\n褚素月\n谭丽虹\n赵珍红\n邹颖\n金凤\n钱文军\n陆春燕\n陈卫娣\n陈彩玉\n陈志芬\n陈景芳\n陈泽浩\n陈选娅\n顾雪美\n演示管理员\n扫码录入\n备注\n调拨明细\n款号／商品名称\t颜色\t版型\t160/XS\t165/S\t170/M\t175/L\t180/XL\t185/2XL\t190/3XL\t195/4XL\t200/5XL\t205/6XL\t小计\t操作\n\n\t\n颜色\n\t\n版型\n\t\t\t\t\t\t\t\t\t\t\t\t\n0款\n0件",
+  "controls": [
+    {
+      "id": "",
+      "text": "返回列表",
+      "selector": "list",
+      "disabled": false
+    },
+    {
+      "id": "",
+      "text": "保存",
+      "selector": "save",
+      "disabled": false
+    },
+    {
+      "id": "",
+      "text": "审核",
+      "selector": "audit",
+      "disabled": false
+    },
+    {
+      "id": "",
+      "text": "导出",
+      "selector": "export",
+      "disabled": false
+    },
+    {
+      "id": "",
+      "text": "打印",
+      "selector": "print",
+      "disabled": false
+    },
+    {
+      "id": "",
+      "text": "操作历史",
+      "selector": "history",
+      "disabled": false
+    },
+    {
+      "id": "tc-date",
+      "text": "单据日期",
+      "disabled": false
+    },
+    {
+      "id": "",
+      "text": "",
+      "selector": "from",
+      "disabled": false
+    },
+    {
+      "id": "",
+      "text": "",
+      "selector": "to",
+      "disabled": false
+    },
+    {
+      "id": "",
+      "text": "扫码录入",
+      "selector": "scan",
+      "disabled": false
+    },
+    {
+      "id": "tc-note",
+      "text": "备注",
+      "disabled": false
+    },
+    {
+      "id": "mx-transfer-search",
+      "text": "调拨行内找货或扫描条码",
+      "disabled": false
+    },
+    {
+      "id": "mx-transfer-color",
+      "text": "颜色",
+      "selector": "spec-color",
+      "disabled": true
+    },
+    {
+      "id": "mx-transfer-fit",
+      "text": "版型",
+      "selector": "spec-fit",
+      "disabled": true
+    }
+  ],
+  "renderFailure": null
+}

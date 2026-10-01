@@ -1,0 +1,101 @@
+{
+  "time": "2026-10-01T13:56:22.582961+08:00",
+  "directories": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007",
+      "allocatedKiB": 274768,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F",
+      "allocatedKiB": 0,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-legacy-interaction-react-rebuild",
+      "allocatedKiB": 228036,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-preexisting-backup-20260925",
+      "allocatedKiB": 6891012,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-design-audit",
+      "allocatedKiB": 165476,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-s2-integrated",
+      "allocatedKiB": 182564,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-s2-products-integrated",
+      "allocatedKiB": 180240,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-shared-basic-integration",
+      "allocatedKiB": 175636,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-core",
+      "allocatedKiB": 166864,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s1-sku",
+      "allocatedKiB": 166924,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s2-sales",
+      "allocatedKiB": 167268,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s3-inventory",
+      "allocatedKiB": 181904,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s4-transfers",
+      "allocatedKiB": 189188,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s5-final",
+      "allocatedKiB": 204680,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05c-luna-basic-data",
+      "allocatedKiB": 172048,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05c-luna-products",
+      "allocatedKiB": 175776,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage06-ui-feedback",
+      "allocatedKiB": 204700,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-tplus-data-cleaning-v1",
+      "allocatedKiB": 449032,
+      "symlink": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统",
+      "allocatedKiB": 11960240,
+      "symlink": false
+    }
+  ],
+  "filesystem": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   239362496 198412540  15438888    93% 1555504 154388880    1%   /System/Volumes/Data\n"
+}

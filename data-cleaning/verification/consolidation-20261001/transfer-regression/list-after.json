@@ -1,0 +1,12 @@
+{
+  "url": "http://127.0.0.1:8877/?v=document-exports-20261001b#transfer",
+  "script": "http://127.0.0.1:8877/transfer-golden.js?v=state-preserved-20261001e",
+  "loaded": true,
+  "ready": true,
+  "filterHeight": 52.5,
+  "currentRows": 20,
+  "primaryRows": 1,
+  "arcoDates": 2,
+  "renderFailure": null,
+  "status": "PASS"
+}

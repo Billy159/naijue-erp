@@ -1,0 +1,13 @@
+[
+  "server/runtime/excel-barcode-authority.ts",
+  "server/runtime/barcode-scheme-supplement.ts",
+  "server/runtime/product-manual-alias.test.ts",
+  "data-cleaning/supplemental/TPLUS-SIZE-RULE-FIX-20261001/verify-mappings.ts",
+  "data-cleaning/supplemental/TPLUS-SIZE-RULE-FIX-20261001/prepare-decisions.py",
+  "data-cleaning/supplemental/TPLUS-SIZE-RULE-FIX-20261001/browser-verify.py",
+  "obsolete packaging helper removed: checkpoint.py",
+  "obsolete packaging helper removed: save-delivery.py",
+  "data-cleaning/supplemental/TPLUS-TRANSFER-SUPPLEMENT-REVIEW-20260930/analyze.py",
+  "data-cleaning/supplemental/TPLUS-TRANSFER-SUPPLEMENT-REVIEW-20260930/apply-decisions.ts",
+  "data-cleaning/supplemental/TPLUS-DEMO-OPENING-20260930/verify-backup.py"
+]

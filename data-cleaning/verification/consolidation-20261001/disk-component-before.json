@@ -1,0 +1,11 @@
+{
+  "databaseBackupsBytes": 3489487965,
+  "imageFilesBytes": 1659939677,
+  "buildCacheAllocatedKiB": 29876,
+  "nodeModulesAllocatedKiB": 414268,
+  "gitHistoryAllocatedKiB": 6122160,
+  "worktreeAllocatedKiB": 3010336,
+  "oldDemoMainAllocatedKiB": 11943368,
+  "preexistingArchiveAllocatedKiB": 6891012,
+  "note": "Categories overlap within parent directory totals; do not sum them."
+}

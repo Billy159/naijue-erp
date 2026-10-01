@@ -1,0 +1,157 @@
+{
+  "started_at": "2026-09-30T14:03:58+08:00",
+  "completed_at": "2026-09-30T14:04:08+08:00",
+  "authorization": "User said 删了吧 after receiving the four-row candidate list. First two items were removed first; this batch completes the other two listed items.",
+  "first_batch_record": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/logs/20260930-135422-项目依赖与缓存清理.json",
+  "second_batch_exact_targets": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-tplus-data-cleaning-v1/migration/cleaning/runs/TPLUS-CLEAN-20260924-A1/preflight/TPLUS-IMPORT-20260924-A1/data",
+      "allocated_bytes": 1794412544
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-tplus-data-cleaning-v1/migration/cleaning/runs/TPLUS-CLEAN-20260924-A1/preflight/TPLUS-IMPORT-20260924-A1/diagnostics",
+      "allocated_bytes": 280981504
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/outputs/account-handoff-20260929/ERP-8877-account-handoff-20260929-2284028.zip",
+      "allocated_bytes": 219701248
+    }
+  ],
+  "second_batch_removed": [
+    "/Users/billy/Desktop/Workspace/project-007-tplus-data-cleaning-v1/migration/cleaning/runs/TPLUS-CLEAN-20260924-A1/preflight/TPLUS-IMPORT-20260924-A1/data",
+    "/Users/billy/Desktop/Workspace/project-007-tplus-data-cleaning-v1/migration/cleaning/runs/TPLUS-CLEAN-20260924-A1/preflight/TPLUS-IMPORT-20260924-A1/diagnostics",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/outputs/account-handoff-20260929/ERP-8877-account-handoff-20260929-2284028.zip"
+  ],
+  "failures": [],
+  "protected_files": 260,
+  "protected_files_changed": [],
+  "source_health_data_unchanged": true,
+  "available_before_second_batch_bytes": 1686409216,
+  "available_after_all_batches_bytes": 3981520896,
+  "second_batch_net_available_increase_bytes": 2295111680,
+  "net_available_increase_from_first_deletion_bytes": 2312101888,
+  "net_available_increase_from_first_deletion_GiB": 2.153,
+  "available_after_all_batches_GiB": 3.708,
+  "candidate_allocated_bytes_total": 5748080640,
+  "all_removed": [
+    "/Users/billy/Desktop/Workspace/project-007-legacy-interaction-react-rebuild/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05-design-audit/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05-s2-integrated/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05-s2-products-integrated/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05-shared-basic-integration/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-core/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s1-sku/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s2-sales/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s3-inventory/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s4-transfers/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s5-final/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05c-luna-basic-data/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage05c-luna-products/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-stage06-ui-feedback/node_modules",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/node_modules/.pnpm-store",
+    "/Users/billy/Desktop/Workspace/project-007-tplus-data-cleaning-v1/migration/cleaning/runs/TPLUS-CLEAN-20260924-A1/preflight/TPLUS-IMPORT-20260924-A1/data",
+    "/Users/billy/Desktop/Workspace/project-007-tplus-data-cleaning-v1/migration/cleaning/runs/TPLUS-CLEAN-20260924-A1/preflight/TPLUS-IMPORT-20260924-A1/diagnostics",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/outputs/account-handoff-20260929/ERP-8877-account-handoff-20260929-2284028.zip"
+  ],
+  "service_checks": [
+    {
+      "url": "http://127.0.0.1:8877/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8878/health",
+      "status": 200,
+      "body": {
+        "ok": true,
+        "source": "REAL_TPLUS_HISTORY",
+        "readonly": true,
+        "database": "business_management",
+        "schema": "tplus_demo_20260922_a2",
+        "batch": "TPLUS-20260922-A2",
+        "data": {
+          "database": "business_management",
+          "schema": "tplus_demo_20260922_a2",
+          "transactionReadOnly": "on",
+          "batch": {
+            "batch_id": "TPLUS-20260922-A2",
+            "status": "COMMITTED",
+            "success_count": 613553,
+            "failure_count": 0
+          },
+          "categories": 50,
+          "products": 2941,
+          "skus": 14864,
+          "productBarcodes": 2943,
+          "purchases": 2172,
+          "purchaseLines": 49127,
+          "sales": 27903,
+          "saleLines": 79508,
+          "funds": 25416,
+          "multiFundSales": 470,
+          "transfers": 13946,
+          "transferLines": 254519,
+          "inventoryKeys": 137940,
+          "inventoryTotal": "80794.0000",
+          "negativeKeys": 1231,
+          "inventoryPosting": 0,
+          "inventoryMovement": 0,
+          "quarantine": [
+            {
+              "dataset_path": "quarantine/independent_receipt_documents.jsonl",
+              "record_count": 25155,
+              "status": "QUARANTINED"
+            },
+            {
+              "dataset_path": "quarantine/independent_receipt_lines.jsonl",
+              "record_count": 25622,
+              "status": "QUARANTINED"
+            },
+            {
+              "dataset_path": "quarantine/unmatched_transfer_documents.jsonl",
+              "record_count": 131,
+              "status": "QUARANTINED"
+            },
+            {
+              "dataset_path": "quarantine/unmatched_transfer_lines.jsonl",
+              "record_count": 88800,
+              "status": "QUARANTINED"
+            }
+          ],
+          "unresolved": 0,
+          "unsafeHistory": 0,
+          "unsafeFunds": 0,
+          "inventoryDifferences": 0
+        }
+      }
+    }
+  ],
+  "active_dependencies_retained": true,
+  "cleaning_dependency_link_retained": true,
+  "older_zip_metadata_backup": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/logs/20260930-140358-旧交接包元数据.json",
+  "raw_history_recovery": [
+    {
+      "file": ".DS_Store",
+      "original_sha256": "9ff0fa3918449275d412cd27173a5bde2f71812a297306fedf3145158296a568",
+      "retained_original_version": "/Users/billy/Desktop/Workspace/project-007-tplus-data-cleaning-v1/migration/cleaning/runs/TPLUS-CLEAN-20260924-A1/cleaned/T+数据/.DS_Store",
+      "current_raw_sha256": "bd432d33424fcc86dd086e23b3eca7521854ae7755929a1cf281e97be65000f5"
+    },
+    {
+      "file": "枚举档案/尺码.xlsx",
+      "original_sha256": "86f691fee142b7d725548f07f0f4fd2215c1317274b7c9d4421221d61de4e518",
+      "retained_original_version": "/Users/billy/Desktop/Workspace/project-007-tplus-data-cleaning-v1/migration/cleaning/runs/TPLUS-CLEAN-20260924-A1/cleaned/T+数据/枚举档案/尺码.xlsx",
+      "current_raw_sha256": "24ee3b7898da757b08021abcafb14df7fed4c1608773e1b06251feb39217c54b"
+    }
+  ],
+  "retained": [
+    "current original T+ inputs",
+    "all historical raw versions recoverable by stored hashes",
+    "cleaned inputs and frozen authority files",
+    "conversion scripts",
+    "quarantine",
+    "controls and reports",
+    "newer complete handoff archive",
+    "all worktree source and uncommitted changes",
+    "Git history",
+    "running business database"
+  ]
+}

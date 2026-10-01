@@ -1,0 +1,218 @@
+[
+  {
+    "file": "frontend/vite.inventory-filters.config.mjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "frontend/vite.inventory-select.config.mjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "frontend/vite.inventory-category.config.mjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "frontend/vite.transfer-date.config.mjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "frontend/vite.unified-single-select.config.mjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "frontend/vite.product.config.mjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "frontend/vite.basic-settings.config.mjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/runtime/product-manual-alias.test.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/runtime/sales-size-group.test.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/runtime/size-mapping.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/runtime/size-mapping.test.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/runtime/http.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/runtime/specs.test.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/runtime/supplements.test.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/runtime/product-profile.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/runtime/product-profile.test.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/runtime/product-spec-view.test.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/runtime/product-master.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/runtime/db.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/runtime/specs.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/api.mjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/historical-runtime/runtime/db.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/cleaning/clean.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/cleaning/run_all.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/cleaning/test_pipeline.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/cleaning/preflight.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/conversion/build_delivery.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/conversion/convert_masters.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/conversion/common.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/conversion/common.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/import/import-tplus.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/cleaning/runtime-init.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/cleaning/verify.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "frontend/verification/transfer-current.cjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "frontend/verification/transfer-refine.cjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "frontend/verification/inventory-quick-detail.cjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "frontend/verification/inventory-close.cjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "frontend/verification/inventory-workbench.cjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "frontend/verification/inventory-search.cjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "frontend/verification/inventory-local-fix.cjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "frontend/verification/inventory-recognition.cjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/supplemental/TPLUS-SIZE-RULE-FIX-20261001/prepare-decisions.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/supplemental/TPLUS-SIZE-RULE-FIX-20261001/checkpoint.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/supplemental/TPLUS-SIZE-RULE-FIX-20261001/verify-mappings.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/supplemental/TPLUS-SIZE-RULE-FIX-20261001/save-delivery.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/supplemental/TPLUS-DEMO-OPENING-20260930/verify-opening.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/supplemental/TPLUS-DEMO-OPENING-20260930/apply-opening.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/supplemental/TPLUS-DEMO-OPENING-20260930/verify-backup.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/supplemental/TPLUS-DEMO-OPENING-20260930/prepare-opening.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/supplemental/TPLUS-DEMO-OPENING-20260930/verify-final-state.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/supplemental/TPLUS-DEMO-OPENING-20260930/verify-service.mjs",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/supplemental/TPLUS-TRANSFER-SUPPLEMENT-REVIEW-20260930/apply-decisions.ts",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "data-cleaning/supplemental/TPLUS-TRANSFER-SUPPLEMENT-REVIEW-20260930/analyze.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  },
+  {
+    "file": "server/runtime/import-product-media.py",
+    "purpose": "local paths and configurable tool/database boundary"
+  }
+]

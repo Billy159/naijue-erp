@@ -1,0 +1,109 @@
+{
+  "updated": "2026-10-01T16:21:18.949964+08:00",
+  "state": "COMPLETE",
+  "finalProject": "/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo",
+  "demo": "http://127.0.0.1:8877/",
+  "checks": {
+    "buildEntries": 7,
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "dependencies": 14,
+    "freshNpmInstall": "PASS",
+    "frontendTests": 19,
+    "backendTests": 11,
+    "restoredTables": 89,
+    "exactRestoreDifferences": 0,
+    "cleaningReplay": "PASS_REVIEWED",
+    "repeatImport": "ALREADY_COMMITTED",
+    "runtimeSecondInitCreated": 0,
+    "browserLogin": "PASS_ISOLATED_ACCOUNT",
+    "browserRoutes": [
+      "inventory",
+      "products",
+      "transfer",
+      "sales",
+      "settings/stores"
+    ],
+    "originalImageFiles": 67,
+    "browserRenderedImages": 62,
+    "protectedFileHashes": 406,
+    "oldRuntimeDependencies": 0,
+    "restoredRequiredBindings": 2,
+    "undefinedReferenceGuardModules": 11,
+    "postDeletionPreservedFiles": 259,
+    "postDeletionProtectedFileHashes": 406,
+    "deletedPathsAbsent": 19,
+    "backupCount": 1,
+    "postDeletionBrowser": "PASS",
+    "postDeletionDatabaseBusinessContent": "PASS",
+    "postDeletionStopAndFreshStart": "PASS"
+  },
+  "disk": {
+    "initialProjectAllocatedKiB": 22136356,
+    "finalProjectAllocatedKiB": 1078648,
+    "projectReductionAllocatedKiB": 21057708,
+    "approvedDeletedAllocatedKiB": 22119468,
+    "filesystemAvailableNetIncreaseKiB": 21812404,
+    "pendingDuplicateBackup": false
+  },
+  "backup": {
+    "time": "2026-10-01T14:50:01.127541+08:00",
+    "file": "backup/business-management-current-20261001.dump",
+    "bytes": 281330547,
+    "sha256": "741f1da7125ee2d4a27bbe59ef3045c2724446f8e0c99aae593ead97f55a701c",
+    "restoreVerified": true
+  },
+  "baselineTag": "8877-final-baseline",
+  "branch": "codex/main",
+  "cleanup": {
+    "removedUnusedNamedDeclarations": 29,
+    "removedUnusedBindingNames": [
+      "cell",
+      "variants"
+    ],
+    "removedPages": [
+      "inventory-matrix.html",
+      "transfer-matrix.html",
+      "startup-diagnostic.html",
+      "startup-verify.html"
+    ],
+    "removedStylesheets": [
+      "sample-base.css"
+    ],
+    "removedDirectDependencies": [
+      "@app/contracts",
+      "@vitejs/plugin-react",
+      "xlsx",
+      "vitest",
+      "@eslint/js"
+    ],
+    "keptCompatibility": [
+      "historical SKU identities",
+      "900/910 no-size meanings",
+      "approved exact primary barcodes",
+      "manual old barcode aliases",
+      "402 accepted size decisions",
+      "current runtime core and fixture-based regressions"
+    ],
+    "restoredRequiredBindings": [
+      "frontend/transfer-golden.js: T = TRANSFER_UI.state",
+      "frontend/product-catalog.js: key in barcode validation"
+    ]
+  },
+  "deletion": {
+    "status": "COMPLETE",
+    "authorization": "批准按清单删除",
+    "directories": 18,
+    "olderBackups": 1,
+    "completedAt": "2026-10-01T15:43:53.537335+08:00",
+    "evidence": "deletion-results.json"
+  },
+  "globalIndex": "00-全局工作台.md synchronized",
+  "git": {
+    "branch": "codex/main",
+    "baselineTag": "8877-final-baseline",
+    "rootCommits": 1,
+    "worktrees": 1,
+    "workingTreeCleanVerified": true
+  }
+}

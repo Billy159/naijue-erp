@@ -1,0 +1,134 @@
+diff --git a/apps/web/package.json b/apps/web/package.json
+index bd8e83d..8e2a978 100644
+--- a/apps/web/package.json
++++ b/apps/web/package.json
+@@ -5,7 +5,9 @@
+   "scripts": {
+     "dev": "vite",
+     "build": "vite build",
+-    "typecheck": "tsc --noEmit"
++    "typecheck": "tsc --noEmit",
++    "dev:legacy": "vite --config vite.legacy.config.ts",
++    "build:legacy": "vite build --config vite.legacy.config.ts"
+   },
+   "dependencies": {
+     "@app/contracts": "workspace:*",
+diff --git a/apps/web/src/stage05/app/router.ts b/apps/web/src/stage05/app/router.ts
+index 0d74514..8eb5d14 100644
+--- a/apps/web/src/stage05/app/router.ts
++++ b/apps/web/src/stage05/app/router.ts
+@@ -5,6 +5,7 @@ export function navigate(target:string, replace=false) {
+   const url=new URL(target,"http://stage05.local");
+   if(!target.startsWith("/")||target.startsWith("//")||url.origin!=="http://stage05.local"||!matchRoute(url.pathname)) throw new Error("UNSAFE_ROUTE");
+   const safe=url.pathname+url.search;
++  if(!window.dispatchEvent(new CustomEvent("stage05:before-route",{cancelable:true,detail:{target:safe}})))return;
+   if(replace) window.history.replaceState({}, "", safe); else window.history.pushState({}, "", safe);
+   window.dispatchEvent(new Event(ROUTE_CHANGE));
+   window.scrollTo({top:0});
+diff --git a/apps/web/src/stage05/data/client.test.ts b/apps/web/src/stage05/data/client.test.ts
+index c7fa701..0adf122 100644
+--- a/apps/web/src/stage05/data/client.test.ts
++++ b/apps/web/src/stage05/data/client.test.ts
+@@ -80,6 +80,15 @@ describe("8878 thin client",()=>{
+     await expect(unsafe.listInventory({page:1,pageSize:100,productCodes:[],warehouseIds:[]}))
+       .rejects.toMatchObject({kind:"server"});
+   });
++  it("ignores only zero-only subtotal metadata without page positions",async()=>{
++    const body={rows:[{code:"P1",color_id:"C1",warehouse_id:"W1",values:{S1:2},total:2,index:0}],rowCount:1,productCount:1,total:2,
++      products:[{code:"P1",cols:{S1:2},first:0,last:0}],colors:[{code:"P1",color_id:"C1",cols:{S1:2},first:0,last:0},{code:"P2",color_id:"C2",cols:{S2:0},first:null,last:null}]};
++    const client=new Stage05ApiClient("",async()=>runtime(body));
++    const page=await client.listInventory({page:1,pageSize:500,productCodes:["P1","P2"],warehouseIds:["W1"]});
++    expect(page.colors).toEqual([{code:"P1",color_id:"C1",cols:{S1:"2"},first:0,last:0}]);
++    const invalid=new Stage05ApiClient("",async()=>runtime({...body,colors:[{code:"P2",color_id:"C2",cols:{S2:1},first:null,last:null}]}));
++    await expect(invalid.listInventory({page:1,pageSize:500,productCodes:["P2"],warehouseIds:["W1"]})).rejects.toMatchObject({kind:"server"});
++  });
+   it("normalizes exact ledger quantities and preserves historical missing operator facts",async()=>{
+     const client=new Stage05ApiClient("",async()=>runtime({items:[{
+       id:"source:1",time:"2025-01-02",type:"销货",delta:-1.25,before:2,after:0.75,
+diff --git a/apps/web/src/stage05/data/client.ts b/apps/web/src/stage05/data/client.ts
+index dfaecdf..c345ee1 100644
+--- a/apps/web/src/stage05/data/client.ts
++++ b/apps/web/src/stage05/data/client.ts
+@@ -55,12 +55,15 @@ function normalizedQuantityMap(value:unknown):Record<string,string> {
+ function normalizedInventorySubtotals(value:unknown,withColor:boolean):RuntimeInventorySubtotal[] {
+   if(value===null)return [];
+   if(!Array.isArray(value))throw Error("INVALID_INVENTORY_SUBTOTALS");
+-  return value.map(raw=>{
++  return value.flatMap(raw=>{
+     if(!raw||typeof raw!=="object"||Array.isArray(raw))throw Error("INVALID_INVENTORY_SUBTOTAL");
+     const row=raw as Record<string,unknown>;
+-    if(typeof row.code!=="string"||(withColor&&typeof row.color_id!=="string")||
+-      !Number.isSafeInteger(row.first)||!Number.isSafeInteger(row.last))throw Error("INVALID_INVENTORY_SUBTOTAL");
+-    return {code:row.code,...(withColor?{color_id:row.color_id as string}:{}),cols:normalizedQuantityMap(row.cols),first:row.first as number,last:row.last as number};
++    if(typeof row.code!=="string"||(withColor&&typeof row.color_id!=="string"))throw Error("INVALID_INVENTORY_SUBTOTAL");
++    const cols=normalizedQuantityMap(row.cols);
++    // The runtime includes zero-only color metadata with no rows in a page. It has no page position to render.
++    if(row.first===null&&row.last===null&&Object.values(cols).every(quantity=>parseSignedQuantity(quantity)===0n))return [];
++    if(!Number.isSafeInteger(row.first)||!Number.isSafeInteger(row.last))throw Error("INVALID_INVENTORY_SUBTOTAL");
++    return [{code:row.code,...(withColor?{color_id:row.color_id as string}:{}),cols,first:row.first as number,last:row.last as number}];
+   });
+ }
+ function normalizeInventoryPage(value:unknown):RuntimeInventoryPage {
+@@ -174,6 +177,12 @@ export class Stage05ApiClient {
+     return this.request<PagedApiResponse<RuntimeDocument>>("/runtime/documents"+params({type,page:query.page,size:query.pageSize,filters:JSON.stringify(query.filters||{})}),{signal:signal??null},"runtime");
+   }
+   getDocument(id:string,signal?:AbortSignal) { return this.request<RuntimeDocument>("/runtime/document/"+encodeURIComponent(id),{signal:signal??null},"runtime"); }
++  async listRuntimeWork(documentKey:string,signal?:AbortSignal):Promise<Record<string,unknown>[]> {
++    if(!documentKey||documentKey.length>200)throw new Error("INVALID_DOCUMENT_KEY");
++    const result=await this.request<{ok:boolean;items:Record<string,unknown>[]}>("/runtime/work",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"logs",docId:documentKey}),signal:signal??null},"runtime");
++    if(!result?.ok||!Array.isArray(result.items))throw new ApiError("server","扫码记录格式不正确");
++    return result.items;
++  }
+   listInventory(query:{page:number;pageSize:100|200|500;productCodes:readonly string[];warehouseIds:readonly string[]},signal?:AbortSignal):Promise<RuntimeInventoryPage> {
+     if(query.productCodes.length>3000||query.warehouseIds.length>200) throw new Error("INVENTORY_QUERY_BOUND_EXCEEDED");
+     return this.request<unknown>("/runtime/inventory"+params({page:query.page,size:query.pageSize}),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({products:query.productCodes,warehouses:query.warehouseIds}),signal:signal??null},"runtime")
+@@ -190,8 +199,8 @@ export class Stage05ApiClient {
+         return {codes:page.codes as string[],total:page.total as number};
+       });
+   }
+-  listLedger(query:{skuId:string;warehouseId:string;page:number;start?:string;end?:string},signal?:AbortSignal):Promise<RuntimeLedgerPage> {
+-    const payload={sku:query.skuId,warehouse:query.warehouseId,page:query.page,filters:{...(query.start?{start:query.start}:{}),...(query.end?{end:query.end}:{})}};
++  listLedger(query:{skuId:string;warehouseId:string;page:number;start?:string;end?:string;type?:string;source?:string},signal?:AbortSignal):Promise<RuntimeLedgerPage> {
++    const payload={sku:query.skuId,warehouse:query.warehouseId,page:query.page,filters:{...(query.start?{start:query.start}:{}),...(query.end?{end:query.end}:{}),...(query.type?{type:query.type}:{}),...(query.source?{source:query.source}:{})}};
+     return this.request<unknown>("/runtime/ledger"+params({query:JSON.stringify(payload)}),{signal:signal??null},"runtime").then(normalizeLedgerPage);
+   }
+   async documentCommand(input:DocumentCommand,signal?:AbortSignal):Promise<{version:number;serverDocument:RuntimeDocument}> {
+diff --git a/apps/web/src/stage05/features/transfers/model.test.ts b/apps/web/src/stage05/features/transfers/model.test.ts
+index 560b63a..1e0c21b 100644
+--- a/apps/web/src/stage05/features/transfers/model.test.ts
++++ b/apps/web/src/stage05/features/transfers/model.test.ts
+@@ -58,6 +58,8 @@ describe("S4 original identity and saved projection", () => {
+     const good: TransferDraft = document([line(0, "1")]).body;
+     const allowed = new Set([from, to]);
+     expect(validateTransferDraft(good, lookup, allowed)).toBeNull();
++    expect(validateTransferDraft({...good, header: {...good.header, business_date: "2026-09-24T19:46"}}, lookup, allowed)).toBeNull();
++    expect(validateTransferDraft({...good, header: {...good.header, business_date: "2026-09-24T25:00"}}, lookup, allowed)).toMatch(/有效业务日期/);
+     expect(validateTransferDraft({...good, header: {...good.header, business_date: "2026-02-30"}}, lookup, allowed)).toMatch(/有效业务日期/);
+     expect(validateTransferDraft({...good, header: {...good.header, source_to_warehouse_id: from}}, lookup, allowed)).toMatch(/不能相同/);
+     expect(validateTransferDraft({...good, lines: []}, lookup, allowed)).toMatch(/至少/);
+diff --git a/apps/web/src/stage05/features/transfers/model.ts b/apps/web/src/stage05/features/transfers/model.ts
+index c3467dc..3d42550 100644
+--- a/apps/web/src/stage05/features/transfers/model.ts
++++ b/apps/web/src/stage05/features/transfers/model.ts
+@@ -21,6 +21,8 @@ export type TransferDocument = Omit<RuntimeDocument, "body" | "history"> & {
+   baseline_was_included?: boolean;
+   current_effect_active?: boolean;
+   source_identity?: Record<string, unknown> | null;
++  original_auditor?: string | null;
++  updated_at?: string | null;
+ };
+ export type TransferDraft = TransferBody;
+ export type TransferViewLine = {line: TransferLine; sku: DisplaySku; quantity: string};
+@@ -125,8 +127,10 @@ export function appendTransferLines(existing: readonly TransferLine[], additions
+ export function validateTransferDraft(draft: TransferDraft, lookup: SkuLookup | null, warehouseIdSet: ReadonlySet<string>): string | null {
+   const {from, to} = warehouseIds(draft.header);
+   const date = transferHeader(draft.header, "business_date");
+-  const parsedDate = /^\d{4}-\d{2}-\d{2}$/.test(date) ? new Date(`${date}T00:00:00Z`) : null;
+-  if (!parsedDate || Number.isNaN(parsedDate.getTime()) || parsedDate.toISOString().slice(0, 10) !== date) return "请填写有效业务日期";
++  const match = /^(\d{4}-\d{2}-\d{2})(?:T(\d{2}):(\d{2}))?$/.exec(date);
++  const day = match?.[1] || "", hour = Number(match?.[2] || 0), minute = Number(match?.[3] || 0);
++  const parsedDate = match ? new Date(`${day}T00:00:00Z`) : null;
++  if (!parsedDate || Number.isNaN(parsedDate.getTime()) || parsedDate.toISOString().slice(0, 10) !== day || hour > 23 || minute > 59) return "请填写有效业务日期";
+   if (!from) return "请选择调出仓";
+   if (!to) return "请选择调入仓";
+   if (from === to) return "调出仓和调入仓不能相同";

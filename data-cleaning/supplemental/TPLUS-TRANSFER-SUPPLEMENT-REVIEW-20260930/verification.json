@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "readOnly": true,
+  "databaseWritten": false,
+  "sourceWorkbookEdited": false,
+  "quarantinedDocuments": 131,
+  "quarantinedLines": 88800,
+  "supplementalTransfersCorrespondingToQuarantinedDocuments": 0,
+  "ignoredNewTransferDocuments": 270,
+  "verifiedHistoricalSameSerialContentMatches": 13945,
+  "historicalContentDifferences": 1,
+  "historicalCurrentlyUnapprovedTransfers": 2,
+  "oldNumberRule": "原其他出入库单号 = AL + 原调拨单号；逐单核对13945张内容一致，另外1张仅一个尺码不同",
+  "knownSampleDifferentOriginalSkuKeys": 39,
+  "sourceShaMatchesCommittedLineage": true
+}

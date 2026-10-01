@@ -1,0 +1,5 @@
+
+> naijue-8877-demo@1.0.0 check:dependencies
+> node server/check-dependencies.mjs
+
+Locked dependencies: 14 ; runtime import paths: PASS

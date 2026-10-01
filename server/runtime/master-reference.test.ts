@@ -1,0 +1,38 @@
+import assert from 'node:assert/strict';
+import { randomUUID } from 'node:crypto';
+import { install, command, registerMasterReference } from './runtime.ts';
+import { transaction, SOURCE } from './db.ts';
+
+const schema='v2_runtime_test_master_'+Date.now();
+await install(schema);
+const source=await transaction(schema,tx=>tx.query(`SELECT v.id sku_id,v.product_id,(SELECT id FROM ${SOURCE}.warehouse LIMIT 1) warehouse_id FROM ${SOURCE}.variant v JOIN ${SOURCE}.product p ON p.id=v.product_id WHERE p.enabled LIMIT 1`));
+const {sku_id,product_id,warehouse_id}=source.rows[0];
+const newWarehouse=randomUUID(),method=randomUUID(),account=randomUUID();
+const add=(kind:string,id:string,name:string,enabled=true,methodId:string|null=null)=>registerMasterReference({kind,id,name,enabled,methodId},schema);
+const create=async(type:'TRANSFER'|'SALE',warehouse:string,fundsRecords:any[]=[],inbound=warehouse_id)=>command({documentId:randomUUID(),documentType:type,operation:'create',expectedVersion:0,requestKey:randomUUID(),body:{header:{business_date:'2026-09-29',adjustment:0},lines:[{source_id:randomUUID(),sku_id,product_id,source_quantity:'1',unit_price:'0',amount:'0',gift:true,warehouse_id:warehouse,from_warehouse_id:warehouse,to_warehouse_id:inbound}],fundsRecords}},{schema});
+await add('warehouses',newWarehouse,'测试仓库');
+assert.equal((await create('TRANSFER',newWarehouse)).ok,true);
+await add('warehouses',newWarehouse,'测试仓库',false);
+await assert.rejects(create('TRANSFER',newWarehouse),/OUTBOUND_WAREHOUSE_DISABLED_EMPTY/);
+// Historical disabled warehouses remain queryable and may be cleared through transfer out only.
+await transaction(schema,tx=>tx.query('INSERT INTO inventory_delta(warehouse_id,sku_id,quantity) VALUES($1::uuid,$2::uuid,2) RETURNING quantity',[newWarehouse,sku_id]));
+assert.equal((await create('TRANSFER',newWarehouse)).ok,true);
+await assert.rejects(create('TRANSFER',warehouse_id,[],newWarehouse),/INBOUND_WAREHOUSE_DISABLED/);
+await assert.rejects(create('SALE',newWarehouse),/INBOUND_WAREHOUSE_DISABLED/);
+await transaction(schema,tx=>tx.query('UPDATE inventory_delta SET quantity=-2 WHERE warehouse_id=$1::uuid RETURNING quantity',[newWarehouse]));
+assert.equal((await create('TRANSFER',newWarehouse)).ok,true,'negative historical balances also remain visible for clearing');
+await transaction(schema,tx=>tx.query('UPDATE inventory_delta SET quantity=0 WHERE warehouse_id=$1::uuid RETURNING quantity',[newWarehouse]));
+await assert.rejects(create('TRANSFER',newWarehouse),/OUTBOUND_WAREHOUSE_DISABLED_EMPTY/);
+const preserved=await transaction(schema,tx=>tx.query("SELECT enabled FROM master_reference_overlay WHERE kind='warehouses' AND id=$1::uuid",[newWarehouse]));
+assert.equal(preserved.rows[0].enabled,false,'clearing must not automatically reactivate warehouse');
+await add('warehouses',newWarehouse,'测试仓库');
+await add('payments',method,'测试收款方式');
+await add('fundAccounts',account,'测试资金账户',true,method);
+const funds=[{source_id:randomUUID(),payment_method_id:method,fund_account_id:account,amount:'0',direction:'zero'}];
+assert.equal((await create('SALE',newWarehouse,funds)).ok,true);
+await add('payments',method,'测试收款方式',false);
+await assert.rejects(create('SALE',newWarehouse,funds),/UNKNOWN_FUNDS_REFERENCE/);
+await add('payments',method,'测试收款方式');
+await add('fundAccounts',account,'测试资金账户',false,method);
+await assert.rejects(create('SALE',newWarehouse,funds),/UNKNOWN_FUNDS_REFERENCE/);
+console.log('runtime master reference overlay passed');

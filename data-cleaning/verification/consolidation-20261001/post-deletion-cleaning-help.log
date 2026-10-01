@@ -1,0 +1,12 @@
+usage: replay.py [-h] --database DATABASE [--run RUN] [--execute]
+                 [--accept-review]
+
+Reproduce the frozen historical diagnostic batch in a restored, isolated
+database.
+
+optional arguments:
+  -h, --help           show this help message and exit
+  --database DATABASE  restored demo_8877_* database
+  --run RUN            reuse this run path for review and execution
+  --execute
+  --accept-review

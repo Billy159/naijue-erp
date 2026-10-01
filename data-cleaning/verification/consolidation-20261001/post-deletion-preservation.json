@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "time": "2026-10-01T16:02:41.950807+08:00",
+  "retainedFiles": 259,
+  "retainedHashDifferences": [],
+  "protectedFiles": 406,
+  "protectedHashDifferences": [],
+  "excludedRebuiltBundles": 7,
+  "deletedPathsAbsent": 19,
+  "backupCount": 1,
+  "latestBackupSha256": "741f1da7125ee2d4a27bbe59ef3045c2724446f8e0c99aae593ead97f55a701c",
+  "onlyProjectEntry": "/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo"
+}

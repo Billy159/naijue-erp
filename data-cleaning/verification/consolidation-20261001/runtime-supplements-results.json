@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-01T06:37:43.989Z",
+  "status": "PASS",
+  "sizeMappings": 14864,
+  "halls": 40,
+  "sourceHalls": 47,
+  "barcodeAuthority": {
+    "revision": "excel-original-20260930-v1",
+    "sourceFile": "基本数据对照表.xls",
+    "sourceSha256": "e25346dbb719114138a547faeb0e57df24a81ba8346dc0985417d7560e35178a",
+    "rawRows": 15097,
+    "distinctSpecs": 10684,
+    "schemeSupplementRevision": "scheme-supplement-4288-20260930-v1",
+    "historyFinalized": true,
+    "finalDecisionRevision": "history-barcode-final-20260930-v1"
+  },
+  "stored": {
+    "count": 14960,
+    "unique_count": 14960,
+    "excelOriginal": 10682,
+    "schemeSupplement": 4278,
+    "aliases": 0
+  },
+  "duplicateBindingsRemoved": 2,
+  "pendingSourceSkus": 0,
+  "noBarcodeRequiredSkus": 10,
+  "newProducts": 14,
+  "newSpecs": 106,
+  "newProductClassificationPending": 14,
+  "c8": {
+    "historicalReviewSize": 163,
+    "status": "SUPERSEDED_BY_APPROVED_EXCEL"
+  },
+  "c9": {
+    "historicalReviewSize": 531,
+    "status": "SUPERSEDED_BY_APPROVED_EXCEL"
+  }
+}

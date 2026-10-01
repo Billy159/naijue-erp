@@ -1,0 +1,32 @@
+{
+  "status": "user_confirmed",
+  "opening_quantity": 0,
+  "opening_basis": "user_business_decision",
+  "source_snapshot_is_baseline": false,
+  "formula": "0 + source_signed_purchase_quantity - source_signed_sales_quantity + matched_transfer_in - matched_transfer_out",
+  "purchase_quantity": "151786",
+  "sales_quantity": "70992",
+  "matched_transfer_pairs": 13946,
+  "matched_transfer_in_quantity": "283423",
+  "matched_transfer_out_quantity": "283423",
+  "reconstructed_control_total": "80794",
+  "control_total_unit": "mixed source main units; not all pieces",
+  "unmatched_source_documents": 131,
+  "unmatched_out_documents": 52,
+  "unmatched_in_documents": 79,
+  "unmatched_treatment": "read_only_isolation_excluded_from_stock",
+  "source_date_end": "2026-09-10",
+  "source_audit_status": "unknown; never fabricated or re-audited",
+  "snapshot_role": "comparison evidence only; never force balance to snapshot",
+  "negative_quantities": "preserved",
+  "negative_stock": "preserved",
+  "source_quantity_sign": "do not reverse a second time for return type",
+  "import_executed": false,
+  "reload_before_launch_required": false,
+  "excluded_actions": [
+    "historical runtime re-audit",
+    "snapshot overwrite",
+    "unmatched source auto-pairing",
+    "inventory balancing adjustment"
+  ]
+}

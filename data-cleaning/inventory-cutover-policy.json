@@ -1,0 +1,194 @@
+{
+  "revision": "inventory-cutover-confirmed-20260930-v2",
+  "decisionDate": "2026-09-30",
+  "decisionStatus": "USER_CONFIRMED",
+  "decision": "保留131张历史盘盈盘亏原单与明细，原因未查明；Demo先用现有库存状况表作测试数量期初；正式上线时用共同截止时点的最新完整全仓库存或确认实盘结果作正式期初，随后仅由未被期初覆盖的有效新业务增减。",
+  "activationStatus": "DEMO_ACTIVE_PRODUCTION_CUTOFF_PENDING",
+  "openingInitialized": true,
+  "cutoff": null,
+  "openingSource": "库存状况表.xlsx",
+  "database": "business_management",
+  "sourceSchema": "tplus_demo_20260922_a2",
+  "runtimeSchema": "v2_runtime_stage03c",
+  "currentRuntimeBasis": "用户授权的现有T+库存快照作为Demo数量期初，加激活后实际运行增量；激活前来源流水及运行增量只保留历史，不叠加",
+  "supersedes": {
+    "policy": "work/TPLUS-DECISION-RESULTS-20260922/inventory-policy.json",
+    "scope": "上线库存的期初为0及历史流水重建口径",
+    "originalDecisionAndSourceEvidencePreserved": true,
+    "replacementActivation": "Demo测试期初已按现有文件激活；正式上线仍需最新完整全仓库存与确认截止时点"
+  },
+  "historicalStocktaking": {
+    "documents": 131,
+    "stockGainDocuments": 79,
+    "stockLossDocuments": 52,
+    "detailRows": 88800,
+    "recordClassification": "HISTORICAL_STOCKTAKING_CAUSE_UNKNOWN",
+    "cause": "未查明",
+    "sourceValidity": "未查明成因不等于作废或错误",
+    "afterCutoverStockEffect": false,
+    "originalDocumentsEvidence": "work/TPLUS-TRANSFER-SUPPLEMENT-REVIEW-20260930/quarantined-131-documents.json",
+    "originalDetailsSources": [
+      "T+数据/单据数据/其他入库单.xlsx",
+      "T+数据/单据数据/其他出库单.xlsx"
+    ],
+    "retention": "保留原单、全部原明细及来源，作为历史资料"
+  },
+  "openingInventoryRequirements": {
+    "completeAllWarehouses": true,
+    "singleConfirmedCutoff": true,
+    "requiredFields": [
+      "仓库",
+      "存货编码",
+      "颜色",
+      "尺码",
+      "计量单位",
+      "库存数量"
+    ],
+    "dimensionKeysPreserved": [
+      "原商品身份",
+      "原SKU身份",
+      "仓库",
+      "单位"
+    ],
+    "blankQuantityPolicy": "空白不是0；缺失或无法识别的库存项先列出",
+    "zeroQuantityPolicy": "明确的0库存可导入；导出未列出的项须有完整覆盖说明",
+    "negativeQuantityPolicy": "保留已确认的负库存",
+    "inventoryCostPolicy": "本裁定确认数量期初，不据此宣称库存成本已核定",
+    "historicalDocumentsAlreadyCovered": true,
+    "cutoffAfterBusinessEffect": "仅增减未被期初覆盖的后续有效新业务；未审核单保留为未审核"
+  },
+  "transferSupplementDecisions": {
+    "revision": "transfer-supplement-decisions-20260930-v1",
+    "sourceFile": "T+数据/调拨单导出.xlsx",
+    "sourceSha256": "2476f388189b68d771911e1381856d27a000d7cf600fbdd4d087d151f3432cdb",
+    "correctedLine": {
+      "sourceNumber": "AL-2026-09-0128",
+      "runtimeNumber": "ALAL-2026-09-0128",
+      "productCode": "586CS5361723",
+      "color": "蓝色",
+      "quantity": "1",
+      "oldSize": "180/104A  43",
+      "newSize": "180/108A 44",
+      "oldSkuId": "47b2fbd7-81f3-cae8-e059-419293281ce6",
+      "newSkuId": "9b2a1e67-be45-6c30-d8b6-87db0fb34a33",
+      "runtimeStatus": "UNAUDITED",
+      "runtimeStatusReason": "修改前该单已处于未审核，尺码更正保留其现有审核状态"
+    },
+    "sourceUnauditedDocuments": [
+      "AL-2026-09-0157",
+      "AL-2026-09-0158"
+    ],
+    "runtimeUnauditedDocuments": [
+      "ALAL-2026-09-0157",
+      "ALAL-2026-09-0158"
+    ],
+    "verification": "work/TPLUS-TRANSFER-SUPPLEMENT-REVIEW-20260930/user-decisions-verification.json",
+    "ignoredNewDocumentsAtOldCutoff": 270
+  },
+  "deferredNewProducts": {
+    "decisionDate": "2026-09-30",
+    "decisionStatus": "USER_CONFIRMED",
+    "classification": "NEW_PRODUCTS_AWAITING_NEXT_IMPORT",
+    "historicalIssue": false,
+    "decision": "用户确认这14款均为新款，分类、供应商与价格等待后续正式资料导入补齐，不再计入历史清洗待修问题。",
+    "productCodes": [
+      "501XF5395665",
+      "501XF5395666",
+      "501XK5399665",
+      "501XK5399666",
+      "510XF5395663",
+      "510XK5399661",
+      "510XK5399663",
+      "710ER5598633",
+      "722MF5598132",
+      "723ER5598635",
+      "732ER5598673",
+      "739JK5396182",
+      "906KZ3399151",
+      "906KZ5399581"
+    ],
+    "registeredSpecsAndBarcodes": 96,
+    "pendingFields": [
+      "分类",
+      "供应商",
+      "销售价",
+      "进价"
+    ],
+    "backfill": "下一批资料按现有货品编号匹配已有商品与SKU后补充，保留已确认条码；资料缺项保持待补，不编造为完整。"
+  },
+  "futureImportPolicy": {
+    "mode": "INCREMENTAL_ONLY",
+    "sameFormatRulesReusable": true,
+    "automaticAnyWorkbookImportVerified": false,
+    "currentHistoricalImporter": "scripts/import-tplus.ts仅接受既有冻结批次，不能将其当作任意新Excel增量导入器",
+    "workflow": "记录来源和批次→比对已导入单据及档案→复用当前字段与尺码映射→列出新增及变更→明确库存截止边界与状态→事务导入→回读数量和精确绑定",
+    "duplicateBatch": "重复文件或重复单据相同内容跳过，不叠加库存",
+    "changedExistingDocument": "同单号不同内容列为变更；保留旧版本，不覆盖为新单",
+    "transferIdentity": "既有基线已验证其他入库/出库单号为AL加调拨导出原单号；重复来源只形成一张调拨，两端仓库库存各计一次",
+    "unauditedDocuments": "保留单据与明细为未审核，未被期初覆盖的新增未审核单不产生库存影响",
+    "unknownStatus": "来源无状态时记录未知，不能编造已审核或作废",
+    "historicalBarcodes": "沿用Excel确认的精确条码及固定补充，10条NOT_REQUIRED保持；不重洗历史，不新增猜测兼容码",
+    "newBarcodeProductSegment": "根据该存货原方案，商品段统一取存货默认条码完整文本，保留前导零和实际长度；颜色尺码按段规则，超位或重码列出",
+    "sizeIdentity": "按存货尺码组和已裁定逐SKU映射解析，旧900/910保留原无尺码含义；不得按条码合并库存",
+    "exceptions": "缺字段、未知档案、规格歧义、重码或变更均单独列出，沿用已裁定规则，不临时补造业务事实"
+  },
+  "rulesFinalized": true,
+  "productionOpeningInitialized": false,
+  "demoOpening": {
+    "initialized": true,
+    "mode": "DEMO_ONLY",
+    "revision": "demo-opening-existing-tplus-20260930-v1",
+    "sourceFile": "库存状况表.xlsx",
+    "sourceSha256": "c40cdf7380be75104fb989d9d75fab3e6bd086fe57faa855f7b046641bfd292f",
+    "sourcePrintDate": "2026-09-10",
+    "businessCutoff": null,
+    "cutoffStatus": "UNCONFIRMED_PRINT_DATE_ONLY",
+    "cells": 32430,
+    "warehouses": 24,
+    "negativeCells": 340,
+    "byUnit": {
+      "件": "59885",
+      "条": "18966",
+      "双": "1919",
+      "套": "98",
+      "张": "84",
+      "次": "-180",
+      "把": "3",
+      "个": "1"
+    },
+    "unmatchedCells": 0,
+    "stockDifferences": 0,
+    "absentQuantityPolicy": "仅Demo将未列出的库存格及仓库解释为0，不沿用历史重建余数；正式期初须确认导出覆盖与空白含义",
+    "preActivationRuntimeEffect": "checkpoint existing inventory_delta and posting IDs; old data retained; not added to Demo snapshot",
+    "postActivationEffect": "only newly posted runtime deltas affect Demo stock",
+    "repeatApplicationWrites": 0,
+    "tables": [
+      "inventory_opening_run",
+      "inventory_opening_cell",
+      "inventory_opening_delta_checkpoint",
+      "inventory_opening_prior_posting"
+    ],
+    "balanceView": "inventory_balance_base",
+    "executionEvidence": "work/TPLUS-DEMO-OPENING-20260930/opening-application-results.json",
+    "verification": "work/TPLUS-DEMO-OPENING-20260930/opening-test-results.json"
+  },
+  "currentSizeGroups": {
+    "names": [
+      "男装上衣尺码",
+      "男装裤子尺码",
+      "女装尺码组",
+      "鞋码",
+      "童装尺码",
+      "配饰均码"
+    ],
+    "currentCodes": {
+      "男装上衣尺码": "201-210; 无尺码900",
+      "男装裤子尺码": "901-910; 无尺码900",
+      "女装尺码组": "251-260; 无尺码900"
+    },
+    "unspecifiedCurrentCodes": "鞋码、童装、配饰编码按已提供对照表留空；不猜填",
+    "historicalIdentity": "原SKU、原颜色/尺码编码名称和确认条码保持；旧900/910仍为原无尺码含义",
+    "displayProjection": "currentSizeMapping",
+    "evidence": "outputs/tplus-size-crosswalk-20260928/旧T+与新尺码对照表-旧910无尺码.xlsx.inspect.ndjson"
+  }
+}

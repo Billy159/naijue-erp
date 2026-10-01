@@ -1,0 +1,56 @@
+{
+  "schema": "v2_runtime_test_1790836103546",
+  "at": "2026-10-01T06:28:52.865Z",
+  "sourceBalances": [
+    {
+      "hash": "f35ad67967773583abb35c34d3d631de",
+      "total": "80794.0000"
+    }
+  ],
+  "results": [
+    {
+      "name": "A 全量初始化两次，不写库存/流水，历史人时未知",
+      "pass": true
+    },
+    {
+      "name": "B/F 销售10→8净+2，第二轮撤8再审6净+4",
+      "pass": true
+    },
+    {
+      "name": "C 正负混合逐仓贡献正确",
+      "pass": true
+    },
+    {
+      "name": "D 调拨两仓反向与再审核",
+      "pass": true
+    },
+    {
+      "name": "E 进货正负原符号，2172真实运行身份",
+      "pass": true
+    },
+    {
+      "name": "G/I 同key并发/响应丢失重试/冲突/过期版本",
+      "pass": true
+    },
+    {
+      "name": "H 四个失败点整事务rollback，调拨不半单",
+      "pass": true
+    },
+    {
+      "name": "J 0/1/N 同方式正负零、保存与审核时机、失败保存重开",
+      "pass": true
+    },
+    {
+      "name": "新增运行单、调拨编辑后直接审核及失败回滚",
+      "pass": true
+    },
+    {
+      "name": "调拨单和销货单仅未审核可软删除，删除不产生库存流水",
+      "pass": true
+    },
+    {
+      "name": "初始化不覆盖已修改版本及状态；source和lineage保护",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+PASS employee-auth.test.ts
+PASS product-profile.test.ts
+PASS product-master.test.ts
+PASS product-spec-view.test.ts
+PASS specs.test.ts
+FAIL supplements.test.ts
+PASS master-reference.test.ts
+FAIL read-boundaries.test.ts
+PASS runtime.test.ts
+PASS size-mapping.test.ts
+FAIL product-manual-alias.test.ts
+PASS sales-size-group.test.ts

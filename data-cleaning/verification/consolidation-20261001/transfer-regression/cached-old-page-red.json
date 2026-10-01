@@ -1,0 +1,15 @@
+{
+  "url": "http://127.0.0.1:8877/?v=document-exports-20261001b#transfer",
+  "loaded": true,
+  "ready": true,
+  "filterClass": "tc-filters tc-filters-two-row",
+  "filterHeight": 353,
+  "currentRows": 20,
+  "primaryRows": 0,
+  "arcoDates": 0,
+  "renderFailure": {
+    "name": "ReferenceError",
+    "message": "T is not defined",
+    "stack": "ReferenceError: T is not defined\n    at enhanceList (http://127.0.0.1:8877/transfer-golden.js?v=final-baseline-20261001d:23:272)\n    at window.render (http://127.0.0.1:8877/transfer-golden.js?v=final-baseline-20261001d:37:97)\n    at window.render (http://127.0.0.1:8877/assets/basic-settings-v2.bundle.js?v=final-baseline-20261001b:61:838450)\n    at window.render (http://127.0.0.1:8877/real-data-bridge.mjs?v=transfer-note-20261001a:24:2631)\n    at <anonymous>:1:498\n    at <anonymous>:1:583"
+  }
+}

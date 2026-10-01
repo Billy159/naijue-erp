@@ -1,0 +1,4907 @@
+{
+  "items": {
+    "001CS5131140-绿色": {
+      "baseCode": "001CS5131140",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "TX5522878-红色": {
+      "baseCode": "TX5522878",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "A2303105-黑": {
+      "baseCode": "A2303105",
+      "suffix": "黑",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0601682-兰色": {
+      "baseCode": "B0601682",
+      "suffix": "兰色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "001CS5131121-卡其": {
+      "baseCode": "001CS5131121",
+      "suffix": "卡其",
+      "colorId": "3ed12940-d75d-9794-ad2f-d313ffcf05ef",
+      "colorCode": "621",
+      "colorName": "卡其色"
+    },
+    "JK5527122-咖啡色": {
+      "baseCode": "JK5527122",
+      "suffix": "咖啡色",
+      "colorId": "f8cdc330-a7dd-3696-45e2-66fb85d865c3",
+      "colorCode": "251",
+      "colorName": "咖啡色"
+    },
+    "B0101162-紫色": {
+      "baseCode": "B0101162",
+      "suffix": "紫色",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "B0702753-灰色": {
+      "baseCode": "B0702753",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "D5121003-绿色": {
+      "baseCode": "D5121003",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "78038-红": {
+      "baseCode": "78038",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0802896-黑色": {
+      "baseCode": "B0802896",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0702703-灰色": {
+      "baseCode": "B0702703",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "TX3322171-黑色": {
+      "baseCode": "TX3322171",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5313205-黑色": {
+      "baseCode": "D5313205",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "T2355309-上青": {
+      "baseCode": "T2355309",
+      "suffix": "上青",
+      "colorId": "5b13d474-364d-9251-87a7-2b93cd29f717",
+      "colorCode": "515",
+      "colorName": "上青色"
+    },
+    "D5311406-上青": {
+      "baseCode": "D5311406",
+      "suffix": "上青",
+      "colorId": "5b13d474-364d-9251-87a7-2b93cd29f717",
+      "colorCode": "515",
+      "colorName": "上青色"
+    },
+    "B0302301-墨绿": {
+      "baseCode": "B0302301",
+      "suffix": "墨绿",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "B0801812-红色": {
+      "baseCode": "B0801812",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0302303-紫红": {
+      "baseCode": "B0302303",
+      "suffix": "紫红",
+      "colorId": "5e3d9211-c6ee-ba8d-82ce-47a18cbed543",
+      "colorCode": "104",
+      "colorName": "紫红色"
+    },
+    "KZ5529372-深蓝": {
+      "baseCode": "KZ5529372",
+      "suffix": "深蓝",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "D5121301-绿色": {
+      "baseCode": "D5121301",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "D2306101-灰绿": {
+      "baseCode": "D2306101",
+      "suffix": "灰绿",
+      "colorId": "211800ae-eac9-b2a4-d35a-e9cfe7fb3f6b",
+      "colorCode": "308",
+      "colorName": "灰绿色"
+    },
+    "A1832409-粉": {
+      "baseCode": "A1832409",
+      "suffix": "粉",
+      "colorId": "db23e752-81cb-4294-de98-d18f74c30974",
+      "colorCode": "131",
+      "colorName": "粉色"
+    },
+    "B0203253-绿色": {
+      "baseCode": "B0203253",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "D5518109-黑色": {
+      "baseCode": "D5518109",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "KZ5529273-黑灰": {
+      "baseCode": "KZ5529273",
+      "suffix": "黑灰",
+      "colorId": "2373e476-4ba3-a9c0-1dfe-ca078c9eb317",
+      "colorCode": "804",
+      "colorName": "黑灰色"
+    },
+    "Y5129501-黑色": {
+      "baseCode": "Y5129501",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "DY5527851-蓝色": {
+      "baseCode": "DY5527851",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "A1831705-上青": {
+      "baseCode": "A1831705",
+      "suffix": "上青",
+      "colorId": "5b13d474-364d-9251-87a7-2b93cd29f717",
+      "colorCode": "515",
+      "colorName": "上青色"
+    },
+    "SK901-墨绿": {
+      "baseCode": "SK901",
+      "suffix": "墨绿",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "B0325202-绿色": {
+      "baseCode": "B0325202",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "D5122103-墨绿": {
+      "baseCode": "D5122103",
+      "suffix": "墨绿",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "001CS5131122-绿色": {
+      "baseCode": "001CS5131122",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "XF5326766-黑色": {
+      "baseCode": "XF5326766",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "MS5323651-咖啡": {
+      "baseCode": "MS5323651",
+      "suffix": "咖啡",
+      "colorId": "f8cdc330-a7dd-3696-45e2-66fb85d865c3",
+      "colorCode": "251",
+      "colorName": "咖啡色"
+    },
+    "D5312001-兰铁灰": {
+      "baseCode": "D5312001",
+      "suffix": "兰铁灰",
+      "colorId": "59b0b38f-ac8e-009e-c509-e44e571cf277",
+      "colorCode": "813",
+      "colorName": "蓝铁灰"
+    },
+    "B0102146-黑色": {
+      "baseCode": "B0102146",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A2353101-红": {
+      "baseCode": "A2353101",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "MS5323053-灰绿": {
+      "baseCode": "MS5323053",
+      "suffix": "灰绿",
+      "colorId": "211800ae-eac9-b2a4-d35a-e9cfe7fb3f6b",
+      "colorCode": "308",
+      "colorName": "灰绿色"
+    },
+    "TX5522853-兰铁灰": {
+      "baseCode": "TX5522853",
+      "suffix": "兰铁灰",
+      "colorId": "59b0b38f-ac8e-009e-c509-e44e571cf277",
+      "colorCode": "813",
+      "colorName": "蓝铁灰"
+    },
+    "S3129102-黑灰": {
+      "baseCode": "S3129102",
+      "suffix": "黑灰",
+      "colorId": "2373e476-4ba3-a9c0-1dfe-ca078c9eb317",
+      "colorCode": "804",
+      "colorName": "黑灰色"
+    },
+    "A2309102-驼": {
+      "baseCode": "A2309102",
+      "suffix": "驼",
+      "colorId": "cb8d386b-35be-0a20-6d54-fb4d15b5c74f",
+      "colorCode": "601",
+      "colorName": "驼色"
+    },
+    "005DY5527561-灰色": {
+      "baseCode": "005DY5527561",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "CS5521072-驼色": {
+      "baseCode": "CS5521072",
+      "suffix": "驼色",
+      "colorId": "cb8d386b-35be-0a20-6d54-fb4d15b5c74f",
+      "colorCode": "601",
+      "colorName": "驼色"
+    },
+    "D5122282-灰蓝": {
+      "baseCode": "D5122282",
+      "suffix": "灰蓝",
+      "colorId": "ad28bc79-51cf-a324-b5eb-14e317755696",
+      "colorCode": "812",
+      "colorName": "灰蓝色"
+    },
+    "A2315301-黑": {
+      "baseCode": "A2315301",
+      "suffix": "黑",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5519219-黑色": {
+      "baseCode": "D5519219",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0101102-玫红": {
+      "baseCode": "B0101102",
+      "suffix": "玫红",
+      "colorId": "60c6bd23-69bc-3ec3-5f31-72c1d4305b36",
+      "colorCode": "107",
+      "colorName": "玫红色"
+    },
+    "D5529370-蓝灰色": {
+      "baseCode": "D5529370",
+      "suffix": "蓝灰色",
+      "colorId": "e5106b1d-bc12-3cee-e9ae-a1b0eed63ab4",
+      "colorCode": "511",
+      "colorName": "蓝灰色"
+    },
+    "A2332322-紫": {
+      "baseCode": "A2332322",
+      "suffix": "紫",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "001CS5131129-白色": {
+      "baseCode": "001CS5131129",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "B0203281-蓝色": {
+      "baseCode": "B0203281",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D5513612-青绿": {
+      "baseCode": "D5513612",
+      "suffix": "青绿",
+      "colorId": "a22f0fe1-0d22-c178-dcf2-34fb2e7676fe",
+      "colorCode": "315",
+      "colorName": "青绿色"
+    },
+    "011CS5131022-灰色": {
+      "baseCode": "011CS5131022",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "B0213001-浅灰": {
+      "baseCode": "B0213001",
+      "suffix": "浅灰",
+      "colorId": "475c0ac8-6bfa-ebba-2abe-7b685fa0922c",
+      "colorCode": "802",
+      "colorName": "浅灰色"
+    },
+    "B0301313-灰色": {
+      "baseCode": "B0301313",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "H1655-卡其": {
+      "baseCode": "H1655",
+      "suffix": "卡其",
+      "colorId": "3ed12940-d75d-9794-ad2f-d313ffcf05ef",
+      "colorCode": "621",
+      "colorName": "卡其色"
+    },
+    "TX5322871-花绿": {
+      "baseCode": "TX5322871",
+      "suffix": "花绿",
+      "colorId": "a063693a-c340-c9d4-413b-97806ff81b9a",
+      "colorCode": "316",
+      "colorName": "花绿色"
+    },
+    "A2309103-黑": {
+      "baseCode": "A2309103",
+      "suffix": "黑",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5122502-白色": {
+      "baseCode": "D5122502",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "B0203260-粉色": {
+      "baseCode": "B0203260",
+      "suffix": "粉色",
+      "colorId": "db23e752-81cb-4294-de98-d18f74c30974",
+      "colorCode": "131",
+      "colorName": "粉色"
+    },
+    "Y208-墨绿": {
+      "baseCode": "Y208",
+      "suffix": "墨绿",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "XF3326753-灰色": {
+      "baseCode": "XF3326753",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "KZ5529275-黑灰": {
+      "baseCode": "KZ5529275",
+      "suffix": "黑灰",
+      "colorId": "2373e476-4ba3-a9c0-1dfe-ca078c9eb317",
+      "colorCode": "804",
+      "colorName": "黑灰色"
+    },
+    "018XF5136705-灰色": {
+      "baseCode": "018XF5136705",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "D5126801-黑色": {
+      "baseCode": "D5126801",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A2309105-黑": {
+      "baseCode": "A2309105",
+      "suffix": "黑",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "001CS5131140-蓝色": {
+      "baseCode": "001CS5131140",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D5519117-蓝色": {
+      "baseCode": "D5519117",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "001CS5131140-红色": {
+      "baseCode": "001CS5131140",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "D2302101-灰绿": {
+      "baseCode": "D2302101",
+      "suffix": "灰绿",
+      "colorId": "211800ae-eac9-b2a4-d35a-e9cfe7fb3f6b",
+      "colorCode": "308",
+      "colorName": "灰绿色"
+    },
+    "A1922507-粉色": {
+      "baseCode": "A1922507",
+      "suffix": "粉色",
+      "colorId": "db23e752-81cb-4294-de98-d18f74c30974",
+      "colorCode": "131",
+      "colorName": "粉色"
+    },
+    "A2302106-红": {
+      "baseCode": "A2302106",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0503505-蓝色": {
+      "baseCode": "B0503505",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D5121313-紫色": {
+      "baseCode": "D5121313",
+      "suffix": "紫色",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "011CS5131021-绿色": {
+      "baseCode": "011CS5131021",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "MS5323001-紫蓝": {
+      "baseCode": "MS5323001",
+      "suffix": "紫蓝",
+      "colorId": "dce551e4-50b1-4f0b-9615-780648034f62",
+      "colorCode": "521",
+      "colorName": "紫蓝色"
+    },
+    "D5319222-黑灰": {
+      "baseCode": "D5319222",
+      "suffix": "黑灰",
+      "colorId": "2373e476-4ba3-a9c0-1dfe-ca078c9eb317",
+      "colorCode": "804",
+      "colorName": "黑灰色"
+    },
+    "D2306101-杏色": {
+      "baseCode": "D2306101",
+      "suffix": "杏色",
+      "colorId": "cee87277-cb2c-3624-9360-1ea225ae4d45",
+      "colorCode": "161",
+      "colorName": "杏色"
+    },
+    "D5129109-浅蓝": {
+      "baseCode": "D5129109",
+      "suffix": "浅蓝",
+      "colorId": "5cd70685-a380-096f-dbbd-1ce4788396a9",
+      "colorCode": "503",
+      "colorName": "浅蓝色"
+    },
+    "D6129207-深灰": {
+      "baseCode": "D6129207",
+      "suffix": "深灰",
+      "colorId": "7a967a43-6537-0382-bf7e-d24fab6f5800",
+      "colorCode": "803",
+      "colorName": "深灰色"
+    },
+    "TX5322071-黑色": {
+      "baseCode": "TX5322071",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0701751-藏兰": {
+      "baseCode": "B0701751",
+      "suffix": "藏兰",
+      "colorId": "2d9f3b34-96e2-ccc2-24a9-525958ef8720",
+      "colorCode": "507",
+      "colorName": "藏蓝色"
+    },
+    "D5512002-绿色": {
+      "baseCode": "D5512002",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "MS5323763-灰绿": {
+      "baseCode": "MS5323763",
+      "suffix": "灰绿",
+      "colorId": "211800ae-eac9-b2a4-d35a-e9cfe7fb3f6b",
+      "colorCode": "308",
+      "colorName": "灰绿色"
+    },
+    "D5517603-灰色": {
+      "baseCode": "D5517603",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "T1857208-驼色": {
+      "baseCode": "T1857208",
+      "suffix": "驼色",
+      "colorId": "cb8d386b-35be-0a20-6d54-fb4d15b5c74f",
+      "colorCode": "601",
+      "colorName": "驼色"
+    },
+    "D5121103-黑色": {
+      "baseCode": "D5121103",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0302303-黑色": {
+      "baseCode": "B0302303",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A1837339-红色": {
+      "baseCode": "A1837339",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0701709-灰色": {
+      "baseCode": "B0701709",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "B0101135-兰色": {
+      "baseCode": "B0101135",
+      "suffix": "兰色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "B0203213-白色": {
+      "baseCode": "B0203213",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "B0702756-绿色": {
+      "baseCode": "B0702756",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "D5513606-豆绿": {
+      "baseCode": "D5513606",
+      "suffix": "豆绿",
+      "colorId": "6d30765a-4a34-f40c-1064-a300ff0225fd",
+      "colorCode": "312",
+      "colorName": "豆绿色"
+    },
+    "B0701709-兰色": {
+      "baseCode": "B0701709",
+      "suffix": "兰色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "P3311107-蓝色": {
+      "baseCode": "P3311107",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "PK5527511-灰色": {
+      "baseCode": "PK5527511",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "D5121005-蓝色": {
+      "baseCode": "D5121005",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "KJ-15069-驼色": {
+      "baseCode": "KJ-15069",
+      "suffix": "驼色",
+      "colorId": "cb8d386b-35be-0a20-6d54-fb4d15b5c74f",
+      "colorCode": "601",
+      "colorName": "驼色"
+    },
+    "B0325802-蓝色": {
+      "baseCode": "B0325802",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "TX3322171-宝蓝色": {
+      "baseCode": "TX3322171",
+      "suffix": "宝蓝色",
+      "colorId": "fa068473-4a1a-1cd8-7fb2-e323caecc0b6",
+      "colorCode": "502",
+      "colorName": "宝蓝色"
+    },
+    "A1922506-玫红": {
+      "baseCode": "A1922506",
+      "suffix": "玫红",
+      "colorId": "60c6bd23-69bc-3ec3-5f31-72c1d4305b36",
+      "colorCode": "107",
+      "colorName": "玫红色"
+    },
+    "D5312302-灰色": {
+      "baseCode": "D5312302",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "D5329160-深蓝色": {
+      "baseCode": "D5329160",
+      "suffix": "深蓝色",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "D5121311-白色": {
+      "baseCode": "D5121311",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "P3311101-红色": {
+      "baseCode": "P3311101",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "A2302101-紫": {
+      "baseCode": "A2302101",
+      "suffix": "紫",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "D5121302-红色": {
+      "baseCode": "D5121302",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0325702-黑色": {
+      "baseCode": "B0325702",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5513602-咖色": {
+      "baseCode": "D5513602",
+      "suffix": "咖色",
+      "colorId": "40f147ef-adf6-63d9-01bd-3727e049fb5c",
+      "colorCode": "262",
+      "colorName": "咖色"
+    },
+    "A1612202-蓝色": {
+      "baseCode": "A1612202",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "B0101109-兰色": {
+      "baseCode": "B0101109",
+      "suffix": "兰色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "TX5322853-紫红": {
+      "baseCode": "TX5322853",
+      "suffix": "紫红",
+      "colorId": "5e3d9211-c6ee-ba8d-82ce-47a18cbed543",
+      "colorCode": "104",
+      "colorName": "紫红色"
+    },
+    "D5122110-黑色": {
+      "baseCode": "D5122110",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0313101-红色": {
+      "baseCode": "B0313101",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "XF3326751-蓝色": {
+      "baseCode": "XF3326751",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "XF5326758-蓝色": {
+      "baseCode": "XF5326758",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "A2353103-紫": {
+      "baseCode": "A2353103",
+      "suffix": "紫",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "D5329556-黑色": {
+      "baseCode": "D5329556",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0701766-兰色": {
+      "baseCode": "B0701766",
+      "suffix": "兰色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "B0702738-黑色": {
+      "baseCode": "B0702738",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0701715-黑色": {
+      "baseCode": "B0701715",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0301390-黑色": {
+      "baseCode": "B0301390",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A2332312-红": {
+      "baseCode": "A2332312",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0602671-黑色": {
+      "baseCode": "B0602671",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0203217-黑色": {
+      "baseCode": "B0203217",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "TX5322852-黑色": {
+      "baseCode": "TX5322852",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "CS5321158-白色": {
+      "baseCode": "CS5321158",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "D5312402-黑色": {
+      "baseCode": "D5312402",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "MS5323653-黑灰": {
+      "baseCode": "MS5323653",
+      "suffix": "黑灰",
+      "colorId": "2373e476-4ba3-a9c0-1dfe-ca078c9eb317",
+      "colorCode": "804",
+      "colorName": "黑灰色"
+    },
+    "018XF5136703-灰色": {
+      "baseCode": "018XF5136703",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "D5529271-黑灰色": {
+      "baseCode": "D5529271",
+      "suffix": "黑灰色",
+      "colorId": "2373e476-4ba3-a9c0-1dfe-ca078c9eb317",
+      "colorCode": "804",
+      "colorName": "黑灰色"
+    },
+    "D5122109-灰绿": {
+      "baseCode": "D5122109",
+      "suffix": "灰绿",
+      "colorId": "211800ae-eac9-b2a4-d35a-e9cfe7fb3f6b",
+      "colorCode": "308",
+      "colorName": "灰绿色"
+    },
+    "D5129108-蓝色": {
+      "baseCode": "D5129108",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "TX5322872-兰铁灰": {
+      "baseCode": "TX5322872",
+      "suffix": "兰铁灰",
+      "colorId": "59b0b38f-ac8e-009e-c509-e44e571cf277",
+      "colorCode": "813",
+      "colorName": "蓝铁灰"
+    },
+    "89019-枣红": {
+      "baseCode": "89019",
+      "suffix": "枣红",
+      "colorId": "9638d629-ce1d-3976-c200-c1eb8df25793",
+      "colorCode": "117",
+      "colorName": "枣红色"
+    },
+    "B0103107-蓝色": {
+      "baseCode": "B0103107",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "P5311203-红色": {
+      "baseCode": "P5311203",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0202272-黑色": {
+      "baseCode": "B0202272",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "S3121310-绿色": {
+      "baseCode": "S3121310",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "D5121002-蓝色": {
+      "baseCode": "D5121002",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "TX5522878-黑色": {
+      "baseCode": "TX5522878",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5121001-蓝色": {
+      "baseCode": "D5121001",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D3121306-灰绿": {
+      "baseCode": "D3121306",
+      "suffix": "灰绿",
+      "colorId": "211800ae-eac9-b2a4-d35a-e9cfe7fb3f6b",
+      "colorCode": "308",
+      "colorName": "灰绿色"
+    },
+    "B0702739-灰色": {
+      "baseCode": "B0702739",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "B0213101-灰色": {
+      "baseCode": "B0213101",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "S3122505-松绿": {
+      "baseCode": "S3122505",
+      "suffix": "松绿",
+      "colorId": "fe56248d-7ad5-ca0c-8c74-8d5b0711f482",
+      "colorCode": "313",
+      "colorName": "松绿色"
+    },
+    "MS5323653-黑色": {
+      "baseCode": "MS5323653",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "001CS5131127-白色": {
+      "baseCode": "001CS5131127",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "81170-宝蓝": {
+      "baseCode": "81170",
+      "suffix": "宝蓝",
+      "colorId": "fa068473-4a1a-1cd8-7fb2-e323caecc0b6",
+      "colorCode": "502",
+      "colorName": "宝蓝色"
+    },
+    "TX5322173-宝蓝色": {
+      "baseCode": "TX5322173",
+      "suffix": "宝蓝色",
+      "colorId": "fa068473-4a1a-1cd8-7fb2-e323caecc0b6",
+      "colorCode": "502",
+      "colorName": "宝蓝色"
+    },
+    "D5122681-乌兰": {
+      "baseCode": "D5122681",
+      "suffix": "乌兰",
+      "colorId": "0ca19ce4-7735-6785-c007-d3c74f4a3b5e",
+      "colorCode": "508",
+      "colorName": "乌蓝色"
+    },
+    "B0302302-墨绿": {
+      "baseCode": "B0302302",
+      "suffix": "墨绿",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "T2309101-黑色": {
+      "baseCode": "T2309101",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5312401-黑色": {
+      "baseCode": "D5312401",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A1832317-红": {
+      "baseCode": "A1832317",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "A2309109-黑": {
+      "baseCode": "A2309109",
+      "suffix": "黑",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D3121305-绿色": {
+      "baseCode": "D3121305",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "A1822007-蓝色": {
+      "baseCode": "A1822007",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "T0301358-灰色": {
+      "baseCode": "T0301358",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "S3129201-黑色": {
+      "baseCode": "S3129201",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0701758-兰色": {
+      "baseCode": "B0701758",
+      "suffix": "兰色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "T0301307-灰色": {
+      "baseCode": "T0301307",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "B0324602-军绿": {
+      "baseCode": "B0324602",
+      "suffix": "军绿",
+      "colorId": "16685600-71f8-ff27-f4c6-1edcf9764bd8",
+      "colorCode": "305",
+      "colorName": "军绿色"
+    },
+    "D5121441-浅蓝": {
+      "baseCode": "D5121441",
+      "suffix": "浅蓝",
+      "colorId": "5cd70685-a380-096f-dbbd-1ce4788396a9",
+      "colorCode": "503",
+      "colorName": "浅蓝色"
+    },
+    "B0103138-紫色": {
+      "baseCode": "B0103138",
+      "suffix": "紫色",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "88188-宝蓝": {
+      "baseCode": "88188",
+      "suffix": "宝蓝",
+      "colorId": "fa068473-4a1a-1cd8-7fb2-e323caecc0b6",
+      "colorCode": "502",
+      "colorName": "宝蓝色"
+    },
+    "DY5527651-灰色": {
+      "baseCode": "DY5527651",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "B0101112-紫色": {
+      "baseCode": "B0101112",
+      "suffix": "紫色",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "B0701713-灰色": {
+      "baseCode": "B0701713",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "XF5326767-蓝色": {
+      "baseCode": "XF5326767",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D2302101-杏色": {
+      "baseCode": "D2302101",
+      "suffix": "杏色",
+      "colorId": "cee87277-cb2c-3624-9360-1ea225ae4d45",
+      "colorCode": "161",
+      "colorName": "杏色"
+    },
+    "B0301308-灰色": {
+      "baseCode": "B0301308",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "B0801892-黑色": {
+      "baseCode": "B0801892",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0103121-红色": {
+      "baseCode": "B0103121",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "TX5322071-灰绿色": {
+      "baseCode": "TX5322071",
+      "suffix": "灰绿色",
+      "colorId": "211800ae-eac9-b2a4-d35a-e9cfe7fb3f6b",
+      "colorCode": "308",
+      "colorName": "灰绿色"
+    },
+    "B0203243-枣红": {
+      "baseCode": "B0203243",
+      "suffix": "枣红",
+      "colorId": "9638d629-ce1d-3976-c200-c1eb8df25793",
+      "colorCode": "117",
+      "colorName": "枣红色"
+    },
+    "JK5527123-黑色": {
+      "baseCode": "JK5527123",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "T0301358-黑红": {
+      "baseCode": "T0301358",
+      "suffix": "黑红",
+      "colorId": "03c26469-0053-ba54-5348-22e84a8c67d8",
+      "colorCode": "105",
+      "colorName": "黑红色"
+    },
+    "MS5323001-雾霾蓝": {
+      "baseCode": "MS5323001",
+      "suffix": "雾霾蓝",
+      "colorId": "d710e017-e3f4-8710-c4eb-1f79528972fa",
+      "colorCode": "512",
+      "colorName": "雾霾蓝"
+    },
+    "D5122103-黑色": {
+      "baseCode": "D5122103",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5312402-绿色": {
+      "baseCode": "D5312402",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "D5329252-黑色": {
+      "baseCode": "D5329252",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "MS5323765-灰绿": {
+      "baseCode": "MS5323765",
+      "suffix": "灰绿",
+      "colorId": "211800ae-eac9-b2a4-d35a-e9cfe7fb3f6b",
+      "colorCode": "308",
+      "colorName": "灰绿色"
+    },
+    "CS5321051-黑色": {
+      "baseCode": "CS5321051",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A2332302-红": {
+      "baseCode": "A2332302",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0201235-白色": {
+      "baseCode": "B0201235",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "A1831101-黄": {
+      "baseCode": "A1831101",
+      "suffix": "黄",
+      "colorId": "c12d1aba-169c-7c60-810f-8fe771c54055",
+      "colorCode": "201",
+      "colorName": "黄色"
+    },
+    "B0101158-白色": {
+      "baseCode": "B0101158",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "001CS5131125-红色": {
+      "baseCode": "001CS5131125",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "78038-黑": {
+      "baseCode": "78038",
+      "suffix": "黑",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5121443-白色": {
+      "baseCode": "D5121443",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "D5122512-青莲": {
+      "baseCode": "D5122512",
+      "suffix": "青莲",
+      "colorId": "ce805566-1884-77eb-82c1-2f444826d613",
+      "colorCode": "406",
+      "colorName": "青莲色"
+    },
+    "B0203248-军绿": {
+      "baseCode": "B0203248",
+      "suffix": "军绿",
+      "colorId": "16685600-71f8-ff27-f4c6-1edcf9764bd8",
+      "colorCode": "305",
+      "colorName": "军绿色"
+    },
+    "D6129206-深兰": {
+      "baseCode": "D6129206",
+      "suffix": "深兰",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "D5121002-绿色": {
+      "baseCode": "D5121002",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "D5513610-草绿": {
+      "baseCode": "D5513610",
+      "suffix": "草绿",
+      "colorId": "45a69c59-470d-bd08-2706-34c8d79ec193",
+      "colorCode": "311",
+      "colorName": "草绿色"
+    },
+    "TX5522876-兰铁灰": {
+      "baseCode": "TX5522876",
+      "suffix": "兰铁灰",
+      "colorId": "59b0b38f-ac8e-009e-c509-e44e571cf277",
+      "colorCode": "813",
+      "colorName": "蓝铁灰"
+    },
+    "B0325202-红色": {
+      "baseCode": "B0325202",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "D2210851-黑色": {
+      "baseCode": "D2210851",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5316603-黑色": {
+      "baseCode": "D5316603",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "S3122516-乌兰": {
+      "baseCode": "S3122516",
+      "suffix": "乌兰",
+      "colorId": "0ca19ce4-7735-6785-c007-d3c74f4a3b5e",
+      "colorCode": "508",
+      "colorName": "乌蓝色"
+    },
+    "B0701786-灰色": {
+      "baseCode": "B0701786",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "XF3326755-灰色": {
+      "baseCode": "XF3326755",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "D5311405-黑色": {
+      "baseCode": "D5311405",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "Y5129511-卡其": {
+      "baseCode": "Y5129511",
+      "suffix": "卡其",
+      "colorId": "3ed12940-d75d-9794-ad2f-d313ffcf05ef",
+      "colorCode": "621",
+      "colorName": "卡其色"
+    },
+    "B0203225-黑色": {
+      "baseCode": "B0203225",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0203217-绿色": {
+      "baseCode": "B0203217",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "D5126801-墨绿": {
+      "baseCode": "D5126801",
+      "suffix": "墨绿",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "FY5326553-黑色": {
+      "baseCode": "FY5326553",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "P3311201-绿色": {
+      "baseCode": "P3311201",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "JK5527821-蓝色": {
+      "baseCode": "JK5527821",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "B0226002-红色": {
+      "baseCode": "B0226002",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "D5513611-紫红": {
+      "baseCode": "D5513611",
+      "suffix": "紫红",
+      "colorId": "5e3d9211-c6ee-ba8d-82ce-47a18cbed543",
+      "colorCode": "104",
+      "colorName": "紫红色"
+    },
+    "B0202290-哈青": {
+      "baseCode": "B0202290",
+      "suffix": "哈青",
+      "colorId": "e7f2e9a2-6780-7fe7-cd16-429926e8e813",
+      "colorCode": "514",
+      "colorName": "哈青色"
+    },
+    "D5316603-绿色": {
+      "baseCode": "D5316603",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "S3319216-深兰": {
+      "baseCode": "S3319216",
+      "suffix": "深兰",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "D5529272-黑兰色": {
+      "baseCode": "D5529272",
+      "suffix": "黑兰色",
+      "colorId": "751a70c8-0f64-4495-d81a-ba4d5be09003",
+      "colorCode": "708",
+      "colorName": "黑蓝色"
+    },
+    "W6319302-黑色": {
+      "baseCode": "W6319302",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0302302-棕色": {
+      "baseCode": "B0302302",
+      "suffix": "棕色",
+      "colorId": "d3e7bcb9-a692-c9c7-537a-c172981b1115",
+      "colorCode": "270",
+      "colorName": "棕色"
+    },
+    "JT1861A-黑色": {
+      "baseCode": "JT1861A",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "P3311102-灰色": {
+      "baseCode": "P3311102",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "T2355307-黑灰": {
+      "baseCode": "T2355307",
+      "suffix": "黑灰",
+      "colorId": "2373e476-4ba3-a9c0-1dfe-ca078c9eb317",
+      "colorCode": "804",
+      "colorName": "黑灰色"
+    },
+    "D5122687-蓝绿": {
+      "baseCode": "D5122687",
+      "suffix": "蓝绿",
+      "colorId": "5e05c50f-5d91-0cec-ab99-3be6439b3006",
+      "colorCode": "306",
+      "colorName": "蓝绿色"
+    },
+    "TX5522877-黑色": {
+      "baseCode": "TX5522877",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "Y3319502-黑色": {
+      "baseCode": "Y3319502",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "T2309115-红": {
+      "baseCode": "T2309115",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0302387-黑色": {
+      "baseCode": "B0302387",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "Y208-紫红": {
+      "baseCode": "Y208",
+      "suffix": "紫红",
+      "colorId": "5e3d9211-c6ee-ba8d-82ce-47a18cbed543",
+      "colorCode": "104",
+      "colorName": "紫红色"
+    },
+    "B0601653-黑色": {
+      "baseCode": "B0601653",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0103136-灰色": {
+      "baseCode": "B0103136",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "A1822007-白色": {
+      "baseCode": "A1822007",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "D5122531-黑色": {
+      "baseCode": "D5122531",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0801893-黑色": {
+      "baseCode": "B0801893",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "89037-深灰": {
+      "baseCode": "89037",
+      "suffix": "深灰",
+      "colorId": "7a967a43-6537-0382-bf7e-d24fab6f5800",
+      "colorCode": "803",
+      "colorName": "深灰色"
+    },
+    "D5512002-铁灰": {
+      "baseCode": "D5512002",
+      "suffix": "铁灰",
+      "colorId": "34a4c945-f376-4eb7-981d-c11017acfe2c",
+      "colorCode": "537",
+      "colorName": "铁灰色"
+    },
+    "019XF5136707-灰色": {
+      "baseCode": "019XF5136707",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "T1857205-兰": {
+      "baseCode": "T1857205",
+      "suffix": "兰",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "DY5527571-灰色": {
+      "baseCode": "DY5527571",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "B0203250-红色": {
+      "baseCode": "B0203250",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "D5517606-藏青": {
+      "baseCode": "D5517606",
+      "suffix": "藏青",
+      "colorId": "4ed88f3a-4a77-286e-65d8-b7c68a5f1e25",
+      "colorCode": "506",
+      "colorName": "藏青色"
+    },
+    "W6129303-米色": {
+      "baseCode": "W6129303",
+      "suffix": "米色",
+      "colorId": "d345f6a9-1f65-c7a2-66d4-ed77df7aec73",
+      "colorCode": "725",
+      "colorName": "米色"
+    },
+    "D5312001-黑色": {
+      "baseCode": "D5312001",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5517002-哈青": {
+      "baseCode": "D5517002",
+      "suffix": "哈青",
+      "colorId": "e7f2e9a2-6780-7fe7-cd16-429926e8e813",
+      "colorCode": "514",
+      "colorName": "哈青色"
+    },
+    "KZ5529173-蓝色": {
+      "baseCode": "KZ5529173",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "YR5528755-黑色": {
+      "baseCode": "YR5528755",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "TX3322171-枣红色": {
+      "baseCode": "TX3322171",
+      "suffix": "枣红色",
+      "colorId": "9638d629-ce1d-3976-c200-c1eb8df25793",
+      "colorCode": "117",
+      "colorName": "枣红色"
+    },
+    "D5311408-红色": {
+      "baseCode": "D5311408",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "D5122501-黑色": {
+      "baseCode": "D5122501",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0201202-黑色": {
+      "baseCode": "B0201202",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A1832406-粉": {
+      "baseCode": "A1832406",
+      "suffix": "粉",
+      "colorId": "db23e752-81cb-4294-de98-d18f74c30974",
+      "colorCode": "131",
+      "colorName": "粉色"
+    },
+    "T1857205-黑": {
+      "baseCode": "T1857205",
+      "suffix": "黑",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "XF5326761-黑色": {
+      "baseCode": "XF5326761",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5122520-青蓝": {
+      "baseCode": "D5122520",
+      "suffix": "青蓝",
+      "colorId": "34f9ffe5-43a7-7f14-8450-f8b54ba6ce17",
+      "colorCode": "516",
+      "colorName": "青蓝色"
+    },
+    "B0201271-黑色": {
+      "baseCode": "B0201271",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "JK5326271-黑色": {
+      "baseCode": "JK5326271",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5122515-中兰": {
+      "baseCode": "D5122515",
+      "suffix": "中兰",
+      "colorId": "a6edd371-4556-0249-4185-deefd298aa86",
+      "colorCode": "510",
+      "colorName": "中蓝色"
+    },
+    "B0601665-咖啡色": {
+      "baseCode": "B0601665",
+      "suffix": "咖啡色",
+      "colorId": "f8cdc330-a7dd-3696-45e2-66fb85d865c3",
+      "colorCode": "251",
+      "colorName": "咖啡色"
+    },
+    "B0202273-黑色": {
+      "baseCode": "B0202273",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5122683-湖蓝": {
+      "baseCode": "D5122683",
+      "suffix": "湖蓝",
+      "colorId": "29b5fa90-0d5f-2bc8-25ad-a930781f0082",
+      "colorCode": "513",
+      "colorName": "湖蓝色"
+    },
+    "A2309102-红": {
+      "baseCode": "A2309102",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "A2332302-蓝色": {
+      "baseCode": "A2332302",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "B0103107-绿色": {
+      "baseCode": "B0103107",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "A1837301-深紫": {
+      "baseCode": "A1837301",
+      "suffix": "深紫",
+      "colorId": "dd3dcc01-14fa-68af-1bbf-8c9b10976440",
+      "colorCode": "403",
+      "colorName": "深紫色"
+    },
+    "D5329158-深蓝色": {
+      "baseCode": "D5329158",
+      "suffix": "深蓝色",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "D5329191-蓝色": {
+      "baseCode": "D5329191",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "B0203242-墨绿": {
+      "baseCode": "B0203242",
+      "suffix": "墨绿",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "D5122688-红色": {
+      "baseCode": "D5122688",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "XF3326752-墨绿色": {
+      "baseCode": "XF3326752",
+      "suffix": "墨绿色",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "D5513612-蓝色": {
+      "baseCode": "D5513612",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "001CS5131123-黑色": {
+      "baseCode": "001CS5131123",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0301301-紫兰": {
+      "baseCode": "B0301301",
+      "suffix": "紫兰",
+      "colorId": "dce551e4-50b1-4f0b-9615-780648034f62",
+      "colorCode": "521",
+      "colorName": "紫蓝色"
+    },
+    "D5122109-黑色": {
+      "baseCode": "D5122109",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5311408-上青": {
+      "baseCode": "D5311408",
+      "suffix": "上青",
+      "colorId": "5b13d474-364d-9251-87a7-2b93cd29f717",
+      "colorCode": "515",
+      "colorName": "上青色"
+    },
+    "B0203286-红色": {
+      "baseCode": "B0203286",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "D5122502-黑色": {
+      "baseCode": "D5122502",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "S3122518-绿色": {
+      "baseCode": "S3122518",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "B0202272-白色": {
+      "baseCode": "B0202272",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "B0701766-绿色": {
+      "baseCode": "B0701766",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "D5122106-黑色": {
+      "baseCode": "D5122106",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5319217-深蓝": {
+      "baseCode": "D5319217",
+      "suffix": "深蓝",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "D5319202-黑色": {
+      "baseCode": "D5319202",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "TX3322171-墨绿": {
+      "baseCode": "TX3322171",
+      "suffix": "墨绿",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "D5512003-铁灰": {
+      "baseCode": "D5512003",
+      "suffix": "铁灰",
+      "colorId": "34a4c945-f376-4eb7-981d-c11017acfe2c",
+      "colorCode": "537",
+      "colorName": "铁灰色"
+    },
+    "011CS5131023-白色": {
+      "baseCode": "011CS5131023",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "XF5326758-灰色": {
+      "baseCode": "XF5326758",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "DY5527551-灰色": {
+      "baseCode": "DY5527551",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "011CS5131025-绿色": {
+      "baseCode": "011CS5131025",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "B0702757-藏蓝": {
+      "baseCode": "B0702757",
+      "suffix": "藏蓝",
+      "colorId": "2d9f3b34-96e2-ccc2-24a9-525958ef8720",
+      "colorCode": "507",
+      "colorName": "藏蓝色"
+    },
+    "D5513608-绿色": {
+      "baseCode": "D5513608",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "001CS5131123-白色": {
+      "baseCode": "001CS5131123",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "L1618-紫": {
+      "baseCode": "L1618",
+      "suffix": "紫",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "S3329152-黑灰色": {
+      "baseCode": "S3329152",
+      "suffix": "黑灰色",
+      "colorId": "2373e476-4ba3-a9c0-1dfe-ca078c9eb317",
+      "colorCode": "804",
+      "colorName": "黑灰色"
+    },
+    "S3329153-黑色": {
+      "baseCode": "S3329153",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0701759-深兰": {
+      "baseCode": "B0701759",
+      "suffix": "深兰",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "011XF5136701-蓝色": {
+      "baseCode": "011XF5136701",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "TX5322851-黑色": {
+      "baseCode": "TX5322851",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "8536-红": {
+      "baseCode": "8536",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "A1612201-军绿": {
+      "baseCode": "A1612201",
+      "suffix": "军绿",
+      "colorId": "16685600-71f8-ff27-f4c6-1edcf9764bd8",
+      "colorCode": "305",
+      "colorName": "军绿色"
+    },
+    "T2353102-红": {
+      "baseCode": "T2353102",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0212901-蓝色": {
+      "baseCode": "B0212901",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "B0701710-黑红": {
+      "baseCode": "B0701710",
+      "suffix": "黑红",
+      "colorId": "03c26469-0053-ba54-5348-22e84a8c67d8",
+      "colorCode": "105",
+      "colorName": "黑红色"
+    },
+    "D5513610-中灰": {
+      "baseCode": "D5513610",
+      "suffix": "中灰",
+      "colorId": "c178933e-de03-c956-9e50-caf710c4e9a9",
+      "colorCode": "811",
+      "colorName": "中灰色"
+    },
+    "MS5323653-墨绿色": {
+      "baseCode": "MS5323653",
+      "suffix": "墨绿色",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "A2309139-兰": {
+      "baseCode": "A2309139",
+      "suffix": "兰",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D5329552-黑色": {
+      "baseCode": "D5329552",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5513608-花灰": {
+      "baseCode": "D5513608",
+      "suffix": "花灰",
+      "colorId": "e24926e8-1782-46de-fce9-fc834917a5c7",
+      "colorCode": "808",
+      "colorName": "花灰色"
+    },
+    "JK3526171-黑色": {
+      "baseCode": "JK3526171",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5313205-墨绿": {
+      "baseCode": "D5313205",
+      "suffix": "墨绿",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "B0701783-灰色": {
+      "baseCode": "B0701783",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "D5517605-蓝色": {
+      "baseCode": "D5517605",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "B0102159-绿色": {
+      "baseCode": "B0102159",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "S3319110-深兰": {
+      "baseCode": "S3319110",
+      "suffix": "深兰",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "B0224702-紫色": {
+      "baseCode": "B0224702",
+      "suffix": "紫色",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "B0312501-粉色": {
+      "baseCode": "B0312501",
+      "suffix": "粉色",
+      "colorId": "db23e752-81cb-4294-de98-d18f74c30974",
+      "colorCode": "131",
+      "colorName": "粉色"
+    },
+    "001CS5131126-卡其": {
+      "baseCode": "001CS5131126",
+      "suffix": "卡其",
+      "colorId": "3ed12940-d75d-9794-ad2f-d313ffcf05ef",
+      "colorCode": "621",
+      "colorName": "卡其色"
+    },
+    "D5122510-豆绿": {
+      "baseCode": "D5122510",
+      "suffix": "豆绿",
+      "colorId": "6d30765a-4a34-f40c-1064-a300ff0225fd",
+      "colorCode": "312",
+      "colorName": "豆绿色"
+    },
+    "D5122113-白色": {
+      "baseCode": "D5122113",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "KZ5529276-黑兰": {
+      "baseCode": "KZ5529276",
+      "suffix": "黑兰",
+      "colorId": "751a70c8-0f64-4495-d81a-ba4d5be09003",
+      "colorCode": "708",
+      "colorName": "黑蓝色"
+    },
+    "T1857205-红": {
+      "baseCode": "T1857205",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "T1857201-酱紫": {
+      "baseCode": "T1857201",
+      "suffix": "酱紫",
+      "colorId": "09caf03a-1d9d-1a5a-78d8-0775e12400bd",
+      "colorCode": "405",
+      "colorName": "酱紫色"
+    },
+    "MS5323003-玫红色": {
+      "baseCode": "MS5323003",
+      "suffix": "玫红色",
+      "colorId": "60c6bd23-69bc-3ec3-5f31-72c1d4305b36",
+      "colorCode": "107",
+      "colorName": "玫红色"
+    },
+    "A1832408-兰": {
+      "baseCode": "A1832408",
+      "suffix": "兰",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "TX5322871-兰铁灰": {
+      "baseCode": "TX5322871",
+      "suffix": "兰铁灰",
+      "colorId": "59b0b38f-ac8e-009e-c509-e44e571cf277",
+      "colorCode": "813",
+      "colorName": "蓝铁灰"
+    },
+    "A2303108-红": {
+      "baseCode": "A2303108",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "D2305101-杏色": {
+      "baseCode": "D2305101",
+      "suffix": "杏色",
+      "colorId": "cee87277-cb2c-3624-9360-1ea225ae4d45",
+      "colorCode": "161",
+      "colorName": "杏色"
+    },
+    "T0301365-紫红": {
+      "baseCode": "T0301365",
+      "suffix": "紫红",
+      "colorId": "5e3d9211-c6ee-ba8d-82ce-47a18cbed543",
+      "colorCode": "104",
+      "colorName": "紫红色"
+    },
+    "A1832405-紫": {
+      "baseCode": "A1832405",
+      "suffix": "紫",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "W6129306-黑色": {
+      "baseCode": "W6129306",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5122103-白色": {
+      "baseCode": "D5122103",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "WY5322751-宝蓝色": {
+      "baseCode": "WY5322751",
+      "suffix": "宝蓝色",
+      "colorId": "fa068473-4a1a-1cd8-7fb2-e323caecc0b6",
+      "colorCode": "502",
+      "colorName": "宝蓝色"
+    },
+    "D5517607-黑色": {
+      "baseCode": "D5517607",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5329555-黑色": {
+      "baseCode": "D5329555",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A1832402-粉": {
+      "baseCode": "A1832402",
+      "suffix": "粉",
+      "colorId": "db23e752-81cb-4294-de98-d18f74c30974",
+      "colorCode": "131",
+      "colorName": "粉色"
+    },
+    "XF5326757-蓝色": {
+      "baseCode": "XF5326757",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "B0702791-黑色": {
+      "baseCode": "B0702791",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A1832401-紫": {
+      "baseCode": "A1832401",
+      "suffix": "紫",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "D5329157-黑灰": {
+      "baseCode": "D5329157",
+      "suffix": "黑灰",
+      "colorId": "2373e476-4ba3-a9c0-1dfe-ca078c9eb317",
+      "colorCode": "804",
+      "colorName": "黑灰色"
+    },
+    "6579-红": {
+      "baseCode": "6579",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "0212201-蓝色": {
+      "baseCode": "0212201",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "S3121308-红色": {
+      "baseCode": "S3121308",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "16616-红色": {
+      "baseCode": "16616",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "XF5326765-灰色": {
+      "baseCode": "XF5326765",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "A1831106-红": {
+      "baseCode": "A1831106",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "A2309103-红": {
+      "baseCode": "A2309103",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "001CS5131122-湖蓝": {
+      "baseCode": "001CS5131122",
+      "suffix": "湖蓝",
+      "colorId": "29b5fa90-0d5f-2bc8-25ad-a930781f0082",
+      "colorCode": "513",
+      "colorName": "湖蓝色"
+    },
+    "W6129302-藏青": {
+      "baseCode": "W6129302",
+      "suffix": "藏青",
+      "colorId": "4ed88f3a-4a77-286e-65d8-b7c68a5f1e25",
+      "colorCode": "506",
+      "colorName": "藏青色"
+    },
+    "D5129107-蓝灰": {
+      "baseCode": "D5129107",
+      "suffix": "蓝灰",
+      "colorId": "e5106b1d-bc12-3cee-e9ae-a1b0eed63ab4",
+      "colorCode": "511",
+      "colorName": "蓝灰色"
+    },
+    "JK5527823-蓝色": {
+      "baseCode": "JK5527823",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "T1857112-咖色": {
+      "baseCode": "T1857112",
+      "suffix": "咖色",
+      "colorId": "40f147ef-adf6-63d9-01bd-3727e049fb5c",
+      "colorCode": "262",
+      "colorName": "咖色"
+    },
+    "CS5321157-红色": {
+      "baseCode": "CS5321157",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "001CS5131123-绿色": {
+      "baseCode": "001CS5131123",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "S3122505-暗蓝": {
+      "baseCode": "S3122505",
+      "suffix": "暗蓝",
+      "colorId": "8bc4ca97-1aa9-3585-d20e-bd44e9f2c087",
+      "colorCode": "509",
+      "colorName": "暗蓝色"
+    },
+    "D5126802-绿色": {
+      "baseCode": "D5126802",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "A1831105-黄": {
+      "baseCode": "A1831105",
+      "suffix": "黄",
+      "colorId": "c12d1aba-169c-7c60-810f-8fe771c54055",
+      "colorCode": "201",
+      "colorName": "黄色"
+    },
+    "B0701783-兰色": {
+      "baseCode": "B0701783",
+      "suffix": "兰色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "Y5129502-灰绿": {
+      "baseCode": "Y5129502",
+      "suffix": "灰绿",
+      "colorId": "211800ae-eac9-b2a4-d35a-e9cfe7fb3f6b",
+      "colorCode": "308",
+      "colorName": "灰绿色"
+    },
+    "DY5527571-驼色": {
+      "baseCode": "DY5527571",
+      "suffix": "驼色",
+      "colorId": "cb8d386b-35be-0a20-6d54-fb4d15b5c74f",
+      "colorCode": "601",
+      "colorName": "驼色"
+    },
+    "B0702738-绿色": {
+      "baseCode": "B0702738",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "D5129203-黑色": {
+      "baseCode": "D5129203",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "S3122505-花灰": {
+      "baseCode": "S3122505",
+      "suffix": "花灰",
+      "colorId": "e24926e8-1782-46de-fce9-fc834917a5c7",
+      "colorCode": "808",
+      "colorName": "花灰色"
+    },
+    "D5122513-蓝色": {
+      "baseCode": "D5122513",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "DY5527553-灰色": {
+      "baseCode": "DY5527553",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "MS5323003-黑蓝色": {
+      "baseCode": "MS5323003",
+      "suffix": "黑蓝色",
+      "colorId": "751a70c8-0f64-4495-d81a-ba4d5be09003",
+      "colorCode": "708",
+      "colorName": "黑蓝色"
+    },
+    "D5329352-咖啡色": {
+      "baseCode": "D5329352",
+      "suffix": "咖啡色",
+      "colorId": "f8cdc330-a7dd-3696-45e2-66fb85d865c3",
+      "colorCode": "251",
+      "colorName": "咖啡色"
+    },
+    "D5122507-黑色": {
+      "baseCode": "D5122507",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0601641-绿色": {
+      "baseCode": "B0601641",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "A1857231-兰色": {
+      "baseCode": "A1857231",
+      "suffix": "兰色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D2268651-黑色": {
+      "baseCode": "D2268651",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0701755-藏兰": {
+      "baseCode": "B0701755",
+      "suffix": "藏兰",
+      "colorId": "2d9f3b34-96e2-ccc2-24a9-525958ef8720",
+      "colorCode": "507",
+      "colorName": "藏蓝色"
+    },
+    "D5126601-绿色": {
+      "baseCode": "D5126601",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "B0301315-红色": {
+      "baseCode": "B0301315",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0702703-红色": {
+      "baseCode": "B0702703",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0201203-黑色": {
+      "baseCode": "B0201203",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5121006-蓝色": {
+      "baseCode": "D5121006",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "CS5321052-墨绿色": {
+      "baseCode": "CS5321052",
+      "suffix": "墨绿色",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "T2309115-黑": {
+      "baseCode": "T2309115",
+      "suffix": "黑",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "MS5323052-灰绿": {
+      "baseCode": "MS5323052",
+      "suffix": "灰绿",
+      "colorId": "211800ae-eac9-b2a4-d35a-e9cfe7fb3f6b",
+      "colorCode": "308",
+      "colorName": "灰绿色"
+    },
+    "011CS5131021-黑色": {
+      "baseCode": "011CS5131021",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A1831701-红": {
+      "baseCode": "A1831701",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "6563-黄": {
+      "baseCode": "6563",
+      "suffix": "黄",
+      "colorId": "c12d1aba-169c-7c60-810f-8fe771c54055",
+      "colorCode": "201",
+      "colorName": "黄色"
+    },
+    "B0903931-黑色": {
+      "baseCode": "B0903931",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0202222-白色": {
+      "baseCode": "B0202222",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "D5129601-深灰": {
+      "baseCode": "D5129601",
+      "suffix": "深灰",
+      "colorId": "7a967a43-6537-0382-bf7e-d24fab6f5800",
+      "colorCode": "803",
+      "colorName": "深灰色"
+    },
+    "A1832102-红": {
+      "baseCode": "A1832102",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0213801-藏兰": {
+      "baseCode": "B0213801",
+      "suffix": "藏兰",
+      "colorId": "2d9f3b34-96e2-ccc2-24a9-525958ef8720",
+      "colorCode": "507",
+      "colorName": "藏蓝色"
+    },
+    "D5122116-白色": {
+      "baseCode": "D5122116",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "T1611610-枣红": {
+      "baseCode": "T1611610",
+      "suffix": "枣红",
+      "colorId": "9638d629-ce1d-3976-c200-c1eb8df25793",
+      "colorCode": "117",
+      "colorName": "枣红色"
+    },
+    "0601667-枣红": {
+      "baseCode": "0601667",
+      "suffix": "枣红",
+      "colorId": "9638d629-ce1d-3976-c200-c1eb8df25793",
+      "colorCode": "117",
+      "colorName": "枣红色"
+    },
+    "D5122301-灰色": {
+      "baseCode": "D5122301",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "TX5322875-紫红": {
+      "baseCode": "TX5322875",
+      "suffix": "紫红",
+      "colorId": "5e3d9211-c6ee-ba8d-82ce-47a18cbed543",
+      "colorCode": "104",
+      "colorName": "紫红色"
+    },
+    "A2309105-红": {
+      "baseCode": "A2309105",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "D5122502-暗蓝": {
+      "baseCode": "D5122502",
+      "suffix": "暗蓝",
+      "colorId": "8bc4ca97-1aa9-3585-d20e-bd44e9f2c087",
+      "colorCode": "509",
+      "colorName": "暗蓝色"
+    },
+    "D5513607-青绿": {
+      "baseCode": "D5513607",
+      "suffix": "青绿",
+      "colorId": "a22f0fe1-0d22-c178-dcf2-34fb2e7676fe",
+      "colorCode": "315",
+      "colorName": "青绿色"
+    },
+    "FY5326552-黑色": {
+      "baseCode": "FY5326552",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0202232-白色": {
+      "baseCode": "B0202232",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "B0701711-红色": {
+      "baseCode": "B0701711",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "D5122508-蓝色": {
+      "baseCode": "D5122508",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "020FY5136602-黑色": {
+      "baseCode": "020FY5136602",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5121442-浅绿": {
+      "baseCode": "D5121442",
+      "suffix": "浅绿",
+      "colorId": "82026128-8fcd-a4b4-55e9-e892a2752ba5",
+      "colorCode": "302",
+      "colorName": "浅绿色"
+    },
+    "TX5522877-紫红": {
+      "baseCode": "TX5522877",
+      "suffix": "紫红",
+      "colorId": "5e3d9211-c6ee-ba8d-82ce-47a18cbed543",
+      "colorCode": "104",
+      "colorName": "紫红色"
+    },
+    "CS5321155-黑灰色": {
+      "baseCode": "CS5321155",
+      "suffix": "黑灰色",
+      "colorId": "2373e476-4ba3-a9c0-1dfe-ca078c9eb317",
+      "colorCode": "804",
+      "colorName": "黑灰色"
+    },
+    "B0702757-灰色": {
+      "baseCode": "B0702757",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "S3129101-蓝色": {
+      "baseCode": "S3129101",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "0327102-墨绿": {
+      "baseCode": "0327102",
+      "suffix": "墨绿",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "D5517602-深蓝": {
+      "baseCode": "D5517602",
+      "suffix": "深蓝",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "A2309102-兰": {
+      "baseCode": "A2309102",
+      "suffix": "兰",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "B0101105-紫色": {
+      "baseCode": "B0101105",
+      "suffix": "紫色",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "JK5326172-黑色": {
+      "baseCode": "JK5326172",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5121313-蓝色": {
+      "baseCode": "D5121313",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "MS5323053-碳灰": {
+      "baseCode": "MS5323053",
+      "suffix": "碳灰",
+      "colorId": "1be5222f-5da3-d3e4-3047-da78538682d7",
+      "colorCode": "807",
+      "colorName": "碳灰色"
+    },
+    "S3319213-咖啡": {
+      "baseCode": "S3319213",
+      "suffix": "咖啡",
+      "colorId": "f8cdc330-a7dd-3696-45e2-66fb85d865c3",
+      "colorCode": "251",
+      "colorName": "咖啡色"
+    },
+    "A1832301-红": {
+      "baseCode": "A1832301",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0302301-紫红": {
+      "baseCode": "B0302301",
+      "suffix": "紫红",
+      "colorId": "5e3d9211-c6ee-ba8d-82ce-47a18cbed543",
+      "colorCode": "104",
+      "colorName": "紫红色"
+    },
+    "A19311-兰色": {
+      "baseCode": "A19311",
+      "suffix": "兰色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D5121007-天蓝": {
+      "baseCode": "D5121007",
+      "suffix": "天蓝",
+      "colorId": "646b13a0-6888-58f7-d89d-4aa47de5f358",
+      "colorCode": "505",
+      "colorName": "天蓝色"
+    },
+    "MS5323652-蓝色": {
+      "baseCode": "MS5323652",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D5122510-青莲": {
+      "baseCode": "D5122510",
+      "suffix": "青莲",
+      "colorId": "ce805566-1884-77eb-82c1-2f444826d613",
+      "colorCode": "406",
+      "colorName": "青莲色"
+    },
+    "A2332321-紫": {
+      "baseCode": "A2332321",
+      "suffix": "紫",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "T1611613-兰": {
+      "baseCode": "T1611613",
+      "suffix": "兰",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "B0302301-深灰": {
+      "baseCode": "B0302301",
+      "suffix": "深灰",
+      "colorId": "7a967a43-6537-0382-bf7e-d24fab6f5800",
+      "colorCode": "803",
+      "colorName": "深灰色"
+    },
+    "TX5322173-墨绿色": {
+      "baseCode": "TX5322173",
+      "suffix": "墨绿色",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "D5122512-灰绿": {
+      "baseCode": "D5122512",
+      "suffix": "灰绿",
+      "colorId": "211800ae-eac9-b2a4-d35a-e9cfe7fb3f6b",
+      "colorCode": "308",
+      "colorName": "灰绿色"
+    },
+    "B0702791-灰色": {
+      "baseCode": "B0702791",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "S3329151-蓝色": {
+      "baseCode": "S3329151",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "DY5527152-黑色": {
+      "baseCode": "DY5527152",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0201205-黑色": {
+      "baseCode": "B0201205",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A1832251-紫": {
+      "baseCode": "A1832251",
+      "suffix": "紫",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "D5519220-黑色": {
+      "baseCode": "D5519220",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5517607-灰色": {
+      "baseCode": "D5517607",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "P3311205-白色": {
+      "baseCode": "P3311205",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "D5512403-黑色": {
+      "baseCode": "D5512403",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0702751-灰色": {
+      "baseCode": "B0702751",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "D5121001-红色": {
+      "baseCode": "D5121001",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0203243-深兰": {
+      "baseCode": "B0203243",
+      "suffix": "深兰",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "B0103106-灰色": {
+      "baseCode": "B0103106",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "Y5129502-黑色": {
+      "baseCode": "Y5129502",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5122105-墨绿": {
+      "baseCode": "D5122105",
+      "suffix": "墨绿",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "A2332320-黑色": {
+      "baseCode": "A2332320",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "TX5522876-花绿": {
+      "baseCode": "TX5522876",
+      "suffix": "花绿",
+      "colorId": "a063693a-c340-c9d4-413b-97806ff81b9a",
+      "colorCode": "316",
+      "colorName": "花绿色"
+    },
+    "B0603615-黑色": {
+      "baseCode": "B0603615",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "SK928-酒红": {
+      "baseCode": "SK928",
+      "suffix": "酒红",
+      "colorId": "a19a5983-ad81-101e-79f8-9322554a300a",
+      "colorCode": "116",
+      "colorName": "酒红色"
+    },
+    "81050-藏青": {
+      "baseCode": "81050",
+      "suffix": "藏青",
+      "colorId": "4ed88f3a-4a77-286e-65d8-b7c68a5f1e25",
+      "colorCode": "506",
+      "colorName": "藏青色"
+    },
+    "D5122113-湖蓝": {
+      "baseCode": "D5122113",
+      "suffix": "湖蓝",
+      "colorId": "29b5fa90-0d5f-2bc8-25ad-a930781f0082",
+      "colorCode": "513",
+      "colorName": "湖蓝色"
+    },
+    "CS5321156-紫色": {
+      "baseCode": "CS5321156",
+      "suffix": "紫色",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "B0702753-绿色": {
+      "baseCode": "B0702753",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "B0201261-黑色": {
+      "baseCode": "B0201261",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5122105-白色": {
+      "baseCode": "D5122105",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "D5312288-黑色": {
+      "baseCode": "D5312288",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5329161-蓝色": {
+      "baseCode": "D5329161",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D5122683-浅绿": {
+      "baseCode": "D5122683",
+      "suffix": "浅绿",
+      "colorId": "82026128-8fcd-a4b4-55e9-e892a2752ba5",
+      "colorCode": "302",
+      "colorName": "浅绿色"
+    },
+    "D5313205-深灰": {
+      "baseCode": "D5313205",
+      "suffix": "深灰",
+      "colorId": "7a967a43-6537-0382-bf7e-d24fab6f5800",
+      "colorCode": "803",
+      "colorName": "深灰色"
+    },
+    "JK5527131-黑色": {
+      "baseCode": "JK5527131",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "DY5527852-灰色": {
+      "baseCode": "DY5527852",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "T2355309-黑": {
+      "baseCode": "T2355309",
+      "suffix": "黑",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5513609-驼色": {
+      "baseCode": "D5513609",
+      "suffix": "驼色",
+      "colorId": "cb8d386b-35be-0a20-6d54-fb4d15b5c74f",
+      "colorCode": "601",
+      "colorName": "驼色"
+    },
+    "B0324502-橙色": {
+      "baseCode": "B0324502",
+      "suffix": "橙色",
+      "colorId": "3b8ad6ed-f6db-cd06-1ebe-375713fce899",
+      "colorCode": "221",
+      "colorName": "橙色"
+    },
+    "B0201272-黑色": {
+      "baseCode": "B0201272",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "T1831121-红": {
+      "baseCode": "T1831121",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0101163-玫红": {
+      "baseCode": "B0101163",
+      "suffix": "玫红",
+      "colorId": "60c6bd23-69bc-3ec3-5f31-72c1d4305b36",
+      "colorCode": "107",
+      "colorName": "玫红色"
+    },
+    "001CS5131125-卡其": {
+      "baseCode": "001CS5131125",
+      "suffix": "卡其",
+      "colorId": "3ed12940-d75d-9794-ad2f-d313ffcf05ef",
+      "colorCode": "621",
+      "colorName": "卡其色"
+    },
+    "B0212201-紫色": {
+      "baseCode": "B0212201",
+      "suffix": "紫色",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "T2355308-灰色": {
+      "baseCode": "T2355308",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "D6129205-黑色": {
+      "baseCode": "D6129205",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "YR5528629-绿色": {
+      "baseCode": "YR5528629",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "B0203260-浅蓝": {
+      "baseCode": "B0203260",
+      "suffix": "浅蓝",
+      "colorId": "5cd70685-a380-096f-dbbd-1ce4788396a9",
+      "colorCode": "503",
+      "colorName": "浅蓝色"
+    },
+    "B0103133-黑色": {
+      "baseCode": "B0103133",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5513606-兰灰": {
+      "baseCode": "D5513606",
+      "suffix": "兰灰",
+      "colorId": "e5106b1d-bc12-3cee-e9ae-a1b0eed63ab4",
+      "colorCode": "511",
+      "colorName": "蓝灰色"
+    },
+    "B0701756-兰色": {
+      "baseCode": "B0701756",
+      "suffix": "兰色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "JK5527113-黑红": {
+      "baseCode": "JK5527113",
+      "suffix": "黑红",
+      "colorId": "03c26469-0053-ba54-5348-22e84a8c67d8",
+      "colorCode": "105",
+      "colorName": "黑红色"
+    },
+    "CS5321157-蓝色": {
+      "baseCode": "CS5321157",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "A2332312-兰": {
+      "baseCode": "A2332312",
+      "suffix": "兰",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "MS5323003-黑绿色": {
+      "baseCode": "MS5323003",
+      "suffix": "黑绿色",
+      "colorId": "4c307685-ac08-4286-b4e7-eb88c43d8ed9",
+      "colorCode": "821",
+      "colorName": "黑绿色"
+    },
+    "XF5326762-灰色": {
+      "baseCode": "XF5326762",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "D5329553-黑色": {
+      "baseCode": "D5329553",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "XF3326755-咖啡色": {
+      "baseCode": "XF3326755",
+      "suffix": "咖啡色",
+      "colorId": "f8cdc330-a7dd-3696-45e2-66fb85d865c3",
+      "colorCode": "251",
+      "colorName": "咖啡色"
+    },
+    "CS5521071-红色": {
+      "baseCode": "CS5521071",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "D5121301-红色": {
+      "baseCode": "D5121301",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "D5319205-黑色": {
+      "baseCode": "D5319205",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "T2309133-黑色": {
+      "baseCode": "T2309133",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0601641-黑色": {
+      "baseCode": "B0601641",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "TX5322872-花绿": {
+      "baseCode": "TX5322872",
+      "suffix": "花绿",
+      "colorId": "a063693a-c340-c9d4-413b-97806ff81b9a",
+      "colorCode": "316",
+      "colorName": "花绿色"
+    },
+    "D5312302-黑色": {
+      "baseCode": "D5312302",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "XF5326768-蓝色": {
+      "baseCode": "XF5326768",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D5311407-蓝绿": {
+      "baseCode": "D5311407",
+      "suffix": "蓝绿",
+      "colorId": "5e05c50f-5d91-0cec-ab99-3be6439b3006",
+      "colorCode": "306",
+      "colorName": "蓝绿色"
+    },
+    "CS5321053-蓝色": {
+      "baseCode": "CS5321053",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "B0702792-黑色": {
+      "baseCode": "B0702792",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A1857208-黑色": {
+      "baseCode": "A1857208",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0302395-红色": {
+      "baseCode": "B0302395",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "D5513607-黑灰": {
+      "baseCode": "D5513607",
+      "suffix": "黑灰",
+      "colorId": "2373e476-4ba3-a9c0-1dfe-ca078c9eb317",
+      "colorCode": "804",
+      "colorName": "黑灰色"
+    },
+    "D5122302-灰色": {
+      "baseCode": "D5122302",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "D5122513-湖绿": {
+      "baseCode": "D5122513",
+      "suffix": "湖绿",
+      "colorId": "8cc461fe-5374-df59-bc7f-dc5aac119c2a",
+      "colorCode": "314",
+      "colorName": "湖绿色"
+    },
+    "D5129106-蓝色": {
+      "baseCode": "D5129106",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D5513601-墨兰": {
+      "baseCode": "D5513601",
+      "suffix": "墨兰",
+      "colorId": "2077b388-766f-328d-cc36-059ed3d05ce2",
+      "colorCode": "526",
+      "colorName": "墨蓝色"
+    },
+    "D5529270-深灰色": {
+      "baseCode": "D5529270",
+      "suffix": "深灰色",
+      "colorId": "7a967a43-6537-0382-bf7e-d24fab6f5800",
+      "colorCode": "803",
+      "colorName": "深灰色"
+    },
+    "B0601639-黑色": {
+      "baseCode": "B0601639",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0801810-绿色": {
+      "baseCode": "B0801810",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "16582-红色": {
+      "baseCode": "16582",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "120CS5131128-黑色": {
+      "baseCode": "120CS5131128",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "SK903-米色": {
+      "baseCode": "SK903",
+      "suffix": "米色",
+      "colorId": "d345f6a9-1f65-c7a2-66d4-ed77df7aec73",
+      "colorCode": "725",
+      "colorName": "米色"
+    },
+    "B0203266-杏色": {
+      "baseCode": "B0203266",
+      "suffix": "杏色",
+      "colorId": "cee87277-cb2c-3624-9360-1ea225ae4d45",
+      "colorCode": "161",
+      "colorName": "杏色"
+    },
+    "TX5322172-松绿色": {
+      "baseCode": "TX5322172",
+      "suffix": "松绿色",
+      "colorId": "fe56248d-7ad5-ca0c-8c74-8d5b0711f482",
+      "colorCode": "313",
+      "colorName": "松绿色"
+    },
+    "TX5522878-花绿": {
+      "baseCode": "TX5522878",
+      "suffix": "花绿",
+      "colorId": "a063693a-c340-c9d4-413b-97806ff81b9a",
+      "colorCode": "316",
+      "colorName": "花绿色"
+    },
+    "D5122105-深蓝": {
+      "baseCode": "D5122105",
+      "suffix": "深蓝",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "D5122101-粉色": {
+      "baseCode": "D5122101",
+      "suffix": "粉色",
+      "colorId": "db23e752-81cb-4294-de98-d18f74c30974",
+      "colorCode": "131",
+      "colorName": "粉色"
+    },
+    "B0301302-浅灰": {
+      "baseCode": "B0301302",
+      "suffix": "浅灰",
+      "colorId": "475c0ac8-6bfa-ebba-2abe-7b685fa0922c",
+      "colorCode": "802",
+      "colorName": "浅灰色"
+    },
+    "D5512201-铁灰": {
+      "baseCode": "D5512201",
+      "suffix": "铁灰",
+      "colorId": "34a4c945-f376-4eb7-981d-c11017acfe2c",
+      "colorCode": "537",
+      "colorName": "铁灰色"
+    },
+    "B0301388-黑色": {
+      "baseCode": "B0301388",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5122301-黑色": {
+      "baseCode": "D5122301",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "B0701713-紫红": {
+      "baseCode": "B0701713",
+      "suffix": "紫红",
+      "colorId": "5e3d9211-c6ee-ba8d-82ce-47a18cbed543",
+      "colorCode": "104",
+      "colorName": "紫红色"
+    },
+    "P3311101-绿色": {
+      "baseCode": "P3311101",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "SK901-米色": {
+      "baseCode": "SK901",
+      "suffix": "米色",
+      "colorId": "d345f6a9-1f65-c7a2-66d4-ed77df7aec73",
+      "colorCode": "725",
+      "colorName": "米色"
+    },
+    "TX5522855-黑色": {
+      "baseCode": "TX5522855",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D3121306-灰蓝": {
+      "baseCode": "D3121306",
+      "suffix": "灰蓝",
+      "colorId": "ad28bc79-51cf-a324-b5eb-14e317755696",
+      "colorCode": "812",
+      "colorName": "灰蓝色"
+    },
+    "A2309125-兰": {
+      "baseCode": "A2309125",
+      "suffix": "兰",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D5517601-黑色": {
+      "baseCode": "D5517601",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A2309121-驼": {
+      "baseCode": "A2309121",
+      "suffix": "驼",
+      "colorId": "cb8d386b-35be-0a20-6d54-fb4d15b5c74f",
+      "colorCode": "601",
+      "colorName": "驼色"
+    },
+    "B0202222-黑色": {
+      "baseCode": "B0202222",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5329156-蓝色": {
+      "baseCode": "D5329156",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "S3319111-黑色": {
+      "baseCode": "S3319111",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "2F580-蓝色": {
+      "baseCode": "2F580",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "XF3326756-黑灰色": {
+      "baseCode": "XF3326756",
+      "suffix": "黑灰色",
+      "colorId": "2373e476-4ba3-a9c0-1dfe-ca078c9eb317",
+      "colorCode": "804",
+      "colorName": "黑灰色"
+    },
+    "A2309125-灰": {
+      "baseCode": "A2309125",
+      "suffix": "灰",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "T1611611-枣红": {
+      "baseCode": "T1611611",
+      "suffix": "枣红",
+      "colorId": "9638d629-ce1d-3976-c200-c1eb8df25793",
+      "colorCode": "117",
+      "colorName": "枣红色"
+    },
+    "CS5321159-灰色": {
+      "baseCode": "CS5321159",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "D5122681-绿色": {
+      "baseCode": "D5122681",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "A1832102-黑": {
+      "baseCode": "A1832102",
+      "suffix": "黑",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A2309139-驼": {
+      "baseCode": "A2309139",
+      "suffix": "驼",
+      "colorId": "cb8d386b-35be-0a20-6d54-fb4d15b5c74f",
+      "colorCode": "601",
+      "colorName": "驼色"
+    },
+    "T2355308-上青": {
+      "baseCode": "T2355308",
+      "suffix": "上青",
+      "colorId": "5b13d474-364d-9251-87a7-2b93cd29f717",
+      "colorCode": "515",
+      "colorName": "上青色"
+    },
+    "TX5322172-深蓝色": {
+      "baseCode": "TX5322172",
+      "suffix": "深蓝色",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "B0102105-紫色": {
+      "baseCode": "B0102105",
+      "suffix": "紫色",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "A1811001-绿": {
+      "baseCode": "A1811001",
+      "suffix": "绿",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "XF3326751-灰色": {
+      "baseCode": "XF3326751",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "D5122682-墨绿": {
+      "baseCode": "D5122682",
+      "suffix": "墨绿",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "D5319211-黑色": {
+      "baseCode": "D5319211",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5122682-灰蓝": {
+      "baseCode": "D5122682",
+      "suffix": "灰蓝",
+      "colorId": "ad28bc79-51cf-a324-b5eb-14e317755696",
+      "colorCode": "812",
+      "colorName": "灰蓝色"
+    },
+    "D5122301-墨绿": {
+      "baseCode": "D5122301",
+      "suffix": "墨绿",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "B0301302-浅兰": {
+      "baseCode": "B0301302",
+      "suffix": "浅兰",
+      "colorId": "5cd70685-a380-096f-dbbd-1ce4788396a9",
+      "colorCode": "503",
+      "colorName": "浅蓝色"
+    },
+    "JK5326172-绿色": {
+      "baseCode": "JK5326172",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "B0302302-黑色": {
+      "baseCode": "B0302302",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "TX5322852-兰铁灰": {
+      "baseCode": "TX5322852",
+      "suffix": "兰铁灰",
+      "colorId": "59b0b38f-ac8e-009e-c509-e44e571cf277",
+      "colorCode": "813",
+      "colorName": "蓝铁灰"
+    },
+    "021FY5136601-黑色": {
+      "baseCode": "021FY5136601",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "011XF5136702-灰色": {
+      "baseCode": "011XF5136702",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "W6319303-深兰": {
+      "baseCode": "W6319303",
+      "suffix": "深兰",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "CS5521071-绿色": {
+      "baseCode": "CS5521071",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "B0203211-黑色": {
+      "baseCode": "B0203211",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5122506-暗粉": {
+      "baseCode": "D5122506",
+      "suffix": "暗粉",
+      "colorId": "6ae28218-e941-adfe-bcf7-77e83faaff4c",
+      "colorCode": "134",
+      "colorName": "暗粉色"
+    },
+    "B0702755-灰色": {
+      "baseCode": "B0702755",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "FY5326553-墨绿色": {
+      "baseCode": "FY5326553",
+      "suffix": "墨绿色",
+      "colorId": "944d9885-20b3-af01-66c6-b35548c07a94",
+      "colorCode": "304",
+      "colorName": "墨绿色"
+    },
+    "D5312296-铁灰": {
+      "baseCode": "D5312296",
+      "suffix": "铁灰",
+      "colorId": "34a4c945-f376-4eb7-981d-c11017acfe2c",
+      "colorCode": "537",
+      "colorName": "铁灰色"
+    },
+    "A1915031-红": {
+      "baseCode": "A1915031",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "D5329351-深蓝色": {
+      "baseCode": "D5329351",
+      "suffix": "深蓝色",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "D5329551-黑色": {
+      "baseCode": "D5329551",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5122503-黑色": {
+      "baseCode": "D5122503",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "T2355309-黑红": {
+      "baseCode": "T2355309",
+      "suffix": "黑红",
+      "colorId": "03c26469-0053-ba54-5348-22e84a8c67d8",
+      "colorCode": "105",
+      "colorName": "黑红色"
+    },
+    "B0701785-黑色": {
+      "baseCode": "B0701785",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "A2309125-黑色": {
+      "baseCode": "A2309125",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "S3122516-黑色": {
+      "baseCode": "S3122516",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "0312201-紫色": {
+      "baseCode": "0312201",
+      "suffix": "紫色",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "JK5527122-黑色": {
+      "baseCode": "JK5527122",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "W6129301-深兰": {
+      "baseCode": "W6129301",
+      "suffix": "深兰",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "A1915032-红": {
+      "baseCode": "A1915032",
+      "suffix": "红",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "B0202215-绿色": {
+      "baseCode": "B0202215",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "B0203281-绿色": {
+      "baseCode": "B0203281",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "D2306101-黑色": {
+      "baseCode": "D2306101",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "MS5323653-黑红": {
+      "baseCode": "MS5323653",
+      "suffix": "黑红",
+      "colorId": "03c26469-0053-ba54-5348-22e84a8c67d8",
+      "colorCode": "105",
+      "colorName": "黑红色"
+    },
+    "D5329256-黑色": {
+      "baseCode": "D5329256",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "XF5326759-蓝色": {
+      "baseCode": "XF5326759",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D5329251-深蓝色": {
+      "baseCode": "D5329251",
+      "suffix": "深蓝色",
+      "colorId": "a019b598-3f9e-f8f5-dd28-231c32437031",
+      "colorCode": "504",
+      "colorName": "深蓝色"
+    },
+    "T2355308-黑红": {
+      "baseCode": "T2355308",
+      "suffix": "黑红",
+      "colorId": "03c26469-0053-ba54-5348-22e84a8c67d8",
+      "colorCode": "105",
+      "colorName": "黑红色"
+    },
+    "89037-藏蓝": {
+      "baseCode": "89037",
+      "suffix": "藏蓝",
+      "colorId": "2d9f3b34-96e2-ccc2-24a9-525958ef8720",
+      "colorCode": "507",
+      "colorName": "藏蓝色"
+    },
+    "D5122509-灰色": {
+      "baseCode": "D5122509",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "B0202222-红色": {
+      "baseCode": "B0202222",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    },
+    "S3121308-绿色": {
+      "baseCode": "S3121308",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "B0302395-黑色": {
+      "baseCode": "B0302395",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5319207-黑色": {
+      "baseCode": "D5319207",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "D5122301-白色": {
+      "baseCode": "D5122301",
+      "suffix": "白色",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "colorCode": "721",
+      "colorName": "白色"
+    },
+    "MS5323651-焦糖色": {
+      "baseCode": "MS5323651",
+      "suffix": "焦糖色",
+      "colorId": "a3d94c06-4ca2-0ade-40e2-5155e4587b39",
+      "colorCode": "258",
+      "colorName": "焦糖色"
+    },
+    "B0302395-灰色": {
+      "baseCode": "B0302395",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "CS5321156-蓝色": {
+      "baseCode": "CS5321156",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "D5121312-绿色": {
+      "baseCode": "D5121312",
+      "suffix": "绿色",
+      "colorId": "64bd0ed3-7940-864c-8aac-6e330459fabb",
+      "colorCode": "301",
+      "colorName": "绿色"
+    },
+    "A2355306-紫兰": {
+      "baseCode": "A2355306",
+      "suffix": "紫兰",
+      "colorId": "dce551e4-50b1-4f0b-9615-780648034f62",
+      "colorCode": "521",
+      "colorName": "紫蓝色"
+    },
+    "DY5527572-灰色": {
+      "baseCode": "DY5527572",
+      "suffix": "灰色",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "colorCode": "801",
+      "colorName": "灰色"
+    },
+    "MS5323001-蓝绿": {
+      "baseCode": "MS5323001",
+      "suffix": "蓝绿",
+      "colorId": "5e05c50f-5d91-0cec-ab99-3be6439b3006",
+      "colorCode": "306",
+      "colorName": "蓝绿色"
+    },
+    "D5121442-深绿": {
+      "baseCode": "D5121442",
+      "suffix": "深绿",
+      "colorId": "cfdc256b-15c7-c880-bf1e-9924762e4488",
+      "colorCode": "303",
+      "colorName": "深绿色"
+    },
+    "117XF5326769-蓝色": {
+      "baseCode": "117XF5326769",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "A2309105-驼": {
+      "baseCode": "A2309105",
+      "suffix": "驼",
+      "colorId": "cb8d386b-35be-0a20-6d54-fb4d15b5c74f",
+      "colorCode": "601",
+      "colorName": "驼色"
+    },
+    "MS5323003-黑色": {
+      "baseCode": "MS5323003",
+      "suffix": "黑色",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "colorCode": "701",
+      "colorName": "黑色"
+    },
+    "019XF5136708-蓝色": {
+      "baseCode": "019XF5136708",
+      "suffix": "蓝色",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "colorCode": "501",
+      "colorName": "蓝色"
+    },
+    "018XF5136706-灰绿": {
+      "baseCode": "018XF5136706",
+      "suffix": "灰绿",
+      "colorId": "211800ae-eac9-b2a4-d35a-e9cfe7fb3f6b",
+      "colorCode": "308",
+      "colorName": "灰绿色"
+    },
+    "D5122503-粉色": {
+      "baseCode": "D5122503",
+      "suffix": "粉色",
+      "colorId": "db23e752-81cb-4294-de98-d18f74c30974",
+      "colorCode": "131",
+      "colorName": "粉色"
+    },
+    "A1811001-桔红": {
+      "baseCode": "A1811001",
+      "suffix": "桔红",
+      "colorId": "358dc5ad-82ab-1650-be89-2db0f663465f",
+      "colorCode": "106",
+      "colorName": "桔红色"
+    },
+    "D5311407-上青": {
+      "baseCode": "D5311407",
+      "suffix": "上青",
+      "colorId": "5b13d474-364d-9251-87a7-2b93cd29f717",
+      "colorCode": "515",
+      "colorName": "上青色"
+    },
+    "T2309101-紫色": {
+      "baseCode": "T2309101",
+      "suffix": "紫色",
+      "colorId": "45fa57a4-bf54-227d-2219-65d27156d220",
+      "colorCode": "401",
+      "colorName": "紫色"
+    },
+    "012KZ5529571-深灰色": {
+      "baseCode": "012KZ5529571",
+      "suffix": "深灰色",
+      "colorId": "7a967a43-6537-0382-bf7e-d24fab6f5800",
+      "colorCode": "803",
+      "colorName": "深灰色"
+    },
+    "TX5322873-红色": {
+      "baseCode": "TX5322873",
+      "suffix": "红色",
+      "colorId": "034114ae-86ca-3617-d0e8-9f4fe51fc84b",
+      "colorCode": "101",
+      "colorName": "红色"
+    }
+  },
+  "pending": [
+    {
+      "product": "B0902987-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0501512-1宝兰",
+      "suffix": "1宝兰",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D5122506-灰粽",
+      "suffix": "灰粽",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D5513706-1红色",
+      "suffix": "1红色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0602693M-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A1832531-1枣红",
+      "suffix": "1枣红",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "89019-深麻灰",
+      "suffix": "深麻灰",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0901958-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D5122683-豆红",
+      "suffix": "豆红",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0602691M-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "902KZ5359166-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0802741-1咖色",
+      "suffix": "1咖色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D5517931-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "0901930-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "MS5323765-酱红",
+      "suffix": "酱红",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A2322132-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "Y3319508-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0301302-花兰",
+      "suffix": "花兰",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0901987-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A1852103-1蓝色",
+      "suffix": "1蓝色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "T27035-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A1822101-3粉条",
+      "suffix": "3粉条",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302315-1墨绿",
+      "suffix": "1墨绿",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302315-1黄色",
+      "suffix": "1黄色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902980-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902988-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A2323102-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902957-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "MS5323001-皮粉",
+      "suffix": "皮粉",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "Y3319503-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D6518605-1藏青",
+      "suffix": "1藏青",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "G18S049A-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0702735-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "15272-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "J-6013米色",
+      "suffix": "6013米色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "T0301358-兰黑",
+      "suffix": "兰黑",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A2302301-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D6518602-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302396-灰色",
+      "suffix": "灰色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A1857202-1蓝色",
+      "suffix": "1蓝色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "81218-黑灰条",
+      "suffix": "黑灰条",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A2309127-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A2315105-橘黄",
+      "suffix": "橘黄",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302311-1黑红",
+      "suffix": "1黑红",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302301-驼咖",
+      "suffix": "驼咖",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0213701-黑色",
+      "suffix": "黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0502536-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "G18S049A-1军绿",
+      "suffix": "1军绿",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302335-1碳灰",
+      "suffix": "1碳灰",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "81170-深麻灰",
+      "suffix": "深麻灰",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0102153-粉色",
+      "suffix": "粉色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A1922110-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902985-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0503505-1蓝色",
+      "suffix": "1蓝色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0702761-1橄榄绿",
+      "suffix": "1橄榄绿",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "582CS5331188-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A1852102-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0301355-黑青",
+      "suffix": "黑青",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A1812605-3红",
+      "suffix": "3红",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D5126402-1蓝色",
+      "suffix": "1蓝色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "89019-浅麻灰",
+      "suffix": "浅麻灰",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902962-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "MS5323001-翡翠绿",
+      "suffix": "翡翠绿",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A2309109-暗红",
+      "suffix": "暗红",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0202266-特白",
+      "suffix": "特白",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0301303-中花灰",
+      "suffix": "中花灰",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902959-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902963-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0502537-1墨绿",
+      "suffix": "1墨绿",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0502539-咸菜",
+      "suffix": "咸菜",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "81050-深麻灰",
+      "suffix": "深麻灰",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0602672-棕咖",
+      "suffix": "棕咖",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0901966-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "0902930-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0212901-桔色",
+      "suffix": "桔色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "Y208-中驼",
+      "suffix": "中驼",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A2302301-1黑红",
+      "suffix": "1黑红",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D5316203-1绿色",
+      "suffix": "1绿色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302335-1咸菜",
+      "suffix": "1咸菜",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902983-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302310-1墨绿",
+      "suffix": "1墨绿",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0602696-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A1852105-1蓝色",
+      "suffix": "1蓝色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A2309127-1红色",
+      "suffix": "1红色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302310-1黑红",
+      "suffix": "1黑红",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0901977-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302315-1深灰",
+      "suffix": "1深灰",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "T1611610-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "Y3319509-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0702733-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902986-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0101139-1绿色",
+      "suffix": "1绿色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A1917109-3",
+      "suffix": "3",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D6518606-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902977-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D3319115-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "88188-深麻灰",
+      "suffix": "深麻灰",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A1612202-红色",
+      "suffix": "红色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902953-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A1857202-1酱紫",
+      "suffix": "1酱紫",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "MS5323003-翡翠绿",
+      "suffix": "翡翠绿",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302301-棕咖",
+      "suffix": "棕咖",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0901902-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0501518-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A1856302-藏青",
+      "suffix": "藏青",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A2321118-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302311-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902971-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302315-1大红",
+      "suffix": "1大红",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "902KZ5359167-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D5122116-粉兰",
+      "suffix": "粉兰",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "T2355308-兰黑",
+      "suffix": "兰黑",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D5517205-1绿色",
+      "suffix": "1绿色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A1922506-蓝色",
+      "suffix": "蓝色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A1852102-3紫色",
+      "suffix": "3紫色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "A2322121-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902961-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0101139-1紫色",
+      "suffix": "1紫色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D5122515-豆红",
+      "suffix": "豆红",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "J22031-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "6539-2红",
+      "suffix": "2红",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902958-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0301302-珊瑚紫",
+      "suffix": "珊瑚紫",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "026MS5333001-黑色",
+      "suffix": "黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902993-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "CS5825331188-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302335-1黑红",
+      "suffix": "1黑红",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D5517205-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0501516-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0203211-白色",
+      "suffix": "白色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "JT1823-1绿灰",
+      "suffix": "1绿灰",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302303-棕咖",
+      "suffix": "棕咖",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "D6518605-1绿色",
+      "suffix": "1绿色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0101130-幻紫",
+      "suffix": "幻紫",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0226602-特白",
+      "suffix": "特白",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902972-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "W6319116-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0502535-1紫色",
+      "suffix": "1紫色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0903902-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0801801-咸菜",
+      "suffix": "咸菜",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0321602-黑色",
+      "suffix": "黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302315-1黑红",
+      "suffix": "1黑红",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0902996-1",
+      "suffix": "1",
+      "reason": "无唯一颜色对应或原规格已分色"
+    },
+    {
+      "product": "B0302310-1黑色",
+      "suffix": "1黑色",
+      "reason": "无唯一颜色对应或原规格已分色"
+    }
+  ],
+  "enabled": false,
+  "status": "用户暂停，恢复拆分前"
+}

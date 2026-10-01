@@ -1,0 +1,320 @@
+{
+  "status": "PASS",
+  "oldBatch": "TPLUS-20260922-A2",
+  "newBatch": "TPLUS-IMPORT-20260924-A1",
+  "identityDrift": {},
+  "unexpectedValueChanges": [],
+  "inventoryOld": "80794",
+  "inventoryNew": "80794",
+  "missingSamples": {
+    "product": [],
+    "sale": [],
+    "transfer": []
+  },
+  "files": {
+    "data/history/purchase_documents.jsonl": {
+      "oldCount": 2172,
+      "newCount": 2172,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/history/purchase_lines.jsonl": {
+      "oldCount": 49127,
+      "newCount": 49127,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/history/sales_documents.jsonl": {
+      "oldCount": 27903,
+      "newCount": 27903,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/history/sales_funds.jsonl": {
+      "oldCount": 25416,
+      "newCount": 25416,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/history/sales_lines.jsonl": {
+      "oldCount": 79508,
+      "newCount": 79508,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/history/transfer_documents.jsonl": {
+      "oldCount": 13946,
+      "newCount": 13946,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/history/transfer_lines.jsonl": {
+      "oldCount": 254519,
+      "newCount": 254519,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/inventory/rebuild_events.jsonl": {
+      "oldCount": 637673,
+      "newCount": 637673,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/inventory/rebuilt_stock.jsonl": {
+      "oldCount": 137940,
+      "newCount": 137940,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/inventory/warehouse_totals.jsonl": {
+      "oldCount": 51,
+      "newCount": 51,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/categories.jsonl": {
+      "oldCount": 49,
+      "newCount": 49,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/colors.jsonl": {
+      "oldCount": 182,
+      "newCount": 182,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/customers.jsonl": {
+      "oldCount": 484,
+      "newCount": 484,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/departments.jsonl": {
+      "oldCount": 58,
+      "newCount": 58,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/employees.jsonl": {
+      "oldCount": 99,
+      "newCount": 99,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/fits.jsonl": {
+      "oldCount": 11,
+      "newCount": 11,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/fund_accounts.jsonl": {
+      "oldCount": 80,
+      "newCount": 80,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/halls.jsonl": {
+      "oldCount": 47,
+      "newCount": 47,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/parties.jsonl": {
+      "oldCount": 485,
+      "newCount": 485,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/payment_methods.jsonl": {
+      "oldCount": 11,
+      "newCount": 11,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/payment_methods_derived.jsonl": {
+      "oldCount": 1,
+      "newCount": 1,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/product_barcodes.jsonl": {
+      "oldCount": 2943,
+      "newCount": 2943,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/products.jsonl": {
+      "oldCount": 2941,
+      "newCount": 2941,
+      "sameBytes": false,
+      "changedRecords": 2941,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {
+        "lineage.sourceSha256": 2941,
+        "description": 1,
+        "source.存货描述": 1
+      }
+    },
+    "data/master/size_groups.jsonl": {
+      "oldCount": 15,
+      "newCount": 15,
+      "sameBytes": false,
+      "changedRecords": 15,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {
+        "lineage.sourceSha256": 15,
+        "supportingLineage[].sourceSha256": 2941
+      }
+    },
+    "data/master/sizes.jsonl": {
+      "oldCount": 240,
+      "newCount": 240,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/skus.jsonl": {
+      "oldCount": 14864,
+      "newCount": 14864,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/suppliers.jsonl": {
+      "oldCount": 451,
+      "newCount": 451,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/units.jsonl": {
+      "oldCount": 10,
+      "newCount": 10,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "data/master/warehouses.jsonl": {
+      "oldCount": 51,
+      "newCount": 51,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "quarantine/independent_receipt_documents.jsonl": {
+      "oldCount": 25155,
+      "newCount": 25155,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "quarantine/independent_receipt_lines.jsonl": {
+      "oldCount": 25622,
+      "newCount": 25622,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "quarantine/unmatched_transfer_documents.jsonl": {
+      "oldCount": 131,
+      "newCount": 131,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    },
+    "quarantine/unmatched_transfer_lines.jsonl": {
+      "oldCount": 88800,
+      "newCount": 88800,
+      "sameBytes": true,
+      "changedRecords": 0,
+      "identityAdded": 0,
+      "identityRemoved": 0,
+      "changedPaths": {}
+    }
+  }
+}

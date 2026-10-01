@@ -1,0 +1,15 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),path=require('node:path');
+const source=fs.readFileSync(path.join(__dirname,'../unified-single-select.jsx'),'utf8');
+const body=source.slice(source.indexOf('function transferData(host)'),source.indexOf('let entitySession'));
+let reads=0;
+const warehouses=Array.from({length:51},(_,i)=>({id:'w'+i,name:i===0?'多立方总仓':'仓库'+i,enabled:i!==50}));
+const allowed=warehouses.filter(x=>x.enabled||x.id==='w50');
+const window={ERP_DEMO:{warehouses},TRANSFER_SERVICE:{actor:{id:'staff'}},MASTER_DATA:{transferWarehouses(direction){reads++;assert.equal(direction,'from');return allowed}},SALES_SERVICE:{session:{warehouses:warehouses.map(x=>x.id),outgoingWarehouses:warehouses.map(x=>x.id),operationWarehouses:warehouses.slice(0,50).map(x=>x.id)}},TRANSFER_UI:{state:{doc:{from:'w0',to:'w1',status:'未审核'},filter:{from:[]},lease:{expires:Date.now()+10000},touched:{}}}};
+const context={window,EMPTY_OPTION:'__empty',Date,Set};vm.createContext(context);vm.runInContext(body+';this.transferData=transferData',context);
+const result=context.transferData({dataset:{uiField:'from',uiContext:'doc'}});
+assert.equal(result.items.length,51);assert.equal(result.items[1].disabled,true);assert.equal(result.items.at(-1).value,'w50');
+assert.equal(reads,1,'one option render must read the warehouse authority once, not once per warehouse');
+reads=0;const incoming=context.transferData({dataset:{uiField:'to',uiContext:'doc'}});
+assert.equal(reads,0);assert.equal(incoming.items.length,50);assert.equal(incoming.items[0].disabled,true);
+window.TRANSFER_UI.state.blocked='资料已更新';assert.equal(context.transferData({dataset:{uiField:'from',uiContext:'doc'}}).disabled,true);
+console.log('PASS warehouse options, disabled-with-stock transfer out, destination exclusion, locking, one authority read');

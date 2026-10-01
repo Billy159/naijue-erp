@@ -1,0 +1,8 @@
+{
+  "time": "2026-10-01T16:10:05.882905+08:00",
+  "toolConfig": "/Users/billy/.config/browser-harness/agent-workspace/agent_helpers.py",
+  "archivedHelper": "data-cleaning/baselines/retired-tests/browser-harness-agent-helpers.pre-consolidation.py",
+  "archivedSha256": "b4aeb94da88ed68144c5bb2cc2473e75e5a3789a42385667ab35f0964853b845",
+  "removedRetiredAbsoluteLoaders": 2,
+  "status": "PASS"
+}

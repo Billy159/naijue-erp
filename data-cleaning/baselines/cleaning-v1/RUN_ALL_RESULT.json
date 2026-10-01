@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "cleanBatch": "TPLUS-CLEAN-20260924-A1",
+  "importBatch": "TPLUS-IMPORT-20260924-A1",
+  "source": "tplus_clean_20260924_a1",
+  "runtime": "v2_runtime_clean_20260924_a1",
+  "input": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/T+数据",
+  "run": "/Users/billy/Desktop/Workspace/project-007-tplus-data-cleaning-v1/migration/cleaning/runs/TPLUS-CLEAN-20260924-A1",
+  "previous": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/migration/preflight/TPLUS-20260922-A2",
+  "executed": true
+}

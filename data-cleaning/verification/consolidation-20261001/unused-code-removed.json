@@ -1,0 +1,147 @@
+[
+  {
+    "file": "frontend/gold.js",
+    "name": "opts",
+    "kind": "variable"
+  },
+  {
+    "file": "frontend/gold.js",
+    "name": "archiveLabel",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/gold.js",
+    "name": "filterOptions",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/gold.js",
+    "name": "categoryName",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/gold.js",
+    "name": "fields",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/gold.js",
+    "name": "resultStats",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/gold.js",
+    "name": "results",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/gold.js",
+    "name": "stockSection",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/gold.js",
+    "name": "status",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/gold.js",
+    "name": "transferList",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/gold.js",
+    "name": "editor",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/gold.js",
+    "name": "docLines",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/inventory-matrix-experiment.js",
+    "name": "context",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/inventory-workbench.js",
+    "name": "value",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/inventory-workbench.js",
+    "name": "thumb",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/product-arco.jsx",
+    "name": "useMemo",
+    "kind": "import"
+  },
+  {
+    "file": "frontend/product-current.js",
+    "name": "opt",
+    "kind": "variable"
+  },
+  {
+    "file": "frontend/product-master.js",
+    "name": "selected",
+    "kind": "variable"
+  },
+  {
+    "file": "frontend/sales-current.js",
+    "name": "foundProducts",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/sales-current.js",
+    "name": "creatorField",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/sales-current.js",
+    "name": "checkMinimum",
+    "kind": "function"
+  },
+  {
+    "file": "frontend/sales-model.js",
+    "name": "copy",
+    "kind": "variable"
+  },
+  {
+    "file": "frontend/transfer-current.js",
+    "name": "sidebarIcon",
+    "kind": "variable"
+  },
+  {
+    "file": "frontend/transfer-current.js",
+    "name": "historyText",
+    "kind": "function"
+  },
+  {
+    "file": "server/runtime/browser-fixtures.ts",
+    "name": "SOURCE",
+    "kind": "import"
+  },
+  {
+    "file": "server/runtime/http.ts",
+    "name": "randomUUID",
+    "kind": "import"
+  },
+  {
+    "file": "server/runtime/product-master.ts",
+    "name": "uuid",
+    "kind": "variable"
+  },
+  {
+    "file": "frontend/inventory-workbench.js",
+    "name": "shirtIcon",
+    "kind": "variable"
+  },
+  {
+    "file": "frontend/inventory-workbench.js",
+    "name": "mainPhoto",
+    "kind": "function"
+  }
+]

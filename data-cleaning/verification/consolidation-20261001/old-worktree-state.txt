@@ -1,0 +1,271 @@
+worktree /Users/billy/Desktop/Workspace/project-007-业务管理系统
+HEAD 2284028b20a675c791ca5908c47fb77852846a70
+branch refs/heads/codex/demo-8877-mainline
+
+worktree /Users/billy/Desktop/Workspace/project-007-legacy-interaction-react-rebuild
+HEAD 988b644931192b8f452db0e2c37e4f15cac8dfb4
+branch refs/heads/codex/legacy-interaction-react-rebuild
+
+worktree /Users/billy/Desktop/Workspace/project-007-stage05-design-audit
+HEAD b5411e863b62d4c999f4bfa6c56bac66683e021b
+branch refs/heads/codex/stage05a-design-audit
+
+worktree /Users/billy/Desktop/Workspace/project-007-stage05-s2-integrated
+HEAD 7b13962454b8399e6d829b8afdeef9315a9bdfe0
+branch refs/heads/codex/stage05-s2-integrated
+
+worktree /Users/billy/Desktop/Workspace/project-007-stage05-s2-products-integrated
+HEAD 3055f19bcd580e5929d9ed30033bcb4a7aa40e2c
+branch refs/heads/codex/stage05-s2-products-integrated
+
+worktree /Users/billy/Desktop/Workspace/project-007-stage05-shared-basic-integration
+HEAD febbd9ce5174833de5d651a26296f26fc2a5d63e
+branch refs/heads/codex/stage05-shared-basic-integration
+
+worktree /Users/billy/Desktop/Workspace/project-007-stage05b-sol-core
+HEAD f3e92c10cf008906fc22f9269f87c69b23456270
+branch refs/heads/codex/stage05b-sol-core
+
+worktree /Users/billy/Desktop/Workspace/project-007-stage05b-sol-s1-sku
+HEAD 4fbf744e7dfb33cc1369d1a31602c9a97f9abe07
+branch refs/heads/codex/stage05b-sol-s1-sku
+
+worktree /Users/billy/Desktop/Workspace/project-007-stage05b-sol-s2-sales
+HEAD bd7957548395089f36ed1ae37d97e5a05ec480df
+branch refs/heads/codex/stage05b-sol-s2-sales
+
+worktree /Users/billy/Desktop/Workspace/project-007-stage05b-sol-s3-inventory
+HEAD b5f9d28e88ae692139e4235cdab1b075a33f4907
+branch refs/heads/codex/stage05b-sol-s3-inventory
+
+worktree /Users/billy/Desktop/Workspace/project-007-stage05b-sol-s4-transfers
+HEAD ac925dfec5bbf451a759ec8f5b53bf23222937bc
+branch refs/heads/codex/stage05b-sol-s4-transfers
+
+worktree /Users/billy/Desktop/Workspace/project-007-stage05b-sol-s5-final
+HEAD 988b644931192b8f452db0e2c37e4f15cac8dfb4
+branch refs/heads/codex/stage05b-sol-s5-final
+
+worktree /Users/billy/Desktop/Workspace/project-007-stage05c-luna-basic-data
+HEAD f2bdbc904294995faa6721292bc3d5eeb3941b75
+branch refs/heads/codex/stage05c-luna-basic-data
+
+worktree /Users/billy/Desktop/Workspace/project-007-stage05c-luna-products
+HEAD cec9f8461e5579440ac4b55a2a389c0b22c6ba8a
+branch refs/heads/codex/stage05c-luna-products
+
+worktree /Users/billy/Desktop/Workspace/project-007-stage06-ui-feedback
+HEAD 988b644931192b8f452db0e2c37e4f15cac8dfb4
+branch refs/heads/codex/stage06-ui-feedback
+
+worktree /Users/billy/Desktop/Workspace/project-007-tplus-data-cleaning-v1
+HEAD a6bec5a3711681fc91d3c190e1089d6000a4c0c2
+branch refs/heads/codex/tplus-data-cleaning-v1
+
+
+ M CONTEXT.md
+ M migration/legacy-real-data-bridge/HANDOFF.md
+ M migration/legacy-real-data-bridge/adapter.mjs
+ M migration/legacy-real-data-bridge/read-boundaries-results.json
+ M migration/legacy-real-data-bridge/runtime-test-results.json
+ M migration/legacy-real-data-bridge/runtime/barcodes.ts
+ M migration/legacy-real-data-bridge/runtime/http.ts
+ M migration/legacy-real-data-bridge/runtime/initialize-supplements.ts
+ M migration/legacy-real-data-bridge/runtime/ledger.ts
+ M migration/legacy-real-data-bridge/runtime/master-reference.test.ts
+ M migration/legacy-real-data-bridge/runtime/product-master.test.ts
+ M migration/legacy-real-data-bridge/runtime/product-master.ts
+ M migration/legacy-real-data-bridge/runtime/product-profile.test.ts
+ M migration/legacy-real-data-bridge/runtime/product-profile.ts
+ M migration/legacy-real-data-bridge/runtime/products.ts
+ M migration/legacy-real-data-bridge/runtime/runtime.ts
+ M migration/legacy-real-data-bridge/runtime/schema.sql
+ M migration/legacy-real-data-bridge/runtime/specs.ts
+ M migration/legacy-real-data-bridge/runtime/supplements.test.ts
+ M migration/legacy-real-data-bridge/runtime/work.ts
+ M migration/legacy-real-data-bridge/size-mapping/user-size-audit.json
+ M migration/legacy-real-data-bridge/size-mapping/user-size-rules.json
+ M migration/legacy-real-data-bridge/supplements-results.json
+ M outputs/ERP-V2-Demo-V1/PROJECT_BRAIN.md
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/INVENTORY-SEARCH-GOLDEN.md
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/assets/basic-settings-v2.bundle.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/assets/inventory-category.bundle.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/assets/inventory-filters.bundle.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/assets/inventory-select.bundle.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/assets/product-arco.bundle.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/assets/transfer-date.bundle.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/assets/unified-single-select.bundle.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/auth-entry.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/barcode-2026.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/basic-settings-v2.css
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/basic-settings-v2.jsx
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/basic-settings.css
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/basic-settings.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/business-config.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/gold.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/golden-consistency.css
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/index.html
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/interaction-common.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-category.jsx
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-filters.jsx
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-fit-projection.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-matrix-experiment.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-refinement.css
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-select.jsx
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-workbench.css
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-workbench.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/legacy-adapter.mjs
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/master-data.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/matrix-sections.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-arco.jsx
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-catalog.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-current.css
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-current.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-finder.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-inventory-unified.css
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-master.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-rework.css
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/real-data-bridge.mjs
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-audit-core.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-core.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-current.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-detail-alignment.css
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-export.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-golden.css
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-model.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-summary.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/transfer-current.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/transfer-date.jsx
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/transfer-golden.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/transfer-matrix-experiment.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/transfer-mock-core.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/transfer-print-template.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/transfer-scan-drawer.js
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/unified-single-select.css
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/unified-single-select.jsx
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/basic-settings-refactor.cjs
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/product-list-history.cjs
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/sales-evidence/core-results.json
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/sales-inline-payment.cjs
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/sales-line-merge.cjs
+ M outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/transfer-actions-print.cjs
+?? logs/20260930-135422-项目依赖与缓存清理.json
+?? logs/20260930-135422-项目依赖与缓存清理.md
+?? logs/20260930-140358-旧交接包元数据.json
+?? logs/20260930-140358-项目空间清理完成.json
+?? logs/20260930-140358-项目空间清理完成.md
+?? logs/20260930-Tplus-库存期初与调拨裁定.md
+?? logs/20261001-Tplus-Demo期初与尺码目录定稿.md
+?? logs/20261001-Tplus-尺码裁定同步.md
+?? logs/20261001-库存历史Tab抽屉恢复.md
+?? logs/20261001-库存商品抽屉三页纯文本只读.md
+?? logs/20261001-库存商品抽屉隐藏历史图片.md
+?? logs/20261001-收款结清与超收新增一笔.md
+?? logs/20261001-调拨与销货单导出.md
+?? logs/20261001-调拨历史尺码数量格.md
+?? logs/20261001-调拨打印参考模板与商品汇总.md
+?? logs/20261001-账号权限与Chrome验收.md
+?? logs/20261001-顶栏Arco账号菜单.md
+?? migration/legacy-real-data-bridge/IMPORT_CONTINUATION_20260930.md
+?? migration/legacy-real-data-bridge/inventory-cutover-policy.json
+?? migration/legacy-real-data-bridge/runtime/barcode-plan.mjs
+?? migration/legacy-real-data-bridge/runtime/barcode-plan.test.mjs
+?? migration/legacy-real-data-bridge/runtime/barcode-scheme-supplement-20260930.json
+?? migration/legacy-real-data-bridge/runtime/barcode-scheme-supplement.sql
+?? migration/legacy-real-data-bridge/runtime/barcode-scheme-supplement.ts
+?? migration/legacy-real-data-bridge/runtime/barcode-supplement-plan.mjs
+?? migration/legacy-real-data-bridge/runtime/barcode-supplement-plan.test.mjs
+?? migration/legacy-real-data-bridge/runtime/c8-barcode-freeze.json
+?? migration/legacy-real-data-bridge/runtime/c8-barcode-targets.json
+?? migration/legacy-real-data-bridge/runtime/c8-freeze.mjs
+?? migration/legacy-real-data-bridge/runtime/c9-barcode-freeze.json
+?? migration/legacy-real-data-bridge/runtime/c9-barcode-targets.json
+?? migration/legacy-real-data-bridge/runtime/c9-freeze.mjs
+?? migration/legacy-real-data-bridge/runtime/c9-freeze.test.mjs
+?? migration/legacy-real-data-bridge/runtime/employee-auth.test.ts
+?? migration/legacy-real-data-bridge/runtime/employee-auth.ts
+?? migration/legacy-real-data-bridge/runtime/excel-barcode-authority-20260930.json
+?? migration/legacy-real-data-bridge/runtime/excel-barcode-authority.sql
+?? migration/legacy-real-data-bridge/runtime/excel-barcode-authority.ts
+?? migration/legacy-real-data-bridge/runtime/inventory-performance.test.ts
+?? migration/legacy-real-data-bridge/runtime/opening-inventory.sql
+?? migration/legacy-real-data-bridge/runtime/opening-inventory.ts
+?? migration/legacy-real-data-bridge/runtime/product-manual-alias.test.ts
+?? migration/legacy-real-data-bridge/runtime/product-spec-view.test.ts
+?? migration/legacy-real-data-bridge/runtime/recommendations.test.ts
+?? migration/legacy-real-data-bridge/runtime/sales-size-group.test.ts
+?? migration/legacy-real-data-bridge/runtime/size-mapping.test.ts
+?? migration/legacy-real-data-bridge/runtime/size-mapping.ts
+?? migration/legacy-real-data-bridge/size-mapping/README.md
+?? migration/legacy-real-data-bridge/size-mapping/accepted-size-decisions.json
+?? migration/legacy-real-data-bridge/size-mapping/accepted-size-decisions.mjs
+?? migration/legacy-real-data-bridge/size-mapping/apply-accepted-decisions.mjs
+?? outputs/ERP-V2-Demo-V1/FINAL-BASELINE-20261001.md
+?? outputs/ERP-V2-Demo-V1/PERFORMANCE-OPTIMIZATION-20261001.md
+?? outputs/ERP-V2-Demo-V1/UI-FIXES-20261001.md
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/business-product-view.mjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-ledger.css
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-media-thumbnails.js
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-size-groups.mjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-spec-view.mjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/topbar-account.jsx
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/business-fit-roundtrip.mjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/employee-permissions.cjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/inventory-fold-performance.cjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/inventory-query-performance.cjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/ledger-local-date.cjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/product-final-chrome/
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/product-image-performance.cjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/product-profile-current-selection.cjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/recommendation-cache.cjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/sales-commit-state.cjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/sales-print-payments.cjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/sales-size-group.cjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/transfer-history-cells.cjs
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/transfer-reliability-evidence/
+?? outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification/transfer-select-performance.cjs
+?? outputs/tplus-C8-frozen-20260930/
+?? outputs/tplus-C9-corrected-20260930/
+?? outputs/tplus-C9-review-20260929/
+?? outputs/tplus-basic-barcode-comparison-20260930/
+?? outputs/tplus-demo-data-final-20260930/
+?? outputs/tplus-demo-frozen-20261001/
+?? outputs/tplus-excel-barcode-authority-20260930/
+?? outputs/tplus-history-database-final-20260930/
+?? outputs/tplus-pending-barcode-supplement-20260930/
+?? outputs/tplus-size-rule-audit-20261001/
+?? outputs/tplus-size-rule-fix-20261001/
+?? work/8877-final-consolidation-20261001/
+?? work/ERP-V2-account-permissions-20260930/
+?? work/ERP-V2-add-payment-20261001/
+?? work/ERP-V2-basic-settings-controls-20260930/
+?? work/ERP-V2-basic-settings-final-20260930/
+?? work/ERP-V2-document-exports-20261001/
+?? work/ERP-V2-final-baseline-20261001/
+?? work/ERP-V2-inventory-ledger-20260930/
+?? work/ERP-V2-inventory-product-drawer-20261001/
+?? work/ERP-V2-performance-20261001/
+?? work/ERP-V2-product-corrections-20260930/
+?? work/ERP-V2-product-final-fixes-20260930/
+?? work/ERP-V2-product-module-final-20260930/
+?? work/ERP-V2-topbar-account-20261001/
+?? work/ERP-V2-transfer-history-cells-20261001/
+?? work/ERP-V2-transfer-print-bof-20261001/
+?? work/ERP-V2-ui-and-consolidation-20261001/
+?? work/TPLUS-BARCODE-RULES-20260929/
+?? work/TPLUS-BASIC-BARCODE-COMPARISON-20260930/
+?? work/TPLUS-C8-CORRECTION-20260930/
+?? work/TPLUS-C8-RESOLUTION-20260930/
+?? work/TPLUS-C9-20260929/
+?? work/TPLUS-C9-RESOLUTION-20260930/
+?? work/TPLUS-DEMO-FINAL-SAVE-20261001/
+?? work/TPLUS-DEMO-OPENING-20260930/
+?? work/TPLUS-EXCEL-BARCODE-AUTHORITY-20260930/
+?? work/TPLUS-HISTORY-FINAL-20260930/
+?? work/TPLUS-PENDING-BARCODE-SUPPLEMENT-20260930/
+?? work/TPLUS-SIZE-RULE-AUDIT-20261001/
+?? work/TPLUS-SIZE-RULE-FIX-20261001/
+?? work/TPLUS-TRANSFER-SUPPLEMENT-REVIEW-20260930/
+?? work/TPLUS-UNDERWEAR-SIZE-20260930/
+?? work/account-handoff-20260929/TPLUS_CURRENT_HANDOFF.md
+?? work/account-handoff-20260929/build_tplus_handoff.py

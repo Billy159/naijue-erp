@@ -1,0 +1,112 @@
+{
+  "status": "APPROVED_AND_COMPLETED",
+  "created": "2026-10-01T15:16:01.000740+08:00",
+  "retainedProject": "/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo",
+  "latestBackup": "backup/business-management-current-20261001.dump",
+  "deletions": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F",
+      "allocatedKiB": 0,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-legacy-interaction-react-rebuild",
+      "allocatedKiB": 228036,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-preexisting-backup-20260925",
+      "allocatedKiB": 6891012,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-design-audit",
+      "allocatedKiB": 165476,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-s2-integrated",
+      "allocatedKiB": 182564,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-s2-products-integrated",
+      "allocatedKiB": 180240,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05-shared-basic-integration",
+      "allocatedKiB": 175636,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-core",
+      "allocatedKiB": 166864,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s1-sku",
+      "allocatedKiB": 166924,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s2-sales",
+      "allocatedKiB": 167268,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s3-inventory",
+      "allocatedKiB": 181904,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s4-transfers",
+      "allocatedKiB": 189188,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05b-sol-s5-final",
+      "allocatedKiB": 204680,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05c-luna-basic-data",
+      "allocatedKiB": 172048,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage05c-luna-products",
+      "allocatedKiB": 175776,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-stage06-ui-feedback",
+      "allocatedKiB": 204700,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-tplus-data-cleaning-v1",
+      "allocatedKiB": 449032,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统",
+      "allocatedKiB": 11943368,
+      "type": "retired-project-or-worktree"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/backup/business-management-latest-20261001.dump",
+      "allocatedKiB": 274752,
+      "type": "preexisting-superseded-backup"
+    }
+  ],
+  "totalAllocatedKiB": 22119468,
+  "globalIndexSync": [
+    "00-全局工作台.md: project-007 -> 奈爵服饰-8877-Demo/README.md",
+    "01-全局复利与踩坑日志.md: append current authority and preservation findings",
+    "current project report: record deleted names and measured sizes"
+  ],
+  "authorization": "用户明确回复：批准按清单删除",
+  "completedAt": "2026-10-01T15:43:53.537335+08:00",
+  "executionEvidence": "deletion-results.json"
+}

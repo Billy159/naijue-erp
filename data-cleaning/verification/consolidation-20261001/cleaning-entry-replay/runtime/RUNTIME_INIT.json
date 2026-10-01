@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "source": "tplus_clean_20261001_150447",
+  "runtimeSchema": "v2_runtime_clean_20261001_150447",
+  "batch": "TPLUS-IMPORT-20261001-A150447",
+  "sourceStatus": {
+    "status": "COMMITTED",
+    "expectedDocuments": 44021
+  },
+  "first": {
+    "created": 44021
+  },
+  "second": {
+    "created": 0
+  },
+  "barcodeFirst": {
+    "inserted": 14170,
+    "total": 14864,
+    "exceptions": 694
+  },
+  "barcodeSecond": {
+    "inserted": 0,
+    "total": 14864,
+    "exceptions": 694
+  },
+  "actual": {
+    "documents": 44021,
+    "approvedbaseline": 44021,
+    "revisions": 44021,
+    "postings": 0,
+    "movements": 0,
+    "idempotencyrequests": 0,
+    "generatedbarcodes": 14170
+  }
+}

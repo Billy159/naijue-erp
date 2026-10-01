@@ -1,0 +1,448 @@
+{
+  "capturedAt": "2026-10-01T04:43:07.648573+00:00",
+  "tables": [
+    {
+      "table_name": "tplus_demo_20260922_a2.app_user",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.barcode",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.barcode_encoding_mapping",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.barcode_scheme",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.barcode_scheme_segment",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.barcode_scheme_version",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.brand",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.business_document",
+      "rows": 41849,
+      "content_md5": "48d3b5ba47c88d5ace25abb9182ed34e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.category",
+      "rows": 50,
+      "content_md5": "c7fdc2245d5f4d71ebb601a88cf54b15"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.counterparty",
+      "rows": 485,
+      "content_md5": "9b76fe179277d2b482993a90391679a3"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.document_line",
+      "rows": 334027,
+      "content_md5": "08f51ad775a48b69fb05fab705a5042e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.fit",
+      "rows": 11,
+      "content_md5": "90546bc0dcdfe5e74b1643a1f8e48625"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.idempotency_request",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.import_batch",
+      "rows": 1,
+      "content_md5": "f07edada3b63061815653256c93bf43b"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.inventory_balance",
+      "rows": 137940,
+      "content_md5": "d8824bf69b41874813cf616da2dbad11"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.inventory_movement",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.inventory_posting",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.migration_checkpoint",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.migration_issue",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.opening_ledger",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.price_type",
+      "rows": 9,
+      "content_md5": "207477198c88fe91010787d0437fcfc2"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.product",
+      "rows": 2941,
+      "content_md5": "beb71c35ab7fe49ab188a45af95a49e7"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.product_image",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.product_option",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.product_price",
+      "rows": 22330,
+      "content_md5": "f5e2b424e3bfaf97c4b86fa0ef99809a"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.return_line_reference",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.schema_migration",
+      "rows": 1,
+      "content_md5": "d8b94a5f9e0f02a854d16e0cdc0eff46"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.size_group",
+      "rows": 15,
+      "content_md5": "21f5c322f1efca244da2b626bbe47fb3"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.size_group_item",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.source_mapping",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.source_record",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.spec_dimension",
+      "rows": 2,
+      "content_md5": "4b2ca27513b52e4daffd98b7d69d0b25"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.spec_value",
+      "rows": 422,
+      "content_md5": "654d33c495678d5b55054c79bc507657"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.system_setting",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_department",
+      "rows": 58,
+      "content_md5": "dd16b43e60274de7b4ed2fd096c03abd"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_employee",
+      "rows": 99,
+      "content_md5": "a47c5e2e7b79048ba5b9de509144ca87"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_fund_account",
+      "rows": 80,
+      "content_md5": "9dc17dddff43ddce22d96cc29efbd1a8"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_hall",
+      "rows": 47,
+      "content_md5": "aa073d6d9001c790feb85d4928c62086"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_history_document",
+      "rows": 44021,
+      "content_md5": "36ef03e62cf9f9ebaa77f80292b9dbb4"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_history_line",
+      "rows": 383154,
+      "content_md5": "2b04d974eb5e72700cbe668ae9f8b969"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_id_map",
+      "rows": 22087,
+      "content_md5": "efe9e51df6abda142689a53991303d23"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_import_file",
+      "rows": 53,
+      "content_md5": "9ae3da75b82c14e1ca76de7f05757898"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_import_run",
+      "rows": 1,
+      "content_md5": "9064a2fb372698f0107b4ed86cf225ce"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_inventory_balance_source",
+      "rows": 137940,
+      "content_md5": "39887598666eef5fc71760bfeb22d083"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_party_role",
+      "rows": 935,
+      "content_md5": "10383d8892116eba48635d8079007eee"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_payment_method",
+      "rows": 12,
+      "content_md5": "70ffba33fc35135eb47275d22db78d34"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_product_barcode",
+      "rows": 2943,
+      "content_md5": "2bee2ef99ee2ff1e5f1c5d260e5ecb87"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_product_source",
+      "rows": 2941,
+      "content_md5": "2bbc77d80bbfe3cc182fe0498b4f2f28"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_sales_fund",
+      "rows": 25416,
+      "content_md5": "ee585ce19a72ddd4ff95f32c98c00416"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.tplus_source_lineage",
+      "rows": 613553,
+      "content_md5": "a5e538985ca633a89b44553487d6a5c3"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.unit",
+      "rows": 10,
+      "content_md5": "c250b8c931db2d00e6a06c689c479ce9"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.user_session",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.user_view_setting",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.variant",
+      "rows": 14864,
+      "content_md5": "ab72d7ac49a924bdb9494b913186c031"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.variant_option",
+      "rows": 29728,
+      "content_md5": "5074162f7dd62f47fe4b3663ceda93bd"
+    },
+    {
+      "table_name": "tplus_demo_20260922_a2.warehouse",
+      "rows": 51,
+      "content_md5": "06c73304e8c61aa28556e80321d931ac"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.barcode_authority_policy",
+      "rows": 1,
+      "content_md5": "ab168f5ccb211e43099753d28d675f31"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.barcode_authority_product",
+      "rows": 2955,
+      "content_md5": "e74f0bf31a581ef9a43fb72c7ff8fba8"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.barcode_authority_record",
+      "rows": 10684,
+      "content_md5": "4c5b372f4a00f08c587ac6dc06c56809"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.barcode_scheme_supplement",
+      "rows": 4288,
+      "content_md5": "3fac6af9fdff92d3ce998bed3260ec25"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.document",
+      "rows": 44032,
+      "content_md5": "2ec929658841ff2f03a571ede2db3198"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.employee_account_audit",
+      "rows": 1,
+      "content_md5": "77cb521a48798dae53038318c1c3bc57"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.employee_login",
+      "rows": 100,
+      "content_md5": "434dd0224f39eff7da9148b459a59ba3"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.generated_barcode",
+      "rows": 14960,
+      "content_md5": "e38db37d0e449ffb9a22dd15a020fae5"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.generated_barcode_retired",
+      "rows": 40354,
+      "content_md5": "3715b59e8cf43de8c0f18e2b8ca942c6"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.idempotency_request",
+      "rows": 89,
+      "content_md5": "5c5a5d8f338614b1de040ca631c79e1b"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.inventory_delta",
+      "rows": 578,
+      "content_md5": "a1bffd5a0bad0a182bf17a257bce3a2a"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.inventory_opening_cell",
+      "rows": 32430,
+      "content_md5": "6a9c46b6e5d2c28d38e3d748a599967e"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.inventory_opening_delta_checkpoint",
+      "rows": 578,
+      "content_md5": "d1032089c2199ea766b3c04580a5c338"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.inventory_opening_prior_posting",
+      "rows": 62,
+      "content_md5": "0dfe320b6d4e729e786515e6bfb92c7d"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.inventory_opening_run",
+      "rows": 1,
+      "content_md5": "2637fcdd3cb5a6625bed98e850745ed2"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.movement",
+      "rows": 692,
+      "content_md5": "505fe4b1478d664580ef56a6358f13de"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.operator",
+      "rows": 101,
+      "content_md5": "52745fbfbd9fa27f3298dbc938bca445"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.posting",
+      "rows": 62,
+      "content_md5": "14d1f4727f928b1d7e4c8fc5a0541f46"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.product_barcode_alias",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.product_barcode_alias_retired",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.product_image",
+      "rows": 114,
+      "content_md5": "091abaa2fd77c17c03e1b989cf4e0551"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.product_master_overlay",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.product_overlay",
+      "rows": 14,
+      "content_md5": "7bbab12ffd4bd6e9d85d61cf53b62bcf"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.product_profile_overlay",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.revision",
+      "rows": 44052,
+      "content_md5": "e4e1a599b67517955ffe858b64976951"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.size_overlay",
+      "rows": 0,
+      "content_md5": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.variant_overlay",
+      "rows": 106,
+      "content_md5": "cb9978313131a76aad547069be3bba22"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.version_history",
+      "rows": 89,
+      "content_md5": "7b9c6d9713649130f545d30102508f2d"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.work_event",
+      "rows": 43,
+      "content_md5": "188f4973200216b8fc14ab2663e6ea17"
+    },
+    {
+      "table_name": "v2_runtime_stage03c.work_record",
+      "rows": 33,
+      "content_md5": "19e30d32f7201e397ab9de733a206af2"
+    }
+  ],
+  "files": {
+    "migration/legacy-real-data-bridge/size-mapping/user-size-audit.json": "bcb3053994cbb171ee95b59b10cca9b838265ec3e5fc7c8a42f6f48a18d40348",
+    "migration/legacy-real-data-bridge/size-mapping/user-size-rules.json": "5573dd8040d8debe5afb123d6f61d3d5dfaf07cf5891c6d176608ff6b7a732da",
+    "migration/legacy-real-data-bridge/runtime/size-mapping.ts": "d9eea48a5693f75fff46d80767c7f84cabb6f0a253388b6d040b1852db812a31",
+    "migration/legacy-real-data-bridge/runtime/specs.ts": "2f929a38eed1642e698d8b57ee87b0e74feadf03bdc20efe91dacd695e115d3e",
+    "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-size-groups.mjs": "7a5c3130cad08922706c79cbc76c41fc16ea4a07569b6131a09c1b6113ec22df",
+    "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-spec-view.mjs": "9b8b16beae062ed75723cfc9994491d2eb26c3dda0b40a62b8674e52b217a9b6"
+  },
+  "databaseBackup": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/TPLUS-SIZE-RULE-FIX-20261001/business_management-demo-schemas-before-size-decisions-20261001.dump",
+    "bytes": 281345342,
+    "sha256": "9a50d9b82bdb8f4bbf0e1607b296843be5f34849226e2ca71064f689eea42708"
+  }
+}

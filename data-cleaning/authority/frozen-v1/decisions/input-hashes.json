@@ -1,0 +1,1224 @@
+{
+  "purpose": "before recording user-confirmed decisions",
+  "allowed_existing_changes": [
+    "outputs/ERP-V2-Demo-V1/PROJECT_BRAIN.md"
+  ],
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/agents.md",
+      "sha256": "ff9121c6f449c1f648a128dcb70e24e1a5bf18920eba91fa34cd8df972b0d4f8"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "d01d888b07e7a3033d9bca6998c060b1ecf36ece5decf4f89cc4ea0db3ddc891"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/PROJECT_BRAIN.md",
+      "sha256": "c80f1e54d2995641e76cabf67fdeda2ebdbe0e221b6c92b44d7b057afe033613"
+    },
+    {
+      "path": "work/ERP-V2-business-close-20260922/HANDOFF.md",
+      "sha256": "e126e808685843cad03bfceed1c311c8a7bd1acad14c81c543beb655c2b861a4"
+    },
+    {
+      "path": "work/ERP-V2-business-close-20260922/SOURCE_CONTRACT.md",
+      "sha256": "10cc104fe26b9a5fc02c9eaf4bd01fb050563310e9388c5d039c08b5602a508d"
+    },
+    {
+      "path": "T+数据/.DS_Store",
+      "sha256": "8eac5a1ea5f8d083b187da21cf2e59dd5239736d2f82c3f9274f1e183b12d254"
+    },
+    {
+      "path": "T+数据/库存状况表.xlsx",
+      "sha256": "c40cdf7380be75104fb989d9d75fab3e6bd086fe57faa855f7b046641bfd292f"
+    },
+    {
+      "path": "T+数据/打印模版/销货单_杰威亚服饰销货单（小间距）.bof",
+      "sha256": "621345567f4c06130e12a3c970c511e37148eb91e5e415a9b76b63f661995213"
+    },
+    {
+      "path": "T+数据/打印模版/进货单_新杰威亚进货单.bof",
+      "sha256": "d404a9a49d82162f08b338a5b518adebd97e308b5c7bb01d9a202f15fb7ff458"
+    },
+    {
+      "path": "T+数据/打印模版/其他出库单_其他出库单(移动仓管).bof",
+      "sha256": "5af2cc29ada3abd54cd51ca87c7c19eb6305caba2f38ad7ccb7367a8eb0f9983"
+    },
+    {
+      "path": "T+数据/打印模版/材料出库单_材料出库单(移动仓管).bof",
+      "sha256": "612681b31eaec6f3e2fd140513a4a4e64b21145a3ed17e2e050efd0dbc12a60b"
+    },
+    {
+      "path": "T+数据/打印模版/产成品入库单_产成品入库单(移动仓管)..bof",
+      "sha256": "29f6937a54d8af17023accff98fde2855e3de5433c5735923c099eff53153a55"
+    },
+    {
+      "path": "T+数据/打印模版/库存状况表_银泰.bof",
+      "sha256": "77f4e192282b354b817f12e4cc6f6c36618e3bd3ed16190866d5874041b018ee"
+    },
+    {
+      "path": "T+数据/打印模版/进货单_jinhuodan.bof",
+      "sha256": "a0f24e649fac81f8dfc308b37c42a90053398b7f81c875b8f17d38f581e7f832"
+    },
+    {
+      "path": "T+数据/打印模版/销货单_销货单(移动仓管).bof",
+      "sha256": "203581710a4335e644c1a53a7deeef6d1a8c0288c4727d744f25b3375c1acf64"
+    },
+    {
+      "path": "T+数据/打印模版/调拨单_银泰商品入库信息表（调拨单）.bof",
+      "sha256": "6427c078a81016fa96565fbe00d98dd5fa75cc7186170943de4ab565181e9b42"
+    },
+    {
+      "path": "T+数据/打印模版/进货单_进货单(移动仓管).bof",
+      "sha256": "08f4c5458b722714f58b08e2de5c4bd1cb55188b3d1c920dafa7890069d2c7b1"
+    },
+    {
+      "path": "T+数据/打印模版/盘点单_银泰模板.bof",
+      "sha256": "fe2d894084da5246be2e8e881ace60cfb52087a533fa0f02392d8c9bcb4bf83b"
+    },
+    {
+      "path": "T+数据/打印模版/销货单_杰威亚服饰销货单.bof",
+      "sha256": "eb7356f678cec7d26ec5d953794f346dcba9102fb74eb620e63680596f9cb5c1"
+    },
+    {
+      "path": "T+数据/打印模版/其他入库单_其他入库单(移动仓管).bof",
+      "sha256": "a9d6d385617143870017469b2e19292adcdf3df0bd23fccff6a97dcb6a55bf3a"
+    },
+    {
+      "path": "T+数据/打印模版/进货单_杰威亚进货单.bof",
+      "sha256": "307793fff30670f3bdc5e51aaf24d05c907da09e4b19f3612228bba08aff115e"
+    },
+    {
+      "path": "T+数据/打印模版/调拨单_杰威亚服饰发货单（调拨单）.bof",
+      "sha256": "7b5f1299e5ebf41275d16022fd5f0178044f7d566be71ef82f6b036dd63e53a2"
+    },
+    {
+      "path": "T+数据/打印模版/进货单_1.bof",
+      "sha256": "73f8a4562f0a4be97b7beac1da7b1ff7a8599783ee18ad71ce85832262cbd944"
+    },
+    {
+      "path": "T+数据/价格本/存货数量档位价格.xlsx",
+      "sha256": "18b3626ba355f6d5c84526eb9f0370c70d5d8e1f509cd3f3f56c83cc8cbc34c6"
+    },
+    {
+      "path": "T+数据/价格本/供应商价格本.xlsx",
+      "sha256": "8a31583c5a8437c3d593076731e2eede6e92bd0bb43e77d0949c89b96fc59961"
+    },
+    {
+      "path": "T+数据/价格本/存货价格本.xlsx",
+      "sha256": "85fc2d665286cdfcaaf7402278ca464637e47de772b9b91ec05cf3d2fbae2764"
+    },
+    {
+      "path": "T+数据/价格本/客户价格本.xlsx",
+      "sha256": "fc0a52a7a6f35fd4d0eed866bd27a7a82c58ace80cdb805830e1882322fb604e"
+    },
+    {
+      "path": "T+数据/价格本/部门价格本.xlsx",
+      "sha256": "55308df8f5e62c4739de588137c03dbaf9dd92dced2758f705a71da35cb6641e"
+    },
+    {
+      "path": "T+数据/枚举档案/门襟.xlsx",
+      "sha256": "4be79e7019b542c16317695971c4200d21e53fbf97df29d2209fcec1b72913de"
+    },
+    {
+      "path": "T+数据/枚举档案/学历.xlsx",
+      "sha256": "16fbd16261f74ee38adff2c4e37ccce5459141143692749aa0d5203abc985a70"
+    },
+    {
+      "path": "T+数据/枚举档案/版型.xlsx",
+      "sha256": "1bb2fb6b0079de8a1f0778c6bf6607b4105c342063eb4bb949ef98823c40f3a6"
+    },
+    {
+      "path": "T+数据/枚举档案/颜色.xlsx",
+      "sha256": "df2eb818a8468f2e9fbae0b312860c58dfa2a87e8273a7fd6022052fe7aa62a3"
+    },
+    {
+      "path": "T+数据/枚举档案/品牌.xlsx",
+      "sha256": "88642ee55cf7b1f9f361c7276fd72fd3743399ef768945033bd264699084b691"
+    },
+    {
+      "path": "T+数据/枚举档案/生产厂家.xlsx",
+      "sha256": "ef479cd4b77bd8b699fc2eccdd5f757acf13a3676888d2184635c6c3969840cf"
+    },
+    {
+      "path": "T+数据/枚举档案/衣长或裤长.xlsx",
+      "sha256": "58aee6e6d2737ea312228370de25b4c8e0fd9b4526e0e6931bd2ee7cb3cd09fd"
+    },
+    {
+      "path": "T+数据/枚举档案/风格.xlsx",
+      "sha256": "77d401d523ba27a1b6dcd02529ae90d4725961789f759e252bf413de9115db13"
+    },
+    {
+      "path": "T+数据/枚举档案/开户银行.xlsx",
+      "sha256": "ff1dd14e6a281a5032045f4950915a16adfa70a45e4bb9ad81e12d466b11c191"
+    },
+    {
+      "path": "T+数据/枚举档案/职务.xlsx",
+      "sha256": "cc541216c4f7b38fc9f7d3bcaa9b1a88d94544f6fb07e1e1f5e62565c3e03eac"
+    },
+    {
+      "path": "T+数据/枚举档案/尺码.xlsx",
+      "sha256": "86f691fee142b7d725548f07f0f4fd2215c1317274b7c9d4421221d61de4e518"
+    },
+    {
+      "path": "T+数据/枚举档案/证件类型.xlsx",
+      "sha256": "3a074401aa858bbe90a853b70beb202fab0391ac5a862c85e8f8f7a9c94aa4e5"
+    },
+    {
+      "path": "T+数据/枚举档案/领型或裤脚口.xlsx",
+      "sha256": "5f469cf67b00088534dbd92dd9a9976856627d4a105fed4ccdb2f21384dbcf52"
+    },
+    {
+      "path": "T+数据/枚举档案/税率%.xlsx",
+      "sha256": "5fe6412e9779c78cfa0ef497013bab6adeb96fcae97231641c3d8a66c9d61315"
+    },
+    {
+      "path": "T+数据/枚举档案/运输方式.xlsx",
+      "sha256": "f497f016defe1a6786b1d1412a65f0c61b61da9d86f205215d0bc989d62be3e5"
+    },
+    {
+      "path": "T+数据/单据数据/其他入库单.xlsx",
+      "sha256": "fca93187d1c603f3fbe61d059651f78b2bb2e0f6c7e0e52bc62a491be5de3d5c"
+    },
+    {
+      "path": "T+数据/单据数据/产成品入库单.xlsx",
+      "sha256": "0380fc28d8195669f0d0ffdc8264ae8dded70f7797d4b14b5b7b11de8c8efac4"
+    },
+    {
+      "path": "T+数据/单据数据/销售订单.xlsx",
+      "sha256": "f39005408172cdaf509466e2fe7d8f37bee55c84b1824a55771679f0f03cda4b"
+    },
+    {
+      "path": "T+数据/单据数据/收入单.xlsx",
+      "sha256": "ca615792fe437026f5b2e96c152f526d83ee27b42752bfcf65e39b8b7e1114ea"
+    },
+    {
+      "path": "T+数据/单据数据/.~收款单.xlsx",
+      "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+    },
+    {
+      "path": "T+数据/单据数据/其他出库单.xlsx",
+      "sha256": "f235b42c2a3472486e8d4ad2aa964a05eac8c73245e3e8ab45d584e220dd0c1f"
+    },
+    {
+      "path": "T+数据/单据数据/要货单.xlsx",
+      "sha256": "2813ae861e4476630d29b5f0826b67557bae4348e6056cce911182b4d9ae6021"
+    },
+    {
+      "path": "T+数据/单据数据/凭证导入导出.xlsx",
+      "sha256": "b722fae6712949e2445c0700bb5924006bbcf8391e19e0bc37664d9172345b0a"
+    },
+    {
+      "path": "T+数据/单据数据/销货单.xlsx",
+      "sha256": "b2972944e35eb026e27bdce76fc77cd0a5447928d05bcb57e9d0112762b99ef3"
+    },
+    {
+      "path": "T+数据/单据数据/.~费用单.xlsx",
+      "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+    },
+    {
+      "path": "T+数据/单据数据/自定义结转.xlsx",
+      "sha256": "bd70f92d3fb9be155636ce26f52e4b72b7b311278b0fee9e6307fd0f808e8361"
+    },
+    {
+      "path": "T+数据/单据数据/收款单.xlsx",
+      "sha256": "292d83cac65acf3ea314af84e274aa91c080c38f8ede876310a0cbd3b9dfb6f4"
+    },
+    {
+      "path": "T+数据/单据数据/付款单.xlsx",
+      "sha256": "8c208dea9cbb2ccdccde0f1463217acc2ca767ffa36eb4febffc77ab3a12aa9f"
+    },
+    {
+      "path": "T+数据/单据数据/费用单.xlsx",
+      "sha256": "15d203c02f587b0371154d8b39a58cc5ab08e7d08a64c9478f8968efac891bf7"
+    },
+    {
+      "path": "T+数据/单据数据/.~销货单.xlsx",
+      "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+    },
+    {
+      "path": "T+数据/单据数据/.~其他入库单.xlsx",
+      "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+    },
+    {
+      "path": "T+数据/单据数据/请购单.xlsx",
+      "sha256": "eca4d589e984205edf347046f3abc123ab5dda7ce23c72be3ad5c3cf8e40c8f9"
+    },
+    {
+      "path": "T+数据/单据数据/采购订单.xlsx",
+      "sha256": "cd66e256772f96ec2041cd57d8e7bda7b9ef79f54bbc96407ff05fa8933246f9"
+    },
+    {
+      "path": "T+数据/单据数据/材料出库单.xlsx",
+      "sha256": "fb5a9338625756e6f57078422a686642ac7e95656f7edaeca3623e9810b10052"
+    },
+    {
+      "path": "T+数据/单据数据/进货单.xlsx",
+      "sha256": "f4bfacf6c1eb06e5ff9aa691fc75eee317c8c31de2cdad1aeb5af2e5156d283d"
+    },
+    {
+      "path": "T+数据/单据数据/.~其他出库单.xlsx",
+      "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+    },
+    {
+      "path": "T+数据/期初数据/往来期初明细.xlsx",
+      "sha256": "0a77e89c77ff2dbbf3c88e116bbfe0c69482c0c35f094410fff5a418222a0bfb"
+    },
+    {
+      "path": "T+数据/期初数据/现金银行期初余额.xlsx",
+      "sha256": "b336c3f0ef31ae4c44c1e0ca954b91f656c96edfd8965ca91bcdfe1e1e42d080"
+    },
+    {
+      "path": "T+数据/期初数据/往来期初余额.xlsx",
+      "sha256": "45d98d283d833840dd640ebf710ab054a4e66b5463a5e8757c3dd3f6ff6f7c52"
+    },
+    {
+      "path": "T+数据/期初数据/库存期初余额.xlsx",
+      "sha256": "28f0ea6748e1500354285ea1f8ca42c4f719d8fa0067d1ada5df88677f44bf90"
+    },
+    {
+      "path": "T+数据/期初数据/辅助核算期初.xlsx",
+      "sha256": "9b8d8210ea94befd8e123a9ed978099c4e7af7a2e9f6121ac02840c8d56765b0"
+    },
+    {
+      "path": "T+数据/期初数据/现金流量期初.xlsx",
+      "sha256": "326b16cc808729058996354403a6cdaf6e751b1fe75c3873e98a72e2257f70c1"
+    },
+    {
+      "path": "T+数据/期初数据/科目期初余额.xlsx",
+      "sha256": "25bb4217681a063a03b4d5f71e597eb4cf491079bdbaee4020eca2ade09d1d8f"
+    },
+    {
+      "path": "T+数据/基础档案/往来单位存货设置.xlsx",
+      "sha256": "af6c0be80ff58091f3cefb37947c4fc12fb2477785fce6819de9607c7344a95d"
+    },
+    {
+      "path": "T+数据/基础档案/物流网点.xlsx",
+      "sha256": "193e70124ee18016156d12674caaca99a86a5e5ae36a905462e04c584ee5c46f"
+    },
+    {
+      "path": "T+数据/基础档案/.~往来单位.xlsx",
+      "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+    },
+    {
+      "path": "T+数据/基础档案/费用.xlsx",
+      "sha256": "5777439bb15c17d38ba9d8d788afc159560f4e8e7022eeb2b7aa0bf2b704112f"
+    },
+    {
+      "path": "T+数据/基础档案/存货分类.xlsx",
+      "sha256": "c5a726bb835046aac984ec02233ec2dde29b351868ea8f5082602b82f4022765"
+    },
+    {
+      "path": "T+数据/基础档案/往来单位分类.xlsx",
+      "sha256": "d8661c0cd111141cfff3255c67b794c9d5f123c50ecc99f42a69cd203fbd3d91"
+    },
+    {
+      "path": "T+数据/基础档案/常用摘要.xlsx",
+      "sha256": "d099254f11e154536e3354f0c90e62ed301227406867f8e7ba831f9905303238"
+    },
+    {
+      "path": "T+数据/基础档案/.~账号.xlsx",
+      "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+    },
+    {
+      "path": "T+数据/基础档案/结算方式.xlsx",
+      "sha256": "ae15f5b7e2bb043941ebcb1ad5a6f3524063b4ab8516c1ed8c31f2003c698385"
+    },
+    {
+      "path": "T+数据/基础档案/存货条码方案.xlsx",
+      "sha256": "650d0ca80f1ab1174362ab0f16de4a57d797c1a43f8fcf4d73181006eae4b411"
+    },
+    {
+      "path": "T+数据/基础档案/.~存货分类.xlsx",
+      "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+    },
+    {
+      "path": "T+数据/基础档案/项目分类.xlsx",
+      "sha256": "7963adfebe42a97b9522bd69a26dd547d33633964f5109356314c6fed02bc18e"
+    },
+    {
+      "path": "T+数据/基础档案/现金流量项目.xlsx",
+      "sha256": "f6fa1de440a7cec6daff6c2604aae7b05c44267d094a20cb5bfc91f32861460c"
+    },
+    {
+      "path": "T+数据/基础档案/计量单位.xlsx",
+      "sha256": "1f36021a3849813a8155664fa674e5f39244bef127c7c602571e3f69df84b452"
+    },
+    {
+      "path": "T+数据/基础档案/会员档案.xlsx",
+      "sha256": "49028db5dab80e17122e6e3090050ed4131f10b2f282cfc04086358c5dfa88ab"
+    },
+    {
+      "path": "T+数据/基础档案/存货.xlsx",
+      "sha256": "78150bd202c0ec6af7750f2dc572bdff261ca7b4cac3babb8a237ad8fa8c9efd"
+    },
+    {
+      "path": "T+数据/基础档案/往来单位.xlsx",
+      "sha256": "55f8bbcb10cef88a23f8fb84677245d145cd61dbbe51c20851b228b8a04b2f96"
+    },
+    {
+      "path": "T+数据/基础档案/收入.xlsx",
+      "sha256": "ae6866e9fbc8d6c662789b78be9ffe58308db58c17d1626be43339a3e9e3bf63"
+    },
+    {
+      "path": "T+数据/基础档案/仓库.xlsx",
+      "sha256": "9f78e451cb6649c17edda15729d63f3ada5740859c594a5cd3daa7fd9d074da6"
+    },
+    {
+      "path": "T+数据/基础档案/项目.xlsx",
+      "sha256": "aadb10db9e6290f6a8cd0babffc12bfee28a56d275e1012ae2d6ad3860c5db29"
+    },
+    {
+      "path": "T+数据/基础档案/地区.xlsx",
+      "sha256": "ed87e532f53efeef6301da40fcde706bb40eadb7365a82f68d5bc9a6f76ff6e5"
+    },
+    {
+      "path": "T+数据/基础档案/现金流量项目分类.xlsx",
+      "sha256": "72653296f590f0e35ed39fe449f7f069459b56dac324a2d18835465b05d711de"
+    },
+    {
+      "path": "T+数据/基础档案/替代方案.xlsx",
+      "sha256": "6bd068a82958338d7967f53045f7a01ef0389e40f7329c401b5568475f078209"
+    },
+    {
+      "path": "T+数据/基础档案/常用摘要分类.xlsx",
+      "sha256": "e0801f88d112b1d77524b7e937b08e788aeb8d8f6786da5767b7b253b51d9fd5"
+    },
+    {
+      "path": "T+数据/基础档案/科目.xlsx",
+      "sha256": "664bdc6056ad85d7099c1a3b9dfb145badae05cc5b50550f002480af95a037ef"
+    },
+    {
+      "path": "T+数据/基础档案/物流公司.xlsx",
+      "sha256": "114a4c571ad310f6b0e8ce5c3e7c38a1e7bcbc61deae23deeb1f4b1c9c8a976b"
+    },
+    {
+      "path": "T+数据/基础档案/.~现金流量项目分类.xlsx",
+      "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+    },
+    {
+      "path": "T+数据/基础档案/出入库类别.xlsx",
+      "sha256": "d5cdb31893191b326c5af0f024924a292cf903417a3c74660cf4675941ba0f9d"
+    },
+    {
+      "path": "T+数据/基础档案/物料清单.xlsx",
+      "sha256": "01abcd4692746c6080255961b25a120b6c17c7dab46b1c54e396365bc403ed49"
+    },
+    {
+      "path": "T+数据/基础档案/.~存货.xlsx",
+      "sha256": "de044b92f328db5282c78a0016e56f719b80d21929fe5f00e93c847c6acfca78"
+    },
+    {
+      "path": "T+数据/基础档案/凭证类别.xlsx",
+      "sha256": "e7eb89f071e2750878ffec1450c27a61365aa8f865de9c3087fd1d2cc7ce62db"
+    },
+    {
+      "path": "T+数据/基础档案/存货条形码.xlsx",
+      "sha256": "e961b423a0d6925c76c27a630bd1fa7619fef97b9c023fbb8a127e3322b432bd"
+    },
+    {
+      "path": "T+数据/基础档案/部门.xlsx",
+      "sha256": "0603255119903738e1d78fcb97d147c548e6e8278ed22776102d1d7c3391d8f9"
+    },
+    {
+      "path": "T+数据/基础档案/账号.xlsx",
+      "sha256": "5fc651fafc3d6d48facb5859ec4e9b3f710eaa4c4bc2932cf81d885280a86388"
+    },
+    {
+      "path": "T+数据/基础档案/员工.xlsx",
+      "sha256": "c96f8081de262dedbd53754a48639e757773cc45bf7ca62afe4571519f23cf36"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/startup-verify.html",
+      "sha256": "7aeb55509a0c88f2dcf4d1e13a40bb991e3c83b9b69dc174957ebd978833bd6c"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/startup-diagnostic.html",
+      "sha256": "0598f9f191d60c3180684a364e3bb753c1f3a4c262a815cf84b80e8dea4f13a1"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/ui-theme.js",
+      "sha256": "7c60c6ed264582d53c9193965f29f71c8492384c6762e81cbb8dc1fa58015651"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/verification-results.json",
+      "sha256": "ca65c4794d7ce97fc5e98b43847c8e37242ad49d4a48c8575f976c810b72076b"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/preview-server.log",
+      "sha256": "ff98352826f1d7bb1f3df8c849e850e4a89f962775853acfe3c93ec8bf0dd477"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-cross-module-verification.json",
+      "sha256": "3d132bec5c6ea0e611f6662896609e366fd1547ab936c35b7b4cff8abb371928"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/final-ui.css",
+      "sha256": "15b6bb63f6bf4c5e0e52aa2b3fb1671d55f87b1b272a9fdd2ac3b574d3e436e1"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/SALES_COMMIT_20260915.md",
+      "sha256": "52672f6401351cea628953734968151929266220833a3863ce9b98d408fa2518"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-model.js",
+      "sha256": "fe11be891fe25ac56d5de71c5aa70096267ae0ed7b6476446d682b1b2c437912"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-workbench.css",
+      "sha256": "0928193a13883c6285f263d1793c1802334a00379bbe16daf67c28d634499109"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/TRANSFER_CURRENT_ACCEPTANCE_20260915.md",
+      "sha256": "19d610ba85dfeed840f8cbee871bbaa44dc29d996ae1438e128369a858b66580"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/transfer-matrix.html",
+      "sha256": "c9fcc3ed383db54a65767e41216502ef1c658b2cacdc090e6c3c8804b2401218"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-result.js",
+      "sha256": "83077f7c9d295bd8c4653c5e0a15c2b26b806d727c56d2204f1bb264ee0d4580"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/INVENTORY_LOCAL_FIX_20260915.md",
+      "sha256": "7e03fb375b3b49cce0d522de6c169f7db253284b4cc71e229373aaa2465f528f"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/final-ui.js",
+      "sha256": "0961473cd897107bd393c65c09fa7374c5c0db5cb6a2937aea2bcf161a20bb26"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-funds-ui.js",
+      "sha256": "8b779d9ce1e3c113be7d3987f27d0df047c5f13b7fd1c3984e586d28fd856052"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/transfer-matrix-experiment.js",
+      "sha256": "4c62e7a30c76f8bd002c8e13a61ddc8d0029a203ad7ddedb7b255dac4a28ae0e"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-returns.css",
+      "sha256": "4a250e0c83d25093fd802d5036388da641c6fb5c922f0a6b010dc64e1c4d1161"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/index.html",
+      "sha256": "06d0f6997856a9deab82b5b17fde3abc4348ca415fcbebd963a2141b31b87c09"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/TRANSFER_RELIABILITY_20260915.md",
+      "sha256": "be68ad539ce75ae8da9d62a2dd0ab6680a5786752eb005f1422e0296d9ad369f"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/business-config.js",
+      "sha256": "2d5b6b864766ea7bb966d10c489d8f58932460a5eab129319ff1aa331c31c35a"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/INVENTORY_CURRENT_ACCEPTANCE.md",
+      "sha256": "96fbf373bd41e3911ed8efe97fa789d0fb911eccaaa01f3fd01379fd700f97ab"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/matrix-report.js",
+      "sha256": "c864c30488f779f4dc460258cd0424c5cab0a8773744f596842c6164d2221206"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/INVENTORY_SEARCH_20260915.md",
+      "sha256": "ed3d245f2132acaa1f4b8152081f633929cf30ced2676fe7cd35eec25b283750"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/styles.css",
+      "sha256": "32b8dd1bff20cd791bc987200c4bed53ebb579f7ca5c84686531bb6ec4948199"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/INVENTORY_WORKBENCH_ACCEPTANCE.md",
+      "sha256": "e3cdd7a57c32b3c3b75e68b7e7b88e5618d7d55c4870f65cff4ed7c58e3ed594"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/interaction-common.css",
+      "sha256": "52116f37e5582312bcf3a0106f9b0f263727631e0372e5df6eb2d4e628ceebe4"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/INVENTORY_CLOSE_20260915.md",
+      "sha256": "be583d3e0e07b3a0f4ab1912a056b7fc3a1b2b347711c36a49fc2f835866ac34"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-return-core.js",
+      "sha256": "87e9e46a8a71fb3baffdd528aec11d2973994184e86442c3b539e09a797c6842"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/PRODUCT_COMPATIBLE_SIMPLIFICATION_ACCEPTANCE.md",
+      "sha256": "0f57d562be624853e9871d79aefc874f13ca8ccb105bd6e9e96c4a38e76cf0dc"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/sample-base.css",
+      "sha256": "ad53761dd7ee0520124d316d3cc80fe388c75aeca4bf8201edb29c51935424e6"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/ui-foundation-verification.json",
+      "sha256": "4c975a7059cda683c70dec50950814bcd647ced1315e775f5035bc58a4908308"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/start.command",
+      "sha256": "672e40e4f9ab14720ba1ca0d025d10cb07836a2ffca01f2678aabfb9b2b0354a"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/TRANSFER_SPACING_20260915.md",
+      "sha256": "9c5fbda002065e5ec7dc2000ac05c4fce162389e50fe3ed9be41ec03a37b40b5"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/matrix-fixtures.js",
+      "sha256": "d76d48364ec57b25d80305f4ee427ece087a73610eb2cd2bd6c02ad2c9436cbc"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-master.js",
+      "sha256": "9b726c30ffea962c79868ebefe1643885968035cbdc6efa892759c0f5ad2a85e"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/transfer-current.js",
+      "sha256": "6db5de974a2b81aaef057fb8c7f9e25e9207f144ae1d1a3a7bf24676667d7cd3"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/UI_SYSTEM.md",
+      "sha256": "cbcf19397ff8a15c58b2fa3f0c9c0f2985af630e3f9fa94fa9c5c4d041f9b5f2"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/basic-settings.js",
+      "sha256": "06b776f7d68e0d4a6817515d31650fb05cdc0a928f5daac91eb856077aaf533a"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/TRANSFER_CORRECTION_20260915.md",
+      "sha256": "d627a83e6a6ef6035aebcdd49363d51999881236789dcfb55ae2eaf8847bdf85"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-business-close-verification.json",
+      "sha256": "9a370051ed1f8837a54e4ffd51d939bf308f31a36b1cebb4334cd59c694a3a18"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/使用说明.md",
+      "sha256": "eda255223290d3371147acc0ff089d360a69730136383de85c16f9cc3f34a68e"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-current.js",
+      "sha256": "1ff63038f9d8b435838cb82ec2e09dd9cc7435eef2d938d0358ebdb7efb1bbb7"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/barcode-2026.js",
+      "sha256": "2409211a82643d29630f965978689e1ecfcd2f709d9c1a5f937701ea449c53c6"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/scan-workbench.js",
+      "sha256": "4f65545bf3c48866eac5972a0551e5c4a268e1a0a65434c81ca9f50efc5f877a"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-workbench.js",
+      "sha256": "d4b537980d724f7695c4149e4be7be82d13c6d714c24d06017114a8155a54548"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/LEGACY_SIZE_COMPATIBILITY_DESIGN.md",
+      "sha256": "a8df940e03cc6d24bb43ee466d8475cfc97f6d26e09d40559ee97d2ed9a9f090"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-returns.js",
+      "sha256": "2eb27ca9a2f08819466207763a27a5cb8bebeda5f3ce6d88dd5b0cd3fc0c3755"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-feedback-12-verification.json",
+      "sha256": "e6e8b55857262de12b824c27c415e1d51547295447e3fe42f01d0079f20ee636"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-audit-core.js",
+      "sha256": "f7abbe6fe1f80618856cb7bbd112d472fc43b9e11bcc3ebc7dee3beca17d6c70"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/TRANSFER_REFINEMENT_20260915.md",
+      "sha256": "2254aefa8abea017a6c4812a57b6ef03cd154042194ca8a9c83c4ea74fcb5ae2"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/INVENTORY_RECOGNITION_20260915.md",
+      "sha256": "f43163d629e8e90a674a6a89e3ee143ccdabaac241cbcd8447eab467be6136a5"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/INVENTORY_QUICK_DETAIL_20260915.md",
+      "sha256": "f4444b7a75a6ac42c02667d3ae941ee99a5bfeed462ca8d0018b37052240af2e"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-funds-data.js",
+      "sha256": "bb6d2858b8387a43f8f0873c3b51549b7597ed870742e0e3ea442565d1b3a2b9"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/SALES_ACCEPTANCE_20260915.md",
+      "sha256": "5f2dd4aac0897463af766256ccbe29639d4c87009848730f6b03cb702bca7efd"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/MIXED_ENTRY_EXPERIMENT_20260915.md",
+      "sha256": "d5c77362cdd20720a12df2f3a1c02fb0195c7e0f5cb2d3cd6cb542891399bc57"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-catalog.js",
+      "sha256": "f625aed523278f3525603069826d9b848259ce1e6f9863259040eee78739b942"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/SALES_CURRENT.md",
+      "sha256": "8d75ffd77ac5343816bac9b707fa2909929abdc755c7d87715bfd339151e1e9c"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-summary.js",
+      "sha256": "e498fc4ffab88fa607a01c76891ef455b4df5a71bbe158d51342021f744af629"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-verification.json",
+      "sha256": "b486afdb688ae23e18d6636ac955c08a4cb17ab469be7d4deb30df412b20b1b2"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/TRANSFER_LIST_ACCEPTANCE_20260915.md",
+      "sha256": "e3ff0d8eedc89521657a189da43dbe3b37a78ca8469aa22c3be1373d9d20c41d"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/PRODUCT_BUSINESS_CLOSE_ACCEPTANCE.md",
+      "sha256": "b12996ee0681de9ed79c9268152fd89eba5d8859cbf0d4c2e65a8a90b9fc358a"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/auth-entry.js",
+      "sha256": "7e04010ed5ba4e79c0c19229ae2ff264d095a4f95cca7bda4528b3fc146199bc"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/matrix-sections.js",
+      "sha256": "a83703ab568258f8d06bf2a0f4dadf59c305eac5377c1db3ea54c203ba6e421f"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/matrix-experiments.css",
+      "sha256": "b19c5cc6bb6157a15b9514368debeee9ac49c968f1ce5fa07121387f76db8c31"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-current.css",
+      "sha256": "c1c8e2e0ea4538cd69efa22d5f45723f5c92df0f057a113247667bac1b4f84ea"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-matrix-experiment.js",
+      "sha256": "0bbd13d72f9dac59a696327b4b7f1b45b0544e0d2ce6349f778a076133d839db"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-final-structure-verification.json",
+      "sha256": "003c7311705ab365259336b5666c2ccb4f708267bf65943ada1c9c135069e797"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/transfer-mock-core.js",
+      "sha256": "0d5654ca87dfca2a3f23f6f65e29d778092c42d649aa1cd0a1ef91b5b1cb1023"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/ui-tokens.css",
+      "sha256": "271cc9defc239e54573862ec9a74430a700f300f22a8969cf0552f2e085c6d2e"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/黄金页本轮使用说明.md",
+      "sha256": "fe71c4939d4303ab4c33dfc0698df204672b8ec0d6d3442303380d06428bb8b7"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-legacy-sizes.js",
+      "sha256": "8ea827d90dafd999ab5d68ca6c562265262a7b2030b1700dc50472520dc97a42"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-matrix.html",
+      "sha256": "acf2b49c5ad00def0fcf0daa21cb9bef70561e84e0275322703d3fb82d713eb2"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/baseline-readonly-hashes.json",
+      "sha256": "f0ac6be401e534e0682baacb4753481eaabe42214b219c8cbd233f13c67df2c6"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-simplify-verification.json",
+      "sha256": "bc158502f71d68ffcac33dfa3c61645ccd5df31e3e2e32a76846275a16d74964"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/gold.css",
+      "sha256": "83b11feb5e4c19dae096000508383838452a36e0b80de64a118ebe7f4602b6a8"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/entity-select.js",
+      "sha256": "d3614d7083f03b11bb29b6466ca76dcf4d3ead536833978dd14dda33ff0be886"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-core.js",
+      "sha256": "d62b2fe9497e3b563c551f3ceabb321980e45b236798eb54bfbb5e9ea8e31793"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/gold-verification.json",
+      "sha256": "a118acada382d09851309c299113a54f348bd370394fbc7e03a8c067da497d0c"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-current-verification.json",
+      "sha256": "f414497b30c00f314cf753f51122d238383c8a3d95928d61345745fdb09b5cb6"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-invariant-verification.json",
+      "sha256": "26c87e96e768e8320c77366f208e6c2f87242c43e932351964f9b3aa11ca3378"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/interaction-common.js",
+      "sha256": "ed80c133ff05b9483534e96034670ebfd3730e1b58c758ceba93a262b1ab8282"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-xlsx.js",
+      "sha256": "e80761e0f45e28807f25e4d53f0dadc909e3f7ed45a8199b4dee9c8a61ec9c3d"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/transfer-current.css",
+      "sha256": "6b040a0d39de73e8f6ffe5ac81c3af6d1599f816ed2bc47666d388c3cb2c42ee"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/ui-review.css",
+      "sha256": "f6ad1b536abd145d3421e82ceadb8734cd70329412d64c9e8f1fd7a7bda1d61a"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/engine.js",
+      "sha256": "f4ba2b39a7f06e738b7d71c8e4f9483e9fd4670e1cab88275540e3061b44953a"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-current.css",
+      "sha256": "9f046cb8e7307e548463e7e2856ee8a93f984ffc89cd36d8d7f7dfe20b1fc3ad"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/transfer-mock-client.js",
+      "sha256": "304cc96674d6d0a2090ca4da8ec9dae3461b7f9f5a04f246916f3d971ed42610"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/gold-baseline-hashes.json",
+      "sha256": "f0ac6be401e534e0682baacb4753481eaabe42214b219c8cbd233f13c67df2c6"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-client.js",
+      "sha256": "c65f73517cab5c334f3b36c41ebbd167ecd06b3b7356725c3afce988fdad07a4"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-finder.js",
+      "sha256": "50b57fbf9a9c8fd1ad3587a30d0def040a8e269e313b39bb7a390cf4c2b8040e"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/inventory-fit-projection.js",
+      "sha256": "19bfb17f82f423c4c71b47bde9dcb8643ff946fcccb32abe0ab8f3ac5cd812fb"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/model.js",
+      "sha256": "a40eea17ec341584d10de45524e310f0ff9e5714164331969c3a8c63db0b3bee"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/PRODUCT_FEEDBACK_12_ACCEPTANCE.md",
+      "sha256": "afb12fb0cc0f5723b28f475053ea5a424fc5f761a7d6b92dcaf1f0397f431720"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/PRODUCT_SIMPLIFY_ACCEPTANCE.md",
+      "sha256": "4504debeae83702b7322ce1ec2be70d700677f6e3fa9eb8b89fa653cde85bcdb"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/entry-shared.css",
+      "sha256": "5020ae7dbaed4f5f561421f11d4272a40c05b5d18090c47a667fb453301aaba9"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/PRODUCT_FINAL_STRUCTURE_ACCEPTANCE.md",
+      "sha256": "0fa8c431d3f8248d98fcf15c449015e114f614380d1746c2f7cc74f48ea513e0"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/basic-settings.css",
+      "sha256": "1b67d9fc3ce9ec3af9c54d41bbff5aa720f2c1844c9017509cd5202f18c9c04e"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/PRODUCT_COMPATIBLE_BARCODES_ACCEPTANCE.md",
+      "sha256": "f6ce7772566e12ab8210561601290bed6aeac4a38ffedbd75bd05e0842087f90"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-compatible-barcodes-verification.json",
+      "sha256": "78681121ab5f41b30ea8db8e9ed08ea23338e2e4a921e4309ac5669b8d0c7672"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/app.js",
+      "sha256": "0ece03110b9d906b1dbf766083d927bcb5bd1bee72d947f1de4f008d49010bf3"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/sales-export.js",
+      "sha256": "dcffef5288b8a9ad77ea6a290dac3e14528589f734dca0c2e260acfdcb4f40b7"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/TRANSFER_ACCEPTANCE_20260915.md",
+      "sha256": "fbe05904e9eec2694c1d42effd71acb211bf80773212ad8c75312772314752dc"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/master-data.js",
+      "sha256": "0e5cd3562092d53c382969b140c1ea79bb457ddd0e0f45069b76dd3206335db5"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/SALES_INLINE_20260915.md",
+      "sha256": "8fb1b517b6ecc814c393ac02656e84b8781fb688c28fe013380885454ffb8f13"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-current.js",
+      "sha256": "a822c4cd4e8e2ae9910451b927718c00fb1ee1ec5bdfe6b395537dcc5e61ae67"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/PRODUCT_CURRENT_ACCEPTANCE.md",
+      "sha256": "8d32ee84714953d5c30e34bf8af2c937eae52b2eba366f22e8e5058c9050a88b"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/gold.js",
+      "sha256": "4d9adea169ed1994bdc91a49d1219c8876c2c86932dd767974eef53faea8e601"
+    },
+    {
+      "path": "outputs/ERP-V2-Demo-V1/ui-structure-prototype/ui-review.js",
+      "sha256": "7dea847ed7b519087885dcb5a1651bc067446b6885084d3a96d5e4f66cfdc550"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/FOUNDATIONS.md",
+      "sha256": "743663cc2b61f44e38337b9e6f7e86c861f8672ca44fbdac586c0b5ca94f8f4c"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/INVENTORY.md",
+      "sha256": "e45768ebd2e9ec35fbb10d1f18b44db8284f86633a238331b9f3c4f706479e89"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/profile.py",
+      "sha256": "1fdd4c0108f8e7fee9822ab1359096f5d639cf5b1f5fc489a6c5636fb495ac44"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/secondary.py",
+      "sha256": "3321fbef120f2d30f1b13401bb1f18f1e491819b6da9590be24509933f630ad8"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/secondary-audit.json",
+      "sha256": "e54f528f9b08c377471a801464427529fd3f9fd12e2732e8da644e33e5b5c18a"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/baseline-drift-check.json",
+      "sha256": "2090a6c671bfa8696d9bf9465b313a0a14240bfcdf11ebd9c4f5110a1da171ef"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/file-inventory.json",
+      "sha256": "eb2cf0e9f3a4f1f3aec6c4778b04b97aa67b6857c2fdb53b2593ef13b449dab9"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/make_inventory_doc.py",
+      "sha256": "8fc20a0e1247b2579923ab1b85892d3321a154d44ff89fb74e0ddaf5b11f5afa"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/baseline.json",
+      "sha256": "51dc46aa01fbec15b1c602930cd30d31d48fbd1dae71ebab8149b35c73d979eb"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sheet-structure.json",
+      "sha256": "185412ff30c4e26f43a8ae792896735797a840b0201f35c34b2c31c0e5c23bde"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/foundations.json",
+      "sha256": "1cd8b8470eb4b551e036b83a6235abf27d5a5eb616273e24f5e0f6438592f57e"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/git-status-start.txt",
+      "sha256": "17f8a57b49d28ed35ae9be0ac072b82626e590582476afb9f383c9680f845965"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/VERIFICATION.json",
+      "sha256": "280f946d69c99725765ee9d7f85aae1f722d1086dda4133fe1bec011d1d9eb4e"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sheet-profiles.json",
+      "sha256": "6591d122339b91c22f7cc03c0500ffd0e319a71e6fb8f11e264eddaf3e72598d"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/verify_delivery.py",
+      "sha256": "7474d65764717386ad1ada8521247591448d143eeaba743757242eea89466322"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/FIELD_DICTIONARY.md",
+      "sha256": "d9eabc14d6c4c9a28768c75519c1c5c19851d2d2f317d5ec0f2659c5694279ff"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/foundations.py",
+      "sha256": "51a66c73b475dcd0cf3f678f26daa7e2742741ed45063af4759a2dedcaad731a"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/profile-run.txt",
+      "sha256": "6a18f1998665b76e55dc7a357604532707086649d7f3f36b93ace7d3a337b77b"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/directory-inventory.json",
+      "sha256": "ee917e7c172b280982a6920798cfca4ed86db7b6434a3003f541abbd413dd9f2"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/secondary-run.txt",
+      "sha256": "196325d65c4f2838409337bff5363f808d9ffc83bcfdbfe8cfa324be73c99ad8"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/barcode_issues.csv",
+      "sha256": "6d1d37ed899a56848d5b6b8c77ea7b7a90c34ad22ddad36b2b726bfb1f7363f2"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/audit_products.py",
+      "sha256": "b231ca00e21e3d4dccd2344c2d7cfff1321d4d8963caab7dcb4321311fd2bfa8"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/size_groups.csv",
+      "sha256": "d6d9e38208c479cdf73b832ea8533bb678703ae39e50f0a526712d79285efd2c"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/category_ambiguous.csv",
+      "sha256": "c4ff8a43f93512aa3a49c073ade2b35e1581778f857d3a334bc9870629c5c6d6"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/summary.json",
+      "sha256": "9f16e09a24d1cab07f7f099b87051d015d302d570fd48ff4d4b71358c7bc3072"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/sales_size_group_mismatches.json",
+      "sha256": "412ad37a7d6cfebbac30166f4bcfd1627935c129bcca93fd490e9e68a1ef28b0"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/category_unidentified.csv",
+      "sha256": "c0d374b20faf8d45c168f978941354a9b32ab36a5d23f239f898b94f0afca3e0"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/category_mapping.csv",
+      "sha256": "12643ee65647c40f53e5bedd5ddb081dd1cb692c9bf6dfb2460f1d9bbcbc3578"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/product_fields.csv",
+      "sha256": "ebb1758a1dd1c675ad20a6bc64f53ce848b61fdafd044de0988eae3326007091"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/REPORT.md",
+      "sha256": "487e29743703f5df43aca8cf10e1d9e4406e2184b3be85287689468f0b311695"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/run-summary.txt",
+      "sha256": "c644aa1edc91ff2ecc808617c44d610b43a9593befa25d73ea5348288afc4e8c"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/taxonomy.json",
+      "sha256": "8d2facb3f812e2f7efbc86880003351bcc5edafefb1060aea08fd568cb48f231"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/structure.json",
+      "sha256": "5f62dc4b58c08d607ffae41e79ad5285e82d07bb0d8c8aad510d03ac0d774278"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/category_reliable.csv",
+      "sha256": "b8c7587c1793e4b77fd49fad382beb8f444551b17d52091e9da6c33ba22e3937"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/audit_spec_references.py",
+      "sha256": "a0d7c5219f18dc9465572aefb3769757ffec07c44723bdefae04bb3c25c7a66e"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/verification.json",
+      "sha256": "9cf282a3137b74ebd074231be4129791f8634ae745a7e9cb1759c34d2e3287bc"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/price_issues.csv",
+      "sha256": "7e71c25a4e39833fba1262c01c0107f814dada7991e53acf3320b419bd7dc1fc"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/spec_summary.json",
+      "sha256": "32add2008c1a306c6d25aa015202764b3a616dc51197b02373172332f673c33b"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/products/sales_observed_skus.json",
+      "sha256": "4f6d69cace20aafcb36987a424135f994d5ec9d80bc3565ff78749d1da411b14"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/summary.json",
+      "sha256": "319416551f1e7e70a0bd6919c7282da8ee1e5d85cbd5c7b4921b05b37002fe78"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/value_overlap_candidates_NOT_LINKS.json",
+      "sha256": "c767d07cb13b6895f4595187c2b193a38ecf3a931612e0786dbe356097c648f5"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/sales_spec_references.json",
+      "sha256": "c9f152373a536c1f3988e7b51863e3439f022df4d1e8a9661fc3a05fc42fb5fd"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/account_method_usage.json",
+      "sha256": "847e3a332f82927ec4ea643e72cce43000ba5af3dafc68cb6f6bd809d0ec986d"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/anomalies.json",
+      "sha256": "e850648bfaf3b70e14656ae62d049c535c16a3c43a409047391a2624d6b9ad6a"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/audit.py",
+      "sha256": "3389fb7fd8dc20c22feef6a865005f1ad57467f1020d0e74e0ddbb46c8de6970"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/inspect_sources.py",
+      "sha256": "76b64a18fda90033e3bd31658f97fe685e2d4f380b7fd88363b860c79fcad3b1"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/document_value_overlap_NOT_LINKS.json",
+      "sha256": "7cdf6b887b87a59c6937b5ce1ca5513430c5dddf1de3fa6ee7df5ff778a6d7a7"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/verify_evidence.py",
+      "sha256": "b13864b3e4319e90dd4b547e490ca1b935161e2e8407fa7ff1f85b2a3547ce6d"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/REPORT.md",
+      "sha256": "64b0274a3cb9d5dac48282b783cf5a9fc26bc989e467bb4386938c86943950ff"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/receipt_explicit_reference_hits.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/sales_documents.json",
+      "sha256": "bef8f864b9ae3bbe3b9448acf9f7acd6dce33866d7452896c7d2ef8d33f9ef2d"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/sales_rows.jsonl",
+      "sha256": "bc80590f8abb94cf841dab34cc4b7d7850d75ef63c5df4c24c4654161e61f756"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/cash_rows.jsonl",
+      "sha256": "8a24193b821df08f81a7440da1761aebcc9ad7a0370456becbf367bd56ca631f"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/build_report.py",
+      "sha256": "82fb41091a0a51722ed05c6dae226324bf7842151220bc84ab3c506095e9f570"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/missing_references.json",
+      "sha256": "15d4cf64ebb7e39477210b7d204dcc9312a93bfbbf4e2a7e0a1023059d668a88"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/orphan_references.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/deep_summary.json",
+      "sha256": "aa2e0fb58a310f95355bf7b744a65c55087409e7fdbbc18c5d9b443a33a9ff3d"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/header_conflicts.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/disabled_references.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/verification.json",
+      "sha256": "0f5cc55aaec7f283f2e512beedc4e2ec17b057736460d90b4f2ba29e6187a47e"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/field_profiles.json",
+      "sha256": "24d27a9495ddafbb13100b708d9e31e1c265d1496edf91426a6e827e6516eefd"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/receipt_rows.jsonl",
+      "sha256": "b191e51f61be9ea64cf8b556a8eff39de68e92e5b8852bb01270ad4a4698472e"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/staff_department_mismatches.json",
+      "sha256": "e7afc4f5d814c85a86b00685dcb65bc3a73c294086bab9ee7521141dbe0e6a5c"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/deep_audit.py",
+      "sha256": "4bf8973f32d7c974fa3a7cb3051f6fa28d8c8791f51cfac214afbc55c6f227ff"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/receipt_documents.json",
+      "sha256": "0315e4dba306857c2b731e1e98e9b9a8557ccf1d9ae20e74a403c140530376ce"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/sales_receipts/special_cases.json",
+      "sha256": "1876efe815f75ec314557e6e25494053d60d284ab92e0ba99a745eea92b6200f"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/inventory-history-sku-residuals.csv",
+      "sha256": "121bd2b2529ea49e08ec9338612ba911b81538cfda75ca194421cb055301a22e"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/inventory-cells.csv",
+      "sha256": "aafd803cd77d90b0569996a38191aa8216fad21cbad1d10092170a3528660725"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/inventory-history-summary.json",
+      "sha256": "cf7790f13b9a10d991dc460c8205c4b64ab3ec5997077eb2e64362f7631b1479"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/audit.py",
+      "sha256": "eedc401b15de45823bdf3ad933ac8ca929bc3bb55cf43fc42931505a4c9cf477"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/unit-totals-and-top-residuals.json",
+      "sha256": "346c6e77c8a9e835cf353744f8a6917bbffe70adf3a6c1bc00252c80eb2e4cef"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/REPORT.md",
+      "sha256": "b5ee6389bbbf3afeff6377439a61dc7b72bf0c32037840182f3534440fb347c8"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/transfer-pair-exceptions.json",
+      "sha256": "d06c9d30052daf925ff2d36dd748f4bc089de472eb634cd8b57fe506367d401d"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/transfer-extra-stats.json",
+      "sha256": "ebe9403c6d61e21ecaf89da1b7abffa16e24425c9ff8344fc55f669da2731411"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/transfer-row-issues.csv",
+      "sha256": "107d2af8b2ffceffb98052e2705ff722986b518dfe60fe429cb934b9a865de57"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/transfer-summary.json",
+      "sha256": "c00571a171359346d7533a836e61e73fe46e5caf87c120569974faf83c035b91"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/source-references.json",
+      "sha256": "48a4c8cac4e643663bcee401205745d283ea4a9e398a8eff605c6f8ac853fc62"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/history_compare.py",
+      "sha256": "db4fd0d9bb286c4a7d39874ce3673d9dbdbdc5ebcd08f66f6aecc97de6bf087c"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/transfer-cache.pkl",
+      "sha256": "3b1968a8bdb1f2dc7014180d4f27a08fe97d98d3af9029a7cc9fb5a94a3ce0cc"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/transfer-unmatched.csv",
+      "sha256": "7c0ef25ff2eaa42c93a72998b96096ae2f27dfa752e51719870f5b9ba7740bcc"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/inventory-issues.csv",
+      "sha256": "a573f6401e360df460a58acc5a8eeb049877b3f52e0d74565d887102aa69f6c4"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/inventory-summary.json",
+      "sha256": "bb9aef83898ae6f4171eebd3580a46a4f93ddc967359feaa27854d9a78d8b6bb"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/verification.json",
+      "sha256": "1f46555536e466cfb1d948592f050bab36aa733723dcb7fb61e447d665459bdd"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/inventory-history-warehouse-residuals.csv",
+      "sha256": "034cd42d24034c48cc2f55551614e46ad2ed7855c901c978b0666a6789874770"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/unmatched-exact-signature-candidates.json",
+      "sha256": "d20611f7be9a5dab90b3678726e7a95abf8c921b9209a06e0377e80fa1683881"
+    },
+    {
+      "path": "work/TPLUS-AUDIT-20260922/transfers_inventory/transfer-pairs.csv",
+      "sha256": "f4fba9c9b3d5b28ea67d96a584c45a2b24a0e0c683c3965b0e8ef11308b94e76"
+    },
+    {
+      "path": "outputs/TPLUS-HISTORY-AUDIT-20260922/SOURCE_MAPPING.md",
+      "sha256": "e6a7d1301060d4599e17f32417fa47c0e545145e13db9c44866173917c35cf79"
+    },
+    {
+      "path": "outputs/TPLUS-HISTORY-AUDIT-20260922/REVIEW.md",
+      "sha256": "4f47be169b13a6bcfb9e0e10f96f64a57ea52c735ecc57ea85680559d14446db"
+    },
+    {
+      "path": "outputs/TPLUS-HISTORY-AUDIT-20260922/HANDOFF.md",
+      "sha256": "b8f26ef4c357dfa6f65c504bd0f2d1ca880d1d57fb817a1545757ae8546b5673"
+    }
+  ]
+}

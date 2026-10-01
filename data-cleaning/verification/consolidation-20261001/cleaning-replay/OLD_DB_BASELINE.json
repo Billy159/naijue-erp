@@ -1,0 +1,13 @@
+{
+  "sourceProducts": 2941,
+  "sourceSkus": 14864,
+  "sourceDocuments": 44021,
+  "sourceStockTotal": "80794.0000",
+  "sourceBatchStatus": "COMMITTED",
+  "runtimeDocuments": 44032,
+  "runtimeRevisions": 44052,
+  "runtimePostings": 62,
+  "runtimeGeneratedBarcodes": 14960,
+  "newSourceExists": false,
+  "newRuntimeExists": false
+}

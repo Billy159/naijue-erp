@@ -1,0 +1,11 @@
+{
+  "initialFreeze": "2026-10-01T13:56:23.274741+08:00",
+  "finalBackup": "2026-10-01T14:50:01.127541+08:00",
+  "tables": 89,
+  "changedTables": [
+    "v2_runtime_stage03c.edit_lease",
+    "v2_runtime_stage03c.master_reference_overlay"
+  ],
+  "sha256": "741f1da7125ee2d4a27bbe59ef3045c2724446f8e0c99aae593ead97f55a701c",
+  "restoreVerified": true
+}

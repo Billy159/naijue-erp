@@ -1,0 +1,512 @@
+[
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "INVENTORY_8877_SOURCE_LOCK.md",
+    "bytes": 9429,
+    "sha256": "9cb98e47607bcfdd80a929f799109561b7c42c9a5240fe556f6baed2038f2c32"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "INVENTORY_STAGE_ACCEPTANCE.md",
+    "bytes": 3657,
+    "sha256": "b3f2c08dd98b51d29e6ecf2beb0fd3573e3329188f54960f04b08ec7bad080e2"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "INVENTORY_UX_OVERRIDE_20260924.md",
+    "bytes": 2502,
+    "sha256": "101f291242c68b83b263f451aeebbde386d9862ccd5d6611d3f7793eb5bdb53f"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "LEGACY_8877_INTERACTION_LOCK.md",
+    "bytes": 14755,
+    "sha256": "59bfa804242735e0d71c1c879eb67813eb1c7e5e4a3812444d767878795f2a0b"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "LEGACY_8877_LAYOUT_METRICS.md",
+    "bytes": 9339,
+    "sha256": "4368d982d3de7b41d7bff6ac3766a1212c3f7e97d04452d41c13c94502195ebc"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "LEGACY_8877_SOURCE_LOCK.md",
+    "bytes": 9223,
+    "sha256": "dc08d3b2dadcc6fb35202f5a4e3b76d43008fc95eece4e59bbc152f2d6dee4d0"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "LEGACY_8877_TYPOGRAPHY_METRICS.md",
+    "bytes": 7447,
+    "sha256": "80ad960eb29970f4cbbbd46094681a446dd3d6c44e1ee1d696120352c31f89b7"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "LEGACY_REBUILD_DIFF.md",
+    "bytes": 2740,
+    "sha256": "c5cec98467a9c666e8addd5e2353e95cb57b5eca66cfe78cd30f6df22106cd26"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "PRODUCTS_8877_SOURCE_LOCK.md",
+    "bytes": 9296,
+    "sha256": "ad4d91df746076ffebcb1e5453a8c43feacef0d5e1fa2c25e68c5c6e5c30ae39"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "SALES_8877_SOURCE_LOCK.md",
+    "bytes": 9468,
+    "sha256": "2de82e2d6560302ec5086e693a3603d01f941ab3e6281ed5e455ad4797d32743"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "TRANSFER_8877_SOURCE_LOCK.md",
+    "bytes": 8107,
+    "sha256": "fb411a93281ae7a39cb56503be8cf34396de59c161ca62de2b2160d432237c8a"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/app/App.tsx",
+    "bytes": 4753,
+    "sha256": "42c091ec56ae2fb6f73ec493990f624c5746fb350a7ace1f9695ca5591da3d45"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/app/AppShell.tsx",
+    "bytes": 4788,
+    "sha256": "1bbe946448c917d87a15bdf1a531300eef22dd483be0917501bd83ccc1f40b89"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/app/LoginPage.tsx",
+    "bytes": 778,
+    "sha256": "eac7ca5b81a23d9a183d2cd0ce3d20db0bebc1cb8c286c289ac5479bdd94f283"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/app/RouteContent.tsx",
+    "bytes": 4912,
+    "sha256": "6937312d8e0adc9d2869c844258fed0bc93f4bbe9e1aec6317dc118306239e12"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/app/router.ts",
+    "bytes": 120,
+    "sha256": "ef2e13ec990b61d8943c16d05ba231def9e0097aadadbeb85153e2da31f26994"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/density.css",
+    "bytes": 725,
+    "sha256": "8004d4b73a53b7e14d3d10e078ca0a44c0e45db2772e7d0a7c77d30eb7271631"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/basic/BasicDataPage.tsx",
+    "bytes": 6300,
+    "sha256": "4668f41b38e30b4f1f29f1757cfb1a1659a971b0207f709d38f4bc186607873b"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/basic/BasicDataRoute.tsx",
+    "bytes": 1207,
+    "sha256": "578c7cc1f580a7bb463c517fd495824a4c7e1c2b94e44d628fc64877e8de0c26"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/basic/basic-data.css",
+    "bytes": 1507,
+    "sha256": "78f8fca34e5e554a8a32a01bbe923fbd5025a6513bf7a47a9f5df03d27478c2c"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/basic/data.ts",
+    "bytes": 117,
+    "sha256": "e0f2d345537755d69d224e7ac1ede7e84983effc516685db1d4f6985e6af3ad0"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/basic/index.ts",
+    "bytes": 118,
+    "sha256": "44176dc1520cb3f1a6a2d81a56ec9487312517d2fbe357df75eefa828f8fd959"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/basic/locations.tsx",
+    "bytes": 9859,
+    "sha256": "2db0231ad9c4417b40e757b20e24d2baee626010e0a19b37843b0ba33a2f0f0e"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/basic/model.ts",
+    "bytes": 118,
+    "sha256": "4d83cec1af902b6d43ebd6a655f7c30e1939146a1273736196c7b9ee9d0afa00"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/basic/parties.tsx",
+    "bytes": 3336,
+    "sha256": "826c35cd2ad32df6f4ef4f58f1f04389d9d43f34841c9f6879543a926075cb78"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/basic/payments.tsx",
+    "bytes": 8334,
+    "sha256": "e5819eb25415aefe9e6e5c57b59b69df630450588afcb180c7b050fbe805f3f0"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/basic/staff.tsx",
+    "bytes": 4150,
+    "sha256": "4da6ae9d2b04bf5dc3a4325920630396650e93c07aa48e7486dbe99acbd096fb"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/catalog-settings/BarcodeSchemesRoute.tsx",
+    "bytes": 3624,
+    "sha256": "4287ca4814720f6086402d5cf4dff633dfba11a98dc38db3aeeb07a5ebfd1b23"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/catalog-settings/CatalogCategoriesRoute.tsx",
+    "bytes": 5768,
+    "sha256": "bee3a630ecddfe37109ad4d0452cffa3a8cad7931754c70255b14edfbe4b69f4"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/catalog-settings/ProductSettingsRoute.tsx",
+    "bytes": 9839,
+    "sha256": "48f8601699b1ef3f0e864d6d67e76822e8b2d12b97a554087981f71a8bcc33de"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/catalog-settings/index.ts",
+    "bytes": 129,
+    "sha256": "6fa75d071fbdeee65c68c113e9a9cfb38dcec9cccb11edeb40012b43d19e19bb"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/inventory/InventoryFinder.tsx",
+    "bytes": 11690,
+    "sha256": "d92a61fb0ceb66c9886e7b8bc79ff6c698f1d401aafe331709465e792568272d"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/inventory/InventoryLedgerDrawer.tsx",
+    "bytes": 7209,
+    "sha256": "91d41013defc9c654426966c719278058a568b83029848c1d3500c0b314d0c80"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/inventory/InventoryMultiPicker.tsx",
+    "bytes": 2736,
+    "sha256": "ccd8414b11ad7fbd1c07946b9197604019f7e465e8a9fd83493b39244188021d"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/inventory/InventoryRoute.tsx",
+    "bytes": 30007,
+    "sha256": "9514bec1a9863b10c722950ecc5fa024e0d23f80316f25ec915a60163e7ef5e6"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/inventory/bulkSelection.test.ts",
+    "bytes": 933,
+    "sha256": "7254015d5d5d65f91f34ca3d2c249af1140313f9728d1eea348836990f444eea"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/inventory/bulkSelection.ts",
+    "bytes": 1397,
+    "sha256": "ccee21575065a84456adcab37b4ae367de96e8350a2720b33967abe50c770d3e"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/inventory/data.ts",
+    "bytes": 6967,
+    "sha256": "a61da7fa41fae75df77653f27112e9a3e530c90bfc3e5b7472818ba2f3a0fa20"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/inventory/inventory.css",
+    "bytes": 24313,
+    "sha256": "6d397be5fa01d348d3d9a92eba7dc40f95f556d1636cc28d6dbb0cf7f955846f"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/inventory/legacySkuOrder.ts",
+    "bytes": 398,
+    "sha256": "6476544008d15ebe1cc85a2f98d0e5f8084fd225cd2f31225bb29cb1407c26ec"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/inventory/model.ts",
+    "bytes": 122,
+    "sha256": "a8cb82e262d9a121c25046da175d0d4a9c182772fa42198ad5d9e40acb97cd46"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/inventory/report.ts",
+    "bytes": 10081,
+    "sha256": "0479c819c57b0dc08acb93529ec881cda8b645b0296ab59235a3945bf32acad8"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/products/ProductDetailRoute.tsx",
+    "bytes": 23940,
+    "sha256": "10c4453d50603fb746315244096d2c222da810a6253000f6320077cbeac66bd6"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/products/ProductNewRoute.tsx",
+    "bytes": 9245,
+    "sha256": "2c3f93e66be6773b610f9a933ad116042166766f9b7fec6efa17039f2eeeb5d9"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/products/ProductsRoute.tsx",
+    "bytes": 12677,
+    "sha256": "87a3b27e7474d9d48b9f18b10b16195a8475e0b9a06293e738413c2a94af99e0"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/products/data.ts",
+    "bytes": 120,
+    "sha256": "979dbc67bf4115167dd30953717782f3508d0e30214bb3f7fdb98a92ec5a9854"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/products/index.ts",
+    "bytes": 121,
+    "sha256": "d88b066e432a7fcf8173ca111077603551867394336db8108215c6212683a448"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/products/inventory.ts",
+    "bytes": 125,
+    "sha256": "974759650e140048044327e0b2c9f8d62b7f143c26b448a1876afe1f3cc5b9d1"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/products/legacyData.ts",
+    "bytes": 4816,
+    "sha256": "9fdc9fc7b72142ab6a538192aca8a5c7face0cb218679945eb661844550f39f2"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/products/logic.ts",
+    "bytes": 121,
+    "sha256": "440e7b6087060e1f7ee1889b4ecaa90afeaeffad83f690a6997ddae10c100ba6"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/products/products.css",
+    "bytes": 11059,
+    "sha256": "dfc1289d0342902dc878ad7f4f3431800b31ca442837a63105146940b0fdd585"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/products/skuRepository.ts",
+    "bytes": 129,
+    "sha256": "66713f359ec22f5931d2dd3e8a1af76d710ecef951f0131d2b5e23bfdffc820f"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/BatchEntry.tsx",
+    "bytes": 6157,
+    "sha256": "e24338750989927368e7b53b9b06ac3932ab66fa0098275c2387248ea9f8d793"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/EntityPicker.tsx",
+    "bytes": 3598,
+    "sha256": "b631c36264890edb43d9b4b72faaf6b1eda2ea372099f5bff916f28f753d3f9a"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/LegacyActionIcon.tsx",
+    "bytes": 866,
+    "sha256": "6d0636a4de5e7f778221bb14b1622b40c9071e8589efa7e0434f13e62e147403"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/PaymentEditor.tsx",
+    "bytes": 5789,
+    "sha256": "a68e0f1d8528a539ab408f2ba2b380dc6c7718948a384da74c4eacd065f356c0"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/SaleFacts.tsx",
+    "bytes": 11027,
+    "sha256": "3a0752464b335eb8916c78be88bdb02722cb62b4b73bf49d3b1f3556ff4cc4c5"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/SaleStatusTag.tsx",
+    "bytes": 345,
+    "sha256": "62c6cb8fe86a4c2cf30289c38d2236ba5c52caab1e4daa8c464ea5060c6e769b"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/SalesDetailPage.tsx",
+    "bytes": 13963,
+    "sha256": "261a1ae9f47b13ee4af02b53d83c8a57c9c88eb489302cc7bfcd785290a735b4"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/SalesEditorPage.tsx",
+    "bytes": 34347,
+    "sha256": "ccade8b64ad5f0de3fb76b530109123dd651e0acabcd94d0c9feb4abf172cad1"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/SalesInlineTable.tsx",
+    "bytes": 15285,
+    "sha256": "7a6376c531d61103c4680677965e13c16556dbb7546d3edfc2bb9b3322280c6c"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/SalesListPage.tsx",
+    "bytes": 17231,
+    "sha256": "fdeb8580ce7441cc2987925abba223ee947544af16cbb8c7980260935a921fc3"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/ScanPanel.tsx",
+    "bytes": 3939,
+    "sha256": "bf7fb5bdf2477bb99d696357b45259db9e227cb17296fa22b60d22d3ab3d227c"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/ScanRecordWindow.tsx",
+    "bytes": 3474,
+    "sha256": "2f56da2c297f4241b8a747267085587827b19341e1a7be01ec094f01c8e5f3b7"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/index.tsx",
+    "bytes": 177,
+    "sha256": "f6ef83bbe8840e61b069cac239414cbcadd6bb07ce02ec98eb4419f56d70a241"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/model.ts",
+    "bytes": 118,
+    "sha256": "fb820361fe3b707f76036c660b8f4305b0db1139948a1a326a11baf9d376f269"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/session.ts",
+    "bytes": 120,
+    "sha256": "e0dea1677e3dc484c7beacc7ba79e9b1f74826bac0c14384295b2abb114ad03b"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/sales/style.css",
+    "bytes": 21300,
+    "sha256": "24f33fe2baa0ddf616ccdbe91505c41689f2efcbc2ea23a156c6b8346cce25c1"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/transfers/TransferBatchEntry.tsx",
+    "bytes": 7105,
+    "sha256": "2bcdc9ba8bf55f6639a085469c36616b3980341447cbe1f11ffc7ef1b8dc33e8"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/transfers/TransferDetailPage.tsx",
+    "bytes": 16362,
+    "sha256": "87f4114b1b9214e00dab750776f1966771228198240d80becf0e3cb24f2be39f"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/transfers/TransferEditorPage.tsx",
+    "bytes": 21466,
+    "sha256": "1b7af8f51b2e109a56a9a2e094e064f25ce79d61e363c5589c815a76a61cd4c4"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/transfers/TransferInlineMatrix.tsx",
+    "bytes": 9881,
+    "sha256": "d97e06da3f1235ea7e26ddb6a20efa44c5d28a0bbe69514c93dcde106bae6192"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/transfers/TransferListPage.tsx",
+    "bytes": 12158,
+    "sha256": "9a44c67b7c3133ffcf35aa5b6c13857cfe2c29404d26f2e92404435f18749b6c"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/transfers/TransferMatrix.tsx",
+    "bytes": 2455,
+    "sha256": "e2852ba039e8043984bf03f1965955232f72893ef521828e082f05c4ca73fc25"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/transfers/TransferScanPanel.tsx",
+    "bytes": 4162,
+    "sha256": "e943bd77b86f6751359321c8e26e2c9c685ead3390f16b9cf00073d6296de74c"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/transfers/export.ts",
+    "bytes": 1316,
+    "sha256": "fd770ff3ebc5f3ee78a4a5a97aa212edd4927b690ee650ccd74db1aabf52ff36"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/transfers/model.ts",
+    "bytes": 122,
+    "sha256": "c7e54d53ced09d8c6b351885a9a186257bb552db2b18132a0ffc3a69468555f8"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/features/transfers/transfers.css",
+    "bytes": 13973,
+    "sha256": "47c63fc402a16a2f8bf0d9f3dba87d37713978f912f0bfd2fe68fe34ebe610f1"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/main.tsx",
+    "bytes": 284,
+    "sha256": "d5d2a87a6d45d9cdbda749aba64ebdaa009e47fb737a17d269819edc1bd5fa10"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/shared/feedback.ts",
+    "bytes": 42,
+    "sha256": "b58dbfc7530e925f1adfc4bb12cfd6f68a7c28e2e6e1cda4184cdff8bf21b47e"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/shared/historicalAttributes.ts",
+    "bytes": 795,
+    "sha256": "47321932bc674c750ccd241ca5710ef1b3f2642a521309886572dabc67d18ba7"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/src/legacy-rebuild/style.css",
+    "bytes": 5068,
+    "sha256": "76a81fad23b161c13377da4d8ca6616919f1fe7547529574e0130e0a21620b5b"
+  },
+  {
+    "sourceProject": "project-007-legacy-interaction-react-rebuild",
+    "path": "apps/web/vite.legacy.config.ts",
+    "bytes": 968,
+    "sha256": "135e261e2470c0c9a63a9ebbf21c87ef886b526d3d63fafdbf7208d5dd1e7c61"
+  },
+  {
+    "sourceProject": "project-007-stage06-ui-feedback",
+    "path": "apps/web/src/stage05/features/inventory/presentation.ts",
+    "bytes": 5134,
+    "sha256": "1c5eef2ef070528b74071e7ac003420e7d4fce0fea7ad8f4c356c52e3b7ac3e3"
+  },
+  {
+    "sourceProject": "project-007-stage06-ui-feedback",
+    "path": "apps/web/src/stage05/shared/sku/businessSizes.ts",
+    "bytes": 1768,
+    "sha256": "4794c459b2944029be53842ab75d52fad75e18a387213c34089e051127cd4cdf"
+  }
+]

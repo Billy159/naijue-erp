@@ -1,0 +1,13 @@
+START 01-clean
+PASS 01-clean
+START 02-preflight
+PASS 02-preflight
+START 03-diff
+PASS 03-diff
+{"status": "STOP", "run": "/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/.runtime/replay/current", "reason": "DIFF_REVIEW_REQUIRED: inspect TPLUS_BATCH_DIFF_REPORT.md, then rerun with --accept-review only after the changes are explained"}
+Traceback (most recent call last):
+  File "/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/data-cleaning/cleaning/run_all.py", line 123, in <module>
+    main()
+  File "/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/data-cleaning/cleaning/run_all.py", line 101, in main
+    raise ValueError("DIFF_REVIEW_REQUIRED: inspect TPLUS_BATCH_DIFF_REPORT.md, then rerun with --accept-review only after the changes are explained")
+ValueError: DIFF_REVIEW_REQUIRED: inspect TPLUS_BATCH_DIFF_REPORT.md, then rerun with --accept-review only after the changes are explained

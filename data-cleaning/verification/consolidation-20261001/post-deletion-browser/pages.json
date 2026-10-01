@@ -1,0 +1,62 @@
+[
+  {
+    "url": "http://127.0.0.1:8877/?v=document-exports-20261001b#products",
+    "title": "商品信息",
+    "text": "商品信息\n新增商品\n☷\n高级筛选\n▾\n查询\n重置\n款号\t商品名称\t商品分类\t年份 / 季节\t供应商\t版型\t厚薄\t零售价\t总库存\t操作\n501XF5395665\t男西服\t\t\t\tA版（标准）\t\t\t0\t编辑\n501XF5395666\t男西服\t\t\t\tA版（标准）\t\t\t0\t编辑\n501XK5399665\t男西裤\t\t\t\tA版（标准）\t\t\t0\t编辑\n501XK5399666\t男西裤\t\t\t\tA版（标准）\t\t\t0\t编辑\n510XF5395663\t男西服\t\t\t\tA版（标准）\t\t\t0\t编辑\n510XK5399661\t男西裤\t\t\t\tA版（标准）\t\t\t0\t编辑\n510XK5399663\t男西裤\t\t\t\tA版（标准）\t\t\t0\t编辑\n710ER5598633\t短款翻领轻薄鹅绒服\t\t\t\tA版（标准）\t\t\t0\t编辑\n722MF5598132\t短款翻领棉服\t\t\t\tA版（标准）\t\t\t0\t编辑\n723ER5598635\t短款翻领轻薄鹅绒服\t\t\t\tA版（标准）\t\t\t0\t编辑\n732ER5598673\t短款戴帽鹅绒服\t\t\t\tA版（标准）\t\t\t0\t编辑\n739JK5396182\t戴帽夹克\t\t\t\tA版（标准）\t\t\t0\t编辑\n906KZ3399151\t牛仔裤\t\t\t\tA版（标准）\t\t\t0\t编辑\n906KZ5399581\t松紧裤\t\t\t\tA版（标准）\t\t\t0\t编辑\n00005\t男工作服\t西服\t2020 / 秋\t000上期结存\tA版（标准）\t\t568.00\t85\t编辑\n0002\t样衣（棉衣 羽绒服）\t羽绒服\t2020 / 冬\t000上期结存\tA版（标准）\t\t1259.00\t15\t编辑\n000CS0000001\t样品衬衫（样衣）\t长袖衬衫\t\t\tA版（标准）\t\t999.00\t5\t编辑\n000JK0000006\t样品薄茄克（茄克、风衣）\t夹克\t\t\tA版（标准）\t\t999.00\t-1\t编辑\n000KZ0000009\t样品裤子（长裤、中裤）\t长裤\t\t\tA版（标准）\t\t999.00\t3\t编辑\n000LD9000002\t领带\t领带\t\t\tA版（标准）\t\t59.00\t-4\t编辑\n000LJ9000005\t领结\t辅料及其他\t\t\tA版（标准）\t\t18.00\t1\t编辑\n000MS0000003\t样品毛衫（样衣）\t毛衫\t\t\tA版（标准）\t\t999.00\t4\t编辑\n000TX0000002\t样品T恤（样衣）\t短袖T恤\t\t\tA版（标准）\t\t999.00\t",
+    "rows": 100,
+    "loginOverlay": false,
+    "employee": "当前员工：陈泽浩 · 管理员",
+    "loaded": true,
+    "renderFailure": null,
+    "route": "products",
+    "status": "PASS"
+  },
+  {
+    "url": "http://127.0.0.1:8877/?v=document-exports-20261001b#transfer",
+    "title": "调拨单列表",
+    "text": "调拨单列表\n新增调拨单\n开始日期\n结束日期\n状态\n调出仓库\n调入仓库\n☷\n高级筛选\n▾\n查询\n重置\n\n修改条件后点击“查询”；“重置”恢复全部结果。\n\n日期\t调拨单号\t状态\t调出仓库\t调入仓库\t商品信息\t数量\t创建者\t最后更新\t操作\n2026-09-10\t\nALAL-2026-09-0128\n\t未审核\t宁海国购ST仓库\t多立方总仓\t\n长袖衬衫 7\n长袖T恤 3\n卫衣 2\n\t71\t\t2026-09-30 22:32\t查看\n2026-09-10\t\nALAL-2026-09-0148\n\t已作废\t多立方总仓\t金华银泰仓ST仓库\t\n风衣 3\n夹克 4\n短袖T恤 4\n+1 更多\n\t33\t\t2026-09-28 18:27\t查看\n2026-09-10\t\nALAL-2026-09-0132\n\t未审核\t金华银泰仓ST仓库\t多立方总仓\t\n卫衣 2\n长袖衬衫 3\n长袖T恤 1\n\t45\t\t2026-09-28 12:33\t查看\n2026-09-10\t\nALAL-2026-09-0154\n\t未审核\t多立方总仓\t银泰文化店ST仓库\t\n长袖T恤 14\n\t44\t\t2026-09-28 10:42\t查看\n2026-09-10\t\nALAL-2026-09-0127\n\t未审核\t兰溪嘉泰ST仓库\t多立方总仓\t\n长袖衬衫 4\n长袖T恤 5\n卫衣 1\n\t43\t\t2026-09-28 00:44\t查看\n2026-09-10\t\nALAL-2026-09-0146\n\t未审核\t多立方总仓\t余姚金泰XM仓库\t\n牛仔裤 1\n松紧裤 1\n大版裤 1\n\t20\t\t2026-09-28 00:35\t查看\n2026-09-25\t\nV2-DB-f80d088a\n\t未审核\t多立方总仓\t舟山银泰ST仓库\t\n毛衫 1\n\t2\t管理员\t2026-09-25 07:03\t查看\n2026-09-24\t\nV2-DB-6a6270f2\n\t未审核\t多立方总仓\t舟山银泰ST仓库\t\n夹克 1\n\t4\t管理员\t2026-09-24 03:57\t查看\n2026-09-24\t\nSTAGE05-S4-ISOLATED-TEST\n\t未审核\t多立方总仓\t舟山银泰ST仓库\t\n夹克 1\n\t2\t管理员\t2026-09-24 03:28\t查看\n2026-09-23\t\nV2-DB-bb21a877\n\t未审核\t多立方总仓\t舟山银泰ST仓库\t\n毛衫 1\n\t2\t管理员\t2026-09-",
+    "rows": 20,
+    "loginOverlay": false,
+    "employee": "当前员工：陈泽浩 · 管理员",
+    "loaded": true,
+    "renderFailure": null,
+    "route": "transfer",
+    "status": "PASS"
+  },
+  {
+    "url": "http://127.0.0.1:8877/?v=document-exports-20261001b#sales",
+    "title": "销货单列表",
+    "text": "销货单列表\n新增销货单\n开始日期\n结束日期\n状态\n业务类型\n营业厅\n营业员\n☷\n高级筛选\n▾\n查询\n重置\n\n修改条件后点击“查询”；“重置”恢复全部结果。\n\n正在查询销货单\n20张/页\n50张/页\n100张/页\n200张/页\n共 27,909 张，当前第 1–20 张\n上一页\n1\n2\n…\n1396\n下一页\n第 1 / 1396 页",
+    "rows": 0,
+    "loginOverlay": false,
+    "employee": "当前员工：陈泽浩 · 管理员",
+    "loaded": true,
+    "renderFailure": null,
+    "route": "sales",
+    "status": "PASS"
+  },
+  {
+    "url": "http://127.0.0.1:8877/?v=document-exports-20261001b#settings/stores",
+    "title": "营业厅与仓库",
+    "text": "营业厅与仓库\n操作记录\n新增营业厅\n营业厅\n仓库\n查询\n重置\n名称\n\t\n默认零售客户\n\t\n默认出库仓\n\t\n状态\n\t\n操作\n\n\n新东方中岛XM\n\t\n新东方中岛XM\n\t\n新东方中岛XM仓库\n\t\n正常\n\t\n编辑\n\n\n舟山一百AMJ\n\t\n舟山一百AMJ零售客户\n\t\n舟山一百AMJ仓库\n\t\n正常\n\t\n编辑\n\n\n嵊州国商XM\n\t\n嵊州国商XM零售客户\n\t\n嵊州国商XM仓库\n\t\n正常\n\t\n编辑\n\n\n丁桥店XM\n\t\n丁桥店XM零售客户\n\t\n丁桥店XM仓库\n\t\n正常\n\t\n编辑\n\n\n六安百大解放路ST\n\t\n六安百大解放路ST零售客户\n\t\n六安百大解放路ST仓库\n\t\n正常\n\t\n编辑\n\n\n金华万泰XM\n\t\n金华万泰XM零售客户\n\t\n金华万泰XM仓库\n\t\n正常\n\t\n编辑\n\n\n舟山银泰AMJ\n\t\n舟山银泰AMJ零售客户\n\t\n舟山银泰AMJ仓库\n\t\n正常\n\t\n编辑\n\n\n舟山一百ST\n\t\n舟山一百ST零售客户\n\t\n舟山一百ST仓库\n\t\n正常\n\t\n编辑\n\n\n大西洋银泰ST\n\t\n大西洋银泰ST零售客户\n\t\n大西洋银泰ST仓库\n\t\n正常\n\t\n编辑\n\n\n金华银泰仓ST\n\t\n金华银泰仓ST 零售客户\n\t\n金华银泰仓ST仓库\n\t\n正常\n\t\n编辑\n\n\n长兴中百ST\n\t\n长兴中百ST零售客户\n\t\n长兴中百ST仓库\n\t\n正常\n\t\n编辑\n\n\n永康南龙ST\n\t\n永康南龙ST零售客户\n\t\n永康南龙ST仓库\n\t\n正常\n\t\n编辑\n\n\n宁海大厦ST\n\t\n宁海大厦ST零售客户\n\t\n宁海大厦ST仓库\n\t\n正常\n\t\n编辑\n\n\n诸暨一百XM\n\t\n诸暨一百XM零售客户\n\t\n诸暨一百XM仓库\n\t\n正常\n\t\n编辑\n\n\n嘉兴江南大厦ST\n\t\n嘉兴江南大厦ST零售客户\n\t\n嘉兴江南大厦ST仓库\n\t\n正常\n\t\n编辑\n\n\n长兴中百XM\n\t\n长兴中百XM零售客户\n\t\n长兴中百XM仓库\n\t\n正常\n\t\n编辑\n\n\n柯桥银泰ST\n\t\n柯桥银泰ST零售客户\n\t\n柯桥银泰ST仓库\n\t\n正常\n\t\n编辑\n\n\n银泰文化店ST\n\t\n银泰文化店ST零售客户\n\t\n银泰文化店ST仓库\n\t\n正常\n\t\n编辑\n\n\n下沙银泰XM\n\t\n下沙银泰XM零售客户\n\t\n下沙银泰XM仓库\n\t\n正常\n\t\n编辑\n\n\n舟山银泰ST\n\t\n舟山银泰ST 零售客户\n\t\n舟山银泰ST仓库\n\t\n正常\n\t\n编辑\n20条/页\n50条/页\n100条/页\n共 41 条，当前第 1–20 条\n‹\n1\n2\n3\n›\n跳至\n页",
+    "rows": 20,
+    "loginOverlay": false,
+    "employee": "当前员工：陈泽浩 · 管理员",
+    "loaded": true,
+    "renderFailure": null,
+    "route": "settings/stores",
+    "status": "PASS"
+  },
+  {
+    "url": "http://127.0.0.1:8877/?v=document-exports-20261001b#inventory",
+    "title": "库存状况表",
+    "text": "库存状况表\n导出\n刷新\n打印\n商品\n商品分类\n仓库\n☷\n高级筛选\n▾\n查询\n重置\n等待查询\n选择筛选条件后点击查询\n显示设置\n100款/页\n200款/页\n500款/页\n共 0 款",
+    "rows": 0,
+    "loginOverlay": false,
+    "employee": "当前员工：陈泽浩 · 管理员",
+    "loaded": true,
+    "renderFailure": null,
+    "route": "inventory",
+    "status": "PASS"
+  }
+]

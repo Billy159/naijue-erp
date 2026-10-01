@@ -1,0 +1,30 @@
+{
+  "time": "2026-10-01T16:00:54.634910+08:00",
+  "tables": 89,
+  "backupTime": "2026-10-01T14:50:01.127541+08:00",
+  "changedTables": [
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "edit_lease",
+      "rows": 18,
+      "digest": "149b77261f99ad851306b69d617340ac",
+      "current": {
+        "rows": 26,
+        "digest": "4cb70b49642165cc9c6b13cfbadeedb9"
+      }
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "master_reference_overlay",
+      "rows": 1,
+      "digest": "b585a56e6ec6a7ed42022de56d239710",
+      "current": {
+        "rows": 1,
+        "digest": "f764d2b7142a73fd38f3d6ef19ee166a"
+      }
+    }
+  ],
+  "businessTablesUnchanged": true,
+  "exactUnchangedTables": 87,
+  "status": "PASS"
+}

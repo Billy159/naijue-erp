@@ -1,0 +1,17 @@
+node_modules/
+.venv/
+.runtime/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.env.*
+!.env.example
+backup/
+inputs/
+data-cleaning/runs/
+data-cleaning/baselines/*.tar.gz
+frontend/verification/*evidence*/
+frontend/verification/*chrome*/
+frontend/verification/*final*/
+server/*results.json

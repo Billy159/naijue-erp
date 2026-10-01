@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "time": "2026-10-01T16:12:53.250553+08:00",
+  "cause": "Name-based cleanup removed bindings from an earlier scope even though that scope still used them.",
+  "restoredBindings": [
+    {
+      "file": "frontend/transfer-golden.js",
+      "binding": "T = TRANSFER_UI.state",
+      "affected": [
+        "list layout",
+        "new transfer header",
+        "creator selection"
+      ]
+    },
+    {
+      "file": "frontend/product-catalog.js",
+      "binding": "key in barcode specification validation",
+      "affected": [
+        "valid primary barcode validation",
+        "duplicate primary and manual alias validation"
+      ]
+    }
+  ],
+  "failingTestsBefore": [
+    "transfer-presentation-state.cjs: T is not defined in list and new editor",
+    "product-barcode-validation.cjs: key is not defined"
+  ],
+  "frontendGroupsAfter": 19,
+  "allFrontendGroupsPassed": true,
+  "undefinedReferenceGuardModules": 11,
+  "realBrowser": [
+    "compact list filters",
+    "new draft date and two warehouses",
+    "creator selection",
+    "product search and choice"
+  ],
+  "realDraftSaved": false,
+  "ownDraftDiscarded": true,
+  "businessTableFingerprintDifferences": 0,
+  "runtimeMetadataChanges": [
+    "edit_lease",
+    "master_reference_overlay timestamps"
+  ],
+  "dataModelRulesChanged": false,
+  "cacheVersionsUpdated": true
+}

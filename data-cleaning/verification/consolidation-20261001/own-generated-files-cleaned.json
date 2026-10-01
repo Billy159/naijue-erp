@@ -1,0 +1,130 @@
+[
+  {
+    "path": "frontend/verification/basic-login-evidence",
+    "bytes": 1794918
+  },
+  {
+    "path": "frontend/verification/product-final-chrome",
+    "bytes": 1318860
+  },
+  {
+    "path": "frontend/verification/inventory-quick-detail-evidence",
+    "bytes": 390002
+  },
+  {
+    "path": "frontend/verification/inventory-recognition-evidence",
+    "bytes": 1987999
+  },
+  {
+    "path": "frontend/verification/inventory-local-fix-evidence",
+    "bytes": 1543250
+  },
+  {
+    "path": "frontend/verification/transfer-list-evidence",
+    "bytes": 1185868
+  },
+  {
+    "path": "frontend/verification/returns-final-evidence",
+    "bytes": 2295363
+  },
+  {
+    "path": "frontend/verification/sales-audit-evidence",
+    "bytes": 620975
+  },
+  {
+    "path": "frontend/verification/final-business-close-evidence",
+    "bytes": 122529
+  },
+  {
+    "path": "frontend/verification/basic-close-evidence",
+    "bytes": 923316
+  },
+  {
+    "path": "frontend/verification/transfer-current-evidence",
+    "bytes": 1388325
+  },
+  {
+    "path": "frontend/verification/matrix-default-evidence",
+    "bytes": 7420625
+  },
+  {
+    "path": "frontend/verification/matrix-final-evidence",
+    "bytes": 1924511
+  },
+  {
+    "path": "frontend/verification/inventory-search-evidence",
+    "bytes": 1036215
+  },
+  {
+    "path": "frontend/verification/transfer-spacing-evidence",
+    "bytes": 1072689
+  },
+  {
+    "path": "frontend/verification/sales-summary-evidence",
+    "bytes": 884138
+  },
+  {
+    "path": "frontend/verification/transfer-refine-evidence",
+    "bytes": 871712
+  },
+  {
+    "path": "frontend/verification/returns-close-evidence",
+    "bytes": 2602250
+  },
+  {
+    "path": "frontend/verification/transfer-correction-evidence",
+    "bytes": 1008526
+  },
+  {
+    "path": "frontend/verification/inventory-workbench-evidence",
+    "bytes": 2496219
+  },
+  {
+    "path": "frontend/verification/light-returns-evidence",
+    "bytes": 3875903
+  },
+  {
+    "path": "frontend/verification/product-master-evidence",
+    "bytes": 654157
+  },
+  {
+    "path": "frontend/verification/transfer-acceptance-evidence",
+    "bytes": 959649
+  },
+  {
+    "path": "frontend/verification/transfer-reliability-evidence",
+    "bytes": 967415
+  },
+  {
+    "path": "frontend/verification/inventory-close-evidence",
+    "bytes": 1539218
+  },
+  {
+    "path": "frontend/verification/sales-evidence",
+    "bytes": 3073377
+  },
+  {
+    "path": "frontend/verification/matrix-close-evidence",
+    "bytes": 18386054
+  },
+  {
+    "path": "frontend/verification/sales-inline-evidence",
+    "bytes": 4037006
+  },
+  {
+    "path": "frontend/verification/product-final-evidence",
+    "bytes": 318314
+  },
+  {
+    "path": "frontend/verification/mixed-entry-evidence",
+    "bytes": 10201018
+  },
+  {
+    "path": "frontend/verification/barcode-2026-evidence",
+    "bytes": 2304550
+  },
+  {
+    "path": "frontend/verification/basic-final-evidence",
+    "bytes": 884359
+  }
+]

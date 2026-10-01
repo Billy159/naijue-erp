@@ -1,0 +1,47 @@
+{
+  "all_pass": true,
+  "checks": {
+    "all_2941_unique_assigned": true,
+    "901_complete_and_893_decided": true,
+    "2040_reliable_unchanged": true,
+    "8_direct_evidence_unchanged": true,
+    "parent_scope_exact": true,
+    "all_13_batch_results_exact": true,
+    "80_accounts_47_halls_unique": true,
+    "24_all_halls_56_original_hall": true,
+    "21_other_59_original_method": true,
+    "account_no_pending": true,
+    "warehouse_and_customer_decisions": true,
+    "zero_opening_confirmed_inventory_formula": true,
+    "only_authorized_project_fact_source_changed": true,
+    "category_agent_validation": true,
+    "delivered_links_exist": true
+  },
+  "counts": {
+    "products": 2941,
+    "original_manual_scope": 901,
+    "category_pending": 0,
+    "warehouse_pending": 0,
+    "default_customer_pending": 0,
+    "accounts": 80,
+    "account_pending": 0,
+    "inventory_policy_pending": 0,
+    "allowed_parent_assignments": {
+      "西服": 121,
+      "皮革服装": 11,
+      "毛皮服装": 1,
+      "长裤": 10
+    }
+  },
+  "protected_files": 304,
+  "changed_protected_files": [
+    "outputs/ERP-V2-Demo-V1/PROJECT_BRAIN.md"
+  ],
+  "inventory_control_total": "80794",
+  "inventory_control_unit": "mixed source main units; not pieces",
+  "import_executed": false,
+  "runtime_changed": false,
+  "business_decision_documents_updated": true,
+  "broken_links": [],
+  "verification_note": "Eight prior evidence-resolved rows retain the explicit AUTO batch label. Manual counts test membership in P01–P13, not whether batch_id is nonempty."
+}

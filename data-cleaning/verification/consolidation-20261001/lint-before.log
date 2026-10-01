@@ -1,0 +1,87 @@
+
+> naijue-8877-demo@1.0.0 lint
+> eslint frontend/*.js frontend/*.mjs frontend/*.jsx server/*.mjs server/runtime/*.ts
+
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/barcode-2026.js
+  7:28  error  'barcodeCode' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u      @typescript-eslint/no-unused-vars
+  7:40  error  'barcodeCodes' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u     @typescript-eslint/no-unused-vars
+  7:53  error  'barcodeCode2026' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+  7:69  error  'codeSource2026' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u   @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/entity-select.js
+  10:1099  error  'e' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/gold.js
+   1:383  error  'opts' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+  16:10   error  'archiveLabel' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u   @typescript-eslint/no-unused-vars
+  17:10   error  'filterOptions' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+  18:10   error  'categoryName' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u   @typescript-eslint/no-unused-vars
+  19:10   error  'fields' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u         @typescript-eslint/no-unused-vars
+  22:10   error  'resultStats' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u    @typescript-eslint/no-unused-vars
+  23:10   error  'results' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u        @typescript-eslint/no-unused-vars
+  24:10   error  'stockSection' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u   @typescript-eslint/no-unused-vars
+  77:10   error  'status' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u         @typescript-eslint/no-unused-vars
+  79:10   error  'transferList' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u   @typescript-eslint/no-unused-vars
+  81:10   error  'editor' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u         @typescript-eslint/no-unused-vars
+  83:10   error  'docLines' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u       @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/inventory-matrix-experiment.js
+  8:10  error  'context' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/inventory-workbench.js
+   8:7   error  'options' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+  50:10  error  'value' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u             @typescript-eslint/no-unused-vars
+  78:10  error  'thumb' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u             @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/product-arco.jsx
+  2:34  error  'useMemo' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/product-catalog.js
+  21:92   error  'compatible' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+  59:152  error  'key' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u         @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/product-current.js
+    4:119  error  'opt' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u   @typescript-eslint/no-unused-vars
+  232:263  error  'cell' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+  232:401  error  'cell' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/product-master.js
+  65:8  error  'selected' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/sales-client.js
+  16:817  error  '_' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/sales-current.js
+   65:10  error  'foundProducts' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+  162:10  error  'creatorField' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u   @typescript-eslint/no-unused-vars
+  201:10  error  'checkMinimum' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u   @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/sales-model.js
+  2:117  error  'copy' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/transfer-current.js
+   30:7   error  'sidebarIcon' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+  117:10  error  'historyText' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u           @typescript-eslint/no-unused-vars
+  126:8   error  'e' is defined but never used                                                                                                                                                               @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/transfer-golden.js
+  41:111  error  'T' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/frontend/transfer-matrix-experiment.js
+  7:61  error  'variants' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/server/runtime/browser-fixtures.ts
+  4:21  error  'SOURCE' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/server/runtime/http.ts
+  12:10  error  'randomUUID' is defined but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/server/runtime/product-master.ts
+  6:7  error  'uuid' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+
+/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/server/runtime/product-profile.test.ts
+  109:9  error  'existingSize' is assigned a value but never used. Allowed unused vars must match /^(React|ERP_DEMO|PRODUCT_CATALOG|MASTER_DATA|GOLD|SALES_SERVICE|TRANSFER_SERVICE|SALES_MODEL|GOLD_UI)$/u  @typescript-eslint/no-unused-vars
+
+✖ 42 problems (42 errors, 0 warnings)
+

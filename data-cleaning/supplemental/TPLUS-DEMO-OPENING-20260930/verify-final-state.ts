@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import {readFile,writeFile} from 'node:fs/promises';
+import {transaction,SOURCE} from '../../../server/runtime/db.ts';
+import {RUNTIME} from '../../../server/runtime/runtime.ts';
+import {sizeMapping} from '../../../server/runtime/size-mapping.ts';
+const plan=JSON.parse(await readFile(new URL('./opening-plan.json',import.meta.url),'utf8'));
+const before=JSON.parse(await readFile(new URL('./before-controls.json',import.meta.url),'utf8'));
+const results=await transaction(RUNTIME,async tx=>{
+ await tx.execute('SET TRANSACTION READ ONLY');
+ const controls:Record<string,any>={};
+ for(const table of Object.keys(before))controls[table]=(await tx.query(`SELECT count(*) n,md5(string_agg(to_jsonb(t)::text,E'\n' ORDER BY to_jsonb(t)::text)) hash FROM ${table} t`)).rows[0];
+ assert.deepEqual(controls,before);
+ const actual=(await tx.query(`WITH actual AS (SELECT warehouse_id,variant_id,sum(quantity) quantity FROM (SELECT * FROM inventory_balance_base UNION ALL SELECT warehouse_id,sku_id,quantity FROM inventory_delta)b GROUP BY warehouse_id,variant_id), wanted AS (SELECT * FROM inventory_opening_cell WHERE run_id=$1) SELECT count(*) FILTER(WHERE coalesce(a.quantity,0)<>coalesce(w.quantity,0)) differences,count(*) FILTER(WHERE a.quantity<0) negative_cells FROM actual a FULL JOIN wanted w ON w.warehouse_id=a.warehouse_id AND w.sku_id=a.variant_id`,[plan.revision])).rows[0];
+ assert.equal(Number(actual.differences),0);assert.equal(Number(actual.negative_cells),340);
+ const run=(await tx.query('SELECT id,active,mode,source_sha256 FROM inventory_opening_run WHERE active')).rows;
+ assert.equal(run.length,1);assert.equal(run[0].id,plan.revision);assert.equal(run[0].source_sha256,plan.sourceSha256);
+ const profiles=(await tx.query(`SELECT p.code,o.body->>'groupId' group_id FROM product_profile_overlay o JOIN ${SOURCE}.product p ON p.id=o.product_id WHERE p.code IN (SELECT jsonb_array_elements_text($1::jsonb))`,[JSON.stringify([...new Set([...sizeMapping.values()].filter((s:any)=>s.targetGroup==='WOMEN').map((s:any)=>s.product))])])).rows;
+ assert(profiles.every((p:any)=>!p.group_id||p.group_id==='WOMEN'),'Stored product profile contradicts accepted women group');
+ return {status:'PASS',at:new Date().toISOString(),currentOpening:run[0],sourceCells:plan.cells.length,stockDifferences:0,negativeCells:340,unchangedSourceAndRuntimeTables:controls,womenMappedSkus:[...sizeMapping.values()].filter((s:any)=>s.targetGroup==='WOMEN').length,womenProfileConflicts:0};
+});
+await writeFile(new URL('./final-state-verification.json',import.meta.url),JSON.stringify(results,null,2)+'\n');
+console.log(JSON.stringify({status:results.status,stockDifferences:results.stockDifferences,negativeCells:results.negativeCells,womenMappedSkus:results.womenMappedSkus,womenProfileConflicts:results.womenProfileConflicts,unchangedTables:Object.keys(results.unchangedSourceAndRuntimeTables).length}));

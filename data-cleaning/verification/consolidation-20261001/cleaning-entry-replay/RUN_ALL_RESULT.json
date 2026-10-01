@@ -1,0 +1,11 @@
+{
+  "status": "PASS_REVIEWED",
+  "cleanBatch": "TPLUS-CLEAN-20261001-A150447",
+  "importBatch": "TPLUS-IMPORT-20261001-A150447",
+  "source": "tplus_clean_20261001_150447",
+  "runtime": "v2_runtime_clean_20261001_150447",
+  "input": "/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/inputs/tplus-frozen-v1",
+  "run": "/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/.runtime/replay-entry/result",
+  "previous": "/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/.runtime/replay-entry/previous",
+  "executed": true
+}

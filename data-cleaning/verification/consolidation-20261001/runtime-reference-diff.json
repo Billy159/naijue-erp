@@ -1,0 +1,26 @@
+{
+  "originalRows": 1,
+  "currentRows": 1,
+  "diff": [
+    {
+      "kind": "warehouses",
+      "id": "c1cccaa8-1213-1f73-1244-0491d9e57bd1",
+      "prior": {
+        "kind": "warehouses",
+        "id": "c1cccaa8-1213-1f73-1244-0491d9e57bd1",
+        "name": "舟山一百外场特卖仓库",
+        "enabled": false,
+        "method_id": null,
+        "updated_at": "2026-10-01T14:50:26.99785+08:00"
+      },
+      "current": {
+        "kind": "warehouses",
+        "id": "c1cccaa8-1213-1f73-1244-0491d9e57bd1",
+        "name": "舟山一百外场特卖仓库",
+        "enabled": false,
+        "method_id": null,
+        "updated_at": "2026-10-01T14:52:54.192434+08:00"
+      }
+    }
+  ]
+}

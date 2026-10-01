@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "protectedFiles": 406,
+  "missing": [],
+  "changed": [],
+  "unusedFilesExcluded": [
+    {
+      "path": "frontend/sample-base.css",
+      "reason": "Unreferenced obsolete sample stylesheet; current index-linked CSS retained unchanged"
+    }
+  ]
+}

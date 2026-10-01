@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {planMissingBarcodeSupplement} from './barcode-supplement-plan.mjs';
+const p={id:'p',code:'含中文名称',name:'样衣',a:{sourceBarcodeSchemeCode:'9',defaultBarcode:'8809000'}};
+const v={sku_id:'v',product_id:'p',options:{COLOR:'501',SIZE:'504'},option_names:{COLOR:'蓝色',SIZE:'175'}};
+const plan=planMissingBarcodeSupplement([p],[v],[],['v']);
+assert.equal(plan.records[0].barcode,'98809000501504');
+const wideColor=planMissingBarcodeSupplement([{...p,a:{...p.a,sourceBarcodeSchemeCode:'8'}}],[{...v,options:{COLOR:'501',SIZE:'03'}}],[],['v']);
+assert.equal(wideColor.records[0].reason,'COLOR_EXCEEDS_WIDTH');assert.equal(wideColor.activeCount,0);
+const paddedColor=planMissingBarcodeSupplement([{...p,a:{...p.a,sourceBarcodeSchemeCode:'8'}}],[{...v,options:{COLOR:'001',SIZE:'03'}}],[],['v']);
+assert.equal(paddedColor.records[0].colorSegment,'1');assert.equal(paddedColor.records[0].sourceColorCode,'001');
+const collision=planMissingBarcodeSupplement([p],[v],[{sku_id:'existing',product_id:'p',barcode:plan.records[0].barcode}],['v']);
+assert.equal(collision.records[0].reason,'COLLISION_WITH_EXISTING');
+assert.throws(()=>planMissingBarcodeSupplement([p],[v],[{sku_id:'v',product_id:'p',barcode:'approved'}],['v']),/ALREADY_HAS_BARCODE/);
+console.log('PASS whole default barcode, segment width, leading zero source preservation, occupied code and scope protection');

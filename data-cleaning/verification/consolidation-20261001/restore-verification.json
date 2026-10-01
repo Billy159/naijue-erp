@@ -1,0 +1,630 @@
+{
+  "database": "demo_8877_restore_20261001",
+  "status": "PASS",
+  "tables": [
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "app_user",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_encoding_mapping",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_segment",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_version",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "brand",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "expectedRows": 41849,
+      "rows": 41849,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "category",
+      "expectedRows": 50,
+      "rows": 50,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "counterparty",
+      "expectedRows": 485,
+      "rows": 485,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "expectedRows": 334027,
+      "rows": 334027,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "fit",
+      "expectedRows": 11,
+      "rows": 11,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "idempotency_request",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "import_batch",
+      "expectedRows": 1,
+      "rows": 1,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_balance",
+      "expectedRows": 137940,
+      "rows": 137940,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_movement",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_posting",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "migration_checkpoint",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "migration_issue",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "opening_ledger",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "price_type",
+      "expectedRows": 9,
+      "rows": 9,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "expectedRows": 2941,
+      "rows": 2941,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product_image",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product_option",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product_price",
+      "expectedRows": 22330,
+      "rows": 22330,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "return_line_reference",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "schema_migration",
+      "expectedRows": 1,
+      "rows": 1,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "size_group",
+      "expectedRows": 15,
+      "rows": 15,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "size_group_item",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_mapping",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_record",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "spec_dimension",
+      "expectedRows": 2,
+      "rows": 2,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "spec_value",
+      "expectedRows": 422,
+      "rows": 422,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "system_setting",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_department",
+      "expectedRows": 58,
+      "rows": 58,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_employee",
+      "expectedRows": 99,
+      "rows": 99,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "expectedRows": 80,
+      "rows": 80,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_hall",
+      "expectedRows": 47,
+      "rows": 47,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "expectedRows": 44021,
+      "rows": 44021,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "expectedRows": 383154,
+      "rows": 383154,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_id_map",
+      "expectedRows": 22087,
+      "rows": 22087,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_file",
+      "expectedRows": 53,
+      "rows": 53,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "expectedRows": 1,
+      "rows": 1,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_inventory_balance_source",
+      "expectedRows": 137940,
+      "rows": 137940,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_party_role",
+      "expectedRows": 935,
+      "rows": 935,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_payment_method",
+      "expectedRows": 12,
+      "rows": 12,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_barcode",
+      "expectedRows": 2943,
+      "rows": 2943,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_source",
+      "expectedRows": 2941,
+      "rows": 2941,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "expectedRows": 25416,
+      "rows": 25416,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_source_lineage",
+      "expectedRows": 613553,
+      "rows": 613553,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "unit",
+      "expectedRows": 10,
+      "rows": 10,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "user_session",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "user_view_setting",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "variant",
+      "expectedRows": 14864,
+      "rows": 14864,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "variant_option",
+      "expectedRows": 29728,
+      "rows": 29728,
+      "equal": true
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "warehouse",
+      "expectedRows": 51,
+      "rows": 51,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_policy",
+      "expectedRows": 1,
+      "rows": 1,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_product",
+      "expectedRows": 2955,
+      "rows": 2955,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_record",
+      "expectedRows": 10684,
+      "rows": 10684,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_scheme_supplement",
+      "expectedRows": 4288,
+      "rows": 4288,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "expectedRows": 44032,
+      "rows": 44032,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "edit_lease",
+      "expectedRows": 18,
+      "rows": 18,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_account_audit",
+      "expectedRows": 1,
+      "rows": 1,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_login",
+      "expectedRows": 100,
+      "rows": 100,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_session",
+      "expectedRows": 2,
+      "rows": 2,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "generated_barcode",
+      "expectedRows": 14960,
+      "rows": 14960,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "generated_barcode_retired",
+      "expectedRows": 40354,
+      "rows": 40354,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "idempotency_request",
+      "expectedRows": 89,
+      "rows": 89,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_delta",
+      "expectedRows": 578,
+      "rows": 578,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_cell",
+      "expectedRows": 32430,
+      "rows": 32430,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_delta_checkpoint",
+      "expectedRows": 578,
+      "rows": 578,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_prior_posting",
+      "expectedRows": 62,
+      "rows": 62,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_run",
+      "expectedRows": 1,
+      "rows": 1,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "master_reference_overlay",
+      "expectedRows": 1,
+      "rows": 1,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "movement",
+      "expectedRows": 692,
+      "rows": 692,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "operator",
+      "expectedRows": 101,
+      "rows": 101,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "posting",
+      "expectedRows": 62,
+      "rows": 62,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_barcode_alias",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_barcode_alias_retired",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_image",
+      "expectedRows": 114,
+      "rows": 114,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_master_overlay",
+      "expectedRows": 19,
+      "rows": 19,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_overlay",
+      "expectedRows": 14,
+      "rows": 14,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_profile_overlay",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "revision",
+      "expectedRows": 44052,
+      "rows": 44052,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "size_overlay",
+      "expectedRows": 0,
+      "rows": 0,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "variant_overlay",
+      "expectedRows": 106,
+      "rows": 106,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "version_history",
+      "expectedRows": 89,
+      "rows": 89,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "work_event",
+      "expectedRows": 43,
+      "rows": 43,
+      "equal": true
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "work_record",
+      "expectedRows": 33,
+      "rows": 33,
+      "equal": true
+    }
+  ],
+  "exactContentDifferences": 0
+}

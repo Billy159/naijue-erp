@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "tplus-cleaning-manifest/1",
+  "version": "TPLUS-CLEANING-RULESET-v1",
+  "createdAt": "2026-09-24T00:00:00+08:00",
+  "updatedAt": "2026-09-24T00:00:00+08:00",
+  "inputStructureVersion": "TPLUS-STRUCTURE-v1",
+  "inputStructureFile": "TPLUS_INPUT_STRUCTURE.json",
+  "applicableFilePatterns": ["**/*.xlsx", "**/*.bof"],
+  "dependencies": {
+    "python": ">=3.12",
+    "readLibrary": "openpyxl>=3.1,<4",
+    "writer": "Python standard-library ZIP/XML targeted cell patch",
+    "conversion": "migration/preflight/TPLUS-20260922-A2/scripts",
+    "importer": "scripts/import-tplus.ts"
+  },
+  "assertions": [
+    "all formal source paths, sheet order, headers and observed column value types match input structure v1",
+    "raw input SHA-256 values are unchanged after cleaning",
+    "all changed Excel cell values have a matching cleaning_changes.jsonl ruleId",
+    "all unchanged workbook ZIP members and all non-workbook files remain byte-identical",
+    "product, SKU, warehouse, sale and transfer identities remain stable unless an explicit rule authorizes a changed source identity",
+    "quarantined history, historical size identity and barcode exceptions are not rewritten into valid business facts"
+  ],
+  "manualReviewPolicy": {
+    "defaultAction": "keep_original",
+    "output": "TPLUS_MANUAL_REVIEW_QUEUE.csv",
+    "recleanAfterDecision": true,
+    "unansweredItemsDoNotBlockIndependentSafeCleaning": true
+  },
+  "quarantinePolicy": {
+    "defaultAction": "preserve_existing_quarantine",
+    "promoteRequiresNewApprovedRule": true,
+    "inventMissingBusinessFacts": false
+  },
+  "rules": [
+    {
+      "ruleId": "TPC-001", "name": "商品描述末尾空白清理", "version": "1.0",
+      "severity": "AUTO_SAFE", "risk": "low", "applicableFilePatterns": ["基础档案/存货.xlsx"],
+      "sheet": "存货", "field": "存货描述", "trigger": "trailing ASCII space, tab or NBSP",
+      "transform": {"operation": "rstrip_chars", "characters": " \t\u00a0"},
+      "changesBusinessValue": false,
+      "assertions": ["before is a nonempty string", "after is nonempty", "only trailing listed whitespace is removed", "source product code is unchanged"],
+      "beforeExample": "原描述\\u00a0", "afterExample": "原描述",
+      "sourceAuthority": "2026-09-24 raw workbook whole-folder scan: 基础档案/存货.xlsx 存货 AI1639; descriptive suffix only",
+      "introducedBatch": "TPLUS-CLEAN-20260924-A1", "lastModifiedBatch": "TPLUS-CLEAN-20260924-A1"
+    },
+    {
+      "ruleId": "TPC-002", "name": "物流校验列表尾空格待确认", "version": "1.0",
+      "severity": "MANUAL_REVIEW", "risk": "medium", "applicableFilePatterns": ["基础档案/物流公司.xlsx"],
+      "sheet": "枚举档案", "field": "validation_F", "trigger": "outer whitespace",
+      "transform": {"operation": "none"}, "changesBusinessValue": false,
+      "assertions": ["validation source is not silently rewritten"],
+      "beforeExample": "八达通  ", "afterExample": "unchanged pending decision",
+      "sourceAuthority": "2026-09-24 whole-folder scan: 12 validation-list cells",
+      "introducedBatch": "TPLUS-CLEAN-20260924-A1", "lastModifiedBatch": "TPLUS-CLEAN-20260924-A1"
+    },
+    {
+      "ruleId": "TPC-003", "name": "数字文本编码保留", "version": "1.0",
+      "severity": "NEVER_TOUCH", "risk": "high", "applicableFilePatterns": ["**/*.xlsx"],
+      "sheet": "*", "field": "*", "trigger": "numeric-looking text",
+      "transform": {"operation": "none"}, "changesBusinessValue": false,
+      "assertions": ["text identifiers, leading zeroes and source codes remain text"],
+      "beforeExample": "0002", "afterExample": "0002",
+      "sourceAuthority": "PROJECT_BRAIN.md source identity and barcode rules; 2026-09-24 whole-folder scan",
+      "introducedBatch": "TPLUS-CLEAN-20260924-A1", "lastModifiedBatch": "TPLUS-CLEAN-20260924-A1"
+    },
+    {
+      "ruleId": "TPC-004", "name": "全角历史文本保留", "version": "1.0",
+      "severity": "NEVER_TOUCH", "risk": "medium", "applicableFilePatterns": ["**/*.xlsx"],
+      "sheet": "*", "field": "*", "trigger": "fullwidth Unicode character",
+      "transform": {"operation": "none"}, "changesBusinessValue": false,
+      "assertions": ["no broad NFKC normalization is applied"],
+      "beforeExample": "（原名）", "afterExample": "（原名）",
+      "sourceAuthority": "2026-09-24 whole-folder scan; equivalence is not established for all names and codes",
+      "introducedBatch": "TPLUS-CLEAN-20260924-A1", "lastModifiedBatch": "TPLUS-CLEAN-20260924-A1"
+    },
+    {
+      "ruleId": "TPC-005", "name": "空字符串原义保留", "version": "1.0",
+      "severity": "NEVER_TOUCH", "risk": "medium", "applicableFilePatterns": ["**/*.xlsx"],
+      "sheet": "*", "field": "*", "trigger": "Excel empty string",
+      "transform": {"operation": "none"}, "changesBusinessValue": false,
+      "assertions": ["no blanket empty-string to null conversion"],
+      "beforeExample": "empty string", "afterExample": "empty string",
+      "sourceAuthority": "2026-09-24 whole-folder scan; cell context and converter semantics vary",
+      "introducedBatch": "TPLUS-CLEAN-20260924-A1", "lastModifiedBatch": "TPLUS-CLEAN-20260924-A1"
+    },
+    {
+      "ruleId": "TPC-006", "name": "备注日期和换行保留", "version": "1.0",
+      "severity": "NEVER_TOUCH", "risk": "medium", "applicableFilePatterns": ["**/*.xlsx"],
+      "sheet": "*", "field": "备注|存货描述|主计量", "trigger": "date-looking text or embedded linebreak/tab",
+      "transform": {"operation": "none"}, "changesBusinessValue": false,
+      "assertions": ["narrative text is not coerced to a date or flattened"],
+      "beforeExample": "2026-09-01 in note", "afterExample": "unchanged",
+      "sourceAuthority": "2026-09-24 scan: 791 date-looking strings are mostly notes; 178 embedded linebreak/tab cells are descriptions or notes",
+      "introducedBatch": "TPLUS-CLEAN-20260924-A1", "lastModifiedBatch": "TPLUS-CLEAN-20260924-A1"
+    },
+    {
+      "ruleId": "TPC-007", "name": "同名员工保留身份并复核", "version": "1.0",
+      "severity": "MANUAL_REVIEW", "risk": "high", "applicableFilePatterns": ["基础档案/员工.xlsx"],
+      "sheet": "员工", "field": "员工名称", "trigger": "same display name with distinct source codes",
+      "transform": {"operation": "none"}, "changesBusinessValue": false,
+      "assertions": ["distinct employee source codes remain distinct"],
+      "beforeExample": "两名同名员工", "afterExample": "two source identities retained",
+      "sourceAuthority": "work/TPLUS-AUDIT-20260922/FOUNDATIONS.md: five duplicate-name groups",
+      "introducedBatch": "TPLUS-CLEAN-20260924-A1", "lastModifiedBatch": "TPLUS-CLEAN-20260924-A1"
+    },
+    {
+      "ruleId": "TPC-008", "name": "历史盘盈盘亏隔离", "version": "1.0",
+      "severity": "QUARANTINE_ONLY", "risk": "high", "applicableFilePatterns": ["单据数据/其他入库单.xlsx", "单据数据/其他出库单.xlsx"],
+      "sheet": "其他入库单|其他出库单", "field": "单据编号", "trigger": "source document not in verified transfer pair",
+      "transform": {"operation": "preserve_existing_quarantine"}, "changesBusinessValue": false,
+      "assertions": ["131 source documents remain quarantined", "no invented transfer partner"],
+      "beforeExample": "ID-2024-08-0003", "afterExample": "unchanged quarantine",
+      "sourceAuthority": "PROJECT_BRAIN.md 2026-09-23 correction: 79 gain and 52 loss documents",
+      "introducedBatch": "TPLUS-CLEAN-20260924-A1", "lastModifiedBatch": "TPLUS-CLEAN-20260924-A1"
+    },
+    {
+      "ruleId": "TPC-009", "name": "独立收款隔离", "version": "1.0",
+      "severity": "QUARANTINE_ONLY", "risk": "high", "applicableFilePatterns": ["单据数据/收款单.xlsx"],
+      "sheet": "收款单", "field": "关联单据", "trigger": "receipt has no reliable sale association",
+      "transform": {"operation": "preserve_existing_quarantine"}, "changesBusinessValue": false,
+      "assertions": ["independent receipt is not converted into a fabricated sale payment"],
+      "beforeExample": "independent receipt", "afterExample": "unchanged quarantine",
+      "sourceAuthority": "PROJECT_BRAIN.md and A2 QUARANTINE.md",
+      "introducedBatch": "TPLUS-CLEAN-20260924-A1", "lastModifiedBatch": "TPLUS-CLEAN-20260924-A1"
+    },
+    {
+      "ruleId": "TPC-010", "name": "条码例外不猜码", "version": "1.0",
+      "severity": "QUARANTINE_ONLY", "risk": "high", "applicableFilePatterns": ["基础档案/存货条形码.xlsx", "基础档案/存货条码方案.xlsx"],
+      "sheet": "*", "field": "*", "trigger": "barcode generation lacks unique supported result",
+      "transform": {"operation": "preserve_existing_quarantine"}, "changesBusinessValue": false,
+      "assertions": ["531 collisions and 163 field/length exceptions do not receive invented barcodes"],
+      "beforeExample": "unknown generated SKU barcode", "afterExample": "unchanged exception",
+      "sourceAuthority": "PROJECT_BRAIN.md 2026-09-23 barcode decision and barcode-generation-v2.json",
+      "introducedBatch": "TPLUS-CLEAN-20260924-A1", "lastModifiedBatch": "TPLUS-CLEAN-20260924-A1"
+    },
+    {
+      "ruleId": "TPC-011", "name": "负库存与快照诊断边界", "version": "1.0",
+      "severity": "NEVER_TOUCH", "risk": "high", "applicableFilePatterns": ["库存状况表.xlsx", "单据数据/*.xlsx"],
+      "sheet": "*", "field": "数量|库存", "trigger": "negative stock or snapshot discrepancy",
+      "transform": {"operation": "none"}, "changesBusinessValue": false,
+      "assertions": ["snapshot does not become opening stock", "negative quantity is not zeroed, deleted or abs-transformed"],
+      "beforeExample": "-1", "afterExample": "-1",
+      "sourceAuthority": "PROJECT_BRAIN.md inventory reconstruction policy; A2 inventory controls",
+      "introducedBatch": "TPLUS-CLEAN-20260924-A1", "lastModifiedBatch": "TPLUS-CLEAN-20260924-A1"
+    },
+    {
+      "ruleId": "TPC-012", "name": "SKU与历史尺码身份不合并", "version": "1.0",
+      "severity": "NEVER_TOUCH", "risk": "high", "applicableFilePatterns": ["基础档案/存货.xlsx", "枚举档案/尺码.xlsx"],
+      "sheet": "存货|尺码|Sheet1", "field": "*", "trigger": "same display value or A/B variant of distinct source IDs",
+      "transform": {"operation": "none"}, "changesBusinessValue": false,
+      "assertions": ["source SKU IDs, 240 historical sizes and five current business groups remain distinct"],
+      "beforeExample": "A/B variants sharing a display cell", "afterExample": "both source identities retained",
+      "sourceAuthority": "PROJECT_BRAIN.md 2026-09-23 size mapping and source identity decisions",
+      "introducedBatch": "TPLUS-CLEAN-20260924-A1", "lastModifiedBatch": "TPLUS-CLEAN-20260924-A1"
+    },
+    {
+      "ruleId": "TPC-013", "name": "冻结商品分类映射断言", "version": "1.0",
+      "severity": "AUTO_WITH_ASSERTION", "risk": "medium", "applicableFilePatterns": ["基础档案/存货.xlsx"],
+      "sheet": "存货", "field": "存货编码", "trigger": "preflight projects approved category",
+      "transform": {"operation": "assert_existing_category_projection"}, "changesBusinessValue": false,
+      "assertions": ["each source product code has exactly one confirmed category assignment", "source code and parent-category permission are unchanged"],
+      "beforeExample": "source product and approved mapping", "afterExample": "same raw product with approved preflight category projection",
+      "sourceAuthority": "outputs/TPLUS-BUSINESS-DECISIONS-20260922/CONFIRMED_DECISIONS.md and full_mapping_2941.json",
+      "introducedBatch": "TPLUS-CLEAN-20260924-A1", "lastModifiedBatch": "TPLUS-CLEAN-20260924-A1"
+    }
+  ]
+}

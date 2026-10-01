@@ -1,0 +1,20 @@
+[
+  {
+    "number": "AL-2026-09-0128",
+    "date": "2026-09-10",
+    "from": "宁海国购ST仓库",
+    "to": "多立方总仓",
+    "type": "同价调拨",
+    "note": "",
+    "creator": "宁海国购ST",
+    "auditor": "陈春祥",
+    "auditDate": "2026-09-17",
+    "status": "生效",
+    "row": 253684,
+    "lastRow": 253753,
+    "lineCount": 70,
+    "quantity": "71",
+    "units": {},
+    "notes": []
+  }
+]

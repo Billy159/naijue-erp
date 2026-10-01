@@ -1,0 +1,7 @@
+{
+  "source": "/Users/billy/Desktop/Workspace/project-007-preexisting-backup-20260925/migration/preflight/TPLUS-20260922-A2",
+  "path": "data-cleaning/baselines/TPLUS-20260922-A2.tar.gz",
+  "sha256": "f57c6a0a988d0f667b66d970ee2c1dc61c530f74df2e8b91aed96f5261451523",
+  "datasets": 53,
+  "validatedAllDatasetHashes": true
+}

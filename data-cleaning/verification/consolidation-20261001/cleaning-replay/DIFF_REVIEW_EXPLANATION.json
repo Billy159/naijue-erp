@@ -1,0 +1,115 @@
+{
+  "data/master/categories.jsonl": {
+    "changedFields": {
+      ".decisionLineage.sourceFile": 18,
+      ".lineage.sourceFile": 49
+    },
+    "samples": {
+      ".decisionLineage.sourceFile": [
+        "outputs/TPLUS-BUSINESS-DECISIONS-20260922/CONFIRMED_DECISIONS.md",
+        "data-cleaning/authority/frozen-v1/business-decisions/CONFIRMED_DECISIONS.md"
+      ],
+      ".lineage.sourceFile": [
+        "outputs/ERP-V2-Demo-V1/ui-structure-prototype/product-master.js",
+        "data-cleaning/authority/frozen-v1/frontend/product-master.js"
+      ]
+    }
+  },
+  "data/master/fund_accounts.jsonl": {
+    "changedFields": {
+      ".decisionLineage.sourceFile": 80
+    },
+    "samples": {
+      ".decisionLineage.sourceFile": [
+        "work/TPLUS-DECISION-RESULTS-20260922/accounts/account-decision-results.json",
+        "data-cleaning/authority/frozen-v1/decisions/accounts/account-decision-results.json"
+      ]
+    }
+  },
+  "data/master/halls.jsonl": {
+    "changedFields": {
+      ".decisionLineage.sourceFile": 47
+    },
+    "samples": {
+      ".decisionLineage.sourceFile": [
+        "work/TPLUS-DECISION-RESULTS-20260922/relations-confirmed.json",
+        "data-cleaning/authority/frozen-v1/decisions/relations-confirmed.json"
+      ]
+    }
+  },
+  "data/master/payment_methods_derived.jsonl": {
+    "changedFields": {
+      ".decisionLineage.sourceFile": 1,
+      ".lineage.sourceFile": 1
+    },
+    "samples": {
+      ".decisionLineage.sourceFile": [
+        "work/TPLUS-DECISION-RESULTS-20260922/accounts/account-decision-results.json",
+        "data-cleaning/authority/frozen-v1/decisions/accounts/account-decision-results.json"
+      ],
+      ".lineage.sourceFile": [
+        "outputs/ERP-V2-Demo-V1/ui-structure-prototype/master-data.js",
+        "data-cleaning/authority/frozen-v1/frontend/master-data.js"
+      ]
+    }
+  },
+  "data/master/products.jsonl": {
+    "changedFields": {
+      ".lineage.sourceSha256": 2941,
+      ".categoryDecisionLineage.sourceFile": 2941,
+      ".source.存货描述": 1,
+      ".description": 1
+    },
+    "samples": {
+      ".lineage.sourceSha256": [
+        "78150bd202c0ec6af7750f2dc572bdff261ca7b4cac3babb8a237ad8fa8c9efd",
+        "47069093545df83195798725f13c7096a530425fa616834187d3346186cf3eaa"
+      ],
+      ".categoryDecisionLineage.sourceFile": [
+        "work/TPLUS-DECISION-RESULTS-20260922/categories/full_mapping_2941.json",
+        "data-cleaning/authority/frozen-v1/decisions/categories/full_mapping_2941.json"
+      ],
+      ".source.存货描述": [
+        "迪莱王子2365-灰绿色短款立领中厚羽绒服，上无袋，下立体大口袋加袋盖，袖口松紧加魔术贴，全身压四道横线；面层：100%聚酯纤维相拼：100%聚酯纤维（非物质纤维除外）                   里料：100%聚酯纤维          胆料：100%聚酯纤维填充物：白鸭绒   绒子含量85%  充绒量：170/112克 175/118克 180/124克 185/130克 190/136克 195/141克               其他附件填充物：100%聚酯纤维           ",
+        "迪莱王子2365-灰绿色短款立领中厚羽绒服，上无袋，下立体大口袋加袋盖，袖口松紧加魔术贴，全身压四道横线；面层：100%聚酯纤维相拼：100%聚酯纤维（非物质纤维除外）                   里料：100%聚酯纤维          胆料：100%聚酯纤维填充物：白鸭绒   绒子含量85%  充绒量：170/112克 175/118克 180/124克 185/130克 190/136克 195/141克               其他附件填充物：100%聚酯纤维"
+      ],
+      ".description": [
+        "迪莱王子2365-灰绿色短款立领中厚羽绒服，上无袋，下立体大口袋加袋盖，袖口松紧加魔术贴，全身压四道横线；面层：100%聚酯纤维相拼：100%聚酯纤维（非物质纤维除外）                   里料：100%聚酯纤维          胆料：100%聚酯纤维填充物：白鸭绒   绒子含量85%  充绒量：170/112克 175/118克 180/124克 185/130克 190/136克 195/141克               其他附件填充物：100%聚酯纤维           ",
+        "迪莱王子2365-灰绿色短款立领中厚羽绒服，上无袋，下立体大口袋加袋盖，袖口松紧加魔术贴，全身压四道横线；面层：100%聚酯纤维相拼：100%聚酯纤维（非物质纤维除外）                   里料：100%聚酯纤维          胆料：100%聚酯纤维填充物：白鸭绒   绒子含量85%  充绒量：170/112克 175/118克 180/124克 185/130克 190/136克 195/141克               其他附件填充物：100%聚酯纤维"
+      ]
+    }
+  },
+  "data/master/size_groups.jsonl": {
+    "changedFields": {
+      ".lineage.sourceSha256": 15,
+      ".supportingLineage[].sourceSha256": 2941
+    },
+    "samples": {
+      ".lineage.sourceSha256": [
+        "78150bd202c0ec6af7750f2dc572bdff261ca7b4cac3babb8a237ad8fa8c9efd",
+        "47069093545df83195798725f13c7096a530425fa616834187d3346186cf3eaa"
+      ],
+      ".supportingLineage[].sourceSha256": [
+        "78150bd202c0ec6af7750f2dc572bdff261ca7b4cac3babb8a237ad8fa8c9efd",
+        "47069093545df83195798725f13c7096a530425fa616834187d3346186cf3eaa"
+      ]
+    }
+  },
+  "data/master/warehouses.jsonl": {
+    "changedFields": {
+      ".decisionLineage.sourceFile": 51
+    },
+    "samples": {
+      ".decisionLineage.sourceFile": [
+        "work/TPLUS-DECISION-RESULTS-20260922/relations-confirmed.json",
+        "data-cleaning/authority/frozen-v1/decisions/relations-confirmed.json"
+      ]
+    }
+  },
+  "diagnostics/inventory_difference_trace.jsonl": {
+    "diagnosticOnly": true
+  },
+  "diagnostics/movement_output_validation.jsonl": {
+    "diagnosticOnly": true
+  }
+}

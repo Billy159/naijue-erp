@@ -1,0 +1,472 @@
+{
+  "rule": "user-confirmed-regular-and-sale-hall-consolidation",
+  "aliases": {
+    "e5681ea1-bdde-3d61-db2b-3a29c9ac5f0f": "4c9aec81-cfe0-c118-e892-4eeeb7d4a7fc",
+    "faf8829f-0c60-1e20-03da-e1c629a756c2": "286c0967-60c8-469f-6b2b-0cabd3bf44ed",
+    "5b9b9f1e-d1dd-2911-ddeb-858b9c3bdced": "5bfc5d4e-f9c8-a062-6e54-ffe859e45c5d",
+    "2266dbdb-76fe-9bef-915d-68c7d7957896": "8e3796b8-a8a8-ccb0-2914-75b1692e2b0c",
+    "0097e543-0234-295b-86f8-2b3df6a65164": "0418eb6a-4a20-5fa1-18fa-f5681802f6d2",
+    "faf7b124-6249-6780-4476-8049d3ee3e19": "9cdfe7d0-a6df-64fd-aa87-11029bc8bc77",
+    "ce496e14-cd0d-bf21-ddf0-211051f2d39d": "a0c8b8d8-5667-ce4b-04cf-52225872ab55"
+  },
+  "stores": [
+    {
+      "id": "b8d26eb3-d7b3-9581-313d-f90cfce706bc",
+      "name": "新东方中岛XM",
+      "warehouseIds": [
+        "eeb89827-3109-d9c9-ee51-6898a3d718e9"
+      ],
+      "defaultWarehouseId": "eeb89827-3109-d9c9-ee51-6898a3d718e9",
+      "sourceIds": [
+        "b8d26eb3-d7b3-9581-313d-f90cfce706bc"
+      ]
+    },
+    {
+      "id": "bf829f12-b5a8-3008-42ad-bebc914a1f45",
+      "name": "舟山一百AMJ",
+      "warehouseIds": [
+        "37aa1646-53ab-5540-108f-285d3d27f6c2",
+        "c1cccaa8-1213-1f73-1244-0491d9e57bd1"
+      ],
+      "defaultWarehouseId": "37aa1646-53ab-5540-108f-285d3d27f6c2",
+      "sourceIds": [
+        "bf829f12-b5a8-3008-42ad-bebc914a1f45"
+      ]
+    },
+    {
+      "id": "27961a4b-f335-978c-bc59-5f33bb5ddd42",
+      "name": "嵊州国商XM",
+      "warehouseIds": [
+        "72b6acfc-cbd8-d487-0682-b5d19dfcb702"
+      ],
+      "defaultWarehouseId": "72b6acfc-cbd8-d487-0682-b5d19dfcb702",
+      "sourceIds": [
+        "27961a4b-f335-978c-bc59-5f33bb5ddd42"
+      ]
+    },
+    {
+      "id": "5b24b910-d1ea-568d-09b5-939e5f1ec607",
+      "name": "丁桥店XM",
+      "warehouseIds": [
+        "e55a08a8-3cb3-9de7-af32-64ae994d6f9e"
+      ],
+      "defaultWarehouseId": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+      "sourceIds": [
+        "5b24b910-d1ea-568d-09b5-939e5f1ec607"
+      ]
+    },
+    {
+      "id": "f297ed70-ce97-b64a-1e02-6c50dc40190f",
+      "name": "六安百大解放路ST",
+      "warehouseIds": [
+        "e25853c0-ac0c-148e-047d-0cd1c289a5a8"
+      ],
+      "defaultWarehouseId": "e25853c0-ac0c-148e-047d-0cd1c289a5a8",
+      "sourceIds": [
+        "f297ed70-ce97-b64a-1e02-6c50dc40190f"
+      ]
+    },
+    {
+      "id": "0418eb6a-4a20-5fa1-18fa-f5681802f6d2",
+      "name": "金华万泰XM",
+      "warehouseIds": [
+        "d311fdf0-60c5-b71b-e2d5-43ff966e2ff3"
+      ],
+      "defaultWarehouseId": "d311fdf0-60c5-b71b-e2d5-43ff966e2ff3",
+      "sourceIds": [
+        "0418eb6a-4a20-5fa1-18fa-f5681802f6d2",
+        "0097e543-0234-295b-86f8-2b3df6a65164"
+      ]
+    },
+    {
+      "id": "62e27001-3b3c-e029-615c-607fb298c747",
+      "name": "舟山银泰AMJ",
+      "warehouseIds": [
+        "4408df8c-d72e-519a-058e-44360bf14abb"
+      ],
+      "defaultWarehouseId": "4408df8c-d72e-519a-058e-44360bf14abb",
+      "sourceIds": [
+        "62e27001-3b3c-e029-615c-607fb298c747"
+      ]
+    },
+    {
+      "id": "d5d9f86c-72a0-9df3-f84d-8a8cf5a3cc97",
+      "name": "舟山一百ST",
+      "warehouseIds": [
+        "af5315e8-bf15-8825-36ee-d5c06ce4b8b3",
+        "c1cccaa8-1213-1f73-1244-0491d9e57bd1"
+      ],
+      "defaultWarehouseId": "af5315e8-bf15-8825-36ee-d5c06ce4b8b3",
+      "sourceIds": [
+        "d5d9f86c-72a0-9df3-f84d-8a8cf5a3cc97"
+      ]
+    },
+    {
+      "id": "5b2461c8-ce98-2c2f-8909-627507196557",
+      "name": "大西洋银泰ST",
+      "warehouseIds": [
+        "5adf34d8-d0d9-8620-1caf-65a4622983f4"
+      ],
+      "defaultWarehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+      "sourceIds": [
+        "5b2461c8-ce98-2c2f-8909-627507196557"
+      ]
+    },
+    {
+      "id": "9cdfe7d0-a6df-64fd-aa87-11029bc8bc77",
+      "name": "金华银泰仓ST",
+      "warehouseIds": [
+        "120fe813-a5be-97d2-3f84-7f7a33f43e08",
+        "3f2d0ee0-ab1a-8355-fce0-ab643f1bb299"
+      ],
+      "defaultWarehouseId": "120fe813-a5be-97d2-3f84-7f7a33f43e08",
+      "sourceIds": [
+        "9cdfe7d0-a6df-64fd-aa87-11029bc8bc77",
+        "faf7b124-6249-6780-4476-8049d3ee3e19"
+      ]
+    },
+    {
+      "id": "6e8df2fa-c735-f700-b070-910b5fc4c493",
+      "name": "长兴中百ST",
+      "warehouseIds": [
+        "dad3e08c-f980-a196-9e37-ac5a5f38bf6f"
+      ],
+      "defaultWarehouseId": "dad3e08c-f980-a196-9e37-ac5a5f38bf6f",
+      "sourceIds": [
+        "6e8df2fa-c735-f700-b070-910b5fc4c493"
+      ]
+    },
+    {
+      "id": "603bac98-e2d1-5c64-3bd2-5a54dc94c722",
+      "name": "永康南龙ST",
+      "warehouseIds": [
+        "368eaa6e-9f28-bda5-ce14-8e8b07de73bf"
+      ],
+      "defaultWarehouseId": "368eaa6e-9f28-bda5-ce14-8e8b07de73bf",
+      "sourceIds": [
+        "603bac98-e2d1-5c64-3bd2-5a54dc94c722"
+      ]
+    },
+    {
+      "id": "4c9aec81-cfe0-c118-e892-4eeeb7d4a7fc",
+      "name": "宁海大厦ST",
+      "warehouseIds": [
+        "316a7f09-6fa8-8f67-11ff-352f0470bf8b",
+        "9b2a29a1-7a88-fd7a-b4a5-2a273238025a"
+      ],
+      "defaultWarehouseId": "316a7f09-6fa8-8f67-11ff-352f0470bf8b",
+      "sourceIds": [
+        "4c9aec81-cfe0-c118-e892-4eeeb7d4a7fc",
+        "e5681ea1-bdde-3d61-db2b-3a29c9ac5f0f"
+      ]
+    },
+    {
+      "id": "5bfc5d4e-f9c8-a062-6e54-ffe859e45c5d",
+      "name": "诸暨一百XM",
+      "warehouseIds": [
+        "73155a42-9e0c-3400-f103-b52983c9d519",
+        "3bf7930c-2c59-d6de-92af-bc1ff64a0acc"
+      ],
+      "defaultWarehouseId": "73155a42-9e0c-3400-f103-b52983c9d519",
+      "sourceIds": [
+        "5bfc5d4e-f9c8-a062-6e54-ffe859e45c5d",
+        "5b9b9f1e-d1dd-2911-ddeb-858b9c3bdced"
+      ]
+    },
+    {
+      "id": "8e3796b8-a8a8-ccb0-2914-75b1692e2b0c",
+      "name": "嘉兴江南大厦ST",
+      "warehouseIds": [
+        "cab59a54-1a8d-b609-7ca3-e736f235fb76",
+        "a6d2c4de-dc1c-8b5a-6b96-38b37af153a2"
+      ],
+      "defaultWarehouseId": "cab59a54-1a8d-b609-7ca3-e736f235fb76",
+      "sourceIds": [
+        "8e3796b8-a8a8-ccb0-2914-75b1692e2b0c",
+        "2266dbdb-76fe-9bef-915d-68c7d7957896"
+      ]
+    },
+    {
+      "id": "dacb81a9-7182-4525-ff00-3d9b4274ddb8",
+      "name": "长兴中百XM",
+      "warehouseIds": [
+        "fe1a3a9e-f88f-570f-29c9-4fcd5a6e4b59"
+      ],
+      "defaultWarehouseId": "fe1a3a9e-f88f-570f-29c9-4fcd5a6e4b59",
+      "sourceIds": [
+        "dacb81a9-7182-4525-ff00-3d9b4274ddb8"
+      ]
+    },
+    {
+      "id": "96042538-ab91-8d9e-5d8f-1e7bee857391",
+      "name": "柯桥银泰ST",
+      "warehouseIds": [
+        "c1f3d0f2-d283-513d-7eb3-4aac282f7279"
+      ],
+      "defaultWarehouseId": "c1f3d0f2-d283-513d-7eb3-4aac282f7279",
+      "sourceIds": [
+        "96042538-ab91-8d9e-5d8f-1e7bee857391"
+      ]
+    },
+    {
+      "id": "286c0967-60c8-469f-6b2b-0cabd3bf44ed",
+      "name": "银泰文化店ST",
+      "warehouseIds": [
+        "8e618846-d5d4-1077-61ff-e80ebf7c7cfc",
+        "7e838a22-8274-eb85-bf08-75241cf11d42"
+      ],
+      "defaultWarehouseId": "8e618846-d5d4-1077-61ff-e80ebf7c7cfc",
+      "sourceIds": [
+        "286c0967-60c8-469f-6b2b-0cabd3bf44ed",
+        "faf8829f-0c60-1e20-03da-e1c629a756c2"
+      ]
+    },
+    {
+      "id": "8ee63744-0769-5a12-15f8-831e20cecb8b",
+      "name": "下沙银泰XM",
+      "warehouseIds": [
+        "ac906986-68aa-88e1-449e-7b7310794278"
+      ],
+      "defaultWarehouseId": "ac906986-68aa-88e1-449e-7b7310794278",
+      "sourceIds": [
+        "8ee63744-0769-5a12-15f8-831e20cecb8b"
+      ]
+    },
+    {
+      "id": "1188bc20-6649-31f3-cae9-33aa3521f33d",
+      "name": "舟山银泰ST",
+      "warehouseIds": [
+        "312f858f-d7c2-c10d-1edd-b1b0fd79ee3a"
+      ],
+      "defaultWarehouseId": "312f858f-d7c2-c10d-1edd-b1b0fd79ee3a",
+      "sourceIds": [
+        "1188bc20-6649-31f3-cae9-33aa3521f33d"
+      ]
+    },
+    {
+      "id": "71ffb200-c419-86f1-4c5b-8e68f8b6f601",
+      "name": "舟山银泰XM",
+      "warehouseIds": [
+        "b899f5df-a66c-6dd2-3729-74c24f13fbf8"
+      ],
+      "defaultWarehouseId": "b899f5df-a66c-6dd2-3729-74c24f13fbf8",
+      "sourceIds": [
+        "71ffb200-c419-86f1-4c5b-8e68f8b6f601"
+      ]
+    },
+    {
+      "id": "a0c8b8d8-5667-ce4b-04cf-52225872ab55",
+      "name": "宜兴八佰伴ST",
+      "warehouseIds": [
+        "7f431c20-ed7e-f5d3-6b57-56428312db17",
+        "7118ee50-40f6-a3c9-3d80-7b90fa566c24"
+      ],
+      "defaultWarehouseId": "7f431c20-ed7e-f5d3-6b57-56428312db17",
+      "sourceIds": [
+        "a0c8b8d8-5667-ce4b-04cf-52225872ab55",
+        "ce496e14-cd0d-bf21-ddf0-211051f2d39d"
+      ]
+    },
+    {
+      "id": "638fa6a9-c595-9426-8c45-4ae7d3e0fe1b",
+      "name": "武林银泰XM",
+      "warehouseIds": [
+        "c4155b7d-3152-3e8e-6eb9-edbe6d65d60b"
+      ],
+      "defaultWarehouseId": "c4155b7d-3152-3e8e-6eb9-edbe6d65d60b",
+      "sourceIds": [
+        "638fa6a9-c595-9426-8c45-4ae7d3e0fe1b"
+      ]
+    },
+    {
+      "id": "48c65e31-ab09-f6ac-932e-1106785f6529",
+      "name": "宁海国购ST",
+      "warehouseIds": [
+        "7f952104-486a-3eed-632c-2a545abfcced"
+      ],
+      "defaultWarehouseId": "7f952104-486a-3eed-632c-2a545abfcced",
+      "sourceIds": [
+        "48c65e31-ab09-f6ac-932e-1106785f6529"
+      ]
+    },
+    {
+      "id": "8d02226b-e5c7-8d66-d467-c5e72b2c7a5f",
+      "name": "长兴浙北ST",
+      "warehouseIds": [
+        "0eccd878-3498-8588-f44a-b6e05f6f115d",
+        "96aeb0b1-6fe9-786e-0b93-830935e84115"
+      ],
+      "defaultWarehouseId": "96aeb0b1-6fe9-786e-0b93-830935e84115",
+      "sourceIds": [
+        "8d02226b-e5c7-8d66-d467-c5e72b2c7a5f"
+      ]
+    },
+    {
+      "id": "d6ff7eb5-3a34-bc39-a276-68c760107cc5",
+      "name": "余姚金泰XM",
+      "warehouseIds": [
+        "cbce5028-e524-fa4e-deb5-5ac093b38d62"
+      ],
+      "defaultWarehouseId": "cbce5028-e524-fa4e-deb5-5ac093b38d62",
+      "sourceIds": [
+        "d6ff7eb5-3a34-bc39-a276-68c760107cc5"
+      ]
+    },
+    {
+      "id": "886f07d3-53ea-8383-ac47-027ebafddb38",
+      "name": "新东方边厅XM",
+      "warehouseIds": [
+        "4fa2a874-8e12-ba77-9a74-750b3d5905c3"
+      ],
+      "defaultWarehouseId": "4fa2a874-8e12-ba77-9a74-750b3d5905c3",
+      "sourceIds": [
+        "886f07d3-53ea-8383-ac47-027ebafddb38"
+      ]
+    },
+    {
+      "id": "ed7d699a-d801-8bd1-89cd-7836b5a7a80b",
+      "name": "江阴国购ST",
+      "warehouseIds": [
+        "ccf6da02-acfe-0c08-c5ce-ab114b29840f"
+      ],
+      "defaultWarehouseId": "ccf6da02-acfe-0c08-c5ce-ab114b29840f",
+      "sourceIds": [
+        "ed7d699a-d801-8bd1-89cd-7836b5a7a80b"
+      ]
+    },
+    {
+      "id": "e18031f2-dd11-b795-f97b-d2b236fdcef9",
+      "name": "舟山银泰外场特卖",
+      "warehouseIds": [
+        "8d6c42c1-287f-68b0-ccd8-aeadb40ff504"
+      ],
+      "defaultWarehouseId": "8d6c42c1-287f-68b0-ccd8-aeadb40ff504",
+      "sourceIds": [
+        "e18031f2-dd11-b795-f97b-d2b236fdcef9"
+      ]
+    },
+    {
+      "id": "08a190e2-699a-ae0d-b862-1c5c750aecc9",
+      "name": "舟山一百XM",
+      "warehouseIds": [
+        "14c7fa05-e148-6adf-1247-13ef3fbcefbd"
+      ],
+      "defaultWarehouseId": "14c7fa05-e148-6adf-1247-13ef3fbcefbd",
+      "sourceIds": [
+        "08a190e2-699a-ae0d-b862-1c5c750aecc9"
+      ]
+    },
+    {
+      "id": "77ef3c0c-78f3-561b-782d-df7a4b363f3c",
+      "name": "庆春银泰ST",
+      "warehouseIds": [
+        "6e644137-3751-2028-964e-d57fa4734cd4",
+        "297ce832-7844-424a-03d1-149aeb929a19"
+      ],
+      "defaultWarehouseId": "297ce832-7844-424a-03d1-149aeb929a19",
+      "sourceIds": [
+        "77ef3c0c-78f3-561b-782d-df7a4b363f3c"
+      ]
+    },
+    {
+      "id": "165fbe4b-1edc-709f-8209-9f72fd83f85e",
+      "name": "兰溪嘉泰ST",
+      "warehouseIds": [
+        "815239fa-4ce8-deac-bcc3-c2229dd81fb1",
+        "cdca9f40-b7c3-ef50-3305-72c3c62f8dd1"
+      ],
+      "defaultWarehouseId": "815239fa-4ce8-deac-bcc3-c2229dd81fb1",
+      "sourceIds": [
+        "165fbe4b-1edc-709f-8209-9f72fd83f85e"
+      ]
+    },
+    {
+      "id": "ac9eeb2a-fe0e-ee2f-1726-ac5e46cc2859",
+      "name": "兰溪今朝",
+      "warehouseIds": [
+        "dc8e3df3-ba01-7ca9-ed3b-a4d119c6b911"
+      ],
+      "defaultWarehouseId": "dc8e3df3-ba01-7ca9-ed3b-a4d119c6b911",
+      "sourceIds": [
+        "ac9eeb2a-fe0e-ee2f-1726-ac5e46cc2859"
+      ]
+    },
+    {
+      "id": "849dd595-b5a3-bf87-abae-18e2b78c9cba",
+      "name": "绍兴国商AMJ",
+      "warehouseIds": [
+        "46ee18e6-a5fb-4b6b-b8b0-6a1365b83d7d"
+      ],
+      "defaultWarehouseId": "46ee18e6-a5fb-4b6b-b8b0-6a1365b83d7d",
+      "sourceIds": [
+        "849dd595-b5a3-bf87-abae-18e2b78c9cba"
+      ]
+    },
+    {
+      "id": "83319136-f5a1-8e8c-441a-ff9a8f19707d",
+      "name": "普陀天地ST",
+      "warehouseIds": [
+        "7bc87a68-4b8a-5a1b-c57b-343538552421"
+      ],
+      "defaultWarehouseId": "7bc87a68-4b8a-5a1b-c57b-343538552421",
+      "sourceIds": [
+        "83319136-f5a1-8e8c-441a-ff9a8f19707d"
+      ]
+    },
+    {
+      "id": "7592f345-a39b-da91-7838-ecb9a4673859",
+      "name": "东阳好乐多",
+      "warehouseIds": [
+        "b3993366-0a77-4d8b-f3a1-499d9aba032a"
+      ],
+      "defaultWarehouseId": "b3993366-0a77-4d8b-f3a1-499d9aba032a",
+      "sourceIds": [
+        "7592f345-a39b-da91-7838-ecb9a4673859"
+      ]
+    },
+    {
+      "id": "4291b16e-0db5-aa83-bdd7-61d9c03c26ab",
+      "name": "临平银泰ST",
+      "warehouseIds": [
+        "e4c07b98-9563-5e93-6c4c-fc3a7e5a1ece"
+      ],
+      "defaultWarehouseId": "e4c07b98-9563-5e93-6c4c-fc3a7e5a1ece",
+      "sourceIds": [
+        "4291b16e-0db5-aa83-bdd7-61d9c03c26ab"
+      ]
+    },
+    {
+      "id": "5d914db5-3db2-b777-0c1f-30314453f80f",
+      "name": "戴梦得AMJ",
+      "warehouseIds": [
+        "19641b4d-cc41-4def-e71a-50eecb51339c"
+      ],
+      "defaultWarehouseId": "19641b4d-cc41-4def-e71a-50eecb51339c",
+      "sourceIds": [
+        "5d914db5-3db2-b777-0c1f-30314453f80f"
+      ]
+    },
+    {
+      "id": "2df3b287-acbc-0c22-071a-6aa2f5773098",
+      "name": "金华之心AMJ",
+      "warehouseIds": [
+        "6446f4e0-0a22-e422-a95e-01de093cc5b0"
+      ],
+      "defaultWarehouseId": "6446f4e0-0a22-e422-a95e-01de093cc5b0",
+      "sourceIds": [
+        "2df3b287-acbc-0c22-071a-6aa2f5773098"
+      ]
+    },
+    {
+      "id": "21e47218-1c6a-fe89-e6f9-0c8e0fbeb3ea",
+      "name": "义乌银泰ST",
+      "warehouseIds": [
+        "dd352703-9df9-24c9-f061-6afd599bc86c"
+      ],
+      "defaultWarehouseId": "dd352703-9df9-24c9-f061-6afd599bc86c",
+      "sourceIds": [
+        "21e47218-1c6a-fe89-e6f9-0c8e0fbeb3ea"
+      ]
+    }
+  ]
+}

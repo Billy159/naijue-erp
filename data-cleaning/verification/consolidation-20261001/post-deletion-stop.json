@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "time": "2026-10-01T15:44:30.151223+08:00",
+  "portsClosed": [
+    8877,
+    8878
+  ],
+  "deletedPathsRemainAbsent": true
+}

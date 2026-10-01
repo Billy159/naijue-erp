@@ -1,0 +1,7 @@
+{
+  "database": "demo_8877_restore_20261001",
+  "cleanBatch": "TPLUS-CLEAN-20261001-A150447",
+  "importBatch": "TPLUS-IMPORT-20261001-A150447",
+  "source": "tplus_clean_20261001_150447",
+  "runtime": "v2_runtime_clean_20261001_150447"
+}

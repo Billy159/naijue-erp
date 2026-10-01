@@ -1,0 +1,86 @@
+{
+  "cutoff": "2026-09-10",
+  "inputs": [
+    {
+      "path": "inputs/tplus-current/单据数据/其他出库单.xlsx",
+      "sheet": "其他出库单",
+      "sha256": "f235b42c2a3472486e8d4ad2aa964a05eac8c73245e3e8ab45d584e220dd0c1f",
+      "documents": 13998,
+      "lines": 298921
+    },
+    {
+      "path": "inputs/tplus-current/单据数据/其他入库单.xlsx",
+      "sheet": "其他入库单",
+      "sha256": "fca93187d1c603f3fbe61d059651f78b2bb2e0f6c7e0e52bc62a491be5de3d5c",
+      "documents": 14025,
+      "lines": 298917
+    },
+    {
+      "path": "inputs/tplus-current/调拨单导出.xlsx",
+      "sheet": "调拨单",
+      "sha256": "2476f388189b68d771911e1381856d27a000d7cf600fbdd4d087d151f3432cdb",
+      "documents": 14216,
+      "lines": 260573,
+      "minDate": "2024-08-01",
+      "maxDate": "2026-09-30"
+    }
+  ],
+  "newExport": {
+    "documents": 14216,
+    "lines": 260573,
+    "legacyDocuments": 13946,
+    "ignoredNewDocuments": 270,
+    "ignoredNewLines": 6054,
+    "allStatuses": {
+      "生效": 14203,
+      "未审": 13
+    },
+    "legacyStatuses": {
+      "生效": 13944,
+      "未审": 2
+    },
+    "legacyTypes": {
+      "同价调拨": 13945,
+      "异价调拨": 1
+    }
+  },
+  "quarantine": {
+    "documents": 131,
+    "bySide": {
+      "out": 52,
+      "in": 79
+    },
+    "lines": 88800,
+    "byType": {
+      "盘亏": 52,
+      "盘盈": 79
+    },
+    "outQuantity": "50050",
+    "inQuantity": "51645",
+    "arithmeticInMinusOut": "1595",
+    "dateMin": "2024-08-03",
+    "dateMax": "2026-08-21",
+    "notes": {
+      "": 131
+    },
+    "exactNumberMatches": 0,
+    "noteMentions": 0,
+    "completeSameDateWarehouseSkuQuantityMatches": 0
+  },
+  "originalTransfers": {
+    "documents": 13946,
+    "newDocsWithExactDateWarehousesSkuQuantities": 13945,
+    "matchedOldDocuments": 13945,
+    "legacyNewDocsWithoutExactMatch": 1,
+    "ambiguity": 2
+  },
+  "sameMonthlySerialIcIdCandidates": {
+    "pairs": 52,
+    "sameDateAndWarehouse": 11,
+    "sameTotalQuantity": 5,
+    "sameCompleteNonzeroSkuQuantity": 0
+  },
+  "notesMentioningStocktaking": 0,
+  "readOnly": true,
+  "databaseWritten": false
+}

@@ -1,0 +1,23 @@
+
+> naijue-8877-demo@1.0.0 test
+> node server/run-tests.mjs
+
+PASS employee-permissions.cjs
+PASS shared-login-tabs.cjs
+PASS basic-settings-refactor.cjs
+PASS transfer-acceptance-core.cjs
+PASS transfer-reliability.cjs
+PASS transfer-history-cells.cjs
+PASS transfer-scan-drawer.cjs
+PASS transfer-presentation-state.cjs
+PASS sales-core.cjs
+PASS sales-inline-payment.cjs
+PASS sales-line-merge.cjs
+PASS product-barcode-validation.cjs
+PASS product-list-history.cjs
+PASS product-profile-current-selection.cjs
+PASS ledger-local-date.cjs
+PASS business-fit-roundtrip.mjs
+PASS sales-print-payments.cjs
+PASS recommendation-cache.cjs
+PASS sales-commit-state.cjs
