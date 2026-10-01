@@ -1,0 +1,58 @@
+{
+  "frozenDate": "2026-10-01",
+  "checks": [
+    {
+      "id": 1,
+      "check": "启动Demo.command 正常启动",
+      "pass": true
+    },
+    {
+      "id": 2,
+      "check": "登录页正常",
+      "pass": true
+    },
+    {
+      "id": 3,
+      "check": "管理员实际登录",
+      "pass": true
+    },
+    {
+      "id": 4,
+      "check": "首页 / 库存状况表可打开",
+      "pass": true
+    },
+    {
+      "id": 5,
+      "check": "商品页可打开",
+      "pass": true
+    },
+    {
+      "id": 6,
+      "check": "调拨单可打开",
+      "pass": true
+    },
+    {
+      "id": 7,
+      "check": "销货单可打开",
+      "pass": true
+    },
+    {
+      "id": 8,
+      "check": "基础设置可打开",
+      "pass": true
+    },
+    {
+      "id": 9,
+      "check": "图片 / 静态资源未丢失",
+      "pass": true
+    },
+    {
+      "id": 10,
+      "check": "浏览器无启动级致命错误",
+      "pass": true
+    }
+  ],
+  "passed": 10,
+  "failed": 0,
+  "businessRuntimeFilesChangedDuringFreeze": []
+}

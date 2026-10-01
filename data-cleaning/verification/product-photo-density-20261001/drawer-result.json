@@ -1,0 +1,43 @@
+{
+  "colors": {
+    "colorRect": {
+      "x": 846,
+      "y": 542,
+      "width": 588,
+      "height": 143,
+      "top": 542,
+      "right": 1434,
+      "bottom": 685,
+      "left": 846
+    },
+    "colorNames": [
+      "上青色",
+      "云彩蓝",
+      "墨绿色",
+      "夜蓝色",
+      "大红色",
+      "暖黄色",
+      "深灰色",
+      "灰绿色",
+      "纯灰色",
+      "花篮色",
+      "花驼色",
+      "豆绿色",
+      "青绿色",
+      "青花蓝",
+      "靓红色",
+      "黄咖色",
+      "黑湖蓝",
+      "黑色"
+    ],
+    "historyNodes": 0,
+    "photos": 62
+  },
+  "close": {
+    "drawerClosed": true,
+    "queryHtmlUnchanged": true,
+    "scrollUnchanged": true,
+    "productUnchanged": true,
+    "urlUnchanged": true
+  }
+}

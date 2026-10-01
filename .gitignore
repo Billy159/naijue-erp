@@ -6,7 +6,6 @@ __pycache__/
 .DS_Store
 .env
 .env.*
-!.env.example
 backup/
 inputs/
 data-cleaning/runs/
@@ -15,3 +14,31 @@ frontend/verification/*evidence*/
 frontend/verification/*chrome*/
 frontend/verification/*final*/
 server/*results.json
+
+# Final Baseline: local credentials, generated output and temporary evidence.
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+credentials.json
+secrets.json
+dist/
+build/
+.cache/
+cache/
+.pytest_cache/
+logs/
+*.log
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+*~
+frontend/assets/*.bundle.js
+data-cleaning/verification/product-photo-density-20261001/before/
+
+# Formal ERP planning is retained locally, outside the frozen Demo repository.
+docs/正式开发与上线主计划-20261001/

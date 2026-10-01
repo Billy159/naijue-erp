@@ -1,0 +1,90 @@
+{
+  "body": "奈\n奈爵服饰\n库存管理\n库存状况表\n调拨单\n调拨单列表\n新增调拨单\n销售管理\n销货单\n销货单列表\n新增销货单\n商品管理\n商品信息\n商品分类\n商品设置\n条码方案\n基础设置\n营业厅与仓库\n往来单位\n员工与账号\n收款配置\n商品管理 / 商品信息\n陈\n陈泽浩 · 管理员\n026MS5133001 · 针织衫\n删除商品\n取消\n保存\n基础资料\n规格\n条码\n价格\n图片\n库存\n款号 *\n商品名称 *\n商品分类\n年份 *\n季节 *\n供应商 *\n厚薄（可选）\n领型 / 裤型（可选）\n系统货号 *",
+  "tabs": [
+    {
+      "text": "基础资料",
+      "tab": "base",
+      "rect": {
+        "x": 224,
+        "y": 94,
+        "width": 76,
+        "height": 32,
+        "top": 94,
+        "right": 300,
+        "bottom": 126,
+        "left": 224
+      }
+    },
+    {
+      "text": "规格",
+      "tab": "specs",
+      "rect": {
+        "x": 302,
+        "y": 94,
+        "width": 68,
+        "height": 32,
+        "top": 94,
+        "right": 370,
+        "bottom": 126,
+        "left": 302
+      }
+    },
+    {
+      "text": "条码",
+      "tab": "barcodes",
+      "rect": {
+        "x": 372,
+        "y": 94,
+        "width": 68,
+        "height": 32,
+        "top": 94,
+        "right": 440,
+        "bottom": 126,
+        "left": 372
+      }
+    },
+    {
+      "text": "价格",
+      "tab": "prices",
+      "rect": {
+        "x": 442,
+        "y": 94,
+        "width": 68,
+        "height": 32,
+        "top": 94,
+        "right": 510,
+        "bottom": 126,
+        "left": 442
+      }
+    },
+    {
+      "text": "图片",
+      "tab": "images",
+      "rect": {
+        "x": 512,
+        "y": 94,
+        "width": 68,
+        "height": 32,
+        "top": 94,
+        "right": 580,
+        "bottom": 126,
+        "left": 512
+      }
+    },
+    {
+      "text": "库存",
+      "tab": "stock",
+      "rect": {
+        "x": 582,
+        "y": 94,
+        "width": 68,
+        "height": 32,
+        "top": 94,
+        "right": 650,
+        "bottom": 126,
+        "left": 582
+      }
+    }
+  ],
+  "catalogKeys": []
+}

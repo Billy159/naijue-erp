@@ -1,0 +1,38 @@
+[
+  {
+    "page": "product",
+    "url": "http://127.0.0.1:8877/#product/026MS5133001",
+    "title": "奈爵服饰",
+    "header": "商品管理 / 商品信息\n演\n演示管理员 · 管理员",
+    "text": "026MS5133001 · 针织衫\n删除商品\n取消\n保存\n基础资料\n规格\n条码\n价格\n图片\n库存\n款号 *\n商品名称 *\n商品分类\n年份 *\n季节 *\n供应商 *\n厚薄（可选）\n领型 / 裤型（可选）\n系统货号 *\nundefined\nundefined\nundefined\nundefined\nundefined\nundefined",
+    "startupErrors": [],
+    "pass": true
+  },
+  {
+    "page": "transfer",
+    "url": "http://127.0.0.1:8877/#transfer/doc/ALAL-2026-09-0132",
+    "title": "奈爵服饰",
+    "header": "库存管理 / 调拨单\n演\n演示管理员 · 管理员",
+    "text": "编辑调拨单\n未审核\n· 已保存\n返回列表\n作废\n保存\n审核\n导出\n打印\n操作历史\n单据日期 *\n调出仓库 *\n调入仓库 *\n单号\nALAL-2026-09-0132\n创建者 *\n乌建红\n何叶方、钱文军\n何玲红\n何玲红\n冯秀琴\n冯秀琴 八佰伴\n凌金英\n刘小芳\n单莉黎\n吕卓颖\n吴 吉\n吴笑燕\n吴红娟\n周春娣\n夏苏芬\n孙丽燕\n孙敏娟\n孙敏娟\n孙静媛\n宋海英\n小方\n尚婷\n张名亚\n张建妹\n张海娟\n张海娟\n张生萍\n张红蕾\n张红蕾\n张红蕾\n徐云霞\n徐利芳\n徐国琴\n徐意芬\n徐茜\n徐萍\n曾玲\n朱孝琴\n朱小华\n朱小玲\n李丽\n李萍美\n李雪儿\n李雪儿\n杨小菊\n杨萍\n林伊\n林慧娟\n林贤芬\n梁波\n毛彩娣\n水筱芳\n沈彩娣\n王丽君\n王君\n王月珍\n王水姣\n王祝飞\n王红仙\n王群英\n祖夏云\n章玉仙\n缪丽华\n胡勇芳\n胡荣珍\n胡蓉\n范其芳 八佰伴\n董玲燕\n蒋丽英\n褚春燕\n褚素月\n谭丽虹\n赵珍红\n邹颖\n金凤\n钱文军\n陆春燕\n陈卫娣\n陈彩玉\n陈志芬\n陈景芳\n陈泽浩\n陈选娅\n顾雪美\n演示管理员\n扫码录入\n备注\n调拨明细\n款号／商品名称\t颜色\t版型\t160/XS\t165/S\t170/M\t175/L\t180/XL\t185/2XL\t190/3XL\t195/4XL\t200/5XL\t205/6XL\t小计\t操作\n\n379TX5382615\n卫衣\n\t\n黑色\n改\n\t\nA版（标准）\n改\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t5\t\n查看\n删除\n\n\n005CS5381659\n长袖衬衫\n\t\n红色\n改\n\t\nA版（标准）\n改\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t5\t\n查看\n删除\n\n\n352TX5372801\n长袖T恤衫\n\t\n黑色\n改\n\t\nA版（标准）\n改\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t5\t\n查看\n删除\n\n\n333TX5382612\n长袖卫衣\n\t\n黑色\n改\n\t\nA版（标准）\n改\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t5\t\n查看\n删除\n\n\n005CS5381659\n长袖衬衫\n\t\n灰色\n改\n\t\nA版（标准）\n改\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t8\t\n查看\n删除\n\n\n379TX5382615\n卫衣\n\t\n白色\n改\n\t\nA版（标准）\n改\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t2\t\n查看\n删除\n\n\n005CS5381660\n长袖衬衫\n\t\n卡其色\n改\n\t\nA版（标准）\n改\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t5\t\n查看\n删除\n\n\n333TX5382612\n长袖卫衣\n\t\n深灰色\n改\n\t\nA版（标准）\n改\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t4\t\n查看\n删除\n\n\n586CS5361723\n长袖衬衫\n\t\n蓝",
+    "startupErrors": [],
+    "pass": true
+  },
+  {
+    "page": "sales",
+    "url": "http://127.0.0.1:8877/#sales/doc/V2-XS-ad693d2e",
+    "title": "奈爵服饰",
+    "header": "销售管理 / 销货单\n演\n演示管理员 · 管理员",
+    "text": "编辑销货单\n未审核\n· 已保存\n返回列表\n取消修改\n作废\n保存\n审核\n导出\n打印\n操作历史\n单据日期 *\n业务类型 *\n请选择\n销售\n退货/换货\n营业厅 *\n舟山银泰ST\n营业员 *\n林伊\n客户 *\n舟山银泰ST 零售客户\n出库仓 *\n舟山银泰ST仓库\n单号\nV2-XS-ad693d2e\n整单优惠 / 抹零\n应结金额\n¥898.00\n收款\n支付方式\n其它\n商场收银台\n微信\n支付宝\n现金\n转账\n资金账户\n91101大西洋银泰ST收银台\n91102金华银泰仓ST收银台\n91103柯桥银泰ST收银台\n91105宁海国购ST收银台\n91106舟山银泰ST收银台\n91107长兴浙北ST收银台\n91108宜兴八佰伴ST商场收银台\n91109嘉兴江南大厦ST收银台\n91110新东方边厅ST收银台\n91111鄞州银泰ST收银台\n91112长兴中百ST收银台\n91113六安百大解放路ST收银台\n91115舟山一百ST收银台\n91116宁海大厦ST收银台\n91117兰溪嘉泰ST收银台\n91119临平银泰收银台\n91201银泰文化店ST收银台\n91202舟山普陀天地收银台\n91203东阳好乐多收银台\n92101舟山一百AMJ收银台\n92102舟山银泰AMJ收银台\n92105戴梦得AMJ收银台\n92106金华之心AMJ收银台\n93102武林银泰XM收银台\n93103新东方边厅XM收银台\n93105新东方中岛XM收银台\n93106长兴中百XM收银台\n93107庆春银泰XM收银台\n93108诸暨一百XM收银台\n93109金华万泰XM收银台\n93111下沙银泰XM收银台\n93112余姚金泰XM收银台\n93113舟山银泰XM收银台\n93115舟山一百XM收银台\n96101嘉兴江南大厦ST特卖收银台\n96102金华万泰XM特卖场收银台\n96103金华银泰仓ST特卖收银台\n96105宁海大厦ST特卖收银台\n96106宜兴八佰伴ST特卖收银台\n96107银泰文化店ST特卖收银台\n96109诸暨一百XM特卖收银台\n96110庆春银泰特卖收银台\n92103 绍兴国商AMJ收银台\n添加\n已收 ¥898.00 · 已结清\n备注\n商品明细\n款号／商品名称\t颜色\t版型\t尺码\t数量\t参考零售价\t折扣\t成交单价\t金额\t操作\n\n026MS5133001\n针织衫\n改\n\t\n纯灰色\n改\n\t\nA版（标准）\n改\n\t\n165/S\n改\n\t\t\t\t\t898.00\t\n查看\n赠品\n删除\n\n\t\n颜色\n\t\n版型\n\t\n尺码\n\t\t\t\t\t\t\n1款 1件\n毛衫1\n销售金额 ¥898.00\n优惠 ¥0.00\n应结 ¥898.00\nundefined\nu",
+    "startupErrors": [],
+    "pass": true
+  },
+  {
+    "page": "settings",
+    "url": "http://127.0.0.1:8877/#settings/stores",
+    "title": "奈爵服饰",
+    "header": "基础设置 / 营业厅与仓库\n演\n演示管理员 · 管理员",
+    "text": "营业厅与仓库\n操作记录\n新增营业厅\n营业厅\n仓库\n查询\n重置\n名称\n\t\n默认零售客户\n\t\n默认出库仓\n\t\n状态\n\t\n操作\n\n\n新东方中岛XM\n\t\n新东方中岛XM\n\t\n新东方中岛XM仓库\n\t\n正常\n\t\n编辑\n\n\n舟山一百AMJ\n\t\n舟山一百AMJ零售客户\n\t\n舟山一百AMJ仓库\n\t\n正常\n\t\n编辑\n\n\n嵊州国商XM\n\t\n嵊州国商XM零售客户\n\t\n嵊州国商XM仓库\n\t\n正常\n\t\n编辑\n\n\n丁桥店XM\n\t\n丁桥店XM零售客户\n\t\n丁桥店XM仓库\n\t\n正常\n\t\n编辑\n\n\n六安百大解放路ST\n\t\n六安百大解放路ST零售客户\n\t\n六安百大解放路ST仓库\n\t\n正常\n\t\n编辑\n\n\n金华万泰XM\n\t\n金华万泰XM零售客户\n\t\n金华万泰XM仓库\n\t\n正常\n\t\n编辑\n\n\n舟山银泰AMJ\n\t\n舟山银泰AMJ零售客户\n\t\n舟山银泰AMJ仓库\n\t\n正常\n\t\n编辑\n\n\n舟山一百ST\n\t\n舟山一百ST零售客户\n\t\n舟山一百ST仓库\n\t\n正常\n\t\n编辑\n\n\n大西洋银泰ST\n\t\n大西洋银泰ST零售客户\n\t\n大西洋银泰ST仓库\n\t\n正常\n\t\n编辑\n\n\n金华银泰仓ST\n\t\n金华银泰仓ST 零售客户\n\t\n金华银泰仓ST仓库\n\t\n正常\n\t\n编辑\n\n\n长兴中百ST\n\t\n长兴中百ST零售客户\n\t\n长兴中百ST仓库\n\t\n正常\n\t\n编辑\n\n\n永康南龙ST\n\t\n永康南龙ST零售客户\n\t\n永康南龙ST仓库\n\t\n正常\n\t\n编辑\n\n\n宁海大厦ST\n\t\n宁海大厦ST零售客户\n\t\n宁海大厦ST仓库\n\t\n正常\n\t\n编辑\n\n\n诸暨一百XM\n\t\n诸暨一百XM零售客户\n\t\n诸暨一百XM仓库\n\t\n正常\n\t\n编辑\n\n\n嘉兴江南大厦ST\n\t\n嘉兴江南大厦ST零售客户\n\t\n嘉兴江南大厦ST仓库\n\t\n正常\n\t\n编辑\n\n\n长兴中百XM\n\t\n长兴中百XM零售客户\n\t\n长兴中百XM仓库\n\t\n正常\n\t\n编辑\n\n\n柯桥银泰ST\n\t\n柯桥银泰ST零售客户\n\t\n柯桥银泰ST仓库\n\t\n正常\n\t\n编辑\n\n\n银泰文化店ST\n\t\n银泰文化店ST零售客户\n\t\n银泰文化店ST仓库\n\t\n正常\n\t\n编辑\n\n\n下沙银泰XM\n\t\n下沙银泰XM零售客户\n\t\n下沙银泰XM仓库\n\t\n正常\n\t\n编辑\n\n\n舟山银泰ST\n\t\n舟山银泰ST 零售客户\n\t\n舟山银泰ST仓库\n\t\n正常\n\t\n编辑\n20条/页\n50条/页\n100条/页\n共 41 条，当前第 1–20 条\n‹\n1\n2\n3\n›\n跳至\n页\n跳转\nundefined\nundefined",
+    "startupErrors": [],
+    "pass": true
+  }
+]

@@ -69,7 +69,7 @@ body.pc-mode .pc-products #pc-products-empty{min-height:220px}
 .pc-arco-photos .arco-upload-type-picture-card{box-sizing:border-box;width:48px;height:48px;min-height:48px;margin:0;border:1px dashed var(--ca-control-border);border-radius:2px;background:var(--ca-surface);color:var(--ca-primary-ink)}
 .pc-arco-photos .arco-upload-type-picture-card:hover{border-color:var(--ca-primary)}
 .pc-arco-photos .arco-upload-type-picture-card .arco-upload-trigger{display:grid;place-items:center;width:100%;height:100%;font-size:12px}
-.pc-color-photo-grid{display:grid;grid-template-columns:repeat(auto-fill,64px);gap:6px}
+.pc-color-photo-grid>div{flex:0 0 48px;min-width:0}
 .pc-color-photo-cell{min-width:0;padding:0;background:var(--ca-surface)}
 .pc-color-photo-name{overflow:hidden;margin-bottom:4px;color:var(--ca-ink);font-size:12px;text-overflow:ellipsis;white-space:nowrap}
 .pc-arco-modal .pc-create-left{margin-right:auto;padding:2px 6px;border:0;background:transparent;color:var(--ca-primary-ink)}

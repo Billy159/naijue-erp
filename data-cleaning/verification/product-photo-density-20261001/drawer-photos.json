@@ -1,0 +1,283 @@
+{
+  "history": false,
+  "historyNodes": 0,
+  "cols": [
+    {
+      "name": "上青色",
+      "rect": {
+        "x": 846,
+        "y": 707,
+        "width": 48,
+        "height": 68.5,
+        "top": 707,
+        "right": 894,
+        "bottom": 775.5,
+        "left": 846
+      }
+    },
+    {
+      "name": "云彩蓝",
+      "rect": {
+        "x": 900,
+        "y": 707,
+        "width": 48,
+        "height": 68.5,
+        "top": 707,
+        "right": 948,
+        "bottom": 775.5,
+        "left": 900
+      }
+    },
+    {
+      "name": "墨绿色",
+      "rect": {
+        "x": 954,
+        "y": 707,
+        "width": 48,
+        "height": 68.5,
+        "top": 707,
+        "right": 1002,
+        "bottom": 775.5,
+        "left": 954
+      }
+    },
+    {
+      "name": "夜蓝色\n暂无图片",
+      "rect": {
+        "x": 1008,
+        "y": 707,
+        "width": 48,
+        "height": 68.5,
+        "top": 707,
+        "right": 1056,
+        "bottom": 775.5,
+        "left": 1008
+      }
+    },
+    {
+      "name": "大红色",
+      "rect": {
+        "x": 1062,
+        "y": 707,
+        "width": 48,
+        "height": 68.5,
+        "top": 707,
+        "right": 1110,
+        "bottom": 775.5,
+        "left": 1062
+      }
+    },
+    {
+      "name": "暖黄色",
+      "rect": {
+        "x": 1116,
+        "y": 707,
+        "width": 48,
+        "height": 68.5,
+        "top": 707,
+        "right": 1164,
+        "bottom": 775.5,
+        "left": 1116
+      }
+    },
+    {
+      "name": "深灰色\n暂无图片",
+      "rect": {
+        "x": 1170,
+        "y": 707,
+        "width": 48,
+        "height": 68.5,
+        "top": 707,
+        "right": 1218,
+        "bottom": 775.5,
+        "left": 1170
+      }
+    },
+    {
+      "name": "灰绿色",
+      "rect": {
+        "x": 1224,
+        "y": 707,
+        "width": 48,
+        "height": 68.5,
+        "top": 707,
+        "right": 1272,
+        "bottom": 775.5,
+        "left": 1224
+      }
+    },
+    {
+      "name": "纯灰色",
+      "rect": {
+        "x": 1278,
+        "y": 707,
+        "width": 48,
+        "height": 68.5,
+        "top": 707,
+        "right": 1326,
+        "bottom": 775.5,
+        "left": 1278
+      }
+    },
+    {
+      "name": "花篮色",
+      "rect": {
+        "x": 1332,
+        "y": 707,
+        "width": 48,
+        "height": 68.5,
+        "top": 707,
+        "right": 1380,
+        "bottom": 775.5,
+        "left": 1332
+      }
+    },
+    {
+      "name": "花驼色",
+      "rect": {
+        "x": 1386,
+        "y": 707,
+        "width": 48,
+        "height": 68.5,
+        "top": 707,
+        "right": 1434,
+        "bottom": 775.5,
+        "left": 1386
+      }
+    },
+    {
+      "name": "豆绿色",
+      "rect": {
+        "x": 846,
+        "y": 781.5,
+        "width": 48,
+        "height": 68.5,
+        "top": 781.5,
+        "right": 894,
+        "bottom": 850,
+        "left": 846
+      }
+    },
+    {
+      "name": "青绿色\n暂无图片",
+      "rect": {
+        "x": 900,
+        "y": 781.5,
+        "width": 48,
+        "height": 68.5,
+        "top": 781.5,
+        "right": 948,
+        "bottom": 850,
+        "left": 900
+      }
+    },
+    {
+      "name": "青花蓝\n暂无图片",
+      "rect": {
+        "x": 954,
+        "y": 781.5,
+        "width": 48,
+        "height": 68.5,
+        "top": 781.5,
+        "right": 1002,
+        "bottom": 850,
+        "left": 954
+      }
+    },
+    {
+      "name": "靓红色",
+      "rect": {
+        "x": 1008,
+        "y": 781.5,
+        "width": 48,
+        "height": 68.5,
+        "top": 781.5,
+        "right": 1056,
+        "bottom": 850,
+        "left": 1008
+      }
+    },
+    {
+      "name": "黄咖色\n暂无图片",
+      "rect": {
+        "x": 1062,
+        "y": 781.5,
+        "width": 48,
+        "height": 68.5,
+        "top": 781.5,
+        "right": 1110,
+        "bottom": 850,
+        "left": 1062
+      }
+    },
+    {
+      "name": "黑湖蓝\n暂无图片",
+      "rect": {
+        "x": 1116,
+        "y": 781.5,
+        "width": 48,
+        "height": 68.5,
+        "top": 781.5,
+        "right": 1164,
+        "bottom": 850,
+        "left": 1116
+      }
+    },
+    {
+      "name": "黑色",
+      "rect": {
+        "x": 1170,
+        "y": 781.5,
+        "width": 48,
+        "height": 68.5,
+        "top": 781.5,
+        "right": 1218,
+        "bottom": 850,
+        "left": 1170
+      }
+    }
+  ],
+  "gap": "6px",
+  "detailGap": "6px",
+  "detailTiles": [
+    {
+      "x": 846,
+      "y": 452.5,
+      "width": 48,
+      "height": 48,
+      "top": 452.5,
+      "right": 894,
+      "bottom": 500.5,
+      "left": 846
+    },
+    {
+      "x": 900,
+      "y": 452.5,
+      "width": 48,
+      "height": 48,
+      "top": 452.5,
+      "right": 948,
+      "bottom": 500.5,
+      "left": 900
+    }
+  ],
+  "operations": 0,
+  "scroll": [
+    {
+      "class": "arco-tabs-content arco-tabs-content-horizontal",
+      "rect": {
+        "x": 826,
+        "y": 101,
+        "width": 628,
+        "height": 611,
+        "top": 101,
+        "right": 1454,
+        "bottom": 712,
+        "left": 826
+      },
+      "top": 0,
+      "height": 776
+    }
+  ],
+  "bodyText": "026MS5133001 · 针织衫\n只读\n基础资料\n规格\n图片\n\n点击图片查看大图\n\n主图\n白底图\n吊牌图\n详情图\n颜色图\n上青色\n云彩蓝\n墨绿色\n夜蓝色\n暂无图片\n大红色\n暖黄色\n深灰色\n暂无图片\n灰绿色\n纯灰色\n花篮色\n花驼色\n豆绿色\n青绿色\n暂无图片\n青花蓝\n暂无图片\n靓红色\n黄咖色\n暂无图片\n黑湖蓝\n暂无图片\n黑色"
+}

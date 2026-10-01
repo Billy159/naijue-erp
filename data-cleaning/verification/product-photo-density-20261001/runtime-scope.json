@@ -1,0 +1,10 @@
+{
+  "checked": 114,
+  "changed": [
+    "frontend/index.html",
+    "frontend/product-rework.css",
+    "frontend/product-arco.jsx",
+    "frontend/assets/product-arco.bundle.js"
+  ],
+  "unchanged": 110
+}

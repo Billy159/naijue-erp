@@ -1,2 +1,0 @@
-PASS list mounts compact filters and retains the shared filter state
-PASS new transfer retains date, warehouses and creator after enhancement

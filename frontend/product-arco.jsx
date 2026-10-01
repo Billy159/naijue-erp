@@ -130,7 +130,6 @@ function SpecTransfer({ source }) {
 }
 function ProductPhotos({ source, onPreviewVisibleChange }) {
   const [preview,setPreview] = useState(null);
-  const [historyOpen,setHistoryOpen] = useState(false);
   const images=source.items();
   const colors=source.colors();
   const upload=(role,colorId='',replaceId='',caption='+ 添加') => <Upload className="pc-arco-upload" listType={replaceId?'text':'picture-card'} showUploadList={false}
@@ -138,11 +137,11 @@ function ProductPhotos({ source, onPreviewVisibleChange }) {
     beforeUpload={(file,files) => { if(!files?.length||files[0]===file)source.upload(files?.length?files:[file],role,colorId,replaceId);return false; }}>
     <span>{caption}</span>
   </Upload>;
-  const tile=(im,role,editable=true) => <div className="pc-arco-photo" key={im.id}>
+  const tile=(im,role) => <div className="pc-arco-photo" key={im.id}>
     <button type="button" className="pc-arco-photo-preview" onClick={() => {setPreview(im);onPreviewVisibleChange?.(true);}} aria-label={'预览 '+im.name}>
       <Image src={window.PRODUCT_MEDIA?.thumbnail(im.url)||im.url} alt={im.name} preview={false} width="100%" height="100%" lazyload loading="lazy" decoding="async" />
     </button>
-    {!source.readonly&&editable&&<Dropdown trigger="click" position="br" unmountOnExit={false} droplist={<Menu className="pc-photo-menu">
+    {!source.readonly&&<Dropdown trigger="click" position="br" unmountOnExit={false} droplist={<Menu className="pc-photo-menu">
       <Menu.Item key="replace">{upload(role,im.colorId||'',im.id,'替换')}</Menu.Item>
       <Menu.Item key="delete" onClick={()=>source.remove(im.id)}>删除</Menu.Item>
     </Menu>}><button type="button" className="pc-photo-more" aria-label={'图片操作 '+im.name}>···</button></Dropdown>}
@@ -154,13 +153,11 @@ function ProductPhotos({ source, onPreviewVisibleChange }) {
       {source.inDrawer&&!images.some(im=>im.role===role)&&<span className="hint">暂无图片</span>}
     </div>
   </section>;
-  const currentColors=new Set(colors.map(color=>color.id));
-  const history=images.filter(im=>!['主图','白底图','吊牌图','详情图','颜色配图'].includes(im.role)||(im.role==='颜色配图'&&!currentColors.has(im.colorId)));
   return <div className="pc-arco-photos">
     <p className="hint">{source.inDrawer?'点击图片查看大图':'支持 PNG、JPEG、WebP，单张不超过 8 MB；图片随商品保存。'}</p>
     {['主图','白底图','吊牌图','详情图'].map(role=>regular(role,role))}
     <section className="pc-photo-section pc-color-matrix"><h3>颜色图</h3>
-      <div className="pc-color-photo-grid">{colors.map(color => {
+      <div className="pc-color-photo-grid pc-arco-photo-row">{colors.map(color => {
         const im=images.find(image=>image.role==='颜色配图'&&image.colorId===color.id);
         return <div key={color.id}>
           <div className="pc-color-photo-cell"><div className="pc-color-photo-name" title={color.name}>{color.name}</div>
@@ -170,9 +167,6 @@ function ProductPhotos({ source, onPreviewVisibleChange }) {
       })}</div>
       {!colors.length&&<p className="hint">{source.inDrawer?'暂无当前颜色':'先在规格页选择当前颜色。'}</p>}
     </section>
-    {!source.inDrawer&&history.length>0&&<details className="pc-photo-section pc-photo-history" onToggle={event=>setHistoryOpen(event.currentTarget.open)}>
-      <summary>历史图片</summary><div className="pc-arco-photo-row">{historyOpen&&history.map(im=>tile(im,im.role,false))}</div>
-    </details>}
     <Image.Preview src={preview?.url||''} visible={!!preview} onVisibleChange={visible=>{if(!visible){setPreview(null);onPreviewVisibleChange?.(false);}}} getPopupContainer={()=>document.body} />
   </div>;
 }

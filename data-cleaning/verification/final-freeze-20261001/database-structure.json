@@ -1,0 +1,7173 @@
+{
+  "database": "business_management",
+  "schemas": [
+    "tplus_demo_20260922_a2",
+    "v2_runtime_stage03c"
+  ],
+  "tables": 89,
+  "columns": [
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "app_user",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "app_user",
+      "column": "username",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "app_user",
+      "column": "password_hash",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "app_user",
+      "column": "display_name",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "app_user",
+      "column": "role",
+      "ordinal": 5,
+      "type": "USER-DEFINED",
+      "udt": "app_role",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "app_user",
+      "column": "enabled",
+      "ordinal": 6,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "app_user",
+      "column": "version",
+      "ordinal": 7,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "app_user",
+      "column": "created_at",
+      "ordinal": 8,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode",
+      "column": "value",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode",
+      "column": "variant_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode",
+      "column": "status",
+      "ordinal": 4,
+      "type": "USER-DEFINED",
+      "udt": "barcode_status",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode",
+      "column": "role",
+      "ordinal": 5,
+      "type": "USER-DEFINED",
+      "udt": "barcode_role",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode",
+      "column": "scheme_version_id",
+      "ordinal": 6,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode",
+      "column": "source",
+      "ordinal": 7,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode",
+      "column": "generated_input_snapshot",
+      "ordinal": 8,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode",
+      "column": "quarantine_reason",
+      "ordinal": 9,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode",
+      "column": "created_at",
+      "ordinal": 10,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_encoding_mapping",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_encoding_mapping",
+      "column": "scheme_version_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_encoding_mapping",
+      "column": "dimension_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_encoding_mapping",
+      "column": "spec_value_id",
+      "ordinal": 4,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_encoding_mapping",
+      "column": "product_id",
+      "ordinal": 5,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_encoding_mapping",
+      "column": "encoded_value",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme",
+      "column": "code",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme",
+      "column": "code_normalized",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme",
+      "column": "name",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme",
+      "column": "enabled",
+      "ordinal": 5,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_segment",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_segment",
+      "column": "scheme_version_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_segment",
+      "column": "segment_order",
+      "ordinal": 3,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_segment",
+      "column": "type",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_segment",
+      "column": "length",
+      "ordinal": 5,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_segment",
+      "column": "pad_side",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_segment",
+      "column": "pad_char",
+      "ordinal": 7,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_segment",
+      "column": "value_rule",
+      "ordinal": 8,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": "'{}'::jsonb"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_segment",
+      "column": "dimension_id",
+      "ordinal": 9,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_segment",
+      "column": "literal",
+      "ordinal": 10,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_version",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_version",
+      "column": "scheme_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_version",
+      "column": "version",
+      "ordinal": 3,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_version",
+      "column": "published_at",
+      "ordinal": 4,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "barcode_scheme_version",
+      "column": "created_at",
+      "ordinal": 5,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "brand",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "brand",
+      "column": "code",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "brand",
+      "column": "code_normalized",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "brand",
+      "column": "name",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "brand",
+      "column": "enabled",
+      "ordinal": 5,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "number",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "type",
+      "ordinal": 3,
+      "type": "USER-DEFINED",
+      "udt": "document_type",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "status",
+      "ordinal": 4,
+      "type": "USER-DEFINED",
+      "udt": "document_status",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "document_date",
+      "ordinal": 5,
+      "type": "date",
+      "udt": "date",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "source_warehouse_id",
+      "ordinal": 6,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "target_warehouse_id",
+      "ordinal": 7,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "actor_id",
+      "ordinal": 8,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "version",
+      "ordinal": 9,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "revision",
+      "ordinal": 10,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "1"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "inventory_mode",
+      "ordinal": 11,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": "'POSTING'::text"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "original_document_id",
+      "ordinal": 12,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "reversal_reason",
+      "ordinal": 13,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "totals",
+      "ordinal": 14,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": "'{}'::jsonb"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "note",
+      "ordinal": 15,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "business_document",
+      "column": "created_at",
+      "ordinal": 16,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "YES",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "category",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "category",
+      "column": "parent_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "category",
+      "column": "code",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "category",
+      "column": "code_normalized",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "category",
+      "column": "name",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "category",
+      "column": "enabled",
+      "ordinal": 6,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "category",
+      "column": "version",
+      "ordinal": 7,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "counterparty",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "counterparty",
+      "column": "code",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "counterparty",
+      "column": "code_normalized",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "counterparty",
+      "column": "name",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "counterparty",
+      "column": "enabled",
+      "ordinal": 5,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "document_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "variant_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "warehouse_id",
+      "ordinal": 4,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "direction",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "barcode",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "product_code",
+      "ordinal": 7,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "product_name",
+      "ordinal": 8,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "options_snapshot",
+      "ordinal": 9,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "color_name",
+      "ordinal": 10,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "size_name",
+      "ordinal": 11,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "unit_name",
+      "ordinal": 12,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "quantity",
+      "ordinal": 13,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "unit_price",
+      "ordinal": 14,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "retail_price",
+      "ordinal": 15,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "amount",
+      "ordinal": 16,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "historical_returned_quantity",
+      "ordinal": 17,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "document_line",
+      "column": "note",
+      "ordinal": 18,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "fit",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "fit",
+      "column": "code",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "fit",
+      "column": "code_normalized",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "fit",
+      "column": "name",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "fit",
+      "column": "enabled",
+      "ordinal": 5,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "idempotency_request",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "idempotency_request",
+      "column": "actor_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "idempotency_request",
+      "column": "command_scope",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "idempotency_request",
+      "column": "idempotency_key",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "idempotency_request",
+      "column": "payload_hash",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "idempotency_request",
+      "column": "response",
+      "ordinal": 6,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "idempotency_request",
+      "column": "completed_at",
+      "ordinal": 7,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "idempotency_request",
+      "column": "created_at",
+      "ordinal": 8,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "import_batch",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "import_batch",
+      "column": "file_name",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "import_batch",
+      "column": "sha256",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "import_batch",
+      "column": "importer_version",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "import_batch",
+      "column": "status",
+      "ordinal": 5,
+      "type": "USER-DEFINED",
+      "udt": "import_status",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "import_batch",
+      "column": "created_at",
+      "ordinal": 6,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "import_batch",
+      "column": "committed_at",
+      "ordinal": 7,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_balance",
+      "column": "variant_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_balance",
+      "column": "warehouse_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_balance",
+      "column": "quantity",
+      "ordinal": 3,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_balance",
+      "column": "version",
+      "ordinal": 4,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_movement",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_movement",
+      "column": "posting_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_movement",
+      "column": "document_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_movement",
+      "column": "document_line_id",
+      "ordinal": 4,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_movement",
+      "column": "variant_id",
+      "ordinal": 5,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_movement",
+      "column": "warehouse_id",
+      "ordinal": 6,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_movement",
+      "column": "delta",
+      "ordinal": 7,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_movement",
+      "column": "balance_after",
+      "ordinal": 8,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_movement",
+      "column": "business_type",
+      "ordinal": 9,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_movement",
+      "column": "reversal_of",
+      "ordinal": 10,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_movement",
+      "column": "occurred_at",
+      "ordinal": 11,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_movement",
+      "column": "actor_id",
+      "ordinal": 12,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_posting",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_posting",
+      "column": "action_key",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_posting",
+      "column": "business_type",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_posting",
+      "column": "document_id",
+      "ordinal": 4,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_posting",
+      "column": "action",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_posting",
+      "column": "status",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_posting",
+      "column": "reversal_of_posting_id",
+      "ordinal": 7,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_posting",
+      "column": "actor_id",
+      "ordinal": 8,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "inventory_posting",
+      "column": "created_at",
+      "ordinal": 9,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "migration_checkpoint",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "migration_checkpoint",
+      "column": "stage",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "migration_checkpoint",
+      "column": "cursor",
+      "ordinal": 3,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "migration_checkpoint",
+      "column": "updated_at",
+      "ordinal": 4,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "migration_issue",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "migration_issue",
+      "column": "batch_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "migration_issue",
+      "column": "source_record_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "migration_issue",
+      "column": "code",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "migration_issue",
+      "column": "severity",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "migration_issue",
+      "column": "details",
+      "ordinal": 6,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "migration_issue",
+      "column": "resolved_at",
+      "ordinal": 7,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "migration_issue",
+      "column": "resolved_by",
+      "ordinal": 8,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "opening_ledger",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "opening_ledger",
+      "column": "ledger_key",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": "'CURRENT'::text"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "opening_ledger",
+      "column": "batch_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "opening_ledger",
+      "column": "committed_at",
+      "ordinal": 4,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "price_type",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "price_type",
+      "column": "code",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "price_type",
+      "column": "code_normalized",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "price_type",
+      "column": "name",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "price_type",
+      "column": "enabled",
+      "ordinal": 5,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "column": "code",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "column": "code_normalized",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "column": "name",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "column": "category_id",
+      "ordinal": 5,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "column": "brand_id",
+      "ordinal": 6,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "column": "unit_id",
+      "ordinal": 7,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "column": "fit_id",
+      "ordinal": 8,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "column": "counterparty_id",
+      "ordinal": 9,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "column": "current_barcode_scheme_version_id",
+      "ordinal": 10,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "column": "enabled",
+      "ordinal": 11,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "column": "version",
+      "ordinal": 12,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "column": "created_at",
+      "ordinal": 13,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product",
+      "column": "updated_at",
+      "ordinal": 14,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product_image",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product_image",
+      "column": "product_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product_image",
+      "column": "path",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product_image",
+      "column": "sha256",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product_image",
+      "column": "media_type",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product_image",
+      "column": "sort_order",
+      "ordinal": 6,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product_option",
+      "column": "product_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product_option",
+      "column": "spec_value_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product_price",
+      "column": "product_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product_price",
+      "column": "price_type_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "product_price",
+      "column": "amount",
+      "ordinal": 3,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "return_line_reference",
+      "column": "return_line_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "return_line_reference",
+      "column": "original_sale_line_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "schema_migration",
+      "column": "version",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "schema_migration",
+      "column": "applied_at",
+      "ordinal": 2,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "size_group",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "size_group",
+      "column": "code",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "size_group",
+      "column": "code_normalized",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "size_group",
+      "column": "name",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "size_group",
+      "column": "enabled",
+      "ordinal": 5,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "size_group_item",
+      "column": "size_group_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "size_group_item",
+      "column": "spec_value_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "size_group_item",
+      "column": "sort_order",
+      "ordinal": 3,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_mapping",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_mapping",
+      "column": "source_record_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_mapping",
+      "column": "target_type",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_mapping",
+      "column": "target_id",
+      "ordinal": 4,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_mapping",
+      "column": "decision",
+      "ordinal": 5,
+      "type": "USER-DEFINED",
+      "udt": "mapping_decision",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_mapping",
+      "column": "evidence",
+      "ordinal": 6,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": "'[]'::jsonb"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_mapping",
+      "column": "decided_by",
+      "ordinal": 7,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_mapping",
+      "column": "decided_at",
+      "ordinal": 8,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_record",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_record",
+      "column": "batch_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_record",
+      "column": "source_type",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_record",
+      "column": "sheet_name",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_record",
+      "column": "row_number",
+      "ordinal": 5,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_record",
+      "column": "column_name",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_record",
+      "column": "raw_value",
+      "ordinal": 7,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "source_record",
+      "column": "source_key",
+      "ordinal": 8,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "spec_dimension",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "spec_dimension",
+      "column": "code",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "spec_dimension",
+      "column": "code_normalized",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "spec_dimension",
+      "column": "name",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "spec_dimension",
+      "column": "enabled",
+      "ordinal": 5,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "spec_value",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "spec_value",
+      "column": "dimension_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "spec_value",
+      "column": "code",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "spec_value",
+      "column": "code_normalized",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "spec_value",
+      "column": "name",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "spec_value",
+      "column": "sort_order",
+      "ordinal": 6,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "spec_value",
+      "column": "enabled",
+      "ordinal": 7,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "system_setting",
+      "column": "key",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "system_setting",
+      "column": "value",
+      "ordinal": 2,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "system_setting",
+      "column": "updated_at",
+      "ordinal": 3,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_department",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_department",
+      "column": "id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_department",
+      "column": "source_id",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_department",
+      "column": "source_code",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_department",
+      "column": "name",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_department",
+      "column": "parent_id",
+      "ordinal": 6,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_department",
+      "column": "hall_id",
+      "ordinal": 7,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_department",
+      "column": "is_hall_source",
+      "ordinal": 8,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_department",
+      "column": "source_payload",
+      "ordinal": 9,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_employee",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_employee",
+      "column": "id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_employee",
+      "column": "source_id",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_employee",
+      "column": "source_code",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_employee",
+      "column": "name",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_employee",
+      "column": "department_id",
+      "ordinal": 6,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_employee",
+      "column": "hall_id",
+      "ordinal": 7,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_employee",
+      "column": "role",
+      "ordinal": 8,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_employee",
+      "column": "source_salesperson",
+      "ordinal": 9,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_employee",
+      "column": "login_enabled",
+      "ordinal": 10,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_employee",
+      "column": "login_identity_created",
+      "ordinal": 11,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_employee",
+      "column": "source_payload",
+      "ordinal": 12,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "column": "id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "column": "source_id",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "column": "source_code",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "column": "account_number",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "column": "name",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "column": "bank",
+      "ordinal": 7,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "column": "account_type",
+      "ordinal": 8,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "column": "source_department_id",
+      "ordinal": 9,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "column": "primary_payment_method_id",
+      "ordinal": 10,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "column": "hall_ids",
+      "ordinal": 11,
+      "type": "ARRAY",
+      "udt": "_uuid",
+      "nullable": "NO",
+      "default": "'{}'::uuid[]"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "column": "source_latest_balance",
+      "ordinal": 12,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "column": "balance_initialized",
+      "ordinal": 13,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_fund_account",
+      "column": "source_payload",
+      "ordinal": 14,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_hall",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_hall",
+      "column": "id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_hall",
+      "column": "source_id",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_hall",
+      "column": "source_code",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_hall",
+      "column": "name",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_hall",
+      "column": "department_id",
+      "ordinal": 6,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_hall",
+      "column": "default_customer_id",
+      "ordinal": 7,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_hall",
+      "column": "default_warehouse_id",
+      "ordinal": 8,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_hall",
+      "column": "warehouse_ids",
+      "ordinal": 9,
+      "type": "ARRAY",
+      "udt": "_uuid",
+      "nullable": "NO",
+      "default": "'{}'::uuid[]"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_hall",
+      "column": "source_payload",
+      "ordinal": 10,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "source_dataset",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "source_id",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "target_document_id",
+      "ordinal": 4,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "document_kind",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "source_number",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "business_date",
+      "ordinal": 7,
+      "type": "date",
+      "udt": "date",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "source_business_type_code",
+      "ordinal": 8,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "source_business_type_name",
+      "ordinal": 9,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "source_party_id",
+      "ordinal": 10,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "source_department_id",
+      "ordinal": 11,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "source_employee_id",
+      "ordinal": 12,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "source_warehouse_id",
+      "ordinal": 13,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "source_from_warehouse_id",
+      "ordinal": 14,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "source_to_warehouse_id",
+      "ordinal": 15,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "line_count",
+      "ordinal": 16,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "quantity_total",
+      "ordinal": 17,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "amount_total",
+      "ordinal": 18,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "read_only",
+      "ordinal": 19,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "audit_status",
+      "ordinal": 20,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "audited_by",
+      "ordinal": 21,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "audited_at",
+      "ordinal": 22,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "created_by",
+      "ordinal": 23,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "created_at",
+      "ordinal": 24,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "runtime_audit_replay_allowed",
+      "ordinal": 25,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "stock_effect",
+      "ordinal": 26,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "source_sha256",
+      "ordinal": 27,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "source_record_sha256",
+      "ordinal": 28,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_document",
+      "column": "source_payload",
+      "ordinal": 29,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "source_dataset",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "source_id",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "target_line_id",
+      "ordinal": 4,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "source_document_id",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "target_document_id",
+      "ordinal": 6,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "line_kind",
+      "ordinal": 7,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "product_id",
+      "ordinal": 8,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "color_id",
+      "ordinal": 9,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "size_id",
+      "ordinal": 10,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "sku_id",
+      "ordinal": 11,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "warehouse_id",
+      "ordinal": 12,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "from_warehouse_id",
+      "ordinal": 13,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "to_warehouse_id",
+      "ordinal": 14,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "source_product_code",
+      "ordinal": 15,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "source_product_name",
+      "ordinal": 16,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "source_color_code",
+      "ordinal": 17,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "source_color_name",
+      "ordinal": 18,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "source_size_code",
+      "ordinal": 19,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "source_size_name",
+      "ordinal": 20,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "source_quantity",
+      "ordinal": 21,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "stock_quantity_contribution",
+      "ordinal": 22,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "amount",
+      "ordinal": 23,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "unit_price",
+      "ordinal": 24,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "unit",
+      "ordinal": 25,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "stock_effect",
+      "ordinal": 26,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "read_only",
+      "ordinal": 27,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "source_sha256",
+      "ordinal": 28,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "source_record_sha256",
+      "ordinal": 29,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_history_line",
+      "column": "source_lineage",
+      "ordinal": 30,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": "'{}'::jsonb"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_id_map",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_id_map",
+      "column": "entity_type",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_id_map",
+      "column": "source_id",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_id_map",
+      "column": "target_id",
+      "ordinal": 4,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_file",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_file",
+      "column": "dataset_path",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_file",
+      "column": "source_sha256",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_file",
+      "column": "record_count",
+      "ordinal": 4,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_file",
+      "column": "success_count",
+      "ordinal": 5,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_file",
+      "column": "failure_count",
+      "ordinal": 6,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_file",
+      "column": "skipped_count",
+      "ordinal": 7,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_file",
+      "column": "quarantined_count",
+      "ordinal": 8,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_file",
+      "column": "can_import",
+      "ordinal": 9,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_file",
+      "column": "participates_in_business_calculation",
+      "ordinal": 10,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_file",
+      "column": "load_action",
+      "ordinal": 11,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_file",
+      "column": "status",
+      "ordinal": 12,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "space_key",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "schema_name",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "database_name",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "manifest_path",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "manifest_sha256",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "preflight_batch_id",
+      "ordinal": 7,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "importer_version",
+      "ordinal": 8,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "status",
+      "ordinal": 9,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "started_at",
+      "ordinal": 10,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "committed_at",
+      "ordinal": 11,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "git_sha",
+      "ordinal": 12,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "workspace_state_sha256",
+      "ordinal": 13,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "success_count",
+      "ordinal": 14,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "failure_count",
+      "ordinal": 15,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "skipped_count",
+      "ordinal": 16,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "quarantined_count",
+      "ordinal": 17,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "counts",
+      "ordinal": 18,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": "'{}'::jsonb"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "rollback_note",
+      "ordinal": 19,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": "''::text"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_import_run",
+      "column": "error",
+      "ordinal": 20,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_inventory_balance_source",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_inventory_balance_source",
+      "column": "source_id",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_inventory_balance_source",
+      "column": "variant_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_inventory_balance_source",
+      "column": "warehouse_id",
+      "ordinal": 4,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_inventory_balance_source",
+      "column": "quantity",
+      "ordinal": 5,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_inventory_balance_source",
+      "column": "unit",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_inventory_balance_source",
+      "column": "opening_quantity",
+      "ordinal": 7,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_inventory_balance_source",
+      "column": "cutoff_source_date",
+      "ordinal": 8,
+      "type": "date",
+      "udt": "date",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_inventory_balance_source",
+      "column": "snapshot_used",
+      "ordinal": 9,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_inventory_balance_source",
+      "column": "apply_historical_documents_again",
+      "ordinal": 10,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_inventory_balance_source",
+      "column": "source_event_count",
+      "ordinal": 11,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_inventory_balance_source",
+      "column": "components",
+      "ordinal": 12,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_inventory_balance_source",
+      "column": "source_payload",
+      "ordinal": 13,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_party_role",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_party_role",
+      "column": "party_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_party_role",
+      "column": "source_id",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_party_role",
+      "column": "role",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_party_role",
+      "column": "name",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_party_role",
+      "column": "source_payload",
+      "ordinal": 6,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_payment_method",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_payment_method",
+      "column": "id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_payment_method",
+      "column": "source_id",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_payment_method",
+      "column": "source_code",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_payment_method",
+      "column": "configuration_key",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_payment_method",
+      "column": "name",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_payment_method",
+      "column": "origin",
+      "ordinal": 7,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_payment_method",
+      "column": "source_payload",
+      "ordinal": 8,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_barcode",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_barcode",
+      "column": "source_id",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_barcode",
+      "column": "product_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_barcode",
+      "column": "barcode",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_barcode",
+      "column": "unit",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_barcode",
+      "column": "is_default",
+      "ordinal": 6,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_barcode",
+      "column": "binding_scope",
+      "ordinal": 7,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_barcode",
+      "column": "sku_id",
+      "ordinal": 8,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_barcode",
+      "column": "sku_binding_known",
+      "ordinal": 9,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_barcode",
+      "column": "source_payload",
+      "ordinal": 10,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_source",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_source",
+      "column": "product_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_source",
+      "column": "source_id",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_source",
+      "column": "source_code",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_source",
+      "column": "source_size_group_id",
+      "ordinal": 5,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_source",
+      "column": "category_decision",
+      "ordinal": 6,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_product_source",
+      "column": "source_payload",
+      "ordinal": 7,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "source_id",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "settlement_id",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "source_document_id",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "target_document_id",
+      "ordinal": 5,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "payment_method_id",
+      "ordinal": 6,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "fund_account_id",
+      "ordinal": 7,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "source_payment_method_code",
+      "ordinal": 8,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "source_payment_method_name",
+      "ordinal": 9,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "source_fund_account_code",
+      "ordinal": 10,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "source_fund_account_name",
+      "ordinal": 11,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "amount",
+      "ordinal": 12,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "direction",
+      "ordinal": 13,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "source_business_date",
+      "ordinal": 14,
+      "type": "date",
+      "udt": "date",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "settled_at",
+      "ordinal": 15,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "read_only",
+      "ordinal": 16,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "runtime_funds_effect",
+      "ordinal": 17,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "source_sha256",
+      "ordinal": 18,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "source_record_sha256",
+      "ordinal": 19,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_sales_fund",
+      "column": "source_payload",
+      "ordinal": 20,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_source_lineage",
+      "column": "batch_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_source_lineage",
+      "column": "dataset_path",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_source_lineage",
+      "column": "source_id",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_source_lineage",
+      "column": "source_sha256",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_source_lineage",
+      "column": "record_sha256",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_source_lineage",
+      "column": "target_type",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "tplus_source_lineage",
+      "column": "target_id",
+      "ordinal": 7,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "unit",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "unit",
+      "column": "code",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "unit",
+      "column": "code_normalized",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "unit",
+      "column": "name",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "unit",
+      "column": "quantity_scale",
+      "ordinal": 5,
+      "type": "smallint",
+      "udt": "int2",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "unit",
+      "column": "enabled",
+      "ordinal": 6,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "user_session",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "user_session",
+      "column": "user_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "user_session",
+      "column": "token_hash",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "user_session",
+      "column": "expires_at",
+      "ordinal": 4,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "user_session",
+      "column": "revoked_at",
+      "ordinal": 5,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "user_session",
+      "column": "created_at",
+      "ordinal": 6,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "user_view_setting",
+      "column": "user_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "user_view_setting",
+      "column": "view_key",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "user_view_setting",
+      "column": "settings",
+      "ordinal": 3,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "user_view_setting",
+      "column": "updated_at",
+      "ordinal": 4,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "variant",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "variant",
+      "column": "product_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "variant",
+      "column": "option_key",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "variant",
+      "column": "enabled",
+      "ordinal": 4,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "variant",
+      "column": "version",
+      "ordinal": 5,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "variant_option",
+      "column": "variant_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "variant_option",
+      "column": "dimension_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "variant_option",
+      "column": "spec_value_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "warehouse",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "warehouse",
+      "column": "code",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "warehouse",
+      "column": "code_normalized",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "warehouse",
+      "column": "name",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "warehouse",
+      "column": "type",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "warehouse",
+      "column": "enabled",
+      "ordinal": 6,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "table": "warehouse",
+      "column": "version",
+      "ordinal": 7,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_policy",
+      "column": "singleton",
+      "ordinal": 1,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_policy",
+      "column": "revision",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_policy",
+      "column": "source_sha256",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_policy",
+      "column": "body",
+      "ordinal": 4,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_policy",
+      "column": "updated_at",
+      "ordinal": 5,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_product",
+      "column": "product_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_product",
+      "column": "code",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_product",
+      "column": "origin",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_record",
+      "column": "sku_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_record",
+      "column": "product_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_record",
+      "column": "status",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_record",
+      "column": "original_barcode",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_authority_record",
+      "column": "record",
+      "ordinal": 5,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_scheme_supplement",
+      "column": "sku_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_scheme_supplement",
+      "column": "product_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_scheme_supplement",
+      "column": "revision",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_scheme_supplement",
+      "column": "status",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_scheme_supplement",
+      "column": "barcode",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_scheme_supplement",
+      "column": "record",
+      "ordinal": 6,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "barcode_scheme_supplement",
+      "column": "updated_at",
+      "ordinal": 7,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "document_type",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "number",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "source_identity",
+      "ordinal": 4,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "status",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "baseline_was_included",
+      "ordinal": 6,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "current_effect_active",
+      "ordinal": 7,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "active_effect_identity",
+      "ordinal": 8,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "active_effect_revision",
+      "ordinal": 9,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "current_revision",
+      "ordinal": 10,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "version",
+      "ordinal": 11,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "1"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "original_auditor",
+      "ordinal": 12,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "original_audited_at",
+      "ordinal": 13,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "created_at",
+      "ordinal": 14,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "updated_at",
+      "ordinal": 15,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "document",
+      "column": "business_day",
+      "ordinal": 16,
+      "type": "date",
+      "udt": "date",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "edit_lease",
+      "column": "document_key",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "edit_lease",
+      "column": "token",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "edit_lease",
+      "column": "expires_at",
+      "ordinal": 3,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_account_audit",
+      "column": "id",
+      "ordinal": 1,
+      "type": "bigint",
+      "udt": "int8",
+      "nullable": "NO",
+      "default": "nextval('v2_runtime_stage03c.employee_account_audit_id_seq'::regclass)"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_account_audit",
+      "column": "actor_id",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_account_audit",
+      "column": "employee_id",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_account_audit",
+      "column": "action",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_account_audit",
+      "column": "changes",
+      "ordinal": 5,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_account_audit",
+      "column": "created_at",
+      "ordinal": 6,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_login",
+      "column": "id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_login",
+      "column": "login_name",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_login",
+      "column": "body",
+      "ordinal": 3,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_login",
+      "column": "password_salt",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_login",
+      "column": "password_hash",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_login",
+      "column": "version",
+      "ordinal": 6,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "1"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_login",
+      "column": "updated_at",
+      "ordinal": 7,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_session",
+      "column": "token",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_session",
+      "column": "employee_id",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_session",
+      "column": "employee_version",
+      "ordinal": 3,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "employee_session",
+      "column": "expires_at",
+      "ordinal": 4,
+      "type": "bigint",
+      "udt": "int8",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "generated_barcode",
+      "column": "sku_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "generated_barcode",
+      "column": "product_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "generated_barcode",
+      "column": "barcode",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "generated_barcode",
+      "column": "scheme_id",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "generated_barcode",
+      "column": "evidence",
+      "ordinal": 5,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "generated_barcode",
+      "column": "created_at",
+      "ordinal": 6,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "generated_barcode_retired",
+      "column": "sku_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "generated_barcode_retired",
+      "column": "product_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "generated_barcode_retired",
+      "column": "barcode",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "generated_barcode_retired",
+      "column": "scheme_id",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "generated_barcode_retired",
+      "column": "evidence",
+      "ordinal": 5,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "generated_barcode_retired",
+      "column": "created_at",
+      "ordinal": 6,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "idempotency_request",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "idempotency_request",
+      "column": "actor_id",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "idempotency_request",
+      "column": "command_scope",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "idempotency_request",
+      "column": "idempotency_key",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "idempotency_request",
+      "column": "payload_hash",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "idempotency_request",
+      "column": "response",
+      "ordinal": 6,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "idempotency_request",
+      "column": "completed_at",
+      "ordinal": 7,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "idempotency_request",
+      "column": "document_id",
+      "ordinal": 8,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "idempotency_request",
+      "column": "expected_version",
+      "ordinal": 9,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "idempotency_request",
+      "column": "operation",
+      "ordinal": 10,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "idempotency_request",
+      "column": "committed_state",
+      "ordinal": 11,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_balance_base",
+      "column": "warehouse_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_balance_base",
+      "column": "variant_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_balance_base",
+      "column": "quantity",
+      "ordinal": 3,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_delta",
+      "column": "warehouse_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_delta",
+      "column": "sku_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_delta",
+      "column": "quantity",
+      "ordinal": 3,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_cell",
+      "column": "run_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_cell",
+      "column": "warehouse_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_cell",
+      "column": "sku_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_cell",
+      "column": "quantity",
+      "ordinal": 4,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_cell",
+      "column": "unit",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_cell",
+      "column": "source_cell",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_cell",
+      "column": "source_record",
+      "ordinal": 7,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_delta_checkpoint",
+      "column": "run_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_delta_checkpoint",
+      "column": "warehouse_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_delta_checkpoint",
+      "column": "sku_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_delta_checkpoint",
+      "column": "quantity",
+      "ordinal": 4,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_prior_posting",
+      "column": "run_id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_prior_posting",
+      "column": "posting_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_run",
+      "column": "id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_run",
+      "column": "source_sha256",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_run",
+      "column": "source_file",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_run",
+      "column": "mode",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_run",
+      "column": "body",
+      "ordinal": 5,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_run",
+      "column": "active",
+      "ordinal": 6,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "false"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "inventory_opening_run",
+      "column": "activated_at",
+      "ordinal": 7,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "master_reference_overlay",
+      "column": "kind",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "master_reference_overlay",
+      "column": "id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "master_reference_overlay",
+      "column": "name",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "master_reference_overlay",
+      "column": "enabled",
+      "ordinal": 4,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "master_reference_overlay",
+      "column": "method_id",
+      "ordinal": 5,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "master_reference_overlay",
+      "column": "updated_at",
+      "ordinal": 6,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "movement",
+      "column": "posting_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "movement",
+      "column": "line_index",
+      "ordinal": 2,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "movement",
+      "column": "warehouse_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "movement",
+      "column": "sku_id",
+      "ordinal": 4,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "movement",
+      "column": "quantity",
+      "ordinal": 5,
+      "type": "numeric",
+      "udt": "numeric",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "operator",
+      "column": "id",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "operator",
+      "column": "name",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "operator",
+      "column": "role",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "operator",
+      "column": "enabled",
+      "ordinal": 4,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "true"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "posting",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "posting",
+      "column": "document_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "posting",
+      "column": "revision",
+      "ordinal": 3,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "posting",
+      "column": "reason",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "posting",
+      "column": "reversed_effect_identity",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "posting",
+      "column": "actor_id",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "posting",
+      "column": "request_key",
+      "ordinal": 7,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "posting",
+      "column": "created_at",
+      "ordinal": 8,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_barcode_alias",
+      "column": "barcode",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_barcode_alias",
+      "column": "product_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_barcode_alias",
+      "column": "sku_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_barcode_alias",
+      "column": "historical_note",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": "''::text"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_barcode_alias",
+      "column": "created_at",
+      "ordinal": 5,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_barcode_alias",
+      "column": "origin",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": "'MIGRATED'::text"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_barcode_alias_retired",
+      "column": "barcode",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_barcode_alias_retired",
+      "column": "product_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_barcode_alias_retired",
+      "column": "sku_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_barcode_alias_retired",
+      "column": "historical_note",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": "''::text"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_barcode_alias_retired",
+      "column": "created_at",
+      "ordinal": 5,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_barcode_alias_retired",
+      "column": "origin",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": "'MIGRATED'::text"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_image",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_image",
+      "column": "product_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_image",
+      "column": "path",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_image",
+      "column": "sha256",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_image",
+      "column": "media_type",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_image",
+      "column": "role",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_image",
+      "column": "color_name",
+      "ordinal": 7,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_image",
+      "column": "name",
+      "ordinal": 8,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_image",
+      "column": "sort_order",
+      "ordinal": 9,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_master_overlay",
+      "column": "kind",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_master_overlay",
+      "column": "id",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_master_overlay",
+      "column": "body",
+      "ordinal": 3,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_master_overlay",
+      "column": "deleted",
+      "ordinal": 4,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "false"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_master_overlay",
+      "column": "version",
+      "ordinal": 5,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "1"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_master_overlay",
+      "column": "updated_at",
+      "ordinal": 6,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_overlay",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_overlay",
+      "column": "code",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_overlay",
+      "column": "body",
+      "ordinal": 3,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_overlay",
+      "column": "deleted",
+      "ordinal": 4,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": "false"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_overlay",
+      "column": "created_at",
+      "ordinal": 5,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_overlay",
+      "column": "updated_at",
+      "ordinal": 6,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_profile_overlay",
+      "column": "product_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_profile_overlay",
+      "column": "body",
+      "ordinal": 2,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_profile_overlay",
+      "column": "version",
+      "ordinal": 3,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": "1"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "product_profile_overlay",
+      "column": "updated_at",
+      "ordinal": 4,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "revision",
+      "column": "document_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "revision",
+      "column": "revision",
+      "ordinal": 2,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "revision",
+      "column": "original_imported",
+      "ordinal": 3,
+      "type": "boolean",
+      "udt": "bool",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "revision",
+      "column": "body",
+      "ordinal": 4,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "revision",
+      "column": "actor_id",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "revision",
+      "column": "created_at",
+      "ordinal": 6,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "size_overlay",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "size_overlay",
+      "column": "group_name",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "size_overlay",
+      "column": "name",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "variant_overlay",
+      "column": "id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": "gen_random_uuid()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "variant_overlay",
+      "column": "product_id",
+      "ordinal": 2,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "variant_overlay",
+      "column": "color_id",
+      "ordinal": 3,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "variant_overlay",
+      "column": "size_id",
+      "ordinal": 4,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "variant_overlay",
+      "column": "size_name",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "variant_overlay",
+      "column": "group_name",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "variant_overlay",
+      "column": "created_at",
+      "ordinal": 7,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "variant_overlay",
+      "column": "fit_id",
+      "ordinal": 8,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": "'A'::text"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "variant_overlay",
+      "column": "size_code",
+      "ordinal": 9,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": "''::text"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "version_history",
+      "column": "document_id",
+      "ordinal": 1,
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "version_history",
+      "column": "version",
+      "ordinal": 2,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "version_history",
+      "column": "operation",
+      "ordinal": 3,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "version_history",
+      "column": "revision",
+      "ordinal": 4,
+      "type": "integer",
+      "udt": "int4",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "version_history",
+      "column": "actor_id",
+      "ordinal": 5,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "version_history",
+      "column": "request_key",
+      "ordinal": 6,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "version_history",
+      "column": "created_at",
+      "ordinal": 7,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "work_event",
+      "column": "document_key",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "work_event",
+      "column": "id",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "work_event",
+      "column": "body",
+      "ordinal": 3,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "work_event",
+      "column": "actor_id",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "work_event",
+      "column": "created_at",
+      "ordinal": 5,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "work_record",
+      "column": "document_key",
+      "ordinal": 1,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "work_record",
+      "column": "id",
+      "ordinal": 2,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "work_record",
+      "column": "body",
+      "ordinal": 3,
+      "type": "jsonb",
+      "udt": "jsonb",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "work_record",
+      "column": "actor_id",
+      "ordinal": 4,
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "work_record",
+      "column": "created_at",
+      "ordinal": 5,
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO",
+      "default": "now()"
+    }
+  ],
+  "views": 1,
+  "relations": [
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "app_user",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "barcode",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "barcode_encoding_mapping",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "barcode_scheme",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "barcode_scheme_segment",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "barcode_scheme_version",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "brand",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "business_document",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "category",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "counterparty",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "document_line",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "fit",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "idempotency_request",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "import_batch",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "inventory_balance",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "inventory_movement",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "inventory_posting",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "migration_checkpoint",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "migration_issue",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "opening_ledger",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "price_type",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "product",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "product_image",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "product_option",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "product_price",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "return_line_reference",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "schema_migration",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "size_group",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "size_group_item",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "source_mapping",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "source_record",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "spec_dimension",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "spec_value",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "system_setting",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_department",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_employee",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_fund_account",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_hall",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_history_document",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_history_line",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_id_map",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_import_file",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_import_run",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_inventory_balance_source",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_party_role",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_payment_method",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_product_barcode",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_product_source",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_sales_fund",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "tplus_source_lineage",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "unit",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "user_session",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "user_view_setting",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "variant",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "variant_option",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "tplus_demo_20260922_a2",
+      "name": "warehouse",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "barcode_authority_policy",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "barcode_authority_product",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "barcode_authority_record",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "barcode_scheme_supplement",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "document",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "edit_lease",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "employee_account_audit",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "employee_login",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "employee_session",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "generated_barcode",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "generated_barcode_retired",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "idempotency_request",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "inventory_balance_base",
+      "type": "VIEW"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "inventory_delta",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "inventory_opening_cell",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "inventory_opening_delta_checkpoint",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "inventory_opening_prior_posting",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "inventory_opening_run",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "master_reference_overlay",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "movement",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "operator",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "posting",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "product_barcode_alias",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "product_barcode_alias_retired",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "product_image",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "product_master_overlay",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "product_overlay",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "product_profile_overlay",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "revision",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "size_overlay",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "variant_overlay",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "version_history",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "work_event",
+      "type": "BASE TABLE"
+    },
+    {
+      "schema": "v2_runtime_stage03c",
+      "name": "work_record",
+      "type": "BASE TABLE"
+    }
+  ]
+}

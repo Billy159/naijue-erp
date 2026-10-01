@@ -1,0 +1,20 @@
+{
+  "scope": "当前 Git 索引源码、资源和必要新文件；不读取 .env 或员工密码，不对历史提交作重写",
+  "realCredentialsFound": false,
+  "privateKeysOrApiTokensFound": false,
+  "passwordPatternFindings": "9 处均为隔离 Smoke Test / 内存模拟 / 独立测试 schema 的测试口令，未发现真实员工密码。",
+  "gitUntrackedOnlyFiles": 80,
+  "allUntrackedFilesPreservedOnDisk": true,
+  "excluded": [
+    ".env*",
+    "private keys and credential files",
+    "node_modules",
+    "dist/build",
+    "cache/logs/temp",
+    ".runtime",
+    "backup/",
+    "inputs/",
+    "frontend/assets/*.bundle.js"
+  ],
+  "formalSystemPlansPreservedLocally": true
+}

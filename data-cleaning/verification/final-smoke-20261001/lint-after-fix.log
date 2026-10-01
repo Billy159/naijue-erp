@@ -1,4 +1,0 @@
-
-> naijue-8877-demo@1.0.0 lint
-> eslint frontend/*.js frontend/*.mjs frontend/*.jsx server/*.mjs server/runtime/*.ts --no-warn-ignored
-

@@ -1,7 +1,0 @@
-PREFLIGHT convert_masters.py
-PREFLIGHT convert_sales.py
-PREFLIGHT convert_movements.py
-PREFLIGHT build_inventory.py
-PREFLIGHT validate_package.py
-DYNAMIC DELIVERY PASS TPLUS-IMPORT-20261001-A1 datasets=51
-{"status": "PASS", "batch": "TPLUS-IMPORT-20261001-A1", "inventory": "80794", "manifest": "/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/.runtime/replay/current/preflight/TPLUS-IMPORT-20261001-A1/IMPORT_MANIFEST.json"}

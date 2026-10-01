@@ -1,0 +1,26 @@
+{
+  "menu": {
+    "text": "替换\n删除",
+    "items": [
+      "替换",
+      "删除"
+    ]
+  },
+  "preview": {
+    "visible": 1,
+    "images": [
+      {
+        "src": "http://127.0.0.1:8877/assets/product-media/026MS5133001/028f3adc9dbd1af89935ed26ef1b88ec9bed2c6a39ad46d59a9daec3de8717b1.jpg",
+        "loaded": true,
+        "width": 2048,
+        "height": 2048
+      }
+    ]
+  },
+  "closed": {
+    "open": 0,
+    "photoTab": "true",
+    "dataUnchanged": true
+  },
+  "firstCheckCorrection": "首次断言使用旧.arco-menu-item类名；DOM回读确认官方Dropdown实际输出arco-dropdown-menu-item。改为role=menuitem后通过，无产品代码改动。"
+}

@@ -1,0 +1,12 @@
+{
+  "dataCleaningRetained": true,
+  "inputsRetained": true,
+  "backupRetained": true,
+  "backupFile": "backup/business-management-current-20261001.dump",
+  "backupTime": "2026-10-01T14:50:01.127541+08:00",
+  "backupBytes": 281330547,
+  "backupSha256": "741f1da7125ee2d4a27bbe59ef3045c2724446f8e0c99aae593ead97f55a701c",
+  "backupPreviouslyRestoreVerified": true,
+  "backupRestoredTables": 89,
+  "note": "保留现有已验证备份，不在冻结时执行重新导入或覆盖当前数据库。"
+}

@@ -1,8 +1,22 @@
 # 奈爵服饰 8877 Demo
 
-当前正式工程位于 `/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo`。此工程从实际运行页面、未提交修改、当前数据库和图片冻结后整理，开发基线使用 `8877-final-baseline`。页面源码、历史兼容规则及已确认业务裁决均保留。
+当前工程位于 `/Users/billy/Desktop/Workspace/project-007-业务管理系统/奈爵服饰-8877-Demo`。冻结对象是当前工作区实际运行、已完成最终 Smoke Test 及最后局部修正的版本；页面源码、历史兼容规则及已确认业务裁决均保留。
 
-**后续采用整套新T+文件夹，复用确认裁定重建独立数据库。完整全仓期初库存及共同截止时点仍待提供；零期初重建不得作为当前上线默认口径。**
+# 8877 Final Baseline
+
+**基线：`8877-final-baseline` · Frozen: 2026-10-01**
+
+1. 当前版本是奈爵服饰 ERP V2 正式开发唯一的产品需求 / UI / 交互基线。
+2. 后续正式系统开发有争议时，以该版本实际运行效果和已确认规则为准。
+3. Demo 冻结后原则上不再继续日常开发，不主动优化 UI、清理代码、性能重构或增加业务功能。
+4. 新需求进入正式系统需求，不静默修改 Final Baseline；基线确有需求错误时，必须明确记录为 `baseline correction`。
+5. 库存状况表是当前系统主要 UI / 交互设计语言基线。
+6. 当前版本仍是产品 Demo，不等于正式生产代码。正式 ERP 后续在独立 `naijue-erp-v2` 工程开发，Demo 仓库只保存产品蓝图和追溯依据。
+7. 历史兼容数据、原 SKU / 尺码含义及历史条码不得因为正式开发而被随意重编或删除。
+
+最终冻结提交由 `git rev-parse 8877-final-baseline^{commit}` 查询。较早的 Smoke Test 冻结标签另存为 `8877-final-baseline-before-final-freeze-20261001`，用于保留原有追溯；唯一正式基线名称保持 `8877-final-baseline`。
+
+**当前 Demo 采用增量导入口径：保留已接纳数据和已激活库存快照，只计激活后的有效增量。完整全仓期初库存及最终截止时点仍需按正式上线数据确定；旧“零期初重建”方案不得作为当前正式上线默认口径。** 后续收到整套新 T+ 文件夹时，仍按既有裁决在独立新库完成迁移与核验；本次冻结不修改迁移程序或业务规则。
 
 ## 目录
 
@@ -17,11 +31,13 @@
 ├── backup/               一份当前业务数据库备份
 ├── README.md
 ├── package.json / package-lock.json
-├── .env.example
+├── .env.example          本机配置模板，仅随完整项目保留，不纳入 Git
 └── .git/                 当前开发主线与 8877-final-baseline 标签
 ```
 
-`node_modules/`、`.venv/`、`.runtime/` 和清洗运行目录可重新生成，不纳入 Git。`inputs/`、`backup/` 与较大的冻结比对压缩包随完整项目文件夹保存；它们有文件哈希清单，不能只拷贝 Git 后误认为业务数据与迁移资料也已拷贝。
+`node_modules/`、`.venv/`、`.runtime/`、`dist/`、`build/`、cache、logs、临时文件、`.env*`、凭据及清洗运行目录不纳入 Git。7 个 `frontend/assets/*.bundle.js` 为可重新生成的构建产物，当前运行文件保留在原位，Git 保存全部入口源码、构建配置及依赖锁；从 Git 获取后先执行下列构建步骤。
+
+`data-cleaning/`、`inputs/`、`backup/` 和各 README 均继续保留。`inputs/`、`backup/` 与较大的冻结比对压缩包随完整项目文件夹保存；它们有文件哈希清单，不能只拷贝 Git 后误认为业务数据与迁移资料也已拷贝。当前运行前端 / 服务 / 资源的 SHA256 清单及轻量冻结验证见 [最终冻结记录](data-cleaning/verification/final-freeze-20261001/FINAL-FREEZE.md)。正式开发与上线主计划保留在本机 `docs/正式开发与上线主计划-20261001/`，属于正式系统工作资料，不纳入 Demo 冻结仓库。
 
 ## 启动和停止
 
@@ -36,7 +52,7 @@ npm run build
 
 随后双击 `启动Demo.command`，访问 <http://127.0.0.1:8877/>，用现有员工账号登录。保持启动窗口打开；按 Control+C 或双击 `停止Demo.command` 同时停止页面与数据服务。已有服务占用 8877 / 8878 时，入口会提示先停止，不会终止其他进程。
 
-数据库连接默认使用本机 `business_management`，Source 为 `tplus_demo_20260922_a2`，Runtime 为 `v2_runtime_stage03c`。按需要复制 `.env.example` 为 `.env` 并调整连接；密码由本人保管，不提交。PostgreSQL 客户端优先使用 `PG_BIN` 或 `PATH`，本机也可从 `$HOME/pg17/bin` 找到。
+数据库连接默认使用本机 `business_management`，Source 为 `tplus_demo_20260922_a2`，Runtime 为 `v2_runtime_stage03c`。默认本机配置无需 `.env`；完整项目可按需要复制本机 `.env.example` 为 `.env`，或自行设置 `POSTGRES_HOST`、`POSTGRES_PORT`、`POSTGRES_USER`、`POSTGRES_DB`、`POSTGRES_SCHEMA`。所有 `.env*` 均不提交，密码由本人保管。PostgreSQL 客户端优先使用 `PG_BIN` 或 `PATH`，本机也可从 `$HOME/pg17/bin` 找到。
 
 ## 数据和图片在哪里
 
@@ -132,4 +148,6 @@ POSTGRES_DB=demo_8877_recovery_20261001 PSQL_BIN="$HOME/pg17/bin/psql" \
 
 ## 本次收口验收
 
-旧目录与重复备份已按用户批准的19项清单删除，唯一正式入口为本工程。完整16项交付、磁盘复测与保留/删除明细见 [收口验收报告](data-cleaning/verification/consolidation-20261001/收口验收报告.md)。本轮恢复了误删的调拨页面状态和商品条码校验引用，并新增直接覆盖这两类问题的回归检查；前端19组、后端11组通过。后续开发从 `codex/main` 的 `8877-final-baseline` 继续。
+旧目录与重复备份已按用户批准的19项清单删除，唯一正式入口为本工程。完整16项交付、磁盘复测与保留/删除明细见 [收口验收报告](data-cleaning/verification/consolidation-20261001/收口验收报告.md)。此前恢复了误删的调拨页面状态和商品条码校验引用，并新增直接覆盖这两类问题的回归检查；前端19组、后端11组通过。
+
+最终 Smoke Test 后的图片局部修正已一并纳入本次冻结。`codex/main` 的 `8877-final-baseline` 是后续正式开发的产品参考，Demo 本身进入冻结状态。修改基线须单独记录 `baseline correction`，保留修正原因、授权、变更范围和验证证据；不得静默移动标签或继续日常开发。
