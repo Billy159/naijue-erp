@@ -1,0 +1,9 @@
+{
+  "time": "2026-10-01T18:50:42.945946+08:00",
+  "initialCommit": "a170640293a068233073cdbfcf89f20ceb2edb34",
+  "testedFiles": {
+    "frontend/index.html": "ef61ecc366e86cb614df8b36d833e3ccc8e2cd5f81cf1944e2daac790b9409b5",
+    "frontend/sales-current.js": "846a217125cc7f0fe2800a7508a01131ad3648cdd4fe8a69cf8284a4b6b4d3a1",
+    "frontend/verification/sales-line-merge.cjs": "87299557d884bc9ebbd32a199434014255c169b8c9a5c2e25267fc88baf252dc"
+  }
+}

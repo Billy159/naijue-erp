@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "review": "All business values identical except one verified trailing whitespace trim; provenance changes and two optional diagnostic files only.",
+  "exceptions": [
+    {
+      "file": "data/master/products.jsonl",
+      "code": "612YR5568116",
+      "changes": [
+        "description trailing whitespace",
+        "source description trailing whitespace"
+      ]
+    }
+  ],
+  "skuBarcodeHistoricalDocumentAndInventoryChanges": 0,
+  "identityDrift": 0,
+  "stockOld": 80794,
+  "stockNew": 80794,
+  "scope": "isolated historical replay only, not current inventory or next full batch"
+}

@@ -1,0 +1,52 @@
+{
+  "stores": [
+    {
+      "name": "Smoke验收营业厅已编辑",
+      "enabled": false,
+      "defaultCustomerId": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+      "defaultWarehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+      "id": "a62bc477-bcdf-4070-964b-f06cc5f00a39"
+    }
+  ],
+  "warehouses": [
+    {
+      "name": "Smoke验收仓库已编辑",
+      "enabled": false,
+      "storeId": "5b2461c8-ce98-2c2f-8909-627507196557",
+      "id": "059c928c-80bb-4ece-aa67-80dffc91d67d",
+      "ownershipPending": false,
+      "ownershipCandidates": []
+    }
+  ],
+  "parties": [
+    {
+      "name": "Smoke验收往来单位已编辑",
+      "enabled": false,
+      "tags": [
+        "customer"
+      ],
+      "id": "3d9647a1-036d-48b1-8a34-0e9bfe954d0a",
+      "code": "V2-CP-000002",
+      "usage": [
+        "customer"
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "name": "Smoke验收收款方式已编辑",
+      "enabled": true,
+      "id": "3a06dc36-b936-4ab4-91d7-d825023f2321"
+    }
+  ],
+  "fundAccounts": [
+    {
+      "name": "Smoke验收资金账户已编辑",
+      "enabled": false,
+      "methodIds": [
+        "3a06dc36-b936-4ab4-91d7-d825023f2321"
+      ],
+      "id": "452abd0b-3e83-46b4-a416-5a33e69e542a"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "check": "lint",
+    "exit": 0,
+    "seconds": 1.589
+  },
+  {
+    "check": "typecheck",
+    "exit": 0,
+    "seconds": 0.576
+  }
+]

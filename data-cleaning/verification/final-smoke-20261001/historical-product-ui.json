@@ -1,0 +1,423 @@
+[
+  {
+    "uuid": "b3ca96bc-fb6a-616e-bb2a-c14319041e1b",
+    "sourceSizes": [
+      {
+        "id": "3475e983-df54-1499-4291-be3bc411161d",
+        "code": "203",
+        "name": "170/M",
+        "sourceName": "170/88A",
+        "sourceCode": "503",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          54
+        ]
+      },
+      {
+        "id": "bf937c4b-e9c1-74fb-b9fe-078d79bf0161",
+        "code": "204",
+        "name": "175/L",
+        "sourceName": "175/92A",
+        "sourceCode": "504",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          55
+        ]
+      },
+      {
+        "id": "774e0571-82bb-2408-8412-54df1448c138",
+        "code": "205",
+        "name": "180/XL",
+        "sourceName": "180/96A",
+        "sourceCode": "505",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          56
+        ]
+      },
+      {
+        "id": "c3d3ee88-4c7f-2013-d29d-aaf08954b4c4",
+        "code": "206",
+        "name": "185/2XL",
+        "sourceName": "185/100A",
+        "sourceCode": "506",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          57
+        ]
+      },
+      {
+        "id": "92d64315-4a57-3091-7ccf-5bc5fc86e7bc",
+        "code": "207",
+        "name": "190/3XL",
+        "sourceName": "190/104A",
+        "sourceCode": "507",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          58
+        ]
+      },
+      {
+        "id": "cb179eac-9652-9867-d563-a165fd63fa71",
+        "code": "208",
+        "name": "195/4XL",
+        "sourceName": "195/108A",
+        "sourceCode": "508",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          59
+        ]
+      }
+    ],
+    "matches": [
+      {
+        "product": "715JK5336252",
+        "sku": "a717ca64-83e3-9d1a-b859-4d624d66c8ac",
+        "color": "蓝色",
+        "size": "180/XL",
+        "sourceSize": "180/96A"
+      }
+    ]
+  },
+  {
+    "uuid": "4fa14349-2e34-553f-e445-f5450b30168d",
+    "sourceSizes": [
+      {
+        "id": "7de879df-eb28-15fe-03b8-3e56d19f38a3",
+        "code": "203",
+        "name": "170/M",
+        "sourceName": "170/31",
+        "sourceCode": "03",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          6
+        ]
+      },
+      {
+        "id": "2669feda-cfd3-c685-d1ec-4639e0c134fd",
+        "code": "204",
+        "name": "175/L",
+        "sourceName": "175/32",
+        "sourceCode": "04",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          7
+        ]
+      },
+      {
+        "id": "aeae4739-a981-e651-6820-6e96a0683a59",
+        "code": "205",
+        "name": "180/XL",
+        "sourceName": "180/33",
+        "sourceCode": "05",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          8
+        ]
+      },
+      {
+        "id": "bb773005-ab96-59f9-ba90-a68b1a610bfb",
+        "code": "206",
+        "name": "185/2XL",
+        "sourceName": "185/34",
+        "sourceCode": "06",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          9
+        ]
+      },
+      {
+        "id": "c6e7d2c6-13df-72bb-d73c-0ede9f5306ef",
+        "code": "207",
+        "name": "190/3XL",
+        "sourceName": "190/35",
+        "sourceCode": "07",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          10
+        ]
+      }
+    ],
+    "matches": [
+      {
+        "product": "501XF5165021",
+        "sku": "648c1ad0-ec58-5bef-ebd2-fb3d7a55180a",
+        "color": "蓝色",
+        "size": "185/2XL",
+        "sourceSize": "185/34"
+      }
+    ]
+  },
+  {
+    "uuid": "b3ca96bc-fb6a-616e-bb2a-c14319041e1b",
+    "sourceSizes": [
+      {
+        "id": "3475e983-df54-1499-4291-be3bc411161d",
+        "code": "203",
+        "name": "170/M",
+        "sourceName": "170/88A",
+        "sourceCode": "503",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          54
+        ]
+      },
+      {
+        "id": "bf937c4b-e9c1-74fb-b9fe-078d79bf0161",
+        "code": "204",
+        "name": "175/L",
+        "sourceName": "175/92A",
+        "sourceCode": "504",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          55
+        ]
+      },
+      {
+        "id": "774e0571-82bb-2408-8412-54df1448c138",
+        "code": "205",
+        "name": "180/XL",
+        "sourceName": "180/96A",
+        "sourceCode": "505",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          56
+        ]
+      },
+      {
+        "id": "c3d3ee88-4c7f-2013-d29d-aaf08954b4c4",
+        "code": "206",
+        "name": "185/2XL",
+        "sourceName": "185/100A",
+        "sourceCode": "506",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          57
+        ]
+      },
+      {
+        "id": "92d64315-4a57-3091-7ccf-5bc5fc86e7bc",
+        "code": "207",
+        "name": "190/3XL",
+        "sourceName": "190/104A",
+        "sourceCode": "507",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          58
+        ]
+      },
+      {
+        "id": "cb179eac-9652-9867-d563-a165fd63fa71",
+        "code": "208",
+        "name": "195/4XL",
+        "sourceName": "195/108A",
+        "sourceCode": "508",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          59
+        ]
+      }
+    ],
+    "matches": [
+      {
+        "product": "715JK5336252",
+        "sku": "8d4090ea-e2bf-78e0-cc74-f0d47d15c966",
+        "color": "蓝色",
+        "size": "170/M",
+        "sourceSize": "170/88A"
+      }
+    ]
+  },
+  {
+    "uuid": "0461c912-19b1-b94c-3294-be40ff8c2ad6",
+    "sourceSizes": [
+      {
+        "id": "b3e02c40-fcd8-c621-5478-b100b17c9ef0",
+        "code": "202",
+        "name": "165/S",
+        "sourceName": "165/30",
+        "sourceCode": "02",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          5
+        ]
+      },
+      {
+        "id": "7de879df-eb28-15fe-03b8-3e56d19f38a3",
+        "code": "203",
+        "name": "170/M",
+        "sourceName": "170/31",
+        "sourceCode": "03",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          6
+        ]
+      },
+      {
+        "id": "2669feda-cfd3-c685-d1ec-4639e0c134fd",
+        "code": "204",
+        "name": "175/L",
+        "sourceName": "175/32",
+        "sourceCode": "04",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          7
+        ]
+      },
+      {
+        "id": "bb773005-ab96-59f9-ba90-a68b1a610bfb",
+        "code": "206",
+        "name": "185/2XL",
+        "sourceName": "185/34",
+        "sourceCode": "06",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          9
+        ]
+      }
+    ],
+    "matches": [
+      {
+        "product": "D5313205-黑色",
+        "sku": "bea134e7-b45d-7432-db97-9b4875816ed3",
+        "color": "不分色",
+        "size": "185/2XL",
+        "sourceSize": "185/34"
+      }
+    ]
+  },
+  {
+    "uuid": "60091f11-658f-61cc-a485-3e04ce4d9e8b",
+    "sourceSizes": [
+      {
+        "id": "7de879df-eb28-15fe-03b8-3e56d19f38a3",
+        "code": "203",
+        "name": "170/M",
+        "sourceName": "170/31",
+        "sourceCode": "03",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          6
+        ]
+      },
+      {
+        "id": "2669feda-cfd3-c685-d1ec-4639e0c134fd",
+        "code": "204",
+        "name": "175/L",
+        "sourceName": "175/32",
+        "sourceCode": "04",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          7
+        ]
+      },
+      {
+        "id": "aeae4739-a981-e651-6820-6e96a0683a59",
+        "code": "205",
+        "name": "180/XL",
+        "sourceName": "180/33",
+        "sourceCode": "05",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          8
+        ]
+      },
+      {
+        "id": "bb773005-ab96-59f9-ba90-a68b1a610bfb",
+        "code": "206",
+        "name": "185/2XL",
+        "sourceName": "185/34",
+        "sourceCode": "06",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          9
+        ]
+      },
+      {
+        "id": "c6e7d2c6-13df-72bb-d73c-0ede9f5306ef",
+        "code": "207",
+        "name": "190/3XL",
+        "sourceName": "190/35",
+        "sourceCode": "07",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          10
+        ]
+      },
+      {
+        "id": "4438ffb0-989e-63cf-5f60-e993752dcdda",
+        "code": "208",
+        "name": "195/4XL",
+        "sourceName": "195/36",
+        "sourceCode": "08",
+        "standardGroup": "男装上衣尺码",
+        "currentGroupId": "UPPER",
+        "standardFit": "A版",
+        "mappingRows": [
+          11
+        ]
+      }
+    ],
+    "matches": [
+      {
+        "product": "102TX5232372",
+        "sku": "79fab884-bbc4-189f-d467-adfaf8933f79",
+        "color": "白色",
+        "size": "175/L",
+        "sourceSize": "175/32"
+      }
+    ]
+  }
+]

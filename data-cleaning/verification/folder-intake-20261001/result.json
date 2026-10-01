@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "verifiedAt": "2026-10-01T17:48:54.349737+08:00",
+  "input": "inputs/tplus-current",
+  "mode": "FULL_REBUILD_FROM_FOLDER",
+  "receipt": "/Users/billy/Desktop/Workspace/project-007/奈爵服饰-8877-Demo/data-cleaning/runs/received/57680d19556f6b58/RECEIPT.json",
+  "summary": {
+    "files": 91,
+    "workbooks": 75,
+    "referenceFiles": 16,
+    "bytes": 110911840,
+    "ruleFiles": 26,
+    "structureIssues": 0,
+    "observations": 0
+  },
+  "ignoredTemporaryFiles": 13,
+  "identity": {
+    "sourceFingerprint": "0077babe4c00a2f801d4fb89c8a138e7e4c936cfe8b383297fef53b2250910f4",
+    "rulesFingerprint": "88ed0e0ac906a937696cdb16517fd7506576eeb0d36fdc107147ae319b4fab5a",
+    "contractFingerprint": "31d66efc81db1e26d678bd2fa69310616088da22503e8835fe3e5dcaad98883d",
+    "cutoff": null
+  },
+  "originalFilesUnchanged": true,
+  "acceptedRulesAndOriginalTablesCopied": 26,
+  "repeatStatus": "ALREADY_RECEIVED",
+  "integrationTests": {
+    "passed": 16,
+    "failed": 0,
+    "output": "receipt-safety-tests.txt"
+  },
+  "databaseWrites": 0,
+  "businessCleaningExecuted": false,
+  "databaseBuildExecuted": false,
+  "accountDecision": "LOGIN_REORGANIZATION_UNDECIDED",
+  "loginChanges": 0,
+  "limits": [
+    "当前仅验证文件接收及结构，未验证任意新批业务行清洗与建库",
+    "正式期初共同截止时点仍待确认",
+    "历史账号整理尚未裁定"
+  ],
+  "scope": "当前入口和文档；没有运行历史重放、回归数据库写入或账号清理"
+}

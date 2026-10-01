@@ -1,0 +1,92 @@
+{
+  "warehouse": "诸暨一百XM特卖仓库",
+  "id": "3bf7930c-2c59-d6de-92af-bc1ff64a0acc",
+  "originalEnabled": true,
+  "scope": "isolated controlled fixture; no initially disabled source warehouse",
+  "cells": [
+    {
+      "code": "002KZ5139106",
+      "name": "牛仔裤",
+      "quantity": 1.0,
+      "variant_id": "d14c4b79-d5a5-c96d-d85d-3cccfc35994f",
+      "warehouse_id": "3bf7930c-2c59-d6de-92af-bc1ff64a0acc"
+    },
+    {
+      "code": "026MS2133001",
+      "name": "针织衫",
+      "quantity": 2.0,
+      "variant_id": "356c18da-9d52-9bdb-35c3-57d7509723e7",
+      "warehouse_id": "3bf7930c-2c59-d6de-92af-bc1ff64a0acc"
+    },
+    {
+      "code": "026MS2133001",
+      "name": "针织衫",
+      "quantity": 1.0,
+      "variant_id": "42879f3c-a033-2f8e-2096-743767bb0ac5",
+      "warehouse_id": "3bf7930c-2c59-d6de-92af-bc1ff64a0acc"
+    },
+    {
+      "code": "026MS2133001",
+      "name": "针织衫",
+      "quantity": 4.0,
+      "variant_id": "775dbcd0-c651-b20a-d99f-ea6265620bf5",
+      "warehouse_id": "3bf7930c-2c59-d6de-92af-bc1ff64a0acc"
+    },
+    {
+      "code": "026MS2133001",
+      "name": "针织衫",
+      "quantity": 2.0,
+      "variant_id": "7ae91bfd-8e7d-d44e-5ed0-da5454db4434",
+      "warehouse_id": "3bf7930c-2c59-d6de-92af-bc1ff64a0acc"
+    },
+    {
+      "code": "026MS5133001",
+      "name": "针织衫",
+      "quantity": -2.0,
+      "variant_id": "2be97075-060c-cf1a-3ea0-ecb8766a818c",
+      "warehouse_id": "3bf7930c-2c59-d6de-92af-bc1ff64a0acc"
+    },
+    {
+      "code": "026MS5133001",
+      "name": "针织衫",
+      "quantity": -2.0,
+      "variant_id": "427fd8c7-ab53-e17d-0817-b82e3fce839a",
+      "warehouse_id": "3bf7930c-2c59-d6de-92af-bc1ff64a0acc"
+    },
+    {
+      "code": "026MS5133001",
+      "name": "针织衫",
+      "quantity": -1.0,
+      "variant_id": "57fd86c7-ae86-0664-37b7-d1c73906a894",
+      "warehouse_id": "3bf7930c-2c59-d6de-92af-bc1ff64a0acc"
+    },
+    {
+      "code": "026MS5133001",
+      "name": "针织衫",
+      "quantity": -4.0,
+      "variant_id": "a7e7af01-bb3c-288a-0a7d-5976e06f7ec0",
+      "warehouse_id": "3bf7930c-2c59-d6de-92af-bc1ff64a0acc"
+    },
+    {
+      "code": "B0230103",
+      "name": "针织衫",
+      "quantity": 1.0,
+      "variant_id": "12278feb-8747-f1ab-f7a9-de00bc347108",
+      "warehouse_id": "3bf7930c-2c59-d6de-92af-bc1ff64a0acc"
+    },
+    {
+      "code": "B0230103",
+      "name": "针织衫",
+      "quantity": -1.0,
+      "variant_id": "ff3ce693-8bfd-ec4f-5410-d17e25202125",
+      "warehouse_id": "3bf7930c-2c59-d6de-92af-bc1ff64a0acc"
+    },
+    {
+      "code": "B0903902-1",
+      "name": "牛仔裤",
+      "quantity": -1.0,
+      "variant_id": "30862365-b4dd-26df-9fcb-c4a5a5e23e91",
+      "warehouse_id": "3bf7930c-2c59-d6de-92af-bc1ff64a0acc"
+    }
+  ]
+}

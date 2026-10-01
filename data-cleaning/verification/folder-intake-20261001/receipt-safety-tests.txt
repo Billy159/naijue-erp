@@ -1,0 +1,21 @@
+test_changed_cutoff_cannot_replace_a_received_batch (__main__.ReceiptSafetyTests) ... ok
+test_changed_input_cannot_replace_a_received_batch (__main__.ReceiptSafetyTests) ... ok
+test_changed_rule_cannot_replace_a_received_batch (__main__.ReceiptSafetyTests) ... ok
+test_corrupted_received_copy_is_rejected (__main__.ReceiptSafetyTests) ... ok
+test_cutoff_timezone_is_required (__main__.ReceiptSafetyTests) ... ok
+test_damaged_workbook_is_preserved_for_review (__main__.ReceiptSafetyTests) ... ok
+test_editor_temporary_files_not_received_as_business_data (__main__.ReceiptSafetyTests) ... ok
+test_header_drift_is_reviewed (__main__.ReceiptSafetyTests) ... ok
+test_missing_print_reference_is_not_a_business_block (__main__.ReceiptSafetyTests) ... ok
+test_missing_required_workbook_is_reviewed_and_other_originals_saved (__main__.ReceiptSafetyTests) ... ok
+test_missing_rule_dependency_does_not_create_receipt (__main__.ReceiptSafetyTests) ... ok
+test_nested_output_does_not_copy_back_into_input (__main__.ReceiptSafetyTests) ... ok
+test_originals_and_rules_conserved_and_repeat_does_not_overwrite (__main__.ReceiptSafetyTests) ... ok
+test_sheet_drift_is_reviewed (__main__.ReceiptSafetyTests) ... ok
+test_unknown_file_is_preserved_for_review (__main__.ReceiptSafetyTests) ... ok
+test_unlisted_received_copy_is_rejected (__main__.ReceiptSafetyTests) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.185s
+
+OK

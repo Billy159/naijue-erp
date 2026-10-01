@@ -1,0 +1,72 @@
+{
+  "status": "PASS",
+  "conditions": [
+    {
+      "item": "无 P0",
+      "result": "PASS"
+    },
+    {
+      "item": "无影响核心业务的 P1",
+      "result": "PASS"
+    },
+    {
+      "item": "三角色真实登录",
+      "result": "PASS"
+    },
+    {
+      "item": "商品流程",
+      "result": "PASS"
+    },
+    {
+      "item": "库存数量和矩阵",
+      "result": "PASS"
+    },
+    {
+      "item": "调拨保存审核弃审",
+      "result": "PASS"
+    },
+    {
+      "item": "销货保存审核弃审",
+      "result": "PASS"
+    },
+    {
+      "item": "混合支付",
+      "result": "PASS"
+    },
+    {
+      "item": "基础设置",
+      "result": "PASS"
+    },
+    {
+      "item": "员工账号",
+      "result": "PASS"
+    },
+    {
+      "item": "历史页面兼容",
+      "result": "PASS"
+    },
+    {
+      "item": "清理后依赖完整",
+      "result": "PASS"
+    },
+    {
+      "item": "唯一工程独立启动",
+      "result": "PASS"
+    },
+    {
+      "item": "当前数据库正常",
+      "result": "PASS"
+    },
+    {
+      "item": "最新备份实际恢复",
+      "result": "PASS"
+    }
+  ],
+  "p0": 0,
+  "unresolvedP1": 0,
+  "fixedP1": 1,
+  "pendingP2": 0,
+  "decision": "可以冻结",
+  "baseline": "8877 Final Baseline",
+  "scope": "current Demo; future arbitrary full-batch database rebuild is not certified"
+}

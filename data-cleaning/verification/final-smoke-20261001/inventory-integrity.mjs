@@ -1,0 +1,20 @@
+import {transaction,SOURCE} from '../../../server/runtime/db.ts';
+import {writeFileSync} from 'node:fs';
+import assert from 'node:assert/strict';
+if(!process.env.POSTGRES_DB?.startsWith('demo_8877_'))throw Error('Isolated database required');
+const run=async sql=>(await transaction('v2_runtime_stage03c',tx=>tx.query(sql))).rows;
+const base=await run(`SELECT p.code,v.id,v.color_id,v.size_id,b.warehouse_id,b.quantity FROM (SELECT variant_id,warehouse_id,quantity FROM inventory_balance_base UNION ALL SELECT sku_id variant_id,warehouse_id,quantity FROM inventory_delta) b JOIN (SELECT v.id,v.product_id,c.spec_value_id color_id,s.spec_value_id size_id FROM ${SOURCE}.variant v JOIN ${SOURCE}.variant_option c ON c.variant_id=v.id JOIN ${SOURCE}.spec_dimension cd ON cd.id=c.dimension_id AND cd.code='COLOR' JOIN ${SOURCE}.variant_option s ON s.variant_id=v.id JOIN ${SOURCE}.spec_dimension sd ON sd.id=s.dimension_id AND sd.code='SIZE' UNION ALL SELECT id,product_id,color_id,size_id FROM variant_overlay)v ON v.id=b.variant_id JOIN (SELECT id,code FROM ${SOURCE}.product UNION ALL SELECT id,code FROM product_overlay o WHERE NOT EXISTS(SELECT 1 FROM ${SOURCE}.product p WHERE p.id=o.id))p ON p.id=v.product_id`);
+const expected=new Map();for(const r of base){const key=[r.code,r.color_id,r.warehouse_id].join('|'),e=expected.get(key)||{code:r.code,values:{},total:0};e.values[r.size_id]=(e.values[r.size_id]||0)+Number(r.quantity);e.total+=Number(r.quantity);expected.set(key,e);}
+for(const [key,e] of expected)if(Object.values(e.values).every(x=>x===0))expected.delete(key);
+const login=await fetch('http://127.0.0.1:8880/runtime/session',{method:'POST',headers:{Origin:'http://127.0.0.1:8877','Content-Type':'application/json'},body:JSON.stringify({loginName:'smoke-admin',password:'SmkDemo20261001!'})});assert.equal(login.status,200);const cookie=login.headers.get('set-cookie').split(';')[0];
+const codes=[...new Set(base.map(r=>r.code))],warehouses=[...new Set(base.map(r=>r.warehouse_id))],seen=new Set(),differences=[],pages=[];let productCount=0;
+for(let page=1;page===1||page<=Math.ceil(productCount/500);page++){
+ const r=await fetch(`http://127.0.0.1:8880/runtime/inventory?page=${page}&size=500&unit=product`,{method:'POST',headers:{Origin:'http://127.0.0.1:8877',Cookie:cookie,'Content-Type':'application/json'},body:JSON.stringify({products:codes,warehouses})});assert.equal(r.status,200);const {data}=await r.json();productCount=Number(data.productCount);pages.push({page,rows:data.rows.length,total:Number(data.total),productCount});
+ for(const row of data.rows){const key=[row.code,row.color_id,row.warehouse_id].join('|');assert(!seen.has(key),'duplicate '+key);seen.add(key);const e=expected.get(key);if(!e||Number(row.total)!==e.total||Object.entries(row.values).some(([id,q])=>Number(q)!==(e.values[id]||0))||Object.entries(e.values).some(([id,q])=>q!==Number(row.values[id]||0)))differences.push(key);}
+ for(const row of data.products||[]){const sum=Object.values(row.cols).reduce((a,b)=>a+Number(b),0);const target=[...expected.values()].filter(e=>e.code===row.code).reduce((a,b)=>a+b.total,0);assert.equal(sum,target,'product subtotal '+row.code);}
+ for(const row of data.colors||[]){const sum=Object.values(row.cols).reduce((a,b)=>a+Number(b),0);const target=[...expected.entries()].filter(([k,e])=>e.code===row.code&&k.split('|')[1]===row.color_id).reduce((a,[k,e])=>a+e.total,0);assert.equal(sum,target,'color subtotal '+row.code+' '+row.color_id);}
+ console.log('Inventory page',page,'rows',data.rows.length);
+}
+assert.equal(seen.size,expected.size);assert.equal(differences.length,0);const total=base.reduce((a,r)=>a+Number(r.quantity),0);assert(pages.every(p=>p.total===total));
+const report={status:'PASS',database:process.env.POSTGRES_DB,baseSkuWarehouseCells:base.length,productCount,total,matrixRows:seen.size,duplicates:0,missingRows:0,quantityDifferences:0,subtotalDifferences:0,pages};
+writeFileSync('data-cleaning/verification/final-smoke-20261001/inventory-integrity.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));

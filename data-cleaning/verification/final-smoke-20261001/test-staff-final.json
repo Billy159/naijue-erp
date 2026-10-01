@@ -1,0 +1,51 @@
+[
+  {
+    "id": "smoke-warehouse",
+    "name": "Smoke验收仓库员",
+    "loginName": "smoke-warehouse",
+    "role": "仓库人员",
+    "storeId": "5b2461c8-ce98-2c2f-8909-627507196557",
+    "employmentStatus": "在职",
+    "loginEnabled": true,
+    "hasPassword": true
+  },
+  {
+    "id": "smoke-sales",
+    "name": "Smoke验收营业员",
+    "loginName": "smoke-sales-renamed",
+    "role": "营业员",
+    "storeId": "5b2461c8-ce98-2c2f-8909-627507196557",
+    "employmentStatus": "在职",
+    "loginEnabled": false,
+    "hasPassword": true
+  },
+  {
+    "id": "smoke-admin",
+    "name": "Smoke验收管理员",
+    "loginName": "smoke-admin",
+    "role": "管理员",
+    "employmentStatus": "在职",
+    "loginEnabled": true,
+    "hasPassword": true
+  },
+  {
+    "id": "a349db27-4a03-4c1b-ba55-42b810b5fa2c",
+    "name": "Smoke验收新增员工",
+    "loginName": "smoke-created",
+    "role": "仓库人员",
+    "storeId": "5b2461c8-ce98-2c2f-8909-627507196557",
+    "employmentStatus": "在职",
+    "loginEnabled": true,
+    "hasPassword": true
+  },
+  {
+    "id": "cbfe4c9d-9297-4cd2-bca8-1868074f0154",
+    "name": "Smoke验收无账号员工",
+    "loginName": "",
+    "role": "仓库人员",
+    "storeId": "",
+    "employmentStatus": "在职",
+    "loginEnabled": false,
+    "hasPassword": false
+  }
+]

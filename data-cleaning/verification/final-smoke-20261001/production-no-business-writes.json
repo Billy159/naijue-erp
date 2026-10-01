@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "tableCount": 89,
+  "unchangedTables": 88,
+  "sourceTableDifferences": 0,
+  "businessTableDifferences": 0,
+  "leaseDifferences": [
+    {
+      "schema": "v2_runtime_stage03c",
+      "table": "edit_lease",
+      "before": {
+        "schema": "v2_runtime_stage03c",
+        "table": "edit_lease",
+        "rows": 25,
+        "digest": "5387f803c28ac5573206ce5bd67b4ef5"
+      },
+      "after": {
+        "schema": "v2_runtime_stage03c",
+        "table": "edit_lease",
+        "rows": 25,
+        "digest": "186f78781fc86be82a8f80a80a2d473e"
+      }
+    }
+  ],
+  "productionBusinessWrites": 0
+}

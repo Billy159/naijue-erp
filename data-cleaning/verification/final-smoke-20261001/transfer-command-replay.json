@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "document": {
+    "id": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e",
+    "number": "V2-DB-5d4bc7bc",
+    "status": "APPROVED",
+    "version": 2,
+    "created_at": "2026-10-01T17:06:17.070369+08:00",
+    "updated_at": "2026-10-01T17:06:18.553008+08:00",
+    "business_day": "2026-10-01",
+    "document_type": "TRANSFER",
+    "source_identity": null,
+    "current_revision": 2,
+    "original_auditor": null,
+    "original_audited_at": null,
+    "baseline_was_included": false,
+    "current_effect_active": true,
+    "active_effect_identity": "580ac197-10be-4dc6-8455-f5d4148d1423",
+    "active_effect_revision": 2
+  }
+}

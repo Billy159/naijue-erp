@@ -1,0 +1,24 @@
+[
+  {
+    "code": "402WZ5139000",
+    "name": "袜子",
+    "sku_id": "c70a882b-e6b4-75fe-b46b-e1d3a26b743e",
+    "warehouse_id": "815239fa-4ce8-deac-bcc3-c2229dd81fb1",
+    "warehouse": "兰溪嘉泰ST仓库",
+    "events": 122,
+    "returns": 3,
+    "start": "2024-10-01",
+    "end": "2026-07-18"
+  },
+  {
+    "code": "620YR3578113",
+    "name": "羽绒服",
+    "sku_id": "5a8af747-808e-dff3-635d-047a6a8b7338",
+    "warehouse_id": "5ee62c24-fc89-9fe4-c5c9-c8f6c35ae5fc",
+    "warehouse": "多立方总仓",
+    "events": 40,
+    "returns": 4,
+    "start": "2024-07-31",
+    "end": "2026-08-18"
+  }
+]

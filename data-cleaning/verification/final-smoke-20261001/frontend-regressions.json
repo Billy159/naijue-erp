@@ -1,0 +1,135 @@
+[
+  {
+    "file": "employee-permissions.cjs",
+    "exit": 0,
+    "seconds": 0.552,
+    "stdout": "Client three-role routes/functions and restored-session overlay race: passed\n",
+    "stderr": ""
+  },
+  {
+    "file": "shared-login-tabs.cjs",
+    "exit": 0,
+    "seconds": 0.362,
+    "stdout": "Shared login, cross-tab logout, and legacy session migration: passed\n",
+    "stderr": ""
+  },
+  {
+    "file": "basic-settings-refactor.cjs",
+    "exit": 0,
+    "seconds": 0.307,
+    "stdout": "basic settings model regression passed\n",
+    "stderr": ""
+  },
+  {
+    "file": "transfer-acceptance-core.cjs",
+    "exit": 0,
+    "seconds": 0.528,
+    "stdout": "24 checks PASS\n",
+    "stderr": ""
+  },
+  {
+    "file": "transfer-reliability.cjs",
+    "exit": 0,
+    "seconds": 0.545,
+    "stdout": "24 checks PASS\n",
+    "stderr": ""
+  },
+  {
+    "file": "transfer-history-cells.cjs",
+    "exit": 0,
+    "seconds": 0.364,
+    "stdout": "{\n  \"passed\": 9,\n  \"checks\": [\n    \"历史尺码映射同一列时只显示一个数量入口\",\n    \"显示合计但保留各历史 SKU 数量\",\n    \"编辑明细包含原尺码及独立数量，打开不改草稿\",\n    \"非法数量或已变化的源值不允许覆盖\",\n    \"确认只修改对应原 SKU，不重新分摊或合并\",\n    \"行修改中的原尺码数量先暂存，取消整行保留原值\",\n    \"新增行按原尺码同时录入，保留各 SKU 并只加入一行\",\n    \"已审核仍可查看原尺码，不能改数量\",\n    \"打印和导出按尺码汇总，原数量总计保持正确\"\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "file": "transfer-scan-drawer.cjs",
+    "exit": 0,
+    "seconds": 6.046,
+    "stdout": "transfer scan drawer acceptance PASS\n",
+    "stderr": ""
+  },
+  {
+    "file": "transfer-presentation-state.cjs",
+    "exit": 0,
+    "seconds": 0.344,
+    "stdout": "PASS list mounts compact filters and retains the shared filter state\nPASS new transfer retains date, warehouses and creator after enhancement\n",
+    "stderr": ""
+  },
+  {
+    "file": "sales-core.cjs",
+    "exit": 0,
+    "seconds": 0.072,
+    "stdout": "20 core checks PASS\n",
+    "stderr": ""
+  },
+  {
+    "file": "sales-inline-payment.cjs",
+    "exit": 0,
+    "seconds": 0.324,
+    "stdout": "sales inline payment policy: PASS\n",
+    "stderr": ""
+  },
+  {
+    "file": "sales-line-merge.cjs",
+    "exit": 0,
+    "seconds": 0.052,
+    "stdout": "sales-line-merge: OK\nsales-identity-price-correction: OK\n",
+    "stderr": ""
+  },
+  {
+    "file": "product-barcode-validation.cjs",
+    "exit": 0,
+    "seconds": 0.299,
+    "stdout": "PASS primary and manual barcodes validate without changing identity; duplicate specifications rejected\n",
+    "stderr": ""
+  },
+  {
+    "file": "product-list-history.cjs",
+    "exit": 0,
+    "seconds": 0.523,
+    "stdout": "Product list order, filters, columns, actions, and historical SKU detail: passed\n",
+    "stderr": ""
+  },
+  {
+    "file": "product-profile-current-selection.cjs",
+    "exit": 0,
+    "seconds": 0.3,
+    "stdout": "Current selection save, empty selection rejection, immutable draft, and retained historical photos: passed\n",
+    "stderr": ""
+  },
+  {
+    "file": "ledger-local-date.cjs",
+    "exit": 0,
+    "seconds": 0.047,
+    "stdout": "Inventory ledger local day and midnight refresh: PASS\n",
+    "stderr": ""
+  },
+  {
+    "file": "business-fit-roundtrip.mjs",
+    "exit": 0,
+    "seconds": 0.055,
+    "stdout": "Sales/transfer fit SKU roundtrip, immutable canonical identity and discount reference snapshot: PASS\n",
+    "stderr": ""
+  },
+  {
+    "file": "sales-print-payments.cjs",
+    "exit": 0,
+    "seconds": 0.297,
+    "stdout": "Saved mixed payments, refunds, original fit/size and readonly print: PASS\n",
+    "stderr": ""
+  },
+  {
+    "file": "recommendation-cache.cjs",
+    "exit": 0,
+    "seconds": 0.047,
+    "stdout": "Recommendation request race, current waiter and sale reversal: PASS\n",
+    "stderr": ""
+  },
+  {
+    "file": "sales-commit-state.cjs",
+    "exit": 0,
+    "seconds": 0.048,
+    "stdout": "Sales commit pending write/readback and failure state: PASS\n",
+    "stderr": ""
+  }
+]

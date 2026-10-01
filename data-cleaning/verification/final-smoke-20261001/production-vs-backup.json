@@ -1,0 +1,14 @@
+[
+  {
+    "schema": "v2_runtime_stage03c",
+    "table": "edit_lease",
+    "currentRows": 25,
+    "backupRows": 18
+  },
+  {
+    "schema": "v2_runtime_stage03c",
+    "table": "master_reference_overlay",
+    "currentRows": 1,
+    "backupRows": 1
+  }
+]

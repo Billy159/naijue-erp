@@ -1,0 +1,775 @@
+{
+  "source": "REAL_TPLUS_RUNTIME",
+  "readonly": false,
+  "id": "V2-DB-5d4bc7bc",
+  "uuid": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e",
+  "date": "2026-10-01",
+  "status": "已审核",
+  "revision": 2,
+  "version": 2,
+  "from": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+  "to": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+  "fromName": "丁桥店XM仓库",
+  "toName": "大西洋银泰ST仓库",
+  "note": "Final Smoke 调拨备注",
+  "q": {
+    "SMK261001A|0|0": 5,
+    "SMK261001A|1|0": 2
+  },
+  "items": [
+    "SMK261001A"
+  ],
+  "lines": [
+    {
+      "source": "REAL_TPLUS_HISTORY",
+      "readonly": true,
+      "id": "v2-0",
+      "skuId": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+      "productUuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "productId": "SMK261001A",
+      "name": "Smoke验收衬衫",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+      "color": "白色",
+      "size": "160/XS",
+      "quantity": 5,
+      "unit": "",
+      "priceCents": null,
+      "amountCents": null,
+      "referenceCents": null,
+      "gift": null,
+      "sourceLineage": {
+        "originalDocument": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e"
+      }
+    },
+    {
+      "source": "REAL_TPLUS_HISTORY",
+      "readonly": true,
+      "id": "v2-1",
+      "skuId": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+      "productUuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "productId": "SMK261001A",
+      "name": "Smoke验收衬衫",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+      "color": "黑色",
+      "size": "160/XS",
+      "quantity": 2,
+      "unit": "",
+      "priceCents": null,
+      "amountCents": null,
+      "referenceCents": null,
+      "gift": null,
+      "sourceLineage": {
+        "originalDocument": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e"
+      }
+    }
+  ],
+  "hiddenColors": [],
+  "scans": [],
+  "history": [
+    {
+      "action": "新建",
+      "version": 1,
+      "revisionBefore": 0,
+      "revisionAfter": 1,
+      "time": "2026-10-01T17:06:17.070369+08:00",
+      "actor": {
+        "id": "smoke-warehouse",
+        "name": "Smoke验收仓库员"
+      },
+      "user": "Smoke验收仓库员",
+      "reason": "V2修订 1",
+      "result": "已提交",
+      "detail": "V2修订 1",
+      "changes": [],
+      "after": {
+        "source": "REAL_TPLUS_RUNTIME",
+        "readonly": false,
+        "id": "V2-DB-5d4bc7bc",
+        "uuid": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e",
+        "date": "2026-10-01",
+        "status": "未审核",
+        "revision": 1,
+        "version": 1,
+        "from": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+        "to": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+        "fromName": "丁桥店XM仓库",
+        "toName": "大西洋银泰ST仓库",
+        "note": "Final Smoke 调拨备注",
+        "q": {
+          "SMK261001A|0|0": 5,
+          "SMK261001A|1|0": 2
+        },
+        "items": [
+          "SMK261001A"
+        ],
+        "lines": [
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "v2-0",
+            "skuId": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+            "productUuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+            "productId": "SMK261001A",
+            "name": "Smoke验收衬衫",
+            "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+            "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+            "color": "白色",
+            "size": "160/XS",
+            "quantity": 5,
+            "unit": "",
+            "priceCents": null,
+            "amountCents": null,
+            "referenceCents": null,
+            "gift": null,
+            "sourceLineage": {
+              "originalDocument": null
+            }
+          },
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "v2-1",
+            "skuId": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+            "productUuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+            "productId": "SMK261001A",
+            "name": "Smoke验收衬衫",
+            "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+            "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+            "color": "黑色",
+            "size": "160/XS",
+            "quantity": 2,
+            "unit": "",
+            "priceCents": null,
+            "amountCents": null,
+            "referenceCents": null,
+            "gift": null,
+            "sourceLineage": {
+              "originalDocument": null
+            }
+          }
+        ],
+        "hiddenColors": [],
+        "scans": [],
+        "history": [],
+        "creator": "Smoke验收仓库员",
+        "created": "2026-10-01T17:06:17.070369+08:00",
+        "updated": "2026-10-01T17:06:18.553008+08:00",
+        "saved": true,
+        "sourceFacts": {
+          "v2_creator": {
+            "id": "smoke-warehouse",
+            "name": "Smoke验收仓库员"
+          }
+        },
+        "_detail": true,
+        "currentRevision": 1,
+        "auditWorkflow": true,
+        "baselineWasIncluded": false,
+        "currentEffectActive": true,
+        "_runtime": {
+          "id": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e",
+          "document_type": "TRANSFER",
+          "number": "V2-DB-5d4bc7bc",
+          "source_identity": null,
+          "status": "UNAUDITED",
+          "baseline_was_included": false,
+          "current_effect_active": true,
+          "active_effect_identity": "580ac197-10be-4dc6-8455-f5d4148d1423",
+          "active_effect_revision": 2,
+          "current_revision": 1,
+          "version": 1,
+          "original_auditor": null,
+          "original_audited_at": null,
+          "created_at": "2026-10-01T17:06:17.070369+08:00",
+          "updated_at": "2026-10-01T17:06:18.553008+08:00",
+          "business_day": "2026-10-01",
+          "body": {
+            "lines": [
+              {
+                "unit": "",
+                "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+                "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+                "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+                "source_id": "v2-0",
+                "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+                "source_lineage": {
+                  "originalDocument": null
+                },
+                "source_quantity": "5",
+                "to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+                "source_size_name": "160/XS",
+                "from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+                "source_color_name": "白色",
+                "source_product_code": "SMK261001A",
+                "source_product_name": "Smoke验收衬衫"
+              },
+              {
+                "unit": "",
+                "sku_id": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+                "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+                "color_id": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+                "source_id": "v2-1",
+                "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+                "source_lineage": {
+                  "originalDocument": null
+                },
+                "source_quantity": "2",
+                "to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+                "source_size_name": "160/XS",
+                "from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+                "source_color_name": "黑色",
+                "source_product_code": "SMK261001A",
+                "source_product_name": "Smoke验收衬衫"
+              }
+            ],
+            "header": {
+              "note": "Final Smoke 调拨备注",
+              "adjustment": 0,
+              "business_date": "2026-10-01",
+              "source_number": "草稿-45d83944",
+              "source_payload": {
+                "v2_creator": {
+                  "id": "smoke-warehouse",
+                  "name": "Smoke验收仓库员"
+                }
+              },
+              "source_to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e"
+            },
+            "fundsRecords": []
+          },
+          "history": []
+        },
+        "creatorId": "smoke-warehouse",
+        "auditor": null
+      }
+    },
+    {
+      "action": "审核",
+      "version": 2,
+      "revisionBefore": 1,
+      "revisionAfter": 2,
+      "time": "2026-10-01T17:06:18.553008+08:00",
+      "actor": {
+        "id": "smoke-warehouse",
+        "name": "Smoke验收仓库员"
+      },
+      "user": "Smoke验收仓库员",
+      "reason": "V2修订 2",
+      "result": "已提交",
+      "detail": "V2修订 2",
+      "changes": [
+        {
+          "field": "header",
+          "label": "单据资料",
+          "before": "{\"note\":\"Final Smoke 调拨备注\",\"adjustment\":0,\"business_date\":\"2026-10-01\",\"source_number\":\"草稿-45d83944\",\"source_payload\":{\"v2_creator\":{\"id\":\"smoke-warehouse\",\"name\":\"Smoke验收仓库员\"}},\"source_to_warehouse_id\":\"5adf34d8-d0d9-8620-1caf-65a4622983f4\",\"source_from_warehouse_id\":\"e55a08a8-3cb3-9de7-af32-64ae994d6f9e\"}",
+          "after": "{\"note\":\"Final Smoke 调拨备注\",\"adjustment\":0,\"business_date\":\"2026-10-01\",\"source_number\":\"V2-DB-5d4bc7bc\",\"source_payload\":{\"v2_creator\":{\"id\":\"smoke-warehouse\",\"name\":\"Smoke验收仓库员\"}},\"source_to_warehouse_id\":\"5adf34d8-d0d9-8620-1caf-65a4622983f4\",\"source_from_warehouse_id\":\"e55a08a8-3cb3-9de7-af32-64ae994d6f9e\"}"
+        },
+        {
+          "field": "lines",
+          "label": "商品明细",
+          "before": "[{\"unit\":\"\",\"sku_id\":\"df1065ed-0fe6-4bf9-8f19-3dffe4d2f402\",\"size_id\":\"785fdff3-dc15-4306-8ffe-9906e79c0747\",\"color_id\":\"e44f74a8-7757-d26f-af00-5edfe4fe053f\",\"source_id\":\"v2-0\",\"product_id\":\"4db2c009-d210-47f4-8e19-14cc5c412aef\",\"source_lineage\":{\"originalDocument\":null},\"source_quantity\":\"5\",\"to_warehouse_id\":\"5adf34d8-d0d9-8620-1caf-65a4622983f4\",\"source_size_name\":\"160/XS\",\"from_warehouse_id\":\"e55a08a8-3cb3-9de7-af32-64ae994d6f9e\",\"source_color_name\":\"白色\",\"source_product_code\":\"SMK261001A\",\"source_product_name\":\"Smoke验收衬衫\"},{\"unit\":\"\",\"sku_id\":\"4213ab59-f955-439e-aa96-6dd1217f0c86\",\"size_id\":\"785fdff3-dc15-4306-8ffe-9906e79c0747\",\"color_id\":\"8f9b98eb-d0ca-3bd3-2d88-546b827162dc\",\"source_id\":\"v2-1\",\"product_id\":\"4db2c009-d210-47f4-8e19-14cc5c412aef\",\"source_lineage\":{\"originalDocument\":null},\"source_quantity\":\"2\",\"to_warehouse_id\":\"5adf34d8-d0d9-8620-1caf-65a4622983f4\",\"source_size_name\":\"160/XS\",\"from_warehouse_id\":\"e55a08a8-3cb3-9de7-af32-64ae994d6f9e\",\"source_color_name\":\"黑色\",\"source_product_code\":\"SMK261001A\",\"source_product_name\":\"Smoke验收衬衫\"}]",
+          "after": "[{\"unit\":\"\",\"sku_id\":\"df1065ed-0fe6-4bf9-8f19-3dffe4d2f402\",\"size_id\":\"785fdff3-dc15-4306-8ffe-9906e79c0747\",\"color_id\":\"e44f74a8-7757-d26f-af00-5edfe4fe053f\",\"source_id\":\"v2-0\",\"product_id\":\"4db2c009-d210-47f4-8e19-14cc5c412aef\",\"source_lineage\":{\"originalDocument\":\"5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e\"},\"source_quantity\":\"5\",\"to_warehouse_id\":\"5adf34d8-d0d9-8620-1caf-65a4622983f4\",\"source_size_name\":\"160/XS\",\"from_warehouse_id\":\"e55a08a8-3cb3-9de7-af32-64ae994d6f9e\",\"source_color_name\":\"白色\",\"source_product_code\":\"SMK261001A\",\"source_product_name\":\"Smoke验收衬衫\"},{\"unit\":\"\",\"sku_id\":\"4213ab59-f955-439e-aa96-6dd1217f0c86\",\"size_id\":\"785fdff3-dc15-4306-8ffe-9906e79c0747\",\"color_id\":\"8f9b98eb-d0ca-3bd3-2d88-546b827162dc\",\"source_id\":\"v2-1\",\"product_id\":\"4db2c009-d210-47f4-8e19-14cc5c412aef\",\"source_lineage\":{\"originalDocument\":\"5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e\"},\"source_quantity\":\"2\",\"to_warehouse_id\":\"5adf34d8-d0d9-8620-1caf-65a4622983f4\",\"source_size_name\":\"160/XS\",\"from_warehouse_id\":\"e55a08a8-3cb3-9de7-af32-64ae994d6f9e\",\"source_color_name\":\"黑色\",\"source_product_code\":\"SMK261001A\",\"source_product_name\":\"Smoke验收衬衫\"}]"
+        }
+      ],
+      "after": {
+        "source": "REAL_TPLUS_RUNTIME",
+        "readonly": false,
+        "id": "V2-DB-5d4bc7bc",
+        "uuid": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e",
+        "date": "2026-10-01",
+        "status": "已审核",
+        "revision": 2,
+        "version": 2,
+        "from": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+        "to": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+        "fromName": "丁桥店XM仓库",
+        "toName": "大西洋银泰ST仓库",
+        "note": "Final Smoke 调拨备注",
+        "q": {
+          "SMK261001A|0|0": 5,
+          "SMK261001A|1|0": 2
+        },
+        "items": [
+          "SMK261001A"
+        ],
+        "lines": [
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "v2-0",
+            "skuId": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+            "productUuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+            "productId": "SMK261001A",
+            "name": "Smoke验收衬衫",
+            "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+            "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+            "color": "白色",
+            "size": "160/XS",
+            "quantity": 5,
+            "unit": "",
+            "priceCents": null,
+            "amountCents": null,
+            "referenceCents": null,
+            "gift": null,
+            "sourceLineage": {
+              "originalDocument": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e"
+            }
+          },
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "v2-1",
+            "skuId": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+            "productUuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+            "productId": "SMK261001A",
+            "name": "Smoke验收衬衫",
+            "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+            "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+            "color": "黑色",
+            "size": "160/XS",
+            "quantity": 2,
+            "unit": "",
+            "priceCents": null,
+            "amountCents": null,
+            "referenceCents": null,
+            "gift": null,
+            "sourceLineage": {
+              "originalDocument": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e"
+            }
+          }
+        ],
+        "hiddenColors": [],
+        "scans": [],
+        "history": [],
+        "creator": "Smoke验收仓库员",
+        "created": "2026-10-01T17:06:17.070369+08:00",
+        "updated": "2026-10-01T17:06:18.553008+08:00",
+        "saved": true,
+        "sourceFacts": {
+          "v2_creator": {
+            "id": "smoke-warehouse",
+            "name": "Smoke验收仓库员"
+          }
+        },
+        "_detail": true,
+        "currentRevision": 2,
+        "auditWorkflow": true,
+        "baselineWasIncluded": false,
+        "currentEffectActive": true,
+        "_runtime": {
+          "id": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e",
+          "document_type": "TRANSFER",
+          "number": "V2-DB-5d4bc7bc",
+          "source_identity": null,
+          "status": "APPROVED",
+          "baseline_was_included": false,
+          "current_effect_active": true,
+          "active_effect_identity": "580ac197-10be-4dc6-8455-f5d4148d1423",
+          "active_effect_revision": 2,
+          "current_revision": 2,
+          "version": 2,
+          "original_auditor": null,
+          "original_audited_at": null,
+          "created_at": "2026-10-01T17:06:17.070369+08:00",
+          "updated_at": "2026-10-01T17:06:18.553008+08:00",
+          "business_day": "2026-10-01",
+          "body": {
+            "lines": [
+              {
+                "unit": "",
+                "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+                "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+                "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+                "source_id": "v2-0",
+                "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+                "source_lineage": {
+                  "originalDocument": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e"
+                },
+                "source_quantity": "5",
+                "to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+                "source_size_name": "160/XS",
+                "from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+                "source_color_name": "白色",
+                "source_product_code": "SMK261001A",
+                "source_product_name": "Smoke验收衬衫"
+              },
+              {
+                "unit": "",
+                "sku_id": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+                "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+                "color_id": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+                "source_id": "v2-1",
+                "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+                "source_lineage": {
+                  "originalDocument": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e"
+                },
+                "source_quantity": "2",
+                "to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+                "source_size_name": "160/XS",
+                "from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+                "source_color_name": "黑色",
+                "source_product_code": "SMK261001A",
+                "source_product_name": "Smoke验收衬衫"
+              }
+            ],
+            "header": {
+              "note": "Final Smoke 调拨备注",
+              "adjustment": 0,
+              "business_date": "2026-10-01",
+              "source_number": "V2-DB-5d4bc7bc",
+              "source_payload": {
+                "v2_creator": {
+                  "id": "smoke-warehouse",
+                  "name": "Smoke验收仓库员"
+                }
+              },
+              "source_to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e"
+            },
+            "fundsRecords": []
+          },
+          "history": []
+        },
+        "creatorId": "smoke-warehouse",
+        "auditor": null
+      }
+    }
+  ],
+  "creator": "Smoke验收仓库员",
+  "created": "2026-10-01T17:06:17.070369+08:00",
+  "updated": "2026-10-01T17:06:18.553008+08:00",
+  "saved": true,
+  "sourceFacts": {
+    "v2_creator": {
+      "id": "smoke-warehouse",
+      "name": "Smoke验收仓库员"
+    }
+  },
+  "_detail": true,
+  "currentRevision": 2,
+  "auditWorkflow": true,
+  "baselineWasIncluded": false,
+  "currentEffectActive": true,
+  "_runtime": {
+    "id": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e",
+    "document_type": "TRANSFER",
+    "number": "V2-DB-5d4bc7bc",
+    "source_identity": null,
+    "status": "APPROVED",
+    "baseline_was_included": false,
+    "current_effect_active": true,
+    "active_effect_identity": "580ac197-10be-4dc6-8455-f5d4148d1423",
+    "active_effect_revision": 2,
+    "current_revision": 2,
+    "version": 2,
+    "original_auditor": null,
+    "original_audited_at": null,
+    "created_at": "2026-10-01T17:06:17.070369+08:00",
+    "updated_at": "2026-10-01T17:06:18.553008+08:00",
+    "business_day": "2026-10-01",
+    "body": {
+      "lines": [
+        {
+          "unit": "",
+          "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+          "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+          "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+          "source_id": "v2-0",
+          "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+          "source_lineage": {
+            "originalDocument": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e"
+          },
+          "source_quantity": "5",
+          "to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+          "source_size_name": "160/XS",
+          "from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+          "source_color_name": "白色",
+          "source_product_code": "SMK261001A",
+          "source_product_name": "Smoke验收衬衫"
+        },
+        {
+          "unit": "",
+          "sku_id": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+          "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+          "color_id": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+          "source_id": "v2-1",
+          "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+          "source_lineage": {
+            "originalDocument": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e"
+          },
+          "source_quantity": "2",
+          "to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+          "source_size_name": "160/XS",
+          "from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+          "source_color_name": "黑色",
+          "source_product_code": "SMK261001A",
+          "source_product_name": "Smoke验收衬衫"
+        }
+      ],
+      "header": {
+        "note": "Final Smoke 调拨备注",
+        "adjustment": 0,
+        "business_date": "2026-10-01",
+        "source_number": "V2-DB-5d4bc7bc",
+        "source_payload": {
+          "v2_creator": {
+            "id": "smoke-warehouse",
+            "name": "Smoke验收仓库员"
+          }
+        },
+        "source_to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+        "source_from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e"
+      },
+      "fundsRecords": []
+    },
+    "history": [
+      {
+        "body": {
+          "lines": [
+            {
+              "unit": "",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "v2-0",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "source_lineage": {
+                "originalDocument": null
+              },
+              "source_quantity": "5",
+              "to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_size_name": "160/XS",
+              "from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            },
+            {
+              "unit": "",
+              "sku_id": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+              "source_id": "v2-1",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "source_lineage": {
+                "originalDocument": null
+              },
+              "source_quantity": "2",
+              "to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_size_name": "160/XS",
+              "from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+              "source_color_name": "黑色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            }
+          ],
+          "header": {
+            "note": "Final Smoke 调拨备注",
+            "adjustment": 0,
+            "business_date": "2026-10-01",
+            "source_number": "草稿-45d83944",
+            "source_payload": {
+              "v2_creator": {
+                "id": "smoke-warehouse",
+                "name": "Smoke验收仓库员"
+              }
+            },
+            "source_to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+            "source_from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e"
+          },
+          "fundsRecords": []
+        },
+        "version": 1,
+        "actor_id": "smoke-warehouse",
+        "revision": 1,
+        "operation": "create",
+        "created_at": "2026-10-01T17:06:17.070369+08:00",
+        "document_id": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e",
+        "request_key": "d1855399-ef82-4eb4-95be-9f5349adf84e",
+        "previous_body": {
+          "lines": [
+            {
+              "unit": "",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "v2-0",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "source_lineage": {
+                "originalDocument": null
+              },
+              "source_quantity": "5",
+              "to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_size_name": "160/XS",
+              "from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            },
+            {
+              "unit": "",
+              "sku_id": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+              "source_id": "v2-1",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "source_lineage": {
+                "originalDocument": null
+              },
+              "source_quantity": "2",
+              "to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_size_name": "160/XS",
+              "from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+              "source_color_name": "黑色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            }
+          ],
+          "header": {
+            "note": "Final Smoke 调拨备注",
+            "adjustment": 0,
+            "business_date": "2026-10-01",
+            "source_number": "草稿-45d83944",
+            "source_payload": {
+              "v2_creator": {
+                "id": "smoke-warehouse",
+                "name": "Smoke验收仓库员"
+              }
+            },
+            "source_to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+            "source_from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e"
+          },
+          "fundsRecords": []
+        }
+      },
+      {
+        "body": {
+          "lines": [
+            {
+              "unit": "",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "v2-0",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "source_lineage": {
+                "originalDocument": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e"
+              },
+              "source_quantity": "5",
+              "to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_size_name": "160/XS",
+              "from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            },
+            {
+              "unit": "",
+              "sku_id": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+              "source_id": "v2-1",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "source_lineage": {
+                "originalDocument": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e"
+              },
+              "source_quantity": "2",
+              "to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_size_name": "160/XS",
+              "from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+              "source_color_name": "黑色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            }
+          ],
+          "header": {
+            "note": "Final Smoke 调拨备注",
+            "adjustment": 0,
+            "business_date": "2026-10-01",
+            "source_number": "V2-DB-5d4bc7bc",
+            "source_payload": {
+              "v2_creator": {
+                "id": "smoke-warehouse",
+                "name": "Smoke验收仓库员"
+              }
+            },
+            "source_to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+            "source_from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e"
+          },
+          "fundsRecords": []
+        },
+        "version": 2,
+        "actor_id": "smoke-warehouse",
+        "revision": 2,
+        "operation": "approve",
+        "created_at": "2026-10-01T17:06:18.553008+08:00",
+        "document_id": "5d4bc7bc-09f8-4cdb-b28f-a30f7c413d5e",
+        "request_key": "063571cb-074c-4513-9392-ac5b2cf90f59",
+        "previous_body": {
+          "lines": [
+            {
+              "unit": "",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "v2-0",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "source_lineage": {
+                "originalDocument": null
+              },
+              "source_quantity": "5",
+              "to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_size_name": "160/XS",
+              "from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            },
+            {
+              "unit": "",
+              "sku_id": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+              "source_id": "v2-1",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "source_lineage": {
+                "originalDocument": null
+              },
+              "source_quantity": "2",
+              "to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_size_name": "160/XS",
+              "from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+              "source_color_name": "黑色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            }
+          ],
+          "header": {
+            "note": "Final Smoke 调拨备注",
+            "adjustment": 0,
+            "business_date": "2026-10-01",
+            "source_number": "草稿-45d83944",
+            "source_payload": {
+              "v2_creator": {
+                "id": "smoke-warehouse",
+                "name": "Smoke验收仓库员"
+              }
+            },
+            "source_to_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+            "source_from_warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e"
+          },
+          "fundsRecords": []
+        }
+      }
+    ]
+  },
+  "creatorId": "smoke-warehouse",
+  "auditor": null,
+  "matrixRowIds": {
+    "SMK261001A|0": "dc9d5c33-4607-47f2-9e52-eeb46790a85b",
+    "SMK261001A|1": "c670eb85-d468-40f1-a73b-44ac68ee36fc"
+  }
+}

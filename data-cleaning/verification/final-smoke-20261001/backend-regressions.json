@@ -1,0 +1,79 @@
+[
+  {
+    "file": "employee-auth.test.ts",
+    "exit": 0,
+    "seconds": 0.657,
+    "stdout": "Employee authentication, three roles, closed/departed/restored, rename, uniqueness, last-admin protection and retained records: passed\n",
+    "stderr": ""
+  },
+  {
+    "file": "product-profile.test.ts",
+    "exit": 0,
+    "seconds": 0.952,
+    "stdout": "product profile persistence and barcode uniqueness passed\n",
+    "stderr": ""
+  },
+  {
+    "file": "product-master.test.ts",
+    "exit": 0,
+    "seconds": 0.258,
+    "stdout": "product master persistence and dependency checks passed\n",
+    "stderr": ""
+  },
+  {
+    "file": "product-spec-view.test.ts",
+    "exit": 0,
+    "seconds": 0.696,
+    "stdout": "{\"products\":2941,\"sourceSkus\":14864,\"audited\":14864,\"currentMappedSkus\":14812,\"historicalSkus\":52,\"historicalProducts\":11,\"ambiguousCells\":16,\"negativeStockRows\":1231,\"knitColors\":18,\"knitSizes\":11,\"oldSizes\":11}\n",
+    "stderr": ""
+  },
+  {
+    "file": "specs.test.ts",
+    "exit": 0,
+    "seconds": 0.33,
+    "stdout": "transfer missing size combination persists, posts stock, and reverses PASS\n",
+    "stderr": "NOTICE:  drop cascades to 31 other objects\nDETAIL:  drop cascades to table v2_runtime_test_spec_6e09ccb8.operator\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.document\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.revision\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.idempotency_request\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.posting\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.movement\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.inventory_delta\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.master_reference_overlay\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.version_history\ndrop cascades to function v2_runtime_test_spec_6e09ccb8.deny_revision_mutation()\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.edit_lease\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.work_record\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.work_event\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.product_image\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.product_profile_overlay\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.product_overlay\ndrop cascades to sequence v2_runtime_test_spec_6e09ccb8.product_item_code_seq\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.product_barcode_alias\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.product_master_overlay\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.generated_barcode\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.barcode_authority_policy\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.barcode_authority_product\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.barcode_authority_record\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.barcode_scheme_supplement\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.size_overlay\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.variant_overlay\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.inventory_opening_run\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.inventory_opening_cell\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.inventory_opening_delta_checkpoint\ndrop cascades to table v2_runtime_test_spec_6e09ccb8.inventory_opening_prior_posting\ndrop cascades to view v2_runtime_test_spec_6e09ccb8.inventory_balance_base\n"
+  },
+  {
+    "file": "supplements.test.ts",
+    "exit": 0,
+    "seconds": 0.323,
+    "stdout": "PASS 历史数据已定稿；14,960条唯一主码，10条无需条码，待处理0条\n",
+    "stderr": ""
+  },
+  {
+    "file": "master-reference.test.ts",
+    "exit": 0,
+    "seconds": 0.287,
+    "stdout": "runtime master reference overlay passed\n",
+    "stderr": ""
+  },
+  {
+    "file": "runtime.test.ts",
+    "exit": 0,
+    "seconds": 23.864,
+    "stdout": "PASS A 全量初始化两次，不写库存/流水，历史人时未知\nPASS B/F 销售10→8净+2，第二轮撤8再审6净+4\nPASS C 正负混合逐仓贡献正确\nPASS D 调拨两仓反向与再审核\nPASS E 进货正负原符号，2172真实运行身份\nPASS G/I 同key并发/响应丢失重试/冲突/过期版本\nPASS H 四个失败点整事务rollback，调拨不半单\nPASS J 0/1/N 同方式正负零、保存与审核时机、失败保存重开\nPASS 新增运行单、调拨编辑后直接审核及失败回滚\nPASS 调拨单和销货单仅未审核可软删除，删除不产生库存流水\nPASS 初始化不覆盖已修改版本及状态；source和lineage保护\nALL PASS v2_runtime_test_1790843632654\n",
+    "stderr": ""
+  },
+  {
+    "file": "size-mapping.test.ts",
+    "exit": 0,
+    "seconds": 0.204,
+    "stdout": "accepted shirt, shorts, western pants, 119TX, reclassified clothing and accessories: PASS\n",
+    "stderr": ""
+  },
+  {
+    "file": "product-manual-alias.test.ts",
+    "exit": 0,
+    "seconds": 1.172,
+    "stdout": "{\n  \"schema\": \"v2_runtime_test_manual_alias_9b01bbd0d89c43a6ae09751036d3fcf8\",\n  \"results\": [\n    \"manual old barcode on Excel-managed SKU saves and reloads exact string, note and original identity\",\n    \"catalog read exposes manual aliases, retains approved primary codes and excludes retired inferred aliases\",\n    \"later product save retains the existing alias without duplicating it\",\n    \"duplicate main/other-SKU codes, wrong ownership, blank/long codes and stale saves are rejected atomically\",\n    \"manual alias removal works; protected main codes, authority records, source SKUs and stock remain identical\"\n  ]\n}\nIsolated manual-alias schema removed\n",
+    "stderr": "(node:30792) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+  },
+  {
+    "file": "sales-size-group.test.ts",
+    "exit": 0,
+    "seconds": 1.145,
+    "stdout": "026MS5133001 / 160 XS sales save, two receipts, approve, retry, reverse and unchanged source facts: PASS\n",
+    "stderr": "NOTICE:  drop cascades to 31 other objects\nDETAIL:  drop cascades to table v2_runtime_test_sale_group_a84b499b.operator\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.document\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.revision\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.idempotency_request\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.posting\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.movement\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.inventory_delta\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.master_reference_overlay\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.version_history\ndrop cascades to function v2_runtime_test_sale_group_a84b499b.deny_revision_mutation()\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.edit_lease\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.work_record\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.work_event\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.product_image\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.product_profile_overlay\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.product_overlay\ndrop cascades to sequence v2_runtime_test_sale_group_a84b499b.product_item_code_seq\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.product_barcode_alias\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.product_master_overlay\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.generated_barcode\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.barcode_authority_policy\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.barcode_authority_product\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.barcode_authority_record\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.barcode_scheme_supplement\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.size_overlay\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.variant_overlay\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.inventory_opening_run\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.inventory_opening_cell\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.inventory_opening_delta_checkpoint\ndrop cascades to table v2_runtime_test_sale_group_a84b499b.inventory_opening_prior_posting\ndrop cascades to view v2_runtime_test_sale_group_a84b499b.inventory_balance_base\n"
+  }
+]

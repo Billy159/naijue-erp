@@ -1,0 +1,52 @@
+{
+  "revision": "TPLUS-FULL-FOLDER-DECISIONS-20261001-v1",
+  "mode": "FULL_REBUILD_FROM_FOLDER",
+  "defaultInput": "inputs/tplus-current",
+  "authorization": "用户要求以现有T+文件夹建立接收入口，后续提供新的完整文件夹，再导入独立新库；沿用全部已裁定规则。",
+  "precedence": [
+    "用户本次整批接收与独立建库指令",
+    "最新库存快照期初及条码Excel原值裁定",
+    "逐商品、规格和单据的明确裁定",
+    "通用转换规则；历史零期初复跑只用于隔离诊断"
+  ],
+  "rules": [
+    {"id": "SOURCE_IDENTITY", "decision": "存货原尺码组和条码方案作为来源；原商品与SKU身份保留，其他历史号型按已裁定关系兼容；不按条码合并库存。"},
+    {"id": "SIZE_DECISIONS", "decision": "保留最新版2.0映射、402条裁定、C1用途分流、C2中裤裤码、旧西裤上衣组、119TX5272201上衣组、内裤040KZ5139400上衣组、分类后尺码、女装组及配饰组。新增来源定义或来源身份变化单独复核。"},
+    {"id": "HISTORICAL_SIZE_TEXT", "decision": "保留历史编码和名称，01不得变成1；旧900/910无尺码继续为无尺码，新裤码910为40。配饰组保有均码和无尺码；历史重叠SKU继续独立。"},
+    {"id": "CATEGORY", "decision": "沿用确认分类。领结、雨伞、皮带、发票、次品、补差价、运费归辅料及其他；允许背心；休闲服、工作服、便装、休闲套装不另新建，采用已确认原类别对应；2015年秋冬结存归其他类。"},
+    {"id": "EXACT_BARCODES", "decision": "已确认Excel条码为对应历史规格的精确依据；缺码按原方案取该存货默认条码完整文本作商品段，保留前导零和实际长度，不抽取货号中的7位。颜色和尺码按原方案段定义处理。"},
+    {"id": "BARCODE_EXCEPTIONS", "decision": "运费重复条码仅保留已裁定绑定；10条无需条码保留空值。经人工登记的旧码兼容保留；不恢复旧C8/C9算法产生的猜测兼容码。新输入与既定条码冲突单独复核。"},
+    {"id": "TRANSFER", "decision": "采用直接调拨导出并核对其他入出库来源，重复来源只成一张业务单；0128最新尺码及0157/0158未审裁定保留。新版来源内容或状态变化列为差异，不机械套用旧批次状态。"},
+    {"id": "OPENING", "decision": "新库采用本批经确认的完整全仓库存及共同截止时点作数量期初；历史单据留查阅、不重复叠加库存。已确认负库存保留，空白不自动当0。131张盘盈盘亏原记录保留，成因未明；不假造作废或调拨。"},
+    {"id": "NEW_PRODUCTS", "decision": "此前14款待补资料可由新批实际资料补齐，按来源身份匹配；未提供的字段仍待补。旧批次数量不作为新批常量。"},
+    {"id": "ACCOUNTS_AND_RELATIONS", "decision": "既定营业厅、仓库、往来单位及资金账户关系继续匹配复用；历史员工、营业员和操作人员身份保留。用户尚未裁定登录账号重整，本次不清理账户，不读取密码数据行。"}
+  ],
+  "files": [
+    "data-cleaning/intake/decision-registry.json",
+    "data-cleaning/intake/input-contract.json",
+    "inputs/TPLUS-SIZE-RULE-AUDIT-20261001/新老尺码对照表2.0(2).xlsx",
+    "inputs/tplus-barcode-authority-20260930/基本数据对照表.xls",
+    "data-cleaning/inventory-cutover-policy.json",
+    "data-cleaning/size-mapping/user-size-audit.json",
+    "data-cleaning/size-mapping/user-size-rules.json",
+    "data-cleaning/size-mapping/accepted-size-decisions.json",
+    "data-cleaning/size-mapping/accepted-size-decisions.mjs",
+    "data-cleaning/size-mapping/README.md",
+    "frontend/product-size-groups.mjs",
+    "frontend/business-product-view.mjs",
+    "data-cleaning/authority/current/decisions/categories/full_mapping_2941.json",
+    "data-cleaning/authority/current/decisions/categories/decisions_901.json",
+    "data-cleaning/authority/current/decisions/categories/clarification_resolution.json",
+    "data-cleaning/authority/current/decisions/accounts/account-decision-results.json",
+    "data-cleaning/authority/current/decisions/accounts/DECISIONS.md",
+    "data-cleaning/authority/current/decisions/relations-confirmed.json",
+    "data-cleaning/authority/current/frontend/master-data.js",
+    "data-cleaning/authority/current/frontend/product-master.js",
+    "data-cleaning/docs/PROJECT_BRAIN.md",
+    "data-cleaning/docs/IMPORT_CONTINUATION_20260930.md",
+    "data-cleaning/supplemental/TPLUS-TRANSFER-SUPPLEMENT-REVIEW-20260930/user-decisions.json",
+    "server/runtime/excel-barcode-authority-20260930.json",
+    "server/runtime/barcode-scheme-supplement-20260930.json",
+    "server/runtime/product-color-split.json"
+  ]
+}

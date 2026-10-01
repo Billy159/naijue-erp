@@ -101,3 +101,36 @@ const doc = () => ({ businessType: '销售', lines: [] });
 }
 
 console.log('sales-line-merge: OK');
+
+// Correcting a price through the identity editor must replace its old input validation.
+{
+  const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
+  const source = fs.readFileSync(path.join(__dirname, '..', 'sales-current.js'), 'utf8');
+  const start = source.indexOf('function confirmIdentity()'), end = source.indexOf('function entryRow(', start);
+  assert(start >= 0 && end > start);
+  const original = row({ priceCents: null });
+  const d = { lines: [original] };
+  const U = {
+    identityEdit: { id: original.id, query: product().id, draft: { ...original, priceCents: 44900 } },
+    rawPrices: { [original.id]: 'bad', unrelated: 'still invalid' },
+    priceErrors: { [original.id]: true, unrelated: true }, error: '',
+  };
+  const ctx = vm.createContext({
+    U, M, p: () => product(), PRODUCT_FINDER: { validSpec: () => true },
+    entryDoc: () => d, mapMergedRecords() {}, repaintLines() {},
+    $: () => ({ textContent: '' }),
+  });
+  vm.runInContext(source.slice(start, end) + '\nglobalThis.confirmIdentity=confirmIdentity;', ctx);
+  ctx.confirmIdentity();
+  assert.equal(d.lines[0].priceCents, 44900);
+  assert.equal(U.identityEdit, null);
+  assert.equal(U.rawPrices[original.id], undefined, 'the accepted price replaces the old invalid input');
+  assert.equal(U.priceErrors[original.id], undefined, 'an accepted price correction must allow save and audit');
+  assert.equal(U.priceErrors.unrelated, true, 'unrelated validation errors remain');
+  U.identityEdit = { id: original.id, query: product().id, draft: { ...d.lines[0], priceCents: null } };
+  U.rawPrices[original.id] = 'bad'; U.priceErrors[original.id] = true;
+  ctx.confirmIdentity();
+  assert(U.identityEdit, 'invalid replacements remain in the editor');
+  assert.equal(U.priceErrors[original.id], true, 'rejected corrections keep validation');
+}
+console.log('sales-identity-price-correction: OK');

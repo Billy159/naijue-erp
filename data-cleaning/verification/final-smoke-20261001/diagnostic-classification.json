@@ -1,0 +1,183 @@
+{
+  "status": "PASS",
+  "assertionRecords": 213,
+  "passRecords": 202,
+  "diagnosticFailedRecords": 11,
+  "unresolvedProductFailures": 0,
+  "confirmedP0": 0,
+  "confirmedP1": 1,
+  "fixedP1": 1,
+  "pendingP2": 0,
+  "diagnostics": [
+    {
+      "original": {
+        "time": "2026-10-01T16:43:10+0800",
+        "label": "切组后无混入上衣尺码",
+        "pass": false,
+        "detail": null
+      },
+      "classification": "driver_expectation",
+      "resolution": "sizeIds retains historical identity; selectedSizeIds was checked against the whole active group",
+      "evidence": "test-product-final.json",
+      "resolved": true
+    },
+    {
+      "original": {
+        "time": "2026-10-01T17:09:13+0800",
+        "label": "营业员手工 URL 被拦截 products",
+        "pass": false,
+        "detail": null
+      },
+      "classification": "driver_expectation",
+      "resolution": "Sales role correctly redirects to sales/new, rather than inventory",
+      "evidence": "assertions.jsonl",
+      "resolved": true
+    },
+    {
+      "original": {
+        "time": "2026-10-01T17:15:35+0800",
+        "label": "营业员修改颜色版型尺码数量",
+        "pass": false,
+        "detail": null
+      },
+      "classification": "driver_input",
+      "resolution": "CDP text selection originally appended digits; native selectAll with verified focus retested successfully",
+      "evidence": "sales-price-correction-fixed.json",
+      "resolved": true
+    },
+    {
+      "original": {
+        "time": "2026-10-01T17:18:57+0800",
+        "label": "单笔 898 已结清",
+        "pass": false,
+        "detail": null
+      },
+      "classification": "driver_input",
+      "resolution": "Native input initially appended 898; corrected focus and selectAll, then retested 898 and 500+398",
+      "evidence": "payment-mixed-settled.json",
+      "resolved": true
+    },
+    {
+      "original": {
+        "time": "2026-10-01T17:22:50+0800",
+        "label": "未结清审核被拦截 待收",
+        "pass": false,
+        "detail": "成交单价需为有效金额，最多两位小数"
+      },
+      "classification": "product_P1_fixed",
+      "resolution": "A corrected price retained a stale error and masked the settlement check; the price correction was fixed, then underpayment and audit were retested",
+      "evidence": "payment-under-blocked.json",
+      "resolved": true
+    },
+    {
+      "original": {
+        "time": "2026-10-01T17:29:59+0800",
+        "label": "混合支付 待收 提示",
+        "pass": false,
+        "detail": null
+      },
+      "classification": "driver_input",
+      "resolution": "Incorrect input selection/focus caused an appended value; native focus was checked before replacement and retested",
+      "evidence": "payment-under-blocked.json",
+      "resolved": true
+    },
+    {
+      "original": {
+        "time": "2026-10-01T17:34:41+0800",
+        "label": "流水包含销货出库 -3",
+        "pass": false,
+        "detail": null
+      },
+      "classification": "driver_expectation",
+      "resolution": "Normal sale and gift correctly retain two ledger rows -2 and -1; the verified sum is -3",
+      "evidence": "ledger-sale-out.json",
+      "resolved": true
+    },
+    {
+      "original": {
+        "time": "2026-10-01T17:57:20+0800",
+        "label": "A B 主条码按方案生成且唯一",
+        "pass": false,
+        "detail": {
+          "count": 66
+        }
+      },
+      "classification": "driver_expectation",
+      "resolution": "Flattening the base and derived fit views counted A twice; canonical 44 records are unique and all resolve to one SKU",
+      "evidence": "test-product-final.json",
+      "resolved": true
+    },
+    {
+      "original": {
+        "time": "2026-10-01T18:11:32+0800",
+        "label": "历史图片展开并正常加载",
+        "pass": false,
+        "detail": 52
+      },
+      "classification": "driver_expectation",
+      "resolution": "Lazy thumbnails outside the viewport were not loaded; actual preview decoded the original and all 67 distinct image URLs returned images",
+      "evidence": "product-image-resources.json",
+      "resolved": true
+    },
+    {
+      "original": {
+        "time": "2026-10-01T18:13:50+0800",
+        "label": "历史单据尺码颜色数量原值 SA-2025-01-0556",
+        "pass": false,
+        "detail": {
+          "source": "REAL_TPLUS_HISTORY",
+          "readonly": true,
+          "id": "tp_sale_line_1203fed4febf341ffa7ddbcf",
+          "uuid": "504886ab-be59-66ce-f15c-dd53db2bbe1a",
+          "skuId": "415bbac1-6913-cb97-f47b-95fee2e1cc1e",
+          "productUuid": "2c124658-1a68-667d-c182-c88f93e729f4",
+          "productId": "602YR5578161",
+          "name": "羽绒服",
+          "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+          "sizeId": "cb179eac-9652-9867-d563-a165fd63fa71",
+          "color": "黑色",
+          "size": "195/4XL",
+          "quantity": 1,
+          "unit": "",
+          "priceCents": 133500,
+          "sourceUnitPrice": 1335,
+          "amountCents": 133500,
+          "referenceCents": null,
+          "gift": false,
+          "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+          "sourceLineage": [],
+          "sourceSize": "195/108A",
+          "fitId": "A",
+          "fit": "A版（标准）",
+          "pricingRule": "unit-price",
+          "discountTenths": null,
+          "previousPrice": null,
+          "note": "",
+          "zeroConfirmed": true,
+          "netCents": 133500,
+          "categorySnapshot": {
+            "id": "cat-9-1",
+            "name": "羽绒服",
+            "fullName": "保暖服装 / 羽绒服"
+          }
+        }
+      },
+      "classification": "driver_expectation",
+      "resolution": "The displayed size is mapped; sourceSize retains 195/108A with the same original SKU, quantity and price",
+      "evidence": "historical-document-ui.json",
+      "resolved": true
+    },
+    {
+      "original": {
+        "time": "2026-10-01T18:23:46+0800",
+        "label": "历史停用资料从实际服务读取",
+        "pass": false,
+        "detail": null
+      },
+      "classification": "fixture_setup",
+      "resolution": "Historical-disabled state requires both persisted master preferences and runtime reference; this controlled fixture was loaded normally and restored through UI",
+      "evidence": "inventory-disabled-historical-warehouse.json",
+      "resolved": true
+    }
+  ]
+}

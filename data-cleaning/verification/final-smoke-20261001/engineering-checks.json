@@ -1,0 +1,22 @@
+[
+  {
+    "check": "build",
+    "exit": 0,
+    "seconds": 5.65
+  },
+  {
+    "check": "lint",
+    "exit": 0,
+    "seconds": 1.62
+  },
+  {
+    "check": "typecheck",
+    "exit": 0,
+    "seconds": 0.6
+  },
+  {
+    "check": "check:dependencies",
+    "exit": 0,
+    "seconds": 0.16
+  }
+]

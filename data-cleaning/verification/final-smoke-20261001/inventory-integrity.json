@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "database": "demo_8877_smoke_20261001",
+  "baseSkuWarehouseCells": 33195,
+  "productCount": 2253,
+  "total": 80776,
+  "matrixRows": 8602,
+  "duplicates": 0,
+  "missingRows": 0,
+  "quantityDifferences": 0,
+  "subtotalDifferences": 0,
+  "pages": [
+    {
+      "page": 1,
+      "rows": 3867,
+      "total": 80776,
+      "productCount": 2253
+    },
+    {
+      "page": 2,
+      "rows": 2129,
+      "total": 80776,
+      "productCount": 2253
+    },
+    {
+      "page": 3,
+      "rows": 1550,
+      "total": 80776,
+      "productCount": 2253
+    },
+    {
+      "page": 4,
+      "rows": 682,
+      "total": 80776,
+      "productCount": 2253
+    },
+    {
+      "page": 5,
+      "rows": 374,
+      "total": 80776,
+      "productCount": 2253
+    }
+  ]
+}

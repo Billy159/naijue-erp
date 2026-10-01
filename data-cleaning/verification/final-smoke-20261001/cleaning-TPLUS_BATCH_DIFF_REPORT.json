@@ -1,0 +1,353 @@
+{
+  "status": "REVIEW",
+  "oldBatch": "TPLUS-20260922-A2",
+  "newBatch": "TPLUS-IMPORT-20261001-A175118",
+  "changedFiles": [
+    "data/master/categories.jsonl",
+    "data/master/fund_accounts.jsonl",
+    "data/master/halls.jsonl",
+    "data/master/payment_methods_derived.jsonl",
+    "data/master/products.jsonl",
+    "data/master/size_groups.jsonl",
+    "data/master/warehouses.jsonl",
+    "diagnostics/inventory_difference_trace.jsonl",
+    "diagnostics/movement_output_validation.jsonl"
+  ],
+  "structureChanged": [],
+  "duplicateSourceKeys": [],
+  "identityDrift": [],
+  "files": {
+    "data/history/purchase_documents.jsonl": {
+      "oldCount": 2172,
+      "newCount": 2172,
+      "delta": 0,
+      "changed": false
+    },
+    "data/history/purchase_lines.jsonl": {
+      "oldCount": 49127,
+      "newCount": 49127,
+      "delta": 0,
+      "changed": false
+    },
+    "data/history/sales_documents.jsonl": {
+      "oldCount": 27903,
+      "newCount": 27903,
+      "delta": 0,
+      "changed": false
+    },
+    "data/history/sales_funds.jsonl": {
+      "oldCount": 25416,
+      "newCount": 25416,
+      "delta": 0,
+      "changed": false
+    },
+    "data/history/sales_lines.jsonl": {
+      "oldCount": 79508,
+      "newCount": 79508,
+      "delta": 0,
+      "changed": false
+    },
+    "data/history/transfer_documents.jsonl": {
+      "oldCount": 13946,
+      "newCount": 13946,
+      "delta": 0,
+      "changed": false
+    },
+    "data/history/transfer_lines.jsonl": {
+      "oldCount": 254519,
+      "newCount": 254519,
+      "delta": 0,
+      "changed": false
+    },
+    "data/inventory/rebuild_events.jsonl": {
+      "oldCount": 637673,
+      "newCount": 637673,
+      "delta": 0,
+      "changed": false
+    },
+    "data/inventory/rebuilt_stock.jsonl": {
+      "oldCount": 137940,
+      "newCount": 137940,
+      "delta": 0,
+      "changed": false
+    },
+    "data/inventory/warehouse_totals.jsonl": {
+      "oldCount": 51,
+      "newCount": 51,
+      "delta": 0,
+      "changed": false
+    },
+    "data/master/categories.jsonl": {
+      "oldCount": 49,
+      "newCount": 49,
+      "delta": 0,
+      "changed": true
+    },
+    "data/master/colors.jsonl": {
+      "oldCount": 182,
+      "newCount": 182,
+      "delta": 0,
+      "changed": false
+    },
+    "data/master/customers.jsonl": {
+      "oldCount": 484,
+      "newCount": 484,
+      "delta": 0,
+      "changed": false
+    },
+    "data/master/departments.jsonl": {
+      "oldCount": 58,
+      "newCount": 58,
+      "delta": 0,
+      "changed": false
+    },
+    "data/master/employees.jsonl": {
+      "oldCount": 99,
+      "newCount": 99,
+      "delta": 0,
+      "changed": false
+    },
+    "data/master/fits.jsonl": {
+      "oldCount": 11,
+      "newCount": 11,
+      "delta": 0,
+      "changed": false
+    },
+    "data/master/fund_accounts.jsonl": {
+      "oldCount": 80,
+      "newCount": 80,
+      "delta": 0,
+      "changed": true
+    },
+    "data/master/halls.jsonl": {
+      "oldCount": 47,
+      "newCount": 47,
+      "delta": 0,
+      "changed": true
+    },
+    "data/master/parties.jsonl": {
+      "oldCount": 485,
+      "newCount": 485,
+      "delta": 0,
+      "changed": false
+    },
+    "data/master/payment_methods.jsonl": {
+      "oldCount": 11,
+      "newCount": 11,
+      "delta": 0,
+      "changed": false
+    },
+    "data/master/payment_methods_derived.jsonl": {
+      "oldCount": 1,
+      "newCount": 1,
+      "delta": 0,
+      "changed": true
+    },
+    "data/master/product_barcodes.jsonl": {
+      "oldCount": 2943,
+      "newCount": 2943,
+      "delta": 0,
+      "changed": false
+    },
+    "data/master/products.jsonl": {
+      "oldCount": 2941,
+      "newCount": 2941,
+      "delta": 0,
+      "changed": true,
+      "sourceAdded": 0,
+      "sourceRemoved": 0,
+      "sharedChanged": 2941,
+      "duplicateSourceKeysOld": 0,
+      "duplicateSourceKeysNew": 0,
+      "identityDrift": 0,
+      "identityDriftSamples": []
+    },
+    "data/master/size_groups.jsonl": {
+      "oldCount": 15,
+      "newCount": 15,
+      "delta": 0,
+      "changed": true
+    },
+    "data/master/sizes.jsonl": {
+      "oldCount": 240,
+      "newCount": 240,
+      "delta": 0,
+      "changed": false
+    },
+    "data/master/skus.jsonl": {
+      "oldCount": 14864,
+      "newCount": 14864,
+      "delta": 0,
+      "changed": false
+    },
+    "data/master/suppliers.jsonl": {
+      "oldCount": 451,
+      "newCount": 451,
+      "delta": 0,
+      "changed": false
+    },
+    "data/master/units.jsonl": {
+      "oldCount": 10,
+      "newCount": 10,
+      "delta": 0,
+      "changed": false
+    },
+    "data/master/warehouses.jsonl": {
+      "oldCount": 51,
+      "newCount": 51,
+      "delta": 0,
+      "changed": true,
+      "sourceAdded": 0,
+      "sourceRemoved": 0,
+      "sharedChanged": 51,
+      "duplicateSourceKeysOld": 0,
+      "duplicateSourceKeysNew": 0,
+      "identityDrift": 0,
+      "identityDriftSamples": []
+    },
+    "diagnostics/inventory_difference_trace.jsonl": {
+      "oldCount": 2291,
+      "newCount": null,
+      "status": "DIAGNOSTIC_ONLY"
+    },
+    "diagnostics/inventory_reconciliation.jsonl": {
+      "oldCount": 138236,
+      "newCount": 138236,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/movement_missing_fk.jsonl": {
+      "oldCount": 0,
+      "newCount": 0,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/movement_output_validation.jsonl": {
+      "oldCount": 1,
+      "newCount": null,
+      "status": "DIAGNOSTIC_ONLY"
+    },
+    "diagnostics/movement_pair_validation.jsonl": {
+      "oldCount": 0,
+      "newCount": 0,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/package_duplicate_ids.jsonl": {
+      "oldCount": 0,
+      "newCount": 0,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/package_foreign_key_issues.jsonl": {
+      "oldCount": 0,
+      "newCount": 0,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/sales_duplicates_preserved.jsonl": {
+      "oldCount": 142,
+      "newCount": 142,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/sales_employee_current_department_difference.jsonl": {
+      "oldCount": 5663,
+      "newCount": 5663,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/sales_functional_department.jsonl": {
+      "oldCount": 2975,
+      "newCount": 2975,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/sales_header_conflicts.jsonl": {
+      "oldCount": 0,
+      "newCount": 0,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/sales_line_amount_difference.jsonl": {
+      "oldCount": 5,
+      "newCount": 5,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/sales_missing_fk.jsonl": {
+      "oldCount": 911,
+      "newCount": 911,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/sales_settlement_difference.jsonl": {
+      "oldCount": 21,
+      "newCount": 21,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/sales_source_purpose.jsonl": {
+      "oldCount": 70,
+      "newCount": 70,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/sales_unique_key_conflicts.jsonl": {
+      "oldCount": 0,
+      "newCount": 0,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/sku_identity_conflicts.jsonl": {
+      "oldCount": 0,
+      "newCount": 0,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/sku_observations.jsonl": {
+      "oldCount": 504384,
+      "newCount": 504384,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/snapshot_stock.jsonl": {
+      "oldCount": 32430,
+      "newCount": 32430,
+      "delta": 0,
+      "changed": false
+    },
+    "diagnostics/warehouse_reconciliation.jsonl": {
+      "oldCount": 51,
+      "newCount": 51,
+      "delta": 0,
+      "changed": false
+    },
+    "quarantine/independent_receipt_documents.jsonl": {
+      "oldCount": 25155,
+      "newCount": 25155,
+      "delta": 0,
+      "changed": false
+    },
+    "quarantine/independent_receipt_lines.jsonl": {
+      "oldCount": 25622,
+      "newCount": 25622,
+      "delta": 0,
+      "changed": false
+    },
+    "quarantine/unmatched_transfer_documents.jsonl": {
+      "oldCount": 131,
+      "newCount": 131,
+      "delta": 0,
+      "changed": false
+    },
+    "quarantine/unmatched_transfer_lines.jsonl": {
+      "oldCount": 88800,
+      "newCount": 88800,
+      "delta": 0,
+      "changed": false
+    }
+  },
+  "inventoryOld": "80794",
+  "inventoryNew": "80794"
+}

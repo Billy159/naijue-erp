@@ -1,0 +1,43 @@
+{
+  "database": "demo_8877_smoke_20261001",
+  "authSchema": "v2_runtime_test_smoke_auth",
+  "accounts": [
+    {
+      "id": "smoke-admin",
+      "name": "Smoke验收管理员",
+      "code": "SMK-A",
+      "role": "管理员",
+      "employmentStatus": "在职",
+      "loginEnabled": true,
+      "loginName": "smoke-admin",
+      "enabled": true,
+      "authVersion": 1
+    },
+    {
+      "id": "smoke-warehouse",
+      "code": "smoke-warehouse",
+      "name": "Smoke验收仓库员",
+      "role": "仓库人员",
+      "enabled": true,
+      "storeId": "5b2461c8-ce98-2c2f-8909-627507196557",
+      "loginName": "smoke-warehouse",
+      "loginEnabled": true,
+      "employmentStatus": "在职",
+      "authVersion": 1,
+      "hasPassword": true
+    },
+    {
+      "id": "smoke-sales",
+      "code": "smoke-sales",
+      "name": "Smoke验收营业员",
+      "role": "营业员",
+      "enabled": true,
+      "storeId": "5b2461c8-ce98-2c2f-8909-627507196557",
+      "loginName": "smoke-sales",
+      "loginEnabled": true,
+      "employmentStatus": "在职",
+      "authVersion": 1,
+      "hasPassword": true
+    }
+  ]
+}

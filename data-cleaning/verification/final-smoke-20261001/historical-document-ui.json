@@ -1,0 +1,168 @@
+[
+  {
+    "number": "ALAL-2026-04-0773",
+    "uuid": "a3f54789-4828-1053-9aec-e8ea77a6763c",
+    "sample": {
+      "source": "REAL_TPLUS_HISTORY",
+      "readonly": true,
+      "id": "tp_transfer_line_6e44abc8349855fea96ab7fa",
+      "uuid": "96c9307d-2f99-657b-665b-15586596020c",
+      "skuId": "f0688bf7-2c27-5a71-8cf0-454a9a5cb0aa",
+      "productUuid": "49ef43d2-fffb-782f-3fb3-28c4f0bf65c5",
+      "productId": "653JK5186125",
+      "name": "夹克（防晒服）",
+      "colorId": "e4cab986-13ff-a9a3-1ede-7cb6f1c7528d",
+      "sizeId": "3475e983-df54-1499-4291-be3bc411161d",
+      "color": "蓝色",
+      "size": "170/88A",
+      "quantity": 1,
+      "unit": "件",
+      "priceCents": null,
+      "sourceUnitPrice": null,
+      "amountCents": 8000,
+      "referenceCents": null,
+      "gift": null,
+      "warehouseId": null,
+      "sourceLineage": [
+        {
+          "row": 262332,
+          "side": "out",
+          "sheet": "其他出库单",
+          "sourceFile": "T+数据/单据数据/其他出库单.xlsx",
+          "sourceSha256": "f235b42c2a3472486e8d4ad2aa964a05eac8c73245e3e8ab45d584e220dd0c1f"
+        },
+        {
+          "row": 262429,
+          "side": "in",
+          "sheet": "其他入库单",
+          "sourceFile": "T+数据/单据数据/其他入库单.xlsx",
+          "sourceSha256": "fca93187d1c603f3fbe61d059651f78b2bb2e0f6c7e0e52bc62a491be5de3d5c"
+        }
+      ]
+    }
+  },
+  {
+    "number": "ALAL-2026-01-0359",
+    "uuid": "00b338b1-a2f0-edd6-e659-5a6e7eddbe1e",
+    "sample": {
+      "source": "REAL_TPLUS_HISTORY",
+      "readonly": true,
+      "id": "tp_transfer_line_36f4f88dd5a146bc9a7f6000",
+      "uuid": "6be02855-faec-3995-03ff-81e94a75ab4d",
+      "skuId": "634bdb47-f461-ae49-5735-4b41c93e1b21",
+      "productUuid": "0c3bd839-5852-908f-1909-749b3e4a554a",
+      "productId": "961KZ6379160",
+      "name": "牛仔裤",
+      "colorId": "ad28bc79-51cf-a324-b5eb-14e317755696",
+      "sizeId": "b0715ffe-3941-a20b-8878-13fdead233e2",
+      "color": "灰蓝色",
+      "size": "32",
+      "quantity": 1,
+      "unit": "条",
+      "priceCents": null,
+      "sourceUnitPrice": null,
+      "amountCents": 9800,
+      "referenceCents": null,
+      "gift": null,
+      "warehouseId": null,
+      "sourceLineage": [
+        {
+          "row": 216743,
+          "side": "out",
+          "sheet": "其他出库单",
+          "sourceFile": "T+数据/单据数据/其他出库单.xlsx",
+          "sourceSha256": "f235b42c2a3472486e8d4ad2aa964a05eac8c73245e3e8ab45d584e220dd0c1f"
+        },
+        {
+          "row": 216845,
+          "side": "in",
+          "sheet": "其他入库单",
+          "sourceFile": "T+数据/单据数据/其他入库单.xlsx",
+          "sourceSha256": "fca93187d1c603f3fbe61d059651f78b2bb2e0f6c7e0e52bc62a491be5de3d5c"
+        }
+      ]
+    }
+  },
+  {
+    "number": "SA-2025-07-0273",
+    "uuid": "a0697f97-1037-831a-6e44-562005560fd8",
+    "sample": {
+      "source": "REAL_TPLUS_HISTORY",
+      "readonly": true,
+      "id": "tp_sale_line_cac8ed2cdf61eba02d49d80a",
+      "uuid": "069d1594-b7f0-f1f9-041f-97bff31a715f",
+      "skuId": "eafa68b8-f412-f3b5-a1ce-ef321c890de4",
+      "productUuid": "d056a9f4-9e89-9e5b-806d-abdc15771923",
+      "productId": "902KZ5179210",
+      "name": "休闲裤",
+      "colorId": "afedc827-5cef-0223-89ef-b1e9eb17e274",
+      "sizeId": "1ec1bc9b-7454-7dcc-9a25-8f1c79f09090",
+      "color": "灰色",
+      "size": "36",
+      "quantity": 1,
+      "unit": "",
+      "priceCents": 29900,
+      "sourceUnitPrice": 299,
+      "amountCents": 29900,
+      "referenceCents": null,
+      "gift": false,
+      "warehouseId": "8e618846-d5d4-1077-61ff-e80ebf7c7cfc",
+      "sourceLineage": [],
+      "sourceSize": "36",
+      "fitId": "A",
+      "fit": "A版（标准）",
+      "pricingRule": "unit-price",
+      "discountTenths": null,
+      "previousPrice": null,
+      "note": "",
+      "zeroConfirmed": true,
+      "netCents": 29900,
+      "categorySnapshot": {
+        "id": "cat-12-0",
+        "name": "休闲裤",
+        "fullName": "长裤 / 休闲裤"
+      }
+    }
+  },
+  {
+    "number": "SA-2025-01-0556",
+    "uuid": "465f9259-a063-487a-a514-1619ba7fe6b8",
+    "sample": {
+      "source": "REAL_TPLUS_HISTORY",
+      "readonly": true,
+      "id": "tp_sale_line_1203fed4febf341ffa7ddbcf",
+      "uuid": "504886ab-be59-66ce-f15c-dd53db2bbe1a",
+      "skuId": "415bbac1-6913-cb97-f47b-95fee2e1cc1e",
+      "productUuid": "2c124658-1a68-667d-c182-c88f93e729f4",
+      "productId": "602YR5578161",
+      "name": "羽绒服",
+      "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc",
+      "sizeId": "cb179eac-9652-9867-d563-a165fd63fa71",
+      "color": "黑色",
+      "size": "195/4XL",
+      "quantity": 1,
+      "unit": "",
+      "priceCents": 133500,
+      "sourceUnitPrice": 1335,
+      "amountCents": 133500,
+      "referenceCents": null,
+      "gift": false,
+      "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+      "sourceLineage": [],
+      "sourceSize": "195/108A",
+      "fitId": "A",
+      "fit": "A版（标准）",
+      "pricingRule": "unit-price",
+      "discountTenths": null,
+      "previousPrice": null,
+      "note": "",
+      "zeroConfirmed": true,
+      "netCents": 133500,
+      "categorySnapshot": {
+        "id": "cat-9-1",
+        "name": "羽绒服",
+        "fullName": "保暖服装 / 羽绒服"
+      }
+    }
+  }
+]

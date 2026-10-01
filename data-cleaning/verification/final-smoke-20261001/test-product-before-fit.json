@@ -1,0 +1,3067 @@
+{
+  "name": "Smoke验收衬衫",
+  "year": "2026",
+  "fitId": "A",
+  "price": "449",
+  "fitIds": [
+    "A"
+  ],
+  "images": [
+    {
+      "id": "photo-8ef5c076-9d93-4502-8d80-c59757e9fc63",
+      "url": "data:image/png;base64,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",
+      "name": "photo-a.png",
+      "role": "白底图",
+      "colorId": "",
+      "sortOrder": 0
+    },
+    {
+      "id": "photo-a4c3f3e7-dc2f-4d6a-91e2-a30b1b32b2f3",
+      "url": "data:image/png;base64,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",
+      "name": "photo-a.png",
+      "role": "吊牌图",
+      "colorId": "",
+      "sortOrder": 1
+    },
+    {
+      "id": "photo-5a201ff0-e870-45be-9e08-72bce7ed4915",
+      "url": "data:image/png;base64,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",
+      "name": "photo-a.png",
+      "role": "详情图",
+      "colorId": "",
+      "sortOrder": 2
+    },
+    {
+      "id": "photo-d48a0a27-fd64-4f72-b3c9-a1a2e4fdbe14",
+      "url": "data:image/png;base64,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",
+      "name": "photo-a.png",
+      "role": "颜色配图",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "sortOrder": 3
+    }
+  ],
+  "season": "秋",
+  "groupId": "UPPER",
+  "freeCode": "",
+  "schemeId": "2026",
+  "shapeCode": "",
+  "thickness": "",
+  "categoryId": "cat-1-0",
+  "supplierId": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+  "wholesale5": "100",
+  "wholesale6": "110",
+  "wholesale7": "120",
+  "wholesale8": "130",
+  "wholesale9": "140",
+  "wholesale10": "150",
+  "minimumPrice": "90",
+  "purchasePrice": "120",
+  "selectedFitIds": [
+    "A"
+  ],
+  "barcodeItemCode": "0887771",
+  "selectedSizeIds": [
+    "UPPER-2026-size-xs",
+    "UPPER-demo-size-0",
+    "UPPER-demo-size-1",
+    "UPPER-demo-size-2",
+    "UPPER-demo-size-3",
+    "UPPER-demo-size-4",
+    "UPPER-demo-size-5",
+    "UPPER-demo-size-6",
+    "UPPER-demo-size-7",
+    "UPPER-demo-size-8",
+    "UPPER-demo-size-9"
+  ],
+  "specSizeRecords": [
+    {
+      "id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+      "code": "201",
+      "name": "160/XS",
+      "uiSizeId": "UPPER-2026-size-xs",
+      "groupName": "男装上衣尺码"
+    },
+    {
+      "id": "9b29dca3-c97e-4e42-a5aa-b135be01205b",
+      "code": "202",
+      "name": "165/S",
+      "uiSizeId": "UPPER-demo-size-0",
+      "groupName": "男装上衣尺码"
+    },
+    {
+      "id": "5b6631eb-15eb-4bc1-8271-bdab1c68cb42",
+      "code": "203",
+      "name": "170/M",
+      "uiSizeId": "UPPER-demo-size-1",
+      "groupName": "男装上衣尺码"
+    },
+    {
+      "id": "86953dca-93b4-4c0d-9092-6262028e98c0",
+      "code": "204",
+      "name": "175/L",
+      "uiSizeId": "UPPER-demo-size-2",
+      "groupName": "男装上衣尺码"
+    },
+    {
+      "id": "485ce5a3-c076-4fd6-9f01-7f4f9ef85007",
+      "code": "205",
+      "name": "180/XL",
+      "uiSizeId": "UPPER-demo-size-3",
+      "groupName": "男装上衣尺码"
+    },
+    {
+      "id": "a749540e-d829-4004-8866-5f1b822dda65",
+      "code": "206",
+      "name": "185/2XL",
+      "uiSizeId": "UPPER-demo-size-4",
+      "groupName": "男装上衣尺码"
+    },
+    {
+      "id": "f4085c7b-30e7-4677-b6d9-09336b90e74a",
+      "code": "207",
+      "name": "190/3XL",
+      "uiSizeId": "UPPER-demo-size-5",
+      "groupName": "男装上衣尺码"
+    },
+    {
+      "id": "cbe6719c-776c-46c0-a46b-19315728ed26",
+      "code": "208",
+      "name": "195/4XL",
+      "uiSizeId": "UPPER-demo-size-6",
+      "groupName": "男装上衣尺码"
+    },
+    {
+      "id": "e3e84fd6-9df5-4897-beef-28feca399a47",
+      "code": "209",
+      "name": "200/5XL",
+      "uiSizeId": "UPPER-demo-size-7",
+      "groupName": "男装上衣尺码"
+    },
+    {
+      "id": "3f0c7c0b-cad6-43ae-86de-303606b29aff",
+      "code": "210",
+      "name": "205/6XL",
+      "uiSizeId": "UPPER-demo-size-8",
+      "groupName": "男装上衣尺码"
+    },
+    {
+      "id": "35a02f28-4284-48b7-95bd-8782ced5d305",
+      "code": "900",
+      "name": "无尺码",
+      "uiSizeId": "UPPER-demo-size-9",
+      "groupName": "男装上衣尺码"
+    }
+  ],
+  "selectedColorIds": [
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+  ],
+  "removedHistoricalBarcodes": [
+    "SMK-OLD-001"
+  ],
+  "attributeLineage": {
+    "yearSeason": {
+      "sourceField": "所属类别",
+      "sourceValue": "",
+      "rule": "explicit-year-and-season-v1"
+    },
+    "supplier": {
+      "sourceField": "默认供应商编码",
+      "sourceCode": null,
+      "sourceName": null
+    }
+  },
+  "source": "REAL_TPLUS_HISTORY",
+  "readonly": false,
+  "id": "SMK261001A",
+  "displayId": "SMK261001A",
+  "styleNumber": "SMK261001A",
+  "colorSplit": null,
+  "uuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+  "category": "长袖衬衫",
+  "baseFitId": "A",
+  "fit": "A版（标准）",
+  "fitBarcodeCode": "5",
+  "sourceFit": {
+    "id": null,
+    "name": "A版"
+  },
+  "enabled": true,
+  "unit": "",
+  "sizeSystem": "standard",
+  "sourceGroupId": null,
+  "legacyGroupName": "男装上衣尺码",
+  "legacySizeRecords": [
+    {
+      "id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+      "name": "160/XS",
+      "code": "201",
+      "sourceName": "160/XS",
+      "sourceCode": "201",
+      "standardGroup": "男装上衣尺码",
+      "standardFit": "A",
+      "mappingRows": []
+    },
+    {
+      "id": "9b29dca3-c97e-4e42-a5aa-b135be01205b",
+      "name": "165/S",
+      "code": "202",
+      "sourceName": "165/S",
+      "sourceCode": "202",
+      "standardGroup": "男装上衣尺码",
+      "standardFit": "A",
+      "mappingRows": []
+    },
+    {
+      "id": "5b6631eb-15eb-4bc1-8271-bdab1c68cb42",
+      "name": "170/M",
+      "code": "203",
+      "sourceName": "170/M",
+      "sourceCode": "203",
+      "standardGroup": "男装上衣尺码",
+      "standardFit": "A",
+      "mappingRows": []
+    },
+    {
+      "id": "86953dca-93b4-4c0d-9092-6262028e98c0",
+      "name": "175/L",
+      "code": "204",
+      "sourceName": "175/L",
+      "sourceCode": "204",
+      "standardGroup": "男装上衣尺码",
+      "standardFit": "A",
+      "mappingRows": []
+    },
+    {
+      "id": "485ce5a3-c076-4fd6-9f01-7f4f9ef85007",
+      "name": "180/XL",
+      "code": "205",
+      "sourceName": "180/XL",
+      "sourceCode": "205",
+      "standardGroup": "男装上衣尺码",
+      "standardFit": "A",
+      "mappingRows": []
+    },
+    {
+      "id": "a749540e-d829-4004-8866-5f1b822dda65",
+      "name": "185/2XL",
+      "code": "206",
+      "sourceName": "185/2XL",
+      "sourceCode": "206",
+      "standardGroup": "男装上衣尺码",
+      "standardFit": "A",
+      "mappingRows": []
+    },
+    {
+      "id": "f4085c7b-30e7-4677-b6d9-09336b90e74a",
+      "name": "190/3XL",
+      "code": "207",
+      "sourceName": "190/3XL",
+      "sourceCode": "207",
+      "standardGroup": "男装上衣尺码",
+      "standardFit": "A",
+      "mappingRows": []
+    },
+    {
+      "id": "cbe6719c-776c-46c0-a46b-19315728ed26",
+      "name": "195/4XL",
+      "code": "208",
+      "sourceName": "195/4XL",
+      "sourceCode": "208",
+      "standardGroup": "男装上衣尺码",
+      "standardFit": "A",
+      "mappingRows": []
+    },
+    {
+      "id": "e3e84fd6-9df5-4897-beef-28feca399a47",
+      "name": "200/5XL",
+      "code": "209",
+      "sourceName": "200/5XL",
+      "sourceCode": "209",
+      "standardGroup": "男装上衣尺码",
+      "standardFit": "A",
+      "mappingRows": []
+    },
+    {
+      "id": "3f0c7c0b-cad6-43ae-86de-303606b29aff",
+      "name": "205/6XL",
+      "code": "210",
+      "sourceName": "205/6XL",
+      "sourceCode": "210",
+      "standardGroup": "男装上衣尺码",
+      "standardFit": "A",
+      "mappingRows": []
+    },
+    {
+      "id": "35a02f28-4284-48b7-95bd-8782ced5d305",
+      "name": "无尺码",
+      "code": "900",
+      "sourceName": "无尺码",
+      "sourceCode": "900",
+      "standardGroup": "男装上衣尺码",
+      "standardFit": "A",
+      "mappingRows": []
+    }
+  ],
+  "colorIds": [
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+  ],
+  "sizeIds": [
+    "785fdff3-dc15-4306-8ffe-9906e79c0747",
+    "9b29dca3-c97e-4e42-a5aa-b135be01205b",
+    "5b6631eb-15eb-4bc1-8271-bdab1c68cb42",
+    "86953dca-93b4-4c0d-9092-6262028e98c0",
+    "485ce5a3-c076-4fd6-9f01-7f4f9ef85007",
+    "a749540e-d829-4004-8866-5f1b822dda65",
+    "f4085c7b-30e7-4677-b6d9-09336b90e74a",
+    "cbe6719c-776c-46c0-a46b-19315728ed26",
+    "e3e84fd6-9df5-4897-beef-28feca399a47",
+    "3f0c7c0b-cad6-43ae-86de-303606b29aff",
+    "35a02f28-4284-48b7-95bd-8782ced5d305"
+  ],
+  "colors": [
+    "白色",
+    "黑色"
+  ],
+  "sizes": [
+    "160/XS",
+    "165/S",
+    "170/M",
+    "175/L",
+    "180/XL",
+    "185/2XL",
+    "190/3XL",
+    "195/4XL",
+    "200/5XL",
+    "205/6XL",
+    "无尺码"
+  ],
+  "barcodes": {
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|785fdff3-dc15-4306-8ffe-9906e79c0747": {
+      "current": "5A0887771721201",
+      "history": [],
+      "skuId": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+          "source": "product-profile",
+          "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+        }
+      }
+    },
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|785fdff3-dc15-4306-8ffe-9906e79c0747": {
+      "current": "5A0887771701201",
+      "history": [],
+      "skuId": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+          "source": "product-profile",
+          "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+        }
+      }
+    },
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|9b29dca3-c97e-4e42-a5aa-b135be01205b": {
+      "current": "5A0887771721202",
+      "history": [],
+      "skuId": "2ae3f4a7-33ba-4886-be55-c9d144a95203",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "9b29dca3-c97e-4e42-a5aa-b135be01205b",
+          "source": "product-profile",
+          "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+        }
+      }
+    },
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|9b29dca3-c97e-4e42-a5aa-b135be01205b": {
+      "current": "5A0887771701202",
+      "history": [],
+      "skuId": "a0b55794-4293-4d9a-b04a-3527a111fbc4",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "9b29dca3-c97e-4e42-a5aa-b135be01205b",
+          "source": "product-profile",
+          "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+        }
+      }
+    },
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|5b6631eb-15eb-4bc1-8271-bdab1c68cb42": {
+      "current": "5A0887771721203",
+      "history": [],
+      "skuId": "757337e8-c830-4168-99d2-c63924e16594",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "5b6631eb-15eb-4bc1-8271-bdab1c68cb42",
+          "source": "product-profile",
+          "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+        }
+      }
+    },
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|5b6631eb-15eb-4bc1-8271-bdab1c68cb42": {
+      "current": "5A0887771701203",
+      "history": [],
+      "skuId": "67457bb5-e923-412e-8daf-f4f2294c615e",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "5b6631eb-15eb-4bc1-8271-bdab1c68cb42",
+          "source": "product-profile",
+          "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+        }
+      }
+    },
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|86953dca-93b4-4c0d-9092-6262028e98c0": {
+      "current": "5A0887771721204",
+      "history": [],
+      "skuId": "34509e2b-634b-4aac-9dad-0d446fe1c55d",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "86953dca-93b4-4c0d-9092-6262028e98c0",
+          "source": "product-profile",
+          "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+        }
+      }
+    },
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|86953dca-93b4-4c0d-9092-6262028e98c0": {
+      "current": "5A0887771701204",
+      "history": [],
+      "skuId": "23691065-a3a9-4b0a-8f14-993ac6cb632a",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "86953dca-93b4-4c0d-9092-6262028e98c0",
+          "source": "product-profile",
+          "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+        }
+      }
+    },
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|485ce5a3-c076-4fd6-9f01-7f4f9ef85007": {
+      "current": "5A0887771721205",
+      "history": [],
+      "skuId": "899a48dd-04dc-49d8-8d0c-089f5731d2b0",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "485ce5a3-c076-4fd6-9f01-7f4f9ef85007",
+          "source": "product-profile",
+          "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+        }
+      }
+    },
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|485ce5a3-c076-4fd6-9f01-7f4f9ef85007": {
+      "current": "5A0887771701205",
+      "history": [],
+      "skuId": "1cab69db-e465-4a91-9858-6e91eebfc680",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "485ce5a3-c076-4fd6-9f01-7f4f9ef85007",
+          "source": "product-profile",
+          "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+        }
+      }
+    },
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|a749540e-d829-4004-8866-5f1b822dda65": {
+      "current": "5A0887771721206",
+      "history": [],
+      "skuId": "8ede2931-c37a-426f-8899-9abb2033af0b",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "a749540e-d829-4004-8866-5f1b822dda65",
+          "source": "product-profile",
+          "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+        }
+      }
+    },
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|a749540e-d829-4004-8866-5f1b822dda65": {
+      "current": "5A0887771701206",
+      "history": [],
+      "skuId": "31196b00-e3cc-4fa7-a2b9-5fc39bd16113",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "a749540e-d829-4004-8866-5f1b822dda65",
+          "source": "product-profile",
+          "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+        }
+      }
+    },
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|f4085c7b-30e7-4677-b6d9-09336b90e74a": {
+      "current": "5A0887771721207",
+      "history": [],
+      "skuId": "bb5ce1a5-9a4c-45e2-ab13-3abb418ef7a9",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "f4085c7b-30e7-4677-b6d9-09336b90e74a",
+          "source": "product-profile",
+          "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+        }
+      }
+    },
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|f4085c7b-30e7-4677-b6d9-09336b90e74a": {
+      "current": "5A0887771701207",
+      "history": [],
+      "skuId": "d515afb3-e883-488a-8c99-f704c3f2ca5b",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "f4085c7b-30e7-4677-b6d9-09336b90e74a",
+          "source": "product-profile",
+          "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+        }
+      }
+    },
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|cbe6719c-776c-46c0-a46b-19315728ed26": {
+      "current": "5A0887771721208",
+      "history": [],
+      "skuId": "83125e05-0bad-4a4c-b1e3-4e63d3efd600",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "cbe6719c-776c-46c0-a46b-19315728ed26",
+          "source": "product-profile",
+          "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+        }
+      }
+    },
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|cbe6719c-776c-46c0-a46b-19315728ed26": {
+      "current": "5A0887771701208",
+      "history": [],
+      "skuId": "4be5b52c-d6ba-4f34-be19-b3d6220c7183",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "cbe6719c-776c-46c0-a46b-19315728ed26",
+          "source": "product-profile",
+          "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+        }
+      }
+    },
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|e3e84fd6-9df5-4897-beef-28feca399a47": {
+      "current": "5A0887771721209",
+      "history": [],
+      "skuId": "80699420-f8ab-4373-92f9-ffc5e29de930",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "e3e84fd6-9df5-4897-beef-28feca399a47",
+          "source": "product-profile",
+          "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+        }
+      }
+    },
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|e3e84fd6-9df5-4897-beef-28feca399a47": {
+      "current": "5A0887771701209",
+      "history": [],
+      "skuId": "14d2c60c-4faa-4e55-8db9-05777a5821ba",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "e3e84fd6-9df5-4897-beef-28feca399a47",
+          "source": "product-profile",
+          "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+        }
+      }
+    },
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|3f0c7c0b-cad6-43ae-86de-303606b29aff": {
+      "current": "5A0887771721210",
+      "history": [],
+      "skuId": "909a54f0-50ad-45af-826c-5c62a4a1710a",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "3f0c7c0b-cad6-43ae-86de-303606b29aff",
+          "source": "product-profile",
+          "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+        }
+      }
+    },
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|3f0c7c0b-cad6-43ae-86de-303606b29aff": {
+      "current": "5A0887771701210",
+      "history": [],
+      "skuId": "159218ef-88ad-4378-843a-f8560420ff22",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "3f0c7c0b-cad6-43ae-86de-303606b29aff",
+          "source": "product-profile",
+          "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+        }
+      }
+    },
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|35a02f28-4284-48b7-95bd-8782ced5d305": {
+      "current": "5A0887771721900",
+      "history": [],
+      "skuId": "f228222d-c555-46da-ad54-a80d013619b5",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "35a02f28-4284-48b7-95bd-8782ced5d305",
+          "source": "product-profile",
+          "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+        }
+      }
+    },
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|35a02f28-4284-48b7-95bd-8782ced5d305": {
+      "current": "5A0887771701900",
+      "history": [],
+      "skuId": "58fa2e23-7bee-4e71-b5e3-3c18a5b097eb",
+      "fitId": "A",
+      "readonly": true,
+      "barcodeStatus": null,
+      "currentMeta": {
+        "schemeId": "2026",
+        "source": "V2_GENERATED",
+        "evidence": {
+          "fitId": "A",
+          "sizeId": "35a02f28-4284-48b7-95bd-8782ced5d305",
+          "source": "product-profile",
+          "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+        }
+      }
+    }
+  },
+  "productBarcodes": [
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+      "barcode": "5A0887771721201",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+        "source": "product-profile",
+        "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "2ae3f4a7-33ba-4886-be55-c9d144a95203",
+      "barcode": "5A0887771721202",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "9b29dca3-c97e-4e42-a5aa-b135be01205b",
+        "source": "product-profile",
+        "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "757337e8-c830-4168-99d2-c63924e16594",
+      "barcode": "5A0887771721203",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "5b6631eb-15eb-4bc1-8271-bdab1c68cb42",
+        "source": "product-profile",
+        "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "34509e2b-634b-4aac-9dad-0d446fe1c55d",
+      "barcode": "5A0887771721204",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "86953dca-93b4-4c0d-9092-6262028e98c0",
+        "source": "product-profile",
+        "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "899a48dd-04dc-49d8-8d0c-089f5731d2b0",
+      "barcode": "5A0887771721205",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "485ce5a3-c076-4fd6-9f01-7f4f9ef85007",
+        "source": "product-profile",
+        "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "8ede2931-c37a-426f-8899-9abb2033af0b",
+      "barcode": "5A0887771721206",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "a749540e-d829-4004-8866-5f1b822dda65",
+        "source": "product-profile",
+        "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "bb5ce1a5-9a4c-45e2-ab13-3abb418ef7a9",
+      "barcode": "5A0887771721207",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "f4085c7b-30e7-4677-b6d9-09336b90e74a",
+        "source": "product-profile",
+        "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "83125e05-0bad-4a4c-b1e3-4e63d3efd600",
+      "barcode": "5A0887771721208",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "cbe6719c-776c-46c0-a46b-19315728ed26",
+        "source": "product-profile",
+        "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "80699420-f8ab-4373-92f9-ffc5e29de930",
+      "barcode": "5A0887771721209",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "e3e84fd6-9df5-4897-beef-28feca399a47",
+        "source": "product-profile",
+        "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "909a54f0-50ad-45af-826c-5c62a4a1710a",
+      "barcode": "5A0887771721210",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "3f0c7c0b-cad6-43ae-86de-303606b29aff",
+        "source": "product-profile",
+        "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "f228222d-c555-46da-ad54-a80d013619b5",
+      "barcode": "5A0887771721900",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "35a02f28-4284-48b7-95bd-8782ced5d305",
+        "source": "product-profile",
+        "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+      "barcode": "5A0887771701201",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+        "source": "product-profile",
+        "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "a0b55794-4293-4d9a-b04a-3527a111fbc4",
+      "barcode": "5A0887771701202",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "9b29dca3-c97e-4e42-a5aa-b135be01205b",
+        "source": "product-profile",
+        "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "67457bb5-e923-412e-8daf-f4f2294c615e",
+      "barcode": "5A0887771701203",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "5b6631eb-15eb-4bc1-8271-bdab1c68cb42",
+        "source": "product-profile",
+        "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "23691065-a3a9-4b0a-8f14-993ac6cb632a",
+      "barcode": "5A0887771701204",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "86953dca-93b4-4c0d-9092-6262028e98c0",
+        "source": "product-profile",
+        "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "1cab69db-e465-4a91-9858-6e91eebfc680",
+      "barcode": "5A0887771701205",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "485ce5a3-c076-4fd6-9f01-7f4f9ef85007",
+        "source": "product-profile",
+        "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "31196b00-e3cc-4fa7-a2b9-5fc39bd16113",
+      "barcode": "5A0887771701206",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "a749540e-d829-4004-8866-5f1b822dda65",
+        "source": "product-profile",
+        "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "d515afb3-e883-488a-8c99-f704c3f2ca5b",
+      "barcode": "5A0887771701207",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "f4085c7b-30e7-4677-b6d9-09336b90e74a",
+        "source": "product-profile",
+        "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "4be5b52c-d6ba-4f34-be19-b3d6220c7183",
+      "barcode": "5A0887771701208",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "cbe6719c-776c-46c0-a46b-19315728ed26",
+        "source": "product-profile",
+        "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "14d2c60c-4faa-4e55-8db9-05777a5821ba",
+      "barcode": "5A0887771701209",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "e3e84fd6-9df5-4897-beef-28feca399a47",
+        "source": "product-profile",
+        "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "159218ef-88ad-4378-843a-f8560420ff22",
+      "barcode": "5A0887771701210",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "3f0c7c0b-cad6-43ae-86de-303606b29aff",
+        "source": "product-profile",
+        "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+      }
+    },
+    {
+      "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "sku_id": "58fa2e23-7bee-4e71-b5e3-3c18a5b097eb",
+      "barcode": "5A0887771701900",
+      "sku_binding_known": true,
+      "generated": true,
+      "scheme_id": "2026",
+      "evidence": {
+        "fitId": "A",
+        "sizeId": "35a02f28-4284-48b7-95bd-8782ced5d305",
+        "source": "product-profile",
+        "colorId": "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+      }
+    }
+  ],
+  "skuByCell": {
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|785fdff3-dc15-4306-8ffe-9906e79c0747": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|785fdff3-dc15-4306-8ffe-9906e79c0747": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|9b29dca3-c97e-4e42-a5aa-b135be01205b": "2ae3f4a7-33ba-4886-be55-c9d144a95203",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|9b29dca3-c97e-4e42-a5aa-b135be01205b": "a0b55794-4293-4d9a-b04a-3527a111fbc4",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|5b6631eb-15eb-4bc1-8271-bdab1c68cb42": "757337e8-c830-4168-99d2-c63924e16594",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|5b6631eb-15eb-4bc1-8271-bdab1c68cb42": "67457bb5-e923-412e-8daf-f4f2294c615e",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|86953dca-93b4-4c0d-9092-6262028e98c0": "34509e2b-634b-4aac-9dad-0d446fe1c55d",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|86953dca-93b4-4c0d-9092-6262028e98c0": "23691065-a3a9-4b0a-8f14-993ac6cb632a",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|485ce5a3-c076-4fd6-9f01-7f4f9ef85007": "899a48dd-04dc-49d8-8d0c-089f5731d2b0",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|485ce5a3-c076-4fd6-9f01-7f4f9ef85007": "1cab69db-e465-4a91-9858-6e91eebfc680",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|a749540e-d829-4004-8866-5f1b822dda65": "8ede2931-c37a-426f-8899-9abb2033af0b",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|a749540e-d829-4004-8866-5f1b822dda65": "31196b00-e3cc-4fa7-a2b9-5fc39bd16113",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|f4085c7b-30e7-4677-b6d9-09336b90e74a": "bb5ce1a5-9a4c-45e2-ab13-3abb418ef7a9",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|f4085c7b-30e7-4677-b6d9-09336b90e74a": "d515afb3-e883-488a-8c99-f704c3f2ca5b",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|cbe6719c-776c-46c0-a46b-19315728ed26": "83125e05-0bad-4a4c-b1e3-4e63d3efd600",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|cbe6719c-776c-46c0-a46b-19315728ed26": "4be5b52c-d6ba-4f34-be19-b3d6220c7183",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|e3e84fd6-9df5-4897-beef-28feca399a47": "80699420-f8ab-4373-92f9-ffc5e29de930",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|e3e84fd6-9df5-4897-beef-28feca399a47": "14d2c60c-4faa-4e55-8db9-05777a5821ba",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|3f0c7c0b-cad6-43ae-86de-303606b29aff": "909a54f0-50ad-45af-826c-5c62a4a1710a",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|3f0c7c0b-cad6-43ae-86de-303606b29aff": "159218ef-88ad-4378-843a-f8560420ff22",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|35a02f28-4284-48b7-95bd-8782ced5d305": "f228222d-c555-46da-ad54-a80d013619b5",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|35a02f28-4284-48b7-95bd-8782ced5d305": "58fa2e23-7bee-4e71-b5e3-3c18a5b097eb"
+  },
+  "skuByFitCell": {
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|785fdff3-dc15-4306-8ffe-9906e79c0747": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|785fdff3-dc15-4306-8ffe-9906e79c0747": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|9b29dca3-c97e-4e42-a5aa-b135be01205b": "2ae3f4a7-33ba-4886-be55-c9d144a95203",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|9b29dca3-c97e-4e42-a5aa-b135be01205b": "a0b55794-4293-4d9a-b04a-3527a111fbc4",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|5b6631eb-15eb-4bc1-8271-bdab1c68cb42": "757337e8-c830-4168-99d2-c63924e16594",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|5b6631eb-15eb-4bc1-8271-bdab1c68cb42": "67457bb5-e923-412e-8daf-f4f2294c615e",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|86953dca-93b4-4c0d-9092-6262028e98c0": "34509e2b-634b-4aac-9dad-0d446fe1c55d",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|86953dca-93b4-4c0d-9092-6262028e98c0": "23691065-a3a9-4b0a-8f14-993ac6cb632a",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|485ce5a3-c076-4fd6-9f01-7f4f9ef85007": "899a48dd-04dc-49d8-8d0c-089f5731d2b0",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|485ce5a3-c076-4fd6-9f01-7f4f9ef85007": "1cab69db-e465-4a91-9858-6e91eebfc680",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|a749540e-d829-4004-8866-5f1b822dda65": "8ede2931-c37a-426f-8899-9abb2033af0b",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|a749540e-d829-4004-8866-5f1b822dda65": "31196b00-e3cc-4fa7-a2b9-5fc39bd16113",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|f4085c7b-30e7-4677-b6d9-09336b90e74a": "bb5ce1a5-9a4c-45e2-ab13-3abb418ef7a9",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|f4085c7b-30e7-4677-b6d9-09336b90e74a": "d515afb3-e883-488a-8c99-f704c3f2ca5b",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|cbe6719c-776c-46c0-a46b-19315728ed26": "83125e05-0bad-4a4c-b1e3-4e63d3efd600",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|cbe6719c-776c-46c0-a46b-19315728ed26": "4be5b52c-d6ba-4f34-be19-b3d6220c7183",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|e3e84fd6-9df5-4897-beef-28feca399a47": "80699420-f8ab-4373-92f9-ffc5e29de930",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|e3e84fd6-9df5-4897-beef-28feca399a47": "14d2c60c-4faa-4e55-8db9-05777a5821ba",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|3f0c7c0b-cad6-43ae-86de-303606b29aff": "909a54f0-50ad-45af-826c-5c62a4a1710a",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|3f0c7c0b-cad6-43ae-86de-303606b29aff": "159218ef-88ad-4378-843a-f8560420ff22",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|35a02f28-4284-48b7-95bd-8782ced5d305": "f228222d-c555-46da-ad54-a80d013619b5",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|35a02f28-4284-48b7-95bd-8782ced5d305": "58fa2e23-7bee-4e71-b5e3-3c18a5b097eb"
+  },
+  "sourceSkuIds": [],
+  "historicalUnmappedSkus": [],
+  "stock": {
+    "e55a08a8-3cb3-9de7-af32-64ae994d6f9e": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "ac906986-68aa-88e1-449e-7b7310794278": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "b3993366-0a77-4d8b-f3a1-499d9aba032a": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "e4c07b98-9563-5e93-6c4c-fc3a7e5a1ece": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "dd352703-9df9-24c9-f061-6afd599bc86c": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "cbce5028-e524-fa4e-deb5-5ac093b38d62": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "e25853c0-ac0c-148e-047d-0cd1c289a5a8": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "dc8e3df3-ba01-7ca9-ed3b-a4d119c6b911": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "815239fa-4ce8-deac-bcc3-c2229dd81fb1": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "cdca9f40-b7c3-ef50-3305-72c3c62f8dd1": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "cab59a54-1a8d-b609-7ca3-e736f235fb76": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "a6d2c4de-dc1c-8b5a-6b96-38b37af153a2": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "5ee62c24-fc89-9fe4-c5c9-c8f6c35ae5fc": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "5adf34d8-d0d9-8620-1caf-65a4622983f4": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "7f952104-486a-3eed-632c-2a545abfcced": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "316a7f09-6fa8-8f67-11ff-352f0470bf8b": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "9b2a29a1-7a88-fd7a-b4a5-2a273238025a": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "7f431c20-ed7e-f5d3-6b57-56428312db17": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "7118ee50-40f6-a3c9-3d80-7b90fa566c24": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "72b6acfc-cbd8-d487-0682-b5d19dfcb702": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "297ce832-7844-424a-03d1-149aeb929a19": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "6e644137-3751-2028-964e-d57fa4734cd4": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "19641b4d-cc41-4def-e71a-50eecb51339c": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "eeb89827-3109-d9c9-ee51-6898a3d718e9": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "4fa2a874-8e12-ba77-9a74-750b3d5905c3": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "7bc87a68-4b8a-5a1b-c57b-343538552421": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "c1f3d0f2-d283-513d-7eb3-4aac282f7279": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "c4155b7d-3152-3e8e-6eb9-edbe6d65d60b": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "368eaa6e-9f28-bda5-ce14-8e8b07de73bf": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "ccf6da02-acfe-0c08-c5ce-ab114b29840f": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "46ee18e6-a5fb-4b6b-b8b0-6a1365b83d7d": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "37aa1646-53ab-5540-108f-285d3d27f6c2": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "af5315e8-bf15-8825-36ee-d5c06ce4b8b3": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "14c7fa05-e148-6adf-1247-13ef3fbcefbd": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "c1cccaa8-1213-1f73-1244-0491d9e57bd1": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "4408df8c-d72e-519a-058e-44360bf14abb": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "312f858f-d7c2-c10d-1edd-b1b0fd79ee3a": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "b899f5df-a66c-6dd2-3729-74c24f13fbf8": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "8d6c42c1-287f-68b0-ccd8-aeadb40ff504": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "73155a42-9e0c-3400-f103-b52983c9d519": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "3bf7930c-2c59-d6de-92af-bc1ff64a0acc": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "d311fdf0-60c5-b71b-e2d5-43ff966e2ff3": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "6446f4e0-0a22-e422-a95e-01de093cc5b0": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "120fe813-a5be-97d2-3f84-7f7a33f43e08": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "3f2d0ee0-ab1a-8355-fce0-ab643f1bb299": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "8e618846-d5d4-1077-61ff-e80ebf7c7cfc": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "7e838a22-8274-eb85-bf08-75241cf11d42": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "dad3e08c-f980-a196-9e37-ac5a5f38bf6f": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "fe1a3a9e-f88f-570f-29c9-4fcd5a6e4b59": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "96aeb0b1-6fe9-786e-0b93-830935e84115": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "0eccd878-3498-8588-f44a-b6e05f6f115d": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "059c928c-80bb-4ece-aa67-80dffc91d67d": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "stockTotal": 0,
+  "sourceFacts": {
+    "source": "REAL_TPLUS_HISTORY",
+    "readonly": true,
+    "attributes": {
+      "name": "Smoke验收衬衫",
+      "year": "2026",
+      "fitId": "A",
+      "price": "449",
+      "fitIds": [
+        "A"
+      ],
+      "images": [
+        {
+          "id": "photo-8ef5c076-9d93-4502-8d80-c59757e9fc63",
+          "url": "data:image/png;base64,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",
+          "name": "photo-a.png",
+          "role": "白底图",
+          "colorId": "",
+          "sortOrder": 0
+        },
+        {
+          "id": "photo-a4c3f3e7-dc2f-4d6a-91e2-a30b1b32b2f3",
+          "url": "data:image/png;base64,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",
+          "name": "photo-a.png",
+          "role": "吊牌图",
+          "colorId": "",
+          "sortOrder": 1
+        },
+        {
+          "id": "photo-5a201ff0-e870-45be-9e08-72bce7ed4915",
+          "url": "data:image/png;base64,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",
+          "name": "photo-a.png",
+          "role": "详情图",
+          "colorId": "",
+          "sortOrder": 2
+        },
+        {
+          "id": "photo-d48a0a27-fd64-4f72-b3c9-a1a2e4fdbe14",
+          "url": "data:image/png;base64,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",
+          "name": "photo-a.png",
+          "role": "颜色配图",
+          "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+          "sortOrder": 3
+        }
+      ],
+      "season": "秋",
+      "groupId": "UPPER",
+      "freeCode": "",
+      "schemeId": "2026",
+      "shapeCode": "",
+      "thickness": "",
+      "categoryId": "cat-1-0",
+      "supplierId": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+      "wholesale5": "100",
+      "wholesale6": "110",
+      "wholesale7": "120",
+      "wholesale8": "130",
+      "wholesale9": "140",
+      "wholesale10": "150",
+      "minimumPrice": "90",
+      "purchasePrice": "120",
+      "selectedFitIds": [
+        "A"
+      ],
+      "barcodeItemCode": "0887771",
+      "selectedSizeIds": [
+        "UPPER-2026-size-xs",
+        "UPPER-demo-size-0",
+        "UPPER-demo-size-1",
+        "UPPER-demo-size-2",
+        "UPPER-demo-size-3",
+        "UPPER-demo-size-4",
+        "UPPER-demo-size-5",
+        "UPPER-demo-size-6",
+        "UPPER-demo-size-7",
+        "UPPER-demo-size-8",
+        "UPPER-demo-size-9"
+      ],
+      "specSizeRecords": [
+        {
+          "id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+          "code": "201",
+          "name": "160/XS",
+          "uiSizeId": "UPPER-2026-size-xs",
+          "groupName": "男装上衣尺码"
+        },
+        {
+          "id": "9b29dca3-c97e-4e42-a5aa-b135be01205b",
+          "code": "202",
+          "name": "165/S",
+          "uiSizeId": "UPPER-demo-size-0",
+          "groupName": "男装上衣尺码"
+        },
+        {
+          "id": "5b6631eb-15eb-4bc1-8271-bdab1c68cb42",
+          "code": "203",
+          "name": "170/M",
+          "uiSizeId": "UPPER-demo-size-1",
+          "groupName": "男装上衣尺码"
+        },
+        {
+          "id": "86953dca-93b4-4c0d-9092-6262028e98c0",
+          "code": "204",
+          "name": "175/L",
+          "uiSizeId": "UPPER-demo-size-2",
+          "groupName": "男装上衣尺码"
+        },
+        {
+          "id": "485ce5a3-c076-4fd6-9f01-7f4f9ef85007",
+          "code": "205",
+          "name": "180/XL",
+          "uiSizeId": "UPPER-demo-size-3",
+          "groupName": "男装上衣尺码"
+        },
+        {
+          "id": "a749540e-d829-4004-8866-5f1b822dda65",
+          "code": "206",
+          "name": "185/2XL",
+          "uiSizeId": "UPPER-demo-size-4",
+          "groupName": "男装上衣尺码"
+        },
+        {
+          "id": "f4085c7b-30e7-4677-b6d9-09336b90e74a",
+          "code": "207",
+          "name": "190/3XL",
+          "uiSizeId": "UPPER-demo-size-5",
+          "groupName": "男装上衣尺码"
+        },
+        {
+          "id": "cbe6719c-776c-46c0-a46b-19315728ed26",
+          "code": "208",
+          "name": "195/4XL",
+          "uiSizeId": "UPPER-demo-size-6",
+          "groupName": "男装上衣尺码"
+        },
+        {
+          "id": "e3e84fd6-9df5-4897-beef-28feca399a47",
+          "code": "209",
+          "name": "200/5XL",
+          "uiSizeId": "UPPER-demo-size-7",
+          "groupName": "男装上衣尺码"
+        },
+        {
+          "id": "3f0c7c0b-cad6-43ae-86de-303606b29aff",
+          "code": "210",
+          "name": "205/6XL",
+          "uiSizeId": "UPPER-demo-size-8",
+          "groupName": "男装上衣尺码"
+        },
+        {
+          "id": "35a02f28-4284-48b7-95bd-8782ced5d305",
+          "code": "900",
+          "name": "无尺码",
+          "uiSizeId": "UPPER-demo-size-9",
+          "groupName": "男装上衣尺码"
+        }
+      ],
+      "selectedColorIds": [
+        "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+        "8f9b98eb-d0ca-3bd3-2d88-546b827162dc"
+      ],
+      "removedHistoricalBarcodes": [
+        "SMK-OLD-001"
+      ]
+    }
+  },
+  "profileVersion": 7,
+  "currentSkuByUiCell": {
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|UPPER-2026-size-xs": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|UPPER-2026-size-xs": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|UPPER-demo-size-0": "2ae3f4a7-33ba-4886-be55-c9d144a95203",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|UPPER-demo-size-0": "a0b55794-4293-4d9a-b04a-3527a111fbc4",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|UPPER-demo-size-1": "757337e8-c830-4168-99d2-c63924e16594",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|UPPER-demo-size-1": "67457bb5-e923-412e-8daf-f4f2294c615e",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|UPPER-demo-size-2": "34509e2b-634b-4aac-9dad-0d446fe1c55d",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|UPPER-demo-size-2": "23691065-a3a9-4b0a-8f14-993ac6cb632a",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|UPPER-demo-size-3": "899a48dd-04dc-49d8-8d0c-089f5731d2b0",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|UPPER-demo-size-3": "1cab69db-e465-4a91-9858-6e91eebfc680",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|UPPER-demo-size-4": "8ede2931-c37a-426f-8899-9abb2033af0b",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|UPPER-demo-size-4": "31196b00-e3cc-4fa7-a2b9-5fc39bd16113",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|UPPER-demo-size-5": "bb5ce1a5-9a4c-45e2-ab13-3abb418ef7a9",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|UPPER-demo-size-5": "d515afb3-e883-488a-8c99-f704c3f2ca5b",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|UPPER-demo-size-6": "83125e05-0bad-4a4c-b1e3-4e63d3efd600",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|UPPER-demo-size-6": "4be5b52c-d6ba-4f34-be19-b3d6220c7183",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|UPPER-demo-size-7": "80699420-f8ab-4373-92f9-ffc5e29de930",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|UPPER-demo-size-7": "14d2c60c-4faa-4e55-8db9-05777a5821ba",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|UPPER-demo-size-8": "909a54f0-50ad-45af-826c-5c62a4a1710a",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|UPPER-demo-size-8": "159218ef-88ad-4378-843a-f8560420ff22",
+    "e44f74a8-7757-d26f-af00-5edfe4fe053f|A|UPPER-demo-size-9": "f228222d-c555-46da-ad54-a80d013619b5",
+    "8f9b98eb-d0ca-3bd3-2d88-546b827162dc|A|UPPER-demo-size-9": "58fa2e23-7bee-4e71-b5e3-3c18a5b097eb"
+  },
+  "mappedCurrentSkuIds": [
+    "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+    "4213ab59-f955-439e-aa96-6dd1217f0c86",
+    "2ae3f4a7-33ba-4886-be55-c9d144a95203",
+    "a0b55794-4293-4d9a-b04a-3527a111fbc4",
+    "757337e8-c830-4168-99d2-c63924e16594",
+    "67457bb5-e923-412e-8daf-f4f2294c615e",
+    "34509e2b-634b-4aac-9dad-0d446fe1c55d",
+    "23691065-a3a9-4b0a-8f14-993ac6cb632a",
+    "899a48dd-04dc-49d8-8d0c-089f5731d2b0",
+    "1cab69db-e465-4a91-9858-6e91eebfc680",
+    "8ede2931-c37a-426f-8899-9abb2033af0b",
+    "31196b00-e3cc-4fa7-a2b9-5fc39bd16113",
+    "bb5ce1a5-9a4c-45e2-ab13-3abb418ef7a9",
+    "d515afb3-e883-488a-8c99-f704c3f2ca5b",
+    "83125e05-0bad-4a4c-b1e3-4e63d3efd600",
+    "4be5b52c-d6ba-4f34-be19-b3d6220c7183",
+    "80699420-f8ab-4373-92f9-ffc5e29de930",
+    "14d2c60c-4faa-4e55-8db9-05777a5821ba",
+    "909a54f0-50ad-45af-826c-5c62a4a1710a",
+    "159218ef-88ad-4378-843a-f8560420ff22",
+    "f228222d-c555-46da-ad54-a80d013619b5",
+    "58fa2e23-7bee-4e71-b5e3-3c18a5b097eb"
+  ],
+  "ambiguousCurrentCells": [],
+  "stockByWarehouse": {
+    "e55a08a8-3cb3-9de7-af32-64ae994d6f9e": 0,
+    "ac906986-68aa-88e1-449e-7b7310794278": 0,
+    "b3993366-0a77-4d8b-f3a1-499d9aba032a": 0,
+    "e4c07b98-9563-5e93-6c4c-fc3a7e5a1ece": 0,
+    "dd352703-9df9-24c9-f061-6afd599bc86c": 0,
+    "cbce5028-e524-fa4e-deb5-5ac093b38d62": 0,
+    "e25853c0-ac0c-148e-047d-0cd1c289a5a8": 0,
+    "dc8e3df3-ba01-7ca9-ed3b-a4d119c6b911": 0,
+    "815239fa-4ce8-deac-bcc3-c2229dd81fb1": 0,
+    "cdca9f40-b7c3-ef50-3305-72c3c62f8dd1": 0,
+    "cab59a54-1a8d-b609-7ca3-e736f235fb76": 0,
+    "a6d2c4de-dc1c-8b5a-6b96-38b37af153a2": 0,
+    "5ee62c24-fc89-9fe4-c5c9-c8f6c35ae5fc": 0,
+    "5adf34d8-d0d9-8620-1caf-65a4622983f4": 0,
+    "7f952104-486a-3eed-632c-2a545abfcced": 0,
+    "316a7f09-6fa8-8f67-11ff-352f0470bf8b": 0,
+    "9b2a29a1-7a88-fd7a-b4a5-2a273238025a": 0,
+    "7f431c20-ed7e-f5d3-6b57-56428312db17": 0,
+    "7118ee50-40f6-a3c9-3d80-7b90fa566c24": 0,
+    "72b6acfc-cbd8-d487-0682-b5d19dfcb702": 0,
+    "297ce832-7844-424a-03d1-149aeb929a19": 0,
+    "6e644137-3751-2028-964e-d57fa4734cd4": 0,
+    "19641b4d-cc41-4def-e71a-50eecb51339c": 0,
+    "eeb89827-3109-d9c9-ee51-6898a3d718e9": 0,
+    "4fa2a874-8e12-ba77-9a74-750b3d5905c3": 0,
+    "7bc87a68-4b8a-5a1b-c57b-343538552421": 0,
+    "c1f3d0f2-d283-513d-7eb3-4aac282f7279": 0,
+    "c4155b7d-3152-3e8e-6eb9-edbe6d65d60b": 0,
+    "368eaa6e-9f28-bda5-ce14-8e8b07de73bf": 0,
+    "ccf6da02-acfe-0c08-c5ce-ab114b29840f": 0,
+    "46ee18e6-a5fb-4b6b-b8b0-6a1365b83d7d": 0,
+    "37aa1646-53ab-5540-108f-285d3d27f6c2": 0,
+    "af5315e8-bf15-8825-36ee-d5c06ce4b8b3": 0,
+    "14c7fa05-e148-6adf-1247-13ef3fbcefbd": 0,
+    "c1cccaa8-1213-1f73-1244-0491d9e57bd1": 0,
+    "4408df8c-d72e-519a-058e-44360bf14abb": 0,
+    "312f858f-d7c2-c10d-1edd-b1b0fd79ee3a": 0,
+    "b899f5df-a66c-6dd2-3729-74c24f13fbf8": 0,
+    "8d6c42c1-287f-68b0-ccd8-aeadb40ff504": 0,
+    "73155a42-9e0c-3400-f103-b52983c9d519": 0,
+    "3bf7930c-2c59-d6de-92af-bc1ff64a0acc": 0,
+    "d311fdf0-60c5-b71b-e2d5-43ff966e2ff3": 0,
+    "6446f4e0-0a22-e422-a95e-01de093cc5b0": 0,
+    "120fe813-a5be-97d2-3f84-7f7a33f43e08": 0,
+    "3f2d0ee0-ab1a-8355-fce0-ab643f1bb299": 0,
+    "8e618846-d5d4-1077-61ff-e80ebf7c7cfc": 0,
+    "7e838a22-8274-eb85-bf08-75241cf11d42": 0,
+    "dad3e08c-f980-a196-9e37-ac5a5f38bf6f": 0,
+    "fe1a3a9e-f88f-570f-29c9-4fcd5a6e4b59": 0,
+    "96aeb0b1-6fe9-786e-0b93-830935e84115": 0,
+    "0eccd878-3498-8588-f44a-b6e05f6f115d": 0,
+    "059c928c-80bb-4ece-aa67-80dffc91d67d": 0
+  },
+  "historicalSourceSkus": [
+    {
+      "skuId": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+      "color": "白色",
+      "size": "160/XS",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771721201"
+      ],
+      "warehouses": [
+        {
+          "warehouseId": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+          "quantity": 0
+        },
+        {
+          "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "skuId": "2ae3f4a7-33ba-4886-be55-c9d144a95203",
+      "color": "白色",
+      "size": "165/S",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771721202"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "757337e8-c830-4168-99d2-c63924e16594",
+      "color": "白色",
+      "size": "170/M",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771721203"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "34509e2b-634b-4aac-9dad-0d446fe1c55d",
+      "color": "白色",
+      "size": "175/L",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771721204"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "899a48dd-04dc-49d8-8d0c-089f5731d2b0",
+      "color": "白色",
+      "size": "180/XL",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771721205"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "8ede2931-c37a-426f-8899-9abb2033af0b",
+      "color": "白色",
+      "size": "185/2XL",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771721206"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "bb5ce1a5-9a4c-45e2-ab13-3abb418ef7a9",
+      "color": "白色",
+      "size": "190/3XL",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771721207"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "83125e05-0bad-4a4c-b1e3-4e63d3efd600",
+      "color": "白色",
+      "size": "195/4XL",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771721208"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "80699420-f8ab-4373-92f9-ffc5e29de930",
+      "color": "白色",
+      "size": "200/5XL",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771721209"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "909a54f0-50ad-45af-826c-5c62a4a1710a",
+      "color": "白色",
+      "size": "205/6XL",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771721210"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "f228222d-c555-46da-ad54-a80d013619b5",
+      "color": "白色",
+      "size": "无尺码",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771721900"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+      "color": "黑色",
+      "size": "160/XS",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771701201"
+      ],
+      "warehouses": [
+        {
+          "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+          "quantity": 0
+        },
+        {
+          "warehouseId": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "skuId": "a0b55794-4293-4d9a-b04a-3527a111fbc4",
+      "color": "黑色",
+      "size": "165/S",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771701202"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "67457bb5-e923-412e-8daf-f4f2294c615e",
+      "color": "黑色",
+      "size": "170/M",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771701203"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "23691065-a3a9-4b0a-8f14-993ac6cb632a",
+      "color": "黑色",
+      "size": "175/L",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771701204"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "1cab69db-e465-4a91-9858-6e91eebfc680",
+      "color": "黑色",
+      "size": "180/XL",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771701205"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "31196b00-e3cc-4fa7-a2b9-5fc39bd16113",
+      "color": "黑色",
+      "size": "185/2XL",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771701206"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "d515afb3-e883-488a-8c99-f704c3f2ca5b",
+      "color": "黑色",
+      "size": "190/3XL",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771701207"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "4be5b52c-d6ba-4f34-be19-b3d6220c7183",
+      "color": "黑色",
+      "size": "195/4XL",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771701208"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "14d2c60c-4faa-4e55-8db9-05777a5821ba",
+      "color": "黑色",
+      "size": "200/5XL",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771701209"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "159218ef-88ad-4378-843a-f8560420ff22",
+      "color": "黑色",
+      "size": "205/6XL",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771701210"
+      ],
+      "warehouses": []
+    },
+    {
+      "skuId": "58fa2e23-7bee-4e71-b5e3-3c18a5b097eb",
+      "color": "黑色",
+      "size": "无尺码",
+      "fit": "A",
+      "barcodes": [
+        "5A0887771701900"
+      ],
+      "warehouses": []
+    }
+  ]
+}

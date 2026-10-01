@@ -1,0 +1,114 @@
+[
+  {
+    "id": "a3f54789-4828-1053-9aec-e8ea77a6763c",
+    "number": "HTRANSFER-959a9fc622267116259c34e",
+    "type": "TRANSFER",
+    "status": "NO_CHANGE",
+    "document_date": "2026-04-27",
+    "line_id": "96c9307d-2f99-657b-665b-15586596020c",
+    "variant_id": "f0688bf7-2c27-5a71-8cf0-454a9a5cb0aa",
+    "product_code": "653JK5186125",
+    "product_name": "夹克（防晒服）",
+    "color_name": "蓝色",
+    "size_name": "170/88A",
+    "barcode": null,
+    "quantity": 1,
+    "unit_price": null,
+    "runtime": {
+      "id": "a3f54789-4828-1053-9aec-e8ea77a6763c",
+      "number": "ALAL-2026-04-0773",
+      "document_type": "TRANSFER",
+      "source_identity": {
+        "batch": "TPLUS-20260922-A2",
+        "sha256": "051668af4e6f966522b9213a55ed02f402767fed277cd962e0472f9d62456a93",
+        "dataset": "data/history/transfer_documents.jsonl",
+        "sourceId": "tp_transfer_62715a77ec22a7979753c4bf"
+      },
+      "business_day": "2026-04-27"
+    }
+  },
+  {
+    "id": "00b338b1-a2f0-edd6-e659-5a6e7eddbe1e",
+    "number": "HTRANSFER-c858a772ab16391ae58478f",
+    "type": "TRANSFER",
+    "status": "NO_CHANGE",
+    "document_date": "2026-01-17",
+    "line_id": "6be02855-faec-3995-03ff-81e94a75ab4d",
+    "variant_id": "634bdb47-f461-ae49-5735-4b41c93e1b21",
+    "product_code": "961KZ6379160",
+    "product_name": "牛仔裤",
+    "color_name": "灰蓝色",
+    "size_name": "32",
+    "barcode": null,
+    "quantity": 1,
+    "unit_price": null,
+    "runtime": {
+      "id": "00b338b1-a2f0-edd6-e659-5a6e7eddbe1e",
+      "number": "ALAL-2026-01-0359",
+      "document_type": "TRANSFER",
+      "source_identity": {
+        "batch": "TPLUS-20260922-A2",
+        "sha256": "6c896d5c2e1838e4d2fe4ac4b862e74d1bd6208856c014e20b12f0bd79e9516f",
+        "dataset": "data/history/transfer_documents.jsonl",
+        "sourceId": "tp_transfer_2a7e49fa71ea911a0ff50438"
+      },
+      "business_day": "2026-01-17"
+    }
+  },
+  {
+    "id": "a0697f97-1037-831a-6e44-562005560fd8",
+    "number": "HSALE-43e7e596e4f33609affec02d",
+    "type": "SALE",
+    "status": "NO_CHANGE",
+    "document_date": "2025-07-11",
+    "line_id": "069d1594-b7f0-f1f9-041f-97bff31a715f",
+    "variant_id": "eafa68b8-f412-f3b5-a1ce-ef321c890de4",
+    "product_code": "902KZ5179210",
+    "product_name": "休闲裤",
+    "color_name": "灰色",
+    "size_name": "36",
+    "barcode": null,
+    "quantity": 1,
+    "unit_price": 299,
+    "runtime": {
+      "id": "a0697f97-1037-831a-6e44-562005560fd8",
+      "number": "SA-2025-07-0273",
+      "document_type": "SALE",
+      "source_identity": {
+        "batch": "TPLUS-20260922-A2",
+        "sha256": "b6a17f7fbabd8e49c68f636c23adf6c75b300c81a22abe12b07649db07aa3048",
+        "dataset": "data/history/sales_documents.jsonl",
+        "sourceId": "tp_sale_dc9e8c626c3f8aa5194ce724"
+      },
+      "business_day": "2025-07-11"
+    }
+  },
+  {
+    "id": "465f9259-a063-487a-a514-1619ba7fe6b8",
+    "number": "HSALE-fe1119b8545ee576455ab1ab",
+    "type": "SALE",
+    "status": "NO_CHANGE",
+    "document_date": "2025-01-10",
+    "line_id": "504886ab-be59-66ce-f15c-dd53db2bbe1a",
+    "variant_id": "415bbac1-6913-cb97-f47b-95fee2e1cc1e",
+    "product_code": "602YR5578161",
+    "product_name": "羽绒服",
+    "color_name": "黑色",
+    "size_name": "195/108A",
+    "barcode": null,
+    "quantity": 1,
+    "unit_price": 1335,
+    "runtime": {
+      "id": "465f9259-a063-487a-a514-1619ba7fe6b8",
+      "number": "SA-2025-01-0556",
+      "document_type": "SALE",
+      "source_identity": {
+        "batch": "TPLUS-20260922-A2",
+        "sha256": "d095a446c43fee5ec1a2e62072305590040caa1c930e2afe6d75d00d949e7560",
+        "dataset": "data/history/sales_documents.jsonl",
+        "sourceId": "tp_sale_89d593928d348e4df9459fb1"
+      },
+      "business_day": "2025-01-10"
+    }
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "type": "stores",
+    "page2": true,
+    "text": "20条/页\n50条/页\n100条/页\n共 41 条，当前第 21–40 条\n‹\n1\n2\n3\n›\n跳至\n页\n跳转"
+  },
+  {
+    "type": "warehouses",
+    "page2": true,
+    "text": "20条/页\n50条/页\n100条/页\n共 51 条，当前第 21–40 条\n‹\n1\n2\n3\n›\n跳至\n页\n跳转"
+  },
+  {
+    "type": "parties",
+    "page2": true,
+    "text": "20条/页\n50条/页\n100条/页\n共 486 条，当前第 21–40 条\n‹\n1\n2\n3\n…\n25\n›\n跳至\n页\n跳转"
+  },
+  {
+    "type": "fundAccounts",
+    "page2": true,
+    "text": "20条/页\n50条/页\n100条/页\n共 80 条，当前第 21–40 条\n‹\n1\n2\n3\n4\n›\n跳至\n页\n跳转"
+  },
+  {
+    "type": "staff",
+    "page2": true,
+    "text": "20条/页\n50条/页\n100条/页\n共 104 条，当前第 21–40 条\n‹\n1\n2\n3\n…\n6\n›\n跳至\n页\n跳转"
+  },
+  {
+    "type": "payments",
+    "singlePage": true,
+    "text": "20条/页\n50条/页\n100条/页\n共 12 条，当前第 1–12 条"
+  }
+]

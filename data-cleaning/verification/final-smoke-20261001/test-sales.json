@@ -1,0 +1,1867 @@
+{
+  "source": "REAL_TPLUS_RUNTIME",
+  "readonly": false,
+  "id": "V2-XS-cba8950c",
+  "uuid": "cba8950c-3a7c-4b39-969d-6890d31515de",
+  "date": "2026-10-01",
+  "datePrecision": "day",
+  "status": "已审核",
+  "revision": 3,
+  "auditWorkflow": true,
+  "creator": {
+    "id": "smoke-sales",
+    "name": "Smoke验收营业员"
+  },
+  "created": "2026-10-01T17:28:44.519532+08:00",
+  "updated": "2026-10-01T17:33:09.062194+08:00",
+  "customerId": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+  "customerName": "001欧奕成 普宁雅艇服饰",
+  "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+  "warehouseName": "大西洋银泰ST仓库",
+  "salespersonId": "smoke-sales",
+  "salespersonName": "Smoke验收营业员",
+  "storeId": "5b2461c8-ce98-2c2f-8909-627507196557",
+  "storeName": "大西洋银泰ST",
+  "businessType": "销售",
+  "note": "Final Smoke 营业员销货、混合收款 · 价格纠正回归",
+  "adjustmentCents": 0,
+  "sourceAmountCents": null,
+  "lines": [
+    {
+      "source": "REAL_TPLUS_HISTORY",
+      "readonly": true,
+      "id": "b0df7850-0609-404f-8bd0-d94628a576d6",
+      "skuId": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+      "productUuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "productId": "SMK261001A",
+      "name": "Smoke验收衬衫",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+      "color": "白色",
+      "size": "160/XS",
+      "quantity": 1,
+      "unit": "",
+      "priceCents": 0,
+      "sourceUnitPrice": "0",
+      "amountCents": 0,
+      "referenceCents": 44900,
+      "gift": true,
+      "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+      "sourceLineage": {
+        "kind": "V2_RUNTIME"
+      },
+      "sourceSize": "160/XS",
+      "fitId": "A",
+      "fit": "A版（标准）",
+      "pricingRule": "unit-price",
+      "discountTenths": null,
+      "previousPrice": 44900,
+      "note": "",
+      "zeroConfirmed": true,
+      "netCents": 0,
+      "categorySnapshot": {
+        "id": "cat-1-0",
+        "name": "长袖衬衫",
+        "fullName": "衬衫 / 长袖衬衫"
+      }
+    },
+    {
+      "source": "REAL_TPLUS_HISTORY",
+      "readonly": true,
+      "id": "93897fa1-2f86-417e-8651-1ca49a6745ec",
+      "skuId": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+      "productUuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+      "productId": "SMK261001A",
+      "name": "Smoke验收衬衫",
+      "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+      "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+      "color": "白色",
+      "size": "160/XS",
+      "quantity": 2,
+      "unit": "",
+      "priceCents": 44900,
+      "sourceUnitPrice": "449",
+      "amountCents": 89800,
+      "referenceCents": 44900,
+      "gift": false,
+      "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+      "sourceLineage": {
+        "kind": "V2_RUNTIME"
+      },
+      "sourceSize": "160/XS",
+      "fitId": "A",
+      "fit": "A版（标准）",
+      "pricingRule": "unit-price",
+      "discountTenths": null,
+      "previousPrice": null,
+      "note": "",
+      "zeroConfirmed": true,
+      "netCents": 89800,
+      "categorySnapshot": {
+        "id": "cat-1-0",
+        "name": "长袖衬衫",
+        "fullName": "衬衫 / 长袖衬衫"
+      }
+    }
+  ],
+  "fundsRecords": [
+    {
+      "source": "REAL_TPLUS_HISTORY",
+      "readonly": true,
+      "id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+      "settlementId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+      "methodId": "36f6edd5-56b2-8f03-f303-c694e10130d2",
+      "accountId": "d2cab5db-f586-b62a-3eb2-edd420629327",
+      "methodName": "微信",
+      "accountName": "10201微信-多立方1881",
+      "amountCents": 50000,
+      "direction": "receipt",
+      "reference": {
+        "sourceId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+        "settlementId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+        "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+      },
+      "sourceFacts": {}
+    },
+    {
+      "source": "REAL_TPLUS_HISTORY",
+      "readonly": true,
+      "id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+      "settlementId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+      "methodId": "f1a7e52c-ef66-0d06-4518-5d7f7958ad3a",
+      "accountId": "95740070-c9dd-1cb1-fc05-9075ac30bb4d",
+      "methodName": "商场收银台",
+      "accountName": "91101大西洋银泰ST收银台",
+      "amountCents": 39800,
+      "direction": "receipt",
+      "reference": {
+        "sourceId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+        "settlementId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+        "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+      },
+      "sourceFacts": {}
+    }
+  ],
+  "links": [],
+  "history": [
+    {
+      "action": "新建",
+      "version": 1,
+      "revisionBefore": 0,
+      "revisionAfter": 1,
+      "time": "2026-10-01T17:28:44.519532+08:00",
+      "actor": {
+        "id": "smoke-sales",
+        "name": "Smoke验收营业员"
+      },
+      "user": "Smoke验收营业员",
+      "reason": "V2修订 1",
+      "result": "已提交",
+      "detail": "V2修订 1",
+      "changes": [],
+      "after": {
+        "source": "REAL_TPLUS_RUNTIME",
+        "readonly": false,
+        "id": "V2-XS-cba8950c",
+        "uuid": "cba8950c-3a7c-4b39-969d-6890d31515de",
+        "date": "2026-10-01",
+        "datePrecision": "day",
+        "status": "未审核",
+        "revision": 1,
+        "auditWorkflow": true,
+        "creator": {
+          "id": "smoke-sales",
+          "name": "Smoke验收营业员"
+        },
+        "created": "2026-10-01T17:28:44.519532+08:00",
+        "updated": "2026-10-01T17:33:09.062194+08:00",
+        "customerId": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+        "customerName": "001欧奕成 普宁雅艇服饰",
+        "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+        "warehouseName": "大西洋银泰ST仓库",
+        "salespersonId": "smoke-sales",
+        "salespersonName": "Smoke验收营业员",
+        "storeId": "5b2461c8-ce98-2c2f-8909-627507196557",
+        "storeName": "大西洋银泰ST",
+        "businessType": "销售",
+        "note": "Final Smoke 营业员销货、混合收款",
+        "adjustmentCents": 0,
+        "sourceAmountCents": null,
+        "lines": [
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "b0df7850-0609-404f-8bd0-d94628a576d6",
+            "skuId": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+            "productUuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+            "productId": "SMK261001A",
+            "name": "Smoke验收衬衫",
+            "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+            "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+            "color": "白色",
+            "size": "160/XS",
+            "quantity": 1,
+            "unit": "",
+            "priceCents": 0,
+            "sourceUnitPrice": "0",
+            "amountCents": 0,
+            "referenceCents": 44900,
+            "gift": true,
+            "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+            "sourceLineage": {
+              "kind": "V2_RUNTIME"
+            },
+            "sourceSize": "160/XS",
+            "fitId": "A",
+            "fit": "A版（标准）",
+            "pricingRule": "unit-price",
+            "discountTenths": null,
+            "previousPrice": 44900,
+            "note": "",
+            "zeroConfirmed": true,
+            "netCents": 0,
+            "categorySnapshot": {
+              "id": "cat-1-0",
+              "name": "长袖衬衫",
+              "fullName": "衬衫 / 长袖衬衫"
+            }
+          },
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "93897fa1-2f86-417e-8651-1ca49a6745ec",
+            "skuId": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+            "productUuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+            "productId": "SMK261001A",
+            "name": "Smoke验收衬衫",
+            "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+            "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+            "color": "白色",
+            "size": "160/XS",
+            "quantity": 2,
+            "unit": "",
+            "priceCents": 44900,
+            "sourceUnitPrice": "449",
+            "amountCents": 89800,
+            "referenceCents": 44900,
+            "gift": false,
+            "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+            "sourceLineage": {
+              "kind": "V2_RUNTIME"
+            },
+            "sourceSize": "160/XS",
+            "fitId": "A",
+            "fit": "A版（标准）",
+            "pricingRule": "unit-price",
+            "discountTenths": null,
+            "previousPrice": null,
+            "note": "",
+            "zeroConfirmed": true,
+            "netCents": 89800,
+            "categorySnapshot": {
+              "id": "cat-1-0",
+              "name": "长袖衬衫",
+              "fullName": "衬衫 / 长袖衬衫"
+            }
+          }
+        ],
+        "fundsRecords": [
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+            "settlementId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+            "methodId": "36f6edd5-56b2-8f03-f303-c694e10130d2",
+            "accountId": "d2cab5db-f586-b62a-3eb2-edd420629327",
+            "methodName": "微信",
+            "accountName": "10201微信-多立方1881",
+            "amountCents": 50000,
+            "direction": "receipt",
+            "reference": {
+              "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de",
+              "sourceId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "settlementId": "5302b75e-5aac-41d3-90fc-57b1a781a38d"
+            },
+            "sourceFacts": {}
+          },
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+            "settlementId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+            "methodId": "f1a7e52c-ef66-0d06-4518-5d7f7958ad3a",
+            "accountId": "95740070-c9dd-1cb1-fc05-9075ac30bb4d",
+            "methodName": "商场收银台",
+            "accountName": "91101大西洋银泰ST收银台",
+            "amountCents": 39800,
+            "direction": "receipt",
+            "reference": {
+              "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de",
+              "sourceId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "settlementId": "3e390b0a-3af3-469b-9345-d4c45e90dff9"
+            },
+            "sourceFacts": {}
+          }
+        ],
+        "links": [],
+        "history": [],
+        "sourceFacts": {
+          "v2_creator": {
+            "id": "smoke-sales",
+            "name": "Smoke验收营业员"
+          }
+        },
+        "_detail": true,
+        "version": 1,
+        "currentRevision": 1,
+        "baselineWasIncluded": false,
+        "currentEffectActive": true,
+        "_runtime": {
+          "id": "cba8950c-3a7c-4b39-969d-6890d31515de",
+          "document_type": "SALE",
+          "number": "V2-XS-cba8950c",
+          "source_identity": null,
+          "status": "UNAUDITED",
+          "baseline_was_included": false,
+          "current_effect_active": true,
+          "active_effect_identity": "82fe4c34-4c9b-455a-8e40-ec2443bcb5f1",
+          "active_effect_revision": 2,
+          "current_revision": 1,
+          "version": 1,
+          "original_auditor": null,
+          "original_audited_at": null,
+          "created_at": "2026-10-01T17:28:44.519532+08:00",
+          "updated_at": "2026-10-01T17:33:09.062194+08:00",
+          "business_day": "2026-10-01",
+          "body": {
+            "lines": [
+              {
+                "gift": true,
+                "unit": "",
+                "amount": "0",
+                "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+                "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+                "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+                "source_id": "b0df7850-0609-404f-8bd0-d94628a576d6",
+                "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+                "unit_price": "0",
+                "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+                "source_lineage": {
+                  "kind": "V2_RUNTIME"
+                },
+                "source_payload": {
+                  "v2_line_note": "",
+                  "v2_pricing_rule": "unit-price",
+                  "v2_discount_tenths": null,
+                  "v2_previous_price_cents": 44900,
+                  "v2_reference_price_cents": 44900
+                },
+                "source_quantity": "1",
+                "source_size_name": "160/XS",
+                "source_color_name": "白色",
+                "source_product_code": "SMK261001A",
+                "source_product_name": "Smoke验收衬衫"
+              },
+              {
+                "gift": false,
+                "unit": "",
+                "amount": "898",
+                "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+                "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+                "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+                "source_id": "93897fa1-2f86-417e-8651-1ca49a6745ec",
+                "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+                "unit_price": "449",
+                "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+                "source_lineage": {
+                  "kind": "V2_RUNTIME"
+                },
+                "source_payload": {
+                  "v2_line_note": "",
+                  "v2_pricing_rule": "unit-price",
+                  "v2_discount_tenths": null,
+                  "v2_previous_price_cents": null,
+                  "v2_reference_price_cents": 44900
+                },
+                "source_quantity": "2",
+                "source_size_name": "160/XS",
+                "source_color_name": "白色",
+                "source_product_code": "SMK261001A",
+                "source_product_name": "Smoke验收衬衫"
+              }
+            ],
+            "header": {
+              "note": "Final Smoke 营业员销货、混合收款",
+              "hall_id": "5b2461c8-ce98-2c2f-8909-627507196557",
+              "adjustment": 0,
+              "business_date": "2026-10-01",
+              "source_number": "unsaved-29c6d6c2-0913-4f09-a406-0dfe28f0fb71",
+              "source_payload": {
+                "v2_creator": {
+                  "id": "smoke-sales",
+                  "name": "Smoke验收营业员"
+                }
+              },
+              "source_party_id": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+              "source_employee_id": "smoke-sales",
+              "source_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4"
+            },
+            "fundsRecords": [
+              {
+                "amount": "500",
+                "direction": "receipt",
+                "reference": null,
+                "source_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                "settlement_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                "source_payload": {},
+                "fund_account_id": "d2cab5db-f586-b62a-3eb2-edd420629327",
+                "payment_method_id": "36f6edd5-56b2-8f03-f303-c694e10130d2",
+                "source_fund_account_name": "10201微信-多立方1881",
+                "source_payment_method_name": "微信"
+              },
+              {
+                "amount": "398",
+                "direction": "receipt",
+                "reference": null,
+                "source_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                "settlement_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                "source_payload": {},
+                "fund_account_id": "95740070-c9dd-1cb1-fc05-9075ac30bb4d",
+                "payment_method_id": "f1a7e52c-ef66-0d06-4518-5d7f7958ad3a",
+                "source_fund_account_name": "91101大西洋银泰ST收银台",
+                "source_payment_method_name": "商场收银台"
+              }
+            ]
+          },
+          "history": []
+        },
+        "returnLines": [],
+        "returnWarehouseId": "",
+        "defaults": {},
+        "settlementCustomerId": "9c42800f-19c3-fab2-c7e3-dee18b28eee1"
+      }
+    },
+    {
+      "action": "保存",
+      "version": 2,
+      "revisionBefore": 1,
+      "revisionAfter": 2,
+      "time": "2026-10-01T17:33:08.532187+08:00",
+      "actor": {
+        "id": "smoke-sales",
+        "name": "Smoke验收营业员"
+      },
+      "user": "Smoke验收营业员",
+      "reason": "V2修订 2",
+      "result": "已提交",
+      "detail": "V2修订 2",
+      "changes": [
+        {
+          "field": "header",
+          "label": "单据资料",
+          "before": "{\"note\":\"Final Smoke 营业员销货、混合收款\",\"hall_id\":\"5b2461c8-ce98-2c2f-8909-627507196557\",\"adjustment\":0,\"business_date\":\"2026-10-01\",\"source_number\":\"unsaved-29c6d6c2-0913-4f09-a406-0dfe28f0fb71\",\"source_payload\":{\"v2_creator\":{\"id\":\"smoke-sales\",\"name\":\"Smoke验收营业员\"}},\"source_party_id\":\"9c42800f-19c3-fab2-c7e3-dee18b28eee1\",\"source_employee_id\":\"smoke-sales\",\"source_warehouse_id\":\"5adf34d8-d0d9-8620-1caf-65a4622983f4\"}",
+          "after": "{\"note\":\"Final Smoke 营业员销货、混合收款 · 价格纠正回归\",\"hall_id\":\"5b2461c8-ce98-2c2f-8909-627507196557\",\"adjustment\":0,\"business_date\":\"2026-10-01\",\"source_number\":\"V2-XS-cba8950c\",\"source_payload\":{\"v2_creator\":{\"id\":\"smoke-sales\",\"name\":\"Smoke验收营业员\"}},\"source_party_id\":\"9c42800f-19c3-fab2-c7e3-dee18b28eee1\",\"source_employee_id\":\"smoke-sales\",\"source_warehouse_id\":\"5adf34d8-d0d9-8620-1caf-65a4622983f4\"}"
+        },
+        {
+          "field": "fundsRecords",
+          "label": "支付明细",
+          "before": "[{\"amount\":\"500\",\"direction\":\"receipt\",\"reference\":null,\"source_id\":\"5302b75e-5aac-41d3-90fc-57b1a781a38d\",\"settlement_id\":\"5302b75e-5aac-41d3-90fc-57b1a781a38d\",\"source_payload\":{},\"fund_account_id\":\"d2cab5db-f586-b62a-3eb2-edd420629327\",\"payment_method_id\":\"36f6edd5-56b2-8f03-f303-c694e10130d2\",\"source_fund_account_name\":\"10201微信-多立方1881\",\"source_payment_method_name\":\"微信\"},{\"amount\":\"398\",\"direction\":\"receipt\",\"reference\":null,\"source_id\":\"3e390b0a-3af3-469b-9345-d4c45e90dff9\",\"settlement_id\":\"3e390b0a-3af3-469b-9345-d4c45e90dff9\",\"source_payload\":{},\"fund_account_id\":\"95740070-c9dd-1cb1-fc05-9075ac30bb4d\",\"payment_method_id\":\"f1a7e52c-ef66-0d06-4518-5d7f7958ad3a\",\"source_fund_account_name\":\"91101大西洋银泰ST收银台\",\"source_payment_method_name\":\"商场收银台\"}]",
+          "after": "[{\"amount\":\"500\",\"direction\":\"receipt\",\"reference\":{\"sourceId\":\"5302b75e-5aac-41d3-90fc-57b1a781a38d\",\"settlementId\":\"5302b75e-5aac-41d3-90fc-57b1a781a38d\",\"targetDocumentId\":\"cba8950c-3a7c-4b39-969d-6890d31515de\"},\"source_id\":\"5302b75e-5aac-41d3-90fc-57b1a781a38d\",\"settlement_id\":\"5302b75e-5aac-41d3-90fc-57b1a781a38d\",\"source_payload\":{},\"fund_account_id\":\"d2cab5db-f586-b62a-3eb2-edd420629327\",\"payment_method_id\":\"36f6edd5-56b2-8f03-f303-c694e10130d2\",\"source_fund_account_name\":\"10201微信-多立方1881\",\"source_payment_method_name\":\"微信\"},{\"amount\":\"398\",\"direction\":\"receipt\",\"reference\":{\"sourceId\":\"3e390b0a-3af3-469b-9345-d4c45e90dff9\",\"settlementId\":\"3e390b0a-3af3-469b-9345-d4c45e90dff9\",\"targetDocumentId\":\"cba8950c-3a7c-4b39-969d-6890d31515de\"},\"source_id\":\"3e390b0a-3af3-469b-9345-d4c45e90dff9\",\"settlement_id\":\"3e390b0a-3af3-469b-9345-d4c45e90dff9\",\"source_payload\":{},\"fund_account_id\":\"95740070-c9dd-1cb1-fc05-9075ac30bb4d\",\"payment_method_id\":\"f1a7e52c-ef66-0d06-4518-5d7f7958ad3a\",\"source_fund_account_name\":\"91101大西洋银泰ST收银台\",\"source_payment_method_name\":\"商场收银台\"}]"
+        }
+      ],
+      "after": {
+        "source": "REAL_TPLUS_RUNTIME",
+        "readonly": false,
+        "id": "V2-XS-cba8950c",
+        "uuid": "cba8950c-3a7c-4b39-969d-6890d31515de",
+        "date": "2026-10-01",
+        "datePrecision": "day",
+        "status": "未审核",
+        "revision": 2,
+        "auditWorkflow": true,
+        "creator": {
+          "id": "smoke-sales",
+          "name": "Smoke验收营业员"
+        },
+        "created": "2026-10-01T17:28:44.519532+08:00",
+        "updated": "2026-10-01T17:33:09.062194+08:00",
+        "customerId": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+        "customerName": "001欧奕成 普宁雅艇服饰",
+        "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+        "warehouseName": "大西洋银泰ST仓库",
+        "salespersonId": "smoke-sales",
+        "salespersonName": "Smoke验收营业员",
+        "storeId": "5b2461c8-ce98-2c2f-8909-627507196557",
+        "storeName": "大西洋银泰ST",
+        "businessType": "销售",
+        "note": "Final Smoke 营业员销货、混合收款 · 价格纠正回归",
+        "adjustmentCents": 0,
+        "sourceAmountCents": null,
+        "lines": [
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "b0df7850-0609-404f-8bd0-d94628a576d6",
+            "skuId": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+            "productUuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+            "productId": "SMK261001A",
+            "name": "Smoke验收衬衫",
+            "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+            "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+            "color": "白色",
+            "size": "160/XS",
+            "quantity": 1,
+            "unit": "",
+            "priceCents": 0,
+            "sourceUnitPrice": "0",
+            "amountCents": 0,
+            "referenceCents": 44900,
+            "gift": true,
+            "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+            "sourceLineage": {
+              "kind": "V2_RUNTIME"
+            },
+            "sourceSize": "160/XS",
+            "fitId": "A",
+            "fit": "A版（标准）",
+            "pricingRule": "unit-price",
+            "discountTenths": null,
+            "previousPrice": 44900,
+            "note": "",
+            "zeroConfirmed": true,
+            "netCents": 0,
+            "categorySnapshot": {
+              "id": "cat-1-0",
+              "name": "长袖衬衫",
+              "fullName": "衬衫 / 长袖衬衫"
+            }
+          },
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "93897fa1-2f86-417e-8651-1ca49a6745ec",
+            "skuId": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+            "productUuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+            "productId": "SMK261001A",
+            "name": "Smoke验收衬衫",
+            "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+            "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+            "color": "白色",
+            "size": "160/XS",
+            "quantity": 2,
+            "unit": "",
+            "priceCents": 44900,
+            "sourceUnitPrice": "449",
+            "amountCents": 89800,
+            "referenceCents": 44900,
+            "gift": false,
+            "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+            "sourceLineage": {
+              "kind": "V2_RUNTIME"
+            },
+            "sourceSize": "160/XS",
+            "fitId": "A",
+            "fit": "A版（标准）",
+            "pricingRule": "unit-price",
+            "discountTenths": null,
+            "previousPrice": null,
+            "note": "",
+            "zeroConfirmed": true,
+            "netCents": 89800,
+            "categorySnapshot": {
+              "id": "cat-1-0",
+              "name": "长袖衬衫",
+              "fullName": "衬衫 / 长袖衬衫"
+            }
+          }
+        ],
+        "fundsRecords": [
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+            "settlementId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+            "methodId": "36f6edd5-56b2-8f03-f303-c694e10130d2",
+            "accountId": "d2cab5db-f586-b62a-3eb2-edd420629327",
+            "methodName": "微信",
+            "accountName": "10201微信-多立方1881",
+            "amountCents": 50000,
+            "direction": "receipt",
+            "reference": {
+              "sourceId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "settlementId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+            },
+            "sourceFacts": {}
+          },
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+            "settlementId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+            "methodId": "f1a7e52c-ef66-0d06-4518-5d7f7958ad3a",
+            "accountId": "95740070-c9dd-1cb1-fc05-9075ac30bb4d",
+            "methodName": "商场收银台",
+            "accountName": "91101大西洋银泰ST收银台",
+            "amountCents": 39800,
+            "direction": "receipt",
+            "reference": {
+              "sourceId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "settlementId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+            },
+            "sourceFacts": {}
+          }
+        ],
+        "links": [],
+        "history": [],
+        "sourceFacts": {
+          "v2_creator": {
+            "id": "smoke-sales",
+            "name": "Smoke验收营业员"
+          }
+        },
+        "_detail": true,
+        "version": 2,
+        "currentRevision": 2,
+        "baselineWasIncluded": false,
+        "currentEffectActive": true,
+        "_runtime": {
+          "id": "cba8950c-3a7c-4b39-969d-6890d31515de",
+          "document_type": "SALE",
+          "number": "V2-XS-cba8950c",
+          "source_identity": null,
+          "status": "UNAUDITED",
+          "baseline_was_included": false,
+          "current_effect_active": true,
+          "active_effect_identity": "82fe4c34-4c9b-455a-8e40-ec2443bcb5f1",
+          "active_effect_revision": 2,
+          "current_revision": 2,
+          "version": 2,
+          "original_auditor": null,
+          "original_audited_at": null,
+          "created_at": "2026-10-01T17:28:44.519532+08:00",
+          "updated_at": "2026-10-01T17:33:09.062194+08:00",
+          "business_day": "2026-10-01",
+          "body": {
+            "lines": [
+              {
+                "gift": true,
+                "unit": "",
+                "amount": "0",
+                "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+                "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+                "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+                "source_id": "b0df7850-0609-404f-8bd0-d94628a576d6",
+                "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+                "unit_price": "0",
+                "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+                "source_lineage": {
+                  "kind": "V2_RUNTIME"
+                },
+                "source_payload": {
+                  "v2_line_note": "",
+                  "v2_pricing_rule": "unit-price",
+                  "v2_discount_tenths": null,
+                  "v2_previous_price_cents": 44900,
+                  "v2_reference_price_cents": 44900
+                },
+                "source_quantity": "1",
+                "source_size_name": "160/XS",
+                "source_color_name": "白色",
+                "source_product_code": "SMK261001A",
+                "source_product_name": "Smoke验收衬衫"
+              },
+              {
+                "gift": false,
+                "unit": "",
+                "amount": "898",
+                "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+                "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+                "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+                "source_id": "93897fa1-2f86-417e-8651-1ca49a6745ec",
+                "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+                "unit_price": "449",
+                "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+                "source_lineage": {
+                  "kind": "V2_RUNTIME"
+                },
+                "source_payload": {
+                  "v2_line_note": "",
+                  "v2_pricing_rule": "unit-price",
+                  "v2_discount_tenths": null,
+                  "v2_previous_price_cents": null,
+                  "v2_reference_price_cents": 44900
+                },
+                "source_quantity": "2",
+                "source_size_name": "160/XS",
+                "source_color_name": "白色",
+                "source_product_code": "SMK261001A",
+                "source_product_name": "Smoke验收衬衫"
+              }
+            ],
+            "header": {
+              "note": "Final Smoke 营业员销货、混合收款 · 价格纠正回归",
+              "hall_id": "5b2461c8-ce98-2c2f-8909-627507196557",
+              "adjustment": 0,
+              "business_date": "2026-10-01",
+              "source_number": "V2-XS-cba8950c",
+              "source_payload": {
+                "v2_creator": {
+                  "id": "smoke-sales",
+                  "name": "Smoke验收营业员"
+                }
+              },
+              "source_party_id": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+              "source_employee_id": "smoke-sales",
+              "source_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4"
+            },
+            "fundsRecords": [
+              {
+                "amount": "500",
+                "direction": "receipt",
+                "reference": {
+                  "sourceId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                  "settlementId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                  "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+                },
+                "source_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                "settlement_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                "source_payload": {},
+                "fund_account_id": "d2cab5db-f586-b62a-3eb2-edd420629327",
+                "payment_method_id": "36f6edd5-56b2-8f03-f303-c694e10130d2",
+                "source_fund_account_name": "10201微信-多立方1881",
+                "source_payment_method_name": "微信"
+              },
+              {
+                "amount": "398",
+                "direction": "receipt",
+                "reference": {
+                  "sourceId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                  "settlementId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                  "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+                },
+                "source_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                "settlement_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                "source_payload": {},
+                "fund_account_id": "95740070-c9dd-1cb1-fc05-9075ac30bb4d",
+                "payment_method_id": "f1a7e52c-ef66-0d06-4518-5d7f7958ad3a",
+                "source_fund_account_name": "91101大西洋银泰ST收银台",
+                "source_payment_method_name": "商场收银台"
+              }
+            ]
+          },
+          "history": []
+        },
+        "returnLines": [],
+        "returnWarehouseId": "",
+        "defaults": {},
+        "settlementCustomerId": "9c42800f-19c3-fab2-c7e3-dee18b28eee1"
+      }
+    },
+    {
+      "action": "审核",
+      "version": 3,
+      "revisionBefore": 2,
+      "revisionAfter": 3,
+      "time": "2026-10-01T17:33:09.062194+08:00",
+      "actor": {
+        "id": "smoke-sales",
+        "name": "Smoke验收营业员"
+      },
+      "user": "Smoke验收营业员",
+      "reason": "V2修订 2",
+      "result": "已提交",
+      "detail": "V2修订 2",
+      "changes": [],
+      "after": {
+        "source": "REAL_TPLUS_RUNTIME",
+        "readonly": false,
+        "id": "V2-XS-cba8950c",
+        "uuid": "cba8950c-3a7c-4b39-969d-6890d31515de",
+        "date": "2026-10-01",
+        "datePrecision": "day",
+        "status": "已审核",
+        "revision": 3,
+        "auditWorkflow": true,
+        "creator": {
+          "id": "smoke-sales",
+          "name": "Smoke验收营业员"
+        },
+        "created": "2026-10-01T17:28:44.519532+08:00",
+        "updated": "2026-10-01T17:33:09.062194+08:00",
+        "customerId": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+        "customerName": "001欧奕成 普宁雅艇服饰",
+        "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+        "warehouseName": "大西洋银泰ST仓库",
+        "salespersonId": "smoke-sales",
+        "salespersonName": "Smoke验收营业员",
+        "storeId": "5b2461c8-ce98-2c2f-8909-627507196557",
+        "storeName": "大西洋银泰ST",
+        "businessType": "销售",
+        "note": "Final Smoke 营业员销货、混合收款 · 价格纠正回归",
+        "adjustmentCents": 0,
+        "sourceAmountCents": null,
+        "lines": [
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "b0df7850-0609-404f-8bd0-d94628a576d6",
+            "skuId": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+            "productUuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+            "productId": "SMK261001A",
+            "name": "Smoke验收衬衫",
+            "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+            "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+            "color": "白色",
+            "size": "160/XS",
+            "quantity": 1,
+            "unit": "",
+            "priceCents": 0,
+            "sourceUnitPrice": "0",
+            "amountCents": 0,
+            "referenceCents": 44900,
+            "gift": true,
+            "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+            "sourceLineage": {
+              "kind": "V2_RUNTIME"
+            },
+            "sourceSize": "160/XS",
+            "fitId": "A",
+            "fit": "A版（标准）",
+            "pricingRule": "unit-price",
+            "discountTenths": null,
+            "previousPrice": 44900,
+            "note": "",
+            "zeroConfirmed": true,
+            "netCents": 0,
+            "categorySnapshot": {
+              "id": "cat-1-0",
+              "name": "长袖衬衫",
+              "fullName": "衬衫 / 长袖衬衫"
+            }
+          },
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "93897fa1-2f86-417e-8651-1ca49a6745ec",
+            "skuId": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+            "productUuid": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+            "productId": "SMK261001A",
+            "name": "Smoke验收衬衫",
+            "colorId": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+            "sizeId": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+            "color": "白色",
+            "size": "160/XS",
+            "quantity": 2,
+            "unit": "",
+            "priceCents": 44900,
+            "sourceUnitPrice": "449",
+            "amountCents": 89800,
+            "referenceCents": 44900,
+            "gift": false,
+            "warehouseId": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+            "sourceLineage": {
+              "kind": "V2_RUNTIME"
+            },
+            "sourceSize": "160/XS",
+            "fitId": "A",
+            "fit": "A版（标准）",
+            "pricingRule": "unit-price",
+            "discountTenths": null,
+            "previousPrice": null,
+            "note": "",
+            "zeroConfirmed": true,
+            "netCents": 89800,
+            "categorySnapshot": {
+              "id": "cat-1-0",
+              "name": "长袖衬衫",
+              "fullName": "衬衫 / 长袖衬衫"
+            }
+          }
+        ],
+        "fundsRecords": [
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+            "settlementId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+            "methodId": "36f6edd5-56b2-8f03-f303-c694e10130d2",
+            "accountId": "d2cab5db-f586-b62a-3eb2-edd420629327",
+            "methodName": "微信",
+            "accountName": "10201微信-多立方1881",
+            "amountCents": 50000,
+            "direction": "receipt",
+            "reference": {
+              "sourceId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "settlementId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+            },
+            "sourceFacts": {}
+          },
+          {
+            "source": "REAL_TPLUS_HISTORY",
+            "readonly": true,
+            "id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+            "settlementId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+            "methodId": "f1a7e52c-ef66-0d06-4518-5d7f7958ad3a",
+            "accountId": "95740070-c9dd-1cb1-fc05-9075ac30bb4d",
+            "methodName": "商场收银台",
+            "accountName": "91101大西洋银泰ST收银台",
+            "amountCents": 39800,
+            "direction": "receipt",
+            "reference": {
+              "sourceId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "settlementId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+            },
+            "sourceFacts": {}
+          }
+        ],
+        "links": [],
+        "history": [],
+        "sourceFacts": {
+          "v2_creator": {
+            "id": "smoke-sales",
+            "name": "Smoke验收营业员"
+          }
+        },
+        "_detail": true,
+        "version": 3,
+        "currentRevision": 2,
+        "baselineWasIncluded": false,
+        "currentEffectActive": true,
+        "_runtime": {
+          "id": "cba8950c-3a7c-4b39-969d-6890d31515de",
+          "document_type": "SALE",
+          "number": "V2-XS-cba8950c",
+          "source_identity": null,
+          "status": "APPROVED",
+          "baseline_was_included": false,
+          "current_effect_active": true,
+          "active_effect_identity": "82fe4c34-4c9b-455a-8e40-ec2443bcb5f1",
+          "active_effect_revision": 2,
+          "current_revision": 2,
+          "version": 3,
+          "original_auditor": null,
+          "original_audited_at": null,
+          "created_at": "2026-10-01T17:28:44.519532+08:00",
+          "updated_at": "2026-10-01T17:33:09.062194+08:00",
+          "business_day": "2026-10-01",
+          "body": {
+            "lines": [
+              {
+                "gift": true,
+                "unit": "",
+                "amount": "0",
+                "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+                "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+                "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+                "source_id": "b0df7850-0609-404f-8bd0-d94628a576d6",
+                "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+                "unit_price": "0",
+                "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+                "source_lineage": {
+                  "kind": "V2_RUNTIME"
+                },
+                "source_payload": {
+                  "v2_line_note": "",
+                  "v2_pricing_rule": "unit-price",
+                  "v2_discount_tenths": null,
+                  "v2_previous_price_cents": 44900,
+                  "v2_reference_price_cents": 44900
+                },
+                "source_quantity": "1",
+                "source_size_name": "160/XS",
+                "source_color_name": "白色",
+                "source_product_code": "SMK261001A",
+                "source_product_name": "Smoke验收衬衫"
+              },
+              {
+                "gift": false,
+                "unit": "",
+                "amount": "898",
+                "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+                "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+                "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+                "source_id": "93897fa1-2f86-417e-8651-1ca49a6745ec",
+                "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+                "unit_price": "449",
+                "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+                "source_lineage": {
+                  "kind": "V2_RUNTIME"
+                },
+                "source_payload": {
+                  "v2_line_note": "",
+                  "v2_pricing_rule": "unit-price",
+                  "v2_discount_tenths": null,
+                  "v2_previous_price_cents": null,
+                  "v2_reference_price_cents": 44900
+                },
+                "source_quantity": "2",
+                "source_size_name": "160/XS",
+                "source_color_name": "白色",
+                "source_product_code": "SMK261001A",
+                "source_product_name": "Smoke验收衬衫"
+              }
+            ],
+            "header": {
+              "note": "Final Smoke 营业员销货、混合收款 · 价格纠正回归",
+              "hall_id": "5b2461c8-ce98-2c2f-8909-627507196557",
+              "adjustment": 0,
+              "business_date": "2026-10-01",
+              "source_number": "V2-XS-cba8950c",
+              "source_payload": {
+                "v2_creator": {
+                  "id": "smoke-sales",
+                  "name": "Smoke验收营业员"
+                }
+              },
+              "source_party_id": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+              "source_employee_id": "smoke-sales",
+              "source_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4"
+            },
+            "fundsRecords": [
+              {
+                "amount": "500",
+                "direction": "receipt",
+                "reference": {
+                  "sourceId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                  "settlementId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                  "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+                },
+                "source_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                "settlement_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                "source_payload": {},
+                "fund_account_id": "d2cab5db-f586-b62a-3eb2-edd420629327",
+                "payment_method_id": "36f6edd5-56b2-8f03-f303-c694e10130d2",
+                "source_fund_account_name": "10201微信-多立方1881",
+                "source_payment_method_name": "微信"
+              },
+              {
+                "amount": "398",
+                "direction": "receipt",
+                "reference": {
+                  "sourceId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                  "settlementId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                  "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+                },
+                "source_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                "settlement_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                "source_payload": {},
+                "fund_account_id": "95740070-c9dd-1cb1-fc05-9075ac30bb4d",
+                "payment_method_id": "f1a7e52c-ef66-0d06-4518-5d7f7958ad3a",
+                "source_fund_account_name": "91101大西洋银泰ST收银台",
+                "source_payment_method_name": "商场收银台"
+              }
+            ]
+          },
+          "history": []
+        },
+        "returnLines": [],
+        "returnWarehouseId": "",
+        "defaults": {},
+        "settlementCustomerId": "9c42800f-19c3-fab2-c7e3-dee18b28eee1"
+      }
+    }
+  ],
+  "sourceFacts": {
+    "v2_creator": {
+      "id": "smoke-sales",
+      "name": "Smoke验收营业员"
+    }
+  },
+  "_detail": true,
+  "version": 3,
+  "currentRevision": 2,
+  "baselineWasIncluded": false,
+  "currentEffectActive": true,
+  "_runtime": {
+    "id": "cba8950c-3a7c-4b39-969d-6890d31515de",
+    "document_type": "SALE",
+    "number": "V2-XS-cba8950c",
+    "source_identity": null,
+    "status": "APPROVED",
+    "baseline_was_included": false,
+    "current_effect_active": true,
+    "active_effect_identity": "82fe4c34-4c9b-455a-8e40-ec2443bcb5f1",
+    "active_effect_revision": 2,
+    "current_revision": 2,
+    "version": 3,
+    "original_auditor": null,
+    "original_audited_at": null,
+    "created_at": "2026-10-01T17:28:44.519532+08:00",
+    "updated_at": "2026-10-01T17:33:09.062194+08:00",
+    "business_day": "2026-10-01",
+    "body": {
+      "lines": [
+        {
+          "gift": true,
+          "unit": "",
+          "amount": "0",
+          "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+          "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+          "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+          "source_id": "b0df7850-0609-404f-8bd0-d94628a576d6",
+          "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+          "unit_price": "0",
+          "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+          "source_lineage": {
+            "kind": "V2_RUNTIME"
+          },
+          "source_payload": {
+            "v2_line_note": "",
+            "v2_pricing_rule": "unit-price",
+            "v2_discount_tenths": null,
+            "v2_previous_price_cents": 44900,
+            "v2_reference_price_cents": 44900
+          },
+          "source_quantity": "1",
+          "source_size_name": "160/XS",
+          "source_color_name": "白色",
+          "source_product_code": "SMK261001A",
+          "source_product_name": "Smoke验收衬衫"
+        },
+        {
+          "gift": false,
+          "unit": "",
+          "amount": "898",
+          "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+          "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+          "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+          "source_id": "93897fa1-2f86-417e-8651-1ca49a6745ec",
+          "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+          "unit_price": "449",
+          "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+          "source_lineage": {
+            "kind": "V2_RUNTIME"
+          },
+          "source_payload": {
+            "v2_line_note": "",
+            "v2_pricing_rule": "unit-price",
+            "v2_discount_tenths": null,
+            "v2_previous_price_cents": null,
+            "v2_reference_price_cents": 44900
+          },
+          "source_quantity": "2",
+          "source_size_name": "160/XS",
+          "source_color_name": "白色",
+          "source_product_code": "SMK261001A",
+          "source_product_name": "Smoke验收衬衫"
+        }
+      ],
+      "header": {
+        "note": "Final Smoke 营业员销货、混合收款 · 价格纠正回归",
+        "hall_id": "5b2461c8-ce98-2c2f-8909-627507196557",
+        "adjustment": 0,
+        "business_date": "2026-10-01",
+        "source_number": "V2-XS-cba8950c",
+        "source_payload": {
+          "v2_creator": {
+            "id": "smoke-sales",
+            "name": "Smoke验收营业员"
+          }
+        },
+        "source_party_id": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+        "source_employee_id": "smoke-sales",
+        "source_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4"
+      },
+      "fundsRecords": [
+        {
+          "amount": "500",
+          "direction": "receipt",
+          "reference": {
+            "sourceId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+            "settlementId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+            "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+          },
+          "source_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+          "settlement_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+          "source_payload": {},
+          "fund_account_id": "d2cab5db-f586-b62a-3eb2-edd420629327",
+          "payment_method_id": "36f6edd5-56b2-8f03-f303-c694e10130d2",
+          "source_fund_account_name": "10201微信-多立方1881",
+          "source_payment_method_name": "微信"
+        },
+        {
+          "amount": "398",
+          "direction": "receipt",
+          "reference": {
+            "sourceId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+            "settlementId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+            "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+          },
+          "source_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+          "settlement_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+          "source_payload": {},
+          "fund_account_id": "95740070-c9dd-1cb1-fc05-9075ac30bb4d",
+          "payment_method_id": "f1a7e52c-ef66-0d06-4518-5d7f7958ad3a",
+          "source_fund_account_name": "91101大西洋银泰ST收银台",
+          "source_payment_method_name": "商场收银台"
+        }
+      ]
+    },
+    "history": [
+      {
+        "body": {
+          "lines": [
+            {
+              "gift": true,
+              "unit": "",
+              "amount": "0",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "b0df7850-0609-404f-8bd0-d94628a576d6",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "unit_price": "0",
+              "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_lineage": {
+                "kind": "V2_RUNTIME"
+              },
+              "source_payload": {
+                "v2_line_note": "",
+                "v2_pricing_rule": "unit-price",
+                "v2_discount_tenths": null,
+                "v2_previous_price_cents": 44900,
+                "v2_reference_price_cents": 44900
+              },
+              "source_quantity": "1",
+              "source_size_name": "160/XS",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            },
+            {
+              "gift": false,
+              "unit": "",
+              "amount": "898",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "93897fa1-2f86-417e-8651-1ca49a6745ec",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "unit_price": "449",
+              "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_lineage": {
+                "kind": "V2_RUNTIME"
+              },
+              "source_payload": {
+                "v2_line_note": "",
+                "v2_pricing_rule": "unit-price",
+                "v2_discount_tenths": null,
+                "v2_previous_price_cents": null,
+                "v2_reference_price_cents": 44900
+              },
+              "source_quantity": "2",
+              "source_size_name": "160/XS",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            }
+          ],
+          "header": {
+            "note": "Final Smoke 营业员销货、混合收款",
+            "hall_id": "5b2461c8-ce98-2c2f-8909-627507196557",
+            "adjustment": 0,
+            "business_date": "2026-10-01",
+            "source_number": "unsaved-29c6d6c2-0913-4f09-a406-0dfe28f0fb71",
+            "source_payload": {
+              "v2_creator": {
+                "id": "smoke-sales",
+                "name": "Smoke验收营业员"
+              }
+            },
+            "source_party_id": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+            "source_employee_id": "smoke-sales",
+            "source_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4"
+          },
+          "fundsRecords": [
+            {
+              "amount": "500",
+              "direction": "receipt",
+              "reference": null,
+              "source_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "settlement_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "source_payload": {},
+              "fund_account_id": "d2cab5db-f586-b62a-3eb2-edd420629327",
+              "payment_method_id": "36f6edd5-56b2-8f03-f303-c694e10130d2",
+              "source_fund_account_name": "10201微信-多立方1881",
+              "source_payment_method_name": "微信"
+            },
+            {
+              "amount": "398",
+              "direction": "receipt",
+              "reference": null,
+              "source_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "settlement_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "source_payload": {},
+              "fund_account_id": "95740070-c9dd-1cb1-fc05-9075ac30bb4d",
+              "payment_method_id": "f1a7e52c-ef66-0d06-4518-5d7f7958ad3a",
+              "source_fund_account_name": "91101大西洋银泰ST收银台",
+              "source_payment_method_name": "商场收银台"
+            }
+          ]
+        },
+        "version": 1,
+        "actor_id": "smoke-sales",
+        "revision": 1,
+        "operation": "create",
+        "created_at": "2026-10-01T17:28:44.519532+08:00",
+        "document_id": "cba8950c-3a7c-4b39-969d-6890d31515de",
+        "request_key": "2693a18e-60de-484b-a5b2-2c9c3b586b94",
+        "previous_body": {
+          "lines": [
+            {
+              "gift": true,
+              "unit": "",
+              "amount": "0",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "b0df7850-0609-404f-8bd0-d94628a576d6",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "unit_price": "0",
+              "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_lineage": {
+                "kind": "V2_RUNTIME"
+              },
+              "source_payload": {
+                "v2_line_note": "",
+                "v2_pricing_rule": "unit-price",
+                "v2_discount_tenths": null,
+                "v2_previous_price_cents": 44900,
+                "v2_reference_price_cents": 44900
+              },
+              "source_quantity": "1",
+              "source_size_name": "160/XS",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            },
+            {
+              "gift": false,
+              "unit": "",
+              "amount": "898",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "93897fa1-2f86-417e-8651-1ca49a6745ec",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "unit_price": "449",
+              "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_lineage": {
+                "kind": "V2_RUNTIME"
+              },
+              "source_payload": {
+                "v2_line_note": "",
+                "v2_pricing_rule": "unit-price",
+                "v2_discount_tenths": null,
+                "v2_previous_price_cents": null,
+                "v2_reference_price_cents": 44900
+              },
+              "source_quantity": "2",
+              "source_size_name": "160/XS",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            }
+          ],
+          "header": {
+            "note": "Final Smoke 营业员销货、混合收款",
+            "hall_id": "5b2461c8-ce98-2c2f-8909-627507196557",
+            "adjustment": 0,
+            "business_date": "2026-10-01",
+            "source_number": "unsaved-29c6d6c2-0913-4f09-a406-0dfe28f0fb71",
+            "source_payload": {
+              "v2_creator": {
+                "id": "smoke-sales",
+                "name": "Smoke验收营业员"
+              }
+            },
+            "source_party_id": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+            "source_employee_id": "smoke-sales",
+            "source_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4"
+          },
+          "fundsRecords": [
+            {
+              "amount": "500",
+              "direction": "receipt",
+              "reference": null,
+              "source_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "settlement_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "source_payload": {},
+              "fund_account_id": "d2cab5db-f586-b62a-3eb2-edd420629327",
+              "payment_method_id": "36f6edd5-56b2-8f03-f303-c694e10130d2",
+              "source_fund_account_name": "10201微信-多立方1881",
+              "source_payment_method_name": "微信"
+            },
+            {
+              "amount": "398",
+              "direction": "receipt",
+              "reference": null,
+              "source_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "settlement_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "source_payload": {},
+              "fund_account_id": "95740070-c9dd-1cb1-fc05-9075ac30bb4d",
+              "payment_method_id": "f1a7e52c-ef66-0d06-4518-5d7f7958ad3a",
+              "source_fund_account_name": "91101大西洋银泰ST收银台",
+              "source_payment_method_name": "商场收银台"
+            }
+          ]
+        }
+      },
+      {
+        "body": {
+          "lines": [
+            {
+              "gift": true,
+              "unit": "",
+              "amount": "0",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "b0df7850-0609-404f-8bd0-d94628a576d6",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "unit_price": "0",
+              "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_lineage": {
+                "kind": "V2_RUNTIME"
+              },
+              "source_payload": {
+                "v2_line_note": "",
+                "v2_pricing_rule": "unit-price",
+                "v2_discount_tenths": null,
+                "v2_previous_price_cents": 44900,
+                "v2_reference_price_cents": 44900
+              },
+              "source_quantity": "1",
+              "source_size_name": "160/XS",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            },
+            {
+              "gift": false,
+              "unit": "",
+              "amount": "898",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "93897fa1-2f86-417e-8651-1ca49a6745ec",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "unit_price": "449",
+              "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_lineage": {
+                "kind": "V2_RUNTIME"
+              },
+              "source_payload": {
+                "v2_line_note": "",
+                "v2_pricing_rule": "unit-price",
+                "v2_discount_tenths": null,
+                "v2_previous_price_cents": null,
+                "v2_reference_price_cents": 44900
+              },
+              "source_quantity": "2",
+              "source_size_name": "160/XS",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            }
+          ],
+          "header": {
+            "note": "Final Smoke 营业员销货、混合收款 · 价格纠正回归",
+            "hall_id": "5b2461c8-ce98-2c2f-8909-627507196557",
+            "adjustment": 0,
+            "business_date": "2026-10-01",
+            "source_number": "V2-XS-cba8950c",
+            "source_payload": {
+              "v2_creator": {
+                "id": "smoke-sales",
+                "name": "Smoke验收营业员"
+              }
+            },
+            "source_party_id": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+            "source_employee_id": "smoke-sales",
+            "source_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4"
+          },
+          "fundsRecords": [
+            {
+              "amount": "500",
+              "direction": "receipt",
+              "reference": {
+                "sourceId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                "settlementId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+              },
+              "source_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "settlement_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "source_payload": {},
+              "fund_account_id": "d2cab5db-f586-b62a-3eb2-edd420629327",
+              "payment_method_id": "36f6edd5-56b2-8f03-f303-c694e10130d2",
+              "source_fund_account_name": "10201微信-多立方1881",
+              "source_payment_method_name": "微信"
+            },
+            {
+              "amount": "398",
+              "direction": "receipt",
+              "reference": {
+                "sourceId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                "settlementId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+              },
+              "source_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "settlement_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "source_payload": {},
+              "fund_account_id": "95740070-c9dd-1cb1-fc05-9075ac30bb4d",
+              "payment_method_id": "f1a7e52c-ef66-0d06-4518-5d7f7958ad3a",
+              "source_fund_account_name": "91101大西洋银泰ST收银台",
+              "source_payment_method_name": "商场收银台"
+            }
+          ]
+        },
+        "version": 2,
+        "actor_id": "smoke-sales",
+        "revision": 2,
+        "operation": "save",
+        "created_at": "2026-10-01T17:33:08.532187+08:00",
+        "document_id": "cba8950c-3a7c-4b39-969d-6890d31515de",
+        "request_key": "28e7de1b-c8bf-41b7-9abd-d4b0f3c2c6f6",
+        "previous_body": {
+          "lines": [
+            {
+              "gift": true,
+              "unit": "",
+              "amount": "0",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "b0df7850-0609-404f-8bd0-d94628a576d6",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "unit_price": "0",
+              "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_lineage": {
+                "kind": "V2_RUNTIME"
+              },
+              "source_payload": {
+                "v2_line_note": "",
+                "v2_pricing_rule": "unit-price",
+                "v2_discount_tenths": null,
+                "v2_previous_price_cents": 44900,
+                "v2_reference_price_cents": 44900
+              },
+              "source_quantity": "1",
+              "source_size_name": "160/XS",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            },
+            {
+              "gift": false,
+              "unit": "",
+              "amount": "898",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "93897fa1-2f86-417e-8651-1ca49a6745ec",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "unit_price": "449",
+              "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_lineage": {
+                "kind": "V2_RUNTIME"
+              },
+              "source_payload": {
+                "v2_line_note": "",
+                "v2_pricing_rule": "unit-price",
+                "v2_discount_tenths": null,
+                "v2_previous_price_cents": null,
+                "v2_reference_price_cents": 44900
+              },
+              "source_quantity": "2",
+              "source_size_name": "160/XS",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            }
+          ],
+          "header": {
+            "note": "Final Smoke 营业员销货、混合收款",
+            "hall_id": "5b2461c8-ce98-2c2f-8909-627507196557",
+            "adjustment": 0,
+            "business_date": "2026-10-01",
+            "source_number": "unsaved-29c6d6c2-0913-4f09-a406-0dfe28f0fb71",
+            "source_payload": {
+              "v2_creator": {
+                "id": "smoke-sales",
+                "name": "Smoke验收营业员"
+              }
+            },
+            "source_party_id": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+            "source_employee_id": "smoke-sales",
+            "source_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4"
+          },
+          "fundsRecords": [
+            {
+              "amount": "500",
+              "direction": "receipt",
+              "reference": null,
+              "source_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "settlement_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "source_payload": {},
+              "fund_account_id": "d2cab5db-f586-b62a-3eb2-edd420629327",
+              "payment_method_id": "36f6edd5-56b2-8f03-f303-c694e10130d2",
+              "source_fund_account_name": "10201微信-多立方1881",
+              "source_payment_method_name": "微信"
+            },
+            {
+              "amount": "398",
+              "direction": "receipt",
+              "reference": null,
+              "source_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "settlement_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "source_payload": {},
+              "fund_account_id": "95740070-c9dd-1cb1-fc05-9075ac30bb4d",
+              "payment_method_id": "f1a7e52c-ef66-0d06-4518-5d7f7958ad3a",
+              "source_fund_account_name": "91101大西洋银泰ST收银台",
+              "source_payment_method_name": "商场收银台"
+            }
+          ]
+        }
+      },
+      {
+        "body": {
+          "lines": [
+            {
+              "gift": true,
+              "unit": "",
+              "amount": "0",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "b0df7850-0609-404f-8bd0-d94628a576d6",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "unit_price": "0",
+              "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_lineage": {
+                "kind": "V2_RUNTIME"
+              },
+              "source_payload": {
+                "v2_line_note": "",
+                "v2_pricing_rule": "unit-price",
+                "v2_discount_tenths": null,
+                "v2_previous_price_cents": 44900,
+                "v2_reference_price_cents": 44900
+              },
+              "source_quantity": "1",
+              "source_size_name": "160/XS",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            },
+            {
+              "gift": false,
+              "unit": "",
+              "amount": "898",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "93897fa1-2f86-417e-8651-1ca49a6745ec",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "unit_price": "449",
+              "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_lineage": {
+                "kind": "V2_RUNTIME"
+              },
+              "source_payload": {
+                "v2_line_note": "",
+                "v2_pricing_rule": "unit-price",
+                "v2_discount_tenths": null,
+                "v2_previous_price_cents": null,
+                "v2_reference_price_cents": 44900
+              },
+              "source_quantity": "2",
+              "source_size_name": "160/XS",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            }
+          ],
+          "header": {
+            "note": "Final Smoke 营业员销货、混合收款 · 价格纠正回归",
+            "hall_id": "5b2461c8-ce98-2c2f-8909-627507196557",
+            "adjustment": 0,
+            "business_date": "2026-10-01",
+            "source_number": "V2-XS-cba8950c",
+            "source_payload": {
+              "v2_creator": {
+                "id": "smoke-sales",
+                "name": "Smoke验收营业员"
+              }
+            },
+            "source_party_id": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+            "source_employee_id": "smoke-sales",
+            "source_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4"
+          },
+          "fundsRecords": [
+            {
+              "amount": "500",
+              "direction": "receipt",
+              "reference": {
+                "sourceId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                "settlementId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+              },
+              "source_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "settlement_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "source_payload": {},
+              "fund_account_id": "d2cab5db-f586-b62a-3eb2-edd420629327",
+              "payment_method_id": "36f6edd5-56b2-8f03-f303-c694e10130d2",
+              "source_fund_account_name": "10201微信-多立方1881",
+              "source_payment_method_name": "微信"
+            },
+            {
+              "amount": "398",
+              "direction": "receipt",
+              "reference": {
+                "sourceId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                "settlementId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+              },
+              "source_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "settlement_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "source_payload": {},
+              "fund_account_id": "95740070-c9dd-1cb1-fc05-9075ac30bb4d",
+              "payment_method_id": "f1a7e52c-ef66-0d06-4518-5d7f7958ad3a",
+              "source_fund_account_name": "91101大西洋银泰ST收银台",
+              "source_payment_method_name": "商场收银台"
+            }
+          ]
+        },
+        "version": 3,
+        "actor_id": "smoke-sales",
+        "revision": 2,
+        "operation": "approve",
+        "created_at": "2026-10-01T17:33:09.062194+08:00",
+        "document_id": "cba8950c-3a7c-4b39-969d-6890d31515de",
+        "request_key": "c499de1c-86c7-4f35-91b8-0b46c5a07f9b",
+        "previous_body": {
+          "lines": [
+            {
+              "gift": true,
+              "unit": "",
+              "amount": "0",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "b0df7850-0609-404f-8bd0-d94628a576d6",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "unit_price": "0",
+              "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_lineage": {
+                "kind": "V2_RUNTIME"
+              },
+              "source_payload": {
+                "v2_line_note": "",
+                "v2_pricing_rule": "unit-price",
+                "v2_discount_tenths": null,
+                "v2_previous_price_cents": 44900,
+                "v2_reference_price_cents": 44900
+              },
+              "source_quantity": "1",
+              "source_size_name": "160/XS",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            },
+            {
+              "gift": false,
+              "unit": "",
+              "amount": "898",
+              "sku_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+              "size_id": "785fdff3-dc15-4306-8ffe-9906e79c0747",
+              "color_id": "e44f74a8-7757-d26f-af00-5edfe4fe053f",
+              "source_id": "93897fa1-2f86-417e-8651-1ca49a6745ec",
+              "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+              "unit_price": "449",
+              "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+              "source_lineage": {
+                "kind": "V2_RUNTIME"
+              },
+              "source_payload": {
+                "v2_line_note": "",
+                "v2_pricing_rule": "unit-price",
+                "v2_discount_tenths": null,
+                "v2_previous_price_cents": null,
+                "v2_reference_price_cents": 44900
+              },
+              "source_quantity": "2",
+              "source_size_name": "160/XS",
+              "source_color_name": "白色",
+              "source_product_code": "SMK261001A",
+              "source_product_name": "Smoke验收衬衫"
+            }
+          ],
+          "header": {
+            "note": "Final Smoke 营业员销货、混合收款 · 价格纠正回归",
+            "hall_id": "5b2461c8-ce98-2c2f-8909-627507196557",
+            "adjustment": 0,
+            "business_date": "2026-10-01",
+            "source_number": "V2-XS-cba8950c",
+            "source_payload": {
+              "v2_creator": {
+                "id": "smoke-sales",
+                "name": "Smoke验收营业员"
+              }
+            },
+            "source_party_id": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+            "source_employee_id": "smoke-sales",
+            "source_warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4"
+          },
+          "fundsRecords": [
+            {
+              "amount": "500",
+              "direction": "receipt",
+              "reference": {
+                "sourceId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                "settlementId": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+                "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+              },
+              "source_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "settlement_id": "5302b75e-5aac-41d3-90fc-57b1a781a38d",
+              "source_payload": {},
+              "fund_account_id": "d2cab5db-f586-b62a-3eb2-edd420629327",
+              "payment_method_id": "36f6edd5-56b2-8f03-f303-c694e10130d2",
+              "source_fund_account_name": "10201微信-多立方1881",
+              "source_payment_method_name": "微信"
+            },
+            {
+              "amount": "398",
+              "direction": "receipt",
+              "reference": {
+                "sourceId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                "settlementId": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+                "targetDocumentId": "cba8950c-3a7c-4b39-969d-6890d31515de"
+              },
+              "source_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "settlement_id": "3e390b0a-3af3-469b-9345-d4c45e90dff9",
+              "source_payload": {},
+              "fund_account_id": "95740070-c9dd-1cb1-fc05-9075ac30bb4d",
+              "payment_method_id": "f1a7e52c-ef66-0d06-4518-5d7f7958ad3a",
+              "source_fund_account_name": "91101大西洋银泰ST收银台",
+              "source_payment_method_name": "商场收银台"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "returnLines": [],
+  "returnWarehouseId": "",
+  "defaults": {
+    "customerId": "manual",
+    "settlementCustomerId": "manual",
+    "warehouseId": "manual"
+  },
+  "settlementCustomerId": "9c42800f-19c3-fab2-c7e3-dee18b28eee1",
+  "scans": []
+}

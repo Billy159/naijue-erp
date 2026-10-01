@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "paths": [
+    {
+      "path": "启动Demo.command",
+      "exists": true
+    },
+    {
+      "path": "停止Demo.command",
+      "exists": true
+    },
+    {
+      "path": "frontend/index.html",
+      "exists": true
+    },
+    {
+      "path": "server/api.mjs",
+      "exists": true
+    },
+    {
+      "path": "server/database.py",
+      "exists": true
+    },
+    {
+      "path": "data-cleaning/README.md",
+      "exists": true
+    },
+    {
+      "path": "data-cleaning/replay.py",
+      "exists": true
+    },
+    {
+      "path": "data-cleaning/intake/receive.py",
+      "exists": true
+    },
+    {
+      "path": "data-cleaning/intake/README.md",
+      "exists": true
+    },
+    {
+      "path": "data-cleaning/inventory-cutover-policy.json",
+      "exists": true
+    },
+    {
+      "path": "inputs/tplus-current",
+      "exists": true
+    },
+    {
+      "path": "inputs/tplus-frozen-v1",
+      "exists": true
+    },
+    {
+      "path": "data-cleaning/baselines/TPLUS-20260922-A2.tar.gz",
+      "exists": true
+    },
+    {
+      "path": "backup/business-management-current-20261001.dump",
+      "exists": true
+    }
+  ],
+  "backupSha256": "741f1da7125ee2d4a27bbe59ef3045c2724446f8e0c99aae593ead97f55a701c",
+  "backupBytes": 281330547,
+  "oldPathsUsedAsRuntimeDependency": false,
+  "note": "Historical provenance retains old paths as evidence; runnable imports and active documented paths resolve in the current root."
+}

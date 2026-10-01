@@ -13,6 +13,7 @@
     "lint": "eslint frontend/*.js frontend/*.mjs frontend/*.jsx server/*.mjs server/runtime/*.ts --no-warn-ignored",
     "test": "node server/run-tests.mjs",
     "clean:prepare": "python3 data-cleaning/cleaning/run_all.py",
+    "data:receive": ".venv/bin/python data-cleaning/intake/receive.py",
     "check:dependencies": "node server/check-dependencies.mjs"
   },
   "dependencies": {

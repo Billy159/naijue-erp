@@ -1,0 +1,30 @@
+[
+  {
+    "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+    "variant_id": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+    "quantity": 2,
+    "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+    "product_code": "SMK261001A"
+  },
+  {
+    "warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+    "variant_id": "4213ab59-f955-439e-aa96-6dd1217f0c86",
+    "quantity": -2,
+    "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+    "product_code": "SMK261001A"
+  },
+  {
+    "warehouse_id": "e55a08a8-3cb3-9de7-af32-64ae994d6f9e",
+    "variant_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+    "quantity": -5,
+    "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+    "product_code": "SMK261001A"
+  },
+  {
+    "warehouse_id": "5adf34d8-d0d9-8620-1caf-65a4622983f4",
+    "variant_id": "df1065ed-0fe6-4bf9-8f19-3dffe4d2f402",
+    "quantity": 2,
+    "product_id": "4db2c009-d210-47f4-8e19-14cc5c412aef",
+    "product_code": "SMK261001A"
+  }
+]
