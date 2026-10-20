@@ -1,0 +1,41 @@
+{
+  "scope": "First bounded clean ERP code foundation; synthetic verification only",
+  "branch": "codex/clean-erp-foundation",
+  "toolchain": {
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "typescript": "5.9.2"
+  },
+  "checks": {
+    "dependencyVersionAndLock": "PASS",
+    "strictTypes": "PASS",
+    "build": "PASS",
+    "emittedJsSmoke": "PASS",
+    "syntheticTests": {
+      "passed": 71,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "frontend": 21,
+      "domainApplicationContracts": 50
+    },
+    "independentTargetedReview": {
+      "passed": 3,
+      "openP1": 0,
+      "serviceSha256": "519831a614b8ac0b9d12e6362d9b59e6427967d721827f2fae0ca22e212a4bd8"
+    }
+  },
+  "notRun": [
+    "Standalone ESLint",
+    "Fresh npm ci install",
+    "Browser/Demo runtime acceptance",
+    "Real PostgreSQL/SQL/concurrency/transactions",
+    "Historical import or baseline-aware editing",
+    "Production rule/auth adapter",
+    "Server startup",
+    "Remote push",
+    "Deployment"
+  ],
+  "dependencyReuseMetadataSideEffect": "Recorded in local-dependency-reuse.json",
+  "fullLog": "evidence/check-final.log"
+}

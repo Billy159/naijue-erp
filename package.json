@@ -1,0 +1,33 @@
+{
+  "name": "naijue-erp-rewrite",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Clean ERP foundation: normalized contracts and synthetic verification only",
+  "engines": {
+    "node": ">=24.19.0 <25",
+    "npm": ">=11.9.0 <12"
+  },
+  "packageManager": "npm@11.9.0",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json",
+    "test": "node --test tests/*.test.ts apps/web/src/loading/*.test.ts",
+    "check": "npm run check:dependencies && npm run typecheck && npm run build && npm run smoke:build && npm test",
+    "check:dependencies": "node scripts/verify-dependencies.mjs",
+    "smoke:build": "node scripts/smoke-build.mjs"
+  },
+  "dependencies": {
+    "fastify": "5.12.5",
+    "pg": "8.23.1",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.3.1",
+    "@types/pg": "8.23.1",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9",
+    "typescript": "5.9.2"
+  }
+}

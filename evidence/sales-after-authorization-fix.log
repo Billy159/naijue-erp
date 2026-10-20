@@ -1,0 +1,35 @@
+✔ SYNTHETIC SALE: independent same-warehouse save/approve/unapprove has exact effects without original-sale links (59.803301ms)
+✔ SYNTHETIC RETURN: independent same-warehouse save/approve/unapprove has exact effects without original-sale links (15.714991ms)
+✔ SYNTHETIC EXCHANGE: independent same-warehouse save/approve/unapprove has exact effects without original-sale links (20.233588ms)
+✔ SYNTHETIC: negative stock is a legal exact fact, not insufficient-stock rejection or zero truncation (5.314528ms)
+✔ SYNTHETIC: exact replay after a lost response returns original result without repeat stock/audit/settlements (6.17615ms)
+✔ SYNTHETIC: concurrent identical commands commit exactly once in the serialized reference adapter (4.990026ms)
+✔ SYNTHETIC: same key changed content is conflict, not another write (5.154872ms)
+✔ SYNTHETIC: stale expected version cannot approve or overwrite (5.034313ms)
+✔ SYNTHETIC: approved quantity/amount cannot be edited or directly voided; must first unapprove (3.7444ms)
+✔ SYNTHETIC: saved draft void changes no inventory, retains detail, becomes immutable (6.450473ms)
+✔ SYNTHETIC: exact settlement mismatch including underpayment blocks approval atomically (11.587109ms)
+✔ SYNTHETIC: refund uses direction plus nonnegative actual amount, never negative payment/account balance (9.635504ms)
+✔ SYNTHETIC: same SKU real lines remain separate, including gift and different price (21.701211ms)
+✔ SYNTHETIC: unapprove/edit/reapprove uses immutable original effects and retains removed referenced lines (26.877313ms)
+✔ SYNTHETIC: duplicate unapprove cannot reverse one original effect twice (8.679503ms)
+✔ SYNTHETIC: injected balance:2 failure rolls back all effects, and original key safely retries (8.219667ms)
+✔ SYNTHETIC: injected document failure rolls back all effects, and original key safely retries (6.322ms)
+✔ SYNTHETIC: injected audit failure rolls back all effects, and original key safely retries (3.966476ms)
+✔ SYNTHETIC: injected receipt failure rolls back all effects, and original key safely retries (2.863152ms)
+✔ SYNTHETIC: missing inventory coverage cannot be invented as zero (3.703934ms)
+✔ SYNTHETIC: stock overflow aborts instead of wrapping or partially posting (4.410023ms)
+✔ SYNTHETIC: authorization is mandatory on writes and idempotent result recovery (2.988129ms)
+✔ SYNTHETIC: imported cutoff history never falls through runtime reversal/edit logic (1.466309ms)
+✔ SYNTHETIC: only approved documents enter settlement statistics; unapprove exits, reapprove reenters once (15.630518ms)
+✔ SYNTHETIC: true null creating-hall snapshot remains null after a different current hall saves (0.668596ms)
+✔ SYNTHETIC: existing SAVE checks both source and proposed destination scopes before any mutation (20.363173ms)
+✔ SYNTHETIC: duplicate documents cannot silently double-count settlement statistics (6.491984ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1365.502927

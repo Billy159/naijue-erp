@@ -1,0 +1,18 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import type { CustomerRow, SupplierRow, SkuRow, ReadonlyDictionary, SizeGroupRow } from "../packages/domain/src/catalog.ts";
+import type { SalesLineRow, SalesHeaderRow } from "../packages/domain/src/documents.ts";
+import type { PaymentAccountRow } from "../packages/domain/src/catalog.ts";
+import type { InventorySource } from "../packages/domain/src/inventory.ts";
+type AssertFalse<T extends false> = T;
+type AssertTrue<T extends true> = T;
+type _SeparateCustomerSupplier = AssertFalse<CustomerRow extends SupplierRow ? true : false>;
+type _NoOriginalLine = AssertFalse<"originalLineId" extends keyof SalesLineRow ? true : false>;
+type _NoOriginalSale = AssertFalse<"originalSalesId" extends keyof SalesHeaderRow ? true : false>;
+type _NoUnit = AssertFalse<"unit" extends keyof SalesLineRow ? true : false>;
+type _NoSkuPrice = AssertFalse<"retailPrice" extends keyof SkuRow ? true : false>;
+type _NoFundBalance = AssertFalse<"balance" extends keyof PaymentAccountRow ? true : false>;
+type _ReadonlyGroups = AssertFalse<"save" extends keyof ReadonlyDictionary<SizeGroupRow> ? true : false>;
+type _FitRequired = AssertTrue<"fitId" extends keyof SkuRow ? true : false>;
+type _SourcesAreTyped = AssertFalse<{ kind: "ANYTHING"; externalId: string } extends InventorySource ? true : false>;
+test("compile-time contract boundaries checked by tsc; this runtime assertion is not the typecheck", () => { assert.ok(true); });

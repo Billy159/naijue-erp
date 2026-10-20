@@ -1,0 +1,15 @@
+{
+  "node": "24.19.0",
+  "npm": "11.9.0",
+  "typescript": "5.9.2",
+  "source": "Pre-existing isolated verification checkout node_modules, reused without copying dependency source",
+  "method": "Ignored node_modules symlink inside this new repository",
+  "packageSourceFilesIntentionallyChanged": 0,
+  "metadataWriteObserved": true,
+  "metadataFile": "reused node_modules/.package-lock.json",
+  "metadataHashBefore": "53cb5a3c9c20f4ee782fb4681bf6e1cadc8328b4013098ac7a2aed49c77f4531",
+  "metadataHashAfter": "678b6829c18b2a402bf6d2d2ac423f4b71f1c8998bbd7272265cd2bbc5ca73dd",
+  "note": "npm --package-lock-only unexpectedly rewrote the reused hidden lock metadata. No further install commands were run with the symlink attached. The final project lock was pruned offline with the symlink removed. No original Demo/source repository was edited.",
+  "dependencyDownloadsObserved": 0,
+  "lockGenerationOffline": true
+}

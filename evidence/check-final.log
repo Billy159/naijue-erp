@@ -1,0 +1,140 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 check
+> npm run check:dependencies && npm run typecheck && npm run build && npm run smoke:build && npm test
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 check:dependencies
+> node scripts/verify-dependencies.mjs
+
+fastify: installed and locked 5.12.5
+pg: installed and locked 8.23.1
+react: installed and locked 19.1.1
+react-dom: installed and locked 19.1.1
+@types/node: installed and locked 24.3.1
+@types/pg: installed and locked 8.23.1
+@types/react: installed and locked 19.1.12
+@types/react-dom: installed and locked 19.1.9
+typescript: installed and locked 5.9.2
+Dependency verification passed; 78 locked package entries, no installation performed.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 build
+> tsc -p tsconfig.build.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 smoke:build
+> node scripts/smoke-build.mjs
+
+Emitted JS imports and exact arithmetic pass. No server started; no database/client constructed.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test
+> node --test tests/*.test.ts apps/web/src/loading/*.test.ts
+
+✔ registration is inert; only activated leaf and its styles load, then code is reused (15.919271ms)
+✔ shared code load keeps consumer cancellation separate (4.813345ms)
+✔ failed code or style leaves can retry without exposing a half-ready module (3.542223ms)
+✔ retained module references are LRU bounded; no cache eviction starts a load (3.952619ms)
+✔ inactive scopes do not start imports (1.309416ms)
+✔ reads start only on run; frozen executed parameters do not follow editable draft (9.578571ms)
+✔ newer query aborts old transport; ignored cancellation cannot overwrite newest result (1.418775ms)
+✔ refresh failure retains last successful facts and their own executed range (1.392092ms)
+✔ switching account clears references immediately; late response cannot reopen a closed region (0.485732ms)
+✔ permission/session refresh invalidates even the same account; clear blocks new scopes (0.578317ms)
+✔ different entity scopes have no shared result state, and closing one leaves another alive (2.169365ms)
+✔ authoritative command result beats old detail read and rejects later older entity versions (8.728679ms)
+✔ cancel read is not dispose and does not clear previous successful facts (5.324953ms)
+✔ invalid parameter snapshot does not supersede a valid pending request (6.724768ms)
+✔ subscriber errors and reentrant disposal cannot bypass cleanup or start an unwanted read (0.922303ms)
+✔ plain parameter snapshots reject cyclic, nonfinite and accessor input without invoking getters (2.540838ms)
+✔ disposing during success notification returns discarded rather than actionable old data (9.712365ms)
+✔ cancel before any successful read returns waiting state rather than false empty success (3.458309ms)
+✔ registration snapshots factories and validates the retained-reference budget (3.652205ms)
+✔ clearing references during an import does not create unbounded duplicate in-flight loads (1.005758ms)
+✔ clear without reactivation does not retain an import after settlement (2.274342ms)
+✔ SYNTHETIC: fit is an independent SKU dimension, not merged with product/color/size (4.06666ms)
+✔ SYNTHETIC: multiple raw historical codes bind directly to one canonical SKU and retain primary (11.355038ms)
+✔ SYNTHETIC: raw barcode leading zeros and string identity are never numeric-normalized (1.09542ms)
+✔ SYNTHETIC: cross-SKU binding and corrupt conflicting lookup fail closed (0.677557ms)
+✔ SYNTHETIC: binding requires an existing enabled SKU, no guessed/matrix-created identity (0.345608ms)
+✔ SYNTHETIC: identical binding is idempotent; disabled code is not silently reactivated (1.327615ms)
+✔ compile-time contract boundaries checked by tsc; this runtime assertion is not the typecheck (2.112897ms)
+✔ SYNTHETIC SALE: independent same-warehouse save/approve/unapprove has exact effects without original-sale links (65.743326ms)
+✔ SYNTHETIC RETURN: independent same-warehouse save/approve/unapprove has exact effects without original-sale links (9.878669ms)
+✔ SYNTHETIC EXCHANGE: independent same-warehouse save/approve/unapprove has exact effects without original-sale links (10.280833ms)
+✔ SYNTHETIC: negative stock is a legal exact fact, not insufficient-stock rejection or zero truncation (3.47143ms)
+✔ SYNTHETIC: exact replay after a lost response returns original result without repeat stock/audit/settlements (5.938466ms)
+✔ SYNTHETIC: concurrent identical commands commit exactly once in the serialized reference adapter (2.405816ms)
+✔ SYNTHETIC: same key changed content is conflict, not another write (3.275775ms)
+✔ SYNTHETIC: stale expected version cannot approve or overwrite (8.941045ms)
+✔ SYNTHETIC: approved quantity/amount cannot be edited or directly voided; must first unapprove (5.451313ms)
+✔ SYNTHETIC: saved draft void changes no inventory, retains detail, becomes immutable (41.446117ms)
+✔ SYNTHETIC: exact settlement mismatch including underpayment blocks approval atomically (12.940452ms)
+✔ SYNTHETIC: refund uses direction plus nonnegative actual amount, never negative payment/account balance (2.464768ms)
+✔ SYNTHETIC: same SKU real lines remain separate, including gift and different price (5.152456ms)
+✔ SYNTHETIC: unapprove/edit/reapprove uses immutable original effects and retains removed referenced lines (14.451834ms)
+✔ SYNTHETIC: duplicate unapprove cannot reverse one original effect twice (5.536003ms)
+✔ SYNTHETIC: injected balance:2 failure rolls back all effects, and original key safely retries (19.664036ms)
+✔ SYNTHETIC: injected document failure rolls back all effects, and original key safely retries (3.427517ms)
+✔ SYNTHETIC: injected audit failure rolls back all effects, and original key safely retries (1.4268ms)
+✔ SYNTHETIC: injected receipt failure rolls back all effects, and original key safely retries (3.36151ms)
+✔ SYNTHETIC: missing inventory coverage cannot be invented as zero (3.044797ms)
+✔ SYNTHETIC: stock overflow aborts instead of wrapping or partially posting (7.379167ms)
+✔ SYNTHETIC: authorization is mandatory on writes and idempotent result recovery (4.892173ms)
+✔ SYNTHETIC: imported cutoff history never falls through runtime reversal/edit logic (7.054112ms)
+✔ SYNTHETIC: only approved documents enter settlement statistics; unapprove exits, reapprove reenters once (21.015551ms)
+✔ SYNTHETIC: true null creating-hall snapshot remains null after a different current hall saves (5.440767ms)
+✔ SYNTHETIC: existing SAVE checks both source and proposed destination scopes before any mutation (19.720454ms)
+✔ SYNTHETIC: duplicate documents cannot silently double-count settlement statistics (5.408127ms)
+✔ SYNTHETIC: changing a caller alias while execute waits cannot change the data bound to the original request hash (12.147782ms)
+✔ SYNTHETIC: audit retains every permitted mutable header field and business line price/display snapshot (5.749041ms)
+✔ SYNTHETIC: operation keys are scoped by authenticated actor, not globally shared (4.582351ms)
+✔ SYNTHETIC: duplicate/foreign lines and more than three settlement rows fail before persistence (4.190996ms)
+✔ SYNTHETIC: transfer pure plan has the exact same canonical SKU and equal opposite integer endpoints (8.160278ms)
+✔ SYNTHETIC: transfer cannot use the same warehouse or nonpositive actual line (4.091191ms)
+✔ SYNTHETIC: transfer rejects empty/currentless, approved and foreign/duplicate lines (6.849709ms)
+✔ SYNTHETIC: quantity signed bigint boundaries are exact, not JS-number limited (2.540639ms)
+✔ SYNTHETIC: quantity overflow/underflow and unsafe negation fail rather than wrap (12.859063ms)
+✔ SYNTHETIC: fractions, number input, whitespace and implicit conversions are rejected (1.40257ms)
+✔ SYNTHETIC: exact minor arithmetic has no binary floating-point error (1.253326ms)
+✔ SYNTHETIC: explicit scale precision is rejected, never rounded (0.759624ms)
+✔ SYNTHETIC: only a caller-supplied cap is enforced; no guessed production amount ceiling (1.088975ms)
+✔ SYNTHETIC: invalid money syntax, implicit scale and invalid caps fail (1.508376ms)
+✔ SYNTHETIC: versions cannot exceed safe integer range and dates cannot normalize silently (2.845612ms)
+✔ SYNTHETIC: command hash is property-order stable but content/type/line-order sensitive (3.36669ms)
+ℹ tests 71
+ℹ suites 0
+ℹ pass 71
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2191.737743
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
