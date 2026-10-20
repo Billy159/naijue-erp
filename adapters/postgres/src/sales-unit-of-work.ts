@@ -123,9 +123,10 @@ class PostgresSalesTransaction implements SalesTransaction {
     requireDomain(this.receiptKey === undefined || this.receiptKey === identity, "TRANSACTION_SCOPE", "One command receipt key is supported per transaction");
     this.receiptKey = identity;
     await this.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", [`naijue:receipt:${identity}`]);
-    const row = (await this.query(`SELECT id, actor_account_id, request_key, request_hash, action, target_id AS target_sales_id, status, result_data AS result,
+    const row = (await this.query(`SELECT id, actor_account_id, request_key, request_hash, action, target_type, target_id AS target_sales_id, status, result_data AS result,
       ${stamp("completed_at")} AS completed_at FROM naijue_erp.operation_receipt WHERE actor_account_id = $1 AND request_key = $2`, [actorId, requestKey])).rows[0];
     if (!row) return undefined;
+    requireDomain(row.target_type === "SALES", "IDEMPOTENCY_CONFLICT", "The original actor/key belongs to another document kind");
     return { id: id("operation", row.id), actorAccountId: id("account", row.actor_account_id), requestKey: stringValue(row.request_key), requestHash: stringValue(row.request_hash),
       action: choice(row.action, ["SAVE", "APPROVE", "UNAPPROVE", "VOID"]), targetSalesId: id("sales", row.target_sales_id), status: choice(row.status, ["COMMITTED"]), result: decodeResult(row.result), completedAt: stringValue(row.completed_at) };
   }

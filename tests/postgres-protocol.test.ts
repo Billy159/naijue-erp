@@ -189,7 +189,7 @@ test("pg protocol: UNAPPROVE appends a linked inverse without mutating original 
 test("pg protocol: same actor/key replay returns original result only after current authorization", async () => {
   const command = approve(); const result: SalesResult = { operationId: sid("operation", 2000), salesId: ids.sales, version: version(2), status: "APPROVED", ledgerEntryIds: [sid("ledger", 2001)] };
   const receipt = { id: result.operationId, actor_account_id: actor.accountId, request_key: command.requestKey, request_hash: requestHash(command), action: command.action,
-    target_sales_id: ids.sales, status: "COMMITTED", result, completed_at: time };
+    target_type: "SALES", target_sales_id: ids.sales, status: "COMMITTED", result, completed_at: time };
   const client = new ProtocolClient([begin(), ...receiptRead(command, receipt), ...salesRead(storedDocument(undefined, "APPROVED", 2)), commit()]); let allowed = 0;
   assert.deepEqual(await service(client, () => allowed++).execute(command), result); assert.equal(allowed, 1);
   assert.ok(client.calls.every(call => !/^(INSERT|UPDATE|DELETE)/.test(call.sql))); client.done();
@@ -199,7 +199,7 @@ test("pg protocol: same actor/key replay returns original result only after curr
 test("pg protocol: changed content under original actor/key conflicts without re-executing", async () => {
   const command = approve(); const result = { operationId: sid("operation", 2000), salesId: ids.sales, version: 2, status: "APPROVED", ledgerEntryIds: [] };
   const client = new ProtocolClient([begin(), ...receiptRead(command, { id: result.operationId, actor_account_id: actor.accountId, request_key: command.requestKey, request_hash: "0".repeat(64),
-    action: command.action, target_sales_id: ids.sales, status: "COMMITTED", result, completed_at: time }), rollback()]);
+    action: command.action, target_type: "SALES", target_sales_id: ids.sales, status: "COMMITTED", result, completed_at: time }), rollback()]);
   await assert.rejects(() => service(client).execute(command), { code: "IDEMPOTENCY_CONFLICT" }); client.done();
 });
 test("pg protocol: cutoff history remains queryable but commands fail before balance/ledger mutation", async () => {
@@ -258,4 +258,11 @@ test("pg protocol: unknown active pre-0002 pricing cannot approve, without rewri
   const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(document), rollback()]);
   await assert.rejects(() => service(client).execute(command), { code: "UNKNOWN_PRICING_FACTS" });
   assert.ok(client.calls.every(row => !/^INSERT|^UPDATE/.test(row.sql))); client.done();
+});
+
+test("pg protocol: transfer receipt cannot be decoded or reused by a sales command with the same actor/key", async () => {
+  const command: SalesCommand = { actor, action: "SAVE", requestKey: "cross-kind-original", expectedVersion: null, draft: syntheticDraft() };
+  const client = new ProtocolClient([begin(), ...receiptRead(command, { target_type: "TRANSFER" }), rollback()]);
+  const service = createSalesService({ unitOfWork: uow(client), rules: SYNTHETIC_RULES, authorization: { async assertAllowed() {} }, now: () => time, newId: kind => sid(kind, 888) });
+  await assert.rejects(service.execute(command), { code: "IDEMPOTENCY_CONFLICT" }); client.done();
 });
