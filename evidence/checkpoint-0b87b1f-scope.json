@@ -1,0 +1,28 @@
+{
+  "commit": "0b87b1f7c1ada7626812518b9dc069d9f71f3d78",
+  "method": "isolated git archive with existing dependencies; direct Node/TypeScript tools",
+  "checks": {
+    "dependencyEntries": 143,
+    "syntheticTests": 581,
+    "inventoryAndProductDomGroups": 14,
+    "authenticationDomGroups": 7,
+    "salesDomGroups": 8,
+    "typesBuildArtifactSmoke": "PASS",
+    "exitCode": 0
+  },
+  "notIncluded": [
+    "uncommitted party UI",
+    "uncommitted application shell",
+    "later zero-stock contract correction",
+    "windowing model",
+    "frozen Demo appearance restoration"
+  ],
+  "notEstablished": [
+    "real PostgreSQL",
+    "real browser",
+    "Demo visual acceptance",
+    "production performance",
+    "deployment readiness"
+  ],
+  "logSha256": "edf77d655d14c17d82f79d1d13478b50b5621f6951507c2842c7db6f36bd573b"
+}
