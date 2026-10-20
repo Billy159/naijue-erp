@@ -1,0 +1,17 @@
+{
+  "commit": "82bf187",
+  "method": "fresh git archive of exact committed revision; no uncommitted leaves; existing dependencies reused without install; direct Node/TypeScript commands",
+  "tests": 407,
+  "passed": 407,
+  "failed": 0,
+  "domGroups": 14,
+  "typesBuildDependencySmoke": "PASS",
+  "notRun": [
+    "real PostgreSQL",
+    "native browser and precise frozen Demo comparison",
+    "real account/service",
+    "performance acceptance",
+    "deployment"
+  ],
+  "remoteConfirmedCommit": "231e53bbae1e161bec0da913c576637a348f885e"
+}

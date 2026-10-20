@@ -1,0 +1,16 @@
+{
+  "file": "/workspace/shared/naijue-erp-rewrite/apps/web/dist-preview/product-drawer-only-preview-test-only.html",
+  "bytes": 232311,
+  "budgetBytes": 262144,
+  "sha256": "e550229f490b25e49582b61b3f3d0bd4f13938a1b006550ceae95c0b668596dc"
+}
+Built a separate TEST ONLY product-drawer derivative. Full inventory app untouched. No server, network, deployment or database.
+PASS actual inline HTML in child iframe: TEST ONLY shell, 3 generated product actions, zero initial/idle reads, unchanged parent/child URL.
+PASS actual drawer: basics/specifications/images are isolated reads; 28 legal SKU rows; original read only after thumbnail click; image Escape retains drawer; close restores focus; URLs unchanged.
+PASS target change/empty images/reopen/interruption: no stale facts, fresh read, close cancels pending work, no revival, no runtime errors or external resource requests.
+{
+  "file": "/workspace/shared/naijue-erp-rewrite/apps/web/dist-preview/product-drawer-only-preview-test-only.html",
+  "bytes": 232311,
+  "sha256": "e550229f490b25e49582b61b3f3d0bd4f13938a1b006550ceae95c0b668596dc"
+}
+jsdom bundled-code DOM smoke only. Not native-browser, screenshot, exact pixel/layout, network-waterfall, performance, real data or Space integration acceptance.

@@ -1,0 +1,16 @@
+{
+  "scope": "separate synthetic drawer-only derivative; full app not reduced",
+  "page": "https://chatgpt.com/space/page_00522b1c97ac8191a7472be5951013db",
+  "pageSequence": 2,
+  "bytes": 232311,
+  "sha256": "e550229f490b25e49582b61b3f3d0bd4f13938a1b006550ceae95c0b668596dc",
+  "embedPersistedAndReadBack": true,
+  "validation": "parent reran build and final generated HTML iframe DOM smoke; passed",
+  "notVerified": [
+    "actual browser",
+    "visual parity",
+    "Page user-side execution",
+    "real API",
+    "production performance"
+  ]
+}
