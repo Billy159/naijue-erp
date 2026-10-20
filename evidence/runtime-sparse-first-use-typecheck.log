@@ -1,0 +1,20 @@
+Scoped TypeScript verification: PASS (exit 0), 2026-10-20 UTC.
+Final successful invocation stdout: empty.
+Final successful invocation stderr: empty.
+Command: ./node_modules/.bin/tsc --noEmit -p /tmp/tsconfig-first-use.json
+Configuration extended the repository tsconfig with explicit node_modules/@types and these selected roots:
+packages/application/src/inventory-posting.ts
+packages/application/src/ports.ts
+packages/application/src/transfer-ports.ts
+packages/application/src/sales-service.ts
+packages/application/src/transfer-service.ts
+adapters/postgres/src/inventory-posting-balances.ts
+adapters/postgres/src/sales-unit-of-work.ts
+adapters/postgres/src/transfer-unit-of-work.ts
+tests/postgres-protocol.test.ts
+tests/transfer-postgres-protocol.test.ts
+tests/inventory-first-use-postgres-protocol.test.ts
+tests/inventory-first-use-schema-contract.test.ts
+tests/sales.test.ts
+tests/transfer-service.test.ts
+Boundary: this pass preceded the final SQL-string-only exact size_group_member JOIN/FOR SHARE adjustment and additions to the two legacy SQL-source assertion test files. No production TypeScript signatures or control flow changed afterward. Root owns final integrated compile. This is not a full-project typecheck/build or PostgreSQL engine evidence.

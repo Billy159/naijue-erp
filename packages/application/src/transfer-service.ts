@@ -1,10 +1,11 @@
+import { applyInventoryEntry, assertPostingCoverage } from "./inventory-posting.ts";
 import { requireDomain } from "../../domain/src/errors.ts";
 import { planTransferEffects } from "../../domain/src/inventory.ts";
 import type { InventoryLedgerRow } from "../../domain/src/inventory.ts";
-import { addQuantity, negateQuantity, nextVersion, version } from "../../domain/src/values.ts";
+import { negateQuantity, nextVersion, version } from "../../domain/src/values.ts";
 import type { EntityId } from "../../domain/src/values.ts";
 import { requestHash } from "./request-hash.ts";
-import type { TransferAuditValues, TransferCommand, TransferDependencies, TransferDocument, TransferDraft, TransferResult, TransferTransaction } from "./transfer-ports.ts";
+import type { TransferAuditValues, TransferCommand, TransferDependencies, TransferDocument, TransferDraft, TransferResult } from "./transfer-ports.ts";
 
 function auditValues(document: TransferDocument, changedLineIds: ReadonlySet<string>): TransferAuditValues {
   const { number, businessDate, fromWarehouseId, toWarehouseId, status, version, note } = document.header;
@@ -98,9 +99,8 @@ export function createTransferService(dependencies: TransferDependencies): { exe
         } else requireDomain(previous.header.status === "DRAFT", "INVALID_STATE", "Only a saved draft may be voided");
         if (effects.length > 0) {
           await tx.lockBalances(effects);
-          // Check all covered keys before the first ledger append; a missing balance is never manufactured.
-          for (const effect of effects) requireDomain(await tx.getBalance(effect.warehouseId, effect.skuId), "INVENTORY_NOT_READY", "Missing coverage is not zero");
-          for (const effect of effects) { await applyEntry(tx, effect); ledgerEntryIds.push(effect.id); }
+          await assertPostingCoverage(tx, effects);
+          for (const effect of effects) { await applyInventoryEntry(tx, effect); ledgerEntryIds.push(effect.id); }
         }
         next = { ...previous, header: { ...previous.header, status: command.action === "APPROVE" ? "APPROVED" : command.action === "VOID" ? "VOID" : "DRAFT",
           version: nextDocumentVersion, updatedAt: timestamp, approvedByAccountId: command.action === "APPROVE" ? command.actor.accountId : null,
@@ -122,11 +122,4 @@ export function createTransferService(dependencies: TransferDependencies): { exe
       return result;
     });
   } };
-}
-async function applyEntry(tx: TransferTransaction, entry: InventoryLedgerRow): Promise<void> {
-  const balance = await tx.getBalance(entry.warehouseId, entry.skuId);
-  requireDomain(balance, "INVENTORY_NOT_READY", "Missing inventory coverage is not zero");
-  const updated = { ...balance, quantity: addQuantity(balance.quantity, entry.quantityDelta), version: nextVersion(balance.version), lastOperationId: entry.operationId, updatedAt: entry.postedAt };
-  await tx.appendLedger(entry);
-  await tx.putBalance(updated);
 }

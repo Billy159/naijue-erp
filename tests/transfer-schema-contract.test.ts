@@ -8,6 +8,7 @@ const ddl = await readFile(new URL("../adapters/postgres/migrations/0004_transfe
 const original = await readFile(new URL("../adapters/postgres/migrations/0001_runtime_sales.sql", import.meta.url), "utf8");
 const pricing = await readFile(new URL("../adapters/postgres/migrations/0002_sales_pricing_facts.sql", import.meta.url), "utf8");
 const adapter = await readFile(new URL("../adapters/postgres/src/transfer-unit-of-work.ts", import.meta.url), "utf8");
+const postingBalances = await readFile(new URL("../adapters/postgres/src/inventory-posting-balances.ts", import.meta.url), "utf8");
 const label = "transfer pg SQL-text contract, NOT engine evidence: ";
 function table(name: string): string {
   const start = ddl.indexOf(`CREATE TABLE naijue_erp.${name} (`);
@@ -225,7 +226,7 @@ test(label + "creator/owner provenance cannot mutate and posting actions cannot 
   assert.match(body("validate_transfer_header_commit"), /a.before_values->'header' IS DISTINCT FROM naijue_erp.transfer_header_audit_values\(OLD\)/);
 });
 
-test(label + "transfer-only cumulative balance guard preserves negative quantities and missing coverage", () => {
+test(label + "transfer-only cumulative balance guard preserves negative quantities and unproven missing coverage", () => {
   const balance = body("validate_transfer_balance_commit");
   assert.match(balance, /OLD.last_operation_id IS NOT DISTINCT FROM NEW.last_operation_id THEN RETURN NULL/);
   assert.match(balance, /IF r.target_type <> 'TRANSFER' THEN RETURN NULL/);
@@ -234,6 +235,9 @@ test(label + "transfer-only cumulative balance guard preserves negative quantiti
   assert.match(balance, /final_balance.version::numeric <> OLD.version::numeric \+ effects/);
   assert.doesNotMatch(statements, /INSERT INTO naijue_erp.inventory_balance|GREATEST\(|CHECK \(quantity_delta > 0\)|ALTER TABLE naijue_erp.inventory_balance[^;]+(?:DEFAULT|CHECK)/);
   assert.doesNotMatch(adapter, /INSERT INTO naijue_erp.inventory_balance|GREATEST\(|Math\.max/);
-  assert.match(adapter, /ORDER BY b.warehouse_id, b.sku_id FOR UPDATE OF b/);
-  assert.match(adapter, /WHERE warehouse_id = \$1 AND sku_id = \$2 AND version = \$7/);
+  assert.match(adapter, /new PostgresPostingBalances/);
+  assert.match(postingBalances, /this.provenZero.has\(identity\) && first && row.version === 1/);
+  assert.match(postingBalances, /schema_migration WHERE version = 8/);
+  assert.match(postingBalances, /ORDER BY b.warehouse_id, b.sku_id FOR UPDATE OF b/);
+  assert.match(postingBalances, /WHERE warehouse_id = \$1 AND sku_id = \$2 AND version = \$7/);
 });

@@ -1,0 +1,37 @@
+✔ independent: canonical advisory order deduplicates the exact importer binary JSON key tuples before any row lock (5.773331ms)
+✔ independent: synthetic adapter without explicit trusted proof fails closed before effects (3.335973ms)
+✔ independent: missing UNAPPROVE never requests a zero proof or appends an inverse (0.527456ms)
+✔ independent: missing publication fails before ledger or balance effects (1.719248ms)
+✔ independent: duplicate publication fails before ledger or balance effects (0.756608ms)
+✔ independent: incomplete checkpoint fails before ledger or balance effects (1.874577ms)
+✔ independent: missing final approval fails before ledger or balance effects (1.569534ms)
+✔ independent: missing completion fails before ledger or balance effects (1.131522ms)
+✔ independent: missing native capability fails before ledger or balance effects (1.6932ms)
+✔ independent: unpublished exact warehouse fails before ledger or balance effects (0.921316ms)
+✔ independent: unpublished exact SKU fails before ledger or balance effects (0.96199ms)
+✔ independent: prior ledger with missing balance fails before ledger or balance effects (0.956949ms)
+✔ independent: balance appeared after locked read fails before ledger or balance effects (0.638944ms)
+✔ independent: invalid native size membership fails before ledger or balance effects (0.943713ms)
+✔ independent: wrong exact key fails before ledger or balance effects (1.106623ms)
+✔ independent: duplicate exact key row fails before ledger or balance effects (0.269174ms)
+✔ independent: repeated same-key real lines yield first exact nonzero delta then cumulative quantity/version per line (2.464424ms)
+✔ independent: first append must be followed by its exact balance, never a zero placeholder or repeated pending effect (0.479432ms)
+✔ independent: first-insert conflict fails CAS without manufacturing cached balance (0.944747ms)
+✔ independent: existing negative retained balance uses CAS without zero proof; conflicting update leaves cache unchanged (1.099073ms)
+✔ independent: cloned returned balances cannot alter locked CAS cache (0.460778ms)
+✔ independent: proof is limited to locked exact keys and new helper instances start unproven (0.334401ms)
+✔ independent SQL source: 0008 changes exactly two function definitions and schema version, no relation/column/trigger/index mutation (0.304874ms)
+✔ independent SQL source: exact IMPORT tail and UPDATE behavior are preserved from 0007 (0.860182ms)
+✔ independent SQL source: full existing transfer source/reversal guard remains, only coverage gap is bounded (0.416885ms)
+✔ independent SQL source: first insert exact final quantity/version reconciles only this operation/key, with retained prior use blocked (1.336903ms)
+✔ independent SQL source: every required native trigger/table capability exists in final 0001–0008 composition (2.136136ms)
+✔ independent final source: exact size-group membership is joined and SHARE-locked with its SKU/product (0.602335ms)
+✔ independent final protocol: absent exact native join, including missing size membership, fails closed as NOT_READY (1.039626ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 423.870837

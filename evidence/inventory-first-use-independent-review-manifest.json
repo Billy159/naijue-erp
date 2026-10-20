@@ -1,0 +1,50 @@
+{
+  "reviewed_at_utc": "2026-10-20T19:20:19Z",
+  "base_head": "7bcba6104a04556dc868bbc295ec261ae44ed91d",
+  "outcome": "No confirmed source/protocol defect after exact size-group membership locking and documentation precision updates.",
+  "source_freeze_confirmed_by_owner": true,
+  "reviewed_file_count": 17,
+  "reviewed_sha256": {
+    "adapters/postgres/README.md": "2dac1b5e8de42e44389a733d509dbe14954205fd38465942b1ad11cf0f3cdbdd",
+    "adapters/postgres/migrations/0008_runtime_sparse_first_use.sql": "4ad006940ddf408a01d319941ce7eba80abefb571788beeb1e8c7edcf60f5765",
+    "adapters/postgres/src/inventory-posting-balances.ts": "4e61d39db910276ec46ae9eba732587716f0af5d8c2e7b81d357bc6807a3a8b1",
+    "adapters/postgres/src/sales-unit-of-work.ts": "b4705078b34d529f4041dba39595b58727700fa63f4458bc9cd590734e6159b1",
+    "adapters/postgres/src/transfer-unit-of-work.ts": "fe2449f0f6564d89dbe7cb4ff4a88f1029b0686448a3f5a27590d3c00d511c8a",
+    "docs/runtime-sparse-first-use.md": "de0a45c6500f85d545c0ed3de927f46a04c725d9f46e0cdb749bcf705c984606",
+    "packages/application/src/inventory-posting.ts": "bee5f84b8c8087041bd322fbf65ac4847f885c7cc33cfb0b2f6f6b7afb202897",
+    "packages/application/src/ports.ts": "dd1ae6b02a08fb1d474fd2a74421c0ac7fa5e444296dd9d01ec1c9b0529dcc50",
+    "packages/application/src/sales-service.ts": "456551bc25696bbfe876874454466fe0318c220b23c880cd482ff6b2b0c89933",
+    "packages/application/src/transfer-ports.ts": "be83993a3287f1c89f656adf803ab781d9f0efc8e5fcb0d6fd03e3ed94492280",
+    "packages/application/src/transfer-service.ts": "f9c1bba04e680f769facc622cff67b6124181f6761ece7d5f5448cd9d5dee6d3",
+    "tests/inventory-first-use-postgres-protocol.test.ts": "006618d6507f3051048ff57a0932ea2eed9f428152f3037a9c09621bccf5e099",
+    "tests/inventory-first-use-schema-contract.test.ts": "e7d1be434d2d39a50716cb1d14518b814fa9176ce251969349e2c9fc89bdfc0c",
+    "tests/postgres-protocol.test.ts": "0cfb777283fb76ad2d7c9e12994e2e516d21972b64e1f484f694b3edae51cdc6",
+    "tests/postgres-schema-contract.test.ts": "0f5e2d607041159db24d94f74733423a3660c5f9c0634bff3ca5fced4c0d3cb4",
+    "tests/transfer-postgres-protocol.test.ts": "d79906ffbd9107d9666f81bff28a96070eee9bdc63f1283d68e24700a3e19571",
+    "tests/transfer-schema-contract.test.ts": "288cd2e9cac30fb4cef4a6794a887b6e12c447d3d090e50faa694421e8538953"
+  },
+  "prior_migrations_unchanged_from_head": true,
+  "independent_probes": {
+    "passed": 29,
+    "failed": 0,
+    "source": "evidence/inventory-first-use-independent-probes.mjs",
+    "log": "evidence/inventory-first-use-independent-probes.log"
+  },
+  "selected_regression": {
+    "passed": 184,
+    "failed": 0,
+    "log": "evidence/inventory-first-use-independent-regression.log"
+  },
+  "checks": {
+    "tracked_scope_diff_check": "passed",
+    "aggregate_compile_build": "deferred to coordinating owner after all active files freeze",
+    "engine_sql_execution": "not run",
+    "live_concurrency_durability": "not established"
+  },
+  "limits": [
+    "SQL-text contracts are not parsed/executed PostgreSQL proof.",
+    "Scripted clients do not prove real locks, races, deadlocks, rollback or durability.",
+    "No DB, network, browser, server, installation, commit, push or production data used.",
+    "Only evidence files were modified by this independent reviewer."
+  ]
+}

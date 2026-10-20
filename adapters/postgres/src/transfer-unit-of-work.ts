@@ -1,3 +1,4 @@
+import { PostgresPostingBalances } from "./inventory-posting-balances.ts";
 import type { Pool } from "pg";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import type { TransferAuditRow, TransferDocument, TransferReceiptRow, TransferResult, TransferTransaction, TransferUnitOfWork, StoredTransfer, RuntimeTransferHeader, TransferWarehouseFact, TransferSkuFact } from "../../../packages/application/src/transfer-ports.ts";
@@ -13,7 +14,6 @@ type PgPoolCompatibility = Pool extends PgSalesPool ? true : never;
 const compatible: PgPoolCompatibility = true; void compatible;
 const id = <K extends EntityKind>(kind: K, value: unknown): EntityId<K> => entityId(kind, stringValue(value));
 const nullableId = <K extends EntityKind>(kind: K, value: unknown): EntityId<K> | null => value === null ? null : id(kind, value);
-const key = (warehouse: string, sku: string): string => JSON.stringify([warehouse, sku]);
 const stamp = (column: string): string => `to_char(${column} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
 function choice<T extends string>(value: unknown, choices: readonly T[]): T {
   requireDomain(typeof value === "string" && choices.includes(value as T), "INVALID_DATABASE_VALUE", "Unexpected persisted enum");
@@ -33,10 +33,7 @@ function line(row: Record<string, unknown>): TransferLineRow {
       productCode: stringValue(row.product_code_snapshot), productName: stringValue(row.product_name_snapshot), colorName: stringValue(row.color_name_snapshot),
       fitName: stringValue(row.fit_name_snapshot), sizeName: stringValue(row.size_name_snapshot), barcode: nullableString(row.barcode_snapshot) } };
 }
-function balance(row: Record<string, unknown>): InventoryBalanceRow {
-  return { warehouseId: id("warehouse", row.warehouse_id), skuId: id("sku", row.sku_id), quantity: quantityFromSql(row.quantity), version: versionFromSql(row.version),
-    lastOperationId: nullableId("operation", row.last_operation_id), updatedAt: stringValue(row.updated_at) };
-}
+
 function result(value: unknown): TransferResult {
   const row = jsonObject(value);
   requireDomain(Array.isArray(row.ledgerEntryIds), "INVALID_DATABASE_VALUE", "Receipt ledger identities must be an array");
@@ -70,12 +67,12 @@ class PostgresTransferTransaction implements TransferTransaction {
   private loaded: { readonly id: EntityId<"transfer">; readonly version: Version | null; readonly stockBasis: StoredTransfer["stockBasis"] } | undefined;
   private receiptKey: string | undefined;
   private balancesLocked = false;
-  private readonly balances = new Map<string, InventoryBalanceRow>();
+  private readonly balances: PostgresPostingBalances;
   private readonly previousLines = new Map<EntityId<"transferLine">, TransferLineRow>();
   private readonly warehouseFacts = new Map<string, TransferWarehouseFact | undefined>();
   private readonly skuFacts = new Map<string, TransferSkuFact | undefined>();
   private readonly client: PgSalesClient;
-  constructor(client: PgSalesClient) { this.client = client; }
+  constructor(client: PgSalesClient) { this.client = client; this.balances = new PostgresPostingBalances((sql, values) => this.query(sql, values)); }
   close(): void { this.active = false; }
   private query(sql: string, values: unknown[] = []): Promise<PgSalesResult> {
     requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot escape its callback");
@@ -132,25 +129,18 @@ class PostgresTransferTransaction implements TransferTransaction {
   async lockBalances(keys: readonly { readonly warehouseId: EntityId<"warehouse">; readonly skuId: EntityId<"sku"> }[]): Promise<void> {
     requireDomain(this.loaded && !this.balancesLocked && keys.length > 0, "TRANSACTION_SCOPE", "Lock the complete posting set exactly once");
     this.balancesLocked = true;
-    const unique = [...new Map(keys.map(row => [key(row.warehouseId, row.skuId), row])).values()].sort((a, b) => a.warehouseId.localeCompare(b.warehouseId) || a.skuId.localeCompare(b.skuId));
-    const rows = (await this.query(`SELECT b.warehouse_id, b.sku_id, b.quantity::text, b.version, b.last_operation_id, ${stamp("b.updated_at")} AS updated_at
-      FROM naijue_erp.inventory_balance b JOIN unnest($1::uuid[], $2::uuid[]) AS k(warehouse_id, sku_id)
-      ON k.warehouse_id = b.warehouse_id AND k.sku_id = b.sku_id ORDER BY b.warehouse_id, b.sku_id FOR UPDATE OF b`,
-      [unique.map(row => row.warehouseId), unique.map(row => row.skuId)])).rows;
-    for (const row of rows.map(balance)) this.balances.set(key(row.warehouseId, row.skuId), row);
+    await this.balances.lock(keys);
   }
   async getBalance(warehouseId: EntityId<"warehouse">, skuId: EntityId<"sku">): Promise<InventoryBalanceRow | undefined> {
     requireDomain(this.active && this.balancesLocked, "TRANSACTION_SCOPE", "Lock the complete posting set before reading balances");
-    return structuredClone(this.balances.get(key(warehouseId, skuId)));
+    return this.balances.get(warehouseId, skuId);
   }
-  async putBalance(row: InventoryBalanceRow): Promise<void> {
-    const identity = key(row.warehouseId, row.skuId); const previous = this.balances.get(identity);
-    requireDomain(previous, "INVENTORY_NOT_READY", "Transfer cannot create missing inventory coverage");
-    requireDomain(row.version === previous.version + 1, "VERSION_CONFLICT", "Balance version must advance exactly once per effect");
-    const written = await this.query(`UPDATE naijue_erp.inventory_balance SET quantity = $3, version = $4, last_operation_id = $5, updated_at = $6
-      WHERE warehouse_id = $1 AND sku_id = $2 AND version = $7`, [row.warehouseId, row.skuId, row.quantity.toString(), versionToSql(row.version), row.lastOperationId, row.updatedAt, versionToSql(previous.version)]);
-    requireDomain(written.rowCount === 1, "VERSION_CONFLICT", "Inventory compare-and-swap failed"); this.balances.set(identity, structuredClone(row));
+  async assertAbsentBalanceIsPublishedZero(warehouseId: EntityId<"warehouse">, skuId: EntityId<"sku">): Promise<void> {
+    requireDomain(this.active && this.loaded?.stockBasis === "RUNTIME_LEDGER" && this.balancesLocked,
+      "TRANSACTION_SCOPE", "Only the loaded runtime transfer may prove first use");
+    await this.balances.assertZero(warehouseId, skuId);
   }
+  async putBalance(row: InventoryBalanceRow): Promise<void> { await this.balances.put(row); }
   async listTransferLedger(transferId: EntityId<"transfer">): Promise<readonly InventoryLedgerRow[]> {
     requireDomain(this.loaded?.id === transferId, "TRANSACTION_SCOPE", "Ledger must match loaded transfer");
     return (await this.query(`SELECT l.id, l.operation_id, l.event_kind, l.warehouse_id, l.sku_id, l.quantity_delta::text, tl.transfer_id, l.source_transfer_line_id,
@@ -164,11 +154,13 @@ class PostgresTransferTransaction implements TransferTransaction {
   }
   async appendLedger(row: InventoryLedgerRow): Promise<void> {
     requireDomain(row.source.kind === "TRANSFER" && row.source.transferId === this.loaded?.id, "TRANSACTION_SCOPE", "Only the loaded transfer may post");
-    requireDomain(this.balances.has(key(row.warehouseId, row.skuId)), "INVENTORY_NOT_READY", "Posting requires locked existing coverage");
-    await this.query(`INSERT INTO naijue_erp.inventory_ledger (id, operation_id, event_kind, warehouse_id, sku_id, quantity_delta,
+    this.balances.assertCanAppend(row);
+    const written = await this.query(`INSERT INTO naijue_erp.inventory_ledger (id, operation_id, event_kind, warehouse_id, sku_id, quantity_delta,
       source_transfer_line_id, endpoint, source_document_version, reverses_entry_id, business_date, posted_at) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`,
       [row.id, row.operationId, row.eventKind, row.warehouseId, row.skuId, row.quantityDelta.toString(), row.source.transferLineId, row.source.endpoint,
         versionToSql(row.sourceDocumentVersion), row.reversesEntryId, row.businessDate, row.postedAt]);
+    requireDomain(written.rowCount === 1, "INVENTORY_INTEGRITY_FAILED", "Exact native inventory effect was not appended");
+    this.balances.didAppend(row);
   }
   async putRuntimeTransfer(document: TransferDocument): Promise<void> {
     const h = document.header; const loaded = this.loaded;

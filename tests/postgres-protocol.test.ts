@@ -76,9 +76,13 @@ function salesRead(document?: SalesDocument, balances: Record<string, unknown>[]
   if (document) {
     steps.push({ sql: /FROM naijue_erp.sales_line WHERE sales_id = \$1 ORDER BY line_no, id/, rows: lineRows(document) },
       { sql: /FROM naijue_erp.sales_settlement WHERE sales_id = \$1 ORDER BY line_no, id/, rows: settlementRows(document) });
-    if (basis === "RUNTIME_LEDGER") steps.push({ sql: /ORDER BY b.warehouse_id, b.sku_id FOR UPDATE OF b/, rows: balances, inspect(values, sql) {
-      assert.deepEqual(values, [ids.warehouse, ids.sales]); assert.match(sql, /SELECT sku_id FROM naijue_erp.sales_line WHERE sales_id = \$2 AND is_current/);
-    } });
+    if (basis === "RUNTIME_LEDGER") {
+      const skus = [...new Set(document.lines.filter(line => line.isCurrent).map(line => line.skuId))].sort();
+      steps.push(...skus.map<Step>(sku => ({ sql: /^SELECT naijue_erp.inventory_key_lock/, inspect(values) { assert.deepEqual(values, [ids.warehouse, sku]); } })));
+      if (skus.length > 0) steps.push({ sql: /ORDER BY b.warehouse_id, b.sku_id FOR UPDATE OF b/, rows: balances, inspect(values, sql) {
+        assert.deepEqual(values, [skus.map(() => ids.warehouse), skus]); assert.match(sql, /JOIN unnest/);
+      } });
+    }
   }
   return steps;
 }
@@ -187,7 +191,7 @@ test("pg protocol: repeated SKU actual lines retain distinct ledger sources and 
   assert.equal((await service(client).execute(command)).ledgerEntryIds.length, 2); client.done();
 });
 test("pg protocol: missing inventory coverage fails closed without insert/upsert/default zero", async () => {
-  const command = approve(); const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(storedDocument(), []), rollback()]);
+  const command = approve(); const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(storedDocument(), []), { sql: /posting:publication/, rows: [] }, rollback()]);
   await assert.rejects(() => service(client).execute(command), { code: "INVENTORY_NOT_READY" });
   assert.ok(client.calls.every(call => !/^(INSERT|UPDATE|DELETE)/.test(call.sql))); client.done();
 });

@@ -1,3 +1,4 @@
+import type { InventoryPostingTransaction } from "./inventory-posting.ts";
 import type { SalesDocument, SalesDraft, SalesLineRow, DocumentStatus } from "../../domain/src/documents.ts";
 import type { InventoryBalanceRow, InventoryLedgerRow } from "../../domain/src/inventory.ts";
 import type { EntityId, EntityKind, Quantity, Version } from "../../domain/src/values.ts";
@@ -34,7 +35,7 @@ export interface SalesAuditRow {
 }
 /** Adapter metadata, not a chosen historical import schema. Cutoff history must never be reversed as runtime postings. */
 export interface StoredSales { readonly document: SalesDocument; readonly stockBasis: "RUNTIME_LEDGER" | "CUTOFF_HISTORY" }
-export interface SalesTransaction {
+export interface SalesTransaction extends InventoryPostingTransaction {
   getSales(id: EntityId<"sales">): Promise<StoredSales | undefined>;
   putRuntimeSales(document: SalesDocument): Promise<void>;
   getReceipt(actorId: EntityId<"account">, requestKey: string): Promise<OperationReceiptRow | undefined>;

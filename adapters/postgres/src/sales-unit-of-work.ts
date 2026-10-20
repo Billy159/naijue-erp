@@ -1,3 +1,4 @@
+import { PostgresPostingBalances } from "./inventory-posting-balances.ts";
 import type { Pool } from "pg";
 import type { OperationReceiptRow, SalesAuditRow, SalesResult, SalesTransaction, SalesUnitOfWork, StoredSales } from "../../../packages/application/src/ports.ts";
 import { sameSalesLine, sameSalesSettlement } from "../../../packages/application/src/sales-change-evidence.ts";
@@ -22,7 +23,6 @@ void pgPoolCompatibility;
 
 const id = <K extends EntityKind>(kind: K, value: unknown): EntityId<K> => entityId(kind, stringValue(value));
 const nullableId = <K extends EntityKind>(kind: K, value: unknown): EntityId<K> | null => value === null ? null : id(kind, value);
-const key = (warehouseId: string, skuId: string): string => JSON.stringify([warehouseId, skuId]);
 function choice<T extends string>(value: unknown, choices: readonly T[]): T {
   requireDomain(typeof value === "string" && choices.includes(value as T), "INVALID_DATABASE_VALUE", "Unexpected persisted enum value");
   return value as T;
@@ -39,10 +39,7 @@ const LINE_SELECT = `SELECT id, sales_id, line_no, sku_id, quantity::text, refer
   FROM naijue_erp.sales_line WHERE sales_id = $1 ORDER BY line_no, id`;
 const SETTLEMENT_SELECT = `SELECT id, sales_id, line_no, payment_account_id, direction, amount::text
   FROM naijue_erp.sales_settlement WHERE sales_id = $1 ORDER BY line_no, id`;
-const BALANCE_SELECT = `SELECT b.warehouse_id, b.sku_id, b.quantity::text, b.version, b.last_operation_id,
-  ${stamp("b.updated_at")} AS updated_at FROM naijue_erp.inventory_balance b
-  WHERE b.warehouse_id = $1 AND b.sku_id IN (SELECT sku_id FROM naijue_erp.sales_line WHERE sales_id = $2 AND is_current)
-  ORDER BY b.warehouse_id, b.sku_id FOR UPDATE OF b`;
+
 
 function decodeHeader(row: Record<string, unknown>): SalesHeaderRow {
   return { id: id("sales", row.id), number: stringValue(row.number), businessType: choice(row.business_type, ["SALE", "RETURN", "EXCHANGE"]),
@@ -66,10 +63,7 @@ function decodeSettlement(row: Record<string, unknown>): SalesSettlementRow {
   return { id: id("settlement", row.id), salesId: id("sales", row.sales_id), lineNo: integerValue(row.line_no), paymentAccountId: id("paymentAccount", row.payment_account_id),
     direction: choice(row.direction, ["RECEIVE", "REFUND"]), amount: moneyFromSql(row.amount) };
 }
-function decodeBalance(row: Record<string, unknown>): InventoryBalanceRow {
-  return { warehouseId: id("warehouse", row.warehouse_id), skuId: id("sku", row.sku_id), quantity: quantityFromSql(row.quantity), version: versionFromSql(row.version),
-    lastOperationId: nullableId("operation", row.last_operation_id), updatedAt: stringValue(row.updated_at) };
-}
+
 function decodeResult(value: unknown): SalesResult {
   const row = jsonObject(value);
   requireDomain(Array.isArray(row.ledgerEntryIds), "INVALID_DATABASE_VALUE", "Receipt ledger identities must be an array");
@@ -110,13 +104,13 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
 class PostgresSalesTransaction implements SalesTransaction {
   private active = true;
   private sales: { readonly id: EntityId<"sales">; readonly version: Version | null; readonly stockBasis: StoredSales["stockBasis"] } | undefined;
-  private readonly balances = new Map<string, InventoryBalanceRow>();
+  private readonly balances: PostgresPostingBalances;
   private readonly previousLines = new Map<string, SalesLineRow>();
   private readonly previousSettlements = new Map<EntityId<"settlement">, SalesSettlementRow>();
   private receiptKey: string | undefined;
   close(): void { this.active = false; }
   private readonly client: PgSalesClient;
-  constructor(client: PgSalesClient) { this.client = client; }
+  constructor(client: PgSalesClient) { this.client = client; this.balances = new PostgresPostingBalances((sql, values) => this.query(sql, values)); }
   private query(text: string, values: unknown[] = []): Promise<PgSalesResult> {
     requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes");
     return this.client.query(text, values);
@@ -146,10 +140,10 @@ class PostgresSalesTransaction implements SalesTransaction {
     const settlements = (await this.query(SETTLEMENT_SELECT, [salesId])).rows.map(decodeSettlement);
     for (const line of lines) this.previousLines.set(line.id, structuredClone(line));
     for (const row of settlements) this.previousSettlements.set(row.id, structuredClone(row));
-    // Lock every possible posting key in one stable order, not caller line order. No missing balance is manufactured.
-    if (stockBasis === "RUNTIME_LEDGER") for (const balance of (await this.query(BALANCE_SELECT, [header.warehouseId, salesId])).rows.map(decodeBalance)) {
-      this.balances.set(key(balance.warehouseId, balance.skuId), balance);
-    }
+    // Existing AND absent keys share the importer's canonical advisory-lock order before row locks.
+    // Loading a document never materializes a sparse zero balance.
+    if (stockBasis === "RUNTIME_LEDGER") await this.balances.lock(lines.filter(line => line.isCurrent)
+      .map(line => ({ warehouseId: header.warehouseId, skuId: line.skuId })));
     return { document: { header, lines, settlements }, stockBasis };
   }
   async putRuntimeSales(document: SalesDocument): Promise<void> {
@@ -209,17 +203,13 @@ class PostgresSalesTransaction implements SalesTransaction {
   }
   async getBalance(warehouseId: EntityId<"warehouse">, skuId: EntityId<"sku">): Promise<InventoryBalanceRow | undefined> {
     requireDomain(this.active && this.sales, "TRANSACTION_SCOPE", "Read the sales target before posting");
-    return structuredClone(this.balances.get(key(warehouseId, skuId)));
+    return this.balances.get(warehouseId, skuId);
   }
-  async putBalance(row: InventoryBalanceRow): Promise<void> {
-    const identity = key(row.warehouseId, row.skuId); const previous = this.balances.get(identity);
-    requireDomain(previous, "INVENTORY_NOT_READY", "Missing coverage is not zero and cannot be inserted by a sales posting");
-    requireDomain(row.version === previous.version + 1, "VERSION_CONFLICT", "Balance must advance exactly once per effect");
-    const result = await this.query(`UPDATE naijue_erp.inventory_balance SET quantity = $3, version = $4, last_operation_id = $5, updated_at = $6
-      WHERE warehouse_id = $1 AND sku_id = $2 AND version = $7`, [row.warehouseId, row.skuId, row.quantity.toString(), versionToSql(row.version), row.lastOperationId, row.updatedAt, versionToSql(previous.version)]);
-    requireDomain(result.rowCount === 1, "VERSION_CONFLICT", "Inventory compare-and-swap failed");
-    this.balances.set(identity, structuredClone(row));
+  async assertAbsentBalanceIsPublishedZero(warehouseId: EntityId<"warehouse">, skuId: EntityId<"sku">): Promise<void> {
+    requireDomain(this.active && this.sales?.stockBasis === "RUNTIME_LEDGER", "TRANSACTION_SCOPE", "Only the loaded runtime sales document may prove first use");
+    await this.balances.assertZero(warehouseId, skuId);
   }
+  async putBalance(row: InventoryBalanceRow): Promise<void> { await this.balances.put(row); }
   async listSalesLedger(salesId: EntityId<"sales">): Promise<readonly InventoryLedgerRow[]> {
     requireDomain(this.sales?.id === salesId, "TRANSACTION_SCOPE", "Ledger must belong to the loaded document");
     return (await this.query(`SELECT l.id, l.operation_id, l.event_kind, l.warehouse_id, l.sku_id, l.quantity_delta::text, sl.sales_id, l.source_sales_line_id AS sales_line_id,
@@ -232,10 +222,12 @@ class PostgresSalesTransaction implements SalesTransaction {
   }
   async appendLedger(row: InventoryLedgerRow): Promise<void> {
     requireDomain(row.source.kind === "SALES" && row.source.salesId === this.sales?.id, "TRANSACTION_SCOPE", "This adapter persists only runtime sales effects, not transfer commands");
-    requireDomain(this.balances.has(key(row.warehouseId, row.skuId)), "INVENTORY_NOT_READY", "Posting requires existing locked coverage");
-    await this.query(`INSERT INTO naijue_erp.inventory_ledger (id, operation_id, event_kind, warehouse_id, sku_id, quantity_delta,
+    this.balances.assertCanAppend(row);
+    const written = await this.query(`INSERT INTO naijue_erp.inventory_ledger (id, operation_id, event_kind, warehouse_id, sku_id, quantity_delta,
       source_sales_line_id, endpoint, source_document_version, reverses_entry_id, business_date, posted_at) VALUES ($1, $2, $3, $4, $5, $6, $7, 'SALES_WAREHOUSE', $8, $9, $10, $11)`,
       [row.id, row.operationId, row.eventKind, row.warehouseId, row.skuId, row.quantityDelta.toString(), row.source.salesLineId, versionToSql(row.sourceDocumentVersion), row.reversesEntryId, row.businessDate, row.postedAt]);
+    requireDomain(written.rowCount === 1, "INVENTORY_INTEGRITY_FAILED", "Exact native inventory effect was not appended");
+    this.balances.didAppend(row);
   }
   async appendAudit(row: SalesAuditRow): Promise<void> {
     requireDomain(row.salesId === this.sales?.id, "TRANSACTION_SCOPE", "Audit must belong to the command target");

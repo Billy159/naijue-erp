@@ -1,9 +1,10 @@
+import { applyInventoryEntry, assertPostingCoverage } from "./inventory-posting.ts";
 import type { SalesDocument, SalesDraft, SalesLineRow } from "../../domain/src/documents.ts";
 import { requireDomain } from "../../domain/src/errors.ts";
 import type { InventoryLedgerRow } from "../../domain/src/inventory.ts";
-import { addMoney, addQuantity, minorAmount, negateMoney, negateQuantity, nextVersion, version } from "../../domain/src/values.ts";
+import { addMoney, minorAmount, negateMoney, negateQuantity, nextVersion, version } from "../../domain/src/values.ts";
 import type { EntityId } from "../../domain/src/values.ts";
-import type { SalesCommand, SalesDependencies, SalesResult, SalesTransaction } from "./ports.ts";
+import type { SalesCommand, SalesDependencies, SalesResult } from "./ports.ts";
 import { requestHash } from "./request-hash.ts";
 import { salesChangeEvidence } from "./sales-change-evidence.ts";
 
@@ -96,14 +97,17 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
             validateDraft({ header: previous.header, lines: previous.lines.filter(line => line.isCurrent), settlements: previous.settlements });
             validateSettlement(previous);
             rules.assertReferencesAndEconomics(previous);
+            const effects: InventoryLedgerRow[] = [];
             for (const line of previous.lines.filter(row => row.isCurrent)) {
               const delta = rules.inventoryDelta(previous, line);
               requireDomain(delta !== 0n, "INVALID_STOCK_EFFECT", "A current business line must have a confirmed nonzero stock effect");
               const entry: InventoryLedgerRow = { id: newId("ledger"), operationId, eventKind: "APPROVE", warehouseId: previous.header.warehouseId,
                 skuId: line.skuId, quantityDelta: delta, source: { kind: "SALES", salesId, salesLineId: line.id, endpoint: "SALES_WAREHOUSE" },
                 sourceDocumentVersion: nextDocumentVersion, reversesEntryId: null, businessDate: previous.header.businessDate, postedAt: timestamp };
-              await applyEntry(tx, entry); entryIds.push(entry.id);
+              effects.push(entry);
             }
+            await assertPostingCoverage(tx, effects);
+            for (const entry of effects) { await applyInventoryEntry(tx, entry); entryIds.push(entry.id); }
             next = { ...previous, header: { ...previous.header, status: "APPROVED", version: nextDocumentVersion, updatedAt: timestamp, approvedByAccountId: command.actor.accountId, approvedAt: timestamp } };
           } else if (command.action === "UNAPPROVE") {
             requireDomain(previous.header.status === "APPROVED", "INVALID_STATE", "Only an approved document can be unapproved");
@@ -119,7 +123,7 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
             for (const original of active) {
               const entry: InventoryLedgerRow = { ...original, id: newId("ledger"), operationId, eventKind: "UNAPPROVE", quantityDelta: negateQuantity(original.quantityDelta),
                 sourceDocumentVersion: nextDocumentVersion, reversesEntryId: original.id, postedAt: timestamp };
-              await applyEntry(tx, entry); entryIds.push(entry.id);
+              await applyInventoryEntry(tx, entry); entryIds.push(entry.id);
             }
             next = { ...previous, header: { ...previous.header, status: "DRAFT", version: nextDocumentVersion, updatedAt: timestamp, approvedByAccountId: null, approvedAt: null } };
           } else {
@@ -137,12 +141,4 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
       });
     }
   };
-}
-
-async function applyEntry(tx: SalesTransaction, entry: InventoryLedgerRow): Promise<void> {
-  const balance = await tx.getBalance(entry.warehouseId, entry.skuId);
-  requireDomain(balance, "INVENTORY_NOT_READY", "Missing inventory coverage is not zero stock");
-  const updated = { ...balance, quantity: addQuantity(balance.quantity, entry.quantityDelta), version: nextVersion(balance.version), lastOperationId: entry.operationId, updatedAt: entry.postedAt };
-  await tx.appendLedger(entry);
-  await tx.putBalance(updated);
 }

@@ -1,3 +1,4 @@
+import type { InventoryPostingTransaction } from "./inventory-posting.ts";
 import type { DocumentStatus, TransferHeaderRow, TransferLineRow } from "../../domain/src/documents.ts";
 import type { InventoryBalanceRow, InventoryLedgerRow } from "../../domain/src/inventory.ts";
 import type { EntityId, EntityKind, Version } from "../../domain/src/values.ts";
@@ -46,7 +47,7 @@ export interface TransferWarehouseFact {
   readonly hallEnabled: boolean; readonly hasNonzeroInventory: boolean;
 }
 export interface TransferSkuFact { readonly id: EntityId<"sku">; readonly enabled: boolean }
-export interface TransferTransaction {
+export interface TransferTransaction extends InventoryPostingTransaction {
   getTransfer(id: EntityId<"transfer">): Promise<StoredTransfer | undefined>;
   putRuntimeTransfer(document: TransferDocument): Promise<void>;
   getReceipt(actorId: EntityId<"account">, requestKey: string): Promise<TransferReceiptRow | undefined>;

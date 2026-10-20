@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 const ddl = await readFile(new URL("../adapters/postgres/migrations/0001_runtime_sales.sql", import.meta.url), "utf8");
 const adapter = await readFile(new URL("../adapters/postgres/src/sales-unit-of-work.ts", import.meta.url), "utf8");
+const postingBalances = await readFile(new URL("../adapters/postgres/src/inventory-posting-balances.ts", import.meta.url), "utf8");
 function table(name: string): string {
   const start = ddl.indexOf(`CREATE TABLE naijue_erp.${name} (`); assert.ok(start >= 0, `Missing native table ${name}`);
   const end = ddl.indexOf("\n);", start); assert.ok(end > start);
@@ -34,13 +35,16 @@ test("pg SQL-text contract: actual lines/settlements are native facts, not hidde
   for (const name of ["sales_header", "sales_line", "sales_settlement"]) assert.doesNotMatch(table(name), /jsonb/);
   assert.doesNotMatch(ddl, /\boriginal_sales_id\b|\boriginal_line_id\b|CREATE TABLE[^;]+return_header/i);
 });
-test("pg SQL-text contract: quantities have no zero floor and balance coverage cannot be auto-created by sales", () => {
+test("pg SQL-text contract: quantities have no zero floor and unproven balance absence cannot be auto-created by sales", () => {
   assert.match(table("inventory_balance"), /quantity bigint NOT NULL/);
   assert.doesNotMatch(table("inventory_balance"), /CHECK \(quantity\s*[>=]|quantity[^,]*DEFAULT/i);
   assert.match(table("inventory_balance"), /PRIMARY KEY \(warehouse_id, sku_id\)/);
   assert.doesNotMatch(adapter, /INSERT INTO naijue_erp.inventory_balance|GREATEST\(|Math\.max/);
-  assert.match(adapter, /ORDER BY b.warehouse_id, b.sku_id FOR UPDATE OF b/);
-  assert.match(adapter, /WHERE warehouse_id = \$1 AND sku_id = \$2 AND version = \$7/);
+  assert.match(adapter, /new PostgresPostingBalances/);
+  assert.match(postingBalances, /this.provenZero.has\(identity\) && first && row.version === 1/);
+  assert.match(postingBalances, /schema_migration WHERE version = 8/);
+  assert.match(postingBalances, /ORDER BY b.warehouse_id, b.sku_id FOR UPDATE OF b/);
+  assert.match(postingBalances, /WHERE warehouse_id = \$1 AND sku_id = \$2 AND version = \$7/);
 });
 test("pg SQL-text contract: source, reversal, receipt/audit uniqueness and deferred atomic references are declared", () => {
   assert.match(table("inventory_ledger"), /source_sales_line_id uuid NOT NULL REFERENCES naijue_erp.sales_line\(id\)/);

@@ -1,0 +1,13 @@
+{
+  "parent_commit": "7bcba6104a04556dc868bbc295ec261ae44ed91d",
+  "scope": "Proven-zero first runtime APPROVE posting for exact absent balance keys; new0008 source changes two guard bodies, no new tables/columns",
+  "checks": "Owner176 selected tests;29 independent probes +184 selected independent regressions; scoped types before final SQL-only and source-assertion changes",
+  "root_integrated_compile": "Pending exact committed checkpoint",
+  "limits": [
+    "No SQL engine execution",
+    "No real concurrency/durability verification",
+    "Historical first unapprove remains closed",
+    "Native catalogue creation proof remains closed"
+  ],
+  "rollback": "Revert source commit before application. No migration executed; no database rollback claimed."
+}
