@@ -1,0 +1,13 @@
+{
+  "number": 2,
+  "commit": "d9a28441777291d5436ec66682307f697501b20e",
+  "suite": "backend-0001-0008",
+  "source": "frozen-commit:d9a28441777291d5436ec66682307f697501b20e",
+  "database": "naijue_erp_test_dfc9596d15ed8757",
+  "host": "127.0.0.1",
+  "port": 55432,
+  "code": 0,
+  "signal": null,
+  "logfile": "evidence/postgres-real-http-read-acceptance-d9a2844/acceptance.tap",
+  "sanitization": "Only local source/log locations replaced; original suite/commit/target/result fields preserved."
+}

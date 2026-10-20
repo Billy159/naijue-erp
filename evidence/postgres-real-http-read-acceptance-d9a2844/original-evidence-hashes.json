@@ -1,0 +1,7 @@
+{
+  "description": "TAP is byte-identical to original. Result JSON replaces only local paths. No original output overwritten.",
+  "sha256": {
+    "acceptance-02-d9a2844.tap": "57be5db61a1d9ebe7830c4a187dfc24048c176ef4d03ba37f51267d485460f91",
+    "acceptance-02-d9a2844.tap.json": "601da8b0e5fcea08de0700b025ba68a54cbd3812bdbae00cead3d6852267532c"
+  }
+}
