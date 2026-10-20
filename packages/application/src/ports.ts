@@ -42,7 +42,7 @@ export interface SalesTransaction {
   appendAudit(row: SalesAuditRow): Promise<void>;
 }
 /** MUST atomically commit/rollback all callback writes; serialize document/receipt/balance conflicts and enforce uniqueness.
- * No PostgreSQL implementation is included. A successful synthetic adapter test is NOT PostgreSQL evidence. */
+ * PostgreSQL implementation lives in adapters/postgres; synthetic/protocol tests are NOT real PostgreSQL evidence. */
 export interface SalesUnitOfWork { transaction<T>(work: (tx: SalesTransaction) => Promise<T>): Promise<T> }
 /** Required trusted server-side policy. No default production sign/discount/rounding algorithm is guessed. */
 export interface SalesBusinessRules {

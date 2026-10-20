@@ -1,0 +1,73 @@
+2026-10-20T15:23:46Z
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 build
+> tsc -p tsconfig.build.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
+✔ SYNTHETIC HTTP SALE: save/approve/unapprove/edit/reapprove, no original-sale reference and no listener (1135.858032ms)
+✔ SYNTHETIC HTTP RETURN: save/approve/unapprove/edit/reapprove, no original-sale reference and no listener (49.708021ms)
+✔ SYNTHETIC HTTP EXCHANGE: save/approve/unapprove/edit/reapprove, no original-sale reference and no listener (66.943745ms)
+✔ SYNTHETIC HTTP: missing providers fail closed; unauthenticated requests never touch storage (30.327476ms)
+✔ SYNTHETIC HTTP: malformed server-derived actor fails closed instead of taking identity from the body (32.157991ms)
+✔ SYNTHETIC HTTP: actor cannot be spoofed, and auth receives request metadata only (56.583175ms)
+✔ SYNTHETIC HTTP: exact key replay and receipt lookup recover the original result without new mutations (39.694728ms)
+✔ SYNTHETIC HTTP: receipt is account-scoped and rechecks current access after revocation (83.937833ms)
+✔ SYNTHETIC HTTP: key content conflicts and stale versions return 409 without changing state (19.658187ms)
+✔ SYNTHETIC HTTP: approval requires exact settlement equality, not debt or overpayment (55.279636ms)
+✔ SYNTHETIC HTTP: proposed reference scope is checked by injected server authorization (92.485425ms)
+✔ SYNTHETIC HTTP: historical cutoff modifications remain explicitly unsupported (40.876421ms)
+✔ SYNTHETIC HTTP: saved-draft VOID changes no inventory; approved edits stay rejected (86.000344ms)
+✔ SYNTHETIC HTTP: rejects missing version without coercion or writes (15.287823ms)
+✔ SYNTHETIC HTTP: rejects numeric-string version without coercion or writes (16.661939ms)
+✔ SYNTHETIC HTTP: rejects fractional version without coercion or writes (15.287592ms)
+✔ SYNTHETIC HTTP: rejects unsafe version without coercion or writes (16.624202ms)
+✔ SYNTHETIC HTTP: rejects empty key without coercion or writes (17.964458ms)
+✔ SYNTHETIC HTTP: rejects noncanonical key without coercion or writes (18.178613ms)
+✔ SYNTHETIC HTTP: rejects unknown action without coercion or writes (35.958461ms)
+✔ SYNTHETIC HTTP: rejects server stock effects without coercion or writes (23.051143ms)
+✔ SYNTHETIC HTTP: rejects header status without coercion or writes (18.626394ms)
+✔ SYNTHETIC HTTP: rejects original-sale link without coercion or writes (14.412506ms)
+✔ SYNTHETIC HTTP: rejects malformed reference without coercion or writes (8.551306ms)
+✔ SYNTHETIC HTTP: rejects invalid real date without coercion or writes (10.050072ms)
+✔ SYNTHETIC HTTP: rejects numeric money without coercion or writes (17.178534ms)
+✔ SYNTHETIC HTTP: rejects decimal money without coercion or writes (15.913137ms)
+✔ SYNTHETIC HTTP: rejects exponent money without coercion or writes (21.336001ms)
+✔ SYNTHETIC HTTP: rejects leading-zero money without coercion or writes (11.524134ms)
+✔ SYNTHETIC HTTP: rejects negative-zero money without coercion or writes (15.399502ms)
+✔ SYNTHETIC HTTP: rejects numeric quantity without coercion or writes (39.841634ms)
+✔ SYNTHETIC HTTP: rejects fractional quantity without coercion or writes (47.98692ms)
+✔ SYNTHETIC HTTP: rejects overflow quantity without coercion or writes (16.589724ms)
+✔ SYNTHETIC HTTP: rejects fractional line position without coercion or writes (53.515523ms)
+✔ SYNTHETIC HTTP: rejects string boolean without coercion or writes (42.247133ms)
+✔ SYNTHETIC HTTP: rejects noncurrent incoming row without coercion or writes (11.314846ms)
+✔ SYNTHETIC HTTP: rejects snapshot unknown field without coercion or writes (10.743148ms)
+✔ SYNTHETIC HTTP: rejects settlement unknown field without coercion or writes (18.977195ms)
+✔ SYNTHETIC HTTP: rejects negative settlement without coercion or writes (11.707323ms)
+✔ SYNTHETIC HTTP: rejects foreign line owner without coercion or writes (26.566303ms)
+✔ SYNTHETIC HTTP: unknown query fields and malformed transport are rejected (67.243728ms)
+✔ SYNTHETIC HTTP: exact money/quantity arrive as bigint, and JSON never rounds bigint (207.143917ms)
+✔ SYNTHETIC HTTP: unexpected provider failures do not leak details and original key can retry (50.913494ms)
+✔ SYNTHETIC HTTP: unknown provider DomainError is not exposed as a client-supplied status or text (24.0466ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 44
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3916.630606
