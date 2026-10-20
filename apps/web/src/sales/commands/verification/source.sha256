@@ -1,0 +1,10 @@
+52fc8d3b5733e15f53f34e09685eeda4fd53a0876708d0d6860c8ae99b22d9dc  apps/web/src/sales/commands/README.md
+1f56db861f9d1cef97c5ae27dc517b70d9d408fdbac42ec9a4daae497ea9fe51  apps/web/src/sales/commands/contracts.ts
+38ea92e0eeb9f6303264eaada7914744002d141a1740d8afaa4ef8de8584a822  apps/web/src/sales/commands/controller.test.ts
+c794fa61f0edffeb2c6ad93d1de7591e5da54d36a84a1b72669bf4d8ab6fd457  apps/web/src/sales/commands/controller.ts
+56b9992f959d1bb0ceb36de88961967227f719b7b78026cecaacf9b7be5686eb  apps/web/src/sales/commands/fixtures.test-support.ts
+470762453eb5c38678803a75c2c3d5074d11eb931d82684681f217523ff89d6d  apps/web/src/sales/commands/http-client.test.ts
+e635248f99eabebc0e4cbf8176bcd25cfc4bcbba0bd8e85314c76c66653657c7  apps/web/src/sales/commands/http-client.ts
+d5b7e2b5960d3f7f9ecd637f9d4d226e2cfa4f1e22771b0fb8dd43202fce432d  apps/web/src/sales/commands/index.ts
+be9363b00cbdaa514a641e07f25e874de7de145afebaed469ede7bd15d77b297  apps/web/src/sales/commands/validation.test.ts
+f30805bac6bde6872d0537d3a4b60bfd4f00c437d98d604ac486b366574b1aee  apps/web/src/sales/commands/validation.ts

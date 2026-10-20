@@ -1,0 +1,46 @@
+✔ workspace construction is inert; CREATE saves once with null CAS and no inventory optimism (25.861497ms)
+✔ DRAFT SAVE is CAS-bound and cannot silently approve unsaved local edits (13.118042ms)
+✔ APPROVED document cannot edit or SAVE/APPROVE/VOID; UNAPPROVE must commit then read back first (7.153058ms)
+✔ approval requires persisted exact settlement; independent return does not consult an original sale or stock balance (6.049276ms)
+✔ all historical writes stay closed even for historical DRAFT; VOID is saved DRAFT only (5.629456ms)
+✔ unknown outcome blocks edits/replacement/new writes and explicit receipt404 remains unknown (4.549435ms)
+✔ explicit replay keeps original key/CAS/deep payload and rejection cannot disprove original commit (8.680656ms)
+✔ wrong receipt action, target, CAS or posting count never becomes committed (11.264951ms)
+✔ local cancel before client invocation is not-sent; after invocation keeps uncertain and ignores late success (9.365321ms)
+✔ route suspension preserves original recovery, while identity disposal clears facts and ignores late results (5.236545ms)
+✔ definitive rejection preserves draft; explicit current read never force-rebases old CAS (4.576933ms)
+✔ access failures clear identity-scoped data before host callback, including malformed HTML-status invalidation (8.131015ms)
+✔ superseded detail/readCurrent cannot revive another target or disposed identity (6.300776ms)
+✔ duplicate generated request key is refused across resolved/discarded operations (5.060195ms)
+✔ unknown legacy price facts never become inferred SAVE or APPROVE intent (2.158248ms)
+✔ opened stock provenance is pinned across readback, conflict and recovery; cutoff history cannot promote (9.555465ms)
+✔ known command/read status must agree at its exact version; VOID remains terminal at all later reads (10.368007ms)
+✔ observed auth headers clear workspace immediately even when response JSON never arrives (15.900317ms)
+✔ command client construction is inert, same-origin exact endpoints retain exact native wire values (75.52684ms)
+✔ immutable caller snapshot protects original nested payload, target and CAS through dispatch and validation (5.937281ms)
+✔ malformed input and oversized UTF-8 draft are rejected before any fetch (8.354378ms)
+✔ recognized native original 4xx rejection is definitive, sanitized and not retried (37.611041ms)
+✔ receipt404 is a read absence and never a definitive command outcome (4.647079ms)
+✔ unknown, malformed or wrong-status errors and 5xx cannot prove non-commit (23.733948ms)
+✔ network errors are uncertain once dispatched, safe and never automatically retried (5.282171ms)
+✔ pre-abort/same-turn abort do not dispatch; abort after dispatch detaches an ignored fetch without claiming rollback (5.300335ms)
+✔ timeout consumes late fetch and cancels late body; monotonic checks prevent expired microtask success (10.525715ms)
+✔ stream timeout is bounded and cannot publish valid JSON after deadline (6.075555ms)
+✔ malformed/oversized/redirected/wrong-target successes stay uncertain, never fake empty results (14.723776ms)
+✔ receipt-only error code cannot prove command rejection; dot-segment keys fail closed before dispatch (4.752625ms)
+✔ observed 401/403 fails immediately and cancels any body without awaiting timeout or claiming non-commit (16.698885ms)
+✔ wire contracts exactly preserve native SAVE, command and receipt shape with deep isolation (11.617639ms)
+✔ draft projection excludes server managed/name facts and never invents missing old pricing intent (2.537264ms)
+✔ strict native command parser rejects extensions, missing fields, actor, coerced CAS and alternate route fields (2.336424ms)
+✔ independent return and exchange are signed, exact and original-sale-free, while SALE is positive only (1.629391ms)
+✔ native gift, zero-confirmation, half-up discount and allocation arithmetic are not coerced (1.422684ms)
+✔ result and receipt require exact key/action/target/CAS/status and posting identity agreement (0.852352ms)
+✔ native largest-remainder allocation preserves persisted row order and never merges equal SKUs (1.100775ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 956.801049

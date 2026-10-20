@@ -1,0 +1,13 @@
+{
+  "parent_commit": "8f87884957ccfb8cf2bd9baefa26d22f302f9634",
+  "scope": "New headless native sales command client/workspace, root test discovery only",
+  "checks": "38 owner tests,113 existing regressions,16 independent probes, final scoped sales types",
+  "UI_activation": false,
+  "missing": "Genuine native form preparation/reference providers and editor UI integration",
+  "rollback": "Revert source commit; no backend/schema/production changes",
+  "not_verified": [
+    "real HTTP cookies/session",
+    "PostgreSQL",
+    "browser UI"
+  ]
+}

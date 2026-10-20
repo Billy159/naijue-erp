@@ -1,0 +1,43 @@
+✔ history provenance cannot be promoted to runtime during refresh/adoption (11.01536ms)
+✔ runtime provenance cannot downgrade to historical during readback (2.894809ms)
+✔ new SAVE pins runtime provenance before its first authorized readback (2.71526ms)
+✔ same-version command status contradictions cannot become editable facts (4.664718ms)
+✔ known VOID is terminal even when an impossible response increments its version (3.348659ms)
+✔ legitimate later unapproval does not get rejected as a same-version contradiction (4.301006ms)
+✔ unknown outcome and receipt404 retain one immutable original key/payload/CAS without retry (1.996493ms)
+✔ a reentrant subscription can cancel before dispatch and dispose without revival (1.214248ms)
+✔ post-dispatch cancel is unknown, and late results cannot override new identity (2.208482ms)
+✔ provider exceptions and native response messages do not retain raw secrets (12.452525ms)
+✔ receipt-only error on POST is not a definitive original-command rejection (0.899709ms)
+✔ unaddressable dot-only operation keys are rejected before a mutating fetch (1.155379ms)
+✔ safe-integer CAS and complete exact native request shapes agree with existing parser (2.012271ms)
+✔ wrong action/key/target/CAS/status/ledger receipts cannot confirm an operation (0.576205ms)
+✔ approval uses exact saved funds and independently signed integer return quantities (1.254817ms)
+✖ observed auth status clears old identity facts even when its JSON body stalls (5.813828ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 15
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 532.084521
+
+✖ failing tests:
+
+test at evidence/sales-command-independent-review/independent.test.mjs:94:1
+✖ observed auth status clears old identity facts even when its JSON body stalls (5.813828ms)
+  AssertionError [ERR_ASSERTION]: execute 401 must invalidate the old scope
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/evidence/sales-command-independent-review/independent.test.mjs:103:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
