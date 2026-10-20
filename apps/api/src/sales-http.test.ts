@@ -85,7 +85,7 @@ test("SYNTHETIC HTTP: actor cannot be spoofed, and auth receives request metadat
   const f = await setup(t, { authenticate: async input => { observed = input; return actor; } });
   const response = await f.post({ ...save(), actor: { accountId: sid("account", 999), hallId: null } });
   assert.equal(response.statusCode, 400); assert.equal(response.json().error.code, "INVALID_HTTP_INPUT");
-  assert.deepEqual(Object.keys(observed as object).sort(), ["headers", "ip"]);
+  assert.deepEqual(Object.keys(observed as object).sort(), ["headers", "ip", "method", "url"]);
   assert.equal(f.store.snapshot().headers.size, 0);
 });
 test("SYNTHETIC HTTP: exact key replay and receipt lookup recover the original result without new mutations", async t => {

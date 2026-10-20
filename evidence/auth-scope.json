@@ -1,0 +1,23 @@
+{
+  "parentCommit": "d1a86b5f00699c96c334fe07324f02de591727a4",
+  "snapshot": "committed parent plus eleven frozen auth leaves",
+  "checks": {
+    "focusedAuthSalesTests": 83,
+    "integratedNodeTests": 218,
+    "webDomGroups": 9,
+    "strictTypes": "PASS",
+    "build": "PASS",
+    "dependencyLock": "PASS",
+    "compiledSmoke": "PASS",
+    "portablePreviewSmoke": "PASS",
+    "independentReview": "PASS_SCOPED"
+  },
+  "npmWrapperAttempt": "Interrupted by registry network policy. No install performed. Replaced by direct existing Node/TypeScript invocations, all corresponding stages exit0.",
+  "notVerified": [
+    "real PostgreSQL",
+    "real browser cookie/TLS behavior",
+    "production auth provisioning and abuse controls",
+    "production deployment"
+  ],
+  "rollback": "Revert source commit; 0003 SQL not executed anywhere."
+}

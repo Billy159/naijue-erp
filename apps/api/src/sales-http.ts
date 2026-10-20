@@ -6,7 +6,7 @@ import { DomainError, requireDomain } from "../../../packages/domain/src/errors.
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { assertNoQuery, parseRequestKey, parseSalesCommand } from "./input.ts";
 
-export interface SalesAuthenticationInput { readonly headers: Readonly<IncomingHttpHeaders>; readonly ip: string }
+export interface SalesAuthenticationInput { readonly headers: Readonly<IncomingHttpHeaders>; readonly ip: string; readonly method: string; readonly url: string }
 export interface SalesHttpOptions {
   /** Must verify credentials through a trusted server source. Null means unauthenticated. No built-in credential format or demo account. */
   readonly authenticate: (input: SalesAuthenticationInput) => Promise<ActorContext | null>;
@@ -55,7 +55,7 @@ export function createSalesHttpPlugin(options: SalesHttpOptions): FastifyPluginA
     app.addHook("onRequest", async (request, reply) => {
       reply.header("Cache-Control", "no-store");
       let actor: ActorContext | null;
-      try { actor = await options.authenticate({ headers: Object.freeze({ ...request.headers }), ip: request.ip }); }
+      try { actor = await options.authenticate({ headers: Object.freeze({ ...request.headers }), ip: request.ip, method: request.method, url: request.url }); }
       catch { throw new Error("Trusted authentication failed"); }
       if (actor === null) return reply.code(401).type("application/json").send(exactJson({ error: { code: "UNAUTHENTICATED", message: "Authentication required" } }));
       actors.set(request, checkedActor(actor));
