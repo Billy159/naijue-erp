@@ -1,0 +1,11 @@
+{
+  "scope": "Separate customer/supplier maintenance backend and user-approved independent KH/GYS numbering; additive unexecuted 0006 source",
+  "targetedTests": { "passed": 44, "failed": 0, "previousMaintenanceTestsPreserved": 33, "application": 10, "httpAndSession": 9, "postgresProtocol": 9, "numberingPureAndApplication": 4, "numberingPostgresProtocol": 4, "sqlTextContracts": 8, "log": "evidence/party-targeted-check.log" },
+  "scopedTypecheck": { "exitCode": 0, "command": "./node_modules/.bin/tsc --noEmit -p evidence/party-typecheck.json", "log": "evidence/party-scoped-typecheck.log" },
+  "wholeProjectTypecheck": { "exitCode": 0, "command": "./node_modules/.bin/tsc --noEmit -p tsconfig.json", "log": "evidence/party-typecheck.log" },
+  "sourceManifest": "evidence/party-source-sha256.txt",
+  "sourceHashVerification": "All 17 source/deliverable files matched; evidence/party-hash-check.log",
+  "allocation": { "customer": "KH000001 onward", "supplier": "GYS000001 onward", "independent": true, "minimumDigits": 6, "originalCodesUnchanged": true, "existingNumericPrefixCodesAdvanceCounter": true, "technicalMaximum": "9223372036854775807", "overflow": "Explicit PARTY_CODE_EXHAUSTED; never wraps", "rollbackGapsAllowed": true, "hostFactory": "createApprovedPartyCodeAllocator in packages/application/src/party-numbering.ts" },
+  "notPerformed": ["database connection", "migration execution", "account creation", "credential creation", "server start", "local Mac access", "install", "commit", "push", "deploy"],
+  "evidenceLimit": "Synthetic/protocol/SQL-text only, not PostgreSQL engine evidence. Prior review was pre-allocator; focused recheck is required."
+}

@@ -1,0 +1,17 @@
+adapters/postgres/migrations/0006_party_maintenance.sql: OK
+adapters/postgres/src/party-maintenance-store.ts: OK
+apps/api/src/party-authentication.ts: OK
+apps/api/src/party-maintenance-http.test.ts: OK
+apps/api/src/party-maintenance-http.ts: OK
+docs/party-maintenance.md: OK
+packages/application/src/party-maintenance-policy.ts: OK
+packages/application/src/party-maintenance-ports.ts: OK
+packages/application/src/party-maintenance-service.ts: OK
+packages/application/src/party-maintenance-validation.ts: OK
+packages/application/src/party-numbering.ts: OK
+tests/party-maintenance.test.ts: OK
+tests/party-numbering-postgres-protocol.test.ts: OK
+tests/party-numbering.test.ts: OK
+tests/party-postgres-protocol.test.ts: OK
+tests/party-schema-contract.test.ts: OK
+tests/support/party-synthetic-store.ts: OK
