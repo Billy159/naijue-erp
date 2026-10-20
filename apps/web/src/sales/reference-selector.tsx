@@ -10,7 +10,7 @@ export function SalesReferenceSelector(props: { readonly parentScope: ReadScope;
   readonly label: string; readonly value: SalesReference | null; readonly onChange: (value: SalesReference | null) => void }) {
   const [open, setOpen] = useState(false); const trigger = useRef<HTMLButtonElement>(null);
   const close = () => { setOpen(false); trigger.current?.focus(); };
-  return <div className="iw-field sales-reference"><label>{props.label}</label><button ref={trigger} type="button" className="iw-control" aria-label={props.label} aria-expanded={open} onClick={() => setOpen(value => !value)}><span>{props.value?.label ?? '全部'}</span><span aria-hidden="true">⌄</span></button>
+  return <div className="iw-field sales-reference"><label>{props.label}</label><button ref={trigger} type="button" className="iw-control" aria-label={props.label} aria-expanded={open} title={props.value?.label ?? `全部${props.kind === 'warehouse' ? '仓库' : props.label}`} onClick={() => setOpen(value => !value)}><span>{props.value?.label ?? `全部${props.kind === 'warehouse' ? '仓库' : props.label}`}</span><span aria-hidden="true">⌄</span></button>
     {open && <ReferenceOptions {...props} close={close} />}
   </div>;
 }

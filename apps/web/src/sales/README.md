@@ -1,10 +1,10 @@
 # Sales list and read-only detail slice
 
-This is source-report-aligned list/detail implementation, not a completed ERP,
-production entry point or claim of frozen Demo pixel parity. Source behavior:
-`erp-rewrite-planning/demo-source-evidence/core-functions-source-report.txt` and
-`architecture/demo-source-alignment-addendum.md`, approved summaries of the frozen
-Demo, not copied business records or a running Demo/browser observation.
+This is the implemented native read-only list/detail slice, with its presentation
+now adapted directly from the actual frozen Demo UI evidence `b8bcfe3`. It is not
+a completed ERP, real browser acceptance, or a claim of frozen Demo pixel parity.
+The frozen evidence's `LOAD_ORDER.md` and `LAYOUT_MAP.md` govern the source
+adaptation. None of its business runtime, bridge, account data or catalog is used.
 
 ## Implemented
 
@@ -83,8 +83,8 @@ Demo, not copied business records or a running Demo/browser observation.
 
 - New/edit sales form, price/reference providers, save/approve/unapprove/void command
   controls, their role/action eligibility, uncertainty/replay/conflict workflows.
-- List-title export or ordinary scan/batch buttons, whose displayed approval is not
-  established. No unit fields, debt/account balances, original-sale link or ledger
+- New/list actions and detail export, print and operation history remain disabled
+  with explicit “尚未接入” titles, rather than pretending to execute them. No unit fields, debt/account balances, original-sale link or ledger
   correction. Settlement amounts are document flows only, not account balances.
 - Optional operation-history UI, settlement-statistics UI, document export/print.
 - Root application/router/auth integration, real session/policy/PG provider
@@ -115,3 +115,95 @@ payment accounts and methods, null salesperson, malformed/missing name records,
 settlement/account identity mismatch, bounded real-endpoint candidate construction,
 invalid input rejected before fetch, and candidate late responses after close or
 identity invalidation. All transport calls remain mocked; no real service is contacted.
+
+## Frozen-source presentation restoration (2026-10-20)
+
+Source package: `8877-ui-evidence-b8bcfe3`, original bytes verified by the dedicated
+`tests/run-frozen-source-check.mjs` check. It reads the source as evidence and never
+executes it. Set `FROZEN_DEMO_UI` to the extracted package root when running the
+check outside the current workspace. A source hash mismatch is a failure.
+
+Resolved references, in the order established by `LOAD_ORDER.md`:
+
+- `sales-current.js:76–98`: original 销货单列表 title; primary start/end date,
+  status, business type, hall and salesperson order; advanced number/customer/
+  warehouse order; list columns 日期 / 销货单号 / 状态 / 业务类型 / 营业厅 /
+  营业员 / 商品信息 / 数量 / 金额 / 最后更新 / 操作; 20/50/100/200 pager.
+- `transfer-current.css:4–20,70–76`, `golden-consistency.css:13–55,91–114`,
+  `sales-refinement.css:95–108`: shared flat list shell, 32px filter controls,
+  two-row filter grid, final 11 column widths and 40px/44px list row rhythm.
+  Earlier `.sale-list` CSS does not govern the actual `.tc-list` markup.
+- `sales-current.js:103–125,164–181`: six business fields followed by saved number,
+  adjustment, due and payment facts; note before lines; ten-column saved-line
+  table and exact colgroup; incoming/outgoing exchange sections and return-price
+  caption; summary below the line surface.
+- `sales-detail-alignment.css:1–178,203–269,278–321,329–363`: final 160px + five
+  flexible field grid, 8px gaps, 32px read values, compact 36px lines, 1200px line
+  table, payment row geometry and responsive field grid. The shared shell is not
+  imported implicitly: detail flex and action-row display are declared locally.
+- `ui-review.css:16–17` and `final-ui.css:3` / `final-ui.js:6–8`: query-note state
+  and resolved pending/effective/void status tags. No observer or global mutation
+  script is copied into React.
+- `sales-summary.js:12–25` and `sales-current.js:7–8,70–72,96`: signed non-gift
+  quantities, historical category provenance and Shanghai minute timestamps.
+  The native summary extension supplies exact signed/incoming/outgoing strings
+  and native `updatedAt` in one bounded page read. No per-row detail hydration or
+  inferred current-product classification is introduced.
+
+Explicit scope-retained differences and remaining gaps:
+
+1. The existing safe closeable detail modal, focus/scroll restoration and cancelled
+   read behavior remain. The frozen Demo uses a document route; native router/
+   history replacement is not claimed. The modal's fixed frame is therefore not
+   source-identical, although its inner document geometry is source-derived.
+2. Native filters remain single selections and the actual SALE/RETURN/EXCHANGE
+   contract, rather than importing the legacy multi-selection model or merging
+   business values. Native date inputs reuse shared control bounds; the frozen
+   Arco date popup and its keyboard behavior are not reproduced or accepted here.
+3. Reset continues to edit the draft without reading. Its note says so. Frozen
+   reset issues a query; changing this previously approved lifecycle is outside
+   this presentation-only work. Successful prior results and explicit cancellation/
+   retry remain available and clearly labelled during a failed or newer read.
+4. The native schema has no saved historical category snapshot. 商品信息 therefore
+   says 历史分类未提供 with an explanation, not invented category tags, current
+   catalog inference or “待确认分类” passed off as a stored fact. No measurement
+   unit suffix is invented. Category parity is still an explicit data gap.
+5. Long native names and stored SKU labels are preserved, with full-name titles
+   where the frozen compact cell geometry ellipsizes them. Payment snapshots
+   remain authoritative; changed current names are shown separately. Payment
+   rows may grow to show that provenance rather than silently replacing names.
+6. This remains read-only. 新增销货单, 导出, 打印 and 操作历史 are visibly disabled.
+   No create/edit/save/approve/void/scan capabilities or permissions are invented.
+   A line's 查看 toggles its already-loaded saved barcode/allocation/gift facts,
+   not a current product lookup. Additional saved timestamps/economics remain in
+   an accessible disclosure so the ten-column frozen line table loses no facts.
+7. Existing exact page jumping is retained alongside source-derived numbered
+   navigation. Totals/page candidates use BigInt and unreachable unsafe Number
+   pages cannot execute. It is an intentional native-safety difference.
+8. JavaScript and native detail data remain explicit-detail-action lazy. CSS is
+   sales-route lazy: the small detail body rules currently share the sales route
+   stylesheet. Action-only detail CSS would need the host's existing trusted
+   stylesheet/build-asset convention; no new inline style injection or unverified
+   stylesheet URL is added. This is a remaining style-granularity gap, not a claim
+   of fully action-lazy styling or measured browser performance.
+9. `application/styles/sales-base.css` is now inert. Its unaccepted inventory-derived
+   visual scaffold was removed without importing inventory styles or changing
+   the host's existing lazy stylesheet graph.
+
+Verification for this adaptation:
+
+- `verification/frozen-source-check.txt`: 10 pinned raw source hashes, final column
+  widths/order, line colgroup, field grid, source order, CSS structure, no legacy/
+  catalog imports, static lazy-detail JavaScript closure and inert scaffold.
+- `verification/frozen-dom-tests.txt`: 9 synthetic DOM groups, including full names,
+  beyond-int64 summary quantities, Shanghai next-day formatting, exchange sections,
+  gift-excluded counts, no extra line/detail reads, close/scroll/focus retention,
+  metadata-summary keyboard loop, cancellation, identity revocation and StrictMode.
+- `verification/frozen-typecheck.txt`: scoped strict sales typecheck; no output on
+  successful exit. `verification/frozen-build-check.txt`: existing split-build check.
+- `verification/frozen-adaptation-source.sha256`: exact changed presentation,
+  dedicated tests, documentation and scaffold hashes for this snapshot.
+
+These are source/static/synthetic checks only. No real browser was retried after
+its earlier denied action. There was no service/network/DB execution, installation,
+commit, push, deployment, runtime memory/waterfall measurement or visual acceptance.

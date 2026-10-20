@@ -1,0 +1,2 @@
+PASS: 10 frozen source hashes/load order, exact list and line columns/widths, six-field grid, note order, state/focus geometry, timestamp/quantity facts, explicit category gap, no legacy/catalog imports, inert scaffold, lazy detail JavaScript.
+LIMIT: CSS is sales-route lazy, not detail-action lazy. Static/source/synthetic evidence only; no real browser, computed layout acceptance, network waterfall, timing, memory, server or database.

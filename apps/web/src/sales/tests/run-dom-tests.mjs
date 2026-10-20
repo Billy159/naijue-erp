@@ -15,7 +15,7 @@ try {
   await build({ entryPoints: [path.join(here, 'dom-entry.tsx')], outfile: output, bundle: true, platform: 'node', format: 'esm', packages: 'external', jsx: 'automatic', loader: { '.css': 'empty' }, logLevel: 'warning' });
   const { act, createElement, StrictMode, createRoot, SalesPageHost, ReadContext, createSalesHttpReader, createSalesFilterReferenceHttpReader, summary, detail, uuid } = await import(pathToFileURL(output).href);
   const host = document.getElementById('root'); root = createRoot(host);
-  const calls = []; const candidateCalls = []; let failList = false; let holdSize = false; let heldSize; let holdDetails = false; const heldDetails = []; let holdReferences = false; const heldReferences = [];
+  const calls = []; const candidateCalls = []; let extendedCase = false; let failList = false; let holdSize = false; let heldSize; let holdDetails = false; const heldDetails = []; let holdReferences = false; const heldReferences = [];
   const json = value => new Response(JSON.stringify(value), { headers: { 'content-type': 'application/json' } });
   const options = { origin: 'https://synthetic.test', basePath: '/api', fetch: async (url, init) => {
     const body = JSON.parse(init.body);
@@ -28,14 +28,14 @@ try {
     calls.push({ url, body, signal: init.signal });
     if (url.endsWith('/sales/query')) {
       if (failList) { failList = false; return new Response('{}', { status: 500, headers: { 'content-type': 'application/json' } }); }
-      const result = { page: body.page, pageSize: body.pageSize, exactTotal: '21', items: Array.from({ length: Math.max(0, Math.min(body.pageSize, 21 - (body.page - 1) * body.pageSize)) }, (_, i) => summary((body.page - 1) * body.pageSize + i + 1)) };
+      const result = { page: body.page, pageSize: body.pageSize, exactTotal: '21', items: Array.from({ length: Math.max(0, Math.min(body.pageSize, 21 - (body.page - 1) * body.pageSize)) }, (_, i) => { const value = summary((body.page - 1) * body.pageSize + i + 1); return extendedCase ? { ...value, businessType: 'EXCHANGE', quantity: '184467440737095516140', incomingQuantity: '1', outgoingQuantity: '184467440737095516141', updatedAt: '2026-10-20T20:34:56.000000Z', hallName: 'TEST 完整且不可缩写的营业厅名称'.repeat(4) } : value; }) };
       if (holdSize) return new Promise(resolve => { heldSize = () => resolve(json(result)); });
       return json(result);
     }
     if (url.endsWith('/sales/detail/query')) {
       const n = Number(body.salesId.slice(-12));
       if (holdDetails) return new Promise(resolve => heldDetails.push({ body, signal: init.signal, finish: () => resolve(json(detail(n))) }));
-      return json(detail(n));
+      const value = detail(n); if (!extendedCase) return json(value); const original = value.document.lines[0]; return json({ ...value, document: { ...value.document, header: { ...value.document.header, businessType: 'EXCHANGE' }, lines: [original, { ...original, id: uuid(31), lineNo: 2, skuId: uuid(32), quantity: '2', lineAmount: '1801439850948198602' }, { ...original, id: uuid(33), lineNo: 3, skuId: uuid(34), quantity: '100', isGift: true, dealPrice: '0', lineAmount: '0' }] } });
     }
     throw new Error('Unexpected mocked endpoint');
   } };
@@ -48,14 +48,14 @@ try {
   const submit = async () => { await act(async () => host.querySelector('form').dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }))); await settle(); };
   const changeSize = async size => { const field = host.querySelector('select[aria-label="每页销货单数"]'); await act(async () => { field.value = String(size); field.dispatchEvent(new dom.window.Event('change', { bubbles: true })); }); await settle(); };
   await act(async () => root.render(createElement(SalesPageHost, { scope, reader, references }))); await settle();
-  assert.equal(calls.length, 0); assert.equal(candidateCalls.length, 0); assert.match(host.textContent, /等待查询/); assert.match(host.textContent, /尚未查询/); assert.doesNotMatch(host.textContent, /共 0 张/);
+  assert.equal(calls.length, 0); assert.equal(candidateCalls.length, 0); assert.equal(host.querySelector('h1').textContent, '销货单列表'); assert.equal(button('新增销货单').disabled, true); assert.deepEqual([...host.querySelector('.tc-filter-primary').children].slice(0, 6).map(element => element.querySelector('span,label')?.textContent), ['开始日期', '结束日期', '状态', '业务类型', '营业厅', '营业员']); assert.match(host.textContent, /等待查询/); assert.match(host.textContent, /尚未查询/); assert.doesNotMatch(host.textContent, /共 0 张/);
   assert.deepEqual([...host.querySelector('select[aria-label="每页销货单数"]').options].map(option => option.value), ['20', '50', '100', '200']);
-  await click(button('高级筛选 ⌄')); assert.equal(calls.length, 0); assert.equal(candidateCalls.length, 0);
+  await click(host.querySelector('.tc-filter-toggle'));  assert.equal(calls.length, 0); assert.equal(candidateCalls.length, 0);
   console.log('PASS DOM 1: idle/advanced expansion reads nothing; actual 20/50/100/200 page sizes and approved primary/advanced filters.');
   await click(host.querySelector('button[aria-label="营业厅"]')); assert.equal(candidateCalls.length, 1); assert.equal(candidateCalls[0].body.kind, 'hall'); assert.equal(candidateCalls[0].body.pageSize, 20); assert.equal(candidateCalls[0].url, 'https://synthetic.test/api/sales/references/query'); assert.deepEqual(Object.keys(candidateCalls[0].body).sort(), ['kind', 'page', 'pageSize', 'search']);
   await act(async () => host.querySelector('[role="dialog"]').dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))); assert.equal(host.querySelector('[role="dialog"]'), null); assert.equal(document.activeElement, host.querySelector('button[aria-label="营业厅"]'));
   assert.equal(calls.length, 0); await submit(); assert.equal(calls.length, 1); assert.equal(calls[0].url, 'https://synthetic.test/api/sales/query');
-  assert.equal(host.querySelectorAll('.sales-list tbody tr').length, 20); assert.match(host.textContent, /共 21 张/); assert.match(host.textContent, /-9007199254740993.01/);
+  assert.equal(host.querySelectorAll('.sales-list tbody tr').length, 20); assert.deepEqual([...host.querySelectorAll('.sales-list th')].map(element => element.textContent), ['日期', '销货单号', '状态', '业务类型', '营业厅', '营业员', '商品信息', '数量', '金额', '最后更新', '操作']); const firstCells = host.querySelector('.sales-list tbody tr').cells; assert.equal(firstCells[6].textContent, '历史分类未提供'); assert.equal(firstCells[7].textContent, '退1 · 换0'); assert.equal(firstCells[9].textContent, '2026-10-20 08:00'); assert.equal(firstCells[4].title, firstCells[4].textContent); assert.equal(host.querySelector('[data-document-status]').dataset.documentStatus, 'pending'); assert.ok(host.querySelector('nav[aria-label="销货单列表分页"] button[aria-current="page"]')); assert.equal(calls.length, 1); assert.match(host.textContent, /共 21 张/); assert.match(host.textContent, /-9007199254740993.01/);
   console.log('PASS DOM 2: only clicked bounded reference port reads; Escape restores focus; explicit query uses real mocked HTTP and exact negative money.');
   await click(host.querySelector('button[aria-label="下一页"]')); assert.equal(calls.at(-1).body.page, 2); assert.equal(host.querySelectorAll('.sales-list tbody tr').length, 1); assert.match(host.textContent, /21–21/);
   await click(button('重置')); assert.equal(calls.length, 2);
@@ -65,12 +65,12 @@ try {
   const region = host.querySelector('.sales-results'); region.scrollTop = 180; region.scrollLeft = 90;
   const trigger = host.querySelector('.sales-view'); trigger.focus(); const beforeDetail = calls.length; await click(trigger);
   assert.equal(calls.length, beforeDetail + 1); assert.equal(calls.at(-1).url, 'https://synthetic.test/api/sales/detail/query');
-  const dialog = () => host.querySelector('.sales-detail-dialog'); assert.ok(dialog()); assert.match(dialog().textContent, /TEST 保存商品 1/); assert.match(dialog().textContent, /165\/S/); assert.match(dialog().textContent, /Y版（修身）/); assert.match(dialog().textContent, /001234567890123/); assert.match(dialog().textContent, /未记录/); assert.match(dialog().textContent, /-9007199254740993.01/);
+  const dialog = () => host.querySelector('.sales-detail-dialog'); assert.ok(dialog()); assert.match(dialog().textContent, /TEST 保存商品 1/); assert.match(dialog().textContent, /165\/S/); assert.match(dialog().textContent, /Y版（修身）/); assert.equal(dialog().querySelector('.sales-line-record'), null); const beforeLine = calls.length; await click(dialog().querySelector('button[aria-label="查看第1行保存记录"]')); assert.equal(calls.length, beforeLine); assert.match(dialog().textContent, /001234567890123/); assert.deepEqual([...dialog().querySelectorAll('.sale-lines-table th')].map(element => element.textContent), ['款号／商品名称', '颜色', '版型', '尺码', '数量', '参考零售价', '折扣', '退货单价', '金额', '操作']); assert.deepEqual([...dialog().querySelector('.sale-doc-fields').children].slice(0, 6).map(element => element.querySelector('.sale-field-label').textContent), ['单据日期', '业务类型', '营业厅', '营业员', '客户', '出库仓']); assert.ok(dialog().querySelector('.sale-note-row').compareDocumentPosition(dialog().querySelector('.sale-entry-section')) & Node.DOCUMENT_POSITION_FOLLOWING); assert.match(dialog().textContent, /未记录/); assert.match(dialog().textContent, /-9007199254740993.01/);
   assert.match(dialog().textContent, /TEST 当前营业厅/); assert.match(dialog().textContent, /TEST 当前客户/); assert.match(dialog().textContent, /TEST 当前出库仓/);
   assert.match(dialog().textContent, /TEST 保存账户/); assert.match(dialog().textContent, /TEST 保存方式/); assert.match(dialog().textContent, /现名称：TEST 现账户/); assert.match(dialog().textContent, /现名称：TEST 现方式/);
   assert.doesNotMatch(dialog().textContent, /列表名称|名称暂不可用/);
-  assert.equal(dialog().querySelectorAll('input,select,textarea').length, 0); assert.doesNotMatch([...dialog().querySelectorAll('button')].map(element => element.textContent).join(' '), /保存|编辑|作废|扫码|审核/); assert.doesNotMatch(dialog().textContent, /原销售单|账户余额|欠款|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
-  await click(host.querySelector('button[aria-label="关闭销货单详情"]')); assert.equal(dialog(), null); assert.equal(document.activeElement, trigger); assert.equal(region.scrollTop, 180); assert.equal(region.scrollLeft, 90); assert.equal(calls.length, beforeDetail + 1);
+  assert.equal(dialog().querySelectorAll('input,select,textarea').length, 0); assert.doesNotMatch([...dialog().querySelectorAll('button')].map(element => element.textContent).join(' '), /保存|编辑|作废|扫码|审核/); for (const label of ['导出', '打印', '操作历史']) assert.equal([...dialog().querySelectorAll('button')].find(element => element.textContent === label).disabled, true); assert.doesNotMatch(dialog().textContent, /原销售单|账户余额|欠款|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
+  const metadataSummary = dialog().querySelector('.sales-record-metadata > summary'); const lastAction = [...dialog().querySelectorAll('button:not(:disabled)')].at(-1); lastAction.focus(); const towardSummary = new dom.window.KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }); await act(async () => lastAction.dispatchEvent(towardSummary)); assert.equal(towardSummary.defaultPrevented, false, 'Native forward Tab must not wrap before the summary'); metadataSummary.focus(); await act(async () => metadataSummary.dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }))); assert.equal(document.activeElement, dialog().querySelector('button[aria-label="关闭销货单详情"]')); await act(async () => document.activeElement.dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true, cancelable: true }))); assert.equal(document.activeElement, metadataSummary); await click(host.querySelector('button[aria-label="关闭销货单详情"]')); assert.equal(dialog(), null); assert.equal(document.activeElement, trigger); assert.equal(region.scrollTop, 180); assert.equal(region.scrollLeft, 90); assert.equal(calls.length, beforeDetail + 1);
   console.log('PASS DOM 4: detail only on click; stored snapshots/full labels/barcode/unknown metadata/exact return economics; no mutations; close retains executed list, scroll and focus.');
   await click(host.querySelectorAll('.sales-number')[1]); assert.match(dialog().textContent, /TEST 保存商品 2/); assert.doesNotMatch(dialog().textContent, /TEST 保存商品 1/);
   await act(async () => dialog().dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))); await settle(); assert.equal(dialog(), null);
@@ -97,5 +97,21 @@ try {
   assert.equal(host.querySelector('[role="dialog"]'), null); assert.doesNotMatch(host.textContent, /TEST 厅/);
   await act(async () => root.unmount()); root = null;
   console.log('PASS DOM 8: concrete reference HTTP cancels on close/identity revocation and late responses cannot reopen candidates or restore old labels.');
-  console.log('All 8 synthetic DOM groups passed. No real browser, network, server, login, PostgreSQL, Demo pixels or performance acceptance.');
+  extendedCase = true; holdDetails = false; holdReferences = false; root = createRoot(host);
+  const extendedContext = new ReadContext({ accountId: 'TEST-FROZEN-EXTENDED', sessionRevision: '1', permissionRevision: '1' });
+  await act(async () => root.render(createElement(SalesPageHost, { scope: extendedContext.createScope('TEST-FROZEN-EXTENDED'), reader, references }))); await settle();
+  const beforeExtended = calls.length; await submit(); assert.equal(calls.length, beforeExtended + 1);
+  const extendedCells = host.querySelector('.sales-list tbody tr').cells;
+  assert.equal(extendedCells[7].textContent, '退1 · 换184467440737095516141'); assert.equal(extendedCells[9].textContent, '2026-10-21 04:34');
+  assert.equal(extendedCells[4].title, 'TEST 完整且不可缩写的营业厅名称'.repeat(4)); assert.equal(extendedCells[4].textContent, extendedCells[4].title);
+  await click(host.querySelector('.sales-view')); assert.equal(calls.length, beforeExtended + 2);
+  assert.deepEqual([...dialog().querySelectorAll('.sale-section-head strong')].map(element => element.textContent), ['退回商品', '换出商品']);
+  assert.equal(dialog().querySelectorAll('.sale-lines-table').length, 2); assert.equal(dialog().querySelectorAll('.sale-lines-table')[0].rows[0].cells[7].textContent, '退货单价');
+  assert.equal(dialog().querySelectorAll('.sale-lines-table')[1].rows[0].cells[7].textContent, '成交单价');
+  assert.match(dialog().querySelector('.sale-summary').textContent, /退回 1换出 2/); assert.doesNotMatch(dialog().querySelector('.sale-summary').textContent, /102/);
+  assert.equal(dialog().querySelectorAll('.sale-gift').length, 1); assert.doesNotMatch(extendedCells[7].textContent, /件|条|套/);
+  await click(host.querySelector('button[aria-label="关闭销货单详情"]')); assert.equal(calls.length, beforeExtended + 2);
+  await act(async () => root.unmount()); root = null;
+  console.log('PASS DOM 9: full native names, exact beyond-int64 aggregates without invented units, Shanghai next-day minute formatting, exchange sections and gift-excluded detail totals; one list plus one detail request only.');
+  console.log('All 9 synthetic DOM groups passed. No real browser, network, server, login, PostgreSQL, Demo pixels or performance acceptance.');
 } finally { if (root) root.unmount(); dom.window.close(); await rm(temp, { recursive: true, force: true }); }

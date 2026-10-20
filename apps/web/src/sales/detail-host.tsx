@@ -31,12 +31,12 @@ export function SalesDetailHost(props: { readonly parentScope: ReadScope; readon
   return <dialog ref={dialog} className="sales-detail-dialog" aria-modal="true" aria-labelledby={`${instance}-title`} onCancel={event => { event.preventDefault(); close(); }} onKeyDown={event => {
     if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); close(); }
     if (event.key !== 'Tab') return;
-    const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),[tabindex="0"]')).filter(element => element.tabIndex >= 0 && !element.closest('[hidden]'));
+    const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),details>summary,[tabindex="0"]')).filter(element => (element.tabIndex >= 0 || element.matches('details>summary')) && !element.closest('[hidden]'));
     const first = controls[0], last = controls.at(-1);
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   }}>
-    <header className="sales-detail-title"><h2 id={`${instance}-title`}>销货单 · 只读</h2><button ref={closeButton} type="button" className="iw-text-button" aria-label="关闭销货单详情" onClick={close}>×</button></header>
+    <header className="sales-detail-title"><h2 id={`${instance}-title`}>查看销货单</h2><button ref={closeButton} type="button" className="iw-text-button" aria-label="关闭销货单详情" onClick={close}>返回列表</button></header>
     <div className="sales-detail-body">{View && scope ? <View scope={scope} reader={props.reader} salesId={props.salesId} /> : error ? <p role="alert" className="iw-inline-state">详情组件加载失败。<button type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试加载</button></p> : <p role="status" className="iw-inline-state">正在准备销货单查看…</p>}</div>
   </dialog>;
 }

@@ -1,0 +1,14 @@
+{
+  "parent_commit": "066673c44f5df5fd9886d0f66f4c3b2c9a16100b",
+  "scope": "Frozen-source layout adaptation for native read-only sales list/detail",
+  "checks": "9 DOM groups,10 frozen-source checks, scoped sales types/build, independent source/CSS/DOM review",
+  "remaining_differences": [
+    "native single/date controls instead of legacy multi/Arco",
+    "modal rather than full document route",
+    "reset/jump behavior",
+    "historical category unavailable without snapshot",
+    "detail CSS route-lazy not action-lazy"
+  ],
+  "real_browser": false,
+  "rollback": "Revert this commit; no database or production state changed."
+}

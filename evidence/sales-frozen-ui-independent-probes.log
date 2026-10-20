@@ -1,0 +1,5 @@
+PASS independent source: frozen 11 widths, 3 primary filter templates, six-field grid and inherited responsive breakpoints; obsolete sales-base scaffold is inert.
+PASS independent DOM: no eager list/detail/reference read; actual SALE exact quantity above Number safe range and separate RETURN/EXCHANGE incoming/outgoing render unchanged, with unavailable historical category and native update timestamp.
+PASS independent DOM/CSS: scoped detail/header flex survives the actual frame+control graph; six fields/10 native columns, historical full labels, gift-excluded counts, readonly actions, local record disclosure with no extra read, native-summary keyboard loop and focus/scroll restoration.
+PASS independent DOM: explicit opens perform one detail read apiece; close and identity replacement abort pending detail and isolate ignored-signal late results.
+LIMIT: source and synthetic JSDOM only; no browser pixels, layout measurements, media-query evaluation, native modal/keyboard acceptance, network, server, database, installation, aggregate/full-suite rerun or commit.
