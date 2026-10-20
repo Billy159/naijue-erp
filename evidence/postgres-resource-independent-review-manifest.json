@@ -1,0 +1,47 @@
+{
+  "review": "Independent frozen PostgreSQL resource-bound leaf review",
+  "reviewed_at": "2026-10-20T18:29:00Z",
+  "source_files": [
+    {
+      "path": "adapters/postgres/src/bounded-pool.ts",
+      "sha256": "38d373b370c01997a4c17e912abefa8663a82ca00a57e7a86a72658c1021342b",
+      "bytes": 14978
+    },
+    {
+      "path": "tests/postgres-bounded-pool.test.ts",
+      "sha256": "6a42a4a8d78e37f35aeeab21b19d87ecab685f3ddc6570a9dcaee4110855941f",
+      "bytes": 23158
+    },
+    {
+      "path": "docs/postgres-resource-bounds.md",
+      "sha256": "11fbd44d053a6978d65f174eee3ff9b9eba88f6900354beab9e6311e58bd2cd8",
+      "bytes": 7174
+    }
+  ],
+  "commands": [
+    {
+      "command": "node --test --test-concurrency=1 evidence/postgres-resource-independent-probes.mjs",
+      "exit_code": 0,
+      "tests": 23,
+      "passed": 23,
+      "failed": 0,
+      "log": "evidence/postgres-resource-independent-probes.log"
+    }
+  ],
+  "restrictions": {
+    "real_postgres": false,
+    "network": false,
+    "listener": false,
+    "install": false,
+    "source_edits": false,
+    "commit": false,
+    "full_aggregate_repeated": false
+  },
+  "runtime_conclusion": "No production runtime blocker identified in the frozen implementation; 23 independent synthetic probes passed.",
+  "documentation_finding": "Explicitly disclose that message and where are masked and tests/integration/proof.ts cannot run unchanged through this sanitized leaf.",
+  "artifacts": [
+    "evidence/postgres-resource-independent-review.md",
+    "evidence/postgres-resource-independent-probes.mjs",
+    "evidence/postgres-resource-independent-probes.log"
+  ]
+}

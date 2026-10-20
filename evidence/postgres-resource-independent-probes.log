@@ -1,0 +1,31 @@
+✔ independent bounded integration: sales SQLSTATE COMMIT failure permits exactly one rollback and discard (16.62721ms)
+✔ independent bounded integration: sales lost COMMIT acknowledgment is safe unknown outcome with no retry (8.100592ms)
+✔ independent bounded integration: transfer SQLSTATE COMMIT failure permits exactly one rollback and discard (6.490492ms)
+✔ independent bounded integration: transfer lost COMMIT acknowledgment is safe unknown outcome with no retry (3.910387ms)
+✔ independent bounded integration: auth SQLSTATE COMMIT failure permits exactly one rollback and discard (1.25799ms)
+✔ independent bounded integration: auth lost COMMIT acknowledgment is safe unknown outcome with no retry (4.101302ms)
+✔ independent bounded integration: party SQLSTATE COMMIT failure permits exactly one rollback and discard (3.898366ms)
+✔ independent bounded integration: party lost COMMIT acknowledgment is safe unknown outcome with no retry (0.844713ms)
+✔ independent bounded integration: product read snapshot retains rollback after sanitized SQLSTATE (4.461911ms)
+✔ independent bounded integration: sales read snapshot retains rollback after sanitized SQLSTATE (4.018804ms)
+✔ independent bounded integration: transfer read snapshot retains rollback after sanitized SQLSTATE (3.201356ms)
+✔ independent bounded integration: cutoff import retains SQLSTATE and rollback (5.483481ms)
+✔ independent bounded integration: cutoff scope retains SQLSTATE and rollback (2.608392ms)
+✔ independent bounded integration: native customer conflict still maps after sanitization (2.336216ms)
+✔ independent bounded integration: native supplier conflict still maps after sanitization (1.685281ms)
+✔ independent bounded: caller config mutation and unknown driver keys cannot replace explicit TLS/target (1.545149ms)
+✔ independent bounded: multi-slot acquisition completion does not bypass older FIFO waiting admission (2.808782ms)
+✔ independent bounded: reentrant release cannot reuse slot before raw cleanup returns (0.686417ms)
+✔ independent bounded: event before scheduled SQL dispatch closes lease without sending SQL (0.984499ms)
+✔ independent bounded: release uncertainty remains quarantined even if raw side effect finished (4.732587ms)
+✔ independent bounded: sanitizer deliberately masks message/where required by deferred real-engine proof (2.442993ms)
+✔ independent pinned pg protocol: SQLSTATE rollback waits for ReadyForQuery without leaking raw errors (7.888855ms)
+✔ independent pinned pg protocol: local query read timeout forces real Client.end active-query stream retirement, not SQL cancel (30.079563ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 932.084333
