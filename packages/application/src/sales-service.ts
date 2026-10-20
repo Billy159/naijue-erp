@@ -3,17 +3,10 @@ import { requireDomain } from "../../domain/src/errors.ts";
 import type { InventoryLedgerRow } from "../../domain/src/inventory.ts";
 import { addMoney, addQuantity, minorAmount, negateMoney, negateQuantity, nextVersion, version } from "../../domain/src/values.ts";
 import type { EntityId } from "../../domain/src/values.ts";
-import type { SalesAuditValues, SalesCommand, SalesDependencies, SalesResult, SalesTransaction } from "./ports.ts";
+import type { SalesCommand, SalesDependencies, SalesResult, SalesTransaction } from "./ports.ts";
 import { requestHash } from "./request-hash.ts";
+import { salesChangeEvidence } from "./sales-change-evidence.ts";
 
-function auditValues(document: SalesDocument): SalesAuditValues {
-  const { number, businessType, businessDate, hallId, salespersonId, customerId, warehouseId, status, version: currentVersion, grossAmount, orderDiscount, netDue, note } = document.header;
-  return {
-    header: { number, businessType, businessDate, hallId, salespersonId, customerId, warehouseId, status, version: currentVersion, grossAmount, orderDiscount, netDue, note },
-    lines: document.lines.map(({ id, lineNo, skuId, quantity, referencePrice, dealPrice, pricingRule, discountTenths, zeroConfirmed, lineAmount, allocatedDiscount, isGift, snapshot, isCurrent }) => ({ id, lineNo, skuId, quantity, referencePrice, dealPrice, pricingRule, discountTenths, zeroConfirmed, lineAmount, allocatedDiscount, isGift, snapshot, isCurrent })),
-    settlements: document.settlements
-  };
-}
 function validateDraft(draft: SalesDraft): void {
   requireDomain(draft.header.number.length > 0, "INVALID_NUMBER", "Document number cannot be empty");
   requireDomain(["SALE", "RETURN", "EXCHANGE"].includes(draft.header.businessType), "INVALID_BUSINESS_TYPE", "Unsupported sales business type");
@@ -56,7 +49,9 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
       // the same isolated value snapshot before the first asynchronous boundary.
       const command = structuredClone(input);
       requireDomain(command.requestKey.length > 0, "INVALID_REQUEST_KEY", "An original operation key is required");
-      const fingerprint = requestHash(command);
+      // The stable account and exact business command identify a retry. Trusted
+      // authorization context can change, but is still rechecked before replay.
+      const fingerprint = requestHash({ ...command, actor: { accountId: command.actor.accountId } });
       return unitOfWork.transaction(async tx => {
         const prior = await tx.getReceipt(command.actor.accountId, command.requestKey);
         if (prior) {
@@ -134,7 +129,7 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
         }
         await tx.putRuntimeSales(next);
         await tx.appendAudit({ id: newId("audit"), operationId, actorAccountId: command.actor.accountId, salesId, action: command.action, occurredAt: timestamp,
-          before: previous ? auditValues(previous) : null, after: auditValues(next) });
+          ...salesChangeEvidence(previous, next) });
         const result: SalesResult = { operationId, salesId, version: next.header.version, status: next.header.status, ledgerEntryIds: entryIds };
         await tx.insertReceipt({ id: operationId, actorAccountId: command.actor.accountId, requestKey: command.requestKey, requestHash: fingerprint,
           action: command.action, targetSalesId: salesId, status: "COMMITTED", result, completedAt: timestamp });

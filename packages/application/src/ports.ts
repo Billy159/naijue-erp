@@ -19,7 +19,11 @@ export interface OperationReceiptRow {
   readonly targetSalesId: EntityId<"sales">; readonly status: "COMMITTED"; readonly result: SalesResult; readonly completedAt: string;
 }
 export interface SalesAuditValues {
-  readonly header: Pick<SalesDocument["header"], "number" | "businessType" | "businessDate" | "hallId" | "salespersonId" | "customerId" | "warehouseId" | "status" | "version" | "grossAmount" | "orderDiscount" | "netDue" | "note">;
+  /** Native old/new versions are always present; all other header values are actual changes only. */
+  readonly header: Pick<SalesDocument["header"], "version"> & Partial<Pick<SalesDocument["header"],
+    "number" | "businessType" | "businessDate" | "hallId" | "salespersonId" | "customerId" | "warehouseId" | "status"
+    | "grossAmount" | "orderDiscount" | "netDue" | "note" | "updatedAt" | "approvedByAccountId" | "approvedAt">>;
+  /** Complete before/after values of changed rows only, never copies of unchanged retained detail. */
   readonly lines: readonly Pick<SalesLineRow, "id" | "lineNo" | "skuId" | "quantity" | "referencePrice" | "dealPrice" | "pricingRule" | "discountTenths" | "zeroConfirmed" | "lineAmount" | "allocatedDiscount" | "isGift" | "snapshot" | "isCurrent">[];
   readonly settlements: SalesDocument["settlements"];
 }

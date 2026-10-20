@@ -1,0 +1,6 @@
+a2d2d7da6e701e319642c76208de2075933eb8e721626e1d9ef8ebaee1d424e2  packages/application/src/ports.ts
+5c68fa95cc64e27b213ef34962d199a4f7d26c7c31b339502aa3e4288cb039ff  packages/application/src/sales-service.ts
+ea4a297280b64832bda821498f93e1dfe6125eadf8433ddab0b834086b59bc11  packages/application/src/sales-change-evidence.ts
+803251c65d70623351357f60efb28b1845d0b6a07169b7ed8e6cb17e34784b85  adapters/postgres/src/sales-unit-of-work.ts
+8baeae7710f080c502b292ea08b892b7ade390ee0af85647dcfe50d322508ac0  tests/sales.test.ts
+e9dca6acbb8b4c25976bca1b754c7e94dc3eca0d7ebf4a1967b638d802a7edd1  tests/postgres-protocol.test.ts

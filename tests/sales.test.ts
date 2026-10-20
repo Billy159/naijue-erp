@@ -238,3 +238,95 @@ test("SYNTHETIC: duplicate/foreign lines and more than three settlement rows fai
     assert.equal(f.store.snapshot().headers.size, 0); assert.equal(f.store.snapshot().receipts.size, 0);
   }
 });
+
+test("SYNTHETIC: memo-only evidence is constant size, with no unchanged current or retained business rows", async () => {
+  const sizes: number[] = [];
+  for (const count of [1, 250]) {
+    const f = fixture(); const base = syntheticDraft();
+    const lines = Array.from({ length: count }, (_, index) => ({ ...base.lines[0]!, id: sid("salesLine", 3000 + index), lineNo: index + 1 }));
+    const total = minorAmount(String(250 * count));
+    const draft = { ...base, lines, header: { ...base.header, grossAmount: total, netDue: total }, settlements: base.settlements.map(row => ({ ...row, amount: total })) };
+    await f.service.execute({ action: "SAVE", actor, requestKey: "s", expectedVersion: null, draft });
+    await f.service.execute({ action: "SAVE", actor, requestKey: "memo", expectedVersion: version(1), draft: { ...draft, header: { ...draft.header, note: "CHANGED MEMO" } } });
+    const evidence = f.store.snapshot().audit[1]!;
+    assert.deepEqual(evidence.before, { header: { version: version(1), note: "SYNTHETIC ONLY" }, lines: [], settlements: [] });
+    assert.deepEqual(evidence.after, { header: { version: version(2), note: "CHANGED MEMO" }, lines: [], settlements: [] });
+    assert.equal(evidence.actorAccountId, actor.accountId); assert.equal(evidence.salesId, ids.sales);
+    assert.equal(evidence.operationId, [...f.store.snapshot().receipts.values()][1]?.result.operationId);
+    sizes.push(JSON.stringify(evidence).length);
+    // Removing a line retains native provenance; later memo edits must not copy it.
+    if (count > 1) {
+      await f.service.execute({ action: "SAVE", actor, requestKey: "remove", expectedVersion: version(2), draft: { ...draft, lines: lines.slice(1) } });
+      await f.service.execute({ action: "SAVE", actor, requestKey: "retained-memo", expectedVersion: version(3), draft: { ...draft, lines: lines.slice(1), header: { ...draft.header, note: "RETAINED MEMO" } } });
+      const retainedEdit = f.store.snapshot().audit[3]!;
+      assert.deepEqual(retainedEdit.before?.lines, []); assert.deepEqual(retainedEdit.after.lines, []);
+      assert.equal(f.document().lines.find(row => row.id === lines[0]?.id)?.isCurrent, false);
+    }
+  }
+  assert.equal(sizes[0], sizes[1]); assert.ok(sizes[0]! < 600);
+});
+
+test("SYNTHETIC: edited, removed and added lines have complete evidence while unchanged siblings stay native", async () => {
+  const f = fixture(); const base = syntheticDraft();
+  const lines = [0, 1, 2].map(index => ({ ...base.lines[0]!, id: sid("salesLine", 4000 + index), lineNo: index + 1 }));
+  const draft = { ...base, lines, header: { ...base.header, grossAmount: minorAmount("750"), netDue: minorAmount("750") }, settlements: base.settlements.map(row => ({ ...row, amount: minorAmount("750") })) };
+  await f.service.execute({ action: "SAVE", actor, requestKey: "s", expectedVersion: null, draft });
+  const edited = { ...lines[0]!, quantity: quantity("3"), lineAmount: minorAmount("375"), referencePrice: minorAmount("250"), snapshot: { ...lines[0]!.snapshot, barcode: "CHANGED-BARCODE" } };
+  const added = { ...lines[1]!, id: sid("salesLine", 4003), quantity: quantity("1"), lineAmount: minorAmount("125") };
+  await f.service.execute({ action: "SAVE", actor, requestKey: "edit", expectedVersion: version(1), draft: { ...draft, lines: [edited, added, lines[2]!] } });
+  const audit = f.store.snapshot().audit[1]!;
+  assert.deepEqual(audit.before?.lines.map(row => row.id), [lines[0]!.id, lines[1]!.id]);
+  assert.deepEqual(new Set(audit.after.lines.map(row => row.id)), new Set([edited.id, lines[1]!.id, added.id]));
+  assert.equal(audit.before?.lines.find(row => row.id === edited.id)?.quantity, 2n);
+  assert.equal(audit.after.lines.find(row => row.id === edited.id)?.quantity, 3n);
+  assert.equal(audit.after.lines.find(row => row.id === edited.id)?.snapshot.barcode, "CHANGED-BARCODE");
+  assert.equal(audit.before?.lines.find(row => row.id === lines[1]!.id)?.isCurrent, true);
+  assert.equal(audit.after.lines.find(row => row.id === lines[1]!.id)?.isCurrent, false);
+  assert.deepEqual(f.document().lines.find(row => row.id === lines[2]!.id), lines[2]);
+  assert.deepEqual(audit.before?.settlements, []); assert.deepEqual(audit.after.settlements, []);
+});
+
+test("SYNTHETIC: settlement additions, removals and changed account/direction/amount retain exact sparse evidence", async () => {
+  const f = fixture(); const base = syntheticDraft();
+  const settlements = [0, 1, 2].map(index => ({ ...base.settlements[0]!, id: sid("settlement", 5000 + index), lineNo: index + 1, amount: minorAmount("100") }));
+  const draft = { ...base, settlements };
+  await f.service.execute({ action: "SAVE", actor, requestKey: "s", expectedVersion: null, draft });
+  const changed = { ...settlements[0]!, paymentAccountId: sid("paymentAccount", 5003), direction: "REFUND" as const, amount: minorAmount("99") };
+  const added = { ...settlements[1]!, id: sid("settlement", 5004) };
+  await f.service.execute({ action: "SAVE", actor, requestKey: "edit", expectedVersion: version(1), draft: { ...draft, settlements: [changed, added, settlements[2]!] } });
+  const audit = f.store.snapshot().audit[1]!;
+  assert.deepEqual(audit.before?.settlements, settlements.slice(0, 2));
+  assert.deepEqual(audit.after.settlements, [changed, added]);
+  assert.deepEqual(audit.before?.lines, []); assert.deepEqual(audit.after.lines, []);
+  assert.deepEqual(audit.before?.header, { version: version(1) }); assert.deepEqual(audit.after.header, { version: version(2) });
+});
+
+test("SYNTHETIC: APPROVE, UNAPPROVE and VOID carry workflow evidence without unchanged lines or settlements", async () => {
+  const f = fixture();
+  await f.service.execute({ action: "SAVE", actor, requestKey: "s", expectedVersion: null, draft: syntheticDraft() });
+  for (const [index, action] of (["APPROVE", "UNAPPROVE", "VOID"] as const).entries()) {
+    await f.service.execute({ action, actor, requestKey: action, expectedVersion: version(index + 1), salesId: ids.sales });
+    const audit = f.store.snapshot().audit[index + 1]!;
+    assert.deepEqual(audit.before?.lines, []); assert.deepEqual(audit.after.lines, []);
+    assert.deepEqual(audit.before?.settlements, []); assert.deepEqual(audit.after.settlements, []);
+    assert.equal(audit.before?.header.version, index + 1); assert.equal(audit.after.header.version, index + 2);
+    assert.equal(audit.before?.header.grossAmount, undefined); assert.equal(audit.after.header.number, undefined);
+    assert.equal(audit.after.header.status, action === "APPROVE" ? "APPROVED" : action === "VOID" ? "VOID" : "DRAFT");
+    if (action === "APPROVE") assert.equal(audit.after.header.approvedByAccountId, actor.accountId);
+    if (action === "UNAPPROVE") assert.equal(audit.after.header.approvedAt, null);
+  }
+});
+
+test("SYNTHETIC: original account/key/body survives trusted hall changes but current access is rechecked", async () => {
+  const seen: (typeof actor.hallId)[] = [];
+  const f = fixture({ authorize: async context => { seen.push(context.hallId); } });
+  const command: SalesCommand = { action: "SAVE", actor, requestKey: "s", expectedVersion: null, draft: syntheticDraft() };
+  const saved = await f.service.execute(command); const before = f.store.snapshot();
+  const currentActor = { ...actor, hallId: sid("hall", 6000) };
+  assert.deepEqual(await f.service.execute({ ...command, actor: currentActor }), saved);
+  assert.equal(seen.at(-1), currentActor.hallId); assert.deepEqual(f.store.snapshot(), before);
+  await assert.rejects(f.service.execute({ ...command, actor: currentActor, draft: { ...command.draft, header: { ...command.draft.header, note: "DIFFERENT BUSINESS BODY" } } }), { code: "IDEMPOTENCY_CONFLICT" });
+  f.revokeAccess();
+  await assert.rejects(f.service.execute({ ...command, actor: { ...actor, hallId: null } }), { code: "FORBIDDEN" });
+  assert.deepEqual(f.store.snapshot(), before);
+});

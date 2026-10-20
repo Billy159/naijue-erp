@@ -82,22 +82,39 @@ function salesRead(document?: SalesDocument, balances: Record<string, unknown>[]
   }
   return steps;
 }
-function documentWrites(document: SalesDocument, isNew = false): Step[] {
+function documentWrites(document: SalesDocument, isNew = false, previous: SalesDocument = storedDocument()): Step[] {
+  const oldLines = new Map(isNew ? [] : previous.lines.map(line => [line.id, line]));
+  const changedLines = document.lines.filter(line => !oldLines.has(line.id) || requestHash(oldLines.get(line.id)) !== requestHash(line));
+  const freedIds = changedLines.filter(line => oldLines.get(line.id)?.isCurrent).map(line => line.id);
+  const oldSettlements = new Map(isNew ? [] : previous.settlements.map(row => [row.id, row]));
+  const nextIds = new Set(document.settlements.map(row => row.id));
+  const removedIds = [...oldSettlements.keys()].filter(id => !nextIds.has(id));
   return [{ sql: isNew ? /^INSERT INTO naijue_erp.sales_header/ : /^UPDATE naijue_erp.sales_header/, inspect(values, sql) {
     assert.equal(values[10], moneyToSql(document.header.grossAmount)); assert.equal(values[12], moneyToSql(document.header.netDue));
     if (!isNew) { assert.match(sql, /WHERE id = \$1 AND version = \$21 AND stock_basis = 'RUNTIME_LEDGER'/); assert.equal(values[20], document.header.version - 1); }
-  } }, { sql: /^UPDATE naijue_erp.sales_line SET is_current = false/ },
-  ...document.lines.map<Step>(line => ({ sql: /^INSERT INTO naijue_erp.sales_line/, inspect(values, sql) {
+  } },
+  ...(freedIds.length ? [{ sql: /^UPDATE naijue_erp.sales_line SET is_current = false/, inspect(values: unknown[], sql: string) {
+    assert.match(sql, /AND id = ANY\(\$2::uuid\[\]\) AND is_current/); assert.deepEqual(values, [ids.sales, freedIds]);
+  } }] : []),
+  ...changedLines.map<Step>(line => ({ sql: /^INSERT INTO naijue_erp.sales_line/, inspect(values, sql) {
     assert.deepEqual(values.slice(17), [line.pricingRule, line.discountTenths, line.zeroConfirmed]);
+    assert.equal(values[0], line.id); assert.equal(values[16], line.isCurrent);
     assert.match(sql, /pricing_rule, discount_tenths, zero_confirmed/); assert.equal(typeof values[4], "string"); assert.match(sql, /WHERE sales_line.sales_id = EXCLUDED.sales_id/); } })),
-  { sql: /^DELETE FROM naijue_erp.sales_settlement WHERE sales_id = \$1 AND NOT \(id = ANY\(\$2::uuid\[\]\)\)/ },
-  ...document.settlements.map<Step>(() => ({ sql: /^INSERT INTO naijue_erp.sales_settlement/, inspect(_values, sql) {
+  ...(removedIds.length ? [{ sql: /^DELETE FROM naijue_erp.sales_settlement WHERE sales_id = \$1 AND id = ANY\(\$2::uuid\[\]\)/,
+    inspect(values: unknown[]) { assert.deepEqual(values, [ids.sales, removedIds]); } }] : []),
+  ...document.settlements.filter(row => !oldSettlements.has(row.id) || requestHash(oldSettlements.get(row.id)) !== requestHash(row)).map<Step>(row => ({ sql: /^INSERT INTO naijue_erp.sales_settlement/, inspect(values, sql) {
+    assert.equal(values[0], row.id); assert.equal(values[5], moneyToSql(row.amount));
     assert.match(sql, /pa.name, pm.name/); assert.match(sql, /THEN sales_settlement.account_name_snapshot ELSE EXCLUDED.account_name_snapshot END/);
     assert.match(sql, /WHERE sales_settlement.sales_id = EXCLUDED.sales_id/);
   } }))];
 }
 function finalWrites(action: string): Step[] {
-  return [{ sql: /^INSERT INTO naijue_erp.audit_change/, inspect(values) { assert.equal(values[4], action); const after = JSON.parse(String(values[9])); assert.equal(typeof after.header.grossAmount, "string"); } },
+  return [{ sql: /^INSERT INTO naijue_erp.audit_change/, inspect(values) {
+    assert.equal(values[4], action); const after = JSON.parse(String(values[9]));
+    if (after.header.grossAmount !== undefined) assert.equal(typeof after.header.grossAmount, "string");
+    assert.equal(after.header.version, values[7]);
+    if (values[8] !== null) assert.equal(JSON.parse(String(values[8])).header.version, values[6]);
+  } },
     { sql: /^INSERT INTO naijue_erp.operation_receipt/, inspect(values, sql) { assert.match(sql, /target_type, target_id, status, result_data/); assert.equal(values[4], action); assert.equal(String(values[3]).length, 64); } }];
 }
 function service(client: ProtocolClient, allowed: (command: string) => void = () => undefined) {
@@ -166,7 +183,7 @@ test("pg protocol: repeated SKU actual lines retain distinct ledger sources and 
   const document = storedDocument(draft); const command = approve(); const next = storedDocument(draft, "APPROVED", 2);
   const effects = ["-2", "-5"].flatMap<Step>((amount, i) => [{ sql: /^INSERT INTO naijue_erp.inventory_ledger/, inspect(values) { assert.equal(values[6], i === 0 ? ids.line : ids.line2); } },
     { sql: /^UPDATE naijue_erp.inventory_balance/, inspect(values) { assert.equal(values[2], amount); assert.equal(values[3], i + 2); assert.equal(values[6], i + 1); } }]);
-  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(document), ...effects, ...documentWrites(next), ...finalWrites("APPROVE"), commit()]);
+  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(document), ...effects, ...documentWrites(next, false, document), ...finalWrites("APPROVE"), commit()]);
   assert.equal((await service(client).execute(command)).ledgerEntryIds.length, 2); client.done();
 });
 test("pg protocol: missing inventory coverage fails closed without insert/upsert/default zero", async () => {
@@ -188,7 +205,7 @@ test("pg protocol: UNAPPROVE appends a linked inverse without mutating original 
 });
 test("pg protocol: same actor/key replay returns original result only after current authorization", async () => {
   const command = approve(); const result: SalesResult = { operationId: sid("operation", 2000), salesId: ids.sales, version: version(2), status: "APPROVED", ledgerEntryIds: [sid("ledger", 2001)] };
-  const receipt = { id: result.operationId, actor_account_id: actor.accountId, request_key: command.requestKey, request_hash: requestHash(command), action: command.action,
+  const receipt = { id: result.operationId, actor_account_id: actor.accountId, request_key: command.requestKey, request_hash: requestHash({ ...command, actor: { accountId: command.actor.accountId } }), action: command.action,
     target_type: "SALES", target_sales_id: ids.sales, status: "COMMITTED", result, completed_at: time };
   const client = new ProtocolClient([begin(), ...receiptRead(command, receipt), ...salesRead(storedDocument(undefined, "APPROVED", 2)), commit()]); let allowed = 0;
   assert.deepEqual(await service(client, () => allowed++).execute(command), result); assert.equal(allowed, 1);
@@ -211,7 +228,7 @@ test("pg protocol: settlement mismatch still blocks APPROVE before any mutation"
   const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(document), rollback()]);
   await assert.rejects(() => service(client).execute(command), { code: "SETTLEMENT_MISMATCH" }); client.done();
 });
-for (const point of ["ledger", "balance", "header", "line", "settlement", "audit", "receipt"] as const) {
+for (const point of ["ledger", "balance", "header", "audit", "receipt"] as const) {
   test(`pg protocol: ${point} write failure requests ROLLBACK, not COMMIT (not durability evidence)`, async () => {
     const command = approve(); const next = storedDocument(undefined, "APPROVED", 2);
     const writes: Step[] = [{ sql: /^INSERT INTO naijue_erp.inventory_ledger/ }, { sql: /^UPDATE naijue_erp.inventory_balance/ }, ...documentWrites(next), ...finalWrites("APPROVE")];
@@ -234,9 +251,11 @@ test("pg protocol: balance CAS zero-row result rejects stale quantity and reques
     await tx.putBalance({ ...balance, quantity: quantity("-3"), version: version(2) }); }), { code: "VERSION_CONFLICT" }); client.done();
 });
 test("pg protocol: foreign line ownership failure cannot silently skip a line write", async () => {
-  const document = storedDocument(); const writes = documentWrites(storedDocument(undefined, "DRAFT", 2)).slice(0, 3); writes[2] = { ...writes[2]!, count: 0 };
+  const document = storedDocument();
+  const next = { ...storedDocument(undefined, "DRAFT", 2), lines: document.lines.map(line => ({ ...line, referencePrice: minorAmount("999") })) };
+  const writes = documentWrites(next).slice(0, 3); writes[2] = { ...writes[2]!, count: 0 };
   const client = new ProtocolClient([begin(), ...salesRead(document), ...writes, rollback()]);
-  await assert.rejects(() => uow(client).transaction(async tx => { await tx.getSales(ids.sales); await tx.putRuntimeSales(storedDocument(undefined, "DRAFT", 2)); }), { code: "FOREIGN_LINE_ID" }); client.done();
+  await assert.rejects(() => uow(client).transaction(async tx => { await tx.getSales(ids.sales); await tx.putRuntimeSales(next); }), { code: "FOREIGN_LINE_ID" }); client.done();
 });
 
 
@@ -265,4 +284,98 @@ test("pg protocol: transfer receipt cannot be decoded or reused by a sales comma
   const client = new ProtocolClient([begin(), ...receiptRead(command, { target_type: "TRANSFER" }), rollback()]);
   const service = createSalesService({ unitOfWork: uow(client), rules: SYNTHETIC_RULES, authorization: { async assertAllowed() {} }, now: () => time, newId: kind => sid(kind, 888) });
   await assert.rejects(service.execute(command), { code: "IDEMPOTENCY_CONFLICT" }); client.done();
+});
+
+test("pg protocol: memo-only SAVE writes header/evidence/receipt but never unchanged lines or settlement snapshots", async () => {
+  const source = storedDocument();
+  const draft = { ...syntheticDraft(), header: { ...syntheticDraft().header, note: "MEMO ONLY" } };
+  const next = storedDocument(draft, "DRAFT", 2);
+  const command: SalesCommand = { action: "SAVE", actor, requestKey: "memo-only", expectedVersion: version(1), draft };
+  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(source), ...documentWrites(next), ...finalWrites("SAVE"), commit()]);
+  await service(client).execute(command);
+  assert.ok(client.calls.every(call => !/^(INSERT INTO|UPDATE|DELETE FROM) naijue_erp.sales_(line|settlement)/.test(call.sql)));
+  const evidence = client.calls.find(call => /^INSERT INTO naijue_erp.audit_change/.test(call.sql))!.values;
+  assert.deepEqual(evidence.slice(6, 8), [1, 2]);
+  assert.deepEqual(JSON.parse(String(evidence[8])), { header: { version: 1, note: source.header.note }, lines: [], settlements: [] });
+  assert.deepEqual(JSON.parse(String(evidence[9])), { header: { version: 2, note: "MEMO ONLY" }, lines: [], settlements: [] });
+  client.done();
+});
+
+test("pg protocol: replaced line frees only its owned current position and leaves unchanged retained/sibling rows untouched", async () => {
+  const base = syntheticDraft("SALE", ["2", "3"]);
+  const retained = { ...base.lines[0]!, id: sid("salesLine", 6100), isCurrent: false, snapshot: { ...base.lines[0]!.snapshot, productName: "OLD RETAINED SNAPSHOT" } };
+  const source = { ...storedDocument(base), lines: [retained, ...base.lines] };
+  const replacement = { ...base.lines[0]!, id: sid("salesLine", 6101), snapshot: { ...base.lines[0]!.snapshot, sizeName: "NEW SNAPSHOT" } };
+  const draft = { ...base, lines: [replacement, base.lines[1]!] };
+  const next = { ...storedDocument(draft, "DRAFT", 2), lines: [retained, { ...base.lines[0]!, isCurrent: false }, ...draft.lines] };
+  const command: SalesCommand = { action: "SAVE", actor, requestKey: "replace-line", expectedVersion: version(1), draft };
+  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(source), ...documentWrites(next, false, source), ...finalWrites("SAVE"), commit()]);
+  await service(client).execute(command);
+  const lineWrites = client.calls.filter(call => /^INSERT INTO naijue_erp.sales_line/.test(call.sql));
+  assert.deepEqual(lineWrites.map(call => call.values[0]), [ids.line, replacement.id]);
+  const free = client.calls.find(call => /^UPDATE naijue_erp.sales_line/.test(call.sql))!;
+  assert.deepEqual(free.values, [ids.sales, [ids.line]]);
+  assert.ok(client.calls.every(call => !/^DELETE FROM naijue_erp.sales_line/.test(call.sql)));
+  const audit = JSON.parse(String(client.calls.find(call => /^INSERT INTO naijue_erp.audit_change/.test(call.sql))!.values[9]));
+  assert.deepEqual(audit.lines.map((row: { id: string }) => row.id), [ids.line, replacement.id]);
+  client.done();
+});
+
+test("pg protocol: current line-position swap releases only changed positions before guarded upserts", async () => {
+  const draft = syntheticDraft("SALE", ["2", "3"]); const source = storedDocument(draft);
+  const next = { ...storedDocument(draft, "DRAFT", 2), lines: source.lines.map(line => ({ ...line, lineNo: line.lineNo === 1 ? 2 : 1 })) };
+  const client = new ProtocolClient([begin(), ...salesRead(source), ...documentWrites(next, false, source), commit()]);
+  await uow(client).transaction(async tx => { await tx.getSales(ids.sales); await tx.putRuntimeSales(next); });
+  assert.deepEqual(client.calls.find(call => /^UPDATE naijue_erp.sales_line/.test(call.sql))?.values, [ids.sales, [ids.line, ids.line2]]);
+  client.done();
+});
+
+test("pg protocol: settlement SAVE deletes only removed rows and writes only changed/new values with snapshot/ownership guards", async () => {
+  const base = syntheticDraft(); const first = base.settlements[0]!;
+  const rows = [first, { ...first, id: sid("settlement", 6200), lineNo: 2 }, { ...first, id: sid("settlement", 6201), lineNo: 3 }];
+  const source = storedDocument({ ...base, settlements: rows });
+  const changed = { ...first, paymentAccountId: sid("paymentAccount", 6202), direction: "REFUND" as const, amount: minorAmount("99") };
+  const added = { ...rows[1]!, id: sid("settlement", 6203) };
+  const draft = { ...base, settlements: [changed, added, rows[2]!] }; const next = storedDocument(draft, "DRAFT", 2);
+  const command: SalesCommand = { action: "SAVE", actor, requestKey: "settlements", expectedVersion: version(1), draft };
+  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(source), ...documentWrites(next, false, source), ...finalWrites("SAVE"), commit()]);
+  await service(client).execute(command);
+  assert.deepEqual(client.calls.filter(call => /^INSERT INTO naijue_erp.sales_settlement/.test(call.sql)).map(call => call.values[0]), [changed.id, added.id]);
+  const evidence = client.calls.find(call => /^INSERT INTO naijue_erp.audit_change/.test(call.sql))!.values;
+  const before = JSON.parse(String(evidence[8])), after = JSON.parse(String(evidence[9]));
+  assert.deepEqual(before.settlements.map((row: { id: string }) => row.id), [first.id, rows[1]!.id]);
+  assert.deepEqual(after.settlements.map((row: { id: string }) => row.id), [changed.id, added.id]);
+  assert.equal(after.settlements[0].amount, "99"); assert.equal(after.settlements[0].direction, "REFUND");
+  client.done();
+});
+
+for (const point of ["line", "settlement"] as const) {
+  test(`pg protocol: changed ${point} SAVE failure still requests rollback before audit/receipt`, async () => {
+    const base = syntheticDraft();
+    const draft = point === "line" ? { ...base, lines: base.lines.map(line => ({ ...line, referencePrice: minorAmount("999") })) }
+      : { ...base, settlements: base.settlements.map(row => ({ ...row, amount: minorAmount("999") })) };
+    const command: SalesCommand = { action: "SAVE", actor, requestKey: point, expectedVersion: version(1), draft };
+    const writes = documentWrites(storedDocument(draft, "DRAFT", 2));
+    const target = writes.findIndex(step => step.sql.source === `^INSERT INTO naijue_erp.sales_${point}`); assert.ok(target >= 0);
+    const failure = new Error(`SYNTHETIC ${point} failure`); const planned = writes.slice(0, target + 1); planned[target] = { ...planned[target]!, error: failure };
+    const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(storedDocument()), ...planned, rollback()]);
+    await assert.rejects(service(client).execute(command), error => error === failure); client.done();
+  });
+}
+
+test("pg protocol: stable-body receipt replay survives trusted hall change but denies revoked access without writes", async () => {
+  const original = approve(); const currentActor = { ...actor, hallId: sid("hall", 6300) };
+  const command = { ...original, actor: currentActor };
+  const result: SalesResult = { operationId: sid("operation", 6301), salesId: ids.sales, version: version(2), status: "APPROVED", ledgerEntryIds: [sid("ledger", 6302)] };
+  const receipt = { id: result.operationId, actor_account_id: actor.accountId, request_key: command.requestKey,
+    request_hash: requestHash({ ...original, actor: { accountId: actor.accountId } }), action: original.action, target_type: "SALES", target_sales_id: ids.sales, status: "COMMITTED", result, completed_at: time };
+  const client = new ProtocolClient([begin(), ...receiptRead(command, receipt), ...salesRead(storedDocument(undefined, "APPROVED", 2)), commit()]);
+  const serviceWithAccess = (client: ProtocolClient, allow: boolean) => createSalesService({ unitOfWork: uow(client), rules: SYNTHETIC_RULES,
+    authorization: { async assertAllowed(context) { assert.equal(context.hallId, currentActor.hallId); if (!allow) throw new Error("SYNTHETIC revoked current hall"); } },
+    now: () => time, newId: kind => sid(kind, 6399) });
+  assert.deepEqual(await serviceWithAccess(client, true).execute(command), result);
+  assert.ok(client.calls.every(call => !/^(INSERT|UPDATE|DELETE)/.test(call.sql))); client.done();
+  const denied = new ProtocolClient([begin(), ...receiptRead(command, receipt), ...salesRead(storedDocument(undefined, "APPROVED", 2)), rollback()]);
+  await assert.rejects(serviceWithAccess(denied, false).execute(command), /SYNTHETIC revoked current hall/);
+  assert.ok(denied.calls.every(call => !/^(INSERT|UPDATE|DELETE)/.test(call.sql))); denied.done();
 });

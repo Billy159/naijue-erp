@@ -1,5 +1,6 @@
 import type { Pool } from "pg";
 import type { OperationReceiptRow, SalesAuditRow, SalesResult, SalesTransaction, SalesUnitOfWork, StoredSales } from "../../../packages/application/src/ports.ts";
+import { sameSalesLine, sameSalesSettlement } from "../../../packages/application/src/sales-change-evidence.ts";
 import type { SalesDocument, SalesHeaderRow, SalesLineRow, SalesSettlementRow } from "../../../packages/domain/src/documents.ts";
 import type { InventoryBalanceRow, InventoryLedgerRow } from "../../../packages/domain/src/inventory.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
@@ -110,6 +111,8 @@ class PostgresSalesTransaction implements SalesTransaction {
   private active = true;
   private sales: { readonly id: EntityId<"sales">; readonly version: Version | null; readonly stockBasis: StoredSales["stockBasis"] } | undefined;
   private readonly balances = new Map<string, InventoryBalanceRow>();
+  private readonly previousLines = new Map<string, SalesLineRow>();
+  private readonly previousSettlements = new Map<EntityId<"settlement">, SalesSettlementRow>();
   private receiptKey: string | undefined;
   close(): void { this.active = false; }
   private readonly client: PgSalesClient;
@@ -141,6 +144,8 @@ class PostgresSalesTransaction implements SalesTransaction {
     this.sales = { id: salesId, version: header.version, stockBasis };
     const lines = (await this.query(LINE_SELECT, [salesId])).rows.map(decodeLine);
     const settlements = (await this.query(SETTLEMENT_SELECT, [salesId])).rows.map(decodeSettlement);
+    for (const line of lines) this.previousLines.set(line.id, structuredClone(line));
+    for (const row of settlements) this.previousSettlements.set(row.id, structuredClone(row));
     // Lock every possible posting key in one stable order, not caller line order. No missing balance is manufactured.
     if (stockBasis === "RUNTIME_LEDGER") for (const balance of (await this.query(BALANCE_SELECT, [header.warehouseId, salesId])).rows.map(decodeBalance)) {
       this.balances.set(key(balance.warehouseId, balance.skuId), balance);
@@ -164,9 +169,17 @@ class PostgresSalesTransaction implements SalesTransaction {
       result = await this.query(`UPDATE naijue_erp.sales_header SET ${fields.slice(1).map((field, index) => `${field} = $${index + 2}`).join(", ")} WHERE id = $1 AND version = $21 AND stock_basis = 'RUNTIME_LEDGER'`, [...values, versionToSql(loaded.version)]);
     }
     requireDomain(result.rowCount === 1, "VERSION_CONFLICT", "Document compare-and-swap failed");
-    // Free current positions first, so swapping positions and replacing a retained line do not hit transient uniqueness conflicts.
-    await this.query("UPDATE naijue_erp.sales_line SET is_current = false WHERE sales_id = $1", [h.id]);
-    for (const line of document.lines) {
+    const changedLines = document.lines.filter(line => {
+      requireDomain(line.salesId === h.id, "FOREIGN_LINE_ID", "Line must belong to this sales document");
+      const previous = this.previousLines.get(line.id);
+      return previous === undefined || !sameSalesLine(previous, line);
+    });
+    // Only changed current rows need their positions freed. The existing immediate
+    // partial unique index still permits swaps/replacements, without touching every
+    // unchanged row on a memo edit or posting-only action.
+    const freedIds = changedLines.filter(line => this.previousLines.get(line.id)?.isCurrent).map(line => line.id);
+    if (freedIds.length > 0) await this.query("UPDATE naijue_erp.sales_line SET is_current = false WHERE sales_id = $1 AND id = ANY($2::uuid[]) AND is_current", [h.id, freedIds]);
+    for (const line of changedLines) {
       requireDomain(line.salesId === h.id, "FOREIGN_LINE_ID", "Line must belong to this sales document");
       const s = line.snapshot;
       const lineValues = [line.id, line.salesId, line.lineNo, line.skuId, line.quantity.toString(), line.referencePrice === null ? null : moneyToSql(line.referencePrice), moneyToSql(line.dealPrice),
@@ -176,9 +189,13 @@ class PostgresSalesTransaction implements SalesTransaction {
         ON CONFLICT (id) DO UPDATE SET ${lineColumns.slice(2).map(column => `${column} = EXCLUDED.${column}`).join(", ")} WHERE sales_line.sales_id = EXCLUDED.sales_id`, lineValues);
       requireDomain(written.rowCount === 1, "FOREIGN_LINE_ID", "A retained line identity cannot move between documents");
     }
-    await this.query("DELETE FROM naijue_erp.sales_settlement WHERE sales_id = $1 AND NOT (id = ANY($2::uuid[]))", [h.id, document.settlements.map(row => row.id)]);
+    const nextSettlementIds = new Set(document.settlements.map(row => row.id));
+    const removedSettlementIds = [...this.previousSettlements.keys()].filter(id => !nextSettlementIds.has(id));
+    if (removedSettlementIds.length > 0) await this.query("DELETE FROM naijue_erp.sales_settlement WHERE sales_id = $1 AND id = ANY($2::uuid[])", [h.id, removedSettlementIds]);
     for (const row of document.settlements) {
       requireDomain(row.salesId === h.id, "FOREIGN_SETTLEMENT_ID", "Settlement must belong to this sales document");
+      const previous = this.previousSettlements.get(row.id);
+      if (previous !== undefined && sameSalesSettlement(previous, row)) continue;
       const written = await this.query(`INSERT INTO naijue_erp.sales_settlement (id, sales_id, line_no, payment_account_id, direction, amount, account_name_snapshot, method_name_snapshot)
         SELECT $1, $2, $3, pa.id, $5, $6, pa.name, pm.name FROM naijue_erp.payment_account pa
         JOIN naijue_erp.payment_method pm ON pm.id = pa.payment_method_id WHERE pa.id = $4
