@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "d9a28441777291d5436ec66682307f697501b20e",
+  "status": "PASS",
+  "aggregateCommand": "npm run check:all",
+  "aggregateExit": 0,
+  "offline": true,
+  "existingPinnedDependenciesOnly": true,
+  "tests": 1015,
+  "pass": 1015,
+  "fail": 0,
+  "DOMGroups": 78,
+  "dependencyEntries": 176,
+  "rootTypeBuildSmoke": "PASS",
+  "webTypeBuildAndBundledSmoke": "PASS",
+  "separateRealPgHttpEvidence": "evidence/postgres-real-http-read-acceptance-d9a2844/",
+  "separateRealPgHttpTests": 16,
+  "notEstablished": [
+    "listening HTTP transport",
+    "browser",
+    "TLS/cookie browser transport",
+    "real production policy providers",
+    "real business data",
+    "visual parity",
+    "performance",
+    "deployment"
+  ],
+  "scope": "Exact isolated Git archive; later uncommitted sales detail/policy work excluded."
+}
