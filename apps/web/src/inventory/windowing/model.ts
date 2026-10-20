@@ -107,6 +107,8 @@ export interface InventoryScrollAnchor {
 
 /** Overscan is a technical safety boundary, not a business page-size limit. */
 export const MAX_INVENTORY_OVERSCAN = 100;
+/** Validate caller geometry before adapters translate coordinate systems. */
+export function validateInventoryWindowViewport(viewport: InventoryWindowViewport): void { validateViewport(viewport); }
 export const inventoryColorFitKey = (productId: string, colorId: string, fitId: string): string => JSON.stringify([productId, colorId, fitId]);
 export const inventorySectionKey = (product: InventoryProduct): string => JSON.stringify([product.sizeGroup.id, product.sizes.map(size => [size.id, size.label])]);
 const warehouseKey = (groupKey: string, warehouseId: string): string => JSON.stringify([groupKey, warehouseId]);
@@ -235,6 +237,14 @@ export class InventoryWindowModel {
       return { section: entry.section, range, columns, fixedLeadingWidth: viewport.fixedLeadingWidth, fixedTrailingWidth: viewport.fixedTrailingWidth };
     });
     return { range, rows, sections, stickyHeader: pinned };
+  }
+
+  /** O(1) column geometry for retaining one focused cell outside a window. */
+  column(sectionIndex: number, index: number): InventoryWindowColumn | null {
+    const entry = this.#sectionIndices[sectionIndex];
+    const size = entry?.section.sizes[index];
+    if (!entry || !size) return null;
+    return { index, size, left: entry.offsets[index]!, width: entry.offsets[index + 1]! - entry.offsets[index]! };
   }
 
   resolveCell(address: InventoryLogicalCell): InventoryCellLocation | null {

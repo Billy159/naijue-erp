@@ -1,0 +1,40 @@
+✔ canonical rows/section order and exact source totals survive windowing without cell traversal (8.681335ms)
+✔ 100/200/500 product synthetic pages have bounded visible work, not fabricated latency (1660.727118ms)
+✔ column window stays bounded as size axes grow and retains exact offscreen cells (19.959558ms)
+✔ half-open windows handle boundaries, empty data, zero viewport and invalid geometry (2.90533ms)
+✔ collapse takes immutable snapshots, preserves canonical IDs/totals, and describes reveal without expanding (1.358188ms)
+✔ sticky header metadata includes external offset and push-off by the next section (0.432273ms)
+✔ logical focus skips nonexistent SKU coordinates, preserves warehouse/size identities and stays in a section (1.552668ms)
+✔ scroll-to-cell computes axis coordinates without mounting all cells or fabricating missing quantities (253.817388ms)
+✔ a changing data reference cannot relabel an old canonical read (0.528588ms)
+✔ ID-based scroll anchors survive preceding collapse and fall back when their row is hidden (3.016237ms)
+✔ single inline projection follows frozen Demo detail and collapse structure, independent of window edges (1.225853ms)
+✔ optional source section description is outside thead and never pins thead prematurely (1.015403ms)
+✔ cached variable row measurements preserve actual geometry without measuring or materializing cells (3.492177ms)
+✔ anchor capture/restore is exactly idempotent at the reported 220px description/header boundary (3.327333ms)
+✔ anchor identity round trips across every physical scroll offset with descriptions and measured header heights (8.385713ms)
+✔ a description anchor retains its captured body-edge context across preceding collapse and measurement reflow (2.7543ms)
+✔ normal-row anchors use the current fully pinned header height after measurement or collapse reflow (2.508137ms)
+✔ boundary anchors retain their transition phase without becoming hidden by grown or shrunk headers (2.86221ms)
+✔ native-table plan is bounded for 100 complete products (130.561861ms)
+✔ native-table plan is bounded for 200 complete products (151.438016ms)
+✔ native-table plan is bounded for 500 complete products (421.565135ms)
+✔ retained logical focus adds one row and at most one column, not its intervening inventory (507.878481ms)
+✔ section margins remain outside table rows and both axes preserve complete extents (5.875042ms)
+✔ collapsed targets never retain a hidden warehouse row; indexed columns fail safely (2.572355ms)
+✔ original invalid viewport cannot be sanitized by section-coordinate translation (1.747075ms)
+✔ section margins and transformed scroll positions cannot overflow safe geometry (3.396216ms)
+✔ only the current data ticket can publish; cancelled/late reads retain their own prior facts (11.073598ms)
+✔ scope cancellation and account/permission replacement clear references and invalidate scheduled focus (4.869716ms)
+✔ focus survives valid data/layout changes by logical ID but stale render actions never survive (8.550221ms)
+✔ a newer focus/clear invalidates earlier scheduled focus without changing data identity (2.420116ms)
+✔ disposal, cancellation or replacement during measurement cannot publish a partially built model (9.307774ms)
+✔ reflow cannot restore a model after its scope is invalidated during measurement (1.743962ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2435.182936

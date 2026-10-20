@@ -1,0 +1,67 @@
+import assert from 'node:assert/strict';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { pathToFileURL, fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
+import { build } from 'esbuild';
+import { JSDOM } from 'jsdom';
+const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const temporary = await mkdtemp(path.join(repo, 'evidence/.independent-window-'));
+const baseline = execFileSync('git', ['show', '361b14d:apps/web/src/inventory/inventory-matrix.tsx'], {cwd:repo, encoding:'utf8'});
+const dom = new JSDOM('<!doctype html><div id="root"></div><button id="outside">outside</button>', { url:'https://synthetic.test/' });
+for (const name of ['window','document','HTMLElement','Node','Event','MouseEvent','KeyboardEvent','FocusEvent']) Object.defineProperty(globalThis,name,{configurable:true,value:dom.window[name]});
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+let root;
+try {
+ const output=path.join(temporary,'entry.mjs');
+ await build({stdin:{contents:`export { act, createElement } from 'react'; export { createRoot } from 'react-dom/client'; export { renderToStaticMarkup } from 'react-dom/server'; export { InventoryMatrix, defaultDisplaySettings } from './apps/web/src/inventory/inventory-matrix.tsx'; export { InventoryMatrix as BaselineMatrix } from 'baseline-matrix'; export { syntheticPage, testLayout, testViewport, testAddress } from './apps/web/src/inventory/windowing/fixtures.ts'; export { InventoryWindowModel } from './apps/web/src/inventory/windowing/model.ts'; export { createInventoryRenderPlan } from './apps/web/src/inventory/windowing/render-plan.ts';`,resolveDir:repo,loader:'tsx'},outfile:output,bundle:true,format:'esm',platform:'node',packages:'external',jsx:'automatic',logLevel:'warning',plugins:[{name:'baseline-source',setup(plugin){plugin.onResolve({filter:/^baseline-matrix$/},()=>({path:'baseline-matrix',namespace:'baseline'}));plugin.onLoad({filter:/.*/,namespace:'baseline'},()=>({contents:baseline,loader:'tsx',resolveDir:path.join(repo,'apps/web/src/inventory')}));}}]});
+ const {act,createElement,createRoot,renderToStaticMarkup,InventoryMatrix,BaselineMatrix,defaultDisplaySettings,syntheticPage,testLayout,testViewport,InventoryWindowModel,createInventoryRenderPlan}=await import(pathToFileURL(output).href);
+ const host=document.getElementById('root'); root=createRoot(host);
+ const noop=()=>{}; const page=syntheticPage(3,2,3,12);
+ const base={data:page,settings:defaultDisplaySettings,collapsedProducts:new Set(),collapsedColors:new Set(),toggleProduct:noop,toggleColor:noop,actions:{onOpenCell:noop,onViewProduct:noop}};
+ for(const settings of [defaultDisplaySettings,{...defaultDisplaySettings,subtotal:true,total:false,fit:true,supplier:true,sizeDescription:true}]) for(const folds of [{collapsedProducts:new Set(),collapsedColors:new Set()},{collapsedProducts:new Set(['product-0']),collapsedColors:new Set(['["product-1","color-0","fit-0"]'])}]){
+  const props={...base,settings,...folds}; assert.equal(renderToStaticMarkup(createElement(InventoryMatrix,props)),renderToStaticMarkup(createElement(BaselineMatrix,props)));
+ }
+ console.log('PASS exact eager static markup equals 361b14d across default/metadata/subtotal/total/description and product/color-FIT folds.');
+ let controller=new AbortController(); const layout=testLayout({sizeWidth:76,heights:{'section-description':0,'section-header':36,warehouse:48,'color-total':36,'product-total':36}});
+ let viewport=testViewport({width:1020,height:280,fixedLeadingWidth:568,fixedTrailingWidth:146}); let requested=null; let errors=[];
+ let props={...base,windowing:{scope:{signal:controller.signal},layout,viewport,sectionGap:12,onScrollRequest:position=>{requested=position;},onInvalidGeometry:error=>errors.push(error.message)}};
+ const render=async()=>{await act(async()=>root.render(createElement(InventoryMatrix,props)));};
+ const focus=async node=>{await act(async()=>node.focus());};
+ const key=async(node,value)=>{await act(async()=>node.dispatchEvent(new KeyboardEvent('keydown',{key:value,bubbles:true,cancelable:true})));};
+ await render(); const first=host.querySelector('.mx-stock'); await focus(first); await key(first,'End'); assert.ok(requested?.scrollLeft>0);
+ const newer=host.querySelectorAll('.mx-stock')[1]; await focus(newer); const newerAddress=newer.dataset.stockAddress;
+ viewport={...viewport,...requested}; props={...props,windowing:{...props.windowing,viewport}}; await render();
+ assert.equal(document.activeElement?.dataset.stockAddress,newerAddress,'A delayed old scroll acknowledgment must not steal newer stock focus.');
+ console.log('PASS delayed scroll acknowledgment does not override newer manually focused stock cell.');
+ await focus(document.getElementById('outside')); viewport={...viewport,scrollTop:5000}; props={...props,windowing:{...props.windowing,viewport}}; await render();
+ assert.equal(host.querySelector(`[data-stock-address='${newerAddress}']`),null,'Focus outside matrix must release retained old row/column.');
+ console.log('PASS leaving matrix releases offscreen focus retention.');
+ viewport={...viewport,scrollTop:0,scrollLeft:0}; props={...props,windowing:{...props.windowing,viewport}}; await render();
+ await focus(host.querySelector('.mx-stock')); await key(document.activeElement,'End'); const oldRequest=requested;
+ const oldController=controller; controller=new AbortController();
+ props={...props,windowing:{...props.windowing,scope:{signal:controller.signal}}}; await render();
+ viewport={...viewport,...oldRequest}; props={...props,windowing:{...props.windowing,viewport}}; await render();
+ assert.notEqual(document.activeElement?.dataset.stockAddress && JSON.parse(document.activeElement.dataset.stockAddress).sizeId,'size-11');
+ viewport={...viewport,scrollTop:5000}; props={...props,windowing:{...props.windowing,viewport}}; await render(); assert.equal(host.querySelectorAll('table').length,0);
+ viewport={...viewport,scrollTop:0,scrollLeft:0}; props={...props,windowing:{...props.windowing,viewport}}; await render();
+ await act(async()=>oldController.abort()); assert.ok(host.querySelector('[data-inventory-windowed]'));
+ console.log('PASS scope replacement cancels old pending focus/retention; old-scope abort cannot clear new-scope facts.');
+ const model=new InventoryWindowModel(page,layout);
+ for(const override of [{scrollTop:-1},{scrollTop:Infinity},{height:-1},{height:Infinity}]) assert.throws(()=>createInventoryRenderPlan(model,{...viewport,...override},12),RangeError);
+ console.log('PASS negative/nonfinite original vertical viewport rejected before coordinate transform.');
+ const multi = new InventoryWindowModel({...page,products:page.products.map((product,index)=>({...product,sizeGroup:{id:`group-${index}`,label:`group-${index}`}}))},layout);
+ for(const gap of [1e16,Number.MAX_VALUE]) assert.throws(()=>createInventoryRenderPlan(multi,viewport,gap),RangeError);
+ console.log('PASS huge finite section gaps reject unsafe or infinite combined geometry.');
+ const proto=HTMLElement.prototype, original=proto.getBoundingClientRect;
+ proto.getBoundingClientRect=function(){const expected=Number(this.dataset.windowRowHeight??this.dataset.windowColumnWidth??0); return {x:0,y:0,top:0,left:0,right:0,bottom:0,width:this.dataset.windowColumnWidth?expected:0,height:this.dataset.windowRowHeight?expected+2:0,toJSON(){}};};
+ viewport={...viewport,scrollTop:0,scrollLeft:0}; props={...props,windowing:{...props.windowing,viewport}}; await render();
+ assert.equal(host.querySelector('[data-inventory-windowed]'),null); assert.ok(errors.some(message=>/measurement|measured|matches/.test(message)));
+ proto.getBoundingClientRect=original;
+ console.log('PASS simulated mounted geometry mismatch triggers eager fallback (protocol only, not real browser layout).');
+ await act(async()=>controller.abort()); assert.equal(host.querySelectorAll('table').length,0);
+ console.log('PASS abort removes facts even after geometry fallback.');
+} finally {
+ if(root) await import('react').then(({act})=>act(async()=>root.unmount()));
+ dom.window.close(); await rm(temporary,{recursive:true,force:true});
+}

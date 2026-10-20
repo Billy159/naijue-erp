@@ -1,0 +1,8 @@
+PASS exact eager static markup equals 361b14d across default/metadata/subtotal/total/description and product/color-FIT folds.
+PASS delayed scroll acknowledgment does not override newer manually focused stock cell.
+PASS leaving matrix releases offscreen focus retention.
+PASS scope replacement cancels old pending focus/retention; old-scope abort cannot clear new-scope facts.
+PASS negative/nonfinite original vertical viewport rejected before coordinate transform.
+PASS huge finite section gaps reject unsafe or infinite combined geometry.
+PASS simulated mounted geometry mismatch triggers eager fallback (protocol only, not real browser layout).
+PASS abort removes facts even after geometry fallback.

@@ -1,0 +1,11 @@
+{
+  "parent_commit": "e5faa4fd69fbcb2cc7e67e3bcd7beb7576e0c8c0",
+  "checks": "32 unit tests; bounded DOM suite; scoped web types;8 independent probes and exact eager markup parity",
+  "default_route": "Still eager. Opt-in measured adapter only; no default performance fix claimed.",
+  "rollback": "Revert this commit; no external state changes.",
+  "limits": [
+    "real browser layout",
+    "sticky wrapping and accessibility",
+    "actual frame latency/memory"
+  ]
+}

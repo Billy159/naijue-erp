@@ -1,0 +1,24 @@
+{
+  "baseline": "361b14d",
+  "reviewedAt": "2026-10-20T19:06:41.101Z",
+  "outcome": "PASS_SOURCE_PROTOCOL_ONLY",
+  "productionEdits": false,
+  "defaultRoute": "eager",
+  "realBrowserVerification": "not executed; release gate remains",
+  "sourceManifest": "apps/web/src/inventory/windowing/verification/renderer-source.sha256",
+  "sources": {
+    "apps/web/src/inventory/inventory-matrix.tsx": "ef5c7755c399eb66298b18aee3005d656f88b35bc8f99fd221f7f6cec13d4ae7",
+    "apps/web/src/inventory/windowing/model.ts": "daf4e35efbe55fc373ed68a6942d914a07ab658920c8007a0aa98a2005c1a66c",
+    "apps/web/src/inventory/windowing/render-plan.ts": "45933eed83fdc1daeb96ea1a6b294821a1a80694b2d98683e69b5b19b371147c",
+    "apps/web/src/inventory/windowing/render-plan.test.ts": "bbd9ec60f7e352599acb237a0ab1d5304e70828d1ff43581daf8b8bc8ea78a4d",
+    "apps/web/src/inventory/windowing/README.md": "a657f01237b033df08799c9dffc04e9eee3729ca0a4b9eb443ffb0d866e47965",
+    "apps/web/src/inventory/tests/windowing-entry.tsx": "6a9c0a5726739b3ee40dc12a5d277812919f88d3db21d924e378c5e8440e981b",
+    "apps/web/src/inventory/tests/run-windowing-dom-tests.mjs": "3ef71915f8b3702b578221c22d77f413485ecb5f5670533dc7ec13b6089086a5"
+  },
+  "evidenceSha256": {
+    "evidence/inventory-window-render-independent-probes.mjs": "d34609b940ce2dbdba5382813f8b469f89b9cb95fcf4f8ea4a6f314cb1c8c8e5",
+    "evidence/inventory-window-render-independent-probes.log": "ee16f02e03a72607ed7ade9ed6e8c1aa1a0e5092e6f9cdaf14c8121745db2982",
+    "evidence/inventory-window-render-independent-review.md": "ff09a9502abd3cdf31da821367464c834535a70261817973691fd741212e11f7"
+  },
+  "independentProbeExit": 0
+}
