@@ -1,0 +1,12 @@
+{
+  "dependency": "@arco-design/web-react",
+  "version": "2.66.16",
+  "source": "Frozen Demo DEPENDENCIES.json and preinstalled package bytes",
+  "mode": "isolated offline package-lock-only --ignore-scripts; no node_modules inside generator directory",
+  "previousLockedEntries": 143,
+  "newLockedEntries": 176,
+  "existingVersionResolvedIntegrityChanged": [],
+  "installationPerformed": false,
+  "networkRequested": false,
+  "previewSizeAndRuntime": "NOT_VERIFIED"
+}
