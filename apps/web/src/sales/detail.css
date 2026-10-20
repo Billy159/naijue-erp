@@ -1,0 +1,55 @@
+/* Separate action-only stylesheet asset. Source: frozen b8bcfe3
+ * sales-current.js:165 and sales-detail-alignment.css. Never statically import
+ * from the sales route: the trusted host readiness capability owns loading. */
+.sales-detail-facts .sales-document-state h1{font-size:20px;line-height:28px;margin:0;font-weight:600}
+.sales-detail-facts .sales-document-state .actions>.iw-text-button{height:32px;min-height:32px;padding:3px 8px;border:0;border-radius:4px;font-size:13px}
+.sales-detail-facts .tc-status{display:inline-block;flex:none;border-radius:4px;padding:3px 7px;font-size:12px;font-weight:500;line-height:20px}
+.sales-detail-facts [data-document-status=pending]{background:var(--ca-warning-soft);color:var(--ca-warning)}
+.sales-detail-facts [data-document-status=effective]{background:var(--ca-success-soft);color:var(--ca-success)}
+.sales-detail-facts [data-document-status=void]{background:var(--ca-neutral-tag-bg);color:var(--ca-neutral-tag-ink)}
+.sales-detail-facts.sale-editor{display:flex;flex-direction:column;gap:0;height:auto;min-height:0;overflow:visible;min-width:0;font:13px var(--ca-font-sans);color:var(--ca-ink)}
+.sales-detail-facts .sales-document-state{display:flex;align-items:center;justify-content:flex-start;flex-wrap:nowrap;gap:8px;min-height:40px;position:static;z-index:auto;margin:0 0 8px;padding:0;border:0;background:#fff}
+.sales-detail-facts .sales-document-state .actions{display:flex;flex-wrap:nowrap;gap:4px;margin-left:auto}
+.sales-detail-facts .sale-muted{color:var(--ca-ink-2);font-size:12px}
+.sales-detail-facts .sale-doc-header{display:block;margin:0 0 8px;padding:0;border:0;background:transparent;flex:none}
+.sales-detail-facts .sale-doc-fields{display:grid;grid-template-columns:160px repeat(5,minmax(0,1fr));align-items:start;gap:8px}
+.sales-detail-facts .tc-gold-field{display:flex;flex-direction:column;align-items:stretch;gap:4px;min-width:0;margin:0;color:var(--ca-ink-2);font-size:12px}
+.sales-detail-facts .sale-field-label{display:block;min-height:16px;line-height:16px;white-space:nowrap}
+.sales-detail-facts .sale-read-value{box-sizing:border-box;display:flex;align-items:center;width:100%;min-width:0;height:32px;min-height:32px;padding:5px 9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);color:var(--ca-ink);font-size:13px;line-height:20px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sales-detail-facts .sale-number-value{display:flex;align-items:center;min-height:32px;color:var(--ca-ink);font-size:13px;font-weight:600;line-height:20px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.sales-detail-facts .sale-due-value{display:flex;align-items:center;height:32px;color:var(--ca-ink);font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sales-detail-facts .sale-payment-field{grid-column:4 / span 3;min-width:0}
+.sales-detail-facts .sale-payment-rows{display:grid;gap:5px;min-width:0}
+.sales-detail-facts .sale-payment-read{display:grid;grid-template-columns:100px minmax(160px,1fr) 110px;align-items:start;gap:7px;min-height:32px;max-width:560px;color:var(--ca-ink);font-size:13px;line-height:20px}
+.sales-detail-facts .sale-payment-read>*{min-width:0;overflow-wrap:anywhere}
+.sales-detail-facts .sale-payment-read strong{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.sales-current-name{display:block;color:var(--ca-ink-3);font-size:11px;line-height:18px}
+.sales-detail-facts .sale-note-row{display:grid;grid-template-columns:minmax(0,1fr);align-items:stretch;gap:4px;min-height:0;margin:2px 0 8px;color:var(--ca-ink-2);font-size:12px}
+.sales-detail-facts .sale-note-read{color:var(--ca-ink);font-size:13px;line-height:20px;white-space:pre-wrap;overflow-wrap:anywhere}
+.sales-detail-facts .sale-entry-section{display:flex;flex-direction:column;flex:none;min-height:0}
+.sales-detail-facts .sale-section-head{display:flex;align-items:center;justify-content:flex-start;gap:10px;height:32px;min-height:32px;margin:0 0 4px;flex:none}
+.sales-detail-facts .sale-section-head strong{font-size:13px;font-weight:500}
+.sales-detail-facts .sale-lines{flex:none;min-height:0;max-height:min(55dvh,560px);overflow:auto;border:1px solid var(--ca-line);border-radius:0;background:#fff}
+.sales-detail-facts .sale-lines-table{width:100%;min-width:1200px;table-layout:fixed;border-collapse:collapse}
+.sales-detail-facts .sale-lines-table th,.sales-detail-facts .sale-lines-table td{min-width:0;height:36px;padding:4px 7px;border-bottom:1px solid var(--ca-line);font-size:12px;line-height:18px;vertical-align:middle;overflow-wrap:anywhere}
+.sales-detail-facts .sale-lines-table th{z-index:4}.sales-detail-facts .sale-lines-table td{font-size:13px;background:#fff}
+.sales-detail-facts .sale-lines-table :is(th,td):nth-child(n+5):nth-child(-n+9){text-align:right}
+.sales-detail-facts .sale-lines-table :is(th,td):nth-child(10){text-align:center}
+.sales-detail-facts .sale-product-cell{display:flex;align-items:center;min-width:0;gap:6px}
+.sales-detail-facts .sale-product-cell strong{flex:none;max-width:52%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sales-detail-facts .sale-product-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sales-detail-facts .sale-gift{display:inline-block;flex:none;padding:1px 5px;border-radius:3px;background:var(--ca-primary-soft);color:var(--ca-primary-ink);font-size:12px}
+.sales-detail-facts .negative{color:var(--ca-critical)}
+.sales-detail-facts .sale-summary{box-sizing:border-box;display:flex;flex:none;justify-content:space-between;align-items:center;gap:16px;width:100%;min-height:42px;margin:8px 0 0;padding:5px 2px;border:0;border-top:1px solid var(--ca-line);border-radius:0;background:transparent}
+.sales-detail-facts .sale-summary-primary,.sales-detail-facts .sale-summary-detail{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.sales-detail-facts .sale-summary strong{color:var(--ca-ink);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sales-line-record,.sales-record-metadata{margin:8px 0 0;color:var(--ca-ink-2);font-size:12px;line-height:20px}
+.sales-line-record{padding:8px 10px;border:1px solid var(--ca-line);background:var(--ca-surface-subtle)}
+.sales-line-record>div{display:flex;align-items:center;justify-content:space-between}
+.sales-record-metadata summary{cursor:pointer}
+.sales-line-record dl,.sales-record-metadata dl{display:flex;gap:20px;flex-wrap:wrap;margin:6px 0 0}
+.sales-line-record dd,.sales-record-metadata dd{margin:0;color:var(--ca-ink);overflow-wrap:anywhere}
+.sales-detail-page :is(button,input,select,summary):focus-visible{outline:2px solid var(--ca-primary);outline-offset:2px}
+@media(max-width:1100px){.sales-detail-facts .sale-doc-fields{grid-template-columns:repeat(3,minmax(0,1fr))}.sales-detail-facts .sale-payment-field{grid-column:1/-1}}
+@media(max-width:700px){.sales-detail-facts .sales-document-state{flex-wrap:wrap}.sales-detail-facts .sales-document-state .actions{flex-wrap:wrap;margin-left:0}.sales-detail-facts .sale-doc-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.sales-detail-facts .sale-summary{flex-wrap:wrap}}
+@media(max-width:620px){.sales-detail-facts .sale-payment-read{grid-template-columns:80px minmax(0,1fr) 90px}}

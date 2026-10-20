@@ -28,7 +28,7 @@ export class ApplicationController {
     const routes = configuration.routes;
     const inventory = routes.inventory ? Object.freeze({ ...routes.inventory, actions: Object.freeze({ ...routes.inventory.actions }), stylesheet: stylesheet(routes.inventory.stylesheet) }) : undefined;
     if (routes.inventory && (!routes.inventory.actions || (routes.inventory.actions.onOpenCell !== undefined && typeof routes.inventory.actions.onOpenCell !== 'function'))) throw new TypeError('Explicit inventory action capabilities are required.');
-    const sales = routes.sales ? Object.freeze({ ...routes.sales, stylesheet: stylesheet(routes.sales.stylesheet) }) : undefined;
+    const sales = routes.sales ? Object.freeze({ stylesheet: stylesheet(routes.sales.stylesheet), ...(routes.sales.detailStylesheet !== undefined ? { detailStylesheet: stylesheet(routes.sales.detailStylesheet) } : {}) }) : undefined;
     const transfers = routes.transfers ? Object.freeze({ stylesheet: stylesheet(routes.transfers.stylesheet), detailStylesheet: stylesheet(routes.transfers.detailStylesheet), ...(routes.transfers.product ? { product: Object.freeze({ stylesheet: stylesheet(routes.transfers.product.stylesheet) }) } : {}) }) : undefined;
     const parties = routes.parties ? Object.freeze({ ...routes.parties, stylesheet: stylesheet(routes.parties.stylesheet) }) : undefined;
     if (parties && typeof parties.newRequestKey !== 'function') throw new TypeError('A party request-key provider is required.');
@@ -108,8 +108,8 @@ export class ApplicationController {
     if (this.#disposed) return;
     this.authentication.dispose(); this.#disposed = true;
     this.#context.clear(); this.#partySession?.workspace.dispose(); this.#partySession = null; this.#leaves.clear();
-    const transfer = this.#configuration.routes.transfers;
-    const styles = [...Object.values(this.#configuration.routes).map(route => route.stylesheet), ...(transfer ? [transfer.detailStylesheet] : []), ...(transfer?.product ? [transfer.product.stylesheet] : [])];
+    const sales = this.#configuration.routes.sales, transfer = this.#configuration.routes.transfers;
+    const styles = [...Object.values(this.#configuration.routes).map(route => route.stylesheet), ...(sales?.detailStylesheet ? [sales.detailStylesheet] : []), ...(transfer ? [transfer.detailStylesheet] : []), ...(transfer?.product ? [transfer.product.stylesheet] : [])];
     for (const provider of new Set(styles)) {
       try { provider.dispose(); } catch { /* A failed host asset cleanup must not prevent the other owners/DOM from being released. */ }
     }

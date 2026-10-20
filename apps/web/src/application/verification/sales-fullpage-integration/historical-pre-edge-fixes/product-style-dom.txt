@@ -1,0 +1,4 @@
+PASS style handshake 1: caller preload and StrictMode attachments share exactly the configured CSS request; immediate close discards late style failure and never calls relative fallback.
+PASS style handshake 2: local CSS failure remains retryable; real body/tab reads wait for style readiness; module caching does not inject the default relative stylesheet.
+PASS style handshake 3: already-cached module code cannot bypass a different attachment’s required CSS owner.
+PASS style handshake 4: default inventory path remains separately deduplicated/retryable and close-safe after configured consumers; no network, browser or CSS-rendering claim.

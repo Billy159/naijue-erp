@@ -7,7 +7,6 @@ import { fileURLToPath } from 'node:url';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
 const repo = path.resolve(here, '../../..');
-const output = path.join(here, 'artifacts');
 const sha = value => createHash('sha256').update(value).digest('hex');
 async function files(directory) {
   const result = [];
@@ -25,6 +24,8 @@ const before = await snapshot();
 const baseCommit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' }).trim();
 const expectedCommit = process.argv[2];
 if (!expectedCommit || !/^[0-9a-f]{40}$/.test(expectedCommit) || baseCommit !== expectedCommit) throw new Error('Pass the exact 40-character reviewed runtime commit as the first argument; HEAD must match it.');
+// Preserve previous delivered HTML/evidence in their existing directories.
+const output = path.join(here, 'artifacts', baseCommit.slice(0, 12));
 const result = await build({ absWorkingDir: here, entryPoints: ['main.tsx'], bundle: true, platform: 'browser', target: 'es2022', format: 'iife', minify: true, legalComments: 'none', write: false, outdir: 'portable', metafile: true, define: { 'process.env.NODE_ENV': '"production"', 'import.meta.url': '"about:blank"' }, logLevel: 'warning' });
 const script = result.outputFiles.find(file => file.path.endsWith('.js'))?.text;
 const css = result.outputFiles.find(file => file.path.endsWith('.css'))?.text;

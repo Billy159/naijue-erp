@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { LatestQuery } from '../loading/latest-query.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
 import type { SalesReference, SalesReferenceKind, SalesReferenceReader, SalesReferenceParameters, SalesReferencePage } from './contracts.ts';
@@ -7,11 +7,15 @@ import { salesCount } from './model.ts';
 import { useSalesOwnedScope } from './owned-scope.ts';
 
 export function SalesReferenceSelector(props: { readonly parentScope: ReadScope; readonly reader: SalesReferenceReader; readonly kind: SalesReferenceKind;
-  readonly label: string; readonly value: SalesReference | null; readonly onChange: (value: SalesReference | null) => void }) {
+  readonly label: string; readonly active?: boolean; readonly value: SalesReference | null; readonly onChange: (value: SalesReference | null) => void }) {
   const [open, setOpen] = useState(false); const trigger = useRef<HTMLButtonElement>(null);
-  const close = () => { setOpen(false); trigger.current?.focus(); };
-  return <div className="iw-field sales-reference"><label>{props.label}</label><button ref={trigger} type="button" className="iw-control" aria-label={props.label} aria-expanded={open} title={props.value?.label ?? `全部${props.kind === 'warehouse' ? '仓库' : props.label}`} onClick={() => setOpen(value => !value)}><span>{props.value?.label ?? `全部${props.kind === 'warehouse' ? '仓库' : props.label}`}</span><span aria-hidden="true">⌄</span></button>
-    {open && <ReferenceOptions {...props} close={close} />}
+  const active = props.active !== false;
+  // Entering a document detaches the candidate child immediately. Clear its UI
+  // state without moving focus back into the newly hidden list.
+  useLayoutEffect(() => { if (!active) setOpen(false); }, [active]);
+  const close = () => { setOpen(false); if (active) trigger.current?.focus(); };
+  return <div className="iw-field sales-reference"><label>{props.label}</label><button ref={trigger} type="button" className="iw-control" aria-label={props.label} aria-expanded={active && open} disabled={!active} title={props.value?.label ?? `全部${props.kind === 'warehouse' ? '仓库' : props.label}`} onClick={() => { if (active) setOpen(value => !value); }}><span>{props.value?.label ?? `全部${props.kind === 'warehouse' ? '仓库' : props.label}`}</span><span aria-hidden="true">⌄</span></button>
+    {active && open && <ReferenceOptions {...props} close={close} />}
   </div>;
 }
 function ReferenceOptions(props: { readonly parentScope: ReadScope; readonly reader: SalesReferenceReader; readonly kind: SalesReferenceKind;

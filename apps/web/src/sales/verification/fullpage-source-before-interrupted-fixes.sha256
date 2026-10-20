@@ -1,0 +1,11 @@
+bf751f3aa701e0fcfe1fa448526ac3a7b76a59914f966d93384202c21ad4142a  apps/web/src/sales/README.md
+6714ab2bb2111e9bb92d5e844f99df58e37bfac0ed3b88df93a4e7b8bc1da404  apps/web/src/sales/detail-content.tsx
+de8872785233b150a486514391b3fdd4179659e71845e484df6183807911947d  apps/web/src/sales/detail-host.tsx
+aeea0ee5a501f619f5b387415eb10df606610a82d9c156978540948e0fd741a7  apps/web/src/sales/detail-header.tsx
+a3c048e3201eaf0ddc7f5527ec537532a15792134fa17f0ad458329568b83353  apps/web/src/sales/detail.css
+0059851dc5ba9abaae86c1fd7b99e28ecd77af603596677506cdfe779e3b404f  apps/web/src/sales/sales-page.tsx
+42565161a93872801d11b6b32d5c75275154f2c2ad1675ba3d57e9acd88c0b65  apps/web/src/sales/sales-route.tsx
+762e493d3b5c76138b6a2ebc628dea81f448ca8439e023fb6d4baeefd92004b5  apps/web/src/sales/sales.css
+a269d9862f58483370cb297243612afcc9a448694f28bf7dcdeeb10ecb009b8e  apps/web/src/sales/tests/run-build-check.mjs
+58b226ae15732adce0f23dd307160d0ad21c529108a0427c5307c977690bd803  apps/web/src/sales/tests/run-dom-tests.mjs
+eacb8b37f4de703804832cb2a0ba5120f00f792d7111255f344a1c26cedd54c5  apps/web/src/sales/tests/run-frozen-source-check.mjs

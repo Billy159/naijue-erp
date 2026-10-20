@@ -32,6 +32,8 @@ const page = await readFile(path.join(here, '../sales-page.tsx'), 'utf8');
 const detail = await readFile(path.join(here, '../detail-content.tsx'), 'utf8');
 const host = await readFile(path.join(here, '../detail-host.tsx'), 'utf8');
 const css = await readFile(path.join(here, '../sales.css'), 'utf8');
+const detailCss = await readFile(path.join(here, '../detail.css'), 'utf8');
+const header = await readFile(path.join(here, '../detail-header.tsx'), 'utf8');
 const columns = "['日期', '销货单号', '状态', '业务类型', '营业厅', '营业员', '商品信息', '数量', '金额', '最后更新', '操作']";
 assert.ok(page.includes(columns));
 assert.ok(sources['sales-current.js'].includes(columns.replaceAll(', ', ',')));
@@ -41,16 +43,27 @@ for (const [column, width] of finalWidths) assert.ok(css.includes(`.sales-list t
 assert.ok(sources['sales-current.js'].includes('[270,100,122,84,80,95,90,108,99,142]'));
 assert.ok(detail.includes('[270, 100, 122, 84, 80, 95, 90, 108, 99, 142]'));
 assert.ok(sources['sales-detail-alignment.css'].includes('grid-template-columns: 160px repeat(5, minmax(0, 1fr))'));
-assert.ok(css.includes('grid-template-columns:160px repeat(5,minmax(0,1fr))'));
-assert.ok(css.includes('.sales-detail-facts.sale-editor{display:flex;flex-direction:column;'));
-assert.ok(css.includes('.sales-detail-facts .sales-document-state{display:flex;align-items:center;'));
+assert.ok(detailCss.includes('grid-template-columns:160px repeat(5,minmax(0,1fr))'));
+assert.ok(detailCss.includes('.sales-detail-facts.sale-editor{display:flex;flex-direction:column;'));
+assert.ok(detailCss.includes('.sales-detail-facts .sales-document-state{display:flex;align-items:center;'));
 assert.ok(detail.indexOf('className="sale-note-row"') < detail.indexOf('className="sale-entry-section"'));
 assert.match(page, /timeZone: 'Asia\/Shanghai'/);
 assert.match(page, /row\.incomingQuantity/); assert.match(page, /row\.outgoingQuantity/); assert.match(page, /row\.updatedAt/);
 assert.match(page, /历史分类未提供/); assert.match(page, /不根据现商品资料推断/);
 assert.match(sources['sales-summary.js'], /历史单据未记录分类，未按当前商品资料推断/);
-assert.match(host, /details>summary/);
-for (const source of [page, detail, host]) {
+assert.match(sources['sales-current.js'], /<div class="tc-head sale-head"><h1>/);
+assert.match(header, /<div className="tc-head sale-head sales-document-state"><h1>查看销货单<\/h1>/);
+assert.ok(header.indexOf('返回列表') < header.indexOf("['导出', '打印', '操作历史']"));
+assert.match(page, /hidden=\{detailActive\}/);
+assert.match(page, /active=\{!detailActive\}/);
+assert.match(page, /target && !detailAvailable\) setTarget\(null\)/); assert.match(page, /useLayoutEffect/);
+assert.match(page, /disabled=\{!detailAvailable\}/);
+assert.doesNotMatch(host, /<dialog|aria-modal|showModal|onCancel|onKeyDown|event\.key/);
+assert.doesNotMatch(css, /sales-detail-facts|sale-editor|sale-doc-fields|sale-lines-table|sale-summary|sales-detail-dialog/);
+assert.doesNotMatch(detailCss, /position:fixed|::backdrop|sales-detail-dialog/);
+assert.match(host, /loadStyles: props\.loadDetailStyles/);
+assert.doesNotMatch(detail + host, /import ['"][^'"]*detail\.css/);
+for (const source of [page, detail, host, header]) {
   assert.doesNotMatch(source, /LEGACY_REAL|SALES_SERVICE|PRODUCT_CATALOG|ERP_DEMO|real-data-bridge|fetch\(/);
 }
 assert.doesNotMatch(detail, /productReader|readList\(|readReferences\(/);
@@ -77,8 +90,15 @@ try {
   walk(entry);
   const inputs = [...visited].flatMap(name => Object.keys(outputs[name].inputs));
   assert.equal(inputs.some(name => name.endsWith('/detail-content.tsx')), false, 'Detail code remains explicit-action lazy');
+  assert.equal(Object.keys(result.metafile.inputs).some(name => name.endsWith('/detail.css')), false, 'Action CSS has no static/dynamic JS import that esbuild could hoist into route CSS');
+  const routeCss = Object.keys(outputs).find(name => name.endsWith('/sales-route.css'));
+  assert.ok(routeCss); const emittedRouteCss = await readFile(path.resolve(root, routeCss), 'utf8');
+  assert.doesNotMatch(emittedRouteCss, /sales-detail-facts|sale-editor|sale-doc-fields|sale-lines-table|sale-summary/);
+  const style = await build({ absWorkingDir: root, entryPoints: [path.join(here, '../detail.css')], outdir: path.join(temporary, 'action-style'), bundle: true, write: false, metafile: true, logLevel: 'warning' });
+  assert.ok(style.outputFiles.some(file => file.text.includes('.sales-detail-facts')));
+  assert.equal(Object.keys(style.metafile.inputs).length, 1, 'Separate action stylesheet reuses tokens instead of bundling shell/route/Arco');
   assert.ok(Object.keys(result.metafile.inputs).some(name => name.endsWith('/detail-content.tsx')));
   assert.equal(inputs.some(name => /\/(?:inventory|parties)\/|@arco-design\//.test(name)), false);
-  console.log('PASS: 10 frozen source hashes/load order, exact list and line columns/widths, six-field grid, note order, state/focus geometry, timestamp/quantity facts, explicit category gap, no legacy/catalog imports, inert scaffold, lazy detail JavaScript.');
-  console.log('LIMIT: CSS is sales-route lazy, not detail-action lazy. Static/source/synthetic evidence only; no real browser, computed layout acceptance, network waterfall, timing, memory, server or database.');
+  console.log('PASS: 10 frozen source hashes/load order, exact list and line columns/widths, six-field grid, note order, single full-page header/action order and reveal-before-focus lifecycle, timestamp/quantity facts, explicit category gap, no legacy/catalog imports, inert scaffold, action-only detail JavaScript/CSS asset graph.');
+  console.log('LIMIT: visible 返回列表 only; no native browser URL/history integration. Static/source/synthetic evidence only; no real browser, computed layout acceptance, network waterfall, timing, memory, server or database.');
 } finally { await rm(temporary, { recursive: true, force: true }); }

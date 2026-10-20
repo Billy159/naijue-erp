@@ -15,7 +15,7 @@ export async function buildApplication({ entryPoint, outdir }) {
   const result = await build({ ...common, entryPoints: { application: entryPoint }, outdir,
     format: 'esm', splitting: true, metafile: true, chunkNames: 'chunks/[name]-[hash]' });
   const styleManifests = {};
-  for (const [name, input] of Object.entries({ application: 'shell', inventory: 'inventory', sales: 'sales', parties: 'parties', transfers: 'transfers', 'transfer-detail': 'transfer-detail', 'transfer-product': 'transfer-product' })) {
+  for (const [name, input] of Object.entries({ application: 'shell', inventory: 'inventory', sales: 'sales', 'sales-detail': 'sales-detail', parties: 'parties', transfers: 'transfers', 'transfer-detail': 'transfer-detail', 'transfer-product': 'transfer-product' })) {
     const css = await build({ ...common, entryPoints: [path.join(here, 'styles', `${input}.css`)], outfile: path.join(outdir, `${name}.css`), metafile: true });
     // Replace rather than merge the erased eager CSS output metadata.
     for (const [file, output] of Object.entries(css.metafile.outputs)) result.metafile.outputs[file] = output;

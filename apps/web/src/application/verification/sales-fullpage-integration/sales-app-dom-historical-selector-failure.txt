@@ -1,0 +1,20 @@
+PASS sales app 1: malformed optional CSS capability fails closed; auth/route/query never loads detail styles or reads detail/references; actual list uses one explicit bounded query.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(input)
+
+    at change (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/application/tests/run-sales-dom-tests.mjs:27:51)
+    at file:///workspace/shared/naijue-erp-rewrite/apps/web/src/application/tests/run-sales-dom-tests.mjs:64:63 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

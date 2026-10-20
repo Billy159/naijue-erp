@@ -35,6 +35,7 @@ try {
   const salesRoute = closure(entryFor('routes/sales.tsx'));
   const partiesRoute = closure(entryFor('routes/parties.tsx'));
   const transfersRoute = closure(entryFor('routes/transfers.tsx'));
+  const salesDetail = closure(entryFor('../sales/detail-content.tsx'));
   const transferDetail = closure(entryFor('../transfers/detail-content.tsx'));
   const startupInputs = inputsOf(startup);
   for (const file of startupInputs) assert.doesNotMatch(file, /\/(?:inventory|sales|parties|transfers)\/|synthetic|preview\//);
@@ -44,14 +45,25 @@ try {
   assert.ok([...inputsOf(partiesRoute)].some(file => /@arco-design\/web-react\//.test(file)), 'Explicit parties activation must reach the actual installed Arco implementation');
   assert.ok([...inputsOf(transfersRoute)].some(file => /@arco-design\/web-react\//.test(file)), 'Explicit transfer activation must reach real source controls');
   for (const file of inputsOf(transfersRoute)) assert.doesNotMatch(file, /detail-content\.tsx$|detail\.css$|product-drawer-host\.tsx$|product-http-reader\.ts$|\/tests\//, 'Transfer route excludes detail/product actions and fixtures');
-  for (const file of inputsOf(salesRoute)) assert.doesNotMatch(file, /\/inventory\/inventory\.css$/, 'Sales source route must not import the inventory stylesheet');
+  for (const file of inputsOf(salesRoute)) {
+    assert.doesNotMatch(file, /\/inventory\/inventory\.css$/, 'Sales source route must not import the inventory stylesheet');
+    assert.doesNotMatch(file, /\/sales\/(?:detail-content\.tsx|detail\.css)$|\/tests\//, 'Sales route excludes detail action content/CSS and fixtures');
+  }
+  assert.ok([...inputsOf(salesDetail)].some(file => /\/sales\/detail-content\.tsx$/.test(file)), 'Sales detail remains a separately emitted action entry');
 
   const styles = Object.fromEntries(await Promise.all(Object.entries(manifest.styles).map(async ([name, file]) => [name, await readFile(path.join(outdir, file), 'utf8')])));
   assert.match(styles.application, /auth-panel/); assert.match(styles.application, /demo-ui/); assert.match(styles.application, /\.sidebar/);
   assert.doesNotMatch(styles.application, /iw-workbench|sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.mx-|\.arco-/);
   assert.match(styles.inventory, /iw-workbench/); assert.match(styles.inventory, /\.mx-table/);
   assert.doesNotMatch(styles.inventory, /sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.arco-/);
-  assert.match(styles.sales, /sales-workbench/); assert.doesNotMatch(styles.sales, /party-workbench|\.arco-/);
+  assert.match(styles.sales, /sales-workbench/); assert.doesNotMatch(styles.sales, /party-workbench|\.arco-|sales-detail-(?:facts|page|dialog)|sale-editor|sale-doc-fields|sale-lines-table|sale-summary/);
+  assert.match(styles['sales-detail'], /sales-detail-facts/);
+  assert.doesNotMatch(styles['sales-detail'], /sales-workbench|party-workbench|transfer-editor|\.arco-|\.iw-product-drawer|\.pd-tabs|\.mx-/);
+  const salesRouteStyles = byAbsolute.get(path.join(outdir, manifest.styles.sales)); assert.ok(salesRouteStyles);
+  for (const input of Object.keys(outputs[salesRouteStyles].inputs)) assert.doesNotMatch(input, /\/sales\/detail\.css$/, 'Sales route CSS graph excludes the detail action stylesheet');
+  const salesDetailStyles = byAbsolute.get(path.join(outdir, manifest.styles['sales-detail'])); assert.ok(salesDetailStyles);
+  assert.ok(Object.keys(outputs[salesDetailStyles].inputs).some(input => /\/sales\/detail\.css$/.test(input)), 'Sales detail manifest resolves its explicit action CSS');
+  for (const input of Object.keys(outputs[salesDetailStyles].inputs)) assert.doesNotMatch(input, /\/inventory\/|\/sales\/sales\.css$/, 'Sales detail CSS graph excludes inventory and sales-list assets');
   assert.match(styles.parties, /party-workbench/); assert.match(styles.parties, /\.arco-btn/);
   assert.doesNotMatch(styles.parties, /sales-workbench/);
   for (const name of ['sales', 'parties']) {
@@ -76,10 +88,11 @@ try {
   assert.ok(dynamicEntryImports.length >= 4);
   const description = {
     startupInputs: [...startupInputs].sort(), startupCode: [...startup].map(name => path.basename(name)),
-    routeInputCounts: { inventory: inputsOf(inventoryRoute).size, sales: inputsOf(salesRoute).size, parties: inputsOf(partiesRoute).size, transfers: inputsOf(transfersRoute).size, transferDetail: inputsOf(transferDetail).size },
+    routeInputCounts: { inventory: inputsOf(inventoryRoute).size, sales: inputsOf(salesRoute).size, salesDetail: inputsOf(salesDetail).size, parties: inputsOf(partiesRoute).size, transfers: inputsOf(transfersRoute).size, transferDetail: inputsOf(transferDetail).size },
     stylesheetBytes: Object.fromEntries(Object.entries(styles).map(([name, css]) => [name, Buffer.byteLength(css)])),
     guarantees: ['Startup/inventory/sales static closures exclude Arco JS/CSS', 'Parties/transfers use actual installed Arco only after explicit activation',
       'Sales/parties CSS preserves shared controls/tokens but excludes all inventory-specific matrix/settings/drawer assets',
+      'Sales route static code/CSS excludes detail content/styles; separate sales-detail CSS is explicit action-only host configuration',
       'Transfer route excludes detail/product code/data/styles; inline-detail and product action assets are separate'],
     boundary: 'Static emitted-import/CSS analysis only. No browser/network waterfall, timing, memory or frozen-Demo visual acceptance.',
   };

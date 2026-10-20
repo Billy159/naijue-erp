@@ -53,8 +53,16 @@ Capabilities:
   leaves unimplemented stock-ledger clicks disabled. Supply `onOpenCell` only when
   the actual authorized warehouse/SKU ledger capability exists. Inventory and
   product HTTP readers are constructed on inventory activation, never startup.
-- `sales: {stylesheet}`. Uses the existing list/detail reader and bounded historical
-  sales-filter reference reader. This is not a sales edit/save/approve form.
+- `sales: {stylesheet, detailStylesheet?}`. Uses the existing list/detail reader and
+  bounded historical sales-filter reference reader. The optional detail asset is
+  loaded only on a number/查看 action, never route navigation, query or idle. Both
+  action code and CSS must be ready before its first target read. Detail is a
+  full-page read-only document with visible 返回列表, not a modal. Its mounted
+  hidden list preserves executed results, unapplied filter draft, scroll and
+  trigger focus without a new query on return. If `detailStylesheet` is omitted,
+  the list stays usable and both viewing controls remain visibly disabled with
+  an explanation. No relative-URL CSS or dummy provider is substituted. This is
+  not a sales edit/save/approve form, deep-link/history adapter or permission grant.
 - `transfers: {stylesheet, detailStylesheet, product?}`. Explicit navigation loads
   the native read-only transfer route and exactly one bounded first list page.
   Draft typing does not query. Opening a row loads the separate detail CSS/code/
@@ -76,7 +84,10 @@ Capabilities:
 
 
 Every `stylesheet` must provide `load(): Promise<unknown>` that resolves only after
-necessary CSS is usable, and `dispose(): void`. `createRouteStylesheet({document,
+necessary CSS is usable, and `dispose(): void`. An optional sales detail provider
+is validated when supplied and disposed once with the app, including when the
+same provider is explicitly reused for more than one asset role.
+`createRouteStylesheet({document,
 origin,href})` supplies an inert, same-origin HTTPS link implementation with
 in-flight deduplication, error retry and disposal. No URLs are guessed. A host
 must supply emitted asset URLs from its actual output manifest and load its
@@ -175,7 +186,7 @@ configuration nor starts a listener, browser or server.
 
 Esbuild normally aggregates CSS from dynamic imports into entry CSS. This builder
 replaces that eager output with exact shell-only CSS, emits inventory/sales/party
-CSS separately, including independent transfer detail/product action assets, and
+CSS separately, including independent sales-detail and transfer detail/product action assets, and
 copies the existing default-inventory product-drawer CSS to its
 chunk-relative URL. The returned `application-assets.json` supplies filenames for
 the actual host's explicit URL configuration. The startup JS uses ESM splitting;
@@ -189,10 +200,14 @@ shared controls plus their own leaf styles, not the inventory matrix/settings/
 scope-dialog/product-drawer CSS. Party output additionally contains its real
 installed Arco 2.66.16 CSS and source-settings adapters. The startup, inventory and
 sales static JS/CSS closures must remain Arco-free; explicit party or transfer
-navigation may load that implementation. `sales-base.css` is a narrowly scoped preservation of
-the previous sales structural scaffold, explicitly NOT accepted frozen-Demo sales
-appearance. Replace it with exact sales-source restoration later, rather than
-expanding a new generic layout framework.
+navigation may load that implementation. Sales list CSS excludes the loaded
+detail document rules, and its static route code excludes detail content. The
+only detail-named list-shell rule is the tiny pending-frame action alignment that
+keeps Back usable while action CSS is still loading. Actual full-page fields,
+lines, totals and status styling live in the separate `sales-detail.css` manifest
+entry, which imports only `sales/detail.css`; the already-ready sales list owns
+shared tokens and controls. `sales-base.css` is now an inert historical scaffold
+placeholder. Frozen-source structural restoration is not browser/pixel acceptance.
 
 ## Synthetic verification only
 
@@ -200,6 +215,7 @@ Run from repository root, using existing installed dependencies:
 
 - `./node_modules/.bin/tsc --noEmit -p apps/web/src/application/tsconfig.json`
 - `node apps/web/src/application/tests/run-dom-tests.mjs`
+- `node apps/web/src/application/tests/run-sales-dom-tests.mjs`
 - `node apps/web/src/application/tests/run-build-check.mjs`
 - `node apps/web/src/application/tests/run-transfer-dom-tests.mjs`
 - `node apps/web/src/application/tests/run-product-style-handshake-dom-tests.mjs`
@@ -215,8 +231,18 @@ the explicitly activated kind reads its bounded normal-status first page; name
 and enabled-state edits are one atomic command, with original key/content retained
 through uncertain response, absent receipt and exact replay. Earlier pre-Arco
 verification logs are retained as historical, not relabelled as current passes.
-Root package/build/preview/backend/schema files are unchanged by this slice, so
-these scoped commands are not yet added to the repository aggregate scripts.
+Those earlier scoped composition checks predated their addition to repository
+aggregate scripts; their historical logs do not attest later source changes.
+
+The later sales-fullpage checkpoint has separate evidence under
+`verification/sales-fullpage-integration/`; previous verification and portable
+deliveries remain historical, not rewritten as current passes. Its composed
+Sales tests exercise the actual configured route bridge, synthetic native HTTP
+and CSS events: invalid/omitted optional capability, action-only readiness,
+failure/retry, visible Back while CSS is pending, late readiness, retained list
+draft/focus/scroll, cancelled/superseded detail401s, identity replacement/current401
+and deduplicated stylesheet disposal. The split-build test checks actual emitted
+code/CSS graphs, not real-network waterfall, browser geometry or performance.
 
 The transfer/style-handshake checkpoint is recorded separately in
 `verification/transfer-integration/result.json` and its exact source/dependency

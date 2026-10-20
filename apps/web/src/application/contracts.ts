@@ -17,7 +17,12 @@ export interface InventoryRouteConfiguration {
   /** Omit unavailable stock-ledger actions, rather than installing dummy success. */
   readonly actions: Pick<InventoryActions, 'onOpenCell'>;
 }
-export interface SalesRouteConfiguration { readonly stylesheet: RouteStylesheet }
+export interface SalesRouteConfiguration {
+  readonly stylesheet: RouteStylesheet;
+  /** Optional full-page read-only detail action CSS. Omission disables viewing,
+   * not the list. Never loaded with route or shell CSS. */
+  readonly detailStylesheet?: RouteStylesheet;
+}
 export interface TransferRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
   /** Separate full-page detail action CSS. Never loaded with route or shell CSS. */

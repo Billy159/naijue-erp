@@ -4,9 +4,13 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import { JSDOM, requestInterceptor, VirtualConsole } from 'jsdom';
 
-const manifest = JSON.parse(await readFile(new URL('./artifacts/verification.json', import.meta.url), 'utf8'));
+const commit = process.argv[2];
+if (!commit || !/^[0-9a-f]{40}$/.test(commit)) throw new Error('Pass the exact reviewed runtime commit used by the checkpoint-specific portable build. Historical delivered artifacts are not relabelled as current.');
+const artifactDirectory = new URL(`./artifacts/${commit.slice(0, 12)}/`, import.meta.url);
+const manifest = JSON.parse(await readFile(new URL('verification.json', artifactDirectory), 'utf8'));
+assert.equal(manifest.baseCommit, commit);
 const file = pathToFileURL(manifest.file);
-assert.ok(file.href.startsWith(new URL('./artifacts/', import.meta.url).href));
+assert.ok(file.href.startsWith(artifactDirectory.href));
 assert.ok(file.pathname.endsWith(`three-core-pages-synthetic-test-only-${manifest.baseCommit.slice(0, 12)}.html`));
 const html = await readFile(file, 'utf8');
 assert.equal(createHash('sha256').update(html).digest('hex'), manifest.sha256);
@@ -75,13 +79,15 @@ try {
   submit('销货筛选'); await waitFor(() => document.querySelectorAll('.sales-list tbody tr').length === 2, 'two generated native sales documents');
   assert.equal(count('salesList'), 1); assert.match(document.querySelector('.sales-list').textContent, /SYNTH-RETURN-001/);
   const returnTrigger = [...document.querySelectorAll('.sales-number')].find(button => button.textContent === 'SYNTH-RETURN-001'); returnTrigger.focus(); click(returnTrigger);
-  await waitFor(() => document.querySelector('.sales-detail-facts'), 'actual sales return detail');
+  await waitFor(() => document.querySelector('.sales-detail-facts .sale-lines-table'), 'actual sales return detail');
   assert.equal(count('salesDetail'), 1); assert.match(document.querySelector('.sales-detail-facts').textContent, /退回 -1/); assert.match(document.querySelector('.sales-detail-facts').textContent, /合成收退账户（非真实账户）/);
-  click(document.querySelector('[aria-label="关闭销货单详情"]')); await waitFor(() => !document.querySelector('.sales-detail-dialog'), 'sales detail close cleanup');
+  assert.equal(document.querySelector('dialog'), null); assert.equal(document.querySelector('[data-document-list=sales]').hidden, true);
+  click(visibleButton('返回列表')); await waitFor(() => !document.querySelector('.sales-detail-page,.sales-detail-loading'), 'sales detail back cleanup');
   assert.equal(document.querySelector('.sales-detail-facts'), null); assert.equal(document.activeElement, returnTrigger); assert.equal(count('salesList'), 1);
+  assert.equal(document.querySelector('[data-document-list=sales]').hidden, false);
   click(returnTrigger); await waitFor(() => count('salesDetail') === 2, 'fresh sales action read');
-  click(document.querySelector('[aria-label="关闭销货单详情"]')); await pause(150); assert.equal(document.querySelector('.sales-detail-dialog'), null);
-  pass('actual sales query/detail: exact synthetic sale+return, one target per action, close during pending read cannot revive detail, list preserved without refetch');
+  click(visibleButton('返回列表')); await pause(150); assert.equal(document.querySelector('.sales-detail-page,.sales-detail-loading'), null);
+  pass('actual sales query/full-page readonly detail: inline test-only CSS readiness, no modal, exact synthetic sale+return, one target per action, Back during pending read cannot revive detail, list preserved without refetch');
 
   nav('transfers'); await waitFor(() => document.querySelectorAll('.transfer-list-table tbody tr').length === 1, 'actual transfer route activation first page');
   assert.equal(document.querySelector('.sales-workbench'), null); assert.equal(count('transferList'), 1); assert.equal(count('transferDetail'), 0); assert.equal(count('transferWarehouses'), 0);
@@ -108,15 +114,15 @@ try {
   window.history.back(); await waitFor(() => window.location.hash === '#transfers' && document.querySelectorAll('.transfer-list-table tbody tr').length === 1, 'browser Back returns actual transfer route');
   assert.equal(document.querySelector('.iw-results'), null); assert.equal(document.querySelector('.transfer-editor'), null); assert.equal(document.querySelector('.iw-product-drawer'), null); assert.equal(count('transferList'), 3);
   click(document.querySelector('.core-preview-close')); await waitFor(() => document.querySelector('.core-preview-home'), 'page close clears active route');
-  await pause(180); assert.equal(document.querySelector('.transfer-route'), null); assert.equal(document.querySelector('.sales-detail-dialog'), null); assert.equal(document.querySelector('.iw-product-drawer'), null);
+  await pause(180); assert.equal(document.querySelector('.transfer-route'), null); assert.equal(document.querySelector('.sales-detail-page,.sales-detail-loading'), null); assert.equal(document.querySelector('.iw-product-drawer'), null);
   assert.deepEqual(resources, []); assert.deepEqual(network, []); assert.deepEqual(errors, []);
   pass('actual artifact route/page/back/interruption cleanup: fresh scopes, no stale results or late detail revival, no external resource/network request or runtime error');
   const ownNames = (await readdir(new URL('.', import.meta.url), { withFileTypes: true })).filter(entry => entry.isFile()).map(entry => entry.name).sort();
   const ownPreviewSourceHashes = await Promise.all(ownNames.map(async name => ({ file: `apps/web/preview-core-pages/${name}`, sha256: createHash('sha256').update(await readFile(new URL(`./${name}`, import.meta.url))).digest('hex') })));
   const ownPreviewManifestSha256 = createHash('sha256').update(ownPreviewSourceHashes.map(row => `${row.sha256}  ${row.file}\n`).join('')).digest('hex');
-  await writeFile(new URL('./artifacts/preview-source.sha256', import.meta.url), ownPreviewSourceHashes.map(row => `${row.sha256}  ${row.file}\n`).join(''));
+  await writeFile(new URL('preview-source.sha256', artifactDirectory), ownPreviewSourceHashes.map(row => `${row.sha256}  ${row.file}\n`).join(''));
   const report = { ...manifest, ownPreviewSourceHashes, ownPreviewManifestSha256, smoke: { status: 'PASS', groups: passed, externalResourceRequests: resources, networkAttempts: network, runtimeErrors: errors, limitation: 'JSDOM built-artifact DOM smoke only; not native-browser, screenshots/pixels, network waterfall/performance, real data or Space embed acceptance.' } };
-  await writeFile(new URL('./artifacts/verification.json', import.meta.url), JSON.stringify(report, null, 2) + '\n');
+  await writeFile(new URL('verification.json', artifactDirectory), JSON.stringify(report, null, 2) + '\n');
   console.log(JSON.stringify({ file: file.pathname, bytes: manifest.bytes, sha256: manifest.sha256, groups: passed.length }, null, 2));
   console.log(report.smoke.limitation);
 } finally { dom.window.close(); }

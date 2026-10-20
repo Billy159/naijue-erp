@@ -33,8 +33,8 @@ adaptation. None of its business runtime, bridge, account data or catalog is use
   display; changed current names are separately labelled, never substituted.
   No product hydration, per-name lookup, initial all-catalog load,
   original-sale linkage or return quota is introduced.
-- Parent list query/draft/results/scroll remain mounted. Close restores trigger focus
-  and scroll without re-reading. New target/reopen uses a new child read scope.
+- Parent list query/draft/results/scroll remain mounted but hidden during full-page
+  detail. 返回列表 reveals it before restoring trigger focus and scroll, without re-reading. New target/reopen uses a new child read scope.
   Cancelled detail clears facts; retry is explicit. Scope/identity/session/permission
   invalidation clears all results and ignored-signal responses cannot restore them.
   Effect-owned child scopes and cancellable read setup handle StrictMode replay.
@@ -51,10 +51,15 @@ adaptation. None of its business runtime, bridge, account data or catalog is use
    A read error is not an authenticated session refresh; 401/403 handling must be
    wired to the host's trusted session/access lifecycle where applicable.
 2. On explicit sales navigation, create a route scope, import `sales-route.tsx`
-   lazily, and mount `SalesPageHost` with that scope, an explicitly constructed
+   lazily, and mount `SalesPageHost` with that scope, optional
+   `loadDetailStyles: () => Promise<unknown>` resolving only after a trusted separate
+   `detail.css` asset is usable, and an explicitly constructed
    `createSalesHttpReader({ fetch, origin, basePath })` plus
    `createSalesFilterReferenceHttpReader({ fetch, origin, basePath })`.
    Unmount on navigation; dispose the route scope when it is no longer applicable.
+   Omit unavailable detail styles: list/query remains usable, while both 查看 and
+   number activation are visibly disabled. Never supply an empty-ready production
+   fallback, inferred asset URL, or static detail CSS import.
    The host component/controller are implemented here, but not installed into any
    production root/router or synthetic inventory preview.
 3. The concrete reference reader sends exactly `{ kind, search, page, pageSize: 20 }`
@@ -76,8 +81,9 @@ adaptation. None of its business runtime, bridge, account data or catalog is use
    stopgaps. Internal UUIDs are not rendered as business names, and no N+1 name
    reads or current-name-to-historical-name inference are performed.
 6. Deep links may explicitly mount `SalesDetailHost` with a current parent scope and
-   validated target. Actual router/history/back-forward wiring and focus/scroll
-   orchestration across top-level routes are not present in this slice.
+   validated target, explicit `loadDetailStyles` and `close` callback. The same
+   full-page frame remains returnable during code/CSS/data waits. Actual browser
+   URL/history/back-forward wiring across top-level routes is not present in this slice.
 
 ## Explicitly not implemented
 
@@ -152,10 +158,11 @@ Resolved references, in the order established by `LOAD_ORDER.md`:
 
 Explicit scope-retained differences and remaining gaps:
 
-1. The existing safe closeable detail modal, focus/scroll restoration and cancelled
-   read behavior remain. The frozen Demo uses a document route; native router/
-   history replacement is not claimed. The modal's fixed frame is therefore not
-   source-identical, although its inner document geometry is source-derived.
+1. Detail now uses the frozen full-page document instead of the former fixed
+   modal. Title, status, saved/read-only state and ordered actions share one flat
+   header; no backdrop, modal Escape dismissal or focus trap is retained. The list
+   stays mounted hidden; 返回列表 reveals it before restoring scroll/focus. Native
+   browser URL/history routing remains a host-level gap, not claimed parity.
 2. Native filters remain single selections and the actual SALE/RETURN/EXCHANGE
    contract, rather than importing the legacy multi-selection model or merging
    business values. Native date inputs reuse shared control bounds; the frozen
@@ -180,12 +187,13 @@ Explicit scope-retained differences and remaining gaps:
 7. Existing exact page jumping is retained alongside source-derived numbered
    navigation. Totals/page candidates use BigInt and unreachable unsafe Number
    pages cannot execute. It is an intentional native-safety difference.
-8. JavaScript and native detail data remain explicit-detail-action lazy. CSS is
-   sales-route lazy: the small detail body rules currently share the sales route
-   stylesheet. Action-only detail CSS would need the host's existing trusted
-   stylesheet/build-asset convention; no new inline style injection or unverified
-   stylesheet URL is added. This is a remaining style-granularity gap, not a claim
-   of fully action-lazy styling or measured browser performance.
+8. JavaScript, native detail data and saved-detail body CSS are explicit-action
+   lazy. `detail.css` is a separate asset with no static or dynamic JS/CSS import
+   from the sales route. A per-activation registry joins code and trusted CSS
+   readiness before mounting the query. The light loading frame and its Back
+   control reuse route/shared controls. Missing capability disables detail only;
+   failures are returnable and explicitly retryable. Static emitted-graph and
+   synthetic readiness checks do not establish measured browser performance.
 9. `application/styles/sales-base.css` is now inert. Its unaccepted inventory-derived
    visual scaffold was removed without importing inventory styles or changing
    the host's existing lazy stylesheet graph.
@@ -207,3 +215,30 @@ Verification for this adaptation:
 These are source/static/synthetic checks only. No real browser was retried after
 its earlier denied action. There was no service/network/DB execution, installation,
 commit, push, deployment, runtime memory/waterfall measurement or visual acceptance.
+
+## Full-page/action-style restoration (2026-10-20)
+
+The exact frozen header source is `sales-current.js:163–181`, with the final flat
+header and auto-height document rules in `sales-detail-alignment.css:1–25`. The
+previous dialog and duplicate title/state rows are removed, while all saved facts,
+exact amount/quantity strings, return/exchange/gift semantics and the historical
+category data gap are unchanged. `detail-header.tsx` is the one reusable header
+for import/style waits, query/error/cancel states and loaded read-only facts.
+
+Current scoped evidence is recorded under `verification/fullpage-*`, replacing no
+historical logs. It covers 18 React/JSDOM groups, including source single-header
+action order, no dialog or key trap, reveal-before-focus instrumentation, retained
+list DOM/draft/scroll, no-loader fail-closed activation, action-style wait/Back,
+failed style explicit retry, superseded style completion and same-account
+session/permission revocation, plus existing exact-fact/cancel/late/StrictMode
+regressions. Interruption regressions also cover a pending filter-reference child
+being cancelled/detached on detail entry, and optional detail capability removal
+during style wait, data wait and loaded facts. Removal reveals the retained list
+immediately and uses heading focus when the former detail trigger is disabled.
+No late candidate popup or detail read is restored. The source check pins the same 10 raw frozen files and now checks
+separate emitted route/detail CSS ownership and action JavaScript closure.
+
+No browser-history integration, real browser/computed-layout/pixel acceptance,
+network waterfall, performance benchmark, service listener or database action was
+performed for this presentation-only change. Shared application configuration and
+asset wiring are separately owned and verified by the composition maintainer.

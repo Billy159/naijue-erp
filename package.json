@@ -20,7 +20,7 @@
     "build:preview": "node apps/web/build-preview.mjs",
     "test:web:dom": "node apps/web/tests/run-dom-tests.mjs",
     "test:web:preview": "node apps/web/tests/run-bundle-smoke.mjs",
-    "check:web": "npm run typecheck:web && npm run build:preview && npm run test:web:dom && npm run test:web:auth && npm run test:web:sales && npm run test:web:parties && npm run test:web:application && npm run test:web:transfers && npm run test:web:application:transfers && npm run test:web:product:styles && npm run test:web:product:lifecycle && npm run test:web:preview",
+    "check:web": "npm run typecheck:web && npm run build:preview && npm run test:web:dom && npm run test:web:auth && npm run test:web:sales && npm run test:web:parties && npm run test:web:application && npm run test:web:transfers && npm run test:web:application:sales && npm run test:web:application:transfers && npm run test:web:product:styles && npm run test:web:product:lifecycle && npm run test:web:preview",
     "check:all": "npm run check && npm run check:web",
     "test:web:auth": "node apps/web/src/authentication/tests/run-dom-tests.mjs",
     "build:preview:product": "node apps/web/build-product-only-preview.mjs",
@@ -31,7 +31,8 @@
     "test:web:transfers": "node apps/web/src/transfers/tests/run-dom-tests.mjs",
     "test:web:application:transfers": "node apps/web/src/application/tests/run-transfer-dom-tests.mjs",
     "test:web:product:styles": "node apps/web/src/application/tests/run-product-style-handshake-dom-tests.mjs",
-    "test:web:product:lifecycle": "node apps/web/src/inventory/tests/run-product-drawer-lifecycle-dom-tests.mjs"
+    "test:web:product:lifecycle": "node apps/web/src/inventory/tests/run-product-drawer-lifecycle-dom-tests.mjs",
+    "test:web:application:sales": "node apps/web/src/application/tests/run-sales-dom-tests.mjs"
   },
   "dependencies": {
     "fastify": "5.12.5",

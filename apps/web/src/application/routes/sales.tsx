@@ -3,7 +3,10 @@ import { createSalesHttpReader, createSalesFilterReferenceHttpReader } from '../
 import type { ApplicationRouteProps, PreparedApplicationRoute, RoutePreparation } from '../contracts.ts';
 
 export function prepareSalesRoute(input: RoutePreparation): PreparedApplicationRoute {
-  if (!input.configuration.sales) throw new TypeError('Sales capability was not configured.');
+  const configuration = input.configuration.sales;
+  if (!configuration) throw new TypeError('Sales capability was not configured.');
   const reader = createSalesHttpReader(input.http), references = createSalesFilterReferenceHttpReader(input.http);
-  return { View: ({ scope }: ApplicationRouteProps) => <SalesPageHost scope={scope} reader={reader} references={references} /> };
+  const detailStylesheet = configuration.detailStylesheet;
+  const detail = detailStylesheet ? { loadDetailStyles: () => detailStylesheet.load() } : {};
+  return { View: ({ scope }: ApplicationRouteProps) => <SalesPageHost scope={scope} reader={reader} references={references} {...detail} /> };
 }

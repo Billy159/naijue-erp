@@ -6,6 +6,10 @@ import { ReadContext, type ReadScope } from '../src/loading/read-scope.ts';
 import type { ProductReadOnlyReader } from '../src/inventory/product-contracts.ts';
 import type { ReadKind, ReportRead } from './catalog.ts';
 import './preview.css';
+// Portable TEST ONLY derivative intentionally inlines action CSS. This resolved
+// fixture-style callback is not a production stylesheet/loading capability.
+import '../src/sales/detail.css';
+const loadInlineSalesDetailStyles = async (): Promise<void> => {};
 
 type Route = 'inventory' | 'sales' | 'transfers';
 type Ready = { readonly View: ComponentType<{ readonly scope: ReadScope }> };
@@ -37,7 +41,7 @@ function createLeaves(report: ReportRead) {
     sales: { load: async (): Promise<Ready> => {
       const [leaf, fixture] = await Promise.all([import('../src/sales/sales-route.tsx'), import('./sales-fixture.ts')]);
       const { reader, references } = fixture.createSalesFixture(report);
-      return { View: ({ scope }) => <leaf.SalesPageHost scope={scope} reader={reader} references={references} /> };
+      return { View: ({ scope }) => <leaf.SalesPageHost scope={scope} reader={reader} references={references} loadDetailStyles={loadInlineSalesDetailStyles} /> };
     } },
     transfers: { load: async (): Promise<Ready> => {
       const [leaf, fixture] = await Promise.all([import('../src/transfers/transfers-route.tsx'), import('./transfer-fixture.ts')]);

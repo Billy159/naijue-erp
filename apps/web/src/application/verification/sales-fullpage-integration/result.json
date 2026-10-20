@@ -1,0 +1,124 @@
+{
+  "generatedAt": "2026-10-20T21:29:53.205Z",
+  "baseCommit": "b0de250fdf786cc48716585b7c0d55baae49819e",
+  "sourceState": "Final reviewed working tree; root owns coherent source commit. Broad manifest refreshed after Sales-only interrupted-flow fixes. Earlier checks are explicitly inherited, never represented as rerun.",
+  "sourceManifestSha256": "b053e9ff5bfe45f8e77db7e94b6f2466e568b093c549a8eec70153acdc74b75d",
+  "sourceFileCount": 198,
+  "changedSourcesSincePriorCheckpoint": [
+    {
+      "file": "apps/web/src/sales/README.md",
+      "sha256": "9f012eb3d756c696f84e369516958496a31ac842520cfc28492873f43d3089ae"
+    },
+    {
+      "file": "apps/web/src/sales/reference-selector.tsx",
+      "sha256": "50c3b12f7fa316c966c9f2bfc58efe1f0767d25bed68f77ac20085eae49385b5"
+    },
+    {
+      "file": "apps/web/src/sales/sales-page.tsx",
+      "sha256": "fb3cb77f4f5f70252c175cd89ceb9631860028ee7e07cabbea9d3383f81595de"
+    },
+    {
+      "file": "apps/web/src/sales/tests/run-dom-tests.mjs",
+      "sha256": "ee5154358b726584abc84dd315eef30b4546b88cbe8319852114ca1078bebced"
+    },
+    {
+      "file": "apps/web/src/sales/tests/run-frozen-source-check.mjs",
+      "sha256": "0e67e7e96545d1f7c1363d4d21eea241929abc52a5f7c6c7d469e2fc9249c2b1"
+    }
+  ],
+  "checks": [
+    {
+      "name": "application-typecheck",
+      "status": "PASS",
+      "log": "typecheck.txt",
+      "groups": 0,
+      "exitCode": 0,
+      "checkpoint": "INHERITED earlier valid unchanged shared-source check, not rerun after Sales-only fixes",
+      "historicalManifest": "historical-pre-edge-fixes/source.sha256",
+      "historicalResult": "historical-pre-edge-fixes/result.json"
+    },
+    {
+      "name": "composed-sales-dom",
+      "status": "PASS",
+      "log": "sales-app-dom.txt",
+      "groups": 6,
+      "exitCode": 0,
+      "checkpoint": "FINAL post-edge-fix frozen source",
+      "rerunBy": "independent reviewer",
+      "originalLog": "evidence/sales-fullpage-independent/final-composed-sales-rerun.txt",
+      "copiedLogSha256": "7030638b33349c43a2818355696a6347b6284ba3ef442298059245a35e380850"
+    },
+    {
+      "name": "emitted-split-code-and-css-graphs",
+      "status": "PASS",
+      "log": "split-build.txt",
+      "groups": null,
+      "exitCode": 0,
+      "checkpoint": "INHERITED earlier valid unchanged shared-source check, not rerun after Sales-only fixes",
+      "historicalManifest": "historical-pre-edge-fixes/source.sha256",
+      "historicalResult": "historical-pre-edge-fixes/result.json"
+    },
+    {
+      "name": "existing-application-dom",
+      "status": "PASS",
+      "log": "app-dom.txt",
+      "groups": 8,
+      "exitCode": 0,
+      "checkpoint": "INHERITED earlier valid unchanged shared-source check, not rerun after Sales-only fixes",
+      "historicalManifest": "historical-pre-edge-fixes/source.sha256",
+      "historicalResult": "historical-pre-edge-fixes/result.json"
+    },
+    {
+      "name": "existing-transfer-composition-dom",
+      "status": "PASS",
+      "log": "transfer-app-dom.txt",
+      "groups": 6,
+      "exitCode": 0,
+      "checkpoint": "INHERITED earlier valid unchanged shared-source check, not rerun after Sales-only fixes",
+      "historicalManifest": "historical-pre-edge-fixes/source.sha256",
+      "historicalResult": "historical-pre-edge-fixes/result.json"
+    },
+    {
+      "name": "existing-product-style-handshake-dom",
+      "status": "PASS",
+      "log": "product-style-dom.txt",
+      "groups": 4,
+      "exitCode": 0,
+      "checkpoint": "INHERITED earlier valid unchanged shared-source check, not rerun after Sales-only fixes",
+      "historicalManifest": "historical-pre-edge-fixes/source.sha256",
+      "historicalResult": "historical-pre-edge-fixes/result.json"
+    },
+    {
+      "name": "portable-preview-source-typecheck",
+      "status": "PASS",
+      "log": "preview-typecheck.txt",
+      "groups": 0,
+      "exitCode": 0,
+      "checkpoint": "INHERITED earlier valid unchanged shared-source check, not rerun after Sales-only fixes",
+      "historicalManifest": "historical-pre-edge-fixes/source.sha256",
+      "historicalResult": "historical-pre-edge-fixes/result.json"
+    }
+  ],
+  "finalIndependentReview": {
+    "result": "evidence/sales-fullpage-independent/final-result.json",
+    "resultSha256": "f6b0ed7064a371dd73fff600cfdb6eab77dec59231f9b29022906590555754ed",
+    "reviewedSource": "evidence/sales-fullpage-independent/reviewed-source.sha256",
+    "sourceGraph": "evidence/sales-fullpage-independent/source-graph-result.json",
+    "ownerDomGroups": 18,
+    "independentLifecycleObservations": 12,
+    "composedSalesGroups": 6,
+    "finalHashes": "evidence/sales-fullpage-independent/final-independent-hashes.txt"
+  },
+  "stylesheetBytes": {
+    "sales": 15804,
+    "sales-detail": 7034
+  },
+  "historicalDiagnostic": "sales-app-dom-historical-selector-failure.txt is the first harness-only stale label failure, not a pass. It was fixed before the final successful run.",
+  "boundary": "Synthetic actual-component/native-mocked-HTTP DOM checks and static emitted graph analysis only. No browser, listener, network, database, credential, deployment, production lazy-network/performance or frozen-Demo pixel acceptance.",
+  "notRun": [
+    "Portable preview actual build/smoke: intentionally awaits root coherent committed source, required by existing source-freeze gate."
+  ],
+  "sourceManifest": "source.sha256",
+  "dependencies": "dependencies.sha256",
+  "archive": "historical-pre-edge-fixes/ contains the prior full successful checkpoint and its first test-only selector failure unchanged."
+}

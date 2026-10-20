@@ -10,8 +10,10 @@ The portable HTML is an offline/downloadable **test file**, not a deployment.
 All route/action modules and CSS are bundled into one file, but the actual
 scoped route/action/tab lifecycles still control module initialization and
 provider reads. This does not establish production code splitting, lazy CSS
-network timing or performance. The separate production application build is
-unchanged. Missing actions stay disabled. Customer/supplier navigation is not
+network timing or performance. The separate production application build uses
+explicit route/action assets; this preview deliberately inlines sales detail CSS
+and supplies an explicitly resolved test-only readiness callback. That is not
+proof of production lazy CSS. Missing actions stay disabled. Customer/supplier navigation is not
 enabled in this three-page derivative. No login is simulated.
 
 Fixtures cover:
@@ -29,16 +31,20 @@ coherent UI checkpoint:
 ```sh
 node_modules/.bin/tsc -p apps/web/preview-core-pages/tsconfig.json
 node apps/web/preview-core-pages/build.mjs <exact-reviewed-runtime-commit>
-node apps/web/preview-core-pages/smoke.mjs
+node apps/web/preview-core-pages/smoke.mjs <exact-reviewed-runtime-commit>
 ```
 
-Open `artifacts/three-core-pages-synthetic-test-only-<commit>.html` directly in a browser.
+Open `artifacts/<commit-prefix>/three-core-pages-synthetic-test-only-<commit>.html` directly in a browser.
 Click the left menu. Inventory/sales require their actual Query button;
 transfers load their actual first list page on route activation. Click a
 document number/View for details. Inventory/transfer product actions open the
-actual read-only product drawer. Nothing reads a real service or writes data.
+actual read-only product drawer. Sales detail is a full-page read-only document
+with visible Back, not a modal; its retained list returns without refetch.
+Nothing reads a real service or writes data.
 
-`verification.json` names the exact coherent source commit and lists exact
+Each checkpoint gets a separate artifact directory, preserving earlier delivered
+HTML and verification files as historical evidence rather than rewriting them.
+Its `verification.json` names the exact coherent source commit and lists exact
 source input/leaf hashes, with preview-only derivative hashes kept separate.
 The builder refuses any actual UI/native runtime input that differs from the
 named commit, and fails if frozen sources change while building.

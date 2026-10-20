@@ -1,9 +1,10 @@
 import { useEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
 import type { ReadScope } from '../loading/read-scope.ts';
 import type { SalesDetailDto, SalesReader } from './contracts.ts';
-import { createSalesDetailQuery, salesMoney, salesStatusLabels, salesTarget, salesTypeLabels } from './model.ts';
+import { SalesDetailHeader } from './detail-header.tsx';
+import { createSalesDetailQuery, salesMoney, salesTarget, salesTypeLabels } from './model.ts';
 
-export interface SalesDetailContentProps { readonly scope: ReadScope; readonly reader: SalesReader; readonly salesId: string }
+export interface SalesDetailContentProps { readonly scope: ReadScope; readonly reader: SalesReader; readonly salesId: string; readonly close: () => void }
 export function SalesDetailContent(props: SalesDetailContentProps) {
   const [query, setQuery] = useState(() => createSalesDetailQuery(props.scope, props.reader));
   const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
@@ -13,12 +14,14 @@ export function SalesDetailContent(props: SalesDetailContentProps) {
     return () => { attached = false; query.cancel(); };
   }, [query, props.salesId, props.scope]);
   if (!props.scope.active) return null;
-  if (snapshot.phase === 'disposed') return <div className="iw-inline-state" role="status">读取已取消。<button type="button" className="iw-link" onClick={() => setQuery(createSalesDetailQuery(props.scope, props.reader))}>重新读取</button></div>;
-  if (snapshot.phase === 'loading' || snapshot.phase === 'idle') return <div className="iw-inline-state" role="status">正在读取销货单…<button type="button" className="iw-link" onClick={() => query.dispose()}>取消读取</button></div>;
-  if (snapshot.phase === 'error') return <div className="iw-inline-state" role="alert">销货单读取失败。请检查登录和读取权限后重试。<button type="button" className="iw-link" onClick={() => { void query.run(salesTarget(props.salesId)); }}>重试详情</button></div>;
-  return snapshot.success ? <DetailFacts data={snapshot.success.data} /> : null;
+  if (snapshot.phase === 'success' && snapshot.success) return <DetailFacts data={snapshot.success.data} close={props.close} />;
+  return <section className="sales-detail-page sales-detail-facts tc-workbench tc-editor sale-workbench sale-editor" aria-label="销货单详情"><SalesDetailHeader close={props.close} />
+    {snapshot.phase === 'disposed' ? <div className="iw-inline-state" role="status">读取已取消。<button type="button" className="iw-link" onClick={() => setQuery(createSalesDetailQuery(props.scope, props.reader))}>重新读取</button></div>
+      : snapshot.phase === 'error' ? <div className="iw-inline-state" role="alert">销货单读取失败。请检查登录和读取权限后重试。<button type="button" className="iw-link" onClick={() => { void query.run(salesTarget(props.salesId)); }}>重试详情</button></div>
+      : <div className="iw-inline-state" role="status">正在读取销货单…<button type="button" className="iw-link" onClick={() => query.dispose()}>取消读取</button></div>}
+  </section>;
 }
-function DetailFacts({ data }: { readonly data: SalesDetailDto }) {
+function DetailFacts({ data, close }: { readonly data: SalesDetailDto; readonly close: () => void }) {
   const { header, lines, settlements } = data.document;
   const [selectedLine, setSelectedLine] = useState<string | null>(null);
   const selected = lines.find(line => line.id === selectedLine);
@@ -29,8 +32,8 @@ function DetailFacts({ data }: { readonly data: SalesDetailDto }) {
   const sections = header.businessType === 'EXCHANGE'
     ? [{ title: '退回商品', incoming: true, rows: lines.filter(line => BigInt(line.quantity) < 0n) }, { title: '换出商品', incoming: false, rows: lines.filter(line => BigInt(line.quantity) >= 0n) }]
     : [{ title: header.businessType === 'RETURN' ? '退回商品' : '商品明细', incoming: header.businessType === 'RETURN', rows: lines }];
-  return <section className="sales-detail-facts tc-workbench tc-editor sale-workbench sale-editor">
-    <div className="sale-head tc-head sales-document-state"><span className="tc-status" data-document-status={header.status === 'APPROVED' ? 'effective' : header.status === 'VOID' ? 'void' : 'pending'}>{salesStatusLabels[header.status]}</span><span className="sale-muted">· 已保存 · 只读</span><div className="actions">{['导出', '打印', '操作历史'].map(label => <button key={label} type="button" className="iw-text-button" disabled title={`${label}尚未接入`}>{label}</button>)}</div></div>
+  return <section className="sales-detail-page sales-detail-facts tc-workbench tc-editor sale-workbench sale-editor" aria-label="销货单详情">
+    <SalesDetailHeader close={close} status={header.status} />
     <div className="tc-doc-header sale-doc-header"><div className="tc-gold-doc-fields sale-doc-fields">
       {field('单据日期', header.businessDate, 'sale-date-field')}
       {field('业务类型', salesTypeLabels[header.businessType])}

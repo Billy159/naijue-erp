@@ -1,0 +1,12 @@
+PASS: Opening full-page detail aborts prior pending list refresh: actual=true, expected=true
+PASS: Ignored-signal late list cannot replace retained executed rows: actual=false, expected=false
+PASS: Back restores original trigger after list reveal: actual=true, expected=true
+PASS: Detail and Back do not initiate hidden list refresh: actual=2, expected=2
+PASS: Entering full-page detail aborts a pending list-reference read: actual=true, expected=true
+PASS: Entering detail removes hidden-list candidate popover: actual=true, expected=true
+PASS: Late reference cannot restore a stale popup on Back: actual=true, expected=true
+PASS: Removing optional style capability during pending-style leaves list usable: actual=false, expected=false
+PASS: Removing capability during pending-style disables both detail activations: actual=true, expected=true
+PASS: Revoked pending style cannot start a detail read: actual=0, expected=0
+PASS: Removing optional style capability during loaded-detail leaves list usable: actual=false, expected=false
+PASS: Removing capability during loaded-detail disables both detail activations: actual=true, expected=true
