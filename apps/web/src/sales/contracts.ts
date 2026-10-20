@@ -4,6 +4,8 @@ import type { QueryRead } from '../loading/latest-query.ts';
 
 /** The exactJson HTTP representation, not a lossy Number conversion. */
 type ExactWire<T> = { readonly [K in keyof T]: T[K] extends bigint ? string : T[K] extends bigint | null ? string | null : T[K] };
+/** Includes exact current non-gift signed/directional sums and the native header
+ * update timestamp. No measurement unit or fabricated historical category. */
 export type SalesSummaryDto = ExactWire<SalesSummary>;
 export type SalesHeaderDto = ExactWire<SalesHeaderRow>;
 export type SalesLineDto = ExactWire<SalesLineRow>;

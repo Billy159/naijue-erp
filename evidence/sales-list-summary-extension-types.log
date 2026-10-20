@@ -1,0 +1,2 @@
+$ node node_modules/typescript/bin/tsc --noEmit -p evidence/sales-list-summary-extension-tsconfig.json
+PASS: scoped strict TypeScript check exited 0.

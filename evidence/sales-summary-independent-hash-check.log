@@ -1,0 +1,15 @@
+$ sha256sum -c evidence/sales-summary-independent-source-sha256.txt
+packages/application/src/sales-query-ports.ts: OK
+adapters/postgres/src/sales-query-reader.ts: OK
+apps/web/src/sales/contracts.ts: OK
+apps/web/src/sales/response-validation.ts: OK
+apps/web/src/sales/tests/fixtures.ts: OK
+apps/web/src/sales/sales.test.ts: OK
+tests/sales-query.test.ts: OK
+tests/sales-query-postgres-protocol.test.ts: OK
+apps/api/src/sales-query-http.test.ts: OK
+evidence/sales-summary-independent-probes.mjs: OK
+/workspace/shared/frozen-demo-ui/extracted/8877-ui-evidence-b8bcfe3/frontend/sales-summary.js: OK
+/workspace/shared/frozen-demo-ui/extracted/8877-ui-evidence-b8bcfe3/frontend/sales-current.js: OK
+
+$ git diff --check -- <nine reviewed files>

@@ -19,7 +19,8 @@ async function setup(t: TestContext, options: { authenticate?: SalesQueryHttpOpt
     async readReferences(read) { check(); return { page: read.parameters.page, exactTotal: 1n, items: [{ id: ids.hall, label: "SYNTHETIC HALL" }] }; },
     async readList(read) { check(); return { page: read.parameters.page, pageSize: read.parameters.pageSize, exactTotal: 9007199254740993n, items: [{
       ...syntheticDraft().header, status: "APPROVED", version: version(2), hallName: "SYNTHETIC", customerName: "SYNTHETIC", warehouseName: "SYNTHETIC", salespersonName: null,
-      grossAmount: minorAmount("9007199254740993"), orderDiscount: minorAmount("0"), netDue: minorAmount("9007199254740993") }] }; },
+      grossAmount: minorAmount("9007199254740993"), orderDiscount: minorAmount("0"), netDue: minorAmount("9007199254740993"),
+      quantity: 9007199254740993n, incomingQuantity: 0n, outgoingQuantity: 9007199254740993n, updatedAt: "2026-10-20T00:00:00.000000Z" }] }; },
     async readDetail() { check(); return { document: { ...syntheticDraft(), header: { ...syntheticDraft().header, status: "DRAFT", version: version(1), createdByAccountId: actor.accountId,
       createdHallId: actor.hallId, createdAt: "2026-10-20T00:00:00Z", updatedAt: "2026-10-20T00:00:00Z", approvedByAccountId: null, approvedAt: null } }, stockBasis: "RUNTIME_LEDGER", referenceNames: { hallName: "SYNTHETIC HALL", salespersonName: null, customerName: "SYNTHETIC CUSTOMER", warehouseName: "SYNTHETIC WAREHOUSE" }, settlementNames: syntheticDraft().settlements.map(row => ({ settlementId: row.id, paymentAccountId: row.paymentAccountId,
         accountNameSnapshot: "SYNTHETIC original account", methodNameSnapshot: "SYNTHETIC original method", currentAccountName: "SYNTHETIC current account", currentMethodName: "SYNTHETIC current method" })) }; },
@@ -39,6 +40,8 @@ async function setup(t: TestContext, options: { authenticate?: SalesQueryHttpOpt
 test("SYNTHETIC sales query HTTP: five read routes use current trusted actor/policy, no listener, exact bigint strings", async t => {
   const f = await setup(t); assert.equal(f.app.server.listening, false);
   const listed = await f.post("/sales/query", input()); assert.equal(listed.statusCode, 200); assert.equal(listed.json().exactTotal, "9007199254740993"); assert.equal(listed.json().items[0].netDue, "9007199254740993");
+  assert.equal(listed.json().items[0].quantity, "9007199254740993"); assert.equal(listed.json().items[0].incomingQuantity, "0");
+  assert.equal(listed.json().items[0].outgoingQuantity, "9007199254740993"); assert.equal(listed.json().items[0].updatedAt, "2026-10-20T00:00:00.000000Z");
   assert.equal(listed.headers["cache-control"], "no-store"); assert.equal(listed.headers.pragma, "no-cache");
   const references = await f.post("/sales/references/query", { kind: "hall", search: "SYNTHETIC", page: 1, pageSize: 20 });
   assert.equal(references.statusCode, 200); assert.equal(references.json().exactTotal, "1"); assert.equal(references.json().items[0].label, "SYNTHETIC HALL");

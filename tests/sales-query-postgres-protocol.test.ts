@@ -30,6 +30,8 @@ const header = () => ({ id: ids.sales, number: "SYNTHETIC-ONLY", business_type: 
   customer_id: ids.customer, salesperson_id: null, warehouse_id: ids.warehouse, status: "DRAFT", version: 1, gross_amount: "90071992547409.93", order_discount: "0.00", net_due: "90071992547409.93",
   note: null, created_by_account_id: ids.account, created_hall_id: ids.hall, created_at: time, updated_at: time, approved_by_account_id: null, approved_at: null, stock_basis: "RUNTIME_LEDGER", hall_name: "SYNTHETIC HALL", warehouse_name: "SYNTHETIC WAREHOUSE", customer_name: "SYNTHETIC CUSTOMER", salesperson_name: null });
 const summary = () => ({ ...header(), hall_name: "SYNTHETIC HALL", warehouse_name: "SYNTHETIC WAREHOUSE", customer_name: "SYNTHETIC CUSTOMER", salesperson_name: null });
+const quantities = (salesId: string = ids.sales, quantity = "9007199254740993", incoming = "0", outgoing = "9007199254740993") =>
+  ({ sales_id: salesId, quantity, incoming_quantity: incoming, outgoing_quantity: outgoing });
 const line = () => ({ id: ids.line, sales_id: ids.sales, line_no: 1, sku_id: ids.sku, quantity: "9007199254740993", reference_price: null, deal_price: "0.00", line_amount: "0.00", allocated_discount: "0.00",
   is_gift: false, pricing_rule: null, discount_tenths: null, zero_confirmed: null, product_code_snapshot: "SYNTHETIC", product_name_snapshot: "SYNTHETIC", color_name_snapshot: "SYNTHETIC", fit_name_snapshot: "SYNTHETIC", size_name_snapshot: "SYNTHETIC", barcode_snapshot: null, is_current: true });
 function scoped(values: unknown[], sql: string) {
@@ -42,7 +44,7 @@ test("sales query pg protocol: mandatory pool never connects at construction; no
   await assert.rejects(() => r.readList(read(parameters(), { kind: "restricted", clauses: [] })), { code: "FORBIDDEN" });
   const controller = new AbortController(); controller.abort(); await assert.rejects(() => r.readList(read(parameters(), scope, controller.signal)), { code: "SALES_READ_ABORTED" }); assert.equal(calls, 0);
 });
-test("sales query pg protocol: exact count and relational page share scoped RR snapshot, no hydration/catalog/N+1", async () => {
+test("sales query pg protocol: exact count, relational page and one page-batched quantity read share scoped RR snapshot, no hydration/catalog/N+1", async () => {
   const input = parameters(); Object.assign(input, { page: 2, pageSize: 50 }); Object.assign(input.filter, { startDate: "2026-10-01", endDate: "2026-10-20", status: "DRAFT", businessType: "EXCHANGE", hallId: ids.hall,
     salespersonId: sid("staff", 44), customerId: ids.customer, warehouseId: ids.warehouse, number: "%_\\' OR TRUE" });
   const seen: unknown[][] = [];
@@ -53,9 +55,37 @@ test("sales query pg protocol: exact count and relational page share scoped RR s
     scoped(values, sql); assert.deepEqual(values.slice(0, -2), seen[0]); assert.deepEqual(values.slice(-2), [50, "50"]);
     assert.match(sql, /ORDER BY h.business_date DESC, h.id DESC LIMIT \$13 OFFSET \$14::bigint/);
     assert.ok(!/sales_line|sales_settlement|naijue_erp.product|FOR UPDATE/.test(sql));
+  } }, { sql: /^SELECT page.id AS sales_id/, rows: [quantities()], inspect(values, sql) {
+    assert.deepEqual(values, [[ids.sales]]); assert.match(sql, /FROM unnest\(\$1::uuid\[\]\) AS page\(id\) LEFT JOIN naijue_erp.sales_line l/);
+    assert.match(sql, /ON l.sales_id = page.id AND l.is_current AND NOT l.is_gift GROUP BY page.id$/);
+    assert.match(sql, /SUM\(l.quantity::numeric\)/); assert.match(sql, /WHEN l.quantity < 0 THEN -\(l.quantity::numeric\)/);
+    assert.match(sql, /WHEN l.quantity > 0 THEN l.quantity::numeric/); assert.ok(!/product|sku|line_amount|LIMIT|OFFSET/.test(sql));
   } }, commit()]);
   const result = await reader(client).readList(read(input)); assert.equal(result.exactTotal, 9007199254740993n); assert.equal(result.items[0]!.netDue, 9007199254740993n);
-  assert.equal(client.calls.length, 4); assert.ok(client.calls.every(call => !/INSERT|UPDATE|DELETE|pg_advisory/.test(call.sql))); client.done();
+  assert.equal(result.items[0]!.quantity, 9007199254740993n); assert.equal(result.items[0]!.incomingQuantity, 0n); assert.equal(result.items[0]!.outgoingQuantity, 9007199254740993n);
+  assert.equal(result.items[0]!.updatedAt, time); assert.equal(client.calls.length, 5); assert.ok(client.calls.every(call => !/INSERT|UPDATE|DELETE|pg_advisory/.test(call.sql))); client.done();
+});
+test("sales query pg protocol: one bounded batch preserves signed SALE/RETURN/EXCHANGE totals, bigint-min magnitude and gift-only zero", async () => {
+  const salesIds = [ids.sales, sid("sales", 802), sid("sales", 803), sid("sales", 804)];
+  const rows = salesIds.map((salesId, index) => ({ ...summary(), id: salesId, business_type: ["SALE", "RETURN", "EXCHANGE", "SALE"][index] }));
+  const batches = [quantities(salesIds[0], "18446744073709551616", "0", "18446744073709551616"),
+    quantities(salesIds[1], "-9223372036854775808", "9223372036854775808", "0"),
+    quantities(salesIds[2], "-2", "5", "3"), quantities(salesIds[3], "0", "0", "0")];
+  const client = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: "4" }] }, { sql: /^SELECT h.id/, rows },
+    { sql: /^SELECT page.id AS sales_id/, rows: batches.toReversed(), inspect(values) { assert.deepEqual(values, [salesIds]); } }, commit()]);
+  const result = await reader(client).readList(read(parameters()));
+  assert.deepEqual(result.items.map(row => [row.quantity, row.incomingQuantity, row.outgoingQuantity]),
+    [[18446744073709551616n, 0n, 18446744073709551616n], [-9223372036854775808n, 9223372036854775808n, 0n], [-2n, 5n, 3n], [0n, 0n, 0n]]);
+  assert.equal(client.calls.length, 5); client.done();
+});
+test("sales query pg protocol: incomplete, foreign, duplicate or malformed quantity facts fail closed", async () => {
+  for (const aggregateRows of [[], [quantities(sid("sales", 999))], [quantities(), quantities()],
+    [{ ...quantities(), quantity: undefined }], [{ ...quantities(), quantity: "01" }], [{ ...quantities(), quantity: "1.5" }],
+    [{ ...quantities(), incoming_quantity: "-1" }], [{ ...quantities(), outgoing_quantity: 9007199254740993 }], [quantities(ids.sales, "1", "3", "3")]]) {
+    const client = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: "1" }] }, { sql: /^SELECT h.id/, rows: [summary()] },
+      { sql: /^SELECT page.id AS sales_id/, rows: aggregateRows }, rollback()]);
+    await assert.rejects(() => reader(client).readList(read(parameters())), { code: "INVALID_DATABASE_VALUE" }); client.done();
+  }
 });
 test("sales query pg protocol: empty out-of-range page retains exact total without global recount or fallback", async () => {
   const client = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: "15" }] }, { sql: /^SELECT h.id/, rows: [] }, commit()]);

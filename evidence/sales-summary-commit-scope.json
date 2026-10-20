@@ -1,0 +1,11 @@
+{
+  "parent_commit": "df4fb3373893fa42105d573f3d0f4603cbd26b82",
+  "scope": "Nine frozen list summary DTO/native batch query/client validation/test leaves",
+  "checks": "46 focused tests, scoped strict types,6 independent probes",
+  "rollback": "Revert commit; no schema or external state changed",
+  "not_verified": [
+    "real PostgreSQL",
+    "query plans/performance",
+    "new source presentation still separately in progress"
+  ]
+}

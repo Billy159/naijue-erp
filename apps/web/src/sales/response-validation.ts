@@ -40,7 +40,9 @@ export function salesListResponse(value: unknown, parameters: Readonly<SalesList
   const result = record(value, ['page', 'pageSize', 'exactTotal', 'items']); const items = array(result.items, parameters.pageSize); page(result, parameters, items);
   const seen = new Set<string>();
   for (const value of items) {
-    const row = record(value, [...summaryFields, 'hallName', 'warehouseName', 'customerName', 'salespersonName']); header(row);
+    const row = record(value, [...summaryFields, 'hallName', 'warehouseName', 'customerName', 'salespersonName', 'quantity', 'incomingQuantity', 'outgoingQuantity', 'updatedAt']); header(row);
+    exact(row.quantity); exact(row.incomingQuantity, true); exact(row.outgoingQuantity, true); stamp(row.updatedAt);
+    if (BigInt(row.quantity) !== BigInt(row.outgoingQuantity) - BigInt(row.incomingQuantity)) invalid();
     for (const label of [row.hallName, row.warehouseName, row.customerName]) text(label); nullableText(row.salespersonName);
     const f = parameters.filter;
     for (const [expected, actual] of [[f.status, row.status], [f.businessType, row.businessType], [f.hallId, row.hallId], [f.salespersonId, row.salespersonId], [f.customerId, row.customerId], [f.warehouseId, row.warehouseId]]) {

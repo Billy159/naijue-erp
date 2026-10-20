@@ -33,9 +33,10 @@ test("sales query: required providers and empty/malformed trusted scopes fail cl
 test("sales query: filters are strict, bounded, canonical and include actual calendar/range validation", () => {
   const bad = [
     { ...salesQueryInput(), role: "ADMIN" }, { ...salesQueryInput(), scope: { kind: "all" } }, { ...salesQueryInput(), page: "1" },
+    ...["quantity", "incomingQuantity", "outgoingQuantity", "updatedAt"].map(field => ({ ...salesQueryInput(), [field]: "1" })),
     { ...salesQueryInput(), page: 0 }, { ...salesQueryInput(), page: 1.5 }, { ...salesQueryInput(), pageSize: 500 }, { ...salesQueryInput(), page: Number.MAX_SAFE_INTEGER },
     ...[{ startDate: "2026-02-30" }, { startDate: "2026-10-21", endDate: "2026-10-20" }, { status: "DELETED" }, { businessType: "PURCHASE" },
-      { hallId: "not-a-uuid" }, { number: "" }, { number: " spaced " }, { number: "a\n" }, { number: "x".repeat(201) }, { actor: ids.account }].map(filter => ({ ...salesQueryInput(), filter: { ...salesQueryInput().filter, ...filter } }))
+      { hallId: "not-a-uuid" }, { number: "" }, { number: " spaced " }, { number: "a\n" }, { number: "x".repeat(201) }, { actor: ids.account }, { quantity: "1" }].map(filter => ({ ...salesQueryInput(), filter: { ...salesQueryInput().filter, ...filter } }))
   ];
   for (const input of bad) assert.throws(() => parseSalesListQuery(input), { code: "INVALID_SALES_QUERY" });
   assert.equal(parseSalesListQuery({ ...salesQueryInput(), filter: { ...salesQueryInput().filter, number: "%_\\ literal" } }).filter.number, "%_\\ literal");

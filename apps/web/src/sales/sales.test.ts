@@ -32,6 +32,25 @@ test('list validates exact totals, bounded page/row membership, no coercion or h
   assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, status: 'APPROVED' } }));
   assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, number: 'NO-MATCH' } }));
 });
+test('list requires exact non-gift quantity aggregates and a non-null native updated timestamp, without line bigint bounds', () => {
+  const p = parameters();
+  const valid = [
+    { ...summary(), businessType: 'SALE', quantity: '18446744073709551616', incomingQuantity: '0', outgoingQuantity: '18446744073709551616' },
+    { ...summary(), quantity: '-9223372036854775808', incomingQuantity: '9223372036854775808', outgoingQuantity: '0' },
+    { ...summary(), businessType: 'EXCHANGE', quantity: '-2', incomingQuantity: '5', outgoingQuantity: '3' },
+    { ...summary(), quantity: '0', incomingQuantity: '0', outgoingQuantity: '0' }
+  ];
+  for (const row of valid) { const result = { page: 1, pageSize: 20, exactTotal: '1', items: [row] }; assert.equal(salesListResponse(result, p), result); }
+  for (const field of ['quantity', 'incomingQuantity', 'outgoingQuantity', 'updatedAt']) {
+    const row: Record<string, unknown> = { ...summary() }; delete row[field];
+    assert.throws(() => salesListResponse({ page: 1, pageSize: 20, exactTotal: '1', items: [row] }, p));
+  }
+  for (const patch of [{ quantity: -1 }, { quantity: '-0' }, { quantity: '-01' }, { quantity: '1.1' }, { incomingQuantity: '-1' },
+    { outgoingQuantity: '1e3' }, { quantity: '0' }, { updatedAt: null }, { updatedAt: '2026-02-30T00:00:00Z' }, { updatedAt: '2026-10-20T08:00:00+08:00' },
+    { categorySummary: 'Not a native snapshot' }, { unit: '件' }]) {
+    assert.throws(() => salesListResponse({ page: 1, pageSize: 20, exactTotal: '1', items: [{ ...summary(), ...patch }] }, p));
+  }
+});
 test('detail preserves independent RETURN snapshots, IDs, full size/FIT and nullable metadata', () => {
   const data = detail(); assert.equal(salesDetailResponse(data, salesTarget(uuid(1))), data);
   assert.equal(data.document.lines[0]?.quantity, '-1'); assert.equal(data.document.lines[0]?.snapshot.sizeName, '165/S');

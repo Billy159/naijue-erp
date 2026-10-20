@@ -40,9 +40,17 @@ export interface SalesReadScopeClause {
 export type SalesReadScope = { readonly kind: "all" } | { readonly kind: "restricted"; readonly clauses: readonly SalesReadScopeClause[] };
 export interface SalesQueryAuthorization { authorize(actor: ActorContext, intent: SalesReadIntent, signal: AbortSignal): Promise<SalesReadScope> }
 export interface SalesScopedRead<P> { readonly actor: ActorContext; readonly scope: SalesReadScope; readonly parameters: P; readonly signal: AbortSignal }
-export type SalesSummary = Pick<SalesHeaderRow, "id" | "number" | "businessType" | "businessDate" | "hallId" | "salespersonId" | "customerId" | "warehouseId" | "status" | "version" | "grossAmount" | "orderDiscount" | "netDue"> & {
+/** Current actual, non-gift signed row quantities only. These sums are not bounded by
+ * one bigint persistence row. Incoming/outgoing are independent absolute totals;
+ * quantity = outgoingQuantity - incomingQuantity, not an inferred business type. */
+export interface SalesSummaryQuantities {
+  readonly quantity: bigint; readonly incomingQuantity: bigint; readonly outgoingQuantity: bigint;
+}
+export type SalesSummary = Pick<SalesHeaderRow, "id" | "number" | "businessType" | "businessDate" | "hallId" | "salespersonId" | "customerId" | "warehouseId" | "status" | "version" | "grossAmount" | "orderDiscount" | "netDue" | "updatedAt"> & SalesSummaryQuantities & {
   readonly hallName: string; readonly warehouseName: string; readonly customerName: string; readonly salespersonName: string | null;
 };
+// The native line snapshot has no historical category. No category summary is
+// exposed or reconstructed from today's product catalog.
 /** Exact bigint counts serialize as decimal strings at the HTTP boundary, never unsafe JS numbers. */
 export interface SalesListPage { readonly page: number; readonly pageSize: SalesQueryPageSize; readonly exactTotal: bigint; readonly items: readonly SalesSummary[] }
 export interface SalesSettlementNames {

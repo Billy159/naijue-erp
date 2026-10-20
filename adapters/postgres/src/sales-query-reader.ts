@@ -3,7 +3,7 @@ import type { SalesDocument, SalesHeaderRow, SalesLineRow, SalesSettlementRow } 
 import type { EntityId, EntityKind } from "../../../packages/domain/src/values.ts";
 import { businessDate, decimalToMinor, entityId } from "../../../packages/domain/src/values.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
-import type { SalesDetail, SalesDetailQuery, SalesFilterReferencePage, SalesFilterReferenceQuery, SalesHistoryPage, SalesHistoryQuery, SalesListPage, SalesListQuery, SalesReadScope, SalesScopedRead, SalesSettlementStatistics, SalesSummary, TrustedSalesSnapshotReader } from "../../../packages/application/src/sales-query-ports.ts";
+import type { SalesDetail, SalesDetailQuery, SalesFilterReferencePage, SalesFilterReferenceQuery, SalesHistoryPage, SalesHistoryQuery, SalesListPage, SalesListQuery, SalesReadScope, SalesScopedRead, SalesSettlementStatistics, SalesSummary, SalesSummaryQuantities, TrustedSalesSnapshotReader } from "../../../packages/application/src/sales-query-ports.ts";
 import { activeSalesRead, checkedSalesReadScope, parseSalesDetailQuery, parseSalesHistoryQuery, parseSalesListQuery } from "../../../packages/application/src/sales-query-validation.ts";
 import { parseSalesFilterReferenceQuery } from "../../../packages/application/src/sales-reference-query-validation.ts";
 import { booleanValue, integerValue, moneyFromSql, nullableString, quantityFromSql, stringValue, versionFromSql } from "./codec.ts";
@@ -27,21 +27,27 @@ function choice<T extends string>(value: unknown, choices: readonly T[]): T {
 function count(value: unknown): bigint {
   requireDomain(typeof value === "string" && /^(0|[1-9]\d*)$/.test(value), "INVALID_DATABASE_VALUE", "An exact nonnegative SQL count is required"); return BigInt(value);
 }
+function summaryQuantities(row: Record<string, unknown>): SalesSummaryQuantities {
+  requireDomain(typeof row.quantity === "string" && /^(0|[1-9]\d*|-[1-9]\d*)$/.test(row.quantity), "INVALID_DATABASE_VALUE", "An exact signed SQL quantity sum is required");
+  const quantity = BigInt(row.quantity); const incomingQuantity = count(row.incoming_quantity); const outgoingQuantity = count(row.outgoing_quantity);
+  requireDomain(quantity === outgoingQuantity - incomingQuantity, "INVALID_DATABASE_VALUE", "Sales quantity totals disagree");
+  return { quantity, incomingQuantity, outgoingQuantity };
+}
 /** Aggregates may exceed one decimal(18,2) row. Preserve arbitrary-precision numeric sums, without row caps. */
 function aggregateMoney(value: unknown) { return decimalToMinor(stringValue(value), { scale: 2 }); }
 const stamp = (column: string): string => `to_char(${column} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
 const SUMMARY_COLUMNS = `h.id, h.number, h.business_type, to_char(h.business_date, 'YYYY-MM-DD') AS business_date,
   h.hall_id, h.customer_id, h.salesperson_id, h.warehouse_id, h.status, h.version,
-  h.gross_amount::text, h.order_discount::text, h.net_due::text`;
+  h.gross_amount::text, h.order_discount::text, h.net_due::text, ${stamp("h.updated_at")} AS updated_at`;
 const HEADER_COLUMNS = `${SUMMARY_COLUMNS}, h.note, h.created_by_account_id, h.created_hall_id,
-  ${stamp("h.created_at")} AS created_at, ${stamp("h.updated_at")} AS updated_at,
+  ${stamp("h.created_at")} AS created_at,
   h.approved_by_account_id, ${stamp("h.approved_at")} AS approved_at, h.stock_basis`;
-function decodeSummary(row: Record<string, unknown>): SalesSummary {
+function decodeSummary(row: Record<string, unknown>, quantities: SalesSummaryQuantities): SalesSummary {
   return { id: id("sales", row.id), number: stringValue(row.number), businessType: choice(row.business_type, ["SALE", "RETURN", "EXCHANGE"]),
     businessDate: businessDate(stringValue(row.business_date)), hallId: id("hall", row.hall_id), customerId: id("customer", row.customer_id),
     salespersonId: nullableId("staff", row.salesperson_id), warehouseId: id("warehouse", row.warehouse_id),
     status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]), version: versionFromSql(row.version),
-    grossAmount: moneyFromSql(row.gross_amount), orderDiscount: moneyFromSql(row.order_discount), netDue: moneyFromSql(row.net_due),
+    grossAmount: moneyFromSql(row.gross_amount), orderDiscount: moneyFromSql(row.order_discount), netDue: moneyFromSql(row.net_due), updatedAt: stringValue(row.updated_at), ...quantities,
     hallName: stringValue(row.hall_name), warehouseName: stringValue(row.warehouse_name), customerName: stringValue(row.customer_name), salespersonName: nullableString(row.salesperson_name) };
 }
 function decodeHeader(row: Record<string, unknown>): SalesHeaderRow {
@@ -163,7 +169,26 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
         LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id WHERE ${p.where()}
         ORDER BY h.business_date DESC, h.id DESC ${paging}`, p.values)).rows;
       requireDomain(rows.length <= parameters.pageSize && BigInt(rows.length) <= exactTotal, "INVALID_DATABASE_VALUE", "Sales page exceeds exact scope");
-      return { ...parametersPage(parameters), exactTotal, items: rows.map(decodeSummary) };
+      // Only authorized, already-paged native IDs enter this one bounded batch.
+      // LEFT JOIN returns an explicit zero aggregate for gift-only/empty documents;
+      // missing or malformed aggregate rows fail closed, never become guessed zero.
+      // Cast before negation so the minimum bigint quantity cannot overflow.
+      const pageIds = rows.map(row => id("sales", row.id)); const pageIdSet = new Set(pageIds);
+      requireDomain(pageIdSet.size === pageIds.length, "INVALID_DATABASE_VALUE", "Duplicate sales page identity");
+      const aggregateRows = pageIds.length === 0 ? [] : (await query(`SELECT page.id AS sales_id,
+        COALESCE(SUM(l.quantity::numeric), 0)::text AS quantity,
+        COALESCE(SUM(CASE WHEN l.quantity < 0 THEN -(l.quantity::numeric) ELSE 0 END), 0)::text AS incoming_quantity,
+        COALESCE(SUM(CASE WHEN l.quantity > 0 THEN l.quantity::numeric ELSE 0 END), 0)::text AS outgoing_quantity
+        FROM unnest($1::uuid[]) AS page(id) LEFT JOIN naijue_erp.sales_line l
+          ON l.sales_id = page.id AND l.is_current AND NOT l.is_gift GROUP BY page.id`, [pageIds])).rows;
+      requireDomain(aggregateRows.length === pageIds.length, "INVALID_DATABASE_VALUE", "Sales quantity batch does not match page");
+      const quantities = new Map<string, SalesSummaryQuantities>();
+      for (const row of aggregateRows) {
+        const salesId = id("sales", row.sales_id);
+        requireDomain(pageIdSet.has(salesId) && !quantities.has(salesId), "INVALID_DATABASE_VALUE", "Sales quantity batch contains an unexpected identity");
+        quantities.set(salesId, summaryQuantities(row));
+      }
+      return { ...parametersPage(parameters), exactTotal, items: rows.map((row, index) => decodeSummary(row, quantities.get(pageIds[index]!)!)) };
     });
   }
   async readDetail(read: SalesScopedRead<SalesDetailQuery>): Promise<SalesDetail> {
