@@ -1,0 +1,2 @@
+PASS package JSON parses; shell syntax is valid; exactly one named development-host hook is appended to check:web; check:all unchanged.
+PASS all dependency/devDependency/engine/package-manager fields are unchanged; package-lock.json is byte-identical to 6f26617.

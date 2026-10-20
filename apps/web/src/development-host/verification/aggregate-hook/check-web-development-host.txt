@@ -1,0 +1,159 @@
+Scope: aggregate hook only; no full check:all, browser, service, database or deployment.
+$ npm run check:web:development-host
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 check:web:development-host
+> tsc --noEmit -p apps/web/src/development-host/tsconfig.json && node --test apps/web/src/development-host/configuration.test.ts && node apps/web/src/development-host/tests/run-dom-tests.mjs && node apps/web/src/development-host/tests/run-build-check.mjs && node apps/web/src/application/tests/run-build-check.mjs
+
+✔ public development settings are explicit, copied/frozen, and only resolve same-origin manifest assets (5.489444ms)
+✔ missing fields, unknown fields and credentials/policy/account inputs fail closed (1.878243ms)
+✔ HTTPS exact origin has no credential, query, fragment, path, inferred default or downgrade (0.784421ms)
+✔ API and asset prefixes reject URL redirection, encoded paths, traversal and query strings (0.523628ms)
+✔ capability switches and optional session verification have no truthy or missing defaults (9.885229ms)
+✔ actual emitted manifest is copied and constrained to finite relative JS/CSS assets (4.240908ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 602.228086
+PASS host DOM 1: exact HTTPS origin and one-root ownership fail closed; real auth/frame mounts without account defaults, business reads, route CSS or auto-navigation; missing/new/write capabilities remain disabled.
+PASS host DOM 2: inventory cancellation/late CSS and sales CSS failure/retry use real lazy routes; queries require explicit submit and 503 is not fabricated empty success.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS host DOM 3: transfer navigation makes one bounded native query; detail and reused product drawer wait separate action CSS/code and real fixed HTTP adapters, without relative fallback CSS or extra list query.
+PASS host DOM 4: host preserves identity-scope invalidation, stale401 isolation, current401 expiry and deterministic root/CSS disposal.
+PASS host DOM 5: explicit bootstrap session verification is exactly once per owner; false routes have no target; pagehide discards stale identity/read state and bfcache restore recreates only the configured unselected host; invalid payload never starts.
+SYNTHETIC ONLY: mocked fetch, CSS events and jsdom; no browser, TLS/cookie, server, DB, pixel, timing or performance acceptance.
+PASS emitted-entry smoke: exact built HTML + ESM executes in jsdom, startup is inert, one explicit mocked session check reaches the reused three-route frame, pagehide disposes it.
+{
+  "syntheticStaticOnly": true,
+  "html": "index.html",
+  "shellStyles": [
+    "application.css",
+    "development-host.css"
+  ],
+  "startupInputs": [
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom-client.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/client.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react-jsx-runtime.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/jsx-runtime.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/cjs/scheduler.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/index.js",
+    "../../../../packages/domain/src/errors.ts",
+    "../../../../packages/domain/src/values.ts",
+    "../authentication/authentication-panel.tsx",
+    "../authentication/authentication.css",
+    "../authentication/contracts.ts",
+    "../authentication/http-client.ts",
+    "../authentication/model.ts",
+    "../demo-presentation/controls.css",
+    "../demo-presentation/demo-frame.tsx",
+    "../demo-presentation/frame.css",
+    "../development-host/bootstrap.ts",
+    "../development-host/configuration.ts",
+    "../development-host/entry.ts",
+    "../development-host/mount.tsx",
+    "../development-host/route-state.tsx",
+    "../loading/async-leaf-registry.ts",
+    "../loading/read-scope.ts",
+    "application-root.tsx",
+    "controller.ts",
+    "demo-frame-presentation.tsx",
+    "index.tsx",
+    "stylesheet.ts"
+  ],
+  "routeStyles": {
+    "application": "application.css",
+    "inventory": "inventory.css",
+    "sales": "sales.css",
+    "sales-detail": "sales-detail.css",
+    "parties": "parties.css",
+    "transfers": "transfers.css",
+    "transfer-detail": "transfer-detail.css",
+    "transfer-product": "transfer-product.css"
+  },
+  "productDrawerStyles": "chunks/product-drawer.css"
+}
+PASS host build: explicit configuration; actual HTML/manifest/output wiring; shell-only startup CSS/JS; separate inventory/sales/transfer/detail/product code and CSS; no eager preload, inline executable script, fixture, listener or browser.
+{
+  "startupInputs": [
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom-client.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/client.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react-jsx-runtime.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/jsx-runtime.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/cjs/scheduler.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/index.js",
+    "../../../../packages/domain/src/errors.ts",
+    "../../../../packages/domain/src/values.ts",
+    "../authentication/authentication-panel.tsx",
+    "../authentication/authentication.css",
+    "../authentication/contracts.ts",
+    "../authentication/http-client.ts",
+    "../authentication/model.ts",
+    "../demo-presentation/controls.css",
+    "../demo-presentation/demo-frame.tsx",
+    "../demo-presentation/frame.css",
+    "../loading/async-leaf-registry.ts",
+    "../loading/read-scope.ts",
+    "application-root.tsx",
+    "controller.ts",
+    "demo-frame-presentation.tsx",
+    "index.tsx",
+    "stylesheet.ts"
+  ],
+  "startupCode": [
+    "application.js",
+    "chunk-AMZFEYCU.js",
+    "chunk-RQDEV55T.js",
+    "chunk-K3WQAY2P.js",
+    "chunk-Y6SLVHK3.js",
+    "chunk-FSROJZ4C.js",
+    "chunk-P74PHBPC.js",
+    "chunk-K2TRKZDL.js"
+  ],
+  "routeInputCounts": {
+    "inventory": 30,
+    "sales": 28,
+    "salesDetail": 13,
+    "parties": 436,
+    "transfers": 444,
+    "transferDetail": 23
+  },
+  "stylesheetBytes": {
+    "application": 15045,
+    "inventory": 17732,
+    "sales": 15804,
+    "sales-detail": 7034,
+    "parties": 596143,
+    "transfers": 588146,
+    "transfer-detail": 6983,
+    "transfer-product": 2933
+  },
+  "guarantees": [
+    "Startup/inventory/sales static closures exclude Arco JS/CSS",
+    "Parties/transfers use actual installed Arco only after explicit activation",
+    "Sales/parties CSS preserves shared controls/tokens but excludes all inventory-specific matrix/settings/drawer assets",
+    "Sales route static code/CSS excludes detail content/styles; separate sales-detail CSS is explicit action-only host configuration",
+    "Transfer route excludes detail/product code/data/styles; inline-detail and product action assets are separate"
+  ],
+  "boundary": "Static emitted-import/CSS analysis only. No browser/network waterfall, timing, memory or frozen-Demo visual acceptance."
+}
+PASS: actual split output isolates business routes, inventory-specific CSS and explicit-party/transfer-only Arco JS/CSS plus separate detail/product action assets while preserving necessary shared controls.
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

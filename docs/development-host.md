@@ -136,6 +136,11 @@ HTML in jsdom with mocked session fetch, confirming inert initial mount and
 explicit-session access to the shared frame. No listener, real browser, network service, database, actual
 credentials, screenshots or performance acceptance is involved.
 
-Root package scripts are intentionally unchanged. These focused commands are not
-silently represented as part of a pre-existing aggregate check or live browser
-acceptance.
+The root package now exposes these five focused commands as
+`npm run check:web:development-host` and calls that command from `check:web`, so
+future `check:all` runs include the development host rather than silently omitting
+it. The original focused logs, report and source manifest remain unchanged as
+historical evidence for the host snapshot committed at `6f26617`; they are not
+relabelled as aggregate-hook evidence. This integration has separate evidence in
+`apps/web/src/development-host/verification/aggregate-hook/`. Neither aggregate
+inclusion nor the offline checks establishes live browser acceptance.

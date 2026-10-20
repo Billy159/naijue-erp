@@ -1,0 +1,64 @@
+{
+  "baseCommit": "6f266172ef9a17b2262bef5bb5ce749286bb0e83",
+  "scope": "Root development-host aggregate hook and documentation only; original host implementation unchanged",
+  "changes": {
+    "package": [
+      "Add check:web:development-host containing the five existing focused checks",
+      "Append exactly one npm run check:web:development-host to check:web"
+    ],
+    "docs": "Record inclusion and preserve 6f26617 historical evidence boundary"
+  },
+  "checks": [
+    {
+      "command": "npm run check:web:development-host",
+      "executions": 1,
+      "exitCode": 0,
+      "includes": [
+        "scoped TypeScript",
+        "6 configuration tests",
+        "5 synthetic jsdom groups",
+        "actual static HTML/asset/import graph and emitted ESM in jsdom",
+        "existing application split-builder regression"
+      ]
+    },
+    {
+      "command": "npm run check:dependencies",
+      "exitCode": 0,
+      "lockedPackageEntries": 176,
+      "installationPerformed": false
+    },
+    {
+      "check": "Parse package JSON; verify exact script changes and shell syntax",
+      "exitCode": 0
+    },
+    {
+      "check": "package-lock.json byte-identical and all other package fields/dependencies unchanged",
+      "exitCode": 0
+    },
+    {
+      "check": "Original four verification artifacts unchanged, including original report and source manifest",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "currentSourceManifest": "source.sha256",
+  "currentSourceManifestSha256": "7a067c352882c2123c89dec421935bf24107ad0b7846bd83b7ef7fa2a384e9d5",
+  "historicalEvidence": "historical-evidence.sha256",
+  "note": "The original source manifest retains the original documentation hash for 6f26617; current documentation/package hashes are recorded separately here. Historical reports are not rewritten or relabelled.",
+  "notPerformed": [
+    "full check:all rerun",
+    "server/listener or browser startup",
+    "live HTTP/cookie/TLS verification",
+    "database/schema/data changes",
+    "dependency/lock updates or installation",
+    "deployment/production action",
+    "git commit/push"
+  ],
+  "warningsRetained": [
+    "Existing Arco React19 element.ref warning",
+    "npm environment http-proxy deprecation warning and cached/new-version notice; no package update performed"
+  ]
+}
