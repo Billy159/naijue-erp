@@ -1,0 +1,107 @@
+/** Independent bounded scripted-driver probes only. No PostgreSQL engine, server, browser, or writes. */
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { readFileSync } from 'node:fs';
+import Fastify from 'fastify';
+import { createTransferQueryHttpPlugin } from '../apps/api/src/transfer-query-http.ts';
+import { PostgresTransferQueryReader } from '../adapters/postgres/src/transfer-query-reader.ts';
+import type { PgTransferQueryClient } from '../adapters/postgres/src/transfer-query-reader.ts';
+import { createTransferQueryService } from '../packages/application/src/transfer-query-service.ts';
+import { parseTransferListQuery, parseTransferWarehouseQuery } from '../packages/application/src/transfer-query-validation.ts';
+import type { TransferListQuery, TransferReadScope, TrustedTransferSnapshotReader } from '../packages/application/src/transfer-query-ports.ts';
+import { actor, draft, ids, sid } from '../tests/support/synthetic-transfer.ts';
+const signal = () => new AbortController().signal;
+const params = (): TransferListQuery => ({ filter: { startDate: null, endDate: null, statuses: [], fromWarehouseIds: [], toWarehouseIds: [], number: null }, page: 1, pageSize: 20 });
+const scope: TransferReadScope = { kind: 'restricted', clauses: [{ fromHallId: ids.hall, toWarehouseId: ids.toWarehouse, createdByAccountId: ids.account }, { toHallId: ids.otherHall, createdHallId: ids.hall, createdRole: 'SALESPERSON' }] };
+const stamp = '2026-10-20T19:50:00.123456Z';
+const h = () => ({ id: ids.transfer, number: 'X_%', business_date: '2026-10-20', from_warehouse_id: ids.fromWarehouse, to_warehouse_id: ids.toWarehouse, status: 'DRAFT', version: 1, note: null, created_by_account_id: ids.account, created_hall_id: ids.hall, created_role: 'SALESPERSON', created_at: stamp, updated_at: stamp, approved_by_account_id: null, approved_at: null, stock_basis: 'CUTOFF_HISTORY', from_warehouse_name: 'Current A', to_warehouse_name: 'Current B', from_hall_name: 'Current Hall A', to_hall_name: 'Current Hall B', created_by_name: 'Current Creator', approved_by_name: null });
+const l = () => ({ id: ids.line, transfer_id: ids.transfer, line_no: 1, sku_id: ids.sku, quantity: '9223372036854775807', product_code_snapshot: 'OldCode', product_name_snapshot: 'OldProduct', color_name_snapshot: 'OldColor', fit_name_snapshot: 'OldFit', size_name_snapshot: 'OldSize', barcode_snapshot: '00000001', is_current: true });
+const product = sid('product', 700), color = sid('color', 701), fit = sid('fit', 702), size = sid('size', 703), size2 = sid('size', 704), group = sid('sizeGroup', 705);
+const sku = () => ({ sku_id: ids.sku, product_id: product, product_code: 'CurrentCode', product_name: 'CurrentProduct', color_id: color, color_name: 'CurrentColor', fit_id: fit, fit_name: 'CurrentFit', size_id: size, size_group_id: group });
+const member = () => ({ size_group_id: group, group_code: 'G', group_name: 'Current Group', size_id: size, size_code: '900', size_name: 'Same Label', display_order: -3 });
+type Step = { match: RegExp; rows?: Record<string, unknown>[]; inspect?: (sql: string, values: unknown[]) => void; fail?: Error };
+class Client implements PgTransferQueryClient {
+  calls: { sql: string; values: unknown[] }[] = []; releaseCount = 0;
+  readonly steps: Step[];
+  constructor(steps: Step[]) { this.steps = steps; }
+  async query(sql: string, values: unknown[] = []) { this.calls.push({ sql, values: structuredClone(values) }); const step = this.steps.shift(); assert.ok(step, sql); assert.match(sql, step.match); step.inspect?.(sql, values); if (step.fail) throw step.fail; return { rows: structuredClone(step.rows ?? []), rowCount: step.rows?.length ?? 0 }; }
+  release() { this.releaseCount++; }
+  done() { assert.equal(this.steps.length, 0); assert.equal(this.releaseCount, 1); }
+}
+const begin = (): Step => ({ match: /^BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY$/ });
+const end = (rollback = false): Step => ({ match: rollback ? /^ROLLBACK$/ : /^COMMIT$/ });
+const reader = (c: Client) => new PostgresTransferQueryReader({ async connect() { return c; } });
+const read = <P>(parameters: P, granted: TransferReadScope = scope) => ({ actor, scope: granted, parameters, signal: signal() });
+
+test('independent: array-only exact list shape rejects legacy scalar and malformed array values', () => {
+  for (const bad of [{ status: null }, { fromWarehouseId: ids.fromWarehouse }, { toWarehouseId: ids.toWarehouse }, { statuses: null }, { statuses: 'DRAFT' }, { statuses: ['DRAFT','DRAFT'] }, { statuses: ['UNKNOWN'] }, { fromWarehouseIds: [ids.fromWarehouse, ids.fromWarehouse] }, { toWarehouseIds: [null] }, { fromWarehouseIds: Array(1) }]) assert.throws(() => parseTransferListQuery({ ...params(), filter: { ...params().filter, ...bad } }), { code: 'INVALID_TRANSFER_QUERY' });
+  const valid = parseTransferListQuery({ ...params(), filter: { ...params().filter, statuses: ['VOID','DRAFT'], fromWarehouseIds: [ids.fromWarehouse,ids.toWarehouse], number: '%_\\literal' } });
+  assert.deepEqual(valid.filter.statuses, ['VOID','DRAFT']); assert.ok(Object.isFrozen(valid.filter.statuses)); assert.ok(Object.isFrozen(valid.filter.fromWarehouseIds));
+});
+
+test('independent: warehouse selected-ID hydration is exclusive, bounded, exact and immutable', () => {
+  const base = { search: '', selectedIds: [], page: 1, pageSize: 20 };
+  for (const bad of [{ search: 'x', selectedIds: [ids.fromWarehouse] }, { selectedIds: [ids.fromWarehouse,ids.fromWarehouse] }, { search: ' x' }, { selectedIds: Array(1001).fill(ids.fromWarehouse) }, { ids: [ids.fromWarehouse] }, { page: '1' }]) assert.throws(() => parseTransferWarehouseQuery({ ...base, ...bad }), { code: 'INVALID_TRANSFER_QUERY' });
+  const found = parseTransferWarehouseQuery({ ...base, selectedIds: [ids.fromWarehouse] }); assert.ok(Object.isFrozen(found.selectedIds));
+});
+
+test('independent: empty filter arrays do not add grants or restrictions, parent relations and stable C sort remain', async () => {
+  let countTail = '';
+  const c = new Client([begin(), { match: /^SELECT COUNT/, rows: [{ exact_total: '0' }], inspect(sql, values) { assert.deepEqual(values, [ids.hall,ids.toWarehouse,ids.account,ids.otherHall,ids.hall,'SALESPERSON']); assert.match(sql, /\(\(fw.hall_id = \$1::uuid AND h.to_warehouse_id = \$2::uuid AND h.created_by_account_id = \$3::uuid\) OR \(tw.hall_id = \$4::uuid AND h.created_hall_id = \$5::uuid AND h.created_role = \$6\)\)/); assert.doesNotMatch(sql, /ANY|creator\.hall_id|creator\.role|enabled\s*=/); assert.match(sql, /JOIN naijue_erp.user_account ca.*JOIN naijue_erp.staff creator/s); countTail = sql.slice(sql.indexOf('FROM naijue_erp.transfer_header')); } }, { match: /^SELECT h.id/, rows: [], inspect(sql, values) { assert.ok(sql.includes(countTail)); assert.match(sql, /ORDER BY h.updated_at DESC, h.number COLLATE "C" ASC, h.id ASC/); assert.deepEqual(values.slice(-2), [20,'0']); } }, end()]);
+  assert.deepEqual((await reader(c).readList(read(params()))).items, []); c.done();
+});
+
+test('independent: one current-line page aggregate distinguishes exact zero from missing and avoids N+1/catalog', async () => {
+  const t2 = sid('transfer', 710); const huge = '18446744073709551614';
+  const c = new Client([begin(), { match: /^SELECT COUNT/, rows: [{ exact_total: '2' }] }, { match: /^SELECT h.id/, rows: [h(), { ...h(), id: t2 }] }, { match: /^SELECT page.id/, rows: [{ transfer_id: t2, total_quantity: '0' }, { transfer_id: ids.transfer, total_quantity: huge }], inspect(sql, values) { assert.deepEqual(values, [[ids.transfer,t2]]); assert.match(sql, /unnest\(\$1::uuid\[\]\).*LEFT JOIN naijue_erp.transfer_line l ON l.transfer_id = page.id AND l.is_current/s); assert.match(sql, /COALESCE\(SUM\(l.quantity\), 0\)::text/); assert.doesNotMatch(sql, /sku|product|inventory_balance|LATERAL/); } }, end()]);
+  const result = await reader(c).readList(read(params())); assert.deepEqual(result.items.map(x=>x.totalQuantity), [BigInt(huge),0n]); assert.equal(result.items[0]!.updatedAt, stamp); assert.equal(c.calls.length,5); c.done();
+});
+
+for (const [label, aggregates] of [['missing', []], ['foreign', [{ transfer_id: sid('transfer',711), total_quantity: '1' }]], ['duplicate', [{ transfer_id: ids.transfer, total_quantity: '0' }, { transfer_id: ids.transfer, total_quantity: '0' }]], ['inexact', [{ transfer_id: ids.transfer, total_quantity: 1 }]]] as const) test(`independent: ${label} aggregate fails rather than filling zero`, async () => {
+  const c = new Client([begin(), { match: /^SELECT COUNT/, rows: [{ exact_total: '1' }] }, { match: /^SELECT h.id/, rows: [h()] }, { match: /^SELECT page.id/, rows: [...aggregates] }, end(true)]); await assert.rejects(() => reader(c).readList(read(params())), { code: 'INVALID_DATABASE_VALUE' }); c.done();
+});
+
+test('independent: restricted selected warehouses preserve full OR/AND authorization before endpoint and selection', async () => {
+  let tail = '';
+  const q = { search: '', selectedIds: [ids.fromWarehouse], page: 1, pageSize: 20 };
+  const c = new Client([begin(), { match: /^SELECT COUNT/, rows: [{ exact_total: '0' }], inspect(sql, values) { assert.deepEqual(values, [ids.hall,ids.toWarehouse,ids.account,ids.otherHall,ids.hall,'SALESPERSON',[ids.fromWarehouse]]); assert.match(sql, /EXISTS \(SELECT 1 FROM naijue_erp.transfer_header h/); assert.match(sql, /\(\(fw.hall_id = \$1::uuid AND h.to_warehouse_id = \$2::uuid AND h.created_by_account_id = \$3::uuid\) OR \(tw.hall_id = \$4::uuid AND h.created_hall_id = \$5::uuid AND h.created_role = \$6\)\)/); assert.match(sql, /AND \(h.from_warehouse_id = w.id OR h.to_warehouse_id = w.id\)\) AND w.id = ANY\(\$7::uuid\[\]\)/); tail = sql.slice(sql.indexOf('FROM naijue_erp.warehouse w')); } }, { match: /^SELECT w.id/, rows: [], inspect(sql) { assert.ok(sql.includes(tail)); } }, end()]); assert.deepEqual((await reader(c).readWarehouses(read(q))).items, []); c.done();
+});
+
+test('independent: all-scope warehouse references need no document and preserve native disabled facts', async () => {
+  const c = new Client([begin(), { match: /^SELECT COUNT/, rows: [{ exact_total: '1' }], inspect(sql) { assert.doesNotMatch(sql, /transfer_header|enabled\s*=/); assert.match(sql, /WHERE TRUE$/); } }, { match: /^SELECT w.id/, rows: [{ id: ids.fromWarehouse, name: 'Disabled native', hall_id: ids.hall, hall_name: 'Disabled native hall', enabled: false, hall_enabled: false }] }, end()]); const result = await reader(c).readWarehouses(read({ search:'',selectedIds:[],page:1,pageSize:20 },{kind:'all'})); assert.equal(result.items[0]!.enabled,false); assert.equal(result.items[0]!.hallEnabled,false); c.done();
+});
+
+test('independent: one RR detail snapshot retains historical saved lines and returns canonical tuple availability/full group', async () => {
+  const c = new Client([begin(), { match:/^SELECT h.id/,rows:[h()] }, { match:/FROM naijue_erp.transfer_line/, rows:[l()] }, { match:/^SELECT s.id/,rows:[sku()],inspect(sql,values) { assert.deepEqual(values[0],[ids.sku]); assert.match(sql,/SELECT DISTINCT product_id, color_id, fit_id FROM naijue_erp.sku WHERE id = ANY\(\$1::uuid\[\]\)/); assert.match(sql,/present.product_id = s.product_id AND present.color_id = s.color_id AND present.fit_id = s.fit_id/); assert.doesNotMatch(sql,/enabled\s*=|inventory_balance|legacy|barcode/); } }, { match:/^SELECT g.id/, rows:[member(),{...member(),size_id:size2,display_order:9}],inspect(sql,values) { assert.deepEqual(values,[[group],20001]); assert.match(sql,/ORDER BY g.id, m.display_order, z.id/); } }, end()]); const result = await reader(c).readDetail(read({transferId:ids.transfer})); assert.equal(result.stockBasis,'CUTOFF_HISTORY'); assert.equal(result.document.lines[0]!.snapshot.productName,'OldProduct'); assert.equal(result.document.lines[0]!.snapshot.barcode,'00000001'); assert.equal(result.catalog.skus[0]!.productName,'CurrentProduct'); assert.deepEqual(result.catalog.sizeGroups[0]!.members.map(x=>[x.sizeId,x.code,x.name,x.displayOrder]),[[size,'900','Same Label',-3],[size2,'900','Same Label',9]]); assert.equal(c.calls.length,6); c.done();
+});
+
+for (const [label, rows, members] of [['foreign tuple',[sku(),{...sku(),sku_id:ids.sku2,product_id:sid('product',712),size_id:size2}],null],['duplicate SKU',[sku(),sku()],null],['foreign size group',[sku()],[{...member(),size_group_id:sid('sizeGroup',713)}]],['duplicate size member',[sku()],[member(),member()]]] as const) test(`independent: ${label} metadata fails closed`,async()=>{ const c=new Client([begin(),{match:/^SELECT h.id/,rows:[h()]},{match:/FROM naijue_erp.transfer_line/,rows:[l()]},{match:/^SELECT s.id/,rows:[...rows]},...(members?[{match:/^SELECT g.id/,rows:[...members]}]:[]),end(true)]); await assert.rejects(()=>reader(c).readDetail(read({transferId:ids.transfer})),{code:'INVALID_DATABASE_VALUE'});c.done(); });
+
+test('independent: authorization re-runs for warehouse intent and required provider fails closed',async()=>{ const intents:string[]=[]; const r:TrustedTransferSnapshotReader={async readList(){return {page:1,pageSize:20,exactTotal:0n,items:[]};},async readDetail(){throw new Error('Unused');},async readWarehouses(){return {page:1,pageSize:20,exactTotal:0n,items:[]};}};assert.throws(()=>createTransferQueryService({authorization:{async authorize(){return {kind:'all'};}},reader:{...r,readWarehouses:undefined} as never}),TypeError);const svc=createTransferQueryService({authorization:{async authorize(_actor,intent){intents.push(intent.kind);return {kind:'all'};}},reader:r});for(let i=0;i<2;i++)await svc.readWarehouses(actor,{search:'',selectedIds:[],page:1,pageSize:20},signal());assert.deepEqual(intents,['warehouses','warehouses']);});
+
+test('independent: all three HTTP reads remain unregistered, exact, authenticated and query-string closed',async t=>{
+  let calls=0; const document={...draft(['9007199254740993']),header:{...draft().header,createdByAccountId:actor.accountId,createdHallId:actor.hallId,createdRole:actor.role,createdAt:stamp,updatedAt:stamp,approvedByAccountId:null,approvedAt:null}};
+  const references={fromWarehouseName:'Current A',toWarehouseName:'Current B',fromHallName:'Current Hall A',toHallName:'Current Hall B',createdByName:'Current Creator',approvedByName:null};
+  const catalog={skus:[{skuId:ids.sku,productId:product,productCode:'CurrentCode',productName:'CurrentProduct',colorId:color,colorName:'CurrentColor',fitId:fit,fitName:'CurrentFit',sizeId:size,sizeGroupId:group}],sizeGroups:[{sizeGroupId:group,code:'G',name:'Current Group',members:[{sizeId:size,code:'900',name:'Same Label',displayOrder:-3}]}]};
+  const r:TrustedTransferSnapshotReader={async readList(){calls++;const header=document.header;return {page:1,pageSize:20,exactTotal:9007199254740993n,items:[{id:header.id,number:header.number,businessDate:header.businessDate,fromWarehouseId:header.fromWarehouseId,toWarehouseId:header.toWarehouseId,status:header.status,version:header.version,createdByAccountId:header.createdByAccountId,createdAt:stamp,updatedAt:stamp,totalQuantity:18446744073709551614n,...references}]};},async readDetail(){calls++;return {document,stockBasis:'CUTOFF_HISTORY',references,catalog};},async readWarehouses(){calls++;return {page:1,pageSize:20,exactTotal:9007199254740993n,items:[]};}};
+  const app=Fastify({logger:false});t.after(()=>app.close());app.register(createTransferQueryHttpPlugin({authenticate:async()=>actor,dependencies:{authorization:{async authorize(){return {kind:'all'};}},reader:r}}));await app.ready();
+  const post=(url:string,payload:unknown)=>app.inject({method:'POST',url,headers:{'content-type':'application/json'},payload:JSON.stringify(payload)});assert.equal(app.server.listening,false);
+  const result=await post('/transfers/warehouses/query',{search:'',selectedIds:[],page:1,pageSize:20});assert.equal(result.statusCode,200);assert.equal(result.json().exactTotal,'9007199254740993');assert.equal(result.headers['cache-control'],'no-store');
+  const list=await post('/transfers/query',params());assert.equal(list.statusCode,200);assert.equal(list.json().items[0].totalQuantity,'18446744073709551614');assert.equal(list.json().items[0].updatedAt,stamp);
+  const detail=await post('/transfers/detail/query',{transferId:ids.transfer});assert.equal(detail.statusCode,200);assert.equal(detail.json().document.lines[0].quantity,'9007199254740993');assert.deepEqual(detail.json().catalog,catalog);assert.equal(detail.json().stockBasis,'CUTOFF_HISTORY');
+  assert.equal((await post('/transfers/query',{...params(),filter:{...params().filter,status:null}})).statusCode,400);assert.equal((await post('/transfers/warehouses/query?role=ADMIN',{search:'',selectedIds:[],page:1,pageSize:20})).statusCode,400);assert.equal(calls,3);
+});
+
+test('independent: production source adds no schema/index, registration, catalog-derived categories or stock inference',()=>{const text=readFileSync(new URL('../adapters/postgres/src/transfer-query-reader.ts',import.meta.url),'utf8');assert.doesNotMatch(text,/CREATE\s+(TABLE|INDEX)|ALTER\s+TABLE|new Pool|inventory_balance|product_category|legacy_/i); const api=readFileSync(new URL('../apps/api/src/transfer-query-http.ts',import.meta.url),'utf8'); assert.doesNotMatch(api,/\.listen\(|new Pool/);});
+
+test('independent: empty historical document skips both metadata queries, never inventing identities', async()=>{const c=new Client([begin(),{match:/^SELECT h.id/,rows:[h()]},{match:/FROM naijue_erp.transfer_line/,rows:[]},end()]);const result=await reader(c).readDetail(read({transferId:ids.transfer}));assert.deepEqual(result.catalog,{skus:[],sizeGroups:[]});assert.equal(c.calls.length,4);c.done();});
+
+test('independent: native disabled SKU is availability, not command eligibility or stock',async()=>{const c=new Client([begin(),{match:/^SELECT h.id/,rows:[h()]},{match:/FROM naijue_erp.transfer_line/,rows:[l()]},{match:/^SELECT s.id/,rows:[{...sku(),enabled:false,product_enabled:false,color_enabled:false,fit_enabled:false}],inspect(sql){assert.doesNotMatch(sql,/enabled|inventory_balance|stock|import_record/);}},{match:/^SELECT g.id/,rows:[member()]},end()]);const result=await reader(c).readDetail(read({transferId:ids.transfer}));assert.equal(result.catalog.skus[0]!.skuId,ids.sku);assert.equal(Object.hasOwn(result.catalog.skus[0]!,'enabled'),false);assert.equal(Object.hasOwn(result.catalog.skus[0]!,'stock'),false);c.done();});
+
+for(const [label,changed] of [['product label',{product_name:'Conflict'}],['product group',{size_group_id:sid('sizeGroup',750)}],['color label',{color_name:'Conflict'}],['FIT label',{fit_name:'Conflict'}]] as const)test(`independent: conflicting same-ID ${label} fails closed`,async()=>{const c=new Client([begin(),{match:/^SELECT h.id/,rows:[h()]},{match:/FROM naijue_erp.transfer_line/,rows:[l()]},{match:/^SELECT s.id/,rows:[sku(),{...sku(),sku_id:ids.sku2,size_id:size2,...changed}]},end(true)]);await assert.rejects(()=>reader(c).readDetail(read({transferId:ids.transfer})),{code:'INVALID_DATABASE_VALUE'});c.done();});
+
+for(const [label,steps] of [['SKU',[{match:/^SELECT s.id/,rows:Array.from({length:20001},sku),inspect(_sql:string,values:unknown[]){assert.equal(values[1],20001);}}]],['member',[{match:/^SELECT s.id/,rows:[sku()]},{match:/^SELECT g.id/,rows:Array.from({length:20001},member),inspect(_sql:string,values:unknown[]){assert.equal(values[1],20001);}}]]] as const)test(`independent: ${label} metadata cap rejects first overflow without partial response`,async()=>{const c=new Client([begin(),{match:/^SELECT h.id/,rows:[h()]},{match:/FROM naijue_erp.transfer_line/,rows:[l()]},...steps,end(true)]);await assert.rejects(()=>reader(c).readDetail(read({transferId:ids.transfer})),{code:'TRANSFER_READ_TOO_LARGE'});c.done();});
+
+test('independent: exact 20k SKU and full-group member boundaries are retained, not silently truncated',async()=>{const sizes=Array.from({length:20000},(_,i)=>i===0?size:sid('size',10000+i));const skus=sizes.map((s,i)=>({...sku(),sku_id:i===0?ids.sku:sid('sku',10000+i),size_id:s}));const members=sizes.map((s,i)=>({...member(),size_id:s,display_order:i}));const c=new Client([begin(),{match:/^SELECT h.id/,rows:[h()]},{match:/FROM naijue_erp.transfer_line/,rows:[l()]},{match:/^SELECT s.id/,rows:skus},{match:/^SELECT g.id/,rows:members},end()]);const result=await reader(c).readDetail(read({transferId:ids.transfer}));assert.equal(result.catalog.skus.length,20000);assert.equal(result.catalog.sizeGroups[0]!.members.length,20000);assert.equal(result.catalog.sizeGroups[0]!.members[19999]!.displayOrder,19999);c.done();});
+
+test('independent: confirmed document-number search lowercases both operands but remains literal and parameterized',async()=>{const needle="MiXeD_%\\' OR TRUE";const c=new Client([begin(),{match:/^SELECT COUNT/,rows:[{exact_total:'0'}],inspect(sql,values){assert.deepEqual(values,[needle]);assert.match(sql,/strpos\(lower\(h.number\), lower\(\$1::text\)\) > 0/);assert.doesNotMatch(sql,/\bI?LIKE\b|OR TRUE|MiXeD|COLLATE/);}},{match:/^SELECT h.id/,rows:[],inspect(sql,values){assert.deepEqual(values,[needle,20,'0']);assert.match(sql,/strpos\(lower\(h.number\), lower\(\$1::text\)\) > 0/);}},end()]);const input=params();Object.assign(input.filter,{number:needle});await reader(c).readList(read(input,{kind:'all'}));c.done();const docs=readFileSync(new URL('../docs/transfer-query.md',import.meta.url),'utf8');assert.match(docs,/case-insensitive/);assert.match(docs,/lower\(h.number\)/);});

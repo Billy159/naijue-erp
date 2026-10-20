@@ -1,0 +1,36 @@
+✔ independent: array-only exact list shape rejects legacy scalar and malformed array values (12.927888ms)
+✔ independent: warehouse selected-ID hydration is exclusive, bounded, exact and immutable (1.137544ms)
+✔ independent: empty filter arrays do not add grants or restrictions, parent relations and stable C sort remain (5.756863ms)
+✔ independent: one current-line page aggregate distinguishes exact zero from missing and avoids N+1/catalog (5.708087ms)
+✔ independent: missing aggregate fails rather than filling zero (1.617047ms)
+✔ independent: foreign aggregate fails rather than filling zero (2.098375ms)
+✔ independent: duplicate aggregate fails rather than filling zero (3.020311ms)
+✔ independent: inexact aggregate fails rather than filling zero (0.680406ms)
+✔ independent: restricted selected warehouses preserve full OR/AND authorization before endpoint and selection (3.812616ms)
+✔ independent: all-scope warehouse references need no document and preserve native disabled facts (3.675785ms)
+✔ independent: one RR detail snapshot retains historical saved lines and returns canonical tuple availability/full group (7.003923ms)
+✔ independent: foreign tuple metadata fails closed (2.244071ms)
+✔ independent: duplicate SKU metadata fails closed (4.826361ms)
+✔ independent: foreign size group metadata fails closed (1.34519ms)
+✔ independent: duplicate size member metadata fails closed (3.223382ms)
+✔ independent: authorization re-runs for warehouse intent and required provider fails closed (1.160486ms)
+✔ independent: all three HTTP reads remain unregistered, exact, authenticated and query-string closed (503.855202ms)
+✔ independent: production source adds no schema/index, registration, catalog-derived categories or stock inference (12.620331ms)
+✔ independent: empty historical document skips both metadata queries, never inventing identities (5.756455ms)
+✔ independent: native disabled SKU is availability, not command eligibility or stock (2.453467ms)
+✔ independent: conflicting same-ID product label fails closed (0.561661ms)
+✔ independent: conflicting same-ID product group fails closed (4.740228ms)
+✔ independent: conflicting same-ID color label fails closed (2.540948ms)
+✔ independent: conflicting same-ID FIT label fails closed (0.516022ms)
+✔ independent: SKU metadata cap rejects first overflow without partial response (453.492787ms)
+✔ independent: member metadata cap rejects first overflow without partial response (190.182592ms)
+✔ independent: exact 20k SKU and full-group member boundaries are retained, not silently truncated (1189.113305ms)
+✔ independent: confirmed document-number search lowercases both operands but remains literal and parameterized (2.801752ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3439.495625

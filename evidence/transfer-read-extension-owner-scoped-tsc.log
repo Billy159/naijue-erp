@@ -1,0 +1,10 @@
+Scoped compiler command:
+node_modules/.bin/tsc --noEmit -p tests/transfer-query.tsconfig.json
+
+Exact successful combined verification command:
+node_modules/.bin/tsc --noEmit -p tests/transfer-query.tsconfig.json && node --test tests/transfer-query*.test.ts apps/api/src/transfer-query-http.test.ts
+
+Existing command result: exit_code 0, wall_time_seconds 7.787853489.
+Capture returned at 2026-10-20 19:54:34 UTC.
+
+No separate tsc stdout/stderr capture is available. The successful combined command contains no compiler diagnostics and proceeds through && to the 48-test output preserved in transfer-read-extension-owner-read-tests.log. Thus tsc exited successfully; no missing compiler output has been reconstructed. No rerun was performed to prepare this evidence.

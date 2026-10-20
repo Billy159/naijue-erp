@@ -4,8 +4,8 @@ import type { EntityId, EntityKind } from "../../../packages/domain/src/values.t
 import { businessDate, entityId } from "../../../packages/domain/src/values.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import type { RuntimeTransferHeader } from "../../../packages/application/src/transfer-ports.ts";
-import type { TransferDetail, TransferDetailQuery, TransferListPage, TransferListQuery, TransferReadScope, TransferReferenceNames, TransferScopedRead, TransferSummary, TrustedTransferSnapshotReader } from "../../../packages/application/src/transfer-query-ports.ts";
-import { activeTransferRead, checkedTransferReadScope, parseTransferDetailQuery, parseTransferListQuery } from "../../../packages/application/src/transfer-query-validation.ts";
+import type { TransferCatalogSku, TransferDetail, TransferDetailCatalog, TransferDetailQuery, TransferListPage, TransferListQuery, TransferReadScope, TransferReferenceNames, TransferScopedRead, TransferSummary, TransferWarehousePage, TransferWarehouseQuery, TrustedTransferSnapshotReader } from "../../../packages/application/src/transfer-query-ports.ts";
+import { activeTransferRead, checkedTransferReadScope, parseTransferDetailQuery, parseTransferListQuery, parseTransferWarehouseQuery } from "../../../packages/application/src/transfer-query-validation.ts";
 import { booleanValue, integerValue, nullableString, quantityFromSql, stringValue, versionFromSql } from "./codec.ts";
 
 export interface PgTransferQueryResult { readonly rows: Record<string, unknown>[]; readonly rowCount: number | null }
@@ -15,6 +15,8 @@ type PgPoolCompatibility = Pool extends PgTransferQueryPool ? true : never;
 const pgPoolCompatibility: PgPoolCompatibility = true; void pgPoolCompatibility;
 /** Technical response bound only. Overflow is rejected, never returned as a truncated document. */
 export const TRANSFER_DETAIL_MAX_CURRENT_LINES = 2000;
+export const TRANSFER_DETAIL_MAX_CATALOG_SKUS = 20_000;
+export const TRANSFER_DETAIL_MAX_SIZE_MEMBERS = 20_000;
 const id = <K extends EntityKind>(kind: K, value: unknown): EntityId<K> => entityId(kind, stringValue(value));
 const nullableId = <K extends EntityKind>(kind: K, value: unknown): EntityId<K> | null => value === null ? null : id(kind, value);
 function choice<T extends string>(value: unknown, choices: readonly T[]): T {
@@ -25,8 +27,8 @@ function count(value: unknown): bigint {
 }
 const stamp = (column: string): string => `to_char(${column} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
 const SUMMARY_COLUMNS = `h.id, h.number, to_char(h.business_date, 'YYYY-MM-DD') AS business_date,
-  h.from_warehouse_id, h.to_warehouse_id, h.status, h.version, h.created_by_account_id, ${stamp("h.created_at")} AS created_at`;
-const HEADER_COLUMNS = `${SUMMARY_COLUMNS}, h.note, h.created_hall_id, h.created_role, ${stamp("h.updated_at")} AS updated_at,
+  h.from_warehouse_id, h.to_warehouse_id, h.status, h.version, h.created_by_account_id, ${stamp("h.created_at")} AS created_at, ${stamp("h.updated_at")} AS updated_at`;
+const HEADER_COLUMNS = `${SUMMARY_COLUMNS}, h.note, h.created_hall_id, h.created_role,
   h.approved_by_account_id, ${stamp("h.approved_at")} AS approved_at, h.stock_basis`;
 const REFERENCES = `fw.name AS from_warehouse_name, tw.name AS to_warehouse_name, fh.name AS from_hall_name, th.name AS to_hall_name,
   creator.name AS created_by_name, approver.name AS approved_by_name`;
@@ -40,11 +42,11 @@ function decodeReferences(row: Record<string, unknown>): TransferReferenceNames 
   return { fromWarehouseName: stringValue(row.from_warehouse_name), toWarehouseName: stringValue(row.to_warehouse_name),
     fromHallName: stringValue(row.from_hall_name), toHallName: stringValue(row.to_hall_name), createdByName: stringValue(row.created_by_name), approvedByName: nullableString(row.approved_by_name) };
 }
-function decodeSummary(row: Record<string, unknown>): TransferSummary {
+function decodeSummary(row: Record<string, unknown>, totalQuantity: bigint): TransferSummary {
   return { id: id("transfer", row.id), number: stringValue(row.number), businessDate: businessDate(stringValue(row.business_date)),
     fromWarehouseId: id("warehouse", row.from_warehouse_id), toWarehouseId: id("warehouse", row.to_warehouse_id),
     status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]), version: versionFromSql(row.version),
-    createdByAccountId: id("account", row.created_by_account_id), createdAt: stringValue(row.created_at), ...decodeReferences(row) };
+    createdByAccountId: id("account", row.created_by_account_id), createdAt: stringValue(row.created_at), updatedAt: stringValue(row.updated_at), totalQuantity, ...decodeReferences(row) };
 }
 function decodeHeader(row: Record<string, unknown>): RuntimeTransferHeader {
   const fromWarehouseId = id("warehouse", row.from_warehouse_id); const toWarehouseId = id("warehouse", row.to_warehouse_id);
@@ -78,11 +80,14 @@ class Predicate {
   }
   filter(query: TransferListQuery): void {
     const f = query.filter;
-    for (const [value, expression] of [[f.startDate, "h.business_date >="], [f.endDate, "h.business_date <="], [f.status, "h.status ="],
-      [f.fromWarehouseId, "h.from_warehouse_id ="], [f.toWarehouseId, "h.to_warehouse_id ="]] as const) {
+    for (const [value, expression] of [[f.startDate, "h.business_date >="], [f.endDate, "h.business_date <="]] as const) {
       if (value !== null) this.parts.push(`${expression} ${this.parameter(value)}`);
     }
-    if (f.number !== null) this.parts.push(`strpos(h.number, ${this.parameter(f.number)}) > 0`);
+    for (const [values, column, cast] of [[f.statuses, "h.status", "text"], [f.fromWarehouseIds, "h.from_warehouse_id", "uuid"],
+      [f.toWarehouseIds, "h.to_warehouse_id", "uuid"]] as const) {
+      if (values.length) this.parts.push(`${column} = ANY(${this.parameter([...values])}::${cast}[])`);
+    }
+    if (f.number !== null) this.parts.push(`strpos(lower(h.number), lower(${this.parameter(f.number)}::text)) > 0`);
   }
   target(transferId: string): void { this.parts.push(`h.id = ${this.parameter(transferId)}::uuid`); }
   where(): string { return this.parts.join(" AND "); }
@@ -91,6 +96,59 @@ class Predicate {
 type ReadQuery = (sql: string, values?: unknown[]) => Promise<PgTransferQueryResult>;
 function one(result: PgTransferQueryResult): Record<string, unknown> {
   requireDomain(result.rows.length === 1, "INVALID_DATABASE_VALUE", "Expected exactly one SQL row"); return result.rows[0]!;
+}
+function decodeCatalogSku(row: Record<string, unknown>): TransferCatalogSku {
+  return { skuId: id("sku", row.sku_id), productId: id("product", row.product_id), productCode: stringValue(row.product_code), productName: stringValue(row.product_name),
+    colorId: id("color", row.color_id), colorName: stringValue(row.color_name), fitId: id("fit", row.fit_id), fitName: stringValue(row.fit_name),
+    sizeId: id("size", row.size_id), sizeGroupId: id("sizeGroup", row.size_group_id) };
+}
+function consistentIdentity(facts: Map<string, string>, identity: string, values: readonly unknown[]): void {
+  const fact = JSON.stringify(values); const previous = facts.get(identity);
+  requireDomain(previous === undefined || previous === fact, "INVALID_DATABASE_VALUE", "Inconsistent canonical identity facts");
+  facts.set(identity, fact);
+}
+async function readCatalog(query: ReadQuery, lines: readonly TransferLineRow[]): Promise<TransferDetailCatalog> {
+  if (!lines.length) return { skus: [], sizeGroups: [] };
+  const actualSkuIds = [...new Set(lines.map(line => line.skuId))];
+  const rows = (await query(`SELECT s.id AS sku_id, s.product_id, p.product_code, p.name AS product_name, s.color_id, c.name AS color_name,
+    s.fit_id, f.name AS fit_name, s.size_id, p.size_group_id FROM naijue_erp.sku s
+    JOIN (SELECT DISTINCT product_id, color_id, fit_id FROM naijue_erp.sku WHERE id = ANY($1::uuid[])) present
+      ON present.product_id = s.product_id AND present.color_id = s.color_id AND present.fit_id = s.fit_id
+    JOIN naijue_erp.product p ON p.id = s.product_id JOIN naijue_erp.color c ON c.id = s.color_id JOIN naijue_erp.fit f ON f.id = s.fit_id
+    ORDER BY s.product_id, s.color_id, s.fit_id, s.size_id, s.id LIMIT $2`, [actualSkuIds, TRANSFER_DETAIL_MAX_CATALOG_SKUS + 1])).rows;
+  requireDomain(rows.length <= TRANSFER_DETAIL_MAX_CATALOG_SKUS, "TRANSFER_READ_TOO_LARGE", "Transfer native SKU availability exceeds bounded response limit");
+  const skus = rows.map(decodeCatalogSku); const bySku = new Map(skus.map(sku => [sku.skuId, sku]));
+  const tuple = (sku: TransferCatalogSku) => JSON.stringify([sku.productId, sku.colorId, sku.fitId]);
+  const actualTuples = new Set(actualSkuIds.map(skuId => { const sku = bySku.get(skuId);
+    requireDomain(sku !== undefined, "INVALID_DATABASE_VALUE", "Missing current-line native SKU identity"); return tuple(sku); }));
+  const coordinates = new Set(skus.map(sku => JSON.stringify([sku.productId, sku.colorId, sku.fitId, sku.sizeId])));
+  requireDomain(bySku.size === skus.length && coordinates.size === skus.length && skus.every(sku => actualTuples.has(tuple(sku))),
+    "INVALID_DATABASE_VALUE", "Invalid native SKU availability identities");
+  const products = new Map<string, string>(); const colors = new Map<string, string>(); const fits = new Map<string, string>();
+  for (const sku of skus) {
+    consistentIdentity(products, sku.productId, [sku.productCode, sku.productName, sku.sizeGroupId]);
+    consistentIdentity(colors, sku.colorId, [sku.colorName]); consistentIdentity(fits, sku.fitId, [sku.fitName]);
+  }
+  const groupIds = [...new Set(skus.map(sku => sku.sizeGroupId))];
+  const members = (await query(`SELECT g.id AS size_group_id, g.code AS group_code, g.name AS group_name, m.size_id,
+    z.code AS size_code, z.name AS size_name, m.display_order FROM naijue_erp.size_group g
+    JOIN naijue_erp.size_group_member m ON m.size_group_id = g.id JOIN naijue_erp.size z ON z.id = m.size_id
+    WHERE g.id = ANY($1::uuid[]) ORDER BY g.id, m.display_order, z.id LIMIT $2`, [groupIds, TRANSFER_DETAIL_MAX_SIZE_MEMBERS + 1])).rows;
+  requireDomain(members.length <= TRANSFER_DETAIL_MAX_SIZE_MEMBERS, "TRANSFER_READ_TOO_LARGE", "Transfer full size groups exceed bounded response limit");
+  const groups = new Map<EntityId<"sizeGroup">, { sizeGroupId: EntityId<"sizeGroup">; code: string; name: string; members: { sizeId: EntityId<"size">; code: string | null; name: string; displayOrder: number }[] }>();
+  const groupSet = new Set(groupIds); const membership = new Set<string>(); const sizes = new Map<string, string>();
+  for (const row of members) {
+    const sizeGroupId = id("sizeGroup", row.size_group_id); const sizeId = id("size", row.size_id);
+    const code = stringValue(row.group_code); const name = stringValue(row.group_name); const key = JSON.stringify([sizeGroupId, sizeId]);
+    requireDomain(groupSet.has(sizeGroupId) && !membership.has(key), "INVALID_DATABASE_VALUE", "Invalid native size membership identity");
+    let group = groups.get(sizeGroupId); if (!group) { group = { sizeGroupId, code, name, members: [] }; groups.set(sizeGroupId, group); }
+    requireDomain(group.code === code && group.name === name, "INVALID_DATABASE_VALUE", "Inconsistent native size group labels");
+    const sizeCode = nullableString(row.size_code); const sizeName = stringValue(row.size_name); consistentIdentity(sizes, sizeId, [sizeCode, sizeName]);
+    group.members.push({ sizeId, code: sizeCode, name: sizeName, displayOrder: integerValue(row.display_order) }); membership.add(key);
+  }
+  requireDomain(groups.size === groupIds.length && skus.every(sku => membership.has(JSON.stringify([sku.sizeGroupId, sku.sizeId]))),
+    "INVALID_DATABASE_VALUE", "Native SKU size must belong to its complete product size group");
+  return { skus, sizeGroups: [...groups.values()] };
 }
 /** Injected protocol only. Construction does not create a Pool, connect, migrate, or listen.
  * Each invocation uses one acquired client and one read-only REPEATABLE READ snapshot. */
@@ -124,9 +182,40 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
       const exactTotal = count(one(await query(`SELECT COUNT(*)::text AS exact_total ${RELATIONS} WHERE ${p.where()}`, [...p.values])).exact_total);
       const paging = p.page(parameters.page, parameters.pageSize);
       const rows = (await query(`SELECT ${SUMMARY_COLUMNS}, ${REFERENCES} ${RELATIONS} WHERE ${p.where()}
-        ORDER BY h.business_date DESC, h.id DESC ${paging}`, p.values)).rows;
+        ORDER BY h.updated_at DESC, h.number COLLATE "C" ASC, h.id ASC ${paging}`, p.values)).rows;
       requireDomain(rows.length <= parameters.pageSize && BigInt(rows.length) <= exactTotal, "INVALID_DATABASE_VALUE", "Transfer page exceeds exact scope");
-      return { page: parameters.page, pageSize: parameters.pageSize, exactTotal, items: rows.map(decodeSummary) };
+      const pageIds = rows.map(row => id("transfer", row.id)); const totals = new Map<EntityId<"transfer">, bigint>();
+      requireDomain(new Set(pageIds).size === pageIds.length, "INVALID_DATABASE_VALUE", "Duplicate transfer page identity");
+      if (pageIds.length) {
+        const aggregates = (await query(`SELECT page.id AS transfer_id, COALESCE(SUM(l.quantity), 0)::text AS total_quantity
+          FROM unnest($1::uuid[]) AS page(id) LEFT JOIN naijue_erp.transfer_line l ON l.transfer_id = page.id AND l.is_current
+          GROUP BY page.id`, [pageIds])).rows;
+        for (const row of aggregates) { const transferId = id("transfer", row.transfer_id);
+          requireDomain(pageIds.includes(transferId) && !totals.has(transferId), "INVALID_DATABASE_VALUE", "Unexpected transfer aggregate identity");
+          totals.set(transferId, count(row.total_quantity)); }
+        requireDomain(totals.size === pageIds.length, "INVALID_DATABASE_VALUE", "Missing transfer page quantity aggregate");
+      }
+      return { page: parameters.page, pageSize: parameters.pageSize, exactTotal, items: rows.map((row, index) => decodeSummary(row, totals.get(pageIds[index]!)!)) };
+    });
+  }
+  async readWarehouses(read: TransferScopedRead<TransferWarehouseQuery>): Promise<TransferWarehousePage> {
+    const parameters = parseTransferWarehouseQuery(read.parameters); const scope = checkedTransferReadScope(read.scope); const p = new Predicate(scope);
+    // Broad warehouse-catalog visibility is explicit only for all scope. Restricted scopes use complete authorized document relations.
+    const authorized = scope.kind === "all" ? "TRUE" : `EXISTS (SELECT 1 ${RELATIONS} WHERE (${p.where()}) AND (h.from_warehouse_id = w.id OR h.to_warehouse_id = w.id))`;
+    const restrictions = [authorized];
+    if (parameters.search) { const search = p.parameter(parameters.search); restrictions.push(`(strpos(w.name, ${search}) > 0 OR strpos(wh.name, ${search}) > 0)`); }
+    if (parameters.selectedIds.length) restrictions.push(`w.id = ANY(${p.parameter([...parameters.selectedIds])}::uuid[])`);
+    const relation = `FROM naijue_erp.warehouse w JOIN naijue_erp.hall wh ON wh.id = w.hall_id WHERE ${restrictions.join(" AND ")}`;
+    return this.snapshot(read.signal, async query => {
+      const exactTotal = count(one(await query(`SELECT COUNT(*)::text AS exact_total ${relation}`, [...p.values])).exact_total);
+      const paging = p.page(parameters.page, parameters.pageSize);
+      const rows = (await query(`SELECT w.id, w.name, w.hall_id, wh.name AS hall_name, w.enabled, wh.enabled AS hall_enabled ${relation}
+        ORDER BY w.name, w.id ${paging}`, p.values)).rows;
+      requireDomain(rows.length <= parameters.pageSize && BigInt(rows.length) <= exactTotal, "INVALID_DATABASE_VALUE", "Warehouse reference page exceeds exact authorized relation");
+      const items = rows.map(row => ({ id: id("warehouse", row.id), name: stringValue(row.name), hallId: id("hall", row.hall_id), hallName: stringValue(row.hall_name),
+        enabled: booleanValue(row.enabled), hallEnabled: booleanValue(row.hall_enabled) }));
+      requireDomain(new Set(items.map(item => item.id)).size === items.length, "INVALID_DATABASE_VALUE", "Duplicate warehouse reference identity");
+      return { page: parameters.page, pageSize: parameters.pageSize, exactTotal, items };
     });
   }
   async readDetail(read: TransferScopedRead<TransferDetailQuery>): Promise<TransferDetail> {
@@ -143,7 +232,8 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
       const lines = rows.map(decodeLine); const ids = new Set<string>(); const positions = new Set<number>();
       requireDomain(lines.every(line => { const valid = line.transferId === header.id && !ids.has(line.id) && !positions.has(line.lineNo);
         ids.add(line.id); positions.add(line.lineNo); return valid; }), "INVALID_DATABASE_VALUE", "Invalid transfer line ownership or identity");
-      return { document: { header, lines }, stockBasis: choice(row.stock_basis, ["RUNTIME_LEDGER", "CUTOFF_HISTORY"]), references: decodeReferences(row) };
+      const catalog = await readCatalog(query, lines);
+      return { document: { header, lines }, stockBasis: choice(row.stock_basis, ["RUNTIME_LEDGER", "CUTOFF_HISTORY"]), references: decodeReferences(row), catalog };
     });
   }
 }

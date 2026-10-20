@@ -1,0 +1,59 @@
+Command: node --test tests/transfer-query*.test.ts apps/api/src/transfer-query-http.test.ts
+Capture provenance: existing successful command result from 2026-10-20 19:54:34 UTC, exit code 0. This test command followed scoped tsc with &&. No rerun performed for this evidence file.
+
+✔ SYNTHETIC transfer query HTTP: three read routes use trusted actor/policy, never listen, and serialize exact counts/quantities (265.365197ms)
+✔ SYNTHETIC transfer query HTTP: detail current native catalog stays separate from saved snapshots, with complete size identities (9.592473ms)
+✔ SYNTHETIC transfer query HTTP: empty pages and requested paging retain exact decimal count contracts (10.595881ms)
+✔ SYNTHETIC transfer query HTTP: missing providers and missing/malformed/failing authentication never grant scope (41.644183ms)
+✔ SYNTHETIC transfer query HTTP: exact array-only list filters reject historical scalar paths and caller authority (36.618814ms)
+✔ SYNTHETIC transfer query HTTP: warehouse search/selected-ID exactness and bounds fail before policy (21.990719ms)
+✔ SYNTHETIC transfer query HTTP: bounded warehouse selection/search maxima are accepted without truncation (13.175114ms)
+✔ SYNTHETIC transfer query HTTP: literal search and selected IDs narrow the reader intent, never the trusted grant (17.01791ms)
+✔ SYNTHETIC transfer query HTTP: denied, empty and malformed current policy scopes cannot touch any reader (31.647583ms)
+✔ SYNTHETIC transfer query HTTP: all read routes reauthorize after access revocation, including selected warehouse IDs (17.687345ms)
+✔ SYNTHETIC transfer query HTTP: known safe errors map on every route while provider/SQL messages stay private (33.149645ms)
+✔ SYNTHETIC transfer query HTTP: synthetic request abort before/after policy or reader prevents delivery on all routes (28.757584ms)
+✔ SYNTHETIC transfer query HTTP: strict transport rejects query strings, malformed JSON/media and large bodies on all routes (17.742465ms)
+✔ transfer pg query: required pool is lazy; aborted, invalid-input and denied-scope reads never connect (7.982143ms)
+✔ transfer pg query: count/page share scoped native relations and repeatable snapshot; values are parameterized (15.390099ms)
+✔ transfer pg query: explicit all and restrictive account/endpoint clauses remain parameterized intersections (2.896426ms)
+✔ transfer pg query: empty out-of-range page retains exact total without global fallback (1.139457ms)
+✔ transfer pg query: saved snapshots stay separate from bounded current canonical metadata (5.628607ms)
+✔ transfer pg query: hidden/missing detail rolls back before any child read (4.581251ms)
+✔ transfer pg query: oversized current detail fails instead of truncating (8.786368ms)
+✔ transfer pg query: bad persisted line identities, ownership, snapshots and quantities fail closed (5.604216ms)
+✔ transfer pg query: exact counts cannot be driver numbers and pages cannot exceed exact total (2.0297ms)
+✔ transfer pg query: commit uncertainty is not retried and discards the client (1.017015ms)
+✔ transfer pg query: begin/connect/rollback errors release correctly without hidden retries (1.198959ms)
+✔ transfer pg query: abort during SQL requests rollback and stops subsequent reads (0.617184ms)
+✔ transfer pg query: page quantities use one exact batch, include zero, and never hydrate catalog (2.542761ms)
+✔ transfer pg query: missing, duplicated, foreign and inexact aggregate rows fail closed (4.709932ms)
+✔ transfer pg query: metadata preserves canonical identities and full duplicate labels, not label grouping (2.123903ms)
+✔ transfer pg query: empty document needs no catalog and invalid canonical availability fails closed (11.663975ms)
+✔ transfer pg query: missing, duplicate, foreign and malformed full group members fail closed (9.695104ms)
+✔ transfer pg query: canonical SKU and complete group bounds reject overflow without truncation (230.554948ms)
+✔ transfer pg query: restricted filter references use identical whole-clause union before endpoint intersection (8.361017ms)
+✔ transfer pg query: all-scope references include unused/disabled native warehouses with literal bounded search (1.280013ms)
+✔ transfer pg query: selected warehouse IDs cannot create references outside authorized documents (1.303555ms)
+✔ transfer pg query: abort after canonical SKU read prevents remaining metadata SQL (0.930033ms)
+✔ transfer query: every trusted provider is required; empty/malformed scopes fail closed on all reads (13.210158ms)
+✔ transfer query: list filters require exact arrays, reject old scalars/aliases, and bound numeric pagination (6.760658ms)
+✔ transfer query: both warehouse-ID arrays accept 1000 distinct native IDs and reject 1001 (5.369382ms)
+✔ transfer query: warehouse lookup has one exact exclusive bounded search/selection contract (3.544529ms)
+✔ transfer query: detail has no aliases, caller identity, or optional transfer ID (0.844796ms)
+✔ transfer query: parsers copy and freeze all filter/selection arrays without mutating caller objects (1.440748ms)
+✔ transfer query: explicit source policy grants endpoint hall OR immutable salesperson creation role+hall for every intent (2.123364ms)
+✔ transfer query: immutable actor, array filters and copied granted scope survive policy await (1.949412ms)
+✔ transfer query: warehouse selected IDs are copied across await and cannot supply their own visibility (1.341189ms)
+✔ transfer query: malformed parameters fail before policy or reader on all three methods (1.736192ms)
+✔ transfer query: pre-abort and malformed actors never reach policy for any intent (1.864176ms)
+✔ transfer query: authorization is renewed on every list, detail and selected warehouse read (1.870864ms)
+✔ transfer query: abort after current policy or any snapshot reader prevents result delivery (4.022591ms)
+ℹ tests 48
+ℹ suites 0
+ℹ pass 48
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1248.186443

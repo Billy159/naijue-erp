@@ -2,7 +2,7 @@ import { entityId } from "../../domain/src/values.ts";
 import { requireDomain } from "../../domain/src/errors.ts";
 import type { TransferActor } from "./transfer-ports.ts";
 import type { TransferQueryAuthorization, TransferQueryDependencies, TransferReadIntent, TransferScopedRead } from "./transfer-query-ports.ts";
-import { activeTransferRead, checkedTransferReadScope, parseTransferDetailQuery, parseTransferListQuery } from "./transfer-query-validation.ts";
+import { activeTransferRead, checkedTransferReadScope, parseTransferDetailQuery, parseTransferListQuery, parseTransferWarehouseQuery } from "./transfer-query-validation.ts";
 
 function checkedActor(actor: TransferActor): TransferActor {
   try {
@@ -22,7 +22,7 @@ export function createSourceConfirmedTransferQueryAuthorization(): TransferQuery
 }
 export function createTransferQueryService(dependencies: TransferQueryDependencies) {
   if (typeof dependencies?.authorization?.authorize !== "function" || typeof dependencies?.reader?.readList !== "function"
-    || typeof dependencies?.reader?.readDetail !== "function") throw new TypeError("Transfer queries require explicit trusted authorization and snapshot reader providers");
+    || typeof dependencies?.reader?.readDetail !== "function" || typeof dependencies?.reader?.readWarehouses !== "function") throw new TypeError("Transfer queries require explicit trusted authorization and snapshot reader providers");
   const authorize = dependencies.authorization.authorize.bind(dependencies.authorization); const reader = dependencies.reader;
   async function read<P, R>(actor: TransferActor, parameters: P, intent: TransferReadIntent, signal: AbortSignal, work: (read: TransferScopedRead<P>) => Promise<R>): Promise<R> {
     const trustedActor = checkedActor(actor); activeTransferRead(signal);
@@ -32,6 +32,9 @@ export function createTransferQueryService(dependencies: TransferQueryDependenci
   return Object.freeze({
     readList(actor: TransferActor, input: unknown, signal: AbortSignal) {
       const parameters = parseTransferListQuery(input); return read(actor, parameters, { kind: "list", parameters }, signal, reader.readList.bind(reader));
+    },
+    readWarehouses(actor: TransferActor, input: unknown, signal: AbortSignal) {
+      const parameters = parseTransferWarehouseQuery(input); return read(actor, parameters, { kind: "warehouses", parameters }, signal, reader.readWarehouses.bind(reader));
     },
     readDetail(actor: TransferActor, input: unknown, signal: AbortSignal) {
       const parameters = parseTransferDetailQuery(input); return read(actor, parameters, { kind: "detail", parameters }, signal, reader.readDetail.bind(reader));

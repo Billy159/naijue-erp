@@ -1,0 +1,16 @@
+Command:
+node --test tests/transfer.test.ts tests/transfer-service.test.ts tests/transfer-postgres-protocol.test.ts tests/transfer-schema-contract.test.ts tests/postgres-bounded-pool.test.ts apps/api/src/transfer-http.test.ts
+
+Existing command result: exit_code 0, wall_time_seconds 1.882262662.
+Capture returned at 2026-10-20 19:52:37 UTC.
+
+FULL OUTPUT UNAVAILABLE: the existing tool response was truncated (reported original_token_count 3923 and Total output lines: 146). It was not written to a file during execution. Missing test output has not been reconstructed and the command has not been rerun. The following is the exact terminal summary retained in the existing response:
+
+ℹ tests 138
+ℹ suites 0
+ℹ pass 138
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1685.674056

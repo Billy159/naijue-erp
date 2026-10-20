@@ -49,7 +49,7 @@ export function createTransferQueryHttpPlugin(options: TransferQueryHttpOptions)
       // Malformed trusted facts, unknown SQL failures and provider details never become successful empty pages or leaked errors.
       return reply.code(500).send({ error: { code: "INTERNAL_ERROR", message: "The transfer read could not be completed" } });
     });
-    for (const [url, read] of [["/transfers/query", service.readList], ["/transfers/detail/query", service.readDetail]] as const) {
+    for (const [url, read] of [["/transfers/query", service.readList], ["/transfers/detail/query", service.readDetail], ["/transfers/warehouses/query", service.readWarehouses]] as const) {
       app.post(url, { bodyLimit: 65_536 }, async (request, reply) => {
         if (!request.query || typeof request.query !== "object" || Array.isArray(request.query) || Object.keys(request.query).length) invalidTransferQuery();
         if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") {
