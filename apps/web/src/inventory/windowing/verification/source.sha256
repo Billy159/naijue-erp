@@ -1,0 +1,8 @@
+93f8aa9a2f18ad5f05a41fefdfd03a68a28b627ef845c72fac12c1382cf2200d  apps/web/src/inventory/windowing/README.md
+eb824a30b2da15ab33ea26631dbed6acc487c10ecc418003adead7792d4a5bc6  apps/web/src/inventory/windowing/fixtures.ts
+25bde9028a5b98b622393ca2669af781065b10414188195eca71e02fdd4e4174  apps/web/src/inventory/windowing/index.ts
+b9c6d7a0bb333a985988bd0d21ba6c2e20fecf2126001fa58eaffbad5de8b7fe  apps/web/src/inventory/windowing/model.test.ts
+3694eef830dd37cd7c76d7cd834e25911843124b58b8988691ec71dc90e7ed54  apps/web/src/inventory/windowing/model.ts
+b3eed78e46cef0e2a59793426dad3b042bcc2f25e52900dd919ac3b4f2e90823  apps/web/src/inventory/windowing/session.test.ts
+88db92fa37ef76fd0cdf01257a9a95fa763bfab282dccdeb660763505d490465  apps/web/src/inventory/windowing/session.ts
+5cdcaf8a43ff23fe8873e25a59fa1d44031bc8ed326d982e9e75f23871b06621  apps/web/src/inventory/windowing/tsconfig.json

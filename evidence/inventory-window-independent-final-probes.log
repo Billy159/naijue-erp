@@ -1,0 +1,18 @@
+Oracle cases 3320
+Anchor sweep cases 25648
+✔ independent variable geometry matches half-open brute row/column oracle across collapse modes (143.516099ms)
+✔ independent every viewport numeric field rejects negative/nonfinite values and overscan fractions (4.38029ms)
+✔ independent invalid measured extents and unsafe accumulated geometry reject (6.235455ms)
+✔ independent exact aggregate/cell facts and logical identities remain original references (1.365365ms)
+✔ independent stale focus/opaque tickets/account abort never restore cleared references (2.767245ms)
+✔ independent scroll-anchor unchanged-model roundtrip at description/header section boundaries (0.519133ms)
+✔ independent header-height reflow preserves exact logical body-edge anchor rather than stale occlusion (2.689755ms)
+✔ independent fractional boundary sweep roundtrips unchanged models with unequal measured header heights (73.054097ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 781.365501

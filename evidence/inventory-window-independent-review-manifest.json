@@ -1,0 +1,217 @@
+{
+  "reviewedAt": "2026-10-20T18:18:30Z",
+  "outcome": "PASS_BOUNDED",
+  "frozenSnapshot": "/tmp/inventory-window-independent-review-final-20261020T181745Z",
+  "sourceFiles": [
+    {
+      "path": "apps/web/src/inventory/windowing/README.md",
+      "sha256": "93f8aa9a2f18ad5f05a41fefdfd03a68a28b627ef845c72fac12c1382cf2200d",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/src/inventory/windowing/fixtures.ts",
+      "sha256": "eb824a30b2da15ab33ea26631dbed6acc487c10ecc418003adead7792d4a5bc6",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/src/inventory/windowing/index.ts",
+      "sha256": "25bde9028a5b98b622393ca2669af781065b10414188195eca71e02fdd4e4174",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/src/inventory/windowing/model.test.ts",
+      "sha256": "b9c6d7a0bb333a985988bd0d21ba6c2e20fecf2126001fa58eaffbad5de8b7fe",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/src/inventory/windowing/model.ts",
+      "sha256": "3694eef830dd37cd7c76d7cd834e25911843124b58b8988691ec71dc90e7ed54",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/src/inventory/windowing/session.test.ts",
+      "sha256": "b3eed78e46cef0e2a59793426dad3b042bcc2f25e52900dd919ac3b4f2e90823",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/src/inventory/windowing/session.ts",
+      "sha256": "88db92fa37ef76fd0cdf01257a9a95fa763bfab282dccdeb660763505d490465",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/src/inventory/windowing/tsconfig.json",
+      "sha256": "5cdcaf8a43ff23fe8873e25a59fa1d44031bc8ed326d982e9e75f23871b06621",
+      "liveAndFrozenMatch": true
+    }
+  ],
+  "frozenDemoSource": {
+    "path": "/workspace/shared/frozen-demo-ui/extracted/8877-ui-evidence-b8bcfe3/frontend/inventory-matrix-experiment.js",
+    "sha256": "7439eb810ac2da36dbe791b9eb37240a4bcf6654bec98dff5674168e6e68e7a5"
+  },
+  "probeFiles": [
+    {
+      "path": "evidence/inventory-window-independent-probes.mjs",
+      "sha256": "d15035b6d000a06709da4b4c64ac330c7b0cf7234b06224ba87bd22f704e48c1"
+    },
+    {
+      "path": "evidence/inventory-window-independent-probes.log",
+      "sha256": "099876e2f335552d3d59986321217464aa7e54f08d3367a9553f40e487b57a3e"
+    },
+    {
+      "path": "evidence/inventory-window-independent-existing-tests.log",
+      "sha256": "a8e02b4bff70110dc2558b57375c8a12c5140d8b96e76f88276accc417d21432"
+    },
+    {
+      "path": "evidence/inventory-window-independent-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/inventory-window-independent-fixed-probes.mjs",
+      "sha256": "1ac7eb8c250907c3d941b0cdcd617c77885655056915e9e123343df6b1c945eb"
+    },
+    {
+      "path": "evidence/inventory-window-independent-fixed-probes.log",
+      "sha256": "2f9b8c639c257f18851ec2aa872f893b7a229fab128feb3daf3db390b3d5c92e"
+    },
+    {
+      "path": "evidence/inventory-window-independent-final-probes.mjs",
+      "sha256": "f6cc2df3cdb18d7d5319031a8cd9404f7ecbd98e0af6b8ea5eebff2a281899d9"
+    },
+    {
+      "path": "evidence/inventory-window-independent-final-probes.log",
+      "sha256": "7b225292990c8de38a7aa945ffa226374f841c04ee72ad9bb3df985189ed22d0"
+    },
+    {
+      "path": "evidence/inventory-window-independent-final-tests.log",
+      "sha256": "251ef0ab6341d03ebda94dd8905ff90c3267c9b4cf0468ac9035c8ebf13a149a"
+    },
+    {
+      "path": "evidence/inventory-window-independent-final-types.log",
+      "sha256": "79439379de6a727fbff68190d67012de8eb8d22124310a95d0cd4bf880afa3ce"
+    }
+  ],
+  "checks": {
+    "finalExistingTests": "24/24 passed; test concurrency2",
+    "finalIndependentProbes": "8/8 passed;3320 variable geometry row/column cases and25648 fractional anchor roundtrip cases",
+    "finalScopedStrictTypecheck": "passed independently, sequentially after owner compiler exited",
+    "sourceHashes": "all8 leaves equal live/frozen/owner manifest",
+    "originalFindings": "both independently reproduced then fixed and independently rechecked",
+    "aggregate": "not run; root owns final aggregate"
+  },
+  "limits": [
+    "Renderer-neutral only; no integration/speed/parity claim",
+    "No matrix JSX/CSS review",
+    "No source edits/install/browser/DB/network/commit"
+  ],
+  "firstFixRecheck": {
+    "reviewedAt": "2026-10-20T18:15:40Z",
+    "outcome": "CHANGES_REQUIRED",
+    "frozenSnapshot": "/tmp/inventory-window-independent-review-fixed-20261020T181435Z",
+    "sourceFiles": [
+      {
+        "path": "apps/web/src/inventory/windowing/README.md",
+        "sha256": "6769cb395d03026e9804712beffdd62cb5f9ce7525fa5a256009a652862c7f7d"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/fixtures.ts",
+        "sha256": "eb824a30b2da15ab33ea26631dbed6acc487c10ecc418003adead7792d4a5bc6"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/index.ts",
+        "sha256": "25bde9028a5b98b622393ca2669af781065b10414188195eca71e02fdd4e4174"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/model.test.ts",
+        "sha256": "94ba68979744a7dfef03f88b35bdc5aebbf642a46d44ae47cb8835fa76e18c70"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/model.ts",
+        "sha256": "fad01141c2d876f6c52a2da304b4e2f35319904841e8b8b5d45e4287507e3938"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/session.test.ts",
+        "sha256": "b3eed78e46cef0e2a59793426dad3b042bcc2f25e52900dd919ac3b4f2e90823"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/session.ts",
+        "sha256": "88db92fa37ef76fd0cdf01257a9a95fa763bfab282dccdeb660763505d490465"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/tsconfig.json",
+        "sha256": "5cdcaf8a43ff23fe8873e25a59fa1d44031bc8ed326d982e9e75f23871b06621"
+      }
+    ],
+    "checks": {
+      "independentProbes": "7/8 passed; original boundary fixed, new header-height reflow regression;3320 geometry cases and25648 fractional anchor roundtrips passed"
+    },
+    "newFinding": {
+      "summary": "Restoration reuses stale captured header height after measured header grows20 to40, hiding anchor under new header",
+      "originalOffset": 5,
+      "recapturedOffset": 25,
+      "anchoredViewportPoint": 20,
+      "currentPinnedHeaderBottom": 40,
+      "modelSha256": "fad01141c2d876f6c52a2da304b4e2f35319904841e8b8b5d45e4287507e3938",
+      "status": "resolved by final3694eef8 model"
+    }
+  },
+  "initialReview": {
+    "frozenSnapshot": "/tmp/inventory-window-independent-review-20261020T180650Z",
+    "sourceFiles": [
+      {
+        "path": "apps/web/src/inventory/windowing/README.md",
+        "sha256": "c9048ba90948dce0a510d276e76aed90d9a639330390411513393da57aa5404c"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/fixtures.ts",
+        "sha256": "eb824a30b2da15ab33ea26631dbed6acc487c10ecc418003adead7792d4a5bc6"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/index.ts",
+        "sha256": "25bde9028a5b98b622393ca2669af781065b10414188195eca71e02fdd4e4174"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/model.test.ts",
+        "sha256": "87210ff6b135e8efd324ccc0de0522ab3b8e7ac7984f4c9bd969e401093b063b"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/model.ts",
+        "sha256": "d28d53df45df37f5d7e0b9e393e5c48cd0a60acd988a83ef7f024e2f9ce72e80"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/session.test.ts",
+        "sha256": "b3eed78e46cef0e2a59793426dad3b042bcc2f25e52900dd919ac3b4f2e90823"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/session.ts",
+        "sha256": "88db92fa37ef76fd0cdf01257a9a95fa763bfab282dccdeb660763505d490465"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/tsconfig.json",
+        "sha256": "5cdcaf8a43ff23fe8873e25a59fa1d44031bc8ed326d982e9e75f23871b06621"
+      }
+    ],
+    "checks": {
+      "existingTests": "19/19 passed; test concurrency2",
+      "independentProbes": "5/6 passed; one reproduced anchor defect;3320 row/column oracle cases passed",
+      "scopedTypes": "passed"
+    },
+    "finding": {
+      "severity": "medium",
+      "path": "apps/web/src/inventory/windowing/model.ts",
+      "lines": "304-327",
+      "summary": "Capture/restore of an unchanged model jumps20px at section boundary with visible section descriptions",
+      "reproducer": {
+        "secondSectionTop": 220,
+        "descriptionHeight": 32,
+        "headerHeight": 20,
+        "scrollTop": 205,
+        "viewportHeight": 60,
+        "capturedOffset": 5,
+        "restoredScrollTop": 225,
+        "expectedScrollTop": 205
+      },
+      "status": "resolved by final3694eef8 model"
+    }
+  },
+  "sourceDigestSha256": "e89632001388243ce413190598033d45dc590573f49dc53790422f6a7090f616"
+}

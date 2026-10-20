@@ -1,0 +1,38 @@
+Oracle cases 3320
+✔ independent variable geometry matches half-open brute row/column oracle across collapse modes (118.561998ms)
+✔ independent every viewport numeric field rejects negative/nonfinite values and overscan fractions (9.782823ms)
+✔ independent invalid measured extents and unsafe accumulated geometry reject (7.045188ms)
+✔ independent exact aggregate/cell facts and logical identities remain original references (2.203317ms)
+✔ independent stale focus/opaque tickets/account abort never restore cleared references (2.681191ms)
+✖ independent scroll-anchor unchanged-model roundtrip at description/header section boundaries (3.592451ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 565.209236
+
+✖ failing tests:
+
+test at ../../../tmp/inventory-window-independent-probes.mjs:24:1
+✖ independent scroll-anchor unchanged-model roundtrip at description/header section boundaries (3.592451ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  225 !== 205
+  
+      at TestContext.<anonymous> (file:///tmp/inventory-window-independent-probes.mjs:24:487)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 225,
+    expected: 205,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
