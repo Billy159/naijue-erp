@@ -1,0 +1,115 @@
+import Fastify from "fastify";
+import type { FastifyInstance } from "fastify";
+import { BoundedPostgresPool } from "../../../adapters/postgres/src/bounded-pool.ts";
+import type { BoundedPostgresConfig, PostgresPoolDriverFactory } from "../../../adapters/postgres/src/bounded-pool.ts";
+import { PostgresAuthenticationStore } from "../../../adapters/postgres/src/auth-store.ts";
+import { PostgresInventoryQueryReader } from "../../../adapters/postgres/src/inventory-query-reader.ts";
+import { PostgresInventoryLedgerQueryReader } from "../../../adapters/postgres/src/inventory-ledger-query-reader.ts";
+import { PostgresSalesQueryReader } from "../../../adapters/postgres/src/sales-query-reader.ts";
+import { PostgresTransferQueryReader } from "../../../adapters/postgres/src/transfer-query-reader.ts";
+import { PostgresProductQueryReader } from "../../../adapters/postgres/src/product-query-reader.ts";
+import type { InventoryQueryAuthorization } from "../../../packages/application/src/inventory-query-contracts.ts";
+import type { SalesQueryAuthorization } from "../../../packages/application/src/sales-query-ports.ts";
+import type { TransferQueryAuthorization } from "../../../packages/application/src/transfer-query-ports.ts";
+import type { ControlledProductMedia, ProductQueryAuthorization } from "../../../packages/application/src/product-query-ports.ts";
+import type { AuthenticationPolicy } from "../../../packages/authentication/src/ports.ts";
+import { createAuthenticationService } from "../../../packages/authentication/src/service.ts";
+import { createNodeScryptPasswords } from "../../../packages/authentication/src/passwords.ts";
+import { createAuthenticationHttpPlugin, createSalesSessionAuthenticator } from "./authentication.ts";
+import { createTransferSessionAuthenticator } from "./transfer-authentication.ts";
+import { createInventoryHttpPlugin } from "./inventory-http.ts";
+import { createInventoryLedgerQueryHttpPlugin } from "./inventory-ledger-query-http.ts";
+import { createSalesQueryHttpPlugin } from "./sales-query-http.ts";
+import { createTransferQueryHttpPlugin } from "./transfer-query-http.ts";
+import { createProductQueryHttpPlugin } from "./product-query-http.ts";
+
+export interface PostgresReadApiOptions {
+  /** Explicit target, TLS choice and finite resource settings; never URI/env/pgpass discovery. */
+  readonly postgres: BoundedPostgresConfig;
+  readonly authentication: {
+    readonly trustedOrigin: string;
+    readonly now: () => string;
+    readonly policy: AuthenticationPolicy;
+  };
+  /** Mandatory current trusted policy providers. This factory does not invent or widen hall grants. */
+  readonly authorization: {
+    readonly inventory: InventoryQueryAuthorization;
+    readonly sales: SalesQueryAuthorization;
+    readonly transfers: TransferQueryAuthorization;
+    readonly products: ProductQueryAuthorization;
+  };
+  /** Required explicit availability. null keeps existing media-unavailable failures honest. */
+  readonly productMedia: ControlledProductMedia | null;
+}
+export interface PostgresReadApi {
+  /** Ready for inject or an explicitly configured host. Never listening on return. */
+  readonly app: FastifyInstance;
+  /** Delegates to Fastify shutdown, then disposes this API's one owned bounded pool. */
+  close(): Promise<void>;
+  readonly postgresBackgroundFailureCount: number;
+}
+
+function exactHttpsOrigin(value: unknown): value is string {
+  if (typeof value !== "string") return false;
+  try { const url = new URL(value); return url.protocol === "https:" && url.origin === value && !url.username && !url.password; }
+  catch { return false; }
+}
+function checkedHost(options: PostgresReadApiOptions) {
+  const auth = options?.authentication; const policies = options?.authorization; const media = options?.productMedia;
+  if (!exactHttpsOrigin(auth?.trustedOrigin) || typeof auth?.now !== "function" || !auth.policy
+    || typeof policies?.inventory?.authorize !== "function" || typeof policies?.sales?.authorize !== "function"
+    || typeof policies?.transfers?.authorize !== "function" || typeof policies?.products?.authorize !== "function"
+    || !Object.hasOwn(options, "productMedia") || (media !== null && (!media || !exactHttpsOrigin(media.deliveryOrigin)
+      || typeof media.resolveThumbnails !== "function" || typeof media.resolveOriginal !== "function"))) {
+    throw new TypeError("PostgreSQL read API requires explicit trusted HTTPS origin, authentication policy/clock, read authorization and media availability");
+  }
+  // Capture provider methods and origins before the first await. Changing the caller's
+  // configuration object later cannot replace these boundaries or enable a write plugin.
+  return {
+    trustedOrigin: auth.trustedOrigin, now: auth.now, policy: auth.policy,
+    inventory: Object.freeze({ authorize: policies.inventory.authorize.bind(policies.inventory) }),
+    sales: Object.freeze({ authorize: policies.sales.authorize.bind(policies.sales) }),
+    transfers: Object.freeze({ authorize: policies.transfers.authorize.bind(policies.transfers) }),
+    products: Object.freeze({ authorize: policies.products.authorize.bind(policies.products) }),
+    media: media === null ? null : Object.freeze({ deliveryOrigin: media.deliveryOrigin,
+      resolveThumbnails: media.resolveThumbnails.bind(media), resolveOriginal: media.resolveOriginal.bind(media) })
+  };
+}
+
+/** Explicit, opt-in auth + native read composition. Import/construction never connects or listens.
+ * Authentication may persist/revoke sessions or change the authenticated user's own password.
+ * No sales/transfer/party commands, admin/account maintenance, migrations, imports or seeds are enabled.
+ * The optional trusted driver seam is for protocol-double tests, not an alternate production provider. */
+export async function createPostgresReadApi(options: PostgresReadApiOptions, createDriver?: PostgresPoolDriverFactory): Promise<PostgresReadApi> {
+  const host = checkedHost(options);
+  const pool = new BoundedPostgresPool(options.postgres, createDriver);
+  let app: FastifyInstance | undefined;
+  try {
+    app = Fastify({ logger: false, trustProxy: false, bodyLimit: 65_536 });
+    app.addHook("onClose", async () => { await pool.dispose(); });
+    const service = createAuthenticationService({ store: new PostgresAuthenticationStore(pool),
+      now: host.now, policy: host.policy, passwords: createNodeScryptPasswords() });
+    const authentication = Object.freeze({ service, trustedOrigin: host.trustedOrigin });
+    const authenticate = createSalesSessionAuthenticator(authentication);
+    const authenticateTransfer = createTransferSessionAuthenticator(authentication);
+    // Each register call deliberately preserves the existing plugin's Fastify encapsulation:
+    // independent error handlers, per-request identity and independent abort controllers.
+    app.register(createAuthenticationHttpPlugin(authentication));
+    app.register(createInventoryHttpPlugin({ authenticate, dependencies: { authorization: host.inventory, reader: new PostgresInventoryQueryReader(pool) } }));
+    app.register(createInventoryLedgerQueryHttpPlugin({ authenticate, dependencies: { authorization: host.inventory, reader: new PostgresInventoryLedgerQueryReader(pool) } }));
+    app.register(createSalesQueryHttpPlugin({ authenticate, dependencies: { authorization: host.sales, reader: new PostgresSalesQueryReader(pool) } }));
+    app.register(createTransferQueryHttpPlugin({ authenticate: authenticateTransfer, dependencies: { authorization: host.transfers, reader: new PostgresTransferQueryReader(pool) } }));
+    app.register(createProductQueryHttpPlugin({ authenticate, dependencies: { authorization: host.products, reader: new PostgresProductQueryReader(pool), media: host.media } }));
+    await app.ready();
+    const readyApp = app;
+    return Object.freeze({ app: readyApp, close: () => readyApp.close(), get postgresBackgroundFailureCount() { return pool.backgroundFailureCount; } });
+  } catch (error) {
+    // Even failed registration owns its pool. Both operations are idempotent; explicitly
+    // dispose as a fallback if Fastify fails before reaching the close hook.
+    const failures: unknown[] = [error];
+    try { await app?.close(); } catch (closeError) { failures.push(closeError); }
+    try { await pool.dispose(); } catch (disposeError) { if (!failures.includes(disposeError)) failures.push(disposeError); }
+    if (failures.length > 1) throw new AggregateError(failures, "PostgreSQL read API construction failed; resource cleanup is not confirmed");
+    throw error;
+  }
+}

@@ -1,0 +1,34 @@
+✔ SYNTHETIC composition: one lazy owned pool, 19 native auth/read routes, no business writes/listener (412.219321ms)
+✔ SYNTHETIC composition: explicit origin/policy/media and bounded configuration fail closed (11.354799ms)
+✔ SYNTHETIC composition: failed authentication-policy construction cleans its pool without a connection (7.465899ms)
+✔ SYNTHETIC composition: real Node scrypt login/store/session/logout wiring never exposes token in JSON (219.100678ms)
+✔ SYNTHETIC composition: all read families resolve the same current PG session; native adapters retain isolated failures (142.049394ms)
+✔ SYNTHETIC composition: missing/stale/cross-site credentials cannot reach policies or business SQL (46.688339ms)
+✔ SYNTHETIC composition: hall policy is mandatory, denied inventory/ledger and product reads do not obtain business leases (41.14595ms)
+✔ SYNTHETIC composition: sanitized provider failures remain local to their read plugin (65.509481ms)
+✔ SYNTHETIC composition: explicit raw aborted event in a pending policy does not cancel a sibling read (53.96346ms)
+✔ SYNTHETIC composition: caller method replacement cannot widen captured policy after construction (35.864015ms)
+✔ SYNTHETIC composition: pool disposal errors reject shutdown and never repeat driver end (20.332277ms)
+✔ SYNTHETIC composition source: no ambient configuration, startup, migration or business command registration (1.811578ms)
+✔ SYNTHETIC transfer session: current authenticated role/hall maps to exact canonical read scope, not request headers (6.218557ms)
+✔ SYNTHETIC transfer session: cookie-only exact HTTPS Origin checks reject credentials before storage (1.298877ms)
+✔ SYNTHETIC transfer session: no role fallback, stale session or hall-less salesperson identity (2.955663ms)
+✔ SYNTHETIC transfer session: explicit trusted configuration and provider failures are not hidden (2.544626ms)
+✔ SYNTHETIC transfer session: caller mutation cannot replace captured HTTPS origin or trusted resolver (1.912756ms)
+✔ independent: current account/session invalidations deny all five read families before policy/business SQL (398.567322ms)
+✔ independent: current hall and role facts, not forged headers/body, reach mandatory authorization (37.996965ms)
+✔ independent: failed authentication storage stays sanitized and never becomes an empty business response (17.048091ms)
+✔ independent: invalid host contracts never allocate a driver or silently enable fallback policy/media (1.457606ms)
+✔ independent: closing one API retires an injected active read and never closes another API pool (54.859454ms)
+✔ independent: standalone transfer authenticator snapshots origin, service, and resolver method (0.847594ms)
+✔ independent: composition captures all policy methods while their current internal state remains authoritative (40.912549ms)
+✔ independent: captured media origin/methods still validate each current provider URL, never exposing private fileRef (19.241402ms)
+✔ independent: injected pending policy is not network-drained by close and cannot acquire business storage afterward (14.914952ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2729.588642
