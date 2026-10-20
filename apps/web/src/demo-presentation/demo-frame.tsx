@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
-/** Names and hierarchy come from frozen frontend/index.html, not a new menu. */
-export type DemoNavigationId = 'inventory' | 'transfer' | 'transfer/new' | 'sales' | 'sales/new' | 'products' | 'product-categories' | 'product-settings' | 'barcode-schemes' | 'settings/stores' | 'settings/parties' | 'settings/staff' | 'settings/payments';
+/** Frozen frontend/index.html hierarchy, with the explicitly approved separate customer/supplier departure. */
+export type DemoNavigationId = 'inventory' | 'transfer' | 'transfer/new' | 'sales' | 'sales/new' | 'products' | 'product-categories' | 'product-settings' | 'barcode-schemes' | 'settings/stores' | 'customers' | 'suppliers' | 'settings/staff' | 'settings/payments';
 export interface DemoNavigationTarget {
   readonly href?: string;
   readonly onActivate?: () => void;
@@ -34,7 +34,7 @@ export function DemoFrame(props: DemoFrameProps) {
           <details className="tc-nav-group" open><summary className="nav child">调拨单</summary><div className="tc-nav-children">{item('transfer', '调拨单列表')}{item('transfer/new', '新增调拨单')}</div></details>
           <div className="nav parent">销售管理</div><details className="tc-nav-group sale-nav-group" open><summary className="nav child">销货单</summary><div className="tc-nav-children">{item('sales', '销货单列表')}{item('sales/new', '新增销货单')}</div></details>
           <div className="nav parent">商品管理</div>{item('products', '商品信息')}{item('product-categories', '商品分类')}{item('product-settings', '商品设置')}{item('barcode-schemes', '条码方案')}
-          <div className="nav parent">基础设置</div>{item('settings/stores', '营业厅与仓库')}{item('settings/parties', '往来单位')}{item('settings/staff', '员工与账号')}{item('settings/payments', '收款配置')}
+          <div className="nav parent">基础设置</div>{item('settings/stores', '营业厅与仓库')}{item('customers', '客户')}{item('suppliers', '供应商')}{item('settings/staff', '员工与账号')}{item('settings/payments', '收款配置')}
         </nav>
       </aside>
       <div className="main"><header className="topbar"><span className="breadcrumb">{props.breadcrumb}</span>{props.topbarActions && <div className="demo-topbar-actions">{props.topbarActions}</div>}</header>

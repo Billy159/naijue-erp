@@ -54,8 +54,10 @@ try {
   assert.equal(document.querySelectorAll('.sidebar .nav.parent').length,4);
   assert.equal(document.querySelectorAll('.sidebar details[open]').length,2);
   assert.equal(document.querySelectorAll('.sidebar a').length,1);
-  assert.equal(document.querySelectorAll('.sidebar button:disabled').length,12);
+  assert.equal(document.querySelectorAll('.sidebar button:disabled').length,13);
   assert.deepEqual([...document.querySelectorAll('.sidebar .nav.parent')].map(n=>n.textContent),['库存管理','销售管理','商品管理','基础设置']);
+  assert.deepEqual([...document.querySelectorAll('.sidebar button:disabled')].map(n=>n.textContent).filter(label=>label==='客户'||label==='供应商'),['客户','供应商']);
+  assert.equal([...document.querySelectorAll('.sidebar .nav.child')].some(n=>n.textContent==='往来单位'),false);
   assert.equal(document.querySelector('.brand-name').textContent,'奈爵服饰');
   assert.equal(document.querySelector('.breadcrumb').textContent,'库存管理 / 库存状况表');
   assert.equal(document.querySelector('.preview-banner'),null);
@@ -118,7 +120,7 @@ try {
   assert.ok(document.querySelector('.mx-absent'));
   assert.deepEqual(errors,[]);
   const bytes=(await stat(new URL('dist-preview/inventory-preview-test-only.html',web))).size;
-  const result={status:'pass',verification:'Built bundled-code jsdom + source-structure/CSS assertions only, not browser rendering or pixel parity.',sourceCommit:'b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3',portableBytes:bytes,pageLimitBytes:256*1024,pageEmbeddable:bytes<=256*1024,checks:['full frozen menu hierarchy with unavailable actions disabled','white scoped role palette and source sidebar/breakpoints; final display:none removes proto gap','hidden filter labels, muted 32px selectors and source action grid','column-first product identity, source colgroup widths/sticky declarations, final4px vertical padding and28px fold minimum','product/color fold controls in correct source columns, optional subtotal/total metadata','all eight frozen display options and source ghost footer; viewport-clamped/flipped fixed settings with scrollable body; resize/scroll create no reads','exact final numeric child ink/font weight overrides parent zero/minus classes, with signs and accessible identities intact','no unknown stock presentation branch; known zero and absent spec distinct','neutral control CSS excludes matrix/drawer, startup excludes inventory layout/styles','no startup business reads; diagnostics separate from source business geometry']};
+  const result={status:'pass',verification:'Built bundled-code jsdom + source-structure/CSS assertions only, not browser rendering or pixel parity.',sourceCommit:'b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3',portableBytes:bytes,pageLimitBytes:256*1024,pageEmbeddable:bytes<=256*1024,checks:['frozen menu hierarchy with approved separate customer/supplier entries and unavailable actions disabled','white scoped role palette and source sidebar/breakpoints; final display:none removes proto gap','hidden filter labels, muted 32px selectors and source action grid','column-first product identity, source colgroup widths/sticky declarations, final4px vertical padding and28px fold minimum','product/color fold controls in correct source columns, optional subtotal/total metadata','all eight frozen display options and source ghost footer; viewport-clamped/flipped fixed settings with scrollable body; resize/scroll create no reads','exact final numeric child ink/font weight overrides parent zero/minus classes, with signs and accessible identities intact','no unknown stock presentation branch; known zero and absent spec distinct','neutral control CSS excludes matrix/drawer, startup excludes inventory layout/styles','no startup business reads; diagnostics separate from source business geometry']};
   await writeFile(new URL('src/demo-presentation/verification/source-structure.json',web),JSON.stringify(result,null,2));
   process.stdout.write(`PASS source-structure: source frame/filter/matrix/pager declarations, native fold structure and display controls; ${bytes} byte portable preview, exact Page limit ${256*1024}. No browser/pixel claim.\n`);
 } finally {dom.window.close();}

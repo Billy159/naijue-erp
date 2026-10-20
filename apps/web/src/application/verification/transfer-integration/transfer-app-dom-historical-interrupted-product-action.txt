@@ -1,0 +1,6 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS transfer app 1: actual first-party frame preserves disabled missing/new/edit routes and independent customer/supplier labels; auth alone stays inert; route cancellation discards late CSS, one explicit transfer activation reads one bounded page.
+PASS transfer app 2: detail code/CSS/data activates only on click, remains an inline full-page read-only view, and cancelled preparation retains the executed list/draft/scroll/focus without a new list read.

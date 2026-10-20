@@ -29,14 +29,16 @@ export class ApplicationController {
     const inventory = routes.inventory ? Object.freeze({ ...routes.inventory, actions: Object.freeze({ ...routes.inventory.actions }), stylesheet: stylesheet(routes.inventory.stylesheet) }) : undefined;
     if (routes.inventory && (!routes.inventory.actions || (routes.inventory.actions.onOpenCell !== undefined && typeof routes.inventory.actions.onOpenCell !== 'function'))) throw new TypeError('Explicit inventory action capabilities are required.');
     const sales = routes.sales ? Object.freeze({ ...routes.sales, stylesheet: stylesheet(routes.sales.stylesheet) }) : undefined;
+    const transfers = routes.transfers ? Object.freeze({ stylesheet: stylesheet(routes.transfers.stylesheet), detailStylesheet: stylesheet(routes.transfers.detailStylesheet), ...(routes.transfers.product ? { product: Object.freeze({ stylesheet: stylesheet(routes.transfers.product.stylesheet) }) } : {}) }) : undefined;
     const parties = routes.parties ? Object.freeze({ ...routes.parties, stylesheet: stylesheet(routes.parties.stylesheet) }) : undefined;
     if (parties && typeof parties.newRequestKey !== 'function') throw new TypeError('A party request-key provider is required.');
-    this.#configuration = Object.freeze({ http: Object.freeze({ ...configuration.http }), presentation: configuration.presentation, routes: Object.freeze({ ...(inventory ? { inventory } : {}), ...(sales ? { sales } : {}), ...(parties ? { parties } : {}) }) });
-    this.#configuredRoutes = Object.freeze([...(inventory ? ['inventory' as const] : []), ...(sales ? ['sales' as const] : []), ...(parties ? ['customers' as const, 'suppliers' as const] : [])]);
+    this.#configuration = Object.freeze({ http: Object.freeze({ ...configuration.http }), presentation: configuration.presentation, routes: Object.freeze({ ...(inventory ? { inventory } : {}), ...(sales ? { sales } : {}), ...(transfers ? { transfers } : {}), ...(parties ? { parties } : {}) }) });
+    this.#configuredRoutes = Object.freeze([...(inventory ? ['inventory' as const] : []), ...(sales ? ['sales' as const] : []), ...(transfers ? ['transfers' as const] : []), ...(parties ? ['customers' as const, 'suppliers' as const] : [])]);
     const unavailable = (): Promise<never> => Promise.reject(new Error('Route capability is unavailable.'));
     this.#leaves = new AsyncLeafRegistry({
       inventory: { load: () => inventory ? import('./routes/inventory.tsx') : unavailable(), loadStyles: () => inventory ? inventory.stylesheet.load() : unavailable() },
       sales: { load: () => sales ? import('./routes/sales.tsx') : unavailable(), loadStyles: () => sales ? sales.stylesheet.load() : unavailable() },
+      transfers: { load: () => transfers ? import('./routes/transfers.tsx') : unavailable(), loadStyles: () => transfers ? transfers.stylesheet.load() : unavailable() },
       parties: { load: () => parties ? import('./routes/parties.tsx') : unavailable(), loadStyles: () => parties ? parties.stylesheet.load() : unavailable() },
     }, { maxRetainedEntries: 1 });
     const replaceIdentity = readContextAuthenticationLifecycle(this.#context);
@@ -71,11 +73,12 @@ export class ApplicationController {
     const scope = this.#context.createScope(`application-route-${++this.#sequence}`);
     this.#publish({ phase: 'loading', route, scope, prepared: null, notice: null });
     const principal = this.authentication.getSnapshot().principal!;
-    const input: RoutePreparation = { scope, principal, configuration: this.#configuration.routes, http: this.#httpForScope(scope) };
+    const input: RoutePreparation = { scope, principal, configuration: this.#configuration.routes, http: this.#httpForScope(scope, route) };
     try {
       let prepared: PreparedApplicationRoute;
       if (route === 'inventory') prepared = (await this.#leaves.load('inventory', scope)).prepareInventoryRoute(input);
       else if (route === 'sales') prepared = (await this.#leaves.load('sales', scope)).prepareSalesRoute(input);
+      else if (route === 'transfers') prepared = (await this.#leaves.load('transfers', scope)).prepareTransferRoute(input);
       else {
         const module = await this.#leaves.load('parties', scope);
         if (!this.#current(scope)) return false;
@@ -105,18 +108,26 @@ export class ApplicationController {
     if (this.#disposed) return;
     this.authentication.dispose(); this.#disposed = true;
     this.#context.clear(); this.#partySession?.workspace.dispose(); this.#partySession = null; this.#leaves.clear();
-    for (const provider of new Set(Object.values(this.#configuration.routes).map(route => route.stylesheet))) {
+    const transfer = this.#configuration.routes.transfers;
+    const styles = [...Object.values(this.#configuration.routes).map(route => route.stylesheet), ...(transfer ? [transfer.detailStylesheet] : []), ...(transfer?.product ? [transfer.product.stylesheet] : [])];
+    for (const provider of new Set(styles)) {
       try { provider.dispose(); } catch { /* A failed host asset cleanup must not prevent the other owners/DOM from being released. */ }
     }
     this.#publish({ ...home(), phase: 'disposed' }); this.#listeners.clear();
   }
   #current(scope: ReadScope): boolean { return !this.#disposed && scope.active && this.#state.scope === scope; }
-  #httpForScope(scope: ReadScope): ApplicationConfiguration['http'] {
+  #httpForScope(scope: ReadScope, route: ApplicationRoute | null = null): ApplicationConfiguration['http'] {
     const http = this.#configuration.http;
     return Object.freeze({ ...http, fetch: async (url: string, init: RequestInit): Promise<Response> => {
       // Never expire a newer identity because a stale, abort-ignoring route returned a late 401.
       const response = await http.fetch(url, init);
-      if (scope.active && response.status === 401) this.authentication.expire();
+      if (scope.active && !init.signal?.aborted) {
+        if (response.status === 401) this.authentication.expire();
+        // Read-only transfers have no unknown-write keys to preserve. A current
+        // denial becomes a route-local failure so its same-menu retry can remount.
+        // Never generalize this disposal to party or sales command workspaces.
+        else if (response.status === 403 && route === 'transfers' && this.#state.route === route && this.#state.scope === scope) this.failRoute(scope);
+      }
       return response;
     } });
   }

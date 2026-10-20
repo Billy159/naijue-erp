@@ -5,6 +5,7 @@ import type { ApplicationConfiguration } from './contracts.ts';
 export { ApplicationController } from './controller.ts';
 export { ApplicationRoot } from './application-root.tsx';
 export { createRouteStylesheet } from './stylesheet.ts';
+export { createDemoFrameWorkspaceRenderer } from './demo-frame-presentation.tsx';
 export type { ApplicationConfiguration, ApplicationRoute, ApplicationSnapshot, ApplicationPresentation, RouteStylesheet } from './contracts.ts';
 
 /** Actual single-root host composition, not a preview. Nothing mounts or checks a session implicitly. */

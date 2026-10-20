@@ -1,2 +1,4 @@
-/* Existing reviewed authentication surface only. The approved host supplies its actual shell CSS. */
+/* Existing authentication plus the first-party frozen-source frame and shared neutral controls. No business leaf CSS. */
 @import '../../authentication/authentication.css';
+@import '../../demo-presentation/frame.css';
+@import '../../demo-presentation/controls.css';

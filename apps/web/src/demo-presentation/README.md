@@ -10,7 +10,9 @@ an assertion of pixel parity.
 
 - `demo-frame.tsx`: source menu/brand/sidebar/topbar/page structure. It only renders
   approved targets supplied by the host. Other source menu positions are disabled
-  and never masquerade as implemented capabilities. No data, imports, reads or
+  and never masquerade as implemented capabilities. The approved business departure
+  replaces the old merged 往来单位 entry with independent 客户 and 供应商 entries
+  keyed `customers`/`suppliers`; each needs its own explicit target. No data, imports, reads or
   routing effects occur just because the frame renders.
 - `tokens.css`: source semantic role tokens and geometry scoped to `.demo-ui`.
   The final source white application surface is explicit. No global dark-mode
@@ -73,7 +75,9 @@ Import `frame.css` once for the approved host. Render DemoFrame with explicit
 Optional `topbarActions`, `notice`, `footer` are host-supplied React nodes, never
 account or capability inference. Other route CSS can import `controls.css`
 directly instead of loading inventory.css and its matrix/drawer declarations.
-Application composition files were not modified in this work.
+The application can reuse this frame through its pure workspace renderer; it still
+owns authentication/read scopes and supplies explicit capabilities. This does not
+claim accepted account-toolbar placement or browser/pixel parity.
 
 ## Business and presentation boundaries
 

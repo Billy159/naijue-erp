@@ -1,0 +1,68 @@
+FINAL_PROBE_EXIT=0
+✔ strict native detail rejects one product mapped to multiple size groups (3.970411ms)
+✔ list, detail and selected-reference shape reject wrong identity and legacy scalar extras (3.013764ms)
+✔ matrix boundaries and exact canonical quantity semantics are preserved (1.887228ms)
+✔ shared size and hall identities cannot carry contradictory current facts (2.680499ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 621.329328
+PASS IND DOM 1: actual StrictMode single initial list, no lazy work; edited draft never leaks into same-filter pagination or actual Arco 20/50/100/200 page-size selections.
+PASS IND DOM 1b: actual Arco status/from/to controls accept multiple selections, including disabled historical warehouse facts, send exact independent arrays only on Query; reset remains draft-only.
+PASS IND DOM 2: Back during pending detail CSS prevents business read, ignores late style readiness, and retains list node/scroll/focus.
+PASS IND DOM 3: failed detail CSS retries explicitly; product action waits configured styles, close defeats late readiness without eager/default-fetch work.
+PASS IND DOM 4: shared product host reads only target basics; same-account permission replacement clears hidden list and pending detail, rejects ignored-signal late data.
+PASS IND DOM 5: bounded large-grid fallback preserves lazy product action and exposes every canonical size through explicit pages without truncation.
+All 6 independent synthetic DOM groups passed; no browser, network, server, DB, pixels or timing acceptance.
+PASS IND STATIC 1: final frozen cascade anchors match list column widths, matrix identity geometry, sticky totals/actions, footer, section/header sizing, popup bounds and source pager labels; no pixel claim.
+PASS IND STATIC 2: code-only index is inert, detail/drawer leaves are split, production graph excludes fixtures/tests, and transfer detail CSS has an independent single-input asset graph.
+Raw esbuild route CSS aggregation is not proof of lazy CSS delivery; the application exact shell/route/detail/product stylesheet graph owns that integration. No browser, timing, deployment or pixels accepted.
+apps/web/src/transfers/README.md: OK
+apps/web/src/transfers/SOURCE-ADAPTATION.md: OK
+apps/web/src/transfers/contracts.ts: OK
+apps/web/src/transfers/controller.ts: OK
+apps/web/src/transfers/detail-content.tsx: OK
+apps/web/src/transfers/detail-host.tsx: OK
+apps/web/src/transfers/detail.css: OK
+apps/web/src/transfers/filter-controls.tsx: OK
+apps/web/src/transfers/format.ts: OK
+apps/web/src/transfers/http-reader.ts: OK
+apps/web/src/transfers/index.ts: OK
+apps/web/src/transfers/matrix.ts: OK
+apps/web/src/transfers/model.ts: OK
+apps/web/src/transfers/owned-scope.ts: OK
+apps/web/src/transfers/pagination.tsx: OK
+apps/web/src/transfers/product-activation.tsx: OK
+apps/web/src/transfers/response-validation.ts: OK
+apps/web/src/transfers/saved-records.tsx: OK
+apps/web/src/transfers/scope.ts: OK
+apps/web/src/transfers/sparse-lines.tsx: OK
+apps/web/src/transfers/tests/dom-entry.tsx: OK
+apps/web/src/transfers/tests/fixtures.ts: OK
+apps/web/src/transfers/tests/run-build-check.mjs: OK
+apps/web/src/transfers/tests/run-dom-tests.mjs: OK
+apps/web/src/transfers/tests/run-frozen-source-check.mjs: OK
+apps/web/src/transfers/transfers-page.tsx: OK
+apps/web/src/transfers/transfers-route.tsx: OK
+apps/web/src/transfers/transfers.css: OK
+apps/web/src/transfers/transfers.test.ts: OK
+apps/web/src/transfers/tsconfig.json: OK
+apps/web/src/inventory/product-drawer-host.tsx: OK
+apps/web/src/inventory/product-drawer.tsx: OK
+apps/web/src/inventory/product-tab-state.tsx: OK
+apps/web/src/inventory/product-tab-images.tsx: OK
+apps/web/src/inventory/product-drawer.css: OK
+apps/web/src/inventory/product-drawer-frame.css: OK
+packages/application/src/transfer-query-ports.ts: OK
+packages/application/src/transfer-query-validation.ts: OK
+apps/web/src/inventory/product-drawer-host.tsx: OK
+apps/web/src/inventory/product-drawer.tsx: OK
+apps/web/src/inventory/product-tab-state.tsx: OK
+apps/web/src/inventory/product-tab-images.tsx: OK
+apps/web/src/inventory/product-drawer.css: OK
+apps/web/src/inventory/product-drawer-frame.css: OK
+apps/web/src/inventory/inventory.css: OK

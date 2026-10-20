@@ -1,0 +1,13 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS transfer app 1: actual first-party frame preserves disabled missing/new/edit routes and independent customer/supplier labels; auth alone stays inert; route cancellation discards late CSS, one explicit transfer activation reads one bounded page.
+PASS transfer app 2: detail code/CSS/data activates only on click, remains an inline full-page read-only view, and cancelled preparation retains the executed list/draft/scroll/focus without a new list read.
+TRACE 1792528123544 before first product preparation
+TRACE 1792528123649 product styles pending
+TRACE 1792528123774 returned while product CSS pending
+TRACE 1792528123787 late product CSS ready
+TRACE 1792528123887 reopened inline detail
+TRACE 1792528123932 opened shared product drawer: {"text":"商品资料 · 只读TEST 当前款号 · TEST 当前商品 1×基础资料规格图片款号SYNTHETIC-PRODUCT名称SYNTHETIC PRODUCT DETAIL分类未提供年份未提供季节未提供供应商未提供系统货号未提供","calls":["https://synthetic.test/api/auth/session","https://synthetic.test/api/transfers/query","https://synthetic.test/api/transfers/detail/query","https://synthetic.test/api/transfers/detail/query","https://synthetic.test/api/products/basics/query"]}
+TRACE 1792528123933 shared native product facts ready

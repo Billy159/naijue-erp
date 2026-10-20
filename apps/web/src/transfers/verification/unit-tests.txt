@@ -1,0 +1,23 @@
+✔ construction and parameter edits are inert, source arrays/page sizes are strict (37.414164ms)
+✔ exact read HTTP request shape, trusted session only and no hydration (47.923486ms)
+✔ response fails closed for missing summaries, wrong scope/count/page, duplicates and scalar aliases (3.684527ms)
+✔ detail validates complete canonical metadata while keeping saved full labels (6.355959ms)
+✔ contradictory current product/color/FIT/size identity facts fail closed (7.23705ms)
+✔ canonical matrix uses identities, full ordered sizes, exact actual quantities and legal empty vs nonexistent SKU (6.639156ms)
+✔ same labels never merge different product/color/FIT identities (2.67968ms)
+✔ wide and many-row grids select explicit bounded fallback before Cartesian materialization (48.318646ms)
+✔ exact formatting and huge count paging do not round quantities or expose unsafe page actions (63.772872ms)
+✔ superseded and cancelled list reads discard late ignored-signal success (10.497866ms)
+✔ failed read retains marked executed facts, identity replacement clears all list/detail results (4.360164ms)
+✔ 401/403 revoke route and child reads immediately without retained old labels (4.925787ms)
+✔ detail version guard never regresses an already-known version (1.036011ms)
+✔ bounded warehouse HTTP is independent, exact selected-ID intersection and rejects malformed candidates (5.817833ms)
+✔ malformed transport data never becomes successful empty results or fixtures (4.114944ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1434.228201

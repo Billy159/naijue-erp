@@ -5,20 +5,25 @@ import type { Selection } from './contracts.ts';
 import type { ProductReadOnlyReader } from './product-contracts.ts';
 import type { ProductDrawerContentProps } from './product-drawer.tsx';
 
-function loadStyles(): Promise<void> {
+let defaultStyles: Promise<void> | null = null;
+function loadDefaultStyles(): Promise<void> {
   if (document.querySelector('[data-inventory-inline],link[data-product-drawer-ready]')) return Promise.resolve();
-  return new Promise((resolve, reject) => {
+  if (defaultStyles) return defaultStyles;
+  defaultStyles = new Promise((resolve, reject) => {
     const link = document.createElement('link');
     link.rel = 'stylesheet'; link.href = new URL('./product-drawer.css', import.meta.url).href;
-    link.onload = () => { link.dataset.productDrawerReady = ''; resolve(); };
-    link.onerror = () => { link.remove(); reject(new Error('商品查看样式加载失败，请重试。')); };
+    link.onload = () => { link.dataset.productDrawerReady = ''; defaultStyles = null; resolve(); };
+    link.onerror = () => { link.remove(); defaultStyles = null; reject(new Error('商品查看样式加载失败，请重试。')); };
     document.head.append(link);
   });
+  return defaultStyles;
 }
-const leaves = new AsyncLeafRegistry({ drawer: { load: () => import('./product-drawer.tsx'), loadStyles } }, { maxRetainedEntries: 1 });
+// Only module code is shared. Each attachment must await its configured style owner;
+// a ready module can never bypass a different owner's pending or failed stylesheet.
+const leaves = new AsyncLeafRegistry({ drawer: { load: () => import('./product-drawer.tsx') } }, { maxRetainedEntries: 1 });
 
 /** Mounted only by an explicit 查看 click. Close detaches pending imports, cancels reads and clears entity facts. */
-export function ProductDrawerHost(props: { readonly parentScope: ReadScope; readonly product: Selection; readonly reader: ProductReadOnlyReader; readonly close: () => void }) {
+export function ProductDrawerHost(props: { readonly parentScope: ReadScope; readonly product: Selection; readonly reader: ProductReadOnlyReader; readonly close: () => void; readonly loadStyles?: () => Promise<unknown> }) {
   const id = useId();
   const attachmentId = useRef(0);
   const [attachment, setAttachment] = useState<{ readonly parentScope: ReadScope; readonly scope: ReadScope } | null>(null);
@@ -49,9 +54,10 @@ export function ProductDrawerHost(props: { readonly parentScope: ReadScope; read
     if (!scope) return;
     let attached = true;
     setLeaf({ scope, View: null, error: false });
-    void leaves.load('drawer', scope).then(module => { if (attached && scope.active) setLeaf({ scope, View: module.ProductDrawerContent, error: false }); }, () => { if (attached && scope.active) setLeaf({ scope, View: null, error: true }); });
+    const styles = Promise.resolve().then(() => (props.loadStyles ?? loadDefaultStyles)());
+    void Promise.all([leaves.load('drawer', scope), styles]).then(([module]) => { if (attached && scope.active) setLeaf({ scope, View: module.ProductDrawerContent, error: false }); }, () => { if (attached && scope.active) setLeaf({ scope, View: null, error: true }); });
     return () => { attached = false; };
-  }, [scope, attempt]);
+  }, [scope, attempt, props.loadStyles]);
   return <dialog ref={dialog} className="iw-product-drawer" aria-modal="true" aria-labelledby={`${id}-title`} onCancel={event => { event.preventDefault(); props.close(); }} onClick={event => { if (event.target === event.currentTarget) { const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) props.close(); } }} onKeyDown={event => {
     if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); props.close(); }
     if (event.key !== 'Tab') return;

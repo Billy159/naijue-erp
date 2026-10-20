@@ -1,0 +1,60 @@
+import assert from 'node:assert/strict';
+import { mkdtemp, rm } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { build } from 'esbuild';
+import { JSDOM } from 'jsdom';
+const here = path.dirname(fileURLToPath(import.meta.url));
+const temporary = await mkdtemp(path.join(here, '.product-style-check-'));
+const dom = new JSDOM('<!doctype html><div id="root"></div>', { url: 'https://synthetic.test/' });
+for (const key of ['window', 'document', 'HTMLElement', 'HTMLDialogElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+dom.window.HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', ''); };
+dom.window.HTMLDialogElement.prototype.close = function () { this.removeAttribute('open'); };
+let root, act;
+try {
+  const output = path.join(temporary, 'entry.mjs');
+  await build({ entryPoints: [path.join(here, 'product-styles-entry.tsx')], outfile: output, bundle: true, platform: 'node', format: 'esm', packages: 'external', jsx: 'automatic', loader: { '.css': 'empty' }, logLevel: 'warning' });
+  const { createElement: h, StrictMode, createRoot, ProductDrawerHost, ReadContext, createRouteStylesheet } = await import(pathToFileURL(output).href);
+  ({ act } = await import(pathToFileURL(output).href));
+  const host = document.getElementById('root'); root = createRoot(host);
+  const reads = [];
+  const reader = { readProductBasics: read => new Promise(resolve => reads.push({ read, resolve })), readProductSpecifications: async () => null, readProductImages: async () => null, readProductImage: async () => { throw new Error('Unexpected image'); } };
+  const context = new ReadContext({ accountId: 'SYNTHETIC-A', sessionRevision: '1', permissionRevision: '1' });
+  let parentScope = context.createScope('SYNTHETIC-STYLE-ROUTE'); let open = true; let loadStyles;
+  const draw = () => root.render(h(StrictMode, null, open ? h(ProductDrawerHost, { parentScope, reader, product: { id: 'SYNTHETIC-PRODUCT', label: 'SYNTHETIC PRODUCT' }, ...(loadStyles ? { loadStyles } : {}), close: () => { open = false; draw(); } }) : null));
+  const render = async () => { await act(async () => draw()); };
+  const settle = async () => { await act(async () => { await new Promise(resolve => setTimeout(resolve, 8)); }); };
+  const until = async (test, label) => { const deadline = Date.now() + 3000; while (!test() && Date.now() < deadline) await settle(); assert.ok(test(), label); };
+  const click = async element => { assert.ok(element); await act(async () => element.click()); await settle(); };
+  const button = label => [...host.querySelectorAll('button')].find(element => element.textContent.trim() === label);
+  const links = () => [...document.head.querySelectorAll('link[rel=stylesheet]')];
+  const close = () => click(host.querySelector('[aria-label="关闭商品资料"]'));
+  const providerA = createRouteStylesheet({ document, origin: 'https://synthetic.test', href: '/approved/product-action-a.css' });
+  const preload = providerA.load(); void preload.catch(() => {}); loadStyles = providerA.load;
+  await render(); await settle(); assert.equal(links().length, 1); assert.match(links()[0].href, /approved\/product-action-a\.css$/); assert.equal(reads.length, 0);
+  await close(); assert.equal(host.querySelector('dialog'), null); await act(async () => links()[0].dispatchEvent(new Event('error'))); await assert.rejects(preload); await settle(); assert.equal(reads.length, 0);
+  console.log('PASS style handshake 1: caller preload and StrictMode attachments share exactly the configured CSS request; immediate close discards late style failure and never calls relative fallback.');
+
+  open = true; await render(); await until(() => links().length === 1, 'Configured retry link');
+  await act(async () => links()[0].dispatchEvent(new Event('error'))); await until(() => button('重试加载'), 'Scoped style failure retry');
+  assert.equal(reads.length, 0); await click(button('重试加载')); assert.equal(links().length, 1);
+  await act(async () => links()[0].dispatchEvent(new Event('load'))); await until(() => reads.some(item => !item.read.signal.aborted), 'Product read after configured CSS');
+  assert.ok(links().every(link => /approved\/product-action-a\.css$/.test(link.href)));
+  await close(); assert.ok(reads.every(item => item.read.signal.aborted));
+  console.log('PASS style handshake 2: local CSS failure remains retryable; real body/tab reads wait for style readiness; module caching does not inject the default relative stylesheet.');
+
+  const providerB = createRouteStylesheet({ document, origin: 'https://synthetic.test', href: '/approved/product-action-b.css' });
+  loadStyles = providerB.load; parentScope = context.createScope('SYNTHETIC-STYLE-ROUTE-B'); const beforeB = reads.length;
+  open = true; await render(); await settle(); assert.equal(reads.length, beforeB); assert.equal(links().filter(link => link.href.endsWith('product-action-b.css')).length, 1);
+  await act(async () => links().find(link => link.href.endsWith('product-action-b.css')).dispatchEvent(new Event('load')));
+  await until(() => reads.length > beforeB, 'Distinct configured attachment must wait for own CSS');
+  assert.ok(links().every(link => link.href.includes('/approved/'))); await close(); providerA.dispose(); providerB.dispose();
+  console.log('PASS style handshake 3: already-cached module code cannot bypass a different attachment’s required CSS owner.');
+
+  loadStyles = undefined; open = true; await render(); await until(() => links().length === 1, 'Legacy inventory default stylesheet');
+  assert.match(links()[0].href, /product-drawer\.css$/); const defaultLink = links()[0]; await close();
+  await act(async () => defaultLink.dispatchEvent(new Event('error'))); await settle(); assert.equal(host.querySelector('dialog'), null);
+  context.clear(); await act(async () => root.unmount()); root = null;
+  console.log('PASS style handshake 4: default inventory path remains separately deduplicated/retryable and close-safe after configured consumers; no network, browser or CSS-rendering claim.');
+} finally { if (root) await act(async () => root.unmount()); dom.window.close(); await rm(temporary, { recursive: true, force: true }); }

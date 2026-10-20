@@ -6,7 +6,7 @@ import type { ReadScope } from '../loading/read-scope.ts';
 import type { HttpQueryOptions } from '../transport/http-query.ts';
 import type { PartyWorkspace } from '../parties/controller.ts';
 
-export type ApplicationRoute = 'inventory' | 'sales' | 'customers' | 'suppliers';
+export type ApplicationRoute = 'inventory' | 'sales' | 'transfers' | 'customers' | 'suppliers';
 export interface RouteStylesheet {
   /** Resolve only when the route's necessary CSS is usable. No construction-time load. */
   readonly load: () => Promise<unknown>;
@@ -18,6 +18,13 @@ export interface InventoryRouteConfiguration {
   readonly actions: Pick<InventoryActions, 'onOpenCell'>;
 }
 export interface SalesRouteConfiguration { readonly stylesheet: RouteStylesheet }
+export interface TransferRouteConfiguration {
+  readonly stylesheet: RouteStylesheet;
+  /** Separate full-page detail action CSS. Never loaded with route or shell CSS. */
+  readonly detailStylesheet: RouteStylesheet;
+  /** Omit when the real shared action-style handshake is unavailable. */
+  readonly product?: { readonly stylesheet: RouteStylesheet };
+}
 export interface PartiesRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
   /** Required real host key provider. Never fabricated, reused across actions or defaulted. */
@@ -28,10 +35,12 @@ export interface ApplicationConfiguration {
   readonly http: HttpQueryOptions;
   /** Required approved host shell. No guessed menu/sidebar/layout is supplied by this composition. */
   readonly presentation: ApplicationPresentation;
-  /** Explicit capabilities. Omitted routes have no menu, module import, CSS or reader. */
+  /** Explicit capabilities. Omitted routes have no actionable navigation target,
+   * module import, CSS or reader; the canonical frame retains disabled labels. */
   readonly routes: {
     readonly inventory?: InventoryRouteConfiguration;
     readonly sales?: SalesRouteConfiguration;
+    readonly transfers?: TransferRouteConfiguration;
     readonly parties?: PartiesRouteConfiguration;
   };
 }
@@ -57,7 +66,7 @@ export type ApplicationSnapshot = {
   readonly notice: 'cannot-leave' | null;
 };
 export const routeLabels: Readonly<Record<ApplicationRoute, string>> = Object.freeze({
-  inventory: '库存状况表', sales: '销货列表', customers: '客户资料', suppliers: '供应商资料',
+  inventory: '库存状况表', sales: '销货列表', transfers: '调拨单列表', customers: '客户资料', suppliers: '供应商资料',
 });
 
 export interface ApplicationPresentation {

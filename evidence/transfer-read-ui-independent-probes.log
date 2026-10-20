@@ -1,0 +1,15 @@
+✔ strict native detail rejects inconsistent product identity labels (7.384268ms)
+✔ strict native detail rejects inconsistent color identity labels (1.192529ms)
+✔ strict native detail rejects inconsistent FIT identity labels (1.940017ms)
+✔ strict native detail rejects one product mapped to multiple size groups (3.970411ms)
+✔ list, detail and selected-reference shape reject wrong identity and legacy scalar extras (3.013764ms)
+✔ matrix boundaries and exact canonical quantity semantics are preserved (1.887228ms)
+✔ shared size and hall identities cannot carry contradictory current facts (2.680499ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 621.329328

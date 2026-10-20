@@ -1,0 +1,3 @@
+PASS: product-drawer frame rules extracted byte-for-byte from committed b508ce8 inventory.css; remaining inventory CSS changes only the shared import and removes that exact block.
+Shared frame SHA256 0c34778a74bfa84866fc9cd6438b68fe7fc14c4424d921d9e92628d12326c5b5
+PASS: no shared frame.css/layout declarations changed. Separate customer/supplier nav is the explicit approved business departure only.

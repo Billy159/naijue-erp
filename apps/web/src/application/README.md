@@ -1,12 +1,15 @@
 # Authenticated application composition (source host, not deployed UI)
 
 This directory composes the existing real authentication, inventory/product, sales
-and independent customer/supplier modules into one actual React root. It is not a
+native transfer read-only and independent customer/supplier modules into one actual React root. It is not a
 synthetic preview and does not reuse a preview reader, fixture, default account,
 permissive role or empty-success fallback.
 
-The root deliberately requires the host's presentation renderer. No new sidebar,
-menu layout, theme or replacement Demo appearance is supplied here. The current
+The root requires explicit presentation composition. A first-party pure
+`createDemoFrameWorkspaceRenderer()` now reuses the existing frozen-source
+`DemoFrame` without requiring callers to invent a complete frame. The host still
+supplies `renderRouteState` for approved home/loading/error/cancel surfaces. No new
+sidebar geometry, theme or replacement layout is introduced here. The current
 leaf visuals and existing authentication surface are not thereby approved as
 frozen-Demo pixel/interaction equivalents. Exact application frame/menu/account
 positions, selected-route/close/loading/error states, responsive behavior and
@@ -31,7 +34,8 @@ Required configuration:
 - `http.fetch`: explicitly injected fetch. Cookies stay server-managed; no token,
   actor, role or client scope is added to business bodies.
 - `presentation.renderWorkspace({principal, controller, state, routeContent})`:
-  render the approved host shell and `routeContent`. The verified principal is
+  use `createDemoFrameWorkspaceRenderer()` or an explicitly approved host renderer
+  to render the shell and `routeContent`. The verified principal is
   display context, not an authorization grant. Use `controller.routes` for the
   currently presentable configured routes and call `controller.navigate(route)`
   on actual authorized menu/deep-link actions, or `navigate(null)` to close.
@@ -51,6 +55,15 @@ Capabilities:
   product HTTP readers are constructed on inventory activation, never startup.
 - `sales: {stylesheet}`. Uses the existing list/detail reader and bounded historical
   sales-filter reference reader. This is not a sales edit/save/approve form.
+- `transfers: {stylesheet, detailStylesheet, product?}`. Explicit navigation loads
+  the native read-only transfer route and exactly one bounded first list page.
+  Draft typing does not query. Opening a row loads the separate detail CSS/code/
+  response and keeps the list mounted for return/draft/scroll/focus retention.
+  New/edit/approve/void/export/print/history commands stay unavailable, not linked
+  to headless commands. The optional `product: {stylesheet}` enables only the real
+  shared read-only product action: its configured frame/body stylesheet loads on
+  click, then the real product HTTP adapter is imported on the first product read.
+  Omission leaves the action disabled. No inventory route/matrix CSS is imported.
 - `parties: {stylesheet, newRequestKey}`. Requires the real host request-key
   provider, e.g. a bound secure UUID implementation. It is called once per fresh
   command by the existing controller, never during exact replay. Customer and
@@ -74,8 +87,42 @@ The source factory intentionally does not guess a browser URL convention/history
 adapter. A host router must validate supported deep links, call `navigate` only
 after identity verification, honor its false return before changing history, and
 map Back/Forward through the same guard. Unsupported/absent routes must be shown
-as unavailable, not fabricated as completed pages. Transfer UI does not exist in
-this composition and has no route/menu/dummy page.
+as unavailable, not fabricated as completed pages. Only explicitly configured read-only transfer navigation is available; absent
+transfer capability and all unimplemented create/edit menu positions remain
+disabled, never dummy completed pages.
+
+## First-party frame and intentional source departure
+
+`createDemoFrameWorkspaceRenderer()` is a pure renderer: it performs no identity
+check, business read, module prefetch, history mutation or permission grant. It
+maps only `controller.routes` into the one shared DemoFrame. Missing routes and
+all unimplemented create/edit entries remain visible but disabled. The explicitly
+approved business departure replaces the old merged 往来单位 entry with separate
+客户 and 供应商 entries, each keyed to its own capability. No default party target,
+merged entity, legacy alternate frame or guessed menu role was introduced.
+
+Authentication still uses the existing `AuthenticationPanel` outside the workspace.
+The renderer does not fabricate account controls in the source topbar, and exact
+account placement/full-frame visual acceptance remains open. Import the emitted
+shell CSS, which now contains existing auth/frame/tokens/shared neutral controls
+only, never business route/action CSS.
+
+## Shared product action-style handshake
+
+The `.iw-product-drawer*` frame declarations were moved verbatim to one shared
+`inventory/product-drawer-frame.css`. Inventory CSS imports that file to preserve
+its existing immediate closeable frame. `transfer-product.css` imports the same
+source plus the existing body/tab CSS, not the inventory route stylesheet.
+
+`ProductDrawerHost` accepts an optional explicit `loadStyles` callback. Global
+module code remains deduplicated independently; every active attachment awaits
+its own configured stylesheet owner, even if drawer code was already cached.
+The configured path never invokes the default relative-URL loader as well.
+Transfer normalizes the configured `RouteStylesheet.load()` to `Promise<void>`,
+waits it before mounting the shared host and passes the same idempotent loader
+through. Cancellation or late CSS completion cannot reopen a closed action, and
+style failure has explicit retry. The unchanged inventory fallback has separate
+in-flight style deduplication/retry. No new styling framework was added.
 
 ## Lifecycle and bounded state
 
@@ -84,7 +131,16 @@ before the auth controller publishes a replacement principal. All prior route an
 party-workspace scopes are invalidated on session verification, account/auth-version/
 role/hall change, logout, expiry, password success, cancellation/uncertain auth
 writes and disposal. Late old-scope HTTP 401s cannot invalidate a newer identity.
-A current-scope business HTTP 401 calls `expire()`; there is no relogin/retry loop.
+A current-scope, still-unaborted business HTTP 401 calls `expire()`; there is no
+relogin/retry loop. Closed or superseded detail requests cannot invalidate a still-
+current session merely because an abort-ignoring transport returns a late 401.
+The fresh 401 check occurs before its own authentication cleanup aborts the read.
+Only the explicitly read-only transfer parent additionally turns a current,
+unaborted 403 into route-local failure with explicit same-route retry. Closed/
+superseded403 responses do nothing. This does not expire authentication or apply
+to party/sales command workspaces, whose unknown-operation keys/recovery state
+must not be silently discarded. No future writable transfer capability is covered
+by this read-only disposal rule.
 
 Each route instance has one scope. Replacing/closing/cancelling disposes it before
 another route is prepared; late code/data cannot remount that instance. A route
@@ -119,7 +175,8 @@ configuration nor starts a listener, browser or server.
 
 Esbuild normally aggregates CSS from dynamic imports into entry CSS. This builder
 replaces that eager output with exact shell-only CSS, emits inventory/sales/party
-CSS separately, and copies the existing action-only product-drawer CSS to its
+CSS separately, including independent transfer detail/product action assets, and
+copies the existing default-inventory product-drawer CSS to its
 chunk-relative URL. The returned `application-assets.json` supplies filenames for
 the actual host's explicit URL configuration. The startup JS uses ESM splitting;
 there is no modulepreload, route-prefetch HTML or automatic bootstrap. A host entry
@@ -131,8 +188,8 @@ Sales and party CSS entry graphs now import only scoped semantic tokens and actu
 shared controls plus their own leaf styles, not the inventory matrix/settings/
 scope-dialog/product-drawer CSS. Party output additionally contains its real
 installed Arco 2.66.16 CSS and source-settings adapters. The startup, inventory and
-sales static JS/CSS closures must remain Arco-free; only explicit party navigation
-loads that implementation. `sales-base.css` is a narrowly scoped preservation of
+sales static JS/CSS closures must remain Arco-free; explicit party or transfer
+navigation may load that implementation. `sales-base.css` is a narrowly scoped preservation of
 the previous sales structural scaffold, explicitly NOT accepted frozen-Demo sales
 appearance. Replace it with exact sales-source restoration later, rather than
 expanding a new generic layout framework.
@@ -144,6 +201,8 @@ Run from repository root, using existing installed dependencies:
 - `./node_modules/.bin/tsc --noEmit -p apps/web/src/application/tsconfig.json`
 - `node apps/web/src/application/tests/run-dom-tests.mjs`
 - `node apps/web/src/application/tests/run-build-check.mjs`
+- `node apps/web/src/application/tests/run-transfer-dom-tests.mjs`
+- `node apps/web/src/application/tests/run-product-style-handshake-dom-tests.mjs`
 
 DOM tests use the actual composed root/auth/routes, an explicitly synthetic semantic
 renderer, mocked fetch and mocked CSS events, never a usable real account, browser,
@@ -158,6 +217,23 @@ through uncertain response, absent receipt and exact replay. Earlier pre-Arco
 verification logs are retained as historical, not relabelled as current passes.
 Root package/build/preview/backend/schema files are unchanged by this slice, so
 these scoped commands are not yet added to the repository aggregate scripts.
+
+The transfer/style-handshake checkpoint is recorded separately in
+`verification/transfer-integration/result.json` and its exact source/dependency
+manifests. It passes the existing 8 composed groups, 6 transfer-composition
+groups, 4 configured-product-style groups, current shared StrictMode/deferred
+product regressions, scoped TypeScript, emitted split-build and freshly rebuilt
+inventory-preview/source-structure checks. Interrupted/failed diagnostic logs are
+retained as historical harness evidence, not pass results: the harness first used
+an obsolete decorated-button text selector and then tried to compare cyclic DOM
+objects after a synthetic `.click()` that did not focus its trigger. Final tests
+focus the trigger explicitly and use a bounded boolean identity assertion.
+
+The 313154-byte portable inventory preview exceeds its 262144-byte Page budget;
+the split build remains separate and this warning is not performance acceptance.
+The pre-existing party receipt-403 recovery issue is being repaired independently;
+the 8-group composed result here binds the exact pre-repair party controller hash
+in `result.json` and does not claim acceptance of that later change.
 
 ## Missing-production checklist (not hidden by this factory)
 

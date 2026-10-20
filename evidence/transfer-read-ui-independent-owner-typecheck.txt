@@ -1,0 +1,3 @@
+Command: node_modules/.bin/tsc -p apps/web/src/transfers/tsconfig.json --pretty false
+Working directory: /workspace/shared/naijue-erp-rewrite
+Exit code: 0

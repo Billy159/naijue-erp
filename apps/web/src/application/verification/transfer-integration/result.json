@@ -1,0 +1,65 @@
+{
+  "status": "pass",
+  "checkpointHead": "23f1085e718645d4da7b27bf61d0bfefbb16230e",
+  "scope": "Optional native read-only transfer route, pure first-party canonical DemoFrame workspace renderer, approved separate customer/supplier navigation, configured product stylesheet handshake and exact shared frame CSS extraction.",
+  "checks": {
+    "scopedTypeScript": "pass",
+    "existingComposedApplicationDomGroups": 8,
+    "transferComposedDomGroups": 6,
+    "configuredProductStylesheetDomGroups": 4,
+    "sharedProductStrictModeAndDeferredStartGroups": 8,
+    "emittedSplitBuild": "pass",
+    "freshIgnoredInventoryPreviewBuild": "pass",
+    "canonicalFrameSourceStructureAndNav14": "pass"
+  },
+  "stylesheetBytes": {
+    "application": 15045,
+    "inventory": 17732,
+    "sales": 22935,
+    "parties": 596143,
+    "transfers": 588146,
+    "transfer-detail": 6983,
+    "transfer-product": 2933
+  },
+  "portableInventoryPreview": {
+    "bytes": 313154,
+    "pageLimitBytes": 262144,
+    "withinPageBudget": false
+  },
+  "manifestCounts": {
+    "applicationSource": 28,
+    "sharedDependencies": 35,
+    "changedSourceAndApprovedSharedEvidence": 23,
+    "frozenTransferSource": 30,
+    "deferredProductSource": 4
+  },
+  "frozenTransferSourceManifestSha256": "490550323f239fd5e1ad9e648708b9f8dbaa7408d7770f5533af3ccabfa7a8c7",
+  "partyControllerAtExistingComposedCheckSha256": "697a2ad8b472542dc6e5bc531d145e59c4a99f31aa325d81f0810149e7749f92",
+  "partyReceipt403Recovery": "Pre-existing recovery defect is assigned to a separate owner; this checkpoint neither edits parties nor accepts the later repair.",
+  "warnings": {
+    "actualArcoReact19ElementRefWarnings": {
+      "existingComposedDom": 3,
+      "transferComposedDom": 4
+    },
+    "historicalFailedOrInterruptedHarnessLogsRetained": true,
+    "portablePreviewExceedsPageBudget": true
+  },
+  "evidenceBoundary": {
+    "realBrowser": false,
+    "realNetwork": false,
+    "listenerOrServer": false,
+    "liveLogin": false,
+    "database": false,
+    "deployment": false,
+    "pixelParityAcceptance": false,
+    "runtimePerformanceAcceptance": false
+  },
+  "remaining": [
+    "Host still supplies renderRouteState and trusted HTTPS/basePath/fetch/stylesheet URLs; no automatic bootstrap or URL/history integration.",
+    "Authentication panel/account placement remains outside canonical workspace pending exact source approval.",
+    "Sales structural scaffold is explicitly unaccepted visual restoration, commands stay disabled without real providers.",
+    "Unopened business leaves/action CSS are statically isolated; browser waterfall/timing/memory and visual acceptance remain untested.",
+    "Canonical presentation source.sha256 must be refreshed by parent for approved nav14/extraction changes; this checkpoint binds exact current shared hashes separately."
+  ],
+  "harnessCorrections": "Decorated advanced-filter selector updated; synthetic product trigger focused before click and focus identity asserted as boolean to avoid huge cyclic DOM inspection. No production lifecycle changes resulted from diagnosis."
+}
