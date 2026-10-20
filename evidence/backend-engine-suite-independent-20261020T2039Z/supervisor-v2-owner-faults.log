@@ -1,0 +1,14 @@
+✔ PURE operator startup fault: setup failure after owned start verifies orderly stop and retains data (14.169312ms)
+✔ PURE operator startup fault: failed start acknowledgement checks/stops only owned directory (4.377166ms)
+✔ PURE operator startup fault: uncertain stop retains holder and ignores every non-stop recovery command (2.50508ms)
+✔ PURE operator startup fault: uncertain status never becomes ready and needs exact stop recovery (3.977187ms)
+✔ PURE operator startup fault: initdb failure cannot stop an unstarted server or run SQL (3.773125ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 274.110518
+OWNER_FAULT_TEST_EXIT=0

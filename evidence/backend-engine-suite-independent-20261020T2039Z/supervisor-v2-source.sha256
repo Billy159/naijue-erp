@@ -1,0 +1,5 @@
+8874c81620a67b475ba3bfd4aa9c74bfcbd7f4a841d4de3ab015d6553dee1325  /workspace/shared/naijue-pg-backend-20261020-aq_irji4/prepared-supervisor.mjs
+e0fd24b113a27c739265429c973ca945db26b2867bdfd734f509c05cf625b0c0  /workspace/shared/naijue-pg-backend-20261020-aq_irji4/supervisor-vs-current.patch
+609b63bfe40cef61c5ddb0696bc590d52b6f42547ad0d46647337f17704ad5ac  /workspace/shared/naijue-pg-backend-20261020-aq_irji4/PREPARED-ONLY-IDENTITY.json
+b2a1256bc65d1fa01a7a142fbe3cb1de0a9e957ff430cca595ba0950d020a05b  evidence/postgres-backend-0001-0008-preparation/operator-startup-faults.test.mjs
+60c8ae583f1e05066fd22aed6f8d1285d7b2f7ccbe3bf7ae89d7b715de901539  evidence/backend-engine-suite-independent-20261020T2039Z/operator-recovery-independent.test.mjs

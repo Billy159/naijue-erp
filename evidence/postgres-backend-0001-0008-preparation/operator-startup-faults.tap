@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: PURE operator startup fault: setup failure after owned start verifies orderly stop and retains data
+ok 1 - PURE operator startup fault: setup failure after owned start verifies orderly stop and retains data
+  ---
+  duration_ms: 21.839131
+  type: 'test'
+  ...
+# Subtest: PURE operator startup fault: failed start acknowledgement checks/stops only owned directory
+ok 2 - PURE operator startup fault: failed start acknowledgement checks/stops only owned directory
+  ---
+  duration_ms: 6.353538
+  type: 'test'
+  ...
+# Subtest: PURE operator startup fault: uncertain stop retains holder and ignores every non-stop recovery command
+ok 3 - PURE operator startup fault: uncertain stop retains holder and ignores every non-stop recovery command
+  ---
+  duration_ms: 3.954082
+  type: 'test'
+  ...
+# Subtest: PURE operator startup fault: uncertain status never becomes ready and needs exact stop recovery
+ok 4 - PURE operator startup fault: uncertain status never becomes ready and needs exact stop recovery
+  ---
+  duration_ms: 2.952939
+  type: 'test'
+  ...
+# Subtest: PURE operator startup fault: initdb failure cannot stop an unstarted server or run SQL
+ok 5 - PURE operator startup fault: initdb failure cannot stop an unstarted server or run SQL
+  ---
+  duration_ms: 1.380398
+  type: 'test'
+  ...
+# Subtest: PURE operator recovery: ignored Unicode line cannot hide a later exact stop
+ok 6 - PURE operator recovery: ignored Unicode line cannot hide a later exact stop
+  ---
+  duration_ms: 3.891676
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 596.795015

@@ -1,0 +1,20 @@
+PURE_REVIEWED_SOURCE_SHA256=8874c81620a67b475ba3bfd4aa9c74bfcbd7f4a841d4de3ab015d6553dee1325
+✔ PURE actual recovery: ASCII prepare/run commands are ignored before a later exact stop (2.604357ms)
+✔ PURE actual recovery: ignored multibyte command cannot skip a later appended exact stop (0.746466ms)
+✔ PURE actual recovery: transient control read failure retains holder until an exact stop (0.590727ms)
+✔ PURE actual recovery: uncertain stop retains control, ignores other commands and retries only a later exact stop (0.721301ms)
+✔ PURE operator startup fault: setup failure after owned start verifies orderly stop and retains data (7.730301ms)
+✔ PURE operator startup fault: failed start acknowledgement checks/stops only owned directory (4.910144ms)
+✔ PURE operator startup fault: uncertain stop retains holder and ignores every non-stop recovery command (4.164578ms)
+✔ PURE operator startup fault: uncertain status never becomes ready and needs exact stop recovery (2.054565ms)
+✔ PURE operator startup fault: initdb failure cannot stop an unstarted server or run SQL (1.168838ms)
+✔ PURE operator recovery: ignored Unicode line cannot hide a later exact stop (3.511901ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 393.063942
+FINAL_FAULT_TEST_EXIT=0

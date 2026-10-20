@@ -54,7 +54,20 @@
       "kind": "SYNTAX_ONLY"
     }
   ],
-  "operator_proposal": "Prepared only; applicable exact fixed-enum patch dry-run and counterfactual syntax check passed. Full separately prepared supervisor/lifecycle requires parent review and explicit authorization; live holder unchanged.",
-  "prepared_full_supervisor_sha256": "e83cec90f6f1e4f822d68dd68b61b5e3e4a9e2b73791e0a3ed4ccd379f01f4b7",
-  "prepared_full_supervisor_exact_diff_sha256": "65754afaf28a7606d6a4c18ece11bf13c30a8a7da6e6d44a531253a5159bc6b2"
+  "operator_proposal": "Prepared only; full fixed-enum/new-directory/startup-cleanup diff is applicable and syntax checked. On uncertain cleanup a stop-only recovery loop retains credentials; no activation, live-holder change, credentials extraction or new cluster. Parent source/policy review and explicit lifecycle authorization required.",
+  "prepared_full_supervisor_sha256": "8874c81620a67b475ba3bfd4aa9c74bfcbd7f4a841d4de3ab015d6553dee1325",
+  "prepared_full_supervisor_exact_diff_sha256": "e0fd24b113a27c739265429c973ca945db26b2867bdfd734f509c05cf625b0c0",
+  "operator_startup_faults": {
+    "kind": "PURE_SIMULATED_NO_POSTGRES_NO_REAL_SUBPROCESS",
+    "tests": 6,
+    "pass": 6,
+    "fail": 0,
+    "exit": 0,
+    "evidence": "operator-startup-faults.tap",
+    "source": "operator-startup-faults.test.mjs"
+  },
+  "superseded_prepared_supervisor_sha256": [
+    "e83cec90f6f1e4f822d68dd68b61b5e3e4a9e2b73791e0a3ed4ccd379f01f4b7",
+    "c96e4f80be77f19d92543544777e81a07deb004477573bf298976a28cd3dfe9b"
+  ]
 }

@@ -1,0 +1,5 @@
+/workspace/shared/naijue-pg-backend-20261020-aq_irji4/prepared-supervisor.mjs: OK
+/workspace/shared/naijue-pg-backend-20261020-aq_irji4/supervisor-vs-current.patch: OK
+/workspace/shared/naijue-pg-backend-20261020-aq_irji4/PREPARED-ONLY-IDENTITY.json: OK
+evidence/postgres-backend-0001-0008-preparation/operator-startup-faults.test.mjs: OK
+evidence/backend-engine-suite-independent-20261020T2039Z/operator-recovery-independent.test.mjs: OK
