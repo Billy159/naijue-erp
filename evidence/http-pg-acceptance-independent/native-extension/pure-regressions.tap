@@ -1,0 +1,149 @@
+TAP version 13
+# Subtest: backend plan-only selection has its own scenarios and the same exact eight migration bytes
+ok 1 - backend plan-only selection has its own scenarios and the same exact eight migration bytes
+  ---
+  duration_ms: 651.951901
+  type: 'test'
+  ...
+# Subtest: backend plan refuses absent, unknown and historical selections rather than choosing a default
+ok 2 - backend plan refuses absent, unknown and historical selections rather than choosing a default
+  ---
+  duration_ms: 712.28245
+  type: 'test'
+  ...
+# Subtest: backend source wiring uses the same pre-Pool guards and never activates the preserved historical body
+ok 3 - backend source wiring uses the same pre-Pool guards and never activates the preserved historical body
+  ---
+  duration_ms: 19.496005
+  type: 'test'
+  ...
+# Subtest: native-profile engine preparation is distinct, explicit, actual-codec/default-driver and guarded-settings-only
+ok 4 - native-profile engine preparation is distinct, explicit, actual-codec/default-driver and guarded-settings-only
+  ---
+  duration_ms: 3.454044
+  type: 'test'
+  ...
+# Subtest: HTTP engine source uses validated explicit settings, real composition/codec and separate synthetic login without a driver double
+ok 5 - HTTP engine source uses validated explicit settings, real composition/codec and separate synthetic login without a driver double
+  ---
+  duration_ms: 2.96314
+  type: 'test'
+  ...
+# Subtest: backend engine source is storage-only, uses actual contention/constraint helpers and no unsafe seed/reset path
+ok 6 - backend engine source is storage-only, uses actual contention/constraint helpers and no unsafe seed/reset path
+  ---
+  duration_ms: 2.032521
+  type: 'test'
+  ...
+# Subtest: migration SQL source only: 0004_transfer_runtime.sql differs from frozen failure only by top-level IF CASE parentheses
+ok 7 - migration SQL source only: 0004_transfer_runtime.sql differs from frozen failure only by top-level IF CASE parentheses
+  ---
+  duration_ms: 10.715422
+  type: 'test'
+  ...
+# Subtest: migration SQL source only: 0008_runtime_sparse_first_use.sql differs from frozen failure only by top-level IF CASE parentheses
+ok 8 - migration SQL source only: 0008_runtime_sparse_first_use.sql differs from frozen failure only by top-level IF CASE parentheses
+  ---
+  duration_ms: 3.655199
+  type: 'test'
+  ...
+# Subtest: migration manifest source only: exact reviewed 0001-0008 hashes still match all source bytes
+ok 9 - migration manifest source only: exact reviewed 0001-0008 hashes still match all source bytes
+  ---
+  duration_ms: 8.487661
+  type: 'test'
+  ...
+# Subtest: migration fabricated diagnostic: filename, SQLSTATE and source position survive without driver text or secrets
+ok 10 - migration fabricated diagnostic: filename, SQLSTATE and source position survive without driver text or secrets
+  ---
+  duration_ms: 1.619652
+  type: 'test'
+  ...
+# Subtest: migration fabricated diagnostic: malformed or unavailable fields cannot leak arbitrary driver content
+ok 11 - migration fabricated diagnostic: malformed or unavailable fields cannot leak arbitrary driver content
+  ---
+  duration_ms: 0.654523
+  type: 'test'
+  ...
+# Subtest: deferred-COMMIT evidence assertion: missing sabotage or COMMIT cannot be mistaken for the intended failure
+ok 12 - deferred-COMMIT evidence assertion: missing sabotage or COMMIT cannot be mistaken for the intended failure
+  ---
+  duration_ms: 8.506237
+  type: 'test'
+  ...
+# Subtest: deferred-COMMIT evidence assertion: unrelated 23514, wrong state or missing validator context is rejected
+ok 13 - deferred-COMMIT evidence assertion: unrelated 23514, wrong state or missing validator context is rejected
+  ---
+  duration_ms: 3.784457
+  type: 'test'
+  ...
+# Subtest: deferred-COMMIT evidence assertion: accepts only complete synthetic assertion evidence, not database execution proof
+ok 14 - deferred-COMMIT evidence assertion: accepts only complete synthetic assertion evidence, not database execution proof
+  ---
+  duration_ms: 0.678058
+  type: 'test'
+  ...
+# Subtest: exact raw-engine assertion rejects an early unrelated error, missing SQL change and missing COMMIT
+ok 15 - exact raw-engine assertion rejects an early unrelated error, missing SQL change and missing COMMIT
+  ---
+  duration_ms: 3.139321
+  type: 'test'
+  ...
+# Subtest: raw constraint assertion requires exact message, SQLSTATE and whole function identity
+ok 16 - raw constraint assertion requires exact message, SQLSTATE and whole function identity
+  ---
+  duration_ms: 1.509115
+  type: 'test'
+  ...
+# Subtest: integration safety: missing gates fail, and ambient DATABASE_URL is never a fallback
+ok 17 - integration safety: missing gates fail, and ambient DATABASE_URL is never a fallback
+  ---
+  duration_ms: 5.320255
+  type: 'test'
+  ...
+# Subtest: integration safety: accepts only a dedicated explicitly repeated loopback test target
+ok 18 - integration safety: accepts only a dedicated explicitly repeated loopback test target
+  ---
+  duration_ms: 0.60049
+  type: 'test'
+  ...
+# Subtest: integration safety: rejects remote, production-like, privileged, ambiguous and option-overridden URLs
+ok 19 - integration safety: rejects remote, production-like, privileged, ambiguous and option-overridden URLs
+  ---
+  duration_ms: 2.528347
+  type: 'test'
+  ...
+# Subtest: integration safety: malformed and encoded credentials never appear in diagnostics
+ok 20 - integration safety: malformed and encoded credentials never appear in diagnostics
+  ---
+  duration_ms: 1.098184
+  type: 'test'
+  ...
+# Subtest: integration safety SQL-source regression: server address uses host(inet), not a subnet-bearing text cast
+ok 21 - integration safety SQL-source regression: server address uses host(inet), not a subnet-bearing text cast
+  ---
+  duration_ms: 25.463491
+  type: 'test'
+  ...
+# Subtest: integration safety: acceptance scenario is explicit, closed and never inferred from ambient database settings
+ok 22 - integration safety: acceptance scenario is explicit, closed and never inferred from ambient database settings
+  ---
+  duration_ms: 1.270183
+  type: 'test'
+  ...
+# Subtest: integration safety: historical migration prefix refuses before pool construction at current adapter revision
+ok 23 - integration safety: historical migration prefix refuses before pool construction at current adapter revision
+  ---
+  duration_ms: 0.465899
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2698.216898
+exit_status=0

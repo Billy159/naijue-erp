@@ -4,10 +4,10 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { BACKEND_SCENARIOS, HTTP_READ_SCENARIOS, MIGRATIONS, SPARSE_SCENARIOS } from "./migration-manifest.ts";
+import { BACKEND_SCENARIOS, HTTP_READ_SCENARIOS, NATIVE_POLICY_SCENARIOS, MIGRATIONS, SPARSE_SCENARIOS } from "./migration-manifest.ts";
 
 test("backend plan-only selection has its own scenarios and the same exact eight migration bytes", () => {
-  for (const [suite, expected] of [["sparse-0001-0008", SPARSE_SCENARIOS], ["backend-0001-0008", [...BACKEND_SCENARIOS, ...HTTP_READ_SCENARIOS]]] as const) {
+  for (const [suite, expected] of [["sparse-0001-0008", SPARSE_SCENARIOS], ["backend-0001-0008", [...BACKEND_SCENARIOS, ...HTTP_READ_SCENARIOS, ...NATIVE_POLICY_SCENARIOS]]] as const) {
     const result = spawnSync(process.execPath, [fileURLToPath(new URL("./plan.ts", import.meta.url)), "--suite", suite], { encoding: "utf8" });
     assert.equal(result.status, 0, result.stderr);
     const plan = JSON.parse(result.stdout);
@@ -31,12 +31,32 @@ test("backend source wiring uses the same pre-Pool guards and never activates th
   assert.ok(currentGuard >= 0 && open >= 0, "both current-suite guard and guarded database open must exist");
   assert.ok(currentGuard < open);
   assert.match(entry, /afterVersionFive: pool => seedSyntheticReferences\(pool, \{ sparse: true \}\)/u);
-  assert.match(entry, /if \(suite === "backend-0001-0008"\) \{\s*await runBackendAcceptance\(t, pool\);\s*await runHttpReadAcceptance\(t, pool, settings\);\s*\}\s*else await runSparseAcceptance\(t, pool\);/u);
+  assert.match(entry, /if \(suite === "backend-0001-0008"\) \{\s*await runBackendAcceptance\(t, pool\);\s*await runHttpReadAcceptance\(t, pool, settings\);\s*await runNativeHttpReadAcceptance\(t, pool, settings\);\s*\}\s*else await runSparseAcceptance\(t, pool\);/u);
   assert.equal((entry.match(/historicalNativeAcceptanceSource\(/gu) ?? []).length, 1, "only its dormant declaration may remain");
   const database = await readFile(new URL("./database.ts", import.meta.url), "utf8");
   const hashes = database.indexOf("const sources = await Promise.all(MIGRATIONS.map"), pool = database.indexOf("const pool = new Pool");
   assert.ok(hashes >= 0 && pool >= 0, "both exact source hash checking and Pool construction must exist");
   assert.ok(hashes < pool);
+});
+
+test("native-profile engine preparation is distinct, explicit, actual-codec/default-driver and guarded-settings-only", async () => {
+  const source = await readFile(new URL("./native-http-read-acceptance.ts", import.meta.url), "utf8");
+  assert.match(source, /runNativeHttpReadAcceptance\(t: TestContext, pool: Pool, settings: IntegrationSettings\)/u);
+  assert.match(source, /authorization: \{ mode: "source-confirmed-native" \}/u);
+  assert.match(source, /policy: createSourceAuthenticationPolicy\(900\)/u);
+  assert.match(source, /password: randomBytes\(32\)\.toString\("base64url"\)/u);
+  assert.match(source, /passwords\.hash\(fixture\.password\)/u);
+  assert.match(source, /new PostgresSalesUnitOfWork\(pool\)/u);
+  assert.match(source, /new PostgresTransferUnitOfWork\(pool\)/u);
+  assert.match(source, /createSourceConfirmedPostgresReadAuthorization\(pool\)/u);
+  assert.match(source, /createPostgresReadApi\(nativeOptions\(settings\)\)/u);
+  assert.match(source, /assert\.equal\(notReady\.statusCode, 503\)/u);
+  assert.match(source, /INVENTORY_NOT_READY/u);
+  assert.match(source, /SUPPLEMENTAL ADAPTER CASE ONLY/u);
+  assert.equal((source.match(/createPostgresReadApi\(/gu) ?? []).length, 1);
+  assert.equal((source.match(/await t\.test\(NATIVE_POLICY_SCENARIOS\[/gu) ?? []).length, NATIVE_POLICY_SCENARIOS.length);
+  assert.doesNotMatch(source, /new Pool|process\.env|DATABASE_URL|driver\.factory|createDriver|\.listen\(|console\.|writeFile|appendFile|spawn|execFile|INSERT INTO naijue_erp\.inventory_balance|DROP DATABASE|DROP SCHEMA|TRUNCATE|DISABLE TRIGGER/u);
+  assert.doesNotMatch(source, /UPDATE naijue_erp\.(?:sales_header|transfer_header|import_record|import_batch)|SET[^;\n]*created_hall_id/u);
 });
 
 test("HTTP engine source uses validated explicit settings, real composition/codec and separate synthetic login without a driver double", async () => {

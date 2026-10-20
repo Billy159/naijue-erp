@@ -42,3 +42,13 @@ export const HTTP_READ_SCENARIOS = [
   "explicit test-only scope exclusions and spoofed cookie/authorization/actor/origin rejection across native read plugins",
   "actual PG logout revocation blocks every read family; exact native business fixture snapshot unchanged and owned API pool closure"
 ] as const;
+
+/** Separate genuine native-policy engine preparation, never a relabel of the explicit-test-policy scenarios above. */
+export const NATIVE_POLICY_SCENARIOS = [
+  "native profile plus canonical source-auth policy: actual A/B salesperson, ADMIN and WAREHOUSE logins with service-written multi-hall facts",
+  "native current-hall sales scope versus genuine ADMIN/WAREHOUSE all scope over nonempty detail/history/references and approved sums",
+  "native all-warehouse inventory/candidates/ledger includes actual other-hall disabled historical references; exact shared product targets",
+  "canonical transfer scope hides actual B-only service draft from A; later unpublished warehouse correctly makes all-warehouse inventory NOT_READY",
+  "current HTTP login/employment/role/hall fail closed and supplemental genuine-PG authorizers reject an explicitly stale captured hall",
+  "native-role sessions revoke on logout, read-phase exact business snapshots stay unchanged and one owned API pool closes"
+] as const;

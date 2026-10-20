@@ -1,0 +1,7 @@
+node --check tests/integration/native-http-read-acceptance.ts: exit_status=0
+node --check tests/integration/migration-manifest.ts: exit_status=0
+node --check tests/integration/plan.ts: exit_status=0
+node --check tests/integration/postgres.integration.test.ts: exit_status=0
+node --check tests/integration/backend-source.test.ts: exit_status=0
+node --check evidence/http-pg-acceptance-independent/native-extension/native-source-helper-probes.test.mjs: exit_status=0
+git diff --check: exit_status=0

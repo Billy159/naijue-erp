@@ -1,0 +1,125 @@
+TAP version 13
+# Subtest: SOURCE ONLY: original16 helper/gate/sparse/fixture/runner/migration bytes remain unchanged
+ok 1 - SOURCE ONLY: original16 helper/gate/sparse/fixture/runner/migration bytes remain unchanged
+  ---
+  duration_ms: 196.133157
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: exact new native profile uses actual factory default driver and canonical source-auth policy, not explicit read grants
+ok 2 - SOURCE ONLY: exact new native profile uses actual factory default driver and canonical source-auth policy, not explicit read grants
+  ---
+  duration_ms: 12.057475
+  type: 'test'
+  ...
+# Subtest: FABRICATED CONFIG ONLY: native options preserve explicit bounded validated target and exact closed profile
+ok 3 - FABRICATED CONFIG ONLY: native options preserve explicit bounded validated target and exact closed profile
+  ---
+  duration_ms: 95.398806
+  type: 'test'
+  ...
+# Subtest: SOURCE/FABRICATED DATA ONLY: four generated in-memory canonical identities are distinct and passwords are never compared or emitted directly
+ok 4 - SOURCE/FABRICATED DATA ONLY: four generated in-memory canonical identities are distinct and passwords are never compared or emitted directly
+  ---
+  duration_ms: 24.270248
+  type: 'test'
+  ...
+# Subtest: SOURCE/DATA ONLY: actual command services produce discriminating A125 B250 approved fixtures without creator-field forgery
+ok 5 - SOURCE/DATA ONLY: actual command services produce discriminating A125 B250 approved fixtures without creator-field forgery
+  ---
+  duration_ms: 10.620546
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: separate six appended groups retain original16 and explicit guarded backend enum/sparse/default discovery
+ok 6 - SOURCE ONLY: separate six appended groups retain original16 and explicit guarded backend enum/sparse/default discovery
+  ---
+  duration_ms: 2.23334
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: genuine visible/hidden and nonzero aggregate assertions discriminate current-hall from privileged all scope
+ok 7 - SOURCE ONLY: genuine visible/hidden and nonzero aggregate assertions discriminate current-hall from privileged all scope
+  ---
+  duration_ms: 0.756822
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: complete all-warehouse phase precedes late B warehouse; later inventory must fail real readiness rather than fake publication
+ok 8 - SOURCE ONLY: complete all-warehouse phase precedes late B warehouse; later inventory must fail real readiness rather than fake publication
+  ---
+  duration_ms: 0.776793
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: stale captured actor is separate genuine-PG adapter evidence, not public HTTP race or fake grants
+ok 9 - SOURCE ONLY: stale captured actor is separate genuine-PG adapter evidence, not public HTTP race or fake grants
+  ---
+  duration_ms: 1.015237
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: safe bounded snapshots exclude authentication data and assertion arguments never dump credential-bearing objects
+ok 10 - SOURCE ONLY: safe bounded snapshots exclude authentication data and assertion arguments never dump credential-bearing objects
+  ---
+  duration_ms: 6.539855
+  type: 'test'
+  ...
+# Subtest: FABRICATED HELPER ONLY: exact source response parser omits unexpected malformed-body excerpt/cause
+ok 11 - FABRICATED HELPER ONLY: exact source response parser omits unexpected malformed-body excerpt/cause
+  ---
+  duration_ms: 14.769905
+  type: 'test'
+  ...
+# Subtest: FABRICATED HELPER ONLY: exact fixture SQL wrapper omits arbitrary failing-row/driver text
+ok 12 - FABRICATED HELPER ONLY: exact fixture SQL wrapper omits arbitrary failing-row/driver text
+  ---
+  duration_ms: 14.767616
+  type: 'test'
+  ...
+# Subtest: FABRICATED HELPER ONLY: exact account-setup catch rolls back/discards and never retains a fake hash-bearing driver error
+ok 13 - FABRICATED HELPER ONLY: exact account-setup catch rolls back/discards and never retains a fake hash-bearing driver error
+  ---
+  duration_ms: 22.551238
+  type: 'test'
+  ...
+# Subtest: FABRICATED HELPER ONLY: exact owned-backend observer waits for zero, then stops
+ok 14 - FABRICATED HELPER ONLY: exact owned-backend observer waits for zero, then stops
+  ---
+  duration_ms: 17.611905
+  type: 'test'
+  ...
+# Subtest: FABRICATED HELPER ONLY: exact owned-backend observer fails at deadline instead of inventing success
+ok 15 - FABRICATED HELPER ONLY: exact owned-backend observer fails at deadline instead of inventing success
+  ---
+  duration_ms: 48.065225
+  type: 'test'
+  ...
+# Subtest: FABRICATED HELPER ONLY: failed observation is not retried
+ok 16 - FABRICATED HELPER ONLY: failed observation is not retried
+  ---
+  duration_ms: 35.914837
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: disabled historical B references remain readable only by still-valid A/null-hall principals; B-assigned identity is rejected
+ok 17 - SOURCE ONLY: disabled historical B references remain readable only by still-valid A/null-hall principals; B-assigned identity is rejected
+  ---
+  duration_ms: 2.392991
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: successful setup is explicit, identity-maintenance interval has restoration-only label, and every role logout blocks all families
+ok 18 - SOURCE ONLY: successful setup is explicit, identity-maintenance interval has restoration-only label, and every role logout blocks all families
+  ---
+  duration_ms: 0.649873
+  type: 'test'
+  ...
+# Subtest: FABRICATED HELPER ONLY: exact owned-API close sanitizes rejection and remains single-owner cleanup
+ok 19 - FABRICATED HELPER ONLY: exact owned-API close sanitizes rejection and remains single-owner cleanup
+  ---
+  duration_ms: 19.905332
+  type: 'test'
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1971.231778
+exit_status=0
