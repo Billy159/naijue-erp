@@ -32,6 +32,18 @@ test('list validates exact totals, bounded page/row membership, no coercion or h
   assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, status: 'APPROVED' } }));
   assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, number: 'NO-MATCH' } }));
 });
+test('list number membership uses deterministic lowercase literal inclusion without treating SQL wildcard characters specially', () => {
+  const p = parameters();
+  const result = { page: 1, pageSize: 20, exactTotal: '1', items: [{ ...summary(), number: 'TEST-SALES-Ä_%\\-1' }] };
+  for (const number of ['test-sales', 'SaLeS', 'ä_%\\', '_%\\']) {
+    assert.equal(salesListResponse(result, { ...p, filter: { ...p.filter, number } }), result);
+  }
+  for (const number of ['NO-MATCH', 'salesXä', 'test%', 'ä%\\']) {
+    assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, number } }));
+  }
+  assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, number: 'test-sales', status: 'APPROVED' } }));
+  assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, number: 'test-sales', customerId: summary(999).id as never } }));
+});
 test('list requires exact non-gift quantity aggregates and a non-null native updated timestamp, without line bigint bounds', () => {
   const p = parameters();
   const valid = [

@@ -1,0 +1,8 @@
+{
+  "parent_commit": "8c27fc12e152ba7acbdbda95662f9ef69d380847",
+  "source": "Frozen b8bcfe3 frontend/sales-current.js49",
+  "change": "updatedAt DESC then number C ASC/id ASC; literal case-insensitive number search and strictclientmembership",
+  "checks": "18 order protocol and35 final protocol/web tests; root inspected exactSQL andvalidator, finalmanifestverified",
+  "limits": "DBUnicode locale vs JSUnicode lowercase and C vs browserlocale collation require genuineengine cases; no productionperformanceclaim",
+  "rollback": "Revert source commit; no database/schema/externalstate changed"
+}

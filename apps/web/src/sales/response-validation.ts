@@ -48,8 +48,11 @@ export function salesListResponse(value: unknown, parameters: Readonly<SalesList
     for (const [expected, actual] of [[f.status, row.status], [f.businessType, row.businessType], [f.hallId, row.hallId], [f.salespersonId, row.salespersonId], [f.customerId, row.customerId], [f.warehouseId, row.warehouseId]]) {
       if (expected !== null && actual !== expected) invalid();
     }
+    // Deterministic Unicode default lowercase, not the viewing browser's locale.
+    // PostgreSQL lower is database-locale-dependent; Unicode edge parity still
+    // needs real-engine verification. Other filter/identity checks stay strict.
     if ((f.startDate !== null && (row.businessDate as string) < f.startDate) || (f.endDate !== null && (row.businessDate as string) > f.endDate)
-      || (f.number !== null && !(row.number as string).includes(f.number))) invalid();
+      || (f.number !== null && !(row.number as string).toLowerCase().includes(f.number.toLowerCase()))) invalid();
     const key = row.id as string; if (seen.has(key)) invalid(); seen.add(key);
   }
   return value as SalesListDto;

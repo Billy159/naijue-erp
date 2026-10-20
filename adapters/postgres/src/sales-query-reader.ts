@@ -91,8 +91,10 @@ class Predicate {
       [f.hallId, "h.hall_id ="], [f.salespersonId, "h.salesperson_id ="], [f.customerId, "h.customer_id ="], [f.warehouseId, "h.warehouse_id ="]] as const) {
       if (value !== null) this.parts.push(`${expression} ${this.parameter(value)}`);
     }
-    // strpos treats %, _ and backslashes literally and never turns user text into SQL wildcard grants.
-    if (f.number !== null) this.parts.push(`strpos(h.number, ${this.parameter(f.number)}) > 0`);
+    // Case-insensitive literal inclusion, not LIKE: %, _ and backslashes remain
+    // ordinary characters. PostgreSQL lower follows its database locale, not a
+    // promise of exact Unicode equivalence to browser toLocaleLowerCase.
+    if (f.number !== null) this.parts.push(`strpos(lower(h.number), lower(${this.parameter(f.number)})) > 0`);
   }
   target(salesId: string): void { this.parts.push(`h.id = ${this.parameter(salesId)}::uuid`); }
   where(): string { return this.parts.join(" AND "); }
@@ -167,7 +169,7 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
         FROM naijue_erp.sales_header h JOIN naijue_erp.hall hall ON hall.id = h.hall_id
         JOIN naijue_erp.warehouse wh ON wh.id = h.warehouse_id JOIN naijue_erp.customer c ON c.id = h.customer_id
         LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id WHERE ${p.where()}
-        ORDER BY h.business_date DESC, h.id DESC ${paging}`, p.values)).rows;
+        ORDER BY h.updated_at DESC, h.number COLLATE "C" ASC, h.id ASC ${paging}`, p.values)).rows;
       requireDomain(rows.length <= parameters.pageSize && BigInt(rows.length) <= exactTotal, "INVALID_DATABASE_VALUE", "Sales page exceeds exact scope");
       // Only authorized, already-paged native IDs enter this one bounded batch.
       // LEFT JOIN returns an explicit zero aggregate for gift-only/empty documents;

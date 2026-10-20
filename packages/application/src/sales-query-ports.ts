@@ -8,7 +8,9 @@ export interface SalesQueryFilter {
   readonly status: DocumentStatus | null; readonly businessType: SalesBusinessType | null;
   readonly hallId: EntityId<"hall"> | null; readonly salespersonId: EntityId<"staff"> | null;
   readonly customerId: EntityId<"customer"> | null; readonly warehouseId: EntityId<"warehouse"> | null;
-  /** Literal substring, not a SQL LIKE pattern. */
+  /** Case-insensitive literal substring, not a SQL LIKE pattern. PostgreSQL lower
+   * follows its database locale; exact browser Unicode lowercase equivalence is
+   * not promised. The original parameter text is preserved, never a SQL pattern. */
   readonly number: string | null;
 }
 export interface SalesListQuery { readonly filter: SalesQueryFilter; readonly page: number; readonly pageSize: SalesQueryPageSize }

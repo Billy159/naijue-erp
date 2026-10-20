@@ -50,10 +50,10 @@ test("sales query pg protocol: exact count, relational page and one page-batched
   const seen: unknown[][] = [];
   const client = new ProtocolClient([begin(), { sql: /^SELECT COUNT\(\*\)::text/, rows: [{ exact_total: "9007199254740993" }], inspect(values, sql) {
     scoped(values, sql); assert.match(sql, /h.business_date >= \$4 AND h.business_date <= \$5 AND h.status = \$6 AND h.business_type = \$7/);
-    assert.match(sql, /strpos\(h.number, \$12\) > 0/); assert.ok(!sql.includes("OR TRUE")); seen.push([...values]);
+    assert.match(sql, /strpos\(lower\(h.number\), lower\(\$12\)\) > 0/); assert.ok(!sql.includes("OR TRUE")); seen.push([...values]);
   } }, { sql: /^SELECT h.id/, rows: [summary()], inspect(values, sql) {
     scoped(values, sql); assert.deepEqual(values.slice(0, -2), seen[0]); assert.deepEqual(values.slice(-2), [50, "50"]);
-    assert.match(sql, /ORDER BY h.business_date DESC, h.id DESC LIMIT \$13 OFFSET \$14::bigint/);
+    assert.match(sql, /ORDER BY h.updated_at DESC, h.number COLLATE "C" ASC, h.id ASC LIMIT \$13 OFFSET \$14::bigint/);
     assert.ok(!/sales_line|sales_settlement|naijue_erp.product|FOR UPDATE/.test(sql));
   } }, { sql: /^SELECT page.id AS sales_id/, rows: [quantities()], inspect(values, sql) {
     assert.deepEqual(values, [[ids.sales]]); assert.match(sql, /FROM unnest\(\$1::uuid\[\]\) AS page\(id\) LEFT JOIN naijue_erp.sales_line l/);
@@ -64,6 +64,37 @@ test("sales query pg protocol: exact count, relational page and one page-batched
   const result = await reader(client).readList(read(input)); assert.equal(result.exactTotal, 9007199254740993n); assert.equal(result.items[0]!.netDue, 9007199254740993n);
   assert.equal(result.items[0]!.quantity, 9007199254740993n); assert.equal(result.items[0]!.incomingQuantity, 0n); assert.equal(result.items[0]!.outgoingQuantity, 9007199254740993n);
   assert.equal(result.items[0]!.updatedAt, time); assert.equal(client.calls.length, 5); assert.ok(client.calls.every(call => !/INSERT|UPDATE|DELETE|pg_advisory/.test(call.sql))); client.done();
+});
+test("sales query pg protocol: count and page use case-insensitive literal number inclusion with original bound text, never LIKE wildcards", async () => {
+  for (const number of ["synthetic", "SyNtHeTiC_%\\", "%'_\\ OR TRUE"]) {
+    const input = parameters(); Object.assign(input.filter, { number });
+    const client = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: "0" }], inspect(values, sql) {
+      scoped(values, sql); assert.deepEqual(values.slice(3), [number]);
+      assert.match(sql, /strpos\(lower\(h.number\), lower\(\$4\)\) > 0$/);
+      assert.doesNotMatch(sql, /\bI?LIKE\b|OR TRUE/);
+    } }, { sql: /^SELECT h.id/, rows: [], inspect(values, sql) {
+      scoped(values, sql); assert.deepEqual(values.slice(3), [number, 20, "0"]);
+      assert.match(sql, /strpos\(lower\(h.number\), lower\(\$4\)\) > 0/);
+      assert.doesNotMatch(sql, /\bI?LIKE\b|OR TRUE/);
+    } }, commit()]);
+    const result = await reader(client).readList(read(input)); assert.equal(result.exactTotal, 0n); assert.deepEqual(result.items, []); client.done();
+  }
+});
+test("sales query pg protocol: list pages use updated time then binary business number and native identity, never business date", async () => {
+  const salesIds = [sid("sales", 812), sid("sales", 811), sid("sales", 813), sid("sales", 814)];
+  const rows = salesIds.map((salesId, index) => ({ ...summary(), id: salesId,
+    number: ["SYNTHETIC-Z", "SYNTHETIC-A", "SYNTHETIC-A", "SYNTHETIC-B"][index],
+    updated_at: index === 0 ? "2026-10-20T13:00:00.000000Z" : time,
+    business_date: index === 0 ? "2026-09-01" : "2026-10-20" }));
+  const client = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: "24" }] },
+    { sql: /^SELECT h.id/, rows, inspect(values, sql) {
+      assert.match(sql, /ORDER BY h.updated_at DESC, h.number COLLATE "C" ASC, h.id ASC LIMIT \$4 OFFSET \$5::bigint$/);
+      assert.doesNotMatch(sql, /ORDER BY h.business_date/); assert.deepEqual(values.slice(-2), [20, "20"]);
+    } }, { sql: /^SELECT page.id AS sales_id/, rows: salesIds.toReversed().map(salesId => quantities(salesId)),
+      inspect(values) { assert.deepEqual(values, [salesIds]); } }, commit()]);
+  const result = await reader(client).readList(read({ ...parameters(), page: 2 }));
+  assert.deepEqual(result.items.map(row => row.id), salesIds); assert.equal(result.items[0]!.businessDate, "2026-09-01");
+  assert.equal(result.items[0]!.updatedAt, "2026-10-20T13:00:00.000000Z"); client.done();
 });
 test("sales query pg protocol: one bounded batch preserves signed SALE/RETURN/EXCHANGE totals, bigint-min magnitude and gift-only zero", async () => {
   const salesIds = [ids.sales, sid("sales", 802), sid("sales", 803), sid("sales", 804)];

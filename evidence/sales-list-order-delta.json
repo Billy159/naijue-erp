@@ -1,0 +1,50 @@
+{
+  "task": "sales list order source-fidelity correction",
+  "baselineHead": "8c27fc12e152ba7acbdbda95662f9ef69d380847",
+  "historicalFreeze": "evidence/sales-list-summary-extension-sha256.txt",
+  "sourceEvidence": "frozen frontend/sales-current.js:49",
+  "order": [
+    "h.updated_at DESC",
+    "h.number COLLATE \"C\" ASC",
+    "h.id ASC"
+  ],
+  "collationBoundary": "PostgreSQL C collation provides deterministic binary business-number order, not exact equivalence to browser localeCompare.",
+  "files": [
+    {
+      "path": "adapters/postgres/src/sales-query-reader.ts",
+      "historicalSha256": "48d2a5fae6da57314dd2e82a39938f389365679c555324c4926d09ee7f11d515",
+      "sha256": "bfc60a672a323a4ff3e724cdc101a8f084bd7ccb8977d037b8a5697f709c66f2"
+    },
+    {
+      "path": "tests/sales-query-postgres-protocol.test.ts",
+      "historicalSha256": "0a4035a1e4c930bf35216d6be66dee4541b06de01a30c985f237867294095461",
+      "sha256": "04f57fba1bf393dc842d2ce89e5e7937bce1ce0d6d07cbb484ab2787b03dff9b"
+    }
+  ],
+  "documentationDelta": "evidence/sales-list-summary-extension-review.md",
+  "verification": {
+    "command": "node --test tests/sales-query-postgres-protocol.test.ts",
+    "passed": 18,
+    "failed": 0,
+    "output": "evidence/sales-list-order-tests.log",
+    "diffCheck": "passed"
+  },
+  "unchanged": [
+    "authorization",
+    "filters",
+    "exact count",
+    "pagination",
+    "summary aggregate",
+    "snapshot",
+    "history and settlement-statistics ordering",
+    "historical 46-test logs and hashes"
+  ],
+  "notPerformed": [
+    "compiler",
+    "broad aggregate checks",
+    "schema/index changes",
+    "UI changes",
+    "server/database/browser/network",
+    "commit/push"
+  ]
+}
