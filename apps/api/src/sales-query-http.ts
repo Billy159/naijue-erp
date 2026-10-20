@@ -49,7 +49,7 @@ export function createSalesQueryHttpPlugin(options: SalesQueryHttpOptions): Fast
       // Malformed trusted facts, unknown SQL failures and provider details never become successful empty pages or leaked errors.
       return reply.code(500).send({ error: { code: "INTERNAL_ERROR", message: "The sales read could not be completed" } });
     });
-    for (const [url, read] of [["/sales/query", service.readList], ["/sales/detail/query", service.readDetail],
+    for (const [url, read] of [["/sales/query", service.readList], ["/sales/references/query", service.readReferences], ["/sales/detail/query", service.readDetail],
       ["/sales/history/query", service.readHistory], ["/sales/settlement-statistics/query", service.readSettlementStatistics]] as const) {
       app.post(url, { bodyLimit: 65_536 }, async (request, reply) => {
         if (!request.query || typeof request.query !== "object" || Array.isArray(request.query) || Object.keys(request.query).length) invalidSalesQuery();

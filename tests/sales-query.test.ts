@@ -11,6 +11,7 @@ export const salesQueryInput = (): SalesListQuery => ({ filter: { startDate: nul
 const signal = () => new AbortController().signal;
 function dependencies(overrides: Partial<SalesQueryDependencies> = {}): SalesQueryDependencies {
   const reader: TrustedSalesSnapshotReader = {
+    async readReferences(read) { return { page: read.parameters.page, exactTotal: 0n, items: [] }; },
     async readList(read) { return { page: read.parameters.page, pageSize: read.parameters.pageSize, exactTotal: 0n, items: [] }; },
     async readDetail() { throw new Error("SYNTHETIC detail not supplied"); },
     async readHistory(read) { return { salesId: read.parameters.salesId, page: read.parameters.page, pageSize: read.parameters.pageSize, exactTotal: 0n, items: [] }; },

@@ -12,6 +12,17 @@ export interface SalesQueryFilter {
   readonly number: string | null;
 }
 export interface SalesListQuery { readonly filter: SalesQueryFilter; readonly page: number; readonly pageSize: SalesQueryPageSize }
+/** Historical SALES FILTER candidates only, not create/edit business-form eligibility.
+ * Candidates are DISTINCT references observed on authorized sales headers, including disabled
+ * historical references. Unused/unauthorized master records are never enumerated. */
+export type SalesFilterReferenceKind = "hall" | "salesperson" | "customer" | "warehouse";
+export interface SalesFilterReferenceQuery {
+  readonly kind: SalesFilterReferenceKind;
+  /** Literal name substring; customer search also includes the native customer code. */
+  readonly search: string; readonly page: number; readonly pageSize: 20;
+}
+export interface SalesFilterReference { readonly id: string; readonly label: string }
+export interface SalesFilterReferencePage { readonly page: number; readonly exactTotal: bigint; readonly items: readonly SalesFilterReference[] }
 export interface SalesDetailQuery { readonly salesId: EntityId<"sales"> }
 export interface SalesHistoryQuery extends SalesDetailQuery { readonly page: number; readonly pageSize: SalesQueryPageSize }
 export type SalesReadIntent =
@@ -34,9 +45,19 @@ export type SalesSummary = Pick<SalesHeaderRow, "id" | "number" | "businessType"
 };
 /** Exact bigint counts serialize as decimal strings at the HTTP boundary, never unsafe JS numbers. */
 export interface SalesListPage { readonly page: number; readonly pageSize: SalesQueryPageSize; readonly exactTotal: bigint; readonly items: readonly SalesSummary[] }
+export interface SalesSettlementNames {
+  readonly settlementId: EntityId<"settlement">; readonly paymentAccountId: EntityId<"paymentAccount">;
+  /** Authoritative historical display, captured by the document write, not refreshed from master names. */
+  readonly accountNameSnapshot: string; readonly methodNameSnapshot: string;
+  /** Current master names in the same snapshot, explicitly not historical display facts. */
+  readonly currentAccountName: string; readonly currentMethodName: string;
+}
 export interface SalesDetail {
   /** Current actual lines only. Inactive provenance remains in persistence, not the editable detail. */
   readonly document: SalesDocument; readonly stockBasis: "RUNTIME_LEDGER" | "CUTOFF_HISTORY";
+  /** Current master names, including disabled references, in this document's authorized snapshot. */
+  readonly referenceNames: Pick<SalesSummary, "hallName" | "salespersonName" | "customerName" | "warehouseName">;
+  readonly settlementNames: readonly SalesSettlementNames[];
 }
 /** Operation history is metadata, not arbitrary persisted JSON or a document-catalog projection.
  * Native before/after audit evidence remains append-only in storage; no private request hashes are exposed. */
@@ -56,6 +77,9 @@ export interface SalesSettlementStatistics {
  * No eager product catalog, document hydration loop, per-document queries or implicit global role.
  * Signal checks bound callback work; they do not assert the driver cancels an already-running SQL query. */
 export interface TrustedSalesSnapshotReader {
+  /** Reuses current LIST authorization with a neutral bounded query. No new role/hall grants or
+   * master-catalog permissions. Scope precedes count, search, DISTINCT and pagination. */
+  readReferences(read: SalesScopedRead<SalesFilterReferenceQuery>): Promise<SalesFilterReferencePage>;
   readList(read: SalesScopedRead<SalesListQuery>): Promise<SalesListPage>;
   readDetail(read: SalesScopedRead<SalesDetailQuery>): Promise<SalesDetail>;
   readHistory(read: SalesScopedRead<SalesHistoryQuery>): Promise<SalesHistoryPage>;

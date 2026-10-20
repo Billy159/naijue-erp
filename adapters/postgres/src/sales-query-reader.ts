@@ -3,8 +3,9 @@ import type { SalesDocument, SalesHeaderRow, SalesLineRow, SalesSettlementRow } 
 import type { EntityId, EntityKind } from "../../../packages/domain/src/values.ts";
 import { businessDate, decimalToMinor, entityId } from "../../../packages/domain/src/values.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
-import type { SalesDetail, SalesDetailQuery, SalesHistoryPage, SalesHistoryQuery, SalesListPage, SalesListQuery, SalesReadScope, SalesScopedRead, SalesSettlementStatistics, SalesSummary, TrustedSalesSnapshotReader } from "../../../packages/application/src/sales-query-ports.ts";
+import type { SalesDetail, SalesDetailQuery, SalesFilterReferencePage, SalesFilterReferenceQuery, SalesHistoryPage, SalesHistoryQuery, SalesListPage, SalesListQuery, SalesReadScope, SalesScopedRead, SalesSettlementStatistics, SalesSummary, TrustedSalesSnapshotReader } from "../../../packages/application/src/sales-query-ports.ts";
 import { activeSalesRead, checkedSalesReadScope, parseSalesDetailQuery, parseSalesHistoryQuery, parseSalesListQuery } from "../../../packages/application/src/sales-query-validation.ts";
+import { parseSalesFilterReferenceQuery } from "../../../packages/application/src/sales-reference-query-validation.ts";
 import { booleanValue, integerValue, moneyFromSql, nullableString, quantityFromSql, stringValue, versionFromSql } from "./codec.ts";
 
 export interface PgSalesQueryResult { readonly rows: Record<string, unknown>[]; readonly rowCount: number | null }
@@ -124,6 +125,33 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
       throw error;
     } finally { client.release(discard); }
   }
+  async readReferences(read: SalesScopedRead<SalesFilterReferenceQuery>): Promise<SalesFilterReferencePage> {
+    const parameters = parseSalesFilterReferenceQuery(read.parameters); const p = new Predicate(checkedSalesReadScope(read.scope));
+    // Closed internal table/column map. EXISTS yields one row per native master PK, irrespective of
+    // document count, and retains old disabled references without exposing unused catalog records.
+    const references = { hall: ["hall", "hall_id", "hall"], salesperson: ["staff", "salesperson_id", "staff"],
+      customer: ["customer", "customer_id", "customer"], warehouse: ["warehouse", "warehouse_id", "warehouse"] } as const;
+    const [table, column, kind] = references[parameters.kind];
+    const authorized = `EXISTS (SELECT 1 FROM naijue_erp.sales_header h WHERE ${p.where()} AND h.${column} = r.id)`;
+    const search = p.parameter(parameters.search);
+    const searched = parameters.kind === "customer" ? `(strpos(r.name, ${search}) > 0 OR strpos(r.code, ${search}) > 0)` : `strpos(r.name, ${search}) > 0`;
+    const source = `FROM naijue_erp.${table} r WHERE ${authorized} AND ${searched}`;
+    return this.snapshot(read.signal, async query => {
+      const exactTotal = count(rowOf(await query(`SELECT COUNT(*)::text AS exact_total ${source}`, [...p.values])).exact_total);
+      const paging = p.page(parameters.page, parameters.pageSize);
+      const rows = (await query(`SELECT r.id, r.name AS label ${source} ORDER BY r.name COLLATE "C", r.id ${paging}`, p.values)).rows;
+      const remaining = exactTotal - BigInt(parameters.page - 1) * BigInt(parameters.pageSize);
+      const expected = remaining < 0n ? 0n : remaining < BigInt(parameters.pageSize) ? remaining : BigInt(parameters.pageSize);
+      requireDomain(BigInt(rows.length) === expected, "INVALID_DATABASE_VALUE", "Sales reference page does not match exact scope");
+      const seen = new Set<string>();
+      const items = rows.map(row => {
+        const referenceId = id(kind, row.id); const label = stringValue(row.label);
+        requireDomain(!seen.has(referenceId) && label.trim().length > 0, "INVALID_DATABASE_VALUE", "Invalid sales reference identity or label");
+        seen.add(referenceId); return { id: referenceId, label };
+      });
+      return { page: parameters.page, exactTotal, items };
+    });
+  }
   async readList(read: SalesScopedRead<SalesListQuery>): Promise<SalesListPage> {
     const parameters = parseSalesListQuery(read.parameters); const p = new Predicate(checkedSalesReadScope(read.scope)); p.filter(parameters);
     return this.snapshot(read.signal, async query => {
@@ -141,7 +169,10 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
   async readDetail(read: SalesScopedRead<SalesDetailQuery>): Promise<SalesDetail> {
     const parameters = parseSalesDetailQuery(read.parameters); const p = new Predicate(checkedSalesReadScope(read.scope)); p.target(parameters.salesId);
     return this.snapshot(read.signal, async query => {
-      const rows = (await query(`SELECT ${HEADER_COLUMNS} FROM naijue_erp.sales_header h WHERE ${p.where()}`, p.values)).rows;
+      const rows = (await query(`SELECT ${HEADER_COLUMNS}, hall.name AS hall_name, wh.name AS warehouse_name, c.name AS customer_name, sp.name AS salesperson_name
+        FROM naijue_erp.sales_header h JOIN naijue_erp.hall hall ON hall.id = h.hall_id
+        JOIN naijue_erp.warehouse wh ON wh.id = h.warehouse_id JOIN naijue_erp.customer c ON c.id = h.customer_id
+        LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id WHERE ${p.where()}`, p.values)).rows;
       requireDomain(rows.length > 0, "DOCUMENT_NOT_FOUND", "Sales document is unavailable");
       const row = rowOf({ rows, rowCount: rows.length }); const header = decodeHeader(row);
       const lineRows = (await query(`SELECT id, sales_id, line_no, sku_id, quantity::text, reference_price::text, deal_price::text, line_amount::text,
@@ -149,11 +180,19 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
         color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot, is_current FROM naijue_erp.sales_line
         WHERE sales_id = $1 AND is_current ORDER BY line_no, id LIMIT $2`, [header.id, SALES_DETAIL_MAX_CURRENT_LINES + 1])).rows;
       requireDomain(lineRows.length <= SALES_DETAIL_MAX_CURRENT_LINES, "SALES_READ_TOO_LARGE", "Sales detail exceeds the bounded response limit");
-      const settlementRows = (await query(`SELECT id, sales_id, line_no, payment_account_id, direction, amount::text FROM naijue_erp.sales_settlement
-        WHERE sales_id = $1 ORDER BY line_no, id LIMIT 4`, [header.id])).rows;
+      const settlementRows = (await query(`SELECT s.id, s.sales_id, s.line_no, s.payment_account_id, s.direction, s.amount::text,
+        s.account_name_snapshot, s.method_name_snapshot, pa.name AS current_account_name, pm.name AS current_method_name
+        FROM naijue_erp.sales_settlement s JOIN naijue_erp.payment_account pa ON pa.id = s.payment_account_id
+        JOIN naijue_erp.payment_method pm ON pm.id = pa.payment_method_id
+        WHERE s.sales_id = $1 ORDER BY s.line_no, s.id LIMIT 4`, [header.id])).rows;
       requireDomain(settlementRows.length <= 3, "INVALID_DATABASE_VALUE", "Sales detail exceeds approved settlement count");
       const document: SalesDocument = { header, lines: lineRows.map(decodeLine), settlements: settlementRows.map(decodeSettlement) };
-      return { document, stockBasis: choice(row.stock_basis, ["RUNTIME_LEDGER", "CUTOFF_HISTORY"]) };
+      return { document, stockBasis: choice(row.stock_basis, ["RUNTIME_LEDGER", "CUTOFF_HISTORY"]),
+        referenceNames: { hallName: stringValue(row.hall_name), warehouseName: stringValue(row.warehouse_name),
+          customerName: stringValue(row.customer_name), salespersonName: nullableString(row.salesperson_name) },
+        settlementNames: settlementRows.map(settlement => ({ settlementId: id("settlement", settlement.id), paymentAccountId: id("paymentAccount", settlement.payment_account_id),
+          accountNameSnapshot: stringValue(settlement.account_name_snapshot), methodNameSnapshot: stringValue(settlement.method_name_snapshot),
+          currentAccountName: stringValue(settlement.current_account_name), currentMethodName: stringValue(settlement.current_method_name) })) };
     });
   }
   async readHistory(read: SalesScopedRead<SalesHistoryQuery>): Promise<SalesHistoryPage> {

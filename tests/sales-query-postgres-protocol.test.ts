@@ -28,7 +28,7 @@ const reader = (client: ProtocolClient) => new PostgresSalesQueryReader({ async 
 const time = "2026-10-20T12:00:00.000000Z";
 const header = () => ({ id: ids.sales, number: "SYNTHETIC-ONLY", business_type: "SALE", business_date: "2026-10-20", hall_id: ids.hall,
   customer_id: ids.customer, salesperson_id: null, warehouse_id: ids.warehouse, status: "DRAFT", version: 1, gross_amount: "90071992547409.93", order_discount: "0.00", net_due: "90071992547409.93",
-  note: null, created_by_account_id: ids.account, created_hall_id: ids.hall, created_at: time, updated_at: time, approved_by_account_id: null, approved_at: null, stock_basis: "RUNTIME_LEDGER" });
+  note: null, created_by_account_id: ids.account, created_hall_id: ids.hall, created_at: time, updated_at: time, approved_by_account_id: null, approved_at: null, stock_basis: "RUNTIME_LEDGER", hall_name: "SYNTHETIC HALL", warehouse_name: "SYNTHETIC WAREHOUSE", customer_name: "SYNTHETIC CUSTOMER", salesperson_name: null });
 const summary = () => ({ ...header(), hall_name: "SYNTHETIC HALL", warehouse_name: "SYNTHETIC WAREHOUSE", customer_name: "SYNTHETIC CUSTOMER", salesperson_name: null });
 const line = () => ({ id: ids.line, sales_id: ids.sales, line_no: 1, sku_id: ids.sku, quantity: "9007199254740993", reference_price: null, deal_price: "0.00", line_amount: "0.00", allocated_discount: "0.00",
   is_gift: false, pricing_rule: null, discount_tenths: null, zero_confirmed: null, product_code_snapshot: "SYNTHETIC", product_name_snapshot: "SYNTHETIC", color_name_snapshot: "SYNTHETIC", fit_name_snapshot: "SYNTHETIC", size_name_snapshot: "SYNTHETIC", barcode_snapshot: null, is_current: true });
@@ -114,4 +114,66 @@ test("sales query pg protocol: begin/connect/rollback errors release or discard 
 test("sales query pg protocol: abort while SQL is in flight requests rollback and stops remaining reads", async () => {
   const controller = new AbortController(); const client = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: "0" }], inspect() { controller.abort(); } }, rollback()]);
   await assert.rejects(() => reader(client).readList(read(parameters(), scope, controller.signal)), { code: "SALES_READ_ABORTED" }); client.done();
+});
+
+test("sales filter references pg protocol: all four kinds query only observed authorized references including disabled history", async () => {
+  for (const [kind, table, column, entityKind] of [["hall", "hall", "hall_id", "hall"], ["salesperson", "staff", "salesperson_id", "staff"],
+    ["customer", "customer", "customer_id", "customer"], ["warehouse", "warehouse", "warehouse_id", "warehouse"]] as const) {
+    const referenceId = sid(entityKind, 801); const search = "%_\\' OR TRUE"; let countValues: unknown[] = [];
+    const client = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: "1" }], inspect(values, sql) {
+      scoped(values, sql); countValues = [...values]; assert.deepEqual(values, [ids.hall, ids.warehouse, ids.account, search]);
+      assert.ok(sql.includes(`FROM naijue_erp.${table} r WHERE EXISTS (SELECT 1 FROM naijue_erp.sales_header h WHERE`));
+      assert.ok(sql.includes(`AND h.${column} = r.id)`)); assert.match(sql, /strpos\(r.name, \$4\) > 0/);
+      assert.equal(sql.includes("strpos(r.code, $4) > 0"), kind === "customer");
+      assert.ok(!/enabled|employment_status|r.role|user_account|OR TRUE|LIMIT|OFFSET/.test(sql));
+    } }, { sql: /^SELECT r.id, r.name AS label/, rows: [{ id: referenceId, label: "SYNTHETIC full historical label" }], inspect(values, sql) {
+      scoped(values, sql); assert.deepEqual(values.slice(0, -2), countValues); assert.deepEqual(values.slice(-2), [20, "0"]);
+      assert.match(sql, /ORDER BY r.name COLLATE "C", r.id LIMIT \$5 OFFSET \$6::bigint$/);
+      assert.ok(!/enabled|employment_status|product|sales_line|sales_settlement/.test(sql));
+    } }, commit()]);
+    const result = await reader(client).readReferences(read({ kind, search, page: 1, pageSize: 20 as const }));
+    assert.deepEqual(result, { page: 1, exactTotal: 1n, items: [{ id: referenceId, label: "SYNTHETIC full historical label" }] });
+    assert.equal(client.calls.length, 4); client.done();
+  }
+});
+test("sales filter references pg protocol: bigint totals, bounded page and exact empty out-of-range semantics", async () => {
+  const rows = Array.from({ length: 20 }, (_, n) => ({ id: sid("customer", 1000 + n), label: `SYNTHETIC ${n}` }));
+  const client = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: "9007199254740993" }] },
+    { sql: /^SELECT r.id/, rows, inspect(values) { assert.deepEqual(values.slice(-2), [20, "40"]); } }, commit()]);
+  const result = await reader(client).readReferences(read({ kind: "customer", search: "", page: 3, pageSize: 20 as const }));
+  assert.equal(result.exactTotal, 9007199254740993n); assert.equal(result.items.length, 20); client.done();
+  const empty = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: "15" }] }, { sql: /^SELECT r.id/, rows: [] }, commit()]);
+  assert.deepEqual(await reader(empty).readReferences(read({ kind: "hall", search: "", page: 2, pageSize: 20 as const })), { page: 2, exactTotal: 15n, items: [] }); empty.done();
+});
+test("sales filter references pg protocol: invalid request/grant/abort never connects, malformed provider facts roll back", async () => {
+  let connects = 0; const r = new PostgresSalesQueryReader({ async connect() { connects++; throw new Error("Must not connect"); } });
+  const input = { kind: "hall", search: "", page: 1, pageSize: 20 } as const;
+  await assert.rejects(() => r.readReferences(read({ ...input, role: "ADMIN" } as never)), { code: "INVALID_SALES_QUERY" });
+  await assert.rejects(() => r.readReferences(read(input, { kind: "restricted", clauses: [] })), { code: "FORBIDDEN" });
+  const controller = new AbortController(); controller.abort();
+  await assert.rejects(() => r.readReferences(read(input, scope, controller.signal)), { code: "SALES_READ_ABORTED" }); assert.equal(connects, 0);
+  for (const rows of [[], [{ id: "invalid", label: "SYNTHETIC" }], [{ id: ids.hall, label: " " }]]) {
+    const client = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: "1" }] }, { sql: /^SELECT r.id/, rows }, rollback()]);
+    await assert.rejects(() => reader(client).readReferences(read(input)), error => ["INVALID_DATABASE_VALUE", "INVALID_ID"].includes((error as { code: string }).code)); client.done();
+  }
+  const duplicate = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: "2" }] }, { sql: /^SELECT r.id/, rows: [{ id: ids.hall, label: "ONE" }, { id: ids.hall, label: "TWO" }] }, rollback()]);
+  await assert.rejects(() => reader(duplicate).readReferences(read(input)), { code: "INVALID_DATABASE_VALUE" }); duplicate.done();
+});
+test("sales detail pg protocol: current master labels and authoritative settlement snapshots share the one authorized RR snapshot", async () => {
+  const settlement = { id: sid("settlement", 15), sales_id: ids.sales, line_no: 1, payment_account_id: ids.payment, direction: "RECEIVE", amount: "90071992547409.93",
+    account_name_snapshot: "SYNTHETIC original account", method_name_snapshot: "SYNTHETIC original method", current_account_name: "SYNTHETIC renamed account", current_method_name: "SYNTHETIC renamed method" };
+  const client = new ProtocolClient([begin(), { sql: /^SELECT h.id/, rows: [{ ...header(), salesperson_id: sid("staff", 444), salesperson_name: "SYNTHETIC former salesperson" }], inspect(values, sql) {
+    scoped(values, sql); assert.match(sql, /LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id/); assert.ok(!/enabled|employment_status/.test(sql));
+  } }, { sql: /FROM naijue_erp.sales_line/, rows: [line()] }, { sql: /FROM naijue_erp.sales_settlement/, rows: [settlement], inspect(values, sql) {
+    assert.deepEqual(values, [ids.sales]); assert.match(sql, /s.account_name_snapshot, s.method_name_snapshot/);
+    assert.match(sql, /JOIN naijue_erp.payment_account pa ON pa.id = s.payment_account_id/); assert.match(sql, /JOIN naijue_erp.payment_method pm ON pm.id = pa.payment_method_id/);
+    assert.match(sql, /WHERE s.sales_id = \$1 ORDER BY s.line_no, s.id LIMIT 4$/); assert.ok(!/enabled|payment_account_hall/.test(sql));
+  } }, commit()]);
+  const detail = await reader(client).readDetail(read({ salesId: ids.sales }));
+  assert.deepEqual(detail.referenceNames, { hallName: "SYNTHETIC HALL", warehouseName: "SYNTHETIC WAREHOUSE", customerName: "SYNTHETIC CUSTOMER", salespersonName: "SYNTHETIC former salesperson" });
+  assert.deepEqual(detail.settlementNames, [{ settlementId: sid("settlement", 15), paymentAccountId: ids.payment,
+    accountNameSnapshot: settlement.account_name_snapshot, methodNameSnapshot: settlement.method_name_snapshot,
+    currentAccountName: settlement.current_account_name, currentMethodName: settlement.current_method_name }]);
+  assert.equal(detail.document.settlements[0]!.amount, 9007199254740993n); assert.equal(detail.document.settlements[0]!.id, detail.settlementNames[0]!.settlementId);
+  assert.equal(client.calls.length, 5); client.done();
 });
