@@ -1,0 +1,25 @@
+{
+  "status": "ACTUAL_APPROVED_LIFECYCLE_COMPLETE_BACKEND_RUN_COMPLETE_NEW_INSTANCE_IDLE",
+  "old_owned_system_identifier": "7698847358763823125",
+  "old_supervisor_unchanged_sha256": "224b6836168da5dc767c20e6cbc1049f6025aad866f5a3295effb26ce5349a86",
+  "old_stop": "Existing bounded stop command, owned pg_ctl fast/wait shutdown acknowledged; credential holder exited 0.",
+  "old_clean_stop_server_log_lines": [
+    "2026-10-21 05:53:34.653 JST [33] LOG:  received fast shutdown request",
+    "2026-10-21 05:53:34.716 JST [33] LOG:  database system is shut down"
+  ],
+  "old_owned_postmaster_pid_absent_after_stop": true,
+  "old_data_and_evidence_retained": true,
+  "port_55432_verified_available_before_new_start": true,
+  "new_supervisor_sha256": "8874c81620a67b475ba3bfd4aa9c74bfcbd7f4a841d4de3ab015d6553dee1325",
+  "new_exact_diff_against_old_supervisor_sha256": "e0fd24b113a27c739265429c973ca945db26b2867bdfd734f509c05cf625b0c0",
+  "new_instance_system_identifier": "7698856207892361241",
+  "fixed_enum": {
+    "run": "sparse-0001-0008",
+    "run-backend": "backend-0001-0008"
+  },
+  "executed_selection": "backend-0001-0008 only, exactly once on this new instance",
+  "no_unreviewed_restart_or_hot_reload": true,
+  "startup_failure_protection": "Owned-directory-only status/stop/verification; uncertain outcome retains in-memory credentials in stop-only recovery, never accepting prepare/engine and never false control READY. Both command offsets use string lengths.",
+  "startup_fault_logic_evidence": "Pure simulated tests only, not actual PostgreSQL failure/cleanup execution. See ../postgres-backend-0001-0008-preparation/ and ../backend-engine-suite-independent-20261020T2039Z/supervisor-v2-review.md.",
+  "current_state": "New owned instance controlled and idle; accepted target retained and not reusable. No additional database or run authorized/performed."
+}

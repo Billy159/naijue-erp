@@ -1,0 +1,81 @@
+Explicitly opted-in disposable local target: 127.0.0.1:55432/naijue_erp_test_9a1a94578554689c. Real PostgreSQL results follow only if executed.
+TAP version 13
+# Subtest: REAL PostgreSQL: explicit disposable target and selected synthetic acceptance scenario
+    # Subtest: current eight-migration backend setup publishes synthetic scope without initial-zero seeding
+    ok 1 - current eight-migration backend setup publishes synthetic scope without initial-zero seeding
+      ---
+      duration_ms: 146.940422
+      type: 'test'
+      ...
+    # Subtest: disabled-account authentication STORAGE: committed session, rollback, account/session locks, sentinel hash version invalidation and revocation
+    ok 2 - disabled-account authentication STORAGE: committed session, rollback, account/session locks, sentinel hash version invalidation and revocation
+      ---
+      duration_ms: 35.61648
+      type: 'test'
+      ...
+    # Subtest: real schema rejects incoherent pricing intent, duplicate coordinate, invalid fit/image/numeric value and invalid session hash
+    ok 3 - real schema rejects incoherent pricing intent, duplicate coordinate, invalid fit/image/numeric value and invalid session hash
+      ---
+      duration_ms: 71.938235
+      type: 'test'
+      ...
+    # Subtest: same sales document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT
+    ok 4 - same sales document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT
+      ---
+      duration_ms: 206.740428
+      type: 'test'
+      ...
+    # Subtest: same transfer document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT
+    ok 5 - same transfer document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT
+      ---
+      duration_ms: 179.477635
+      type: 'test'
+      ...
+    # Subtest: signed independent RETURN/EXCHANGE native posting, settlement direction and linked inverse effects on current sparse scope
+    ok 6 - signed independent RETURN/EXCHANGE native posting, settlement direction and linked inverse effects on current sparse scope
+      ---
+      duration_ms: 291.493929
+      type: 'test'
+      ...
+    # Subtest: native scoped sales list/detail/history/statistics, literal search, hidden scope and page beyond end
+    ok 7 - native scoped sales list/detail/history/statistics, literal search, hidden scope and page beyond end
+      ---
+      duration_ms: 125.209345
+      type: 'test'
+      ...
+    # Subtest: native sales count/page share one real REPEATABLE READ snapshot across an intervening committed SAVE
+    ok 8 - native sales count/page share one real REPEATABLE READ snapshot across an intervening committed SAVE
+      ---
+      duration_ms: 42.154794
+      type: 'test'
+      ...
+    # Subtest: native product basics, exact three-SKU/two-size specifications and image METADATA only
+    ok 9 - native product basics, exact three-SKU/two-size specifications and image METADATA only
+      ---
+      duration_ms: 24.261397
+      type: 'test'
+      ...
+    # Subtest: deferred transfer line-position uniqueness permits an actual two-line swap with sparse audit and no stock effect
+    ok 10 - deferred transfer line-position uniqueness permits an actual two-line swap with sparse audit and no stock effect
+      ---
+      duration_ms: 80.920818
+      type: 'test'
+      ...
+    1..10
+ok 1 - REAL PostgreSQL: explicit disposable target and selected synthetic acceptance scenario
+  ---
+  duration_ms: 1841.949911
+  type: 'test'
+  ...
+# Actual PostgreSQL server_version_num=170011; synthetic disposable target only
+# Selected current suite=backend-0001-0008; prepared scenarios: disabled-account authentication STORAGE: committed session, rollback, account/session locks, sentinel hash version invalidation and revocation; real schema rejects incoherent pricing intent, duplicate coordinate, invalid fit/image/numeric value and invalid session hash; same sales document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT; same transfer document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT; signed independent RETURN/EXCHANGE native posting, settlement direction and linked inverse effects on current sparse scope; native scoped sales list/detail/history/statistics, literal search, hidden scope and page beyond end; native sales count/page share one real REPEATABLE READ snapshot across an intervening committed SAVE; native product basics, exact three-SKU/two-size specifications and image METADATA only; deferred transfer line-position uniqueness permits an actual two-line swap with sparse audit and no stock effect
+# Current 0001–0008 backend terminal assertions are engine evidence only if this explicit suite actually ran. Authentication STORAGE only; no login, password verification, HTTP/UI, real-data, production-policy, performance or deployment acceptance is implied.
+1..1
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2433.128727
