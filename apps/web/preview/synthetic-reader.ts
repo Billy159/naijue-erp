@@ -20,7 +20,7 @@ function sumTotals(values: readonly StockTotal[]): StockTotal {
   const unknownCells = values.reduce((sum, value) => sum + value.unknownCells, 0);
   return { knownQuantity: String(values.reduce((sum, value) => sum + BigInt(value.knownQuantity), 0n)), unknownCells, completeness: unknownCells ? 'incomplete' : 'complete' };
 }
-function makeProduct(index: number, filter: InventoryFilter): InventoryProduct {
+export function makeSyntheticInventoryProduct(index: number, filter: InventoryFilter): InventoryProduct {
   const product = productSelection(index);
   const groups: InventoryColorFit[] = [];
   const visibleWarehouses = warehouses.filter(value => selectionMatches(filter.warehouses, value));
@@ -76,9 +76,9 @@ export function createSyntheticInventoryReader(options: { readonly productCount?
       if (shouldFail) throw new Error('TEST ONLY：模拟库存读取失败，未连接真实数据库。');
       const indexes = Array.from({ length: count }, (_, index) => index + 1).filter(index => matches(index, read.parameters.filter));
       const offset = (read.parameters.page - 1) * read.parameters.pageSize;
-      const products = indexes.slice(offset, offset + read.parameters.pageSize).map(index => makeProduct(index, read.parameters.filter));
+      const products = indexes.slice(offset, offset + read.parameters.pageSize).map(index => makeSyntheticInventoryProduct(index, read.parameters.filter));
       // This fixture acts as a SERVER: only the bounded page is returned. Full-filter summary is separate.
-      const allMatchesTotal = sumTotals(indexes.map(index => makeProduct(index, read.parameters.filter).total));
+      const allMatchesTotal = sumTotals(indexes.map(index => makeSyntheticInventoryProduct(index, read.parameters.filter).total));
       return { page: read.parameters.page, pageSize: read.parameters.pageSize, exactTotalProducts: indexes.length, products, warehouseLabels: warehouses.filter(value => selectionMatches(read.parameters.filter.warehouses, value)).map(value => value.label), allMatchesTotal, readReference: 'TEST-ONLY-SYNTHETIC-READ' };
     },
     async readCandidates(read: QueryRead<CandidateParameters>): Promise<CandidatePage> {

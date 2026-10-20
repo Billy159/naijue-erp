@@ -1,4 +1,4 @@
-# 库存查询首个交互切片（TEST ONLY）
+# 库存查询与商品只读查看（TEST ONLY）
 
 已加入可看的最小菜单壳、库存状况表、复用候选选择器和商品分页器。它是重写中的第一个前端切片，不是整套 ERP 完工，也不是已接真实数据库的业务系统。
 
@@ -8,17 +8,18 @@
 
 ```sh
 node_modules/.bin/tsc --noEmit -p apps/web/tsconfig.json
-node --test apps/web/src/inventory/model.test.ts
+node --test apps/web/src/loading/*.test.ts apps/web/src/inventory/*.test.ts
 node apps/web/tests/run-dom-tests.mjs
 node apps/web/build-preview.mjs
 node apps/web/tests/run-bundle-smoke.mjs
 ```
 
-构建只生成静态文件，不启动 HTTP 服务、不监听端口、不部署。当前离线环境实际有 esbuild 0.25.12 和 jsdom 29.1.1；这两个工具尚未列入根清单，干净安装的可复现性要由根依赖整合完成，不在此脚本自动安装。
+构建只生成静态文件，不启动 HTTP 服务、不监听端口、不部署。esbuild 0.25.12 和 jsdom 29.1.1 已列入根清单；脚本不会自动安装依赖。
 
 - `dist-preview/inventory-preview-test-only.html`：可直接下载、用浏览器打开的单文件预览。为便于 file-open，代码/样式全部内嵌；它不是路由代码按需网络加载的证明。
 - `dist-preview/index.html`、`main.js`、`main.css`、`inventory-route.js`、`inventory-route.css`、`synthetic-reader.js`、共享 chunks：拆分式构建，供获准的静态预览环境使用。启动只装壳样式；明确点菜单/合法 #inventory 深链才加载库存路由及样式，样式就绪再展示页面。没有 hover/空闲预取。
-- `dist-preview/metafile.json`：构建导入图。esbuild 默认会把动态导入 CSS 也归入入口 CSS，脚本特意将入口 CSS 替换为仅壳样式，库存样式由叶节点工厂按点击加载。
+- 完整便携单文件目前超过 256KiB 交付预算，构建会明确报告字节数并保留全部功能。它不是符合该附件预算的交付物；拆分式构建仍完整可用。
+- `dist-preview/metafile.json`：构建导入图。esbuild 默认会把动态导入 CSS 也归入入口 CSS，脚本特意将入口 CSS 替换为仅壳样式，库存样式由叶节点工厂按点击加载；商品抽屉另有动作样式，库存路由 CSS 不包含页签样式。
 
 ## 当前已实现
 
@@ -29,11 +30,14 @@ node apps/web/tests/run-bundle-smoke.mjs
 - product/color/fit/size 四维身份不合并。完整尺码标签（165/S、170/M 等）、组内顺序、尺码组及 FIT 独立列；不存在规格、数量未知、确定零及负数明确区分。数量以精确整数字符串展示，汇总不从可见 DOM 采集。
 - 商品/颜色-FIT 折叠、颜色小计/商品合计显示设置。折叠不改变 DTO 总计；有效库存格传递明确 warehouse+sku 及完整规格回调，不存在规格没有动作。
 - `LatestQuery` / `ReadScope` 控制读取消、较新执行替代旧执行、身份/权限变化清理。单页与候选各自持有短期读状态，不使用 localStorage。
+- 商品“查看”提供基础资料、规格、图片三个只读页签。必传 `productReader: ProductReadOnlyReader`，不是从已显示标签拆商品字段；没有默认 API 或静默测试回退。点击查看才导入抽屉代码/样式，当前页签再导入并读取本商品；切页签、关闭、换商品、离页/换身份均释放旧读，迟到响应不复活界面。当前页签数据离开即释放，代码模块只保留有界引用。
+- 基础资料仅展示来源摘要已核字段；规格保留真实颜色、FIT、完整尺码标签及合法 SKU，不生成笛卡尔积。图片页仅清单/缩略图，点击才取单张大图；关闭预览返回图片按钮，Esc 不连带关闭抽屉。无保存、上传、维护尺码组/季节、单位或库存纠正。
+- `preview/synthetic-product-reader.ts` 是明确标注 TEST ONLY 的目标商品夹具，使用与库存夹具相同的规格身份；示例图片只是生成像素，不是商品照片。它只在预览明确读取商品资料时动态加载。
 - `preview/synthetic-reader.ts` 是显式 TEST ONLY 的隔离生成测试读取器。默认 3 款，提供已知负数、零、未知和不存在规格；103 款样本仅用于分页测试。它模拟服务端边界，不进入真实应用数据读取的默认分支。
 
 ## 刻意未完成
 
-- 没有真实 API/数据库、真实账号权限与可用性检查、商品只读三页签抽屉、库存流水筛选/20 条分页/来源跳转、完整范围导出/打印。相关动作禁用或由预览回调明确说明未接入，不伪造结果。
+- 没有真实 API/数据库、真实账号权限与可用性检查、库存流水筛选/20 条分页/来源跳转、完整范围导出/打印。相关动作禁用或由预览回调明确说明未接入，不伪造结果。
 - 分类候选只展示服务提供的两级标签/层级；冻结 Demo 的完整树展开、精确键盘/focus/返回/滚动、显示设置持久化尚待真实运行参考补齐。
 - 没有其他 ERP 业务页面、计量单位、库存纠正、账户余额/对账、新建尺码组/季节。
 - 未完成结果矩阵窗口化、真实规模/内存/网络瀑布性能验收、全部断线/越权/分页越界恢复、完整运行可访问性或冻结 Demo 像素对齐。候选源码 617 主题只取安全的隔离颜色/尺寸参考，不声称等同冻结 Demo 字节。
@@ -41,12 +45,14 @@ node apps/web/tests/run-bundle-smoke.mjs
 ## 代码入口
 
 - `src/inventory/contracts.ts`：可对接真实 API 的窄只读 DTO/端口与点击回调合同。
+- `src/inventory/product-contracts.ts` / `product-model.ts`：必传只读商品端口与目标/规格/媒体响应验证。
+- `src/inventory/product-drawer-host.tsx` / `product-drawer.tsx` / `product-tab-*.tsx`：可取消动作框架、点击加载页签与各自的只读读取。
 - `src/inventory/model.ts`：精确整数、明确库存格状态和分页响应校验。
 - `src/inventory/inventory-page.tsx`、`inventory-matrix.tsx`：React 页面与矩阵。
 - `src/components/`：复用候选与分页控件。
 - `preview/main.tsx`：TEST ONLY 菜单壳及点击才导入的预览路由。
 
-纯模型测试与 jsdom 实际 DOM 操作测试通过不等于真实浏览器、截图、精确布局或业务通过。业务行为依据来源摘要和加载讨论稿；冻结 Demo 完整源码与实际运行参考未在本次 cloud 环境取得。
+纯模型测试与 jsdom 实际 DOM 操作测试通过不等于真实浏览器、截图、精确布局或业务通过。商品抽屉的三页签来自冻结 Demo 源码摘要（b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3，product-arco.jsx:184）；字段排列和像素现场未核。右侧/关闭行为辅以候选617源码作隔离参考，不声称它等同冻结 Demo。业务行为还依据已批准加载讨论稿；冻结 Demo 完整源码与实际运行参考未在本次 cloud 环境取得。
 
 # 加载基础层说明
 

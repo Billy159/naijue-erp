@@ -3,3 +3,6 @@ export { act, createElement } from 'react';
 export { InventoryPageView } from '../src/inventory/inventory-page.tsx';
 export { ReadContext } from '../src/loading/read-scope.ts';
 export { createSyntheticInventoryReader } from '../preview/synthetic-reader.ts';
+
+export { createSyntheticProductReader } from '../preview/synthetic-product-reader.ts';
+export { ProductDrawerHost } from '../src/inventory/product-drawer-host.tsx';

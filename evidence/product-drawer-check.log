@@ -1,0 +1,80 @@
+Final scoped commands (all exited 0):
+node_modules/.bin/tsc --noEmit -p apps/web/tsconfig.json
+node --test apps/web/src/loading/*.test.ts apps/web/src/inventory/*.test.ts
+node apps/web/tests/run-dom-tests.mjs
+node apps/web/build-preview.mjs
+node apps/web/tests/run-bundle-smoke.mjs
+
+Captured stdout/stderr:
+4a23c57dffc61ae50e965896f9fa510b76d5b80f4f9013d4a594f36cdfcc2b85  apps/web/dist-preview/product-drawer-source.sha256
+✔ inventory does not read before explicit run; bounded products and exact full-filter summary (376.389036ms)
+✔ preserves full size labels, FIT identities, unknown/zero/negative/nonexistent specifications (89.8989ms)
+✔ integer totals never coerce unknown to zero and keep large exact values (10.469892ms)
+✔ filter draft mutation cannot relabel executed facts; failure preserves its own prior scope (15.97213ms)
+✔ missing cell, malformed integer and pagination mismatch fail instead of zero-success (37.127843ms)
+✔ identity replacement clears inventory references and stops future scope reads (9.882461ms)
+✔ candidate fixture is paged and independent from inventory reads (10.414188ms)
+✔ product DTOs validate target identity and preserve same-color/size different FIT legal SKUs (20.063095ms)
+✔ null/empty product facts are distinct from malformed success and unsafe media (16.567196ms)
+✔ product query is inert until activated; close clears facts and stale ignored transport cannot republish (8.147038ms)
+✔ synthetic provider reads target tabs independently and never reads originals for metadata (84.996649ms)
+✔ synthetic thumbnail fixture contains a decodable real PNG rather than passing only URL syntax (14.27432ms)
+✔ registration is inert; only activated leaf and its styles load, then code is reused (52.252797ms)
+✔ shared code load keeps consumer cancellation separate (5.790495ms)
+✔ failed code or style leaves can retry without exposing a half-ready module (9.854598ms)
+✔ retained module references are LRU bounded; no cache eviction starts a load (19.365701ms)
+✔ inactive scopes do not start imports (31.14855ms)
+✔ reads start only on run; frozen executed parameters do not follow editable draft (70.512597ms)
+✔ newer query aborts old transport; ignored cancellation cannot overwrite newest result (7.573443ms)
+✔ refresh failure retains last successful facts and their own executed range (2.6434ms)
+✔ switching account clears references immediately; late response cannot reopen a closed region (3.923574ms)
+✔ permission/session refresh invalidates even the same account; clear blocks new scopes (1.302973ms)
+✔ different entity scopes have no shared result state, and closing one leaves another alive (1.310242ms)
+✔ authoritative command result beats old detail read and rejects later older entity versions (1.761426ms)
+✔ cancel read is not dispose and does not clear previous successful facts (0.671679ms)
+✔ invalid parameter snapshot does not supersede a valid pending request (16.088645ms)
+✔ subscriber errors and reentrant disposal cannot bypass cleanup or start an unwanted read (18.170021ms)
+✔ plain parameter snapshots reject cyclic, nonfinite and accessor input without invoking getters (0.529705ms)
+✔ disposing during success notification returns discarded rather than actionable old data (0.548767ms)
+✔ cancel before any successful read returns waiting state rather than false empty success (7.427334ms)
+✔ registration snapshots factories and validates the retained-reference budget (1.515564ms)
+✔ clearing references during an import does not create unbounded duplicate in-flight loads (6.442226ms)
+✔ clear without reactivation does not retain an import after settlement (2.234267ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25950.221694
+PASS DOM: initial idle state performs no inventory/candidate reads and does not invent zero count.
+PASS DOM: advanced expansion does not read; opening FIT reads only its six candidate labels; Escape closes and returns focus.
+PASS DOM: opening candidates reads only candidates; selecting does not query; explicit query renders complete size/FIT identities.
+PASS DOM: negative quantities preserved, valid cell callback carries exact warehouse/SKU/FIT/size; absent spec has no action.
+PASS DOM: folds preserve totals; reset edits only draft; refresh uses executed filter, not changed draft.
+PASS DOM: read failure keeps marked previous facts; retry recovers without losing the draft.
+PASS DOM: closed selector does not read again; identity revocation removes all stock facts.
+PASS DOM: failed/cancelled size changes retain visible/applied100; explicit query uses100; retry200 and its following query both use visible200.
+PASS DOM: 103-product fixture renders 100 then 3 products via explicit server-page reads, not matrix-row pagination.
+All 9 original DOM interaction groups passed.
+PASS drawer: pending action/style load is closeable with zero business reads; closed failed leaf stays closed, and reopening retries before reading.
+PASS drawer: no target read before 查看; only default 基础资料 reads; three exact tabs; no editable controls or mutation actions.
+PASS drawer: current legal SKUs preserve full sizes/FIT; image list uses lazy thumbnails; originals only on preview; image failure/retry and Escape retain drawer and restore focus.
+PASS drawer: failed tab retries locally; close returns original inventory focus; a different product has independent basics and truthful empty images.
+PASS drawer: tab switch, close, reopen, cancel and identity replacement abort target reads; deliberately ignored cancellation cannot leak stale facts or reopen UI; explicit retry and null state work.
+All 9 original DOM groups and 5 product-drawer groups passed in jsdom. Not real-browser screenshots, precise layout, network waterfall, frozen-Demo parity or performance acceptance.
+index.html: 369 bytes
+main.js: 185511 bytes
+main.css: 5127 bytes
+inventory-route.js: 27053 bytes
+inventory-route.css: 10027 bytes
+synthetic-reader.js: 229 bytes
+product-drawer.js: 2320 bytes
+product-drawer.css: 2062 bytes
+inventory-preview-test-only.html: 271118 bytes
+Built static files only. No server, listener, deployment, database or network action.
+Portable preview exceeds 256KiB budget: 271118 bytes. Functionality retained; split build is available.
+PASS split graph: startup excludes inventory/detail leaves; inventory excludes drawer/tab code; drawer excludes inactive tab code; startup/route CSS exclude detail styles.
+PASS built portable HTML: starts with zero reads; explicit menu opens idle route; query renders 3 synthetic products; three product tabs read lazily and full image only on click; cell callback says unavailable; close/reopen clears old facts; no jsdom runtime errors.
+This is actual bundled-code DOM smoke, not a real browser, screenshot, network waterfall or pixel/performance acceptance.
