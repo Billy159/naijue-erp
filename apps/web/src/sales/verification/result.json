@@ -1,0 +1,42 @@
+{
+  "scope": "sales list and read-only detail frontend only",
+  "sourceManifestSha256": "edc49e1d75d9ad354b37b154ce0736d1dc6436886d01f883f1b5264efeee5276",
+  "checks": {
+    "scopedStrictTypes": "passed",
+    "unitAndMockHttpTests": {
+      "passed": 10,
+      "failed": 0
+    },
+    "syntheticDomGroups": {
+      "passed": 7,
+      "failed": 0
+    },
+    "splitBrowserBundle": "passed",
+    "sharedTypecheck": "passed"
+  },
+  "requiredRemaining": [
+    "real root/router/auth/session lifecycle composition",
+    "real bounded authorized hall/staff/customer/warehouse candidate provider",
+    "approved named reference/payment-account detail DTO",
+    "new/edit/save/approve/unapprove/void UI and command workflows",
+    "history/statistics/export/print UI",
+    "aggregate test discovery",
+    "real server/login/PostgreSQL/browser/Demo-pixel/performance acceptance"
+  ],
+  "notPerformed": [
+    "network",
+    "real login",
+    "service listener",
+    "PostgreSQL",
+    "local Mac",
+    "install",
+    "commit",
+    "push",
+    "deploy"
+  ],
+  "changedPaths": [
+    "apps/web/src/sales/**"
+  ],
+  "frozenOn": "2026-10-20",
+  "integrationNote": "Parent removed trailing whitespace only from detail-content.tsx after independent review; original review manifest remains documented in report."
+}

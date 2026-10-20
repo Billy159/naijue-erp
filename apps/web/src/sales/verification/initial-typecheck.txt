@@ -1,0 +1,6 @@
+apps/web/src/sales/detail-host.tsx(32,26): error TS2488: Type 'NodeListOf<HTMLElement>' must have a '[Symbol.iterator]()' method that returns an iterator.
+apps/web/src/sales/reference-selector.tsx(20,140): error TS2345: Argument of type 'QueryRead<unknown>' is not assignable to parameter of type 'QueryRead<SalesReferenceParameters>'.
+  Types of property 'parameters' are incompatible.
+    Type 'Readonly<unknown>' is missing the following properties from type 'Readonly<SalesReferenceParameters>': kind, search, page, pageSize
+apps/web/src/sales/reference-selector.tsx(20,147): error TS2345: Argument of type 'Readonly<unknown>' is not assignable to parameter of type 'Readonly<SalesReferenceParameters>'.
+  Type 'Readonly<unknown>' is missing the following properties from type 'Readonly<SalesReferenceParameters>': kind, search, page, pageSize

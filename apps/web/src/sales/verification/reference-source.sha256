@@ -1,0 +1,7 @@
+5725565bb2cdb936c82df0b7ff0242ee4207206ed938372076652cb03227bb25  packages/application/src/sales-query-ports.ts
+2f927b17caef3ddaf9090110cd512474673c5e67ca99245e1165210cf758ac61  packages/application/src/sales-query-validation.ts
+7f4202d1d3e0ad4622b3f317a5c2182c0b5828aa288e0a41bbcadfd17a1d615a  apps/api/src/sales-query-http.ts
+39332b02e0512aa85a1cae14ad940ea6629aaa07794ff32825fff689cb08fd2d  apps/web/src/transport/http-query.ts
+1f087b8cb2e99170d9dc51ce90010dc1af7f8b5d46611db2a3f24e16515cdb5a  apps/web/src/loading/read-scope.ts
+bc15322380805ddca6ec7b357ae6ba51b978002468f7d275d774c72072308cff  apps/web/src/loading/latest-query.ts
+9c2a5d30cf1b658be423d87580c4b0570e8afc271e9a52c6ee5c87c1161104e8  apps/web/src/loading/async-leaf-registry.ts
