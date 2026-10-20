@@ -1,0 +1,7 @@
+Observed tool session: 16896
+Observed terminal exit code: 0
+Exact final output:
+waiting for server to shut down.... done
+server stopped
+
+ISOLATED_INSTANCE_STOPPED_DATA_AND_EVIDENCE_RETAINED

@@ -1,0 +1,18 @@
+{
+  "status": "EXACT_OWNED_INSTANCE_CLEANLY_STOPPED_HOLDER_TERMINAL",
+  "verified_at_utc": "2026-10-20T22:09:25.881442+00:00",
+  "system_identifier": "7698856207892361241",
+  "postgresql_version": "17.11 (Debian 17.11-0+deb13u1)",
+  "approved_supervisor_sha256": "8874c81620a67b475ba3bfd4aa9c74bfcbd7f4a841d4de3ab015d6553dee1325",
+  "action": "Existing bounded stop command only; owned pg_ctl fast/wait shutdown acknowledged. No blind kill or other process/port operation.",
+  "holder_tool_session": 16896,
+  "holder_terminal_exit_code": 0,
+  "owned_postmaster_pid_file_absent": true,
+  "owned_pg_control_cluster_state": "shut down",
+  "owned_data_directory_retained": true,
+  "test_databases_and_all_evidence_retained": true,
+  "created_database_or_reran_tests": false,
+  "deleted_or_modified_original_acceptance_evidence": false,
+  "original_22_test_tap_sha256_unchanged": "19d442eb711df4fca89f90c87520f6ec7594d062f680dcfa720f8f1d2838a8a0",
+  "new_postgresql_process_started": false
+}
