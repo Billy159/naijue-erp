@@ -1,0 +1,40 @@
+/* Only the inventory ledger drawer. The inventory workbench is untouched. */
+#gold-drawer.inventory-ledger .gd-body{display:flex;flex-direction:column;gap:0;overflow:hidden}
+#gold-drawer.inventory-ledger .gd-head{flex:none}
+#gold-drawer.inventory-ledger .ledger-close{display:grid;place-items:center;width:28px;height:28px;min-height:28px;padding:0;border:0;background:transparent;border-radius:var(--ca-radius-control);color:var(--ca-ink-2);font-size:22px;font-weight:400;line-height:1}
+#gold-drawer.inventory-ledger .ledger-close:hover{background:var(--ca-surface-subtle);color:var(--ca-ink)}
+#gold-drawer.inventory-ledger .ledger-identity{flex:none;font-size:13px;line-height:20px}
+#gold-drawer.inventory-ledger .ledger-identity p{margin:3px 0 0;color:var(--ca-ink-2)}
+#gold-drawer.inventory-ledger #ledger-filter{display:grid;grid-template-columns:140px 140px 170px minmax(100px,1fr) 64px;gap:8px;align-items:center;flex:none;margin:12px 0 8px}
+#gold-drawer.inventory-ledger #ledger-filter [hidden]{display:none}
+#gold-drawer.inventory-ledger #ledger-filter .ui-single-host{width:100%;min-width:0;max-width:none}
+body.inventory-workbench #gold-drawer.inventory-ledger #ledger-filter .btn{height:32px;min-height:32px;padding:4px 10px;font-size:13px}
+#gold-drawer.inventory-ledger .ledger-filter-error:empty{display:none}
+#gold-drawer.inventory-ledger .ledger-filter-error{flex:none;margin-bottom:6px;color:var(--ca-critical);font-size:12px}
+#gold-drawer.inventory-ledger .ledger-stats{flex:none;margin:0 0 8px;color:var(--ca-ink-2);font-size:12px}
+#gold-drawer.inventory-ledger .ledger-scroll{flex:1;min-height:0;max-height:none;overflow:auto}
+#gold-drawer.inventory-ledger .ledger-scroll table{width:100%;min-width:720px;table-layout:fixed}
+#gold-drawer.inventory-ledger .ledger-scroll th:nth-child(1){width:145px}
+#gold-drawer.inventory-ledger .ledger-scroll th:nth-child(2){width:130px}
+#gold-drawer.inventory-ledger .ledger-scroll th:nth-child(3){width:60px}
+#gold-drawer.inventory-ledger .ledger-scroll th:nth-child(4){width:105px}
+#gold-drawer.inventory-ledger .ledger-scroll th:nth-child(6){width:86px}
+#gold-drawer.inventory-ledger .ledger-scroll td{white-space:nowrap;font-variant-numeric:tabular-nums}
+#gold-drawer.inventory-ledger .ledger-scroll td:nth-child(5){white-space:normal;overflow-wrap:anywhere}
+#gold-drawer.inventory-ledger .ledger-scroll a{color:var(--ca-primary);text-decoration:none}
+#gold-drawer.inventory-ledger .ledger-scroll a:hover{text-decoration:underline}
+#gold-drawer.inventory-ledger .ledger-source-button{border:0;padding:0;background:transparent;color:var(--ca-primary);font:inherit;text-align:left;cursor:pointer}
+#gold-drawer.inventory-ledger .ledger-source-button:hover{text-decoration:underline}
+#gold-drawer.inventory-ledger .ledger-source-button:focus-visible{outline:2px solid var(--ca-primary);outline-offset:2px}
+#gold-drawer.inventory-ledger .ledger-scroll small{display:block;white-space:normal;color:var(--ca-ink-2)}
+#gold-drawer.inventory-source .source-version{overflow:auto;margin-top:8px}
+#gold-drawer.inventory-source .source-version strong{overflow-wrap:anywhere}
+#gold-drawer.inventory-source .source-version pre{white-space:pre-wrap;overflow-wrap:anywhere}
+#gold-drawer.inventory-source .source-version table{table-layout:auto}
+#gold-drawer.inventory-ledger .ledger-footer{flex:none;padding-top:8px}
+#gold-drawer.inventory-ledger .ledger-footer .iw-pagination{justify-content:flex-end;min-height:32px;gap:8px}
+#gold-drawer.inventory-ledger .ledger-footer .iw-pagination>select,
+#gold-drawer.inventory-ledger .ledger-footer .iw-pagination>span,
+#gold-drawer.inventory-ledger .ledger-footer .iw-pagination>.ui-single-host{display:none}
+#gold-drawer.inventory-ledger .ledger-footer .actions{margin-left:auto;gap:6px}
+@media(max-width:750px){#gold-drawer.inventory-ledger #ledger-filter{grid-template-columns:1fr 1fr 1.2fr}#gold-drawer.inventory-ledger #ledger-filter [data-ledger-source]{grid-column:1/3}#gold-drawer.inventory-ledger #ledger-filter .btn{width:100%}}

@@ -1,0 +1,59 @@
+const {JSDOM}=require('jsdom'),fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..'),out=__dirname+'/transfer-refine-evidence';
+const dom=new JSDOM(fs.readFileSync(root+'/index.html','utf8'),{url:'http://127.0.0.1:8767/#products',runScripts:'outside-only',pretendToBeVisual:true});const w=dom.window,d=w.document;
+w.structuredClone=structuredClone;w.CSS={escape:x=>x};w.confirm=()=>true;w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(){this.open=false};
+const errors=[],checks=[];w.addEventListener('error',e=>errors.push(e.message));for(const f of ['model.js','app.js','product-legacy-sizes.js','product-catalog.js','engine.js','gold.js','assets/vendor/jszip.min.js','inventory-result.js','inventory-xlsx.js','inventory-workbench.js','product-current.js','transfer-current.js'])vm.runInContext(fs.readFileSync(root+'/'+f,'utf8'),dom.getInternalVMContext());
+w.JSZip=require('jszip');
+const R=w.INVENTORY_RESULT,S=w.GOLD_UI.state,W=w.INVENTORY_UI.state,I=w.INVENTORY_UI;
+const check=(name,fn)=>{fn();checks.push(name)},click=s=>{const e=d.querySelector(s);assert(e,s);assert(!e.disabled,s);e.click()},wait=()=>new Promise(r=>setTimeout(r,240));
+
+w.HTMLElement.prototype.scrollIntoView=function(){};
+const U=w.TRANSFER_UI,T=U.state,G=w.GOLD,D=w.ERP_DEMO;
+const fill=(s,v)=>{const e=d.querySelector(s);assert(e,s);e.value=v;e.dispatchEvent(new w.Event('input',{bubbles:true}))};
+function route(r){w.history.pushState(null,'','#'+r);w.render()}
+function current(){return T.doc}
+(async()=>{
+route('transfer');check('T01/T02：独立列表与10列，无旧顶部Tab',()=>{assert.equal(d.querySelector('h1').textContent,'调拨单列表');assert.equal(d.querySelectorAll('.tc-list-scroll th').length,10);assert(!d.querySelector('.mode-tabs'));assert(d.querySelector('a[href="#transfer/new"]'))});
+click('[data-t=new]');const id=current().id;check('T03/T04：新单头与顶部动作、常驻侧栏',()=>{assert(d.querySelector('.tc-head [data-t=save]'));assert(d.querySelector('.tc-head [data-t=audit]'));assert(d.querySelector('.tc-scans'));assert(!d.querySelector('.sticky-actions'));assert(!d.querySelector('[data-g=review]'));assert.equal(d.querySelectorAll('input[type=number]').length,0)});
+T.doc.from='main';T.doc.to='outlet';w.render();const initial=D.products[0].stock.main[0][1],target=D.products[0].stock.outlet[0][1];
+for(let i=0;i<5;i++)U.scan('BC-M26001-1-2');check('T05：五次扫描共5，历史事实0→1至4→5',()=>{assert.equal(current().q['M26001|0|1'],5);assert.equal(current().scans.length,5);assert.equal(current().scans[0].before,0);assert.equal(current().scans[4].after,5)});
+U.scan('OLD-M26001-1-2');check('T05：旧码累加同规格至6',()=>{assert.equal(current().q['M26001|0|1'],6);assert.equal(current().scans.at(-1).kind,'historical')});
+fill('[data-t-qty="M26001|0|1"]','10');check('T06/T09：手改数量10同步当前累计，不修改扫码当时6',()=>{assert.equal(current().q['M26001|0|1'],'10');assert.equal(current().scans.at(-1).after,6);assert.equal(d.querySelector('[data-t-current]').textContent,'10')});
+click('[data-t=undo]');check('T11：撤销上一扫10→9，记录不删除',()=>{assert.equal(current().q['M26001|0|1'],9);assert.equal(current().scans.length,6);assert(current().scans.at(-1).undone)});
+U.scan('NOT-FOUND');U.scan('AMB-001');check('失败与歧义不改变数量、分别留记录',()=>{assert.equal(current().q['M26001|0|1'],9);assert.equal(current().scans.at(-1).kind,'ambiguous');assert(current().scans.at(-2).error)});
+U.scan('M26005');check('T09/T10：多款保留旧数量，裤子读商品统一尺码',()=>{assert(current().items.includes('M26005'));assert.equal(current().q['M26001|0|1'],9);assert(d.querySelector('[data-product=M26005]').textContent.includes('裤子尺码'));assert(d.querySelector('[data-product=M26005] th').textContent.includes('颜色'))});
+fill('[data-t-qty="M26005|0|0"]','2');click('[data-t=detail][data-id=M26001]');check('T12：只读详情，目的仓优先',()=>{assert(d.querySelector('#tc-dialog').textContent.includes('调入仓现存'));assert(d.querySelector('#tc-dialog').textContent.indexOf('调入仓现存')<d.querySelector('#tc-dialog').textContent.indexOf('调出仓现存'))});click('[data-t=detail-tab][data-tab=barcode]');check('条码详情读取原始三类条码',()=>assert(d.querySelector('#tc-dialog').textContent.includes('OLD-M26001')));click('[data-t=close-modal]');
+const oldQ=JSON.stringify(current().q);click('[data-t=select][data-context=doc][data-field=from]');check('T13：调出仓搜索单选，同调入仓禁用',()=>{assert(d.querySelector('[data-t=select-value][data-id=outlet]').disabled);fill('#tc-wh-search','BH');assert.equal(d.querySelectorAll('[role=option]').length,1)});click('[data-t=select-value][data-id=reserve]');check('T13：换仓不清数量且无需确认',()=>{assert.equal(current().from,'reserve');assert.equal(JSON.stringify(current().q),oldQ);assert(!d.querySelector('#tc-dialog').open)});current().from='main';w.render();
+click('[data-t=toggle-panel]');check('T06：可收起扫码侧栏',()=>assert(!d.querySelector('.tc-scans')));click('[data-t=toggle-panel]');check('T06：展开保留全部记录',()=>assert.equal(d.querySelectorAll('.tc-log').length,8));
+click('[data-t=list]');check('未保存离开保护仅取消确定',()=>{assert(d.querySelector('#tc-dialog').open);assert.equal(d.querySelectorAll('#tc-dialog footer button').length,2)});click('[data-t=close-modal]');check('取消离开保留草稿',()=>assert.equal(current().q['M26001|0|1'],9));
+await U.commit('save');check('T14：保存草稿不改变双仓库存/流水',()=>{assert.equal(D.products[0].stock.main[0][1],initial);assert.equal(D.products[0].stock.outlet[0][1],target);assert.equal(G.events.length,0);assert.equal(G.documents.find(d=>d.id===id).q['M26001|0|1'],9);assert(!U.dirty())});
+fill('[data-t-qty="M26001|0|1"]','25');check('未保存编辑不直接改已保存单据',()=>assert.equal(G.documents.find(d=>d.id===id).q['M26001|0|1'],9));await U.commit('audit');check('T14：不足不阻断，双仓变化且已审核只读',()=>{assert.equal(current().status,'已审核');assert.equal(D.products[0].stock.main[0][1],initial-25);assert.equal(D.products[0].stock.outlet[0][1],target+25);assert(d.querySelector('[data-t-qty]').readOnly);assert(!d.querySelector('[data-t=audit]'));assert(d.querySelector('[data-t=reverse]'));assert.equal(G.events.length,4)});
+const e=G.events.length;await U.commit('audit');check('重复审核无重复库存影响',()=>assert.equal(G.events.length,e));await U.commit('reverse');check('T14：弃审恢复两仓，保留原流水，状态未审核',()=>{assert.equal(current().status,'未审核');assert.equal(D.products[0].stock.main[0][1],initial);assert.equal(D.products[0].stock.outlet[0][1],target);assert.equal(G.events.length,8)});await U.commit('reverse');check('重复弃审不再恢复',()=>assert.equal(G.events.length,8));
+fill('[data-t-qty="M26001|0|1"]','3');await U.commit('audit');check('重审产生v2、新流水，旧v1仍存在',()=>{assert.equal(current().version,2);assert.equal(G.events.length,12);assert.equal(D.products[0].stock.main[0][1],initial-3);assert(G.events.some(e=>e.version===1));assert.equal(G.events.at(-1).version,2)});
+await U.commit('reverse');click('[data-t=delete-color][data-id=M26001][data-c="0"]');check('有数量颜色删除先确认',()=>assert(d.querySelector('#tc-dialog').open));click('[data-t=confirm-action]');check('颜色删除仅本单，不改商品颜色',()=>{assert(current().hiddenColors.includes('M26001|0'));assert.equal(current().q['M26001|0|1'],undefined);assert.equal(D.products[0].colors[0],'藏青')});
+click('[data-t=delete-product][data-id=M26005]');click('[data-t=confirm-action]');check('商品删除移除本单所有数量',()=>{assert(!current().items.includes('M26005'));assert(!Object.keys(current().q).some(k=>k.startsWith('M26005|')))});
+current().from=current().to;check('同仓基本校验保持',()=>assert(U.validation(current()).includes('不能相同')));
+// Isolated fixtures only; never written to normal product files or browser session.
+T.doc=G.makeDoc();T.doc.from='';T.doc.to='';T.route='transfer/new';w.history.replaceState(null,'','#transfer/new');w.render();
+check('新导航父分组和两层子项，无中间页',()=>{assert(d.querySelector('.tc-nav-group').open);assert.equal(d.querySelectorAll('.tc-nav-children a').length,2)});
+check('空单保存审核禁用且原因在字段旁',()=>{assert(d.querySelector('[data-t=audit]').disabled);assert(d.querySelector('[data-t=save]').disabled);assert.equal(d.querySelector('#tc-from-hint').textContent,'请选择调出仓')});
+click('[data-t=more]');check('更多为就近菜单，不打开遮罩',()=>{assert(!d.querySelector('#tc-dialog').open);assert(d.querySelector('#tc-pop [role=menu]'));assert.equal(d.querySelector('#tc-from-hint').textContent,'请选择调出仓')});
+click('[data-t=history]');click('[data-t=close-modal]');
+U.scan('M26002');check('未选仓可找货，款号只加商品不加数',()=>{assert(T.doc.items.includes('M26002'));assert.equal(G.count(T.doc).units,0)});
+T.doc.from='main';T.doc.to='outlet';w.render();fill('[data-t-qty="M26002|1|2"]','2');
+check('颜色小计、商品总量、商品颜色行统计一致',()=>{assert.equal(d.querySelector('[data-t-row="M26002|1"]').textContent,'2');assert(d.querySelector('[data-t-product-total=M26002]').textContent.includes('2'));assert(d.querySelector('#tc-totals').textContent.includes('1 个商品颜色行'));assert(!d.querySelector('.tc-code'));assert.equal(d.querySelectorAll('[data-t=undo]').length,1)});
+check('输入绑定商品颜色尺码ID，保留无尺码',()=>{const el=d.querySelector('[data-t-qty="M26002|1|2"]');assert(el.dataset.tProduct&&el.dataset.tColor&&el.dataset.tSize);assert(d.querySelector('[data-t-qty="M26002|1|9"]'))});
+fill('[data-t-qty="M26002|1|2"]','1.5');check('非法数量禁用审核、不算入有效统计',()=>{assert(d.querySelector('[data-t=audit]').disabled);assert(d.querySelector('#tc-totals').textContent.includes('共 0 件'))});fill('[data-t-qty="M26002|1|2"]','2');
+click('[data-t=detail][data-id=M26002][data-c="1"]');check('灰白详情直接读当前草稿数量',()=>{assert(d.querySelector('#tc-dialog').textContent.includes('当前颜色：灰白'));assert.equal(d.querySelectorAll('#tc-dialog tbody tr')[2].lastElementChild.textContent,'2');assert.equal(d.querySelectorAll('#tc-dialog [role=tab]').length,4)});
+click('[data-t=close-modal]');click('[data-t=detail][data-id=M26002][data-c="0"]');check('蓝白未录数量不串灰白',()=>assert.equal(d.querySelectorAll('#tc-dialog tbody tr')[2].lastElementChild.textContent,'0'));
+click('[data-t=detail-tab][data-tab=product]');check('无图商品紧凑占位、价格两位',()=>{assert(d.querySelector('.tc-no-photo'));assert(d.querySelector('#tc-dialog').textContent.includes('219.00'))});
+const pfx=D.products.find(p=>p.id==='M26002'),oldImages=structuredClone(pfx.images),url='data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="90" height="120"><rect width="90" height="120" fill="white"/><text x="5" y="50">TEST</text></svg>');
+pfx.images=[{id:'fixture-main',role:'主图',url,name:'隔离技术夹具-非商品照片'},{id:'fixture-blue',role:'颜色配图',colorId:pfx.colorIds[0],url,name:'蓝白技术夹具'},{id:'fixture-grey',role:'颜色配图',colorId:pfx.colorIds[1],url,name:'灰白技术夹具'}];
+click('[data-t=detail-tab][data-tab=product]');click('[data-t=image-tab]');check('主图跳图片Tab并定位主图，不冒充颜色图',()=>{assert.equal(d.querySelector('.tc-photo-heading span').textContent,'商品主图');assert.equal(d.querySelector('[data-t=image-select][aria-pressed=true]').dataset.id,'fixture-main')});
+click('[data-t=image-select][data-id=fixture-grey]');check('图片按已有colorId标识，切换不改档案',()=>assert.equal(d.querySelector('.tc-photo-heading span').textContent,'灰白 · 颜色图'));click('[data-t=image-zoom]');assert(d.querySelector('.tc-photo-stage.zoomed'));
+d.querySelector('.tc-photo-stage img').dispatchEvent(new w.Event('error'));check('图片失败有反馈、数量不变',()=>{assert(!d.querySelector('.tc-photo-stage .tc-photo-error').hidden);assert.equal(T.doc.q['M26002|1|2'],'2')});
+click('[data-t=close-modal]');pfx.images=oldImages;const sku=w.PRODUCT_CATALOG.specKey(pfx.colorIds[0],pfx.sizeIds[0]),oldCodes=structuredClone(pfx.barcodes[sku]);pfx.barcodes[sku].compatible=[{code:'000012345678',schemeId:'2020'}];U.scan('000012345678');check('兼容码保留前导零并命中同一规格',()=>{assert.equal(T.doc.scans.at(-1).code,'000012345678');assert.equal(T.doc.q['M26002|0|0'],1)});pfx.barcodes[sku]=oldCodes;
+
+check('无脚本异常',()=>assert.deepEqual(errors,[]));
+fs.writeFileSync(out+'/model-checks.json',JSON.stringify({kind:'独立模拟DOM与Demo引擎验证；不是真实浏览器',checks,passed:checks.length},null,2));console.log(JSON.stringify({passed:checks.length,checks},null,2));w.close();
+})().catch(e=>{console.error(e);w.close();process.exitCode=1});

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="erp-runtime" content="demo">
+  <title>奈爵服饰 · 导出与打印</title>
+  <link rel="stylesheet" href="ui-tokens.css?v=t27-20261002a">
+  <link rel="stylesheet" href="styles.css?v=t27-20261002a">
+  <link rel="stylesheet" href="gold.css?v=t27-20261002a">
+  <link rel="stylesheet" href="entry-shared.css?v=t27-20261002a">
+  <link rel="stylesheet" href="interaction-common.css?v=t27-20261002a">
+  <link rel="stylesheet" href="brand-components.css?v=t27-20261002a">
+  <link rel="stylesheet" href="inventory-ledger.css?v=t27-20261002a">
+  <link rel="stylesheet" href="sales-current.css?v=t27-20261002a">
+  <link rel="stylesheet" href="sales-detail-alignment.css?v=t27-20261002a">
+</head>
+<body>
+  <div class="app t27-app">
+    <aside class="sidebar">
+      <div class="brand" aria-label="奈爵服饰"><span class="brand-mark" aria-hidden="true">奈</span><span class="brand-name">奈爵服饰</span></div>
+      <div class="proto-tag">业务输出</div>
+      <nav aria-label="业务导航">
+        <div class="nav parent">公共能力</div>
+        <a class="nav child selected" href="export-workbench.html" aria-current="page">导出与打印</a>
+        <a class="nav child" href="index.html">返回业务台</a>
+      </nav>
+      <div class="sidebar-note">按当前账号授权读取<br>打印只生成输出<br>不写入业务数据</div>
+    </aside>
+    <div class="main">
+      <header class="topbar"><span>公共能力 / 导出打印</span><a href="index.html">返回 ERP</a></header>
+      <main id="t27-root" aria-live="polite"></main>
+    </div>
+  </div>
+  <noscript>请启用 JavaScript 后使用导出与打印。</noscript>
+  <script src="assets/vendor/jszip.min.js?v=t27-20261002a"></script>
+  <script src="assets/vendor/JsBarcode.code128.min.js?v=t27-20261002a"></script>
+  <script src="service-client.js?v=t11-20261002a"></script>
+  <script type="module" src="assets/modules/export-workbench.js?v=t27-ui-entry-relocation-20261005-v1"></script>
+</body>
+</html>

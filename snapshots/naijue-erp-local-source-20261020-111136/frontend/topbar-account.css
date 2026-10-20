@@ -1,0 +1,7 @@
+.account-password-modal{width:440px!important;max-width:calc(100vw - 32px)}
+.account-password-fields{display:grid;gap:16px}
+.account-password-field{display:grid;gap:6px;min-width:0}
+.account-password-field>label{font-size:13px;font-weight:500;color:var(--text)}
+.account-password-field .arco-input-password{width:100%}
+.account-password-error{color:var(--error);font-size:12px;line-height:1.5}
+.account-password-hint{color:var(--secondary);font-size:12px;line-height:1.5}

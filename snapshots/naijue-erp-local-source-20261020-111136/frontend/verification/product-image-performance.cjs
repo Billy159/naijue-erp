@@ -1,0 +1,15 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),{JSDOM}=require('jsdom');
+const root=path.join(__dirname,'..'),dom=new JSDOM('<div id="photos"></div>',{url:'http://localhost/',runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window;
+w.ResizeObserver=class{observe(){}disconnect(){}};w.matchMedia=()=>({matches:false,addListener(){},removeListener(){},addEventListener(){},removeEventListener(){}});
+w.PRODUCT_MEDIA={thumbnail:url=>url+'?thumbnail=256'};
+const errors=[];w.addEventListener('error',e=>errors.push(e.message));
+w.eval(fs.readFileSync(root+'/assets/product-arco.bundle.js','utf8'));
+const images=[{id:'main',name:'main.jpg',url:'/main.jpg',role:'主图'},{id:'history',name:'history.jpg',url:'/history.jpg',role:'历史图片'}];
+w.PRODUCT_ARCO.photos(w.document.querySelector('#photos'),{items:()=>images,colors:()=>[],readonly:false,upload(){},remove(){}});
+const tick=()=>new Promise(r=>setTimeout(r,80));
+(async()=>{await tick();const history=w.document.querySelector('.pc-photo-history');assert.equal(history.open,false);assert.equal(history.querySelectorAll('img').length,0,'closed history must not mount or request images');
+ const thumb=w.document.querySelector('.pc-arco-photo-preview img');assert.equal(thumb.getAttribute('src'),'/main.jpg?thumbnail=256');assert.equal(thumb.getAttribute('loading'),'lazy');
+ history.open=true;history.dispatchEvent(new w.Event('toggle'));await tick();assert.equal(history.querySelector('img').getAttribute('src'),'/history.jpg?thumbnail=256');assert.equal(history.querySelectorAll('.pc-photo-more').length,0);
+ w.document.querySelector('.pc-arco-photo-preview').click();await tick();assert([...w.document.querySelectorAll('.arco-image-preview img')].some(e=>e.getAttribute('src')==='/main.jpg'),'preview loads the original URL');
+ assert.equal(JSON.stringify(images),JSON.stringify([{id:'main',name:'main.jpg',url:'/main.jpg',role:'主图'},{id:'history',name:'history.jpg',url:'/history.jpg',role:'历史图片'}]));assert.deepEqual(errors,[]);
+ console.log('PASS lazy thumbnails, closed history unmounted, expanded history readonly, original preview and image facts preserved');w.PRODUCT_ARCO.beforeRender();w.close();})().catch(e=>{console.error(e.message);w.close();process.exitCode=1});

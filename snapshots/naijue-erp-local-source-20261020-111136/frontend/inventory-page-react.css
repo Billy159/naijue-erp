@@ -1,0 +1,48 @@
+.erp-inventory-advanced-field {display:flex;align-items:center;gap:8px;min-width:220px;color:var(--ca-ink-2)}
+.erp-inventory-advanced-field>span {min-width:max-content}
+.erp-inventory-advanced-field .arco-select {min-width:150px;flex:1}
+.erp-inventory-switch {display:flex;align-items:center;gap:8px;min-height:32px;color:var(--ca-ink-2)}
+.erp-inventory-validation,.erp-inventory-applied-caption,.erp-inventory-unresolved {padding:8px 12px;margin:8px 0;border-radius:4px;color:var(--ca-ink-2);background:var(--ca-surface-subtle)}
+.erp-inventory-validation {color:var(--ca-critical);background:var(--ca-critical-soft,#fff1f0)}
+.erp-inventory-first-query {min-height:180px;display:grid;place-items:center;color:var(--ca-ink-3);border:1px solid var(--ca-line);background:var(--ca-surface)}
+.erp-inventory-summary-content {min-width:0}
+.erp-inventory-unit-totals {margin:0 0 12px;padding:6px 10px;border:1px solid var(--ca-line);background:var(--ca-surface-subtle);color:var(--ca-ink-2);font-variant-numeric:tabular-nums}
+.erp-inventory-unit-total-list {display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px 16px;max-height:180px;overflow:auto;padding:8px 4px 2px}
+.erp-inventory-settings {display:grid;gap:14px}
+.erp-inventory-settings>div {display:flex;align-items:center;justify-content:space-between;min-height:32px;color:var(--ca-ink-2)}
+.erp-inventory-product-field {flex:2;min-width:240px}
+.erp-inventory-product-field .erp-product-picker {width:100%}
+.erp-inventory-category-field,.erp-inventory-warehouse-field {flex:1;min-width:180px}
+.erp-inventory-category-field .arco-tree-select,.erp-inventory-warehouse-field .arco-select,.erp-inventory-warehouse-field .arco-tree-select {width:100%}
+.erp-inventory-output-link {color:var(--ca-ink-2);text-decoration:none;padding:5px 8px;white-space:nowrap}
+.erp-inventory-output-link:hover {color:var(--ca-link)}
+.erp-inventory-scope {display:grid;gap:6px;padding:10px 12px;background:var(--ca-surface-subtle);border:1px solid var(--ca-line);color:var(--ca-ink-2);line-height:1.6}
+.erp-inventory-source-caption {font-size:12px;color:var(--ca-ink-3);margin:6px 0}
+.erp-inventory-result-controls {display:flex;justify-content:flex-end;gap:8px;margin-bottom:8px}
+.erp-inventory-product-block {margin-bottom:16px;min-width:0}
+.erp-inventory-block-summary {display:flex;align-items:center;gap:8px;font-size:12px;font-variant-numeric:tabular-nums;color:var(--ca-ink-2);padding-right:8px;white-space:nowrap}
+.erp-inventory-color-folds {display:flex;flex-wrap:wrap;gap:4px;padding:3px 8px;border:1px solid var(--ca-line);border-top:0;background:var(--ca-surface)}
+.erp-inventory-color-folds .arco-btn {font-size:12px;color:var(--ca-ink-2)}
+.erp-inventory-product-link {display:block;border:0;padding:0;background:none;text-align:left;cursor:pointer;color:var(--ca-ink);font:inherit;max-width:100%}
+.erp-inventory-product-link strong {display:block;font-weight:500;white-space:nowrap;color:var(--ca-link)}
+.erp-inventory-product-link span {display:block;font-size:12px;color:var(--ca-ink-2)}
+.erp-inventory-deferred-matrix {border:1px solid var(--ca-line);border-top:0;background:var(--ca-surface)}
+.erp-inventory-row-subtotal .arco-table-td,.erp-inventory-row-folded-color .arco-table-td {background:var(--ca-surface-subtle);font-weight:500}
+.erp-inventory-row-total .arco-table-td {background:var(--ca-table-head);font-weight:600}
+.erp-inventory-detail {color:var(--ca-ink);font-family:var(--ca-font-sans,Arial,sans-serif)}
+.erp-inventory-detail .arco-table-th,.erp-inventory-detail .arco-table-td {font-size:var(--ui-font,13px);padding:6px 10px}
+.erp-inventory-facts {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 20px;margin:0 0 16px}
+.erp-inventory-facts>div {min-width:0}
+.erp-inventory-facts dt {color:var(--ca-ink-3);font-size:12px;margin-bottom:4px}
+.erp-inventory-facts dd {margin:0;overflow-wrap:anywhere;color:var(--ca-ink)}
+.erp-inventory-detail-caption {color:var(--ca-ink-2);line-height:1.6}
+.erp-inventory-panel-actions,.erp-inventory-ledger-filters {display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.erp-inventory-panel-actions {margin:0;gap:2px}
+.erp-inventory-source-evidence {max-height:400px;overflow:auto;font-size:12px;white-space:pre-wrap;background:var(--ca-surface-subtle);padding:12px;border:1px solid var(--ca-line)}
+.erp-inventory-product-images {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:12px 0}
+.erp-inventory-product-images figure {margin:0;min-width:0}
+.erp-inventory-product-images img {width:100%;aspect-ratio:1;object-fit:contain;border:1px solid var(--ca-line);background:white}
+.erp-inventory-product-images figcaption {font-size:12px;text-align:center;color:var(--ca-ink-2);margin-top:4px}
+.erp-inventory-target-fields {display:grid;gap:12px;margin:12px 0}
+.erp-inventory-print-frame {display:block;width:100%;height:65vh;border:1px solid var(--ca-line);background:white}
+@media(max-width:640px){.erp-inventory-advanced-field{width:100%;min-width:0}.erp-inventory-advanced-field .arco-select{min-width:0}.erp-inventory-product-field,.erp-inventory-category-field,.erp-inventory-warehouse-field{min-width:150px}.erp-inventory-block-summary{white-space:normal}.erp-inventory-facts{grid-template-columns:1fr}.erp-inventory-product-images{grid-template-columns:repeat(3,minmax(0,1fr))}.erp-matrix-section-heading{flex-wrap:wrap}}

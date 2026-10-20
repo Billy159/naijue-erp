@@ -1,0 +1,2 @@
+.service-recovery{position:fixed;right:20px;bottom:20px;z-index:1800;max-width:420px;max-height:35vh;overflow:auto;padding:12px 16px;border:1px solid var(--ca-line);border-radius:var(--ca-radius-card);background:var(--ca-surface);box-shadow:var(--ca-shadow-float);color:var(--ca-ink);font-size:13px}
+.service-recovery[hidden]{display:none}.service-recovery p{margin:0 0 4px}.service-recovery small{display:block;margin-bottom:8px;overflow-wrap:anywhere;color:var(--ca-ink-2)}.service-recovery>div+div{border-top:1px solid var(--ca-line);margin-top:12px;padding-top:12px}

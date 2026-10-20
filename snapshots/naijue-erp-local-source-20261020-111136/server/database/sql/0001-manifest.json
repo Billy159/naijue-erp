@@ -1,0 +1,6472 @@
+{
+  "source": {
+    "enums": [
+      {
+        "name": "app_role",
+        "values": [
+          "ADMIN",
+          "WAREHOUSE",
+          "SALES"
+        ]
+      },
+      {
+        "name": "barcode_role",
+        "values": [
+          "CURRENT",
+          "HISTORICAL"
+        ]
+      },
+      {
+        "name": "barcode_status",
+        "values": [
+          "ACTIVE",
+          "QUARANTINED",
+          "RETIRED"
+        ]
+      },
+      {
+        "name": "document_status",
+        "values": [
+          "DRAFT",
+          "APPROVED",
+          "UNAPPROVED",
+          "COMPLETED",
+          "REVERSED",
+          "NO_CHANGE"
+        ]
+      },
+      {
+        "name": "document_type",
+        "values": [
+          "TRANSFER",
+          "SALE",
+          "RETURN_EXCHANGE",
+          "ADJUSTMENT",
+          "HISTORICAL_SALE"
+        ]
+      },
+      {
+        "name": "import_status",
+        "values": [
+          "UPLOADED",
+          "INSPECTED",
+          "VALIDATED",
+          "NEEDS_REVIEW",
+          "READY",
+          "COMMITTED",
+          "FAILED"
+        ]
+      },
+      {
+        "name": "mapping_decision",
+        "values": [
+          "AUTO_CANDIDATE",
+          "CONFIRMED",
+          "REJECTED",
+          "CONFLICT"
+        ]
+      }
+    ],
+    "functions": [
+      "CREATE OR REPLACE FUNCTION __SOURCE__.tplus_uuid(kind text, source_id text)\n RETURNS uuid\n LANGUAGE sql\n IMMUTABLE\nAS $function$\n  SELECT (\n    substr(md5('tplus:' || kind || ':' || source_id), 1, 8) || '-' ||\n    substr(md5('tplus:' || kind || ':' || source_id), 9, 4) || '-' ||\n    substr(md5('tplus:' || kind || ':' || source_id), 13, 4) || '-' ||\n    substr(md5('tplus:' || kind || ':' || source_id), 17, 4) || '-' ||\n    substr(md5('tplus:' || kind || ':' || source_id), 21, 12)\n  )::uuid;\n$function$\n"
+    ],
+    "relations": [
+      {
+        "kind": "r",
+        "name": "app_user",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "username",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "password_hash",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "display_name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "role",
+            "type": "__SOURCE__.app_role",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX app_user_pkey ON __SOURCE__.app_user USING btree (id)",
+          "CREATE UNIQUE INDEX app_user_username_key ON __SOURCE__.app_user USING btree (username)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "app_user_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "app_user_username_key",
+            "definition": "UNIQUE (username)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "barcode",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "value",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "variant_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "status",
+            "type": "__SOURCE__.barcode_status",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "role",
+            "type": "__SOURCE__.barcode_role",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "scheme_version_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "generated_input_snapshot",
+            "type": "jsonb",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "quarantine_reason",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX barcode_one_active_current_per_variant ON __SOURCE__.barcode USING btree (variant_id) WHERE ((status = 'ACTIVE'::__SOURCE__.barcode_status) AND (role = 'CURRENT'::__SOURCE__.barcode_role))",
+          "CREATE UNIQUE INDEX barcode_pkey ON __SOURCE__.barcode USING btree (id)",
+          "CREATE UNIQUE INDEX barcode_value_key ON __SOURCE__.barcode USING btree (value)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "barcode_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "barcode_scheme_version_id_fkey",
+            "definition": "FOREIGN KEY (scheme_version_id) REFERENCES __SOURCE__.barcode_scheme_version(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "barcode_value_key",
+            "definition": "UNIQUE (value)"
+          },
+          {
+            "name": "barcode_variant_id_fkey",
+            "definition": "FOREIGN KEY (variant_id) REFERENCES __SOURCE__.variant(id) ON DELETE RESTRICT"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "barcode_encoding_mapping",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "scheme_version_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "dimension_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "spec_value_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "encoded_value",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX barcode_encoding_mapping_pkey ON __SOURCE__.barcode_encoding_mapping USING btree (id)",
+          "CREATE UNIQUE INDEX barcode_encoding_mapping_scheme_version_id_dimension_id_spe_key ON __SOURCE__.barcode_encoding_mapping USING btree (scheme_version_id, dimension_id, spec_value_id, product_id) NULLS NOT DISTINCT"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "barcode_encoding_mapping_dimension_id_fkey",
+            "definition": "FOREIGN KEY (dimension_id) REFERENCES __SOURCE__.spec_dimension(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "barcode_encoding_mapping_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "barcode_encoding_mapping_product_id_fkey",
+            "definition": "FOREIGN KEY (product_id) REFERENCES __SOURCE__.product(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "barcode_encoding_mapping_scheme_version_id_dimension_id_spe_key",
+            "definition": "UNIQUE NULLS NOT DISTINCT (scheme_version_id, dimension_id, spec_value_id, product_id)"
+          },
+          {
+            "name": "barcode_encoding_mapping_scheme_version_id_fkey",
+            "definition": "FOREIGN KEY (scheme_version_id) REFERENCES __SOURCE__.barcode_scheme_version(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "barcode_encoding_mapping_spec_value_id_fkey",
+            "definition": "FOREIGN KEY (spec_value_id) REFERENCES __SOURCE__.spec_value(id) ON DELETE RESTRICT"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "barcode_scheme",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code_normalized",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX barcode_scheme_code_normalized_key ON __SOURCE__.barcode_scheme USING btree (code_normalized)",
+          "CREATE UNIQUE INDEX barcode_scheme_pkey ON __SOURCE__.barcode_scheme USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "barcode_scheme_code_normalized_key",
+            "definition": "UNIQUE (code_normalized)"
+          },
+          {
+            "name": "barcode_scheme_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "barcode_scheme_segment",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "scheme_version_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "segment_order",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "type",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "length",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "pad_side",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "pad_char",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "value_rule",
+            "type": "jsonb",
+            "default": "'{}'::jsonb",
+            "notNull": true
+          },
+          {
+            "name": "dimension_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "literal",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX barcode_scheme_segment_pkey ON __SOURCE__.barcode_scheme_segment USING btree (id)",
+          "CREATE UNIQUE INDEX barcode_scheme_segment_scheme_version_id_segment_order_key ON __SOURCE__.barcode_scheme_segment USING btree (scheme_version_id, segment_order)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "barcode_scheme_segment_dimension_id_fkey",
+            "definition": "FOREIGN KEY (dimension_id) REFERENCES __SOURCE__.spec_dimension(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "barcode_scheme_segment_length_check",
+            "definition": "CHECK (length > 0)"
+          },
+          {
+            "name": "barcode_scheme_segment_pad_char_check",
+            "definition": "CHECK (length(pad_char) = 1)"
+          },
+          {
+            "name": "barcode_scheme_segment_pad_side_check",
+            "definition": "CHECK (pad_side = ANY (ARRAY['LEFT'::text, 'RIGHT'::text]))"
+          },
+          {
+            "name": "barcode_scheme_segment_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "barcode_scheme_segment_scheme_version_id_fkey",
+            "definition": "FOREIGN KEY (scheme_version_id) REFERENCES __SOURCE__.barcode_scheme_version(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "barcode_scheme_segment_scheme_version_id_segment_order_key",
+            "definition": "UNIQUE (scheme_version_id, segment_order)"
+          },
+          {
+            "name": "barcode_scheme_segment_segment_order_check",
+            "definition": "CHECK (segment_order >= 0)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "barcode_scheme_version",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "scheme_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "published_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX barcode_scheme_version_pkey ON __SOURCE__.barcode_scheme_version USING btree (id)",
+          "CREATE UNIQUE INDEX barcode_scheme_version_scheme_id_version_key ON __SOURCE__.barcode_scheme_version USING btree (scheme_id, version)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "barcode_scheme_version_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "barcode_scheme_version_scheme_id_fkey",
+            "definition": "FOREIGN KEY (scheme_id) REFERENCES __SOURCE__.barcode_scheme(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "barcode_scheme_version_scheme_id_version_key",
+            "definition": "UNIQUE (scheme_id, version)"
+          },
+          {
+            "name": "barcode_scheme_version_version_check",
+            "definition": "CHECK (version > 0)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "brand",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code_normalized",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX brand_code_normalized_key ON __SOURCE__.brand USING btree (code_normalized)",
+          "CREATE UNIQUE INDEX brand_pkey ON __SOURCE__.brand USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "brand_code_normalized_key",
+            "definition": "UNIQUE (code_normalized)"
+          },
+          {
+            "name": "brand_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "business_document",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "number",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "type",
+            "type": "__SOURCE__.document_type",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "status",
+            "type": "__SOURCE__.document_status",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "document_date",
+            "type": "date",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "target_warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "actor_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "revision",
+            "type": "integer",
+            "default": "1",
+            "notNull": true
+          },
+          {
+            "name": "inventory_mode",
+            "type": "text",
+            "default": "'POSTING'::text",
+            "notNull": true
+          },
+          {
+            "name": "original_document_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "reversal_reason",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "totals",
+            "type": "jsonb",
+            "default": "'{}'::jsonb",
+            "notNull": true
+          },
+          {
+            "name": "note",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": false
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX business_document_number_key ON __SOURCE__.business_document USING btree (number)",
+          "CREATE UNIQUE INDEX business_document_pkey ON __SOURCE__.business_document USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "business_document_actor_id_fkey",
+            "definition": "FOREIGN KEY (actor_id) REFERENCES __SOURCE__.app_user(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "business_document_check",
+            "definition": "CHECK (source_warehouse_id IS NULL OR target_warehouse_id IS NULL OR source_warehouse_id <> target_warehouse_id)"
+          },
+          {
+            "name": "business_document_number_key",
+            "definition": "UNIQUE (number)"
+          },
+          {
+            "name": "business_document_original_document_id_fkey",
+            "definition": "FOREIGN KEY (original_document_id) REFERENCES __SOURCE__.business_document(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "business_document_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "business_document_source_warehouse_id_fkey",
+            "definition": "FOREIGN KEY (source_warehouse_id) REFERENCES __SOURCE__.warehouse(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "business_document_target_warehouse_id_fkey",
+            "definition": "FOREIGN KEY (target_warehouse_id) REFERENCES __SOURCE__.warehouse(id) ON DELETE RESTRICT"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "category",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "parent_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code_normalized",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX category_parent_id_code_normalized_key ON __SOURCE__.category USING btree (parent_id, code_normalized)",
+          "CREATE UNIQUE INDEX category_pkey ON __SOURCE__.category USING btree (id)",
+          "CREATE UNIQUE INDEX category_root_code_uq ON __SOURCE__.category USING btree (code_normalized) WHERE (parent_id IS NULL)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "category_parent_id_code_normalized_key",
+            "definition": "UNIQUE (parent_id, code_normalized)"
+          },
+          {
+            "name": "category_parent_id_fkey",
+            "definition": "FOREIGN KEY (parent_id) REFERENCES __SOURCE__.category(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "category_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "counterparty",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code_normalized",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX counterparty_code_normalized_key ON __SOURCE__.counterparty USING btree (code_normalized)",
+          "CREATE UNIQUE INDEX counterparty_pkey ON __SOURCE__.counterparty USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "counterparty_code_normalized_key",
+            "definition": "UNIQUE (code_normalized)"
+          },
+          {
+            "name": "counterparty_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "document_line",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "document_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "variant_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "direction",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "barcode",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "product_code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "product_name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "options_snapshot",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "color_name",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "size_name",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "unit_name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "unit_price",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "retail_price",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "amount",
+            "type": "numeric(18,2)",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "historical_returned_quantity",
+            "type": "numeric(18,4)",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "note",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX document_line_pkey ON __SOURCE__.document_line USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "document_line_document_id_fkey",
+            "definition": "FOREIGN KEY (document_id) REFERENCES __SOURCE__.business_document(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "document_line_historical_returned_quantity_check",
+            "definition": "CHECK (historical_returned_quantity >= 0::numeric)"
+          },
+          {
+            "name": "document_line_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "document_line_quantity_check",
+            "definition": "CHECK (quantity > 0::numeric)"
+          },
+          {
+            "name": "document_line_retail_price_check",
+            "definition": "CHECK (retail_price >= 0::numeric)"
+          },
+          {
+            "name": "document_line_unit_price_check",
+            "definition": "CHECK (unit_price >= 0::numeric)"
+          },
+          {
+            "name": "document_line_variant_id_fkey",
+            "definition": "FOREIGN KEY (variant_id) REFERENCES __SOURCE__.variant(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "document_line_warehouse_id_fkey",
+            "definition": "FOREIGN KEY (warehouse_id) REFERENCES __SOURCE__.warehouse(id) ON DELETE RESTRICT"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "fit",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code_normalized",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX fit_code_normalized_key ON __SOURCE__.fit USING btree (code_normalized)",
+          "CREATE UNIQUE INDEX fit_pkey ON __SOURCE__.fit USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "fit_code_normalized_key",
+            "definition": "UNIQUE (code_normalized)"
+          },
+          {
+            "name": "fit_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "idempotency_request",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "actor_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "command_scope",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "idempotency_key",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "payload_hash",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "response",
+            "type": "jsonb",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "completed_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX idempotency_request_actor_id_command_scope_idempotency_key_key ON __SOURCE__.idempotency_request USING btree (actor_id, command_scope, idempotency_key)",
+          "CREATE UNIQUE INDEX idempotency_request_pkey ON __SOURCE__.idempotency_request USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "idempotency_request_actor_id_command_scope_idempotency_key_key",
+            "definition": "UNIQUE (actor_id, command_scope, idempotency_key)"
+          },
+          {
+            "name": "idempotency_request_actor_id_fkey",
+            "definition": "FOREIGN KEY (actor_id) REFERENCES __SOURCE__.app_user(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "idempotency_request_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "import_batch",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "file_name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "importer_version",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "status",
+            "type": "__SOURCE__.import_status",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          },
+          {
+            "name": "committed_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "notNull": false
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX import_batch_pkey ON __SOURCE__.import_batch USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "import_batch_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "import_batch_sha256_check",
+            "definition": "CHECK (sha256 ~ '^[0-9a-f]{64}$'::text)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "inventory_balance",
+        "view": null,
+        "columns": [
+          {
+            "name": "variant_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(18,4)",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX inventory_balance_pkey ON __SOURCE__.inventory_balance USING btree (variant_id, warehouse_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "inventory_balance_pkey",
+            "definition": "PRIMARY KEY (variant_id, warehouse_id)"
+          },
+          {
+            "name": "inventory_balance_variant_id_fkey",
+            "definition": "FOREIGN KEY (variant_id) REFERENCES __SOURCE__.variant(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "inventory_balance_warehouse_id_fkey",
+            "definition": "FOREIGN KEY (warehouse_id) REFERENCES __SOURCE__.warehouse(id) ON DELETE RESTRICT"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "inventory_movement",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "posting_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "document_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "document_line_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "variant_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "delta",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "balance_after",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "business_type",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "reversal_of",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "occurred_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          },
+          {
+            "name": "actor_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX inventory_movement_pkey ON __SOURCE__.inventory_movement USING btree (id)",
+          "CREATE UNIQUE INDEX movement_one_reversal ON __SOURCE__.inventory_movement USING btree (reversal_of) WHERE (reversal_of IS NOT NULL)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "inventory_movement_actor_id_fkey",
+            "definition": "FOREIGN KEY (actor_id) REFERENCES __SOURCE__.app_user(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "inventory_movement_delta_check",
+            "definition": "CHECK (delta <> 0::numeric)"
+          },
+          {
+            "name": "inventory_movement_document_id_fkey",
+            "definition": "FOREIGN KEY (document_id) REFERENCES __SOURCE__.business_document(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "inventory_movement_document_line_id_fkey",
+            "definition": "FOREIGN KEY (document_line_id) REFERENCES __SOURCE__.document_line(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "inventory_movement_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "inventory_movement_posting_id_fkey",
+            "definition": "FOREIGN KEY (posting_id) REFERENCES __SOURCE__.inventory_posting(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "inventory_movement_reversal_of_fkey",
+            "definition": "FOREIGN KEY (reversal_of) REFERENCES __SOURCE__.inventory_movement(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "inventory_movement_variant_id_fkey",
+            "definition": "FOREIGN KEY (variant_id) REFERENCES __SOURCE__.variant(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "inventory_movement_warehouse_id_fkey",
+            "definition": "FOREIGN KEY (warehouse_id) REFERENCES __SOURCE__.warehouse(id) ON DELETE RESTRICT"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "inventory_posting",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "action_key",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "business_type",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "document_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "action",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "reversal_of_posting_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "actor_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX inventory_posting_action_key_key ON __SOURCE__.inventory_posting USING btree (action_key)",
+          "CREATE UNIQUE INDEX inventory_posting_pkey ON __SOURCE__.inventory_posting USING btree (id)",
+          "CREATE UNIQUE INDEX posting_one_reversal ON __SOURCE__.inventory_posting USING btree (reversal_of_posting_id) WHERE (reversal_of_posting_id IS NOT NULL)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "inventory_posting_action_key_key",
+            "definition": "UNIQUE (action_key)"
+          },
+          {
+            "name": "inventory_posting_actor_id_fkey",
+            "definition": "FOREIGN KEY (actor_id) REFERENCES __SOURCE__.app_user(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "inventory_posting_document_id_fkey",
+            "definition": "FOREIGN KEY (document_id) REFERENCES __SOURCE__.business_document(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "inventory_posting_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "inventory_posting_reversal_of_posting_id_fkey",
+            "definition": "FOREIGN KEY (reversal_of_posting_id) REFERENCES __SOURCE__.inventory_posting(id) ON DELETE RESTRICT"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "migration_checkpoint",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "stage",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "cursor",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX migration_checkpoint_pkey ON __SOURCE__.migration_checkpoint USING btree (batch_id, stage)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "migration_checkpoint_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.import_batch(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "migration_checkpoint_pkey",
+            "definition": "PRIMARY KEY (batch_id, stage)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "migration_issue",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "batch_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_record_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "severity",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "details",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "resolved_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "resolved_by",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX migration_issue_pkey ON __SOURCE__.migration_issue USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "migration_issue_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.import_batch(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "migration_issue_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "migration_issue_resolved_by_fkey",
+            "definition": "FOREIGN KEY (resolved_by) REFERENCES __SOURCE__.app_user(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "migration_issue_source_record_id_fkey",
+            "definition": "FOREIGN KEY (source_record_id) REFERENCES __SOURCE__.source_record(id) ON DELETE RESTRICT"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "opening_ledger",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "ledger_key",
+            "type": "text",
+            "default": "'CURRENT'::text",
+            "notNull": true
+          },
+          {
+            "name": "batch_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "committed_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX opening_ledger_batch_id_key ON __SOURCE__.opening_ledger USING btree (batch_id)",
+          "CREATE UNIQUE INDEX opening_ledger_ledger_key_key ON __SOURCE__.opening_ledger USING btree (ledger_key)",
+          "CREATE UNIQUE INDEX opening_ledger_pkey ON __SOURCE__.opening_ledger USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "opening_ledger_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.import_batch(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "opening_ledger_batch_id_key",
+            "definition": "UNIQUE (batch_id)"
+          },
+          {
+            "name": "opening_ledger_ledger_key_check",
+            "definition": "CHECK (ledger_key = 'CURRENT'::text)"
+          },
+          {
+            "name": "opening_ledger_ledger_key_key",
+            "definition": "UNIQUE (ledger_key)"
+          },
+          {
+            "name": "opening_ledger_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "price_type",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code_normalized",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX price_type_code_normalized_key ON __SOURCE__.price_type USING btree (code_normalized)",
+          "CREATE UNIQUE INDEX price_type_pkey ON __SOURCE__.price_type USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "price_type_code_normalized_key",
+            "definition": "UNIQUE (code_normalized)"
+          },
+          {
+            "name": "price_type_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "product",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code_normalized",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "category_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "brand_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "unit_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "fit_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "counterparty_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "current_barcode_scheme_version_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX product_code_normalized_key ON __SOURCE__.product USING btree (code_normalized)",
+          "CREATE UNIQUE INDEX product_pkey ON __SOURCE__.product USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "product_brand_id_fkey",
+            "definition": "FOREIGN KEY (brand_id) REFERENCES __SOURCE__.brand(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "product_category_id_fkey",
+            "definition": "FOREIGN KEY (category_id) REFERENCES __SOURCE__.category(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "product_code_normalized_key",
+            "definition": "UNIQUE (code_normalized)"
+          },
+          {
+            "name": "product_counterparty_id_fkey",
+            "definition": "FOREIGN KEY (counterparty_id) REFERENCES __SOURCE__.counterparty(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "product_current_barcode_scheme_version_id_fkey",
+            "definition": "FOREIGN KEY (current_barcode_scheme_version_id) REFERENCES __SOURCE__.barcode_scheme_version(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "product_fit_id_fkey",
+            "definition": "FOREIGN KEY (fit_id) REFERENCES __SOURCE__.fit(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "product_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "product_unit_id_fkey",
+            "definition": "FOREIGN KEY (unit_id) REFERENCES __SOURCE__.unit(id) ON DELETE RESTRICT"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "product_image",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "path",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "media_type",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sort_order",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX product_image_pkey ON __SOURCE__.product_image USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "product_image_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "product_image_product_id_fkey",
+            "definition": "FOREIGN KEY (product_id) REFERENCES __SOURCE__.product(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "product_image_sha256_check",
+            "definition": "CHECK (sha256 ~ '^[0-9a-f]{64}$'::text)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "product_option",
+        "view": null,
+        "columns": [
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "spec_value_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX product_option_pkey ON __SOURCE__.product_option USING btree (product_id, spec_value_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "product_option_pkey",
+            "definition": "PRIMARY KEY (product_id, spec_value_id)"
+          },
+          {
+            "name": "product_option_product_id_fkey",
+            "definition": "FOREIGN KEY (product_id) REFERENCES __SOURCE__.product(id) ON DELETE CASCADE"
+          },
+          {
+            "name": "product_option_spec_value_id_fkey",
+            "definition": "FOREIGN KEY (spec_value_id) REFERENCES __SOURCE__.spec_value(id) ON DELETE RESTRICT"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "product_price",
+        "view": null,
+        "columns": [
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "price_type_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "amount",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX product_price_pkey ON __SOURCE__.product_price USING btree (product_id, price_type_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "product_price_amount_check",
+            "definition": "CHECK (amount >= 0::numeric)"
+          },
+          {
+            "name": "product_price_pkey",
+            "definition": "PRIMARY KEY (product_id, price_type_id)"
+          },
+          {
+            "name": "product_price_price_type_id_fkey",
+            "definition": "FOREIGN KEY (price_type_id) REFERENCES __SOURCE__.price_type(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "product_price_product_id_fkey",
+            "definition": "FOREIGN KEY (product_id) REFERENCES __SOURCE__.product(id) ON DELETE RESTRICT"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "return_line_reference",
+        "view": null,
+        "columns": [
+          {
+            "name": "return_line_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "original_sale_line_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE INDEX return_line_original_idx ON __SOURCE__.return_line_reference USING btree (original_sale_line_id)",
+          "CREATE UNIQUE INDEX return_line_reference_pkey ON __SOURCE__.return_line_reference USING btree (return_line_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "return_line_reference_original_sale_line_id_fkey",
+            "definition": "FOREIGN KEY (original_sale_line_id) REFERENCES __SOURCE__.document_line(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "return_line_reference_pkey",
+            "definition": "PRIMARY KEY (return_line_id)"
+          },
+          {
+            "name": "return_line_reference_return_line_id_fkey",
+            "definition": "FOREIGN KEY (return_line_id) REFERENCES __SOURCE__.document_line(id) ON DELETE RESTRICT"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "schema_migration",
+        "view": null,
+        "columns": [
+          {
+            "name": "version",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "applied_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX schema_migration_pkey ON __SOURCE__.schema_migration USING btree (version)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "schema_migration_pkey",
+            "definition": "PRIMARY KEY (version)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "size_group",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code_normalized",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX size_group_code_normalized_key ON __SOURCE__.size_group USING btree (code_normalized)",
+          "CREATE UNIQUE INDEX size_group_pkey ON __SOURCE__.size_group USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "size_group_code_normalized_key",
+            "definition": "UNIQUE (code_normalized)"
+          },
+          {
+            "name": "size_group_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "size_group_item",
+        "view": null,
+        "columns": [
+          {
+            "name": "size_group_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "spec_value_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sort_order",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX size_group_item_pkey ON __SOURCE__.size_group_item USING btree (size_group_id, spec_value_id)",
+          "CREATE UNIQUE INDEX size_group_item_size_group_id_sort_order_key ON __SOURCE__.size_group_item USING btree (size_group_id, sort_order)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "size_group_item_pkey",
+            "definition": "PRIMARY KEY (size_group_id, spec_value_id)"
+          },
+          {
+            "name": "size_group_item_size_group_id_fkey",
+            "definition": "FOREIGN KEY (size_group_id) REFERENCES __SOURCE__.size_group(id) ON DELETE CASCADE"
+          },
+          {
+            "name": "size_group_item_size_group_id_sort_order_key",
+            "definition": "UNIQUE (size_group_id, sort_order)"
+          },
+          {
+            "name": "size_group_item_spec_value_id_fkey",
+            "definition": "FOREIGN KEY (spec_value_id) REFERENCES __SOURCE__.spec_value(id) ON DELETE RESTRICT"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "source_mapping",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "source_record_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "target_type",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "target_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "decision",
+            "type": "__SOURCE__.mapping_decision",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "evidence",
+            "type": "jsonb",
+            "default": "'[]'::jsonb",
+            "notNull": true
+          },
+          {
+            "name": "decided_by",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "decided_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "notNull": false
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX source_mapping_pkey ON __SOURCE__.source_mapping USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "source_mapping_decided_by_fkey",
+            "definition": "FOREIGN KEY (decided_by) REFERENCES __SOURCE__.app_user(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "source_mapping_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "source_mapping_source_record_id_fkey",
+            "definition": "FOREIGN KEY (source_record_id) REFERENCES __SOURCE__.source_record(id) ON DELETE RESTRICT"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "source_record",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "batch_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_type",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sheet_name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "row_number",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "column_name",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "raw_value",
+            "type": "jsonb",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_key",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX source_record_batch_id_source_key_key ON __SOURCE__.source_record USING btree (batch_id, source_key)",
+          "CREATE UNIQUE INDEX source_record_pkey ON __SOURCE__.source_record USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "source_record_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.import_batch(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "source_record_batch_id_source_key_key",
+            "definition": "UNIQUE (batch_id, source_key)"
+          },
+          {
+            "name": "source_record_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "source_record_row_number_check",
+            "definition": "CHECK (row_number > 0)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "spec_dimension",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code_normalized",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX spec_dimension_code_normalized_key ON __SOURCE__.spec_dimension USING btree (code_normalized)",
+          "CREATE UNIQUE INDEX spec_dimension_pkey ON __SOURCE__.spec_dimension USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "spec_dimension_code_normalized_key",
+            "definition": "UNIQUE (code_normalized)"
+          },
+          {
+            "name": "spec_dimension_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "spec_value",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "dimension_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code_normalized",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sort_order",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX spec_value_dimension_id_code_normalized_key ON __SOURCE__.spec_value USING btree (dimension_id, code_normalized)",
+          "CREATE UNIQUE INDEX spec_value_id_dimension_id_key ON __SOURCE__.spec_value USING btree (id, dimension_id)",
+          "CREATE UNIQUE INDEX spec_value_pkey ON __SOURCE__.spec_value USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "spec_value_dimension_id_code_normalized_key",
+            "definition": "UNIQUE (dimension_id, code_normalized)"
+          },
+          {
+            "name": "spec_value_dimension_id_fkey",
+            "definition": "FOREIGN KEY (dimension_id) REFERENCES __SOURCE__.spec_dimension(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "spec_value_id_dimension_id_key",
+            "definition": "UNIQUE (id, dimension_id)"
+          },
+          {
+            "name": "spec_value_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "system_setting",
+        "view": null,
+        "columns": [
+          {
+            "name": "key",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "value",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX system_setting_pkey ON __SOURCE__.system_setting USING btree (key)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "system_setting_pkey",
+            "definition": "PRIMARY KEY (key)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_department",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_code",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "parent_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "hall_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "is_hall_source",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_payload",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_department_batch_id_id_key ON __SOURCE__.tplus_department USING btree (batch_id, id)",
+          "CREATE UNIQUE INDEX tplus_department_pkey ON __SOURCE__.tplus_department USING btree (batch_id, source_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_department_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_department_batch_id_id_key",
+            "definition": "UNIQUE (batch_id, id)"
+          },
+          {
+            "name": "tplus_department_pkey",
+            "definition": "PRIMARY KEY (batch_id, source_id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_employee",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_code",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "department_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "hall_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "role",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_salesperson",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "login_enabled",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "login_identity_created",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_payload",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_employee_batch_id_id_key ON __SOURCE__.tplus_employee USING btree (batch_id, id)",
+          "CREATE UNIQUE INDEX tplus_employee_pkey ON __SOURCE__.tplus_employee USING btree (batch_id, source_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_employee_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_employee_batch_id_id_key",
+            "definition": "UNIQUE (batch_id, id)"
+          },
+          {
+            "name": "tplus_employee_pkey",
+            "definition": "PRIMARY KEY (batch_id, source_id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_fund_account",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "account_number",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "bank",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "account_type",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_department_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "primary_payment_method_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "hall_ids",
+            "type": "uuid[]",
+            "default": "'{}'::uuid[]",
+            "notNull": true
+          },
+          {
+            "name": "source_latest_balance",
+            "type": "numeric(18,2)",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "balance_initialized",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_payload",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_fund_account_batch_id_id_key ON __SOURCE__.tplus_fund_account USING btree (batch_id, id)",
+          "CREATE UNIQUE INDEX tplus_fund_account_pkey ON __SOURCE__.tplus_fund_account USING btree (batch_id, source_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_fund_account_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_fund_account_batch_id_id_key",
+            "definition": "UNIQUE (batch_id, id)"
+          },
+          {
+            "name": "tplus_fund_account_pkey",
+            "definition": "PRIMARY KEY (batch_id, source_id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_hall",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "department_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "default_customer_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "default_warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "warehouse_ids",
+            "type": "uuid[]",
+            "default": "'{}'::uuid[]",
+            "notNull": true
+          },
+          {
+            "name": "source_payload",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_hall_batch_id_id_key ON __SOURCE__.tplus_hall USING btree (batch_id, id)",
+          "CREATE UNIQUE INDEX tplus_hall_pkey ON __SOURCE__.tplus_hall USING btree (batch_id, source_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_hall_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_hall_batch_id_id_key",
+            "definition": "UNIQUE (batch_id, id)"
+          },
+          {
+            "name": "tplus_hall_pkey",
+            "definition": "PRIMARY KEY (batch_id, source_id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_history_document",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_dataset",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "target_document_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "document_kind",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_number",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "business_date",
+            "type": "date",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_business_type_code",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_business_type_name",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_party_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_department_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_employee_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_from_warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_to_warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "line_count",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "quantity_total",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "amount_total",
+            "type": "numeric(18,2)",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "read_only",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "audit_status",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "audited_by",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "audited_at",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "created_by",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "created_at",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "runtime_audit_replay_allowed",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "stock_effect",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_record_sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_payload",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_history_document_pkey ON __SOURCE__.tplus_history_document USING btree (batch_id, source_dataset, source_id)",
+          "CREATE INDEX tplus_history_document_target_idx ON __SOURCE__.tplus_history_document USING btree (batch_id, target_document_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_history_document_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_history_document_document_kind_check",
+            "definition": "CHECK (document_kind = ANY (ARRAY['purchase'::text, 'sale'::text, 'transfer'::text]))"
+          },
+          {
+            "name": "tplus_history_document_pkey",
+            "definition": "PRIMARY KEY (batch_id, source_dataset, source_id)"
+          },
+          {
+            "name": "tplus_history_document_source_record_sha256_check",
+            "definition": "CHECK (source_record_sha256 ~ '^[0-9a-f]{64}$'::text)"
+          },
+          {
+            "name": "tplus_history_document_source_sha256_check",
+            "definition": "CHECK (source_sha256 ~ '^[0-9a-f]{64}$'::text)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_history_line",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_dataset",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "target_line_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_document_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "target_document_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "line_kind",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "color_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "size_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sku_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "from_warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "to_warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_product_code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_product_name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_color_code",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_color_name",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_size_code",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_size_name",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_quantity",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "stock_quantity_contribution",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "amount",
+            "type": "numeric(18,2)",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "unit_price",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "unit",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "stock_effect",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "read_only",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_record_sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_lineage",
+            "type": "jsonb",
+            "default": "'{}'::jsonb",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_history_line_pkey ON __SOURCE__.tplus_history_line USING btree (batch_id, source_dataset, source_id)",
+          "CREATE INDEX tplus_history_line_sku_warehouse_idx ON __SOURCE__.tplus_history_line USING btree (batch_id, sku_id, warehouse_id)",
+          "CREATE INDEX tplus_history_line_target_doc_idx ON __SOURCE__.tplus_history_line USING btree (batch_id, target_document_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_history_line_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_history_line_line_kind_check",
+            "definition": "CHECK (line_kind = ANY (ARRAY['purchase'::text, 'sale'::text, 'transfer'::text]))"
+          },
+          {
+            "name": "tplus_history_line_pkey",
+            "definition": "PRIMARY KEY (batch_id, source_dataset, source_id)"
+          },
+          {
+            "name": "tplus_history_line_source_record_sha256_check",
+            "definition": "CHECK (source_record_sha256 ~ '^[0-9a-f]{64}$'::text)"
+          },
+          {
+            "name": "tplus_history_line_source_sha256_check",
+            "definition": "CHECK (source_sha256 ~ '^[0-9a-f]{64}$'::text)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_id_map",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "entity_type",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "target_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_id_map_batch_id_entity_type_target_id_key ON __SOURCE__.tplus_id_map USING btree (batch_id, entity_type, target_id)",
+          "CREATE UNIQUE INDEX tplus_id_map_pkey ON __SOURCE__.tplus_id_map USING btree (batch_id, entity_type, source_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_id_map_batch_id_entity_type_target_id_key",
+            "definition": "UNIQUE (batch_id, entity_type, target_id)"
+          },
+          {
+            "name": "tplus_id_map_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_id_map_pkey",
+            "definition": "PRIMARY KEY (batch_id, entity_type, source_id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_import_file",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "dataset_path",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "record_count",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "success_count",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "failure_count",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "skipped_count",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "quarantined_count",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "can_import",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "participates_in_business_calculation",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "load_action",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_import_file_pkey ON __SOURCE__.tplus_import_file USING btree (batch_id, dataset_path)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_import_file_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_import_file_pkey",
+            "definition": "PRIMARY KEY (batch_id, dataset_path)"
+          },
+          {
+            "name": "tplus_import_file_source_sha256_check",
+            "definition": "CHECK (source_sha256 ~ '^[0-9a-f]{64}$'::text)"
+          },
+          {
+            "name": "tplus_import_file_status_check",
+            "definition": "CHECK (status = ANY (ARRAY['IMPORTED'::text, 'QUARANTINED'::text, 'SKIPPED'::text, 'FAILED'::text]))"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_import_run",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "space_key",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "schema_name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "database_name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "manifest_path",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "manifest_sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "preflight_batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "importer_version",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "started_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          },
+          {
+            "name": "committed_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "git_sha",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "workspace_state_sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "success_count",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "failure_count",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "skipped_count",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "quarantined_count",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "counts",
+            "type": "jsonb",
+            "default": "'{}'::jsonb",
+            "notNull": true
+          },
+          {
+            "name": "rollback_note",
+            "type": "text",
+            "default": "''::text",
+            "notNull": true
+          },
+          {
+            "name": "error",
+            "type": "jsonb",
+            "default": null,
+            "notNull": false
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_import_run_pkey ON __SOURCE__.tplus_import_run USING btree (batch_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_import_run_manifest_sha256_check",
+            "definition": "CHECK (manifest_sha256 ~ '^[0-9a-f]{64}$'::text)"
+          },
+          {
+            "name": "tplus_import_run_pkey",
+            "definition": "PRIMARY KEY (batch_id)"
+          },
+          {
+            "name": "tplus_import_run_status_check",
+            "definition": "CHECK (status = ANY (ARRAY['IMPORTING'::text, 'COMMITTED'::text, 'FAILED'::text]))"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_inventory_balance_source",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "variant_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "unit",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "opening_quantity",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "cutoff_source_date",
+            "type": "date",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "snapshot_used",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "apply_historical_documents_again",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_event_count",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "components",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_payload",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_inventory_balance_sourc_batch_id_variant_id_warehouse_key ON __SOURCE__.tplus_inventory_balance_source USING btree (batch_id, variant_id, warehouse_id)",
+          "CREATE UNIQUE INDEX tplus_inventory_balance_source_pkey ON __SOURCE__.tplus_inventory_balance_source USING btree (batch_id, source_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_inventory_balance_sourc_batch_id_variant_id_warehouse_key",
+            "definition": "UNIQUE (batch_id, variant_id, warehouse_id)"
+          },
+          {
+            "name": "tplus_inventory_balance_source_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_inventory_balance_source_pkey",
+            "definition": "PRIMARY KEY (batch_id, source_id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_party_role",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "party_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "role",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_payload",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_party_role_pkey ON __SOURCE__.tplus_party_role USING btree (batch_id, source_id, role)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_party_role_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_party_role_pkey",
+            "definition": "PRIMARY KEY (batch_id, source_id, role)"
+          },
+          {
+            "name": "tplus_party_role_role_check",
+            "definition": "CHECK (role = ANY (ARRAY['customer'::text, 'supplier'::text]))"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_payment_method",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_code",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "configuration_key",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "origin",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_payload",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_payment_method_batch_id_id_key ON __SOURCE__.tplus_payment_method USING btree (batch_id, id)",
+          "CREATE UNIQUE INDEX tplus_payment_method_pkey ON __SOURCE__.tplus_payment_method USING btree (batch_id, source_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_payment_method_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_payment_method_batch_id_id_key",
+            "definition": "UNIQUE (batch_id, id)"
+          },
+          {
+            "name": "tplus_payment_method_pkey",
+            "definition": "PRIMARY KEY (batch_id, source_id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_product_barcode",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "barcode",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "unit",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "is_default",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "binding_scope",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sku_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "sku_binding_known",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_payload",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_product_barcode_pkey ON __SOURCE__.tplus_product_barcode USING btree (batch_id, source_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_product_barcode_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_product_barcode_pkey",
+            "definition": "PRIMARY KEY (batch_id, source_id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_product_source",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_size_group_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "category_decision",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_payload",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_product_source_batch_id_product_id_key ON __SOURCE__.tplus_product_source USING btree (batch_id, product_id)",
+          "CREATE UNIQUE INDEX tplus_product_source_pkey ON __SOURCE__.tplus_product_source USING btree (batch_id, source_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_product_source_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_product_source_batch_id_product_id_key",
+            "definition": "UNIQUE (batch_id, product_id)"
+          },
+          {
+            "name": "tplus_product_source_pkey",
+            "definition": "PRIMARY KEY (batch_id, source_id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_sales_fund",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "settlement_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_document_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "target_document_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "payment_method_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "fund_account_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_payment_method_code",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_payment_method_name",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_fund_account_code",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "source_fund_account_name",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "amount",
+            "type": "numeric(18,2)",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "direction",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_business_date",
+            "type": "date",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "settled_at",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "read_only",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "runtime_funds_effect",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_record_sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_payload",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX tplus_sales_fund_batch_id_settlement_id_key ON __SOURCE__.tplus_sales_fund USING btree (batch_id, settlement_id)",
+          "CREATE INDEX tplus_sales_fund_document_idx ON __SOURCE__.tplus_sales_fund USING btree (batch_id, target_document_id)",
+          "CREATE UNIQUE INDEX tplus_sales_fund_pkey ON __SOURCE__.tplus_sales_fund USING btree (batch_id, source_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_sales_fund_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_sales_fund_batch_id_settlement_id_key",
+            "definition": "UNIQUE (batch_id, settlement_id)"
+          },
+          {
+            "name": "tplus_sales_fund_pkey",
+            "definition": "PRIMARY KEY (batch_id, source_id)"
+          },
+          {
+            "name": "tplus_sales_fund_source_record_sha256_check",
+            "definition": "CHECK (source_record_sha256 ~ '^[0-9a-f]{64}$'::text)"
+          },
+          {
+            "name": "tplus_sales_fund_source_sha256_check",
+            "definition": "CHECK (source_sha256 ~ '^[0-9a-f]{64}$'::text)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "tplus_source_lineage",
+        "view": null,
+        "columns": [
+          {
+            "name": "batch_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "dataset_path",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "record_sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "target_type",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "target_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          }
+        ],
+        "indexes": [
+          "CREATE INDEX tplus_lineage_target_idx ON __SOURCE__.tplus_source_lineage USING btree (batch_id, target_type, target_id)",
+          "CREATE UNIQUE INDEX tplus_source_lineage_pkey ON __SOURCE__.tplus_source_lineage USING btree (batch_id, dataset_path, source_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "tplus_source_lineage_batch_id_fkey",
+            "definition": "FOREIGN KEY (batch_id) REFERENCES __SOURCE__.tplus_import_run(batch_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "tplus_source_lineage_pkey",
+            "definition": "PRIMARY KEY (batch_id, dataset_path, source_id)"
+          },
+          {
+            "name": "tplus_source_lineage_record_sha256_check",
+            "definition": "CHECK (record_sha256 ~ '^[0-9a-f]{64}$'::text)"
+          },
+          {
+            "name": "tplus_source_lineage_source_sha256_check",
+            "definition": "CHECK (source_sha256 ~ '^[0-9a-f]{64}$'::text)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "unit",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code_normalized",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "quantity_scale",
+            "type": "smallint",
+            "default": "0",
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX unit_code_normalized_key ON __SOURCE__.unit USING btree (code_normalized)",
+          "CREATE UNIQUE INDEX unit_pkey ON __SOURCE__.unit USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "unit_code_normalized_key",
+            "definition": "UNIQUE (code_normalized)"
+          },
+          {
+            "name": "unit_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "unit_quantity_scale_check",
+            "definition": "CHECK (quantity_scale >= 0 AND quantity_scale <= 4)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "user_session",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "user_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "token_hash",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "expires_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "revoked_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX user_session_pkey ON __SOURCE__.user_session USING btree (id)",
+          "CREATE UNIQUE INDEX user_session_token_hash_key ON __SOURCE__.user_session USING btree (token_hash)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "user_session_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "user_session_token_hash_key",
+            "definition": "UNIQUE (token_hash)"
+          },
+          {
+            "name": "user_session_user_id_fkey",
+            "definition": "FOREIGN KEY (user_id) REFERENCES __SOURCE__.app_user(id) ON DELETE CASCADE"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "user_view_setting",
+        "view": null,
+        "columns": [
+          {
+            "name": "user_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "view_key",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "settings",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX user_view_setting_pkey ON __SOURCE__.user_view_setting USING btree (user_id, view_key)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "user_view_setting_pkey",
+            "definition": "PRIMARY KEY (user_id, view_key)"
+          },
+          {
+            "name": "user_view_setting_user_id_fkey",
+            "definition": "FOREIGN KEY (user_id) REFERENCES __SOURCE__.app_user(id) ON DELETE CASCADE"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "variant",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "option_key",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX variant_pkey ON __SOURCE__.variant USING btree (id)",
+          "CREATE UNIQUE INDEX variant_product_id_option_key_key ON __SOURCE__.variant USING btree (product_id, option_key)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "variant_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "variant_product_id_fkey",
+            "definition": "FOREIGN KEY (product_id) REFERENCES __SOURCE__.product(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "variant_product_id_option_key_key",
+            "definition": "UNIQUE (product_id, option_key)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "variant_option",
+        "view": null,
+        "columns": [
+          {
+            "name": "variant_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "dimension_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "spec_value_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX variant_option_pkey ON __SOURCE__.variant_option USING btree (variant_id, dimension_id)",
+          "CREATE UNIQUE INDEX variant_option_variant_id_spec_value_id_key ON __SOURCE__.variant_option USING btree (variant_id, spec_value_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "variant_option_dimension_id_fkey",
+            "definition": "FOREIGN KEY (dimension_id) REFERENCES __SOURCE__.spec_dimension(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "variant_option_pkey",
+            "definition": "PRIMARY KEY (variant_id, dimension_id)"
+          },
+          {
+            "name": "variant_option_spec_value_id_dimension_id_fkey",
+            "definition": "FOREIGN KEY (spec_value_id, dimension_id) REFERENCES __SOURCE__.spec_value(id, dimension_id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "variant_option_variant_id_fkey",
+            "definition": "FOREIGN KEY (variant_id) REFERENCES __SOURCE__.variant(id) ON DELETE RESTRICT"
+          },
+          {
+            "name": "variant_option_variant_id_spec_value_id_key",
+            "definition": "UNIQUE (variant_id, spec_value_id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "warehouse",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code_normalized",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "type",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "default": "0",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX warehouse_code_normalized_key ON __SOURCE__.warehouse USING btree (code_normalized)",
+          "CREATE UNIQUE INDEX warehouse_pkey ON __SOURCE__.warehouse USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "warehouse_code_normalized_key",
+            "definition": "UNIQUE (code_normalized)"
+          },
+          {
+            "name": "warehouse_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      }
+    ]
+  },
+  "runtime": {
+    "enums": [],
+    "functions": [
+      "CREATE OR REPLACE FUNCTION __RUNTIME__.deny_revision_mutation()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nBEGIN RAISE EXCEPTION 'IMMUTABLE_REVISION'; END $function$\n"
+    ],
+    "relations": [
+      {
+        "kind": "r",
+        "name": "barcode_authority_policy",
+        "view": null,
+        "columns": [
+          {
+            "name": "singleton",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          },
+          {
+            "name": "revision",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "body",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX barcode_authority_policy_pkey ON __RUNTIME__.barcode_authority_policy USING btree (singleton)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "barcode_authority_policy_pkey",
+            "definition": "PRIMARY KEY (singleton)"
+          },
+          {
+            "name": "barcode_authority_policy_singleton_check",
+            "definition": "CHECK (singleton)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "barcode_authority_product",
+        "view": null,
+        "columns": [
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "origin",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX barcode_authority_product_pkey ON __RUNTIME__.barcode_authority_product USING btree (product_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "barcode_authority_product_pkey",
+            "definition": "PRIMARY KEY (product_id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "barcode_authority_record",
+        "view": null,
+        "columns": [
+          {
+            "name": "sku_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "original_barcode",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "record",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX barcode_authority_record_pkey ON __RUNTIME__.barcode_authority_record USING btree (sku_id)",
+          "CREATE INDEX barcode_authority_record_product ON __RUNTIME__.barcode_authority_record USING btree (product_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "barcode_authority_record_pkey",
+            "definition": "PRIMARY KEY (sku_id)"
+          },
+          {
+            "name": "barcode_authority_record_status_check",
+            "definition": "CHECK (status = ANY (ARRAY['ACTIVE'::text, 'DUPLICATE_REMOVED'::text]))"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "barcode_scheme_supplement",
+        "view": null,
+        "columns": [
+          {
+            "name": "sku_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "revision",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "barcode",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "record",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX barcode_scheme_supplement_pkey ON __RUNTIME__.barcode_scheme_supplement USING btree (sku_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "barcode_scheme_supplement_pkey",
+            "definition": "PRIMARY KEY (sku_id)"
+          },
+          {
+            "name": "barcode_scheme_supplement_status_check",
+            "definition": "CHECK (status = ANY (ARRAY['ACTIVE'::text, 'EXCEPTION'::text, 'NOT_REQUIRED'::text]))"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "document",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "document_type",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "number",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_identity",
+            "type": "jsonb",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "status",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "baseline_was_included",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "current_effect_active",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "active_effect_identity",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "active_effect_revision",
+            "type": "integer",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "current_revision",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "default": "1",
+            "notNull": true
+          },
+          {
+            "name": "original_auditor",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "original_audited_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          },
+          {
+            "name": "business_day",
+            "type": "date",
+            "default": null,
+            "notNull": false
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX document_pkey ON __RUNTIME__.document USING btree (id)",
+          "CREATE INDEX document_type_day ON __RUNTIME__.document USING btree (document_type, business_day DESC)",
+          "CREATE INDEX document_type_number ON __RUNTIME__.document USING btree (document_type, number)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "document_check",
+            "definition": "CHECK ((status = 'APPROVED'::text) = current_effect_active)"
+          },
+          {
+            "name": "document_check1",
+            "definition": "CHECK (current_effect_active = (active_effect_identity IS NOT NULL))"
+          },
+          {
+            "name": "document_check2",
+            "definition": "CHECK (current_effect_active = (active_effect_revision IS NOT NULL))"
+          },
+          {
+            "name": "document_document_type_check",
+            "definition": "CHECK (document_type = ANY (ARRAY['SALE'::text, 'TRANSFER'::text, 'PURCHASE'::text]))"
+          },
+          {
+            "name": "document_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "document_status_check",
+            "definition": "CHECK (status = ANY (ARRAY['DRAFT'::text, 'UNAUDITED'::text, 'APPROVED'::text, 'DELETED'::text]))"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "edit_lease",
+        "view": null,
+        "columns": [
+          {
+            "name": "document_key",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "token",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "expires_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX edit_lease_pkey ON __RUNTIME__.edit_lease USING btree (document_key)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "edit_lease_pkey",
+            "definition": "PRIMARY KEY (document_key)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "generated_barcode",
+        "view": null,
+        "columns": [
+          {
+            "name": "sku_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "barcode",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "scheme_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "evidence",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX generated_barcode_barcode_key ON __RUNTIME__.generated_barcode USING btree (barcode)",
+          "CREATE UNIQUE INDEX generated_barcode_pkey ON __RUNTIME__.generated_barcode USING btree (sku_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "generated_barcode_barcode_key",
+            "definition": "UNIQUE (barcode)"
+          },
+          {
+            "name": "generated_barcode_pkey",
+            "definition": "PRIMARY KEY (sku_id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "generated_barcode_retired",
+        "view": null,
+        "columns": [
+          {
+            "name": "sku_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "barcode",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "scheme_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "evidence",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [],
+        "sequence": null,
+        "constraints": []
+      },
+      {
+        "kind": "r",
+        "name": "idempotency_request",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "actor_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "command_scope",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "idempotency_key",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "payload_hash",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "response",
+            "type": "jsonb",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "completed_at",
+            "type": "timestamp with time zone",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "document_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "expected_version",
+            "type": "integer",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "operation",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "committed_state",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX idempotency_request_actor_id_command_scope_idempotency_key_key ON __RUNTIME__.idempotency_request USING btree (actor_id, command_scope, idempotency_key)",
+          "CREATE UNIQUE INDEX idempotency_request_pkey ON __RUNTIME__.idempotency_request USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "idempotency_request_actor_id_command_scope_idempotency_key_key",
+            "definition": "UNIQUE (actor_id, command_scope, idempotency_key)"
+          },
+          {
+            "name": "idempotency_request_actor_id_fkey",
+            "definition": "FOREIGN KEY (actor_id) REFERENCES __RUNTIME__.operator(id)"
+          },
+          {
+            "name": "idempotency_request_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "v",
+        "name": "inventory_balance_base",
+        "view": " WITH active AS (\n         SELECT inventory_opening_run.id\n           FROM __RUNTIME__.inventory_opening_run\n          WHERE inventory_opening_run.active\n        ), snapshot_basis AS (\n         SELECT inventory_opening_cell.warehouse_id,\n            inventory_opening_cell.sku_id AS variant_id,\n            inventory_opening_cell.quantity\n           FROM __RUNTIME__.inventory_opening_cell\n          WHERE (inventory_opening_cell.run_id IN ( SELECT active.id\n                   FROM active))\n        UNION ALL\n         SELECT inventory_opening_delta_checkpoint.warehouse_id,\n            inventory_opening_delta_checkpoint.sku_id,\n            - inventory_opening_delta_checkpoint.quantity\n           FROM __RUNTIME__.inventory_opening_delta_checkpoint\n          WHERE (inventory_opening_delta_checkpoint.run_id IN ( SELECT active.id\n                   FROM active))\n        )\n SELECT tplus_inventory_balance_source.warehouse_id,\n    tplus_inventory_balance_source.variant_id,\n    tplus_inventory_balance_source.quantity\n   FROM __SOURCE__.tplus_inventory_balance_source\n  WHERE NOT (EXISTS ( SELECT 1\n           FROM active))\nUNION ALL\n SELECT snapshot_basis.warehouse_id,\n    snapshot_basis.variant_id,\n    sum(snapshot_basis.quantity) AS quantity\n   FROM snapshot_basis\n  GROUP BY snapshot_basis.warehouse_id, snapshot_basis.variant_id;",
+        "columns": [
+          {
+            "name": "warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "variant_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "quantity",
+            "type": "numeric",
+            "default": null,
+            "notNull": false
+          }
+        ],
+        "indexes": [],
+        "sequence": null,
+        "constraints": []
+      },
+      {
+        "kind": "r",
+        "name": "inventory_delta",
+        "view": null,
+        "columns": [
+          {
+            "name": "warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sku_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX inventory_delta_pkey ON __RUNTIME__.inventory_delta USING btree (warehouse_id, sku_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "inventory_delta_pkey",
+            "definition": "PRIMARY KEY (warehouse_id, sku_id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "inventory_opening_cell",
+        "view": null,
+        "columns": [
+          {
+            "name": "run_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sku_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "unit",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_cell",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_record",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX inventory_opening_cell_pkey ON __RUNTIME__.inventory_opening_cell USING btree (run_id, warehouse_id, sku_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "inventory_opening_cell_pkey",
+            "definition": "PRIMARY KEY (run_id, warehouse_id, sku_id)"
+          },
+          {
+            "name": "inventory_opening_cell_run_id_fkey",
+            "definition": "FOREIGN KEY (run_id) REFERENCES __RUNTIME__.inventory_opening_run(id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "inventory_opening_delta_checkpoint",
+        "view": null,
+        "columns": [
+          {
+            "name": "run_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sku_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX inventory_opening_delta_checkpoint_pkey ON __RUNTIME__.inventory_opening_delta_checkpoint USING btree (run_id, warehouse_id, sku_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "inventory_opening_delta_checkpoint_pkey",
+            "definition": "PRIMARY KEY (run_id, warehouse_id, sku_id)"
+          },
+          {
+            "name": "inventory_opening_delta_checkpoint_run_id_fkey",
+            "definition": "FOREIGN KEY (run_id) REFERENCES __RUNTIME__.inventory_opening_run(id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "inventory_opening_prior_posting",
+        "view": null,
+        "columns": [
+          {
+            "name": "run_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "posting_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX inventory_opening_prior_posting_pkey ON __RUNTIME__.inventory_opening_prior_posting USING btree (run_id, posting_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "inventory_opening_prior_posting_pkey",
+            "definition": "PRIMARY KEY (run_id, posting_id)"
+          },
+          {
+            "name": "inventory_opening_prior_posting_run_id_fkey",
+            "definition": "FOREIGN KEY (run_id) REFERENCES __RUNTIME__.inventory_opening_run(id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "inventory_opening_run",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "source_file",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "mode",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "body",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "active",
+            "type": "boolean",
+            "default": "false",
+            "notNull": true
+          },
+          {
+            "name": "activated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX inventory_opening_one_active ON __RUNTIME__.inventory_opening_run USING btree (active) WHERE active",
+          "CREATE UNIQUE INDEX inventory_opening_run_pkey ON __RUNTIME__.inventory_opening_run USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "inventory_opening_run_mode_check",
+            "definition": "CHECK (mode = ANY (ARRAY['DEMO_ONLY'::text, 'CONFIRMED_CUTOVER'::text]))"
+          },
+          {
+            "name": "inventory_opening_run_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "master_reference_overlay",
+        "view": null,
+        "columns": [
+          {
+            "name": "kind",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "method_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX master_reference_overlay_pkey ON __RUNTIME__.master_reference_overlay USING btree (kind, id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "master_reference_overlay_kind_check",
+            "definition": "CHECK (kind = ANY (ARRAY['warehouses'::text, 'payments'::text, 'fundAccounts'::text]))"
+          },
+          {
+            "name": "master_reference_overlay_pkey",
+            "definition": "PRIMARY KEY (kind, id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "movement",
+        "view": null,
+        "columns": [
+          {
+            "name": "posting_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "line_index",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "warehouse_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sku_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "quantity",
+            "type": "numeric(18,4)",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE INDEX movement_key ON __RUNTIME__.movement USING btree (warehouse_id, sku_id)",
+          "CREATE UNIQUE INDEX movement_pkey ON __RUNTIME__.movement USING btree (posting_id, line_index, warehouse_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "movement_pkey",
+            "definition": "PRIMARY KEY (posting_id, line_index, warehouse_id)"
+          },
+          {
+            "name": "movement_posting_id_fkey",
+            "definition": "FOREIGN KEY (posting_id) REFERENCES __RUNTIME__.posting(id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "operator",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "role",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "enabled",
+            "type": "boolean",
+            "default": "true",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX operator_pkey ON __RUNTIME__.operator USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "operator_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "operator_role_check",
+            "definition": "CHECK (role = ANY (ARRAY['ADMIN'::text, 'WAREHOUSE'::text, 'SALESPERSON'::text]))"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "posting",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "document_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "revision",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "reason",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "reversed_effect_identity",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "actor_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "request_key",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX posting_pkey ON __RUNTIME__.posting USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "posting_actor_id_fkey",
+            "definition": "FOREIGN KEY (actor_id) REFERENCES __RUNTIME__.operator(id)"
+          },
+          {
+            "name": "posting_document_id_fkey",
+            "definition": "FOREIGN KEY (document_id) REFERENCES __RUNTIME__.document(id)"
+          },
+          {
+            "name": "posting_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "posting_reason_check",
+            "definition": "CHECK (reason = ANY (ARRAY['BASELINE_EFFECT_REVERSAL'::text, 'REVISION_APPROVAL'::text, 'ACTIVE_EFFECT_REVERSAL'::text]))"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "product_barcode_alias",
+        "view": null,
+        "columns": [
+          {
+            "name": "barcode",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sku_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "historical_note",
+            "type": "text",
+            "default": "''::text",
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          },
+          {
+            "name": "origin",
+            "type": "text",
+            "default": "'MIGRATED'::text",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX product_barcode_alias_pkey ON __RUNTIME__.product_barcode_alias USING btree (barcode)",
+          "CREATE INDEX product_barcode_alias_product ON __RUNTIME__.product_barcode_alias USING btree (product_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "product_barcode_alias_pkey",
+            "definition": "PRIMARY KEY (barcode)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "product_barcode_alias_retired",
+        "view": null,
+        "columns": [
+          {
+            "name": "barcode",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sku_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "historical_note",
+            "type": "text",
+            "default": "''::text",
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          },
+          {
+            "name": "origin",
+            "type": "text",
+            "default": "'MIGRATED'::text",
+            "notNull": true
+          }
+        ],
+        "indexes": [],
+        "sequence": null,
+        "constraints": []
+      },
+      {
+        "kind": "r",
+        "name": "product_image",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "path",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sha256",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "media_type",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "role",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "color_name",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "sort_order",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX product_image_pkey ON __RUNTIME__.product_image USING btree (id)",
+          "CREATE UNIQUE INDEX product_image_product_id_role_name_sha256_key ON __RUNTIME__.product_image USING btree (product_id, role, name, sha256)",
+          "CREATE INDEX product_image_product_order ON __RUNTIME__.product_image USING btree (product_id, sort_order)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "product_image_pkey",
+            "definition": "PRIMARY KEY (id)"
+          },
+          {
+            "name": "product_image_product_id_role_name_sha256_key",
+            "definition": "UNIQUE (product_id, role, name, sha256)"
+          },
+          {
+            "name": "product_image_sha256_check",
+            "definition": "CHECK (sha256 ~ '^[0-9a-f]{64}$'::text)"
+          }
+        ]
+      },
+      {
+        "kind": "S",
+        "name": "product_item_code_seq",
+        "view": null,
+        "columns": [
+          {
+            "name": "last_value",
+            "type": "bigint",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "log_cnt",
+            "type": "bigint",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "is_called",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [],
+        "sequence": {
+          "max": "9999999",
+          "min": "1",
+          "type": "bigint",
+          "cache": "1",
+          "cycle": false,
+          "start": "9000000",
+          "increment": "1"
+        },
+        "constraints": []
+      },
+      {
+        "kind": "r",
+        "name": "product_master_overlay",
+        "view": null,
+        "columns": [
+          {
+            "name": "kind",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "body",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "deleted",
+            "type": "boolean",
+            "default": "false",
+            "notNull": true
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "default": "1",
+            "notNull": true
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX product_master_overlay_pkey ON __RUNTIME__.product_master_overlay USING btree (kind, id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "product_master_overlay_kind_check",
+            "definition": "CHECK (kind = ANY (ARRAY['categories'::text, 'colors'::text, 'groups'::text, 'fits'::text, 'seasons'::text]))"
+          },
+          {
+            "name": "product_master_overlay_pkey",
+            "definition": "PRIMARY KEY (kind, id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "product_overlay",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "code",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "body",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "deleted",
+            "type": "boolean",
+            "default": "false",
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE INDEX product_overlay_active_code ON __RUNTIME__.product_overlay USING btree (code) WHERE (deleted = false)",
+          "CREATE UNIQUE INDEX product_overlay_code_key ON __RUNTIME__.product_overlay USING btree (code)",
+          "CREATE UNIQUE INDEX product_overlay_pkey ON __RUNTIME__.product_overlay USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "product_overlay_code_key",
+            "definition": "UNIQUE (code)"
+          },
+          {
+            "name": "product_overlay_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "product_profile_overlay",
+        "view": null,
+        "columns": [
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "body",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "default": "1",
+            "notNull": true
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX product_profile_overlay_pkey ON __RUNTIME__.product_profile_overlay USING btree (product_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "product_profile_overlay_pkey",
+            "definition": "PRIMARY KEY (product_id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "revision",
+        "view": null,
+        "columns": [
+          {
+            "name": "document_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "revision",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "original_imported",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "body",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "actor_id",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX revision_pkey ON __RUNTIME__.revision USING btree (document_id, revision)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "revision_actor_id_fkey",
+            "definition": "FOREIGN KEY (actor_id) REFERENCES __RUNTIME__.operator(id)"
+          },
+          {
+            "name": "revision_document_id_fkey",
+            "definition": "FOREIGN KEY (document_id) REFERENCES __RUNTIME__.document(id)"
+          },
+          {
+            "name": "revision_pkey",
+            "definition": "PRIMARY KEY (document_id, revision)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "size_overlay",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "group_name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX size_overlay_group_name_name_key ON __RUNTIME__.size_overlay USING btree (group_name, name)",
+          "CREATE UNIQUE INDEX size_overlay_pkey ON __RUNTIME__.size_overlay USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "size_overlay_group_name_name_key",
+            "definition": "UNIQUE (group_name, name)"
+          },
+          {
+            "name": "size_overlay_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "variant_overlay",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "default": "gen_random_uuid()",
+            "notNull": true
+          },
+          {
+            "name": "product_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "color_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "size_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "size_name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "group_name",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          },
+          {
+            "name": "fit_id",
+            "type": "text",
+            "default": "'A'::text",
+            "notNull": true
+          },
+          {
+            "name": "size_code",
+            "type": "text",
+            "default": "''::text",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX variant_overlay_identity ON __RUNTIME__.variant_overlay USING btree (product_id, color_id, size_id, fit_id)",
+          "CREATE UNIQUE INDEX variant_overlay_pkey ON __RUNTIME__.variant_overlay USING btree (id)",
+          "CREATE INDEX variant_overlay_product ON __RUNTIME__.variant_overlay USING btree (product_id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "variant_overlay_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "version_history",
+        "view": null,
+        "columns": [
+          {
+            "name": "document_id",
+            "type": "uuid",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "operation",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "revision",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "actor_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "request_key",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX version_history_pkey ON __RUNTIME__.version_history USING btree (document_id, version)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "version_history_actor_id_fkey",
+            "definition": "FOREIGN KEY (actor_id) REFERENCES __RUNTIME__.operator(id)"
+          },
+          {
+            "name": "version_history_document_id_fkey",
+            "definition": "FOREIGN KEY (document_id) REFERENCES __RUNTIME__.document(id)"
+          },
+          {
+            "name": "version_history_pkey",
+            "definition": "PRIMARY KEY (document_id, version)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "work_event",
+        "view": null,
+        "columns": [
+          {
+            "name": "document_key",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "body",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "actor_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX work_event_pkey ON __RUNTIME__.work_event USING btree (document_key, id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "work_event_actor_id_fkey",
+            "definition": "FOREIGN KEY (actor_id) REFERENCES __RUNTIME__.operator(id)"
+          },
+          {
+            "name": "work_event_pkey",
+            "definition": "PRIMARY KEY (document_key, id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "work_record",
+        "view": null,
+        "columns": [
+          {
+            "name": "document_key",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "body",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "actor_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX work_record_pkey ON __RUNTIME__.work_record USING btree (document_key, id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "work_record_actor_id_fkey",
+            "definition": "FOREIGN KEY (actor_id) REFERENCES __RUNTIME__.operator(id)"
+          },
+          {
+            "name": "work_record_pkey",
+            "definition": "PRIMARY KEY (document_key, id)"
+          }
+        ]
+      }
+    ]
+  },
+  "auth": {
+    "enums": [],
+    "functions": [],
+    "relations": [
+      {
+        "kind": "r",
+        "name": "employee_account_audit",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint",
+            "default": "nextval('__AUTH__.employee_account_audit_id_seq'::regclass)",
+            "notNull": true
+          },
+          {
+            "name": "actor_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "employee_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "action",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "changes",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX employee_account_audit_pkey ON __AUTH__.employee_account_audit USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "employee_account_audit_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "S",
+        "name": "employee_account_audit_id_seq",
+        "view": null,
+        "columns": [
+          {
+            "name": "last_value",
+            "type": "bigint",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "log_cnt",
+            "type": "bigint",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "is_called",
+            "type": "boolean",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [],
+        "sequence": {
+          "max": "9223372036854775807",
+          "min": "1",
+          "type": "bigint",
+          "cache": "1",
+          "cycle": false,
+          "start": "1",
+          "increment": "1"
+        },
+        "constraints": []
+      },
+      {
+        "kind": "r",
+        "name": "employee_login",
+        "view": null,
+        "columns": [
+          {
+            "name": "id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "login_name",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "body",
+            "type": "jsonb",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "password_salt",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "password_hash",
+            "type": "text",
+            "default": null,
+            "notNull": false
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "default": "1",
+            "notNull": true
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone",
+            "default": "now()",
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX employee_login_login_name_key ON __AUTH__.employee_login USING btree (login_name)",
+          "CREATE UNIQUE INDEX employee_login_pkey ON __AUTH__.employee_login USING btree (id)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "employee_login_login_name_key",
+            "definition": "UNIQUE (login_name)"
+          },
+          {
+            "name": "employee_login_pkey",
+            "definition": "PRIMARY KEY (id)"
+          }
+        ]
+      },
+      {
+        "kind": "r",
+        "name": "employee_session",
+        "view": null,
+        "columns": [
+          {
+            "name": "token",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "employee_id",
+            "type": "text",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "employee_version",
+            "type": "integer",
+            "default": null,
+            "notNull": true
+          },
+          {
+            "name": "expires_at",
+            "type": "bigint",
+            "default": null,
+            "notNull": true
+          }
+        ],
+        "indexes": [
+          "CREATE UNIQUE INDEX employee_session_pkey ON __AUTH__.employee_session USING btree (token)"
+        ],
+        "sequence": null,
+        "constraints": [
+          {
+            "name": "employee_session_employee_id_fkey",
+            "definition": "FOREIGN KEY (employee_id) REFERENCES __AUTH__.employee_login(id)"
+          },
+          {
+            "name": "employee_session_pkey",
+            "definition": "PRIMARY KEY (token)"
+          }
+        ]
+      }
+    ]
+  }
+}

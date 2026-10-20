@@ -1,0 +1,6 @@
+**
+!dist
+!dist/**
+!package.json
+!package-lock.json
+# T45 will bind a dedicated runtime package/lock to linux/amd64 images.

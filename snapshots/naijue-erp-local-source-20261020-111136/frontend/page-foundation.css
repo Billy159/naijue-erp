@@ -1,0 +1,31 @@
+#react-page-host {padding:12px var(--ui-page-space,24px) 16px;min-width:0;margin:auto;max-width:none}
+#react-page-host[hidden],#page[hidden] {display:none!important}
+.erp-page-foundation,.erp-foundation-popup {color:var(--ca-ink);font-family:var(--ca-font-sans,Arial,sans-serif);font-size:var(--ui-font,13px);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2);--color-border-2:var(--ca-line);--primary-6:25,120,255}
+.erp-page-foundation .arco-btn,.erp-page-foundation .arco-select-view,.erp-page-foundation .arco-tree-select-view {min-height:var(--ui-control,32px);font-size:var(--ui-font,13px);border-radius:4px}
+.erp-page-heading,.erp-page-actions,.erp-filter-row,.erp-filter-actions,.erp-page-footer,.erp-matrix-section-heading {display:flex;align-items:center;gap:12px}
+.erp-page-heading {justify-content:space-between;margin:4px 0 16px}
+.erp-page-heading h1 {font-size:var(--ui-title,22px);line-height:32px;font-weight:600;margin:0;color:var(--ca-ink)}
+.erp-page-actions,.erp-filter-actions {flex-shrink:0;gap:8px}
+.erp-filter-row {flex-wrap:wrap;align-items:flex-start}
+.erp-filter-fields {display:flex;align-items:center;flex:1;gap:10px;min-width:300px;flex-wrap:wrap}
+.erp-product-picker {flex:2;min-width:240px}
+.erp-category-picker,.erp-warehouse-picker {flex:1;min-width:180px}
+.erp-filter-advanced {display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.erp-filter-pending {font-size:12px;color:var(--ca-ink-3);margin:8px 0 0}
+.erp-page-summary {display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0 10px;color:var(--ca-ink-2)}
+.erp-inventory-matrix .arco-table-th {background:var(--ca-table-head);font-weight:600;color:var(--ca-ink-2)}
+.erp-inventory-matrix .arco-table-th,.erp-inventory-matrix .arco-table-td {height:var(--ui-row,36px);padding:6px 10px;font-size:var(--ui-font,13px);border-color:var(--ca-table-grid)}
+.erp-inventory-matrix .arco-table-tr:hover .arco-table-td {background:var(--ca-table-row-hover)}
+.erp-quantity {font:inherit;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ca-ink)}
+button.erp-quantity {border:0;padding:0;background:none;cursor:pointer;color:var(--ca-link)}
+button.erp-quantity:hover {text-decoration:underline}
+.erp-quantity.is-unknown {color:var(--ca-ink-3)}
+.erp-quantity.is-negative {color:var(--ca-critical)}
+.erp-matrix-section {margin-bottom:14px}
+.erp-matrix-section-heading {justify-content:space-between;background:var(--ca-surface-subtle);border:1px solid var(--ca-line);min-height:36px}
+.erp-matrix-section-heading .arco-btn {color:var(--ca-ink);font-weight:500}
+.erp-inventory-pagination {display:flex;align-items:center;justify-content:flex-start;margin:12px 0}
+.erp-page-status {display:flex;gap:12px;align-items:center;justify-content:center;min-height:160px;color:var(--ca-ink-3)}
+.erp-product-option-footer {padding:8px 10px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--ca-line);font-size:12px;color:var(--ca-ink-3)}
+.erp-foundation-popup .arco-drawer-header,.erp-foundation-popup .arco-drawer-body {font-size:13px;color:var(--ca-ink)}
+@media(max-width:640px){.erp-filter-fields{min-width:0;width:100%}.erp-filter-actions{width:100%;justify-content:flex-end}.erp-page-heading{align-items:flex-start;flex-wrap:wrap}.erp-product-picker,.erp-category-picker,.erp-warehouse-picker{min-width:150px}}

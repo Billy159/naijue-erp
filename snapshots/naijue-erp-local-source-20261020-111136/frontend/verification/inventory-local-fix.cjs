@@ -1,0 +1,26 @@
+const {JSDOM}=require('jsdom'),fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..'),out=__dirname+'/inventory-local-fix-evidence';
+const dom=new JSDOM(fs.readFileSync(root+'/index.html','utf8'),{url:'http://127.0.0.1:8767/#products',runScripts:'outside-only',pretendToBeVisual:true});const w=dom.window,d=w.document;
+w.structuredClone=structuredClone;w.CSS={escape:x=>x};w.confirm=()=>true;w.HTMLDialogElement.prototype.showModal=function(){this.open=true};w.HTMLDialogElement.prototype.close=function(){this.open=false};
+const errors=[],checks=[];w.addEventListener('error',e=>errors.push(e.message));for(const f of ['model.js','app.js','product-legacy-sizes.js','product-catalog.js','engine.js','gold.js','assets/vendor/jszip.min.js','inventory-result.js','inventory-xlsx.js','inventory-workbench.js','product-current.js'])vm.runInContext(fs.readFileSync(root+'/'+f,'utf8'),dom.getInternalVMContext());
+w.JSZip=require('jszip');
+const R=w.INVENTORY_RESULT,S=w.GOLD_UI.state,W=w.INVENTORY_UI.state,I=w.INVENTORY_UI;
+const check=(name,fn)=>{fn();checks.push(name)},click=s=>{const e=d.querySelector(s);assert(e,s);assert(!e.disabled,s);e.click()},wait=()=>new Promise(r=>setTimeout(r,240));
+(async()=>{
+w.PRODUCT_UI.navigate('inventory');click('[data-i=reset]');await wait();
+const all=W.snapshot;
+fs.writeFileSync(out+'/all-source.json',JSON.stringify({query:all.query,rows:all.rows,products:all.products.map(p=>({id:p.id,name:p.name,sizes:p.sizes})),total:all.total},null,2));
+check('全部摘要仅来自成功快照',()=>assert.equal(d.querySelector('[data-i=scope]').textContent,'当前结果：全部库存'));
+S.draft.products=all.products.slice(0,9).map(p=>p.id);S.draft.warehouses=['main','outlet'];S.draft.more={season:'春夏'};w.render();
+check('未执行草稿不修改摘要',()=>assert.equal(d.querySelector('[data-i=scope]').textContent,'当前结果：全部库存'));
+await I.query();check('商品数、仓库数、附加条件摘要',()=>assert.equal(d.querySelector('[data-i=scope]').textContent,'当前结果：已选9款商品 · 2个仓库 · 附加条件1项'));
+const summary=d.querySelector('[data-i=scope]').textContent;W.failNext=true;S.draft.products=[];await I.query();check('失败保留成功摘要',()=>assert.equal(d.querySelector('[data-i=scope]').textContent,summary));
+S.draft={products:[],keyword:'',category:'all',warehouses:['main','reserve'],more:{}};await I.query();const snap=W.snapshot;
+fs.writeFileSync(out+'/export-source.json',JSON.stringify({query:snap.query,rows:snap.rows,products:snap.products.map(p=>({id:p.id,name:p.name,sizes:p.sizes})),total:snap.total},null,2));
+const cat=R.build({...snap.query,category:'shirts'});fs.writeFileSync(out+'/category-export-source.json',JSON.stringify({query:cat.query,rows:cat.rows,products:cat.products.map(p=>({id:p.id,name:p.name,sizes:p.sizes})),total:cat.total},null,2));
+const browser=JSON.parse(fs.readFileSync(out+'/browser-checks.json'));check('浏览器全部十页稳定键与模型逐行一致',()=>assert.deepEqual(browser.pages.flatMap(x=>x.keys),Array.from(all.rows,r=>r.key)));
+check('浏览器十页无重无漏',()=>assert.equal(new Set(browser.pages.flatMap(x=>x.keys)).size,all.rows.length));
+check('导出快照986基础行，38029件',()=>{assert.equal(snap.rows.length,986);assert.equal(snap.total,38029)});
+check('保护文件未改变',()=>{const crypto=require('crypto'),base=JSON.parse(fs.readFileSync(path.resolve(root,'../../../work/ERP-V2-inventory-workbench/protected.json')));for(const [f,hash]of Object.entries(base))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.resolve(root,'../../..',f))).digest('hex'),hash,f)});
+fs.writeFileSync(out+'/local-model-checks.json',JSON.stringify({kind:'模拟DOM和独立数据对账',checks,errors},null,2));console.log(JSON.stringify({passed:checks.length,checks}));w.close();
+})().catch(e=>{console.error(e);w.close();process.exitCode=1});

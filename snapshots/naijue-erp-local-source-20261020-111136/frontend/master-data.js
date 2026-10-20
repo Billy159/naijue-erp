@@ -1,0 +1,151 @@
+/* Isolated local Demo authority. Not a production authentication boundary. */
+(function(){'use strict';
+const params=new URLSearchParams(location.search),space=params.get('tr-space')||'normal';
+const active=window.REAL_DATA_MODE||space==='normal'||params.get('basic-demo')==='1',key='erp-masters-v1:'+space,authKey='erp-auth-v1:'+space;
+const copy=x=>structuredClone(x),fail=error=>({ok:false,error}),roles=['管理员','仓库人员','营业员'];
+const partyInRole=(row,role)=>Array.isArray(row.usage)&&row.usage.length===1&&row.usage[0]===role;
+const seed=()=>({revision:0,stores:[{id:'hall-outlet',code:'DEMO-H01',name:'网点营业厅',enabled:true,defaultCustomerId:'retail',defaultWarehouseId:'outlet',paymentMethodId:''}],warehouses:ERP_DEMO.warehouses.map(w=>({...w,enabled:true,storeId:w.id==='outlet'?'hall-outlet':''})),parties:[{"id": "tplus-party:AC-05-91101", "code": "AC-05-91101", "name": "大西洋银泰ST零售客户", "enabled": true, "usage": ["customer"], "source": {"file": "往来单位.xlsx", "sheet": "往来单位", "row": 4, "code": "AC-05-91101", "nature": "客户/供应商", "categoryCode": "05", "categoryName": "商场收银", "departmentCode": "91101", "relation": "用户明确指定用于隔离Demo，现用状态未作生产确认"}},{id:'retail',code:'DEMO-C01',name:'零售客户',enabled:true,usage:['customer']},{id:'named',code:'DEMO-C02',name:'具名客户（演示）',enabled:true,usage:['customer']},...PRODUCT_CATALOG.suppliers.map(x=>({...x,code:x.code||x.id,enabled:true,usage:['supplier']}))],staff:[{id:'sales-1',code:'DEMO-001',name:'张三（演示）',role:'营业员',storeId:'hall-outlet',enabled:true,loginEnabled:false},{id:'sales-2',code:'DEMO-002',name:'李四（演示）',role:'营业员',storeId:'hall-outlet',enabled:true,loginEnabled:false}],payments:['现金','银行转账','微信','支付宝','其它'].map((name,i)=>({id:['cash','bank','wechat','alipay','other'][i],code:'DEMO-P0'+(i+1),name,enabled:true,storeIds:[]})),categories:[],options:{},audit:[],imports:[]});
+let sessionEmployee=null,serverEmployees=[];
+const emptyFormal=()=>({revision:0,stores:[],warehouses:[],parties:[],staff:[],payments:[],fundAccounts:[],categories:[],options:{},audit:[],imports:[]});
+let data=window.REAL_DATA_MODE?emptyFormal():(JSON.parse(localStorage.getItem(key)||'null')||seed()),runtimeBase=null;
+const runtimeKey='erp-runtime-masters-v1:'+space;
+const api={active,key,authKey,roles,brand:'奈爵服饰',get data(){return data},actor:null,ready:null};
+function fundsCatalog(d){for(const e of d.staff||[]){e.employmentStatus??=e.enabled===false?'离职':'在职';e.enabled=e.employmentStatus==='在职';}for(const type of ['stores','warehouses','parties','payments','fundAccounts','categories'])for(const x of d[type]||[]){x.enabled??=true;if(type==='warehouses'){x.storeId??=Array.isArray(x.storeIds)&&x.storeIds.length===1?x.storeIds[0]:'';delete x.storeIds;}if(type==='parties'){x.usage??=[];x.tags??=[...x.usage,...(x.categoryId?[x.categoryId]:[])];}if(type==='fundAccounts')delete x.storeIds;}d.audit??=[];return d}
+fundsCatalog(data);
+function runtimeData(){const base=copy(runtimeBase);base.revision=Number(base.revision)||0;base.audit=Array.isArray(base.audit)?base.audit:[];for(const x of base.warehouses||[]){x.hallRelations=Array.isArray(x.hallRelations)?x.hallRelations:(x.storeId?[x.storeId]:[]);x.storeId=x.hallRelations.length===1?x.hallRelations[0]:'';x.ownershipPending=x.sourceOwnershipUnknown===true||x.hallRelations.length===0}for(const x of base.fundAccounts||[])x.methodIds=x.primaryPaymentMethodId?[x.primaryPaymentMethodId]:(x.methodIds||[]);return base}
+function read(){data=runtimeBase?runtimeData():window.REAL_DATA_MODE?fundsCatalog(data):fundsCatalog(JSON.parse(localStorage.getItem(key)||'null')||data);mergeServerEmployees();return data}
+function persist(d){if(runtimeBase||api.serverAuth)return;localStorage.setItem(key,JSON.stringify(d))}
+function attachRuntime(base){runtimeBase=copy(base);read();mergeServerEmployees();sync();return data}
+function mergeServerEmployees(){for(const e of serverEmployees){const i=data.staff.findIndex(x=>x.id===e.id);if(i<0)data.staff.push(copy(e));else Object.assign(data.staff[i],copy(e));if(api.serverAuth)delete data.staff.find(x=>x.id===e.id).credential;}return data}
+function setServerEmployees(employees){serverEmployees=copy(employees);read();mergeServerEmployees();persist(data);return data}
+function setSessionEmployee(e){sessionEmployee=e?copy(e):null;if(e){serverEmployees=serverEmployees.filter(x=>x.id!==e.id).concat(copy(e));storeAuth(e);}else{localStorage.removeItem(authKey);sessionStorage.removeItem(authKey)}api.actor=context(e);}
+function isActive(type,item){return !!item&&(type==='staff'?item.employmentStatus!=='离职'&&item.enabled!==false:item.enabled!==false)}
+function selectable(type){const d=read();return (d[type]||[]).filter(x=>isActive(type,x)&&!x.legacyOnly&&(type!=='warehouses'||!x.ownershipPending)&&(type!=='staff'||roles.includes(x.role)&&!(x.role==='营业员'&&!isActive('stores',d.stores.find(s=>s.id===x.storeId))))) }
+function dependencies(d,type,item){const live=t=>(d[t]||[]).filter(x=>isActive(t,x)),named=(t,predicate)=>live(t).filter(predicate).map(x=>x.name);if(type==='stores')return [...named('warehouses',x=>(x.hallRelations||[]).includes(item.id)).map(x=>'仓库「'+x+'」的所属营业厅'),...named('staff',x=>x.role==='营业员'&&x.storeId===item.id).map(x=>'在职营业员「'+x+'」的所属营业厅')];if(type==='warehouses')return (d.stores||[]).filter(x=>x.defaultWarehouseId===item.id).map(x=>'营业厅「'+x.name+'」的默认出库仓');if(type==='parties')return named('stores',x=>x.defaultCustomerId===item.id).map(x=>'营业厅「'+x+'」的默认零售客户');if(type==='payments')return named('fundAccounts',x=>(x.methodIds||[]).includes(item.id)).map(x=>'资金账户「'+x+'」的所属收款方式');return []}
+const moduleName={stores:'营业厅',warehouses:'仓库',parties:'往来单位',staff:'员工',payments:'收款方式',fundAccounts:'资金账户',categories:'往来标签'};
+function audit(d,actor,type,item,action,changes=[]){d.audit.push({time:new Date().toISOString(),actor:actor.name,actorId:actor.id,module:moduleName[type],type,object:item.name,target:item.id,action,changes})}
+function authData(){return window.REAL_DATA_MODE?read():fundsCatalog(JSON.parse(localStorage.getItem(key)||'null')||seed())}
+function runtimeEmployees(){if(runtimeBase)return read().staff;if(window.REAL_DATA_MODE)return serverEmployees;try{return JSON.parse(localStorage.getItem(runtimeKey)||'null')?.staff||[]}catch{return []}}
+function current(){if(api.serverAuth)return sessionEmployee;const shared=localStorage.getItem(authKey),legacy=shared?null:sessionStorage.getItem(authKey);let a;try{a=JSON.parse(shared||legacy||'null')}catch{return null}const runtimeEmployee=runtimeEmployees().find(x=>x.id===a?.id),e=runtimeEmployee||(runtimeBase?authData():read()).staff.find(x=>x.id===a?.id);if(!a||a.expires<=Date.now()||!e?.loginEnabled||!isActive('staff',e)||e.authVersion!==a.version)return null;if(legacy){localStorage.setItem(authKey,legacy);sessionStorage.removeItem(authKey)}return e}
+function storeAuth(e){const old=JSON.parse(localStorage.getItem(authKey)||'null');if(old?.id===e.id&&old.version===e.authVersion&&old.expires>Date.now())return;localStorage.setItem(authKey,JSON.stringify({id:e.id,version:e.authVersion,expires:Date.now()+8*3600000}));sessionStorage.removeItem(authKey)}
+// Function access and sales data scope are separate policy seams, not employee overrides.
+const rolePolicy={
+ '管理员':{employees:true,settings:true,products:true,transfer:true,sales:true,inventory:true,salesScope:'all'},
+ '营业员':{employees:false,settings:false,products:false,transfer:true,sales:true,inventory:true,salesScope:'ownStore'},
+ '仓库人员':{employees:false,settings:true,products:true,transfer:true,sales:true,inventory:true,salesScope:'all'}
+};
+function context(e=current()){if(!e||!rolePolicy[e.role])return null;const policy=rolePolicy[e.role],staffSelectable=x=>isActive('staff',x)&&roles.includes(x.role)&&(x.role!=='营业员'||isActive('stores',data.stores.find(s=>s.id===x.storeId)));return {accountId:e.id,employeeId:e.id,name:e.name,role:e.role,storeId:e.storeId||'',employmentStatus:e.employmentStatus,loginEnabled:!!e.loginEnabled,creatorCandidates:e.role!=='营业员'?data.staff.filter(staffSelectable).map(x=>({id:x.id,name:x.name})):[],salesScope:policy.salesScope,staffId:e.role==='营业员'?e.id:null,storeIds:policy.salesScope==='ownStore'?[e.storeId].filter(id=>isActive('stores',data.stores.find(s=>s.id===id))):data.stores.filter(x=>isActive('stores',x)).map(x=>x.id),warehouses:data.warehouses.map(x=>x.id),operationWarehouses:transferWarehouses('to').map(x=>x.id),outgoingWarehouses:transferWarehouses('from').map(x=>x.id),warehouseNames:Object.fromEntries(data.warehouses.map(x=>[x.id,x.name])),permissions:['view','save','audit','reverse'],expires:Date.now()+8*3600000}}
+function routeAllowed(route,e=current()){const policy=rolePolicy[e?.role];if(!policy)return false;if(route.startsWith('settings/'))return policy.settings&&['stores','warehouses','parties','staff','payments','fundAccounts'].includes(route.slice(9))&&(route!=='settings/staff'||policy.employees);if(/^transfer(?:\/|$)/.test(route))return policy.transfer;if(/^sales(?:\/|$)/.test(route))return policy.sales;if(route==='inventory')return policy.inventory;if(route==='products')return policy.products;if(/^product-view\/[^/]+$/.test(route))return policy.inventory;if(/^product\/[^/]+$/.test(route))return policy.products;if(['product-categories','product-settings','barcode-schemes'].includes(route))return policy.products;return false}
+function canManage(type,e=current()){const policy=rolePolicy[e?.role];return !!policy&&(type==='staff'?policy.employees:type==='products'?policy.products:policy.settings)}
+function landing(e=current()){return e?(e.role==='营业员'?'sales/new':'inventory'):''}
+async function digest(password,salt){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveBits']);return Array.from(new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode(salt),iterations:210000,hash:'SHA-256'},k,256))).map(x=>x.toString(16).padStart(2,'0')).join('')}
+async function credential(password){if(password.length<8)throw Error('密码至少8位');const salt=crypto.randomUUID();return {salt,hash:await digest(password,salt)}}
+async function login(name,password){if(api.serverAuth)return api.serverAuth.login(name,password);const runtimeEmployee=runtimeEmployees().find(x=>x.loginName===name),e=runtimeEmployee||(runtimeBase?authData():read()).staff.find(x=>x.loginName===name);if(!e?.credential||await digest(password,e.credential.salt)!==e.credential.hash)return fail('登录账号或密码不正确');if(e.employmentStatus==='离职')return fail('员工已离职，无法登录');if(!e.loginEnabled)return fail('登录权限已关闭，请联系管理员');storeAuth(e);api.actor=context(current());return {ok:true}}
+async function setup(name,password){if(api.serverAuth)return fail('员工账号由管理员在员工与账号中维护');return navigator.locks.request(key,async()=>{const d=runtimeBase?authData():read();if(d.staff.some(x=>x.loginEnabled&&x.role==='管理员'))return fail('管理员已初始化，请登录');try{const e={id:'demo-admin',code:'DEMO-ADMIN',name:'演示管理员',role:'管理员',storeId:'',enabled:true,loginEnabled:true,loginName:name.trim(),authVersion:1,credential:await credential(password)};if(!e.loginName)return fail('请填写登录名');d.staff.push(e);d.revision++;d.audit.push({time:new Date().toISOString(),actor:e.name,action:'初始化隔离演示管理员',target:e.id});localStorage.setItem(key,JSON.stringify(d));if(!runtimeBase)data=d;return {ok:true}}catch(e){return fail(e.message)}})}
+function validate(d,type,n,old){
+ if(!n.name?.trim())return '请填写名称';
+ if(n.code&&d[type].some(x=>x.id!==n.id&&String(x.code||'').trim().toLocaleLowerCase()===String(n.code).trim().toLocaleLowerCase()))return '编码已存在，请核对后重试';
+ const changed=f=>JSON.stringify(old?.[f])!==JSON.stringify(n[f]),live=(t,id)=>isActive(t,d[t]?.find(x=>x.id===id));
+ if(type==='staff'){
+  const hallId=n.hallId||n.storeId;
+  if(!roles.includes(n.role))return '请选择三个角色之一';
+  if(n.role==='营业员'&&(!hallId||changed('hallId')||changed('storeId')||changed('role'))&&n.employmentStatus!=='离职'&&!live('stores',hallId))return '在职营业员须选择正常营业厅';
+  if(n.loginEnabled&&n.employmentStatus==='离职')return '离职员工不能开通登录';
+  if(n.loginEnabled&&!n.loginName?.trim())return '可登录账号须填写登录名';
+  if(n.loginName&&[...d.staff,...(runtimeBase?authData().staff:[])].some(x=>x.id!==n.id&&x.loginName?.trim()===n.loginName))return '登录账号已存在，请使用其他账号';
+  if(old?.loginName&&!n.loginName)return '已有登录账号不能为空';
+  if(n.loginEnabled&&n.needsReview)return '疑似组合或重复历史员工待确认，不能开通个人登录';
+  if(old?.role==='管理员'&&old.loginEnabled&&!(n.role==='管理员'&&n.loginEnabled&&n.employmentStatus!=='离职')&&!d.staff.some(x=>x.id!==n.id&&x.role==='管理员'&&x.loginEnabled&&isActive('staff',x)))return '不能关闭最后一个可登录管理员';
+ }
+ if(type==='fundAccounts'){if(old&&changed('methodIds'))return '资金账户创建后不能修改所属收款方式，请新建账户并停用旧账户';if(!old&&(n.methodIds?.length!==1||!live('payments',n.methodIds[0])))return '请选择一个正常收款方式'}
+ if(type==='parties'&&(!Array.isArray(n.tags)||n.tags.length!==1||!['customer','supplier'].includes(n.tags[0])))return '请选择客户或供应商中的一种分类';
+ if(type==='stores'&&n.enabled!==false){
+  if(n.defaultWarehouseId&&(changed('defaultWarehouseId')||!old)&&!d.warehouses.some(w=>w.id===n.defaultWarehouseId&&isActive('warehouses',w)&&!w.ownershipPending&&(w.hallRelations||[]).includes(n.id)))return '默认出库仓须为本营业厅关联的正常仓库';
+  if(n.defaultCustomerId&&(changed('defaultCustomerId')||!old)&&!d.parties.some(x=>x.id===n.defaultCustomerId&&isActive('parties',x)&&partyInRole(x,'customer')))return '默认零售客户须为正常客户';
+ }
+ if(type==='warehouses'){
+  const relations=n.hallRelations||[];
+  if(n.sourceOwnershipUnknown&&relations.length)return '仓库归属尚未核实，不能保存为已确认营业厅关系';
+  if(!n.sourceOwnershipUnknown&&relations.length===0)return '请选择所属营业厅（可多选），或保留未核实状态';
+  if(relations.some(id=>!live('stores',id)))return '仓库关系须为正常营业厅';
+  if(old&&changed('hallRelations')){const refs=(d.stores||[]).filter(x=>x.defaultWarehouseId===n.id);if(refs.some(x=>!relations.includes(x.id)))return '请先修改营业厅「'+refs.filter(x=>!relations.includes(x.id)).map(x=>x.name).join('、')+'」的默认出库仓';}
+ }
+ return ''}
+async function save(type,input,{password='',baseRevision=data.revision}={}){return navigator.locks.request(key,async()=>{const actor=current();if(!canManage(type,actor))return fail(type==='staff'?'只有管理员可以管理员工与账号':'无权维护此基础资料');const d=copy(read());if(!runtimeBase&&d.revision!==baseRevision)return fail('基础资料已更新，请重新打开核对');if(!['stores','warehouses','parties','staff','payments','fundAccounts'].includes(type))return fail('不支持此资料');
+ {const old=d[type].find(x=>x.id===input.id),n={...copy(old||{}),...copy(input),id:old?.id||input.id||crypto.randomUUID()};n.code=String(input.code??old?.code??'');if(!runtimeBase&&type==='parties'&&!old&&!n.code)n.code='V2-CP-'+String(d.parties.filter(x=>/^V2-CP-\d+$/.test(x.code||'')).reduce((max,x)=>Math.max(max,Number(x.code.slice(6))),0)+1).padStart(6,'0');n.enabled=old?input.enabled??old.enabled??true:true;if(type==='warehouses'){if(!Array.isArray(n.hallRelations))n.hallRelations=n.storeId?[n.storeId]:[];if(n.storeId&&!n.hallRelations.includes(n.storeId))n.hallRelations=[...new Set([...n.hallRelations,n.storeId])];n.storeId=n.hallRelations.length===1?n.hallRelations[0]:'';n.sourceOwnershipUnknown=!!(n.sourceOwnershipUnknown??n.ownershipPending);n.ownershipPending=n.sourceOwnershipUnknown||n.hallRelations.length===0;delete n.storeIds;delete n.ownershipCandidates}if(type==='fundAccounts'){n.primaryPaymentMethodId=n.primaryPaymentMethodId||n.methodIds?.[0]||'';n.methodIds=n.primaryPaymentMethodId?[n.primaryPaymentMethodId]:[];delete n.storeIds}if(type==='parties')n.usage=(n.tags||[]).filter(x=>['customer','supplier'].includes(x));n.name=String(n.name||'').trim();if(type==='staff'){n.hallId=n.hallId||n.storeId||'';n.storeId=n.hallId;n.loginName=String(n.loginName||'').trim();n.employmentStatus=old?.employmentStatus||'在职';n.enabled=n.employmentStatus==='在职';n.credential=old?.credential;n.authVersion=old?.authVersion||1;if(password&&!api.serverAuth){try{n.credential=await credential(password)}catch(e){return fail(e.message)}}if(n.loginEnabled&&!n.credential&&!n.hasPassword&&!api.serverAuth)return fail('首次开通登录请初始化密码');if((old&&['loginEnabled','loginName','role','storeId','employmentStatus'].some(f=>JSON.stringify(old[f])!==JSON.stringify(n[f])))||password)n.authVersion++;delete n.password;}
+ const error=validate(d,type,n,old);if(error)return fail(error);if(type!=='staff'&&old?.enabled!==false&&n.enabled===false){const issue=await disableIssue(d,type,n);if(issue)return fail(issue)}if(runtimeBase&&api.runtimeCommit){if(api.serverAuth)delete n.credential;const committed=await api.runtimeCommit(type,n,{password});if(!committed.ok)return fail(committed.error);if(committed.record){Object.assign(n,committed.record);delete n.credential;serverEmployees=serverEmployees.filter(x=>x.id!==n.id).concat(copy(n))}}if(old)d[type][d[type].indexOf(old)]=n;else d[type].push(n);const action=!old?'新增':type!=='staff'&&old.enabled!==n.enabled?(n.enabled?'恢复使用':'停用'):password&&(old.credential||old.hasPassword)?'重置密码':type==='staff'&&old.loginEnabled!==n.loginEnabled?(n.loginEnabled?'登录账号恢复':'登录账号关闭'):'修改';const changes=Object.keys(n).filter(f=>['name','code','enabled','employmentStatus','role','storeId','ownershipPending','loginEnabled','loginName','phone','defaultCustomerId','defaultWarehouseId','tags','methodIds','hallRelations','sourceOwnershipUnknown','type','bank','accountNumber','department','primaryPaymentMethodId'].includes(f)&&JSON.stringify(old?.[f])!==JSON.stringify(n[f])).map(f=>({field:f,before:old?.[f]??null,after:n[f]}));if(password&&old)changes.push({field:'credential',before:old.credential||old.hasPassword?'已设置':null,after:old.credential||old.hasPassword?'已重置':'已设置'});audit(d,actor,type,n,action,changes);}
+ d.revision++;persist(d);data=d;const own=d.staff.find(x=>x.id===actor.id);if(own?.loginEnabled)storeAuth(own);sync();return {ok:true}})}
+async function changePassword(oldPassword,password){return navigator.locks.request(key,async()=>{if(!current())return fail('登录已失效');const record=JSON.parse(localStorage.getItem(authKey)||'null'),runtimeEmployee=runtimeBase?read().staff.find(x=>x.id===record?.id):null,source=runtimeEmployee?data:runtimeBase?authData():read(),e=source.staff.find(x=>x.id===record?.id);if(!e?.credential)return fail('登录已失效');if(await digest(oldPassword,e.credential.salt)!==e.credential.hash)return fail('原密码不正确');try{e.credential=await credential(password);e.authVersion++;audit(source,e,'staff',e,'修改本人密码',[{field:'credential',before:'已设置',after:'已重置'}]);source.revision++;if(runtimeEmployee){persist(source);data=source;sync()}else{localStorage.setItem(key,JSON.stringify(source));if(!runtimeBase)data=source}storeAuth(e);return {ok:true}}catch(x){return fail(x.message)}})}
+async function setStatus(type,id,field,next,{baseRevision=data.revision}={}){return navigator.locks.request(key,async()=>{
+ const actor=current();if(!canManage(type,actor))return fail(type==='staff'?'只有管理员可以管理员工与账号':'无权维护此基础资料');
+ const d=copy(read());if(d.revision!==baseRevision)return fail('基础资料已更新，请重新打开核对');
+ const item=d[type]?.find(x=>x.id===id);if(!item)return fail('资料已变化，请刷新后重试');
+ const before=copy(item);let action;
+ if(type==='staff'){
+  if(field==='employmentStatus'){
+   if(!['在职','离职'].includes(next))return fail('员工状态无效');
+   item.employmentStatus=next;item.enabled=next==='在职';item.loginEnabled=false;action=next==='离职'?'办理离职':'恢复在职';
+  }else if(field==='loginEnabled'){
+   if(next&&item.employmentStatus==='离职')return fail('离职员工不能恢复登录');
+   if(next&&(!item.credential&&!item.hasPassword||!item.loginName))return fail('先在员工资料中设置登录名和密码');
+   item.loginEnabled=!!next;action=next?'登录账号恢复':'登录账号关闭';
+  }else return fail('操作无效');
+  if(before.role==='管理员'&&before.loginEnabled&&!item.loginEnabled&&!d.staff.some(x=>x.id!==id&&x.role==='管理员'&&x.loginEnabled&&isActive('staff',x)))return fail('不能关闭最后一个可登录管理员');
+  if(before.loginEnabled!==item.loginEnabled||before.enabled!==item.enabled)item.authVersion=(item.authVersion||0)+1;
+ }else{
+  if(field!=='enabled'||!['stores','warehouses','parties','payments','fundAccounts'].includes(type))return fail('操作无效');
+  if(!next){const issue=await disableIssue(d,type,item);if(issue)return fail(issue)}
+  item.enabled=!!next;if(next){const issue=validate(d,type,item,type==='warehouses'?before:null);if(issue)return fail(issue)}
+  action=next?'恢复使用':'停用';
+ }
+ if(JSON.stringify(before)===JSON.stringify(item))return {ok:true};
+ if(runtimeBase&&api.runtimeCommit){const committed=await api.runtimeCommit(type,item);if(committed.record)Object.assign(item,committed.record);if(!committed.ok)return fail(committed.error);if(committed.record){Object.assign(item,committed.record);delete item.credential;serverEmployees=serverEmployees.filter(x=>x.id!==item.id).concat(copy(item))}}
+ audit(d,actor,type,item,action,Object.keys(item).filter(f=>JSON.stringify(item[f])!==JSON.stringify(before[f])&&f!=='authVersion').map(f=>({field:f,before:before[f]??null,after:item[f]})));
+ d.revision++;persist(d);data=d;sync();return {ok:true};
+})}
+// Both Modal saves and status commands must pass the same dependency gate before committing.
+async function disableIssue(d,type,item){
+ const refs=dependencies(d,type,item);
+ if(type==='payments'&&refs.length)return '当前收款方式仍有 '+refs.length+' 个正常资金账户，请先处理相关账户。';
+ if(refs.length)return '请先处理关联：'+refs.slice(0,8).join('；')+(refs.length>8?'；等共 '+refs.length+' 项':'');
+ if(type==='warehouses'){
+  let quantity;try{quantity=await api.warehouseStock?.(item.id)}catch(e){return '仓库库存检查失败：'+e.message}
+  if(quantity==null||!Number.isFinite(Number(quantity)))return '仓库库存尚未确认，暂不能停用';
+  if(Number(quantity)!==0)return '仓库仍有库存，请先处理库存后停用。';
+ }
+ return '';
+}
+function legacyOverrideCandidates(){
+ if(!runtimeBase||!api.serverAuth)return [];
+ let snapshot;try{snapshot=JSON.parse(localStorage.getItem(runtimeKey)||'null')}catch{return []}
+ if(!snapshot||typeof snapshot!=='object')return [];
+ const editable={stores:['name','enabled','defaultCustomerId','defaultWarehouseId'],warehouses:['name','enabled','hallRelations','sourceOwnershipUnknown'],parties:['name','enabled','usage','tags'],staff:['name','role','hallId','phone'],payments:['name','enabled'],fundAccounts:['name','enabled','type','bank','accountNumber','department']};
+ const candidates=[];
+ for(const [type,fields] of Object.entries(editable))for(const local of Array.isArray(snapshot[type])?snapshot[type]:[]){
+  if(!canManage(type))continue;
+  const current=data[type]?.find(row=>row.id===local?.id);if(!current||!current.code||String(local.code||'')!==String(current.code))continue;
+  const values={};for(const field of fields){if(field==='hallId'){const value=local.hallId??local.storeId;if(typeof value==='string'&&value!==current.hallId&&value!==current.storeId)values.hallId=value;continue}if(!Object.hasOwn(local,field))continue;if(type==='warehouses'&&field==='hallRelations'&&!Array.isArray(local.hallRelations))continue;if(JSON.stringify(local[field])!==JSON.stringify(current[field]))values[field]=copy(local[field]);}
+  if(type==='warehouses'&&values.hallRelations&&local.sourceOwnershipUnknown!==false)delete values.hallRelations;
+  if(!Object.keys(values).length)continue;
+  candidates.push({type,id:current.id,code:current.code,name:current.name,changedFields:Object.keys(values),record:{...copy(current),...values,id:current.id,version:current.version||0}});
+ }
+ return candidates;
+}
+async function importLegacyOverrides(candidates){const results=[];for(const candidate of candidates){const result=await save(candidate.type,candidate.record,{baseRevision:data.revision});results.push({id:candidate.id,type:candidate.type,ok:result.ok,error:result.error});if(!result.ok)break;}if(results.some(row=>row.ok))await api.refreshMasters?.();return results}
+// A stopped warehouse with a remaining physical balance may only be selected for transfer out.
+function transferWarehouses(direction='to'){
+ const all=read().warehouses||[];
+ return all.filter(x=>!x.ownershipPending&&(isActive('warehouses',x)||direction==='from'&&Number(api.warehouseStockSummary?.[x.id]||0)>0));
+}
+function sync(){if(!active)return;read();if(runtimeBase){PRODUCT_CATALOG.suppliers.splice(0,PRODUCT_CATALOG.suppliers.length,...copy(data.parties.filter(x=>partyInRole(x,'supplier')).map(x=>({...x,disabled:!isActive('parties',x)}))));ERP_DEMO.warehouses.splice(0,ERP_DEMO.warehouses.length,...copy(data.warehouses.map(x=>({...x,enabled:isActive('warehouses',x)&&!x.ownershipPending}))));const catalog=window.SALES_SERVICE?.catalog;if(catalog){catalog.stores=copy(data.stores);catalog.customers=copy(data.parties.filter(x=>partyInRole(x,'customer')));catalog.staff=copy(data.staff);catalog.payments=copy(data.payments)}api.actor=context();return}for(const p of ERP_DEMO.products)p.enabled=true;for(const list of ['colors','groups','categories'])for(const x of PRODUCT_CATALOG[list]||[])x.disabled=false;
+ // New warehouses have no movements. Prepare only the display projection before legacy startup render.
+ // Existing balances and absent SKU combinations must survive untouched.
+ for(const p of ERP_DEMO.products||[])for(const w of data.warehouses)if(!p.stock[w.id])p.stock[w.id]=p.colors.map((_,ci)=>p.sizes.map((_,si)=>Object.values(p.stock).some(m=>Number.isSafeInteger(m?.[ci]?.[si]))?0:null));
+ PRODUCT_CATALOG.suppliers.splice(0,PRODUCT_CATALOG.suppliers.length,...copy(data.parties.filter(x=>partyInRole(x,'supplier')).map(x=>({...x,disabled:!isActive('parties',x)}))));ERP_DEMO.warehouses.splice(0,ERP_DEMO.warehouses.length,...copy(data.warehouses.map(x=>({...x,enabled:isActive('warehouses',x)&&!x.ownershipPending}))));const c=window.SALES_SERVICE?.catalog;if(c){c.stores=copy(data.stores);c.customers=copy(data.parties.filter(x=>partyInRole(x,'customer')));c.staff=copy(data.staff);c.payments=copy(data.payments);c.accounts=Object.fromEntries(data.staff.map(x=>[x.id,{storeIds:context(x)?.storeIds||[],staffId:x.role==='营业员'?x.id:null}]));}api.actor=context()}
+
+async function resetPassword(id){const actor=current();if(actor?.role!=='管理员')return fail('只有管理员可以重置密码');const employee=read().staff.find(x=>x.id===id);if(!employee?.loginName)return fail('请先设置登录账号');const bytes=new Uint8Array(12);crypto.getRandomValues(bytes);const password='N'+Array.from(bytes,x=>x.toString(16).padStart(2,'0')).join('')+'!';const result=await api.save('staff',{...employee},{password,baseRevision:data.revision});return result.ok?{ok:true,password}:result}
+async function demoWarehouseStock(id){let total=0;for(const product of ERP_DEMO.products||[])for(const row of product.stock?.[id]||[])for(const quantity of row||[])if(Number.isFinite(quantity))total+=Math.abs(Number(quantity));return total}
+Object.assign(api,{rolePolicy,canManage,setSessionEmployee,setServerEmployees,read,authData,current,context,routeAllowed,landing,login,setup,save,setStatus,changePassword,resetPassword,warehouseStock:demoWarehouseStock,sync,isActive,selectable,transferWarehouses,dependencies,attachRuntime,legacyOverrideCandidates,importLegacyOverrides});window.MASTER_DATA=api;
+for(const name of ['save','setup','setStatus','changePassword']){const fn=api[name];api[name]=(...args)=>Promise.resolve().then(()=>fn(...args)).catch(e=>{data=runtimeBase?runtimeData():window.REAL_DATA_MODE?emptyFormal():(JSON.parse(localStorage.getItem(key)||'null')||seed());return fail('保存未完成，输入已保留，请核对后重试（'+e.name+'）')})}if(active)sync();
+if(active)window.addEventListener('storage',event=>{if(runtimeBase||window.REAL_DATA_MODE||event.key!==key)return;sync();if(!current())api.expire?.();else if(location.hash.startsWith('#settings/')&&!document.querySelector('#basic-dialog[open]'))window.render?.()});
+})();

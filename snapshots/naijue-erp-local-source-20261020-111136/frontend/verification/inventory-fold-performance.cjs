@@ -1,0 +1,27 @@
+const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path'),assert=require('node:assert/strict'),{JSDOM}=require('jsdom');
+const root=path.join(__dirname,'..'),dom=new JSDOM('<div id="page"><input id="query-sentinel"><div id="iw-results"></div><button data-i="toggle-folds">折叠</button></div>',{url:'http://localhost/#inventory',runScripts:'outside-only'}),w=dom.window;
+w.structuredClone=structuredClone;
+const products=['p0','p1','p2'].map((id,i)=>({id,name:'商品'+i,sizeSystem:'standard',groupId:'UPPER',sizeIds:['s0','s1'],sizes:['170/M','175/L'],colorIds:['c0','c1'],colors:['黑','灰'],legacySizeRecords:[],barcodes:{'c0|s0':{},'c0|s1':{},'c1|s0':{},'c1|s1':{}}}));
+const rows=[],groups=new Map();
+for(const p of products){const pr=[];for(let c=0;c<2;c++){const cr=[];for(let n=0;n<2;n++){const values=[n+c,c===1?-1:0],r={key:JSON.stringify([p.id,c,n]),p:p.id,c,color:p.colors[c],w:'w'+n,warehouse:'仓'+n,warehouseCode:String(n),values,total:values.reduce((a,b)=>a+b,0),index:rows.length};rows.push(r);cr.push(r);pr.push(r)}groups.set(p.id+'|'+c,{cols:[0,1].map(s=>cr.reduce((n,r)=>n+r.values[s],0)),first:cr[0].index,last:cr.at(-1).index})}groups.set(p.id,{cols:[0,1].map(s=>pr.reduce((n,r)=>n+r.values[s],0)),first:pr[0].index,last:pr.at(-1).index})}
+const snap={products,rows,groups,productCount:3,total:rows.reduce((n,r)=>n+r.total,0)},S={page:1,size:100,foldP:new Set(),foldC:new Set(),settings:{category:false,total:true,subtotal:true,sizeDescription:false}},W={status:'ready',snapshot:snap,scroll:{top:0,left:0}};
+const C={group:()=>({name:'男装上衣尺码',sizes:[{id:'s0',name:'170/M'},{id:'s1',name:'175/L'}]}),sizeRecords:p=>p.sizeIds.map((id,i)=>({id,name:p.sizes[i]}))},R={finite:Number.isFinite,page:s=>s.rows};
+Object.assign(w,{ERP_DEMO:{products},PRODUCT_CATALOG:C,INVENTORY_RESULT:R,PRODUCT_FINDER:{validSpec:()=>true},GOLD_UI:{state:S},INVENTORY_UI:{state:W,label:()=>''}});
+vm.runInContext(fs.readFileSync(root+'/matrix-sections.js','utf8'),dom.getInternalVMContext());
+const matrix=fs.readFileSync(root+'/inventory-matrix-experiment.js','utf8'),part=matrix.slice(matrix.indexOf('function valid('),matrix.indexOf('function render()'));
+vm.runInContext("const I=INVENTORY_UI,W=I.state,S=GOLD_UI.state,R=INVENTORY_RESULT,C=PRODUCT_CATALOG,F=PRODUCT_FINDER,H=MATRIX_SECTIONS,$=s=>document.querySelector(s),h=x=>String(x??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c])),active=()=>location.hash==='#inventory';"+part+";window.INVENTORY_MATRIX_EXPERIMENT={table,refreshFold:typeof refreshFold==='function'?refreshFold:undefined};",dom.getInternalVMContext());
+const X=w.INVENTORY_MATRIX_EXPERIMENT,box=w.document.querySelector('#iw-results');let fullRenders=0;
+const render=()=>{fullRenders++;w.document.querySelector('#query-sentinel').replaceWith(w.document.createElement('input'));box.innerHTML=X.table(rows)};box.innerHTML=X.table(rows);
+const source=fs.readFileSync(root+'/inventory-workbench.js','utf8'),fold=source.slice(source.indexOf("if(a==='fold-product'||a==='fold-color')"),source.indexOf('\n',source.indexOf("if(a==='fold-product'||a==='fold-color')")));
+w.foldAction=new w.Function('el','a',"const S=GOLD_UI.state;const refresh=window.testRefresh;"+source.split('\n').find(line=>line.startsWith('function foldKey('))+fold);w.testRefresh=render;
+const fullHTML=()=>{const container=w.document.createElement('div');container.innerHTML=X.table(rows);return container.innerHTML};
+const stockBefore=JSON.stringify(rows),sentinel=w.document.querySelector('#query-sentinel'),unrelated=[...box.querySelectorAll('[data-inventory-row]')].find(r=>JSON.parse(r.dataset.inventoryRow)[0]==='p1');
+w.foldAction(box.querySelector('[data-i=fold-product][data-id=p0]'),'fold-product');
+assert.equal(fullRenders,0,'folding one product must preserve the rest of the page');assert.equal(sentinel.isConnected,true);assert.equal(unrelated.isConnected,true);
+assert.equal(box.querySelector('[data-i=fold-product][data-id=p0]').getAttribute('aria-expanded'),'false');
+assert.equal(box.innerHTML,fullHTML(),'partial fold must equal the complete existing projection');
+w.foldAction(box.querySelector('[data-i=fold-product][data-id=p0]'),'fold-product');assert.equal(box.innerHTML,fullHTML());
+w.foldAction(box.querySelector('[data-i=fold-color][data-key="p0|1"]'),'fold-color');assert.equal(box.innerHTML,fullHTML());
+w.foldAction(box.querySelector('[data-i=fold-color][data-key="p0|1"]'),'fold-color');assert.equal(box.innerHTML,fullHTML());
+assert.equal(JSON.stringify(rows),stockBefore);assert.equal(snap.total,rows.reduce((n,r)=>n+r.total,0));assert.equal(unrelated.isConnected,true);
+console.log('PASS product/color collapse and expand match full projection, preserve unrelated DOM, subtotals, negative/zero stock and snapshots');dom.window.close();

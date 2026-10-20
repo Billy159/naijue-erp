@@ -1,0 +1,11 @@
+.inventory-correction-modal .arco-modal-content{padding:20px 24px;color:var(--text-1,#1d2129)}
+.inventory-correction-modal .ic-form .arco-form-item{margin-bottom:16px}
+.inventory-correction-modal .arco-select-view,.inventory-correction-modal .arco-input-wrapper{min-height:32px}
+.inventory-correction-modal .ic-alert{margin-bottom:16px}
+.inventory-correction-modal .ic-actions{display:flex;justify-content:flex-end;gap:8px}
+.inventory-correction-modal .ic-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:16px 0}
+.inventory-correction-modal .ic-facts dt{font-size:12px;color:var(--text-3,#86909c)}
+.inventory-correction-modal .ic-facts dd{margin:4px 0 0;font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+.inventory-correction-modal .ic-request{color:var(--text-3,#86909c);font-size:12px;overflow-wrap:anywhere}
+.inventory-correction-modal .ic-hint{margin-bottom:0;font-size:13px;color:var(--text-2,#4e5969)}
+@media(max-width:540px){.inventory-correction-modal .arco-modal-content{padding:16px}.inventory-correction-modal .ic-actions{flex-wrap:wrap}.inventory-correction-modal .ic-facts{gap:8px}.inventory-correction-modal .ic-facts dd{font-size:16px}}
