@@ -7,7 +7,7 @@ On 2026-10-20 UTC, exact commit `e4aa8b2663da5984486ddc63b2f95e2a92ca0950` ran o
 This is actual PostgreSQL/default-driver/API/source-policy execution with **Fastify.inject**, canonical roles and controlled synthetic facts. It is not a listening-server/browser/TLS/public deployment, real-data/media, performance or production-readiness result.
 
 - Exact source: `e4aa8b2663da5984486ddc63b2f95e2a92ca0950`; frozen backend PLAN SHA-256 `2bafc8989ae97997c4517143d8ee5f3b2094526a4a7e107051bb58df6d310a3a`.
-- All **1111 committed files** in the frozen archive matched their exact Git blobs after execution; zero mismatches. Exact eight migration and selected implementation hashes are included.
+- All **1111 committed files** in the frozen archive matched their exact Git blobs after execution; zero mismatches. Exact eight migration and selected implementation hashes are included. `frozen-source-complete-file-verification.json` records every expected/observed Git blob plus SHA-256, `frozen-source-files.sha256` contains all 1111 relative-file hashes, and metadata hashes are separate.
 - Target: `127.0.0.1:55432/naijue_erp_test_9fdd325d18bbbf0a`, PostgreSQL 17.11 (`170011`), physical system identifier `7698856207892361241`, primary/not recovery, sockets disabled.
 - Dedicated `naijue_erp_test` owner/login is non-superuser without CREATEDB, CREATEROLE, REPLICATION or BYPASSRLS. All existing source-hash, fresh/exclusive/direct-loopback, explicit-selection and runner gates remained unchanged and passed.
 - The approved final supervisor SHA is `8874c81620a67b475ba3bfd4aa9c74bfcbd7f4a841d4de3ab015d6553dee1325`. This was one approved run on one fresh target, not a reset or reuse of earlier targets.
