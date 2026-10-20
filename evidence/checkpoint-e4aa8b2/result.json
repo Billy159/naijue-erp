@@ -1,0 +1,41 @@
+{
+  "sourceCommit": "e4aa8b2663da5984486ddc63b2f95e2a92ca0950",
+  "status": "PASS",
+  "aggregateCommand": "npm run check:all",
+  "aggregateExit": 0,
+  "offline": true,
+  "existingPinnedDependenciesOnly": true,
+  "tests": 1040,
+  "pass": 1040,
+  "fail": 0,
+  "DOMGroups": 93,
+  "DOMGroupBreakdown": {
+    "inventoryAndProduct": 14,
+    "authentication": 7,
+    "sales": 18,
+    "parties": 11,
+    "application": 8,
+    "transfers": 11,
+    "composedSales": 6,
+    "composedTransfers": 6,
+    "productStyles": 4,
+    "productLifecycle": 8
+  },
+  "dependencyEntries": 176,
+  "rootTypeBuildSmoke": "PASS",
+  "webTypeBuildAndBundledSmoke": "PASS",
+  "frozenFilesVerified": 1111,
+  "frozenFileMismatches": [],
+  "separateRealPgNativeEvidence": "evidence/postgres-real-native-profile-acceptance-e4aa8b2/",
+  "separateRealPgTests": 22,
+  "notEstablished": [
+    "listening HTTP transport",
+    "browser",
+    "TLS/cookie browser transport",
+    "real business data",
+    "visual parity",
+    "performance",
+    "deployment"
+  ],
+  "scope": "Exact isolated Git archive. Later evidence-only commits and development-host work excluded. DOM is synthetic jsdom, not rendered browser acceptance. Existing React19 element.ref and npm http-proxy warnings retained."
+}
