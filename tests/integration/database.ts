@@ -3,16 +3,11 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { Pool } from "pg";
 import type { PoolClient } from "pg";
+import { assertExactRawSqlFailure } from "./proof.ts";
 import type { IntegrationSettings } from "./safety.ts";
 
-// Review this list explicitly when extending scope. Never glob migrations or pick up unreviewed 0006+.
-export const MIGRATIONS = [
-  [1, "0001_runtime_sales.sql", "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf"],
-  [2, "0002_sales_pricing_facts.sql", "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98"],
-  [3, "0003_auth_sessions.sql", "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29"],
-  [4, "0004_transfer_runtime.sql", "a85dd812fdf561652433e6fc2da49024f95db1137e52b84170470ec5f937224d"],
-  [5, "0005_product_read_fields.sql", "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a"]
-] as const;
+import { MIGRATIONS } from "./migration-manifest.ts";
+export { MIGRATIONS } from "./migration-manifest.ts";
 function refused(reason: string): never { throw new Error(`Fresh disposable database verification refused: ${reason}`); }
 export interface IntegrationDatabase {
   readonly pool: Pool;
@@ -77,7 +72,11 @@ async function assertFresh(client: PoolClient, settings: IntegrationSettings): P
 }
 
 /** This function is the only Pool construction in the suite. The caller must validate all opt-in gates first. */
-export async function openFreshDatabase(settings: IntegrationSettings): Promise<IntegrationDatabase> {
+export async function openFreshDatabase(settings: IntegrationSettings, options: {
+  /** Explicit historical reference fixture setup after 0005, before current party constraints. Not CREATE acceptance. */
+  readonly afterVersionFive: (pool: Pool) => Promise<void>;
+}): Promise<IntegrationDatabase> {
+  if (typeof options.afterVersionFive !== "function") refused("the reviewed historical reference fixture hook is required");
   // Validate source hashes before even constructing the driver. No URL/default PG credentials are passed through.
   const sources = await Promise.all(MIGRATIONS.map(async ([, filename, expected]) => {
     const sql = await readFile(new URL(`../../adapters/postgres/migrations/${filename}`, import.meta.url), "utf8");
@@ -98,6 +97,7 @@ export async function openFreshDatabase(settings: IntegrationSettings): Promise<
       const { rows } = await guard.query("SELECT version FROM naijue_erp.schema_migration ORDER BY version");
       const expected = MIGRATIONS.slice(0, index + 1).map(([version]) => version);
       if (JSON.stringify(rows.map(row => row.version)) !== JSON.stringify(expected)) refused(`migration registry differs after ${migration[1]}`);
+      if (migration[0] === 5 && options.afterVersionFive) await options.afterVersionFive(pool);
     }
     const held = guard;
     return { pool, serverVersion, async close() { held.release(true); await pool.end(); } };
@@ -122,4 +122,16 @@ export async function expectSqlState(pool: Pool, sqlState: string, work: (client
     throw new Error(`Constraint probe expected SQLSTATE ${sqlState}, observed ${failure && typeof failure === "object" && "code" in failure ? String(failure.code) : "no matching database error"}`);
   }
   if (constraint && (!("constraint" in failure) || failure.constraint !== constraint)) throw new Error(`Constraint probe did not reach the expected ${constraint} constraint`);
+}
+
+/** Exact real-driver constraint probe. Force deferred checks, then always roll back; never fabricate a receipt. */
+export async function expectExactSqlFailure(pool: Pool, code: string, message: string, functionName: string,
+  work: (client: PoolClient) => Promise<void>): Promise<void> {
+  const client = await pool.connect(); let failure: unknown;
+  try {
+    await client.query("BEGIN");
+    try { await work(client); await client.query("SET CONSTRAINTS ALL IMMEDIATE"); } catch (error) { failure = error; }
+    await client.query("ROLLBACK");
+  } finally { client.release(); }
+  assertExactRawSqlFailure(failure, code, message, functionName);
 }

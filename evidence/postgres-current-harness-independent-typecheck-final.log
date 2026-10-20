@@ -1,0 +1,5 @@
+Final independent scoped source-only checks, 2026-10-20 UTC
+v24.19.0
+
+--- scoped TypeScript ---
+tsc_exit=0

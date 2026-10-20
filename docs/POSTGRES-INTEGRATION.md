@@ -1,123 +1,120 @@
-# Disposable PostgreSQL integration harness
+# Disposable PostgreSQL acceptance harness
 
 ## Evidence status: real PostgreSQL NOT RUN
 
-This is dormant test **source**, prepared on 2026-10-20 UTC. No database connection, SQL/DDL execution, migration, reference insert, PostgreSQL process, HTTP listener, network request, package installation, CI service, user-computer operation, push or deployment was performed to prepare it. No real `.env` file, connection string or credential was read.
+This is dormant engine-test **source**, extended on 2026-10-20 UTC. No database connection, SQL/DDL/EXPLAIN execution, migration, PostgreSQL process, HTTP listener, network request, package installation, CI service, user-computer operation, push or deployment was performed while preparing the extension. No real `.env`, connection string or credential was read.
 
-Scoped TypeScript, JavaScript/TypeScript syntax checks and eight connection-free guard/assertion regressions have been performed. The real integration suite has not been run. Those checks do not parse PostgreSQL SQL, execute PL/pgSQL, exercise locks, establish rollback durability or prove any integration assertion passes. Existing scripted protocol and SQL-text tests remain separate evidence. Pure regression results also do not establish that a real database accepted anything.
+Typechecking, syntax checks, pure guard/assertion regressions and plan output are connection-free checks only. They do not parse SQL, execute PL/pgSQL, establish trigger composition, prove locks, demonstrate rollback durability or validate an assertion against PostgreSQL. Existing protocol/SQL-text evidence remains separate. Never relabel it engine proof.
 
-The harness is not selected by the repository's existing `npm test`, `npm run check` or `npm run check:all`. No root package/configuration file or CI workflow was changed. It must not be added to a default command that can run without the explicit gates below.
+The existing original preparation evidence for the historical 0001–0005 harness remains unchanged, including its eight pure regressions. The current extension needs its own source revision/checksums and separately recorded static-check results. The full real suite has still never run.
 
-## Files and scope
+The suite is not selected by `npm test`, `npm run check` or `npm run check:all`. Root package/configuration files, CI and the existing explicit runner script were not changed. Never add this suite to an ungated default command.
 
-- `scripts/run-postgres-integration.mjs`: explicit `--run` entry point; no provisioning or `.env` loading.
-- `tests/integration/safety.ts`: pure dedicated-URL/opt-in checks, without automatic environment reads or driver imports.
-- `tests/integration/safety.test.ts`: pure negative/positive target-guard unit-test source using only literal fake settings, no PostgreSQL driver.
-- `tests/integration/database.ts`: fresh-target verification, source-hash-pinned migration application, rollback-only constraint probes and connection release.
-- `tests/integration/fixtures.ts`: clearly synthetic native reference facts and commands. Nothing is copied from production fixtures, dictionaries, historical imports or real accounts.
-- `tests/integration/adapter-helpers.ts`: real injected `pg` clients, actual lock-wait observation and test-local fault injection. It never fabricates database rows or simulated COMMIT results.
-- `tests/integration/proof.ts` and `proof.test.ts`: connection-free assertion logic/regressions that prevent an unrelated early constraint error from satisfying the deferred-COMMIT scenario. Fabricated unit-test errors are not PostgreSQL evidence.
-- `tests/integration/postgres.integration.test.ts`: one sequential Node test suite with real-database subtests, fail-closed rather than silently skipped.
-- `tests/integration/tsconfig.json`: scoped static checking; extends but does not change the root TypeScript configuration.
+## One implementation and current schema
 
-Only migrations **0001–0005** are enumerated, in order, with exact SHA-256 checksums. There is deliberately no migration glob, auto-discovery, production migration mechanism, checksum rewrite, repair, backfill or upgrade mode. Migration `0006_party_maintenance.sql` and later migrations are excluded pending their own review. The harness does not claim to validate party maintenance or the entire ERP schema.
+The current acceptance plan is **only `sparse-0001-0008`**, using the one current PostgreSQL implementation and exact migrations 0001–0008. These are acceptance scenarios, not alternate production storage paths.
 
-## Prerequisites before anyone runs it
+The old 0001–0005 test body is preserved, unregistered and uncalled, in `postgres.integration.test.ts`. `native-0001-0005` is explicitly refused before Pool construction. Current adapters call `inventory_key_lock` from 0007 even when a balance exists, and need the reviewed 0008 first-use guard semantics. Running today's adapters on the historical five-migration prefix would be misleading, not compatibility acceptance.
 
-An operator must first obtain explicit approval for the exact disposable local/CI target. Setting an opt-in environment variable is an accident-prevention gate, not a substitute for authorization.
+The manifest lists exact filenames and SHA-256 values. **All eight source hashes are checked before constructing any Pool**, never discovered with a migration glob. A change aborts and requires deliberate review. No migration repair, upgrade, checksum rewrite, historical source loading or production migration mode exists.
 
-1. Use the repository's pinned installed dependencies and supported Node/npm toolchain. At preparation time these are Node 24.19.x, npm 11.9.x, TypeScript 5.9.2 and `pg` 8.23.1. This harness does not install anything.
-2. Provision a **new, dedicated, disposable PostgreSQL 15+ database externally**, preferably in an isolated throwaway cluster. Database lifecycle and any administrator actions remain outside this harness. No database creation or deletion is implemented here.
-3. Bind that PostgreSQL server directly to `127.0.0.1` or `::1` on an explicit TCP port in 1024–65535. `localhost` in the URL is normalized to `127.0.0.1` without DNS. The guard uses `host(inet_server_addr())` to compare the backend's loopback address without `/32` or `/128` notation, plus its port. Those observations **cannot prove the absence of SSH forwarding or another proxy**, including forwarding to a backend that also reports loopback and the same port. The operator must independently verify the approved physical disposable target before invocation. Remote URLs, Unix sockets, cloud databases, local SSH tunnels, proxy/port-forwarding and container port mappings with a different backend address/port remain intentionally unsupported. A CI executor can run a local PostgreSQL process bound directly to its own loopback; a future container-service variant needs separate review, not relaxed guards.
-4. Name the database `naijue_erp_test_` followed by 8–32 lowercase hexadecimal characters, for example `naijue_erp_test_a1b2c3d4`. The name must be repeated exactly in the separate expected-database setting. Production, staging, live, application-default and arbitrary database names are rejected.
-5. Connect as the dedicated PostgreSQL role **`naijue_erp_test`**, with a nonempty disposable-role password supplied explicitly in the dedicated URL. This is a database connection role, not an ERP administrator. It must own the disposable database and have LOGIN, but **not** SUPERUSER, CREATEDB, CREATEROLE, REPLICATION, BYPASSRLS or any role memberships. Use a cluster/role that has no access to real business data. The harness cannot prove what privileges this role has on unrelated databases or whether a deceptively named database contains important information.
-6. The target must have only the normal empty `public`, `pg_catalog`, `pg_toast` and `information_schema` namespaces. No prior `naijue_erp` schema, custom schema, user relations/routines/types/collations/conversions/operators/text-search objects, default-ACL overrides, extra extensions except normal `plpgsql`, event triggers, foreign servers, publications, large objects, prepared transactions or other connections are accepted. Even an empty prior ERP schema is refused. A test-owned advisory session lock prevents simultaneous harness migrations. The operator must still ensure no unrelated client connects during the run.
-7. Run against the five exact reviewed migration bytes and a matching source checkout. A changed migration hash aborts **before** Pool construction. Review a changed migration and update the test manifest deliberately; do not bypass a mismatch or substitute an existing/migrated database.
+- `migration-manifest.ts`: driver-free exact hashes and scenario plan.
+- `plan.ts`: connection-free explicit operator plan, checks hashes and prints migration/scenario/gate lists.
+- `safety.ts` and `safety.test.ts`: pure dedicated-target, opt-in and current-scenario checks; no automatic environment reads, driver imports or credential fallbacks.
+- `database.ts`: fresh-target verification, exact ordered migrations, explicit historical fixture hook after 0005, rollback-only constraint probes and release.
+- `fixtures.ts`: synthetic-only historical reference setup, not production catalogues, usable credentials or stock seeds. In current mode no initial balances are inserted. The extra real SKU coordinate gives a separate absent race key and an actual missing coordinate for not-applicable reads.
+- `adapter-helpers.ts`: real injected `pg` clients, actual lock-wait observation and same-transaction SQL fault injection. It fabricates neither rows nor COMMIT results.
+- `proof.ts` and `proof.test.ts`: pure negative assertion regressions, including exact raw-driver deferred error code/message/function-context matching. Fabricated unit errors are not engine evidence. Production bounded-pool sanitization is not changed or bypassed in production; exact error assertions use only this trusted raw-driver test boundary.
+- `sparse-acceptance.ts`: current 0001–0008 real-engine subtest source.
+- `postgres.integration.test.ts`: gated current entry point and preserved historical body; fail closed, never silently skipped.
+- `tsconfig.json`: scoped static checking, without changing root TypeScript configuration.
 
-The owner role is needed for this bounded migration/constraint exercise. It is not a production runtime-grant, RLS, least-privilege, authentication or security-hardening test.
+Paths above are under `tests/integration/`. The existing entry point remains `scripts/run-postgres-integration.mjs`.
 
-## Explicit invocation after approval
+## Safe plan, no database access
 
-These are illustrative shell settings, **not commands executed during preparation**. Replace the disposable name, direct server port and encoded disposable-role password using your approved local/CI secret mechanism. Do not paste real credentials into chat, source, tracked files or evidence logs. Password URL characters must be percent-encoded.
+```sh
+node tests/integration/plan.ts --suite sparse-0001-0008
+```
+
+This is **plan-only**. It reads only reviewed migration source bytes, not environment settings or credentials. It imports no PostgreSQL driver and cannot open a connection. It prints the exact migration list/checksums, planned scenarios, required execution gates and explicit NOT RUN status. Missing/unknown/historical suite selections refuse rather than choosing an implicit target or compatibility path.
+
+Planning does not authorize execution. Actual execution still requires the existing explicit `--run`, target gates, fresh-server checks and authorization below.
+
+## Prerequisites before real execution
+
+Obtain explicit approval for the **exact operator-selected fresh disposable physical target** first. Opt-in variables and a generated runner marker are accident-prevention gates, not authority or security boundaries.
+
+1. Use the repository's pinned installed dependencies and supported toolchain. The harness never installs anything.
+2. Provision a **new dedicated disposable PostgreSQL 15+ database externally**, preferably in an isolated throwaway cluster. No creation/deletion/provisioning commands are implemented here. Never select the user's current ERP, production, staging, shared data or a reused test database.
+3. Bind the PostgreSQL process directly to `127.0.0.1` or `::1`, with an explicit TCP port in 1024–65535. `localhost` normalizes to loopback without DNS. The server must report the same loopback address/port, primary status and approved database/role identity. These checks cannot establish that there is no SSH tunnel/proxy to another loopback backend: the operator must independently verify physical isolation. Remote endpoints, Unix sockets, tunnels/proxies and mismatched container port mappings remain unsupported. Do not weaken guards to work around setup failures.
+4. Use `naijue_erp_test_` plus 8–32 lowercase hexadecimal characters, repeated exactly in `NAIJUE_PG_EXPECT_DATABASE`.
+5. Use the dedicated `naijue_erp_test` role and explicit nonempty disposable password. The role must own the target and have LOGIN, but no SUPERUSER, CREATEDB, CREATEROLE, REPLICATION, BYPASSRLS or role memberships. Its access to unrelated databases is the operator's responsibility. This owner-role test is not proof of runtime grants, RLS or security hardening.
+6. The database must be fresh and exclusive, with only normal empty namespaces. Custom objects, prior ERP schema, user routines/types/relations/text-search objects, default ACL overrides, extra extensions other than `plpgsql`, event triggers, foreign servers, publications, large objects, prepared transactions and other clients are refused. The session guard retains its advisory lock; independently ensure no unrelated client joins later.
+7. Match all eight reviewed migration hashes. Do not reuse a partly migrated target after a failure.
+
+`DATABASE_URL`, ambient `PG*`, `.env`, DNS and URL query options are never credential/target fallbacks. The Pool receives explicit host/port/database/user/password, disabled TLS, bounded connection/statement/lock/idle timeouts, UTC and fixed search path. No URL/password is logged.
+
+## Explicit invocation only after approval
+
+Illustrative settings, **not commands run while preparing**. Supply the direct server port, fresh name and disposable password via the approved secret mechanism. URL-encode password characters. Never paste real credentials into chat, tracked files or evidence.
 
 ```sh
 export NODE_ENV=test
 export NAIJUE_PG_INTEGRATION=I_APPROVE_A_FRESH_DISPOSABLE_LOCAL_DATABASE
+export NAIJUE_PG_TEST_SUITE=sparse-0001-0008
 export NAIJUE_PG_EXPECT_DATABASE=naijue_erp_test_a1b2c3d4
 export NAIJUE_PG_TEST_DATABASE_URL='postgresql://naijue_erp_test:REPLACE_WITH_URL_ENCODED_DISPOSABLE_PASSWORD@127.0.0.1:55432/naijue_erp_test_a1b2c3d4'
 node scripts/run-postgres-integration.mjs --run
 ```
 
-The example expects the actual local PostgreSQL process itself to listen on 55432. It is not a suggested Docker host-port mapping.
+The PostgreSQL process itself must listen directly on the example port; this does not suggest port forwarding. Direct test invocation lacks the runner marker and refuses. Missing gates, unsafe targets, elevated roles, reused databases, hash changes or historical scenario selection fail nonzero, never pass/skip.
 
-`DATABASE_URL`, `PG*` ambient credential defaults and actual `.env` files are not configuration inputs. Host, port, database, user, password, disabled TLS, application name, timeouts and search path are supplied explicitly to `pg`. URL query options, fragments and socket overrides are rejected. The runner does not print the URL or password. Do not add verbose environment/connection logging. Directly invoking the real integration test without the runner marker fails; the marker is not a secret or a security boundary.
+## Reviewed fixture order and intended engine assertions, NOT RUN
 
-No argument, a missing gate, an unsafe URL, an elevated role, a reused/nonempty target, unexpected connections or a changed migration produces a refusal/nonzero exit, not a fake passing/skip result. `--help` is informational and opens no connection.
+1. Migrate 0001–0005. Insert one bounded, atomic set of **historical synthetic reference facts** before 0006 enables current party constraints. This is not current CREATE acceptance or permission to bypass current guards. No triggers are disabled, no fake receipts are forged and no starting balances exist. Apply 0006–0008 and check the exact registry after each migration.
+2. Exercise actual 0006 party CREATE, EDIT, DISABLE and RESTORE through the real application service/store. Independently allocated KH/GYS codes, same-key concurrent replay, exact sparse audit fields, immutable original result, different-content conflict, rollback without rows/receipt/audit and enabled-hall default protection are asserted. Sequence gaps after failed reservations are expected, not rolled-back/gapless claims. The synthetic account stays login-disabled; the WAREHOUSE actor is only explicit fixture authorization, not trusted production authentication.
+3. Stage the exact synthetic manifest and import native warehouse/SKU membership. Early publication and runtime approval before publication fail closed without partial state.
+4. Import **one real nonzero baseline**. A same-transaction balance mismatch must reach actual COMMIT and fail with exact SQLSTATE/message/PL/pgSQL sparse-validator context, then leave checkpoint/source/ledger/balance/audit/receipt unchanged. Retry only after known deferred rejection and completed rollback. A healthy baseline must then COMMIT with exact source ownership, nullable native sources, import endpoint, quantity 7, balance version 1, receipt/audit/checkpoint and immutable replay. This positive COMMIT detects the old unconditional native-ledger-trigger composition defect, not merely a trigger-name/text test. Also inspect the installed native-only trigger predicate.
+5. Inspect the actual server's unique valid/ready `(object_id,new_version)` IMPORT checkpoint index and installed function definition. The checkpoint function must use the exact native version and no historical `import_record` query/SUM/ORDER BY. Run `EXPLAIN (FORMAT JSON)` of that exact point lookup inside a read-only transaction with **local `enable_seqscan=off`**, then roll back. This establishes index **eligibility only**, not the optimizer's normal choice, trigger-internal execution plan, timing, realistic cardinality or performance. No ANALYZE/load benchmark is claimed.
+6. Publish exact complete scope and final approval: 2 warehouses, 3 SKUs, 1 baseline and 1 explicit complete-scope attestation. Assert exact checkpoint counters, immutable publication receipt/audit and no Cartesian-product zero inserts.
+7. Use the actual native inventory reader: readiness, exact totals, stable source size order, real SKU absent stock as known zero, missing coordinate as not-applicable, baseline value, scoped warehouse intersection, forbidden outside-scope filter, page beyond end with full-filter summary, literal candidate search and non-mutating reads. Negative native stock must participate exactly in summaries. No client label, CSV fallback or fabricated read result supplies proof.
+8. First sale with repeated real lines: actual SQL division failure after its first balance/ledger/header/audit writes rolls back everything and preserves absence. Healthy duplicate-key APPROVE after known rollback creates only actual effects, balance -5/version 2, exact receipt/audit/ledger and linked inverse UNAPPROVE; zero is retained at version 4.
+9. First transfer with repeated lines and both previously absent endpoints: duplicate APPROVE creates exact FROM/TO effects, -5/+5 balances/version 2, then linked inverse UNAPPROVE retains both zeros/version 4. A later same-transaction balance corruption must still reach COMMIT and fail the **old native transfer** cumulative validator with exact raw error evidence and no committed partial state.
+10. A corrupted first-use sales balance must reach COMMIT and fail the **new sparse** exact cumulative effect/version validator, rolling back without consuming the fresh key.
+11. Two distinct sales documents with different receipt keys must both be observed waiting on the same blocked, previously absent inventory key before release. Both commit serially, with one actual inserted balance at -5/version 2, exact native effects/receipts/audits and final linked reversals retaining zero/version 4. Promise concurrency alone is not accepted as evidence; the harness observes real PostgreSQL advisory waiters on the exclusive target.
+12. Used zero balances, immutable ledger/import sources, historical sales conversion and wrong native warehouse/source attempts remain rejected. A test-injected write through the native reader must fail because its real transaction is READ ONLY, with no modification and an unaffected subsequent read. This is read-only enforcement, not a privileged corrupt-owner recovery test.
 
-## Intended database assertions, still NOT RUN
+## Isolation, failure and cleanup
 
-The source is designed to exercise these through actual existing adapters and exact synthetic facts:
+- No `DROP DATABASE`, `DROP SCHEMA`, `TRUNCATE`, destructive resets, trigger disabling or cleanup deletes are added. Some reviewed migrations replace their own fixed constraints/triggers as source specifies.
+- Every execution needs a separately fresh, exclusive approved target. Never automatically reuse, clear or repair the historical suite's database.
+- Deferred probes force constraints before rollback; they cannot appear green merely because a transaction was unconditionally rolled back before validation.
+- Fault callbacks reach a real acquired client on the same transaction. Snapshot comparisons are subsequent real pooled reads, not claims of a new physical connection.
+- The guard plus bounded Pool connections, lock waits and statement/transaction timeouts remain unchanged. Both contending requests are drained on success/failure. Advisory waiter counting relies on the required exclusive target; its finite timeout is a failure, not waived concurrency proof.
+- Failed and successful runs retain the target for **external lifecycle disposal**. Only an open failed transaction is rolled back, and harness clients are released/discarded. Earlier committed migrations remain if a later step fails.
+- Unknown COMMIT acknowledgement is not rollback proof. Stop, retain the original key, inspect the disposable target and logs; never automatic retry/reset. Known SQLSTATE rejection plus completed rollback is distinguished explicitly in fault tests.
 
-- Apply migrations 0001–0005 and check the migration registry after every migration.
-- SAVE new sales and transfers without inventory effects; APPROVE and UNAPPROVE with exact version increments, immutable successful receipts and audit facts.
-- Synthetic independent SALE, RETURN and EXCHANGE signed amounts/settlement directions. The fixture's deliberately simple arithmetic is **not** a production sales economics provider or business-rule acceptance.
-- Two actual PostgreSQL advisory-lock waiters before releasing each request-key/document blocker, so duplicate same-key results are not merely called a concurrency test because two promises were created. Same-key SAVE/APPROVE/UNAPPROVE replay, different-content conflict and globally shared actor/key conflict across SALES/TRANSFER are checked.
-- Distinct-key stale-version CAS races and absent-header insertion races, each with exactly one successful writer and no losing committed receipt.
-- Repeated actual lines for one SKU remain distinct. Sales may produce negative stock. Transfers produce both FROM/TO entries per native line; exact inverse entries link to each original on UNAPPROVE. Transfer balance versions advance for every endpoint effect, not just an aggregated quantity.
-- SQLSTATE 22012 induced on the same real transaction after native header/ledger/balance/audit writes, followed by adapter ROLLBACK and comparison through subsequent pool reads outside the aborted transaction. Those reads are not guaranteed to use newly created physical connections. A retry reuses the original key only after an explicit SQL error with a known rollback, never after an unknown COMMIT outcome.
-- Transfer deferred final-balance inconsistency rejects COMMIT with SQLSTATE 23514 and leaves no partial operation. That scenario additionally requires one successful sabotage-row update, an observed real adapter COMMIT attempt, the exact expected balance-validator error message and its PL/pgSQL function context. An unrelated early 23514 is not accepted. Normal constraint probes force `SET CONSTRAINTS ... IMMEDIATE` inside a transaction before rolling it back, so deferred checks cannot be hidden by unconditional rollback.
-- Missing inventory coverage stays absent. Failed commands must not advance documents or commit ledger, balance, audit or receipt changes.
-- Real deferrable transfer line-position swaps and sparse actual changed-line audit evidence.
-- Selected actual schema checks/FKs/uniqueness: canonical SKU coordinates, fit format, explicit pricing metadata, image byte bound, decimal storage overflow, auth-session hash format, same actor/request-key uniqueness, closed tagged native receipt targets, typed result identity, reciprocal deferred receipt/audit linkage, ledger endpoint/source check, settlement equality and append-only mutation rejection.
-- Scoped sales list/detail/history/approved-only settlement-statistics reads, exact integer/money results, hidden-scope refusal, literal rather than LIKE/injection text and out-of-range pages.
-- A real separately committed SAVE between a sales reader's count and page statements: the existing REPEATABLE READ reader must still return its original count/page snapshot, while a subsequent reader sees the new commit.
-- Product basics, normalized specifications and image **metadata only**, with no original image bytes, storage service, thumbnail generation or public-link fallback.
-- Authentication **storage** account/session locking, synthetic-session insertion, rollback and auth-version/session invalidation. The fixture ERP account is non-admin, login-disabled and has only intentionally invalid password-hash sentinels. No usable password, bootstrap administrator, session bearer token, login or complete authentication/authorization composition is created.
+## Source-only validation
 
-All server acceptance, SQLSTATE expectations, deferred-trigger ordering and observable concurrency behavior above remain assertions to be verified on the first approved execution. The harness source may expose a migration/adapter defect; compilation is not evidence those assumptions are correct.
-
-## Isolation, failure and cleanup boundaries
-
-- The whole database must be disposable and exclusive. The harness never attaches to a populated database, tries to find a safe subset of production data or silently clears a schema.
-- The five migrations create/alter only their fixed test-owned `naijue_erp` schema after freshness checks. Some migrations intentionally replace their own constraints/triggers. There are **no harness `DROP DATABASE`, `DROP SCHEMA`, `TRUNCATE`, broad cleanup deletes or trigger-disable operations**.
-- Synthetic rows are inserted only after fresh-target verification and all five migrations. Constraint probes always roll back. Existing append-only receipt/audit/ledger facts are not deleted to make cleanup convenient.
-- Successful and failed runs leave the disposable database for **external lifecycle disposal**, including any already committed earlier migrations. The harness only rolls back an open failed transaction and releases/discards its own clients. Never rerun against a partly migrated/used target; provision another fresh approved target.
-- The one guard client retains its advisory session lock until suite cleanup. Other clients have bounded connection, statement, lock and idle-transaction timeouts. Test assertions drain their own contending command promises before the next subtest. Advisory waiter counting is database-wide and relies on the required exclusive target. The 2.5-second observation window and 4-second lock timeout are intentionally bounded but may need separately reviewed tuning on slow CI; a timeout is a failure, not a waived concurrency assertion.
-- On a crash or uncertain COMMIT acknowledgement, retain the original request key, stop and inspect the disposable target/logs. This harness does not automatically retry uncertain writes, reset state or infer rollback from an error alone.
-- Do not weaken safe-target guards to resolve setup failures. A valid future extension needs explicit review, a bounded new target contract and separately recorded execution evidence.
-
-## Safe source-only checks
-
-These commands do not run the database suite, load `.env` files or construct a Pool:
+These commands neither run the suite nor open PostgreSQL:
 
 ```sh
 ./node_modules/.bin/tsc --noEmit -p tests/integration/tsconfig.json
 node --check scripts/run-postgres-integration.mjs
 for file in tests/integration/*.ts; do node --check "$file" || exit; done
-```
-
-Those exact scoped type/syntax checks passed on 2026-10-20 UTC for the corrected source. No actual integration command was run. The following connection-free regression command also ran, with **8 passed, 0 failed, 0 skipped**:
-
-```sh
 node --test tests/integration/safety.test.ts tests/integration/proof.test.ts
+node tests/integration/plan.ts --suite sparse-0001-0008
 ```
 
-These regressions use only literal fake settings, fabricated error objects and a local SQL-source text assertion. They import no database driver and make no connections. They must never be presented as PostgreSQL evidence.
+Record their actual output separately. Pure tests use literal fake target settings, fabricated errors and local SQL-source text checks only. Passing them is not PostgreSQL acceptance.
 
-## What this enables next, and what it cannot establish
+## Remaining acceptance gaps
 
-Next: approve/provision the fresh direct-loopback disposable target, run the explicit harness, record the source revision, migration checksums, actual PostgreSQL version and unedited TAP/exit status without credentials, and investigate failures before considering a reviewed CI job. Only then may those executed assertions be labeled real-PostgreSQL integration evidence.
+The next authorized step is externally provisioning/approving a fresh direct-loopback target, then running the exact current plan and recording source revision, all migration hashes, actual PostgreSQL version and unedited TAP/exit status without credentials. Any real failure is a finding to investigate, not permission to relax guards or change migration checksums automatically.
 
-Even a future green run covers only these synthetic cases. It does not prove production data compatibility, migration from an existing ERP, historical cutoff import/editing, party maintenance/0006+, full application composition, trusted production rules/auth providers, HTTP/UI/browser acceptance, media delivery, grants/RLS, all deadlock schedules, sustained load, failover, process/cluster restart recovery, unknown-COMMIT recovery or deployment readiness. Those need separate test plans and authorization.
+Even a green future run proves only these synthetic scenarios. It does not establish actual source-file/manifest truth, historical cutoff editing/first-unapprove, native catalogue creation after publication, production policy/authentication, HTTP/UI flows, media, source data compatibility, upgrade from an existing ERP, grants/RLS, privileged-owner tampering recovery, all race/deadlock schedules, unknown-COMMIT recovery, cluster restart/failover, sustained load, normal-planner performance or deployment readiness.
 
-## Primary documentation for later operator review
+Additional production-shaped cases require explicitly approved source manifests/namespace and authorization-provider facts, exact native catalogue creation semantics, multi-product/multi-page fixture cardinalities, and measured disposable PostgreSQL plans. Do not invent those facts or import production/current ERP data to fill the gaps.
 
-The following official references were not fetched during this no-network preparation:
-
-- [node-postgres transactions: one acquired client per transaction](https://node-postgres.com/features/transactions)
-- [node-postgres client connection/timeouts configuration](https://node-postgres.com/apis/client)
-- [PostgreSQL transaction isolation](https://www.postgresql.org/docs/current/transaction-iso.html)
-- [PostgreSQL explicit/advisory locking](https://www.postgresql.org/docs/current/explicit-locking.html)
-- [PostgreSQL SET CONSTRAINTS and deferred checks](https://www.postgresql.org/docs/current/sql-set-constraints.html)
-- [PostgreSQL database constraints](https://www.postgresql.org/docs/current/ddl-constraints.html)
-- [PostgreSQL role attributes](https://www.postgresql.org/docs/current/role-attributes.html)
+Official references for a later operator review, not fetched in this no-network preparation: [node-postgres transactions](https://node-postgres.com/features/transactions), [PostgreSQL isolation](https://www.postgresql.org/docs/current/transaction-iso.html), [explicit/advisory locking](https://www.postgresql.org/docs/current/explicit-locking.html), [deferred constraints](https://www.postgresql.org/docs/current/sql-set-constraints.html), and [EXPLAIN](https://www.postgresql.org/docs/current/sql-explain.html).

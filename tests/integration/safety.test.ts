@@ -2,7 +2,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { DISPOSABLE_DATABASE_APPROVAL, integrationSettings, safeTarget } from "./safety.ts";
+import { DISPOSABLE_DATABASE_APPROVAL, integrationSettings, integrationSuite, requireCurrentIntegrationSuite, safeTarget } from "./safety.ts";
 
 const fixture = () => ({ NODE_ENV: "test", NAIJUE_PG_INTEGRATION: DISPOSABLE_DATABASE_APPROVAL,
   NAIJUE_PG_TEST_DATABASE_URL: "postgresql://naijue_erp_test:SYNTHETIC_NOT_A_REAL_SECRET@127.0.0.1:55432/naijue_erp_test_a1b2c3d4",
@@ -42,4 +42,14 @@ test("integration safety SQL-source regression: server address uses host(inet), 
   const source = await readFile(new URL("./database.ts", import.meta.url), "utf8");
   assert.match(source, /host\(inet_server_addr\(\)\) AS address/u);
   assert.doesNotMatch(source, /inet_server_addr\(\)::text AS address/u);
+});
+
+test("integration safety: acceptance scenario is explicit, closed and never inferred from ambient database settings", () => {
+  for (const value of [undefined, "", "sparse", "all", "sparse-0001-0008 "]) assert.throws(() => integrationSuite({ NAIJUE_PG_TEST_SUITE: value }), /explicit NAIJUE_PG_TEST_SUITE/);
+  for (const value of ["native-0001-0005", "sparse-0001-0008"] as const) assert.equal(integrationSuite({ NAIJUE_PG_TEST_SUITE: value }), value);
+});
+
+test("integration safety: historical migration prefix refuses before pool construction at current adapter revision", () => {
+  assert.throws(() => requireCurrentIntegrationSuite("native-0001-0005"), /historical source only/);
+  assert.doesNotThrow(() => requireCurrentIntegrationSuite("sparse-0001-0008"));
 });

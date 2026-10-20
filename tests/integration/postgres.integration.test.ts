@@ -1,6 +1,8 @@
 /** DORMANT REAL-POSTGRESQL SUITE. Not selected by npm test/check. Never substitute scripted protocol evidence.
  * Invoke only through the explicit opt-in runner on a freshly provisioned disposable loopback database. */
 import test from "node:test";
+import type { TestContext } from "node:test";
+import type { Pool } from "pg";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { PostgresAuthenticationStore } from "../../adapters/postgres/src/auth-store.ts";
@@ -10,8 +12,9 @@ import type { SalesCommand } from "../../packages/application/src/ports.ts";
 import type { TransferCommand } from "../../packages/application/src/transfer-ports.ts";
 import type { SalesListQuery, SalesReadScope } from "../../packages/application/src/sales-query-ports.ts";
 import { version } from "../../packages/domain/src/values.ts";
-import { integrationSettings } from "./safety.ts";
+import { integrationSettings, integrationSuite, requireCurrentIntegrationSuite } from "./safety.ts";
 import { expectSqlState, MIGRATIONS, openFreshDatabase } from "./database.ts";
+import { runSparseAcceptance, SPARSE_SCENARIOS } from "./sparse-acceptance.ts";
 import { assertDeferredBalanceFailure } from "./proof.ts";
 import { actor, ids, salesDraft, seedSyntheticReferences, syntheticId, SYNTHETIC_PASSWORD_SENTINEL, SYNTHETIC_REPLACED_SENTINEL,
   SYNTHETIC_TIME, transferActor, transferDraft } from "./fixtures.ts";
@@ -23,19 +26,28 @@ const parameters = (number: string | null = null): SalesListQuery => ({ filter: 
 const granted: SalesReadScope = { kind: "restricted", clauses: [{ hallId: ids.hall, warehouseId: ids.warehouse }] };
 const read = <P>(parameters: P, scope: SalesReadScope = granted) => ({ actor, scope, parameters, signal: new AbortController().signal });
 
-test("REAL PostgreSQL: explicit disposable target, migrations 0001–0005 and synthetic adapter validation", { timeout: 180000 }, async t => {
+test("REAL PostgreSQL: explicit disposable target and selected synthetic acceptance scenario", { timeout: 240000 }, async t => {
   // Fail closed, never skip, before Pool construction. This is an accident-prevention guard, not an authorization system.
   const settings = integrationSettings(process.env, true);
-  const database = await openFreshDatabase(settings);
+  const suite = integrationSuite(process.env);
+  requireCurrentIntegrationSuite(suite); // Preserve old source below, but never run it against incompatible current adapters.
+  const database = await openFreshDatabase(settings, { afterVersionFive: pool => seedSyntheticReferences(pool, { sparse: true }) });
   t.after(async () => { await database.close(); });
   const { pool } = database;
   t.diagnostic(`Actual PostgreSQL server_version_num=${database.serverVersion}; synthetic disposable target only`);
+  t.diagnostic(`Prepared scenarios: ${SPARSE_SCENARIOS.join("; ")}`);
+  await runSparseAcceptance(t, pool);
+});
+
+/** Preserved historical 0001–0005 test source only. Intentionally never registered or invoked:
+ * current adapters require 0007 key locks and 0008 semantics. Original evidence logs are unchanged. */
+async function historicalNativeAcceptanceSource(t: TestContext, pool: Pool): Promise<void> {
   await seedSyntheticReferences(pool);
   const sales = salesService(pool), transfers = transferService(pool), salesReader = new PostgresSalesQueryReader(pool);
   let salesLifecycleId = syntheticId("sales", 100), transferLifecycleId = syntheticId("transfer", 200);
 
   await t.test("all five exact migration versions applied once; synthetic account cannot log in", async () => {
-    assert.deepEqual((await pool.query("SELECT version FROM naijue_erp.schema_migration ORDER BY version")).rows.map(row => row.version), MIGRATIONS.map(([value]) => value));
+    assert.deepEqual((await pool.query("SELECT version FROM naijue_erp.schema_migration ORDER BY version")).rows.map(row => row.version), MIGRATIONS.slice(0, 5).map(([value]) => value));
     const { rows: [account] } = await pool.query("SELECT login_enabled,password_hash FROM naijue_erp.user_account WHERE id=$1", [ids.account]);
     assert.equal(account?.login_enabled, false); assert.equal(account?.password_hash, SYNTHETIC_PASSWORD_SENTINEL);
     assert.equal((await pool.query("SELECT COUNT(*)::integer AS count FROM naijue_erp.size WHERE code='SYNTHETIC_REPEAT'")).rows[0]?.count, 2);
@@ -352,4 +364,4 @@ test("REAL PostgreSQL: explicit disposable target, migrations 0001–0005 and sy
     assert.deepEqual(await commandSnapshot(pool, "TRANSFER", transferLifecycleId), before);
   });
   t.diagnostic("Suite reached its terminal assertions. Database intentionally retained for external disposable-lifecycle cleanup; no production/HTTP/media/end-to-end acceptance is implied.");
-});
+}

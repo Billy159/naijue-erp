@@ -17,7 +17,8 @@ export const ids = {
   category: syntheticId("category", 9), color: syntheticId("color", 10), fit: syntheticId("fit", 11), size: syntheticId("size", 12),
   otherSize: syntheticId("size", 13), group: syntheticId("sizeGroup", 14), product: syntheticId("product", 15),
   sku: syntheticId("sku", 16), uncoveredSku: syntheticId("sku", 17), method: syntheticId("paymentMethod", 18),
-  payment: syntheticId("paymentAccount", 19), image: "7e570000-0000-4000-8000-000000000014"
+  payment: syntheticId("paymentAccount", 19), image: "7e570000-0000-4000-8000-000000000014",
+  raceColor: syntheticId("color", 21), raceSku: syntheticId("sku", 22)
 };
 export const actor: ActorContext = { accountId: ids.account, hallId: ids.hall };
 export const transferActor: TransferActor = { ...actor, role: "SALESPERSON" };
@@ -26,8 +27,8 @@ export const SYNTHETIC_REPLACED_SENTINEL = "SYNTHETIC_REPLACED_STILL_NOT_A_PASSW
 const snapshot = { productCode: "SYNTHETIC_ONLY_PRODUCT", productName: "SYNTHETIC ONLY PRODUCT", colorName: "SYNTHETIC ONLY COLOR",
   fitName: "SYNTHETIC ONLY FIT", sizeName: "SYNTHETIC ONLY SIZE A", barcode: null };
 
-/** One atomic fixture insert after all five migrations. No existing objects/rows are updated or removed. */
-export async function seedSyntheticReferences(pool: Pool): Promise<void> {
+/** Historical synthetic references after 0005, before current party constraints. Not current-party CREATE acceptance. */
+export async function seedSyntheticReferences(pool: Pool, options: { readonly sparse?: boolean } = {}): Promise<void> {
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
@@ -53,8 +54,14 @@ export async function seedSyntheticReferences(pool: Pool): Promise<void> {
     await client.query("INSERT INTO naijue_erp.payment_method(id,name,enabled,version) VALUES($1,'SYNTHETIC ONLY METHOD',true,1)", [ids.method]);
     await client.query("INSERT INTO naijue_erp.payment_account(id,name,payment_method_id,enabled,version) VALUES($1,'SYNTHETIC ONLY PAYMENT REFERENCE',$2,true,1)", [ids.payment, ids.method]);
     await client.query("INSERT INTO naijue_erp.payment_account_hall(payment_account_id,hall_id) VALUES($1,$2)", [ids.payment, ids.hall]);
-    await client.query(`INSERT INTO naijue_erp.inventory_balance(warehouse_id,sku_id,quantity,version,updated_at)
+    if (!options.sparse) await client.query(`INSERT INTO naijue_erp.inventory_balance(warehouse_id,sku_id,quantity,version,updated_at)
       VALUES($1,$2,0,1,$3),($4,$2,0,1,$3)`, [ids.warehouse, ids.sku, SYNTHETIC_TIME, ids.toWarehouse]);
+    if (options.sparse) {
+      // One extra real coordinate leaves its other size not-applicable, and its stock keys absent for the race.
+      await client.query("INSERT INTO naijue_erp.color(id,code,name,enabled,version) VALUES($1,'SYNTHETIC_RACE_COLOR','SYNTHETIC RACE COLOR',true,1)", [ids.raceColor]);
+      await client.query(`INSERT INTO naijue_erp.sku(id,product_id,color_id,fit_id,size_id,sku_code,enabled,version)
+        VALUES($1,$2,$3,$4,$5,'SYNTHETIC_RACE_SKU',true,1)`, [ids.raceSku, ids.product, ids.raceColor, ids.fit, ids.size]);
+    }
     // Metadata-only reference, no actual file, image bytes or storage/network operation.
     await client.query(`INSERT INTO naijue_erp.product_image(id,product_id,file_ref,mime,byte_size,display_order,created_at,version)
       VALUES($1,$2,'synthetic:not-a-real-file','image/png',1,1,$3,1)`, [ids.image, ids.product, SYNTHETIC_TIME]);
@@ -91,7 +98,7 @@ export const SYNTHETIC_SALES_RULES: SalesBusinessRules = {
     const lines = document.lines.filter(line => line.isCurrent);
     assert.equal(document.header.orderDiscount, 0n);
     for (const line of lines) {
-      assert.ok([ids.sku, ids.uncoveredSku].includes(line.skuId)); assert.notEqual(line.quantity, 0n);
+      assert.ok([ids.sku, ids.uncoveredSku, ids.raceSku].includes(line.skuId)); assert.notEqual(line.quantity, 0n);
       assert.equal(line.lineAmount, multiplyMoney(line.dealPrice, line.quantity)); assert.equal(line.allocatedDiscount, 0n);
     }
     assert.equal(document.header.netDue, lines.reduce((sum, line) => sum + line.lineAmount, 0n));

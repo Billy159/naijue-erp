@@ -1,0 +1,4 @@
+Initial independent scoped tsc failed (2026-10-20 UTC)
+Node v24.19.0
+tests/integration/sparse-acceptance.ts(293,13): error TS7022: result implicitly has type any because it lacks an explicit annotation and is referenced directly or indirectly in its initializer.
+Exit 2; sent to owner for correction.

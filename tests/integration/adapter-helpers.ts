@@ -74,9 +74,13 @@ export async function contend<T>(pool: Pool, lockIdentity: string, work: () => r
     } while (Date.now() < deadline);
     assert.ok(waiters >= 2, "expected two actual PostgreSQL advisory-lock waiters before releasing the blocker");
   } finally {
-    try { await blocker.query("ROLLBACK"); } finally { blocker.release(); }
-    // Drain both requests even if the observation assertion fails; do not leak active commands into another test.
-    if (results) await results;
+    let discard: Error | undefined;
+    try { await blocker.query("ROLLBACK"); }
+    catch (error) { discard = error instanceof Error ? error : new Error("Integration blocker rollback failed"); throw error; }
+    finally {
+      // A failed blocker rollback must discard its connection, and cannot skip draining bounded command promises.
+      try { blocker.release(discard); } finally { if (results) await results; }
+    }
   }
   return results!;
 }
