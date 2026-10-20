@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { bindHistoricalBarcode, resolveBarcode } from "../packages/domain/src/barcodes.ts";
 import type { SkuBarcodeRow } from "../packages/domain/src/barcodes.ts";
+import type { SizeRow } from "../packages/domain/src/catalog.ts";
 import { validateSkuUniqueness } from "../packages/domain/src/catalog.ts";
 import { ids, sid, syntheticSku } from "./support/synthetic-fixtures.ts";
 
@@ -37,4 +38,15 @@ test("SYNTHETIC: identical binding is idempotent; disabled code is not silently 
   assert.deepEqual(bindHistoricalBarcode([primary], skus, { id: sid("barcode", 77), barcode: primary.barcode, skuId: ids.sku }), [primary]);
   assert.throws(() => bindHistoricalBarcode([{ ...primary, enabled: false }], skus, { id: sid("barcode", 77), barcode: primary.barcode, skuId: ids.sku }), { code: "BARCODE_DISABLED" });
   assert.throws(() => resolveBarcode([{ ...primary, enabled: false }], skus, primary.barcode), { code: "BARCODE_DISABLED" });
+});
+
+test("SYNTHETIC: source sizes preserve absent and repeated codes without inventing identity", () => {
+  const rows: readonly SizeRow[] = [
+    { id: sid("size", 801), code: null, name: "SYNTHETIC 无尺码" },
+    { id: sid("size", 802), code: "900", name: "SYNTHETIC 组A无尺码" },
+    { id: sid("size", 803), code: "900", name: "SYNTHETIC 组B无尺码" }
+  ];
+  assert.equal(rows[0]!.code, null);
+  assert.equal(rows[1]!.code, rows[2]!.code);
+  assert.notEqual(rows[1]!.id, rows[2]!.id);
 });

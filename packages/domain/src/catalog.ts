@@ -16,7 +16,8 @@ export interface SkuRow {
   readonly fitId: EntityId<"fit">; readonly sizeId: EntityId<"size">; readonly skuCode: string;
   readonly enabled: boolean; readonly version: Version;
 }
-export interface SizeRow { readonly id: EntityId<"size">; readonly code: string; readonly name: string }
+/** Source size code may be absent or repeat across groups; internal identity remains the ID. */
+export interface SizeRow { readonly id: EntityId<"size">; readonly code: string | null; readonly name: string }
 export interface SizeGroupRow { readonly id: EntityId<"sizeGroup">; readonly code: string; readonly name: string }
 export interface SeasonRow { readonly id: EntityId<"season">; readonly code: string; readonly name: string; readonly displayOrder: number }
 export interface SizeGroupMemberRow { readonly sizeGroupId: EntityId<"sizeGroup">; readonly sizeId: EntityId<"size">; readonly displayOrder: number }
