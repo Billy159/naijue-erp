@@ -1,0 +1,24 @@
+.auth-panel { color: #243246; font: 14px/1.5 system-ui, sans-serif; }
+.auth-panel *, .auth-password-dialog * { box-sizing: border-box; }
+.auth-form { display: grid; gap: 8px; max-width: 380px; margin: 20px auto; }
+.auth-form h2 { margin: 0 0 12px; font-size: 20px; }
+.auth-form label { font-weight: 600; }
+.auth-form input { width: 100%; height: 38px; padding: 8px 10px; border: 1px solid #cdd5df; border-radius: 5px; font: inherit; }
+.auth-panel button, .auth-password-dialog button { min-height: 34px; padding: 6px 14px; border: 1px solid #b9c5d4; border-radius: 5px; background: #fff; color: #243246; cursor: pointer; font: inherit; }
+.auth-form button[type=submit] { background: #176bd2; border-color: #176bd2; color: #fff; }
+.auth-panel button:disabled, .auth-password-dialog button:disabled { opacity: .55; cursor: wait; }
+.auth-panel :focus-visible, .auth-password-dialog :focus-visible { outline: 3px solid #8bbdff; outline-offset: 2px; }
+.auth-hint { margin: 3px 0 10px; color: #65748b; font-size: 12px; }
+.auth-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.auth-panel [role=alert], .auth-password-dialog [role=alert] { padding: 10px 12px; color: #a92b25; border: 1px solid #f1c4be; border-radius: 5px; background: #fff5f3; }
+.auth-panel > [role=status] { padding: 10px 12px; background: #f1f6fd; }
+.auth-session { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 12px 18px; border-bottom: 1px solid #e0e6ee; }
+.auth-session span { margin-left: 12px; color: #65748b; }
+.auth-password-dialog { width: min(440px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto; border: 1px solid #ccd5df; border-radius: 8px; padding: 22px; color: #243246; font: 14px/1.5 system-ui, sans-serif; }
+.auth-password-dialog::backdrop { background: rgb(18 30 46 / 35%); }
+.auth-password-dialog header { display: flex; align-items: center; justify-content: space-between; }
+.auth-password-dialog header h2 { margin: 0; font-size: 19px; }
+.auth-password-dialog header button { padding: 4px 10px; }
+.auth-password-dialog .auth-form { margin-bottom: 0; }
+.auth-cancel { display: block; margin: 14px auto; }
+@media (max-width: 520px) { .auth-form { padding: 0 14px; } .auth-password-dialog .auth-form { padding: 0; } .auth-session { align-items: stretch; flex-direction: column; } }

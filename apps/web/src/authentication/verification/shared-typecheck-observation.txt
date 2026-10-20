@@ -1,0 +1,16 @@
+adapters/postgres/src/party-maintenance-store.ts(16,3): error TS2322: Type '{ id: EntityId<"customer" | "supplier">; code: string; name: string; enabled: boolean; version: Version; createdAt: string | null; updatedAt: string | null; }' is not assignable to type 'PartyRecord'.
+  Type '{ id: EntityId<"customer" | "supplier">; code: string; name: string; enabled: boolean; version: Version; createdAt: string | null; updatedAt: string | null; }' is not assignable to type 'SupplierRecord'.
+    Types of property 'id' are incompatible.
+      Type 'EntityId<"customer" | "supplier">' is not assignable to type 'EntityId<"supplier">'.
+        Type 'EntityId<"customer" | "supplier">' is not assignable to type '{ readonly [entityIdBrand]: "supplier"; }'.
+          Types of property '[entityIdBrand]' are incompatible.
+            Type '"customer" | "supplier"' is not assignable to type '"supplier"'.
+              Type '"customer"' is not assignable to type '"supplier"'.
+packages/application/src/party-maintenance-service.ts(42,9): error TS2322: Type '{ id: EntityId<"customer" | "supplier">; code: string; name: string; enabled: true; version: Version; createdAt: string; updatedAt: string; }' is not assignable to type 'PartyRecord'.
+  Type '{ id: EntityId<"customer" | "supplier">; code: string; name: string; enabled: true; version: Version; createdAt: string; updatedAt: string; }' is not assignable to type 'SupplierRecord'.
+    Types of property 'id' are incompatible.
+      Type 'EntityId<"customer" | "supplier">' is not assignable to type 'EntityId<"supplier">'.
+        Type 'EntityId<"customer" | "supplier">' is not assignable to type '{ readonly [entityIdBrand]: "supplier"; }'.
+          Types of property '[entityIdBrand]' are incompatible.
+            Type '"customer" | "supplier"' is not assignable to type '"supplier"'.
+              Type '"customer"' is not assignable to type '"supplier"'.

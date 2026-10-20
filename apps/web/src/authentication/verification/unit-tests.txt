@@ -1,0 +1,23 @@
+✔ HTTP auth is inert, explicit HTTPS only, fixed same-origin cookie requests and exact DTOs (66.187337ms)
+✔ HTTP session null is truthful; unknown/secret response fields, identities, redirect and wrong statuses fail closed (32.379596ms)
+✔ HTTP validation rejects oversize/empty inputs without fetching and sanitizes errors (10.729183ms)
+✔ HTTP status mappings distinguish old-password rejection and expiry without retaining server messages (13.051426ms)
+✔ HTTP cancellation, timeout and late ignored fetch response never produce a successful login/retry (49.604877ms)
+✔ HTTP bounded stream and content validation; pending body aborts without exposing contents (23.590804ms)
+✔ controller requires lifecycle, starts without reads/secrets, and explicit resolve handles null/current/revisions (6.921082ms)
+✔ repeated login is single-shot; logout supersedes pending login, clears ReadContext and ignores late identity (2.906054ms)
+✔ cancelled session resolution never restores identity; explicit retry is distinct and late rejection is consumed (1.519002ms)
+✔ successful password change clears all scopes and requires explicit fresh login, no automatic relogin (4.383589ms)
+✔ old-password/policy rejection retain verified identity, real expiry/uncertain writes clear it (2.729218ms)
+✔ logout failure is not success, cancellation/disposal/expiry clear host context and detach late responses (6.652984ms)
+✔ cancelled password write cannot report success; login expiry and session failure remain truthful (4.429187ms)
+✔ known login expiry timer invalidates current reads without making a network request (21.062791ms)
+✔ absolute monotonic deadline rejects microtask-starved streams and late fetch before timer callbacks (31.446238ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3867.681313
