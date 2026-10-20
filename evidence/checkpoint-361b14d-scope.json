@@ -1,0 +1,43 @@
+{
+  "exact_commit": "361b14d1a1e7eeed58fd89be0c09e807608be9b5",
+  "method": "git archive exact commit to isolated checkpoint directory, installed pinned dependencies symlink, sequential checks",
+  "exit_code": 0,
+  "synthetic_tests": {
+    "passed": 729,
+    "failed": 0
+  },
+  "synthetic_dom_groups": {
+    "inventory_and_product": 14,
+    "authentication": 7,
+    "sales": 8,
+    "parties": 11,
+    "application": 8,
+    "total": 48
+  },
+  "checks": [
+    "dependency verification",
+    "root strict types",
+    "backend build",
+    "build smoke",
+    "all discovered pure tests",
+    "web types",
+    "split preview build",
+    "five DOM suites",
+    "bundled preview smoke"
+  ],
+  "log_sha256": "96121dfbdc08247eb0ebbb60fe2901f4118f8727e810a411103ba1a25c000558",
+  "warnings": [
+    "Actual Arco React19 element.ref deprecation warnings retained",
+    "Portable preview exceeds Page embedding size cap"
+  ],
+  "not_performed": [
+    "real PostgreSQL",
+    "browser screenshot/layout/performance",
+    "production deployment",
+    "GitHub push"
+  ],
+  "later_work_excluded": [
+    "opt-in measured inventory window renderer",
+    "native PostgreSQL inventory reader"
+  ]
+}
