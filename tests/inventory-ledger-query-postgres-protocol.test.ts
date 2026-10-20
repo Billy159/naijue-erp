@@ -1,0 +1,172 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import { readFileSync } from "node:fs";
+import { PostgresInventoryLedgerQueryReader } from "../adapters/postgres/src/inventory-ledger-query-reader.ts";
+import type { PgInventoryLedgerQueryClient, PgInventoryLedgerQueryPool, PgInventoryLedgerQueryResult } from "../adapters/postgres/src/inventory-ledger-query-reader.ts";
+import { DomainError } from "../packages/domain/src/errors.ts";
+import { inventoryLedgerBefore } from "../packages/application/src/inventory-ledger-query-validation.ts";
+import { inventoryId, ledgerBatchId, ledgerEntry, ledgerParameters, ledgerRead, ledgerSnapshot, ledgerWarehouse } from "./support/synthetic-inventory-ledger-query.ts";
+import type { InventoryLedgerEntry } from "../packages/application/src/inventory-ledger-query-contracts.ts";
+
+// SCRIPTED DRIVER ONLY: this does not connect to PostgreSQL or prove SQL execution, isolation, indexes or performance.
+type Row = Record<string, unknown>;
+const stages = (pool: ScriptedPool) => pool.calls.map(call => /\/\* inventory(?:-ledger)?:([a-z-]+) \*\//.exec(call.sql)?.[1] ?? call.sql);
+const code = (expected: string) => (error: unknown) => error instanceof DomainError && error.code === expected;
+function nativeEntry(entry: InventoryLedgerEntry): Row {
+  return { id: entry.id, operation_id: entry.operationId, event_kind: entry.eventKind, warehouse_id: ledgerWarehouse.id, sku_id: ledgerParameters().skuId,
+    quantity_delta: entry.quantityDelta, source_sales_line_id: entry.source.kind === "SALES" ? entry.source.salesLineId : null,
+    source_sales_id: entry.source.kind === "SALES" ? entry.source.salesId : null, source_transfer_line_id: entry.source.kind === "TRANSFER" ? entry.source.transferLineId : null,
+    source_transfer_id: entry.source.kind === "TRANSFER" ? entry.source.transferId : null, source_import_batch_id: entry.source.kind === "CUTOFF_BASELINE" ? entry.source.importBatchId : null,
+    endpoint: entry.source.endpoint, source_document_version: entry.sourceDocumentVersion, reverses_entry_id: entry.reversesEntryId, business_date: entry.businessDate, posted_at: entry.postedAt };
+}
+class ScriptedPool implements PgInventoryLedgerQueryPool, PgInventoryLedgerQueryClient {
+  calls: { sql: string; values: unknown[] }[] = []; releases: (Error | boolean | undefined)[] = []; connects = 0;
+  entries: InventoryLedgerEntry[] = [ledgerEntry(0), ledgerEntry(1, "TRANSFER"), ledgerEntry(2, "CUTOFF_BASELINE")];
+  transform: ((stage: string, rows: Row[]) => Row[]) | undefined;
+  failAt: string | undefined; failRollback = false; afterQuery: ((stage: string) => void) | undefined;
+  async connect() { this.connects++; return this; }
+  release(error?: Error | boolean) { this.releases.push(error); }
+  async query(sql: string, values: unknown[] = []): Promise<PgInventoryLedgerQueryResult> {
+    this.calls.push({ sql, values: structuredClone(values) }); const stage = /\/\* inventory(?:-ledger)?:([a-z-]+) \*\//.exec(sql)?.[1] ?? sql;
+    if (stage === this.failAt || (stage === "ROLLBACK" && this.failRollback)) throw new Error(`SYNTHETIC PRIVATE ${stage} failure`);
+    let rows: Row[];
+    switch (stage) {
+      case "warehouse": rows = [{ id: ledgerWarehouse.id, hall_id: ledgerWarehouse.hallId, name: ledgerWarehouse.label }]; break;
+      case "sku": {
+        const s = ledgerSnapshot(ledgerRead()).data.sku;
+        rows = [{ id: s.id, sku_code: s.code, product_id: s.product.id, product_code: s.product.code, product_name: s.product.name,
+          color_id: s.color.id, color_name: s.color.label, fit_id: s.fit.id, fit_code: s.fit.code, fit_name: s.fit.label,
+          size_group_id: s.sizeGroup.id, size_group_name: s.sizeGroup.label, size_id: s.size.id, size_code: s.size.code, size_name: s.size.label, size_member: true }]; break;
+      }
+      case "publication": {
+        const counts = { WAREHOUSE: 1, SKU: 1, INVENTORY_LEDGER: 1, IMPORT_BATCH: 1 };
+        rows = [{ id: ledgerBatchId, completed: true, final_approval: true, warehouse_published: true, sku_published: true,
+          checkpoint: { sequence: 3, cursor: 4, counts, expected: counts } }]; break;
+      }
+      case "guards": rows = [{ integrity_guards_present: true }]; break;
+      case "entries": {
+        const after = values[3] === null ? null : { postedAt: values[3] as string, entryId: values[4] as InventoryLedgerEntry["id"] };
+        rows = this.entries.filter(entry => after === null || inventoryLedgerBefore({ postedAt: entry.postedAt, entryId: entry.id }, after)).slice(0, Number(values[5])).map(nativeEntry); break;
+      }
+      default: assert.ok(["BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY", "COMMIT", "ROLLBACK"].includes(stage), `Unexpected scripted SQL stage ${stage}`); rows = [];
+    }
+    rows = this.transform?.(stage, rows) ?? rows; this.afterQuery?.(stage); return { rows, rowCount: rows.length };
+  }
+}
+
+test("SCRIPTED ledger PG: inert constructor, same native exact-key RR READ ONLY snapshot and three distinct provenance variants", async () => {
+  const pool = new ScriptedPool(); const reader = new PostgresInventoryLedgerQueryReader(pool); assert.equal(pool.connects, 0);
+  const result = await reader.readLedger(ledgerRead()); assert.equal(pool.connects, 1);
+  assert.deepEqual(stages(pool), ["BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY", "warehouse", "sku", "publication", "guards", "entries", "COMMIT"]);
+  assert.deepEqual(pool.releases, [undefined]); assert.equal(result.readiness, "ready"); assert.notEqual(result.readReference, ledgerBatchId);
+  assert.deepEqual(result.data.entries.map(entry => entry.source.kind), ["SALES", "TRANSFER", "CUTOFF_BASELINE"]);
+  assert.equal(result.data.entries[0]!.quantityDelta, "-9223372036854775808"); assert.equal(result.data.entries[2]!.sourceDocumentVersion, null);
+  assert.equal(result.data.sku.size.label, "170/M full native size"); assert.equal(result.data.sku.fit.label, "Y版（修身）"); assert.equal(result.data.entries[0]!.postedAt, "2026-10-20T18:20:30.123456Z");
+  const page = pool.calls.find(call => call.sql.includes("inventory-ledger:entries"))!;
+  assert.deepEqual(page.values, [ledgerWarehouse.id, ledgerWarehouse.hallId, ledgerParameters().skuId, null, null, 21]);
+  assert.ok(page.sql.includes("l.warehouse_id = $1::uuid AND w.hall_id = $2::uuid AND l.sku_id = $3::uuid"));
+  assert.throws(() => new PostgresInventoryLedgerQueryReader({} as PgInventoryLedgerQueryPool), /explicit PostgreSQL pool/);
+});
+
+test("SCRIPTED ledger PG: keyset pagination stays exact across same-timestamp ties and a new top entry without OFFSET/count", async () => {
+  const pool = new ScriptedPool(); const reader = new PostgresInventoryLedgerQueryReader(pool);
+  const first = await reader.readLedger(ledgerRead(ledgerParameters({ pageSize: 1 }))); assert.equal(first.data.entries.length, 1); assert.ok(first.data.nextCursor);
+  pool.entries.unshift({ ...ledgerEntry(7), id: inventoryId("ledger", 11000), postedAt: "2026-10-20T18:20:30.123457Z" });
+  const second = await reader.readLedger(ledgerRead(ledgerParameters({ pageSize: 1, after: first.data.nextCursor })));
+  assert.equal(second.data.entries[0]!.id, ledgerEntry(1).id); assert.notEqual(second.data.entries[0]!.id, first.data.entries[0]!.id); assert.ok(second.data.nextCursor);
+  const third = await reader.readLedger(ledgerRead(ledgerParameters({ pageSize: 1, after: second.data.nextCursor })));
+  assert.equal(third.data.entries[0]!.source.kind, "CUTOFF_BASELINE"); assert.equal(third.data.nextCursor, null);
+  const pages = pool.calls.filter(call => call.sql.includes("inventory-ledger:entries"));
+  assert.deepEqual(pages[1]!.values.slice(3), [first.data.nextCursor.postedAt, first.data.nextCursor.entryId, 2]);
+  assert.ok(pages.every(call => call.sql.includes("(l.posted_at, l.id) < ($4::timestamptz, $5::uuid)") && call.sql.includes("ORDER BY l.posted_at DESC, l.id DESC LIMIT $6") && !/OFFSET|COUNT|SUM\(/i.test(call.sql)));
+});
+
+test("SCRIPTED ledger PG: empty ready history is not missing key/publication proof; nullable/duplicate size code is not global identity", async () => {
+  const pool = new ScriptedPool(); pool.entries = [];
+  pool.transform = (stage, rows) => stage === "sku" ? rows.map(row => ({ ...row, size_code: null })) : rows;
+  const result = await new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead());
+  assert.deepEqual(result.data.entries, []); assert.equal(result.data.nextCursor, null); assert.equal(result.data.sku.size.code, null); assert.equal(result.readiness, "ready");
+});
+
+for (const [name, target, mutate, expected] of [
+  ["stale hall", "warehouse", (rows: Row[]) => rows.map(row => ({ ...row, hall_id: inventoryId("hall", 999) })), "INVENTORY_INTEGRITY_FAILED"],
+  ["stale warehouse label", "warehouse", rows => rows.map(row => ({ ...row, name: "stale invented label" })), "INVENTORY_INTEGRITY_FAILED"],
+  ["missing authorized warehouse", "warehouse", _rows => [], "FORBIDDEN"],
+  ["missing exact SKU", "sku", _rows => [], "SKU_NOT_FOUND"],
+  ["wrong size group", "sku", rows => rows.map(row => ({ ...row, size_member: false })), "INVENTORY_INTEGRITY_FAILED"],
+  ["missing publication guards", "guards", rows => rows.map(row => ({ ...row, integrity_guards_present: false })), "INVENTORY_INTEGRITY_FAILED"],
+  ["no published cutoff", "publication", _rows => [], "INVENTORY_NOT_READY"],
+  ["multiple published cutoffs", "publication", rows => [...rows, rows[0]!], "INVENTORY_INTEGRITY_FAILED"],
+  ["incomplete final approval", "publication", rows => rows.map(row => ({ ...row, final_approval: false })), "INVENTORY_INTEGRITY_FAILED"],
+  ["unpublished exact SKU", "publication", rows => rows.map(row => ({ ...row, sku_published: false })), "INVENTORY_NOT_READY"],
+  ["unpublished exact warehouse", "publication", rows => rows.map(row => ({ ...row, warehouse_published: false })), "INVENTORY_NOT_READY"]
+] satisfies [string, string, (rows: Row[]) => Row[], string][]) test(`SCRIPTED ledger PG: ${name} rejects before ledger disclosure`, async () => {
+  const pool = new ScriptedPool(); pool.transform = (stage, rows) => stage === target ? mutate(rows) : rows;
+  await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead()), code(expected)); assert.equal(stages(pool).at(-1), "ROLLBACK"); assert.ok(!stages(pool).includes("entries"));
+});
+
+for (const [name, mutate] of [
+  ["wrong ledger warehouse", (row: Row) => ({ ...row, warehouse_id: inventoryId("warehouse", 999) })],
+  ["wrong ledger SKU", row => ({ ...row, sku_id: inventoryId("sku", 999) })],
+  ["mixed native source", row => ({ ...row, source_import_batch_id: ledgerBatchId })],
+  ["missing source document", row => ({ ...row, source_sales_id: null })],
+  ["zero delta", row => ({ ...row, quantity_delta: "0" })],
+  ["invalid timestamp", row => ({ ...row, posted_at: "2026-02-30T00:00:00.000000Z" })],
+  ["bad endpoint", row => ({ ...row, endpoint: "https://invented.example/" })]
+] satisfies [string, (row: Row) => Row][]) test(`SCRIPTED ledger PG: ${name} rolls back rather than returning partial history`, async () => {
+  const pool = new ScriptedPool(); pool.transform = (stage, rows) => stage === "entries" ? rows.map((row, n) => n === 0 ? mutate(row) : row) : rows;
+  await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead())); assert.equal(stages(pool).at(-1), "ROLLBACK"); assert.ok(!stages(pool).includes("COMMIT"));
+});
+
+test("SCRIPTED ledger PG: corrupt look-ahead, staged baseline, missing native label and driver overfetch fail whole page", async () => {
+  const cases: { pageSize: number; mutate: (stage: string, rows: Row[]) => Row[] }[] = [
+    { pageSize: 1, mutate: (stage, rows) => stage === "entries" ? rows.map((row, n) => n === 1 ? { ...row, quantity_delta: "0" } : row) : rows },
+    { pageSize: 20, mutate: (stage, rows) => stage === "entries" ? rows.map(row => row.source_import_batch_id ? { ...row, source_import_batch_id: inventoryId("operation", 999) } : row) : rows },
+    { pageSize: 1, mutate: (stage, rows) => stage === "sku" ? rows.map(row => ({ ...row, fit_name: null })) : rows },
+    { pageSize: 1, mutate: (stage, rows) => stage === "entries" ? [...rows, ...rows] : rows }
+  ];
+  for (const { pageSize, mutate } of cases) {
+    const pool = new ScriptedPool(); pool.transform = mutate;
+    await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(ledgerParameters({ pageSize }))));
+    assert.equal(stages(pool).at(-1), "ROLLBACK");
+  }
+});
+
+test("SCRIPTED ledger PG: invalid scope/cursor/actor and preabort do not connect; midread abort prevents following queries", async () => {
+  for (const read of [
+    { ...ledgerRead(), scope: { ...ledgerRead().scope, warehouses: [{ ...ledgerWarehouse, id: inventoryId("warehouse", 999) }] } },
+    { ...ledgerRead(), actor: { accountId: "invalid", hallId: null } as unknown as ReturnType<typeof ledgerRead>["actor"] },
+    { ...ledgerRead(), parameters: { ...ledgerParameters(), after: { postedAt: "invalid", entryId: inventoryId("ledger", 3) } } }
+  ]) { const pool = new ScriptedPool(); await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(read)); assert.equal(pool.connects, 0); }
+  const controller = new AbortController(); controller.abort(); const before = new ScriptedPool();
+  await assert.rejects(new PostgresInventoryLedgerQueryReader(before).readLedger(ledgerRead(undefined, controller.signal)), code("INVENTORY_READ_ABORTED")); assert.equal(before.connects, 0);
+  const midController = new AbortController(); const mid = new ScriptedPool(); mid.afterQuery = stage => { if (stage === "sku") midController.abort(); };
+  await assert.rejects(new PostgresInventoryLedgerQueryReader(mid).readLedger(ledgerRead(undefined, midController.signal)), code("INVENTORY_READ_ABORTED"));
+  assert.equal(stages(mid).at(-1), "ROLLBACK"); assert.ok(!stages(mid).includes("publication"));
+});
+
+test("SCRIPTED ledger PG: query/BEGIN/uncertain COMMIT/rollback failures release exactly once without retry", async () => {
+  for (const failAt of ["BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY", "entries", "COMMIT"]) {
+    const pool = new ScriptedPool(); pool.failAt = failAt; await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead()), /SYNTHETIC/);
+    assert.equal(pool.connects, 1); assert.equal(pool.releases.length, 1); assert.equal(pool.releases[0] instanceof Error, failAt !== "entries"); assert.ok(!stages(pool).includes("COMMIT") || failAt === "COMMIT");
+  }
+  const pool = new ScriptedPool(); pool.failAt = "entries"; pool.failRollback = true;
+  await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead()), AggregateError); assert.ok(pool.releases[0] instanceof Error); assert.equal(pool.releases.length, 1);
+});
+
+test("SOURCE CONTRACT ONLY ledger: no history materialization, aggregate, private imported payload, new database/pool or mutable source projection", () => {
+  const source = readFileSync(new URL("../adapters/postgres/src/inventory-ledger-query-reader.ts", import.meta.url), "utf8");
+  assert.ok(!/SELECT\s+\*|OFFSET|COUNT\(|SUM\(|INSERT INTO|UPDATE naijue_erp|DELETE FROM|\.listen\(|new Pool\(/i.test(source));
+  assert.ok(!source.includes("readPublishedCutoffScope(") && !source.includes("readInventory(") && !source.includes("readDetail("));
+  assert.ok(!/sl\.(?:sku_id|quantity|product_name_snapshot|is_current)|tl\.(?:sku_id|quantity|product_name_snapshot|is_current)/.test(source));
+  assert.ok(source.includes("sl.sales_id AS source_sales_id") && source.includes("tl.transfer_id AS source_transfer_id"));
+  assert.ok(source.includes("r.source_record_hash = b.source_hash") && !source.includes("b.source_hash AS"));
+  assert.ok(source.includes("ORDER BY b.id LIMIT 2") && source.includes("LIMIT $6"));
+  assert.ok(source.includes("s.size_id") && source.includes("m.size_group_id = p.size_group_id AND m.size_id = s.size_id"));
+});
+
+test("SCRIPTED ledger PG: abort while COMMIT completes suppresses direct-reader result without misreporting or rolling back completed read", async () => {
+  const pool = new ScriptedPool(); const controller = new AbortController(); pool.afterQuery = stage => { if (stage === "COMMIT") controller.abort(); };
+  await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(undefined, controller.signal)), code("INVENTORY_READ_ABORTED"));
+  assert.equal(stages(pool).at(-1), "COMMIT"); assert.equal(pool.releases.length, 1); assert.deepEqual(pool.releases, [undefined]);
+});

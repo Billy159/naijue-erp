@@ -1,0 +1,27 @@
+✔ independent: direct reader suppresses result when cancellation arrives during COMMIT (22.158851ms)
+✔ independent: cancellation at connect prevents later SQL and releases once (1.922912ms)
+✔ independent: cancellation at BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY prevents later SQL and releases once (1.97347ms)
+✔ independent: cancellation at warehouse prevents later SQL and releases once (1.388603ms)
+✔ independent: cancellation at sku prevents later SQL and releases once (1.240743ms)
+✔ independent: cancellation at publication prevents later SQL and releases once (1.944518ms)
+✔ independent: cancellation at entries prevents later SQL and releases once (2.04021ms)
+✔ independent: maximum page validates 201st row, returning exactly 200 and last-visible cursor (15.203732ms)
+✔ independent: bytewise UUID and six-fraction timestamp pagination crosses ties without duplicates (9.631008ms)
+✔ independent: out-of-order lookahead rejects complete page before COMMIT (2.428467ms)
+✔ independent: cross-SKU lookahead rejects complete page before COMMIT (1.580476ms)
+✔ independent: unpublished baseline lookahead rejects complete page before COMMIT (2.199519ms)
+✔ independent: sales source wrong endpoint rejects complete page before COMMIT (1.042044ms)
+✔ independent: transfer source missing owner rejects complete page before COMMIT (1.515493ms)
+✔ independent: baseline version not null rejects complete page before COMMIT (1.106078ms)
+✔ independent: actual six-digit UTC timestamps preserve microseconds and reject invalid dates/offsets (1.186178ms)
+✔ independent: cursor never grants a missing warehouse and forged hall scope is rejected (1.13313ms)
+✔ independent: output labels stay current-reference and unknown/private fields fail closed (5.644164ms)
+✔ independent: HTTP inject without listener protects private trusted errors and exact wire result (338.19539ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1205.310162

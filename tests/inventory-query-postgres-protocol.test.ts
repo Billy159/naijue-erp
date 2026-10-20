@@ -274,7 +274,10 @@ test("SOURCE CONTRACT ONLY: no global member/SKU preload, source-history reconci
   assert.ok(source.includes("WHERE s.product_id = ANY($1::uuid[])"));
   assert.ok(source.includes("WHERE s.product_id = ANY($9::uuid[])"));
   assert.ok(source.includes("FROM filtered_skus s WHERE NOT EXISTS"));
-  assert.ok(source.includes("required.table_name") && source.includes("required.trigger_name"));
+  const guards = readFileSync(new URL("../adapters/postgres/src/inventory-publication-guards.ts", import.meta.url), "utf8");
+  assert.ok(guards.includes("required.table_name") && guards.includes("required.trigger_name"));
+  assert.ok(source.includes('import { GUARD_CAPABILITY } from "./inventory-publication-guards.ts";'));
+  assert.ok(source.includes("query(GUARD_CAPABILITY)"));
   assert.ok(source.includes("ORDER BY b.id LIMIT 2"));
   assert.ok(source.includes("category.parent_id = $4::uuid"));
   assert.ok(source.includes("WHERE parent.parent_id IS NOT NULL) AS invalid_category_tree"));
