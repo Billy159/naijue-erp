@@ -1,0 +1,2 @@
+Command: node_modules/.bin/tsc --noEmit -p evidence/inventory-native-reader-independent-tsconfig.json
+Exit: 0

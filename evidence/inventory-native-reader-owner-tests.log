@@ -1,0 +1,31 @@
+✔ SYNTHETIC PG protocol: constructor is inert; one native RR read keeps negative, explicit zero, proven absence and nonexistent coordinates distinct (20.294189ms)
+✔ SYNTHETIC PG protocol: exact count/full-filter sum remain independent from stable bounded product pages and empty out-of-range page (53.821103ms)
+✔ SYNTHETIC PG protocol: warehouse filter narrows before native validation, summary, sparse page balance reads and display order (4.489513ms)
+✔ SYNTHETIC PG protocol: no publication rejects entire snapshot, including an empty visible page (2.207425ms)
+✔ SYNTHETIC PG protocol: missing guards rejects entire snapshot, including an empty visible page (2.082081ms)
+✔ SYNTHETIC PG protocol: off-page unpublished SKU rejects entire snapshot, including an empty visible page (3.124854ms)
+✔ SYNTHETIC PG protocol: unsupported deeper native category hierarchy rejects entire snapshot, including an empty visible page (1.561547ms)
+✔ SYNTHETIC PG protocol: off-page missing group sizes rejects entire snapshot, including an empty visible page (0.631066ms)
+✔ SYNTHETIC PG protocol: off-page SKU outside product size group rejects entire snapshot, including an empty visible page (1.5855ms)
+✔ SYNTHETIC PG protocol: off-page corrupt sparse balance rejects entire snapshot, including an empty visible page (1.205698ms)
+✔ SYNTHETIC PG protocol: stale native hall rejects entire snapshot, including an empty visible page (0.791445ms)
+✔ SYNTHETIC PG protocol: unpublished warehouse rejects entire snapshot, including an empty visible page (0.594535ms)
+✔ SYNTHETIC PG protocol: no silent truncation of size, SKU or balance set queries (36.594454ms)
+✔ SYNTHETIC PG protocol: bounded fact rows cannot bypass the pre-allocation matrix work limit (32.92906ms)
+✔ SYNTHETIC PG protocol: corrupt page identity, duplicate SKU coordinate, missing sizes and invalid stock never become zero (7.2841ms)
+✔ SYNTHETIC PG protocol: aggregate arithmetic exceeds signed bigint without narrowing individual native quantity strings (3.479581ms)
+✔ SYNTHETIC PG protocol: all identity filters are parameters in the full-filter count/summary and fit page queries (1.919711ms)
+✔ SYNTHETIC PG protocol: bounded candidates use same snapshot, literal parameterized search and no selectedIds grants or hidden selected page (5.000117ms)
+✔ SYNTHETIC PG protocol: candidate kinds select closed native relations, stable paging and native optional metadata (5.067418ms)
+✔ SYNTHETIC PG protocol: candidate readiness uses only returned catalogue IDs and never broad stock predicates (4.27113ms)
+✔ SYNTHETIC PG protocol: returned invalid/unready candidate is rejected, never silently removed from an exact page (1.685785ms)
+✔ SYNTHETIC PG protocol: abort and failures roll back, uncertain COMMIT discards, rollback failure aggregates without retry (2.961975ms)
+✔ SOURCE CONTRACT ONLY: no global member/SKU preload, source-history reconcile, Cartesian zero relation or application-side N+1 (1.014567ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 825.045993

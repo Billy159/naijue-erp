@@ -1,0 +1,7 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../adapters/postgres/src/inventory-query-reader.ts",
+    "../tests/inventory-query-postgres-protocol.test.ts"
+  ]
+}
