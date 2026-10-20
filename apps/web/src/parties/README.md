@@ -53,6 +53,12 @@ After dispatch, network/timeout/detach/malformed-success/5xx outcomes are treate
 conservatively as uncertain. Inputs, target, original CAS and key stay locked.
 Explicit recovery uses only real native GET receipt or POST exact replay. Receipt
 404 does not prove rollback; replay rejection cannot prove original uncommitted.
+Receipt/read/replay 403 cannot establish rollback either. While either kind has an
+unresolved command, a 403 stays a local failure and preserves its original key,
+target, CAS, name and enabled payload without expiring the host session or retrying
+the write. A fresh definitively rejected command with no other unresolved work
+retains the existing access-failure cleanup. Current 401 and trusted explicit
+identity/session/permission invalidation still clear both stores and recovery.
 Success is acknowledged only from a validated native result/receipt. This is the
 original operation result, not a reconstructed current record or optimistic rename.
 The source-style modal closes and refreshes only the last executed current list.
@@ -87,7 +93,9 @@ they do not block ordinary navigation or survive a new authenticated workspace.
 - Reuse current authentication lifecycle and ReadContext. Verified current ADMIN/
   WAREHOUSE is a maintenance-menu hint only. Server policy reauthorizes every
   command/read/receipt. No client actor/role is transmitted. The access-failure
-  callback connects redacted401/403 to the host's trusted lifecycle.
+  callback connects current redacted401, and403 only when no unresolved command
+  would be discarded, to the host's trusted lifecycle. It is not called for a
+  recoverable403 or a stale/aborted response.
 - Global schema/runtime readiness belongs startup/deployment, not a fabricated
   allowedActions/readiness API. An empty successful list never proves readiness.
 - PartyCandidateSelector opens only the exact independent enabled-only native page

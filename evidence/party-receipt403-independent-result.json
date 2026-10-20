@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "scope": "Separate unresolved party receipt/replay403 recovery repair, not rewritten application baseline",
+  "controllerSha256": "bd0c324fe40e5e57cc18a00179f27d2719fa5e604c37f3ec0eb39237a5dfc9ab",
+  "targetedTestsSha256": "3a8e69ae84842a444630b40fdbcd621f957704e9538b626b9c78f14a2ce3b421",
+  "readmeSha256": "d318759d0ab641b45a1e9a210cf697dbdb979281ba701883ae4cbdaafa53d772",
+  "checks": {
+    "unchangedOriginalComposedReproduction": "exit0 with preserved auth/editor/original replay",
+    "newIndependentActualComposedGroups": 3,
+    "independentlyExecutedOwnerTargetedTests": { "passed": 15, "failed": 0 },
+    "exactSourceHashes": "match",
+    "sealedApplicationBaselineEvidence": "unchanged"
+  },
+  "current401StillInvalidates": true,
+  "stale401And403IgnoredAfterReplacement": true,
+  "originalReplayBodyByteIdentical": true,
+  "newAutomaticRetryOrPermissionGrant": false,
+  "productionEditsByReviewer": false,
+  "scopeLimits": ["mocked HTTP/CSS", "no aggregate compiler", "no network/browser/server/DB", "no performance or visual acceptance"]
+}

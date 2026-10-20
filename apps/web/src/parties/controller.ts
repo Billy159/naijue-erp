@@ -39,17 +39,20 @@ export class PartyMaintenanceController {
   readonly client: PartyClient;
   readonly kind: PartyKind;
   readonly #options: PartyWorkspaceOptions;
+  readonly #hasOtherUnresolvedWrite: () => boolean;
   readonly #listeners = new Set<() => void>();
   #state: PartySnapshot = Object.freeze({ filterDraft: defaultFilterDraft(), editor: null, write: idleWrite(), listStale: false, disposed: false, notice: null });
   #read: AbortController | null = null;
   #write: AbortController | null = null;
   #generation = 0;
   readonly #abort = () => this.dispose();
-  constructor(kind: PartyKind, options: PartyWorkspaceOptions) {
+  /** The workspace supplies only its bounded sibling-kind recovery guard. */
+  constructor(kind: PartyKind, options: PartyWorkspaceOptions, hasOtherUnresolvedWrite: () => boolean = () => false) {
     validateKind(kind);
     if (!options.scope.active || typeof options.client?.list !== 'function' || typeof options.client.detail !== 'function' || typeof options.client.execute !== 'function'
-      || typeof options.client.receipt !== 'function' || typeof options.client.candidates !== 'function' || typeof options.newRequestKey !== 'function' || typeof options.onAccessFailure !== 'function') throw new TypeError('Explicit current party workspace dependencies are required.');
+      || typeof options.client.receipt !== 'function' || typeof options.client.candidates !== 'function' || typeof options.newRequestKey !== 'function' || typeof options.onAccessFailure !== 'function' || typeof hasOtherUnresolvedWrite !== 'function') throw new TypeError('Explicit current party workspace dependencies are required.');
     this.kind = kind; this.#options = Object.freeze({ ...options }); this.scope = options.scope; this.client = options.client;
+    this.#hasOtherUnresolvedWrite = hasOtherUnresolvedWrite;
     this.list = new LatestQuery({ scope: options.scope, execute: async read => {
       try { return validateList(await options.client.list(kind, read.parameters, read.signal), read.parameters); }
       catch (error) { if (!read.signal.aborted) this.#access(error); throw safeReadError(error); }
@@ -213,9 +216,9 @@ export class PartyMaintenanceController {
     } catch (error) {
       if (!this.#current(generation, request, 'write')) return false;
       const safe = error instanceof PartyClientError ? error : new PartyClientError('malformed-response', 'UNCONFIRMED_RESPONSE', 'uncertain');
-      this.#access(safe); if (!this.scope.active) return false;
       // A replay rejection cannot prove the original attempt did not commit.
       const uncertain = replay || !['rejected', 'not-sent'].includes(safe.outcome);
+      this.#access(safe, uncertain); if (!this.scope.active) return false;
       this.#publish({ ...this.#state, write: Object.freeze({ ...this.#state.write, phase: uncertain ? 'uncertain' : 'rejected', error: safe }), notice: uncertain ? '提交结果不确定。输入和原操作身份已保留；请先核实，不要重复新建。' : rejectionMessage(safe.code) }); return false;
     } finally { if (this.#write === request) this.#write = null; }
   }
@@ -229,8 +232,13 @@ export class PartyMaintenanceController {
   #current(generation: number, request: AbortController, channel: 'read' | 'write'): boolean {
     return this.scope.active && !this.#state.disposed && generation === this.#generation && !request.signal.aborted && (channel === 'read' ? this.#read : this.#write) === request;
   }
-  #access(error: unknown): void {
+  #access(error: unknown, hasUnresolvedWrite = this.hasUnresolvedWrite): void {
     if (!this.scope.active || !(error instanceof PartyClientError) || !['unauthenticated', 'forbidden'].includes(error.kind)) return;
+    // A denied read/replay is not a trusted identity revision or evidence that a
+    // previous dispatched command rolled back. Keep its immutable recovery state,
+    // including when the denial came from the other kind's independent store.
+    // A current 401 or explicit identity/permission invalidation still clears it.
+    if (error.kind === 'forbidden' && (hasUnresolvedWrite || this.#hasOtherUnresolvedWrite())) return;
     this.scope.dispose();
     try { this.#options.onAccessFailure(error); } catch { /* Already invalidated; never restore facts on host callback failure. */ }
   }
@@ -248,7 +256,12 @@ export function createPartyWorkspace(options: PartyWorkspaceOptions) {
   const controllers = new Map<PartyKind, PartyMaintenanceController>();
   return Object.freeze({ scope: options.scope, get(kind: PartyKind): PartyMaintenanceController {
     validateKind(kind); if (!options.scope.active) throw new TypeError('An active party workspace scope is required.');
-    let controller = controllers.get(kind); if (!controller) { controller = new PartyMaintenanceController(kind, options); controllers.set(kind, controller); } return controller;
+    let controller = controllers.get(kind);
+    if (!controller) {
+      const created = new PartyMaintenanceController(kind, options, () => controllers.get(kind === 'CUSTOMER' ? 'SUPPLIER' : 'CUSTOMER')?.hasUnresolvedWrite ?? false);
+      controllers.set(kind, created); controller = created;
+    }
+    return controller;
   }, canLeave: () => [...controllers.values()].every(controller => controller.canLeave()),
   dispose: () => { options.scope.dispose(); for (const controller of controllers.values()) controller.dispose(); controllers.clear(); },
   });

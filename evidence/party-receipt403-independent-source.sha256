@@ -1,0 +1,5 @@
+bd0c324fe40e5e57cc18a00179f27d2719fa5e604c37f3ec0eb39237a5dfc9ab  apps/web/src/parties/controller.ts
+3a8e69ae84842a444630b40fdbcd621f957704e9538b626b9c78f14a2ce3b421  apps/web/src/parties/receipt-access-recovery.test.ts
+d318759d0ab641b45a1e9a210cf697dbdb979281ba701883ae4cbdaafa53d772  apps/web/src/parties/README.md
+3b119f0e24eb19a6375f7a1cd85171f56f6e6f489c6e5ede4da51ea21d55c104  apps/web/src/application/routes/parties.tsx
+a11e11d6d0fc8f8fa34461b391632b41fc746886c067f11837940f5af4a98d02  apps/web/src/application/controller.ts

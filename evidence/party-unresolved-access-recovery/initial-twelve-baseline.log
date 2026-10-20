@@ -1,0 +1,124 @@
+✖ CUSTOMER receipt403 preserves exact unresolved atomic command and explicit receipt recovery (10.918862ms)
+✖ SUPPLIER receipt403 preserves exact unresolved atomic command and explicit receipt recovery (1.841414ms)
+✖ replay403 rejection cannot establish rollback and later explicit replay uses identical object/key/CAS/payload (1.770466ms)
+✖ sibling403 read does not discard another kind's submitting command (4.390636ms)
+✖ sibling403 read does not discard another kind's uncertain command (1.569298ms)
+✔ current401 during receipt still invalidates both party stores and host session (2.027628ms)
+✔ current401 during replay still invalidates both party stores and host session (1.870686ms)
+✔ current401 during sibling still invalidates both party stores and host session (1.759977ms)
+✔ late forbidden receipt after suspension cannot expire current identity or remove original recovery (3.704446ms)
+✔ late unauthenticated receipt after suspension cannot expire current identity or remove original recovery (2.982258ms)
+✔ ordinary403 still invalidates when there is no unresolved command, including a definitively rejected fresh submission (5.604959ms)
+✖ uncertain fresh403 cannot establish rollback and preserves the original command without automatic retry (1.311313ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 6
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 542.320257
+
+✖ failing tests:
+
+test at apps/web/src/parties/receipt-access-recovery.test.ts:46:55
+✖ CUSTOMER receipt403 preserves exact unresolved atomic command and explicit receipt recovery (10.918862ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/receipt-access-recovery.test.ts:56:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps/web/src/parties/receipt-access-recovery.test.ts:46:55
+✖ SUPPLIER receipt403 preserves exact unresolved atomic command and explicit receipt recovery (1.841414ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/receipt-access-recovery.test.ts:56:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps/web/src/parties/receipt-access-recovery.test.ts:68:1
+✖ replay403 rejection cannot establish rollback and later explicit replay uses identical object/key/CAS/payload (1.770466ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/receipt-access-recovery.test.ts:77:68)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps/web/src/parties/receipt-access-recovery.test.ts:84:59
+✖ sibling403 read does not discard another kind's submitting command (4.390636ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/receipt-access-recovery.test.ts:91:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps/web/src/parties/receipt-access-recovery.test.ts:84:59
+✖ sibling403 read does not discard another kind's uncertain command (1.569298ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/receipt-access-recovery.test.ts:91:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps/web/src/parties/receipt-access-recovery.test.ts:130:1
+✖ uncertain fresh403 cannot establish rollback and preserves the original command without automatic retry (1.311313ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/receipt-access-recovery.test.ts:134:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
