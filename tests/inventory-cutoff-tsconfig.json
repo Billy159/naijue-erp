@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../packages/application/src/inventory-cutoff-import.ts",
+    "../packages/application/src/inventory-cutoff-scope.ts",
+    "../adapters/postgres/src/inventory-cutoff-import-store.ts",
+    "../adapters/postgres/src/inventory-cutoff-scope-reader.ts",
+    "./inventory-cutoff-import.test.ts",
+    "./inventory-cutoff-postgres-protocol.test.ts",
+    "./inventory-cutoff-schema-contract.test.ts",
+    "./support/synthetic-cutoff-fixtures.ts"
+  ]
+}

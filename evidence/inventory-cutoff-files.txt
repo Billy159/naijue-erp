@@ -1,0 +1,11 @@
+adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql
+adapters/postgres/src/inventory-cutoff-import-store.ts
+adapters/postgres/src/inventory-cutoff-scope-reader.ts
+packages/application/src/inventory-cutoff-import.ts
+packages/application/src/inventory-cutoff-scope.ts
+tests/inventory-cutoff-import.test.ts
+tests/inventory-cutoff-postgres-protocol.test.ts
+tests/inventory-cutoff-schema-contract.test.ts
+tests/inventory-cutoff-tsconfig.json
+tests/support/synthetic-cutoff-fixtures.ts
+docs/inventory-cutoff-foundation.md

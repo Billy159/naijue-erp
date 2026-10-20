@@ -1,0 +1,33 @@
+✔ independent SQL composition: baseline cannot reach the old strict TRANSFER receipt-source branch (18.754924ms)
+✔ independent SQL access path: import checkpoint audit lookup has an IMPORT object/version index (4.46814ms)
+✖ independent bounded protocol: 500 shuffled signed baselines lock before writes and advance one exact checkpoint (81.40743ms)
+✔ independent bounded validation: record 501 and zero stock cannot start a transaction (4.770325ms)
+✔ independent failure protocol: uncertain COMMIT requests rollback and discards without automatic replay (61.448413ms)
+✔ independent failure protocol: failed baseline plus failed rollback returns both failures and discards (49.070761ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 651.75165
+
+✖ failing tests:
+
+test at evidence/inventory-cutoff-independent-probes.mjs:64:1
+✖ independent bounded protocol: 500 shuffled signed baselines lock before writes and advance one exact checkpoint (81.40743ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  501 !== 500
+  
+      at TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/evidence/inventory-cutoff-independent-probes.mjs:70:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 501,
+    expected: 500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

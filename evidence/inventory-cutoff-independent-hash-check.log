@@ -1,0 +1,17 @@
+adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql: OK
+adapters/postgres/src/inventory-cutoff-import-store.ts: OK
+adapters/postgres/src/inventory-cutoff-scope-reader.ts: OK
+packages/application/src/inventory-cutoff-import.ts: OK
+packages/application/src/inventory-cutoff-scope.ts: OK
+tests/inventory-cutoff-import.test.ts: OK
+tests/inventory-cutoff-postgres-protocol.test.ts: OK
+tests/inventory-cutoff-schema-contract.test.ts: OK
+tests/inventory-cutoff-tsconfig.json: OK
+tests/support/synthetic-cutoff-fixtures.ts: OK
+docs/inventory-cutoff-foundation.md: OK
+adapters/postgres/migrations/0001_runtime_sales.sql: OK
+adapters/postgres/migrations/0002_sales_pricing_facts.sql: OK
+adapters/postgres/migrations/0003_auth_sessions.sql: OK
+adapters/postgres/migrations/0004_transfer_runtime.sql: OK
+adapters/postgres/migrations/0005_product_read_fields.sql: OK
+adapters/postgres/migrations/0006_party_maintenance.sql: OK

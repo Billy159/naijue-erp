@@ -1,0 +1,13 @@
+{
+  "parent_commit": "5f6979d7b9aca304167a4b31d077c4355ed9e9b4",
+  "source_scope": "11 leaves verified against frozen manifest; previous migrations unchanged",
+  "checks": "44 focused +158 regression owner tests;6 independent probes; source-only review after two corrections",
+  "real_postgres": false,
+  "rollback": "Revert this commit before integration. Migration never executed; no database rollback claimed.",
+  "unfinished": [
+    "historical commands",
+    "native CREATE proof",
+    "sparse first use commands",
+    "full PostgreSQL inventory query"
+  ]
+}
