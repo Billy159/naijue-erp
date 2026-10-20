@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: backend plan-only selection has its own scenarios and the same exact eight migration bytes
+ok 1 - backend plan-only selection has its own scenarios and the same exact eight migration bytes
+  ---
+  duration_ms: 905.353128
+  type: 'test'
+  ...
+# Subtest: backend plan refuses absent, unknown and historical selections rather than choosing a default
+ok 2 - backend plan refuses absent, unknown and historical selections rather than choosing a default
+  ---
+  duration_ms: 1344.182796
+  type: 'test'
+  ...
+# Subtest: backend source wiring uses the same pre-Pool guards and never activates the preserved historical body
+ok 3 - backend source wiring uses the same pre-Pool guards and never activates the preserved historical body
+  ---
+  duration_ms: 25.770696
+  type: 'test'
+  ...
+# Subtest: backend engine source is storage-only, uses actual contention/constraint helpers and no unsafe seed/reset path
+ok 4 - backend engine source is storage-only, uses actual contention/constraint helpers and no unsafe seed/reset path
+  ---
+  duration_ms: 10.524597
+  type: 'test'
+  ...
+# Subtest: migration SQL source only: 0004_transfer_runtime.sql differs from frozen failure only by top-level IF CASE parentheses
+ok 5 - migration SQL source only: 0004_transfer_runtime.sql differs from frozen failure only by top-level IF CASE parentheses
+  ---
+  duration_ms: 36.050532
+  type: 'test'
+  ...
+# Subtest: migration SQL source only: 0008_runtime_sparse_first_use.sql differs from frozen failure only by top-level IF CASE parentheses
+ok 6 - migration SQL source only: 0008_runtime_sparse_first_use.sql differs from frozen failure only by top-level IF CASE parentheses
+  ---
+  duration_ms: 7.126701
+  type: 'test'
+  ...
+# Subtest: migration manifest source only: exact reviewed 0001-0008 hashes still match all source bytes
+ok 7 - migration manifest source only: exact reviewed 0001-0008 hashes still match all source bytes
+  ---
+  duration_ms: 25.049939
+  type: 'test'
+  ...
+# Subtest: migration fabricated diagnostic: filename, SQLSTATE and source position survive without driver text or secrets
+ok 8 - migration fabricated diagnostic: filename, SQLSTATE and source position survive without driver text or secrets
+  ---
+  duration_ms: 2.368862
+  type: 'test'
+  ...
+# Subtest: migration fabricated diagnostic: malformed or unavailable fields cannot leak arbitrary driver content
+ok 9 - migration fabricated diagnostic: malformed or unavailable fields cannot leak arbitrary driver content
+  ---
+  duration_ms: 1.552866
+  type: 'test'
+  ...
+# Subtest: deferred-COMMIT evidence assertion: missing sabotage or COMMIT cannot be mistaken for the intended failure
+ok 10 - deferred-COMMIT evidence assertion: missing sabotage or COMMIT cannot be mistaken for the intended failure
+  ---
+  duration_ms: 5.721483
+  type: 'test'
+  ...
+# Subtest: deferred-COMMIT evidence assertion: unrelated 23514, wrong state or missing validator context is rejected
+ok 11 - deferred-COMMIT evidence assertion: unrelated 23514, wrong state or missing validator context is rejected
+  ---
+  duration_ms: 2.255416
+  type: 'test'
+  ...
+# Subtest: deferred-COMMIT evidence assertion: accepts only complete synthetic assertion evidence, not database execution proof
+ok 12 - deferred-COMMIT evidence assertion: accepts only complete synthetic assertion evidence, not database execution proof
+  ---
+  duration_ms: 0.286301
+  type: 'test'
+  ...
+# Subtest: exact raw-engine assertion rejects an early unrelated error, missing SQL change and missing COMMIT
+ok 13 - exact raw-engine assertion rejects an early unrelated error, missing SQL change and missing COMMIT
+  ---
+  duration_ms: 1.769903
+  type: 'test'
+  ...
+# Subtest: raw constraint assertion requires exact message, SQLSTATE and whole function identity
+ok 14 - raw constraint assertion requires exact message, SQLSTATE and whole function identity
+  ---
+  duration_ms: 2.040014
+  type: 'test'
+  ...
+# Subtest: integration safety: missing gates fail, and ambient DATABASE_URL is never a fallback
+ok 15 - integration safety: missing gates fail, and ambient DATABASE_URL is never a fallback
+  ---
+  duration_ms: 3.236531
+  type: 'test'
+  ...
+# Subtest: integration safety: accepts only a dedicated explicitly repeated loopback test target
+ok 16 - integration safety: accepts only a dedicated explicitly repeated loopback test target
+  ---
+  duration_ms: 0.696853
+  type: 'test'
+  ...
+# Subtest: integration safety: rejects remote, production-like, privileged, ambiguous and option-overridden URLs
+ok 17 - integration safety: rejects remote, production-like, privileged, ambiguous and option-overridden URLs
+  ---
+  duration_ms: 1.419235
+  type: 'test'
+  ...
+# Subtest: integration safety: malformed and encoded credentials never appear in diagnostics
+ok 18 - integration safety: malformed and encoded credentials never appear in diagnostics
+  ---
+  duration_ms: 0.53031
+  type: 'test'
+  ...
+# Subtest: integration safety SQL-source regression: server address uses host(inet), not a subnet-bearing text cast
+ok 19 - integration safety SQL-source regression: server address uses host(inet), not a subnet-bearing text cast
+  ---
+  duration_ms: 14.365465
+  type: 'test'
+  ...
+# Subtest: integration safety: acceptance scenario is explicit, closed and never inferred from ambient database settings
+ok 20 - integration safety: acceptance scenario is explicit, closed and never inferred from ambient database settings
+  ---
+  duration_ms: 1.509784
+  type: 'test'
+  ...
+# Subtest: integration safety: historical migration prefix refuses before pool construction at current adapter revision
+ok 21 - integration safety: historical migration prefix refuses before pool construction at current adapter revision
+  ---
+  duration_ms: 0.590184
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3056.74251

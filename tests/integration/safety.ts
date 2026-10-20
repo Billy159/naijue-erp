@@ -41,14 +41,14 @@ export function safeTarget(settings: IntegrationSettings): string {
 }
 
 /** Acceptance scenario, not a production storage mode. Each invocation requires another fresh approved database. */
-export type IntegrationSuite = "native-0001-0005" | "sparse-0001-0008";
+export type IntegrationSuite = "native-0001-0005" | "sparse-0001-0008" | "backend-0001-0008";
 export function integrationSuite(env: Environment): IntegrationSuite {
   const value = env.NAIJUE_PG_TEST_SUITE;
-  if (value !== "native-0001-0005" && value !== "sparse-0001-0008") fail("explicit NAIJUE_PG_TEST_SUITE must be native-0001-0005 or sparse-0001-0008");
+  if (value !== "native-0001-0005" && value !== "sparse-0001-0008" && value !== "backend-0001-0008") fail("explicit NAIJUE_PG_TEST_SUITE must be native-0001-0005, sparse-0001-0008 or backend-0001-0008");
   return value;
 }
 
 /** Current adapters require 0007 inventory_key_lock even for previously covered balances. */
 export function requireCurrentIntegrationSuite(suite: IntegrationSuite): void {
-  if (suite !== "sparse-0001-0008") fail("native-0001-0005 is historical source only; current adapters require 0007/0008, so select sparse-0001-0008 on a fresh target");
+  if (suite !== "sparse-0001-0008" && suite !== "backend-0001-0008") fail("native-0001-0005 is historical source only; current adapters require 0007/0008, so select an explicit current 0001–0008 suite on a fresh target");
 }

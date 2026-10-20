@@ -20,3 +20,16 @@ export const SPARSE_SCENARIOS = [
   "two distinct documents really waiting on one absent inventory key, exact cumulative first-use outcome",
   "new sparse deferred corruption plus retained old transfer/reversal/source guards still reject"
 ] as const;
+
+/** Additional current-schema backend scenarios, not a compatibility storage path or login/HTTP acceptance. */
+export const BACKEND_SCENARIOS = [
+  "disabled-account authentication STORAGE: committed session, rollback, account/session locks, sentinel hash version invalidation and revocation",
+  "real schema rejects incoherent pricing intent, duplicate coordinate, invalid fit/image/numeric value and invalid session hash",
+  "same sales document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT",
+  "same transfer document distinct-key SAVE version-CAS and insertion races: two real waits, one winner and one VERSION_CONFLICT",
+  "signed independent RETURN/EXCHANGE native posting, settlement direction and linked inverse effects on current sparse scope",
+  "native scoped sales list/detail/history/statistics, literal search, hidden scope and page beyond end",
+  "native sales count/page share one real REPEATABLE READ snapshot across an intervening committed SAVE",
+  "native product basics, exact three-SKU/two-size specifications and image METADATA only",
+  "deferred transfer line-position uniqueness permits an actual two-line swap with sparse audit and no stock effect"
+] as const;

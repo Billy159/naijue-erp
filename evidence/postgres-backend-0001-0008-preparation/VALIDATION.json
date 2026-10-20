@@ -1,0 +1,60 @@
+{
+  "status": "SOURCE_ONLY_BACKEND_ENGINE_NOT_RUN",
+  "base_commit_not_a_backend_tested_revision": "bbee8e378dae2175c0c2d72b8c2e6e8f2f855745",
+  "suite": "backend-0001-0008",
+  "source_sha256": {
+    "tests/integration/backend-acceptance.ts": "ae67fd823d5c4ebc77fccc4cd21497577ee91146cdb14079d0717f06e00597e5",
+    "tests/integration/backend-source.test.ts": "91a1e2a191063b1a537bc6ba97124abbdad6c4ef2e8cd9287717f3daafa59e24",
+    "tests/integration/migration-manifest.ts": "4bc134f62232f85ebcd6353da6d5586ccf281a58af45005c52bfa16e51508a66",
+    "tests/integration/plan.ts": "1c00a3f685e385abe3fcb0f6b0bdc5b49c7edae250abadc73674590e3d9927e4",
+    "tests/integration/postgres.integration.test.ts": "3ae93136554e8371df19fbbe619f37d843a0c6a2753d6447c95d6db877075053",
+    "tests/integration/safety.ts": "a2488d99b04d5eb4ee1a59efdf7429b88669032c41783e359dcf823972188468",
+    "tests/integration/safety.test.ts": "67c695ee5520ea4ada9ac7273a4a63d37b73a49d5f9160aa9dbfc9ccaf2acf14"
+  },
+  "protected_source_unchanged_from_base_sha256": {
+    "tests/integration/sparse-acceptance.ts": "b9b53a9fe3f546fdccf6412cdc3f4d6cdc151542d55e67e38ccfe022fdda3dd3",
+    "tests/integration/fixtures.ts": "3705823c88a94b3810a05bbefa1f0b7bd98aec27647fc3ad1c7dce9f22a1eea0",
+    "tests/integration/database.ts": "aaab741db40d3667738e841d7582e510ff6c8762c369e469cd58a7b4352a9808",
+    "tests/integration/adapter-helpers.ts": "b1ffde72029b83926b73780cedaf2a21f7b4c1e0a62afc12aca06a84bdec4cc8"
+  },
+  "migration_sql_changed": false,
+  "new_database_or_engine_execution": false,
+  "checks": [
+    {
+      "command": "./node_modules/.bin/tsc --noEmit -p tests/integration/tsconfig.json",
+      "exit": 0,
+      "evidence": "typecheck.log",
+      "kind": "STATIC_ONLY"
+    },
+    {
+      "command": "node --test --test-reporter=tap tests/integration/safety.test.ts tests/integration/proof.test.ts tests/integration/migration-source.test.ts tests/integration/backend-source.test.ts",
+      "exit": 0,
+      "tests": 21,
+      "pass": 21,
+      "fail": 0,
+      "evidence": "source-regressions.tap",
+      "kind": "PURE_FABRICATED_SOURCE_ONLY"
+    },
+    {
+      "command": "node tests/integration/plan.ts --suite backend-0001-0008",
+      "exit": 0,
+      "evidence": "BACKEND-PLAN-ONLY.json",
+      "kind": "PLAN_ONLY_NO_CONNECTION"
+    },
+    {
+      "command": "node tests/integration/plan.ts --suite sparse-0001-0008",
+      "exit": 0,
+      "evidence": "SPARSE-PLAN-ONLY.json",
+      "kind": "PLAN_ONLY_NO_CONNECTION"
+    },
+    {
+      "command": "node --check for every tests/integration/*.ts file",
+      "exit": 0,
+      "evidence": "syntax-checks.log",
+      "kind": "SYNTAX_ONLY"
+    }
+  ],
+  "operator_proposal": "Prepared only; applicable exact fixed-enum patch dry-run and counterfactual syntax check passed. Full separately prepared supervisor/lifecycle requires parent review and explicit authorization; live holder unchanged.",
+  "prepared_full_supervisor_sha256": "e83cec90f6f1e4f822d68dd68b61b5e3e4a9e2b73791e0a3ed4ccd379f01f4b7",
+  "prepared_full_supervisor_exact_diff_sha256": "65754afaf28a7606d6a4c18ece11bf13c30a8a7da6e6d44a531253a5159bc6b2"
+}

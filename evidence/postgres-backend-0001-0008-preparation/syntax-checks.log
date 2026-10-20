@@ -1,0 +1,16 @@
+Source-only syntax checks; no engine execution
+PASS tests/integration/adapter-helpers.ts
+PASS tests/integration/backend-acceptance.ts
+PASS tests/integration/backend-source.test.ts
+PASS tests/integration/database.ts
+PASS tests/integration/fixtures.ts
+PASS tests/integration/migration-manifest.ts
+PASS tests/integration/migration-source.test.ts
+PASS tests/integration/plan.ts
+PASS tests/integration/postgres.integration.test.ts
+PASS tests/integration/proof.test.ts
+PASS tests/integration/proof.ts
+PASS tests/integration/safety.test.ts
+PASS tests/integration/safety.ts
+PASS tests/integration/sparse-acceptance.ts
+exit=0

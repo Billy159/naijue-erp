@@ -1,0 +1,4 @@
+PROPOSAL ONLY; no activation, hot reload, stop, provisioning, database or engine execution.
+Counterfactual fixed-enum supervisor node --check: exit=0.
+Proposal patch --dry-run against exact existing operator source: exit=0.
+The existing supervisor source and live holder are unchanged.
