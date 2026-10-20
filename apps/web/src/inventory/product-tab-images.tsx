@@ -25,27 +25,32 @@ const emptyImageSnapshot = () => idleImageSnapshot;
 const noImageSubscription = () => () => {};
 function ImagePreview(props: ProductDrawerContentProps & { readonly image: ProductImageSummary; readonly close: () => void }) {
   const attachmentId = useRef(0);
-  const [attachment, setAttachment] = useState<{ readonly parentScope: ReadScope; readonly imageId: string; readonly scope: ReadScope; readonly query: LatestQuery<ProductImageParameters, ProductImage> } | null>(null);
+  type Attachment = { readonly parentScope: ReadScope; readonly imageId: string; readonly scope: ReadScope; readonly query: LatestQuery<ProductImageParameters, ProductImage>; pending: boolean };
+  const [attachment, setAttachment] = useState<Attachment | null>(null);
+  const activeAttachment = useRef<Attachment | null>(null);
   const current = attachment?.parentScope === props.scope && attachment.imageId === props.image.id && attachment.scope.active ? attachment : null;
   const query = current?.query;
   const snapshot = useSyncExternalStore(query?.subscribe ?? noImageSubscription, query?.getSnapshot ?? emptyImageSnapshot, query?.getSnapshot ?? emptyImageSnapshot);
   const [decodeError, setDecodeError] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
-  const read = () => { setDecodeError(false); if (current?.scope.entityId) void current.query.run({ productId: current.scope.entityId, imageId: props.image.id }); };
+  const read = () => { setDecodeError(false); const value = activeAttachment.current; if (value?.parentScope === props.scope && value.imageId === props.image.id && value.scope.active && value.scope.entityId) { value.pending = false; void value.query.run({ productId: value.scope.entityId, imageId: value.imageId }); } };
   useEffect(() => {
     const scope = new ReadScope(props.scope.identity, `${props.scope.routeInstanceId}:image:${props.image.id}:${++attachmentId.current}`, props.scope.entityId, () => {});
     const query = new LatestQuery<ProductImageParameters, ProductImage>({ scope, execute: async read => {
       const data = await props.reader.readProductImage(read); assertProductImage(data, read.parameters); return data;
     } });
-    const next = { parentScope: props.scope, imageId: props.image.id, scope, query };
-    const dispose = () => { query.dispose(); scope.dispose(); setAttachment(value => value === next ? null : value); };
+    const next = { parentScope: props.scope, imageId: props.image.id, scope, query, pending: true };
+    const parameters = scope.entityId ? Object.freeze({ productId: scope.entityId, imageId: props.image.id }) : null;
+    const dispose = () => { next.pending = false; if (activeAttachment.current === next) activeAttachment.current = null; query.dispose(); scope.dispose(); setAttachment(value => value === next ? null : value); };
     props.scope.signal.addEventListener('abort', dispose, { once: true });
     if (props.scope.active) {
-      setAttachment(next); setDecodeError(false);
-      if (scope.entityId) void query.run({ productId: scope.entityId, imageId: props.image.id });
+      activeAttachment.current = next; setAttachment(next); setDecodeError(false);
+      queueMicrotask(() => {
+        if (activeAttachment.current === next && next.pending && scope.active && parameters) { next.pending = false; void query.run(parameters); }
+      });
     } else dispose();
-    return () => { props.scope.signal.removeEventListener('abort', dispose); query.dispose(); scope.dispose(); };
+    return () => { props.scope.signal.removeEventListener('abort', dispose); next.pending = false; if (activeAttachment.current === next) activeAttachment.current = null; query.dispose(); scope.dispose(); };
   }, [props.scope, props.image.id]);
   useEffect(() => {
     const element = dialog.current;

@@ -13,11 +13,12 @@ const dom = new JSDOM('<!doctype html><div id="root"></div>', { url: 'https://sy
 for (const key of ['window', 'document', 'HTMLElement', 'HTMLDialogElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 const dialogs = [];
-dom.window.HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', ''); dialogs.push({ kind: 'open', element: this }); };
+let onDialogOpen;
+dom.window.HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', ''); dialogs.push({ kind: 'open', element: this }); onDialogOpen?.(this); };
 dom.window.HTMLDialogElement.prototype.close = function () { this.removeAttribute('open'); dialogs.push({ kind: 'close', element: this }); };
 let root, act, restoreDispose;
 try {
-  const result = await build({ entryPoints: [path.join(here, 'product-drawer-lifecycle-entry.tsx')], outdir: temporary, bundle: true, splitting: true, metafile: true, platform: 'node', format: 'esm', packages: 'external', jsx: 'automatic', logLevel: 'warning' });
+  const result = await build({ entryPoints: [path.join(here, 'product-drawer-lifecycle-entry.tsx'), path.join(here, 'product-drawer-deferred-start-entry.tsx')], outdir: temporary, bundle: true, splitting: true, metafile: true, platform: 'node', format: 'esm', packages: 'external', jsx: 'automatic', logLevel: 'warning' });
   const entry = Object.entries(result.metafile.outputs).find(([, output]) => output.entryPoint?.endsWith('product-drawer-lifecycle-entry.tsx'));
   assert.ok(entry);
   assert.ok(entry[1].imports.some(item => item.kind === 'dynamic-import'), 'The tested host must retain a real lazy drawer import.');
@@ -47,7 +48,7 @@ try {
   const drawer = () => host.querySelector('.iw-product-drawer');
   const tab = label => [...host.querySelectorAll('[role=tab]')].find(element => element.textContent === label);
   const active = kind => requests.findLast(request => request.kind === kind && !request.read.signal.aborted);
-  const waitRead = async (kind, after = 0) => { await until(() => requests.length > after && active(kind), `Expected active ${kind} read`); return active(kind); };
+  const waitRead = async (kind, after = 0) => { await until(() => requests.length > after && active(kind), `Expected active ${kind} read`); await settle(); assert.equal(requests.slice(after).filter(request => request.kind === kind).length, 1, `Exactly one ${kind} transport start per actual action, including StrictMode replay`); return active(kind); };
   const base = (productId, name) => ({ productId, code: `CODE-${productId}`, name, categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null });
   const emptySpecs = productId => ({ productId, sizeGroup: null, colors: [], fits: [], sizes: [], skus: [] });
   const resolve = async (request, value) => { await act(async () => request.resolve(value)); await settle(); };
@@ -74,8 +75,7 @@ try {
   await act(async () => document.querySelector('link[rel=stylesheet]').dispatchEvent(new Event('load')));
   const first = await waitRead('base');
   const initial = requests.filter(request => request.kind === 'base');
-  assert.equal(initial.length, 2, 'Real StrictMode must replay the mounted product query effect');
-  assert.equal(initial[0].read.signal.aborted, true, 'StrictMode cleans the first query instance');
+  assert.equal(initial.length, 1, 'StrictMode replay must not start transport for the discarded query instance');
   assert.equal(first.read.signal.aborted, false, 'The replacement query remains live');
   assert.deepEqual(first.read.identity, identity('TEST-DRAWER-A'));
   assert.equal(first.read.parameters.productId, 'test-product-1');
@@ -87,8 +87,6 @@ try {
   assert.equal(dialogs.filter(event => event.element === mainDialog && event.kind === 'open').length, 2);
   assert.equal(dialogs.filter(event => event.element === mainDialog && event.kind === 'close').length, 1);
   assert.equal(document.activeElement, host.querySelector('[aria-label="关闭商品资料"]'));
-  await resolve(initial[0], base('test-product-1', 'STALE STRICTMODE QUERY'));
-  assert.doesNotMatch(host.textContent, /STALE STRICTMODE QUERY/);
   await resolve(first, base('test-product-1', 'CURRENT FIRST PRODUCT'));
   assert.match(host.textContent, /CURRENT FIRST PRODUCT/);
   const firstTab = tab('基础资料');
@@ -112,17 +110,25 @@ try {
   assert.equal(requests.filter(request => request.kind === 'original').length, 0, 'Image list does not prefetch originals');
   assert.ok(host.querySelector('img[loading=lazy]'));
   before = requests.length;
+  let immediatePreviewCloses = 0;
+  onDialogOpen = element => { if (element.matches('.pd-image-preview')) { immediatePreviewCloses++; element.querySelector('[aria-label="关闭图片预览"]').click(); } };
+  await click(host.querySelector('.pd-thumbnail'));
+  onDialogOpen = undefined; await settle();
+  assert.equal(immediatePreviewCloses, 2, 'The close-before-start probe must observe real preview StrictMode replay');
+  assert.equal(requests.slice(before).filter(request => request.kind === 'original').length, 0, 'Preview closed during attachment must not start its queued original read');
+  assert.equal(host.querySelector('.pd-image-preview'), null);
+  assert.ok(drawer());
+  before = requests.length;
   await click(host.querySelector('.pd-thumbnail'));
   const original = await waitRead('original', before);
   const originals = requests.slice(before).filter(request => request.kind === 'original');
-  assert.equal(originals.length, 2);
-  assert.equal(originals[0].read.signal.aborted, true);
+  assert.equal(originals.length, 1, 'StrictMode preview replay must start only one original-image read');
   assert.equal(original.read.parameters.imageId, 'TEST-IMAGE');
   assert.equal(original.read.entityId, 'test-product-1');
   await act(async () => original.reject(new Error('TEST synthetic original failure')));
   assert.match(host.querySelector('.pd-image-preview').textContent, /大图暂不可读取/);
-  await click(button('重试大图'));
-  const retriedOriginal = active('original');
+  before = requests.length; await click(button('重试大图'));
+  const retriedOriginal = await waitRead('original', before);
   await resolve(retriedOriginal, { productId: 'test-product-1', imageId: 'TEST-IMAGE', url: png });
   assert.ok(host.querySelector('.pd-image-preview img'));
   await act(async () => host.querySelector('.pd-image-preview').dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true })));
@@ -249,7 +255,43 @@ try {
   assert.ok(disposed.every(scope => !scope.active));
   assert.ok(requests.every(request => disposed.some(scope => scope.routeInstanceId === request.read.routeInstanceId && !scope.active)), 'Every queried descendant scope must be disposed after unmount');
   console.log('PASS StrictMode: already-inactive parent and final unmount retain no product facts or live descendant scopes.');
-  console.log('All shared product-drawer lifecycle regressions passed in real React StrictMode + jsdom; this is not real-browser visual/network acceptance.');
+  const deferredEntry = Object.entries(result.metafile.outputs).find(([, output]) => output.entryPoint?.endsWith('product-drawer-deferred-start-entry.tsx'));
+  assert.ok(deferredEntry);
+  const { useEffect, useProductRead, assertProductBasics } = await import(pathToFileURL(path.resolve(deferredEntry[0])).href);
+  const deferredContext = new ReadContext(identity('TEST-DEFERRED-CANCEL'));
+  const cancelledScope = deferredContext.createScope('TEST-DEFERRED-CANCEL-ROUTE', 'test-product-5');
+  const hookReads = [];
+  let controls, cancellations = 0;
+  function CancelBeforeMicrotask({ scope }) {
+    controls = useProductRead(scope, async read => { hookReads.push(read); return base(read.parameters.productId, 'EXPLICIT RETRY AFTER EARLY CANCEL'); }, assertProductBasics);
+    useEffect(() => { cancellations++; controls.cancel(); }, [scope]);
+    return h('p', null, controls.snapshot.phase);
+  }
+  root = createRoot(host);
+  await act(async () => root.render(h(StrictMode, null, h(CancelBeforeMicrotask, { scope: cancelledScope }))));
+  await settle();
+  assert.equal(cancellations, 2, 'The cancellation probe itself must undergo real StrictMode effect replay');
+  assert.equal(hookReads.length, 0, 'An explicit cancel during attachment must consume the queued initial start');
+  await act(async () => controls.read()); await settle();
+  assert.equal(hookReads.length, 1, 'Explicit retry after pre-microtask cancel starts exactly once');
+  assert.equal(hookReads[0].parameters.productId, 'test-product-5');
+  await act(async () => root.unmount()); root = null;
+  const abortedScope = deferredContext.createScope('TEST-DEFERRED-ABORT-ROUTE', 'test-product-6');
+  let abortEffects = 0;
+  function AbortBeforeMicrotask({ scope }) {
+    useProductRead(scope, async read => { hookReads.push(read); return base(read.parameters.productId, 'UNEXPECTED ABORTED START'); }, assertProductBasics);
+    useEffect(() => { abortEffects++; scope.dispose(); }, [scope]);
+    return null;
+  }
+  root = createRoot(host);
+  await act(async () => root.render(h(StrictMode, null, h(AbortBeforeMicrotask, { scope: abortedScope }))));
+  await settle();
+  assert.equal(abortEffects, 2);
+  assert.equal(hookReads.length, 1, 'A scope cancelled before the microtask never starts transport');
+  await act(async () => root.unmount()); root = null;
+  deferredContext.clear();
+  console.log('PASS deferred starts: real StrictMode effects replay, but discarded/cancelled/aborted attachments start zero transports; explicit retry starts exactly once.');
+  console.log('All shared product-drawer lifecycle regressions passed in real React StrictMode + jsdom with exact single-start basics/specs/images/original actions; this is not real-browser visual/network acceptance.');
 } finally {
   if (root && act) await act(async () => root.unmount());
   restoreDispose?.();

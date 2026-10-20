@@ -1,0 +1,21 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Exactly one base transport start per actual action, including StrictMode replay
+
+2 !== 1
+
+    at waitRead (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/inventory/tests/.deferred-start-negative-control.mjs:53:164)
+    at async file:///workspace/shared/naijue-erp-rewrite/apps/web/src/inventory/tests/.deferred-start-negative-control.mjs:78:17 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 2,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+Expected negative-control exit code: 1
