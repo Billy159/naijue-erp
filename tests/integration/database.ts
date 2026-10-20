@@ -9,6 +9,18 @@ import type { IntegrationSettings } from "./safety.ts";
 import { MIGRATIONS } from "./migration-manifest.ts";
 export { MIGRATIONS } from "./migration-manifest.ts";
 function refused(reason: string): never { throw new Error(`Fresh disposable database verification refused: ${reason}`); }
+
+/** Migration-only diagnostics: never retain SQL, credentials or arbitrary driver message/context fields. */
+export function migrationExecutionFailure(filename: (typeof MIGRATIONS)[number][1], error: unknown): Error {
+  const fields = error !== null && typeof error === "object" ? error : {};
+  const rawCode = "code" in fields ? fields.code : undefined;
+  const rawPosition = "position" in fields ? fields.position : undefined;
+  const code = typeof rawCode === "string" && /^[0-9A-Z]{5}$/u.test(rawCode) ? rawCode : "unknown";
+  const position = typeof rawPosition === "string" && /^[1-9][0-9]{0,9}$/u.test(rawPosition) ? rawPosition : "unknown";
+  return Object.assign(new Error(`Reviewed migration ${filename} failed (SQLSTATE ${code}; position ${position}). Database text omitted.`),
+    { name: "MigrationExecutionError", code, position, migration: filename });
+}
+
 export interface IntegrationDatabase {
   readonly pool: Pool;
   readonly serverVersion: number;
@@ -93,7 +105,9 @@ export async function openFreshDatabase(settings: IntegrationSettings, options: 
     const serverVersion = await assertFresh(guard, settings);
     for (let index = 0; index < sources.length; index++) {
       const migration = MIGRATIONS[index]!;
-      await guard.query(sources[index]!); // Each immutable migration owns its BEGIN/COMMIT.
+      // Each reviewed migration owns its BEGIN/COMMIT. Keep failures attributable without logging SQL or connection data.
+      try { await guard.query(sources[index]!); }
+      catch (error) { throw migrationExecutionFailure(migration[1], error); }
       const { rows } = await guard.query("SELECT version FROM naijue_erp.schema_migration ORDER BY version");
       const expected = MIGRATIONS.slice(0, index + 1).map(([version]) => version);
       if (JSON.stringify(rows.map(row => row.version)) !== JSON.stringify(expected)) refused(`migration registry differs after ${migration[1]}`);

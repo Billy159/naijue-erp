@@ -158,7 +158,7 @@ BEGIN
   expected_delta := CASE NEW.endpoint WHEN 'FROM' THEN -ln.quantity::numeric WHEN 'TO' THEN ln.quantity::numeric ELSE NULL END;
   IF NEW.event_kind = 'UNAPPROVE' THEN expected_delta := -expected_delta; END IF;
   IF h.stock_basis <> 'RUNTIME_LEDGER' OR NOT ln.is_current OR ln.sku_id <> NEW.sku_id
-    OR NEW.warehouse_id IS DISTINCT FROM CASE NEW.endpoint WHEN 'FROM' THEN h.from_warehouse_id WHEN 'TO' THEN h.to_warehouse_id ELSE NULL END
+    OR NEW.warehouse_id IS DISTINCT FROM (CASE NEW.endpoint WHEN 'FROM' THEN h.from_warehouse_id WHEN 'TO' THEN h.to_warehouse_id ELSE NULL END)
     OR NEW.quantity_delta::numeric IS DISTINCT FROM expected_delta OR h.business_date <> NEW.business_date
     OR h.version::bigint + 1 <> NEW.source_document_version
     OR (NEW.event_kind = 'APPROVE' AND h.status <> 'DRAFT') OR (NEW.event_kind = 'UNAPPROVE' AND h.status <> 'APPROVED') THEN
@@ -310,7 +310,7 @@ BEGIN
     OR a.object_id <> h.id OR a.action <> NEW.action
     OR h.updated_at IS DISTINCT FROM NEW.completed_at OR a.occurred_at IS DISTINCT FROM NEW.completed_at
     OR (NEW.action = 'APPROVE' AND (h.approved_by_account_id IS DISTINCT FROM NEW.actor_account_id OR h.approved_at IS DISTINCT FROM NEW.completed_at))
-    OR h.status <> CASE NEW.action WHEN 'APPROVE' THEN 'APPROVED' WHEN 'VOID' THEN 'VOID' ELSE 'DRAFT' END
+    OR h.status <> (CASE NEW.action WHEN 'APPROVE' THEN 'APPROVED' WHEN 'VOID' THEN 'VOID' ELSE 'DRAFT' END)
     OR jsonb_typeof(a.after_values) IS DISTINCT FROM 'object' OR jsonb_typeof(a.after_values->'lines') IS DISTINCT FROM 'array'
     OR (a.after_values - ARRAY['header', 'lines']) <> '{}'::jsonb
     OR a.after_values->'header' IS DISTINCT FROM naijue_erp.transfer_header_audit_values(h)

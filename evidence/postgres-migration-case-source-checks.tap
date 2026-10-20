@@ -1,0 +1,112 @@
+TAP version 13
+# Subtest: migration SQL source only: 0004_transfer_runtime.sql differs from frozen failure only by top-level IF CASE parentheses
+ok 1 - migration SQL source only: 0004_transfer_runtime.sql differs from frozen failure only by top-level IF CASE parentheses
+  ---
+  duration_ms: 85.312365
+  type: 'test'
+  ...
+# Subtest: migration SQL source only: 0008_runtime_sparse_first_use.sql differs from frozen failure only by top-level IF CASE parentheses
+ok 2 - migration SQL source only: 0008_runtime_sparse_first_use.sql differs from frozen failure only by top-level IF CASE parentheses
+  ---
+  duration_ms: 17.191839
+  type: 'test'
+  ...
+# Subtest: migration manifest source only: exact reviewed 0001-0008 hashes still match all source bytes
+ok 3 - migration manifest source only: exact reviewed 0001-0008 hashes still match all source bytes
+  ---
+  duration_ms: 71.759119
+  type: 'test'
+  ...
+# Subtest: migration fabricated diagnostic: filename, SQLSTATE and source position survive without driver text or secrets
+ok 4 - migration fabricated diagnostic: filename, SQLSTATE and source position survive without driver text or secrets
+  ---
+  duration_ms: 18.828234
+  type: 'test'
+  ...
+# Subtest: migration fabricated diagnostic: malformed or unavailable fields cannot leak arbitrary driver content
+ok 5 - migration fabricated diagnostic: malformed or unavailable fields cannot leak arbitrary driver content
+  ---
+  duration_ms: 7.816369
+  type: 'test'
+  ...
+# Subtest: deferred-COMMIT evidence assertion: missing sabotage or COMMIT cannot be mistaken for the intended failure
+ok 6 - deferred-COMMIT evidence assertion: missing sabotage or COMMIT cannot be mistaken for the intended failure
+  ---
+  duration_ms: 4.528801
+  type: 'test'
+  ...
+# Subtest: deferred-COMMIT evidence assertion: unrelated 23514, wrong state or missing validator context is rejected
+ok 7 - deferred-COMMIT evidence assertion: unrelated 23514, wrong state or missing validator context is rejected
+  ---
+  duration_ms: 1.622394
+  type: 'test'
+  ...
+# Subtest: deferred-COMMIT evidence assertion: accepts only complete synthetic assertion evidence, not database execution proof
+ok 8 - deferred-COMMIT evidence assertion: accepts only complete synthetic assertion evidence, not database execution proof
+  ---
+  duration_ms: 0.184682
+  type: 'test'
+  ...
+# Subtest: exact raw-engine assertion rejects an early unrelated error, missing SQL change and missing COMMIT
+ok 9 - exact raw-engine assertion rejects an early unrelated error, missing SQL change and missing COMMIT
+  ---
+  duration_ms: 1.29962
+  type: 'test'
+  ...
+# Subtest: raw constraint assertion requires exact message, SQLSTATE and whole function identity
+ok 10 - raw constraint assertion requires exact message, SQLSTATE and whole function identity
+  ---
+  duration_ms: 1.10157
+  type: 'test'
+  ...
+# Subtest: integration safety: missing gates fail, and ambient DATABASE_URL is never a fallback
+ok 11 - integration safety: missing gates fail, and ambient DATABASE_URL is never a fallback
+  ---
+  duration_ms: 3.683456
+  type: 'test'
+  ...
+# Subtest: integration safety: accepts only a dedicated explicitly repeated loopback test target
+ok 12 - integration safety: accepts only a dedicated explicitly repeated loopback test target
+  ---
+  duration_ms: 0.458721
+  type: 'test'
+  ...
+# Subtest: integration safety: rejects remote, production-like, privileged, ambiguous and option-overridden URLs
+ok 13 - integration safety: rejects remote, production-like, privileged, ambiguous and option-overridden URLs
+  ---
+  duration_ms: 0.788097
+  type: 'test'
+  ...
+# Subtest: integration safety: malformed and encoded credentials never appear in diagnostics
+ok 14 - integration safety: malformed and encoded credentials never appear in diagnostics
+  ---
+  duration_ms: 0.337271
+  type: 'test'
+  ...
+# Subtest: integration safety SQL-source regression: server address uses host(inet), not a subnet-bearing text cast
+ok 15 - integration safety SQL-source regression: server address uses host(inet), not a subnet-bearing text cast
+  ---
+  duration_ms: 17.387848
+  type: 'test'
+  ...
+# Subtest: integration safety: acceptance scenario is explicit, closed and never inferred from ambient database settings
+ok 16 - integration safety: acceptance scenario is explicit, closed and never inferred from ambient database settings
+  ---
+  duration_ms: 0.375345
+  type: 'test'
+  ...
+# Subtest: integration safety: historical migration prefix refuses before pool construction at current adapter revision
+ok 17 - integration safety: historical migration prefix refuses before pool construction at current adapter revision
+  ---
+  duration_ms: 0.235738
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2061.508229
