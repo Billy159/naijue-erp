@@ -1,0 +1,12 @@
+PASS built artifact: actual shared menu, exactly three enabled routes, truthful test notice, no initial/idle provider reads
+PASS actual inventory query: negative/zero/non-applicable cells, distinct FIT/full size labels; target-only product basics/specs/images and close cleanup
+PASS actual sales query/full-page readonly detail: inline test-only CSS readiness, no modal, exact synthetic sale+return, one target per action, Back during pending read cannot revive detail, list preserved without refetch
+PASS actual transfer route/query/full-page detail: native sparse matrix, current FIT/full size facts, blank vs unsupported cells, saved snapshots, action-only shared drawer, back clears detail without list refetch
+PASS actual artifact route/page/back/interruption cleanup: fresh scopes, no stale results or late detail revival, no external resource/network request or runtime error
+{
+  "file": "/workspace/shared/naijue-erp-rewrite/apps/web/preview-core-pages/artifacts/bc87b5bed2fb/three-core-pages-synthetic-test-only-bc87b5bed2fb.html",
+  "bytes": 1365449,
+  "sha256": "b058a56e353628bfaca294a608a1248d1b74ff4402d1b70bda70f6bd7c92baf5",
+  "groups": 5
+}
+JSDOM built-artifact DOM smoke only; not native-browser, screenshots/pixels, network waterfall/performance, real data or Space embed acceptance.
