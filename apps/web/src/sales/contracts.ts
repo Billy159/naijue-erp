@@ -1,4 +1,4 @@
-import type { SalesDetailQuery, SalesListQuery, SalesQueryPageSize, SalesSummary } from '../../../../packages/application/src/sales-query-ports.ts';
+import type { SalesDetail, SalesDetailQuery, SalesListQuery, SalesQueryPageSize, SalesSummary, SalesFilterReferenceKind, SalesFilterReference, SalesFilterReferenceQuery, SalesFilterReferencePage } from '../../../../packages/application/src/sales-query-ports.ts';
 import type { SalesDocument, SalesHeaderRow, SalesLineRow, SalesSettlementRow } from '../../../../packages/domain/src/documents.ts';
 import type { QueryRead } from '../loading/latest-query.ts';
 
@@ -9,22 +9,21 @@ export type SalesHeaderDto = ExactWire<SalesHeaderRow>;
 export type SalesLineDto = ExactWire<SalesLineRow>;
 export type SalesSettlementDto = ExactWire<SalesSettlementRow>;
 export interface SalesListDto { readonly page: number; readonly pageSize: SalesQueryPageSize; readonly exactTotal: string; readonly items: readonly SalesSummaryDto[] }
-export interface SalesDetailDto {
+export interface SalesDetailDto extends Pick<SalesDetail, 'stockBasis' | 'referenceNames' | 'settlementNames'> {
   readonly document: Omit<SalesDocument, 'header' | 'lines' | 'settlements'> & {
     readonly header: SalesHeaderDto; readonly lines: readonly SalesLineDto[]; readonly settlements: readonly SalesSettlementDto[];
   };
-  readonly stockBasis: 'RUNTIME_LEDGER' | 'CUTOFF_HISTORY';
 }
 export interface SalesReader {
   readList(read: QueryRead<SalesListQuery>): Promise<SalesListDto>;
   readDetail(read: QueryRead<SalesDetailQuery>): Promise<SalesDetailDto>;
 }
-export type SalesReferenceKind = 'hall' | 'salesperson' | 'customer' | 'warehouse';
-export interface SalesReference { readonly id: string; readonly label: string }
-export interface SalesReferenceParameters { readonly kind: SalesReferenceKind; readonly search: string; readonly page: number; readonly pageSize: 20 }
-export interface SalesReferencePage { readonly page: number; readonly exactTotal: string; readonly items: readonly SalesReference[] }
-/** Required host port. No candidate HTTP route is invented by this slice. The host
- * must provide bounded, authorized reference search, not an eagerly loaded catalog. */
+export type SalesReferenceKind = SalesFilterReferenceKind;
+export type SalesReference = SalesFilterReference;
+export type SalesReferenceParameters = SalesFilterReferenceQuery;
+export interface SalesReferencePage extends Omit<SalesFilterReferencePage, 'exactTotal'> { readonly exactTotal: string }
+/** Historical SALES FILTER references only. Never create/edit eligibility, and no
+ * unused catalog enumeration. The concrete reader uses /sales/references/query. */
 export interface SalesReferenceReader { readReferences(read: QueryRead<SalesReferenceParameters>): Promise<SalesReferencePage> }
 export interface SalesFilterDraft {
   readonly startDate: string; readonly endDate: string;

@@ -1,0 +1,14 @@
+a02563dafdb1a61c87d4d184b3b7f666c5bf67b73af581c5a4d3e8d61b6fef13  apps/web/src/sales/README.md
+a86512c4dde9e15b1ded82fda26236073bf34fdf6fa0133f1598fe3225142625  apps/web/src/sales/contracts.ts
+3106e4ebd844c52e7681c42386a97ac43c446e2a333ea70863c9f8b797c5a91d  apps/web/src/sales/detail-content.tsx
+327d8b0da1bd937439bac9215451a1df2f4ce9f3b254ff3804d15dd4700c4cb7  apps/web/src/sales/detail-host.tsx
+8c533ecbcb7e905b79ea865fedf205a39efb6a5a8ed40985e8dfdcca28049eb1  apps/web/src/sales/http-reader.ts
+8bcf0317f07da0f2a0ca54f95e01c95e310a1355a2f45784e436ce8f4089f662  apps/web/src/sales/index.ts
+c9df244d75b03ce0d155cea518d4f4144f10f51a6ef2430fffed9b78d6e2d9e9  apps/web/src/sales/reference-selector.tsx
+b0790891a35945ced8af4eecbdede9103de2424f9bced719851a69c7d96c1546  apps/web/src/sales/response-validation.ts
+6a4ba54f6f9cfbefc329ae4456c39c6eb5ed060222bf164aae0f33dd426e737e  apps/web/src/sales/sales-page.tsx
+25706ab4b313cdf3ac158051f52f86f83a6d0dd3cb26ce38a6bbc3887a00f700  apps/web/src/sales/sales.css
+a0d661157968f71d93d2d8df517f8372c7cdf3ba4150f08f70b29b1e318a30cd  apps/web/src/sales/sales.test.ts
+51eeaf4ceb282441e01611af55b0ce99f0aa9fb7cd48c128a34a3ef2b12fea9b  apps/web/src/sales/tests/dom-entry.tsx
+23c6b34677af0ea1c280439c12282c13159314e7bfea3b50475465ae11f2104e  apps/web/src/sales/tests/fixtures.ts
+98b37d3b7c25194d8c1e439ba28e07b6f83daf6f2f9095cf2eba507ead8a6f89  apps/web/src/sales/tests/run-dom-tests.mjs

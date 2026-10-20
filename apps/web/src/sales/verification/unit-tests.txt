@@ -1,18 +1,22 @@
-✔ sales money and counts remain exact beyond Number and preserve negative sign (3.328969ms)
-✔ sales filters project the committed shape, reject dates/UUID/status and trim literal number (2.850358ms)
-✔ list validates exact totals, bounded page/row membership, no coercion or hidden extensions (4.090439ms)
-✔ detail preserves independent RETURN snapshots, IDs, full size/FIT and nullable metadata (2.519472ms)
-✔ detail rejects wrong target lines, inactive rows, floating amounts, overflows and duplicate line identity (0.631382ms)
-✔ reference port rejects partial pages and noncanonical identities (0.413223ms)
-✔ HTTP construction is inert and one explicit list/detail call uses exact existing same-origin endpoints (22.245157ms)
-✔ malformed HTTP success cannot become an empty or successful sales result (7.22015ms)
-✔ safe HTTP status kinds remain errors, never successful zero pages (14.442929ms)
-✔ superseded/cancelled details and identity replacement discard transports that ignore signals (7.472273ms)
-ℹ tests 10
+✔ sales money and counts remain exact beyond Number and preserve negative sign (3.426114ms)
+✔ sales filters project the committed shape, reject dates/UUID/status and trim literal number (2.781372ms)
+✔ list validates exact totals, bounded page/row membership, no coercion or hidden extensions (2.478515ms)
+✔ detail preserves independent RETURN snapshots, IDs, full size/FIT and nullable metadata (2.418955ms)
+✔ detail rejects wrong target lines, inactive rows, floating amounts, overflows and duplicate line identity (1.934756ms)
+✔ reference port rejects partial pages and noncanonical identities (1.222096ms)
+✔ HTTP construction is inert and one explicit list/detail call uses exact existing same-origin endpoints (22.723425ms)
+✔ malformed HTTP success cannot become an empty or successful sales result (3.500729ms)
+✔ safe HTTP status kinds remain errors, never successful zero pages (14.618554ms)
+✔ superseded/cancelled details and identity replacement discard transports that ignore signals (2.421147ms)
+✔ named detail is required and nullable current salesperson matches its reference identity (0.671552ms)
+✔ settlement name records map one-to-one to exact settlement/account identities with historical and current facts distinct (2.460955ms)
+✔ concrete filter reference HTTP reader is inert and projects only the actual bounded endpoint contract (2.751252ms)
+✔ filter reference HTTP rejects invalid parameters before fetch and old/malformed candidate responses without fallback (3.388299ms)
+ℹ tests 14
 ℹ suites 0
-ℹ pass 10
+ℹ pass 14
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 588.181123
+ℹ duration_ms 475.995069

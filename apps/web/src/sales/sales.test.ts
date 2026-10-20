@@ -1,12 +1,13 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { LatestQuery } from '../loading/latest-query.ts';
 import { ReadContext } from '../loading/read-scope.ts';
 import { createSalesPageController } from './controller.ts';
 import { emptySalesFilter } from './contracts.ts';
-import type { SalesReader, SalesDetailDto } from './contracts.ts';
+import type { SalesReader, SalesDetailDto, SalesReferenceParameters, SalesReferencePage } from './contracts.ts';
 import { createSalesDetailQuery, pageFacts, salesCount, salesMoney, salesParameters, salesTarget } from './model.ts';
 import { salesDetailResponse, salesListResponse, salesReferencesResponse } from './response-validation.ts';
-import { createSalesHttpReader } from './http-reader.ts';
+import { createSalesHttpReader, createSalesFilterReferenceHttpReader } from './http-reader.ts';
 import { detail, summary, uuid } from './tests/fixtures.ts';
 const parameters = () => salesParameters(emptySalesFilter(), 20);
 const scope = () => new ReadContext({ accountId: 'TEST', sessionRevision: '1', permissionRevision: '1' }).createScope('TEST-SALES');
@@ -78,4 +79,42 @@ test('superseded/cancelled details and identity replacement discard transports t
   assert.equal(pending[0]?.signal.aborted, true); pending[0]!.resolve(detail(1)); pending[1]!.resolve(detail(2)); assert.equal((await old).status, 'discarded'); assert.equal((await current).status, 'success');
   const next = query.run(salesTarget(uuid(2))); context.replaceIdentity({ accountId: 'TEST', sessionRevision: '2', permissionRevision: '1' });
   assert.equal(pending[2]?.signal.aborted, true); assert.equal(query.getSnapshot().success, null); pending[2]!.resolve(detail(2)); assert.equal((await next).status, 'discarded');
+});
+
+test('named detail is required and nullable current salesperson matches its reference identity', () => {
+  const data = detail(); const { referenceNames: _references, settlementNames: _settlements, ...oldShape } = data;
+  assert.throws(() => salesDetailResponse(oldShape, salesTarget(uuid(1))));
+  assert.throws(() => salesDetailResponse({ ...data, referenceNames: { ...data.referenceNames, hallName: 17 } }, salesTarget(uuid(1))));
+  assert.throws(() => salesDetailResponse({ ...data, referenceNames: { ...data.referenceNames, salespersonName: 'NOT NULL' } }, salesTarget(uuid(1))));
+  assert.throws(() => salesDetailResponse({ ...data, document: { ...data.document, header: { ...data.document.header, salespersonId: uuid(19) } } }, salesTarget(uuid(1))));
+  assert.equal(data.referenceNames.hallName, 'TEST 当前营业厅');
+});
+test('settlement name records map one-to-one to exact settlement/account identities with historical and current facts distinct', () => {
+  const data = detail(); const names = data.settlementNames[0]!;
+  for (const invalid of [[], [names, names], [{ ...names, settlementId: uuid(999) }], [{ ...names, paymentAccountId: uuid(999) }], [{ ...names, accountNameSnapshot: null }], [{ ...names, currentMethodName: 17 }], [{ ...names, extra: true }]]) {
+    assert.throws(() => salesDetailResponse({ ...data, settlementNames: invalid }, salesTarget(uuid(1))));
+  }
+  const empty = { ...data, document: { ...data.document, settlements: [] }, settlementNames: [] };
+  assert.equal(salesDetailResponse(empty, salesTarget(uuid(1))), empty);
+  assert.notEqual(names.accountNameSnapshot, names.currentAccountName); assert.notEqual(names.methodNameSnapshot, names.currentMethodName);
+});
+test('concrete filter reference HTTP reader is inert and projects only the actual bounded endpoint contract', async () => {
+  const calls: { url: string; init: RequestInit }[] = [];
+  const reader = createSalesFilterReferenceHttpReader({ origin: 'https://synthetic.test', basePath: '/api', fetch: async (url, init) => { calls.push({ url, init }); return response({ page: 1, exactTotal: '1', items: [{ id: uuid(11), label: 'TEST 历史停用厅' }] }); } });
+  assert.equal(calls.length, 0);
+  const query = new LatestQuery<SalesReferenceParameters, SalesReferencePage>({ scope: scope(), execute: read => reader.readReferences(read) });
+  const outcome = await query.run({ kind: 'hall', search: '', page: 1, pageSize: 20 });
+  assert.equal(outcome.status, 'success'); assert.equal(calls.length, 1); assert.equal(calls[0]?.url, 'https://synthetic.test/api/sales/references/query');
+  assert.deepEqual(JSON.parse(calls[0]!.init.body as string), { kind: 'hall', search: '', page: 1, pageSize: 20 });
+  assert.equal(calls[0]?.init.credentials, 'same-origin'); assert.equal(calls[0]?.init.cache, 'no-store'); query.dispose();
+});
+test('filter reference HTTP rejects invalid parameters before fetch and old/malformed candidate responses without fallback', async () => {
+  let calls = 0;
+  const reader = createSalesFilterReferenceHttpReader({ origin: 'https://synthetic.test', basePath: '', fetch: async () => { calls++; return response({ page: 1, exactTotal: '1', items: [] }); } });
+  const query = new LatestQuery<SalesReferenceParameters, SalesReferencePage>({ scope: scope(), execute: read => reader.readReferences(read) });
+  for (const search of [' leading', 'trailing ', 'x\n', 'x'.repeat(201)]) {
+    assert.equal((await query.run({ kind: 'customer', search, page: 1, pageSize: 20 })).status, 'error');
+  }
+  assert.equal(calls, 0); assert.equal((await query.run({ kind: 'warehouse', search: '', page: 1, pageSize: 20 })).status, 'error');
+  assert.equal(calls, 1); assert.equal(query.getSnapshot().success, null); query.dispose();
 });

@@ -5,4 +5,5 @@ PASS DOM 4: detail only on click; stored snapshots/full labels/barcode/unknown m
 PASS DOM 5: new target is independent; Escape/cancel/close abort and discard late ignored-signal responses; cancelled facts do not reappear.
 PASS DOM 6: cancelling page-size retains applied size; identity/session/permission replacement clears list/detail and discards late facts.
 PASS DOM 7: StrictMode setup/cleanup replay does not dispose the live route, detail or reference lifecycle.
-All 7 synthetic DOM groups passed. No real browser, network, server, login, PostgreSQL, Demo pixels or performance acceptance.
+PASS DOM 8: concrete reference HTTP cancels on close/identity revocation and late responses cannot reopen candidates or restore old labels.
+All 8 synthetic DOM groups passed. No real browser, network, server, login, PostgreSQL, Demo pixels or performance acceptance.

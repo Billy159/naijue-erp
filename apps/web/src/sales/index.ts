@@ -1,4 +1,4 @@
-export { createSalesHttpReader } from './http-reader.ts';
+export { createSalesHttpReader, createSalesFilterReferenceHttpReader } from './http-reader.ts';
 export { createSalesPageController } from './controller.ts';
 export type { SalesPageController } from './controller.ts';
 export type { SalesReader, SalesReferenceReader, SalesReferenceParameters, SalesReferencePage, SalesReference, SalesListDto, SalesDetailDto, SalesSummaryDto } from './contracts.ts';

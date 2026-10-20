@@ -1,26 +1,37 @@
 {
-  "scope": "sales list and read-only detail frontend only",
-  "sourceManifestSha256": "edc49e1d75d9ad354b37b154ce0736d1dc6436886d01f883f1b5264efeee5276",
+  "scope": "Sales named-detail and authorized filter-reference frontend extension",
+  "baseCommit": "c79e9aaa2ad10c115b94474acdbff8dd8f3627a6",
+  "priorReviewedManifestSha256": "edc49e1d75d9ad354b37b154ce0736d1dc6436886d01f883f1b5264efeee5276",
+  "sourceManifestSha256": "ad43b2f076756510c4625cc740b58fb1c3d6da92011225e44967298aa5a95659",
+  "changedSourceManifestSha256": "98511e9d8a695e0bbec35c9c405933d170db32953bdf00eb715869c54ab25e95",
   "checks": {
     "scopedStrictTypes": "passed",
     "unitAndMockHttpTests": {
-      "passed": 10,
+      "passed": 14,
       "failed": 0
     },
     "syntheticDomGroups": {
-      "passed": 7,
+      "passed": 8,
       "failed": 0
     },
     "splitBrowserBundle": "passed",
     "sharedTypecheck": "passed"
   },
+  "independentExtensionReview": "pending",
+  "implemented": [
+    "required same-endpoint named detail DTO without compatibility fallback",
+    "authentic stored account/method names and separately labelled current renames",
+    "current same-detail reference names with nullable salesperson",
+    "concrete authorized bounded historical sales-filter reference reader",
+    "one-to-one settlement/account name validation",
+    "close/cancel/identity race protection"
+  ],
   "requiredRemaining": [
     "real root/router/auth/session lifecycle composition",
-    "real bounded authorized hall/staff/customer/warehouse candidate provider",
-    "approved named reference/payment-account detail DTO",
-    "new/edit/save/approve/unapprove/void UI and command workflows",
+    "real session/policy/PG provider registration",
+    "new/edit form eligibility providers and save/approve/unapprove/void UI",
     "history/statistics/export/print UI",
-    "aggregate test discovery",
+    "aggregate sales DOM/build check wiring",
     "real server/login/PostgreSQL/browser/Demo-pixel/performance acceptance"
   ],
   "notPerformed": [
@@ -37,6 +48,5 @@
   "changedPaths": [
     "apps/web/src/sales/**"
   ],
-  "frozenOn": "2026-10-20",
-  "integrationNote": "Parent removed trailing whitespace only from detail-content.tsx after independent review; original review manifest remains documented in report."
+  "frozenOn": "2026-10-20"
 }

@@ -53,11 +53,14 @@ export function salesListResponse(value: unknown, parameters: Readonly<SalesList
   return value as SalesListDto;
 }
 export function salesDetailResponse(value: unknown, parameters: Readonly<SalesDetailQuery>): SalesDetailDto {
-  const result = record(value, ['document', 'stockBasis']); choice(result.stockBasis, ['RUNTIME_LEDGER', 'CUTOFF_HISTORY']);
+  const result = record(value, ['document', 'stockBasis', 'referenceNames', 'settlementNames']); choice(result.stockBasis, ['RUNTIME_LEDGER', 'CUTOFF_HISTORY']);
   const document = record(result.document, ['header', 'lines', 'settlements']);
   const h = record(document.header, [...summaryFields, 'note', 'createdByAccountId', 'createdHallId', 'createdAt', 'updatedAt', 'approvedByAccountId', 'approvedAt']); header(h);
   if (h.id !== parameters.salesId) invalid(); nullableText(h.note); id('account', h.createdByAccountId); nullableId('hall', h.createdHallId);
   stamp(h.createdAt); stamp(h.updatedAt); nullableId('account', h.approvedByAccountId); if (h.approvedAt !== null) stamp(h.approvedAt);
+  const names = record(result.referenceNames, ['hallName', 'salespersonName', 'customerName', 'warehouseName']);
+  [names.hallName, names.customerName, names.warehouseName].forEach(text); nullableText(names.salespersonName);
+  if ((h.salespersonId === null) !== (names.salespersonName === null)) invalid();
   const lineIds = new Set<string>(); const lineNos = new Set<number>(); let previousLine = 0;
   for (const value of array(document.lines, 2000)) {
     const row = record(value, ['id', 'salesId', 'lineNo', 'skuId', 'quantity', 'referencePrice', 'dealPrice', 'pricingRule', 'discountTenths', 'zeroConfirmed', 'lineAmount', 'allocatedDiscount', 'isGift', 'snapshot', 'isCurrent']);
@@ -71,12 +74,21 @@ export function salesDetailResponse(value: unknown, parameters: Readonly<SalesDe
     const snapshot = record(row.snapshot, ['productCode', 'productName', 'colorName', 'fitName', 'sizeName', 'barcode']);
     [snapshot.productCode, snapshot.productName, snapshot.colorName, snapshot.fitName, snapshot.sizeName].forEach(text); nullableText(snapshot.barcode);
   }
-  const settlementIds = new Set<string>(); const settlementNos = new Set<number>(); let previousSettlement = 0;
+  const settlementIds = new Set<string>(); const settlementAccounts = new Map<string, string>(); const settlementNos = new Set<number>(); let previousSettlement = 0;
   for (const value of array(document.settlements, 3)) {
     const row = record(value, ['id', 'salesId', 'lineNo', 'paymentAccountId', 'direction', 'amount']);
     id('settlement', row.id); id('sales', row.salesId); id('paymentAccount', row.paymentAccountId); integer(row.lineNo); exact(row.amount, true); choice(row.direction, ['RECEIVE', 'REFUND']);
     if (row.salesId !== parameters.salesId || settlementIds.has(row.id) || settlementNos.has(row.lineNo) || row.lineNo < previousSettlement) invalid();
-    settlementIds.add(row.id); settlementNos.add(row.lineNo); previousSettlement = row.lineNo;
+    settlementIds.add(row.id); settlementAccounts.set(row.id, row.paymentAccountId); settlementNos.add(row.lineNo); previousSettlement = row.lineNo;
+  }
+  const settlementNames = array(result.settlementNames, 3); const seenNames = new Set<string>();
+  if (settlementNames.length !== settlementIds.size) invalid();
+  for (const value of settlementNames) {
+    const row = record(value, ['settlementId', 'paymentAccountId', 'accountNameSnapshot', 'methodNameSnapshot', 'currentAccountName', 'currentMethodName']);
+    id('settlement', row.settlementId); id('paymentAccount', row.paymentAccountId);
+    [row.accountNameSnapshot, row.methodNameSnapshot, row.currentAccountName, row.currentMethodName].forEach(text);
+    if (seenNames.has(row.settlementId) || settlementAccounts.get(row.settlementId) !== row.paymentAccountId) invalid();
+    seenNames.add(row.settlementId);
   }
   return value as SalesDetailDto;
 }

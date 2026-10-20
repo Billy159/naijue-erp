@@ -13,12 +13,19 @@ let root;
 try {
   const output = path.join(temp, 'dom-entry.mjs');
   await build({ entryPoints: [path.join(here, 'dom-entry.tsx')], outfile: output, bundle: true, platform: 'node', format: 'esm', packages: 'external', jsx: 'automatic', loader: { '.css': 'empty' }, logLevel: 'warning' });
-  const { act, createElement, StrictMode, createRoot, SalesPageHost, ReadContext, createSalesHttpReader, summary, detail, uuid } = await import(pathToFileURL(output).href);
+  const { act, createElement, StrictMode, createRoot, SalesPageHost, ReadContext, createSalesHttpReader, createSalesFilterReferenceHttpReader, summary, detail, uuid } = await import(pathToFileURL(output).href);
   const host = document.getElementById('root'); root = createRoot(host);
-  const calls = []; const candidateCalls = []; let failList = false; let holdSize = false; let heldSize; let holdDetails = false; const heldDetails = [];
+  const calls = []; const candidateCalls = []; let failList = false; let holdSize = false; let heldSize; let holdDetails = false; const heldDetails = []; let holdReferences = false; const heldReferences = [];
   const json = value => new Response(JSON.stringify(value), { headers: { 'content-type': 'application/json' } });
-  const reader = createSalesHttpReader({ origin: 'https://synthetic.test', basePath: '/api', fetch: async (url, init) => {
-    const body = JSON.parse(init.body); calls.push({ url, body, signal: init.signal });
+  const options = { origin: 'https://synthetic.test', basePath: '/api', fetch: async (url, init) => {
+    const body = JSON.parse(init.body);
+    if (url.endsWith('/sales/references/query')) {
+      candidateCalls.push({ url, body, signal: init.signal });
+      const data = { page: body.page, exactTotal: '1', items: [{ id: uuid(11), label: 'TEST 厅' }] };
+      if (holdReferences) return new Promise(resolve => heldReferences.push({ body, signal: init.signal, finish: () => resolve(json(data)) }));
+      return json(data);
+    }
+    calls.push({ url, body, signal: init.signal });
     if (url.endsWith('/sales/query')) {
       if (failList) { failList = false; return new Response('{}', { status: 500, headers: { 'content-type': 'application/json' } }); }
       const result = { page: body.page, pageSize: body.pageSize, exactTotal: '21', items: Array.from({ length: Math.max(0, Math.min(body.pageSize, 21 - (body.page - 1) * body.pageSize)) }, (_, i) => summary((body.page - 1) * body.pageSize + i + 1)) };
@@ -31,8 +38,9 @@ try {
       return json(detail(n));
     }
     throw new Error('Unexpected mocked endpoint');
-  } });
-  const references = { readReferences: async read => { candidateCalls.push(read); return { page: read.parameters.page, exactTotal: '1', items: [{ id: uuid(11), label: 'TEST 厅' }] }; } };
+  } };
+  const reader = createSalesHttpReader(options);
+  const references = createSalesFilterReferenceHttpReader(options);
   const context = new ReadContext({ accountId: 'TEST-DOM', sessionRevision: '1', permissionRevision: '1' }); const scope = context.createScope('TEST-SALES-ROUTE');
   const settle = async () => { await act(async () => { await new Promise(resolve => setTimeout(resolve, 10)); }); };
   const click = async element => { assert.ok(element, 'Expected clickable element'); await act(async () => element.click()); await settle(); };
@@ -44,7 +52,7 @@ try {
   assert.deepEqual([...host.querySelector('select[aria-label="每页销货单数"]').options].map(option => option.value), ['20', '50', '100', '200']);
   await click(button('高级筛选 ⌄')); assert.equal(calls.length, 0); assert.equal(candidateCalls.length, 0);
   console.log('PASS DOM 1: idle/advanced expansion reads nothing; actual 20/50/100/200 page sizes and approved primary/advanced filters.');
-  await click(host.querySelector('button[aria-label="营业厅"]')); assert.equal(candidateCalls.length, 1); assert.equal(candidateCalls[0].parameters.kind, 'hall'); assert.equal(candidateCalls[0].parameters.pageSize, 20);
+  await click(host.querySelector('button[aria-label="营业厅"]')); assert.equal(candidateCalls.length, 1); assert.equal(candidateCalls[0].body.kind, 'hall'); assert.equal(candidateCalls[0].body.pageSize, 20); assert.equal(candidateCalls[0].url, 'https://synthetic.test/api/sales/references/query'); assert.deepEqual(Object.keys(candidateCalls[0].body).sort(), ['kind', 'page', 'pageSize', 'search']);
   await act(async () => host.querySelector('[role="dialog"]').dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))); assert.equal(host.querySelector('[role="dialog"]'), null); assert.equal(document.activeElement, host.querySelector('button[aria-label="营业厅"]'));
   assert.equal(calls.length, 0); await submit(); assert.equal(calls.length, 1); assert.equal(calls[0].url, 'https://synthetic.test/api/sales/query');
   assert.equal(host.querySelectorAll('.sales-list tbody tr').length, 20); assert.match(host.textContent, /共 21 张/); assert.match(host.textContent, /-9007199254740993.01/);
@@ -58,6 +66,9 @@ try {
   const trigger = host.querySelector('.sales-view'); trigger.focus(); const beforeDetail = calls.length; await click(trigger);
   assert.equal(calls.length, beforeDetail + 1); assert.equal(calls.at(-1).url, 'https://synthetic.test/api/sales/detail/query');
   const dialog = () => host.querySelector('.sales-detail-dialog'); assert.ok(dialog()); assert.match(dialog().textContent, /TEST 保存商品 1/); assert.match(dialog().textContent, /165\/S/); assert.match(dialog().textContent, /Y版（修身）/); assert.match(dialog().textContent, /001234567890123/); assert.match(dialog().textContent, /未记录/); assert.match(dialog().textContent, /-9007199254740993.01/);
+  assert.match(dialog().textContent, /TEST 当前营业厅/); assert.match(dialog().textContent, /TEST 当前客户/); assert.match(dialog().textContent, /TEST 当前出库仓/);
+  assert.match(dialog().textContent, /TEST 保存账户/); assert.match(dialog().textContent, /TEST 保存方式/); assert.match(dialog().textContent, /现名称：TEST 现账户/); assert.match(dialog().textContent, /现名称：TEST 现方式/);
+  assert.doesNotMatch(dialog().textContent, /列表名称|名称暂不可用/);
   assert.equal(dialog().querySelectorAll('input,select,textarea').length, 0); assert.doesNotMatch([...dialog().querySelectorAll('button')].map(element => element.textContent).join(' '), /保存|编辑|作废|扫码|审核/); assert.doesNotMatch(dialog().textContent, /原销售单|账户余额|欠款|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
   await click(host.querySelector('button[aria-label="关闭销货单详情"]')); assert.equal(dialog(), null); assert.equal(document.activeElement, trigger); assert.equal(region.scrollTop, 180); assert.equal(region.scrollLeft, 90); assert.equal(calls.length, beforeDetail + 1);
   console.log('PASS DOM 4: detail only on click; stored snapshots/full labels/barcode/unknown metadata/exact return economics; no mutations; close retains executed list, scroll and focus.');
@@ -76,7 +87,15 @@ try {
   await act(async () => root.render(createElement(StrictMode, null, createElement(SalesPageHost, { scope: strictScope, reader, references })))); await settle(); await submit(); assert.equal(host.querySelectorAll('.sales-list tbody tr').length, 20);
   await click(host.querySelector('.sales-view')); assert.match(dialog().textContent, /TEST 保存商品 1/); await click(host.querySelector('button[aria-label="关闭销货单详情"]'));
   await click(host.querySelector('button[aria-label="营业厅"]')); assert.match(host.querySelector('[role="dialog"]').textContent, /TEST 厅/);
-  await act(async () => strictContext.clear()); await act(async () => root.unmount()); root = null;
   console.log('PASS DOM 7: StrictMode setup/cleanup replay does not dispose the live route, detail or reference lifecycle.');
-  console.log('All 7 synthetic DOM groups passed. No real browser, network, server, login, PostgreSQL, Demo pixels or performance acceptance.');
+  await click(host.querySelector('button[aria-label="关闭营业厅选择"]'));
+  holdReferences = true; await click(host.querySelector('button[aria-label="营业厅"]')); assert.equal(heldReferences.length, 1);
+  await act(async () => host.querySelector('[role="dialog"]').dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))); await settle();
+  assert.equal(heldReferences[0].signal.aborted, true); await act(async () => heldReferences[0].finish()); await settle(); assert.equal(host.querySelector('[role="dialog"]'), null);
+  await click(host.querySelector('button[aria-label="营业厅"]')); assert.equal(heldReferences.length, 2);
+  await act(async () => strictContext.clear()); await settle(); assert.equal(heldReferences[1].signal.aborted, true); await act(async () => heldReferences[1].finish()); await settle();
+  assert.equal(host.querySelector('[role="dialog"]'), null); assert.doesNotMatch(host.textContent, /TEST 厅/);
+  await act(async () => root.unmount()); root = null;
+  console.log('PASS DOM 8: concrete reference HTTP cancels on close/identity revocation and late responses cannot reopen candidates or restore old labels.');
+  console.log('All 8 synthetic DOM groups passed. No real browser, network, server, login, PostgreSQL, Demo pixels or performance acceptance.');
 } finally { if (root) root.unmount(); dom.window.close(); await rm(temp, { recursive: true, force: true }); }
