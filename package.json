@@ -12,10 +12,16 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "build": "tsc -p tsconfig.build.json",
-    "test": "node --test tests/*.test.ts apps/web/src/loading/*.test.ts apps/api/src/*.test.ts",
+    "test": "node --test tests/*.test.ts apps/web/src/loading/*.test.ts apps/web/src/inventory/*.test.ts apps/api/src/*.test.ts",
     "check": "npm run check:dependencies && npm run typecheck && npm run build && npm run smoke:build && npm test",
     "check:dependencies": "node scripts/verify-dependencies.mjs",
-    "smoke:build": "node scripts/smoke-build.mjs"
+    "smoke:build": "node scripts/smoke-build.mjs",
+    "typecheck:web": "tsc -p apps/web/tsconfig.json",
+    "build:preview": "node apps/web/build-preview.mjs",
+    "test:web:dom": "node apps/web/tests/run-dom-tests.mjs",
+    "test:web:preview": "node apps/web/tests/run-bundle-smoke.mjs",
+    "check:web": "npm run typecheck:web && npm run build:preview && npm run test:web:dom && npm run test:web:preview",
+    "check:all": "npm run check && npm run check:web"
   },
   "dependencies": {
     "fastify": "5.12.5",
@@ -28,6 +34,8 @@
     "@types/pg": "8.23.1",
     "@types/react": "19.1.12",
     "@types/react-dom": "19.1.9",
-    "typescript": "5.9.2"
+    "typescript": "5.9.2",
+    "esbuild": "0.25.12",
+    "jsdom": "29.1.1"
   }
 }

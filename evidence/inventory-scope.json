@@ -1,0 +1,20 @@
+{
+  "parentCommit": "bae6f8c07e8ab75b9af5ab95a7c9b16d1066ad01",
+  "scope": "inventory synthetic preview and web build integration",
+  "checks": [
+    "28 model/loading tests",
+    "9 DOM interaction groups",
+    "strict web typecheck",
+    "split and portable build",
+    "portable DOM smoke",
+    "dependency lock verification",
+    "independent failed/retry/cancel paging and iframe review"
+  ],
+  "notVerified": [
+    "actual browser and exact frozen Demo parity",
+    "real PostgreSQL",
+    "real API integration",
+    "production performance or business acceptance"
+  ],
+  "rollback": "revert this frontend-only commit; no database migrations in this change"
+}

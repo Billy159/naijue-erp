@@ -1,6 +1,56 @@
-# 前端按需加载基础层
+# 库存查询首个交互切片（TEST ONLY）
 
-这是可复用的 TypeScript 基础设施，不是已完成的 ERP 页面。没有入口页面、真实 API、演示业务数据或数据库连接，也不假装已经还原冻结 Demo 的外观。
+已加入可看的最小菜单壳、库存状况表、复用候选选择器和商品分页器。它是重写中的第一个前端切片，不是整套 ERP 完工，也不是已接真实数据库的业务系统。
+
+## 查看与验证
+
+在仓库根目录运行：
+
+```sh
+node_modules/.bin/tsc --noEmit -p apps/web/tsconfig.json
+node --test apps/web/src/inventory/model.test.ts
+node apps/web/tests/run-dom-tests.mjs
+node apps/web/build-preview.mjs
+node apps/web/tests/run-bundle-smoke.mjs
+```
+
+构建只生成静态文件，不启动 HTTP 服务、不监听端口、不部署。当前离线环境实际有 esbuild 0.25.12 和 jsdom 29.1.1；这两个工具尚未列入根清单，干净安装的可复现性要由根依赖整合完成，不在此脚本自动安装。
+
+- `dist-preview/inventory-preview-test-only.html`：可直接下载、用浏览器打开的单文件预览。为便于 file-open，代码/样式全部内嵌；它不是路由代码按需网络加载的证明。
+- `dist-preview/index.html`、`main.js`、`main.css`、`inventory-route.js`、`inventory-route.css`、`synthetic-reader.js`、共享 chunks：拆分式构建，供获准的静态预览环境使用。启动只装壳样式；明确点菜单/合法 #inventory 深链才加载库存路由及样式，样式就绪再展示页面。没有 hover/空闲预取。
+- `dist-preview/metafile.json`：构建导入图。esbuild 默认会把动态导入 CSS 也归入入口 CSS，脚本特意将入口 CSS 替换为仅壳样式，库存样式由叶节点工厂按点击加载。
+
+## 当前已实现
+
+- 注入式 `InventoryReader`，只读 `readInventory` / `readCandidates`，没有硬编码 API 地址、真实认证/业务记录、写请求或假后台成功。
+- 进入库存页保持等待查询。商品/分类/仓库及高级供应商/版型/季节候选各自在打开时读取，20 项一页；搜索仅刷新已打开的候选，不刷新库存。关闭或离页释放读范围。
+- 草稿与已执行筛选分开。查询显式执行；重置只改草稿；刷新、翻页/每页数沿已执行条件；查看范围不会贴上未执行的新条件。保留旧结果的加载/失败始终有明确标记。
+- 100/200/500 款商品分页与跳页，DTO exact total 及完整筛选汇总独立返回。不全拉商品后在浏览器冒充服务端分页。 每页数切换成功前保留上次已执行档位；失败或取消后显示值与下一次显式查询一致，重试才明确重放失败请求的档位。
+- product/color/fit/size 四维身份不合并。完整尺码标签（165/S、170/M 等）、组内顺序、尺码组及 FIT 独立列；不存在规格、数量未知、确定零及负数明确区分。数量以精确整数字符串展示，汇总不从可见 DOM 采集。
+- 商品/颜色-FIT 折叠、颜色小计/商品合计显示设置。折叠不改变 DTO 总计；有效库存格传递明确 warehouse+sku 及完整规格回调，不存在规格没有动作。
+- `LatestQuery` / `ReadScope` 控制读取消、较新执行替代旧执行、身份/权限变化清理。单页与候选各自持有短期读状态，不使用 localStorage。
+- `preview/synthetic-reader.ts` 是显式 TEST ONLY 的隔离生成测试读取器。默认 3 款，提供已知负数、零、未知和不存在规格；103 款样本仅用于分页测试。它模拟服务端边界，不进入真实应用数据读取的默认分支。
+
+## 刻意未完成
+
+- 没有真实 API/数据库、真实账号权限与可用性检查、商品只读三页签抽屉、库存流水筛选/20 条分页/来源跳转、完整范围导出/打印。相关动作禁用或由预览回调明确说明未接入，不伪造结果。
+- 分类候选只展示服务提供的两级标签/层级；冻结 Demo 的完整树展开、精确键盘/focus/返回/滚动、显示设置持久化尚待真实运行参考补齐。
+- 没有其他 ERP 业务页面、计量单位、库存纠正、账户余额/对账、新建尺码组/季节。
+- 未完成结果矩阵窗口化、真实规模/内存/网络瀑布性能验收、全部断线/越权/分页越界恢复、完整运行可访问性或冻结 Demo 像素对齐。候选源码 617 主题只取安全的隔离颜色/尺寸参考，不声称等同冻结 Demo 字节。
+
+## 代码入口
+
+- `src/inventory/contracts.ts`：可对接真实 API 的窄只读 DTO/端口与点击回调合同。
+- `src/inventory/model.ts`：精确整数、明确库存格状态和分页响应校验。
+- `src/inventory/inventory-page.tsx`、`inventory-matrix.tsx`：React 页面与矩阵。
+- `src/components/`：复用候选与分页控件。
+- `preview/main.tsx`：TEST ONLY 菜单壳及点击才导入的预览路由。
+
+纯模型测试与 jsdom 实际 DOM 操作测试通过不等于真实浏览器、截图、精确布局或业务通过。业务行为依据来源摘要和加载讨论稿；冻结 Demo 完整源码与实际运行参考未在本次 cloud 环境取得。
+
+# 加载基础层说明
+
+以下是独立加载基础设施的原有边界。现在另有上方所述的库存首个交互切片；真实 API、数据库连接及冻结 Demo 运行/像素验收仍未完成。
 
 ## 已实现的边界
 
