@@ -1,0 +1,11 @@
+{
+  "extends": "../../apps/web/tsconfig.json",
+  "include": [],
+  "files": [
+    "../../apps/web/src/inventory/product-drawer-host.tsx",
+    "../../apps/web/src/inventory/product-drawer.tsx",
+    "../../apps/web/src/inventory/product-tab-state.tsx",
+    "../../apps/web/src/inventory/product-tab-images.tsx",
+    "../../apps/web/src/inventory/tests/product-drawer-lifecycle-entry.tsx"
+  ]
+}

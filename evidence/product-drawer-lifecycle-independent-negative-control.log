@@ -1,0 +1,19 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected active base
+    at until (file:///workspace/shared/naijue-erp-rewrite/evidence/product-drawer-lifecycle-independent-probes.mjs:62:152)
+    at async waitRead (file:///workspace/shared/naijue-erp-rewrite/evidence/product-drawer-lifecycle-independent-probes.mjs:68:50)
+    at async file:///workspace/shared/naijue-erp-rewrite/evidence/product-drawer-lifecycle-independent-probes.mjs:83:17 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+PASS negative control: original HEAD lifecycle substituted into esbuild in memory fails the live-base-read assertion (exit 1). Production files never replaced.

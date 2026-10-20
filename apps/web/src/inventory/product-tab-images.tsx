@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
-import { LatestQuery } from '../loading/latest-query.ts';
+import { LatestQuery, type QuerySnapshot } from '../loading/latest-query.ts';
 import { ReadScope } from '../loading/read-scope.ts';
 import type { ProductImage, ProductImageParameters, ProductImageSummary } from './product-contracts.ts';
 import type { ProductDrawerContentProps } from './product-drawer.tsx';
@@ -20,24 +20,39 @@ function Thumbnail({ image, open }: { readonly image: ProductImageSummary; reado
   const [attempt, setAttempt] = useState(0);
   return <figure><button type="button" className="pd-thumbnail" aria-label={`预览 ${image.label}`} onClick={event => open(event.currentTarget)}>{failed ? <span>缩略图暂不可用，仍可预览</span> : <img key={attempt} src={image.thumbnailUrl} alt={image.label} loading="lazy" decoding="async" onError={() => setFailed(true)} />}</button><figcaption>{image.label}</figcaption>{failed && <button type="button" className="iw-link" onClick={() => { setFailed(false); setAttempt(value => value + 1); }}>重试缩略图</button>}</figure>;
 }
+const idleImageSnapshot: QuerySnapshot<ProductImageParameters, ProductImage> = Object.freeze({ phase: 'idle', request: null, success: null, error: null });
+const emptyImageSnapshot = () => idleImageSnapshot;
+const noImageSubscription = () => () => {};
 function ImagePreview(props: ProductDrawerContentProps & { readonly image: ProductImageSummary; readonly close: () => void }) {
-  const [scope] = useState(() => new ReadScope(props.scope.identity, `${props.scope.routeInstanceId}:image:${props.image.id}`, props.scope.entityId, () => {}));
-  const [query] = useState(() => new LatestQuery<ProductImageParameters, ProductImage>({ scope, execute: async read => {
-    const data = await props.reader.readProductImage(read); assertProductImage(data, read.parameters); return data;
-  } }));
-  const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
+  const attachmentId = useRef(0);
+  const [attachment, setAttachment] = useState<{ readonly parentScope: ReadScope; readonly imageId: string; readonly scope: ReadScope; readonly query: LatestQuery<ProductImageParameters, ProductImage> } | null>(null);
+  const current = attachment?.parentScope === props.scope && attachment.imageId === props.image.id && attachment.scope.active ? attachment : null;
+  const query = current?.query;
+  const snapshot = useSyncExternalStore(query?.subscribe ?? noImageSubscription, query?.getSnapshot ?? emptyImageSnapshot, query?.getSnapshot ?? emptyImageSnapshot);
   const [decodeError, setDecodeError] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
-  const read = () => { setDecodeError(false); if (scope.entityId) void query.run({ productId: scope.entityId, imageId: props.image.id }); };
+  const read = () => { setDecodeError(false); if (current?.scope.entityId) void current.query.run({ productId: current.scope.entityId, imageId: props.image.id }); };
   useEffect(() => {
-    const dispose = () => scope.dispose();
+    const scope = new ReadScope(props.scope.identity, `${props.scope.routeInstanceId}:image:${props.image.id}:${++attachmentId.current}`, props.scope.entityId, () => {});
+    const query = new LatestQuery<ProductImageParameters, ProductImage>({ scope, execute: async read => {
+      const data = await props.reader.readProductImage(read); assertProductImage(data, read.parameters); return data;
+    } });
+    const next = { parentScope: props.scope, imageId: props.image.id, scope, query };
+    const dispose = () => { query.dispose(); scope.dispose(); setAttachment(value => value === next ? null : value); };
     props.scope.signal.addEventListener('abort', dispose, { once: true });
-    if (!props.scope.active) dispose();
-    if (typeof dialog.current?.showModal === 'function') dialog.current.showModal(); else dialog.current?.setAttribute('open', '');
-    closeButton.current?.focus(); read();
+    if (props.scope.active) {
+      setAttachment(next); setDecodeError(false);
+      if (scope.entityId) void query.run({ productId: scope.entityId, imageId: props.image.id });
+    } else dispose();
     return () => { props.scope.signal.removeEventListener('abort', dispose); query.dispose(); scope.dispose(); };
-  }, [props.scope, scope, query]);
+  }, [props.scope, props.image.id]);
+  useEffect(() => {
+    const element = dialog.current;
+    if (typeof element?.showModal === 'function') element.showModal(); else element?.setAttribute('open', '');
+    closeButton.current?.focus();
+    return () => { element?.close?.(); };
+  }, [props.scope, props.image.id]);
   return <dialog ref={dialog} className="pd-image-preview" aria-modal="true" onClick={event => { if (event.target === event.currentTarget) { const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) props.close(); } }} aria-label={`图片预览 ${props.image.label}`} onCancel={event => { event.preventDefault(); event.stopPropagation(); props.close(); }} onKeyDown={event => {
     if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); props.close(); }
     if (event.key === 'Tab') { event.stopPropagation(); const buttons = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>('button')); const first = buttons[0], last = buttons.at(-1); if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); } else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); } }

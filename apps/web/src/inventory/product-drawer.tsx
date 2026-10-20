@@ -22,21 +22,27 @@ export function ProductDrawerContent(props: ProductDrawerContentProps) {
   }}>{tabs[key]}</button>)}</div><section id={`${id}-panel`} role="tabpanel" aria-labelledby={`${id}-${tab}`} className="pd-panel"><ProductTabLeaf key={tab} {...props} tab={tab} /></section></>;
 }
 function ProductTabLeaf(props: ProductDrawerContentProps & { readonly tab: Tab }) {
-  const [scope] = useState(() => new ReadScope(props.scope.identity, `${props.scope.routeInstanceId}:${props.tab}`, props.scope.entityId, () => {}));
-  const [View, setView] = useState<ComponentType<ProductDrawerContentProps> | null>(null);
-  const [error, setError] = useState(false);
+  const attachmentId = useRef(0);
+  const [attachment, setAttachment] = useState<{ readonly parentScope: ReadScope; readonly tab: Tab; readonly scope: ReadScope } | null>(null);
+  const [leaf, setLeaf] = useState<{ readonly scope: ReadScope; readonly View: ComponentType<ProductDrawerContentProps> | null; readonly error: boolean } | null>(null);
+  const scope = attachment?.parentScope === props.scope && attachment.tab === props.tab && attachment.scope.active ? attachment.scope : null;
+  const View = leaf?.scope === scope ? leaf.View : null;
+  const error = leaf?.scope === scope && leaf.error;
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
-    const dispose = () => scope.dispose();
+    const next = new ReadScope(props.scope.identity, `${props.scope.routeInstanceId}:${props.tab}:${++attachmentId.current}`, props.scope.entityId, () => {});
+    const current = { parentScope: props.scope, tab: props.tab, scope: next };
+    const dispose = () => { next.dispose(); setAttachment(value => value === current ? null : value); };
     props.scope.signal.addEventListener('abort', dispose, { once: true });
-    if (!props.scope.active) dispose();
-    return () => { props.scope.signal.removeEventListener('abort', dispose); scope.dispose(); };
-  }, [props.scope, scope]);
+    if (props.scope.active) setAttachment(current); else dispose();
+    return () => { props.scope.signal.removeEventListener('abort', dispose); next.dispose(); };
+  }, [props.scope, props.tab]);
   useEffect(() => {
+    if (!scope) return;
     let attached = true;
-    setError(false);
-    void leaves.load(props.tab, scope).then(module => { if (attached && scope.active) setView(() => module.ProductTab); }, () => { if (attached && scope.active) setError(true); });
+    setLeaf({ scope, View: null, error: false });
+    void leaves.load(props.tab, scope).then(module => { if (attached && scope.active) setLeaf({ scope, View: module.ProductTab, error: false }); }, () => { if (attached && scope.active) setLeaf({ scope, View: null, error: true }); });
     return () => { attached = false; };
   }, [props.tab, scope, attempt]);
-  return View ? <View scope={scope} reader={props.reader} /> : error ? <div className="iw-inline-state" role="alert">页签组件未加载。<button type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试页签</button></div> : <p className="iw-inline-state" role="status">正在准备{tabs[props.tab]}…</p>;
+  return View && scope ? <View key={scope.routeInstanceId} scope={scope} reader={props.reader} /> : error ? <div className="iw-inline-state" role="alert">页签组件未加载。<button type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试页签</button></div> : <p className="iw-inline-state" role="status">正在准备{tabs[props.tab]}…</p>;
 }

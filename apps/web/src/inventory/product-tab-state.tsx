@@ -1,16 +1,29 @@
 import { useEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
-import type { QueryRead } from '../loading/latest-query.ts';
+import type { LatestQuery, QueryRead, QuerySnapshot } from '../loading/latest-query.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
 import { createProductQuery } from './product-model.ts';
 import type { ProductParameters } from './product-contracts.ts';
 
+const idleSnapshot: QuerySnapshot<ProductParameters, never> = Object.freeze({ phase: 'idle', request: null, success: null, error: null });
+const emptySnapshot = () => idleSnapshot;
+const noSubscription = () => () => {};
+
 export function useProductRead<T>(scope: ReadScope, execute: (read: QueryRead<ProductParameters>) => Promise<T>, validate: (data: T, parameters: Readonly<ProductParameters>) => void) {
   const [cancelled, setCancelled] = useState(false);
-  const [query] = useState(() => createProductQuery(scope, execute, validate));
-  const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
-  const read = () => { setCancelled(false); if (scope.entityId) void query.run({ productId: scope.entityId }); };
-  useEffect(() => { read(); return () => query.dispose(); }, [query]);
-  return { snapshot, read, cancelled, cancel: () => { setCancelled(true); query.cancel(); } };
+  const [attachment, setAttachment] = useState<{ readonly scope: ReadScope; readonly query: LatestQuery<ProductParameters, T> } | null>(null);
+  const query = attachment?.scope === scope && scope.active ? attachment.query : null;
+  const snapshot = useSyncExternalStore<QuerySnapshot<ProductParameters, T>>(query?.subscribe ?? noSubscription, query?.getSnapshot ?? emptySnapshot, query?.getSnapshot ?? emptySnapshot);
+  const read = () => { setCancelled(false); if (scope.entityId) void query?.run({ productId: scope.entityId }); };
+  useEffect(() => {
+    // Queries, like their scopes, belong to one effect attachment. StrictMode
+    // cleanup must not leave the next setup reading through a disposed query.
+    const next = createProductQuery(scope, execute, validate);
+    setAttachment({ scope, query: next });
+    setCancelled(false);
+    if (scope.entityId) void next.run({ productId: scope.entityId });
+    return () => next.dispose();
+  }, [scope]);
+  return { snapshot, read, cancelled, cancel: () => { setCancelled(true); query?.cancel(); } };
 }
 export function ProductReadState(props: { readonly phase: string; readonly retry: () => void; readonly cancel: () => void; readonly empty: boolean; readonly cancelled: boolean; readonly children: ReactNode }) {
   if (props.phase === 'loading') return <p className="iw-inline-state" role="status">正在读取当前页签… <button type="button" className="iw-link" onClick={props.cancel}>取消读取</button></p>;
