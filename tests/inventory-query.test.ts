@@ -172,3 +172,19 @@ test("SYNTHETIC inventory application: integer quantities remain exact beyond JS
   assert.equal(result.data.products[0]!.colorFits[0]!.rows[0]!.cells[inventoryId("size", 10)]!.state, "known");
   assert.equal(result.data.allMatchesTotal.knownQuantity, sum);
 });
+
+test("SYNTHETIC inventory application: absent verified size columns are rejected, not a zero-stock product", async () => {
+  const emptyTotal = { knownQuantity: "0", unknownCells: 0, completeness: "complete" as const };
+  const s = service({ async readInventory(read) {
+    const result = structuredClone(syntheticInventorySnapshot(read)); const product = result.data.products[0]!;
+    Object.assign(product, { sizes: [], sizeTotals: {}, total: { ...emptyTotal } });
+    for (const group of product.colorFits) {
+      Object.assign(group, { sizeTotals: {}, total: { ...emptyTotal } });
+      for (const row of group.rows) Object.assign(row, { cells: {}, total: { ...emptyTotal } });
+    }
+    Object.assign(result, { readiness: "ready" });
+    Object.assign(result.data, { allMatchesTotal: { ...emptyTotal } });
+    return result;
+  }, async readCandidates(read) { return syntheticCandidateSnapshot(read); } });
+  await assert.rejects(s.readInventory(inventoryActor, inventoryParameters(), signal()), hasCode("INVALID_INVENTORY_RESPONSE"));
+});

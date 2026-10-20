@@ -1,0 +1,33 @@
+✔ constructors are inert; exact same-origin POSTs use session credentials/no-store and only projected DTO fields (33.570713ms)
+✔ base configuration rejects foreign/ambiguous URLs before any request and permits explicit root/prefix (9.143646ms)
+✔ product tabs and individual image read use four exact routes and no eager related reads (18.842957ms)
+✔ HTTP 401/403/409/503 and capability failures remain distinct; safe known code only, no server details or automatic retries (14.90472ms)
+✔ network failure is sanitized and POST is never retried (2.058969ms)
+✔ malformed success is not an empty/zero success; invalid quantities, totals, fields, targets and media fail closed (16.060681ms)
+✔ candidate response verifies complete shape, exact page, labels, duplicates and option types (5.370994ms)
+✔ HTTP content, malformed UTF-8/JSON, unexpected empty success and observable redirects are rejected (6.448205ms)
+✔ decoded response stream and declared response size are bounded and cancelled, without truncating facts (4.401763ms)
+✔ request JSON size is bounded before fetch; full unmodified labels count as UTF-8 bytes (3.880681ms)
+✔ caller cancellation forwards to fetch and detaches immediately even when mocked fetch ignores it (37.524042ms)
+✔ stalled response body cancellation and total timeout are bounded (26.91019ms)
+✔ LatestQuery retains old executed facts on HTTP failure and discards superseded/closed HTTP reads (9.096574ms)
+✔ LatestQuery scope disposal cancels a pending HTTP body, clears facts and permits no late publication (3.604268ms)
+✔ zero-byte chunk streams and oversized exact integer text also fail closed within technical bounds (1359.052384ms)
+✔ inventory rejects different SKU or absent-vs-existing identity for one coordinate across warehouses (6.771758ms)
+✔ inventory prevents a SKU being reused by a different product even when every total is exact (2.987966ms)
+✔ known cells enforce signed-bigint bounds while exact aggregate totals may exceed those bounds (3.342764ms)
+✔ warehouse header labels/count/order and warehouse IDs must agree throughout the matrix (5.279875ms)
+✔ inventory result also respects executed product/fit/warehouse IDs and the bounded opaque read reference (6.821746ms)
+✔ monotonic deadline stops continuously resolved stream chunks without waiting for the timer task (4.300794ms)
+▶ deadline cannot publish a success after synchronous JSON decode/parse or DTO validation returns
+  ✔ elapsed during JSON parsing (1.631425ms)
+  ✔ elapsed during DTO validation (2.296721ms)
+✔ deadline cannot publish a success after synchronous JSON decode/parse or DTO validation returns (5.274949ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2071.602629

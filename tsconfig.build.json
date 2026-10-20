@@ -10,6 +10,7 @@
     "tests",
     "**/*.test.ts",
     "**/tests/**",
-    "apps/web/preview/**"
+    "apps/web/preview/**",
+    "**/*.test.tsx"
   ]
 }

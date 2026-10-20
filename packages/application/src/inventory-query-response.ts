@@ -49,6 +49,9 @@ function product(value: unknown, scope: InventoryReadScope, query: InventoryQuer
   const id = idValue("product", row.id, reject);
   if (query.filter.productIds.length && !query.filter.productIds.includes(id)) reject();
   const sizes = selectionList("size", row.sizes);
+  // A returned inventory product must have verified size columns; an empty array
+  // is not a proven zero-stock product and cannot satisfy the web read contract.
+  if (sizes.length === 0) reject();
   spend(budget, sizes.length);
   const variants = new Set<string>();
   const colorFits = list(row.colorFits, 10000).map(item => {

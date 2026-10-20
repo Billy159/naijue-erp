@@ -4,8 +4,8 @@ Current confirmed remote commit is 231e53b on codex/clean-erp-foundation. Later 
 
 ## Targeted follow-ups from cross-slice review
 
-- Sales audit currently copies all retained line values on each operation. Align it with approved sparse key/changed-line before/after evidence without losing source facts, native old/new version fields, idempotency or transaction atomicity. Do not use audit JSON as a reconstructed business source. Transfer is correcting this in its in-progress slice; preserve file ownership until it finishes.
-- Sales request fingerprint currently includes ActorContext.hallId. Review and test same original business request + stable account/key after trusted hall/role context changes. Receipt replay should recheck current permission, while dynamic authorization context should not turn unchanged business content into a spurious key-content conflict. Transfer has independently reproduced the analogous role/hall issue and is correcting its own implementation.
+- CLOSED in a3f1502: sales now records sparse key/changed-line/settlement before/after evidence and skips unchanged native detail writes. Independent6 targeted probes plus85 focused/130 combined tests passed; realPG is still unverified. Transfer equivalent is in f8ebc86.
+- CLOSED in a3f1502: sales fingerprint binds stable account and actual business command, not transient hall context; receipt replay still rechecks current permission. Transfer equivalent is in f8ebc86. Do not re-open these resolved source defects without new evidence.
 - Inventory HTTP/application boundary is implemented, but PostgreSQL snapshot reader, approved cutoff coverage/readiness facts and real web transport/composition are still missing. Missing balances must not be defaulted to zero.
 - Product drawer source is being reviewed. Full portable preview exceeds the Page 256KiB cap, so do not replace the approved smaller Page preview with an oversized payload or remove features to claim successful delivery. Split output remains available; real browser and exact Demo appearance remain unverified.
 
