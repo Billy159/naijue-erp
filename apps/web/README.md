@@ -18,7 +18,7 @@ node apps/web/tests/run-bundle-smoke.mjs
 
 - `dist-preview/inventory-preview-test-only.html`：可直接下载、用浏览器打开的单文件预览。为便于 file-open，代码/样式全部内嵌；它不是路由代码按需网络加载的证明。
 - `dist-preview/index.html`、`main.js`、`main.css`、`inventory-route.js`、`inventory-route.css`、`synthetic-reader.js`、共享 chunks：拆分式构建，供获准的静态预览环境使用。启动只装壳样式；明确点菜单/合法 #inventory 深链才加载库存路由及样式，样式就绪再展示页面。没有 hover/空闲预取。
-- 完整便携单文件目前超过 256KiB 交付预算，构建会明确报告字节数并保留全部功能。它不是符合该附件预算的交付物；拆分式构建仍完整可用。
+- 完整便携单文件目前超过 ChatGPT Page 可视化嵌入的 256KiB 限额，构建会明确报告字节数并保留全部功能。该限制不是普通 Library 文件附件限制；可作为 HTML 文件交付，但不能声称已在 Page 中嵌入执行。拆分式构建仍完整可用。
 - `dist-preview/metafile.json`：构建导入图。esbuild 默认会把动态导入 CSS 也归入入口 CSS，脚本特意将入口 CSS 替换为仅壳样式，库存样式由叶节点工厂按点击加载；商品抽屉另有动作样式，库存路由 CSS 不包含页签样式。
 
 ## 当前已实现
