@@ -1,0 +1,16 @@
+{
+  "parentCommit": "a3f1502cb0aa6e0887b80b1bb1f0e6f32807371a",
+  "focusedTests": 30,
+  "independentReview": "no blocking auth/SQL/target/media defect in injectable read scope",
+  "integration": "archive6d89f60 plus exact frozen product10/sales-audit6/transport7 leaves; direct strict types/build/smoke and462 synthetic tests passed",
+  "integrationWarning": "This integration included PRE-REMEDIATION transport. It supports unchanged product source compatibility, not final transport validation or latest whole workspace. Exact additions captured separately.",
+  "ownerSharedTreeCheck": "type/build initially failed on then-in-progress authentication UI, recorded in owner log; isolated archive excluded that unfinished work",
+  "mediaDelivery": "not implemented; explicit required controlled port or501, no synthetic fallback",
+  "openRequirements": [
+    "host pool/query/rollback deadlines",
+    "real PostgreSQL validation",
+    "production policy and composition",
+    "controlled media delivery"
+  ],
+  "rollback": "revert source and unexecuted additive0005; no runtime changed"
+}
