@@ -2,6 +2,7 @@ import type { BusinessDate, EntityId, MinorAmount, Quantity, Version } from "./v
 
 export type DocumentStatus = "DRAFT" | "APPROVED" | "VOID";
 export type SalesBusinessType = "SALE" | "RETURN" | "EXCHANGE";
+export type SalesPricingRule = "UNIT_PRICE" | "DISCOUNT";
 export interface SkuSnapshot {
   readonly productCode: string; readonly productName: string; readonly colorName: string;
   readonly fitName: string; readonly sizeName: string; readonly barcode: string | null;
@@ -16,11 +17,15 @@ export interface SalesHeaderRow {
   readonly createdHallId: EntityId<"hall"> | null; readonly createdAt: string; readonly updatedAt: string;
   readonly approvedByAccountId: EntityId<"account"> | null; readonly approvedAt: string | null;
 }
-/** Signed integer quantity; its exact business-type/sign convention must be supplied by a confirmed rule provider. */
+/** Signed integer quantity. Candidate adapter maps RETURN and EXCHANGE to independent signed-row economics. */
 export interface SalesLineRow {
   readonly id: EntityId<"salesLine">; readonly salesId: EntityId<"sales">; readonly lineNo: number;
   readonly skuId: EntityId<"sku">; readonly quantity: Quantity; readonly referencePrice: MinorAmount | null;
-  readonly dealPrice: MinorAmount; readonly lineAmount: MinorAmount; readonly allocatedDiscount: MinorAmount;
+  readonly dealPrice: MinorAmount;
+  /** Null marks pre-0002 unknown metadata, never inferred confirmation or pricing intent. New active commands require explicit values. */
+  readonly pricingRule: SalesPricingRule | null; readonly discountTenths: number | null; readonly zeroConfirmed: boolean | null;
+  /** Gross = signed quantity × deal price; net is lineAmount − allocatedDiscount. */
+  readonly lineAmount: MinorAmount; readonly allocatedDiscount: MinorAmount;
   readonly isGift: boolean; readonly snapshot: SkuSnapshot; readonly isCurrent: boolean;
 }
 export interface SalesSettlementRow {

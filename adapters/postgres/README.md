@@ -7,6 +7,7 @@ This directory now contains a genuine `pg` client-protocol transaction adapter a
 - `src/sales-unit-of-work.ts`: `PostgresSalesUnitOfWork`, supplied with an existing `pg.Pool` (structurally type-checked against pinned pg 8.23.1). Construction/import does not construct a pool, open a connection, read credentials, run migrations, or start a listener.
 - `src/codec.ts`: exact integer minor-unit ↔ approved `decimal(18,2)` conversion at scale 2, signed bigint quantity decoding, and PostgreSQL integer version checks. Extra precision and storage overflow fail instead of silently rounding/truncating. This is a storage bound, not a newly invented business amount cap.
 - `migrations/0001_runtime_sales.sql`: review-only, one-time schema creation in the fixed `naijue_erp` namespace. It has not been executed. Its only insert records the migration version, not business/dictionary data. There is intentionally no automatic runner or business seed.
+- `migrations/0002_sales_pricing_facts.sql`: additive explicit pricing-rule/discount/ordinary-zero confirmation columns. Not executed. Existing rows remain all NULL with no inferred backfill. New active SAVE/APPROVE requires explicit pricing facts; old unknown rows remain readable/reversible, not automatically confirmed. `0001` is unchanged.
 - `tests/postgres-protocol.test.ts`: scripted client-response expectations, not an in-memory database and not PostgreSQL validation.
 - `tests/postgres-schema-contract.test.ts`: SQL-text assertions only, not a PostgreSQL SQL parser or constraint execution.
 

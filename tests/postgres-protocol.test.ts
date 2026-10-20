@@ -55,6 +55,7 @@ function headerRow(document: SalesDocument, basis = "RUNTIME_LEDGER"): Record<st
 function lineRows(document: SalesDocument): Record<string, unknown>[] {
   return document.lines.map(l => ({ id: l.id, sales_id: l.salesId, line_no: l.lineNo, sku_id: l.skuId, quantity: l.quantity.toString(),
     reference_price: l.referencePrice === null ? null : moneyToSql(l.referencePrice), deal_price: moneyToSql(l.dealPrice), line_amount: moneyToSql(l.lineAmount),
+    pricing_rule: l.pricingRule, discount_tenths: l.discountTenths, zero_confirmed: l.zeroConfirmed,
     allocated_discount: moneyToSql(l.allocatedDiscount), is_gift: l.isGift, is_current: l.isCurrent, product_code_snapshot: l.snapshot.productCode,
     product_name_snapshot: l.snapshot.productName, color_name_snapshot: l.snapshot.colorName, fit_name_snapshot: l.snapshot.fitName,
     size_name_snapshot: l.snapshot.sizeName, barcode_snapshot: l.snapshot.barcode }));
@@ -86,7 +87,9 @@ function documentWrites(document: SalesDocument, isNew = false): Step[] {
     assert.equal(values[10], moneyToSql(document.header.grossAmount)); assert.equal(values[12], moneyToSql(document.header.netDue));
     if (!isNew) { assert.match(sql, /WHERE id = \$1 AND version = \$21 AND stock_basis = 'RUNTIME_LEDGER'/); assert.equal(values[20], document.header.version - 1); }
   } }, { sql: /^UPDATE naijue_erp.sales_line SET is_current = false/ },
-  ...document.lines.map<Step>(() => ({ sql: /^INSERT INTO naijue_erp.sales_line/, inspect(values, sql) { assert.equal(typeof values[4], "string"); assert.match(sql, /WHERE sales_line.sales_id = EXCLUDED.sales_id/); } })),
+  ...document.lines.map<Step>(line => ({ sql: /^INSERT INTO naijue_erp.sales_line/, inspect(values, sql) {
+    assert.deepEqual(values.slice(17), [line.pricingRule, line.discountTenths, line.zeroConfirmed]);
+    assert.match(sql, /pricing_rule, discount_tenths, zero_confirmed/); assert.equal(typeof values[4], "string"); assert.match(sql, /WHERE sales_line.sales_id = EXCLUDED.sales_id/); } })),
   { sql: /^DELETE FROM naijue_erp.sales_settlement WHERE sales_id = \$1 AND NOT \(id = ANY\(\$2::uuid\[\]\)\)/ },
   ...document.settlements.map<Step>(() => ({ sql: /^INSERT INTO naijue_erp.sales_settlement/, inspect(_values, sql) {
     assert.match(sql, /pa.name, pm.name/); assert.match(sql, /THEN sales_settlement.account_name_snapshot ELSE EXCLUDED.account_name_snapshot END/);
@@ -234,4 +237,25 @@ test("pg protocol: foreign line ownership failure cannot silently skip a line wr
   const document = storedDocument(); const writes = documentWrites(storedDocument(undefined, "DRAFT", 2)).slice(0, 3); writes[2] = { ...writes[2]!, count: 0 };
   const client = new ProtocolClient([begin(), ...salesRead(document), ...writes, rollback()]);
   await assert.rejects(() => uow(client).transaction(async tx => { await tx.getSales(ids.sales); await tx.putRuntimeSales(storedDocument(undefined, "DRAFT", 2)); }), { code: "FOREIGN_LINE_ID" }); client.done();
+});
+
+
+test("pg protocol: explicit discount/zero facts and pre-0002 unknowns decode without inference", async () => {
+  for (const metadata of [
+    { pricingRule: "DISCOUNT" as const, discountTenths: 50, zeroConfirmed: true },
+    { pricingRule: null, discountTenths: null, zeroConfirmed: null }
+  ]) {
+    const source = storedDocument();
+    const document = { ...source, lines: source.lines.map(row => ({ ...row, ...metadata })) };
+    const client = new ProtocolClient([begin(), ...salesRead(document), commit()]);
+    const result = await uow(client).transaction(tx => tx.getSales(ids.sales));
+    assert.deepEqual(result?.document.lines, document.lines); client.done();
+  }
+});
+test("pg protocol: unknown active pre-0002 pricing cannot approve, without rewriting stored rows", async () => {
+  const source = storedDocument(); const document = { ...source, lines: source.lines.map(row => ({ ...row, pricingRule: null, discountTenths: null, zeroConfirmed: null })) };
+  const command = approve();
+  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(document), rollback()]);
+  await assert.rejects(() => service(client).execute(command), { code: "UNKNOWN_PRICING_FACTS" });
+  assert.ok(client.calls.every(row => !/^INSERT|^UPDATE/.test(row.sql))); client.done();
 });

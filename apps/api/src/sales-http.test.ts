@@ -3,6 +3,8 @@ import test from "node:test";
 import type { TestContext } from "node:test";
 import Fastify from "fastify";
 import type { ActorContext, SalesAuthorization, SalesBusinessRules, SalesDependencies, SalesUnitOfWork } from "../../../packages/application/src/ports.ts";
+import { createCandidateSalesBusinessRules } from "../../../packages/application/src/sales-business-rules.ts";
+import { minorAmount } from "../../../packages/domain/src/values.ts";
 import { DomainError, requireDomain } from "../../../packages/domain/src/errors.ts";
 import type { SalesBusinessType } from "../../../packages/domain/src/documents.ts";
 import { actor, fixture, ids, sid, syntheticDraft, SYNTHETIC_RULES } from "../../../tests/support/synthetic-fixtures.ts";
@@ -161,6 +163,15 @@ const invalidInputs: ReadonlyArray<readonly [string, (body: Record<string, unkno
   ["overflow quantity", (_body, value) => { value.lines[0]!.quantity = "9223372036854775808"; }],
   ["fractional line position", (_body, value) => { value.lines[0]!.lineNo = 1.1; }],
   ["string boolean", (_body, value) => { value.lines[0]!.isGift = "false"; }],
+  ["missing pricing intent", (_body, value) => { delete value.lines[0]!.pricingRule; }],
+  ["null pricing intent", (_body, value) => { value.lines[0]!.pricingRule = null; }],
+  ["unknown pricing intent", (_body, value) => { value.lines[0]!.pricingRule = "APPROXIMATE_RATIO"; }],
+  ["missing zero confirmation", (_body, value) => { delete value.lines[0]!.zeroConfirmed; }],
+  ["string zero confirmation", (_body, value) => { value.lines[0]!.zeroConfirmed = "true"; }],
+  ["null zero confirmation", (_body, value) => { value.lines[0]!.zeroConfirmed = null; }],
+  ["fractional entered discount", (_body, value) => { value.lines[0]!.discountTenths = 50.5; }],
+  ["string entered discount", (_body, value) => { value.lines[0]!.discountTenths = "50"; }],
+  ["out of range entered discount", (_body, value) => { value.lines[0]!.discountTenths = 101; }],
   ["noncurrent incoming row", (_body, value) => { value.lines[0]!.isCurrent = false; }],
   ["snapshot unknown field", (_body, value) => { (value.lines[0]!.snapshot as Record<string, unknown>).hidden = true; }],
   ["settlement unknown field", (_body, value) => { value.settlements[0]!.balance = "0"; }],
@@ -206,4 +217,29 @@ test("SYNTHETIC HTTP: unexpected provider failures do not leak details and origi
 test("SYNTHETIC HTTP: unknown provider DomainError is not exposed as a client-supplied status or text", async t => {
   const f = await setup(t, { authorize: async () => { throw new DomainError("INTERNAL_PROVIDER_DETAIL", "PRIVATE PROVIDER DIAGNOSTIC"); } });
   const response = await f.post(save()); assert.equal(response.statusCode, 500); assert.equal(response.json().error.code, "INTERNAL_ERROR"); assert.ok(!response.body.includes("PRIVATE"));
+});
+
+
+test("candidate policy / SYNTHETIC HTTP: explicit discount metadata persists and economics errors use allowlisted responses", async t => {
+  const productId = sid("product", 999);
+  const rules = createCandidateSalesBusinessRules({
+    sku: id => [ids.sku, ids.sku2].includes(id) ? { id, productId, enabled: true } : undefined,
+    productPricing: id => id === productId ? { id, enabled: true, referencePrice: minorAmount("125"), minimumPrice: null } : undefined,
+    assertDocumentReferences(document) {
+      requireDomain(document.header.customerId === ids.customer && document.header.warehouseId === ids.warehouse
+        && document.settlements.every(row => row.paymentAccountId === ids.payment), "FORBIDDEN", "SYNTHETIC references only");
+    }
+  });
+  const f = await setup(t, { rules }); const value = draft();
+  Object.assign(value.lines[0]!, { pricingRule: "DISCOUNT", discountTenths: 50, dealPrice: "63", lineAmount: "126" });
+  Object.assign(value.header, { grossAmount: "126", netDue: "126" }); value.settlements[0]!.amount = "126";
+  const incorrect = structuredClone(value); incorrect.lines[0]!.dealPrice = "62";
+  const rejected = await f.post(save(incorrect));
+  assert.equal(rejected.statusCode, 422); assert.equal(rejected.json().error.code, "DISCOUNT_PRICE_MISMATCH");
+  assert.equal(f.store.snapshot().headers.size, 0);
+  assert.equal((await f.post(save(value))).statusCode, 200);
+  assert.equal((await f.command("APPROVE", 1)).statusCode, 200);
+  assert.equal(f.document().lines[0]?.pricingRule, "DISCOUNT"); assert.equal(f.document().lines[0]?.discountTenths, 50);
+  assert.equal(f.document().lines[0]?.zeroConfirmed, false); assert.equal(f.document().header.netDue, 126n);
+  assert.equal(f.balance(), -2n); assert.equal(f.app.server.listening, false);
 });

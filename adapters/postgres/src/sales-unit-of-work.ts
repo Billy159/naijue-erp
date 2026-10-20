@@ -33,7 +33,7 @@ const HEADER_SELECT = `SELECT id, number, business_type, to_char(business_date, 
   approved_by_account_id, ${stamp("approved_at")} AS approved_at, stock_basis
   FROM naijue_erp.sales_header WHERE id = $1 FOR UPDATE`;
 const LINE_SELECT = `SELECT id, sales_id, line_no, sku_id, quantity::text, reference_price::text, deal_price::text,
-  line_amount::text, allocated_discount::text, is_gift, product_code_snapshot, product_name_snapshot,
+  line_amount::text, allocated_discount::text, is_gift, pricing_rule, discount_tenths, zero_confirmed, product_code_snapshot, product_name_snapshot,
   color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot, is_current
   FROM naijue_erp.sales_line WHERE sales_id = $1 ORDER BY line_no, id`;
 const SETTLEMENT_SELECT = `SELECT id, sales_id, line_no, payment_account_id, direction, amount::text
@@ -54,6 +54,9 @@ function decodeHeader(row: Record<string, unknown>): SalesHeaderRow {
 function decodeLine(row: Record<string, unknown>): SalesLineRow {
   return { id: id("salesLine", row.id), salesId: id("sales", row.sales_id), lineNo: integerValue(row.line_no), skuId: id("sku", row.sku_id),
     quantity: quantityFromSql(row.quantity), referencePrice: row.reference_price === null ? null : moneyFromSql(row.reference_price), dealPrice: moneyFromSql(row.deal_price),
+    pricingRule: row.pricing_rule === null ? null : choice(row.pricing_rule, ["UNIT_PRICE", "DISCOUNT"] as const),
+    discountTenths: row.discount_tenths === null ? null : integerValue(row.discount_tenths),
+    zeroConfirmed: row.zero_confirmed === null ? null : booleanValue(row.zero_confirmed),
     lineAmount: moneyFromSql(row.line_amount), allocatedDiscount: moneyFromSql(row.allocated_discount), isGift: booleanValue(row.is_gift), isCurrent: booleanValue(row.is_current),
     snapshot: { productCode: stringValue(row.product_code_snapshot), productName: stringValue(row.product_name_snapshot), colorName: stringValue(row.color_name_snapshot),
       fitName: stringValue(row.fit_name_snapshot), sizeName: stringValue(row.size_name_snapshot), barcode: nullableString(row.barcode_snapshot) } };
@@ -166,8 +169,8 @@ class PostgresSalesTransaction implements SalesTransaction {
       requireDomain(line.salesId === h.id, "FOREIGN_LINE_ID", "Line must belong to this sales document");
       const s = line.snapshot;
       const lineValues = [line.id, line.salesId, line.lineNo, line.skuId, line.quantity.toString(), line.referencePrice === null ? null : moneyToSql(line.referencePrice), moneyToSql(line.dealPrice),
-        moneyToSql(line.lineAmount), moneyToSql(line.allocatedDiscount), line.isGift, s.productCode, s.productName, s.colorName, s.fitName, s.sizeName, s.barcode, line.isCurrent];
-      const lineColumns = ["id", "sales_id", "line_no", "sku_id", "quantity", "reference_price", "deal_price", "line_amount", "allocated_discount", "is_gift", "product_code_snapshot", "product_name_snapshot", "color_name_snapshot", "fit_name_snapshot", "size_name_snapshot", "barcode_snapshot", "is_current"];
+        moneyToSql(line.lineAmount), moneyToSql(line.allocatedDiscount), line.isGift, s.productCode, s.productName, s.colorName, s.fitName, s.sizeName, s.barcode, line.isCurrent, line.pricingRule, line.discountTenths, line.zeroConfirmed];
+      const lineColumns = ["id", "sales_id", "line_no", "sku_id", "quantity", "reference_price", "deal_price", "line_amount", "allocated_discount", "is_gift", "product_code_snapshot", "product_name_snapshot", "color_name_snapshot", "fit_name_snapshot", "size_name_snapshot", "barcode_snapshot", "is_current", "pricing_rule", "discount_tenths", "zero_confirmed"];
       const written = await this.query(`INSERT INTO naijue_erp.sales_line (${lineColumns.join(", ")}) VALUES (${lineValues.map((_value, index) => `$${index + 1}`).join(", ")})
         ON CONFLICT (id) DO UPDATE SET ${lineColumns.slice(2).map(column => `${column} = EXCLUDED.${column}`).join(", ")} WHERE sales_line.sales_id = EXCLUDED.sales_id`, lineValues);
       requireDomain(written.rowCount === 1, "FOREIGN_LINE_ID", "A retained line identity cannot move between documents");

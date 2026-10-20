@@ -20,6 +20,7 @@ export function syntheticDraft(businessType: SalesBusinessType = "SALE", quantit
   const counts = quantities ?? (businessType === "RETURN" ? ["-2"] : businessType === "EXCHANGE" ? ["-2", "3"] : ["2"]);
   const lines: SalesLineRow[] = counts.map((count, index) => ({ id: index === 0 ? ids.line : ids.line2, salesId: ids.sales, lineNo: index + 1,
     skuId: index === 0 ? ids.sku : ids.sku2, quantity: quantity(count), referencePrice: minorAmount("125"), dealPrice: minorAmount("125"),
+    pricingRule: "UNIT_PRICE", discountTenths: null, zeroConfirmed: false,
     lineAmount: multiplyMoney(minorAmount("125"), quantity(count)), allocatedDiscount: minorAmount("0"), isGift: false, snapshot, isCurrent: true }));
   const due = minorAmount(lines.reduce((sum, row) => sum + row.lineAmount, 0n).toString());
   return { header: { id: ids.sales, number: "SYNTHETIC-DOC-0001", businessType, businessDate: businessDate("2026-10-20"), hallId: ids.hall,
@@ -45,12 +46,12 @@ export const SYNTHETIC_RULES: SalesBusinessRules = {
   },
   inventoryDelta(_document, line) { return negateQuantity(line.quantity); }
 };
-export function fixture(options: { readonly authorize?: SalesAuthorization["assertAllowed"] } = {}) {
+export function fixture(options: { readonly authorize?: SalesAuthorization["assertAllowed"]; readonly rules?: SalesBusinessRules } = {}) {
   const store = new SyntheticStore();
   for (const skuId of [ids.sku, ids.sku2]) store.seedBalance({ warehouseId: ids.warehouse, skuId, quantity: quantity("0"), version: version(1), lastOperationId: null, updatedAt: "2026-10-20T00:00:00Z" });
   let sequence = 1000;
   let allowed = true;
-  const service = createSalesService({ unitOfWork: store, rules: SYNTHETIC_RULES,
+  const service = createSalesService({ unitOfWork: store, rules: options.rules ?? SYNTHETIC_RULES,
     authorization: { async assertAllowed(context, action, document) {
       requireDomain(allowed, "FORBIDDEN", "Synthetic permission was revoked");
       await options.authorize?.(context, action, document);

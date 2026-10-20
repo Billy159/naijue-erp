@@ -16,6 +16,11 @@ function object(value: unknown, keys: readonly string[]): Record<string, unknown
 function string(value: unknown): string { if (typeof value !== "string") invalid(); return value; }
 function nullableString(value: unknown): string | null { return value === null ? null : string(value); }
 function integer(value: unknown): number { if (typeof value !== "number" || !Number.isSafeInteger(value) || value < 1) invalid(); return value; }
+function discountTenths(value: unknown): number | null {
+  if (value === null) return null;
+  if (typeof value !== "number" || !Number.isInteger(value) || value < 0 || value > 100) invalid();
+  return value;
+}
 function boolean(value: unknown): boolean { if (typeof value !== "boolean") invalid(); return value; }
 function id<K extends EntityKind>(kind: K, value: unknown): EntityId<K> { return entityId(kind, string(value)); }
 function array(value: unknown): unknown[] { if (!Array.isArray(value)) invalid(); return value; }
@@ -35,11 +40,12 @@ function snapshot(value: unknown): SkuSnapshot {
     fitName: string(row.fitName), sizeName: string(row.sizeName), barcode: nullableString(row.barcode) };
 }
 function line(value: unknown): SalesLineRow {
-  const row = object(value, ["id", "salesId", "lineNo", "skuId", "quantity", "referencePrice", "dealPrice", "lineAmount", "allocatedDiscount", "isGift", "snapshot", "isCurrent"]);
+  const row = object(value, ["id", "salesId", "lineNo", "skuId", "quantity", "referencePrice", "dealPrice", "pricingRule", "discountTenths", "zeroConfirmed", "lineAmount", "allocatedDiscount", "isGift", "snapshot", "isCurrent"]);
   if (row.isCurrent !== true) invalid();
   return { id: id("salesLine", row.id), salesId: id("sales", row.salesId), lineNo: integer(row.lineNo), skuId: id("sku", row.skuId),
     quantity: quantity(string(row.quantity)), referencePrice: row.referencePrice === null ? null : minorAmount(string(row.referencePrice)),
-    dealPrice: minorAmount(string(row.dealPrice)), lineAmount: minorAmount(string(row.lineAmount)), allocatedDiscount: minorAmount(string(row.allocatedDiscount)),
+    dealPrice: minorAmount(string(row.dealPrice)), pricingRule: choice(row.pricingRule, ["UNIT_PRICE", "DISCOUNT"]),
+    discountTenths: discountTenths(row.discountTenths), zeroConfirmed: boolean(row.zeroConfirmed), lineAmount: minorAmount(string(row.lineAmount)), allocatedDiscount: minorAmount(string(row.allocatedDiscount)),
     isGift: boolean(row.isGift), snapshot: snapshot(row.snapshot), isCurrent: true };
 }
 function settlement(value: unknown): SalesSettlementRow {

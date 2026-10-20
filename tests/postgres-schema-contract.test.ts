@@ -76,3 +76,18 @@ test("pg SQL-text contract: missing or JSON-null receipt IDs cannot exploit null
   assert.match(receipt, /\(result_data->>'salesId'\) IS NOT DISTINCT FROM target_id::text/);
   assert.match(receipt, /jsonb_typeof\(result_data->'version'\) = 'number'/);
 });
+
+
+const pricingDdl = await readFile(new URL("../adapters/postgres/migrations/0002_sales_pricing_facts.sql", import.meta.url), "utf8");
+test("pg SQL-text contract: additive 0002 preserves unknown old pricing intent with no guessed backfill", () => {
+  assert.match(pricingDdl, /^-- VERSION 0002:/); assert.match(pricingDdl, /BEGIN;/); assert.match(pricingDdl, /COMMIT;/);
+  assert.match(pricingDdl, /ALTER TABLE naijue_erp.sales_line\s+ADD COLUMN pricing_rule text,\s+ADD COLUMN discount_tenths integer,\s+ADD COLUMN zero_confirmed boolean;/);
+  assert.match(pricingDdl, /pricing_rule IS NULL AND discount_tenths IS NULL AND zero_confirmed IS NULL/);
+  assert.match(pricingDdl, /pricing_rule IS NOT NULL AND zero_confirmed IS NOT NULL/);
+  assert.match(pricingDdl, /pricing_rule = 'UNIT_PRICE' AND discount_tenths IS NULL/);
+  assert.match(pricingDdl, /pricing_rule = 'DISCOUNT' AND discount_tenths IS NOT NULL AND discount_tenths BETWEEN 0 AND 100/);
+  const statements = pricingDdl.split("\n").filter(line => !line.trimStart().startsWith("--")).join("\n");
+  assert.doesNotMatch(statements, /\bUPDATE\b|\bDEFAULT\b|CREATE TABLE|original_sales_id|original_line_id/i);
+  assert.deepEqual([...statements.matchAll(/INSERT INTO ([\w.]+)/g)].map(match => match[1]), ["naijue_erp.schema_migration"]);
+  assert.match(statements, /VALUES \(2,/);
+});

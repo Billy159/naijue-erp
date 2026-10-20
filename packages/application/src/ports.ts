@@ -20,7 +20,7 @@ export interface OperationReceiptRow {
 }
 export interface SalesAuditValues {
   readonly header: Pick<SalesDocument["header"], "number" | "businessType" | "businessDate" | "hallId" | "salespersonId" | "customerId" | "warehouseId" | "status" | "version" | "grossAmount" | "orderDiscount" | "netDue" | "note">;
-  readonly lines: readonly Pick<SalesLineRow, "id" | "lineNo" | "skuId" | "quantity" | "referencePrice" | "dealPrice" | "lineAmount" | "allocatedDiscount" | "isGift" | "snapshot" | "isCurrent">[];
+  readonly lines: readonly Pick<SalesLineRow, "id" | "lineNo" | "skuId" | "quantity" | "referencePrice" | "dealPrice" | "pricingRule" | "discountTenths" | "zeroConfirmed" | "lineAmount" | "allocatedDiscount" | "isGift" | "snapshot" | "isCurrent">[];
   readonly settlements: SalesDocument["settlements"];
 }
 export interface SalesAuditRow {
@@ -44,7 +44,8 @@ export interface SalesTransaction {
 /** MUST atomically commit/rollback all callback writes; serialize document/receipt/balance conflicts and enforce uniqueness.
  * PostgreSQL implementation lives in adapters/postgres; synthetic/protocol tests are NOT real PostgreSQL evidence. */
 export interface SalesUnitOfWork { transaction<T>(work: (tx: SalesTransaction) => Promise<T>): Promise<T> }
-/** Required trusted server-side policy. No default production sign/discount/rounding algorithm is guessed. */
+/** Required trusted server-side policy, never an implicit default. A candidate-source adapter
+ * is available in sales-business-rules.ts and still requires verified catalogue/reference facts. */
 export interface SalesBusinessRules {
   assertDraftChange(previous: SalesDocument | undefined, draft: SalesDraft): void;
   assertReferencesAndEconomics(document: SalesDocument): void;

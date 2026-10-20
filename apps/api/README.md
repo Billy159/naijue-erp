@@ -34,8 +34,10 @@ SAVE body has exactly `action`, `requestKey`, `expectedVersion`, `draft`. `actio
   - `businessType` is `SALE`, `RETURN` or `EXCHANGE`.
   - `salespersonId` is a staff UUID or null; `note` is a string or null.
   - `number` is an existing supplied document number, not allocated by this boundary. Its cross-document uniqueness is a storage/production policy concern.
-- Each line: `id`, `salesId`, `lineNo`, `skuId`, `quantity`, `referencePrice`, `dealPrice`, `lineAmount`, `allocatedDiscount`, `isGift`, `snapshot`, `isCurrent`.
+- Each line: `id`, `salesId`, `lineNo`, `skuId`, `quantity`, `referencePrice`, `dealPrice`, `pricingRule`, `discountTenths`, `zeroConfirmed`, `lineAmount`, `allocatedDiscount`, `isGift`, `snapshot`, `isCurrent`.
   - `referencePrice` is a money string or null. Other monetary fields are money strings.
+  - `pricingRule` is `UNIT_PRICE` or `DISCOUNT`; `discountTenths` is an integer 0–100 (0.0–10.0 折) or explicitly null for direct unit price. `zeroConfirmed` is a required boolean, never inferred from amount zero. The concrete policy checks rule/discount consistency.
+  - `lineAmount` is signed gross quantity × actual unit price; net line amount is gross minus `allocatedDiscount`.
   - Incoming `isCurrent` must be true. Retaining former rows is handled by the service, not by sending inactive lines from the client.
   - `snapshot`: exactly `productCode`, `productName`, `colorName`, `fitName`, `sizeName`, `barcode`. All are strings except `barcode`, which is a string or null. No inferred dictionaries, barcode generation or product pricing logic is supplied.
 - Each settlement: `id`, `salesId`, `lineNo`, `paymentAccountId`, `direction`, `amount`.
@@ -68,3 +70,14 @@ Focused checks, with the already installed pinned dependencies and no installati
 - `npm run build`
 
 The synthetic HTTP tests cover authenticated identity isolation, revoked access and actor-scoped receipt recovery; exact replay/version guards; SALE/RETURN/EXCHANGE save/approve/unapprove/edit/reapprove; negative stock; settlement equality; void and historical rejection; exact bigint handling; nested unknown fields, references, dates, integers and booleans; malformed/oversized JSON and unsupported media; and transaction failure rollback/retry. These tests do not establish real database, production auth, browser UI, deployment or full ERP acceptance.
+
+
+## Candidate-source pricing adapter
+
+`packages/application/src/sales-business-rules.ts` provides an optional concrete, mandatory-facts adapter based on directly inspected candidate `server/domain/sales/money.ts:27–39` and `validation.ts:43–74,149–170`, not proof of frozen-Demo runtime equivalence. No default provider is installed by HTTP. Product reference/minimum facts and enabled SKU→product identity must be supplied by trusted server catalogue reads; missing facts fail closed, never default to zero. Other document references and enabled payment-account/method identity remain an explicit required trusted callback, not implemented production reference policy.
+
+Both new RETURN and EXCHANGE enum values deliberately map to the candidate's same independent combined return/exchange economics. Either may contain any nonzero signed rows. SALE requires positive quantities; all stock effects are `-quantity`. UI negative defaults or direction toggles do not narrow backend acceptance. Whole discounts apply only to SALE, with largest-remainder ties by original calculated row index. Current array order must be ascending persisted `lineNo` to preserve that index across database readback. Same-SKU rows are not merged.
+
+Discounted unit price is nonnegative half-up `(referenceMinor × discountTenths + 50) / 100`, before multiplication by integer signed quantity. Gift prices are zero, skip minimum-price and discount-price equality checks, and still move stock. Ordinary zero requires confirmation and remains subject to product minimum. Existing reference snapshots are not replaced with today's catalogue price; negotiated deal prices may differ across lines.
+
+Drafts may be unbalanced; approval requires exact signed RECEIVE-minus-REFUND sum, including mixed directions. A zero-net document needs no rows. Explicit absolute-zero RECEIVE/REFUND both map to signed zero and still need valid references. No virtual empty-account row is persisted.

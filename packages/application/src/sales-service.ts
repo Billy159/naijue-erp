@@ -10,7 +10,7 @@ function auditValues(document: SalesDocument): SalesAuditValues {
   const { number, businessType, businessDate, hallId, salespersonId, customerId, warehouseId, status, version: currentVersion, grossAmount, orderDiscount, netDue, note } = document.header;
   return {
     header: { number, businessType, businessDate, hallId, salespersonId, customerId, warehouseId, status, version: currentVersion, grossAmount, orderDiscount, netDue, note },
-    lines: document.lines.map(({ id, lineNo, skuId, quantity, referencePrice, dealPrice, lineAmount, allocatedDiscount, isGift, snapshot, isCurrent }) => ({ id, lineNo, skuId, quantity, referencePrice, dealPrice, lineAmount, allocatedDiscount, isGift, snapshot, isCurrent })),
+    lines: document.lines.map(({ id, lineNo, skuId, quantity, referencePrice, dealPrice, pricingRule, discountTenths, zeroConfirmed, lineAmount, allocatedDiscount, isGift, snapshot, isCurrent }) => ({ id, lineNo, skuId, quantity, referencePrice, dealPrice, pricingRule, discountTenths, zeroConfirmed, lineAmount, allocatedDiscount, isGift, snapshot, isCurrent })),
     settlements: document.settlements
   };
 }
@@ -25,6 +25,9 @@ function validateDraft(draft: SalesDraft): void {
       && !ids.has(line.id) && !positions.has(line.lineNo), "INVALID_LINE", "Line identities and positions must be unique and owned by this document");
     requireDomain(line.dealPrice >= 0n && (line.referencePrice === null || line.referencePrice >= 0n)
       && line.allocatedDiscount >= 0n, "INVALID_PRICE", "Prices and allocated discounts must be nonnegative");
+    requireDomain((line.pricingRule === "UNIT_PRICE" || line.pricingRule === "DISCOUNT") && typeof line.zeroConfirmed === "boolean"
+      && (line.discountTenths === null || (Number.isInteger(line.discountTenths) && line.discountTenths >= 0 && line.discountTenths <= 100)),
+    "UNKNOWN_PRICING_FACTS", "Active lines require explicit pricing rule, discount metadata and zero confirmation");
     ids.add(line.id); positions.add(line.lineNo);
   }
   requireDomain(draft.settlements.length <= 3, "SETTLEMENT_LIMIT", "At most three document settlement rows are supported by the observed Demo rule");
