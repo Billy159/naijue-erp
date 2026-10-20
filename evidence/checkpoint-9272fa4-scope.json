@@ -1,0 +1,25 @@
+{
+  "commit": "9272fa418c468644683cb30fe5652831c6ae0b20",
+  "method": "git archive into isolated directory; existing dependency symlink; direct installed tools, no npm registry calls",
+  "checks": {
+    "dependencyEntries": 143,
+    "unitSyntheticProtocolTests": 487,
+    "inventoryProductDomGroups": 14,
+    "authenticationDomGroups": 7,
+    "strictTypes": "PASS",
+    "compiledBuild": "PASS",
+    "compiledSmoke": "PASS",
+    "webTypes": "PASS",
+    "previewBuild": "PASS",
+    "splitAndBundleSmoke": "PASS"
+  },
+  "exitCode": 0,
+  "notIncluded": [
+    "later party maintenance commit 97f6138",
+    "later sales query UI commit c79e9aa",
+    "concurrent read reference and transfer read development"
+  ],
+  "realPostgreSQL": "NOT_RUN",
+  "production": "NOT_TOUCHED",
+  "logSha256": "401245a77a2dc09c4d0972387e03c141e92df88a24dd11b1a3c84f1d9e4ac57e"
+}
