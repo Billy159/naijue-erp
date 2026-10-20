@@ -12,21 +12,32 @@ export const inventoryScope: InventoryReadScope = { hallIds: [inventoryId("hall"
 export const inventoryParameters = (page = 1, pageSize = 100) => ({ page, pageSize,
   filter: { products: [], category: null, warehouses: [], suppliers: [], fits: [], seasons: [] } });
 export const candidateParameters = (page = 1) => ({ kind: "product", search: "", page, pageSize: 20, selectedIds: [], categoryId: null });
-function total(known: bigint, unknown: number): InventoryStockTotal {
-  return { knownQuantity: known.toString(), unknownCells: unknown, completeness: unknown ? "incomplete" : "complete" };
+function total(known: bigint): InventoryStockTotal {
+  return { knownQuantity: known.toString(), unknownCells: 0, completeness: "complete" };
+}
+/** A distinct finite COMPLETE published TEST dataset, not a DB implementation or imported production proof.
+ * Its SKU catalog contains exactly the first three sizes, and its entire sparse balance source contains
+ * -2 for the first SKU and an explicit zero for the second. The third has no stock in this complete source.
+ * Incomplete/unproven source fixtures belong in whole-query rejection tests, never in published cells. */
+function completeSyntheticSource(index: number) {
+  const skuBySize = new Map([0, 1, 2].map(n => [inventoryId("size", 10 + n), inventoryId("sku", 10000 + index * 4 + n)]));
+  const balances = new Map([[inventoryId("sku", 10000 + index * 4), "-2"], [inventoryId("sku", 10001 + index * 4), "0"]]);
+  return { publication: "complete" as const, skuBySize, balances };
 }
 function syntheticProduct(index: number, scope: InventoryReadScope): InventoryQueryProduct {
   const sizes = [0, 1, 2, 3].map(n => ({ id: inventoryId("size", 10 + n), label: ["160/XS", "165/S", "170/M", "175/L"][n]! }));
-  const perSize = Object.fromEntries(sizes.map((size, n) => [size.id, total(n === 0 ? -2n * BigInt(scope.warehouses.length) : 0n, n === 2 ? scope.warehouses.length : 0)]));
-  const productTotal = total(-2n * BigInt(scope.warehouses.length), scope.warehouses.length);
+  const perSize = Object.fromEntries(sizes.map((size, n) => [size.id, total(n === 0 ? -2n * BigInt(scope.warehouses.length) : 0n)]));
+  const productTotal = total(-2n * BigInt(scope.warehouses.length));
+  const source = completeSyntheticSource(index);
   const colorFit: InventoryQueryColorFit = {
     color: { id: inventoryId("color", 20), label: "SYNTHETIC COLOR" }, fit: { id: inventoryId("fit", 21), label: "Y版（修身）" },
     rows: scope.warehouses.map(warehouse => ({ warehouse: { id: warehouse.id, label: warehouse.label }, cells: {
-      [sizes[0]!.id]: { state: "known", skuId: inventoryId("sku", 10000 + index * 4), quantity: "-2" },
-      [sizes[1]!.id]: { state: "known", skuId: inventoryId("sku", 10001 + index * 4), quantity: "0" },
-      [sizes[2]!.id]: { state: "unknown", skuId: inventoryId("sku", 10002 + index * 4), reason: "SYNTHETIC baseline coverage not proven" },
-      [sizes[3]!.id]: { state: "not-applicable" }
-    }, total: total(-2n, 1) })), sizeTotals: perSize, total: productTotal
+      ...Object.fromEntries(sizes.map(size => {
+        const skuId = source.skuBySize.get(size.id);
+        return [size.id, skuId === undefined ? { state: "not-applicable" as const }
+          : { state: "known" as const, skuId, quantity: source.balances.get(skuId) ?? "0" }];
+      }))
+    }, total: total(-2n) })), sizeTotals: perSize, total: productTotal
   };
   return { id: inventoryId("product", 1000 + index), code: `SYNTHETIC-${String(index).padStart(6, "0")}`, name: `SYNTHETIC PRODUCT ${index}`,
     categoryLabel: "SYNTHETIC CATEGORY", supplierLabel: "", seasonLabel: "", sizeGroup: { id: inventoryId("sizeGroup", 30), label: "SYNTHETIC SOURCE SIZES" },
@@ -37,14 +48,14 @@ export function syntheticInventorySnapshot(read: InventoryScopedRead<InventoryQu
   // Generate only the requested page. Full-filter summary is independently known from this finite fixture.
   const products = Array.from({ length: Math.min(pageSize, Math.max(0, count - offset)) }, (_, n) => syntheticProduct(offset + n, read.scope));
   const readReference = "SYNTHETIC-INVENTORY-SNAPSHOT-1";
-  const allMatchesTotal = total(-2n * BigInt(count * read.scope.warehouses.length), count * read.scope.warehouses.length);
-  return { readReference, readiness: count ? "incomplete" : "ready", data: { page, pageSize, exactTotalProducts: count, products,
+  const allMatchesTotal = total(-2n * BigInt(count * read.scope.warehouses.length));
+  return { readReference, readiness: "ready", data: { page, pageSize, exactTotalProducts: count, products,
     warehouseLabels: read.scope.warehouses.map(row => row.label), allMatchesTotal, readReference } };
 }
 export function syntheticCandidateSnapshot(read: InventoryScopedRead<InventoryCandidateQuery>): InventoryReadSnapshot<InventoryCandidatePage> {
   const all = read.parameters.kind === "warehouse" ? read.scope.warehouses : Array.from({ length: 23 }, (_, n) => ({ id: inventoryId(read.parameters.kind, 1000 + n), label: `SYNTHETIC CANDIDATE ${n}` }));
   const offset = (read.parameters.page - 1) * 20;
-  return { readReference: "SYNTHETIC-CANDIDATE-SNAPSHOT-1", readiness: "incomplete", data: {
+  return { readReference: "SYNTHETIC-CANDIDATE-SNAPSHOT-1", readiness: "ready", data: {
     items: all.slice(offset, offset + 20).map(({ id, label }) => ({ id, label })), exactTotal: all.length, page: read.parameters.page
   } };
 }

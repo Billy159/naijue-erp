@@ -1,0 +1,26 @@
+{
+  "sales": {
+    "staticLocalModules": 17,
+    "styles": [
+      "apps/web/src/application/styles/sales-base.css",
+      "apps/web/src/application/styles/sales.css",
+      "apps/web/src/demo-presentation/controls.css",
+      "apps/web/src/demo-presentation/tokens.css",
+      "apps/web/src/sales/sales.css"
+    ],
+    "inventorySpecificCss": false
+  },
+  "parties": {
+    "staticLocalModules": 6,
+    "styles": [
+      "../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/dist/css/arco.css",
+      "apps/web/src/application/styles/parties.css",
+      "apps/web/src/demo-presentation/controls.css",
+      "apps/web/src/demo-presentation/tokens.css",
+      "apps/web/src/parties/parties.css",
+      "apps/web/src/parties/source-settings.css"
+    ],
+    "inventorySpecificCss": false
+  }
+}
+PASS focused source static-CSS graph: sales and parties preserve shared controls/tokens with no inventory matrix/settings/scope-dialog/product-drawer source or selectors. No emitted build/types/browser/network rerun.

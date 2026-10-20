@@ -17,3 +17,7 @@ No line in this document authorizes a database write, migration execution, deplo
 ## Visual acceptance correction
 
 The prior synthetic inventory appearance was rejected by Billy. Exact frozen Demo UI source is now available and verified; restoration is active, but no real-Demo screenshot comparison or real-browser acceptance has occurred. See FRONTEND-ACCEPTANCE-STATUS.md. No functional test count overrides this missing acceptance.
+
+## Latest catalog price decision
+
+User message Sentinel_3d67bb2097188191afc75e5acf73ba9f: “你按照demo的价格保留啊”. Preserve all price fields, labels, ordering and semantics from frozen Demo b8bcfe3, at product rather than SKU level. This is no longer a pending user scope decision. The exported UI evidence references C.priceFields but excludes the private-containing module defining it. A bounded request for static configuration-only extraction has no confirmed new task outcome; do not substitute candidate617 configuration as verified frozen Demo evidence or guess field labels. Existing frozen product UI explicitly distinguishes blank/unset from numeric zero and validates nonnegative amounts with at most two decimals; these observed rules remain source evidence, not complete configuration extraction.

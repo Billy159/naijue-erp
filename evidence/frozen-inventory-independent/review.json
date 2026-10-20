@@ -1,0 +1,219 @@
+{
+  "reviewed_at_utc": "2026-10-20T18:49:46Z",
+  "scope": "Independent final-cascade/source-structure review only; no implementation changes, real browser, screenshot or pixel-parity claim.",
+  "source_commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "decision": "Accepted within the reviewed source-declaration, cascade, inherited typography and pure popover-positioning scope. R1-R7 resolved. Not real-browser, whole-UI visual or pixel-parity acceptance.",
+  "findings": [
+    {
+      "id": "R1",
+      "status": "resolved_source_level",
+      "severity": "medium",
+      "area": "sidebar",
+      "source": "frontend/interaction-common.css:1 (.sidebar-note,.proto-tag display:none!important)",
+      "rewrite": "apps/web/src/demo-presentation/frame.css:16; demo-frame.tsx:31",
+      "finding": "The restored invisible proto tag still reserves its text line and 4px/14px padding; the final frozen source removes the element from layout.",
+      "resolution": "frame.css:16 now removes sidebar/proto prose with display:none!important."
+    },
+    {
+      "id": "R2",
+      "status": "resolved_source_level",
+      "severity": "low",
+      "area": "matrix row geometry",
+      "source": "frontend/interaction-common.css:5; matrix-experiments.css:1",
+      "rewrite": "apps/web/src/inventory/inventory.css:56",
+      "finding": "Final source cell block padding is 4px after the interaction layer overrides the initial 5px; rewrite retains 5px 8px.",
+      "resolution": "inventory.css:58 now uses padding:4px 8px."
+    },
+    {
+      "id": "R3",
+      "status": "resolved_source_level",
+      "severity": "medium",
+      "area": "matrix fold controls",
+      "source": "frontend/interaction-common.css:1; inventory-refinement.css:69-70",
+      "rewrite": "apps/web/src/inventory/inventory.css:80-81",
+      "finding": "Final source fold control keeps min-height:28px even though the later height is 22px. Rewrite omits min-height and reduces the control to 22px.",
+      "resolution": "inventory.css:82 retains height:22px; :83 explicitly restores min-height:28px."
+    },
+    {
+      "id": "R4",
+      "status": "resolved_source_level",
+      "severity": "low",
+      "area": "display settings footer",
+      "source": "frontend/inventory-workbench.js:7,71; styles.css:44,49; inventory-workbench.css:10",
+      "rewrite": "apps/web/src/inventory/inventory-page.tsx:89; demo-presentation/controls.css:4,8,10",
+      "finding": "Source defaults and close controls are btn ghost (neutral transparent controls). Rewrite makes defaults a blue 12px link and close a bordered secondary button.",
+      "resolution": "inventory-page.tsx:92 renders both settings footer buttons as iw-button iw-ghost. controls.css:6-7 provides neutral transparent roles; inventory.css:44 retains height32/min30/padding4px9px/weight500."
+    },
+    {
+      "id": "R5",
+      "status": "resolved_source_level",
+      "severity": "medium",
+      "area": "display settings responsive placement",
+      "source": "frontend/inventory-workbench.js:64-65",
+      "rewrite": "apps/web/src/inventory/inventory.css:37; inventory-page.tsx:89",
+      "finding": "Source fixed popover clamps horizontal position, bounds height to available viewport space/450px, and flips above the trigger when needed. Rewrite is absolute below/right with overflow:hidden, no max-height or flip. Short-viewport clipping is a risk inferred from declarations, not a measured browser result.",
+      "resolution": "inventory.css:37 uses fixed positioning; :38 permits body scrolling and :43 keeps the footer nonshrinking. popover-position.ts preserves source formula/strict230/tie/100-450 bounds; anchored-popover.ts updates and cleans up resize/captured-scroll listeners. The documented sub24px width guard is an explicit safe exception."
+    },
+    {
+      "id": "R6",
+      "status": "resolved_source_level",
+      "severity": "high",
+      "area": "inherited native-control reset specificity",
+      "source": "frontend/styles.css:5 has bare button/input/select/textarea selectors, specificity (0,0,1).",
+      "rewrite": "apps/web/src/demo-presentation/frame.css:6 uses :where(.demo-ui) before each native selector, restoring specificity (0,0,1) without global leakage.",
+      "finding": "The prior .demo-ui native selectors (0,1,1) defeated primary white ink, neutral/link roles and ordinary button weight.",
+      "resolution": "Independent actual-CSS jsdom precedence regression passes. Its in-memory old-reset negative control reproduces dark primary/link/text ink. Outside native control remains unchanged."
+    },
+    {
+      "id": "R7",
+      "status": "resolved_source_level",
+      "severity": "low",
+      "area": "inherited control and section-heading line-height",
+      "source": "frontend/styles.css:3,5,44 and inventory-workbench.css:9-11 preserve inherited unitless 1.5 for header/query controls; matrix-experiments.css:1 gives section h3 font-size13 with inherited 1.5.",
+      "rewrite": "apps/web/src/demo-presentation/controls.css:3 now uses font:inherit;font-size:13px; inventory.css:55 now uses section h3 line-height:inherit.",
+      "finding": "The former shared control font shorthand set line-height:normal, and section h3 used20px instead of inherited19.5px at13px. Main inventory h1 already retained20px/30px/600.",
+      "resolution": "Independent inherited-typography oracle expands only the exact declared font-family token for jsdom and verifies line-height1.5 for query/text controls and section h3. In-memory prior-shorthand/20px negative controls reproduce both former differences."
+    }
+  ],
+  "checks": {
+    "frozen_manifest_files": 17,
+    "frozen_manifest_all_match": true,
+    "empty_svg_path_matches_installed_2_66_16": true,
+    "arco_license_byte_identical": true,
+    "portable_sha256": "e30df03f62d9ea4501f7842981e5e1f3129e3c1442ab3b67e47dbb2af3b1104f",
+    "portable_bytes": 288610,
+    "page_cap_bytes": 262144,
+    "page_over_cap_bytes": 26466,
+    "page_embeddable": false,
+    "browser_probe_performed": false,
+    "heavy_suites_repeated": false,
+    "actual_css_precedence_regression": "pass",
+    "actual_css_old_reset_negative_control": "reproduced former defect",
+    "inherited_typography_regression": "pass, with exact declared font-token expansion only",
+    "old_typography_negative_controls": "reproduced former normal/20px values",
+    "new_geometry_test_output": "Owner nine-case pure arithmetic result inspected; not redundantly rerun."
+  },
+  "manifest_sha256": "bdbbcca99b9262e3fd1d01fc1a9a4bd67f780d8de99a21bf638d583b193a0a60",
+  "manifest_files": [
+    {
+      "path": "apps/web/preview/main.tsx",
+      "sha256": "9febe9516b6404a554b16905a5248b1246d11795af8c2a0ad4f7466b4d01cc96"
+    },
+    {
+      "path": "apps/web/preview/shell.css",
+      "sha256": "ddafd719266a1f5e1783cb206fb8c2ce205efa90705b5b61b7fabc0240cc1f09"
+    },
+    {
+      "path": "apps/web/src/components/pagination.tsx",
+      "sha256": "e535ddd99d01eeb25493cb024ea3f1e8228e613d0db99a7af8bc81b444be748d"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/ARCO-LICENSE",
+      "sha256": "41f929ce996762fbbfc9760266c45558e9f48f6179b2c2149e6eca6d1efc9123"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/README.md",
+      "sha256": "cab0efd8119ca64bacb0f46be80aaacb3659e82869cb9f5d8b8466dbd1cddecd"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/anchored-popover.ts",
+      "sha256": "bd1c737b946159131acc6dd7aa6f4b1d57037a6a9147f3e9472e44cd72f31f27"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/controls.css",
+      "sha256": "d03119b81ee1a5c065ea01c6b62509d6fadc2cb3133c482568645fc95be681ac"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+      "sha256": "341060e6e52571eb2323db841a239f12c6e65d3ea5c7c153e6e987f5974c9b45"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/frame.css",
+      "sha256": "8d55a960b6708429ac7af0a199f377b6f9d23241f432b90cb18e5d6abc8877be"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/icons.tsx",
+      "sha256": "39f988ac49335c65a3be7587f129cf76a85546e001221ca921dc57d7d20a80d2"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/popover-position.test.ts",
+      "sha256": "021970c5359b76c308b91fcfa14aad7732b86caea8fe4fc1d336d35ec7b83ff6"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/popover-position.ts",
+      "sha256": "e57ec5192609b20cbe9bc5975dfd3e7ec41d482513d6c90ad5bab80ee257c02e"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/tests/run-source-structure.mjs",
+      "sha256": "929abca350cd041ff090b441b291b9df727764a0ae1de6d384aae67d86938c06"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/tokens.css",
+      "sha256": "8ba3b7e1c9133524295d562cc712662a1045bb0804e4e0c3e77df4e2f3455054"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory-matrix.tsx",
+      "sha256": "ab2bcf4572ed0c02c3045d1fbe49955e7f695928cc1ac44b3cb4cd971d1fefd1"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory-page.tsx",
+      "sha256": "cd2daf0b66e1968b93917ef727c9b31f36359b1dd7f2af7caddca2275fdb1606"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory.css",
+      "sha256": "fa0e97d3793dbda6894b2adf5676137fa50e0b4dad750d067f921465b34e08e4"
+    }
+  ],
+  "reference_files": [
+    {
+      "path": "LOAD_ORDER.md",
+      "sha256": "a5806268ab952d3b498add7c7f0b80ea55d3a77c0cf43ba4743287f09cf8dff4"
+    },
+    {
+      "path": "LAYOUT_MAP.md",
+      "sha256": "9c7b971ced09870885a234ce0c9c921e6a8d4fd7fb246ef156424ea16f14129a"
+    },
+    {
+      "path": "frontend/interaction-common.css",
+      "sha256": "b293a8574187a2e92901389ede4a90da9c2b6eea941da2db62e0eac6a5584c81"
+    },
+    {
+      "path": "frontend/inventory-workbench.css",
+      "sha256": "150b34257f18bee7143c6261258560e2a8e02db6d05cfa1e50a82012e7eb9dca"
+    },
+    {
+      "path": "frontend/inventory-refinement.css",
+      "sha256": "d054a7f141d0421936f8969724a5398e4cf76e26db9aa64bc8727eea7fdefce1"
+    },
+    {
+      "path": "frontend/inventory-matrix-experiment.js",
+      "sha256": "7439eb810ac2da36dbe791b9eb37240a4bcf6654bec98dff5674168e6e68e7a5"
+    },
+    {
+      "path": "frontend/ui-tokens.css",
+      "sha256": "fdb91a2df6218a7a24081831cd4a104c2817fe9e399dcdf934273c1bb465979d"
+    },
+    {
+      "path": "frontend/inventory-workbench.js",
+      "sha256": "4f54830acd5c242cfed21a55334ed12043e5a7b92a375f0a1f1d7ee6e2f8e59e"
+    }
+  ],
+  "narrow_geometry_review": {
+    "source_equivalence": "Desktop filter minima 260+160+170 plus 112/72/72 actions and five 8px gaps total 886px. At viewport <=1100px, filter minima 220+150+160 and two 8px gaps total 546px, with actions moved to a separate row. At viewport <=740px, two columns/product spanning apply. Frozen inventory-refinement.css:2-3,73-74 matches rewrite inventory.css:11-12,108-109.",
+    "boundary": "Both versions use viewport media queries, not container queries. A narrow nested host inside a wider viewport can overflow. Current preview explicitly provides outer horizontal overflow. Actual host clipping, scroll reachability, resolved contrast and rasterization remain unverified without a permitted browser."
+  },
+  "evidence_files": [
+    {
+      "path": "/workspace/shared/frozen-inventory-review/run-cascade-precedence.cjs",
+      "sha256": "e2725166e832abcb93df2058cff3e3d839f065eeb8bde39ac028e9ad5266b0f9"
+    },
+    {
+      "path": "/workspace/shared/frozen-inventory-review/cascade-precedence.json",
+      "sha256": "1cc4eec69627a4fa65789542dbf8ba54b651d7200ba2053a9e5a566de1029e84"
+    },
+    {
+      "path": "/workspace/shared/frozen-inventory-review/cascade-precedence.txt",
+      "sha256": "67e9309a763503417877cef9e298c8392cdcb3a83af776203f53056ab5ca8d90"
+    }
+  ]
+}

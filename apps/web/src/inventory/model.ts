@@ -10,29 +10,30 @@ export function assertQuantity(value: string): void {
 }
 export function totalOf(cells: readonly StockCell[]): StockTotal {
   let known = 0n;
-  let unknownCells = 0;
   for (const cell of cells) {
-    if (cell.state === 'known') { assertQuantity(cell.quantity); known += BigInt(cell.quantity); }
-    else if (cell.state === 'unknown') unknownCells++;
+    if (cell?.state === 'known') { assertQuantity(cell.quantity); known += BigInt(cell.quantity); }
+    else if (cell?.state !== 'not-applicable') throw new TypeError('库存数据未完整核实，不能按零发布。');
   }
-  return { knownQuantity: String(known), completeness: unknownCells ? 'incomplete' : 'complete', unknownCells };
+  return { knownQuantity: String(known), completeness: 'complete', unknownCells: 0 };
 }
 export function formatQuantity(value: string): string {
   assertQuantity(value);
   return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 export function totalLabel(total: StockTotal): string {
-  return `${total.completeness === 'incomplete' ? '已核 ' : ''}${formatQuantity(total.knownQuantity)}${total.completeness === 'incomplete' ? `（${total.unknownCells} 格未知）` : ''}`;
+  assertTotal(total);
+  return formatQuantity(total.knownQuantity);
 }
 function assertTotal(total: StockTotal): void {
-  if (!total || !['complete', 'incomplete'].includes(total.completeness) || !Number.isSafeInteger(total.unknownCells) || total.unknownCells < 0) throw new TypeError('库存汇总完整性未核实。');
+  if (!total || total.completeness !== 'complete' || total.unknownCells !== 0) throw new TypeError('库存汇总完整性未核实，不能发布部分结果。');
   assertQuantity(total.knownQuantity);
-  if ((total.completeness === 'complete') !== (total.unknownCells === 0)) throw new TypeError('库存汇总完整性不一致。');
 }
+
 function sumTotals(totals: readonly StockTotal[]): StockTotal {
-  const unknownCells = totals.reduce((count, total) => count + total.unknownCells, 0);
-  return { knownQuantity: String(totals.reduce((sum, total) => sum + BigInt(total.knownQuantity), 0n)), unknownCells, completeness: unknownCells ? 'incomplete' : 'complete' };
+  for (const total of totals) assertTotal(total);
+  return { knownQuantity: String(totals.reduce((sum, total) => sum + BigInt(total.knownQuantity), 0n)), unknownCells: 0, completeness: 'complete' };
 }
+
 function sameTotal(actual: StockTotal, expected: StockTotal): void {
   if (actual.knownQuantity !== expected.knownQuantity || actual.unknownCells !== expected.unknownCells || actual.completeness !== expected.completeness) throw new TypeError('库存汇总与完整当前页模型不一致，不能把未知当零。');
 }
@@ -70,7 +71,7 @@ export function assertInventoryPage(data: InventoryPage, parameters: Readonly<In
         if (Object.keys(row.cells).length !== product.sizes.length) throw new TypeError('库存格数量与已核实尺码列不一致。');
         for (const size of product.sizes) {
           const cell = row.cells[size.id];
-          if (!cell || !['known', 'unknown', 'not-applicable'].includes(cell.state)) throw new TypeError('库存格缺少明确状态，不能当作零库存。');
+          if (!cell || !['known', 'not-applicable'].includes(cell.state)) throw new TypeError('库存格缺少明确状态，不能当作零库存。');
           if (cell.state !== 'not-applicable') {
             nonempty(cell.skuId);
             const coordinate = JSON.stringify([group.color.id, group.fit.id, size.id]);
@@ -79,7 +80,6 @@ export function assertInventoryPage(data: InventoryPage, parameters: Readonly<In
             skuCoordinates.set(cell.skuId, coordinate);
           }
           if (cell.state === 'known') assertQuantity(cell.quantity);
-          if (cell.state === 'unknown') nonempty(cell.reason);
         }
         sameTotal(row.total, totalOf(product.sizes.map(size => row.cells[size.id]!)));
       }
@@ -90,7 +90,6 @@ export function assertInventoryPage(data: InventoryPage, parameters: Readonly<In
     for (const size of product.sizes) sameTotal(product.sizeTotals[size.id]!, sumTotals(product.colorFits.map(group => group.sizeTotals[size.id]!)));
   }
   const pageTotal = sumTotals(data.products.map(product => product.total));
-  if (data.allMatchesTotal.unknownCells < pageTotal.unknownCells) throw new TypeError('全部匹配汇总不能隐藏当前页的未知库存。');
   if (data.exactTotalProducts === data.products.length) sameTotal(data.allMatchesTotal, pageTotal);
 }
 export function createInventoryQuery(scope: ReadScope, reader: InventoryReader): LatestQuery<InventoryParameters, InventoryPage> {

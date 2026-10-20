@@ -1,0 +1,42 @@
+{
+  "startupInputs": [
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom-client.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/client.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react-jsx-runtime.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/jsx-runtime.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/cjs/scheduler.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/index.js",
+    "../../../../packages/domain/src/errors.ts",
+    "../../../../packages/domain/src/values.ts",
+    "../authentication/authentication-panel.tsx",
+    "../authentication/authentication.css",
+    "../authentication/contracts.ts",
+    "../authentication/http-client.ts",
+    "../authentication/model.ts",
+    "../loading/async-leaf-registry.ts",
+    "../loading/read-scope.ts",
+    "application-root.tsx",
+    "controller.ts",
+    "index.tsx",
+    "stylesheet.ts"
+  ],
+  "startupCode": [
+    "application.js",
+    "chunk-FSROJZ4C.js",
+    "chunk-P74PHBPC.js",
+    "chunk-K2TRKZDL.js",
+    "chunk-3QL4IOED.js"
+  ],
+  "stylesheetBytes": {
+    "application": 2095,
+    "inventory": 10027,
+    "sales": 13137,
+    "parties": 13718
+  },
+  "boundary": "Synthetic static build import/CSS analysis only. No browser/network waterfall or timing/performance acceptance."
+}
+PASS: actual split output startup closure excludes every business route/reader; shell CSS excludes all route/action CSS.

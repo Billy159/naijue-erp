@@ -88,17 +88,15 @@ export function exactInteger(value: unknown, cell: boolean): bigint {
 export function stockTotal(value: unknown): InventoryStockTotal {
   const row = record(value, ["knownQuantity", "completeness", "unknownCells"], [], rejectInventoryResponse);
   exactInteger(row.knownQuantity, false);
-  const unknownCells = numberValue(row.unknownCells, 0, rejectInventoryResponse);
-  const completeness = unknownCells === 0 ? "complete" : "incomplete";
-  if (row.completeness !== completeness) rejectInventoryResponse();
-  return Object.freeze({ knownQuantity: row.knownQuantity as string, completeness, unknownCells });
+  if (row.unknownCells !== 0 || row.completeness !== "complete") rejectInventoryResponse();
+  return Object.freeze({ knownQuantity: row.knownQuantity as string, completeness: "complete", unknownCells: 0 });
 }
 export function sumTotals(values: readonly InventoryStockTotal[]): InventoryStockTotal {
-  let known = 0n; let unknown = 0;
-  for (const value of values) { known += BigInt(value.knownQuantity); unknown += value.unknownCells; }
-  if (!Number.isSafeInteger(unknown)) rejectInventoryResponse();
-  return Object.freeze({ knownQuantity: known.toString(), completeness: unknown === 0 ? "complete" : "incomplete", unknownCells: unknown });
+  let known = 0n;
+  for (const value of values) { known += BigInt(value.knownQuantity); }
+  return Object.freeze({ knownQuantity: known.toString(), completeness: "complete", unknownCells: 0 });
 }
+
 export function equalTotal(actual: InventoryStockTotal, expected: InventoryStockTotal): void {
   if (actual.knownQuantity !== expected.knownQuantity || actual.unknownCells !== expected.unknownCells || actual.completeness !== expected.completeness) rejectInventoryResponse();
 }

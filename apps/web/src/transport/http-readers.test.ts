@@ -25,18 +25,18 @@ function read<P>(parameters: P, controller = new AbortController()): QueryRead<P
 function json(value: unknown, status = 200): Response { return new Response(JSON.stringify(value), { status, headers: { 'Content-Type': 'application/json; charset=utf-8' } }); }
 function options(fetch: QueryFetch, extra: Partial<HttpQueryOptions> = {}): HttpQueryOptions { return { fetch, origin, basePath: '/api', ...extra }; }
 function inventoryPage(): InventoryPage {
-  const total = { knownQuantity: '-9007199254740993', completeness: 'incomplete' as const, unknownCells: 1 };
-  const totals = { s1: { knownQuantity: '-9007199254740993', completeness: 'complete' as const, unknownCells: 0 },
-    s2: { knownQuantity: '0', completeness: 'complete' as const, unknownCells: 0 },
-    s3: { knownQuantity: '0', completeness: 'incomplete' as const, unknownCells: 1 },
-    s4: { knownQuantity: '0', completeness: 'complete' as const, unknownCells: 0 } };
+  const total = { knownQuantity: '-9007199254740993', completeness: 'complete' as const, unknownCells: 0 as const };
+  const totals = { s1: { knownQuantity: '-9007199254740993', completeness: 'complete' as const, unknownCells: 0 as const },
+    s2: { knownQuantity: '0', completeness: 'complete' as const, unknownCells: 0 as const },
+    s3: { knownQuantity: '0', completeness: 'complete' as const, unknownCells: 0 as const },
+    s4: { knownQuantity: '0', completeness: 'complete' as const, unknownCells: 0 as const } };
   return { page: 1, pageSize: 100, exactTotalProducts: 1, warehouseLabels: ['授权仓库完整标签'], readReference: 'TEST-READ', allMatchesTotal: total,
     products: [{ id: target.productId, code: 'TEST-001', name: '测试商品', categoryLabel: '分类', supplierLabel: '供应商', seasonLabel: '季节',
       sizeGroup: { id: 'group', label: '上衣组' }, sizes: [{ id: 's1', label: '165/S' }, { id: 's2', label: '170/M' }, { id: 's3', label: '175/L' }, { id: 's4', label: '180/XL' }],
       colorFits: [{ color: { id: 'blue', label: '蓝' }, fit: { id: 'Y', label: 'Y版（修身）' }, total, sizeTotals: totals,
         rows: [{ warehouse: { id: 'warehouse', label: '授权仓库完整标签' }, total,
           cells: { s1: { state: 'known', skuId: 'sku-1', quantity: '-9007199254740993' }, s2: { state: 'known', skuId: 'sku-2', quantity: '0' },
-            s3: { state: 'unknown', skuId: 'sku-3', reason: '来源覆盖尚未核实' }, s4: { state: 'not-applicable' } } }] }], sizeTotals: totals, total }] };
+            s3: { state: 'known', skuId: 'sku-3', quantity: '0' }, s4: { state: 'not-applicable' } } }] }], sizeTotals: totals, total }] };
 }
 function errorKind(kind: HttpQueryError['kind'], code?: string, status?: number): (error: unknown) => boolean {
   return error => { assert.ok(error instanceof HttpQueryError); assert.equal(error.kind, kind);
@@ -136,7 +136,7 @@ test('malformed success is not an empty/zero success; invalid quantities, totals
     { ...inventoryPage(), page: 2 }, { ...inventoryPage(), exactTotalProducts: 2 }];
   const missing = structuredClone(inventoryPage()); delete (missing.products[0]!.colorFits[0]!.rows[0]!.cells as Record<string, unknown>).s3; malformedInventory.push(missing);
   const quantity = structuredClone(inventoryPage()); Object.assign(quantity.products[0]!.colorFits[0]!.rows[0]!.cells.s1!, { quantity: -9007199254740993 }); malformedInventory.push(quantity);
-  const unknownZero = structuredClone(inventoryPage()); Object.assign(unknownZero.allMatchesTotal, { unknownCells: 0, completeness: 'complete' }); malformedInventory.push(unknownZero);
+  const unknownZero = structuredClone(inventoryPage()); Object.assign(unknownZero.allMatchesTotal, { unknownCells: 1, completeness: 'incomplete' }); malformedInventory.push(unknownZero);
   for (const value of malformedInventory) {
     const reader = createInventoryHttpReader(options(async () => json(value)));
     await assert.rejects(reader.readInventory(read(inventoryParameters())), errorKind('malformed-response', 'INVALID_RESPONSE'));
@@ -266,7 +266,7 @@ test('zero-byte chunk streams and oversized exact integer text also fail closed 
 
 function matrixPage(value = '1'): InventoryPage {
   const id = (value: number) => `00000000-0000-4000-8000-${String(value).padStart(12, '0')}`;
-  const total = (value: string | bigint) => ({ knownQuantity: String(value), unknownCells: 0, completeness: 'complete' as const });
+  const total = (value: string | bigint) => ({ knownQuantity: String(value), unknownCells: 0 as const, completeness: 'complete' as const });
   const sum = total(BigInt(value) * 2n);
   return { page: 1, pageSize: 100, exactTotalProducts: 1, warehouseLabels: ['Warehouse 6', 'Warehouse 7'], readReference: 'read-1', allMatchesTotal: sum,
     products: [{ id: id(1), code: '001', name: 'Product', categoryLabel: '', supplierLabel: '', seasonLabel: '', sizeGroup: { id: id(2), label: 'Group' },
@@ -288,7 +288,7 @@ test('inventory rejects different SKU or absent-vs-existing identity for one coo
   const second = conflictingPresence.products[0]!.colorFits[0]!.rows[1]!;
   Object.assign(second, { cells: Object.fromEntries(Object.keys(second.cells).map(key => [key, { state: 'not-applicable' }])) });
   await assert.rejects(inventoryResult(conflictingPresence), errorKind('malformed-response', 'INVALID_RESPONSE'));
-  // Coverage may differ by warehouse without changing the underlying actual SKU.
+  // Incomplete coverage anywhere rejects the whole response, even for the same actual SKU.
   const unknown = structuredClone(matrixPage('0')), product = unknown.products[0]!, group = product.colorFits[0]!, row = group.rows[1]!;
   const cell = Object.values(row.cells)[0]!;
   assert.equal(cell.state, 'known');
@@ -298,13 +298,13 @@ test('inventory rejects different SKU or absent-vs-existing identity for one coo
   Object.assign(group, { total: incomplete, sizeTotals: Object.fromEntries(product.sizes.map(size => [size.id, incomplete])) });
   Object.assign(product, { total: incomplete, sizeTotals: Object.fromEntries(product.sizes.map(size => [size.id, incomplete])) });
   Object.assign(unknown, { allMatchesTotal: incomplete });
-  assert.deepEqual(await inventoryResult(unknown), unknown);
+  await assert.rejects(inventoryResult(unknown), errorKind('malformed-response', 'INVALID_RESPONSE'));
 });
 
 test('inventory prevents a SKU being reused by a different product even when every total is exact', async () => {
   const page = structuredClone(matrixPage()), product = structuredClone(page.products[0]!);
   Object.assign(product, { id: imageTarget.imageId, code: '002' });
-  Object.assign(page, { products: [...page.products, product], exactTotalProducts: 2, allMatchesTotal: { knownQuantity: '4', unknownCells: 0, completeness: 'complete' } });
+  Object.assign(page, { products: [...page.products, product], exactTotalProducts: 2, allMatchesTotal: { knownQuantity: '4', unknownCells: 0 as const, completeness: 'complete' } });
   await assert.rejects(inventoryResult(page), errorKind('malformed-response', 'INVALID_RESPONSE'));
   for (const row of product.colorFits[0]!.rows) Object.assign(Object.values(row.cells)[0]!, { skuId: '00000000-0000-4000-8000-000000000099' });
   assert.deepEqual(await inventoryResult(page), page);
@@ -329,7 +329,7 @@ test('warehouse header labels/count/order and warehouse IDs must agree throughou
   Object.assign(product, { id: imageTarget.imageId, code: '002' });
   for (const row of product.colorFits[0]!.rows) Object.assign(Object.values(row.cells)[0]!, { skuId: '00000000-0000-4000-8000-000000000099' });
   Object.assign(product.colorFits[0]!.rows[0]!.warehouse, { id: '00000000-0000-4000-8000-000000000100' });
-  Object.assign(page, { products: [...page.products, product], exactTotalProducts: 2, allMatchesTotal: { knownQuantity: '4', unknownCells: 0, completeness: 'complete' } });
+  Object.assign(page, { products: [...page.products, product], exactTotalProducts: 2, allMatchesTotal: { knownQuantity: '4', unknownCells: 0 as const, completeness: 'complete' } });
   await assert.rejects(inventoryResult(page), errorKind('malformed-response', 'INVALID_RESPONSE'));
 });
 

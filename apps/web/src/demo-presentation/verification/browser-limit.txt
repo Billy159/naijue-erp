@@ -1,0 +1,1 @@
+NOT VERIFIED: no real-browser rendering or screenshot comparison. A local installed Chromium probe exited before page output with ECONNRESET; parent subsequently supplied earlier denied browser restrictions. No retry or alternate route was performed. Only build/jsdom/structural checks are used.

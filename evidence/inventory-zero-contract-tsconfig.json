@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "typeRoots": [
+      "../node_modules/@types"
+    ]
+  },
+  "files": [
+    "../tests/inventory-query.test.ts",
+    "../apps/api/src/inventory-http.test.ts",
+    "../apps/web/src/inventory/model.test.ts",
+    "../apps/web/src/transport/http-readers.test.ts",
+    "../apps/web/src/inventory/inventory-matrix.tsx",
+    "../apps/web/preview/synthetic-reader.ts"
+  ],
+  "include": []
+}

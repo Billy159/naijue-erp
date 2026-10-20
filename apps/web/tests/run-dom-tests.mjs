@@ -41,7 +41,7 @@ try {
   await click(host.querySelector('.iw-option-list input')); await click(button('完成'));
   assert.equal(reads.filter(event => event.kind === 'inventory').length, 0);
   await act(async () => host.querySelector('form').dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }))); await settle();
-  assert.equal(reads.filter(event => event.kind === 'inventory').length, 1); assert.match(host.textContent, /共 1 款/); assert.match(host.textContent, /165\/S/); assert.match(host.textContent, /170\/M/); assert.match(host.textContent, /Y版（修身）/); assert.match(host.textContent, /A版（标准）/); assert.match(host.textContent, /未知/);
+  assert.equal(reads.filter(event => event.kind === 'inventory').length, 1); assert.match(host.textContent, /共 1 款/); assert.match(host.textContent, /165\/S/); assert.match(host.textContent, /170\/M/); assert.match(host.textContent, /Y版（修身）/); assert.match(host.textContent, /A版（标准）/); assert.doesNotMatch(host.textContent, /未知/); assert.equal(host.querySelector('.mx-unknown'), null); assert.ok([...host.querySelectorAll('.mx-stock')].some(cell => cell.textContent === '0'));
   console.log('PASS DOM: opening candidates reads only candidates; selecting does not query; explicit query renders complete size/FIT identities.');
   const negative = host.querySelector('.mx-stock.mx-negative'); assert.equal(negative.textContent, '-2');
   await click(negative); assert.equal(calls.length, 1); assert.equal(calls[0].warehouse.id, 'test-warehouse-main'); assert.equal(calls[0].size.label, '165/S'); assert.equal(calls[0].fit.id, 'test-fit-Y'); assert.ok(calls[0].skuId);
@@ -55,6 +55,9 @@ try {
   reader.failNextInventory(); await click(button('刷新')); await settle(); assert.ok(host.querySelector('[role=alert]')); assert.match(host.textContent, /保留上次成功结果/); assert.match(host.textContent, /共 1 款/);
   await click(button('重试')); await settle(); assert.equal(host.querySelector('[role=alert]'), null);
   console.log('PASS DOM: read failure keeps marked previous facts; retry recovers without losing the draft.');
+  reader.unreadyNextInventory(); await click(button('刷新')); await settle(); assert.ok(host.querySelector('[role=alert]')); assert.match(host.textContent, /保留上次成功结果/); assert.doesNotMatch(host.textContent, /未知/);
+  await click(button('重试')); await settle(); assert.equal(host.querySelector('[role=alert]'), null);
+  console.log('PASS DOM: incomplete source rejects the whole query, never publishes unknown cells or invented zero totals.');
   await click(host.querySelector('.iw-product-field .iw-control')); await settle(); const beforeClose = reads.length; await click(button('完成')); await settle(220); assert.equal(reads.length, beforeClose);
   await act(async () => context.clear()); assert.equal(host.querySelectorAll('.iw-control').length, 0); assert.match(host.textContent, /旧身份结果已清除/); assert.equal(host.querySelectorAll('.mx-stock').length, 0);
   console.log('PASS DOM: closed selector does not read again; identity revocation removes all stock facts.');
@@ -146,7 +149,7 @@ try {
   detailReader.failNext('specs'); await click(tab('规格')); await settle(); assert.ok(drawer().querySelector('[role=alert]'));
   await click(button('重试')); await settle(); assert.equal(drawer().querySelector('[role=alert]'), null);
   await click(host.querySelector('button[aria-label="关闭商品资料"]')); assert.equal(drawer(), null); assert.equal(document.activeElement, viewTrigger);
-  const secondView = host.querySelectorAll('.mx-view')[1]; await click(secondView); await settle();
+  const secondView = host.querySelector('[data-inventory-product="test-product-2"] .mx-view'); await click(secondView); await settle();
   assert.match(drawer().textContent, /TEST-SYSTEM-2/); assert.doesNotMatch(drawer().textContent, /TEST-SYSTEM-1/);
   await click(tab('图片')); await settle(); assert.match(drawer().textContent, /暂无图片/); assert.equal(drawer().querySelector('.pd-thumbnail'), null);
   await act(async () => drawer().dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true })));
@@ -168,10 +171,10 @@ try {
   assert.doesNotMatch(drawer().textContent, /STALE FIRST RESPONSE/);
   await click(host.querySelector('button[aria-label="关闭商品资料"]')); assert.equal(requests[1].read.signal.aborted, true);
   await act(async () => requests[1].resolve({ productId: 'test-product-1', sizeGroup: null, colors: [], fits: [], sizes: [], skus: [] })); await settle(); assert.equal(drawer(), null);
-  await click(host.querySelectorAll('.mx-view')[1]); await settle(); assert.equal(requests[2].read.parameters.productId, 'test-product-2');
+  await click(host.querySelector('[data-inventory-product="test-product-2"] .mx-view')); await settle(); assert.equal(requests[2].read.parameters.productId, 'test-product-2');
   await act(async () => requests[2].resolve(basePayload('test-product-2', 'CURRENT SECOND RESPONSE'))); await settle(); assert.match(drawer().textContent, /CURRENT SECOND RESPONSE/);
   await click(host.querySelector('button[aria-label="关闭商品资料"]'));
-  await click(host.querySelectorAll('.mx-view')[1]); await settle(); assert.equal(requests.length, 4); assert.doesNotMatch(drawer().textContent, /CURRENT SECOND RESPONSE/);
+  await click(host.querySelector('[data-inventory-product="test-product-2"] .mx-view')); await settle(); assert.equal(requests.length, 4); assert.doesNotMatch(drawer().textContent, /CURRENT SECOND RESPONSE/);
   await click(button('取消读取')); assert.equal(requests[3].read.signal.aborted, true); assert.match(drawer().textContent, /读取已取消/);
   await act(async () => requests[3].resolve(basePayload('test-product-2', 'STALE CANCELLED'))); await settle(); assert.doesNotMatch(drawer().textContent, /STALE CANCELLED/);
   await click(button('重新读取')); assert.equal(requests.length, 5);

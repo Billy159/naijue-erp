@@ -1,0 +1,279 @@
+{
+  "status": "pass",
+  "scope": "Actual owned CSS in jsdom; CSS custom-property role strings are compared without asserting resolved color, contrast, widths, rasterization or browser pixels.",
+  "checks": [
+    "primary white-ink role and 500 weight beat scoped reset",
+    "neutral/text/link/pager/ghost roles beat scoped reset",
+    "stock explicit normal ink and 400 weight survive reset",
+    "inventory h1 retains 20px/30px/600",
+    "outside native button unaffected by scoped reset",
+    "negative control restoring previous scoped specificity reproduces dark primary/link/text ink",
+    "exact font-token expansion confirms inherited1.5 control/section-heading line-height; previous shorthand/20px negative control reproduces differences"
+  ],
+  "actual": {
+    "primary": {
+      "color": "var(--ca-on-primary)",
+      "fontWeight": "500",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "text": {
+      "color": "var(--ca-ink-2)",
+      "fontWeight": "400",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "secondary": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "500",
+      "fontSize": "medium",
+      "lineHeight": "normal"
+    },
+    "link": {
+      "color": "var(--ca-primary-ink)",
+      "fontWeight": "normal",
+      "fontSize": "12px",
+      "lineHeight": "normal"
+    },
+    "pager": {
+      "color": "var(--ca-ink-2)",
+      "fontWeight": "normal",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "ghost": {
+      "color": "var(--ca-button-text)",
+      "fontWeight": "500",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "stock": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "normal",
+      "fontSize": "medium",
+      "lineHeight": "normal"
+    },
+    "heading": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "600",
+      "fontSize": "20px",
+      "lineHeight": "30px"
+    },
+    "sectionHeading": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "600",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "outside": {
+      "color": "rgb(0, 0, 0)",
+      "fontWeight": "normal",
+      "fontSize": "medium",
+      "lineHeight": "normal"
+    }
+  },
+  "negativeControl": {
+    "primary": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "normal",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "text": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "normal",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "secondary": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "normal",
+      "fontSize": "medium",
+      "lineHeight": "normal"
+    },
+    "link": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "normal",
+      "fontSize": "medium",
+      "lineHeight": "normal"
+    },
+    "pager": {
+      "color": "var(--ca-ink-2)",
+      "fontWeight": "normal",
+      "fontSize": "medium",
+      "lineHeight": "normal"
+    },
+    "ghost": {
+      "color": "var(--ca-button-text)",
+      "fontWeight": "500",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "stock": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "normal",
+      "fontSize": "medium",
+      "lineHeight": "normal"
+    },
+    "heading": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "600",
+      "fontSize": "20px",
+      "lineHeight": "30px"
+    },
+    "sectionHeading": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "600",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "outside": {
+      "color": "rgb(0, 0, 0)",
+      "fontWeight": "normal",
+      "fontSize": "medium",
+      "lineHeight": "normal"
+    }
+  },
+  "inheritedTypography": {
+    "primary": {
+      "color": "var(--ca-on-primary)",
+      "fontWeight": "500",
+      "fontSize": "13px",
+      "lineHeight": "1.5"
+    },
+    "text": {
+      "color": "var(--ca-ink-2)",
+      "fontWeight": "400",
+      "fontSize": "13px",
+      "lineHeight": "1.5"
+    },
+    "secondary": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "500",
+      "fontSize": "12px",
+      "lineHeight": "1.5"
+    },
+    "link": {
+      "color": "var(--ca-primary-ink)",
+      "fontWeight": "normal",
+      "fontSize": "12px",
+      "lineHeight": "1.5"
+    },
+    "pager": {
+      "color": "var(--ca-ink-2)",
+      "fontWeight": "normal",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "ghost": {
+      "color": "var(--ca-button-text)",
+      "fontWeight": "500",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "stock": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "normal",
+      "fontSize": "12px",
+      "lineHeight": "1.5"
+    },
+    "heading": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "600",
+      "fontSize": "20px",
+      "lineHeight": "30px"
+    },
+    "sectionHeading": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "600",
+      "fontSize": "13px",
+      "lineHeight": "1.5"
+    },
+    "outside": {
+      "color": "rgb(0, 0, 0)",
+      "fontWeight": "normal",
+      "fontSize": "medium",
+      "lineHeight": "normal"
+    }
+  },
+  "typographyNegativeControl": {
+    "primary": {
+      "color": "var(--ca-on-primary)",
+      "fontWeight": "500",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "text": {
+      "color": "var(--ca-ink-2)",
+      "fontWeight": "400",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "secondary": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "500",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "link": {
+      "color": "var(--ca-primary-ink)",
+      "fontWeight": "normal",
+      "fontSize": "12px",
+      "lineHeight": "normal"
+    },
+    "pager": {
+      "color": "var(--ca-ink-2)",
+      "fontWeight": "normal",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "ghost": {
+      "color": "var(--ca-button-text)",
+      "fontWeight": "500",
+      "fontSize": "13px",
+      "lineHeight": "normal"
+    },
+    "stock": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "normal",
+      "fontSize": "12px",
+      "lineHeight": "1.5"
+    },
+    "heading": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "600",
+      "fontSize": "20px",
+      "lineHeight": "30px"
+    },
+    "sectionHeading": {
+      "color": "var(--ca-ink)",
+      "fontWeight": "600",
+      "fontSize": "13px",
+      "lineHeight": "20px"
+    },
+    "outside": {
+      "color": "rgb(0, 0, 0)",
+      "fontWeight": "normal",
+      "fontSize": "medium",
+      "lineHeight": "normal"
+    }
+  },
+  "sourceFiles": [
+    {
+      "path": "apps/web/src/demo-presentation/tokens.css",
+      "sha256": "8ba3b7e1c9133524295d562cc712662a1045bb0804e4e0c3e77df4e2f3455054"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/frame.css",
+      "sha256": "8d55a960b6708429ac7af0a199f377b6f9d23241f432b90cb18e5d6abc8877be"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/controls.css",
+      "sha256": "d03119b81ee1a5c065ea01c6b62509d6fadc2cb3133c482568645fc95be681ac"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory.css",
+      "sha256": "fa0e97d3793dbda6894b2adf5676137fa50e0b4dad750d067f921465b34e08e4"
+    }
+  ]
+}

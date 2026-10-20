@@ -1,0 +1,13 @@
+/* Only clean-lifecycle extensions. Frozen settings layout and Arco presentation
+   live in source-settings.css; no replacement list/modal geometry is invented. */
+.party-code{white-space:pre-wrap;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.party-notice,.party-read-state{flex:none;margin:0 0 8px;font:12px/20px var(--ca-font-sans);color:var(--ca-ink-2)}
+.party-pagination>.actions{display:flex;align-items:center;gap:4px;flex-wrap:nowrap}
+.party-workbench .party-pagination>.party-single{flex:0 0 108px;width:108px;min-width:108px}
+.party-modal-backdrop{position:fixed;inset:0;background:var(--ca-overlay);z-index:1000;display:flex;align-items:center;justify-content:center}
+.party-modal-backdrop .arco-modal{position:relative;transform:none;top:auto;margin:16px}
+.party-recovery,.party-current,.party-close-confirm{margin-top:12px;padding:12px;border:1px solid var(--ca-line);border-radius:var(--ca-radius-control);background:var(--ca-surface-subtle);font-size:13px;line-height:22px}
+.party-recovery{border-color:var(--ca-warning);color:var(--ca-warning)}
+.party-recovery p,.party-current p,.party-close-confirm p{margin:6px 0 10px}
+.party-current dl{display:grid;grid-template-columns:90px minmax(0,1fr);gap:4px;margin:8px 0}.party-current dt{color:var(--ca-ink-3)}.party-current dd{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.party-candidate{position:relative}.party-candidate .iw-option{white-space:pre-wrap;overflow-wrap:anywhere}.party-candidate-code{color:var(--ca-ink-3);margin-left:auto;max-width:45%;overflow-wrap:anywhere}.party-candidate-search{display:flex;align-items:center;padding-right:10px}.party-candidate-search .iw-search{min-width:0}.party-candidate footer{gap:8px}

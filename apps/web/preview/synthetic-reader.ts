@@ -17,24 +17,38 @@ const seasons = [{ id: 'test-season-spring', label: '测试春季' }, { id: 'tes
 const productSelection = (index: number): Selection => ({ id: `test-product-${index}`, label: `TEST-${String(index).padStart(3, '0')} 测试上衣${index}` });
 const selectionMatches = (selected: readonly Selection[], value: Selection): boolean => !selected.length || selected.some(item => item.id === value.id);
 function sumTotals(values: readonly StockTotal[]): StockTotal {
-  const unknownCells = values.reduce((sum, value) => sum + value.unknownCells, 0);
-  return { knownQuantity: String(values.reduce((sum, value) => sum + BigInt(value.knownQuantity), 0n)), unknownCells, completeness: unknownCells ? 'incomplete' : 'complete' };
+  return { knownQuantity: String(values.reduce((sum, value) => sum + BigInt(value.knownQuantity), 0n)), unknownCells: 0, completeness: 'complete' };
+}
+/** Explicit COMPLETE finite test dataset, generated on the synthetic SERVER side.
+ * The catalog lists all legal SKUs; the sparse stock source lists every stock entry for this
+ * warehouse/variant. An absent stock entry therefore means zero only in this complete fixture.
+ * This is not a production import proof and is never used by the HTTP client. */
+function completeSyntheticSource(index: number, color: Selection, fit: Selection, warehouse: Selection) {
+  const colorIndex = colors.findIndex(value => value.id === color.id);
+  const fitIndex = fits.findIndex(value => value.id === fit.id);
+  const warehouseIndex = warehouses.findIndex(value => value.id === warehouse.id);
+  const skuBySize = new Map(sizes.slice(0, 7).map(size => [size.id, `test-sku-${index}-${color.id}-${fit.id}-${size.id}`]));
+  const balances = new Map<string, string>();
+  for (const [sizeIndex, size] of sizes.slice(0, 7).entries()) {
+    if (index === 1 && colorIndex === 0 && fitIndex === 0 && warehouseIndex === 0 && sizeIndex === 3) continue;
+    balances.set(skuBySize.get(size.id)!, String(index === 1 && colorIndex === 0 && fitIndex === 0 && warehouseIndex === 0 && sizeIndex === 1 ? -2 : (index + sizeIndex + colorIndex + fitIndex + warehouseIndex) % 7));
+  }
+  return { publication: 'complete' as const, skuBySize, balances };
 }
 export function makeSyntheticInventoryProduct(index: number, filter: InventoryFilter): InventoryProduct {
   const product = productSelection(index);
   const groups: InventoryColorFit[] = [];
   const visibleWarehouses = warehouses.filter(value => selectionMatches(filter.warehouses, value));
   const visibleFits = fits.slice(0, index === 1 ? 2 : 1).filter(value => selectionMatches(filter.fits, value));
-  for (const [colorIndex, color] of colors.slice(0, index === 1 ? 2 : 1).entries()) {
-    for (const [fitIndex, fit] of visibleFits.entries()) {
-      const rows: InventoryRow[] = visibleWarehouses.map((warehouse, warehouseIndex) => {
+  for (const color of colors.slice(0, index === 1 ? 2 : 1)) {
+    for (const fit of visibleFits) {
+      const rows: InventoryRow[] = visibleWarehouses.map(warehouse => {
+        const source = completeSyntheticSource(index, color, fit, warehouse);
         const cells: Record<string, StockCell> = {};
-        for (const [sizeIndex, size] of sizes.entries()) {
-          // Only explicit legal fixture SKUs are generated; absent specs have no SKU identity.
-          const skuId = `test-sku-${index}-${color.id}-${fit.id}-${size.id}`;
-          cells[size.id] = sizeIndex >= 7 ? { state: 'not-applicable' }
-            : index === 1 && colorIndex === 0 && fitIndex === 0 && warehouseIndex === 0 && sizeIndex === 3 ? { state: 'unknown', skuId, reason: 'TEST ONLY：模拟此合法 SKU 数量未返回，不能补零。' }
-              : { state: 'known', skuId, quantity: String(index === 1 && colorIndex === 0 && fitIndex === 0 && warehouseIndex === 0 && sizeIndex === 1 ? -2 : (index + sizeIndex + colorIndex + fitIndex + warehouseIndex) % 7) };
+        for (const size of sizes) {
+          const skuId = source.skuBySize.get(size.id);
+          cells[size.id] = skuId === undefined ? { state: 'not-applicable' }
+            : { state: 'known', skuId, quantity: source.balances.get(skuId) ?? '0' };
         }
         return { warehouse, cells, total: totalOf(Object.values(cells)) };
       });
@@ -61,19 +75,23 @@ function wait(signal: AbortSignal, milliseconds: number): Promise<void> {
   });
 }
 export interface SyntheticReadEvent { readonly kind: 'inventory' | CandidateKind; readonly page: number; readonly pageSize: number; readonly search?: string }
-export function createSyntheticInventoryReader(options: { readonly productCount?: number; readonly delayMs?: number; readonly onRead?: (event: SyntheticReadEvent) => void } = {}): InventoryReader & { failNextInventory(): void; failNextCandidates(): void } {
+export function createSyntheticInventoryReader(options: { readonly productCount?: number; readonly delayMs?: number; readonly onRead?: (event: SyntheticReadEvent) => void } = {}): InventoryReader & { failNextInventory(): void; unreadyNextInventory(): void; failNextCandidates(): void } {
   const count = options.productCount ?? 3;
   if (!Number.isSafeInteger(count) || count < 0 || count > 1000) throw new Error('TEST ONLY fixture count must be 0–1000.');
   let failInventory = false;
+  let unreadyInventory = false;
   let failCandidates = false;
   return {
     failNextInventory() { failInventory = true; },
+    unreadyNextInventory() { unreadyInventory = true; },
     failNextCandidates() { failCandidates = true; },
     async readInventory(read: QueryRead<InventoryParameters>): Promise<InventoryPage> {
       options.onRead?.({ kind: 'inventory', page: read.parameters.page, pageSize: read.parameters.pageSize });
       const shouldFail = failInventory; failInventory = false;
+      const notReady = unreadyInventory; unreadyInventory = false;
       await wait(read.signal, options.delayMs ?? 240);
       if (shouldFail) throw new Error('TEST ONLY：模拟库存读取失败，未连接真实数据库。');
+      if (notReady) throw new Error('TEST ONLY：完整库存来源尚未就绪，不能发布部分结果。');
       const indexes = Array.from({ length: count }, (_, index) => index + 1).filter(index => matches(index, read.parameters.filter));
       const offset = (read.parameters.page - 1) * read.parameters.pageSize;
       const products = indexes.slice(offset, offset + read.parameters.pageSize).map(index => makeSyntheticInventoryProduct(index, read.parameters.filter));

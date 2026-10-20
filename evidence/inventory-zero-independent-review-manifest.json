@@ -1,0 +1,123 @@
+{
+  "reviewedAt": "2026-10-20T18:13:00Z",
+  "outcome": "PASS_BOUNDED",
+  "sourceManifest": "evidence/inventory-zero-contract-manifest.json",
+  "frozenSnapshot": "/tmp/inventory-zero-contract-review-20261020T180504Z",
+  "sourceFiles": [
+    {
+      "path": "packages/application/src/inventory-query-contracts.ts",
+      "sha256": "969288756e0e877a2cf18157cfb33fa169a574bce2bcc2786d97c0f2fffa5660",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "packages/application/src/inventory-query-response.ts",
+      "sha256": "2b04721effaa0e3224135373f50c32f388b4d02bbef1745c255159b17e05b894",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "packages/application/src/inventory-query-validation.ts",
+      "sha256": "9b67e031193273dc6827febe987614dd0f6b7e79b4c64522cd65f2a32b737417",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/api/src/inventory-http.test.ts",
+      "sha256": "994c893048e2f8649e2ef80b5ec406c440b32732fc783a077ec1e2c9f200cabd",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/src/inventory/contracts.ts",
+      "sha256": "8098eb2be7c8598b1c0f2143107198455e9b728434e640a53539f6a99a856d4b",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/src/inventory/model.ts",
+      "sha256": "c59bf3731acbd02eda96863b6249a340f559d54fb6a0875d1d7597e00da51cb1",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/src/inventory/model.test.ts",
+      "sha256": "cf678b5501c27a1b297f9f2fef52f81cf431a995f89afed0bcc8eb22c4b5018c",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/src/transport/response-validation.ts",
+      "sha256": "7cef7bb58e9c13a493ca29b08b5c1254b977f755c0f012a09032987a5fa0c4c8",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/src/transport/http-readers.test.ts",
+      "sha256": "0947eb55eda1146d7fa13e0eab2816db6f3728691854963361d0e53ebd2e27b5",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/src/transport/README.md",
+      "sha256": "a3b55c71975e82f2b0d7b9a7d6d45cf92a66ca82f5aed3a1bc40847278a82648",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/preview/synthetic-reader.ts",
+      "sha256": "49f44c58ac74072893da3bae476785d25523907efd5fa959cc55be723be2df5f",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "apps/web/tests/run-dom-tests.mjs",
+      "sha256": "23673c7fcdd9bc0d265d54560e3fa7e7a92562016d7b23a29b5765432e001698",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "tests/inventory-query.test.ts",
+      "sha256": "8c48c143983d5335b1465614cfc1da6a01863071d6fdd41a8f1dba2200d07a6e",
+      "liveAndFrozenMatch": true
+    },
+    {
+      "path": "tests/support/synthetic-inventory-query.ts",
+      "sha256": "74693157484702e6075549371a5d449756ba9d70794fc2b1145f0bc72d84ba3a",
+      "liveAndFrozenMatch": true
+    }
+  ],
+  "additionalReadDependencies": [
+    {
+      "path": "apps/api/src/inventory-http.ts",
+      "sha256": "8f026daae08feada6adde45df842249f9724f4a6ce7db466c03fafce53d1c79c"
+    },
+    {
+      "path": "packages/application/src/inventory-query-service.ts",
+      "sha256": "9c6c57102e48c6177674fa0ef1a1078a4dc31ffe45b6f8f9a55518d0a43a2726"
+    }
+  ],
+  "probeFiles": [
+    {
+      "path": "evidence/inventory-zero-independent-probes.mjs",
+      "sha256": "1b337fd9b7b63bfb77a25921444cd7ae7604fc9fc298027fedcb965329015de1"
+    },
+    {
+      "path": "evidence/inventory-zero-independent-probes.log",
+      "sha256": "4385e7f8186aaf1f970593383581a42e235eed5bf517b1d682045596aea25975"
+    },
+    {
+      "path": "evidence/inventory-zero-independent-existing-tests.log",
+      "sha256": "712ea6e9fced364aa4b2a8a5b55a0fbf3884aeced0d770dd03cb289e5acaaf2f"
+    },
+    {
+      "path": "evidence/inventory-zero-independent-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/inventory-zero-independent-tsconfig.json",
+      "sha256": "717d5b481d4b2c134813b7ed0b0e03ab612d57ffd866f37ad4d978f949fcb4fc"
+    }
+  ],
+  "checks": {
+    "existingFocusedTests": "85/85 passed; test concurrency2",
+    "independentProbes": "11/11 passed; test concurrency2",
+    "scopedTypes": "passed without active JSX/CSS",
+    "dom": "owner evidence only; independent DOM not rerun"
+  },
+  "limits": [
+    "Synthetic/in-memory only; no real PG reader/proof",
+    "No network/browser/listener/install/commit/source edits",
+    "Does not approve final aggregate, presentation, or production readiness"
+  ],
+  "finalHashRecheckAt": "2026-10-20T18:18:30Z",
+  "sourceDigestSha256": "3dc98b67cdb66a0b2280a4a01402e390d1ebab232b920b30cfa41d80a3b5f530"
+}

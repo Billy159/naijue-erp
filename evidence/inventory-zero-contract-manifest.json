@@ -1,0 +1,76 @@
+{
+  "createdAt": "2026-10-20T18:05:04.624919+00:00",
+  "scope": "Ready-only inventory query/HTTP/display semantics; no DB/schema changes",
+  "sourceFiles": [
+    {
+      "path": "packages/application/src/inventory-query-contracts.ts",
+      "sha256": "969288756e0e877a2cf18157cfb33fa169a574bce2bcc2786d97c0f2fffa5660"
+    },
+    {
+      "path": "packages/application/src/inventory-query-response.ts",
+      "sha256": "2b04721effaa0e3224135373f50c32f388b4d02bbef1745c255159b17e05b894"
+    },
+    {
+      "path": "packages/application/src/inventory-query-validation.ts",
+      "sha256": "9b67e031193273dc6827febe987614dd0f6b7e79b4c64522cd65f2a32b737417"
+    },
+    {
+      "path": "apps/api/src/inventory-http.test.ts",
+      "sha256": "994c893048e2f8649e2ef80b5ec406c440b32732fc783a077ec1e2c9f200cabd"
+    },
+    {
+      "path": "apps/web/src/inventory/contracts.ts",
+      "sha256": "8098eb2be7c8598b1c0f2143107198455e9b728434e640a53539f6a99a856d4b"
+    },
+    {
+      "path": "apps/web/src/inventory/model.ts",
+      "sha256": "c59bf3731acbd02eda96863b6249a340f559d54fb6a0875d1d7597e00da51cb1"
+    },
+    {
+      "path": "apps/web/src/inventory/model.test.ts",
+      "sha256": "cf678b5501c27a1b297f9f2fef52f81cf431a995f89afed0bcc8eb22c4b5018c"
+    },
+    {
+      "path": "apps/web/src/transport/response-validation.ts",
+      "sha256": "7cef7bb58e9c13a493ca29b08b5c1254b977f755c0f012a09032987a5fa0c4c8"
+    },
+    {
+      "path": "apps/web/src/transport/http-readers.test.ts",
+      "sha256": "0947eb55eda1146d7fa13e0eab2816db6f3728691854963361d0e53ebd2e27b5"
+    },
+    {
+      "path": "apps/web/src/transport/README.md",
+      "sha256": "a3b55c71975e82f2b0d7b9a7d6d45cf92a66ca82f5aed3a1bc40847278a82648"
+    },
+    {
+      "path": "apps/web/preview/synthetic-reader.ts",
+      "sha256": "49f44c58ac74072893da3bae476785d25523907efd5fa959cc55be723be2df5f"
+    },
+    {
+      "path": "apps/web/tests/run-dom-tests.mjs",
+      "sha256": "23673c7fcdd9bc0d265d54560e3fa7e7a92562016d7b23a29b5765432e001698"
+    },
+    {
+      "path": "tests/inventory-query.test.ts",
+      "sha256": "8c48c143983d5335b1465614cfc1da6a01863071d6fdd41a8f1dba2200d07a6e"
+    },
+    {
+      "path": "tests/support/synthetic-inventory-query.ts",
+      "sha256": "74693157484702e6075549371a5d449756ba9d70794fc2b1145f0bc72d84ba3a"
+    }
+  ],
+  "immutableReviewSnapshot": "/tmp/inventory-zero-contract-review-20261020T180504Z",
+  "handoff": "inventory-matrix.tsx unknown branches retired, then handed to frozen-Demo appearance owner; final file is reviewed with presentation work",
+  "checks": {
+    "focusedTests": "85 passed, 0 failed; --test-concurrency=2",
+    "focusedStrictTypecheck": "passed",
+    "jsdomInventoryAndDrawer": "passed; 9 original inventory groups + incomplete-source group + 5 drawer groups",
+    "gitDiffCheck": "passed",
+    "rootTypecheck": "attempted; failed on parties UI Arco/pagination and subsequently-fixed transport test literal widening. Focused strict typecheck after fix passed. Root aggregate must be rerun."
+  },
+  "limits": [
+    "No real PostgreSQL inventory snapshot reader implemented or executed.",
+    "No install, listener, network, real PG, migrations, commit or push.",
+    "No screenshot/layout/performance/frozen-Demo parity claim from jsdom."
+  ]
+}

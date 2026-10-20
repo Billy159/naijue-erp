@@ -1,0 +1,9 @@
+PASS DOM 1: separate maintenance lists, explicit bounded query/pagination, draft-only reset, no hidden other-kind load.
+PASS DOM 2: lazy create reads nothing, generated code stays readonly, exact name-only write, dirty-close guard and confirmed-result focus.
+PASS DOM 3: fresh-target edit, preserved old code, native CAS conflict with unchanged draft and explicit latest-version reconciliation.
+PASS DOM 4: uncertain outcome locks drafts/new keys/close; receipt404 is not rollback proof; explicit replay sends identical command/key.
+PASS DOM 5: disable/restore confirmation uses real native commands and dependency wording, no delete/merged-role controls.
+PASS DOM 6: closing detail/candidate aborts and discards late responses; StrictMode selector reads one enabled-only independent native candidate page on open.
+PASS DOM 7: identity/session/permission changes clear list/detail/command/draft DOM and ignored late write success cannot restore facts.
+PASS DOM 8: replacement workspace with reused route ID gets new component identity and cannot retain previous filter/editor state or prefetch facts.
+All 8 synthetic behavioral DOM groups passed. CSS is deliberately not rendered: no frozen-Demo visual, geometry, browser, performance or production acceptance claim.

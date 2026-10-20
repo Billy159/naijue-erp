@@ -1,0 +1,42 @@
+{
+  "scope": "application/** source composition plus one approved sales route CSS-import correction",
+  "typecheck": "passed",
+  "domGroups": 8,
+  "domImplementation": "Actual installed Arco with mocked native HTTP and synthetic explicit host renderer",
+  "splitBuild": "passed: startup/inventory/sales Arco-free; sales/parties no inventory-specific CSS; shared controls/tokens retained",
+  "stylesheetBytes": {
+    "application": 2095,
+    "inventory": 17731,
+    "sales": 14728,
+    "parties": 596145
+  },
+  "reactCompatibilityWarnings": 3,
+  "realBrowser": false,
+  "network": false,
+  "server": false,
+  "liveLogin": false,
+  "postgres": false,
+  "frozenDemoParity": false,
+  "productionDeployment": false,
+  "remaining": [
+    "Approved host presentation/bootstrap/history integration",
+    "Exact source restoration replacing temporary sales structural scaffold",
+    "Trusted live server/provider/deployment configuration",
+    "Real-browser waterfall/performance/visual acceptance"
+  ],
+  "finalPartyCacheRegression": {
+    "partySourceManifestSha256": "85b99f2b35bc093c2b8ce65b50e753ea529df3c86d40914b9bc5a1dcdc476d08",
+    "partyRouteSha256": "e580e82bcc71c7c39722805ee3a45305a6da3f5a6c6846705aa8cd036edb2381",
+    "partyControllerSha256": "697a2ad8b472542dc6e5bc531d145e59c4a99f31aa325d81f0810149e7749f92",
+    "status": "8 composed DOM groups passed; exact dependency hashes verified; focused source static-CSS graph passed.",
+    "log": "verification/final-party-cache-dom-tests.txt",
+    "cssSelfCheck": "verification/final-party-cache-css-self-check.txt",
+    "unchangedApplicationSource": true,
+    "notRepeated": [
+      "Full split build",
+      "TypeScript checks"
+    ],
+    "warnings": "Same 3 React19 element.ref compatibility warnings retained in the actual-Arco DOM log."
+  },
+  "earlierBuildAndTypes": "Prior frozen CSS delta passed emitted build/typecheck; these stages were not repeated for party filter-cache-only dependency change."
+}

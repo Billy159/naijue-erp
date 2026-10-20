@@ -1,0 +1,128 @@
+/* Source-faithful settings layout/adapters from frozen b8bcfe3.
+ * Exact sources and excluded global shell rules are listed in SOURCE-ADAPTATION.md.
+ * No old MASTER_DATA, globals, merged tags, data bridge or hidden source selects. */
+.party-workbench,.party-modal,.party-single{--text:var(--ca-ink);--secondary:var(--ca-ink-2);--primary:var(--ca-link);--primary-fill:var(--ca-primary-fill);--primary-hover:var(--ca-primary-hover);--border:var(--ca-line);--surface:var(--ca-surface);--error:var(--ca-critical);--ui-neutral-tag-bg:var(--ca-neutral-tag-bg)}
+.party-workbench{font-family:var(--ca-font-sans);font-size:12px;min-width:0}.party-workbench .iw-head{margin:0 0 8px;min-height:32px;flex:none}.party-workbench .iw-head h1{font-size:20px;line-height:30px;margin:0;font-weight:600}
+/* Settings owns only its layout. Controls and density live in inventory-workbench.css. */
+.party-workbench.bs-page.iw-workbench{max-height:none;min-height:0;flex:1;display:flex;flex-direction:column;color:var(--text)}
+.bs-head.iw-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bs-head-actions{display:flex;align-items:center;gap:4px}
+.bs-tabs{display:flex;gap:20px;border-bottom:1px solid var(--border);margin:0 0 10px;flex:none}
+.bs-tabs button{border:0;border-bottom:2px solid transparent;background:transparent;padding:7px 2px 8px;color:var(--secondary);font-size:13px;cursor:pointer}
+.bs-tabs button:hover{color:var(--primary)}
+.bs-tabs button[aria-selected=true]{color:var(--primary);border-bottom-color:var(--primary-fill);font-weight:600}
+.bs-toolbar{display:flex;align-items:center;gap:var(--ca-space-2);margin:0 0 var(--ca-space-2);flex:none}
+.bs-filter-fields{display:flex;align-items:center;gap:var(--ca-space-2);flex:1;min-width:0}
+.bs-filter{flex:0 1 178px;min-width:128px}
+.bs-filter.search{flex:1 1 280px;max-width:440px}
+.bs-single,.bs-multi{width:100%;min-width:0}
+.bs-toolbar-actions{display:flex;align-items:center;gap:var(--ca-space-2);margin-left:auto;flex:none}
+.bs-table-wrap{border:1px solid var(--border);overflow:auto;min-height:0;background:var(--surface);flex:0 1 auto}
+.bs-row-actions{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.bs-page>.bs-pager{flex:none;margin-top:auto;padding-top:var(--ca-space-2);background:var(--surface)}
+.bs-pager .iw-pagination{white-space:nowrap;flex-wrap:nowrap}
+.bs-pager .iw-pagination>span{flex:none}
+.bs-modal{width:520px!important;max-width:calc(100vw - 32px)}
+.bs-modal.bs-modal-staff{width:580px!important}
+.bs-staff-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+.bs-checks{display:flex;align-items:center;gap:var(--ca-space-4);min-height:var(--ui-control)}
+.bs-readonly{min-height:var(--ui-control);display:flex;align-items:center;overflow-wrap:anywhere}
+.bs-wide{grid-column:1/-1;padding-top:3px}
+.bs-switch{display:flex;align-items:center;gap:var(--ca-space-2);min-height:var(--ui-control)}
+.bs-password-reset{padding:0;margin-top:10px}
+.bs-error{margin:10px 0 0;color:var(--error);line-height:1.5}
+.bs-one-time{display:block;margin-top:12px;padding:10px;background:var(--surface-subtle);font-family:monospace;user-select:all}
+.bs-audit-drawer{max-width:100vw}
+.bs-audit-drawer .arco-drawer-content{display:flex;flex-direction:column;height:100%;min-height:0}
+.bs-audit-drawer .arco-drawer-header,.bs-audit-drawer .arco-drawer-footer{flex:none}
+.bs-audit-drawer .arco-drawer-body{padding:12px 16px;overflow:hidden;display:flex;flex-direction:column;min-height:0;flex:1}
+.bs-audit-drawer .arco-drawer-footer{padding:8px 16px}
+.bs-log-filters{display:grid;grid-template-columns:1.2fr 1.6fr 1fr 1.2fr 1.2fr 1.2fr auto;gap:8px;margin-bottom:10px;align-items:center;flex:none}
+.bs-log-filters>.arco-input-wrapper,.bs-log-filters>.arco-picker{width:100%;min-width:0}
+.bs-log-results{flex:1;min-height:0;overflow:auto;border:1px solid var(--border)}
+.bs-log-results .arco-table-th{position:sticky;top:0;z-index:2}
+.bs-log-results .arco-table-td{white-space:normal;overflow-wrap:anywhere;vertical-align:top}
+@media(max-width:1100px){.bs-toolbar{flex-wrap:wrap}.bs-filter-fields{flex-wrap:wrap}.bs-filter{flex:1 1 145px}.bs-filter.search{max-width:none}.bs-log-filters{grid-template-columns:repeat(4,minmax(0,1fr))}.bs-log-actions{grid-column:3/-1;justify-self:end}}
+@media(max-width:620px){.bs-staff-fields{grid-template-columns:1fr}.bs-wide{grid-column:auto}.bs-pager .iw-pagination{flex-wrap:wrap}.bs-pager .actions{margin-left:0}}
+/* Frozen inventory-workbench shared Arco adapter block, scope narrowed. */
+
+:is(.party-workbench,.party-modal).iw-arco-controls{--primary-6:var(--ca-primary-rgb);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2);font-family:var(--ca-font-sans)}
+:is(.party-workbench,.party-modal).iw-arco-controls .arco-btn{height:var(--ui-control);border-radius:var(--ca-radius-control);font-size:13px;padding-inline:9px}
+:is(.party-workbench,.party-modal).iw-arco-controls .arco-btn.arco-btn-primary:not(.arco-btn-disabled){background:var(--primary-fill);border-color:var(--primary-fill)}
+:is(.party-workbench,.party-modal).iw-arco-controls .arco-btn.arco-btn-primary:not(.arco-btn-disabled):hover{background:var(--primary-hover);border-color:var(--primary-hover)}
+:is(.party-workbench,.party-modal).iw-arco-controls .arco-btn.arco-btn-secondary:not(.arco-btn-disabled){background:var(--ca-surface);border:1px solid var(--ca-control-border);color:var(--ca-ink)}
+:is(.party-workbench,.party-modal).iw-arco-controls .arco-btn.arco-btn-secondary:not(.arco-btn-disabled):hover{background:var(--ca-surface-subtle);border-color:var(--ca-control-hover-border)}
+:is(.party-workbench,.party-modal).iw-arco-controls .arco-btn.arco-btn-text:not(.arco-btn-disabled){color:var(--ca-primary-ink);background:transparent}
+:is(.party-workbench,.party-modal).iw-arco-controls .arco-btn.arco-btn-text:not(.arco-btn-disabled):hover{background:var(--ca-primary-hover-soft)}
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-query-actions>.btn{width:72px}
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-arco-input.arco-input-wrapper,:is(.party-workbench,.party-modal).iw-arco-controls .arco-picker{box-sizing:border-box;height:var(--ui-control);min-height:var(--ui-control);padding:4px 9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none;font-size:13px}
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-arco-input.arco-input-wrapper:hover,:is(.party-workbench,.party-modal).iw-arco-controls .arco-picker:hover{border-color:var(--ca-control-hover-border)}
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-arco-input.arco-input-wrapper:focus-within,:is(.party-workbench,.party-modal).iw-arco-controls .arco-picker:focus-within{border-color:var(--ca-control-focus-border);box-shadow:none}
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-arco-input input.arco-input,:is(.party-workbench,.party-modal).iw-arco-controls .arco-picker input{box-sizing:border-box;width:100%;height:22px;min-height:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;outline:0;font-size:13px;color:var(--ca-ink)}
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-arco-input input.arco-input:focus,:is(.party-workbench,.party-modal).iw-arco-controls .iw-arco-input input.arco-input:hover,:is(.party-workbench,.party-modal).iw-arco-controls .arco-picker input:focus{border:0;box-shadow:none;outline:0;background:transparent}
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-arco-input input::placeholder{color:var(--ca-control-placeholder)}
+.party-workbench .iw-arco-table .arco-table{font:12px var(--ca-font-sans);color:var(--text)}
+.party-workbench .iw-arco-table .arco-table .arco-table-th,.party-workbench .iw-arco-table .arco-table .arco-table-td{box-sizing:border-box;height:var(--ui-row);padding:5px 8px;border-bottom:1px solid var(--ca-table-grid);font-size:12px;line-height:20px;color:var(--ca-ink);background:var(--surface)}
+.party-workbench .iw-arco-table .arco-table .arco-table-th{background:var(--ca-table-head);font-weight:600;color:var(--ca-ink-2)}
+.party-workbench .iw-arco-table .arco-table .arco-table-th-item{padding:0}
+.party-workbench .iw-arco-table .arco-table-tr:hover .arco-table-td{background:var(--ca-table-row-hover)}
+.party-workbench .iw-arco-table .arco-table-border .arco-table-container{border:0}
+.party-workbench .iw-arco-table .arco-btn.arco-btn-text{height:var(--ui-row-dense);padding-inline:var(--ca-space-1)}
+.party-workbench .iw-status.arco-tag{height:22px;line-height:20px;padding:0 6px;border:0;border-radius:3px;font-size:12px;white-space:nowrap}
+.party-workbench .iw-status.normal{background:var(--ca-success-soft);color:var(--ca-success)}
+.party-workbench .iw-status.off{background:var(--ui-neutral-tag-bg);color:var(--secondary)}
+:is(.party-workbench,.party-modal).iw-arco-controls input.iw-arco-input.arco-input{box-sizing:border-box;height:var(--ui-control);min-height:var(--ui-control);padding:4px 9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none;font-size:13px}
+:is(.party-workbench,.party-modal).iw-arco-controls input.iw-arco-input.arco-input:hover{border-color:var(--ca-control-hover-border)}
+:is(.party-workbench,.party-modal).iw-arco-controls input.iw-arco-input.arco-input:focus{border-color:var(--ca-control-focus-border);box-shadow:none;outline:0}
+
+/* Arco Input adds an inner wrapper for clear/suffix/password controls. Adapt that
+   real wrapper once, rather than putting different dimensions in each page. */
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-arco-input.arco-input-inner-wrapper,
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-arco-input.arco-input-group-wrapper .arco-input-inner-wrapper{box-sizing:border-box;width:100%;height:var(--ui-control);min-height:var(--ui-control);padding-inline:9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none;align-items:center}
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-arco-input.arco-input-group-wrapper{width:100%;display:inline-flex;vertical-align:middle}
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-arco-input.arco-input-inner-wrapper:hover,
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-arco-input.arco-input-group-wrapper .arco-input-inner-wrapper:hover{border-color:var(--ca-control-hover-border)}
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-arco-input.arco-input-inner-wrapper:focus-within,
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-arco-input.arco-input-group-wrapper .arco-input-inner-wrapper:focus-within{border-color:var(--ca-control-focus-border);box-shadow:none}
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-search-input .arco-input{height:auto;line-height:normal;font-size:inherit}
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-search-input .arco-input-inner-wrapper:hover{border-color:transparent}
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-search-input .arco-input-inner-wrapper:focus-within{border-color:var(--ca-control-focus-border);background:var(--ca-surface)}
+:is(.party-workbench,.party-modal).iw-arco-controls .iw-search-input .arco-input-group-suffix>.arco-icon{width:var(--ui-small);height:var(--ui-small);font-size:var(--ui-small);color:var(--ca-ink-2)}
+
+/* Shared compact form and Modal adapters use the workspace spacing tokens. */
+.party-modal .iw-form-fields{display:grid;grid-template-columns:1fr;gap:var(--ca-space-3)}
+.party-modal .iw-form-field{display:flex;flex-direction:column;gap:var(--ca-space-1);min-width:0;color:var(--text);font-size:var(--ui-font)}
+.party-modal .iw-form-field>span:first-child{color:var(--secondary);font-size:var(--ui-small);line-height:var(--ca-space-4)}
+.party-modal .iw-form-field i{color:var(--error);font-style:normal}
+.party-modal.iw-arco-modal .arco-modal-header{padding:var(--ca-space-3) var(--ca-space-5);height:auto;border-bottom:0}
+.party-modal.iw-arco-modal .arco-modal-content{padding:var(--ca-space-3) var(--ca-space-5)}
+.party-modal.iw-arco-modal .arco-modal-footer{padding:var(--ca-space-3) var(--ca-space-5);border-top:1px solid var(--border)}
+
+/* Frozen unified-single-select styles, local-host scope rather than global mount. */
+.party-single{display:block;width:100%;min-width:0;font:13px Arial,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ca-ink);--arcoblue-6:var(--ca-primary-rgb);--primary-6:var(--ca-primary-rgb);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2)}
+.party-single .arco-select{display:block;width:100%;font-size:13px}
+.party-single .arco-select .arco-select-view{box-sizing:border-box;height:32px;min-height:32px;max-height:32px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none}
+.party-single .arco-select-size-default.arco-select-single .arco-select-view{padding-inline:3px}
+.party-single .arco-select:hover .arco-select-view{border-color:var(--ca-control-hover-border);background:var(--ca-surface-muted)}
+.party-single .arco-select.arco-select-focused .arco-select-view{border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted);box-shadow:none}
+.party-single .arco-select-view .arco-select-view-value{display:flex;align-items:center;min-width:0;overflow:hidden}
+.party-single .ui-single-tag{box-sizing:border-box;display:inline-flex;align-items:center;max-width:100%;height:23px;padding:1px 7px;overflow:hidden;border-radius:3px;background:#fff;color:var(--ca-ink);text-overflow:ellipsis;white-space:nowrap;font:400 13px Arial,"PingFang SC",sans-serif}
+.party-single .ui-page-size-select .ui-single-tag, .party-single .ui-flat-select .ui-single-tag{padding-left:7px;background:transparent}
+.party-single .arco-select-view input{min-width:28px;font-size:13px;background:transparent}
+.party-single .arco-select-view input::placeholder{color:var(--ca-ink-3)}
+.party-single .arco-select .arco-icon-hover{color:var(--ca-ink-2)}
+.party-single .arco-select-popup{box-sizing:border-box;padding:4px;border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);background:#fff;box-shadow:var(--ca-shadow-float)}
+.party-single .arco-select-popup-inner{max-height:288px;overflow:auto}
+.party-single .arco-select-option-wrapper{height:30px!important;min-height:30px!important;max-height:30px!important;padding:0 4px!important}
+.party-single .arco-select-option{box-sizing:border-box;height:30px!important;min-height:30px!important;max-height:30px!important;padding:0 8px!important;line-height:30px!important;color:var(--ca-ink)!important;background:#fff;font-size:13px!important;font-weight:400!important}
+.party-single .arco-select-option-selected{background:var(--ca-surface-subtle)!important;font-weight:400!important}
+.party-single .arco-select-option-hover, .party-single .arco-select-option:hover{background:var(--ca-popover-hover)!important}
+.party-single .arco-select-option-disabled{color:var(--ca-disabled-ink)!important}
+.party-single .arco-select-option-content{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.party-single .arco-select-popup .arco-empty{font-size:13px}
+.party-single .arco-select-optgroup-label, .party-single .arco-select-popup .arco-select-group-title{padding:5px 12px;color:var(--ca-ink-3);font-size:11px;background:var(--ca-surface-subtle)}
+.party-single .ui-select-recommendation{padding:8px 10px;border-bottom:1px solid var(--ca-line);background:var(--ca-surface-subtle);color:var(--ca-ink);font-size:12px}
+.party-single .ui-select-recommendation small{display:block;margin-bottom:3px;color:var(--ca-ink-3)}
+.party-single .ui-select-recommendation-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.party-single .ui-select-recommendation-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.party-single .ui-select-recommendation-row button{flex:none;padding:2px 4px;border:0;background:transparent;color:var(--ca-primary);font:inherit;cursor:pointer}

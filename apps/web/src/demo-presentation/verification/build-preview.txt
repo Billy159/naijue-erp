@@ -1,0 +1,11 @@
+index.html: 369 bytes
+main.js: 186872 bytes
+main.css: 15535 bytes
+inventory-route.js: 31133 bytes
+inventory-route.css: 17732 bytes
+synthetic-reader.js: 229 bytes
+product-drawer.js: 2320 bytes
+product-drawer.css: 2062 bytes
+inventory-preview-test-only.html: 288610 bytes
+Built static files only. No server, listener, deployment, database or network action.
+Portable preview exceeds 256KiB budget: 288610 bytes. Functionality retained; split build is available.

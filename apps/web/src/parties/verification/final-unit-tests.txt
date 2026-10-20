@@ -1,0 +1,42 @@
+✔ party construction is inert and each read uses its exact native GET route with bounded same-origin session options (40.070031ms)
+✔ all four actions POST exact command DTOs to independent families without actor, kind, code or retries (8.442372ms)
+✔ EDIT atomically sends name and required enabled state and requires that exact state in the committed result (10.06918ms)
+✔ configuration rejects absolute/ambiguous prefixes, credentials and invalid resource bounds without sending (2.382754ms)
+✔ invalid kind, exact-key DTOs, identifiers, query values and oversized UTF-8 body all fail before dispatch (5.228206ms)
+✔ caller mutations after invocation cannot change dispatch or expected response validation (3.117807ms)
+✔ every known party 4xx code is retained only from an exact error envelope and proves command rejection (28.070429ms)
+✔ unknown, wrong-status, extra-field and malformed error envelopes never prove a write did not commit (9.962757ms)
+✔ network failure is sanitized, uncertain after write dispatch, and never retried (1.652878ms)
+✔ pre-abort and same-turn cancellation do not send; post-dispatch ignored abort stays uncertain and consumes late failure (16.978384ms)
+✔ timeout detaches ignored fetch, cancels a late body, and keeps writes uncertain (4.57838ms)
+✔ fetch/body microtasks cannot publish a result after the monotonic timeout budget (2.208439ms)
+✔ streamed bodies are byte/chunk bounded, stalled reads detach on timeout and cancellation (631.26234ms)
+✔ malformed JSON/UTF-8/content, non-200 success and observable redirects never acknowledge a command (6.672596ms)
+✔ wrong kind/id/CAS/state/code successes are uncertain, and invalid list/candidate/detail/receipt data fail closed (12.91956ms)
+✔ independent lazy workspace constructs no reads and retains each bounded list without merging names/codes (8.452757ms)
+✔ per-kind unapplied filter drafts survive route leave independently of applied results and clear with identity (3.520703ms)
+✔ create allocates no client code and generates one key only on explicit valid submit (3.335881ms)
+✔ edit reads current target only, preserves original code/null timestamps and sends native CAS without code (17.434459ms)
+✔ only native disable/restore commands, enabled-state guard and default-customer rejection preserve facts (3.222396ms)
+✔ uncertain write blocks duplicate/new/close and absent receipt never proves not committed; exact replay preserves key/CAS/name (2.50721ms)
+✔ receipt recovery validates native key/action/target/CAS and does not treat original result as current detail (2.039151ms)
+✔ replay rejection stays uncertain because it cannot prove original uncommitted (0.699355ms)
+✔ definitive CAS conflict retains draft, fetches current facts separately and rebases only by explicit preparation (3.593313ms)
+✔ duplicate clicks serialize; route suspend retains uncertain command and ignores late success (0.992996ms)
+✔ detail close/replace cancellation discards ignored-signal results and suspended detail can retry (0.906368ms)
+✔ identity/session/permission invalidation clears both independent lists, editor, drafts and pending command; late response cannot restore (1.866418ms)
+✔ 401/403 clears shared party scope before host callback, while stale cancelled errors cannot expire a replacement identity (1.49782ms)
+✔ exact total bounds page correction and latest query ignores superseded results (1.168242ms)
+✔ untrusted DTOs reject extra fields, identity/version regressions, wrong totals and malformed native receipts (1.240186ms)
+✔ list wrapper owns an immutable executed range during await and never adjusts with a mutated draft (1.043766ms)
+✔ atomic edit owns both name and state in one key/CAS; blocked default disable preserves both fields (1.525133ms)
+✔ state-only edit is dirty; uncertain atomic recovery locks both fields and replays identical state/name/key/CAS (1.305825ms)
+✔ legitimate route leave drops clean editors and detached detail, never dirty or unresolved recovery (1.147817ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1271.634196

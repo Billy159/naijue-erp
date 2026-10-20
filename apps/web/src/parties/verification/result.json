@@ -1,0 +1,66 @@
+{
+  "stage": "source-faithful-party-maintenance-with-atomic-EDIT",
+  "scope": "NEW apps/web/src/parties/** only",
+  "frozen_source_commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "unit_tests": {
+    "pass": 34,
+    "fail": 0,
+    "http": 15,
+    "controller": 19,
+    "log": "final-unit-tests.txt",
+    "concurrency": 2
+  },
+  "behavioral_dom_groups": {
+    "pass": 11,
+    "fail": 0,
+    "actual_Arco_components": true,
+    "CSS_rendered": false,
+    "Select_path": "actual keyboard events, not fake component or layout",
+    "log": "final-dom-tests.txt"
+  },
+  "dynamic_leaf_build": {
+    "status": "passed",
+    "installed_Arco_CSS_bundled": true,
+    "external_React": true,
+    "log": "final-build-check.txt"
+  },
+  "scoped_strict_types": {
+    "status": "passed",
+    "log": "final-typecheck.txt"
+  },
+  "source_manifest_files": 22,
+  "visual_acceptance": "SOURCE_FAITHFUL; NOT_PIXEL_OR_REAL_BROWSER_VERIFIED; no frozen screenshots/runtime cascade evidence",
+  "runtime_observations": [
+    "Actual Arco2.66.16 emits React19 element.ref development deprecation warnings.",
+    "No local any/declaration stubs or production compatibility workaround added."
+  ],
+  "timing_observation": "Prior repeated-run timing failures and deterministic test correction retained in timing-observation.txt. Historical nonvisual logs are superseded, not reused as current evidence.",
+  "atomic_edit": "Exact required keys action/requestKey/id/expectedVersion/name/enabled; one transaction/CAS/key/result; no paired submits.",
+  "external_actions": [],
+  "integration_gaps": [
+    "Real-browser responsive/keyboard/dropdown geometry and frozen visual comparison",
+    "Real trusted authenticated host/session/style/navigation/reload guard verification",
+    "Live same-origin HTTP/PG/policy/default-customer race/allocator verification",
+    "Known-key receipt only, no durable unresolved-operation discovery after reload/identity clear",
+    "No party audit-list DTO/route, source operation-record button explicitly unavailable",
+    "Root aggregate test discovery/production capacity and deployment outside this slice"
+  ],
+  "source_review_corrections": [
+    "Pagination Select tl/150, ordinary unchanged",
+    "Title20px/30px/600; no route line-height shorthand reset",
+    "Clean-only real route leave cleanup; dirty/uncertain/StrictMode preserved",
+    "Direct numeric pager children, source ellipsis/gap4/nowrap",
+    "Per-kind unapplied search/status filter drafts persist separately from applied queries across route reentry; typing does not read and identity clears"
+  ],
+  "static_presentation_regressions": {
+    "status": "passed",
+    "actual_Select_props": "AST checked",
+    "title_pager_cascade": "scoped declarations checked",
+    "numeric_child_structure": "actual DOM checked",
+    "rendered_geometry_mocked": false
+  },
+  "filter_cache_regressions": {
+    "controller": "bounded immutable per-kind drafts, no read on typing, applied range unchanged, invalid input ignored, identity/dispose clears",
+    "actual_route": "exact raw search/status survive independent reentry; paging uses applied query; Reset clears and applies current kind; replacement workspace fresh"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "startupInputs": [
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom-client.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/client.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react-jsx-runtime.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/jsx-runtime.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/cjs/scheduler.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/index.js",
+    "../../../../packages/domain/src/errors.ts",
+    "../../../../packages/domain/src/values.ts",
+    "../authentication/authentication-panel.tsx",
+    "../authentication/authentication.css",
+    "../authentication/contracts.ts",
+    "../authentication/http-client.ts",
+    "../authentication/model.ts",
+    "../loading/async-leaf-registry.ts",
+    "../loading/read-scope.ts",
+    "application-root.tsx",
+    "controller.ts",
+    "index.tsx",
+    "stylesheet.ts"
+  ],
+  "startupCode": [
+    "application.js",
+    "chunk-KJBI7PM7.js",
+    "chunk-3QL4IOED.js",
+    "chunk-FSROJZ4C.js",
+    "chunk-P74PHBPC.js",
+    "chunk-K2TRKZDL.js"
+  ],
+  "routeInputCounts": {
+    "inventory": 28,
+    "sales": 27,
+    "parties": 351
+  },
+  "stylesheetBytes": {
+    "application": 2095,
+    "inventory": 17731,
+    "sales": 14728,
+    "parties": 596145
+  },
+  "guarantees": [
+    "Startup/inventory/sales static closures exclude Arco JS/CSS",
+    "Parties uses actual installed Arco only after explicit activation",
+    "Sales/parties CSS preserves shared controls/tokens but excludes all inventory-specific matrix/settings/drawer assets"
+  ],
+  "boundary": "Static emitted-import/CSS analysis only. No browser/network waterfall, timing, memory or frozen-Demo visual acceptance."
+}
+PASS: actual split output isolates business routes, inventory-specific CSS and party-only Arco JS/CSS while preserving necessary shared controls.

@@ -1,0 +1,67 @@
+{
+  "scope": "Post-review CSS isolation and current composed-party verification only; no application runtime lifecycle/API changes.",
+  "changedSourceSha256": {
+    "apps/web/src/application/README.md": "40d0a58176d8e666b6d2ceb3f0f63a5254c856d5cfad4097cb18e24c19dd8514",
+    "apps/web/src/application/styles/sales.css": "6ac43d12bf25dbb872d760317c46491f57d60fa6ebf09fcd46e1886a2e677e97",
+    "apps/web/src/application/styles/parties.css": "4e4ca0fcba75b2467514f1f1b1fccfc1193d110f89bfde35e1fc308128a24bf5",
+    "apps/web/src/application/styles/sales-base.css": "675f45eec8e7bafff0eda295e48a7a117ecdecc9cec2b32882e1b0333ef9c0b9",
+    "apps/web/src/application/tests/run-build-check.mjs": "8c9ee0c4abc8f60d15bcaf4a5246e04bf347495ef97074eeb4cfb1a7c880512c",
+    "apps/web/src/application/tests/run-dom-tests.mjs": "4d836b26e9eea91a61f8bf1e0a8f45f392f2380fb4cced56e15d7c176faf9733",
+    "apps/web/src/sales/sales-route.tsx": "bfea039cdd6e0b01a42929d56b607f81bc90f2a39a155f51b9b21c3c34574a1c"
+  },
+  "frozenDependencySha256": {
+    "apps/web/src/demo-presentation/controls.css": "e863d8bdcb9023acb7cfed24c0a70a7bec06993883f9bc63094fe84114f2a504",
+    "apps/web/src/demo-presentation/tokens.css": "8ba3b7e1c9133524295d562cc712662a1045bb0804e4e0c3e77df4e2f3455054",
+    "apps/web/src/parties/party-route.tsx": "e580e82bcc71c7c39722805ee3a45305a6da3f5a6c6846705aa8cd036edb2381",
+    "apps/web/src/parties/party-form.tsx": "02e822d1820012c9e3592efa872fa53b9dc8beaaacec92f3b85613c11911ac78",
+    "apps/web/src/parties/party-single-select.tsx": "3426044dbaa72bade8b212e880e730dbbc60a38ed7e7610e44c49cc4429cbe9c",
+    "apps/web/src/parties/controller.ts": "697a2ad8b472542dc6e5bc531d145e59c4a99f31aa325d81f0810149e7749f92",
+    "apps/web/src/parties/source-settings.css": "c1c4122a408d16c07e4ebbca23967d292d93f3d5e1cdfe757e48853beb9ce997",
+    "apps/web/src/parties/parties.css": "7a79ed9f2269797b57c4953b8e5618d8612915bc97dc87a93b3a3424b98f9190"
+  },
+  "approvedOutsideOwnedDirectory": {
+    "path": "apps/web/src/sales/sales-route.tsx",
+    "change": "One import only: inventory/inventory.css to demo-presentation/controls.css."
+  },
+  "salesBaseStatus": "Temporary unaccepted existing structural scaffold; no frozen-Demo visual claim.",
+  "excludedActions": [
+    "No package/lock/backend/schema/preview/frame/business edits.",
+    "No network/server/browser/live login/database/install/push/deploy."
+  ],
+  "verification": {
+    "sequence": [
+      "scoped strict TypeScript",
+      "8 composed DOM groups using actual Arco",
+      "emitted split JS/CSS isolation build"
+    ],
+    "status": "passed",
+    "uncompressedStylesheetBytes": {
+      "application": 2095,
+      "inventory": 17731,
+      "sales": 14728,
+      "parties": 596145
+    },
+    "warnings": "3 React19 element.ref compatibility warnings observed during actual-Arco DOM stage; retained in logs, not test failures.",
+    "notVerified": [
+      "Real browser or network waterfall",
+      "Timing/memory/performance acceptance",
+      "Frozen-Demo pixels/geometry",
+      "Production configuration/deployment"
+    ]
+  },
+  "historicalEvidence": "verification/historical-20261020T1751 retains earlier pre-Arco logs; they were not relabelled current.",
+  "finalPartyCacheRegression": {
+    "partySourceManifestSha256": "85b99f2b35bc093c2b8ce65b50e753ea529df3c86d40914b9bc5a1dcdc476d08",
+    "partyRouteSha256": "e580e82bcc71c7c39722805ee3a45305a6da3f5a6c6846705aa8cd036edb2381",
+    "partyControllerSha256": "697a2ad8b472542dc6e5bc531d145e59c4a99f31aa325d81f0810149e7749f92",
+    "status": "8 composed DOM groups passed; exact dependency hashes verified; focused source static-CSS graph passed.",
+    "log": "verification/final-party-cache-dom-tests.txt",
+    "cssSelfCheck": "verification/final-party-cache-css-self-check.txt",
+    "unchangedApplicationSource": true,
+    "notRepeated": [
+      "Full split build",
+      "TypeScript checks"
+    ],
+    "warnings": "Same 3 React19 element.ref compatibility warnings retained in the actual-Arco DOM log."
+  }
+}

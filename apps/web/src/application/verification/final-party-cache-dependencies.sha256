@@ -1,0 +1,9 @@
+e863d8bdcb9023acb7cfed24c0a70a7bec06993883f9bc63094fe84114f2a504  apps/web/src/demo-presentation/controls.css
+8ba3b7e1c9133524295d562cc712662a1045bb0804e4e0c3e77df4e2f3455054  apps/web/src/demo-presentation/tokens.css
+e580e82bcc71c7c39722805ee3a45305a6da3f5a6c6846705aa8cd036edb2381  apps/web/src/parties/party-route.tsx
+02e822d1820012c9e3592efa872fa53b9dc8beaaacec92f3b85613c11911ac78  apps/web/src/parties/party-form.tsx
+3426044dbaa72bade8b212e880e730dbbc60a38ed7e7610e44c49cc4429cbe9c  apps/web/src/parties/party-single-select.tsx
+697a2ad8b472542dc6e5bc531d145e59c4a99f31aa325d81f0810149e7749f92  apps/web/src/parties/controller.ts
+c1c4122a408d16c07e4ebbca23967d292d93f3d5e1cdfe757e48853beb9ce997  apps/web/src/parties/source-settings.css
+7a79ed9f2269797b57c4953b8e5618d8612915bc97dc87a93b3a3424b98f9190  apps/web/src/parties/parties.css
+85b99f2b35bc093c2b8ce65b50e753ea529df3c86d40914b9bc5a1dcdc476d08  apps/web/src/parties/verification/source.sha256

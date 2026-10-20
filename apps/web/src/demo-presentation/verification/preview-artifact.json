@@ -1,0 +1,42 @@
+{
+  "artifact": "apps/web/dist-preview/inventory-preview-test-only.html",
+  "sha256": "e30df03f62d9ea4501f7842981e5e1f3129e3c1442ab3b67e47dbb2af3b1104f",
+  "bytes": 288610,
+  "page_limit_bytes": 262144,
+  "page_excess_bytes": 26466,
+  "page_embeddable": false,
+  "synthetic_only": true,
+  "source_commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "frozen_runtime_screenshots": 0,
+  "new_runtime_screenshots": 0,
+  "checks": {
+    "web_typecheck": "pass",
+    "static_preview_build": "pass",
+    "popover_geometry_9_cases": "pass",
+    "inventory_jsdom_9_groups": "pass",
+    "product_drawer_jsdom_5_groups": "pass",
+    "bundled_preview_smoke": "pass",
+    "source_structure_css_and_fold_checks": "pass",
+    "mocked_viewport_resize_scroll_and_no_read_checks": "pass",
+    "root_followup_build_structure_bundle": "pass after scoped reset correction",
+    "independent_jsdom_actual_css_precedence": "pass; not browser layout"
+  },
+  "resolved_cascade_findings": [
+    "interaction-common.css:1 removes proto/sidebar prose with display:none!important",
+    "interaction-common.css:5 leaves final matrix padding4px8px",
+    "interaction-common.css:1 min-height28px survives inventory-refinement.css:69 height22px",
+    "inventory-workbench.js:7/71 ghost default plus styles.css:49 and workbench.css:10 styles both footer controls",
+    "inventory-workbench.js:65 fixed x/width/height bounds and above/below flip formula, with scrollable body/nonshrinking footer",
+    "Scoped native reset uses :where(.demo-ui) so source-equivalent native selector specificity does not override control class colors and weights.",
+    "Shared buttons and matrix section headings retain source inherited line-height rather than reset to normal or20px."
+  ],
+  "numeric_ink": "Exact resolved source child .iw-number normal ink/font-weight400; signs/zero/accessibility/callbacks preserved.",
+  "claim": "Source declarations, bounded arithmetic and bundled jsdom verified; no pixel parity, computed layout, browser clipping or real-browser acceptance.",
+  "popover_limits": "The exact source100px max-height floor can exceed an exceptionally short viewport. Pathological widths below24px are clamped at zero rather than invalid negative CSS width.",
+  "unavailable": [
+    "actual inventory ledger",
+    "full-query export/print",
+    "other preview business routes"
+  ],
+  "no_feature_removed_for_cap": true
+}

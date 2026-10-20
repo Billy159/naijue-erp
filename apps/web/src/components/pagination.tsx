@@ -19,10 +19,10 @@ export function InventoryPagination(props: {
     <span>{props.total === null ? '尚未查询' : `共 ${props.total.toLocaleString('zh-CN')} 款${props.total ? `，当前第 ${(props.page - 1) * props.pageSize + 1}–${Math.min(props.page * props.pageSize, props.total)} 款` : ''}`}</span>
     {pages > 1 && <div className="iw-actions iw-pager-actions">
       <button type="button" className="iw-page-button" aria-label="上一页" disabled={props.busy || props.page <= 1} onClick={() => props.onPage(props.page - 1)}>‹</button>
-      {numbers.map((page, index) => <span className="iw-actions" key={page}>{index > 0 && page - numbers[index - 1]! > 1 && <span className="muted">…</span>}<button type="button" className="iw-page-button" aria-label={`第${page}页`} aria-current={page === props.page ? 'page' : undefined} disabled={props.busy} onClick={() => props.onPage(page)}>{page}</button></span>)}
+      {numbers.map((page, index) => <span className="iw-actions" key={page}>{index > 0 && page - numbers[index - 1]! > 1 && <span className="iw-page-ellipsis muted">…</span>}<button type="button" className="iw-page-button" aria-label={`第${page}页`} aria-current={page === props.page ? 'page' : undefined} disabled={props.busy} onClick={() => props.onPage(page)}>{page}</button></span>)}
       <button type="button" className="iw-page-button" aria-label="下一页" disabled={props.busy || props.page >= pages} onClick={() => props.onPage(props.page + 1)}>›</button>
       <label className="iw-jump">跳至 <input aria-label="目标页码" inputMode="numeric" value={jump} onChange={event => setJump(event.target.value)} onKeyDown={event => { if (event.key === 'Enter' && validJump && !props.busy) props.onPage(Number(jump)); }} /> 页</label>
-      <button type="button" className="iw-text-button" disabled={props.busy || !validJump} onClick={() => props.onPage(Number(jump))}>跳转</button>
+      <button type="button" className="iw-text-button iw-jump-go" disabled={props.busy || !validJump} onClick={() => props.onPage(Number(jump))}>跳转</button>
     </div>}
   </div>;
 }

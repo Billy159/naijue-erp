@@ -1,0 +1,48 @@
+/* Frozen Demo b8bcfe3 ui-tokens.css: scoped semantic roles and geometry.
+   Final golden-consistency.css makes the application surface white.
+   No source runtime, compatibility aliases, external font fetches or data modules. */
+.demo-ui{
+ color-scheme:light;
+ /* Foundation: neutral surfaces and ink do not carry a second blue accent. */
+ --ca-bg:#F7F8FA;--ca-surface:#FFFFFF;--ca-surface-subtle:#F6F7F8;--ca-surface-muted:#F0F1F3;
+ --ca-sidebar:#F8F9FA;--ca-ink:#232A36;--ca-ink-2:#4F596B;--ca-ink-3:#626D7D;
+ --ca-line:#E1E4E8;--ca-line-strong:#C9CED6;--ca-line-subtle:#ECEEF1;--ca-disabled-ink:#8A93A0;
+ /* The supplied brand square establishes the only accent hue. The deeper fill passes white-text contrast. */
+ --ca-primary:#1978FF;--ca-primary-rgb:25,120,255;--ca-primary-fill:#166FF2;--ca-primary-ink:#0D5DCE;
+ --ca-primary-hover:#0E5DD3;--ca-primary-active:#0A4DB4;--ca-primary-soft:#ECF4FF;
+ --ca-primary-selected:#E8F2FF;--ca-primary-hover-soft:#F3F8FF;--ca-on-primary:#FFFFFF;
+ /* Component roles: navigation, actions, forms, tables and overlays. */
+ --ca-nav-text:var(--ca-ink-2);--ca-nav-hover-bg:var(--ca-primary-hover-soft);--ca-nav-hover-text:var(--ca-ink);
+ --ca-nav-selected-bg:var(--ca-primary-selected);--ca-nav-selected-text:var(--ca-primary-ink);--ca-nav-selected-bar:var(--ca-primary);
+ --ca-button-secondary-bg:var(--ca-surface);--ca-button-secondary-text:var(--ca-ink);--ca-button-secondary-border:var(--ca-line-strong);
+ --ca-button-secondary-hover-bg:var(--ca-primary-hover-soft);--ca-button-secondary-hover-border:var(--ca-primary);
+ --ca-button-text:var(--ca-ink-2);--ca-button-text-hover:var(--ca-primary-ink);
+ --ca-control-bg:var(--ca-surface);--ca-control-border:var(--ca-line-strong);--ca-control-hover-border:#9DA3AC;
+ --ca-control-focus-border:var(--ca-primary);--ca-control-placeholder:var(--ca-ink-3);
+ --ca-control-disabled-bg:var(--ca-surface-muted);--ca-control-disabled-border:var(--ca-line);--ca-control-disabled-text:var(--ca-disabled-ink);
+ --ca-focus-ring:0 0 0 2px rgb(25 120 255 / 24%);
+ --ca-link:var(--ca-primary-ink);--ca-link-hover:var(--ca-primary-active);
+ --ca-table-head:#F4F5F7;--ca-table-grid:var(--ca-line);--ca-table-row-hover:#F7FAFE;
+ --ca-table-selected:var(--ca-primary-selected);--ca-table-subtotal:#F6F7F9;--ca-table-total:#EAF3FF;
+ --ca-popover-bg:var(--ca-surface);--ca-popover-border:var(--ca-line);--ca-popover-hover:var(--ca-primary-hover-soft);
+ --ca-overlay:rgb(22 34 52 / 30%);--ca-overlay-strong:rgb(22 34 52 / 38%);
+ --ca-shadow-float:0 8px 24px rgb(22 34 52 / 11%);--ca-shadow-dialog:0 16px 48px rgb(22 34 52 / 15%);
+ --ca-shadow-sticky:-3px 0 6px rgb(22 34 52 / 7%);
+ /* Status hues are reserved for business meaning, never used as alternate brand accents. */
+ --ca-success:#247447;--ca-success-soft:#EAF7EF;
+ --ca-warning:#875A12;--ca-warning-soft:#FFF4DE;
+ --ca-critical:#B23D42;--ca-critical-soft:#FFF0F0;
+ --ca-info:var(--ca-primary-ink);--ca-info-soft:var(--ca-primary-soft);
+ --ca-neutral-tag-bg:var(--ca-surface-muted);--ca-neutral-tag-ink:var(--ca-ink-2);
+ --ca-font-sans:Arial,'PingFang SC','Microsoft YaHei',sans-serif;
+ --ca-font-mono:'SFMono-Regular',Consolas,monospace;
+ --ca-space-1:4px;--ca-space-2:8px;--ca-space-3:12px;--ca-space-4:16px;--ca-space-5:20px;--ca-space-6:24px;
+ --ca-radius-control:4px;--ca-radius-card:6px;
+ /* Existing Demo dimensions remain intact. */
+ --ui-font:13px;--ui-small:12px;--ui-title:22px;--ui-control:32px;--ui-row:36px;--ui-row-dense:26px;--ui-row-edit:34px;
+ --ui-sidebar:208px;--ui-topbar:44px;--ui-page-space:16px;--ui-group-height:26px;--ui-color-width:104px;--ui-warehouse-width:96px;--ui-size-width:76px;
+ --ui-table-grid:var(--ca-table-grid);--ui-table-heading:var(--ca-table-head);
+ --ui-drawer-select:560px;--ui-drawer-detail:880px;--ui-panel:320px;
+
+ --ca-bg:#fff;
+}

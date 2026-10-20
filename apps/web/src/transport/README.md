@@ -44,7 +44,7 @@ SKU-or-absent identity across warehouses. Every matrix group uses the same order
 warehouse identities and exactly the header's warehouse labels. Executed product/fit/
 warehouse ID filters and bounded opaque read references are checked as response
 consistency, not used as client authorization. Exact integer strings, full source
-labels and explicit unknown/not-applicable stock states remain unchanged. Unrecognized
+labels and exact negative/zero quantities remain unchanged. Published inventory has only known or not-applicable cells. Incomplete source coverage rejects the whole query; the client never fills holes or infers readiness. Unrecognized
 response fields are rejected. Null product metadata and an actual empty image list
 are valid facts, not transport failures; originals are read only by the explicit
 single-image method.

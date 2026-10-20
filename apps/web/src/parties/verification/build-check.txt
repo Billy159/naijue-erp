@@ -1,0 +1,2 @@
+PASS static build: inert client/controller entry has no React route/CSS; maintenance form and candidate popup are dynamic leaves; each visual entry has an explicit CSS bundle.
+Build only, with external existing React. No route host installation, listener, network, performance or frozen-Demo visual acceptance.

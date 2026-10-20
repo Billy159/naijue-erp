@@ -1,0 +1,17 @@
+✔ source default below: 360 width, anchor+5, right/left guard and 450 height ceiling (13.283419ms)
+✔ source short viewport flips above when more room exists there (0.257423ms)
+✔ narrow viewport caps width at viewport minus24 and right edge at8 minimum (0.681225ms)
+✔ left guard is8 even for a partially offscreen anchor (0.74639ms)
+✔ strict230 boundary stays below even with greater room above (0.446324ms)
+✔ 229 below flips above, but tied spaces do not (1.782294ms)
+✔ source100 height floor survives a shorter viewport; this is not a guarantee of fit (2.618773ms)
+✔ pathological sub24 viewport never emits negative CSS width (0.224249ms)
+✔ nonfinite dimensions and negative sizes are rejected, not pushed into CSS (2.159574ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 786.026787

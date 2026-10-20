@@ -1,0 +1,28 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS DOM 1: actual frozen Arco table/control structure, normal-status route-activation page only, reset applies defaults, independent kind lists; unsupported audit explicit.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+ReferenceError: HTMLIFrameElement is not defined
+    at getActiveElement (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/tests/.dom-tmp-wUdV7u/dom-entry.mjs:16807:111)
+    at focusIsHidden (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/tests/.dom-tmp-wUdV7u/dom-entry.mjs:16856:27)
+    at isFreeFocus2 (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/tests/.dom-tmp-wUdV7u/dom-entry.mjs:17525:31)
+    at activateTrap2 (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/tests/.dom-tmp-wUdV7u/dom-entry.mjs:17600:66)
+    at Document.onTrap2 (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/tests/.dom-tmp-wUdV7u/dom-entry.mjs:17645:11)
+    at Document.callTheUserObjectsOperation (/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/jsdom/lib/generated/idl/EventListener.js:26:30)
+    at innerInvokeEventListeners (/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:360:16)
+    at invokeEventListeners (/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:296:3)
+    at HTMLDivElementImpl._dispatch (/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:243:9)
+    at exports.fireFocusEventWithTargetAdjustment (/workspace/shared/core16-strict-check-bUsiBu/project/node_modules/jsdom/lib/jsdom/living/helpers/focusing.js:103:10)
+file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/tests/.dom-tmp-wUdV7u/dom-entry.mjs:16807
+      return activeElement.shadowRoot ? getActiveElement(activeElement.shadowRoot) : activeElement instanceof HTMLIFrameElement && safeProbe(function() {
+                                                                                                              ^
+
+ReferenceError: HTMLIFrameElement is not defined
+    at getActiveElement (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/tests/.dom-tmp-wUdV7u/dom-entry.mjs:16807:111)
+    at focusIsHidden (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/tests/.dom-tmp-wUdV7u/dom-entry.mjs:16856:27)
+    at isFreeFocus2 (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/tests/.dom-tmp-wUdV7u/dom-entry.mjs:17525:31)
+    at Timeout.activateTrap2 [as _onTimeout] (file:///workspace/shared/naijue-erp-rewrite/apps/web/src/parties/tests/.dom-tmp-wUdV7u/dom-entry.mjs:17600:66)
+    at listOnTimeout (node:internal/timers:635:17)
+    at process.processTimers (node:internal/timers:571:7)
+
+Node.js v24.19.0

@@ -1,0 +1,18 @@
+{
+  "scope": "application/** source composition only",
+  "typecheck": "passed",
+  "domGroups": 8,
+  "splitBuild": "passed: startup static closure excludes business routes/readers and route CSS",
+  "realBrowser": false,
+  "network": false,
+  "server": false,
+  "liveLogin": false,
+  "postgres": false,
+  "frozenDemoParity": false,
+  "productionDeployment": false,
+  "remaining": [
+    "approved host presentation/bootstrap/history integration",
+    "trusted live server/provider/deployment configuration",
+    "real-browser waterfall/performance/visual acceptance"
+  ]
+}

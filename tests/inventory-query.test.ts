@@ -15,15 +15,15 @@ function service(reader = syntheticInventoryReader(), authorization: InventoryQu
 }
 function hasCode(code: string) { return (error: unknown) => error instanceof DomainError && error.code === code; }
 
-test("SYNTHETIC inventory application: explicit providers only; authorized snapshot returns distinct negative/zero/unknown/nonexistent facts", async () => {
+test("SYNTHETIC inventory application: explicit providers only; authorized snapshot returns distinct negative/explicit-zero/complete-source-no-stock/nonexistent facts", async () => {
   assert.throws(() => createInventoryQueryService({} as InventoryQueryDependencies), /explicit trusted/);
   const result = await service().readInventory(inventoryActor, inventoryParameters(), signal());
   const product = result.data.products[0]!; const cells = Object.values(product.colorFits[0]!.rows[0]!.cells);
-  assert.deepEqual(cells.map(cell => cell.state), ["known", "known", "unknown", "not-applicable"]);
-  assert.deepEqual(cells.slice(0, 2).map(cell => cell.state === "known" && cell.quantity), ["-2", "0"]);
+  assert.deepEqual(cells.map(cell => cell.state), ["known", "known", "known", "not-applicable"]);
+  assert.deepEqual(cells.slice(0, 3).map(cell => cell.state === "known" && cell.quantity), ["-2", "0", "0"]);
   assert.equal(product.sizes[1]!.label, "165/S"); assert.equal(product.colorFits[0]!.fit.label, "Y版（修身）");
-  assert.deepEqual(result.data.allMatchesTotal, { knownQuantity: "-2", unknownCells: 1, completeness: "incomplete" });
-  assert.equal(result.readiness, "incomplete"); assert.equal(result.readReference, result.data.readReference);
+  assert.deepEqual(result.data.allMatchesTotal, { knownQuantity: "-2", unknownCells: 0, completeness: "complete" });
+  assert.equal(result.readiness, "ready"); assert.equal(result.readReference, result.data.readReference);
   assert.ok(Object.isFrozen(result.data.products[0]!.colorFits[0]!.rows[0]!.cells));
 });
 test("SYNTHETIC inventory application: one authorized read per page, real total and identical full-filter summary across pages", async () => {
@@ -33,7 +33,7 @@ test("SYNTHETIC inventory application: one authorized read per page, real total 
   const second = await s.readInventory(inventoryActor, inventoryParameters(2), signal());
   assert.equal(first.data.products.length, 100); assert.equal(second.data.products.length, 3);
   assert.equal(first.data.exactTotalProducts, 103); assert.deepEqual(first.data.allMatchesTotal, second.data.allMatchesTotal);
-  assert.equal(first.data.allMatchesTotal.unknownCells, 103); assert.equal(reads, 2); assert.equal(authorizations, 2);
+  assert.equal(first.data.allMatchesTotal.knownQuantity, "-206"); assert.equal(first.data.allMatchesTotal.unknownCells, 0); assert.equal(reads, 2); assert.equal(authorizations, 2);
   const outOfRange = await s.readInventory(inventoryActor, inventoryParameters(3), signal());
   assert.deepEqual(outOfRange.data.products, []); assert.equal(outOfRange.data.exactTotalProducts, 103);
   assert.deepEqual(outOfRange.data.allMatchesTotal, first.data.allMatchesTotal);
@@ -100,10 +100,10 @@ const malformed: readonly [string, (snapshot: any) => void][] = [
   ["missing cell", s => { delete s.data.products[0].colorFits[0].rows[0].cells[inventoryId("size", 10)]; }],
   ["fractional stock", s => { s.data.products[0].colorFits[0].rows[0].cells[inventoryId("size", 10)].quantity = "1.5"; }],
   ["overflow stock", s => { s.data.products[0].colorFits[0].rows[0].cells[inventoryId("size", 10)].quantity = "9223372036854775808"; }],
-  ["hidden unknown", s => { s.data.allMatchesTotal.unknownCells = 0; s.data.allMatchesTotal.completeness = "complete"; s.readiness = "ready"; }],
+  ["hidden unknown", s => { s.data.products[0].colorFits[0].rows[0].cells[inventoryId("size", 12)] = { state: "unknown", skuId: inventoryId("sku", 10002), reason: "missing source proof" }; }],
   ["wrong row total", s => { s.data.products[0].colorFits[0].rows[0].total.knownQuantity = "0"; }],
   ["wrong column total", s => { s.data.products[0].sizeTotals[inventoryId("size", 10)].knownQuantity = "0"; }],
-  ["readiness mismatch", s => { s.readiness = "ready"; }], ["reference mismatch", s => { s.data.readReference = "other"; }],
+  ["invalid readiness", s => { s.readiness = "guessed"; }], ["reference mismatch", s => { s.data.readReference = "other"; }],
   ["reference header injection", s => { s.readReference = s.data.readReference = "unsafe\r\nvalue"; }],
   ["wrong page", s => { s.data.page = 2; }], ["unknown total", s => { s.data.exactTotalProducts = null; }],
   ["truncated page", s => { s.data.exactTotalProducts = 2; }], ["response extra", s => { s.data.internalCredential = "private"; }],
@@ -115,7 +115,7 @@ for (const [name, mutate] of malformed) test(`SYNTHETIC inventory application: m
   const s = service({ async readInventory(read) { const snapshot = structuredClone(syntheticInventorySnapshot(read)); mutate(snapshot); return snapshot; }, async readCandidates(read) { return syntheticCandidateSnapshot(read); } });
   await assert.rejects(s.readInventory(inventoryActor, inventoryParameters(), signal()), hasCode("INVALID_INVENTORY_RESPONSE"));
 });
-test("SYNTHETIC inventory application: readiness failure propagates; actual authorized empty set is the only zero-total page", async () => {
+test("SYNTHETIC inventory application: readiness failure propagates; complete empty sets remain exact zero", async () => {
   const empty = await service(syntheticInventoryReader(0)).readInventory(inventoryActor, inventoryParameters(), signal());
   assert.equal(empty.data.exactTotalProducts, 0); assert.equal(empty.readiness, "ready");
   const s = service({ async readInventory() { throw new DomainError("INVENTORY_NOT_READY", "missing approved coverage facts"); }, async readCandidates(read) { return syntheticCandidateSnapshot(read); } });
@@ -185,6 +185,28 @@ test("SYNTHETIC inventory application: absent verified size columns are rejected
     Object.assign(result, { readiness: "ready" });
     Object.assign(result.data, { allMatchesTotal: { ...emptyTotal } });
     return result;
+  }, async readCandidates(read) { return syntheticCandidateSnapshot(read); } });
+  await assert.rejects(s.readInventory(inventoryActor, inventoryParameters(), signal()), hasCode("INVALID_INVENTORY_RESPONSE"));
+});
+
+// Runtime callers can violate the ready-only TypeScript provider contract. Never publish their data.
+test("SYNTHETIC inventory application: whole-scope incomplete imports reject even if visible page totals are complete", async () => {
+  for (const count of [0, 1, 103]) {
+    const s = service({ async readInventory(read) {
+      const snapshot = structuredClone(syntheticInventorySnapshot(read, count));
+      Object.assign(snapshot, { readiness: "incomplete" }); return snapshot;
+    }, async readCandidates(read) { return syntheticCandidateSnapshot(read); } });
+    await assert.rejects(s.readInventory(inventoryActor, inventoryParameters(), signal()), hasCode("INVENTORY_NOT_READY"));
+  }
+  const candidates = service({ async readInventory(read) { return syntheticInventorySnapshot(read); }, async readCandidates(read) {
+    const snapshot = structuredClone(syntheticCandidateSnapshot(read)); Object.assign(snapshot, { readiness: "incomplete" }); return snapshot;
+  } });
+  await assert.rejects(candidates.readCandidates(inventoryActor, candidateParameters(), signal()), hasCode("INVENTORY_NOT_READY"));
+});
+test("SYNTHETIC inventory application: incomplete off-page full-filter summary cannot publish a complete-looking page", async () => {
+  const s = service({ async readInventory(read) {
+    const snapshot = structuredClone(syntheticInventorySnapshot(read, 103));
+    Object.assign(snapshot.data.allMatchesTotal, { completeness: "incomplete", unknownCells: 1 }); return snapshot;
   }, async readCandidates(read) { return syntheticCandidateSnapshot(read); } });
   await assert.rejects(s.readInventory(inventoryActor, inventoryParameters(), signal()), hasCode("INVALID_INVENTORY_RESPONSE"));
 });

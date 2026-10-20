@@ -1,0 +1,22 @@
+✔ party construction is inert and each read uses its exact native GET route with bounded same-origin session options (53.500083ms)
+✔ all four actions POST exact command DTOs to independent families without actor, kind, code or retries (22.125317ms)
+✔ configuration rejects absolute/ambiguous prefixes, credentials and invalid resource bounds without sending (4.686185ms)
+✔ invalid kind, exact-key DTOs, identifiers, query values and oversized UTF-8 body all fail before dispatch (14.742086ms)
+✔ caller mutations after invocation cannot change dispatch or expected response validation (8.088218ms)
+✔ every known party 4xx code is retained only from an exact error envelope and proves command rejection (76.823478ms)
+✔ unknown, wrong-status, extra-field and malformed error envelopes never prove a write did not commit (22.499066ms)
+✔ network failure is sanitized, uncertain after write dispatch, and never retried (1.343758ms)
+✔ pre-abort and same-turn cancellation do not send; post-dispatch ignored abort stays uncertain and consumes late failure (31.183646ms)
+✔ timeout detaches ignored fetch, cancels a late body, and keeps writes uncertain (5.737316ms)
+✔ fetch/body microtasks cannot publish a result after the monotonic timeout budget (1.892948ms)
+✔ streamed bodies are byte/chunk bounded, stalled reads detach on timeout and cancellation (1024.572231ms)
+✔ malformed JSON/UTF-8/content, non-200 success and observable redirects never acknowledge a command (8.6182ms)
+✔ wrong kind/id/CAS/state/code successes are uncertain, and invalid list/candidate/detail/receipt data fail closed (24.231794ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1992.080325

@@ -1,0 +1,2 @@
+/* Existing reviewed authentication surface only. The approved host supplies its actual shell CSS. */
+@import '../../authentication/authentication.css';

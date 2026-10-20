@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "verification": "Built bundled-code jsdom + source-structure/CSS assertions only, not browser rendering or pixel parity.",
+  "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "portableBytes": 288610,
+  "pageLimitBytes": 262144,
+  "pageEmbeddable": false,
+  "checks": [
+    "full frozen menu hierarchy with unavailable actions disabled",
+    "white scoped role palette and source sidebar/breakpoints; final display:none removes proto gap",
+    "hidden filter labels, muted 32px selectors and source action grid",
+    "column-first product identity, source colgroup widths/sticky declarations, final4px vertical padding and28px fold minimum",
+    "product/color fold controls in correct source columns, optional subtotal/total metadata",
+    "all eight frozen display options and source ghost footer; viewport-clamped/flipped fixed settings with scrollable body; resize/scroll create no reads",
+    "exact final numeric child ink/font weight overrides parent zero/minus classes, with signs and accessible identities intact",
+    "no unknown stock presentation branch; known zero and absent spec distinct",
+    "neutral control CSS excludes matrix/drawer, startup excludes inventory layout/styles",
+    "no startup business reads; diagnostics separate from source business geometry"
+  ]
+}

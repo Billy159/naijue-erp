@@ -1,0 +1,26 @@
+✔ independent lazy workspace constructs no reads and retains each bounded list without merging names/codes (10.276258ms)
+✔ create allocates no client code and generates one key only on explicit valid submit (4.520065ms)
+✔ edit reads current target only, preserves original code/null timestamps and sends native CAS without code (19.730191ms)
+✔ only native disable/restore commands, enabled-state guard and default-customer rejection preserve facts (3.95607ms)
+✔ uncertain write blocks duplicate/new/close and absent receipt never proves not committed; exact replay preserves key/CAS/name (2.188742ms)
+✔ receipt recovery validates native key/action/target/CAS and does not treat original result as current detail (2.338947ms)
+✔ replay rejection stays uncertain because it cannot prove original uncommitted (1.512996ms)
+✔ definitive CAS conflict retains draft, fetches current facts separately and rebases only by explicit preparation (2.536065ms)
+✔ duplicate clicks serialize; route suspend retains uncertain command and ignores late success (1.920524ms)
+✔ detail close/replace cancellation discards ignored-signal results and suspended detail can retry (1.539889ms)
+✔ identity/session/permission invalidation clears both independent lists, editor, drafts and pending command; late response cannot restore (2.24348ms)
+✔ 401/403 clears shared party scope before host callback, while stale cancelled errors cannot expire a replacement identity (1.037075ms)
+✔ exact total bounds page correction and latest query ignores superseded results (1.002115ms)
+✔ untrusted DTOs reject extra fields, identity/version regressions, wrong totals and malformed native receipts (1.119654ms)
+✔ list wrapper owns an immutable executed range during await and never adjusts with a mutated draft (1.591648ms)
+✔ atomic edit owns both name and state in one key/CAS; blocked default disable preserves both fields (0.99907ms)
+✔ state-only edit is dirty; uncertain atomic recovery locks both fields and replays identical state/name/key/CAS (1.049111ms)
+✔ legitimate route leave drops clean editors and detached detail, never dirty or unresolved recovery (1.324598ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 532.376184

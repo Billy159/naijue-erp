@@ -31,7 +31,7 @@ test("SYNTHETIC inventory HTTP: required trusted providers, no listener and DTO-
   assert.equal(first.statusCode, 200, first.body); assert.equal(second.statusCode, 200, second.body);
   assert.equal(first.json().products.length, 100); assert.equal(second.json().products.length, 3); assert.equal(second.json().exactTotalProducts, 103);
   assert.deepEqual(first.json().allMatchesTotal, second.json().allMatchesTotal);
-  assert.equal(first.headers["x-inventory-read-reference"], first.json().readReference); assert.equal(first.headers["x-inventory-readiness"], "incomplete");
+  assert.equal(first.headers["x-inventory-read-reference"], first.json().readReference); assert.equal(first.headers["x-inventory-readiness"], "ready");
   assert.equal(first.headers["cache-control"], "no-store"); assert.equal(first.headers.pragma, "no-cache");
   const candidates = await f.post(candidateParameters(2), "/inventory/candidates/query");
   assert.equal(candidates.statusCode, 200, candidates.body); assert.equal(candidates.json().items.length, 3); assert.equal(candidates.json().exactTotal, 23);
@@ -150,4 +150,15 @@ test("SYNTHETIC inventory HTTP: reviewed session authenticator is structurally r
     cookie, origin: "https://synthetic-erp.example", "sec-fetch-site": "same-origin"
   } });
   assert.equal(valid.statusCode, 200, valid.body); assert.equal(resolutions, 1); assert.equal(f.calls.inventory, 1);
+});
+
+test("SYNTHETIC inventory HTTP: incomplete snapshot is 503, not a partial 200 or a zero-filled page", async t => {
+  const f = await setup(t, { reader: {
+    async readInventory(read) { const result = syntheticInventorySnapshot(read, 103); Object.assign(result, { readiness: "incomplete" }); return result; },
+    async readCandidates(read) { const result = syntheticCandidateSnapshot(read); Object.assign(result, { readiness: "incomplete" }); return result; }
+  } });
+  for (const [url, body] of [["/inventory/query", inventoryParameters()], ["/inventory/candidates/query", candidateParameters()]] as const) {
+    const result = await f.post(body, url); assert.equal(result.statusCode, 503); assert.equal(result.json().error.code, "INVENTORY_NOT_READY");
+    assert.equal(result.json().products, undefined); assert.equal(result.headers["x-inventory-readiness"], undefined);
+  }
 });

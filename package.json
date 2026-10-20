@@ -12,7 +12,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "build": "tsc -p tsconfig.build.json",
-    "test": "node --test tests/*.test.ts apps/web/src/loading/*.test.ts apps/web/src/inventory/*.test.ts apps/web/src/inventory/windowing/*.test.ts apps/web/src/transport/*.test.ts apps/web/src/authentication/*.test.ts apps/web/src/sales/*.test.ts apps/api/src/*.test.ts",
+    "test": "node --test tests/*.test.ts apps/web/src/loading/*.test.ts apps/web/src/inventory/*.test.ts apps/web/src/inventory/windowing/*.test.ts apps/web/src/transport/*.test.ts apps/web/src/authentication/*.test.ts apps/web/src/sales/*.test.ts apps/web/src/parties/*.test.ts apps/web/src/demo-presentation/*.test.ts apps/api/src/*.test.ts",
     "check": "npm run check:dependencies && npm run typecheck && npm run build && npm run smoke:build && npm test",
     "check:dependencies": "node scripts/verify-dependencies.mjs",
     "smoke:build": "node scripts/smoke-build.mjs",
@@ -20,12 +20,14 @@
     "build:preview": "node apps/web/build-preview.mjs",
     "test:web:dom": "node apps/web/tests/run-dom-tests.mjs",
     "test:web:preview": "node apps/web/tests/run-bundle-smoke.mjs",
-    "check:web": "npm run typecheck:web && npm run build:preview && npm run test:web:dom && npm run test:web:auth && npm run test:web:sales && npm run test:web:preview",
+    "check:web": "npm run typecheck:web && npm run build:preview && npm run test:web:dom && npm run test:web:auth && npm run test:web:sales && npm run test:web:parties && npm run test:web:application && npm run test:web:preview",
     "check:all": "npm run check && npm run check:web",
     "test:web:auth": "node apps/web/src/authentication/tests/run-dom-tests.mjs",
     "build:preview:product": "node apps/web/build-product-only-preview.mjs",
     "check:preview:product": "npm run build:preview:product && node apps/web/tests/run-product-only-smoke.mjs",
-    "test:web:sales": "node apps/web/src/sales/tests/run-dom-tests.mjs"
+    "test:web:sales": "node apps/web/src/sales/tests/run-dom-tests.mjs",
+    "test:web:parties": "node apps/web/src/parties/tests/run-dom-tests.mjs",
+    "test:web:application": "node apps/web/src/application/tests/run-dom-tests.mjs"
   },
   "dependencies": {
     "fastify": "5.12.5",

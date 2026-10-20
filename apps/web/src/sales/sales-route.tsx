@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import '../inventory/inventory.css';
+import '../demo-presentation/controls.css';
 import './sales.css';
 import type { ReadScope } from '../loading/read-scope.ts';
 import type { SalesReader, SalesReferenceReader } from './contracts.ts';

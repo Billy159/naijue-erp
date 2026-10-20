@@ -7,12 +7,11 @@ export type InventoryCandidateKind = "product" | "category" | "warehouse" | "sup
 export interface InventorySelection { readonly id: string; readonly label: string }
 export type InventoryStockCell =
   | { readonly state: "known"; readonly skuId: string; readonly quantity: string }
-  | { readonly state: "unknown"; readonly skuId: string; readonly reason: string }
   | { readonly state: "not-applicable" };
 export interface InventoryStockTotal {
   readonly knownQuantity: string;
-  readonly completeness: "complete" | "incomplete";
-  readonly unknownCells: number;
+  readonly completeness: "complete";
+  readonly unknownCells: 0;
 }
 export interface InventoryQueryRow {
   readonly warehouse: InventorySelection;
@@ -85,8 +84,9 @@ export interface InventoryQueryAuthorization {
 export interface InventoryReadSnapshot<T> {
   /** Opaque bounded non-secret reference to this read. Never a credential or an import identifier guessed by the caller. */
   readonly readReference: string;
-  /** ready requires complete proven coverage; incomplete retains explicit unknown cells. Unavailable facts must reject with INVENTORY_NOT_READY. */
-  readonly readiness: "ready" | "incomplete";
+  /** Ready certifies the entire filtered authorized data scope, not just this page.
+   * Incomplete import/coverage or unavailable facts must reject with INVENTORY_NOT_READY, never return partial data. */
+  readonly readiness: "ready";
   readonly data: T;
 }
 export interface InventoryScopedRead<P> {
@@ -100,8 +100,11 @@ export interface InventoryScopedRead<P> {
  * Inventory is paged by distinct product with stable (product_code COLLATE "C",id) ordering. Candidate ordering
  * must be stable for its exact filter; selectedIds is selection context, not an extra page or a grant.
  * Fetch page matrix facts in bounded set queries; never preload all products or issue per-product reads.
- * Existing SKU + absent/unproven balance is unknown, absent four-dimensional SKU is not-applicable;
- * zero needs an actual covered balance fact. Preserve negative quantities and source size order.
+ * Publish only after proving the entire authorized filtered catalog and stock dataset complete.
+ * In that verified published scope, an existing SKU with no stock/balance is exact zero; an absent
+ * four-dimensional SKU is not-applicable. Unproven absence, missing proof, incomplete imports,
+ * corruption and failed reads must reject the whole query, never become zero or partial cells.
+ * This proof belongs to this trusted reader, not to the client. Preserve negative quantities and source size order.
  * The current minimal schema has no approved baseline-coverage/readiness persistence; this contract
  * does not assert a PostgreSQL implementation exists. Signal forwarding does NOT prove SQL cancellation.
  */

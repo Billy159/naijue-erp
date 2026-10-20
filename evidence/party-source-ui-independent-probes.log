@@ -1,0 +1,6 @@
+PASS independent immutable per-kind filter draft survives allowed leave without reads or applied-range mutation; explicit reset applies exactly one read.
+OBSERVATION clean EDIT after generic suspend: retained; route cleanup policy is separately reviewed against frozen App remount.
+PASS legitimate route leave clears a clean unchanged editor.
+PASS changed-code result cannot become committed; exact old code and both draft fields are retained.
+PASS receipt404 cannot release unresolved guard; explicit replay reuses identical object/key/name/enabled/CAS.
+PASS disposal clears both filter drafts, editor and command references.

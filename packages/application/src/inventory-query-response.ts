@@ -1,3 +1,4 @@
+import { DomainError } from "../../domain/src/errors.ts";
 import { Buffer } from "node:buffer";
 import type { InventoryCandidatePage, InventoryCandidateQuery, InventoryQuery, InventoryQueryCandidate, InventoryQueryColorFit, InventoryQueryPage, InventoryQueryProduct, InventoryQueryRow, InventoryReadScope, InventoryReadSnapshot, InventorySelection, InventoryStockCell, InventoryStockTotal } from "./inventory-query-contracts.ts";
 import { equalTotal, exactInteger, idValue, numberValue, record, rejectInventoryResponse as reject, stockTotal, sumTotals, textValue } from "./inventory-query-validation.ts";
@@ -19,15 +20,11 @@ function totalsBySize(value: unknown, sizes: readonly InventorySelection[]): Rea
   return Object.freeze(Object.fromEntries(sizes.map(size => [size.id, stockTotal(row[size.id])])));
 }
 function cell(value: unknown): InventoryStockCell {
-  const state = record(value, ["state"], ["skuId", "quantity", "reason"], reject).state;
+  const state = record(value, ["state"], ["skuId", "quantity"], reject).state;
   if (state === "known") {
     const row = record(value, ["state", "skuId", "quantity"], [], reject);
     exactInteger(row.quantity, true);
     return Object.freeze({ state, skuId: idValue("sku", row.skuId, reject), quantity: row.quantity as string });
-  }
-  if (state === "unknown") {
-    const row = record(value, ["state", "skuId", "reason"], [], reject);
-    return Object.freeze({ state, skuId: idValue("sku", row.skuId, reject), reason: textValue(row.reason, reject) });
   }
   if (state !== "not-applicable") reject();
   record(value, ["state"], [], reject);
@@ -35,8 +32,7 @@ function cell(value: unknown): InventoryStockCell {
 }
 function cellTotal(value: InventoryStockCell): InventoryStockTotal {
   if (value.state === "not-applicable") return ZERO;
-  if (value.state === "known") return { knownQuantity: value.quantity, unknownCells: 0, completeness: "complete" };
-  return { knownQuantity: "0", unknownCells: 1, completeness: "incomplete" };
+  return { knownQuantity: value.quantity, unknownCells: 0, completeness: "complete" };
 }
 interface MatrixBudget { units: number; readonly skuCoordinates: Map<string, string> }
 function spend(budget: MatrixBudget, units: number): void {
@@ -100,12 +96,13 @@ function product(value: unknown, scope: InventoryReadScope, query: InventoryQuer
     seasonLabel: textValue(row.seasonLabel, reject, true), sizeGroup: selection("sizeGroup", row.sizeGroup), sizes,
     colorFits: Object.freeze(colorFits), sizeTotals, total });
 }
-function envelope(value: unknown): { row: Record<string, unknown>; readReference: string; readiness: "ready" | "incomplete" } {
+function envelope(value: unknown): { row: Record<string, unknown>; readReference: string; readiness: "ready" } {
   const row = record(value, ["readReference", "readiness", "data"], [], reject);
   const readReference = textValue(row.readReference, reject, false, 200);
   // Header-safe opaque reference. It is not accepted as a permission token on later requests.
   if (!/^[A-Za-z0-9._:-]{1,200}$/.test(readReference) || (row.readiness !== "ready" && row.readiness !== "incomplete")) reject();
-  return { row, readReference, readiness: row.readiness };
+  if (row.readiness !== "ready") throw new DomainError("INVENTORY_NOT_READY", "Complete inventory scope is not ready for publication");
+  return { row, readReference, readiness: "ready" };
 }
 function pageLength(total: number, page: number, size: number): number { return Math.min(size, Math.max(0, total - (page - 1) * size)); }
 export function checkedInventorySnapshot(value: unknown, query: InventoryQuery, scope: InventoryReadScope): InventoryReadSnapshot<InventoryQueryPage> {
@@ -125,9 +122,7 @@ export function checkedInventorySnapshot(value: unknown, query: InventoryQuery, 
   const warehouseLabels = list(row.warehouseLabels, scope.warehouses.length).map(label => textValue(label, reject));
   if (warehouseLabels.length !== scope.warehouses.length || warehouseLabels.some((label, index) => label !== scope.warehouses[index]!.label)) reject();
   const allMatchesTotal = stockTotal(row.allMatchesTotal);
-  if (readiness !== (allMatchesTotal.completeness === "complete" ? "ready" : "incomplete")) reject();
   const pageTotal = sumTotals(products.map(row => row.total));
-  if (allMatchesTotal.unknownCells < pageTotal.unknownCells) reject();
   if (exactTotalProducts === 0 || products.length === exactTotalProducts) equalTotal(allMatchesTotal, pageTotal);
   const data: InventoryQueryPage = Object.freeze({ page: query.page, pageSize: query.pageSize, exactTotalProducts,
     products: Object.freeze(products), warehouseLabels: Object.freeze(warehouseLabels), allMatchesTotal, readReference });
