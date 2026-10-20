@@ -1,0 +1,115 @@
+import type { ActorContext } from "./ports.ts";
+import type { EntityId } from "../../domain/src/values.ts";
+
+/** Structurally matches the web inventory DTO, without importing UI/runtime code. */
+export type InventoryPageSize = 100 | 200 | 500;
+export type InventoryCandidateKind = "product" | "category" | "warehouse" | "supplier" | "fit" | "season";
+export interface InventorySelection { readonly id: string; readonly label: string }
+export type InventoryStockCell =
+  | { readonly state: "known"; readonly skuId: string; readonly quantity: string }
+  | { readonly state: "unknown"; readonly skuId: string; readonly reason: string }
+  | { readonly state: "not-applicable" };
+export interface InventoryStockTotal {
+  readonly knownQuantity: string;
+  readonly completeness: "complete" | "incomplete";
+  readonly unknownCells: number;
+}
+export interface InventoryQueryRow {
+  readonly warehouse: InventorySelection;
+  readonly cells: Readonly<Record<string, InventoryStockCell>>;
+  readonly total: InventoryStockTotal;
+}
+export interface InventoryQueryColorFit {
+  readonly color: InventorySelection;
+  readonly fit: InventorySelection;
+  readonly rows: readonly InventoryQueryRow[];
+  readonly sizeTotals: Readonly<Record<string, InventoryStockTotal>>;
+  readonly total: InventoryStockTotal;
+}
+export interface InventoryQueryProduct {
+  readonly id: string; readonly code: string; readonly name: string;
+  readonly categoryLabel: string; readonly supplierLabel: string; readonly seasonLabel: string;
+  readonly sizeGroup: InventorySelection;
+  /** Exact source membership/order/full labels; never derive display size from code. */
+  readonly sizes: readonly InventorySelection[];
+  readonly colorFits: readonly InventoryQueryColorFit[];
+  readonly sizeTotals: Readonly<Record<string, InventoryStockTotal>>;
+  readonly total: InventoryStockTotal;
+}
+export interface InventoryQueryPage {
+  readonly page: number; readonly pageSize: InventoryPageSize;
+  readonly exactTotalProducts: number; readonly products: readonly InventoryQueryProduct[];
+  readonly warehouseLabels: readonly string[];
+  readonly allMatchesTotal: InventoryStockTotal;
+  readonly readReference: string;
+}
+export interface InventoryQueryCandidate extends InventorySelection {
+  readonly disabled?: boolean; readonly parentLabel?: string; readonly depth?: 0 | 1;
+}
+export interface InventoryCandidatePage {
+  readonly items: readonly InventoryQueryCandidate[]; readonly exactTotal: number; readonly page: number;
+}
+/** Normalized immutable IDs only. Client selection labels never become reference or permission facts. */
+export interface InventoryQuery {
+  readonly filter: {
+    readonly productIds: readonly EntityId<"product">[];
+    readonly categoryId: EntityId<"category"> | null;
+    readonly warehouseIds: readonly EntityId<"warehouse">[];
+    readonly supplierIds: readonly EntityId<"supplier">[];
+    readonly fitIds: readonly EntityId<"fit">[];
+    readonly seasonIds: readonly EntityId<"season">[];
+  };
+  readonly page: number; readonly pageSize: InventoryPageSize;
+}
+export interface InventoryCandidateQuery {
+  readonly kind: InventoryCandidateKind; readonly search: string;
+  readonly page: number; readonly pageSize: 20;
+  readonly selectedIds: readonly string[]; readonly categoryId: EntityId<"category"> | null;
+}
+export type InventoryReadIntent =
+  | { readonly kind: "inventory"; readonly parameters: InventoryQuery }
+  | { readonly kind: "candidates"; readonly parameters: InventoryCandidateQuery };
+export interface InventoryAuthorizedWarehouse {
+  readonly id: EntityId<"warehouse">; readonly hallId: EntityId<"hall">; readonly label: string;
+}
+/** Explicit finite scope, from trusted current policy/reference facts, never from request identity/labels.
+ * hallIds and warehouses are an intersection, not an OR or a grant to an entire catalog.
+ * Order is the authorized business warehouse display order. No empty/global/admin shortcut. */
+export interface InventoryReadScope {
+  readonly hallIds: readonly EntityId<"hall">[];
+  readonly warehouses: readonly InventoryAuthorizedWarehouse[];
+}
+export interface InventoryQueryAuthorization {
+  authorize(actor: ActorContext, intent: InventoryReadIntent, signal: AbortSignal): Promise<InventoryReadScope>;
+}
+export interface InventoryReadSnapshot<T> {
+  /** Opaque bounded non-secret reference to this read. Never a credential or an import identifier guessed by the caller. */
+  readonly readReference: string;
+  /** ready requires complete proven coverage; incomplete retains explicit unknown cells. Unavailable facts must reject with INVENTORY_NOT_READY. */
+  readonly readiness: "ready" | "incomplete";
+  readonly data: T;
+}
+export interface InventoryScopedRead<P> {
+  readonly actor: ActorContext; readonly scope: InventoryReadScope;
+  readonly parameters: P; readonly signal: AbortSignal;
+}
+/** Required production seam, NOT an in-memory production fallback.
+ * Each invocation must obtain page, exact count, warehouse labels, readiness and FULL FILTER summary
+ * in one consistent read snapshot (e.g. PostgreSQL read-only REPEATABLE READ). Apply the supplied
+ * hall/warehouse intersection and all ID filters BEFORE count, paging, aggregates and candidates.
+ * Inventory is paged by distinct product with stable (product_code COLLATE "C",id) ordering. Candidate ordering
+ * must be stable for its exact filter; selectedIds is selection context, not an extra page or a grant.
+ * Fetch page matrix facts in bounded set queries; never preload all products or issue per-product reads.
+ * Existing SKU + absent/unproven balance is unknown, absent four-dimensional SKU is not-applicable;
+ * zero needs an actual covered balance fact. Preserve negative quantities and source size order.
+ * The current minimal schema has no approved baseline-coverage/readiness persistence; this contract
+ * does not assert a PostgreSQL implementation exists. Signal forwarding does NOT prove SQL cancellation.
+ */
+export interface TrustedInventorySnapshotReader {
+  readInventory(read: InventoryScopedRead<InventoryQuery>): Promise<InventoryReadSnapshot<InventoryQueryPage>>;
+  readCandidates(read: InventoryScopedRead<InventoryCandidateQuery>): Promise<InventoryReadSnapshot<InventoryCandidatePage>>;
+}
+export interface InventoryQueryDependencies {
+  readonly authorization: InventoryQueryAuthorization;
+  readonly reader: TrustedInventorySnapshotReader;
+}
