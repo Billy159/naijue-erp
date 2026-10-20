@@ -1,0 +1,32 @@
+{
+  "os": "Debian GNU/Linux 13 (trixie), amd64",
+  "repository": "https://deb.debian.org/debian",
+  "suite": "trixie/main",
+  "origin": "Debian",
+  "apt_index_trusted": true,
+  "authentication": "APT authenticated the InRelease/index using the preinstalled Debian archive keyring, with no unauthenticated/trusted override. APT package SHA256 metadata matches each downloaded package byte-for-byte.",
+  "installation": "User-mode dpkg-deb extraction into a new isolated test directory only; no host package install, service registration or security configuration change.",
+  "packages": [
+    {
+      "package": "postgresql-17",
+      "version": "17.11-0+deb13u1",
+      "architecture": "amd64",
+      "filename": "pool/main/p/postgresql-17/postgresql-17_17.11-0+deb13u1_amd64.deb",
+      "sha256": "d2ce1ddffafa783f9acda4c92c86fc21e8288bff3782d739294f14fa797d7886"
+    },
+    {
+      "package": "postgresql-client-17",
+      "version": "17.11-0+deb13u1",
+      "architecture": "amd64",
+      "filename": "pool/main/p/postgresql-17/postgresql-client-17_17.11-0+deb13u1_amd64.deb",
+      "sha256": "9d8558f8dd57c8e92e218a20698383575d53742ca3f9e7c2b7fe5f246d5216ae"
+    },
+    {
+      "package": "libpq5",
+      "version": "17.11-0+deb13u1",
+      "architecture": "amd64",
+      "filename": "pool/main/p/postgresql-17/libpq5_17.11-0+deb13u1_amd64.deb",
+      "sha256": "20a4c9ef58b4baf90deda67cfb2cc062871c062830dddc234d28f5ac7931b86b"
+    }
+  ]
+}

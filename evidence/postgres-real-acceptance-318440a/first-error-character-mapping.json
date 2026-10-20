@@ -1,0 +1,14 @@
+{
+  "evidence_kind": "STATIC_CHARACTER_MAPPING_NOT_REGISTRY_FORENSICS",
+  "error_source": "Original isolated server log: ERROR at character 11489, 2026-10-21 05:20:08.400 JST",
+  "sqlstate_from_TAP": "42601",
+  "error": "syntax error at end of input",
+  "server_character_position": 11489,
+  "frozen_source_commit": "b508ce88127ce3e4562ff731982ac8b50a980146",
+  "source": "adapters/postgres/migrations/0004_transfer_runtime.sql in frozen commit b508ce88127ce3e4562ff731982ac8b50a980146",
+  "source_sha256": "a85dd812fdf561652433e6fc2da49024f95db1137e52b84170470ec5f937224d",
+  "one_based_line": 161,
+  "one_based_column": 71,
+  "line_text": "    OR NEW.warehouse_id IS DISTINCT FROM CASE NEW.endpoint WHEN 'FROM' THEN h.from_warehouse_id WHEN 'TO' THEN h.to_warehouse_id ELSE NULL END",
+  "suffix_at_position": " THEN h.from_warehouse_id WHEN 'TO'"
+}
