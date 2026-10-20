@@ -12,7 +12,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "build": "tsc -p tsconfig.build.json",
-    "test": "node --test tests/*.test.ts apps/web/src/loading/*.test.ts apps/web/src/inventory/*.test.ts apps/web/src/inventory/windowing/*.test.ts apps/web/src/transport/*.test.ts apps/web/src/authentication/*.test.ts apps/web/src/sales/*.test.ts apps/web/src/sales/commands/*.test.ts apps/web/src/parties/*.test.ts apps/web/src/transfers/*.test.ts apps/web/src/demo-presentation/*.test.ts apps/api/src/*.test.ts tests/integration/migration-source.test.ts tests/integration/safety.test.ts tests/integration/proof.test.ts",
+    "test": "node --test tests/*.test.ts apps/web/src/loading/*.test.ts apps/web/src/inventory/*.test.ts apps/web/src/inventory/windowing/*.test.ts apps/web/src/transport/*.test.ts apps/web/src/authentication/*.test.ts apps/web/src/sales/*.test.ts apps/web/src/sales/commands/*.test.ts apps/web/src/parties/*.test.ts apps/web/src/transfers/*.test.ts apps/web/src/demo-presentation/*.test.ts apps/api/src/*.test.ts tests/integration/migration-source.test.ts tests/integration/safety.test.ts tests/integration/proof.test.ts tests/integration/backend-source.test.ts",
     "check": "npm run check:dependencies && npm run typecheck && npm run build && npm run smoke:build && npm test",
     "check:dependencies": "node scripts/verify-dependencies.mjs",
     "smoke:build": "node scripts/smoke-build.mjs",

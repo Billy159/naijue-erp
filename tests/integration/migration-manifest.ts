@@ -33,3 +33,12 @@ export const BACKEND_SCENARIOS = [
   "native product basics, exact three-SKU/two-size specifications and image METADATA only",
   "deferred transfer line-position uniqueness permits an actual two-line swap with sparse audit and no stock effect"
 ] as const;
+
+/** Additional backend-suite preparation. Actual engine evidence requires a fresh guarded run; inject is not network/TLS acceptance. */
+export const HTTP_READ_SCENARIOS = [
+  "actual scrypt/auth service/PG store login: separate synthetic account, wrong password, secure cookie and current session",
+  "authenticated native inventory matrix/candidates and bounded ledger keyset pages on published synthetic scope",
+  "authenticated bounded sales/detail/history/statistics, transfer/detail and product reads with honest unavailable media",
+  "explicit test-only scope exclusions and spoofed cookie/authorization/actor/origin rejection across native read plugins",
+  "actual PG logout revocation blocks every read family; exact native business fixture snapshot unchanged and owned API pool closure"
+] as const;

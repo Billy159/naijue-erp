@@ -1,0 +1,95 @@
+TAP version 13
+# Subtest: SOURCE ONLY: real composition is imported and both construction calls omit the driver-double argument
+ok 1 - SOURCE ONLY: real composition is imported and both construction calls omit the driver-double argument
+  ---
+  duration_ms: 6.354931
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: explicit validated target, bounded fresh synthetic identity, and no credential output/listener/reset seam
+ok 2 - SOURCE ONLY: explicit validated target, bounded fresh synthetic identity, and no credential output/listener/reset seam
+  ---
+  duration_ms: 0.896896
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: gates, original backend/sparse helpers, fixture source and all migration bytes unchanged from c48eba1
+ok 3 - SOURCE ONLY: gates, original backend/sparse helpers, fixture source and all migration bytes unchanged from c48eba1
+  ---
+  duration_ms: 169.201162
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: backend dispatch follows current-suite/fresh-target gates, sparse remains separate, default discovery remains pure
+ok 4 - SOURCE ONLY: backend dispatch follows current-suite/fresh-target gates, sparse remains separate, default discovery remains pure
+  ---
+  duration_ms: 2.00459
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: failed login prerequisite cannot pass through; fixed policies reject unknown identity and preserve transfer role
+ok 5 - SOURCE ONLY: failed login prerequisite cannot pass through; fixed policies reject unknown identity and preserve transfer role
+  ---
+  duration_ms: 0.442894
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: all native read routes and logout/session/revocation/owned-resource checks are represented
+ok 6 - SOURCE ONLY: all native read routes and logout/session/revocation/owned-resource checks are represented
+  ---
+  duration_ms: 5.638888
+  type: 'test'
+  ...
+# Subtest: FABRICATED HELPER ONLY: exact source JSON wrapper suppresses parser excerpts and preserves successful parsed data
+ok 7 - FABRICATED HELPER ONLY: exact source JSON wrapper suppresses parser excerpts and preserves successful parsed data
+  ---
+  duration_ms: 60.833873
+  type: 'test'
+  ...
+# Subtest: FABRICATED HELPER ONLY: exact source cleanup drains async rejection and emits only fixed diagnostics
+ok 8 - FABRICATED HELPER ONLY: exact source cleanup drains async rejection and emits only fixed diagnostics
+  ---
+  duration_ms: 18.00515
+  type: 'test'
+  ...
+# Subtest: FABRICATED HELPER ONLY: exact source cleanup also contains a synchronous throw before closing remaining APIs
+ok 9 - FABRICATED HELPER ONLY: exact source cleanup also contains a synchronous throw before closing remaining APIs
+  ---
+  duration_ms: 16.729309
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: bounded fixed14-table business digests compare values without dumping rows or auth material
+ok 10 - SOURCE ONLY: bounded fixed14-table business digests compare values without dumping rows or auth material
+  ---
+  duration_ms: 0.794709
+  type: 'test'
+  ...
+# Subtest: SOURCE ONLY: terminal disconnect observation is finite, read-only, and does not catch/retry failed queries or closes
+ok 11 - SOURCE ONLY: terminal disconnect observation is finite, read-only, and does not catch/retry failed queries or closes
+  ---
+  duration_ms: 2.178882
+  type: 'test'
+  ...
+# Subtest: FABRICATED HELPER ONLY: exact disconnect observer waits for a delayed zero and then stops
+ok 12 - FABRICATED HELPER ONLY: exact disconnect observer waits for a delayed zero and then stops
+  ---
+  duration_ms: 10.966382
+  type: 'test'
+  ...
+# Subtest: FABRICATED HELPER ONLY: exact disconnect observer fails, rather than passing, at its finite deadline
+ok 13 - FABRICATED HELPER ONLY: exact disconnect observer fails, rather than passing, at its finite deadline
+  ---
+  duration_ms: 12.778624
+  type: 'test'
+  ...
+# Subtest: FABRICATED HELPER ONLY: exact disconnect observer propagates a failed observation without retry
+ok 14 - FABRICATED HELPER ONLY: exact disconnect observer propagates a failed observation without retry
+  ---
+  duration_ms: 5.931989
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1227.247156
+exit_status=0
