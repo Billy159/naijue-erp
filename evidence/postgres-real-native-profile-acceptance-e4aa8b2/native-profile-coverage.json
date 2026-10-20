@@ -1,0 +1,35 @@
+{
+  "actual_profile": {
+    "authorization_mode": "source-confirmed-native",
+    "authentication_policy": "createSourceAuthenticationPolicy(900)",
+    "driver": "Actual default PostgreSQL driver and one API-owned bounded pool, no optional fake-driver seam or explicit test-provider bag."
+  },
+  "roles": [
+    "SALESPERSON hall A",
+    "SALESPERSON hall B",
+    "ADMIN null hall",
+    "WAREHOUSE null hall"
+  ],
+  "source_policy_engine_proof": [
+    "Actual scrypt/source-auth logins and current sessions with canonical active employment/roles.",
+    "Nonempty own/foreign hall approved service-written sales: received125/250; ADMIN and WAREHOUSE all-scope received375.",
+    "Sales list/detail/history/references/statistics restricted before results; foreign detail/history hidden and foreign-hall filter cannot expand grant.",
+    "All-warehouse inventory/candidates/ledger includes real other-hall disabled historical references before later warehouse insertion; exact shared product targets.",
+    "Actual B-only transfer draft/endpoints/reference scope excluded from A, visible to B/ADMIN/WAREHOUSE.",
+    "Later deliberately unpublished third warehouse yields inventory503/INVENTORY_NOT_READY under all-warehouse grant; no fabricated readiness.",
+    "Current HTTP sessions fail closed for login-disabled/inactive-employment/unknown-role/disabled-hall controlled states.",
+    "Each native role logout revokes session and read access; owned API pool closes; read-phase snapshots unchanged."
+  ],
+  "supplemental_not_http_race": {
+    "kind": "DIRECT_GENUINE_PG_AUTHORIZER_CALLS_WITH_CAPTURED_STALE_HALL",
+    "families": [
+      "sales",
+      "inventory",
+      "products"
+    ],
+    "expected": "FORBIDDEN after controlled hall change, no claim of public HTTP race coverage."
+  },
+  "fixture_maintenance": "Explicit fresh synthetic account/reference maintenance and service-written business fixtures. Controlled status/hall mutations are restored; terminal snapshot equality is not a write-free-interval claim. Third warehouse insertion is a negative fixture, not acceptance of a catalogue creation workflow.",
+  "transport_and_data_limits": "Fastify.inject only; no web listener/browser/TLS/real-data/media/performance/deployment acceptance.",
+  "credentials": "Generated app passwords/cookies memory-only; ordinary scrypt/session hashes in test database only, no usable credential evidence."
+}

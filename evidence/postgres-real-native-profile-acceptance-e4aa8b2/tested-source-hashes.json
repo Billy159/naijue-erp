@@ -1,0 +1,20 @@
+{
+  "commit": "e4aa8b2663da5984486ddc63b2f95e2a92ca0950",
+  "sha256": {
+    "tests/integration/native-http-read-acceptance.ts": "5ea8f860860f5cd2a7fe565fadd8116cc34b7477a1e52aa0333d0d8add8e3a91",
+    "tests/integration/http-read-acceptance.ts": "8a11561cf39c9ef850cf9514cbf4d9350b8171d1ab6f9074de85d3a75a143dff",
+    "tests/integration/backend-acceptance.ts": "ae67fd823d5c4ebc77fccc4cd21497577ee91146cdb14079d0717f06e00597e5",
+    "tests/integration/backend-source.test.ts": "f0905d9a6b53dfcad92197d32b572083969afd1b5d664da1457995e4a68bedde",
+    "tests/integration/postgres.integration.test.ts": "ceafe0f932aa593c267a01991a1b3e3b9b857681e6ca746b917960575857e04b",
+    "tests/integration/migration-manifest.ts": "96f1cf2a5dd2aa5e63335dadee5402a167f5d2f07f934cbc5c665b8ffc03ca49",
+    "tests/integration/database.ts": "aaab741db40d3667738e841d7582e510ff6c8762c369e469cd58a7b4352a9808",
+    "tests/integration/safety.ts": "a2488d99b04d5eb4ee1a59efdf7429b88669032c41783e359dcf823972188468",
+    "apps/api/src/postgres-read-api.ts": "02694b4e9ae55726c3d82fc8a71704c9d979f3e591f0d4512171037c416f3455",
+    "adapters/postgres/src/source-confirmed-read-authorization.ts": "3800ffd48bcd5f9eee0df41662533430464c1da5ad033c1a291c48056aa15caf",
+    "packages/authentication/src/source-policy.ts": "9b9b1274feae28b2ba0edfce559e7f7de1ebcd54b19b0464df2e1c0a5f31ae44",
+    "packages/authentication/src/service.ts": "668f9407d21c5e4e009cdc1c711b0c8e1593c5e91da25bd411da2d2113f7cfd9",
+    "packages/authentication/src/passwords.ts": "f26e8602205339b1d8ca728ce4d570151d691f252f7cf4faf8841161b51caa29",
+    "adapters/postgres/src/auth-store.ts": "30d284972c3c136bb809d9895faf7da25f496ff1e36b6ce161717388df67cb1d",
+    "adapters/postgres/src/bounded-pool.ts": "38d373b370c01997a4c17e912abefa8663a82ca00a57e7a86a72658c1021342b"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "verification_timing": "POST_RUN_READ_ONLY_PHYSICAL_IDENTITY",
+  "system_identifier": "7698856207892361241",
+  "listen_addresses": "127.0.0.1",
+  "port": 55432,
+  "unix_socket_directory_empty": true,
+  "postmaster_status": "ready",
+  "supervisor_sha256": "8874c81620a67b475ba3bfd4aa9c74bfcbd7f4a841d4de3ab015d6553dee1325",
+  "owned_cluster_identity_unchanged": true
+}
