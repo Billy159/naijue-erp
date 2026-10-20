@@ -8,9 +8,11 @@ import { PostgresInventoryLedgerQueryReader } from "../../../adapters/postgres/s
 import { PostgresSalesQueryReader } from "../../../adapters/postgres/src/sales-query-reader.ts";
 import { PostgresTransferQueryReader } from "../../../adapters/postgres/src/transfer-query-reader.ts";
 import { PostgresProductQueryReader } from "../../../adapters/postgres/src/product-query-reader.ts";
+import { createSourceConfirmedPostgresReadAuthorization } from "../../../adapters/postgres/src/source-confirmed-read-authorization.ts";
 import type { InventoryQueryAuthorization } from "../../../packages/application/src/inventory-query-contracts.ts";
 import type { SalesQueryAuthorization } from "../../../packages/application/src/sales-query-ports.ts";
 import type { TransferQueryAuthorization } from "../../../packages/application/src/transfer-query-ports.ts";
+import { createSourceConfirmedTransferQueryAuthorization } from "../../../packages/application/src/transfer-query-service.ts";
 import type { ControlledProductMedia, ProductQueryAuthorization } from "../../../packages/application/src/product-query-ports.ts";
 import type { AuthenticationPolicy } from "../../../packages/authentication/src/ports.ts";
 import { createAuthenticationService } from "../../../packages/authentication/src/service.ts";
@@ -23,6 +25,22 @@ import { createSalesQueryHttpPlugin } from "./sales-query-http.ts";
 import { createTransferQueryHttpPlugin } from "./transfer-query-http.ts";
 import { createProductQueryHttpPlugin } from "./product-query-http.ts";
 
+export interface PostgresReadApiExplicitAuthorization {
+  readonly mode?: never;
+  readonly inventory: InventoryQueryAuthorization;
+  readonly sales: SalesQueryAuthorization;
+  readonly transfers: TransferQueryAuthorization;
+  readonly products: ProductQueryAuthorization;
+}
+export interface PostgresReadApiNativeAuthorization {
+  readonly mode: "source-confirmed-native";
+  readonly inventory?: never;
+  readonly sales?: never;
+  readonly transfers?: never;
+  readonly products?: never;
+}
+export type PostgresReadApiAuthorization = PostgresReadApiExplicitAuthorization | PostgresReadApiNativeAuthorization;
+
 export interface PostgresReadApiOptions {
   /** Explicit target, TLS choice and finite resource settings; never URI/env/pgpass discovery. */
   readonly postgres: BoundedPostgresConfig;
@@ -31,13 +49,9 @@ export interface PostgresReadApiOptions {
     readonly now: () => string;
     readonly policy: AuthenticationPolicy;
   };
-  /** Mandatory current trusted policy providers. This factory does not invent or widen hall grants. */
-  readonly authorization: {
-    readonly inventory: InventoryQueryAuthorization;
-    readonly sales: SalesQueryAuthorization;
-    readonly transfers: TransferQueryAuthorization;
-    readonly products: ProductQueryAuthorization;
-  };
+  /** Trusted host-only selection: explicit providers OR the closed source-confirmed native profile.
+   * No default, mixed overrides, request-selected mode, invented or widened hall grants. */
+  readonly authorization: PostgresReadApiAuthorization;
   /** Required explicit availability. null keeps existing media-unavailable failures honest. */
   readonly productMedia: ControlledProductMedia | null;
 }
@@ -54,11 +68,32 @@ function exactHttpsOrigin(value: unknown): value is string {
   try { const url = new URL(value); return url.protocol === "https:" && url.origin === value && !url.username && !url.password; }
   catch { return false; }
 }
+type CapturedAuthorization = { readonly kind: "source-confirmed-native" }
+  | { readonly kind: "providers"; readonly providers: PostgresReadApiExplicitAuthorization };
+function checkedAuthorization(value: PostgresReadApiAuthorization): CapturedAuthorization {
+  if (!value || typeof value !== "object" || Array.isArray(value)) throw new TypeError("Explicit PostgreSQL read authorization is required");
+  if ("mode" in value) {
+    // A closed, own-key selector is not a provider bag. Reject unknown modes and
+    // every override (including undefined/non-enumerable/symbol properties).
+    const prototype = Object.getPrototypeOf(value);
+    if (!Object.hasOwn(value, "mode") || value.mode !== "source-confirmed-native" || Reflect.ownKeys(value).length !== 1
+      || (prototype !== null && prototype !== Object.prototype))
+      throw new TypeError("Native PostgreSQL read authorization requires only its explicit source-confirmed-native mode");
+    return Object.freeze({ kind: "source-confirmed-native" });
+  }
+  if (typeof value.inventory?.authorize !== "function" || typeof value.sales?.authorize !== "function"
+    || typeof value.transfers?.authorize !== "function" || typeof value.products?.authorize !== "function")
+    throw new TypeError("Explicit PostgreSQL read authorization providers are required");
+  return Object.freeze({ kind: "providers", providers: Object.freeze({
+    inventory: Object.freeze({ authorize: value.inventory.authorize.bind(value.inventory) }),
+    sales: Object.freeze({ authorize: value.sales.authorize.bind(value.sales) }),
+    transfers: Object.freeze({ authorize: value.transfers.authorize.bind(value.transfers) }),
+    products: Object.freeze({ authorize: value.products.authorize.bind(value.products) })
+  }) });
+}
 function checkedHost(options: PostgresReadApiOptions) {
-  const auth = options?.authentication; const policies = options?.authorization; const media = options?.productMedia;
+  const auth = options?.authentication; const media = options?.productMedia;
   if (!exactHttpsOrigin(auth?.trustedOrigin) || typeof auth?.now !== "function" || !auth.policy
-    || typeof policies?.inventory?.authorize !== "function" || typeof policies?.sales?.authorize !== "function"
-    || typeof policies?.transfers?.authorize !== "function" || typeof policies?.products?.authorize !== "function"
     || !Object.hasOwn(options, "productMedia") || (media !== null && (!media || !exactHttpsOrigin(media.deliveryOrigin)
       || typeof media.resolveThumbnails !== "function" || typeof media.resolveOriginal !== "function"))) {
     throw new TypeError("PostgreSQL read API requires explicit trusted HTTPS origin, authentication policy/clock, read authorization and media availability");
@@ -67,10 +102,7 @@ function checkedHost(options: PostgresReadApiOptions) {
   // configuration object later cannot replace these boundaries or enable a write plugin.
   return {
     trustedOrigin: auth.trustedOrigin, now: auth.now, policy: auth.policy,
-    inventory: Object.freeze({ authorize: policies.inventory.authorize.bind(policies.inventory) }),
-    sales: Object.freeze({ authorize: policies.sales.authorize.bind(policies.sales) }),
-    transfers: Object.freeze({ authorize: policies.transfers.authorize.bind(policies.transfers) }),
-    products: Object.freeze({ authorize: policies.products.authorize.bind(policies.products) }),
+    authorization: checkedAuthorization(options.authorization),
     media: media === null ? null : Object.freeze({ deliveryOrigin: media.deliveryOrigin,
       resolveThumbnails: media.resolveThumbnails.bind(media), resolveOriginal: media.resolveOriginal.bind(media) })
   };
@@ -85,6 +117,9 @@ export async function createPostgresReadApi(options: PostgresReadApiOptions, cre
   const pool = new BoundedPostgresPool(options.postgres, createDriver);
   let app: FastifyInstance | undefined;
   try {
+    const policies = host.authorization.kind === "source-confirmed-native"
+      ? Object.freeze({ ...createSourceConfirmedPostgresReadAuthorization(pool), transfers: createSourceConfirmedTransferQueryAuthorization() })
+      : host.authorization.providers;
     app = Fastify({ logger: false, trustProxy: false, bodyLimit: 65_536 });
     app.addHook("onClose", async () => { await pool.dispose(); });
     const service = createAuthenticationService({ store: new PostgresAuthenticationStore(pool),
@@ -95,11 +130,11 @@ export async function createPostgresReadApi(options: PostgresReadApiOptions, cre
     // Each register call deliberately preserves the existing plugin's Fastify encapsulation:
     // independent error handlers, per-request identity and independent abort controllers.
     app.register(createAuthenticationHttpPlugin(authentication));
-    app.register(createInventoryHttpPlugin({ authenticate, dependencies: { authorization: host.inventory, reader: new PostgresInventoryQueryReader(pool) } }));
-    app.register(createInventoryLedgerQueryHttpPlugin({ authenticate, dependencies: { authorization: host.inventory, reader: new PostgresInventoryLedgerQueryReader(pool) } }));
-    app.register(createSalesQueryHttpPlugin({ authenticate, dependencies: { authorization: host.sales, reader: new PostgresSalesQueryReader(pool) } }));
-    app.register(createTransferQueryHttpPlugin({ authenticate: authenticateTransfer, dependencies: { authorization: host.transfers, reader: new PostgresTransferQueryReader(pool) } }));
-    app.register(createProductQueryHttpPlugin({ authenticate, dependencies: { authorization: host.products, reader: new PostgresProductQueryReader(pool), media: host.media } }));
+    app.register(createInventoryHttpPlugin({ authenticate, dependencies: { authorization: policies.inventory, reader: new PostgresInventoryQueryReader(pool) } }));
+    app.register(createInventoryLedgerQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.inventory, reader: new PostgresInventoryLedgerQueryReader(pool) } }));
+    app.register(createSalesQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.sales, reader: new PostgresSalesQueryReader(pool) } }));
+    app.register(createTransferQueryHttpPlugin({ authenticate: authenticateTransfer, dependencies: { authorization: policies.transfers, reader: new PostgresTransferQueryReader(pool) } }));
+    app.register(createProductQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.products, reader: new PostgresProductQueryReader(pool), media: host.media } }));
     await app.ready();
     const readyApp = app;
     return Object.freeze({ app: readyApp, close: () => readyApp.close(), get postgresBackgroundFailureCount() { return pool.backgroundFailureCount; } });

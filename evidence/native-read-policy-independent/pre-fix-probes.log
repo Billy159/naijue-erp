@@ -1,0 +1,43 @@
+✔ independent: current canonical role determines sales scope, not injected role, target hall, or old provider state (7.220965ms)
+✔ independent: ALL-role complete warehouse grants preserve native other-hall and historical labels without enabling filters (3.539048ms)
+✔ independent: exactly 1000 unique warehouses pass, 1001 fail without scope truncation, empty/duplicate/unknown hall never becomes invented scope (14.451702ms)
+✔ independent: all policy families deny stale/null/disabled/unknown native identity and never continue to warehouse grant (6.538219ms)
+✔ independent: product facts are exact target and image ownership remains native reader work; no stock or producthall invention (8.17731ms)
+✖ independent: abort boundaries return no grant, rollback active snapshots, and never rollback acknowledged COMMIT (3.039051ms)
+✔ independent: failed and non-Error COMMIT never retries/returns success; rollback errors retain both failures and discard once (0.675654ms)
+✔ independent: native selector is exact, rejects overrides/inherited keys/symbols before allocating or connecting a driver (3.279121ms)
+✔ independent: sole own-key native selector (ordinary/null prototype) constructs one lazy owned non-listening pool only (275.250499ms)
+✔ independent: request JSON cannot select profile, omit session, fabricate role/hall, or bypass business-input validation (34.925961ms)
+✔ independent: authenticated native sales shares one pool, keeps current-hall predicate before foreign filter, and captured selector survives caller mutation (14.44437ms)
+✔ independent: native lookup denies a current account changed after authentication before any sales count/page query; sibling product stays independent (16.487464ms)
+✔ independent: native profile preserves existing canonical transfer endpoint/creator union, without a second native-policy lookup (35.93053ms)
+✔ independent source/schema: fresh identity is non-secret and read-only; one bounded pool/native factory/canonical transfer; no commands or runtime defaults (10.137791ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1106.571977
+
+✖ failing tests:
+
+test at evidence/native-read-policy-independent/probes.mjs:89:1
+✖ independent: abort boundaries return no grant, rollback active snapshots, and never rollback acknowledged COMMIT (3.039051ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'ROLLBACK'
+  - 'COMMIT'
+  
+      at TestContext.<anonymous> (file:///workspace/shared/naijue-erp-rewrite/evidence/native-read-policy-independent/probes.mjs:95:40)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ROLLBACK',
+    expected: 'COMMIT',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

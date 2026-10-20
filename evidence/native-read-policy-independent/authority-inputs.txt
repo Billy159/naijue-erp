@@ -1,0 +1,8 @@
+/workspace/scratch/f6bee04e937b/erp-handoff/source/naijue-erp-v0.0.1/handoff-references/单据按厅可见权限补充-20261003.md
+/workspace/scratch/f6bee04e937b/erp-handoff/source/naijue-erp-v0.0.1/handoff-references/仓库单厅归属简化裁决-20261017.md
+/workspace/shared/erp-rewrite-planning/demo-source-evidence/noncore-functions-source-report.txt
+/workspace/scratch/f6bee04e937b/erp-handoff/source/naijue-erp-v0.0.1/frontend/master-data.js
+/workspace/scratch/f6bee04e937b/erp-handoff/source/naijue-erp-v0.0.1/server/security/policies.ts
+/workspace/scratch/f6bee04e937b/erp-handoff/source/naijue-erp-v0.0.1/server/security/repository.ts
+/workspace/scratch/f6bee04e937b/erp-handoff/source/naijue-erp-v0.0.1/server/security/service.ts
+/workspace/scratch/f6bee04e937b/erp-handoff/source/naijue-erp-v0.0.1/frontend/inventory-filters.jsx

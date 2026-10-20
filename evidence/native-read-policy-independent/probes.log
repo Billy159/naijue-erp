@@ -1,0 +1,23 @@
+✔ independent: current canonical role determines sales scope, not injected role, target hall, or old provider state (14.158864ms)
+✔ independent: ALL-role complete warehouse grants preserve native other-hall and historical labels without enabling filters (13.396733ms)
+✔ independent: exactly 1000 unique warehouses pass, 1001 fail without scope truncation, empty/duplicate/unknown hall never becomes invented scope (23.799643ms)
+✔ independent: all policy families deny stale/null/disabled/unknown native identity and never continue to warehouse grant (10.498526ms)
+✔ independent: product facts are exact target and image ownership remains native reader work; no stock or producthall invention (11.782692ms)
+✔ independent: abort boundaries return no grant, rollback active snapshots, and never rollback acknowledged COMMIT (2.234677ms)
+✔ independent: failed and non-Error COMMIT never retries/returns success; rollback errors retain both failures and discard once (1.638778ms)
+✔ independent: release failure never reports a successful grant or retries connection ownership cleanup (0.63491ms)
+✔ independent: native selector is exact, rejects overrides/inherited keys/symbols before allocating or connecting a driver (4.321147ms)
+✔ independent: sole own-key native selector (ordinary/null prototype) constructs one lazy owned non-listening pool only (511.947437ms)
+✔ independent: request JSON cannot select profile, omit session, fabricate role/hall, or bypass business-input validation (51.762097ms)
+✔ independent: authenticated native sales shares one pool, keeps current-hall predicate before foreign filter, and captured selector survives caller mutation (26.790562ms)
+✔ independent: native lookup denies a current account changed after authentication before any sales count/page query; sibling product stays independent (29.786362ms)
+✔ independent: native profile preserves existing canonical transfer endpoint/creator union, without a second native-policy lookup (74.484991ms)
+✔ independent source/schema: fresh identity is non-secret and read-only; one bounded pool/native factory/canonical transfer; no commands or runtime defaults (2.003948ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1931.995158

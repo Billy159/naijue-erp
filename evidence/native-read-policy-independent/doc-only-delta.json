@@ -1,0 +1,10 @@
+{
+  "oldSha256": "be1ee468760eeb6cba380a6f260249a26d96b71c61fe480b3a93bf1ac0ca2164",
+  "newSha256": "7a2fe58732f4fe12a39693a8e1624cdd6b4894a7c578ff87438ae32c400d29cb",
+  "verifiedOnlyChanges": [
+    "repository reference 126–139 to126–136",
+    "service reference246–249 to258–259",
+    "exact target wording narrowed to detail/media target"
+  ],
+  "runtimeAndTestsUnchanged": true
+}
