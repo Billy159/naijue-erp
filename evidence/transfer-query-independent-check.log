@@ -1,0 +1,46 @@
+Independent transfer read review: targeted synthetic rerun
+✔ SYNTHETIC transfer query HTTP: both read routes use current trusted actor/policy and exact integer strings (420.161873ms)
+✔ SYNTHETIC transfer query HTTP: missing providers and missing/malformed/failing authentication never grant scope (47.361553ms)
+✔ SYNTHETIC transfer query HTTP: client identity, role, scope and unknown filters cannot grant visibility (39.984841ms)
+✔ SYNTHETIC transfer query HTTP: denied, empty and malformed current policy scopes cannot touch reader (44.364034ms)
+✔ SYNTHETIC transfer query HTTP: known safe errors map; arbitrary provider/SQL messages stay private (29.854389ms)
+✔ SYNTHETIC transfer query HTTP: strict transport rejects query strings, invalid JSON/media and large bodies (11.61551ms)
+✔ transfer pg query: required pool is lazy; aborted, invalid-input and denied-scope reads never connect (9.793248ms)
+✔ transfer pg query: count/page share scoped native relations and repeatable snapshot; values are parameterized (7.509661ms)
+✔ transfer pg query: explicit all and restrictive account/endpoint clauses remain parameterized intersections (2.725645ms)
+✔ transfer pg query: empty out-of-range page retains exact total without global fallback (1.351881ms)
+✔ transfer pg query: native current snapshots and current names use two bounded detail reads (3.574433ms)
+✔ transfer pg query: hidden/missing detail rolls back before any child read (1.266726ms)
+✔ transfer pg query: oversized current detail fails instead of truncating (16.530031ms)
+✔ transfer pg query: bad persisted line identities, ownership, snapshots and quantities fail closed (8.658382ms)
+✔ transfer pg query: exact counts cannot be driver numbers and pages cannot exceed exact total (1.806046ms)
+✔ transfer pg query: commit uncertainty is not retried and discards the client (2.407624ms)
+✔ transfer pg query: begin/connect/rollback errors release correctly without hidden retries (1.819002ms)
+✔ transfer pg query: abort during SQL requests rollback and stops subsequent reads (1.066281ms)
+✔ transfer query: required providers and empty/malformed trusted scopes fail closed (8.528697ms)
+✔ transfer query: strict exact filters and required bounded numeric pagination (8.082913ms)
+✔ transfer query: explicit source policy grants either endpoint hall OR immutable salesperson creation role+hall (2.698413ms)
+✔ transfer query: immutable actor, filters and granted scope are isolated across policy await (2.476387ms)
+✔ transfer query: aborted and malformed actors never reach policy; authorization is current on every call (9.598235ms)
+✔ transfer query: abort after policy or reader prevents delivery of stale results (2.298925ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2408.267901
+TEST_EXIT=0
+TYPECHECK_EXIT=0
+packages/application/src/transfer-query-ports.ts: OK
+packages/application/src/transfer-query-validation.ts: OK
+packages/application/src/transfer-query-service.ts: OK
+adapters/postgres/src/transfer-query-reader.ts: OK
+apps/api/src/transfer-query-http.ts: OK
+apps/api/src/transfer-query-http.test.ts: OK
+tests/transfer-query.test.ts: OK
+tests/transfer-query-postgres-protocol.test.ts: OK
+tests/transfer-query.tsconfig.json: OK
+docs/transfer-query.md: OK
+HASH_EXIT=0

@@ -1,0 +1,5 @@
+PASS transfer: abort after acquisition releases acquired client without BEGIN/read
+PASS transfer: pre-connect copied query/scope survive mutation across pool await
+PASS transfer: prefixed read-only POST has no listener and exact signed-bigint-maximum count
+PASS transfer: request-abort signal rejects delayed provider result and removes its listener
+Independent bounded synthetic transfer probe groups: 4/4 passed. No PostgreSQL, network or listener.
