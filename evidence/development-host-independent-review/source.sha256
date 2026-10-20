@@ -1,0 +1,8 @@
+9cec6722d9a5f0b107521d7894b7aa2b2a904c91477a21c2ebb226463b107963  apps/web/src/development-host/bootstrap.ts
+b25607199fcfdc4222f41880648a17ef04743d684f91db688bbc19b2d1c35617  apps/web/src/development-host/build-development-host.mjs
+f97a061267593882758f6626d16319c926b78c48239969716e1e1e841dc55ffd  apps/web/src/development-host/configuration.ts
+26ea79d706697d1cce0eb48ea8c0d5ae8b9343f634170000fabcc0428a5f9b0a  apps/web/src/development-host/entry.ts
+47d5531e374a49b1622e37bd602d308bf2735dd87044877faaad0103eb044667  apps/web/src/development-host/host.css
+9096c0598cae44150fdc3a32fb95c9d3c4e226519c3c4c0d8e0e6decc77023c6  apps/web/src/development-host/mount.tsx
+72a43c11ead764a7b6ae0a014180728f4fc31e523182fca4004cb6ea2c9278d4  apps/web/src/development-host/route-state.tsx
+35400a82319b676a241caeb84adf7674adae2044221544351960a2add838818c  apps/web/src/development-host/tsconfig.json

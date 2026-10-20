@@ -1,0 +1,6 @@
+fa8eef2ab78469a8b241893ccfa7cdb691fc9e9f15aa5c07ff62c8b7da9fb906  apps/web/src/application/build-application.mjs
+bfbe0c2e74b3aab9717af18d9c1c6aefd2a4e8f5ab655d2019b9ffc4d5e12557  apps/web/src/application/index.tsx
+2129addfd0d8f95165ec52e50d41478c32308cdb2e8a1f53b795569fe3038738  apps/web/src/application/controller.ts
+5871b928d9eca852af63357bd793c39f982b1fc1596969ba35a9b9b50e956d5a  apps/web/src/application/contracts.ts
+ef737e6155fa4514f79c20c342d0a83e71ace852214521562aa69094e0b3fe66  apps/web/src/application/stylesheet.ts
+8c77f774ddd63d50bc674252beb96b74955ff270e030bb1f3c4f3d6899a93bac  apps/web/src/application/demo-frame-presentation.tsx

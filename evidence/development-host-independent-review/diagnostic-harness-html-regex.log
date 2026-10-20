@@ -1,0 +1,33 @@
+PASS 1: strict public configuration rejects 38 malformed/private settings and invalid asset paths; accepted values are immutable.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /modulepreload|prefetch|inventory\.css|sales\.css|transfers\.css|transfer-detail\.css|transfer-product\.css(?=\")/. Input:
+
+'<!doctype html>\n' +
+  '<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="same-origin"><title>奈爵 ERP · 开发宿主</title>\n' +
+  '<link rel="stylesheet" href="https://synthetic.test/assets/review/application.css">\n' +
+  '<link rel="stylesheet" href="https://synthetic.test/assets/review/development-host.css">\n' +
+  '</head><body><div id="naijue-erp-root"></div><noscript>此开发宿主需要启用 JavaScript。</noscript>\n' +
+  '<script id="naijue-erp-development-configuration" type="application/json">{"configuration":{"kind":"naijue-erp-development-host","http":{"origin":"https://synthetic.test","basePath":"/api"},"assets":{"basePath":"/assets/review/"},"routes":{"inventory":true,"sales":false,"transfers":false},"session":{"verifyOnMount":false}},"assets":{"entry":"application.js","styles":{"application":"application.css","inventory":"inventory.css","sales":"sales.css","sales-detail":"sales-detail.css","parties":"parties.css","transfers":"transfers.css","transfer-detail":"transfer-detail.css","transfer-product":"transfer-product.css"},"productDrawerStyles":"chunks/product-drawer.css"}}</script>\n' +
+  '<script type="module" src="https://synthetic.test/assets/review/application.js"></script>\n' +
+  '</body></html>\n'
+
+    at file:///workspace/shared/naijue-erp-rewrite/evidence/development-host-independent-review/run-review.mjs:37:10 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '<!doctype html>\n' +
+    '<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="same-origin"><title>奈爵 ERP · 开发宿主</title>\n' +
+    '<link rel="stylesheet" href="https://synthetic.test/assets/review/application.css">\n' +
+    '<link rel="stylesheet" href="https://synthetic.test/assets/review/development-host.css">\n' +
+    '</head><body><div id="naijue-erp-root"></div><noscript>此开发宿主需要启用 JavaScript。</noscript>\n' +
+    '<script id="naijue-erp-development-configuration" type="application/json">{"configuration":{"kind":"naijue-erp-development-host","http":{"origin":"https://synthetic.test","basePath":"/api"},"assets":{"basePath":"/assets/review/"},"routes":{"inventory":true,"sales":false,"transfers":false},"session":{"verifyOnMount":false}},"assets":{"entry":"application.js","styles":{"application":"application.css","inventory":"inventory.css","sales":"sales.css","sales-detail":"sales-detail.css","parties":"parties.css","transfers":"transfers.css","transfer-detail":"transfer-detail.css","transfer-product":"transfer-product.css"},"productDrawerStyles":"chunks/product-drawer.css"}}</script>\n' +
+    '<script type="module" src="https://synthetic.test/assets/review/application.js"></script>\n' +
+    '</body></html>\n',
+  expected: /modulepreload|prefetch|inventory\.css|sales\.css|transfers\.css|transfer-detail\.css|transfer-product\.css(?=\")/,
+  operator: 'doesNotMatch',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
