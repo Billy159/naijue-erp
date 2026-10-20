@@ -114,6 +114,7 @@ END;
 $$;
 CREATE TRIGGER hall_default_customer_enabled BEFORE INSERT OR UPDATE OF default_customer_id, enabled ON naijue_erp.hall FOR EACH ROW EXECUTE FUNCTION naijue_erp.check_hall_default_customer_enabled();
 
+-- EDIT atomically saves name and enabled together, including state-only changes.
 -- Sparse audit contains actual changed native keys only, never whole-row/time snapshots.
 -- Creation naturally includes the four initial key values. No old-version platform.
 CREATE FUNCTION naijue_erp.validate_party_native_commit() RETURNS trigger LANGUAGE plpgsql SET search_path = pg_catalog, naijue_erp AS $$
@@ -136,7 +137,7 @@ BEGIN
     expected_after := next_values;
   ELSE
     IF a.old_version IS DISTINCT FROM OLD.version OR a.action NOT IN ('EDIT', 'DISABLE', 'RESTORE')
-      OR (a.action = 'EDIT' AND (NEW.name IS NOT DISTINCT FROM OLD.name OR NEW.enabled IS DISTINCT FROM OLD.enabled))
+      OR (a.action = 'EDIT' AND (NEW.name IS NOT DISTINCT FROM OLD.name AND NEW.enabled IS NOT DISTINCT FROM OLD.enabled))
       OR (a.action = 'DISABLE' AND (NOT OLD.enabled OR NEW.enabled OR NEW.name IS DISTINCT FROM OLD.name))
       OR (a.action = 'RESTORE' AND (OLD.enabled OR NOT NEW.enabled OR NEW.name IS DISTINCT FROM OLD.name)) THEN
       RAISE EXCEPTION 'party command does not describe native transition' USING ERRCODE = '23514';

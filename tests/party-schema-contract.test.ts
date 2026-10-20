@@ -68,3 +68,10 @@ test(label + "allocation uses the matching transaction lock and advances past ex
   assert.match(adapter, /SELECT setval\('naijue_erp.\$\{sequence\}'::regclass, \$1::bigint, true\)::text AS allocated/);
   assert.match(adapter, /reserved\?\.allocated === next.toString\(\)/);
 });
+
+test(label + "atomic EDIT allows changed name, state or both but rejects only a fully unchanged pair", () => {
+  const native = body("validate_party_native_commit");
+  assert.match(native, /a.action = 'EDIT' AND \(NEW.name IS NOT DISTINCT FROM OLD.name AND NEW.enabled IS NOT DISTINCT FROM OLD.enabled\)/);
+  assert.doesNotMatch(native, /a.action = 'EDIT' AND \(NEW.name IS NOT DISTINCT FROM OLD.name OR NEW.enabled IS DISTINCT FROM OLD.enabled\)/);
+  assert.match(body("keep_party_native_identity"), /TG_TABLE_NAME = 'customer' AND OLD.enabled AND NOT NEW.enabled/);
+});

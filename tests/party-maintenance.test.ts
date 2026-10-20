@@ -14,7 +14,7 @@ test("SYNTHETIC party: complete separate create/edit/disable/restore lifecycle a
   const first = await service.execute(create()); const supplier = await service.execute(create("SUPPLIER", "supplier"));
   assert.notEqual(first.partyId, supplier.partyId); assert.equal(f.customers().length, 1); assert.equal(f.suppliers().length, 1);
   assert.equal(f.customers()[0]!.name, f.suppliers()[0]!.name);
-  await service.execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey: "edit", id: first.partyId, expectedVersion: version(1), name: "SYNTHETIC CHANGED" });
+  await service.execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey: "edit", id: first.partyId, expectedVersion: version(1), enabled: true, name: "SYNTHETIC CHANGED" });
   assert.deepEqual(f.audits()[2]!.before, { version: 1, name: "SYNTHETIC SAME NAME" }); assert.deepEqual(f.audits()[2]!.after, { version: 2, name: "SYNTHETIC CHANGED" });
   const disabled = await service.execute({ actor: partyActor, kind: "CUSTOMER", action: "DISABLE", requestKey: "disable", id: first.partyId, expectedVersion: version(2) });
   assert.equal(disabled.enabled, false); assert.equal(disabled.code, first.code);
@@ -44,14 +44,14 @@ test("SYNTHETIC party: enabled-hall default blocks disable, not harmless edit, a
   const f = partyFixture(); const service = createPartyMaintenanceService(f.dependencies); const first = await service.execute(create()); f.defaults.add(first.partyId);
   await assert.rejects(service.execute({ actor: partyActor, kind: "CUSTOMER", action: "DISABLE", requestKey: "blocked", id: first.partyId, expectedVersion: version(1) }), error("CUSTOMER_DEFAULT_IN_USE"));
   assert.equal(f.receipts().length, 1); assert.equal(f.audits().length, 1);
-  await service.execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey: "rename", id: first.partyId, expectedVersion: version(1), name: "RENAMED" });
+  await service.execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey: "rename", id: first.partyId, expectedVersion: version(1), enabled: true, name: "RENAMED" });
   f.defaults.clear(); await service.execute({ actor: partyActor, kind: "CUSTOMER", action: "DISABLE", requestKey: "disabled", id: first.partyId, expectedVersion: version(2) });
   assert.equal(f.customers().length, 1); assert.equal(f.customers()[0]!.id, first.partyId);
 });
 test("SYNTHETIC party: CAS rejects concurrent different operations while duplicate requests converge", async () => {
   const f = partyFixture(); const service = createPartyMaintenanceService(f.dependencies);
   const [a, b] = await Promise.all([service.execute(create()), service.execute(create())]); assert.deepEqual(a, b); assert.equal(f.customers().length, 1);
-  const outcomes = await Promise.allSettled(["one", "two"].map(requestKey => service.execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey, id: a.partyId, expectedVersion: version(1), name: requestKey })));
+  const outcomes = await Promise.allSettled(["one", "two"].map(requestKey => service.execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey, id: a.partyId, expectedVersion: version(1), enabled: true, name: requestKey })));
   assert.equal(outcomes.filter(row => row.status === "fulfilled").length, 1); assert.equal(f.customers()[0]!.version, 2);
 });
 test("SYNTHETIC party: transaction failures roll back native row/audit/receipt together", async () => {
@@ -65,7 +65,7 @@ test("SYNTHETIC party: historical original code and unknown creation time remain
   const f = partyFixture(); const id = partyId("customer", 12);
   f.seedCustomer({ id, code: " 000123-old ", name: "OLD", enabled: true, version: version(7), createdAt: null, updatedAt: null });
   const service = createPartyMaintenanceService(f.dependencies);
-  await service.execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey: "old", id, expectedVersion: version(7), name: "NEW" });
+  await service.execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey: "old", id, expectedVersion: version(7), enabled: true, name: "NEW" });
   assert.equal(f.customers()[0]!.code, " 000123-old "); assert.equal(f.customers()[0]!.createdAt, null);
   assert.ok(!Object.hasOwn(f.audits()[0]!.after, "code"));
 });
@@ -94,4 +94,50 @@ test("SYNTHETIC party: no absent implicit providers, guessed code, hidden fields
   for (const input of [{ ...query, page: "1" }, { ...query, page: 0 }, { ...query, pageSize: 10 }, { ...query, enabled: true }, { ...query, usage: "supplier" }]) assert.throws(() => parsePartySearch(input, false));
   const f = partyFixture(); const service = createPartyMaintenanceService({ ...f.dependencies, codes: { async allocateCustomerCode() { return ""; }, async allocateSupplierCode() { return ""; } } });
   await assert.rejects(service.execute(create()), error("INVALID_ALLOCATED_CODE")); assert.equal(f.customers().length, 0);
+});
+
+test("SYNTHETIC atomic party EDIT: name and enabled change together under one version, audit and original replay", async () => {
+  for (const kind of ["CUSTOMER", "SUPPLIER"] as const) {
+    const f = partyFixture(); const service = createPartyMaintenanceService(f.dependencies); const first = await service.execute(create(kind));
+    const command = { actor: partyActor, kind, action: "EDIT" as const, requestKey: "combined", id: first.partyId, expectedVersion: version(1), name: "SYNTHETIC ATOMIC NAME", enabled: false };
+    const result = await service.execute(command); assert.equal(result.version, 2); assert.equal(result.enabled, false); assert.equal(result.code, first.code);
+    const rows = kind === "CUSTOMER" ? f.customers() : f.suppliers(); assert.equal(rows[0]!.name, command.name); assert.equal(rows[0]!.enabled, false); assert.equal(rows[0]!.version, 2);
+    assert.equal(f.receipts().length, 2); assert.equal(f.audits().length, 2); assert.equal(f.receipts()[1]!.action, "EDIT");
+    assert.deepEqual(f.audits()[1]!.before, { version: 1, name: "SYNTHETIC SAME NAME", enabled: true });
+    assert.deepEqual(f.audits()[1]!.after, { version: 2, name: command.name, enabled: false });
+    assert.deepEqual(await service.execute(command), result); assert.equal(f.audits().length, 2);
+    await assert.rejects(service.execute({ ...command, enabled: true }), error("IDEMPOTENCY_CONFLICT"));
+  }
+});
+test("SYNTHETIC atomic party EDIT: enabled-hall default blocks the entire rename and disable with no transient write", async () => {
+  const f = partyFixture(); const service = createPartyMaintenanceService(f.dependencies); const first = await service.execute(create());
+  const before = f.customers(); f.defaults.add(first.partyId);
+  const command = { actor: partyActor, kind: "CUSTOMER" as const, action: "EDIT" as const, requestKey: "guarded-combined", id: first.partyId, expectedVersion: version(1), name: "MUST NOT BE WRITTEN", enabled: false };
+  await assert.rejects(service.execute(command), error("CUSTOMER_DEFAULT_IN_USE"));
+  assert.deepEqual(f.customers(), before); assert.equal(f.audits().length, 1); assert.equal(f.receipts().length, 1);
+  f.defaults.clear(); const result = await service.execute(command); assert.equal(result.version, 2); assert.equal(f.customers()[0]!.name, command.name);
+});
+test("SYNTHETIC atomic party EDIT: state-only and rename-only work; both unchanged is a no-op rejection", async () => {
+  const f = partyFixture(); const service = createPartyMaintenanceService(f.dependencies); const first = await service.execute(create());
+  const command = { actor: partyActor, kind: "CUSTOMER" as const, action: "EDIT" as const, requestKey: "noop", id: first.partyId, expectedVersion: version(1), name: "SYNTHETIC SAME NAME", enabled: true };
+  await assert.rejects(service.execute(command), error("NO_PARTY_CHANGE")); assert.equal(f.receipts().length, 1);
+  await service.execute({ ...command, requestKey: "state-only", enabled: false });
+  assert.deepEqual(f.audits()[1]!.after, { version: 2, enabled: false });
+  await service.execute({ ...command, requestKey: "rename-disabled", expectedVersion: version(2), enabled: false, name: "RENAMED WHILE DISABLED" });
+  assert.deepEqual(f.audits()[2]!.after, { version: 3, name: "RENAMED WHILE DISABLED" }); assert.equal(f.customers()[0]!.enabled, false);
+});
+test("SYNTHETIC atomic party EDIT: concurrent CAS never mixes name and enabled from competing proposals", async () => {
+  const f = partyFixture(); const service = createPartyMaintenanceService(f.dependencies); const first = await service.execute(create());
+  const commands = [{ name: "PAIR-OFF", enabled: false }, { name: "PAIR-ON", enabled: true }].map((values, i) => ({ actor: partyActor, kind: "CUSTOMER" as const, action: "EDIT" as const, requestKey: `pair-${i}`, id: first.partyId, expectedVersion: version(1), ...values }));
+  const results = await Promise.allSettled(commands.map(command => service.execute(command))); const winner = results.findIndex(result => result.status === "fulfilled");
+  assert.equal(results.filter(result => result.status === "fulfilled").length, 1); const loser = results.find(result => result.status === "rejected"); assert.ok(loser && loser.reason.code === "VERSION_CONFLICT");
+  const current = f.customers()[0]!; assert.equal(current.name, commands[winner]!.name); assert.equal(current.enabled, commands[winner]!.enabled); assert.equal(current.version, 2);
+  assert.equal(f.audits().length, 2); assert.equal(f.receipts().length, 2);
+});
+test("SYNTHETIC atomic party EDIT: late audit or receipt failure rolls both proposed fields back", async () => {
+  for (const at of ["AUDIT", "RECEIPT"] as const) {
+    const f = partyFixture(); const service = createPartyMaintenanceService(f.dependencies); const first = await service.execute(create()); const before = f.customers(); f.fail(at);
+    await assert.rejects(service.execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey: "rollback-pair", id: first.partyId, expectedVersion: version(1), name: "ROLL BACK NAME", enabled: false }), /SYNTHETIC/);
+    assert.deepEqual(f.customers(), before); assert.equal(f.audits().length, 1); assert.equal(f.receipts().length, 1);
+  }
 });

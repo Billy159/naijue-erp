@@ -4,6 +4,7 @@ apps/api/src/party-authentication.ts: OK
 apps/api/src/party-maintenance-http.test.ts: OK
 apps/api/src/party-maintenance-http.ts: OK
 docs/party-maintenance.md: OK
+evidence/party-atomic-edit-scope.md: OK
 packages/application/src/party-maintenance-policy.ts: OK
 packages/application/src/party-maintenance-ports.ts: OK
 packages/application/src/party-maintenance-service.ts: OK

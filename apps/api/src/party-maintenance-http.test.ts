@@ -22,7 +22,7 @@ test("SYNTHETIC party HTTP: separate route lifecycle, original replay and minima
   const f = await setup(t); assert.equal(f.app.server.listening, false);
   const saved = await f.post(create); assert.equal(saved.statusCode, 200, saved.body); const first = saved.json();
   const supplier = await f.post({ ...create, requestKey: "supplier" }, "suppliers"); assert.equal(supplier.statusCode, 200); assert.equal(supplier.json().kind, "SUPPLIER");
-  assert.equal((await f.post({ action: "EDIT", requestKey: "edit", id: first.partyId, expectedVersion: 1, name: "CHANGED" })).statusCode, 200);
+  assert.equal((await f.post({ action: "EDIT", requestKey: "edit", id: first.partyId, expectedVersion: 1, enabled: true, name: "CHANGED" })).statusCode, 200);
   assert.equal((await f.post({ action: "DISABLE", requestKey: "disable", id: first.partyId, expectedVersion: 2 })).statusCode, 200);
   assert.equal((await f.post({ action: "RESTORE", requestKey: "restore", id: first.partyId, expectedVersion: 3 })).statusCode, 200);
   assert.deepEqual((await f.post(create)).json(), first);
@@ -60,9 +60,9 @@ test("SYNTHETIC party HTTP: strict pagination rejects repeated/unknown/coerced/d
 test("SYNTHETIC party HTTP: versions, default-customer dependencies and cross-kind request keys are conflicts", async t => {
   const f = await setup(t); const first = (await f.post(create)).json(); f.defaults.add(first.partyId);
   assert.equal((await f.post({ action: "DISABLE", requestKey: "blocked", id: first.partyId, expectedVersion: 1 })).json().error.code, "CUSTOMER_DEFAULT_IN_USE");
-  assert.equal((await f.post({ action: "EDIT", requestKey: "stale", id: first.partyId, expectedVersion: 2, name: "NEW" })).json().error.code, "VERSION_CONFLICT");
+  assert.equal((await f.post({ action: "EDIT", requestKey: "stale", id: first.partyId, expectedVersion: 2, enabled: true, name: "NEW" })).json().error.code, "VERSION_CONFLICT");
   assert.equal((await f.post(create, "suppliers")).json().error.code, "IDEMPOTENCY_CONFLICT");
-  assert.equal((await f.post({ action: "EDIT", requestKey: "readonly", id: first.partyId, expectedVersion: 1, name: "NEW", code: "CHANGED" })).statusCode, 400);
+  assert.equal((await f.post({ action: "EDIT", requestKey: "readonly", id: first.partyId, expectedVersion: 1, enabled: true, name: "NEW", code: "CHANGED" })).statusCode, 400);
   assert.equal(f.receipts().length, 1);
 });
 test("SYNTHETIC party HTTP: provider failures and invalid trusted actors never leak internals", async t => {
@@ -96,4 +96,25 @@ test("SYNTHETIC approved party HTTP: technical code exhaustion is explicit and d
   } } })); t.after(() => app.close()); await app.ready();
   const result = await app.inject({ method: "POST", url: "/customers/commands", headers: { "content-type": "application/json" }, payload: JSON.stringify(create) });
   assert.equal(result.statusCode, 409); assert.equal(result.json().error.code, "PARTY_CODE_EXHAUSTED"); assert.doesNotMatch(result.body, /PRIVATE STORAGE/); assert.equal(f.customers().length, 0); assert.equal(f.receipts().length, 0);
+});
+
+test("SYNTHETIC atomic party HTTP: EDIT requires name plus boolean enabled and saves/replays the pair once", async t => {
+  const f = await setup(t); const first = (await f.post(create)).json();
+  const command = { action: "EDIT", requestKey: "pair", id: first.partyId, expectedVersion: 1, name: "ATOMIC HTTP NAME", enabled: false };
+  const { enabled: _enabled, ...nameOnly } = command; assert.equal((await f.post(nameOnly)).statusCode, 400);
+  for (const enabled of ["false", 0, null]) assert.equal((await f.post({ ...command, enabled })).statusCode, 400);
+  const saved = await f.post(command); assert.equal(saved.statusCode, 200, saved.body); assert.equal(saved.json().version, 2); assert.equal(saved.json().enabled, false);
+  const detail = (await f.app.inject(`/customers/${first.partyId}`)).json(); assert.equal(detail.name, command.name); assert.equal(detail.enabled, false); assert.equal(detail.version, 2);
+  assert.deepEqual((await f.post(command)).json(), saved.json()); assert.equal(f.receipts().length, 2); assert.equal(f.audits().length, 2);
+  assert.equal((await f.post({ ...command, enabled: true })).json().error.code, "IDEMPOTENCY_CONFLICT");
+  assert.equal((await f.post({ ...command, requestKey: "stale-pair", name: "OTHER", enabled: true })).json().error.code, "VERSION_CONFLICT");
+});
+test("SYNTHETIC atomic party HTTP: default-customer dependency rejects both edits and status-only save remains atomic", async t => {
+  const f = await setup(t); const first = (await f.post(create)).json(); const before = f.customers(); f.defaults.add(first.partyId);
+  const blocked = await f.post({ action: "EDIT", requestKey: "blocked-pair", id: first.partyId, expectedVersion: 1, name: "NOT WRITTEN", enabled: false });
+  assert.equal(blocked.statusCode, 409); assert.equal(blocked.json().error.code, "CUSTOMER_DEFAULT_IN_USE"); assert.deepEqual(f.customers(), before); assert.equal(f.receipts().length, 1);
+  f.defaults.clear(); const statusOnly = await f.post({ action: "EDIT", requestKey: "state-only", id: first.partyId, expectedVersion: 1, name: create.name, enabled: false });
+  assert.equal(statusOnly.statusCode, 200); assert.equal(statusOnly.json().version, 2);
+  const noop = await f.post({ action: "EDIT", requestKey: "noop", id: first.partyId, expectedVersion: 2, name: create.name, enabled: false });
+  assert.equal(noop.statusCode, 409); assert.equal(noop.json().error.code, "NO_PARTY_CHANGE"); assert.equal(f.receipts().length, 2);
 });

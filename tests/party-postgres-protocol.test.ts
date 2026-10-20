@@ -44,7 +44,7 @@ test("SYNTHETIC party pg protocol: global actor/key conflicts with SALES or othe
 });
 test("SYNTHETIC party pg protocol: native edit locks row, preserves original code/null time and CAS uses old version", async () => {
   const f = protocol(sql => sql.includes("FROM naijue_erp.customer WHERE id") ? { rows: [native], rowCount: 1 } : noRows);
-  await createPartyMaintenanceService(dependencies(f.store)).execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey: "edit", id: native.id, expectedVersion: version(7), name: "SYNTHETIC RENAMED" });
+  await createPartyMaintenanceService(dependencies(f.store)).execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey: "edit", id: native.id, expectedVersion: version(7), enabled: true, name: "SYNTHETIC RENAMED" });
   const select = f.calls.find(call => call.sql.includes("FROM naijue_erp.customer WHERE id"))!; assert.match(select.sql, /FOR UPDATE/);
   const update = f.calls.find(call => call.sql.startsWith("UPDATE naijue_erp.customer"))!;
   assert.match(update.sql, /WHERE id = \$1 AND version = \$8 AND code = \$2/); assert.doesNotMatch(update.sql, /SET code/);
@@ -54,7 +54,7 @@ test("SYNTHETIC party pg protocol: native edit locks row, preserves original cod
 });
 test("SYNTHETIC party pg protocol: zero-row CAS rolls back without audit or receipt", async () => {
   const f = protocol(sql => sql.includes("FROM naijue_erp.customer WHERE id") ? { rows: [native], rowCount: 1 } : sql.startsWith("UPDATE") ? { rows: [], rowCount: 0 } : noRows);
-  await assert.rejects(createPartyMaintenanceService(dependencies(f.store)).execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey: "stale", id: native.id, expectedVersion: version(7), name: "SYNTHETIC CHANGED" }), (error: unknown) => (error as { code: string }).code === "VERSION_CONFLICT");
+  await assert.rejects(createPartyMaintenanceService(dependencies(f.store)).execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey: "stale", id: native.id, expectedVersion: version(7), enabled: true, name: "SYNTHETIC CHANGED" }), (error: unknown) => (error as { code: string }).code === "VERSION_CONFLICT");
   assert.equal(f.calls.at(-1)!.sql, "ROLLBACK"); assert.ok(!f.calls.some(call => call.sql.startsWith("INSERT")));
 });
 test("SYNTHETIC party pg protocol: trusted enabled-hall default check blocks mutation", async () => {
@@ -81,4 +81,20 @@ test("SYNTHETIC party pg protocol: rollback failure aggregates and discards, esc
   await assert.rejects(f.store.transaction(async () => { throw new Error("SYNTHETIC COMMAND FAILURE"); }), AggregateError); assert.ok(f.releases[0] instanceof Error);
   const clean = protocol(); let escaped: PartyTransaction | undefined; await clean.store.transaction(async tx => { escaped = tx; }); const count = clean.calls.length;
   await assert.rejects(escaped!.getCustomer(native.id), (error: unknown) => (error as { code: string }).code === "TRANSACTION_CLOSED"); assert.equal(clean.calls.length, count);
+});
+
+test("SYNTHETIC atomic party pg protocol: combined EDIT is one guarded native CAS with one sparse audit and receipt", async () => {
+  const f = protocol(sql => sql.includes("FROM naijue_erp.customer WHERE id") ? { rows: [native], rowCount: 1 } : sql.includes("SELECT EXISTS") ? { rows: [{ used: false }], rowCount: 1 } : noRows);
+  const result = await createPartyMaintenanceService(dependencies(f.store)).execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey: "atomic-pair", id: native.id, expectedVersion: version(7), name: "ATOMIC NAME", enabled: false });
+  assert.equal(result.version, 8); assert.equal(result.enabled, false);
+  const writes = f.calls.filter(call => call.sql.startsWith("UPDATE naijue_erp.customer")); assert.equal(writes.length, 1); assert.equal(writes[0]!.parameters[2], "ATOMIC NAME"); assert.equal(writes[0]!.parameters[3], false); assert.equal(writes[0]!.parameters[7], 7);
+  const guardIndex = f.calls.findIndex(call => call.sql.includes("SELECT EXISTS")); const updateIndex = f.calls.indexOf(writes[0]!); assert.ok(guardIndex >= 0 && guardIndex < updateIndex);
+  const audit = f.calls.find(call => call.sql.startsWith("INSERT INTO naijue_erp.audit_change"))!; assert.equal(audit.parameters[5], "EDIT");
+  assert.deepEqual(JSON.parse(audit.parameters[8] as string), { version: 7, name: native.name, enabled: true }); assert.deepEqual(JSON.parse(audit.parameters[9] as string), { version: 8, name: "ATOMIC NAME", enabled: false });
+  assert.equal(f.calls.filter(call => call.sql.startsWith("INSERT INTO naijue_erp.operation_receipt")).length, 1); assert.equal(f.calls.at(-1)!.sql, "COMMIT");
+});
+test("SYNTHETIC atomic party pg protocol: dependency rejection precedes all rename/state/audit/receipt writes", async () => {
+  const f = protocol(sql => sql.includes("FROM naijue_erp.customer WHERE id") ? { rows: [native], rowCount: 1 } : sql.includes("SELECT EXISTS") ? { rows: [{ used: true }], rowCount: 1 } : noRows);
+  await assert.rejects(createPartyMaintenanceService(dependencies(f.store)).execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey: "blocked-pair", id: native.id, expectedVersion: version(7), name: "NOT WRITTEN", enabled: false }), (error: unknown) => (error as { code: string }).code === "CUSTOMER_DEFAULT_IN_USE");
+  assert.ok(!f.calls.some(call => call.sql.startsWith("UPDATE") || call.sql.startsWith("INSERT"))); assert.equal(f.calls.at(-1)!.sql, "ROLLBACK");
 });

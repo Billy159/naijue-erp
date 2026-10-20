@@ -11,7 +11,7 @@ export interface SupplierRecord { readonly id: EntityId<"supplier">; readonly co
 export type PartyRecord = CustomerRecord | SupplierRecord;
 export type PartyCommand = { readonly kind: PartyKind; readonly actor: PartyActor; readonly requestKey: string } & (
   { readonly action: "CREATE"; readonly name: string }
-  | { readonly action: "EDIT"; readonly id: string; readonly expectedVersion: Version; readonly name: string }
+  | { readonly action: "EDIT"; readonly id: string; readonly expectedVersion: Version; readonly name: string; readonly enabled: boolean }
   | { readonly action: "DISABLE" | "RESTORE"; readonly id: string; readonly expectedVersion: Version }
 );
 export interface PartyResult { readonly operationId: EntityId<"operation">; readonly kind: PartyKind; readonly partyId: string; readonly version: Version; readonly code: string; readonly enabled: boolean }

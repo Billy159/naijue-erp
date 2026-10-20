@@ -46,14 +46,16 @@ export function createPartyMaintenanceService(dependencies: PartyDependencies) {
         requireDomain(previous, "PARTY_NOT_FOUND", "Party is unavailable");
         requireDomain(previous.version === command.expectedVersion, "VERSION_CONFLICT", "Expected version does not match");
         requireDomain(previous.version < 2147483647, "VERSION_STORAGE_OVERFLOW", "Version storage exhausted");
-        if (command.action === "EDIT") requireDomain(command.name !== previous.name, "NO_PARTY_CHANGE", "No name change supplied");
+        if (command.action === "EDIT") requireDomain(command.name !== previous.name || command.enabled !== previous.enabled, "NO_PARTY_CHANGE", "No name or enabled-state change supplied");
         if (command.action === "DISABLE") {
           requireDomain(previous.enabled, "INVALID_PARTY_STATE", "Party is already disabled");
-          if (kind === "CUSTOMER") requireDomain(!(await tx.customerIsEnabledHallDefault(entityId("customer", previous.id))), "CUSTOMER_DEFAULT_IN_USE", "An enabled hall still uses this default customer");
         }
         if (command.action === "RESTORE") requireDomain(!previous.enabled, "INVALID_PARTY_STATE", "Party is already enabled");
-        next = { ...previous, name: command.action === "EDIT" ? command.name : previous.name,
-          enabled: command.action === "DISABLE" ? false : command.action === "RESTORE" ? true : previous.enabled,
+        const enabled = command.action === "EDIT" ? command.enabled : command.action === "DISABLE" ? false : command.action === "RESTORE" ? true : previous.enabled;
+        // The modal may atomically rename and disable: check the proposed transition,
+        // never only the dedicated DISABLE action, before any native write.
+        if (kind === "CUSTOMER" && previous.enabled && !enabled) requireDomain(!(await tx.customerIsEnabledHallDefault(entityId("customer", previous.id))), "CUSTOMER_DEFAULT_IN_USE", "An enabled hall still uses this default customer");
+        next = { ...previous, name: command.action === "EDIT" ? command.name : previous.name, enabled,
           version: nextVersion(previous.version), updatedAt: timestamp };
       }
       if (kind === "CUSTOMER") await tx.putCustomer(next as CustomerRecord); else await tx.putSupplier(next as SupplierRecord);

@@ -26,12 +26,15 @@ export function parsePartyCommand(input: unknown, actor: PartyActor, kind: Party
   if (!input || typeof input !== "object" || Array.isArray(input)) invalid();
   const action = (input as Record<string, unknown>).action;
   if (!["CREATE", "EDIT", "DISABLE", "RESTORE"].includes(action as string)) invalid();
-  const keys = action === "CREATE" ? ["action", "requestKey", "name"] : action === "EDIT" ? ["action", "requestKey", "id", "expectedVersion", "name"] : ["action", "requestKey", "id", "expectedVersion"];
+  const keys = action === "CREATE" ? ["action", "requestKey", "name"] : action === "EDIT" ? ["action", "requestKey", "id", "expectedVersion", "name", "enabled"] : ["action", "requestKey", "id", "expectedVersion"];
   const row = partyObject(input, keys); const requestKey = partyRequestKey(row.requestKey);
   if (action === "CREATE") return { kind, actor, action, requestKey, name: partyName(row.name) };
   if (typeof row.id !== "string" || typeof row.expectedVersion !== "number" || row.expectedVersion > 2147483647) invalid();
   const id = entityId(kind === "CUSTOMER" ? "customer" : "supplier", row.id); const expectedVersion = version(row.expectedVersion);
-  if (action === "EDIT") return { kind, actor, action, requestKey, id, expectedVersion, name: partyName(row.name) };
+  if (action === "EDIT") {
+    if (typeof row.enabled !== "boolean") invalid();
+    return { kind, actor, action, requestKey, id, expectedVersion, name: partyName(row.name), enabled: row.enabled };
+  }
   return { kind, actor, action: action as "DISABLE" | "RESTORE", requestKey, id, expectedVersion };
 }
 export function parsePartySearch(input: unknown, candidates: boolean, wire = false): PartySearch {

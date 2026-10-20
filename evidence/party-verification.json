@@ -1,11 +1,66 @@
 {
-  "scope": "Separate customer/supplier maintenance backend and user-approved independent KH/GYS numbering; additive unexecuted 0006 source",
-  "targetedTests": { "passed": 44, "failed": 0, "previousMaintenanceTestsPreserved": 33, "application": 10, "httpAndSession": 9, "postgresProtocol": 9, "numberingPureAndApplication": 4, "numberingPostgresProtocol": 4, "sqlTextContracts": 8, "log": "evidence/party-targeted-check.log" },
-  "scopedTypecheck": { "exitCode": 0, "command": "./node_modules/.bin/tsc --noEmit -p evidence/party-typecheck.json", "log": "evidence/party-scoped-typecheck.log" },
-  "wholeProjectTypecheck": { "exitCode": 0, "command": "./node_modules/.bin/tsc --noEmit -p tsconfig.json", "log": "evidence/party-typecheck.log" },
+  "scope": "Separate customer/supplier backend with exact atomic EDIT{name,enabled} and unchanged approved independent KH/GYS numbering; additive unexecuted 0006 source",
+  "targetedTests": {
+    "passed": 54,
+    "failed": 0,
+    "application": 15,
+    "httpAndSession": 11,
+    "postgresProtocol": 11,
+    "numberingPureAndApplication": 4,
+    "numberingPostgresProtocol": 4,
+    "sqlTextContracts": 9,
+    "command": "node --test --test-concurrency=2 tests/party-*.test.ts apps/api/src/party-maintenance-http.test.ts",
+    "log": "evidence/party-targeted-check.log"
+  },
+  "scopedTypecheck": {
+    "exitCode": 0,
+    "command": "./node_modules/.bin/tsc --noEmit -p evidence/party-typecheck.json",
+    "log": "evidence/party-scoped-typecheck.log"
+  },
+  "wholeProjectTypecheck": {
+    "status": "Not rerun for atomic-edit delta; prior whole-project check was clean before this delta",
+    "priorLog": "evidence/party-typecheck.log"
+  },
   "sourceManifest": "evidence/party-source-sha256.txt",
-  "sourceHashVerification": "All 17 source/deliverable files matched; evidence/party-hash-check.log",
-  "allocation": { "customer": "KH000001 onward", "supplier": "GYS000001 onward", "independent": true, "minimumDigits": 6, "originalCodesUnchanged": true, "existingNumericPrefixCodesAdvanceCounter": true, "technicalMaximum": "9223372036854775807", "overflow": "Explicit PARTY_CODE_EXHAUSTED; never wraps", "rollbackGapsAllowed": true, "hostFactory": "createApprovedPartyCodeAllocator in packages/application/src/party-numbering.ts" },
-  "notPerformed": ["database connection", "migration execution", "account creation", "credential creation", "server start", "local Mac access", "install", "commit", "push", "deploy"],
-  "evidenceLimit": "Synthetic/protocol/SQL-text only, not PostgreSQL engine evidence. Prior review was pre-allocator; focused recheck is required."
+  "sourceHashVerification": "All 18 source/deliverable files matched; evidence/party-hash-check.log",
+  "allocation": {
+    "customer": "KH000001 onward",
+    "supplier": "GYS000001 onward",
+    "independent": true,
+    "minimumDigits": 6,
+    "originalCodesUnchanged": true,
+    "existingNumericPrefixCodesAdvanceCounter": true,
+    "technicalMaximum": "9223372036854775807",
+    "overflow": "Explicit PARTY_CODE_EXHAUSTED; never wraps",
+    "rollbackGapsAllowed": true,
+    "hostFactory": "createApprovedPartyCodeAllocator in packages/application/src/party-numbering.ts"
+  },
+  "notPerformed": [
+    "database connection",
+    "migration execution",
+    "account creation",
+    "credential creation",
+    "server start",
+    "local Mac access",
+    "install",
+    "commit",
+    "push",
+    "deploy"
+  ],
+  "evidenceLimit": "Synthetic/protocol/SQL-text only, not PostgreSQL engine evidence. Earlier narrower edit review is superseded by the atomic-edit scope; focused independent recheck is required. 0006 has not run and real-PG harness remains pinned to 0001–0005.",
+  "atomicEdit": {
+    "requiredKeys": [
+      "action",
+      "requestKey",
+      "id",
+      "expectedVersion",
+      "name",
+      "enabled"
+    ],
+    "enabledType": "boolean",
+    "atomicWrites": "one native CAS/version, one sparse audit, one receipt",
+    "noOp": "NO_PARTY_CHANGE if name and enabled both unchanged",
+    "disableGuard": "Every CUSTOMER true-to-false transition, including combined rename+disable",
+    "sourceAndSupersession": "evidence/party-atomic-edit-scope.md"
+  }
 }

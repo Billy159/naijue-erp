@@ -6,7 +6,7 @@ Customer and supplier remain physically independent native tables from migration
 
 The implementation adds:
 
-- Create, rename, disable and restore with native version compare-and-swap.
+- Create, atomically edit name and enabled status, disable and restore with native version compare-and-swap.
 - Server-assigned new IDs/codes; no code input on create and no code field in edit.
 - Original existing code and original nullable creation timestamp are preserved verbatim.
 - Bounded independent name/code substring search and 20/50/100 pagination.
@@ -24,12 +24,14 @@ Register createPartyMaintenanceHttpPlugin with explicit dependencies and an auth
 Two explicit families: /customers and /suppliers.
 
 - POST /{family}/commands: action CREATE, requestKey and name.
-- POST /{family}/commands: action EDIT, requestKey, id, expectedVersion and name.
+- POST /{family}/commands: action EDIT, requestKey, id, expectedVersion, name and enabled (required boolean). This is one atomic form save, not rename followed by a status request.
 - POST /{family}/commands: action DISABLE or RESTORE, requestKey, id and expectedVersion.
 - GET /{family}?search=&enabled=ALL&page=1&pageSize=20. All four fields are required; enabled is ALL, ENABLED or DISABLED.
 - GET /{family}/candidates?search=&page=1&pageSize=20. It cannot request disabled or all candidates.
 - GET /{family}/{id} for authorized maintenance detail.
 - GET /{family}/receipts/{requestKey} for the authenticated account's reauthorized original receipt.
+
+EDIT accepts rename-only, state-only or combined changes while requiring both proposed fields. It advances version once and emits one receipt/audit. If both values are unchanged it returns NO_PARTY_CHANGE without writing. Any customer transition from enabled to disabled checks the enabled-hall default dependency before writing either field. DISABLE/RESTORE remain separate explicit API actions; they do not imply new UI row controls or a fallback multi-request form save.
 
 Command and query key sets are exact. Unknown fields including code, usage, tags, actor and kind are rejected rather than stripped. Versions and page values must be canonical integers; duplicate query fields are rejected. Request keys are preserved exactly. POST bodies require application/json and have an 8192-byte bound. Errors do not echo authentication, policy, SQL or provider details. Responses are no-store.
 
@@ -53,4 +55,10 @@ Test-only SYNTHETIC-* allocators remain explicit fixtures, not production wiring
 
 0006_party_maintenance.sql is additive source, extending existing 0001/0004 contracts. It has not been applied or connected to any database. No business seeds, legacy import, account creation, credential creation, server start, install, push or deployment occurred.
 
-44 focused checks cover application lifecycle/rollback/replay/policies, synthetic non-listening HTTP/session handling, injected pg-protocol behavior and SQL-text contracts. These are not PostgreSQL-engine constraint, trigger, isolation or race evidence. An authorized disposable-engine test remains necessary before production use, alongside explicit approved allocator wiring, runtime grants and host route composition.
+54 focused checks cover application lifecycle/rollback/replay/policies, synthetic non-listening HTTP/session handling, injected pg-protocol behavior and SQL-text contracts. These are not PostgreSQL-engine constraint, trigger, isolation or race evidence. An authorized disposable-engine test remains necessary before production use, alongside explicit approved allocator wiring, runtime grants and host route composition.
+
+## Atomic edit evidence supersedes the narrower draft
+
+The frozen Demo basic-settings-v2.jsx Fields implementation (lines 74–100) includes name and the edit-only enabled switch in one form. Its save handler (lines 164–167) clones the form and makes one M.save call. The earlier unreleased name-only EDIT restriction was an implementation choice, not a user business rule. It is replaced by the exact required name+enabled command above, without a name-only compatibility default.
+
+Earlier maintenance/numbering reviews cover their then-frozen source and do not establish this amended edit contract or native audit transition. The new atomic-edit scope/evidence and source manifest supersede that narrower edit evidence; numbering and normalization policies are unchanged. Migration 0006 remains SQL source only and has not run. The separate real-PostgreSQL harness still pins migrations 0001–0005, so none of these checks constitutes 0006 engine evidence.
