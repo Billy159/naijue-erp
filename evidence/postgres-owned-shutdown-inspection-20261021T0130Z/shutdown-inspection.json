@@ -1,0 +1,69 @@
+{
+  "status": "UNKNOWN_TERMINAL_CLEAN_SHUTDOWN_UNVERIFIED_AFTER_EXECUTION_CONTEXT_LOSS",
+  "requested_scope": "Only existing owned isolated test instance, existing commandFile stop protocol; no SQL, restart, target creation, deletion, reset, or direct stop command.",
+  "local_probe_timestamp_utc": "2026-10-21T01:30:42.234466+00:00",
+  "session_probe": {
+    "holder_session_id": 99032,
+    "result": "write_stdin failed: Unknown process id 99032"
+  },
+  "identity": {
+    "expected_system_identifier": "7698921673096908826",
+    "observed_control": {
+      "Database system identifier": "7698921673096908826",
+      "Database cluster state": "in production"
+    },
+    "expected_supervisor_sha256": "247cd41d3ef3416082be28ee7a943cf590182d13db1a286395ce5875c1a2743a",
+    "observed_supervisor_sha256": "247cd41d3ef3416082be28ee7a943cf590182d13db1a286395ce5875c1a2743a"
+  },
+  "process_status": {
+    "postmaster_pidfile_present": true,
+    "postmaster_pid": "34",
+    "pidfile_exact_data_path": true,
+    "pidfile_port": "55432",
+    "pidfile_listen_address": "127.0.0.1",
+    "pidfile_ready_status": "ready",
+    "postmaster_pid_present_in_current_proc_namespace": false,
+    "exact_supervisor_process_probe_exit_code": 1,
+    "exact_supervisor_process_pids": [],
+    "pg_ctl_readonly_status_exit_code": 3,
+    "pg_ctl_readonly_status": "pg_ctl: no server running\n"
+  },
+  "protocol": {
+    "command_file": "/workspace/shared/naijue-pg-write-auth-20261021-01/commands.txt",
+    "current_commands": [
+      "run-backend /workspace/shared/erp-pg-source-3dd087b-20261021T0030"
+    ],
+    "verified_existing_stop_semantics": "Exact line stop, appended with newline to existing commands file; supervisor uses pg_ctl -D exact owned data -m fast -w stop.",
+    "command_appended": false
+  },
+  "lifecycle_lines": [
+    "2026-10-21 10:08:13.411 JST [34] LOG:  starting PostgreSQL 17.11 (Debian 17.11-0+deb13u1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "2026-10-21 10:08:13.421 JST [34] LOG:  database system is ready to accept connections"
+  ],
+  "verification_limits": "Process and status checks apply to this execution namespace only. Missing session/PID is not proof against another process namespace. Retained pg_control state is in production, not shut down; no clean or terminal server shutdown is claimed.",
+  "retention": {
+    "data_directory_retained": true,
+    "existing_evidence_retained": true,
+    "no_credentials_inspected_or_written": true,
+    "no_sql_or_new_connection": true,
+    "no_lifecycle_mutation": true
+  },
+  "read_only_file_hashes_before": {
+    "commands": "ea29adc918c7c5afd2711e71edbea07776005776a6935dbd5ff41e48f7618549",
+    "pg_control": "6acbb0b9443ca159136fef33b88d8dd84e03db85064691dbc705b65f19a30e95"
+  },
+  "read_only_file_hashes_after": {
+    "commands": "ea29adc918c7c5afd2711e71edbea07776005776a6935dbd5ff41e48f7618549",
+    "pg_control": "6acbb0b9443ca159136fef33b88d8dd84e03db85064691dbc705b65f19a30e95"
+  },
+  "probed_files_unchanged": true,
+  "stop_command_issued": false,
+  "test_evidence": {
+    "path": "/workspace/shared/naijue-erp-rewrite/evidence/postgres-real-sales-write-authorization-3dd087b",
+    "manifest_sha256": "20eb5b08b316ea7244ab3fc4783c5e7aa8416cae11505a25305d6960fc449e31",
+    "manifest_verification_exit_code": 0,
+    "manifest_verification_result": "README.md: OK\nacceptance-run.json: OK\nacceptance.tap: OK\nactual-coverage.json: OK\nfrozen-source-complete-file-verification.json: OK\nfrozen-source-files.sha256: OK\nfrozen-source-metadata-hashes.json: OK\nfrozen-source-post-run-verification.json: OK\nofficial-package-provenance.json: OK\noperator-lifecycle.json: OK\noriginal-evidence-hashes.json: OK\npost-run-physical-identity.json: OK\npre-start-distribution-verification.json: OK\nreviewed-migrations.json: OK\nstartup-preflight-adjustment.json: OK\ntarget-fingerprint.json: OK\ntested-source-hashes.json: OK\n",
+    "test_evidence_unchanged_and_integrity_valid": true,
+    "interpretation": "Completed test evidence remains valid; lifecycle uncertainty after execution-context loss does not invalidate recorded test results."
+  }
+}
