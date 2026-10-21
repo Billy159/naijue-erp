@@ -1,8 +1,8 @@
 {
-  "status": "Scoped source, synthetic lifecycle, model/protocol and emitted build checks passed. Parent full compiler/build verification is separate and pending in this snapshot.",
+  "status": "Scoped source, synthetic lifecycle, model/protocol, emitted build, full root/web typecheck and TypeScript build checks passed; not genuine PG, real browser or deployment acceptance.",
   "baseCommit": "760c489d3aa5913aab02372940a5ae25b3964688",
-  "sourceStateSha256": "9277a6dabce7e4cb63031f69529e3e1d1d40e7f638f814ed155d91ff2cdcf02c",
-  "sourceManifestSha256": "eeed71c133e7cef9cd55b3e6d917548740491857b263eb6b009d2368c8329f89",
+  "sourceStateSha256": "2f7c61d5d9ce1b8418c99180f24c9d24095ef656ae72f0c5ac40d75f5267d86c",
+  "sourceManifestSha256": "c3e79dc8a8103ab7b96178ebcc0a75d70cc156d919d70808b785ac410f36d7e1",
   "changedSourcePaths": 32,
   "removedObsoleteImplementation": "apps/web/src/sales/reference-selector.tsx",
   "scope": "Six sales filter dimensions now reuse the source-adapted shared transfer TreeSelect action; native positive query arrays, read providers and stored business types are unchanged.",
@@ -77,8 +77,8 @@
     "explicitNativeFilterIdsLimit": 1000,
     "candidateReads": "Only winning popup open, debounced search, explicit retry and explicit bottom scroll; no eager full catalog or per-selected-ID hydration.",
     "completeUniverse": "Only one unsearched complete first response, never accumulated pages.",
-    "allMinusIncomplete": "Refused with explicit limitation. A separate deliberate 仅选择该项 action may start a positive subset.",
-    "clear": "Unrestricted ALL and always labelled 全部, not match-none."
+    "allMinusIncomplete": "Refused with explicit limitation. A separate deliberate \u4ec5\u9009\u62e9\u8be5\u9879 action may start a positive subset.",
+    "clear": "Unrestricted ALL and always labelled \u5168\u90e8, not match-none."
   },
   "knownParityLimits": [
     "Incomplete remote all-minus is intentionally not approximated.",
@@ -102,5 +102,6 @@
     "Real authentication/account/catalog/data/production operations",
     "Any package installation, network service startup, push, deployment or commit by worker"
   ],
-  "parentOwnedExistingUntracked": "evidence/native-read-independent-probes.log was not modified or included in this source scope."
+  "parentOwnedExistingUntracked": "evidence/native-read-independent-probes.log was not modified or included in this source scope.",
+  "parentVerification": "root-verification.json"
 }
