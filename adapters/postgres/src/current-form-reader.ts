@@ -1,0 +1,235 @@
+import type { ActorContext } from "../../../packages/application/src/ports.ts";
+import type { CurrentFormAuthorization, CurrentFormContext, CurrentFormIdentity, CurrentFormIntent, CurrentFormPage,
+  CurrentFormProduct, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormReader, CurrentFormReadGrant,
+  CurrentFormSku, CurrentFormSkuBatchQuery, CurrentSalesReferenceItem, CurrentSalesReferenceQuery,
+  CurrentTransferWarehouse, CurrentTransferWarehouseQuery } from "../../../packages/application/src/current-form-ports.ts";
+import { activeCurrentFormRead, checkedCurrentFormActor, checkedCurrentFormGrant, parseCurrentFormProductQuery,
+  parseCurrentFormProductSkuQuery, parseCurrentFormSkuBatchQuery, parseCurrentSalesReferenceQuery,
+  parseCurrentTransferWarehouseQuery } from "../../../packages/application/src/current-form-validation.ts";
+import { DomainError, requireDomain } from "../../../packages/domain/src/errors.ts";
+import { entityId } from "../../../packages/domain/src/values.ts";
+import type { EntityId, EntityKind } from "../../../packages/domain/src/values.ts";
+import type { PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
+import { booleanValue } from "./codec.ts";
+
+type Query = (sql: string, values?: unknown[]) => Promise<PgSalesResult>;
+function denied(): never { throw new DomainError("FORBIDDEN", "Current form is not available to this account"); }
+function id<K extends EntityKind>(kind: K, value: unknown): EntityId<K> {
+  requireDomain(typeof value === "string", "INVALID_DATABASE_VALUE", "Expected native reference identity");
+  return entityId(kind, value);
+}
+function text(value: unknown): string {
+  requireDomain(typeof value === "string" && value.trim().length > 0 && !/[\x00-\x1f\x7f]/.test(value), "INVALID_DATABASE_VALUE", "Expected full native reference text");
+  return value;
+}
+function nullableText(value: unknown): string | null { return value === null ? null : text(value); }
+function price(value: unknown): string | null {
+  requireDomain(value === null || (typeof value === "string" && /^(?:0|[1-9]\d{0,15})\.\d{2}$/.test(value)),
+    "INVALID_DATABASE_VALUE", "Expected nullable exact nonnegative decimal(18,2) product price");
+  return value;
+}
+function count(rows: readonly Record<string, unknown>[]): bigint {
+  requireDomain(rows.length === 1 && typeof rows[0]!.total === "string" && /^(?:0|[1-9]\d*)$/.test(rows[0]!.total),
+    "INVALID_DATABASE_VALUE", "Expected one exact native count");
+  return BigInt(rows[0]!.total);
+}
+function hallPredicate(column: string, grant: CurrentFormReadGrant, values: unknown[]): string {
+  if (grant.kind === "all") return "TRUE";
+  values.push([...grant.hallIds]); return `${column} = ANY($${values.length}::uuid[])`;
+}
+const SKU_JOINS = `FROM naijue_erp.sku s JOIN naijue_erp.product p ON p.id = s.product_id
+  JOIN naijue_erp.color c ON c.id = s.color_id JOIN naijue_erp.fit f ON f.id = s.fit_id
+  JOIN naijue_erp.size sz ON sz.id = s.size_id
+  JOIN naijue_erp.size_group_member m ON m.size_group_id = p.size_group_id AND m.size_id = s.size_id`;
+const SKU_ENABLED = "s.enabled AND p.enabled AND c.enabled AND f.enabled";
+const SKU_COLUMNS = `s.id, s.sku_code, s.product_id, p.product_code, p.name AS product_name,
+  s.color_id, c.name AS color_name, s.fit_id, f.name AS fit_name, s.size_id, sz.name AS size_name,
+  p.size_group_id, m.size_id AS member_size_id, s.enabled AS sku_enabled, p.enabled AS product_enabled,
+  c.enabled AS color_enabled, f.enabled AS fit_enabled`;
+const SKU_ORDER = `p.product_code COLLATE "C", p.id, c.code COLLATE "C", c.id, f.code COLLATE "C", f.id, m.display_order, s.size_id, s.id`;
+function sku(row: Record<string, unknown>): CurrentFormSku {
+  const sizeId = id("size", row.size_id);
+  requireDomain(row.sku_enabled === true && row.product_enabled === true && row.color_enabled === true && row.fit_enabled === true
+    && row.member_size_id === sizeId, "INVALID_DATABASE_VALUE", "Native SKU is not an eligible current four-dimensional fact");
+  return Object.freeze({ id: id("sku", row.id), skuCode: text(row.sku_code), productId: id("product", row.product_id),
+    productCode: text(row.product_code), productName: text(row.product_name), colorId: id("color", row.color_id), colorName: text(row.color_name),
+    fitId: id("fit", row.fit_id), fitName: text(row.fit_name), sizeId, sizeName: text(row.size_name), sizeGroupId: id("sizeGroup", row.size_group_id),
+    barcodeAvailability: "UNAVAILABLE" });
+}
+
+/** Schema-neutral, explicit-host CURRENT proposal reader. Each call rechecks the
+ * native account/staff/hall and explicit host grant in ONE RR READ ONLY snapshot.
+ * No connection on construction, HTTP wiring, policy default, history-derived
+ * catalogue, barcode/minimum fabrication, write authority or cross-request cache.
+ * Signals bound callback work; host-provided pool timeouts bound in-flight pg work. */
+export class PostgresCurrentFormReader implements CurrentFormReader {
+  private readonly pool: PgSalesPool;
+  private readonly authorize: CurrentFormAuthorization["authorize"];
+  constructor(pool: PgSalesPool, authorization: CurrentFormAuthorization) {
+    if (typeof pool?.connect !== "function" || typeof authorization?.authorize !== "function")
+      throw new TypeError("Current forms require an explicit PostgreSQL pool and trusted form authorization provider");
+    this.pool = pool; this.authorize = authorization.authorize.bind(authorization);
+  }
+  private async identity(query: Query, actor: ActorContext): Promise<CurrentFormIdentity> {
+    const rows = (await query(`/* current-form:identity */ SELECT a.id AS account_id, a.staff_id, a.login_enabled,
+      s.role, s.employment_status, s.hall_id, h.id AS native_hall_id, h.enabled AS hall_enabled
+      FROM naijue_erp.user_account a JOIN naijue_erp.staff s ON s.id = a.staff_id
+      LEFT JOIN naijue_erp.hall h ON h.id = s.hall_id WHERE a.id = $1::uuid LIMIT 2`, [actor.accountId])).rows;
+    if (rows.length !== 1) denied(); const row = rows[0]!;
+    if (row.account_id !== actor.accountId || row.login_enabled !== true || row.employment_status !== "在职"
+      || (row.role !== "ADMIN" && row.role !== "WAREHOUSE" && row.role !== "SALESPERSON")) denied();
+    const hallId = row.hall_id === null ? null : id("hall", row.hall_id);
+    if (hallId !== actor.hallId || (row.role === "SALESPERSON" && hallId === null)
+      || (hallId === null && (row.native_hall_id !== null || row.hall_enabled !== null))
+      || (hallId !== null && (row.native_hall_id !== hallId || row.hall_enabled !== true))) denied();
+    return Object.freeze({ accountId: id("account", row.account_id), staffId: id("staff", row.staff_id), role: row.role, hallId });
+  }
+  private async snapshot<T>(actor: ActorContext, intent: CurrentFormIntent, signal: AbortSignal,
+    work: (query: Query, identity: CurrentFormIdentity, grant: CurrentFormReadGrant) => Promise<T>): Promise<T> {
+    const trusted = checkedCurrentFormActor(actor); activeCurrentFormRead(signal);
+    const client = await this.pool.connect(); let began = false; let committing = false; let committed = false; let discard: Error | undefined;
+    const query: Query = async (sql, values = []) => { activeCurrentFormRead(signal); const result = await client.query(sql, values); activeCurrentFormRead(signal); return result; };
+    try {
+      // Mark acknowledged transaction state before checking a cancellation after BEGIN.
+      activeCurrentFormRead(signal); await client.query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true; activeCurrentFormRead(signal);
+      const identity = await this.identity(query, trusted);
+      const grant = checkedCurrentFormGrant(await this.authorize(Object.freeze({ actor: trusted, identity }), Object.freeze(intent), signal));
+      activeCurrentFormRead(signal); const result = await work(query, identity, grant); activeCurrentFormRead(signal); committing = true;
+      await client.query("COMMIT"); committed = true; activeCurrentFormRead(signal); return result;
+    } catch (error) {
+      if (!began || (committing && !committed)) discard = error instanceof Error ? error : new Error("Current form snapshot failed");
+      if (began && !committed) try { await client.query("ROLLBACK"); } catch (rollbackError) {
+        discard = rollbackError instanceof Error ? rollbackError : new Error("Current form rollback failed");
+        throw new AggregateError([error, rollbackError], "Current form read and rollback failed; connection discarded");
+      }
+      throw error;
+    } finally { client.release(discard); }
+  }
+  private async salesHall(query: Query, identity: CurrentFormIdentity, grant: CurrentFormReadGrant, hallId: EntityId<"hall">): Promise<void> {
+    if ((identity.role === "SALESPERSON" && identity.hallId !== hallId) || (grant.kind === "halls" && !grant.hallIds.includes(hallId))) denied();
+    const rows = (await query("/* current-form:sales-hall */ SELECT id, enabled FROM naijue_erp.hall WHERE id = $1::uuid LIMIT 2", [hallId])).rows;
+    if (rows.length !== 1 || rows[0]!.id !== hallId || rows[0]!.enabled !== true) denied();
+  }
+  private async formContext(query: Query, identity: CurrentFormIdentity, grant: CurrentFormReadGrant, context: CurrentFormContext): Promise<void> {
+    if (context.kind === "SALES") await this.salesHall(query, identity, grant, context.hallId);
+    // Shared product/SKU identities have no product-hall ownership. A restricted
+    // grant authorizes use in its halls, never a fictitious product-hall relation.
+  }
+  private async page<T extends { readonly id: string }>(query: Query, parameters: { readonly page: number; readonly pageSize: 20 },
+    from: string, where: string, columns: string, order: string, values: unknown[], decode: (row: Record<string, unknown>) => T, orderValues: unknown[] = []): Promise<CurrentFormPage<T>> {
+    const total = count((await query(`/* current-form:count */ SELECT count(*)::text AS total ${from} WHERE ${where}`, values)).rows);
+    const offset = (parameters.page - 1) * 20; const pageValues = [...values, ...orderValues, 20, offset];
+    const rows = (await query(`/* current-form:page */ SELECT ${columns} ${from} WHERE ${where}
+      ORDER BY ${order} LIMIT $${pageValues.length - 1} OFFSET $${pageValues.length}`, pageValues)).rows;
+    const remaining = total > BigInt(offset) ? total - BigInt(offset) : 0n;
+    requireDomain(rows.length === Number(remaining > 20n ? 20n : remaining), "INVALID_DATABASE_VALUE", "Current form page/count mismatch or overflow");
+    const items = rows.map(decode); requireDomain(new Set(items.map(row => row.id)).size === items.length, "INVALID_DATABASE_VALUE", "Repeated native candidate identity");
+    return Object.freeze({ page: parameters.page, pageSize: 20, exactTotal: total, items: Object.freeze(items) });
+  }
+  readSalesReferences(actor: ActorContext, input: CurrentSalesReferenceQuery, signal: AbortSignal): Promise<CurrentFormPage<CurrentSalesReferenceItem>> {
+    const parameters = parseCurrentSalesReferenceQuery(input);
+    return this.snapshot(actor, { kind: "sales-references", parameters }, signal, async (query, identity, grant) => {
+      if (parameters.hallId !== null) await this.salesHall(query, identity, grant, parameters.hallId);
+      const values: unknown[] = [parameters.search]; const match = (column: string) => `strpos(lower(${column}), lower($1::text)) > 0`;
+      let from: string; let where: string; let columns: string; let order = `r.name COLLATE "C", r.id`;
+      const orderValues: unknown[] = [];
+      switch (parameters.kind) {
+        case "hall": {
+          from = "FROM naijue_erp.hall r";
+          const scope = hallPredicate("r.id", grant, values);
+          let native = "TRUE"; if (identity.role === "SALESPERSON") { values.push(identity.hallId); native = `r.id = $${values.length}::uuid`; }
+          where = `r.enabled AND ${scope} AND ${native} AND ${match("r.name")}`;
+          columns = `r.id, r.name, NULL::text AS code, r.id AS hall_id, r.name AS hall_name, NULL::uuid AS payment_method_id, NULL::text AS payment_method_name`; break;
+        }
+        case "customer":
+          from = "FROM naijue_erp.customer r"; where = `r.enabled AND (${match("r.name")} OR ${match("r.code")})`;
+          columns = `r.id, r.name, r.code, NULL::uuid AS hall_id, NULL::text AS hall_name, NULL::uuid AS payment_method_id, NULL::text AS payment_method_name`; break;
+        case "salesperson":
+          from = "FROM naijue_erp.staff r LEFT JOIN naijue_erp.hall h ON h.id = r.hall_id";
+          // Native staff has no enabled column: exact current employment status is
+          // all that can be established. No role, staff-hall or login-account filter.
+          where = `r.employment_status = '在职' AND ${match("r.name")}`; orderValues.push(identity.staffId);
+          order = `(r.id = $${values.length + 1}::uuid) DESC, ${order}`;
+          columns = `r.id, r.name, NULL::text AS code, r.hall_id, h.name AS hall_name, NULL::uuid AS payment_method_id, NULL::text AS payment_method_name`; break;
+        case "warehouse":
+          from = "FROM naijue_erp.warehouse r JOIN naijue_erp.hall h ON h.id = r.hall_id"; values.push(parameters.hallId);
+          where = `r.enabled AND h.enabled AND r.hall_id = $${values.length}::uuid AND ${match("r.name")}`;
+          columns = `r.id, r.name, NULL::text AS code, r.hall_id, h.name AS hall_name, NULL::uuid AS payment_method_id, NULL::text AS payment_method_name`; break;
+        case "paymentAccount":
+          from = "FROM naijue_erp.payment_account r JOIN naijue_erp.payment_method pm ON pm.id = r.payment_method_id";
+          where = `r.enabled AND pm.enabled AND (${match("r.name")} OR ${match("pm.name")})`; orderValues.push(parameters.hallId);
+          order = `(EXISTS (SELECT 1 FROM naijue_erp.payment_account_hall ph WHERE ph.payment_account_id = r.id AND ph.hall_id = $${values.length + 1}::uuid)) DESC, ${order}`;
+          columns = `r.id, r.name, NULL::text AS code, NULL::uuid AS hall_id, NULL::text AS hall_name, pm.id AS payment_method_id, pm.name AS payment_method_name`; break;
+        default: throw new TypeError("Unsupported current reference kind");
+      }
+      return this.page(query, parameters, from, where, columns, order, values, row => {
+        const kind = ({ hall: "hall", customer: "customer", salesperson: "staff", warehouse: "warehouse", paymentAccount: "paymentAccount" } as const)[parameters.kind];
+        const hallId = row.hall_id === null ? null : id("hall", row.hall_id); const hallName = nullableText(row.hall_name);
+        requireDomain((hallId === null) === (hallName === null), "INVALID_DATABASE_VALUE", "Native hall identity/label mismatch");
+        const nativeId = id(kind, row.id);
+        if (parameters.kind === "hall") requireDomain(nativeId === hallId && (identity.role !== "SALESPERSON" || hallId === identity.hallId)
+          && (grant.kind === "all" || (hallId !== null && grant.hallIds.includes(hallId))), "INVALID_DATABASE_VALUE", "Native hall candidate exceeds the authorized scope");
+        if (parameters.kind === "warehouse") requireDomain(hallId === parameters.hallId, "INVALID_DATABASE_VALUE", "Native warehouse exceeds the proposed sales hall");
+        const paymentMethodId = row.payment_method_id === null ? null : id("paymentMethod", row.payment_method_id);
+        const paymentMethodName = nullableText(row.payment_method_name);
+        requireDomain((paymentMethodId === null) === (paymentMethodName === null)
+          && (parameters.kind === "paymentAccount" ? paymentMethodId !== null : paymentMethodId === null), "INVALID_DATABASE_VALUE", "Native payment method identity/label mismatch");
+        requireDomain(parameters.kind === "customer" ? row.code !== null : row.code === null, "INVALID_DATABASE_VALUE", "Unexpected native reference code shape");
+        return Object.freeze({ id: nativeId, name: text(row.name), code: nullableText(row.code), hallId, hallName, paymentMethodId, paymentMethodName });
+      }, orderValues);
+    });
+  }
+  readTransferWarehouses(actor: ActorContext, input: CurrentTransferWarehouseQuery, signal: AbortSignal): Promise<CurrentFormPage<CurrentTransferWarehouse>> {
+    const parameters = parseCurrentTransferWarehouseQuery(input);
+    return this.snapshot(actor, { kind: "transfer-warehouses", parameters }, signal, async (query, _identity, grant) => {
+      const values: unknown[] = [parameters.search]; const scope = hallPredicate("w.hall_id", grant, values);
+      const nonzero = "EXISTS (SELECT 1 FROM naijue_erp.inventory_balance b WHERE b.warehouse_id = w.id AND b.quantity <> 0)";
+      const eligible = parameters.direction === "FROM" ? `(w.enabled OR ${nonzero})` : "w.enabled";
+      return this.page(query, parameters, "FROM naijue_erp.warehouse w JOIN naijue_erp.hall h ON h.id = w.hall_id",
+        `${scope} AND ${eligible} AND (strpos(lower(w.name), lower($1::text)) > 0 OR strpos(lower(h.name), lower($1::text)) > 0)`,
+        `w.id, w.name, w.hall_id, h.name AS hall_name, w.enabled, h.enabled AS hall_enabled, ${nonzero} AS has_nonzero_inventory`,
+        `w.name COLLATE "C", w.id`, values, row => {
+          const enabled = booleanValue(row.enabled), hasNonzeroInventory = booleanValue(row.has_nonzero_inventory);
+          requireDomain(enabled || (parameters.direction === "FROM" && hasNonzeroInventory), "INVALID_DATABASE_VALUE", "Ineligible native transfer warehouse");
+          const hallId = id("hall", row.hall_id);
+          requireDomain(grant.kind === "all" || grant.hallIds.includes(hallId), "INVALID_DATABASE_VALUE", "Native transfer warehouse exceeds explicit form grant");
+          return Object.freeze({ id: id("warehouse", row.id), name: text(row.name), hallId, hallName: text(row.hall_name),
+            enabled, hallEnabled: booleanValue(row.hall_enabled), hasNonzeroInventory });
+        });
+    });
+  }
+  readProducts(actor: ActorContext, input: CurrentFormProductQuery, signal: AbortSignal): Promise<CurrentFormPage<CurrentFormProduct>> {
+    const parameters = parseCurrentFormProductQuery(input);
+    return this.snapshot(actor, { kind: "products", parameters }, signal, async (query, identity, grant) => {
+      await this.formContext(query, identity, grant, parameters.context);
+      return this.page(query, parameters, "FROM naijue_erp.product p", `p.enabled AND
+        (strpos(lower(p.product_code), lower($1::text)) > 0 OR strpos(lower(p.name), lower($1::text)) > 0)`,
+        "p.id, p.product_code, p.name, p.retail_price::text, p.enabled", `p.product_code COLLATE "C", p.id`, [parameters.search], row => {
+          requireDomain(row.enabled === true, "INVALID_DATABASE_VALUE", "Ineligible current product");
+          return Object.freeze({ id: id("product", row.id), code: text(row.product_code), name: text(row.name), retailPrice: price(row.retail_price), minimumPriceAvailability: "UNAVAILABLE" });
+        });
+    });
+  }
+  readProductSkus(actor: ActorContext, input: CurrentFormProductSkuQuery, signal: AbortSignal): Promise<CurrentFormPage<CurrentFormSku>> {
+    const parameters = parseCurrentFormProductSkuQuery(input);
+    return this.snapshot(actor, { kind: "product-skus", parameters }, signal, async (query, identity, grant) => {
+      await this.formContext(query, identity, grant, parameters.context);
+      return this.page(query, parameters, SKU_JOINS, `${SKU_ENABLED} AND s.product_id = $1::uuid`, SKU_COLUMNS, SKU_ORDER, [parameters.productId], row => {
+        const result = sku(row); requireDomain(result.productId === parameters.productId, "INVALID_DATABASE_VALUE", "SKU does not match target product"); return result;
+      });
+    });
+  }
+  readSkuBatch(actor: ActorContext, input: CurrentFormSkuBatchQuery, signal: AbortSignal): Promise<readonly CurrentFormSku[]> {
+    const parameters = parseCurrentFormSkuBatchQuery(input);
+    return this.snapshot(actor, { kind: "sku-batch", parameters }, signal, async (query, identity, grant) => {
+      await this.formContext(query, identity, grant, parameters.context);
+      const rows = (await query(`/* current-form:sku-batch */ SELECT ${SKU_COLUMNS} ${SKU_JOINS}
+        WHERE ${SKU_ENABLED} AND s.id = ANY($1::uuid[]) ORDER BY s.id LIMIT $2`, [[...parameters.skuIds].sort(), parameters.skuIds.length + 1])).rows;
+      // Deliberately do not disclose which requested SKU was disabled/missing.
+      requireDomain(rows.length === parameters.skuIds.length, "SKU_UNAVAILABLE", "Requested current SKU facts are unavailable");
+      const items = rows.map(sku); const byId = new Map(items.map(row => [row.id, row]));
+      requireDomain(byId.size === items.length && items.every(row => parameters.skuIds.includes(row.id)), "INVALID_DATABASE_VALUE", "Unexpected native SKU batch identity");
+      return Object.freeze(parameters.skuIds.map(id => byId.get(id)!));
+    });
+  }
+}
