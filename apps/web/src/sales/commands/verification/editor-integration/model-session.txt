@@ -1,0 +1,25 @@
+✔ session construction is inert and absent native preparation keeps new-create unavailable (48.900635ms)
+✔ invalid raw input survives suspend, blocks navigation/actions and never saves the old valid value (23.646629ms)
+✔ valid edit saves only explicit native fields at original CAS, double click allocates one key (17.417245ms)
+✔ current read preserves raw invalid edit and requires explicit discard to adopt (5.883473ms)
+✔ unknown commit retains original request, raw input and blocks new operations until receipt recovery (21.748275ms)
+✔ identity replacement clears raw inputs and native command facts synchronously (4.02303ms)
+✔ preparer supplies document number, cancellation and late ignored abort never invent or revive a new draft (3.266378ms)
+✔ salesperson affordances allow own-hall save/void and own creator approval but never unapproval (3.739857ms)
+✔ superseded open completion cannot reset newer raw input to the last valid native draft (2.33303ms)
+✔ raw form roundtrip preserves exact huge money, native IDs and original barcode (29.81585ms)
+✔ unfinished/invalid prices, decimal quantities and zero quantity never reuse last valid facts (7.295252ms)
+✔ explicit discount uses exact half-up per-unit price before multiplying integer quantity (5.753266ms)
+✔ null reference price is not zero and cannot become discount authority (4.535921ms)
+✔ ordinary zero needs explicit confirmation, gifts remain zero without inferred confirmation (6.375085ms)
+✔ stable discount allocation preserves original row positions, no SKU merge or reorder (8.141008ms)
+✔ independent return and exchange preserve signed rows and same native warehouse without original links (10.40044ms)
+✔ draft settlement can be unbalanced, account identities retained, no balance or credit projection (25.908205ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1001.623375

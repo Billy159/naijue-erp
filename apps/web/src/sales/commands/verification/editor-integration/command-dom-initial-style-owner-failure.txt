@@ -1,0 +1,53 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS SALES COMMAND DOM 1: source header/columns, invalid raw input never sends old facts, Back requires explicit discard and Cancel preserves input.
+An update to SalesCommandForm inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+PASS SALES COMMAND DOM 2: SAVE is separate from approval, exact CAS and explicit action confirmations, committed content stays stale until current read/adopt, approved edit requires confirmed unapprove/readback.
+An update to SalesCommandForm inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+PASS SALES COMMAND DOM 3: unknown results block repeat actions/navigation, original-key replay is exact, receipt recovery and identity disposal clear safely.
+An update to SalesCommandPageHost inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+PASS SALES COMMAND DOM 4: no native preparer keeps NEW disabled, detail/write only on click, retained list is explicitly stale after mutation and refresh is manual.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /样式未准备完成/. Input:
+
+'销货单列表新增销货单开始日期结束日期状态全部状态⌄全部状态业务类型全部业务类型⌄全部业务类型营业厅全部营业厅⌄全部营业厅营业员全部营业员⌄全部营业员☷高级筛选▾查询重置修改条件后点击“查询”；“重置”仅清空条件，查询后生效。等待查询设置筛选条件后，点击「查询」查看销货单。20张/页尚未查询新增销货单未审核· 有未保存输入返回列表保存审核作废导出打印操作历史单据日期业务类型退货营业厅当前资料名称未提供营业员未指定客户当前资料名称未提供出库仓当前资料名称未提供单号TEST-SALES-1整单优惠 / 抹零应结金额¥-9007199254740993.01本单收退明细收款退款当前账户名称未提供备注TEST 独立退货本步只修改原有实际行及收退金额。当前商品、规格、营业厅、客户、仓库及账户选择尚未接入，原身份和条码保持不变。退回商品销货明细 · 退回商品款号／商品名称颜色版型尺码数量参考零售价折扣退货单价金额操作TEST-SNAPSHOTTEST 保存商品 1TEST 保存颜色Y版（修身）165/S9007199254740993.01成交单价折扣-9007199254740993.01赠品确认零价1 行应结 ¥-9007199254740993.01收退已配平'
+
+    at file:///workspace/shared/naijue-erp-rewrite/apps/web/src/sales/commands/tests/run-dom-tests.mjs:80:40 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '销货单列表新增销货单开始日期结束日期状态全部状态⌄全部状态业务类型全部业务类型⌄全部业务类型营业厅全部营业厅⌄全部营业厅营业员全部营业员⌄全部营业员☷高级筛选▾查询重置修改条件后点击“查询”；“重置”仅清空条件，查询后生效。等待查询设置筛选条件后，点击「查询」查看销货单。20张/页尚未查询新增销货单未审核· 有未保存输入返回列表保存审核作废导出打印操作历史单据日期业务类型退货营业厅当前资料名称未提供营业员未指定客户当前资料名称未提供出库仓当前资料名称未提供单号TEST-SALES-1整单优惠 / 抹零应结金额¥-9007199254740993.01本单收退明细收款退款当前账户名称未提供备注TEST 独立退货本步只修改原有实际行及收退金额。当前商品、规格、营业厅、客户、仓库及账户选择尚未接入，原身份和条码保持不变。退回商品销货明细 · 退回商品款号／商品名称颜色版型尺码数量参考零售价折扣退货单价金额操作TEST-SNAPSHOTTEST 保存商品 1TEST 保存颜色Y版（修身）165/S9007199254740993.01成交单价折扣-9007199254740993.01赠品确认零价1 行应结 ¥-9007199254740993.01收退已配平',
+  expected: /样式未准备完成/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

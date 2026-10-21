@@ -1,0 +1,72 @@
+import assert from 'node:assert/strict';
+import { mkdtemp, rm } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { build } from 'esbuild';
+import { JSDOM } from 'jsdom';
+const here = path.dirname(fileURLToPath(import.meta.url)), temp = await mkdtemp(path.join(here, '.dom-tmp-'));
+const dom = new JSDOM('<!doctype html><div id="root"></div>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
+for (const key of ['window', 'document', 'navigator', 'HTMLElement', 'HTMLInputElement', 'HTMLTextAreaElement', 'Element', 'SVGElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'MutationObserver', 'getComputedStyle']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
+globalThis.IS_REACT_ACT_ENVIRONMENT = true; globalThis.ResizeObserver = class { observe() {} unobserve() {} disconnect() {} }; dom.window.ResizeObserver = globalThis.ResizeObserver;
+globalThis.requestAnimationFrame = dom.window.requestAnimationFrame.bind(dom.window); globalThis.cancelAnimationFrame = dom.window.cancelAnimationFrame.bind(dom.window);
+dom.window.matchMedia = () => ({ matches: false, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {} }); dom.window.HTMLElement.prototype.scrollIntoView = () => {};
+let root;
+try {
+  const output = path.join(temp, 'dom-entry.mjs');
+  await build({ entryPoints: [path.join(here, 'dom-entry.tsx')], outfile: output, bundle: true, platform: 'node', format: 'esm', external: ['react', 'react/*', 'react-dom', 'react-dom/*'], banner: { js: "import { createRequire as __createRequire } from 'node:module'; const require = __createRequire(import.meta.url);" }, jsx: 'automatic', loader: { '.css': 'empty' }, logLevel: 'warning' });
+  const { act, createElement, StrictMode, createRoot, ReadContext, TransferPageHost, TransferCommandWorkspace, createTransferCommandHttpClient, createTransferHttpReader, createTransferWarehouseHttpReader, detail, draft, result, receipt, uuid, summary } = await import(pathToFileURL(output).href);
+  const host = document.getElementById('root'); root = createRoot(host);
+  const settle = async (ms = 35) => { await act(async () => { await new Promise(resolve => setTimeout(resolve, ms)); }); };
+  const until = async (test, label) => { for (let i = 0; i < 80 && !test(); i++) await settle(10); assert.ok(test(), label); };
+  const button = label => [...host.querySelectorAll('button')].find(el => el.textContent.trim() === label && !el.closest('[hidden]'));
+  const click = async el => { assert.ok(el, 'Click target exists'); assert.equal(el.disabled, false, `${el.textContent} is actionable`); await act(async () => el.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true }))); await settle(); };
+  const change = async (el, value) => { assert.ok(el); const prototype = el instanceof dom.window.HTMLTextAreaElement ? dom.window.HTMLTextAreaElement.prototype : dom.window.HTMLInputElement.prototype; await act(async () => { Object.getOwnPropertyDescriptor(prototype, 'value').set.call(el, value); el.dispatchEvent(new dom.window.Event('input', { bubbles: true })); }); await settle(); };
+  const json = (value, status = 200) => new Response(JSON.stringify(value), { status, headers: { 'content-type': 'application/json' } });
+  let current = detail(), network = false, holdDetail = false, pendingDetail, heldStyle = false, styleReady, keys = 0, access = 0; const calls = [], writes = [];
+  const http = { origin: 'https://synthetic.test', basePath: '/api', fetch: async (url, init) => {
+    const body = init.body ? JSON.parse(init.body) : null; calls.push({ url, body, signal: init.signal });
+    if (url.endsWith('/transfers/query')) return json({ page: body.page, pageSize: body.pageSize, exactTotal: '1', items: [summary()] });
+    if (url.endsWith('/transfers/detail/query')) { if (holdDetail) return new Promise(resolve => { pendingDetail = { signal: init.signal, finish: () => resolve(json(current)) }; }); return json(current); }
+    if (url.endsWith('/transfers/commands')) {
+      writes.push(body); if (network) throw Error('SYNTHETIC connection loss'); const answer = result(body);
+      const h = current.document.header;
+      current = body.action === 'SAVE' ? { ...current, document: { header: { ...h, ...body.draft.header, status: answer.status, version: answer.version }, lines: body.draft.lines } } : { ...current, document: { ...current.document, header: { ...h, status: answer.status, version: answer.version, approvedAt: body.action === 'APPROVE' ? '2026-10-21T00:00:00.000000Z' : null, approvedByAccountId: body.action === 'APPROVE' ? uuid(30) : null } }, references: { ...current.references, approvedByName: body.action === 'APPROVE' ? 'TEST 审核人' : null } };
+      return json(answer);
+    }
+    if (url.includes('/transfers/receipts/')) return json(receipt(writes.at(-1)));
+    throw Error(`Unexpected synthetic endpoint ${url}`);
+  } };
+  const context = new ReadContext({ accountId: 'TEST', sessionRevision: '1', permissionRevision: '1' }), sessionScope = context.createScope('TEST-TRANSFER-SESSION');
+  const reader = createTransferHttpReader(http), references = createTransferWarehouseHttpReader(http);
+  const workspace = new TransferCommandWorkspace({ scope: sessionScope, reader, client: createTransferCommandHttpClient(http), newRequestKey: () => `TEST.transfer:${++keys}`, onAccessFailure: () => { access++; } });
+  const capability = { workspace }; let styleCalls = 0;
+  const loadDetailStyles = async () => { styleCalls++; if (heldStyle) await new Promise(resolve => { styleReady = resolve; }); };
+  const mount = async (extra = {}) => { await act(async () => root.render(createElement(StrictMode, null, createElement(TransferPageHost, { scope: context.createScope(`TEST-TRANSFER-ROUTE-${calls.length}`), reader, references, commands: capability, loadDetailStyles, ...extra })))); await settle(); };
+  await mount(); await until(() => host.querySelector('.transfer-view'), 'initial bounded list');
+  assert.equal(writes.length, 0); assert.equal(styleCalls, 0); assert.equal(button('新增调拨单').disabled, true);
+  heldStyle = true; await click(host.querySelector('.transfer-view')); assert.equal(styleCalls, 1); assert.equal(calls.filter(call => call.url.endsWith('/transfers/detail/query')).length, 0);
+  await click(button('返回列表')); await act(async () => styleReady()); heldStyle = false; await settle(); assert.equal(host.querySelector('.transfer-command-editor'), null); assert.equal(calls.filter(call => call.url.endsWith('/transfers/detail/query')).length, 0);
+  console.log('PASS transfer command DOM 1: explicit capability without current preparer leaves new disabled; command form/code/styles wait actual view, cancellation before CSS prevents detail/command reads.');
+  await click(host.querySelector('.transfer-view')); await until(() => host.querySelector('.transfer-command-editor input[aria-label^="数量"]'), 'actual editable native matrix');
+  assert.ok(host.querySelector('.mx-fit-col')); assert.match(host.querySelector('.transfer-command-editor').textContent, /165\/S/); assert.equal(host.querySelector('[aria-label="无单据明细，未开放新增"]').textContent, ''); assert.equal(host.querySelector('[aria-label="无此规格"]').textContent, '—');
+  const quantity = () => host.querySelector('input[aria-label^="数量 第1行"]');
+  await change(quantity(), '1.5'); assert.equal(button('保存').disabled, true); assert.equal(button('审核').disabled, true); assert.equal(button('返回列表').disabled, true); assert.equal(workspace.canLeave(), false); assert.equal(writes.length, 0);
+  await change(quantity(), '7'); await change(host.querySelector('textarea[aria-label="备注"]'), 'TEST USER EDIT'); assert.equal(button('保存').disabled, false); assert.equal(button('审核').disabled, true);
+  await click(button('保存')); assert.equal(writes.length, 1); assert.equal(writes[0].expectedVersion, 2); assert.equal(writes[0].draft.lines[0].quantity, '7'); assert.equal(writes[0].draft.lines[0].snapshot.barcode, '001234567890123'); assert.equal(writes[0].draft.lines[0].skuId, uuid(70)); assert.equal(Object.hasOwn(writes[0], 'actor'), false);
+  assert.equal(quantity().disabled, true); assert.equal(button('审核').disabled, true); assert.match(host.textContent, /当前表单仍是原内容/);
+  await click(button('读取当前单据')); await click(button('采用当前单据')); assert.equal(button('审核').disabled, false); assert.equal(quantity().value, '7');
+  console.log('PASS transfer command DOM 2: real controls retain invalid raw quantity and block leaving; actual SAVE preserves endpoints/SKU/original barcode and CAS, then requires explicit read/adopt, never optimistic status or stock.');
+  await click(button('审核')); assert.equal(writes.at(-1).action, 'APPROVE'); assert.equal(writes.at(-1).expectedVersion, 3); assert.match(host.textContent, /库存流水 4 条/);
+  await click(button('读取当前单据')); await click(button('采用当前单据')); assert.equal(quantity(), null); assert.equal(button('保存'), undefined);
+  await click(button('弃审')); await click(button('读取当前单据')); await click(button('采用当前单据')); assert.equal(quantity().disabled, false); assert.equal(writes.at(-1).action, 'UNAPPROVE');
+  await click(button('作废')); await click(button('读取当前单据')); await click(button('采用当前单据')); assert.equal(button('保存'), undefined); assert.equal(button('审核'), undefined); assert.equal(button('弃审'), undefined); assert.equal(quantity(), null);
+  console.log('PASS transfer command DOM 3: genuine buttons enforce persisted DRAFT/APPROVED/VOID states through approval, two-ended reversal and void, each followed by authoritative reread/adoption.');
+  await click(button('返回列表')); assert.match(host.textContent, /下方仍是操作前的列表结果/); await click(button('刷新当前列表范围')); assert.doesNotMatch(host.textContent, /下方仍是操作前的列表结果/); await act(async () => { workspace.discardEditor(); }); current = detail(); holdDetail = true;
+  await click(host.querySelector('.transfer-view')); await until(() => pendingDetail, 'held native detail'); await click(button('返回列表')); assert.equal(pendingDetail.signal.aborted, true); await act(async () => pendingDetail.finish()); holdDetail = false; await settle(); assert.equal(host.querySelector('.transfer-command-editor'), null);
+  await click(host.querySelector('.transfer-view')); await until(() => quantity(), 'reopened edit'); await change(quantity(), '8'); network = true; await click(button('保存')); assert.match(host.textContent, /原操作结果不确定/); const original = structuredClone(writes.at(-1)); const originalKeyCount = keys;
+  assert.equal(button('返回列表').disabled, true); assert.equal(button('保存').disabled, true); await click(button('重放原请求')); assert.deepEqual(writes.at(-1), original); assert.equal(keys, originalKeyCount);
+  await click(button('核实原操作回执')); assert.match(host.textContent, /原操作已确认/); assert.equal(workspace.getSnapshot().write.phase, 'committed'); network = false;
+  console.log('PASS transfer command DOM 4: return cancels an active native read; a lost SAVE response locks edits/navigation, exact original replay keeps key/CAS/payload, and only correlated receipt confirms outcome.');
+  await act(async () => context.replaceIdentity({ accountId: 'NEW', sessionRevision: '2', permissionRevision: '2' })); await settle(); assert.equal(workspace.getSnapshot().disposed, true); assert.equal(workspace.getSnapshot().editor, null); assert.equal(host.querySelector('.transfer-command-editor'), null); assert.equal(access, 0);
+  console.log('PASS transfer command DOM 5: same-owner identity/permission replacement clears original recovery payload, raw input and rendered editor; tests are synthetic JSDOM, not browser/layout/DB/write-host acceptance.');
+} finally { if (root) await import('react').then(async ({ act }) => { await act(async () => root.unmount()); }); dom.window.close(); await rm(temp, { recursive: true, force: true }); }

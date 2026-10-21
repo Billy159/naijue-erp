@@ -1,0 +1,28 @@
+✔ only current loaded native parent rows are nested, preserving provider labels and order (5.383671ms)
+✔ selected-only and unknown parent rows are not invented or injected into tree data (0.822531ms)
+✔ current candidate metadata overrides selected-only metadata without rejecting cross-input IDs (0.546392ms)
+✔ native parent coverage is projected without changing or normalizing canonical value (0.454208ms)
+✔ selected children never imply a parent check or half-check (0.440435ms)
+✔ ALL stays standalone; a positive check chooses exactly one current enabled category (0.92662ms)
+✔ explicitly selecting every known ID is never normalized to ALL (0.592705ms)
+✔ adding a native parent removes only proven redundant selected children and preserves unknown IDs (0.428224ms)
+✔ parent addition uses current native proof, not stale selected metadata (4.252365ms)
+✔ covered children cannot exclude a selected branch, even if also explicitly selected (0.548882ms)
+✔ removing an explicit redundant child tag preserves branch coverage while checkbox exclusion stays refused (0.390709ms)
+✔ disabled redundant child tags remain removable without enabling branch checkbox exclusion (0.440886ms)
+✔ tag actions only remove explicit tokens, including unknown IDs and the final token (0.347833ms)
+✔ removing a parent does not materialize children; the last removal becomes ALL (0.39522ms)
+✔ disabled candidates cannot be newly added but retained disabled selections may be removed (0.554221ms)
+✔ unknown and selected-only retained IDs may be removed without hydration but cannot be newly added (0.629974ms)
+✔ each input rejects duplicate IDs independently while cross-input metadata is allowed (1.01663ms)
+✔ self parents, cycles, and known depth beyond two levels fail closed (0.624318ms)
+✔ malformed parent and disabled metadata fails closed, including stale overwritten metadata (0.76342ms)
+✔ projection and selection leave frozen source metadata and canonical arrays unchanged (0.75023ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1726.071012

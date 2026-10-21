@@ -110,7 +110,10 @@ export function DemoMultiSelectAction(props: DemoMultiSelectActionProps) {
       onSelect={(_keys, extra) => { const key = extra.node.props._key; if (typeof key === 'string') chooseBranch(key, key === ALL ? !allSelected : !branchProjection.checkedIds.includes(key)); }}
       {...(props.onMenuScroll ? { virtualListProps: { height: 320, threshold: props.menuItemLimit ?? 202, onScroll: props.onMenuScroll } } : {})} />;
   };
-  return <div ref={host} className={`demo-multi-select${categoryBranches ? ' demo-multi-select--category-branches' : ''}`}><TreeSelect ref={select} {...(allSelected ? { className: 'inv-all-selected' } : {})}
+  // Arco unsets its source popup cap when a virtual-list height is supplied.
+  // An empty dropdown maxHeight restores the installed CSS cap. Scoped flex
+  // keeps the tree as the scroll target used by bounded remote pagination.
+  return <div ref={host} className={`demo-multi-select${categoryBranches ? ' demo-multi-select--category-branches' : ''}${props.onMenuScroll ? ' demo-multi-select--scroll-menu' : ''}`}><TreeSelect ref={select} {...(allSelected ? { className: 'inv-all-selected' } : {})}
     aria-label={`${props.label}，多选`} treeData={[{ key: ALL, value: ALL, title: props.allLabel }, ...props.options.map(item => ({ key: item.id, value: item.id, title: item.name, disabled: !!item.disabled && !props.value.includes(item.id) }))]}
     value={allSelected ? categoryBranches ? [ALL] : [ALL, ...props.options.map(item => item.id)] : [...props.value]} multiple treeCheckable treeCheckStrictly treeCheckedStrategy={TreeSelect.SHOW_ALL}
     showSearch={{ retainInputValueWhileSelect: false }} placeholder={`搜索${props.label}`} allowClear={false} unmountOnExit
@@ -129,9 +132,11 @@ export function DemoMultiSelectAction(props: DemoMultiSelectActionProps) {
     }}
     triggerProps={{ position: 'bl', autoAlignPopupWidth: false, popupStyle: { width: Math.min(Math.max(width, 300), window.innerWidth - (host.current?.getBoundingClientRect().left ?? 0) - 12) } }}
     {...(props.onMenuScroll ? { treeProps: { virtualListProps: { height: 288, threshold: props.menuItemLimit ?? 202, onScroll: props.onMenuScroll } } } : {})}
+    {...(props.onMenuScroll ? { dropdownMenuStyle: { maxHeight: '' } } : {})}
     dropdownRender={menu => {
       const content = categoryBranches ? categoryMenu() : menu;
-      return props.renderMenu ? props.renderMenu(content) : <div><div className="inv-filter-tools">匹配 {found.length} 项 · 已选 {allSelected ? props.options.length : props.value.length} 项</div>{content}{search && !found.length && <div className="inv-filter-empty">没有匹配的{props.label}</div>}</div>;
+      const rendered = props.renderMenu ? props.renderMenu(content) : <div><div className="inv-filter-tools">匹配 {found.length} 项 · 已选 {allSelected ? props.options.length : props.value.length} 项</div>{content}{search && !found.length && <div className="inv-filter-empty">没有匹配的{props.label}</div>}</div>;
+      return props.onMenuScroll ? <div className="demo-multi-menu-viewport">{rendered}</div> : rendered;
     }}
     onChange={(values: unknown, extra) => {
       // Installed Arco marks tag removal with selected:false; ordinary checked

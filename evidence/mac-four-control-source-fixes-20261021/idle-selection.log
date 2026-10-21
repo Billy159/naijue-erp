@@ -1,0 +1,7 @@
+PASS idle reference ALL: source-shaped token and real unrestricted reset, no nested button, module/read/open or empty-subset invention.
+PASS idle reference explicit tags: native IDs/current labels/pinned unknowns, measured +N/resize, disabled-item and last removal, isolated keyboard/form events.
+PASS idle reference lifecycle: disabled/inactive/aborted/stale nodes cannot mutate; live callbacks and focus-only pending preparation stay owned and do not open on removal.
+PASS idle product: retained selections are visible using exact supplied labels, real input/empty placeholder retained, truthful overflow and real removal without JS/CSS/catalog work.
+PASS idle product interruption: pending CSS/removal retains one owner, reader/remount invalidation disposes old owner/CSS, stale tokens and revoked scope are inert.
+PASS lazy boundary: both idle static graphs exclude Arco/actions; route CSS uses scoped shell rules only.
+All 6 focused idle-selection groups passed. Synthetic JSDOM/computed declarations and bundle-source checks only; not browser geometry, Demo pixel parity, backend or full compiler acceptance.

@@ -38,6 +38,7 @@
     "Current source order is retained for finite enum options. Paginated remote candidate order is server-owned, and no all-catalog ordering parity is claimed.",
     "Reset remains the existing draft-only operation and explicit Query remains required, unlike the frozen reset which queries immediately."
   ],
+  "remotePopupCap": "The frozen source retains installed TreeSelect CSS max-height. Native virtualListProps.height otherwise generates inline maxHeight:unset; this adapter clears only that generated override. Scoped flex/min-height rules shrink the actual tree beneath source toolbar/notices, retaining the same bounded candidates, threshold and scroll callback without a screenshot-height override.",
   "installedArco": {
     "version": "2.66.16",
     "copiedPrimitiveSource": {

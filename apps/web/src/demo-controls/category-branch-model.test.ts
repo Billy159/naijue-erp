@@ -54,14 +54,19 @@ test('selected children never imply a parent check or half-check', () => {
   assert.equal(Object.hasOwn(projection, 'halfCheckedIds'), false);
 });
 
-test('ALL checks every current node, including disabled nodes, without adding metadata-only nodes', () => {
+test('ALL stays standalone; a positive check chooses exactly one current enabled category', () => {
   const disabled = { ...other, disabled: true };
   const projection = project([], [parent, child, disabled], [{ id: 'retained', name: 'Not loaded' }]);
-  assert.deepEqual(projection.checkedIds, ['p', 'c', 'q']);
+  assert.deepEqual(projection.checkedIds, []);
+  assert.deepEqual([...projection.coveredByParent], []);
   assert.deepEqual(projection.treeData[1], { key: 'q', value: 'q', title: 'Other parent', disabled: true });
   assert.deepEqual(changeCategoryBranchSelection(projection, [], 'c', false), { kind: 'refused', option: child });
   assert.deepEqual(changeCategoryBranchSelection(projection, [], 'p', false), { kind: 'refused', option: parent });
-  assert.deepEqual(changeCategoryBranchSelection(projection, [], 'c', true), { kind: 'unchanged' });
+  assert.deepEqual(changeCategoryBranchSelection(projection, [], 'c', true), { kind: 'change', ids: ['c'] });
+  assert.deepEqual(changeCategoryBranchSelection(projection, [], 'p', true), { kind: 'change', ids: ['p'] });
+  assert.deepEqual(changeCategoryBranchSelection(projection, [], 'q', true), { kind: 'unchanged' });
+  assert.deepEqual(changeCategoryBranchSelection(projection, [], 'retained', true), { kind: 'unchanged' });
+  assert.deepEqual(changeCategoryBranchSelection(projection, [], 'unknown', true), { kind: 'unchanged' });
 });
 
 test('explicitly selecting every known ID is never normalized to ALL', () => {

@@ -16,7 +16,9 @@ No line in this document authorizes a database write, migration execution, deplo
 
 ## Visual acceptance correction
 
-The prior synthetic inventory appearance was rejected by Billy. Exact frozen Demo UI source is now available and verified; restoration is active, but no real-Demo screenshot comparison or real-browser acceptance has occurred. See FRONTEND-ACCEPTANCE-STATUS.md. No functional test count overrides this missing acceptance.
+The prior synthetic inventory appearance was rejected by Billy. Actual Mac Chrome comparison of four control groups at source 4d0f0f4 against the frozen Demo has now occurred at matching 1470x702 CSS px, 100% zoom and DPR 2. It found differences; it did not establish visual parity or frontend/business acceptance. See [FRONTEND-ACCEPTANCE-STATUS.md](FRONTEND-ACCEPTANCE-STATUS.md) and the [Mac comparison/source-repair review](../evidence/mac-four-control-source-fixes-20261021/review.json).
+
+Source repairs are uncommitted WIP atop 2d0f5d2, not the Mac-tested version. Focused checks partly passed; the sales reference-popup check was resource/environment-blocked at exit 137 with no assertion result, and full validation plus actual Mac recheck remain pending. Original Demo recovery and read-only comparison have explicit user authorization; this is not a blanket waiting-for-permission blocker. Historical offline/DOM/PG counts below remain separate evidence, not acceptance of these repairs.
 
 ## Latest catalog price decision
 

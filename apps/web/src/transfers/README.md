@@ -1,3 +1,7 @@
+## Optional command/editor increment
+
+`commands/README.md` documents the new explicit-capability frontend slice: existing runtime actual-line quantity/date/note editing, SAVE/APPROVE/UNAPPROVE/VOID, original-key recovery and session-owned invalid drafts. The default development host remains read-only. Complete current-reference/barcode/approved document-number preparation and a trusted writer composition are still required before real creation can be enabled. Synthetic component tests do not establish real command usability.
+
 # Native read-only transfer workspace
 
 This is a leaf, not a deployed or production-accepted ERP screen. Only explicit transfer navigation imports it. The inert `index.ts` provides native readers and a route-scoped controller, never React, styles, fixtures, startup requests, commands or fallback data.

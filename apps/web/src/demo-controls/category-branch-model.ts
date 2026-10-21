@@ -93,12 +93,13 @@ export function createCategoryBranchProjection(
     (parent.children ??= []).push(node);
   }
 
-  const all = value.length === 0;
   const selectedIds = new Set(value);
-  const checkedIds = new Set(all ? current.keys() : value);
+  // Unrestricted ALL is a standalone choice, not a checked enumeration of the
+  // loaded page. Its ordinary rows stay unchecked, as in the frozen source.
+  const checkedIds = new Set(value);
   const coveredByParent = new Map<string, string>();
   for (const [id, parentId] of parentById) {
-    if (all ? current.has(id) : selectedIds.has(parentId)) {
+    if (selectedIds.has(parentId)) {
       coveredByParent.set(id, parentId);
       if (current.has(id)) checkedIds.add(id);
     }
@@ -121,8 +122,11 @@ export function changeCategoryBranchSelection(
   }
   const option = projection.known.get(id);
   if (value.length === 0) {
-    // ALL is a standalone source value, not an enumeration of this page.
-    return !checked && option ? { kind: 'refused', option } : { kind: 'unchanged' };
+    // A positive check deliberately replaces standalone ALL with exactly that
+    // branch/category. A false callback must never approximate ALL minus one.
+    if (!checked) return option ? { kind: 'refused', option } : { kind: 'unchanged' };
+    return projection.currentIds.has(id) && option && !option.disabled
+      ? { kind: 'change', ids: [id] } : { kind: 'unchanged' };
   }
   const selected = new Set(value);
   const parentId = projection.parentById.get(id);

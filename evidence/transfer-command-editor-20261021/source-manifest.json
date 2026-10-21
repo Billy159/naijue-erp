@@ -1,0 +1,171 @@
+{
+  "baseline_commit": "2d0f5d2ef79a1d48f63a85cb0242661d2e54efde",
+  "source_frozen_at_utc": "2026-10-21T06:56:00Z",
+  "owned_files": [
+    {
+      "path": "apps/web/src/transfers/commands/README.md",
+      "sha256": "bf5514e6032910b2f58008a57affb85aebdfc4336e23c979d7b81bf9c58eec65"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/contracts.ts",
+      "sha256": "a3eaac44661310f3740e1ebb7d5f1cd5406f5051bac513cf976c8ebfb85c1fad"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/controller.test.ts",
+      "sha256": "061a9b2b63264ee34dc5f37ad9c2a8dad877d687cba2afadb78e0637308bd163"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/controller.ts",
+      "sha256": "d80578c9b70265347881ed8b3f4389a97f0355616ef88adc9944fc53c71a70e6"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/editable-lines.tsx",
+      "sha256": "b3c55de7ada61bc565936f3fbfbf38b3acb20af69ff1001db194105daec6ceff"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/fixtures.test-support.ts",
+      "sha256": "0549b223ff2a14df6e16def1b0feb4ca81b25a172e7a47fa1a787cdfcfde7312"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/form.tsx",
+      "sha256": "5a0d482c6293f555c35d3de64811aa4712beacbdaf9c4f7e0020b54ec0b40fc1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/host.tsx",
+      "sha256": "6a91cdc43d3dd7592d84edac272bbd9223ff7003bf44948a61d12288d12440d5"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/http-client.test.ts",
+      "sha256": "88df4f8cf045907ffb803eb5ec7173a5047383072690150a570e06329098fe35"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/http-client.ts",
+      "sha256": "1585ea2db05086a9b7a22e4ca187480a83ff6aa4babfb32c11d2df6a2b68ca0c"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/index.ts",
+      "sha256": "6eb4a959325ae8619053e176057557b50aaee6772401b1745e71f859f4b9f95d"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/tests/dom-entry.tsx",
+      "sha256": "a763452e071906c4469b661c834065798bb0a3577dbcea61c6b0f09772d8008a"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/tests/run-dom-tests.mjs",
+      "sha256": "94f3e0e0f57fd077e45896851ff2242ad4d3718137ea1a80bd11d15977c40883"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/validation.ts",
+      "sha256": "1669fb069f37e032aa1457132efea50dd2107c2ecef01288b6bfecdecec2451d"
+    },
+    {
+      "path": "apps/web/src/transfers/transfers-page.tsx",
+      "sha256": "92ecb8412eeb78453758a8b7ece5ceefcd6dfa3fc861b21cb709710d2604ef55"
+    },
+    {
+      "path": "apps/web/src/transfers/transfers-route.tsx",
+      "sha256": "398561831b987a0d8fddfe94c0e6b33f0dd9d2ab7af2ae0e72fd1ba73a985fce"
+    },
+    {
+      "path": "apps/web/src/transfers/detail.css",
+      "sha256": "b20484fdc8101d01cde28b075b1583a53ea39a4d0bc739d13094288b8cf9505a"
+    },
+    {
+      "path": "apps/web/src/transfers/README.md",
+      "sha256": "b744bddded5b9eee14cee8fab0200b5139f0192c16e73d0055b9ea4dbd4621e3"
+    },
+    {
+      "path": "apps/web/src/transfers/SOURCE-ADAPTATION.md",
+      "sha256": "f23225d8736f319158aad156e74adc00439208af70774d6b9df48851eaaab830"
+    },
+    {
+      "path": "apps/web/src/application/routes/transfers.tsx",
+      "sha256": "d5dcb6dca2bc072fe447a898d58a1b10505aff57e5da0cf96a383f07b1400ae3"
+    }
+  ],
+  "shared_dependencies_not_owned": [
+    "apps/web/src/application/contracts.ts (sales worker)",
+    "apps/web/src/application/controller.ts (sales worker)",
+    "package.json (root-owned test hooks)",
+    "apps/web/src/transfers/transfers-page.tsx first iw-filter-icon span (visual worker)",
+    "apps/web/src/transfers/transfers.css (visual worker)"
+  ],
+  "observed_checks_before_final_refinements": [
+    {
+      "command": "node --test apps/web/src/transfers/commands/*.test.ts",
+      "result": "PASS 10/10 synthetic tests",
+      "observed_at_utc": "2026-10-21T06:41:44Z"
+    },
+    {
+      "command": "node_modules/.bin/tsc --noEmit -p apps/web/src/transfers/tsconfig.json",
+      "result": "PASS",
+      "observed_at_utc": "2026-10-21T06:43:16Z"
+    },
+    {
+      "command": "node apps/web/src/transfers/tests/run-dom-tests.mjs",
+      "result": "PASS all 11 synthetic React/JSDOM groups",
+      "observed_at_utc": "2026-10-21T06:45:15Z"
+    },
+    {
+      "command": "node apps/web/src/transfers/tests/run-build-check.mjs",
+      "result": "PASS isolated static transfer route bundle",
+      "observed_at_utc": "2026-10-21T06:45:15Z"
+    },
+    {
+      "command": "node apps/web/src/transfers/commands/tests/run-dom-tests.mjs",
+      "result": "PASS all 5 synthetic React/JSDOM groups after correcting test expectation that approved/void show read values rather than editable inputs",
+      "observed_at_utc": "2026-10-21T06:46:19Z"
+    }
+  ],
+  "required_final_rechecks": [],
+  "limits": [
+    "No real browser/layout/performance acceptance",
+    "No real database write",
+    "No default development-host command activation",
+    "No current-reference/number/barcode native create preparer implementation",
+    "No transfer numbering generator",
+    "No schema/domain/authentication policy edits",
+    "No root compiler/build/commit/deployment performed by this worker"
+  ],
+  "verified_at_utc": "2026-10-21T07:11:16.314693+00:00",
+  "verification_checkout_commit": "2d0f5d2ef79a1d48f63a85cb0242661d2e54efde",
+  "owned_source_changed_since_freeze": [],
+  "final_refinements_rechecked": [
+    "command/list mutation revision and explicit stale-list refresh notice",
+    "session/route identity match validation",
+    "fresh native detail read on clean reopen",
+    "route-bound list/reference HTTP versus session-bound command/recovery HTTP",
+    "native line-position uniqueness instead of requiring input array order",
+    "safe semantic rejection notices",
+    "clear raw-input baseline on discard/dispose",
+    "test assertions for identity mismatch and stale-list refresh"
+  ],
+  "final_checks": [
+    {
+      "command": "node --test apps/web/src/transfers/commands/*.test.ts",
+      "result": "PASS 10/10 synthetic Node tests",
+      "log": "final-checks/node-tests.txt",
+      "log_sha256": "d784d1c3baa76605369fed6e3f5d6b31cfb1ae72df6d94231aec120992355185"
+    },
+    {
+      "command": "node apps/web/src/transfers/commands/tests/run-dom-tests.mjs",
+      "result": "PASS all 5 synthetic React/JSDOM groups",
+      "log": "final-checks/command-dom.txt",
+      "log_sha256": "716e52c3c8f67577b03e49d7ebc705520580d145c4c0310a3914d762d59bfc57"
+    },
+    {
+      "command": "node apps/web/src/transfers/tests/run-dom-tests.mjs",
+      "result": "PASS all 11 synthetic React/JSDOM groups",
+      "log": "final-checks/readonly-dom.txt",
+      "log_sha256": "95a23ec7f01aa98cd9d51f4b9cb306c0eec89e5353dbc8684998758403b94b99"
+    },
+    {
+      "command": "node_modules/.bin/tsc --noEmit -p apps/web/src/transfers/tsconfig.json",
+      "result": "PASS scoped types; no diagnostic output; final process exit 0",
+      "log": "final-checks/scoped-types.txt",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "shared_integration_verification": "Application command-session integration belongs to the sales worker/root and is not claimed by these four focused checks.",
+  "root_post_review_note": "Trimmed trailing whitespace in controller.test.ts only; no executable token changes. Root reruns focused command Node tests."
+}

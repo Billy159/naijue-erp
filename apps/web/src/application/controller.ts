@@ -2,7 +2,7 @@ import { AuthenticationController, readContextAuthenticationLifecycle } from '..
 import { createAuthHttpClient } from '../authentication/http-client.ts';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import { ReadContext, type ReadScope } from '../loading/read-scope.ts';
-import type { ApplicationConfiguration, ApplicationRoute, ApplicationSnapshot, PartySession, PreparedApplicationRoute, RoutePreparation, RouteStylesheet } from './contracts.ts';
+import type { ApplicationConfiguration, ApplicationRoute, ApplicationSnapshot, PartySession, SalesSession, TransferSession, PreparedApplicationRoute, RoutePreparation, RouteStylesheet } from './contracts.ts';
 
 const home = (): ApplicationSnapshot => Object.freeze({ phase: 'home', route: null, scope: null, prepared: null, notice: null });
 function stylesheet(value: RouteStylesheet | undefined): RouteStylesheet {
@@ -20,6 +20,8 @@ export class ApplicationController {
   #state = home();
   #sequence = 0;
   #partySession: PartySession | null = null;
+  #salesSession: SalesSession | null = null;
+  #transferSession: TransferSession | null = null;
   #disposed = false;
   constructor(configuration: ApplicationConfiguration) {
     if (!configuration?.routes || !configuration.http || typeof configuration.presentation?.renderWorkspace !== 'function' || typeof configuration.presentation.renderRouteState !== 'function') throw new TypeError('Explicit host configuration is required.');
@@ -28,8 +30,10 @@ export class ApplicationController {
     const routes = configuration.routes;
     const inventory = routes.inventory ? Object.freeze({ ...routes.inventory, actions: Object.freeze({ ...routes.inventory.actions }), stylesheet: stylesheet(routes.inventory.stylesheet) }) : undefined;
     if (routes.inventory && (!routes.inventory.actions || (routes.inventory.actions.onOpenCell !== undefined && typeof routes.inventory.actions.onOpenCell !== 'function'))) throw new TypeError('Explicit inventory action capabilities are required.');
-    const sales = routes.sales ? Object.freeze({ stylesheet: stylesheet(routes.sales.stylesheet), ...(routes.sales.detailStylesheet !== undefined ? { detailStylesheet: stylesheet(routes.sales.detailStylesheet) } : {}) }) : undefined;
-    const transfers = routes.transfers ? Object.freeze({ stylesheet: stylesheet(routes.transfers.stylesheet), detailStylesheet: stylesheet(routes.transfers.detailStylesheet), ...(routes.transfers.product ? { product: Object.freeze({ stylesheet: stylesheet(routes.transfers.product.stylesheet) }) } : {}) }) : undefined;
+    const sales = routes.sales ? Object.freeze({ stylesheet: stylesheet(routes.sales.stylesheet), ...(routes.sales.detailStylesheet !== undefined ? { detailStylesheet: stylesheet(routes.sales.detailStylesheet) } : {}), ...(routes.sales.commands ? { commands: Object.freeze({ ...routes.sales.commands }) } : {}) }) : undefined;
+    const transfers = routes.transfers ? Object.freeze({ stylesheet: stylesheet(routes.transfers.stylesheet), detailStylesheet: stylesheet(routes.transfers.detailStylesheet), ...(routes.transfers.product ? { product: Object.freeze({ stylesheet: stylesheet(routes.transfers.product.stylesheet) }) } : {}), ...(routes.transfers.commands ? { commands: Object.freeze({ ...routes.transfers.commands }) } : {}) }) : undefined;
+    if (sales?.commands && (typeof sales.commands.newRequestKey !== 'function' || !sales.detailStylesheet)
+      || transfers?.commands && typeof transfers.commands.newRequestKey !== 'function') throw new TypeError('Command routes require explicit key providers and document styles.');
     const parties = routes.parties ? Object.freeze({ ...routes.parties, stylesheet: stylesheet(routes.parties.stylesheet) }) : undefined;
     if (parties && typeof parties.newRequestKey !== 'function') throw new TypeError('A party request-key provider is required.');
     this.#configuration = Object.freeze({ http: Object.freeze({ ...configuration.http }), presentation: configuration.presentation, routes: Object.freeze({ ...(inventory ? { inventory } : {}), ...(sales ? { sales } : {}), ...(transfers ? { transfers } : {}), ...(parties ? { parties } : {}) }) });
@@ -46,6 +50,8 @@ export class ApplicationController {
       // Required order: abort ALL old route/session scopes before the auth controller publishes a replacement principal.
       replaceIdentity(change);
       this.#partySession?.workspace.dispose(); this.#partySession = null;
+      this.#salesSession?.workspace.dispose(); this.#salesSession = null;
+      this.#transferSession?.workspace.dispose(); this.#transferSession = null;
       this.#leaves.clear();
       this.#publish(home());
     } });
@@ -65,9 +71,11 @@ export class ApplicationController {
     if (this.#disposed || !this.authentication.getSnapshot().principal || this.authentication.busy) return false;
     if (route !== null && !this.routes.includes(route)) return false;
     if (route === this.#state.route && this.#state.phase === 'ready') return true;
-    if (this.#partySession && route !== this.#state.route && !this.#partySession.workspace.canLeave()) {
+    const sessions = [this.#partySession, this.#salesSession, this.#transferSession];
+    if (route !== this.#state.route && sessions.some(session => session && !session.workspace.canLeave())) {
       this.#publish({ ...this.#state, notice: 'cannot-leave' }); return false;
     }
+    if (route !== this.#state.route) { this.#salesSession?.workspace.suspend(); this.#transferSession?.workspace.suspend(); }
     this.#state.scope?.dispose();
     if (route === null) { this.#publish(home()); return true; }
     const scope = this.#context.createScope(`application-route-${++this.#sequence}`);
@@ -77,8 +85,32 @@ export class ApplicationController {
     try {
       let prepared: PreparedApplicationRoute;
       if (route === 'inventory') prepared = (await this.#leaves.load('inventory', scope)).prepareInventoryRoute(input);
-      else if (route === 'sales') prepared = (await this.#leaves.load('sales', scope)).prepareSalesRoute(input);
-      else if (route === 'transfers') prepared = (await this.#leaves.load('transfers', scope)).prepareTransferRoute(input);
+      else if (route === 'sales') {
+        const module = await this.#leaves.load('sales', scope);
+        if (!this.#current(scope)) return false;
+        if (this.#configuration.routes.sales?.commands) {
+          if (!this.#salesSession) {
+            const workspaceScope = this.#context.createScope(`application-sales-session-${++this.#sequence}`);
+            let session: SalesSession;
+            try { session = await module.prepareSalesSession({ ...input, scope: workspaceScope, http: this.#httpForScope(workspaceScope) }, () => this.authentication.expire()); }
+            catch (error) { workspaceScope.dispose(); throw error; }
+            if (!this.#current(scope) || !workspaceScope.active) { session.workspace.dispose(); return false; }
+            this.#salesSession = session;
+          }
+          prepared = this.#salesSession.prepare(input);
+        } else prepared = module.prepareSalesRoute(input);
+      }
+      else if (route === 'transfers') {
+        const module = await this.#leaves.load('transfers', scope);
+        if (!this.#current(scope)) return false;
+        if (this.#configuration.routes.transfers?.commands) {
+          if (!this.#transferSession) {
+            const workspaceScope = this.#context.createScope(`application-transfer-session-${++this.#sequence}`);
+            this.#transferSession = module.prepareTransferSession({ ...input, scope: workspaceScope, http: this.#httpForScope(workspaceScope) }, () => this.authentication.expire());
+          }
+          prepared = this.#transferSession.prepare(input);
+        } else prepared = module.prepareTransferRoute(input);
+      }
       else {
         const module = await this.#leaves.load('parties', scope);
         if (!this.#current(scope)) return false;
@@ -107,7 +139,9 @@ export class ApplicationController {
   dispose(): void {
     if (this.#disposed) return;
     this.authentication.dispose(); this.#disposed = true;
-    this.#context.clear(); this.#partySession?.workspace.dispose(); this.#partySession = null; this.#leaves.clear();
+    this.#context.clear(); this.#partySession?.workspace.dispose(); this.#partySession = null;
+    this.#salesSession?.workspace.dispose(); this.#salesSession = null;
+    this.#transferSession?.workspace.dispose(); this.#transferSession = null; this.#leaves.clear();
     const sales = this.#configuration.routes.sales, transfer = this.#configuration.routes.transfers;
     const styles = [...Object.values(this.#configuration.routes).map(route => route.stylesheet), ...(sales?.detailStylesheet ? [sales.detailStylesheet] : []), ...(transfer ? [transfer.detailStylesheet] : []), ...(transfer?.product ? [transfer.product.stylesheet] : [])];
     for (const provider of new Set(styles)) {

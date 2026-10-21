@@ -47,3 +47,10 @@
 .demo-multi-select--category-branches .arco-tree-node-switcher{display:flex}
 .demo-multi-select--category-branches .arco-tree-node-selected,.demo-multi-select--category-branches .arco-tree-node:hover{background:transparent}
 .demo-multi-select--category-branches .arco-tree-node-selected .arco-tree-node-title,.demo-multi-select--category-branches .arco-tree-node:hover .arco-tree-node-title{background:var(--ca-popover-hover);color:var(--ca-ink)}
+/* Preserve the installed TreeSelect popup cap, without a screenshot-sized
+ * override. Remote menus shrink the actual scrolling tree below their natural
+ * toolbar/notices; the candidate scroll callback and threshold stay on it. */
+.demo-multi-select--scroll-menu .arco-tree-select-popup{display:flex;flex-direction:column}
+.demo-multi-select--scroll-menu .demo-multi-menu-viewport,.demo-multi-select--scroll-menu .demo-multi-menu-viewport>div:not(.arco-tree){display:flex;flex-direction:column;flex:0 1 auto;min-height:0}
+.demo-multi-select--scroll-menu .demo-multi-menu-viewport>div:not(.arco-tree)>:not(.arco-tree){flex-shrink:0}
+.demo-multi-select--scroll-menu .demo-multi-menu-viewport .arco-tree{flex:0 1 auto;min-height:0;overflow-y:auto}

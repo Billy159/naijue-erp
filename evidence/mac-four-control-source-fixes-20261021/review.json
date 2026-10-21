@@ -1,0 +1,225 @@
+{
+  "createdAt": "2026-10-21T06:47:50.590278+00:00",
+  "outcome": "source_fixes_implemented_focused_checks_partly_passed_actual_browser_recheck_pending",
+  "actualBrowserEvidence": {
+    "testedCommit": "4d0f0f44c8247e3ea15105d8a4d3207ba48f4e0e",
+    "frozenDemoCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+    "result": "actual_browser_comparison_performed_differences_found_not_accepted",
+    "jsonSha256": "6a30fdfd123f60f87389829d50e804a83e0c7c7669e48307e7141f5ff5c926f6",
+    "environment": {
+      "viewportCss": {
+        "width": 1470,
+        "height": 702
+      },
+      "devicePixelRatio": 2,
+      "zoomPercent": 100
+    },
+    "inspectedAll10Images": true,
+    "screenshots": [
+      {
+        "file": "new-product-recent.jpg",
+        "sha256": "cba82aa5f6e635e644fbd520b148c7781d9f9e57c7125f8f1481ca05fa22ef6e"
+      },
+      {
+        "file": "new-product-candidates.jpg",
+        "sha256": "d1566cb68cee30e3c460ff6893033ba62abe603fbff4718125a8c6a88542de14"
+      },
+      {
+        "file": "demo-product-recent.jpg",
+        "sha256": "9ed84312d3984fe9ebca87c04e37b24a9a1b3275529e2759cd468bf7fe7e724d"
+      },
+      {
+        "file": "demo-product-candidates.jpg",
+        "sha256": "0df02fe213b8f7dba881f0964c46c449d46e0c07514251136a17e7f63b640b4f"
+      },
+      {
+        "file": "new-category-tree.jpg",
+        "sha256": "453e23ec39b93866560456a8e4733baa961e888aba3d2d8d7519b47c4062c8e2"
+      },
+      {
+        "file": "demo-category-tree.jpg",
+        "sha256": "e88507453f80300c01dce48393791c09993c05c06e50d40d75d0650af19d5025"
+      },
+      {
+        "file": "new-warehouse-multiple.jpg",
+        "sha256": "190679c75d25ab9a1de09da3069f3b1c10ad976360804cf5cab4c6b106c8e37f"
+      },
+      {
+        "file": "demo-warehouse-multiple.jpg",
+        "sha256": "77b62bc5a4ce34772f060acd746870e3ea063f1556e91a821b5dbd4316ca0d37"
+      },
+      {
+        "file": "new-transfer-status.jpg",
+        "sha256": "0f5fd26ccd2df5e7fefb233d4ae33bcd16329d319f8b83894d15ad6c5debcaa9"
+      },
+      {
+        "file": "demo-transfer-status.jpg",
+        "sha256": "4381916bdb2d8fe1a2d2984e27d3ee56b8bb39b55c0ff81fde90620e4e78457a"
+      }
+    ]
+  },
+  "currentSource": {
+    "baseHead": "2d0f5d2ef79a1d48f63a85cb0242661d2e54efde",
+    "workingTreeChangesUncommitted": true,
+    "notTheMacTestedVersion": true,
+    "sourceFiles": [
+      {
+        "file": "apps/web/src/demo-controls/README.md",
+        "sha256": "190e6613482ba96c677ce4f1035c8b20ab4f23b46e506da9afb70aa0953ebc72",
+        "ownership": "Shared visual/model/geometry regression scope."
+      },
+      {
+        "file": "apps/web/src/demo-controls/category-branch-model.ts",
+        "sha256": "2c2423710e391f5ec3368f6688f20f4895d404528ab2d3b41e75ba4a92104499",
+        "ownership": "Shared visual/model/geometry regression scope."
+      },
+      {
+        "file": "apps/web/src/demo-controls/category-branch-model.test.ts",
+        "sha256": "9b6010fd2263e08d781afa94b9e71a7d03da70f6d904066f005744aa1fc06993",
+        "ownership": "Shared visual/model/geometry regression scope."
+      },
+      {
+        "file": "apps/web/src/demo-controls/category-branch-source-provenance.json",
+        "sha256": "e5c8927b148e379643193587bc403802fc5ded16ce9e874f8b18247a25482a0a",
+        "ownership": "Shared visual/model/geometry regression scope."
+      },
+      {
+        "file": "apps/web/src/demo-controls/multi-select-action.tsx",
+        "sha256": "2037dc958afb420161bd8053d9190279a73329762e307eeab3e0c8d8e7358485",
+        "ownership": "Shared visual/model/geometry regression scope."
+      },
+      {
+        "file": "apps/web/src/demo-controls/multi-select-source-provenance.json",
+        "sha256": "d1f1d1a3140c1a5848eca20d2e24fa54db53e4d0114ad96b1215db06e9e99614",
+        "ownership": "Shared visual/model/geometry regression scope."
+      },
+      {
+        "file": "apps/web/src/demo-controls/multi-select.css",
+        "sha256": "175658394e0e01507caf5f2f2ae46b90923833d3fda93115aeb65fecfb0cc9a6",
+        "ownership": "Shared visual/model/geometry regression scope."
+      },
+      {
+        "file": "apps/web/src/demo-controls/tests/run-category-branch-dom-tests.mjs",
+        "sha256": "6d670e917c84c225292674249368a93c59e04d3e48949946c499fe8a3e8f1f7f",
+        "ownership": "Shared visual/model/geometry regression scope."
+      },
+      {
+        "file": "apps/web/src/demo-controls/tests/run-multi-select-layout-dom-tests.mjs",
+        "sha256": "8a65a595c722b4fb2da6c63a94af8d7ec6d3289bc1b74358781f685ae03b3f5c",
+        "ownership": "Shared visual/model/geometry regression scope."
+      },
+      {
+        "file": "apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs",
+        "sha256": "a7bd984120181fd0276e8b32bfb1ff27213ff6ec79458127b98194cdda39c970",
+        "ownership": "Shared visual/model/geometry regression scope."
+      },
+      {
+        "file": "apps/web/src/transfers/transfers.css",
+        "sha256": "aa0cc8207d66e66bc6e9414b7d11b3390d1bf7462c3c845bf2442e7b4c155ace",
+        "ownership": "Shared visual/model/geometry regression scope."
+      },
+      {
+        "file": "apps/web/src/transfers/transfers-page.tsx",
+        "sha256": "487a5b6d0ff93f585185448b2e06a497ea35ef3cc670be2591c68d1b595fc3ef",
+        "ownership": "Only original first filter-icon span class added; other page changes belong to concurrent transfer form work."
+      }
+    ]
+  },
+  "findingsAndChanges": [
+    {
+      "subject": "Warehouse popup cap",
+      "confirmedSourceCause": "Arco TreeSelect sets inline maxHeight:unset when treeProps.virtualListProps.height exists; remote adapter supplies 288. The installed CSS cap used by the frozen Demo is consequently bypassed.",
+      "change": "Clear only generated inline maxHeight, restoring installed CSS. A scoped flex/min-height:0 chain shrinks the actual tree under natural toolbar/notices. No screenshot-sized height or candidate truncation is authored.",
+      "preserved": "Same tree scroll callback, rendering threshold, 20-per-page loading, 200 candidate display limit, exact totals and existing ALL-minus semantics.",
+      "verification": "Authored/computed CSS and actual-tree event target only; browser flex sizing and bottom reachability require recheck."
+    },
+    {
+      "subject": "Category standalone ALL",
+      "confirmedSourceCause": "The previous bounded projection checked every current ordinary node under canonical unrestricted []. Frozen Demo checks standalone ALL only.",
+      "change": "Only ALL is checked under []; an explicit true check chooses exactly [id]. False callbacks are refused.",
+      "preserved": "Unrestricted [] still includes uncategorized rows. Positive parent coverage, unknown-ID retention and no inferred half-checks remain. Positive IDs never normalize to []. No backend/API/schema change."
+    },
+    {
+      "subject": "Transfer horizontal geometry",
+      "confirmedSourceCause": "Frozen first toggle icon has iw-filter-icon at 15px/line-height1. New source omitted its class and inherited 12px. Both grids use a final max-content action track.",
+      "change": "Restore only original icon class and scoped 15px/line-height1 rule.",
+      "verification": "Computed declaration passed. The approximately 1.1328px grid shift is consistent with intrinsic-track redistribution but causal pixel parity remains unverified."
+    },
+    {
+      "subject": "Shared vertical geometry",
+      "assessment": "Both source headers use auto height, minimum44px, padding6px top/bottom, border1px. Synthetic marker outer height20px permits44px; original default32px account button would require45px. This is a source-supported host-content hypothesis, not a confirmed control-local defect.",
+      "change": "None. No pixel transform, business-frame edit or test-marker change.",
+      "nextEvidence": "Measure both topbar/account/marker/page bounds and control top minus topbar.bottom."
+    },
+    {
+      "subject": "Product candidates and other screenshot differences",
+      "assessment": "Product input width/height, candidate row height/font, and right facts width match. Recent-history counts, candidate counts, images, names and category count are data differences, not source layout bugs. Idle token fallback mismatch in tested 4d0f0f4 was already fixed in current HEAD and was not reimplemented."
+    }
+  ],
+  "checks": [
+    {
+      "command": "node --test apps/web/src/demo-controls/category-branch-model.test.ts",
+      "status": "passed",
+      "tests": 20,
+      "log": "category-model.log"
+    },
+    {
+      "command": "node apps/web/src/demo-controls/tests/run-category-branch-dom-tests.mjs",
+      "status": "passed",
+      "groups": 7,
+      "log": "category-dom.log"
+    },
+    {
+      "command": "node apps/web/src/demo-controls/tests/run-multi-select-layout-dom-tests.mjs",
+      "status": "passed",
+      "scope": "Four route/style contexts, original cascade invariants, 24 remote-menu cases (flat/category by6/20/200), unchanged actual-tree scroll target and source icon declarations. JSDOM only.",
+      "log": "computed-css.log"
+    },
+    {
+      "command": "node apps/web/src/transfers/tests/run-filter-dom-tests.mjs",
+      "status": "passed",
+      "groups": 4,
+      "log": "transfer-filter.log"
+    },
+    {
+      "command": "node apps/web/src/demo-controls/tests/run-idle-selection-dom-tests.mjs",
+      "status": "passed",
+      "groups": 6,
+      "log": "idle-selection.log"
+    },
+    {
+      "command": "node apps/web/src/sales/tests/run-reference-popup-dom-tests.mjs",
+      "status": "blocked_environment_killed_exit137",
+      "scope": "Only React19 warnings emitted; no assertion result. Not retried.",
+      "log": "sales-reference-killed.log"
+    },
+    {
+      "command": "node apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs",
+      "status": "not_run",
+      "scope": "Existing expectation updated for approved direct positive category check; deferred while shared heavy-test slot is occupied."
+    },
+    {
+      "command": "git diff --check -- [owned paths]",
+      "status": "passed"
+    },
+    {
+      "command": "Full compiler/typecheck/build, DB, actual Mac browser recheck",
+      "status": "not_run_by_this_worker"
+    }
+  ],
+  "nextBrowserChecks": [
+    "Native warehouse popup cap with actual tree scroll: reach bottom, append one next20-row page only on user scroll, preserve totals/candidate cap.",
+    "Category default checks, direct parent/child positive selection, parent coverage/refusal, reset to unrestricted and unchanged query payload.",
+    "Topbar-relative Y coordinates to distinguish synthetic host height from controls.",
+    "Transfer actual gridTemplateColumns, first icon/action widths and status control X after original icon restoration."
+  ],
+  "safetyScope": {
+    "commits": false,
+    "fullBuild": false,
+    "database": false,
+    "network": false,
+    "macActions": false,
+    "backendApiSchemaDomainChanges": false,
+    "originalMacEvidenceModified": false
+  }
+}

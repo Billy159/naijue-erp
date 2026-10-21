@@ -57,12 +57,18 @@ try {
   await click(title('全部分类')); assert.deepEqual(value(), []); assert.equal(checked('全部分类'), true);
   console.log('PASS category branch2: covered-child exclusion is refused without replacement; only a separate deliberate positive-only button changes it; all loaded children never fabricate parent/halfcheck; choosing parent removes only proven redundant child IDs.');
 
-  await mount({ initial: [], completeUniverse: true }); await click(title('上装'));
+  let allTree;
+  await mount({ initial: [], completeUniverse: true, onTree: menu => { allTree = menu; } });
+  assert.equal(checked('全部分类'), true); assert.equal(checked('上装'), false); assert.equal(checked('下装'), false);
+  await expand('上装'); assert.equal(checked('衬衫'), false); assert.equal(checked('针织'), false);
+  await act(async () => allTree.props.onCheck([], { node: { props: { _key: 'a' } }, checked: false }));
   assert.deepEqual(value(), []); assert.equal(changes.length, 0); assert.deepEqual(refusals.at(-1), { id: 'a', reason: undefined });
-  await click(host.querySelector('p[role="status"] button')); assert.deepEqual(value(), ['a']);
+  await click(title('上装')); assert.deepEqual(value(), ['a']); assert.equal(checked('全部分类'), false); assert.equal(checked('衬衫'), true);
+  await click(title('全部分类')); assert.deepEqual(value(), []); assert.equal(checked('上装'), false); assert.equal(checked('衬衫'), false);
+  await click(title('衬衫')); assert.deepEqual(value(), ['a1']); assert.equal(checked('上装'), false); assert.equal(checked('衬衫'), true); assert.equal(host.querySelector('.arco-checkbox-indeterminate'), null);
   await mount({ initial: categories.map(option => option.id), completeUniverse: true });
   assert.deepEqual(value(), categories.map(option => option.id)); assert.equal(checked('全部分类'), false); assert.ok(!tags().some(text => text.includes('全部分类')));
-  console.log('PASS category branch3: ALL stays standalone; even a complete page cannot approximate unrestricted-minus-category or normalize every positive ID into unrestricted (uncategorized rows remain distinct).');
+  console.log('PASS category branch3: only standalone ALL is checked for unrestricted scope; a positive parent/child check chooses exactly that ID, false callbacks cannot approximate ALL-minus, and every positive ID remains distinct from unrestricted scope including uncategorized rows.');
 
   await mount({ initial: ['b1'] }); assert.equal(node('停用分类').querySelector('input').disabled, true); await click(title('停用分类')); assert.deepEqual(value(), ['b1']); assert.equal(changes.length, 0);
   await mount({ initial: ['disabled'] }); assert.equal(node('停用分类').querySelector('input').disabled, false); await click(title('停用分类')); assert.deepEqual(value(), []);

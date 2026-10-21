@@ -5,6 +5,10 @@ import type { InventoryActions } from '../inventory/contracts.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
 import type { HttpQueryOptions } from '../transport/http-query.ts';
 import type { PartyWorkspace } from '../parties/controller.ts';
+import type { SalesFormPreparationProvider } from '../sales/commands/contracts.ts';
+import type { SalesEditorSession } from '../sales/commands/editor-session.ts';
+import type { TransferFormPreparationProvider } from '../transfers/commands/contracts.ts';
+import type { TransferCommandWorkspace } from '../transfers/commands/controller.ts';
 
 export type ApplicationRoute = 'inventory' | 'sales' | 'transfers' | 'customers' | 'suppliers';
 export interface RouteStylesheet {
@@ -22,6 +26,9 @@ export interface SalesRouteConfiguration {
   /** Optional full-page read-only detail action CSS. Omission disables viewing,
    * not the list. Never loaded with route or shell CSS. */
   readonly detailStylesheet?: RouteStylesheet;
+  /** Explicit write-host opt-in only, after native server reference/economics
+   * composition is available. Omission preserves the existing read-only route. */
+  readonly commands?: { readonly newRequestKey: () => string; readonly preparation?: SalesFormPreparationProvider };
 }
 export interface TransferRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
@@ -29,6 +36,7 @@ export interface TransferRouteConfiguration {
   readonly detailStylesheet: RouteStylesheet;
   /** Omit when the real shared action-style handshake is unavailable. */
   readonly product?: { readonly stylesheet: RouteStylesheet };
+  readonly commands?: { readonly newRequestKey: () => string; readonly preparation?: TransferFormPreparationProvider };
 }
 export interface PartiesRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
@@ -62,6 +70,14 @@ export interface RoutePreparation {
 export interface PartySession {
   readonly workspace: PartyWorkspace;
   readonly prepare: (route: 'customers' | 'suppliers') => PreparedApplicationRoute;
+}
+export interface SalesSession {
+  readonly workspace: SalesEditorSession;
+  readonly prepare: (route: RoutePreparation) => PreparedApplicationRoute;
+}
+export interface TransferSession {
+  readonly workspace: TransferCommandWorkspace;
+  readonly prepare: (route: RoutePreparation) => PreparedApplicationRoute;
 }
 export type ApplicationSnapshot = {
   readonly phase: 'home' | 'loading' | 'ready' | 'error' | 'cancelled' | 'disposed';

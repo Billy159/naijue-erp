@@ -1,12 +1,13 @@
 import { TransferPageHost } from '../../transfers/transfers-route.tsx';
 import { createTransferHttpReader, createTransferWarehouseHttpReader } from '../../transfers/http-reader.ts';
+import { TransferCommandWorkspace } from '../../transfers/commands/controller.ts';
+import { createTransferCommandHttpClient } from '../../transfers/commands/http-client.ts';
+import type { TransferCommandCapability, TransferCommandError } from '../../transfers/commands/contracts.ts';
 import { HttpQueryError } from '../../transport/http-query.ts';
 import type { ProductReadOnlyReader } from '../../inventory/product-contracts.ts';
-import type { ApplicationRouteProps, PreparedApplicationRoute, RoutePreparation } from '../contracts.ts';
+import type { ApplicationRouteProps, PreparedApplicationRoute, RoutePreparation, TransferSession } from '../contracts.ts';
 
-/** Real fixed native endpoints only. Construction remains inert; the route owns
- * its one bounded first-page read after explicit authenticated navigation. */
-export function prepareTransferRoute(input: RoutePreparation): PreparedApplicationRoute {
+function preparedTransferRoute(input: RoutePreparation, commands?: TransferCommandCapability): PreparedApplicationRoute {
   const configuration = input.configuration.transfers;
   if (!configuration) throw new TypeError('Transfer capability was not configured.');
   const reader = createTransferHttpReader(input.http), references = createTransferWarehouseHttpReader(input.http);
@@ -28,5 +29,17 @@ export function prepareTransferRoute(input: RoutePreparation): PreparedApplicati
     } satisfies ProductReadOnlyReader,
     loadStyles: async (): Promise<void> => { await configuration.product!.stylesheet.load(); },
   } : undefined;
-  return { View: ({ scope }: ApplicationRouteProps) => <TransferPageHost scope={scope} reader={reader} references={references} loadDetailStyles={loadDetailStyles} {...(product ? { product } : {})} /> };
+  return { View: ({ scope }: ApplicationRouteProps) => <TransferPageHost scope={scope} reader={reader} references={references} loadDetailStyles={loadDetailStyles} {...(commands ? { commands } : {})} {...(product ? { product } : {})} /> };
+}
+/** Default real read-only path. Commands are never inferred from read access. */
+export function prepareTransferRoute(input: RoutePreparation): PreparedApplicationRoute { return preparedTransferRoute(input); }
+/** One session-owned command workspace, retained across route detach. Explicit
+ * host configuration is the capability gate, not an authorization bypass. */
+export function prepareTransferSession(input: RoutePreparation, onAccessFailure: (error: TransferCommandError) => void): TransferSession {
+  const configuration = input.configuration.transfers?.commands;
+  if (input.principal.accountId !== input.scope.identity.accountId || !configuration || typeof configuration.newRequestKey !== 'function' || typeof onAccessFailure !== 'function'
+    || configuration.preparation !== undefined && typeof configuration.preparation.prepareCreate !== 'function') throw new TypeError('Explicit transfer command capability is required.');
+  const workspace = new TransferCommandWorkspace({ scope: input.scope, reader: createTransferHttpReader(input.http), client: createTransferCommandHttpClient(input.http), newRequestKey: configuration.newRequestKey, onAccessFailure });
+  const commands = Object.freeze({ workspace, ...(configuration.preparation ? { preparation: configuration.preparation } : {}) });
+  return Object.freeze({ workspace, prepare: (currentRoute: RoutePreparation) => preparedTransferRoute(currentRoute, commands) });
 }

@@ -39,6 +39,11 @@ if (artifact) {
   styles.push({ name: 'split-transfer', css: shell + await css('apps/web/src/application/styles/transfers.css'), routes: ['transfer'] });
   styles.push({ name: 'split-sales', css: shell + await css('apps/web/src/application/styles/sales.css') + await css('apps/web/src/demo-controls/multi-select.css'), routes: ['sales'] });
 }
+const nativeTreeSelectCss = await readFile(path.join(repo, 'node_modules/@arco-design/web-react/es/TreeSelect/style/index.css'), 'utf8');
+const nativePopupCap = nativeTreeSelectCss.match(/\.arco-tree-select-popup\{[^}]*max-height:([^;}]+)/)?.[1];
+assert.ok(nativePopupCap, 'Read the actual installed popup cap, not a screenshot-derived fixture');
+const transferPage = await readFile(path.join(repo, 'apps/web/src/transfers/transfers-page.tsx'), 'utf8');
+assert.match(transferPage, /<span className="iw-filter-icon" aria-hidden="true">☷<\/span>/, 'The transfer toggle retains the original icon class');
 const dom = new JSDOM('<!doctype html><style></style><div id="root"></div>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
 for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLButtonElement', 'HTMLIFrameElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'Element', 'SVGElement', 'MutationObserver', 'ShadowRoot', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame', 'innerWidth', 'innerHeight', 'pageXOffset', 'pageYOffset']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
 Object.defineProperty(globalThis, 'navigator', { configurable: true, value: dom.window.navigator });
@@ -107,6 +112,52 @@ try {
       assert.equal(computed(host.querySelector('.arco-tree-select-view')).maxHeight, '32px');
       assert.equal(computed(host.querySelector('.arco-input-tag-tag')).height, '23px');
       console.log(`PASS shared multi-select layout cascade: ${scenario.name}/${route}`);
+
+      // Real bounded remote menus, with both flat and category content. JSDOM
+      // cannot resolve a flex height, so assert the native cap and authored
+      // shrink chain, then exercise the unchanged actual-tree scroll target.
+      for (const hierarchy of [undefined, 'category-branches']) {
+        for (const count of [6, 20, 200]) {
+          const scrollTargets = [], changes = [];
+          const options = Array.from({ length: count }, (_, index) => ({ id: `W${index}`, name: `合成仓库 ${index + 1}` }));
+          await act(async () => root.render(h(StrictMode, null, h('section', { className: `demo-ui ${route === 'transfer' ? 'transfer-route' : 'sales-workbench'}` },
+            h(DemoMultiSelectAction, { key: `remote-${scenario.name}-${route}-${hierarchy}-${count}`, label: '候选', allLabel: '全部候选', options, value: [], open: true,
+              ...(hierarchy ? { hierarchy } : {}), menuItemLimit: 202, onMenuScroll: event => scrollTargets.push(event.currentTarget), onChange: ids => changes.push(ids),
+              renderMenu: menu => h('div', { className: 'inventory-reference-menu' }, h('div', { className: 'inv-filter-tools' }, `匹配 ${count} 项 · 已选 ${count} 项`), menu) })))));
+          await act(async () => { await new Promise(resolve => setTimeout(resolve, 35)); });
+          const popup = host.querySelector('.arco-tree-select-popup');
+          const viewport = host.querySelector('.demo-multi-menu-viewport');
+          const content = viewport?.firstElementChild;
+          const tree = host.querySelector('.arco-tree');
+          assert.ok(popup && viewport && content && tree);
+          assert.equal(popup.style.maxHeight, '', 'The virtual-list height must not leave Arco maxHeight:unset on the popup');
+          assert.equal(getComputedStyle(popup).maxHeight, nativePopupCap, 'Installed native cap survives at six, twenty and two hundred candidates');
+          for (const element of [popup, viewport, content]) {
+            assert.equal(getComputedStyle(element).display, 'flex');
+            assert.equal(getComputedStyle(element).flexDirection, 'column');
+          }
+          for (const element of [viewport, content, tree]) {
+            assert.equal(getComputedStyle(element).minHeight, '0px');
+            assert.equal(getComputedStyle(element).flexShrink, '1');
+          }
+          assert.equal(getComputedStyle(content.querySelector('.inv-filter-tools')).flexShrink, '0');
+          assert.equal(getComputedStyle(tree).overflowY, 'auto');
+          assert.equal(host.querySelectorAll('.arco-tree-node').length, count + 1, 'No candidate is removed to fit the source popup cap');
+          assert.deepEqual(scrollTargets, []); assert.deepEqual(changes, []);
+          await act(async () => popup.dispatchEvent(new Event('scroll', { bubbles: false })));
+          assert.deepEqual(scrollTargets, [], 'An outer clip is not substituted for the candidate scroll target');
+          await act(async () => tree.dispatchEvent(new Event('scroll', { bubbles: false })));
+          assert.deepEqual(scrollTargets, [tree], 'The same actual tree still owns the remote pagination callback');
+          assert.deepEqual(changes, []);
+        }
+      }
+      if (route === 'transfer') {
+        await act(async () => root.render(h('section', { className: 'demo-ui transfer-route' }, h('button', { className: 'iw-text-button tc-filter-toggle' }, h('span', { className: 'iw-filter-icon', 'aria-hidden': true }, '☷'), h('span', null, '高级筛选')))));
+        const icon = host.querySelector('.iw-filter-icon');
+        assert.equal(getComputedStyle(icon).fontSize, '15px');
+        assert.equal(getComputedStyle(icon).lineHeight, '1');
+      }
+      console.log(`PASS native popup cap, shrink chain, intact bounded candidates/tree scroll target and source toggle icon: ${scenario.name}/${route}`);
     }
   }
   console.log('PASS actual TreeSelect DOM and computed CSS invariants across current portable and production split styles. JSDOM does not perform browser layout or prove same-row pixels; actual-browser comparison remains required.');

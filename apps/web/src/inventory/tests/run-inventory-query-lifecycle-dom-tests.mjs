@@ -217,9 +217,15 @@ try {
   assert.ok(treeRow('商品分类', 'Native Missing Parent / Orphan Child'));
   assert.equal(!!treeRow('商品分类', 'Native Missing Parent'), false, 'A supplied parent label is a path, not a fabricated parent node');
   assert.equal(refHost('商品分类').querySelectorAll('.iw-search, .iw-pop-head, footer').length, 0);
-  // Category ALL-minus is never synthesized, even when all named categories fit one page.
-  await click(checkbox(treeRow('商品分类', 'Parent'))); assert.match(refHost('商品分类').textContent, /不能从全部范围排除单项/);
-  await click([...refHost('商品分类').querySelectorAll('button')].find(button => button.textContent === '仅选择该项'));
+  // Standalone ALL is the only check for unrestricted scope. An ordinary check
+  // chooses a positive branch, never an approximation of ALL-minus-that-branch.
+  assert.equal(checkbox(treeRow('商品分类', '全部分类')).checked, true);
+  assert.equal(checkbox(treeRow('商品分类', 'Parent')).checked, false);
+  assert.equal(checkbox(treeRow('商品分类', 'Other')).checked, false);
+  const beforePositiveCategory = count('inventory');
+  await click(checkbox(treeRow('商品分类', 'Parent')));
+  assert.equal(count('inventory'), beforePositiveCategory, 'A positive category check only edits the draft');
+  assert.equal(checkbox(treeRow('商品分类', '全部分类')).checked, false);
   assert.match(refHost('商品分类').querySelector('.arco-tag').textContent, /Parent/);
   const parentNode = treeRow('商品分类', 'Parent'); if (parentNode.getAttribute('aria-expanded') !== 'true') await click(parentNode.querySelector('.arco-tree-node-switcher-icon[role="button"]'));
   await settle(); assert.ok(treeRow('商品分类', 'Child')); assert.equal(checkbox(treeRow('商品分类', 'Child')).checked, true);
@@ -236,7 +242,7 @@ try {
   assert.equal(refHost('仓库').querySelectorAll('.iw-search, .iw-pop-head, footer').length, 0);
   await submit(); assert.deepEqual(latest('inventory').read.parameters.filter.warehouses.map(item => item.id), ['WAREHOUSE-B']);
   await clear(); referenceContext.clear();
-  console.log('PASS inventory shared filters: native category hierarchy preserves explicit multi-branch IDs, refuses ALL-minus/parent-minus-child, deliberate replacement works; warehouse source tags select a true subset; changing controls never auto-submits inventory.');
+  console.log('PASS inventory shared filters: standalone ALL switches directly to a positive category branch; native hierarchy preserves explicit multi-branch IDs and refuses parent-minus-child; deliberate replacement and warehouse true-subset tags work; changing controls never auto-submits inventory.');
 
 } finally {
   if (root && act) await act(async () => root.unmount());

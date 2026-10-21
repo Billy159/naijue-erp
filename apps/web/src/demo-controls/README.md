@@ -182,6 +182,15 @@ The regression also exposed shortened tag selectors losing to installed size rul
 (24px instead of the source23px). Original TreeSelect/input-tag ancestry is retained
 under the shared host so the copied declarations keep their intended precedence.
 
+The actual Mac comparison at tested commit4d0f0f4 also exposed a remote-menu
+integration issue: Arco removes its native popup cap whenever the caller supplies
+a virtual-list height. Remote menus now clear only that generated inline override
+and use a scoped flex/min-height shrink chain so the actual tree remains the
+scroll target below the native cap. No screenshot height, candidate truncation,
+page-size, selection or load-more policy is substituted. Computed-CSS checks cover
+six, twenty and two hundred candidates and preserve the actual-tree scroll callback;
+they do not establish browser flex geometry or Mac parity.
+
 `run-multi-select-layout-dom-tests.mjs` compiles the actual portable source CSS graph
 and production split transfer/sales CSS, then checks the real TreeSelect DOM/cascade
 under each field ancestry. Its optional HTML filename diagnoses the exact rejected
@@ -205,8 +214,10 @@ Only present current parent nodes are nested. Missing parents remain standalone
 provider-labelled options, never invented rows or extra reads. Known invalid
 self-links/cycles/depth fail closed visibly rather than showing guessed hierarchy.
 
-ALL is standalone and may include uncategorized rows, so a category page cannot
-prove unrestricted-minus-one. Selecting every positive ID never normalizes to[]
+ALL is standalone and may include uncategorized rows. Only its own checkbox is
+checked for unrestricted scope; an ordinary positive check deliberately switches
+to exactly that category or branch ID. False/uncheck callbacks cannot approximate
+unrestricted-minus-one. Selecting every positive ID never normalizes to[]
 and neither complete nor partial pages approximate ALL-minus. A covered child
 cannot exclude its selected parent branch; the limitation callback receives
 `'branch-exclusion'`. The inventory adapter explains this and offers a separate,

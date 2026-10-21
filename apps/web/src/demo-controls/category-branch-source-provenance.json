@@ -33,7 +33,7 @@
   "intentionalDifferences": [
     "Strict selection with explicit canonical branch IDs instead of source non-strict SHOW_PARENT on a complete catalog. No halfchecks or completeness inferred from a partial candidate page.",
     "Only real current loaded parents are nested; an absent parent is not fetched, injected or invented. Provider-owned orphan labels are preserved.",
-    "ALL is independent from every explicit positive category ID; it may include uncategorized rows. Category ALL-minus is refused even for a complete page, and positive IDs never normalize to unrestricted[].",
+    "ALL is independent from every explicit positive category ID; it may include uncategorized rows. Its standalone projection checks only ALL. Checking one ordinary node replaces ALL with exactly that positive ID; false/uncheck callbacks still refuse ALL-minus even for a complete page. Positive IDs never normalize to unrestricted[].",
     "A child already included by a selected parent cannot be individually excluded. A separate deliberate positive-only action may replace the branch. No exclusion API or loaded-window approximation.",
     "Removing an explicit redundant child tag removes only that canonical token; the child remains visually covered by its selected native parent.",
     "Disabled candidates cannot be newly added; retained explicit disabled tokens remain removable.",

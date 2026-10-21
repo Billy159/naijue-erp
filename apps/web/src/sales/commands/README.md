@@ -1,8 +1,47 @@
-# Native sales command boundary, headless and not activated
+# Native sales commands and bounded existing-document editor
 
-This additive slice implements a bounded native command client and a session-owned
-single-document controller. It does not enable an editor or alter existing sales
-presentation, contracts, routing, API, schema, package scripts or application root.
+## Current additive frontend checkpoint
+
+The command boundary below now has an opt-in full-page existing-document editor
+(`form.tsx`, `editor-session.ts`, `page-host.tsx`) and exact raw-input arithmetic
+(`form-model.ts`). `ApplicationConfiguration.routes.sales.commands` is an explicit
+trusted-host capability, not inferred from read access. Existing read/development
+hosts still omit it, so this does not enable real business writes or claim that a
+complete new sales form works.
+
+The bounded editor changes only existing native rows: date/note, integer signed
+quantity, explicit direct-price/discount intent, gift/zero-price confirmation,
+whole-sale discount and the existing settlement amounts/directions. Header/SKU/
+payment-account identities, line order, saved reference-price facts and original
+barcodes are not replaced. The frozen header/column order and exchange sections
+are retained. Current identity/product/account selection and row addition/removal
+are deliberately unavailable, rather than using historical filter candidates.
+
+Both incomplete raw inputs and original commands belong to a session owner.
+Navigation cannot discard invalid input, unsaved edits or unknown writes. Explicit
+discard is required; confirmed writes require a separate current read and adopt,
+and the retained list is marked stale until an explicit query. SAVE never chains
+to APPROVE. State actions have an explicit confirmation, and salesperson
+affordances mirror the confirmed own-hall/own-creator/no-unapprove rule while the
+server remains authoritative. Style failure retains a working discard/back path.
+
+NEW remains disabled without a complete real `SalesFormPreparationProvider`.
+That provider must supply the native document number; customer/supplier KH/GYS
+numbering does not authorize a sales-number scheme. Tests may inject explicitly
+synthetic preparers, but none is a production fallback. Current catalog/pricing,
+barcode authority, transaction-bound reference/economics assembly and write-host
+composition must be connected and validated separately before business usability.
+
+Focused new checks: `node --test apps/web/src/sales/commands/form-model.test.ts
+apps/web/src/sales/commands/editor-session.test.ts`; DOM runner:
+`node apps/web/src/sales/commands/tests/run-dom-tests.mjs`. These remain synthetic
+and do not establish real-browser, live HTTP/PostgreSQL or Demo pixel acceptance.
+
+## Existing command boundary
+
+The original additive slice implements a bounded native command client and a
+session-owned single-document controller. Its behavior remains preserved by the
+separately opt-in frontend integration above. No API or database schema is changed.
 No new endpoint, price configuration, original-sale reference, credit/account
 balance feature, optimistic success or production fixture fallback is introduced.
 
@@ -95,8 +134,8 @@ receipt/replay recovery remains available. It is not a document/business limit.
 
 ## Missing trusted native form providers: activation is false
 
-`salesCommandUiActivation.available` is explicitly false. No UI has been wired and
-none should be enabled by this slice. `SalesFormPreparationProvider` is an inert
+`salesCommandUiActivation.available` is explicitly false for complete native NEW.
+The bounded existing editor does not change that prerequisite. `SalesFormPreparationProvider` is an inert
 future host contract for preparing complete new/edit drafts, not an implemented
 provider, catalogue store, authority resolver, permission framework or endpoint.
 A caller-supplied draft remains a proposal subject to all server checks.

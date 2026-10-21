@@ -38,7 +38,8 @@ export interface SalesFormPreparationProvider {
   prepareCreate(signal: AbortSignal): Promise<SalesDraftDto>;
   prepareEdit(detail: SalesDetailDto, signal: AbortSignal): Promise<SalesDraftDto>;
 }
-/** No native picker/preparation implementation is supplied by this slice. */
+/** Complete native NEW-form preparation remains unavailable. The separately
+ * opt-in existing-document editor does not turn missing providers into facts. */
 export const salesCommandUiActivation = Object.freeze({ available: false, reason: 'NATIVE_FORM_PROVIDERS_UNAVAILABLE' } as const);
 export interface SalesCommandWorkspaceOptions {
   /** Session-owned scope, retained across route detach. Identity changes dispose it. */

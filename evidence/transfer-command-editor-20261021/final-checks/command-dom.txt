@@ -1,0 +1,8 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS transfer command DOM 1: explicit capability without current preparer leaves new disabled; command form/code/styles wait actual view, cancellation before CSS prevents detail/command reads.
+PASS transfer command DOM 2: real controls retain invalid raw quantity and block leaving; actual SAVE preserves endpoints/SKU/original barcode and CAS, then requires explicit read/adopt, never optimistic status or stock.
+PASS transfer command DOM 3: genuine buttons enforce persisted DRAFT/APPROVED/VOID states through approval, two-ended reversal and void, each followed by authoritative reread/adoption.
+PASS transfer command DOM 4: return cancels an active native read; a lost SAVE response locks edits/navigation, exact original replay keeps key/CAS/payload, and only correlated receipt confirms outcome.
+PASS transfer command DOM 5: same-owner identity/permission replacement clears original recovery payload, raw input and rendered editor; tests are synthetic JSDOM, not browser/layout/DB/write-host acceptance.
