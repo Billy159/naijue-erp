@@ -1,0 +1,45 @@
+{
+  "parentCommit": "4d0f0f44c8247e3ea15105d8a4d3207ba48f4e0e",
+  "files": [
+    {
+      "path": "apps/web/src/demo-controls/idle-selection-tokens.tsx",
+      "sha256": "a57ff2d79728b4090d932e91f3a7be449d79ea493380d448c47d893ded0dc633",
+      "bytes": 4293
+    },
+    {
+      "path": "apps/web/src/demo-controls/idle-selection-tokens.css",
+      "sha256": "10505c9e78c3d061ee2039ce1250f84c13d634ca0adc844072d6340e1221b06b",
+      "bytes": 2897
+    },
+    {
+      "path": "apps/web/src/demo-controls/multi-select.tsx",
+      "sha256": "cb121dc3e060119537b646f6357259e09078f01548d399f86699f3551cb36d78",
+      "bytes": 10761
+    },
+    {
+      "path": "apps/web/src/components/candidate-selector.tsx",
+      "sha256": "061c5247ff56632962587f183947092d67b210cfdd24bf5a1143ab41c059a048",
+      "bytes": 12172
+    },
+    {
+      "path": "apps/web/src/demo-presentation/controls.css",
+      "sha256": "2ac2b4b45d71d938049934b6b89f15575e66ffda0ff88e065f0135254487df93",
+      "bytes": 6379
+    },
+    {
+      "path": "apps/web/src/demo-controls/tests/idle-selection-entry.tsx",
+      "sha256": "69fcc9b80f6d097108b5adf311bf6f06e7a615db7093a8416b8663d966daae27",
+      "bytes": 438
+    },
+    {
+      "path": "apps/web/src/demo-controls/tests/run-idle-selection-dom-tests.mjs",
+      "sha256": "312cb3947c6bd9a6302f84b70cc05ce1b9c774a4f529d6d10bd0152bc6caf944",
+      "bytes": 15930
+    },
+    {
+      "path": "package.json",
+      "sha256": "76436e4855674916f609eb9d9508f6f3435ba9c46054725dab73fcf022c04e73",
+      "bytes": 4824
+    }
+  ]
+}

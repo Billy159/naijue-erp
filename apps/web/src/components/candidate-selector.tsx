@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useRef, useState, type ComponentType } from 'react';
+import { useLayoutEffect, useMemo, useReducer, useRef, useState, type ComponentType } from 'react';
 import { ReadScope } from '../loading/read-scope.ts';
 import type { PopupOwnership } from '../demo-controls/popup-ownership.ts';
 import { DemoMultiSelect } from '../demo-controls/multi-select.tsx';
@@ -8,6 +8,7 @@ import type { CandidateSelectorProps, ProductCandidateActionProps, ProductCandid
 import { useInventoryFilterPopupHost } from './inventory-filter-popup-host.ts';
 import { InventoryCandidateMenu } from './inventory-candidate-menu.tsx';
 import { inventoryMultiOption, type InventoryCandidateSnapshot } from './inventory-candidates.ts';
+import { IdleSelectionTokens } from '../demo-controls/idle-selection-tokens.tsx';
 
 const noCategoryRestriction: readonly string[] = Object.freeze([]);
 export function CandidateSelector(props: CandidateSelectorProps) {
@@ -57,12 +58,13 @@ function ProductSelector(props: CandidateSelectorProps) {
   const live = useRef(props); live.current = props;
   const [activation, setActivation] = useState<ReadScope | null>(null); const [search, setSearch] = useState('');
   const [View, setView] = useState<ComponentType<ProductCandidateActionProps> | null>(null);
+  const [, invalidate] = useReducer((value: number) => value + 1, 0);
   const [phase, setPhase] = useState<'idle' | 'loading' | 'error'>('idle');
   const clearPending = () => { generation.current++; pending.current = null; styles.current?.dispose(); styles.current = null; setPhase('idle'); };
   const available = () => attached.current && live.current.scope.active && !!live.current.popupHost && !live.current.popupHost.controller.disposed;
   useLayoutEffect(() => {
     attached.current = true; suppressOpen.current = false; setSearch(''); setView(null); clearPending();
-    const abort = () => { owned.current?.ownership.dispose(); clearPending(); setActivation(null); setSearch(''); setView(null); };
+    const abort = () => { owned.current?.ownership.dispose(); clearPending(); setActivation(null); setSearch(''); setView(null); invalidate(); };
     props.scope.signal.addEventListener('abort', abort, { once: true });
     return () => { attached.current = false; props.scope.signal.removeEventListener('abort', abort); owned.current?.ownership.dispose(); clearPending(); };
   }, [props.scope, props.reader, props.productReader, props.popupHost]);
@@ -103,8 +105,18 @@ function ProductSelector(props: CandidateSelectorProps) {
     <label>{props.label}</label>
     {View ? <View {...props} search={search} onSearch={setSearch} open={!!activation?.active} activationScope={activation}
       focusOnMount={!!host.current?.contains(document.activeElement)} onOpen={next => { if (next) open(); else owned.current?.ownership.close(); }} />
-      : <div className="iw-product-search-shell"><input ref={input} className="iw-product-input" role="combobox" aria-label="商品搜索，多选" aria-expanded={!!activation?.active} aria-autocomplete="list"
-        disabled={!enabled} value={search} placeholder={props.placeholder ?? '商品款号 / 名称 / 系统货号'}
+      : <div className={`iw-product-search-shell${props.selected.length ? ' iw-product-search-shell--selected' : ''}`} onClick={event => { if (event.target === event.currentTarget) { input.current?.focus(); prepare(); } }}>
+        {props.selected.length > 0 && <IdleSelectionTokens variant="product" disabled={!enabled}
+          tokens={props.selected.map(item => ({ id: item.id, label: item.label }))} onRemove={id => {
+            if (!available() || live.current !== props || !props.selected.some(item => item.id === id)) return;
+            setSearch(''); props.onChange(props.selected.filter(item => item.id !== id));
+          }} onEmptyFocus={() => {
+            if (!available() || live.current.scope !== props.scope || live.current.reader !== props.reader || live.current.productReader !== props.productReader || live.current.popupHost !== props.popupHost) return;
+            suppressOpen.current = true; input.current?.focus({ preventScroll: true });
+            queueMicrotask(() => { suppressOpen.current = false; });
+          }} />}
+        <input ref={input} className="iw-product-input" role="combobox" aria-label="商品搜索，多选" aria-expanded={!!activation?.active} aria-autocomplete="list"
+        disabled={!enabled} value={search} placeholder={props.selected.length ? '' : props.placeholder ?? '商品款号 / 名称 / 系统货号'}
         onFocus={prepare} onClick={prepare} onChange={event => { setSearch(event.target.value); prepare(); }}
         onKeyDown={event => { if (event.key === 'Enter') { event.preventDefault(); event.stopPropagation(); prepare(); } }} /><SearchIcon /></div>}
     {phase === 'loading' && <span className="iw-filter-load-state" role="status">正在加载商品搜索…</span>}

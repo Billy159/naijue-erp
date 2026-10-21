@@ -1,0 +1,10 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS category branch1: real current-only hierarchy/switchers/indentation and320px source list; parent selection projects known child checks while canonical tags/payload retain only explicit branch IDs.
+PASS category branch2: covered-child exclusion is refused without replacement; only a separate deliberate positive-only button changes it; all loaded children never fabricate parent/halfcheck; choosing parent removes only proven redundant child IDs.
+PASS category branch3: ALL stays standalone; even a complete page cannot approximate unrestricted-minus-category or normalize every positive ID into unrestricted (uncategorized rows remain distinct).
+PASS category branch4: disabled candidates cannot be newly selected; an already-selected disabled token remains visible/removable, and last removal truthfully returns ALL.
+PASS category branch5: absent parents are not invented or hydrated; retained native parent ID still proves child coverage, and its selected-only tag can be removed without adopting projected IDs.
+PASS category branch6: malformed self-links, known cycles and unsupported depth fail closed with a visible message rather than fabricating nodes/partial checks or emitting a filter.
+PASS category branch7: actual public Tree callbacks retained across close/reopen/unmount cannot mutate a later activation; only its current callback commits, without an implicit query/read.
+All7 synthetic category-branch groups passed with actual installed TreeSelect/Tree leaves and component-only CSS. No catalog reads, network, browser layout/pixels, performance, DB or full frozen-Demo semantic equivalence is claimed.

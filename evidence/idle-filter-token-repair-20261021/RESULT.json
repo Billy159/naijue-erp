@@ -1,0 +1,20 @@
+{
+  "parentCommit": "4d0f0f44c8247e3ea15105d8a4d3207ba48f4e0e",
+  "checks": {
+    "rootTypecheck": 0,
+    "webTypecheck": 0,
+    "build": 0,
+    "finalIdleGroups": 6,
+    "sharedShellGroups": 7,
+    "categoryGroups": 7,
+    "productCssScenarios": 2
+  },
+  "captureBoundary": "TXT files are complete captured combined stdout/stderr copied after execution, not original redirected stdout; final manifests matched before/after focused rerun. LOG files are directly redirected root checks. Earlier shared/category/product regressions predate one extra provider-identity guard; final idle6 and final root compilers include that guard.",
+  "semantics": "ALL reset preserves [] unrestricted; no eager module/style/catalog read on token removal; no schema/API change.",
+  "notVerified": [
+    "Native-browser visual parity",
+    "Formal business usability",
+    "Production deployment"
+  ],
+  "rollback": "Revert coherent eight-source-file commit; no database changes."
+}

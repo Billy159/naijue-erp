@@ -1,4 +1,5 @@
 @import '../demo-controls/page-size-shell.css';
+@import '../demo-controls/idle-selection-tokens.css';
 /* Frozen Demo semantic controls, resolved from styles.css, inventory selectors'
    local CSS and inventory-refinement.css. No route layout, matrix, or drawer CSS. */
 .iw-button,.iw-text-button,.iw-link,.iw-page-button,.iw-select{box-sizing:border-box;font:inherit;font-size:13px;color:var(--ca-ink);border-radius:4px;cursor:pointer;white-space:nowrap}

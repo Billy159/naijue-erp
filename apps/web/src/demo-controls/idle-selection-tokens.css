@@ -1,0 +1,24 @@
+/* Lightweight closed-state counterpart of frozen inventory-filters/category/
+   select token rules and installed Tag/InputTag spacing. No Arco/global CSS. */
+.demo-idle-reference{position:relative;width:100%;min-width:0;height:32px}
+.demo-idle-reference .demo-multi-trigger{height:32px;padding-right:12px}
+.demo-idle-reference .demo-idle-trigger-value{visibility:hidden}
+.demo-idle-selection{display:flex;align-items:center;gap:4px;min-width:0;overflow:hidden;white-space:nowrap;pointer-events:none;font-family:var(--ca-font-sans)}
+.demo-idle-reference>.demo-idle-selection{position:absolute;inset:1px 31px 1px 8px}
+.demo-idle-token{box-sizing:border-box;display:inline-flex;align-items:center;flex:none;max-width:calc(100% - 42px);height:23px;line-height:23px;padding:0 8px;border:0;border-radius:3px;background:var(--ca-surface);color:var(--ca-ink);font-size:12px;font-weight:500;box-shadow:none}
+.demo-idle-token-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.demo-idle-token-remove{position:relative;display:inline-flex;align-items:center;justify-content:center;flex:none;width:12px;height:16px;margin:0 0 0 4px;padding:0;border:0;background:transparent;color:var(--ca-ink-2);font:inherit;line-height:0;cursor:pointer;pointer-events:auto}
+.demo-idle-token-remove::before{content:'';position:absolute;top:50%;left:50%;width:16px;height:16px;transform:translate(-50%,-50%);border-radius:50%;background:transparent}
+.demo-idle-token-remove:hover:not(:disabled)::before{background:var(--ca-line)}
+.demo-idle-token-remove>svg{position:relative;width:12px;height:12px}
+.demo-idle-token-remove:focus-visible{outline:2px solid var(--ca-control-focus-border);outline-offset:1px}
+.demo-idle-token-remove:disabled{color:var(--ca-disabled-ink);cursor:not-allowed}
+.demo-idle-token:has(.demo-idle-token-remove:disabled){color:var(--ca-disabled-ink);background:var(--ca-control-disabled-bg)}
+.demo-idle-token-count{flex:none;padding:0 3px;font-size:12px;font-weight:500;line-height:23px;color:var(--ca-ink-2);white-space:nowrap}
+.iw-product-search-shell.iw-product-search-shell--selected{box-sizing:border-box;display:flex;align-items:center;padding:0 31px 0 8px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted)}
+.iw-product-search-shell--selected:focus-within{border-color:var(--ca-control-focus-border)}
+.iw-product-search-shell--selected>.demo-idle-selection{flex:0 1 auto;max-width:calc(100% - 42px)}
+.iw-product-search-shell--selected .demo-idle-token{max-width:100%;gap:2px;padding:0 4px 0 7px}
+.iw-product-search-shell--selected .demo-idle-token-remove{margin-left:0}
+.iw-product-search-shell--selected>.iw-product-input{flex:1;min-width:42px;width:0;height:30px;padding:0;border:0;border-radius:0;background:transparent}
+.iw-product-search-shell--selected>.iw-product-input:focus{border:0;background:transparent}
