@@ -16,9 +16,10 @@ import { integrationSettings, integrationSuite, requireCurrentIntegrationSuite }
 import { expectSqlState, MIGRATIONS, openFreshDatabase } from "./database.ts";
 import { runSparseAcceptance, SPARSE_SCENARIOS } from "./sparse-acceptance.ts";
 import { BACKEND_SCENARIOS, runBackendAcceptance } from "./backend-acceptance.ts";
-import { HTTP_READ_SCENARIOS, NATIVE_POLICY_SCENARIOS } from "./migration-manifest.ts";
+import { HTTP_READ_SCENARIOS, NATIVE_POLICY_SCENARIOS, SALES_WRITE_AUTHORIZATION_SCENARIOS } from "./migration-manifest.ts";
 import { runHttpReadAcceptance } from "./http-read-acceptance.ts";
 import { runNativeHttpReadAcceptance } from "./native-http-read-acceptance.ts";
+import { runSalesWriteAuthorizationAcceptance } from "./sales-write-authorization-acceptance.ts";
 import { assertDeferredBalanceFailure } from "./proof.ts";
 import { actor, ids, salesDraft, seedSyntheticReferences, syntheticId, SYNTHETIC_PASSWORD_SENTINEL, SYNTHETIC_REPLACED_SENTINEL,
   SYNTHETIC_TIME, transferActor, transferDraft } from "./fixtures.ts";
@@ -39,11 +40,12 @@ test("REAL PostgreSQL: explicit disposable target and selected synthetic accepta
   t.after(async () => { await database.close(); });
   const { pool } = database;
   t.diagnostic(`Actual PostgreSQL server_version_num=${database.serverVersion}; synthetic disposable target only`);
-  t.diagnostic(`Selected current suite=${suite}; prepared scenarios: ${(suite === "backend-0001-0008" ? [...BACKEND_SCENARIOS, ...HTTP_READ_SCENARIOS, ...NATIVE_POLICY_SCENARIOS] : SPARSE_SCENARIOS).join("; ")}`);
+  t.diagnostic(`Selected current suite=${suite}; prepared scenarios: ${(suite === "backend-0001-0008" ? [...BACKEND_SCENARIOS, ...HTTP_READ_SCENARIOS, ...NATIVE_POLICY_SCENARIOS, ...SALES_WRITE_AUTHORIZATION_SCENARIOS] : SPARSE_SCENARIOS).join("; ")}`);
   if (suite === "backend-0001-0008") {
     await runBackendAcceptance(t, pool);
     await runHttpReadAcceptance(t, pool, settings);
     await runNativeHttpReadAcceptance(t, pool, settings);
+    await runSalesWriteAuthorizationAcceptance(t, pool);
   }
   else await runSparseAcceptance(t, pool);
 });

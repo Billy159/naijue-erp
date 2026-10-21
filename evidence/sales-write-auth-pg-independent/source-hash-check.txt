@@ -1,0 +1,5 @@
+tests/integration/sales-write-authorization-acceptance.ts: OK
+tests/integration/backend-source.test.ts: OK
+tests/integration/migration-manifest.ts: OK
+tests/integration/plan.ts: OK
+tests/integration/postgres.integration.test.ts: OK

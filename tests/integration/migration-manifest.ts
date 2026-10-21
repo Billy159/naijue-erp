@@ -52,3 +52,11 @@ export const NATIVE_POLICY_SCENARIOS = [
   "current HTTP login/employment/role/hall fail closed and supplemental genuine-PG authorizers reject an explicitly stale captured hall",
   "native-role sessions revoke on logout, read-phase exact business snapshots stay unchanged and one owned API pool closes"
 ] as const;
+
+/** Native transactional ACTION policy only; receipt inject explicitly uses test-only authentication. */
+export const SALES_WRITE_AUTHORIZATION_SCENARIOS = [
+  "native sales action matrix, preserved state/CAS, later-APPROVED original SAVE and GET-receipt via explicit TEST-ONLY AUTHENTICATION plus current disable recheck",
+  "known-PID actual account/staff/hall metadata UPDATE waits while native command identity locks remain held through commit",
+  "known-PID command waits for committed disable or ADMIN-to-SALESPERSON change and READ COMMITTED denies without business facts",
+  "identity SELECT actually waits on staff before hall disable commits; separate current hall SELECT rejects without unauthorized business facts"
+] as const;

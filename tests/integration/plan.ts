@@ -1,7 +1,7 @@
 /** Connection-free operator plan. No env/credential reads, pg import, execution, provisioning or server startup. */
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
-import { BACKEND_SCENARIOS, HTTP_READ_SCENARIOS, NATIVE_POLICY_SCENARIOS, MIGRATIONS, SPARSE_SCENARIOS } from "./migration-manifest.ts";
+import { BACKEND_SCENARIOS, HTTP_READ_SCENARIOS, NATIVE_POLICY_SCENARIOS, SALES_WRITE_AUTHORIZATION_SCENARIOS, MIGRATIONS, SPARSE_SCENARIOS } from "./migration-manifest.ts";
 import { integrationSuite, requireCurrentIntegrationSuite } from "./safety.ts";
 
 const args = process.argv.slice(2);
@@ -16,7 +16,7 @@ for (const [, name, hash] of MIGRATIONS) {
 console.log(JSON.stringify({ mode: "PLAN_ONLY_NO_CONNECTION", suite,
   note: "One current schema; exact separately authorized fresh disposable target required before real execution.",
   migrations: MIGRATIONS.map(([version, filename, sha256]) => ({ version, filename, sha256 })),
-  scenarios: suite === "backend-0001-0008" ? [...BACKEND_SCENARIOS, ...HTTP_READ_SCENARIOS, ...NATIVE_POLICY_SCENARIOS] : SPARSE_SCENARIOS,
+  scenarios: suite === "backend-0001-0008" ? [...BACKEND_SCENARIOS, ...HTTP_READ_SCENARIOS, ...NATIVE_POLICY_SCENARIOS, ...SALES_WRITE_AUTHORIZATION_SCENARIOS] : SPARSE_SCENARIOS,
   requiredGatesForExecution: ["explicit approval of the exact operator-selected fresh disposable physical target", "NODE_ENV=test", "NAIJUE_PG_INTEGRATION", `NAIJUE_PG_TEST_SUITE=${suite}`, "NAIJUE_PG_EXPECT_DATABASE", "NAIJUE_PG_TEST_DATABASE_URL", "existing --run entry point and marker", "server-side fresh/exclusive loopback non-admin owner checks"],
   notExecuted: ["PostgreSQL", "SQL/DDL/EXPLAIN", "migration", "reference inserts", "network", "server startup", "package installation"]
 }, null, 2));
