@@ -1,0 +1,14 @@
+{
+  "command": [
+    "node_modules/.bin/tsc",
+    "--noEmit",
+    "-p",
+    "apps/web/src/demo-controls/tsconfig.json"
+  ],
+  "cwd": "/workspace/shared/naijue-erp-rewrite",
+  "started": "2026-10-21T02:10:01.517600+00:00",
+  "finished": "2026-10-21T02:10:15.539178+00:00",
+  "exitCode": 0,
+  "rawOutputBytes": 0,
+  "log": "01-focused-typecheck.log"
+}

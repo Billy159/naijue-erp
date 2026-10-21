@@ -1,0 +1,8 @@
+Command: node_modules/.bin/tsc --noEmit -p apps/web/src/demo-controls/tsconfig.json
+Cwd: /workspace/shared/naijue-erp-rewrite
+Started: 2026-10-21T02:10:01.517600+00:00
+--- complete merged stdout/stderr follows ---
+
+--- end command output ---
+Finished: 2026-10-21T02:10:15.539178+00:00
+Exit code: 0

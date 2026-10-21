@@ -1,0 +1,47 @@
+/* Action-only component leaf styles, never the all-library/global stylesheet.
+ * Frozen source and exact extraction ranges are recorded in source-provenance.json.
+ * The caller's existing lazy style loader must load this entry before mounting. */
+@import '@arco-design/web-react/es/Select/style/index.css';
+@import '@arco-design/web-react/es/Trigger/style/index.css';
+/* Frozen unified-single-select.jsx:10; declarations unchanged, selectors scoped. */
+.demo-single-select{display:block;width:100%;min-width:0;font:13px Arial,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ca-ink);--arcoblue-6:var(--ca-primary-rgb);--primary-6:var(--ca-primary-rgb);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2)}
+/* Frozen unified-single-select.jsx:12; declarations unchanged, selectors scoped. */
+.demo-single-select .arco-select{display:block;width:100%;font-size:13px}
+.demo-single-select .arco-select .arco-select-view{box-sizing:border-box;height:32px;min-height:32px;max-height:32px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none}
+/* Frozen unified-single-select.jsx:13; declarations unchanged, selectors scoped. */
+.demo-single-select .arco-select-size-default.arco-select-single .arco-select-view{padding-inline:3px}
+/* Frozen unified-single-select.jsx:14; declarations unchanged, selectors scoped. */
+.demo-single-select .arco-select:hover .arco-select-view{border-color:var(--ca-control-hover-border);background:var(--ca-surface-muted)}
+/* Frozen unified-single-select.jsx:15; declarations unchanged, selectors scoped. */
+.demo-single-select .arco-select.arco-select-focused .arco-select-view{border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted);box-shadow:none}
+/* Frozen unified-single-select.jsx:16; declarations unchanged, selectors scoped. */
+.demo-single-select .arco-select-view .arco-select-view-value{display:flex;align-items:center;min-width:0;overflow:hidden}
+.demo-single-select .ui-single-tag{box-sizing:border-box;display:inline-flex;align-items:center;max-width:100%;height:23px;padding:1px 7px;overflow:hidden;border-radius:3px;background:#fff;color:var(--ca-ink);text-overflow:ellipsis;white-space:nowrap;font:400 13px Arial,"PingFang SC",sans-serif}
+/* Frozen unified-single-select.jsx:17; declarations unchanged, selectors scoped. */
+.demo-single-select .ui-page-size-select .ui-single-tag,.demo-single-select .ui-flat-select .ui-single-tag{padding-left:7px;background:transparent}
+/* Frozen unified-single-select.jsx:24; declarations unchanged, selectors scoped. */
+.demo-single-select .arco-select-view input{min-width:28px;font-size:13px;background:transparent}
+.demo-single-select .arco-select-view input::placeholder{color:var(--ca-ink-3)}
+.demo-single-select .arco-select .arco-icon-hover{color:var(--ca-ink-2)}
+/* Frozen unified-single-select.jsx:25; declarations unchanged, selectors scoped. */
+.demo-single-select .arco-select-popup{box-sizing:border-box;padding:4px;border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);background:#fff;box-shadow:var(--ca-shadow-float)}
+.demo-single-select .arco-select-popup-inner{max-height:288px;overflow:auto}
+.demo-single-select .arco-select-option-wrapper{height:30px!important;min-height:30px!important;max-height:30px!important;padding:0 4px!important}
+.demo-single-select .arco-select-option{box-sizing:border-box;height:30px!important;min-height:30px!important;max-height:30px!important;padding:0 8px!important;line-height:30px!important;color:var(--ca-ink)!important;background:#fff;font-size:13px!important;font-weight:400!important}
+.demo-single-select .arco-select-option-selected{background:var(--ca-surface-subtle)!important;font-weight:400!important}
+.demo-single-select .arco-select-option-hover,.demo-single-select .arco-select-option:hover{background:var(--ca-popover-hover)!important}
+.demo-single-select .arco-select-option-disabled{color:var(--ca-disabled-ink)!important}
+/* Frozen unified-single-select.jsx:26; declarations unchanged, selectors scoped. */
+.demo-single-select .arco-select-option-content{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.demo-single-select .arco-select-popup .arco-empty{font-size:13px}
+/* Adapter additions replacing the frozen ShadowRoot's surrounding base CSS.
+ * Local theme aliases stay on this host, and its popup is a descendant, not body. */
+.demo-single-select{--color-text-3:var(--ca-ink-3);--color-text-4:var(--ca-disabled-ink);--color-fill-2:var(--ca-surface-muted);--color-fill-3:var(--ca-line);--color-bg-2:var(--ca-surface);--color-bg-popup:var(--ca-surface);--border-radius-small:var(--ca-radius-control);--border-radius-medium:var(--ca-radius-card)}
+.demo-single-select .arco-trigger{z-index:2000}
+/* Installed Arco es/style/index.css icon rules, scoped, not a global reset. */
+.demo-single-select .arco-icon{display:inline-block;color:inherit;font-style:normal;width:1em;height:1em;vertical-align:-2px;stroke:currentColor}
+.demo-single-select .arco-icon[fill=currentColor]{fill:currentColor;stroke:none}
+.demo-single-select .arco-icon[stroke=currentColor]{stroke:currentColor;fill:none}
+.demo-single-select .arco-icon[fill=currentColor][stroke=currentColor]{fill:currentColor;stroke:currentColor}
+/* Keep the source focus border, not the host app's generic tabindex ring. */
+.demo-single-select .arco-select:focus-visible{outline:0}

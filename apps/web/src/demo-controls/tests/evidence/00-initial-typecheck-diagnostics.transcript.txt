@@ -1,0 +1,15 @@
+Historical diagnostic transcript copy, NOT an original saved raw-output log.
+The earlier run's raw stdout/stderr was not saved to a file. The following
+TypeScript diagnostics are copied verbatim from the visible tool transcript.
+Initial command: node_modules/.bin/tsc --noEmit -p apps/web/src/demo-controls/tsconfig.json
+Initial exit code: 2
+The leaf className typing and OptionInfo.label assumption were corrected before
+the successful focused reruns. Current full rerun output is in 01-focused-typecheck.log.
+
+--- verbatim diagnostics from the tool transcript ---
+apps/web/src/demo-controls/single-select-action.tsx(37,6): error TS2375: Type '{ ref: RefObject<SelectHandle | null>; className: string | undefined; value: string; options: { value: string; label: string; disabled: boolean; }[]; "aria-label": string; ... 9 more ...; onChange: (value: string) => void; }' is not assignable to type 'SelectProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'className' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string | string[]'.
+      Type 'undefined' is not assignable to type 'string | string[]'.
+apps/web/src/demo-controls/single-select-action.tsx(54,84): error TS2339: Property 'label' does not exist on type 'OptionInfo'.
+--- end verbatim diagnostics ---

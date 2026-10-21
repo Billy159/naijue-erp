@@ -1,0 +1,39 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "apps/web/src/demo-controls/popup-ownership.test.ts"
+    ],
+    "cwd": "/workspace/shared/naijue-erp-rewrite",
+    "started": "2026-10-21T02:10:15.391030+00:00",
+    "finished": "2026-10-21T02:10:21.403388+00:00",
+    "exitCode": 0,
+    "rawOutputBytes": 848,
+    "log": "02-popup-ownership.log"
+  },
+  {
+    "command": [
+      "node",
+      "apps/web/src/demo-controls/tests/run-source-and-boundary-tests.mjs"
+    ],
+    "cwd": "/workspace/shared/naijue-erp-rewrite",
+    "started": "2026-10-21T02:10:21.403981+00:00",
+    "finished": "2026-10-21T02:10:22.234354+00:00",
+    "exitCode": 0,
+    "rawOutputBytes": 269,
+    "log": "03-source-and-boundary.log"
+  },
+  {
+    "command": [
+      "node",
+      "apps/web/src/demo-controls/tests/run-action-dom-tests.mjs"
+    ],
+    "cwd": "/workspace/shared/naijue-erp-rewrite",
+    "started": "2026-10-21T02:10:22.239338+00:00",
+    "finished": "2026-10-21T02:10:31.031021+00:00",
+    "exitCode": 0,
+    "rawOutputBytes": 546,
+    "log": "04-action-dom.log"
+  }
+]

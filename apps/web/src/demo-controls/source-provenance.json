@@ -1,0 +1,104 @@
+{
+  "status": "Select presentation is an unwired replacement candidate; the pure popup controller can be integrated independently. No running Demo or page-parity acceptance.",
+  "frozenCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "frozenFile": "frontend/unified-single-select.jsx",
+  "frozenSha256": "0551d20e63ee3e50e214ee4137b6b4a7fa98b0eb441dd51cea32e01e434dd43d",
+  "lineHashConvention": "UTF-8 original lines, inclusive bounds, each range ends with LF.",
+  "sourceRanges": [
+    {
+      "lines": [
+        10,
+        17
+      ],
+      "sha256": "41d1d9ceeeeccddc9cb867a9876c68cfdd136087f4500391371b651419e5e680",
+      "use": "Host/select/tag/page-size declarations, copied with selector scoping only; source11 ShadowRoot portal structure excluded."
+    },
+    {
+      "lines": [
+        24,
+        26
+      ],
+      "sha256": "e80aabe66c5ac644671861f2b409f88da600ebfd311bdf12c9f6383ce5e62ad6",
+      "use": "Input/icon/menu/option declarations, copied with selector scoping only."
+    },
+    {
+      "lines": [
+        56,
+        73
+      ],
+      "sha256": "4ac2b098097d38c900a634b8f0004650248aa2c0251ee6e40d5bc5425407d539",
+      "use": "Real Arco Select leaf, tag display fallback, local popup container, trigger settings; adapted to explicit controlled props and non-search/non-clear subset."
+    },
+    {
+      "lines": [
+        89,
+        107
+      ],
+      "sha256": "afa7411ecd698086322d95f77641112e74b4d62f8efe0fc7ba974116462f3c80",
+      "use": "Page-size presentation detection and tl/150 popup policy; only presentation policy retained, no native DOM reading."
+    },
+    {
+      "lines": [
+        139,
+        167
+      ],
+      "sha256": "14bdf47b599a94f3156fdf13d8522f9e19ead03530149c44e2e60f1bdec04972",
+      "use": "Entity-session replacement/close/stale-work intent informs new ownership lifecycle; no original global entity/data bridge copied."
+    },
+    {
+      "lines": [
+        194,
+        200
+      ],
+      "sha256": "5d98122298563112d78060855992456396d7530d72430de4fb26de80e98bbe04",
+      "use": "Outside/Escape/cleanup intent only; global listeners and singleton explicitly not copied."
+    }
+  ],
+  "copiedCssSourceLines": [
+    10,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    24,
+    25,
+    26
+  ],
+  "adaptations": [
+    "A single .demo-single-select wrapper replaces ShadowRoot boundaries; copied declarations retain source values, selectors gain this scope.",
+    "Only Select/style/index.css and Trigger/style/index.css are imported as action-only CSS; no all-library barrel, full CSS, palette/body reset or global bridge.",
+    "Direct leaf type assertion handles installed NodeNext package typing without importing a barrel at runtime or type time.",
+    "Caller owns applied value/options and lazy loading; source optimistic local value, scan/mount maps, nativeData/transferData/entityData and global ERP data are excluded.",
+    "Narrow required-value ungrouped non-search/non-clear subset matches both existing page-size widgets. Group/recommendation/empty-sentinel/search/creator/fit adapters are not included.",
+    "Controlled popup, unmountOnExit, local-only portal, disable dismissal, guarded StrictMode portal refresh and explicit focus-on-mount are lifecycle adapters, not copied frozen behavior.",
+    "ExclusivePopupController is entirely new pure lifecycle code. It is session-owned, closes/revokes earlier ownership, removes scope-abort listeners and rejects stale handles. It installs no document listeners.",
+    "Closing popup option callbacks are ignored when open is false, so the normal Arco exit animation cannot commit after ownership replacement. Host callbacks must still revalidate live scope/lease before publishing."
+  ],
+  "installedArco": {
+    "version": "2.66.16",
+    "css": [
+      {
+        "file": "es/Select/style/index.css",
+        "sha256": "8e9f6b60b9a593331f5fedf24d8e54ab3f239b01f860e03b777c04f5b562aa08"
+      },
+      {
+        "file": "es/Trigger/style/index.css",
+        "sha256": "093e0680159946ca594be3fc58184cb621622e149c0d4c8bb484ef694e381064"
+      },
+      {
+        "file": "es/style/index.css",
+        "sha256": "87ea9a6b14150950fd950b8e8a74b7128da9176fafa23e490273f07c68219a32"
+      }
+    ],
+    "iconRules": "Four static .arco-icon/attribute rules copied from es/style/index.css and scoped; see existing demo-presentation/ARCO-LICENSE."
+  },
+  "existingReplacementTargets": [
+    "apps/web/src/components/inventory-page-size-action.tsx",
+    "apps/web/src/transfers/pagination.tsx"
+  ],
+  "notChanged": [
+    "This extraction changed no existing files, active routes, data contract, database fields, package manifests or build entrypoints. Select production integration remains unwired; separately owned controller integration is outside this extraction."
+  ]
+}
