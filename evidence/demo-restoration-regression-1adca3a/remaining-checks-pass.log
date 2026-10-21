@@ -1,0 +1,206 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 build:preview
+> node apps/web/build-preview.mjs
+
+index.html: 369 bytes
+main.js: 183442 bytes
+main.css: 16001 bytes
+inventory-route.js: 59451 bytes
+inventory-route.css: 19306 bytes
+synthetic-reader.js: 264 bytes
+product-drawer.js: 2678 bytes
+product-drawer.css: 2698 bytes
+inventory-preview-test-only.html: 540694 bytes
+Built static files only. No server, listener, deployment, database or network action.
+Portable preview exceeds 256KiB budget: 540694 bytes. Functionality retained; split build is available.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test:web:preview
+> node apps/web/tests/run-bundle-smoke.mjs
+
+PASS split graph: startup excludes inventory/detail leaves; inventory excludes drawer/tab code; drawer excludes inactive tab code; startup/route CSS exclude detail styles.
+PASS built portable HTML: starts with zero reads; explicit menu opens idle route; query renders 3 synthetic products; three product tabs read lazily and full image only on click; hidden-FIT aggregates cannot dispatch arbitrary SKU actions; explicit FIT reveals original negative stock without reads and its exact cell callback says unavailable; close/reopen clears old facts; no jsdom runtime errors.
+This is actual bundled-code DOM smoke, not a real browser, screenshot, network waterfall or pixel/performance acceptance.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 check:web:development-host
+> tsc --noEmit -p apps/web/src/development-host/tsconfig.json && node --test apps/web/src/development-host/configuration.test.ts && node apps/web/src/development-host/tests/run-dom-tests.mjs && node apps/web/src/development-host/tests/run-build-check.mjs && node apps/web/src/application/tests/run-build-check.mjs
+
+✔ public development settings are explicit, copied/frozen, and only resolve same-origin manifest assets (2.941683ms)
+✔ missing fields, unknown fields and credentials/policy/account inputs fail closed (1.353499ms)
+✔ HTTPS exact origin has no credential, query, fragment, path, inferred default or downgrade (0.662491ms)
+✔ API and asset prefixes reject URL redirection, encoded paths, traversal and query strings (0.777552ms)
+✔ capability switches and optional session verification have no truthy or missing defaults (2.687152ms)
+✔ actual emitted manifest is copied and constrained to finite relative JS/CSS assets (4.507542ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 302.115817
+PASS host DOM 1: exact HTTPS origin and one-root ownership fail closed; real auth/frame mounts without account defaults, business reads, route CSS or auto-navigation; missing/new/write capabilities remain disabled.
+PASS host DOM 2: inventory cancellation/late CSS and sales CSS failure/retry use real lazy routes; queries require explicit submit and 503 is not fabricated empty success.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS host DOM 3: transfer navigation makes one bounded native query; detail and reused product drawer wait separate action CSS/code and real fixed HTTP adapters, without relative fallback CSS or extra list query.
+PASS host DOM 4: host preserves identity-scope invalidation, stale401 isolation, current401 expiry and deterministic root/CSS disposal.
+PASS host DOM 5: explicit bootstrap session verification is exactly once per owner; false routes have no target; pagehide discards stale identity/read state and bfcache restore recreates only the configured unselected host; invalid payload never starts.
+SYNTHETIC ONLY: mocked fetch, CSS events and jsdom; no browser, TLS/cookie, server, DB, pixel, timing or performance acceptance.
+PASS emitted-entry smoke: exact built HTML + ESM executes in jsdom, startup is inert, one explicit mocked session check reaches the reused three-route frame, pagehide disposes it.
+{
+  "syntheticStaticOnly": true,
+  "html": "index.html",
+  "shellStyles": [
+    "application.css",
+    "development-host.css"
+  ],
+  "startupInputs": [
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom-client.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/client.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react-jsx-runtime.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/jsx-runtime.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/cjs/scheduler.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/index.js",
+    "../../../../packages/domain/src/errors.ts",
+    "../../../../packages/domain/src/values.ts",
+    "../authentication/authentication-panel.tsx",
+    "../authentication/authentication.css",
+    "../authentication/contracts.ts",
+    "../authentication/http-client.ts",
+    "../authentication/model.ts",
+    "../demo-presentation/controls.css",
+    "../demo-presentation/demo-frame.tsx",
+    "../demo-presentation/frame.css",
+    "../development-host/bootstrap.ts",
+    "../development-host/configuration.ts",
+    "../development-host/entry.ts",
+    "../development-host/mount.tsx",
+    "../development-host/route-state.tsx",
+    "../loading/async-leaf-registry.ts",
+    "../loading/read-scope.ts",
+    "application-root.tsx",
+    "controller.ts",
+    "demo-frame-presentation.tsx",
+    "index.tsx",
+    "stylesheet.ts"
+  ],
+  "routeStyles": {
+    "application": "application.css",
+    "inventory": "inventory.css",
+    "sales": "sales.css",
+    "sales-detail": "sales-detail.css",
+    "parties": "parties.css",
+    "transfers": "transfers.css",
+    "transfer-detail": "transfer-detail.css",
+    "transfer-product": "transfer-product.css"
+  },
+  "productDrawerStyles": "chunks/product-drawer.css"
+}
+PASS host build: explicit configuration; actual HTML/manifest/output wiring; shell-only startup CSS/JS; separate inventory/sales/transfer/detail/product code and CSS; no eager preload, inline executable script, fixture, listener or browser.
+{
+  "startupInputs": [
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom-client.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/client.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react-jsx-runtime.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/jsx-runtime.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/cjs/scheduler.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/index.js",
+    "../../../../packages/domain/src/errors.ts",
+    "../../../../packages/domain/src/values.ts",
+    "../authentication/authentication-panel.tsx",
+    "../authentication/authentication.css",
+    "../authentication/contracts.ts",
+    "../authentication/http-client.ts",
+    "../authentication/model.ts",
+    "../demo-presentation/controls.css",
+    "../demo-presentation/demo-frame.tsx",
+    "../demo-presentation/frame.css",
+    "../loading/async-leaf-registry.ts",
+    "../loading/read-scope.ts",
+    "application-root.tsx",
+    "controller.ts",
+    "demo-frame-presentation.tsx",
+    "index.tsx",
+    "stylesheet.ts"
+  ],
+  "startupCode": [
+    "application.js",
+    "chunk-AMZFEYCU.js",
+    "chunk-RQDEV55T.js",
+    "chunk-K3WQAY2P.js",
+    "chunk-Y6SLVHK3.js",
+    "chunk-FSROJZ4C.js",
+    "chunk-P74PHBPC.js",
+    "chunk-K2TRKZDL.js"
+  ],
+  "routeInputCounts": {
+    "inventory": 32,
+    "sales": 28,
+    "salesDetail": 13,
+    "parties": 436,
+    "transfers": 446,
+    "transferDetail": 23
+  },
+  "stylesheetBytes": {
+    "application": 15511,
+    "inventory": 19306,
+    "sales": 15804,
+    "sales-detail": 6777,
+    "parties": 596143,
+    "transfers": 588899,
+    "transfer-detail": 6983,
+    "transfer-product": 3995
+  },
+  "guarantees": [
+    "Startup/inventory/sales static closures exclude Arco JS/CSS",
+    "Parties/transfers use actual installed Arco only after explicit activation",
+    "Sales/parties CSS preserves shared controls/tokens but excludes all inventory-specific matrix/settings/drawer assets",
+    "Sales route static code/CSS excludes detail content/styles; separate sales-detail CSS is explicit action-only host configuration",
+    "Transfer route excludes detail/product code/data/styles; inline-detail and product action assets are separate"
+  ],
+  "boundary": "Static emitted-import/CSS analysis only. No browser/network waterfall, timing, memory or frozen-Demo visual acceptance."
+}
+PASS: actual split output isolates business routes, inventory-specific CSS and explicit-party/transfer-only Arco JS/CSS plus separate detail/product action assets while preserving necessary shared controls.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test:web:demo-restoration
+> node apps/web/src/components/tests/run-inventory-page-size-dom-tests.mjs && node apps/web/src/inventory/tests/run-display-projection-dom-tests.mjs && node apps/web/src/inventory/tests/run-windowing-dom-tests.mjs && node apps/web/src/demo-presentation/tests/run-document-source-restoration.mjs && node apps/web/src/transfers/tests/run-filter-dom-tests.mjs
+
+PASS page-size shell: no idle import/native select; first focus loads once; click joins pending work; Escape cancels and a late module cannot replace/open the shell.
+PASS page-size interruption: blur/busy closes pending intent; scope revoke/unmount rejects late attachment.
+PASS page-size failure: missing JS or CSS is accessible and retryable, never silently falls back to an OS popup.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS actual Arco action: exactly100/200/500, 150px popup, controlled applied value and busy disable. Popup configuration uses frozen tl placement; jsdom is not layout/pixel acceptance.
+PASS default hidden FIT: real product identities remain separate; color/warehouse rows aggregate exactly, full size columns and repeated product labels remain, multi-SKU cells cannot dispatch an arbitrary source.
+PASS FIT toggle and folding: show FIT restores real groups/text and exact original cell target; hide FIT reprojects without changing stock facts or server pagination/summary.
+PASS single-source projected cells open only their one real source FIT/SKU/warehouse, without synthetic identities.
+PASS hidden-FIT opt-in window fallback: eager projection stays explicit and scope abort removes all facts. No browser/layout or large-table performance acceptance is claimed.
+PASS bounded native DOM: 100/200/500 complete products each mount 8 detail rows, 48 stock buttons, 280 elements.
+PASS 1,200-size axis stays bounded and keyboard End reaches exact final size.
+PASS semantics/focus: negatives, valid zero, absent cells, exact SKU/readReference; arrows skip absent coordinates, End scrolls/mounts/focuses by ID.
+PASS retained offscreen focus stays bounded; product/color-FIT folds preserve source identities and totals without synthesizing stock.
+PASS invalid or changed natural geometry retains unclipped eager rendering; replaced reads cancel stale pending focus; disposed scope removes all matrix facts.
+jsdom only: real browser sticky geometry, wrapped row measurement, screen reader behavior and latency remain release gates. Default route remains eager.
+PASS source/CSSOM/SSR: final non-inventory spacing without changing inventory marker, scoped keyboard-focus exceptions, final settlement grid, transfer font/padding/heights/badge, sticky action cells with opaque/hover surfaces; non-Demo saved blocks absent, unavailable product/history semantics preserved.
+LIMIT: source, CSS selector/declaration and synthetic DOM assertions only. No browser layout, real pixel parity, live request, server, database or performance acceptance.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS FILTER DOM 1: actual React19 StrictMode first open starts exactly one transport; complete two-candidate all-minus and exact toolbar work; retained selected label stays outside a new search; filtered subset never becomes the universe.
+PASS FILTER DOM 2: each search and reopen starts one transport; search-generation races, close/reopen and permission replacement abort stalled transports and reject their late results without reviving labels.
+PASS FILTER DOM 3: bottom scroll appends the final page with all newly visible candidates checked; exact totals stay 21 and repeated end scrolls stop; cross-page completeness is never fabricated into all-minus.
+PASS FILTER DOM 4: status shares the source toolbar/all-check projection and bounded local Chinese/native-id/full-pinyin/initial search without a remote request.
+All 4 focused synthetic React/JSDOM filter groups passed. No browser, listener, network, PostgreSQL or Demo pixel acceptance.

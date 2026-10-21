@@ -1,0 +1,17 @@
+{
+  "prefixCommit": "7c9ec3cc17ac4f89d8152d9317558c7cd8afb383",
+  "tailCommit": "1adca3a6d37d9d38ed2de3044fce1744720d0cb4",
+  "prefixCommand": "npm run check:all",
+  "prefixExit": 1,
+  "prefixPassedTests": 1078,
+  "prefixFailure": "Old bundle smoke expected a negative cell while FIT was hidden; merged -2 + 3 = 1 correctly has no negative cell.",
+  "onlyNonEvidenceChangedFile": "apps/web/tests/run-bundle-smoke.mjs",
+  "tailCommand": "npm run build:preview && npm run test:web:preview && npm run check:web:development-host && npm run test:web:demo-restoration",
+  "tailExit": 0,
+  "interpretation": "Passing unchanged prefix reused plus passing corrected smoke and remaining tail. Not a single fresh check:all exit0. No production code change after 7c9ec3c.",
+  "boundaries": [
+    "synthetic DOM is not browser pixel/layout/performance acceptance",
+    "genuine PG evidence has its own exact source and scope",
+    "no deployment or production business acceptance"
+  ]
+}
