@@ -1,0 +1,22 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS reference popup 1: StrictMode opens one bounded transport; static↔reference and reference replacement synchronously abort old owners, retain one local tree and one listener pair, and reject late facts.
+PASS reference popup 2: outside/Escape abort and restore only in-control focus; debounced remote search aborts stale generations, retains selected labels, and never promotes filtered/cross-page/200-capped windows to ALL; explicit positive-only resolution and bottom-scroll bounded pages work.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: A wide control fits two real tags rather than forcing one
+
+3 !== 2
+
+    at file:///workspace/shared/naijue-erp-rewrite/apps/web/src/sales/tests/run-reference-popup-dom-tests.mjs:167:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 3,
+  expected: 2,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

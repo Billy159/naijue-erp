@@ -1,0 +1,12 @@
+Read-only source review and focused runtime regression findings, with resolutions:
+
+1. Confirmed manual-production-style gap: generic TreeSelect rules moved out of transfer CSS, but the manual production transfer style entry did not import their shared replacement. Fixed by importing demo-controls/multi-select.css in application/styles/transfers.css. The emitted graph now asserts both its input and resulting .demo-multi-select rules independently of sales activation.
+2. Confirmed shared-shell edge: disabling focus-only pending preparation without popup ownership retained its stylesheet lease/loading phase. Fixed by canceling pending preparation whenever unavailable. Permanent shell group 5 covers disable, ignored late CSS and fresh re-enable.
+3. Confirmed reference-provider/target edge: an existing child bound reader/kind only on construction. Fixed by memoized provider/target owner identity invalidating pending/open child scopes, styles and view before another explicit opening. Permanent shell group 6 and actual reference DOM provider-replacement guard cover this.
+4. Reproduced actual Arco Escape focus loss to BODY. Fixed by restoring the native input only after close commit, with guards against newer ownership, hidden/inactive scope and focus moved outside. Original failing focus logs remain under diagnostics.
+5. Defensive source-identified focus race, not a normal-flow DOM reproduction: an old close-focus ticket could survive owner replacement. Cleared in owner cleanup/setup and covered by a close-plus-provider-swap batched shell guard.
+6. Closed-menu hardening: installed Arco distinguishes closed tag removal with extra.selected=false. Retained popup-option callbacks are rejected once closed while existing tag removal is preserved. Transfer focused regressions cover the unchanged closed-tag behavior.
+
+The first three findings were sent immediately during review. A delta review confirmed their wiring and found no additional actionable issue; broad source/fixture/builder search identified no remaining live scalar-draft or removed-selector consumer. This is review evidence, not substitute compiler or genuine database proof.
+
+Known intentional deviations are recorded in docs/sales-query.md and multi-select-source-provenance.json: incomplete remote ALL-minus, clear-to-unrestricted labeling, historical rather than active master candidates, bounded literal remote search, and retained draft-only reset.

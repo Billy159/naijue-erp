@@ -1,0 +1,79 @@
+{
+  "frozenCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "frozenFile": "frontend/inventory-filters.jsx",
+  "frozenSha256": "bdcd2aaef2f8b6dbd7f66ff13bb6dc5eee31e59e8f9f68c0ce33a917efb0dd48",
+  "sourceRanges": [
+    {
+      "lines": [
+        11,
+        38
+      ],
+      "sha256": "acd8f2983848c7937043751f8609c89e22775977604e645f284ac6268f151570",
+      "use": "Host/TreeSelect/tag/toolbar/row geometry and theme declarations, adapted to local .demo-multi-select scope instead of ShadowRoot."
+    },
+    {
+      "lines": [
+        53,
+        137
+      ],
+      "sha256": "ff69cc16b9c425d65e727ef46c1eaf11f53269cbbee69d1e2b2815551d0ce7ff",
+      "use": "Actual TreeSelect strict multi-check, all tag, source tag-fit calculation, search reset, minimum-width popup and informational toolbar."
+    },
+    {
+      "lines": [
+        161,
+        181
+      ],
+      "sha256": "7278d64a24cbad596ddaf450348e81a3b3d3a68aff57ed1dfd992852e25a6cdc",
+      "use": "Exactly six sales filter dimensions, status choices and SALE versus RETURN_EXCHANGE presentation groups; original data bridge excluded."
+    }
+  ],
+  "reuse": "Existing transfer MultiSelect extracted into one domain-neutral action and component CSS. Transfer keeps its own candidate loader/DatePicker behavior; sales adds a lightweight action-owned lazy/exclusive shell and native-reference adapter.",
+  "nativeQueryBaseCommit": "760c489d3aa5913aab02372940a5ae25b3964688",
+  "intentionalDifferences": [
+    "Empty values always display all/unrestricted. Frozen transient zero-selected display with an unrestricted query is not copied.",
+    "Exact ALL minus one only when one unsearched response proves the complete universe. Incomplete/filtered/multi-page candidates show a limitation, then a separately explicit Only this item action can start a positive subset. No excluded-ID API or catalog enumeration.",
+    "The native reference API lists authorized historical observations, not the source enabled/current master catalogs.",
+    "Remote search is the existing literal name substring (plus customer code), not an approximation of complete catalog ID/pinyin/initial matching. Static status/business choices retain known pinyin aliases.",
+    "Current source order is retained for finite enum options. Paginated remote candidate order is server-owned, and no all-catalog ordering parity is claimed.",
+    "Reset remains the existing draft-only operation and explicit Query remains required, unlike the frozen reset which queries immediately."
+  ],
+  "installedArco": {
+    "version": "2.66.16",
+    "componentCss": [
+      {
+        "file": "es/TreeSelect/style/index.css",
+        "sha256": "fd3d701f4b57ddb64862504f9c0923aaaed6cfede2decf0d9fcc21b5a89a795d"
+      },
+      {
+        "file": "es/Tree/style/index.css",
+        "sha256": "563ee8d647d3d84d9bdab56003496b13e0e3f617d5e72b61df202efdde804bed"
+      },
+      {
+        "file": "es/InputTag/style/index.css",
+        "sha256": "0c32c88995863bc0ed0eef60f3514ed6b6d738640f4c885417e7de61e6c82b4f"
+      },
+      {
+        "file": "es/_class/OverflowEllipsis/style/index.css",
+        "sha256": "dc67e7f35c308becbf3b38937d02e4b2820c9c396a8ff2c43ae1dc8b316d9649"
+      },
+      {
+        "file": "es/Tag/style/index.css",
+        "sha256": "b73f296739e3aa3073cc5f2d10b5d76fed9ac3819ad96588f0a8f5fe87a6a9b1"
+      },
+      {
+        "file": "es/Checkbox/style/index.css",
+        "sha256": "05198a9181d59acf1fa6857b6d799a8fe05b4c345c5e47e1634b9831f715b726"
+      },
+      {
+        "file": "es/Trigger/style/index.css",
+        "sha256": "093e0680159946ca594be3fc58184cb621622e149c0d4c8bb484ef694e381064"
+      },
+      {
+        "file": "es/Empty/style/index.css",
+        "sha256": "62054ce898a88d4f654a2eb57b060b5d7872697b33f7b1cf916168a119fe25e0"
+      }
+    ]
+  },
+  "verificationBoundary": "Source hashes, Node/React-JSDOM lifecycle tests and emitted static graphs only. No real-browser geometry/pixels, performance, PostgreSQL or production acceptance."
+}

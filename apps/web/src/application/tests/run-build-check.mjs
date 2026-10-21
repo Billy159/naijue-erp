@@ -61,6 +61,18 @@ try {
   assert.ok(actionStyleInputs.some(file => file.endsWith('/demo-controls/single-select.css')));
   const emittedAction = await readFile(path.resolve(workingDirectory, selectCopies[0][0]), 'utf8');
   assert.match(emittedAction, /single-select\.css/, 'The action resolves the separately emitted CSS beside its chunk');
+  const multiSelect = closure(entryFor('../demo-controls/multi-select-action.tsx'));
+  assert.ok([...inputsOf(multiSelect)].some(file => file.endsWith('/es/TreeSelect/index.js')), 'Sales and transfer reuse the installed TreeSelect leaf');
+  const multiCopies = Object.entries(outputs).filter(([name, output]) => name.endsWith('.js') && Object.keys(output.inputs).some(file => file.endsWith('/demo-controls/multi-select-action.tsx')));
+  assert.equal(multiCopies.length, 1, 'Sales and transfer emit one shared multi-select implementation');
+  assert.ok([...inputsOf(salesRoute)].some(file => file.endsWith('/demo-controls/multi-select.tsx')), 'Sales statically reaches only the lightweight multi-select shell');
+  for (const file of inputsOf(salesRoute)) assert.doesNotMatch(file, /multi-select-(?:action|styles)\.(?:tsx?|css)$/, 'Sales defers multi-select action code and its CSS');
+  const multiStyles = byAbsolute.get(path.join(outdir, 'chunks/multi-select.css')); assert.ok(multiStyles, 'Shared multi-select CSS is emitted at the action-owned URL');
+  const multiStyleInputs = Object.keys(outputs[multiStyles].inputs);
+  assert.ok(multiStyleInputs.some(file => file.endsWith('/demo-controls/multi-select.css')));
+  for (const file of multiStyleInputs) assert.doesNotMatch(file, /dist\/css\/arco\.css|\/transfers\/|\/sales\//, 'Shared action CSS contains component leaves, not route/global styles');
+  const emittedMultiAction = await readFile(path.resolve(workingDirectory, multiCopies[0][0]), 'utf8');
+  assert.match(emittedMultiAction, /multi-select\.css/, 'The shared action resolves its separately emitted CSS beside its chunk');
   const startupInputs = inputsOf(startup);
   for (const file of startupInputs) assert.doesNotMatch(file, /\/(?:inventory|sales|parties|transfers)\/|synthetic|preview\//);
   for (const [name, route] of [['startup', startup], ['inventory', inventoryRoute], ['sales', salesRoute]]) {
@@ -99,6 +111,9 @@ try {
     for (const input of Object.keys(outputs[stylesheet].inputs)) assert.doesNotMatch(input, /\/inventory\//, `${name} CSS graph must exclude inventory source assets`);
   }
   assert.match(styles.transfers, /transfer-route/); assert.match(styles.transfers, /\.arco-/);
+  assert.match(styles.transfers, /\.demo-multi-select/, 'The manual production transfer route CSS retains moved shared TreeSelect rules');
+  const transferStyles = byAbsolute.get(path.join(outdir, manifest.styles.transfers)); assert.ok(transferStyles);
+  assert.ok(Object.keys(outputs[transferStyles].inputs).some(file => file.endsWith('/demo-controls/multi-select.css')), 'Transfer direct action usage has its shared CSS without depending on a prior sales activation');
   assert.doesNotMatch(styles.transfers, /transfer-editor|\.mx-|\.iw-product-drawer|\.pd-/);
   assert.match(styles['transfer-detail'], /transfer-editor/); assert.match(styles['transfer-detail'], /\.mx-table/);
   assert.doesNotMatch(styles['transfer-detail'], /\.iw-product-drawer|\.pd-tabs|sales-workbench|party-workbench/);
@@ -114,7 +129,7 @@ try {
     startupInputs: [...startupInputs].sort(), startupCode: [...startup].map(name => path.basename(name)),
     routeInputCounts: { inventory: inputsOf(inventoryRoute).size, sales: inputsOf(salesRoute).size, salesDetail: inputsOf(salesDetail).size, parties: inputsOf(partiesRoute).size, transfers: inputsOf(transfersRoute).size, transferDetail: inputsOf(transferDetail).size },
     stylesheetBytes: Object.fromEntries(Object.entries(styles).map(([name, css]) => [name, Buffer.byteLength(css)])),
-    guarantees: ['One shared single-select action and action-only CSS serves all three lightweight pager adapters', 'Startup/inventory/sales static closures exclude Arco JS/CSS', 'Parties/transfers use actual installed Arco only after explicit activation',
+    guarantees: ['One shared single-select action and action-only CSS serves all three lightweight pager adapters', 'One shared TreeSelect presentation serves transfer filters and action-lazy sales filters', 'Startup/inventory/sales static closures exclude Arco JS/CSS', 'Parties/transfers use actual installed Arco only after explicit activation',
       'Sales/parties CSS preserves shared controls/tokens but excludes all inventory-specific matrix/settings/drawer assets',
       'Sales route static code/CSS excludes detail content/styles; separate sales-detail CSS is explicit action-only host configuration',
       'Transfer route excludes detail/product code/data/styles; inline-detail and product action assets are separate'],

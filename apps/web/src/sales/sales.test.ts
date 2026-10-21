@@ -25,7 +25,7 @@ test('sales filters project the committed shape, reject dates/UUID/status and tr
   const draft = { ...emptySalesFilter(), number: ' TEST_% ' }; const query = salesParameters(draft, 50); assert.equal(query.filter.number, 'TEST_%'); assert.equal(query.pageSize, 50);
   assert.equal(Object.keys(query.filter).length, 9);
   assert.throws(() => salesParameters({ ...draft, startDate: '2026-10-21', endDate: '2026-10-20' }, 20));
-  assert.throws(() => salesParameters({ ...draft, hall: { id: 'not-uuid', label: 'TEST' } }, 20));
+  assert.throws(() => salesParameters({ ...draft, hall: [{ id: 'not-uuid', label: 'TEST' }] }, 20));
 });
 test('list validates exact totals, bounded page/row membership, no coercion or hidden extensions', () => {
   const p = parameters(); const result = { page: 1, pageSize: 20, exactTotal: '1', items: [summary()] };
@@ -155,16 +155,16 @@ test('filter reference HTTP rejects invalid parameters before fetch and old/malf
   assert.equal(calls, 1); assert.equal(query.getSnapshot().success, null); query.dispose();
 });
 
-test('temporary scalar sales filter adapter preserves each selection and maps the Demo return/exchange group, not stored types', () => {
+test('multi-value sales draft preserves every selection and maps Demo business groups without changing stored types', () => {
   const empty = salesParameters(emptySalesFilter(), 20);
   assert.deepEqual(empty.filter, { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: null });
-  const selected = salesParameters({ ...emptySalesFilter(), status: 'APPROVED', businessType: 'RETURN_EXCHANGE',
-    hall: { id: uuid(11), label: 'TEST' }, salesperson: { id: uuid(14), label: 'TEST' },
-    customer: { id: uuid(12), label: 'TEST' }, warehouse: { id: uuid(13), label: 'TEST' } }, 50);
+  const selected = salesParameters({ ...emptySalesFilter(), statuses: ['APPROVED'], businessTypes: ['RETURN_EXCHANGE'],
+    hall: [{ id: uuid(11), label: 'TEST' }], salesperson: [{ id: uuid(14), label: 'TEST' }],
+    customer: [{ id: uuid(12), label: 'TEST' }], warehouse: [{ id: uuid(13), label: 'TEST' }] }, 50);
   assert.deepEqual(selected.filter, { ...empty.filter, statuses: ['APPROVED'], businessTypes: ['RETURN', 'EXCHANGE'], hallIds: [uuid(11)],
     salespersonIds: [uuid(14)], customerIds: [uuid(12)], warehouseIds: [uuid(13)] });
-  assert.deepEqual(salesParameters({ ...emptySalesFilter(), businessType: 'SALE' }, 20).filter.businessTypes, ['SALE']);
-  for (const value of ['RETURN', 'EXCHANGE', 'UNKNOWN', undefined]) assert.throws(() => salesParameters({ ...emptySalesFilter(), businessType: value as never }, 20));
+  assert.deepEqual(salesParameters({ ...emptySalesFilter(), businessTypes: ['SALE'] }, 20).filter.businessTypes, ['SALE']);
+  for (const value of [['RETURN'], ['EXCHANGE'], ['UNKNOWN'], undefined, ['SALE', 'SALE'], Array(1)]) assert.throws(() => salesParameters({ ...emptySalesFilter(), businessTypes: value as never }, 20));
 });
 test('list membership uses OR within all six selections, AND across dimensions and preserves native RETURN/EXCHANGE output', () => {
   const first = { ...summary(), salespersonId: uuid(14), salespersonName: 'TEST' };

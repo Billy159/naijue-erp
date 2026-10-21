@@ -49,9 +49,13 @@
 .sales-pagination nav>.iw-button{height:28px;min-height:28px;padding:2px 7px;font-size:13px;font-weight:400}
 .sales-pagination .sales-page-item{display:inline-flex;align-items:center;gap:5px}
 .sales-pagination .iw-jump,.sales-pagination .iw-text-button{font-size:12px}
-.sales-reference-search{display:flex;align-items:center;padding-right:10px}.sales-reference-search .iw-search{min-width:0}.sales-reference-options{z-index:25}
 .sales-workbench[hidden]{display:none}
 /* Lightweight Back frame remains usable while action code/CSS is pending. */
 .sales-detail-loading>.tc-head .actions{display:flex;align-items:center;gap:4px;margin-left:auto}
 @media(max-width:1450px){.sales-workbench .tc-filters{--sales-filter-columns:minmax(100px,.8fr) minmax(100px,.8fr) 155px minmax(138px,1fr) minmax(110px,1.2fr) minmax(110px,1.2fr) max-content;--sales-filter-min-width:0px}}
 @media(max-width:1270px){.sales-workbench .tc-filters{--sales-filter-columns:minmax(88px,.8fr) minmax(88px,.8fr) 155px minmax(115px,1fr) minmax(95px,1.2fr) minmax(95px,1.2fr) max-content}}
+/* Lightweight placeholders remain route-local; heavy TreeSelect CSS is action-only. */
+.demo-multi-host{position:relative;display:block;min-width:0;width:100%}
+.demo-multi-host .demo-multi-trigger{height:32px;font-size:13px}
+.demo-multi-host .demo-multi-state{display:block;font-size:12px;line-height:18px;color:var(--ca-ink-2);padding:4px 0}
+.sales-filter-notice{margin:0;padding:7px 8px;font-size:12px;line-height:18px;color:var(--ca-ink-2)}

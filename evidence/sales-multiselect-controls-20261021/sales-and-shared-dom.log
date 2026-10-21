@@ -1,0 +1,48 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 test:web:sales
+> node apps/web/src/sales/tests/run-dom-tests.mjs && node apps/web/src/sales/tests/run-reference-popup-dom-tests.mjs && node apps/web/src/demo-controls/tests/run-multi-select-shell-dom-tests.mjs
+
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS DOM 1: idle/advanced expansion reads nothing; actual 20/50/100/200 page sizes and approved primary/advanced filters.
+PASS DOM 2: only clicked bounded reference port reads; Escape restores focus; explicit query uses real mocked HTTP and exact negative money.
+PASS DOM 3: server document pagination, reset without read, failed page-size keeps marked prior scope; retry applies new size only on success.
+PASS DOM 4: detail only on click; stored line/full labels/exact return economics; non-Demo saved blocks absent and product 查看 explicitly unavailable; no mutations; full-page Back retains mounted executed list, scroll and focus after reveal; no dialog/Tab trap/Escape dismissal.
+PASS DOM 5: new target is independent; Back/cancel/close abort and discard late ignored-signal responses; cancelled facts do not reappear.
+PASS DOM 6: cancelling page-size retains applied size; identity/session/permission replacement clears list/detail and discards late facts.
+PASS DOM 7: StrictMode setup/cleanup replay does not dispose the live route, detail or reference lifecycle.
+PASS DOM 8: concrete reference HTTP cancels on close/identity revocation and late responses cannot reopen candidates or restore old labels.
+PASS DOM 9: full native names, exact beyond-int64 aggregates without invented units, Shanghai next-day minute formatting, exchange sections and gift-excluded detail totals; one list plus one detail request only.
+PASS DOM 10: missing detail-style capability leaves native list/query usable and both detail activations visibly unavailable; no dummy CSS provider/read fallback.
+PASS DOM 11: style readiness gates data; Back works while CSS is pending, preserves draft/results/DOM/scroll/focus, and late style success cannot start a closed read.
+PASS DOM 12: failed action CSS never mounts data; explicit retry joins code/style readiness and performs exactly one native read, with honest errors and source action order.
+PASS DOM 13: closed older style activation cannot unlock a newer target; only its own ready action starts the new independent document scope.
+PASS DOM 14: same-account session/permission revocation during action-style wait clears retained facts and cannot start late data after CSS resolves.
+PASS DOM 15: entering detail cancels/detaches a pending list-reference child without hidden-trigger focus; ignored-signal late candidates cannot reopen on Back or reread the list.
+PASS DOM 16: removing capability during pending action CSS immediately reveals list, restores safe heading focus/scroll, disables detail actions and discards late readiness without implicit reopening.
+PASS DOM 17: removing capability during detail data aborts its query/scope and drops ignored-signal late facts while retaining a usable list; reinstatement never rereads automatically.
+PASS DOM 18: removing capability from loaded detail clears document, reveals the original retained list and safely focuses its heading instead of its now-disabled trigger, without Back/read resurrection.
+All 18 synthetic DOM groups passed. No real browser, network, server, login, PostgreSQL, Demo pixels or performance acceptance.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS reference popup 1: StrictMode opens one bounded transport; static↔reference and reference replacement synchronously abort old owners, retain one local tree and one listener pair, and reject late facts.
+PASS reference popup 2: outside/Escape abort and restore only in-control focus; debounced remote search aborts stale generations, retains selected labels, and never promotes filtered/cross-page/200-capped windows to ALL; explicit positive-only resolution and bottom-scroll bounded pages work.
+PASS reference popup 3: advanced removal/explicit close clean up without hidden focus; genuine checked ALL and fitted plural tags edit only draft; explicit query carries all six plural dimensions and native RETURN+EXCHANGE grouping.
+PASS reference popup 4: entering detail and route unmount abort pending candidates, drop late completions, preserve the retained applied list and release page listeners.
+PASS reference popup 5: open-reader replacement aborts without implicit reads or stale labels; same-account identity/permission revocation aborts the transport and listener ownership immediately; late completion cannot reopen or reread.
+All 5 focused synthetic reference-popup DOM groups passed. No real browser, production data, Demo appearance or performance acceptance.
+PASS multi shell 1: idle is inert; CSS gates views/data; replacement, Escape and late CSS cannot revive dismissed owners.
+PASS multi shell 2: reopen gets an independent child; Escape restores safe focus and hiding the list drops ownership/view/data.
+PASS multi shell 3: CSS failure is visible, never starts data, and explicit retry opens once without changing selection.
+PASS multi shell 4: identity/permission replacement drops every child/style/view, and unmount leaves no retained popup.
+PASS multi shell 5: disabling a focus-only pending preparation disposes its lease without popup ownership; reenable starts a clean action.
+PASS multi shell 6: provider/target identity replacement closes the old child synchronously, drops its view and waits for another explicit action.
+PASS multi shell 7: actual stylesheet leases are inert, per-owner, deduplicated, retryable, detachable while pending and honor an explicit portable-inline marker.
+All 7 synthetic shared multi-select shell groups passed. Injected action plus actual stylesheet-owner lifecycle only; actual TreeSelect behavior has separate sales/transfer DOM tests. No browser, network, PG or pixel acceptance.
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

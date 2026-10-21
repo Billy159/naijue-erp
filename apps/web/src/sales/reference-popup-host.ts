@@ -8,7 +8,7 @@ export interface SalesReferencePopupHost {
   readonly attach: (ownership: PopupOwnership, element: HTMLElement) => () => void;
 }
 
-/** One listener/ownership host per sales page. Replay gets a fresh controller;
+/** One listener/ownership host for all six filters per sales page. Replay gets a fresh controller;
  * neither an abandoned StrictMode effect nor a closed route can be reused. */
 export function useSalesReferencePopupHost(scope: ReadScope): SalesReferencePopupHost | null {
   const [owned, setOwned] = useState<{ scope: ReadScope; host: SalesReferencePopupHost } | null>(null);

@@ -9,12 +9,12 @@ export const salesTypeLabels: Readonly<Record<SalesBusinessType, string>> = { SA
 export const salesTypeGroupLabels = { SALE: '销售', RETURN_EXCHANGE: '退货/换货' } as const;
 export const salesPageSizes = [20, 50, 100, 200] as const;
 export function salesParameters(draft: SalesFilterDraft, pageSize: SalesQueryPageSize): SalesListQuery {
-  if (draft.businessType !== null && !Object.hasOwn(salesTypeGroupLabels, draft.businessType)) throw new TypeError('Invalid sales business type group.');
+  if (!Array.isArray(draft.businessTypes) || draft.businessTypes.length > 2 || new Set(draft.businessTypes).size !== draft.businessTypes.length || !Array.from(draft.businessTypes).every(value => typeof value === 'string' && Object.hasOwn(salesTypeGroupLabels, value))) throw new TypeError('Invalid sales business type group.');
   return parseSalesListQuery({ filter: { startDate: draft.startDate || null, endDate: draft.endDate || null,
-    statuses: draft.status === null ? [] : [draft.status],
-    businessTypes: draft.businessType === 'RETURN_EXCHANGE' ? ['RETURN', 'EXCHANGE'] : draft.businessType === null ? [] : [draft.businessType],
-    hallIds: draft.hall === null ? [] : [draft.hall.id], salespersonIds: draft.salesperson === null ? [] : [draft.salesperson.id],
-    customerIds: draft.customer === null ? [] : [draft.customer.id], warehouseIds: draft.warehouse === null ? [] : [draft.warehouse.id],
+    statuses: draft.statuses,
+    businessTypes: draft.businessTypes.flatMap(value => value === 'RETURN_EXCHANGE' ? ['RETURN', 'EXCHANGE'] : ['SALE']),
+    hallIds: draft.hall.map(item => item.id), salespersonIds: draft.salesperson.map(item => item.id),
+    customerIds: draft.customer.map(item => item.id), warehouseIds: draft.warehouse.map(item => item.id),
     number: draft.number.trim() || null }, page: 1, pageSize });
 }
 export function createSalesListQuery(scope: ReadScope, reader: SalesReader): LatestQuery<SalesListQuery, SalesListDto> {

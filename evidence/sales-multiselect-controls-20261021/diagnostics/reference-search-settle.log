@@ -1,0 +1,21 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS reference popup 1: StrictMode opens one bounded transport; static↔reference and reference replacement synchronously abort old owners, retain one local tree and one listener pair, and reject late facts.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Remote search waits the 160ms debounce
+
+7 !== 6
+
+    at file:///workspace/shared/naijue-erp-rewrite/apps/web/src/sales/tests/run-reference-popup-dom-tests.mjs:125:82 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 7,
+  expected: 6,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

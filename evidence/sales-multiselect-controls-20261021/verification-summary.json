@@ -1,0 +1,106 @@
+{
+  "status": "Scoped source, synthetic lifecycle, model/protocol and emitted build checks passed. Parent full compiler/build verification is separate and pending in this snapshot.",
+  "baseCommit": "760c489d3aa5913aab02372940a5ae25b3964688",
+  "sourceStateSha256": "9277a6dabce7e4cb63031f69529e3e1d1d40e7f638f814ed155d91ff2cdcf02c",
+  "sourceManifestSha256": "eeed71c133e7cef9cd55b3e6d917548740491857b263eb6b009d2368c8329f89",
+  "changedSourcePaths": 32,
+  "removedObsoleteImplementation": "apps/web/src/sales/reference-selector.tsx",
+  "scope": "Six sales filter dimensions now reuse the source-adapted shared transfer TreeSelect action; native positive query arrays, read providers and stored business types are unchanged.",
+  "checks": {
+    "focusedNode": {
+      "passed": 84,
+      "failed": 0,
+      "log": "focused-node.log",
+      "boundary": "Synthetic model/candidate, existing application/PG scripted protocol and Fastify injection tests. No genuine PostgreSQL."
+    },
+    "salesDom": {
+      "groups": 18,
+      "log": "sales-and-shared-dom.log"
+    },
+    "expandedReferenceDom": {
+      "groups": 5,
+      "log": "sales-and-shared-dom.log",
+      "coverage": [
+        "Six plural payload dimensions",
+        "Mutually exclusive static and reference popups",
+        "Provider replacement and ignored-signal stale results",
+        "One host listener pair after StrictMode",
+        "Native input focus after Escape",
+        "Fitted tags and narrow +N overflow",
+        "Debounce/search generation races",
+        "Explicit positive singleton resolution after incomplete all-minus refusal",
+        "20 per explicit scroll and 200 display cap"
+      ]
+    },
+    "sharedShellDom": {
+      "groups": 7,
+      "log": "sales-and-shared-dom.log",
+      "boundary": "Injected action plus actual stylesheet owner. Actual Arco behavior is covered separately by sales/transfer DOM."
+    },
+    "transferDom": {
+      "groups": 11,
+      "log": "transfer-dom.log"
+    },
+    "transferFilterDom": {
+      "groups": 4,
+      "log": "transfer-filter-dom.log"
+    },
+    "composedSalesDom": {
+      "groups": 6,
+      "log": "composed-sales-dom.log"
+    },
+    "applicationEmittedGraph": {
+      "status": "passed",
+      "log": "application-emitted.log"
+    },
+    "developmentHostEmittedGraph": {
+      "status": "passed",
+      "log": "development-host-emitted.log"
+    },
+    "salesSplitBuild": {
+      "status": "passed",
+      "log": "sales-split-build.log"
+    },
+    "salesFrozenSource": {
+      "status": "passed",
+      "log": "sales-source.log"
+    },
+    "transferFrozenSource": {
+      "status": "passed",
+      "log": "transfer-source.log"
+    },
+    "finalSourceManifest": "All present file hashes match; removed scalar selector absent; whitespace diff check passed."
+  },
+  "boundedBehavior": {
+    "referencePageSize": 20,
+    "popupCandidateDisplayLimit": 200,
+    "explicitNativeFilterIdsLimit": 1000,
+    "candidateReads": "Only winning popup open, debounced search, explicit retry and explicit bottom scroll; no eager full catalog or per-selected-ID hydration.",
+    "completeUniverse": "Only one unsearched complete first response, never accumulated pages.",
+    "allMinusIncomplete": "Refused with explicit limitation. A separate deliberate 仅选择该项 action may start a positive subset.",
+    "clear": "Unrestricted ALL and always labelled 全部, not match-none."
+  },
+  "knownParityLimits": [
+    "Incomplete remote all-minus is intentionally not approximated.",
+    "Native reference candidates are authorized historical observations, not source enabled/current master catalogs.",
+    "Remote search remains the native literal-name/customer-code contract, not full catalog ID/pinyin/initial matching.",
+    "Reset remains draft-only and explicit Query remains required.",
+    "Native dates retain current controls; source Arco date popup not part of this task."
+  ],
+  "preservedDiagnostics": {
+    "rawPriorRuns": 14,
+    "directory": "diagnostics",
+    "note": "Includes runtime focus failure and test-adaptation/real-CSS timing failures, with fixes or corrected live-node assertions. Extra shared-shell idle-abort observation is explicitly labelled as captured tool-transcript evidence rather than raw process output."
+  },
+  "review": "review-and-resolution.txt records three confirmed source findings, actual Escape focus failure, defensive close-focus race, closed-menu callback hardening and their permanent regressions.",
+  "notExecuted": [
+    "Full root/web compilers by this worker (reserved for parent)",
+    "Genuine PostgreSQL verification of the prior query extension",
+    "Real browser/computed geometry/pixels",
+    "Browser network waterfall, memory or performance acceptance",
+    "Fresh committed portable derivative build/smoke for this new UI stage",
+    "Real authentication/account/catalog/data/production operations",
+    "Any package installation, network service startup, push, deployment or commit by worker"
+  ],
+  "parentOwnedExistingUntracked": "evidence/native-read-independent-probes.log was not modified or included in this source scope."
+}

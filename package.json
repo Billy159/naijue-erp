@@ -25,7 +25,7 @@
     "test:web:auth": "node apps/web/src/authentication/tests/run-dom-tests.mjs",
     "build:preview:product": "node apps/web/build-product-only-preview.mjs",
     "check:preview:product": "npm run build:preview:product && node apps/web/tests/run-product-only-smoke.mjs",
-    "test:web:sales": "node apps/web/src/sales/tests/run-dom-tests.mjs && node apps/web/src/sales/tests/run-reference-popup-dom-tests.mjs",
+    "test:web:sales": "node apps/web/src/sales/tests/run-dom-tests.mjs && node apps/web/src/sales/tests/run-reference-popup-dom-tests.mjs && node apps/web/src/demo-controls/tests/run-multi-select-shell-dom-tests.mjs",
     "test:web:parties": "node apps/web/src/parties/tests/run-dom-tests.mjs",
     "test:web:application": "node apps/web/src/application/tests/run-dom-tests.mjs",
     "test:web:transfers": "node apps/web/src/transfers/tests/run-dom-tests.mjs",

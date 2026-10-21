@@ -6,11 +6,21 @@ import { build } from 'esbuild';
 import { JSDOM } from 'jsdom';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const temp = await mkdtemp(path.join(here, '.dom-tmp-'));
-const dom = new JSDOM('<!doctype html><style data-demo-single-select-inline></style><div id="root"></div>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
-for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLDialogElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLButtonElement', 'HTMLIFrameElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'Element', 'SVGElement', 'MutationObserver', 'ShadowRoot', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
+// Readiness markers are attached only to real locally bundled action CSS.
+const inlineActionStyles = await Promise.all(['single-select', 'multi-select'].map(async name => {
+  const css = await build({ entryPoints: [path.join(here, `../../demo-controls/${name}.css`)], bundle: true, write: false, logLevel: 'warning' });
+  return css.outputFiles[0].text;
+}));
+const dom = new JSDOM('<!doctype html><style data-demo-single-select-inline></style><style data-demo-multi-select-inline></style><div id="root"></div>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
+dom.window.document.querySelector('style[data-demo-single-select-inline]').textContent = inlineActionStyles[0];
+dom.window.document.querySelector('style[data-demo-multi-select-inline]').textContent = inlineActionStyles[1];
+for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLDialogElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLButtonElement', 'HTMLIFrameElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'Element', 'SVGElement', 'MutationObserver', 'ShadowRoot', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame', 'innerWidth', 'innerHeight', 'pageXOffset', 'pageYOffset']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
 Object.defineProperty(globalThis, 'navigator', { configurable: true, value: dom.window.navigator });
 dom.window.matchMedia = query => ({ matches: false, media: query, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {}, dispatchEvent() { return true; } });
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+globalThis.ResizeObserver = class { observe() {} unobserve() {} disconnect() {} }; dom.window.ResizeObserver = globalThis.ResizeObserver;
+dom.window.HTMLElement.prototype.scrollIntoView = () => {};
+dom.window.HTMLCanvasElement.prototype.getContext = () => ({ font: '', measureText: text => ({ width: text.length * 7 }) });
 let root;
 try {
   const output = path.join(temp, 'dom-entry.mjs');
@@ -25,7 +35,8 @@ try {
     const body = JSON.parse(init.body);
     if (url.endsWith('/sales/references/query')) {
       candidateCalls.push({ url, body, signal: init.signal });
-      const data = { page: body.page, exactTotal: '1', items: [{ id: uuid(11), label: 'TEST 厅' }] };
+      const referenceId = { hall: 11, salesperson: 14, customer: 12, warehouse: 13 }[body.kind];
+      const data = { page: body.page, exactTotal: '1', items: [{ id: uuid(referenceId), label: 'TEST 厅' }] };
       if (holdReferences) return new Promise(resolve => heldReferences.push({ body, signal: init.signal, finish: () => resolve(json(data)) }));
       return json(data);
     }
@@ -46,8 +57,15 @@ try {
   const reader = createSalesHttpReader(options);
   const references = createSalesFilterReferenceHttpReader(options);
   const context = new ReadContext({ accountId: 'TEST-DOM', sessionRevision: '1', permissionRevision: '1' }); const scope = context.createScope('TEST-SALES-ROUTE');
-  const settle = async () => { await act(async () => { await new Promise(resolve => setTimeout(resolve, 10)); }); };
-  const click = async element => { assert.ok(element, 'Expected clickable element'); await act(async () => element.click()); await settle(); };
+  const settle = async (ms = 50) => { await act(async () => { await new Promise(resolve => setTimeout(resolve, ms)); }); };
+  const focus = async element => { assert.ok(element); await act(async () => element.focus()); };
+  const click = async element => { assert.ok(element, 'Expected clickable element'); await act(async () => { element.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true })); element.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true })); }); await settle(); };
+  const multi = label => host.querySelector(`[data-multi-label="${label}"]`);
+  const multiControl = label => multi(label)?.querySelector(`[aria-label="${label}，多选"]`);
+  const openMulti = async label => { await click(multiControl(label)); await settle(); return multi(label); };
+  const closeMulti = async label => { await act(async () => multi(label).dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }))); await settle(); };
+  const multiOption = (label, text) => [...multi(label).querySelectorAll('.arco-tree-node-title')].find(option => option.textContent === text);
+  const referenceMenu = () => host.querySelector('.sales-reference-menu');
   const button = text => [...host.querySelectorAll('button')].find(element => element.textContent.trim() === text);
   const submit = async () => { await act(async () => host.querySelector('form').dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }))); await settle(); };
   const displayedSize = () => host.querySelector('.sales-pagination .ui-single-tag')?.textContent ?? host.querySelector('.sales-pagination .iw-page-size-trigger span')?.textContent;
@@ -59,13 +77,20 @@ try {
   assert.deepEqual([...host.querySelectorAll('.sales-pagination [role=option]')].map(option => option.textContent), ['20张/页', '50张/页', '100张/页', '200张/页']);
   await act(async () => host.querySelector('.sales-pagination [role=combobox]').dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }))); await settle();
   await click(host.querySelector('.tc-filter-toggle'));  assert.equal(calls.length, 0); assert.equal(candidateCalls.length, 0);
-  const businessType = host.querySelector('select[aria-label="业务类型"]');
-  assert.deepEqual([...businessType.options].map(option => [option.value, option.textContent]), [['', '全部业务类型'], ['SALE', '销售'], ['RETURN_EXCHANGE', '退货/换货']]);
-  await act(async () => { businessType.value = 'RETURN_EXCHANGE'; businessType.dispatchEvent(new dom.window.Event('change', { bubbles: true })); });
+  assert.deepEqual([...host.querySelectorAll('[data-multi-label]')].map(control => control.dataset.multiLabel), ['状态', '业务类型', '营业厅', '营业员', '客户', '出库仓']);
+  assert.equal(host.querySelector('.demo-multi-select'), null, 'Idle filters do not mount Arco TreeSelect');
+  assert.equal(document.querySelector('link[data-demo-multi-select-styles]'), null, 'Actual inline-ready marker avoids stylesheet transport');
+  await openMulti('业务类型');
+  assert.deepEqual([...multi('业务类型').querySelectorAll('.arco-tree-node-title')].map(option => option.textContent), ['全部业务类型', '销售', '退货/换货']);
+  await click(multiOption('业务类型', '销售'));
+  await click(multiOption('业务类型', '退货/换货')); await settle(350);
+  assert.match(multi('业务类型').querySelector('.inv-filter-tools').textContent, /匹配 2 项 · 已选 2 项/); assert.ok([...multi('业务类型').querySelectorAll('.arco-tree input[type="checkbox"]')].every(input => input.checked), 'Unchecking the last explicit item returns unrestricted ALL, not an invented zero-set');
+  await click(multiOption('业务类型', '销售')); await settle(350); await closeMulti('业务类型');
+  assert.match(multiControl('业务类型').textContent, /退货\/换货/);
   assert.equal(calls.length, 0); assert.equal(candidateCalls.length, 0);
   console.log('PASS DOM 1: idle/advanced expansion reads nothing; actual 20/50/100/200 page sizes and approved primary/advanced filters.');
-  await click(host.querySelector('button[aria-label="营业厅"]')); assert.equal(candidateCalls.length, 1); assert.equal(candidateCalls[0].body.kind, 'hall'); assert.equal(candidateCalls[0].body.pageSize, 20); assert.equal(candidateCalls[0].url, 'https://synthetic.test/api/sales/references/query'); assert.deepEqual(Object.keys(candidateCalls[0].body).sort(), ['kind', 'page', 'pageSize', 'search']);
-  await act(async () => host.querySelector('[role="dialog"]').dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))); assert.equal(host.querySelector('[role="dialog"]'), null); assert.equal(document.activeElement, host.querySelector('button[aria-label="营业厅"]'));
+  await openMulti('营业厅'); assert.equal(candidateCalls.length, 1); assert.equal(candidateCalls[0].body.kind, 'hall'); assert.equal(candidateCalls[0].body.pageSize, 20); assert.equal(candidateCalls[0].url, 'https://synthetic.test/api/sales/references/query'); assert.deepEqual(Object.keys(candidateCalls[0].body).sort(), ['kind', 'page', 'pageSize', 'search']);
+  await closeMulti('营业厅'); assert.equal(referenceMenu(), null); assert.ok(document.activeElement === multi('营业厅').querySelector('input'), 'Escape restores focus to reference input');
   assert.equal(calls.length, 0); await submit(); assert.equal(calls.length, 1); assert.equal(calls[0].url, 'https://synthetic.test/api/sales/query');
   assert.deepEqual(calls[0].body.filter, { startDate: null, endDate: null, statuses: [], businessTypes: ['RETURN', 'EXCHANGE'], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: null });
   assert.equal(host.querySelectorAll('.sales-list tbody tr').length, 20); assert.deepEqual([...host.querySelectorAll('.sales-list th')].map(element => element.textContent), ['日期', '销货单号', '状态', '业务类型', '营业厅', '营业员', '商品信息', '数量', '金额', '最后更新', '操作']); const firstCells = host.querySelector('.sales-list tbody tr').cells; assert.equal(firstCells[6].textContent, '历史分类未提供'); assert.equal(firstCells[7].textContent, '退1 · 换0'); assert.equal(firstCells[9].textContent, '2026-10-20 08:00'); assert.equal(firstCells[4].title, firstCells[4].textContent); assert.equal(host.querySelector('[data-document-status]').dataset.documentStatus, 'pending'); assert.ok(host.querySelector('nav[aria-label="销货单列表分页"] button[aria-current="page"]')); assert.equal(calls.length, 1); assert.match(host.textContent, /共 21 张/); assert.match(host.textContent, /-9007199254740993.01/);
@@ -73,10 +98,10 @@ try {
   await click(host.querySelector('button[aria-label="下一页"]')); assert.equal(calls.at(-1).body.page, 2); assert.equal(host.querySelectorAll('.sales-list tbody tr').length, 1); assert.match(host.textContent, /21–21/);
   await click(button('重置')); assert.equal(calls.length, 2);
   failList = true; await changeSize(50); assert.ok(host.querySelector('[role="alert"]')); assert.equal(displayedSize(), '20张/页'); assert.match(host.textContent, /保留上次成功结果/); assert.equal(host.querySelectorAll('.sales-list tbody tr').length, 1);
-  await click(button('重试')); assert.equal(calls.at(-1).body.pageSize, 50); assert.equal(displayedSize(), '50张/页'); assert.equal(host.querySelectorAll('.sales-list tbody tr').length, 21);
+  await click(button('重试')); assert.equal(calls.at(-1).body.pageSize, 50); assert.equal(displayedSize(), '50张/页'); assert.equal(host.querySelectorAll('.sales-list tbody tr').length, 21); assert.deepEqual(calls.at(-1).body.filter.businessTypes, ['RETURN', 'EXCHANGE'], 'Page-size retries keep the applied range after draft reset');
   console.log('PASS DOM 3: server document pagination, reset without read, failed page-size keeps marked prior scope; retry applies new size only on success.');
   const region = host.querySelector('.sales-results'); region.scrollTop = 180; region.scrollLeft = 90;
-  const trigger = host.querySelector('.sales-view'); trigger.focus(); const beforeDetail = calls.length; await click(trigger);
+  const trigger = host.querySelector('.sales-view'); await focus(trigger); const beforeDetail = calls.length; await click(trigger);
   assert.equal(calls.length, beforeDetail + 1); assert.equal(calls.at(-1).url, 'https://synthetic.test/api/sales/detail/query');
   const detailPage = () => host.querySelector('.sales-detail-page, .sales-detail-loading'); assert.ok(detailPage()); assert.match(detailPage().textContent, /TEST 保存商品 1/); assert.match(detailPage().textContent, /165\/S/); assert.match(detailPage().textContent, /Y版（修身）/); assert.equal(detailPage().querySelector('.sales-line-record, .sales-record-metadata'), null); const beforeLine = calls.length; const lineView = detailPage().querySelector('.sale-lines-table tbody .ui-action-cell button'); assert.equal(lineView.textContent, '查看'); assert.equal(lineView.disabled, true); assert.equal(lineView.title, '商品规格详情尚未接入'); await click(lineView); assert.equal(calls.length, beforeLine); assert.doesNotMatch(detailPage().textContent, /001234567890123|行保存记录|单据保存信息/); assert.ok(detailPage().querySelector('.sale-lines-table thead th:last-child').classList.contains('ui-action-cell')); assert.deepEqual([...detailPage().querySelectorAll('.sale-lines-table th')].map(element => element.textContent), ['款号／商品名称', '颜色', '版型', '尺码', '数量', '参考零售价', '折扣', '退货单价', '金额', '操作']); assert.deepEqual([...detailPage().querySelector('.sale-doc-fields').children].slice(0, 6).map(element => element.querySelector('.sale-field-label').textContent), ['单据日期', '业务类型', '营业厅', '营业员', '客户', '出库仓']); assert.ok(detailPage().querySelector('.sale-note-row').compareDocumentPosition(detailPage().querySelector('.sale-entry-section')) & Node.DOCUMENT_POSITION_FOLLOWING); assert.match(detailPage().textContent, /未记录/); assert.match(detailPage().textContent, /-9007199254740993.01/);
   assert.match(detailPage().textContent, /TEST 当前营业厅/); assert.match(detailPage().textContent, /TEST 当前客户/); assert.match(detailPage().textContent, /TEST 当前出库仓/);
@@ -88,7 +113,7 @@ try {
   assert.equal(detailPage().querySelector('h1').textContent, '查看销货单');
   assert.deepEqual([...detailPage().querySelector('.sales-document-state').children].map(element => element.tagName), ['H1', 'SPAN', 'SPAN', 'DIV']);
   assert.deepEqual([...detailPage().querySelector('.sales-document-state .actions').children].map(element => element.textContent), ['返回列表', '导出', '打印', '操作历史']);
-  const returnControl = [...detailPage().querySelectorAll('button')].find(element => element.textContent === '返回列表'); returnControl.focus();
+  const returnControl = [...detailPage().querySelectorAll('button')].find(element => element.textContent === '返回列表'); await focus(returnControl);
   const forwardTab = new dom.window.KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
   await act(async () => returnControl.dispatchEvent(forwardTab)); assert.equal(forwardTab.defaultPrevented, false, 'Full page must not trap Tab');
   const escape = new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true });
@@ -113,15 +138,15 @@ try {
   const strictContext = new ReadContext({ accountId: 'TEST-STRICT', sessionRevision: '1', permissionRevision: '1' }); const strictScope = strictContext.createScope('TEST-STRICT');
   await act(async () => root.render(createElement(StrictMode, null, createElement(SalesPageHost, { scope: strictScope, reader, references, loadDetailStyles })))); await settle(); await submit(); assert.equal(host.querySelectorAll('.sales-list tbody tr').length, 20);
   await click(host.querySelector('.sales-view')); assert.match(detailPage().textContent, /TEST 保存商品 1/); await click(button('返回列表'));
-  await click(host.querySelector('button[aria-label="营业厅"]')); assert.match(host.querySelector('[role="dialog"]').textContent, /TEST 厅/);
+  await openMulti('营业厅'); assert.match(referenceMenu().textContent, /TEST 厅/);
   console.log('PASS DOM 7: StrictMode setup/cleanup replay does not dispose the live route, detail or reference lifecycle.');
-  await click(host.querySelector('button[aria-label="关闭营业厅选择"]'));
-  holdReferences = true; await click(host.querySelector('button[aria-label="营业厅"]')); assert.equal(heldReferences.length, 1);
-  await act(async () => host.querySelector('[role="dialog"]').dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))); await settle();
-  assert.equal(heldReferences[0].signal.aborted, true); await act(async () => heldReferences[0].finish()); await settle(); assert.equal(host.querySelector('[role="dialog"]'), null);
-  await click(host.querySelector('button[aria-label="营业厅"]')); assert.equal(heldReferences.length, 2);
+  await closeMulti('营业厅');
+  holdReferences = true; await openMulti('营业厅'); assert.equal(heldReferences.length, 1);
+  await closeMulti('营业厅');
+  assert.equal(heldReferences[0].signal.aborted, true); await act(async () => heldReferences[0].finish()); await settle(); assert.equal(referenceMenu(), null);
+  await openMulti('营业厅'); assert.equal(heldReferences.length, 2);
   await act(async () => strictContext.clear()); await settle(); assert.equal(heldReferences[1].signal.aborted, true); await act(async () => heldReferences[1].finish()); await settle();
-  assert.equal(host.querySelector('[role="dialog"]'), null); assert.doesNotMatch(host.textContent, /TEST 厅/);
+  assert.equal(referenceMenu(), null); assert.doesNotMatch(host.textContent, /TEST 厅/);
   await act(async () => root.unmount()); root = null;
   console.log('PASS DOM 8: concrete reference HTTP cancels on close/identity revocation and late responses cannot reopen candidates or restore old labels.');
   extendedCase = true; holdDetails = false; holdReferences = false; root = createRoot(host);
@@ -151,11 +176,11 @@ try {
   root = createRoot(host); const styleContext = new ReadContext({ accountId: 'TEST-STYLE-READY', sessionRevision: '1', permissionRevision: '1' });
   await act(async () => root.render(createElement(SalesPageHost, { scope: styleContext.createScope('STYLE-READY'), reader, references, loadDetailStyles }))); await settle(); await submit();
   const retainedList = host.querySelector('[data-document-list="sales"]'); const retainedRegion = host.querySelector('.sales-results'); retainedRegion.scrollTop = 237; retainedRegion.scrollLeft = 112;
-  const statusDraft = host.querySelector('select[aria-label="状态"]'); await act(async () => { statusDraft.value = 'APPROVED'; statusDraft.dispatchEvent(new Event('change', { bubbles: true })); }); await settle();
-  const heldTrigger = host.querySelector('.sales-view'); heldTrigger.focus(); const readsBeforeStyles = calls.length; styleMode = 'hold'; await click(heldTrigger);
+  await openMulti('状态'); await click(multiOption('状态', '未审核')); await click(multiOption('状态', '已作废')); await settle(350); await closeMulti('状态');
+  const heldTrigger = host.querySelector('.sales-view'); await focus(heldTrigger); const readsBeforeStyles = calls.length; styleMode = 'hold'; await click(heldTrigger);
   assert.equal(calls.length, readsBeforeStyles, 'Detail data waits for usable action CSS'); assert.equal(retainedList.hidden, true); assert.ok(host.querySelector('.sales-detail-loading')); assert.equal(document.activeElement, button('返回列表'));
   const firstStyleWait = heldStyles.at(-1); await click(button('返回列表')); assert.equal(retainedList.hidden, false); assert.equal(host.querySelector('.sales-results'), retainedRegion); assert.equal(document.activeElement, heldTrigger);
-  assert.equal(retainedRegion.scrollTop, 237); assert.equal(retainedRegion.scrollLeft, 112); assert.equal(statusDraft.value, 'APPROVED'); assert.match(host.textContent, /条件已修改/);
+  assert.equal(retainedRegion.scrollTop, 237); assert.equal(retainedRegion.scrollLeft, 112); assert.match(multiControl('状态').textContent, /已审核/); assert.doesNotMatch(multiControl('状态').textContent, /未审核|已作废/); assert.match(host.textContent, /条件已修改/);
   await act(async () => firstStyleWait.resolve()); await settle(); assert.equal(calls.length, readsBeforeStyles); assert.equal(detailPage(), null);
   console.log('PASS DOM 11: style readiness gates data; Back works while CSS is pending, preserves draft/results/DOM/scroll/focus, and late style success cannot start a closed read.');
 
@@ -165,7 +190,7 @@ try {
   console.log('PASS DOM 12: failed action CSS never mounts data; explicit retry joins code/style readiness and performs exactly one native read, with honest errors and source action order.');
 
   styleMode = 'hold'; await click(heldTrigger); const olderStyleWait = heldStyles.at(-1); await click(button('返回列表'));
-  const newerTrigger = host.querySelectorAll('.sales-number')[1]; newerTrigger.focus(); await click(newerTrigger); const newerStyleWait = heldStyles.at(-1); const beforeNewerRead = calls.length;
+  const newerTrigger = host.querySelectorAll('.sales-number')[1]; await focus(newerTrigger); await click(newerTrigger); const newerStyleWait = heldStyles.at(-1); const beforeNewerRead = calls.length;
   await act(async () => olderStyleWait.resolve()); await settle(); assert.equal(calls.length, beforeNewerRead); assert.ok(host.querySelector('.sales-detail-loading'));
   await act(async () => newerStyleWait.resolve()); await settle(); assert.equal(calls.length, beforeNewerRead + 1); assert.match(detailPage().textContent, /TEST 保存商品 2/); assert.doesNotMatch(detailPage().textContent, /TEST 保存商品 1/);
   await click(button('返回列表')); assert.equal(document.activeElement, newerTrigger);
@@ -179,29 +204,29 @@ try {
   root = createRoot(host); const interruptionContext = new ReadContext({ accountId: 'TEST-INTERRUPTION', sessionRevision: '1', permissionRevision: '1' }); const interruptionScope = interruptionContext.createScope('INTERRUPTION');
   const renderCapability = async enabled => { await act(async () => root.render(createElement(SalesPageHost, { scope: interruptionScope, reader, references, ...(enabled ? { loadDetailStyles } : {}) }))); await settle(); };
   await renderCapability(true); await submit(); const interruptionList = host.querySelector('[data-document-list="sales"]'); const interruptionRegion = host.querySelector('.sales-results'); interruptionRegion.scrollTop = 319; interruptionRegion.scrollLeft = 83;
-  holdReferences = true; await click(host.querySelector('button[aria-label="营业厅"]')); const interruptedReference = heldReferences.at(-1); assert.equal(interruptedReference.signal.aborted, false);
-  const interruptionTrigger = host.querySelector('.sales-view'); interruptionTrigger.focus(); const beforeReferenceInterruption = calls.length; await click(interruptionTrigger);
-  assert.equal(interruptedReference.signal.aborted, true); assert.equal(host.querySelector('[role="dialog"]'), null); assert.equal(host.querySelector('button[aria-label="营业厅"]').getAttribute('aria-expanded'), 'false');
+  holdReferences = true; await openMulti('营业厅'); const interruptedReference = heldReferences.at(-1); assert.equal(interruptedReference.signal.aborted, false);
+  const interruptionTrigger = host.querySelector('.sales-view'); await focus(interruptionTrigger); const beforeReferenceInterruption = calls.length; await click(interruptionTrigger);
+  assert.equal(interruptedReference.signal.aborted, true); assert.equal(referenceMenu(), null); assert.equal(multiControl('营业厅').getAttribute('aria-expanded'), 'false');
   await act(async () => interruptedReference.finish()); await settle(); await click(button('返回列表'));
-  assert.equal(host.querySelector('[role="dialog"]'), null); assert.equal(document.activeElement, interruptionTrigger); assert.equal(host.querySelector('.sales-results'), interruptionRegion); assert.equal(calls.length, beforeReferenceInterruption + 1); holdReferences = false;
+  assert.equal(referenceMenu(), null); assert.equal(document.activeElement, interruptionTrigger); assert.equal(host.querySelector('.sales-results'), interruptionRegion); assert.equal(calls.length, beforeReferenceInterruption + 1); holdReferences = false;
   console.log('PASS DOM 15: entering detail cancels/detaches a pending list-reference child without hidden-trigger focus; ignored-signal late candidates cannot reopen on Back or reread the list.');
 
-  styleMode = 'hold'; interruptionTrigger.focus(); const beforeStyleRemoval = calls.length; await click(interruptionTrigger); const removedStyleWait = heldStyles.at(-1); await renderCapability(false);
+  styleMode = 'hold'; await focus(interruptionTrigger); const beforeStyleRemoval = calls.length; await click(interruptionTrigger); const removedStyleWait = heldStyles.at(-1); await renderCapability(false);
   assert.equal(interruptionList.hidden, false); assert.equal(detailPage(), null); assert.equal(interruptionTrigger.disabled, true); assert.equal(host.querySelector('.sales-number').disabled, true); assert.equal(document.activeElement, interruptionList.querySelector('h1'));
   assert.equal(interruptionRegion.scrollTop, 319); assert.equal(interruptionRegion.scrollLeft, 83); await act(async () => removedStyleWait.resolve()); await settle(); assert.equal(calls.length, beforeStyleRemoval); assert.equal(detailPage(), null);
   await renderCapability(true); assert.equal(detailPage(), null); assert.equal(interruptionTrigger.disabled, false); assert.equal(calls.length, beforeStyleRemoval);
   console.log('PASS DOM 16: removing capability during pending action CSS immediately reveals list, restores safe heading focus/scroll, disables detail actions and discards late readiness without implicit reopening.');
 
-  styleMode = 'ready'; holdDetails = true; interruptionTrigger.focus(); await click(interruptionTrigger); const removedDetailRead = heldDetails.at(-1); assert.equal(removedDetailRead.signal.aborted, false); const beforeDataRemoval = calls.length;
+  styleMode = 'ready'; holdDetails = true; await focus(interruptionTrigger); await click(interruptionTrigger); const removedDetailRead = heldDetails.at(-1); assert.equal(removedDetailRead.signal.aborted, false); const beforeDataRemoval = calls.length;
   await renderCapability(false); assert.equal(removedDetailRead.signal.aborted, true); assert.equal(interruptionList.hidden, false); assert.equal(detailPage(), null); assert.equal(document.activeElement, interruptionList.querySelector('h1'));
   await act(async () => removedDetailRead.finish()); await settle(); assert.equal(detailPage(), null); assert.doesNotMatch(host.textContent, /TEST 保存商品/); assert.equal(calls.length, beforeDataRemoval);
   holdDetails = false; await renderCapability(true); assert.equal(detailPage(), null); assert.equal(calls.length, beforeDataRemoval);
   console.log('PASS DOM 17: removing capability during detail data aborts its query/scope and drops ignored-signal late facts while retaining a usable list; reinstatement never rereads automatically.');
 
-  interruptionTrigger.focus(); await click(interruptionTrigger); assert.match(detailPage().textContent, /TEST 保存商品 1/); const beforeLoadedRemoval = calls.length; await renderCapability(false);
+  await focus(interruptionTrigger); await click(interruptionTrigger); assert.match(detailPage().textContent, /TEST 保存商品 1/); const beforeLoadedRemoval = calls.length; await renderCapability(false);
   assert.equal(interruptionList.hidden, false); assert.equal(detailPage(), null); assert.equal(host.querySelector('.sales-results'), interruptionRegion); assert.equal(document.activeElement, interruptionList.querySelector('h1')); assert.equal(interruptionTrigger.disabled, true);
   assert.equal(interruptionRegion.scrollTop, 319); assert.equal(interruptionRegion.scrollLeft, 83); await renderCapability(true); assert.equal(detailPage(), null); assert.equal(calls.length, beforeLoadedRemoval);
   await act(async () => root.unmount()); root = null;
   console.log('PASS DOM 18: removing capability from loaded detail clears document, reveals the original retained list and safely focuses its heading instead of its now-disabled trigger, without Back/read resurrection.');
   console.log('All 18 synthetic DOM groups passed. No real browser, network, server, login, PostgreSQL, Demo pixels or performance acceptance.');
-} finally { if (root) root.unmount(); dom.window.close(); await rm(temp, { recursive: true, force: true }); }
+} finally { if (root) await (await import('react')).act(async () => root.unmount()); dom.window.close(); await rm(temp, { recursive: true, force: true }); }

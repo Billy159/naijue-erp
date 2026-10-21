@@ -54,13 +54,36 @@ request. There is no silent truncation or selection-to-first-value conversion.
 
 ## Demo presentation and native facts
 
-Until the reusable multi-select UI is mounted, the existing scalar controls remain
-thin adapters to single-element native lists. The existing business-type select
-uses SALE (销售) and RETURN_EXCHANGE (退货/换货); the latter projects to the
-native list `[RETURN, EXCHANGE]`. RETURN_EXCHANGE is not a native API or stored type.
-Detail and list output preserve the original RETURN versus EXCHANGE type and their
-existing distinct labels. These temporary controls are not evidence that the
-Demo's full six-dimension multi-select visual/interaction restoration is complete.
+The six sales dimensions now use the shared source-adapted TreeSelect multi-select
+presentation, also reused by transfer filters. Drafts retain every selected
+reference and its full label. Status is a complete three-option universe; business
+type is exactly the two Demo groups SALE (销售) and RETURN_EXCHANGE (退货/换货).
+RETURN_EXCHANGE projects to native `[RETURN, EXCHANGE]`, never a stored/API type.
+Native list/detail facts preserve RETURN versus EXCHANGE.
+
+The sales shell prepares action code/CSS only on first focus or action, obtains
+exclusive popup ownership before opening, and starts reference data only while
+that popup owns a live child scope. One bounded 20-entry page follows opening or
+debounced search; another page requires bottom scrolling. At most 200 candidates
+are retained per popup activation without truncating its exact total. Selected
+references survive search/page changes; popup data itself is discarded on close,
+provider/target replacement, detail entry, route or identity invalidation.
+
+Known frozen-Demo interaction limits are explicit, not silently approximated:
+
+- Exact all-minus-one is available only for a complete unsearched single response.
+  A filtered, partial or accumulated multi-page set cannot establish that universe.
+  In that case the checkbox operation is refused with an explanatory notice; a
+  separately labelled 仅选择该项 action may start a positive subset. There is no
+  excluded-ID API, page-only complement or eager full-catalog enumeration.
+- Clearing a selection returns to all/unrestricted and displays 全部…. The frozen
+  local zero-selected display despite an unrestricted query is not reproduced.
+- Native candidates intentionally include authorized historical references, unlike
+  frozen enabled/current master choices. Remote search retains the existing literal
+  name (and customer code) contract, not unsupported whole-catalog pinyin matching.
+
+These controls and source/configuration checks do not claim full Demo behavior,
+real-browser appearance, computed layout or performance parity.
 
 ## Predicate and loading boundaries
 

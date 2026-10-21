@@ -1,0 +1,7 @@
+Observed during the first focused shared-shell run, before abort invalidation was added.
+The process exited 1 after shell groups 1–3 passed. The exact failing assertion was:
+assert.ok([...host.querySelectorAll('button')].filter(button => button.classList.contains('demo-multi-trigger')).every(button => button.disabled))
+The tool transcript reported actual:false / expected:true. This file records that observation, not a reconstructed raw process log.
+Cause: an untouched idle control had no changed React state value on scope abort, so its disabled attribute did not redraw independently of the surrounding sales page.
+Fix: abort explicitly invalidates the shell render, clears child/style/view state and leaves inactive triggers disabled.
+The final shared-shell aggregate includes this identity/permission cleanup guard.

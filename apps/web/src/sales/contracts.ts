@@ -27,13 +27,13 @@ export interface SalesReferencePage extends Omit<SalesFilterReferencePage, 'exac
 /** Historical SALES FILTER references only. Never create/edit eligibility, and no
  * unused catalog enumeration. The concrete reader uses /sales/references/query. */
 export interface SalesReferenceReader { readReferences(read: QueryRead<SalesReferenceParameters>): Promise<SalesReferencePage> }
-/** Temporary scalar presentation adapter until the reusable multi-select is mounted. */
+/** Presentation groups remain distinct from native persisted business types. */
 export type SalesBusinessTypeGroup = 'SALE' | 'RETURN_EXCHANGE';
 export interface SalesFilterDraft {
   readonly startDate: string; readonly endDate: string;
-  readonly status: DocumentStatus | null; readonly businessType: SalesBusinessTypeGroup | null;
-  readonly hall: SalesReference | null; readonly salesperson: SalesReference | null;
-  readonly customer: SalesReference | null; readonly warehouse: SalesReference | null; readonly number: string;
+  readonly statuses: readonly DocumentStatus[]; readonly businessTypes: readonly SalesBusinessTypeGroup[];
+  readonly hall: readonly SalesReference[]; readonly salesperson: readonly SalesReference[];
+  readonly customer: readonly SalesReference[]; readonly warehouse: readonly SalesReference[]; readonly number: string;
 }
-export const emptySalesFilter = (): SalesFilterDraft => ({ startDate: '', endDate: '', status: null, businessType: null, hall: null, salesperson: null, customer: null, warehouse: null, number: '' });
+export const emptySalesFilter = (): SalesFilterDraft => ({ startDate: '', endDate: '', statuses: [], businessTypes: [], hall: [], salesperson: [], customer: [], warehouse: [], number: '' });
 export type { SalesDetailQuery, SalesListQuery, SalesQueryPageSize };

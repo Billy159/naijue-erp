@@ -8,8 +8,8 @@ adaptation. None of its business runtime, bridge, account data or catalog is use
 
 ## Implemented
 
-- The actual `/sales/query` filter: start/end dates, status, business type, hall,
-  salesperson; advanced literal number, customer, warehouse. Explicit 查询, reset
+- The actual `/sales/query` filter: start/end dates, multiple statuses/business groups/halls/
+  salespeople; advanced literal number, customer, warehouse. Explicit 查询, reset
   edits only, 20/50/100/200 document pages, bounded retry and cancellation.
 - Inert `createSalesHttpReader` and `createSalesFilterReferenceHttpReader` use
   reviewed same-origin JSON transport and only `/sales/query`, `/sales/detail/query`
@@ -163,10 +163,13 @@ Explicit scope-retained differences and remaining gaps:
    header; no backdrop, modal Escape dismissal or focus trap is retained. The list
    stays mounted hidden; 返回列表 reveals it before restoring scroll/focus. Native
    browser URL/history routing remains a host-level gap, not claimed parity.
-2. Native filters remain single selections and the actual SALE/RETURN/EXCHANGE
-   contract, rather than importing the legacy multi-selection model or merging
-   business values. Native date inputs reuse shared control bounds; the frozen
-   Arco date popup and its keyboard behavior are not reproduced or accepted here.
+2. All six filter dimensions now use shared TreeSelect multi-selection, with native
+   positive arrays and unchanged SALE/RETURN/EXCHANGE facts. The two visible
+   business groups map return/exchange to both native types. Exact all-minus needs
+   a proven complete unsearched single response; incomplete remote sets show an
+   explicit limitation and optional separately chosen positive singleton. Current
+   historical-reference and literal-search contracts are preserved, not claimed
+   equivalent to the source active catalogs/pinyin. Native dates remain unchanged.
 3. Reset continues to edit the draft without reading. Its note says so. Frozen
    reset issues a query; changing this previously approved lifecycle is outside
    this presentation-only work. Successful prior results and explicit cancellation/
@@ -246,3 +249,25 @@ No browser-history integration, real browser/computed-layout/pixel acceptance,
 network waterfall, performance benchmark, service listener or database action was
 performed for this presentation-only change. Shared application configuration and
 asset wiring are separately owned and verified by the composition maintainer.
+
+
+## Sales multi-select integration (2026-10-21)
+
+Six sales filters reuse the extracted transfer TreeSelect action and its shared
+component CSS. Lazy sales shells arbitrate all six popups through one page host,
+prepare styles on focus/action, and open bounded historical reference reads only
+inside the winning live activation. Search replaces the previous generation;
+explicit bottom scroll adds 20 candidates up to a 200-item display bound. Exact
+totals and off-page selected labels remain intact. Provider/kind replacement,
+advanced-field removal, detail entry, close/Escape/outside and identity cleanup
+abort old children and discard late responses without implicit rereads. The old
+single-reference selector implementation is removed.
+
+The complete status and business-group universes have full positive selection
+support. For incomplete remote universes, ALL-minus is not approximated with the
+first page or an excluded-ID API: a notice explains the limit, and only clicking
+仅选择该项 starts a positive subset. Clearing returns unrestricted ALL. This known
+Demo interaction difference, historical-vs-active candidate difference, and remote
+search limitation are documented in docs/sales-query.md and the shared multi-select
+provenance file. Draft/applied separation, explicit Query, draft-only Reset and
+native exact-count pagination remain unchanged.

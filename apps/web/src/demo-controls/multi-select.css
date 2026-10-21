@@ -1,0 +1,31 @@
+/* Action-only installed component leaves. No global Arco CSS or reset. */
+@import '@arco-design/web-react/es/TreeSelect/style/index.css';
+@import '@arco-design/web-react/es/Tree/style/index.css';
+@import '@arco-design/web-react/es/InputTag/style/index.css';
+@import '@arco-design/web-react/es/_class/OverflowEllipsis/style/index.css';
+@import '@arco-design/web-react/es/Tag/style/index.css';
+@import '@arco-design/web-react/es/Checkbox/style/index.css';
+@import '@arco-design/web-react/es/Trigger/style/index.css';
+@import '@arco-design/web-react/es/Empty/style/index.css';
+/* Frozen inventory-filters.jsx presentation, shared without domain ownership. */
+.demo-multi-select{position:relative;display:block;width:100%;min-width:0}
+.demo-multi-select .arco-tree-select{display:block;width:100%;font-size:13px}.demo-multi-select .arco-tree-select-view{height:32px;min-height:32px;max-height:32px;overflow:hidden;border:1px solid transparent;border-radius:4px;background:var(--ca-surface-muted);box-shadow:none}.demo-multi-select .arco-tree-select:hover .arco-tree-select-view{border-color:transparent;background:var(--ca-surface-muted)}.demo-multi-select .arco-tree-select-focused .arco-tree-select-view{border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted);box-shadow:none}
+.demo-multi-select .arco-input-tag,.demo-multi-select .arco-input-tag:hover,.demo-multi-select .arco-input-tag-focus{background:transparent!important}.demo-multi-select .arco-input-tag-inner{min-width:0;flex-wrap:nowrap;white-space:nowrap}.demo-multi-select .arco-input-tag-tag{height:23px;line-height:23px;max-width:calc(100% - 42px);flex:none;white-space:nowrap;background:var(--ca-surface);color:var(--ca-ink);border:0;border-radius:3px;box-shadow:none}.demo-multi-select .arco-tag-content{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.demo-multi-select .inv-filter-count{font-size:12px;color:var(--ca-ink-2);white-space:nowrap}
+.demo-multi-select .arco-tree-select-popup{box-sizing:border-box;padding:4px;border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);box-shadow:var(--ca-shadow-float);background:var(--ca-popover-bg);color:var(--ca-ink)}.demo-multi-select .arco-tree{max-height:288px;overflow-y:auto;scrollbar-gutter:stable}.demo-multi-select .arco-tree-node{min-height:30px;padding-left:8px}.demo-multi-select .arco-tree-node-switcher{display:none}.demo-multi-select .arco-tree-node-title{font-size:13px;color:var(--ca-ink)}.demo-multi-select .inv-filter-tools{display:flex;align-items:center;gap:8px;padding:5px 8px 7px;border-bottom:1px solid var(--ca-line);font-size:12px;color:var(--ca-ink-2)}
+.demo-multi-select .inv-all-selected .arco-input-tag-inner>.arco-input-tag-tag:not(:first-child){display:none}
+.demo-multi-select .inv-filter-empty{padding:10px;color:var(--ca-ink-2);font-size:13px}
+/* Frozen inventory-filters.jsx:25-28,35-37, scoped to this action host. */
+.demo-multi-select .arco-tree-select-view input{font-size:13px;min-width:32px;background:transparent}
+.demo-multi-select .arco-input-tag-tag:has(.inv-filter-count){padding-inline:3px;border:0;background:transparent}
+.demo-multi-select .arco-tag-close-icon,.demo-multi-select .arco-icon-hover{color:var(--ca-ink-2)}
+.demo-multi-select .arco-tree-node-selected,.demo-multi-select .arco-tree-node:hover{background:var(--ca-popover-hover)}
+.demo-multi-select .arco-tree-node-selected .arco-tree-node-title,.demo-multi-select .arco-tree-node:hover .arco-tree-node-title{background:transparent;color:var(--ca-ink)}
+.demo-multi-select .arco-tree-select-popup .arco-checkbox-checked .arco-checkbox-mask,.demo-multi-select .arco-tree-select-popup .arco-checkbox-indeterminate .arco-checkbox-mask{background:var(--ca-primary);border-color:var(--ca-primary)}
+.demo-multi-select .arco-trigger{z-index:1600!important}
+/* Local aliases replace the source ShadowRoot's surrounding base CSS. */
+.demo-multi-select{font:13px var(--ca-font-sans);color:var(--ca-ink);--primary-6:var(--ca-primary-rgb);--arcoblue-6:var(--ca-primary-rgb);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2);--color-text-3:var(--ca-ink-3);--color-text-4:var(--ca-disabled-ink);--color-fill-1:var(--ca-surface-subtle);--color-fill-2:var(--ca-surface-muted);--color-fill-3:var(--ca-line);--color-fill-4:var(--ca-line-strong);--color-bg-2:var(--ca-surface);--color-bg-popup:var(--ca-surface);--color-border-2:var(--ca-control-border);--color-primary-light-1:var(--ca-surface-subtle);--color-primary-light-2:var(--ca-popover-hover);--border-radius-small:var(--ca-radius-control);--border-radius-medium:var(--ca-radius-card)}
+/* Installed Arco icon rules, scoped here instead of importing a global reset. */
+.demo-multi-select .arco-icon{display:inline-block;color:inherit;font-style:normal;width:1em;height:1em;vertical-align:-2px;stroke:currentColor}
+.demo-multi-select .arco-icon[fill=currentColor]{fill:currentColor;stroke:none}
+.demo-multi-select .arco-icon[stroke=currentColor]{stroke:currentColor;fill:none}
+.demo-multi-select .arco-icon[fill=currentColor][stroke=currentColor]{fill:currentColor;stroke:currentColor}

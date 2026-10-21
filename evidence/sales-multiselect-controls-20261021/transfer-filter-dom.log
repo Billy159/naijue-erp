@@ -1,0 +1,7 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS FILTER DOM 1: actual React19 StrictMode first open starts exactly one transport; complete two-candidate all-minus and exact toolbar work; retained selected label stays outside a new search; filtered subset never becomes the universe.
+PASS FILTER DOM 2: each search and reopen starts one transport; search-generation races, close/reopen and permission replacement abort stalled transports and reject their late results without reviving labels.
+PASS FILTER DOM 3: bottom scroll appends the final page with all newly visible candidates checked; exact totals stay 21 and repeated end scrolls stop; cross-page completeness is never fabricated into all-minus.
+PASS FILTER DOM 4: status shares the source toolbar/all-check projection and bounded local Chinese/native-id/full-pinyin/initial search without a remote request.
+All 4 focused synthetic React/JSDOM filter groups passed. No browser, listener, network, PostgreSQL or Demo pixel acceptance.

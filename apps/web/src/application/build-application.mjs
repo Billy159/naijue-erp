@@ -27,6 +27,8 @@ export async function buildApplication({ entryPoint, outdir }) {
   await copyFile(path.join(here, '../inventory/product-drawer.css'), path.join(outdir, 'chunks/product-drawer.css'));
   const pageSizeStyles = await build({ ...common, entryPoints: [path.join(here, '../demo-controls/single-select.css')], outfile: path.join(outdir, 'chunks/single-select.css'), metafile: true });
   Object.assign(result.metafile.outputs, pageSizeStyles.metafile.outputs);
+  const multiSelectStyles = await build({ ...common, entryPoints: [path.join(here, '../demo-controls/multi-select.css')], outfile: path.join(outdir, 'chunks/multi-select.css'), metafile: true });
+  Object.assign(result.metafile.outputs, multiSelectStyles.metafile.outputs);
   await writeFile(path.join(outdir, 'metafile.json'), JSON.stringify(result.metafile, null, 2));
   const manifest = Object.freeze({ entry: 'application.js', styles: styleManifests, productDrawerStyles: 'chunks/product-drawer.css' });
   await writeFile(path.join(outdir, 'application-assets.json'), JSON.stringify(manifest, null, 2));

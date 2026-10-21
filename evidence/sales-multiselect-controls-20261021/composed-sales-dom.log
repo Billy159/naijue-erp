@@ -1,0 +1,7 @@
+PASS sales app 1: malformed optional CSS capability fails closed; auth/route/query never loads detail styles or reads detail/references; actual list uses one explicit bounded query.
+PASS sales app 2: action CSS failure stays local and retryable; visible Back works while retry is pending; late CSS cannot read/reopen, and retained list/draft/focus/scroll survive without refetch.
+PASS sales app 3: configured readiness reaches actual full-page read-only detail via one target HTTP read, no modal/history or relative CSS fallback; Back restores original list.
+PASS sales app 4: cancel/Back abort current detail reads; abort-ignoring late401 cannot expire current identity or replace a newer target.
+PASS sales app 5: identity replacement aborts old detail before publishing new principal; old401 is ignored, current401 clears authenticated facts, and disposal releases route plus action CSS.
+PASS sales app 6: omitted detail capability preserves usable list but visibly disables both viewing controls, without fallback CSS/data; aliased route/action owners dispose exactly once and never load during cleanup.
+All 6 composed sales application DOM groups passed. Mocked native HTTP/CSS events only, not browser/layout/network/performance or production acceptance.

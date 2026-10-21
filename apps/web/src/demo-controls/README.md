@@ -1,10 +1,11 @@
-# Shared frozen Demo single-select
+# Shared frozen Demo controls
 
 The committed Select action is now used by inventory, sales and transfer page-size
 controls through one lightweight `page-size-select.tsx` loading/lifecycle shell.
 The inventory adapter owns only 100/200/500 options and numeric conversion; document
 pagers retain 20/50/100/200 and their own exact-total/page mathematics.
-No schema, query contract, data/business behavior or other control migration is included.
+The page-size slice did not alter schema, query contracts or business behavior.
+The source-adapted multi-select integration is described separately below.
 
 ## Reused source, not a lookalike
 
@@ -136,3 +137,36 @@ outside/Escape and scope/unmount cleanup. Test-only options describe control
 choices, not ERP business fixtures. No aggregate compiler/build or actual browser,
 computed-layout, screen-reader, clipping or production integration acceptance is
 claimed. Arco's existing React 19 `element.ref` compatibility warnings may appear.
+
+
+## Shared sales/transfer multi-select
+
+`multi-select-action.tsx` extracts the existing transfer TreeSelect presentation.
+Transfer adapters reuse it directly; sales uses the lightweight `multi-select.tsx`
+shell so entering a route does not eagerly load TreeSelect code/CSS or candidates.
+`multi-select-source-provenance.json` records the original inventory-filters.jsx
+source/hash/ranges and the explicit bounded-API departures. No old business/data
+bridge, full catalog or new external dependency is used.
+
+The action owns presentation only: strict checked options, complete-universe
+normalization, full labels, width-fitting tags and +N 更多, source-like toolbar,
+local portal and explicit callbacks. Completeness belongs to the data adapter.
+Closed tag removal remains available, but retained exit-animation menu callbacks
+cannot commit after closing. The shell owns lazy code/style generations, one
+exclusive popup lease, live child scope, provider identity and safe post-close
+focus. Close/replacement/hiding/disable/identity cleanup cannot resurrect late CSS
+or data. Action styles use component leaves, not a global Arco reset. The manual
+production transfer CSS entry includes the shared rules independently of sales.
+
+The native sales adapter uses historical authorized references, 20 per page and a
+200-item popup display cap. Explicit scrolling alone appends candidates. Selecting
+ALL minus a row requires a proven complete unsearched single response; otherwise
+the UI refuses that operation and offers a separately explicit 仅选择该项 action.
+Clear/last removal means unrestricted ALL, never a false selected-none label.
+Static status and two business-group universes are complete. No catalog scan,
+excluded-ID contract, per-ID hydration or unsupported remote pinyin behavior is
+introduced. See docs/sales-query.md for the exact native filter semantics.
+
+`run-multi-select-shell-dom-tests.mjs` covers injected-action/style ownership only;
+sales/transfer DOM runners separately mount the installed real TreeSelect. These
+are synthetic lifecycle/configuration checks, not browser/pixel/performance proof.
