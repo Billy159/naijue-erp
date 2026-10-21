@@ -1,0 +1,19 @@
+PASS DOM: initial idle state performs no inventory/candidate reads and does not invent zero count.
+PASS DOM: advanced expansion does not read; opening FIT reads only its six candidate labels; Escape closes and returns focus.
+PASS DOM: explicit query defaults to source-preserving hidden-FIT aggregation; display FIT restores complete groups without another read.
+PASS DOM: negative quantities preserved, valid cell callback carries exact warehouse/SKU/FIT/size; absent spec has no action.
+PASS DOM: folds preserve totals; reset edits only draft; refresh uses executed filter, not changed draft.
+PASS DOM: read failure keeps marked previous facts; retry recovers without losing the draft.
+PASS DOM: incomplete source rejects the whole query, never publishes unknown cells or invented zero totals.
+PASS DOM: closed selector does not read again; identity revocation removes all stock facts.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS DOM: failed/cancelled size changes retain visible/applied100; explicit query uses100; retry200 and its following query both use visible200.
+PASS DOM: 103-product fixture renders 100 then 3 products via explicit server-page reads, not matrix-row pagination.
+All 9 original DOM interaction groups passed.
+PASS drawer: pending action/style load is closeable with zero business reads; closed failed leaf stays closed, and reopening retries before reading.
+PASS drawer: no target read before 查看; only default 基础资料 reads; three exact tabs; no editable controls or mutation actions.
+PASS drawer: specifications follow the three frozen read-only sections without an added SKU table; image list uses lazy thumbnails; originals only on preview; image failure/retry and Escape retain drawer and restore focus.
+PASS drawer: failed tab retries locally; close returns original inventory focus; a different product has independent basics and truthful empty images.
+PASS drawer: tab switch, close, reopen, cancel and identity replacement abort target reads; deliberately ignored cancellation cannot leak stale facts or reopen UI; explicit retry and null state work.
+All 9 original DOM groups and 5 product-drawer groups passed in jsdom. Not real-browser screenshots, precise layout, network waterfall, frozen-Demo parity or performance acceptance.

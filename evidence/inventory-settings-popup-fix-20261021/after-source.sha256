@@ -1,0 +1,6 @@
+1ef425ae1a2b88f1fee8f1c083cac3a0874eda571b5470546994cb3e439066e4  apps/web/src/inventory/inventory-page.tsx
+6cdf64ce4d3624388e58b0d172bfd8ccf2975fcff3c119d1991fbf72da5b1273  apps/web/src/inventory/settings-popup.ts
+ade4183e5bafc13333f500bf4ed4c369bed1b591896fe55887d3cad0eb4693c6  apps/web/src/inventory/tests/run-settings-popup-dom-tests.mjs
+794caafa665c9f7c668916ec2c4ee515d6bb10e3f977989b69000ee7ee45d0f1  apps/web/src/demo-controls/popup-ownership.ts
+bd1c737b946159131acc6dd7aa6f4b1d57037a6a9147f3e9472e44cd72f31f27  apps/web/src/demo-presentation/anchored-popover.ts
+1a521e979d28942a83d3a822e5fc3993d6c1d3bbe8847b98b1f1b61db0b69bac  apps/web/src/inventory/inventory.css

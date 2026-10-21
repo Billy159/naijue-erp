@@ -18,7 +18,7 @@
     "smoke:build": "node scripts/smoke-build.mjs",
     "typecheck:web": "tsc -p apps/web/tsconfig.json",
     "build:preview": "node apps/web/build-preview.mjs",
-    "test:web:dom": "node apps/web/tests/run-dom-tests.mjs && node apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs",
+    "test:web:dom": "node apps/web/tests/run-dom-tests.mjs && node apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs && node apps/web/src/inventory/tests/run-settings-popup-dom-tests.mjs",
     "test:web:preview": "node apps/web/tests/run-bundle-smoke.mjs",
     "check:web": "npm run typecheck:web && npm run build:preview && npm run test:web:dom && npm run test:web:auth && npm run test:web:sales && npm run test:web:parties && npm run test:web:application && npm run test:web:transfers && npm run test:web:application:sales && npm run test:web:application:transfers && npm run test:web:product:styles && npm run test:web:product:lifecycle && npm run test:web:preview && npm run check:web:development-host && npm run test:web:demo-restoration",
     "check:all": "npm run check && npm run check:web",
