@@ -11,7 +11,10 @@ trusted authentication and an authorization-enforcing reader, validates before
 provider calls, serializes bigint counts as decimal strings, rejects stale SKU
 batches with sanitized HTTP409, and forwards/rechecks cancellation. No permissive
 grant, pool, listener or automatic host registration exists. Existing read-only
-API composition remains unchanged; production forms, numbering and commands are
+API composition originally remained unchanged. A later separate explicit
+`currentForms: { authorization }` opt-in is documented in
+`native-current-form-host-composition.md`; without it even the native profile
+still installs none of these routes. Production forms, numbering and commands are
 not enabled. HTTP tests use Fastify.inject, not a real browser/socket deployment.
 
 ## Explicit composition

@@ -13,6 +13,8 @@ import type { AuthenticationSession } from "../../../packages/authentication/src
 import { createSourceAuthenticationPolicy } from "../../../packages/authentication/src/source-policy.ts";
 import { sessionTokenHash } from "../../../packages/authentication/src/service.ts";
 import { createSourceConfirmedTransferQueryAuthorization } from "../../../packages/application/src/transfer-query-service.ts";
+import { createSourceConfirmedCurrentFormAuthorization } from "../../../packages/application/src/source-confirmed-current-form-authorization.ts";
+import type { CurrentFormAuthorization } from "../../../packages/application/src/current-form-ports.ts";
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import type { SalesListQuery } from "../../../packages/application/src/sales-query-ports.ts";
 import { createPostgresReadApi } from "./postgres-read-api.ts";
@@ -41,11 +43,24 @@ function options(): PostgresReadApiOptions & { readonly authorization: PostgresR
   }, productMedia: null };
 }
 const nativeOptions = (): PostgresReadApiOptions => ({ ...options(), authorization: { mode: "source-confirmed-native" } });
+const currentOptions = (): PostgresReadApiOptions => ({ ...nativeOptions(), currentForms: { authorization: createSourceConfirmedCurrentFormAuthorization() } });
+const currentRoutes = [
+  ["/current-form/sales-references/query", { kind: "hall", hallId: null, search: "", page: 1, pageSize: 20 }],
+  ["/current-form/transfer-warehouses/query", { direction: "FROM", search: "", page: 1, pageSize: 20 }],
+  ["/current-form/products/query", { context: { kind: "SALES", hallId: ids.hall }, search: "", page: 1, pageSize: 20 }],
+  ["/current-form/product-skus/query", { context: { kind: "TRANSFER" }, productId: sid("product", 210), page: 1, pageSize: 20 }],
+  ["/current-form/sku-batch/query", { context: { kind: "TRANSFER" }, skuIds: [ids.sku] }]
+] as const;
+const currentSkuRow = { id: ids.sku, sku_code: "SYNTHETIC_SKU", product_id: sid("product", 210), product_code: "SYNTHETIC_PRODUCT", product_name: "SYNTHETIC ONLY",
+  color_id: sid("color", 211), color_name: "SYNTHETIC_COLOR", fit_id: sid("fit", 212), fit_name: "SYNTHETIC_FIT", size_id: sid("size", 213),
+  size_name: "SYNTHETIC_SIZE", size_group_id: sid("sizeGroup", 214), member_size_id: sid("size", 213),
+  sku_enabled: true, product_enabled: true, color_enabled: true, fit_enabled: true };
 type Call = { readonly sql: string; readonly values: unknown[] };
 class ScriptedDriver extends EventEmitter {
   allocations = 0; connects = 0; ends = 0; releases: (Error | boolean | undefined)[] = []; calls: Call[] = [];
   failEnd = false; failBusiness = false; loginEnabled = true;
   nativeIdentity: Record<string, unknown> | undefined;
+  currentIdentity: Record<string, unknown> | undefined;
   beforeNativeIdentity: (() => Promise<void>) | undefined;
   business: ((sql: string, values: unknown[]) => BoundedPostgresResult | Promise<BoundedPostgresResult>) | undefined;
   readonly account = { account_id: ids.account, staff_id: sid("staff", 120), login_name: "SYNTHETIC.employee", password_hash: HASH,
@@ -67,7 +82,7 @@ class ScriptedDriver extends EventEmitter {
   private async query(sql: string, values: unknown[]): Promise<BoundedPostgresResult> {
     const rows = (value: Record<string, unknown>[]): BoundedPostgresResult => ({ rows: value, rowCount: value.length });
     if (sql.startsWith("BEGIN ") || sql === "COMMIT" || sql === "ROLLBACK") return rows([]);
-    if (sql.includes("FROM naijue_erp.user_account a JOIN") && !sql.includes("/* read-authorization:identity */")) {
+    if (sql.includes("FROM naijue_erp.user_account a JOIN") && !sql.includes("/* read-authorization:identity */") && !sql.includes("/* current-form:identity */")) {
       const matches = sql.includes("a.login_name = $1") ? values[0] === this.account.login_name : values[0] === this.account.account_id;
       return rows(matches ? [{ ...this.account, login_enabled: this.loginEnabled }] : []);
     }
@@ -87,6 +102,9 @@ class ScriptedDriver extends EventEmitter {
       return { rows: [], rowCount: session ? 1 : 0 };
     }
     if (this.failBusiness) throw new Error("SYNTHETIC private SQL/parameter/credential failure");
+    if (sql.includes("/* current-form:identity */")) return rows([this.currentIdentity ?? { account_id: this.account.account_id, staff_id: this.account.staff_id,
+      login_enabled: this.loginEnabled, role: this.account.role, employment_status: this.account.employment_status, hall_id: this.account.hall_id,
+      native_hall_id: this.account.hall_id, hall_enabled: this.account.hall_id === null ? null : true }]);
     if (sql.includes("/* read-authorization:identity */")) {
       await this.beforeNativeIdentity?.();
       return rows([this.nativeIdentity ?? { account_id: this.account.account_id, staff_id: this.account.staff_id, login_enabled: this.loginEnabled,
@@ -95,6 +113,10 @@ class ScriptedDriver extends EventEmitter {
     }
     if (sql.includes("/* read-authorization:warehouses */")) return rows([{ id: warehouse.id, hall_id: warehouse.hallId, name: warehouse.label, native_hall_id: warehouse.hallId }]);
     if (this.business) return this.business(sql, values);
+    if (sql.includes("/* current-form:sales-hall */")) return rows([{ id: values[0], enabled: true }]);
+    if (sql.includes("/* current-form:count */")) return rows([{ total: "0" }]);
+    if (sql.includes("/* current-form:page */")) return rows([]);
+    if (sql.includes("/* current-form:sku-batch */")) return rows([currentSkuRow]);
     if (sql.includes("/* inventory:publication */")) return rows([]); // Explicitly unpublished fixture; never invent stock zero.
     if (sql.includes("/* inventory-ledger:warehouse */")) return rows([{ id: warehouse.id, hall_id: warehouse.hallId, name: warehouse.label }]);
     if (sql.includes("/* inventory-ledger:sku */")) return rows([]);
@@ -262,7 +284,7 @@ test("SYNTHETIC native profile: abort during native identity query stops later p
   assert.equal(driver.releases.length, 5); assert.equal(driver.allocations, 1);
 });
 test("SYNTHETIC composition: failed authentication-policy construction cleans its pool without a connection", async () => {
-  for (const value of [options(), nativeOptions()]) {
+  for (const value of [options(), nativeOptions(), currentOptions()]) {
     const driver = new ScriptedDriver();
     await assert.rejects(createPostgresReadApi({ ...value, authentication: { ...value.authentication, policy: { ...value.authentication.policy, sessionTtlSeconds: 0 } } }, driver.factory),
       /complete policy/);
@@ -356,7 +378,7 @@ test("SYNTHETIC composition: caller method replacement cannot widen captured pol
   const response = await f.post("/products/basics/query", { productId: sid("product", 128) }); assert.equal(response.statusCode, 200); assert.equal(replaced, 0);
 });
 test("SYNTHETIC composition: pool disposal errors reject shutdown and never repeat driver end", async () => {
-  for (const value of [options(), nativeOptions()]) {
+  for (const value of [options(), nativeOptions(), currentOptions()]) {
     const driver = new ScriptedDriver(); driver.failEnd = true; const f = await createPostgresReadApi(value, driver.factory);
     await assert.rejects(f.close(), { code: "PG_DISPOSE_FAILED" }); assert.equal(driver.ends, 1); assert.equal(driver.connects, 0);
     assert.equal(driver.allocations, 1);
@@ -366,5 +388,119 @@ test("SYNTHETIC composition source: no ambient configuration, startup, migration
   const source = readFileSync(new URL("./postgres-read-api.ts", import.meta.url), "utf8");
   assert.doesNotMatch(source, /process\.env|dotenv|\.listen\s*\(|readFile|createSalesHttpPlugin|createTransferHttpPlugin|createPartyMaintenanceHttpPlugin/);
   assert.equal((source.match(/new BoundedPostgresPool\(/g) ?? []).length, 1);
-  assert.equal((source.match(/app\.register\(/g) ?? []).length, 6);
+  assert.equal((source.match(/app\.register\(/g) ?? []).length, 7); // Six existing calls plus explicit optional CURRENT branch.
+});
+test("SYNTHETIC CURRENT composition: absent option, including native profile alone, keeps all five routes 404", async t => {
+  for (const value of [options(), nativeOptions()]) {
+    const f = await setup(t, value);
+    for (const [url, payload] of currentRoutes) {
+      assert.equal(f.app.hasRoute({ method: "POST", url }), false); assert.equal((await f.post(url, payload)).statusCode, 404);
+    }
+    assert.equal(f.driver.allocations, 1); assert.equal(f.driver.connects, 0); assert.equal(f.app.server.listening, false);
+  }
+});
+test("SYNTHETIC CURRENT composition: explicit opt-in adds five native readers with one owned lazy pool and no commands/listener", async t => {
+  for (const value of [currentOptions(), { ...options(), currentForms: currentOptions().currentForms! }]) {
+    const f = await setup(t, value); assert.equal(f.driver.allocations, 1); assert.equal(f.driver.connects, 0);
+    for (const [url, payload] of currentRoutes) {
+      assert.equal(f.app.hasRoute({ method: "POST", url }), true);
+      const response = await f.post(url, payload, { "x-role": "ADMIN", "x-hall-id": sid("hall", 215) });
+      assert.equal(response.statusCode, 200, `${url}: ${response.body}`); assert.equal(response.headers["cache-control"], "no-store");
+      if (!url.includes("sku-batch")) assert.deepEqual(response.json(), { page: 1, pageSize: 20, exactTotal: "0", items: [] });
+      else assert.equal(response.json()[0].id, ids.sku);
+    }
+    assert.equal(f.driver.calls.filter(call => call.sql.includes("/* current-form:identity */")).length, 5);
+    assert.equal(f.driver.calls.filter(call => call.sql.includes("/* read-authorization:identity */")).length, 0); // No second policy lease.
+    assert.equal(f.driver.connects, 10); assert.equal(f.driver.releases.length, 10); // Session + one CURRENT snapshot per request.
+    for (const url of ["/sales/commands", "/transfers/commands", "/customers/commands", "/suppliers/commands", "/accounts", "/products/commands",
+      "/current-form/commands", "/current-form/sales/commands", "/current-form/transfers/commands"])
+      assert.equal((await f.post(url, {})).statusCode, 404, url);
+    for (const url of ["/sales/receipts/SYNTHETIC", "/transfers/receipts/SYNTHETIC"])
+      assert.equal((await f.app.inject({ method: "GET", url })).statusCode, 404, url);
+    assert.equal(f.driver.allocations, 1); assert.equal(f.app.server.listening, false); assert.equal(f.postgresBackgroundFailureCount, 0);
+    await f.app.close(); await f.close(); assert.equal(f.driver.ends, 1);
+  }
+});
+test("SYNTHETIC CURRENT composition: malformed explicit provider fails before any pool allocation", async () => {
+  const invalid: unknown[] = [undefined, null, false, [], {}, { authorization: null }, { authorization: {} }, { authorization: { authorize: false } },
+    { authorization: Object.assign([], { authorize() {} }) }, { authorization: Object.assign(() => {}, { authorize() {} }) },
+    { authorization: createSourceConfirmedCurrentFormAuthorization(), extra: undefined },
+    Object.create({ authorization: createSourceConfirmedCurrentFormAuthorization() })];
+  for (const currentForms of invalid) {
+    const driver = new ScriptedDriver();
+    await assert.rejects(createPostgresReadApi({ ...options(), currentForms } as PostgresReadApiOptions, driver.factory), TypeError);
+    assert.equal(driver.allocations, 0); assert.equal(driver.connects, 0); assert.equal(driver.ends, 0);
+  }
+  const driver = new ScriptedDriver();
+  const inherited = Object.assign(Object.create({ currentForms: currentOptions().currentForms }), options()) as PostgresReadApiOptions;
+  await assert.rejects(createPostgresReadApi(inherited, driver.factory), TypeError); assert.equal(driver.allocations, 0);
+});
+test("SYNTHETIC CURRENT composition: capture and bind provider before first await; later object/method changes cannot replace it", async t => {
+  const canonical = createSourceConfirmedCurrentFormAuthorization(); let originalCalls = 0; let replacements = 0;
+  const provider: CurrentFormAuthorization & { readonly marker: string } = { marker: "SYNTHETIC_BOUND", async authorize(context, intent, signal) {
+    assert.equal(this, provider); assert.equal(this.marker, "SYNTHETIC_BOUND"); originalCalls++;
+    assert.equal(Object.isFrozen(context.identity), true); assert.equal(Object.isFrozen(context.actor), true);
+    return canonical.authorize(context, intent, signal);
+  } };
+  const forms = { authorization: provider }; const value = { ...currentOptions(), currentForms: forms };
+  const driver = new ScriptedDriver(); const pending = createPostgresReadApi(value, driver.factory);
+  const replacement = { async authorize() { replacements++; throw new Error("SYNTHETIC replacement must not run"); } };
+  Object.assign(provider, replacement); Object.assign(forms, { authorization: replacement }); Object.assign(value, { currentForms: undefined });
+  const api = await pending; t.after(() => api.close());
+  const response = await api.app.inject({ method: "POST", url: currentRoutes[0][0], payload: currentRoutes[0][1],
+    headers: { origin: ORIGIN, cookie: `__Host-naijue_session=${TOKEN}` } });
+  assert.equal(response.statusCode, 200, response.body); assert.equal(originalCalls, 1); assert.equal(replacements, 0); assert.equal(driver.allocations, 1);
+});
+test("SYNTHETIC CURRENT composition: cookie/origin/bearer spoof fails before proposal auth/read; request roles/grants never select authority", async t => {
+  let calls = 0; const canonical = createSourceConfirmedCurrentFormAuthorization();
+  const f = await setup(t, { ...currentOptions(), currentForms: { authorization: { async authorize(...args) { calls++; return canonical.authorize(...args); } } } });
+  for (const [url, payload] of currentRoutes) for (const headers of [
+    { cookie: "" }, { cookie: "__Host-naijue_session=bad" }, { origin: "" }, { origin: "https://other.invalid" },
+    { authorization: `Bearer ${TOKEN}` }, { "sec-fetch-site": "cross-site" }, { cookie: `__Host-naijue_session=${TOKEN}; __Host-naijue_session=${TOKEN}` }
+  ]) assert.equal((await f.post(url, payload, headers)).statusCode, 401);
+  assert.equal(calls, 0); assert.equal(f.driver.connects, 0);
+  for (const [url, payload] of currentRoutes) assert.equal((await f.post(url, { ...payload, role: "ADMIN", grant: { kind: "all" } })).statusCode, 400);
+  assert.equal(calls, 0); assert.equal(f.driver.calls.some(call => call.sql.includes("/* current-form:")), false);
+});
+test("SYNTHETIC CURRENT composition: same-snapshot native identity grants own-hall sales, rejects foreign hall and stale native facts", async t => {
+  const f = await setup(t, currentOptions()); const url = "/current-form/products/query";
+  const payload = { context: { kind: "SALES", hallId: ids.hall }, search: "", page: 1, pageSize: 20 };
+  assert.equal((await f.post(url, payload)).statusCode, 200);
+  const offset = f.driver.calls.length;
+  assert.equal((await f.post(url, { ...payload, context: { kind: "SALES", hallId: sid("hall", 216) } }, { "x-role": "ADMIN" })).statusCode, 403);
+  assert.equal(f.driver.calls.slice(offset).some(call => call.sql.includes("current-form:count") || call.sql.includes("current-form:sales-hall")), false);
+  assert.equal(f.driver.calls.at(-1)!.sql, "ROLLBACK");
+  for (const role of ["ADMIN", "WAREHOUSE"]) {
+    f.driver.account.role = role; f.driver.account.hall_id = null;
+    assert.equal((await f.post(url, payload)).statusCode, 200);
+  }
+  f.driver.account.role = "SALESPERSON"; f.driver.account.hall_id = ids.hall;
+  const base = { account_id: ids.account, staff_id: f.driver.account.staff_id, login_enabled: true, role: "SALESPERSON", employment_status: "在职",
+    hall_id: ids.hall, native_hall_id: ids.hall, hall_enabled: true };
+  for (const change of [{ role: "AUDITOR" }, { hall_enabled: false }, { hall_id: null, native_hall_id: null, hall_enabled: null },
+    { employment_status: "离职" }, { login_enabled: false }, { account_id: sid("account", 217) }]) {
+    f.driver.currentIdentity = { ...base, ...change }; const offset = f.driver.calls.length;
+    assert.equal((await f.post(url, payload)).statusCode, 403);
+    assert.equal(f.driver.calls.slice(offset).some(call => call.sql.includes("current-form:count")), false);
+  }
+});
+test("SYNTHETIC CURRENT composition: salesperson may propose cross-hall transfer FROM/TO including disabled hall; native endpoint eligibility remains", async t => {
+  const driver = new ScriptedDriver(); const foreignHall = sid("hall", 218); let direction: "FROM" | "TO" = "FROM";
+  driver.business = sql => {
+    if (sql.includes("current-form:count")) return { rows: [{ total: "1" }], rowCount: 1 };
+    if (sql.includes("current-form:page")) return { rows: [{ id: sid("warehouse", 219), name: "SYNTHETIC foreign warehouse", hall_id: foreignHall,
+      hall_name: "SYNTHETIC disabled foreign hall", enabled: direction === "TO", hall_enabled: false, has_nonzero_inventory: direction === "FROM" }], rowCount: 1 };
+    throw new Error("SYNTHETIC unexpected transfer proposal SQL");
+  };
+  const f = await setup(t, currentOptions(), driver);
+  for (const value of ["FROM", "TO"] as const) {
+    direction = value; const offset = driver.calls.length;
+    const response = await f.post("/current-form/transfer-warehouses/query", { direction, search: "", page: 1, pageSize: 20 });
+    assert.equal(response.statusCode, 200, response.body); assert.equal(response.json().items[0].hallId, foreignHall);
+    assert.equal(response.json().items[0].hallEnabled, false);
+    const count = driver.calls.slice(offset).find(call => call.sql.includes("current-form:count"))!;
+    assert.deepEqual(count.values, [""]); assert.match(count.sql, /WHERE TRUE AND/); assert.doesNotMatch(count.sql, /h\.enabled|w\.hall_id =/);
+    if (direction === "FROM") assert.match(count.sql, /w\.enabled OR EXISTS/); else assert.match(count.sql, /TRUE AND w\.enabled AND/);
+  }
+  assert.equal(driver.calls.some(call => call.sql.includes("read-authorization:")), false); assert.equal(driver.connects, 4);
 });

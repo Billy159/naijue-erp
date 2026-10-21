@@ -8,10 +8,12 @@ import { PostgresInventoryLedgerQueryReader } from "../../../adapters/postgres/s
 import { PostgresSalesQueryReader } from "../../../adapters/postgres/src/sales-query-reader.ts";
 import { PostgresTransferQueryReader } from "../../../adapters/postgres/src/transfer-query-reader.ts";
 import { PostgresProductQueryReader } from "../../../adapters/postgres/src/product-query-reader.ts";
+import { PostgresCurrentFormReader } from "../../../adapters/postgres/src/current-form-reader.ts";
 import { createSourceConfirmedPostgresReadAuthorization } from "../../../adapters/postgres/src/source-confirmed-read-authorization.ts";
 import type { InventoryQueryAuthorization } from "../../../packages/application/src/inventory-query-contracts.ts";
 import type { SalesQueryAuthorization } from "../../../packages/application/src/sales-query-ports.ts";
 import type { TransferQueryAuthorization } from "../../../packages/application/src/transfer-query-ports.ts";
+import type { CurrentFormAuthorization } from "../../../packages/application/src/current-form-ports.ts";
 import { createSourceConfirmedTransferQueryAuthorization } from "../../../packages/application/src/transfer-query-service.ts";
 import type { ControlledProductMedia, ProductQueryAuthorization } from "../../../packages/application/src/product-query-ports.ts";
 import type { AuthenticationPolicy } from "../../../packages/authentication/src/ports.ts";
@@ -24,6 +26,7 @@ import { createInventoryLedgerQueryHttpPlugin } from "./inventory-ledger-query-h
 import { createSalesQueryHttpPlugin } from "./sales-query-http.ts";
 import { createTransferQueryHttpPlugin } from "./transfer-query-http.ts";
 import { createProductQueryHttpPlugin } from "./product-query-http.ts";
+import { createCurrentFormHttpPlugin } from "./current-form-http.ts";
 
 export interface PostgresReadApiExplicitAuthorization {
   readonly mode?: never;
@@ -54,6 +57,9 @@ export interface PostgresReadApiOptions {
   readonly authorization: PostgresReadApiAuthorization;
   /** Required explicit availability. null keeps existing media-unavailable failures honest. */
   readonly productMedia: ControlledProductMedia | null;
+  /** Separate trusted opt-in: absence (including native profile alone) installs no CURRENT routes.
+   * Proposals only; grants never enable commands or create a listener. */
+  readonly currentForms?: { readonly authorization: CurrentFormAuthorization };
 }
 export interface PostgresReadApi {
   /** Ready for inject or an explicitly configured host. Never listening on return. */
@@ -102,10 +108,24 @@ function checkedHost(options: PostgresReadApiOptions) {
   // configuration object later cannot replace these boundaries or enable a write plugin.
   return {
     trustedOrigin: auth.trustedOrigin, now: auth.now, policy: auth.policy,
-    authorization: checkedAuthorization(options.authorization),
+    authorization: checkedAuthorization(options.authorization), currentForms: checkedCurrentForms(options),
     media: media === null ? null : Object.freeze({ deliveryOrigin: media.deliveryOrigin,
       resolveThumbnails: media.resolveThumbnails.bind(media), resolveOriginal: media.resolveOriginal.bind(media) })
   };
+}
+function checkedCurrentForms(options: PostgresReadApiOptions): CurrentFormAuthorization | null {
+  if (!("currentForms" in options)) return null;
+  const forms = options.currentForms;
+  if (!Object.hasOwn(options, "currentForms") || !forms || typeof forms !== "object" || Array.isArray(forms)
+    || Reflect.ownKeys(forms).length !== 1 || !Object.hasOwn(forms, "authorization")
+    || (Object.getPrototypeOf(forms) !== Object.prototype && Object.getPrototypeOf(forms) !== null))
+    throw new TypeError("Current forms require an explicit trusted authorization provider");
+  const authorization = forms.authorization;
+  if (!authorization || typeof authorization !== "object" || Array.isArray(authorization))
+    throw new TypeError("Current forms require an explicit trusted authorization provider");
+  const authorize = authorization?.authorize;
+  if (typeof authorize !== "function") throw new TypeError("Current forms require an explicit trusted authorization provider");
+  return Object.freeze({ authorize: authorize.bind(authorization) });
 }
 
 /** Explicit, opt-in auth + native read composition. Import/construction never connects or listens.
@@ -135,6 +155,8 @@ export async function createPostgresReadApi(options: PostgresReadApiOptions, cre
     app.register(createSalesQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.sales, reader: new PostgresSalesQueryReader(pool) } }));
     app.register(createTransferQueryHttpPlugin({ authenticate: authenticateTransfer, dependencies: { authorization: policies.transfers, reader: new PostgresTransferQueryReader(pool) } }));
     app.register(createProductQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.products, reader: new PostgresProductQueryReader(pool), media: host.media } }));
+    if (host.currentForms !== null) app.register(createCurrentFormHttpPlugin({ authenticate,
+      reader: new PostgresCurrentFormReader(pool, host.currentForms) }));
     await app.ready();
     const readyApp = app;
     return Object.freeze({ app: readyApp, close: () => readyApp.close(), get postgresBackgroundFailureCount() { return pool.backgroundFailureCount; } });

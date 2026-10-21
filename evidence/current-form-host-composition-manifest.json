@@ -1,0 +1,76 @@
+{
+  "parentCheckpoint": "d6620a5b62374c11dbfe8d8b38453c46d8c30ac4",
+  "createdAtUtc": "2026-10-21T08:50:34.502423+00:00",
+  "scope": "Cloud-only optional CURRENT proposal host composition and pure source-confirmed current-form authorization; synthetic verification only",
+  "ownedPaths": [
+    "apps/api/src/postgres-read-api.ts",
+    "apps/api/src/postgres-read-api.test.ts",
+    "packages/application/src/source-confirmed-current-form-authorization.ts",
+    "tests/source-confirmed-current-form-authorization.test.ts",
+    "docs/native-current-form-host-composition.md",
+    "docs/native-current-form-read.md",
+    "docs/postgres-read-api.md",
+    "evidence/current-form-host-composition-scripted-tests.log",
+    "evidence/current-form-host-composition-focused-typecheck.log",
+    "evidence/current-form-host-composition-manifest.json"
+  ],
+  "commands": [
+    {
+      "command": "node --test --test-concurrency=1 apps/api/src/postgres-read-api.test.ts tests/source-confirmed-current-form-authorization.test.ts apps/api/src/current-form-http.test.ts tests/current-form-reader.test.ts",
+      "exitCode": 0,
+      "tests": 78,
+      "pass": 78,
+      "fail": 0,
+      "log": "evidence/current-form-host-composition-scripted-tests.log"
+    },
+    {
+      "command": "./node_modules/.bin/tsc --noEmit --target ES2023 --module NodeNext --moduleResolution NodeNext --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noFallthroughCasesInSwitch --noImplicitOverride --verbatimModuleSyntax --rewriteRelativeImportExtensions --skipLibCheck --types node --lib ES2023,DOM apps/api/src/postgres-read-api.ts apps/api/src/postgres-read-api.test.ts packages/application/src/source-confirmed-current-form-authorization.ts tests/source-confirmed-current-form-authorization.test.ts",
+      "exitCode": 0,
+      "log": "evidence/current-form-host-composition-focused-typecheck.log"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "sha256": {
+    "apps/api/src/postgres-read-api.ts": "86af0ea1f9ed4f330c88e35aab2aec227bc208946f1733b3055bb92eddc48664",
+    "apps/api/src/postgres-read-api.test.ts": "a9892370c4c9c4dfea123773438210d303384c71d1526ea3ff1a04f72eb0803d",
+    "packages/application/src/source-confirmed-current-form-authorization.ts": "cb42ebfa1df4db2820f9c4898f2928f924a43ba4fcdd0f27aec049db9fef52d9",
+    "tests/source-confirmed-current-form-authorization.test.ts": "d6ef873c8a12d7030ded4d184c385def5d4a3016f352b0227b1ebe54c77ec594",
+    "docs/native-current-form-host-composition.md": "88c9144c8e885fcccabe438ac7533ff997da019344a852c26ef77fc6cd3594a1",
+    "docs/native-current-form-read.md": "1168894eb85b7613e81ad702e185fd8ddc331cc47048797bbf5b9dea1181bd59",
+    "docs/postgres-read-api.md": "2991ac69a5292e9cb2f100f32567868d7c8bbf6d0d9d7e0d27ccd44ec466f81a",
+    "evidence/current-form-host-composition-scripted-tests.log": "e8252f8db8064f7e10e3ba90821cc37d7ebe6daac478b9465691a00e0d597e0e",
+    "evidence/current-form-host-composition-focused-typecheck.log": "ae83a3ae13d7b3bd00ee127bc7bdb3a9fa0a2ca71b3490011b0c284069ed243f"
+  },
+  "inspectedSourceSha256": {
+    "packages/application/src/transfer-policy.ts": "201344714aa15b1cf947582d0e30b02057b03e78539d66c998cfea54e141eeae",
+    "packages/application/src/transfer-service.ts": "f9c1bba04e680f769facc622cff67b6124181f6761ece7d5f5448cd9d5dee6d3",
+    "adapters/postgres/src/current-form-reader.ts": "b2b294dcd803ff9a92e7a8f2291db75f1a4ec01401b93dab2592faf53574804a",
+    "packages/application/src/current-form-validation.ts": "d27c6eae368cac9bb5ac7ab5156e182e529392f18d08729f99da520c657cd25d",
+    "apps/api/src/current-form-http.ts": "2260cf5d63785ec95d3d90575a0de8645e7baa6baee0ff03514f4171de84269c",
+    "../erp-handoff/source/naijue-erp-v0.0.1/server/security/service.ts": "bfdd5f8c0b3c12f70dde66f331670aafa4d61c842dc4149abb6fab583b43d51a",
+    "../erp-handoff/source/naijue-erp-v0.0.1/server/security/policies.ts": "942d556ba8bee7f9501d74b1966b3d28eda952a99e554776b6cdbabbaf4e7d30"
+  },
+  "boundaries": {
+    "actualDataBatch": "paused; not parsed/imported/resumed",
+    "actualDatabaseConnection": false,
+    "listenerStarted": false,
+    "migrationsImportsSeeds": false,
+    "credentialsLookup": false,
+    "productionDeployment": false,
+    "browserFilesChanged": false,
+    "packageFilesChanged": false,
+    "currentFormReaderChanged": false,
+    "realPostgresOrBrowserAcceptanceClaimed": false,
+    "broadIntegrationRerun": false
+  },
+  "policy": {
+    "sales": "SALESPERSON own current hall; ADMIN/WAREHOUSE all, retaining reader sales-hall eligibility",
+    "transfer": "All validated canonical roles receive all eligible new proposals; do not apply existing-transfer historical visibility as endpoint eligibility",
+    "identity": "Reader-supplied immutable same-snapshot native identity; no second authorizer connection",
+    "default": "No currentForms option, including native profile alone: five routes remain 404"
+  },
+  "remaining": "Parent integration review/tests and any separately authorized real PostgreSQL/browser acceptance; no production start or actual data import"
+}

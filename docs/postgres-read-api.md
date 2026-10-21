@@ -19,6 +19,8 @@ There are no permissive defaults or automatic provider fallbacks. The trusted ca
 - In explicit provider mode, `authorization.products`: a current `ProductQueryAuthorization` returning the exact requested product grant. Being able to resolve a UUID or having an authenticated session does not authorize the shared product catalog.
 - `productMedia`: either an actual `ControlledProductMedia` with explicit HTTPS delivery origin and authenticated opaque delivery links, or explicit `null`. `null` does not fabricate storage URLs: existing image metadata with unavailable media delivery retains the explicit 501 behavior. No storage/thumbnail/byte-delivery implementation is supplied by this factory.
 
+Separately, optional `currentForms: { authorization: CurrentFormAuthorization }` explicitly adds the five existing CURRENT proposal routes. Absence, including `source-confirmed-native` alone, leaves all five unregistered/404. A supplied option must contain an actual authorization provider; malformed/undefined/null options fail before pool allocation. The provider method is validated, captured and bound before allocation/first await. The existing sales session authenticator and `PostgresCurrentFormReader` share this API's one owned bounded pool. The pure `createSourceConfirmedCurrentFormAuthorization()` is available for deliberate selection, not installed by default. See `native-current-form-host-composition.md` for the intent-sensitive source policy and synthetic-only evidence.
+
 The existing explicit-provider API remains supported with no `mode` property and all four mandatory providers. It does not mutate, replace or install methods on external providers or authentication configuration. Arbitrary provider closures remain trusted server code, not approved native policy evidence. Catalog/form reference providers, product price configuration/storage and document-number contracts are not manufactured here.
 
 ### Explicit source-confirmed native selection
@@ -35,13 +37,15 @@ The selected profile or explicit provider methods, origin strings and media avai
 
 ## Registered routes and identity trace
 
-The factory separately registers six encapsulated native plugins, totaling 19 explicit routes:
+Without `currentForms`, the factory separately registers six encapsulated native plugins, totaling 19 explicit routes:
 
 - Authentication: `POST /auth/login`, `GET /auth/session`, `POST /auth/logout`, `POST /auth/password`.
 - Inventory: `POST /inventory/query`, `/inventory/candidates/query`, `/inventory/ledger/query`.
 - Sales reads: `POST /sales/query`, `/sales/references/query`, `/sales/detail/query`, `/sales/history/query`, `/sales/settlement-statistics/query`.
 - Transfer reads: `POST /transfers/query`, `/transfers/detail/query`, `/transfers/warehouses/query`.
 - Product reads: `POST /products/basics/query`, `/products/specifications/query`, `/products/images/query`, `/products/image/query`.
+
+Explicit `currentForms` adds one encapsulated plugin and five POST routes (24 explicit routes total): `/current-form/sales-references/query`, `/current-form/transfer-warehouses/query`, `/current-form/products/query`, `/current-form/product-skus/query`, `/current-form/sku-batch/query`. Authentication uses the same existing cookie-only sales authenticator; authorization consumes the reader's non-secret frozen identity in its proposal snapshot, not a second policy connection. Business commands/receipts remain absent.
 
 No sales/transfer/party commands, receipt commands, account administration, product maintenance, migration, cutoff import or seed routes are registered. Fastify's normal HEAD companion for the session GET is not another explicit application route.
 
