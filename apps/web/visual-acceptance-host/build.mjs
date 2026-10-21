@@ -7,6 +7,16 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repository = path.resolve(here, '../../..');
 const digest = data => createHash('sha256').update(data).digest('hex');
+/** Build metadata only. Dirty consumed source is a snapshot, never commit-only evidence. */
+export function acceptanceSourceIdentity({ sourceCommit, hostWorkingTreeChanges, consumedProductionInputsDirty }) {
+  if (!/^[a-f0-9]{40}$/.test(sourceCommit) || typeof hostWorkingTreeChanges !== 'boolean' || typeof consumedProductionInputsDirty !== 'boolean') {
+    throw new TypeError('An explicit Git revision and both working-tree status flags are required.');
+  }
+  return { sourceCommit, componentsSourceBase: sourceCommit, hostWorkingTreeChanges, consumedProductionInputsDirty,
+    sourceIdentityBasis: hostWorkingTreeChanges || consumedProductionInputsDirty ? 'git-head-plus-source-hash' : 'git-commit',
+    sourceCommitMeaning: 'Actual Git HEAD at build time. If hostWorkingTreeChanges or consumedProductionInputsDirty is true, exact source identity additionally requires sourceHash; the commit alone does not identify this build.' };
+}
+
 export async function buildAcceptance({ outdir = path.join(here, 'dist') } = {}) {
   if (!path.isAbsolute(outdir) || outdir === repository || outdir === here) throw new TypeError('An independent absolute output directory is required.');
   const publicRoot = path.join(outdir, 'public');
@@ -53,7 +63,14 @@ export async function buildAcceptance({ outdir = path.join(here, 'dist') } = {})
   const assets = {};
   for (const filename of await files(publicRoot)) assets[filename] = digest(await readFile(path.join(publicRoot, filename)));
   const hostWorkingTreeChanges = execFileSync('git', ['status', '--porcelain', '--', 'apps/web/visual-acceptance-host'], { cwd: repository, encoding: 'utf8' }).trim().length > 0;
-  const manifest = { componentsSourceBase: 'cc2f237a673c400a2ebefd9daa965fd1daaf4031', hostWorkingTreeChanges, sourceCommitMeaning: 'Git HEAD at build time; hostWorkingTreeChanges=true means the independent host is additionally identified by sourceHash, not included in that commit.', purpose: 'SYNTHETIC ONLY visual acceptance UI test', sourceCommit, sourceHash, sourceEntry: 'apps/web/visual-acceptance-host/entry.tsx',
+  // Include actual consumed first-party source outside the independent host plus
+  // dependency manifests. Unrelated working-tree changes do not taint this flag.
+  const consumedProductionInputs = Object.keys(sourceInputs).filter(filename => !filename.startsWith('apps/web/visual-acceptance-host/'));
+  const consumedProductionInputsDirty = consumedProductionInputs.length > 0 && execFileSync('git',
+    ['status', '--porcelain=v1', '-z', '--untracked-files=all', '--', ...consumedProductionInputs.map(filename => `:(literal)${filename}`)],
+    { cwd: repository, encoding: 'utf8' }).length > 0;
+  const sourceIdentity = acceptanceSourceIdentity({ sourceCommit, hostWorkingTreeChanges, consumedProductionInputsDirty });
+  const manifest = { ...sourceIdentity, purpose: 'SYNTHETIC ONLY visual acceptance UI test', sourceHash, sourceEntry: 'apps/web/visual-acceptance-host/entry.tsx',
     productionBootstrapUsed: false, businessNetwork: false, authentication: false, database: false, writes: false,
     assets, sourceInputs, chromeDifference: 'SYNTHETIC ONLY marker in existing DemoFrame topbarActions slot; closed fixed diagnostics outside business layout; no extra notice row.',
     boundary: 'Static build and focused tests are not frozen-Demo browser visual acceptance.' };
@@ -78,5 +95,5 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
   const args = process.argv.slice(2);
   if (args.length && (args.length !== 2 || args[0] !== '--outdir' || !path.isAbsolute(args[1]))) throw new TypeError('Usage: node build.mjs [--outdir ABSOLUTE_DIRECTORY]');
   const result = await buildAcceptance(args.length ? { outdir: args[1] } : {});
-  process.stdout.write(`Built independent SYNTHETIC ONLY UI app at ${result.outdir}\nSource commit: ${result.manifest.sourceCommit}\nSource SHA-256: ${result.manifest.sourceHash}\nNo server was started.\n`);
+  process.stdout.write(`Built independent SYNTHETIC ONLY UI app at ${result.outdir}\nSource commit: ${result.manifest.sourceCommit}\nSource identity basis: ${result.manifest.sourceIdentityBasis}\nConsumed production inputs dirty: ${result.manifest.consumedProductionInputsDirty}\nSource SHA-256: ${result.manifest.sourceHash}\nNo server was started.\n`);
 }

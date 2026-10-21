@@ -60,18 +60,28 @@ there is no inline-JS or inline-all-CSS substitute for code splitting.
 
 `public/manifest.json` records:
 
-- `componentsSourceBase`: canonical component baseline cc2f237a673c400a2ebefd9daa965fd1daaf4031.
-- `sourceCommit`: Git HEAD when built, not an assertion that uncommitted host files belong to it.
-- `hostWorkingTreeChanges`: whether host source was uncommitted/modified at build time.
+- `componentsSourceBase` and `sourceCommit`: actual Git HEAD when built, not a fixed
+  historical component baseline or an assertion that dirty files belong to it.
+- `hostWorkingTreeChanges`: host-only uncommitted/modified status at build time.
+- `consumedProductionInputsDirty`: whether any consumed first-party input outside
+  this independent host, or either package manifest, was staged, modified or
+  untracked at build time. Unrelated unconsumed files do not affect this flag.
+- `sourceIdentityBasis`: `git-commit` only when both dirty flags are false;
+  otherwise `git-head-plus-source-hash`, requiring the exact snapshot hash below.
 - `sourceHash` and `sourceInputs`: SHA-256 identity of the exact first-party inputs,
   host files, and lock/package manifests used to build this distribution.
 - `assets`: each emitted static asset's SHA-256. `distribution.sha256` additionally
   identifies server.mjs and the manifest, avoiding a self-referential manifest hash.
 
-Before the final Mac distribution, the root must review, compile, commit the new
-host, and rebuild. That final manifest must say `hostWorkingTreeChanges: false`
-and match the commit being compared. A pre-commit build is identified by its
-source hash and explicitly is not commit-only evidence.
+Before a future final Mac distribution, the root must review, compile, commit all
+consumed changes, and build a fresh distribution. Its manifest must have both
+`hostWorkingTreeChanges: false` and `consumedProductionInputsDirty: false`, use
+`sourceIdentityBasis: git-commit`, and match the actual commit being compared.
+Any dirty-source build is snapshot evidence requiring `sourceHash`, explicitly
+not commit-only evidence. Preserve already captured distributions/archives as
+immutable historical evidence; do not overwrite them to update their identity.
+The earlier 4d0f0f44c8247e3ea15105d8a4d3207ba48f4e0e distribution retains its
+original manifest and is not evidence of later component fixes.
 
 ## Actual source and lazy boundaries
 

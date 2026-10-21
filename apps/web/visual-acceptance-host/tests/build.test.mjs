@@ -5,9 +5,24 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
-import { buildAcceptance } from '../build.mjs';
+import { acceptanceSourceIdentity, buildAcceptance } from '../build.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url)), repo = path.resolve(here, '../../../..');
 const sha = data => createHash('sha256').update(data).digest('hex');
+test('component revision follows actual build HEAD and dirty inputs prevent commit-only identity', () => {
+  for (const sourceCommit of ['1'.repeat(40), 'a'.repeat(40)]) {
+    for (const hostWorkingTreeChanges of [false, true]) for (const consumedProductionInputsDirty of [false, true]) {
+      const identity = acceptanceSourceIdentity({ sourceCommit, hostWorkingTreeChanges, consumedProductionInputsDirty });
+      assert.equal(identity.componentsSourceBase, sourceCommit, 'Component revision must not retain an earlier hardcoded baseline');
+      assert.equal(identity.sourceCommit, sourceCommit);
+      assert.equal(identity.hostWorkingTreeChanges, hostWorkingTreeChanges, 'Host-only status remains independent');
+      assert.equal(identity.consumedProductionInputsDirty, consumedProductionInputsDirty);
+      assert.equal(identity.sourceIdentityBasis, hostWorkingTreeChanges || consumedProductionInputsDirty ? 'git-head-plus-source-hash' : 'git-commit');
+      assert.match(identity.sourceCommitMeaning, /commit alone does not identify this build/);
+    }
+  }
+  assert.throws(() => acceptanceSourceIdentity({ sourceCommit: 'missing', hostWorkingTreeChanges: false, consumedProductionInputsDirty: false }));
+  assert.throws(() => acceptanceSourceIdentity({ sourceCommit: 'a'.repeat(40), hostWorkingTreeChanges: false }));
+});
 test('independent app emits actual lazy routes/actions and separately owned CSS', async () => {
   const outdir = await mkdtemp(path.join(os.tmpdir(), 'acceptance-build-'));
   try {
@@ -55,6 +70,9 @@ test('independent app emits actual lazy routes/actions and separately owned CSS'
     for (const filename of Object.keys(manifest.assets).filter(file => file.endsWith('.js'))) assert.doesNotMatch(await readFile(path.join(publicRoot, filename), 'utf8'), /REQUEST_TOO_LARGE|injected fetch implementation|credentials:\s*[\"']same-origin|\.fetch\(/, 'HTTP request functions are tree-shaken; only canonical error types may remain');
     for (const [filename, expected] of Object.entries(manifest.assets)) assert.equal(sha(await readFile(path.join(publicRoot, filename))), expected, filename);
     assert.equal(sha(JSON.stringify(manifest.sourceInputs)), manifest.sourceHash); assert.equal(manifest.productionBootstrapUsed, false);
+    assert.equal(manifest.componentsSourceBase, manifest.sourceCommit);
+    assert.equal(typeof manifest.consumedProductionInputsDirty, 'boolean');
+    assert.equal(manifest.sourceIdentityBasis, manifest.hostWorkingTreeChanges || manifest.consumedProductionInputsDirty ? 'git-head-plus-source-hash' : 'git-commit');
     const appSource = await readFile(path.resolve(here, '../entry.tsx'), 'utf8');
     assert.match(appSource, /topbarActions=.*acceptance-marker/s); assert.doesNotMatch(appSource, /notice=|fetch\(|localStorage|sessionStorage|ApplicationController|AuthenticationPanel/);
     const css = await readFile(path.resolve(here, '../shell.css'), 'utf8'); assert.match(css, /acceptance-diagnostics\{position:fixed/);
