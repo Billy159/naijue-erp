@@ -1,0 +1,73 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 typecheck:web
+> tsc -p apps/web/tsconfig.json
+
+{
+  "startupInputs": [
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom-client.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/client.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react-jsx-runtime.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/jsx-runtime.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/cjs/scheduler.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/index.js",
+    "../../../../packages/domain/src/errors.ts",
+    "../../../../packages/domain/src/values.ts",
+    "../authentication/authentication-panel.tsx",
+    "../authentication/authentication.css",
+    "../authentication/contracts.ts",
+    "../authentication/http-client.ts",
+    "../authentication/model.ts",
+    "../demo-presentation/controls.css",
+    "../demo-presentation/demo-frame.tsx",
+    "../demo-presentation/frame.css",
+    "../loading/async-leaf-registry.ts",
+    "../loading/read-scope.ts",
+    "application-root.tsx",
+    "controller.ts",
+    "demo-frame-presentation.tsx",
+    "index.tsx",
+    "stylesheet.ts"
+  ],
+  "startupCode": [
+    "application.js",
+    "chunk-AMZFEYCU.js",
+    "chunk-RQDEV55T.js",
+    "chunk-K3WQAY2P.js",
+    "chunk-Y6SLVHK3.js",
+    "chunk-FSROJZ4C.js",
+    "chunk-P74PHBPC.js",
+    "chunk-K2TRKZDL.js"
+  ],
+  "routeInputCounts": {
+    "inventory": 34,
+    "sales": 30,
+    "salesDetail": 13,
+    "parties": 436,
+    "transfers": 446,
+    "transferDetail": 23
+  },
+  "stylesheetBytes": {
+    "application": 15511,
+    "inventory": 19306,
+    "sales": 15804,
+    "sales-detail": 6777,
+    "parties": 596143,
+    "transfers": 588899,
+    "transfer-detail": 6983,
+    "transfer-product": 3995
+  },
+  "guarantees": [
+    "Startup/inventory/sales static closures exclude Arco JS/CSS",
+    "Parties/transfers use actual installed Arco only after explicit activation",
+    "Sales/parties CSS preserves shared controls/tokens but excludes all inventory-specific matrix/settings/drawer assets",
+    "Sales route static code/CSS excludes detail content/styles; separate sales-detail CSS is explicit action-only host configuration",
+    "Transfer route excludes detail/product code/data/styles; inline-detail and product action assets are separate"
+  ],
+  "boundary": "Static emitted-import/CSS analysis only. No browser/network waterfall, timing, memory or frozen-Demo visual acceptance."
+}
+PASS: actual split output isolates business routes, inventory-specific CSS and explicit-party/transfer-only Arco JS/CSS plus separate detail/product action assets while preserving necessary shared controls.

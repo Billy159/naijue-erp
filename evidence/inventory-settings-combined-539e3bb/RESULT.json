@@ -1,0 +1,9 @@
+{
+  "commit": "539e3bb9685d359478a187513a9e6d15ac5d4906",
+  "commands": [
+    "npm run typecheck:web",
+    "node apps/web/src/application/tests/run-build-check.mjs"
+  ],
+  "exitCode": 0,
+  "scope": "Web typecheck and static route/assets split checks; focused 5 settings and 7 lifecycle plus existing14 DOM were separate saved natural-exit tests. Not full check:all, real browser or visual parity."
+}
