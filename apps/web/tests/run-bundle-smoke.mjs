@@ -55,9 +55,27 @@ try {
   drawer.querySelector('.pd-thumbnail').click(); await waitFor(() => drawer.querySelector('.pd-image-preview img'), 'explicit original image'); assert.ok(drawer.querySelector('.pd-image-preview img')); assert.match(document.querySelector('.preview-diagnostics').textContent, /商品资料读取 4/);
   drawer.querySelector('button[aria-label="关闭图片预览"]').click(); document.querySelector('button[aria-label="关闭商品资料"]').click(); await pause(20);
   assert.equal(document.querySelector('.iw-product-drawer'), null);
-  document.querySelector('.mx-stock.mx-negative').click();
+  // Hidden FIT is the frozen default: -2 + 3 is a read-only, multi-SKU aggregate.
+  const mergedStock = document.querySelector('[data-inventory-product="test-product-1"]').querySelectorAll('.mx-stock')[1];
+  assert.equal(mergedStock.textContent, '1'); assert.equal(mergedStock.dataset.inventorySourceCount, '2'); assert.equal(mergedStock.disabled, true);
+  assert.match(mergedStock.title, /跨版型汇总.*显示版型后查看/);
+  assert.equal(document.querySelector('.mx-stock.mx-negative'), null);
+  mergedStock.click(); await pause(20); assert.equal(document.querySelector('.preview-dialog'), null, 'A multi-SKU aggregate cannot open an arbitrary source ledger');
+  const settingsButton = [...document.querySelectorAll('button')].find(button => button.textContent === '显示设置');
+  assert.ok(settingsButton); settingsButton.click();
+  await waitFor(() => document.querySelector('.iw-settings'), 'display settings');
+  const fitSetting = [...document.querySelectorAll('.iw-settings label')].find(label => label.textContent === '版型')?.querySelector('input');
+  assert.ok(fitSetting); assert.equal(fitSetting.checked, false); fitSetting.click();
+  await waitFor(() => document.querySelector('.mx-stock.mx-negative'), 'explicit FIT reveals original negative stock');
+  [...document.querySelectorAll('.iw-settings button')].find(button => button.textContent === '关闭').click();
+  const negative = document.querySelector('.mx-stock.mx-negative');
+  assert.equal(negative.textContent, '-2'); assert.equal(negative.dataset.inventorySourceCount, '1'); assert.equal(negative.disabled, false);
+  assert.match(document.querySelector('.preview-diagnostics').textContent, /库存读取 1 · 候选读取 0 · 商品资料读取 4/);
+  negative.click();
   await waitFor(() => document.querySelector('.preview-dialog'), 'ledger unavailable notice');
   assert.match(document.querySelector('.preview-dialog').textContent, /库存流水尚未接入/);
+  assert.match(document.querySelector('.preview-dialog').textContent, /TEST-001 测试上衣1 · 测试蓝 · Y版（修身） · 165\/S/);
+  assert.match(document.querySelector('.preview-dialog').textContent, /仓库：测试总仓/);
   document.querySelector('button[aria-label=关闭提示]').click();
   document.querySelector('.shell-text-button').click();
   await waitFor(() => document.querySelector('.iw-workbench') === null, 'inventory close');
@@ -67,6 +85,6 @@ try {
   assert.match(document.querySelector('.iw-results').textContent, /等待查询/);
   assert.equal(document.querySelectorAll('.mx-stock').length, 0);
   assert.deepEqual(errors, []);
-  console.log('PASS built portable HTML: starts with zero reads; explicit menu opens idle route; query renders 3 synthetic products; three product tabs read lazily and full image only on click; cell callback says unavailable; close/reopen clears old facts; no jsdom runtime errors.');
+  console.log('PASS built portable HTML: starts with zero reads; explicit menu opens idle route; query renders 3 synthetic products; three product tabs read lazily and full image only on click; hidden-FIT aggregates cannot dispatch arbitrary SKU actions; explicit FIT reveals original negative stock without reads and its exact cell callback says unavailable; close/reopen clears old facts; no jsdom runtime errors.');
   console.log('This is actual bundled-code DOM smoke, not a real browser, screenshot, network waterfall or pixel/performance acceptance.');
 } finally { dom.window.close(); }
