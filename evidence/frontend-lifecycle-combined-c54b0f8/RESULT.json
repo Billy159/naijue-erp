@@ -1,0 +1,9 @@
+{
+  "commit": "c54b0f8056ca1c1981d28aa112e2340379a1b5f4",
+  "commands": [
+    "npm run typecheck:web",
+    "node apps/web/src/application/tests/run-build-check.mjs"
+  ],
+  "exit": 0,
+  "scope": "Combined frontend typecheck and actual static emitted route/CSS boundaries after inventory lifecycle and sales popup fixes. Not full aggregate, real browser, pixel or performance acceptance."
+}
