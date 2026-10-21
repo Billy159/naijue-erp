@@ -127,7 +127,7 @@ const CATALOG = `WITH published_scope AS (
     AND (cardinality($7::uuid[]) = 0 OR p.season_id = ANY($7::uuid[]))
     AND (cardinality($6::uuid[]) = 0 OR EXISTS (SELECT 1 FROM naijue_erp.sku sf WHERE sf.product_id = p.id AND sf.fit_id = ANY($6::uuid[])))
 ), filtered_skus AS (
-  SELECT s.id, s.product_id, s.color_id, s.fit_id, s.size_id FROM naijue_erp.sku s JOIN matched_products p ON p.id = s.product_id
+  SELECT s.id, s.product_id, s.color_id, s.fit_id, s.size_id, p.size_group_id FROM naijue_erp.sku s JOIN matched_products p ON p.id = s.product_id
     WHERE cardinality($6::uuid[]) = 0 OR s.fit_id = ANY($6::uuid[])
 )`;
 function parameters(scope: InventoryReadScope, filter: InventoryQuery["filter"], batchId: string): unknown[] {
@@ -141,8 +141,8 @@ async function catalogStatus(query: Query, values: unknown[]): Promise<{ exactTo
     EXISTS (SELECT 1 FROM matched_products p WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.size_group_member m WHERE m.size_group_id = p.size_group_id)) AS missing_sizes,
     EXISTS (SELECT 1 FROM filtered_skus s WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.import_record r
       WHERE r.import_batch_id = $8::uuid AND r.status = 'IMPORTED' AND r.target_type = 'SKU' AND r.target_id = s.id)) AS uncovered_sku,
-    EXISTS (SELECT 1 FROM filtered_skus s JOIN matched_products p ON p.id = s.product_id WHERE NOT EXISTS (
-      SELECT 1 FROM naijue_erp.size_group_member m WHERE m.size_group_id = p.size_group_id AND m.size_id = s.size_id)) AS invalid_sku_size,
+    EXISTS (SELECT 1 FROM filtered_skus s WHERE NOT EXISTS (
+      SELECT 1 FROM naijue_erp.size_group_member m WHERE m.size_group_id = s.size_group_id AND m.size_id = s.size_id)) AS invalid_sku_size,
     EXISTS (SELECT 1 FROM naijue_erp.inventory_balance b JOIN filtered_skus s ON s.id = b.sku_id
       JOIN authorized_warehouses w ON w.id = b.warehouse_id WHERE b.version <= 0 OR b.last_operation_id IS NULL) AS invalid_balance,
     (SELECT coalesce(sum(b.quantity), 0)::text FROM naijue_erp.inventory_balance b
