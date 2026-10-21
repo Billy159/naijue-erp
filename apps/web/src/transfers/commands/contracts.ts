@@ -24,7 +24,10 @@ export class TransferCommandError extends Error {
 /** Explicit trusted current-reference and approved-number preparation. No historical
  * filter candidate, random number, eager catalogue or local fixture fallback. */
 export interface TransferFormPreparationProvider { prepareCreate(signal: AbortSignal): Promise<TransferDraftDto> }
-export interface TransferCommandCapability { readonly workspace: import('./controller.ts').TransferCommandWorkspace; readonly preparation?: TransferFormPreparationProvider }
+export interface TransferCommandCapability { readonly workspace: import('./controller.ts').TransferCommandWorkspace; readonly preparation?: TransferFormPreparationProvider;
+  /** Explicit current-form/native-preparation host; never inferred from read access. */
+  readonly manualCreate?: { readonly open: () => Promise<import('../../current-form/transfer-create.ts').TransferNewDocumentSession>; readonly canLeave: () => boolean };
+}
 export interface TransferCommandWorkspaceOptions {
   readonly scope: ReadScope; readonly client: TransferCommandClient; readonly reader: Pick<TransferReader, 'readDetail'>;
   readonly newRequestKey: () => string; readonly onAccessFailure: (error: TransferCommandError) => void;

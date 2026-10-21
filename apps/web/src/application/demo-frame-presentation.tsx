@@ -20,7 +20,7 @@ export function createDemoFrameWorkspaceRenderer(): ApplicationPresentation['ren
       onActivate: () => { void controller.navigate(route); },
     };
     return <DemoFrame navigation={navigation} breadcrumb={state.route ? breadcrumbs[state.route] : ''}
-      notice={state.notice === 'cannot-leave' ? <p className="iw-inline-state" role="alert">当前客户或供应商有未保存输入或尚未确认的操作，请先处理当前页面后再离开。</p> : null}>
+      notice={state.notice === 'cannot-leave' ? <p className="iw-inline-state" role="alert">当前页面有未保存输入或尚未确认的操作，请先处理当前页面后再离开。</p> : null}>
       {routeContent}
     </DemoFrame>;
   };

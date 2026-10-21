@@ -69,3 +69,8 @@ export interface SalesCommandSnapshot {
   readonly editor: SalesCommandEditor | null; readonly write: SalesCommandWriteState;
   readonly stale: boolean; readonly disposed: boolean; readonly notice: string | null;
 }
+
+export interface SalesManualCreateCapability {
+  readonly open: () => Promise<import('../../current-form/sales-create.ts').SalesNewDocumentSession>;
+  readonly canLeave: () => boolean;
+}

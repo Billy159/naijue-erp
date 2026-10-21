@@ -283,3 +283,30 @@ in `result.json` and does not claim acceptance of that later change.
 
 No production deployment, openable accepted ERP, live login, database connection,
 root aggregate success or frozen-Demo/performance completion is claimed.
+
+### Explicit manual transfer CREATE opt-in
+
+With the authenticated command server explicitly configured for native manual
+transfer preparation, set `routes.transfers.commands.manualCreate: true` alongside
+its required `newRequestKey`. The real transfer list's “新增调拨单” then opens the
+current warehouse/product/actual-SKU proposal editor. Save calls
+`POST /transfers/prepare-create` before the existing native SAVE command; no
+browser number/barcode/source snapshot is trusted. Command recovery, reread/adopt,
+approval and inventory effects continue through the existing workspace.
+Without this opt-in (or the older fully prepared provider) NEW stays disabled.
+Preparation endpoint/MAIN-barcode absence is a visible failure, never fake success.
+Raw proposal changes participate in the application navigation guard. Access denial
+uses the same session invalidation callback as commands, and a clean NEW after a
+committed document starts fresh even when the user switched routes in between.
+
+### Explicit native SALE CREATE opt-in
+
+`routes.sales.commands.manualCreate: true`, with an approved key provider and detail
+stylesheet, connects the actual sales list's NEW action to current hall/customer/
+warehouse/SKU/payment-method/account candidates, then native `/sales/prepare-create`
+and existing SAVE. The backend must explicitly configure trusted native pricing
+proof/preparation; missing proof rejects before SAVE. Default read-only hosts and
+required fields do not change. The same explicit NEW form offers independent
+RETURN/EXCHANGE with signed quantities and zero whole-document discount; existing
+signed command paths are retained. See `current-form/README.md` and the
+synthetic `run-sales-create-route-dom-tests.mjs` regression for SALE, negative RETURN and mixed-sign EXCHANGE.

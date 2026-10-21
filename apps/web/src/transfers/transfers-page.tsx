@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import type { TransferFilterDraft, TransferListQuery, TransferProductCapability, TransferWarehouseReader } from './contracts.ts';
 import { emptyTransferFilter } from './contracts.ts';
 import type { TransferPageController } from './controller.ts';
+import { TransferManualCreateHost } from './commands/manual-create-host.tsx';
 import { TransferCommandHost } from './commands/host.tsx';
 import type { TransferCommandCapability } from './commands/contracts.ts';
 import { TransferDetailHost } from './detail-host.tsx';
@@ -54,7 +55,7 @@ export function TransferPageView(props: TransferPageProps) {
   const pendingSize = snapshot.request?.parameters.pageSize; const changingSize = !!data && pendingSize !== undefined && pendingSize !== size;
   if (!scope.active || snapshot.phase === 'disposed') return <div className="tc-empty" role="status"><strong>当前读取范围已关闭</strong><p>旧身份结果已清除，请重新进入调拨页。</p></div>;
   return <div className="transfer-route"><section className="tc-workbench tc-list transfer-list" hidden={target !== null}>
-    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>调拨单列表</h1><button type="button" className="iw-button iw-primary" disabled={!props.commands?.preparation} title={props.commands?.preparation ? undefined : '当前可用商品、仓库、原条码及编号准备尚未接入'} onClick={() => { if (props.commands?.preparation && props.commands.workspace.canLeave()) { returnContext.current = { trigger: document.activeElement instanceof HTMLElement ? document.activeElement : null, top: results.current?.scrollTop ?? 0, left: results.current?.scrollLeft ?? 0 }; if (query.getSnapshot().phase === 'loading') query.cancel(); setTarget({ id: null, activation: ++activation.current }); } }}>新增调拨单</button></div>
+    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>调拨单列表</h1><button type="button" className="iw-button iw-primary" disabled={!props.commands?.preparation && !props.commands?.manualCreate} title={props.commands?.preparation || props.commands?.manualCreate ? undefined : '当前可用商品、仓库、原条码及编号准备尚未接入'} onClick={() => { if ((props.commands?.preparation || props.commands?.manualCreate) && props.commands.workspace.canLeave() && props.commands.manualCreate?.canLeave() !== false) { returnContext.current = { trigger: document.activeElement instanceof HTMLElement ? document.activeElement : null, top: results.current?.scrollTop ?? 0, left: results.current?.scrollLeft ?? 0 }; if (query.getSnapshot().phase === 'loading') query.cancel(); setTarget({ id: null, activation: ++activation.current }); } }}>新增调拨单</button></div>
     <form key={target ? 'detail' : 'list'} className="tc-filters tc-filters-two-row" aria-label="调拨筛选" onSubmit={event => { event.preventDefault(); try { run(transferParameters(draft, size)); } catch { setInputError(true); } }}>
       <div className="tc-filter-row tc-filter-primary">
         <label><span>开始日期</span><TransferDate label="开始日期" value={draft.startDate} onChange={value => setDraft(previous => ({ ...previous, startDate: value }))} /></label>
@@ -77,6 +78,6 @@ export function TransferPageView(props: TransferPageProps) {
     </div>
     <TransferPagination scope={scope} active={target === null} page={data?.page ?? 1} pageSize={size} total={data?.exactTotal ?? null} busy={busy} onPage={page => { if (success) run({ ...success.parameters, page }); }} onPageSize={pageSize => { if (success) run({ ...success.parameters, page: 1, pageSize }); else { setInitialSize(pageSize); run(transferParameters(draft, pageSize)); } }} />
   </section>
-  {target && (props.commands ? <TransferCommandHost key={`${target.id}:${target.activation}`} parentScope={scope} transferId={target.id} capability={props.commands} loadStyles={props.loadDetailStyles} close={() => setTarget(null)} /> : target.id && <TransferDetailHost key={`${target.id}:${target.activation}`} parentScope={scope} transferId={target.id} reader={controller.reader} loadDetailStyles={props.loadDetailStyles} close={() => setTarget(null)} {...(props.product ? { product: props.product } : {})} />)}
+  {target && (target.id === null && props.commands?.manualCreate ? <TransferManualCreateHost key={target.activation} parentScope={scope} capability={props.commands.manualCreate} loadStyles={props.loadDetailStyles} close={() => setTarget(null)} /> : props.commands ? <TransferCommandHost key={`${target.id}:${target.activation}`} parentScope={scope} transferId={target.id} capability={props.commands} loadStyles={props.loadDetailStyles} close={() => setTarget(null)} /> : target.id && <TransferDetailHost key={`${target.id}:${target.activation}`} parentScope={scope} transferId={target.id} reader={controller.reader} loadDetailStyles={props.loadDetailStyles} close={() => setTarget(null)} {...(props.product ? { product: props.product } : {})} />)}
   </div>;
 }

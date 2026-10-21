@@ -1,15 +1,15 @@
+import { TRANSFER_COMMAND_MAX_REQUEST_BYTES } from '../../../../../packages/application/src/transfer-payload-budget.ts';
 import type { HttpQueryOptions } from '../../transport/http-query.ts';
 import { TransferCommandError, type TransferCommandClient } from './contracts.ts';
 import { validateTransferCommand, validateTransferReceipt, validateTransferResult } from './validation.ts';
 export type { HttpQueryOptions } from '../../transport/http-query.ts';
 
-const MAX_REQUEST_BYTES = 65_536;
 const MAX_RESPONSE_CHUNKS = 65_536;
 const commandCodes: Readonly<Record<number, readonly string[]>> = {
   400: ['INVALID_HTTP_INPUT', 'INVALID_ID', 'INVALID_QUANTITY', 'INVALID_VERSION', 'INVALID_BUSINESS_DATE', 'INVALID_JSON'],
   401: ['UNAUTHENTICATED'], 403: ['FORBIDDEN', 'DESTINATION_SCOPE_FORBIDDEN'], 404: ['DOCUMENT_NOT_FOUND'],
-  409: ['VERSION_CONFLICT', 'IDEMPOTENCY_CONFLICT', 'INVALID_STATE', 'HISTORICAL_POSTING_NOT_IMPLEMENTED', 'INVENTORY_NOT_READY', 'MISSING_POSTING_PROVENANCE', 'WAREHOUSE_UNAVAILABLE', 'SKU_UNAVAILABLE'],
-  413: ['BODY_TOO_LARGE'], 415: ['UNSUPPORTED_MEDIA_TYPE'],
+  409: ['VERSION_CONFLICT', 'IDEMPOTENCY_CONFLICT', 'INVALID_STATE', 'HISTORICAL_POSTING_NOT_IMPLEMENTED', 'INVENTORY_NOT_READY', 'MISSING_POSTING_PROVENANCE', 'WAREHOUSE_UNAVAILABLE', 'SKU_UNAVAILABLE', 'NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE', 'TRANSFER_SNAPSHOT_MISMATCH'],
+  413: ['BODY_TOO_LARGE', 'TRANSFER_PAYLOAD_TOO_LARGE'], 415: ['UNSUPPORTED_MEDIA_TYPE'],
   422: ['QUANTITY_OVERFLOW', 'INVALID_NUMBER', 'SAME_WAREHOUSE', 'EMPTY_DOCUMENT', 'INVALID_TRANSFER_LINE', 'INVALID_LINES', 'INVALID_LINE', 'FOREIGN_LINE_ID', 'INVALID_STOCK_EFFECT'],
   500: ['INTERNAL_ERROR'],
 };
@@ -86,7 +86,7 @@ export function createTransferCommandHttpClient(options: HttpQueryOptions): Tran
     if (write) {
       try { payload = JSON.stringify(body); if (typeof payload !== 'string') throw new Error(); }
       catch { throw fail('invalid-request', 'INVALID_TRANSFER_COMMAND_INPUT'); }
-      if (new TextEncoder().encode(payload).byteLength > MAX_REQUEST_BYTES) throw fail('invalid-request', 'REQUEST_TOO_LARGE');
+      if (new TextEncoder().encode(payload).byteLength > TRANSFER_COMMAND_MAX_REQUEST_BYTES) throw fail('invalid-request', 'REQUEST_TOO_LARGE');
     }
     const controller = new AbortController();
     const signal = AbortSignal.any([callerSignal, controller.signal]);

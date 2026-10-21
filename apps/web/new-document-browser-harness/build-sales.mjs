@@ -1,0 +1,12 @@
+import {build} from 'esbuild';
+import {inlineHarnessAssets} from './inline-assets.mjs';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+const here=path.dirname(fileURLToPath(import.meta.url)), outdir=path.join(here,'dist');
+await mkdir(outdir,{recursive:true});
+const result=await build({entryPoints:[path.join(here,'sales-main.tsx')],outdir:'standalone',bundle:true,platform:'browser',format:'esm',write:false,target:'es2022',jsx:'automatic',minify:true,define:{'process.env.NODE_ENV':'"production"'},logLevel:'warning'});
+const script=result.outputFiles.find(f=>f.path.endsWith('.js'))?.text,css=result.outputFiles.find(f=>f.path.endsWith('.css'))?.text;
+if(!script||!css)throw Error('Missing assets');
+const template=`<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>合成SALE浏览器验收 · 非正式 · 无PG</title><link rel="stylesheet" href="./main.css"></head><body><header class="harness-toolbar"><h1>合成SALE验收 · 非正式 · 无真实数据库 / 账号 / 九价凭据</h1><p>实际Application路由、准备及SAVE客户端，接口仅页面内存模拟。刷新清空。不是数据库端到端验收。</p><p>示例：选择厅／客户／仓／SKU，日期2026-10-21、数量1、单价39.90，添加现金账户收款39.90，再保存。缺proof可改下方正常响应后明确点击保存重试。</p><button id="authorize">模拟授权／权限失败后重新授权</button><button id="home">返回应用首页</button><button id="sale">打开销货单列表</button><a href="./synthetic-new-transfer.html">独立调拨验收页</a><label>流程条件<select id="failure"><option value="none">正常合成响应</option><option value="proofMissing">缺九价proof（409）</option><option value="candidate403">候选403</option><option value="prepare403">准备403</option><option value="prepareUnavailable">准备服务503</option><option value="saveUncertain">保存后丢响应（回执核实）</option></select></label><label><input id="delay" type="checkbox">准备延迟5秒，测试取消/修改后迟到响应</label></header><details><summary>合成请求日志</summary><pre id="calls"></pre></details><div id="root"></div><script type="module" src="./main.js"></script></body></html>`;
+const html=inlineHarnessAssets(template,script,css);await writeFile(path.join(outdir,'synthetic-new-sale.html'),html);console.log(`Built synthetic SALE standalone (${Buffer.byteLength(html)} bytes); transfer outputs unchanged.`);

@@ -1,3 +1,4 @@
+import { loadNativeTransferSnapshots } from "./native-transfer-snapshots.ts";
 import { PostgresNativeSalesFacts } from "./sales-native-facts.ts";
 import type { NativeCatalogueCompletenessVerifier } from "./sales-native-facts.ts";
 import type { NativeSalesReferenceFacts } from "../../../packages/application/src/sales-native-facts.ts";
@@ -141,6 +142,13 @@ class PostgresSalesTransaction implements SalesTransaction {
       "TRANSACTION_SCOPE", "Native facts require the original receipt actor and loaded sales target");
     await this.getCurrentSalesIdentity(this.receiptActor);
     return this.nativeFacts.load(document);
+  }
+  async getCurrentSalesSnapshots(skuIds: readonly EntityId<"sku">[]): Promise<ReadonlyMap<EntityId<"sku">, SalesLineRow["snapshot"]>> {
+    requireDomain(this.active && this.receiptActor !== undefined && this.sales !== undefined,
+      "TRANSACTION_SCOPE", "Native snapshots require the original bound sales actor and target");
+    await this.getCurrentSalesIdentity(this.receiptActor);
+    // Shared manual-SKU MAIN snapshot authority; no pricing or transfer mutation.
+    return loadNativeTransferSnapshots((sql, values) => this.query(sql, values), skuIds);
   }
   private query(text: string, values: unknown[] = []): Promise<PgSalesResult> {
     requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes");

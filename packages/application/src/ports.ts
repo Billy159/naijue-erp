@@ -51,6 +51,8 @@ export interface SalesTransaction extends InventoryPostingTransaction {
    * Native rules require it and fail closed if absent. Reads use this original
    * bound command transaction and an explicit real catalogue completeness verifier. */
   getCurrentSalesReferenceFacts?(document: SalesDraft | SalesDocument): Promise<NativeSalesReferenceFacts>;
+  /** Manual creation only: exact enabled MAIN barcode and native labels, on the bound transaction. */
+  getCurrentSalesSnapshots?(skuIds: readonly EntityId<"sku">[]): Promise<ReadonlyMap<EntityId<"sku">, SalesLineRow["snapshot"]>>;
   getSales(id: EntityId<"sales">): Promise<StoredSales | undefined>;
   putRuntimeSales(document: SalesDocument): Promise<void>;
   getReceipt(actorId: EntityId<"account">, requestKey: string): Promise<OperationReceiptRow | undefined>;

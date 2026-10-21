@@ -48,6 +48,9 @@ export interface TransferWarehouseFact {
 }
 export interface TransferSkuFact { readonly id: EntityId<"sku">; readonly enabled: boolean }
 export interface TransferTransaction extends InventoryPostingTransaction {
+  /** Optional native MAIN-barcode snapshots for explicit manual-SKU preparation.
+   * Must be loaded/locked through this original transaction, never client labels. */
+  getCurrentTransferSnapshots?(skuIds: readonly EntityId<"sku">[]): Promise<ReadonlyMap<EntityId<"sku">, import("../../domain/src/documents.ts").SkuSnapshot>>;
   getTransfer(id: EntityId<"transfer">): Promise<StoredTransfer | undefined>;
   putRuntimeTransfer(document: TransferDocument): Promise<void>;
   getReceipt(actorId: EntityId<"account">, requestKey: string): Promise<TransferReceiptRow | undefined>;

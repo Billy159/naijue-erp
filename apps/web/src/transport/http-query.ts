@@ -131,12 +131,14 @@ async function boundedJson(response: Response, signal: AbortSignal, timedOut: ()
 export interface HttpJsonQuery {
   post<T>(path: string, body: unknown, signal: AbortSignal, validate: (value: unknown) => T): Promise<T>;
 }
-/** Construction is inert. One explicit call makes at most one structured JSON POST. */
-export function createHttpJsonQuery(options: HttpQueryOptions): HttpJsonQuery {
+/** Construction is inert. One explicit call makes at most one structured JSON POST.
+ * An endpoint may explicitly pass its shared server request budget; defaults stay 64 KiB. */
+export function createHttpJsonQuery(options: HttpQueryOptions, requestBudgetBytes?: number): HttpJsonQuery {
   if (typeof options?.fetch !== 'function') throw new TypeError('An injected fetch implementation is required.');
   const fetch = options.fetch, base = endpointBase(options.origin, options.basePath);
   const limit = boundedOption(options.maxResponseBytes, 8 * 1024 * 1024, 32 * 1024 * 1024);
   const timeoutMs = boundedOption(options.timeoutMs, 30_000, 120_000);
+  const requestLimit = boundedOption(requestBudgetBytes, MAX_REQUEST_BYTES, 32 * 1024 * 1024);
   return Object.freeze({ async post<T>(path: string, body: unknown, callerSignal: AbortSignal, validate: (value: unknown) => T): Promise<T> {
     // Only local fixed route suffixes, never a caller-supplied absolute URL.
     if (!/^\/(?:[a-z-]+\/)*[a-z-]+$/.test(path)) throw new HttpQueryError('invalid-request', 'INVALID_QUERY_ROUTE');
@@ -147,7 +149,7 @@ export function createHttpJsonQuery(options: HttpQueryOptions): HttpJsonQuery {
       if (typeof serialized !== 'string') throw new Error();
       payload = serialized;
     } catch { throw new HttpQueryError('invalid-request', 'INVALID_QUERY_BODY'); }
-    if (new TextEncoder().encode(payload).byteLength > MAX_REQUEST_BYTES) throw new HttpQueryError('too-large', 'REQUEST_TOO_LARGE');
+    if (new TextEncoder().encode(payload).byteLength > requestLimit) throw new HttpQueryError('too-large', 'REQUEST_TOO_LARGE');
     const controller = new AbortController();
     const deadline = performance.now() + timeoutMs;
     let timeout = false;

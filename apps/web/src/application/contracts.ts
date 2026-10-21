@@ -28,7 +28,7 @@ export interface SalesRouteConfiguration {
   readonly detailStylesheet?: RouteStylesheet;
   /** Explicit write-host opt-in only, after native server reference/economics
    * composition is available. Omission preserves the existing read-only route. */
-  readonly commands?: { readonly newRequestKey: () => string; readonly preparation?: SalesFormPreparationProvider };
+  readonly commands?: { readonly newRequestKey: () => string; readonly preparation?: SalesFormPreparationProvider; readonly manualCreate?: true };
 }
 export interface TransferRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
@@ -36,7 +36,7 @@ export interface TransferRouteConfiguration {
   readonly detailStylesheet: RouteStylesheet;
   /** Omit when the real shared action-style handshake is unavailable. */
   readonly product?: { readonly stylesheet: RouteStylesheet };
-  readonly commands?: { readonly newRequestKey: () => string; readonly preparation?: TransferFormPreparationProvider };
+  readonly commands?: { readonly newRequestKey: () => string; readonly preparation?: TransferFormPreparationProvider; readonly manualCreate?: true };
 }
 export interface PartiesRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
@@ -72,10 +72,12 @@ export interface PartySession {
   readonly prepare: (route: 'customers' | 'suppliers') => PreparedApplicationRoute;
 }
 export interface SalesSession {
+  readonly canLeave?: () => boolean;
   readonly workspace: SalesEditorSession;
   readonly prepare: (route: RoutePreparation) => PreparedApplicationRoute;
 }
 export interface TransferSession {
+  readonly canLeave?: () => boolean;
   readonly workspace: TransferCommandWorkspace;
   readonly prepare: (route: RoutePreparation) => PreparedApplicationRoute;
 }

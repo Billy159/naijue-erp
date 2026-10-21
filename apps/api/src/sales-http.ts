@@ -1,3 +1,7 @@
+import { SALES_PREPARE_MAX_REQUEST_BYTES, SALES_COMMAND_MAX_REQUEST_BYTES, salesPreparedDraftFitsSaveBudget } from "../../../packages/application/src/sales-payload-budget.ts";
+import type { NativeSalesCreateProposal } from "../../../packages/application/src/native-sales-preparation.ts";
+import type { SalesDraft } from "../../../packages/domain/src/documents.ts";
+import { parseSalesCreateProposal } from "./sales-preparation-input.ts";
 import type { IncomingHttpHeaders } from "node:http";
 import type { FastifyPluginAsync } from "fastify";
 import type { ActorContext, SalesDependencies } from "../../../packages/application/src/ports.ts";
@@ -12,10 +16,14 @@ export interface SalesHttpOptions {
   readonly authenticate: (input: SalesAuthenticationInput) => Promise<ActorContext | null>;
   /** Mandatory transaction, authorization/reference scope, economics and identifier providers. No production policy is inferred here. */
   readonly dependencies: SalesDependencies;
+  /** Explicit native preparation; absent means no preparation endpoint. */
+  readonly preparation?: { prepareCreate(actor: ActorContext, proposal: NativeSalesCreateProposal): Promise<SalesDraft> };
 }
 const statuses: Readonly<Record<string, number>> = {
+  SALES_PAYLOAD_TOO_LARGE: 413, NATIVE_CATALOGUE_FACTS_UNAVAILABLE: 409, SALES_REFERENCE_UNAVAILABLE: 409,
+  SALES_SNAPSHOT_MISMATCH: 409, BARCODE_UNAVAILABLE: 409, NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE: 409,
   INVALID_HTTP_INPUT: 400, INVALID_ID: 400, INVALID_QUANTITY: 400, QUANTITY_OVERFLOW: 422,
-  INVALID_MONEY: 400, INVALID_VERSION: 400, INVALID_BUSINESS_DATE: 400,
+  INVALID_MONEY: 400, MONEY_OVERFLOW: 422, MONEY_PRECISION: 422, MONEY_STORAGE_OVERFLOW: 422, INVALID_VERSION: 400, INVALID_BUSINESS_DATE: 400,
   FORBIDDEN: 403, DESTINATION_SCOPE_FORBIDDEN: 403, DOCUMENT_NOT_FOUND: 404, RECEIPT_NOT_FOUND: 404,
   VERSION_CONFLICT: 409, IDEMPOTENCY_CONFLICT: 409, INVALID_STATE: 409,
   SETTLEMENT_METHOD_MISMATCH: 409, IMMUTABLE_SETTLEMENT_METHOD: 409,
@@ -51,6 +59,9 @@ export function createSalesHttpPlugin(options: SalesHttpOptions): FastifyPluginA
     throw new TypeError("Sales HTTP requires explicit trusted authentication, authorization, business rules, and storage providers");
   }
   const service = createSalesService(dependencies);
+  if (options.preparation !== undefined && typeof options.preparation?.prepareCreate !== "function")
+    throw new TypeError("Sales preparation requires an explicit trusted provider");
+  const prepare = options.preparation?.prepareCreate.bind(options.preparation);
   return async function salesHttp(app) {
     const actors = new WeakMap<object, ActorContext>();
     app.addHook("onRequest", async (request, reply) => {
@@ -72,7 +83,15 @@ export function createSalesHttpPlugin(options: SalesHttpOptions): FastifyPluginA
       if (transport.code === "FST_ERR_CTP_INVALID_MEDIA_TYPE") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });
       return reply.code(500).send({ error: { code: "INTERNAL_ERROR", message: "The request could not be completed" } });
     });
-    app.post("/sales/commands", { bodyLimit: 65_536 }, async (request, reply) => {
+    if (prepare) app.post("/sales/prepare-create", { bodyLimit: SALES_PREPARE_MAX_REQUEST_BYTES }, async (request, reply) => {
+      assertNoQuery(request.query);
+      if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });
+      const actor = actors.get(request); if (!actor) throw new Error("Missing trusted actor");
+      const draft = await prepare(actor, parseSalesCreateProposal(request.body));
+      requireDomain(salesPreparedDraftFitsSaveBudget(draft), "SALES_PAYLOAD_TOO_LARGE", "Prepared sales exceeds SAVE budget");
+      return reply.type("application/json").send(exactJson(draft));
+    });
+    app.post("/sales/commands", { bodyLimit: SALES_COMMAND_MAX_REQUEST_BYTES }, async (request, reply) => {
       assertNoQuery(request.query);
       if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });
       const actor = actors.get(request);

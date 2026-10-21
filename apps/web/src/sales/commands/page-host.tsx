@@ -1,3 +1,5 @@
+import { SalesManualCreateHost } from './manual-create-host.tsx';
+import type { SalesManualCreateCapability } from './contracts.ts';
 import { createElement, useEffect, useState, useSyncExternalStore, type ComponentType } from 'react';
 import type { ReadScope } from '../../loading/read-scope.ts';
 import type { SalesReader, SalesReferenceReader } from '../contracts.ts';
@@ -6,24 +8,25 @@ import type { SalesEditorSession } from './editor-session.ts';
 type SalesFormComponent = ComponentType<{ readonly session: SalesEditorSession; readonly close: () => void }>;
 
 export function SalesCommandPageHost(props: { readonly scope: ReadScope; readonly reader: SalesReader; readonly references: SalesReferenceReader;
-  readonly session: SalesEditorSession; readonly loadDetailStyles: () => Promise<unknown> }) {
+  readonly session: SalesEditorSession; readonly manualCreate?: SalesManualCreateCapability; readonly loadDetailStyles: () => Promise<unknown> }) {
   const state = useSyncExternalStore(props.session.subscribe, props.session.getSnapshot, props.session.getSnapshot);
   const [styleState, setStyles] = useState<{ readonly scope: ReadScope; readonly session: SalesEditorSession; readonly loader: () => Promise<unknown>; readonly phase: 'idle' | 'loading' | 'ready' | 'error'; readonly Form: SalesFormComponent | null }>(() => ({ scope: props.scope, session: props.session, loader: props.loadDetailStyles, phase: 'idle', Form: null }));
   const styles = styleState.scope === props.scope && styleState.session === props.session && styleState.loader === props.loadDetailStyles ? styleState.phase : 'idle';
   const [retry, setRetry] = useState(0), [discard, setDiscard] = useState(false);
-  const active = !!state.command.editor || state.preparing;
+  const [manualActive, setManualActive] = useState(false);
+  const active = manualActive || !!state.command.editor || state.preparing;
   useEffect(() => {
-    if (!active || styles === 'ready') return;
+    if (!active || manualActive || styles === 'ready') return;
     let attached = true; const owner = { scope: props.scope, session: props.session, loader: props.loadDetailStyles }; setStyles({ ...owner, phase: 'loading', Form: null });
     void Promise.all([props.loadDetailStyles(), import('./form.tsx')]).then(([, module]) => { if (attached && props.scope.active) setStyles({ ...owner, phase: 'ready', Form: module.SalesCommandForm }); }, () => { if (attached && props.scope.active) setStyles({ ...owner, phase: 'error', Form: null }); });
     return () => { attached = false; };
-  }, [active, props.loadDetailStyles, props.scope, props.session, retry]);
+  }, [active, manualActive, props.loadDetailStyles, props.scope, props.session, retry]);
   useEffect(() => { setDiscard(false); }, [props.scope, props.session]);
   useEffect(() => () => props.session.suspend(), [props.session]);
   return <><SalesPageHost scope={props.scope} reader={props.reader} references={props.references} loadDetailStyles={props.loadDetailStyles} write={{
-    active, canCreate: props.session.canCreate, preparing: state.preparing, commitRevision: state.commitRevision,
-    openCreate: () => { void props.session.openCreate(); }, openExisting: salesId => { void props.session.openExisting(salesId); },
-    editor: styles === 'ready' && styleState.Form ? createElement(styleState.Form, { session: props.session, close: () => {} }) : <section className="tc-workbench" aria-label="销货单编辑"><h1>销货单</h1>
+    active, canCreate: props.session.canCreate || !!props.manualCreate, preparing: state.preparing, commitRevision: state.commitRevision,
+    openCreate: () => { if (props.manualCreate && props.manualCreate.canLeave() && props.session.canLeave()) setManualActive(true); else if (!props.manualCreate) void props.session.openCreate(); }, openExisting: salesId => { void props.session.openExisting(salesId); },
+    editor: manualActive && props.manualCreate ? <SalesManualCreateHost parentScope={props.scope} capability={props.manualCreate} loadStyles={props.loadDetailStyles} close={() => setManualActive(false)} /> : styles === 'ready' && styleState.Form ? createElement(styleState.Form, { session: props.session, close: () => {} }) : <section className="tc-workbench" aria-label="销货单编辑"><h1>销货单</h1>
       <button type="button" className="iw-button" disabled={props.session.commands.hasUnresolvedWrite} onClick={() => {
         if (state.preparing) { props.session.suspend(); return; }
         if (props.session.hasDirtyDraft) setDiscard(true); else props.session.discardEditor();

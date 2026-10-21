@@ -22,3 +22,10 @@ test('SYNTHETIC transfer HTTP client: input/abort before dispatch sends nothing;
   const signal = AbortSignal.abort(); await assert.rejects(client.execute(command(), signal), e => e instanceof TransferCommandError && e.outcome === 'not-sent'); assert.equal(calls, 0);
   await assert.rejects(client.receipt(command(), new AbortController().signal), e => e instanceof TransferCommandError && e.code === 'RECEIPT_NOT_FOUND' && e.outcome === 'read');
 });
+test('SYNTHETIC transfer native snapshot409 codes are definitive rollback rejections; unknown409 stays uncertain', async () => {
+  for (const code of ['NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE', 'TRANSFER_SNAPSHOT_MISMATCH', 'UNRECOGNIZED_FUTURE_ERROR']) {
+    const client = createTransferCommandHttpClient({ origin: 'https://synthetic.test', basePath: '', fetch: async () => json({ error: { code, message: 'not retained' } }, 409) });
+    await assert.rejects(() => client.execute(command(), new AbortController().signal), error => error instanceof TransferCommandError
+      && error.outcome === (code === 'UNRECOGNIZED_FUTURE_ERROR' ? 'uncertain' : 'rejected'));
+  }
+});

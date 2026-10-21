@@ -72,7 +72,7 @@ export class ApplicationController {
     if (route !== null && !this.routes.includes(route)) return false;
     if (route === this.#state.route && this.#state.phase === 'ready') return true;
     const sessions = [this.#partySession, this.#salesSession, this.#transferSession];
-    if (route !== this.#state.route && sessions.some(session => session && !session.workspace.canLeave())) {
+    if (route !== this.#state.route && (sessions.some(session => session && !session.workspace.canLeave()) || this.#transferSession?.canLeave?.() === false || this.#salesSession?.canLeave?.() === false)) {
       this.#publish({ ...this.#state, notice: 'cannot-leave' }); return false;
     }
     if (route !== this.#state.route) { this.#salesSession?.workspace.suspend(); this.#transferSession?.workspace.suspend(); }

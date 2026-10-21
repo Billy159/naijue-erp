@@ -1,3 +1,4 @@
+import { SALES_COMMAND_MAX_REQUEST_BYTES } from '../../../../../packages/application/src/sales-payload-budget.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { HttpQueryOptions } from '../../transport/http-query.ts';
@@ -38,7 +39,7 @@ test('malformed input and oversized UTF-8 draft are rejected before any fetch', 
   await assert.rejects(client.execute({ ...save(), actor: 'private' } as never, signal()), failure('invalid-request', 'not-sent'));
   await assert.rejects(client.receipt({ ...stateCommand(), requestKey: '../private' }, signal()), failure('invalid-request', 'read'));
   const command = save(); assert.equal(command.action, 'SAVE');
-  await assert.rejects(client.execute({ ...command, draft: { ...command.draft, header: { ...command.draft.header, note: '中'.repeat(25000) } } }, signal()), failure('invalid-request', 'not-sent', 'REQUEST_TOO_LARGE'));
+  await assert.rejects(client.execute({ ...command, draft: { ...command.draft, header: { ...command.draft.header, note: '中'.repeat(Math.ceil(SALES_COMMAND_MAX_REQUEST_BYTES / 3)) } } }, signal()), failure('invalid-request', 'not-sent', 'REQUEST_TOO_LARGE'));
   assert.equal(calls, 0);
   for (const bad of [{ origin: 'https://other.test/path' }, { origin: 'https://user:password@synthetic.test' }, { origin: 'file:///tmp' }, { basePath: '//other.test' }, { basePath: '/api?actor=secret' }, { timeoutMs: 0 }, { maxResponseBytes: -1 }]) assert.throws(() => createSalesCommandHttpClient(options(async () => json({}), bad)));
 });
@@ -148,5 +149,17 @@ test('observed 401/403 fails immediately and cancels any body without awaiting t
       await assert.rejects(write, failure(status === 401 ? 'unauthenticated' : 'forbidden', 'uncertain', status === 401 ? 'UNAUTHENTICATED' : 'FORBIDDEN', status));
       if (mode === 'stalled') { assert.equal(cancelled, 1); assert.ok(pulled <= 1); }
     }
+  }
+});
+test('native SALE preparation/reference rejection codes remain definitive; unknown409 stays uncertain', async () => {
+  for (const code of ['NATIVE_CATALOGUE_FACTS_UNAVAILABLE', 'SALES_REFERENCE_UNAVAILABLE', 'SALES_SNAPSHOT_MISMATCH', 'BARCODE_UNAVAILABLE', 'NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE', 'UNKNOWN_NEW_ERROR']) {
+    const client = createSalesCommandHttpClient(options(async () => json({ error: { code, message: 'SYNTHETIC not retained' } }, 409)));
+    await assert.rejects(() => client.execute(save(), signal()), error => error instanceof SalesCommandError && error.outcome === (code === 'UNKNOWN_NEW_ERROR' ? 'uncertain' : 'rejected'));
+  }
+});
+test('native money storage and precision validation are definitive rejections', async () => {
+  for (const code of ['MONEY_STORAGE_OVERFLOW', 'MONEY_OVERFLOW', 'MONEY_PRECISION']) {
+    const client = createSalesCommandHttpClient(options(async () => json({ error: { code, message: 'SYNTHETIC' } }, 422)));
+    await assert.rejects(() => client.execute(save(), signal()), failure('invalid-request', 'rejected', code, 422));
   }
 });

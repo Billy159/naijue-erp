@@ -1,4 +1,5 @@
 import { PostgresPostingBalances } from "./inventory-posting-balances.ts";
+import { loadNativeTransferSnapshots } from "./native-transfer-snapshots.ts";
 import type { Pool } from "pg";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import type { TransferAuditRow, TransferDocument, TransferReceiptRow, TransferResult, TransferTransaction, TransferUnitOfWork, StoredTransfer, RuntimeTransferHeader, TransferWarehouseFact, TransferSkuFact } from "../../../packages/application/src/transfer-ports.ts";
@@ -63,6 +64,10 @@ export class PostgresTransferUnitOfWork implements TransferUnitOfWork {
   }
 }
 class PostgresTransferTransaction implements TransferTransaction {
+  async getCurrentTransferSnapshots(skuIds: readonly EntityId<"sku">[]) {
+    requireDomain(this.loaded !== undefined, "TRANSACTION_SCOPE", "Load the target document before snapshot facts");
+    return loadNativeTransferSnapshots((sql, values) => this.query(sql, values), skuIds);
+  }
   private active = true;
   private loaded: { readonly id: EntityId<"transfer">; readonly version: Version | null; readonly stockBasis: StoredTransfer["stockBasis"] } | undefined;
   private receiptKey: string | undefined;

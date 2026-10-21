@@ -1,0 +1,141 @@
+import { SALES_PREPARE_MAX_REQUEST_BYTES, SALES_PREPARE_MAX_LINES, SALES_PREPARE_MAX_NOTE_LENGTH, salesJsonByteLength, salesPreparedDraftFitsSaveBudget } from "./sales-payload-budget.ts";
+import type { SalesDraft, SalesLineRow } from "../../domain/src/documents.ts";
+import { requireDomain } from "../../domain/src/errors.ts";
+import { allocateSalesDiscount, discountUnitPrice } from "../../domain/src/sales-money.ts";
+import { businessDate, decimalToMinor, entityId, minorAmount, multiplyMoney, quantity } from "../../domain/src/values.ts";
+import type { ActorContext, SalesDependencies, SalesBusinessRules } from "./ports.ts";
+import { createNativeTransactionSalesBusinessRules } from "./sales-native-facts.ts";
+import { sourceConfirmedCreateDocumentNumber } from "./source-confirmed-document-number.ts";
+
+/** Manual sales/independent-return/exchange proposal: IDs and explicit pricing intent, never labels,
+ * barcode, reference/minimum-price authority, calculated totals or document IDs.
+ * RETURN/EXCHANGE reuse independent signed economics: nonzero ± rows, no original
+ * sale association, zero whole discount/allocation. Settlement equality is APPROVE-only. */
+export interface NativeSalesCreateProposal {
+  readonly businessType: "SALE" | "RETURN" | "EXCHANGE"; readonly businessDate: string; readonly note: string | null;
+  readonly hallId: string; readonly customerId: string; readonly salespersonId: string | null; readonly warehouseId: string;
+  readonly orderDiscount: string;
+  readonly lines: readonly { readonly skuId: string; readonly quantity: string; readonly dealPrice: string | null;
+    readonly pricingRule: "UNIT_PRICE" | "DISCOUNT"; readonly discountTenths: number | null;
+    readonly isGift: boolean; readonly zeroConfirmed: boolean }[];
+  readonly settlements: readonly { readonly paymentAccountId: string; readonly paymentMethodId: string;
+    readonly direction: "RECEIVE" | "REFUND"; readonly amount: string }[];
+}
+export const NATIVE_SALES_PREPARE_MAX_LINES = SALES_PREPARE_MAX_LINES;
+function money(value: unknown) {
+  requireDomain(typeof value === "string" && value.length <= 19 && /^(?:0|[1-9]\d*)(?:\.\d{1,2})?$/.test(value), "INVALID_MONEY", "Exact nonnegative yuan text required");
+  return decimalToMinor(value, { scale: 2, maxAbsMinor: 999999999999999999n });
+}
+/** Explicit manual-SKU SAVE profile. Existing unchanged line observations remain
+ * historical; new/replaced snapshots must still be the actual current MAIN.
+ * Reference snapshots on newly created lines must be current product prices. */
+export function createNativeManualSalesBusinessRules(): SalesBusinessRules {
+  const native = createNativeTransactionSalesBusinessRules();
+  return Object.freeze({
+    async assertDraftChange(previous, draft, tx) {
+      await native.assertDraftChange(previous, draft, tx);
+      const prior = new Map((previous?.lines ?? []).map(row => [row.id, row]));
+      const keys = ["productCode", "productName", "colorName", "fitName", "sizeName", "barcode"] as const;
+      const changed = draft.lines.filter(row => row.isCurrent && !(prior.get(row.id)?.skuId === row.skuId
+        && prior.get(row.id)!.referencePrice === row.referencePrice && keys.every(key => prior.get(row.id)!.snapshot[key] === row.snapshot[key])));
+      if (changed.length === 0) return;
+      requireDomain(tx?.getCurrentSalesSnapshots && tx.getCurrentSalesReferenceFacts, "NATIVE_CATALOGUE_FACTS_UNAVAILABLE", "Original transaction native snapshots required");
+      const snapshots = await tx.getCurrentSalesSnapshots(changed.map(row => row.skuId));
+      const facts = await tx.getCurrentSalesReferenceFacts(draft);
+      for (const row of changed) {
+        const snapshot = snapshots.get(row.skuId), sku = facts.skus.find(sku => sku.id === row.skuId);
+        const product = sku && facts.products.find(product => product.id === sku.productId);
+        requireDomain(snapshot && keys.every(key => snapshot[key] === row.snapshot[key]), "SALES_SNAPSHOT_MISMATCH", "Manual sales requires current MAIN snapshot");
+        requireDomain(product && product.referencePrice === row.referencePrice, "SALES_SNAPSHOT_MISMATCH", "New line reference snapshot must match current product price");
+      }
+    },
+    assertReferencesAndEconomics: native.assertReferencesAndEconomics,
+    inventoryDelta: native.inventoryDelta
+  } satisfies SalesBusinessRules);
+}
+
+/** Read-only preparation; never creates receipts, documents, audit or stock. SAVE
+ * still uses its own request key, expectedVersion:null, authorization and native
+ * transaction rules. Returned preparation is neither reservation nor access grant.
+ * Host must install native transaction rules on SAVE; this function never enables a route. */
+export function createNativeSalesPreparation(dependencies: SalesDependencies) {
+  const nativeRules = createNativeManualSalesBusinessRules();
+  return Object.freeze({ async prepareCreate(actorInput: ActorContext, input: NativeSalesCreateProposal): Promise<SalesDraft> {
+    const actor = structuredClone(actorInput), proposal = structuredClone(input);
+    requireDomain(proposal && typeof proposal === "object" && (proposal.businessType === "SALE" || proposal.businessType === "RETURN" || proposal.businessType === "EXCHANGE")
+      && (proposal.note === null || typeof proposal.note === "string" && proposal.note.length <= SALES_PREPARE_MAX_NOTE_LENGTH)
+      && Array.isArray(proposal.lines) && proposal.lines.length > 0 && proposal.lines.length <= NATIVE_SALES_PREPARE_MAX_LINES
+      && Array.isArray(proposal.settlements) && proposal.settlements.length <= 3, "INVALID_HTTP_INPUT", "Bounded native sales proposal required");
+    requireDomain(salesJsonByteLength(proposal) <= SALES_PREPARE_MAX_REQUEST_BYTES, "SALES_PAYLOAD_TOO_LARGE", "Preparation exceeds request budget");
+    const used = new Set<string>();
+    const nextId: SalesDependencies["newId"] = kind => {
+      const value = entityId(kind, dependencies.newId(kind));
+      requireDomain(!used.has(value), "INVALID_ID", "Generated identities must be distinct"); used.add(value); return value;
+    };
+    const id = nextId("sales"), zero = minorAmount("0");
+    const header = { id, number: sourceConfirmedCreateDocumentNumber("SALE", id), businessType: proposal.businessType,
+      businessDate: businessDate(proposal.businessDate), hallId: entityId("hall", proposal.hallId), customerId: entityId("customer", proposal.customerId),
+      salespersonId: proposal.salespersonId === null ? null : entityId("staff", proposal.salespersonId), warehouseId: entityId("warehouse", proposal.warehouseId),
+      note: proposal.note, orderDiscount: money(proposal.orderDiscount), grossAmount: zero, netDue: zero };
+    requireDomain(header.businessType === "SALE" || header.orderDiscount === 0n, "INDEPENDENT_RETURN_DISCOUNT",
+      "Independent return/exchange requires zero whole-document discount");
+    const lines: SalesLineRow[] = proposal.lines.map((line, index) => {
+      requireDomain(line && (line.pricingRule === "UNIT_PRICE" || line.pricingRule === "DISCOUNT")
+        && typeof line.isGift === "boolean" && typeof line.zeroConfirmed === "boolean", "UNKNOWN_PRICING_FACTS", "Explicit pricing intent required");
+      requireDomain(line.pricingRule === "UNIT_PRICE" ? line.discountTenths === null && (line.isGift || line.dealPrice !== null)
+        : line.dealPrice === null && Number.isInteger(line.discountTenths) && line.discountTenths! >= 0 && line.discountTenths! <= 100,
+      "INVALID_LINE_DISCOUNT", "Direct price and discount intent must be unambiguous");
+      const count = quantity(line.quantity); requireDomain(count !== 0n && (header.businessType !== "SALE" || count > 0n), "INVALID_SALES_QUANTITY", "SALE requires positive quantity; independent return/exchange accepts nonzero signed quantity");
+      return { id: nextId("salesLine"), salesId: id, lineNo: index + 1, skuId: entityId("sku", line.skuId), quantity: count,
+        referencePrice: null, dealPrice: line.dealPrice === null ? zero : money(line.dealPrice), pricingRule: line.pricingRule,
+        discountTenths: line.discountTenths, zeroConfirmed: line.zeroConfirmed, lineAmount: zero, allocatedDiscount: zero,
+        isGift: line.isGift, snapshot: { productCode: "", productName: "", colorName: "", fitName: "", sizeName: "", barcode: null }, isCurrent: true };
+    });
+    const settlements = proposal.settlements.map((row, index) => {
+      requireDomain(row && (row.direction === "RECEIVE" || row.direction === "REFUND"), "INVALID_SETTLEMENT", "Explicit settlement direction required");
+      return { id: nextId("settlement"), salesId: id, lineNo: index + 1, paymentAccountId: entityId("paymentAccount", row.paymentAccountId),
+        paymentMethodId: entityId("paymentMethod", row.paymentMethodId), direction: row.direction, amount: money(row.amount) };
+    });
+    const skeleton: SalesDraft = { header, lines, settlements };
+    return dependencies.unitOfWork.transaction(async tx => {
+      // Bind the existing adapter's receipt/actor scope without writing a receipt.
+      // Generated request identity is private to this preparation, never reused by SAVE.
+      requireDomain(!await tx.getReceipt(actor.accountId, `prepare-sales:${nextId("operation")}`), "IDEMPOTENCY_CONFLICT", "Preparation identity already exists");
+      requireDomain(!await tx.getSales(id), "VERSION_CONFLICT", "Generated sales identity already exists");
+      await dependencies.authorization.assertAllowed(actor, "SAVE", skeleton, tx);
+      requireDomain(tx.getCurrentSalesSnapshots && tx.getCurrentSalesReferenceFacts,
+        "NATIVE_CATALOGUE_FACTS_UNAVAILABLE", "Native transaction preparation capabilities required");
+      const snapshots = await tx.getCurrentSalesSnapshots(lines.map(row => row.skuId));
+      const selected: SalesDraft = { ...skeleton, lines: lines.map(row => {
+        const snapshot = snapshots.get(row.skuId); requireDomain(snapshot, "SKU_UNAVAILABLE", "Actual native MAIN snapshot required");
+        return { ...row, snapshot: { ...snapshot } };
+      }) };
+      const facts = await tx.getCurrentSalesReferenceFacts(selected);
+      const skus = new Map(facts.skus.map(row => [row.id, row])), products = new Map(facts.products.map(row => [row.id, row]));
+      const priced = selected.lines.map(row => {
+        const sku = skus.get(row.skuId), product = sku && products.get(sku.productId);
+        requireDomain(product && product.referencePrice !== undefined, "PRODUCT_PRICING_UNAVAILABLE", "Complete current product reference price required");
+        let dealPrice = row.dealPrice;
+        if (row.isGift) { requireDomain(dealPrice === 0n, "INVALID_GIFT_PRICE", "Gift price must be explicitly zero or absent"); dealPrice = zero; }
+        else if (row.pricingRule === "DISCOUNT") {
+          requireDomain(product.referencePrice !== null, "PRODUCT_PRICING_UNAVAILABLE", "Discount requires actual reference price");
+          dealPrice = discountUnitPrice(product.referencePrice, row.discountTenths!);
+        }
+        return { ...row, referencePrice: product.referencePrice, dealPrice, lineAmount: multiplyMoney(dealPrice, row.quantity) };
+      });
+      const allocations = header.businessType === "SALE"
+        ? allocateSalesDiscount(priced.map(row => row.lineAmount), header.orderDiscount) : priced.map(() => zero);
+      const grossAmount = minorAmount(priced.reduce((sum, row) => sum + row.lineAmount, 0n).toString());
+      requireDomain(grossAmount >= -999999999999999999n && grossAmount <= 999999999999999999n
+        && priced.every(row => row.lineAmount >= -999999999999999999n && row.lineAmount <= 999999999999999999n),
+        "MONEY_STORAGE_OVERFLOW", "Calculated amounts must fit existing decimal(18,2) storage");
+      const draft: SalesDraft = { header: { ...header, grossAmount, netDue: minorAmount((grossAmount - header.orderDiscount).toString()) },
+        lines: priced.map((row, index) => ({ ...row, allocatedDiscount: allocations[index]! })), settlements };
+      await nativeRules.assertDraftChange(undefined, draft, tx);
+      await dependencies.rules.assertDraftChange(undefined, draft, tx);
+      requireDomain(salesPreparedDraftFitsSaveBudget(draft),
+        "SALES_PAYLOAD_TOO_LARGE", "Prepared draft exceeds SAVE request budget");
+      return structuredClone(draft);
+    });
+  } });
+}

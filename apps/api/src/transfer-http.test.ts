@@ -1,3 +1,4 @@
+import { TRANSFER_COMMAND_MAX_REQUEST_BYTES } from "../../../packages/application/src/transfer-payload-budget.ts";
 import assert from "node:assert/strict";
 import test from "node:test";
 import type { TestContext } from "node:test";
@@ -266,7 +267,7 @@ test("SYNTHETIC transfer HTTP: malformed JSON/media/body limits and extra query 
   ]);
   for (const response of responses) assert.equal(response.statusCode, 400, response.body);
   assert.equal((await f.app.inject({ method: "POST", url: "/transfers/commands", payload: "text" })).statusCode, 415);
-  assert.equal((await f.app.inject({ method: "POST", url: "/transfers/commands", headers: { "content-type": "application/json" }, payload: JSON.stringify({ padding: "x".repeat(65_536) }) })).statusCode, 413);
+  assert.equal((await f.app.inject({ method: "POST", url: "/transfers/commands", headers: { "content-type": "application/json" }, payload: JSON.stringify({ padding: "x".repeat(TRANSFER_COMMAND_MAX_REQUEST_BYTES) }) })).statusCode, 413);
   assert.equal(calls, 0);
 });
 test("SYNTHETIC transfer HTTP: bigint quantity reaches trusted references exactly, without a numeric round trip", async t => {

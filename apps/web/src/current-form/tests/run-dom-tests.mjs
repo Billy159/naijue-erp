@@ -1,0 +1,94 @@
+import assert from 'node:assert/strict';
+import { mkdtemp, rm } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { build } from 'esbuild';
+import { JSDOM } from 'jsdom';
+const here = path.dirname(fileURLToPath(import.meta.url)), temp = await mkdtemp(path.join(here, '.dom-tmp-'));
+const dom = new JSDOM('<!doctype html><div id="root"></div>', { url: 'https://synthetic.test/' });
+for (const key of ['window', 'document', 'navigator', 'HTMLElement', 'HTMLInputElement', 'HTMLTextAreaElement', 'Event', 'MouseEvent']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+let root;
+try {
+  const output = path.join(temp, 'entry.mjs');
+  await build({ entryPoints: [path.join(here, 'dom-entry.tsx')], outfile: output, bundle: true, platform: 'node', format: 'esm', external: ['react', 'react/*', 'react-dom', 'react-dom/*'], jsx: 'automatic', logLevel: 'warning' });
+  const { act, createElement, createRoot, ReadContext, createCurrentFormHttpReader, TransferProposalSession, TransferProposalForm, SalesProposalSession, SalesProposalForm } = await import(pathToFileURL(output).href);
+  const host = document.getElementById('root'); root = createRoot(host);
+  const uuid = n => `00000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
+  const warehouse = n => ({ id: uuid(n), name: `TEST warehouse ${n}`, hallId: uuid(90), hallName: 'TEST hall', enabled: true, hallEnabled: true, hasNonzeroInventory: false });
+  const product = { id: uuid(3), code: 'TEST', name: 'TEST product', retailPrice: null, minimumPriceAvailability: 'UNAVAILABLE' };
+  const sku = { id: uuid(4), skuCode: 'TEST-SKU', productId: uuid(3), productCode: 'TEST', productName: 'TEST product', colorId: uuid(5), colorName: 'TEST red', fitId: uuid(6), fitName: 'TEST fit', sizeId: uuid(7), sizeName: '165/S', sizeGroupId: uuid(8), barcodeAvailability: 'UNAVAILABLE' };
+  const calls = []; let closed = 0;
+  const reader = createCurrentFormHttpReader({ origin: 'https://synthetic.test', basePath: '/api', fetch: async (url, init) => {
+    const body = JSON.parse(init.body); calls.push({ url, body });
+    const items = url.endsWith('/transfer-warehouses/query') ? [warehouse(1), warehouse(2)] : url.endsWith('/products/query') ? [product] : url.endsWith('/product-skus/query') ? [sku] : assert.fail('Unexpected network command');
+    return new Response(JSON.stringify({ page: body.page, pageSize: 20, exactTotal: String(items.length), items }), { headers: { 'content-type': 'application/json' } });
+  } });
+  const context = new ReadContext({ accountId: uuid(99), sessionRevision: 'test', permissionRevision: 'test' });
+  const session = new TransferProposalSession(context.createScope('proposal'), reader);
+  await act(async () => root.render(createElement(TransferProposalForm, { session, close: () => closed++ })));
+  assert.equal(calls.length, 0);
+  const button = label => [...host.querySelectorAll('button')].find(el => el.textContent === label);
+  const click = async el => { assert.ok(el); assert.equal(el.disabled, false); await act(async () => { el.dispatchEvent(new MouseEvent('click', { bubbles: true })); await new Promise(resolve => setTimeout(resolve, 10)); }); };
+  const change = async (el, value) => { assert.ok(el); await act(async () => {
+    const proto = el instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
+    Object.getOwnPropertyDescriptor(proto, 'value').set.call(el, value); el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true }));
+  }); };
+  await click(button('选择调出仓库')); await click(button('TEST warehouse 1 · TEST hall'));
+  await click(button('选择调入仓库')); await click(button('TEST warehouse 1 · TEST hall')); assert.match(host.textContent, /不能相同/);
+  await click(button('TEST warehouse 2 · TEST hall')); await click(button('添加商品规格')); await click(button('TEST product'));
+  await click(button('TEST · TEST red · TEST fit · 165/S')); assert.equal(button('TEST · TEST red · TEST fit · 165/S').disabled, true);
+  await click(button('关闭候选'));
+  await change(host.querySelector('[aria-label="单据日期"]'), '2026-10-21');
+  await change(host.querySelector('[aria-label="TEST-SKU 数量"]'), '1.5'); await click(button('校验草稿'));
+  assert.ok(host.querySelector('[role="alert"]')); assert.equal(session.getSnapshot().draft.lines[0].quantity, '1.5');
+  await change(host.querySelector('[aria-label="TEST-SKU 数量"]'), '3'); await click(button('校验草稿'));
+  assert.match(host.textContent, /本地草稿校验通过/); assert.equal(button('保存（尚未接入）').disabled, true);
+  assert.equal(calls.length, 4); assert.ok(calls.every(call => call.url.includes('/current-form/') && call.body.pageSize === 20 && !('actor' in call.body)));
+  await click(button('重置草稿')); await click(button('保留输入')); assert.equal(session.getSnapshot().draft.lines.length, 1);
+  await click(host.querySelector('[aria-label="删除 TEST-SKU"]')); assert.equal(session.getSnapshot().draft.lines.length, 0);
+  await click(button('重置草稿')); await click(button('确认放弃')); assert.equal(session.getSnapshot().dirty, false);
+  await change(host.querySelector('[aria-label="备注"]'), 'unsaved'); await click(button('取消新增')); assert.equal(closed, 0);
+  await click(button('确认放弃')); assert.equal(closed, 1); assert.equal(session.getSnapshot().disposed, true);
+  console.log('PASS current transfer proposal DOM: actual HTTP candidate boundary, full SKU, add/remove/raw validation, guarded reset/cancel, no save command.');
+  const salesCalls = [];
+  const reference = (n, more = {}) => ({ id: uuid(n), name: `TEST reference ${n}`, code: null, hallId: null, hallName: null, paymentMethodId: null, paymentMethodName: null, ...more });
+  const salesReader = createCurrentFormHttpReader({ origin: 'https://synthetic.test', basePath: '/api', fetch: async (url, init) => {
+    const body = JSON.parse(init.body); salesCalls.push({ url, body }); let items, extra = {};
+    if (url.endsWith('/sales-references/query')) {
+      if (body.kind === 'hall') items = [reference(20, { hallId: uuid(20), hallName: 'TEST hall' })];
+      else if (body.kind === 'customer') items = [reference(21, { code: 'TEST-CUSTOMER' })];
+      else if (body.kind === 'warehouse') items = [reference(22, { hallId: uuid(20), hallName: 'TEST hall' })];
+      else if (body.kind === 'paymentMethod') items = [reference(23)];
+      else if (body.kind === 'paymentAccount') {
+        assert.equal(body.paymentMethodId, uuid(23)); items = [reference(24, { paymentMethodId: uuid(23), paymentMethodName: 'TEST reference 23' })]; extra = { recommendationAvailability: 'UNAVAILABLE' };
+      } else assert.fail('Unexpected reference');
+    } else if (url.endsWith('/products/query')) items = [product];
+    else if (url.endsWith('/product-skus/query')) items = [sku];
+    else assert.fail('Unexpected network command');
+    return new Response(JSON.stringify({ page: body.page, pageSize: 20, exactTotal: String(items.length), items, ...extra }), { headers: { 'content-type': 'application/json' } });
+  } });
+  const sales = new SalesProposalSession(context.createScope('sales-proposal'), salesReader);
+  await act(async () => root.render(createElement(SalesProposalForm, { session: sales, close: () => closed++ })));
+  assert.equal(salesCalls.length, 0); assert.equal(button('选择客户').disabled, true);
+  await click(button('选择营业厅')); await click(button('TEST reference 20'));
+  await click(button('选择客户')); await click(button('TEST reference 21'));
+  await click(button('选择仓库')); await click(button('TEST reference 22'));
+  await click(button('添加商品规格')); await click(button('TEST product')); await click(button('TEST · TEST red · TEST fit · 165/S')); await click(button('关闭候选'));
+  assert.equal(host.querySelector('[aria-label="TEST-SKU 单价"]').value, '');
+  assert.equal(host.querySelector('option[value="DISCOUNT"]').disabled, true);
+  await change(host.querySelector('[aria-label="单据日期"]'), '2026-10-21'); await change(host.querySelector('[aria-label="TEST-SKU 单价"]'), '10.05');
+  await change(host.querySelector('[aria-label="整单优惠"]'), '0.05');
+  await click(button('添加收退明细')); await click(button('TEST reference 23')); assert.match(host.textContent, /未提供，不自动选择/); await click(button('TEST reference 24'));
+  await change(host.querySelector('[aria-label="收退金额 1"]'), '10'); await click(button('校验草稿'));
+  assert.equal(sales.getSnapshot().totals.netDueMinor, '1000'); assert.equal(sales.getSnapshot().totals.balanced, true);
+  assert.match(host.textContent, /不代表可审核/); assert.equal(button('保存（尚未接入）').disabled, true);
+  await change(host.querySelector('[aria-label="TEST-SKU 单价"]'), '0'); await click(button('校验草稿')); assert.equal(sales.getSnapshot().totals, null);
+  await click(host.querySelector('[aria-label="删除收退 1"]')); assert.equal(sales.getSnapshot().draft.settlements.length, 0);
+  assert.ok(salesCalls.every(call => call.url.includes('/current-form/') && !('actor' in call.body)));
+  await act(async () => context.clear()); assert.equal(sales.getSnapshot().disposed, true); assert.doesNotMatch(host.textContent, /TEST-CUSTOMER/);
+  console.log('PASS current SALE proposal DOM: native references, SKU identity, blank explicit price, method-scoped account, exact settlement totals and immediate identity cleanup; no command.');
+  await act(async () => root.unmount()); root = null;
+} finally {
+  if (root) root.unmount(); dom.window.close(); await rm(temp, { recursive: true, force: true });
+}

@@ -1,3 +1,4 @@
+import { SALES_COMMAND_MAX_REQUEST_BYTES } from "../../../packages/application/src/sales-payload-budget.ts";
 import assert from "node:assert/strict";
 import test from "node:test";
 import type { TestContext } from "node:test";
@@ -197,7 +198,7 @@ test("SYNTHETIC HTTP: unknown query fields and malformed transport are rejected"
   ]);
   for (const response of responses) assert.equal(response.statusCode, 400, response.body);
   assert.equal((await f.app.inject({ method: "POST", url: "/sales/commands", payload: "text" })).statusCode, 415);
-  assert.equal((await f.app.inject({ method: "POST", url: "/sales/commands", headers: { "content-type": "application/json" }, payload: JSON.stringify({ padding: "x".repeat(65_536) }) })).statusCode, 413);
+  assert.equal((await f.app.inject({ method: "POST", url: "/sales/commands", headers: { "content-type": "application/json" }, payload: JSON.stringify({ padding: "x".repeat(SALES_COMMAND_MAX_REQUEST_BYTES) }) })).statusCode, 413);
   assert.equal(f.store.snapshot().headers.size, 0);
 });
 test("SYNTHETIC HTTP: exact money/quantity arrive as bigint, and JSON never rounds bigint", async t => {

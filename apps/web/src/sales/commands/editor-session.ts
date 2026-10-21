@@ -1,5 +1,6 @@
+import type { ReadScope } from '../../loading/read-scope.ts';
 import type { AuthenticationPrincipal } from '../../authentication/contracts.ts';
-import type { SalesCommandDto, SalesCommandSnapshot, SalesCommandWorkspaceOptions, SalesFormPreparationProvider } from './contracts.ts';
+import type { SalesCommandDto, SalesCommandSnapshot, SalesCommandWorkspaceOptions, SalesFormPreparationProvider, SalesDraftDto } from './contracts.ts';
 import { SalesCommandError } from './contracts.ts';
 import { SalesCommandWorkspace } from './controller.ts';
 import { compileSalesForm, salesFormInput, type SalesFormInput } from './form-model.ts';
@@ -42,6 +43,10 @@ export class SalesEditorSession {
   }
   readonly getSnapshot = (): SalesEditorSnapshot => this.#state;
   readonly subscribe = (listener: () => void): (() => void) => { this.#listeners.add(listener); return () => { this.#listeners.delete(listener); }; };
+  matchesIdentity(scope: ReadScope): boolean {
+    const owner = this.#options.scope.identity, target = scope.identity;
+    return !this.#state.command.disposed && this.#options.scope.active && scope.active && owner.accountId === target.accountId && owner.sessionRevision === target.sessionRevision && owner.permissionRevision === target.permissionRevision;
+  }
   get canCreate(): boolean { return !!this.#options.preparation && !this.#state.command.disposed; }
   get hasDirtyDraft(): boolean {
     return this.#state.command.write.phase !== 'committed' && !!this.#state.input
@@ -68,6 +73,12 @@ export class SalesEditorSession {
     const sequence = ++this.#sequence, ok = await this.commands.openExisting(salesId);
     if (sequence !== this.#sequence || !this.#options.scope.active) return false;
     this.#adoptInput(); return ok;
+  }
+  /** Native prepared CREATE handoff; preparation is not a write or an access grant. */
+  openPreparedCreate(draft: SalesDraftDto): boolean {
+    if (!this.canLeave()) return false;
+    this.#sequence++;
+    const ok = this.commands.openCreate(draft); if (ok) this.#adoptInput(); return ok;
   }
   async openCreate(): Promise<boolean> {
     if (!this.canLeave() || !this.#options.preparation) { this.#notice('新增尚缺当前授权资料、价格及编号准备，未创建单据。'); return false; }
