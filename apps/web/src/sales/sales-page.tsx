@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } fr
 import type { SalesPageController } from './controller.ts';
 import { emptySalesFilter, type SalesFilterDraft, type SalesListQuery, type SalesQueryPageSize, type SalesReferenceKind, type SalesReferenceReader, type SalesSummaryDto } from './contracts.ts';
 import { SalesDetailHost } from './detail-host.tsx';
-import { salesMoney, salesParameters, salesStatusLabels, salesTypeLabels } from './model.ts';
+import { salesMoney, salesParameters, salesStatusLabels, salesTypeGroupLabels, salesTypeLabels } from './model.ts';
 import { SalesReferenceSelector } from './reference-selector.tsx';
 import { useSalesReferencePopupHost } from './reference-popup-host.ts';
 import { SalesPagination } from './sales-pagination.tsx';
@@ -61,7 +61,7 @@ export function SalesPageView({ controller, references, loadDetailStyles }: Sale
         <label className="iw-field"><span>开始日期</span><input className="iw-control" type="date" aria-label="开始日期" value={draft.startDate} onChange={event => setDraft(value => ({ ...value, startDate: event.target.value }))} /></label>
         <label className="iw-field"><span>结束日期</span><input className="iw-control" type="date" aria-label="结束日期" value={draft.endDate} onChange={event => setDraft(value => ({ ...value, endDate: event.target.value }))} /></label>
         <label className="iw-field"><span>状态</span><select className="iw-control" aria-label="状态" value={draft.status ?? ''} onChange={event => setDraft(value => ({ ...value, status: event.target.value === '' ? null : event.target.value as SalesFilterDraft['status'] }))}><option value="">全部状态</option>{Object.entries(salesStatusLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
-        <label className="iw-field"><span>业务类型</span><select className="iw-control" aria-label="业务类型" value={draft.businessType ?? ''} onChange={event => setDraft(value => ({ ...value, businessType: event.target.value === '' ? null : event.target.value as SalesFilterDraft['businessType'] }))}><option value="">全部业务类型</option>{Object.entries(salesTypeLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
+        <label className="iw-field"><span>业务类型</span><select className="iw-control" aria-label="业务类型" value={draft.businessType ?? ''} onChange={event => setDraft(value => ({ ...value, businessType: event.target.value === '' ? null : event.target.value as SalesFilterDraft['businessType'] }))}><option value="">全部业务类型</option>{Object.entries(salesTypeGroupLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
         {reference('hall')}{reference('salesperson')}
         <div className="tc-filter-actions"><button type="button" className="iw-text-button tc-filter-toggle" aria-expanded={advanced} aria-controls="sales-extra-filters" onClick={() => setAdvanced(value => !value)}><span aria-hidden="true">☷</span><span>{advanced ? '收起筛选' : '高级筛选'}</span>{advancedCount > 0 && <span className="iw-filter-count">{advancedCount}</span>}<span aria-hidden="true">{advanced ? '▴' : '▾'}</span></button><button type="submit" className="iw-button iw-primary">查询</button><button type="button" className="iw-button" onClick={() => { setDraft(emptySalesFilter()); setInputError(false); }}>重置</button></div>
       </div>

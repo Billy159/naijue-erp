@@ -56,8 +56,7 @@ const warehouses = (rows: Record<string, unknown>[] = warehouseRows()): Step => 
 } });
 const inventoryIntent: InventoryReadIntent = { kind: "inventory", parameters: { page: 1, pageSize: 100,
   filter: { productIds: [], categoryId: null, warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] } } };
-const salesQuery = { page: 1, pageSize: 20 as const, filter: { startDate: null, endDate: null, status: null, businessType: null,
-  hallId: hallB, salespersonId: null, customerId: null, warehouseId: null, number: null } };
+const salesQuery = { page: 1, pageSize: 20 as const, filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [hallB], salespersonIds: [], customerIds: [], warehouseIds: [], number: null } };
 const salesIntents: SalesReadIntent[] = [{ kind: "list", parameters: salesQuery }, { kind: "settlement-statistics", parameters: salesQuery },
   { kind: "detail", parameters: { salesId: ids.sales } }, { kind: "history", parameters: { salesId: ids.sales, page: 1, pageSize: 20 } }];
 const productIntents: ProductReadIntent[] = ["basics", "specifications", "images"].map(kind => ({ kind: kind as "basics" | "specifications" | "images", parameters: { productId } }));

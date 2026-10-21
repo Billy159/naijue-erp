@@ -11,7 +11,7 @@ import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { minorAmount, version } from "../../../packages/domain/src/values.ts";
 import { actor, ids, sid, syntheticDraft } from "../../../tests/support/synthetic-fixtures.ts";
 
-const input = (): SalesListQuery => ({ filter: { startDate: null, endDate: null, status: null, businessType: null, hallId: null, salespersonId: null, customerId: null, warehouseId: null, number: null }, page: 1, pageSize: 20 });
+const input = (): SalesListQuery => ({ filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: null }, page: 1, pageSize: 20 });
 async function setup(t: TestContext, options: { authenticate?: SalesQueryHttpOptions["authenticate"]; authorize?: SalesQueryAuthorization["authorize"]; failure?: Error } = {}) {
   let policyCalls = 0; let readCalls = 0; let currentActor: ActorContext | null = actor; const intents: SalesReadIntent[] = [];
   const check = () => { readCalls++; if (options.failure) throw options.failure; };
@@ -160,4 +160,42 @@ test("SYNTHETIC sales filter references HTTP: simulated disconnect aborts forwar
   raw.emit("aborted"); assert.equal(forwarded.aborted, true); release();
   const response = await pending; assert.equal(response.statusCode, 408); assert.equal(response.json().error.code, "SALES_READ_ABORTED");
   assert.equal(raw.listenerCount("aborted"), before - 1); assert.equal(app.server.listening, false);
+});
+
+test("SYNTHETIC sales query HTTP: list and statistics forward every selected value in one canonical query", async t => {
+  const payload = { ...input(), filter: { ...input().filter, statuses: ["DRAFT", "APPROVED"], businessTypes: ["RETURN", "EXCHANGE"],
+    hallIds: [ids.hall, sid("hall", 99)], salespersonIds: [sid("staff", 44), sid("staff", 45)], customerIds: [ids.customer, sid("customer", 46)],
+    warehouseIds: [ids.warehouse, sid("warehouse", 48)], number: "%_\\' literal" } };
+  const f = await setup(t);
+  for (const url of ["/sales/query", "/sales/settlement-statistics/query"]) {
+    const response = await f.post(url, payload); assert.equal(response.statusCode, 200);
+    const intent = f.intents.at(-1)!; assert.deepEqual(intent.parameters, payload); assert.ok(Object.isFrozen(intent.parameters));
+    assert.ok(Object.values((intent.parameters as SalesListQuery).filter).filter(Array.isArray).every(Object.isFrozen));
+    assert.equal(response.headers["cache-control"], "no-store");
+    assert.equal(typeof (url === "/sales/query" ? response.json().exactTotal : response.json().received), "string");
+  }
+  assert.deepEqual(f.counts(), { policyCalls: 2, readCalls: 2 });
+});
+test("SYNTHETIC sales query HTTP: both query routes reject scalar aliases and invalid/duplicate/over-bound lists before policy", async t => {
+  const f = await setup(t);
+  for (const url of ["/sales/query", "/sales/settlement-statistics/query"]) {
+    for (const [key, value] of [["statuses", null], ["statuses", "DRAFT"], ["statuses", ["DRAFT", "DRAFT"]], ["statuses", ["UNKNOWN"]],
+      ["statuses", ["DRAFT", "APPROVED", "VOID", "DRAFT"]], ["businessTypes", ["RETURN_EXCHANGE"]], ["businessTypes", ["RETURN", "RETURN"]],
+      ["hallIds", ["invalid"]], ["salespersonIds", [null]], ["customerIds", [ids.customer, ids.customer]],
+      ["warehouseIds", Array.from({ length: 1001 }, (_, index) => sid("warehouse", index + 100))], ["status", "DRAFT"], ["hallId", ids.hall]] as const) {
+      const response = await f.post(url, { ...input(), filter: { ...input().filter, [key]: value } });
+      assert.equal(response.statusCode, 400, `${url} ${key}`); assert.equal(response.json().error.code, "INVALID_SALES_QUERY");
+    }
+  }
+  assert.deepEqual(f.counts(), { policyCalls: 0, readCalls: 0 });
+});
+test("SYNTHETIC sales query HTTP: the total body cap remains independent of valid per-dimension selection bounds", async t => {
+  const f = await setup(t); const payload = { ...input(), filter: { ...input().filter,
+    hallIds: Array.from({ length: 1000 }, (_, index) => sid("hall", index + 100)),
+    warehouseIds: Array.from({ length: 1000 }, (_, index) => sid("warehouse", index + 100)) } };
+  assert.ok(Buffer.byteLength(JSON.stringify(payload)) > 65_536);
+  for (const url of ["/sales/query", "/sales/settlement-statistics/query"]) {
+    const result = await f.post(url, payload); assert.equal(result.statusCode, 413); assert.equal(result.json().error.code, "BODY_TOO_LARGE");
+  }
+  assert.deepEqual(f.counts(), { policyCalls: 0, readCalls: 0 });
 });

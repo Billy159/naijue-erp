@@ -6,11 +6,16 @@ import type { SalesDetailDto, SalesDetailQuery, SalesFilterDraft, SalesListDto, 
 
 export const salesStatusLabels: Readonly<Record<DocumentStatus, string>> = { DRAFT: '未审核', APPROVED: '已审核', VOID: '已作废' };
 export const salesTypeLabels: Readonly<Record<SalesBusinessType, string>> = { SALE: '销售', RETURN: '退货', EXCHANGE: '换货' };
+export const salesTypeGroupLabels = { SALE: '销售', RETURN_EXCHANGE: '退货/换货' } as const;
 export const salesPageSizes = [20, 50, 100, 200] as const;
 export function salesParameters(draft: SalesFilterDraft, pageSize: SalesQueryPageSize): SalesListQuery {
+  if (draft.businessType !== null && !Object.hasOwn(salesTypeGroupLabels, draft.businessType)) throw new TypeError('Invalid sales business type group.');
   return parseSalesListQuery({ filter: { startDate: draft.startDate || null, endDate: draft.endDate || null,
-    status: draft.status, businessType: draft.businessType, hallId: draft.hall?.id ?? null, salespersonId: draft.salesperson?.id ?? null,
-    customerId: draft.customer?.id ?? null, warehouseId: draft.warehouse?.id ?? null, number: draft.number.trim() || null }, page: 1, pageSize });
+    statuses: draft.status === null ? [] : [draft.status],
+    businessTypes: draft.businessType === 'RETURN_EXCHANGE' ? ['RETURN', 'EXCHANGE'] : draft.businessType === null ? [] : [draft.businessType],
+    hallIds: draft.hall === null ? [] : [draft.hall.id], salespersonIds: draft.salesperson === null ? [] : [draft.salesperson.id],
+    customerIds: draft.customer === null ? [] : [draft.customer.id], warehouseIds: draft.warehouse === null ? [] : [draft.warehouse.id],
+    number: draft.number.trim() || null }, page: 1, pageSize });
 }
 export function createSalesListQuery(scope: ReadScope, reader: SalesReader): LatestQuery<SalesListQuery, SalesListDto> {
   return new LatestQuery({ scope, execute: read => reader.readList(read) });

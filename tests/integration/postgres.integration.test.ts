@@ -26,8 +26,7 @@ import { actor, ids, salesDraft, seedSyntheticReferences, syntheticId, SYNTHETIC
 import { afterStatement, balanceRows, commandSnapshot, contend, ledgerRows, oneVersionWinner, receiptCount, receiptLock,
   salesService, successfulPair, transferService } from "./adapter-helpers.ts";
 
-const parameters = (number: string | null = null): SalesListQuery => ({ filter: { startDate: null, endDate: null, status: null, businessType: null,
-  hallId: null, salespersonId: null, customerId: null, warehouseId: null, number }, page: 1, pageSize: 20 });
+const parameters = (number: string | null = null): SalesListQuery => ({ filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number }, page: 1, pageSize: 20 });
 const granted: SalesReadScope = { kind: "restricted", clauses: [{ hallId: ids.hall, warehouseId: ids.warehouse }] };
 const read = <P>(parameters: P, scope: SalesReadScope = granted) => ({ actor, scope, parameters, signal: new AbortController().signal });
 

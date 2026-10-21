@@ -87,9 +87,14 @@ class Predicate {
   }
   filter(query: SalesListQuery): void {
     const f = query.filter;
-    for (const [value, expression] of [[f.startDate, "h.business_date >="], [f.endDate, "h.business_date <="], [f.status, "h.status ="], [f.businessType, "h.business_type ="],
-      [f.hallId, "h.hall_id ="], [f.salespersonId, "h.salesperson_id ="], [f.customerId, "h.customer_id ="], [f.warehouseId, "h.warehouse_id ="]] as const) {
+    for (const [value, expression] of [[f.startDate, "h.business_date >="], [f.endDate, "h.business_date <="]] as const) {
       if (value !== null) this.parts.push(`${expression} ${this.parameter(value)}`);
+    }
+    // 0001_runtime_sales.sql stores enums as text CHECKs and reference IDs as
+    // uuid. One array parameter per dimension keeps work bounded, not N queries.
+    for (const [values, column, type] of [[f.statuses, "status", "text"], [f.businessTypes, "business_type", "text"],
+      [f.hallIds, "hall_id", "uuid"], [f.salespersonIds, "salesperson_id", "uuid"], [f.customerIds, "customer_id", "uuid"], [f.warehouseIds, "warehouse_id", "uuid"]] as const) {
+      if (values.length) this.parts.push(`h.${column} = ANY(${this.parameter(values)}::${type}[])`);
     }
     // Case-insensitive literal inclusion, not LIKE: %, _ and backslashes remain
     // ordinary characters. PostgreSQL lower follows its database locale, not a

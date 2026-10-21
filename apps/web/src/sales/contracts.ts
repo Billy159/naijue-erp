@@ -1,5 +1,5 @@
 import type { SalesDetail, SalesDetailQuery, SalesListQuery, SalesQueryPageSize, SalesSummary, SalesFilterReferenceKind, SalesFilterReference, SalesFilterReferenceQuery, SalesFilterReferencePage } from '../../../../packages/application/src/sales-query-ports.ts';
-import type { SalesDocument, SalesHeaderRow, SalesLineRow, SalesSettlementRow } from '../../../../packages/domain/src/documents.ts';
+import type { DocumentStatus, SalesDocument, SalesHeaderRow, SalesLineRow, SalesSettlementRow } from '../../../../packages/domain/src/documents.ts';
 import type { QueryRead } from '../loading/latest-query.ts';
 
 /** The exactJson HTTP representation, not a lossy Number conversion. */
@@ -27,9 +27,11 @@ export interface SalesReferencePage extends Omit<SalesFilterReferencePage, 'exac
 /** Historical SALES FILTER references only. Never create/edit eligibility, and no
  * unused catalog enumeration. The concrete reader uses /sales/references/query. */
 export interface SalesReferenceReader { readReferences(read: QueryRead<SalesReferenceParameters>): Promise<SalesReferencePage> }
+/** Temporary scalar presentation adapter until the reusable multi-select is mounted. */
+export type SalesBusinessTypeGroup = 'SALE' | 'RETURN_EXCHANGE';
 export interface SalesFilterDraft {
   readonly startDate: string; readonly endDate: string;
-  readonly status: SalesListQuery['filter']['status']; readonly businessType: SalesListQuery['filter']['businessType'];
+  readonly status: DocumentStatus | null; readonly businessType: SalesBusinessTypeGroup | null;
   readonly hall: SalesReference | null; readonly salesperson: SalesReference | null;
   readonly customer: SalesReference | null; readonly warehouse: SalesReference | null; readonly number: string;
 }

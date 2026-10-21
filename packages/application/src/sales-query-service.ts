@@ -1,5 +1,5 @@
 import type { ActorContext } from "./ports.ts";
-import type { SalesListQuery, SalesQueryDependencies, SalesReadIntent, SalesScopedRead } from "./sales-query-ports.ts";
+import type { SalesQueryDependencies, SalesReadIntent, SalesScopedRead } from "./sales-query-ports.ts";
 import { entityId } from "../../domain/src/values.ts";
 import { parseSalesFilterReferenceQuery } from "./sales-reference-query-validation.ts";
 import { activeSalesRead, checkedSalesReadScope, parseSalesDetailQuery, parseSalesHistoryQuery, parseSalesListQuery } from "./sales-query-validation.ts";
@@ -29,8 +29,8 @@ export function createSalesQueryService(dependencies: SalesQueryDependencies) {
       const parameters = parseSalesFilterReferenceQuery(input);
       // A filter-candidate read is a projection of readable sales, not permission to enumerate
       // master data. Current authorization runs with a neutral list intent on every invocation.
-      const list: SalesListQuery = Object.freeze({ page: 1, pageSize: 20, filter: Object.freeze({ startDate: null, endDate: null,
-        status: null, businessType: null, hallId: null, salespersonId: null, customerId: null, warehouseId: null, number: null }) });
+      const list = parseSalesListQuery({ page: 1, pageSize: 20, filter: { startDate: null, endDate: null,
+        statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: null } });
       return read(actor, parameters, { kind: "list", parameters: list }, signal, reader.readReferences.bind(reader));
     },
     readList(actor: ActorContext, input: unknown, signal: AbortSignal) {

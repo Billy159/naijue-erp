@@ -21,7 +21,7 @@ class ProtocolClient implements PgSalesQueryClient {
 }
 const begin = (): Step => ({ sql: /^BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY$/ });
 const commit = (): Step => ({ sql: /^COMMIT$/ }); const rollback = (): Step => ({ sql: /^ROLLBACK$/ });
-const parameters = (): SalesListQuery => ({ filter: { startDate: null, endDate: null, status: null, businessType: null, hallId: null, salespersonId: null, customerId: null, warehouseId: null, number: null }, page: 1, pageSize: 20 });
+const parameters = (): SalesListQuery => ({ filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: null }, page: 1, pageSize: 20 });
 const scope: SalesReadScope = { kind: "restricted", clauses: [{ hallId: ids.hall, warehouseId: ids.warehouse }, { createdByAccountId: ids.account }] };
 const read = <P>(parameters: P, granted = scope, signal = new AbortController().signal) => ({ actor, scope: granted, parameters, signal });
 const reader = (client: ProtocolClient) => new PostgresSalesQueryReader({ async connect() { return client; } });
@@ -45,11 +45,13 @@ test("sales query pg protocol: mandatory pool never connects at construction; no
   const controller = new AbortController(); controller.abort(); await assert.rejects(() => r.readList(read(parameters(), scope, controller.signal)), { code: "SALES_READ_ABORTED" }); assert.equal(calls, 0);
 });
 test("sales query pg protocol: exact count, relational page and one page-batched quantity read share scoped RR snapshot, no hydration/catalog/N+1", async () => {
-  const input = parameters(); Object.assign(input, { page: 2, pageSize: 50 }); Object.assign(input.filter, { startDate: "2026-10-01", endDate: "2026-10-20", status: "DRAFT", businessType: "EXCHANGE", hallId: ids.hall,
-    salespersonId: sid("staff", 44), customerId: ids.customer, warehouseId: ids.warehouse, number: "%_\\' OR TRUE" });
+  const input = parameters(); Object.assign(input, { page: 2, pageSize: 50 }); Object.assign(input.filter, { startDate: "2026-10-01", endDate: "2026-10-20", statuses: ["DRAFT", "APPROVED"], businessTypes: ["RETURN", "EXCHANGE"], hallIds: [ids.hall, sid("hall", 47)],
+    salespersonIds: [sid("staff", 44), sid("staff", 45)], customerIds: [ids.customer, sid("customer", 46)], warehouseIds: [ids.warehouse, sid("warehouse", 48)], number: "%_\\' OR TRUE" });
   const seen: unknown[][] = [];
   const client = new ProtocolClient([begin(), { sql: /^SELECT COUNT\(\*\)::text/, rows: [{ exact_total: "9007199254740993" }], inspect(values, sql) {
-    scoped(values, sql); assert.match(sql, /h.business_date >= \$4 AND h.business_date <= \$5 AND h.status = \$6 AND h.business_type = \$7/);
+    scoped(values, sql); assert.match(sql, /h.business_date >= \$4 AND h.business_date <= \$5 AND h.status = ANY\(\$6::text\[\]\) AND h.business_type = ANY\(\$7::text\[\]\)/);
+    assert.match(sql, /AND h.hall_id = ANY\(\$8::uuid\[\]\) AND h.salesperson_id = ANY\(\$9::uuid\[\]\) AND h.customer_id = ANY\(\$10::uuid\[\]\) AND h.warehouse_id = ANY\(\$11::uuid\[\]\)/);
+    assert.deepEqual(values.slice(5, 11), [input.filter.statuses, input.filter.businessTypes, input.filter.hallIds, input.filter.salespersonIds, input.filter.customerIds, input.filter.warehouseIds]);
     assert.match(sql, /strpos\(lower\(h.number\), lower\(\$12\)\) > 0/); assert.ok(!sql.includes("OR TRUE")); seen.push([...values]);
   } }, { sql: /^SELECT h.id/, rows: [summary()], inspect(values, sql) {
     scoped(values, sql); assert.deepEqual(values.slice(0, -2), seen[0]); assert.deepEqual(values.slice(-2), [50, "50"]);
@@ -149,9 +151,9 @@ test("sales query pg protocol: audit metadata exact count/page reapply current s
   const result = await reader(client).readHistory(read({ salesId: ids.sales, page: 2, pageSize: 20 as const })); assert.equal(result.exactTotal, 81n); assert.equal(result.items[0]!.oldVersion, 2); client.done();
 });
 test("sales query pg protocol: settlement summary includes approved full scope only and exact unbounded numeric sums, account page separately", async () => {
-  const input = parameters(); Object.assign(input, { page: 2 }); Object.assign(input.filter, { status: "DRAFT" });
+  const input = parameters(); Object.assign(input, { page: 2 }); Object.assign(input.filter, { statuses: ["DRAFT"] });
   const client = new ProtocolClient([begin(), { sql: /^WITH authorized AS/, rows: [{ exact_approved_documents: "901", exact_total_accounts: "35", received: "19999999999999999.98", refunded: "1.25" }], inspect(values, sql) {
-    scoped(values, sql); assert.match(sql, /h.status = \$4 AND h.status = 'APPROVED'/); assert.match(sql, /COUNT\(DISTINCT payment_account_id\)::text/); assert.ok(!/LIMIT|OFFSET|product|account_name_snapshot/.test(sql));
+    scoped(values, sql); assert.match(sql, /h.status = ANY\(\$4::text\[\]\) AND h.status = 'APPROVED'/); assert.match(sql, /COUNT\(DISTINCT payment_account_id\)::text/); assert.ok(!/LIMIT|OFFSET|product|account_name_snapshot/.test(sql));
   } }, { sql: /^SELECT s.payment_account_id/, rows: [{ payment_account_id: ids.payment, received: "2.50", refunded: "0.00" }], inspect(values, sql) {
     scoped(values, sql); assert.match(sql, /h.status = 'APPROVED'/); assert.match(sql, /GROUP BY s.payment_account_id ORDER BY s.payment_account_id LIMIT/); assert.deepEqual(values.slice(-2), [20, "20"]);
   } }, commit()]);
@@ -237,4 +239,39 @@ test("sales detail pg protocol: current master labels and authoritative settleme
     currentAccountName: settlement.current_account_name, currentMethodName: settlement.current_method_name }]);
   assert.equal(detail.document.settlements[0]!.amount, 9007199254740993n); assert.equal(detail.document.settlements[0]!.id, detail.settlementNames[0]!.settlementId);
   assert.equal(client.calls.length, 5); client.done();
+});
+
+test("sales query pg protocol: list/count and both statistics reads share identical six-dimensional authorized predicates", async () => {
+  const input = parameters(); Object.assign(input.filter, { statuses: ["DRAFT", "APPROVED"], businessTypes: ["RETURN", "EXCHANGE"],
+    hallIds: [sid("hall", 500), ids.hall], salespersonIds: [sid("staff", 501), sid("staff", 502)],
+    customerIds: [sid("customer", 503), ids.customer], warehouseIds: [sid("warehouse", 504), ids.warehouse], number: "%_\\' literal" });
+  let listWhere = ""; let filterValues: unknown[] = [];
+  const listClient = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: "0" }], inspect(values, sql) {
+    listWhere = sql.split(" WHERE ")[1]!; filterValues = structuredClone(values); scoped(values, sql);
+    assert.equal((sql.match(/= ANY\(/g) ?? []).length, 6); assert.equal(values.length, 10);
+    assert.ok(!sql.includes("500") && !sql.includes("literal"));
+  } }, { sql: /^SELECT h.id/, rows: [], inspect(values, sql) {
+    assert.equal(sql.split(" WHERE ")[1]!.split("\n")[0], listWhere); assert.deepEqual(values.slice(0, -2), filterValues);
+  } }, commit()]);
+  await reader(listClient).readList(read(input)); listClient.done(); assert.equal(listClient.calls.length, 4);
+  const statsClient = new ProtocolClient([begin(), { sql: /^WITH authorized AS/, rows: [{ exact_approved_documents: "0", exact_total_accounts: "0", received: "0.00", refunded: "0.00" }], inspect(values, sql) {
+    assert.ok(sql.includes(`WHERE ${listWhere} AND h.status = 'APPROVED'`)); assert.deepEqual(values, filterValues);
+  } }, { sql: /^SELECT s.payment_account_id/, rows: [], inspect(values, sql) {
+    assert.ok(sql.includes(`WHERE ${listWhere} AND h.status = 'APPROVED'`)); assert.deepEqual(values.slice(0, -2), filterValues);
+  } }, commit()]);
+  const statistics = await reader(statsClient).readSettlementStatistics(read(input)); statsClient.done(); assert.equal(statsClient.calls.length, 4);
+  assert.equal(statistics.exactApprovedDocuments, 0n); assert.equal(statistics.exactTotalAccounts, 0n);
+});
+test("sales query pg protocol: empty selections add no filter and malformed lists never acquire a client", async () => {
+  const client = new ProtocolClient([begin(), { sql: /^SELECT COUNT/, rows: [{ exact_total: "0" }], inspect(values, sql) {
+    scoped(values, sql); assert.equal(sql.split(" WHERE ")[1], "((h.hall_id = $1::uuid AND h.warehouse_id = $2::uuid) OR (h.created_by_account_id = $3::uuid))");
+    assert.equal(values.length, 3); assert.doesNotMatch(sql, /ANY\(/);
+  } }, { sql: /^SELECT h.id/, rows: [] }, commit()]);
+  await reader(client).readList(read(parameters())); client.done();
+  let acquired = 0; const direct = new PostgresSalesQueryReader({ async connect() { acquired++; throw new Error("must not acquire"); } });
+  for (const method of ["readList", "readSettlementStatistics"] as const) for (const value of [null, "DRAFT", ["DRAFT", "DRAFT"], Array(1), ["UNKNOWN"]]) {
+    const input = parameters(); Object.assign(input.filter, { statuses: value });
+    await assert.rejects(() => direct[method](read(input)), { code: "INVALID_SALES_QUERY" });
+  }
+  assert.equal(acquired, 0);
 });

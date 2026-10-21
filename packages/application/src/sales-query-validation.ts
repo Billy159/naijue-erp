@@ -1,6 +1,7 @@
 import { DomainError } from "../../domain/src/errors.ts";
 import { businessDate, entityId } from "../../domain/src/values.ts";
 import type { EntityId, EntityKind } from "../../domain/src/values.ts";
+import { SALES_QUERY_MAX_FILTER_IDS } from "./sales-query-ports.ts";
 import type { SalesDetailQuery, SalesHistoryQuery, SalesListQuery, SalesReadScope, SalesReadScopeClause } from "./sales-query-ports.ts";
 
 export function invalidSalesQuery(): never { throw new DomainError("INVALID_SALES_QUERY", "Invalid sales read parameters"); }
@@ -13,7 +14,23 @@ function record(value: unknown, keys: readonly string[], optional: readonly stri
 function id<K extends EntityKind>(kind: K, value: unknown): EntityId<K> {
   try { if (typeof value !== "string") invalidSalesQuery(); return entityId(kind, value); } catch { return invalidSalesQuery(); }
 }
-function nullableId<K extends EntityKind>(kind: K, value: unknown): EntityId<K> | null { return value === null ? null : id(kind, value); }
+function selections<T>(value: unknown, maximum: number, parse: (value: unknown) => T): readonly T[] {
+  if (!Array.isArray(value) || value.length > maximum) invalidSalesQuery();
+  for (let index = 0; index < value.length; index++) if (!Object.hasOwn(value, index)) invalidSalesQuery();
+  // Array.from visits holes rather than silently preserving a sparse selection.
+  const result = Array.from(value, parse);
+  if (new Set(result).size !== result.length) invalidSalesQuery();
+  return Object.freeze(result);
+}
+function ids<K extends EntityKind>(kind: K, value: unknown): readonly EntityId<K>[] {
+  return selections(value, SALES_QUERY_MAX_FILTER_IDS, value => id(kind, value));
+}
+function choices<T extends string>(value: unknown, allowed: readonly T[]): readonly T[] {
+  return selections(value, allowed.length, value => {
+    if (typeof value !== "string" || !allowed.includes(value as T)) invalidSalesQuery();
+    return value as T;
+  });
+}
 function date(value: unknown) {
   try { if (value === null) return null; if (typeof value !== "string") invalidSalesQuery(); return businessDate(value); } catch { return invalidSalesQuery(); }
 }
@@ -24,16 +41,14 @@ function pagination(row: Record<string, unknown>): Pick<SalesListQuery, "page" |
 }
 export function parseSalesListQuery(value: unknown): SalesListQuery {
   const row = record(value, ["filter", "page", "pageSize"]);
-  const f = record(row.filter, ["startDate", "endDate", "status", "businessType", "hallId", "salespersonId", "customerId", "warehouseId", "number"]);
+  const f = record(row.filter, ["startDate", "endDate", "statuses", "businessTypes", "hallIds", "salespersonIds", "customerIds", "warehouseIds", "number"]);
   const startDate = date(f.startDate); const endDate = date(f.endDate);
   if (startDate !== null && endDate !== null && startDate > endDate) invalidSalesQuery();
-  if (f.status !== null && !["DRAFT", "APPROVED", "VOID"].includes(f.status as string)) invalidSalesQuery();
-  if (f.businessType !== null && !["SALE", "RETURN", "EXCHANGE"].includes(f.businessType as string)) invalidSalesQuery();
   if (f.number !== null && (typeof f.number !== "string" || f.number.length < 1 || f.number.length > 200 || f.number.trim() !== f.number || /[\u0000-\u001f\u007f]/.test(f.number))) invalidSalesQuery();
   return Object.freeze({ ...pagination(row), filter: Object.freeze({ startDate, endDate,
-    status: f.status as SalesListQuery["filter"]["status"], businessType: f.businessType as SalesListQuery["filter"]["businessType"],
-    hallId: nullableId("hall", f.hallId), salespersonId: nullableId("staff", f.salespersonId), customerId: nullableId("customer", f.customerId),
-    warehouseId: nullableId("warehouse", f.warehouseId), number: f.number as string | null }) });
+    statuses: choices(f.statuses, ["DRAFT", "APPROVED", "VOID"] as const), businessTypes: choices(f.businessTypes, ["SALE", "RETURN", "EXCHANGE"] as const),
+    hallIds: ids("hall", f.hallIds), salespersonIds: ids("staff", f.salespersonIds), customerIds: ids("customer", f.customerIds),
+    warehouseIds: ids("warehouse", f.warehouseIds), number: f.number as string | null }) });
 }
 export function parseSalesDetailQuery(value: unknown): SalesDetailQuery {
   const row = record(value, ["salesId"]); return Object.freeze({ salesId: id("sales", row.salesId) });

@@ -21,8 +21,7 @@ import { actor, ids, salesDraft, syntheticId, SYNTHETIC_DATE, SYNTHETIC_PASSWORD
 import { BACKEND_SCENARIOS } from "./migration-manifest.ts";
 export { BACKEND_SCENARIOS } from "./migration-manifest.ts";
 
-const parameters = (number: string | null = null): SalesListQuery => ({ filter: { startDate: null, endDate: null, status: null, businessType: null,
-  hallId: null, salespersonId: null, customerId: null, warehouseId: null, number }, page: 1, pageSize: 20 });
+const parameters = (number: string | null = null): SalesListQuery => ({ filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number }, page: 1, pageSize: 20 });
 const granted: SalesReadScope = { kind: "restricted", clauses: [{ hallId: ids.hall, warehouseId: ids.warehouse }] };
 const read = <P>(input: P, scope: SalesReadScope = granted) => ({ actor, scope, parameters: input, signal: new AbortController().signal });
 
@@ -181,6 +180,14 @@ export async function runBackendAcceptance(t: TestContext, pool: Pool): Promise<
     assert.equal((await reader.readDetail(read({ salesId: draft.header.id }))).document.lines.length, 2);
     const statistics = await reader.readSettlementStatistics(read(parameters(draft.header.number)));
     assert.equal(statistics.exactApprovedDocuments, 1n); assert.equal(statistics.received, 625n); assert.equal(statistics.refunded, 0n);
+    // Prepared for the next gated isolated engine run, not protocol-test evidence.
+    const returns: SalesListQuery = { ...parameters("SYNTHETIC_PG_SALES_430"), filter: { ...parameters("SYNTHETIC_PG_SALES_430").filter,
+      statuses: ["DRAFT", "APPROVED"], businessTypes: ["RETURN", "EXCHANGE"], hallIds: [ids.otherHall, ids.hall],
+      customerIds: [syntheticId("customer", 4990), ids.customer], warehouseIds: [ids.toWarehouse, ids.warehouse] } };
+    const returnPage = await reader.readList(read(returns));
+    assert.equal(returnPage.exactTotal, 2n); assert.deepEqual(returnPage.items.map(row => row.businessType).sort(), ["EXCHANGE", "RETURN"]);
+    const returnStatistics = await reader.readSettlementStatistics(read(returns));
+    assert.equal(returnStatistics.exactApprovedDocuments, 0n); assert.equal(returnStatistics.received, 0n); assert.equal(returnStatistics.refunded, 0n);
     const hidden: SalesReadScope = { kind: "restricted", clauses: [{ hallId: ids.otherHall }] };
     assert.equal((await reader.readList(read(parameters(draft.header.number), hidden))).exactTotal, 0n);
     await assert.rejects(reader.readDetail(read({ salesId: draft.header.id }, hidden)), { code: "DOCUMENT_NOT_FOUND" });

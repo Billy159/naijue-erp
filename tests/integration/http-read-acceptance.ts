@@ -27,8 +27,7 @@ const LOGIN = "SYNTHETIC_HTTP_ONLY_DISPOSABLE_LOGIN";
 const EMPLOYMENT = "SYNTHETIC_HTTP_ACTIVE_ONLY";
 const accountId = syntheticId("account", 4700), staffId = syntheticId("staff", 4701);
 const salesId = syntheticId("sales", 4400), transferId = syntheticId("transfer", 4600);
-const salesInput = () => ({ filter: { startDate: null, endDate: null, status: null, businessType: null,
-  hallId: null, salespersonId: null, customerId: null, warehouseId: null, number: "SYNTHETIC_PG_SALES_4400" }, page: 1, pageSize: 20 });
+const salesInput = () => ({ filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: "SYNTHETIC_PG_SALES_4400" }, page: 1, pageSize: 20 });
 const transferInput = () => ({ filter: { startDate: null, endDate: null, statuses: [], fromWarehouseIds: [],
   toWarehouseIds: [], number: "SYNTHETIC_PG_TRANSFER_4600" }, page: 1, pageSize: 20 });
 const inventoryInput = (warehouseId = ids.warehouse) => ({ filter: { products: [{ id: ids.product, label: "SYNTHETIC ONLY PRODUCT" }],

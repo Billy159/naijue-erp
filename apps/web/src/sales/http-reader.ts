@@ -11,10 +11,10 @@ export function createSalesHttpReader(options: HttpQueryOptions): SalesReader {
   return Object.freeze({
     readList(read) {
       const f = read.parameters.filter;
-      const body = { filter: { startDate: f.startDate, endDate: f.endDate, status: f.status, businessType: f.businessType,
-        hallId: f.hallId, salespersonId: f.salespersonId, customerId: f.customerId, warehouseId: f.warehouseId, number: f.number }, page: read.parameters.page, pageSize: read.parameters.pageSize };
+      const body = { filter: { startDate: f.startDate, endDate: f.endDate, statuses: f.statuses, businessTypes: f.businessTypes,
+        hallIds: f.hallIds, salespersonIds: f.salespersonIds, customerIds: f.customerIds, warehouseIds: f.warehouseIds, number: f.number }, page: read.parameters.page, pageSize: read.parameters.pageSize };
       const parsed = parseSalesListQuery(body);
-      return http.post('/sales/query', body, read.signal, value => salesListResponse(value, parsed));
+      return http.post('/sales/query', parsed, read.signal, value => salesListResponse(value, parsed));
     },
     readDetail(read) {
       const parsed = parseSalesDetailQuery({ salesId: read.parameters.salesId });

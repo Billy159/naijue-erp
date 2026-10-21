@@ -26,8 +26,7 @@ const PASSWORD = "SYNTHETIC only password";
 const SALT = Buffer.alloc(16, 19);
 const HASH = `naijue:scrypt:1:32768:8:1:${SALT.toString("hex")}:${scryptSync(PASSWORD, SALT, 64, { N: 32768, r: 8, p: 1, maxmem: 64 * 1024 * 1024 }).toString("hex")}`;
 const inventoryInput = () => ({ filter: { products: [], category: null, warehouses: [], suppliers: [], fits: [], seasons: [] }, page: 1, pageSize: 100 });
-const salesInput = (): SalesListQuery => ({ filter: { startDate: null, endDate: null, status: null, businessType: null,
-  hallId: null, salespersonId: null, customerId: null, warehouseId: null, number: null }, page: 1, pageSize: 20 });
+const salesInput = (): SalesListQuery => ({ filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: null }, page: 1, pageSize: 20 });
 const transferInput = () => ({ filter: { startDate: null, endDate: null, statuses: [], fromWarehouseIds: [], toWarehouseIds: [], number: null }, page: 1, pageSize: 20 });
 const warehouse = { id: ids.warehouse, hallId: ids.hall, label: "SYNTHETIC warehouse" };
 const postgres = (): BoundedPostgresConfig => ({ target: { host: "synthetic-never-connected.invalid", port: 5432, database: "SYNTHETIC_NOT_REAL", user: "SYNTHETIC_ONLY",

@@ -45,7 +45,8 @@ test("sales filter references: current neutral list grant, immutable input/actor
   d.authorization.authorize = async (context, intent, signal) => {
     assert.deepEqual(context, actor); assert.ok(Object.isFrozen(context)); assert.ok(signal instanceof AbortSignal);
     assert.equal(intent.kind, "list"); const list = intent as Extract<SalesReadIntent, { kind: "list" | "settlement-statistics" }>;
-    assert.deepEqual(Object.values(list.parameters.filter), Array(9).fill(null)); assert.equal(list.parameters.page, 1); assert.equal(list.parameters.pageSize, 20);
+    assert.deepEqual(list.parameters.filter, { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: null });
+    assert.ok(Object.values(list.parameters.filter).filter(Array.isArray).every(Object.isFrozen)); assert.equal(list.parameters.page, 1); assert.equal(list.parameters.pageSize, 20);
     assert.ok(Object.isFrozen(intent)); assert.ok(Object.isFrozen(list.parameters.filter)); reached(); await gate; return scope;
   };
   d.reader.readReferences = async read => {

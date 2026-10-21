@@ -18,7 +18,12 @@ export function createSalesFixture(report: ReportRead): { reader: SalesReader; r
   return { reader: {
     async readList(read) {
       await syntheticRead(read.signal, report, 'salesList'); const f = read.parameters.filter;
-      const items = [summary(0), summary(1)].filter(row => (!f.startDate || row.businessDate >= f.startDate) && (!f.endDate || row.businessDate <= f.endDate) && (!f.status || row.status === f.status) && (!f.businessType || row.businessType === f.businessType) && (!f.hallId || row.hallId === f.hallId) && (!f.salespersonId || row.salespersonId === f.salespersonId) && (!f.customerId || row.customerId === f.customerId) && (!f.warehouseId || row.warehouseId === f.warehouseId) && (!f.number || row.number.toLowerCase().includes(f.number.toLowerCase())));
+      const items = [summary(0), summary(1)].filter(row => (!f.startDate || row.businessDate >= f.startDate) && (!f.endDate || row.businessDate <= f.endDate)
+        && (f.statuses.length === 0 || f.statuses.includes(row.status)) && (f.businessTypes.length === 0 || f.businessTypes.includes(row.businessType))
+        && (f.hallIds.length === 0 || f.hallIds.includes(row.hallId))
+        && (f.salespersonIds.length === 0 || (row.salespersonId !== null && f.salespersonIds.includes(row.salespersonId)))
+        && (f.customerIds.length === 0 || f.customerIds.includes(row.customerId)) && (f.warehouseIds.length === 0 || f.warehouseIds.includes(row.warehouseId))
+        && (!f.number || row.number.toLowerCase().includes(f.number.toLowerCase())));
       const offset = (read.parameters.page - 1) * read.parameters.pageSize;
       return { page: read.parameters.page, pageSize: read.parameters.pageSize, exactTotal: String(items.length), items: items.slice(offset, offset + read.parameters.pageSize) };
     },

@@ -3,11 +3,16 @@ import type { DocumentStatus, SalesBusinessType, SalesDocument, SalesHeaderRow }
 import type { BusinessDate, EntityId, MinorAmount, Version } from "../../domain/src/values.ts";
 
 export type SalesQueryPageSize = 20 | 50 | 100 | 200;
+/** Request bound, not a business master-data or authorization limit. */
+export const SALES_QUERY_MAX_FILTER_IDS = 1000;
 export interface SalesQueryFilter {
   readonly startDate: BusinessDate | null; readonly endDate: BusinessDate | null;
-  readonly status: DocumentStatus | null; readonly businessType: SalesBusinessType | null;
-  readonly hallId: EntityId<"hall"> | null; readonly salespersonId: EntityId<"staff"> | null;
-  readonly customerId: EntityId<"customer"> | null; readonly warehouseId: EntityId<"warehouse"> | null;
+  /** OR within each unique selection list, AND across dimensions and trusted scope.
+   * Empty lists add no restriction. Native business types remain distinct; the
+   * Demo's 退货/换货 selection projects to [RETURN, EXCHANGE] at the UI boundary. */
+  readonly statuses: readonly DocumentStatus[]; readonly businessTypes: readonly SalesBusinessType[];
+  readonly hallIds: readonly EntityId<"hall">[]; readonly salespersonIds: readonly EntityId<"staff">[];
+  readonly customerIds: readonly EntityId<"customer">[]; readonly warehouseIds: readonly EntityId<"warehouse">[];
   /** Case-insensitive literal substring, not a SQL LIKE pattern. PostgreSQL lower
    * follows its database locale; exact browser Unicode lowercase equivalence is
    * not promised. The original parameter text is preserved, never a SQL pattern. */

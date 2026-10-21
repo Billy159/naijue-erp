@@ -1,0 +1,22 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+apps/web/preview-core-pages/sales-fixture.ts(21,166): error TS2551: Property 'status' does not exist on type 'SalesQueryFilter'. Did you mean 'statuses'?
+apps/web/preview-core-pages/sales-fixture.ts(21,193): error TS2551: Property 'status' does not exist on type 'SalesQueryFilter'. Did you mean 'statuses'?
+apps/web/preview-core-pages/sales-fixture.ts(21,208): error TS2551: Property 'businessType' does not exist on type 'SalesQueryFilter'. Did you mean 'businessTypes'?
+apps/web/preview-core-pages/sales-fixture.ts(21,247): error TS2551: Property 'businessType' does not exist on type 'SalesQueryFilter'. Did you mean 'businessTypes'?
+apps/web/preview-core-pages/sales-fixture.ts(21,268): error TS2551: Property 'hallId' does not exist on type 'SalesQueryFilter'. Did you mean 'hallIds'?
+apps/web/preview-core-pages/sales-fixture.ts(21,295): error TS2551: Property 'hallId' does not exist on type 'SalesQueryFilter'. Did you mean 'hallIds'?
+apps/web/preview-core-pages/sales-fixture.ts(21,310): error TS2551: Property 'salespersonId' does not exist on type 'SalesQueryFilter'. Did you mean 'salespersonIds'?
+apps/web/preview-core-pages/sales-fixture.ts(21,351): error TS2551: Property 'salespersonId' does not exist on type 'SalesQueryFilter'. Did you mean 'salespersonIds'?
+apps/web/preview-core-pages/sales-fixture.ts(21,373): error TS2551: Property 'customerId' does not exist on type 'SalesQueryFilter'. Did you mean 'customerIds'?
+apps/web/preview-core-pages/sales-fixture.ts(21,408): error TS2551: Property 'customerId' does not exist on type 'SalesQueryFilter'. Did you mean 'customerIds'?
+apps/web/preview-core-pages/sales-fixture.ts(21,427): error TS2551: Property 'warehouseId' does not exist on type 'SalesQueryFilter'. Did you mean 'warehouseIds'?
+apps/web/preview-core-pages/sales-fixture.ts(21,464): error TS2551: Property 'warehouseId' does not exist on type 'SalesQueryFilter'. Did you mean 'warehouseIds'?
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

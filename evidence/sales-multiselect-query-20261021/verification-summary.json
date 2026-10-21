@@ -1,0 +1,90 @@
+{
+  "scope": "Unreleased native sales read-query multiselect extension; no business schema, domain write, permission, authorization, pager or style changes.",
+  "baseCommit": "88da661274099ac419d647e32f0701e06ef6cc09",
+  "sourceManifestSha256": "107b43d88781aac38a5dbc2ea3715766262b4e6778be6287f55802c581cb9d20",
+  "sourceFileCount": 24,
+  "canonicalFilterDimensions": [
+    "statuses",
+    "businessTypes",
+    "hallIds",
+    "salespersonIds",
+    "customerIds",
+    "warehouseIds"
+  ],
+  "bounds": {
+    "enumEntriesPerList": 3,
+    "idsPerList": 1000,
+    "totalRequestBytes": 65536
+  },
+  "completedChecks": {
+    "focusedSyntheticNodeTests": {
+      "passed": 125,
+      "failed": 0,
+      "log": "focused-tests.log"
+    },
+    "salesJsdomGroups": {
+      "passed": 18,
+      "log": "sales-dom.log"
+    },
+    "composedSalesJsdomGroups": {
+      "passed": 6,
+      "log": "composed-sales-dom.log"
+    },
+    "independentReadOnlyReview": {
+      "blockingFindings": 0,
+      "focusedSyntheticTestsPassed": 58,
+      "correction": "Initial no-missed-consumers statement was overstated. Parent full root typecheck found an active local-f alias consumer in preview-core-pages/sales-fixture.ts. Fixed and directly covered; expanded follow-up sweep identified no further active-source misses. This remains a search/review result, not compiler evidence."
+    },
+    "gitDiffWhitespace": "passed",
+    "referencePopupJsdomGroups": {
+      "passed": 5,
+      "log": "reference-popup-dom.log"
+    },
+    "previewFixtureRegression": {
+      "passed": 21,
+      "newRegressionTests": 2,
+      "log": "preview-fixture-regression.log",
+      "coverage": "Active portable-core-page fixture: matching selection second in all six lists, AND across dimensions, empty lists, literal number/date, exact total on out-of-range page, native business type and list-only read bounds."
+    },
+    "rootTypecheck": {
+      "exitCode": 0,
+      "log": "root-typecheck-after.log"
+    },
+    "webTypecheck": {
+      "exitCode": 0,
+      "log": "web-typecheck-after.log"
+    },
+    "typescriptBuild": {
+      "exitCode": 0,
+      "log": "build.log"
+    },
+    "emittedBuildSmoke": {
+      "exitCode": 0,
+      "log": "smoke-build.log"
+    }
+  },
+  "notExecuted": [
+    "Genuine PostgreSQL execution of new ANY predicates and prepared native acceptance assertions",
+    "Actual browser/pixels/performance",
+    "Any database, Docker, service/network, production or deployment action"
+  ],
+  "compatibility": "No legacy scalar query branch. Active internal consumers and fixtures migrated coherently; prior verification evidence retained unchanged.",
+  "remainingUi": "Current select is only a temporary scalar-to-array adapter. Reusable six-dimension multi-select widget restoration is a separate task.",
+  "commitCreated": false,
+  "resolvedHarnessFailure": {
+    "command": "node apps/web/src/sales/tests/run-reference-popup-dom-tests.mjs",
+    "stage": "before any DOM test",
+    "reason": "Initial existing Node/packages-external harness failed before tests on the extensionless Arco ES Select import. Parent approved a test-only switch to the established browser-bundle configuration and matching jsdom globals. Corrected harness passes all five groups; initial failure log preserved unchanged.",
+    "log": "reference-popup-harness-pretest-failure.log",
+    "changedTestPath": "apps/web/src/sales/tests/run-reference-popup-dom-tests.mjs",
+    "runtimeChanges": false
+  },
+  "priorFailure": {
+    "check": "Parent full root typecheck",
+    "status": "failed before preview fixture correction on twelve TS2551 scalar field errors",
+    "preservedLog": "root-typecheck-before-preview-fixture-fix.log",
+    "sha256": "6b83dba766250b3f10fb97b31403103e37bfa8106f6d996b2494a91da05630f4",
+    "resolution": "Exact plural-list semantics implemented in apps/web/preview-core-pages/sales-fixture.ts without casts or scalar aliases; parent compiler rerun pending."
+  },
+  "historicalProbeLimit": "Three archived evidence probe scripts retain historical scalar payloads and were not modified or rerun: native-read-policy-independent/probes.mjs, native-read-composition-independent/probes.test.mjs, sales-summary-independent-probes.mjs. They need explicit adaptation before reuse as current checks."
+}

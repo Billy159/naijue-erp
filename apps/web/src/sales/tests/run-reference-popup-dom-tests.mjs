@@ -8,7 +8,9 @@ import { JSDOM } from 'jsdom';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const temp = await mkdtemp(path.join(here, '.reference-popup-tmp-'));
 const dom = new JSDOM('<!doctype html><div id="root"></div><button id="outside">Outside</button>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
-for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLDialogElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
+for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLDialogElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLButtonElement', 'HTMLIFrameElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'Element', 'SVGElement', 'MutationObserver', 'ShadowRoot', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
+Object.defineProperty(globalThis, 'navigator', { configurable: true, value: dom.window.navigator });
+dom.window.matchMedia = query => ({ matches: false, media: query, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {}, dispatchEvent() { return true; } });
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 const registered = new Map();
 const add = document.addEventListener.bind(document), remove = document.removeEventListener.bind(document);
@@ -23,7 +25,7 @@ document.removeEventListener = (type, listener, options) => {
 let root;
 try {
   const output = path.join(temp, 'dom-entry.mjs');
-  await build({ entryPoints: [path.join(here, 'dom-entry.tsx')], outfile: output, bundle: true, platform: 'node', format: 'esm', packages: 'external', jsx: 'automatic', loader: { '.css': 'empty' }, logLevel: 'warning' });
+  await build({ entryPoints: [path.join(here, 'dom-entry.tsx')], outfile: output, bundle: true, platform: 'browser', format: 'esm', external: ['react', 'react-dom', 'react-dom/*'], banner: { js: "import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);" }, jsx: 'automatic', loader: { '.css': 'empty' }, logLevel: 'warning' });
   const { act, createElement, StrictMode, createRoot, SalesPageHost, ReadContext, createSalesHttpReader, createSalesFilterReferenceHttpReader, summary, detail, uuid } = await import(pathToFileURL(output).href);
   const host = document.getElementById('root'), outside = document.getElementById('outside');
   const candidates = [], lists = [], details = [];

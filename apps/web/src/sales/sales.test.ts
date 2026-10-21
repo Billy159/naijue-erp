@@ -4,11 +4,13 @@ import { LatestQuery } from '../loading/latest-query.ts';
 import { ReadContext } from '../loading/read-scope.ts';
 import { createSalesPageController } from './controller.ts';
 import { emptySalesFilter } from './contracts.ts';
-import type { SalesReader, SalesDetailDto, SalesReferenceParameters, SalesReferencePage } from './contracts.ts';
+import type { SalesReader, SalesDetailDto, SalesListQuery, SalesReferenceParameters, SalesReferencePage } from './contracts.ts';
 import { createSalesDetailQuery, pageFacts, salesCount, salesMoney, salesParameters, salesTarget } from './model.ts';
 import { salesDetailResponse, salesListResponse, salesReferencesResponse } from './response-validation.ts';
 import { createSalesHttpReader, createSalesFilterReferenceHttpReader } from './http-reader.ts';
 import { detail, summary, uuid } from './tests/fixtures.ts';
+import { entityId } from '../../../../packages/domain/src/values.ts';
+import { createSalesFixture } from '../../preview-core-pages/sales-fixture.ts';
 const parameters = () => salesParameters(emptySalesFilter(), 20);
 const scope = () => new ReadContext({ accountId: 'TEST', sessionRevision: '1', permissionRevision: '1' }).createScope('TEST-SALES');
 const response = (value: unknown) => new Response(JSON.stringify(value), { headers: { 'content-type': 'application/json' } });
@@ -29,7 +31,7 @@ test('list validates exact totals, bounded page/row membership, no coercion or h
   const p = parameters(); const result = { page: 1, pageSize: 20, exactTotal: '1', items: [summary()] };
   assert.equal(salesListResponse(result, p), result);
   for (const invalid of [{ ...result, exactTotal: 1 }, { ...result, exactTotal: '2' }, { ...result, page: 2 }, { ...result, actor: 'CLIENT' }, { ...result, items: [{ ...summary(), netDue: 0 }] }, { ...result, items: [{ ...summary(), version: 9007199254740992 }] }]) assert.throws(() => salesListResponse(invalid, p));
-  assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, status: 'APPROVED' } }));
+  assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, statuses: ['APPROVED'] } }));
   assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, number: 'NO-MATCH' } }));
 });
 test('list number membership uses deterministic lowercase literal inclusion without treating SQL wildcard characters specially', () => {
@@ -41,8 +43,8 @@ test('list number membership uses deterministic lowercase literal inclusion with
   for (const number of ['NO-MATCH', 'salesXä', 'test%', 'ä%\\']) {
     assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, number } }));
   }
-  assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, number: 'test-sales', status: 'APPROVED' } }));
-  assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, number: 'test-sales', customerId: summary(999).id as never } }));
+  assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, number: 'test-sales', statuses: ['APPROVED'] } }));
+  assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, number: 'test-sales', customerIds: [summary(999).id as never] } }));
 });
 test('list requires exact non-gift quantity aggregates and a non-null native updated timestamp, without line bigint bounds', () => {
   const p = parameters();
@@ -151,4 +153,78 @@ test('filter reference HTTP rejects invalid parameters before fetch and old/malf
   }
   assert.equal(calls, 0); assert.equal((await query.run({ kind: 'warehouse', search: '', page: 1, pageSize: 20 })).status, 'error');
   assert.equal(calls, 1); assert.equal(query.getSnapshot().success, null); query.dispose();
+});
+
+test('temporary scalar sales filter adapter preserves each selection and maps the Demo return/exchange group, not stored types', () => {
+  const empty = salesParameters(emptySalesFilter(), 20);
+  assert.deepEqual(empty.filter, { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: null });
+  const selected = salesParameters({ ...emptySalesFilter(), status: 'APPROVED', businessType: 'RETURN_EXCHANGE',
+    hall: { id: uuid(11), label: 'TEST' }, salesperson: { id: uuid(14), label: 'TEST' },
+    customer: { id: uuid(12), label: 'TEST' }, warehouse: { id: uuid(13), label: 'TEST' } }, 50);
+  assert.deepEqual(selected.filter, { ...empty.filter, statuses: ['APPROVED'], businessTypes: ['RETURN', 'EXCHANGE'], hallIds: [uuid(11)],
+    salespersonIds: [uuid(14)], customerIds: [uuid(12)], warehouseIds: [uuid(13)] });
+  assert.deepEqual(salesParameters({ ...emptySalesFilter(), businessType: 'SALE' }, 20).filter.businessTypes, ['SALE']);
+  for (const value of ['RETURN', 'EXCHANGE', 'UNKNOWN', undefined]) assert.throws(() => salesParameters({ ...emptySalesFilter(), businessType: value as never }, 20));
+});
+test('list membership uses OR within all six selections, AND across dimensions and preserves native RETURN/EXCHANGE output', () => {
+  const first = { ...summary(), salespersonId: uuid(14), salespersonName: 'TEST' };
+  const second = { ...summary(2), businessType: 'EXCHANGE' as const, salespersonId: uuid(14), salespersonName: 'TEST' };
+  const result = { page: 1, pageSize: 20, exactTotal: '2', items: [first, second] };
+  const p = { ...parameters(), filter: { ...parameters().filter, statuses: ['APPROVED', 'DRAFT'] as const, businessTypes: ['RETURN', 'EXCHANGE'] as const,
+    hallIds: [entityId('hall', uuid(99)), entityId('hall', uuid(11))], salespersonIds: [entityId('staff', uuid(99)), entityId('staff', uuid(14))],
+    customerIds: [entityId('customer', uuid(99)), entityId('customer', uuid(12))], warehouseIds: [entityId('warehouse', uuid(99)), entityId('warehouse', uuid(13))] } };
+  assert.equal(salesListResponse(result, p), result); assert.equal(result.items[0]?.businessType, 'RETURN'); assert.equal(result.items[1]?.businessType, 'EXCHANGE');
+  for (const key of ['statuses', 'businessTypes', 'hallIds', 'salespersonIds', 'customerIds', 'warehouseIds'] as const) {
+    assert.throws(() => salesListResponse(result, { ...p, filter: { ...p.filter, [key]: [key === 'statuses' ? 'VOID' : key === 'businessTypes' ? 'SALE' : uuid(99)] } }), TypeError, key);
+  }
+  assert.throws(() => salesListResponse({ ...result, items: [first, { ...second, salespersonId: null, salespersonName: null }] }, p));
+});
+test('HTTP multi-value query serializes all six arrays unchanged and rejects malformed selections before fetch', async () => {
+  const calls: Record<string, unknown>[] = [];
+  const selected = { ...parameters(), filter: { ...parameters().filter, statuses: ['APPROVED', 'DRAFT'] as const, businessTypes: ['RETURN', 'EXCHANGE'] as const,
+    hallIds: [entityId('hall', uuid(99)), entityId('hall', uuid(11))], salespersonIds: [],
+    customerIds: [entityId('customer', uuid(99)), entityId('customer', uuid(12))], warehouseIds: [entityId('warehouse', uuid(99)), entityId('warehouse', uuid(13))] } };
+  const reader = createSalesHttpReader({ origin: 'https://synthetic.test', basePath: '', fetch: async (_url, init) => { calls.push(JSON.parse(init.body as string)); return response({ page: 1, pageSize: 20, exactTotal: '1', items: [summary()] }); } });
+  const controller = createSalesPageController(scope(), reader); assert.equal((await controller.list.run(selected)).status, 'success');
+  assert.equal(calls.length, 1); assert.deepEqual(calls[0], selected);
+  for (const value of [null, 'DRAFT', ['DRAFT', 'DRAFT'], ['UNKNOWN']]) {
+    assert.equal((await controller.list.run({ ...selected, filter: { ...selected.filter, statuses: value as never } })).status, 'error');
+  }
+  assert.equal(calls.length, 1); controller.dispose();
+});
+test('active core-pages sales fixture uses every plural dimension with matching values second, exact counts and native types', async () => {
+  const reads: string[] = []; const fixture = createSalesFixture(kind => reads.push(kind));
+  const controller = createSalesPageController(scope(), fixture.reader); assert.deepEqual(reads, []);
+  const all = await controller.list.run(parameters()); assert.equal(all.status, 'success');
+  if (all.status !== 'success') throw new Error('Expected explicit synthetic fixture list.');
+  assert.equal(all.data.exactTotal, '2'); assert.deepEqual(all.data.items.map(row => row.businessType), ['SALE', 'RETURN']);
+  const row = all.data.items[1]!; assert.ok(row.salespersonId !== null);
+  const query: SalesListQuery = { ...parameters(), filter: { ...parameters().filter,
+    startDate: row.businessDate, endDate: row.businessDate, number: 'sYnTh', statuses: ['VOID', 'APPROVED'], businessTypes: ['EXCHANGE', 'RETURN'],
+    hallIds: [entityId('hall', uuid(99)), row.hallId], salespersonIds: [entityId('staff', uuid(99)), row.salespersonId],
+    customerIds: [entityId('customer', uuid(99)), row.customerId], warehouseIds: [entityId('warehouse', uuid(99)), row.warehouseId] } };
+  const selected = await controller.list.run(query); assert.equal(selected.status, 'success');
+  if (selected.status !== 'success') throw new Error('Expected selected synthetic fixture list.');
+  assert.equal(salesListResponse(selected.data, query), selected.data); assert.equal(selected.data.exactTotal, '1');
+  assert.equal(selected.data.items[0]?.id, row.id); assert.equal(selected.data.items[0]?.businessType, 'RETURN');
+  const pageTwo = await controller.list.run({ ...query, page: 2 }); assert.equal(pageTwo.status, 'success');
+  if (pageTwo.status !== 'success') throw new Error('Expected synthetic fixture out-of-range page.');
+  assert.equal(pageTwo.data.exactTotal, '1'); assert.deepEqual(pageTwo.data.items, []);
+  assert.deepEqual(reads, ['salesList', 'salesList', 'salesList']); controller.dispose();
+});
+test('active core-pages sales fixture intersects each selected dimension, with empty lists unrestricted and no detail/catalog reads', async () => {
+  const reads: string[] = []; const fixture = createSalesFixture(kind => reads.push(kind));
+  const controller = createSalesPageController(scope(), fixture.reader); const p = parameters();
+  const filters: SalesListQuery['filter'][] = [
+    { ...p.filter, statuses: ['DRAFT'] }, { ...p.filter, businessTypes: ['EXCHANGE'] },
+    { ...p.filter, hallIds: [entityId('hall', uuid(99))] }, { ...p.filter, salespersonIds: [entityId('staff', uuid(99))] },
+    { ...p.filter, customerIds: [entityId('customer', uuid(99))] }, { ...p.filter, warehouseIds: [entityId('warehouse', uuid(99))] },
+    { ...p.filter, number: '%' }
+  ];
+  for (const filter of filters) {
+    const query = { ...p, filter }; const outcome = await controller.list.run(query); assert.equal(outcome.status, 'success');
+    if (outcome.status !== 'success') throw new Error('Expected synthetic fixture filtered list.');
+    assert.equal(salesListResponse(outcome.data, query), outcome.data); assert.equal(outcome.data.exactTotal, '0'); assert.deepEqual(outcome.data.items, []);
+  }
+  assert.equal(reads.length, filters.length); assert.ok(reads.every(kind => kind === 'salesList')); controller.dispose();
 });

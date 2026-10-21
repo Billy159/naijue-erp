@@ -58,8 +58,7 @@ function nativeOptions(settings: IntegrationSettings): PostgresReadApiOptions {
     authentication: { trustedOrigin: ORIGIN, now: () => SYNTHETIC_TIME, policy: createSourceAuthenticationPolicy(900) },
     authorization: { mode: "source-confirmed-native" }, productMedia: null };
 }
-const salesInput = (): SalesListQuery => ({ filter: { startDate: null, endDate: null, status: null, businessType: null,
-  hallId: null, salespersonId: null, customerId: null, warehouseId: null, number: PREFIX }, page: 1, pageSize: 20 });
+const salesInput = (): SalesListQuery => ({ filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: PREFIX }, page: 1, pageSize: 20 });
 const transferInput = () => ({ filter: { startDate: null, endDate: null, statuses: [], fromWarehouseIds: [], toWarehouseIds: [],
   number: "SYNTHETIC_NATIVE_TRANSFER_" }, page: 1, pageSize: 20 });
 const inventoryInput = () => ({ filter: { products: [{ id: ids.product, label: "CLIENT PRODUCT LABEL" }], category: null,
@@ -229,6 +228,25 @@ export async function runNativeHttpReadAcceptance(t: TestContext, pool: Pool, se
       ok(statistics.exactApprovedDocuments === (restricted ? "1" : "2")
         && statistics.received === (fixture === own ? "125" : fixture === foreign ? "250" : "375") && statistics.refunded === "0",
       "nonempty approved A/B sales amounts are scoped before statistics");
+      // Prepared engine coverage only until this gated isolated suite is executed.
+      // A's values deliberately occur second, so dropping to first cannot pass.
+      const multi: SalesListQuery = { ...salesInput(), filter: { ...salesInput().filter,
+        statuses: ["VOID", "APPROVED"], businessTypes: ["EXCHANGE", "SALE"], hallIds: [ids.otherHall, ids.hall],
+        salespersonIds: [foreign.staffId, own.staffId], customerIds: [syntheticId("customer", 6990), ids.customer],
+        warehouseIds: [ids.toWarehouse, ids.warehouse] } };
+      const selected = await success(fixture, "/sales/query", multi);
+      ok(selected.exactTotal === page.exactTotal && selected.items.length === page.items.length
+        && (!restricted || selected.items[0].id === expectedId), "all six multi-select dimensions intersect unchanged native scope");
+      const selectedStatistics = await success(fixture, "/sales/settlement-statistics/query", multi);
+      ok(selectedStatistics.exactApprovedDocuments === statistics.exactApprovedDocuments
+        && selectedStatistics.received === statistics.received && selectedStatistics.refunded === statistics.refunded,
+      "multi-select list and statistics share the exact native authorized scope");
+      const mismatch = { ...multi, filter: { ...multi.filter, businessTypes: ["RETURN", "EXCHANGE"] } };
+      const mismatchedList = await success(fixture, "/sales/query", mismatch);
+      const mismatchedStatistics = await success(fixture, "/sales/settlement-statistics/query", mismatch);
+      ok(mismatchedList.exactTotal === "0" && mismatchedList.items.length === 0
+        && mismatchedStatistics.exactApprovedDocuments === "0" && mismatchedStatistics.received === "0",
+      "one unmatched dimension excludes sales from list and approved statistics alike");
       if (!restricted) ok((await success(fixture, "/sales/detail/query", { salesId: foreignSalesId })).document.header.id === foreignSalesId,
         "ADMIN/WAREHOUSE native grant includes actual other-hall sales");
     }
@@ -236,7 +254,7 @@ export async function runNativeHttpReadAcceptance(t: TestContext, pool: Pool, se
       assert.equal((await post(fixture, "/sales/detail/query", { salesId: hidden })).statusCode, 404);
       assert.equal((await post(fixture, "/sales/history/query", { salesId: hidden, page: 1, pageSize: 20 })).statusCode, 404);
     }
-    const overridden = await success(own, "/sales/query", { ...salesInput(), filter: { ...salesInput().filter, hallId: ids.otherHall } });
+    const overridden = await success(own, "/sales/query", { ...salesInput(), filter: { ...salesInput().filter, hallIds: [ids.otherHall] } });
     ok(overridden.exactTotal === "0" && overridden.items.length === 0, "request foreign-hall filter never expands native grant");
     await unchanged(pool, before);
   });
