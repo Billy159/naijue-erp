@@ -1,0 +1,42 @@
+[
+  {
+    "name": "inventory-candidate-strictmode",
+    "strict": false,
+    "reads": 1,
+    "popupCount": 1,
+    "optionCount": 1,
+    "text": "选择商品×✓ 全部商品可选择商品共 1 项上一页下一页完成"
+  },
+  {
+    "name": "inventory-candidate-strictmode",
+    "strict": true,
+    "reads": 1,
+    "popupCount": 1,
+    "optionCount": 1,
+    "text": "选择商品×✓ 全部商品可选择商品共 1 项上一页下一页完成"
+  },
+  {
+    "name": "inventory-settings-dismissal",
+    "triggerFocused": true,
+    "insidePopup": false,
+    "afterEscape": true,
+    "escapePrevented": false,
+    "afterOutside": true,
+    "reads": 0
+  },
+  {
+    "name": "inventory-candidate-enter",
+    "insideMainQueryForm": "库存筛选",
+    "enterPrevented": true,
+    "reachedMainQueryForm": true,
+    "mainSubmitButtons": 1,
+    "inventoryReadsFromSyntheticKeyOnly": 0
+  },
+  {
+    "name": "inventory-page-strictmode",
+    "scopeActive": true,
+    "formPresent": true,
+    "text": "库存状况表导出刷新打印商品商品款号 / 名称 / 系统货号⌄商品分类全部商品分类⌄仓库全部仓库⌄高级筛选 ⌄查询重置等待查询选择筛选条件后点击查询显示设置等待查询设置筛选条件后，点击「查询」查看库存。100款/页尚未查询",
+    "reads": 0
+  }
+]

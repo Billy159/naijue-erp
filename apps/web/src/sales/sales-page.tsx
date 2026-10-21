@@ -4,6 +4,7 @@ import { emptySalesFilter, type SalesFilterDraft, type SalesListQuery, type Sale
 import { SalesDetailHost } from './detail-host.tsx';
 import { salesMoney, salesParameters, salesStatusLabels, salesTypeLabels } from './model.ts';
 import { SalesReferenceSelector } from './reference-selector.tsx';
+import { useSalesReferencePopupHost } from './reference-popup-host.ts';
 import { SalesPagination } from './sales-pagination.tsx';
 
 export interface SalesPageProps { readonly controller: SalesPageController; readonly references: SalesReferenceReader; readonly loadDetailStyles?: () => Promise<unknown> }
@@ -17,6 +18,7 @@ function updatedMinute(timestamp: string): string {
 }
 export function SalesPageView({ controller, references, loadDetailStyles }: SalesPageProps) {
   const { list: query, scope, reader } = controller;
+  const referencePopupHost = useSalesReferencePopupHost(scope);
   const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
   const [draft, setDraft] = useState<SalesFilterDraft>(emptySalesFilter); const [initialSize, setInitialSize] = useState<SalesQueryPageSize>(20);
   const [advanced, setAdvanced] = useState(false); const [inputError, setInputError] = useState(false);
@@ -49,7 +51,7 @@ export function SalesPageView({ controller, references, loadDetailStyles }: Sale
   const pendingSize = snapshot.request?.parameters.pageSize; const changingSize = !!data && pendingSize !== undefined && pendingSize !== size;
   let dirty = false; try { dirty = !!success && JSON.stringify(salesParameters(draft, size).filter) !== JSON.stringify(success.parameters.filter); } catch { dirty = !!success; }
   const run = (parameters: Readonly<SalesListQuery>) => { setInputError(false); void query.run(parameters); };
-  const reference = (kind: SalesReferenceKind) => <SalesReferenceSelector active={!detailActive} parentScope={scope} reader={references} kind={kind} label={refLabels[kind]} value={draft[kind]} onChange={value => setDraft(previous => ({ ...previous, [kind]: value }))} />;
+  const reference = (kind: SalesReferenceKind) => <SalesReferenceSelector popupHost={referencePopupHost} active={!detailActive} parentScope={scope} reader={references} kind={kind} label={refLabels[kind]} value={draft[kind]} onChange={value => setDraft(previous => ({ ...previous, [kind]: value }))} />;
   if (snapshot.phase === 'disposed' || !scope.active) return <div className="iw-empty" role="status"><strong>当前读取范围已关闭</strong><p>旧身份结果已清除，请重新进入销货页。</p></div>;
   const advancedCount = [draft.number.trim(), draft.customer, draft.warehouse].filter(Boolean).length;
   return <div className="sales-route"><section className="tc-workbench tc-list sales-workbench" data-document-list="sales" hidden={detailActive}>

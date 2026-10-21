@@ -1,0 +1,16 @@
+{
+  "afterOutside": {
+    "popupCount": 0,
+    "requestAborted": true
+  },
+  "afterSecond": {
+    "popupCount": 1,
+    "transportStarts": 2,
+    "firstRequestAborted": true,
+    "secondRequestAborted": false
+  },
+  "afterRevocation": {
+    "popupCount": 0,
+    "allRequestsAborted": true
+  }
+}

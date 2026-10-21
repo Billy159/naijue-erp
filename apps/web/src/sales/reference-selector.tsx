@@ -1,27 +1,47 @@
-import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
+import type { PopupOwnership } from '../demo-controls/popup-ownership.ts';
 import { LatestQuery } from '../loading/latest-query.ts';
-import type { ReadScope } from '../loading/read-scope.ts';
+import { ReadScope } from '../loading/read-scope.ts';
 import type { SalesReference, SalesReferenceKind, SalesReferenceReader, SalesReferenceParameters, SalesReferencePage } from './contracts.ts';
 import { salesReferencesResponse } from './response-validation.ts';
 import { salesCount } from './model.ts';
-import { useSalesOwnedScope } from './owned-scope.ts';
+import type { SalesReferencePopupHost } from './reference-popup-host.ts';
 
-export function SalesReferenceSelector(props: { readonly parentScope: ReadScope; readonly reader: SalesReferenceReader; readonly kind: SalesReferenceKind;
+interface ReferenceActivation { readonly scope: ReadScope; readonly ownership: PopupOwnership }
+
+export function SalesReferenceSelector(props: { readonly popupHost: SalesReferencePopupHost | null; readonly parentScope: ReadScope; readonly reader: SalesReferenceReader; readonly kind: SalesReferenceKind;
   readonly label: string; readonly active?: boolean; readonly value: SalesReference | null; readonly onChange: (value: SalesReference | null) => void }) {
-  const [open, setOpen] = useState(false); const trigger = useRef<HTMLButtonElement>(null);
-  const active = props.active !== false;
+  const [activation, setActivation] = useState<ReferenceActivation | null>(null);
+  const owned = useRef<ReferenceActivation | null>(null); const host = useRef<HTMLDivElement>(null); const trigger = useRef<HTMLButtonElement>(null);
+  const instance = useId(); const sequence = useRef(0);
+  const active = props.active !== false && props.parentScope.active && !!props.popupHost && !props.popupHost.controller.disposed;
+  const activeNow = useRef(active); activeNow.current = active;
+  useLayoutEffect(() => () => { owned.current?.ownership.dispose(); }, [props.popupHost, props.parentScope, props.reader, props.kind]);
   // Entering a document detaches the candidate child immediately. Clear its UI
   // state without moving focus back into the newly hidden list.
-  useLayoutEffect(() => { if (!active) setOpen(false); }, [active]);
-  const close = () => { setOpen(false); if (active) trigger.current?.focus(); };
-  return <div className="iw-field sales-reference"><label>{props.label}</label><button ref={trigger} type="button" className="iw-control" aria-label={props.label} aria-expanded={active && open} disabled={!active} title={props.value?.label ?? `全部${props.kind === 'warehouse' ? '仓库' : props.label}`} onClick={() => { if (active) setOpen(value => !value); }}><span>{props.value?.label ?? `全部${props.kind === 'warehouse' ? '仓库' : props.label}`}</span><span aria-hidden="true">⌄</span></button>
-    {active && open && <ReferenceOptions {...props} close={close} />}
+  useLayoutEffect(() => { if (!active) owned.current?.ownership.dispose(); }, [active]);
+  const toggle = () => {
+    if (!active || !props.popupHost || !host.current) return;
+    if (owned.current?.ownership.active) { owned.current.ownership.close(); return; }
+    const scope = new ReadScope(props.parentScope.identity, `${props.parentScope.routeInstanceId}:sales-reference:${instance}:${++sequence.current}`, null, () => {});
+    let detach = () => {};
+    const ownership = props.popupHost.controller.open({ signal: props.parentScope.signal, onClose: reason => {
+      const restoreFocus = (reason === 'close' || reason === 'escape') && !!host.current?.contains(document.activeElement);
+      // Abort immediately, before a newer selector starts its own transport.
+      scope.dispose(); detach();
+      if (owned.current?.scope !== scope) return;
+      owned.current = null; setActivation(null);
+      if (restoreFocus && activeNow.current && props.parentScope.active && trigger.current?.isConnected
+        && !trigger.current.matches(':disabled') && !trigger.current.closest('[hidden]')) trigger.current.focus({ preventScroll: true });
+    } });
+    if (!ownership) { scope.dispose(); return; }
+    detach = props.popupHost.attach(ownership, host.current);
+    const next = { scope, ownership }; owned.current = next; setActivation(next);
+  };
+  const open = active && !!activation?.ownership.active && activation.scope.active;
+  return <div ref={host} className="iw-field sales-reference"><label>{props.label}</label><button ref={trigger} type="button" className="iw-control" aria-label={props.label} aria-expanded={open} disabled={!active} title={props.value?.label ?? `全部${props.kind === 'warehouse' ? '仓库' : props.label}`} onClick={toggle}><span>{props.value?.label ?? `全部${props.kind === 'warehouse' ? '仓库' : props.label}`}</span><span aria-hidden="true">⌄</span></button>
+    {open && activation && <ReferenceRead {...props} key={activation.scope.routeInstanceId} scope={activation.scope} close={() => { activation.ownership.close(); }} onChange={value => { if (activation.ownership.active && activation.scope.active) props.onChange(value); }} />}
   </div>;
-}
-function ReferenceOptions(props: { readonly parentScope: ReadScope; readonly reader: SalesReferenceReader; readonly kind: SalesReferenceKind;
-  readonly label: string; readonly onChange: (value: SalesReference | null) => void; readonly close: () => void }) {
-  const scope = useSalesOwnedScope(props.parentScope, 'sales-reference', null);
-  return scope ? <ReferenceRead {...props} scope={scope} /> : null;
 }
 function ReferenceRead(props: { readonly parentScope: ReadScope; readonly scope: ReadScope; readonly reader: SalesReferenceReader; readonly kind: SalesReferenceKind;
   readonly label: string; readonly onChange: (value: SalesReference | null) => void; readonly close: () => void }) {

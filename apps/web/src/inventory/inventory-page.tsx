@@ -28,8 +28,20 @@ function scopeLines(filter: InventoryFilter): string[] {
 function toggle(set: ReadonlySet<string>, key: string): ReadonlySet<string> {
   const next = new Set(set); if (next.has(key)) next.delete(key); else next.add(key); return next;
 }
-export function InventoryPageView({ scope, reader, productReader, actions = {} }: InventoryPageProps) {
-  const [query] = useState(() => createInventoryQuery(scope, reader));
+/** The mounted owner creates a fresh query for each effect activation. React's
+ * setup/cleanup replay must not leave the visible page using a disposed query. */
+export function InventoryPageView(props: InventoryPageProps) {
+  const [owner, setOwner] = useState<{ scope: ReadScope; reader: InventoryReader; query: ReturnType<typeof createInventoryQuery> } | null>(null);
+  useEffect(() => {
+    const query = createInventoryQuery(props.scope, props.reader);
+    setOwner({ scope: props.scope, reader: props.reader, query });
+    return () => query.dispose();
+  }, [props.scope, props.reader]);
+  return owner?.scope === props.scope && owner.reader === props.reader
+    ? <InventoryPageContent {...props} query={owner.query} /> : null;
+}
+
+function InventoryPageContent({ scope, reader, productReader, actions = {}, query }: InventoryPageProps & { readonly query: ReturnType<typeof createInventoryQuery> }) {
   const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
   const [draft, setDraft] = useState<InventoryFilter>(emptyInventoryFilter);
   // Only pre-query selection is local. After a success, the applied size is the
@@ -50,7 +62,6 @@ export function InventoryPageView({ scope, reader, productReader, actions = {} }
   const scopeTrigger = useRef<HTMLButtonElement>(null);
   const settingsTrigger = useRef<HTMLButtonElement>(null);
   const settingsPosition = useAnchoredPopover(settingsOpen, settingsTrigger);
-  useEffect(() => () => query.dispose(), [query]);
   useEffect(() => {
     if (!scopeOpen) return;
     const dialog = scopeDialog.current;

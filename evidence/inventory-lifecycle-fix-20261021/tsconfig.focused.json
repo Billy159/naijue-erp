@@ -1,0 +1,9 @@
+{
+  "extends": "../../apps/web/tsconfig.json",
+  "include": [],
+  "files": [
+    "../../apps/web/src/inventory/inventory-page.tsx",
+    "../../apps/web/src/components/candidate-selector.tsx",
+    "../../apps/web/src/inventory/tests/inventory-query-lifecycle-entry.tsx"
+  ]
+}

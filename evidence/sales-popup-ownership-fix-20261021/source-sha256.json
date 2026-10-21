@@ -1,0 +1,14 @@
+{
+  "baseCommit": "02d82005289b7f90fc832aff6979e8518f2e59e6",
+  "sourceState": "uncommitted worktree; exact files tested by the saved DOM runs",
+  "sha256": {
+    "apps/web/src/demo-controls/popup-ownership.ts": "794caafa665c9f7c668916ec2c4ee515d6bb10e3f977989b69000ee7ee45d0f1",
+    "apps/web/src/sales/reference-popup-host.ts": "d9106afd05cdeb5e92b4fc1fce222e574625996ec0b630e60e57223a01b8fc0f",
+    "apps/web/src/sales/reference-selector.tsx": "1c91d05e943f28ced328e57f8e547eeffe396bea88456a210240a29ebed31662",
+    "apps/web/src/sales/sales-page.tsx": "d6241b4e2252b94e5add2531bb4b6b62d02b03cd15a2794e9851a039e6dcad74",
+    "apps/web/src/sales/tests/run-reference-popup-dom-tests.mjs": "62ea4d4a069553ba49f54e7b708a993bd43172ec0087a735b9925db052f807ed",
+    "apps/web/src/sales/tests/run-dom-tests.mjs": "ef731f29f4b737ea78220388b6452106e3420164663058af3b0aa3ad6ecb10df",
+    "evidence/sales-popup-ownership-fix-20261021/sales-popup-entry.tsx": "798b1ffb632198e13f17c9fc45d82ba28938c24010d5bd01c13f27e73c65cf9b",
+    "evidence/sales-popup-ownership-fix-20261021/reproduce-sales-popup.mjs": "85b57f19f170d7389d33472cb21ec88f13abfece61034148de060bfa5c357779"
+  }
+}

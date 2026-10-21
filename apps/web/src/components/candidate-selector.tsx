@@ -37,30 +37,44 @@ export function CandidateSelector(props: Props) {
 }
 
 function CandidatePopup(props: Props & { readonly id: string; readonly close: () => void }) {
+  const [owner, setOwner] = useState<{ parent: ReadScope; reader: InventoryReader; kind: CandidateKind; scope: ReadScope; query: LatestQuery<CandidateParameters, CandidatePage> } | null>(null);
+  useEffect(() => {
+    // Own scopes/queries in setup, not render. Replay disposes the abandoned
+    // activation and creates a new one; a real close still aborts immediately.
+    const scope = new ReadScope(props.scope.identity, `${props.scope.routeInstanceId}:candidate:${props.id}`, null, () => {});
+    const query = new LatestQuery<CandidateParameters, CandidatePage>({ scope, execute: async read => {
+      const result = await props.reader.readCandidates(read);
+      if (!Number.isSafeInteger(result.exactTotal) || result.exactTotal < 0 || result.page !== read.parameters.page || result.items.length > read.parameters.pageSize || new Set(result.items.map(item => item.id)).size !== result.items.length) throw new Error('候选响应无效，请重新加载。');
+      return result;
+    } });
+    const dispose = () => { scope.dispose(); setOwner(null); };
+    props.scope.signal.addEventListener('abort', dispose, { once: true });
+    if (props.scope.active) setOwner({ parent: props.scope, reader: props.reader, kind: props.kind, scope, query }); else dispose();
+    return () => { props.scope.signal.removeEventListener('abort', dispose); query.dispose(); scope.dispose(); };
+  }, [props.scope, props.reader, props.kind, props.id]);
+  return owner?.parent === props.scope && owner.reader === props.reader && owner.kind === props.kind && owner.scope.active
+    ? <CandidateRead {...props} scope={owner.scope} query={owner.query} /> : null;
+}
+
+function CandidateRead(props: Omit<Props, 'scope'> & { readonly scope: ReadScope; readonly query: LatestQuery<CandidateParameters, CandidatePage>; readonly id: string; readonly close: () => void }) {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const searchInput = useRef<HTMLInputElement>(null);
-  const [scope] = useState(() => new ReadScope(props.scope.identity, `${props.scope.routeInstanceId}:candidate:${props.id}`, null, () => {}));
-  const [query] = useState(() => new LatestQuery<CandidateParameters, CandidatePage>({ scope, execute: async read => {
-    const result = await props.reader.readCandidates(read);
-    if (!Number.isSafeInteger(result.exactTotal) || result.exactTotal < 0 || result.page !== read.parameters.page || result.items.length > read.parameters.pageSize || new Set(result.items.map(item => item.id)).size !== result.items.length) throw new Error('候选响应无效，请重新加载。');
-    return result;
-  } }));
+  const { query } = props;
   const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
   useEffect(() => {
-    const dispose = () => scope.dispose();
-    props.scope.signal.addEventListener('abort', dispose, { once: true });
-    if (!props.scope.active) dispose();
     searchInput.current?.focus();
-    return () => { props.scope.signal.removeEventListener('abort', dispose); query.dispose(); scope.dispose(); };
-  }, [props.scope, query, scope]);
+    // Leaf replay cancels only the pending read. The popup owner, above, is
+    // responsible for permanent teardown and parent identity invalidation.
+    return () => query.cancel();
+  }, [query]);
   useEffect(() => {
     // Opening is the first read. Debounce only this open control's candidate search.
     const timer = setTimeout(() => { void query.run({ kind: props.kind, search: search.trim(), page, pageSize: 20, selectedIds: props.selected.map(item => item.id), categoryId: props.categoryId }); }, search ? 180 : 0);
     return () => clearTimeout(timer);
     // Selected values stay visible even when outside this response page; selecting is not a new read.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, page, query, props.categoryId]);
+  }, [search, page, query, props.kind, props.categoryId]);
   const matchingResponse = snapshot.success?.parameters.search === search.trim() && snapshot.success.parameters.page === page && snapshot.success.parameters.categoryId === props.categoryId;
   const result = matchingResponse ? snapshot.success?.data : undefined;
   const pending = snapshot.phase === 'loading' || !matchingResponse && snapshot.phase !== 'error';
@@ -73,7 +87,7 @@ function CandidatePopup(props: Props & { readonly id: string; readonly close: ()
   };
   return <div className="iw-popover" role="dialog" aria-label={`选择${props.label}`} onKeyDown={event => { if (event.key === 'Escape') { event.stopPropagation(); props.close(); } }}>
     <div className="iw-pop-head"><strong>选择{props.label}</strong><button type="button" className="iw-text-button" onClick={props.close} aria-label={`关闭${props.label}选择`}>×</button></div>
-    <input ref={searchInput} className="iw-search" aria-label={`搜索${props.label}`} value={search} placeholder={props.kind === 'product' ? '商品款号 / 名称 / 系统货号' : `搜索${props.label}`} onChange={event => { query.cancel(); setSearch(event.target.value); setPage(1); }} />
+    <input ref={searchInput} className="iw-search" aria-label={`搜索${props.label}`} value={search} placeholder={props.kind === 'product' ? '商品款号 / 名称 / 系统货号' : `搜索${props.label}`} onChange={event => { query.cancel(); setSearch(event.target.value); setPage(1); }} onKeyDown={event => { if (event.key === 'Enter') event.preventDefault(); }} />
     <button type="button" className="iw-option iw-all-option" onClick={() => props.onChange([])}><span aria-hidden="true">{props.selected.length ? '□' : '✓'}</span> 全部{props.label}</button>
     <div className="iw-option-list" aria-busy={pending}>
       {pending && <p className="iw-inline-state" role="status">正在加载候选…</p>}
