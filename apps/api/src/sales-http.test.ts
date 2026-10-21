@@ -3,11 +3,12 @@ import test from "node:test";
 import type { TestContext } from "node:test";
 import Fastify from "fastify";
 import type { ActorContext, SalesAuthorization, SalesBusinessRules, SalesDependencies, SalesUnitOfWork } from "../../../packages/application/src/ports.ts";
+import { createSalesActionAuthorization } from "../../../packages/application/src/sales-authorization.ts";
 import { createCandidateSalesBusinessRules } from "../../../packages/application/src/sales-business-rules.ts";
 import { minorAmount } from "../../../packages/domain/src/values.ts";
 import { DomainError, requireDomain } from "../../../packages/domain/src/errors.ts";
 import type { SalesBusinessType } from "../../../packages/domain/src/documents.ts";
-import { actor, fixture, ids, sid, syntheticDraft, SYNTHETIC_RULES } from "../../../tests/support/synthetic-fixtures.ts";
+import { actor, fixture, ids, sid, syntheticDraft, syntheticSalesIdentity, SYNTHETIC_RULES } from "../../../tests/support/synthetic-fixtures.ts";
 import { createSalesHttpPlugin, exactJson } from "./sales-http.ts";
 import type { SalesHttpOptions } from "./sales-http.ts";
 
@@ -25,13 +26,13 @@ async function setup(t: TestContext, options: {
   let allowed = true; let authenticated: ActorContext | null = actor; let sequence = 2000;
   const dependencies: SalesDependencies = {
     unitOfWork: options.unitOfWork ?? data.store, rules: options.rules ?? SYNTHETIC_RULES,
-    authorization: { async assertAllowed(context, action, document) {
+    authorization: { async assertAllowed(context, action, document, tx) {
       requireDomain(allowed, "FORBIDDEN", "SYNTHETIC permission revoked");
       // EXCLUSIVELY SYNTHETIC finite reference set, not an ERP permission policy.
       requireDomain(document.header.hallId === ids.hall && document.header.warehouseId === ids.warehouse
         && document.header.customerId === ids.customer && document.lines.every(row => [ids.sku, ids.sku2].includes(row.skuId))
         && document.settlements.every(row => row.paymentAccountId === ids.payment), "FORBIDDEN", "SYNTHETIC unknown/unauthorized reference");
-      await options.authorize?.(context, action, document);
+      await options.authorize?.(context, action, document, tx);
     } }, now: () => "2026-10-20T12:00:00Z", newId: kind => sid(kind, sequence++)
   };
   app.register(createSalesHttpPlugin({ authenticate: options.authenticate ?? (async () => authenticated), dependencies }));
@@ -242,4 +243,52 @@ test("candidate policy / SYNTHETIC HTTP: explicit discount metadata persists and
   assert.equal(f.document().lines[0]?.pricingRule, "DISCOUNT"); assert.equal(f.document().lines[0]?.discountTenths, 50);
   assert.equal(f.document().lines[0]?.zeroConfirmed, false); assert.equal(f.document().header.netDue, 126n);
   assert.equal(f.balance(), -2n); assert.equal(f.app.server.listening, false);
+});
+
+test("SYNTHETIC HTTP native action policy: unseeded/disabled/changed current identity denies commands and receipt recovery", async t => {
+  const policy = createSalesActionAuthorization(); const f = await setup(t, { authorize: policy.assertAllowed });
+  const unseeded = await f.post(save()); assert.equal(unseeded.statusCode, 403); assert.equal(f.store.snapshot().headers.size, 0);
+  f.store.seedIdentity(syntheticSalesIdentity()); const saved = await f.post(save()); assert.equal(saved.statusCode, 200);
+  for (const identity of [syntheticSalesIdentity({ loginEnabled: false }), syntheticSalesIdentity({ role: "ADMIN " }),
+    syntheticSalesIdentity({ employmentStatus: "离职" }), syntheticSalesIdentity({ hallId: sid("hall", 99) }), syntheticSalesIdentity({ hallEnabled: false })]) {
+    f.store.seedIdentity(identity); const before = f.store.snapshot();
+    const recovered = await f.app.inject({ url: "/sales/receipts/save" }); assert.equal(recovered.statusCode, 403);
+    assert.deepEqual(recovered.json(), { error: { code: "FORBIDDEN", message: "Access denied" } });
+    assert.equal((await f.post(save())).statusCode, 403); assert.deepEqual(f.store.snapshot(), before);
+  }
+});
+
+test("SYNTHETIC HTTP native action policy: original SAVE receipt remains accessible after APPROVE, salesperson cannot UNAPPROVE", async t => {
+  const policy = createSalesActionAuthorization(); const f = await setup(t, { authorize: policy.assertAllowed }); f.store.seedIdentity(syntheticSalesIdentity());
+  const saved = await f.post(save()); assert.equal(saved.statusCode, 200); const approved = await f.command("APPROVE", 1); assert.equal(approved.statusCode, 200);
+  const before = f.store.snapshot();
+  const recovered = await f.app.inject({ url: "/sales/receipts/save" }); assert.equal(recovered.statusCode, 200); assert.deepEqual(recovered.json().result, saved.json());
+  assert.deepEqual((await f.post(save())).json(), saved.json());
+  assert.equal((await f.command("UNAPPROVE", 2)).statusCode, 403);
+  const edited = await f.post(save(draft(), "edit-approved", 2)); assert.equal(edited.statusCode, 409); assert.equal(edited.json().error.code, "INVALID_STATE");
+  assert.deepEqual(f.store.snapshot(), before);
+});
+
+test("SYNTHETIC HTTP native action policy: colleague-owned draft can be edited/voided but not approved via selected salesperson", async t => {
+  const policy = createSalesActionAuthorization(); const f = await setup(t, { authorize: policy.assertAllowed });
+  const colleague = { ...actor, accountId: sid("account", 99) }; f.store.seedIdentity(syntheticSalesIdentity(colleague)); f.authenticateAs(colleague);
+  assert.equal((await f.post(save())).statusCode, 200);
+  f.store.seedIdentity(syntheticSalesIdentity()); f.authenticateAs(actor);
+  const changed = draft(); changed.header.salespersonId = sid("staff", 16);
+  assert.equal((await f.post(save(changed, "edit", 1))).statusCode, 200);
+  const before = f.store.snapshot(); const refused = await f.command("APPROVE", 2);
+  assert.equal(refused.statusCode, 403); assert.equal(f.document().header.createdByAccountId, colleague.accountId); assert.deepEqual(f.store.snapshot(), before);
+  assert.equal((await f.command("VOID", 2)).statusCode, 200); assert.equal(f.balance(), 0n);
+});
+
+test("SYNTHETIC HTTP transaction forwarding: receipt recovery receives the same transaction as its receipt and target reads", async t => {
+  const observed: unknown[] = []; const policy = createSalesActionAuthorization();
+  const f = await setup(t, { authorize: async (context, action, value, tx) => { assert.ok(tx); observed.push(tx); await policy.assertAllowed(context, action, value, tx); } });
+  f.store.seedIdentity(syntheticSalesIdentity());
+  assert.equal((await f.post(save())).statusCode, 200);
+  assert.equal((await f.post(save(draft(), "edit", 1))).statusCode, 200);
+  assert.equal(observed[1], observed[2]); assert.notEqual(observed[0], observed[1]);
+  assert.equal((await f.post(save())).statusCode, 200);
+  assert.equal((await f.app.inject({ url: "/sales/receipts/save" })).statusCode, 200);
+  assert.equal(new Set(observed).size, 4);
 });

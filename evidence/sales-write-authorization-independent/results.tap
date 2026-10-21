@@ -1,0 +1,22 @@
+✔ independent SYNTHETIC: full confirmed action matrix and state-independent receipt authorization (10.216947ms)
+✔ independent SYNTHETIC: unknown/missing/stale identity facts fail closed (1.760434ms)
+✔ independent SYNTHETIC: own-hall editing never changes real creator or grants another creator approval (12.846964ms)
+✔ independent SYNTHETIC: all four auth call sites receive tx and SAVE receipt survives later approval (227.156959ms)
+✔ independent SYNTHETIC: denied identity/action and cross-hall move produce no writes (8.633714ms)
+✔ independent SYNTHETIC: state, settlement, CAS, history and privileged inverse still gate after auth (9.797744ms)
+✔ independent PG PROTOCOL: one lease, explicit SHARE locks, non-secret identity and active/account-bound per-tx cache (16.969191ms)
+✔ independent PG PROTOCOL: waiting identity lock returning revoked facts denies before any write (1.414286ms)
+✔ independent PG PROTOCOL: waiting hall lock returning disabled facts also denies (0.917995ms)
+✔ independent PG PROTOCOL: in-flight escaped identity lookup cannot return a grant after callback close (0.501417ms)
+✔ independent PG PROTOCOL: lookup failure rolls back once; rollback failure discards once without retry (0.848781ms)
+✔ independent PG PROTOCOL: null-hall privileged identities work; missing/malformed identities never write (2.824588ms)
+✔ independent PG PROTOCOL: absent/duplicate/wrong/disabled hall facts reject without writes (1.474178ms)
+✔ independent PG PROTOCOL: loaded creation facts cannot be mutated through returned alias or a new document (3.33163ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 880.276399

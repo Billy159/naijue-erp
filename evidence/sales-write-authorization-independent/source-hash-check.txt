@@ -1,0 +1,6 @@
+packages/application/src/ports.ts: OK
+packages/application/src/sales-authorization.ts: OK
+packages/application/src/sales-service.ts: OK
+adapters/postgres/src/sales-unit-of-work.ts: OK
+apps/api/src/sales-http.ts: OK
+tests/support/synthetic-store.ts: OK

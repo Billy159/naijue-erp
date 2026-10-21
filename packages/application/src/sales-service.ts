@@ -60,7 +60,7 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
           // Recheck access before disclosing a committed result to a now-revoked actor.
           const current = await tx.getSales(prior.targetSalesId);
           requireDomain(current, "DOCUMENT_NOT_FOUND", "Committed operation target is unavailable");
-          await authorization.assertAllowed(command.actor, command.action, current.document);
+          await authorization.assertAllowed(command.actor, command.action, current.document, tx);
           return prior.result;
         }
         const salesId = command.action === "SAVE" ? command.draft.header.id : command.salesId;
@@ -69,10 +69,10 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
         const previous = stored?.document;
         requireDomain(previous || command.action === "SAVE", "DOCUMENT_NOT_FOUND", "Document does not exist");
         requireDomain(command.expectedVersion === (previous?.header.version ?? null), "VERSION_CONFLICT", "Expected document version does not match");
-        await authorization.assertAllowed(command.actor, command.action, previous ?? (command.action === "SAVE" ? command.draft : (() => { throw new Error("Document missing"); })()));
+        await authorization.assertAllowed(command.actor, command.action, previous ?? (command.action === "SAVE" ? command.draft : (() => { throw new Error("Document missing"); })()), tx);
         // Updating an accessible source does not authorize moving its proposed data
         // into a different hall/warehouse/customer/payment-account scope.
-        if (previous && command.action === "SAVE") await authorization.assertAllowed(command.actor, "SAVE", command.draft);
+        if (previous && command.action === "SAVE") await authorization.assertAllowed(command.actor, "SAVE", command.draft, tx);
         const timestamp = now();
         requireDomain(!Number.isNaN(Date.parse(timestamp)) && /(?:Z|[+-]\d{2}:\d{2})$/.test(timestamp), "INVALID_ACTION_TIME", "A real time with timezone is required");
         const operationId = newId("operation");

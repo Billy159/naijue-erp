@@ -1,0 +1,6 @@
+15de9ee939e8f2e590f4cbb6b2f0535ce7e211d27824a27c410015210022c163  packages/application/src/ports.ts
+5b482ebbf43bfa4b07fdc23e13630dd88363ed04dabb926dd68390bdca9c56a2  packages/application/src/sales-authorization.ts
+9e62fb5e8cc538ec3ed2505390132bfd5481df9b06c22a013193e10e71eeca55  packages/application/src/sales-service.ts
+44240b0ad3875129a3aa126529fc74bfc00d9c72e39ced16ce332cc2b56cfd9f  adapters/postgres/src/sales-unit-of-work.ts
+63a2128cdf869e396af28027abb7d244f27777ebe45818a35278bef8bb96a452  apps/api/src/sales-http.ts
+1a6525a375e8b5c13f8b4eea195b6a90a38926e510f772c3ad1f271d86c4466b  tests/support/synthetic-store.ts

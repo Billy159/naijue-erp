@@ -3,7 +3,7 @@ import type { SalesBusinessType, SalesDocument, SalesDraft, SalesLineRow } from 
 import type { SkuRow } from "../../packages/domain/src/catalog.ts";
 import { businessDate, entityId, minorAmount, multiplyMoney, negateQuantity, quantity, version } from "../../packages/domain/src/values.ts";
 import type { EntityKind, EntityId } from "../../packages/domain/src/values.ts";
-import type { ActorContext, SalesBusinessRules, SalesAuthorization } from "../../packages/application/src/ports.ts";
+import type { ActorContext, SalesBusinessRules, SalesAuthorization, SalesCurrentIdentity } from "../../packages/application/src/ports.ts";
 import { createSalesService } from "../../packages/application/src/sales-service.ts";
 import { balanceKey, SyntheticStore } from "./synthetic-store.ts";
 
@@ -12,6 +12,11 @@ export const sid = <K extends EntityKind>(kind: K, number: number): EntityId<K> 
 export const ids = { sales: sid("sales", 1), customer: sid("customer", 2), hall: sid("hall", 3), warehouse: sid("warehouse", 4),
   account: sid("account", 5), sku: sid("sku", 6), sku2: sid("sku", 7), line: sid("salesLine", 8), line2: sid("salesLine", 9), payment: sid("paymentAccount", 10) };
 export const actor: ActorContext = { accountId: ids.account, hallId: ids.hall };
+/** Explicit identity seed helper, never an automatic default in SyntheticStore. */
+export function syntheticSalesIdentity(overrides: Partial<SalesCurrentIdentity> = {}): SalesCurrentIdentity {
+  return { accountId: actor.accountId, staffId: sid("staff", 16), loginEnabled: true, role: "SALESPERSON", employmentStatus: "在职",
+    hallId: actor.hallId, hallEnabled: true, ...overrides };
+}
 export const snapshot = { productCode: "SYNTHETIC_PRODUCT", productName: "SYNTHETIC ONLY", colorName: "SYNTHETIC_COLOR", fitName: "SYNTHETIC_FIT", sizeName: "SYNTHETIC_SIZE_A", barcode: null };
 export function syntheticSku(id = ids.sku, fit = 11): SkuRow {
   return { id, productId: sid("product", 12), colorId: sid("color", 13), fitId: sid("fit", fit), sizeId: sid("size", 14), skuCode: `SYNTHETIC_SKU_${id}`, enabled: true, version: version(1) };
@@ -52,9 +57,9 @@ export function fixture(options: { readonly authorize?: SalesAuthorization["asse
   let sequence = 1000;
   let allowed = true;
   const service = createSalesService({ unitOfWork: store, rules: options.rules ?? SYNTHETIC_RULES,
-    authorization: { async assertAllowed(context, action, document) {
+    authorization: { async assertAllowed(context, action, document, tx) {
       requireDomain(allowed, "FORBIDDEN", "Synthetic permission was revoked");
-      await options.authorize?.(context, action, document);
+      await options.authorize?.(context, action, document, tx);
     } },
     now: () => "2026-10-20T12:00:00Z", newId: kind => sid(kind, sequence++) });
   return { store, service, revokeAccess: () => { allowed = false; },

@@ -89,7 +89,7 @@ export function createSalesHttpPlugin(options: SalesHttpOptions): FastifyPluginA
         requireDomain(found, "RECEIPT_NOT_FOUND", "Operation receipt is unavailable");
         const stored = await tx.getSales(found.targetSalesId);
         requireDomain(stored, "DOCUMENT_NOT_FOUND", "Operation target is unavailable");
-        await dependencies.authorization.assertAllowed(actor, found.action, stored.document);
+        await dependencies.authorization.assertAllowed(actor, found.action, stored.document, tx);
         // Do not expose internal request hash, actor identity, audit rows, or document contents.
         return { requestKey: found.requestKey, action: found.action, status: found.status, completedAt: found.completedAt, result: found.result };
       });

@@ -1,0 +1,57 @@
+{
+  "baseCommit": "c568785",
+  "scope": "transaction-bound sales action authorization only; no production write assembly",
+  "runtime": {
+    "node": "v24.19.0",
+    "npm": "11.9.0"
+  },
+  "checks": [
+    {
+      "command": "node --test tests/sales*.test.ts tests/postgres-protocol.test.ts apps/api/src/sales-http.test.ts",
+      "exitCode": 0,
+      "passed": 196,
+      "failed": 0,
+      "log": "scoped-tests.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 2,
+      "log": "typecheck-failed-before-test-annotation.log",
+      "explanation": "New protocol test inference TS7022/TS7006. Fixed with an explicit ProtocolClient variable annotation; failure retained."
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "typecheck-final.log"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "log": "boundary-check.log"
+    }
+  ],
+  "notRun": [
+    "real PostgreSQL, SQL engine/lock/isolation/concurrency acceptance",
+    "production tests or routes, service listening, migrations, seeds, deployment",
+    "full aggregate check/build (parent integration owns any further aggregate verification)"
+  ],
+  "sourceSha256": {
+    "packages/application/src/ports.ts": "15de9ee939e8f2e590f4cbb6b2f0535ce7e211d27824a27c410015210022c163",
+    "packages/application/src/sales-service.ts": "9e62fb5e8cc538ec3ed2505390132bfd5481df9b06c22a013193e10e71eeca55",
+    "packages/application/src/sales-authorization.ts": "5b482ebbf43bfa4b07fdc23e13630dd88363ed04dabb926dd68390bdca9c56a2",
+    "adapters/postgres/src/sales-unit-of-work.ts": "44240b0ad3875129a3aa126529fc74bfc00d9c72e39ced16ce332cc2b56cfd9f",
+    "apps/api/src/sales-http.ts": "63a2128cdf869e396af28027abb7d244f27777ebe45818a35278bef8bb96a452",
+    "tests/support/synthetic-store.ts": "1a6525a375e8b5c13f8b4eea195b6a90a38926e510f772c3ad1f271d86c4466b",
+    "tests/support/synthetic-fixtures.ts": "6de17d5d3cc94a2735eed83b9c372609ea330adba57547641a3c8db8bdde125f",
+    "tests/sales-authorization.test.ts": "64119ad04135b558c69a3961d0ea32ca152d8040aed0d567fd8c5e9d296892ac",
+    "tests/postgres-protocol.test.ts": "32045f9c90e864c2c7167c1a2920dc56d0daa8bdc7cfe6a61be2631f49e73f3a",
+    "apps/api/src/sales-http.test.ts": "582aa28d293fafa90356e0a3c37ec78c8e3812f664951a80e22740e3066378e6",
+    "docs/sales-write-authorization.md": "af234159f4cdfce29f9ddeb5d31bca584048dbef91b4afda77515e4cde2c953b"
+  },
+  "evidenceSha256": {
+    "boundary-check.log": "1f5cd697735fa644861eb50a891f15398612e5b85bd3ce43c22bd6d105dba103",
+    "scoped-tests.log": "14715bd3a194714d55eafca5f7c94857932a1de19a7e9a688e76663767a6cdb3",
+    "typecheck-failed-before-test-annotation.log": "720829fcb83143204d8c296fc551ba51fc54f0213d72efe8dde92e2a9b6fe4d2",
+    "typecheck-final.log": "e561ac8f15ef0e499f65a370384076ae5d946984114f3c437eaa7ad0f14b400d"
+  }
+}

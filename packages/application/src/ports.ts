@@ -35,7 +35,17 @@ export interface SalesAuditRow {
 }
 /** Adapter metadata, not a chosen historical import schema. Cutoff history must never be reversed as runtime postings. */
 export interface StoredSales { readonly document: SalesDocument; readonly stockBasis: "RUNTIME_LEDGER" | "CUTOFF_HISTORY" }
+/** Current, non-secret native facts, read and held inside the command transaction.
+ * Unknown roles/statuses remain explicit facts for the action policy to reject. */
+export interface SalesCurrentIdentity {
+  readonly accountId: EntityId<"account">; readonly staffId: EntityId<"staff">;
+  readonly loginEnabled: boolean; readonly role: string; readonly employmentStatus: string;
+  readonly hallId: EntityId<"hall"> | null; readonly hallEnabled: boolean | null;
+}
 export interface SalesTransaction extends InventoryPostingTransaction {
+  /** Requires the receipt actor/key and single sales target to have been bound first.
+   * Implementations must not open another transaction or expose credentials/session material. */
+  getCurrentSalesIdentity(accountId: EntityId<"account">): Promise<SalesCurrentIdentity | undefined>;
   getSales(id: EntityId<"sales">): Promise<StoredSales | undefined>;
   putRuntimeSales(document: SalesDocument): Promise<void>;
   getReceipt(actorId: EntityId<"account">, requestKey: string): Promise<OperationReceiptRow | undefined>;
@@ -57,8 +67,10 @@ export interface SalesBusinessRules {
   inventoryDelta(document: SalesDocument, line: SalesLineRow): Quantity;
 }
 export interface SalesAuthorization {
-  /** Check record access AND every proposed hall/warehouse/customer/payment-account reference scope. */
-  assertAllowed(actor: ActorContext, action: SalesAction, document: SalesDocument | SalesDraft): Promise<void>;
+  /** The assembled provider must check record/action access AND every proposed
+   * hall/warehouse/customer/payment-account reference scope. The optional argument
+   * preserves existing explicit test providers; native identity policy requires it. */
+  assertAllowed(actor: ActorContext, action: SalesAction, document: SalesDocument | SalesDraft, tx?: SalesTransaction): Promise<void>;
 }
 export interface SalesDependencies {
   readonly unitOfWork: SalesUnitOfWork; readonly rules: SalesBusinessRules; readonly authorization: SalesAuthorization;

@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { PostgresSalesUnitOfWork } from "../adapters/postgres/src/sales-unit-of-work.ts";
 import type { PgSalesClient, PgSalesResult } from "../adapters/postgres/src/sales-unit-of-work.ts";
 import { moneyFromSql, moneyToSql, quantityFromSql, versionToSql } from "../adapters/postgres/src/codec.ts";
+import { createSalesActionAuthorization } from "../packages/application/src/sales-authorization.ts";
 import { createSalesService } from "../packages/application/src/sales-service.ts";
 import { requestHash } from "../packages/application/src/request-hash.ts";
 import type { SalesCommand, SalesResult, SalesTransaction } from "../packages/application/src/ports.ts";
@@ -95,6 +96,7 @@ function documentWrites(document: SalesDocument, isNew = false, previous: SalesD
   const removedIds = [...oldSettlements.keys()].filter(id => !nextIds.has(id));
   return [{ sql: isNew ? /^INSERT INTO naijue_erp.sales_header/ : /^UPDATE naijue_erp.sales_header/, inspect(values, sql) {
     assert.equal(values[10], moneyToSql(document.header.grossAmount)); assert.equal(values[12], moneyToSql(document.header.netDue));
+    assert.equal(values[14], document.header.createdByAccountId); assert.equal(values[15], document.header.createdHallId); assert.equal(values[16], document.header.createdAt);
     if (!isNew) { assert.match(sql, /WHERE id = \$1 AND version = \$21 AND stock_basis = 'RUNTIME_LEDGER'/); assert.equal(values[20], document.header.version - 1); }
   } },
   ...(freedIds.length ? [{ sql: /^UPDATE naijue_erp.sales_line SET is_current = false/, inspect(values: unknown[], sql: string) {
@@ -382,4 +384,166 @@ test("pg protocol: stable-body receipt replay survives trusted hall change but d
   const denied = new ProtocolClient([begin(), ...receiptRead(command, receipt), ...salesRead(storedDocument(undefined, "APPROVED", 2)), rollback()]);
   await assert.rejects(serviceWithAccess(denied, false).execute(command), /SYNTHETIC revoked current hall/);
   assert.ok(denied.calls.every(call => !/^(INSERT|UPDATE|DELETE)/.test(call.sql))); denied.done();
+});
+
+function identityRow(overrides: Record<string, unknown> = {}): Record<string, unknown> {
+  return { account_id: actor.accountId, staff_id: sid("staff", 16), login_enabled: true,
+    role: "SALESPERSON", employment_status: "在职", hall_id: ids.hall, ...overrides };
+}
+function identityRead(row: Record<string, unknown> | undefined = identityRow(), hall: Record<string, unknown> | undefined = { id: ids.hall, enabled: true }): Step[] {
+  return [{ sql: /sales-authorization:identity/, rows: row ? [row] : [], inspect(values, sql) {
+    assert.deepEqual(values, [actor.accountId]); assert.match(sql, /JOIN naijue_erp.staff s ON s.id = a.staff_id/);
+    assert.match(sql, /WHERE a.id = \$1::uuid FOR SHARE OF a, s$/); assert.doesNotMatch(sql, /LEFT JOIN|password|token|session|login_name/);
+  } }, ...(row && row.hall_id !== null ? [{ sql: /sales-authorization:hall/, rows: hall ? [hall] : [], inspect(values: unknown[], sql: string) {
+    assert.deepEqual(values, [row.hall_id]); assert.match(sql, /FROM naijue_erp.hall WHERE id = \$1::uuid FOR SHARE$/);
+  } }] : [])];
+}
+function actionService(client: ProtocolClient) {
+  let sequence = 1000;
+  return createSalesService({ unitOfWork: uow(client), rules: SYNTHETIC_RULES, authorization: createSalesActionAuthorization(),
+    now: () => time, newId: kind => sid(kind, sequence++) });
+}
+
+test("pg protocol sales authorization: identity locks stay on the command connection after receipt/target, not a second snapshot", async () => {
+  const command: SalesCommand = { action: "SAVE", actor, requestKey: "native-save", expectedVersion: null, draft: syntheticDraft() };
+  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(), ...identityRead(), ...documentWrites(storedDocument(), true), ...finalWrites("SAVE"), commit()]);
+  assert.equal((await actionService(client).execute(command)).status, "DRAFT");
+  assert.equal(client.calls.filter(call => /sales-authorization:identity/.test(call.sql)).length, 1); client.done();
+});
+
+test("pg protocol sales authorization: existing SAVE checks source/proposed scopes with one transaction-local identity lookup", async () => {
+  const command: SalesCommand = { action: "SAVE", actor, requestKey: "native-edit", expectedVersion: version(1), draft: syntheticDraft() };
+  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(storedDocument()), ...identityRead(),
+    ...documentWrites(storedDocument(undefined, "DRAFT", 2)), ...finalWrites("SAVE"), commit()]);
+  assert.equal((await actionService(client).execute(command)).version, 2);
+  assert.equal(client.calls.filter(call => /sales-authorization:identity/.test(call.sql)).length, 1); client.done();
+  const moved: SalesCommand = { ...command, draft: { ...command.draft, header: { ...command.draft.header, hallId: sid("hall", 99) } } };
+  const refused = new ProtocolClient([begin(), ...receiptRead(moved), ...salesRead(storedDocument()), ...identityRead(), rollback()]);
+  await assert.rejects(() => actionService(refused).execute(moved), { code: "FORBIDDEN" });
+  assert.ok(refused.calls.every(call => !/^(INSERT|UPDATE|DELETE)/.test(call.sql))); refused.done();
+});
+
+test("pg protocol sales authorization: disabled/current hall/role/staff facts fail before any write", async () => {
+  const variants: [Record<string, unknown> | undefined, Record<string, unknown> | undefined][] = [
+    [identityRow({ login_enabled: false }), { id: ids.hall, enabled: true }],
+    [identityRow({ employment_status: "离职" }), { id: ids.hall, enabled: true }],
+    [identityRow({ role: "admin" }), { id: ids.hall, enabled: true }],
+    [identityRow({ hall_id: sid("hall", 99) }), { id: sid("hall", 99), enabled: true }],
+    [identityRow(), { id: ids.hall, enabled: false }], [identityRow(), undefined],
+    [identityRow({ hall_id: null }), undefined]
+  ];
+  for (const [identity, hall] of variants) {
+    const command: SalesCommand = { action: "SAVE", actor, requestKey: "native-reject", expectedVersion: null, draft: syntheticDraft() };
+    // Explicit undefined hall means a missing row, not identityRead's default.
+    const steps = identityRead(identity, hall); if (hall === undefined && steps.length > 1) steps[1] = { ...steps[1]!, rows: [] };
+    const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(), ...steps, rollback()]);
+    await assert.rejects(() => actionService(client).execute(command), { code: "FORBIDDEN" });
+    assert.ok(client.calls.every(call => !/^(INSERT|UPDATE|DELETE)/.test(call.sql))); client.done();
+  }
+  const command: SalesCommand = { action: "SAVE", actor, requestKey: "native-missing", expectedVersion: null, draft: syntheticDraft() };
+  const missing = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(), { sql: /sales-authorization:identity/, rows: [] }, rollback()]);
+  await assert.rejects(() => actionService(missing).execute(command), { code: "FORBIDDEN" }); missing.done();
+});
+
+test("pg protocol sales authorization: cached identity requires active handle, same receipt account and loaded target", async () => {
+  const command = approve();
+  const unbound = new ProtocolClient([begin(), rollback()]);
+  await assert.rejects(() => uow(unbound).transaction(tx => tx.getCurrentSalesIdentity(actor.accountId)), { code: "TRANSACTION_SCOPE" }); unbound.done();
+  const noTarget = new ProtocolClient([begin(), ...receiptRead(command), rollback()]);
+  await assert.rejects(() => uow(noTarget).transaction(async tx => { await tx.getReceipt(actor.accountId, command.requestKey); await tx.getCurrentSalesIdentity(actor.accountId); }), { code: "TRANSACTION_SCOPE" }); noTarget.done();
+  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(), ...identityRead(), commit()]); let leaked: SalesTransaction | undefined;
+  await uow(client).transaction(async tx => {
+    leaked = tx; await tx.getReceipt(actor.accountId, command.requestKey); await tx.getSales(ids.sales);
+    const first = await tx.getCurrentSalesIdentity(actor.accountId); assert.ok(first); assert.ok(Object.isFrozen(first));
+    assert.equal(await tx.getCurrentSalesIdentity(actor.accountId), first);
+    await assert.rejects(() => tx.getCurrentSalesIdentity(sid("account", 99)), { code: "TRANSACTION_SCOPE" });
+  });
+  await assert.rejects(() => leaked!.getCurrentSalesIdentity(actor.accountId), { code: "TRANSACTION_CLOSED" }); client.done();
+});
+
+test("pg protocol sales authorization: identity cache never crosses command transactions", async () => {
+  const command = approve(); const first = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(), ...identityRead(), commit()]);
+  const second = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(), ...identityRead(identityRow({ login_enabled: false })), commit()]);
+  const clients = [first, second]; let connections = 0;
+  const work = new PostgresSalesUnitOfWork({ async connect() { connections++; const client = clients.shift(); assert.ok(client); return client; } });
+  for (const enabled of [true, false]) await work.transaction(async tx => {
+    await tx.getReceipt(actor.accountId, command.requestKey); await tx.getSales(ids.sales);
+    assert.equal((await tx.getCurrentSalesIdentity(actor.accountId))?.loginEnabled, enabled);
+  });
+  assert.equal(connections, 2); first.done(); second.done();
+});
+
+test("pg protocol sales authorization: late identity result after callback completion cannot escape as a grant", async () => {
+  const command = approve(); const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(), { sql: /sales-authorization:identity/, rows: [identityRow()] }, commit()]);
+  let releaseIdentity!: () => void; const held = new Promise<void>(resolve => { releaseIdentity = resolve; });
+  const pool = { async connect(): Promise<PgSalesClient> { return {
+    async query(sql, values) { const result = await client.query(sql, values); if (/sales-authorization:identity/.test(sql)) await held; return result; },
+    release: error => client.release(error)
+  }; } };
+  let rejected: Promise<void> | undefined;
+  await new PostgresSalesUnitOfWork(pool).transaction(async tx => {
+    await tx.getReceipt(actor.accountId, command.requestKey); await tx.getSales(ids.sales);
+    rejected = assert.rejects(() => tx.getCurrentSalesIdentity(actor.accountId), { code: "TRANSACTION_CLOSED" });
+  });
+  releaseIdentity(); await rejected; client.done();
+});
+
+test("pg protocol sales authorization: identity query failure requests rollback and releases the same connection", async () => {
+  const failure = new Error("SYNTHETIC identity lookup failure"); const command = approve();
+  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(storedDocument()), { sql: /sales-authorization:identity/, error: failure }, rollback()]);
+  await assert.rejects(() => actionService(client).execute(command), error => error === failure); assert.equal(client.releases[0], undefined); client.done();
+});
+
+test("pg protocol sales authorization: original SAVE result survives later APPROVED state but not current revocation", async () => {
+  const command: SalesCommand = { action: "SAVE", actor, requestKey: "original-save", expectedVersion: null, draft: syntheticDraft() };
+  const result: SalesResult = { operationId: sid("operation", 2000), salesId: ids.sales, version: version(1), status: "DRAFT", ledgerEntryIds: [] };
+  const receipt = { id: result.operationId, actor_account_id: actor.accountId, request_key: command.requestKey,
+    request_hash: requestHash({ ...command, actor: { accountId: actor.accountId } }), action: "SAVE", target_type: "SALES", target_sales_id: ids.sales, status: "COMMITTED", result, completed_at: time };
+  for (const enabled of [true, false]) {
+    const client: ProtocolClient = new ProtocolClient([begin(), ...receiptRead(command, receipt), ...salesRead(storedDocument(undefined, "APPROVED", 2)),
+      ...identityRead(identityRow({ login_enabled: enabled })), enabled ? commit() : rollback()]);
+    if (enabled) assert.deepEqual(await actionService(client).execute(command), result);
+    else await assert.rejects(() => actionService(client).execute(command), { code: "FORBIDDEN" });
+    assert.ok(client.calls.every(call => !/^(INSERT|UPDATE|DELETE)/.test(call.sql))); client.done();
+  }
+});
+
+test("pg protocol sales provenance defense: UPDATE cannot change loaded creator, creating hall or creation time", async () => {
+  for (const field of ["createdByAccountId", "createdHallId", "createdAt"] as const) {
+    const source = storedDocument(); const next = storedDocument(undefined, "DRAFT", 2);
+    const header = { ...next.header, [field]: field === "createdAt" ? "2026-10-21T00:00:00Z" : field === "createdHallId" ? null : sid("account", 99) };
+    const client = new ProtocolClient([begin(), ...salesRead(source), rollback()]);
+    await assert.rejects(() => uow(client).transaction(async tx => { await tx.getSales(ids.sales); await tx.putRuntimeSales({ ...next, header }); }), { code: "IMMUTABLE_CREATION_FACTS" });
+    assert.ok(client.calls.every(call => !/^(INSERT|UPDATE|DELETE)/.test(call.sql))); client.done();
+  }
+});
+
+test("pg protocol sales provenance defense: INSERT creator must be the receipt actor, not a request-selected account", async () => {
+  const command = approve();
+  for (const hasReceipt of [false, true]) {
+    const document = storedDocument();
+    const client = new ProtocolClient([begin(), ...(hasReceipt ? receiptRead(command) : []), ...salesRead(), rollback()]);
+    await assert.rejects(() => uow(client).transaction(async tx => {
+      if (hasReceipt) await tx.getReceipt(actor.accountId, command.requestKey);
+      await tx.getSales(ids.sales);
+      await tx.putRuntimeSales({ ...document, header: { ...document.header, createdByAccountId: sid("account", 99) } });
+    }), { code: "IMMUTABLE_CREATION_FACTS" }); client.done();
+  }
+});
+
+test("pg protocol sales authorization: approval uses the locked stored creator, not the selected salesperson", async () => {
+  const source = storedDocument(); const other = { ...source, header: { ...source.header, createdByAccountId: sid("account", 99), salespersonId: sid("staff", 16) } };
+  const command = approve(); const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(other), ...identityRead(), rollback()]);
+  await assert.rejects(() => actionService(client).execute(command), { code: "FORBIDDEN" });
+  assert.ok(client.calls.every(call => !/^(INSERT|UPDATE|DELETE)/.test(call.sql))); client.done();
+});
+
+test("pg protocol sales authorization: genuine null-hall ADMIN skips hall lookup and preserves null creation hall", async () => {
+  const context = { ...actor, hallId: null };
+  const command: SalesCommand = { action: "SAVE", actor: context, requestKey: "native-null-hall", expectedVersion: null, draft: syntheticDraft() };
+  const expected = storedDocument(); const document = { ...expected, header: { ...expected.header, createdHallId: null } };
+  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(), ...identityRead(identityRow({ hall_id: null, role: "ADMIN" })),
+    ...documentWrites(document, true), ...finalWrites("SAVE"), commit()]);
+  assert.equal((await actionService(client).execute(command)).status, "DRAFT");
+  assert.ok(client.calls.every(call => !/sales-authorization:hall/.test(call.sql))); client.done();
 });

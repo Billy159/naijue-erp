@@ -2,9 +2,10 @@ import type { SalesDocument, SalesHeaderRow, SalesLineRow, SalesSettlementRow } 
 import type { InventoryBalanceRow, InventoryLedgerRow } from "../../packages/domain/src/inventory.ts";
 import { requireDomain } from "../../packages/domain/src/errors.ts";
 import type { EntityId } from "../../packages/domain/src/values.ts";
-import type { OperationReceiptRow, SalesAuditRow, SalesTransaction, SalesUnitOfWork, StoredSales } from "../../packages/application/src/ports.ts";
+import type { OperationReceiptRow, SalesAuditRow, SalesCurrentIdentity, SalesTransaction, SalesUnitOfWork, StoredSales } from "../../packages/application/src/ports.ts";
 
 interface SyntheticTables {
+  identities: Map<EntityId<"account">, SalesCurrentIdentity>;
   headers: Map<EntityId<"sales">, SalesHeaderRow>;
   lines: Map<EntityId<"salesLine">, SalesLineRow>;
   settlements: Map<EntityId<"settlement">, SalesSettlementRow>;
@@ -18,10 +19,11 @@ export const balanceKey = (warehouseId: string, skuId: string): string => JSON.s
 const receiptKey = (actorId: string, key: string): string => JSON.stringify([actorId, key]);
 /** Synthetic-only serialized copy-on-write reference adapter. NOT a database or evidence of SQL isolation. */
 export class SyntheticStore implements SalesUnitOfWork {
-  private tables: SyntheticTables = { headers: new Map(), lines: new Map(), settlements: new Map(), balances: new Map(), ledger: [], audit: [], receipts: new Map(), stockBasis: new Map() };
+  private tables: SyntheticTables = { identities: new Map(), headers: new Map(), lines: new Map(), settlements: new Map(), balances: new Map(), ledger: [], audit: [], receipts: new Map(), stockBasis: new Map() };
   private tail: Promise<unknown> = Promise.resolve();
   failNextAt: string | undefined;
   snapshot(): SyntheticTables { return structuredClone(this.tables); }
+  seedIdentity(identity: SalesCurrentIdentity): void { this.tables.identities.set(identity.accountId, structuredClone(identity)); }
   seedBalance(row: InventoryBalanceRow): void { this.tables.balances.set(balanceKey(row.warehouseId, row.skuId), structuredClone(row)); }
   seedCutoffHistory(document: SalesDocument): void {
     this.tables.headers.set(document.header.id, structuredClone(document.header));
@@ -39,8 +41,15 @@ export class SyntheticStore implements SalesUnitOfWork {
           this.failNextAt = undefined; throw new Error(`SYNTHETIC injected failure: ${name}:${count}`);
         }
       };
+      let active = true; let receiptActor: EntityId<"account"> | undefined; let target: EntityId<"sales"> | undefined;
+      const check = (): void => { requireDomain(active, "TRANSACTION_CLOSED", "Synthetic transaction is closed"); };
       const tx: SalesTransaction = {
+        async getCurrentSalesIdentity(accountId) {
+          check(); requireDomain(receiptActor === accountId && target !== undefined, "TRANSACTION_SCOPE", "Bind synthetic receipt actor and target first");
+          return structuredClone(draft.identities.get(accountId));
+        },
         async getSales(id) {
+          check(); target = id;
           const header = draft.headers.get(id); if (!header) return undefined;
           return structuredClone({ document: { header, lines: [...draft.lines.values()].filter(row => row.salesId === id), settlements: [...draft.settlements.values()].filter(row => row.salesId === id) }, stockBasis: draft.stockBasis.get(id) ?? "RUNTIME_LEDGER" });
         },
@@ -58,7 +67,7 @@ export class SyntheticStore implements SalesUnitOfWork {
           }
           draft.stockBasis.set(document.header.id, "RUNTIME_LEDGER");
         },
-        async getReceipt(actorId, key) { return structuredClone(draft.receipts.get(receiptKey(actorId, key))); },
+        async getReceipt(actorId, key) { check(); receiptActor = actorId; return structuredClone(draft.receipts.get(receiptKey(actorId, key))); },
         async insertReceipt(row) {
           point("receipt"); const key = receiptKey(row.actorAccountId, row.requestKey);
           requireDomain(!draft.receipts.has(key), "RECEIPT_UNIQUE", "Actor and original key must be unique");
@@ -76,9 +85,11 @@ export class SyntheticStore implements SalesUnitOfWork {
         },
         async appendAudit(row) { point("audit"); draft.audit.push(structuredClone(row)); }
       };
-      const result = await work(tx);
-      this.tables = draft;
-      return structuredClone(result);
+      try {
+        const result = await work(tx);
+        this.tables = draft;
+        return structuredClone(result);
+      } finally { active = false; }
     };
     const result = this.tail.then(run);
     this.tail = result.catch(() => undefined);

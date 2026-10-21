@@ -1,6 +1,6 @@
 import { PostgresPostingBalances } from "./inventory-posting-balances.ts";
 import type { Pool } from "pg";
-import type { OperationReceiptRow, SalesAuditRow, SalesResult, SalesTransaction, SalesUnitOfWork, StoredSales } from "../../../packages/application/src/ports.ts";
+import type { OperationReceiptRow, SalesAuditRow, SalesCurrentIdentity, SalesResult, SalesTransaction, SalesUnitOfWork, StoredSales } from "../../../packages/application/src/ports.ts";
 import { sameSalesLine, sameSalesSettlement } from "../../../packages/application/src/sales-change-evidence.ts";
 import type { SalesDocument, SalesHeaderRow, SalesLineRow, SalesSettlementRow } from "../../../packages/domain/src/documents.ts";
 import type { InventoryBalanceRow, InventoryLedgerRow } from "../../../packages/domain/src/inventory.ts";
@@ -103,7 +103,11 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
 
 class PostgresSalesTransaction implements SalesTransaction {
   private active = true;
-  private sales: { readonly id: EntityId<"sales">; readonly version: Version | null; readonly stockBasis: StoredSales["stockBasis"] } | undefined;
+  private sales: { readonly id: EntityId<"sales">; readonly version: Version | null; readonly stockBasis: StoredSales["stockBasis"];
+    readonly creation?: Pick<SalesHeaderRow, "createdByAccountId" | "createdHallId" | "createdAt"> } | undefined;
+  private receiptActor: EntityId<"account"> | undefined;
+  private identityLoaded = false;
+  private identity: SalesCurrentIdentity | undefined;
   private readonly balances: PostgresPostingBalances;
   private readonly previousLines = new Map<string, SalesLineRow>();
   private readonly previousSettlements = new Map<EntityId<"settlement">, SalesSettlementRow>();
@@ -115,6 +119,39 @@ class PostgresSalesTransaction implements SalesTransaction {
     requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes");
     return this.client.query(text, values);
   }
+  async getCurrentSalesIdentity(accountId: EntityId<"account">): Promise<SalesCurrentIdentity | undefined> {
+    // Check before the cache too: a closed or differently-bound handle must never
+    // return an earlier grant. Cache lifetime is this command transaction only.
+    const check = (): void => {
+      requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes");
+      requireDomain(this.receiptActor === accountId && this.sales !== undefined, "TRANSACTION_SCOPE", "Bind the receipt actor and sales target before identity lookup");
+    };
+    check();
+    if (this.identityLoaded) return this.identity;
+    const rows = (await this.query(`/* sales-authorization:identity */ SELECT a.id AS account_id, a.staff_id, a.login_enabled,
+      s.role, s.employment_status, s.hall_id
+      FROM naijue_erp.user_account a JOIN naijue_erp.staff s ON s.id = a.staff_id
+      WHERE a.id = $1::uuid FOR SHARE OF a, s`, [accountId])).rows;
+    check();
+    requireDomain(rows.length <= 1, "FORBIDDEN", "Current sales identity is ambiguous");
+    const row = rows[0];
+    if (!row) { this.identityLoaded = true; return undefined; }
+    const nativeAccountId = id("account", row.account_id);
+    requireDomain(nativeAccountId === accountId, "FORBIDDEN", "Current identity must match the receipt account");
+    const hallId = nullableId("hall", row.hall_id);
+    // Separate READ COMMITTED statement observes hall changes after account/staff
+    // lock waits; never lock the nullable side of an outer join.
+    const halls = hallId === null ? [] : (await this.query(`/* sales-authorization:hall */ SELECT id, enabled
+      FROM naijue_erp.hall WHERE id = $1::uuid FOR SHARE`, [hallId])).rows;
+    check();
+    requireDomain(halls.length <= 1, "FORBIDDEN", "Current sales hall is ambiguous");
+    const hall = halls[0];
+    const hallEnabled = hallId === null ? null : !!hall && id("hall", hall.id) === hallId && booleanValue(hall.enabled);
+    this.identity = Object.freeze({ accountId: nativeAccountId, staffId: id("staff", row.staff_id), loginEnabled: booleanValue(row.login_enabled),
+      role: stringValue(row.role), employmentStatus: stringValue(row.employment_status), hallId, hallEnabled });
+    this.identityLoaded = true;
+    return this.identity;
+  }
   async getReceipt(actorId: EntityId<"account">, requestKey: string): Promise<OperationReceiptRow | undefined> {
     const identity = JSON.stringify([actorId, requestKey]);
     requireDomain(this.receiptKey === undefined || this.receiptKey === identity, "TRANSACTION_SCOPE", "One command receipt key is supported per transaction");
@@ -122,6 +159,8 @@ class PostgresSalesTransaction implements SalesTransaction {
     await this.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", [`naijue:receipt:${identity}`]);
     const row = (await this.query(`SELECT id, actor_account_id, request_key, request_hash, action, target_type, target_id AS target_sales_id, status, result_data AS result,
       ${stamp("completed_at")} AS completed_at FROM naijue_erp.operation_receipt WHERE actor_account_id = $1 AND request_key = $2`, [actorId, requestKey])).rows[0];
+    requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes");
+    this.receiptActor = actorId;
     if (!row) return undefined;
     requireDomain(row.target_type === "SALES", "IDEMPOTENCY_CONFLICT", "The original actor/key belongs to another document kind");
     return { id: id("operation", row.id), actorAccountId: id("account", row.actor_account_id), requestKey: stringValue(row.request_key), requestHash: stringValue(row.request_hash),
@@ -135,7 +174,8 @@ class PostgresSalesTransaction implements SalesTransaction {
     if (!row) { this.sales = { id: salesId, version: null, stockBasis: "RUNTIME_LEDGER" }; return undefined; }
     const header = decodeHeader(row);
     const stockBasis = choice(row.stock_basis, ["RUNTIME_LEDGER", "CUTOFF_HISTORY"]);
-    this.sales = { id: salesId, version: header.version, stockBasis };
+    this.sales = { id: salesId, version: header.version, stockBasis,
+      creation: { createdByAccountId: header.createdByAccountId, createdHallId: header.createdHallId, createdAt: header.createdAt } };
     const lines = (await this.query(LINE_SELECT, [salesId])).rows.map(decodeLine);
     const settlements = (await this.query(SETTLEMENT_SELECT, [salesId])).rows.map(decodeSettlement);
     for (const line of lines) this.previousLines.set(line.id, structuredClone(line));
@@ -147,10 +187,15 @@ class PostgresSalesTransaction implements SalesTransaction {
     return { document: { header, lines, settlements }, stockBasis };
   }
   async putRuntimeSales(document: SalesDocument): Promise<void> {
+    requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes");
     const h = document.header; const loaded = this.sales;
     requireDomain(loaded?.id === h.id, "TRANSACTION_SCOPE", "Document must be read before it is written");
     requireDomain(loaded.stockBasis === "RUNTIME_LEDGER", "HISTORICAL_POSTING_NOT_IMPLEMENTED", "Cutoff history is not a runtime posting");
     requireDomain(h.version === (loaded.version === null ? 1 : loaded.version + 1), "VERSION_CONFLICT", "Document write must advance the loaded version exactly once");
+    requireDomain(loaded.creation ? h.createdByAccountId === loaded.creation.createdByAccountId
+      && h.createdHallId === loaded.creation.createdHallId && h.createdAt === loaded.creation.createdAt
+      : this.receiptActor !== undefined && h.createdByAccountId === this.receiptActor,
+    "IMMUTABLE_CREATION_FACTS", "Sales creation facts must preserve the loaded header, and new creators must match the receipt actor");
     const values: unknown[] = [h.id, h.number, h.businessType, h.businessDate, h.hallId, h.customerId, h.salespersonId, h.warehouseId, h.status,
       versionToSql(h.version), moneyToSql(h.grossAmount), moneyToSql(h.orderDiscount), moneyToSql(h.netDue), h.note, h.createdByAccountId, h.createdHallId,
       h.createdAt, h.updatedAt, h.approvedByAccountId, h.approvedAt];
