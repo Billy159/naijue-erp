@@ -1,0 +1,54 @@
+{
+  "status": "SOURCE_ONLY_READY_NOT_ENGINE_PASS",
+  "runtime_implementation_base": "60457e0bc2dadb09921ef69eec7b30af60d7a758",
+  "head_at_source_freeze": "4350886f5838f35253032b21a6b92a820c9efeb9",
+  "suite": "backend-0001-0008",
+  "existing_test_total_preserved": 22,
+  "new_prepared_groups": 4,
+  "planned_scenario_labels": 24,
+  "expected_future_total_tests_including_setup_and_outer": 26,
+  "postgres_execution": "NOT_RUN",
+  "postgres_startup_or_connection": "NOT_PERFORMED",
+  "new_accounts_or_secrets": "NONE",
+  "receipt_boundary": "Actual GET receipt route with explicit TEST-ONLY AUTHENTICATION and Fastify.inject, not session-authorized public writes/browser/TLS acceptance",
+  "checks": {
+    "integration_typecheck_exit": 0,
+    "connection_free_regressions": {
+      "passed": 24,
+      "failed": 0
+    },
+    "syntax": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "independent_review": "evidence/sales-write-auth-pg-independent/",
+  "sources": [
+    {
+      "path": "tests/integration/sales-write-authorization-acceptance.ts",
+      "sha256": "0b2e550fe58598b9ad9643e11be907bdd8009d12495a39b0b3c70bff2f2a5ae3"
+    },
+    {
+      "path": "tests/integration/postgres.integration.test.ts",
+      "sha256": "8f4b96b4ed3c666ae631759d073815ce10a7a090b3b607351682d6eced50598e"
+    },
+    {
+      "path": "tests/integration/migration-manifest.ts",
+      "sha256": "276c5305bde739b4fde72c64b134962c1f4d7b264edf76feaeb77acea43f6414"
+    },
+    {
+      "path": "tests/integration/plan.ts",
+      "sha256": "15f840b0ebe06ab8e10e989b8e8ad6012f0bd2c2115aca4e6cd51fc802573121"
+    },
+    {
+      "path": "tests/integration/backend-source.test.ts",
+      "sha256": "a420074e27b6bdda8512bd28402fd9856912fa324f015882b80ce2d06886bac1"
+    }
+  ],
+  "unchanged_boundaries": [
+    "original eight migration bytes/hashes",
+    "fresh/exclusive/loopback gates",
+    "suite enum",
+    "database/safety/operator",
+    "old backend/HTTP/native/sparse helpers and original evidence"
+  ],
+  "no_source_changes_after_this_freeze": true
+}
