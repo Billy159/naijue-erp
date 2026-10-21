@@ -15,12 +15,14 @@ export interface CurrentFormSearch { readonly search: string; readonly page: num
 /** Only account lookup carries a selected method; omission is not an all-method grant. */
 export type CurrentSalesReferenceQuery = CurrentFormSearch & (
   { readonly kind: "hall"; readonly hallId: null }
-  | { readonly kind: "customer" | "salesperson" | "warehouse"; readonly hallId: EntityId<"hall"> }
+  | { readonly kind: "customer" | "salesperson" | "warehouse" | "paymentMethod"; readonly hallId: EntityId<"hall"> }
   | { readonly kind: "paymentAccount"; readonly hallId: EntityId<"hall">; readonly paymentMethodId: EntityId<"paymentMethod"> }
 );
 export interface CurrentSalesReferenceItem {
   readonly id: string; readonly name: string; readonly code: string | null;
   readonly hallId: EntityId<"hall"> | null; readonly hallName: string | null;
+  /** Account-only method metadata. A paymentMethod item's own canonical ID/name
+   * are in id/name; these two fields and its hall/code fields remain null. */
   readonly paymentMethodId: EntityId<"paymentMethod"> | null; readonly paymentMethodName: string | null;
 }
 export interface CurrentTransferWarehouseQuery extends CurrentFormSearch { readonly direction: "FROM" | "TO" }
@@ -58,7 +60,7 @@ export type CurrentFormIntent = { readonly kind: "sales-references"; readonly pa
   | { readonly kind: "product-skus"; readonly parameters: CurrentFormProductSkuQuery }
   | { readonly kind: "sku-batch"; readonly parameters: CurrentFormSkuBatchQuery };
 /** A trusted host grant for this form, never request-supplied. Halls constrain the
- * form/warehouse scope, not ownership of shared customer/staff/product/account records. */
+ * form/warehouse scope, not ownership of shared customer/staff/product/method/account records. */
 export type CurrentFormReadGrant = { readonly kind: "all" }
   | { readonly kind: "halls"; readonly hallIds: readonly EntityId<"hall">[] };
 export interface CurrentFormAuthorization {

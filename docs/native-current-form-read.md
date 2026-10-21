@@ -39,11 +39,13 @@ or prevent changes between read and submit. No cross-request facts cache exists.
 `packages/application/src/current-form-ports.ts` defines:
 
 - `readSalesReferences(actor, { kind, hallId, search, page, pageSize: 20 }, signal)`.
-  Kinds are hall, customer, salesperson, warehouse and paymentAccount. Only the
+  Kinds are hall, customer, salesperson, warehouse, paymentMethod and paymentAccount. Only the
   hall picker uses null hallId. All other queries explicitly name their proposed
   sales hall. The paymentAccount kind additionally requires canonical paymentMethodId;
   other kinds reject that property. The hall must exist, be enabled, be in the host grant, and match the current
   salesperson's hall. Admin/warehouse action scope is not narrowed to their own hall.
+  The paymentMethod kind returns its canonical native method in item id/name;
+  code, hallId/hallName and account-only paymentMethodId/paymentMethodName are null.
 - `readTransferWarehouses(actor, { direction: FROM | TO, search, page, pageSize: 20 }, signal)`.
 - `readProducts(actor, { context, search, page, pageSize: 20 }, signal)`.
 - `readProductSkus(actor, { context, productId, page, pageSize: 20 }, signal)`.
@@ -60,7 +62,8 @@ Candidate search is a bounded 0–200-character, already-trimmed, control-free s
 substring: percent, underscore, backslash and quotes are not wildcard/code. Existing
 PostgreSQL locale rules apply; browser Unicode-locale parity is not claimed.
 
-Non-account counts and stable name/code + native-ID-ordered pages use two set
+Non-account counts and stable name/code + native-ID-ordered pages (method-ID order
+for payment methods) use two set
 queries in the same snapshot. Account counts remain pure current eligibility; optional
 recommendation reads use a short-budget savepoint and stable account-ID bucket order. Pagination is exactly 20 and real out-of-range pages stay empty.
 The batch uses one bounded target query, never per-SKU calls. No historical-observed
@@ -85,6 +88,15 @@ recommendation has a bounded runtime-document proof, never a candidate eligibili
   accounts selectable in stable native-ID order. Frozen
   sales-funds-ui.js:17,22 and candidate sales/validation.ts settlement handling
   explicitly support this distinction. No balances, debt or invented fund rows.
+- Payment method candidates come from enabled native payment_method rows with an
+  EXISTS check for at least one enabled payment_account whose actual method is
+  that row's ID. This preserves the inspected online selector eligibility, not
+  a broader all-enabled catalogue or a guessed list reconstructed from accounts.
+  Native method ID/name are returned unchanged, with no account payload, account
+  recommendation or account-hall ownership filter. Count/page use the same
+  eligibility/search predicate and stable native method-ID order. See
+  `native-current-payment-method-selector.md` for exact source references and
+  this amendment's synthetic-only verification.
 - Transfer FROM is enabled OR has nonzero native inventory; TO is enabled. The
   existing transfer-policy does not reject a warehouse merely for hallEnabled=false,
   so this reader returns that fact and does not invent a new hall-enabled rule.
@@ -93,7 +105,7 @@ recommendation has a bounded runtime-document proof, never a candidate eligibili
 - Products must be enabled. SKU reads require enabled SKU/product/color/fit and an
   actual size-group membership. They return actual four-dimensional native IDs,
   original SKU/product codes and full labels, never a generated cross-product.
-  Shared product/customer/staff/account records acquire no invented hall ownership.
+  Shared product/customer/staff/method/account records acquire no invented hall ownership.
 
 ## Honest storage and launch boundaries
 
@@ -118,8 +130,9 @@ transaction reference/pricing assembly and real write-host startup still remain.
 
 ## Verification and rollback
 
-`node --test tests/current-form-reader.test.ts` now has32 synthetic/parser/scripted
-pg tests; the original25-test log is a historical artifact. Current focused results
+`node --test tests/current-form-reader.test.ts` had32 synthetic/parser/scripted
+pg tests in the historical account amendment; the original25-test log is a historical artifact. Later payment-method amendment results
+are recorded separately in `evidence/current-payment-method-selector/`. Earlier focused results
 and exact source hashes are in evidence/account-production-parity/. These check strict bounds and immutable capture, fresh identity/revocation,
 explicit grants/scope, source-specific eligibility, stable native facts, exact prices
 and counts, bounded target sets, aborts and cleanup. They inspect requested SQL but

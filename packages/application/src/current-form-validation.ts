@@ -43,7 +43,7 @@ export function parseCurrentSalesReferenceQuery(value: unknown): CurrentSalesRef
   const hallId = id("hall", row.hallId);
   if (row.kind === "paymentAccount") return Object.freeze({ ...search(row), kind: "paymentAccount", hallId,
     paymentMethodId: id("paymentMethod", row.paymentMethodId) });
-  if (row.kind !== "customer" && row.kind !== "salesperson" && row.kind !== "warehouse") invalid();
+  if (row.kind !== "customer" && row.kind !== "salesperson" && row.kind !== "warehouse" && row.kind !== "paymentMethod") invalid();
   return Object.freeze({ ...search(row), kind: row.kind, hallId });
 }
 export function parseCurrentTransferWarehouseQuery(value: unknown): CurrentTransferWarehouseQuery {

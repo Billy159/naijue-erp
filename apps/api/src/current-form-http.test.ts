@@ -59,6 +59,22 @@ test('CURRENT form HTTP: selected method mandatory only for account lookup', asy
  assert.equal((await f.post(url, { ...query, kind: 'customer', paymentMethodId: id })).statusCode, 400);
  assert.equal(f.calls.length, 1);
 });
+test('CURRENT form HTTP: bounded payment-method selection uses the existing authenticated sales-reference route', async t => {
+ const f = await setup(t); const url = routes[0][0];
+ const query = { kind: 'paymentMethod', hallId: id, search: "%_'\\", page: 2, pageSize: 20 };
+ const response = await f.post(url, query); assert.equal(response.statusCode, 200, response.body);
+ assert.equal(response.json().exactTotal, '9007199254740993'); assert.equal(response.headers['cache-control'], 'no-store');
+ assert.equal(f.calls.length, 1); assert.deepEqual(f.calls[0]!.body, query); assert.ok(Object.isFrozen(f.calls[0]!.body));
+ assert.deepEqual(f.calls[0]!.actor, actor); assert.equal(f.app.server.listening, false);
+ for (const invalid of [{ ...query, hallId: null }, { ...query, hallId: 'fake' }, { ...query, paymentMethodId: id },
+  { ...query, paymentAccountId: id }, { ...query, pageSize: 200 }, { ...query, page: '2' }, { ...query, search: ' trim ' }, { ...query, search: 'x'.repeat(201) }])
+  assert.equal((await f.post(url, invalid)).statusCode, 400);
+ assert.equal(f.calls.length, 1);
+ const unauthenticated = await setup(t, { authenticate: async () => null });
+ assert.equal((await unauthenticated.post(url, query)).statusCode, 401); assert.equal(unauthenticated.calls.length, 0);
+ const denied = await setup(t, { failure: new DomainError('FORBIDDEN', 'PRIVATE method source') });
+ const forbidden = await denied.post(url, query); assert.equal(forbidden.statusCode, 403); assert.ok(!forbidden.body.includes('PRIVATE'));
+});
 test('CURRENT form HTTP: authentication must precede reader and malformed trusted facts fail closed', async t => {
  const f = await setup(t, { authenticate: async () => null });
  for (const [url, body] of routes) assert.equal((await f.post(url, body)).statusCode, 401);
@@ -67,7 +83,7 @@ test('CURRENT form HTTP: authentication must precede reader and malformed truste
   const g = await setup(t, { authenticate }); const r = await g.post(...routes[0]); assert.equal(r.statusCode, 500); assert.ok(!r.body.includes('PRIVATE')); assert.equal(g.calls.length, 0);
  }
  assert.throws(() => createCurrentFormHttpPlugin({} as CurrentFormHttpOptions), /explicit trusted authentication/);
- assert.throws(() => createCurrentFormHttpPlugin({ authenticate: async () => actor } as CurrentFormHttpOptions), /explicit trusted reader/);
+ assert.throws(() => createCurrentFormHttpPlugin({ authenticate: async () => actor } as unknown as CurrentFormHttpOptions), /explicit trusted reader/);
 });
 test('CURRENT form HTTP: captured reader cannot be replaced after construction', async t => {
  const f = await setup(t); f.reader.readSalesReferences = async () => { throw new Error('REPLACED'); };

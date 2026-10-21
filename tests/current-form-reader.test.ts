@@ -8,6 +8,7 @@ import type { CurrentFormAuthorization, CurrentFormIntent, CurrentFormReadGrant,
 import { parseCurrentSalesReferenceQuery, parseCurrentTransferWarehouseQuery, parseCurrentFormProductQuery,
   parseCurrentFormProductSkuQuery, parseCurrentFormSkuBatchQuery } from "../packages/application/src/current-form-validation.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
+import { DomainError } from "../packages/domain/src/errors.ts";
 const hall = actor.hallId!, foreignHall = sid("hall", 990), staffId = sid("staff", 991), productId = sid("product", 992), skuId = sid("sku", 993);
 const signal = () => new AbortController().signal;
 const context = { kind: "SALES" as const, hallId: hall };
@@ -124,6 +125,86 @@ test("current forms: selected sales hall must exist and be enabled in this same 
     const client = new Client([begin(), identity(), { sql: /current-form:sales-hall/, rows }, rollback()]);
     await assert.rejects(() => reader(client).readSalesReferences(actor, reference("customer"), signal()), { code: "FORBIDDEN" }); client.done();
   }
+});
+test("current forms: payment-method selector has a strict native hall-context contract, never selected-method/account authority", async () => {
+  const query = reference("paymentMethod"); const parsed = parseCurrentSalesReferenceQuery(query);
+  assert.deepEqual(parsed, query); assert.ok(Object.isFrozen(parsed));
+  let connections = 0; const r = new PostgresCurrentFormReader({ async connect() { connections++; throw new Error("must not connect"); } }, allow);
+  for (const input of [{ ...query, hallId: null }, { ...query, hallId: "fake" }, { ...query, paymentMethodId: selectedMethod },
+    { ...query, accountId: sid("paymentAccount", 1010) }, { ...query, enabled: true }, { ...query, pageSize: 1 },
+    { ...query, page: "1" }, { ...query, search: " padded " }, { ...query, search: "x".repeat(201) }]) {
+    await assert.rejects(async () => r.readSalesReferences(actor, input as never, signal()), { code: "INVALID_CURRENT_FORM_QUERY" });
+  }
+  const aborted = new AbortController(); aborted.abort();
+  await assert.rejects(() => r.readSalesReferences(actor, query, aborted.signal), { code: "CURRENT_FORM_READ_ABORTED" });
+  assert.equal(connections, 0);
+});
+test("current forms: payment-method reads recheck identity, explicit authorization and proposed-hall scope before candidates", async () => {
+  const foreign = new Client([begin(), identity(), rollback()]);
+  await assert.rejects(() => reader(foreign).readSalesReferences(actor, { ...search, kind: "paymentMethod", hallId: foreignHall }, signal()), { code: "FORBIDDEN" }); foreign.done();
+  const restricted = new Client([begin(), identity({ role: "ADMIN" }), rollback()]);
+  await assert.rejects(() => reader(restricted, { async authorize() { return { kind: "halls", hallIds: [foreignHall] }; } })
+    .readSalesReferences(actor, reference("paymentMethod"), signal()), { code: "FORBIDDEN" }); restricted.done();
+  const revoked = new Client([begin(), identity({ login_enabled: false }), rollback()]);
+  await assert.rejects(() => reader(revoked).readSalesReferences(actor, reference("paymentMethod"), signal()), { code: "FORBIDDEN" }); revoked.done();
+  const denied = new Client([begin(), identity(), rollback()]);
+  await assert.rejects(() => reader(denied, { async authorize() { throw new DomainError("FORBIDDEN", "SYNTHETIC denied"); } })
+    .readSalesReferences(actor, reference("paymentMethod"), signal()), { code: "FORBIDDEN" }); denied.done();
+  for (const rows of [[], [{ id: hall, enabled: false }]]) {
+    const disabledHall = new Client([begin(), identity(), { sql: /current-form:sales-hall/, rows }, rollback()]);
+    await assert.rejects(() => reader(disabledHall).readSalesReferences(actor, reference("paymentMethod"), signal()), { code: "FORBIDDEN" }); disabledHall.done();
+  }
+});
+test("current forms: payment-method identity/label comes from enabled native methods with an eligible account, never hall ownership or account projection", async () => {
+  const literal = "%_'\\"; const nativeName = "SYNTHETIC 原始收款方式 完整名称";
+  const candidate = item({ id: selectedMethod, name: nativeName, method_enabled: true, hall_id: null, hall_name: null });
+  const eligibility = (values: unknown[], sql: string) => {
+    assert.deepEqual(values, [literal]); assert.match(sql, /FROM naijue_erp.payment_method r WHERE r.enabled AND EXISTS \(SELECT 1 FROM naijue_erp.payment_account a WHERE a.payment_method_id = r.id AND a.enabled\)/);
+    assert.match(sql, /strpos\(lower\(r.name\), lower\(\$1::text\)\) > 0/);
+    assert.ok(!/JOIN|DISTINCT|payment_account_hall|hall_id|sales_header|LIKE|a.name/.test(sql)); assert.ok(!sql.includes(literal));
+  };
+  const client = new Client([begin(), identity(), selectedHall(), total("1", eligibility), page([candidate], (values, sql) => {
+    assert.deepEqual(values, [literal, 20, 0]); assert.match(sql, /SELECT r.id, r.name, r.enabled AS method_enabled/);
+    assert.match(sql, /ORDER BY r.id LIMIT \$2 OFFSET \$3/); assert.ok(!/ORDER BY.*name|is_recommended/.test(sql));
+  }), commit()]);
+  let authorized = 0;
+  const result = await reader(client, { async authorize(_facts, intent) {
+    authorized++; assert.deepEqual(intent, { kind: "sales-references", parameters: { ...reference("paymentMethod"), search: literal } });
+    assert.ok(Object.isFrozen(intent.parameters)); return { kind: "halls", hallIds: [hall] };
+  } }).readSalesReferences(actor, { ...reference("paymentMethod"), search: literal }, signal());
+  assert.deepEqual(result.items, [{ id: selectedMethod, name: nativeName, code: null, hallId: null, hallName: null, paymentMethodId: null, paymentMethodName: null }]);
+  assert.equal(result.exactTotal, 1n); assert.equal(authorized, 1); assert.ok(Object.isFrozen(result.items[0]));
+  assert.ok(!Object.hasOwn(result, "recommendationAvailability")); assert.equal(client.calls.length, 6); readonly(client); client.done();
+});
+test("current forms: disabled and zero-eligible-account methods are excluded by the same authoritative count/page predicate", async () => {
+  const eligible = "r.enabled AND EXISTS (SELECT 1 FROM naijue_erp.payment_account a WHERE a.payment_method_id = r.id AND a.enabled)";
+  const check = (values: unknown[], sql: string) => { assert.ok(sql.includes(eligible)); assert.deepEqual(values[0], ""); };
+  // Scripted pg tests assert the exclusion predicate; no PostgreSQL execution is claimed.
+  const client = new Client([begin(), identity(), selectedHall(), total("0", check), page([], check), commit()]);
+  const result = await reader(client).readSalesReferences(actor, reference("paymentMethod"), signal());
+  assert.equal(result.exactTotal, 0n); assert.deepEqual(result.items, []); client.done();
+});
+test("current forms: payment-method pages retain exact bigint totals, fixed bounds and real out-of-range emptiness", async () => {
+  const row = (index: number) => item({ id: sid("paymentMethod", 3300 + index), method_enabled: true, hall_id: null, hall_name: null });
+  const large = new Client([begin(), identity(), selectedHall(), total("9007199254740993"), page(Array.from({ length: 20 }, (_, index) => row(index))), commit()]);
+  assert.equal((await reader(large).readSalesReferences(actor, reference("paymentMethod"), signal())).exactTotal, 9007199254740993n); large.done();
+  const outOfRange = new Client([begin(), identity(), selectedHall(), total("1"), page([], (values, sql) => {
+    assert.deepEqual(values, ["", 20, 20]); assert.match(sql, /ORDER BY r.id LIMIT \$2 OFFSET \$3/);
+  }), commit()]);
+  const result = await reader(outOfRange).readSalesReferences(actor, { ...reference("paymentMethod"), page: 2 }, signal());
+  assert.equal(result.page, 2); assert.deepEqual(result.items, []); outOfRange.done();
+});
+test("current forms: malformed/disabled/shared-shape payment-method facts fail closed without fallback", async () => {
+  const candidate = item({ id: selectedMethod, method_enabled: true, hall_id: null, hall_name: null });
+  for (const change of [{ id: "fake" }, { name: "" }, { method_enabled: false }, { method_enabled: "true" },
+    { code: "invented" }, { hall_id: hall, hall_name: "SYNTHETIC hall" }, { payment_method_id: selectedMethod, payment_method_name: "SYNTHETIC self" }]) {
+    const client = new Client([begin(), identity(), selectedHall(), total(), page([{ ...candidate, ...change }]), rollback()]);
+    await assert.rejects(() => reader(client).readSalesReferences(actor, reference("paymentMethod"), signal()), { code: "id" in change ? "INVALID_ID" : "INVALID_DATABASE_VALUE" }); client.done();
+  }
+  const duplicates = new Client([begin(), identity(), selectedHall(), total("2"), page([candidate, candidate]), rollback()]);
+  await assert.rejects(() => reader(duplicates).readSalesReferences(actor, reference("paymentMethod"), signal()), { code: "INVALID_DATABASE_VALUE" }); duplicates.done();
+  const mismatch = new Client([begin(), identity(), selectedHall(), total("1"), page([]), rollback()]);
+  await assert.rejects(() => reader(mismatch).readSalesReferences(actor, reference("paymentMethod"), signal()), { code: "INVALID_DATABASE_VALUE" }); mismatch.done();
 });
 test("current forms: enabled customers are native master candidates even unused, with literal parameterized search", async () => {
   const value = "%_'\\"; const customer = sid("customer", 1001); const client = new Client([begin(), identity(), selectedHall(),

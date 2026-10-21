@@ -200,6 +200,14 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
           from = "FROM naijue_erp.warehouse r JOIN naijue_erp.hall h ON h.id = r.hall_id"; values.push(parameters.hallId);
           where = `r.enabled AND h.enabled AND r.hall_id = $${values.length}::uuid AND ${match("r.name")}`;
           columns = `r.id, r.name, NULL::text AS code, r.hall_id, h.name AS hall_name, NULL::uuid AS payment_method_id, NULL::text AS payment_method_name`; break;
+        case "paymentMethod":
+          from = "FROM naijue_erp.payment_method r";
+          // Online methodOptions shows enabled native methods with at least one
+          // eligible account. EXISTS avoids duplicate methods/count fanout; neither
+          // the method nor its accounts acquire hall ownership from the form scope.
+          where = `r.enabled AND EXISTS (SELECT 1 FROM naijue_erp.payment_account a WHERE a.payment_method_id = r.id AND a.enabled) AND ${match("r.name")}`;
+          order = "r.id";
+          columns = `r.id, r.name, r.enabled AS method_enabled, NULL::text AS code, NULL::uuid AS hall_id, NULL::text AS hall_name, NULL::uuid AS payment_method_id, NULL::text AS payment_method_name`; break;
         case "paymentAccount":
           from = "FROM naijue_erp.payment_account r JOIN naijue_erp.payment_method pm ON pm.id = r.payment_method_id";
           values.push(parameters.paymentMethodId);
@@ -209,13 +217,15 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
         default: throw new TypeError("Unsupported current reference kind");
       }
       const decode = (row: Record<string, unknown>): CurrentSalesReferenceItem => {
-        const kind = ({ hall: "hall", customer: "customer", salesperson: "staff", warehouse: "warehouse", paymentAccount: "paymentAccount" } as const)[parameters.kind];
+        const kind = ({ hall: "hall", customer: "customer", salesperson: "staff", warehouse: "warehouse", paymentMethod: "paymentMethod", paymentAccount: "paymentAccount" } as const)[parameters.kind];
         const hallId = row.hall_id === null ? null : id("hall", row.hall_id); const hallName = nullableText(row.hall_name);
         requireDomain((hallId === null) === (hallName === null), "INVALID_DATABASE_VALUE", "Native hall identity/label mismatch");
         const nativeId = id(kind, row.id);
         if (parameters.kind === "hall") requireDomain(nativeId === hallId && (identity.role !== "SALESPERSON" || hallId === identity.hallId)
           && (grant.kind === "all" || (hallId !== null && grant.hallIds.includes(hallId))), "INVALID_DATABASE_VALUE", "Native hall candidate exceeds the authorized scope");
         if (parameters.kind === "warehouse") requireDomain(hallId === parameters.hallId, "INVALID_DATABASE_VALUE", "Native warehouse exceeds the proposed sales hall");
+        if (parameters.kind === "paymentMethod") requireDomain(hallId === null && row.method_enabled === true,
+          "INVALID_DATABASE_VALUE", "Native payment method is not an enabled shared candidate");
         const paymentMethodId = row.payment_method_id === null ? null : id("paymentMethod", row.payment_method_id);
         const paymentMethodName = nullableText(row.payment_method_name);
         requireDomain((paymentMethodId === null) === (paymentMethodName === null)

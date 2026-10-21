@@ -1,0 +1,77 @@
+{
+  "baseline": "0b40e5a",
+  "capturedAtUtc": "2026-10-21T08:37:54.116311+00:00",
+  "scope": "Source-only bounded CURRENT paymentMethod selector under existing explicit identity/authorization/proposed-sales-hall checks; existing authenticated sales-reference HTTP route; no schema or policy change",
+  "ownedPaths": [
+    "packages/application/src/current-form-ports.ts",
+    "packages/application/src/current-form-validation.ts",
+    "adapters/postgres/src/current-form-reader.ts",
+    "tests/current-form-reader.test.ts",
+    "apps/api/src/current-form-http.test.ts",
+    "docs/native-current-form-read.md",
+    "docs/native-current-payment-method-selector.md"
+  ],
+  "sha256": {
+    "packages/application/src/current-form-ports.ts": "db288755a3d3888b86e99ff91c9519d5641971594f3caa3392e9a2856b5903af",
+    "packages/application/src/current-form-validation.ts": "d27c6eae368cac9bb5ac7ab5156e182e529392f18d08729f99da520c657cd25d",
+    "adapters/postgres/src/current-form-reader.ts": "b2b294dcd803ff9a92e7a8f2291db75f1a4ec01401b93dab2592faf53574804a",
+    "tests/current-form-reader.test.ts": "34446a196a5bba7fb09da3121f30972ef81cac52b8d5cfc129b7d8255cc66e16",
+    "apps/api/src/current-form-http.test.ts": "df2e1843aab2c88dabde5a4f6b41d0557713dd63960e3a5e10c7db6eddcfe427",
+    "docs/native-current-form-read.md": "4d86b93d63d8a8827e19aff3be30d4b4942f97629dc80ede8c2dd3c56b62a50f",
+    "docs/native-current-payment-method-selector.md": "483f79c7d0ff847535b33815f4304d518ec733fcdb1792164fdca727a0bfe804"
+  },
+  "sourceEvidence": {
+    "source": "existing handoff source tree; no live visit or real-data reads",
+    "sourceRoot": "/workspace/scratch/f6bee04e937b/erp-handoff/source/naijue-erp-v0.0.1",
+    "sha256": {
+      "frontend/real-data-bridge.mjs": "d32b36b021197c7b153fb79b76fcc6e4d9850965903420f78328bb3cf4722d04",
+      "frontend/sales-funds-ui.js": "0814e0187c6d827482bcb4de4522fec4cbde5f38cc2970d6aefc0f4028672452",
+      "server/security/master-data.ts": "742a4ab4f7979eb8152f481c30c50c932e7d8dc07185f25c31e36a2c80059765"
+    },
+    "references": [
+      "frontend/real-data-bridge.mjs:1185-1196,1203",
+      "frontend/sales-funds-ui.js:17-18",
+      "server/security/master-data.ts:133-134",
+      "adapters/postgres/migrations/0001_runtime_sales.sql:73-75"
+    ]
+  },
+  "eligibility": "native payment_method.enabled AND EXISTS(native payment_account.enabled with actual payment_method_id = method.id); no hall ownership restriction, duplicate/account projection or account-derived method identity",
+  "order": "native method ID; no invented code/display_order/name priority",
+  "itemShape": "native method id/name; code/hallId/hallName/paymentMethodId/paymentMethodName are null; no recommendationAvailability",
+  "verification": {
+    "tests": {
+      "command": "node --test tests/current-form-reader.test.ts apps/api/src/current-form-http.test.ts",
+      "exitCode": 0,
+      "log": "evidence/current-payment-method-selector/tests.tap"
+    },
+    "focusedTypecheck": {
+      "command": "./node_modules/.bin/tsc --noEmit --target ES2023 --module NodeNext --moduleResolution NodeNext --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --verbatimModuleSyntax --rewriteRelativeImportExtensions --skipLibCheck --types node tests/current-form-reader.test.ts apps/api/src/current-form-http.test.ts",
+      "exitCode": 0,
+      "log": "evidence/current-payment-method-selector/typecheck.log"
+    }
+  },
+  "runtimeResult": {
+    "passed": 48,
+    "failed": 0,
+    "skipped": 0,
+    "readerGroups": 38,
+    "httpInjectGroups": 10,
+    "type": "synthetic/parser/scripted pg and Fastify.inject only; not PostgreSQL engine"
+  },
+  "corrections": [
+    "Initial runtime47/48 had test expectation INVALID_DATABASE_VALUE for malformed native ID; existing helper returns INVALID_ID. Corrected expectation, final48/48.",
+    "First focused tsc exposed pre-existing missing-reader assertion TS2352; corrected type-only cast through unknown. Parent preserves prior failure in evidence/current-form-http/typecheck-before-test-cast-fix.log. Final focused tsc exit0."
+  ],
+  "notRun": [
+    "PostgreSQL engine/parser/migrations/locks/isolation/performance for this SQL; frozen d26b7cc engine evidence predates and does NOT cover this selector",
+    "Native host registration/listener/production operation/real authentication or browser workflow",
+    "Actual intake batch/import or source-data reads; actual batch remains paused",
+    "Full aggregate tests/build, dependency install, push/deploy"
+  ],
+  "rollback": "Revert this scoped source commit or its owned paths only. Do not delete shared current-form modules or reset concurrent parent changes.",
+  "evidenceSha256": {
+    "evidence/current-payment-method-selector/tests.tap": "34a8e26e3bfcd05ade26f4b90a881c3f6110c5cb8a004ada7d3dce05c3e63b3e",
+    "evidence/current-payment-method-selector/typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/current-payment-method-selector/verification.json": "2d85d3e632823de44f0c9697aa3d46d025600e3ce6141601588004334d2a995f"
+  }
+}
