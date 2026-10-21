@@ -1,0 +1,8 @@
+{
+  "commit": "7c9ec3cc17ac4f89d8152d9317558c7cd8afb383",
+  "unifiedManifest": "/workspace/shared/naijue-erp-rewrite/evidence/demo-restoration-checkpoint-20261021/source-before.sha256",
+  "unifiedManifestSha256": "fdc07bfcb8bc857f8081f12bc57b0e1047290f16ade4676d0387dc91a4c7431d",
+  "files": 51,
+  "committedBytesMatchManifest": true,
+  "beforeGraphAfterGraphAndAfterDOMWorkingTreeHashChecks": "51/51 each passed"
+}

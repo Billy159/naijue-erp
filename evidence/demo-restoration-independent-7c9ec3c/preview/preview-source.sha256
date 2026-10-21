@@ -1,0 +1,12 @@
+f162171ded7ff8c1d6032f7cb50317bc19cc4d1bbd4757be9f8ea75cdec540f1  apps/web/preview-core-pages/.gitignore
+cedded3cdc4a5c23a51fde42a27f9f423ea3ccda24142fb8512811b937b2abf0  apps/web/preview-core-pages/README.md
+4cc768a3fc4bd281c0b04c6f00d686bd882cd112d8cf745639d0ce49a11191e7  apps/web/preview-core-pages/build.mjs
+298a9780b6b59d0dc2b4e3146c64b0040ebb007846cbb93e571e65a80f7a6101  apps/web/preview-core-pages/catalog.ts
+ab56d69bd0fbb7e2d914992b266518701807113985732b839abdf6b1f0cc80ce  apps/web/preview-core-pages/inventory-fixture.ts
+18db1963fa22df699247790b43bfa601317c2822fba4c4650c999599374d230d  apps/web/preview-core-pages/main.tsx
+163e2ec97c5d04be745b7b8a8cc29db3e2dffa10e23512482add377f0229adee  apps/web/preview-core-pages/preview.css
+4bc8c9ce6ff990b71ad4b743e49a1c95644e1a9964cc8790a75411db302ce2ac  apps/web/preview-core-pages/product-fixture.ts
+d0a5c7a440f7c591e618dde896f4dd37edbc536e2fad5e7f462de718a86c707f  apps/web/preview-core-pages/sales-fixture.ts
+e01794ea31c9fd56376be84f654d50f70fb8851ecc8af87a991f641a1a0f5cd1  apps/web/preview-core-pages/smoke.mjs
+82d60d5b9494c1b8f9c88fb5768a1e851c051d0b287acdce42bd3d40ad839f0a  apps/web/preview-core-pages/transfer-fixture.ts
+e0ba3959a10e58c34f4d6069a165bb13c8135ddc820a199d4a96e8fb3f694ca0  apps/web/preview-core-pages/tsconfig.json

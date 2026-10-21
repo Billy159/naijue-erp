@@ -1,0 +1,8 @@
+{
+  "pass": true,
+  "trials": 80,
+  "displayCellsChecked": 10428,
+  "realSourcesChecked": 25245,
+  "sourceSha256": "3a731dbeb36656c4567485082161092c22bd6b66f44cddafaf397e55ccdbfc77",
+  "boundary": "Independent deterministic model oracle only; no browser, screenshot, database or performance claim."
+}

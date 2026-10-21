@@ -1,0 +1,407 @@
+{
+  "pass": true,
+  "sourceSha256": "47c4c6b5af9d96082cb55a999ce0c7e10d1f584084f0c1f478fff56440efbb2a",
+  "sourceFiles": [
+    {
+      "file": "apps/web/src/application/build-application.mjs",
+      "sha256": "b9484c536607b1008e0433f52581820d8c64ecb9334a157bee3c3526c42ade76"
+    },
+    {
+      "file": "apps/web/src/components/pagination.tsx",
+      "sha256": "96d752d67d8d0fd29f202e48a9b4f4a5b9253ba26031695645269afa2c52cf0e"
+    },
+    {
+      "file": "apps/web/src/components/inventory-page-size.tsx",
+      "sha256": "dacef1810583dbd113d7a28fa864279001ff58c40ae343b19fcf4e990a9b2ab3"
+    },
+    {
+      "file": "apps/web/src/components/inventory-page-size-action.tsx",
+      "sha256": "27d53d390cc2046fe82036bc562ccff441ce57b02f2b723136d07916101acc1b"
+    },
+    {
+      "file": "apps/web/src/components/inventory-page-size.css",
+      "sha256": "8778a5b9e767d0ceeb45281a8d3f247d373d745f2fb327f7da165c6192f8d7d6"
+    },
+    {
+      "file": "apps/web/src/components/inventory-page-size-shell.css",
+      "sha256": "ec9018578101491061f20e7dd01907e15750fd48b8f12ccbb143adbb5fa47071"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory-matrix.tsx",
+      "sha256": "90987017148caf814d8bd35064baf1503716fb8298e5e06839e3f33184f7d8b1"
+    },
+    {
+      "file": "apps/web/src/inventory/display-projection.ts",
+      "sha256": "3a731dbeb36656c4567485082161092c22bd6b66f44cddafaf397e55ccdbfc77"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory-page.tsx",
+      "sha256": "9f044be454735e9f0a70960a164cf73d049dbd4aa5d1362f9e2b0c4d0701b7f6"
+    },
+    {
+      "file": "apps/web/src/inventory/inventory.css",
+      "sha256": "1a521e979d28942a83d3a822e5fc3993d6c1d3bbe8847b98b1f1b61db0b69bac"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer-host.tsx",
+      "sha256": "57a65b92f79307d23ec6073f973234c6b3936ecbcbbf8fdfed8416ed699088b6"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer-frame.css",
+      "sha256": "1318e0e5296c00a0d5ff9b95d3349f27cec670f7fc77b7f9140637950d33e127"
+    },
+    {
+      "file": "apps/web/src/inventory/product-drawer.css",
+      "sha256": "0420ce27bb3e6d27ceea9c9342e7cd4e82c4abc91dbec016da273406b773f913"
+    },
+    {
+      "file": "apps/web/src/inventory/product-tab-specifications.tsx",
+      "sha256": "5a87933e532ca1c52b339d211a33d8c68831a6940bdac0fb7cd5046be4f1f165"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/frame.css",
+      "sha256": "824433ba117982c841550fa4be109ab7f02be3040b1e48f0b7e1f059630a32a7"
+    },
+    {
+      "file": "apps/web/src/demo-presentation/demo-frame.tsx",
+      "sha256": "6efa6e8cb290b81911ab1b2cb9f583b972b234dac43f1b48e47c86374db891bc"
+    },
+    {
+      "file": "apps/web/src/sales/detail-content.tsx",
+      "sha256": "814276f1b851972179b959ecc0268298748d0492634a73d3bce62f7e9899306d"
+    },
+    {
+      "file": "apps/web/src/sales/detail.css",
+      "sha256": "0af8481df8463ea6325ddbca95d178967a707e38e0a43536a65ef05b55b7b577"
+    },
+    {
+      "file": "apps/web/src/transfers/transfers-page.tsx",
+      "sha256": "be6b7b820ee197b67095c79e29d7a5bcfefb631a470247668774e35c2a1ec36a"
+    },
+    {
+      "file": "apps/web/src/transfers/transfers.css",
+      "sha256": "cf9bcb0cdc0c30af70435c680a4174c6f8a58ecacdf77cf7aad8d9f27e765ec3"
+    },
+    {
+      "file": "apps/web/src/transfers/filter-controls.tsx",
+      "sha256": "8d112cd3b91ce6fd0b8f35a156f348ee78b5d46624726adb3dd6c6f1b46e9687"
+    },
+    {
+      "file": "apps/web/src/transfers/filter-controls.css",
+      "sha256": "a7171609e7e972babec3c67b3ed48d88cdb55a14a8dac46c365f4137f9b28bbe"
+    },
+    {
+      "file": "apps/web/src/transfers/warehouse-candidates.ts",
+      "sha256": "b410cc9a381a4d98db1c662511eddb9ba517d096812bf0fdb05862617162d3fe"
+    },
+    {
+      "file": "package.json",
+      "sha256": "faf24ac19055d4d62bbc8cb766a17e5089fea321baf8c70158930daf591fb2cb"
+    }
+  ],
+  "staticInputCounts": {
+    "startup": 27,
+    "inventory": 32,
+    "pageSizeAction": 176
+  },
+  "startupInputs": [
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom-client.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/client.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react-jsx-runtime.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/jsx-runtime.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/cjs/scheduler.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/index.js",
+    "../../../../packages/domain/src/errors.ts",
+    "../../../../packages/domain/src/values.ts",
+    "../authentication/authentication-panel.tsx",
+    "../authentication/authentication.css",
+    "../authentication/contracts.ts",
+    "../authentication/http-client.ts",
+    "../authentication/model.ts",
+    "../demo-presentation/controls.css",
+    "../demo-presentation/demo-frame.tsx",
+    "../demo-presentation/frame.css",
+    "../loading/async-leaf-registry.ts",
+    "../loading/read-scope.ts",
+    "application-root.tsx",
+    "controller.ts",
+    "demo-frame-presentation.tsx",
+    "index.tsx",
+    "stylesheet.ts"
+  ],
+  "inventoryInputs": [
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react-jsx-runtime.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/jsx-runtime.js",
+    "../../../../packages/domain/src/errors.ts",
+    "../../../../packages/domain/src/values.ts",
+    "../components/candidate-selector.tsx",
+    "../components/inventory-page-size.tsx",
+    "../components/pagination.tsx",
+    "../demo-presentation/anchored-popover.ts",
+    "../demo-presentation/icons.tsx",
+    "../demo-presentation/popover-position.ts",
+    "../inventory/contracts.ts",
+    "../inventory/display-projection.ts",
+    "../inventory/inventory-matrix.tsx",
+    "../inventory/inventory-page.tsx",
+    "../inventory/inventory-route.tsx",
+    "../inventory/inventory.css",
+    "../inventory/model.ts",
+    "../inventory/product-drawer-host.tsx",
+    "../inventory/product-model.ts",
+    "../inventory/windowing/model.ts",
+    "../inventory/windowing/render-plan.ts",
+    "../loading/async-leaf-registry.ts",
+    "../loading/latest-query.ts",
+    "../loading/query-parameters.ts",
+    "../loading/read-scope.ts",
+    "../transport/http-query.ts",
+    "../transport/inventory-http-reader.ts",
+    "../transport/product-http-reader.ts",
+    "../transport/response-validation.ts",
+    "routes/inventory.tsx"
+  ],
+  "pageSizeActionInputs": [
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Checkbox/checkbox.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Checkbox/group.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Checkbox/icon-check.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Checkbox/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Checkbox/useCheckbox.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/ConfigProvider/context.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/ConfigProvider/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/ConfigProvider/util.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Empty/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Input/input-element.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Input/useComposition.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/InputTag/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/InputTag/input-tag.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Message/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Message/useMessage.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Modal/config.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Notification/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Notification/useNotification.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Popover/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Select/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Select/opt-group.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Select/option.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Select/select.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Select/utils.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Tag/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Tooltip/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Trigger/getPopupStyle.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Trigger/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Trigger/portal.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_class/Draggable/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_class/Draggable/item.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_class/OverflowEllipsis/OverflowItem.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_class/OverflowEllipsis/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_class/VirtualList/Filler.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_class/VirtualList/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_class/VirtualList/utils/algorithmUtil.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_class/VirtualList/utils/itemUtil.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_class/icon-hover.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_class/notice.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_class/notification.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_class/select-view.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/CSSTransition.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/classNames.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/constant.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/contextHolder.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/dom.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/fillNBSP.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/getHighlightText.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/getHotkeyHandler.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/getStringLength.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/hooks/useForceUpdate.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/hooks/useId.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/hooks/useIsFirstRender.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/hooks/useIsomorphicLayoutEffect.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/hooks/useKeyboardEvent.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/hooks/useMergeProps.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/hooks/useMergeValue.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/hooks/usePersistCallback.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/hooks/usePrevious.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/hooks/useStateWithPromise.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/include.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/is.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/keycode.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/mergeProps.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/omit.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/pick.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/raf.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/react-dom.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/resizeObserver.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/throttleByRaf.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/_util/warning.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/locale/default.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/locale/zh-CN.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/icon/react-icon/IconCheckCircleFill/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/icon/react-icon/IconClose/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/icon/react-icon/IconCloseCircleFill/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/icon/react-icon/IconDown/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/icon/react-icon/IconEmpty/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/icon/react-icon/IconExclamationCircleFill/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/icon/react-icon/IconInfoCircleFill/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/icon/react-icon/IconLoading/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/icon/react-icon/IconSearch/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/icon/react-icon/context.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@babel/runtime/helpers/esm/defineProperty.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@babel/runtime/helpers/esm/extends.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@babel/runtime/helpers/esm/inheritsLoose.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@babel/runtime/helpers/esm/toPrimitive.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@babel/runtime/helpers/esm/toPropertyKey.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/@babel/runtime/helpers/esm/typeof.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/dayjs/dayjs.min.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/dayjs/locale/zh-cn.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/dom-helpers/esm/addClass.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/dom-helpers/esm/hasClass.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/dom-helpers/esm/removeClass.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_Hash.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_ListCache.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_Map.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_MapCache.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_Symbol.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_arrayMap.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_assocIndexOf.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_baseGet.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_baseGetTag.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_baseIsNative.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_baseToString.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_baseTrim.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_castPath.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_coreJsData.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_freeGlobal.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_getMapData.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_getNative.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_getRawTag.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_getValue.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_hashClear.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_hashDelete.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_hashGet.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_hashHas.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_hashSet.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_isKey.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_isKeyable.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_isMasked.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_listCacheClear.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_listCacheDelete.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_listCacheGet.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_listCacheHas.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_listCacheSet.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_mapCacheClear.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_mapCacheDelete.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_mapCacheGet.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_mapCacheHas.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_mapCacheSet.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_memoizeCapped.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_nativeCreate.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_objectToString.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_root.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_stringToPath.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_toKey.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_toSource.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/_trimmedEndIndex.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/debounce.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/eq.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/escapeRegExp.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/get.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/isArray.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/isFunction.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/isObject.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/isObjectLike.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/isSymbol.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/memoize.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/now.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/throttle.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/toNumber.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/lodash/toString.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-is/cjs/react-is.production.min.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-is/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-transition-group/esm/CSSTransition.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-transition-group/esm/SwitchTransition.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-transition-group/esm/Transition.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-transition-group/esm/TransitionGroup.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-transition-group/esm/TransitionGroupContext.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-transition-group/esm/config.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-transition-group/esm/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-transition-group/esm/utils/ChildMapping.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-transition-group/esm/utils/reflow.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react-jsx-runtime.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/jsx-runtime.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/resize-observer-polyfill/dist/ResizeObserver.es.js",
+    "../components/inventory-page-size-action.tsx",
+    "../components/inventory-page-size.css"
+  ],
+  "styles": {
+    "application": {
+      "bytes": 15511,
+      "sha256": "be91b126c0048687d738061762e2666f18955f220e74e72a6a4cbb03114d5108",
+      "inputs": [
+        "../authentication/authentication.css",
+        "../demo-presentation/controls.css",
+        "../demo-presentation/frame.css",
+        "../demo-presentation/tokens.css",
+        "styles/shell.css"
+      ]
+    },
+    "inventory": {
+      "bytes": 19306,
+      "sha256": "15961a7cec2caf3143d18af5568c34af9be6b0d130f4b279928546725b6ccc2b",
+      "inputs": [
+        "../components/inventory-page-size-shell.css",
+        "../demo-presentation/controls.css",
+        "../inventory/inventory.css",
+        "../inventory/product-drawer-frame.css",
+        "styles/inventory.css"
+      ]
+    },
+    "sales": {
+      "bytes": 15804,
+      "sha256": "ab04e96e5c375b61559db3af823cbd577a9fd075dddeef4e6601f3bdcf5957b7",
+      "inputs": [
+        "../demo-presentation/controls.css",
+        "../demo-presentation/tokens.css",
+        "../sales/sales.css",
+        "styles/sales-base.css",
+        "styles/sales.css"
+      ]
+    }
+  },
+  "pageSizeActionStyle": {
+    "bytes": 18904,
+    "sha256": "336888e52eb78606d371666ab6f1a2f543c8d9c1843bb2b011e0799688b9745a",
+    "inputs": [
+      "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Select/style/index.css",
+      "../../../../../core16-strict-check-bUsiBu/project/node_modules/@arco-design/web-react/es/Trigger/style/index.css",
+      "../components/inventory-page-size.css"
+    ]
+  },
+  "manifest": {
+    "entry": "application.js",
+    "styles": {
+      "application": "application.css",
+      "inventory": "inventory.css",
+      "sales": "sales.css",
+      "sales-detail": "sales-detail.css",
+      "parties": "parties.css",
+      "transfers": "transfers.css",
+      "transfer-detail": "transfer-detail.css",
+      "transfer-product": "transfer-product.css"
+    },
+    "productDrawerStyles": "chunks/product-drawer.css"
+  },
+  "boundary": "Static emitted graph/CSS analysis only; no browser network waterfall, screenshots/pixels, database or runtime performance acceptance."
+}

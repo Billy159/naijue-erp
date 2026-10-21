@@ -1,0 +1,17 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+{
+  "pass": true,
+  "combined": "Actual DemoFrame + InventoryMatrix + InventoryPagination under real React19 StrictMode",
+  "checks": [
+    "idle native/Arco select absent",
+    "merged multi-source target cannot invoke ledger",
+    "real Arco first-open 3 options and focus transfer inside DemoFrame",
+    "local zero outline declaration plus retained focused border",
+    "selection remains old applied value until parent commits",
+    "busy disable",
+    "FIT toggle restores exact real negative SKU target",
+    "canonical facts unchanged; no network"
+  ],
+  "boundary": "Synthetic DOM, source selector and interaction assertions only; not browser computed layout/pixel/performance acceptance."
+}
