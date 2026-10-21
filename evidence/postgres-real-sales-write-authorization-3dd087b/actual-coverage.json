@@ -1,0 +1,46 @@
+{
+  "actual_total_tests": 26,
+  "actual_subtests": 25,
+  "outer_test": 1,
+  "exit_code": 0,
+  "suite": "backend-0001-0008",
+  "groups": {
+    "current_schema_backend": 10,
+    "actual_auth_and_test_policy_inject": 5,
+    "native_source_confirmed_profile": 6,
+    "new_native_transactional_sales_action_authorization": 4
+  },
+  "new_actual_engine_groups": [
+    {
+      "tap_subtest": 22,
+      "scope": "Native sales action matrix; preserved state/version-CAS; later-APPROVED original SAVE; GET receipt replay and current-disable recheck",
+      "boundary": "Explicit fixture actors/references/economics. GET receipt uses explicit TEST-ONLY AUTHENTICATION with Fastify.inject, not a session-authorized write host."
+    },
+    {
+      "tap_subtest": 23,
+      "scope": "Known-PID real account/staff/hall metadata UPDATE lock waits while native command identity locks remain held through commit"
+    },
+    {
+      "tap_subtest": 24,
+      "scope": "Known-PID native command waits for committed disable or ADMIN-to-SALESPERSON change; READ COMMITTED denies without unauthorized business facts"
+    },
+    {
+      "tap_subtest": 25,
+      "scope": "Identity SELECT truly waits on staff; hall disable then commits; separate current hall SELECT denies without unauthorized business facts"
+    }
+  ],
+  "earlier_groups_keep_their_boundaries": true,
+  "older_tap_diagnostic_note": "Inherited STORAGE-only diagnostic is preserved verbatim and describes the original storage group, not the later actual auth/inject and native-policy groups. Later diagnostics and explicit subtest scopes must be read together.",
+  "not_tested": [
+    "Actual session-authorized production write-provider/server assembly",
+    "Browser/UI and all parallel current-working-tree UI changes",
+    "Listening web socket, network transport, TLS or public exposure",
+    "Real business data or production deployment/readiness/grants",
+    "Real media bytes or image/network transport",
+    "Performance, load, capacity or natural-plan benchmark",
+    "Successful inventory readiness after the later unpublished transfer-only warehouse",
+    "A public HTTP stale-actor race; stale captured-actor read cases are supplemental direct genuine-PG calls"
+  ],
+  "source_claim": "Only exact committed frozen3dd087b archive; no later/current source changes included",
+  "historical_22_claim": "Earlier22/22 remains its own historical scope; only this new actual26 run supplies the four new transactional write-authorization engine groups"
+}

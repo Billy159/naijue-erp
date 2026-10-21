@@ -1,0 +1,10 @@
+{
+  "original_tap_sha256": "5b27fa904c36e79f476eb1040706ab02ba4c7ceac08a281b661632c590defd10",
+  "bundle_tap_is_byte_identical": true,
+  "original_run_json_sha256": "6a6a1f579bbd5ba7617658d9c4973642477837c46d38c38d1f3bd6fcb078b0bc",
+  "run_json_sanitization": "Only local source/log paths replaced, see acceptance-run.json",
+  "original_source_before_report_sha256": "bc7f5fe8ae8a3acc904daec632095c68f9b89138805e0cb3509b68b2c7367a32",
+  "original_source_after_report_sha256": "ae6b61df27a7203f5291fdc664952888ec399c83f9677b1af1cfc348f25ea887",
+  "source_archive_commit": "3dd087b8072fc189837c8299f9ff54c9a1c76718",
+  "old_acceptance_and_blocked_artifacts": "Referenced only; not rewritten"
+}

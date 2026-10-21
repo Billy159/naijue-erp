@@ -1,0 +1,26 @@
+{
+  "status": "NEW_OWNED_INSTANCE_STARTED_ONCE_ONE_FRESH_TARGET_RUN_ONCE_NOW_CONTROLLED_IDLE",
+  "old_owned_system_identifier": "7698856207892361241",
+  "old_clean_stop_evidence": "../postgres-owned-shutdown-20261020T2208Z/",
+  "old_data_targets_and_evidence_retained_unmodified": true,
+  "original_reviewed_supervisor_sha256": "8874c81620a67b475ba3bfd4aa9c74bfcbd7f4a841d4de3ab015d6553dee1325",
+  "current_prepared_supervisor_sha256": "247cd41d3ef3416082be28ee7a943cf590182d13db1a286395ce5875c1a2743a",
+  "current_exact_base_only_diff_sha256": "c9a17bdb03c10383c11048234c9b43ab603773ddfccb32738271fb073cb69c8b",
+  "source_delta": "Only const base changed to new never-used isolated directory; no other byte change. Original approved supervisor retained unchanged.",
+  "startup_sandbox_permissions": "use_default",
+  "startup_attempts": 1,
+  "fresh_targets_created": 1,
+  "engine_runs": 1,
+  "executed_selection": "backend-0001-0008",
+  "fixed_enum": {
+    "run": "sparse-0001-0008",
+    "run-backend": "backend-0001-0008"
+  },
+  "postmaster_start_utc": "2026-10-21T01:08:13.413372Z",
+  "new_system_identifier": "7698921673096908826",
+  "fresh_generated_credentials": "Process memory, anonymous initdb pipe and child environment only; no credential file or old secret read; ordinary cluster password hashes remain inside retained data only.",
+  "startup_failure_protection": "Unchanged owned-data-only status/stop/verification; uncertain cleanup keeps stop-only holder. No actual startup failure/cleanup is claimed for this successful run.",
+  "file_only_readiness_parser_note": "PostgreSQL stores status as ready followed by three padding spaces; strip only for this additional file-only status assertion. No harness, supervisor, credentials, or database change. Initial local verifier stopped before any run command.",
+  "current_state": "Controlled holder idle; used target retained, no repeat/reset/drop/additional target or automatic stop.",
+  "residual_lifecycle_risk": "No absolute claim against extreme process/socket replacement after successful pg_ctl readiness; no unrelated service was contacted during the successful owned startup."
+}

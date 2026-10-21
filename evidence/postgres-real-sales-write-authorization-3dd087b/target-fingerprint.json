@@ -1,0 +1,28 @@
+{
+  "physical_identity": {
+    "system_identifier": "7698921673096908826",
+    "version": "PostgreSQL 17.11 (Debian 17.11-0+deb13u1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "postmaster_start": "2026-10-21T10:08:13.413372+09:00",
+    "data_directory": "<owned-isolated-write-auth-cluster>/data",
+    "listen_addresses": "127.0.0.1",
+    "port": 55432,
+    "address": "127.0.0.1",
+    "recovery": false,
+    "role_flags": {
+      "rolname": "naijue_erp_test",
+      "rolsuper": false,
+      "rolcreatedb": false,
+      "rolcreaterole": false,
+      "rolreplication": false,
+      "rolbypassrls": false,
+      "rolcanlogin": true
+    },
+    "data_directory_sanitization": "Machine-local prefix removed; exact owned path was verified against the approved base before and after the run."
+  },
+  "database": "naijue_erp_test_f76c53978c0c3a54",
+  "owner": "naijue_erp_test",
+  "allow_connections": true,
+  "target_initial_state": "Fresh disposable test target, no migrations",
+  "target_terminal_state": "Used once; retained and not reusable",
+  "scope": "Only synthetic fixtures on the newly initialized owned physical cluster"
+}

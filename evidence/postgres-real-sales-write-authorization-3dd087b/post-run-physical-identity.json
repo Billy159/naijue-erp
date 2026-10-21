@@ -1,0 +1,12 @@
+{
+  "system_identifier": "7698921673096908826",
+  "pg_control_cluster_state_exact": "in production",
+  "state_interpretation": "PostgreSQL generic running-state label for this owned synthetic test instance; not a production application/environment",
+  "owned_pidfile_data_port_loopback_and_ready_match": true,
+  "unix_socket_directory_exact": "",
+  "address": "127.0.0.1",
+  "port": 55432,
+  "prepared_supervisor_sha256": "247cd41d3ef3416082be28ee7a943cf590182d13db1a286395ce5875c1a2743a",
+  "controlled_holder_idle": true,
+  "no_new_target_or_run_since_result": true
+}

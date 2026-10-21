@@ -1,0 +1,17 @@
+{
+  "status": "ADDITIONAL_SS_PRECHECK_WITHDRAWN_SEPARATE_AUTHORIZED_PG_START_PERFORMED_ONCE",
+  "prior_blocked_evidence": "../sales-write-auth-pg-preflight-blocked/",
+  "prior_blocked_manifest_sha256": "04d25e4370bcdbdb376c9c5a62889d1b82476eacac9e514a48f101bc1bf3f627",
+  "prior_artifact_hashes": {
+    "README.md": "bb7b521dac13877d5ff34b890f0bfc932d7d6b88dae439695b3cfb25646899de",
+    "attempt-01-preflight-output.txt": "20ca02fff888da9decb5f35efa469d0287f314db3ae9c694b1a90b779ede681a",
+    "attempt-02-approved-tool-output.txt": "409a64026dd79edd5d995dc398c22d039563a9d9b12b909c4df186f4b80b52f0",
+    "blocked-preflight.json": "8a7af7b39cf576a80f778fb47a394fefd7737eba62aba2abd0661fc5bd31418c"
+  },
+  "prior_failures_remain_true": "The default ss netlink read was denied; its exit0 is not a reliable port result. The single approved escalated invocation failed in its environment wrapper before obtaining ss output.",
+  "adjustment_reason": "Static review established that pg_ctl -w start for the fixed new data path precedes every SQL connection. PostgreSQL uses OS binding on the exact 127.0.0.1:55432 endpoint, with no Unix socket fallback. A conflicting binding causes startup failure, followed only by owned-data cleanup or stop-only recovery; no pre-failure SQL connection to another instance occurs.",
+  "not_a_bypass": "No ss retry, alternate port probe, alternate port, sandbox escalation, network/security change, foreign-service action, or old-data restart was performed. This separate already-authorized startup used the unchanged reviewed source under the default sandbox.",
+  "residual_risk_disclosed": "No absolute guarantee against extreme successful-start-then-process/socket replacement TOCTOU; the independent ss precheck would not eliminate that lifecycle race.",
+  "not_claimed": "No netlink read success, no previous preflight repair, no new write-authorization acceptance result",
+  "decision_scope": "Only the additional independent ss precheck was withdrawn after static review; this did not retry the denied netlink read or claim that its environment issue was fixed. Ordinary authorized PG startup was separately attempted once."
+}
