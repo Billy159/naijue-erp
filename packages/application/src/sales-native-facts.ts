@@ -45,6 +45,8 @@ function resolver(document: SalesDraft | SalesDocument, facts: NativeSalesRefere
         const account = accounts.get(settlement.paymentAccountId);
         requireDomain(account?.enabled === true && account.methodEnabled === true,
           "SALES_REFERENCE_UNAVAILABLE", "Settlement account and its actual method must remain enabled");
+        requireDomain(settlement.paymentMethodId !== null && settlement.paymentMethodId === account.methodId,
+          "SETTLEMENT_METHOD_MISMATCH", "Selected payment-method identity must match the locked account actual method");
       }
       for (const line of proposed.lines.filter(row => row.isCurrent)) {
         const current = skus.get(line.skuId); requireDomain(current?.enabled === true, "SKU_UNAVAILABLE", "Current formal SKU facts are unavailable");

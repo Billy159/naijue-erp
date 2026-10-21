@@ -32,10 +32,19 @@ function context(value: unknown): CurrentFormContext {
   return Object.freeze({ kind: "SALES", hallId: id("hall", row.hallId) });
 }
 export function parseCurrentSalesReferenceQuery(value: unknown): CurrentSalesReferenceQuery {
-  const row = record(value, ["kind", "hallId", "search", "page", "pageSize"]);
-  if (!["hall", "customer", "salesperson", "warehouse", "paymentAccount"].includes(row.kind as string)
-    || (row.kind === "hall" ? row.hallId !== null : row.hallId === null)) invalid();
-  return Object.freeze({ ...search(row), kind: row.kind as CurrentSalesReferenceQuery["kind"], hallId: row.hallId === null ? null : id("hall", row.hallId) });
+  const accountKind = value !== null && typeof value === "object" && !Array.isArray(value)
+    && (value as Record<string, unknown>).kind === "paymentAccount";
+  const row = record(value, accountKind ? ["kind", "hallId", "paymentMethodId", "search", "page", "pageSize"]
+    : ["kind", "hallId", "search", "page", "pageSize"]);
+  if (row.kind === "hall") {
+    if (row.hallId !== null) invalid();
+    return Object.freeze({ ...search(row), kind: "hall", hallId: null });
+  }
+  const hallId = id("hall", row.hallId);
+  if (row.kind === "paymentAccount") return Object.freeze({ ...search(row), kind: "paymentAccount", hallId,
+    paymentMethodId: id("paymentMethod", row.paymentMethodId) });
+  if (row.kind !== "customer" && row.kind !== "salesperson" && row.kind !== "warehouse") invalid();
+  return Object.freeze({ ...search(row), kind: row.kind, hallId });
 }
 export function parseCurrentTransferWarehouseQuery(value: unknown): CurrentTransferWarehouseQuery {
   const row = record(value, ["direction", "search", "page", "pageSize"]); if (row.direction !== "FROM" && row.direction !== "TO") invalid();

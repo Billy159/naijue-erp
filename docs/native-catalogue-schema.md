@@ -16,17 +16,18 @@ product in ACCESS EXCLUSIVE mode, verifies exactly versions 1–8, and rejects a
 nonempty product table before adding nullable fields. A failed precondition is not
 permission to truncate, delete, backfill NULL, forge registry rows or disable guards.
 
-The existing explicit genuine-PG `MIGRATIONS` harness intentionally remains its
-reviewed 0001–0008 scope. Its historical synthetic fixtures insert products between
-0005 and 0006, so appending 0009 there would necessarily violate the empty-product
-precondition. No previous SQL hash, fixture or suite was silently changed. A new
-reviewed 1–9 harness must apply all nine files before its explicit nine-price
-product fixture, assert registry versions 1–9, and test 0009 guards on separate
-fresh targets. Passing the existing eight-migration suite does not verify 0009.
+The immutable original1–8 byte manifest now lives in
+`tests/integration/frozen-0001-0008-manifest.ts` as historical evidence only. It is
+not an executable compatibility suite. The single current MIGRATIONS list is1–10:
+apply all ten before any product/settlement fixture, then insert all nine explicit
+price values. Version10 is the separately approved original-method settlement
+snapshot, not another catalogue field. No earlier migration bytes were rewritten.
+Passing old eight-version evidence does not verify0009/0010 or current writehost.
 
-Old schema-neutral readers remain compatible with their existing prefix. Future
-native nine-price/barcode facts must explicitly require version 9 before referencing
-its columns; no compatibility value/default or pretend ready state is provided.
+Current native sales writes/facts require version10, without legacy options. The
+schema-neutral proposal reader remains a deliberately incomplete read projection;
+its optional recommendations may degrade unavailable on missing later schema, but
+that never grants schema-critical write authority. No genuine new migration ran.
 
 ## Product prices
 
@@ -78,7 +79,7 @@ rollback, import, native economics, production startup or browser acceptance.
 Still required: strict explicit-nine-price input validation at the actual product
 creation/import path; reviewed native in-transaction batch reference/pricing facts;
 trusted import completeness proof; current barcode read/scan adapters; dedicated
-1–9 real-engine acceptance; document numbering; and real write-host composition.
+1–10 real-engine acceptance; document numbering; and real write-host composition.
 The current CURRENT proposal reader honestly keeps minimum/barcode availability
 UNAVAILABLE rather than treating this unexecuted schema source as live authority.
 

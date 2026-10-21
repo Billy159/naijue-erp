@@ -84,11 +84,8 @@ async function assertFresh(client: PoolClient, settings: IntegrationSettings): P
 }
 
 /** This function is the only Pool construction in the suite. The caller must validate all opt-in gates first. */
-export async function openFreshDatabase(settings: IntegrationSettings, options: {
-  /** Explicit historical reference fixture setup after 0005, before current party constraints. Not CREATE acceptance. */
-  readonly afterVersionFive: (pool: Pool) => Promise<void>;
-}): Promise<IntegrationDatabase> {
-  if (typeof options.afterVersionFive !== "function") refused("the reviewed historical reference fixture hook is required");
+export async function openFreshDatabase(settings: IntegrationSettings): Promise<IntegrationDatabase> {
+  // All 1–10 migration guards run while the catalogue is empty. Current fixtures are seeded only AFTER this returns.
   // Validate source hashes before even constructing the driver. No URL/default PG credentials are passed through.
   const sources = await Promise.all(MIGRATIONS.map(async ([, filename, expected]) => {
     const sql = await readFile(new URL(`../../adapters/postgres/migrations/${filename}`, import.meta.url), "utf8");
@@ -111,7 +108,6 @@ export async function openFreshDatabase(settings: IntegrationSettings, options: 
       const { rows } = await guard.query("SELECT version FROM naijue_erp.schema_migration ORDER BY version");
       const expected = MIGRATIONS.slice(0, index + 1).map(([version]) => version);
       if (JSON.stringify(rows.map(row => row.version)) !== JSON.stringify(expected)) refused(`migration registry differs after ${migration[1]}`);
-      if (migration[0] === 5 && options.afterVersionFive) await options.afterVersionFive(pool);
     }
     const held = guard;
     return { pool, serverVersion, async close() { held.release(true); await pool.end(); } };

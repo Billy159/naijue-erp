@@ -13,5 +13,5 @@ export const detail = (n = 1): SalesDetailDto => {
     lines: [{ id: entityId('salesLine', uuid(21)), salesId: header.id, lineNo: 1, skuId: entityId('sku', uuid(22)), quantity: '-1', referencePrice: '900719925474099301', dealPrice: '900719925474099301', pricingRule: null,
       discountTenths: null, zeroConfirmed: null, lineAmount: '-900719925474099301', allocatedDiscount: '0', isGift: false, isCurrent: true,
       snapshot: { productCode: 'TEST-SNAPSHOT', productName: `TEST 保存商品 ${n}`, colorName: 'TEST 保存颜色', fitName: 'Y版（修身）', sizeName: '165/S', barcode: '001234567890123' } }],
-    settlements: [{ id: entityId('settlement', uuid(23)), salesId: header.id, lineNo: 1, paymentAccountId: entityId('paymentAccount', uuid(24)), direction: 'REFUND', amount: '900719925474099301' }] } };
+    settlements: [{ id: entityId('settlement', uuid(23)), salesId: header.id, lineNo: 1, paymentAccountId: entityId('paymentAccount', uuid(24)), paymentMethodId: uuid(25), direction: 'REFUND', amount: '900719925474099301' }] } };
 };

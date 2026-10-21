@@ -30,7 +30,7 @@ export function syntheticDraft(businessType: SalesBusinessType = "SALE", quantit
   const due = minorAmount(lines.reduce((sum, row) => sum + row.lineAmount, 0n).toString());
   return { header: { id: ids.sales, number: "SYNTHETIC-DOC-0001", businessType, businessDate: businessDate("2026-10-20"), hallId: ids.hall,
     salespersonId: null, customerId: ids.customer, warehouseId: ids.warehouse, grossAmount: due, orderDiscount: minorAmount("0"), netDue: due, note: "SYNTHETIC ONLY" }, lines,
-    settlements: due === 0n ? [] : [{ id: sid("settlement", 15), salesId: ids.sales, lineNo: 1, paymentAccountId: ids.payment,
+    settlements: due === 0n ? [] : [{ id: sid("settlement", 15), salesId: ids.sales, lineNo: 1, paymentAccountId: ids.payment, paymentMethodId: sid("paymentMethod", 31),
       direction: due < 0n ? "REFUND" : "RECEIVE", amount: minorAmount((due < 0n ? -due : due).toString()) }] };
 }
 /** EXCLUSIVELY SYNTHETIC convention: outgoing positive, incoming negative, no discounts.

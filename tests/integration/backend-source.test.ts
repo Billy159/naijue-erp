@@ -4,10 +4,10 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { BACKEND_SCENARIOS, HTTP_READ_SCENARIOS, NATIVE_POLICY_SCENARIOS, SALES_WRITE_AUTHORIZATION_SCENARIOS, MIGRATIONS, SPARSE_SCENARIOS } from "./migration-manifest.ts";
+import { BACKEND_SCENARIOS, HTTP_READ_SCENARIOS, NATIVE_POLICY_SCENARIOS, SALES_WRITE_AUTHORIZATION_SCENARIOS, METHOD_IDENTITY_SCENARIOS, MIGRATIONS, SPARSE_SCENARIOS } from "./migration-manifest.ts";
 
-test("backend plan-only selection has its own scenarios and the same exact eight migration bytes", () => {
-  for (const [suite, expected] of [["sparse-0001-0008", SPARSE_SCENARIOS], ["backend-0001-0008", [...BACKEND_SCENARIOS, ...HTTP_READ_SCENARIOS, ...NATIVE_POLICY_SCENARIOS, ...SALES_WRITE_AUTHORIZATION_SCENARIOS]]] as const) {
+test("backend plan-only selection has its own scenarios and the same exact ten current migration bytes", () => {
+  for (const [suite, expected] of [["sparse-0001-0010", SPARSE_SCENARIOS], ["backend-0001-0010", [...BACKEND_SCENARIOS, ...HTTP_READ_SCENARIOS, ...NATIVE_POLICY_SCENARIOS, ...SALES_WRITE_AUTHORIZATION_SCENARIOS, ...METHOD_IDENTITY_SCENARIOS]]] as const) {
     const result = spawnSync(process.execPath, [fileURLToPath(new URL("./plan.ts", import.meta.url)), "--suite", suite], { encoding: "utf8" });
     assert.equal(result.status, 0, result.stderr);
     const plan = JSON.parse(result.stdout);
@@ -15,28 +15,50 @@ test("backend plan-only selection has its own scenarios and the same exact eight
     assert.deepEqual(plan.migrations.map((item: { version: number; filename: string; sha256: string }) => [item.version, item.filename, item.sha256]), MIGRATIONS);
     assert.ok(plan.requiredGatesForExecution.includes(`NAIJUE_PG_TEST_SUITE=${suite}`));
     assert.ok(plan.notExecuted.includes("PostgreSQL"));
+    assert.equal(plan.evidenceStatus, "CURRENT1_TO10_NOT_RUN");
+    assert.ok(plan.fixtureOrder[1].includes("migrations1–10"));
   }
 });
 
 test("backend plan refuses absent, unknown and historical selections rather than choosing a default", () => {
-  for (const args of [[], ["--suite", "all"], ["--suite", "backend"], ["--suite", "native-0001-0005"]]) {
+  for (const args of [[], ["--suite", "all"], ["--suite", "backend"], ["--suite", "native-0001-0005"], ["--suite", "sparse-0001-0008"], ["--suite", "backend-0001-0008"]]) {
     const result = spawnSync(process.execPath, [fileURLToPath(new URL("./plan.ts", import.meta.url)), ...args], { encoding: "utf8" });
     assert.notEqual(result.status, 0); assert.equal(result.stdout, "");
   }
 });
 
-test("backend source wiring uses the same pre-Pool guards and never activates the preserved historical body", async () => {
+test("current runner rejects historical selections before settings or child creation, without a test URL", async () => {
+  const runnerUrl = new URL("../../scripts/run-postgres-integration.mjs", import.meta.url);
+  const source = await readFile(runnerUrl, "utf8");
+  assert.ok(source.indexOf("const suite = integrationSuite(process.env)") < source.indexOf("const settings = integrationSettings(process.env)"));
+  assert.ok(source.indexOf("requireCurrentIntegrationSuite(suite)") < source.indexOf("const child = spawn("));
+  assert.doesNotMatch(source, /from ["'][^"']*(?:database|postgres\.integration|pg)[^"']*["']|dotenv|process\.loadEnvFile|new Pool/u);
+  for (const suite of ["native-0001-0005", "sparse-0001-0008", "backend-0001-0008"]) {
+    // No target URL exists: even a broken suite check cannot connect to any real server.
+    const result = spawnSync(process.execPath, [fileURLToPath(runnerUrl), "--run"], { encoding: "utf8", env: {
+      NODE_ENV: "test", NAIJUE_PG_INTEGRATION: "I_APPROVE_A_FRESH_DISPOSABLE_LOCAL_DATABASE", NAIJUE_PG_TEST_SUITE: suite
+    } });
+    assert.equal(result.status, 2); assert.equal(result.stdout, "");
+    assert.match(result.stderr, /explicit NAIJUE_PG_TEST_SUITE/u);
+    assert.doesNotMatch(result.stderr, /supply the dedicated test URL/u);
+  }
+});
+
+test("current source wiring uses pre-Pool guards, migrates ten before seed and has no historical execution body", async () => {
   const entry = await readFile(new URL("./postgres.integration.test.ts", import.meta.url), "utf8");
   const currentGuard = entry.indexOf("requireCurrentIntegrationSuite(suite)"), open = entry.indexOf("await openFreshDatabase(settings");
   assert.ok(currentGuard >= 0 && open >= 0, "both current-suite guard and guarded database open must exist");
   assert.ok(currentGuard < open);
-  assert.match(entry, /afterVersionFive: pool => seedSyntheticReferences\(pool, \{ sparse: true \}\)/u);
-  assert.match(entry, /if \(suite === "backend-0001-0008"\) \{\s*await runBackendAcceptance\(t, pool\);\s*await runHttpReadAcceptance\(t, pool, settings\);\s*await runNativeHttpReadAcceptance\(t, pool, settings\);\s*await runSalesWriteAuthorizationAcceptance\(t, pool\);\s*\}\s*else await runSparseAcceptance\(t, pool\);/u);
-  assert.equal((entry.match(/historicalNativeAcceptanceSource\(/gu) ?? []).length, 1, "only its dormant declaration may remain");
+  assert.ok(entry.indexOf("await openFreshDatabase(settings)") < entry.indexOf("await seedSyntheticReferences(pool)"));
+  assert.ok(entry.indexOf("t.after") < entry.indexOf("await seedSyntheticReferences(pool)"), "fixture failure must still close owned test connections");
+  assert.doesNotMatch(entry, /afterVersionFive|historicalNativeAcceptanceSource/u);
+  assert.match(entry, /if \(suite === "backend-0001-0010"\) \{\s*await runBackendAcceptance\(t, pool\);\s*await runHttpReadAcceptance\(t, pool, settings\);\s*await runNativeHttpReadAcceptance\(t, pool, settings\);\s*await runSalesWriteAuthorizationAcceptance\(t, pool\);\s*await runMethodIdentityAcceptance\(t, pool\);\s*\}\s*else await runSparseAcceptance\(t, pool\);/u);
+
   const database = await readFile(new URL("./database.ts", import.meta.url), "utf8");
   const hashes = database.indexOf("const sources = await Promise.all(MIGRATIONS.map"), pool = database.indexOf("const pool = new Pool");
   assert.ok(hashes >= 0 && pool >= 0, "both exact source hash checking and Pool construction must exist");
   assert.ok(hashes < pool);
+  assert.doesNotMatch(database, /afterVersionFive|seedSyntheticReferences/u);
 });
 
 test("sales action engine preparation appends native transaction/known-PID cases without credentials or operator changes", async () => {
@@ -103,4 +125,48 @@ test("backend engine source is storage-only, uses actual contention/constraint h
   assert.match(backend, /\[ids\.sku, ids\.uncoveredSku, ids\.raceSku\]\.sort\(\)/u);
   assert.doesNotMatch(backend, /new Pool|process\.env|DATABASE_URL|createAuthenticationService|\.login\(|\.listen\(|app\.inject|seedSyntheticReferences|INSERT INTO naijue_erp\.inventory_balance|DROP DATABASE|DROP SCHEMA|TRUNCATE|DISABLE TRIGGER/u);
   assert.equal((backend.match(/await t\.test\(BACKEND_SCENARIOS\[/gu) ?? []).length, BACKEND_SCENARIOS.length);
+});
+
+test("current fixture source: actual party CREATE precedes explicit nine-key product after all ten migrations, no zero or old-schema seed", async () => {
+  const fixture = await readFile(new URL("./fixtures.ts", import.meta.url), "utf8");
+  assert.match(fixture, /MIGRATIONS\.map\(\(\[value\]\) => value\)/u);
+  assert.match(fixture, /createPartyMaintenanceService\(\{ unitOfWork: new PostgresPartyUnitOfWork\(pool\)/u);
+  assert.match(fixture, /referenceMaintainerAccount/u);
+  assert.match(fixture, /role: "WAREHOUSE"/u);
+  assert.doesNotMatch(fixture, /INSERT INTO naijue_erp\.(?:customer|supplier)\(|INSERT INTO naijue_erp\.inventory_balance|afterVersionFive|readonly sparse/u);
+  const party = fixture.indexOf("const customer = await parties.execute");
+  const product = fixture.indexOf("INSERT INTO naijue_erp.product(");
+  assert.ok(party >= 0 && product > party);
+  const statement = /INSERT INTO naijue_erp\.product\(([\s\S]*?)\)\s*VALUES\(([\s\S]*?)\)/u.exec(fixture);
+  assert.ok(statement);
+  const columns = statement[1]!.split(",").map(value => value.trim());
+  const values = statement[2]!.split(",").map(value => value.trim());
+  assert.equal(columns.length, values.length);
+  const prices = ["retail_price", "purchase_price", "wholesale5_price", "wholesale6_price", "wholesale7_price", "wholesale8_price", "wholesale9_price", "wholesale10_price", "minimum_price"];
+  const actual = Object.fromEntries(prices.map(column => { const index = columns.indexOf(column); assert.ok(index >= 0); return [column, values[index]]; }));
+  assert.deepEqual(actual, { retail_price: "1.25", purchase_price: "0.75", wholesale5_price: "1.10", wholesale6_price: "1.05", wholesale7_price: "NULL", wholesale8_price: "NULL", wholesale9_price: "NULL", wholesale10_price: "NULL", minimum_price: "NULL" });
+  assert.match(fixture, /KNOWN-UNSET/u);
+  assert.match(fixture, /paymentAccountId: ids\.payment, paymentMethodId: ids\.method/u);
+  const sparse = await readFile(new URL("./sparse-acceptance.ts", import.meta.url), "utf8");
+  assert.match(sparse, /"KH000002" : "GYS000002"/u);
+  assert.match(sparse, /const partyActor = \{ accountId: ids\.referenceMaintainerAccount, hallId: null, role: "WAREHOUSE"/u);
+  assert.match(sparse, /"CREATE", 0, partyActor\.accountId/u);
+});
+
+/** These are source-wiring assertions only. They never import or execute the method-identity engine module. */
+test("current10 method engine preparation uses real native rules, explicit provenance and observed non-key metadata locks", async () => {
+  const source = await readFile(new URL("./method-identity-acceptance.ts", import.meta.url), "utf8");
+  assert.match(source, /rules: createNativeTransactionSalesBusinessRules\(\)/u);
+  assert.match(source, /catalogueCompleteness: \{ async assertComplete\(context\)/u);
+  assert.match(source, /context\.query\(`/u);
+  assert.doesNotMatch(source, /SYNTHETIC_SALES_RULES|new Pool|process\.env|DATABASE_URL|DROP DATABASE|DROP SCHEMA|TRUNCATE|DISABLE TRIGGER/u);
+  assert.match(source, /SYNTHETIC_METHOD_FIRST_UNSAVED_STALE_PAIR/u);
+  assert.match(source, /first stale-pair SAVE consumes no key or document identity/u);
+  assert.match(source, /IMMUTABLE_SETTLEMENT_METHOD/u); assert.match(source, /SETTLEMENT_METHOD_MISMATCH/u);
+  assert.match(source, /stored pre-0010 unknown identity/u); assert.match(source, /NOT an upgrade\/backfill test/u);
+  assert.match(source, /wait_event_type === "Lock" && row\.expected_blocker === true/u);
+  assert.match(source, /ANY\(pg_blocking_pids\(pid\)\)/u);
+  assert.match(source, /const deadline = performance\.now\(\) \+ 2500/u);
+  for (const marker of ["account actual-method non-key update", "account enabled non-key update", "method enabled non-key update"]) assert.ok(source.includes(marker));
+  assert.equal((source.match(/await t\.test\(METHOD_IDENTITY_SCENARIOS\[/gu) ?? []).length, METHOD_IDENTITY_SCENARIOS.length);
 });

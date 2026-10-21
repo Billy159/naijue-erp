@@ -24,7 +24,10 @@ class ProtocolClient implements PgSalesClient {
   readonly calls: { sql: string; values: unknown[] }[] = [];
   readonly releases: (Error | boolean | undefined)[] = [];
   private readonly steps: Step[];
-  constructor(steps: Step[]) { this.steps = steps; }
+  constructor(steps: Step[]) {
+    this.steps = steps.flatMap(step => step.sql.test("BEGIN ISOLATION LEVEL READ COMMITTED") && !step.error
+      ? [step, { sql: /sales:current-schema/, rows: [{ current_sales_schema_ready: true }], inspect(_values: unknown[], sql: string) { assert.match(sql, /schema_migration WHERE version = 10/); } }] : [step]);
+  }
   async query(sql: string, values: unknown[] = []): Promise<PgSalesResult> {
     this.calls.push({ sql, values: structuredClone(values) });
     const step = this.steps.shift();
@@ -62,7 +65,7 @@ function lineRows(document: SalesDocument): Record<string, unknown>[] {
     size_name_snapshot: l.snapshot.sizeName, barcode_snapshot: l.snapshot.barcode }));
 }
 function settlementRows(document: SalesDocument): Record<string, unknown>[] {
-  return document.settlements.map(r => ({ id: r.id, sales_id: r.salesId, line_no: r.lineNo, payment_account_id: r.paymentAccountId, direction: r.direction, amount: moneyToSql(r.amount) }));
+  return document.settlements.map(r => ({ id: r.id, sales_id: r.salesId, line_no: r.lineNo, payment_account_id: r.paymentAccountId, payment_method_id_snapshot: r.paymentMethodId, direction: r.direction, amount: moneyToSql(r.amount) }));
 }
 function balanceRow(skuId = ids.sku, amount = "0", balanceVersion = 1): Record<string, unknown> {
   return { warehouse_id: ids.warehouse, sku_id: skuId, quantity: amount, version: balanceVersion, last_operation_id: null, updated_at: time };
@@ -109,7 +112,9 @@ function documentWrites(document: SalesDocument, isNew = false, previous: SalesD
   ...(removedIds.length ? [{ sql: /^DELETE FROM naijue_erp.sales_settlement WHERE sales_id = \$1 AND id = ANY\(\$2::uuid\[\]\)/,
     inspect(values: unknown[]) { assert.deepEqual(values, [ids.sales, removedIds]); } }] : []),
   ...document.settlements.filter(row => !oldSettlements.has(row.id) || requestHash(oldSettlements.get(row.id)) !== requestHash(row)).map<Step>(row => ({ sql: /^INSERT INTO naijue_erp.sales_settlement/, inspect(values, sql) {
-    assert.equal(values[0], row.id); assert.equal(values[5], moneyToSql(row.amount));
+    assert.equal(values[0], row.id); assert.equal(values[5], moneyToSql(row.amount)); assert.equal(values[6], row.paymentMethodId);
+    assert.match(sql, /pa.name, pm.name, pm.id/); assert.match(sql, /WHERE pa.id = \$4 AND pm.id = \$7::uuid/);
+    assert.match(sql, /THEN sales_settlement.payment_method_id_snapshot ELSE EXCLUDED.payment_method_id_snapshot END/);
     assert.match(sql, /pa.name, pm.name/); assert.match(sql, /THEN sales_settlement.account_name_snapshot ELSE EXCLUDED.account_name_snapshot END/);
     assert.match(sql, /WHERE sales_settlement.sales_id = EXCLUDED.sales_id/);
   } }))];
@@ -546,4 +551,40 @@ test("pg protocol sales authorization: genuine null-hall ADMIN skips hall lookup
     ...documentWrites(document, true), ...finalWrites("SAVE"), commit()]);
   assert.equal((await actionService(client).execute(command)).status, "DRAFT");
   assert.ok(client.calls.every(call => !/sales-authorization:hall/.test(call.sql))); client.done();
+});
+
+test("pg protocol schema10: absent current schema fails before callback, has no legacy writer retry and rolls back", async () => {
+  const calls: string[] = []; let callbacks = 0, released = 0;
+  const client: PgSalesClient = { async query(sql) { calls.push(sql); return { rows: sql.includes("sales:current-schema") ? [{ current_sales_schema_ready: false }] : [], rowCount: 0 }; }, release() { released++; } };
+  await assert.rejects(() => new PostgresSalesUnitOfWork({ async connect() { return client; } }).transaction(async () => { callbacks++; }), { code: "SALES_SCHEMA_NOT_READY" });
+  assert.equal(callbacks, 0); assert.equal(released, 1); assert.deepEqual(calls.map(sql => sql.includes("sales:current-schema") ? "SCHEMA10" : sql), ["BEGIN ISOLATION LEVEL READ COMMITTED", "SCHEMA10", "ROLLBACK"]);
+});
+test("pg protocol method identity: amount edits preserve original known ID, changed account captures explicit new method in original transaction", async () => {
+  for (const changedAccount of [false, true]) {
+    const source = storedDocument(); const old = source.settlements[0]!; const changed = { ...old, amount: minorAmount("99"),
+      ...(changedAccount ? { paymentAccountId: sid("paymentAccount", 7100), paymentMethodId: sid("paymentMethod", 7101) } : {}) };
+    const next = { ...source, header: { ...source.header, version: version(2) }, settlements: [changed] };
+    const client = new ProtocolClient([begin(), ...salesRead(source), ...documentWrites(next, false, source), commit()]);
+    await uow(client).transaction(async tx => { await tx.getSales(ids.sales); await tx.putRuntimeSales(next); });
+    const write = client.calls.find(call => /^INSERT INTO naijue_erp.sales_settlement/.test(call.sql))!;
+    assert.equal(write.values[6], changed.paymentMethodId); assert.match(write.sql, /pm.name, pm.id/);
+    assert.match(write.sql, /THEN sales_settlement.payment_method_id_snapshot ELSE EXCLUDED.payment_method_id_snapshot END/); client.done();
+  }
+});
+test("pg protocol method identity: retained same-account original known/NULL ID cannot be overwritten by caller's current method", async () => {
+  for (const previousMethod of [sid("paymentMethod", 31), null]) {
+    const base = storedDocument(); const source = { ...base, settlements: base.settlements.map(row => ({ ...row, paymentMethodId: previousMethod })) };
+    const next = { ...source, header: { ...source.header, version: version(2) }, settlements: source.settlements.map(row => ({ ...row, paymentMethodId: sid("paymentMethod", 7102) })) };
+    const client = new ProtocolClient([begin(), ...salesRead(source), { sql: /^UPDATE naijue_erp.sales_header/ }, rollback()]);
+    await assert.rejects(() => uow(client).transaction(async tx => { await tx.getSales(ids.sales); await tx.putRuntimeSales(next); }), { code: "IMMUTABLE_SETTLEMENT_METHOD" });
+    assert.ok(!client.calls.some(call => /^INSERT INTO naijue_erp.sales_settlement/.test(call.sql))); client.done();
+  }
+});
+
+test("pg protocol method identity: status-only writer preserves original NULL unchanged instead of guessing/backfilling a method", async () => {
+  const base = storedDocument(undefined, "APPROVED"); const source = { ...base, settlements: base.settlements.map(row => ({ ...row, paymentMethodId: null })) };
+  const next = { ...source, header: { ...source.header, status: "DRAFT" as const, version: version(2), approvedByAccountId: null, approvedAt: null } };
+  const client = new ProtocolClient([begin(), ...salesRead(source), ...documentWrites(next, false, source), commit()]);
+  await uow(client).transaction(async tx => { await tx.getSales(ids.sales); await tx.putRuntimeSales(next); });
+  assert.ok(!client.calls.some(call => /^INSERT INTO naijue_erp.sales_settlement/.test(call.sql))); client.done();
 });

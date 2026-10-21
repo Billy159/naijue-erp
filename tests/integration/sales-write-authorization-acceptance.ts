@@ -94,7 +94,7 @@ function dependencies(pool: PgSalesPool): SalesDependencies {
       ok(allowedDocuments.has(h.id) && [salesperson.accountId, foreign.accountId, admin.accountId, warehouse.accountId].includes(actor.accountId)
         && [ids.hall, ids.otherHall].includes(h.hallId) && h.warehouseId === (h.hallId === ids.hall ? ids.warehouse : ids.toWarehouse)
         && h.customerId === ids.customer && document.lines.every(line => line.skuId === ids.sku)
-        && document.settlements.every(row => row.paymentAccountId === ids.payment), "exact synthetic reference/economics scope, separate from native action grant");
+        && document.settlements.every(row => row.paymentAccountId === ids.payment && row.paymentMethodId === ids.method), "exact synthetic reference/economics scope, separate from native action grant");
     } } };
 }
 /** Exact finite fixture business rows. Identity/account/staff/hall maintenance is intentionally outside this snapshot. */

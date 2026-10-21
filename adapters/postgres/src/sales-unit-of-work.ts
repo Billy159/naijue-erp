@@ -40,7 +40,7 @@ const LINE_SELECT = `SELECT id, sales_id, line_no, sku_id, quantity::text, refer
   line_amount::text, allocated_discount::text, is_gift, pricing_rule, discount_tenths, zero_confirmed, product_code_snapshot, product_name_snapshot,
   color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot, is_current
   FROM naijue_erp.sales_line WHERE sales_id = $1 ORDER BY line_no, id`;
-const SETTLEMENT_SELECT = `SELECT id, sales_id, line_no, payment_account_id, direction, amount::text
+const SETTLEMENT_SELECT = `SELECT id, sales_id, line_no, payment_account_id, payment_method_id_snapshot, direction, amount::text
   FROM naijue_erp.sales_settlement WHERE sales_id = $1 ORDER BY line_no, id`;
 
 
@@ -63,7 +63,7 @@ function decodeLine(row: Record<string, unknown>): SalesLineRow {
       fitName: stringValue(row.fit_name_snapshot), sizeName: stringValue(row.size_name_snapshot), barcode: nullableString(row.barcode_snapshot) } };
 }
 function decodeSettlement(row: Record<string, unknown>): SalesSettlementRow {
-  return { id: id("settlement", row.id), salesId: id("sales", row.sales_id), lineNo: integerValue(row.line_no), paymentAccountId: id("paymentAccount", row.payment_account_id),
+  return { id: id("settlement", row.id), salesId: id("sales", row.sales_id), lineNo: integerValue(row.line_no), paymentAccountId: id("paymentAccount", row.payment_account_id), paymentMethodId: nullableId("paymentMethod", row.payment_method_id_snapshot),
     direction: choice(row.direction, ["RECEIVE", "REFUND"]), amount: moneyFromSql(row.amount) };
 }
 
@@ -92,6 +92,10 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
     try {
       // Explicit READ COMMITTED: a receipt waiter must see the previous holder's committed receipt after its advisory lock.
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
+      const schema = await client.query(`/* sales:current-schema */ SELECT EXISTS (
+        SELECT 1 FROM naijue_erp.schema_migration WHERE version = 10) AS current_sales_schema_ready`);
+      requireDomain(schema.rows.length === 1 && schema.rows[0]!.current_sales_schema_ready === true,
+        "SALES_SCHEMA_NOT_READY", "The current sales writer requires reviewed schema version 10");
       const result = await work(tx);
       tx.close();
       commitAttempted = true; await client.query("COMMIT");
@@ -257,15 +261,21 @@ class PostgresSalesTransaction implements SalesTransaction {
     for (const row of document.settlements) {
       requireDomain(row.salesId === h.id, "FOREIGN_SETTLEMENT_ID", "Settlement must belong to this sales document");
       const previous = this.previousSettlements.get(row.id);
+      // Status-only reversal/void never rewrites an unchanged stored unknown.
+      // Runtime SAVE/APPROVE enforce explicit intent before reaching this adapter.
       if (previous !== undefined && sameSalesSettlement(previous, row)) continue;
-      const written = await this.query(`INSERT INTO naijue_erp.sales_settlement (id, sales_id, line_no, payment_account_id, direction, amount, account_name_snapshot, method_name_snapshot)
-        SELECT $1, $2, $3, pa.id, $5, $6, pa.name, pm.name FROM naijue_erp.payment_account pa
-        JOIN naijue_erp.payment_method pm ON pm.id = pa.payment_method_id WHERE pa.id = $4
+      requireDomain(typeof row.paymentMethodId === "string", "INVALID_SETTLEMENT_REFERENCE", "Runtime settlement requires its explicit selected payment-method identity");
+      if (previous?.paymentAccountId === row.paymentAccountId) requireDomain(previous.paymentMethodId === row.paymentMethodId,
+        "IMMUTABLE_SETTLEMENT_METHOD", "The original method of a retained same-account settlement cannot be replaced or inferred");
+      const written = await this.query(`INSERT INTO naijue_erp.sales_settlement (id, sales_id, line_no, payment_account_id, direction, amount, account_name_snapshot, method_name_snapshot, payment_method_id_snapshot)
+        SELECT $1, $2, $3, pa.id, $5, $6, pa.name, pm.name, pm.id FROM naijue_erp.payment_account pa
+        JOIN naijue_erp.payment_method pm ON pm.id = pa.payment_method_id WHERE pa.id = $4 AND pm.id = $7::uuid
         ON CONFLICT (id) DO UPDATE SET line_no = EXCLUDED.line_no, payment_account_id = EXCLUDED.payment_account_id,
         direction = EXCLUDED.direction, amount = EXCLUDED.amount,
         account_name_snapshot = CASE WHEN sales_settlement.payment_account_id = EXCLUDED.payment_account_id THEN sales_settlement.account_name_snapshot ELSE EXCLUDED.account_name_snapshot END,
-        method_name_snapshot = CASE WHEN sales_settlement.payment_account_id = EXCLUDED.payment_account_id THEN sales_settlement.method_name_snapshot ELSE EXCLUDED.method_name_snapshot END
-        WHERE sales_settlement.sales_id = EXCLUDED.sales_id`, [row.id, row.salesId, row.lineNo, row.paymentAccountId, row.direction, moneyToSql(row.amount)]);
+        method_name_snapshot = CASE WHEN sales_settlement.payment_account_id = EXCLUDED.payment_account_id THEN sales_settlement.method_name_snapshot ELSE EXCLUDED.method_name_snapshot END,
+        payment_method_id_snapshot = CASE WHEN sales_settlement.payment_account_id = EXCLUDED.payment_account_id THEN sales_settlement.payment_method_id_snapshot ELSE EXCLUDED.payment_method_id_snapshot END
+        WHERE sales_settlement.sales_id = EXCLUDED.sales_id`, [row.id, row.salesId, row.lineNo, row.paymentAccountId, row.direction, moneyToSql(row.amount), row.paymentMethodId]);
       requireDomain(written.rowCount === 1, "INVALID_SETTLEMENT_REFERENCE", "Settlement identity or payment account reference is invalid");
     }
   }

@@ -9,7 +9,9 @@ type ExactWire<T> = { readonly [K in keyof T]: T[K] extends bigint ? string : T[
 export type SalesSummaryDto = ExactWire<SalesSummary>;
 export type SalesHeaderDto = ExactWire<SalesHeaderRow>;
 export type SalesLineDto = ExactWire<SalesLineRow>;
-export type SalesSettlementDto = ExactWire<SalesSettlementRow>;
+/** Original intended method identity is independent from account/display names.
+ * null is an explicit unknown historical fact, not today's account method. */
+export type SalesSettlementDto = Omit<ExactWire<SalesSettlementRow>, 'paymentMethodId'> & { readonly paymentMethodId: string | null };
 export interface SalesListDto { readonly page: number; readonly pageSize: SalesQueryPageSize; readonly exactTotal: string; readonly items: readonly SalesSummaryDto[] }
 export interface SalesDetailDto extends Pick<SalesDetail, 'stockBasis' | 'referenceNames' | 'settlementNames'> {
   readonly document: Omit<SalesDocument, 'header' | 'lines' | 'settlements'> & {

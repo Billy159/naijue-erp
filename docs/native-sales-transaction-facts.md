@@ -3,8 +3,10 @@
 This is explicit opt-in source implementation, not a production write host, real
 catalogue publisher, genuine-PG lock/transaction acceptance or an enabled form.
 The prior synchronous candidate rules and explicit synthetic providers remain
-compatible. No domain, shared authorization policy, HTTP route or schema-execution
-path is changed by this slice.
+supported as explicit test providers, not a legacy-schema writer mode. The later
+approved method-identity amendment changes domain/transport fields; see
+`native-account-production-parity.md`. Shared authorization policy and production
+HTTP composition remain untouched.
 
 ## Async original-transaction seam
 
@@ -23,9 +25,10 @@ Inventory delta/sign policy remains the existing candidate-source rule.
 
 `PostgresSalesUnitOfWork(pool, { catalogueCompleteness })` captures an explicit
 `NativeCatalogueCompletenessVerifier.assertComplete` when native catalogue facts
-are intended. Old `PostgresSalesUnitOfWork(pool)` remains usable with the existing
-explicit non-native rules and eight-migration fixtures, but cannot supply native
-pricing facts. There is no default or ready=true toggle.
+are intended. Every current PostgresSalesUnitOfWork transaction requires schema10
+before its callback, including explicit synthetic-test providers. No old-schema
+writer fallback or settlement snapshot compatibility flag exists. Missing real
+completeness cannot supply native pricing facts; no ready=true default exists.
 
 The verifier receives only exact target product IDs and a query function on the
 original, still-active command transaction. It must read real persistent validated
@@ -42,7 +45,7 @@ every genuine blank. All nine keys must be known before publication.
 The PostgreSQL capability requires the original receipt actor/key and single sales
 target to have been bound. It reuses the existing current account/staff/hall lookup
 and its transaction-held SHARE locks. It then reads through the same original
-client and requires migration version 9 before touching its price/barcode columns.
+client and requires migration version10 before touching its price/barcode columns.
 Native action and proposed-scope authorization remain separate, mandatory host
 providers; reference/economic facts are not themselves a permission grant.
 
@@ -67,7 +70,7 @@ are sorted and queried in at-most-200-ID batches, not one query per line/SKU:
 
 Account/staff/hall and reference/SKU/product facts are locked on the command client.
 Their lock ordering and READ COMMITTED behavior are requested by this source, not
-claimed as PostgreSQL-engine proof. A real 1–9 suite still needs to validate waits,
+claimed as PostgreSQL-engine proof. A real1–10 suite still needs to validate waits,
 concurrent maintenance, ordering/deadlocks, snapshot visibility, constraints and
 rollback. No catalogue mutation, balance, audit or receipt is emitted by fact reads.
 The query capability checks transaction active state and cannot work after close.
@@ -85,7 +88,12 @@ Sales hall/customer/warehouse must be enabled and warehouse must belong to the
 proposed sales hall. Optional staff requires exact native employment status 在职;
 there is no invented salesperson-role or staff-hall restriction. Native staff still
 has no separate enabled flag, so this is not a claim to reproduce an absent legacy
-flag. Account and method must both be enabled.
+flag. Account and method must both be enabled, and each explicit intended
+paymentMethodId must equal the locked account actual method. Runtime SAVE/APPROVE
+have no unchanged-row import exemption. Unknown stored method IDs are not inferred
+from names/current account; they cannot approve. Same-account retained method IDs
+are immutable; changing the account or creating a genuinely new settlement captures
+the actual matching method inside the original transaction.
 
 A retained line's real loaded native ID, SKU and unchanged snapshot may preserve
 old labels/raw observations across master renames or later barcode disablement.
@@ -104,14 +112,16 @@ create credentials, execute migrations or register write plugins in the read API
 ## Verification
 
 The focused command is recorded in evidence/sales-native-facts-manifest.json.
-177 tests pass across the new 13 unit/scripted-pg groups, existing sales lifecycle,
+The original artifact records177 passing tests across the new 13 unit/scripted-pg groups, existing sales lifecycle,
 economics, action authorization, PostgreSQL protocol and Fastify inject boundaries.
 New coverage includes both awaited rules, failure before effects, same-key retry,
-original-client proof, missing verifier/version9, incomplete prices, bounded 201-SKU
+original-client proof, missing verifier/schema requirements, incomplete prices, bounded 201-SKU
 set batches, product read-once, preserved snapshots, exact old-code observations,
 commit/rollback and closed query capabilities. No genuine PostgreSQL engine or
-publisher, browser, live host, operations, compiler/build or production mutation ran
-from this worker. Root's aggregate typecheck is recorded separately.
+publisher, browser, live host, operations or production mutation ran
+from this worker. Current amendment focused TypeScript and281 unit/protocol/HTTP
+regressions are recorded in evidence/account-production-parity/; the old177 log
+is not relabelled as current-schema engine acceptance. Root aggregate checks are separate.
 
 Scope/revert: only the new native-facts modules/test/document/evidence and the small
 tracked edits to application ports, sales service and PostgreSQL sales UoW belong

@@ -292,3 +292,10 @@ test("SYNTHETIC HTTP transaction forwarding: receipt recovery receives the same 
   assert.equal((await f.app.inject({ url: "/sales/receipts/save" })).statusCode, 200);
   assert.equal(new Set(observed).size, 4);
 });
+test("SYNTHETIC HTTP method intent: known pair/retained-identity rejections are safe conflicts, not provider details or unknown outcomes", async t => {
+  for (const code of ["SETTLEMENT_METHOD_MISMATCH", "IMMUTABLE_SETTLEMENT_METHOD"]) {
+    const f = await setup(t, { authorize: async () => { throw new DomainError(code, "PRIVATE method identity diagnostics"); } });
+    const response = await f.post(save()); assert.equal(response.statusCode, 409); assert.equal(response.json().error.code, code);
+    assert.ok(!response.body.includes("PRIVATE")); assert.equal(f.store.snapshot().headers.size, 0);
+  }
+});

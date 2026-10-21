@@ -2,18 +2,20 @@
 import { spawn } from "node:child_process";
 import { randomBytes } from "node:crypto";
 import { fileURLToPath } from "node:url";
-import { integrationSettings, safeTarget } from "../tests/integration/safety.ts";
+import { integrationSettings, integrationSuite, requireCurrentIntegrationSuite, safeTarget } from "../tests/integration/safety.ts";
 
 const args = process.argv.slice(2);
 if (args.length === 1 && args[0] === "--help") {
-  console.log("Dormant real-PostgreSQL validation. Read docs/POSTGRES-INTEGRATION.md first.\nRun only after approval: node scripts/run-postgres-integration.mjs --run\nRequires NODE_ENV=test, NAIJUE_PG_INTEGRATION, NAIJUE_PG_TEST_DATABASE_URL and NAIJUE_PG_EXPECT_DATABASE.\nNo provisioning, automatic cleanup, .env loading, remote target or production data is supported.");
+  console.log("Dormant CURRENT schema1–10 PostgreSQL validation. Read tests/integration/README.md first.\nRun only after approval: node scripts/run-postgres-integration.mjs --run\nRequires NODE_ENV=test, NAIJUE_PG_INTEGRATION, NAIJUE_PG_TEST_SUITE=sparse-0001-0010|backend-0001-0010, NAIJUE_PG_TEST_DATABASE_URL and NAIJUE_PG_EXPECT_DATABASE. Earlier1–8 passes are historical only.\nNo provisioning, automatic cleanup, .env loading, remote target or production data is supported.");
 } else if (args.length !== 1 || args[0] !== "--run") {
   console.error("Refused: explicit --run is required. Use --help for prerequisites; no connection was attempted.");
   process.exitCode = 2;
 } else {
   try {
+    const suite = integrationSuite(process.env);
+    requireCurrentIntegrationSuite(suite);
     const settings = integrationSettings(process.env);
-    console.log(`Explicitly opted-in disposable local target: ${safeTarget(settings)}. Real PostgreSQL results follow only if executed.`);
+    console.log(`Explicitly opted-in disposable local target: ${safeTarget(settings)}. CURRENT1–10 results follow only if executed; historical1–8 results are not reused.`);
     const child = spawn(process.execPath, ["--test", "--test-concurrency=1", "--test-reporter=tap", "tests/integration/postgres.integration.test.ts"], {
       cwd: fileURLToPath(new URL("../", import.meta.url)), stdio: "inherit", shell: false,
       env: { ...process.env, NAIJUE_PG_RUNNER_MARKER: randomBytes(32).toString("hex") }

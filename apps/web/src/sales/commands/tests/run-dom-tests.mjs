@@ -50,6 +50,7 @@ try {
 
   await act(async () => h.session.openExisting(uuid(1))); await settle(); await input(host.querySelector('textarea[aria-label="备注"]'), 'TEST 保存输入'); await click(button('保存'));
   assert.equal(h.commands.length, 1); assert.equal(h.commands[0].action, 'SAVE'); assert.equal(h.commands[0].expectedVersion, 2); assert.equal(button('保存').disabled, true); assert.equal(h.keys, 1);
+  assert.equal(h.commands[0].draft.settlements[0].paymentMethodId, uuid(25)); assert.equal(h.commands[0].draft.settlements[0].paymentAccountId, draft().settlements[0].paymentAccountId);
   assert.equal(h.session.getSnapshot().command.editor.detail.document.header.version, 2); assert.ok(button('读取当前单据'));
   h.setCurrent(detail('DRAFT', 3)); await click(button('读取当前单据')); await click(button('采用当前单据'));
   assert.equal(h.session.getSnapshot().command.editor.detail.document.header.version, 3); await click(button('审核')); assert.equal(h.commands.length, 1); await click(button('确认审核')); assert.equal(h.commands[1].action, 'APPROVE');
@@ -65,6 +66,15 @@ try {
   await act(async () => unknown.context.replaceIdentity({ accountId: uuid(999), sessionRevision: '2', permissionRevision: '2' })); await settle();
   assert.equal(unknown.session.getSnapshot().input, null); assert.equal(host.querySelectorAll('input,textarea').length, 0); await act(async () => unknown.session.dispose());
   console.log('PASS SALES COMMAND DOM 3: unknown results block repeat actions/navigation, original-key replay is exact, receipt recovery and identity disposal clear safely.');
+
+  const unknownMethod = setup(), methodDetail = detail(); unknownMethod.setCurrent({ ...methodDetail, document: { ...methodDetail.document,
+    settlements: methodDetail.document.settlements.map(row => ({ ...row, paymentMethodId: null })) } });
+  await unknownMethod.session.openExisting(uuid(1)); await act(async () => root.render(createElement(SalesCommandForm, { session: unknownMethod.session, close: () => {} }))); await settle();
+  assert.match(host.textContent, /原付款方式编号/); assert.match(host.textContent, /TEST 保存方式/);
+  assert.equal(button('保存').disabled, true); assert.equal(button('审核').disabled, true); assert.equal(host.querySelectorAll('input,textarea').length, 0);
+  await click(button('保存')); await click(button('审核')); assert.equal(unknownMethod.commands.length, 0); assert.equal(unknownMethod.keys, 0);
+  await act(async () => unknownMethod.session.dispose());
+  console.log('PASS SALES METHOD DOM: explicit nullable original method stays readable without inferring current/name facts; unknown method never enables runtime editing or approval.');
 
   const page = setup(); const references = { readReferences: async () => { throw new Error('Unexpected filter candidate read'); } };
   await act(async () => root.render(createElement(SalesCommandPageHost, { scope: page.routeScope, reader: page.reader, references, session: page.session, loadDetailStyles: async () => {} }))); await settle();

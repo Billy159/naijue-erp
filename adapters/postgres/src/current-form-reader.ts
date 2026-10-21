@@ -1,3 +1,4 @@
+import { readCurrentRecentAccount } from "./current-account-recommendations.ts";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
 import type { CurrentFormAuthorization, CurrentFormContext, CurrentFormIdentity, CurrentFormIntent, CurrentFormPage,
   CurrentFormProduct, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormReader, CurrentFormReadGrant,
@@ -65,10 +66,13 @@ function sku(row: Record<string, unknown>): CurrentFormSku {
 export class PostgresCurrentFormReader implements CurrentFormReader {
   private readonly pool: PgSalesPool;
   private readonly authorize: CurrentFormAuthorization["authorize"];
-  constructor(pool: PgSalesPool, authorization: CurrentFormAuthorization) {
+  private readonly recommendationTimeoutMillis: number;
+  constructor(pool: PgSalesPool, authorization: CurrentFormAuthorization, options?: { readonly recommendationTimeoutMillis?: number }) {
     if (typeof pool?.connect !== "function" || typeof authorization?.authorize !== "function")
       throw new TypeError("Current forms require an explicit PostgreSQL pool and trusted form authorization provider");
-    this.pool = pool; this.authorize = authorization.authorize.bind(authorization);
+    const timeout = options?.recommendationTimeoutMillis ?? 250;
+    if (!Number.isInteger(timeout) || timeout < 1 || timeout > 1000) throw new TypeError("Optional account recommendation timeout must be an integer from 1 through 1000 milliseconds");
+    this.pool = pool; this.authorize = authorization.authorize.bind(authorization); this.recommendationTimeoutMillis = timeout;
   }
   private async identity(query: Query, actor: ActorContext): Promise<CurrentFormIdentity> {
     const rows = (await query(`/* current-form:identity */ SELECT a.id AS account_id, a.staff_id, a.login_enabled,
@@ -121,10 +125,51 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
     const offset = (parameters.page - 1) * 20; const pageValues = [...values, ...orderValues, 20, offset];
     const rows = (await query(`/* current-form:page */ SELECT ${columns} ${from} WHERE ${where}
       ORDER BY ${order} LIMIT $${pageValues.length - 1} OFFSET $${pageValues.length}`, pageValues)).rows;
-    const remaining = total > BigInt(offset) ? total - BigInt(offset) : 0n;
+    return this.decodedPage(parameters, total, rows, decode);
+  }
+  private decodedPage<T extends { readonly id: string }>(parameters: { readonly page: number; readonly pageSize: 20 }, total: bigint,
+    rows: readonly Record<string, unknown>[], decode: (row: Record<string, unknown>) => T): CurrentFormPage<T> {
+    const offset = (parameters.page - 1) * 20; const remaining = total > BigInt(offset) ? total - BigInt(offset) : 0n;
     requireDomain(rows.length === Number(remaining > 20n ? 20n : remaining), "INVALID_DATABASE_VALUE", "Current form page/count mismatch or overflow");
     const items = rows.map(decode); requireDomain(new Set(items.map(row => row.id)).size === items.length, "INVALID_DATABASE_VALUE", "Repeated native candidate identity");
     return Object.freeze({ page: parameters.page, pageSize: 20, exactTotal: total, items: Object.freeze(items) });
+  }
+  private async paymentAccounts(query: Query, parameters: Extract<CurrentSalesReferenceQuery, { kind: "paymentAccount" }>, signal: AbortSignal,
+    from: string, where: string, columns: string, values: unknown[], decode: (row: Record<string, unknown>) => CurrentSalesReferenceItem): Promise<CurrentFormPage<CurrentSalesReferenceItem>> {
+    // Eligibility/count is authoritative and independent of every optional hint.
+    const total = count((await query(`/* current-form:count */ SELECT count(*)::text AS total ${from} WHERE ${where}`, values)).rows);
+    const offset = (parameters.page - 1) * 20; let rows: Record<string, unknown>[]; let recommendationAvailability: "AVAILABLE" | "UNAVAILABLE";
+    await query("SAVEPOINT current_account_recommendation");
+    try {
+      const settings = (await query("/* current-form:recommendation-timeout */ SELECT current_setting('statement_timeout') AS statement_timeout")).rows;
+      requireDomain(settings.length === 1 && typeof settings[0]!.statement_timeout === "string", "CURRENT_ACCOUNT_RECOMMENDATION_UNAVAILABLE", "Original timeout is unavailable");
+      const original = settings[0]!.statement_timeout;
+      const match = /^(0|[1-9]\d*)(us|ms|s|min|h|d)?$/.exec(original);
+      requireDomain(match, "CURRENT_ACCOUNT_RECOMMENDATION_UNAVAILABLE", "Original timeout is not a recognized PostgreSQL value");
+      const units: Record<string, bigint> = { us: 1n, ms: 1000n, s: 1000000n, min: 60000000n, h: 3600000000n, d: 86400000000n };
+      const originalMicros = BigInt(match[1]!) * units[match[2] ?? "ms"]!;
+      const budget = originalMicros > 0n && originalMicros < BigInt(this.recommendationTimeoutMillis) * 1000n ? original : `${this.recommendationTimeoutMillis}ms`;
+      await query("SELECT set_config('statement_timeout', $1::text, true)", [budget]);
+      const recent = await readCurrentRecentAccount(query, parameters.hallId, parameters.paymentMethodId);
+      const pageValues = [...values, parameters.hallId, recent, 20, offset];
+      rows = (await query(`/* current-form:page */ SELECT ${columns},
+        (EXISTS (SELECT 1 FROM naijue_erp.payment_account_hall ph WHERE ph.payment_account_id = r.id AND ph.hall_id = $3::uuid)
+          OR r.id = $4::uuid) IS TRUE AS is_recommended ${from} WHERE ${where}
+        ORDER BY is_recommended DESC, r.id LIMIT $5 OFFSET $6`, pageValues)).rows;
+      for (const row of rows) booleanValue(row.is_recommended);
+      await query("SELECT set_config('statement_timeout', $1::text, true)", [original]);
+      await query("RELEASE SAVEPOINT current_account_recommendation"); recommendationAvailability = "AVAILABLE";
+    } catch (error) {
+      if (signal.aborted) throw error;
+      // PostgreSQL ROLLBACK TO also restores the original SET LOCAL timeout. If
+      // recovery fails the whole snapshot fails, rather than faking a usable client.
+      await query("ROLLBACK TO SAVEPOINT current_account_recommendation");
+      await query("RELEASE SAVEPOINT current_account_recommendation");
+      rows = (await query(`/* current-form:eligible-account-fallback */ SELECT ${columns} ${from} WHERE ${where}
+        ORDER BY r.id LIMIT $3 OFFSET $4`, [...values, 20, offset])).rows;
+      recommendationAvailability = "UNAVAILABLE";
+    }
+    return Object.freeze({ ...this.decodedPage(parameters, total, rows, decode), recommendationAvailability });
   }
   readSalesReferences(actor: ActorContext, input: CurrentSalesReferenceQuery, signal: AbortSignal): Promise<CurrentFormPage<CurrentSalesReferenceItem>> {
     const parameters = parseCurrentSalesReferenceQuery(input);
@@ -157,12 +202,13 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
           columns = `r.id, r.name, NULL::text AS code, r.hall_id, h.name AS hall_name, NULL::uuid AS payment_method_id, NULL::text AS payment_method_name`; break;
         case "paymentAccount":
           from = "FROM naijue_erp.payment_account r JOIN naijue_erp.payment_method pm ON pm.id = r.payment_method_id";
-          where = `r.enabled AND pm.enabled AND (${match("r.name")} OR ${match("pm.name")})`; orderValues.push(parameters.hallId);
-          order = `(EXISTS (SELECT 1 FROM naijue_erp.payment_account_hall ph WHERE ph.payment_account_id = r.id AND ph.hall_id = $${values.length + 1}::uuid)) DESC, ${order}`;
+          values.push(parameters.paymentMethodId);
+          where = `r.enabled AND pm.enabled AND r.payment_method_id = $${values.length}::uuid AND (${match("r.name")} OR ${match("pm.name")})`;
+          order = "r.id";
           columns = `r.id, r.name, NULL::text AS code, NULL::uuid AS hall_id, NULL::text AS hall_name, pm.id AS payment_method_id, pm.name AS payment_method_name`; break;
         default: throw new TypeError("Unsupported current reference kind");
       }
-      return this.page(query, parameters, from, where, columns, order, values, row => {
+      const decode = (row: Record<string, unknown>): CurrentSalesReferenceItem => {
         const kind = ({ hall: "hall", customer: "customer", salesperson: "staff", warehouse: "warehouse", paymentAccount: "paymentAccount" } as const)[parameters.kind];
         const hallId = row.hall_id === null ? null : id("hall", row.hall_id); const hallName = nullableText(row.hall_name);
         requireDomain((hallId === null) === (hallName === null), "INVALID_DATABASE_VALUE", "Native hall identity/label mismatch");
@@ -173,10 +219,12 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
         const paymentMethodId = row.payment_method_id === null ? null : id("paymentMethod", row.payment_method_id);
         const paymentMethodName = nullableText(row.payment_method_name);
         requireDomain((paymentMethodId === null) === (paymentMethodName === null)
-          && (parameters.kind === "paymentAccount" ? paymentMethodId !== null : paymentMethodId === null), "INVALID_DATABASE_VALUE", "Native payment method identity/label mismatch");
+          && (parameters.kind === "paymentAccount" ? paymentMethodId === parameters.paymentMethodId : paymentMethodId === null), "INVALID_DATABASE_VALUE", "Native payment method identity/label mismatch");
         requireDomain(parameters.kind === "customer" ? row.code !== null : row.code === null, "INVALID_DATABASE_VALUE", "Unexpected native reference code shape");
         return Object.freeze({ id: nativeId, name: text(row.name), code: nullableText(row.code), hallId, hallName, paymentMethodId, paymentMethodName });
-      }, orderValues);
+      };
+      if (parameters.kind === "paymentAccount") return this.paymentAccounts(query, parameters, signal, from, where, columns, values, decode);
+      return this.page(query, parameters, from, where, columns, order, values, decode, orderValues);
     });
   }
   readTransferWarehouses(actor: ActorContext, input: CurrentTransferWarehouseQuery, signal: AbortSignal): Promise<CurrentFormPage<CurrentTransferWarehouse>> {

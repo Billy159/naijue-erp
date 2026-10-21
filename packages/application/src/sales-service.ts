@@ -2,7 +2,7 @@ import { applyInventoryEntry, assertPostingCoverage } from "./inventory-posting.
 import type { SalesDocument, SalesDraft, SalesLineRow } from "../../domain/src/documents.ts";
 import { requireDomain } from "../../domain/src/errors.ts";
 import type { InventoryLedgerRow } from "../../domain/src/inventory.ts";
-import { addMoney, minorAmount, negateMoney, negateQuantity, nextVersion, version } from "../../domain/src/values.ts";
+import { addMoney, entityId, minorAmount, negateMoney, negateQuantity, nextVersion, version } from "../../domain/src/values.ts";
 import type { EntityId } from "../../domain/src/values.ts";
 import type { SalesCommand, SalesDependencies, SalesResult } from "./ports.ts";
 import { requestHash } from "./request-hash.ts";
@@ -27,9 +27,10 @@ function validateDraft(draft: SalesDraft): void {
   requireDomain(draft.settlements.length <= 3, "SETTLEMENT_LIMIT", "At most three document settlement rows are supported by the observed Demo rule");
   ids.clear(); positions.clear();
   for (const row of draft.settlements) {
-    requireDomain(row.salesId === draft.header.id && row.amount >= 0n && ["RECEIVE", "REFUND"].includes(row.direction)
+    requireDomain(row.salesId === draft.header.id && typeof row.paymentMethodId === "string" && row.amount >= 0n && ["RECEIVE", "REFUND"].includes(row.direction)
       && Number.isSafeInteger(row.lineNo) && row.lineNo > 0 && !ids.has(row.id) && !positions.has(row.lineNo),
     "INVALID_SETTLEMENT", "Expected owned, unique, nonnegative receive/refund rows");
+    entityId("paymentMethod", row.paymentMethodId);
     ids.add(row.id); positions.add(row.lineNo);
   }
 }

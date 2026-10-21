@@ -23,13 +23,14 @@ test('command client construction is inert, same-origin exact endpoints retain e
   assert.deepEqual(await client.receipt(command, signal()), receipt(command)); assert.equal(calls.length, 2);
   assert.equal(calls[0]?.url, 'https://synthetic.test/api/sales/commands'); assert.equal(calls[1]?.url, 'https://synthetic.test/api/sales/receipts/TEST.sales%3Aoriginal');
   assert.deepEqual(JSON.parse(calls[0]!.init.body as string), command); assert.equal(calls[1]?.init.body, undefined);
+  assert.equal(JSON.parse(calls[0]!.init.body as string).draft.settlements[0].paymentMethodId, uuid(25));
   for (const call of calls) { assert.equal(call.init.credentials, 'same-origin'); assert.equal(call.init.cache, 'no-store'); assert.equal(call.init.redirect, 'error'); assert.equal(call.init.mode, 'same-origin'); }
   assert.equal(calls[0]?.init.method, 'POST'); assert.equal(calls[1]?.init.method, 'GET');
 });
 test('immutable caller snapshot protects original nested payload, target and CAS through dispatch and validation', async () => {
   const original = save(2), command = structuredClone(original); let body: unknown;
   const client = createSalesCommandHttpClient(options(async (_url, init) => { body = JSON.parse(init.body as string); return json(result(original)); }));
-  const write = client.execute(command, signal()); Object.assign(command, { expectedVersion: 99 }); if (command.action === 'SAVE') { Object.assign(command.draft.header, { id: uuid(9) }); Object.assign(command.draft.lines[0]!.snapshot, { barcode: 'MUTATED' }); }
+  const write = client.execute(command, signal()); Object.assign(command, { expectedVersion: 99 }); if (command.action === 'SAVE') { Object.assign(command.draft.header, { id: uuid(9) }); Object.assign(command.draft.lines[0]!.snapshot, { barcode: 'MUTATED' }); Object.assign(command.draft.settlements[0]!, { paymentMethodId: uuid(99) }); }
   assert.deepEqual(await write, result(original)); assert.deepEqual(body, original);
 });
 test('malformed input and oversized UTF-8 draft are rejected before any fetch', async () => {
@@ -41,9 +42,18 @@ test('malformed input and oversized UTF-8 draft are rejected before any fetch', 
   assert.equal(calls, 0);
   for (const bad of [{ origin: 'https://other.test/path' }, { origin: 'https://user:password@synthetic.test' }, { origin: 'file:///tmp' }, { basePath: '//other.test' }, { basePath: '/api?actor=secret' }, { timeoutMs: 0 }, { maxResponseBytes: -1 }]) assert.throws(() => createSalesCommandHttpClient(options(async () => json({}), bad)));
 });
+test('missing or unknown intended method never dispatches an old account-only SAVE payload', async () => {
+  let calls = 0; const client = createSalesCommandHttpClient(options(async () => { calls++; return json({}); }));
+  const command = save(); assert.equal(command.action, 'SAVE'); const original = command.draft.settlements[0]!;
+  const { paymentMethodId: _method, ...oldShape } = original;
+  for (const row of [oldShape, { ...original, paymentMethodId: null }, { ...original, paymentMethodId: undefined }, { ...original, paymentMethodId: '' }]) {
+    await assert.rejects(client.execute({ ...command, draft: { ...command.draft, settlements: [row] } } as never, signal()), failure('invalid-request', 'not-sent'));
+  }
+  assert.equal(calls, 0);
+});
 test('recognized native original 4xx rejection is definitive, sanitized and not retried', async () => {
   for (const [status, code, kind] of [[400, 'INVALID_HTTP_INPUT', 'invalid-request'], [404, 'DOCUMENT_NOT_FOUND', 'not-found'],
-    [409, 'VERSION_CONFLICT', 'conflict'], [409, 'HISTORICAL_POSTING_NOT_IMPLEMENTED', 'conflict'], [409, 'PRODUCT_PRICING_UNAVAILABLE', 'conflict'], [409, 'INVENTORY_NOT_READY', 'conflict'],
+    [409, 'VERSION_CONFLICT', 'conflict'], [409, 'HISTORICAL_POSTING_NOT_IMPLEMENTED', 'conflict'], [409, 'PRODUCT_PRICING_UNAVAILABLE', 'conflict'], [409, 'INVENTORY_NOT_READY', 'conflict'], [409, 'SETTLEMENT_METHOD_MISMATCH', 'conflict'], [409, 'IMMUTABLE_SETTLEMENT_METHOD', 'conflict'],
     [422, 'SETTLEMENT_MISMATCH', 'invalid-request'], [422, 'BELOW_MINIMUM_PRICE', 'invalid-request'], [413, 'BODY_TOO_LARGE', 'invalid-request'], [415, 'UNSUPPORTED_MEDIA_TYPE', 'invalid-request']] as const) {
     let calls = 0; const client = createSalesCommandHttpClient(options(async () => { calls++; return json({ error: { code, message: 'private SQL token secret' } }, status); }));
     await assert.rejects(client.execute(save(), signal()), failure(kind, 'rejected', code, status)); assert.equal(calls, 1);

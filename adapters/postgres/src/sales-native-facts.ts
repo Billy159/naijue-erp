@@ -63,8 +63,8 @@ export class PostgresNativeSalesFacts {
     for (const line of current) { id("salesLine", line.id); id("sku", line.skuId); requireDomain(line.salesId === h.id, "TRANSACTION_SCOPE", "Native facts require owned actual sales lines"); }
     id("sales", h.id); id("hall", h.hallId); id("warehouse", h.warehouseId); id("customer", h.customerId);
     if (h.salespersonId !== null) id("staff", h.salespersonId);
-    const schema = one((await this.query("/* native-sales-facts:schema */ SELECT EXISTS (SELECT 1 FROM naijue_erp.schema_migration WHERE version = 9) AS installed")).rows);
-    requireDomain(schema.installed === true, "NATIVE_CATALOGUE_FACTS_UNAVAILABLE", "Native nine-price/barcode schema has not been installed");
+    const schema = one((await this.query("/* native-sales-facts:schema */ SELECT EXISTS (SELECT 1 FROM naijue_erp.schema_migration WHERE version = 10) AS installed")).rows);
+    requireDomain(schema.installed === true, "NATIVE_CATALOGUE_FACTS_UNAVAILABLE", "Current native sales schema including the original-method snapshot has not been installed");
     const hall = one((await this.query("/* native-sales-facts:hall */ SELECT id, enabled FROM naijue_erp.hall WHERE id = $1::uuid FOR SHARE", [h.hallId])).rows);
     const warehouse = one((await this.query("/* native-sales-facts:warehouse */ SELECT id, hall_id, enabled FROM naijue_erp.warehouse WHERE id = $1::uuid FOR SHARE", [h.warehouseId])).rows);
     const customer = one((await this.query("/* native-sales-facts:customer */ SELECT id, enabled FROM naijue_erp.customer WHERE id = $1::uuid FOR SHARE", [h.customerId])).rows);

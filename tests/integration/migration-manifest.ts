@@ -1,15 +1,12 @@
-/** Reviewed immutable SQL bytes only. No pg import, environment lookup or connection. */
-// Review this list explicitly when extending scope. Never glob migrations or pick up unreviewed 0009+.
+/** Exact reviewed CURRENT SQL bytes only. No pg import, environment lookup or connection. */
+import { FROZEN_0001_0008_MIGRATIONS } from "./frozen-0001-0008-manifest.ts";
+// Historical prefix is retained verbatim for evidence; current execution ALWAYS applies all ten migrations.
 export const MIGRATIONS = [
-  [1, "0001_runtime_sales.sql", "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf"],
-  [2, "0002_sales_pricing_facts.sql", "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98"],
-  [3, "0003_auth_sessions.sql", "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29"],
-  [4, "0004_transfer_runtime.sql", "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e"],
-  [5, "0005_product_read_fields.sql", "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a"],
-  [6, "0006_party_maintenance.sql", "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c"],
-  [7, "0007_sparse_inventory_cutoff.sql", "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7"],
-  [8, "0008_runtime_sparse_first_use.sql", "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262"]
+  ...FROZEN_0001_0008_MIGRATIONS,
+  [9, "0009_catalogue_prices_barcodes.sql", "bb12e54d7b4989d5b6fe608a9582f4c887980eb19be839f74005d54eb0ac530e"],
+  [10, "0010_sales_settlement_method_snapshot.sql", "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f"]
 ] as const;
+
 
 export const SPARSE_SCENARIOS = [
   "0006 independent party CREATE/EDIT/DISABLE/RESTORE, duplicate receipt, numbering, rollback and dependency guard",
@@ -59,4 +56,14 @@ export const SALES_WRITE_AUTHORIZATION_SCENARIOS = [
   "known-PID actual account/staff/hall metadata UPDATE waits while native command identity locks remain held through commit",
   "known-PID command waits for committed disable or ADMIN-to-SALESPERSON change and READ COMMITTED denies without business facts",
   "identity SELECT actually waits on staff before hall disable commits; separate current hall SELECT rejects without unauthorized business facts"
+] as const;
+
+/** Current10 method identity: actual native rules and same-transaction synthetic completeness proof. NOT RUN. */
+export const METHOD_IDENTITY_SCENARIOS = [
+  "native M1/A capture, same-ID rename preserves original method/account names, eligibility and immutable original-key replay",
+  "account A changes M1→M2: stored original stays M1, runtime SAVE/APPROVE and forged same-row M2 reject with exact no-effect snapshots",
+  "intentional new settlement/new account captures verified M2/B and valid runtime recent recommendation",
+  "explicit stored-NULL negative fixture remains unknown across read/reversal, never inferred or eligible as a recent-method fact",
+  "original-transaction FOR SHARE actually blocks non-key account method/account enabled/method enabled updates until COMMIT",
+  "three actual metadata-change lock waits recheck committed facts, reject without key/effects, then explicit original-key recovery/replay"
 ] as const;

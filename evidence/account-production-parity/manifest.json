@@ -1,0 +1,129 @@
+{
+  "observedHead": "3774ece71b49702cbf8b9f20aaa06f4cb31c6410",
+  "approvedTaskBaseline": "306fe28a0d03086c697dca5582c3ee64d71f7782",
+  "scope": "Source-only current account global selected-method eligibility, optional bounded runtime/source-hall recommendations, approved one original-method snapshot, explicit runtime intent and original-transaction pair verification. No actual intake/DB/production execution.",
+  "frozenAtUtc": "2026-10-21T08:10:03.336936+00:00",
+  "ownedPaths": [
+    "adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql",
+    "adapters/postgres/src/current-account-recommendations.ts",
+    "adapters/postgres/src/current-form-reader.ts",
+    "adapters/postgres/src/sales-native-facts.ts",
+    "adapters/postgres/src/sales-query-reader.ts",
+    "adapters/postgres/src/sales-unit-of-work.ts",
+    "apps/api/src/input.ts",
+    "apps/api/src/sales-http.ts",
+    "apps/api/src/sales-http.test.ts",
+    "packages/application/src/current-form-ports.ts",
+    "packages/application/src/current-form-validation.ts",
+    "packages/application/src/sales-change-evidence.ts",
+    "packages/application/src/sales-native-facts.ts",
+    "packages/application/src/sales-service.ts",
+    "packages/domain/src/documents.ts",
+    "tests/catalogue-authority-schema-contract.test.ts",
+    "tests/current-form-reader.test.ts",
+    "tests/inventory-first-use-postgres-protocol.test.ts",
+    "tests/postgres-protocol.test.ts",
+    "tests/sales-business-rules.test.ts",
+    "tests/sales-native-facts.test.ts",
+    "tests/sales-query-postgres-protocol.test.ts",
+    "tests/support/synthetic-fixtures.ts",
+    "tests/settlement-method-schema-contract.test.ts",
+    "docs/native-current-form-read.md",
+    "docs/native-sales-transaction-facts.md",
+    "docs/native-catalogue-schema.md",
+    "docs/native-account-production-parity.md"
+  ],
+  "newSourcePaths": [
+    "adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql",
+    "adapters/postgres/src/current-account-recommendations.ts",
+    "tests/settlement-method-schema-contract.test.ts",
+    "docs/native-account-production-parity.md"
+  ],
+  "trackedPatch": "evidence/account-production-parity/tracked-source.patch",
+  "sha256": {
+    "adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f",
+    "adapters/postgres/src/current-account-recommendations.ts": "a0bd90cb2db3f454676dca3e2c1a60ff7482a85d0152d2dc53f8239716f9881f",
+    "adapters/postgres/src/current-form-reader.ts": "19e8a92826ef264e42f7176218adde91a2b7c831ba79345750f30dc84273a92a",
+    "adapters/postgres/src/sales-native-facts.ts": "e85f571a7506dd351139742b5b5072945beda494a4f276d536d48252e15b1328",
+    "adapters/postgres/src/sales-query-reader.ts": "8defa550f763751f0f8667e2a15fcfc2a719cb921e64d3f2d53837b124511263",
+    "adapters/postgres/src/sales-unit-of-work.ts": "bc308d636422fb8d54e580b03c94227d8d9a24133bf8a50cdf4dd716b6f0c445",
+    "apps/api/src/input.ts": "0c9e5419dd7ebbd4a5528cd903f74785107673d4fd32d5b65d1402d109b97438",
+    "apps/api/src/sales-http.ts": "c6f17a162e91d899ea9a1e9c9a32fab2a7dc56567e3831554a1c52f2303cff2c",
+    "apps/api/src/sales-http.test.ts": "8aa907263ef6e9e47c545a628dfa9fd75388b78cf79ddc08dc108cd44f59484a",
+    "packages/application/src/current-form-ports.ts": "7a39851e5ff2f350788e2290426010a1718217442e4bdc200b9c64054f594b83",
+    "packages/application/src/current-form-validation.ts": "d2ffbd4e0013df3af3c36308be69110ce55bdabee64efd0fe2dcf71af94e97d1",
+    "packages/application/src/sales-change-evidence.ts": "44a53299d1a56891154afdcca2549e64343f37d4ebce8f878c17d8e80d6b1b12",
+    "packages/application/src/sales-native-facts.ts": "27acef37b175fc393ac1c48c513fa51165ab7b1dd18e4a96d6749af207bef63f",
+    "packages/application/src/sales-service.ts": "824f180e71da6045fbe6b1f3eb6a3b8ef90974e991a6f0ae615abdd5181af4de",
+    "packages/domain/src/documents.ts": "1e140d723c25292e568cfd478d6c364537aff1f4440ae16307a0cc13e9a4cd01",
+    "tests/catalogue-authority-schema-contract.test.ts": "52236175f42b474754a49b2ed1a8aab664daecedd59100d08b71a9ea9d7740a9",
+    "tests/current-form-reader.test.ts": "92a23dda3d55820812496f79fe2356d8799b31167de2fa582efda991c681ea44",
+    "tests/inventory-first-use-postgres-protocol.test.ts": "ae289ad8119987de61c34b2276853005ea99bb157219ba5f24884997e5bddb1f",
+    "tests/postgres-protocol.test.ts": "e28ccb9e8986bbe5b72e4d048af964c0368140e1bc60a63262042b6dc117c027",
+    "tests/sales-business-rules.test.ts": "f748840510f8e7d21a373105d35e787612c33e78bb82692f8e7b6b28785d03a8",
+    "tests/sales-native-facts.test.ts": "e2c26b2e9c83c6189f55c4b9fdf959f1f99e61efdba5ae5ac74266d9c15a1ff5",
+    "tests/sales-query-postgres-protocol.test.ts": "3c40567f295f7cee3717f03c1f2be59ac15bda881847b8af63478f3f6d0b215f",
+    "tests/support/synthetic-fixtures.ts": "78e3006624189d6eccb841048d5cb88e72a27e574ce283181f9c30a1a62544f7",
+    "tests/settlement-method-schema-contract.test.ts": "16670a243da9a8607681ef7485f10ea03cf237e3314700ed47dd31101ab61d5f",
+    "docs/native-current-form-read.md": "24198f495d5030a7f4e4d9f34f9d0b84ced40d158be1995e6a68b2582dd144a2",
+    "docs/native-sales-transaction-facts.md": "b1e5e4f002ddbd61afb78c2f82b4259f426e79dbea55f96d681f48fa66b54c18",
+    "docs/native-catalogue-schema.md": "10c69be4f1cd1d298743f237bddf389a7b08a18102ed54de0ce7163f32da2c8c",
+    "docs/native-account-production-parity.md": "f3459e6b4384c44b0a17ccd10b534b34ac25ac73845fed8c5082e7cb369b714b",
+    "evidence/account-production-parity/focused-tests.log": "db0c279d662a8f6bd01b5d9ae6671b4cbec3215bdcd3258d75fc8cd9d735f216",
+    "evidence/account-production-parity/focused-typecheck.log": "c569dd3d973ddc42e4633077a49951b7230ae36023ed4ce0f45754853193da49",
+    "evidence/account-production-parity/tracked-source.patch": "50dacae3895a3829fdecae744932f912b51c9f767d541f24186d75e9837c5110"
+  },
+  "verification": {
+    "node": {
+      "command": "node --test tests/current-form-reader.test.ts tests/postgres-protocol.test.ts tests/inventory-first-use-postgres-protocol.test.ts tests/sales-native-facts.test.ts tests/sales.test.ts tests/sales-business-rules.test.ts tests/sales-query-postgres-protocol.test.ts apps/api/src/sales-http.test.ts apps/api/src/sales-query-http.test.ts tests/catalogue-authority-schema-contract.test.ts tests/settlement-method-schema-contract.test.ts",
+      "passed": 281,
+      "failed": 0,
+      "type": "synthetic unit, source contracts, scripted pg protocol and Fastify inject only"
+    },
+    "focusedTypeScript": {
+      "command": "./node_modules/.bin/tsc --noEmit --target ES2023 --module NodeNext --moduleResolution NodeNext --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --verbatimModuleSyntax --rewriteRelativeImportExtensions --skipLibCheck --types node tests/settlement-method-schema-contract.test.ts tests/current-form-reader.test.ts tests/postgres-protocol.test.ts tests/inventory-first-use-postgres-protocol.test.ts tests/sales-native-facts.test.ts tests/sales-business-rules.test.ts tests/sales-query-postgres-protocol.test.ts tests/sales.test.ts apps/api/src/sales-http.test.ts apps/api/src/sales-query-http.test.ts tests/catalogue-authority-schema-contract.test.ts",
+      "exitCode": 0
+    }
+  },
+  "productionSourceEvidence": {
+    "appImage": "20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+    "webImage": "aa52934534a4d083988010753998efa32d7cd1c0856993b213ca5440e50ef02f",
+    "frontendRelease": "637643643ca73c23baeb3cf7e60b3e8b074986c3e973bd126b7d4cb4a6f425d8",
+    "source": "parent supplied inspected running-source evidence; no further online visit or actual-data reads"
+  },
+  "approvedMigration": {
+    "file": "adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql",
+    "sha256": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f",
+    "newFields": [
+      "sales_settlement.payment_method_id_snapshot"
+    ],
+    "historicalBackfill": "none; unknown remains NULL",
+    "currentWriterSchema": 10
+  },
+  "recommendationLimits": {
+    "maxDocuments": 50,
+    "maxLinesPerDocument": 2000,
+    "proofRowsSentinel": 100001,
+    "defaultStatementBudgetMillis": 250,
+    "maximumTrustedStatementBudgetMillis": 1000,
+    "historyAvailability": "AVAILABLE means runtime/source-hall hints; CUTOFF_HISTORY or missing original method remains excluded until trustworthy original/active contribution proof, not full historical parity"
+  },
+  "separateOwners": [
+    "apps/web sales DTO/parsers/editor/fixtures and UI evidence: advance_sales_create_workflow",
+    "current1–10 genuine-PG harness/fixtures/scenarios: run_isolated_postgres_acceptance",
+    "offline import optional source method/relationship contracts: advance_import_preflight"
+  ],
+  "notRun": [
+    "PostgreSQL SQL parser/engine/migrations/savepoints/statement_timeout/locks/constraints/concurrency",
+    "genuine1–10 integration acceptance or performance/latency measurement",
+    "real source-data/paused intake reads, import/publisher or production host",
+    "full aggregate compiler/build, install, credential change, commit, push, deploy"
+  ],
+  "remainingRealDependencies": [
+    "genuine isolated1–10 engine acceptance including pair lock wait/reread and bounded recommendation semantics",
+    "real validated product import/creation completeness publisher, not offline preflight",
+    "historical original method and trustworthy current-active contribution proof for recent hints only",
+    "real trusted write-host composition and document numbering; no grant/ready defaults"
+  ],
+  "revert": "If source remains at these hashes, reverse only tracked-source.patch and remove listed newSourcePaths plus this evidence directory. Do not reset shared worktree, other owners, frozen1–8 SQL/evidence or actual database. This source-only migration has not run."
+}

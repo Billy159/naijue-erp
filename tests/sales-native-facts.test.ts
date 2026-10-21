@@ -123,7 +123,7 @@ test("native sales pg facts: original-query bounded target locks, actual member 
   assert.equal(f.calls.filter(row => row.sql.includes("native-sales-facts:membership")).length, 2);
   assert.ok(f.calls.filter(row => row.sql.includes("native-sales-facts:") && !row.sql.includes(":schema")).every(row => /FOR SHARE/.test(row.sql)));
 });
-test("native sales pg facts: missing real verifier, schema9 and incomplete/invalid nine-price facts fail closed", async () => {
+test("native sales pg facts: missing real verifier, schema10 and incomplete/invalid nine-price facts fail closed", async () => {
   let queried = false; const missing = new PostgresNativeSalesFacts(async () => { queried = true; return { rows: [], rowCount: 0 }; }, () => {}, () => []);
   await assert.rejects(() => missing.load(syntheticDraft()), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" }); assert.equal(queried, false);
   const old = pgFixture({ schema: false }); await assert.rejects(() => old.reader.load(old.draft), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" }); assert.equal(old.calls.length, 1); assert.equal(old.completeCalls(), 0);
@@ -148,6 +148,7 @@ test("native sales pg facts: captured document cannot be redirected during async
 test("native sales UoW: missing verifier fails native capability on original bound actor/target and an escaped transaction stays closed", async () => {
   const calls: string[] = []; let connections = 0, released = 0, escaped: SalesTransaction | undefined;
   const client: PgSalesClient = { async query(sql) { calls.push(sql); let rows: Record<string, unknown>[] = [];
+    if (sql.includes("sales:current-schema")) rows = [{ current_sales_schema_ready: true }];
     if (sql.includes("sales-authorization:identity")) rows = [{ account_id: actor.accountId, staff_id: syntheticSalesIdentity().staffId, login_enabled: true, role: "SALESPERSON", employment_status: "在职", hall_id: ids.hall }];
     if (sql.includes("sales-authorization:hall")) rows = [{ id: ids.hall, enabled: true }];
     return { rows, rowCount: rows.length }; }, release() { released++; } };
@@ -164,6 +165,7 @@ test("native sales UoW/service: real seam uses one original scripted client thro
   let escapedQuery: NativeSalesFactQuery | undefined;
   const client: PgSalesClient = { async query(sql, values = []) {
     calls.push(sql);
+    if (sql.includes("sales:current-schema")) return { rows: [{ current_sales_schema_ready: true }], rowCount: 1 };
     if (sql.includes("native-sales-facts:") || sql.includes("SYNTHETIC-persisted-completeness")) return f.query(sql, values);
     if (sql.includes("sales-authorization:identity")) return { rows: [{ account_id: actor.accountId, staff_id: syntheticSalesIdentity().staffId, login_enabled: true, role: "SALESPERSON", employment_status: "在职", hall_id: ids.hall }], rowCount: 1 };
     if (sql.includes("sales-authorization:hall")) return { rows: [{ id: ids.hall, enabled: true }], rowCount: 1 };
@@ -189,6 +191,7 @@ test("native sales UoW/service: real seam uses one original scripted client thro
 test("native sales UoW/service: unproven complete prices reject before native writes and roll back the same client", async () => {
   const f = pgFixture(); const calls: string[] = []; let releases = 0, sequence = 9500;
   const client: PgSalesClient = { async query(sql, values = []) { calls.push(sql);
+    if (sql.includes("sales:current-schema")) return { rows: [{ current_sales_schema_ready: true }], rowCount: 1 };
     if (sql.includes("native-sales-facts:")) return f.query(sql, values);
     if (sql.includes("sales-authorization:identity")) return { rows: [{ account_id: actor.accountId, staff_id: syntheticSalesIdentity().staffId, login_enabled: true, role: "SALESPERSON", employment_status: "在职", hall_id: ids.hall }], rowCount: 1 };
     if (sql.includes("sales-authorization:hall")) return { rows: [{ id: ids.hall, enabled: true }], rowCount: 1 };
@@ -198,4 +201,32 @@ test("native sales UoW/service: unproven complete prices reject before native wr
   const service = createSalesService({ unitOfWork: uow, rules, authorization: { async assertAllowed() {} }, now: () => "2026-10-20T12:00:00Z", newId: kind => sid(kind, sequence++) });
   await assert.rejects(() => service.execute({ actor, action: "SAVE", requestKey: "SYNTHETIC-unpublished-catalogue", expectedVersion: null, draft: syntheticDraft() }), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" });
   assert.equal(calls.at(-1), "ROLLBACK"); assert.ok(!calls.some(sql => /^INSERT|^UPDATE/.test(sql))); assert.equal(releases, 1);
+});
+
+test("native method intent: runtime SAVE unchanged/amount and APPROVE reject account reassignment without effects; same method rename is identity-stable", async () => {
+  const store = new SyntheticStore(); let currentMethod = method, sequence = 11000;
+  const uow = { transaction<T>(work: (tx: SalesTransaction) => Promise<T>): Promise<T> { return store.transaction(tx => work({ ...tx,
+    async getCurrentSalesReferenceFacts(document) { const value = nativeFacts(document); return { ...value, paymentAccounts: value.paymentAccounts.map(account => ({ ...account, methodId: currentMethod })) }; }
+  })); } };
+  const service = createSalesService({ unitOfWork: uow, rules, authorization: { async assertAllowed() {} }, now: () => "2026-10-21T08:00:00Z", newId: kind => sid(kind, sequence++) });
+  const draft = syntheticDraft(); await service.execute({ action: "SAVE", actor, draft, expectedVersion: null, requestKey: "known-method" });
+  // A renamed method retains this same identity; no method labels participate in validation.
+  await rules.assertDraftChange(undefined, draft, txFacts(nativeFacts()));
+  currentMethod = sid("paymentMethod", 11001); const before = store.snapshot();
+  for (const amount of [draft.settlements[0]!.amount, minorAmount("99")]) await assert.rejects(() => service.execute({ action: "SAVE", actor,
+    draft: { ...draft, settlements: draft.settlements.map(row => ({ ...row, amount })) }, expectedVersion: version(1), requestKey: `method-save-${amount}` }), { code: "SETTLEMENT_METHOD_MISMATCH" });
+  await assert.rejects(() => service.execute({ action: "APPROVE", actor, salesId: ids.sales, expectedVersion: version(1), requestKey: "method-approve" }), { code: "SETTLEMENT_METHOD_MISMATCH" });
+  assert.deepEqual(store.snapshot(), before);
+  const unknown = { ...draft, settlements: draft.settlements.map(row => ({ ...row, paymentMethodId: null })) };
+  await assert.rejects(() => service.execute({ action: "SAVE", actor, draft: unknown, expectedVersion: version(1), requestKey: "unknown-runtime" }), { code: "INVALID_SETTLEMENT" });
+  await assert.rejects(async () => rules.assertDraftChange(undefined, unknown, txFacts(nativeFacts())), { code: "SETTLEMENT_METHOD_MISMATCH" });
+});
+test("native method intent: first SAVE retains selected M1 intent and rejects actual M2 before any document/receipt/effect", async () => {
+  const store = new SyntheticStore(); const before = store.snapshot(); let sequence = 12000;
+  const service = createSalesService({ unitOfWork: { transaction<T>(work: (tx: SalesTransaction) => Promise<T>) { return store.transaction(tx => work({ ...tx,
+    async getCurrentSalesReferenceFacts(document) { const value = nativeFacts(document); return { ...value,
+      paymentAccounts: value.paymentAccounts.map(account => ({ ...account, methodId: sid("paymentMethod", 12001) })) }; }
+  })); } }, rules, authorization: { async assertAllowed() {} }, now: () => "2026-10-21T08:03:00Z", newId: kind => sid(kind, sequence++) });
+  await assert.rejects(() => service.execute({ action: "SAVE", actor, draft: syntheticDraft(), expectedVersion: null, requestKey: "new-selected-method-race" }), { code: "SETTLEMENT_METHOD_MISMATCH" });
+  assert.deepEqual(store.snapshot(), before);
 });

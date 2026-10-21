@@ -5,15 +5,19 @@ import type { EntityId } from "../../domain/src/values.ts";
  * authorization, authoritative transaction facts, numbering or a prepared draft. */
 export interface CurrentFormPage<T> {
   readonly page: number; readonly pageSize: 20; readonly exactTotal: bigint; readonly items: readonly T[];
+  /** Only paymentAccount pages expose this optional hint status. AVAILABLE covers
+   * verified runtime-active/source-hall hints, not unproven CUTOFF_HISTORY activity. */
+  readonly recommendationAvailability?: "AVAILABLE" | "UNAVAILABLE";
 }
 export type CurrentFormContext = { readonly kind: "SALES"; readonly hallId: EntityId<"hall"> }
   | { readonly kind: "TRANSFER" };
 export interface CurrentFormSearch { readonly search: string; readonly page: number; readonly pageSize: 20 }
-export interface CurrentSalesReferenceQuery extends CurrentFormSearch {
-  readonly kind: "hall" | "customer" | "salesperson" | "warehouse" | "paymentAccount";
-  /** null only for the hall picker; all other references belong to this proposed form hall. */
-  readonly hallId: EntityId<"hall"> | null;
-}
+/** Only account lookup carries a selected method; omission is not an all-method grant. */
+export type CurrentSalesReferenceQuery = CurrentFormSearch & (
+  { readonly kind: "hall"; readonly hallId: null }
+  | { readonly kind: "customer" | "salesperson" | "warehouse"; readonly hallId: EntityId<"hall"> }
+  | { readonly kind: "paymentAccount"; readonly hallId: EntityId<"hall">; readonly paymentMethodId: EntityId<"paymentMethod"> }
+);
 export interface CurrentSalesReferenceItem {
   readonly id: string; readonly name: string; readonly code: string | null;
   readonly hallId: EntityId<"hall"> | null; readonly hallName: string | null;

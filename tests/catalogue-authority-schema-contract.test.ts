@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
+import { FROZEN_0001_0008_MIGRATIONS } from "./integration/frozen-0001-0008-manifest.ts";
 import { MIGRATIONS } from "./integration/migration-manifest.ts";
 const file = "0009_catalogue_prices_barcodes.sql";
 const ddl = await readFile(new URL(`../adapters/postgres/migrations/${file}`, import.meta.url), "utf8");
@@ -55,10 +56,10 @@ test("catalogue authority migration source: only migration registry inserted; no
   assert.match(sql, /VALUES \(9, 'Approved product nine-price/);
   assert.ok(!/password|session|credential|inventory_balance|inventory_ledger|import_batch|operation_receipt|sales_header|transfer_header/.test(sql));
 });
-test("catalogue authority migration source: legacy eight-migration harness is deliberately unchanged and does not silently apply incompatible 0009 to populated fixtures", async () => {
-  assert.deepEqual(MIGRATIONS.map(([version]) => version), [1,2,3,4,5,6,7,8]);
-  assert.ok(!MIGRATIONS.some(([, name]) => String(name) === file));
-  for (const [, name, sha256] of MIGRATIONS) {
+test("catalogue authority migration source: frozen historical eight-prefix stays immutable; current harness requires1–10 before products", async () => {
+  assert.deepEqual(FROZEN_0001_0008_MIGRATIONS.map(([version]) => version), [1,2,3,4,5,6,7,8]);
+  assert.deepEqual(MIGRATIONS.map(([version]) => version), [1,2,3,4,5,6,7,8,9,10]);
+  for (const [, name, sha256] of FROZEN_0001_0008_MIGRATIONS) {
     const source = await readFile(new URL(`../adapters/postgres/migrations/${name}`, import.meta.url));
     assert.equal(createHash("sha256").update(source).digest("hex"), sha256, name);
   }

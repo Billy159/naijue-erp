@@ -17,6 +17,15 @@ barcodes are not replaced. The frozen header/column order and exchange sections
 are retained. Current identity/product/account selection and row addition/removal
 are deliberately unavailable, rather than using historical filter candidates.
 
+Every runtime settlement now requires an explicit intended `paymentMethodId`
+alongside `paymentAccountId`. Native reads carry the original method UUID or an
+explicit null for unknown history. Missing fields are rejected, not treated as an
+old account-only request. Names/current account metadata never fill the original
+UUID. The editor preserves the known pair through amount/direction changes and
+cannot replace a stored method while retaining the same row/account. Unknown
+method facts cannot become SAVE/APPROVE intent; CUTOFF_HISTORY remains unwritable.
+The server still verifies the intended pair under the original transaction locks.
+
 Both incomplete raw inputs and original commands belong to a session owner.
 Navigation cannot discard invalid input, unsaved edits or unknown writes. Explicit
 discard is required; confirmed writes require a separate current read and adopt,

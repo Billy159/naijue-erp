@@ -1,0 +1,94 @@
+{
+  "status": "SOURCE_ONLY_CURRENT_SCHEMA_1_TO_10_ENGINE_NOT_RUN",
+  "frozenAtUtc": "2026-10-21T08:14:45.733863+00:00",
+  "observedHead": "3774ece71b49702cbf8b9f20aaa06f4cb31c6410",
+  "ownedPaths": [
+    "docs/POSTGRES-INTEGRATION.md",
+    "scripts/run-postgres-integration.mjs",
+    "tests/integration/README.md",
+    "tests/integration/backend-acceptance.ts",
+    "tests/integration/backend-source.test.ts",
+    "tests/integration/database.ts",
+    "tests/integration/fixtures.ts",
+    "tests/integration/frozen-0001-0008-manifest.ts",
+    "tests/integration/method-identity-acceptance.ts",
+    "tests/integration/migration-manifest.ts",
+    "tests/integration/migration-source.test.ts",
+    "tests/integration/plan.ts",
+    "tests/integration/postgres.integration.test.ts",
+    "tests/integration/safety.test.ts",
+    "tests/integration/safety.ts",
+    "tests/integration/sales-write-authorization-acceptance.ts",
+    "tests/integration/sparse-acceptance.ts"
+  ],
+  "sha256": {
+    "docs/POSTGRES-INTEGRATION.md": "24ea76d5cc65f542533ce82b7387b8fad5620a3ec3f59caad8981c8f45cb0737",
+    "scripts/run-postgres-integration.mjs": "a3faf94e6df11a365b3a94d6ade8619ceacefe88d2eea378538164a5d3ccff7b",
+    "tests/integration/README.md": "f6b6e6687f76e654da3f7929f3fe043b2e882fc03d9ad0a054207635027d7cef",
+    "tests/integration/backend-acceptance.ts": "664d179f62a638a6913a414372b6d44cdfdf927bc368b1e4ec0fecca3b8db16a",
+    "tests/integration/backend-source.test.ts": "82581cfeacd1ae545d6633d59b8bdebdb26df6a8e3bc360e738b00a51425c4a3",
+    "tests/integration/database.ts": "575a3ec6471ecb1a57c0b34b13b00019032c0444a7d5dc3f404fad91d2d0eff8",
+    "tests/integration/fixtures.ts": "71fa755e6d8e06092b39b8bd9f7dddb3c8d9365a55a2a2b4c65666a40641a61a",
+    "tests/integration/frozen-0001-0008-manifest.ts": "8a672db78ea1c3ee6988cb43fa9ba888c7baf37333fb2b41cbaf982d5f7e07b6",
+    "tests/integration/method-identity-acceptance.ts": "69b9edefe9d7cccbe77d308cf3c72815689ff2d08532d6dda55b61ea7f56f131",
+    "tests/integration/migration-manifest.ts": "0a2de2e752873fe943bab1ad4716f08120941e57a73adfdc14a9b5da3533a3de",
+    "tests/integration/migration-source.test.ts": "2adad5cceca72af2e7bff19fa4dce85cf7f56c0b7a305845bc68487db242f7a5",
+    "tests/integration/plan.ts": "d66d31f1a517dceced965f0e79cb78d680969a301a56fc265fd7b27d2e552467",
+    "tests/integration/postgres.integration.test.ts": "9f9c44972047941bf4a089bb477cadfb6eadc034d934a1e3fa10cd86c0398155",
+    "tests/integration/safety.test.ts": "6f0af6eb62fafe951d1718ef20e510dc1840a7428a20b06c2ef57786f3142caf",
+    "tests/integration/safety.ts": "54df233cf39f1314e865f096e10c0beb795c793e31a51123fb863449e7d2009a",
+    "tests/integration/sales-write-authorization-acceptance.ts": "579b9e0fa493b1f565485c3365eb1dec1292d758cf06366135576d94ff37138a",
+    "tests/integration/sparse-acceptance.ts": "0e42e0e4d580006fc7d9d0b62af40a9d2a9f8504da6fb1ac9e6b2375df17ac9e"
+  },
+  "trackedPatchSha256": "f7895221df80fd4fcec471c8c83b3d03dca3f78fe2012479410c1e2c0a9ca46b",
+  "allIntegrationInputSha256": {
+    "tests/integration/adapter-helpers.ts": "b1ffde72029b83926b73780cedaf2a21f7b4c1e0a62afc12aca06a84bdec4cc8",
+    "tests/integration/backend-acceptance.ts": "664d179f62a638a6913a414372b6d44cdfdf927bc368b1e4ec0fecca3b8db16a",
+    "tests/integration/backend-source.test.ts": "82581cfeacd1ae545d6633d59b8bdebdb26df6a8e3bc360e738b00a51425c4a3",
+    "tests/integration/database.ts": "575a3ec6471ecb1a57c0b34b13b00019032c0444a7d5dc3f404fad91d2d0eff8",
+    "tests/integration/fixtures.ts": "71fa755e6d8e06092b39b8bd9f7dddb3c8d9365a55a2a2b4c65666a40641a61a",
+    "tests/integration/frozen-0001-0008-manifest.ts": "8a672db78ea1c3ee6988cb43fa9ba888c7baf37333fb2b41cbaf982d5f7e07b6",
+    "tests/integration/http-read-acceptance.ts": "154618e10c4e19bc49003300439193f387ba21e0e50ea67cf41d298de3c61168",
+    "tests/integration/method-identity-acceptance.ts": "69b9edefe9d7cccbe77d308cf3c72815689ff2d08532d6dda55b61ea7f56f131",
+    "tests/integration/migration-manifest.ts": "0a2de2e752873fe943bab1ad4716f08120941e57a73adfdc14a9b5da3533a3de",
+    "tests/integration/migration-source.test.ts": "2adad5cceca72af2e7bff19fa4dce85cf7f56c0b7a305845bc68487db242f7a5",
+    "tests/integration/native-http-read-acceptance.ts": "261e1bc211b629c7f8cd25b98494aea874638d0c45b931b3892dfcfb0bd3d186",
+    "tests/integration/plan.ts": "d66d31f1a517dceced965f0e79cb78d680969a301a56fc265fd7b27d2e552467",
+    "tests/integration/postgres.integration.test.ts": "9f9c44972047941bf4a089bb477cadfb6eadc034d934a1e3fa10cd86c0398155",
+    "tests/integration/proof.test.ts": "5196d0e0c225e74696215f28123eff4a243d170e349528e5d7e9c467b3575707",
+    "tests/integration/proof.ts": "9c6f72d2f51382296188ab1ca4ea70f5d8747b61f02e9358bcc525cf9c60f077",
+    "tests/integration/safety.test.ts": "6f0af6eb62fafe951d1718ef20e510dc1840a7428a20b06c2ef57786f3142caf",
+    "tests/integration/safety.ts": "54df233cf39f1314e865f096e10c0beb795c793e31a51123fb863449e7d2009a",
+    "tests/integration/sales-write-authorization-acceptance.ts": "579b9e0fa493b1f565485c3365eb1dec1292d758cf06366135576d94ff37138a",
+    "tests/integration/sparse-acceptance.ts": "0e42e0e4d580006fc7d9d0b62af40a9d2a9f8504da6fb1ac9e6b2375df17ac9e"
+  },
+  "migration10Sha256": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f",
+  "inventoryReaderSha256": "aaa088a6f1bace7f37e5d364aa2d4f8c21b868e6c0422ddb74f533ae9c1e3d1d",
+  "dependencyLockSha256": "1f39850320ab4391e0d504ae38aad76e255e9dd3d37b39ef2c2c4f57ca5f294d",
+  "checks": {
+    "sourceGuards": {
+      "passed": 28,
+      "failed": 0,
+      "log": "static-tests.tap"
+    },
+    "scopedTypeScript": {
+      "log": "typecheck-final.log",
+      "status": "exit0"
+    },
+    "syntax": "all tests/integration/*.ts and runner exit0",
+    "plans": [
+      "plan-backend.json",
+      "plan-sparse.json"
+    ]
+  },
+  "preservedFailure": "static-tests-failure-20261021-0810.tap: one source-test regex mistakenly matched comments/process.env, corrected to detect real environment loaders; no engine ran",
+  "historicalEvidence": "Original 2d0/schema1–8 and separately reviewed inventory-patch evidence remain unchanged; frozen-0001-0008-manifest.ts is historical source assertion only, not an executable prefix.",
+  "evidenceSha256": {
+    "static-tests.tap": "0a45bd38cd29a62803dca97d46d93f3232749a4d8de887cc3bf79c3f6cc0eb7e",
+    "static-tests-failure-20261021-0810.tap": "e69f026037275fd54fe94fdc34b68bc892fa997763be876abf74e2f8a8e8df08",
+    "typecheck-final.log": "16e3edbe92d848d09637b5ec0801d01a735a0deb44c99bc4c374f0865de6acd8",
+    "plan-backend.json": "df5b27ec4a210dc7dbc75f0afad7a5ee743dab7e1c8d4ab879b063b1a3309b27",
+    "plan-sparse.json": "1a6182148a570c6cc79864da696fc0ec341aef16cbddf82e9023cd2bb87e0b68",
+    "tracked-harness.patch": "f7895221df80fd4fcec471c8c83b3d03dca3f78fe2012479410c1e2c0a9ca46b"
+  }
+}

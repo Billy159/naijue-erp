@@ -40,15 +40,17 @@ export function safeTarget(settings: IntegrationSettings): string {
   return `${settings.host === "::1" ? "[::1]" : settings.host}:${settings.port}/${settings.database}`;
 }
 
-/** Acceptance scenario, not a production storage mode. Each invocation requires another fresh approved database. */
-export type IntegrationSuite = "native-0001-0005" | "sparse-0001-0008" | "backend-0001-0008";
+/** Acceptance scenario, not a storage mode. Only current schema 1–10 runs exist. Each invocation needs a fresh approved target. */
+export type IntegrationSuite = "sparse-0001-0010" | "backend-0001-0010";
 export function integrationSuite(env: Environment): IntegrationSuite {
   const value = env.NAIJUE_PG_TEST_SUITE;
-  if (value !== "native-0001-0005" && value !== "sparse-0001-0008" && value !== "backend-0001-0008") fail("explicit NAIJUE_PG_TEST_SUITE must be native-0001-0005, sparse-0001-0008 or backend-0001-0008");
+  if (value !== "sparse-0001-0010" && value !== "backend-0001-0010")
+    fail("explicit NAIJUE_PG_TEST_SUITE must be sparse-0001-0010 or backend-0001-0010; historical 1–5/1–8 names are not executable");
   return value;
 }
 
-/** Current adapters require 0007 inventory_key_lock even for previously covered balances. */
-export function requireCurrentIntegrationSuite(suite: IntegrationSuite): void {
-  if (suite !== "sparse-0001-0008" && suite !== "backend-0001-0008") fail("native-0001-0005 is historical source only; current adapters require 0007/0008, so select an explicit current 0001–0008 suite on a fresh target");
+/** Reject historical or unknown names before Pool construction. No compatibility writer flag is introduced. */
+export function requireCurrentIntegrationSuite(suite: string): asserts suite is IntegrationSuite {
+  if (suite !== "sparse-0001-0010" && suite !== "backend-0001-0010")
+    fail("historical source only: current native writers require schema 1–10; select an explicit current suite on a fresh target");
 }

@@ -51,5 +51,13 @@ test('independent return and exchange preserve signed rows and same native wareh
 });
 test('draft settlement can be unbalanced, account identities retained, no balance or credit projection', () => {
   const base = draft(), raw = salesFormInput(base); const result = compileSalesForm(base, { ...raw, settlements: raw.settlements.map(row => ({ ...row, direction: 'RECEIVE', amount: '1.00' })) });
-  assert.equal(result.ok, true); if (result.ok) { assert.equal(result.draft.settlements[0]?.paymentAccountId, base.settlements[0]?.paymentAccountId); assert.equal(result.draft.settlements[0]?.amount, '100'); }
+  assert.equal(result.ok, true); if (result.ok) { assert.equal(result.draft.settlements[0]?.paymentAccountId, base.settlements[0]?.paymentAccountId); assert.equal(result.draft.settlements[0]?.paymentMethodId, base.settlements[0]?.paymentMethodId); assert.equal(result.draft.settlements[0]?.amount, '100'); }
+});
+test('raw settlement edits preserve the intended account/method pair; unknown method cannot compile a runtime draft', () => {
+  const base = draft(), raw = salesFormInput(base);
+  const changed = compileSalesForm(base, { ...raw, settlements: raw.settlements.map(row => ({ ...row, direction: 'RECEIVE', amount: '2.01' })) });
+  assert.equal(changed.ok, true);
+  if (changed.ok) { assert.equal(changed.draft.settlements[0]?.paymentMethodId, uuid(25)); assert.equal(changed.draft.settlements[0]?.paymentAccountId, base.settlements[0]?.paymentAccountId); }
+  const unknown = { ...base, settlements: base.settlements.map(row => ({ ...row, paymentMethodId: null })) } as unknown as SalesDraftDto;
+  assert.throws(() => salesFormInput(unknown)); assert.equal(compileSalesForm(unknown, raw).ok, false);
 });

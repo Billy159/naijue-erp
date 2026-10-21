@@ -148,6 +148,39 @@ test('unknown legacy price facts never become inferred SAVE or APPROVE intent', 
   assert.equal(await h.controller.submit('SAVE'), false); assert.equal(await h.controller.submit('APPROVE'), false); assert.equal(h.commands.length, 0);
   assert.equal(await h.controller.submit('VOID'), true); h.controller.dispose();
 });
+test('retained settlement/account cannot replace its original method identity in the local editor', async () => {
+  const h = setup(); await h.controller.openExisting(uuid(1));
+  const value = draft(); assert.equal(h.controller.replaceDraft({ ...value, settlements: value.settlements.map(row => ({ ...row, paymentMethodId: uuid(99) })) }), false);
+  assert.equal(h.controller.getSnapshot().editor?.draft?.settlements[0]?.paymentMethodId, uuid(25));
+  assert.equal(h.controller.getSnapshot().editor?.draft?.settlements[0]?.paymentAccountId, value.settlements[0]?.paymentAccountId);
+  assert.equal(h.commands.length, 0); assert.equal(h.keys, 0); h.controller.dispose();
+});
+test('selected M1/account A intent survives a current-account method race and a definitive mismatch rejection', async () => {
+  const currentAccountMethod = uuid(26), sent: SalesCommandDto[] = [];
+  const client = createSalesCommandHttpClient({ origin: 'https://synthetic.test', basePath: '/api', fetch: async (_url, init) => {
+    const command = JSON.parse(init.body as string) as SalesCommandDto; sent.push(command); assert.equal(command.action, 'SAVE');
+    assert.equal(command.draft.settlements[0]?.paymentMethodId, uuid(25));
+    assert.notEqual(command.draft.settlements[0]?.paymentMethodId, currentAccountMethod);
+    assert.equal(command.draft.settlements[0]?.paymentAccountId, draft().settlements[0]?.paymentAccountId);
+    return new Response(JSON.stringify({ error: { code: 'SETTLEMENT_METHOD_MISMATCH', message: 'Rejected' } }), { status: 409, headers: { 'Content-Type': 'application/json' } });
+  } });
+  const h = setup(client); await h.controller.openExisting(uuid(1));
+  h.controller.replaceDraft({ ...draft(), header: { ...draft().header, note: 'TEST M1/A selected before account changed to M2' } });
+  assert.equal(await h.controller.submit('SAVE'), false); assert.equal(h.controller.getSnapshot().write.phase, 'rejected');
+  assert.equal(h.controller.getSnapshot().write.error?.code, 'SETTLEMENT_METHOD_MISMATCH'); assert.equal(sent.length, 1); assert.equal(h.keys, 1);
+  assert.match(h.controller.getSnapshot().notice ?? '', /已保留原选择/);
+  assert.equal(h.controller.getSnapshot().editor?.draft?.settlements[0]?.paymentMethodId, uuid(25)); assert.equal(h.controller.getSnapshot().write.result, null); h.controller.dispose();
+});
+test('unknown runtime method does not block legitimate status-only VOID or UNAPPROVE and is never filled in', async () => {
+  for (const action of ['VOID', 'UNAPPROVE'] as const) {
+    const native = detail(action === 'UNAPPROVE' ? 'APPROVED' : 'DRAFT');
+    const unknown = { ...native, document: { ...native.document, settlements: native.document.settlements.map(row => ({ ...row, paymentMethodId: null })) } };
+    const h = setup({}, unknown); assert.equal(await h.controller.openExisting(uuid(1)), true);
+    assert.equal(h.controller.getSnapshot().editor?.draft, null); assert.equal(await h.controller.submit(action), true);
+    assert.equal(h.commands[0]?.action, action); assert.deepEqual(Object.keys(h.commands[0]!).sort(), ['action', 'expectedVersion', 'requestKey', 'salesId']);
+    assert.equal(h.controller.getSnapshot().editor?.detail?.document.settlements[0]?.paymentMethodId, null); h.controller.dispose();
+  }
+});
 
 test('opened stock provenance is pinned across readback, conflict and recovery; cutoff history cannot promote', async () => {
   for (const initial of ['CUTOFF_HISTORY', 'RUNTIME_LEDGER'] as const) {

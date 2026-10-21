@@ -62,7 +62,7 @@ async function publishSyntheticBackendScope(pool: Pool): Promise<void> {
 export async function runBackendAcceptance(t: TestContext, pool: Pool): Promise<void> {
   const sales = salesService(pool), transfers = transferService(pool), reader = new PostgresSalesQueryReader(pool);
 
-  await t.test("current eight-migration backend setup publishes synthetic scope without initial-zero seeding", async () => {
+  await t.test("current ten-migration backend setup publishes synthetic scope without initial-zero seeding", async () => {
     assert.deepEqual((await pool.query("SELECT version FROM naijue_erp.schema_migration ORDER BY version")).rows.map(row => row.version), MIGRATIONS.map(([value]) => value));
     assert.deepEqual(await balanceRows(pool), []);
     assert.equal((await pool.query("SELECT count(*)::integer AS count FROM naijue_erp.inventory_ledger")).rows[0]?.count, 0);
@@ -244,5 +244,5 @@ export async function runBackendAcceptance(t: TestContext, pool: Pool): Promise<
     assert.deepEqual(await balanceRows(pool), beforeBalances); assert.equal(await receiptCount(pool, draft.header.id), 2);
   });
 
-  t.diagnostic("Current 0001–0008 backend terminal assertions are engine evidence only if this explicit suite actually ran. Authentication STORAGE only; no login, password verification, HTTP/UI, real-data, production-policy, performance or deployment acceptance is implied.");
+  t.diagnostic("Current 0001–0010 backend terminal assertions are engine evidence only if this explicit suite actually ran. Authentication STORAGE only; no login, password verification, HTTP/UI, real-data, production-policy, performance or deployment acceptance is implied.");
 }

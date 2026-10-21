@@ -81,8 +81,8 @@ export function salesDetailResponse(value: unknown, parameters: Readonly<SalesDe
   }
   const settlementIds = new Set<string>(); const settlementAccounts = new Map<string, string>(); const settlementNos = new Set<number>(); let previousSettlement = 0;
   for (const value of array(document.settlements, 3)) {
-    const row = record(value, ['id', 'salesId', 'lineNo', 'paymentAccountId', 'direction', 'amount']);
-    id('settlement', row.id); id('sales', row.salesId); id('paymentAccount', row.paymentAccountId); integer(row.lineNo); exact(row.amount, true); choice(row.direction, ['RECEIVE', 'REFUND']);
+    const row = record(value, ['id', 'salesId', 'lineNo', 'paymentAccountId', 'paymentMethodId', 'direction', 'amount']);
+    id('settlement', row.id); id('sales', row.salesId); id('paymentAccount', row.paymentAccountId); nullableId('paymentMethod', row.paymentMethodId); integer(row.lineNo); exact(row.amount, true); choice(row.direction, ['RECEIVE', 'REFUND']);
     if (row.salesId !== parameters.salesId || settlementIds.has(row.id) || settlementNos.has(row.lineNo) || row.lineNo < previousSettlement) invalid();
     settlementIds.add(row.id); settlementAccounts.set(row.id, row.paymentAccountId); settlementNos.add(row.lineNo); previousSettlement = row.lineNo;
   }

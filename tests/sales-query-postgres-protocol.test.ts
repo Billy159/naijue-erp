@@ -223,7 +223,7 @@ test("sales filter references pg protocol: invalid request/grant/abort never con
   await assert.rejects(() => reader(duplicate).readReferences(read(input)), { code: "INVALID_DATABASE_VALUE" }); duplicate.done();
 });
 test("sales detail pg protocol: current master labels and authoritative settlement snapshots share the one authorized RR snapshot", async () => {
-  const settlement = { id: sid("settlement", 15), sales_id: ids.sales, line_no: 1, payment_account_id: ids.payment, direction: "RECEIVE", amount: "90071992547409.93",
+  const settlement = { id: sid("settlement", 15), sales_id: ids.sales, line_no: 1, payment_account_id: ids.payment, payment_method_id_snapshot: sid("paymentMethod", 31), direction: "RECEIVE", amount: "90071992547409.93",
     account_name_snapshot: "SYNTHETIC original account", method_name_snapshot: "SYNTHETIC original method", current_account_name: "SYNTHETIC renamed account", current_method_name: "SYNTHETIC renamed method" };
   const client = new ProtocolClient([begin(), { sql: /^SELECT h.id/, rows: [{ ...header(), salesperson_id: sid("staff", 444), salesperson_name: "SYNTHETIC former salesperson" }], inspect(values, sql) {
     scoped(values, sql); assert.match(sql, /LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id/); assert.ok(!/enabled|employment_status/.test(sql));
@@ -274,4 +274,14 @@ test("sales query pg protocol: empty selections add no filter and malformed list
     await assert.rejects(() => direct[method](read(input)), { code: "INVALID_SALES_QUERY" });
   }
   assert.equal(acquired, 0);
+});
+test("sales detail pg protocol: original method identity comes only from nullable snapshot, never the account current method/name", async () => {
+  for (const original of [sid("paymentMethod", 31), null]) {
+    const settlement = { id: sid("settlement", 15), sales_id: ids.sales, line_no: 1, payment_account_id: ids.payment, payment_method_id_snapshot: original,
+      direction: "RECEIVE", amount: "2.50", account_name_snapshot: "SYNTHETIC old account", method_name_snapshot: "SYNTHETIC old method",
+      current_account_name: "SYNTHETIC current account", current_method_name: "SYNTHETIC different method" };
+    const client = new ProtocolClient([begin(), { sql: /^SELECT h.id/, rows: [header()] }, { sql: /FROM naijue_erp.sales_line/, rows: [line()] },
+      { sql: /FROM naijue_erp.sales_settlement/, rows: [settlement], inspect(_values, sql) { assert.match(sql, /s.payment_method_id_snapshot/); assert.doesNotMatch(sql, /COALESCE|pm.id AS payment_method_id_snapshot/); } }, commit()]);
+    const detail = await reader(client).readDetail(read({ salesId: ids.sales })); assert.equal(detail.document.settlements[0]!.paymentMethodId, original); client.done();
+  }
 });

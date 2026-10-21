@@ -64,8 +64,8 @@ export function validateSalesDraft(value: unknown): SalesDraftDto {
   if (lines.some((line, index) => BigInt((line as Record<string, string>).allocatedDiscount!) !== shares[index]) || BigInt(h.grossAmount) !== sum || BigInt(h.netDue) !== sum - discount) invalid();
   const settlementIds = new Set<string>(); const positions = new Set<number>();
   for (const value of array(root.settlements, 3)) {
-    const row = object(value, ['id', 'salesId', 'lineNo', 'paymentAccountId', 'direction', 'amount']);
-    id(row.id); id(row.paymentAccountId); positive(row.lineNo); choice(row.direction, ['RECEIVE', 'REFUND']); exact(row.amount, true);
+    const row = object(value, ['id', 'salesId', 'lineNo', 'paymentAccountId', 'paymentMethodId', 'direction', 'amount']);
+    id(row.id); id(row.paymentAccountId); id(row.paymentMethodId); positive(row.lineNo); choice(row.direction, ['RECEIVE', 'REFUND']); exact(row.amount, true);
     if (row.salesId !== h.id || settlementIds.has(row.id) || positions.has(row.lineNo)) invalid(); settlementIds.add(row.id); positions.add(row.lineNo);
   }
   return frozenSnapshot(copy as SalesDraftDto);

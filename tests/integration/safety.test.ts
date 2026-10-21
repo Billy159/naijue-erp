@@ -44,13 +44,16 @@ test("integration safety SQL-source regression: server address uses host(inet), 
   assert.doesNotMatch(source, /inet_server_addr\(\)::text AS address/u);
 });
 
-test("integration safety: acceptance scenario is explicit, closed and never inferred from ambient database settings", () => {
-  for (const value of [undefined, "", "sparse", "backend", "all", "sparse-0001-0008 ", "backend-0001-0008 "]) assert.throws(() => integrationSuite({ NAIJUE_PG_TEST_SUITE: value }), /explicit NAIJUE_PG_TEST_SUITE/);
-  for (const value of ["native-0001-0005", "sparse-0001-0008", "backend-0001-0008"] as const) assert.equal(integrationSuite({ NAIJUE_PG_TEST_SUITE: value }), value);
+test("integration safety: only explicit current schema1–10 suites are accepted", () => {
+  for (const value of [undefined, "", "sparse", "backend", "all", "native-0001-0005", "sparse-0001-0008", "backend-0001-0008", "sparse-0001-0010 ", "backend-0001-0010 "])
+    assert.throws(() => integrationSuite({ NAIJUE_PG_TEST_SUITE: value }), /explicit NAIJUE_PG_TEST_SUITE/);
+  for (const value of ["sparse-0001-0010", "backend-0001-0010"] as const)
+    assert.equal(integrationSuite({ NAIJUE_PG_TEST_SUITE: value }), value);
 });
 
-test("integration safety: historical migration prefix refuses before pool construction at current adapter revision", () => {
-  assert.throws(() => requireCurrentIntegrationSuite("native-0001-0005"), /historical source only/);
-  assert.doesNotThrow(() => requireCurrentIntegrationSuite("sparse-0001-0008"));
-  assert.doesNotThrow(() => requireCurrentIntegrationSuite("backend-0001-0008"));
+test("integration safety: historical5/8 prefixes and unknown modes refuse before current Pool construction", () => {
+  for (const value of ["native-0001-0005", "sparse-0001-0008", "backend-0001-0008", "all"])
+    assert.throws(() => requireCurrentIntegrationSuite(value), /historical source only/);
+  assert.doesNotThrow(() => requireCurrentIntegrationSuite("sparse-0001-0010"));
+  assert.doesNotThrow(() => requireCurrentIntegrationSuite("backend-0001-0010"));
 });

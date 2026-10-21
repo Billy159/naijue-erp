@@ -1,4 +1,4 @@
-/** DORMANT engine acceptance source. Called only after the same fresh-target/runner gates as the legacy suite. */
+/** DORMANT engine acceptance source. Called only after the current schema1–10 fresh-target/runner gates. */
 import assert from "node:assert/strict";
 import type { TestContext } from "node:test";
 import type { Pool } from "pg";
@@ -58,13 +58,13 @@ async function partySnapshot(pool: Pool): Promise<unknown> {
   // Sequence reservations are intentionally excluded: PostgreSQL sequence gaps survive ROLLBACK.
   return result;
 }
-async function assertOperation(pool: Pool, result: { readonly operationId: string }, kind: string, target: string, action: string, ledgerCount: number): Promise<void> {
+async function assertOperation(pool: Pool, result: { readonly operationId: string }, kind: string, target: string, action: string, ledgerCount: number, actorAccountId: string = ids.account): Promise<void> {
   const receipts = (await pool.query("SELECT * FROM naijue_erp.operation_receipt WHERE id=$1", [result.operationId])).rows;
   const audits = (await pool.query("SELECT * FROM naijue_erp.audit_change WHERE operation_id=$1", [result.operationId])).rows;
   assert.equal(receipts.length, 1); assert.equal(audits.length, 1);
   assert.equal(receipts[0]?.target_type, kind); assert.equal(receipts[0]?.target_id, target); assert.equal(receipts[0]?.action, action);
   assert.equal(receipts[0]?.status, "COMMITTED"); assert.equal(audits[0]?.object_type, kind); assert.equal(audits[0]?.object_id, target);
-  assert.equal(receipts[0]?.actor_account_id, ids.account); assert.equal(audits[0]?.actor_account_id, ids.account); assert.equal(audits[0]?.action, action);
+  assert.equal(receipts[0]?.actor_account_id, actorAccountId); assert.equal(audits[0]?.actor_account_id, actorAccountId); assert.equal(audits[0]?.action, action);
   assert.deepEqual(receipts[0]?.result_data, JSON.parse(JSON.stringify(result)), "persisted immutable receipt must equal the actual service result");
   assert.deepEqual(audits[0]?.occurred_at, receipts[0]?.completed_at); assert.equal(receipts[0]?.completed_at.toISOString(), SYNTHETIC_TIME);
   const newVersion = kind === "IMPORT" ? Number(Reflect.get(result, "sequence")) + 1 : Reflect.get(result, "version");
@@ -92,14 +92,14 @@ export async function runSparseAcceptance(t: TestContext, pool: Pool): Promise<v
       assert.equal(account, ids.account); assert.equal(command.batchId, batchId);
       if (command.action === "IMPORT_STAGE") { assert.equal(command.sourceName, "synthetic-only"); assert.equal(command.sourceHash, sourceHash); }
     } } });
-  const partyActor = { ...actor, role: "WAREHOUSE" as const };
+  const partyActor = { accountId: ids.referenceMaintainerAccount, hallId: null, role: "WAREHOUSE" as const };
   const partyService = (input: Parameters<typeof afterStatement>[0] | ReturnType<typeof afterStatement>) => createPartyMaintenanceService({
     unitOfWork: new PostgresPartyUnitOfWork(input), authorization: createSourcePartyAuthorization(), codes: createApprovedPartyCodeAllocator(), now: () => SYNTHETIC_TIME, newId: newSyntheticId
   });
   const parties = partyService(pool);
   let importedBaseline: CutoffImportResult;
 
-  await t.test("exact reviewed eight migration registry; historical reference fixture has no stock rows", async () => {
+  await t.test("exact reviewed ten migration registry; current reference fixture has no stock rows", async () => {
     assert.deepEqual((await pool.query("SELECT version FROM naijue_erp.schema_migration ORDER BY version")).rows.map(row => row.version), MIGRATIONS.map(([value]) => value));
     assert.deepEqual(await balanceRows(pool), []);
     assert.equal((await pool.query("SELECT count(*)::integer AS count FROM naijue_erp.inventory_ledger")).rows[0]?.count, 0);
@@ -110,13 +110,13 @@ export async function runSparseAcceptance(t: TestContext, pool: Pool): Promise<v
     for (const kind of ["CUSTOMER", "SUPPLIER"] as const) {
       const create: PartyCommand = { kind, actor: partyActor, action: "CREATE", name: `SYNTHETIC CURRENT ${kind}`, requestKey: `SYNTHETIC_PARTY_${kind}_CREATE` };
       const [created] = successfulPair(await contend(pool, receiptLock(create.requestKey), () => [parties.execute(create), parties.execute(create)]));
-      assert.equal(created.code, kind === "CUSTOMER" ? "KH000001" : "GYS000001"); assert.equal(created.version, 1);
-      await assertOperation(pool, created, kind, created.partyId, "CREATE", 0);
+      assert.equal(created.code, kind === "CUSTOMER" ? "KH000002" : "GYS000002"); assert.equal(created.version, 1);
+      await assertOperation(pool, created, kind, created.partyId, "CREATE", 0, partyActor.accountId);
       for (const [action, expectedVersion] of [["EDIT", 1], ["DISABLE", 2], ["RESTORE", 3]] as const) {
         const body = { actor: partyActor, kind, id: created.partyId, expectedVersion: version(expectedVersion), requestKey: `SYNTHETIC_${kind}_${action}` };
         const result = await parties.execute(action === "EDIT" ? { ...body, action, name: `SYNTHETIC EDITED ${kind}`, enabled: true } : { ...body, action });
         assert.equal(result.version, expectedVersion + 1); assert.equal(result.code, created.code);
-        await assertOperation(pool, result, kind, created.partyId, action, 0);
+        await assertOperation(pool, result, kind, created.partyId, action, 0, partyActor.accountId);
         const audit = (await pool.query("SELECT before_values,after_values FROM naijue_erp.audit_change WHERE operation_id=$1", [result.operationId])).rows[0]!;
         assert.deepEqual(Object.keys(audit.after_values).sort(), action === "EDIT" ? ["name", "version"] : ["enabled", "version"]);
       }
@@ -343,5 +343,5 @@ export async function runSparseAcceptance(t: TestContext, pool: Pool): Promise<v
     assert.deepEqual(await importSnapshot(pool), before);
     assert.equal((await reader.readInventory(read())).data.allMatchesTotal.knownQuantity, "7");
   });
-  t.diagnostic("0001–0008 terminal assertions reached only if the engine actually executed this opted-in scenario. No production/import-file/HTTP/auth/load/upgrade acceptance is implied.");
+  t.diagnostic("0001–0010 terminal assertions reached only if the engine actually executed this opted-in scenario. No production/import-file/HTTP/auth/load/upgrade acceptance is implied.");
 }

@@ -49,9 +49,9 @@ function line(value: unknown): SalesLineRow {
     isGift: boolean(row.isGift), snapshot: snapshot(row.snapshot), isCurrent: true };
 }
 function settlement(value: unknown): SalesSettlementRow {
-  const row = object(value, ["id", "salesId", "lineNo", "paymentAccountId", "direction", "amount"]);
+  const row = object(value, ["id", "salesId", "lineNo", "paymentAccountId", "paymentMethodId", "direction", "amount"]);
   return { id: id("settlement", row.id), salesId: id("sales", row.salesId), lineNo: integer(row.lineNo),
-    paymentAccountId: id("paymentAccount", row.paymentAccountId), direction: choice(row.direction, ["RECEIVE", "REFUND"]), amount: minorAmount(string(row.amount)) };
+    paymentAccountId: id("paymentAccount", row.paymentAccountId), paymentMethodId: id("paymentMethod", row.paymentMethodId), direction: choice(row.direction, ["RECEIVE", "REFUND"]), amount: minorAmount(string(row.amount)) };
 }
 function draft(value: unknown): SalesDraft {
   const row = object(value, ["header", "lines", "settlements"]);

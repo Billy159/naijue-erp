@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { MIGRATIONS, migrationExecutionFailure } from "./database.ts";
+import { FROZEN_0001_0008_MIGRATIONS } from "./frozen-0001-0008-manifest.ts";
 
 const originalCondition = "OR NEW.warehouse_id IS DISTINCT FROM CASE NEW.endpoint WHEN 'FROM' THEN h.from_warehouse_id WHEN 'TO' THEN h.to_warehouse_id ELSE NULL END";
 const correctedCondition = "OR NEW.warehouse_id IS DISTINCT FROM (CASE NEW.endpoint WHEN 'FROM' THEN h.from_warehouse_id WHEN 'TO' THEN h.to_warehouse_id ELSE NULL END)";
@@ -30,12 +31,27 @@ for (const [filename, originalHash] of frozen) {
   });
 }
 
-test("migration manifest source only: exact reviewed 0001-0008 hashes still match all source bytes", async () => {
-  assert.deepEqual(MIGRATIONS.map(([version]) => version), [1, 2, 3, 4, 5, 6, 7, 8]);
-  for (const [, filename, expected] of MIGRATIONS) {
+test("historical SQL baseline source only: frozen 0001-0008 hashes remain unchanged, not a current executable suite", async () => {
+  assert.deepEqual(FROZEN_0001_0008_MIGRATIONS.map(([version]) => version), [1, 2, 3, 4, 5, 6, 7, 8]);
+  assert.deepEqual(MIGRATIONS.slice(0, 8), FROZEN_0001_0008_MIGRATIONS);
+  for (const [, filename, expected] of FROZEN_0001_0008_MIGRATIONS) {
     const sql = await readFile(new URL(`../../adapters/postgres/migrations/${filename}`, import.meta.url));
     assert.equal(createHash("sha256").update(sql).digest("hex"), expected, filename);
   }
+});
+
+test("CURRENT migration manifest source only: exact reviewed1–10 bytes include empty-catalogue and nullable method identity guards", async () => {
+  assert.deepEqual(MIGRATIONS.map(([version]) => version), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  for (const [, filename, expected] of MIGRATIONS) {
+    assert.equal(createHash("sha256").update(await readFile(new URL(`../../adapters/postgres/migrations/${filename}`, import.meta.url))).digest("hex"), expected, filename);
+  }
+  const nine = await readFile(new URL("../../adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql", import.meta.url), "utf8");
+  assert.match(nine, /ARRAY\[1,2,3,4,5,6,7,8\]/u);
+  assert.match(nine, /IF EXISTS \(SELECT 1 FROM naijue_erp\.product\)/u);
+  const ten = await readFile(new URL("../../adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql", import.meta.url), "utf8");
+  assert.match(ten, /ARRAY\[1,2,3,4,5,6,7,8,9\]/u);
+  assert.match(ten, /ADD COLUMN payment_method_id_snapshot uuid REFERENCES naijue_erp\.payment_method\(id\)/u);
+  assert.doesNotMatch(ten, /UPDATE naijue_erp\.sales_settlement|ADD COLUMN payment_method_id_snapshot[^;]*(?:NOT NULL|DEFAULT)/u);
 });
 
 test("migration fabricated diagnostic: filename, SQLSTATE and source position survive without driver text or secrets", () => {

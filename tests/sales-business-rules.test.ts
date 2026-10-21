@@ -32,7 +32,7 @@ function draft(businessType: SalesBusinessType, input: readonly SalesLineRow[], 
   const due = gross - BigInt(discount);
   return { ...syntheticDraft(businessType), header: { ...syntheticDraft(businessType).header, businessType, grossAmount: gross, orderDiscount: money(discount), netDue: money(due) },
     lines: input.map((row, index) => ({ ...row, allocatedDiscount: shares[index]! })),
-    settlements: due === 0n ? [] : [{ id: sid("settlement", 500), salesId: ids.sales, lineNo: 1, paymentAccountId: ids.payment, direction: due < 0n ? "REFUND" : "RECEIVE", amount: money(due < 0n ? -due : due) }] };
+    settlements: due === 0n ? [] : [{ id: sid("settlement", 500), salesId: ids.sales, lineNo: 1, paymentAccountId: ids.payment, paymentMethodId: sid("paymentMethod", 31), direction: due < 0n ? "REFUND" : "RECEIVE", amount: money(due < 0n ? -due : due) }] };
 }
 const rules = () => createCandidateSalesBusinessRules(facts());
 const check = (value: SalesDraft) => rules().assertDraftChange(undefined, value);
@@ -151,7 +151,7 @@ test("candidate adapter / synthetic: unbalanced saved refund is allowed but appr
 test("candidate adapter / synthetic: absolute zero RECEIVE or REFUND adapts to signed zero with valid references", async () => {
   for (const direction of ["RECEIVE", "REFUND"] as const) {
     const f = fixture({ rules: rules() }); const value = draft("SALE", [line(0, "1", 0, { isGift: true })]);
-    await f.service.execute(save({ ...value, settlements: [{ id: sid("settlement", 500), salesId: ids.sales, lineNo: 1, paymentAccountId: ids.payment, direction, amount: money(0) }] }));
+    await f.service.execute(save({ ...value, settlements: [{ id: sid("settlement", 500), salesId: ids.sales, lineNo: 1, paymentAccountId: ids.payment, paymentMethodId: sid("paymentMethod", 31), direction, amount: money(0) }] }));
     await f.service.execute(approve()); assert.equal(f.balance(), -1n);
   }
 });

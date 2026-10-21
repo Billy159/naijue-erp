@@ -81,3 +81,16 @@ test('superseded open completion cannot reset newer raw input to the last valid 
   reads[1]!.resolve(native); assert.equal(await second, true); session.updateInput({ ...session.getSnapshot().input!, note: 'TEST 新输入必须保留' });
   reads[0]!.resolve(native); assert.equal(await first, false); assert.equal(session.getSnapshot().input?.note, 'TEST 新输入必须保留'); assert.equal(session.hasDirtyDraft, true); session.dispose();
 });
+test('unknown original payment method remains readable but cannot become an editable or approvable runtime draft', async () => {
+  const h = setup(), native = detail();
+  h.setCurrent({ ...native, document: { ...native.document, settlements: native.document.settlements.map(row => ({ ...row, paymentMethodId: null })) },
+    settlementNames: native.settlementNames.map(row => ({ ...row, methodNameSnapshot: 'TEST 名称不能补ID', currentMethodName: 'TEST 当前账户方式也不能补ID' })) });
+  assert.equal(await h.session.openExisting(uuid(1)), true); assert.equal(h.session.getSnapshot().input, null); assert.equal(h.session.editable, false);
+  assert.equal(h.session.getSnapshot().command.editor?.detail?.document.settlements[0]?.paymentMethodId, null);
+  assert.equal(await h.session.save(), false); assert.equal(await h.session.submit('APPROVE'), false); assert.equal(h.keys, 0); assert.equal(h.commands.length, 0); h.session.dispose();
+  const history = setup(); history.setCurrent({ ...native, stockBasis: 'CUTOFF_HISTORY', document: { ...native.document,
+    settlements: native.document.settlements.map(row => ({ ...row, paymentMethodId: null })) } });
+  assert.equal(await history.session.openExisting(uuid(1)), true); assert.equal(history.session.editable, false);
+  for (const action of ['APPROVE', 'UNAPPROVE', 'VOID'] as const) assert.equal(await history.session.submit(action), false);
+  assert.equal(await history.session.save(), false); assert.equal(history.keys, 0); assert.equal(history.commands.length, 0); history.session.dispose();
+});

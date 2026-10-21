@@ -1,6 +1,8 @@
 # Native CURRENT form proposal reads
 
-Parent source: `2d0f5d2ef79a1d48f63a85cb0242661d2e54efde`.
+Original parent source: `2d0f5d2ef79a1d48f63a85cb0242661d2e54efde`.
+Current account parity amendment: see `native-account-production-parity.md` and
+`evidence/account-production-parity/manifest.json`; original25-test evidence remains historical.
 This slice adds new ports, strict parsers and a PostgreSQL reader only. It does not
 register HTTP routes, change the deliberate read-only API composition, enable
 production forms, allocate document numbers, change schema or authorize commands.
@@ -32,7 +34,8 @@ or prevent changes between read and submit. No cross-request facts cache exists.
 - `readSalesReferences(actor, { kind, hallId, search, page, pageSize: 20 }, signal)`.
   Kinds are hall, customer, salesperson, warehouse and paymentAccount. Only the
   hall picker uses null hallId. All other queries explicitly name their proposed
-  sales hall; it must exist, be enabled, be in the host grant, and match the current
+  sales hall. The paymentAccount kind additionally requires canonical paymentMethodId;
+  other kinds reject that property. The hall must exist, be enabled, be in the host grant, and match the current
   salesperson's hall. Admin/warehouse action scope is not narrowed to their own hall.
 - `readTransferWarehouses(actor, { direction: FROM | TO, search, page, pageSize: 20 }, signal)`.
 - `readProducts(actor, { context, search, page, pageSize: 20 }, signal)`.
@@ -50,11 +53,12 @@ Candidate search is a bounded 0–200-character, already-trimmed, control-free s
 substring: percent, underscore, backslash and quotes are not wildcard/code. Existing
 PostgreSQL locale rules apply; browser Unicode-locale parity is not claimed.
 
-Counts and stable name/code + native-ID-ordered pages use two set queries in the
-same snapshot. Pagination is exactly 20 and real out-of-range pages stay empty.
-The batch uses one bounded target query, never per-SKU calls. No document-history
-scan, historical-observed master filter, eager full catalogue or fake all-entity ID
-is used. Native labels and IDs remain intact.
+Non-account counts and stable name/code + native-ID-ordered pages use two set
+queries in the same snapshot. Account counts remain pure current eligibility; optional
+recommendation reads use a short-budget savepoint and stable account-ID bucket order. Pagination is exactly 20 and real out-of-range pages stay empty.
+The batch uses one bounded target query, never per-SKU calls. No historical-observed
+master filter, eager full catalogue or fake all-entity ID is used. Optional recent-use
+recommendation has a bounded runtime-document proof, never a candidate eligibility filter. Native labels and IDs remain intact.
 
 ## Eligibility and evidence
 
@@ -67,8 +71,11 @@ is used. Native labels and IDs remain intact.
   non-left staff and recommends the current user, not only same-hall salespeople.
   Native staff has no separate `enabled` column. This slice does not invent that
   missing legacy flag or claim full legacy enabled-flag equivalence.
-- Payment account and its one native method must both be enabled. Hall affiliations
-  are recommendation ordering only, never an ACL or count restriction. Frozen
+- Payment account and its one selected native method must both be enabled and the
+  account actual method must equal the required paymentMethodId. Hall affiliations
+  and the one bounded proven recent account are unioned recommendation ordering
+  only, never an ACL or count restriction. Optional failure leaves all eligible
+  accounts selectable in stable native-ID order. Frozen
   sales-funds-ui.js:17,22 and candidate sales/validation.ts settlement handling
   explicitly support this distinction. No balances, debt or invented fund rows.
 - Transfer FROM is enabled OR has nonzero native inventory; TO is enabled. The
@@ -83,13 +90,15 @@ is used. Native labels and IDs remain intact.
 
 ## Honest storage and launch boundaries
 
-Current migrations 0001–0008 store only product.retail_price. Product responses
+The original0001–0008 prefix stored only product.retail_price. Source0009 now defines
+the approved nine prices, but this deliberately incomplete proposal projection still
+exposes only retail and does not manufacture catalogue-completeness authority. Product responses
 preserve its exact nullable decimal(18,2) yuan text and state
 `minimumPriceAvailability: UNAVAILABLE`. They do not expose a fabricated minimum
 price, nine-price set or no-minimum policy. Missing is not null/zero business facts.
 
-Current migrations have no native barcode authority relation. Only historical line
-barcode_snapshot columns exist. SKU responses therefore state
+Source0009 now defines the approved native barcode relations. This proposal reader
+does not yet expose a trusted current barcode picker or claim the schema is installed. SKU responses therefore state
 `barcodeAvailability: UNAVAILABLE`, do not include a fake null barcode, and never
 borrow a historical observation to manufacture a CURRENT binding.
 
@@ -102,15 +111,19 @@ transaction reference/pricing assembly and real write-host startup still remain.
 
 ## Verification and rollback
 
-`node --test tests/current-form-reader.test.ts` passes 25 synthetic/parser/scripted
-pg tests. These check strict bounds and immutable capture, fresh identity/revocation,
+`node --test tests/current-form-reader.test.ts` now has32 synthetic/parser/scripted
+pg tests; the original25-test log is a historical artifact. Current focused results
+and exact source hashes are in evidence/account-production-parity/. These check strict bounds and immutable capture, fresh identity/revocation,
 explicit grants/scope, source-specific eligibility, stable native facts, exact prices
 and counts, bounded target sets, aborts and cleanup. They inspect requested SQL but
 do not run a PostgreSQL parser/engine, locks, isolation, optimizer, production host,
 real authentication/browser workflow or performance acceptance. No install, actual
-DB/operations, compiler/build, commit, push or deployment ran in this slice.
+DB/operations, full build, commit, push or deployment ran in this slice. Current
+focused TypeScript is recorded in the amendment evidence.
 
-All implementation changes are new files. To revert only this slice, remove the
+The original slice added new files. Its removal recipe is historical, not a safe
+recipe for the later account/method contract amendment. Revert current amendment
+using its scoped manifest, not by deleting shared domain files. Original scope: the
 three current-form TypeScript modules, current-form-reader.test.ts, this document,
 native-catalogue-authority-next-step.md and the current-form evidence files listed
 in evidence/current-form-reader-manifest.json. Do not reset other workers' files.

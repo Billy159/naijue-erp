@@ -68,7 +68,7 @@ function decodeLine(row: Record<string, unknown>): SalesLineRow {
       fitName: stringValue(row.fit_name_snapshot), sizeName: stringValue(row.size_name_snapshot), barcode: nullableString(row.barcode_snapshot) } };
 }
 function decodeSettlement(row: Record<string, unknown>): SalesSettlementRow {
-  return { id: id("settlement", row.id), salesId: id("sales", row.sales_id), lineNo: integerValue(row.line_no), paymentAccountId: id("paymentAccount", row.payment_account_id),
+  return { id: id("settlement", row.id), salesId: id("sales", row.sales_id), lineNo: integerValue(row.line_no), paymentAccountId: id("paymentAccount", row.payment_account_id), paymentMethodId: nullableId("paymentMethod", row.payment_method_id_snapshot),
     direction: choice(row.direction, ["RECEIVE", "REFUND"]), amount: moneyFromSql(row.amount) };
 }
 /** Only internal static column names enter SQL; every scope/filter value is a driver parameter. */
@@ -212,7 +212,7 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
         color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot, is_current FROM naijue_erp.sales_line
         WHERE sales_id = $1 AND is_current ORDER BY line_no, id LIMIT $2`, [header.id, SALES_DETAIL_MAX_CURRENT_LINES + 1])).rows;
       requireDomain(lineRows.length <= SALES_DETAIL_MAX_CURRENT_LINES, "SALES_READ_TOO_LARGE", "Sales detail exceeds the bounded response limit");
-      const settlementRows = (await query(`SELECT s.id, s.sales_id, s.line_no, s.payment_account_id, s.direction, s.amount::text,
+      const settlementRows = (await query(`SELECT s.id, s.sales_id, s.line_no, s.payment_account_id, s.payment_method_id_snapshot, s.direction, s.amount::text,
         s.account_name_snapshot, s.method_name_snapshot, pa.name AS current_account_name, pm.name AS current_method_name
         FROM naijue_erp.sales_settlement s JOIN naijue_erp.payment_account pa ON pa.id = s.payment_account_id
         JOIN naijue_erp.payment_method pm ON pm.id = pa.payment_method_id

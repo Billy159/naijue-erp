@@ -63,6 +63,11 @@ export class SalesCommandWorkspace {
       || editor.detail && (editor.detail.stockBasis !== 'RUNTIME_LEDGER' || editor.detail.document.header.status !== 'DRAFT')) return false;
     let draft: SalesDraftDto; try { draft = validateSalesDraft(value); } catch { this.#notice('草稿不符合现有合同，输入未提交。'); return false; }
     if (draft.header.id !== editor.salesId) return false;
+    const previousSettlements = new Map<string, SalesDetailDto['document']['settlements'][number]>(editor.detail?.document.settlements.map(row => [row.id, row]));
+    if (draft.settlements.some(row => {
+      const previous = previousSettlements.get(row.id);
+      return previous && previous.paymentAccountId === row.paymentAccountId && previous.paymentMethodId !== row.paymentMethodId;
+    })) { this.#notice('保留原收退账户及明细时，不能替换原付款方式编号。'); return false; }
     this.#publish({ ...this.#state, editor: Object.freeze({ ...editor, draft }), notice: null }); return true;
   }
   async submit(action: SalesCommandDto['action']): Promise<boolean> {
@@ -78,7 +83,7 @@ export class SalesCommandWorkspace {
       // Mutations must apply to the persisted document, never silently save edits.
       if (this.hasDirtyDraft) { this.#notice('请先保存草稿并重新读取，再执行状态操作。'); return false; }
       if (action === 'APPROVE') {
-        let persisted: SalesDraftDto; try { persisted = draftFromSalesDetail(detail!); } catch { this.#notice('已保存单据缺少明确价格事实，无法审核。'); return false; }
+        let persisted: SalesDraftDto; try { persisted = draftFromSalesDetail(detail!); } catch { this.#notice('已保存单据缺少明确价格事实或原付款方式编号，无法审核。'); return false; }
         if (!settlementBalanced(persisted)) { this.#notice('审核要求收款减退款与应结金额精确配平。'); return false; }
       }
     }
@@ -202,7 +207,9 @@ export class SalesCommandWorkspace {
       this.#access(safe); if (!this.#active()) return false;
       const uncertain = replay || !['not-sent', 'rejected'].includes(safe.outcome);
       this.#publish({ ...this.#state, write: Object.freeze({ ...this.#state.write, phase: uncertain ? 'uncertain' : 'rejected', error: safe }),
-        notice: uncertain ? '提交结果不确定。原操作身份、版本和内容已保留，请先核实。' : safe.code === 'VERSION_CONFLICT' ? '版本冲突，草稿已保留。请读取当前单据并明确重新准备，不能强制覆盖。' : '请求已拒绝，草稿已保留。' }); return false;
+        notice: uncertain ? '提交结果不确定。原操作身份、版本和内容已保留，请先核实。' : safe.code === 'VERSION_CONFLICT' ? '版本冲突，草稿已保留。请读取当前单据并明确重新准备，不能强制覆盖。'
+          : safe.code === 'SETTLEMENT_METHOD_MISMATCH' ? '当前收退账户与原选付款方式不再匹配，已保留原选择；请重新准备有效收退资料，不能自动换方式。'
+            : safe.code === 'IMMUTABLE_SETTLEMENT_METHOD' ? '保留原收退账户及明细时，不能替换原付款方式编号；草稿已保留。' : '请求已拒绝，草稿已保留。' }); return false;
     } finally { if (this.#write === request) this.#write = null; }
   }
   #accept(result: SalesCommandResultDto, command: SalesCommandDto, receipt: SalesCommandReceiptDto | null): void {

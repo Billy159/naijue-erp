@@ -30,7 +30,9 @@ export interface SalesLineRow {
 }
 export interface SalesSettlementRow {
   readonly id: EntityId<"settlement">; readonly salesId: EntityId<"sales">; readonly lineNo: number;
-  readonly paymentAccountId: EntityId<"paymentAccount">; readonly direction: "RECEIVE" | "REFUND";
+  readonly paymentAccountId: EntityId<"paymentAccount">;
+  /** Original selected method identity; NULL only represents unknown stored history, never runtime intent. */
+  readonly paymentMethodId: EntityId<"paymentMethod"> | null; readonly direction: "RECEIVE" | "REFUND";
   readonly amount: MinorAmount;
 }
 export interface SalesDocument {

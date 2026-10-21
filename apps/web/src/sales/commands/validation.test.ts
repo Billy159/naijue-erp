@@ -22,6 +22,21 @@ test('draft projection excludes server managed/name facts and never invents miss
   assert.throws(() => draftFromSalesDetail({ ...value, document: { ...value.document, lines: value.document.lines.map(line => ({ ...line, pricingRule: null })) } }));
   assert.throws(() => draftFromSalesDetail({ ...value, document: { ...value.document, lines: value.document.lines.map(line => ({ ...line, zeroConfirmed: null })) } }));
 });
+test('runtime settlements require an explicit canonical intended method and reject old or unknown request shapes', () => {
+  const value = draft(), original = value.settlements[0]!;
+  assert.equal(original.paymentMethodId, uuid(25));
+  const { paymentMethodId: _method, ...oldShape } = original;
+  for (const settlement of [oldShape, { ...original, paymentMethodId: null }, { ...original, paymentMethodId: undefined },
+    { ...original, paymentMethodId: '' }, { ...original, paymentMethodId: 25 }, { ...original, paymentMethodId: ` ${uuid(25)}` },
+    { ...oldShape, originalPaymentMethodId: uuid(25) }, { ...original, currentPaymentMethodId: uuid(26) }]) {
+    assert.throws(() => validateSalesDraft({ ...value, settlements: [settlement] }));
+    assert.throws(() => validateSalesCommand({ ...save(), draft: { ...value, settlements: [settlement] } }));
+  }
+  const native = detail();
+  const renamed = { ...native, settlementNames: native.settlementNames.map(row => ({ ...row, methodNameSnapshot: 'TEST 历史显示名', currentMethodName: 'TEST 当前改名' })) };
+  assert.equal(draftFromSalesDetail(renamed).settlements[0]?.paymentMethodId, uuid(25));
+  assert.throws(() => draftFromSalesDetail({ ...renamed, document: { ...renamed.document, settlements: renamed.document.settlements.map(row => ({ ...row, paymentMethodId: null })) } }));
+});
 test('strict native command parser rejects extensions, missing fields, actor, coerced CAS and alternate route fields', () => {
   const command = save();
   for (const invalid of [{ ...command, actor: { accountId: uuid(99) } }, { ...command, expectedVersion: '2' }, { ...command, requestKey: ' trimmed ' },

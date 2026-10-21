@@ -134,6 +134,20 @@ test('settlement name records map one-to-one to exact settlement/account identit
   assert.equal(salesDetailResponse(empty, salesTarget(uuid(1))), empty);
   assert.notEqual(names.accountNameSnapshot, names.currentAccountName); assert.notEqual(names.methodNameSnapshot, names.currentMethodName);
 });
+test('settlement read requires the original nullable method ID and never reconstructs it from display/current names', () => {
+  const data = detail(), target = salesTarget(uuid(1)), original = data.document.settlements[0]!;
+  assert.equal(salesDetailResponse(data, target).document.settlements[0]?.paymentMethodId, uuid(25));
+  const renamed = { ...data, settlementNames: data.settlementNames.map(row => ({ ...row, methodNameSnapshot: 'TEST 旧方式名称', currentMethodName: 'TEST 同一方式改名' })) };
+  assert.equal(salesDetailResponse(renamed, target).document.settlements[0]?.paymentMethodId, uuid(25));
+  const unknown = { ...data, document: { ...data.document, settlements: [{ ...original, paymentMethodId: null }] } };
+  assert.equal(salesDetailResponse(unknown, target).document.settlements[0]?.paymentMethodId, null);
+  const { paymentMethodId: _method, ...oldShape } = original;
+  for (const settlement of [oldShape, { ...original, paymentMethodId: undefined }, { ...original, paymentMethodId: '' },
+    { ...original, paymentMethodId: 25 }, { ...original, paymentMethodId: ` ${uuid(25)}` },
+    { ...oldShape, originalPaymentMethodId: uuid(25) }, { ...original, currentPaymentMethodId: uuid(26) }]) {
+    assert.throws(() => salesDetailResponse({ ...data, document: { ...data.document, settlements: [settlement] } }, target));
+  }
+});
 test('concrete filter reference HTTP reader is inert and projects only the actual bounded endpoint contract', async () => {
   const calls: { url: string; init: RequestInit }[] = [];
   const reader = createSalesFilterReferenceHttpReader({ origin: 'https://synthetic.test', basePath: '/api', fetch: async (url, init) => { calls.push({ url, init }); return response({ page: 1, exactTotal: '1', items: [{ id: uuid(11), label: 'TEST 历史停用厅' }] }); } });

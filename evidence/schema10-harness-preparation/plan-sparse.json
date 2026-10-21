@@ -1,0 +1,93 @@
+{
+  "mode": "PLAN_ONLY_NO_CONNECTION",
+  "suite": "sparse-0001-0010",
+  "note": "CURRENT schema1–10 only. All ten migrations precede every product fixture; 0009 empty-catalogue guard remains active. Earlier1–8 results are historical, not current passes.",
+  "evidenceStatus": "CURRENT1_TO10_NOT_RUN",
+  "fixtureOrder": [
+    "fresh-target guards",
+    "exact migrations1–10 with empty product table",
+    "synthetic ordinary references",
+    "real current party CREATE service/store",
+    "explicit nine-price product/SKU/image fixtures without stock"
+  ],
+  "migrations": [
+    {
+      "version": 1,
+      "filename": "0001_runtime_sales.sql",
+      "sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf"
+    },
+    {
+      "version": 2,
+      "filename": "0002_sales_pricing_facts.sql",
+      "sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98"
+    },
+    {
+      "version": 3,
+      "filename": "0003_auth_sessions.sql",
+      "sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29"
+    },
+    {
+      "version": 4,
+      "filename": "0004_transfer_runtime.sql",
+      "sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e"
+    },
+    {
+      "version": 5,
+      "filename": "0005_product_read_fields.sql",
+      "sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a"
+    },
+    {
+      "version": 6,
+      "filename": "0006_party_maintenance.sql",
+      "sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c"
+    },
+    {
+      "version": 7,
+      "filename": "0007_sparse_inventory_cutoff.sql",
+      "sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7"
+    },
+    {
+      "version": 8,
+      "filename": "0008_runtime_sparse_first_use.sql",
+      "sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262"
+    },
+    {
+      "version": 9,
+      "filename": "0009_catalogue_prices_barcodes.sql",
+      "sha256": "bb12e54d7b4989d5b6fe608a9582f4c887980eb19be839f74005d54eb0ac530e"
+    },
+    {
+      "version": 10,
+      "filename": "0010_sales_settlement_method_snapshot.sql",
+      "sha256": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f"
+    }
+  ],
+  "scenarios": [
+    "0006 independent party CREATE/EDIT/DISABLE/RESTORE, duplicate receipt, numbering, rollback and dependency guard",
+    "0007 baseline COMMIT, native-only old trigger dispatch, exact import source/receipt/audit/balance and rollback",
+    "IMPORT checkpoint unique index, server function shape and forced-index EXPLAIN without ANALYZE",
+    "complete sparse publication, absent-is-zero versus missing coordinate, native scoped reader and candidates",
+    "0008 first SALES and TRANSFER APPROVE/UNAPPROVE, repeated effects, duplicate replay and retained zeros",
+    "two distinct documents really waiting on one absent inventory key, exact cumulative first-use outcome",
+    "new sparse deferred corruption plus retained old transfer/reversal/source guards still reject"
+  ],
+  "requiredGatesForExecution": [
+    "explicit approval of the exact operator-selected fresh disposable physical target",
+    "NODE_ENV=test",
+    "NAIJUE_PG_INTEGRATION",
+    "NAIJUE_PG_TEST_SUITE=sparse-0001-0010",
+    "NAIJUE_PG_EXPECT_DATABASE",
+    "NAIJUE_PG_TEST_DATABASE_URL",
+    "existing --run entry point and marker",
+    "server-side fresh/exclusive loopback non-admin owner checks"
+  ],
+  "notExecuted": [
+    "PostgreSQL",
+    "SQL/DDL/EXPLAIN",
+    "migration",
+    "reference inserts",
+    "network",
+    "server startup",
+    "package installation"
+  ]
+}

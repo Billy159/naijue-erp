@@ -1,9 +1,10 @@
 /** SYNTHETIC/scripted pg protocol only: no database, listener, operations or imported data. */
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readCurrentRecentAccount } from "../adapters/postgres/src/current-account-recommendations.ts";
 import { PostgresCurrentFormReader } from "../adapters/postgres/src/current-form-reader.ts";
 import type { PgSalesClient, PgSalesResult } from "../adapters/postgres/src/sales-unit-of-work.ts";
-import type { CurrentFormAuthorization, CurrentFormIntent, CurrentFormReadGrant } from "../packages/application/src/current-form-ports.ts";
+import type { CurrentFormAuthorization, CurrentFormIntent, CurrentFormReadGrant, CurrentSalesReferenceQuery } from "../packages/application/src/current-form-ports.ts";
 import { parseCurrentSalesReferenceQuery, parseCurrentTransferWarehouseQuery, parseCurrentFormProductQuery,
   parseCurrentFormProductSkuQuery, parseCurrentFormSkuBatchQuery } from "../packages/application/src/current-form-validation.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
@@ -12,7 +13,12 @@ const signal = () => new AbortController().signal;
 const context = { kind: "SALES" as const, hallId: hall };
 const transferContext = { kind: "TRANSFER" as const };
 const search = { search: "", page: 1, pageSize: 20 as const };
-const reference = (kind: "hall" | "customer" | "salesperson" | "warehouse" | "paymentAccount" = "hall") => ({ ...search, kind, hallId: kind === "hall" ? null : hall });
+const selectedMethod = sid("paymentMethod", 1004);
+function reference(kind: CurrentSalesReferenceQuery["kind"] = "hall"): CurrentSalesReferenceQuery {
+  if (kind === "hall") return { ...search, kind, hallId: null };
+  if (kind === "paymentAccount") return { ...search, kind, hallId: hall, paymentMethodId: selectedMethod };
+  return { ...search, kind, hallId: hall };
+}
 interface Step { readonly sql: RegExp; readonly rows?: Record<string, unknown>[]; readonly error?: Error; readonly inspect?: (values: unknown[], sql: string) => void }
 class Client implements PgSalesClient {
   readonly calls: { sql: string; values: unknown[] }[] = []; readonly releases: (Error | boolean | undefined)[] = [];
@@ -35,6 +41,17 @@ const identity = (change: Record<string, unknown> = {}): Step => ({ sql: /curren
 const selectedHall = (): Step => ({ sql: /current-form:sales-hall/, rows: [{ id: hall, enabled: true }] });
 const total = (value = "1", inspect?: Step["inspect"]): Step => ({ sql: /current-form:count/, rows: [{ total: value }], ...(inspect ? { inspect } : {}) });
 const page = (rows: Record<string, unknown>[], inspect?: Step["inspect"]): Step => ({ sql: /current-form:page/, rows, ...(inspect ? { inspect } : {}) });
+const savepoint = (): Step => ({ sql: /^SAVEPOINT current_account_recommendation$/ });
+const releaseHints = (): Step => ({ sql: /^RELEASE SAVEPOINT current_account_recommendation$/ });
+const rollbackHints = (): Step => ({ sql: /^ROLLBACK TO SAVEPOINT current_account_recommendation$/ });
+const setTimeout = (value: string): Step => ({ sql: /^SELECT set_config\('statement_timeout'/, inspect(values) { assert.deepEqual(values, [value]); } });
+function hints(recent: string | null = null, original = "15s", budget = "250ms"): Step[] {
+  return [savepoint(), { sql: /current-form:recommendation-timeout/, rows: [{ statement_timeout: original }] }, setTimeout(budget),
+    { sql: /current-form:recent-account/, rows: [{ recent_account_id: recent, candidate_overflow: false, proof_overflow: false }], inspect(values) {
+      assert.deepEqual(values, [hall, selectedMethod, 51, 50, 100001, 2000, 100000]);
+    } }];
+}
+const restoreHints = (original = "15s"): Step[] => [setTimeout(original), releaseHints()];
 const item = (change: Record<string, unknown> = {}) => ({ id: hall, name: "SYNTHETIC 完整名称", code: null, hall_id: hall, hall_name: "SYNTHETIC 完整厅名", payment_method_id: null, payment_method_name: null, ...change });
 const sku = (change: Record<string, unknown> = {}) => ({ id: skuId, sku_code: "SYNTHETIC ORIGINAL SKU", product_id: productId, product_code: "SYNTHETIC ORIGINAL PRODUCT", product_name: "SYNTHETIC 完整商品名", color_id: sid("color", 994), color_name: "SYNTHETIC 完整颜色", fit_id: sid("fit", 995), fit_name: "SYNTHETIC 完整版型", size_id: sid("size", 996), size_name: "SYNTHETIC 完整尺码", size_group_id: sid("sizeGroup", 997), member_size_id: sid("size", 996), sku_enabled: true, product_enabled: true, color_enabled: true, fit_enabled: true, ...change });
 const allow: CurrentFormAuthorization = { async authorize() { return { kind: "all" }; } };
@@ -98,7 +115,7 @@ test("current forms: denied/empty/malformed explicit grants fail closed, never b
 });
 test("current forms: proposed foreign sales hall is denied before target disclosure, even with an all grant", async () => {
   const client = new Client([begin(), identity(), rollback()]);
-  await assert.rejects(() => reader(client).readSalesReferences(actor, { ...reference("customer"), hallId: foreignHall }, signal()), { code: "FORBIDDEN" }); client.done();
+  await assert.rejects(() => reader(client).readSalesReferences(actor, { ...search, kind: "customer", hallId: foreignHall }, signal()), { code: "FORBIDDEN" }); client.done();
   const restricted = new Client([begin(), identity({ role: "ADMIN" }), rollback()]);
   await assert.rejects(() => reader(restricted, { async authorize() { return { kind: "halls", hallIds: [foreignHall] }; } }).readProducts(actor, { ...search, context }, signal()), { code: "FORBIDDEN" }); restricted.done();
 });
@@ -128,13 +145,18 @@ test("current forms: sales warehouse is enabled and belongs to proposed hall, ne
   }), page([]), commit()]);
   assert.equal((await reader(client).readSalesReferences(actor, reference("warehouse"), signal())).items.length, 0); client.done();
 });
-test("current forms: accounts require enabled method; hall affiliation is page recommendation, never count/WHERE restriction", async () => {
-  const accountId = sid("paymentAccount", 1003), method = sid("paymentMethod", 1004); const client = new Client([begin(), identity(), selectedHall(), total("1", (values, sql) => {
-    assert.deepEqual(values, [""]); assert.match(sql, /r.enabled AND pm.enabled/); assert.ok(!/payment_account_hall/.test(sql));
-  }), page([item({ id: accountId, hall_id: null, hall_name: null, payment_method_id: method, payment_method_name: "SYNTHETIC 完整方式" })], (values, sql) => {
-    assert.deepEqual(values, ["", hall, 20, 0]); assert.match(sql, /ORDER BY \(EXISTS \(SELECT 1 FROM naijue_erp.payment_account_hall/); assert.match(sql, /LIMIT \$3 OFFSET \$4/);
-  }), commit()]);
-  const result = await reader(client).readSalesReferences(actor, reference("paymentAccount"), signal()); assert.equal(result.items[0]!.paymentMethodId, method); client.done();
+test("current forms: selected-method accounts stay globally eligible; OR recommendations share stable account-ID base order", async () => {
+  const accountId = sid("paymentAccount", 1003); const client = new Client([begin(), identity(), selectedHall(), total("1", (values, sql) => {
+    assert.deepEqual(values, ["", selectedMethod]); assert.match(sql, /r.enabled AND pm.enabled AND r.payment_method_id = \$2::uuid/);
+    assert.ok(!/payment_account_hall|sales_header|hall_id/.test(sql));
+  }), ...hints(accountId), page([item({ id: accountId, hall_id: null, hall_name: null, payment_method_id: selectedMethod, payment_method_name: "SYNTHETIC 完整方式", is_recommended: true })], (values, sql) => {
+    assert.deepEqual(values, ["", selectedMethod, hall, accountId, 20, 0]);
+    assert.match(sql, /EXISTS \(SELECT 1 FROM naijue_erp.payment_account_hall/); assert.match(sql, /OR r.id = \$4::uuid/);
+    assert.match(sql, /ORDER BY is_recommended DESC, r.id LIMIT \$5 OFFSET \$6/);
+    assert.ok(!/ORDER BY.*name|updated_at/.test(sql));
+  }), ...restoreHints(), commit()]);
+  const result = await reader(client).readSalesReferences(actor, reference("paymentAccount"), signal());
+  assert.equal(result.items[0]!.paymentMethodId, selectedMethod); assert.equal(result.recommendationAvailability, "AVAILABLE"); readonly(client); client.done();
 });
 test("current forms: transfer FROM retains disabled nonzero warehouse, TO only enabled; hall enabled is a fact not a new filter", async () => {
   for (const direction of ["FROM", "TO"] as const) {
@@ -218,7 +240,7 @@ test("current forms: driver-returned out-of-scope references and inconsistent ac
     { kind: "paymentAccount", row: item({ id: sid("paymentAccount", 2102), hall_id: null, hall_name: null, payment_method_id: sid("paymentMethod", 2103), payment_method_name: null }), selected: true }
   ];
   for (const value of cases) {
-    const client = new Client([begin(), identity(), ...(value.selected ? [selectedHall()] : []), total(), page([value.row]), rollback()]);
+    const client = new Client([begin(), identity(), ...(value.selected ? [selectedHall()] : []), total(), ...(value.kind === "paymentAccount" ? hints() : []), page([{ ...value.row, ...(value.kind === "paymentAccount" ? { is_recommended: false } : {}) }]), ...(value.kind === "paymentAccount" ? restoreHints() : []), rollback()]);
     await assert.rejects(() => reader(client).readSalesReferences(actor, reference(value.kind), signal()), { code: "INVALID_DATABASE_VALUE" }); client.done();
   }
   const client = new Client([begin(), identity(), total(), page([{ id: sid("warehouse", 2104), name: "SYNTHETIC W", hall_id: foreignHall, hall_name: "SYNTHETIC H", enabled: true, hall_enabled: true, has_nonzero_inventory: false }]), rollback()]);
@@ -240,4 +262,83 @@ test("current forms: the maximum target batch stays one bounded set and never be
   const ids = Array.from({ length: 200 }, (_, index) => sid("sku", 2300 + index));
   const client = new Client([begin(), identity(), { sql: /current-form:sku-batch/, rows: ids.map((id, index) => sku({ id, size_id: sid("size", 2500 + index), member_size_id: sid("size", 2500 + index) })), inspect(values) { assert.equal((values[0] as unknown[]).length, 200); assert.equal(values[1], 201); } }, commit()]);
   assert.equal((await reader(client).readSkuBatch(actor, { context: transferContext, skuIds: ids }, signal())).length, 200); assert.equal(client.calls.length, 4); client.done();
+});
+
+test("current forms: payment method is mandatory/canonical only for account queries; invalid contract never connects", async () => {
+  const { paymentMethodId: _method, ...missing } = reference("paymentAccount") as Extract<CurrentSalesReferenceQuery, { kind: "paymentAccount" }>;
+  let connections = 0; const r = new PostgresCurrentFormReader({ async connect() { connections++; throw new Error("must not connect"); } }, allow);
+  for (const input of [missing, { ...missing, paymentMethodId: null }, { ...missing, paymentMethodId: "fake" }, { ...missing, paymentMethodId: selectedMethod.toUpperCase() },
+    { ...reference("customer"), paymentMethodId: selectedMethod }, { ...reference(), paymentMethodId: selectedMethod }]) {
+    await assert.rejects(async () => r.readSalesReferences(actor, input as never, signal()), { code: "INVALID_CURRENT_FORM_QUERY" });
+  }
+  assert.equal(connections, 0);
+});
+test("current forms: optional recent timeout/missing SQL permission/overflow recover same connection with pure global eligibility", async () => {
+  for (const code of ["57014", "42703", "42501", "CURRENT_ACCOUNT_RECOMMENDATION_UNAVAILABLE"]) {
+    const failure = Object.assign(new Error("SYNTHETIC optional recommendation failure"), { code }); const accountId = sid("paymentAccount", 3010);
+    const prefix = hints().slice(0, 3); const client = new Client([begin(), identity(), selectedHall(), total(), ...prefix,
+      { sql: /current-form:recent-account/, error: failure }, rollbackHints(), releaseHints(),
+      { sql: /current-form:eligible-account-fallback/, rows: [item({ id: accountId, hall_id: null, hall_name: null, payment_method_id: selectedMethod, payment_method_name: "SYNTHETIC cross-hall eligible" })], inspect(values, sql) {
+        assert.deepEqual(values, ["", selectedMethod, 20, 0]); assert.match(sql, /r.enabled AND pm.enabled AND r.payment_method_id = \$2::uuid/);
+        assert.match(sql, /ORDER BY r.id LIMIT \$3 OFFSET \$4/); assert.ok(!/payment_account_hall|sales_header|hall_id =|is_recommended/.test(sql));
+      } }, commit()]);
+    const result = await reader(client).readSalesReferences(actor, reference("paymentAccount"), signal());
+    assert.equal(result.items[0]!.id, accountId); assert.equal(result.recommendationAvailability, "UNAVAILABLE"); assert.equal(result.exactTotal, 1n);
+    assert.equal(client.calls.filter(call => call.sql.includes("current-form:recent-account")).length, 1); client.done();
+  }
+});
+test("current forms: optional recommendation timeout is bounded, does not extend tighter original, and restores success setting", async () => {
+  for (const [original, budget, option] of [["0", "250ms", undefined], ["15s", "1000ms", 1000], ["100ms", "100ms", 250], ["100us", "100us", 250]] as const) {
+    const client = new Client([begin(), identity(), selectedHall(), total("0"), ...hints(null, original, budget), page([]), ...restoreHints(original), commit()]);
+    await new PostgresCurrentFormReader({ async connect() { return client; } }, allow, option === undefined ? undefined : { recommendationTimeoutMillis: option })
+      .readSalesReferences(actor, reference("paymentAccount"), signal()); client.done();
+  }
+  for (const value of [0, 1001, -1, 2.5, NaN]) assert.throws(() => new PostgresCurrentFormReader({ async connect() { throw new Error(); } }, allow, { recommendationTimeoutMillis: value }), /1 through 1000/);
+});
+test("current forms: eligibility SQL/count, decoder, and failed savepoint recovery do not degrade into successful hints", async () => {
+  const core = new Error("SYNTHETIC authoritative count denied"); const denied = new Client([begin(), identity(), selectedHall(), { sql: /current-form:count/, error: core }, rollback()]);
+  await assert.rejects(() => reader(denied).readSalesReferences(actor, reference("paymentAccount"), signal()), core); denied.done();
+  const mismatch = new Client([begin(), identity(), selectedHall(), total(), ...hints(), page([item({ id: sid("paymentAccount", 3011), hall_id: null, hall_name: null, payment_method_id: sid("paymentMethod", 3012), payment_method_name: "OTHER", is_recommended: false })]), ...restoreHints(), rollback()]);
+  await assert.rejects(() => reader(mismatch).readSalesReferences(actor, reference("paymentAccount"), signal()), { code: "INVALID_DATABASE_VALUE" }); mismatch.done();
+  const recovery = new Error("SYNTHETIC rollback-to failed"); const broken = new Client([begin(), identity(), selectedHall(), total(), ...hints().slice(0,3), { sql: /current-form:recent-account/, error: core }, { ...rollbackHints(), error: recovery }, rollback()]);
+  await assert.rejects(() => reader(broken).readSalesReferences(actor, reference("paymentAccount"), signal()), recovery); broken.done();
+});
+test("current forms: recent proof is one bounded aggregate, retains sales-family/order/original-pair and does not invent historical active facts", async () => {
+  let calls = 0; const recent = sid("paymentAccount", 3013);
+  const query = async (sql: string, values?: unknown[]): Promise<PgSalesResult> => { calls++; assert.deepEqual(values, [hall, selectedMethod, 51, 50, 100001, 2000, 100000]);
+    assert.match(sql, /h.status = 'APPROVED' AND h.stock_basis = 'RUNTIME_LEDGER'/); assert.ok(!/business_type\s*=|CUTOFF_HISTORY|method_name_snapshot/.test(sql));
+    assert.match(sql, /h.business_date DESC NULLS LAST, h.updated_at DESC, h.id DESC LIMIT \$3/);
+    assert.match(sql, /ss.payment_method_id_snapshot = a.payment_method_id/); assert.match(sql, /d.id DESC, ss.line_no ASC LIMIT 1/);
+    assert.match(sql, /NOT EXISTS \(SELECT 1 FROM naijue_erp.inventory_ledger reversal/); assert.match(sql, /e.source_document_version = d.version/);
+    assert.match(sql, /e.quantity_delta::numeric = -l.quantity::numeric/); assert.match(sql, /e.distinct_line_count = l.line_count/);
+    assert.equal((sql.match(/FROM naijue_erp.sales_header/g) ?? []).length, 1); assert.equal((sql.match(/LIMIT \$5/g) ?? []).length, 2);
+    return { rows: [{ recent_account_id: recent, candidate_overflow: true, proof_overflow: false }], rowCount: 1 };
+  };
+  assert.equal(await readCurrentRecentAccount(query, hall, selectedMethod), recent); assert.equal(calls, 1);
+  for (const row of [{ recent_account_id: null, candidate_overflow: true, proof_overflow: false }, { recent_account_id: recent, candidate_overflow: false, proof_overflow: true }])
+    await assert.rejects(() => readCurrentRecentAccount(async () => ({ rows: [row], rowCount: 1 }), hall, selectedMethod), { code: "CURRENT_ACCOUNT_RECOMMENDATION_UNAVAILABLE" });
+  assert.equal(await readCurrentRecentAccount(async () => ({ rows: [{ recent_account_id: null, candidate_overflow: false, proof_overflow: false }], rowCount: 1 }), hall, selectedMethod), null);
+});
+test("current forms: every optional config/page/restore failure recovers via savepoint and never hides globally eligible accounts", async () => {
+  const accountId = sid("paymentAccount", 3020), failure = new Error("SYNTHETIC optional failure");
+  const candidate = item({ id: accountId, hall_id: null, hall_name: null, payment_method_id: selectedMethod, payment_method_name: "SYNTHETIC method" });
+  const scenarios: Step[][] = [
+    [savepoint(), { sql: /current-form:recommendation-timeout/, error: failure }],
+    [savepoint(), { sql: /current-form:recommendation-timeout/, rows: [{ statement_timeout: "untrusted timeout" }] }],
+    [...hints().slice(0, 2), { ...setTimeout("250ms"), error: failure }],
+    [...hints(), { sql: /current-form:page/, error: failure }],
+    [...hints(), page([{ ...candidate, is_recommended: false }]), { ...setTimeout("15s"), error: failure }]
+  ];
+  for (const steps of scenarios) {
+    const client = new Client([begin(), identity(), selectedHall(), total(), ...steps, rollbackHints(), releaseHints(),
+      { sql: /current-form:eligible-account-fallback/, rows: [candidate] }, commit()]);
+    const result = await reader(client).readSalesReferences(actor, reference("paymentAccount"), signal());
+    assert.equal(result.recommendationAvailability, "UNAVAILABLE"); assert.equal(result.items[0]!.id, accountId); assert.equal(result.exactTotal, 1n); client.done();
+  }
+});
+test("current forms: optional cancellation remains cancellation with whole rollback, not an unrequested fallback", async () => {
+  const control = new AbortController(); const client = new Client([begin(), identity(), selectedHall(), total("0"),
+    ...hints().slice(0, 3), { sql: /current-form:recent-account/, rows: [{ recent_account_id: null, candidate_overflow: false, proof_overflow: false }], inspect() { control.abort(); } }, rollback()]);
+  await assert.rejects(() => reader(client).readSalesReferences(actor, reference("paymentAccount"), control.signal), { code: "CURRENT_FORM_READ_ABORTED" });
+  assert.ok(!client.calls.some(call => call.sql.includes("eligible-account-fallback"))); client.done();
 });

@@ -1,0 +1,53 @@
+{
+  "baseHead": "3774ece71b49702cbf8b9f20aaa06f4cb31c6410",
+  "scope": "Frontend original payment-method identity parity; uncommitted source changes",
+  "contract": {
+    "read": "Required paymentMethodId key, canonical UUID or explicit null original snapshot. Missing/aliases invalid.",
+    "runtimeCommand": "Required non-null canonical paymentMethodId alongside paymentAccountId. No old account-only payload compatibility.",
+    "retainedPair": "Known original method survives raw amount/direction editing and original-request replay; same stored row/account cannot replace the original method.",
+    "unknown": "Readable but no SAVE/APPROVE and no allocated key. Authorized runtime status-only VOID/UNAPPROVE still allowed without filling null; CUTOFF_HISTORY writes remain closed."
+  },
+  "verification": {
+    "salesScopedTypes": "passed",
+    "salesReadReferenceAndCommandNodeTests": 96,
+    "commandDomGroups": 7,
+    "readOnlySalesDomGroups": 18,
+    "salesApplicationDomGroups": 6,
+    "diffCheck": "passed",
+    "sourceHashes": "verified"
+  },
+  "cases": [
+    "M1/account A selection survives current-account method M2 mismatch response without correction or automatic retry.",
+    "409 SETTLEMENT_METHOD_MISMATCH and IMMUTABLE_SETTLEMENT_METHOD are explicit definitive original-command rejections, not unknown outcomes.",
+    "Caller mutation cannot change the frozen intended method sent by the command client.",
+    "Known method ID is independent from renamed saved/current labels.",
+    "Null original method never becomes an inferred current-account/name UUID."
+  ],
+  "limits": [
+    "No full aggregate or root/web compiler. Scoped types plus synthetic/mocked Node/DOM only.",
+    "No actual HTTP, real browser, PostgreSQL, migration execution, paused input, deployment, commit or push by this worker.",
+    "Existing real NEW business remains gated on complete native current pickers/preparation, document numbering and write-host composition; these frontend contract changes do not enable it.",
+    "Existing Arco/React ref and application harness act-wrapping warnings remain; all command exit statuses and assertions passed."
+  ],
+  "files": [
+    "apps/web/src/sales/contracts.ts",
+    "apps/web/src/sales/response-validation.ts",
+    "apps/web/src/sales/sales.test.ts",
+    "apps/web/src/sales/tests/fixtures.ts",
+    "apps/web/preview-core-pages/sales-fixture.ts",
+    "apps/web/src/sales/commands/contracts.ts",
+    "apps/web/src/sales/commands/validation.ts",
+    "apps/web/src/sales/commands/validation.test.ts",
+    "apps/web/src/sales/commands/controller.ts",
+    "apps/web/src/sales/commands/controller.test.ts",
+    "apps/web/src/sales/commands/http-client.ts",
+    "apps/web/src/sales/commands/http-client.test.ts",
+    "apps/web/src/sales/commands/form-model.ts",
+    "apps/web/src/sales/commands/form-model.test.ts",
+    "apps/web/src/sales/commands/editor-session.ts",
+    "apps/web/src/sales/commands/editor-session.test.ts",
+    "apps/web/src/sales/commands/form.tsx",
+    "apps/web/src/sales/commands/tests/run-dom-tests.mjs",
+    "apps/web/src/sales/commands/README.md"
+  ]
+}

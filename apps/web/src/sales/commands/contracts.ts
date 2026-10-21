@@ -6,9 +6,13 @@ import type { ReadScope } from '../../loading/read-scope.ts';
 /** Wire counterparts of the existing native contracts. No actor, role or scope is sent. */
 type Wire<T> = T extends bigint ? string : T extends string ? string : T extends number ? number
   : T extends readonly (infer Item)[] ? readonly Wire<Item>[] : T extends object ? { readonly [K in keyof T]: Wire<T[K]> } : T;
-export type SalesDraftDto = Omit<Wire<SalesDraft>, 'lines'> & { readonly lines: readonly (Omit<Wire<SalesDraft['lines'][number]>, 'pricingRule' | 'zeroConfirmed' | 'isCurrent'> & {
+export type SalesDraftDto = Omit<Wire<SalesDraft>, 'lines' | 'settlements'> & { readonly lines: readonly (Omit<Wire<SalesDraft['lines'][number]>, 'pricingRule' | 'zeroConfirmed' | 'isCurrent'> & {
   readonly pricingRule: SalesPricingRule; readonly zeroConfirmed: boolean; readonly isCurrent: true;
-})[] };
+})[];
+  /** Runtime commands require the user's intended method/account pair. Never
+   * fill an unknown original method from a label or the account's current method. */
+  readonly settlements: readonly (Omit<Wire<SalesDraft['settlements'][number]>, 'paymentMethodId'> & { readonly paymentMethodId: string })[];
+};
 export type SalesCommandDto = { readonly action: 'SAVE'; readonly requestKey: string; readonly expectedVersion: number | null; readonly draft: SalesDraftDto }
   | { readonly action: Exclude<SalesAction, 'SAVE'>; readonly requestKey: string; readonly expectedVersion: number; readonly salesId: string };
 export type SalesCommandResultDto = Wire<SalesResult>;

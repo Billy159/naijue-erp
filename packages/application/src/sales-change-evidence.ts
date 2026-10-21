@@ -6,7 +6,7 @@ const headerFields = ["number", "businessType", "businessDate", "hallId", "sales
 const lineFields = ["id", "salesId", "lineNo", "skuId", "quantity", "referencePrice", "dealPrice", "pricingRule", "discountTenths",
   "zeroConfirmed", "lineAmount", "allocatedDiscount", "isGift", "isCurrent"] as const;
 const snapshotFields = ["productCode", "productName", "colorName", "fitName", "sizeName", "barcode"] as const;
-const settlementFields = ["id", "salesId", "lineNo", "paymentAccountId", "direction", "amount"] as const;
+const settlementFields = ["id", "salesId", "lineNo", "paymentAccountId", "paymentMethodId", "direction", "amount"] as const;
 
 /** Explicit native-value comparisons, not display/JSON coercions or audit reconstruction. */
 export function sameSalesLine(left: SalesLineRow, right: SalesLineRow): boolean {
@@ -42,8 +42,8 @@ export function salesChangeEvidence(previous: SalesDocument | undefined, next: S
       referencePrice, dealPrice, pricingRule, discountTenths, zeroConfirmed, lineAmount, allocatedDiscount, isGift,
       snapshot: { productCode: snapshot.productCode, productName: snapshot.productName, colorName: snapshot.colorName,
         fitName: snapshot.fitName, sizeName: snapshot.sizeName, barcode: snapshot.barcode }, isCurrent })),
-    settlements: document.settlements.filter(row => changedSettlements.has(row.id)).map(({ id, salesId, lineNo, paymentAccountId, direction, amount }) => ({
-      id, salesId, lineNo, paymentAccountId, direction, amount }))
+    settlements: document.settlements.filter(row => changedSettlements.has(row.id)).map(({ id, salesId, lineNo, paymentAccountId, paymentMethodId, direction, amount }) => ({
+      id, salesId, lineNo, paymentAccountId, paymentMethodId, direction, amount }))
   });
   return { before: previous ? values(previous) : null, after: values(next) };
 }
