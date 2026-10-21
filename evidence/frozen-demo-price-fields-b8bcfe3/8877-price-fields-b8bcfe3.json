@@ -1,0 +1,376 @@
+{
+  "schema": "8877-frozen-price-fields-static-evidence-v1",
+  "source_commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "repository_verification": {
+    "HEAD": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+    "main": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+    "tag": "8877-final-baseline",
+    "dereferenced_tag_commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+    "worktree_clean_before_extraction": true,
+    "worktree_clean_after_extraction": true
+  },
+  "scope": "Only static price-field constants and necessary generic default/display/save excerpts. No JavaScript source was executed.",
+  "sources": {
+    "frontend/product-catalog.js": {
+      "git_blob_id": "7ac2d6baab441b523c95a9fe2c1e4089f75bda5f",
+      "sha256": "004b695c7b51ee0cec539d99cd9c6016a4a7300c2cd18cb52adb9fd17d2e0a1c",
+      "whole_file_exported": false
+    },
+    "frontend/product-master.js": {
+      "git_blob_id": "adeb7d04b3b1d5deed70266a01ce95e430dc2c79",
+      "sha256": "dc43a278d339c9c3d50ab3567376f1b0d79b387bd83ac48304e76d8d5ca61aaa",
+      "whole_file_exported": false
+    },
+    "frontend/product-current.js": {
+      "git_blob_id": "bd56403e5e19f7be64555795ff0823a4922638e6",
+      "sha256": "d5a3ae29d781aa725859196dac6ef4e64f0e3cea08b3cca5c199579c9527b0be",
+      "whole_file_exported": false
+    },
+    "frontend/barcode-2026.js": {
+      "git_blob_id": "0e9138b840898b93eeb4d52b1b5866d05be85a5b",
+      "sha256": "311a9e4eef6945a063d022c077aa5c57a11aacfb45fa2ede7f7c6c85594f2dfd",
+      "whole_file_exported": false
+    },
+    "frontend/index.html": {
+      "git_blob_id": "e63d15d89844c7bf42f44a37036a118e5879730e",
+      "sha256": "abd6e2efe92e5f94d262ab591aba9cb7a6291099bd2bd5df80dcbb6760b08ded",
+      "whole_file_exported": false
+    }
+  },
+  "fields_in_declared_table_and_paste_order": [
+    {
+      "order_1_based": 1,
+      "key": "purchasePrice",
+      "label": "采购价",
+      "base_new_product": {
+        "property_present": true,
+        "value": null
+      },
+      "product_master_override": {
+        "writes_property": false,
+        "inherits_from": "prior barcode wrapper -> base C.newProduct; null preserved"
+      },
+      "effective_new_product_default": null
+    },
+    {
+      "order_1_based": 2,
+      "key": "price",
+      "label": "零售价",
+      "base_new_product": {
+        "property_present": true,
+        "value": null
+      },
+      "product_master_override": {
+        "writes_property": true,
+        "value": null
+      },
+      "effective_new_product_default": null
+    },
+    {
+      "order_1_based": 3,
+      "key": "wholesale5",
+      "label": "五级批发价（工厂店供货价）",
+      "base_new_product": {
+        "property_present": false,
+        "js_value_if_read": "undefined"
+      },
+      "product_master_override": {
+        "writes_property": true,
+        "value": null
+      },
+      "effective_new_product_default": null
+    },
+    {
+      "order_1_based": 4,
+      "key": "wholesale6",
+      "label": "六级批发价（贴牌价）",
+      "base_new_product": {
+        "property_present": false,
+        "js_value_if_read": "undefined"
+      },
+      "product_master_override": {
+        "writes_property": true,
+        "value": null
+      },
+      "effective_new_product_default": null
+    },
+    {
+      "order_1_based": 5,
+      "key": "wholesale7",
+      "label": "七级批发价（批发价）",
+      "base_new_product": {
+        "property_present": false,
+        "js_value_if_read": "undefined"
+      },
+      "product_master_override": {
+        "writes_property": true,
+        "value": null
+      },
+      "effective_new_product_default": null
+    },
+    {
+      "order_1_based": 6,
+      "key": "wholesale8",
+      "label": "八级批发价（代理商供货价）",
+      "base_new_product": {
+        "property_present": false,
+        "js_value_if_read": "undefined"
+      },
+      "product_master_override": {
+        "writes_property": true,
+        "value": null
+      },
+      "effective_new_product_default": null
+    },
+    {
+      "order_1_based": 7,
+      "key": "wholesale9",
+      "label": "九级批发价（工厂店零售价）",
+      "base_new_product": {
+        "property_present": false,
+        "js_value_if_read": "undefined"
+      },
+      "product_master_override": {
+        "writes_property": true,
+        "value": null
+      },
+      "effective_new_product_default": null
+    },
+    {
+      "order_1_based": 8,
+      "key": "wholesale10",
+      "label": "十级批发价（葛玉珠）",
+      "base_new_product": {
+        "property_present": false,
+        "js_value_if_read": "undefined"
+      },
+      "product_master_override": {
+        "writes_property": true,
+        "value": null
+      },
+      "effective_new_product_default": null
+    },
+    {
+      "order_1_based": 9,
+      "key": "minimumPrice",
+      "label": "最低售价",
+      "base_new_product": {
+        "property_present": false,
+        "js_value_if_read": "undefined"
+      },
+      "product_master_override": {
+        "writes_property": true,
+        "value": null
+      },
+      "effective_new_product_default": null
+    }
+  ],
+  "semantics": {
+    "scope_of_defaults": "Defaults apply only to creating a new product via the three factories in the frozen entry load order. They do not describe existing/imported product records or unrelated fixture helpers.",
+    "base_vs_override": "Frozen index loads product-catalog.js, then barcode-2026.js, then product-master.js. Base C.newProduct explicitly sets price and purchasePrice to null and does not define the other seven configured price keys. The intermediate barcode wrapper spreads ...oldNew() through C.prepare and adds only barcode/fit defaults; it writes none of the nine price properties. The final product-master wrapper spreads its prior oldNew(), leaves purchasePrice inherited as null, explicitly writes price:null again, and writes minimumPrice and wholesale5..10 to null. Thus all nine effective defaults in this factory chain are null.",
+    "display": "The table maps C.priceFields in array order and passes p[key]??\"\" to the input. null/undefined display blank; numeric 0 remains visible.",
+    "hint_exact": "空白表示未设置；0 表示价格为零。",
+    "manual_draft": "Generic input handling keeps the current input string; an empty draft may temporarily be \"\" before saving.",
+    "paste": "Column paste uses C.priceFields order, begins at the focused field, trims each cell, writes null for an empty cell, and otherwise keeps the trimmed string until save.",
+    "nonempty_validation": {
+      "javascript_regex": "^\\d+(?:\\.\\d{1,2})?$",
+      "additional_condition": "Number.isFinite(Number(p[key]))",
+      "meaning": "Nonnegative decimal amount with at most two fractional digits. null/undefined/\"\" skip this nonempty-value check."
+    },
+    "save": "Base save normalizes price and purchasePrice: null/undefined/\"\" -> null; otherwise unary + converts to Number. Wrapped save converts all nonempty price fields with Number; empty non-price fields become null. Retail empty has already been normalized by base save. Numeric 0 is preserved.",
+    "sort": "No separate sort value is defined in C.priceFields. order_1_based is the array index plus one.",
+    "currency": "No currency code or cents-unit declaration is supplied by this static configuration; none has been invented."
+  },
+  "evidence_snippets": [
+    {
+      "id": "price_fields_definition",
+      "path": "frontend/product-master.js",
+      "line": 57,
+      "column_1_based_unicode": 1,
+      "byte_offset_0_based": 8427,
+      "byte_length": 416,
+      "sha256_utf8_no_added_newline": "01f4a875ae5365b075bead73635148ad411c21377e5e56b292d30261a194b5f9",
+      "exact_original_substring": "C.priceFields=[['purchasePrice','采购价'],['price','零售价'],['wholesale5','五级批发价（工厂店供货价）'],['wholesale6','六级批发价（贴牌价）'],['wholesale7','七级批发价（批发价）'],['wholesale8','八级批发价（代理商供货价）'],['wholesale9','九级批发价（工厂店零售价）'],['wholesale10','十级批发价（葛玉珠）'],['minimumPrice','最低售价']];"
+    },
+    {
+      "id": "catalog_alias",
+      "path": "frontend/product-master.js",
+      "line": 2,
+      "column_1_based_unicode": 26,
+      "byte_offset_0_based": 116,
+      "byte_length": 24,
+      "sha256_utf8_no_added_newline": "ce59fcb90699680235590b707613792916e49110dc47e5e440c12c14bbedbe06",
+      "exact_original_substring": "const C=PRODUCT_CATALOG;"
+    },
+    {
+      "id": "base_new_product_factory",
+      "path": "frontend/product-catalog.js",
+      "line": 32,
+      "column_1_based_unicode": 1,
+      "byte_offset_0_based": 7474,
+      "byte_length": 18,
+      "sha256_utf8_no_added_newline": "6dcfe521419edef83d3840da5f82557910d685435603f5701854fa2310388ae9",
+      "exact_original_substring": "C.newProduct=()=>{"
+    },
+    {
+      "id": "base_price_defaults",
+      "path": "frontend/product-catalog.js",
+      "line": 32,
+      "column_1_based_unicode": 443,
+      "byte_offset_0_based": 7926,
+      "byte_length": 29,
+      "sha256_utf8_no_added_newline": "3f2888aebd8994e6ab0a617be7760d2bd4329216e0f1c6cfa0a070fede45b71c",
+      "exact_original_substring": "price:null,purchasePrice:null"
+    },
+    {
+      "id": "new_product_inheritance",
+      "path": "frontend/product-master.js",
+      "line": 58,
+      "column_1_based_unicode": 1,
+      "byte_offset_0_based": 8844,
+      "byte_length": 57,
+      "sha256_utf8_no_added_newline": "06706662f2c83b07cfc4692b4d094bca1634ed7a081bafcb608b40cc768fbda8",
+      "exact_original_substring": "const oldNew=C.newProduct;C.newProduct=()=>({...oldNew(),"
+    },
+    {
+      "id": "retail_null_override",
+      "path": "frontend/product-master.js",
+      "line": 58,
+      "column_1_based_unicode": 74,
+      "byte_offset_0_based": 8917,
+      "byte_length": 10,
+      "sha256_utf8_no_added_newline": "d275c5c68dd349e22437f096af51a3691206bd0260d664e43b9bb9c53ab12e6f",
+      "exact_original_substring": "price:null"
+    },
+    {
+      "id": "additional_price_null_overrides",
+      "path": "frontend/product-master.js",
+      "line": 58,
+      "column_1_based_unicode": 159,
+      "byte_offset_0_based": 9002,
+      "byte_length": 114,
+      "sha256_utf8_no_added_newline": "83acfeda016aca5fab2046c7b53d24a0eeeef501c90b2fe907d72b68c12e8737",
+      "exact_original_substring": "minimumPrice:null,wholesale5:null,wholesale6:null,wholesale7:null,wholesale8:null,wholesale9:null,wholesale10:null"
+    },
+    {
+      "id": "nonempty_price_validation",
+      "path": "frontend/product-master.js",
+      "line": 67,
+      "column_1_based_unicode": 2,
+      "byte_offset_0_based": 10191,
+      "byte_length": 207,
+      "sha256_utf8_no_added_newline": "f2ecdc9a3104e21d04aceecb9ffe68812e1d0e04b23fef9504864f1b772bc0a4",
+      "exact_original_substring": "for(const [key,label] of C.priceFields)if(p[key]!=null&&p[key]!==''&&(!/^\\d+(?:\\.\\d{1,2})?$/.test(String(p[key]))||!Number.isFinite(Number(p[key]))))return label+'请填写非负金额，最多两位小数';"
+    },
+    {
+      "id": "base_save_normalization",
+      "path": "frontend/product-catalog.js",
+      "line": 43,
+      "column_1_based_unicode": 1330,
+      "byte_offset_0_based": 16585,
+      "byte_length": 132,
+      "sha256_utf8_no_added_newline": "914c1821cb58e7e38f4f919df833a649e567229621ce03365a05508fe5175a91",
+      "exact_original_substring": "p.price=p.price==null||p.price===''?null:+p.price;p.purchasePrice=p.purchasePrice==null||p.purchasePrice===''?null:+p.purchasePrice;"
+    },
+    {
+      "id": "wrapped_save_normalization",
+      "path": "frontend/product-master.js",
+      "line": 80,
+      "column_1_based_unicode": 2,
+      "byte_offset_0_based": 12562,
+      "byte_length": 126,
+      "sha256_utf8_no_added_newline": "ea461c2fc412e35408fa9a199b796709ee947c4026b4fb993c8b392bdc5321e0",
+      "exact_original_substring": "const p=result.product;for(const [k]of C.priceFields)if(p[k]!=null&&p[k]!=='')p[k]=Number(p[k]);else if(k!=='price')p[k]=null;"
+    },
+    {
+      "id": "price_table_display_and_order",
+      "path": "frontend/product-current.js",
+      "line": 119,
+      "column_1_based_unicode": 1,
+      "byte_offset_0_based": 19814,
+      "byte_length": 568,
+      "sha256_utf8_no_added_newline": "32ebb3d93b79f677395fcf21f6e10d286558aa6407619a4b27d899d3a418ba20",
+      "exact_original_substring": "function priceBody(p){return `<div class=\"pc-price-wrap\"><div class=\"pc-price-paste\"><span>价格</span><small>可从 Excel 整列复制价格，按下表顺序粘贴</small></div><table class=\"pc-price-table\"><thead><tr><th>价格类型</th><th>金额</th></tr></thead><tbody>${C.priceFields.map(([key,label])=>`<tr><th scope=\"row\">${h(label)}</th><td>${input(key,p[key]??'','text','inputmode=\"decimal\" placeholder=\"未设置\" data-price-field')}</td></tr>`).join('')}</tbody></table><small class=\"hint\">空白表示未设置；0 表示价格为零。</small></div>`}"
+    },
+    {
+      "id": "input_keeps_draft_string",
+      "path": "frontend/product-current.js",
+      "line": 273,
+      "column_1_based_unicode": 137,
+      "byte_offset_0_based": 64973,
+      "byte_length": 64,
+      "sha256_utf8_no_added_newline": "5871a93dcb58ad1cc4b18c4a2a3e2280da057a786fca3ccea0c258e6ca77385d",
+      "exact_original_substring": "if(t.dataset.edit){const key=t.dataset.edit;U.edit[key]=t.value;"
+    },
+    {
+      "id": "paste_order",
+      "path": "frontend/product-current.js",
+      "line": 282,
+      "column_1_based_unicode": 300,
+      "byte_offset_0_based": 69620,
+      "byte_length": 125,
+      "sha256_utf8_no_added_newline": "e32c3ba477fd1772889d2fe1b984f0ed7c4be7aa2d633ef03296fd79e6debe7b",
+      "exact_original_substring": "const allFields=C.priceFields.map(([key])=>key),fields=allFields.slice(Math.max(0,allFields.indexOf(e.target.dataset.edit)));"
+    },
+    {
+      "id": "paste_empty_to_null",
+      "path": "frontend/product-current.js",
+      "line": 282,
+      "column_1_based_unicode": 662,
+      "byte_offset_0_based": 70046,
+      "byte_length": 71,
+      "sha256_utf8_no_added_newline": "0a13e171c8684caf3c999c7160719764eea10c54af9bd9a770c6f86e5b1dfe93",
+      "exact_original_substring": "const key=fields[i],value=raw.trim();U.edit[key]=value===''?null:value;"
+    },
+    {
+      "id": "intermediate_new_product_capture",
+      "path": "frontend/barcode-2026.js",
+      "line": 19,
+      "column_1_based_unicode": 1,
+      "byte_offset_0_based": 2488,
+      "byte_length": 26,
+      "sha256_utf8_no_added_newline": "305efeb59aea9fa81b99ade5f24df8fa750250087b4703b6e9a6a9ede141b820",
+      "exact_original_substring": "const oldNew=C.newProduct;"
+    },
+    {
+      "id": "intermediate_new_product_inheritance",
+      "path": "frontend/barcode-2026.js",
+      "line": 20,
+      "column_1_based_unicode": 1,
+      "byte_offset_0_based": 2515,
+      "byte_length": 40,
+      "sha256_utf8_no_added_newline": "9ce4617443773a55a8f722baba69343d9738e1cebd537157a73f126c149c327a",
+      "exact_original_substring": "C.newProduct=()=>C.prepare({...oldNew(),"
+    },
+    {
+      "id": "new_product_static_load_order",
+      "path": "frontend/index.html",
+      "line": 17,
+      "column_1_based_unicode": 472,
+      "byte_offset_0_based": 5948,
+      "byte_length": 211,
+      "sha256_utf8_no_added_newline": "773d1f5600ca7deff98ef2be522021ff74529c3504b046cc8695d04561ab3eac",
+      "exact_original_substring": "<script src=\"product-catalog.js?v=validation-state-20261001c\"></script><script src=\"barcode-2026.js?v=product-final-fixes-20260930c\"></script><script src=\"product-master.js?v=employee-access-20261001a\"></script>"
+    }
+  ],
+  "exclusions": [
+    "Whole mixed source files",
+    "business records and stored product prices",
+    "account/personnel/funds-account datasets",
+    "passwords and keys",
+    "images",
+    "unrelated metadata and source declarations",
+    "Unrelated barcode fixture helper and its hardcoded amounts"
+  ],
+  "redaction_policy": "Exact requested UI labels are retained, including parenthetical display labels. Unrelated mixed-file content is omitted completely; no replacement business values or placeholder records were invented.",
+  "integrity": "This JSON is a derived minimal configuration, not an original whole-source file. Every evidence substring is byte-checked against the frozen Git blob and separately SHA256 hashed; complete source blobs are identified by commit/Git blob ID/SHA256 but are not exported.",
+  "not_performed": [
+    "source execution",
+    "development",
+    "source audit",
+    "tests",
+    "build",
+    "service startup",
+    "deployment"
+  ]
+}
