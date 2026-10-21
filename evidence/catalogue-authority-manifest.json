@@ -1,0 +1,31 @@
+{
+  "parentCommit": "2d0f5d2ef79a1d48f63a85cb0242661d2e54efde",
+  "approvedSchemaPage": "https://chatgpt.com/space/page_503dc756b3fc8191a29c8cf269409092",
+  "pageSequence": 8,
+  "ownedPaths": [
+    "adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql",
+    "tests/catalogue-authority-schema-contract.test.ts",
+    "docs/native-catalogue-schema.md",
+    "evidence/catalogue-authority-schema-contract.log",
+    "evidence/catalogue-authority-manifest.json"
+  ],
+  "sha256": {
+    "adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql": "bb12e54d7b4989d5b6fe608a9582f4c887980eb19be839f74005d54eb0ac530e",
+    "tests/catalogue-authority-schema-contract.test.ts": "c8e017e6e993be0886f7ce95137799fb6a5ba9dc18c9518a11fb630e43128686",
+    "docs/native-catalogue-schema.md": "686d9dec94e41f5acf1f58475717a088079290ba1ae751bb7900ae788f09eefe",
+    "evidence/catalogue-authority-schema-contract.log": "4b8cc54ae03a6f58bf9a8663616163febfee606b7e01859358424e178333c90e"
+  },
+  "verification": {
+    "command": "node --test tests/catalogue-authority-schema-contract.test.ts",
+    "passed": 7,
+    "failed": 0,
+    "scope": "SQL source/contract only; no PG parser/engine"
+  },
+  "compatibility": "No edits to 0001-0008 SQL/hash manifest or populated historical fixtures. New 1-9 install must migrate before first product input.",
+  "notRun": [
+    "actual PostgreSQL/migration/locks/concurrency/constraints",
+    "import or product creation",
+    "compiler/build/full checks",
+    "operations/credentials/commit/push/deployment"
+  ]
+}
