@@ -1,0 +1,42 @@
+[
+  {
+    "name": "inventory-candidate-strictmode",
+    "strict": false,
+    "reads": 1,
+    "popupCount": 1,
+    "optionCount": 1,
+    "text": "选择商品×✓ 全部商品可选择商品共 1 项上一页下一页完成"
+  },
+  {
+    "name": "inventory-candidate-strictmode",
+    "strict": true,
+    "reads": 0,
+    "popupCount": 1,
+    "optionCount": 0,
+    "text": "选择商品×✓ 全部商品正在加载候选…候选按需读取上一页下一页完成"
+  },
+  {
+    "name": "inventory-settings-dismissal",
+    "triggerFocused": true,
+    "insidePopup": false,
+    "afterEscape": true,
+    "escapePrevented": false,
+    "afterOutside": true,
+    "reads": 0
+  },
+  {
+    "name": "inventory-candidate-enter",
+    "insideMainQueryForm": "库存筛选",
+    "enterPrevented": false,
+    "reachedMainQueryForm": true,
+    "mainSubmitButtons": 1,
+    "inventoryReadsFromSyntheticKeyOnly": 0
+  },
+  {
+    "name": "inventory-page-strictmode",
+    "scopeActive": true,
+    "formPresent": false,
+    "text": "当前读取范围已关闭请重新进入库存页。旧身份结果已清除。",
+    "reads": 0
+  }
+]
