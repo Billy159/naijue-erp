@@ -51,7 +51,7 @@ try {
       return json(result);
     }
     if (url.endsWith('/transfers/warehouses/query')) return json({ page: body.page, pageSize: body.pageSize, exactTotal: '1', items: [warehouse()] });
-    if (url.endsWith('/products/basics/query')) return json({ productId: body.productId, code: 'SYNTHETIC-PRODUCT', name: 'SYNTHETIC PRODUCT DETAIL', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null });
+    if (url.endsWith('/products/basics/query')) return json({ productId: body.productId, code: 'SYNTHETIC-PRODUCT', name: 'SYNTHETIC PRODUCT DETAIL', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null });
     throw new Error('Unexpected synthetic endpoint');
   } };
   const count = suffix => calls.filter(call => call.url.endsWith(suffix)).length;

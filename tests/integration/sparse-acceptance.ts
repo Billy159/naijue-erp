@@ -42,7 +42,7 @@ const publish: Extract<CutoffImportCommand, { readonly action: "IMPORT_PUBLISH" 
 const scope: InventoryReadScope = { hallIds: [ids.hall, ids.otherHall], warehouses: [
   { id: ids.warehouse, hallId: ids.hall, label: "SYNTHETIC ONLY FROM" }, { id: ids.toWarehouse, hallId: ids.otherHall, label: "SYNTHETIC ONLY TO" }
 ] };
-const parameters: InventoryQuery = { filter: { productIds: [], categoryId: null, warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] }, page: 1, pageSize: 100 };
+const parameters: InventoryQuery = { filter: { productIds: [], categoryIds: [], warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] }, page: 1, pageSize: 100 };
 const read = (input = parameters, granted = scope) => ({ actor, scope: granted, parameters: input, signal: new AbortController().signal });
 const raceDraft = (number: number, count = "2"): SalesDraft => { const draft = salesDraft(number, { quantities: [count] }); return { ...draft, lines: draft.lines.map(line => ({ ...line, skuId: ids.raceSku })) }; };
 async function importSnapshot(pool: Pool): Promise<unknown> {
@@ -212,7 +212,7 @@ export async function runSparseAcceptance(t: TestContext, pool: Pool): Promise<v
     await assert.rejects(reader.readInventory(read({ ...parameters, filter: { ...parameters.filter, warehouseIds: [ids.toWarehouse] } }, onlyFrom)), { code: "FORBIDDEN" });
     for (const search of ["%", "' OR TRUE --", "\\"]) {
       const candidates = await reader.readCandidates({ actor, scope, signal: new AbortController().signal,
-        parameters: { kind: "product", search, page: 1, pageSize: 20, selectedIds: [], categoryId: null } });
+        parameters: { kind: "product", search, page: 1, pageSize: 20, selectedIds: [], categoryIds: [] } });
       assert.equal(candidates.data.exactTotal, 0); assert.deepEqual(candidates.data.items, []);
     }
     assert.deepEqual(await importSnapshot(pool), before, "all native inventory reads must be non-mutating");

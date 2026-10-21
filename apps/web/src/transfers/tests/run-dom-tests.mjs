@@ -89,7 +89,7 @@ try {
   console.log('PASS DOM 8: adversarial 2,000-row × 200-size native document never materializes a Cartesian grid; visible actual/saved rows and full-size pages stay bounded and complete through paging.');
   await act(async () => root.unmount()); root = createRoot(host); wide = false;
   let finishProductStyles; let stylesReady = false; let pendingStyles; const productCalls = [];
-  const productReader = { readProductBasics: async read => { productCalls.push('basics'); return { productId: read.parameters.productId, code: 'TEST-PRODUCT', name: 'TEST 显式商品资料', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null }; },
+  const productReader = { readProductBasics: async read => { productCalls.push('basics'); return { productId: read.parameters.productId, code: 'TEST-PRODUCT', name: 'TEST 显式商品资料', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null }; },
     readProductSpecifications: async read => { productCalls.push('specifications'); return { productId: read.parameters.productId, sizeGroup: null, colors: [], fits: [], sizes: [], skus: [] }; },
     readProductImages: async read => { productCalls.push('images'); return { productId: read.parameters.productId, images: [] }; }, readProductImage: async () => { throw new Error('Unexpected original image read'); } };
   const product = { reader: productReader, loadStyles: async () => { if (stylesReady) return; if (!pendingStyles) pendingStyles = new Promise(resolve => { finishProductStyles = () => { stylesReady = true; resolve(); }; }); await pendingStyles; } };

@@ -18,7 +18,7 @@ const signal = () => new AbortController().signal;
 function fixture(options: { missing?: boolean; empty?: boolean; media?: ControlledProductMedia | null; authorize?: ProductQueryDependencies["authorization"]["authorize"] } = {}) {
   const intents: ProductReadIntent[] = []; let reads = 0; let thumbnails = 0; let originals = 0;
   const reader: TrustedProductSnapshotReader = {
-    async readBasics() { reads++; return options.missing ? null : { productId, code: "SYNTHETIC", name: "SYNTHETIC PRODUCT", categoryLabel: "SYNTHETIC CATEGORY", yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null }; },
+    async readBasics() { reads++; return options.missing ? null : { productId, code: "SYNTHETIC", name: "SYNTHETIC PRODUCT", categoryLabel: "SYNTHETIC CATEGORY", yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null }; },
     async readSpecifications() { reads++; return options.missing ? null : { productId, sizeGroup: null, colors: [], fits: [], sizes: [], skus: [] }; },
     async readImages() { reads++; return options.missing ? null : { productId, productName: "SYNTHETIC PRODUCT", images: options.empty ? [] : [image] }; },
     async readImage() { reads++; return options.missing ? null : image; }

@@ -21,6 +21,7 @@ function selections(values: readonly Selection[]): Set<string> {
 export function assertProductBasics(value: ProductBasics | null, parameters: Readonly<ProductParameters>): void {
   if (value === null) return;
   target(value.productId, parameters); text(value.code); text(value.name);
+  if (value.retailPrice !== null && (typeof value.retailPrice !== 'string' || !/^(?:0|[1-9]\d{0,15})\.\d{2}$/.test(value.retailPrice))) throw new TypeError('商品零售价必须是精确的非负金额文本。');
   for (const label of [value.categoryLabel, value.yearLabel, value.seasonLabel, value.supplierLabel, value.systemCode]) if (label !== null) text(label);
 }
 export function assertProductSpecifications(value: ProductSpecifications | null, parameters: Readonly<ProductParameters>): void {

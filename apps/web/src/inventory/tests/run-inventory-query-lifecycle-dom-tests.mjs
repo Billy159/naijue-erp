@@ -10,7 +10,7 @@ import { JSDOM } from 'jsdom';
 // JSDOM proves lifecycle/event contracts, not browser implicit submission/layout.
 const here = path.dirname(fileURLToPath(import.meta.url));
 const temporary = await mkdtemp(path.join(here, '.inventory-query-lifecycle-'));
-const dom = new JSDOM('<!doctype html><style data-inventory-inline data-demo-single-select-inline></style><div id="root"></div><button id="outside">outside</button>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
+const dom = new JSDOM('<!doctype html><style data-inventory-inline data-demo-single-select-inline data-demo-multi-select-inline data-inventory-product-select-inline></style><div id="root"></div><button id="outside">outside</button>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
 for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLDialogElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLButtonElement', 'HTMLIFrameElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'Element', 'SVGElement', 'MutationObserver', 'ShadowRoot', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
 Object.defineProperty(globalThis, 'navigator', { configurable: true, value: dom.window.navigator });
 dom.window.matchMedia = query => ({ matches: false, media: query, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {}, dispatchEvent() { return true; } });
@@ -52,7 +52,7 @@ try {
     return { ...data, products: data.products.map(product => ({ ...product, name })) };
   };
   const succeedInventory = async (request, name) => resolve(request, await inventoryData(request, name));
-  const candidateData = (request, label = 'CURRENT CANDIDATE') => ({ page: request.read.parameters.page, exactTotal: 1, items: [{ id: `candidate-${label}`, label }] });
+  const candidateData = (request, label = 'CURRENT CANDIDATE') => ({ page: request.read.parameters.page, exactTotal: 1, items: [{ id: `candidate-${label}`, label, code: `CODE-${label}`, name: label }] });
   const type = async (input, value) => act(async () => {
     Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, value);
     input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -92,7 +92,7 @@ try {
   await reject(replaced, 'LATE REPLACED INVENTORY FAILURE'); assert.equal(host.querySelector('[role=alert]'), null);
   await submit(); const other = latest('inventory'); assert.deepEqual(other.read.identity, identity('TEST-OTHER-IDENTITY', '2'));
   await succeedInventory(other, 'OTHER IDENTITY FACT');
-  await click(host.querySelector('.iw-product-field .iw-control')); await settle(); const revokedCandidate = latest('candidate');
+  await click(host.querySelector('.iw-product-field input')); await settle(); await type(host.querySelector('.iw-product-field input'), 'revoke'); await settle(220); const revokedCandidate = latest('candidate');
   await click(button('刷新')); const revokedInventory = latest('inventory');
   await act(async () => otherContext.replaceIdentity(identity('TEST-OTHER-IDENTITY', '3')));
   assert.equal(revokedInventory.read.signal.aborted, true); assert.equal(revokedCandidate.read.signal.aborted, true);
@@ -107,58 +107,137 @@ try {
 
   const candidateContext = new ReadContext(identity('TEST-CANDIDATE'));
   scope = candidateContext.createScope('TEST-CANDIDATE');
-  let selected = [], fullSubmits = 0, uncancelledEnter = 0, categoryId = null;
+  let selected = [], fullSubmits = 0, uncancelledEnter = 0, categoryIds = [], candidateProductReader;
   const renderCandidate = async () => act(async () => root.render(h(StrictMode, null,
     h('form', { 'aria-label': 'candidate parent form', onSubmit: event => { event.preventDefault(); fullSubmits++; }, onKeyDown: event => { if (event.key === 'Enter' && !event.defaultPrevented) uncancelledEnter++; } },
-      h(CandidateSelector, { scope, reader, kind: 'product', label: '商品', multiple: true, selected, categoryId, onChange: value => { selected = value; void renderCandidate(); } })))));
-  const control = () => host.querySelector('.iw-control');
-  const popup = () => host.querySelector('[role=dialog]');
+      h(CandidateSelector, { scope, reader, productReader: candidateProductReader, kind: 'product', label: '商品', multiple: true, selected, categoryIds, onChange: value => { selected = value; void renderCandidate(); } })))));
+  const input = () => host.querySelector('.iw-product-field input:not([type="hidden"])');
+  const popup = () => host.querySelector('.arco-select[aria-expanded="true"]') ? host.querySelector('.arco-select-popup') : null;
+  const dismiss = async () => act(async () => document.getElementById('outside').dispatchEvent(new Event('pointerdown', { bubbles: true })));
   await renderCandidate(); const beforeFirst = count('candidate');
-  // Closing during input attachment precedes the zero-delay candidate start.
-  const closeOnFocus = event => { if (event.target.matches('.iw-search')) host.querySelector('[aria-label="关闭商品选择"]').click(); };
-  host.addEventListener('focusin', closeOnFocus); await click(control()); await settle(); host.removeEventListener('focusin', closeOnFocus);
-  assert.equal(popup(), null); assert.equal(count('candidate'), beforeFirst);
-  await click(control()); await settle(); assert.equal(count('candidate'), beforeFirst + 1);
-  const opening = latest('candidate'); assert.equal(opening.read.signal.aborted, false);
-  assert.equal(opening.read.parameters.search, ''); assert.equal(opening.read.parameters.pageSize, 20);
+  await click(input()); await settle(); assert.ok(popup()); assert.match(popup().textContent, /最近搜索/); assert.equal(count('candidate'), beforeFirst);
+  assert.equal(host.querySelectorAll('.iw-search').length, 0); assert.doesNotMatch(popup().textContent, /选择商品|上一页|下一页|完成/);
+  await type(input(), 'one'); await type(input(), 'two'); await settle(220);
+  assert.equal(count('candidate'), beforeFirst + 1); const searched = latest('candidate');
+  assert.equal(searched.read.parameters.search, 'two'); assert.equal(searched.read.parameters.pageSize, 20); assert.deepEqual(searched.read.parameters.categoryIds, []);
   const enter = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
-  await act(async () => host.querySelector('.iw-search').dispatchEvent(enter));
-  assert.equal(enter.defaultPrevented, true); assert.equal(uncancelledEnter, 0); assert.equal(fullSubmits, 0);
-  await type(host.querySelector('.iw-search'), 'one'); await type(host.querySelector('.iw-search'), 'two');
-  assert.equal(opening.read.signal.aborted, true); await settle(220);
-  assert.equal(count('candidate'), beforeFirst + 2); const searched = latest('candidate'); assert.equal(searched.read.parameters.search, 'two');
-  await click(host.querySelector('[aria-label="关闭商品选择"]')); assert.equal(searched.read.signal.aborted, true); assert.equal(popup(), null);
-  await reject(searched, 'LATE CLOSED CANDIDATE FAILURE'); assert.equal(popup(), null);
-  await resolve(opening, candidateData(opening, 'LATE SUPERSEDED CANDIDATE')); assert.doesNotMatch(host.textContent, /LATE SUPERSEDED/);
-  console.log('PASS candidate StrictMode/debounce: close-before-start sends nothing; one open sends one actual transport; rapid search starts only its latest bounded read; Enter is default-cancelled before the parent form; close rejects late facts/failures.');
+  await act(async () => input().dispatchEvent(enter)); assert.equal(enter.defaultPrevented, true); assert.equal(uncancelledEnter, 0); assert.equal(fullSubmits, 0);
+  await type(input(), 'three'); assert.equal(searched.read.signal.aborted, true); await settle(220);
+  const superseding = latest('candidate'); assert.equal(count('candidate'), beforeFirst + 2);
+  await resolve(searched, candidateData(searched, 'LATE SUPERSEDED CANDIDATE')); assert.doesNotMatch(host.textContent, /LATE SUPERSEDED/);
+  await dismiss(); assert.equal(superseding.read.signal.aborted, true); await reject(superseding, 'LATE CLOSED CANDIDATE FAILURE'); await settle(); assert.equal(!!popup(), false);
+  console.log('PASS candidate StrictMode/debounce: recent history sends no catalogue read; direct inline input starts only the latest bounded search; Enter never submits inventory; close aborts and rejects late facts.');
 
-  await click(control()); await settle(); const reopenedCandidate = latest('candidate');
-  assert.equal(count('candidate'), beforeFirst + 3); assert.equal(reopenedCandidate.read.parameters.search, '');
+  await click(input()); await settle(); await type(input(), 'retry'); await settle(220); const reopenedCandidate = latest('candidate');
   await reject(reopenedCandidate, 'TEST CANDIDATE FAILURE'); assert.match(popup().textContent, /候选暂不可读取/);
-  const beforeCandidateRetry = count('candidate'); await click(button('重试')); assert.equal(count('candidate'), beforeCandidateRetry + 1);
+  const beforeCandidateRetry = count('candidate'); await click(button('重试候选')); assert.equal(count('candidate'), beforeCandidateRetry + 1);
   const retriedCandidate = latest('candidate'); await resolve(retriedCandidate, candidateData(retriedCandidate));
-  assert.equal(host.querySelectorAll('.iw-option-list input').length, 1); assert.doesNotMatch(popup().textContent, /正在加载候选|候选暂不可读取/);
-  const beforeSelect = count('candidate'); await click(host.querySelector('.iw-option-list input')); await settle(220);
-  assert.equal(count('candidate'), beforeSelect); assert.match(control().textContent, /CURRENT CANDIDATE/);
-  await click(button('完成')); assert.equal(popup(), null); assert.equal(document.activeElement, control());
-  await click(control()); await settle(); const remounted = latest('candidate'); assert.equal(count('candidate'), beforeSelect + 1);
-  assert.deepEqual(remounted.read.parameters.selectedIds, ['candidate-CURRENT CANDIDATE']);
+  assert.equal(host.querySelectorAll('[data-product-id]').length, 1); assert.match(popup().textContent, /商品款号.*商品名称/);
+  assert.match(host.querySelector('.inv-option-code').textContent, /CODE-CURRENT CANDIDATE/); assert.equal(host.querySelector('.inv-option-name').textContent, 'CURRENT CANDIDATE');
+  const beforeSelect = count('candidate'); await click(host.querySelector('[data-product-id]')); await settle(220);
+  assert.equal(count('candidate'), beforeSelect); assert.equal(selected.length, 1); assert.match(host.querySelector('.inv-tag').textContent, /CODE-CURRENT CANDIDATE/);
+  assert.match(popup().textContent, /最近搜索/); assert.match(popup().textContent, /CODE-CURRENT CANDIDATE/);
+  await click(button('清空')); assert.doesNotMatch(popup().textContent, /CODE-CURRENT CANDIDATE/); assert.match(popup().textContent, /暂无最近搜索/);
+  await dismiss(); await settle(); await click(input()); await settle(); await type(input(), 'current'); await settle(220);
+  const remounted = latest('candidate'); assert.deepEqual(remounted.read.parameters.selectedIds, ['candidate-CURRENT CANDIDATE']);
   await resolve(remounted, candidateData(remounted));
-  console.log('PASS candidate error/retry/reopen: one retry recovers actual options; selecting keeps labels without rereading; completion returns focus; reopening starts fresh and sends current selected IDs.');
+  const retainedNode = host.querySelector('[data-product-id]'); const retainedKey = Object.keys(retainedNode).find(key => key.startsWith('__reactProps$'));
+  const retainedOptionClick = retainedNode[retainedKey].onClick;
+  console.log('PASS candidate error/retry/history: retry recovers source-style code/name options; selection uses actual provider identities without rereading; code tags and bounded local recent history survive closing only.');
 
-  categoryId = 'TEST-CATEGORY'; const beforeCategory = count('candidate'); await renderCandidate(); await settle();
-  assert.equal(count('candidate'), beforeCategory + 1); const categoryRead = latest('candidate'); assert.equal(categoryRead.read.parameters.categoryId, 'TEST-CATEGORY');
+  categoryIds = ['TEST-CATEGORY', 'TEST-CATEGORY-2']; const beforeCategory = count('candidate'); await renderCandidate(); await settle(220);
+  assert.equal(count('candidate'), beforeCategory + 1); const categoryRead = latest('candidate'); assert.deepEqual(categoryRead.read.parameters.categoryIds, categoryIds);
+  const beforeRetained = selected; await act(async () => retainedOptionClick(new MouseEvent('click', { bubbles: true })));
+  assert.equal(selected, beforeRetained, 'A retained old-query public option callback cannot change the current draft');
   await act(async () => candidateContext.replaceIdentity(identity('TEST-CANDIDATE', '2')));
-  assert.equal(categoryRead.read.signal.aborted, true); assert.equal(popup(), null);
-  await reject(categoryRead, 'LATE REVOKED CANDIDATE FAILURE'); assert.equal(popup(), null);
-  await clear(); scope = candidateContext.createScope('TEST-CANDIDATE-RESTORED'); await renderCandidate(); await click(control()); await settle();
+  assert.equal(categoryRead.read.signal.aborted, true); assert.equal(!!popup(), false);
+  await reject(categoryRead, 'LATE REVOKED CANDIDATE FAILURE'); assert.equal(!!popup(), false);
+  await clear(); scope = candidateContext.createScope('TEST-CANDIDATE-RESTORED'); await renderCandidate(); await click(input()); await settle(); await type(input(), 'unmount'); await settle(220);
   const activeUnmount = latest('candidate'); assert.deepEqual(activeUnmount.read.identity, identity('TEST-CANDIDATE', '2'));
   await clear(); assert.equal(activeUnmount.read.signal.aborted, true); await reject(activeUnmount, 'LATE UNMOUNT CANDIDATE FAILURE');
   assert.equal(host.childElementCount, 0); candidateContext.clear();
   assert.ok(disposedQueries.every(query => { const state = query.getSnapshot(); return state.phase === 'disposed' && state.success === null && state.request === null && state.error === null; }));
-  assert.ok(disposedScopes.every(value => !value.active));
-  assert.equal(productReads.length, 0);
-  console.log('PASS final cleanup: category changes reread only candidates; identity abort and real unmount immediately abort pending candidates; late failure is ignored; disposed queries retain no request/success/error references, and no product prefetch occurs.');
+  assert.ok(disposedScopes.every(value => !value.active)); assert.equal(productReads.length, 0);
+  console.log('PASS final cleanup: category arrays reread only candidates; identity abort and real unmount immediately abort pending candidates; history/facts are cleared; no product prefetch occurs before active suggestions.');
+
+  // Active-candidate facts are separate existing target-only ports, not per-row hydration.
+  const previewContext = new ReadContext(identity('TEST-PREVIEW')); scope = previewContext.createScope('TEST-ACTIVE-PREVIEW'); selected = []; categoryIds = [];
+  candidateProductReader = { readProductBasics: pending('previewBasics'), readProductSpecifications: pending('previewSpecs'), readProductImages: pending('previewImages'),
+    readProductImage() { throw new Error('An original image must never prefetch.'); } };
+  await renderCandidate(); await click(input()); await settle(); assert.equal(count('previewBasics'), 0);
+  await type(input(), 'preview'); await settle(220); const previewCandidates = latest('candidate');
+  const two = [{ id: 'PREVIEW-A', label: 'A Product A', code: 'CODE-A', name: 'Product A' }, { id: 'PREVIEW-B', label: 'B Product B', code: 'CODE-B', name: 'Product B' }];
+  await resolve(previewCandidates, { page: 1, exactTotal: 2, items: two }); await settle();
+  assert.equal(count('previewBasics'), 1); assert.equal(count('previewSpecs'), 1); assert.equal(count('previewImages'), 1);
+  const oldFacts = ['previewBasics', 'previewSpecs', 'previewImages'].map(latest);
+  for (const read of oldFacts) assert.equal(read.read.parameters.productId, 'PREVIEW-A');
+  await act(async () => host.querySelector('[data-product-id="PREVIEW-B"]').dispatchEvent(new MouseEvent('mouseover', { bubbles: true })));
+  await settle(); for (const read of oldFacts) assert.equal(read.read.signal.aborted, true);
+  assert.equal(count('previewBasics'), 2); assert.equal(count('previewSpecs'), 2); assert.equal(count('previewImages'), 2);
+  const basics = (id, name, price = null) => ({ productId: id, code: `FACT-${id}`, name, categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: price });
+  await resolve(oldFacts[0], basics('PREVIEW-A', 'LATE OLD PREVIEW', '99.99'));
+  assert.doesNotMatch(host.textContent, /LATE OLD PREVIEW|99.99/);
+  await resolve(latest('previewBasics'), basics('PREVIEW-B', 'CURRENT PREVIEW FACT', '12.34'));
+  await resolve(latest('previewSpecs'), { productId: 'PREVIEW-B', sizeGroup: null, colors: [{ id: 'COLOR', label: 'Blue' }], fits: [{ id: 'FIT', label: 'Regular' }], sizes: [], skus: [] });
+  await resolve(latest('previewImages'), { productId: 'PREVIEW-B', images: [] });
+  assert.match(host.querySelector('.inv-preview').textContent, /CURRENT PREVIEW FACT/); assert.match(host.querySelector('.inv-preview').textContent, /12.34/);
+  assert.match(host.querySelector('.inv-preview').textContent, /1 色/); assert.match(host.querySelector('.inv-preview').textContent, /该商品尚未提供图片/);
+  await act(async () => input().dispatchEvent(new dom.window.CompositionEvent('compositionstart', { bubbles: true })));
+  await act(async () => input().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true })));
+  assert.equal(selected.length, 0, 'IME confirmation cannot choose a candidate');
+  await act(async () => input().dispatchEvent(new dom.window.CompositionEvent('compositionend', { bubbles: true })));
+  await act(async () => input().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true })));
+  assert.equal(selected.length, 0, 'The immediate post-composition Enter cannot choose a candidate'); await settle(50);
+  const beforeEnterCandidates = count('candidate'); const beforeEnterFacts = count('previewBasics');
+  const chooseEnter = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
+  await act(async () => input().dispatchEvent(chooseEnter)); await settle();
+  assert.equal(chooseEnter.defaultPrevented, true); assert.equal(fullSubmits, 0); assert.equal(count('candidate'), beforeEnterCandidates); assert.equal(count('previewBasics'), beforeEnterFacts);
+  assert.equal(selected[0].id, 'PREVIEW-B'); assert.equal(host.querySelector('.inv-preview'), null);
+  await clear(); previewContext.clear();
+  console.log('PASS active preview: exactly one target gets basics/specifications/thumbnails; hover aborts prior target and ignores late facts; actual retail price is displayed; candidate Enter selects without inventory query or original-image fetch.');
+
+
+
+  // The real inventory page reuses shared TreeSelect branches and warehouse tags.
+  const referenceContext = new ReadContext(identity('TEST-REFERENCE-MULTI')); scope = referenceContext.createScope('TEST-REFERENCE-MULTI');
+  await renderPage(); await settle();
+  const refHost = label => host.querySelector(`[data-multi-label="${label}"]`);
+  const refControl = label => refHost(label).querySelector('.iw-control, .arco-tree-select-view');
+  const treeRows = label => [...refHost(label).querySelectorAll('.arco-tree-node')];
+  const treeRow = (label, name) => treeRows(label).find(row => row.querySelector('.arco-tree-node-title')?.textContent === name);
+  const checkbox = row => row?.querySelector('input[type=checkbox]');
+  await click(refControl('商品分类')); await settle(); const categoryCandidates = latest('candidate');
+  assert.equal(categoryCandidates.read.parameters.kind, 'category');
+  await resolve(categoryCandidates, { page: 1, exactTotal: 4, items: [
+    { id: 'CATEGORY-PARENT', label: 'Parent', parentId: null, depth: 0 },
+    { id: 'CATEGORY-CHILD', label: 'Child', parentId: 'CATEGORY-PARENT', parentLabel: 'Parent', depth: 1 },
+    { id: 'CATEGORY-OTHER', label: 'Other', parentId: null, depth: 0 },
+    { id: 'CATEGORY-ORPHAN', label: 'Orphan Child', parentId: 'NOT-LOADED', parentLabel: 'Native Missing Parent', depth: 1 },
+  ] });
+  assert.ok(treeRow('商品分类', 'Native Missing Parent / Orphan Child'));
+  assert.equal(!!treeRow('商品分类', 'Native Missing Parent'), false, 'A supplied parent label is a path, not a fabricated parent node');
+  assert.equal(refHost('商品分类').querySelectorAll('.iw-search, .iw-pop-head, footer').length, 0);
+  // Category ALL-minus is never synthesized, even when all named categories fit one page.
+  await click(checkbox(treeRow('商品分类', 'Parent'))); assert.match(refHost('商品分类').textContent, /不能从全部范围排除单项/);
+  await click([...refHost('商品分类').querySelectorAll('button')].find(button => button.textContent === '仅选择该项'));
+  assert.match(refHost('商品分类').querySelector('.arco-tag').textContent, /Parent/);
+  const parentNode = treeRow('商品分类', 'Parent'); if (parentNode.getAttribute('aria-expanded') !== 'true') await click(parentNode.querySelector('.arco-tree-node-switcher-icon[role="button"]'));
+  await settle(); assert.ok(treeRow('商品分类', 'Child')); assert.equal(checkbox(treeRow('商品分类', 'Child')).checked, true);
+  await click(checkbox(treeRow('商品分类', 'Child'))); assert.match(refHost('商品分类').textContent, /不支持只排除其中一个子分类/);
+  await click([...refHost('商品分类').querySelectorAll('button')].find(button => button.textContent === '仅选择该项'));
+  await click(checkbox(treeRow('商品分类', 'Other')));
+  const beforeExplicitQuery = count('inventory'); await submit(); assert.equal(count('inventory'), beforeExplicitQuery + 1);
+  assert.deepEqual(latest('inventory').read.parameters.filter.categories.map(item => item.id), ['CATEGORY-CHILD', 'CATEGORY-OTHER']);
+  await resolve(latest('inventory'), await inventoryData(latest('inventory'), 'CATEGORY MULTI RESULT'));
+  await click(refControl('仓库')); await settle(); assert.equal(refHost('商品分类').querySelector('.arco-tree-select').getAttribute('aria-expanded'), 'false');
+  const warehouseCandidates = latest('candidate'); assert.equal(warehouseCandidates.read.parameters.kind, 'warehouse');
+  await resolve(warehouseCandidates, { page: 1, exactTotal: 2, items: [{ id: 'WAREHOUSE-A', label: 'Warehouse A' }, { id: 'WAREHOUSE-B', label: 'Warehouse B' }] });
+  await click(checkbox(treeRow('仓库', 'Warehouse A'))); assert.match(refHost('仓库').querySelector('.arco-tag').textContent, /Warehouse B/);
+  assert.equal(refHost('仓库').querySelectorAll('.iw-search, .iw-pop-head, footer').length, 0);
+  await submit(); assert.deepEqual(latest('inventory').read.parameters.filter.warehouses.map(item => item.id), ['WAREHOUSE-B']);
+  await clear(); referenceContext.clear();
+  console.log('PASS inventory shared filters: native category hierarchy preserves explicit multi-branch IDs, refuses ALL-minus/parent-minus-child, deliberate replacement works; warehouse source tags select a true subset; changing controls never auto-submits inventory.');
+
 } finally {
   if (root && act) await act(async () => root.unmount());
   restoreDispose?.();

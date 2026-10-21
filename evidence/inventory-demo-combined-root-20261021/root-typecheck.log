@@ -1,0 +1,29 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+apps/web/src/components/product-candidate-action.tsx(71,98): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+apps/web/src/components/product-candidate-action.tsx(78,135): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: OptionProps, context?: any): string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | ... 4 more ... | undefined', gave the following error.
+    Type '{ children: Element; key: string; value: string; disabled: boolean | undefined; "data-product-id": string; className: string | undefined; onMouseEnter: () => void; }' is not assignable to type 'OptionProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'className' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string | string[]'.
+          Type 'undefined' is not assignable to type 'string | string[]'.
+  Overload 2 of 2, '(props: OptionProps): string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<...> | Promise<...> | Component<...> | null | undefined', gave the following error.
+    Type '{ children: Element; key: string; value: string; disabled: boolean | undefined; "data-product-id": string; className: string | undefined; onMouseEnter: () => void; }' is not assignable to type 'OptionProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'className' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string | string[]'.
+          Type 'undefined' is not assignable to type 'string | string[]'.
+apps/web/src/components/product-candidate-action.tsx(91,7): error TS2375: Type '{ children: Element[]; ref: RefObject<SelectHandle | null>; className: string | undefined; "aria-label": string; mode: "multiple"; showSearch: true; ... 18 more ...; dropdownRender: (menu: ReactNode) => Element; }' is not assignable to type 'SelectProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'className' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string | string[]'.
+      Type 'undefined' is not assignable to type 'string | string[]'.
+apps/web/src/components/product-candidate-action.tsx(101,94): error TS2551: Property 'value' does not exist on type 'number | LabeledValue'. Did you mean 'valueOf'?
+  Property 'value' does not exist on type 'number'.
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

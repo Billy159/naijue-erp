@@ -61,10 +61,10 @@ function quantities(sizes: readonly InventorySelection[], groups: readonly { rea
 function checkedParameters(value: InventoryQuery): InventoryQuery {
   // Reuse the public parser's ID, uniqueness, pagination and selection bounds without accepting labels as facts.
   const input = record(value, ["filter", "page", "pageSize"]);
-  const filter = record(input.filter, ["productIds", "categoryId", "warehouseIds", "supplierIds", "fitIds", "seasonIds"]);
+  const filter = record(input.filter, ["productIds", "categoryIds", "warehouseIds", "supplierIds", "fitIds", "seasonIds"]);
   const selections = (value: unknown) => Array.isArray(value) ? value.map(id => ({ id, label: "native-id" })) : value;
   return parseInventoryQuery({ page: input.page, pageSize: input.pageSize, filter: {
-    products: selections(filter.productIds), category: filter.categoryId === null ? null : { id: filter.categoryId, label: "native-id" },
+    products: selections(filter.productIds), categories: selections(filter.categoryIds),
     warehouses: selections(filter.warehouseIds), suppliers: selections(filter.supplierIds), fits: selections(filter.fitIds), seasons: selections(filter.seasonIds)
   } });
 }
@@ -121,8 +121,8 @@ const CATALOG = `WITH published_scope AS (
   SELECT w.id FROM naijue_erp.warehouse w WHERE w.id = ANY($1::uuid[]) AND w.hall_id = ANY($2::uuid[]) AND EXISTS (SELECT 1 FROM published_scope)
 ), matched_products AS (
   SELECT p.id, p.size_group_id FROM naijue_erp.product p WHERE EXISTS (SELECT 1 FROM authorized_warehouses)
-    AND (cardinality($3::uuid[]) = 0 OR p.id = ANY($3::uuid[])) AND ($4::uuid IS NULL OR p.category_id = $4::uuid OR EXISTS (
-      SELECT 1 FROM naijue_erp.product_category category WHERE category.id = p.category_id AND category.parent_id = $4::uuid))
+    AND (cardinality($3::uuid[]) = 0 OR p.id = ANY($3::uuid[])) AND (cardinality($4::uuid[]) = 0 OR p.category_id = ANY($4::uuid[]) OR EXISTS (
+      SELECT 1 FROM naijue_erp.product_category category WHERE category.id = p.category_id AND category.parent_id = ANY($4::uuid[])))
     AND (cardinality($5::uuid[]) = 0 OR p.supplier_id = ANY($5::uuid[]))
     AND (cardinality($7::uuid[]) = 0 OR p.season_id = ANY($7::uuid[]))
     AND (cardinality($6::uuid[]) = 0 OR EXISTS (SELECT 1 FROM naijue_erp.sku sf WHERE sf.product_id = p.id AND sf.fit_id = ANY($6::uuid[])))
@@ -131,7 +131,7 @@ const CATALOG = `WITH published_scope AS (
     WHERE cardinality($6::uuid[]) = 0 OR s.fit_id = ANY($6::uuid[])
 )`;
 function parameters(scope: InventoryReadScope, filter: InventoryQuery["filter"], batchId: string): unknown[] {
-  return [scope.warehouses.map(row => row.id), scope.hallIds, filter.productIds, filter.categoryId, filter.supplierIds, filter.fitIds, filter.seasonIds, batchId];
+  return [scope.warehouses.map(row => row.id), scope.hallIds, filter.productIds, filter.categoryIds, filter.supplierIds, filter.fitIds, filter.seasonIds, batchId];
 }
 async function catalogStatus(query: Query, values: unknown[]): Promise<{ exactTotal: number; allMatchesTotal: InventoryStockTotal }> {
   const row = one(await query(`/* inventory:catalog-status */ ${CATALOG}
@@ -313,7 +313,7 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
     if (input.kind === "warehouse") requireDomain(input.selectedIds.every(id => scope.warehouses.some(warehouse => warehouse.id === id)), "FORBIDDEN", "Selected warehouse is outside authorized inventory scope");
     return this.snapshot(read.signal, async query => {
       const batchId = await publishedBatch(query); await verifyWarehouses(query, scope, batchId);
-      const filter: InventoryQuery["filter"] = { productIds: [], categoryId: input.kind === "category" || input.kind === "warehouse" ? null : input.categoryId,
+      const filter: InventoryQuery["filter"] = { productIds: [], categoryIds: input.kind === "category" || input.kind === "warehouse" ? [] : input.categoryIds,
         warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] };
       const values = parameters(scope, filter, batchId);
       const source = candidateSource(input.kind); values.push(input.search);
@@ -325,7 +325,9 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
       const items: InventoryQueryCandidate[] = rows.map(row => ({ id: id(input.kind, row.id), label: label(row.label),
         ...(row.disabled === null ? {} : { disabled: booleanValue(row.disabled) }),
         ...(row.parent_label === null ? {} : { parentLabel: label(row.parent_label) }),
-        ...(row.depth === undefined ? {} : { depth: integerValue(row.depth) as 0 | 1 }) }));
+        ...(row.depth === undefined ? {} : { depth: integerValue(row.depth) as 0 | 1 }),
+        ...(input.kind === "product" ? { code: label(row.code), name: label(row.name) } : {}),
+        ...(input.kind === "category" ? { parentId: row.parent_id === null ? null : id("category", row.parent_id) } : {}) }));
       await verifyCandidateMembership(query, values.slice(0, 8), input.kind, items.map(item => item.id));
       return checkedCandidateSnapshot({ readReference: `inventory:${randomUUID()}`, readiness: "ready", data: { items, exactTotal, page: input.page } }, input, scope);
     });
@@ -336,9 +338,9 @@ function candidateSource(kind: InventoryCandidateQuery["kind"]): CandidateSource
   switch (kind) {
     case "warehouse": return { columns: "r.id, r.name AS label, NOT r.enabled AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.warehouse r JOIN authorized_warehouses w ON w.id = r.id",
       where: "strpos(r.name, $9::text) > 0", order: "array_position($1::uuid[], r.id), r.id" };
-    case "product": return { columns: "r.id, r.product_code || ' ' || r.name AS label, NOT r.enabled AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.product r JOIN matched_products p ON p.id = r.id",
-      where: "(strpos(r.product_code, $9::text) > 0 OR strpos(r.name, $9::text) > 0)", order: 'r.product_code COLLATE "C", r.id' };
-    case "category": return { columns: "r.id, r.name AS label, NULL::boolean AS disabled, parent.name AS parent_label, CASE WHEN r.parent_id IS NULL THEN 0 ELSE 1 END AS depth, (r.parent_id IS NULL OR (parent.id IS NOT NULL AND parent.parent_id IS NULL)) AS category_valid", from: "FROM naijue_erp.product_category r LEFT JOIN naijue_erp.product_category parent ON parent.id = r.parent_id",
+    case "product": return { columns: "r.id, r.product_code || ' ' || r.name AS label, r.product_code AS code, r.name, NOT r.enabled AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.product r JOIN matched_products p ON p.id = r.id",
+      where: "(strpos(r.product_code, $9::text) > 0 OR strpos(r.name, $9::text) > 0 OR strpos(r.system_item_code, $9::text) > 0)", order: 'r.product_code COLLATE "C", r.id' };
+    case "category": return { columns: "r.id, r.name AS label, r.parent_id, NULL::boolean AS disabled, parent.name AS parent_label, CASE WHEN r.parent_id IS NULL THEN 0 ELSE 1 END AS depth, (r.parent_id IS NULL OR (parent.id IS NOT NULL AND parent.parent_id IS NULL)) AS category_valid", from: "FROM naijue_erp.product_category r LEFT JOIN naijue_erp.product_category parent ON parent.id = r.parent_id",
       where: "EXISTS (SELECT 1 FROM authorized_warehouses) AND strpos(r.name, $9::text) > 0", order: 'r.display_order, r.name COLLATE "C", r.id' };
     case "fit": return { columns: "r.id, r.name AS label, NOT r.enabled AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.fit r",
       where: "EXISTS (SELECT 1 FROM filtered_skus s WHERE s.fit_id = r.id) AND (strpos(r.code, $9::text) > 0 OR strpos(r.name, $9::text) > 0)", order: 'r.code COLLATE "C", r.id' };

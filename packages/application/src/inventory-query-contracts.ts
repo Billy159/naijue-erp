@@ -44,15 +44,21 @@ export interface InventoryQueryPage {
 }
 export interface InventoryQueryCandidate extends InventorySelection {
   readonly disabled?: boolean; readonly parentLabel?: string; readonly depth?: 0 | 1;
+  /** Required only for product candidates; native projection, never parsed from label. */
+  readonly code?: string; readonly name?: string;
+  /** Required only for category candidates; null denotes a root. */
+  readonly parentId?: string | null;
 }
 export interface InventoryCandidatePage {
   readonly items: readonly InventoryQueryCandidate[]; readonly exactTotal: number; readonly page: number;
 }
-/** Normalized immutable IDs only. Client selection labels never become reference or permission facts. */
+/** Normalized immutable IDs only. Client selection labels never become reference or permission facts.
+ * Every array is a positive OR selection; dimensions combine with AND inside the authorized scope.
+ * Category IDs match their own category or its native direct children; [] adds no category predicate. */
 export interface InventoryQuery {
   readonly filter: {
     readonly productIds: readonly EntityId<"product">[];
-    readonly categoryId: EntityId<"category"> | null;
+    readonly categoryIds: readonly EntityId<"category">[];
     readonly warehouseIds: readonly EntityId<"warehouse">[];
     readonly supplierIds: readonly EntityId<"supplier">[];
     readonly fitIds: readonly EntityId<"fit">[];
@@ -63,7 +69,7 @@ export interface InventoryQuery {
 export interface InventoryCandidateQuery {
   readonly kind: InventoryCandidateKind; readonly search: string;
   readonly page: number; readonly pageSize: 20;
-  readonly selectedIds: readonly string[]; readonly categoryId: EntityId<"category"> | null;
+  readonly selectedIds: readonly string[]; readonly categoryIds: readonly EntityId<"category">[];
 }
 export type InventoryReadIntent =
   | { readonly kind: "inventory"; readonly parameters: InventoryQuery }

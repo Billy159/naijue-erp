@@ -20,7 +20,7 @@ async function setup(t: TestContext, options: { authenticate?: ProductQueryHttpO
   const check = () => { readCalls++; if (options.failure) throw options.failure; };
   const image = { id: imageId, productId, fileRef: "SYNTHETIC/private-file-reference", mime: "image/jpeg" as const, byteSize: 123n, displayOrder: 1 };
   const reader: TrustedProductSnapshotReader = {
-    async readBasics() { check(); return options.missing ? null : { productId, code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC PRODUCT", categoryLabel: "完整分类名称", yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null }; },
+    async readBasics() { check(); return options.missing ? null : { productId, code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC PRODUCT", categoryLabel: "完整分类名称", yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null }; },
     async readSpecifications() { check(); return options.missing ? null : { productId, sizeGroup: { id: sid("sizeGroup", 903), label: "完整组名" }, colors: [{ id: sid("color", 904), label: "完整颜色名称" }], fits: [{ id: sid("fit", 905), label: "Y版（修身）" }], sizes: [{ id: sid("size", 906), label: "165/S" }], skus: [{ id: sid("sku", 907), colorId: sid("color", 904), fitId: sid("fit", 905), sizeId: sid("size", 906) }] }; },
     async readImages() { check(); return options.missing ? null : { productId, productName: "SYNTHETIC PRODUCT", images: [image] }; },
     async readImage() { check(); return options.missing ? null : image; }
@@ -36,7 +36,7 @@ async function setup(t: TestContext, options: { authenticate?: ProductQueryHttpO
 }
 test("SYNTHETIC product HTTP: four DTO-compatible read routes use current trusted policy; thumbnails and originals are separate", async t => {
   const f = await setup(t); assert.equal(f.app.server.listening, false);
-  const basics = await f.post(routes[0], parameters); assert.equal(basics.statusCode, 200); assert.equal(basics.json().yearLabel, null); assert.equal(basics.json().systemCode, null);
+  const basics = await f.post(routes[0], parameters); assert.equal(basics.statusCode, 200); assert.equal(basics.json().yearLabel, null); assert.equal(basics.json().systemCode, null); assert.equal(basics.json().retailPrice, null);
   assert.equal(basics.headers["cache-control"], "no-store"); assert.equal(basics.headers.pragma, "no-cache");
   const specs = await f.post(routes[1], parameters); assert.equal(specs.statusCode, 200); assert.equal(specs.json().sizes[0].label, "165/S"); assert.equal(specs.json().fits[0].label, "Y版（修身）");
   const images = await f.post(routes[2], parameters); assert.equal(images.statusCode, 200); assert.equal(images.json().images[0].thumbnailUrl, "https://synthetic.example/opaque-thumbnail");

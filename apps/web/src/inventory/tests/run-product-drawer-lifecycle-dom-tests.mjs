@@ -49,7 +49,7 @@ try {
   const tab = label => [...host.querySelectorAll('[role=tab]')].find(element => element.textContent === label);
   const active = kind => requests.findLast(request => request.kind === kind && !request.read.signal.aborted);
   const waitRead = async (kind, after = 0) => { await until(() => requests.length > after && active(kind), `Expected active ${kind} read`); await settle(); assert.equal(requests.slice(after).filter(request => request.kind === kind).length, 1, `Exactly one ${kind} transport start per actual action, including StrictMode replay`); return active(kind); };
-  const base = (productId, name) => ({ productId, code: `CODE-${productId}`, name, categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null });
+  const base = (productId, name) => ({ productId, code: `CODE-${productId}`, name, categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null });
   const emptySpecs = productId => ({ productId, sizeGroup: null, colors: [], fits: [], sizes: [], skus: [] });
   const resolve = async (request, value) => { await act(async () => request.resolve(value)); await settle(); };
   const png = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGOwq/78HwAFUwKs5SlCvgAAAABJRU5ErkJggg==';

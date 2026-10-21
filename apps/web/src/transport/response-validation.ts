@@ -112,18 +112,26 @@ export function candidatesResponse(value: unknown, parameters: Readonly<Candidat
   if (items.length !== expected) reject();
   const ids = new Set<string>();
   for (const item of items) {
-    const row = record(item, ['id', 'label'], ['disabled', 'parentLabel', 'depth']);
+    const required = parameters.kind === 'product' ? ['id', 'label', 'code', 'name']
+      : parameters.kind === 'category' ? ['id', 'label', 'parentId', 'depth'] : ['id', 'label'];
+    const row = record(item, required, parameters.kind === 'category' ? ['disabled', 'parentLabel'] : ['disabled']);
     text(row.id); text(row.label);
     if (ids.has(row.id)) reject(); ids.add(row.id);
     if (Object.hasOwn(row, 'disabled') && typeof row.disabled !== 'boolean') reject();
     if (Object.hasOwn(row, 'parentLabel')) text(row.parentLabel);
-    if (Object.hasOwn(row, 'depth') && row.depth !== 0 && row.depth !== 1) reject();
+    if (parameters.kind === 'product') { text(row.code); text(row.name); }
+    if (parameters.kind === 'category') {
+      if (row.depth !== 0 && row.depth !== 1) reject();
+      if (row.parentId !== null) text(row.parentId);
+      if (row.parentId === row.id || (row.parentId === null) !== (row.depth === 0)
+        || Object.hasOwn(row, 'parentLabel') !== (row.parentId !== null)) reject();
+    }
   }
   return value as CandidatePage;
 }
 export function productBasicsResponse(value: unknown, parameters: Readonly<ProductParameters>): ProductBasics | null {
   if (value === null) return null;
-  const row = record(value, ['productId', 'code', 'name', 'categoryLabel', 'yearLabel', 'seasonLabel', 'supplierLabel', 'systemCode']);
+  const row = record(value, ['productId', 'code', 'name', 'categoryLabel', 'yearLabel', 'seasonLabel', 'supplierLabel', 'systemCode', 'retailPrice']);
   [row.productId, row.code, row.name].forEach(text);
   for (const label of [row.categoryLabel, row.yearLabel, row.seasonLabel, row.supplierLabel, row.systemCode]) if (label !== null) text(label);
   const data = value as ProductBasics; assertProductBasics(data, parameters); return data;

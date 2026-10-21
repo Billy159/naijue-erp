@@ -21,6 +21,8 @@ export interface ProductBasicsDto {
   readonly productId: string; readonly code: string; readonly name: string;
   readonly categoryLabel: string | null; readonly yearLabel: string | null; readonly seasonLabel: string | null;
   readonly supplierLabel: string | null; readonly systemCode: string | null;
+  /** Nullable native product retail_price; exact nonnegative decimal(18,2) text, not minor units. */
+  readonly retailPrice: string | null;
 }
 export interface ProductSpecificationsDto {
   readonly productId: string; readonly sizeGroup: ProductSelection | null;

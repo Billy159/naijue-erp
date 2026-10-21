@@ -69,7 +69,7 @@ test('identity replacement clears inventory references and stops future scope re
 });
 test('candidate fixture is paged and independent from inventory reads', async () => {
   const s = setup(103);
-  const result = await s.reader.readCandidates({ parameters: { kind: 'product', search: '', page: 1, pageSize: 20, selectedIds: ['test-product-103'], categoryId: null }, signal: s.scope.signal, identity: s.scope.identity, routeInstanceId: s.scope.routeInstanceId, entityId: null });
+  const result = await s.reader.readCandidates({ parameters: { kind: 'product', search: '', page: 1, pageSize: 20, selectedIds: ['test-product-103'], categoryIds: [] }, signal: s.scope.signal, identity: s.scope.identity, routeInstanceId: s.scope.routeInstanceId, entityId: null });
   assert.equal(result.items.length, 20); assert.equal(result.exactTotal, 103); assert.deepEqual(s.reads, ['product']); assert.equal(s.query.getSnapshot().phase, 'idle'); s.context.clear();
 });
 

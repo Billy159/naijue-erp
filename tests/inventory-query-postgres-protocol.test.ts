@@ -55,7 +55,7 @@ class ScriptedPool implements PgInventoryQueryPool, PgInventoryQueryClient {
         return [this.negative, "0"].map((quantity, index) => ({ warehouse_id: this.scope.warehouses[0]!.id, sku_id: skuId(n, index), quantity, version: 1, last_operation_id: inventoryId("operation", 990 + n) }));
       }); break;
       case "candidate-count": rows = [{ exact_total: "1" }]; break;
-      case "candidates": rows = Number(values[10]) === 0 ? [{ id: productId(0), label: "NATIVE-000000 Synthetic native product", disabled: false, parent_label: null }] : []; break;
+      case "candidates": rows = Number(values[10]) === 0 ? [{ id: productId(0), label: "NATIVE-000000 Synthetic native product", code: "NATIVE-000000", name: "Synthetic native product", disabled: false, parent_label: null }] : []; break;
       default: assert.ok(["BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY", "COMMIT", "ROLLBACK"].includes(stage), `Unexpected scripted statement: ${stage}`); rows = [];
     }
     rows = this.transform?.(stage, rows) ?? rows; this.afterQuery?.(stage);
@@ -179,11 +179,11 @@ test("SYNTHETIC PG protocol: aggregate arithmetic exceeds signed bigint without 
 test("SYNTHETIC PG protocol: all identity filters are parameters in the full-filter count/summary and fit page queries", async () => {
   const pool = new ScriptedPool(); const p = inventoryParameters();
   const input = parseInventoryQuery({ ...p, filter: { ...p.filter, products: [{ id: productId(0), label: "not a fact" }],
-    category: { id: inventoryId("category", 40), label: "not a fact" }, suppliers: [{ id: inventoryId("supplier", 41), label: "not a fact" }],
+    categories: [{ id: inventoryId("category", 40), label: "not a fact" }], suppliers: [{ id: inventoryId("supplier", 41), label: "not a fact" }],
     fits: [{ id: fitId, label: "not a fact" }], seasons: [{ id: inventoryId("season", 42), label: "not a fact" }] } });
   await new PostgresInventoryQueryReader(pool).readInventory(read(pool, input));
   const status = pool.calls.find(call => call.sql.includes("inventory:catalog-status"))!;
-  assert.deepEqual(status.values.slice(2), [[productId(0)], inventoryId("category", 40), [inventoryId("supplier", 41)], [fitId], [inventoryId("season", 42)], batchId]);
+  assert.deepEqual(status.values.slice(2), [[productId(0)], [inventoryId("category", 40)], [inventoryId("supplier", 41)], [fitId], [inventoryId("season", 42)], batchId]);
   assert.deepEqual(pool.calls.find(call => call.sql.includes("inventory:skus"))!.values[1], [fitId]);
   assert.ok(!JSON.stringify(pool.calls).includes("not a fact"));
 });
@@ -206,7 +206,8 @@ test("SYNTHETIC PG protocol: candidate kinds select closed native relations, sta
     const pool = new ScriptedPool(); pool.transform = (stage, rows) => stage === "candidates" ? [{
       id: kind === "warehouse" ? inventoryScope.warehouses[0]!.id : inventoryId(kind, 80),
       label: kind === "warehouse" ? inventoryScope.warehouses[0]!.label : "Native candidate", disabled: kind === "season" || kind === "category" ? null : true,
-      parent_label: kind === "category" ? "Native parent" : null, ...(kind === "category" ? { depth: 1, category_valid: true } : {})
+      parent_label: kind === "category" ? "Native parent" : null, ...(kind === "category" ? { parent_id: inventoryId("category", 79), depth: 1, category_valid: true } : {}),
+      ...(kind === "product" ? { code: "NATIVE", name: "Native candidate" } : {})
     }] : rows;
     const result = await new PostgresInventoryQueryReader(pool).readCandidates(candidate(pool, { kind }));
     assert.equal(result.data.items[0]!.disabled, kind === "season" || kind === "category" ? undefined : true);
@@ -222,7 +223,8 @@ test("SYNTHETIC PG protocol: candidate readiness uses only returned catalogue ID
     pool.transform = (stage, rows) => stage === "candidates" ? [{
       id: kind === "warehouse" ? inventoryScope.warehouses[0]!.id : inventoryId(kind, 80),
       label: kind === "warehouse" ? inventoryScope.warehouses[0]!.label : "Native candidate", disabled: null, parent_label: null,
-      ...(kind === "category" ? { depth: 0, category_valid: true } : {})
+      ...(kind === "category" ? { parent_id: null, depth: 0, category_valid: true } : {}),
+      ...(kind === "product" ? { code: "NATIVE", name: "Native candidate" } : {})
     }] : rows;
     await new PostgresInventoryQueryReader(pool).readCandidates(candidate(pool, { kind }));
     assert.ok(!stages(pool).includes("catalog-status"));
@@ -279,6 +281,99 @@ test("SOURCE CONTRACT ONLY: no global member/SKU preload, source-history reconci
   assert.ok(source.includes('import { GUARD_CAPABILITY } from "./inventory-publication-guards.ts";'));
   assert.ok(source.includes("query(GUARD_CAPABILITY)"));
   assert.ok(source.includes("ORDER BY b.id LIMIT 2"));
-  assert.ok(source.includes("category.parent_id = $4::uuid"));
+  assert.ok(source.includes("category.parent_id = ANY($4::uuid[])"));
   assert.ok(source.includes("WHERE parent.parent_id IS NOT NULL) AS invalid_category_tree"));
+});
+
+test("inventory category SQL contract: one positive-array predicate is shared by list/count/full summary and never multiplies parent+child products", async () => {
+  const categories = [inventoryId("category", 40), inventoryId("category", 41)];
+  for (const categoryIds of [[], categories]) {
+    const pool = new ScriptedPool();
+    const parameters = parseInventoryQuery({ ...inventoryParameters(), filter: { ...inventoryParameters().filter,
+      categories: categoryIds.map(id => ({ id, label: "not a database fact" })) } });
+    const result = await new PostgresInventoryQueryReader(pool).readInventory(read(pool, parameters));
+    const queries = pool.calls.filter(call => ["catalog-status", "products", "balances"].some(stage => call.sql.includes(`inventory:${stage}`)));
+    const prefix = (sql: string) => /WITH published_scope[\s\S]*?filtered_skus AS \([\s\S]*?\n\)/.exec(sql)?.[0];
+    for (const call of queries) {
+      assert.deepEqual(call.values[3], categoryIds); assert.deepEqual(call.values[0], inventoryScope.warehouses.map(row => row.id));
+      assert.match(call.sql, /cardinality\(\$4::uuid\[\]\) = 0 OR p.category_id = ANY\(\$4::uuid\[\]\) OR EXISTS/);
+      assert.match(call.sql, /category.parent_id = ANY\(\$4::uuid\[\]\)/);
+      assert.equal(prefix(call.sql), prefix(queries[0]!.sql));
+      assert.ok(!/unnest\(\$4|JOIN.*\$4|\$4::uuid IS NULL/.test(call.sql));
+      assert.ok(!JSON.stringify(call.values).includes("not a database fact"));
+    }
+    assert.equal(result.data.exactTotalProducts, 1); assert.equal(result.data.products.length, 1);
+    assert.equal(result.data.allMatchesTotal.knownQuantity, "-2");
+  }
+});
+
+test("inventory candidate SQL contract: arrays and direct fields use the existing one-page query without eager details or per-row reads", async () => {
+  const categories = [inventoryId("category", 40), inventoryId("category", 41)];
+  const pool = new ScriptedPool();
+  const result = await new PostgresInventoryQueryReader(pool).readCandidates(candidate(pool, { categoryIds: categories }));
+  const page = pool.calls.find(call => call.sql.includes("inventory:candidates"))!;
+  assert.deepEqual(page.values[3], categories); assert.match(page.sql, /r.product_code AS code, r.name/);
+  assert.deepEqual(result.data.items[0], { id: productId(0), label: "NATIVE-000000 Synthetic native product", code: "NATIVE-000000", name: "Synthetic native product", disabled: false });
+  assert.equal(stages(pool).filter(stage => stage === "candidates").length, 1);
+  assert.ok(pool.calls.every(call => !/retail_price|product_image|product-query|inventory:products/.test(call.sql)));
+  for (const kind of ["category", "warehouse"] as const) {
+    const p = new ScriptedPool(); p.transform = (stage, rows) => stage === "candidates" ? [{
+      id: kind === "warehouse" ? inventoryScope.warehouses[0]!.id : inventoryId("category", 80),
+      label: kind === "warehouse" ? inventoryScope.warehouses[0]!.label : "Native root", disabled: null, parent_label: null,
+      ...(kind === "category" ? { parent_id: null, depth: 0, category_valid: true } : {}) }] : rows;
+    await new PostgresInventoryQueryReader(p).readCandidates(candidate(p, { kind, categoryIds: categories }));
+    const query = p.calls.find(call => call.sql.includes("inventory:candidates"))!;
+    assert.deepEqual(query.values[3], []);
+    if (kind === "category") assert.match(query.sql, /r.parent_id/);
+  }
+});
+
+test("SYNTHETIC product search SQL contract: native system-item-code shares bounded count/page predicate; percent/underscore are literal and null grants no match", async () => {
+  // Finite scripted model ONLY. This checks reader protocol plus the exact generated SQL shape;
+  // it does not claim to execute PostgreSQL or verify deployed migration 0005.
+  const rows = [
+    { id: productId(0), code: "STYLE-A", name: "Shirt", system: "SYS_%_Match" },
+    { id: productId(1), code: "STYLE-B", name: "Coat", system: null },
+    { id: productId(2), code: "STYLE-C", name: "Pants", system: "SYSAXMatch" }
+  ];
+  class SearchPool extends ScriptedPool {
+    override async query(sql: string, values: unknown[] = []): Promise<PgInventoryQueryResult> {
+      const response = await super.query(sql, values);
+      if (!/\/\* inventory:(candidate-count|candidates) \*\//.test(sql)) return response;
+      assert.match(sql, /WHERE \(strpos\(r.product_code, \$9::text\) > 0 OR strpos\(r.name, \$9::text\) > 0 OR strpos\(r.system_item_code, \$9::text\) > 0\)/);
+      assert.ok(!/\bI?LIKE\b|coalesce\(r.system_item_code|r.id::text/.test(sql));
+      const search = values[8] as string;
+      const matches = rows.filter(row => row.code.includes(search) || row.name.includes(search)
+        || (row.system !== null && row.system.includes(search)));
+      const result = sql.includes("inventory:candidate-count") ? [{ exact_total: String(matches.length) }]
+        : matches.slice(Number(values[10]), Number(values[10]) + Number(values[9])).map(row => ({
+          id: row.id, label: `${row.code} ${row.name}`, code: row.code, name: row.name, disabled: false, parent_label: null
+        }));
+      return { rows: result, rowCount: result.length };
+    }
+  }
+  for (const [search, expected] of [["SYS_%_Match", [productId(0)]], ["%", [productId(0)]], ["_", [productId(0)]],
+    ["SYS", [productId(0), productId(2)]], ["STYLE-B", [productId(1)]], ["Coat", [productId(1)]],
+    ["not present", []], ["%' OR TRUE --", []], ["", rows.map(row => row.id)]] as const) {
+    const pool = new SearchPool(); const categories = [inventoryId("category", 40)];
+    const result = await new PostgresInventoryQueryReader(pool).readCandidates(candidate(pool, { search, categoryIds: categories }));
+    assert.deepEqual(result.data.items.map(row => row.id), expected); assert.equal(result.data.exactTotal, expected.length);
+    const count = pool.calls.find(call => call.sql.includes("inventory:candidate-count"))!;
+    const page = pool.calls.find(call => call.sql.includes("inventory:candidates"))!;
+    const predicate = (sql: string) => /FROM naijue_erp.product r JOIN matched_products p ON p.id = r.id WHERE ([^\n]+)/.exec(sql)?.[1];
+    assert.equal(predicate(count.sql), predicate(page.sql)); assert.ok(predicate(count.sql));
+    assert.deepEqual(count.values, page.values.slice(0, 9)); assert.equal(count.values[8], search);
+    assert.deepEqual(page.values.slice(-2), [20, "0"]); assert.deepEqual(page.values[3], categories);
+    assert.deepEqual(page.values[0], inventoryScope.warehouses.map(row => row.id)); assert.deepEqual(page.values[1], inventoryScope.hallIds);
+    assert.match(page.sql, /ORDER BY r.product_code COLLATE "C", r.id LIMIT \$10 OFFSET \$11::bigint/);
+    if (search.length > 1) assert.ok(!page.sql.includes(search));
+    assert.equal(stages(pool).filter(stage => stage === "candidates").length, 1);
+  }
+  for (const search of [null, 123, {}, "bad\u0000text", "x".repeat(201)]) {
+    const pool = new SearchPool();
+    await assert.rejects(() => new PostgresInventoryQueryReader(pool).readCandidates({
+      actor: inventoryActor, scope: inventoryScope, signal: new AbortController().signal,
+      parameters: { ...candidateParameters(), search } as unknown as InventoryCandidateQuery
+    }), code("INVALID_INVENTORY_INPUT")); assert.equal(pool.connects, 0);
+  }
 });

@@ -45,7 +45,7 @@ try {
       return json({ page: body.page, pageSize: body.pageSize, exactTotal: '1', items: [summary()] });
     }
     if (url.endsWith('/transfers/detail/query')) return json(detail());
-    if (url.endsWith('/products/basics/query')) return json({ productId: body.productId, code: 'SYNTHETIC-PRODUCT', name: 'SYNTHETIC SHARED PRODUCT', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null });
+    if (url.endsWith('/products/basics/query')) return json({ productId: body.productId, code: 'SYNTHETIC-PRODUCT', name: 'SYNTHETIC SHARED PRODUCT', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null });
     throw new Error('Unexpected synthetic endpoint');
   };
   const environment = { document, location: dom.window.location, fetch };

@@ -11,10 +11,10 @@ const fits: readonly Selection[] = [
 ];
 const warehouses: readonly Selection[] = [{ id: 'test-warehouse-main', label: '测试总仓' }, { id: 'test-warehouse-store', label: '测试门店仓' }];
 const colors: readonly Selection[] = [{ id: 'test-color-blue', label: '测试蓝' }, { id: 'test-color-gray', label: '测试灰' }];
-const categories: readonly Candidate[] = [{ id: 'test-category-clothing', label: '测试服装', depth: 0 }, { id: 'test-category-top', label: '测试上衣', depth: 1, parentLabel: '测试服装' }];
+const categories: readonly Candidate[] = [{ id: 'test-category-clothing', label: '测试服装', depth: 0, parentId: null }, { id: 'test-category-top', label: '测试上衣', depth: 1, parentId: 'test-category-clothing', parentLabel: '测试服装' }];
 const suppliers = [{ id: 'test-supplier-1', label: '测试供应商甲' }, { id: 'test-supplier-2', label: '测试供应商乙' }];
 const seasons = [{ id: 'test-season-spring', label: '测试春季' }, { id: 'test-season-autumn', label: '测试秋季' }];
-const productSelection = (index: number): Selection => ({ id: `test-product-${index}`, label: `TEST-${String(index).padStart(3, '0')} 测试上衣${index}` });
+const productSelection = (index: number): Candidate => ({ id: `test-product-${index}`, label: `TEST-${String(index).padStart(3, '0')} 测试上衣${index}`, code: `TEST-${String(index).padStart(3, '0')}`, name: `测试上衣${index}` });
 const selectionMatches = (selected: readonly Selection[], value: Selection): boolean => !selected.length || selected.some(item => item.id === value.id);
 function sumTotals(values: readonly StockTotal[]): StockTotal {
   return { knownQuantity: String(values.reduce((sum, value) => sum + BigInt(value.knownQuantity), 0n)), unknownCells: 0, completeness: 'complete' };
@@ -60,7 +60,7 @@ export function makeSyntheticInventoryProduct(index: number, filter: InventoryFi
 }
 function matches(index: number, filter: InventoryFilter): boolean {
   return selectionMatches(filter.products, productSelection(index))
-    && (!filter.category || categories.some(value => value.id === filter.category?.id))
+    && (!filter.categories.length || categories.some(value => filter.categories.some(selected => selected.id === value.id)))
     && selectionMatches(filter.suppliers, suppliers[(index - 1) % 2]!)
     && selectionMatches(filter.seasons, seasons[(index - 1) % 2]!)
     && (!filter.fits.length || fits.slice(0, index === 1 ? 2 : 1).some(fit => selectionMatches(filter.fits, fit)))

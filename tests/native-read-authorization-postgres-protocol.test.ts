@@ -55,7 +55,7 @@ const warehouses = (rows: Record<string, unknown>[] = warehouseRows()): Step => 
   assert.ok(!/\bWHERE\b|\benabled\b|import|publication|inventory_balance|inventory_ledger|product|sku/i.test(sql));
 } });
 const inventoryIntent: InventoryReadIntent = { kind: "inventory", parameters: { page: 1, pageSize: 100,
-  filter: { productIds: [], categoryId: null, warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] } } };
+  filter: { productIds: [], categoryIds: [], warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] } } };
 const salesQuery = { page: 1, pageSize: 20 as const, filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [hallB], salespersonIds: [], customerIds: [], warehouseIds: [], number: null } };
 const salesIntents: SalesReadIntent[] = [{ kind: "list", parameters: salesQuery }, { kind: "settlement-statistics", parameters: salesQuery },
   { kind: "detail", parameters: { salesId: ids.sales } }, { kind: "history", parameters: { salesId: ids.sales, page: 1, pageSize: 20 } }];
@@ -85,7 +85,7 @@ test("native read authorization: every canonical role retains ALL native warehou
 test("native read authorization: inventory and all candidate kinds use the same current identity + warehouse grant, including disabled historical references", async () => {
   for (const kind of ["product", "category", "warehouse", "supplier", "fit", "season"] as const) {
     const client = new Client([begin(), identityStep(), warehouses(), commit()]);
-    const result = await policies(client).inventory.authorize(actor, { kind: "candidates", parameters: { kind, search: "", page: 1, pageSize: 20, selectedIds: [], categoryId: null } }, signal());
+    const result = await policies(client).inventory.authorize(actor, { kind: "candidates", parameters: { kind, search: "", page: 1, pageSize: 20, selectedIds: [], categoryIds: [] } }, signal());
     assert.deepEqual(result, expectedScope()); assert.equal(client.calls.length, 4); client.done();
   }
 });
@@ -220,7 +220,7 @@ test("native read authorization: services await fresh authorization before reade
   const deniedClient = new Client([begin(), identityStep([{ ...identity(), login_enabled: false }]), rollback()]); let businessReads = 0;
   const read = async (): Promise<never> => { businessReads++; throw new Error("No business read permitted"); };
   const inventory = createInventoryQueryService({ authorization: policies(deniedClient).inventory, reader: { readInventory: read, readCandidates: read } });
-  await assert.rejects(() => inventory.readInventory(actor, { page: 1, pageSize: 100, filter: { products: [], category: null, warehouses: [], suppliers: [], fits: [], seasons: [] } }, signal()), { code: "FORBIDDEN" });
+  await assert.rejects(() => inventory.readInventory(actor, { page: 1, pageSize: 100, filter: { products: [], categories: [], warehouses: [], suppliers: [], fits: [], seasons: [] } }, signal()), { code: "FORBIDDEN" });
   assert.equal(businessReads, 0); deniedClient.done();
   const productClient = new Client([begin(), identityStep(), commit()]);
   const product = createProductQueryService({ authorization: policies(productClient).products, reader: { readBasics: async value => { businessReads++; assert.deepEqual(value.grant, { productId }); productClient.done(); throw new Error("Exact target native reader"); }, readSpecifications: read, readImages: read, readImage: read }, media: null });
@@ -239,7 +239,7 @@ test("native read authorization: inventory and ledger narrow an ALL-warehouse gr
       await assert.rejects(() => service.readLedger(actor, { warehouseId: warehouseB, skuId: ids.sku, pageSize: 20, after: null }, signal()), error => error === stopped);
     } else {
       const service = createInventoryQueryService({ authorization: policies(client).inventory, reader: { readInventory: read, readCandidates: read } });
-      await assert.rejects(() => service.readInventory(actor, { page: 1, pageSize: 100, filter: { products: [], category: null,
+      await assert.rejects(() => service.readInventory(actor, { page: 1, pageSize: 100, filter: { products: [], categories: [],
         warehouses: [{ id: warehouseB, label: "untrusted request label" }], suppliers: [], fits: [], seasons: [] } }, signal()), error => error === stopped);
     }
     assert.equal(reads, 1);

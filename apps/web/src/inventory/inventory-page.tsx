@@ -4,6 +4,7 @@ import type { Selection } from './contracts.ts';
 import type { ProductReadOnlyReader } from './product-contracts.ts';
 import { ProductDrawerHost } from './product-drawer-host.tsx';
 import { EmptyIcon } from '../demo-presentation/icons.tsx';
+import { useInventoryFilterPopupHost } from '../components/inventory-filter-popup-host.ts';
 import { CandidateSelector } from '../components/candidate-selector.tsx';
 import { InventoryPagination } from '../components/pagination.tsx';
 import { emptyInventoryFilter, type InventoryActions, type InventoryFilter, type InventoryPageSize, type InventoryParameters, type InventoryReader } from './contracts.ts';
@@ -17,11 +18,11 @@ export interface InventoryPageProps {
   readonly productReader: ProductReadOnlyReader;
   readonly actions?: Pick<InventoryActions, 'onOpenCell'>;
 }
-const names = { products: '商品', category: '商品分类', warehouses: '仓库', suppliers: '供应商', fits: '版型', seasons: '季节' };
+const names = { products: '商品', categories: '商品分类', warehouses: '仓库', suppliers: '供应商', fits: '版型', seasons: '季节' };
 function scopeLines(filter: InventoryFilter): string[] {
   return (Object.keys(names) as (keyof typeof names)[]).map(key => {
     const value = filter[key];
-    const labels = key === 'category' ? filter.category ? [filter.category.label] : [] : (value as readonly { label: string }[]).map(item => item.label);
+    const labels = (value as readonly { label: string }[]).map(item => item.label);
     return `${names[key]}：${labels.length ? labels.join('、') : '全部'}`;
   });
 }
@@ -82,7 +83,8 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, quer
     if (success) run({ ...success.parameters, page: 1, pageSize: size });
     else setInitialPageSize(size);
   };
-  const fields = { reader, scope, categoryId: draft.category?.id ?? null };
+  const filterPopupHost = useInventoryFilterPopupHost(scope);
+  const fields = { reader, scope, productReader, popupHost: filterPopupHost, categoryIds: draft.categories.map(item => item.id) };
   const settingLabels: Readonly<Record<keyof InventoryDisplaySettings, string>> = { category: '商品分类', supplier: '供应商', fit: '版型', sizeGroup: '尺码组', season: '季节', subtotal: '颜色小计', total: '商品合计', sizeDescription: '显示尺码组说明' };
   if (snapshot.phase === 'disposed') return <div className="iw-empty" role="status"><strong>当前读取范围已关闭</strong><p>请重新进入库存页。旧身份结果已清除。</p></div>;
   return <div className="iw-workbench">
@@ -90,7 +92,7 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, quer
     <form className="iw-query" aria-label="库存筛选" onSubmit={event => { event.preventDefault(); run({ filter: draft, page: 1, pageSize: displayedPageSize }); }}>
       <div className="iw-query-row">
         <CandidateSelector {...fields} kind="product" label="商品" selected={draft.products} multiple placeholder="商品款号 / 名称 / 系统货号" onChange={products => setDraft(value => ({ ...value, products }))} />
-        <CandidateSelector {...fields} kind="category" label="商品分类" selected={draft.category ? [draft.category] : []} onChange={items => setDraft(value => ({ ...value, category: items[0] ?? null }))} />
+        <CandidateSelector {...fields} kind="category" label="商品分类" selected={draft.categories} multiple onChange={categories => setDraft(value => ({ ...value, categories }))} />
         <CandidateSelector {...fields} kind="warehouse" label="仓库" selected={draft.warehouses} multiple onChange={warehouses => setDraft(value => ({ ...value, warehouses }))} />
         <div className="iw-query-actions"><button type="button" className="iw-text-button iw-filter-toggle" aria-expanded={advanced} aria-controls="iw-advanced" onClick={() => setAdvanced(value => !value)}>{advanced ? '收起筛选 ⌃' : '高级筛选 ⌄'}</button><button type="submit" className="iw-button iw-primary">查询</button><button type="button" className="iw-button iw-reset" onClick={() => setDraft(emptyInventoryFilter())}>重置</button></div>
       </div>

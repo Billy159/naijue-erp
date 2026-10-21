@@ -15,6 +15,10 @@ const inventoryStyles = await build({ ...common, entryPoints: ['src/inventory/in
 for (const [file, output] of Object.entries(inventoryStyles.metafile.outputs)) result.metafile.outputs[file] = output;
 const pageSizeStyles = await build({ ...common, entryPoints: ['src/demo-controls/single-select.css'], outfile: path.join(outdir, 'chunks/single-select.css'), metafile: true });
 Object.assign(result.metafile.outputs, pageSizeStyles.metafile.outputs);
+const productSearchStyles = await build({ ...common, entryPoints: ['src/components/product-candidate-action.css'], outfile: path.join(outdir, 'chunks/product-candidate-action.css'), metafile: true });
+Object.assign(result.metafile.outputs, productSearchStyles.metafile.outputs);
+const multiSelectStyles = await build({ ...common, entryPoints: ['src/demo-controls/multi-select.css'], outfile: path.join(outdir, 'chunks/multi-select.css'), metafile: true });
+Object.assign(result.metafile.outputs, multiSelectStyles.metafile.outputs);
 const head = '<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>奈爵 ERP · TEST ONLY 库存交互预览</title>';
 await writeFile(path.join(outdir, 'index.html'), `${head}<link rel="stylesheet" href="./main.css"></head><body><div id="root"></div><script type="module" src="./main.js"></script></body></html>`);
 await writeFile(path.join(outdir, 'metafile.json'), JSON.stringify(result.metafile, null, 2));
@@ -23,7 +27,7 @@ const standalone = await build({ ...common, entryPoints: ['preview/main.tsx'], w
 const script = standalone.outputFiles.find(file => file.path.endsWith('.js'))?.text;
 const css = standalone.outputFiles.find(file => file.path.endsWith('.css'))?.text;
 if (!script || !css) throw new Error('Standalone preview bundle missing.');
-await writeFile(path.join(outdir, 'inventory-preview-test-only.html'), `${head}<style data-inventory-inline data-demo-single-select-inline>${(css + await readFile(path.join(outdir, 'chunks/single-select.css'), 'utf8')).replaceAll('</style', '<\\/style')}</style></head><body><div id="root"></div><script>${script.replaceAll('</script', '<\\/script')}</script></body></html>`);
+await writeFile(path.join(outdir, 'inventory-preview-test-only.html'), `${head}<style data-inventory-inline data-demo-single-select-inline data-demo-multi-select-inline data-inventory-product-select-inline>${(css + await readFile(path.join(outdir, 'chunks/single-select.css'), 'utf8') + await readFile(path.join(outdir, 'chunks/multi-select.css'), 'utf8') + await readFile(path.join(outdir, 'chunks/product-candidate-action.css'), 'utf8')).replaceAll('</style', '<\\/style')}</style></head><body><div id="root"></div><script>${script.replaceAll('</script', '<\\/script')}</script></body></html>`);
 const files = ['index.html', 'main.js', 'main.css', 'inventory-route.js', 'inventory-route.css', 'synthetic-reader.js', 'product-drawer.js', 'product-drawer.css', 'inventory-preview-test-only.html'];
 for (const file of files) console.log(`${file}: ${(await stat(path.join(outdir, file))).size} bytes`);
 console.log('Built static files only. No server, listener, deployment, database or network action.');

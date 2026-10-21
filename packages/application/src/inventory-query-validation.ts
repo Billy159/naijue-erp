@@ -28,6 +28,7 @@ export function idValue<K extends EntityKind>(kind: K, value: unknown, reject: R
 }
 function arrayValue(value: unknown, max: number, reject: Reject): unknown[] {
   if (!Array.isArray(value) || value.length > max) reject();
+  for (let index = 0; index < value.length; index++) if (!Object.hasOwn(value, index)) reject();
   return value;
 }
 function selections<K extends EntityKind>(kind: K, value: unknown): readonly EntityId<K>[] {
@@ -47,25 +48,25 @@ function pagination(page: unknown, pageSize: unknown, allowed: readonly number[]
 }
 export function parseInventoryQuery(value: unknown): InventoryQuery {
   const row = record(value, ["filter", "page", "pageSize"]);
-  const filter = record(row.filter, ["products", "category", "warehouses", "suppliers", "fits", "seasons"]);
-  const category = filter.category === null ? null : record(filter.category, ["id", "label"]);
-  if (category) textValue(category.label);
+  const filter = record(row.filter, ["products", "categories", "warehouses", "suppliers", "fits", "seasons"]);
   const page = pagination(row.page, row.pageSize, [100, 200, 500]);
   return Object.freeze({ page: page.page, pageSize: page.pageSize as InventoryQuery["pageSize"], filter: Object.freeze({
-    productIds: selections("product", filter.products), categoryId: category ? idValue("category", category.id) : null,
+    productIds: selections("product", filter.products), categoryIds: selections("category", filter.categories),
     warehouseIds: selections("warehouse", filter.warehouses), supplierIds: selections("supplier", filter.suppliers),
     fitIds: selections("fit", filter.fits), seasonIds: selections("season", filter.seasons)
   }) });
 }
 export function parseInventoryCandidateQuery(value: unknown): InventoryCandidateQuery {
-  const row = record(value, ["kind", "search", "page", "pageSize", "selectedIds", "categoryId"]);
+  const row = record(value, ["kind", "search", "page", "pageSize", "selectedIds", "categoryIds"]);
   if (!KINDS.includes(row.kind as InventoryCandidateKind)) rejectInventoryInput();
   const kind = row.kind as InventoryCandidateKind;
   const selectedIds = arrayValue(row.selectedIds, INVENTORY_MAX_SELECTIONS, rejectInventoryInput).map(id => idValue(kind, id));
   if (new Set(selectedIds).size !== selectedIds.length) rejectInventoryInput();
+  const categoryIds = arrayValue(row.categoryIds, INVENTORY_MAX_SELECTIONS, rejectInventoryInput).map(id => idValue("category", id));
+  if (new Set(categoryIds).size !== categoryIds.length) rejectInventoryInput();
   const page = pagination(row.page, row.pageSize, [20]);
   return Object.freeze({ kind, search: textValue(row.search, rejectInventoryInput, true, 200), page: page.page, pageSize: 20,
-    selectedIds: Object.freeze(selectedIds), categoryId: row.categoryId === null ? null : idValue("category", row.categoryId) });
+    selectedIds: Object.freeze(selectedIds), categoryIds: Object.freeze(categoryIds) });
 }
 export function checkedInventoryScope(value: InventoryReadScope): InventoryReadScope {
   const reject = rejectInventoryResponse;

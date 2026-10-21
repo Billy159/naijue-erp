@@ -64,6 +64,10 @@ try {
   for (const route of ['inventory', 'sales']) for (const file of inputsOf(closure(entryFor(`routes/${route}.tsx`)))) assert.doesNotMatch(file, /@arco-design\//);
   for (const file of inputsOf(closure(entryFor('routes/transfers.tsx')))) assert.doesNotMatch(file, /detail-content\.tsx$|product-drawer-host\.tsx$|product-http-reader\.ts$|\/tests\//);
   assert.ok(entryFor('../sales/detail-content.tsx')); assert.ok(entryFor('../transfers/detail-content.tsx')); assert.ok(entryFor('../inventory/product-drawer.tsx'));
+  assert.ok(entryFor('../components/product-candidate-action.tsx'));
+  const productStyles = byAbsolute.get(path.join(outdir, 'chunks/product-candidate-action.css')); assert.ok(productStyles);
+  assert.match(await readFile(path.join(outdir, 'chunks/product-candidate-action.css'), 'utf8'), /inv-menu-grid/);
+  for (const file of Object.keys(outputs[productStyles].inputs)) assert.doesNotMatch(file, /dist\/css\/arco\.css|\/es\/style\/index\.css/);
   const css = Object.fromEntries(await Promise.all(Object.entries(result.manifest.styles).map(async ([key, filename]) => [key, await readFile(path.join(outdir, filename), 'utf8')])));
   assert.match(css.application, /auth-panel/); assert.match(css.application, /demo-ui/);
   assert.doesNotMatch(withoutSharedFocusInputExclusion(css.application), /\.mx-|sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.arco-/);

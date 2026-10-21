@@ -1,0 +1,17 @@
+{
+  "parentCommit": "cdd15dbd59de1393849ac44d9dbdc154a793299e",
+  "rootTypecheck": 0,
+  "webTypecheck": 0,
+  "build": 0,
+  "emittedSmoke": 0,
+  "inventoryCombinedDom": 0,
+  "passLines": 29,
+  "limitations": [
+    "JSDOM canvas measurements unavailable; warnings preserved",
+    "React19 ref deprecation warnings preserved",
+    "No genuine PG or native-browser visual/performance acceptance",
+    "Stage16 remains user-rejected; this is not a new preview delivery"
+  ],
+  "rollback": "Revert coherent source/fixture changes together; no schema changes",
+  "whitespaceCheck": "Runtime/doc/check source passed. Stored unified .patch evidence retains required single-space blank-context lines; whole-index check reports those as trailing spaces, preserved intentionally."
+}

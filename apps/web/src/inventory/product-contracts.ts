@@ -12,6 +12,8 @@ export interface ProductBasics {
   readonly seasonLabel: string | null;
   readonly supplierLabel: string | null;
   readonly systemCode: string | null;
+  /** Exact decimal(18,2) source text. Null means unavailable, never zero. */
+  readonly retailPrice: string | null;
 }
 export interface ProductSku {
   readonly id: string;

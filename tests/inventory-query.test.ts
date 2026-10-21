@@ -210,3 +210,83 @@ test("SYNTHETIC inventory application: incomplete off-page full-filter summary c
   }, async readCandidates(read) { return syntheticCandidateSnapshot(read); } });
   await assert.rejects(s.readInventory(inventoryActor, inventoryParameters(), signal()), hasCode("INVALID_INVENTORY_RESPONSE"));
 });
+
+test("inventory categories: bounded positive arrays capture immutable IDs before authorization and preserve OR selection context", async () => {
+  const first = inventoryId("category", 70), second = inventoryId("category", 71);
+  let release!: () => void; let arrived!: () => void;
+  const gate = new Promise<void>(resolve => { release = resolve; });
+  const entered = new Promise<void>(resolve => { arrived = resolve; });
+  const input = { ...inventoryParameters(), filter: { ...inventoryParameters().filter,
+    categories: [{ id: first, label: "untrusted parent" }, { id: second, label: "untrusted child" }] } };
+  const s = service({ async readInventory(read) {
+    assert.deepEqual(read.parameters.filter.categoryIds, [first, second]);
+    assert.ok(Object.isFrozen(read.parameters.filter.categoryIds));
+    assert.ok(!JSON.stringify(read.parameters).includes("untrusted"));
+    return syntheticInventorySnapshot(read);
+  }, async readCandidates(read) { return syntheticCandidateSnapshot(read); } }, { async authorize(_actor, intent) {
+    if (intent.kind === "inventory") assert.deepEqual(intent.parameters.filter.categoryIds, [first, second]);
+    arrived(); await gate; return inventoryScope;
+  } });
+  const pending = s.readInventory(inventoryActor, input, signal()); await entered;
+  input.filter.categories[0]!.id = inventoryId("category", 72); input.filter.categories.pop(); release();
+  await pending;
+  const candidates = { ...candidateParameters(), categoryIds: [first, second] };
+  let releaseCandidate!: () => void; let candidateArrived!: () => void;
+  const candidateGate = new Promise<void>(resolve => { releaseCandidate = resolve; });
+  const candidateEntered = new Promise<void>(resolve => { candidateArrived = resolve; });
+  const c = service({ async readInventory(read) { return syntheticInventorySnapshot(read); }, async readCandidates(read) {
+    assert.deepEqual(read.parameters.categoryIds, [first, second]); assert.ok(Object.isFrozen(read.parameters.categoryIds));
+    return syntheticCandidateSnapshot(read);
+  } }, { async authorize() { candidateArrived(); await candidateGate; return inventoryScope; } });
+  const candidatePending = c.readCandidates(inventoryActor, candidates, signal()); await candidateEntered;
+  candidates.categoryIds[0] = inventoryId("category", 72); candidates.categoryIds.length = 0; releaseCandidate(); await candidatePending;
+});
+
+test("inventory categories: scalar legacy, malformed, duplicate, sparse and over-bound arrays reject before authorization", async () => {
+  const id = inventoryId("category", 70);
+  const invalid = [null, id, {}, [{ id: "bad", label: "bad" }], [{ id, label: "a" }, { id, label: "b" }],
+    [{ id, label: "a", extra: true }], new Array(1), Array.from({ length: 101 }, (_, n) => ({ id: inventoryId("category", n), label: "over-bound" }))];
+  let calls = 0; const s = service(syntheticInventoryReader(), { async authorize() { calls++; return inventoryScope; } });
+  for (const categories of invalid) await assert.rejects(s.readInventory(inventoryActor, { ...inventoryParameters(), filter: { ...inventoryParameters().filter, categories } }, signal()), hasCode("INVALID_INVENTORY_INPUT"));
+  const legacy: any = inventoryParameters(); delete legacy.filter.categories; legacy.filter.category = null;
+  await assert.rejects(s.readInventory(inventoryActor, legacy, signal()), hasCode("INVALID_INVENTORY_INPUT"));
+  for (const categoryIds of [null, id, ["bad"], [id, id], new Array(1), Array.from({ length: 101 }, (_, n) => inventoryId("category", n))]) {
+    await assert.rejects(s.readCandidates(inventoryActor, { ...candidateParameters(), categoryIds }, signal()), hasCode("INVALID_INVENTORY_INPUT"));
+  }
+  const old: any = candidateParameters(); delete old.categoryIds; old.categoryId = null;
+  await assert.rejects(s.readCandidates(inventoryActor, old, signal()), hasCode("INVALID_INVENTORY_INPUT")); assert.equal(calls, 0);
+  await s.readInventory(inventoryActor, inventoryParameters(), signal());
+  await s.readCandidates(inventoryActor, candidateParameters(), signal()); assert.equal(calls, 2);
+});
+
+test("inventory categories: selected categories cannot bypass an absent or denied authorized warehouse scope", async () => {
+  const selected = [{ id: inventoryId("category", 70), label: "not an authorization fact" }]; let reads = 0;
+  const reader = { async readInventory(read: any) { reads++; return syntheticInventorySnapshot(read); }, async readCandidates(read: any) { reads++; return syntheticCandidateSnapshot(read); } };
+  for (const authorization of [{ async authorize() { return { hallIds: [], warehouses: [] }; } }, { async authorize(): Promise<InventoryReadScope> { throw new DomainError("FORBIDDEN", "Denied current scope"); } }]) {
+    const s = service(reader, authorization);
+    await assert.rejects(s.readInventory(inventoryActor, { ...inventoryParameters(), filter: { ...inventoryParameters().filter, categories: selected } }, signal()), hasCode("FORBIDDEN"));
+    await assert.rejects(s.readCandidates(inventoryActor, { ...candidateParameters(), categoryIds: selected.map(row => row.id) }, signal()), hasCode("FORBIDDEN"));
+  }
+  assert.equal(reads, 0);
+});
+
+test("inventory candidate projections: required product fields and native category identities are closed and immutable", async () => {
+  const result = await service().readCandidates(inventoryActor, candidateParameters(), signal());
+  assert.equal(result.data.items[0]!.code, "SYNTHETIC-000000"); assert.equal(result.data.items[0]!.name, "SYNTHETIC PRODUCT 0");
+  assert.ok(Object.isFrozen(result.data.items[0]));
+  for (const [kind, mutate] of [
+    ["product", (row: any) => { delete row.code; }], ["product", (row: any) => { row.name = ""; }],
+    ["product", (row: any) => { row.parentId = null; }], ["supplier", (row: any) => { row.code = "not a supplier field"; }],
+    ["category", (row: any) => { delete row.parentId; }], ["category", (row: any) => { row.parentId = row.id; }],
+    ["category", (row: any) => { row.parentId = inventoryId("category", 999); }],
+    ["category", (row: any) => { row.parentId = "bad"; row.depth = 1; row.parentLabel = "not a native identity"; }],
+    ["category", (row: any) => { row.depth = 1; }], ["category", (row: any) => { row.code = "not a category field"; }]
+  ] as const) {
+    const s = service({ async readInventory(read) { return syntheticInventorySnapshot(read); }, async readCandidates(read) {
+      const snapshot = structuredClone(syntheticCandidateSnapshot(read)); mutate(snapshot.data.items[0]); return snapshot;
+    } });
+    await assert.rejects(s.readCandidates(inventoryActor, { ...candidateParameters(), kind }, signal()), hasCode("INVALID_INVENTORY_RESPONSE"));
+  }
+  const categories = await service().readCandidates(inventoryActor, { ...candidateParameters(), kind: "category" }, signal());
+  assert.equal(categories.data.items[0]!.parentId, null); assert.equal(categories.data.items[0]!.depth, 0);
+});

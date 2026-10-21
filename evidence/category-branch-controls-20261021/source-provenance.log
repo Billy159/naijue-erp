@@ -1,0 +1,5 @@
+PASS frozen category source range 13 33 330a39cfd7dbf22ce4a7ae0bf40fe35f038278377cea41c8a5a6a29efed61a7f
+PASS frozen category source range 50 65 3e4a66d459ce7fb67a24470ea859293e784408ff59ba7fd29b55c5eef60a7dff
+PASS frozen category source range 93 121 e769c5086669a3fb07e2b3b9e1b7ba87ec2270e8ddbc2b0ec6db7db2233e72f2
+PASS actual frozen full category source hash e76e01dfd849e11eea23c3867d2185eb5fe512a3dc883045029c01d7d6d74a1e
+Static source mapping only; not pixel/semantic parity.

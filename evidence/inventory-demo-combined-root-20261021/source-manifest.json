@@ -1,0 +1,286 @@
+[
+  {
+    "file": "adapters/postgres/src/inventory-query-reader.ts",
+    "sha256": "c014ef6581ef9afef9c42401fce06a4c2a7ccb07606d467ab5dfe58cc59a1902"
+  },
+  {
+    "file": "adapters/postgres/src/product-query-reader.ts",
+    "sha256": "53efcd05501f12a6037156708ff64da79672a86ed7592f49378448ca2542bd36"
+  },
+  {
+    "file": "apps/api/src/postgres-read-api.test.ts",
+    "sha256": "90bf4e0bdaf6c0d93d193cae37cfae4422ac8ac6977d65ffe025ae07e2496658"
+  },
+  {
+    "file": "apps/api/src/product-query-http.test.ts",
+    "sha256": "5d05307b70411e249cd0c7bd637d9b3acb50ebddd8f3833f2a25c8973b327eaa"
+  },
+  {
+    "file": "apps/web/build-preview.mjs",
+    "sha256": "3f54ef10d33017df0f1c7290c321ca898edecd532594787ba91dadb85a8b61ec"
+  },
+  {
+    "file": "apps/web/preview-core-pages/build.mjs",
+    "sha256": "127d1b50be056c27a66bf5691d4d78742a97f41e9a6870d4e6b563c1ff247328"
+  },
+  {
+    "file": "apps/web/preview-core-pages/inventory-fixture.ts",
+    "sha256": "99b719451ff33cb59e3043d1c13e4da056e9a76cefbb5df608a864cb206beea7"
+  },
+  {
+    "file": "apps/web/preview-core-pages/main.tsx",
+    "sha256": "181a6ef907c88788dc796bcba8cd7a86729b6b4c525d272aa91379c8d5d8b446"
+  },
+  {
+    "file": "apps/web/preview-core-pages/product-fixture.ts",
+    "sha256": "a1e2fc91b877c2f0538048ef389694ff36ea6efa57bfe521d249b151ff1a53bd"
+  },
+  {
+    "file": "apps/web/preview/synthetic-product-reader.ts",
+    "sha256": "9539845fe0c41399da2276fb51cacb37faa4db4702b2627c1b75212ef027d07f"
+  },
+  {
+    "file": "apps/web/preview/synthetic-reader.ts",
+    "sha256": "50424f3e8f51a84b68917ab16f2122bc8e4c911db39c3c09e9e1cf0afcd365db"
+  },
+  {
+    "file": "apps/web/src/application/build-application.mjs",
+    "sha256": "7600620690dfce918f3b8fc4f5500aa8c06d775debdfa2f26f8c53f93a5687b6"
+  },
+  {
+    "file": "apps/web/src/application/tests/run-build-check.mjs",
+    "sha256": "4466187e2d71709399852badadc67f0c82101b8b12a219db33b8e6d01842f86d"
+  },
+  {
+    "file": "apps/web/src/application/tests/run-transfer-dom-tests.mjs",
+    "sha256": "0682fb9be02ed1eaaa041ca16788780ac81ab1e9cc6ff0a4b18a196f967ba634"
+  },
+  {
+    "file": "apps/web/src/components/candidate-selector-contract.ts",
+    "sha256": "df54d248d7039fa228ce75f066380630069108ebb84d217d3247ca2c85de8d92"
+  },
+  {
+    "file": "apps/web/src/components/candidate-selector.tsx",
+    "sha256": "4eb04b31ab32797c20c15d6ef0628ad43f481d46c48d1e8585f0b9c6179eb646"
+  },
+  {
+    "file": "apps/web/src/components/inventory-candidate-menu.tsx",
+    "sha256": "9bf34eca64a2d1b7c3ee0b4f049cc3a3909e42062b1834b7e0f37fb647eacaf9"
+  },
+  {
+    "file": "apps/web/src/components/inventory-candidates.test.ts",
+    "sha256": "29178493751dee6881bd03f03f2c93c65d7682fc71c3d0096db1d9f0a860c7bc"
+  },
+  {
+    "file": "apps/web/src/components/inventory-candidates.ts",
+    "sha256": "372340cfa630a66b23a8c3e2e32f4c2c1834095104ad7b5e5f957315e3c4b190"
+  },
+  {
+    "file": "apps/web/src/components/inventory-filter-popup-host.ts",
+    "sha256": "a3f2d411139ff7b00085d3608adb97b233f0a64f274b4afaec9a30ff097cda24"
+  },
+  {
+    "file": "apps/web/src/components/inventory-filter-source-provenance.json",
+    "sha256": "e38aa9a737e5fcc148c330f808b9a38de4c25f3bebeaef6d161de33137eb67aa"
+  },
+  {
+    "file": "apps/web/src/components/product-candidate-action.css",
+    "sha256": "341dd44945a0d10b4afd783ba3291fadf1e59a4798db77b1e471e1b7fe6f71a8"
+  },
+  {
+    "file": "apps/web/src/components/product-candidate-action.tsx",
+    "sha256": "4558483ceb53abea32b1ac0548a5b3527d6b9c3fc925f860ee7a5cfbd5383dc0"
+  },
+  {
+    "file": "apps/web/src/components/product-candidate-preview.tsx",
+    "sha256": "9938e888498d4575f111cc9666cd5148bd002343c85445573e968ff2936ddbe9"
+  },
+  {
+    "file": "apps/web/src/components/product-candidate-styles.test.ts",
+    "sha256": "72487037550339cf3515af4eca4d91ba4fad522ad121ec7c5337a07f9f3926c6"
+  },
+  {
+    "file": "apps/web/src/components/product-candidate-styles.ts",
+    "sha256": "56d7cfd83f0d1c2196c374d61931328dff6217aa68196c893fbd3ba1f0594199"
+  },
+  {
+    "file": "apps/web/src/components/use-inventory-candidates.ts",
+    "sha256": "8fe50cff10cbfc85c4f04c61a732b7513e01097727cec64e06e616f79f57ae84"
+  },
+  {
+    "file": "apps/web/src/demo-controls/README.md",
+    "sha256": "e004a71caaa0e0215080b4dae47f5cff4c1b55f98e0f8178ba1c6b2fbf379c35"
+  },
+  {
+    "file": "apps/web/src/demo-controls/category-branch-model.test.ts",
+    "sha256": "6ed46b50652f78d675b663e5389c6405d95b8a7c4ae15e8bea6922c1a16a95da"
+  },
+  {
+    "file": "apps/web/src/demo-controls/category-branch-model.ts",
+    "sha256": "df4db1066ae988513d46fa941f53457939b8c5ac4b38fa35fca5837137e4e5d7"
+  },
+  {
+    "file": "apps/web/src/demo-controls/category-branch-source-provenance.json",
+    "sha256": "4da08360ca81d42cf868fe94282096becdce26e1149b37386361b9ea4f3cdfe8"
+  },
+  {
+    "file": "apps/web/src/demo-controls/multi-select-action.tsx",
+    "sha256": "2306df59a4fdc48b3865a5a60681649bb7391fed6a72f93362a2cbf25038e304"
+  },
+  {
+    "file": "apps/web/src/demo-controls/multi-select-contract.ts",
+    "sha256": "2ce2f78db2e0ef6eeba6b6e087286fccaa0e50d4761164130b54a667b0c381b2"
+  },
+  {
+    "file": "apps/web/src/demo-controls/multi-select.css",
+    "sha256": "6ff8eb366d50668c5391195d672a06ddf36f07304e358a2562dd5536eeb5ad2b"
+  },
+  {
+    "file": "apps/web/src/demo-controls/tests/category-branch-entry.tsx",
+    "sha256": "083c1318e0a3772002347fbc7e582ea7de7b24e780cb8b15f469356b28d9448d"
+  },
+  {
+    "file": "apps/web/src/demo-controls/tests/run-category-branch-dom-tests.mjs",
+    "sha256": "8695b48ab856064e6fe132bb110f0a093b087426c8c8e2b861341e649bc932d7"
+  },
+  {
+    "file": "apps/web/src/development-host/tests/run-build-check.mjs",
+    "sha256": "bd1a34d1654425672124ac681186e446ac1547768f88737c0aaac4c3edb3c392"
+  },
+  {
+    "file": "apps/web/src/development-host/tests/run-dom-tests.mjs",
+    "sha256": "8d5fb9af07a73c2c6763e62030c46399f947938073374cf04ce885170a545e43"
+  },
+  {
+    "file": "apps/web/src/inventory/contracts.ts",
+    "sha256": "15f65e6bbd035ce38824a433c556521b4db20e0e7d1b205486d6a9dcea169cac"
+  },
+  {
+    "file": "apps/web/src/inventory/inventory-page.tsx",
+    "sha256": "2d448f0f8f4ba4218f62de951f8f85fc8cdf2ee4b91f7d92cc933691d5be1979"
+  },
+  {
+    "file": "apps/web/src/inventory/inventory.css",
+    "sha256": "576c5cc4907dde9809b8c2d32094200a677c76c9aeb9f5ba23438b1ec9064d03"
+  },
+  {
+    "file": "apps/web/src/inventory/model.test.ts",
+    "sha256": "bc6e7c792e2a69d83e6efae883f1216cbec057a0b6f543ee0de240260a321cdb"
+  },
+  {
+    "file": "apps/web/src/inventory/product-contracts.ts",
+    "sha256": "1a5ed625dcc69b65aa844e66cddd6855cf1051d4cd3fcbe675602ec3e2197027"
+  },
+  {
+    "file": "apps/web/src/inventory/product-model.test.ts",
+    "sha256": "4e2dc5e8a7d60e17c276d9f774bdcd78eb659d773363c621fc85c76ea9cfaee4"
+  },
+  {
+    "file": "apps/web/src/inventory/product-model.ts",
+    "sha256": "385d063339966593aa02a5c4e6c3c389b3a75a351dd0fe568d4333ee94ee33dc"
+  },
+  {
+    "file": "apps/web/src/inventory/tests/product-candidate-layout-entry.tsx",
+    "sha256": "56a3447fe89230ccbd8e9e1bfa965a0992213839564c72514051b094e1647bc6"
+  },
+  {
+    "file": "apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs",
+    "sha256": "f7376cadd074a392a75b30fa28d5e9786d1ba94d5581c61cdc36512d56b25320"
+  },
+  {
+    "file": "apps/web/src/inventory/tests/run-product-candidate-layout-dom-tests.mjs",
+    "sha256": "dc3155a4b64ab374b3ab6675298dd8eb53d74101f68ce641af178fc7bcb0746c"
+  },
+  {
+    "file": "apps/web/src/inventory/tests/run-product-drawer-lifecycle-dom-tests.mjs",
+    "sha256": "ce09c90d8726a4f2121f7af62540fefd7001b1ec23da031493ac5d9dcb914b1a"
+  },
+  {
+    "file": "apps/web/src/inventory/tests/run-settings-popup-dom-tests.mjs",
+    "sha256": "0740c469b023f043fd55aefa3726306e2870ee87e63acb074140d52295ffe1df"
+  },
+  {
+    "file": "apps/web/src/transfers/tests/run-dom-tests.mjs",
+    "sha256": "46e9b0917e35bcde109d7b2f8ab055330131ca3f7ddc8cc3a9b995b3eec7250c"
+  },
+  {
+    "file": "apps/web/src/transfers/tests/run-frozen-source-check.mjs",
+    "sha256": "cac1f555567545e10e2e8e02137fcebaf102653add24ada413354a6ef6142845"
+  },
+  {
+    "file": "apps/web/src/transport/http-readers.test.ts",
+    "sha256": "55db846c886c89c793e49314836d13abc152b61120d8d133ad0dfe63f7ef7e36"
+  },
+  {
+    "file": "apps/web/src/transport/inventory-http-reader.ts",
+    "sha256": "01e7b0edfc58ad021aa29e92e0a49e4ea94117b7adef61754293953e94a6f176"
+  },
+  {
+    "file": "apps/web/src/transport/response-validation.ts",
+    "sha256": "88a511142299fb8bdbcd0d6297487a4f556fa1ade4c8e24ebcdd2637b677fa77"
+  },
+  {
+    "file": "apps/web/tests/run-dom-tests.mjs",
+    "sha256": "903e4d3d7661ce306a43ae3079070d0421697db62f9f6282e0473fb6b2feba81"
+  },
+  {
+    "file": "package.json",
+    "sha256": "df63069b535bf97400a09b6dd36bae8fb9f081fec389eb53a1c4be75e29e43f9"
+  },
+  {
+    "file": "packages/application/src/inventory-ledger-query-service.ts",
+    "sha256": "da81db41d026fd9e59fde6941f3c5bbb0876beb305394051950b9560558ac5c3"
+  },
+  {
+    "file": "packages/application/src/inventory-query-contracts.ts",
+    "sha256": "b0df511ab37c7816135cac931eb14fbfaf2a99bc63d6f25d3ae024a0007c934d"
+  },
+  {
+    "file": "packages/application/src/inventory-query-response.ts",
+    "sha256": "2868053daf7bcce2bd4fbaa731bdfdc434f72f19e02a326e5c1861d9cdc90f8c"
+  },
+  {
+    "file": "packages/application/src/inventory-query-validation.ts",
+    "sha256": "6fddc0d9044395532eac68cfe15e31e64a85f30ec88b9713ee581524ad599bec"
+  },
+  {
+    "file": "packages/application/src/product-query-ports.ts",
+    "sha256": "6400fa9347b990669a53f34e5e6891f818b62dba98a1588629ddba762e36cb6c"
+  },
+  {
+    "file": "tests/integration/http-read-acceptance.ts",
+    "sha256": "154618e10c4e19bc49003300439193f387ba21e0e50ea67cf41d298de3c61168"
+  },
+  {
+    "file": "tests/integration/native-http-read-acceptance.ts",
+    "sha256": "261e1bc211b629c7f8cd25b98494aea874638d0c45b931b3892dfcfb0bd3d186"
+  },
+  {
+    "file": "tests/integration/sparse-acceptance.ts",
+    "sha256": "7fd06de31fbdf2fc942a6f50f991da2416e624f3acfc4107a51513bce5fd0ffe"
+  },
+  {
+    "file": "tests/inventory-query-postgres-protocol.test.ts",
+    "sha256": "543bdda0967f241d060b1a4c03cbecaa5f4848393e6f86baf972f6a59c4be8a3"
+  },
+  {
+    "file": "tests/inventory-query.test.ts",
+    "sha256": "e0e230d9f1b9dc86aee54d473ba0fc1fe453a13ce0c31088caef42e1ca1d3354"
+  },
+  {
+    "file": "tests/native-read-authorization-postgres-protocol.test.ts",
+    "sha256": "afa3a37f98c74d1a565d039999e387de69c196dd78c08811081e2f7bdc5dee1b"
+  },
+  {
+    "file": "tests/product-query-postgres-protocol.test.ts",
+    "sha256": "f23efb863de3928dc8a9a41ae2d9b61138b9b30f0dcfb25f7e5c637428399d7d"
+  },
+  {
+    "file": "tests/product-query.test.ts",
+    "sha256": "51edb22c8ed0fc16cc52081a3647be514bcf191717bc28fe4f0101c04641f745"
+  },
+  {
+    "file": "tests/support/synthetic-inventory-query.ts",
+    "sha256": "a7389ecdad780132b6971424bb4f9f1ffaf93c6034de4cf50980a0205356837a"
+  }
+]

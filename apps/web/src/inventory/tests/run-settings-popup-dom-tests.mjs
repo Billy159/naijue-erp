@@ -9,7 +9,7 @@ import { JSDOM } from 'jsdom';
 // verifies event/focus/lifecycle contracts, not browser geometry or pixel parity.
 const here = path.dirname(fileURLToPath(import.meta.url));
 const temporary = await mkdtemp(path.join(here, '.settings-popup-'));
-const dom = new JSDOM('<!doctype html><style data-inventory-inline data-demo-single-select-inline></style><div id="root"></div><button id="outside">outside</button>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
+const dom = new JSDOM('<!doctype html><style data-inventory-inline data-demo-single-select-inline data-demo-multi-select-inline data-inventory-product-select-inline></style><div id="root"></div><button id="outside">outside</button>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
 for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLButtonElement', 'HTMLDialogElement', 'HTMLIFrameElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'Element', 'SVGElement', 'MutationObserver', 'ShadowRoot', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
 Object.defineProperty(globalThis, 'navigator', { configurable: true, value: dom.window.navigator });
 dom.window.matchMedia = query => ({ matches: false, media: query, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {}, dispatchEvent() { return true; } });
@@ -42,6 +42,7 @@ try {
   const settle = async () => act(async () => { await new Promise(resolve => setTimeout(resolve, 20)); });
   const render = async strict => act(async () => root.render(strict ? h(StrictMode, null, h(InventoryPageView, { scope, reader, productReader })) : h(InventoryPageView, { scope, reader, productReader })));
   const click = async element => { assert.ok(element); await act(async () => element.click()); };
+  const type = async (input, value) => act(async () => { Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, value); input.dispatchEvent(new Event('input', { bubbles: true })); });
   const button = text => [...host.querySelectorAll('button')].find(element => element.textContent.trim() === text);
   const popup = () => host.querySelector('.iw-settings');
   const trigger = () => button('显示设置');
@@ -84,28 +85,28 @@ try {
 
     // With a genuine pending candidate, clicking settings via pointerdown uses
     // its existing outside lifecycle. This patch must not start candidate reads.
-    await click(host.querySelector('.iw-product-field .iw-control')); await settle();
-    const beforeSettings = reads.length;
+    await click(host.querySelector('.iw-product-field input')); await settle(); await type(host.querySelector('.iw-product-field input'), 'TEST'); await act(async () => { await new Promise(resolve => setTimeout(resolve, 220)); });
+    const beforeSettings = reads.length; const beforeSettingsProduct = productReads.length;
     await pointer(trigger()); await click(trigger());
-    assert.equal(!!host.querySelector('.iw-product-field [role=dialog]'), false);
-    assert.ok(popup()); assert.equal(reads.length, beforeSettings);
-    await pointer(host.querySelector('.iw-product-field .iw-control'));
+    assert.equal(host.querySelector('.iw-product-field .arco-select')?.getAttribute('aria-expanded'), 'false');
+    assert.ok(popup()); assert.equal(reads.length, beforeSettings); assert.equal(productReads.length, beforeSettingsProduct);
+    await pointer(host.querySelector('.iw-product-field input'));
     assert.equal(!!popup(), false); assert.deepEqual(counts(), idle);
     await act(async () => root.render(null)); await settle();
     // Candidate read above is expected once. Separate from display-only actions.
-    assert.ok(reads.every(read => read.kind === 'product')); reads.length = 0;
+    assert.ok(reads.every(read => read.kind === 'product')); reads.length = 0; productReads.length = 0;
   }
 
   await render(true); const idle = counts();
   await click(trigger()); await act(async () => context.replaceIdentity(identity('2')));
-  assert.equal(!!popup(), false); assert.equal(!!host.querySelector('form'), false); assert.deepEqual(counts(), idle);
+  assert.equal(!!popup(), false); assert.equal(!!host.querySelector('form'), false); assert.deepEqual(counts(), { pointerdown: 0, click: 0, keydown: 0 });
   outside.focus(); assert.equal((await escape(outside)).defaultPrevented, false);
   scope = context.createScope('TEST-SETTINGS-RESTORED'); await render(true);
   assert.equal(trigger().getAttribute('aria-expanded'), 'false'); assert.equal(!!popup(), false);
   await click(trigger()); await click(button('关闭')); assert.equal(document.activeElement === trigger(), true);
   await click(trigger()); await act(async () => root.render(null));
   assert.equal(scope.active, true, 'Settings unmount must not dispose the caller-owned scope');
-  assert.deepEqual(counts(), idle); assert.equal((await escape(outside)).defaultPrevented, false);
+  assert.deepEqual(counts(), { pointerdown: 0, click: 0, keydown: 0 }); assert.equal((await escape(outside)).defaultPrevented, false);
   await render(true); assert.equal(!!popup(), false); await click(trigger()); assert.ok(popup());
   await click(button('关闭')); assert.equal(reads.length, 0); assert.equal(productReads.length, 0); await act(async () => context.clear());
   console.log('PASS settings identity/unmount: scope abort resets visibility/removes listeners synchronously, restored scopes never reopen stale intent, unmount preserves the parent scope, a fresh StrictMode mount still opens/closes. No inventory/product prefetch.');

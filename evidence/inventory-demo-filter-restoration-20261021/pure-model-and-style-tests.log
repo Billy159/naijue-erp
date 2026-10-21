@@ -1,0 +1,16 @@
+✔ candidate window is idle until explicitly started, bounded20, selected IDs/categories preserved, no next-page prefetch (13.311239ms)
+✔ candidate all is proven only by one complete unsearched page, never accumulated or searched subset (1.134602ms)
+✔ candidate search and scope disposal abort immediately and cannot publish late data (4.07182ms)
+✔ candidate rendering window stops at200 without pretending exactTotal is truncated (10.907973ms)
+✔ candidate drift, duplicate identities and malformed known category relationships fail closed (1.735468ms)
+✔ product search stylesheet has one action-owned relative URL and releases its link (4.323131ms)
+✔ closed pending product style load rejects, cannot publish late load or retain handlers (0.8923ms)
+✔ product style errors are retryable, and only actual portable-inline marker skips the link (0.839732ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 644.922813

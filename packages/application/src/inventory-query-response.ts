@@ -134,12 +134,22 @@ export function checkedCandidateSnapshot(value: unknown, query: InventoryCandida
   if (row.page !== query.page) reject();
   const exactTotal = numberValue(row.exactTotal, 0, reject);
   const items = list(row.items, 20).map((item): InventoryQueryCandidate => {
-    const candidate = record(item, ["id", "label"], ["disabled", "parentLabel", "depth"], reject);
+    const required = query.kind === "product" ? ["id", "label", "code", "name"]
+      : query.kind === "category" ? ["id", "label", "parentId", "depth"] : ["id", "label"];
+    const candidate = record(item, required, query.kind === "category" ? ["disabled", "parentLabel"] : ["disabled"], reject);
     const id = idValue(query.kind, candidate.id, reject); const label = textValue(candidate.label, reject);
     if (query.kind === "warehouse" && !scope.warehouses.some(warehouse => warehouse.id === id && warehouse.label === label)) reject();
     if (Object.hasOwn(candidate, "disabled") && typeof candidate.disabled !== "boolean") reject();
-    if (Object.hasOwn(candidate, "depth") && candidate.depth !== 0 && candidate.depth !== 1) reject();
-    return Object.freeze({ id, label, ...(Object.hasOwn(candidate, "disabled") ? { disabled: candidate.disabled as boolean } : {}),
+    if (query.kind === "category") {
+      if (candidate.depth !== 0 && candidate.depth !== 1) reject();
+      const parentId = candidate.parentId === null ? null : idValue("category", candidate.parentId, reject);
+      if (parentId === id || (parentId === null) !== (candidate.depth === 0)
+        || Object.hasOwn(candidate, "parentLabel") !== (parentId !== null)) reject();
+    }
+    return Object.freeze({ id, label,
+      ...(query.kind === "product" ? { code: textValue(candidate.code, reject), name: textValue(candidate.name, reject) } : {}),
+      ...(query.kind === "category" ? { parentId: candidate.parentId === null ? null : idValue("category", candidate.parentId, reject) } : {}),
+      ...(Object.hasOwn(candidate, "disabled") ? { disabled: candidate.disabled as boolean } : {}),
       ...(Object.hasOwn(candidate, "parentLabel") ? { parentLabel: textValue(candidate.parentLabel, reject) } : {}),
       ...(Object.hasOwn(candidate, "depth") ? { depth: candidate.depth as 0 | 1 } : {}) });
   });

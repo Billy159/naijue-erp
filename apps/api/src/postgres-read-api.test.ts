@@ -25,7 +25,7 @@ const TOKEN = Buffer.alloc(32, 23).toString("base64url");
 const PASSWORD = "SYNTHETIC only password";
 const SALT = Buffer.alloc(16, 19);
 const HASH = `naijue:scrypt:1:32768:8:1:${SALT.toString("hex")}:${scryptSync(PASSWORD, SALT, 64, { N: 32768, r: 8, p: 1, maxmem: 64 * 1024 * 1024 }).toString("hex")}`;
-const inventoryInput = () => ({ filter: { products: [], category: null, warehouses: [], suppliers: [], fits: [], seasons: [] }, page: 1, pageSize: 100 });
+const inventoryInput = () => ({ filter: { products: [], categories: [], warehouses: [], suppliers: [], fits: [], seasons: [] }, page: 1, pageSize: 100 });
 const salesInput = (): SalesListQuery => ({ filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: null }, page: 1, pageSize: 20 });
 const transferInput = () => ({ filter: { startDate: null, endDate: null, statuses: [], fromWarehouseIds: [], toWarehouseIds: [], number: null }, page: 1, pageSize: 20 });
 const warehouse = { id: ids.warehouse, hallId: ids.hall, label: "SYNTHETIC warehouse" };
@@ -168,7 +168,7 @@ test("SYNTHETIC native profile: one lazy pool creates genuine read policies and 
   for (const [url, payload, status] of [
     ["/sales/query", salesInput(), 200], ["/transfers/query", transferInput(), 200],
     ["/products/basics/query", { productId: sid("product", 130) }, 200], ["/inventory/query", inventoryInput(), 503],
-    ["/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryId: null }, 503],
+    ["/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryIds: [] }, 503],
     ["/inventory/ledger/query", { warehouseId: ids.warehouse, skuId: ids.sku, pageSize: 20, after: null }, 404]
   ] as const) {
     const response = await f.post(url, payload, { "x-role": "ADMIN", "x-hall-id": sid("hall", 131) });
@@ -287,7 +287,7 @@ test("SYNTHETIC composition: all read families resolve the same current PG sessi
   const cases = [["/sales/query", salesInput(), 200], ["/transfers/query", transferInput(), 200],
     ["/products/basics/query", { productId }, 200], ["/products/specifications/query", { productId }, 200], ["/products/images/query", { productId }, 200],
     ["/products/image/query", { productId, imageId: sid("operation", 122) }, 404], ["/inventory/query", inventoryInput(), 503],
-    ["/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryId: null }, 503],
+    ["/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryIds: [] }, 503],
     ["/inventory/ledger/query", { warehouseId: ids.warehouse, skuId: ids.sku, pageSize: 20, after: null }, 404]] as const;
   for (const [url, payload, status] of cases) {
     const response = await f.post(url, payload); assert.equal(response.statusCode, status, `${url}: ${response.body}`);

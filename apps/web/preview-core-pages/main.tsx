@@ -10,6 +10,7 @@ import './preview.css';
 // fixture-style callback is not a production stylesheet/loading capability.
 import '../src/sales/detail.css';
 import '../src/demo-controls/single-select.css';
+import '../src/components/product-candidate-action.css';
 const loadInlineSalesDetailStyles = async (): Promise<void> => {};
 
 type Route = 'inventory' | 'sales' | 'transfers';

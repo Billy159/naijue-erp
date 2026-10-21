@@ -61,7 +61,7 @@ function nativeOptions(settings: IntegrationSettings): PostgresReadApiOptions {
 const salesInput = (): SalesListQuery => ({ filter: { startDate: null, endDate: null, statuses: [], businessTypes: [], hallIds: [], salespersonIds: [], customerIds: [], warehouseIds: [], number: PREFIX }, page: 1, pageSize: 20 });
 const transferInput = () => ({ filter: { startDate: null, endDate: null, statuses: [], fromWarehouseIds: [], toWarehouseIds: [],
   number: "SYNTHETIC_NATIVE_TRANSFER_" }, page: 1, pageSize: 20 });
-const inventoryInput = () => ({ filter: { products: [{ id: ids.product, label: "CLIENT PRODUCT LABEL" }], category: null,
+const inventoryInput = () => ({ filter: { products: [{ id: ids.product, label: "CLIENT PRODUCT LABEL" }], categories: [],
   warehouses: [], suppliers: [], fits: [], seasons: [] }, page: 1, pageSize: 100 });
 
 /** Explicit fixture maintenance only. Sanitize raw failing-row details, which can include a stored password hash.
@@ -271,7 +271,7 @@ export async function runNativeHttpReadAcceptance(t: TestContext, pool: Pool, se
           && inventory.allMatchesTotal.knownQuantity === "4", "all-warehouse native inventory includes actual A/B quantities");
         ok(inventory.products[0].colorFits.every((variant: { rows: { warehouse: { id: string } }[] }) => variant.rows.length === 2
           && variant.rows.some(row => row.warehouse.id === ids.toWarehouse)), "salesperson retains other-hall disabled historical warehouse rows");
-        const candidates = await success(fixture, "/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryId: null });
+        const candidates = await success(fixture, "/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryIds: [] });
         ok(candidates.exactTotal === 2 && candidates.items.length === 2 && candidates.items.some((item: { id: string }) => item.id === ids.toWarehouse),
           "native candidates retain disabled other-hall warehouse identity");
         const ledger = await success(fixture, "/inventory/ledger/query", { warehouseId: ids.toWarehouse, skuId: ids.sku, pageSize: 20, after: null });
@@ -341,7 +341,7 @@ export async function runNativeHttpReadAcceptance(t: TestContext, pool: Pool, se
       const signal = new AbortController().signal;
       for (const attempt of [() => policies.sales.authorize(stale, { kind: "list", parameters: salesInput() }, signal),
         () => policies.inventory.authorize(stale, { kind: "inventory", parameters: { page: 1, pageSize: 100,
-          filter: { productIds: [], categoryId: null, warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] } } }, signal),
+          filter: { productIds: [], categoryIds: [], warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] } } }, signal),
         () => policies.products.authorize(stale, { kind: "basics", parameters: { productId: ids.product } }, signal)]) {
         let rejected = false;
         try { await attempt(); } catch (error) { rejected = error instanceof Error && "code" in error && error.code === "FORBIDDEN"; }

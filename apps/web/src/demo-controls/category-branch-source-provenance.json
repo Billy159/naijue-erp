@@ -1,0 +1,43 @@
+{
+  "frozenCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "frozenFile": "frontend/inventory-category.jsx",
+  "frozenSha256": "e76e01dfd849e11eea23c3867d2185eb5fe512a3dc883045029c01d7d6d74a1e",
+  "sourceRanges": [
+    {
+      "lines": [
+        13,
+        33
+      ],
+      "sha256": "330a39cfd7dbf22ce4a7ae0bf40fe35f038278377cea41c8a5a6a29efed61a7f",
+      "use": "Shared trigger/tag/popup declarations; category-specific320px list, native switcher/indentation and title hover."
+    },
+    {
+      "lines": [
+        50,
+        65
+      ],
+      "sha256": "3e4a66d459ce7fb67a24470ea859293e784408ff59ba7fd29b55c5eef60a7dff",
+      "use": "Native-parent tree construction only; no synthetic parent rows."
+    },
+    {
+      "lines": [
+        93,
+        121
+      ],
+      "sha256": "e769c5086669a3fb07e2b3b9e1b7ba87ec2270e8ddbc2b0ec6db7db2233e72f2",
+      "use": "Original non-strict SHOW_PARENT/standaloneALL behavior is inspected, not blindly applied to an incomplete native candidate page."
+    }
+  ],
+  "nativeContract": "Existing authorized bounded category candidates and positive categoryIds. A selected native parent means its whole server-defined branch. No new query API, schema, table, permission or write changes in this shared-control checkpoint.",
+  "reuse": "Existing shared TreeSelect trigger/tag/lazy-style/ownership shell is unchanged for flat consumers. Opt-in category-branches uses the installed public Tree leaf through TreeSelect.dropdownRender to keep canonical tag IDs separate from projected known-child checks. No private TreeList cloning or component registry.",
+  "intentionalDifferences": [
+    "Strict selection with explicit canonical branch IDs instead of source non-strict SHOW_PARENT on a complete catalog. No halfchecks or completeness inferred from a partial candidate page.",
+    "Only real current loaded parents are nested; an absent parent is not fetched, injected or invented. Provider-owned orphan labels are preserved.",
+    "ALL is independent from every explicit positive category ID; it may include uncategorized rows. Category ALL-minus is refused even for a complete page, and positive IDs never normalize to unrestricted[].",
+    "A child already included by a selected parent cannot be individually excluded. A separate deliberate positive-only action may replace the branch. No exclusion API or loaded-window approximation.",
+    "Removing an explicit redundant child tag removes only that canonical token; the child remains visually covered by its selected native parent.",
+    "Disabled candidates cannot be newly added; retained explicit disabled tokens remain removable.",
+    "Known malformed parent cycles/self-links/unsupported depth fail closed visibly. No inference is made about unobserved ancestors."
+  ],
+  "verificationBoundary": "Pure model tests, real installed TreeSelect/Tree in synthetic JSDOM, source hashes and static CSS/graph checks only. No real-browser pixels/layout, performance, DB, production, or full frozen-Demo semantic parity acceptance."
+}

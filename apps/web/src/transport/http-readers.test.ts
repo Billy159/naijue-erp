@@ -12,10 +12,10 @@ import { createInventoryHttpReader, createProductHttpReader, HttpQueryError, typ
 const origin = 'https://erp.example.test';
 const identity = { accountId: 'TEST-ACCOUNT', sessionRevision: 'TEST-SESSION', permissionRevision: 'TEST-PERMISSION' };
 const inventoryParameters = (): InventoryParameters => ({ filter: emptyInventoryFilter(), page: 1, pageSize: 100 });
-const candidateParameters: CandidateParameters = { kind: 'product', search: '完整标签', page: 1, pageSize: 20, selectedIds: [], categoryId: null };
+const candidateParameters: CandidateParameters = { kind: 'product', search: '完整标签', page: 1, pageSize: 20, selectedIds: [], categoryIds: [] };
 const target = { productId: '00000000-0000-4000-8000-000000000001' };
 const imageTarget = { ...target, imageId: '00000000-0000-4000-8000-000000000002' };
-const basics: ProductBasics = { ...target, code: 'TEST-001', name: '测试商品', categoryLabel: null, yearLabel: null, seasonLabel: '原始季节标签', supplierLabel: null, systemCode: null };
+const basics: ProductBasics = { ...target, code: 'TEST-001', name: '测试商品', categoryLabel: null, yearLabel: null, seasonLabel: '原始季节标签', supplierLabel: null, systemCode: null, retailPrice: null };
 const specs: ProductSpecifications = { ...target, sizeGroup: { id: 'group', label: '上衣' }, colors: [{ id: 'blue', label: '蓝' }],
   fits: [{ id: 'Y', label: 'Y版（修身）' }, { id: 'A', label: 'A版（标准）' }], sizes: [{ id: 'size', label: '165/S' }],
   skus: [{ id: 'sku-Y', colorId: 'blue', fitId: 'Y', sizeId: 'size' }, { id: 'sku-A', colorId: 'blue', fitId: 'A', sizeId: 'size' }] };
@@ -49,7 +49,7 @@ async function flush(): Promise<void> { await new Promise<void>(resolve => setIm
 test('constructors are inert; exact same-origin POSTs use session credentials/no-store and only projected DTO fields', async () => {
   const calls: { url: string; init: RequestInit }[] = [];
   const fetch: QueryFetch = async (url, init) => { calls.push({ url, init }); return json(url.endsWith('/candidates/query')
-    ? { items: [{ id: target.productId, label: '完整标签', disabled: false, parentLabel: '父分类', depth: 1 }], exactTotal: 1, page: 1 } : inventoryPage()); };
+    ? { items: [{ id: target.productId, label: '完整标签', code: 'TEST-001', name: '测试商品', disabled: false }], exactTotal: 1, page: 1 } : inventoryPage()); };
   const reader = createInventoryHttpReader(options(fetch)); assert.equal(calls.length, 0);
   const parameters = { ...inventoryParameters(), actor: { role: 'admin' }, identity: { accountId: 'untrusted' } };
   const result = await reader.readInventory(read(parameters));
@@ -372,4 +372,46 @@ test('deadline cannot publish a success after synchronous JSON decode/parse or D
     const http = createHttpJsonQuery(options(async () => json(basics), { timeoutMs: 1 }));
     await assert.rejects(http.post('/products/basics/query', target, new AbortController().signal, value => { now = 2; return value; }), errorKind('timeout', 'QUERY_TIMEOUT'));
   });
+});
+
+test('category arrays and product projections cross HTTP explicitly, without scalar compatibility or label parsing', async () => {
+  const categoryIds = [imageTarget.imageId, target.productId]; const calls: RequestInit[] = [];
+  const product = { id: target.productId, label: 'display label is not a code/name parser input', code: 'ORIGINAL CODE', name: 'ORIGINAL NAME' };
+  const reader = createInventoryHttpReader(options(async (_url, init) => { calls.push(init); return json({ items: [product], exactTotal: 1, page: 1 }); }));
+  const response = await reader.readCandidates(read({ ...candidateParameters, categoryIds }));
+  assert.deepEqual(response.items[0], product); assert.deepEqual(JSON.parse(calls[0]!.body as string).categoryIds, categoryIds);
+  assert.ok(!Object.hasOwn(JSON.parse(calls[0]!.body as string), 'categoryId'));
+  for (const item of [{ id: target.productId, label: 'no projected columns' }, { ...product, code: '' }, { ...product, name: 12 }, { ...product, parentId: null }]) {
+    const malformed = createInventoryHttpReader(options(async () => json({ items: [item], exactTotal: 1, page: 1 })));
+    await assert.rejects(malformed.readCandidates(read(candidateParameters)), errorKind('malformed-response'));
+  }
+  const parameters = { ...inventoryParameters(), filter: { ...emptyInventoryFilter(), categories: categoryIds.map(id => ({ id, label: 'ignored label' })) } };
+  const inventory = createInventoryHttpReader(options(async (_url, init) => { calls.push(init); return json(inventoryPage()); }));
+  await inventory.readInventory(read(parameters)); const body = JSON.parse(calls[1]!.body as string);
+  assert.deepEqual(body.filter.categories, parameters.filter.categories); assert.ok(!Object.hasOwn(body.filter, 'category'));
+});
+
+test('category native parent identity is required and cannot be replaced by matching labels', async () => {
+  const parameters = { ...candidateParameters, kind: 'category' as const };
+  const root = { id: target.productId, label: 'same label', parentId: null, depth: 0 };
+  const child = { id: imageTarget.imageId, label: 'same label', parentId: target.productId, parentLabel: 'same label', depth: 1 };
+  for (const items of [[root], [child]]) {
+    const reader = createInventoryHttpReader(options(async () => json({ items, exactTotal: 1, page: 1 })));
+    assert.deepEqual((await reader.readCandidates(read(parameters))).items, items);
+  }
+  for (const item of [{ id: target.productId, label: 'root', depth: 0 }, { ...root, parentId: root.id }, { ...root, depth: 1 }, { ...child, parentLabel: undefined }, { ...root, parentLabel: 'not a root field' }, { ...child, code: 'not a category column' }]) {
+    const reader = createInventoryHttpReader(options(async () => json({ items: [item], exactTotal: 1, page: 1 })));
+    await assert.rejects(reader.readCandidates(read(parameters)), errorKind('malformed-response'));
+  }
+});
+
+test('retail price HTTP field preserves null versus exact zero and large decimal text; malformed or missing never defaults', async () => {
+  for (const retailPrice of [null, '0.00', '9007199254740993.01', '9999999999999999.99']) {
+    const reader = createProductHttpReader(options(async () => json({ ...basics, retailPrice })));
+    assert.equal((await reader.readProductBasics(read(target)))!.retailPrice, retailPrice);
+  }
+  for (const retailPrice of [undefined, 0, '0', '0.0', '-0.00', '-1.00', '1.234', '1e2', '01.00', '10000000000000000.00']) {
+    const reader = createProductHttpReader(options(async () => json({ ...basics, retailPrice })));
+    await assert.rejects(reader.readProductBasics(read(target)), errorKind('malformed-response'));
+  }
 });

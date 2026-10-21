@@ -73,6 +73,15 @@ try {
   for (const file of multiStyleInputs) assert.doesNotMatch(file, /dist\/css\/arco\.css|\/transfers\/|\/sales\//, 'Shared action CSS contains component leaves, not route/global styles');
   const emittedMultiAction = await readFile(path.resolve(workingDirectory, multiCopies[0][0]), 'utf8');
   assert.match(emittedMultiAction, /multi-select\.css/, 'The shared action resolves its separately emitted CSS beside its chunk');
+  const productSearch = closure(entryFor('../components/product-candidate-action.tsx'));
+  assert.ok([...inputsOf(productSearch)].some(file => file.endsWith('/es/Select/index.js')), 'Product finder uses the source Select leaf');
+  for (const file of inputsOf(inventoryRoute)) assert.doesNotMatch(file, /product-candidate-(?:action|styles)\.(?:tsx?|css)$/, 'Inventory defers product search action and styles');
+  const productStyles = byAbsolute.get(path.join(outdir, 'chunks/product-candidate-action.css')); assert.ok(productStyles);
+  assert.ok(Object.keys(outputs[productStyles].inputs).some(file => file.endsWith('/components/product-candidate-action.css')));
+  for (const file of Object.keys(outputs[productStyles].inputs)) assert.doesNotMatch(file, /dist\/css\/arco\.css|\/es\/style\/index\.css/, 'Product search imports leaves only, not Arco global reset');
+  assert.match(await readFile(path.resolve(workingDirectory, productStyles), 'utf8'), /inv-menu-grid/);
+  const productActionOutput = [...productSearch].find(name => Object.keys(outputs[name].inputs).some(file => file.endsWith('/components/product-candidate-styles.ts')));
+  assert.ok(productActionOutput); assert.match(await readFile(path.resolve(workingDirectory, productActionOutput), 'utf8'), /product-candidate-action\.css/);
   const startupInputs = inputsOf(startup);
   for (const file of startupInputs) assert.doesNotMatch(file, /\/(?:inventory|sales|parties|transfers)\/|synthetic|preview\//);
   for (const [name, route] of [['startup', startup], ['inventory', inventoryRoute], ['sales', salesRoute]]) {

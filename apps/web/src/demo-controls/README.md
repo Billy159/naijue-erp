@@ -189,3 +189,38 @@ artifact without rebuilding it. It checks authored display/line-height, hidden n
 inputs, source search/trigger/tag sizes and local dependency aliases. JSDOM cannot
 prove flex-item blockification, row-center pixels, clipping, halo size or resolved
 SVG checkmark color. Actual-browser comparison is still required before acceptance.
+
+### Optional native category branches
+
+`hierarchy: 'category-branches'` opts into the frozen category tree presentation;
+flat sales/transfer callers omit it and keep their existing behavior. Options may
+carry native `parentId` and `disabled` metadata. `category-branch-source-provenance.json`
+records the separate frozen category source and the bounded-contract departures.
+
+The shared installed TreeSelect still owns trigger/search/tags. Its public
+`dropdownRender` hosts the same installed public Tree leaf with strict checks:
+canonical tag/query IDs stay separate from known child coverage. A selected native
+parent covers its server-defined branch; no browser catalog enumeration is needed.
+Only present current parent nodes are nested. Missing parents remain standalone
+provider-labelled options, never invented rows or extra reads. Known invalid
+self-links/cycles/depth fail closed visibly rather than showing guessed hierarchy.
+
+ALL is standalone and may include uncategorized rows, so a category page cannot
+prove unrestricted-minus-one. Selecting every positive ID never normalizes to[]
+and neither complete nor partial pages approximate ALL-minus. A covered child
+cannot exclude its selected parent branch; the limitation callback receives
+`'branch-exclusion'`. The inventory adapter explains this and offers a separate,
+deliberate positive-only action. Strict checks never infer a parent or half-check
+because all loaded children happen to be selected. This intentionally does not
+claim full source non-strict/SHOW_PARENT semantics on incomplete catalogs.
+
+Disabled options cannot be newly added, while explicit retained tokens remain
+removable. Removing a redundant child tag removes that token only; its checkbox
+stays covered by a selected parent. Parent selection removes only provably
+redundant known child tokens and preserves unknown retained IDs. Live activation
+tickets reject public Tree callbacks retained across close/reopen/unmount.
+
+`category-branch-model.test.ts` covers pure graph/selection semantics, and
+`run-category-branch-dom-tests.mjs` mounts real TreeSelect/Tree leaves with the
+actual component-only stylesheet. These checks cover behavior/authored cascade,
+not browser geometry/pixels, performance, real data or full Demo parity.

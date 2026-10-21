@@ -7,7 +7,7 @@ import type { ProductBasics, ProductSpecifications } from './product-contracts.t
 
 const identity = { accountId: 'SYNTHETIC-PRODUCT', sessionRevision: '1', permissionRevision: '1' };
 const parameters = { productId: 'test-product-1' };
-const basics: ProductBasics = { productId: parameters.productId, code: 'TEST-001', name: '测试上衣1', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null };
+const basics: ProductBasics = { productId: parameters.productId, code: 'TEST-001', name: '测试上衣1', categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null };
 const specs: ProductSpecifications = { productId: parameters.productId, sizeGroup: { id: 'test-group', label: '测试上衣' }, colors: [{ id: 'test-blue', label: '测试蓝' }], fits: [{ id: 'test-Y', label: 'Y版（修身）' }, { id: 'test-A', label: 'A版（标准）' }], sizes: [{ id: 'test-size', label: '165/S' }], skus: [{ id: 'test-sku-Y', colorId: 'test-blue', fitId: 'test-Y', sizeId: 'test-size' }, { id: 'test-sku-A', colorId: 'test-blue', fitId: 'test-A', sizeId: 'test-size' }] };
 
 test('product DTOs validate target identity and preserve same-color/size different FIT legal SKUs', () => {

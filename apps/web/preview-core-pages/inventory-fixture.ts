@@ -22,13 +22,13 @@ export function createInventoryFixture(report: ReportRead): InventoryReader {
     async readInventory(read) {
       await syntheticRead(read.signal, report, 'inventory');
       const { filter, page, pageSize } = read.parameters;
-      const visible = matches(filter.products, { id: product.id, label: `${product.code} ${product.name}` }) && (!filter.category || filter.category.id === category.id) && matches(filter.suppliers, supplier) && matches(filter.seasons, season) && (filter.fits.length === 0 || fits.some(fit => matches(filter.fits, fit))) && (filter.warehouses.length === 0 || warehouses.some(warehouse => matches(filter.warehouses, warehouse)));
+      const visible = matches(filter.products, { id: product.id, label: `${product.code} ${product.name}` }) && matches(filter.categories, category) && matches(filter.suppliers, supplier) && matches(filter.seasons, season) && (filter.fits.length === 0 || fits.some(fit => matches(filter.fits, fit))) && (filter.warehouses.length === 0 || warehouses.some(warehouse => matches(filter.warehouses, warehouse)));
       const item = syntheticProduct(filter);
       return { page, pageSize, exactTotalProducts: visible ? 1 : 0, products: visible && page === 1 ? [item] : [], warehouseLabels: warehouses.filter(warehouse => matches(filter.warehouses, warehouse)).map(warehouse => warehouse.label), allMatchesTotal: visible ? item.total : total([]), readReference: `SYNTHETIC-ONLY-COMPLETE-${account}` };
     },
     async readCandidates(read) {
       await syntheticRead(read.signal, report, 'inventoryCandidates');
-      const options: Record<CandidateKind, readonly Candidate[]> = { product: [{ id: product.id, label: `${product.code} ${product.name}` }], category: [{ ...category, depth: 0 }], warehouse: warehouses, supplier: [supplier], fit: fits, season: [season] };
+      const options: Record<CandidateKind, readonly Candidate[]> = { product: [{ id: product.id, label: `${product.code} ${product.name}`, code: product.code, name: product.name }], category: [{ ...category, depth: 0, parentId: null }], warehouse: warehouses, supplier: [supplier], fit: fits, season: [season] };
       const matching = options[read.parameters.kind].filter(item => item.label.toLowerCase().includes(read.parameters.search.toLowerCase()));
       return { page: read.parameters.page, exactTotal: matching.length, items: matching.slice((read.parameters.page - 1) * 20, read.parameters.page * 20) };
     },

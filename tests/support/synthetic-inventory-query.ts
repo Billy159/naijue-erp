@@ -10,8 +10,8 @@ export const inventoryScope: InventoryReadScope = { hallIds: [inventoryId("hall"
   { id: inventoryId("warehouse", 3), hallId: inventoryId("hall", 2), label: "SYNTHETIC WAREHOUSE" }
 ] };
 export const inventoryParameters = (page = 1, pageSize = 100) => ({ page, pageSize,
-  filter: { products: [], category: null, warehouses: [], suppliers: [], fits: [], seasons: [] } });
-export const candidateParameters = (page = 1) => ({ kind: "product", search: "", page, pageSize: 20, selectedIds: [], categoryId: null });
+  filter: { products: [], categories: [], warehouses: [], suppliers: [], fits: [], seasons: [] } });
+export const candidateParameters = (page = 1) => ({ kind: "product", search: "", page, pageSize: 20, selectedIds: [], categoryIds: [] });
 function total(known: bigint): InventoryStockTotal {
   return { knownQuantity: known.toString(), unknownCells: 0, completeness: "complete" };
 }
@@ -56,7 +56,9 @@ export function syntheticCandidateSnapshot(read: InventoryScopedRead<InventoryCa
   const all = read.parameters.kind === "warehouse" ? read.scope.warehouses : Array.from({ length: 23 }, (_, n) => ({ id: inventoryId(read.parameters.kind, 1000 + n), label: `SYNTHETIC CANDIDATE ${n}` }));
   const offset = (read.parameters.page - 1) * 20;
   return { readReference: "SYNTHETIC-CANDIDATE-SNAPSHOT-1", readiness: "ready", data: {
-    items: all.slice(offset, offset + 20).map(({ id, label }) => ({ id, label })), exactTotal: all.length, page: read.parameters.page
+    items: all.slice(offset, offset + 20).map(({ id, label }, n) => ({ id, label,
+      ...(read.parameters.kind === "product" ? { code: `SYNTHETIC-${String(offset + n).padStart(6, "0")}`, name: `SYNTHETIC PRODUCT ${offset + n}` } : {}),
+      ...(read.parameters.kind === "category" ? { parentId: null, depth: 0 as const } : {}) })), exactTotal: all.length, page: read.parameters.page
   } };
 }
 export function syntheticInventoryReader(count = 1): TrustedInventorySnapshotReader {

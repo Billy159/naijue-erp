@@ -40,3 +40,10 @@
 :where(.demo-multi-select .arco-icon-hover-size-mini,.demo-multi-select .arco-icon-hover-size-small)::before{height:20px;width:20px}
 :where(.demo-multi-select .arco-icon-hover-size-large,.demo-multi-select .arco-icon-hover-size-huge)::before{height:24px;width:24px}
 .demo-multi-select{--color-white:#fff;--border-radius-circle:50%}
+/* Frozen inventory-category.jsx uses genuine category switchers/indentation and
+ * a320px list. Strict branch semantics are an explicit bounded-API adaptation. */
+.demo-multi-select--category-branches .arco-tree{max-height:320px}
+.demo-multi-select--category-branches .arco-tree-node{padding-left:2px}
+.demo-multi-select--category-branches .arco-tree-node-switcher{display:flex}
+.demo-multi-select--category-branches .arco-tree-node-selected,.demo-multi-select--category-branches .arco-tree-node:hover{background:transparent}
+.demo-multi-select--category-branches .arco-tree-node-selected .arco-tree-node-title,.demo-multi-select--category-branches .arco-tree-node:hover .arco-tree-node-title{background:var(--ca-popover-hover);color:var(--ca-ink)}

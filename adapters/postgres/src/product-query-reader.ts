@@ -23,6 +23,11 @@ function text(value: unknown): string {
   const result = stringValue(value); requireDomain(result.trim().length > 0, "INVALID_DATABASE_VALUE", "Missing persisted product label"); return result;
 }
 function optionalText(value: unknown): string | null { const result = nullableString(value); return result === null ? null : text(result); }
+function retailPrice(value: unknown): string | null {
+  if (value === null) return null;
+  requireDomain(typeof value === "string" && /^(?:0|[1-9]\d{0,15})\.\d{2}$/.test(value), "INVALID_DATABASE_VALUE", "Invalid exact native retail price");
+  return value;
+}
 function id(kind: EntityKind, value: unknown): string { return entityId(kind, stringValue(value)); }
 function oneOrMissing(rows: readonly Record<string, unknown>[]): Record<string, unknown> | null {
   requireDomain(rows.length <= 1, "INVALID_DATABASE_VALUE", "Product target is not unique"); return rows[0] ?? null;
@@ -77,7 +82,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
   async readBasics(read: ProductScopedRead<ProductQuery>): Promise<ProductBasicsDto | null> {
     const parameters = parseProductQuery(read.parameters); this.validate(read, parameters);
     return this.snapshot(read.signal, async query => {
-      const row = oneOrMissing((await query(`SELECT p.id, p.product_code, p.name, p.year, p.system_item_code,
+      const row = oneOrMissing((await query(`SELECT p.id, p.product_code, p.name, p.year, p.system_item_code, p.retail_price::text,
         c.name AS category_name, se.name AS season_name, su.name AS supplier_name
         FROM naijue_erp.product p JOIN naijue_erp.product_category c ON c.id = p.category_id
         LEFT JOIN naijue_erp.season se ON se.id = p.season_id LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id
@@ -86,7 +91,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
       requireDomain(id("product", row.id) === parameters.productId, "INVALID_DATABASE_VALUE", "Mismatched product target");
       return { productId: parameters.productId, code: text(row.product_code), name: text(row.name), categoryLabel: text(row.category_name),
         yearLabel: row.year === null ? null : String(integerValue(row.year)), systemCode: optionalText(row.system_item_code),
-        seasonLabel: optionalText(row.season_name), supplierLabel: optionalText(row.supplier_name) };
+        seasonLabel: optionalText(row.season_name), supplierLabel: optionalText(row.supplier_name), retailPrice: retailPrice(row.retail_price) };
     });
   }
   async readSpecifications(read: ProductScopedRead<ProductQuery>): Promise<ProductSpecificationsDto | null> {

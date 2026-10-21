@@ -36,7 +36,7 @@ export function createSyntheticProductReader(options: { readonly delayMs?: numbe
     failNext(kind) { failure = kind; },
     async readProductBasics(read): Promise<ProductBasics> {
       const index = await prepare('base', read);
-      return { productId: read.parameters.productId, code: `TEST-${String(index).padStart(3, '0')}`, name: `测试上衣${index}`, categoryLabel: '测试服装 / 测试上衣', yearLabel: '2026（测试）', seasonLabel: index % 2 ? '测试春季' : '测试秋季', supplierLabel: index % 2 ? '测试供应商甲' : '测试供应商乙', systemCode: `TEST-SYSTEM-${index}` };
+      return { productId: read.parameters.productId, code: `TEST-${String(index).padStart(3, '0')}`, name: `测试上衣${index}`, categoryLabel: '测试服装 / 测试上衣', yearLabel: '2026（测试）', seasonLabel: index % 2 ? '测试春季' : '测试秋季', supplierLabel: index % 2 ? '测试供应商甲' : '测试供应商乙', systemCode: `TEST-SYSTEM-${index}`, retailPrice: null };
     },
     async readProductSpecifications(read): Promise<ProductSpecifications> {
       const index = await prepare('specs', read);

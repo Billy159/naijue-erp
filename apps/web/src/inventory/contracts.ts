@@ -8,7 +8,7 @@ export type CandidateKind = 'product' | 'category' | 'warehouse' | 'supplier' | 
 export interface Selection { readonly id: string; readonly label: string }
 export interface InventoryFilter {
   readonly products: readonly Selection[];
-  readonly category: Selection | null;
+  readonly categories: readonly Selection[];
   readonly warehouses: readonly Selection[];
   readonly suppliers: readonly Selection[];
   readonly fits: readonly Selection[];
@@ -25,9 +25,14 @@ export interface CandidateParameters {
   readonly page: number;
   readonly pageSize: 20;
   readonly selectedIds: readonly string[];
-  readonly categoryId: string | null;
+  readonly categoryIds: readonly string[];
 }
 export interface Candidate extends Selection {
+  /** Required on product candidates; source code/name are not derived from label. */
+  readonly code?: string;
+  readonly name?: string;
+  /** Required on category candidates; null is an actual root. */
+  readonly parentId?: string | null;
   readonly disabled?: boolean;
   readonly parentLabel?: string;
   readonly depth?: 0 | 1;
@@ -103,5 +108,5 @@ export interface InventoryActions {
   readonly onViewProduct?: (product: Selection) => void;
 }
 export function emptyInventoryFilter(): InventoryFilter {
-  return { products: [], category: null, warehouses: [], suppliers: [], fits: [], seasons: [] };
+  return { products: [], categories: [], warehouses: [], suppliers: [], fits: [], seasons: [] };
 }

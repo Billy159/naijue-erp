@@ -31,7 +31,7 @@ const salesInput = () => ({ filter: { startDate: null, endDate: null, statuses: 
 const transferInput = () => ({ filter: { startDate: null, endDate: null, statuses: [], fromWarehouseIds: [],
   toWarehouseIds: [], number: "SYNTHETIC_PG_TRANSFER_4600" }, page: 1, pageSize: 20 });
 const inventoryInput = (warehouseId = ids.warehouse) => ({ filter: { products: [{ id: ids.product, label: "SYNTHETIC ONLY PRODUCT" }],
-  category: null, warehouses: [{ id: warehouseId, label: "CLIENT LABEL IS NOT A GRANT" }], suppliers: [], fits: [], seasons: [] }, page: 1, pageSize: 100 });
+  categories: [], warehouses: [{ id: warehouseId, label: "CLIENT LABEL IS NOT A GRANT" }], suppliers: [], fits: [], seasons: [] }, page: 1, pageSize: 100 });
 
 /** Caller supplies the SAME validated target after all existing runner/freshness/hash gates.
  * No env, URL, ambient driver setting, discovery or default target is consulted here. */
@@ -184,7 +184,7 @@ export async function runHttpReadAcceptance(t: TestContext, pool: Pool, settings
     const variants = data.products[0].colorFits;
     ok(variants.length === 2 && variants.every((variant: { rows: { warehouse: { id: string } }[] }) => variant.rows.length === 1
       && variant.rows[0]?.warehouse.id === ids.warehouse), "no out-of-scope warehouse matrix rows");
-    const candidates = await successful(api, "/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryId: null });
+    const candidates = await successful(api, "/inventory/candidates/query", { kind: "warehouse", search: "", page: 1, pageSize: 20, selectedIds: [], categoryIds: [] });
     ok(json(candidates).exactTotal === 1 && json(candidates).items.length === 1 && json(candidates).items[0].id === ids.warehouse, "bounded scoped warehouse candidates");
     const ledger = await successful(api, "/inventory/ledger/query", { warehouseId: ids.warehouse, skuId: ids.sku, pageSize: 2, after: null });
     const page = json(ledger);

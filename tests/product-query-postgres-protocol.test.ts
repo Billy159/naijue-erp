@@ -25,7 +25,7 @@ const productId = sid("product", 701), groupId = sid("sizeGroup", 702), colorId 
 const parameters = { productId }; const imageParameters = { productId, imageId };
 const read = <P extends ProductQuery>(parameters: P, signal = new AbortController().signal): ProductScopedRead<P> => ({ actor, grant: { productId }, parameters, signal });
 const reader = (client: Client) => new PostgresProductQueryReader({ async connect() { return client; } });
-const basic = () => ({ id: productId, product_code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC PRODUCT", year: null, system_item_code: null, category_name: "完整分类名称", season_name: null, supplier_name: null });
+const basic = () => ({ id: productId, product_code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC PRODUCT", year: null, system_item_code: null, retail_price: null, category_name: "完整分类名称", season_name: null, supplier_name: null });
 const group = () => ({ id: productId, size_group_id: groupId, size_group_name: "完整尺码组名称" });
 const member = (id = size1, order = 20) => ({ id, name: id === size1 ? "165/S（完整标签）" : "无尺码（完整标签）", display_order: order });
 const sku = (fit = fitId, index = 1) => ({ id: sid("sku", 800 + index), product_id: productId, color_id: colorId, color_name: "完整颜色名称", fit_id: fit, fit_name: fit === fitId ? "Y版（修身）" : "A版（标准）", size_id: size1, member_size_id: size1 });
@@ -40,7 +40,7 @@ test("product pg protocol: constructor does not connect; invalid/aborted/mismatc
 });
 test("product pg protocol: basics parameterized target-only RR snapshot preserves actual nulls and original code", async () => {
   const client = new Client([begin(), { sql: /^SELECT p.id, p.product_code/, rows: [basic()], inspect: target }, commit()]);
-  assert.deepEqual(await reader(client).readBasics(read(parameters)), { productId, code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC PRODUCT", categoryLabel: "完整分类名称", yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null });
+  assert.deepEqual(await reader(client).readBasics(read(parameters)), { productId, code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC PRODUCT", categoryLabel: "完整分类名称", yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null });
   assert.equal(client.calls.length, 3); assert.ok(client.calls.every(call => !/INSERT|UPDATE|DELETE|FOR UPDATE/.test(call.sql))); client.done();
   const present = new Client([begin(), { sql: /^SELECT p.id/, rows: [{ ...basic(), year: 2021, system_item_code: "EXISTING SYSTEM CODE", season_name: "真实季节名称", supplier_name: "真实供应商名称" }] }, commit()]);
   const result = await reader(present).readBasics(read(parameters)); assert.equal(result!.yearLabel, "2021"); assert.equal(result!.systemCode, "EXISTING SYSTEM CODE"); present.done();
@@ -112,4 +112,18 @@ test("product pg protocol: abort during SQL rolls back and stops subsequent read
   await assert.rejects(() => reader(client).readSpecifications(read(parameters, controller.signal)), { code: "PRODUCT_READ_ABORTED" }); client.done();
   const early = new AbortController(); const idle = new Client([]); const r = new PostgresProductQueryReader({ async connect() { early.abort(); return idle; } });
   await assert.rejects(() => r.readBasics(read(parameters, early.signal)), { code: "PRODUCT_READ_ABORTED" }); assert.ok(idle.releases[0] instanceof Error); idle.done();
+});
+
+test("product pg protocol: native retail price stays an exact nullable decimal in the existing target-only basics query", async () => {
+  for (const retailPrice of [null, "0.00", "18.20", "9007199254740993.01", "9999999999999999.99"]) {
+    const client = new Client([begin(), { sql: /^SELECT p.id/, rows: [{ ...basic(), retail_price: retailPrice }], inspect(values, sql) {
+      target(values, sql); assert.match(sql, /p.retail_price::text/); assert.ok(!/reference_price|sku|sum\(|min\(|max\(/i.test(sql));
+    } }, commit()]);
+    const result = await reader(client).readBasics(read(parameters)); assert.equal(result!.retailPrice, retailPrice);
+    assert.equal(client.calls.length, 3); client.done();
+  }
+  for (const retailPrice of [undefined, 0, "0", "0.0", "-0.00", "-1.00", "1.234", "1e2", "01.00", "10000000000000000.00", "NaN", "Infinity"]) {
+    const client = new Client([begin(), { sql: /^SELECT p.id/, rows: [{ ...basic(), retail_price: retailPrice }] }, rollback()]);
+    await assert.rejects(() => reader(client).readBasics(read(parameters)), { code: "INVALID_DATABASE_VALUE" }); client.done();
+  }
 });
