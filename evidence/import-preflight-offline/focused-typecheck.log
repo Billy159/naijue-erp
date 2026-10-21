@@ -1,0 +1,2 @@
+./node_modules/.bin/tsc --noEmit --target ES2023 --module NodeNext --moduleResolution NodeNext --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --verbatimModuleSyntax --rewriteRelativeImportExtensions --skipLibCheck --types node tests/import-preflight.test.ts
+exit code: 0

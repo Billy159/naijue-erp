@@ -1,0 +1,34 @@
+✔ SYNTHETIC offline contract: exactly original 18 sheets / 154 ordered fields (18.406976ms)
+✔ SYNTHETIC exact yuan parser: no float, rounding, exponent, or blank-to-zero (15.601436ms)
+✔ SYNTHETIC intake: stable identities preserve leading zeros and do not depend on file/row order (32.952549ms)
+✔ SYNTHETIC intake: namespace and entity category isolate same source ID (9.058527ms)
+✔ SYNTHETIC intake: schema checks report changed headers and mistyped input sheets, skip exact guides only (5.057079ms)
+✔ SYNTHETIC precision: nine prices/raw blanks preserved; numeric precision risks do not silently normalize (15.304138ms)
+✔ SYNTHETIC formula and numeric IDs: preserve values and isolate affected facts, no guessed text conversion (9.796896ms)
+✔ SYNTHETIC cross-file references: forward/circular references resolve without row order or labels (22.156227ms)
+✔ SYNTHETIC staged/final: missing later-batch references are pending, final unresolved references errors (23.732935ms)
+✔ SYNTHETIC prior manifest: same namespace resolves later refs; wrong namespace/content remain blocked (38.900941ms)
+✔ SYNTHETIC uniqueness: source IDs, actual SKU tuple, original line numbers and same-valued balances all reject duplicates (26.315611ms)
+✔ SYNTHETIC historical barcode: preserve leading zeros, disabled bindings still conflict across SKUs (5.218994ms)
+✔ SYNTHETIC inventory: negative/zero explicit quantities retained, no absent-is-zero or Cartesian rows (5.743739ms)
+✔ SYNTHETIC histories: preserve approved state/unknown identity and raw Excel date, isolate whole document (6.041248ms)
+✔ SYNTHETIC safety: checking every supplied sheet is still not DB execution/import/publish acceptance (6.997082ms)
+✔ SYNTHETIC bounds: precise overlong cell and malformed JS numeric input fail rather than truncate/coerce (2.316537ms)
+✔ SYNTHETIC manifest safety: both unique-key conflict participants and dependent records are blocked (4.148547ms)
+✔ SYNTHETIC manifest safety: duplicate prior identities are all poisoned, not resolved to the first (4.365879ms)
+✔ SYNTHETIC source issue: unresolved original issue blocks the actual target and is never exported as imported identity (2.170083ms)
+✔ SYNTHETIC barcode conflict: first and later bindings all remain excluded from prior identity evidence (3.898792ms)
+✔ SYNTHETIC whole-document closure: one invalid child blocks header and all siblings from prior identities (10.128319ms)
+✔ SYNTHETIC unresolved source issue poisons prior-only target before current references resolve (4.582992ms)
+✔ SYNTHETIC barcode conflict related evidence remains bounded per affected row (8.263396ms)
+✔ SYNTHETIC source location aliases: duplicate basenames/row positions cannot validate the wrong record (9.111273ms)
+✔ SYNTHETIC nine-price contract: verified v0.3 blanks are UNSET, zero distinct, formulas UNKNOWN, never native authority (8.837276ms)
+✔ SYNTHETIC final pending capability/source issue does not turn dependent data into invented source errors (4.3758ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1838.084775
