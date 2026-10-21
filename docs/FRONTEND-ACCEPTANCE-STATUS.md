@@ -1,5 +1,11 @@
 # Frontend acceptance status
 
+## Current checkpoint — 2026-10-21 08:20 UTC
+
+Source is now `d26b7cc` (last push-verified `66384c6`). The previously reported source repairs and bounded sales/transfer editors are committed, and root/web compilation, build and 1,285 root checks passed the account integration run. Earlier killed reference-popup checks and uncommitted descriptions below are historical, not the latest integration state. None of this establishes actual repaired-source visual parity. The same-viewport browser recheck and remaining interactions are still open; the earlier four-group comparison remains a rejected comparison, not an acceptance certificate.
+
+The account frontend now carries original payment-method identity and refuses silent historical reassignment. This does not create native proposal pickers, complete new-document entry or production write-host composition. Preserve the distinction between existing-document editor tests and complete business workflows.
+
 ## Frozen source and scoped browser comparison available, visual acceptance still open
 
 The user rejected the earlier inventory synthetic preview because its appearance differs from the frozen Demo. Functional DOM checks and source-only reviews do not close this finding. The existing preview is a historical functional test artifact, not accepted final UI.

@@ -3,9 +3,16 @@
 Original parent source: `2d0f5d2ef79a1d48f63a85cb0242661d2e54efde`.
 Current account parity amendment: see `native-account-production-parity.md` and
 `evidence/account-production-parity/manifest.json`; original25-test evidence remains historical.
-This slice adds new ports, strict parsers and a PostgreSQL reader only. It does not
-register HTTP routes, change the deliberate read-only API composition, enable
-production forms, allocate document numbers, change schema or authorize commands.
+The initial slice added ports, strict parsers and a PostgreSQL reader. A later
+standalone `createCurrentFormHttpPlugin` adds five bounded authenticated POST read
+routes under `/current-form/`: `sales-references/query`, `transfer-warehouses/query`,
+`products/query`, `product-skus/query` and `sku-batch/query`. It requires explicit
+trusted authentication and an authorization-enforcing reader, validates before
+provider calls, serializes bigint counts as decimal strings, rejects stale SKU
+batches with sanitized HTTP409, and forwards/rechecks cancellation. No permissive
+grant, pool, listener or automatic host registration exists. Existing read-only
+API composition remains unchanged; production forms, numbering and commands are
+not enabled. HTTP tests use Fastify.inject, not a real browser/socket deployment.
 
 ## Explicit composition
 
@@ -42,11 +49,11 @@ or prevent changes between read and submit. No cross-request facts cache exists.
 - `readProductSkus(actor, { context, productId, page, pageSize: 20 }, signal)`.
 - `readSkuBatch(actor, { context, skuIds }, signal)`, for 1–200 unique target IDs.
   All requested IDs must still be eligible. Failure does not identify a missing or
-  disabled target. The successful response preserves requested order.
+  disabled target. The standalone HTTP adapter maps this whole-batch conflict to409. The successful response preserves requested order.
 
 Context is exactly `{ kind: SALES, hallId }` or `{ kind: TRANSFER }`. Each page has
-page, literal pageSize 20, exactTotal bigint, and items. A future HTTP boundary must
-serialize bigint as an exact decimal string, not Number. No HTTP contract is added.
+page, literal pageSize 20, exactTotal bigint, and items. The standalone HTTP boundary
+serializes bigint as an exact decimal string, not Number. It does not register itself in the native host.
 
 Candidate search is a bounded 0–200-character, already-trimmed, control-free string.
 `strpos(lower(native text), lower(parameter))` is a literal case-insensitive

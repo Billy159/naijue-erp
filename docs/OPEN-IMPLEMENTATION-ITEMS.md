@@ -1,6 +1,17 @@
 # Open implementation items (not a release checklist pass)
 
-Current confirmed remote commit is 231e53b on codex/clean-erp-foundation. Later cloud commits are not automatically on GitHub. Full feature gaps remain in the approved project completion Page and scope reports.
+## Current checkpoint — 2026-10-21 08:20 UTC
+
+Current recovered source is `d26b7cc` plus the two-file receipt-lock harness correction. Last independently confirmed remote is `66384c64e8ed5a6e594b63ce2cab929b997cb6d5` on `codex/clean-erp-foundation`; `main` remains `b8bcfe3`. Later source is not push-verified.
+
+- Nine-price/barcode schema, bounded CURRENT proposal readers, transaction-bound sales facts, offline XLSX preflight, inventory SQL optimization and bounded existing-document editors are implemented in source. These are not a complete production importer or create-document workflow.
+- Original payment-method snapshot and strict method-intent checks are implemented in `d26b7cc`. Root/web TypeScript, build, emitted smoke and 1,285 root checks passed in the account integration run. These checks do not execute real PostgreSQL locks. Current schema 0001–0010 PostgreSQL acceptance is being run separately; do not relabel earlier 0001–0008 results.
+- The sparse party concurrency harness now locks the actual maintainer actor receipt namespace, rather than another actor. A source assertion guards this regression; genuine overlapping transactions remain the required engine proof.
+- CURRENT form readers now have a standalone opt-in HTTP adapter with synthetic inject checks, but still lack native host composition and a payment-method picker; native create forms, row add/remove and document numbering remain incomplete. A production catalogue completeness publisher, controlled history import/editing and active-history recommendation proof remain open.
+- The actual real-data batch remains explicitly paused. Do not read, validate, split or import it until the user resumes it. Source/synthetic work may continue.
+- Four-control Mac visual comparison found differences, not parity. Source fixes and later component checks do not replace repaired-source browser rechecks. No production deployment or final business acceptance is established.
+
+The dated checkpoints below retain historical scope and may describe capabilities before the current source. They must not override this summary or be used as a current release checklist pass.
 
 ## Targeted follow-ups from cross-slice review
 

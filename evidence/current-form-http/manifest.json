@@ -1,0 +1,16 @@
+{
+  "baseCommit": "d26b7cc",
+  "scope": "Standalone authenticated CURRENT form HTTP read adapter; not registered in native host; no listener, DB, production, or paused data access",
+  "verification": {
+    "injectGroups": 9,
+    "typecheck": "passed",
+    "realSocketOrBrowser": false,
+    "postgresRun": "not part of this HTTP slice"
+  },
+  "review": "Independent source review found missing SKU_UNAVAILABLE status; fixed to sanitized 409 with regression test. Added raw-event cancellation and pending-listener cleanup tests.",
+  "files": {
+    "apps/api/src/current-form-http.ts": "2260cf5d63785ec95d3d90575a0de8645e7baa6baee0ff03514f4171de84269c",
+    "apps/api/src/current-form-http.test.ts": "e947cc3d733afd18ed7e85a873575113782352d6487a2ef42489f0c77bcfae0e",
+    "docs/native-current-form-read.md": "37f1e1019eaac595aad8096cfef55e012ea803863cfb5ad3d3fb6651e9f26f4f"
+  }
+}
