@@ -1,0 +1,12 @@
+{
+  "suite": "sparse-0001-0010",
+  "commit": "d26b7ccbb5a3b2407dcae597707386dd003d76df",
+  "source": "/workspace/scratch/f6bee04e937b/naijue-pg-schema10-current-20261021-0820/source",
+  "database": "naijue_erp_test_ea9ffea48ce2c98b",
+  "host": "127.0.0.1",
+  "port": 55442,
+  "logfile": "/workspace/scratch/f6bee04e937b/naijue-pg-schema10-current-20261021-0820/evidence/02-sparse-0001-0010.tap",
+  "independentWaitSnapshots": 2,
+  "code": 0,
+  "signal": null
+}

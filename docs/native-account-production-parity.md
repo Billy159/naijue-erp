@@ -119,9 +119,15 @@ original identity, NULL readback/status-only preservation, sparse audit and safe
 conflict responses. Exact commands and owned hashes are in
 `evidence/account-production-parity/manifest.json`.
 
-These do NOT execute PostgreSQL SQL/locks/savepoints/timeout behavior or measure
-latency. The separately owned current1–10 genuine-PG harness is source preparation,
-not a completed run. Full engine/current-active/order/concurrency acceptance and a
+The focused281 checks above do NOT execute PostgreSQL SQL/locks or measure latency.
+A later separate frozen `d26b7cc` run, with only the exact receipt-actor harness fix,
+applied all migrations0001–0010 and passed genuine PostgreSQL17.11 backend33/33
+(32 cases plus parent) and sparse12/12 (11 cases plus parent), zero failure/skip.
+It proves tested snapshot/reassignment/NULL preservation and actual FOR SHARE
+wait/recheck scenarios, not every optional recommendation timeout or production
+path. Owned cluster shutdown and closed-port proof are retained. See
+`evidence/postgres-current-schema10/`; later standalone HTTP code is outside that
+frozen engine snapshot. Untested engine/current-active/order cases and a
 real catalogue completeness publisher/writehost remain outstanding. Previous1–8
 artifacts and old test logs remain historical, not relabelled current acceptance.
 No frontend/domain permissions, fake balances, private input, actual data reads,

@@ -1,0 +1,12 @@
+{
+  "suite": "backend-0001-0010",
+  "commit": "d26b7ccbb5a3b2407dcae597707386dd003d76df",
+  "source": "/workspace/scratch/f6bee04e937b/naijue-pg-schema10-current-20261021-0820/source",
+  "database": "naijue_erp_test_93add78a8bd72e27",
+  "host": "127.0.0.1",
+  "port": 55442,
+  "logfile": "/workspace/scratch/f6bee04e937b/naijue-pg-schema10-current-20261021-0820/evidence/01-backend-0001-0010.tap",
+  "independentWaitSnapshots": 5,
+  "code": 0,
+  "signal": null
+}

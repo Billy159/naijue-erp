@@ -1,0 +1,123 @@
+{
+  "canonicalCommit": "d26b7ccbb5a3b2407dcae597707386dd003d76df",
+  "allTrackedCurrentFilesEqualFrozenSnapshot": true,
+  "trackedFileCount": 1750,
+  "productAndMigrationChangesFromCanonical": [],
+  "deliberateHarnessPatchEqualsPreparedReceiptFix": true,
+  "harnessPatchSha256": "63f232ed288711be013b0deaf1ec67595d8b50cecced8c964e92d57977665b92",
+  "sourceOnlyChecks": {
+    "focusedTests": 28,
+    "failures": 0,
+    "skipped": 0,
+    "scopedTypeScriptExitCode": 0,
+    "dependencies": "176 pinned lock entries verified, no install"
+  },
+  "engineResults": [
+    {
+      "suite": "backend-0001-0010",
+      "commit": "d26b7ccbb5a3b2407dcae597707386dd003d76df",
+      "source": "/workspace/scratch/f6bee04e937b/naijue-pg-schema10-current-20261021-0820/source",
+      "database": "naijue_erp_test_93add78a8bd72e27",
+      "host": "127.0.0.1",
+      "port": 55442,
+      "logfile": "/workspace/scratch/f6bee04e937b/naijue-pg-schema10-current-20261021-0820/evidence/01-backend-0001-0010.tap",
+      "independentWaitSnapshots": 5,
+      "code": 0,
+      "signal": null,
+      "tap": {
+        "tests": 33,
+        "pass": 33,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "migrationVersions": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "poolClientsRemaining": 0,
+      "countIncludesOneParentTest": true
+    },
+    {
+      "suite": "sparse-0001-0010",
+      "commit": "d26b7ccbb5a3b2407dcae597707386dd003d76df",
+      "source": "/workspace/scratch/f6bee04e937b/naijue-pg-schema10-current-20261021-0820/source",
+      "database": "naijue_erp_test_ea9ffea48ce2c98b",
+      "host": "127.0.0.1",
+      "port": 55442,
+      "logfile": "/workspace/scratch/f6bee04e937b/naijue-pg-schema10-current-20261021-0820/evidence/02-sparse-0001-0010.tap",
+      "independentWaitSnapshots": 2,
+      "code": 0,
+      "signal": null,
+      "tap": {
+        "tests": 12,
+        "pass": 12,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "migrationVersions": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "poolClientsRemaining": 0,
+      "countIncludesOneParentTest": true
+    }
+  ],
+  "physicalIdentity": {
+    "system_identifier": "7699033463915180060",
+    "version": "PostgreSQL 17.11 (Debian 17.11-0+deb13u1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "postmaster_start": "2026-10-21T17:21:59.825243+09:00",
+    "data_directory": "/workspace/scratch/f6bee04e937b/naijue-pg-schema10-current-20261021-0820/data",
+    "cluster_name": "naijue_schema10_d26b7cc_0820",
+    "listen_addresses": "127.0.0.1",
+    "port": 55442,
+    "address": "127.0.0.1",
+    "recovery": false,
+    "shared_buffers": "128MB",
+    "max_connections": "16",
+    "work_mem": "4MB",
+    "role_flags": {
+      "rolname": "naijue_erp_test",
+      "rolsuper": false,
+      "rolcreatedb": false,
+      "rolcreaterole": false,
+      "rolreplication": false,
+      "rolbypassrls": false,
+      "rolcanlogin": true
+    }
+  },
+  "cleanup": {
+    "status": "OWNED_INSTANCE_STOPPED_PROCESS_AND_PORT_VERIFIED_CLOSED",
+    "data": "/workspace/scratch/f6bee04e937b/naijue-pg-schema10-current-20261021-0820/data",
+    "port": 55442,
+    "system_identifier": "7699033463915180060",
+    "retained": true
+  },
+  "limitations": [
+    "Synthetic disposable data only; not production acceptance, real-data/import compatibility, upgrade/backfill acceptance, deployment, restart/failover, exhaustive races, security grants/RLS hardening or performance SLA.",
+    "HTTP cases use Fastify.inject; no public listener, browser or TLS acceptance. Some groups use explicit test-only authentication/authorization and synthetic completeness policy; native runtime identity/economic/locking rules are identified separately in TAP.",
+    "Independent read-only sampling observed real lock snapshots but does not itself show both simultaneous advisory waiters in each race; the engine helper asserts two real pg_locks NOT granted waiters before releasing its blocker. Exact known-PID payment metadata wait checks and six diagnostics are in backend TAP.",
+    "Stored NULL case is an explicit negative fixture, not historical data migration/backfill proof.",
+    "Current planning/source docs retain their original NOT RUN preparation statements; newly executed evidence is recorded separately here rather than relabeling historical/source-only artifacts.",
+    "Database timestamps include original +09:00 server session offsets; monitor timestamps use UTC. They describe the same execution."
+  ]
+}
