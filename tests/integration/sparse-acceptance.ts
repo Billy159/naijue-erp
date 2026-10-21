@@ -109,7 +109,7 @@ export async function runSparseAcceptance(t: TestContext, pool: Pool): Promise<v
   await t.test(SPARSE_SCENARIOS[0], async () => {
     for (const kind of ["CUSTOMER", "SUPPLIER"] as const) {
       const create: PartyCommand = { kind, actor: partyActor, action: "CREATE", name: `SYNTHETIC CURRENT ${kind}`, requestKey: `SYNTHETIC_PARTY_${kind}_CREATE` };
-      const [created] = successfulPair(await contend(pool, receiptLock(create.requestKey), () => [parties.execute(create), parties.execute(create)]));
+      const [created] = successfulPair(await contend(pool, `naijue:receipt:${JSON.stringify([partyActor.accountId, create.requestKey])}`, () => [parties.execute(create), parties.execute(create)]));
       assert.equal(created.code, kind === "CUSTOMER" ? "KH000002" : "GYS000002"); assert.equal(created.version, 1);
       await assertOperation(pool, created, kind, created.partyId, "CREATE", 0, partyActor.accountId);
       for (const [action, expectedVersion] of [["EDIT", 1], ["DISABLE", 2], ["RESTORE", 3]] as const) {

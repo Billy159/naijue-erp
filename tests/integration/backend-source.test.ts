@@ -151,6 +151,8 @@ test("current fixture source: actual party CREATE precedes explicit nine-key pro
   assert.match(sparse, /"KH000002" : "GYS000002"/u);
   assert.match(sparse, /const partyActor = \{ accountId: ids\.referenceMaintainerAccount, hallId: null, role: "WAREHOUSE"/u);
   assert.match(sparse, /"CREATE", 0, partyActor\.accountId/u);
+  assert.ok(sparse.includes("JSON.stringify([partyActor.accountId, create.requestKey])"), "party contention blocker must use the actual stored maintainer actor namespace");
+  assert.doesNotMatch(sparse, /receiptLock\(create\.requestKey\)/u);
 });
 
 /** These are source-wiring assertions only. They never import or execute the method-identity engine module. */
