@@ -1,0 +1,29 @@
+{
+  "scope": "DEVELOPER_SIDE_ACCOUNT_RECOMMENDATION_CONTRACT_CLARIFICATION_ONLY",
+  "base_head": "306fe28a0d03086c697dca5582c3ee64d71f7782",
+  "contract_version": "0.3-offline-kernel.2",
+  "original_18_sheets_154_ordered_headers_unchanged": true,
+  "intake_optional_sheets": [
+    "11账户适用厅"
+  ],
+  "relationship_semantics": "historical source recommendation only, not account/staff permissions; missing or empty does not restrict normal eligible account selection",
+  "tests_passed": 30,
+  "focused_typescript": "PASS; command and exit code in focused-typecheck.log",
+  "synthetic_test_scope": [
+    "STAGED/FINAL missing or empty sheet11 never emits required-master/permission blocker",
+    "existing supplied relationship and stable account identity preserved",
+    "malformed supplied recommendation is reported on relation only, not valid account authorization",
+    "original sheet name and two headers unchanged"
+  ],
+  "real_inputs_read_or_modified": false,
+  "xlsx_created_or_modified": false,
+  "database_or_runtime_ordering_changed": false,
+  "full_build_run": false,
+  "files_sha256": {
+    "packages/application/src/import-preflight-contract.ts": "b5fa7bd9699cec50d2c15ec45da1883b81aa0e46927cc3e30df98c2ed2522f66",
+    "packages/application/src/import-preflight.ts": "d4725aa089cb41bc8a3f5b73cca79554d386b860a28dc07b273d32309fed0546",
+    "scripts/import-preflight/README.md": "af829629f522f312b2badc491d32b4d727d55dfc32e3cbd57d0c41cd170bab05",
+    "tests/import-preflight.test.ts": "358e13316abfddc911148b22a079875efe37b4acdb6ca7ca3e42285ae2e93b62",
+    "docs/import-payment-account-guidance-v0.3-addendum.md": "9ccab5b17b78e4d889fd88ebdfaa6f440271d0ae08f8ef689bad383f61f194b8"
+  }
+}

@@ -170,10 +170,13 @@ export function preflightImport(input: ImportPreflightInput) {
     const contract = supportedSheets.get(sheet.name);
     if (!contract) { issue("UNKNOWN_INPUT_SHEET", "页签不是原18个业务输入页或精确已知说明页；可能为输入页名拼写错误。", { fileName: file.fileName, sheet: sheet.name }); continue; }
     foundSheets.add(sheet.name);
-    const headersMatch = sheet.headers.length === contract.fields.length
-      && sheet.headers.every((c, i) => c.kind === "text" && c.raw === contract.fields[i]!.header);
+    const optionalFields = contract.optionalTrailingFields ?? [];
+    const extendedFields = [...contract.fields, ...optionalFields];
+    const activeFields = sheet.headers.length === extendedFields.length ? extendedFields : contract.fields;
+    const headersMatch = (sheet.headers.length === contract.fields.length || (optionalFields.length > 0 && sheet.headers.length === extendedFields.length))
+      && sheet.headers.every((c, i) => c.kind === "text" && c.raw === activeFields[i]!.header);
     if (!headersMatch) {
-      issue("INPUT_HEADER_MISMATCH", "表头必须保持原名、原顺序和完整列数；原18页154列未改动。", { fileName: file.fileName, sheet: sheet.name, excelRow: 1,
+      issue("INPUT_HEADER_MISMATCH", "原18页154列表头必须原名、原序完整保留；仅允许15历史收退记录末尾追加已批准的可选原收款方式来源编号。", { fileName: file.fileName, sheet: sheet.name, excelRow: 1,
         field: contract.fields.map(f => f.header).join(" | "), rawValue: sheet.headers.map(c => c.raw ?? "").join(" | ") });
       continue;
     }
@@ -183,9 +186,11 @@ export function preflightImport(input: ImportPreflightInput) {
       const position = { fileName: file.fileName, sheet: sheet.name, excelRow: row.excelRow };
       if (row.excelRow < 2 || seenRowNumbers.has(row.excelRow)) issue("DUPLICATE_OR_INVALID_EXCEL_ROW", "业务记录的Excel行定位重复或覆盖表头。", position);
       seenRowNumbers.add(row.excelRow);
-      if (row.cells.length > contract.fields.length) issue("EXTRA_INPUT_CELLS", "业务记录在原字段范围之外含有额外单元格，未静默截断。", position);
-      const rawValues = Object.fromEntries(contract.fields.map((f, i) => [f.header, row.cells[i] ?? blankCell]));
-      const normalizedValues: Record<string, string | null> = {};
+      if (row.cells.length > activeFields.length) issue("EXTRA_INPUT_CELLS", "业务记录在原字段范围之外含有额外单元格，未静默截断。", position);
+      const rawValues = Object.fromEntries(activeFields.map((f, i) => [f.header, row.cells[i] ?? blankCell]));
+      // Old eight-column files remain unknown, not inferred from names/current accounts.
+      // Omitted extension is not inserted into rawValues or the original source hash.
+      const normalizedValues: Record<string, string | null> = Object.fromEntries(optionalFields.map(f => [f.header, null]));
       const sourceCell = rawValues[contract.entityType === "ISSUE" ? "*问题编号" : "*来源编号"];
       const sourceId = sourceCell?.kind === "text" && !blank(sourceCell) && sourceCell.raw!.trim().length > 0 ? sourceCell.raw : null;
       let sourceKey = sourceId === null ? null : sourceKeyFor(sourceId);
@@ -195,7 +200,7 @@ export function preflightImport(input: ImportPreflightInput) {
           sourceKey = `derived:${requestHash(["naijue-source-key-v1", contract.entityType, ["PAYMENT_ACCOUNT_HALL", sourceKeyFor(account.raw!), sourceKeyFor(hall.raw!)]])}`;
       }
       const rowPosition = { ...position, sourceId };
-      for (const field of contract.fields) {
+      for (const field of activeFields) {
         const cell = rawValues[field.header]!;
         const fieldPosition = { ...rowPosition, field: field.header, rawValue: cell.raw };
         normalizedValues[field.header] = null;
@@ -248,7 +253,7 @@ export function preflightImport(input: ImportPreflightInput) {
     }
   }
   if (!records.length) issue("NO_BUSINESS_RECORDS", "没有任何业务记录；空模板可通过表头检查，但不能称为已完成来源预检或导入。", {}, "PENDING");
-  for (const contract of IMPORT_PREFLIGHT_SHEETS) if (!foundSheets.has(contract.name)) issue("INPUT_SHEET_NOT_PRESENT",
+  for (const contract of IMPORT_PREFLIGHT_SHEETS) if (!foundSheets.has(contract.name) && !contract.intakeOptional) issue("INPUT_SHEET_NOT_PRESENT",
     "本批未提供原业务输入页；分批准备可以待后批，但完整范围尚未核实。", { sheet: contract.name }, input.mode === "FINAL" ? "ERROR" : "PENDING");
   const relatedPosition = (r: ImportPreflightRecord, field: string) => ({ fileName: r.fileName, sheet: r.sheet, excelRow: r.excelRow, sourceId: r.sourceId, field, rawValue: r.rawValues[field]?.raw ?? null });
   for (const r of records.filter(record => record.entityType === "ISSUE")) {
@@ -272,7 +277,7 @@ export function preflightImport(input: ImportPreflightInput) {
   }
   for (const record of records) {
     const contract = supportedSheets.get(record.sheet)!;
-    for (const field of contract.fields) if (field.referenceEntity) {
+    for (const field of [...contract.fields, ...(contract.optionalTrailingFields ?? [])]) if (field.referenceEntity) {
       const value = record.normalizedValues[field.header];
       if (value === null || value === undefined) continue;
       const key = sourceKeyFor(value), identity = identityKey(field.referenceEntity, key);
@@ -307,7 +312,7 @@ export function preflightImport(input: ImportPreflightInput) {
   unique("SKU", ["SKU编码"], "DUPLICATE_SKU_CODE", "正式SKU编码重复。");
   unique("SKU", ["商品来源编号", "颜色编码", "版型编码", "完整尺码"], "DUPLICATE_SKU_COMBINATION", "实际SKU四维组合重复；不生成笛卡尔积或合并原行。");
   unique("INVENTORY_BASELINE", ["仓库来源编号", "SKU来源编号"], "DUPLICATE_WAREHOUSE_SKU_BALANCE", "同仓SKU余额重复，即使同值也不相加；需核准互不重叠的分区证明及组合规则。");
-  unique("PAYMENT_ACCOUNT_HALL", ["账户来源编号", "厅来源编号"], "DUPLICATE_ACCOUNT_HALL", "账户与厅的真实适用关系重复。");
+  unique("PAYMENT_ACCOUNT_HALL", ["账户来源编号", "厅来源编号"], "DUPLICATE_ACCOUNT_HALL", "账户与厅的历史来源推荐关系重复；仅核对该关系，不产生账户或营业员权限，也不限制其他正常账户可选。");
   unique("SALES_LINE", ["单据来源编号", "原行号"], "DUPLICATE_DOCUMENT_LINE", "同一销货原行号重复，不重编原行。");
   unique("SETTLEMENT", ["单据来源编号", "原收退行号"], "DUPLICATE_SETTLEMENT_LINE", "同一销货原收退行号重复。");
   unique("TRANSFER_LINE", ["单据来源编号", "原行号"], "DUPLICATE_TRANSFER_LINE", "同一调拨原行号重复，不因同SKU合并。");
@@ -388,6 +393,9 @@ export function preflightImport(input: ImportPreflightInput) {
   return { contractVersion: IMPORT_PREFLIGHT_CONTRACT_VERSION, batchId: input.batchId, fixedSourceNamespace: input.fixedSourceNamespace, mode: input.mode,
     databaseExecuted: false as const, importReady: false as const, publishReady: false as const,
     priceCompletenessVerified: false as const, blankPriceMeaning: "VERIFIED_V03_PRICE_COLUMN_BLANK_IS_UNSET" as const,
+    historicalPaymentMethodSnapshotPolicy: { nativeTarget: "sales_settlement.payment_method_id_snapshot" as const,
+      optionalSourceHeader: "原收款方式来源编号" as const, absentValue: "UNKNOWN_NOT_A_RECENT_RECOMMENDATION_FACT" as const,
+      inferredFromDisplayNameOrCurrentAccount: false as const, providedReferenceAloneGrantsRecommendation: false as const },
     dataStatus: issues.some(i => i.severity === "ERROR") ? "INVALID" as const : issues.some(i => i.severity === "PENDING") ? "PENDING" as const : "CHECKED_WITHIN_SCOPE" as const,
     files: input.files, records, issues, capabilityBlockers, isolatedDocuments,
     recordChecks: records.map(r => ({ fileName: r.fileName, sheet: r.sheet, excelRow: r.excelRow, sourceKey: r.sourceKey,

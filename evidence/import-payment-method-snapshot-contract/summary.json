@@ -1,0 +1,37 @@
+{
+  "scope": "OPTIONAL_ORIGINAL_PAYMENT_METHOD_SNAPSHOT_INPUT_CONTRACT_ONLY",
+  "base_head": "66384c64e8ed5a6e594b63ce2cab929b997cb6d5",
+  "contract_version": "0.3-offline-kernel.3",
+  "original_18_sheets_154_ordered_headers_unchanged": true,
+  "original_settlement_eight_headers_unchanged": true,
+  "only_optional_trailing_extension": [
+    {
+      "sheet": "15历史收退记录",
+      "header": "原收款方式来源编号",
+      "type": "TEXT",
+      "required": false,
+      "referenceEntity": "PAYMENT_METHOD",
+      "nativeTarget": "sales_settlement.payment_method_id_snapshot"
+    }
+  ],
+  "node_tests_passed": 35,
+  "python_tests_passed": 17,
+  "focused_typescript": "PASS; command and exit code in focused-typecheck.log",
+  "input_route_implemented": "original 8 columns, or exact original 8 + optional ninth original method source ID",
+  "controlled_supplement_loader_implemented": false,
+  "missing_original_method_id": "unknown/null is allowed; never derive from display name or current account; cannot contribute recent recommendation",
+  "provided_id_alone_grants_recent_recommendation": false,
+  "no_actual_inputs_read_or_modified": true,
+  "no_new_excel_bundle_or_original_workbook_changes": true,
+  "no_database_sql_or_schema_execution": true,
+  "no_new_table_or_unrelated_field": true,
+  "no_full_build_or_commit": true,
+  "files_sha256": {
+    "packages/application/src/import-preflight-contract.ts": "cbaefa8288391cc5e640a84ee138f89223ae1f2744b47f08801574e8fa3c9600",
+    "packages/application/src/import-preflight.ts": "aca8322c309f6807b56a87b392ece8a33d412990e307233c1de34b628dd3ba5f",
+    "scripts/import-preflight/README.md": "62b445f60e0d4dab2df3c9ea551643f818155b69571463664833e282f86ddb5d",
+    "scripts/import-preflight/test_read_xlsx.py": "c9e2e08d08d6395f7c005f19beea52aec1b5ff431161d6951280e18af232a68e",
+    "tests/import-preflight.test.ts": "6ed6bad18e1d0aeb56f2171e4cdaae0bd01906d9122174b1cb5ebf53a46ebf42",
+    "docs/import-payment-account-guidance-v0.3-addendum.md": "5191d2f011b42140a7bf522bb7e5daa83bb31b1c8e7f2f8fed1053d34a4e7fdb"
+  }
+}

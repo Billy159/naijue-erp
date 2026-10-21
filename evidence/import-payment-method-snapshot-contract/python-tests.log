@@ -1,0 +1,22 @@
+test_batch_budget_is_shared_across_workbooks_before_accumulation (__main__.ReadXlsxTests.test_batch_budget_is_shared_across_workbooks_before_accumulation) ... ok
+test_blank_formatting_rows_ignored_not_invented (__main__.ReadXlsxTests.test_blank_formatting_rows_ignored_not_invented) ... ok
+test_cli_direct_xlsx_no_db_write_and_inputs_unchanged (__main__.ReadXlsxTests.test_cli_direct_xlsx_no_db_write_and_inputs_unchanged) ... ok
+test_cli_old_eight_and_optional_ninth_original_payment_method_snapshot_column (__main__.ReadXlsxTests.test_cli_old_eight_and_optional_ninth_original_payment_method_snapshot_column) ... ok
+test_cli_unsupported_format_is_capability_not_fabricated_missing_business_data (__main__.ReadXlsxTests.test_cli_unsupported_format_is_capability_not_fabricated_missing_business_data) ... ok
+test_compressed_decompressed_row_and_text_bounds_fail_not_truncate (__main__.ReadXlsxTests.test_compressed_decompressed_row_and_text_bounds_fail_not_truncate) ... ok
+test_doctype_rejected_in_utf8_and_utf16_even_unused_part (__main__.ReadXlsxTests.test_doctype_rejected_in_utf8_and_utf16_even_unused_part) ... ok
+test_external_relationship_and_macro_rejected (__main__.ReadXlsxTests.test_external_relationship_and_macro_rejected) ... ok
+test_formula_without_cache_is_preserved_not_blank (__main__.ReadXlsxTests.test_formula_without_cache_is_preserved_not_blank) ... ok
+test_known_guide_is_skipped_but_mistyped_name_is_not (__main__.ReadXlsxTests.test_known_guide_is_skipped_but_mistyped_name_is_not) ... ok
+test_phonetic_annotations_never_modify_display_text_or_identity (__main__.ReadXlsxTests.test_phonetic_annotations_never_modify_display_text_or_identity) ... ok
+test_preserve_shared_inline_strings_decimal_lexemes_formula_and_date_system (__main__.ReadXlsxTests.test_preserve_shared_inline_strings_decimal_lexemes_formula_and_date_system) ... ok
+test_row_cell_shared_string_and_column_errors_are_located (__main__.ReadXlsxTests.test_row_cell_shared_string_and_column_errors_are_located) ... ok
+test_safe_opc_parent_reference_does_not_extract_or_escape (__main__.ReadXlsxTests.test_safe_opc_parent_reference_does_not_extract_or_escape) ... ok
+test_sparse_dense_and_xml_structural_budgets_reject_before_allocation (__main__.ReadXlsxTests.test_sparse_dense_and_xml_structural_budgets_reject_before_allocation) ... ok
+test_zip_path_traversal_and_package_escape_rejected (__main__.ReadXlsxTests.test_zip_path_traversal_and_package_escape_rejected) ... ok
+test_zip_symlink_and_duplicate_member_rejected (__main__.ReadXlsxTests.test_zip_symlink_and_duplicate_member_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 2.971s
+
+OK

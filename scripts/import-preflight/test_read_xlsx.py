@@ -206,6 +206,26 @@ class ReadXlsxTests(unittest.TestCase):
         self.assertEqual(report["identityManifest"]["identities"], [])
         self.assertEqual((report["databaseExecuted"], report["importReady"], report["publishReady"]), (False, False, False))
 
+    def test_cli_old_eight_and_optional_ninth_original_payment_method_snapshot_column(self):
+        headers = ["*来源编号", "*单据来源编号", "*原收退行号", "*账户来源编号", "*方向", "*金额", "原账户显示名", "原方式显示名"]
+        values = ["SYN-SETTLEMENT", "SYN-SALE", "1", "SYN-ACCOUNT", "收款", "10.00", "SYNTHETIC ACCOUNT", "SYNTHETIC METHOD NAME ONLY"]
+        target_ids = []
+        for extended in (False, True):
+            with self.subTest(extended=extended):
+                source_headers = headers + (["原收款方式来源编号"] if extended else [])
+                source_values = values + (["000009"] if extended else [])
+                data = [row(1, *(cell(f"{chr(65+i)}1", text) for i, text in enumerate(source_headers))), row(2, *(cell(f"{chr(65+i)}2", text) for i, text in enumerate(source_values)))]
+                self.write(parts(sheet_name="15历史收退记录", data=data))
+                completed = subprocess.run(["node", str(HERE / "run.mjs"), "--batch", "SYNTHETIC", "--namespace", "synthetic.offline", "--mode", "STAGED", str(self.path)], capture_output=True, text=True, timeout=60)
+                self.assertEqual(completed.returncode, 0, completed.stderr)
+                report = json.loads(completed.stdout)
+                record = report["records"][0]
+                self.assertEqual(record["normalizedValues"]["原收款方式来源编号"], "000009" if extended else None)
+                self.assertFalse(any(issue["code"] == "INPUT_HEADER_MISMATCH" for issue in report["issues"]))
+                self.assertEqual(report["historicalPaymentMethodSnapshotPolicy"]["inferredFromDisplayNameOrCurrentAccount"], False)
+                target_ids.append(record["targetId"])
+        self.assertEqual(target_ids[0], target_ids[1])
+
     def test_cli_direct_xlsx_no_db_write_and_inputs_unchanged(self):
         self.write()
         before = self.path.read_bytes()

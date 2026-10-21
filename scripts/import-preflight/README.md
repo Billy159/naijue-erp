@@ -60,6 +60,30 @@ limits must still be resolved before further work can be considered ready.
 - Precise batch/file/sheet/Excel-row/source-ID/field/raw-value/rule/reason reports,
   distinct source ERROR, PENDING, and missing-program CAPABILITY outcomes.
 
+## Optional historical account/hall recommendations
+
+`11账户适用厅` keeps its original sheet name and two original headers
+`*账户来源编号` and `*厅来源编号` for v0.3 compatibility. It is **optional historical
+source recommendation data**, not an account permission, staff permission, or a
+required master-data grant. The stars describe values needed only when a real
+existing relationship row is supplied; they do not make the sheet or a relationship
+for every account mandatory.
+
+The sheet may be empty or omitted in either STAGED or FINAL mode. Its absence does
+not produce `INPUT_SHEET_NOT_PRESENT`, remove an account, or require the user to
+reassign accounts to halls. Existing filled relationships are preserved unchanged;
+provided malformed relationships are reported against their own source rows, not
+converted into permission restrictions on otherwise valid account master records.
+
+The verified running behavior is that all normal accounts with an enabled, matching
+payment method remain selectable. Historical source hall recommendations are
+combined with qualifying accounts from the hall's recent effective approved sales
+and only move recommendations to the top; they are not an allow-list. The offline
+preflight does not invent the runtime recency window, tie-breaks, or sort algorithm.
+Account maintenance UI/list has no applicable-hall input; detail may show a read-only
+source hall range. See `docs/import-payment-account-guidance-v0.3-addendum.md` for the
+standalone filling clarification. No existing or paused input workbook is rewritten.
+
 ## Security/resource profile
 
 No archive extraction, formula evaluation, macro execution, or network is used.
@@ -111,3 +135,34 @@ not treated as zero. No business schema or table has been added.
 Fixtures are explicitly synthetic temporary ZIP/XML workbooks. Tests exercise real
 XLSX-to-CLI input and verify unchanged source bytes; they do not perform database
 or real-business import acceptance.
+
+## Optional original payment-method snapshot (one approved fact)
+
+`15历史收退记录` still accepts its original eight columns unchanged. The only new
+accepted layout appends exactly `原收款方式来源编号` as the ninth column, in that
+position, without a required marker. This optional original source identifier
+resolves through the existing `PAYMENT_METHOD` source mapping (`09收款方式`), with
+one native target: `sales_settlement.payment_method_id_snapshot`. No new table or
+unrelated business field is introduced by this intake contract.
+
+The legacy `原方式显示名` is only a display snapshot, not the original method ID.
+Neither it nor the account's current method supplies a missing historical ID. Old
+eight-column inputs and genuine empty extension cells retain unknown/null, with
+no extra missing-required-field error and no re-cleaning requirement. Unknown ID
+facts are not eligible to generate a recent-account recommendation; other valid
+account choices remain unaffected. An explicitly supplied but unresolved method
+reference is reported at its original file/sheet/row/source ID/field, PENDING for
+a later STAGED batch or ERROR for an unresolved FINAL source reference.
+
+A source-backed developer supplement can be prepared later from actual original
+records, keyed by the existing settlement source identity and with controlled
+provenance. This slice implements the optional appended-column route only; it does
+not claim a supplement loader or an automatic method-ID backfill. Original inputs
+need not be rewritten or re-cleaned. New runtime settlements obtain their known
+current method snapshot server-side, not from a client guess. Runtime capture,
+recent recommendation eligibility and persistence are owned by the backend. A
+provided/known ID alone does not make historical data recommendation-eligible:
+effective approved history/active contribution and the current eligible account/
+method pair must also satisfy the verified backend contract.
+
+No paused actual input is read or modified by this developer-side clarification.

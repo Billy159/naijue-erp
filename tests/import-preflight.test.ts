@@ -211,3 +211,102 @@ test("SYNTHETIC final pending capability/source issue does not turn dependent da
   assert.equal(report.issues.find(i => i.code === "SOURCE_REFERENCE_TARGET_NOT_VALIDATED")!.severity, "PENDING");
   assert.equal(report.identityManifest.identities.length, 0);
 });
+
+test("SYNTHETIC account/hall contract: original two headers remain optional historical recommendations, never permissions", () => {
+  const contract = IMPORT_PREFLIGHT_SHEETS.find(s => s.name === "11账户适用厅")!;
+  assert.deepEqual(contract.fields.map(f => f.header), ["*账户来源编号", "*厅来源编号"]);
+  assert.equal(contract.intakeOptional, true);
+  assert.equal(contract.relationshipUse, "HISTORICAL_RECOMMENDATION_ONLY_NOT_PERMISSION");
+  assert.equal(IMPORT_PREFLIGHT_SHEETS.filter(s => s.intakeOptional).length, 1);
+});
+function accountMasterSheets(includeRecommendations: boolean): ImportSourceSheet[] {
+  return IMPORT_PREFLIGHT_SHEETS.filter(s => includeRecommendations || s.name !== "11账户适用厅").map(s => sheet(s.name,
+    s.name === "09收款方式" ? [{ 来源编号: "SYN-PM", 方式名称: "SYNTHETIC METHOD", 状态: "正常" }]
+      : s.name === "10收款账户" ? [{ 来源编号: "SYN-PA", 账户显示名称: "SYNTHETIC ACCOUNT", 收款方式来源编号: "SYN-PM", 状态: "正常" }] : []));
+}
+test("SYNTHETIC optional account/hall sheet: omitted or empty in STAGED/FINAL never creates missing master/permission blockers", () => {
+  for (const mode of ["STAGED", "FINAL"] as const) for (const provided of [false, true]) {
+    const report = preflightImport(input(accountMasterSheets(provided), mode));
+    assert.equal(report.dataStatus, "CHECKED_WITHIN_SCOPE");
+    assert.equal(report.issues.length, 0);
+    assert.equal(report.records.find(r => r.entityType === "PAYMENT_ACCOUNT")!.sourceId, "SYN-PA");
+    assert.equal(report.recordChecks.find(r => r.sheet === "10收款账户")!.sourceValidation, "CHECKED_WITHIN_SCOPE");
+    assert.ok(report.identityManifest.identities.some(r => r.entityType === "PAYMENT_ACCOUNT" && r.sourceKey === "src:SYN-PA"));
+    assert.ok(!report.issues.some(i => /PERMISSION|AUTHORIZATION/.test(i.code)));
+    assert.deepEqual([report.databaseExecuted, report.importReady, report.publishReady], [false, false, false]);
+  }
+});
+test("SYNTHETIC provided historical account/hall recommendation is retained without changing account identity or demanding reassignment", () => {
+  const baseline = preflightImport(input(accountMasterSheets(false), "FINAL"));
+  const supplied = accountMasterSheets(false).map(s => s.name === "06厅" ? sheet("06厅", [{ 来源编号: "SYN-H", 厅名称: "SYNTHETIC HALL", 状态: "正常" }]) : s);
+  const report = preflightImport(input([...supplied, sheet("11账户适用厅", [{ 账户来源编号: "SYN-PA", 厅来源编号: "SYN-H" }])], "FINAL"));
+  assert.equal(report.issues.length, 0);
+  const relationship = report.records.find(r => r.entityType === "PAYMENT_ACCOUNT_HALL")!;
+  assert.equal(relationship.rawValues["*账户来源编号"]!.raw, "SYN-PA");
+  assert.equal(relationship.rawValues["*厅来源编号"]!.raw, "SYN-H");
+  assert.equal(report.records.find(r => r.entityType === "PAYMENT_ACCOUNT")!.targetId, baseline.records.find(r => r.entityType === "PAYMENT_ACCOUNT")!.targetId);
+});
+test("SYNTHETIC malformed optional recommendation reports only its source relation, not a false account permission failure", () => {
+  const report = preflightImport(input([...accountMasterSheets(false), sheet("11账户适用厅", [{ 账户来源编号: "SYN-PA", 厅来源编号: "SYN-MISSING-HALL" }])], "FINAL"));
+  assert.ok(report.issues.some(i => i.sheet === "11账户适用厅" && i.code === "SOURCE_REFERENCE_NOT_PRESENT"));
+  assert.equal(report.recordChecks.find(r => r.sheet === "10收款账户")!.sourceValidation, "CHECKED_WITHIN_SCOPE");
+  assert.ok(report.identityManifest.identities.some(r => r.entityType === "PAYMENT_ACCOUNT"));
+  assert.ok(!report.issues.some(i => i.sheet === "10收款账户" || /PERMISSION|AUTHORIZATION/.test(i.code)));
+});
+
+const originalSettlementHeaders = ["*来源编号", "*单据来源编号", "*原收退行号", "*账户来源编号", "*方向", "*金额", "原账户显示名", "原方式显示名"];
+const snapshotSourceHeader = "原收款方式来源编号";
+const syntheticSettlement = () => ({ 来源编号: "SYN-SETTLEMENT", 单据来源编号: "SYN-SALE", 原收退行号: "1", 账户来源编号: "SYN-PA", 方向: "收款", 金额: "10.00", 原账户显示名: "SYNTHETIC OLD ACCOUNT", 原方式显示名: "SYNTHETIC DISPLAY ONLY" });
+function settlementSnapshotSheet(method: ImportSourceCell | string | null, extended = true): ImportSourceSheet {
+  const original = sheet("15历史收退记录", [syntheticSettlement()]);
+  return extended ? { ...original, headers: [...original.headers, text(snapshotSourceHeader)], rows: original.rows.map(r => ({ ...r, cells: [...r.cells, method === null ? empty : typeof method === "string" ? text(method) : method] })) } : original;
+}
+test("SYNTHETIC payment-method snapshot contract: original 18 sheets/154 columns and old eight headers unchanged, one optional trailing fact only", () => {
+  const contract = IMPORT_PREFLIGHT_SHEETS.find(s => s.name === "15历史收退记录")!;
+  assert.deepEqual(contract.fields.map(f => f.header), originalSettlementHeaders);
+  assert.equal(IMPORT_PREFLIGHT_SHEETS.reduce((n, s) => n + s.fields.length, 0), 154);
+  assert.equal(IMPORT_PREFLIGHT_SHEETS.flatMap(s => s.optionalTrailingFields ?? []).length, 1);
+  assert.deepEqual(contract.optionalTrailingFields, [{ header: snapshotSourceHeader, type: "TEXT", required: false, referenceEntity: "PAYMENT_METHOD", nativeTarget: "sales_settlement.payment_method_id_snapshot" }]);
+});
+test("SYNTHETIC old settlement: absent method ID is permitted unknown, never inferred from matching display name or current account method", () => {
+  const report = preflightImport(input([settlementSnapshotSheet(null, false), sheet("09收款方式", [{ 来源编号: "SYN-PM", 方式名称: "SYNTHETIC DISPLAY ONLY", 状态: "正常" }]),
+    sheet("10收款账户", [{ 来源编号: "SYN-PA", 账户显示名称: "SYNTHETIC OLD ACCOUNT", 收款方式来源编号: "SYN-PM", 状态: "正常" }])]));
+  const record = report.records.find(r => r.entityType === "SETTLEMENT")!;
+  assert.equal(record.normalizedValues[snapshotSourceHeader], null);
+  assert.equal(record.rawValues[snapshotSourceHeader], undefined);
+  assert.equal(Object.keys(record.rawValues).length, 8);
+  assert.ok(!report.issues.some(i => i.field === snapshotSourceHeader || i.code === "INPUT_HEADER_MISMATCH"));
+  assert.equal(report.historicalPaymentMethodSnapshotPolicy.absentValue, "UNKNOWN_NOT_A_RECENT_RECOMMENDATION_FACT");
+  assert.equal(report.historicalPaymentMethodSnapshotPolicy.inferredFromDisplayNameOrCurrentAccount, false);
+  assert.equal(report.historicalPaymentMethodSnapshotPolicy.providedReferenceAloneGrantsRecommendation, false);
+});
+test("SYNTHETIC extended settlement: appended original method reference maps by source ID and preserves source values/identity", () => {
+  const previous = preflightImport(input([settlementSnapshotSheet(null, false)]));
+  const report = preflightImport(input([settlementSnapshotSheet("000009"), sheet("09收款方式", [{ 来源编号: "000009", 方式名称: "SYNTHETIC METHOD", 状态: "正常" }])]));
+  const record = report.records.find(r => r.entityType === "SETTLEMENT")!;
+  assert.equal(record.normalizedValues[snapshotSourceHeader], "000009"); assert.equal(record.rawValues[snapshotSourceHeader]!.raw, "000009");
+  assert.equal(record.targetId, previous.records[0]!.targetId);
+  assert.ok(!report.issues.some(i => i.field === snapshotSourceHeader));
+  assert.ok(!codes(report).includes("INPUT_HEADER_MISMATCH"));
+});
+test("SYNTHETIC appended method ID: blank remains unknown; bad explicit reference has exact location; pending staged vs unresolved final", () => {
+  const blankReport = preflightImport(input([settlementSnapshotSheet(null)]));
+  assert.equal(blankReport.records[0]!.normalizedValues[snapshotSourceHeader], null);
+  assert.ok(!blankReport.issues.some(i => i.field === snapshotSourceHeader));
+  for (const mode of ["STAGED", "FINAL"] as const) {
+    const report = preflightImport(input([settlementSnapshotSheet("SYN-NOT-PRESENT")], mode));
+    const problem = report.issues.find(i => i.field === snapshotSourceHeader)!;
+    assert.equal(problem.code, "SOURCE_REFERENCE_NOT_PRESENT"); assert.equal(problem.severity, mode === "STAGED" ? "PENDING" : "ERROR");
+    assert.deepEqual([problem.fileName, problem.sheet, problem.excelRow, problem.sourceId, problem.rawValue], ["SYNTHETIC.xlsx", "15历史收退记录", 2, "SYN-SETTLEMENT", "SYN-NOT-PRESENT"]);
+  }
+});
+test("SYNTHETIC snapshot extension exactness: no inserted/reordered/renamed columns, numeric or formula IDs never inferred", () => {
+  const valid = settlementSnapshotSheet("SYN-PM");
+  const badHeaders = [ [...valid.headers.slice(0, 7), text(snapshotSourceHeader), valid.headers[7]!], [...valid.headers.slice(0, 8), text("原收款方式名称")], [...valid.headers, text("UNAPPROVED EXTRA FIELD")] ];
+  for (const headers of badHeaders) assert.ok(codes(preflightImport(input([{ ...valid, headers }]))).includes("INPUT_HEADER_MISMATCH"));
+  for (const method of [number("9"), { kind: "formula", raw: "000009", formula: '"000009"' } as ImportSourceCell]) {
+    const report = preflightImport(input([settlementSnapshotSheet(method)]));
+    assert.equal(report.records[0]!.normalizedValues[snapshotSourceHeader], null);
+    assert.ok(report.issues.some(i => i.field === snapshotSourceHeader && ["TEXT_IDENTITY_OR_VALUE_UNVERIFIED", "FORMULA_NOT_VERIFIED"].includes(i.code)));
+  }
+});

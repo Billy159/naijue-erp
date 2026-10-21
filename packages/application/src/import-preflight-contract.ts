@@ -4,11 +4,18 @@ export type ImportFieldType = "TEXT" | "ENUM" | "INTEGER" | "MONEY" | "DATE" | "
 export interface ImportFieldContract {
   readonly header: string; readonly type: ImportFieldType; readonly required: boolean;
   readonly allowed?: readonly string[]; readonly referenceEntity?: string;
+  /** Approved source snapshot mapping only; not permission to write or infer a value. */
+  readonly nativeTarget?: "sales_settlement.payment_method_id_snapshot";
 }
 export interface ImportSheetContract {
   readonly name: string; readonly entityType: string; readonly fields: readonly ImportFieldContract[];
+  /** A missing optional sheet is not an incomplete master-data or permission grant. */
+  readonly intakeOptional?: true;
+  readonly relationshipUse?: "HISTORICAL_RECOMMENDATION_ONLY_NOT_PERMISSION";
+  /** Original ordered columns stay intact. Only an exact approved trailing extension is accepted. */
+  readonly optionalTrailingFields?: readonly ImportFieldContract[];
 }
-export const IMPORT_PREFLIGHT_CONTRACT_VERSION = "0.3-offline-kernel.1";
+export const IMPORT_PREFLIGHT_CONTRACT_VERSION = "0.3-offline-kernel.3";
 export const IMPORT_PREFLIGHT_SHEETS: readonly ImportSheetContract[] = [
   {
     "name": "06厅",
@@ -193,6 +200,8 @@ export const IMPORT_PREFLIGHT_SHEETS: readonly ImportSheetContract[] = [
   {
     "name": "11账户适用厅",
     "entityType": "PAYMENT_ACCOUNT_HALL",
+    "intakeOptional": true,
+    "relationshipUse": "HISTORICAL_RECOMMENDATION_ONLY_NOT_PERMISSION",
     "fields": [
       {
         "header": "*账户来源编号",
@@ -770,6 +779,15 @@ export const IMPORT_PREFLIGHT_SHEETS: readonly ImportSheetContract[] = [
   {
     "name": "15历史收退记录",
     "entityType": "SETTLEMENT",
+    "optionalTrailingFields": [
+      {
+        "header": "原收款方式来源编号",
+        "type": "TEXT",
+        "required": false,
+        "referenceEntity": "PAYMENT_METHOD",
+        "nativeTarget": "sales_settlement.payment_method_id_snapshot"
+      }
+    ],
     "fields": [
       {
         "header": "*来源编号",
