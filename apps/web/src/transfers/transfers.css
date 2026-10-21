@@ -10,7 +10,9 @@
 .transfer-list{display:flex;flex-direction:column;height:calc(100dvh - var(--ui-topbar,48px) - 32px);min-height:0}.transfer-list[hidden]{display:none!important}
 .transfer-route .tc-filters{display:flex;flex-direction:column;gap:8px;margin:0 0 14px;flex:none;overflow:visible}
 .transfer-route .tc-filter-row{display:grid;grid-template-columns:minmax(120px,.7fr) minmax(120px,.7fr) 155px minmax(170px,1fr) minmax(170px,1fr) max-content;align-items:end;gap:8px;min-width:990px}
-.transfer-route .tc-filters label{display:flex;flex-direction:column;gap:4px;align-items:stretch;min-width:0;font-size:12px;color:var(--ca-ink-2)}
+/* Only field labels stack their caption/control. The source ShadowRoot kept
+ * nested Arco checkbox labels isolated; this ordinary host must not restyle them. */
+.transfer-route .tc-filter-row>label{display:flex;flex-direction:column;gap:4px;align-items:stretch;min-width:0;font-size:12px;color:var(--ca-ink-2)}
 .transfer-route .tc-filter-secondary>label:first-child{grid-column:span 2}.transfer-route .tc-filter-actions{grid-column:-2/-1;display:flex;align-items:center;justify-self:end;gap:8px;white-space:nowrap}.transfer-route .tc-filter-actions>.iw-button{min-width:70px}
 .transfer-route .tc-filter-toggle{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:0;height:32px;padding:0 5px;font-size:12px;font-weight:400}.transfer-route .tc-filter-toggle[aria-expanded=true]{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
 .transfer-route .tc-number-field>.iw-control{padding:4px 10px}.transfer-route .ui-query-note{margin:0 0 8px;font-size:12px;line-height:20px;color:var(--ca-ink-3);flex:none}

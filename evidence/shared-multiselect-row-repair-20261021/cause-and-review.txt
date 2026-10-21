@@ -1,0 +1,24 @@
+Rejected delivered artifact: apps/web/preview-core-pages/artifacts/d2262df37604/three-core-pages-synthetic-test-only-d2262df37604.html
+Artifact SHA256: c718ecfd68b775c835c6e06ee969a3c2f4dd7eb3e96918005fae9cd3ac0dc577
+The existing artifact and user-provided screenshots remain unchanged.
+
+Cause and repair
+The source ShadowRoot isolated internal Arco labels. The ordinary shared host inherited .transfer-route .tc-filters label, which overrode the checkbox label to display:flex, flex-direction:column, gap:4px and font-size:12px. Its title remained a separate13px sibling. The exact rejected artifact fails the new regression before repair.
+The transfer rule now targets only direct .tc-filter-row>label field children. No checkbox offset, forced top alignment or global reset was added. Sales already scopes field input/select/label selectors to direct children. The only descendant sales input rule intentionally changes placeholder color; other shared label/input/select rules do not match this internal checkbox.
+
+The action-only sales stylesheet also lacked installed icon-hover primitive display/line-height/pseudo rules plus white/circle aliases. Transfer global Arco had masked this omission. Shared scoped primitives now supply it without importing the global reset. Zero-specificity hover bases retain Checkbox leaf line-height1 and24px halo precedence.
+
+A second real regression showed24px tags because extraction had shortened the frozen TreeSelect/input-tag selector ancestry. That ancestry is restored under the shared host, retaining the source23px declaration and min-width0 on input-tag-view. No geometry values changed. The exact transfer source-test selector assertion was updated accordingly.
+
+Independent read-only reviewer confirmed these fixes, inspected the exact rejected artifact and frozen source, and found no remaining nested field label/input/select collision. It verified restored source declaration ancestry, not browser pixels. The actual test ancestry now uses transfer-multi-control without an invented iw-field class, and sales demo-multi-host.
+
+Diagnostic interpretation
+rejected-artifact-before.log and tag-specificity-before.log are genuine runtime-CSS cascade failures.
+narrowed-field-before-leaf-repair.log initially stopped on equivalent #ffffff versus #fff; the test accepts both white spellings now.
+The intermediate layout-cascade-*-failure logs retain development assertions. One repeated computed-style probe reported13px then14px within the same synchronous section; the test snapshots each element once so diagnostics/assertions share a declaration. No browser-engine cause is claimed from that observation. The restored input selector now has the frozen ancestry under the owner scope.
+The height-auto diagnostic is not itself a rendering defect: installed size+multiple rules author height:auto; source min/max32px clamp the trigger. The regression asserts that actual clamp rather than demanding a computed height32px value.
+The aggregate rerun was terminated EXIT137 during reference tests while another worker had heavy DOM work. That outcome is resource/unknown, not evidence of a runtime assertion failure. Its raw log is preserved; any isolated rerun is reported separately with its resource condition.
+An optional /usr/bin/time diagnostic attempt returned127 because the binary is absent and launched no test. That tool result was reported immediately; subsequent resource probing uses Node built-ins, not a new package.
+
+Boundary
+These are authored-cascade/DOM checks in JSDOM, not flex-layout, baseline-center, clipping, halo-pixel, resolved SVG checkmark-color, browser performance or visual acceptance. JSDOM does not model flex-item blockification. Parent owns coherent full compilation/build and real-browser comparison against the original. No DB, production, deployment, network, package installation or commit action was performed here.

@@ -9,15 +9,15 @@
 @import '@arco-design/web-react/es/Empty/style/index.css';
 /* Frozen inventory-filters.jsx presentation, shared without domain ownership. */
 .demo-multi-select{position:relative;display:block;width:100%;min-width:0}
-.demo-multi-select .arco-tree-select{display:block;width:100%;font-size:13px}.demo-multi-select .arco-tree-select-view{height:32px;min-height:32px;max-height:32px;overflow:hidden;border:1px solid transparent;border-radius:4px;background:var(--ca-surface-muted);box-shadow:none}.demo-multi-select .arco-tree-select:hover .arco-tree-select-view{border-color:transparent;background:var(--ca-surface-muted)}.demo-multi-select .arco-tree-select-focused .arco-tree-select-view{border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted);box-shadow:none}
-.demo-multi-select .arco-input-tag,.demo-multi-select .arco-input-tag:hover,.demo-multi-select .arco-input-tag-focus{background:transparent!important}.demo-multi-select .arco-input-tag-inner{min-width:0;flex-wrap:nowrap;white-space:nowrap}.demo-multi-select .arco-input-tag-tag{height:23px;line-height:23px;max-width:calc(100% - 42px);flex:none;white-space:nowrap;background:var(--ca-surface);color:var(--ca-ink);border:0;border-radius:3px;box-shadow:none}.demo-multi-select .arco-tag-content{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.demo-multi-select .inv-filter-count{font-size:12px;color:var(--ca-ink-2);white-space:nowrap}
+.demo-multi-select .arco-tree-select{display:block;width:100%;font-size:13px}.demo-multi-select .arco-tree-select .arco-tree-select-view{height:32px;min-height:32px;max-height:32px;overflow:hidden;border:1px solid transparent;border-radius:4px;background:var(--ca-surface-muted);box-shadow:none}.demo-multi-select .arco-tree-select:hover .arco-tree-select-view{border-color:transparent;background:var(--ca-surface-muted)}.demo-multi-select .arco-tree-select.arco-tree-select-focused .arco-tree-select-view{border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted);box-shadow:none}
+.demo-multi-select .arco-tree-select .arco-input-tag,.demo-multi-select .arco-tree-select .arco-input-tag:hover,.demo-multi-select .arco-tree-select .arco-input-tag.arco-input-tag-focus{background:transparent!important}.demo-multi-select .arco-tree-select .arco-input-tag-view,.demo-multi-select .arco-tree-select .arco-input-tag-inner{min-width:0}.demo-multi-select .arco-tree-select .arco-input-tag-inner{flex-wrap:nowrap;white-space:nowrap}.demo-multi-select .arco-tree-select .arco-input-tag .arco-input-tag-tag{height:23px;line-height:23px;max-width:calc(100% - 42px);flex:none;white-space:nowrap;background:var(--ca-surface);color:var(--ca-ink);border:0;border-radius:3px;box-shadow:none}.demo-multi-select .arco-tree-select .arco-tag-content{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.demo-multi-select .inv-filter-count{font-size:12px;color:var(--ca-ink-2);white-space:nowrap}
 .demo-multi-select .arco-tree-select-popup{box-sizing:border-box;padding:4px;border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);box-shadow:var(--ca-shadow-float);background:var(--ca-popover-bg);color:var(--ca-ink)}.demo-multi-select .arco-tree{max-height:288px;overflow-y:auto;scrollbar-gutter:stable}.demo-multi-select .arco-tree-node{min-height:30px;padding-left:8px}.demo-multi-select .arco-tree-node-switcher{display:none}.demo-multi-select .arco-tree-node-title{font-size:13px;color:var(--ca-ink)}.demo-multi-select .inv-filter-tools{display:flex;align-items:center;gap:8px;padding:5px 8px 7px;border-bottom:1px solid var(--ca-line);font-size:12px;color:var(--ca-ink-2)}
 .demo-multi-select .inv-all-selected .arco-input-tag-inner>.arco-input-tag-tag:not(:first-child){display:none}
 .demo-multi-select .inv-filter-empty{padding:10px;color:var(--ca-ink-2);font-size:13px}
 /* Frozen inventory-filters.jsx:25-28,35-37, scoped to this action host. */
-.demo-multi-select .arco-tree-select-view input{font-size:13px;min-width:32px;background:transparent}
-.demo-multi-select .arco-input-tag-tag:has(.inv-filter-count){padding-inline:3px;border:0;background:transparent}
-.demo-multi-select .arco-tag-close-icon,.demo-multi-select .arco-icon-hover{color:var(--ca-ink-2)}
+.demo-multi-select .arco-tree-select .arco-tree-select-view input{font-size:13px;min-width:32px;background:transparent}
+.demo-multi-select .arco-tree-select .arco-input-tag .arco-input-tag-tag:has(.inv-filter-count){padding-inline:3px;border:0;background:transparent}
+.demo-multi-select .arco-tree-select .arco-tag-close-icon,.demo-multi-select .arco-tree-select .arco-icon-hover{color:var(--ca-ink-2)}
 .demo-multi-select .arco-tree-node-selected,.demo-multi-select .arco-tree-node:hover{background:var(--ca-popover-hover)}
 .demo-multi-select .arco-tree-node-selected .arco-tree-node-title,.demo-multi-select .arco-tree-node:hover .arco-tree-node-title{background:transparent;color:var(--ca-ink)}
 .demo-multi-select .arco-tree-select-popup .arco-checkbox-checked .arco-checkbox-mask,.demo-multi-select .arco-tree-select-popup .arco-checkbox-indeterminate .arco-checkbox-mask{background:var(--ca-primary);border-color:var(--ca-primary)}
@@ -29,3 +29,14 @@
 .demo-multi-select .arco-icon[fill=currentColor]{fill:currentColor;stroke:none}
 .demo-multi-select .arco-icon[stroke=currentColor]{stroke:currentColor;fill:none}
 .demo-multi-select .arco-icon[fill=currentColor][stroke=currentColor]{fill:currentColor;stroke:currentColor}
+/* Installed es/style/index.css icon-hover primitive, scoped instead of importing
+ * its global reset. Keep the base at zero specificity so the Checkbox leaf's
+ * mask-wrapper line-height and 24px halo continue to override the 20px base. */
+:where(.demo-multi-select .arco-icon-hover){position:relative;display:inline-block;cursor:pointer;line-height:0}
+.demo-multi-select .arco-icon-hover .arco-icon{position:relative;vertical-align:-.09em}
+:where(.demo-multi-select .arco-icon-hover)::before{content:'';position:absolute;display:block;border-radius:var(--border-radius-circle);background-color:transparent;box-sizing:border-box;transition:background-color .1s cubic-bezier(0,0,1,1);top:50%;left:50%;height:20px;width:20px;transform:translate(-50%,-50%)}
+:where(.demo-multi-select .arco-icon-hover:hover)::before{background-color:var(--color-fill-2)}
+:where(.demo-multi-select .arco-icon-hover.arco-icon-hover-disabled)::before{opacity:0}
+:where(.demo-multi-select .arco-icon-hover-size-mini,.demo-multi-select .arco-icon-hover-size-small)::before{height:20px;width:20px}
+:where(.demo-multi-select .arco-icon-hover-size-large,.demo-multi-select .arco-icon-hover-size-huge)::before{height:24px;width:24px}
+.demo-multi-select{--color-white:#fff;--border-radius-circle:50%}

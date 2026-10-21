@@ -170,3 +170,22 @@ introduced. See docs/sales-query.md for the exact native filter semantics.
 `run-multi-select-shell-dom-tests.mjs` covers injected-action/style ownership only;
 sales/transfer DOM runners separately mount the installed real TreeSelect. These
 are synthetic lifecycle/configuration checks, not browser/pixel/performance proof.
+
+The stage16 actual-browser rejection exposed a missed host cascade: transfer's
+descendant field-label selector applied column-flex layout and 12px field font to
+Arco checkbox labels. The rule now targets only direct filter-row labels, preserving
+both the source stacked fields and installed inline checkbox baseline. The shared
+action also supplies scoped installed icon-hover primitives and white/circle aliases
+that were previously masked by transfer's full Arco sheet in the portable build.
+No popup top/left offset or global reset is used as a repair.
+The regression also exposed shortened tag selectors losing to installed size rules
+(24px instead of the source23px). Original TreeSelect/input-tag ancestry is retained
+under the shared host so the copied declarations keep their intended precedence.
+
+`run-multi-select-layout-dom-tests.mjs` compiles the actual portable source CSS graph
+and production split transfer/sales CSS, then checks the real TreeSelect DOM/cascade
+under each field ancestry. Its optional HTML filename diagnoses the exact rejected
+artifact without rebuilding it. It checks authored display/line-height, hidden native
+inputs, source search/trigger/tag sizes and local dependency aliases. JSDOM cannot
+prove flex-item blockification, row-center pixels, clipping, halo size or resolved
+SVG checkmark color. Actual-browser comparison is still required before acceptance.

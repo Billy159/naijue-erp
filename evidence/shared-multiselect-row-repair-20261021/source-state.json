@@ -1,0 +1,38 @@
+{
+  "baseCommit": "6b3e5647fb174201f028518f677f7cb43e2da0e3",
+  "scope": "Shared multiselect cascade repair; unchanged runtime contract and native query semantics. Only the eight named paths belong to this checkpoint. Concurrent inventory work is excluded.",
+  "files": [
+    {
+      "file": "apps/web/src/demo-controls/README.md",
+      "sha256": "33db1a45db4a3182298b7299be84d787d9d2204a68ad646e336c6bb179673602"
+    },
+    {
+      "file": "apps/web/src/demo-controls/multi-select-source-provenance.json",
+      "sha256": "79a0ac286ec9a8a1d7f73422b7ff1d343d2f4a7e1ab80fafab24067d21a83c94"
+    },
+    {
+      "file": "apps/web/src/demo-controls/multi-select.css",
+      "sha256": "330adcca235f543be2de6ab0279a3767d79ebfcdf83fcf2e92474f1bf05299bf"
+    },
+    {
+      "file": "apps/web/src/demo-controls/tests/multi-select-layout-entry.tsx",
+      "sha256": "c587787f340782ad94b8addd14a20e208820f1181c156d2a3814713416286000"
+    },
+    {
+      "file": "apps/web/src/demo-controls/tests/run-multi-select-layout-dom-tests.mjs",
+      "sha256": "a0bcbab06ab5e90b0540ed504804dee49b12b0174e4f58a8de8fbf6b581c99f8"
+    },
+    {
+      "file": "apps/web/src/transfers/tests/run-frozen-source-check.mjs",
+      "sha256": "f7cb6836f150db74abc4ea055780804c786cd18d182acb0d92fa8fdafdd9dba0"
+    },
+    {
+      "file": "apps/web/src/transfers/transfers.css",
+      "sha256": "67f77d7833533edbfb3f353ce0de0d6de23b52ddce0ce10d351b5423cf58c10a"
+    },
+    {
+      "file": "package.json",
+      "sha256": "d468ffbbf8b4e0af21eb0c7eed0d66c8520820e8b2ca39af2fc2142b023b8966"
+    }
+  ]
+}

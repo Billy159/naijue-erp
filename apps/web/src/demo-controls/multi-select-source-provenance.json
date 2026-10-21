@@ -40,6 +40,11 @@
   ],
   "installedArco": {
     "version": "2.66.16",
+    "copiedPrimitiveSource": {
+      "file": "es/style/index.css",
+      "sha256": "87ea9a6b14150950fd950b8e8a74b7128da9176fafa23e490273f07c68219a32",
+      "use": "Scoped icon and icon-hover primitive rules, white/circle aliases only. No global reset/palette import. The zero-specificity hover base preserves installed Checkbox leaf line-height/halo overrides."
+    },
     "componentCss": [
       {
         "file": "es/TreeSelect/style/index.css",
@@ -75,5 +80,6 @@
       }
     ]
   },
+  "cascadeRepair": "The frozen ShadowRoot isolated field labels. Ordinary hosts must constrain field-column rules to direct row labels, never nested Arco checkbox labels. Actual portable/split CSS regression preserves this boundary; real-browser visual comparison remains separate.",
   "verificationBoundary": "Source hashes, Node/React-JSDOM lifecycle tests and emitted static graphs only. No real-browser geometry/pixels, performance, PostgreSQL or production acceptance."
 }

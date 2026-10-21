@@ -1,0 +1,21 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+{"scenario":"portable","route":"transfer","field":{"display":"flex","flexDirection":"column"},"row":{"display":"flex","alignItems":"flex-start","children":["SPAN.arco-tree-node-indent","SPAN.arco-tree-node-switcher","LABEL.arco-checkbox arco-checkbox-checked","SPAN.arco-tree-node-title arco-tree-node-title-block"]},"checkbox":{"display":"inline-block","flexDirection":"row","gap":"","alignItems":"normal","fontSize":"14px","lineHeight":"32px"},"maskWrapper":{"display":"inline-block","lineHeight":"1"},"input":{"position":"absolute","width":"0px","height":"0px","opacity":"0"},"title":{"fontSize":"13px"},"search":{"fontSize":"13px","minWidth":"32px"},"markup":"<div class=\"arco-tree-node arco-tree-node-is-leaf\" role=\"treeitem\" aria-expanded=\"false\" aria-level=\"0\"><span class=\"arco-tree-node-indent\" aria-hidden=\"true\"></span><span class=\"arco-tree-node-switcher\"></span><label class=\"arco-checkbox arco-checkbox-checked\"><input type=\"checkbox\" value=\"DRAFT\" checked=\"\"><span class=\"arco-icon-hover arco-checkbox-icon-hover arco-icon-hover-disabled arco-checkbox-mask-wrapper\"><div class=\"arco-checkbox-mask\"><svg class=\"arco-checkbox-mask-icon\" aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 1024 1024\" width=\"200\" height=\"200\" fill=\"currentColor\"><path d=\"M877.44815445 206.10060629a64.72691371 64.72691371 0 0 0-95.14856334 4.01306852L380.73381888 685.46812814 235.22771741 533.48933518a64.72691371 64.72691371 0 0 0-92.43003222-1.03563036l-45.82665557 45.82665443a64.72691371 64.72691371 0 0 0-0.90617629 90.61767965l239.61903446 250.10479331a64.72691371 64.72691371 0 0 0 71.19960405 15.14609778 64.33855261 64.33855261 0 0 0 35.08198741-21.23042702l36.24707186-42.71976334 40.5190474-40.77795556-3.36579926-3.49525333 411.40426297-486.74638962a64.72691371 64.72691371 0 0 0-3.88361443-87.64024149l-45.3088404-45.43829334z\" p-id=\"840\"></path></svg></div></span></label><span aria-grabbed=\"false\" class=\"arco-tree-node-title arco-tree-node-title-block\"><span class=\"arco-tree-node-title-text\">未审核</span></span></div>"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+'14px' !== '13px'
+
+    at file:///workspace/shared/naijue-erp-rewrite/apps/web/src/demo-controls/tests/run-multi-select-layout-dom-tests.mjs:86:14 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '14px',
+  expected: '13px',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
