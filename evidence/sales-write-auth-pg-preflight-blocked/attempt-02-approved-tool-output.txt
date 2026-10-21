@@ -1,0 +1,1 @@
+bwrap: Can't create file at /home/agent/.codex/sessions: Read-only file system

@@ -1,0 +1,14 @@
+/usr/bin/ss
+NEW_DATA_ABSENT
+NEW_COMMAND_FILE_ABSENT
+RUNTIME_EVIDENCE_EMPTY
+prepared-supervisor.mjs: OK
+preparation/supervisor-vs-reviewed.patch: OK
+preparation/reuse-and-lifecycle-proposal.json: OK
+preparation/README.md: OK
+8874c81620a67b475ba3bfd4aa9c74bfcbd7f4a841d4de3ab015d6553dee1325  /workspace/shared/naijue-pg-backend-20261020-aq_irji4/prepared-supervisor.mjs
+Cannot open netlink socket: Operation not permitted
+READ_ONLY_PORT_STATUS_EXIT=0
+{"package": "postgresql-17", "authenticated_package_hash_match": true, "extracted_files_match": 1571, "symlinks_match": 1}
+{"package": "postgresql-client-17", "authenticated_package_hash_match": true, "extracted_files_match": 371, "symlinks_match": 0}
+{"package": "libpq5", "authenticated_package_hash_match": true, "extracted_files_match": 22, "symlinks_match": 1}

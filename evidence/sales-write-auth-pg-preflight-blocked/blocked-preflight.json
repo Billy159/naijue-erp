@@ -1,0 +1,40 @@
+{
+  "status": "ENVIRONMENT_PREFLIGHT_BLOCKED_NOT_POSTGRESQL_TEST_FAILURE",
+  "frozen_report_at_utc": "2026-10-21T00:32:33Z",
+  "prepared_supervisor": "/workspace/shared/naijue-pg-write-auth-20261021-01/prepared-supervisor.mjs",
+  "prepared_supervisor_sha256": "247cd41d3ef3416082be28ee7a943cf590182d13db1a286395ce5875c1a2743a",
+  "expected_future_source_commit_not_run": "3dd087b8072fc189837c8299f9ff54c9a1c76718",
+  "attempts": [
+    {
+      "number": 1,
+      "command": "ss -H -ltn 'sport = :55432'",
+      "sandbox_permissions": "use_default",
+      "overall_preflight_exec_exit_code": 0,
+      "captured_ss_exit_code": 0,
+      "raw_output_file": "attempt-01-preflight-output.txt",
+      "raw_output_scope": "Complete returned output of the combined read-only directory/hash/distribution/ss preflight; ss exit was captured explicitly by the immediately following shell printf.",
+      "conclusion": "netlink socket operation denied; exit0 does not establish port availability"
+    },
+    {
+      "number": 2,
+      "command": "ss -H -ltn 'sport = :55432'",
+      "sandbox_permissions": "require_escalated",
+      "tool_exit_code": 1,
+      "raw_output_file": "attempt-02-approved-tool-output.txt",
+      "conclusion": "environment wrapper startup failed with read-only-filesystem error; no reliable ss result obtained. No restricted path was read, repaired, or reconfigured."
+    }
+  ],
+  "port_availability": "UNKNOWN_NOT_CONFIRMED",
+  "postgresql_started": false,
+  "initdb_executed": false,
+  "new_database_created": false,
+  "acceptance_test_executed": false,
+  "new_data_directory_absent": true,
+  "bounded_command_file_absent": true,
+  "runtime_evidence_directory_empty": true,
+  "prepared_supervisor_hash_reverified_before_report": true,
+  "restricted_path_read_or_permission_request": false,
+  "alternative_probe_route_or_retry_after_second_failure": false,
+  "old_data_and_evidence_modified": false,
+  "interpretation": "This is an environment/tool preflight blocker, not a PostgreSQL acceptance failure. No finding establishes missing user authorization, and additional user authorization is not a known fix. Expected26 tests were not run; previous22 results do not establish new sales write-authorization acceptance."
+}
