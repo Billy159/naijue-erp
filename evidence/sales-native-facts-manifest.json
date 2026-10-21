@@ -1,0 +1,44 @@
+{
+  "parentCommit": "2d0f5d2ef79a1d48f63a85cb0242661d2e54efde",
+  "ownedPaths": [
+    "packages/application/src/sales-native-facts.ts",
+    "adapters/postgres/src/sales-native-facts.ts",
+    "packages/application/src/ports.ts",
+    "packages/application/src/sales-service.ts",
+    "adapters/postgres/src/sales-unit-of-work.ts",
+    "tests/sales-native-facts.test.ts",
+    "docs/native-sales-transaction-facts.md",
+    "evidence/sales-native-facts-tests.log",
+    "evidence/sales-native-facts-manifest.json"
+  ],
+  "sha256": {
+    "packages/application/src/sales-native-facts.ts": "b801d93c4466e1cbc35cf75837ec8f0f21025ad7af8f359cae813180262177e8",
+    "adapters/postgres/src/sales-native-facts.ts": "097223d190d15f2e547e33f8cf20bf71f873cb565261f08b45375dc97846b1e6",
+    "packages/application/src/ports.ts": "fbcdbab08a7bb644745b52cdc248c5edfc1c2c364f03ce0866fbe69bc5698273",
+    "packages/application/src/sales-service.ts": "4bd6a20ef43c52f8dcbed7bebb521e9b3e1d8bbd04d73546b61dbd9723ae017e",
+    "adapters/postgres/src/sales-unit-of-work.ts": "88c72bac4846a4d92b443546bc2d15f3963b9c114224a8fffe2967dcf21cde8e",
+    "tests/sales-native-facts.test.ts": "bd66355f2da26f75a52991dcd4e9047b3645ca18774a5cddb8ab135fee9b4e7e",
+    "docs/native-sales-transaction-facts.md": "2c1c5ab3c82a6bfe49bd8d994cbf92e5ac537227afdeb8aef93d9c74d34c96de",
+    "evidence/sales-native-facts-tests.log": "6d7fd448dafed7bb77da944b885a17238fd8816db48f61c0c04951030171c3b8"
+  },
+  "verification": {
+    "command": "node --test --test-concurrency=1 tests/sales-native-facts.test.ts tests/sales.test.ts tests/sales-business-rules.test.ts tests/sales-authorization.test.ts tests/postgres-protocol.test.ts apps/api/src/sales-http.test.ts",
+    "passed": 177,
+    "failed": 0,
+    "newTests": 13,
+    "scope": "synthetic unit/scripted pg protocol and Fastify inject only"
+  },
+  "dependencies": [
+    "0009 source migration must be genuinely installed separately before native facts",
+    "real validated nine-price product creation/import completeness verifier; no default implemented",
+    "separate trusted action/reference scope authorization and production write host",
+    "document numbering remains independent unresolved implementation"
+  ],
+  "notRun": [
+    "PostgreSQL parser/engine/locks/isolation/constraints/concurrency",
+    "real migration/import/publisher/browser/host/operations",
+    "compiler/build/full tests by this worker",
+    "install/credential/commit/push/deployment"
+  ],
+  "revert": "Remove owned new files and revert only this scope hunks in ports.ts/sales-service.ts/sales-unit-of-work.ts. Preserve all concurrent files."
+}

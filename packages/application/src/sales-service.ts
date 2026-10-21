@@ -81,7 +81,7 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
         if (command.action === "SAVE") {
           requireDomain(!previous || previous.header.status === "DRAFT", "INVALID_STATE", "Only a draft can be edited; approved documents must first be unapproved");
           validateDraft(command.draft);
-          rules.assertDraftChange(previous, command.draft);
+          await rules.assertDraftChange(previous, command.draft, tx);
           next = {
             header: { ...command.draft.header, status: "DRAFT", version: previous ? nextVersion(previous.header.version) : version(1),
               createdByAccountId: previous?.header.createdByAccountId ?? command.actor.accountId,
@@ -96,7 +96,7 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
             requireDomain(previous.header.status === "DRAFT", "INVALID_STATE", "Only a draft can be approved");
             validateDraft({ header: previous.header, lines: previous.lines.filter(line => line.isCurrent), settlements: previous.settlements });
             validateSettlement(previous);
-            rules.assertReferencesAndEconomics(previous);
+            await rules.assertReferencesAndEconomics(previous, tx);
             const effects: InventoryLedgerRow[] = [];
             for (const line of previous.lines.filter(row => row.isCurrent)) {
               const delta = rules.inventoryDelta(previous, line);

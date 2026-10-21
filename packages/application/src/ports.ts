@@ -1,3 +1,4 @@
+import type { NativeSalesReferenceFacts } from "./sales-native-facts.ts";
 import type { InventoryPostingTransaction } from "./inventory-posting.ts";
 import type { SalesDocument, SalesDraft, SalesLineRow, DocumentStatus } from "../../domain/src/documents.ts";
 import type { InventoryBalanceRow, InventoryLedgerRow } from "../../domain/src/inventory.ts";
@@ -46,6 +47,10 @@ export interface SalesTransaction extends InventoryPostingTransaction {
   /** Requires the receipt actor/key and single sales target to have been bound first.
    * Implementations must not open another transaction or expose credentials/session material. */
   getCurrentSalesIdentity(accountId: EntityId<"account">): Promise<SalesCurrentIdentity | undefined>;
+  /** Optional capability for compatibility with explicit non-native providers.
+   * Native rules require it and fail closed if absent. Reads use this original
+   * bound command transaction and an explicit real catalogue completeness verifier. */
+  getCurrentSalesReferenceFacts?(document: SalesDraft | SalesDocument): Promise<NativeSalesReferenceFacts>;
   getSales(id: EntityId<"sales">): Promise<StoredSales | undefined>;
   putRuntimeSales(document: SalesDocument): Promise<void>;
   getReceipt(actorId: EntityId<"account">, requestKey: string): Promise<OperationReceiptRow | undefined>;
@@ -62,8 +67,8 @@ export interface SalesUnitOfWork { transaction<T>(work: (tx: SalesTransaction) =
 /** Required trusted server-side policy, never an implicit default. A candidate-source adapter
  * is available in sales-business-rules.ts and still requires verified catalogue/reference facts. */
 export interface SalesBusinessRules {
-  assertDraftChange(previous: SalesDocument | undefined, draft: SalesDraft): void;
-  assertReferencesAndEconomics(document: SalesDocument): void;
+  assertDraftChange(previous: SalesDocument | undefined, draft: SalesDraft, tx?: SalesTransaction): void | Promise<void>;
+  assertReferencesAndEconomics(document: SalesDocument, tx?: SalesTransaction): void | Promise<void>;
   inventoryDelta(document: SalesDocument, line: SalesLineRow): Quantity;
 }
 export interface SalesAuthorization {

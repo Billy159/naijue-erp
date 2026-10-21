@@ -1,8 +1,11 @@
+import { PostgresNativeSalesFacts } from "./sales-native-facts.ts";
+import type { NativeCatalogueCompletenessVerifier } from "./sales-native-facts.ts";
+import type { NativeSalesReferenceFacts } from "../../../packages/application/src/sales-native-facts.ts";
 import { PostgresPostingBalances } from "./inventory-posting-balances.ts";
 import type { Pool } from "pg";
 import type { OperationReceiptRow, SalesAuditRow, SalesCurrentIdentity, SalesResult, SalesTransaction, SalesUnitOfWork, StoredSales } from "../../../packages/application/src/ports.ts";
 import { sameSalesLine, sameSalesSettlement } from "../../../packages/application/src/sales-change-evidence.ts";
-import type { SalesDocument, SalesHeaderRow, SalesLineRow, SalesSettlementRow } from "../../../packages/domain/src/documents.ts";
+import type { SalesDocument, SalesDraft, SalesHeaderRow, SalesLineRow, SalesSettlementRow } from "../../../packages/domain/src/documents.ts";
 import type { InventoryBalanceRow, InventoryLedgerRow } from "../../../packages/domain/src/inventory.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { businessDate, entityId } from "../../../packages/domain/src/values.ts";
@@ -74,10 +77,17 @@ function decodeResult(value: unknown): SalesResult {
 /** Real pg transaction adapter. No connection, migration, seed, retry, authorization default or server is created here. */
 export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
   private readonly pool: PgSalesPool;
-  constructor(pool: PgSalesPool) { this.pool = pool; }
+  private readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier | undefined;
+  constructor(pool: PgSalesPool, options?: { readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier }) {
+    this.pool = pool;
+    if (options !== undefined && typeof options.catalogueCompleteness?.assertComplete !== "function")
+      throw new TypeError("Native catalogue facts require an explicit real completeness verifier");
+    const verifier = options?.catalogueCompleteness;
+    this.catalogueCompleteness = verifier === undefined ? undefined : Object.freeze({ assertComplete: verifier.assertComplete.bind(verifier) });
+  }
   async transaction<T>(work: (tx: SalesTransaction) => Promise<T>): Promise<T> {
     const client = await this.pool.connect();
-    const tx = new PostgresSalesTransaction(client);
+    const tx = new PostgresSalesTransaction(client, this.catalogueCompleteness);
     let began = false; let commitAttempted = false; let discard: Error | undefined;
     try {
       // Explicit READ COMMITTED: a receipt waiter must see the previous holder's committed receipt after its advisory lock.
@@ -114,7 +124,20 @@ class PostgresSalesTransaction implements SalesTransaction {
   private receiptKey: string | undefined;
   close(): void { this.active = false; }
   private readonly client: PgSalesClient;
-  constructor(client: PgSalesClient) { this.client = client; this.balances = new PostgresPostingBalances((sql, values) => this.query(sql, values)); }
+  private readonly nativeFacts: PostgresNativeSalesFacts;
+  constructor(client: PgSalesClient, verifier?: NativeCatalogueCompletenessVerifier) {
+    this.client = client; this.balances = new PostgresPostingBalances((sql, values) => this.query(sql, values));
+    this.nativeFacts = new PostgresNativeSalesFacts((sql, values) => this.query(sql, values), salesId => {
+      requireDomain(this.active && this.receiptActor !== undefined && this.sales?.id === salesId,
+        "TRANSACTION_SCOPE", "Native facts require the original bound sales actor and target in an active transaction");
+    }, () => [...this.previousLines.values()].filter(line => line.isCurrent).map(line => ({ id: line.id, skuId: line.skuId, snapshot: line.snapshot })), verifier);
+  }
+  async getCurrentSalesReferenceFacts(document: SalesDraft | SalesDocument): Promise<NativeSalesReferenceFacts> {
+    requireDomain(this.active && this.receiptActor !== undefined && this.sales?.id === document.header.id,
+      "TRANSACTION_SCOPE", "Native facts require the original receipt actor and loaded sales target");
+    await this.getCurrentSalesIdentity(this.receiptActor);
+    return this.nativeFacts.load(document);
+  }
   private query(text: string, values: unknown[] = []): Promise<PgSalesResult> {
     requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes");
     return this.client.query(text, values);
