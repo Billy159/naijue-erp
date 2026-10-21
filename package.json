@@ -20,7 +20,7 @@
     "build:preview": "node apps/web/build-preview.mjs",
     "test:web:dom": "node apps/web/tests/run-dom-tests.mjs",
     "test:web:preview": "node apps/web/tests/run-bundle-smoke.mjs",
-    "check:web": "npm run typecheck:web && npm run build:preview && npm run test:web:dom && npm run test:web:auth && npm run test:web:sales && npm run test:web:parties && npm run test:web:application && npm run test:web:transfers && npm run test:web:application:sales && npm run test:web:application:transfers && npm run test:web:product:styles && npm run test:web:product:lifecycle && npm run test:web:preview && npm run check:web:development-host",
+    "check:web": "npm run typecheck:web && npm run build:preview && npm run test:web:dom && npm run test:web:auth && npm run test:web:sales && npm run test:web:parties && npm run test:web:application && npm run test:web:transfers && npm run test:web:application:sales && npm run test:web:application:transfers && npm run test:web:product:styles && npm run test:web:product:lifecycle && npm run test:web:preview && npm run check:web:development-host && npm run test:web:demo-restoration",
     "check:all": "npm run check && npm run check:web",
     "test:web:auth": "node apps/web/src/authentication/tests/run-dom-tests.mjs",
     "build:preview:product": "node apps/web/build-product-only-preview.mjs",
@@ -33,7 +33,8 @@
     "test:web:product:styles": "node apps/web/src/application/tests/run-product-style-handshake-dom-tests.mjs",
     "test:web:product:lifecycle": "node apps/web/src/inventory/tests/run-product-drawer-lifecycle-dom-tests.mjs",
     "test:web:application:sales": "node apps/web/src/application/tests/run-sales-dom-tests.mjs",
-    "check:web:development-host": "tsc --noEmit -p apps/web/src/development-host/tsconfig.json && node --test apps/web/src/development-host/configuration.test.ts && node apps/web/src/development-host/tests/run-dom-tests.mjs && node apps/web/src/development-host/tests/run-build-check.mjs && node apps/web/src/application/tests/run-build-check.mjs"
+    "check:web:development-host": "tsc --noEmit -p apps/web/src/development-host/tsconfig.json && node --test apps/web/src/development-host/configuration.test.ts && node apps/web/src/development-host/tests/run-dom-tests.mjs && node apps/web/src/development-host/tests/run-build-check.mjs && node apps/web/src/application/tests/run-build-check.mjs",
+    "test:web:demo-restoration": "node apps/web/src/components/tests/run-inventory-page-size-dom-tests.mjs && node apps/web/src/inventory/tests/run-display-projection-dom-tests.mjs && node apps/web/src/inventory/tests/run-windowing-dom-tests.mjs && node apps/web/src/demo-presentation/tests/run-document-source-restoration.mjs && node apps/web/src/transfers/tests/run-filter-dom-tests.mjs"
   },
   "dependencies": {
     "fastify": "5.12.5",

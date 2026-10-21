@@ -20,9 +20,9 @@
 .sales-detail-facts .sale-due-value{display:flex;align-items:center;height:32px;color:var(--ca-ink);font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 .sales-detail-facts .sale-payment-field{grid-column:4 / span 3;min-width:0}
 .sales-detail-facts .sale-payment-rows{display:grid;gap:5px;min-width:0}
-.sales-detail-facts .sale-payment-read{display:grid;grid-template-columns:100px minmax(160px,1fr) 110px;align-items:start;gap:7px;min-height:32px;max-width:560px;color:var(--ca-ink);font-size:13px;line-height:20px}
-.sales-detail-facts .sale-payment-read>*{min-width:0;overflow-wrap:anywhere}
-.sales-detail-facts .sale-payment-read strong{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.sales-detail-facts .sale-payment-read{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) auto;align-items:center;gap:7px;min-height:32px;color:var(--ca-ink);font-size:13px;line-height:20px}
+.sales-detail-facts .sale-payment-read>*{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sales-detail-facts .sale-payment-read strong{font-variant-numeric:tabular-nums;font-weight:600}
 .sales-current-name{display:block;color:var(--ca-ink-3);font-size:11px;line-height:18px}
 .sales-detail-facts .sale-note-row{display:grid;grid-template-columns:minmax(0,1fr);align-items:stretch;gap:4px;min-height:0;margin:2px 0 8px;color:var(--ca-ink-2);font-size:12px}
 .sales-detail-facts .sale-note-read{color:var(--ca-ink);font-size:13px;line-height:20px;white-space:pre-wrap;overflow-wrap:anywhere}
@@ -35,6 +35,10 @@
 .sales-detail-facts .sale-lines-table th{z-index:4}.sales-detail-facts .sale-lines-table td{font-size:13px;background:#fff}
 .sales-detail-facts .sale-lines-table :is(th,td):nth-child(n+5):nth-child(-n+9){text-align:right}
 .sales-detail-facts .sale-lines-table :is(th,td):nth-child(10){text-align:center}
+/* interaction-common.js:4 marks the operation column; final-ui.css:4 pins it. */
+.sales-detail-facts .sale-lines-table .ui-action-cell{position:sticky;right:0;left:auto;z-index:2;min-width:136px;width:136px;background:#fff;box-shadow:var(--ca-shadow-sticky);white-space:nowrap}
+.sales-detail-facts .sale-lines-table thead .ui-action-cell{z-index:7;background:var(--ca-table-head)}
+.sales-detail-facts .sale-lines-table tbody tr:hover td{background:var(--ca-table-row-hover)}
 .sales-detail-facts .sale-product-cell{display:flex;align-items:center;min-width:0;gap:6px}
 .sales-detail-facts .sale-product-cell strong{flex:none;max-width:52%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sales-detail-facts .sale-product-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -43,13 +47,6 @@
 .sales-detail-facts .sale-summary{box-sizing:border-box;display:flex;flex:none;justify-content:space-between;align-items:center;gap:16px;width:100%;min-height:42px;margin:8px 0 0;padding:5px 2px;border:0;border-top:1px solid var(--ca-line);border-radius:0;background:transparent}
 .sales-detail-facts .sale-summary-primary,.sales-detail-facts .sale-summary-detail{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
 .sales-detail-facts .sale-summary strong{color:var(--ca-ink);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
-.sales-line-record,.sales-record-metadata{margin:8px 0 0;color:var(--ca-ink-2);font-size:12px;line-height:20px}
-.sales-line-record{padding:8px 10px;border:1px solid var(--ca-line);background:var(--ca-surface-subtle)}
-.sales-line-record>div{display:flex;align-items:center;justify-content:space-between}
-.sales-record-metadata summary{cursor:pointer}
-.sales-line-record dl,.sales-record-metadata dl{display:flex;gap:20px;flex-wrap:wrap;margin:6px 0 0}
-.sales-line-record dd,.sales-record-metadata dd{margin:0;color:var(--ca-ink);overflow-wrap:anywhere}
 .sales-detail-page :is(button,input,select,summary):focus-visible{outline:2px solid var(--ca-primary);outline-offset:2px}
 @media(max-width:1100px){.sales-detail-facts .sale-doc-fields{grid-template-columns:repeat(3,minmax(0,1fr))}.sales-detail-facts .sale-payment-field{grid-column:1/-1}}
 @media(max-width:700px){.sales-detail-facts .sales-document-state{flex-wrap:wrap}.sales-detail-facts .sales-document-state .actions{flex-wrap:wrap;margin-left:0}.sales-detail-facts .sale-doc-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.sales-detail-facts .sale-summary{flex-wrap:wrap}}
-@media(max-width:620px){.sales-detail-facts .sale-payment-read{grid-template-columns:80px minmax(0,1fr) 90px}}

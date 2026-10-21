@@ -1,0 +1,8 @@
+/* Frozen single-select's 108px/32px shell, without any Arco static dependency. */
+.iw-page-size-host{position:relative;flex:0 0 108px;width:108px;min-width:108px;max-width:108px;height:32px;font:13px var(--ca-font-sans)}
+.iw-page-size-trigger{box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;width:100%;height:32px;padding:0 4px 0 10px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);color:var(--ca-ink);font:400 13px Arial,"PingFang SC",sans-serif;cursor:pointer;white-space:nowrap}
+.iw-page-size-trigger svg{color:var(--ca-ink-2);flex:none}
+.iw-page-size-trigger:hover{border-color:var(--ca-control-hover-border)}
+.iw-page-size-trigger:focus-visible{outline:0;border-color:var(--ca-control-focus-border)}
+.iw-page-size-trigger:disabled{color:var(--ca-control-disabled-text);background:var(--ca-control-disabled-bg);cursor:not-allowed}
+.iw-page-size-state{position:absolute;left:0;bottom:36px;z-index:2000;box-sizing:border-box;width:260px;padding:8px;border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);background:var(--ca-surface);box-shadow:var(--ca-shadow-float);color:var(--ca-ink-2);font-size:12px;line-height:20px}

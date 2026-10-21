@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-21",
+  "status": "focused_source_and_synthetic_checks_passed",
+  "scope": "Restore only deterministic frozen Demo document presentation layers; root owns commit and aggregate build/typecheck.",
+  "files": [
+    "apps/web/src/demo-presentation/frame.css",
+    "apps/web/src/demo-presentation/demo-frame.tsx",
+    "apps/web/src/demo-presentation/tests/run-document-source-restoration.mjs",
+    "apps/web/src/sales/detail-content.tsx",
+    "apps/web/src/sales/detail.css",
+    "apps/web/src/sales/README.md",
+    "apps/web/src/sales/sales.test.ts",
+    "apps/web/src/sales/tests/run-dom-tests.mjs",
+    "apps/web/src/transfers/transfers.css",
+    "apps/web/src/transfers/transfers-page.tsx",
+    "apps/web/src/transfers/tests/run-dom-tests.mjs",
+    "apps/web/src/application/tests/run-build-check.mjs",
+    "apps/web/src/development-host/tests/run-build-check.mjs"
+  ],
+  "checks": {
+    "source_cssom_ssr": "passed",
+    "sales_frozen_source_and_asset_graph": "passed",
+    "sales_units": 16,
+    "sales_dom_groups": 18,
+    "transfer_dom_groups": 11,
+    "application_sales_dom_groups": 6,
+    "application_transfer_dom_groups": 6,
+    "application_emitted_build_boundary": "passed",
+    "development_host_emitted_build_boundary": "passed"
+  },
+  "not_run_by_owner": [
+    "tsc/full typecheck, coordinated root lane",
+    "final aggregate check:all and preview build, root-owned",
+    "real browser/screenshot/pixel verification",
+    "network/listener/server/PostgreSQL/live-data acceptance"
+  ],
+  "remaining_gaps": [
+    "Sales line product specification view remains explicitly disabled, not a saved-record expansion.",
+    "Full operation history remains explicitly disabled; no snapshot is mislabeled as history.",
+    "Stored barcode/allocation/gift/timestamps remain in DTO/validated detail response; not all are shown in the restored default document.",
+    "Bounded warehouse reference paging and selection semantics are outside this owner scope.",
+    "Only the final source CSS settlement proportions are restored; excluded runtime bridge is not reconstructed."
+  ]
+}

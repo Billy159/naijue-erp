@@ -6,6 +6,15 @@ import { buildApplication } from '../build-application.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const workingDirectory = path.resolve(here, '..');
 const temporary = await mkdtemp(path.join(here, '.build-check-'));
+// This exact negative-only selector prevents a native-text ring on composite
+// Arco inner inputs. It is not an eager Arco dependency or positive Arco style.
+const sharedFocusInputExclusion = ':not(:where(.arco-picker input,.arco-tree-select input,.arco-select input,.arco-input-tag input))';
+const withoutSharedFocusInputExclusion = css => css.replaceAll(sharedFocusInputExclusion, '');
+const assertNoPositiveArcoStyle = css => assert.doesNotMatch(withoutSharedFocusInputExclusion(css), /\.arco-/);
+assertNoPositiveArcoStyle(`.demo-ui input${sharedFocusInputExclusion}:focus-visible{box-shadow:var(--ca-focus-ring)}`);
+for (const forbidden of ['.arco-picker{color:red}', `${sharedFocusInputExclusion} .arco-btn{color:red}`, sharedFocusInputExclusion.replace('.arco-picker input', '.arco-picker textarea')]) {
+  assert.throws(() => assertNoPositiveArcoStyle(forbidden), 'Positive Arco styles and unreviewed exclusion variants remain forbidden');
+}
 try {
   const outdir = path.join(temporary, 'output');
   // Export the source factory only. No fixture/config injection, HTML, listener or network.
@@ -53,10 +62,10 @@ try {
 
   const styles = Object.fromEntries(await Promise.all(Object.entries(manifest.styles).map(async ([name, file]) => [name, await readFile(path.join(outdir, file), 'utf8')])));
   assert.match(styles.application, /auth-panel/); assert.match(styles.application, /demo-ui/); assert.match(styles.application, /\.sidebar/);
-  assert.doesNotMatch(styles.application, /iw-workbench|sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.mx-|\.arco-/);
+  assert.doesNotMatch(withoutSharedFocusInputExclusion(styles.application), /iw-workbench|sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.mx-|\.arco-/);
   assert.match(styles.inventory, /iw-workbench/); assert.match(styles.inventory, /\.mx-table/);
-  assert.doesNotMatch(styles.inventory, /sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.arco-/);
-  assert.match(styles.sales, /sales-workbench/); assert.doesNotMatch(styles.sales, /party-workbench|\.arco-|sales-detail-(?:facts|page|dialog)|sale-editor|sale-doc-fields|sale-lines-table|sale-summary/);
+  assert.doesNotMatch(withoutSharedFocusInputExclusion(styles.inventory), /sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.arco-/);
+  assert.match(styles.sales, /sales-workbench/); assert.doesNotMatch(withoutSharedFocusInputExclusion(styles.sales), /party-workbench|\.arco-|sales-detail-(?:facts|page|dialog)|sale-editor|sale-doc-fields|sale-lines-table|sale-summary/);
   assert.match(styles['sales-detail'], /sales-detail-facts/);
   assert.doesNotMatch(styles['sales-detail'], /sales-workbench|party-workbench|transfer-editor|\.arco-|\.iw-product-drawer|\.pd-tabs|\.mx-/);
   const salesRouteStyles = byAbsolute.get(path.join(outdir, manifest.styles.sales)); assert.ok(salesRouteStyles);

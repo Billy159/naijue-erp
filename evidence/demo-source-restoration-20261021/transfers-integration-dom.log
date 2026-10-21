@@ -1,0 +1,11 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS transfer app 1: actual first-party frame preserves disabled missing/new/edit routes and independent customer/supplier labels; auth alone stays inert; route cancellation discards late CSS, one explicit transfer activation reads one bounded page.
+PASS transfer app 2: detail code/CSS/data activates only on click, remains an inline full-page read-only view, and cancelled preparation retains the executed list/draft/scroll/focus without a new list read.
+PASS transfer app 3: optional product action waits one configured frame/body stylesheet, closes safely while pending, then uses the real lazy HTTP reader/shared drawer without any relative fallback CSS request or eager product reads.
+PASS transfer app 4: aborted/cancelled and closed/superseded detail late403/401s cannot expire the still-current route session or replace newer inline detail.
+PASS transfer app 5: current read-only403 clears route facts and permits same-route retry without destroying auth; identity replacement aborts children, old-scope401 is ignored, while a fresh current401 immediately clears auth/route facts despite its own abort cleanup.
+PASS transfer app 6: omitted product dependency leaves viewing explicitly disabled, not fixture/default-reader fallback; no edit/create/sales command route is activated.
+All6 composed transfer application DOM groups passed. Real leaf/native mocked HTTP and shared drawer, not browser/layout/network/performance acceptance.

@@ -7,6 +7,15 @@ import { buildDevelopmentHost } from '../build-development-host.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const workingDirectory = path.resolve(here, '../../application');
 const temporary = await mkdtemp(path.join(here, '.host-build-'));
+// This exact negative-only selector prevents a native-text ring on composite
+// Arco inner inputs. It is not an eager Arco dependency or positive Arco style.
+const sharedFocusInputExclusion = ':not(:where(.arco-picker input,.arco-tree-select input,.arco-select input,.arco-input-tag input))';
+const withoutSharedFocusInputExclusion = css => css.replaceAll(sharedFocusInputExclusion, '');
+const assertNoPositiveArcoStyle = css => assert.doesNotMatch(withoutSharedFocusInputExclusion(css), /\.arco-/);
+assertNoPositiveArcoStyle(`.demo-ui input${sharedFocusInputExclusion}:focus-visible{box-shadow:var(--ca-focus-ring)}`);
+for (const forbidden of ['.arco-picker{color:red}', `${sharedFocusInputExclusion} .arco-btn{color:red}`, sharedFocusInputExclusion.replace('.arco-picker input', '.arco-picker textarea')]) {
+  assert.throws(() => assertNoPositiveArcoStyle(forbidden), 'Positive Arco styles and unreviewed exclusion variants remain forbidden');
+}
 const configuration = { kind: 'naijue-erp-development-host', http: { origin: 'https://synthetic.test', basePath: '/api' }, assets: { basePath: '/development/erp/' }, routes: { inventory: true, sales: true, transfers: true }, session: { verifyOnMount: false } };
 try {
   await assert.rejects(buildDevelopmentHost({ configuration: { ...configuration, password: 'SYNTHETIC' }, outdir: path.join(temporary, 'rejected') }));
@@ -57,9 +66,9 @@ try {
   assert.ok(entryFor('../sales/detail-content.tsx')); assert.ok(entryFor('../transfers/detail-content.tsx')); assert.ok(entryFor('../inventory/product-drawer.tsx'));
   const css = Object.fromEntries(await Promise.all(Object.entries(result.manifest.styles).map(async ([key, filename]) => [key, await readFile(path.join(outdir, filename), 'utf8')])));
   assert.match(css.application, /auth-panel/); assert.match(css.application, /demo-ui/);
-  assert.doesNotMatch(css.application, /\.mx-|sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.arco-/);
-  assert.match(css.inventory, /iw-workbench/); assert.doesNotMatch(css.inventory, /\.arco-/);
-  assert.match(css.sales, /sales-workbench/); assert.doesNotMatch(css.sales, /\.arco-|sale-lines-table|sales-detail-facts/);
+  assert.doesNotMatch(withoutSharedFocusInputExclusion(css.application), /\.mx-|sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.arco-/);
+  assert.match(css.inventory, /iw-workbench/); assert.doesNotMatch(withoutSharedFocusInputExclusion(css.inventory), /\.arco-/);
+  assert.match(css.sales, /sales-workbench/); assert.doesNotMatch(withoutSharedFocusInputExclusion(css.sales), /\.arco-|sale-lines-table|sales-detail-facts/);
   assert.match(css['sales-detail'], /sales-detail-facts/); assert.match(css.transfers, /transfer-route/);
   assert.doesNotMatch(css.transfers, /transfer-editor|pd-tabs|iw-product-drawer/);
   assert.match(css['transfer-detail'], /transfer-editor/); assert.doesNotMatch(css['transfer-detail'], /pd-tabs|iw-product-drawer/);

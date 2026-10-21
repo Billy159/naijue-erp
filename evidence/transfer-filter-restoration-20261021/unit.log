@@ -1,0 +1,30 @@
+✔ construction and parameter edits are inert, source arrays/page sizes are strict (14.476292ms)
+✔ exact read HTTP request shape, trusted session only and no hydration (55.405399ms)
+✔ response fails closed for missing summaries, wrong scope/count/page, duplicates and scalar aliases (11.198805ms)
+✔ detail validates complete canonical metadata while keeping saved full labels (5.203316ms)
+✔ contradictory current product/color/FIT/size identity facts fail closed (7.694179ms)
+✔ canonical matrix uses identities, full ordered sizes, exact actual quantities and legal empty vs nonexistent SKU (4.088495ms)
+✔ same labels never merge different product/color/FIT identities (2.55226ms)
+✔ wide and many-row grids select explicit bounded fallback before Cartesian materialization (79.534184ms)
+✔ exact formatting and huge count paging do not round quantities or expose unsafe page actions (4.329447ms)
+✔ superseded and cancelled list reads discard late ignored-signal success (10.710103ms)
+✔ failed read retains marked executed facts, identity replacement clears all list/detail results (5.432942ms)
+✔ 401/403 revoke route and child reads immediately without retained old labels (9.809762ms)
+✔ detail version guard never regresses an already-known version (3.570512ms)
+✔ bounded warehouse HTTP is independent, exact selected-ID intersection and rejects malformed candidates (14.440771ms)
+✔ malformed transport data never becomes successful empty results or fixtures (5.900191ms)
+✔ candidate construction is inert, scroll calls fetch one page and the session has a hard finite cap (35.396111ms)
+✔ repeated scrolls serialize, search aborts and a late ignored-signal page cannot append (5.794173ms)
+✔ only an unsearched single complete response is a proven universe, never a search subset or accumulated pages (3.392085ms)
+✔ a failed next page preserves previous candidates and can be explicitly retried (6.176782ms)
+✔ changed totals and cross-page duplicate IDs fail closed without silent deduplication or fake totals (7.75064ms)
+✔ close and identity revocation abort pending reads and clear all candidate facts (2.238031ms)
+✔ warehouse access denial invalidates the parent rather than retaining old identity candidates (1.481344ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1419.87173

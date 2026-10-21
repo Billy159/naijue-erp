@@ -1,0 +1,6 @@
+PASS page-size shell: no idle import/native select; first focus loads once; click joins pending work; Escape cancels and a late module cannot replace/open the shell.
+PASS page-size interruption: blur/busy closes pending intent; scope revoke/unmount rejects late attachment.
+PASS page-size failure: missing JS or CSS is accessible and retryable, never silently falls back to an OS popup.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS actual Arco action: exactly100/200/500, 150px popup, controlled applied value and busy disable. Popup configuration uses frozen tl placement; jsdom is not layout/pixel acceptance.

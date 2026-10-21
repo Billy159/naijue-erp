@@ -1,8 +1,12 @@
-/* Lightweight closeable frame stays available during its explicit action import. */
-.iw-product-drawer{box-sizing:border-box;position:fixed;inset:0 0 0 auto;margin:0;width:min(660px,100vw);height:100%;max-width:100vw;max-height:100%;border:0;border-left:1px solid var(--ca-line);padding:0;background:var(--ca-surface);box-shadow:-8px 0 32px #16223426;color:var(--ca-ink);font:13px var(--ca-font-sans);overflow:auto}
+/* Lightweight closeable frame stays available during its explicit action import.
+ * Frozen product-rework.css 92–114: product title + small readonly, fixed header. */
+.iw-product-drawer{box-sizing:border-box;position:fixed;inset:0 0 0 auto;margin:0;width:min(660px,100vw);height:100%;max-width:100vw;max-height:100%;border:0;border-left:1px solid var(--ca-line);padding:0;background:var(--ca-surface);box-shadow:-8px 0 32px #16223426;color:var(--ca-ink);font:13px var(--ca-font-sans);overflow:hidden}
+.iw-product-drawer[open]{display:flex;flex-direction:column}
 .iw-product-drawer::backdrop{background:var(--ca-overlay)}
-.iw-product-drawer-head{padding:16px 20px;border-bottom:1px solid var(--ca-line);display:flex;align-items:center;justify-content:space-between;gap:12px}
-.iw-product-drawer-head h2{font-size:16px;line-height:24px;margin:0;font-weight:600}
-.iw-product-drawer-head p{margin:4px 0 0;line-height:20px;color:var(--ca-ink-3);overflow-wrap:anywhere}
-.iw-product-drawer-body{min-height:220px}
+.iw-product-drawer-head{box-sizing:border-box;flex:none;min-height:54px;padding:12px 40px 12px 20px;border-bottom:1px solid var(--ca-line);display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative}
+.iw-product-drawer-title{display:flex;align-items:baseline;gap:10px;min-width:0}
+.iw-product-drawer-title h2{min-width:0;overflow-wrap:anywhere;font:700 20px/30px var(--ca-font-sans);margin:0}
+.iw-product-drawer-title small{flex:none;color:var(--ca-ink-3);font:400 12px/18px var(--ca-font-sans)}
+.iw-product-drawer-head>button{position:absolute;right:12px;top:12px;width:24px;min-height:24px;height:24px;padding:0}
+.iw-product-drawer-body{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden;padding:0}
 .iw-product-drawer :is(button,a):focus-visible{outline:2px solid var(--ca-primary);outline-offset:2px}

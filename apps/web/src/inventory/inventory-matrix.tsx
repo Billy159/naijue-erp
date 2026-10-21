@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
-import type { InventoryActions, InventoryColorFit, InventoryPage, InventoryProduct, InventoryRow, InventorySize, StockTotal } from './contracts.ts';
+import type { InventoryActions, InventoryCellTarget, InventoryColorFit, InventoryPage, InventoryProduct, InventoryRow, InventorySize, StockTotal } from './contracts.ts';
 import { formatQuantity, totalLabel } from './model.ts';
+import { knownDisplaySources, projectInventoryColors, type InventoryDisplayColor, type InventoryDisplayRow } from './display-projection.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
 import { InventoryWindowModel, type InventoryLogicalCell, type InventoryWindowLayout, type InventoryWindowRow, type InventoryWindowViewport } from './windowing/model.ts';
 import { createInventoryRenderPlan, inventoryDOMScrollTop, inventoryModelViewport, type InventoryColumnPart } from './windowing/render-plan.ts';
@@ -15,7 +16,7 @@ export interface InventoryDisplaySettings {
   readonly total: boolean;
   readonly sizeDescription: boolean;
 }
-/** Frozen workbench defaults; these are presentation choices, never SKU merging. */
+/** Frozen workbench defaults; hidden FIT is a read-only display projection, never SKU merging. */
 export const defaultDisplaySettings: InventoryDisplaySettings = { category: true, supplier: false, fit: false, sizeGroup: false, season: false, subtotal: false, total: true, sizeDescription: false };
 
 /** Deliberate developer opt-in. No unmeasured/fixed row-height defaults. */
@@ -40,7 +41,15 @@ type MatrixProps = {
 /** Column-first geometry follows frozen inventory-matrix-experiment.js, not
  * standalone product-heading rows. Canonical FIT/SKU identities stay separate. */
 export function InventoryMatrix(props: MatrixProps) {
-  return props.windowing ? <WindowedInventoryMatrix {...props} windowing={props.windowing} /> : <EagerInventoryMatrix {...props} />;
+  const signal = props.windowing?.scope.signal;
+  const aborted = useSyncExternalStore(callback => {
+    signal?.addEventListener('abort', callback);
+    return () => signal?.removeEventListener('abort', callback);
+  }, () => signal?.aborted ?? false, () => signal?.aborted ?? false);
+  if (aborted) return null;
+  // The opt-in window model addresses canonical single-SKU cells. Until it has
+  // measured projection geometry, hidden-FIT views retain the safe eager path.
+  return props.windowing && props.settings.fit ? <WindowedInventoryMatrix {...props} windowing={props.windowing} /> : <EagerInventoryMatrix {...props} />;
 }
 function EagerInventoryMatrix(props: MatrixProps) {
   const sections = new Map<string, InventoryProduct[]>();
@@ -80,19 +89,22 @@ function ViewProduct(props: { readonly product: InventoryProduct; readonly actio
 }
 function ProductRows(props: MatrixProps & { readonly product: InventoryProduct }) {
   const { product } = props;
+  const groups = useMemo(() => props.settings.fit ? product.colorFits : projectInventoryColors(product), [product, props.settings.fit]);
   const collapsed = props.collapsedProducts.has(product.id);
   const productFold = <Fold expanded={!collapsed} label={`商品${product.code}`} toggle={() => props.toggleProduct(product.id)} />;
   if (collapsed) return <TotalRow {...props} kind="product" folded first identity color={<Indent control={productFold}>所有颜色</Indent>} warehouse={<Indent control={spacer}>所有库存</Indent>} totals={product.sizeTotals} total={product.total} />;
-  return <>{product.colorFits.map((group, index) => <ColorRows key={JSON.stringify([group.color.id, group.fit.id])} {...props} group={group} firstGroup={index === 0} productFold={productFold} />)}
+  return <>{groups.map((group, index) => <ColorRows key={JSON.stringify([group.color.id, group.fit?.id ?? null])} {...props} group={group} firstGroup={index === 0} productFold={productFold} />)}
     {props.settings.total && <TotalRow {...props} kind="product" label="商品合计" totals={product.sizeTotals} total={product.total} />}
   </>;
 }
-function ColorRows(props: MatrixProps & { readonly product: InventoryProduct; readonly group: InventoryColorFit; readonly firstGroup: boolean; readonly productFold: ReactNode }) {
+type MatrixColor = InventoryColorFit | InventoryDisplayColor;
+type MatrixRow = InventoryRow | InventoryDisplayRow;
+function ColorRows(props: MatrixProps & { readonly product: InventoryProduct; readonly group: MatrixColor; readonly firstGroup: boolean; readonly productFold: ReactNode }) {
   const { group, product } = props;
-  const key = JSON.stringify([product.id, group.color.id, group.fit.id]);
+  const key = JSON.stringify([product.id, group.color.id, group.fit?.id ?? null]);
   const folded = props.collapsedColors.has(key);
-  const colorFold = <Fold expanded={!folded} label={`${product.code}${group.color.label}${group.fit.label}`} toggle={() => props.toggleColor(key)} />;
-  if (folded) return <><TotalRow {...props} kind="color" folded first={props.firstGroup} identity fit={group.fit.label} color={<Indent control={props.firstGroup ? props.productFold : spacer}>{group.color.label}</Indent>} warehouse={<Indent control={colorFold}>所有库存</Indent>} totals={group.sizeTotals} total={group.total} /></>;
+  const colorFold = <Fold expanded={!folded} label={`${product.code}${group.color.label}${group.fit?.label ?? ''}`} toggle={() => props.toggleColor(key)} />;
+  if (folded) return <><TotalRow {...props} kind="color" folded first={props.firstGroup} identity {...(group.fit ? { fit: group.fit.label } : {})} color={<Indent control={props.firstGroup ? props.productFold : spacer}>{group.color.label}</Indent>} warehouse={<Indent control={colorFold}>所有库存</Indent>} totals={group.sizeTotals} total={group.total} /></>;
   return <>
     {group.rows.map((row, index) => <WarehouseRow key={row.warehouse.id} {...props} row={row} first={props.firstGroup && index === 0} firstInGroup={index === 0} colorFold={colorFold} />)}
     {props.settings.subtotal && <TotalRow {...props} kind="color" label="颜色小计" totals={group.sizeTotals} total={group.total} />}
@@ -115,16 +127,25 @@ function ColumnCells(props: { readonly product: InventoryProduct; readonly windo
 function rowAttributes(window: RowWindow | undefined) {
   return window ? { 'aria-rowindex': window.row.index - window.sectionStart + 1, 'data-window-row-height': window.row.height, style: { height: window.row.height } } : {};
 }
-function WarehouseRow(props: MatrixProps & { readonly product: InventoryProduct; readonly group: InventoryColorFit; readonly row: InventoryRow; readonly first: boolean; readonly firstInGroup: boolean; readonly productFold: ReactNode; readonly colorFold: ReactNode; readonly window?: RowWindow }) {
+function WarehouseRow(props: MatrixProps & { readonly product: InventoryProduct; readonly group: MatrixColor; readonly row: MatrixRow; readonly first: boolean; readonly firstInGroup: boolean; readonly productFold: ReactNode; readonly colorFold: ReactNode; readonly window?: RowWindow }) {
   const { product, group, row, first } = props;
-  return <tr {...rowAttributes(props.window)} data-inventory-product={product.id} data-inventory-row={JSON.stringify([product.id, group.color.id, group.fit.id, row.warehouse.id])} className={`mx-detail-row${first ? ' mx-product-row' : ''}`}>
-    <td className="mx-product" aria-colindex={props.window ? 1 : undefined}><ProductIdentity product={product} settings={props.settings} showMeta={first || props.settings.fit && props.firstInGroup} fit={group.fit.label} /><span className="sr-only">{group.fit.label}</span></td>
+  const fitLabel = group.fit?.label ?? '';
+  return <tr {...rowAttributes(props.window)} data-inventory-product={product.id} data-inventory-row={JSON.stringify([product.id, group.color.id, group.fit?.id ?? null, row.warehouse.id])} className={`mx-detail-row${first ? ' mx-product-row' : ''}`}>
+    <td className="mx-product" aria-colindex={props.window ? 1 : undefined}><ProductIdentity product={product} settings={props.settings} showMeta={first || props.settings.fit && props.firstInGroup} fit={fitLabel} />{group.fit && <span className="sr-only">{fitLabel}</span>}</td>
     <td className="mx-color" aria-colindex={props.window ? 2 : undefined}><Indent control={first ? props.productFold : spacer}>{group.color.label}</Indent></td>
-    <td className="mx-warehouse" aria-colindex={props.window ? 3 : undefined} title={`${row.warehouse.label} · ${group.fit.label}`}><Indent control={props.firstInGroup ? props.colorFold : spacer}>{row.warehouse.label}</Indent></td>
+    <td className="mx-warehouse" aria-colindex={props.window ? 3 : undefined} title={[row.warehouse.label, fitLabel].filter(Boolean).join(' · ')}><Indent control={props.firstInGroup ? props.colorFold : spacer}>{row.warehouse.label}</Indent></td>
     <ColumnCells product={product} {...(props.window ? { window: props.window } : {})} render={(size, index) => {
       const cell = row.cells[size.id]!;
-      const address = props.window ? { productId: product.id, colorId: group.color.id, fitId: group.fit.id, warehouseId: row.warehouse.id, sizeId: size.id } : null;
-      return <td key={size.id} className="mx-number" aria-colindex={props.window ? index + 4 : undefined}>{cell.state === 'not-applicable' ? <span className="mx-absent" aria-label="不存在此规格">—</span> : <button type="button" className={`mx-stock${cell.quantity.startsWith('-') ? ' mx-negative' : cell.quantity === '0' ? ' mx-zero' : ''}`} {...(address ? props.window?.bindCell(address) : {})} data-stock-address={props.window ? JSON.stringify(address) : undefined} disabled={!props.actions.onOpenCell} title={props.actions.onOpenCell ? `查看该仓库 / SKU 库存流水 · ${group.fit.label}` : '库存流水尚未接入'} aria-label={`${product.code} ${group.color.label} ${group.fit.label} ${row.warehouse.label} ${size.label} 库存${cell.quantity}`} onClick={() => props.actions.onOpenCell?.({ productId: product.id, productLabel: `${product.code} ${product.name}`, color: group.color, fit: group.fit, size, warehouse: row.warehouse, skuId: cell.skuId, readReference: props.data.readReference })}>{formatQuantity(cell.quantity)}</button>}</td>;
+      const address = props.window && group.fit ? { productId: product.id, colorId: group.color.id, fitId: group.fit.id, warehouseId: row.warehouse.id, sizeId: size.id } : null;
+      if (cell.state === 'not-applicable') return <td key={size.id} className="mx-number" aria-colindex={props.window ? index + 4 : undefined}><span className="mx-absent" aria-label="不存在此规格">—</span></td>;
+      const sources = 'sources' in cell ? knownDisplaySources(cell) : null;
+      const source = sources?.length === 1 ? sources[0]! : null;
+      const target: InventoryCellTarget | null = sources
+        ? source ? { productId: source.productId, productLabel: `${product.code} ${product.name}`, color: source.color, fit: source.fit, size: source.size, warehouse: source.warehouse, skuId: source.cell.skuId, readReference: props.data.readReference } : null
+        : group.fit && 'skuId' in cell ? { productId: product.id, productLabel: `${product.code} ${product.name}`, color: group.color, fit: group.fit, size, warehouse: row.warehouse, skuId: cell.skuId, readReference: props.data.readReference } : null;
+      const multipleSources = !!sources && sources.length > 1;
+      const explanation = multipleSources ? '跨版型汇总包含多个 SKU，请在显示设置中显示版型后查看各自库存流水' : props.actions.onOpenCell ? `查看该仓库 / SKU 库存流水${target ? ` · ${target.fit.label}` : ''}` : '库存流水尚未接入';
+      return <td key={size.id} className="mx-number" aria-colindex={props.window ? index + 4 : undefined}><button type="button" className={`mx-stock${cell.quantity.startsWith('-') ? ' mx-negative' : cell.quantity === '0' ? ' mx-zero' : ''}`} {...(address ? props.window?.bindCell(address) : {})} data-stock-address={props.window ? JSON.stringify(address) : undefined} data-inventory-source-count={sources?.length ?? 1} disabled={!props.actions.onOpenCell || !target} title={explanation} aria-label={`${product.code} ${group.color.label} ${fitLabel} ${row.warehouse.label} ${size.label} 库存${cell.quantity}${multipleSources ? `，${explanation}` : ''}`} onClick={() => { if (target) props.actions.onOpenCell?.(target); }}>{formatQuantity(cell.quantity)}</button></td>;
     }} /><td className="mx-total-cell" aria-colindex={props.window ? product.sizes.length + 4 : undefined} title={totalLabel(row.total)}>{totalLabel(row.total)}</td><td className="mx-operation" aria-colindex={props.window ? product.sizes.length + 5 : undefined}><ViewProduct product={product} actions={props.actions} /></td>
   </tr>;
 }

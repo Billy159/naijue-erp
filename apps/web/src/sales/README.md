@@ -181,9 +181,13 @@ Explicit scope-retained differences and remaining gaps:
    rows may grow to show that provenance rather than silently replacing names.
 6. This remains read-only. 新增销货单, 导出, 打印 and 操作历史 are visibly disabled.
    No create/edit/save/approve/void/scan capabilities or permissions are invented.
-   A line's 查看 toggles its already-loaded saved barcode/allocation/gift facts,
-   not a current product lookup. Additional saved timestamps/economics remain in
-   an accessible disclosure so the ten-column frozen line table loses no facts.
+   The frozen line 查看 means product specification detail, not a saved-record
+   expansion. It is currently disabled with 商品规格详情尚未接入 until that genuine
+   shared component is integrated. The extra line/document saved-record blocks
+   were removed from the default page to restore the frozen layout. Barcode,
+   allocated discount, gift flag and saved timestamps remain intact in the domain,
+   DTO, validation and existing detail response; this page does not display all
+   of them. Complete operation history remains unimplemented and disabled.
 7. Existing exact page jumping is retained alongside source-derived numbered
    navigation. Totals/page candidates use BigInt and unreachable unsafe Number
    pages cannot execute. It is an intentional native-safety difference.

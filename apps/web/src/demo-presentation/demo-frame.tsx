@@ -39,7 +39,7 @@ export function DemoFrame(props: DemoFrameProps) {
       </aside>
       <div className="main"><header className="topbar"><span className="breadcrumb">{props.breadcrumb}</span>{props.topbarActions && <div className="demo-topbar-actions">{props.topbarActions}</div>}</header>
         {props.notice}
-        <main className="demo-page">{props.children}</main>{props.footer}
+        <main className={`demo-page${props.navigation.inventory?.selected ? ' demo-page-inventory' : ''}`}>{props.children}</main>{props.footer}
       </div>
     </div>
   </div>;

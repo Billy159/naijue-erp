@@ -1,0 +1,31 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 check:preview:product
+> npm run build:preview:product && node apps/web/tests/run-product-only-smoke.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 build:preview:product
+> node apps/web/build-product-only-preview.mjs
+
+{
+  "file": "/workspace/shared/naijue-erp-rewrite/apps/web/dist-preview/product-drawer-only-preview-test-only.html",
+  "bytes": 244221,
+  "budgetBytes": 262144,
+  "sha256": "b5b1ad27df7dc52c9543077b5a3c24f425e8dd359e85e7a453e656713f71b9d5"
+}
+Built a separate TEST ONLY product-drawer derivative. Full inventory app untouched. No server, network, deployment or database.
+PASS actual inline HTML in child iframe: TEST ONLY shell, 3 generated product actions, zero initial/idle reads, unchanged parent/child URL.
+PASS actual drawer: basics/specifications/images are isolated reads; three frozen read-only specification sections without an added SKU table; original read only after thumbnail click; image Escape retains drawer; close restores focus; URLs unchanged.
+PASS target change/empty images/reopen/interruption: no stale facts, fresh read, close cancels pending work, no revival, no runtime errors or external resource requests.
+{
+  "file": "/workspace/shared/naijue-erp-rewrite/apps/web/dist-preview/product-drawer-only-preview-test-only.html",
+  "bytes": 244221,
+  "sha256": "b5b1ad27df7dc52c9543077b5a3c24f425e8dd359e85e7a453e656713f71b9d5"
+}
+jsdom bundled-code DOM smoke only. Not native-browser, screenshot, exact pixel/layout, network-waterfall, performance, real data or Space integration acceptance.
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

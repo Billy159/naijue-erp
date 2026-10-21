@@ -1,0 +1,73 @@
+import assert from 'node:assert/strict';
+import { mkdtemp, rm, readFile } from 'node:fs/promises';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import path from 'node:path';
+import { build } from 'esbuild';
+import { JSDOM } from 'jsdom';
+const here = path.dirname(fileURLToPath(import.meta.url));
+const temporary = await mkdtemp(path.join(here, '.page-size-dom-'));
+const dom = new JSDOM('<!doctype html><style data-inventory-inline></style><div id="root"></div><button id="outside">outside</button>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
+for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLButtonElement', 'HTMLIFrameElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'Element', 'SVGElement', 'MutationObserver', 'ShadowRoot', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
+Object.defineProperty(globalThis, 'navigator', { configurable: true, value: dom.window.navigator });
+dom.window.matchMedia = query => ({ matches: false, media: query, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {}, dispatchEvent() { return true; } });
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+let root, cleanupAct;
+try {
+  const css = await readFile(path.join(here, '../inventory-page-size.css'), 'utf8');
+  assert.match(css, /\.iw-page-size-arco \.arco-select:focus-visible\{outline:0\}/);
+  assert.match(css, /\.arco-select\.arco-select-focused \.arco-select-view\{border-color:var\(--ca-control-focus-border\)/);
+  const output = path.join(temporary, 'entry.mjs');
+  await build({ entryPoints: [path.join(here, 'inventory-page-size-entry.tsx')], outfile: output, bundle: true, platform: 'browser', format: 'esm', external: ['react', 'react-dom', 'react-dom/*'], banner: { js: "import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);" }, jsx: 'automatic', loader: { '.css': 'empty' }, logLevel: 'warning' });
+  const { act, createElement: h, StrictMode, createRoot, InventoryPageSizeSelect, ReadContext } = await import(pathToFileURL(output).href);
+  cleanupAct = act;
+  const host = document.getElementById('root');
+  const context = new ReadContext({ accountId: 'TEST-PAGE-SIZE', sessionRevision: '1', permissionRevision: '1' });
+  let scope = context.createScope('TEST-PAGE-SIZE');
+  root = createRoot(host);
+  const settle = async () => act(async () => { await new Promise(resolve => setTimeout(resolve, 35)); });
+  const click = async element => { assert.ok(element); await act(async () => element.click()); await settle(); };
+  let calls = 0, styleCalls = 0, resolveAction, rejectAction;
+  const loadAction = () => { calls++; return new Promise((resolve, reject) => { resolveAction = resolve; rejectAction = reject; }); };
+  const mockModule = { loadStyles: async () => { styleCalls++; }, InventoryPageSizeAction: props => h('button', { 'data-fake-action': '', 'aria-expanded': props.open, onClick: () => props.onOpenChange(!props.open) }, String(props.value)) };
+  let key = 0;
+  const render = async (options = {}) => act(async () => root.render(h(StrictMode, null, h(InventoryPageSizeSelect, { key, scope, value: 100, disabled: false, onChange() {}, loadAction, ...options }))));
+  const trigger = () => host.querySelector('.iw-page-size-trigger');
+  await render(); assert.equal(calls, 0); assert.equal(host.querySelector('select'), null); assert.match(trigger().textContent, /100款\/页/);
+  await act(async () => trigger().focus()); assert.equal(calls, 1); await click(trigger()); assert.equal(calls, 1);
+  await act(async () => trigger().dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true })));
+  await act(async () => resolveAction(mockModule)); await settle(); assert.equal(host.querySelector('[data-fake-action]'), null); assert.ok(trigger()); assert.equal(styleCalls, 0, 'A cancelled module cannot start a late stylesheet request');
+  console.log('PASS page-size shell: no idle import/native select; first focus loads once; click joins pending work; Escape cancels and a late module cannot replace/open the shell.');
+
+  key++; await render(); await click(trigger()); await act(async () => document.getElementById('outside').focus()); await act(async () => resolveAction(mockModule)); await settle();
+  assert.equal(host.querySelector('[data-fake-action]').getAttribute('aria-expanded'), 'false');
+  key++; await render(); await click(trigger()); await render({ disabled: true }); await act(async () => resolveAction(mockModule)); await settle(); assert.equal(host.querySelector('[data-fake-action]').getAttribute('aria-expanded'), 'false');
+  key++; await render(); await click(trigger()); await act(async () => scope.dispose()); await act(async () => resolveAction(mockModule)); await settle(); assert.equal(host.querySelector('[data-fake-action]'), null);
+  scope = context.createScope('TEST-PAGE-SIZE-REOPEN'); key++; await render(); await click(trigger()); await act(async () => root.render(null)); await act(async () => resolveAction(mockModule)); await settle(); assert.equal(host.childElementCount, 0);
+  console.log('PASS page-size interruption: blur/busy closes pending intent; scope revoke/unmount rejects late attachment.');
+
+  key++; await render(); await click(trigger()); await act(async () => rejectAction(new Error('TEST missing leaf'))); await settle(); assert.match(host.querySelector('[role=alert]').textContent, /仍为 100/);
+  await click(trigger()); await act(async () => resolveAction({ ...mockModule, loadStyles: async () => { throw new Error('TEST missing CSS'); } })); await settle(); assert.match(host.querySelector('[role=alert]').textContent, /组件未加载/);
+  await click(trigger()); await act(async () => resolveAction(mockModule)); await settle(); assert.ok(host.querySelector('[data-fake-action]'));
+  console.log('PASS page-size failure: missing JS or CSS is accessible and retryable, never silently falls back to an OS popup.');
+
+  key++; await render(); await act(async () => trigger().focus()); await act(async () => resolveAction(mockModule)); await settle(); assert.equal(host.querySelector('[data-fake-action]').getAttribute('aria-expanded'), 'false');
+  key++; await render(); await click(trigger()); await click([...host.querySelectorAll('button')].find(button => button.textContent === '取消加载')); await act(async () => resolveAction(mockModule)); await settle(); assert.ok(trigger()); assert.equal(host.querySelector('[data-fake-action]'), null);
+  const chosen = [];
+  key++; await render({ loadAction: undefined, onChange: size => chosen.push(size) });
+  assert.equal(host.querySelector('.arco-select'), null); await click(trigger()); await settle();
+  assert.ok(host.querySelector('.arco-select'), 'Must mount the real installed Arco Select');
+  let options = [...host.querySelectorAll('[role=option]')]; assert.deepEqual(options.map(option => option.textContent), ['100款/页', '200款/页', '500款/页']);
+  assert.equal(host.querySelector('.arco-trigger').style.width, '150px');
+  await click(options[1]); assert.deepEqual(chosen, [200]); assert.equal(host.querySelector('.ui-single-tag').textContent, '100款/页', 'Selection cannot publish an uncommitted page size');
+  await render({ loadAction: undefined, value: 200, onChange: size => chosen.push(size) }); assert.equal(host.querySelector('.ui-single-tag').textContent, '200款/页');
+  await click(host.querySelector('.arco-select-view')); assert.equal(host.querySelector('[role=combobox]').getAttribute('aria-expanded'), 'true'); assert.equal(host.querySelectorAll('[role=option]').length, 3);
+  await act(async () => host.querySelector('[role=combobox]').dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }))); await settle(); assert.equal(host.querySelector('[role=combobox]').getAttribute('aria-expanded'), 'false');
+  await click(host.querySelector('.arco-select-view')); assert.equal(host.querySelector('[role=combobox]').getAttribute('aria-expanded'), 'true');
+  await act(async () => document.getElementById('outside').focus()); await settle(); assert.equal(host.querySelector('[role=combobox]').getAttribute('aria-expanded'), 'false');
+  await render({ loadAction: undefined, value: 200, disabled: true, onChange: size => chosen.push(size) }); assert.ok(host.querySelector('.arco-select-disabled'));
+  console.log('PASS actual Arco action: exactly100/200/500, 150px popup, controlled applied value and busy disable. Popup configuration uses frozen tl placement; jsdom is not layout/pixel acceptance.');
+} finally {
+  if (root) await cleanupAct(async () => root.unmount());
+  dom.window.close();
+  await rm(temporary, { recursive: true, force: true });
+}

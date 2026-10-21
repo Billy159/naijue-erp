@@ -1,0 +1,4 @@
+/* Frozen inventory-filters.jsx presentation, kept separate from route styles. */
+.transfer-multi-control .inv-all-selected .arco-input-tag-inner>.arco-input-tag-tag:not(:first-child){display:none}
+.transfer-multi-control .inv-filter-empty{padding:10px;color:var(--ca-ink-2);font-size:13px}
+.transfer-multi-control .transfer-filter-notice{margin:0;padding:7px 8px;color:var(--ca-ink-2);font-size:12px;line-height:18px}

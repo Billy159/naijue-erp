@@ -50,7 +50,7 @@ try {
   const drawer = document.querySelector('.iw-product-drawer'); assert.ok(drawer); assert.match(drawer.textContent, /TEST-SYSTEM-1/);
   assert.match(document.querySelector('.preview-diagnostics').textContent, /商品资料读取 1/);
   const tabs = [...drawer.querySelectorAll('[role=tab]')]; assert.deepEqual(tabs.map(tab => tab.textContent), ['基础资料', '规格', '图片']);
-  tabs[1].click(); await waitFor(() => drawer.querySelectorAll('.pd-skus tbody tr').length === 28, 'legal specification rows'); assert.equal(drawer.querySelectorAll('.pd-skus tbody tr').length, 28);
+  tabs[1].click(); await waitFor(() => drawer.querySelectorAll('.pd-spec-section').length === 3, 'three frozen specification sections'); assert.deepEqual([...drawer.querySelectorAll('.pd-spec-section h3')].map(node => node.textContent), ['颜色', '尺码组', '版型']); assert.equal(drawer.querySelector('table'), null);
   tabs[2].click(); await waitFor(() => drawer.querySelector('img[loading=lazy]'), 'image thumbnail list'); assert.ok(drawer.querySelector('img[loading=lazy]')); assert.match(document.querySelector('.preview-diagnostics').textContent, /商品资料读取 3/);
   drawer.querySelector('.pd-thumbnail').click(); await waitFor(() => drawer.querySelector('.pd-image-preview img'), 'explicit original image'); assert.ok(drawer.querySelector('.pd-image-preview img')); assert.match(document.querySelector('.preview-diagnostics').textContent, /商品资料读取 4/);
   drawer.querySelector('button[aria-label="关闭图片预览"]').click(); document.querySelector('button[aria-label="关闭商品资料"]').click(); await pause(20);

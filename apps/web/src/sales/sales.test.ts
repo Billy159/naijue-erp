@@ -66,6 +66,9 @@ test('list requires exact non-gift quantity aggregates and a non-null native upd
 test('detail preserves independent RETURN snapshots, IDs, full size/FIT and nullable metadata', () => {
   const data = detail(); assert.equal(salesDetailResponse(data, salesTarget(uuid(1))), data);
   assert.equal(data.document.lines[0]?.quantity, '-1'); assert.equal(data.document.lines[0]?.snapshot.sizeName, '165/S');
+  // These facts remain in the validated response even when the frozen page does not display them.
+  assert.equal(data.document.lines[0]?.snapshot.barcode, '001234567890123'); assert.equal(data.document.lines[0]?.allocatedDiscount, '0'); assert.equal(data.document.lines[0]?.isGift, false);
+  assert.equal(data.document.header.createdAt, '2026-10-20T00:00:00.000000Z'); assert.equal(data.document.header.updatedAt, '2026-10-20T00:00:00.000000Z'); assert.equal(data.document.header.approvedAt, null);
   assert.throws(() => salesDetailResponse(data, salesTarget(uuid(2))));
   assert.throws(() => salesDetailResponse({ ...data, document: { ...data.document, originalSaleId: uuid(3) } }, salesTarget(uuid(1))));
 });

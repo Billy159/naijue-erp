@@ -70,11 +70,12 @@ try {
   assert.deepEqual(tabs.map(tab => tab.textContent), ['基础资料', '规格', '图片']);
   assert.equal(tabs[0].getAttribute('aria-selected'), 'true');
   tabs[1].click();
-  await waitFor(() => drawer.querySelectorAll('.pd-skus tbody tr').length === 28, '28 legal actual specification rows');
+  await waitFor(() => drawer.querySelectorAll('.pd-spec-section').length === 3, 'three actual frozen specification sections');
   assert.deepEqual(counts(), [1, 1, 0, 0]);
-  assert.match(drawer.querySelector('.pd-skus').textContent, /165\/S/);
-  assert.match(drawer.querySelector('.pd-skus').textContent, /170\/M/);
-  assert.equal(new Set([...drawer.querySelectorAll('[data-sku-id]')].map(row => row.dataset.skuId)).size, 28);
+  assert.deepEqual([...drawer.querySelectorAll('.pd-spec-section h3')].map(node => node.textContent), ['颜色', '尺码组', '版型']);
+  assert.equal(drawer.querySelector('table'), null);
+  assert.match(drawer.querySelector('.pd-spec-stack').textContent, /Y版（修身）/);
+  assert.match(drawer.querySelector('.pd-spec-stack').textContent, /A版（标准）/);
   tabs[2].click();
   await waitFor(() => drawer.querySelector('img[loading=lazy]'), 'actual thumbnail list');
   assert.deepEqual(counts(), [1, 1, 1, 0]);
@@ -94,7 +95,7 @@ try {
   assert.equal(document.activeElement, firstTrigger);
   assert.deepEqual(counts(), [1, 1, 1, 1]);
   unchangedUrls();
-  console.log('PASS actual drawer: basics/specifications/images are isolated reads; 28 legal SKU rows; original read only after thumbnail click; image Escape retains drawer; close restores focus; URLs unchanged.');
+  console.log('PASS actual drawer: basics/specifications/images are isolated reads; three frozen read-only specification sections without an added SKU table; original read only after thumbnail click; image Escape retains drawer; close restores focus; URLs unchanged.');
 
   document.querySelector('[data-product-id="test-product-2"]').click();
   await waitFor(() => document.querySelector('.iw-product-drawer')?.textContent.includes('TEST-SYSTEM-2'), 'second target basics');

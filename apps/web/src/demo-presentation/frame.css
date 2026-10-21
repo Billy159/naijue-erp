@@ -6,6 +6,10 @@
 :where(.demo-ui) button,:where(.demo-ui) input,:where(.demo-ui) select,:where(.demo-ui) textarea{font:inherit;color:inherit}
 .demo-ui button,.demo-ui a{touch-action:manipulation}
 .demo-ui :is(button,a,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid var(--ca-primary);outline-offset:2px}
+/* styles.css:17 follows the generic ring. Text controls use a border/ring,
+   while composite Arco controls keep focus on their visible outer shell. */
+.demo-ui input:not([type=checkbox]):not([type=radio]):focus-visible,.demo-ui select:focus-visible,.demo-ui textarea:focus-visible{outline:0}
+.demo-ui :is(input:not([type=checkbox]):not([type=radio]),select,textarea):not(:where(.arco-picker input,.arco-tree-select input,.arco-select input,.arco-input-tag input)):focus-visible{border-color:var(--ca-control-focus-border);box-shadow:var(--ca-focus-ring)}
 .demo-ui .app{display:grid;grid-template-columns:var(--ui-sidebar) minmax(0,1fr);min-height:100dvh;background:#fff}
 .demo-ui .main{min-width:0;background:#fff}
 .demo-ui .sidebar{position:sticky;top:0;align-self:start;height:100dvh;overflow:auto;background:var(--ca-sidebar);border-right:1px solid var(--ca-line);padding:16px 10px;display:flex;flex-direction:column}
@@ -30,5 +34,7 @@
 .demo-ui .breadcrumb{color:var(--ca-ink)}
 .demo-ui .demo-topbar-actions{display:flex;align-items:center;gap:12px;margin-left:auto}
 .demo-ui .demo-page{min-width:0;padding:12px var(--ui-page-space) 16px;margin:auto;max-width:none;background:#fff}
+/* golden-consistency.css:4 overrides only the non-inventory page spacing. */
+.demo-ui .demo-page:not(.demo-page-inventory){padding:16px 20px}
 @media(max-width:1100px){.demo-ui{--ui-sidebar:184px;--ui-page-space:12px}}
 @media(max-width:760px){.demo-ui{--ui-sidebar:156px;--ui-page-space:10px}.demo-ui .app{grid-template-columns:var(--ui-sidebar) minmax(420px,1fr)}.demo-ui .sidebar{padding:12px 6px}.demo-ui .sidebar .brand{gap:6px;padding-inline:6px}.demo-ui .sidebar .brand-mark{flex-basis:34px;width:34px;height:34px;border-radius:8px;font-size:20px}.demo-ui .sidebar .brand-name{font-size:16px}.demo-ui .nav.child{padding-left:20px}.demo-ui .topbar{min-height:var(--ui-topbar);padding-block:8px;gap:4px}}

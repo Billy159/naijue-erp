@@ -1,0 +1,55 @@
+PASS emitted-entry smoke: exact built HTML + ESM executes in jsdom, startup is inert, one explicit mocked session check reaches the reused three-route frame, pagehide disposes it.
+{
+  "syntheticStaticOnly": true,
+  "html": "index.html",
+  "shellStyles": [
+    "application.css",
+    "development-host.css"
+  ],
+  "startupInputs": [
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom-client.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/cjs/react-dom.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/client.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react-dom/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react-jsx-runtime.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/cjs/react.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/index.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/react/jsx-runtime.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/cjs/scheduler.production.js",
+    "../../../../../core16-strict-check-bUsiBu/project/node_modules/scheduler/index.js",
+    "../../../../packages/domain/src/errors.ts",
+    "../../../../packages/domain/src/values.ts",
+    "../authentication/authentication-panel.tsx",
+    "../authentication/authentication.css",
+    "../authentication/contracts.ts",
+    "../authentication/http-client.ts",
+    "../authentication/model.ts",
+    "../demo-presentation/controls.css",
+    "../demo-presentation/demo-frame.tsx",
+    "../demo-presentation/frame.css",
+    "../development-host/bootstrap.ts",
+    "../development-host/configuration.ts",
+    "../development-host/entry.ts",
+    "../development-host/mount.tsx",
+    "../development-host/route-state.tsx",
+    "../loading/async-leaf-registry.ts",
+    "../loading/read-scope.ts",
+    "application-root.tsx",
+    "controller.ts",
+    "demo-frame-presentation.tsx",
+    "index.tsx",
+    "stylesheet.ts"
+  ],
+  "routeStyles": {
+    "application": "application.css",
+    "inventory": "inventory.css",
+    "sales": "sales.css",
+    "sales-detail": "sales-detail.css",
+    "parties": "parties.css",
+    "transfers": "transfers.css",
+    "transfer-detail": "transfer-detail.css",
+    "transfer-product": "transfer-product.css"
+  },
+  "productDrawerStyles": "chunks/product-drawer.css"
+}
+PASS host build: explicit configuration; actual HTML/manifest/output wiring; shell-only startup CSS/JS; separate inventory/sales/transfer/detail/product code and CSS; no eager preload, inline executable script, fixture, listener or browser.

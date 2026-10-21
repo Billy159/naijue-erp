@@ -1,0 +1,13 @@
+824433ba117982c841550fa4be109ab7f02be3040b1e48f0b7e1f059630a32a7  apps/web/src/demo-presentation/frame.css
+6efa6e8cb290b81911ab1b2cb9f583b972b234dac43f1b48e47c86374db891bc  apps/web/src/demo-presentation/demo-frame.tsx
+16b1cbd938292f2aefc1a6c96f9f579993817603387f9417eab95809c18a433b  apps/web/src/demo-presentation/tests/run-document-source-restoration.mjs
+814276f1b851972179b959ecc0268298748d0492634a73d3bce62f7e9899306d  apps/web/src/sales/detail-content.tsx
+0af8481df8463ea6325ddbca95d178967a707e38e0a43536a65ef05b55b7b577  apps/web/src/sales/detail.css
+7a8a57fbc7ec36ee5ab4a8f096b674ef6e57cffb9ea59f738ae78a9679ea1c07  apps/web/src/sales/README.md
+23b5ba3f5fab374b9ae66fa846889fcba5b5e0944113bddd1e10c149d539fdc3  apps/web/src/sales/sales.test.ts
+ef731f29f4b737ea78220388b6452106e3420164663058af3b0aa3ad6ecb10df  apps/web/src/sales/tests/run-dom-tests.mjs
+cf9bcb0cdc0c30af70435c680a4174c6f8a58ecacdf77cf7aad8d9f27e765ec3  apps/web/src/transfers/transfers.css
+be6b7b820ee197b67095c79e29d7a5bcfefb631a470247668774e35c2a1ec36a  apps/web/src/transfers/transfers-page.tsx
+49e88be86449c367a91e63ffff10dad7121dbce7fe784d903c109103003aeee3  apps/web/src/transfers/tests/run-dom-tests.mjs
+e9fb463165e7bf98ad5b0fa8711cee36eb6d1ba900b9490cc7eeec5082dd975c  apps/web/src/application/tests/run-build-check.mjs
+22398202301aa3a86253bd8584b6ced95b6990ee60e5fe092644a67aaa19fa92  apps/web/src/development-host/tests/run-build-check.mjs

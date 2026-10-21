@@ -27,7 +27,7 @@ try {
   const calls = [], scrolls = [], errors = [];
   const onScrollRequest = position => { scrolls.push(position); viewport = { ...viewport, ...position }; props = { ...props, windowing: { ...props.windowing, viewport } }; root.render(createElement(InventoryMatrix, props)); };
   const windowing = () => ({ scope, layout, viewport, sectionGap: 12, onScrollRequest, onInvalidGeometry: error => errors.push(error.message) });
-  const base = data => ({ data, settings: defaultDisplaySettings, collapsedProducts: new Set(), collapsedColors: new Set(), toggleProduct: id => { props = { ...props, collapsedProducts: new Set(props.collapsedProducts.has(id) ? [] : [id]) }; root.render(createElement(InventoryMatrix, props)); }, toggleColor: id => { props = { ...props, collapsedColors: new Set(props.collapsedColors.has(id) ? [] : [id]) }; root.render(createElement(InventoryMatrix, props)); }, actions: { onOpenCell: target => calls.push(target), onViewProduct: target => calls.push(target) } });
+  const base = data => ({ data, settings: { ...defaultDisplaySettings, fit: true }, collapsedProducts: new Set(), collapsedColors: new Set(), toggleProduct: id => { props = { ...props, collapsedProducts: new Set(props.collapsedProducts.has(id) ? [] : [id]) }; root.render(createElement(InventoryMatrix, props)); }, toggleColor: id => { props = { ...props, collapsedColors: new Set(props.collapsedColors.has(id) ? [] : [id]) }; root.render(createElement(InventoryMatrix, props)); }, actions: { onOpenCell: target => calls.push(target), onViewProduct: target => calls.push(target) } });
   const counts = [];
   for (const count of [100, 200, 500]) {
     let reads = 0;

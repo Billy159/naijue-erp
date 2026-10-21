@@ -1,0 +1,10 @@
+8d112cd3b91ce6fd0b8f35a156f348ee78b5d46624726adb3dd6c6f1b46e9687  apps/web/src/transfers/filter-controls.tsx
+a7171609e7e972babec3c67b3ed48d88cdb55a14a8dac46c365f4137f9b28bbe  apps/web/src/transfers/filter-controls.css
+b410cc9a381a4d98db1c662511eddb9ba517d096812bf0fdb05862617162d3fe  apps/web/src/transfers/warehouse-candidates.ts
+9d1a5896b3a7da7d3b5c7b12a48d853e1e110fd052853efc53a566e6716429cd  apps/web/src/transfers/warehouse-candidates.test.ts
+461bf473f594dc155e98afb9e59462e4745337bbe35b37db873e5eb1b8d8daec  apps/web/src/transfers/SOURCE-ADAPTATION.md
+22d56c73676376cdb736171b5ae5f729cbefc0bfae392f799abb0fa64429e0c4  apps/web/src/transfers/tests/filter-entry.tsx
+840c68b158425ff2f335e10163b949391077403717a41047ee8691fc41d2e156  apps/web/src/transfers/tests/run-filter-dom-tests.mjs
+0c070dbf13d2d419baeb347a137361e36d79d798f15f10f44d8eb0c7b4a02c12  apps/web/src/transfers/tests/run-dom-tests.mjs
+12afb5749a548d616e2e7fff4e97e61d9059a6657efab7ef29bee5c01831c5a6  apps/web/src/application/styles/transfers.css
+bcbe7d4de6289c6db022fd7f50f49f46f7c299717a77c4546ada702cc705b009  evidence/transfer-filter-restoration-20261021/report.md

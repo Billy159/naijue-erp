@@ -66,7 +66,7 @@ export function ProductDrawerHost(props: { readonly parentScope: ReadScope; read
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   }}>
-    <header className="iw-product-drawer-head"><div><h2 id={`${id}-title`}>商品资料 · 只读</h2><p>{props.product.label}</p></div><button ref={closeButton} type="button" className="iw-text-button" aria-label="关闭商品资料" onClick={props.close}>×</button></header>
+    <header className="iw-product-drawer-head"><div className="iw-product-drawer-title"><h2 id={`${id}-title`}>{props.product.label}</h2><small>只读</small></div><button ref={closeButton} type="button" className="iw-text-button" aria-label="关闭商品资料" onClick={props.close}>×</button></header>
     <div className="iw-product-drawer-body">{View && scope ? <View key={scope.routeInstanceId} scope={scope} reader={props.reader} /> : error ? <div className="iw-inline-state" role="alert">商品查看组件未加载。<button type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试加载</button></div> : <p className="iw-inline-state" role="status">正在准备商品查看…</p>}</div>
   </dialog>;
 }

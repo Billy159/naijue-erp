@@ -3,9 +3,10 @@
 /* Test-only chrome is outside source business components and geometry. */
 html,body,#root{margin:0;min-height:100%;background:#fff;color:#232a36;color-scheme:light}
 body{font:13px/1.5 Arial,'PingFang SC','Microsoft YaHei',sans-serif;overflow-x:auto}
-.core-preview-notice{margin:10px 24px 0;padding:9px 12px;border:1px solid #e9c86a;background:#fff9e6;border-radius:4px;font-size:12px;line-height:20px;color:#694b00;display:flex;flex-direction:column;gap:2px}
+.core-preview-notice{margin:0;padding:2px var(--ui-page-space,24px);border:0;border-bottom:1px solid #e9c86a;background:#fff9e6;font-size:11px;line-height:18px;color:#694b00;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .core-preview-account{font-size:12px;color:#697586;white-space:nowrap}
 .core-preview-close{border:0;background:transparent;color:#42526b;cursor:pointer;padding:0;font-size:12px}
 .core-preview-home{min-height:360px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:30px;text-align:center}
 .core-preview-home h1{font-size:21px;margin:0 0 14px}.core-preview-home p{margin:4px 0;line-height:24px;color:#697586}
-.core-preview-footer{padding:8px 24px 16px;background:#fff;color:#697586;font-size:11px;line-height:19px}.core-preview-footer p{margin:4px 0 0}
+.core-preview-footer{padding:2px var(--ui-page-space,24px) 6px;background:#fff;color:#697586;font-size:11px;line-height:19px}.core-preview-footer p{margin:4px 0}
+.core-preview-details>summary{width:max-content;max-width:100%;cursor:pointer}.core-preview-details[open]{padding-bottom:6px}.core-preview-diagnostics{display:block}
