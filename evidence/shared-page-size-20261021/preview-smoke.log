@@ -1,0 +1,4 @@
+PASS split graph: startup excludes inventory/detail leaves; inventory excludes drawer/tab code; drawer excludes inactive tab code; startup/route CSS exclude detail styles.
+PASS built portable page-size: first visible enabled click opens the shared actual Arco action with exact options, dedicated inline CSS and no stylesheet/data request; Escape closes it.
+PASS built portable HTML: starts with zero reads; explicit menu opens idle route; query renders 3 synthetic products; three product tabs read lazily and full image only on click; hidden-FIT aggregates cannot dispatch arbitrary SKU actions; explicit FIT reveals original negative stock without reads and its exact cell callback says unavailable; close/reopen clears old facts; no jsdom runtime errors.
+This is actual bundled-code DOM smoke, not a real browser, screenshot, network waterfall or pixel/performance acceptance.

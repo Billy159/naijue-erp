@@ -17,7 +17,7 @@ interface CommonProps {
 }
 
 /**
- * Narrow common subset needed by both existing page-size controls: ungrouped,
+ * Narrow common subset needed by the three page-size controls: ungrouped,
  * non-search, non-clear, controlled applied value. No option list is invented.
  * Other single values may use the original tag or flat presentation explicitly.
  */

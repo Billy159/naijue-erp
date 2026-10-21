@@ -24,11 +24,14 @@ const errors = [];
 const virtualConsole = new VirtualConsole();
 virtualConsole.on('jsdomError', error => errors.push(error));
 virtualConsole.on('error', (...args) => errors.push(args));
-const dom = new JSDOM(html, { url: 'https://synthetic.test/', runScripts: 'dangerously', virtualConsole });
+const dom = new JSDOM(html, { url: 'https://synthetic.test/', runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole, beforeParse(window) {
+  window.matchMedia = query => ({ matches: false, media: query, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {} });
+  window.ResizeObserver = class { observe() {} unobserve() {} disconnect() {} };
+} });
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 async function waitFor(predicate, label) {
   const deadline = Date.now() + 15000;
-  while (!predicate()) { if (Date.now() >= deadline) throw new Error(`Timed out waiting for ${label}`); await pause(25); }
+  while (!predicate()) { if (Date.now() >= deadline) throw new Error(`Timed out waiting for ${label}: ${errors.map(String).join('; ')}`); await pause(25); }
 }
 try {
   const document = dom.window.document;
@@ -41,6 +44,17 @@ try {
   assert.ok(document.querySelector('.iw-workbench'));
   assert.match(document.querySelector('.iw-results').textContent, /等待查询/);
   assert.match(document.querySelector('.preview-diagnostics').textContent, /库存读取 0 · 候选读取 0/);
+  assert.ok(document.querySelector('style[data-demo-single-select-inline]'));
+  const firstEnabledPageSize = document.querySelector('.iw-page-size-trigger');
+  assert.equal(firstEnabledPageSize.disabled, false, 'The first visible trigger is ready for its first interaction');
+  firstEnabledPageSize.click();
+  await waitFor(() => document.querySelectorAll('.iw-page-size-host [role=option]').length === 3, 'portable inline shared page-size action');
+  assert.deepEqual([...document.querySelectorAll('.iw-page-size-host [role=option]')].map(option => option.textContent), ['100款/页', '200款/页', '500款/页']);
+  assert.equal(document.querySelector('link[data-demo-single-select-styles]'), null, 'Portable action must use actual inlined CSS, never an about:blank relative stylesheet');
+  document.querySelector('.iw-page-size-host [role=combobox]').dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }));
+  await waitFor(() => document.querySelector('.iw-page-size-host [role=combobox]')?.getAttribute('aria-expanded') === 'false', 'portable page-size dismissal');
+  assert.match(document.querySelector('.preview-diagnostics').textContent, /库存读取 0 · 候选读取 0/);
+  console.log('PASS built portable page-size: first visible enabled click opens the shared actual Arco action with exact options, dedicated inline CSS and no stylesheet/data request; Escape closes it.');
   document.querySelector('form').dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }));
   await waitFor(() => document.querySelectorAll('.mx-product-row').length === 3, 'synthetic inventory query');
   assert.equal(document.querySelectorAll('.mx-product-row').length, 3);

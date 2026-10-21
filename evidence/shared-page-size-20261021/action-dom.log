@@ -1,0 +1,4 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+PASS actual Arco leaf: StrictMode, caller options, source 150px popup, local portal and exclusive ownership.
+PASS controlled value/disabled, outside, real Select Escape, scope disposal, interrupted reopening and popup unmount. Not browser geometry/pixel acceptance.

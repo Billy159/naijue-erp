@@ -1,3 +1,4 @@
+export { createDemoSingleSelectStyles } from './single-select-styles.ts';
 import ArcoSelect from '@arco-design/web-react/es/Select/index.js';
 import type { SelectHandle, SelectProps } from '@arco-design/web-react/es/Select/interface.js';
 import { useEffect, useReducer, useRef, useState, type ForwardRefExoticComponent, type RefAttributes } from 'react';

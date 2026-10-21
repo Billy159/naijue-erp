@@ -7,7 +7,7 @@ import { JSDOM } from 'jsdom';
 const webRoot = fileURLToPath(new URL('..', import.meta.url));
 const temporary = await mkdtemp(path.join(webRoot, '.test-tmp-'));
 let root;
-const dom = new JSDOM('<!doctype html><style data-inventory-inline></style><div id="root"></div>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
+const dom = new JSDOM('<!doctype html><style data-inventory-inline data-demo-single-select-inline></style><div id="root"></div>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
 for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLDialogElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent', 'HTMLTextAreaElement', 'HTMLSelectElement', 'HTMLButtonElement', 'HTMLIFrameElement', 'Element', 'SVGElement', 'MutationObserver', 'ShadowRoot', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 Object.defineProperty(globalThis, 'navigator', { configurable: true, value: dom.window.navigator });

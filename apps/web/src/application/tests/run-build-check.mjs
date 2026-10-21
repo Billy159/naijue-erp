@@ -46,6 +46,21 @@ try {
   const transfersRoute = closure(entryFor('routes/transfers.tsx'));
   const salesDetail = closure(entryFor('../sales/detail-content.tsx'));
   const transferDetail = closure(entryFor('../transfers/detail-content.tsx'));
+  const singleSelect = closure(entryFor('../demo-controls/single-select-action.tsx'));
+  assert.ok([...inputsOf(singleSelect)].some(file => file.endsWith('/es/Select/index.js')), 'The shared action reaches the installed Select leaf');
+  const selectCopies = Object.entries(outputs).filter(([name, output]) => name.endsWith('.js') && Object.keys(output.inputs).some(file => file.endsWith('/demo-controls/single-select-action.tsx')));
+  assert.equal(selectCopies.length, 1, 'All three pagers emit one shared single-select implementation');
+  for (const [name, route] of [['inventory', inventoryRoute], ['sales', salesRoute], ['transfers', transfersRoute]]) {
+    assert.ok([...inputsOf(route)].some(file => file.endsWith('/demo-controls/page-size-select.tsx')), `${name} statically reaches the shared lightweight shell`);
+    for (const file of inputsOf(route)) assert.doesNotMatch(file, /single-select-(?:action|styles)\.(?:tsx?|css)$|inventory-page-size-action/, `${name} defers the page-size action and its styles`);
+  }
+  for (const file of Object.keys(metafile.inputs)) assert.doesNotMatch(file, /components\/inventory-page-size(?:-action\.tsx|\.css)$/, 'Removed inventory widget/CSS cannot survive in the graph');
+  const actionStyles = byAbsolute.get(path.join(outdir, 'chunks/single-select.css')); assert.ok(actionStyles);
+  const actionStyleInputs = Object.keys(outputs[actionStyles].inputs);
+  assert.equal(actionStyleInputs.filter(file => file.includes('node_modules')).length, 2, 'Shared action CSS includes only Select/Trigger leaves');
+  assert.ok(actionStyleInputs.some(file => file.endsWith('/demo-controls/single-select.css')));
+  const emittedAction = await readFile(path.resolve(workingDirectory, selectCopies[0][0]), 'utf8');
+  assert.match(emittedAction, /single-select\.css/, 'The action resolves the separately emitted CSS beside its chunk');
   const startupInputs = inputsOf(startup);
   for (const file of startupInputs) assert.doesNotMatch(file, /\/(?:inventory|sales|parties|transfers)\/|synthetic|preview\//);
   for (const [name, route] of [['startup', startup], ['inventory', inventoryRoute], ['sales', salesRoute]]) {
@@ -99,7 +114,7 @@ try {
     startupInputs: [...startupInputs].sort(), startupCode: [...startup].map(name => path.basename(name)),
     routeInputCounts: { inventory: inputsOf(inventoryRoute).size, sales: inputsOf(salesRoute).size, salesDetail: inputsOf(salesDetail).size, parties: inputsOf(partiesRoute).size, transfers: inputsOf(transfersRoute).size, transferDetail: inputsOf(transferDetail).size },
     stylesheetBytes: Object.fromEntries(Object.entries(styles).map(([name, css]) => [name, Buffer.byteLength(css)])),
-    guarantees: ['Startup/inventory/sales static closures exclude Arco JS/CSS', 'Parties/transfers use actual installed Arco only after explicit activation',
+    guarantees: ['One shared single-select action and action-only CSS serves all three lightweight pager adapters', 'Startup/inventory/sales static closures exclude Arco JS/CSS', 'Parties/transfers use actual installed Arco only after explicit activation',
       'Sales/parties CSS preserves shared controls/tokens but excludes all inventory-specific matrix/settings/drawer assets',
       'Sales route static code/CSS excludes detail content/styles; separate sales-detail CSS is explicit action-only host configuration',
       'Transfer route excludes detail/product code/data/styles; inline-detail and product action assets are separate'],

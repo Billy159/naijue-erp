@@ -65,7 +65,7 @@ try {
   assert.equal(count('inventory'), 0); assert.equal(count('inventoryCandidates'), 0); assert.equal(count('productBasics'), 0);
   assert.equal(document.querySelector('.iw-page-size-host .arco-select'), null, 'The real pagination action has not initialized before focus/open.');
   assert.equal(document.querySelector('.iw-pagination select'), null, 'No native OS page-size select fallback.');
-  assert.match(document.querySelector('[data-inventory-inline]').textContent, /\.iw-page-size-arco/);
+  assert.match(document.querySelector('[data-inventory-inline]').textContent, /\.demo-single-select/);
   const pageSizeTrigger = document.querySelector('.iw-page-size-trigger'); assert.match(pageSizeTrigger.textContent, /100款\/页/);
   click(pageSizeTrigger);
   await waitFor(() => document.querySelector('.iw-page-size-host .arco-select') && document.querySelectorAll('.iw-page-size-host [role=option]').length === 3, 'actual lazy Arco page-size action and popup');

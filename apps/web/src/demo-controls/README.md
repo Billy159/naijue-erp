@@ -1,11 +1,10 @@
-# Frozen Demo single-select replacement candidate
+# Shared frozen Demo single-select
 
-The Select action and styles are preparatory and **unwired**: a proposed common
-replacement for the existing inventory and transfer implementations, not a third
-active Select implementation. The pure ownership controller is separately reusable
-and can be integrated independently by a behavior-fix owner. This extraction itself
-changes no existing widget, route, build entry, package or database contract and
-claims no production Select integration/page parity.
+The committed Select action is now used by inventory, sales and transfer page-size
+controls through one lightweight `page-size-select.tsx` loading/lifecycle shell.
+The inventory adapter owns only 100/200/500 options and numeric conversion; document
+pagers retain 20/50/100/200 and their own exact-total/page mathematics.
+No schema, query contract, data/business behavior or other control migration is included.
 
 ## Reused source, not a lookalike
 
@@ -40,7 +39,7 @@ Excluded: data globals, `ERP_DEMO`, entity/native DOM bridges, source mount maps
 MutationObserver, full-library CSS, grouped options/recommendations, empty-option
 sentinel, search/clear, transfer creator/FIT exceptions and optimistic local value.
 The narrow ungrouped, non-search, non-clear contract is the common subset of both
-existing page-size widgets. Hosts supply all real options/labels and applied value.
+three page-size widgets. Hosts supply all real options/labels and applied value.
 No fake model data or new fields are introduced.
 
 ## API
@@ -89,34 +88,33 @@ normal application Escape ordering: consume only the active control popup before
 closing an underlying drawer. Focus restoration is also host-owned; do not focus
 a trigger that has been replaced by a new owner, route or session.
 
-## Migration, not performed here
+## Integrated page-size lifecycle
 
-1. Keep `components/inventory-page-size.tsx` as the current lightweight lazy shell.
-   Acquire popup ownership on open intent **before** action import/style loading.
-   Preserve its generation, attached, focused, disabled and ReadScope checks.
-   Replacing/closing/aborting an owner must invalidate late module/style completion.
-   Never let a replaced popup reopen just because a load promise resolves.
-2. Replace the Select JSX/import in `inventory-page-size-action.tsx` with this
-   common action, mapped to source 100/200/500 labels and existing typed callbacks.
-   Keep canonical InventoryPageSize validation in that adapter, not in this leaf.
-   Update the action-only style bundle entry to the common CSS, await its existing
-   style lease, and retire the duplicated widget CSS only after regressions pass.
-3. Replace the Select in `transfers/pagination.tsx` through the same lightweight
-   contract and ownership model, without moving the Arco action into its static
-   route closure. Keep transfer page-size choices/labels and numeric validation in
-   its existing business adapter. Remove the current runtime root-barrel Select
-   import. The pager and exact-total math remain unchanged.
-4. Use the same session controller for both adapters, with their own route/drawer
-   scope signals. Revalidate active scope/ownership in selection callbacks too. Wire outside/Escape once at that host, release leases on blur,
-   cancellation, disable, unmount and scope/session changes. Do not add a second
-   listener/singleton in either widget. A warm action may remain mounted closed,
-   but stale loading work must never attach a replaced owner.
-5. Rerun both existing widget regressions and lazy startup/bundle checks after
-   replacing them. Then compare against the actual running Demo: open/choose,
-   reopen, keyboard/Escape, click another selector, scrolling/clipping and precise
-   popup/trigger/option dimensions. Current frozen files alone cannot establish
-   browser interaction or pixel parity, and original local-source comparison is
-   still pending the user's computer connection.
+- `page-size-select.tsx` is the sole trigger/loading/failure/retry shell. It imports
+  the action through the existing lightweight dynamic contract only on first focus
+  or open intent. No eager action/Arco or action CSS is added to startup, inventory
+  or sales static closures. Transfer's unrelated existing filter controls remain.
+- The shared action exports an inert stylesheet factory. Each mounted pager owns a
+  separate `single-select-styles.ts` lease, with the exact emitted asset URL, pending
+  promise, error retry and removal/rejection on scope disposal/unmount/inactivation.
+  There is no document-global cache that could mix configured asset identities.
+- Action CSS is explicitly bundled to `chunks/single-select.css`. Only the small
+  108px shell CSS is shared with route controls. Portable TEST ONLY builders
+  explicitly inline the action stylesheet and set its dedicated inline-ready flag;
+  those all-in-one derivatives are not production lazy-loading evidence.
+- Focus/open intent, Escape/cancel, blur/outside pointer, busy state, late JS/CSS,
+  local portal and live ReadScope checks remain in the shell/action. Retained hidden
+  sales/transfer lists revoke pending work/remove the popup and disable paging;
+  returning to the list does not change its applied page size or perform a read.
+- The former inventory action and duplicated CSS were removed after the real shared
+  action passed the inventory regressions. Sales's native Select and transfer's
+  page-size Select JSX/root import were replaced, not left as alternate renderers.
+- The existing pure `ExclusivePopupController` remains independently reusable;
+  this finite pager integration does not migrate unrelated application popups.
+
+Existing original runtime screenshots and frozen source are reference evidence.
+Current browser screenshot/pixel/clipping/real-performance acceptance remains open:
+only source/hash, actual-Arco synthetic DOM and emitted bundle graph checks are claimed.
 
 ## Focused verification
 

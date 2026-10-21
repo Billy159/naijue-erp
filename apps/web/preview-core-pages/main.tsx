@@ -9,6 +9,7 @@ import './preview.css';
 // Portable TEST ONLY derivative intentionally inlines action CSS. This resolved
 // fixture-style callback is not a production stylesheet/loading capability.
 import '../src/sales/detail.css';
+import '../src/demo-controls/single-select.css';
 const loadInlineSalesDetailStyles = async (): Promise<void> => {};
 
 type Route = 'inventory' | 'sales' | 'transfers';

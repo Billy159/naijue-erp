@@ -25,7 +25,7 @@ export async function buildApplication({ entryPoint, outdir }) {
   // no startup or inventory-route stylesheet imports the drawer body/tab CSS.
   await mkdir(path.join(outdir, 'chunks'), { recursive: true });
   await copyFile(path.join(here, '../inventory/product-drawer.css'), path.join(outdir, 'chunks/product-drawer.css'));
-  const pageSizeStyles = await build({ ...common, entryPoints: [path.join(here, '../components/inventory-page-size.css')], outfile: path.join(outdir, 'chunks/inventory-page-size.css'), metafile: true });
+  const pageSizeStyles = await build({ ...common, entryPoints: [path.join(here, '../demo-controls/single-select.css')], outfile: path.join(outdir, 'chunks/single-select.css'), metafile: true });
   Object.assign(result.metafile.outputs, pageSizeStyles.metafile.outputs);
   await writeFile(path.join(outdir, 'metafile.json'), JSON.stringify(result.metafile, null, 2));
   const manifest = Object.freeze({ entry: 'application.js', styles: styleManifests, productDrawerStyles: 'chunks/product-drawer.css' });

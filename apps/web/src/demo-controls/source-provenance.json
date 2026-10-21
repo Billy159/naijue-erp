@@ -1,5 +1,5 @@
 {
-  "status": "Select presentation is an unwired replacement candidate; the pure popup controller can be integrated independently. No running Demo or page-parity acceptance.",
+  "status": "Integrated: inventory, sales and transfers page-size adapters share one lazy shell/action and action-only CSS. Source/hash, synthetic DOM and emitted graph evidence only; browser/pixel acceptance remains open.",
   "frozenCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
   "frozenFile": "frontend/unified-single-select.jsx",
   "frozenSha256": "0551d20e63ee3e50e214ee4137b6b4a7fa98b0eb441dd51cea32e01e434dd43d",
@@ -71,7 +71,7 @@
     "Only Select/style/index.css and Trigger/style/index.css are imported as action-only CSS; no all-library barrel, full CSS, palette/body reset or global bridge.",
     "Direct leaf type assertion handles installed NodeNext package typing without importing a barrel at runtime or type time.",
     "Caller owns applied value/options and lazy loading; source optimistic local value, scan/mount maps, nativeData/transferData/entityData and global ERP data are excluded.",
-    "Narrow required-value ungrouped non-search/non-clear subset matches both existing page-size widgets. Group/recommendation/empty-sentinel/search/creator/fit adapters are not included.",
+    "Narrow required-value ungrouped non-search/non-clear subset matches the three page-size widgets. Group/recommendation/empty-sentinel/search/creator/fit adapters are not included.",
     "Controlled popup, unmountOnExit, local-only portal, disable dismissal, guarded StrictMode portal refresh and explicit focus-on-mount are lifecycle adapters, not copied frozen behavior.",
     "ExclusivePopupController is entirely new pure lifecycle code. It is session-owned, closes/revokes earlier ownership, removes scope-abort listeners and rejects stale handles. It installs no document listeners.",
     "Closing popup option callbacks are ignored when open is false, so the normal Arco exit animation cannot commit after ownership replacement. Host callbacks must still revalidate live scope/lease before publishing."
@@ -95,10 +95,11 @@
     "iconRules": "Four static .arco-icon/attribute rules copied from es/style/index.css and scoped; see existing demo-presentation/ARCO-LICENSE."
   },
   "existingReplacementTargets": [
-    "apps/web/src/components/inventory-page-size-action.tsx",
+    "apps/web/src/components/inventory-page-size.tsx",
+    "apps/web/src/sales/sales-pagination.tsx",
     "apps/web/src/transfers/pagination.tsx"
   ],
   "notChanged": [
-    "This extraction changed no existing files, active routes, data contract, database fields, package manifests or build entrypoints. Select production integration remains unwired; separately owned controller integration is outside this extraction."
+    "No schema, data/query contract, filters, business math, package/dependency, external service or deployment changes. The three pager presentations/loading owners are integrated; unrelated controls are not migrated."
   ]
 }

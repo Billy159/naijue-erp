@@ -45,7 +45,6 @@
 .sales-workbench .tc-empty strong{font:inherit}.sales-workbench .tc-empty p{font-size:12px;line-height:20px;margin:8px 0}
 .sales-pagination{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:42px;padding:8px 0;flex:none;font-size:12px;flex-wrap:wrap}
 .sales-pagination .sale-pagination-count{display:inline-flex;flex:none;align-items:center;gap:10px;white-space:nowrap}
-.sales-pagination .tc-page-size{width:108px;height:30px;padding:4px 7px;border:1px solid transparent;border-radius:4px;background:var(--ca-surface-muted);font-size:12px}
 .sales-pagination nav{display:flex;align-items:center;gap:5px;flex:none;white-space:nowrap}
 .sales-pagination nav>.iw-button{height:28px;min-height:28px;padding:2px 7px;font-size:13px;font-weight:400}
 .sales-pagination .sales-page-item{display:inline-flex;align-items:center;gap:5px}

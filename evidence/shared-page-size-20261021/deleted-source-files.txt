@@ -1,0 +1,3 @@
+apps/web/src/components/inventory-page-size-action.tsx
+apps/web/src/components/inventory-page-size-shell.css
+apps/web/src/components/inventory-page-size.css

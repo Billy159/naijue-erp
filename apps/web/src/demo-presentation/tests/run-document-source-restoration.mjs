@@ -44,7 +44,7 @@ assert.match(header, /\['导出', '打印', '操作历史'\].*disabled title=/);
 assert.doesNotMatch(detail, /readList\(|readReferences\(|productReader|fetch\(/);
 assert.equal((detail.match(/void query\.run\(salesTarget\(props\.salesId\)\)/g) ?? []).length, 2);
 
-const dom = new JSDOM(`<!doctype html><style>${frame.replace(/@import[^;]+;/g, '')}\n${controls}\n${sales}\n${transfers}</style><div class="demo-ui"><button id="button">Button</button><input id="checkbox" type="checkbox"><input id="radio" type="radio"><input id="native"><select id="select"></select><textarea id="textarea"></textarea><span class="arco-picker"><input id="arco-date"></span><span class="arco-tree-select"><input id="arco-search"></span></div>`);
+const dom = new JSDOM(`<!doctype html><style>${frame.replace(/@import[^;]+;/g, '')}\n${controls.replace(/@import[^;]+;/g, '')}\n${sales}\n${transfers}</style><div class="demo-ui"><button id="button">Button</button><input id="checkbox" type="checkbox"><input id="radio" type="radio"><input id="native"><select id="select"></select><textarea id="textarea"></textarea><span class="arco-picker"><input id="arco-date"></span><span class="arco-tree-select"><input id="arco-search"></span></div>`);
 const rules = [...dom.window.document.styleSheets[0].cssRules];
 const rule = selector => {
   const matches = rules.filter(item => item.selectorText === selector);

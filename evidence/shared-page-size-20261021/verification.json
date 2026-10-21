@@ -1,0 +1,150 @@
+{
+  "baseCommit": "6cf90f3be794177a7a89ef8c38faf6260247239c",
+  "sourceState": "Working tree for root review; no worker commit or deployment.",
+  "implementation": "Inventory/sales/transfers page-size controls use one lightweight lifecycle shell and one real shared Demo Select action. Duplicate inventory action/CSS removed.",
+  "preserved": [
+    "inventory 100/200/500; documents 20/50/100/200",
+    "domain exact-total/page mathematics and applied-vs-pending query state",
+    "no schema, reader/query contract, filters, business logic, package or external-service changes"
+  ],
+  "changedFiles": [
+    "apps/web/build-preview.mjs",
+    "apps/web/preview-core-pages/build.mjs",
+    "apps/web/preview-core-pages/main.tsx",
+    "apps/web/preview-core-pages/smoke.mjs",
+    "apps/web/src/application/build-application.mjs",
+    "apps/web/src/application/tests/run-build-check.mjs",
+    "apps/web/src/components/inventory-page-size.tsx",
+    "apps/web/src/components/tests/inventory-page-size-entry.tsx",
+    "apps/web/src/components/tests/run-inventory-page-size-dom-tests.mjs",
+    "apps/web/src/demo-controls/README.md",
+    "apps/web/src/demo-controls/page-size-select.tsx",
+    "apps/web/src/demo-controls/page-size-shell.css",
+    "apps/web/src/demo-controls/single-select-action.tsx",
+    "apps/web/src/demo-controls/single-select-contract.ts",
+    "apps/web/src/demo-controls/single-select-styles.ts",
+    "apps/web/src/demo-controls/source-provenance.json",
+    "apps/web/src/demo-presentation/controls.css",
+    "apps/web/src/demo-presentation/tests/run-document-source-restoration.mjs",
+    "apps/web/src/inventory/inventory.css",
+    "apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs",
+    "apps/web/src/inventory/tests/run-settings-popup-dom-tests.mjs",
+    "apps/web/src/sales/sales-page.tsx",
+    "apps/web/src/sales/sales-pagination.tsx",
+    "apps/web/src/sales/sales.css",
+    "apps/web/src/sales/tests/run-dom-tests.mjs",
+    "apps/web/src/transfers/pagination.tsx",
+    "apps/web/src/transfers/tests/run-frozen-source-check.mjs",
+    "apps/web/src/transfers/transfers-page.tsx",
+    "apps/web/src/transfers/transfers.css",
+    "apps/web/tests/run-bundle-smoke.mjs",
+    "apps/web/tests/run-dom-tests.mjs"
+  ],
+  "deletedFiles": [
+    "apps/web/src/components/inventory-page-size-action.tsx",
+    "apps/web/src/components/inventory-page-size-shell.css",
+    "apps/web/src/components/inventory-page-size.css"
+  ],
+  "knownWarnings": [
+    "Installed Arco React 19 element.ref compatibility warnings in development DOM tests",
+    "Portable all-in-one inventory derivative exceeds 256KiB; no feature removed to fit"
+  ],
+  "boundary": "Frozen source/hash, actual-Arco synthetic DOM, portable built-code DOM smoke and emitted import/CSS graph evidence. No current browser screenshot, pixel/clipping, performance, real-data or production acceptance.",
+  "historicalFailure": "root-typecheck-before-fix.log preserves the failed full web tsc. Loader inference and await narrowing errors were corrected without casts; focused tsc and root full web tsc both subsequently passed.",
+  "earlyInteractionFix": "Root identified first enabled click before passive ownership attachment. Ownership now attaches with useLayoutEffect; compiled portable smoke exercises the first visible enabled click without an arbitrary delay.",
+  "review": "Independent read-only review and delta review report no blocking findings; low HTML wrapper issue fixed.",
+  "writtenAt": "2026-10-21T03:11:37.880924+00:00",
+  "checks": [
+    {
+      "command": "node_modules/.bin/tsc --noEmit -p apps/web/src/demo-controls/tsconfig.json",
+      "log": "focused-typecheck.log",
+      "exitCode": 0,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": "node apps/web/src/components/tests/run-inventory-page-size-dom-tests.mjs",
+      "log": "inventory-page-size.log",
+      "exitCode": 0,
+      "logSha256": "1db709e453ca4e62e34db6b182534bacb5ea76818da0068f883a5961773179b3"
+    },
+    {
+      "command": "node apps/web/src/demo-controls/tests/run-source-and-boundary-tests.mjs",
+      "log": "source-boundary.log",
+      "exitCode": 0,
+      "logSha256": "56b2aa5be639d6690cd755d82e69ff4468bd14902819a65d41f403916dddeee7"
+    },
+    {
+      "command": "node apps/web/src/demo-controls/tests/run-action-dom-tests.mjs",
+      "log": "action-dom.log",
+      "exitCode": 0,
+      "logSha256": "0d85c776f0ae4d6693b9b1bf8c638fc1b4c16a2ba855c6868687984cbf0fd4a3"
+    },
+    {
+      "command": "node apps/web/src/sales/tests/run-dom-tests.mjs",
+      "log": "sales-dom.log",
+      "exitCode": 0,
+      "logSha256": "8a58ffd1e7130ce8239ddb4e40a772283f35e0a29149aa0370cc2108eaa96aba"
+    },
+    {
+      "command": "node apps/web/src/transfers/tests/run-dom-tests.mjs",
+      "log": "transfers-dom.log",
+      "exitCode": 0,
+      "logSha256": "95a23ec7f01aa98cd9d51f4b9cb306c0eec89e5353dbc8684998758403b94b99"
+    },
+    {
+      "command": "node apps/web/tests/run-dom-tests.mjs",
+      "log": "inventory-main-dom.log",
+      "exitCode": 0,
+      "logSha256": "df7de9bee3e46b51ea73c7815d10e936eed9b26d6fcc1e28cf3ca495f3dff571"
+    },
+    {
+      "command": "node apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs",
+      "log": "inventory-query-lifecycle.log",
+      "exitCode": 0,
+      "logSha256": "c3d45528cf7c70e5d41888943549fcc93ed55089c7e02c7cd5cd8a0c868655bb"
+    },
+    {
+      "command": "node apps/web/src/inventory/tests/run-settings-popup-dom-tests.mjs",
+      "log": "inventory-settings-popup.log",
+      "exitCode": 0,
+      "logSha256": "f4f7e62b96946dd94a08c362d296a0cf7c4563daaf61d21a8264cda7ffd5dc42"
+    },
+    {
+      "command": "node apps/web/src/transfers/tests/run-frozen-source-check.mjs",
+      "log": "frozen-transfer-source.log",
+      "exitCode": 0,
+      "logSha256": "b1ce75008e8497d93eccf626767c9cead8034ba6b5c034eae0b6fd9b00f87163"
+    },
+    {
+      "command": "node apps/web/src/demo-presentation/tests/run-document-source-restoration.mjs",
+      "log": "document-source.log",
+      "exitCode": 0,
+      "logSha256": "710decba3a2e87979ea727f813440e10989c3263f7f62b9d11d8e59d9d47c9cc"
+    },
+    {
+      "command": "node apps/web/src/application/tests/run-build-check.mjs",
+      "log": "application-build-graph.log",
+      "exitCode": 0,
+      "logSha256": "de934b6e86c302a33040c6de930625b3001158426c80c1b61d97388fa0e1728d"
+    },
+    {
+      "command": "node apps/web/build-preview.mjs",
+      "log": "preview-build.log",
+      "exitCode": 0,
+      "logSha256": "d6b4cbf68b0c8a1f9539520afdac8cd60f681db6c6347f7f694485cbf5d78f4c"
+    },
+    {
+      "command": "node apps/web/tests/run-bundle-smoke.mjs",
+      "log": "preview-smoke.log",
+      "exitCode": 0,
+      "logSha256": "47609356e2b3d0b64c25e67dd1e374d92239649a9a2de23ff0138517583fd323"
+    }
+  ],
+  "rootFullWebTypecheck": {
+    "command": "npm run typecheck:web",
+    "exitCode": 0,
+    "confirmedBy": "Root parent message on 2026-10-21; root will copy its full log into evidence.",
+    "sourceLog": "/workspace/shared/pager-unification-typecheck-after.log"
+  },
+  "sourceManifestSha256": "290d6f76014306e3b8611bc32776328f7f19fbcceb72412771616688ea3a1d77"
+}
