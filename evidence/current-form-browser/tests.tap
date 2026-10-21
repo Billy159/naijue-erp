@@ -1,0 +1,18 @@
+✔ CURRENT browser proposals: construction inert; strict body and same-origin session request (19.407472ms)
+✔ CURRENT browser proposals: invalid query and preabort never fetch, no browser actor authority (1.738041ms)
+✔ CURRENT browser proposals: account identity/selected method/availability must match (5.43346ms)
+✔ CURRENT browser proposals: staff may belong another hall without being filtered client-side (1.244774ms)
+✔ CURRENT browser proposals: exact bigint counts, count-page consistency, unknown keys and IDs rejected (19.148193ms)
+✔ CURRENT browser proposals: product zero distinct from unknown, no invented minima (8.927487ms)
+✔ CURRENT browser proposals: SKU page binds product and batch binds exact order/set (4.811625ms)
+✔ CURRENT browser proposals: transfer source may be disabled with stock, target must enabled (2.448046ms)
+✔ CURRENT browser proposals: HTTP conflicts stay safe and no retry occurs (1.294983ms)
+✔ CURRENT browser proposals: payment method references retain native identity and no account metadata (1.285442ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 521.453844

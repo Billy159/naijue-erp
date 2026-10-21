@@ -1,0 +1,13 @@
+{
+  "sourceBase": "5cdd4aa",
+  "scope": "bounded same-origin browser CURRENT proposal reader; no page/host integration",
+  "focusedTests": 10,
+  "rootCombinedTests": 1311,
+  "rootCombinedExit": 0,
+  "databaseCoverage": "Not covered by earlier frozen d26b7cc PG test",
+  "files": {
+    "apps/web/src/current-form/http-reader.ts": "afccd16f1c87c559c5ccb816cc6669aadd0b6494a2dce0dbf729608b5840fb43",
+    "apps/web/src/current-form/README.md": "8fc42a4151a8634038ba110731ff4d7ce2e97c221909891134d7d900582155f8",
+    "apps/web/src/current-form/http-reader.test.ts": "34eee3db92cfe490307464c8062a934775b8319f9ce3de6a1e3f1f381b7ab702"
+  }
+}

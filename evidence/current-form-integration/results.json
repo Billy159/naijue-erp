@@ -1,0 +1,20 @@
+[
+  {
+    "step": "root-check",
+    "command": [
+      "npm",
+      "run",
+      "check"
+    ],
+    "exitCode": 0
+  },
+  {
+    "step": "web-types",
+    "command": [
+      "npm",
+      "run",
+      "typecheck:web"
+    ],
+    "exitCode": 0
+  }
+]
