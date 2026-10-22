@@ -1,0 +1,52 @@
+{
+  "atUtc": "2026-10-22T17:35:24.194550+00:00",
+  "parent": "f18666cef005fbfc8584502ded05a3f59f0d47e5",
+  "groups": [
+    {
+      "slice": "DDL_SOURCE_PRESERVATION_21_26_STABLE_BYTES_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/DDL-SOURCE-ONLY-READY-21-26.json",
+      "receiptSha256": "d5713af7e7570173d04afffb3b8f9e4673b07b5fa33bac024a23ff4e9c3550f0",
+      "files": [
+        {
+          "path": "adapters/postgres/migrations/0021_native_maintenance_receipts.sql",
+          "owner": "D1",
+          "bytes": 54970,
+          "sha256": "904809567388816bb32fc19dd0faed220e3c8f7bbcad2c7baddcd0d6cb47ae61"
+        },
+        {
+          "path": "adapters/postgres/migrations/0022_product_media_retained_delete.sql",
+          "owner": "D1",
+          "bytes": 7259,
+          "sha256": "4caf953912adbfdcdf33a73ac031d1c69e7313047accc050efe636b698225163"
+        },
+        {
+          "path": "adapters/postgres/migrations/0023_inventory_key_admission.sql",
+          "owner": "D1",
+          "bytes": 21576,
+          "sha256": "18ad09f32567dcd5a7fe57681a5f741d617805b2e76b3334c6a0b71f738a0f65"
+        },
+        {
+          "path": "adapters/postgres/migrations/0024_history_effective_revisions.sql",
+          "owner": "D1",
+          "bytes": 4768,
+          "sha256": "180d7ef43210a2f9a414c362b74f3df5fedb0d56d98711d1f6a7a14cbea0f696"
+        },
+        {
+          "path": "adapters/postgres/migrations/0025_product_season_selection.sql",
+          "owner": "D1",
+          "bytes": 5339,
+          "sha256": "3994b45c86424454e47cbdd322b7443e9807a382e7b8621ca12d4a7af3f36248"
+        },
+        {
+          "path": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+          "owner": "D1",
+          "bytes": 85582,
+          "sha256": "26b5f9e5a06014409189156a8224743d56772564082027c8a37dfe6cf18e206b"
+        }
+      ]
+    }
+  ],
+  "fileCount": 6,
+  "newlyTrackedCount": 5,
+  "scope": "Only source preservation;26 already frozen round35. Prior engine20..25 and26v4/v5 retain original exact inputs; v6newprojection engine not tested. No fullmigration/issuer/business/production claim."
+}
