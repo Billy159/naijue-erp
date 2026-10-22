@@ -1,3 +1,6 @@
+import { SalesExistingDocumentSession } from '../../current-form/sales-existing-document.ts';
+import type { SalesExistingPreparation } from '../../current-form/existing-document-preparation.ts';
+import type { createCurrentFormHttpReader } from '../../current-form/http-reader.ts';
 import type { ReadScope } from '../../loading/read-scope.ts';
 import type { AuthenticationPrincipal } from '../../authentication/contracts.ts';
 import type { SalesCommandDto, SalesCommandSnapshot, SalesCommandWorkspaceOptions, SalesFormPreparationProvider, SalesDraftDto } from './contracts.ts';
@@ -13,6 +16,7 @@ export interface SalesEditorSnapshot {
 }
 export interface SalesEditorSessionOptions extends SalesCommandWorkspaceOptions {
   readonly principal: AuthenticationPrincipal; readonly preparation?: SalesFormPreparationProvider;
+  readonly existingPreparation?: SalesExistingPreparation; readonly existingReader?: ReturnType<typeof createCurrentFormHttpReader>;
 }
 /** Session owner for BOTH invalid raw input and the original native operation.
  * Route unmount never discards either. Current references are not fabricated. */
@@ -21,6 +25,7 @@ export class SalesEditorSession {
   readonly #options: SalesEditorSessionOptions;
   readonly #listeners = new Set<() => void>();
   #state: SalesEditorSnapshot;
+  #existing: SalesExistingDocumentSession | null = null; #existingUnsubscribe: (() => void) | null = null;
   #baseline: string | null = null;
   #preparing: AbortController | null = null;
   #sequence = 0;
@@ -37,7 +42,7 @@ export class SalesEditorSession {
       if (command.write.phase === 'committed' && command.write.result && command.write.result.operationId !== this.#committedOperation) {
         this.#committedOperation = command.write.result.operationId; commitRevision++;
       }
-      if (command.disposed) { this.#sequence++; this.#preparing?.abort(); this.#preparing = null; this.#baseline = null; }
+      if (command.disposed) { this.#clearExisting(); this.#sequence++; this.#preparing?.abort(); this.#preparing = null; this.#baseline = null; }
       this.#publish({ ...this.#state, command, commitRevision, ...(command.disposed ? { input: null, errors: Object.freeze({}), preparing: false, notice: null } : {}) });
     });
   }
@@ -49,10 +54,34 @@ export class SalesEditorSession {
   }
   get canCreate(): boolean { return !!this.#options.preparation && !this.#state.command.disposed; }
   get hasDirtyDraft(): boolean {
-    return this.#state.command.write.phase !== 'committed' && !!this.#state.input
-      && (this.#state.command.editor?.mode === 'CREATE' || JSON.stringify(this.#state.input) !== this.#baseline);
+    return this.#state.command.write.phase !== 'committed' && (this.commands.hasDirtyDraft || !!this.#state.input
+      && (this.#state.command.editor?.mode === 'CREATE' || JSON.stringify(this.#state.input) !== this.#baseline) || this.#existing?.hasDirtyDraft === true);
   }
-  canLeave(): boolean { return !this.#state.preparing && !this.hasDirtyDraft && this.commands.canLeave(); }
+  canLeave(): boolean { return !this.#state.preparing && !this.hasDirtyDraft && this.commands.canLeave() && this.#existing?.canLeave() !== false; }
+  get canUseExistingProposal(): boolean {
+    const state = this.#state.command, editor = state.editor;
+    return !!this.#options.existingPreparation && !!this.#options.existingReader && !state.disposed && editor?.mode === 'EXISTING' && !!editor.detail && !!editor.draft && !!this.#state.input
+      && editor.detail.stockBasis === 'RUNTIME_LEDGER' && editor.detail.document.header.status === 'DRAFT';
+  }
+  get existingDocument(): SalesExistingDocumentSession | null { return this.#existing; }
+  prepareExistingDocument(): SalesExistingDocumentSession | null {
+    const editor = this.#state.command.editor;
+    if (this.#existing && this.#existing.original === editor?.detail && !this.#existing.getSnapshot().disposed) return this.#existing;
+    if (!this.canUseExistingProposal || !this.editable || !editor?.detail || !this.#state.input) return null;
+    const dirty = this.hasDirtyDraft; this.#clearExisting();
+    const model = new SalesExistingDocumentSession({ owner: this, scope: this.#options.scope, reader: this.#options.existingReader!, preparation: this.#options.existingPreparation!, original: editor.detail, input: this.#state.input, dirty });
+    this.#existing = model; this.#existingUnsubscribe = model.subscribe(() => { if (this.#existing === model && !this.#state.command.disposed) this.#publish({ ...this.#state }); }); return model;
+  }
+  expireExistingIdentity(): void { this.#options.scope.dispose(); try { this.#options.onAccessFailure(new SalesCommandError('unauthenticated', 'UNAUTHENTICATED', 'read', 401)); } catch { /* cleared before callback */ } }
+  async applyExistingPrepared(model: SalesExistingDocumentSession, response: { readonly expectedVersion: number; readonly draft: SalesDraftDto }, originalInput: SalesFormInput | null, stillCurrent: () => boolean): Promise<boolean> {
+    const editor = this.#state.command.editor;
+    if (this.#existing !== model || !this.editable || !editor?.detail || editor.detail !== model.original || response.expectedVersion !== editor.detail.document.header.version || this.#state.input !== originalInput || !stillCurrent()) return false;
+    if (!this.commands.replaceDraft(response.draft) || !stillCurrent()) return false;
+    this.#adoptInput(true);
+    if (!this.commands.hasDirtyDraft) { if (stillCurrent()) model.markUnchanged(); this.#notice('内容未改变，无需保存。'); return false; }
+    const preparedInput = this.#state.input, preparedDraft = this.commands.getSnapshot().editor?.draft;
+    return this.commands.submitPreparedExistingSave(() => this.#existing === model && stillCurrent() && this.#state.input === preparedInput && this.commands.getSnapshot().editor?.draft === preparedDraft && this.commands.getSnapshot().editor?.detail === model.original);
+  }
   get editable(): boolean {
     const { editor, write, stale, disposed } = this.#state.command;
     return !disposed && !this.#state.preparing && !!editor?.draft && editor.phase === 'ready' && !editor.current && !stale
@@ -70,6 +99,7 @@ export class SalesEditorSession {
   }
   async openExisting(salesId: string): Promise<boolean> {
     if (!this.canLeave()) return false;
+    this.#clearExisting();
     const sequence = ++this.#sequence, ok = await this.commands.openExisting(salesId);
     if (sequence !== this.#sequence || !this.#options.scope.active) return false;
     this.#adoptInput(); return ok;
@@ -103,6 +133,7 @@ export class SalesEditorSession {
     this.#publish({ ...this.#state, input: frozenSnapshot(input), errors: Object.freeze({}), notice: null }); return true;
   }
   async save(): Promise<boolean> {
+    if (this.#existing?.getSnapshot().phase === 'ready') return this.#existing.save();
     if (!this.editable || !this.#state.input) return false;
     const base = this.#state.command.editor!.draft!, result = compileSalesForm(base, this.#state.input);
     if (!result.ok) { this.#publish({ ...this.#state, errors: result.errors, notice: '输入尚未通过校验，未发送保存请求。' }); return false; }
@@ -130,9 +161,11 @@ export class SalesEditorSession {
   }
   dispose(): void {
     this.#sequence++; this.#preparing?.abort(); this.#preparing = null;
-    this.commands.dispose(); this.#unsubscribe(); this.#listeners.clear();
+    this.#clearExisting(); this.commands.dispose(); this.#unsubscribe(); this.#listeners.clear();
   }
-  #adoptInput(): void {
+  #clearExisting(): void { const model = this.#existing; this.#existing = null; this.#existingUnsubscribe?.(); this.#existingUnsubscribe = null; model?.dispose(); }
+  #adoptInput(preserveExisting = false): void {
+    if (!preserveExisting) this.#clearExisting();
     const draft = this.commands.getSnapshot().editor?.draft; const input = draft ? salesFormInput(draft) : null;
     this.#baseline = input ? JSON.stringify(input) : null;
     this.#publish({ ...this.#state, input, errors: Object.freeze({}), notice: null });

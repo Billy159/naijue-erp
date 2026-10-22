@@ -106,6 +106,31 @@ test("runtime26 limited review cannot grant another purpose or maintenance drive
     await assert.rejects(issuer.runtime26.assertReady(client, "IMPORT_PUBLISH"), { code: "NATIVE_RUNTIME26_NOT_READY" }); assert.equal(p.calls.length, count); client.release();
   } finally { f.cleanup(); }
 });
+test("runtime26 retained-delete view binds only the original managed read pool and existing reviewed PRODUCT_SEASONS_READ purpose", async () => {
+  const f = fixture(); try {
+    const p = scripted(), q = scripted(), settings = f.options({ ...f.review, purposes: ["PRODUCT_SEASONS_READ"] });
+    const issuer = await createNativeRuntime26Issuer(p.pool, settings), foreign = await createNativeRuntime26Issuer(q.pool, settings);
+    const view = issuer.catalogueRetainedDelete, count = p.calls.length + q.calls.length;
+    assert.equal(view.profile, "catalogue-retained-delete-v22"); assert.deepEqual(Reflect.ownKeys(view).sort(), ["assertVerified", "profile"]);
+    assert.ok(Object.isFrozen(view)); assert.equal(view.assertVerified(issuer.pool), undefined);
+    for (const target of [p.pool, { ...issuer.pool }, foreign.pool, new PostgresMaintenanceCommandUnitOfWork(issuer.pool), {}])
+      assert.throws(() => view.assertVerified(target as never), { code: "NATIVE_RUNTIME26_NOT_READY" });
+    assert.equal(p.calls.length + q.calls.length, count);
+    const limited = await createNativeRuntime26Issuer(scripted().pool, f.options({ ...f.review, purposes: ["PRODUCT_MAINTENANCE"] }));
+    assert.throws(() => limited.catalogueRetainedDelete.assertVerified(limited.pool), { code: "NATIVE_RUNTIME26_NOT_READY" });
+  } finally { f.cleanup(); }
+});
+test("runtime26 retained-delete view checks pinned files synchronously and cannot recover after revocation", async () => {
+  const f = fixture(); try {
+    const settings = f.options(), p = scripted(), issuer = await createNativeRuntime26Issuer(p.pool, settings), count = p.calls.length;
+    const original = JSON.stringify({ result: "PASS", notice: "SYNTHETIC_PROTOCOL_ONLY_NOT_ACTUAL_APPROVAL" });
+    writeFileSync(f.independent, "changed");
+    assert.throws(() => issuer.catalogueRetainedDelete.assertVerified(issuer.pool), { code: "NATIVE_RUNTIME26_NOT_READY" });
+    writeFileSync(f.independent, original);
+    assert.throws(() => issuer.catalogueRetainedDelete.assertVerified(issuer.pool), { code: "NATIVE_RUNTIME26_NOT_READY" });
+    await assert.rejects(issuer.pool.connect(), { code: "NATIVE_RUNTIME26_NOT_READY" }); assert.equal(p.calls.length, count); assert.equal(p.connects(), 1);
+  } finally { f.cleanup(); }
+});
 test("runtime26 rechecks actual metadata inside the live original transaction and forbids COMMIT after drift", async () => {
   const f = fixture(); try {
     const p = scripted(), issuer = await createNativeRuntime26Issuer(p.pool, f.options()), client = await issuer.pool.connect();

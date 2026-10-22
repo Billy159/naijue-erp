@@ -21,7 +21,7 @@
 .catalogue-workbench th{position:sticky;top:0;z-index:2;height:36px;background:var(--ca-table-head);color:var(--ca-ink-2);font-size:12px;font-weight:600}
 .catalogue-workbench tbody tr:hover>td{background:var(--ca-table-row-hover)}
 .catalogue-workbench td{white-space:pre-wrap;overflow-wrap:anywhere}
-.catalogue-workbench :is(th,td):last-child{width:112px}
+.catalogue-workbench :is(th,td):last-child{width:100px}
 .catalogue-workbench td button{height:26px;min-height:26px;padding:2px 5px;font-size:12px}
 .catalogue-workbench td .view-action{color:var(--ca-primary-ink)}
 .catalogue-workbench .empty{padding:32px 16px;text-align:center;color:var(--ca-ink-3)}
@@ -42,3 +42,21 @@
 .catalogue-write-recovery{padding:10px;background:var(--ca-primary-soft);color:var(--ca-ink);margin:8px 0}
 .catalogue-write-recovery p{margin:0 0 6px}
 .catalogue-write-recovery button+button{margin-left:8px}
+
+/* Frozen settings tab/table layer, mapped to the installed Arco ownership.
+   These selectors also win when the library stylesheet is loaded later. */
+.catalogue-workbench .erp-tabs-host.catalogue-entry-tabs .arco-tabs-header-nav{padding:0}
+.catalogue-workbench .erp-tabs-host.catalogue-entry-tabs .arco-tabs-header-nav::before{display:none}
+.catalogue-workbench .erp-tabs-host.catalogue-entry-tabs>.arco-tabs>[role=tablist]{border-bottom:1px solid var(--ca-line)}
+.catalogue-workbench .erp-tabs-host.catalogue-entry-tabs .arco-tabs-header{display:flex;align-items:center;gap:4px;margin:0;padding:0}
+.catalogue-workbench .erp-tabs-host.catalogue-entry-tabs .arco-tabs-header-title{box-sizing:border-box;min-width:76px;height:34px;min-height:34px;margin:0;padding:5px 12px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--ca-ink-2);font-family:var(--ca-font-sans);font-size:13px;font-weight:400;line-height:1.15}
+.catalogue-workbench .erp-tabs-host.catalogue-entry-tabs .arco-tabs-header-title:not(.arco-tabs-header-title-disabled):hover{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+.catalogue-workbench .erp-tabs-host.catalogue-entry-tabs .arco-tabs-header-title-active{border-bottom-color:var(--ca-primary);color:var(--ca-primary-ink);font-weight:600}
+.catalogue-workbench .erp-tabs-host.catalogue-entry-tabs .arco-tabs-header-title-disabled{color:var(--ca-disabled-ink)}
+.catalogue-workbench .catalogue-entry-tabs .arco-tabs-header-nav-horizontal>.arco-tabs-header-scroll .arco-tabs-header-title:first-of-type{margin-left:0}
+.catalogue-workbench .catalogue-entry-tabs .arco-tabs-header-title-text{padding:0;font:inherit}
+.catalogue-workbench .catalogue-entry-tabs .arco-tabs-header-ink{display:none}
+.catalogue-workbench .pc-settings-body .erp-read-table .arco-table :is(.arco-table-th,.arco-table-td){box-sizing:border-box;height:34px;min-height:34px;padding:4px 8px;border-bottom:1px solid var(--ca-table-grid);font-size:12px;line-height:18px;vertical-align:middle}
+.catalogue-workbench .pc-settings-body .erp-read-table .arco-table .arco-table-th{height:36px;background:var(--ca-table-head);color:var(--ca-ink-2);font-weight:600}
+.catalogue-workbench .pc-settings-body .erp-read-table :is(.arco-table-th-item,.arco-table-cell){line-height:inherit}
+.catalogue-workbench .pc-settings-body .erp-read-table :is(.arco-table-th,.arco-table-td):last-child{width:100px}

@@ -58,7 +58,7 @@ function AuditContents(props: { readonly controller: SettingsAuditController; re
       {item.credentialActions.map((action, index) => <div key={`credential-${index}`}>{action === 'CREATE' ? '账号凭据：已设置' : '密码：已重置'}</div>)}{!item.changes.length && !item.credentialActions.length && <span>未提供字段变化</span>}</div> },
   ];
   const errors = Object.values(state.errors);
-  return <Drawer visible width={1040} title={<span title="日期与时间按上海时区显示。对象和操作人名称为当前资料；变化值保留原记录。">基础设置操作记录</span>} onCancel={props.close} maskClosable={false} className="demo-settings-audit bs-audit-drawer settings-audit-drawer iw-arco-controls" unmountOnExit
+  return <Drawer visible width={1040} title={<span title="日期与时间按上海时区显示。对象和操作人名称为当前资料；变化值保留原记录。">基础设置操作记录</span>} onCancel={props.close} maskClosable={false} className="demo-ui demo-settings-audit bs-audit-drawer settings-audit-drawer iw-arco-controls" unmountOnExit
     footer={<DemoSettingsPager label="操作记录分页" scope={controller.scope} page={page} size={pageSize} total={result?.total ?? null} busy={busy} disabled={!active || !!restricted} onPage={next => controller.page(next)} onSize={next => controller.pageSize(next)} />}>
     <form className="bs-log-filters" role="search" onSubmit={event => { event.preventDefault(); controller.apply(); }}>
       <DemoSettingsSingleSelect scope={controller.scope} label="模块" placeholder="全部模块" clear value={draft.module === 'ALL' ? '' : draft.module} disabled={!active || controller.targetLocked} options={controller.allowedModules.map(module => ({ value: module, label: auditModuleLabels[module] }))} onChange={module => controller.update({ module: (module || 'ALL') as typeof draft.module })} />

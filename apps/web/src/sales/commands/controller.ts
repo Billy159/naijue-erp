@@ -70,7 +70,11 @@ export class SalesCommandWorkspace {
     })) { this.#notice('保留原收退账户及明细时，不能替换原付款方式编号。'); return false; }
     this.#publish({ ...this.#state, editor: Object.freeze({ ...editor, draft }), notice: null }); return true;
   }
-  async submit(action: SalesCommandDto['action']): Promise<boolean> {
+  submit(action: SalesCommandDto['action']): Promise<boolean> { return this.#submit(action); }
+  submitPreparedExistingSave(beforeDispatch: () => boolean): Promise<boolean> {
+    return this.#state.editor?.mode === 'EXISTING' && typeof beforeDispatch === 'function' ? this.#submit('SAVE', beforeDispatch) : Promise.resolve(false);
+  }
+  async #submit(action: SalesCommandDto['action'], beforeDispatch?: () => boolean): Promise<boolean> {
     const editor = this.#state.editor;
     if (!this.#active() || !editor || editor.phase !== 'ready' || this.hasUnresolvedWrite || this.#state.write.phase === 'committed' || editor.current || this.#state.stale) return false;
     const detail = editor.detail, header = detail?.document.header;
@@ -97,7 +101,7 @@ export class SalesCommandWorkspace {
         : { action, requestKey, expectedVersion: header!.version, salesId: editor.salesId });
       this.#usedKeys.add(requestKey);
     } catch { this.#notice('无法准备新的操作身份或合同，未发送请求。'); return false; }
-    return this.#send(command, false);
+    return this.#send(command, false, beforeDispatch);
   }
   async checkReceipt(): Promise<boolean> {
     const original = this.#state.write;
@@ -190,13 +194,14 @@ export class SalesCommandWorkspace {
       this.#publish({ ...this.#state, editor: Object.freeze({ ...editor, phase: 'error', readError: safe }) }); return false;
     } finally { if (this.#read === request) this.#read = null; }
   }
-  async #send(command: SalesCommandDto, replay: boolean): Promise<boolean> {
+  async #send(command: SalesCommandDto, replay: boolean, beforeDispatch?: () => boolean): Promise<boolean> {
     if (!this.#active() || busy(this.#state.write)) return false;
     const generation = ++this.#generation, request = new AbortController(); this.#write = request; this.#writeInvoked = false;
     this.#publish({ ...this.#state, write: Object.freeze({ ...idle(), command, phase: replay ? 'replaying' : 'submitting' }), notice: null });
     try {
       // Permit a synchronous close/cancel before invoking even an injected client.
       await Promise.resolve(); if (!this.#current(generation, request, 'write')) return false;
+      if (beforeDispatch) { let allowed = false; try { allowed = beforeDispatch() === true; } catch { /* deny before transport */ } if (!this.#current(generation, request, 'write')) return false; if (!allowed) { this.#publish({ ...this.#state, write: Object.freeze({ ...idle(), phase: 'rejected', command, error: new SalesCommandError('invalid-request', 'PROPOSAL_CHANGED_BEFORE_SUBMIT', 'not-sent') }), notice: '输入已变化，未发送保存；请重新准备后保存。' }); return false; } }
       this.#writeInvoked = true;
       const result = validateSalesResult(await this.#options.client.execute(command, AbortSignal.any([this.#options.scope.signal, request.signal])), command);
       if (!this.#current(generation, request, 'write')) return false;

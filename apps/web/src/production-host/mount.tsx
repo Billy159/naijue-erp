@@ -1,4 +1,5 @@
 import { createAccountSettingsHttpReader } from '../account-settings/http-client.ts';
+import { createSalesExistingPreparationHttpClient } from '../current-form/existing-document-preparation.ts';
 import { createDictionaryHttpReader } from '../product-settings/size-groups/http-reader.ts';
 import { UIButton } from '../components/standard-controls.tsx';
 import { createApplication, createDemoFrameWorkspaceRenderer, createRouteStylesheet } from '../application/index.tsx';
@@ -53,7 +54,7 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
   // wait for the controller's exact backend and isolated-PG approval.
   if (staffView?.canPrepare || paymentView?.canPrepare || accountView?.canPrepare) throw new TypeError('Editable settings require a configured maintenance session owner.');
   const crypto = input.document.defaultView?.crypto;
-  if ((configuration.routes.salesManualCreate || configuration.routes.transferManualCreate || configuration.routes.parties || configuration.routes.storeSettings || configuration.routes.staffSettings && !staffView?.workspace || configuration.routes.paymentSettings && !paymentView?.workspace || configuration.routes.accountSettings && !accountView?.workspace)
+  if ((configuration.routes.salesManualCreate || configuration.routes.salesExistingEdit || configuration.routes.transferManualCreate || configuration.routes.parties || configuration.routes.storeSettings || configuration.routes.staffSettings && !staffView?.workspace || configuration.routes.paymentSettings && !paymentView?.workspace || configuration.routes.accountSettings && !accountView?.workspace)
     && typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is required.');
   const newRequestKey = () => { if (typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is unavailable.'); return crypto.randomUUID(); };
   const stylesheet = (name: keyof typeof assets.styles) => {
@@ -65,7 +66,7 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
     ...(configuration.routes.inventory ? { inventory: { stylesheet: stylesheet('inventory'), actions: {}, ...(configuration.routes.inventoryLedger ? { ledger: true as const } : {}) } } : {}),
     ...(configuration.routes.sales ? { sales: { stylesheet: stylesheet('sales'), detailStylesheet: stylesheet('sales-detail'),
       ...(configuration.routes.salesProductFullPage ? { productFullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: createProductFullPageHttpReader({ ...configuration.http, fetch: input.fetch }, ['prices', 'barcodes', 'stock']) } } : {}),
-      ...(configuration.routes.salesManualCreate ? { commands: { newRequestKey, manualCreate: true as const } } : {}) } } : {}),
+      ...(configuration.routes.salesManualCreate || configuration.routes.salesExistingEdit ? { commands: { newRequestKey, ...(configuration.routes.salesManualCreate ? { manualCreate: true as const } : {}), ...(configuration.routes.salesExistingEdit ? { existingPreparation: createSalesExistingPreparationHttpClient(http) } : {}) } } : {}) } } : {}),
     ...(configuration.routes.transfers ? { transfers: { stylesheet: stylesheet('transfers'), detailStylesheet: stylesheet('transfer-detail'), product: { stylesheet: stylesheet('transfer-product') },
       ...(configuration.routes.transferProductFullPage ? { productFullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: createProductFullPageHttpReader(http, ['prices', 'barcodes', 'stock']) } } : {}),
       ...(configuration.routes.transferInitialSizeGroupId ? { initialSizeGroup: { id: configuration.routes.transferInitialSizeGroupId, reader: createDictionaryHttpReader(http) } } : {}),

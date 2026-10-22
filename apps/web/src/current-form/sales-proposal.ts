@@ -1,3 +1,4 @@
+import type { SalesDraftDto } from '../sales/commands/contracts.ts';
 import type { CurrentFormPage, CurrentFormProduct, CurrentFormSku, CurrentSalesReferenceItem, CurrentSalesReferenceQuery } from '../../../../packages/application/src/current-form-ports.ts';
 import { businessDate, entityId, minorAmount, quantity } from '../../../../packages/domain/src/values.ts';
 import { allocateSalesDiscount, discountUnitPrice } from '../../../../packages/domain/src/sales-money.ts';
@@ -13,6 +14,7 @@ export type SalesProposalPicker = CurrentSalesReferenceQuery['kind'] | 'product'
 export interface SalesProposalLine {
   readonly key: string;
   readonly sku: CurrentFormSku; readonly product: CurrentFormProduct; readonly quantity: string; readonly dealPrice: string;
+  readonly sourceSnapshot?: SalesDraftDto['lines'][number]['snapshot'];
   readonly pricingRule: 'UNIT_PRICE' | 'DISCOUNT'; readonly discount: string; readonly isGift: boolean; readonly zeroConfirmed: boolean;
 }
 export interface SalesSpecChoice { readonly id: string; readonly name: string }
@@ -83,6 +85,8 @@ export function salesProposalMoney(draft: SalesProposal): { readonly grossMinor:
  * minimum-price authority, approval eligibility, inventory effects or commands. */
 export class SalesProposalSession {
   readonly #scope: ReadScope; readonly #reader: SalesProposalReader; readonly #onAccessFailure: ((error: HttpQueryError) => void) | undefined; readonly #listeners = new Set<() => void>();
+  #seeded = false;
+  #savedWarehouse: { readonly hallId: string; readonly warehouseId: string } | null = null;
   #request: AbortController | null = null; #sequence = 0; #nextSettlement = 0; #nextLine = 0; #settlementTarget: string | null = null; #revision = 0; #entryTarget: 'IN' | 'OUT' | null = null; #inlineSettlement = false;
   #state: SalesProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, totals: null, picker: null, lineEdit: null, entries: emptyEntries() });
   constructor(scope: ReadScope, reader: SalesProposalReader, onAccessFailure?: (error: HttpQueryError) => void) { this.#scope = scope; this.#reader = reader; this.#onAccessFailure = onAccessFailure; scope.signal.addEventListener('abort', this.dispose, { once: true }); if (!scope.active) this.dispose(); }
@@ -91,6 +95,24 @@ export class SalesProposalSession {
   matchesIdentity(scope: ReadScope): boolean {
     const owner = this.#scope.identity, target = scope.identity;
     return !this.#state.disposed && this.#scope.active && scope.active && owner.accountId === target.accountId && owner.sessionRevision === target.sessionRevision && owner.permissionRevision === target.permissionRevision;
+  }
+  /** Cold session initialization from a validated native saved document plus
+   * actual current SKU reads. Local presentation only; never a native draft,
+   * permission, ID allocation or preparation proof. Raw invalid input survives. */
+  initializeFromSaved(value: SalesProposal, dirty = false): boolean {
+    if (this.#seeded || this.#state.disposed || this.#state.dirty || this.#state.draft.lines.length || this.#state.picker) return false;
+    let draft: SalesProposal;
+    try {
+      draft = structuredClone(value);
+      if (!['SALE', 'RETURN', 'EXCHANGE'].includes(draft.businessType) || !Array.isArray(draft.lines) || !draft.lines.length || draft.lines.length > 200 || new Set(draft.lines.map(line => line.key)).size !== draft.lines.length || !Array.isArray(draft.settlements) || draft.settlements.length > 3 || new Set(draft.settlements.map(row => row.key)).size !== draft.settlements.length) return false;
+      if (typeof draft.businessDate !== 'string' || typeof draft.note !== 'string' || typeof draft.orderDiscount !== 'string' || draft.lines.some(line => !line.key || line.sku.productId !== line.product.id || typeof line.quantity !== 'string' || typeof line.dealPrice !== 'string')) return false;
+    } catch { return false; }
+    this.#seeded = true; this.#savedWarehouse = draft.hall && draft.warehouse ? { hallId: draft.hall.id, warehouseId: draft.warehouse.id } : null; this.#revision++;
+    this.#publish({ draft, dirty, entries: emptyEntries(), lineEdit: null, errors: [], notice: null, totals: null }); return true;
+  }
+  markUnchanged(reference: SalesProposal): boolean {
+    if (!this.#seeded || this.#state.disposed || this.#state.draft !== reference || this.#state.lineEdit || Object.values(this.#state.entries).some(entry => entry.product || entry.query.trim())) return false;
+    this.#publish({ dirty: false, notice: null }); return true;
   }
   #publish(patch: Partial<SalesProposalSnapshot>): void { this.#state = freeze({ ...this.#state, ...patch }); for (const listener of [...this.#listeners]) { try { listener(); } catch { /* continue invalidation */ } } }
   #cancelRead(): void { this.#sequence++; this.#request?.abort(); this.#request = null; }
@@ -145,7 +167,7 @@ export class SalesProposalSession {
     const edit = this.#state.lineEdit, draft = this.#state.draft;
     if (this.#state.disposed || this.#state.picker || !edit?.sku || edit.sku.productId !== edit.product.id) return false;
     if (draft.lines.find(row => row.key === edit.key) !== edit.original) { this.#publish({ notice: '原行已变化，请取消改选后重新选择。' }); return false; }
-    const changed = this.#edit({ ...draft, lines: draft.lines.map(row => row.key === edit.key ? { ...row, product: edit.product, sku: edit.sku! } : row) });
+    const changed = this.#edit({ ...draft, lines: draft.lines.map(row => { if (row.key !== edit.key) return row; const { sourceSnapshot, ...retained } = row; const sameStoredSku = row.sku.id === edit.sku!.id && !!sourceSnapshot; const { category: _currentCategory, ...currentProduct } = edit.product; const product = sameStoredSku ? { ...currentProduct, retailPrice: row.product.retailPrice, ...(row.product.category ? { category: row.product.category } : {}) } : edit.product; return { ...retained, ...(sameStoredSku ? { sourceSnapshot: sourceSnapshot! } : {}), product, sku: edit.sku! }; }) });
     if (changed) this.#publish({ lineEdit: null });
     return changed;
   }
@@ -344,7 +366,7 @@ export class SalesProposalSession {
     const draft = this.#state.draft, errors: string[] = [], gross: bigint[] = [];
     try { businessDate(draft.businessDate); } catch { errors.push('请输入有效单据日期。'); }
     if (!draft.hall || !draft.customer || !draft.warehouse) errors.push('请选择营业厅、客户和仓库。');
-    if (draft.warehouse && draft.warehouse.hallId !== draft.hall?.id) errors.push('仓库必须属于所选营业厅。');
+    if (draft.warehouse && draft.warehouse.hallId !== draft.hall?.id && !(this.#savedWarehouse?.hallId === draft.hall?.id && this.#savedWarehouse?.warehouseId === draft.warehouse.id)) errors.push('仓库必须属于所选营业厅。');
     if (draft.note.length > 10000) errors.push('备注不能超过 10000 字符。');
     if (!draft.lines.length) errors.push('请至少添加一个实际规格。');
     for (const row of draft.lines) {
@@ -379,5 +401,5 @@ export class SalesProposalSession {
     this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); return true;
   }
   cancel(discardConfirmed = false): boolean { if (!this.reset(discardConfirmed)) return false; this.dispose(); return true; }
-  readonly dispose = (): void => { if (this.#state.disposed) return; this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#scope.signal.removeEventListener('abort', this.dispose); this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); this.#listeners.clear(); };
+  readonly dispose = (): void => { if (this.#state.disposed) return; this.#savedWarehouse = null; this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#scope.signal.removeEventListener('abort', this.dispose); this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); this.#listeners.clear(); };
 }

@@ -45,7 +45,7 @@ function StaffSettingsModal(props: { readonly title: string; readonly controller
   if (state.disposed) return null;
   const blocked = controller.intent !== 'edit' && write.phase === 'rejected';
   const acknowledge = () => { if (controller.requestClose()) props.close(); };
-  return <Modal className={`bs-modal demo-settings-modal iw-arco-modal iw-arco-controls${controller.intent === 'edit' ? ' bs-modal-staff' : ''}`}
+  return <Modal className={`demo-ui bs-modal demo-settings-modal iw-arco-modal iw-arco-controls${controller.intent === 'edit' ? ' bs-modal-staff' : ''}`}
     visible title={blocked ? '无法完成操作' : props.title} maskClosable={false} autoFocus={false} focusLock hideCancel={blocked} okText={blocked ? '知道了' : '确定'} cancelText={write.phase === 'committed' ? '关闭' : '取消'}
     okButtonProps={{ disabled: !blocked && (!controller.writesEnabled || controller.locked || Boolean(controller.intent === 'edit' && controller.record && !state.dirty)), loading: write.phase === 'submitting' }}
     onOk={blocked ? acknowledge : props.submit} onCancel={() => { if (controller.requestClose()) props.close(); }}>

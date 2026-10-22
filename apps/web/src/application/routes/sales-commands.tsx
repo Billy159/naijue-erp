@@ -5,17 +5,19 @@ import type { ApplicationRouteProps, RoutePreparation, SalesSession } from '../c
 import { createSalesCommandHttpClient } from '../../sales/commands/http-client.ts';
 import { SalesEditorSession } from '../../sales/commands/editor-session.ts';
 import { SalesCommandPageHost } from '../../sales/commands/page-host.tsx';
+import { createCurrentFormHttpReader } from '../../current-form/http-reader.ts';
 
 /** Separately imported opt-in leaf. Read-only routes do not import write clients
  * or session owners merely to render a sales list. */
 export function prepareSalesCommandSession(input: RoutePreparation, onAccessFailure: () => void): SalesSession {
   const configuration = input.configuration.sales, commands = configuration?.commands;
   if (!commands || !configuration.detailStylesheet || typeof commands.newRequestKey !== 'function'
-    || commands.preparation && (typeof commands.preparation.prepareCreate !== 'function' || typeof commands.preparation.prepareEdit !== 'function') || commands.manualCreate !== undefined && commands.manualCreate !== true) throw new TypeError('Explicit sales command capability is required.');
+    || commands.preparation && (typeof commands.preparation.prepareCreate !== 'function' || typeof commands.preparation.prepareEdit !== 'function') || commands.existingPreparation && typeof commands.existingPreparation.prepareExisting !== 'function' || commands.manualCreate !== undefined && commands.manualCreate !== true) throw new TypeError('Explicit sales command capability is required.');
   const reader = createSalesHttpReader(input.http);
   const workspace = new SalesEditorSession({ scope: input.scope, principal: input.principal, reader,
     client: createSalesCommandHttpClient(input.http), newRequestKey: commands.newRequestKey, onAccessFailure,
-    ...(commands.preparation ? { preparation: commands.preparation } : {}) });
+    ...(commands.preparation ? { preparation: commands.preparation } : {}),
+    ...(commands.existingPreparation ? { existingPreparation: commands.existingPreparation, existingReader: createCurrentFormHttpReader(input.http) } : {}) });
   let currentNewDocument: SalesNewDocumentSession | null = null;
   const manualCreate = commands.manualCreate ? Object.freeze({
     canLeave: () => workspace.getSnapshot().command.editor ? workspace.canLeave() : !currentNewDocument || currentNewDocument.getSnapshot().disposed || currentNewDocument.getSnapshot().nativeHandoff || (!currentNewDocument.getSnapshot().preparing && !currentNewDocument.proposal.getSnapshot().dirty),

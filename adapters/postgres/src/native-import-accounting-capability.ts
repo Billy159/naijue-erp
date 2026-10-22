@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { isAbsolute } from "node:path";
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
-import type { ProductSeasonArrayCapability } from "./product-query-reader.ts";
+import type { CatalogueRetainedDeleteCapability, ProductSeasonArrayCapability } from "./product-query-reader.ts";
 import type { HistoricalCustomerExclusionCapability } from "./party-read-reader.ts";
 import type { ProductMediaWriteCapability } from "./product-maintenance-store.ts";
 import { assertMaintenanceDriverPool, maintenanceContextClient, assertMaintenanceProductImagesPrepared } from "./maintenance-command-unit-of-work.ts";
@@ -448,6 +448,7 @@ function dataMethod(target: object, key: string): (...args: unknown[]) => unknow
 export interface NativeRuntime26Issuer {
   readonly pool: PgSalesPool;
   readonly runtime26: NativeRuntime26Capability;
+  readonly catalogueRetainedDelete: CatalogueRetainedDeleteCapability;
   readonly productSeasonArray: ProductSeasonArrayCapability;
   readonly historicalCustomerExclusion: HistoricalCustomerExclusionCapability;
   readonly productMediaWrite: ProductMediaWriteCapability;
@@ -543,6 +544,10 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     if (value !== pool) assertMaintenanceDriverPool(value, pool);
   }
   const runtime26: NativeRuntime26Capability = Object.freeze({ profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", assertReady: verify });
+  const catalogueRetainedDelete: CatalogueRetainedDeleteCapability = Object.freeze({ profile: "catalogue-retained-delete-v22", assertVerified(value: Parameters<CatalogueRetainedDeleteCapability["assertVerified"]>[0]): void {
+    filesReady();
+    if (value !== pool || !allowed.has("PRODUCT_SEASONS_READ")) throw runtime26Error("Original managed catalogue read pool and reviewed purpose required");
+  } });
   const productSeasonArray: ProductSeasonArrayCapability = Object.freeze({ profile: "product-season-array-v1", assertVerified(value: object): void {
     verifiedTarget(value, value === pool ? "PRODUCT_SEASONS_READ" : "PRODUCT_MAINTENANCE");
   } });
@@ -564,7 +569,7 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
   issuedPools.add(originalPool);
   try {
     const first = await pool.connect(); first.release();
-    return Object.freeze({ pool, runtime26, productSeasonArray, historicalCustomerExclusion, productMediaWrite, imageColorSwap });
+    return Object.freeze({ pool, runtime26, catalogueRetainedDelete, productSeasonArray, historicalCustomerExclusion, productMediaWrite, imageColorSwap });
   } catch (error) { revoked = true; throw error; }
 }
 function exactVersions26(value: unknown): boolean {

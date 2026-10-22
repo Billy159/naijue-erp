@@ -17,7 +17,7 @@ export function PaymentSettingsModal(props: { readonly title: string; readonly c
   const { controller } = props, state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot), write = state.write;
   if (state.disposed) return null;
   const pending = write.phase === 'submitting' || write.phase === 'recovering';
-  return <Modal className="bs-modal demo-settings-modal iw-arco-modal iw-arco-controls"
+  return <Modal className="demo-ui bs-modal demo-settings-modal iw-arco-modal iw-arco-controls"
     visible title={props.title} maskClosable={false} autoFocus={false} focusLock okText="确定" cancelText={write.phase === 'committed' ? '关闭' : '取消'}
     okButtonProps={{ disabled: !controller.writesEnabled || controller.locked || Boolean(controller.record && !state.dirty), loading: write.phase === 'submitting' }}
     onOk={() => { void controller.submit(); }} onCancel={() => { if (controller.requestClose()) props.close(); }}>

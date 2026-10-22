@@ -26,7 +26,7 @@ export function SettingsPreparationModal<T extends object>(props: {
 }) {
   const state = useSyncExternalStore(props.controller.subscribe, props.controller.getSnapshot, props.controller.getSnapshot);
   if (state.disposed) return null;
-  return <Modal className={`bs-modal ${props.demoStore ? 'demo-store-modal' : 'store-settings-modal settings-preparation-modal'} iw-arco-modal iw-arco-controls${props.staff ? ' bs-modal-staff' : ''}`}
+  return <Modal className={`demo-ui bs-modal ${props.demoStore ? 'demo-store-modal' : 'store-settings-modal settings-preparation-modal'} iw-arco-modal iw-arco-controls${props.staff ? ' bs-modal-staff' : ''}`}
     visible title={props.title} maskClosable={false} autoFocus={false} focusLock
     okText="确定" cancelText="取消" okButtonProps={{ disabled: true }}
     onCancel={() => { if (props.controller.requestClose()) props.close(); }}>
@@ -145,7 +145,7 @@ export function StoreCommandForm(props: StoreMaintenanceFormProps & { readonly c
   const { controller } = props, state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot), write = state.write;
   if (state.disposed || !props.scope.active) return null;
   const pending = write.phase === 'submitting' || write.phase === 'recovering';
-  return <Modal className="bs-modal demo-store-modal iw-arco-modal iw-arco-controls"
+  return <Modal className="demo-ui bs-modal demo-store-modal iw-arco-modal iw-arco-controls"
     visible title={`${controller.record ? '编辑' : '新增'}${props.kind === 'stores' ? '营业厅' : '仓库'}`} maskClosable={false} autoFocus={false} focusLock okText="确定" cancelText={write.phase === 'committed' ? '关闭' : '取消'}
     okButtonProps={{ disabled: !controller.writesEnabled || controller.locked || Boolean(controller.record && !state.dirty), loading: write.phase === 'submitting' }}
     onOk={() => { void controller.submit(); }} onCancel={() => { if (controller.requestClose()) props.close(); }}>

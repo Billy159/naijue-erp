@@ -21,7 +21,7 @@ export function AccountSettingsForm(props: AccountSettingsProps & { readonly con
   if (!draft || !props.scope.active) return null;
   const full = controller.intent === 'CREATE' || controller.intent === 'EDIT', secret = controller.intent === 'CREATE' || controller.intent === 'RESET_PASSWORD';
   const role = props.roles.find(item => item.value === draft.staff?.role)?.label ?? '未提供';
-  return <Modal className="bs-modal demo-settings-modal iw-arco-modal iw-arco-controls" visible title={titles[controller.intent]} maskClosable={false} autoFocus={false} focusLock
+  return <Modal className="demo-ui bs-modal demo-settings-modal iw-arco-modal iw-arco-controls" visible title={titles[controller.intent]} maskClosable={false} autoFocus={false} focusLock
     okText="确定" cancelText={write.phase === 'committed' ? '关闭' : '取消'}
     okButtonProps={{ disabled: !controller.writesEnabled || controller.locked || controller.intent === 'EDIT' && !state.dirty, loading: write.phase === 'checking' || write.phase === 'submitting' }}
     onOk={() => { const transient = password; setPassword(''); void controller.submit(transient); }} onCancel={() => { if (controller.requestClose()) props.close(); }}>

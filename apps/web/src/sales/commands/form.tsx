@@ -15,7 +15,20 @@ import { SalesHistoryAction, type SalesHistoryCapability } from '../history-view
 
 /** Bounded full-page editor using the frozen header/sections/columns. Current
  * identity/product/account pickers are explicitly unavailable in this slice. */
-export function SalesCommandForm({ session, close, history, scope, product }: { readonly scope?: ReadScope; readonly product?: SalesProductCapability; readonly session: SalesEditorSession; readonly close: () => void; readonly history?: SalesHistoryCapability }) {
+export interface SalesCommandFormProps { readonly scope?: ReadScope; readonly product?: SalesProductCapability; readonly session: SalesEditorSession; readonly close: () => void; readonly history?: SalesHistoryCapability }
+export function SalesCommandForm(props: SalesCommandFormProps) {
+  const state = useSyncExternalStore(props.session.subscribe, props.session.getSnapshot, props.session.getSnapshot);
+  const [bridge, setBridge] = useState<{ readonly owner: SalesEditorSession; readonly View: typeof import('../../current-form/sales-existing-document-form.tsx').SalesExistingDocumentForm } | null>(null);
+  const [failedOwner, setFailedOwner] = useState<SalesEditorSession | null>(null);
+  const enabled = props.session.canUseExistingProposal;
+  useEffect(() => { if (!enabled) return; let live = true; void import('../../current-form/sales-existing-document-form.tsx').then(module => { if (live) setBridge({ owner: props.session, View: module.SalesExistingDocumentForm }); }, () => { if (live) setFailedOwner(props.session); }); return () => { live = false; }; }, [props.session, enabled]);
+  if (enabled && bridge?.owner === props.session) return <bridge.View {...props} />;
+  // Keep raw input inactive until the saved proposal has captured it. A user
+  // cannot edit a fallback concurrently with the cold SKU relation read.
+  if (enabled && props.session.editable && failedOwner !== props.session) return <p role="status">正在准备完整旧单编辑页…</p>;
+  return <SalesNativeCommandForm {...props} key={state.command.editor?.salesId} />;
+}
+export function SalesNativeCommandForm({ session, close, history, scope, product }: SalesCommandFormProps) {
   const state = useSyncExternalStore(session.subscribe, session.getSnapshot, session.getSnapshot);
   const heading = useRef<HTMLHeadingElement>(null);
   const [zeroLine, setZeroLine] = useState<string | null>(null);

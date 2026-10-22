@@ -4,6 +4,8 @@ import { assertHistoryPublicationSchema19 } from '../../../packages/application/
 import { COMPLETE_SCOPE_DECISION } from '../../../packages/application/src/inventory-cutoff-import.ts';
 import { requireDomain } from '../../../packages/domain/src/errors.ts';
 import { assertNativeImportAccountingSchema19Guards } from './native-import-accounting-capability.ts';
+import { checkedNativeRuntime26Capability } from '../../../packages/application/src/native-import-schema-contract.ts';
+import type { NativeRuntime26Capability } from '../../../packages/application/src/native-import-schema-contract.ts';
 import type { PgSalesClient, PgSalesPool, PgSalesResult } from './sales-unit-of-work.ts';
 
 type Query = (sql: string, values?: unknown[]) => Promise<PgSalesResult>;
@@ -74,12 +76,24 @@ function page<T>(n: number, size: ImportedHistoryPageSize, total: string, items:
 
 /** Inert standalone reader. It never migrates, writes, grants access or invokes
  * the STAGE closure function (which takes write/table locks). Exact19
- * publication/runtime capability is mandatory; frozen18 remains closed. Future
- * profiles never enter through a maximum-version comparison.
+ * publication/runtime capability remains the default. Explicit26 requires the
+ * independently issued original-client HISTORY_READ capability on every read;
+ * frozen18 and future profiles never enter through a maximum-version comparison.
  * Host bounded pool/timeouts remain responsible for in-flight query cancellation. */
 export class PostgresImportedHistoryQueryReader implements ImportedHistoryReader {
   private readonly pool: PgSalesPool;
-  constructor(pool: PgSalesPool) { if (typeof pool?.connect !== 'function') throw new TypeError('Explicit historical read pool required'); this.pool = pool; }
+  private readonly runtime26: NativeRuntime26Capability | undefined;
+  constructor(pool: PgSalesPool, options?: { readonly runtime26: NativeRuntime26Capability }) {
+    if (typeof pool?.connect !== 'function') throw new TypeError('Explicit historical read pool required');
+    if (options !== undefined) {
+      const descriptor = options && Object.getOwnPropertyDescriptor(options, 'runtime26');
+      if (!options || Object.getPrototypeOf(options) !== Object.prototype || Reflect.ownKeys(options).length !== 1
+        || !descriptor?.enumerable || !('value' in descriptor) || descriptor.value === undefined)
+        throw new TypeError('Explicit historical exact26 runtime options required');
+      this.runtime26 = checkedNativeRuntime26Capability(descriptor.value);
+    }
+    this.pool = pool;
+  }
   private validate(read: ImportedHistoryScopedRead, operation: 'list' | 'detail') {
     const actor = checkedImportedHistoryActor(read.actor), intent = checkedImportedHistoryIntent(read.intent), grant = checkedImportedHistoryGrant(read.grant, intent, actor);
     activeImportedHistoryRead(read.signal); requireDomain(intent.operation === operation, 'IMPORTED_HISTORY_FORBIDDEN', 'Mismatched historical operation'); return { intent, grant };
@@ -89,12 +103,19 @@ export class PostgresImportedHistoryQueryReader implements ImportedHistoryReader
     let began = false, committing = false, committed = false, discard: Error | undefined;
     const query: Query = (sql, values = []) => { activeImportedHistoryRead(signal); return client.query(sql, values); };
     try {
+      if (this.runtime26) await this.runtime26.assertReady(client, 'HISTORY_READ');
       await query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'); began = true;
       const versions = (await query('/* imported-history:schema */ SELECT array_agg(version ORDER BY version) versions FROM naijue_erp.schema_migration')).rows;
       requireDomain(versions.length === 1, 'HISTORY_CLOSURE_SCHEMA_NOT_READY', 'One finite historical schema required');
-      assertHistoryPublicationSchema19(versions[0]!.versions);
-      const guardedClient: PgSalesClient = { query, release() { throw new Error('Capability cannot release the read client'); } };
-      await assertNativeImportAccountingSchema19Guards(guardedClient);
+      if (this.runtime26) {
+        const profile: unknown = versions[0]!.versions;
+        requireDomain(Array.isArray(profile) && profile.length === 26 && profile.every((n, i) => n === i + 1),
+          'HISTORY_CLOSURE_SCHEMA_NOT_READY', 'Exact26 historical schema required');
+      } else {
+        assertHistoryPublicationSchema19(versions[0]!.versions);
+        const guardedClient: PgSalesClient = { query, release() { throw new Error('Capability cannot release the read client'); } };
+        await assertNativeImportAccountingSchema19Guards(guardedClient);
+      }
       const result = await work(query); activeImportedHistoryRead(signal);
       committing = true; await query('COMMIT'); committed = true; activeImportedHistoryRead(signal); return result;
     } catch (error) {

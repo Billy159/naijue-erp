@@ -8,6 +8,7 @@ import type { ImportedHistoryKind, ImportedHistoryReadIntent, ImportedHistorySco
 import { PostgresImportedHistoryQueryReader } from '../adapters/postgres/src/imported-history-query-reader.ts';
 import { NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from '../adapters/postgres/src/native-import-accounting-capability.ts';
 import type { PgSalesClient, PgSalesPool } from '../adapters/postgres/src/sales-unit-of-work.ts';
+import type { NativeRuntime26Capability } from '../packages/application/src/native-import-schema-contract.ts';
 import { createImportedHistoryQueryHttpPlugin } from '../apps/api/src/imported-history-query-http.ts';
 import { historyActor as actor, historyId as id, historyListQuery as listQuery, historyDetailQuery as detailQuery, historyGrant as grant, historyHeader as header, historyHeaderRow as headerRow } from './support/imported-history-query-fixtures.ts';
 const signal = () => new AbortController().signal;
@@ -71,8 +72,65 @@ function protocol(options: { failure?: string; final?: boolean; kind?: ImportedH
     options.afterQuery?.(tag); return { rows, rowCount: rows.length };
   }, release(error) { releases.push(error); } };
   const pool: PgSalesPool = { async connect() { connects++; return client; } };
-  return { pool, calls, releases, connects: () => connects };
+  return { pool, client, calls, releases, connects: () => connects };
 }
+test('HISTORY26: each sales and transfer list/detail proves the original client before SQL and preserves publication filtering', async () => {
+  for (const kind of ['sales', 'transfers'] as const) {
+    const p = protocol({ schema: Array.from({ length: 26 }, (_, i) => i + 1), final: true, kind }); let calls = 0, previousQueries = 0;
+    const runtime26: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(client, purpose) {
+      assert.equal(client, p.client); assert.equal(purpose, 'HISTORY_READ'); assert.equal(p.calls.length, previousQueries); calls++;
+    } };
+    const reader = new PostgresImportedHistoryQueryReader(p.pool, { runtime26 });
+    assert.deepEqual((await reader.readList(scoped(intent(kind)))).documents.items, [header(kind)]); previousQueries = p.calls.length;
+    assert.deepEqual((await reader.readDetail(scoped(intent(kind, true)))).document, header(kind));
+    assert.equal(calls, 2); assert.equal(p.connects(), 2); assert.deepEqual(p.releases, [undefined, undefined]);
+    for (const q of p.calls.filter(q => ['imported-history:list-count', 'imported-history:list-page', 'imported-history:detail'].includes(q.tag))) {
+      assert.match(q.sql, /b\.status='IMPORTED'/); assert.match(q.sql, /history_validation_passed IS TRUE/);
+      assert.match(q.sql, /import_record_accounting_claim/); assert.match(q.sql, /operation_receipt/); assert.match(q.sql, /audit_change/);
+    }
+    assert.equal(p.calls.filter(q => q.sql === 'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY').length, 2);
+    assert.ok(!p.calls.some(q => q.sql === NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY || /FOR UPDATE|LOCK TABLE|INSERT INTO|UPDATE naijue|DELETE FROM/.test(q.sql)));
+  }
+});
+test('HISTORY26: explicit options capture capability and refuse absent, accessor and boolean or denied authority before SQL', async () => {
+  const p = protocol({ schema: Array.from({ length: 26 }, (_, i) => i + 1) }); let gets = 0;
+  const runtime26 = { profile: 'EXACT26' as const, contract: 'NATIVE_RUNTIME26_V1' as const, async assertReady(_client: object, _purpose: Parameters<NativeRuntime26Capability['assertReady']>[1]) {} };
+  const accessor = Object.defineProperty({}, 'runtime26', { enumerable: true, get() { gets++; return runtime26; } });
+  for (const options of [null, {}, { runtime26: undefined }, { runtime26, extra: true }, accessor]) assert.throws(() => new PostgresImportedHistoryQueryReader(p.pool, options as never), TypeError);
+  assert.equal(gets, 0); assert.equal(p.connects(), 0);
+  for (const verify of [async () => true, async () => { throw Error('SYNTHETIC_WRONG_TARGET'); }]) {
+    const q = protocol(); const cap = { ...runtime26, assertReady: verify } as unknown as NativeRuntime26Capability;
+    await assert.rejects(new PostgresImportedHistoryQueryReader(q.pool, { runtime26: cap }).readList(scoped()));
+    assert.equal(q.calls.length, 0); assert.equal(q.connects(), 1); assert.equal(q.releases[0] instanceof Error, true);
+  }
+  let proofs = 0; runtime26.assertReady = async client => { assert.equal(client, p.client); proofs++; };
+  const options = { runtime26 }, reader = new PostgresImportedHistoryQueryReader(p.pool, options);
+  options.runtime26 = { ...runtime26, async assertReady() { throw Error('LATE_OPTIONS_MUTATION'); } };
+  runtime26.assertReady = async () => { throw Error('LATE_CAPABILITY_MUTATION'); };
+  await reader.readList(scoped()); assert.equal(proofs, 1);
+});
+test('HISTORY26: exact prefix is required without upgrading the default19 reader or falling back to it', async () => {
+  for (const schema of [Array.from({ length: 19 }, (_, i) => i + 1), Array.from({ length: 25 }, (_, i) => i + 1), Array.from({ length: 27 }, (_, i) => i + 1), [...Array.from({ length: 25 }, (_, i) => i + 1), 27]]) {
+    const p = protocol({ schema }); let proofs = 0;
+    const runtime26: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(client, purpose) { assert.equal(client, p.client); assert.equal(purpose, 'HISTORY_READ'); proofs++; } };
+    await assert.rejects(new PostgresImportedHistoryQueryReader(p.pool, { runtime26 }).readList(scoped()), { code: 'HISTORY_CLOSURE_SCHEMA_NOT_READY' });
+    assert.equal(proofs, 1); assert.ok(!p.calls.some(q => q.tag.startsWith('imported-history:list'))); assert.equal(p.calls.at(-1)!.tag, 'ROLLBACK');
+    assert.ok(!p.calls.some(q => q.sql === NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY));
+  }
+  const legacy = protocol({ schema: Array.from({ length: 26 }, (_, i) => i + 1) });
+  await assert.rejects(new PostgresImportedHistoryQueryReader(legacy.pool).readList(scoped()));
+  assert.ok(!legacy.calls.some(q => q.tag.startsWith('imported-history:list')));
+});
+test('HISTORY26: denied or cancelled preflight and unknown COMMIT preserve the original read outcome boundaries', async () => {
+  const p = protocol({ schema: Array.from({ length: 26 }, (_, i) => i + 1), failure: 'COMMIT' });
+  const runtime26: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady() {} };
+  await assert.rejects(new PostgresImportedHistoryQueryReader(p.pool, { runtime26 }).readList(scoped()), /SYNTHETIC:COMMIT/);
+  assert.equal(p.connects(), 1); assert.equal(p.calls.filter(q => q.tag === 'ROLLBACK').length, 0); assert.equal(p.releases[0] instanceof Error, true);
+  const q = protocol(), controller = new AbortController();
+  const cancel = { ...runtime26, async assertReady() { controller.abort(); } };
+  await assert.rejects(new PostgresImportedHistoryQueryReader(q.pool, { runtime26: cancel }).readDetail({ ...scoped(intent('sales', true)), signal: controller.signal }), { code: 'IMPORTED_HISTORY_READ_ABORTED' });
+  assert.equal(q.calls.length, 0); assert.equal(q.releases[0] instanceof Error, true);
+});
 test('protocol: one RR READ ONLY snapshot; COUNT/page use same FINAL closure/receipt/audit scope and parameterized hall filter', async () => {
   const p = protocol({ final: true }), read = scoped();
   const constrained = { ...read, intent: { kind: 'sales' as const, operation: 'list' as const, parameters: { ...listQuery(), number: "'; DROP TABLE x;--" } }, grant: { ...read.grant, scope: { kind: 'HALL_IDS' as const, hallIds: [id(2)] } } };
