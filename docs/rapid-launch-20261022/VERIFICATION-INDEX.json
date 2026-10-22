@@ -7506,10 +7506,34 @@
       "notTested": [
         "Actual real source import and production business"
       ]
+    },
+    {
+      "id": "C-ACTUAL-MAINTENANCE-JOB30",
+      "scope": "Actual isolated synthetic maintenance8businessCOMMIT/3negativeROLLBACK/3fixtureCOMMIT; same D1 fixed runner, realpg driver",
+      "result": "PASS_ACTUAL_SYNTHETIC_MAINTENANCE_COMMIT_MATRIX_ONLY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-maintenance-matrix-20261022-30/release-receipts/c03-maintenance-matrix-20261022-30/engine-result.json",
+      "evidenceSha256": "ecc5dc30bc9ce32d5d634ef4958334fa8f6f5ecc360defd7fdbf1b8b34b979e6",
+      "readback": {
+        "staffVersion": 5,
+        "accountVersion": 7,
+        "authVersion": 7,
+        "receiptCount": "8",
+        "auditCount": "8",
+        "activeSessions": "0",
+        "sourceRows": "0"
+      },
+      "notTested": [
+        "published last-usable-admin guard/race",
+        "real source bootstrap49",
+        "product/media/admission",
+        "runtime issuer or public routes",
+        "Actual source import/publication",
+        "Production target unchanged"
+      ]
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-22T17:34:34.607644+00:00",
+  "updatedAt": "2026-10-22T17:42:50.909973+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",

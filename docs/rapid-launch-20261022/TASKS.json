@@ -8,26 +8,28 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "a8546f3f79fc64581575f4d64f590d3752dde794",
+    "headObserved": "5180ac0e55ee713b231b3664719b7a52b7d92f8c",
     "workingTreeNotFullyCommitted": true,
     "remoteHeadVerified": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
     "remoteReadbackMethod": "Exact GitHub API ref; latest source checkpoint is private draft release bundle downloaded/verified, not normal branch push",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
-      "status": "GITHUB_ASSET_DOWNLOADED_HASH_AND_BUNDLE_VERIFIED",
-      "atUtc": "2026-10-22T11:46:35.320693+00:00",
-      "sourceCommit": "a9079af66a92b62223ec53ba62173198e109b133",
+      "type": "PRIVATE_DRAFT_RECOVERABLE_GIT_CHECKPOINT_NOT_BRANCH_PUSH_OR_PRODUCTION",
+      "sourceAndHandoffCommit": "9be8063393ac44a6a990fd3d8f18c60d2227c51f",
       "prerequisiteCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+      "atUtc": "2026-10-22T17:38:24.391673+00:00",
       "bundle": {
-        "file": "naijue-erp-source-a9079af.bundle",
-        "bytes": 696637,
-        "sha256": "5d48d559fc9cdabccc09fcdaf3ec4f7ce7a7561cc1a399fa6ce929a3529a13d9"
+        "name": "naijue-erp-source-9be8063.bundle",
+        "bytes": 825891,
+        "sha256": "f26d5f834b8b2d00961829fd004eb31a0a3e3203039b4f03cde0f784bb7aca6b"
       },
-      "draftReleaseTag": "codex-checkpoint-20261022-a7e817b",
-      "draftReleaseUrl": "https://github.com/Billy159/naijue-erp/releases/tag/untagged-ba75756655ef31b66d5d",
-      "remoteBranchReadback": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
-      "branchPushComplete": false,
-      "actualSshAttempt": "Strict official-key verified ssh443 existing agent failed publickey; no key/credential/verification changes"
+      "scope": "Source round1..36, exact schema21..26 source, current model directive, queue/QA index140/handoff; independent source and engine scopes retained",
+      "excluded": "Private raw business data, runtime configuration/credentials, uncommitted owner WIP",
+      "localVerification": "git bundle verify PASS; remote download/readback next",
+      "status": "UPLOADED_DOWNLOADED_HASH_AND_GIT_BUNDLE_VERIFIED",
+      "normalBranchAdvanced": false,
+      "remoteBranchStill": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+      "draftTag": "codex-checkpoint-20261022-a7e817b"
     }
   },
   "concurrency": {
@@ -922,7 +924,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T17:37:49.572414+00:00",
+  "updatedAt": "2026-10-22T17:42:50.909973+00:00",
   "stage": "ACTIVE_PHASED_LAUNCH_SOURCE_AND_ISOLATED_QA_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1383,7 +1385,7 @@
     "accountIdentityAdditional4": "D3_EXACT_PLAN_SOURCE_FACTS_READY_QB_QUEUED",
     "deploymentTools": "QB38_SOURCE_PROTOCOL_PASS_REAL_DEPLOY_NOT_RUN",
     "bootPersistence": "SOURCE_READY_FINAL_RELEASE_MANIFEST_AND_ACTUAL_BOOT_NOT_DONE",
-    "currentSourceCheckpoint": "a8546f3f79fc64581575f4d64f590d3752dde794",
+    "currentSourceCheckpoint": "5180ac0e55ee713b231b3664719b7a52b7d92f8c",
     "currentPreview": {
       "url": "http://127.0.0.1:57836/synthetic-unified.html",
       "commit": "21f2afa108e9252ad9829c78077b16d46b579d31",
@@ -1406,11 +1408,14 @@
       "qaDatabase": "erp_qa_rapid26_20261022_01",
       "installedVersions": "1..26",
       "actualPatchLevel": "26_v5",
-      "accounts": 0,
+      "accounts": 2,
       "sourceRows": 0,
       "status": "PASS_JOB23_V4_CATALOG_AND_JOB24_V5_HELPER; NOT_ACTUAL_MAINTENANCE_COMMIT_PASS",
-      "matrix": "jobs25/26/28 failed before matrix; job27 hostNode works; job29 existing admin readonly technical socket location + real Node pg readonly handshake submitted, collect sameID",
-      "productionTargetStill": "erp_rewrite_20261022_r1 exact1..19 unchanged"
+      "matrix": "PASS_ACTUAL_SYNTHETIC_MAINTENANCE_COMMIT_MATRIX_ONLY",
+      "productionTargetStill": "erp_rewrite_20261022_r1 exact1..19 unchanged",
+      "matrixEvidence": "operational-checkpoints/C03-ACTUAL-MAINTENANCE-MATRIX-JOB30.json",
+      "qaNotAnEmptyMainTarget": true,
+      "next": "QB v6source then C patch2functions+readback only; QAexisting2synthetic accounts not empty. Full MAIN must use independent authorized empty target."
     },
     "latestCandidatePins": [
       "B06-ACCOUNT-IDENTITY-49.json",
@@ -1723,7 +1728,9 @@
     "QB 275ac63 MAIN26 source6 and local real codec2",
     "QB new materialized-source offset index, no full source rescan",
     "QB f18666c exact3 full closure26 projection/v6 2function only",
-    "QB0e95cc2 private stage2 + genuine product source consumer2/actual2956 scope"
+    "QB0e95cc2 private stage2 + genuine product source consumer2/actual2956 scope",
+    "QB round37 catalogue26 exact3/new344metadata only",
+    "QB round38 cutoff26 callback exact2/finite43SQL only"
   ],
   "openFindingsCurrent": [
     {
@@ -1744,8 +1751,8 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-22T17:37:49.572414+00:00",
-    "sourceRound": 36,
+    "atUtc": "2026-10-22T17:42:50.909973+00:00",
+    "sourceRound": 38,
     "modelAllChats": "gpt-6.1-sol/xhigh",
     "fast": "Requested off, tool has no switch; actual UI state unverified",
     "fieldApprovalPending": false,

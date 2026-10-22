@@ -1,3 +1,5 @@
+当前更新 2026-10-22T17:42:50.909973+00:00：源码已到round38/5180ac0e55ee713b231b3664719b7a52b7d92f8c；GitHub最新可恢复附件9be8063（已下载验hash/verify，普通branch仍877）。job30实际维护矩阵PASS，QA现在2个合成账号、8审计/8回执、0activeSessions/source0；不能再当空MAIN目标。此前job25/26/28失败和job29只读握手均为历史接续证据，后文旧“矩阵待跑/QA空”不能覆盖此事实。下一仅v6两函数定向安装读回及真实49/full11factory/MAIN/issuer和相关批次验收。
+
 # 从这里接续
 
 当前快照 2026-10-22T17:34:34.607644+00:00。先读PROGRESS/TASKS/WRITE-OWNERSHIP/VERIFICATION-INDEX/API索引，本文件不恢复旧任务、不重做C00/旧sealed18/已验同范围。目标ACTIVE，全部适用范围上线前不能complete。
