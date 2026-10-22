@@ -191,3 +191,23 @@ test('design-token source policy still rejects token data and unregistered token
     await assert.rejects(validateRelease(f.options), error => error.code === 'NON_PRODUCTION_SOURCE');
   }
 });
+test('package dependency identity ignores key order but rejects missing extra and changed exact versions', async () => {
+  for (const scenario of ['reordered', 'missing', 'extra', 'version']) {
+    const f = await fixture('dependency-identity-' + scenario);
+    const pkg = JSON.parse(f.sourceData['package.json']), lock = JSON.parse(f.sourceData['package-lock.json']);
+    pkg.dependencies = { fastify: '5.12.5', pg: '8.23.1', react: '19.1.1', 'react-dom': '19.1.1', '@arco-design/web-react': '2.66.16' };
+    lock.packages[''].dependencies = { '@arco-design/web-react': '2.66.16', fastify: '5.12.5', pg: '8.23.1', react: '19.1.1', 'react-dom': '19.1.1' };
+    if (scenario === 'missing') delete lock.packages[''].dependencies.pg;
+    if (scenario === 'extra') lock.packages[''].dependencies.unexpected = '1.0.0';
+    if (scenario === 'version') lock.packages[''].dependencies.react = '19.1.0';
+    for (const [name, value] of [['package.json', pkg], ['package-lock.json', lock]]) {
+      const bytes = JSON.stringify(value); f.sourceData[name] = bytes; f.buildData[name] = bytes;
+      Object.assign(f.source.files.find(row => row.path === name), record(name, bytes));
+      Object.assign(f.build.files.find(row => row.path === name), record(name, bytes));
+      await put(f.sourceRoot, name, bytes);
+    }
+    await f.save();
+    if (scenario === 'reordered') assert.equal((await validateRelease(f.options)).manifest.buildId, 'tool-check-1');
+    else await assert.rejects(validateRelease(f.options), error => error.code === 'PACKAGE_LOCK_IDENTITY_MISMATCH');
+  }
+});

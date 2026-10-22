@@ -151,6 +151,12 @@ function scanPublicBytes(bytes, name) {
 }
 function dependencyName(specifier) { return specifier.startsWith('@') ? specifier.split('/').slice(0, 2).join('/') : specifier.split('/')[0]; }
 const nodeBuiltins = new Set(builtinModules.flatMap(name => [name, `node:${name}`]));
+function sameDependencyVersions(left, right) {
+  if (!left || !right || typeof left !== 'object' || typeof right !== 'object' || Array.isArray(left) || Array.isArray(right)) return false;
+  const keys = Object.keys(left);
+  return keys.length === Object.keys(right).length && keys.every(key => Object.hasOwn(right, key)
+    && typeof left[key] === 'string' && left[key] === right[key]);
+}
 
 /** Parse the generated entry's explicit HTML subset; never silently skip alternate resource-attribute syntax. */
 function htmlResources(html) {
@@ -309,7 +315,7 @@ export async function validateRelease({ sourceManifest, buildManifest, buildRoot
   try { packageJson = JSON.parse(sourceBytes.get('package.json')); lock = JSON.parse(sourceBytes.get('package-lock.json')); }
   catch { throw new ReleaseError('INVALID_RUNTIME_LOCK'); }
   requireRelease(packageJson.private === true && packageJson.type === 'module' && lock.lockfileVersion >= 3
-    && lock.packages?.[''] && JSON.stringify(lock.packages[''].dependencies ?? {}) === JSON.stringify(packageJson.dependencies ?? {}), 'PACKAGE_LOCK_IDENTITY_MISMATCH');
+    && lock.packages?.[''] && sameDependencyVersions(lock.packages[''].dependencies ?? {}, packageJson.dependencies ?? {}), 'PACKAGE_LOCK_IDENTITY_MISMATCH');
   const fileBytes = new Map(), members = new Set(); total = 0;
   for (const [name, record] of files) {
     allowedMember(name, record.role);
