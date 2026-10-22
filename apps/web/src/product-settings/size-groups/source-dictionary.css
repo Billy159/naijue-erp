@@ -34,7 +34,7 @@
 .dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs .arco-tabs-header-nav::before{display:none}
 .dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs>.arco-tabs>[role=tablist]{border-bottom:1px solid var(--ca-line)}
 .dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs .arco-tabs-header{display:flex;align-items:center;gap:4px;margin:0;padding:0}
-.dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs .arco-tabs-header-title{box-sizing:border-box;min-width:76px;height:34px;min-height:34px;margin:0;padding:5px 12px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--ca-ink-2);font-family:var(--ca-font-sans);font-size:13px;font-weight:400;line-height:1.15}
+.dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs .arco-tabs-header-title{box-sizing:border-box;justify-content:center;min-width:76px;height:34px;min-height:34px;margin:0;padding:5px 12px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--ca-ink-2);font-family:var(--ca-font-sans);font-size:13px;font-weight:400;line-height:1.15}
 .dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs .arco-tabs-header-title:not(.arco-tabs-header-title-disabled):hover{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
 .dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs .arco-tabs-header-title-active{border-bottom-color:var(--ca-primary);color:var(--ca-primary-ink);font-weight:600}
 .dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs .arco-tabs-header-title-disabled{color:var(--ca-disabled-ink)}

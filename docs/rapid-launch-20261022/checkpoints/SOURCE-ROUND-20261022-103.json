@@ -1,0 +1,76 @@
+{
+  "atUtc": "2026-10-22T22:46:31.510786+00:00",
+  "parent": "34afa1dba210e51a9c882f16270ed3e42abc9716",
+  "groups": [
+    {
+      "slice": "fix: center readonly dictionary tab text",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DICTIONARY-TAB-CENTER-DELIVERY-v1.json",
+      "receiptSha256": "1234935b078b5c5082e67361726257257c0b02972becad723fb556e97f157b4c",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskId": "CAT-UI-01 existing P16/P18 residual glyph horizontal alignment",
+        "role": "F2",
+        "atUtc": "2026-10-22T22:43:22.356437+00:00",
+        "status": "SOURCE_READY_SINGLE_PROPERTY_CHECK_PASS_BROWSER_GLYPH_PENDING",
+        "authority": {
+          "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+          "owner": "Existing exact F2 CSS ownership and current C explicit smallfix dispatch; no new file/registration"
+        },
+        "modelRequested": "gpt-6.1-sol/xhigh",
+        "fastRequested": false,
+        "input": {
+          "path": "reports/ui-demo-comparison-20261022/v016-6eac13e/DICTIONARY-TAB-ALIGNMENT-RESIDUAL.json",
+          "sha256": "cf32ea4c4efb7814d8f5b79c933e0e8dd051562e1ad79352816c001de991b07f"
+        },
+        "completedScope": "One justify-content:center declaration in existing P16/P18-only .arco-tabs-header-title rule. Keep native Arco flex/align-items/structure/events; adapt native button centered glyph to actual flex container. All other CSS and TSX bytes unchanged.",
+        "diagnosis": "Actual C100 display:flex/title span widths26/39/26/26, text at padding-start. Frozen native block buttons text-align:center. Both outer x228/308/388/468,w76 and vertical glyph metrics equal. Native Arco display:inline-flex computes flex inside header flex; no justify-content present in source, defaultnormal/start. Correct horizontal flex justification only.",
+        "changedFiles": [
+          {
+            "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
+            "sha256": "652c57a87e9adefd311cddf9ec1436dd1db3865bbc0b2ac8010f71cc0e72b147",
+            "beforeSha256": "5f60ff8600e0a374cc991a9466d38adeb0829fc6eaa8c3e0c123ffeabbf9917f",
+            "fixedCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DICTIONARY-TAB-CENTER-source.css"
+          }
+        ],
+        "newApplicationFiles": 0,
+        "checks": {
+          "exitCode": 0,
+          "log": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DICTIONARY-TAB-CENTER-check-v1.log",
+          "logSha256": "55670128c09887fb09f86833a02942bc82ee365b5f785f987f4c2e19bed75bed",
+          "result": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DICTIONARY-TAB-CENTER-result-v1.json",
+          "resultSha256": "5d26e6194f260cdc49637ae3417808d946c993ae18860d825186712c13f837c3",
+          "method": "Immutable C100 actual full inline CSS+provenance and actual existing P16/P18 DOM. Single declaration tested before/after whole actual bundle; exact before->after source comparison proves only one property addition. All4 native tab nodes center winner.",
+          "predictionsOnly": [
+            253,
+            326.5,
+            413,
+            493
+          ],
+          "qualification": "Predictions use preexisting measured widths; no new browser Range result.",
+          "reused": "C100 outer tabbox/header36/row34/idle and prior C99/QF/protocol tests retained, not rerun.",
+          "types": "NOT_RUN_CSS_ONLY"
+        },
+        "notRun": [
+          "New browser glyph Range/visual confirmation",
+          "Old whole2page/paging/query/header/row/box suites not repeated",
+          "RealHTTP/PG/business/deployment"
+        ],
+        "blockers": {
+          "sourceSlice": null,
+          "acceptance": "Await C fixed singleCSS+receipt, then only Demo glyph Range after necessary candidate."
+        },
+        "nextStep": "C fix hash. QF only one CSS property; Demo only P16/P18 glyph alignment residual. No expanded scope/shared/P19 changes or wholepage PASS."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
+          "owner": "F2",
+          "bytes": 6733,
+          "sha256": "652c57a87e9adefd311cddf9ec1436dd1db3865bbc0b2ac8010f71cc0e72b147"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only one justify-content:center property in existing P16/P18 scoped header-title. Native query/handlers and all dimensions/header/rows/idle acceptedC100 results reused. Actual glyphRange pending necessary fixednextpreview; no wholepage/business PASS or otherconsumerchange."
+}
