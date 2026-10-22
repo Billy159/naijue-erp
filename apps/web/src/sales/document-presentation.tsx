@@ -149,7 +149,7 @@ export function SalesProductPresentation({ scope, capability, children, returnLa
     if (target?.isConnected && !target.closest('[hidden],[inert]')) target.focus({ preventScroll: true });
     else frame.current?.querySelector<HTMLElement>('button:not(:disabled),h1')?.focus({ preventScroll: true });
   }, [current]);
-  return <><div ref={frame} hidden={!!current}>{children(open)}{notice && <p role="status">{notice}</p>}</div>{current && <section aria-label={viewLabel} onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); dismiss(); } }}>
+  return <><div ref={frame} style={{ width: '100%', minWidth: 0 }} hidden={!!current}>{children(open)}{notice && <p role="status">{notice}</p>}</div>{current && <section style={{ flex: '1 1 0%', width: '100%', minWidth: 0 }} aria-label={viewLabel} onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); dismiss(); } }}>
     {current.View && current.target && current.configuration ? <current.View parent={current.scope} target={current.target} configuration={current.configuration} reader={current.configuration.reader} close={dismiss} returnLabel={returnLabel} />
       : current.failed ? <p role="alert">商品资料或规格关系暂不可读取，原单据输入已保留。<UIButton onClick={() => open?.(current.skuId, current.hallId)}>重试商品查看</UIButton><UIButton onClick={dismiss}>{returnLabel}</UIButton></p>
       : <p role="status">正在读取商品关系并准备商品页…<UIButton onClick={dismiss}>{returnLabel}</UIButton></p>}

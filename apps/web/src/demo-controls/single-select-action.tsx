@@ -43,7 +43,8 @@ export function DemoSingleSelectAction(props: DemoSingleSelectActionProps) {
       {...(props.loading !== undefined ? { loading: props.loading } : {})}
       {...(props.dropdownRender ? { dropdownRender: props.dropdownRender } : {})}
       {...(props.required !== undefined ? { 'aria-required': props.required } : {})}
-      showSearch={false}
+      showSearch={!!props.onSearch}
+      {...(props.onSearch ? { onSearch: props.onSearch, filterOption: false } : {})}
       allowClear={false}
       disabled={props.disabled}
       popupVisible={mounted && props.open && !props.disabled}

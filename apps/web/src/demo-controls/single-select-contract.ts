@@ -19,6 +19,8 @@ interface CommonProps {
   readonly dropdownRender?: (menu: ReactNode) => ReactNode;
   /** Accessibility metadata only; no native value coercion or business validation. */
   readonly required?: boolean;
+  /** Optional remote search. Raw text belongs to the caller; no local filtering. */
+  readonly onSearch?: (value: string) => void;
   /** Public installed Select focus API; the owner decides whether it still owns focus. */
   readonly focusRef?: Ref<DemoSingleSelectFocusHandle>;
   readonly onOpenChange: (open: boolean) => void;
@@ -27,7 +29,7 @@ interface CommonProps {
 
 /**
  * Narrow common subset needed by the three page-size controls: ungrouped,
- * non-search, non-clear, controlled applied value. No option list is invented.
+ * non-clear, controlled applied value. Search is opt-in; no option list is invented.
  * Other single values may use the original tag or flat presentation explicitly.
  */
 export type DemoSingleSelectActionProps = CommonProps & (
