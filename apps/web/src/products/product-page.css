@@ -138,6 +138,11 @@
 .product-stock-head button{height:28px;min-height:28px;padding:2px 7px;border:0;background:transparent;color:var(--ca-primary-ink);font-size:13px;font-weight:400}
 .product-stock-head button:hover{background:var(--ca-primary-hover-soft)}
 .product-stock-empty{display:flex;align-items:center;justify-content:center;min-height:90px;color:var(--ca-ink-2);font-size:13px}
+/* Final frozen overview constraints, limited to the actual readonly page. */
+.product-readonly-page .product-stock-head{min-height:28px}
+.product-readonly-page .product-stock-head>div{gap:4px}
+.product-readonly-page .product-stock-overview{max-width:700px}
+.product-readonly-page .product-stock-head button.erp-button{border:0}
 
 /* Frozen product-rework.css 4-19 / product-current.js editor UI, adapted to real Arco header/panel ownership. */
 .product-detail-workbench{--product-sticky-title-height:37px;min-width:0;color:var(--ca-ink);font:13px var(--ca-font-sans)}
