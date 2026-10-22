@@ -4,6 +4,7 @@ import { mkdtemp, mkdir, writeFile, readFile, readdir, rm } from 'node:fs/promis
 import { join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
+import { gunzipSync } from 'node:zlib';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import {watch,existsSync,renameSync,writeFileSync,symlinkSync} from 'node:fs';
@@ -267,4 +268,55 @@ test('replacement or symlink of newly derived evidence is rejected before select
       assert.deepEqual(await readdir(options.spoolParent),[]);assert.equal(await readFile(sentinel,'utf8'),'ORIGINAL MUST REMAIN');
     }finally{watcher.close();}
   }
+});
+test('gzip selected storage preserves raw bytes/hash, source order, whole32 approvals and real header/reference authorizers',async t=>{
+  const {openAuthorizedV3HeaderReader}=await import('./authorized-header-reader.mjs');
+  const {prepareV3HistoryHeaderChunk}=await import('../../packages/application/src/import-v3-history-header-staging.ts');
+  const {prepareV3HistoryHeaderNativeReferenceChunk}=await import('../../packages/application/src/import-v3-history-header-native-reference.ts');
+  const options=await headerReaderFixture(t),plain=await openAuthorizedV3HeaderReader({...options,includeNativeReferenceSources:true});
+  const old={bytes:plain.report.spoolBytes,sha:plain.report.spoolSha256};await plain.close();
+  const reader=await openAuthorizedV3HeaderReader({...options,includeNativeReferenceSources:true,spoolStorage:{format:'gzip-v1',maxStoredBytes:1024*1024},
+    resolveNativeBinding:async q=>bindingsFor(q),resolveNativeReferenceBinding:async q=>referenceBindingFor(q)});
+  try{
+    assert.equal(reader.report.spoolBytes,old.bytes);assert.equal(reader.report.spoolSha256,old.sha);
+    const storage=reader.report.spoolStorage;assert.ok(storage.storedBytes<old.bytes);assert.equal(storage.format,'gzip-v1');
+    const directory=join(options.spoolParent,(await readdir(options.spoolParent))[0]);assert.ok(!(await readdir(directory)).includes('selected-headers.jsonl'));
+    const compressed=await readFile(join(directory,'selected-headers.jsonl.gz'));assert.equal(hash(compressed),storage.storedSha256);assert.equal(hash(gunzipSync(compressed)),old.sha);
+    let headers=0,references=0;for await(const record of reader.rows()){
+      assert.equal(record.moneyApprovals.size,32);await reader.authorize(prepareV3HistoryHeaderChunk([{batchId:options.batchId,fixedSourceNamespace:options.fixedSourceNamespace,...record,bindings:bindingsFor({entity:record.source.entityType})}]));headers++;
+    }
+    for await(const record of reader.referenceRows()){
+      await reader.authorizeReferences(prepareV3HistoryHeaderNativeReferenceChunk([{batchId:options.batchId,fixedSourceNamespace:options.fixedSourceNamespace,...record,...referenceBindingFor({entity:record.source.entityType})}]));references++;
+    }
+    assert.equal(headers,33);assert.equal(references,3);
+  }finally{await reader.close();}assert.deepEqual(await readdir(options.spoolParent),[]);
+});
+test('gzip raw and stored bounds each stop before row/resolver; cleanup completes without increasing old limits',async t=>{
+  const {openAuthorizedV3HeaderReader}=await import('./authorized-header-reader.mjs');const options=await headerReaderFixture(t);let callbacks=0;
+  for(const [maxSpoolBytes,maxStoredBytes,expected]of [[1,1024*1024,/HEADER_READER_SPOOL_LIMIT/],[512*1024*1024,1,/HEADER_READER_STORED_SPOOL_LIMIT/]]){
+    await assert.rejects(openAuthorizedV3HeaderReader({...options,maxSpoolBytes,spoolStorage:{format:'gzip-v1',maxStoredBytes},resolveNativeBinding:async q=>{callbacks++;return bindingsFor(q);}}),expected);
+    assert.equal(callbacks,0);assert.deepEqual(await readdir(options.spoolParent),[]);
+  }
+});
+test('gzip file corruption/truncation/replacement refuses before first row, without a native callback',async t=>{
+  const {openAuthorizedV3HeaderReader}=await import('./authorized-header-reader.mjs');const options=await headerReaderFixture(t);let callbacks=0;
+  for(const attack of ['corrupt','truncate','symlink']){
+    const reader=await openAuthorizedV3HeaderReader({...options,spoolStorage:{format:'gzip-v1',maxStoredBytes:1024*1024},resolveNativeBinding:async q=>{callbacks++;return bindingsFor(q);}});
+    try{
+      const directory=join(options.spoolParent,(await readdir(options.spoolParent))[0]),path=join(directory,'selected-headers.jsonl.gz'),bytes=await readFile(path);
+      if(attack==='corrupt'){bytes[bytes.length-8]^=0x80;await writeFile(path,bytes);}
+      else if(attack==='truncate')await writeFile(path,bytes.subarray(0,bytes.length-4));
+      else{renameSync(path,path+'.owned-old');symlinkSync(join(options.sourceRoot,'历史销货.synthetic.xlsx'),path);}
+      let count=0;await assert.rejects(async()=>{for await(const _ of reader.rows())count++;});assert.equal(count,0);assert.equal(callbacks,0);
+    }finally{await reader.close();}assert.deepEqual(await readdir(options.spoolParent),[]);
+  }
+});
+test('gzip storage options capture own data before await and reject unknown format/getters/symbol fields before IO',async t=>{
+  const {openAuthorizedV3HeaderReader}=await import('./authorized-header-reader.mjs');const options=await headerReaderFixture(t);let getters=0;
+  for(const storage of [null,{}, {format:'plain',maxStoredBytes:10},{format:'gzip-v1',maxStoredBytes:128*1024*1024+1},{format:'gzip-v1',maxStoredBytes:1,extra:true},
+    Object.defineProperty({format:'gzip-v1'},'maxStoredBytes',{enumerable:true,get(){getters++;return 10;}}),{format:'gzip-v1',maxStoredBytes:1,[Symbol('hidden')]:true}])
+    await assert.rejects(openAuthorizedV3HeaderReader({...options,spoolStorage:storage}),/STORAGE_/);
+  assert.equal(getters,0);assert.deepEqual(await readdir(options.spoolParent),[]);
+  const storage={format:'gzip-v1',maxStoredBytes:1024*1024},pending=openAuthorizedV3HeaderReader({...options,spoolStorage:storage});storage.maxStoredBytes=1;
+  const reader=await pending;try{assert.equal(reader.report.selectedRows,33);assert.equal(reader.report.spoolStorage.maxStoredBytes,1024*1024);}finally{await reader.close();}
 });

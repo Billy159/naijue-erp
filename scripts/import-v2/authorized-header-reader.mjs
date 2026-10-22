@@ -6,6 +6,9 @@ import { lstat, realpath, mkdtemp, chmod, open, rm, readFile, unlink } from 'nod
 import { resolve, join, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
+import { createGzip, createGunzip } from 'node:zlib';
+import { Readable } from 'node:stream';
+import { finished } from 'node:stream/promises';
 import { preflightV2 } from './run.mjs';
 import { IMPORT_V2_TABLES } from '../../packages/application/src/import-v2-contract.ts';
 import { v2MoneyApprovalSet } from '../../packages/application/src/import-v2.ts';
@@ -33,6 +36,13 @@ function captureOptions(original){
     if(Object.hasOwn(captured,key)&&(!Number.isSafeInteger(captured[key])||captured[key]<=0||captured[key]>MAX_SPOOL))fail(code);
     captured[key]??=MAX_SPOOL;
   }
+  if(Object.hasOwn(captured,'spoolStorage')){
+    const storage=captured.spoolStorage;
+    if(!storage||Object.getPrototypeOf(storage)!==Object.prototype||Reflect.ownKeys(storage).length!==2)fail('HEADER_READER_STORAGE_OPTIONS');
+    const values={};for(const key of ['format','maxStoredBytes']){const d=Object.getOwnPropertyDescriptor(storage,key);if(!d?.enumerable||!Object.hasOwn(d,'value'))fail('HEADER_READER_STORAGE_OPTIONS');values[key]=d.value;}
+    if(values.format!=='gzip-v1'||!Number.isSafeInteger(values.maxStoredBytes)||values.maxStoredBytes<=0||values.maxStoredBytes>128*1024*1024)fail('HEADER_READER_STORAGE_BOUND');
+    captured.spoolStorage=values;
+  }
   return captured;
 }
 const creatorPath='provenance/creator-hall-approved-overlay.csv', moneyPath='provenance/approved-money-tail-overlay.csv';
@@ -44,15 +54,31 @@ async function* lines(chunks) {
   if(pending){if(++count>1_000_000)fail('HEADER_READER_LINE_COUNT');yield pending;}
 }
 const sameFile=(a,b)=>a.dev===b.dev&&a.ino===b.ino&&a.mode===b.mode&&a.size===b.size&&a.mtimeMs===b.mtimeMs&&a.ctimeMs===b.ctimeMs;
-async function* checkedFile(path,expectedBytes,expectedHash,identity){
+async function* checkedFileBytes(path,expectedBytes,expectedHash,identity){
   const stat=await lstat(path);if(!stat.isFile()||stat.isSymbolicLink()||stat.size!==expectedBytes||(stat.mode&0o777)!==0o600||(identity&&!sameFile(stat,identity)))fail('HEADER_READER_FILE_CHANGED');
   const fd=await open(path,constants.O_RDONLY|constants.O_NOFOLLOW);
   try{
     if(!sameFile(await fd.stat(),stat))fail('HEADER_READER_FILE_CHANGED');
-    const digest=createHash('sha256'),decoder=new TextDecoder('utf8',{fatal:true,ignoreBOM:true}),buffer=Buffer.alloc(65536);let count=0;
-    for(;;){const{bytesRead}=await fd.read(buffer,0,buffer.length,count);if(!bytesRead)break;count+=bytesRead;if(count>expectedBytes)fail('HEADER_READER_FILE_CHANGED');digest.update(buffer.subarray(0,bytesRead));yield decoder.decode(buffer.subarray(0,bytesRead),{stream:true});}yield decoder.decode();
+    const digest=createHash('sha256'),buffer=Buffer.alloc(65536);let count=0;
+    for(;;){const{bytesRead}=await fd.read(buffer,0,buffer.length,count);if(!bytesRead)break;count+=bytesRead;if(count>expectedBytes)fail('HEADER_READER_FILE_CHANGED');const part=Buffer.from(buffer.subarray(0,bytesRead));digest.update(part);yield part;}
     if(count!==expectedBytes||digest.digest('hex')!==expectedHash||!sameFile(await fd.stat(),stat))fail('HEADER_READER_FILE_CHANGED');
   }finally{await fd.close();}
+}
+async function* checkedFile(path,expectedBytes,expectedHash,identity){
+  const decoder=new TextDecoder('utf8',{fatal:true,ignoreBOM:true});
+  for await(const bytes of checkedFileBytes(path,expectedBytes,expectedHash,identity))yield decoder.decode(bytes,{stream:true});yield decoder.decode();
+}
+async function* checkedGzip(path,storedBytes,storedHash,rawBytes,rawHash,identity){
+  const source=Readable.from(checkedFileBytes(path,storedBytes,storedHash,identity)),inflate=createGunzip();
+  source.on('error',error=>inflate.destroy(error));const stream=source.pipe(inflate),done=[finished(source),finished(inflate)];
+  // Install rejection handlers immediately; iterator/decompressor errors remain the primary failure.
+  for(const promise of done)promise.catch(()=>{});
+  const decoder=new TextDecoder('utf8',{fatal:true,ignoreBOM:true}),digest=createHash('sha256');let size=0;
+  try{
+    for await(const bytes of stream){size+=bytes.length;if(size>rawBytes)fail('HEADER_READER_RAW_SPOOL_CHANGED');digest.update(bytes);yield decoder.decode(bytes,{stream:true});}
+    yield decoder.decode();await Promise.all(done);
+    if(size!==rawBytes||digest.digest('hex')!==rawHash)fail('HEADER_READER_RAW_SPOOL_CHANGED');
+  }finally{source.destroy();inflate.destroy();await Promise.allSettled(done);}
 }
 async function smallJson(path){const s=await lstat(path);if(!s.isFile()||s.isSymbolicLink()||s.size>4*1024*1024)fail('HEADER_READER_METADATA_FILE');return JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(await readFile(path)));}
 async function regenerateCells(options,directory){
@@ -95,9 +121,12 @@ export async function openAuthorizedV3HeaderReader(options){
   const parent=await realpath(resolve(options.spoolParent)),roots=await Promise.all([options.base,options.v3Amendment,options.sourceRoot,fileURLToPath(new URL('../../',import.meta.url))].map(p=>realpath(resolve(p))));
   if(parent.split('/').includes('.git')||roots.some(r=>parent===r||parent.startsWith(r+'/'))||!(await lstat(parent)).isDirectory())fail('HEADER_READER_SPOOL_MUST_BE_OUTSIDE_INPUT_AND_REPO');
   const directory=await mkdtemp(join(parent,'v3-header-reader-'));await chmod(directory,0o700);
-  const path=join(directory,'selected-headers.jsonl');let output,closed=false,spoolBytes=0,spoolRows=0,referenceRows=0,rawRows=0,spoolSha256,preflight,cellReport;
+  const compressed=options.spoolStorage!==undefined;
+  const path=join(directory,compressed?'selected-headers.jsonl.gz':'selected-headers.jsonl');let output,compressor,compressionDone,compressionFailure,storedBytes=0,storedSha256,spoolIdentity;
+  let closed=false,spoolBytes=0,spoolRows=0,referenceRows=0,rawRows=0,spoolSha256,preflight,cellReport;
   const sourceHashes=new Map(),selections=new Map(),counts=Object.fromEntries(readEntities.map(e=>[e,0]));let approvedSet;
-  const cleanup=async()=>{closed=true;sourceHashes.clear();if(output){const handle=output;output=undefined;await handle.close();}await rm(directory,{recursive:true,force:true});};
+  const cleanup=async()=>{closed=true;sourceHashes.clear();if(compressor)compressor.destroy();if(compressionDone)await compressionDone;
+    if(output){const handle=output;output=undefined;await handle.close();}await rm(directory,{recursive:true,force:true});};
   try{
     const regenerated=await regenerateCells(options,directory);cellReport=regenerated.report;
     const evidenceIdentity=await lstat(regenerated.path);
@@ -114,6 +143,11 @@ export async function openAuthorizedV3HeaderReader(options){
     if(dirname(dirname(regenerated.path))!==directory||basename(regenerated.path)!=='evidence.jsonl'||!evidenceNow.isFile()||evidenceNow.isSymbolicLink()||(evidenceNow.mode&0o777)!==0o600||!sameFile(evidenceNow,evidenceIdentity))fail('HEADER_READER_FILE_CHANGED');
     await unlink(regenerated.path);
     output=await open(path,'wx',0o600);const digest=createHash('sha256');
+    if(compressed){
+      compressor=createGzip();const storedDigest=createHash('sha256');
+      compressionDone=(async()=>{for await(const part of compressor){storedBytes+=part.length;if(storedBytes>options.spoolStorage.maxStoredBytes)fail('HEADER_READER_STORED_SPOOL_LIMIT');storedDigest.update(part);await output.writeFile(part);}storedSha256=storedDigest.digest('hex');})()
+        .catch(error=>{compressionFailure=error;compressor.destroy(error);});
+    }
     preflight=await preflightV2(options.base,{v3Amendment:options.v3Amendment,v3Approval:options.v3Approval,approvedMoneyOverlaySha256,verifyCreatorHall:true,onVerifiedV3:async({records,strings,manifest,verified,report})=>{
       if(verified.approvalSha256!==trustedApprovalSha256||!report.referenceTargetsValid||!report.wireRequiredFieldsValid
         ||report.originalSourceMoneyVerification?.approvedCellsMatched!==32||report.creatorHallSourceVerification?.status!=='SOURCE_AND_RULES_VERIFIED')fail('HEADER_READER_UNSATISFIED_PREFLIGHT');
@@ -128,7 +162,9 @@ export async function openAuthorizedV3HeaderReader(options){
       const approvals=[];
       for await(const row of records(moneyPath,moneyColumns))approvals.push({fileSha256:row.sourceFileSha256,sheet:row.sheet,row:row.row,sourceId:row.sourceId,field:row.field,rawValue:row.rawValue,exactCentValue:row.candidateExactCentValue});
       approvedSet=v2MoneyApprovalSet(approvals,approvals);
-      let buffer='';const flush=async()=>{if(!buffer)return;const bytes=Buffer.from(buffer);spoolBytes+=bytes.length;if(spoolBytes>options.maxSpoolBytes)fail('HEADER_READER_SPOOL_LIMIT');digest.update(bytes);await output.writeFile(bytes);buffer='';};
+      let buffer='';const flush=async()=>{if(!buffer)return;const bytes=Buffer.from(buffer);spoolBytes+=bytes.length;if(spoolBytes>options.maxSpoolBytes)fail('HEADER_READER_SPOOL_LIMIT');digest.update(bytes);
+        if(compressed){if(compressionFailure)throw compressionFailure;await new Promise((accept,reject)=>compressor.write(bytes,error=>error?reject(error):accept()));if(compressionFailure)throw compressionFailure;}
+        else await output.writeFile(bytes);buffer='';};
       for await(const line of lines(strings('snapshots/all-business-source-rows.jsonl'))){
         rawRows++;const raw=JSON.parse(line);if(!readEntities.includes(raw?.entity))continue;
         if(!text(raw.sourceId)||!text(raw.file)||!text(raw.sheet)||!Number.isSafeInteger(raw.row)||raw.row<1||!hash(raw.sourceSha256)
@@ -163,14 +199,22 @@ export async function openAuthorizedV3HeaderReader(options){
       if(normalized.size||cells.size||overlays.size)fail('HEADER_READER_SOURCE_COVERAGE');await flush();
     }});
     if(spoolBytes>options.maxSpoolBytes)fail('HEADER_READER_SPOOL_LIMIT');
-    await output.sync();await output.close();output=undefined;spoolSha256=digest.digest('hex');
+    if(compressed){compressor.end();await compressionDone;if(compressionFailure)throw compressionFailure;}
+    await output.sync();await output.close();output=undefined;spoolSha256=digest.digest('hex');spoolIdentity=await lstat(path);
   }catch(error){await cleanup();throw error;}
   const assertOpen=()=>{if(closed)fail('HEADER_READER_CLOSED');};
   const checkRecord=record=>{if(sourceHashes.get(rowKey(record.source?.entityType,record.source?.sourceKey))!==requestHash(record))fail('HEADER_READER_SOURCE_NOT_AUTHORIZED');};
+  const spoolText=()=>compressed?checkedGzip(path,storedBytes,storedSha256,spoolBytes,spoolSha256,spoolIdentity):checkedFile(path,spoolBytes,spoolSha256,spoolIdentity);
+  async function* spoolLines(){
+    // Verify compressed storage, complete CRC, raw length and raw digest before the first row can escape.
+    if(compressed)for await(const _ of spoolText()){assertOpen();}
+    for await(const line of lines(spoolText())){assertOpen();yield line;}
+  }
   return {
-    report:{kind:'V3_HEADER_SOURCE_ROW_READER',importReady:false,noSql:true,preflight,rawRowsScanned:rawRows,selectedRows:spoolRows,counts,spoolBytes,spoolSha256,rowHashAlgorithm:'SHA256_JSONL_UTF8_EXCLUDING_LF_RETAINING_CR_V1',originalCellEvidenceRegenerated:true,numericCellEvidence:cellReport.numericCellEvidence,nativeBindingsVerified:false,nativeReferenceSourcesIncluded:includeReferences,nativeReferenceRows:referenceRows},
-    async *rows(entity){assertOpen();if(entity!==undefined&&!entities.includes(entity))fail('HEADER_READER_ENTITY_NOT_SUPPORTED');for await(const line of lines(checkedFile(path,spoolBytes,spoolSha256))){assertOpen();const record=JSON.parse(line);checkRecord(record);if(entities.includes(record.source.entityType)&&(entity===undefined||record.source.entityType===entity))yield {...record,moneyApprovals:structuredClone(approvedSet)};}},
-    async *referenceRows(entity){assertOpen();if(!includeReferences)fail('HEADER_READER_REFERENCE_MODE_REQUIRED');if(entity!==undefined&&!referenceEntities.includes(entity))fail('HEADER_READER_ENTITY_NOT_SUPPORTED');for await(const line of lines(checkedFile(path,spoolBytes,spoolSha256))){assertOpen();const record=JSON.parse(line);checkRecord(record);if(referenceEntities.includes(record.source.entityType)&&(entity===undefined||record.source.entityType===entity))yield record;}},
+    report:{kind:'V3_HEADER_SOURCE_ROW_READER',importReady:false,noSql:true,preflight,rawRowsScanned:rawRows,selectedRows:spoolRows,counts,spoolBytes,spoolSha256,rowHashAlgorithm:'SHA256_JSONL_UTF8_EXCLUDING_LF_RETAINING_CR_V1',originalCellEvidenceRegenerated:true,numericCellEvidence:cellReport.numericCellEvidence,nativeBindingsVerified:false,nativeReferenceSourcesIncluded:includeReferences,nativeReferenceRows:referenceRows,
+      ...(compressed?{spoolStorage:{format:'gzip-v1',storedBytes,storedSha256,maxStoredBytes:options.spoolStorage.maxStoredBytes}}:{})},
+    async *rows(entity){assertOpen();if(entity!==undefined&&!entities.includes(entity))fail('HEADER_READER_ENTITY_NOT_SUPPORTED');for await(const line of spoolLines()){const record=JSON.parse(line);checkRecord(record);if(entities.includes(record.source.entityType)&&(entity===undefined||record.source.entityType===entity))yield {...record,moneyApprovals:structuredClone(approvedSet)};}},
+    async *referenceRows(entity){assertOpen();if(!includeReferences)fail('HEADER_READER_REFERENCE_MODE_REQUIRED');if(entity!==undefined&&!referenceEntities.includes(entity))fail('HEADER_READER_ENTITY_NOT_SUPPORTED');for await(const line of spoolLines()){const record=JSON.parse(line);checkRecord(record);if(referenceEntities.includes(record.source.entityType)&&(entity===undefined||record.source.entityType===entity))yield record;}},
     async authorizeReferences(inputChunk){
       assertOpen();if(!includeReferences||typeof resolveNativeReferenceBinding!=='function')fail('HEADER_READER_REFERENCE_RESOLVER_REQUIRED');
       const {validatePreparedHistoryHeaderNativeReferenceChunk,prepareV3HistoryHeaderNativeReferenceChunk}=await import('../../packages/application/src/import-v3-history-header-native-reference.ts');

@@ -47,7 +47,7 @@ export class PostgresAuthenticationStore implements AuthenticationStore {
     } catch (error) {
       tx.close();
       if (!began || commitAttempted) discard = error instanceof Error ? error : new Error("Authentication transaction failed");
-      if (began) try { await client.query("ROLLBACK"); }
+      if (began && !commitAttempted) try { await client.query("ROLLBACK"); }
       catch (rollbackError) {
         discard = rollbackError instanceof Error ? rollbackError : new Error("Authentication rollback failed");
         throw new AggregateError([error, rollbackError], "Authentication transaction and rollback failed; connection discarded");

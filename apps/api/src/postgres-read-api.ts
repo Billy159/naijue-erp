@@ -19,6 +19,7 @@ import type { ControlledProductMedia, ProductQueryAuthorization } from "../../..
 import type { AuthenticationPolicy } from "../../../packages/authentication/src/ports.ts";
 import { createAuthenticationService } from "../../../packages/authentication/src/service.ts";
 import { createNodeScryptPasswords } from "../../../packages/authentication/src/passwords.ts";
+import { createNodeMigratedLegacyPasswords } from "../../../packages/authentication/src/legacy-passwords.ts";
 import { createAuthenticationHttpPlugin, createSalesSessionAuthenticator } from "./authentication.ts";
 import { createTransferSessionAuthenticator } from "./transfer-authentication.ts";
 import { createInventoryHttpPlugin } from "./inventory-http.ts";
@@ -76,6 +77,8 @@ export interface PostgresReadApiOptions {
     readonly trustedOrigin: string;
     readonly now: () => string;
     readonly policy: AuthenticationPolicy;
+    /** Trusted host opt-in only; absent keeps the original scrypt-only codec. */
+    readonly credentialCompatibility?: "legacy-pbkdf2-v1";
   };
   /** Trusted host-only selection: explicit providers OR the closed source-confirmed native profile.
    * No default, mixed overrides, request-selected mode, invented or widened hall grants. */
@@ -225,6 +228,7 @@ function checkedAuthorization(value: PostgresReadApiAuthorization): CapturedAuth
 function checkedHost(options: PostgresReadApiOptions) {
   const auth = options?.authentication; const media = options?.productMedia;
   if (!exactHttpsOrigin(auth?.trustedOrigin) || typeof auth?.now !== "function" || !auth.policy
+    || ("credentialCompatibility" in auth && (!Object.hasOwn(auth, "credentialCompatibility") || auth.credentialCompatibility !== "legacy-pbkdf2-v1"))
     || !Object.hasOwn(options, "productMedia") || (media !== null && (!media || !exactHttpsOrigin(media.deliveryOrigin)
       || typeof media.resolveThumbnails !== "function" || typeof media.resolveOriginal !== "function"))) {
     throw new TypeError("PostgreSQL read API requires explicit trusted HTTPS origin, authentication policy/clock, read authorization and media availability");
@@ -232,7 +236,7 @@ function checkedHost(options: PostgresReadApiOptions) {
   // Capture provider methods and origins before the first await. Changing the caller's
   // configuration object later cannot replace these boundaries or enable a write plugin.
   return {
-    trustedOrigin: auth.trustedOrigin, now: auth.now, policy: auth.policy,
+    trustedOrigin: auth.trustedOrigin, now: auth.now, policy: auth.policy, credentialCompatibility: auth.credentialCompatibility,
     authorization: checkedAuthorization(options.authorization), currentForms: checkedCurrentForms(options),
     media: media === null ? null : Object.freeze({ deliveryOrigin: media.deliveryOrigin,
       resolveThumbnails: media.resolveThumbnails.bind(media), resolveOriginal: media.resolveOriginal.bind(media) })
@@ -278,7 +282,8 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     app = Fastify({ logger: false, trustProxy: false, bodyLimit: 65_536 });
     app.addHook("onClose", async () => { await pool.dispose(); });
     const service = createAuthenticationService({ store: new PostgresAuthenticationStore(pool),
-      now: host.now, policy: host.policy, passwords: createNodeScryptPasswords() });
+      now: host.now, policy: host.policy, passwords: host.credentialCompatibility === "legacy-pbkdf2-v1"
+        ? createNodeMigratedLegacyPasswords() : createNodeScryptPasswords() });
     const authentication = Object.freeze({ service, trustedOrigin: host.trustedOrigin });
     const authenticate = createSalesSessionAuthenticator(authentication);
     const authenticateTransfer = createTransferSessionAuthenticator(authentication);

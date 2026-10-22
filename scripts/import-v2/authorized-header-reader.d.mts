@@ -6,7 +6,8 @@ export type AuthorizedHeaderRecord = Pick<HistoryHeaderInput,'source'|'selection
 export interface AuthorizedV3HeaderReader {
   readonly report: Readonly<{kind:'V3_HEADER_SOURCE_ROW_READER';importReady:false;noSql:true;preflight:Record<string,unknown>;
     rawRowsScanned:number;selectedRows:number;counts:Record<HistoryHeaderEntity,number>;spoolBytes:number;spoolSha256:string;
-    rowHashAlgorithm:'SHA256_JSONL_UTF8_EXCLUDING_LF_RETAINING_CR_V1';originalCellEvidenceRegenerated:true;numericCellEvidence:number;nativeBindingsVerified:false;nativeReferenceSourcesIncluded:boolean;nativeReferenceRows:number}>;
+    rowHashAlgorithm:'SHA256_JSONL_UTF8_EXCLUDING_LF_RETAINING_CR_V1';originalCellEvidenceRegenerated:true;numericCellEvidence:number;nativeBindingsVerified:false;nativeReferenceSourcesIncluded:boolean;nativeReferenceRows:number;
+    spoolStorage?:Readonly<{format:'gzip-v1';storedBytes:number;storedSha256:string;maxStoredBytes:number}>}>;
   rows(entity?:HistoryHeaderEntity):AsyncGenerator<AuthorizedHeaderRecord>;
   referenceRows(entity?:HistoryHeaderNativeReferenceEntity):AsyncGenerator<Pick<HistoryHeaderNativeReferenceInput,'source'|'selection'>>;
   authorizeReferences(chunk:PreparedHistoryHeaderNativeReferenceChunk):Promise<void>;
@@ -20,6 +21,8 @@ export function openAuthorizedV3HeaderReader(options:{
   maxEvidenceSpoolBytes?:number;
   /** Optional stricter selected DTO spool bound with the same positive safe <=512MiB/default policy. */
   maxSpoolBytes?:number;
+  /** Logical raw JSONL bound above stays unchanged; only owned selected-file storage is compressed. */
+  spoolStorage?:{format:'gzip-v1';maxStoredBytes:number};
   resolveNativeReferenceBinding?:(query:{entity:HistoryHeaderNativeReferenceEntity;sourceKey:string;rawFields:ImportSourceEvidence['rawFields'];normalizedFields:ImportSourceEvidence['normalizedFields']})=>Promise<Pick<HistoryHeaderNativeReferenceInput,'nativeSnapshot'|'bindings'|'enumMappings'>>;
   resolveNativeBinding?:(query:{entity:HistoryHeaderEntity;sourceKey:string;rawFields:ImportSourceEvidence['rawFields'];normalizedFields:ImportSourceEvidence['normalizedFields']})=>Promise<Readonly<Record<string,HeaderNativeBinding|undefined>>>;
 }):Promise<AuthorizedV3HeaderReader>;

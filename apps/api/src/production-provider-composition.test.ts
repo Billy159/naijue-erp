@@ -5,6 +5,9 @@ import { createProductionApplicationApi, parseProductionRuntimeConfiguration, pr
 import type { ProductionRuntimeConfiguration } from "./production-provider-composition.ts";
 import { runProductionMain } from "./production-main.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
+import { pbkdf2Sync } from "node:crypto";
+import { wrapTrustedLegacyCredential } from "../../../packages/authentication/src/legacy-passwords.ts";
+import { createPostgresApplicationApi } from "./postgres-read-api.ts";
 
 function config(): ProductionRuntimeConfiguration {
   return { schemaVersion: 1, profile: "source-confirmed-native-v1", documentCommands: "NATIVE_RUNTIME", publicOrigin: PRODUCTION_PUBLIC_ORIGIN,
@@ -95,4 +98,28 @@ test("R1 explicit read profile installs no command or preparation routes", async
     for (const url of ["/sales/commands", "/transfers/commands", "/sales/prepare-create", "/transfers/prepare-create"]) assert.equal(api.app.hasRoute({ method: "POST", url }), false);
     assert.equal(api.app.hasRoute({ method: "POST", url: "/inventory/query" }), true); assert.equal(connects, 0);
   } finally { await api.close(); }
+});
+
+test("explicit production legacy opt-in reaches actual auth service while default composition remains scrypt-only", async () => {
+  const password = "123456", salt = "c".repeat(48), hash = wrapTrustedLegacyCredential({ salt,
+    hash: pbkdf2Sync(password, salt, 210000, 32, "sha256").toString("hex") });
+  let inserted = 0;
+  const factory = () => Object.assign(new EventEmitter(), {
+    async connect() { return Object.assign(new EventEmitter(), { async query(sql: string) {
+      if (sql.includes("INSERT INTO naijue_erp.auth_session")) inserted++;
+      return { rows: sql.includes("FROM naijue_erp.user_account a JOIN naijue_erp.staff s") ? [{ account_id: account,
+        staff_id: "00000000-0000-4000-8000-000000000003", login_name: "SYNTHETIC_LEGACY_USER", password_hash: hash, login_enabled: true,
+        auth_version: 1, role: "ADMIN", employment_status: "在职", hall_id: null }] : [], rowCount: 1 };
+    }, release() {} }); }, async end() {}
+  });
+  const options = productionApplicationOptions({ ...config(), documentCommands: "DISABLED" }), { credentialCompatibility: _optIn, ...defaultAuth } = options.authentication;
+  const original = await createPostgresApplicationApi({ ...options, authentication: defaultAuth }, factory);
+  const production = await createProductionApplicationApi({ ...config(), documentCommands: "DISABLED" }, factory);
+  try {
+    const request = { method: "POST" as const, url: "/auth/login", headers: { origin: PRODUCTION_PUBLIC_ORIGIN }, payload: { loginName: "SYNTHETIC_LEGACY_USER", password } };
+    assert.equal((await original.app.inject(request)).statusCode, 401); assert.equal(inserted, 0);
+    const response = await production.app.inject(request); assert.equal(response.statusCode, 200); assert.equal(inserted, 1);
+    assert.ok(response.headers["set-cookie"]?.toString().includes("HttpOnly; Secure; SameSite=Strict"));
+    assert.equal(response.body.includes(hash), false); assert.equal(response.body.includes(salt), false); assert.equal(response.body.includes(password), false);
+  } finally { await original.close(); await production.close(); }
 });
