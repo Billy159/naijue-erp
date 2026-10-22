@@ -1,0 +1,154 @@
+{
+  "version": "C_TRANSFER_PREPARE_EXISTING_READ_CONTRACT_V1",
+  "atUtc": "2026-10-22T18:58:08.485163+00:00",
+  "decision": "FREEZE_TECHNICAL_EXISTING_FIELDS_ZERO_DML_PREPARATION",
+  "proposalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/TRANSFER-PREPARE-EXISTING-PROPOSAL-v1.json",
+  "proposalSha256": "60a0faca5ede4520be1f03a2a317913a9b379332a9b7e2e847f792d968c6f390",
+  "scope": "Existing SAVE/policy/DDL unchanged. Actual transfer positive quantities/warehouse visibility and disabled-out nonzero/disabled SKU retention rules remain original. No sales rules borrowed. No business DML/number allocation or PG READ ONLY claim. New write-contract difference must be reported first.",
+  "contract": {
+    "version": "D1_TRANSFER_PREPARE_EXISTING_PROPOSAL_V1",
+    "status": "READ_ONLY_TECHNICAL_PROPOSAL_FOR_C_FREEZE_NOT_IMPLEMENTED",
+    "atUtc": "2026-10-22T18:49:13.829Z",
+    "request": {
+      "method": "POST",
+      "path": "/transfers/prepare-existing",
+      "exactKeys": [
+        "transferId",
+        "expectedVersion",
+        "businessDate",
+        "note",
+        "fromWarehouseId",
+        "toWarehouseId",
+        "lines"
+      ],
+      "types": {
+        "transferId": "canonical existing transfer UUID",
+        "expectedVersion": "positive integer <=2147483647",
+        "businessDate": "actual YYYY-MM-DD",
+        "note": "string|null; <=10000 UTF16 units",
+        "fromWarehouseId": "canonical UUID",
+        "toWarehouseId": "canonical UUID"
+      },
+      "lineExactKeys": [
+        "existingLineId",
+        "skuId",
+        "quantity"
+      ],
+      "lineTypes": {
+        "existingLineId": "canonical owned current transferLine UUID|null",
+        "skuId": "canonical actual SKU UUID",
+        "quantity": "positive canonical exact integer text within existing signed bigint storage; zero/negative rejected"
+      },
+      "budgets": {
+        "requestBytes": 131072,
+        "linesMin": 1,
+        "linesMax": 200,
+        "saveEnvelopeBytes": 524288
+      },
+      "forbidden": [
+        "caller actor/role/hall/creation facts",
+        "sales business type, prices, amounts, settlements or signed return rules",
+        "client snapshot/barcode/number/new document id",
+        "new native line UUID or source/stock metadata"
+      ]
+    },
+    "response": {
+      "exactKeys": [
+        "expectedVersion",
+        "draft"
+      ],
+      "draft": "Existing TransferDraft wire with exact quantity strings; original transferId and number retained, no number allocation",
+      "expectedVersion": "actual loaded version unchanged",
+      "notAuthorization": "SAVE keeps independent requestKey, full current auth/reference and CAS; preparation may repeat without business state reservation"
+    },
+    "nativeIdentityRules": {
+      "pointer": "Each nonnull existingLineId unique, actual owner=current transfer and isCurrent=true; no foreign adoption/noncurrent resurrection. Assign1..N in explicit input order, no SKU merging or implicit sort.",
+      "sameSKU": "Retain actual existing line ID and original snapshot/barcode, change only explicit quantity/order in returned draft.",
+      "newOrReplacedSKU": "New pointer or changed SKU allocates a distinct server transferLine ID and current actual native MAIN snapshot. Old ID omitted from new current draft; existing unchanged SAVE merge keeps old line isCurrent=false/snapshot unchanged.",
+      "creation": "Existing createdBy/createdHall/createdRole/time are not client proposal fields, not regenerated; original SAVE retains them."
+    },
+    "transferSpecificPolicy": {
+      "actor": "Trusted authenticated TransferActor includes accountId/hallId/role. Existing transfer transaction has no SalesCurrentIdentity port; do not invent or copy sales role restrictions. Current host auth and existing transfer authorization remain mandatory, repeated at actual SAVE.",
+      "oldAndProposedScope": "First authorize actual stored document, then proposed draft with previous=document. SALESPERSON current hall sees either actual endpoint OR trusted historical salesperson creation-hall branch, exactly existing transfer policy; ADMIN/WAREHOUSE follow original policy. No invented same-hall endpoint requirement or sales own-creator approval rule.",
+      "warehouses": "Both actual warehouse facts; from != to. Existing policy allows disabled outgoing warehouse only when its actual hasNonzeroInventory fact is true (nonzero, not guessed positive or selected-SKU inventory); disabled destination cannot receive. Do not add a new hall_enabled restriction absent from original policy.",
+      "disabledSKU": "Existing source reference provider permits retention/reduction at unchanged endpoints using prior aggregate allowance, including split rows; preserve that validation, do not copy sales all-enabled rule. Retained same-ID/same-SKU snapshots require no fresh enabled-MAIN lookup. New/replaced rows still need actual native MAIN as original manual transfer profile; no fabricated snapshot fallback.",
+      "quantity": "Transfer positive quantity only. No signed RETURN/EXCHANGE economics, money, sales settlement, or net-due checks.",
+      "state": "Only actual RUNTIME_LEDGER DRAFT and exact expectedVersion; CUTOFF_HISTORY remains HISTORY-only. APPROVE/UNAPPROVE/VOID transitions and stock ledger unchanged."
+    },
+    "readSequence": [
+      "Closed own-data parse/IDs/budgets before async; trusted actor only.",
+      "One original transfer UOW; server private nonce getReceipt binds original actor without receipt insert, then getTransfer once. Authorize stored record before disclosing state/version.",
+      "Check original stockBasis/DRAFT/version and all pointers. Prepare original id/number with explicit new endpoints/quantity and original snapshots for retained sameSKU rows.",
+      "Authorize proposed draft with previous original to retain correct creation-hall semantics. Sequential actual warehouse/SKU facts on the same client; no overlapping query calls on bounded client.",
+      "Get current native snapshots only for new/replaced IDs, validate via unchanged createNativeManualTransferReferences/source policy with previous doc; enforce current response/SAVE budgets.",
+      "Return complete expectedVersion+draft. No putRuntimeTransfer/putBalance/appendLedger/appendAudit/insertReceipt/number reserve/assert or posting entry call. Read view denies and poisons caught attempts; closes on callback exit."
+    ],
+    "readOnlyMeaning": "Zero business DML. Existing READ COMMITTED/advisory/FOR UPDATE/FOR SHARE locks allowed; not PostgreSQL READ ONLY. Warehouse nonzero fact is a real SELECT, no sparse zero materialization.",
+    "errors": {
+      "reuse": "Existing safe transfer 400/403/404/409/422/413 mappings; no raw SQL/provider text",
+      "pointer": "Foreign/noncurrent/duplicate pointer => INVALID_HTTP_INPUT400 as a new read proposal validation, no SAVE rule change",
+      "failure": "No partial prepared response; F1 retains original local form and conflicts/disabled references; no CREATE proof substitution"
+    },
+    "optionalHostPort": "Independent existingPreparation:{prepareExisting}; export suggested createNativeTransferExistingPreparation(dependencies), separate closed existing parser. Missing provider404, does not reuse preparation:prepareCreate presence.",
+    "minimalNewChecks": [
+      "Existing sameSKU original snapshot/id/number preserved with explicit quantity; zero write/number effects and original input unchanged.",
+      "New/replaced SKU has distinct server ID/current actual snapshot; omitted old row retained by unchanged SAVE; foreign/noncurrent/duplicate pointer denied.",
+      "Original and proposed visibility, trusted previous creator-hall branch, current disabled actors and version/state/HISTORY conflicts; no sales policy substitutions.",
+      "Disabled-out warehouse nonzero exception, disabled destination refusal, disabled retained SKU reduction at unchanged endpoints vs increased/new usage or endpoint movement refusal per original provider.",
+      "Positive integer quantities, endpoint inequality, explicit order, snapshot/MAIN freshness on later SAVE and request/response exact budgets.",
+      "Optional route404, exact wire/contenttype/query/auth/origin behavior and safe errors/no partial response."
+    ],
+    "candidateSourceExact": [
+      "packages/application/src/native-transfer-preparation.ts",
+      "apps/api/src/transfer-http.ts",
+      "tests/native-transfer-preparation.test.ts",
+      "apps/api/src/authenticated-document-commands.test.ts"
+    ],
+    "sourceReadOnlyReferences": [
+      "packages/application/src/transfer-policy.ts",
+      "packages/application/src/transfer-service.ts",
+      "adapters/postgres/src/transfer-unit-of-work.ts",
+      "packages/application/src/transfer-ports.ts"
+    ],
+    "noChanges": [
+      "transfer write/approval/reversal or per-warehouse conservation rules",
+      "DDL/shared contracts/frontend",
+      "existing create parser/provider/number allocation",
+      "actual host activation or source/MAIN grants"
+    ],
+    "sourceEvidence": [
+      {
+        "path": "packages/application/src/native-transfer-preparation.ts",
+        "sha256": "1a6b685ba89d956a6850dff4d998db58a93c1e90dc46e24ba22188d6d22ae63a"
+      },
+      {
+        "path": "packages/application/src/transfer-policy.ts",
+        "sha256": "9a54a66edfb3f0d3d5f5ac6ccd26951fd234f336b2a26532b36f0d6c9df1a7e2"
+      },
+      {
+        "path": "packages/application/src/transfer-service.ts",
+        "sha256": "d5ecbcd510450cfd2badbb2a2dac468a6af0f368623a5842cb9e0a3045a59bb3"
+      },
+      {
+        "path": "packages/application/src/transfer-ports.ts",
+        "sha256": "7013b806e7e3e0b46faa0cb8a94571bda4eeeaf43454db10522698d1cc3ff835"
+      },
+      {
+        "path": "adapters/postgres/src/transfer-unit-of-work.ts",
+        "sha256": "d4b4f40dfa40663e588692f41e2874a9622271723d014a19c4fa03add7aee426"
+      },
+      {
+        "path": "apps/api/src/transfer-http.ts",
+        "sha256": "cd27d8752ee638930675831c5bb4c43bea5d771d129ff87875e2c423b934b8f3"
+      },
+      {
+        "path": "apps/api/src/transfer-input.ts",
+        "sha256": "895d1a970caa5bd0d2933ab5d48abd49c8b104a5d783b7e2db191dd6d173333a"
+      },
+      {
+        "path": "packages/application/src/transfer-payload-budget.ts",
+        "sha256": "d597165d85cd0d51759f22be9945573dcebd518f50a11fdbb4da771956226098"
+      }
+    ]
+  }
+}

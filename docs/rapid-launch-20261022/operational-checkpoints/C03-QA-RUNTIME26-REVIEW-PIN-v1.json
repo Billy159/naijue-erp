@@ -1,0 +1,34 @@
+{
+  "atUtc": "2026-10-22T20:02:22.939243+00:00",
+  "authorityFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/runtime26-qa-server-probe-review-v1.json",
+  "authoritySha256": "d824e67d0477e5a3aae49eb16fddcc7bb45ebc0c7cd49db086b3a52973b972ff",
+  "purposes": [
+    "PRODUCT_MAINTENANCE",
+    "PRODUCT_SEASONS_READ"
+  ],
+  "target": {
+    "database": "erp_qa_rapid26_20261022_01",
+    "databaseOid": "1029372",
+    "actingRole": "erp_qa_owner_20261022_01",
+    "sessionUser": "t15_prod_bootstrap",
+    "serverAddress": null,
+    "serverPort": null,
+    "postmasterStart": "2026-10-04 08:16:07.895273+00"
+  },
+  "catalog": {
+    "format": "EXACT26_RUNTIME_CATALOG_EXPORT_V1",
+    "sha256": "e37dd0c0b723bd5525c10f1cbcef563397db3135cb81948796a78aaf555d3dc2",
+    "patchLevel": "26_v7_media_color_swap"
+  },
+  "independentReview": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/c03-runtime26-live-probe-20261023-35/bundle/INDEPENDENT-REVIEW.json",
+    "sha256": "91f8be527957881f377f81059db19dce9bbf045b7be41354723d79e44720addb",
+    "result": "PASS"
+  },
+  "realImportExecutionAuthorized": false,
+  "actualIssuerCreated": true,
+  "jobId": "c03-runtime26-live-probe-20261023-35",
+  "actualIssuerLifetime": "C35 isolated QA process only; pool closed, not a live daemon or R1 grant",
+  "actualResult": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-runtime26-live-probe-20261023-35/release-receipts/c03-runtime26-live-probe-20261023-35/engine-result.json",
+  "actualResultSha256": "cbf41f37ee8e151614af57509c2a2a0aa7d6911a1462eac4f7eb498c88236a6b"
+}

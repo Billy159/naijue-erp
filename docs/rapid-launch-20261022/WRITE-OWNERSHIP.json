@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T18:14:38.234255+00:00",
+  "updatedAt": "2026-10-22T20:05:31.632071+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -389,6 +389,21 @@
           "path": "apps/api/src/sales-preparation-http.test.ts",
           "group": "EXISTING_SALES_READ_PREPARATION_ONLY",
           "fieldGate": "NO_SAVE_CONTRACT_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/api/src/transfer-http.ts",
+          "group": "EXPLICIT_EXISTING_READ_PREPARATION",
+          "fieldGate": "NO_NEW_SCHEMA_OR_WRITE_CONTRACT"
+        },
+        {
+          "path": "tests/native-transfer-preparation.test.ts",
+          "group": "EXPLICIT_EXISTING_READ_PREPARATION",
+          "fieldGate": "NO_NEW_SCHEMA_OR_WRITE_CONTRACT"
+        },
+        {
+          "path": "apps/api/src/authenticated-document-commands.test.ts",
+          "group": "EXPLICIT_EXISTING_READ_PREPARATION",
+          "fieldGate": "NO_NEW_SCHEMA_OR_WRITE_CONTRACT"
         }
       ]
     },
@@ -975,6 +990,20 @@
           "path": "tests/product-media-stage.test.ts",
           "group": "CONTROLLED_MEDIA_CODEC_AND_PRIVATE_STAGE",
           "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS"
+        },
+        {
+          "path": "adapters/postgres/src/product-warehouse-stock-reader.ts",
+          "group": "EXPLICIT_RUNTIME26_STOCK_READ_NEW_BRANCH",
+          "fieldGate": "NO_SCHEMA_OR_BUSINESS_RULE_CHANGE",
+          "transferredFrom": "D3",
+          "transferAuthority": "C after D3 explicit no in-flight/queued/unreceipted work and release in current controller reply"
+        },
+        {
+          "path": "tests/product-warehouse-stock-postgres-protocol.test.ts",
+          "group": "EXPLICIT_RUNTIME26_STOCK_READ_NEW_BRANCH",
+          "fieldGate": "NO_SCHEMA_OR_BUSINESS_RULE_CHANGE",
+          "transferredFrom": "D3",
+          "transferAuthority": "C after D3 explicit no in-flight/queued/unreceipted work and release in current controller reply"
         }
       ]
     },
@@ -1109,16 +1138,6 @@
         {
           "path": "packages/application/src/inventory-ledger-query-validation.ts",
           "fieldGate": "HISTORY_REVISE_NEW_ENUM_OR_PARSER_BRANCH_REQUIRES_C01_USER_APPROVAL"
-        },
-        {
-          "path": "adapters/postgres/src/product-warehouse-stock-reader.ts",
-          "group": "R1_STOCK_AND_REAL_IMPORT_HOST",
-          "fieldGate": "C01_20261022_V1_APPROVED_ONLY"
-        },
-        {
-          "path": "tests/product-warehouse-stock-postgres-protocol.test.ts",
-          "group": "R1_STOCK_AND_REAL_IMPORT_HOST",
-          "fieldGate": "C01_20261022_V1_APPROVED_ONLY"
         },
         {
           "path": "scripts/import-v3/production-source-host.mjs",
@@ -1329,6 +1348,58 @@
           "path": "tests/import-v3-history-staging.test.ts",
           "group": "NATIVE_IMPORT_26_EXPLICIT_SUCCESSOR_MINIMAL_SCOPE",
           "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_CONTRACT"
+        },
+        {
+          "path": "scripts/import-v2/authorized-history-closure-reader.mjs",
+          "group": "EXPLICIT26_FULL_PROJECTION_CLOSURE_READER",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_WRITE_CONTRACT"
+        },
+        {
+          "path": "scripts/import-v2/authorized-history-closure-reader.test.mjs",
+          "group": "EXPLICIT26_FULL_PROJECTION_CLOSURE_READER",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_WRITE_CONTRACT"
+        },
+        {
+          "path": "scripts/import-v3/native-sku-source26.mjs",
+          "group": "GENUINE_APPROVED26_SKU_PAYMENT_SOURCE",
+          "fieldGate": "NO_NEW_SCHEMA_OR_WRITE_CONTRACT"
+        },
+        {
+          "path": "scripts/import-v3/native-sku-source26.test.mjs",
+          "group": "GENUINE_APPROVED26_SKU_PAYMENT_SOURCE",
+          "fieldGate": "NO_NEW_SCHEMA_OR_WRITE_CONTRACT"
+        },
+        {
+          "path": "scripts/import-v3/native-payment-source26.mjs",
+          "group": "GENUINE_APPROVED26_SKU_PAYMENT_SOURCE",
+          "fieldGate": "NO_NEW_SCHEMA_OR_WRITE_CONTRACT"
+        },
+        {
+          "path": "scripts/import-v3/native-payment-source26.test.mjs",
+          "group": "GENUINE_APPROVED26_SKU_PAYMENT_SOURCE",
+          "fieldGate": "NO_NEW_SCHEMA_OR_WRITE_CONTRACT"
+        },
+        {
+          "path": "scripts/import-v3/native-product-source26.mjs",
+          "group": "GENUINE_PRODUCT26_REVIEWED_SOURCE_CONSUMER",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_IDS_NO_SQL",
+          "authority": "C registers D3 existing product2956 reference/source reuse only; no source execution grant"
+        },
+        {
+          "path": "scripts/import-v3/native-product-source26.test.mjs",
+          "group": "GENUINE_PRODUCT26_REVIEWED_SOURCE_CONSUMER",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_IDS_NO_SQL",
+          "authority": "C registers D3 existing product2956 reference/source reuse only; no source execution grant"
+        },
+        {
+          "path": "scripts/import-v3/native-party-source26.mjs",
+          "group": "GENUINE_PARTY26_REVIEWED_SOURCE_CONSUMER",
+          "fieldGate": "EXISTING_APPROVED_MAPPING_NO_NEW_IDS_NO_CREDENTIAL_READ_NO_SQL"
+        },
+        {
+          "path": "scripts/import-v3/native-party-source26.test.mjs",
+          "group": "GENUINE_PARTY26_REVIEWED_SOURCE_CONSUMER",
+          "fieldGate": "EXISTING_APPROVED_MAPPING_NO_NEW_IDS_NO_CREDENTIAL_READ_NO_SQL"
         }
       ]
     },
@@ -2328,6 +2399,41 @@
           "path": "apps/web/src/transfers/document-presentation.tsx",
           "group": "FROZEN_DEMO_COMPLETE_UI_PRESENTATION_ONLY",
           "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/web/src/demo-controls/single-select-contract.ts",
+          "group": "EXISTING_DEMO_SINGLE_SELECT_OPTIONAL_READ_PRESENTATION_SEAM",
+          "fieldGate": "NO_BUSINESS_OR_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/web/src/demo-controls/single-select-action.tsx",
+          "group": "EXISTING_DEMO_SINGLE_SELECT_OPTIONAL_READ_PRESENTATION_SEAM",
+          "fieldGate": "NO_BUSINESS_OR_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/web/src/current-form/existing-document-preparation.ts",
+          "group": "EXISTING_DOCUMENT_READ_PREPARATION_PURE_ADAPTER",
+          "fieldGate": "FROZEN_EXISTING_FIELDS_READ_DTO_NO_SCHEMA_OR_SAVE_CHANGE"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-existing-document.ts",
+          "group": "EXISTING_DOCUMENT_FULL_FORM_AND_ORIGINAL_NATIVE_OWNER_BRIDGE",
+          "fieldGate": "EXISTING_FROZEN_READ_DTO_AND_SAVE_UNCHANGED"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-existing-document.ts",
+          "group": "EXISTING_DOCUMENT_FULL_FORM_AND_ORIGINAL_NATIVE_OWNER_BRIDGE",
+          "fieldGate": "EXISTING_FROZEN_READ_DTO_AND_SAVE_UNCHANGED"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-existing-document-form.tsx",
+          "group": "EXISTING_DOCUMENT_FULL_FORM_AND_ORIGINAL_NATIVE_OWNER_BRIDGE",
+          "fieldGate": "EXISTING_FROZEN_READ_DTO_AND_SAVE_UNCHANGED"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-existing-document-form.tsx",
+          "group": "EXISTING_DOCUMENT_FULL_FORM_AND_ORIGINAL_NATIVE_OWNER_BRIDGE",
+          "fieldGate": "EXISTING_FROZEN_READ_DTO_AND_SAVE_UNCHANGED"
         }
       ]
     }
@@ -2454,5 +2560,25 @@
     "maintenanceSupplement": "FIELD-APPROVAL-SUPPLEMENT-v2-B.json",
     "seasonSupplement": "FIELD-APPROVAL-SUPPLEMENT-v3-A.json",
     "rejected": "product_season relation table"
-  }
+  },
+  "ownershipTransfers": [
+    {
+      "path": "adapters/postgres/src/product-warehouse-stock-reader.ts",
+      "from": "D3",
+      "to": "D2",
+      "atUtc": "2026-10-22T19:58:52.098047+00:00",
+      "scope": "readStock26 missing branch only; legacy/overview valid evidence reused",
+      "D3Released": true,
+      "RNoDiffAtTransfer": true
+    },
+    {
+      "path": "tests/product-warehouse-stock-postgres-protocol.test.ts",
+      "from": "D3",
+      "to": "D2",
+      "atUtc": "2026-10-22T19:58:52.098047+00:00",
+      "scope": "readStock26 missing branch only; legacy/overview valid evidence reused",
+      "D3Released": true,
+      "RNoDiffAtTransfer": true
+    }
+  ]
 }

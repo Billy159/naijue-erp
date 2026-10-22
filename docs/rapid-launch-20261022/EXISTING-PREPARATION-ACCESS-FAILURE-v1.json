@@ -1,0 +1,8 @@
+{
+  "scope": "Frontend pending proposal error policy; no backend permission or SAVE rule change",
+  "401": "Existing identity invalidation/isolation behavior",
+  "403Proposal": "Keep original pending input; stop prepare/no result adoption; do not treat one proposed reference rejection as old document authorization loss; block submitting changed proposal without successful new prepare; no automatic retry or create/old-proof fallback",
+  "403ActualOldDocumentReadOrSave": "Existing actual old-document authorization failure handling remains",
+  "UncertainWrite": "Retain original key/receipt recovery lock; prepare does not bypass it",
+  "SharedOptionalPorts": "sales.commands.existingPreparation / transfers.commands.existingPreparation, type-only imports; not committed separately before F1 actual public exports are fixed"
+}

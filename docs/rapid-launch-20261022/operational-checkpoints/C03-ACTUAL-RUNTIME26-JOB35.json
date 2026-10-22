@@ -1,0 +1,18 @@
+{
+  "atUtc": "2026-10-22T20:02:22.939243+00:00",
+  "jobId": "c03-runtime26-live-probe-20261023-35",
+  "result": "PASS_ACTUAL_QA_RUNTIME26_LIVE_LEASE_READ_ONLY_ONLY",
+  "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-runtime26-live-probe-20261023-35/release-receipts/c03-runtime26-live-probe-20261023-35/engine-result.json",
+  "evidenceSha256": "cbf41f37ee8e151614af57509c2a2a0aa7d6911a1462eac4f7eb498c88236a6b",
+  "scope": "Original D1 issuer/managed pool/actual live lease and one READ ONLY COMMIT; no business DML. Pool closed.",
+  "qaState": {
+    "accounts": 2,
+    "products": 1,
+    "images": 2,
+    "audits": 9,
+    "receipts": 9,
+    "sourceRows": 0
+  },
+  "notR1OrSourceAuthority": true,
+  "notPersistentIssuer": true
+}

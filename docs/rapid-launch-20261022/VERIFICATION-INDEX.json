@@ -8136,10 +8136,911 @@
         "Actual source import/publication",
         "Production target unchanged"
       ]
+    },
+    {
+      "id": "QB-slice96-payment1086-source-reference-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice96-payment1086-source-reference/RESULT.json",
+      "evidenceSha256": "ed5f208fb9648fdf25aaf4f8475de262977e83fa162482eb9ba9d665c9bc33c4",
+      "sourceCommit": null,
+      "result": "PASS",
+      "scope": "Exact6735139B payment1086 candidate126dbc64;12methods84accounts990relations/12chunks",
+      "qualification": "Only new payment source/reference candidate; no native/import/MAIN grant",
+      "notTested": [
+        "No actual26paymentstore/runtimeissuance/sourcefactory/11factories/MAIN/PG/nativewrite/PUBLISH; C mustseparatelyoutside-pin exactcandidate.",
+        "Candidate source/reference approval isnot actualnativebindingoraccount/hallpermissiongrant."
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QB-slice97-actual-v7-runtime-metadata-c33-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice97-actual-v7-runtime-metadata-c33/RESULT.json",
+      "evidenceSha256": "91f8be527957881f377f81059db19dce9bbf045b7be41354723d79e44720addb",
+      "sourceCommit": null,
+      "result": "PASS",
+      "scope": "C33 actualapprovedsingleguard+target/catalog/canonicaldelta;source91/issuer95 andprioractualv6/structure/ACL reused",
+      "qualification": "Independent actual saved engine/export binding for this exact QA target v7metadata only; no SOURCE/MAIN/production permission",
+      "notTested": [
+        "QB read saved immutableengine/export;no livePG/probe rerun/guardinstall oractualissuercreation. Actualissuer mustrechecksameidentity/digest onitsownleases.",
+        "Source/nativebinding/49/bootstrap/MAIN/PUBLISH/productionACL/businessacceptance notgranted. QA isknownsynthetic andnotemptyMAIN; laterC34DMLstate isnot reverifiedbyQB.",
+        "Report isactualmetadata binding only; itdoesnotpromote source95 or SQLsuccessalone towhole import readiness."
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QB-slice98-readonly-stage-manifest-5b363f44-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice98-readonly-stage-manifest-5b363f44/RESULT.json",
+      "evidenceSha256": "2c651158c0a810cbc8f666cd5f88c127d49a9b7e325dfda04db51265b9629bee",
+      "sourceCommit": "5b363f44d303415d26030622d4aee6690259c0d3",
+      "result": "PASS",
+      "scope": "5b363f44新增createManifestResolver，冻结API4908cfc8；旧codec/stageF01/W17W18写入不重复",
+      "qualification": "固定exact2新只读映射源码/真实私有合成文件与脚本化native可见性协议；非actual host/nativeDB/HTTP/browser验收",
+      "notTested": [
+        "真实production root/artifact/native currentreader/权限/host/F2/HTTP/browser/部署未验；无PG写入/actual授权。",
+        "旧原图映射/媒体回填未做；合成provider权限不代表实际账号。"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QB-slice99-payment26-store-5b363f44-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice99-payment26-store-5b363f44/RESULT.json",
+      "evidenceSha256": "1325d5bd70142257ea5b14ce6500c102a8fea4123d4f0e123f99cec24b16bbe5",
+      "sourceCommit": "5b363f44d303415d26030622d4aee6690259c0d3",
+      "result": "PASS",
+      "scope": "5b363f44仅PostgresNativePaymentImportStore26及新3/affected2；不重原款项/状态/权限/来源规则",
+      "qualification": "固定exact2新增explicit26付款store门/受影响事务协议，非实际PG/native/source执行授权",
+      "notTested": [
+        "无实际PG/runtime/native付款写入/sourcegrant/11factory/MAIN/PUBLISH/生产。",
+        "源码consumer接受独立actualcap不等于此report发行cap或批准款项权限。"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QB-slice100-header-transfer26-5b363f44-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice100-header-transfer26-5b363f44/RESULT.json",
+      "evidenceSha256": "6b32e245b5487e5ff381b5a3986b92a28aa1b224f5270c00a51f2c2a7a7819b2",
+      "sourceCommit": "5b363f44d303415d26030622d4aee6690259c0d3",
+      "result": "PASS",
+      "scope": "5b363f44新增两explicit26 constructor，actualclient IMPORT_STAGE首SQL前+锁后private26；原header/transfer行形态不变",
+      "qualification": "固定exact4新header/transfer store26门与脚本化事务协议；未PG/42561原来源复审或实际导入",
+      "notTested": [
+        "未实际runtimeissuer/PG/源factory/49bootstrap/MAIN/PUBLISH/生产。",
+        "legacy host19-bound及newhost显式export选择仍须最终11factory集成证据；本片不宣称完整host可执行。"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QB-slice101-sales-settlement26-resolvers-7939759f-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice101-sales-settlement26-resolvers-7939759f/RESULT.json",
+      "evidenceSha256": "f98642acea60670ef31342b2d5e86ceb7711666390100174fc8bc02da28c84eb",
+      "sourceCommit": "7939759f5bc702e8beeb5a47776f7ee8e3101c88",
+      "result": "PASS",
+      "scope": "7939759f相对5b363f44新增sales-detail/settlement explicit26门及两只读解析器，原事实和旧schema边界复用",
+      "qualification": "固定exact5新增两store26及两resolver26源码/脚本化事务协议；未PG/真实导入或MAIN组合",
+      "notTested": [
+        "未实际runtime26 issuer/PG/真实source producer/11factory组合/MAIN49/PUBLISH/生产。",
+        "脚本化client检查不等于数据库SQL或完整导入已通过。"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QB-slice102-existing-sales-preparation-258d54a3-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice102-existing-sales-preparation-258d54a3/RESULT.json",
+      "evidenceSha256": "e78a37ed0bdeadce49e9a8ab3a29d79bee0d526e91a96b4e227f49e302306192",
+      "sourceCommit": "258d54a378faa29f650fa04eca24191511f90ef6",
+      "result": "PASS",
+      "scope": "独立闭合proposal/parser、零业务DML准备provider、独立HTTP opt-in；原prepareCreate/parser/SAVE/编号核心不改",
+      "qualification": "固定exact5新增prepare-existing源码/纯合成协议，遵循C冻结read contract；未实际PG或host启用",
+      "notTested": [
+        "未实际PG/真实业务保存/host route activation/浏览器；纯合成UOW与HTTP注入。",
+        "零业务DML不等于PostgreSQL READ ONLY：复用READ COMMITTED原行锁/advisory/reference锁，未剥锁或改SQL。"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QB-slice103-executor26-cli-258d54a3-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice103-executor26-cli-258d54a3/RESULT.json",
+      "evidenceSha256": "299de1012e6e0fbc758fcfd3f2bb9fd039ee06afe4960b16e9651d372f96fd09",
+      "sourceCommit": "258d54a378faa29f650fa04eca24191511f90ef6",
+      "result": "PASS",
+      "scope": "独立NATIVE_IMPORT_EXECUTION_26_V1、actual issued pool/cap依赖注入、closed source authority/bootstrap接口、explicit26 stage路由和CLI选择",
+      "qualification": "固定exact2显式executor26/CLI源码与合成client协议；成功正例仅BARCODE26，不是MAIN49或11producer实测",
+      "notTested": [
+        "未实际D1 issuer/PG/native写入/source grant、真实49bootstrap或成功MAIN26；未完整11producer/openImportHost26组合/生产。",
+        "合成成功只走BARCODE26；12kind静态映射不是12路径端到端测试。"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QB-slice104-full26-closure-reader-af2c3c20-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice104-full26-closure-reader-af2c3c20/RESULT.json",
+      "evidenceSha256": "4d1d64c7857784d3aafe5daf2c32e5910ebb6241de2df7e603b5b11e863d6130",
+      "sourceCommit": "af2c3c202fa01881b67ea739d1d712941c14b126",
+      "result": "PASS",
+      "scope": "openAuthorizedHistoryClosureReader26独立接入已审full26 projection/buildExpected，原export保留旧形态",
+      "qualification": "固定exact2新增full26授权闭包reader源码与合成来源协议，未真实11factory/PG/MAIN",
+      "notTested": [
+        "未真实11factory/源actor49/bootstrap/full execution grant/runtime26或PG。",
+        "未closure持久化/MAIN/PUBLISH/生产，合成11stream正例不代表真实来源齐备。"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QB-slice105-executable-host26-6a23762d-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice105-executable-host26-6a23762d/RESULT.json",
+      "evidenceSha256": "148ebaf99837911d142fd55d90b1bae10a1e4c665c43eb73db922ecff9f251c8",
+      "sourceCommit": "6a23762d0bd515fd19f684d4ccc08e45a911cb16",
+      "result": "PASS",
+      "scope": "closed9 executable job/closed11 source session及source preflight→D1实际issuer组合；原input-only26与旧host不改",
+      "qualification": "固定exact2新增executablehost26/runtime gate源码与合成生命周期协议；0PG/无真实issuer或SOURCE grant",
+      "notTested": [
+        "未实际C metadata consumed/issuer实际签发/PG/native写入。",
+        "未all11真实producer/真实49bootstrap/full SOURCE execution grant/MAIN/PUBLISH；session函数齐全和preflight协议通过不代表实际来源闭包已通过。",
+        "C35当前仅待collect的metadata/readOnly scope不被本结果扩成SOURCE/MAIN/R1权限。"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QB-slice106-payment26-artifact-consumer-6a23762d-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice106-payment26-artifact-consumer-6a23762d/RESULT.json",
+      "evidenceSha256": "ce6bb6a1cb426537ce2c2a55e081fc46072d805c620b46e4d6d43b2f17d0c809",
+      "sourceCommit": "6a23762d0bd515fd19f684d4ccc08e45a911cb16",
+      "result": "PASS",
+      "scope": "C ef981 reference-only针与QB96已验资料的新消费路径、global跨chunk身份/引用闭包、文件生命周期和MAIN hash缺失闭锁",
+      "qualification": "固定exact2新consumer源码/合成协议PASS，复用已存实际1086批准artifact消费与逐批authorize；0PG/无SOURCE执行权",
+      "notTested": [
+        "未actualfull SOURCE/MAIN/STAGE/PUBLISH execution grant/49bootstrap/runtime26/PG/native写入。",
+        "全来源执行hash目前未知；合成fullclosure正例与reference-only实际消费均不能证明实际MAIN闭包已开放。",
+        "QB本轮仅新consumer/source组合源码审查及已有实际artifact消费证据核验，未重复QB96原始资料审查或执行旧测试。"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QB-slice107-existing-transfer-preparation-16ea5b98-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice107-existing-transfer-preparation-16ea5b98/RESULT.json",
+      "evidenceSha256": "27ba30541ef448d11602175331bf87d0c23db468f1e68a45c3ff075861da17fe",
+      "sourceCommit": "16ea5b987b21a6718dfd7c81ac78a8c8f0509f14",
+      "result": "PASS",
+      "scope": "C冻结technical read contract及v1/v2收据约束下的调拨原单准备；原create/policy/PG/WRITE和QF publicports scope不重验",
+      "qualification": "固定exact4新增transfer prepare-existing源码/合成协议，v2只2个测试EOF LF变化；无实际PG或host启用",
+      "notTested": [
+        "未实际PG/业务保存/host与浏览器启用/actual media prepared或HTTP/R1。",
+        "未SOURCE/MAIN/PUBLISH权限或导入执行；C35 runtime QA不授予这些权限。",
+        "QF frontend publicports3及C types1不作本任务重复技术验收，仅必要类型上下文。"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QB-slice108-sku26-genuine-consumer-d6ad29c7-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice108-sku26-genuine-consumer-d6ad29c7/RESULT.json",
+      "evidenceSha256": "5cebe5da6ed451dbf98f71f765a28bf231f05e9ae690a596e7f6d8436b2a2314",
+      "sourceCommit": "d6ad29c7d8b105e517a95e70bcb48138b55bd817",
+      "result": "PASS",
+      "scope": "完整native9重建/sourcejoin/全alias/prepare指纹/full26 closure和文件生命周期，旧2956/18/344/去重业务规则不重审",
+      "qualification": "固定exact2新SKU consumer源码与合成协议；复用D3 actual14999/15121消费及已验QB94引用决策，0PG/无MAIN执行权",
+      "notTested": [
+        "未all11真实source producer/49bootstrap/真实MAIN payload或SOURCE/STAGE/PUBLISH执行授权/runtime26/PG/native写入/生产。",
+        "本次未重新运行既有实际全量消费、未全registry/原362MB/Workbook/gzip读取或原QA重跑；实际full26 closure成功只有合成固定小样，actual缺MAIN hash保持关闭。"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QB-slice109-current-product-code-search-3af57db5-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice109-current-product-code-search-3af57db5/RESULT.json",
+      "evidenceSha256": "667ad44a35149cf9ecc4d4cbc744719b84e01718a82a81dd44de5f10cdeca74b",
+      "sourceCommit": "3af57db5fde74da1544e57200dee6f9c85f99bc6",
+      "result": "PASS",
+      "scope": "仅6字符新native字段字面contains、来源未发布排除、shared count/page EXISTS；短search/身份厅权限/分页DTO保持",
+      "qualification": "固定exact2新增商品code contains搜索源码/合成协议；实际R1三列SELECT权限尚未授予，未PG或真实性能",
+      "notTested": [
+        "未PG/实际SQL执行/大数据性能或浏览器/host激活/生产。",
+        "R1实际角色对import_source_row(batch_id,entity_type,field_provenance)三列SELECT尚未授予；source PASS不表示当前R1可运行。既有import_batch id/status权限沿原合同。",
+        "F1提示消费及其它frontend不在本独立后端审查范围。"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-da61c6a0-F1-ROOT-CAPTURE-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-da61c6a0/F1-ROOT-CAPTURE-REVIEW.json",
+      "evidenceSha256": "4c95fc3e1e5fa58f709c918d0f2a275224ef65da97dad9810ae7df61891e9181",
+      "sourceCommit": "da61c6a0e34150cdaf3f82389573e584ea378e05",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "DEMO_V008_ROOT_CAPABILITY_CAPTURE_AND_FINDER_POPUP",
+      "qualification": null,
+      "notTested": [],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-258d54a3-F1-TRANSFER-UI-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-258d54a3/F1-TRANSFER-UI-REVIEW.json",
+      "evidenceSha256": "4876df0a68cc3d552a402f7b4c49ef11b58cfef6313c5c9e4ef28fce7022240e",
+      "sourceCommit": "258d54a378faa29f650fa04eca24191511f90ef6",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "TRANSFER_WHOLE_UI_AND_ACTUAL_THREE_CONSUMERS",
+      "qualification": null,
+      "notTested": [
+        "Chrome/CUA/browser-harness or real app shell/wholepage geometry",
+        "PG, real save/audit/readback/role authorization",
+        "Full build/deploy/release activation",
+        "Actual readonly Transfer401 callback journey",
+        "Excel app/physical print/performance/concurrency"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-af2c3c20-F1-SELECT-SEAM-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-af2c3c20/F1-SELECT-SEAM-REVIEW.json",
+      "evidenceSha256": "a5a25fcc10e5f0013a8d378e21977a041c7f5781ae2b7fa8ed2de215f3c6ee1b",
+      "sourceCommit": "af2c3c202fa01881b67ea739d1d712941c14b126",
+      "result": "PASS_SOURCE_COMPATIBILITY_ONLY",
+      "scope": "DEMO_SINGLE_SELECT_FOUR_OPTIONAL_PRESENTATION_PORTS",
+      "qualification": null,
+      "notTested": [
+        "F2 YEAR-first consumer, actual native50-page/loading/error/retry wiring",
+        "Browser visual/keyboard/portal geometry",
+        "Full build/deploy/PG/native business commands"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-87559312-F1-STYLE-EXPORT-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-87559312/F1-STYLE-EXPORT-REVIEW.json",
+      "evidenceSha256": "c01be82b2d5ec904e97f1763a9ff2aa168ddac36e49f27d7c8e75461228978d7",
+      "sourceCommit": "87559312f75e4c96db72305d1c42e6ffe50580b4",
+      "result": "PASS_SOURCE_EXPORT_ONLY",
+      "scope": "SINGLE_SELECT_INERT_STYLE_FACTORY_EXPORT",
+      "qualification": null,
+      "notTested": [
+        "F2 actual YEAR consumer and runtime journey",
+        "W7 root runtime; missing-export observation is not W7 PASS",
+        "Browser, full build, PG, deploy"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-87559312-F3-STORE-P2-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-87559312/F3-STORE-P2-REVIEW.json",
+      "evidenceSha256": "b098ab8392b73822543745ac8df855ecf8e406c8ee90bfc6bef7959eeab9ec33",
+      "sourceCommit": "87559312f75e4c96db72305d1c42e6ffe50580b4",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "STORE_UI_P2_PAGER_SCROLL_DRAFT_NOTE",
+      "qualification": null,
+      "notTested": [
+        "Actual Chrome/CUA/browser-harness or new fixed preview geometry",
+        "Native scroll clamping and full browser hover/focus cascade",
+        "Modal commands/audit actual host capability",
+        "PG/business/full build/deploy/release"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-6a23762d-F1-ACCOUNT-ROOT-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-6a23762d/F1-ACCOUNT-ROOT-REVIEW.json",
+      "evidenceSha256": "0b32b0ac1f4a54163784cc208487481a9434099fd5bcbc0a7b95198df19bcced",
+      "sourceCommit": "6a23762d0bd515fd19f684d4ccc08e45a911cb16",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "W7_ACTUAL_APPLICATION_ROOT",
+      "qualification": null,
+      "notTested": [
+        "Node24.21 actual root runtime rerun; independent fixed strict types only on24.21",
+        "Actual administrator/credential/backend provider authorization or PG/account mutation",
+        "Production host flag activation, true asset/network loading or latest browser preview",
+        "Whole build/release/deploy/roleUAT"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-6a23762d-F2-YEAR-CONSUMER-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-6a23762d/F2-YEAR-CONSUMER-REVIEW.json",
+      "evidenceSha256": "0c0e993e6ff478cf35fcfa251367e96436bbaf7e0165f073fb85978fe1d9ce11",
+      "sourceCommit": "6a23762d0bd515fd19f684d4ccc08e45a911cb16",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "YEAR_SHARED_SELECT_ACTUAL_CONSUMER",
+      "qualification": [
+        "DOM main fixture installs actual CSS bytes with honest recognized inline marker, not real asset delivery.",
+        "Lifecycle bundle maps import.meta.url to synthetic asset module URL and dispatches load/error explicitly; actual bytes injected. No network/deployed asset closure.",
+        "Host rect/1470 viewport controlled synthetically; 400.75→180→400.75 width is DOM formula proof, not actual browser layout/hover/scroll/position.",
+        "Source49 year rules reused as regression support; CSS51/P12 unchanged, no broad re-review."
+      ],
+      "notTested": [
+        "Actual browser",
+        "Whole build/release/deploy",
+        "PG/real business save or actual role authorization",
+        "Old P12 suite"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-6a23762d-F3-SHARED-SETTINGS-P2-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-6a23762d/F3-SHARED-SETTINGS-P2-REVIEW.json",
+      "evidenceSha256": "00e075c1faa3b1400344895ed1b03b6ee99069c910df321fa3d8ac22f822e807",
+      "sourceCommit": "6a23762d0bd515fd19f684d4ccc08e45a911cb16",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "SHARED_SETTINGS_PAGER_AND_PAYMENT_SCROLL_P2",
+      "qualification": [
+        "DOM/program logs are F3 supplied targeted evidence, reviewed and reused; no redundant DOM run.",
+        "Pager styles are isolated cloned actual shell probes with page adapters/static palette; not full Arco/global browser cascade. Hover/focus source-reviewed.",
+        "ScrollTop/Left are synthetic DOM properties, no physical native clamping/geometry proof.",
+        "Source matrix5b363 is not proof browser693 or875 consumes57 leaves; current browser875 lacks these source groups."
+      ],
+      "notTested": [
+        "Actual browser/new preview geometry, footer/tableY/native scrolling",
+        "Audit secondary metadata actual line geometry or wholeF09",
+        "PG/business/root/runtime/build/deploy"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-16ea5b98-C-OPTIONAL-EXISTING-CAPABILITIES-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-16ea5b98/C-OPTIONAL-EXISTING-CAPABILITIES-REVIEW.json",
+      "evidenceSha256": "f8716fc83ff162d6bca833ed38600fd31b7de057f4af3721c30bc1674fbe5c94",
+      "sourceCommit": "16ea5b987b21a6718dfd7c81ac78a8c8f0509f14",
+      "result": "PASS_SOURCE_COMPATIBILITY_ONLY",
+      "scope": "C_OPTIONAL_EXISTING_READ_CAPABILITY_PUBLIC_TYPES",
+      "qualification": null,
+      "notTested": [
+        "Nonexistent runtime consumer",
+        "Saved UI or business availability",
+        "Backend4 acceptance"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-16ea5b98-F1-EXISTING-READ-PORT-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-16ea5b98/F1-EXISTING-READ-PORT-REVIEW.json",
+      "evidenceSha256": "23dfbf94af4fd7c72c210ab01f87e3b5b554e71f3cb7d3e396609e583a93d293",
+      "sourceCommit": "16ea5b987b21a6718dfd7c81ac78a8c8f0509f14",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "EXISTING_DOCUMENT_STRICT_READ_PORTS_ONLY",
+      "qualification": [
+        "Canonical/unique pointers are local wire checks; actual ownership/current-row status, same-SKU versus replacement identity, snapshot/reference/number truth and authorization remain trusted backend preparation facts, not a client grant.",
+        "Response number only validated as existing wire field; client has no original-number authority in request. Tests preserve supplied original number but do not prove backend ownership or independently reject every changed number.",
+        "HistoricalNULL/newbarcode/current DTO tests use synthetic responses, not actual source/provider/PG. Zero local command requests is not evidence server performed no DML or PostgreSQL READ ONLY.",
+        "Signed business/gift/discount/minimum and old write behavior are source/validator reuse, no old broad three-business suite repeated."
+      ],
+      "notTested": [
+        "Saved UI/session consumer or new-SKU/header/warehouse usable editing",
+        "Actual backend/provider effects, auth/real data/PG",
+        "Mounted401/403 UI policy, original workspace conflict/recovery integration",
+        "Production host activation/build/deploy/browser"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-d6ad29c7-F1-FINDER-PORTAL-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-d6ad29c7/F1-FINDER-PORTAL-REVIEW.json",
+      "evidenceSha256": "8add1fb039730c3c137dfcd3d82dd46900c5fde33164cad15c11231a35341e21",
+      "sourceCommit": "d6ad29c7d8b105e517a95e70bcb48138b55bd817",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "FINDER_PORTAL_SCOPE_AND_ACTUAL_ANCHOR",
+      "qualification": [
+        "Bounds are explicitly injected JSDOM probes; not actual browser input dimensions, computed CSS/tokens, visible border/card/shadow/clipping/alignment or browser measurements.",
+        "CSS imports empty in synthetic runtime, base/spec/images providers return null/empty facts; frame containment only proves namespace parent, not actual theme variable winners.",
+        "No claim all reference/warehouse popup geometry tested; shared callback source-reviewed."
+      ],
+      "notTested": [
+        "Actual Chrome/browser-harness, new fixed preview tokens/geometry",
+        "Whole sales/transfer page or partial barcode lookup/saved existing UI",
+        "PG/business/write/build/deploy"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-d6ad29c7-F3-AUDIT-PLAIN-CELLS-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-d6ad29c7/F3-AUDIT-PLAIN-CELLS-REVIEW.json",
+      "evidenceSha256": "9338aa536be8004620d874ad7256fc8e701666aef757833f78c2e200d4d23b5e",
+      "sourceCommit": "d6ad29c7d8b105e517a95e70bcb48138b55bd817",
+      "result": "PASS_SOURCE_PRESENTATION_ONLY",
+      "scope": "AUDIT_PLAIN_CELLS_ONLY",
+      "qualification": null,
+      "notTested": [
+        "Actual overlay content/row height/pixels on new fixed preview",
+        "Runtime/root/native business or deployment"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-99d687b5-F1-PRODUCT-SHELL-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-99d687b5/F1-PRODUCT-SHELL-REVIEW.json",
+      "evidenceSha256": "f17e3de2f0b6e7243599af4dde5b108418b71d028eef019bba0a044648f5a61c",
+      "sourceCommit": "99d687b5b791c7bfad0efb81b9d08fe37ed7b2e3",
+      "result": "PASS_SOURCE_LAYOUT_ONLY",
+      "scope": "F1_CHUNK_39",
+      "qualification": null,
+      "notTested": [
+        "New fixed-preview actual product versus route width equality/clipping",
+        "Browser token/style winners or whole page",
+        "PG/business/full build/deploy"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-99d687b5-F1-SEARCH-SEAM-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-99d687b5/F1-SEARCH-SEAM-REVIEW.json",
+      "evidenceSha256": "cf852656050e820505cc7c5cf33028cad202b329e5d859fb62e170cbb45bad2f",
+      "sourceCommit": "99d687b5b791c7bfad0efb81b9d08fe37ed7b2e3",
+      "result": "PASS_SOURCE_COMPATIBILITY_ONLY",
+      "scope": "F1_CHUNK_38",
+      "qualification": null,
+      "notTested": [
+        "F2 actual size-group/barcode-scheme consumer",
+        "Browser search, remote query behavior or persistence",
+        "Whole build/PG/deploy"
+      ],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "Demo-v009-8755931-SALE-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v009-8755931/SALE-RESULT.json",
+      "evidenceSha256": "3f4dfc30e9e4e3516a56270dfa8c65ff3401f52040454f9cf2475b85b44cff7c",
+      "sourceCommit": {
+        "candidateId": "ui-preview-8755931-01",
+        "businessCommit": "87559312f75e4c96db72305d1c42e6ffe50580b4",
+        "previewOverlaySha256": "8fdfaecc2803f45333b618658158efbc0a58e65c4866cedd2e79b7d1d65782f4",
+        "buildId": "ui-preview-8755931-01-build01",
+        "htmlSha256": "6f4ac9e2ba7a2a2337c2b2045bb206adcf6f532c535770aa92833cc66d02237f",
+        "htmlBytes": 2753908,
+        "actualInputCount": 383,
+        "sourceModuleInputCount": 366,
+        "actualBuildInputSha256": "987b6da541217a0901f5329ee320c6c3c47611d96d1667defc16e10d8bb3f931",
+        "syntheticOnly": true,
+        "browserVerification": "NOT_RUN",
+        "databaseVerification": "NOT_RUN",
+        "wholeSalesPage": "NOT_ACCEPTED",
+        "knownRemaining": [
+          "Saved newSKU/reference trusted edit preparation",
+          "Transfer whole UI included; native existing readprepare not composed. Store3P2 source fixes included; shared settings/payment extension remains pending",
+          "Real saves/approvals/auth/inventory writes"
+        ],
+        "scenarios": [
+          "empty",
+          "sale-filled",
+          "sale-payment",
+          "line-edit",
+          "exchange",
+          "saved-sale-edit",
+          "saved-sale-view",
+          "saved-exchange-edit",
+          "saved-exchange-view"
+        ]
+      },
+      "result": "SCOPED_RECEIPT",
+      "scope": "actual Application sales new page only; affected capability/geometry/real product-view return",
+      "qualification": null,
+      "notTested": [
+        "remaining sales wholepage states",
+        "real save/audit/permissions/stock",
+        "native existing prepare / partial barcode"
+      ],
+      "findings": [
+        {
+          "id": "SALE-V008-CAPTURE-01",
+          "priority": "P1",
+          "status": "PAGE_RETEST_PASSED_NEW_CONSUMER_ONLY",
+          "difference": "root omitted sales.productFullPage; fallback data instead of actual reader",
+          "fixedAt": "apps/web/src/application/controller.ts; fixed independent capture from original F1 chunk31/root52",
+          "evidence": "SALE-FINDER-DOM.json realPreviewCount1; actual completed row -> real ProductFullPage -> return exact raw/rows equal",
+          "otherStates": "saved edit/view source same capture; not individually browser checked"
+        },
+        {
+          "id": "SALE-V006-01",
+          "priority": "P1",
+          "status": "PARTIAL_REPAIR_PAGE_DIFFERENCE_REMAINS",
+          "fixed": "actual root660px, grid270+382, adjacent real preview",
+          "remaining": "portal lacks --ca-* theme variables: list border0/shadow none, preview transparent; list270 differs entry262.8047. Original F1 notified; no whole region PASS.",
+          "source": "current-form/product-finder.css; callers Trigger portals; theme tokens exist in .demo-ui only"
+        },
+        {
+          "id": "SALE-V006-03",
+          "status": "UNCHANGED_REMAINING",
+          "remaining": "partial barcode lookup not closed by truthful separate scanner hint"
+        }
+      ],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false,
+      "boundary": "Actual browser local synthetic findings/partial checks only, not whole page/business/production acceptance"
+    },
+    {
+      "id": "Demo-v009-8755931-TRANSFER-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v009-8755931/TRANSFER-RESULT.json",
+      "evidenceSha256": "b3b2863047b649401c2a67f263309b12b42915a52a11826400efe62fc9a07f05",
+      "sourceCommit": {
+        "candidateId": "ui-preview-8755931-01",
+        "businessCommit": "87559312f75e4c96db72305d1c42e6ffe50580b4",
+        "previewOverlaySha256": "8fdfaecc2803f45333b618658158efbc0a58e65c4866cedd2e79b7d1d65782f4",
+        "buildId": "ui-preview-8755931-01-build01",
+        "htmlSha256": "6f4ac9e2ba7a2a2337c2b2045bb206adcf6f532c535770aa92833cc66d02237f",
+        "htmlBytes": 2753908,
+        "actualInputCount": 383,
+        "sourceModuleInputCount": 366,
+        "actualBuildInputSha256": "987b6da541217a0901f5329ee320c6c3c47611d96d1667defc16e10d8bb3f931",
+        "syntheticOnly": true,
+        "browserVerification": "NOT_RUN",
+        "databaseVerification": "NOT_RUN",
+        "wholeSalesPage": "NOT_ACCEPTED",
+        "knownRemaining": [
+          "Saved newSKU/reference trusted edit preparation",
+          "Transfer whole UI included; native existing readprepare not composed. Store3P2 source fixes included; shared settings/payment extension remains pending",
+          "Real saves/approvals/auth/inventory writes"
+        ],
+        "scenarios": [
+          "empty",
+          "sale-filled",
+          "sale-payment",
+          "line-edit",
+          "exchange",
+          "saved-sale-edit",
+          "saved-sale-view",
+          "saved-exchange-edit",
+          "saved-exchange-view"
+        ]
+      },
+      "result": "SCOPED_RECEIPT",
+      "scope": "actual Application new transfer empty10/filled/inline cancel/product return; old saved states source only, not all consumer browser passed",
+      "qualification": null,
+      "notTested": [],
+      "findings": [
+        {
+          "id": "TR-UI-01",
+          "priority": "P1",
+          "status": "PARTIAL_FIXED_REGION_NOT_ACCEPTED",
+          "fixed": "Original bottom product entry, actual grouped SKU quantities, explicit改/查看/删除 and inline确认/取消 now rendered. Real product view and return exercised.",
+          "remaining": "Finder same theme-portal gap as SALE-V006-01; product input focus double frame, color/fit ordinary Select empty placeholders blank, popup/options too narrow/truncated, empty row0/录入/清除 differ. Native saved newSKU/header/warehouse preparation still missing."
+        },
+        {
+          "id": "TR-UI-02",
+          "priority": "P1",
+          "status": "INITIAL_DICTIONARY_SUBPART_VERIFIED_WHOLE_REGION_PENDING",
+          "fixed": "Configured preview dictionary displays ten160/XS..205/6XL headers; only actual SKU70/71 get writable inputs after product/color/fit. No guessed other8SKU/qty.",
+          "remaining": "Same-state empty matrix final visual differences remain underTR01/TR03. This does not prove formal default configuration."
+        },
+        {
+          "id": "TR-UI-03",
+          "priority": "P2",
+          "status": "PARTIAL_FIXED_REGION_NOT_ACCEPTED",
+          "fixed": "Header field order/note/plain actions broadly restored; creator comes from authenticated fixture, legitimate business boundary preserved.",
+          "remaining": "Missing visible调拨明细 heading: candidate matrix outer y232/header about233, prior Demo actual table top269 (DEMO-EMPTY-DOM.json). Roughly36px up. Header/blank-cell/input/action visual differences remain. Creator readonly is legitimate authenticated-identity adaptation, not restoring old free selector."
+        },
+        {
+          "id": "TR-UI-04",
+          "priority": "P2",
+          "status": "PARTIAL_FIXED_REGION_NOT_ACCEPTED",
+          "fixed": "Actual product count and category group footer; native3+2=5 verified, unknown classification remains unknown.",
+          "remaining": "Footer wording0款·数量0 differsDemo0款0件；按用户要求复核件数和tag形态，恢复计数文案不等于新增已取消Unit DTO/DB或单位字段。Saved classification needs trusted source; no whole footer pass."
+        },
+        {
+          "id": "TR-UI-05",
+          "priority": "P2",
+          "status": "FOUND_ORIGINAL_F1_FIX_PENDING",
+          "difference": "Transfer product whole-page view shrinks to535px while route1222px; same current product from sales uses full1222px.",
+          "actualSource": "DocumentProductPresentation unclassedsection is flex0 1 auto direct child of .transfer-route display:flex; width intrinsic535. This is observed host geometry, not data content difference.",
+          "expected": "Full-width Demo product UI same viewport; return action positioned with full workspace.",
+          "owner": "F1",
+          "fixVersion": null,
+          "minimalRetest": "New transfer row查看 -> product width vs route; return keeps raw. Check same wrapper new/edit/read affected branches only."
+        }
+      ],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false,
+      "boundary": "Actual browser local synthetic findings/partial checks only, not whole page/business/production acceptance"
+    },
+    {
+      "id": "Demo-v009-8755931-STORE-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v009-8755931/STORE-RESULT.json",
+      "evidenceSha256": "dbc756dd951e2fca48ad9779f9b6d9773079a3ff26f27f8e31b262eae2889484",
+      "sourceCommit": {
+        "candidateId": "ui-preview-8755931-01",
+        "businessCommit": "87559312f75e4c96db72305d1c42e6ffe50580b4",
+        "previewOverlaySha256": "8fdfaecc2803f45333b618658158efbc0a58e65c4866cedd2e79b7d1d65782f4",
+        "buildId": "ui-preview-8755931-01-build01",
+        "htmlSha256": "6f4ac9e2ba7a2a2337c2b2045bb206adcf6f532c535770aa92833cc66d02237f",
+        "htmlBytes": 2753908,
+        "actualInputCount": 383,
+        "sourceModuleInputCount": 366,
+        "actualBuildInputSha256": "987b6da541217a0901f5329ee320c6c3c47611d96d1667defc16e10d8bb3f931",
+        "syntheticOnly": true,
+        "browserVerification": "NOT_RUN",
+        "databaseVerification": "NOT_RUN",
+        "wholeSalesPage": "NOT_ACCEPTED",
+        "knownRemaining": [
+          "Saved newSKU/reference trusted edit preparation",
+          "Transfer whole UI included; native existing readprepare not composed. Store3P2 source fixes included; shared settings/payment extension remains pending",
+          "Real saves/approvals/auth/inventory writes"
+        ],
+        "scenarios": [
+          "empty",
+          "sale-filled",
+          "sale-payment",
+          "line-edit",
+          "exchange",
+          "saved-sale-edit",
+          "saved-sale-view",
+          "saved-exchange-edit",
+          "saved-exchange-view"
+        ]
+      },
+      "result": "SCOPED_RECEIPT",
+      "scope": "Exact receipt only",
+      "qualification": null,
+      "notTested": [],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false,
+      "boundary": "Actual browser local synthetic findings/partial checks only, not whole page/business/production acceptance"
+    },
+    {
+      "id": "Demo-v009-8755931-STORE-MODAL-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v009-8755931/STORE-MODAL-RESULT.json",
+      "evidenceSha256": "58e2e566c1ae197b0de80c551f550103daa0f44a145e1d98922df07edecf223f",
+      "sourceCommit": {
+        "candidateId": "ui-preview-8755931-01",
+        "businessCommit": "87559312f75e4c96db72305d1c42e6ffe50580b4",
+        "previewOverlaySha256": "8fdfaecc2803f45333b618658158efbc0a58e65c4866cedd2e79b7d1d65782f4",
+        "buildId": "ui-preview-8755931-01-build01",
+        "htmlSha256": "6f4ac9e2ba7a2a2337c2b2045bb206adcf6f532c535770aa92833cc66d02237f",
+        "htmlBytes": 2753908,
+        "actualInputCount": 383,
+        "sourceModuleInputCount": 366,
+        "actualBuildInputSha256": "987b6da541217a0901f5329ee320c6c3c47611d96d1667defc16e10d8bb3f931",
+        "syntheticOnly": true,
+        "browserVerification": "NOT_RUN",
+        "databaseVerification": "NOT_RUN",
+        "wholeSalesPage": "NOT_ACCEPTED",
+        "knownRemaining": [
+          "Saved newSKU/reference trusted edit preparation",
+          "Transfer whole UI included; native existing readprepare not composed. Store3P2 source fixes included; shared settings/payment extension remains pending",
+          "Real saves/approvals/auth/inventory writes"
+        ],
+        "scenarios": [
+          "empty",
+          "sale-filled",
+          "sale-payment",
+          "line-edit",
+          "exchange",
+          "saved-sale-edit",
+          "saved-sale-view",
+          "saved-exchange-edit",
+          "saved-exchange-view"
+        ]
+      },
+      "result": "SCOPED_RECEIPT",
+      "scope": "Exact receipt only",
+      "qualification": null,
+      "notTested": [],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false,
+      "boundary": "Actual browser local synthetic findings/partial checks only, not whole page/business/production acceptance"
+    },
+    {
+      "id": "Demo-v009-8755931-PRODUCT-RESULT",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v009-8755931/PRODUCT-RESULT.json",
+      "evidenceSha256": "78f68627e8d5843613537adfe2a06b55c98b71abdf9ed5e80f1ded155b5de1d9",
+      "sourceCommit": {
+        "candidateId": "ui-preview-8755931-01",
+        "businessCommit": "87559312f75e4c96db72305d1c42e6ffe50580b4",
+        "previewOverlaySha256": "8fdfaecc2803f45333b618658158efbc0a58e65c4866cedd2e79b7d1d65782f4",
+        "buildId": "ui-preview-8755931-01-build01",
+        "htmlSha256": "6f4ac9e2ba7a2a2337c2b2045bb206adcf6f532c535770aa92833cc66d02237f",
+        "htmlBytes": 2753908,
+        "actualInputCount": 383,
+        "sourceModuleInputCount": 366,
+        "actualBuildInputSha256": "987b6da541217a0901f5329ee320c6c3c47611d96d1667defc16e10d8bb3f931",
+        "syntheticOnly": true,
+        "browserVerification": "NOT_RUN",
+        "databaseVerification": "NOT_RUN",
+        "wholeSalesPage": "NOT_ACCEPTED",
+        "knownRemaining": [
+          "Saved newSKU/reference trusted edit preparation",
+          "Transfer whole UI included; native existing readprepare not composed. Store3P2 source fixes included; shared settings/payment extension remains pending",
+          "Real saves/approvals/auth/inventory writes"
+        ],
+        "scenarios": [
+          "empty",
+          "sale-filled",
+          "sale-payment",
+          "line-edit",
+          "exchange",
+          "saved-sale-edit",
+          "saved-sale-view",
+          "saved-exchange-edit",
+          "saved-exchange-view"
+        ]
+      },
+      "result": "SCOPED_RECEIPT",
+      "scope": "P02 actual Application new product blank basic tab; no selected value changes, no saves",
+      "qualification": null,
+      "notTested": [
+        "filled six tabs",
+        "P03/P04 same select affected consumer",
+        "readonly/edit full final cascade",
+        "real save/auth/media/stock",
+        "all remaining101 cases"
+      ],
+      "findings": [
+        {
+          "id": "PROD-UI-02",
+          "priority": "P2",
+          "owner": "original F2 via C",
+          "status": "PAGE_RETEST_PASSED_P02_EMPTY_GEOMETRY_ONLY",
+          "difference": "old84 firsttab x240/font14 and outer Select34px moved third row y271",
+          "fixedAt": "product-page.css153-159/ordinary outer select scoped rule; F2 css51",
+          "actual": "six tabs font13/pad5x12/first x224,w76,h32; Select outer32; third row y269, all match frozen Demo",
+          "remaining": "filled/edit/readonly tab consumer and P03/P04 Select are not individually retested; this is not a whole issue/page closure"
+        },
+        {
+          "id": "PROD-UI-03",
+          "priority": "P1",
+          "owner": "original F2 via C; shared control boundary original F1",
+          "status": "ASSIGNED",
+          "demoExpected": "season popup all four options visible and mouse reachable, x638.49 y261 h154",
+          "currentActual": "same popup y261,h154 but tab content-item bottom339 overflow hidden clips autumn/winter; elementFromPoint their centers is main not options",
+          "source": "product-page.css159 misses .arco-tabs-content-item; StandardTabs creates wrapper; components/standard-controls.tsx37-39 portals into local host",
+          "steps": [
+            "商品信息→新增商品→基础资料",
+            "鼠标打开季节",
+            "观察秋/冬选项下半部裁切，hit-test confirms non-option at centers"
+          ],
+          "businessImpact": "mouse cannot choose lower candidates in this form; similar local popup consumers require scoped owner review",
+          "fixVersion": null,
+          "approvedDifference": null
+        },
+        {
+          "id": "PROD-UI-SOURCE-01",
+          "priority": "P2",
+          "status": "RUNTIME_DIFFERENCES_CONFIRMED_PARTIAL_YEAR_SOURCE_FIX",
+          "owner": "original F2 via C",
+          "details": [
+            "ordinary Select inner font14/pad0x11 vs Demo ordinary13",
+            "several blank placeholders vs Demo 选择供应商/请选择",
+            "required stars gray rather than red, cancel gray-filled rather than Demo bordered white",
+            "year mouse repeated single-click yields expandedfalse/no popup; Enter opened actual2026/2025 options. Do not claim mouse passed; new shared YEAR successor provided after this run awaits separate retest."
+          ],
+          "qualification": "same existing candidate/control issue; no new duplicate issue count; season required/empty-array semantics must follow latest contract, not restore old validation arbitrarily"
+        }
+      ],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false,
+      "boundary": "Actual browser local synthetic findings/partial checks only, not whole page/business/production acceptance"
+    },
+    {
+      "id": "C-c03-runtime26-live-probe-20261023-35-engine-result",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-runtime26-live-probe-20261023-35/release-receipts/c03-runtime26-live-probe-20261023-35/engine-result.json",
+      "evidenceSha256": "cbf41f37ee8e151614af57509c2a2a0aa7d6911a1462eac4f7eb498c88236a6b",
+      "sourceCommit": null,
+      "result": "PASS_ACTUAL_QA_RUNTIME26_LIVE_LEASE_READ_ONLY_ONLY",
+      "scope": "D1 actual metadata-only QA live issuer/read-only probe; no business write",
+      "qualification": null,
+      "notTested": [],
+      "findings": [],
+      "adoption": "C adopts existing exact independent/operational/browser receipt; no repeated technical review",
+      "wholePageAcceptance": false
+    },
+    {
+      "id": "QF-candidate-0bc99573-F2-SUPPLIER-NOCLEAR-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-0bc99573/F2-SUPPLIER-NOCLEAR-REVIEW.json",
+      "evidenceSha256": "33ac410aee7d7733dbfd4f0692ee5545dadd544bab3ae7c1bcb6789b5795ab1c",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "sourceCommit": "0bc99573c606ef30c17dd8689ed06239c14a4fd9",
+      "scope": "PROD-SUPPLIER-NOCLEAR-DELIVERY-v1",
+      "notTested": [
+        "Actual browser supplier interaction",
+        "Real backend nullable EDIT/CREATE execution or PG/business save",
+        "Whole build/deploy",
+        "Original YEAR/P12/native suites"
+      ],
+      "adoption": "C adopts effective exact independent conclusion; no repeat tests"
+    },
+    {
+      "id": "QF-candidate-0bc99573-F2-PRODUCT-OVERFLOW-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-0bc99573/F2-PRODUCT-OVERFLOW-REVIEW.json",
+      "evidenceSha256": "00ad5fb4586be9aa0c1915203dac2a56425775a5bb95e8d0bd4ad0294bd7e0f5",
+      "result": "PASS_SOURCE_CASCADE_ONLY",
+      "sourceCommit": "0bc99573c606ef30c17dd8689ed06239c14a4fd9",
+      "scope": "PROD-UI-03-DELIVERY-v1",
+      "notTested": [
+        "Actual Chrome autumn/winter pointer hit",
+        "Real readonly popup/new preview",
+        "Full build/typecheck for CSS-only/PG/deploy"
+      ],
+      "adoption": "C adopts effective exact independent conclusion; no repeat tests"
+    },
+    {
+      "id": "QF-candidate-61517de3-F1-FRAME-VIEWPORT-REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-61517de3/F1-FRAME-VIEWPORT-REVIEW.json",
+      "evidenceSha256": "fdc9847d59687724032d44be04ea28ddace414b2d6ce2092d39e2df9a43b0049",
+      "result": "PASS_SOURCE_COMPATIBILITY_ONLY",
+      "sourceCommit": "61517de362bfc6d5be1a682d35714f1325ceb5ab",
+      "scope": "F1_CAT02_EXISTING_VIEWPORT_OPT_IN",
+      "notTested": [
+        "Actual new candidate CAT02 scrolling or F2 leaf/tabs/table",
+        "Browser/PG/fullbuild/deploy"
+      ],
+      "adoption": "C adopts effective exact independent conclusion; no repeat tests"
+    },
+    {
+      "id": "C-c03-actual-service-media-swap-20261023-36",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-actual-service-media-swap-20261023-36/release-receipts/c03-actual-service-media-swap-20261023-36/engine-result.json",
+      "evidenceSha256": "e40214b6d4ccf59c28e1d315261c97f90e452ecb4676da8b5b6cc19a21d240a1",
+      "sourceCommit": "d6ad29c7d8b105e517a95e70bcb48138b55bd817",
+      "result": "PASS_ACTUAL_D1_D2_SYNTHETIC_SERVICE_COLOR_SWAP_DELTA",
+      "scope": "Actual D1 prepared context/privateWeakMap + D2 service/store one twoimage swap/replay/CAS only",
+      "notTested": [
+        "actual uploads/decoding/files/controlled GET",
+        "HTTP identity/CSRF/actual app runtime role",
+        "real sources/import/MAIN/PUBLISH",
+        "original public URL business release"
+      ],
+      "qaCounts": {
+        "database": "erp_qa_rapid26_20261022_01",
+        "role": "erp_qa_owner_20261022_01",
+        "accounts": 2,
+        "products": 1,
+        "images": 2,
+        "audits": 10,
+        "receipts": 10,
+        "sources": 0
+      },
+      "adoption": "Original operational acceptance; no duplicate QB"
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-22T18:41:40.531544+00:00",
+  "updatedAt": "2026-10-22T20:06:46.865983+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -8980,6 +9881,49 @@
       "newTests": 0,
       "previousRowsReReviewed": 0,
       "note": "Only previously delivered fixed metadata adopted; no source, DB, UI or old accepted tests repeated."
+    },
+    {
+      "atUtc": "2026-10-22T20:02:22.939243+00:00",
+      "batch": "C_SOURCE_THROUGH63_QB109_QF_CURRENT_AND_ACTUAL_C35",
+      "addedChecks": [
+        "QB-slice96-payment1086-source-reference-RESULT",
+        "QB-slice97-actual-v7-runtime-metadata-c33-RESULT",
+        "QB-slice98-readonly-stage-manifest-5b363f44-RESULT",
+        "QB-slice99-payment26-store-5b363f44-RESULT",
+        "QB-slice100-header-transfer26-5b363f44-RESULT",
+        "QB-slice101-sales-settlement26-resolvers-7939759f-RESULT",
+        "QB-slice102-existing-sales-preparation-258d54a3-RESULT",
+        "QB-slice103-executor26-cli-258d54a3-RESULT",
+        "QB-slice104-full26-closure-reader-af2c3c20-RESULT",
+        "QB-slice105-executable-host26-6a23762d-RESULT",
+        "QB-slice106-payment26-artifact-consumer-6a23762d-RESULT",
+        "QB-slice107-existing-transfer-preparation-16ea5b98-RESULT",
+        "QB-slice108-sku26-genuine-consumer-d6ad29c7-RESULT",
+        "QB-slice109-current-product-code-search-3af57db5-RESULT",
+        "QF-candidate-da61c6a0-F1-ROOT-CAPTURE-REVIEW",
+        "QF-candidate-258d54a3-F1-TRANSFER-UI-REVIEW",
+        "QF-candidate-af2c3c20-F1-SELECT-SEAM-REVIEW",
+        "QF-candidate-87559312-F1-STYLE-EXPORT-REVIEW",
+        "QF-candidate-87559312-F3-STORE-P2-REVIEW",
+        "QF-candidate-6a23762d-F1-ACCOUNT-ROOT-REVIEW",
+        "QF-candidate-6a23762d-F2-YEAR-CONSUMER-REVIEW",
+        "QF-candidate-6a23762d-F3-SHARED-SETTINGS-P2-REVIEW",
+        "QF-candidate-16ea5b98-C-OPTIONAL-EXISTING-CAPABILITIES-REVIEW",
+        "QF-candidate-16ea5b98-F1-EXISTING-READ-PORT-REVIEW",
+        "QF-candidate-d6ad29c7-F1-FINDER-PORTAL-REVIEW",
+        "QF-candidate-d6ad29c7-F3-AUDIT-PLAIN-CELLS-REVIEW",
+        "QF-candidate-99d687b5-F1-PRODUCT-SHELL-REVIEW",
+        "QF-candidate-99d687b5-F1-SEARCH-SEAM-REVIEW",
+        "Demo-v009-8755931-SALE-RESULT",
+        "Demo-v009-8755931-TRANSFER-RESULT",
+        "Demo-v009-8755931-STORE-RESULT",
+        "Demo-v009-8755931-STORE-MODAL-RESULT",
+        "Demo-v009-8755931-PRODUCT-RESULT",
+        "C-c03-runtime26-live-probe-20261023-35-engine-result"
+      ],
+      "technicalTestsByC": 0,
+      "sourceRound53Correction": "Metadata-only; controller d14 already fixed52, no second code change",
+      "adoptedActualOps": "C35 READ ONLY issuer proof; C36 application delta submitted, collect same ID first"
     }
   ],
   "coverageGroups": [
@@ -9026,5 +9970,20 @@
     ],
     "wholePagesPassed": 0,
     "wholeOverlaysPassed": 0
+  },
+  "currentControllerContinuation": {
+    "sourceCommit": "79ce6c3270fd45c6599892913172f35ceb9fefdb",
+    "wholePagesAccepted": 0,
+    "wholeOverlaysAccepted": 0,
+    "scopeCount": 101,
+    "browserLocalPartialCount": 15,
+    "browserCountMeaning": "15 deduplicated local checks; never whole page/overlay count",
+    "pendingActualBrowser": [
+      "C62 season popup actual mouse hit",
+      "C61 transfer product width",
+      "C63 product-settings inner scroll plus original F2 leaf",
+      "F3 STORE04 source repair not fixed at this snapshot"
+    ],
+    "C36": "PASS_ACTUAL_NEW3_SERVICE_DELTA_POOL_CLOSED_QA_10AUDIT_10RECEIPTS_SOURCE0"
   }
 }

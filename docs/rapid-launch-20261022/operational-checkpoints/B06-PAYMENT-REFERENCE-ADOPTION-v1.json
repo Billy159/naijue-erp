@@ -1,0 +1,17 @@
+{
+  "atUtc": "2026-10-22T18:51:19.680406+00:00",
+  "scope": "PAYMENT_REFERENCE_DECISIONS_ONLY",
+  "authorityFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-payment-reference-review-v1.json",
+  "authoritySha256": "ef981a5fdfcb217926eb04452d2ad2c3d0b275794af11841e2cf6637020395a9",
+  "independentReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice96-payment1086-source-reference/RESULT.json",
+    "sha256": "ed5f208fb9648fdf25aaf4f8475de262977e83fa162482eb9ba9d665c9bc33c4",
+    "result": "PASS"
+  },
+  "counts": {
+    "PAYMENT_METHOD": 12,
+    "PAYMENT_ACCOUNT": 84,
+    "PAYMENT_ACCOUNT_HALL": 990
+  },
+  "realImportExecutionAuthorized": false
+}

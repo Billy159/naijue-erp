@@ -1,0 +1,28 @@
+{
+  "atUtc": "2026-10-22T18:51:19.681205+00:00",
+  "format": "VERIFIED_PRIVATE_GITHUB_DRAFT_RECOVERY_ATTACHMENT",
+  "sourceCommit": "eb57b347fb69c3ebd174ca787103f10c37acd236",
+  "bundle": {
+    "name": "naijue-erp-source-eb57b34.bundle",
+    "bytes": 1091532,
+    "sha256": "37cef319f5fda2e793d69e80057eca5d4f3460c1bbaaa38bddae7d1a8860afc2",
+    "requiredBaseCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+    "headRef": "HEAD"
+  },
+  "remoteReadback": {
+    "atUtc": "2026-10-22T18:45:30.144730+00:00",
+    "sourceCommit": "eb57b347fb69c3ebd174ca787103f10c37acd236",
+    "remoteDownloadSha256": "37cef319f5fda2e793d69e80057eca5d4f3460c1bbaaa38bddae7d1a8860afc2",
+    "bytes": 1091532,
+    "downloadedCheckpointByteIdentical": true,
+    "downloadedBundleVerifyExit": 0,
+    "normalGitHubBranchUpdated": false,
+    "isBusinessRelease": false
+  },
+  "draftTag": "codex-checkpoint-20261022-a7e817b",
+  "url": "https://github.com/Billy159/naijue-erp/releases/tag/untagged-67e9839379da5bcc16cd",
+  "isDraft": true,
+  "normalBranchObserved": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+  "normalPushSucceeded": false,
+  "isBusinessRelease": false
+}

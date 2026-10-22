@@ -1,0 +1,65 @@
+{
+  "atUtc": "2026-10-22T20:06:46.865983+00:00",
+  "jobId": "c03-actual-service-media-swap-20261023-36",
+  "sourceCommit": "d6ad29c7d8b105e517a95e70bcb48138b55bd817",
+  "status": "PASS_ACTUAL_D1_D2_SYNTHETIC_SERVICE_COLOR_SWAP_DELTA",
+  "engineEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-actual-service-media-swap-20261023-36/release-receipts/c03-actual-service-media-swap-20261023-36/engine-result.json",
+  "engineSha256": "e40214b6d4ccf59c28e1d315261c97f90e452ecb4676da8b5b6cc19a21d240a1",
+  "actualService": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-actual-service-media-swap-20261023-36/release-receipts/c03-actual-service-media-swap-20261023-36/actual-service-result.json",
+    "collectedPrettySha256": "5338ed6daf87b3d4314fa54743368e0e1519240d109253c87dc11d92a7354d2a",
+    "serverRawSha256": "2a7a95012ad6ceebe43ea13e001fccfb1d33f84d6e9fa010622d54359d632668",
+    "difference": "Collector redacts authorization-labelled fields; raw/collected hashes are distinct, both retained"
+  },
+  "cases": [
+    {
+      "case": "actual-service-color-cycle",
+      "status": "PASS_ACTUAL_COMMIT"
+    },
+    {
+      "case": "same-original-key-replay",
+      "status": "PASS_NO_SECOND_WRITE"
+    },
+    {
+      "case": "stale-root-CAS",
+      "status": "PASS_EXPECTED_VERSION_CONFLICT_ROLLBACK"
+    }
+  ],
+  "qaCounts": {
+    "database": "erp_qa_rapid26_20261022_01",
+    "role": "erp_qa_owner_20261022_01",
+    "accounts": 2,
+    "products": 1,
+    "images": 2,
+    "audits": 10,
+    "receipts": 10,
+    "sources": 0
+  },
+  "rootVersion": 3,
+  "imageVersions": [
+    3,
+    3
+  ],
+  "actualD1PreparedContextAndD2Service": true,
+  "poolClosed": true,
+  "linuxDependencyEvidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-actual-service-media-swap-20261023-36/release-receipts/c03-actual-service-media-swap-20261023-36/locked-linux-package-result.json",
+    "collectedSha256": "7480e93076ac271a7b0f0b3cdbc3c51e4a585355fb7e43cf51fbc10df7555440",
+    "lockedPackages": 6,
+    "actualSharpConstructorPassed": true,
+    "lifecycleScripts": 0
+  },
+  "realStageConstructor": true,
+  "mediaFilesChanged": false,
+  "uploadOrCodecOperations": 0,
+  "realImport": false,
+  "oldDatabaseWrites": false,
+  "r1DatabaseWrites": false,
+  "notTested": [
+    "actual uploads/decoding/files/controlled GET",
+    "HTTP identity/CSRF/actual app runtime role",
+    "real sources/import/MAIN/PUBLISH",
+    "original public URL business release"
+  ],
+  "adoption": "Original C operations acceptance; do not dispatch duplicate QB technical review"
+}

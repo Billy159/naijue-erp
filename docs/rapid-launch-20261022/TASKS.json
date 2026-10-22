@@ -924,8 +924,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T18:41:40.531544+00:00",
-  "stage": "ACTIVE_PHASED_LAUNCH_SOURCE_AND_ISOLATED_QA_IN_PROGRESS",
+  "updatedAt": "2026-10-22T20:06:46.865983+00:00",
+  "stage": "ACTIVE_SOURCE64_ACTUAL_SERVICE_C36_PASS_BROWSER_D6",
   "lastVerifiedRemoteCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -1893,10 +1893,18 @@
     }
   ],
   "newPendingReviews": [
-    "QF04a6 CSS-only and root52 actualcapture source minimum",
-    "QB actual payment1086 reference/source plus 48/49 newstore scopes",
-    "D1 actual issuer not issued; needs actual metadata review and approved purpose only",
-    "Demo next candidate root52/settings48/year49/css51 affected browser only"
+    {
+      "owner": "QF",
+      "scope": "New C62 popup/supplier and C63 viewport only; C61 new seam/layout receipt already received"
+    },
+    {
+      "owner": "C",
+      "scope": "Collect C36 same ID; never rerun carrier after unknown commit"
+    },
+    {
+      "owner": "Demo",
+      "scope": "v010 d6 finder/sharedYEAR/new actual root only; new C61/62/63 browser still await next necessary candidate"
+    }
   ],
   "openFindingsCurrent": [
     {
@@ -1925,17 +1933,17 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-22T18:41:40.531544+00:00",
-    "sourceRound": 53,
+    "atUtc": "2026-10-22T20:06:46.865983+00:00",
+    "sourceRound": 64,
     "modelAllChats": "gpt-6.1-sol/xhigh",
-    "fast": "Requested off, tool has no switch; actual UI state unverified",
+    "fast": "Requested off; tool has no switch, actual UI state unverified",
     "fieldApprovalPending": false,
     "fullReferenceOutsidePin": "a21105ca99f0efff1acf10fda01f1bf62117e2ffd3214d4d43e02f9efc24025b",
     "realImportAuthorizedByReferencePin": false,
-    "releaseGate": "Actual49/fullnativefactories/26issuer/host/PG+browser relevantbatch/login not complete; originalURL not switched",
+    "releaseGate": "Full11 genuine producers/actual49 SOURCE+MAIN+PUBLISH/native app and relevant browser/role checks not complete; originalURL unchanged; no whole-site gate on unrelated pages.",
     "privateSourceAndCredentials": "Never Git; Dot on another machine must acquire exact K/A/private-data and existing release reference, cannot infer authority from paths",
-    "mediaColorSwapV4": "APPROVED_SOURCE_FIXED_QB90_CYCLE_QB91_GUARD_PASS_ENGINE_PENDING",
-    "sourceCheckpoint": "26333bd461901cdba9f7e7710ff27ed76649cb56",
+    "mediaColorSwapV4": "APPROVED_SOURCE_QB90_QB91_ACTUAL_C33_C34_PASS; actual application C36 submitted",
+    "sourceCheckpoint": "79ce6c3270fd45c6599892913172f35ceb9fefdb",
     "offsetIndexOutsidePin": "87ec0b318029dc682cd86611d5e9d9d97442988b6bb5bde14ad689fe5a7b88a6",
     "actualV6Job31": {
       "jobId": "c03-exact26-v6-projection-20261023-31",
@@ -1980,11 +1988,17 @@
       ]
     },
     "currentPreview": {
-      "url": "http://127.0.0.1:57838/synthetic-unified.html",
-      "source": "693e215d943fe4c23371aba4c19ace68b77b5720",
-      "build": "ui-preview-693e215-01-build01",
-      "htmlSha256": "2a99a754a645ef065ee1e9986468f77ea5346df8faada0de71dba7ab4a84de9e",
-      "syntheticOnly": true
+      "atUtc": "2026-10-22T19:52:21.668261+00:00",
+      "url": "http://127.0.0.1:57840/synthetic-unified.html",
+      "status": 200,
+      "bytes": 2816782,
+      "htmlSha256": "a49b15cfa8a05811e71fdcb1f11b3dcdace98e0e3d6ebfd1accf3b8649b329cd",
+      "sourceCommit": "d6ad29c7d8b105e517a95e70bcb48138b55bd817",
+      "buildId": "ui-preview-d6ad29c-01-build01",
+      "actualBrowserCheck": "NOT_RUN",
+      "syntheticOnly": true,
+      "realSave": false,
+      "browserVerification": "Dedicated Demo v010 in progress; per-scope evidence only"
     },
     "chromeInput": {
       "cause": "UNKNOWN",
@@ -1993,8 +2007,8 @@
       "next": "Necessary inputs with immediate readback; stop if stray input recurs"
     },
     "realImportAuthorizedByMetadataPins": false,
-    "issuerQB92": "QB95 SOURCE_TARGETED_PASS_ACTUAL_ISSUER_NOT_ISSUED",
-    "v7ActualJob": "c03-exact26-v7-color-guard-20261023-32_SUBMITTED_COLLECT_FIRST",
+    "issuerQB92": "QB95_TARGETED_SOURCE_FIX_PASS; C35 actual temporary QA issuer READ ONLY PASS and pool closed",
+    "v7ActualJob": "C32_FAILED_BEFORE_SQL; C33_ACTUAL_PATCH_PASS; no replay",
     "round53": "metadata receipt snapshot only; exact controller d14 was already round52",
     "v7ActualGuard": "C33 PASS; canonical e37dd0c0b723bd5525c10f1cbcef563397db3135cb81948796a78aaf555d3dc2",
     "v7ActualMatrix": {
@@ -2011,22 +2025,114 @@
       "notThreeImageOrHostBusinessAcceptance": true
     },
     "salesExistingReadDto": "SALES-PREPARE-EXISTING-READ-CONTRACT-v1 frozen, zero DML, existing SAVE unchanged",
-    "demoRootAndFinder": "source52 fixed; actual next preview/browser still pending"
+    "demoRootAndFinder": "Source59+actual d6 sale finder local PASS; Transfer TR02 anchor offset remains open",
+    "actualRuntime35": {
+      "jobId": "c03-runtime26-live-probe-20261023-35",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-runtime26-live-probe-20261023-35/release-receipts/c03-runtime26-live-probe-20261023-35/engine-result.json",
+      "evidenceSha256": "cbf41f37ee8e151614af57509c2a2a0aa7d6911a1462eac4f7eb498c88236a6b",
+      "status": "PASS_ACTUAL_QA_RUNTIME26_LIVE_LEASE_READ_ONLY_ONLY",
+      "poolClosed": true,
+      "purposes": [
+        "PRODUCT_MAINTENANCE",
+        "PRODUCT_SEASONS_READ"
+      ],
+      "realImportExecutionAuthorized": false
+    },
+    "actualApplication36": {
+      "atUtc": "2026-10-22T20:06:46.865983+00:00",
+      "jobId": "c03-actual-service-media-swap-20261023-36",
+      "sourceCommit": "d6ad29c7d8b105e517a95e70bcb48138b55bd817",
+      "status": "PASS_ACTUAL_D1_D2_SYNTHETIC_SERVICE_COLOR_SWAP_DELTA",
+      "engineEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-actual-service-media-swap-20261023-36/release-receipts/c03-actual-service-media-swap-20261023-36/engine-result.json",
+      "engineSha256": "e40214b6d4ccf59c28e1d315261c97f90e452ecb4676da8b5b6cc19a21d240a1",
+      "actualService": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-actual-service-media-swap-20261023-36/release-receipts/c03-actual-service-media-swap-20261023-36/actual-service-result.json",
+        "collectedPrettySha256": "5338ed6daf87b3d4314fa54743368e0e1519240d109253c87dc11d92a7354d2a",
+        "serverRawSha256": "2a7a95012ad6ceebe43ea13e001fccfb1d33f84d6e9fa010622d54359d632668",
+        "difference": "Collector redacts authorization-labelled fields; raw/collected hashes are distinct, both retained"
+      },
+      "cases": [
+        {
+          "case": "actual-service-color-cycle",
+          "status": "PASS_ACTUAL_COMMIT"
+        },
+        {
+          "case": "same-original-key-replay",
+          "status": "PASS_NO_SECOND_WRITE"
+        },
+        {
+          "case": "stale-root-CAS",
+          "status": "PASS_EXPECTED_VERSION_CONFLICT_ROLLBACK"
+        }
+      ],
+      "qaCounts": {
+        "database": "erp_qa_rapid26_20261022_01",
+        "role": "erp_qa_owner_20261022_01",
+        "accounts": 2,
+        "products": 1,
+        "images": 2,
+        "audits": 10,
+        "receipts": 10,
+        "sources": 0
+      },
+      "rootVersion": 3,
+      "imageVersions": [
+        3,
+        3
+      ],
+      "actualD1PreparedContextAndD2Service": true,
+      "poolClosed": true,
+      "linuxDependencyEvidence": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-actual-service-media-swap-20261023-36/release-receipts/c03-actual-service-media-swap-20261023-36/locked-linux-package-result.json",
+        "collectedSha256": "7480e93076ac271a7b0f0b3cdbc3c51e4a585355fb7e43cf51fbc10df7555440",
+        "lockedPackages": 6,
+        "actualSharpConstructorPassed": true,
+        "lifecycleScripts": 0
+      },
+      "realStageConstructor": true,
+      "mediaFilesChanged": false,
+      "uploadOrCodecOperations": 0,
+      "realImport": false,
+      "oldDatabaseWrites": false,
+      "r1DatabaseWrites": false,
+      "notTested": [
+        "actual uploads/decoding/files/controlled GET",
+        "HTTP identity/CSRF/actual app runtime role",
+        "real sources/import/MAIN/PUBLISH",
+        "original public URL business release"
+      ],
+      "adoption": "Original C operations acceptance; do not dispatch duplicate QB technical review"
+    },
+    "R1Runtime": "Exact19 empty R1 not switched. Exact26 explicit composition/current+history+stock adapters and minimal actual ACL/target review pending; no QA pin reuse.",
+    "outsideReferencePins": {
+      "product": "a21105ca99f0efff1acf10fda01f1bf62117e2ffd3214d4d43e02f9efc24025b",
+      "sku": "f238530f1b3eec7f5586f7f08e4497982782f53500c65ad6c37a19b6a56f1273",
+      "payment": "ef981a5fdfcb217926eb04452d2ad2c3d0b275794af11841e2cf6637020395a9",
+      "offset": "87ec0b318029dc682cd86611d5e9d9d97442988b6bb5bde14ad689fe5a7b88a6",
+      "scope": "Reference/index metadata only, all false execution authority"
+    },
+    "github": {
+      "normalBranch": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+      "newExistingHelperHttp1Attempt": "FAILED_REMOTE_UNCHANGED",
+      "latestVerifiedDraftBundleCommit": "eb57b347fb69c3ebd174ca787103f10c37acd236",
+      "next": "New checkpoint after this docs commit; verify download SHA and git bundle verify",
+      "normalPushSucceeded": false
+    },
+    "nextReady": "D1 read-only retained view/production26; D3 HISTORY26+PARTIES; D2 K-only upload-save-controlledread carrier; F1 saved/TR; F2 CAT/search/YEAR mouse; F3 STORE04"
   },
-  "latestReadySource": "All21..26 SQL originals source-only fixed exactD1receipt in round36;26v6 actual patch awaitsQB/engine",
-  "pendingUserDecision": {
-    "id": "WRITE_CONTRACT_V4_MEDIA_COLOR_SWAP",
-    "document": "WRITE-CONTRACT-SUPPLEMENT-v4-MEDIA-COLOR-SWAP.md",
-    "status": "APPROVED_BY_DIRECT_USER",
-    "affectedBranch": "Only cyclic color image swap guarded writer",
-    "newTables": 0,
-    "newColumns": 0,
-    "otherWork": "CONTINUES",
-    "approvalRecord": "WRITE-CONTRACT-APPROVAL-v4-MEDIA-COLOR-SWAP.json"
+  "latestReadySource": {
+    "checkpoint": "79ce6c3270fd45c6599892913172f35ceb9fefdb",
+    "round": 64,
+    "sourceQa": "Valid exact QF/QB receipts in VERIFICATION-INDEX; 62/63 newest affected scope QF pending",
+    "notApplicationOrProductionAcceptance": true
   },
+  "pendingUserDecision": null,
   "currentAcceptedReceiptBatch": {
-    "atUtc": "2026-10-22T18:27:18.226637+00:00",
-    "indexCount": 164,
-    "notWholeAcceptance": true
+    "atUtc": "2026-10-22T20:02:22.939243+00:00",
+    "backendThrough": "QB109",
+    "frontend": "Exact received scopes through59/61; 62/63 pending",
+    "ops": "C35 actual READ ONLY temporary issuer PASS; C36 queued",
+    "browser": "v009 and new v010 d6 local exact scope only; whole pages/overlays0",
+    "sourceCommit": "61517de362bfc6d5be1a682d35714f1325ceb5ab"
   }
 }
