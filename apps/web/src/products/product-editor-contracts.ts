@@ -25,6 +25,8 @@ export interface ProductEditorCapability {
   /** Full category-directory enumeration is an explicit independent host grant. */
   readonly categoryReader?: Pick<CatalogueSettingsBrowserReader, 'readCategories'>;
   readonly stock?: ProductFullPageReadOnlyReader['stock'];
+  /** Opt in only when the richer authenticated media endpoint is mounted. */
+  readonly media?: ProductEditorMediaReader;
 }
 export interface ProductEditorProps {
   readonly parent: ReadScope; readonly productId: string | null; readonly capability: ProductEditorCapability;
@@ -62,4 +64,24 @@ export interface ProductEditorWriteState {
   readonly command: ProductMaintenanceCommand | null; readonly result: ProductMaintenanceResult | null;
   readonly receipt: ProductMaintenanceReceipt | null; readonly recovery: 'unqueried' | 'absent' | 'failed' | 'found';
   readonly error: ProductMaintenanceError | null;
+}
+
+/** Separate from the frozen drawer wire format; unknown legacy roles stay null. */
+export type ProductImageRole = 'MAIN' | 'WHITE_BACKGROUND' | 'HANG_TAG' | 'DETAIL' | 'COLOR';
+export interface ProductEditorImage {
+  readonly id: string; readonly version: number; readonly role: ProductImageRole | null;
+  readonly colorId: string | null; readonly displayOrder: number;
+  readonly mime: 'image/png' | 'image/jpeg' | 'image/webp'; readonly byteSize: string;
+  readonly createdAt: string; readonly createdByAccountId: string | null;
+  readonly thumbnailUrl: string | null; readonly thumbnailState: 'READY' | 'UNAVAILABLE';
+}
+export interface ProductEditorImages {
+  readonly productId: string; readonly version: number; readonly images: readonly ProductEditorImage[];
+}
+export interface ProductEditorMediaReader {
+  readImages(read: QueryRead<{ readonly productId: string }>): Promise<ProductEditorImages>;
+  /** Only called after the user explicitly requests an original. */
+  readOriginal(read: QueryRead<{ readonly productId: string; readonly imageId: string }>): Promise<{
+    readonly productId: string; readonly imageId: string; readonly url: string;
+  }>;
 }

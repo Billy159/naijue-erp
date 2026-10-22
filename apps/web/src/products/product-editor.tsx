@@ -98,7 +98,7 @@ function EditorFields(p:Fields){
     if(cells.length>keys.length||cells.some(text=>text!==''&&!/^(?:0|[1-9]\d{0,15})(?:\.\d{1,2})?$/.test(text))){p.setError('价格必须是非负金额，最多两位小数；空白表示未设置。');return;}
     const prices={...p.values.prices};cells.forEach((text,i)=>{prices[keys[i]!]=text===''?null:text;});change({prices});p.setError('');
    }}/></td></tr>)}</tbody></table><p className="product-field-hint">空白表示未设置；0 表示价格为零。</p></div>}
-   {p.tab==='images'&&<ProductEditorMedia scope={p.scope} productId={p.detail?.productId??null} reader={p.capability.productReader}/>}
+   {p.tab==='images'&&<ProductEditorMedia scope={p.scope} productId={p.detail?.productId??null} expectedVersion={p.detail?.version??null} reader={p.capability.productReader} {...(p.capability.media?{media:p.capability.media}:{})} onAccessFailure={p.onAccessFailure} onReloadRequest={()=>setReloadConfirm(true)}/>}
    {p.tab==='stock'&&(existing&&p.capability.stock?<ProductStockView scope={p.scope} reader={{stock:p.capability.stock}}/>:<p className="product-field-hint">{existing?'库存资料暂不可读取。':'新商品保存后可查看库存。'}</p>)}
   </div></StandardTabs>
   {p.leave&&<StandardOverlay title="放弃未保存资料" closeLabel="关闭放弃确认" close={()=>p.setLeave(false)} footer={dismiss=><><UIButton onClick={dismiss}>继续填写</UIButton><UIButton onClick={p.onClose}>放弃填写</UIButton></>}><p>是否放弃当前未保存的商品资料？</p></StandardOverlay>}

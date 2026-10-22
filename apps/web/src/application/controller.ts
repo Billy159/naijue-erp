@@ -1,4 +1,4 @@
-import { AuthenticationController, readContextAuthenticationLifecycle } from '../authentication/model.ts';
+import { AuthenticationController, readContextAuthenticationLifecycle, type IdentityChange } from '../authentication/model.ts';
 import { createAuthHttpClient } from '../authentication/http-client.ts';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import { ReadContext, type ReadScope } from '../loading/read-scope.ts';
@@ -25,6 +25,7 @@ export class ApplicationController {
   #salesSession: SalesSession | null = null;
   #transferSession: TransferSession | null = null;
   #paymentSession: ReturnType<typeof preparePaymentSettingsSession> | null = null;
+  #externalPaymentPending = true;
   #disposed = false;
   constructor(configuration: ApplicationConfiguration) {
     if (!configuration?.routes || !configuration.http || typeof configuration.presentation?.renderWorkspace !== 'function' || typeof configuration.presentation.renderRouteState !== 'function') throw new TypeError('Explicit host configuration is required.');
@@ -91,10 +92,18 @@ export class ApplicationController {
       this.#salesSession?.workspace.dispose(); this.#salesSession = null;
       this.#transferSession?.workspace.dispose(); this.#transferSession = null;
       this.#paymentSession?.workspace.dispose(); this.#paymentSession = null;
-      this.#configuration.routes.paymentSettings?.view.workspace?.dispose();
+      this.#externalPaymentIdentity(change);
       this.#leaves.clear();
       this.#publish(home());
     } });
+    // A failed/anonymous initial verification has no authenticated identity
+    // lifecycle event. It still must release the unverified injected owner.
+    this.authentication.subscribe(() => {
+      if (this.#externalPaymentPending && ['anonymous', 'error', 'cancelled'].includes(this.authentication.getSnapshot().phase)) {
+        this.#externalPaymentPending = false;
+        this.#configuration.routes.paymentSettings?.view.workspace?.dispose();
+      }
+    });
   }
   /** Maintenance presentation follows only the currently verified server principal. It is not an authorization grant. */
   get routes(): readonly ApplicationRoute[] {
@@ -121,7 +130,11 @@ export class ApplicationController {
     if (this.#disposed || !this.authentication.getSnapshot().principal || this.authentication.busy) return false;
     if (route !== null && !this.routes.includes(route)) return false;
     if (route === this.#state.route && this.#state.phase === 'ready') return true;
-    if (route !== this.#state.route && !this.canLeave()) {
+    // An already-dirty injected owner must be able to enter its own recovery
+    // page after first authentication. It still blocks every other destination.
+    const enterInjectedPayment = route === 'payment-settings' && this.#state.phase === 'home' && !this.#externalPaymentPending
+      && !this.#paymentSession && this.#configuration.routes.paymentSettings?.view.workspace?.scope.active === true;
+    if (route !== this.#state.route && !enterInjectedPayment && !this.canLeave()) {
       this.#publish({ ...this.#state, notice: 'cannot-leave' }); return false;
     }
     if (route !== this.#state.route) { this.#salesSession?.workspace.suspend(); this.#transferSession?.workspace.suspend(); }
@@ -244,6 +257,20 @@ export class ApplicationController {
     else if (kind === 'forbidden' && !(this.#state.route === 'payment-settings' && this.#paymentWorkspace()?.hasUnresolvedWrite())) this.failRoute(scope);
   }
   #paymentWorkspace() { return this.#paymentSession?.workspace ?? this.#configuration.routes.paymentSettings?.view.workspace; }
+  #externalPaymentIdentity(change: IdentityChange): void {
+    const external = this.#configuration.routes.paymentSettings?.view.workspace;
+    if (!external) return;
+    // Preserve a supplied owner only through its first authentication attempt,
+    // then bind it to the exact verified account/session/permission identity.
+    if (this.#externalPaymentPending && (change.reason === 'initial' || change.reason === 'verification' || change.reason === 'login')) return;
+    if (this.#externalPaymentPending && change.reason === 'identity' && change.principal) {
+      this.#externalPaymentPending = false;
+      const identity = external.scope.identity, principal = change.principal;
+      if (external.scope.active && identity.accountId === principal.accountId && identity.sessionRevision === change.sessionRevision
+        && identity.permissionRevision === JSON.stringify([principal.authVersion, principal.staffId, principal.role, principal.hallId])) return;
+    }
+    this.#externalPaymentPending = false; external.dispose();
+  }
   #current(scope: ReadScope): boolean { return !this.#disposed && scope.active && this.#state.scope === scope; }
   #httpForScope(scope: ReadScope, route: ApplicationRoute | null = null): ApplicationConfiguration['http'] {
     const http = this.#configuration.http;

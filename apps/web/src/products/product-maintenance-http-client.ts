@@ -1,7 +1,7 @@
 import { parseProductMaintenanceCommand } from '../../../../packages/application/src/product-maintenance-validation.ts';
 import { entityId } from '../../../../packages/domain/src/values.ts';
 import { createHttpJsonQuery, HttpQueryError, type HttpQueryOptions } from '../transport/http-query.ts';
-import type { ProductMaintenanceReader, ProductMaintenanceDetail, ProductMaintenanceCandidatePage, ProductMaintenanceCandidateQuery } from './product-editor-contracts.ts';
+import type { ProductEditorMediaReader, ProductEditorImages, ProductMaintenanceReader, ProductMaintenanceDetail, ProductMaintenanceCandidatePage, ProductMaintenanceCandidateQuery } from './product-editor-contracts.ts';
 import { parseProductMaintenanceCandidates } from '../../../../packages/application/src/product-maintenance-validation.ts';
 import { ProductMaintenanceError, type ProductMaintenanceClient, type ProductMaintenanceCommand, type ProductMaintenanceResult, type ProductMaintenanceReceipt } from './product-editor-contracts.ts';
 /** Same bounded command/outcome protocol as the existing sales/transfer clients; target validation stays product-specific. */
@@ -254,4 +254,70 @@ export function createProductMaintenanceHttpReader(options:HttpQueryOptions):Pro
  const http=createHttpJsonQuery(options);
  return Object.freeze({readDetail:read=>http.post('/products/maintenance/detail/query',{productId:read.parameters.productId},read.signal,value=>validateProductMaintenanceDetail(value,read.parameters.productId)),
  readCandidates:read=>{const q=parseProductMaintenanceCandidates({...read.parameters});return http.post('/products/maintenance/candidates/query',q,read.signal,value=>validateProductMaintenanceCandidates(value,q));}} satisfies ProductMaintenanceReader);
+}
+
+function mediaFailure(): never { throw new HttpQueryError('malformed-response', 'INVALID_PRODUCT_MEDIA_RESPONSE'); }
+function mediaVersion(value: unknown): value is number {
+  return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= 2147483647;
+}
+/** The opaque revision is never derived from a row version or treated as a grant. */
+function controlledMediaUrl(value: unknown, options: Pick<HttpQueryOptions, 'origin' | 'basePath'>, productId: string, imageId: string, variant: 'thumbnail' | 'original'): string {
+  if (typeof value !== 'string') return mediaFailure();
+  const url = new URL(value), prefix = `${options.basePath.replace(/\/$/, '')}/products/media/${productId}/${imageId}/`;
+  if (url.protocol !== 'https:' || url.origin !== options.origin || url.username || url.password || url.search || url.hash
+    || url.href !== value || !url.pathname.startsWith(prefix)) return mediaFailure();
+  const parts = url.pathname.slice(prefix.length).split('/');
+  if (parts.length !== 2 || !/^[A-Za-z0-9_-]+$/.test(parts[0] ?? '') || parts[1] !== variant) return mediaFailure();
+  return value;
+}
+export function validateProductEditorImages(value: unknown, productId: string, options: Pick<HttpQueryOptions, 'origin' | 'basePath'>): ProductEditorImages {
+  try {
+    entityId('product', productId);
+    const root = record(value, ['productId', 'version', 'images']);
+    if (root.productId !== productId || !mediaVersion(root.version) || !Array.isArray(root.images)) return mediaFailure();
+    const ids = new Set<string>(), colors = new Set<string>();
+    let previous: { order: number; id: string } | null = null;
+    for (const value of root.images) {
+      const row = record(value, ['id','version','role','colorId','displayOrder','mime','byteSize','createdAt','createdByAccountId','thumbnailUrl','thumbnailState']);
+      if (typeof row.id !== 'string' || !mediaVersion(row.version) || ids.has(row.id.toLowerCase())) return mediaFailure();
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(row.id)) return mediaFailure(); ids.add(row.id);
+      if (row.role !== null && !['MAIN','WHITE_BACKGROUND','HANG_TAG','DETAIL','COLOR'].includes(row.role as string)) return mediaFailure();
+      if (row.role === 'COLOR') {
+        if (typeof row.colorId !== 'string' || colors.has(row.colorId.toLowerCase())) return mediaFailure();
+        entityId('color', row.colorId); colors.add(row.colorId.toLowerCase());
+      } else if (row.colorId !== null) return mediaFailure();
+      if (typeof row.displayOrder !== 'number' || !Number.isInteger(row.displayOrder) || row.displayOrder < -2147483648 || row.displayOrder > 2147483647) return mediaFailure();
+      if (previous && (row.displayOrder < previous.order || row.displayOrder === previous.order && row.id.toLowerCase() <= previous.id)) return mediaFailure();
+      previous = { order: row.displayOrder, id: row.id.toLowerCase() };
+      if (!['image/png','image/jpeg','image/webp'].includes(row.mime as string) || typeof row.byteSize !== 'string'
+        || !/^[1-9]\d{0,6}$/.test(row.byteSize) || BigInt(row.byteSize) > 8388608n) return mediaFailure();
+      if (typeof row.createdAt !== 'string' || !/(?:Z|[+-]\d{2}:\d{2})$/.test(row.createdAt) || !Number.isFinite(Date.parse(row.createdAt))) return mediaFailure();
+      if (row.createdByAccountId !== null) { if (typeof row.createdByAccountId !== 'string') return mediaFailure(); entityId('account', row.createdByAccountId); }
+      if (row.thumbnailState === 'READY') controlledMediaUrl(row.thumbnailUrl, options, productId, row.id, 'thumbnail');
+      else if (row.thumbnailState !== 'UNAVAILABLE' || row.thumbnailUrl !== null) return mediaFailure();
+    }
+    return value as ProductEditorImages;
+  } catch { return mediaFailure(); }
+}
+/** Constructing this read capability performs no IO and cannot upload or save images. */
+export function createProductEditorMediaHttpReader(options: HttpQueryOptions): ProductEditorMediaReader {
+  const http = createHttpJsonQuery(options), mediaOptions = Object.freeze({ origin: options.origin, basePath: options.basePath });
+  return Object.freeze({
+    readImages: read => {
+      entityId('product', read.parameters.productId);
+      return http.post('/products/maintenance/images/query', { productId: read.parameters.productId }, read.signal,
+        value => validateProductEditorImages(value, read.parameters.productId, mediaOptions));
+    },
+    readOriginal: read => {
+      const { productId, imageId } = read.parameters;
+      entityId('product', productId); if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(imageId)) throw new HttpQueryError('invalid-request', 'INVALID_PRODUCT_IMAGE_ID');
+      return http.post('/products/image/query', { productId, imageId }, read.signal, value => {
+        try {
+          const row = record(value, ['productId','imageId','url']);
+          if (row.productId !== productId || row.imageId !== imageId) return mediaFailure();
+          return { productId, imageId, url: controlledMediaUrl(row.url, mediaOptions, productId, imageId, 'original') };
+        } catch { return mediaFailure(); }
+      });
+    },
+  } satisfies ProductEditorMediaReader);
 }
