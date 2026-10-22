@@ -68,11 +68,25 @@ export function TransferMatrixTable({ sizes, children, showHeader = true, classN
 export function transferDisplayQuantity(rows: readonly { readonly quantity: string }[]): string {
   return rows.every(row => /^(?:0|[1-9]\d{0,18})$/.test(row.quantity)) ? rows.reduce((sum, row) => sum + BigInt(row.quantity), 0n).toString() : '待校验';
 }
-export function TransferDocumentSummary({ lines }: { readonly lines: readonly { readonly productId: string | undefined; readonly quantity: string; readonly category?: { readonly id: string; readonly label: string | null } }[] }) {
+export function TransferDocumentSummary({ lines, presentation }: { readonly lines: readonly { readonly productId: string | undefined; readonly quantity: string; readonly category?: { readonly id: string; readonly label: string | null } }[]; readonly presentation?: 'proposal' }) {
   const categories = new Map<string, { label: string; rows: typeof lines[number][] }>();
   for (const line of lines) {
     const id = line.category?.id ?? 'unknown', label = line.category?.label ?? '未知分类', category = categories.get(id) ?? { label, rows: [] };
     if (category.label !== label) category.label = '未知分类'; category.rows.push(line); categories.set(id, category);
+  }
+  if (presentation === 'proposal') {
+    const facts = new Map<string, string>(), conflicts = new Set<string>();
+    for (const line of lines) if (line.productId) {
+      const fact = JSON.stringify([line.category?.id ?? null, line.category?.label ?? null]);
+      if (facts.has(line.productId) && facts.get(line.productId) !== fact) conflicts.add(line.productId);
+      facts.set(line.productId, fact);
+    }
+    const groups = new Map<string, { label: string; rows: typeof lines[number][] }>();
+    for (const line of lines) {
+      const conflict = !!line.productId && conflicts.has(line.productId), id = conflict ? 'unknown' : line.category?.id ?? 'unknown', label = conflict ? '未知分类' : line.category?.label ?? '未知分类', group = groups.get(id) ?? { label, rows: [] };
+      if (group.label !== label) group.label = '未知分类'; group.rows.push(line); groups.set(id, group);
+    }
+    return <footer className="tc-foot tc-gold-footer transfer-document-summary transfer-document-summary-proposal"><strong>{lines.some(line => !line.productId) ? '款数待读取' : `${new Set(lines.map(line => line.productId)).size}款`}</strong><strong>数量 {transferDisplayQuantity(lines)}</strong><div className="tc-product-tags" aria-label="商品信息">{[...groups].map(([id, group]) => <span className="tc-product-tag" key={id} title={group.label}>{group.label} {group.rows.some(line => !line.productId) ? '款数待读取' : new Set(group.rows.map(line => line.productId)).size}</span>)}</div></footer>;
   }
   return <footer className="tc-foot tc-gold-footer transfer-document-summary"><strong>{lines.some(line => !line.productId) ? '款数待读取' : `${new Set(lines.map(line => line.productId)).size} 款`} · 数量 {transferDisplayQuantity(lines)}</strong><div>{[...categories].map(([id, group]) => <span className="tc-product-tag" key={id}>{group.label} {transferDisplayQuantity(group.rows)}</span>)}</div></footer>;
 }
