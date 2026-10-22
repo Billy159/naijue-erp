@@ -1,0 +1,83 @@
+{
+  "version": "WRITE_CONTRACT_SUPPLEMENT_V4_MEDIA_COLOR_SWAP",
+  "status": "APPROVED_BY_DIRECT_USER_PENDING_IMPLEMENTATION_AND_ACCEPTANCE",
+  "atUtc": "2026-10-22T17:51:32.088631+00:00",
+  "humanGateSource": "Current user goal: new/changed backend fields, constraints and dependent write contracts require full reviewable difference before explicit confirmation. Existing21 guard now rejects retained-id DELETE, so allowing it is a new permitted write event.",
+  "newTables": 0,
+  "newColumns": 0,
+  "changedFunctions": [
+    "guard_maintenance_child_write image DELETE retained-id branch only"
+  ],
+  "sourceProposalSha256": "e72083c272be780146f2d8c971be70c8c01c057f5ab3df189fcfb412e6e5280b",
+  "implementationAuthorized": true,
+  "scope": "Atomic color image swaps/cycles only; other already authorized branches continue",
+  "proposal": {
+    "status": "PROPOSAL_ONLY_REQUIRES_DIRECT_USER_APPROVAL_NOT_IMPLEMENTED_OR_ENGINE_TESTED",
+    "atUtc": "2026-10-22T17:49:26.085558+00:00",
+    "source": "adapters/postgres/migrations/0021_native_maintenance_receipts.sql guard_maintenance_child_write",
+    "sourceSqlFileSha256": "904809567388816bb32fc19dd0faed220e3c8f7bbcad2c7baddcd0d6cb47ae61",
+    "newTables": 0,
+    "newColumns": 0,
+    "indexChange": false,
+    "functionChangeCount": 1,
+    "problem": "Immediatepartialunique(product_id,color_id) prevents occupiedA-Bcycles; currentDELETEevent rejects retainedidinafterproof, so sameIDdelete/reinsert isnotcurrentlylegal. Temporaryroles/colorswouldviolateexactpreparedrowproof.",
+    "proposal": "Only imageDELETE with sameid in both exactpreparedbefore/after may materialize bydelete/reinsertfinal. Preserve originalid/product/createdtimestamp/creator, childversion advancesexactly1; ordinarytrueimage removal, SKU/barcode/payment branches unchanged. Existingprepare actor/currenttx/beforecompleterow, INSERTexactafter, finaldeferredwholeafter anduniquecolorguards remainmandatory.",
+    "executionOrder": [
+      "Originalproductlock/currentidentity/receiptgrant; sourceimage stagechecks andallchangedbefore/finalafter preparedaudit",
+      "RootCAS oneversion; explicitly lockallchangedexistingimages; deleteonlycyclemembers matchingoriginalCAS/fullbefore",
+      "Insert onlytheir exactfinalrows withsameid/originalcreationmetadata/oneversion advance, nofakeintermediate row",
+      "Finalcompleteactualimages readback, same original receipt/audit, COMMIT; anymissing/wrong row mustfaildeferredproof androllbackwholetransaction"
+    ],
+    "negativeAcceptance": [
+      "No preparedaudit/wrongactor/wrongroot failsbeforeDML",
+      "Wrongbeforeimage orchangedid/product/createdAt/creator/versionfails",
+      "Deletewithoutreinsert orwrongafterimage failsfinalproof/no receipt committed",
+      "Duplicatefinalcolorstillfailsoriginaluniqueindex",
+      "Sourceexpired/revoked/failedcodec no consumption orimagewrite; COMMITunknown originalkeyrecovery only"
+    ],
+    "impact": [
+      "Productmaintenancemedia color mapping cyclic branch only; no inventory/stockmoney/SKU identity changes",
+      "Old image rows notbackfilled; existing22nullablelegacyroles preserved",
+      "Ordinaryacyclic imageoperations continue underoldguard whilecyclicbranchwaitsusergate"
+    ],
+    "rollback": "Disablecyclicwriter, restoreoriginalonefunctionbody viaCcontrollednewmigration/window. Alreadycommittedvalidbusinessimages preserved; neverrestoreoldbusinesssnapshot overnewwrites. Reversal ofcommittedimageoperation mustuse a newauditedcommand.",
+    "notClaimed": [
+      "Userapproval",
+      "Sourceimplementationincentral0026orD2writer",
+      "SQLparse/actualPGguard/positivecycle/negative/deferredproofpassed",
+      "Productionissuer/hostenabled"
+    ],
+    "files": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/media-cyclic-image-proposal-v1/EXACT-DIFF.diff",
+        "sha256": "050e41870f7f209c9b9420ae2f8c34c68a09538c3e28c5fe138ca99b9bf014d6",
+        "bytes": 1682
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/media-cyclic-image-proposal-v1/PROPOSED-ONLY-guard-image-reinsert.sql",
+        "sha256": "8ccc6ee2cdfc381dbf144f1e4ba88341874bce73583df99fd05cb2e84e2666d1",
+        "bytes": 4972
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/media-cyclic-image-proposal-v1/ROLLBACK-ORIGINAL-guard-image-write.sql",
+        "sha256": "f42c4b142ba60505b68ff737ebf2dd46d3b3bc32ef3b89c93a711f3930a5bf21",
+        "bytes": 3910
+      }
+    ]
+  },
+  "copies": [
+    {
+      "path": "proposals/media-color-swap-v4/EXACT-DIFF.diff",
+      "sha256": "050e41870f7f209c9b9420ae2f8c34c68a09538c3e28c5fe138ca99b9bf014d6"
+    },
+    {
+      "path": "proposals/media-color-swap-v4/PROPOSED-ONLY-guard-image-reinsert.sql",
+      "sha256": "8ccc6ee2cdfc381dbf144f1e4ba88341874bce73583df99fd05cb2e84e2666d1"
+    },
+    {
+      "path": "proposals/media-color-swap-v4/ROLLBACK-ORIGINAL-guard-image-write.sql",
+      "sha256": "f42c4b142ba60505b68ff737ebf2dd46d3b3bc32ef3b89c93a711f3930a5bf21"
+    }
+  ],
+  "approvalRecord": "WRITE-CONTRACT-APPROVAL-v4-MEDIA-COLOR-SWAP.json"
+}

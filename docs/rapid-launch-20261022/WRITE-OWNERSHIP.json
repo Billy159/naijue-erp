@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T17:26:37.944141+00:00",
+  "updatedAt": "2026-10-22T18:14:38.234255+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -354,6 +354,41 @@
           "path": "tests/history-typed-closure26.test.ts",
           "group": "EXPLICIT_NATIVE_CLOSURE26_FULL_APPROVED_SHAPES",
           "fieldGate": "APPROVED_FULL_NATIVE_FIELDS_NO_NEW_SCHEMA_OR_BUSINESS_RULE"
+        },
+        {
+          "path": "tests/native-runtime26-capability.test.ts",
+          "group": "EXPLICIT_OUTSIDE_REVIEW_AND_REAL_CONTEXT_CAPABILITY",
+          "fieldGate": "NO_NEW_SCHEMA_OR_DATA_AUTHORITY"
+        },
+        {
+          "path": "tests/product-media-write-capability.test.ts",
+          "group": "EXPLICIT_OUTSIDE_REVIEW_AND_REAL_CONTEXT_CAPABILITY",
+          "fieldGate": "NO_NEW_SCHEMA_OR_DATA_AUTHORITY"
+        },
+        {
+          "path": "apps/api/src/sales-preparation-input.ts",
+          "group": "EXISTING_SALES_READ_PREPARATION_ONLY",
+          "fieldGate": "NO_SAVE_CONTRACT_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/api/src/sales-http.ts",
+          "group": "EXISTING_SALES_READ_PREPARATION_ONLY",
+          "fieldGate": "NO_SAVE_CONTRACT_SCHEMA_CHANGE"
+        },
+        {
+          "path": "tests/native-sales-preparation.test.ts",
+          "group": "EXISTING_SALES_READ_PREPARATION_ONLY",
+          "fieldGate": "NO_SAVE_CONTRACT_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/api/src/sales-http.test.ts",
+          "group": "EXISTING_SALES_READ_PREPARATION_ONLY",
+          "fieldGate": "NO_SAVE_CONTRACT_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/api/src/sales-preparation-http.test.ts",
+          "group": "EXISTING_SALES_READ_PREPARATION_ONLY",
+          "fieldGate": "NO_SAVE_CONTRACT_SCHEMA_CHANGE"
         }
       ]
     },
@@ -1219,6 +1254,81 @@
           "path": "tests/native-catalogue-import.test.ts",
           "group": "EXPLICIT_NATIVE_CATALOGUE_SKU26",
           "fieldGate": "APPROVED_SOURCE_FULL26_FIELDS_ONLY_OLD19_UNCHANGED"
+        },
+        {
+          "path": "scripts/import-v3/verified-offset-source.mjs",
+          "group": "EXPLICIT_OUTSIDE_REVIEW_AND_REAL_CONTEXT_CAPABILITY",
+          "fieldGate": "NO_NEW_SCHEMA_OR_DATA_AUTHORITY"
+        },
+        {
+          "path": "scripts/import-v3/verified-offset-source.test.mjs",
+          "group": "EXPLICIT_OUTSIDE_REVIEW_AND_REAL_CONTEXT_CAPABILITY",
+          "fieldGate": "NO_NEW_SCHEMA_OR_DATA_AUTHORITY"
+        },
+        {
+          "path": "adapters/postgres/src/native-barcode-import.ts",
+          "group": "NATIVE_IMPORT_26_EXPLICIT_SUCCESSOR_MINIMAL_SCOPE",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_CONTRACT"
+        },
+        {
+          "path": "adapters/postgres/src/native-stock-contributor-import.ts",
+          "group": "NATIVE_IMPORT_26_EXPLICIT_SUCCESSOR_MINIMAL_SCOPE",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_CONTRACT"
+        },
+        {
+          "path": "adapters/postgres/src/native-payment-import.ts",
+          "group": "NATIVE_IMPORT_26_EXPLICIT_SUCCESSOR_MINIMAL_SCOPE",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_CONTRACT"
+        },
+        {
+          "path": "adapters/postgres/src/import-v3-history-header-staging-store.ts",
+          "group": "NATIVE_IMPORT_26_EXPLICIT_SUCCESSOR_MINIMAL_SCOPE",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_CONTRACT"
+        },
+        {
+          "path": "adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts",
+          "group": "NATIVE_IMPORT_26_EXPLICIT_SUCCESSOR_MINIMAL_SCOPE",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_CONTRACT"
+        },
+        {
+          "path": "adapters/postgres/src/import-v3-history-settlement-staging-store.ts",
+          "group": "NATIVE_IMPORT_26_EXPLICIT_SUCCESSOR_MINIMAL_SCOPE",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_CONTRACT"
+        },
+        {
+          "path": "adapters/postgres/src/import-v3-history-staging-store.ts",
+          "group": "NATIVE_IMPORT_26_EXPLICIT_SUCCESSOR_MINIMAL_SCOPE",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_CONTRACT"
+        },
+        {
+          "path": "tests/native-payment-import-postgres-protocol.test.ts",
+          "group": "NATIVE_IMPORT_26_EXPLICIT_SUCCESSOR_MINIMAL_SCOPE",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_CONTRACT"
+        },
+        {
+          "path": "tests/import-v3-history-header-staging.test.ts",
+          "group": "NATIVE_IMPORT_26_EXPLICIT_SUCCESSOR_MINIMAL_SCOPE",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_CONTRACT"
+        },
+        {
+          "path": "tests/history-sales-detail-binding-resolver-postgres-protocol.test.ts",
+          "group": "NATIVE_IMPORT_26_EXPLICIT_SUCCESSOR_MINIMAL_SCOPE",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_CONTRACT"
+        },
+        {
+          "path": "tests/history-sales-detail-staging-postgres-protocol.test.ts",
+          "group": "NATIVE_IMPORT_26_EXPLICIT_SUCCESSOR_MINIMAL_SCOPE",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_CONTRACT"
+        },
+        {
+          "path": "tests/history-settlement-postgres-protocol.test.ts",
+          "group": "NATIVE_IMPORT_26_EXPLICIT_SUCCESSOR_MINIMAL_SCOPE",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_CONTRACT"
+        },
+        {
+          "path": "tests/import-v3-history-staging.test.ts",
+          "group": "NATIVE_IMPORT_26_EXPLICIT_SUCCESSOR_MINIMAL_SCOPE",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_CONTRACT"
         }
       ]
     },
@@ -1647,6 +1757,16 @@
           "path": "apps/web/src/settings/stores/demo-store-ui.css",
           "group": "DEMO_WHOLE_STORE_PAGE_UI_ADAPTATION",
           "fieldGate": "EXISTING_APPROVED_FIELDS_ONLY_NO_RULE_CHANGE"
+        },
+        {
+          "path": "apps/web/src/settings/demo-settings-controls.tsx",
+          "group": "FROZEN_DEMO_COMPLETE_UI_PRESENTATION_ONLY",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/web/src/settings/demo-settings-ui.css",
+          "group": "FROZEN_DEMO_COMPLETE_UI_PRESENTATION_ONLY",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
         }
       ]
     },
@@ -2192,6 +2312,21 @@
         {
           "path": "apps/web/src/sales/document-presentation.tsx",
           "group": "WHOLE_SALES_UI_SHARED_PRESENTATION",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/web/src/current-form/product-finder.tsx",
+          "group": "DEMO_COMPLETE_PRODUCT_FINDER_UI",
+          "fieldGate": "EXISTING_TRUSTED_READS_ONLY_NO_RULE_CHANGE"
+        },
+        {
+          "path": "apps/web/src/current-form/product-finder.css",
+          "group": "DEMO_COMPLETE_PRODUCT_FINDER_UI",
+          "fieldGate": "EXISTING_TRUSTED_READS_ONLY_NO_RULE_CHANGE"
+        },
+        {
+          "path": "apps/web/src/transfers/document-presentation.tsx",
+          "group": "FROZEN_DEMO_COMPLETE_UI_PRESENTATION_ONLY",
           "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
         }
       ]

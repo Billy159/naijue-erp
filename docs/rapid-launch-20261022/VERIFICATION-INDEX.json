@@ -7530,10 +7530,616 @@
         "Actual source import/publication",
         "Production target unchanged"
       ]
+    },
+    {
+      "id": "QB-slice76-main26-seams-275ac63f",
+      "reviewer": "QB",
+      "sourceCommit": "275ac63fc01eeed971f2f2cb9c10fdfa38acfbeb",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice76-main26-seams-275ac63f/RESULT.json",
+      "evidenceSha256": "9f2c665684abf19d0d4c85cfff90edf6ba9c53d0ba5ec39f41663729b8770a72",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "taskId": "MAIN26_CLOSURE_ACCOUNTING_PUBLICATION_SEAMS",
+      "scope": "round32 explicit26 seams，旧19保留；fourSQL导出只作后继输入，不把未接callback当完成",
+      "qualification": "固定6文件新26闭包/accounting/publication源码与脚本协议通过；非完整MAIN、实际issuer/PG或首STAGE/bootstrap执行通过",
+      "notTested": [
+        "实际26 helper121例程/ACL/target与issuer，SQL解析/锁/PG/守恒/合法导入/PUBLISH均未实测。",
+        "D1 Cutoff MAIN26胶水、finite bootstrap4 SQL callback/arity执行闭包、49 source/执行grant、D3完整11工厂/sourcehost26/runner仍是后继。",
+        "未安装/重放SQL patch或查询PG，不因fourSQL export或源码PASS声称callback已运行。"
+      ],
+      "findings": [],
+      "closedFindings": null
+    },
+    {
+      "id": "QB-slice77-full-closure26-projection-f18666ce",
+      "reviewer": "QB",
+      "sourceCommit": "f18666cef005fbfc8584502ded05a3f59f0d47e5",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice77-full-closure26-projection-f18666ce/RESULT.json",
+      "evidenceSha256": "c24190490bb2dcae298964b30b147a491a4ffef408ec925ae4372358a6709ba2",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "NEED_FIX",
+      "taskId": "EXPLICIT_FULL_NATIVE_CLOSURE26_PROJECTION",
+      "scope": "QB77 f18666ce相对0e95cc26：显式26 spec/row/expected builder、新增测试、central0026仅两投影函数；旧19默认/0018/旧121套不重跑",
+      "qualification": "仅固定exact3源码/纯协议审查；核心26投影与两SQL函数静态对齐，新增测试严格类型检查未通过，不能采纳回执strict PASS",
+      "notTested": [
+        "未安装v6补丁、未连接PG/issuer/MAIN/STAGE/PUBLISH、未核真实导入守恒；实际两函数patch/readback由C负责。",
+        "Fast设置工具不可见，未声称实测；没有全量构建/原始来源全扫/OOXML/gzip。"
+      ],
+      "findings": [
+        {
+          "id": "QB77-F01",
+          "axis": "Standards",
+          "priority": 2,
+          "file": "tests/history-typed-closure26.test.ts",
+          "line": 28,
+          "title": "为getter测试数组提供明确类型并更正strict结果",
+          "body": "固定f18666ce新测试const getter=[]在回调中被引用，strict产生TS7034/TS7005；tsconfig包含tests/**/*.ts，故当前文件集不能通过工程严格类型检查。交付的run1/run2日志均有相同3处错误。请以如unknown[]显式声明数组，冻结修复提交，补受影响严格类型检查并更新回执；无需重跑旧121或纯协议全套。"
+        }
+      ],
+      "closedFindings": null
+    },
+    {
+      "id": "QB-slice78-sharp-codec-275ac63f",
+      "reviewer": "QB",
+      "sourceCommit": "275ac63fc01eeed971f2f2cb9c10fdfa38acfbeb",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice78-sharp-codec-275ac63f/RESULT.json",
+      "evidenceSha256": "8e879e5dea1c3e1bafd041dec1f0ae5bd9de994edae784ead1e1ba6ffa562339",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "taskId": "REAL_LOCAL_SHARP_CODEC_AND_LIMITS",
+      "scope": "QB78 275ac63f相对a9079af6：Sharp0.35.5完整解码与输入/像素/字节/共享并发/超时限制",
+      "qualification": "仅固定exact2源码与纯协议/已留存真实本机合成codec证据；不是stage/HTTP/PG/生产性能或上线验收",
+      "notTested": [
+        "未读取真实商品原图/媒体映射；未运行stage、HTTP、上传/保存、PG、部署。",
+        "超时为受控时钟验证；未做真实10秒压力/生产性能/原生崩溃恢复或断电耐久。"
+      ],
+      "findings": [],
+      "closedFindings": null
+    },
+    {
+      "id": "QB-slice79-materialized-source-index-run2",
+      "reviewer": "QB",
+      "sourceCommit": null,
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice79-materialized-source-index-run2/RESULT.json",
+      "evidenceSha256": "8368e2c0aa40414b492649c12fb654c856ab91fcde93530e1de36af11d1c8f6f",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "taskId": "QB79_MATERIALIZED_SOURCE_OFFSET_INDEX",
+      "scope": "tool96b6848b + run2 manifest36db4321 +8 locatorcomponents; no repeated362MB source scan",
+      "qualification": "SOURCE/LOCATOR DATA ONLY; 8 new components, original fullsource hash/EOF evidence reused; not native binding/import authority",
+      "notTested": [
+        "Allraworiginalrows not reread; independent original validation limited24bounded samples, while componentstream fully audited.",
+        "Index locator approval isnot source/native refs approval or all11factory/runtime26/STAGE/MAIN/PUBLISH; no nativebind allocation,SQL/PG/browser/server/build.",
+        "D3 duration1.98s/RSS85573632 only savedD3 evidence, not QBbenchmark."
+      ],
+      "findings": [],
+      "closedFindings": null
+    },
+    {
+      "id": "QB-slice80-private-stage-0e95cc26",
+      "reviewer": "QB",
+      "sourceCommit": "0e95cc26bbdd818869642c530e11c2bc61c90ac2",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice80-private-stage-0e95cc26/RESULT.json",
+      "evidenceSha256": "17befb323e4c71a34996a284dbeb8e8437fb66da4150cbd5f29375a25f792e97",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "NEED_FIX",
+      "taskId": "PRIVATE_DURABLE_MEDIA_STAGE",
+      "scope": "QB80 0e95cc26相对10640f6b：私有0700/0600图片暂存、原键幂等与有限消费，codec依赖复用QB78",
+      "qualification": "固定exact2源码/纯协议及新隔离合成反例；未PG/HTTP/实际账号/断电实测",
+      "notTested": [
+        "未断电或宿主文件系统耐久压力；反例为fsync失败注入与调用路径证明。",
+        "实际root/当前账号授权/host manifest producer/同客户端image writer/HTTP/F2/生产部署均未完成。"
+      ],
+      "findings": [
+        {
+          "id": "QB80-F01",
+          "axis": "Spec",
+          "priority": 2,
+          "file": "adapters/media/src/product-media-stage.ts",
+          "line": 194,
+          "title": "恢复已发布stage时补做keys目录同步后再成功",
+          "body": "link后keys目录fsync可能失败/中断，此时stage正确返回失败但原键索引已存在。后续stage命中prior（或completed）后直接replay，layout只sync root，verified只读文件，没有sync keys目录，故会在索引持久化尚无保证时承诺成功；父root fsync不能代替keys目录条目的fsync。独立合成故障注入已证实第一次PRODUCT_MEDIA_NOT_READY、第二次成功且keys sync次数0。请在所有命中已发布winner的成功恢复路径同步keys（及合同所需目录），失败继续拒绝，补此单一受影响反例，不删除/换键/重传原件。"
+        }
+      ],
+      "closedFindings": null
+    },
+    {
+      "id": "QB-slice81-qb77-f01-type-only-2ad90db3",
+      "reviewer": "QB",
+      "sourceCommit": "2ad90db3de13dfc28fb802c518f37a8b9dde4156",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice81-qb77-f01-type-only-2ad90db3/RESULT.json",
+      "evidenceSha256": "35f69dc18da02f71f9e38811602e45ef6ad471084ec8662fbf63475ed378f405",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "taskId": "QB77_F01_TYPE_ANNOTATION_ONLY",
+      "scope": "2ad90db3相对bbe2d8ce exact1；与QB77固定原测试比较仅const getter: unknown[]=[]注解新增",
+      "qualification": "仅QB77-F01单测试注解/真实受影响strict闭包；复用QB77核心投影结论，不代表PG实测",
+      "notTested": [
+        "不重复pure3、旧121、整构建或PG；未安装v6/issuer/MAIN或导入。"
+      ],
+      "findings": [],
+      "closedFindings": [
+        "QB77-F01"
+      ]
+    },
+    {
+      "id": "QB-slice82-genuine-product-source-0e95cc26",
+      "reviewer": "QB",
+      "sourceCommit": "0e95cc26bbdd818869642c530e11c2bc61c90ac2",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice82-genuine-product-source-0e95cc26/RESULT.json",
+      "evidenceSha256": "4270b0e76e08b57c23a1a2625ada6573f002eadd045de3fcd39faa121b3d690e",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "taskId": "GENUINE_PRODUCT_SOURCE_READER_AND_ACTUAL2956_CONSUMPTION",
+      "scope": "固定0e95cc26相对10640f6b exact2，仅openReviewedProductEvidenceSource及新3测试，实际30chunk授权消费与既有QB73独立指纹对齐",
+      "qualification": "source reader/protocol及实际2956来源+完整引用授权消费证据；无SQL/STAGE/PUBLISH/正式导入",
+      "notTested": [
+        "未实际SQL/PG/MAIN/STAGE/PUBLISH或发grant；reader alone没有native引用/导入权限。",
+        "8.726895625秒/RSS577404928仅D3保存证据，不是QB重跑/生产性能结论；没有原始资料全扫。"
+      ],
+      "findings": [],
+      "closedFindings": null
+    },
+    {
+      "id": "QB-slice83-catalogue26-full-shape-3adcdc22",
+      "reviewer": "QB",
+      "sourceCommit": "3adcdc2225c25d63da0f80ba66b2c6455ba0038b",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice83-catalogue26-full-shape-3adcdc22/RESULT.json",
+      "evidenceSha256": "e28712f4cdcdb0a36c940eb3019ba48674f40514cacfe7d9263b9e15bb89aaaf",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "taskId": "NATIVE_CATALOGUE26_EXPLICIT_COMPLETE_SHAPE",
+      "scope": "3adcdc22相对9be80633：26独立DTO/preparer/store、完整CATEGORY/COLOR/FIT deleted_at NULL元数据、原client cap/完整RETURNING",
+      "qualification": "仅固定exact3新26契约/存储协议及实际344条纯转换；未实际PG/issuer/native写入或导入",
+      "notTested": [
+        "无实际SQL/PG/fullcurrent读回/issuer/native import/MAIN49；344转换仅pure准备候选。",
+        "旧openReviewedCatalogueSource仍V1；26 source factory与historyClosureProjectionRow26接线尚须后续固定新片，不把本片当完整11factory或执行授权。"
+      ],
+      "findings": [],
+      "closedFindings": null
+    },
+    {
+      "id": "QB-slice84-cutoff26-bootstrap-capability-5180ac0e",
+      "reviewer": "QB",
+      "sourceCommit": "5180ac0e55ee713b231b3664719b7a52b7d92f8c",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice84-cutoff26-bootstrap-capability-5180ac0e/RESULT.json",
+      "evidenceSha256": "a58faa7558c52d7ef65b3055014c2324de33f539680e74ee61b558fd84f9fccb",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "taskId": "MAIN26_CUTOFF_AND_FINITE_BOOTSTRAP_CALLBACK_CAPABILITY",
+      "scope": "5180ac0e相对3adcdc22：原client cap-before-BEGIN及锁/receipt/cutoff分支、有限43 SQL与callback runtime生命周期；旧19/default不扩",
+      "qualification": "固定exact2新26 MAIN/callback源码与协议；实际issuer/49真实provider/全来源grant/PG/MAIN执行未完成",
+      "notTested": [
+        "只有协议测试里的noop provider；未实现/核准真实49callback、全11factory/sourcehost executor/fullsource grant或实际issuer。",
+        "未PG/STAGE/CHUNK/PUBLISH/MAIN实导、生产部署或全仓真实数量守恒。"
+      ],
+      "findings": [],
+      "closedFindings": null
+    },
+    {
+      "id": "QB-slice85-sku26-full-shape-84be0029",
+      "reviewer": "QB",
+      "sourceCommit": "84be00299f3347dac13567be3e1775ffb6a4cf98",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice85-sku26-full-shape-84be0029/RESULT.json",
+      "evidenceSha256": "539fef593fb980ae7aa6dd09cf28f73a42941f7f1ad1a63047367e1bb8815915",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "taskId": "EXPLICIT_NATIVE_SKU26_FULL_SHAPE",
+      "scope": "84be0029新独立SKU26 DTO/preparer/store/evidence；不核同提交UI或重复旧stock/barcode",
+      "qualification": "固定exact3新SKU26源码/协议；未实际14999 SKU来源准备/native引用授权或PG导入",
+      "notTested": [
+        "未实际14999 SKU准备、逐个native引用新授权、全11factory/sourcehost/49bootstrap/issuer或PG写入/读回/MAIN。",
+        "同round40前端UI组不在QB受托backend范围。"
+      ],
+      "findings": [],
+      "closedFindings": null
+    },
+    {
+      "id": "QB-slice86-bounded-offset-reader-84be0029",
+      "reviewer": "QB",
+      "sourceCommit": "84be00299f3347dac13567be3e1775ffb6a4cf98",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice86-bounded-offset-reader-84be0029/RESULT.json",
+      "evidenceSha256": "7ac920af093b112338149540110d5ef04dbcd7765a6da48f2e104d4dd9377eca",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "taskId": "BOUNDED_VERIFIED_OFFSET_SOURCE_CONSUMER",
+      "scope": "84be0029 openReviewedMaterializedSource的新outside OFFSET_ROWS_ONLY/选定索引/逐raw读取/存续与撤销",
+      "qualification": "固定exact2新有限consumer源码/合成协议；QB79实际索引证据复用，未实际新reader读取原数据或导入",
+      "notTested": [
+        "实际outside C grant和原数据尚未用此consumer消费；无native引用/UUID/11factory/PG/MAIN/import/STAGE/PUBLISH。",
+        "本报告不把合成reader验证当真实8类native转换。"
+      ],
+      "findings": [],
+      "closedFindings": null
+    },
+    {
+      "id": "QB-slice87-ordered-media-writer-84be0029",
+      "reviewer": "QB",
+      "sourceCommit": "84be00299f3347dac13567be3e1775ffb6a4cf98",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice87-ordered-media-writer-84be0029/RESULT.json",
+      "evidenceSha256": "ae20df687f4a7f4b597d0ca9dc777153929343cd101c8f256950e9a21ebe0313",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "taskId": "ORDERED_PRODUCT_MEDIA_WRITE_WITH_PRIVATE_PREPARED_PROOF",
+      "scope": "84be0029 backend exact8 +外部冻结W17 API合约c4230006；仅新extended parser/同key哈希兼容/有序CAS/两阶段proof边界；不核UI或重跑codec/stage11",
+      "qualification": "仅合法非循环图片命令新增源码/应用合成模型/脚本化SQL及HTTP协议；循环颜色交换明确未完成，实际D1证明/PG/host/F2未验收，非完整图片功能PASS",
+      "notTested": [
+        "实际D1 WeakMap/fingerprint issuer和exact schema/ACL/guard、真实PG constraint/rollback/最终读回没有实测；脚本化leafSQL不等于真实PG。",
+        "实际stage/root/manifest producer与host/source mapping/F2配对/上传HTTP/CSRF/browser/部署/B04未完成；图片upload/write保持关闭。",
+        "循环COLOR交换尚未实施；相关最小guard变更需按用户裁决办理，不把非循环writer当完整图片功能。",
+        "QB80-F01原键恢复keys目录同步缺口仍待D2，不能沿本片PASS覆盖。"
+      ],
+      "findings": [],
+      "closedFindings": null
+    },
+    {
+      "id": "QB-slice88-qb80-f01-stage-fsync-ce4b207b",
+      "reviewer": "QB",
+      "sourceCommit": "ce4b207bb1fcc66b5de48945a4738466712e7686",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice88-qb80-f01-stage-fsync-ce4b207b/RESULT.json",
+      "evidenceSha256": "f31eea34ba35bc358681aac7e6d65c23be7fca5e396850849c3d2f112aab8d8b",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "taskId": "QB80_F01_STAGE_RECOVERY_KEY_DIRECTORY_DURABILITY",
+      "scope": "ce4b207b相对固定parent：公共stage成功统一await实际keys目录同步；仅复核prior/completed/EEXIST失败恢复",
+      "qualification": "仅QB80-F01固定exact2修复/故障反例与严格类型差异；非真实断电、生产stage或图片写入启用验收",
+      "notTested": [
+        "故障/分支时间调度仅合成probe，使用实际Sharp、原生私有文件/link/fsync；未断电或宿主文件系统耐久压力。",
+        "未生产root/实际identity/host/HTTP/PG/图片write activation；不把本片作为生产ready。"
+      ],
+      "findings": [],
+      "closedFindings": [
+        "QB80-F01"
+      ]
+    },
+    {
+      "id": "QB-slice89-catalogue26-genuine-source-48f8bab3",
+      "reviewer": "QB",
+      "sourceCommit": "48f8bab3119c09ff810c327e89398ff7053af13b",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice89-catalogue26-genuine-source-48f8bab3/RESULT.json",
+      "evidenceSha256": "74c07878196c873cc25c56c9df92bc1acf0180f19b260d1d0f3b5b0d6e1f7bce",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "taskId": "CATALOGUE26_GENUINE_SOURCE_FACTORY",
+      "scope": "48f8bab3相对ce4b207b backend exact2；不核该提交前端组、不重核QB83 app/pg exact3或344原资料/裁决/UUID",
+      "qualification": "仅新26 genuine sourcefactory/授权/完整投影源码与实际344消费保存证据；实际MAIN授权闭包因缺payload正确拒绝，未PG/导入",
+      "notTested": [
+        "实际1032是新sourcefactory消费与纯完整projection，不是已获真实MAIN payload授权的openClosure；后者明确拒绝。",
+        "未全11factory/全来源grant/actual issuer/runtime/SQL/native写入/STAGE/MAIN/PUBLISH；未原始workbook/headergzip/362MB/190MB复扫。"
+      ],
+      "findings": [],
+      "closedFindings": null
+    },
+    {
+      "id": "QB-slice90-approved-color-cycle-74f240af",
+      "reviewer": "QB",
+      "sourceCommit": "74f240af0124f945d0aa7586c8a21b9b1e7bcc83",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice90-approved-color-cycle-74f240af/RESULT.json",
+      "evidenceSha256": "0b2e5bd946f7cb5e7ca74cc188c18453c31827ccac5cb3cf9e72b85408b91246",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "taskId": "USER_APPROVED_IMAGE_COLOR_CYCLE_WRITER",
+      "scope": "74f240af相对29d2ec29：closed cycle planner+独立exact3 proof+同ID先删后重插，旧QB87非循环范围复用，不审未固定D1/DDL/issuer",
+      "qualification": "仅用户已批准v4的D2循环交换exact6源码/协议/独立计划不变量；不代表实际PG/v7守卫/issuer/host/browser或B04通过",
+      "notTested": [
+        "D1实际v7 guard/catalogue/ACL/私有issuer不属本exact6，未安装或实际PG执行。",
+        "合同要求的真实隔离PG双/多循环、缺/错audit/version/before/after/漏重插/重复颜色及rollback仍须C独立实测。",
+        "实际private root/host/F2/browser/upload/save与生产/B04均未验收；本source PASS不得改写该边界。"
+      ],
+      "findings": [],
+      "closedFindings": null
+    },
+    {
+      "id": "QB-slice91-approved-v7-single-guard-693e215d",
+      "reviewer": "QB",
+      "sourceCommit": "693e215d943fe4c23371aba4c19ace68b77b5720",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice91-approved-v7-single-guard-693e215d/RESULT.json",
+      "evidenceSha256": "c7b735150fae9908f782113d0e7698557fd89f8344ca4dd979d8129060e397c5",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "taskId": "APPROVED_V7_SINGLE_IMAGE_GUARD_ONLY",
+      "scope": "693e215d source v7仅guard_maintenance_child_write；原v6/旧121/结构/maintenance matrix不重验",
+      "qualification": "固定source0026 exact1的已批准单函数增量；未安装/执行PG或验实际issuer，fixture仅保存语法检查证据",
+      "notTested": [
+        "未PG连接、安装v7/实际guardbody读回或fixture正反例；保存语法exit0不等于引擎parse/业务验收。",
+        "实际issuer/ACL/host/生产/B04未验；真实隔离多循环与缺/错审计、before/after/version/漏重插/唯一色回滚按C实证分别闭环。"
+      ],
+      "findings": [],
+      "closedFindings": null
+    },
+    {
+      "id": "QF-candidate-84be0029-F1-CHUNK26-REVIEW",
+      "reviewer": "QF",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-84be0029/F1-CHUNK26-REVIEW.json",
+      "evidenceSha256": "ed77cef5624ac22520ffb58b709342f49f0e155ed4e13080b9ef0122a1589cc6",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "NEED_FIX"
+    },
+    {
+      "id": "QF-candidate-84be0029-F2-P12-TYPE-CLOSURE-REVIEW",
+      "reviewer": "QF",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-84be0029/F2-P12-TYPE-CLOSURE-REVIEW.json",
+      "evidenceSha256": "2b79aece49b60a6d41347c90794ee3b81271ab28862675d49dd23e90d8fb36b8",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "id": "QF-candidate-48f8bab3-F1-FINDER-REVIEW",
+      "reviewer": "QF",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-48f8bab3/F1-FINDER-REVIEW.json",
+      "evidenceSha256": "23622dbb9c505344e35fc13ac58621163bddc0127b8c44f3a4f1c9ffd53f687c",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "id": "QF-candidate-48f8bab3-F3-STORE-UI-REVIEW",
+      "reviewer": "QF",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-48f8bab3/F3-STORE-UI-REVIEW.json",
+      "evidenceSha256": "eb0efb02d8891d6ca6a668d808cc5d83a32ac27d4b83c41198782a87bb223fa6",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "id": "QF-candidate-74f240af-F1-INCOMING-HEADER-FIX-REVIEW",
+      "reviewer": "QF",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-74f240af/F1-INCOMING-HEADER-FIX-REVIEW.json",
+      "evidenceSha256": "73c469926b636861cec7785b886bf86d128defa698a16103ed4afc552c76c184",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS_TARGETED_FIX"
+    },
+    {
+      "id": "QF-candidate-6ce728a9-F3-STORE-RETURN-FIX-REVIEW",
+      "reviewer": "QF",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-6ce728a9/F3-STORE-RETURN-FIX-REVIEW.json",
+      "evidenceSha256": "04caf22a5f3efc76153e97d01880099c9dace683f0ab0c11803349102226aef6",
+      "adoption": "C_INDEX_OF_INDEPENDENT_RESULT_NO_TECHNICAL_RETEST",
+      "result": "PASS_TARGETED_FIX_SOURCE_SCOPE"
+    },
+    {
+      "id": "C-ACTUAL-V6-JOB31",
+      "jobId": "c03-exact26-v6-projection-20261023-31",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v6-projection-20261023-31/release-receipts/c03-exact26-v6-projection-20261023-31/engine-result.json",
+      "evidenceSha256": "6ab797dc8dfeda817421b1e1076e5e954165212a6c1c45b1237c5afe5d521a5b",
+      "result": "PASS_ACTUAL_V6_TWO_FUNCTION_PATCH_AND_CANONICAL_CATALOG_ONLY",
+      "scope": "Only actual2 v6 function COMMIT/readback and pure technical cases; preserve QA2 synthetic accounts/8audits8receipts/source0, no old/R1 writes",
+      "catalog": {
+        "file": "runtime-catalog-canonical.json",
+        "serverRawSha256": "b8201e4d4d18326f8e7769203dd5e62096e916d3d422872f83508d35c880eca4",
+        "bytes": 1123854,
+        "canonicalSha256": "914dc28ca1c5596e12d10c8c094dd87ffcdd70a9c987db3a52eb4e8dc23f236c",
+        "canonicalFormat": "PG_JSONB_TEXT_MINUS_IDENTITY_UTF8_SHA256",
+        "querySha256": "c95dda7ae4adc246bc3cc697ab37d5339de8ad6428e06dca608dc95fb581133c",
+        "identity": {
+          "database": "erp_qa_rapid26_20261022_01",
+          "server_addr": null,
+          "server_port": null,
+          "current_user": "erp_qa_owner_20261022_01",
+          "database_oid": "1029372",
+          "session_user": "t15_prod_bootstrap",
+          "database_owner": "erp_qa_owner_20261022_01",
+          "postmaster_start": "2026-10-04 08:16:07.895273+00",
+          "replication_role": "origin",
+          "server_version_num": "170011"
+        },
+        "counts": {
+          "relations": 60,
+          "columns": 592,
+          "routines": 121,
+          "triggers": 930,
+          "constraints": 529,
+          "indexes": 164,
+          "roles": 2
+        }
+      },
+      "notTested": [
+        "v7 approved image-color single-guard patch not yet installed",
+        "No issuer or SOURCE MAIN execution authority created",
+        "Product/media actual engine matrix untested",
+        "No actual source import/publication or production switch"
+      ]
+    },
+    {
+      "id": "QB-slice92-runtime26-live-issuer-693e215d",
+      "reviewer": "QB",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice92-runtime26-live-issuer-693e215d/RESULT.json",
+      "evidenceSha256": "d742e6326b351514d7e2c59e42758e57862448bbe63f102d359301cb6a2ce317",
+      "adoption": "C_ADOPT_NO_TECHNICAL_RETEST",
+      "result": "NEED_FIX",
+      "scope": "693e215d新runtime26 managed pool/livelease/metadata/私有D1 context actual audit proof；不重旧121/结构/maintenance matrix",
+      "qualification": "仅固定exact4新issuer/private prepared源码与协议；新增外部复核文件失效窗口独立复现，不能发行实际issuer；非PG/MAIN结论",
+      "candidateCommit": "693e215d943fe4c23371aba4c19ace68b77b5720",
+      "findings": [
+        {
+          "id": "QB92-F01",
+          "axis": "Spec",
+          "priority": 2,
+          "file": "adapters/postgres/src/native-import-accounting-capability.ts",
+          "line": 525,
+          "title": "在提交前重新校验外部复核文件，关闭撤销窗口",
+          "body": "managed query目前仅检查lease.active/checking及缓存revoked。末次assertReady之后C review或independent receipt内容/权限/路径失效时，revoked尚未被另一次显式探测设置，query(COMMIT)仍送原driver；实际maintenance driver在业务完成后会直接COMMIT，因而可提交已失效的外部批准。QB两个纯合成反例均复现。请在managed提交边界至少重新filesReady（并保持失败单向撤销、允许ROLLBACK/可discard release）；若合同要求每业务query前后存续也一并覆盖。新增此受影响失效反例即可，不重跑旧121或已验15例。"
+        }
+      ],
+      "closedFindings": null,
+      "notTested": [
+        "未实际PG probe parse/execution/v7install/真实pool或issuer发行/ACL/原actor/whole source/49bootstrap/MAIN/PUBLISH。",
+        "脚本化private Evidence成功INSERT不是PG约束/完整native row验证的实证；真实guard/host/browser/生产/B04另验。"
+      ]
+    },
+    {
+      "id": "QB-slice93-leaf26-barcode-stock-46b66aa1",
+      "reviewer": "QB",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice93-leaf26-barcode-stock-46b66aa1/RESULT.json",
+      "evidenceSha256": "8745aab5313dd88a873b5ef4f5d10404b0e32f93242ad474a0d4f4f3f1ca632c",
+      "adoption": "C_ADOPT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "scope": "46b66aa1相对693e215d：条码/签名库存贡献两个独立26 constructor +新3/受影响3测试，不重复原条码21裁决/正负量/原source/过账",
+      "qualification": "固定exact3新增explicit26门与事务协议；未实际issuer/PG/原来源导入或库存过账",
+      "candidateCommit": "46b66aa1dcf43a2bdd3e1217c28f5a7a1838a641",
+      "findings": [],
+      "closedFindings": null,
+      "notTested": [
+        "实际runtime26 issuer尚受QB92-F01阻塞；本片只验证consumer门，不发行cap。",
+        "未PG/native写入/过账、真实source/11factory/49/MAIN/PUBLISH或生产。"
+      ]
+    },
+    {
+      "id": "QB-slice94-sku14999-source-reference",
+      "reviewer": "QB",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice94-sku14999-source-reference/RESULT.json",
+      "evidenceSha256": "bf69321816b617782c1cfb9fed12ea28d15e7c0c705cd7fc0ec5e34d82930bd8",
+      "adoption": "C_ADOPT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "scope": "Exact manifest26d05201 and35,596,947B candidate7b580b53; original15121→14999 complete groups/five refs/provenance/old allocation reuse",
+      "qualification": "NEW SOURCE/REFERENCE CANDIDATE ONLY; no native grant/MAIN/import execution",
+      "candidateCommit": null,
+      "findings": [],
+      "closedFindings": null,
+      "notTested": [
+        "No original362MB fullscan, originalXLSX/headergzip or190MB allindex rescan. Selected6.28MB SKUindex consumed solelyfornewjoins and8750677B bounded rawlines read.",
+        "No actualnewsourcefactory/runtimeissuer/49bootstrap/MAIN/PG/nativewrites/PUBLISH. Candidate allocation isnot native binding authority; C outside newpin required."
+      ]
+    },
+    {
+      "id": "QB-slice95-qb92-f01-commit-pins-1e789109",
+      "reviewer": "QB",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice95-qb92-f01-commit-pins-1e789109/RESULT.json",
+      "evidenceSha256": "0da551944857fd0f6b2ff75f7af351302e0b4fbf1955e60a054b6d762b4441b1",
+      "adoption": "C_ADOPT_NO_TECHNICAL_RETEST",
+      "result": "PASS",
+      "scope": "1e789109 exact2相对7939759f；与QB92旧source比较仅COMMIT/END dispatch前同步filesReady新增，原NEED_FIX保留链接后继",
+      "qualification": "仅QB92-F01新提交边界修复/原两反例定向复验；不代表实际issuer签发、PG或MAIN执行",
+      "candidateCommit": "1e78910976aa7541fe165fc91de948bf0b2e003a",
+      "findings": [],
+      "closedFindings": [
+        "QB92-F01"
+      ],
+      "notTested": [
+        "未真实PG、actualreview签发/actualissuer issuance、host/browser/生产或source/49/MAIN/PUBLISH；合成metadata/driver仅证明新边界。",
+        "未重旧15/121/source矩阵及已核媒体matrix。"
+      ]
+    },
+    {
+      "id": "QF-candidate-5b363f44-F3-SETTINGS-UI-REVIEW",
+      "reviewer": "QF",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-5b363f44/F3-SETTINGS-UI-REVIEW.json",
+      "evidenceSha256": "50adc96994f3e03dabdbd1a66d88bd4f0fe8a48dd76b308ddaa5cfea54ee56c6",
+      "adoption": "C_ADOPT_NO_TECHNICAL_RETEST",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "id": "QF-candidate-7939759f-F2-YEAR-REVIEW",
+      "reviewer": "QF",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-7939759f/F2-YEAR-REVIEW.json",
+      "evidenceSha256": "dd4fc2cb4f9f34b9ecbf116fe4b1a33c00cb9fe8f2edbbb36059065aec599070",
+      "adoption": "C_ADOPT_NO_TECHNICAL_RETEST",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "id": "QF-candidate-7939759f-F3-ACCOUNT-LEAF-REVIEW",
+      "reviewer": "QF",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-7939759f/F3-ACCOUNT-LEAF-REVIEW.json",
+      "evidenceSha256": "d4ae475b5670522920070d02339726ec133ab90d18bc2bc09ac6346c504fac87",
+      "adoption": "C_ADOPT_NO_TECHNICAL_RETEST",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "id": "C-c03-exact26-v7-color-guard-20261023-32",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v7-color-guard-20261023-32/release-receipts/c03-exact26-v7-color-guard-20261023-32/engine-result.json",
+      "evidenceSha256": "6393ebd8457da4b27366726944e97fee61d5d7121e277641fed0d548578ac522",
+      "result": "FAILED_FIRST_ERROR_NO_REPLAY",
+      "scope": "Exact isolated C operation only; old/R1 writesfalse; failure no replay",
+      "patchOutcome": "NOT_ATTEMPTED",
+      "catalog": null,
+      "matrixReadback": null,
+      "notTested": []
+    },
+    {
+      "id": "C-c03-exact26-v7-wrapped-guard-20261023-33",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v7-wrapped-guard-20261023-33/release-receipts/c03-exact26-v7-wrapped-guard-20261023-33/engine-result.json",
+      "evidenceSha256": "5abd05d21038e2ee7f4f18c643a0c858c9b75f4310c302aa70d6103b331c8980",
+      "result": "PASS_ACTUAL_V7_SINGLE_GUARD_PATCH_AND_CANONICAL_CATALOG_ONLY",
+      "scope": "Exact isolated C operation only; old/R1 writesfalse; failure no replay",
+      "patchOutcome": "COMMIT_RETURNED_SUCCESS",
+      "catalog": {
+        "file": "runtime-catalog-canonical.json",
+        "serverRawSha256": "7676552cdebf799ac80ffd0e2233ad4bce2150e99112358d7036afb57e3b0403",
+        "bytes": 1124929,
+        "canonicalSha256": "e37dd0c0b723bd5525c10f1cbcef563397db3135cb81948796a78aaf555d3dc2",
+        "canonicalFormat": "PG_JSONB_TEXT_MINUS_IDENTITY_UTF8_SHA256",
+        "querySha256": "c95dda7ae4adc246bc3cc697ab37d5339de8ad6428e06dca608dc95fb581133c",
+        "identity": {
+          "database": "erp_qa_rapid26_20261022_01",
+          "server_addr": null,
+          "server_port": null,
+          "current_user": "erp_qa_owner_20261022_01",
+          "database_oid": "1029372",
+          "session_user": "t15_prod_bootstrap",
+          "database_owner": "erp_qa_owner_20261022_01",
+          "postmaster_start": "2026-10-04 08:16:07.895273+00",
+          "replication_role": "origin",
+          "server_version_num": "170011"
+        },
+        "counts": {
+          "relations": 60,
+          "columns": 592,
+          "routines": 121,
+          "triggers": 930,
+          "constraints": 529,
+          "indexes": 164,
+          "roles": 2
+        }
+      },
+      "matrixReadback": null,
+      "notTested": [
+        "New actual media color positive/negative transaction matrix not yet executed",
+        "No issuer or SOURCE MAIN execution authority created",
+        "Product/media actual engine matrix untested",
+        "No actual source import/publication or production switch"
+      ]
+    },
+    {
+      "id": "C-c03-media-color-swap-matrix-20261023-34",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-media-color-swap-matrix-20261023-34/release-receipts/c03-media-color-swap-matrix-20261023-34/engine-result.json",
+      "evidenceSha256": "0454b0645285539a0507b6d977f49857dd35bb9719c9a419b6638e8076a55717",
+      "result": "PASS_ACTUAL_NEW_SYNTHETIC_MEDIA_COLOR_SWAP_MATRIX_ONLY",
+      "scope": "Exact isolated C operation only; old/R1 writesfalse; failure no replay",
+      "patchOutcome": null,
+      "catalog": null,
+      "matrixReadback": {
+        "productVersion": 2,
+        "images": [
+          {
+            "id": "00000000-0027-4000-8000-000000000008",
+            "version": 2,
+            "color_id": "00000000-0027-4000-8000-000000000003",
+            "file_ref": "SYNTHETIC-NO-FILE-A",
+            "created_by_account_id": "00000000-0021-4000-8000-000000000002"
+          },
+          {
+            "id": "00000000-0027-4000-8000-000000000009",
+            "version": 2,
+            "color_id": "00000000-0027-4000-8000-000000000002",
+            "file_ref": "SYNTHETIC-NO-FILE-B",
+            "created_by_account_id": "00000000-0021-4000-8000-000000000002"
+          }
+        ],
+        "audits": 9,
+        "receipts": 9,
+        "accounts": 2,
+        "sources": 0
+      },
+      "notTested": [
+        "runtime issuer or source authorization",
+        "real media/files/HTTP",
+        "published or concurrent business",
+        "old maintenance matrix",
+        "Actual source import/publication",
+        "Production target unchanged"
+      ]
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-22T17:42:50.909973+00:00",
+  "updatedAt": "2026-10-22T18:41:40.531544+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -8403,13 +9009,22 @@
       "QB63-F01 viaQB67",
       "QB64-R01-F01 viaQB68",
       "QF-F3-AUDIT-DENIED-RETRY-01 via27c6",
-      "F1 output committed stale via4825"
+      "F1 output committed stale via4825",
+      "QB77-F01 viaQB81",
+      "QB80-F01 viaQB88",
+      "QF-F1-INCOMING-PRICE-HEADER-01 via74f240/QF",
+      "F3-STORE-TAB-QUERY-RETURN-01 via6ce728/QF",
+      "QB92-F01 viaQB95 exact1e789109; original NEED_FIX preserved"
     ],
     "pending": [
-      "SALE-V006-01 candidate two-column+real preview UI P1",
-      "SALE-V006-02 empty paid badge/grid P2",
-      "SALE-V006-03 heading/entry style P2"
+      "V00601 sourcefixed48f8; browser recheck57838",
+      "V00602 actual57837 empty geometry closed; V00603 residual hint and V00604 respective scope only",
+      "TR-UI01..04 F1 wholeUI in progress",
+      "PROD-UI-SOURCE-01 and PROD-UI-02 F2 targeted",
+      "Media v7 actual matrix/host pairing pending",
+      "UNKNOWN Chrome input; human denies operation; controlled probe pending"
     ],
-    "wholePagesPassed": 0
+    "wholePagesPassed": 0,
+    "wholeOverlaysPassed": 0
   }
 }

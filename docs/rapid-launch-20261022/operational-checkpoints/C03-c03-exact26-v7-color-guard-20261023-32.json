@@ -1,0 +1,27 @@
+{
+  "jobId": "c03-exact26-v7-color-guard-20261023-32",
+  "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v7-color-guard-20261023-32/release-receipts/c03-exact26-v7-color-guard-20261023-32/engine-result.json",
+  "evidenceSha256": "6393ebd8457da4b27366726944e97fee61d5d7121e277641fed0d548578ac522",
+  "actual": {
+    "jobId": "c03-exact26-v7-color-guard-20261023-32",
+    "status": "FAILED_FIRST_ERROR_NO_REPLAY",
+    "events": [
+      {
+        "phase": "fixed-input-admission",
+        "atUtc": "2026-10-22T18:30:37.781102+00:00"
+      },
+      {
+        "phase": "stopped",
+        "atUtc": "2026-10-22T18:30:37.862324+00:00"
+      }
+    ],
+    "oldDatabaseWrites": false,
+    "r1DatabaseWrites": false,
+    "realImport": false,
+    "issuerCreated": false,
+    "patchOutcome": "NOT_ATTEMPTED",
+    "qaKnownSyntheticStatePreserved": false,
+    "phase": "stopped",
+    "failureCode": "C_ONLY_ATOMIC_WRAPPERS"
+  }
+}

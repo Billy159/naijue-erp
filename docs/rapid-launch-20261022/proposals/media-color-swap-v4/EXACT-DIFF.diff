@@ -1,0 +1,27 @@
+--- current-approved-0021-guard
+
++++ proposed-image-only-reinsert-guard
+
+@@ -45,7 +45,20 @@
+
+         RAISE EXCEPTION 'Actual new child differs from after evidence' USING ERRCODE='23514';
+       END IF;
+     ELSIF EXISTS(SELECT 1 FROM jsonb_array_elements(audit.after_values->child_kind) x(v) WHERE v->>'id'=row_before->>'id') THEN
+-      RAISE EXCEPTION 'Removed child cannot remain in after evidence' USING ERRCODE='23514';
++      -- Proposed only: retain logical image identity while materializing an exact
++      -- already-prepared final mapping; no temporary fake image row is permitted.
++      SELECT value INTO STRICT after_item FROM jsonb_array_elements(audit.after_values->child_kind)
++        WHERE value->>'id'=row_before->>'id';
++      IF (child_kind='images' AND jsonb_typeof(after_item)='object'
++        AND after_item->'id'=before_item->'id' AND after_item->'product_id'=before_item->'product_id'
++        AND after_item->>'product_id'=root_id::text
++        AND after_item->'created_at'=before_item->'created_at'
++        AND after_item->'created_by_account_id'=before_item->'created_by_account_id'
++        AND jsonb_typeof(before_item->'version')='number' AND jsonb_typeof(after_item->'version')='number'
++        AND before_item->>'version' ~ '^[1-9][0-9]*$' AND after_item->>'version' ~ '^[1-9][0-9]*$'
++        AND (after_item->>'version')::bigint=(before_item->>'version')::bigint+1) IS DISTINCT FROM TRUE THEN
++        RAISE EXCEPTION 'Removed child cannot remain in after evidence except exact prepared image identity replacement' USING ERRCODE='23514';
++      END IF;
+     END IF;
+   END IF;
+   IF TG_OP='DELETE' THEN RETURN OLD; ELSE RETURN NEW; END IF;

@@ -27,3 +27,7 @@ Source/protocol acceptance is not actual COMMIT acceptance: original0013 prohibi
 ## 2026-10-22T17:29:22.984672+00:00 接续与全站UI口径
 
 最新直接模型裁决：全部角色含Demo gpt-6.1-sol/xhigh，不开Fast；工具未提供速度开关，实际Fast未验证。直接人类Demo来源01a162e7-024a-7e22-980a-e329b32fcd60及01a162f1-fbeb-7963-99b5-e3f43dd80002已核：全站完整UI来源到实际消费逐条登记、双向完整区域，35+65基线保留，新增本人改密后101；多核心偏离迁完整UI层最小Arco适配，未知不作已复用。单位/库存校正已原任务取消；季节真多选/仓单厅/资金多厅/客供分开等批准差异不回退。C采用QB73 fullrefs新范围后签closed reference-only外部pin，realImportExecutionAuthorized=false；不把上述sourcepin、QAowner或合成预览作为生产/MAIN授权。
+
+## 2026-10-22T18:05:14.024029+00:00 用户批准图片颜色互换补充v4
+
+用户直接回复“确认图片颜色互换补充 v4”，来源questionItemId call_82226439f7bc4059aa8b13a7806c1243/0。按WRITE-CONTRACT-APPROVAL-v4-MEDIA-COLOR-SWAP.json放行单守卫image retained-id DELETE/final重新插入分支，0新表列/索引；原身份、创建信息、一次版本、完整审计、final唯一性和整事务回滚保持。只是实施批准，source/SQL/真实PG/业务未通过；其他未批差异仍须确认。

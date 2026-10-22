@@ -1,0 +1,42 @@
+{
+  "jobId": "c03-exact26-v6-projection-20261023-31",
+  "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v6-projection-20261023-31/release-receipts/c03-exact26-v6-projection-20261023-31/engine-result.json",
+  "evidenceSha256": "6ab797dc8dfeda817421b1e1076e5e954165212a6c1c45b1237c5afe5d521a5b",
+  "result": "PASS_ACTUAL_V6_TWO_FUNCTION_PATCH_AND_CANONICAL_CATALOG_ONLY",
+  "scope": "Only actual2 v6 function COMMIT/readback and pure technical cases; preserve QA2 synthetic accounts/8audits8receipts/source0, no old/R1 writes",
+  "catalog": {
+    "file": "runtime-catalog-canonical.json",
+    "serverRawSha256": "b8201e4d4d18326f8e7769203dd5e62096e916d3d422872f83508d35c880eca4",
+    "bytes": 1123854,
+    "canonicalSha256": "914dc28ca1c5596e12d10c8c094dd87ffcdd70a9c987db3a52eb4e8dc23f236c",
+    "canonicalFormat": "PG_JSONB_TEXT_MINUS_IDENTITY_UTF8_SHA256",
+    "querySha256": "c95dda7ae4adc246bc3cc697ab37d5339de8ad6428e06dca608dc95fb581133c",
+    "identity": {
+      "database": "erp_qa_rapid26_20261022_01",
+      "server_addr": null,
+      "server_port": null,
+      "current_user": "erp_qa_owner_20261022_01",
+      "database_oid": "1029372",
+      "session_user": "t15_prod_bootstrap",
+      "database_owner": "erp_qa_owner_20261022_01",
+      "postmaster_start": "2026-10-04 08:16:07.895273+00",
+      "replication_role": "origin",
+      "server_version_num": "170011"
+    },
+    "counts": {
+      "relations": 60,
+      "columns": 592,
+      "routines": 121,
+      "triggers": 930,
+      "constraints": 529,
+      "indexes": 164,
+      "roles": 2
+    }
+  },
+  "notTested": [
+    "v7 approved image-color single-guard patch not yet installed",
+    "No issuer or SOURCE MAIN execution authority created",
+    "Product/media actual engine matrix untested",
+    "No actual source import/publication or production switch"
+  ]
+}

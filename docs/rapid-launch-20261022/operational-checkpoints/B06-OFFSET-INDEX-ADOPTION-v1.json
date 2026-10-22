@@ -1,0 +1,29 @@
+{
+  "atUtc": "2026-10-22T18:01:50.270156+00:00",
+  "status": "ACCEPTED_QB79_NEW_OFFSET_BINDINGS_ONLY",
+  "authorityFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/materialized-source-offset-index-review-v1.json",
+  "authoritySha256": "87ec0b318029dc682cd86611d5e9d9d97442988b6bb5bde14ad689fe5a7b88a6",
+  "bindingSource": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/import-authority-binding/EXECUTION-BINDING-C-v1.json",
+    "sha256": "b7db92e02f9afc4267c49986a532ec00ee5123da2d9e3149efeedb60f43a69a6"
+  },
+  "indexManifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-source-offset-index-20261022-D3-run2/INDEX-CANDIDATE.json",
+    "sha256": "36db4321f6361a4ad16de54751068c013c8c099680f2e3389d8d3a85578c7cf0",
+    "bytes": 4930
+  },
+  "source": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v2/snapshots/all-business-source-rows.jsonl",
+    "bytes": 362306590,
+    "sha256": "219192f79190981917c16b044e704629b4b4c9ccdb39c30126f78579e44cf756",
+    "rows": 486987
+  },
+  "independentReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice79-materialized-source-index-run2/RESULT.json",
+    "sha256": "8368e2c0aa40414b492649c12fb654c856ab91fcde93530e1de36af11d1c8f6f",
+    "result": "PASS"
+  },
+  "scope": "OFFSET_ROWS_ONLY",
+  "realImportExecutionAuthorized": false,
+  "noSourceRescan": true
+}

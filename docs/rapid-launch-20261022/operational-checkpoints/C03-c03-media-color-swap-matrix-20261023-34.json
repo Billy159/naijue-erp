@@ -1,0 +1,485 @@
+{
+  "jobId": "c03-media-color-swap-matrix-20261023-34",
+  "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-media-color-swap-matrix-20261023-34/release-receipts/c03-media-color-swap-matrix-20261023-34/engine-result.json",
+  "evidenceSha256": "0454b0645285539a0507b6d977f49857dd35bb9719c9a419b6638e8076a55717",
+  "actual": {
+    "jobId": "c03-media-color-swap-matrix-20261023-34",
+    "status": "PASS_ACTUAL_NEW_SYNTHETIC_MEDIA_COLOR_SWAP_MATRIX_ONLY",
+    "events": [
+      {
+        "phase": "fixed-input-admission",
+        "atUtc": "2026-10-22T18:38:29.682386+00:00"
+      },
+      {
+        "phase": "empty26-before-matrix",
+        "atUtc": "2026-10-22T18:38:29.845775+00:00"
+      },
+      {
+        "phase": "matrix-actual-start",
+        "atUtc": "2026-10-22T18:38:30.939393+00:00"
+      },
+      {
+        "phase": "after-matrix-readback",
+        "atUtc": "2026-10-22T18:38:31.393568+00:00"
+      },
+      {
+        "phase": "complete",
+        "atUtc": "2026-10-22T18:38:31.549432+00:00"
+      }
+    ],
+    "oldDatabaseWrites": false,
+    "r1DatabaseWrites": false,
+    "realImport": false,
+    "issuerCreated": false,
+    "matrixAttempted": true,
+    "scope": "D1 approved new v7 synthetic media color matrix; C isolated carrier only",
+    "phase": "complete",
+    "lastSqlOutcome": "RETURNED_SUCCESS",
+    "before": {
+      "database": "erp_qa_rapid26_20261022_01",
+      "databaseOid": "1029372",
+      "owner": "erp_qa_owner_20261022_01",
+      "actingRole": "erp_qa_owner_20261022_01",
+      "ownerFlags": {
+        "login": false,
+        "superuser": false,
+        "createDb": false,
+        "createRole": false,
+        "replication": false,
+        "bypassRls": false,
+        "inherit": false
+      },
+      "versions": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "registrations": [
+        {
+          "version": 1,
+          "appliedAt": "2026-10-22T08:37:50.330192+00:00",
+          "description": "Bounded runtime sales pg adapter; not a full ERP or historical import"
+        },
+        {
+          "version": 2,
+          "appliedAt": "2026-10-22T08:37:50.573198+00:00",
+          "description": "Explicit sales pricing facts; unknown existing metadata is not backfilled"
+        },
+        {
+          "version": 3,
+          "appliedAt": "2026-10-22T08:37:50.663762+00:00",
+          "description": "Opaque session hashes and authentication-version invalidation; no account seeds"
+        },
+        {
+          "version": 4,
+          "appliedAt": "2026-10-22T08:37:50.763751+00:00",
+          "description": "Native runtime transfer commands and closed shared SALES/TRANSFER provenance; SQL source only"
+        },
+        {
+          "version": 5,
+          "appliedAt": "2026-10-22T08:37:50.903025+00:00",
+          "description": "Approved nullable product read fields and controlled image metadata"
+        },
+        {
+          "version": 6,
+          "appliedAt": "2026-10-22T08:37:51.025099+00:00",
+          "description": "Independent native customer/supplier maintenance with sparse evidence; SQL source only"
+        },
+        {
+          "version": 7,
+          "appliedAt": "2026-10-22T08:37:51.156321+00:00",
+          "description": "Approved sparse cutoff/import foundation; historical commands remain closed; SQL source only"
+        },
+        {
+          "version": 8,
+          "appliedAt": "2026-10-22T08:37:51.299366+00:00",
+          "description": "Exact published-zero first runtime approval; native atomic effects only; SQL source only"
+        },
+        {
+          "version": 9,
+          "appliedAt": "2026-10-22T08:37:51.398924+00:00",
+          "description": "Approved product nine-price and retained raw barcode authority; empty catalogue precondition; SQL source only"
+        },
+        {
+          "version": 10,
+          "appliedAt": "2026-10-22T08:37:51.5412+00:00",
+          "description": "Approved original sales-settlement payment-method snapshot identity; no guessed historical backfill; SQL source only"
+        },
+        {
+          "version": 11,
+          "appliedAt": "2026-10-22T08:37:51.660187+00:00",
+          "description": "Nullable historical projections and immutable import evidence; atomic v2 publication; corrections not yet enabled; SQL source only"
+        },
+        {
+          "version": 12,
+          "appliedAt": "2026-10-22T08:37:51.86854+00:00",
+          "description": "Immutable explicit historical header native references; SQL source only, not database/runtime/import proof"
+        },
+        {
+          "version": 13,
+          "appliedAt": "2026-10-22T08:37:51.990323+00:00",
+          "description": "Exact same-transaction original organization/party creation and immutable source evidence; SQL source only"
+        },
+        {
+          "version": 14,
+          "appliedAt": "2026-10-22T08:37:52.140224+00:00",
+          "description": "Typed immutable native dictionary creation bindings; exact occurrence and reviewed new-property decisions; SQL source only"
+        },
+        {
+          "version": 15,
+          "appliedAt": "2026-10-22T08:37:52.258951+00:00",
+          "description": "Once-only typed native import record accounting; original receipt audit checkpoint delta guards; integration and engine acceptance required"
+        },
+        {
+          "version": 16,
+          "appliedAt": "2026-10-22T08:37:52.443409+00:00",
+          "description": "Polymorphic history trigger uses table-specific NEW fields only inside its table branch"
+        },
+        {
+          "version": 17,
+          "appliedAt": "2026-10-22T08:37:52.610013+00:00",
+          "description": "Typed payment native creation and original optional recommendation facts; settlement/publication readiness not granted"
+        },
+        {
+          "version": 18,
+          "appliedAt": "2026-10-22T08:37:52.723342+00:00",
+          "description": "Bounded semantic closure STAGE readback and immutable manifests; publication explicitly closed pending joint acceptance"
+        },
+        {
+          "version": 19,
+          "appliedAt": "2026-10-22T08:37:52.887555+00:00",
+          "description": "Exact immutable typed history publication readback; original FINAL accounting/receipt/audit transaction retained"
+        },
+        {
+          "version": 20,
+          "appliedAt": "2026-10-22T08:37:52.990315+00:00",
+          "description": "C01-v1 immutable database runtime document number allocation; preserved history numbers"
+        },
+        {
+          "version": 21,
+          "appliedAt": "2026-10-22T08:37:53.151617+00:00",
+          "description": "C01-v1 typed maintenance receipts and exact sparse root audit closure; legacy branches preserved"
+        },
+        {
+          "version": 22,
+          "appliedAt": "2026-10-22T08:37:53.373373+00:00",
+          "description": "C01-v1 explicit product image roles/default scheme and retained catalogue deletion"
+        },
+        {
+          "version": 23,
+          "appliedAt": "2026-10-22T08:37:53.483806+00:00",
+          "description": "C01-v1 immutable post-cutoff native creation and independent exact key admission"
+        },
+        {
+          "version": 24,
+          "appliedAt": "2026-10-22T08:37:53.613078+00:00",
+          "description": "C01-v1 HISTORY projection schema foundation; controlled revision writes remain CLOSED pending complete capability"
+        },
+        {
+          "version": 25,
+          "appliedAt": "2026-10-22T08:37:53.74399+00:00",
+          "description": "Approved product season_ids array; retained scalar, exact selection and two-way dictionary references"
+        },
+        {
+          "version": 26,
+          "appliedAt": "2026-10-22T09:07:14.833902+00:00",
+          "description": "Exact reviewed source supplement, bootstrap closure, season readback and whole-current-snapshot successor guards"
+        }
+      ],
+      "accounts": 2,
+      "sourceRows": 0
+    },
+    "nodeSourceSha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+    "nodeBytes": 126595440,
+    "hostSocketContainerPid": "1780",
+    "matrixResult": {
+      "file": "matrix-result.json",
+      "querySha256": "eece59bf3de034c9daef25091640267547878228cc3e56d3b4cb39e7c6a7f57a",
+      "bytes": 15796
+    },
+    "matrixExitCode": 0,
+    "readback": {
+      "database": "erp_qa_rapid26_20261022_01",
+      "databaseOid": "1029372",
+      "owner": "erp_qa_owner_20261022_01",
+      "actingRole": "erp_qa_owner_20261022_01",
+      "ownerFlags": {
+        "login": false,
+        "superuser": false,
+        "createDb": false,
+        "createRole": false,
+        "replication": false,
+        "bypassRls": false,
+        "inherit": false
+      },
+      "versions": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "registrations": [
+        {
+          "version": 1,
+          "appliedAt": "2026-10-22T08:37:50.330192+00:00",
+          "description": "Bounded runtime sales pg adapter; not a full ERP or historical import"
+        },
+        {
+          "version": 2,
+          "appliedAt": "2026-10-22T08:37:50.573198+00:00",
+          "description": "Explicit sales pricing facts; unknown existing metadata is not backfilled"
+        },
+        {
+          "version": 3,
+          "appliedAt": "2026-10-22T08:37:50.663762+00:00",
+          "description": "Opaque session hashes and authentication-version invalidation; no account seeds"
+        },
+        {
+          "version": 4,
+          "appliedAt": "2026-10-22T08:37:50.763751+00:00",
+          "description": "Native runtime transfer commands and closed shared SALES/TRANSFER provenance; SQL source only"
+        },
+        {
+          "version": 5,
+          "appliedAt": "2026-10-22T08:37:50.903025+00:00",
+          "description": "Approved nullable product read fields and controlled image metadata"
+        },
+        {
+          "version": 6,
+          "appliedAt": "2026-10-22T08:37:51.025099+00:00",
+          "description": "Independent native customer/supplier maintenance with sparse evidence; SQL source only"
+        },
+        {
+          "version": 7,
+          "appliedAt": "2026-10-22T08:37:51.156321+00:00",
+          "description": "Approved sparse cutoff/import foundation; historical commands remain closed; SQL source only"
+        },
+        {
+          "version": 8,
+          "appliedAt": "2026-10-22T08:37:51.299366+00:00",
+          "description": "Exact published-zero first runtime approval; native atomic effects only; SQL source only"
+        },
+        {
+          "version": 9,
+          "appliedAt": "2026-10-22T08:37:51.398924+00:00",
+          "description": "Approved product nine-price and retained raw barcode authority; empty catalogue precondition; SQL source only"
+        },
+        {
+          "version": 10,
+          "appliedAt": "2026-10-22T08:37:51.5412+00:00",
+          "description": "Approved original sales-settlement payment-method snapshot identity; no guessed historical backfill; SQL source only"
+        },
+        {
+          "version": 11,
+          "appliedAt": "2026-10-22T08:37:51.660187+00:00",
+          "description": "Nullable historical projections and immutable import evidence; atomic v2 publication; corrections not yet enabled; SQL source only"
+        },
+        {
+          "version": 12,
+          "appliedAt": "2026-10-22T08:37:51.86854+00:00",
+          "description": "Immutable explicit historical header native references; SQL source only, not database/runtime/import proof"
+        },
+        {
+          "version": 13,
+          "appliedAt": "2026-10-22T08:37:51.990323+00:00",
+          "description": "Exact same-transaction original organization/party creation and immutable source evidence; SQL source only"
+        },
+        {
+          "version": 14,
+          "appliedAt": "2026-10-22T08:37:52.140224+00:00",
+          "description": "Typed immutable native dictionary creation bindings; exact occurrence and reviewed new-property decisions; SQL source only"
+        },
+        {
+          "version": 15,
+          "appliedAt": "2026-10-22T08:37:52.258951+00:00",
+          "description": "Once-only typed native import record accounting; original receipt audit checkpoint delta guards; integration and engine acceptance required"
+        },
+        {
+          "version": 16,
+          "appliedAt": "2026-10-22T08:37:52.443409+00:00",
+          "description": "Polymorphic history trigger uses table-specific NEW fields only inside its table branch"
+        },
+        {
+          "version": 17,
+          "appliedAt": "2026-10-22T08:37:52.610013+00:00",
+          "description": "Typed payment native creation and original optional recommendation facts; settlement/publication readiness not granted"
+        },
+        {
+          "version": 18,
+          "appliedAt": "2026-10-22T08:37:52.723342+00:00",
+          "description": "Bounded semantic closure STAGE readback and immutable manifests; publication explicitly closed pending joint acceptance"
+        },
+        {
+          "version": 19,
+          "appliedAt": "2026-10-22T08:37:52.887555+00:00",
+          "description": "Exact immutable typed history publication readback; original FINAL accounting/receipt/audit transaction retained"
+        },
+        {
+          "version": 20,
+          "appliedAt": "2026-10-22T08:37:52.990315+00:00",
+          "description": "C01-v1 immutable database runtime document number allocation; preserved history numbers"
+        },
+        {
+          "version": 21,
+          "appliedAt": "2026-10-22T08:37:53.151617+00:00",
+          "description": "C01-v1 typed maintenance receipts and exact sparse root audit closure; legacy branches preserved"
+        },
+        {
+          "version": 22,
+          "appliedAt": "2026-10-22T08:37:53.373373+00:00",
+          "description": "C01-v1 explicit product image roles/default scheme and retained catalogue deletion"
+        },
+        {
+          "version": 23,
+          "appliedAt": "2026-10-22T08:37:53.483806+00:00",
+          "description": "C01-v1 immutable post-cutoff native creation and independent exact key admission"
+        },
+        {
+          "version": 24,
+          "appliedAt": "2026-10-22T08:37:53.613078+00:00",
+          "description": "C01-v1 HISTORY projection schema foundation; controlled revision writes remain CLOSED pending complete capability"
+        },
+        {
+          "version": 25,
+          "appliedAt": "2026-10-22T08:37:53.74399+00:00",
+          "description": "Approved product season_ids array; retained scalar, exact selection and two-way dictionary references"
+        },
+        {
+          "version": 26,
+          "appliedAt": "2026-10-22T09:07:14.833902+00:00",
+          "description": "Exact reviewed source supplement, bootstrap closure, season readback and whole-current-snapshot successor guards"
+        }
+      ],
+      "accounts": 2,
+      "sourceRows": 0
+    },
+    "cases": [
+      {
+        "label": "new synthetic product/two-color image fixture only",
+        "status": "PASS_ACTUAL_COMMIT"
+      },
+      {
+        "label": "reject version; complete original product/images/audit/receipt rollback",
+        "status": "PASS_EXPECTED_REJECTION_AND_ROLLBACK",
+        "code": "23514"
+      },
+      {
+        "label": "reject createdAt; complete original product/images/audit/receipt rollback",
+        "status": "PASS_EXPECTED_REJECTION_AND_ROLLBACK",
+        "code": "23514"
+      },
+      {
+        "label": "reject creator; complete original product/images/audit/receipt rollback",
+        "status": "PASS_EXPECTED_REJECTION_AND_ROLLBACK",
+        "code": "23514"
+      },
+      {
+        "label": "reject root; complete original product/images/audit/receipt rollback",
+        "status": "PASS_EXPECTED_REJECTION_AND_ROLLBACK",
+        "code": "23514"
+      },
+      {
+        "label": "reject before; complete original product/images/audit/receipt rollback",
+        "status": "PASS_EXPECTED_REJECTION_AND_ROLLBACK",
+        "code": "23514"
+      },
+      {
+        "label": "reject missing; complete original product/images/audit/receipt rollback",
+        "status": "PASS_EXPECTED_REJECTION_AND_ROLLBACK",
+        "code": "23514"
+      },
+      {
+        "label": "reject after; complete original product/images/audit/receipt rollback",
+        "status": "PASS_EXPECTED_REJECTION_AND_ROLLBACK",
+        "code": "23514"
+      },
+      {
+        "label": "reject duplicateColor; complete original product/images/audit/receipt rollback",
+        "status": "PASS_EXPECTED_REJECTION_AND_ROLLBACK",
+        "code": "23505"
+      },
+      {
+        "label": "two occupied colors swap with original image ids/creation metadata and exactly one root/child version advance",
+        "status": "PASS_ACTUAL_COMMIT"
+      }
+    ],
+    "matrixReadback": {
+      "productVersion": 2,
+      "images": [
+        {
+          "id": "00000000-0027-4000-8000-000000000008",
+          "version": 2,
+          "color_id": "00000000-0027-4000-8000-000000000003",
+          "file_ref": "SYNTHETIC-NO-FILE-A",
+          "created_by_account_id": "00000000-0021-4000-8000-000000000002"
+        },
+        {
+          "id": "00000000-0027-4000-8000-000000000009",
+          "version": 2,
+          "color_id": "00000000-0027-4000-8000-000000000002",
+          "file_ref": "SYNTHETIC-NO-FILE-B",
+          "created_by_account_id": "00000000-0021-4000-8000-000000000002"
+        }
+      ],
+      "audits": 9,
+      "receipts": 9,
+      "accounts": 2,
+      "sources": 0
+    },
+    "qaNowContainsSyntheticData": true,
+    "notAnEmptyMainTarget": true,
+    "remaining": [
+      "runtime issuer or source authorization",
+      "real media/files/HTTP",
+      "published or concurrent business",
+      "old maintenance matrix",
+      "Actual source import/publication",
+      "Production target unchanged"
+    ]
+  }
+}

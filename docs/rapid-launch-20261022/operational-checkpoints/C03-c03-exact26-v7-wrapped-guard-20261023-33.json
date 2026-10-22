@@ -1,0 +1,521 @@
+{
+  "jobId": "c03-exact26-v7-wrapped-guard-20261023-33",
+  "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v7-wrapped-guard-20261023-33/release-receipts/c03-exact26-v7-wrapped-guard-20261023-33/engine-result.json",
+  "evidenceSha256": "5abd05d21038e2ee7f4f18c643a0c858c9b75f4310c302aa70d6103b331c8980",
+  "actual": {
+    "jobId": "c03-exact26-v7-wrapped-guard-20261023-33",
+    "status": "PASS_ACTUAL_V7_SINGLE_GUARD_PATCH_AND_CANONICAL_CATALOG_ONLY",
+    "events": [
+      {
+        "phase": "fixed-input-admission",
+        "atUtc": "2026-10-22T18:34:19.044289+00:00"
+      },
+      {
+        "phase": "known-synthetic-qa-admission",
+        "atUtc": "2026-10-22T18:34:19.201884+00:00"
+      },
+      {
+        "phase": "known8receipt8audit",
+        "atUtc": "2026-10-22T18:34:19.340305+00:00"
+      },
+      {
+        "phase": "exact-two-prior-bodies",
+        "atUtc": "2026-10-22T18:34:19.498495+00:00"
+      },
+      {
+        "phase": "install-approved-single-v7-guard",
+        "atUtc": "2026-10-22T18:34:19.631271+00:00"
+      },
+      {
+        "phase": "v6-commit-returned",
+        "atUtc": "2026-10-22T18:34:19.814594+00:00"
+      },
+      {
+        "phase": "state-preserved-readback",
+        "atUtc": "2026-10-22T18:34:19.870896+00:00"
+      },
+      {
+        "phase": "counts-preserved",
+        "atUtc": "2026-10-22T18:34:20.008241+00:00"
+      },
+      {
+        "phase": "fixed-two-function-bodies",
+        "atUtc": "2026-10-22T18:34:20.140506+00:00"
+      },
+      {
+        "phase": "new-runtime7-readonly-probe",
+        "atUtc": "2026-10-22T18:34:20.303206+00:00"
+      },
+      {
+        "phase": "runtime7-metadata-probe-passed",
+        "atUtc": "2026-10-22T18:34:20.560202+00:00"
+      },
+      {
+        "phase": "complete",
+        "atUtc": "2026-10-22T18:34:20.995769+00:00"
+      }
+    ],
+    "oldDatabaseWrites": false,
+    "r1DatabaseWrites": false,
+    "realImport": false,
+    "issuerCreated": false,
+    "patchOutcome": "COMMIT_RETURNED_SUCCESS",
+    "qaKnownSyntheticStatePreserved": true,
+    "phase": "complete",
+    "normalizedPatchSha256": "477cd3fcfaef04149aa29a1e0e7db1d26510f2c7ef6a8576715db12e66a4e4a2",
+    "patchWrapperAdaptation": "Validate exact one outer BEGIN/COMMIT in frozen D1 patch then remove only those outer lines; keep full function bytes unchanged; C atomic admission wrapper owns transaction. Prior32 rejected before any SQL.",
+    "lastSqlOutcome": "RETURNED_SUCCESS",
+    "before": {
+      "database": "erp_qa_rapid26_20261022_01",
+      "databaseOid": "1029372",
+      "owner": "erp_qa_owner_20261022_01",
+      "actingRole": "erp_qa_owner_20261022_01",
+      "ownerFlags": {
+        "login": false,
+        "superuser": false,
+        "createDb": false,
+        "createRole": false,
+        "replication": false,
+        "bypassRls": false,
+        "inherit": false
+      },
+      "versions": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "registrations": [
+        {
+          "version": 1,
+          "appliedAt": "2026-10-22T08:37:50.330192+00:00",
+          "description": "Bounded runtime sales pg adapter; not a full ERP or historical import"
+        },
+        {
+          "version": 2,
+          "appliedAt": "2026-10-22T08:37:50.573198+00:00",
+          "description": "Explicit sales pricing facts; unknown existing metadata is not backfilled"
+        },
+        {
+          "version": 3,
+          "appliedAt": "2026-10-22T08:37:50.663762+00:00",
+          "description": "Opaque session hashes and authentication-version invalidation; no account seeds"
+        },
+        {
+          "version": 4,
+          "appliedAt": "2026-10-22T08:37:50.763751+00:00",
+          "description": "Native runtime transfer commands and closed shared SALES/TRANSFER provenance; SQL source only"
+        },
+        {
+          "version": 5,
+          "appliedAt": "2026-10-22T08:37:50.903025+00:00",
+          "description": "Approved nullable product read fields and controlled image metadata"
+        },
+        {
+          "version": 6,
+          "appliedAt": "2026-10-22T08:37:51.025099+00:00",
+          "description": "Independent native customer/supplier maintenance with sparse evidence; SQL source only"
+        },
+        {
+          "version": 7,
+          "appliedAt": "2026-10-22T08:37:51.156321+00:00",
+          "description": "Approved sparse cutoff/import foundation; historical commands remain closed; SQL source only"
+        },
+        {
+          "version": 8,
+          "appliedAt": "2026-10-22T08:37:51.299366+00:00",
+          "description": "Exact published-zero first runtime approval; native atomic effects only; SQL source only"
+        },
+        {
+          "version": 9,
+          "appliedAt": "2026-10-22T08:37:51.398924+00:00",
+          "description": "Approved product nine-price and retained raw barcode authority; empty catalogue precondition; SQL source only"
+        },
+        {
+          "version": 10,
+          "appliedAt": "2026-10-22T08:37:51.5412+00:00",
+          "description": "Approved original sales-settlement payment-method snapshot identity; no guessed historical backfill; SQL source only"
+        },
+        {
+          "version": 11,
+          "appliedAt": "2026-10-22T08:37:51.660187+00:00",
+          "description": "Nullable historical projections and immutable import evidence; atomic v2 publication; corrections not yet enabled; SQL source only"
+        },
+        {
+          "version": 12,
+          "appliedAt": "2026-10-22T08:37:51.86854+00:00",
+          "description": "Immutable explicit historical header native references; SQL source only, not database/runtime/import proof"
+        },
+        {
+          "version": 13,
+          "appliedAt": "2026-10-22T08:37:51.990323+00:00",
+          "description": "Exact same-transaction original organization/party creation and immutable source evidence; SQL source only"
+        },
+        {
+          "version": 14,
+          "appliedAt": "2026-10-22T08:37:52.140224+00:00",
+          "description": "Typed immutable native dictionary creation bindings; exact occurrence and reviewed new-property decisions; SQL source only"
+        },
+        {
+          "version": 15,
+          "appliedAt": "2026-10-22T08:37:52.258951+00:00",
+          "description": "Once-only typed native import record accounting; original receipt audit checkpoint delta guards; integration and engine acceptance required"
+        },
+        {
+          "version": 16,
+          "appliedAt": "2026-10-22T08:37:52.443409+00:00",
+          "description": "Polymorphic history trigger uses table-specific NEW fields only inside its table branch"
+        },
+        {
+          "version": 17,
+          "appliedAt": "2026-10-22T08:37:52.610013+00:00",
+          "description": "Typed payment native creation and original optional recommendation facts; settlement/publication readiness not granted"
+        },
+        {
+          "version": 18,
+          "appliedAt": "2026-10-22T08:37:52.723342+00:00",
+          "description": "Bounded semantic closure STAGE readback and immutable manifests; publication explicitly closed pending joint acceptance"
+        },
+        {
+          "version": 19,
+          "appliedAt": "2026-10-22T08:37:52.887555+00:00",
+          "description": "Exact immutable typed history publication readback; original FINAL accounting/receipt/audit transaction retained"
+        },
+        {
+          "version": 20,
+          "appliedAt": "2026-10-22T08:37:52.990315+00:00",
+          "description": "C01-v1 immutable database runtime document number allocation; preserved history numbers"
+        },
+        {
+          "version": 21,
+          "appliedAt": "2026-10-22T08:37:53.151617+00:00",
+          "description": "C01-v1 typed maintenance receipts and exact sparse root audit closure; legacy branches preserved"
+        },
+        {
+          "version": 22,
+          "appliedAt": "2026-10-22T08:37:53.373373+00:00",
+          "description": "C01-v1 explicit product image roles/default scheme and retained catalogue deletion"
+        },
+        {
+          "version": 23,
+          "appliedAt": "2026-10-22T08:37:53.483806+00:00",
+          "description": "C01-v1 immutable post-cutoff native creation and independent exact key admission"
+        },
+        {
+          "version": 24,
+          "appliedAt": "2026-10-22T08:37:53.613078+00:00",
+          "description": "C01-v1 HISTORY projection schema foundation; controlled revision writes remain CLOSED pending complete capability"
+        },
+        {
+          "version": 25,
+          "appliedAt": "2026-10-22T08:37:53.74399+00:00",
+          "description": "Approved product season_ids array; retained scalar, exact selection and two-way dictionary references"
+        },
+        {
+          "version": 26,
+          "appliedAt": "2026-10-22T09:07:14.833902+00:00",
+          "description": "Exact reviewed source supplement, bootstrap closure, season readback and whole-current-snapshot successor guards"
+        }
+      ],
+      "accounts": 2,
+      "sourceRows": 0
+    },
+    "submittedSqlSha256": "ecca5794380eea65aafe0f3f83bb7485d920efd7872e701dd51ae6d670d32daf",
+    "patchSha256": "21a1826d68845bbd2fd6ad945dac9660bfa1de0d15abccab3d1648a74f6570ed",
+    "runtime7Metadata": {
+      "identity": {
+        "database": "erp_qa_rapid26_20261022_01",
+        "server_addr": null,
+        "server_port": null,
+        "current_user": "erp_qa_owner_20261022_01",
+        "database_oid": "1029372",
+        "session_user": "t15_prod_bootstrap",
+        "database_owner": "erp_qa_owner_20261022_01",
+        "postmaster_start": "2026-10-04 08:16:07.895273+00",
+        "replication_role": "origin",
+        "server_version_num": "170011"
+      },
+      "migration_versions": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "catalog_sha256": "e37dd0c0b723bd5525c10f1cbcef563397db3135cb81948796a78aaf555d3dc2",
+      "source_routines_match": true
+    },
+    "actualMetadataProbe": true,
+    "readback": {
+      "database": "erp_qa_rapid26_20261022_01",
+      "databaseOid": "1029372",
+      "owner": "erp_qa_owner_20261022_01",
+      "actingRole": "erp_qa_owner_20261022_01",
+      "ownerFlags": {
+        "login": false,
+        "superuser": false,
+        "createDb": false,
+        "createRole": false,
+        "replication": false,
+        "bypassRls": false,
+        "inherit": false
+      },
+      "versions": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "registrations": [
+        {
+          "version": 1,
+          "appliedAt": "2026-10-22T08:37:50.330192+00:00",
+          "description": "Bounded runtime sales pg adapter; not a full ERP or historical import"
+        },
+        {
+          "version": 2,
+          "appliedAt": "2026-10-22T08:37:50.573198+00:00",
+          "description": "Explicit sales pricing facts; unknown existing metadata is not backfilled"
+        },
+        {
+          "version": 3,
+          "appliedAt": "2026-10-22T08:37:50.663762+00:00",
+          "description": "Opaque session hashes and authentication-version invalidation; no account seeds"
+        },
+        {
+          "version": 4,
+          "appliedAt": "2026-10-22T08:37:50.763751+00:00",
+          "description": "Native runtime transfer commands and closed shared SALES/TRANSFER provenance; SQL source only"
+        },
+        {
+          "version": 5,
+          "appliedAt": "2026-10-22T08:37:50.903025+00:00",
+          "description": "Approved nullable product read fields and controlled image metadata"
+        },
+        {
+          "version": 6,
+          "appliedAt": "2026-10-22T08:37:51.025099+00:00",
+          "description": "Independent native customer/supplier maintenance with sparse evidence; SQL source only"
+        },
+        {
+          "version": 7,
+          "appliedAt": "2026-10-22T08:37:51.156321+00:00",
+          "description": "Approved sparse cutoff/import foundation; historical commands remain closed; SQL source only"
+        },
+        {
+          "version": 8,
+          "appliedAt": "2026-10-22T08:37:51.299366+00:00",
+          "description": "Exact published-zero first runtime approval; native atomic effects only; SQL source only"
+        },
+        {
+          "version": 9,
+          "appliedAt": "2026-10-22T08:37:51.398924+00:00",
+          "description": "Approved product nine-price and retained raw barcode authority; empty catalogue precondition; SQL source only"
+        },
+        {
+          "version": 10,
+          "appliedAt": "2026-10-22T08:37:51.5412+00:00",
+          "description": "Approved original sales-settlement payment-method snapshot identity; no guessed historical backfill; SQL source only"
+        },
+        {
+          "version": 11,
+          "appliedAt": "2026-10-22T08:37:51.660187+00:00",
+          "description": "Nullable historical projections and immutable import evidence; atomic v2 publication; corrections not yet enabled; SQL source only"
+        },
+        {
+          "version": 12,
+          "appliedAt": "2026-10-22T08:37:51.86854+00:00",
+          "description": "Immutable explicit historical header native references; SQL source only, not database/runtime/import proof"
+        },
+        {
+          "version": 13,
+          "appliedAt": "2026-10-22T08:37:51.990323+00:00",
+          "description": "Exact same-transaction original organization/party creation and immutable source evidence; SQL source only"
+        },
+        {
+          "version": 14,
+          "appliedAt": "2026-10-22T08:37:52.140224+00:00",
+          "description": "Typed immutable native dictionary creation bindings; exact occurrence and reviewed new-property decisions; SQL source only"
+        },
+        {
+          "version": 15,
+          "appliedAt": "2026-10-22T08:37:52.258951+00:00",
+          "description": "Once-only typed native import record accounting; original receipt audit checkpoint delta guards; integration and engine acceptance required"
+        },
+        {
+          "version": 16,
+          "appliedAt": "2026-10-22T08:37:52.443409+00:00",
+          "description": "Polymorphic history trigger uses table-specific NEW fields only inside its table branch"
+        },
+        {
+          "version": 17,
+          "appliedAt": "2026-10-22T08:37:52.610013+00:00",
+          "description": "Typed payment native creation and original optional recommendation facts; settlement/publication readiness not granted"
+        },
+        {
+          "version": 18,
+          "appliedAt": "2026-10-22T08:37:52.723342+00:00",
+          "description": "Bounded semantic closure STAGE readback and immutable manifests; publication explicitly closed pending joint acceptance"
+        },
+        {
+          "version": 19,
+          "appliedAt": "2026-10-22T08:37:52.887555+00:00",
+          "description": "Exact immutable typed history publication readback; original FINAL accounting/receipt/audit transaction retained"
+        },
+        {
+          "version": 20,
+          "appliedAt": "2026-10-22T08:37:52.990315+00:00",
+          "description": "C01-v1 immutable database runtime document number allocation; preserved history numbers"
+        },
+        {
+          "version": 21,
+          "appliedAt": "2026-10-22T08:37:53.151617+00:00",
+          "description": "C01-v1 typed maintenance receipts and exact sparse root audit closure; legacy branches preserved"
+        },
+        {
+          "version": 22,
+          "appliedAt": "2026-10-22T08:37:53.373373+00:00",
+          "description": "C01-v1 explicit product image roles/default scheme and retained catalogue deletion"
+        },
+        {
+          "version": 23,
+          "appliedAt": "2026-10-22T08:37:53.483806+00:00",
+          "description": "C01-v1 immutable post-cutoff native creation and independent exact key admission"
+        },
+        {
+          "version": 24,
+          "appliedAt": "2026-10-22T08:37:53.613078+00:00",
+          "description": "C01-v1 HISTORY projection schema foundation; controlled revision writes remain CLOSED pending complete capability"
+        },
+        {
+          "version": 25,
+          "appliedAt": "2026-10-22T08:37:53.74399+00:00",
+          "description": "Approved product season_ids array; retained scalar, exact selection and two-way dictionary references"
+        },
+        {
+          "version": 26,
+          "appliedAt": "2026-10-22T09:07:14.833902+00:00",
+          "description": "Exact reviewed source supplement, bootstrap closure, season readback and whole-current-snapshot successor guards"
+        }
+      ],
+      "accounts": 2,
+      "sourceRows": 0
+    },
+    "countsReadback": {
+      "receipts": 8,
+      "audits": 8
+    },
+    "catalog": {
+      "file": "runtime-catalog-canonical.json",
+      "serverRawSha256": "7676552cdebf799ac80ffd0e2233ad4bce2150e99112358d7036afb57e3b0403",
+      "bytes": 1124929,
+      "canonicalSha256": "e37dd0c0b723bd5525c10f1cbcef563397db3135cb81948796a78aaf555d3dc2",
+      "canonicalFormat": "PG_JSONB_TEXT_MINUS_IDENTITY_UTF8_SHA256",
+      "querySha256": "c95dda7ae4adc246bc3cc697ab37d5339de8ad6428e06dca608dc95fb581133c",
+      "identity": {
+        "database": "erp_qa_rapid26_20261022_01",
+        "server_addr": null,
+        "server_port": null,
+        "current_user": "erp_qa_owner_20261022_01",
+        "database_oid": "1029372",
+        "session_user": "t15_prod_bootstrap",
+        "database_owner": "erp_qa_owner_20261022_01",
+        "postmaster_start": "2026-10-04 08:16:07.895273+00",
+        "replication_role": "origin",
+        "server_version_num": "170011"
+      },
+      "counts": {
+        "relations": 60,
+        "columns": 592,
+        "routines": 121,
+        "triggers": 930,
+        "constraints": 529,
+        "indexes": 164,
+        "roles": 2
+      }
+    },
+    "functions": [
+      {
+        "acl": null,
+        "name": "guard_maintenance_child_write",
+        "owner": "erp_qa_owner_20261022_01",
+        "config": [
+          "search_path=pg_catalog, naijue_erp"
+        ],
+        "definer": false,
+        "bodySha256": "a19def51718e008e541482dd1e6f2d2ab9257842ce7e66ad6e62aedcfa216d8a"
+      }
+    ],
+    "remaining": [
+      "New actual media color positive/negative transaction matrix not yet executed",
+      "No issuer or SOURCE MAIN execution authority created",
+      "Product/media actual engine matrix untested",
+      "No actual source import/publication or production switch"
+    ]
+  }
+}
