@@ -1,14 +1,14 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T04:36:42.430990+00:00",
+  "updatedAt": "2026-10-22T04:47:52.885418+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
-  "writeGate": "CLOSED_PENDING_C00_DEMO_REFERENCE_AND_F1_FINITE_LIST",
+  "writeGate": "OPEN_ONLY_AFTER_C_EXPLICIT_CHECKPOINT_MESSAGE",
   "roles": {
     "D1": {
       "proposal": "reports/backend/rapid-launch-20261022/D1/REQUESTED-WRITE-SCOPE.json",
-      "sourceWriteEnabled": false,
+      "sourceWriteEnabled": true,
       "registeredFiles": [
         {
           "path": "apps/api/src/postgres-read-api.ts",
@@ -129,12 +129,72 @@
           "path": "adapters/postgres/src/inventory-posting-balances.ts",
           "group": "SHARED_POSTING_CONTRACT_IF_ASSIGNED",
           "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/api/src/sales-query-http.ts",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM"
+        },
+        {
+          "path": "apps/api/src/transfer-query-http.ts",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM"
+        },
+        {
+          "path": "adapters/postgres/src/sales-query-reader.ts",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM"
+        },
+        {
+          "path": "adapters/postgres/src/transfer-query-reader.ts",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM"
+        },
+        {
+          "path": "packages/application/src/sales-query-ports.ts",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM"
+        },
+        {
+          "path": "packages/application/src/transfer-query-ports.ts",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM"
+        },
+        {
+          "path": "packages/application/src/sales-query-service.ts",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM"
+        },
+        {
+          "path": "packages/application/src/transfer-query-service.ts",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM"
+        },
+        {
+          "path": "apps/api/src/current-form-http.ts",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM"
+        },
+        {
+          "path": "adapters/postgres/src/current-form-reader.ts",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM"
+        },
+        {
+          "path": "packages/application/src/current-form-ports.ts",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM"
+        },
+        {
+          "path": "packages/application/src/current-form-service.ts",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM"
         }
       ]
     },
     "D2": {
       "proposal": "reports/backend/rapid-launch-20261022/D2/00-FILE-SCOPE.json",
-      "sourceWriteEnabled": false,
+      "sourceWriteEnabled": true,
       "registeredFiles": [
         {
           "path": "adapters/postgres/src/catalogue-settings-read-reader.ts",
@@ -660,7 +720,7 @@
     },
     "D3": {
       "proposal": "reports/backend/rapid-launch-20261022/D3/FILE-OWNERSHIP-PROPOSAL.json",
-      "sourceWriteEnabled": false,
+      "sourceWriteEnabled": true,
       "registeredFiles": [
         {
           "path": "packages/application/src/inventory-cutoff-scope.ts",
@@ -786,7 +846,7 @@
     },
     "F2": {
       "proposal": "reports/frontend/rapid-launch-20261022/F2/W0-FILE-OWNERSHIP-REQUEST-v1.json",
-      "sourceWriteEnabled": false,
+      "sourceWriteEnabled": true,
       "registeredFiles": [
         {
           "path": "apps/web/src/inventory/inventory-page.tsx",
@@ -1004,7 +1064,7 @@
     },
     "F3": {
       "proposal": "reports/frontend/rapid-launch-20261022/F3/FILE-OWNERSHIP-PROPOSAL.json",
-      "sourceWriteEnabled": false,
+      "sourceWriteEnabled": true,
       "registeredFiles": [
         {
           "path": "apps/web/src/settings/stores/contracts.ts",
@@ -1153,9 +1213,510 @@
       ]
     },
     "F1": {
-      "proposal": "PENDING_F1",
-      "sourceWriteEnabled": false,
-      "registeredFiles": []
+      "proposal": "reports/frontend/rapid-launch-20261022/F1/WRITE-SCOPE-PROPOSAL.json",
+      "sourceWriteEnabled": true,
+      "registeredFiles": [
+        {
+          "path": "apps/web/src/application/application-root.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/controller.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/demo-frame-presentation.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/build-application.mjs",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/stylesheet.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/index.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/routes/sales.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/routes/sales-commands.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/routes/transfers.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/routes/inventory.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/routes/products.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/routes/product-categories.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/routes/product-settings.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/routes/barcode-schemes.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/routes/store-settings.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/routes/parties.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/styles/shell.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/styles/sales.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/styles/sales-base.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/styles/sales-detail.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/styles/transfers.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/styles/transfer-detail.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/demo-presentation/document-navigation.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/demo-presentation/frame.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/demo-presentation/controls.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/demo-presentation/tokens.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/demo-presentation/navigation-menu.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/demo-presentation/navigation-menu.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/authentication/authentication-panel.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/authentication/authentication.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/authentication/model.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/authentication/http-client.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/development-host/bootstrap.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/development-host/configuration.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/development-host/mount.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/development-host/entry.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/development-host/route-state.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/development-host/host.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/development-host/build-development-host.mjs",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/components/standard-controls.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/components/standard-controls.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/components/standard-overlay.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/components/standard-overlay.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/components/use-dialog-focus-return.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/tests/run-sales-dom-tests.mjs",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/tests/sales-dom-entry.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/tests/run-transfer-dom-tests.mjs",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/tests/transfer-dom-entry.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/demo-presentation/tests/run-navigation-menu-dom-tests.mjs",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/authentication/tests/run-dom-tests.mjs",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/authentication/tests/dom-entry.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-create.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-new-document-form.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-create.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-new-document-form.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/http-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/sales-route.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/detail-host.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/detail-header.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/detail-content.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/detail.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/http-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/response-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/commands/page-host.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/commands/manual-create-host.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/commands/form.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/commands/form-model.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/commands/editor-session.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/commands/controller.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/commands/http-client.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/commands/contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/transfers-route.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/detail-host.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/detail-content.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/detail.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/http-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/response-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/matrix.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/manual-create-host.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/host.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/form.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/controller.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/editable-lines.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/http-client.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/tests/run-create-route-dom-tests.mjs",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/tests/create-route-entry.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/tests/run-sales-create-route-dom-tests.mjs",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/tests/sales-create-route-entry.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/saved-records.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/sparse-lines.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transport/http-query.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transport/index.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/authentication/account-menu.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/production-host/configuration.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/production-host/mount.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/production-host/entry.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/production-host/build-production-host.mjs",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/routes/staff-settings.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/routes/payment-settings.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/business-date.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-business-mode.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/components/document-scan-contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/components/document-scan-controller.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/components/document-scan.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/components/document-scan.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/components/document-output-contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/components/document-output.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/components/document-output.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/history-http-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/history-controller.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/sales/history-view.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/history-http-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/history-controller.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transfers/history-view.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/routes/imported-history.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        }
+      ]
     }
   },
   "reservedSharedFiles": {
@@ -1195,5 +1756,9 @@
       "reports": "K/reports/qa-backend/rapid-launch-20261022/QB/**"
     }
   },
-  "resourcePolicy": "No new PG, browser or integrated build before C assigns a bounded window. Light focused checks after source opening require result recording; no default full regression."
+  "resourcePolicy": "No new PG, browser or integrated build before C assigns a bounded window. Light focused checks after source opening require result recording; no default full regression.",
+  "fieldApproval": "NOT_CONFIRMED",
+  "demoReferenceManifest": "references/demo-ui-baseline/MANIFEST.json",
+  "demoReferenceManifestSha256": "a84986dc63dfab87579333cf3f9655fb94c14173a2d06c7d52970c65e884ce4f",
+  "changesBeyondFiniteList": "Report exact path and reason to C before write; ordinary path allocation needs C registration, not new user approval. Field approval remains required."
 }

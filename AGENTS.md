@@ -11,3 +11,7 @@
 sealed18 run2 已实际通过9场景（含父测试10/10）并停库，禁止重复同目标。新PG需主控协调，隔离合成目标并保留停止证据。历史人员/时间未知保持空；库存未知/零/缺失/读失败分开，金额和数量保留精确字符串，不猜授权、映射或零值。
 
 优先交付最新整合构建与冻结 Demo 逐页对比，绑定源文件hash、版本、实际时间、截图、问题和未测项。局部测试不是整页或完整验收；线上版本未绑定要明确记录。正式切换前仍须具体影响、备份、回退和必要确认。
+
+## 2026-10-22 rapid-launch nine-role current authority
+
+Current C=01a161ca-f5d5-7de1-a8ad-1cdd43c96915. User explicitly replaced the old three-slot/broad frontend/backend ownership with the nine roles in docs/rapid-launch-20261022/TASKS.json and exact WRITE-OWNERSHIP.json. Previous entries remain historical. Writes activate on C checkpoint message. New fields/constraints/dependent writes require explicit user approval. Current user authorization permits phased testing/replacement/deployment at the existing public address, superseding old general production-not-authorized wording; backup, rollback and data protection remain required. Current progress lives only in that docs directory.

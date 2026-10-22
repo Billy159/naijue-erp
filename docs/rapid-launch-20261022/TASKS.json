@@ -50,7 +50,7 @@
       "hostId": "local",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "sourceWriteEnabled": false
+      "sourceWriteEnabled": true
     },
     "F2": {
       "title": "前端库存与商品",
@@ -63,7 +63,7 @@
       "hostId": "local",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "sourceWriteEnabled": false
+      "sourceWriteEnabled": true
     },
     "F3": {
       "title": "前端基础设置",
@@ -75,7 +75,7 @@
       "hostId": "local",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "sourceWriteEnabled": false
+      "sourceWriteEnabled": true
     },
     "D1": {
       "title": "后端宿主事务与公共迁移",
@@ -89,7 +89,7 @@
       "hostId": "local",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "sourceWriteEnabled": false
+      "sourceWriteEnabled": true
     },
     "D2": {
       "title": "后端商品与基础资料维护",
@@ -102,7 +102,7 @@
       "hostId": "local",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "sourceWriteEnabled": false
+      "sourceWriteEnabled": true
     },
     "D3": {
       "title": "后端库存历史与导入",
@@ -116,7 +116,7 @@
       "hostId": "local",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "sourceWriteEnabled": false
+      "sourceWriteEnabled": true
     },
     "QF": {
       "title": "前端独立验收",
@@ -150,7 +150,7 @@
       "owner": "C",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "RUNNING",
+      "status": "CODE_DONE",
       "startDependencies": [],
       "completionDependencies": [],
       "fieldGate": "Only new/changed schema or write semantics await relevant explicit approval; existing approved fields, read wiring and preparation proceed.",
@@ -160,13 +160,19 @@
       "checks": [
         "39 exact WIP files hash matched; github branch readback equal"
       ],
-      "evidence": [],
+      "evidence": [
+        "GitHub source8211285 verified",
+        "references/demo-ui-baseline/MANIFEST.json",
+        "WRITE-OWNERSHIP.json"
+      ],
       "notTested": [],
-      "nextAction": "Collect W0 exact path lists; package screened distributable Demo UI references; publish ownership and write authorization.",
+      "nextAction": "Push/read back final C00 checkpoint, then explicitly open six roles. Preserve PUSH_BLOCKED if network unavailable and continue independent work per contract.",
       "write_scope": {
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "C",
         "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -191,9 +197,11 @@
       "notTested": [],
       "nextAction": "Existing API v1 frozen; collect final D1/D2/D3 schema proposals, make one explicit user confirmation request. No new field approved.",
       "write_scope": {
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "C",
         "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -216,9 +224,11 @@
       "notTested": [],
       "nextAction": "C02 delegated read-only source/operations inventory in progress; C remains sole live-server operator.",
       "write_scope": {
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "C",
         "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -244,9 +254,11 @@
       "notTested": [],
       "nextAction": "QB source-only receipt may adopt B00 factual inventory; no business verification claimed.",
       "write_scope": {
-        "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "D1",
+        "sourceWriteEnabled": true,
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -255,7 +267,7 @@
       "owner": "D1",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "READY",
       "startDependencies": [
         "C00"
       ],
@@ -269,11 +281,13 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Role is actively doing W0 read-only scope preparation; implementation waits C00 exact write registry.",
+      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
       "write_scope": {
-        "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "D1",
+        "sourceWriteEnabled": true,
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -282,7 +296,7 @@
       "owner": "D1",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "READY",
       "startDependencies": [
         "C00"
       ],
@@ -296,11 +310,13 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Role is actively doing W0 read-only scope preparation; implementation waits C00 exact write registry.",
+      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
       "write_scope": {
-        "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "D1",
+        "sourceWriteEnabled": true,
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -309,7 +325,7 @@
       "owner": "D3",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "READY",
       "startDependencies": [
         "C00"
       ],
@@ -324,11 +340,13 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Role is actively doing W0 read-only scope preparation; implementation waits C00 exact write registry.",
+      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
       "write_scope": {
-        "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "D3",
+        "sourceWriteEnabled": true,
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -337,7 +355,7 @@
       "owner": "D2",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "READY",
       "startDependencies": [
         "C00"
       ],
@@ -352,11 +370,13 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Role is actively doing W0 read-only scope preparation; implementation waits C00 exact write registry.",
+      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
       "write_scope": {
-        "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "D2",
+        "sourceWriteEnabled": true,
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -365,7 +385,7 @@
       "owner": "D2",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "READY",
       "startDependencies": [
         "C00"
       ],
@@ -380,11 +400,13 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Role is actively doing W0 read-only scope preparation; implementation waits C00 exact write registry.",
+      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
       "write_scope": {
-        "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "D2",
+        "sourceWriteEnabled": true,
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -393,7 +415,7 @@
       "owner": "D3",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "READY",
       "startDependencies": [
         "C00"
       ],
@@ -409,18 +431,20 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Role is actively doing W0 read-only scope preparation; implementation waits C00 exact write registry.",
+      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
       "write_scope": {
-        "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "D3",
+        "sourceWriteEnabled": true,
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
       "id": "B07",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "READY",
       "startDependencies": [
         "C00"
       ],
@@ -429,7 +453,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Role is actively doing W0 read-only scope preparation; implementation waits C00 exact write registry.",
+      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
       "title": "基线感知历史修订（R4）",
       "owner": "D3",
       "instructions": "B07 基线感知历史修订（R4）\n路径：D3拥有history修订应用、有效投影、PG叶适配与历史命令插件；迁移由D1集中实施，过账复用D1公共端口。\n依赖：相关字段确认、B06已发布历史基线、B02受控事务/过账合同。\n历史修改按受控revision和当前有效投影实现：原始header/line/source不可变；加版本CAS、原因、操作者、前后值、原请求key；新旧有效库存效果之差记账，金额单改不动库存，已计入切换基线的旧单不得再过整单。历史修订入口、存储增补和收退配平的具体字段在C01确认后实施；不要擅自扩大为历史审核状态迁移。\n最小证据：历史数量增加/减少差额、金额单改、同key重复、权限/版本冲突；调拨两端守恒；读取看到最新有效值且原始值可追溯。复用schema19既有发布/回滚证据，真实导入不是再跑全套合成验证。",
@@ -440,9 +464,11 @@
         "B02:controlled-posting-contract"
       ],
       "write_scope": {
-        "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "D3",
+        "sourceWriteEnabled": true,
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -451,7 +477,7 @@
       "owner": "F1",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "READY",
       "startDependencies": [
         "C00"
       ],
@@ -465,11 +491,13 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Role is actively doing W0 read-only scope preparation; implementation waits C00 exact write registry.",
+      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
       "write_scope": {
-        "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "F1",
+        "sourceWriteEnabled": true,
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -478,7 +506,7 @@
       "owner": "F1",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "READY",
       "startDependencies": [
         "C00"
       ],
@@ -493,11 +521,13 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Role is actively doing W0 read-only scope preparation; implementation waits C00 exact write registry.",
+      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
       "write_scope": {
-        "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "F1",
+        "sourceWriteEnabled": true,
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -506,7 +536,7 @@
       "owner": "F2",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "READY",
       "startDependencies": [
         "C00"
       ],
@@ -521,11 +551,13 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Role is actively doing W0 read-only scope preparation; implementation waits C00 exact write registry.",
+      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
       "write_scope": {
-        "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "F2",
+        "sourceWriteEnabled": true,
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -534,7 +566,7 @@
       "owner": "F2",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "READY",
       "startDependencies": [
         "C00"
       ],
@@ -548,11 +580,13 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Role is actively doing W0 read-only scope preparation; implementation waits C00 exact write registry.",
+      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
       "write_scope": {
-        "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "F2",
+        "sourceWriteEnabled": true,
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -561,7 +595,7 @@
       "owner": "F3",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "READY",
       "startDependencies": [
         "C00"
       ],
@@ -575,11 +609,13 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Role is actively doing W0 read-only scope preparation; implementation waits C00 exact write registry.",
+      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
       "write_scope": {
-        "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "F3",
+        "sourceWriteEnabled": true,
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -588,7 +624,7 @@
       "owner": "F1",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "READY",
       "startDependencies": [
         "C00"
       ],
@@ -604,11 +640,13 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Role is actively doing W0 read-only scope preparation; implementation waits C00 exact write registry.",
+      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
       "write_scope": {
-        "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "F1",
+        "sourceWriteEnabled": true,
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -634,9 +672,11 @@
       "notTested": [],
       "nextAction": null,
       "write_scope": {
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "C",
         "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -664,9 +704,11 @@
       "notTested": [],
       "nextAction": null,
       "write_scope": {
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "C",
         "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -692,9 +734,11 @@
       "notTested": [],
       "nextAction": null,
       "write_scope": {
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "C",
         "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -719,9 +763,11 @@
       "notTested": [],
       "nextAction": "W0 read-only preparation dispatched; no implementation or acceptance result yet.",
       "write_scope": {
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "QF",
         "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     },
     {
@@ -746,9 +792,11 @@
       "notTested": [],
       "nextAction": "W0 read-only preparation dispatched; no implementation or acceptance result yet.",
       "write_scope": {
+        "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "owner": "QB",
         "sourceWriteEnabled": false,
-        "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
-        "exactRegistry": "PENDING_W0_OWNER_PATH_LISTS"
+        "activation": "C explicit checkpoint message",
+        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       }
     }
   ],
@@ -809,6 +857,6 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
-  "updatedAt": "2026-10-22T04:21:35.162576+00:00",
-  "stage": "C00_WIP_REMOTE_VERIFIED_W0_READONLY_PREPARATION"
+  "updatedAt": "2026-10-22T04:47:52.885418+00:00",
+  "stage": "C00_READY_SOURCE_WRITES_AWAIT_C_CHECKPOINT_MESSAGE"
 }
