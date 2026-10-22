@@ -20,3 +20,10 @@
 .erp-overlay.erp-overlay-catalogue .erp-overlay-close{top:11px;font-size:14px;border:0;background:transparent}
 .erp-overlay.erp-overlay-catalogue.arco-modal .arco-modal-footer .erp-button.arco-btn-secondary:not(.arco-btn-disabled){background:var(--ca-surface,#fff);border:1px solid var(--ca-control-border,#c9ced6);color:var(--ca-ink,#232a36)}
 .erp-overlay.erp-overlay-catalogue.arco-modal .arco-modal-footer .erp-button.arco-btn-secondary:not(.arco-btn-disabled):hover{background:var(--ca-surface-subtle,#f6f7f8);border-color:var(--ca-control-hover-border,#b8bec8)}
+/* Native frozen Modal close: 12px icon and centered 20px hover circle. Keep the
+ * existing keyboard-accessible 24px button; adapt its inset around that icon. */
+.erp-overlay.erp-overlay-catalogue.arco-modal .erp-overlay-close{top:12px;right:14px;display:flex;align-items:center;justify-content:center;font-size:12px;line-height:0;color:var(--ca-ink,#232a36)}
+.erp-overlay.erp-overlay-catalogue.arco-modal .erp-overlay-close>.arco-icon{position:relative;width:12px;height:12px;font-size:12px;vertical-align:0}
+.erp-overlay.erp-overlay-catalogue.arco-modal .erp-overlay-close::before{content:'';position:absolute;display:block;top:50%;left:50%;width:20px;height:20px;transform:translate(-50%,-50%);box-sizing:border-box;border-radius:50%;background-color:transparent;pointer-events:none;transition:background-color .1s cubic-bezier(0,0,1,1)}
+.erp-overlay.erp-overlay-catalogue.arco-modal .erp-overlay-close.arco-btn:is(:hover,:active){border:0;background:transparent;color:var(--ca-ink,#232a36)}
+.erp-overlay.erp-overlay-catalogue.arco-modal .erp-overlay-close:hover::before{background-color:var(--color-fill-2)}
