@@ -1,0 +1,55 @@
+{
+  "atUtc": "2026-10-22T21:15:08.313633+00:00",
+  "parent": "82ff715338b87e971ac896828db357a6049cd860",
+  "groups": [
+    {
+      "slice": "FLAT_SINGLE_SELECT_ORIGINAL_HOST_ANCHOR_POSITION",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-50/DELIVERY.json",
+      "receiptSha256": "185dce7f2978d11cd38bb41acf2d3d1aab5ae4b40bc4777af1f29bb595ce668f",
+      "receiptSnapshot": {
+        "chunk": 50,
+        "atUtc": "2026-10-22T21:14:05.551627+00:00",
+        "status": "READY_FOR_C_PIN_FLAT_ANCHOR_ONLY",
+        "finding": "PROD-UI-SOURCE-01/P03-P04; existing ticket only",
+        "files": [
+          {
+            "path": "apps/web/src/demo-controls/single-select-action.tsx",
+            "sha256": "051115760bebbca1318d6451dfea3fbb37d49fc10153cfcae55eef5f5d986679"
+          }
+        ],
+        "change": "One conditional inline style: flat host position relative. Same local Portal; width/caller/search/filter/Enter/Esc/value/null/tag/page-size/season/C62 overflow implementation untouched. No new paths or F2 caller prop.",
+        "sourceEvidence": [
+          "C69 v011 FLAT-CONSUMERS-RESULT.json source/static position + actual P03 x299/w320 versus popup224/w320",
+          "Installed Trigger/index.js getContainer absolute top0/left0 and getPopupStyle relative coordinates/parent clientWidth clamp; observed source mechanism consistent with actual offset",
+          "SOURCE-CHECK.json verifies all other Action bytes equal fixed actual C69 input source"
+        ],
+        "checks": {
+          "types-1.log": "exit0",
+          "anchor-before-1.log": "exit0 modeled original misalignment reproduced with actual installed calculator",
+          "anchor-after-1.log": "exit0 actual Action relative host + installed calculator model aligns P03x299/w320, preserves P04x224/w360/token ancestor"
+        },
+        "geometryBoundary": "jsdom has no layout. Explicit rect inputs: P03 measured C69; P04 x/width source evidence and Y263 controlled model only. NOT Chrome pixels or real browser causal intervention proof.",
+        "notTested": [
+          "next explicit candidate actual P03/P04 anchor/width/clip",
+          "whole product form, native SKU/save or real business"
+        ],
+        "notRepeated": [
+          "YEAR/P12 passed suites",
+          "old shared keyboard/search/selection suites",
+          "whole app/build/Chrome/PG/server"
+        ],
+        "blockers": [],
+        "next": "C exact1 pin then original Demo next clear candidate only new P03/04 anchors and actual affected scope. Existing other pass reused."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/demo-controls/single-select-action.tsx",
+          "owner": "F1",
+          "sha256": "051115760bebbca1318d6451dfea3fbb37d49fc10153cfcae55eef5f5d986679",
+          "bytes": 4041
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Exact single source checkpoint only. Actual C83 preview does not include this fix; independent new scope and subsequent actual browser remain separate."
+}

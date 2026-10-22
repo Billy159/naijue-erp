@@ -33,7 +33,7 @@ export function DemoSingleSelectAction(props: DemoSingleSelectActionProps) {
     return () => { active = false; };
   }, [mounted, props.open, props.disabled]);
   const pageSize = props.presentation === 'page-size';
-  return <div ref={host} className="demo-single-select ui-single-host">
+  return <div ref={host} className="demo-single-select ui-single-host" style={props.presentation === 'flat' ? { position: 'relative' } : undefined}>
     <Select ref={select}
       className={pageSize ? 'ui-page-size-select' : props.presentation === 'flat' ? 'ui-flat-select' : ''}
       value={props.value}
