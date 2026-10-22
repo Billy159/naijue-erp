@@ -140,8 +140,8 @@ export function createHttpJsonQuery(options: HttpQueryOptions, requestBudgetByte
   const timeoutMs = boundedOption(options.timeoutMs, 30_000, 120_000);
   const requestLimit = boundedOption(requestBudgetBytes, MAX_REQUEST_BYTES, 32 * 1024 * 1024);
   return Object.freeze({ async post<T>(path: string, body: unknown, callerSignal: AbortSignal, validate: (value: unknown) => T): Promise<T> {
-    // Only local fixed route suffixes, never a caller-supplied absolute URL.
-    if (!/^\/(?:[a-z-]+\/)*[a-z-]+$/.test(path)) throw new HttpQueryError('invalid-request', 'INVALID_QUERY_ROUTE');
+    // Fixed local route segments also include explicit API versions such as v2.
+    if (!/^\/(?:[a-z0-9-]+\/)*[a-z0-9-]+$/.test(path) || /[\r\n]/.test(path)) throw new HttpQueryError('invalid-request', 'INVALID_QUERY_ROUTE');
     if (callerSignal.aborted) throw new HttpQueryError('aborted', 'QUERY_ABORTED');
     let payload: string;
     try {
