@@ -1,0 +1,33 @@
+{
+  "atUtc": "2026-10-22T18:22:44.014384+00:00",
+  "parent": "693e215d943fe4c23371aba4c19ace68b77b5720",
+  "groups": [
+    {
+      "slice": "EXPLICIT26_BARCODE_AND_STOCK_CONTRIBUTOR_STORES",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/leaf26-stores-slice1/RESULT.json",
+      "receiptSha256": "3dbbf1e791b3afbb404daa245e6c7207b4b724fcc66fd93ba3cd807b2cb6a238",
+      "files": [
+        {
+          "path": "adapters/postgres/src/native-barcode-import.ts",
+          "owner": "D3",
+          "sha256": "0189bb3898c0ca61c460e193a45d22b27a1e84197267e421a5168966b2ca96e9",
+          "bytes": 9109
+        },
+        {
+          "path": "adapters/postgres/src/native-stock-contributor-import.ts",
+          "owner": "D3",
+          "sha256": "a480c43ee707f6adea2fcfe2598899c60214796113b42af7dff8d2130594e0fc",
+          "bytes": 12198
+        },
+        {
+          "path": "tests/native-sku-stock-import.test.ts",
+          "owner": "D3",
+          "sha256": "4ef1898c32d2048c99ba0c89b61a21c201c6b05baccfa8d45c40d68be2461978",
+          "bytes": 39216
+        }
+      ]
+    }
+  ],
+  "fileCount": 3,
+  "scope": "Only new explicit26 source/protocol gates and affected transaction handling; original barcode/stock business rules unchanged, no actual PG/import/posting."
+}

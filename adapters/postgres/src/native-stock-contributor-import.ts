@@ -2,19 +2,24 @@ import { assertNativeImportAccountingGuards } from "./native-import-accounting-c
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { nativeStockSourceEvidence, validatePreparedNativeStockGroup } from "../../../packages/application/src/native-stock-contributor-import.ts";
 import type { NativeStockContributorStore, PreparedNativeStockGroup } from "../../../packages/application/src/native-stock-contributor-import.ts";
-import { assertReviewedNativeImportSchema } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { assertReviewedNativeImportSchema, checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { PgSalesClient, PgSalesPool } from "./sales-unit-of-work.ts";
 
 /** Original signed contribution staging only. No ledger/balance/receipt/publication effect. */
 export class PostgresNativeStockContributorStore implements NativeStockContributorStore {
-  private readonly pool: PgSalesPool;
+  protected readonly pool: PgSalesPool;
   constructor(pool: PgSalesPool) { this.pool = pool; }
   async stage(input: PreparedNativeStockGroup): Promise<{ inserted: number; replayed: number }> {
     const group = structuredClone(input); validatePreparedNativeStockGroup(group);
+    return this.stageValidated(group);
+  }
+  protected async stageValidated(group: PreparedNativeStockGroup, runtime26?: NativeRuntime26Capability): Promise<{ inserted: number; replayed: number }> {
     const client = await this.pool.connect(); let began = false, committing = false, discard: Error | undefined;
     try {
+      if (runtime26) await runtime26.assertReady(client, "IMPORT_STAGE");
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
-      const result = await this.write(client, group);
+      const result = await this.write(client, group, runtime26);
       committing = true; await client.query("COMMIT"); return result;
     } catch (error) {
       if (!began || committing) discard = error instanceof Error ? error : new Error("Stock contribution COMMIT outcome unknown; do not auto-retry");
@@ -25,14 +30,20 @@ export class PostgresNativeStockContributorStore implements NativeStockContribut
       throw error;
     } finally { client.release(discard); }
   }
-  private async write(client: PgSalesClient, group: PreparedNativeStockGroup): Promise<{ inserted: number; replayed: number }> {
+  private async write(client: PgSalesClient, group: PreparedNativeStockGroup, runtime26?: NativeRuntime26Capability): Promise<{ inserted: number; replayed: number }> {
     await client.query("/* native-stock:cutoff */ SELECT naijue_erp.cutoff_import_lock()");
     const versions = (await client.query(`/* native-stock:schema */ SELECT
       array_agg(version ORDER BY version) AS installed_versions FROM naijue_erp.schema_migration`)).rows;
     requireDomain(versions.length === 1, "NATIVE_STOCK_SCHEMA_NOT_READY", "Schema migration registry required");
-    const reviewedSchema = assertReviewedNativeImportSchema(versions[0]!.installed_versions,
-      { minimumVersion: 14, errorCode: "NATIVE_STOCK_SCHEMA_NOT_READY" });
-    if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
+    if (runtime26) {
+      const installed = versions[0]!.installed_versions;
+      requireDomain(Array.isArray(installed) && installed.length === 26 && installed.every((v, i) => v === i + 1),
+        "NATIVE_STOCK_SCHEMA_NOT_READY", "Exact successor prefix26 required");
+    } else {
+      const reviewedSchema = assertReviewedNativeImportSchema(versions[0]!.installed_versions,
+        { minimumVersion: 14, errorCode: "NATIVE_STOCK_SCHEMA_NOT_READY" });
+      if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
+    }
     const batches = (await client.query(`/* native-stock:batch */ SELECT id,mapping_version,status,source_hash,source_name,
       EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED') AS already_published
       FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`, [group.batchId])).rows;
@@ -119,5 +130,17 @@ export class PostgresNativeStockContributorStore implements NativeStockContribut
     }
     requireDomain(inserted === 0 || replayed === 0, "NATIVE_STOCK_PARTIAL_GROUP", "One complete group must be either all new or an exact replay");
     return { inserted, replayed };
+  }
+}
+
+/** Explicit successor with unchanged native/source shape. No legacy schema union. */
+export class PostgresNativeStockContributorStore26 extends PostgresNativeStockContributorStore {
+  private readonly runtime26: NativeRuntime26Capability;
+  constructor(pool: PgSalesPool, runtime26: NativeRuntime26Capability) {
+    super(pool); const checked = checkedNativeRuntime26Capability(runtime26);
+    if (!checked) throw new TypeError("Actual successor runtime capability required"); this.runtime26 = checked;
+  }
+  override async stage(input: PreparedNativeStockGroup): Promise<{ inserted: number; replayed: number }> {
+    const group = structuredClone(input); validatePreparedNativeStockGroup(group); return this.stageValidated(group, this.runtime26);
   }
 }

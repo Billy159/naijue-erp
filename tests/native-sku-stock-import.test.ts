@@ -10,8 +10,8 @@ import type { NativeBarcodeInput } from "../packages/application/src/native-barc
 import type { ImportSourceEvidence, JsonObject } from "../packages/application/src/history-storage-contract.ts";
 import { PostgresNativeSkuImportStore, PostgresNativeSkuImportStore26 } from "../adapters/postgres/src/native-sku-import.ts";
 import type { NativeRuntime26Capability } from "../packages/application/src/native-import-schema-contract.ts";
-import { PostgresNativeStockContributorStore } from "../adapters/postgres/src/native-stock-contributor-import.ts";
-import { PostgresNativeBarcodeImportStore } from "../adapters/postgres/src/native-barcode-import.ts";
+import { PostgresNativeStockContributorStore, PostgresNativeStockContributorStore26 } from "../adapters/postgres/src/native-stock-contributor-import.ts";
+import { PostgresNativeBarcodeImportStore, PostgresNativeBarcodeImportStore26 } from "../adapters/postgres/src/native-barcode-import.ts";
 import { CATALOGUE_PRICE_KEYS } from "../packages/application/src/catalogue-price-input.ts";
 const id = (n: number) => `00000000-0000-0000-0000-${String(n).padStart(12, "0")}`;
 const H = "a".repeat(64), J = "b".repeat(64), K = "c".repeat(64);
@@ -335,4 +335,66 @@ test("SKU, barcode and stock SQL paths refuse future schema19 before targets or 
     assert.equal(calls.at(-1), "ROLLBACK");
     assert.ok(!calls.some(sql => /\bINSERT INTO\b|:batch|:target/.test(sql)));
   }
+});
+
+function leaf26Protocol(kind: 'barcode' | 'stock', options: { schema?: number; replay?: boolean; partial?: boolean; deny?: boolean; booleanProof?: boolean; commitUnknown?: boolean } = {}) {
+  const input = kind === 'stock' ? stockInput() : barcodeInput(), calls: Array<{sql: string; values: unknown[]}> = [], releaseErrors: Array<Error | undefined> = [];
+  let proofs = 0, connects = 0;
+  const answer = (rows: Record<string, unknown>[] = []) => ({rows, rowCount: rows.length});
+  const client = { async query(sql: string, values: unknown[] = []) {
+    assertSqlBinds(sql, values); calls.push({sql, values});
+    if (sql === 'COMMIT' && options.commitUnknown) throw Error('leaf26 COMMIT unknown');
+    if (sql.startsWith('BEGIN') || sql === 'COMMIT' || sql === 'ROLLBACK' || sql.includes(':cutoff')) return answer();
+    if (sql.includes(':schema')) return answer([{installed_versions: Array.from({length: options.schema ?? 26}, (_, i) => i + 1)}]);
+    if (sql.includes(':batch')) return answer([{id:id(1),mapping_version:'V2_HISTORY_NULLABLE_1',status:'STAGED',source_hash:J,source_name:input.fixedSourceNamespace,already_published:false}]);
+    if (kind === 'stock') {
+      if (sql.includes('native-stock:warehouse') || sql.includes('native-stock:sku')) return answer([{id:values[2]}]);
+      if (sql.includes('native-stock:alias')) return answer([{canonical_sku_id:id(50),canonical_source_key:id(10)}]);
+      if (sql.includes('native-stock:group-identity')) return answer();
+      if (sql.includes('native-stock:source-replay')) return answer(options.replay || options.partial ? [{equal:true}] : []);
+      if (sql.includes('native-stock:contributor-replay')) return answer(options.replay ? [{equal:true,baseline_ledger_id:null}] : []);
+      if (sql.includes('native-stock:source-create')) return answer([{id:JSON.parse(values[0] as string).id}]);
+      if (sql.includes('native-stock:contributor-create')) { assert.ok(['-5','2'].includes(values[7] as string)); return answer([{source_row_id:values[1]}]); }
+    } else {
+      if (sql.includes('native-barcode:sku-alias')) return answer([{id:id(10)}]);
+      if (sql.includes('native-barcode:scheme')) return answer([{exact:true}]);
+      if (sql.includes('native-barcode:target')) return answer(options.replay || options.partial ? [{id:id(301),exact:true}] : []);
+      if (sql.includes('native-barcode:main')) return answer(options.replay || options.partial ? [{id:id(301)}] : []);
+      if (sql.includes('native-barcode:source-replay')) return answer(options.replay ? [{exact:true}] : []);
+      if (sql.includes('native-barcode:create')) { assert.equal(values[1], '0000123400'); return answer([{id:id(301)}]); }
+      if (sql.includes('native-barcode:source-create')) return answer([{id:(input as NativeBarcodeInput).source.id}]);
+    }
+    throw Error('Unexpected leaf26 protocol SQL');
+  }, release(error?: Error) { releaseErrors.push(error); } };
+  const pool = {async connect() { connects++; return client; }};
+  const runtime: NativeRuntime26Capability = {profile:'EXACT26',contract:'NATIVE_RUNTIME26_V1',async assertReady(c, purpose) {
+    proofs++; assert.equal(c,client); assert.equal(purpose,'IMPORT_STAGE'); assert.equal(calls.length,0);
+    if (options.deny) throw Object.assign(Error('Original live lease required'),{code:'NATIVE_RUNTIME26_NOT_READY'});
+    if (options.booleanProof) return true as never;
+  }};
+  return {input,calls,pool,runtime,client,releaseErrors,proofs:()=>proofs,connects:()=>connects};
+}
+test('leaf26 barcode and signed stock require actual original-client proof before SQL and keep legacy prefix26 refused',async()=>{
+  for(const kind of ['barcode','stock'] as const){
+    const Store = kind==='barcode'?PostgresNativeBarcodeImportStore26:PostgresNativeStockContributorStore26;
+    const f=leaf26Protocol(kind);assert.throws(()=>new Store(f.pool,undefined as never),/runtime capability/);assert.equal(f.connects(),0);
+    const prepared = kind==='barcode'?prepareNativeBarcode(f.input as NativeBarcodeInput):prepareNativeStockGroup(f.input as NativeStockGroupInput);
+    const old = kind==='barcode'?new PostgresNativeBarcodeImportStore(f.pool):new PostgresNativeStockContributorStore(f.pool);
+    await assert.rejects(old.stage(prepared as never),{code:kind==='barcode'?'NATIVE_BARCODE_SCHEMA_NOT_READY':'NATIVE_STOCK_SCHEMA_NOT_READY'});
+    assert.equal(f.calls.some(c=>/:batch|:create|:source-create/.test(c.sql)),false);
+    for(const option of [{deny:true},{booleanProof:true}]){const denied=leaf26Protocol(kind,option);await assert.rejects(new Store(denied.pool,denied.runtime).stage(prepared as never));assert.equal(denied.calls.length,0);assert.equal(denied.releaseErrors.length,1);assert.ok(denied.releaseErrors[0]);}
+    for(const schema of [19,27]){const wrong=leaf26Protocol(kind,{schema});await assert.rejects(new Store(wrong.pool,wrong.runtime).stage(prepared as never));assert.equal(wrong.calls.some(c=>c.sql.includes(':batch')),false);}
+  }
+});
+test('leaf26 exact schema preserves signed contributors and raw barcode immutable source with complete replay only',async()=>{
+  for(const kind of ['barcode','stock'] as const)for(const replay of [false,true]){
+    const f=leaf26Protocol(kind,{replay}),prepared=kind==='barcode'?prepareNativeBarcode(f.input as NativeBarcodeInput):prepareNativeStockGroup(f.input as NativeStockGroupInput);
+    const store=kind==='barcode'?new PostgresNativeBarcodeImportStore26(f.pool,f.runtime):new PostgresNativeStockContributorStore26(f.pool,f.runtime);
+    assert.deepEqual(await store.stage(prepared as never),{inserted:replay?0:kind==='stock'?2:1,replayed:replay?kind==='stock'?2:1:0});assert.equal(f.proofs(),1);assert.equal(f.calls.at(-1)!.sql,'COMMIT');
+    assert.equal(f.calls.some(c=>/INSERT INTO naijue_erp\.(inventory_ledger|inventory_balance|operation_receipt)\b|UPDATE naijue_erp.import_batch|DELETE /.test(c.sql)),false);
+  }
+  for(const kind of ['barcode','stock'] as const){const f=leaf26Protocol(kind,{partial:true}),store=kind==='barcode'?new PostgresNativeBarcodeImportStore26(f.pool,f.runtime):new PostgresNativeStockContributorStore26(f.pool,f.runtime),prepared=kind==='barcode'?prepareNativeBarcode(f.input as NativeBarcodeInput):prepareNativeStockGroup(f.input as NativeStockGroupInput);await assert.rejects(store.stage(prepared as never),{code:kind==='barcode'?'NATIVE_BARCODE_REPLAY_CONFLICT':'NATIVE_STOCK_REPLAY_CONFLICT'});assert.equal(f.calls.at(-1)!.sql,'ROLLBACK');}
+});
+test('leaf26 unknown COMMIT discards original client without rollback, retry or extra source writes',async()=>{
+  for(const kind of ['barcode','stock'] as const){const f=leaf26Protocol(kind,{commitUnknown:true}),store=kind==='barcode'?new PostgresNativeBarcodeImportStore26(f.pool,f.runtime):new PostgresNativeStockContributorStore26(f.pool,f.runtime),prepared=kind==='barcode'?prepareNativeBarcode(f.input as NativeBarcodeInput):prepareNativeStockGroup(f.input as NativeStockGroupInput);await assert.rejects(store.stage(prepared as never),/COMMIT unknown/);assert.equal(f.connects(),1);assert.equal(f.calls.filter(c=>c.sql==='COMMIT').length,1);assert.equal(f.calls.some(c=>c.sql==='ROLLBACK'),false);assert.ok(f.releaseErrors[0]);}
 });
