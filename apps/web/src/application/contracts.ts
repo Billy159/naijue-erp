@@ -32,6 +32,10 @@ export interface InventoryRouteConfiguration {
 }
 export interface SalesRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
+  /** Explicit complete product read-only action; absent stays unavailable.
+   * Captured independently, loaded only on row-view action; never inferred
+   * from another route or used as server authorization. */
+  readonly productFullPage?: ProductFullPageConfiguration;
   /** Optional full-page read-only detail action CSS. Omission disables viewing,
    * not the list. Never loaded with route or shell CSS. */
   readonly detailStylesheet?: RouteStylesheet;

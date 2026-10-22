@@ -28,7 +28,7 @@ export function salesPreparationIntent(proposal: SalesProposal): NativeSalesCrea
     orderDiscount: yuan(proposal.orderDiscount), lines: proposal.lines.map(row => ({ skuId: row.sku.id, quantity: row.quantity,
       dealPrice: row.pricingRule === 'DISCOUNT' ? null : row.isGift ? '0.00' : yuan(row.dealPrice), pricingRule: row.pricingRule,
       discountTenths: row.pricingRule === 'DISCOUNT' ? tenths(row.discount) : null, isGift: row.isGift, zeroConfirmed: row.zeroConfirmed })),
-    settlements: proposal.settlements.map(row => ({ paymentAccountId: row.account.id, paymentMethodId: row.method.id, direction: row.direction, amount: yuan(row.amount) })) });
+    settlements: proposal.settlements.map(row => { if (!row.method || !row.account || row.account.paymentMethodId !== row.method.id) throw new TypeError('Incomplete settlement selection.'); return { paymentAccountId: row.account.id, paymentMethodId: row.method.id, direction: row.direction, amount: yuan(row.amount) }; }) });
 }
 function keys(value: unknown, expected: readonly string[]): void {
   if (!value || typeof value !== 'object' || Array.isArray(value) || Object.getPrototypeOf(value) !== Object.prototype || Object.keys(value).sort().join() !== [...expected].sort().join()) throw new TypeError('Invalid native sales intent.');
@@ -79,8 +79,14 @@ export class SalesNewDocumentSession {
   constructor(options: { readonly scope: ReadScope; readonly proposal: SalesProposalSession; readonly editor: SalesEditorSession; readonly preparation: SalesCreatePreparation; readonly onAccessFailure?: (error: HttpQueryError) => void }) {
     if (!options.proposal.matchesIdentity(options.scope) || !options.editor.matchesIdentity(options.scope)) throw new TypeError('Sales preparation and commands must share identity.');
     this.proposal = options.proposal; this.editor = options.editor; this.#scope = options.scope; this.#preparation = options.preparation; this.#onAccessFailure = options.onAccessFailure;
-    let previous = this.proposal.getSnapshot().draft;
-    this.#unsubscribe = this.proposal.subscribe(() => { const state = this.proposal.getSnapshot(); if (state.disposed) this.dispose(); else if (state.draft !== previous) { previous = state.draft; this.cancelPreparation(); } });
+    let previous = this.proposal.getSnapshot();
+    this.#unsubscribe = this.proposal.subscribe(() => {
+      const state = this.proposal.getSnapshot();
+      if (state.disposed) this.dispose();
+      else if (state.draft !== previous.draft || state.entries !== previous.entries || state.lineEdit !== previous.lineEdit) {
+        previous = state; this.cancelPreparation();
+      }
+    });
     this.#scope.signal.addEventListener('abort', this.dispose, { once: true });
   }
   readonly getSnapshot = (): SalesCreateSnapshot => this.#state;

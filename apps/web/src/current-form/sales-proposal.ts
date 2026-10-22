@@ -15,19 +15,28 @@ export interface SalesProposalLine {
   readonly sku: CurrentFormSku; readonly product: CurrentFormProduct; readonly quantity: string; readonly dealPrice: string;
   readonly pricingRule: 'UNIT_PRICE' | 'DISCOUNT'; readonly discount: string; readonly isGift: boolean; readonly zeroConfirmed: boolean;
 }
+export interface SalesSpecChoice { readonly id: string; readonly name: string }
+export interface SalesProposalEntry {
+  readonly product: CurrentFormProduct | null; readonly sku: CurrentFormSku | null;
+  readonly color: SalesSpecChoice | null; readonly fit: SalesSpecChoice | null; readonly skuPage: number;
+  readonly query: string; readonly quantity: string; readonly dealPrice: string;
+}
+const emptyEntry = (direction: 'IN' | 'OUT'): SalesProposalEntry => ({ product: null, sku: null, color: null, fit: null, skuPage: 1, query: '', quantity: direction === 'IN' ? '-1' : '1', dealPrice: '' });
+const emptyEntries = () => ({ IN: emptyEntry('IN'), OUT: emptyEntry('OUT') });
 export interface SalesProposal {
   readonly businessType: 'SALE' | 'RETURN' | 'EXCHANGE'; readonly businessDate: string; readonly note: string; readonly orderDiscount: string;
   readonly hall: CurrentSalesReferenceItem | null; readonly customer: CurrentSalesReferenceItem | null;
   readonly salesperson: CurrentSalesReferenceItem | null; readonly warehouse: CurrentSalesReferenceItem | null;
   readonly lines: readonly SalesProposalLine[];
-  readonly settlements: readonly { readonly key: string; readonly method: CurrentSalesReferenceItem; readonly account: CurrentSalesReferenceItem; readonly direction: 'RECEIVE' | 'REFUND'; readonly amount: string }[];
+  readonly settlements: readonly { readonly key: string; readonly method: CurrentSalesReferenceItem | null; readonly account: CurrentSalesReferenceItem | null; readonly direction: 'RECEIVE' | 'REFUND'; readonly amount: string }[];
 }
 type Candidate = CurrentSalesReferenceItem | CurrentFormProduct | CurrentFormSku;
 export interface SalesProposalSnapshot {
   readonly draft: SalesProposal; readonly dirty: boolean; readonly disposed: boolean; readonly errors: readonly string[]; readonly notice: string | null;
   readonly totals: { readonly grossMinor: string; readonly netDueMinor: string; readonly settledMinor: string; readonly balanced: boolean } | null;
+  readonly entries: Readonly<Record<'IN' | 'OUT', SalesProposalEntry>>;
   /** A pending identity change never mutates the original draft line. */
-  readonly lineEdit: { readonly key: string; readonly original: SalesProposalLine; readonly product: CurrentFormProduct; readonly sku: CurrentFormSku | null } | null;
+  readonly lineEdit: { readonly key: string; readonly original: SalesProposalLine; readonly product: CurrentFormProduct; readonly sku: CurrentFormSku | null; readonly color: SalesSpecChoice | null; readonly fit: SalesSpecChoice | null; readonly skuPage: number } | null;
   readonly picker: { readonly kind: SalesProposalPicker; readonly search: string; readonly page: number;
     readonly product: CurrentFormProduct | null; readonly method: CurrentSalesReferenceItem | null;
     readonly phase: 'loading' | 'ready' | 'error'; readonly result: CurrentFormPage<Candidate> | null } | null;
@@ -63,7 +72,7 @@ export function salesProposalMoney(draft: SalesProposal): { readonly grossMinor:
     const gross = amounts.reduce((sum, value) => sum + value, 0n), net = gross - discount;
     let settled: bigint | null;
     try { settled = draft.settlements.reduce((sum, row) => {
-      if (row.direction !== 'RECEIVE' && row.direction !== 'REFUND') throw Error();
+      if (!row.method || !row.account || row.account.paymentMethodId !== row.method.id || row.direction !== 'RECEIVE' && row.direction !== 'REFUND') throw Error();
       return sum + (row.direction === 'RECEIVE' ? 1n : -1n) * amount(row.amount);
     }, 0n); } catch { settled = null; }
     return { grossMinor: gross.toString(), netDueMinor: net.toString(), orderDiscountMinor: discount.toString(), settledMinor: settled?.toString() ?? null,
@@ -74,8 +83,8 @@ export function salesProposalMoney(draft: SalesProposal): { readonly grossMinor:
  * minimum-price authority, approval eligibility, inventory effects or commands. */
 export class SalesProposalSession {
   readonly #scope: ReadScope; readonly #reader: SalesProposalReader; readonly #onAccessFailure: ((error: HttpQueryError) => void) | undefined; readonly #listeners = new Set<() => void>();
-  #request: AbortController | null = null; #sequence = 0; #nextSettlement = 0; #nextLine = 0; #settlementTarget: string | null = null; #revision = 0;
-  #state: SalesProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, totals: null, picker: null, lineEdit: null });
+  #request: AbortController | null = null; #sequence = 0; #nextSettlement = 0; #nextLine = 0; #settlementTarget: string | null = null; #revision = 0; #entryTarget: 'IN' | 'OUT' | null = null; #inlineSettlement = false;
+  #state: SalesProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, totals: null, picker: null, lineEdit: null, entries: emptyEntries() });
   constructor(scope: ReadScope, reader: SalesProposalReader, onAccessFailure?: (error: HttpQueryError) => void) { this.#scope = scope; this.#reader = reader; this.#onAccessFailure = onAccessFailure; scope.signal.addEventListener('abort', this.dispose, { once: true }); if (!scope.active) this.dispose(); }
   readonly getSnapshot = (): SalesProposalSnapshot => this.#state;
   readonly subscribe = (listener: () => void): (() => void) => { this.#listeners.add(listener); return () => { this.#listeners.delete(listener); }; };
@@ -121,8 +130,9 @@ export class SalesProposalSession {
     if (this.#state.disposed || !original || !this.#state.draft.hall) return;
     if (this.#state.lineEdit && this.#state.lineEdit.key !== key) { this.#publish({ notice: '请先确认或取消当前行的改选。' }); return; }
     this.#settlementTarget = null;
-    if (!this.#state.lineEdit) this.#publish({ lineEdit: { key, original, product: original.product, sku: original.sku } });
-    await this.#read(kind, '', 1, kind === 'sku' ? this.#state.lineEdit!.product : null, null);
+    if (!this.#state.lineEdit) this.#publish({ lineEdit: { key, original, product: original.product, sku: original.sku, color: { id: original.sku.colorId, name: original.sku.colorName }, fit: { id: original.sku.fitId, name: original.sku.fitName }, skuPage: 1 } });
+    this.#entryTarget = null;
+    await this.#read(kind, '', kind === 'sku' ? this.#state.lineEdit!.skuPage : 1, kind === 'sku' ? this.#state.lineEdit!.product : null, null);
   }
   confirmLineEdit(): boolean {
     const edit = this.#state.lineEdit, draft = this.#state.draft;
@@ -133,6 +143,66 @@ export class SalesProposalSession {
     return changed;
   }
   cancelLineEdit(): void { this.closePicker(); if (!this.#state.disposed) this.#publish({ lineEdit: null }); }
+  updateEntry(direction: 'IN' | 'OUT', patch: Partial<Pick<SalesProposalEntry, 'query' | 'quantity' | 'dealPrice'>>): void {
+    if (this.#state.disposed) return;
+    this.#revision++; this.#publish({ entries: { ...this.#state.entries, [direction]: { ...this.#state.entries[direction], ...patch, ...(patch.query !== undefined && patch.query !== this.#state.entries[direction].product?.code ? { product: null, sku: null, color: null, fit: null, skuPage: 1 } : {}) } }, dirty: true, errors: [], notice: null });
+  }
+  clearEntry(direction: 'IN' | 'OUT'): void {
+    if (this.#state.disposed) return;
+    this.closePicker(); this.#revision++; this.#publish({ entries: { ...this.#state.entries, [direction]: emptyEntry(direction) } });
+  }
+  async openEntryPicker(direction: 'IN' | 'OUT', kind: 'product' | 'sku'): Promise<void> {
+    const entry = this.#state.entries[direction];
+    if (this.#state.disposed || !this.#state.draft.hall || this.#state.lineEdit || direction === 'IN' && this.#state.draft.businessType === 'SALE' || kind === 'sku' && !entry.product) return;
+    this.#entryTarget = direction; this.#settlementTarget = null; this.#inlineSettlement = false;
+    await this.#read(kind, kind === 'product' ? entry.query : '', kind === 'sku' ? entry.skuPage : 1, kind === 'sku' ? entry.product : null, null);
+  }
+  /** Each option is projected from the currently read actual SKU page. Color and
+   * fit narrow explicitly; only the size choice binds one exact SKU ID. */
+  selectSpec(kind: 'color' | 'fit' | 'size', id: string): boolean {
+    const picker = this.#state.picker, target = this.#entryTarget, edit = this.#state.lineEdit;
+    const selection = edit ?? (target ? this.#state.entries[target] : null);
+    if (this.#state.disposed || picker?.kind !== 'sku' || picker.phase !== 'ready' || !selection?.product || picker.product?.id !== selection.product.id) return false;
+    const rows = picker.result!.items as readonly CurrentFormSku[];
+    const row = rows.find(row => row.productId === selection.product!.id && (kind === 'color' ? row.colorId === id
+      : row.colorId === selection.color?.id && (kind === 'fit' ? row.fitId === id : row.fitId === selection.fit?.id && row.id === id)));
+    if (!row) return false;
+    const patch = kind === 'color' ? { color: { id: row.colorId, name: row.colorName }, fit: null, sku: null }
+      : kind === 'fit' ? { fit: { id: row.fitId, name: row.fitName }, sku: null } : { sku: row };
+    if (edit) this.#publish({ lineEdit: { ...edit, ...patch, skuPage: picker.page } });
+    else if (target) { this.#revision++; this.#publish({ entries: { ...this.#state.entries, [target]: { ...this.#state.entries[target], ...patch, skuPage: picker.page } }, dirty: true }); }
+    this.closePicker(); return true;
+  }
+  appendEntry(direction: 'IN' | 'OUT'): boolean {
+    const entry = this.#state.entries[direction], draft = this.#state.draft;
+    if (this.#state.disposed || this.#state.lineEdit || !entry.product || entry.query !== entry.product.code || !entry.sku || entry.sku.productId !== entry.product.id || entry.sku.colorId !== entry.color?.id || entry.sku.fitId !== entry.fit?.id) {
+      this.#publish({ notice: '请选择款号、颜色、版型及实际尺码后完成录入。' }); return false;
+    }
+    if (draft.lines.length >= 200 || !/^-?[1-9]\d{0,18}$/.test(entry.quantity) || entry.quantity.startsWith('-') !== (direction === 'IN') || direction === 'IN' && draft.businessType === 'SALE') {
+      this.#publish({ notice: '请核对当前分区的数量方向及 200 行上限；输入已保留。' }); return false;
+    }
+    try { quantity(entry.quantity); } catch { this.#publish({ notice: '数量超出可用范围，输入已保留。' }); return false; }
+    this.closePicker();
+    const ok = this.#edit({ ...draft, lines: [...draft.lines, { key: `local-line-${++this.#nextLine}`, sku: entry.sku, product: entry.product, quantity: entry.quantity, dealPrice: entry.dealPrice, pricingRule: 'UNIT_PRICE', discount: '', isGift: false, zeroConfirmed: false }] });
+    if (ok) this.#publish({ entries: { ...this.#state.entries, [direction]: emptyEntry(direction) } });
+    return ok;
+  }
+  addSettlement(): boolean {
+    const draft = this.#state.draft;
+    if (this.#state.disposed || !draft.hall || draft.settlements.length >= 3) return false;
+    if (draft.settlements.some(row => !row.method || !row.account || row.account.paymentMethodId !== row.method.id || !/^\d+(?:\.\d{1,2})?$/.test(row.amount))) return false;
+    return this.#edit({ ...draft, settlements: [...draft.settlements, { key: `local-settlement-${++this.#nextSettlement}`, method: null, account: null, direction: 'RECEIVE', amount: '' }] });
+  }
+  async openPaymentPicker(key: string | null, kind: 'paymentMethod' | 'paymentAccount'): Promise<void> {
+    const row = this.#state.draft.settlements.find(row => row.key === key);
+    if (this.#state.disposed || !this.#state.draft.hall || this.#state.lineEdit || key !== null && !row || kind === 'paymentAccount' && !row?.method) return;
+    this.#entryTarget = null; this.#settlementTarget = key; this.#inlineSettlement = true;
+    await this.#read(kind, '', 1, null, kind === 'paymentAccount' ? row!.method : null);
+  }
+  updateSignedSettlement(key: string | null, raw: string): boolean {
+    if (key === null) { if (!this.addSettlement()) return false; key = this.#state.draft.settlements.at(-1)!.key; }
+    return this.updateSettlement(key, { direction: raw.startsWith('-') ? 'REFUND' : 'RECEIVE', amount: raw.startsWith('-') ? raw.slice(1) : raw });
+  }
   updateSettlement(key: string, patch: { readonly amount?: string; readonly direction?: 'RECEIVE' | 'REFUND' }): boolean {
     if (!this.#state.draft.settlements.some(row => row.key === key)) return false;
     return this.#edit({ ...this.#state.draft, settlements: this.#state.draft.settlements.map(row => row.key === key ? { ...row, ...patch } : row) });
@@ -170,23 +240,23 @@ export class SalesProposalSession {
     if (this.#state.disposed) return;
     if (this.#state.lineEdit) { this.#publish({ notice: '请先确认或取消当前行的改选。' }); return; }
     if (kind !== 'hall' && !this.#state.draft.hall) { this.#publish({ notice: '请先选择营业厅。' }); return; }
-    this.#settlementTarget = null;
+    this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false;
     await this.#read(kind, '', 1, null, null);
   }
   async openSettlementPicker(key: string): Promise<void> {
     if (this.#state.disposed || !this.#state.draft.hall || !this.#state.draft.settlements.some(row => row.key === key)) return;
     if (this.#state.lineEdit) { this.#publish({ notice: '请先确认或取消当前行的改选。' }); return; }
-    this.#settlementTarget = key;
+    this.#settlementTarget = key; this.#entryTarget = null; this.#inlineSettlement = false;
     await this.#read('paymentMethod', '', 1, null, null);
   }
-  async search(search: string): Promise<void> { const p = this.#state.picker; if (p && p.kind !== 'sku') await this.#read(p.kind, search, 1, p.product, p.method); }
+  async search(search: string): Promise<void> { const p = this.#state.picker; if (p && p.kind !== 'sku') { if (p.kind === 'product' && this.#entryTarget) this.updateEntry(this.#entryTarget, { query: search }); await this.#read(p.kind, search, 1, p.product, p.method); } }
   async page(page: number): Promise<void> {
     const p = this.#state.picker;
     if (!p || p.phase !== 'ready' || !p.result || !Number.isSafeInteger(page) || page < 1 || BigInt(page - 1) * 20n >= p.result.exactTotal) return;
     await this.#read(p.kind, p.search, page, p.product, p.method);
   }
   async retry(): Promise<void> { const p = this.#state.picker; if (p?.phase === 'error') await this.#read(p.kind, p.search, p.page, p.product, p.method); }
-  closePicker(): void { this.#cancelRead(); this.#settlementTarget = null; if (!this.#state.disposed) this.#publish({ picker: null }); }
+  closePicker(): void { this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; if (!this.#state.disposed) this.#publish({ picker: null }); }
   async #read(kind: SalesProposalPicker, search: string, page: number, product: CurrentFormProduct | null, method: CurrentSalesReferenceItem | null): Promise<void> {
     if (this.#state.disposed) return;
     this.#cancelRead(); const sequence = this.#sequence, request = new AbortController(); this.#request = request;
@@ -214,6 +284,21 @@ export class SalesProposalSession {
   async select(id: string, initialQuantity: '1' | '-1' = '1'): Promise<boolean> {
     const p = this.#state.picker; if (this.#state.disposed || p?.phase !== 'ready') return false;
     const item = p.result?.items.find(row => row.id === id); if (!item) return false;
+    if (p.kind === 'product' && (this.#entryTarget || this.#state.lineEdit)) {
+      const product = item as CurrentFormProduct, target = this.#entryTarget;
+      if (this.#state.lineEdit) this.#publish({ lineEdit: { ...this.#state.lineEdit, product, sku: null, color: null, fit: null, skuPage: 1 } });
+      else if (target) { this.#revision++; this.#publish({ entries: { ...this.#state.entries, [target]: { ...this.#state.entries[target], product, query: product.code, sku: null, color: null, fit: null, skuPage: 1, dealPrice: this.#state.entries[target].dealPrice } }, dirty: true }); }
+      this.closePicker(); return true;
+    }
+    if (p.kind === 'paymentMethod' && this.#inlineSettlement) {
+      const target = this.#settlementTarget, draft = this.#state.draft;
+      if (target === null && draft.settlements.length >= 3) return false;
+      const row = draft.settlements.find(row => row.key === target);
+      if (target !== null && !row) return false;
+      this.closePicker();
+      return this.#edit({ ...draft, settlements: row ? draft.settlements.map(value => value === row ? { ...value, method: item as CurrentSalesReferenceItem, account: null } : value)
+        : [...draft.settlements, { key: `local-settlement-${++this.#nextSettlement}`, method: item as CurrentSalesReferenceItem, account: null, direction: 'RECEIVE', amount: '' }] });
+    }
     if (p.kind === 'product') {
       if (this.#state.lineEdit) this.#publish({ lineEdit: { ...this.#state.lineEdit, product: item as CurrentFormProduct, sku: null } });
       await this.#read('sku', '', 1, item as CurrentFormProduct, null); return true;
@@ -223,7 +308,7 @@ export class SalesProposalSession {
     if (p.kind === 'sku') {
       if (this.#state.lineEdit) {
         if ((item as CurrentFormSku).productId !== p.product?.id) return false;
-        this.#publish({ lineEdit: { ...this.#state.lineEdit, product: p.product!, sku: item as CurrentFormSku } });
+        this.#publish({ lineEdit: { ...this.#state.lineEdit, product: p.product!, sku: item as CurrentFormSku, color: { id: (item as CurrentFormSku).colorId, name: (item as CurrentFormSku).colorName }, fit: { id: (item as CurrentFormSku).fitId, name: (item as CurrentFormSku).fitName } } });
         this.closePicker(); return true;
       }
       if (initialQuantity !== '1' && initialQuantity !== '-1' || initialQuantity === '-1' && draft.businessType === 'SALE') return false;
@@ -240,13 +325,14 @@ export class SalesProposalSession {
       if (draft.settlements.length >= 3) { this.#publish({ notice: '收退明细已达原生单据 3 行上限。' }); return false; }
       this.closePicker(); return this.#edit({ ...draft, settlements: [...draft.settlements, { key: `local-settlement-${++this.#nextSettlement}`, method: p.method!, account: item as CurrentSalesReferenceItem, direction: 'RECEIVE', amount: '' }] });
     }
-    if (p.kind === 'hall' && draft.hall?.id !== id && (draft.customer || draft.salesperson || draft.warehouse || draft.lines.length || draft.settlements.length)) {
+    if (p.kind === 'hall' && draft.hall?.id !== id && (draft.customer || draft.salesperson || draft.warehouse || draft.lines.length || draft.settlements.length || Object.values(this.#state.entries).some(entry => entry.product || entry.query.trim()))) {
       this.#publish({ notice: '切换营业厅会改变候选范围。请先确认重置草稿，再选择新厅。' }); return false;
     }
     this.closePicker(); return this.#edit({ ...draft, [p.kind]: item });
   }
   validate(): SalesProposal | null {
     if (this.#state.disposed) return null;
+    if (Object.values(this.#state.entries).some(entry => entry.product || entry.query.trim())) { this.#publish({ errors: ['请完成或清除表格底部尚未完成的录入。'] }); return null; }
     if (this.#state.lineEdit) { this.#publish({ errors: ['请先确认或取消当前行的改选。'] }); return null; }
     const draft = this.#state.draft, errors: string[] = [], gross: bigint[] = [];
     try { businessDate(draft.businessDate); } catch { errors.push('请输入有效单据日期。'); }
@@ -272,7 +358,7 @@ export class SalesProposalSession {
     catch { errors.push(draft.businessType === 'SALE' ? '整单优惠须为非负两位金额，且不超过商品金额。' : '独立退货／换货整单优惠必须为零。'); }
     for (const row of draft.settlements) {
       try {
-        if (!['RECEIVE', 'REFUND'].includes(row.direction) || row.account.paymentMethodId !== row.method.id) throw Error();
+        if (!row.method || !row.account || !['RECEIVE', 'REFUND'].includes(row.direction) || row.account.paymentMethodId !== row.method.id) throw Error();
         settled += (row.direction === 'RECEIVE' ? 1n : -1n) * amount(row.amount);
       } catch { errors.push(`${row.key}：收退金额或方式／账户不匹配。`); }
     }
@@ -283,8 +369,8 @@ export class SalesProposalSession {
   }
   reset(discardConfirmed = false): boolean {
     if (this.#state.disposed || this.#state.dirty && !discardConfirmed) return false;
-    this.#cancelRead(); this.#settlementTarget = null; this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, lineEdit: null, errors: [], notice: null, totals: null }); return true;
+    this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); return true;
   }
   cancel(discardConfirmed = false): boolean { if (!this.reset(discardConfirmed)) return false; this.dispose(); return true; }
-  readonly dispose = (): void => { if (this.#state.disposed) return; this.#cancelRead(); this.#settlementTarget = null; this.#scope.signal.removeEventListener('abort', this.dispose); this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, lineEdit: null, errors: [], notice: null, totals: null }); this.#listeners.clear(); };
+  readonly dispose = (): void => { if (this.#state.disposed) return; this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#scope.signal.removeEventListener('abort', this.dispose); this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); this.#listeners.clear(); };
 }
