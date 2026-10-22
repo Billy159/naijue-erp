@@ -1,0 +1,20 @@
+{
+  "status": "PRIVATE_DRAFT_UPLOAD_DOWNLOAD_SHA_AND_BUNDLE_VERIFY_PASS",
+  "atUtc": "2026-10-22T22:17:05.718753+00:00",
+  "sourceCommit": "3c61ec4518bc70dfcf2325a7d2bd6e519dd8bec7",
+  "draftUrl": "https://github.com/Billy159/naijue-erp/releases/tag/untagged-5b853bfdbac0d44aa5da",
+  "isDraft": true,
+  "bundle": {
+    "file": "naijue-erp-source-3c61ec4.bundle",
+    "bytes": 1671615,
+    "sha256": "5d9c0928caf91bbc8ac72ce16a88b424cddef50727026c9b079dc43993c24a57"
+  },
+  "metadataSha256": "424d2226a96008da90293ee56ee1dd4c552a0fb564db34dea16e7a9f643e415d",
+  "downloadedBundleSha256": "5d9c0928caf91bbc8ac72ce16a88b424cddef50727026c9b079dc43993c24a57",
+  "downloadedMetadataMatches": true,
+  "bundleVerify": true,
+  "notesReadbackMatches": true,
+  "normalRemoteBranchVerified": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+  "normalPushSucceeded": false,
+  "businessRelease": false
+}

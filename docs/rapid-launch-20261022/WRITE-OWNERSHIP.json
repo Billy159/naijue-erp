@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T22:15:14.021503+00:00",
+  "updatedAt": "2026-10-22T22:24:47.114518+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -1700,6 +1700,18 @@
           "path": "apps/web/src/barcode-schemes/barcode-schemes.css",
           "group": "FROZEN_DEMO_P19_BARCODE_SCHEME_LEAF_PRESENTATION",
           "fieldGate": "READ_ONLY_EXISTING_NATIVE_SCHEME_FIELDS_NO_RULE_INFERENCE_OR_WRITES"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/setting-page.tsx",
+          "group": "CAT_UI_01_03_P16_P18_FROZEN_UI",
+          "fieldGate": "READ_ONLY_UI_NO_SCHEMA_OR_WRITE",
+          "boundary": "F2 soleowner, read-only specific scope; preserve P19 sharedCSS consumer and unrelated color/fit current proof; no shared StandardTabs/Table edits"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
+          "group": "CAT_UI_01_03_P16_P18_FROZEN_UI",
+          "fieldGate": "READ_ONLY_UI_NO_SCHEMA_OR_WRITE",
+          "boundary": "F2 soleowner, read-only specific scope; preserve P19 sharedCSS consumer and unrelated color/fit current proof; no shared StandardTabs/Table edits"
         }
       ]
     },
@@ -2675,6 +2687,17 @@
       "sourcePlan": "K/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-plan1/PLAN.json",
       "planSha256": "a079d9381279bc67a64a457163d2c1c59689aed61439c02d3d4915caad515042",
       "noOriginalDataReadGrant": true,
+      "humanAuthorizationMessage": "01a161f7-a5e8-7e10-9059-9537c28910c2"
+    },
+    {
+      "atUtc": "2026-10-22T22:24:47.114518+00:00",
+      "owner": "F2",
+      "scope": "Existing exact2 registered for original CATUI01/03 P16/P18; source dictionary also P19 must remain byte-equivalent outside scoped new class",
+      "files": [
+        "apps/web/src/product-settings/size-groups/setting-page.tsx",
+        "apps/web/src/product-settings/size-groups/source-dictionary.css"
+      ],
+      "evidenceSha256": "c230aa52f675b733e2543ab74ff55189a80ec30c42258fd67948057f9f1deadb",
       "humanAuthorizationMessage": "01a161f7-a5e8-7e10-9059-9537c28910c2"
     }
   ],

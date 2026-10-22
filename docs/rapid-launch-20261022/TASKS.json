@@ -8,47 +8,33 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "6cac8700c0dece997ea77cd9b5af29b4b9ae8507",
+    "headObserved": "3c61ec4518bc70dfcf2325a7d2bd6e519dd8bec7",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
-    "remoteReadbackMethod": "Normal branch87 verified; draft recovery88 independently downloaded/hash/bundle verified; newer source90 pending next checkpoint",
-    "pushPendingLocalCommits": true,
+    "remoteHeadVerified": "3c61ec4518bc70dfcf2325a7d2bd6e519dd8bec7",
+    "remoteReadbackMethod": "Exact original15 GitHub objects verified+force=false fastforward+independentGET; conventional Git network failed preserved",
+    "pushPendingLocalCommits": false,
     "recoverableDraftCheckpoint": {
-      "format": "PRIVATE_GITHUB_DRAFT_SOURCE_RECOVERY_CHECKPOINT_V1",
-      "atUtc": "2026-10-22T21:40:50.019861+00:00",
-      "sourceCommit": "edc1e9626005f4ccb44fde619253de337a561ab6",
-      "branch": "codex/local-takeover-wip-20261022-082411",
-      "normalGitHubBranchObserved": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
-      "normalPushSucceeded": false,
+      "status": "PRIVATE_DRAFT_UPLOAD_DOWNLOAD_SHA_AND_BUNDLE_VERIFY_PASS",
+      "atUtc": "2026-10-22T22:17:05.718753+00:00",
+      "sourceCommit": "3c61ec4518bc70dfcf2325a7d2bd6e519dd8bec7",
+      "draftUrl": "https://github.com/Billy159/naijue-erp/releases/tag/untagged-5b853bfdbac0d44aa5da",
+      "isDraft": true,
       "bundle": {
-        "name": "naijue-erp-source-edc1e96.bundle",
-        "bytes": 1581083,
-        "sha256": "43d4b35ac9b4b76f17bd5763872c29be888f14f1fda66bf4ea5622a0f03c6a28",
-        "requiredBaseCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
-        "headRef": "HEAD"
+        "file": "naijue-erp-source-3c61ec4.bundle",
+        "bytes": 1671615,
+        "sha256": "5d9c0928caf91bbc8ac72ce16a88b424cddef50727026c9b079dc43993c24a57"
       },
-      "repository": "Billy159/naijue-erp",
-      "draftTag": "codex-checkpoint-20261022-a7e817b",
-      "scope": "Exact source throughC88/settingsanchor and docs33f1071 including v5 pending field confirmation, C-only metadata/source window/H06 technical freezes; no private data/authority originals/credentials",
-      "restore": "Verify SHA and git bundle verify with exact base; fetch HEAD into NEW codex/recovery branch without reset. Read HANDOFF. K/A/private-data/server references require separately authorized access; no inferred import or write grants.",
-      "businessRelease": false,
-      "uploadOutcome": "UNCONFIRMED_UNTIL_DOWNLOAD_SHA_AND_BUNDLE_VERIFY",
-      "verifiedReadback": {
-        "atUtc": "2026-10-22T21:42:42.225578+00:00",
-        "sourceCommit": "edc1e9626005f4ccb44fde619253de337a561ab6",
-        "url": "https://github.com/Billy159/naijue-erp/releases/tag/untagged-eca8e7e6042ac6f9014e",
-        "isDraft": true,
-        "downloadSha256": "43d4b35ac9b4b76f17bd5763872c29be888f14f1fda66bf4ea5622a0f03c6a28",
-        "bytes": 1581083,
-        "bundleVerify": true,
-        "metadataByteIdentical": true,
-        "notesReadbackMatched": true,
-        "normalPushSucceeded": false,
-        "normalBranchSeparatelyVerified": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
-        "businessRelease": false
-      },
-      "verified": true
-    }
+      "metadataSha256": "424d2226a96008da90293ee56ee1dd4c552a0fb564db34dea16e7a9f643e415d",
+      "downloadedBundleSha256": "5d9c0928caf91bbc8ac72ce16a88b424cddef50727026c9b079dc43993c24a57",
+      "downloadedMetadataMatches": true,
+      "bundleVerify": true,
+      "notesReadbackMatches": true,
+      "normalRemoteBranchVerified": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+      "normalPushSucceeded": false,
+      "businessRelease": false
+    },
+    "normalGitProtocolPushSucceeded": false,
+    "remoteNormalBranchFastForwardSucceeded": true
   },
   "concurrency": {
     "chats": 9,
@@ -91,7 +77,8 @@
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
-      "fastRequested": false
+      "fastRequested": false,
+      "currentWork": "C54/55 fixed+QFpassed, actualDemo C98 active; next original Transfer 3tags+more UI"
     },
     "F2": {
       "title": "前端库存与商品",
@@ -105,7 +92,8 @@
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
-      "fastRequested": false
+      "fastRequested": false,
+      "currentWork": "Original CATUI01/03 P16/P18 actual Demo gaps directedfix; do not redo sharedX"
     },
     "F3": {
       "title": "前端基础设置",
@@ -118,7 +106,8 @@
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
-      "fastRequested": false
+      "fastRequested": false,
+      "currentWork": "C88 source/current B04 actual local accepted; no duplicate scope, other9 related consumers unmeasured and closed-login humanpending"
     },
     "D1": {
       "title": "后端宿主事务与公共迁移",
@@ -133,7 +122,8 @@
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
-      "fastRequested": false
+      "fastRequested": false,
+      "currentWork": "QB129 adopted/source95 immutable; K-only once actualH06 QA prep: original FOR SHARE/zeroDML/RR, currentACL first; no R1/H06 activation, NULL27 humanpending"
     },
     "D2": {
       "title": "后端商品与基础资料维护",
@@ -147,7 +137,8 @@
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
-      "fastRequested": false
+      "fastRequested": false,
+      "currentWork": "No new duplicate scope; schemeinitializer classification humanpending, original maintenance/media accepted scopes reused"
     },
     "D3": {
       "title": "后端库存历史与导入",
@@ -162,7 +153,8 @@
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
-      "fastRequested": false
+      "fastRequested": false,
+      "currentWork": "TransferLines exact2 new source+synthetic implementation; C draft bounded window pending; no repeated SKU/Header consumers"
     },
     "QF": {
       "title": "前端独立验收",
@@ -942,9 +934,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T22:09:48.904427+00:00",
+  "updatedAt": "2026-10-22T22:28:01.961671+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+  "lastVerifiedRemoteCommit": "3c61ec4518bc70dfcf2325a7d2bd6e519dd8bec7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1402,14 +1394,14 @@
     "accountIdentity45": "QB35_SCOPED_PASS_C_OUTSIDE_PIN",
     "accountIdentityAdditional4": "QB42_IDENTITY_ONLY_ACCEPTED_FALSE_EXECUTION",
     "deploymentTools": "QB38_SOURCE_PROTOCOL_PASS_REAL_DEPLOY_NOT_RUN",
-    "bootPersistence": "SOURCE_READY_FINAL_RELEASE_MANIFEST_AND_ACTUAL_BOOT_NOT_DONE",
-    "currentSourceCheckpoint": "6cac8700c0dece997ea77cd9b5af29b4b9ae8507",
+    "bootPersistence": "QB128_SOURCE_PASS_C96_PIN_UPDATE_PENDING_QB_ACTUAL_NOT_INSTALLED",
+    "currentSourceCheckpoint": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
     "currentPreview": {
-      "url": "http://127.0.0.1:57842/synthetic-unified.html",
-      "source": "4ee77b5db93f8e20eb04f0c7fd73b58b554befa6",
-      "build": "ui-preview-4ee77b5-01-build01",
-      "htmlSha256": "9f28810a66801aa7010ffe40eb6dd0b95078296c760a5d6cf27997f7181e2222",
-      "overlaySha256": "c8a0a2e804f7e6efa6141f953db9269dd8d9bb24088e920486f7ec2a7cc03665",
+      "url": "http://127.0.0.1:57845/synthetic-unified.html",
+      "source": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
+      "build": "ui-preview-65d2787-01-build01",
+      "htmlSha256": "7db64edbff7ae7b567876249a9edc3524d6ce84d58dbdb4663ef8720c6d64958",
+      "overlaySha256": "2e50a7c76e85ed0c3f7ad82261f184eda5369c38f54e6f544ee9059dc1f382b1",
       "syntheticOnly": true,
       "actualInputs": 400,
       "sourceModules": 383,
@@ -1436,7 +1428,7 @@
         "dumpExported": false,
         "credentialValuesReadOrExported": false
       },
-      "runtimeCatalog": "C41_ACTUAL_RUNTIME_TCP_COMPLETE_CAPTURE_PENDING_QB",
+      "runtimeCatalog": "QB123_METADATA_PASS_AND_C42_ACTUAL_FIVE_PURPOSE_READONLY_PASS",
       "fullApplicationConfiguration": "PENDING",
       "realImport": "NOT_STARTED",
       "productionSwitch": "NOT_DONE"
@@ -2028,11 +2020,8 @@
     }
   ],
   "newPendingReviews": [
-    "QB C93 boot source",
-    "QB C95 H06proof source",
-    "QF C94 optionalsummary/visual",
-    "F1 RETURN P1 fix",
-    "C exact2SQL packguard fix prep"
+    "QB C96 exact2 SQLpath guards",
+    "Demo C98 Transfer/Catalogue hover affected actual scope"
   ],
   "openFindingsCurrent": [
     {
@@ -2061,55 +2050,68 @@
     {
       "id": "SCHEME-UI-01-HOVER",
       "owner": "F1",
-      "status": "NORMAL89_CLOSED_HOVER_VISUAL_FIX54_READY_NOT_ACTUAL"
+      "status": "C97_QF_SOURCE_CASCADE_PASS_C98_ACTUAL_PENDING",
+      "fixedCommit": "e31ea0f3ccc371a0fb3e3a65f718a6c5408193c2"
     },
     {
       "id": "SALE-QUANTITY-DIRECTION-01",
       "family": "DOC-SOURCE-04",
       "owner": "F1",
-      "status": "P1_SAVED_RETURN_CLEAR_RAW_TO_DISABLED_OUT_PRIORITY_FIX",
-      "evidenceSha256": "d718b5a772f6996f699184dcdff8c150682094afb14a7d926a9f300be49d7bbb"
+      "status": "C98_ACTUAL_BROWSER_P1_INPUT_INTERRUPTION_CLOSED_ONLY",
+      "evidenceSha256": "d718b5a772f6996f699184dcdff8c150682094afb14a7d926a9f300be49d7bbb",
+      "fixedCommit": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
+      "successorEvidenceSha256": "2d6b98deaaeaa7d8bd6d1a9e4c69f8e5189b5187d7c955ff3f0ebc2bcb4a65f9",
+      "wholePageOrRealSavePass": false
+    },
+    {
+      "id": "CAT-UI-01/03-P16P18",
+      "owner": "F2",
+      "status": "C89_ACTUAL_DIFFERENCE_ORIGINAL_OWNER_FIX_ACTIVE",
+      "evidenceSha256": "c230aa52f675b733e2543ab74ff55189a80ec30c42258fd67948057f9f1deadb"
     }
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-22T22:09:48.904427+00:00",
-    "sourceRound": 95,
-    "sourceCheckpoint": "6cac8700c0dece997ea77cd9b5af29b4b9ae8507",
+    "atUtc": "2026-10-22T22:24:28.460716+00:00",
+    "sourceRound": 98,
+    "sourceCheckpoint": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "url": "http://127.0.0.1:57842/synthetic-unified.html",
-      "source": "4ee77b5db93f8e20eb04f0c7fd73b58b554befa6",
-      "build": "ui-preview-4ee77b5-01-build01",
-      "htmlSha256": "9f28810a66801aa7010ffe40eb6dd0b95078296c760a5d6cf27997f7181e2222",
-      "overlaySha256": "c8a0a2e804f7e6efa6141f953db9269dd8d9bb24088e920486f7ec2a7cc03665",
+      "url": "http://127.0.0.1:57845/synthetic-unified.html",
+      "source": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
+      "build": "ui-preview-65d2787-01-build01",
+      "htmlSha256": "7db64edbff7ae7b567876249a9edc3524d6ce84d58dbdb4663ef8720c6d64958",
+      "overlaySha256": "2e50a7c76e85ed0c3f7ad82261f184eda5369c38f54e6f544ee9059dc1f382b1",
       "syntheticOnly": true,
       "actualInputs": 400,
       "sourceModules": 383,
       "wholePageAccepted": false
     },
-    "nextPreview": "CurrentC89/57844, Demo39local; savedRETURN P1newfound F1priorityfix, C91/94 notbrowserpreviewed",
-    "r1": "Actual C42 genuineBoundedPool/issuer fivepurpose readonly PASS6.659s/COMMIT/release/dispose/helperremoved. Final config/build/stage/49/import notready",
+    "nextPreview": "C98 actively being checked by Demo. OldC89 retained; future F1 tags/F2 P16P18 not yet integrated.",
+    "r1": "C42 actual originalpool/issuer fivepurpose pass. C permanentmetadata review359b2286 separately frozen, serverinstall/finalconfigpending. C98 formal export/deps prepared, onebuild waits QB96. No49/sourceMAIN/publicswitch.",
     "qa": "C40 actual Sharp upload/ADD/replay/controlled original+thumbnail PASS; QA11audits11receipts3images/root4. No HTTP/realrole/business acceptance",
-    "import": "QB127 C92 consumer sourcePASS; actual44af onepass/final742d fourguards explicitly separate. D3 nextTransferLines Kplan. C95H06pendingQB/actualPG; NULL27v5pending human.",
+    "import": "QB127 TransferHeader sourcePASS adopted; D3 TransferLines exact2 implementation/synthetic active, one bounded original window waits finalproducer/preparer freeze+window. H06 C95 QB129sourcePASS, actualQA Kprep/currentACL unknown; NULL27 v5 humanpending.",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Normal87verified; source91 push60s failed/API87. Private88 downloaded/hash/bundle/notesverified; source95 nextbackup pending",
+    "github": "Normal branch3c61ec4 verified via exact original15 objects REST fastforward. Private same3c61 bundle downloaded/hash/gitverify. Conventional Git network failed retained.",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
-      "localDeduplicated": 39,
+      "localDeduplicated": 40,
       "wholePagesAccepted": 0,
       "wholeOverlayClassesAccepted": 0,
       "notRun": 65,
+      "uiDifference": 25,
+      "partial": 6,
       "waitingIntegration": 7,
-      "latestReceipt": "DEMO-C89-LOCAL39"
+      "approvedException": 1,
+      "latestReceipt": "DEMO-C98-LOCAL40"
     }
   },
   "latestReadySource": {
-    "sourceRound": 95,
-    "commit": "6cac8700c0dece997ea77cd9b5af29b4b9ae8507",
-    "qualification": "H06source-ready pendingQB/actualPG, noR3/NULL27implementation"
+    "sourceRound": 98,
+    "commit": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
+    "qualification": "C94/97/98 QF passed and C98 savedRETURN P1 actualclosed. C95 H06 QB129 source-only pass, actualQA pending. C96guard QBpending."
   },
   "pendingUserDecision": [
     {
@@ -2134,8 +2136,8 @@
     }
   ],
   "currentAcceptedReceiptBatch": {
-    "atUtc": "2026-10-22T22:09:48.904427+00:00",
-    "indexRows": 265,
+    "atUtc": "2026-10-22T22:28:01.961671+00:00",
+    "indexRows": 272,
     "controllerTechnicalRetests": 0
   }
 }

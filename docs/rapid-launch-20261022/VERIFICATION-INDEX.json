@@ -9796,10 +9796,94 @@
       "notTested": [
         "No wholeUI/fullbusiness/realimport/publicrelease conclusion outside exact scope"
       ]
+    },
+    {
+      "id": "QB128",
+      "sourceCommit": "944d219cb744925e9b2f5cfa81d4bff17e05cc93",
+      "result": "PASS_BOOT_SOURCE_ONLY",
+      "scope": "C93 explicit26 boot selector; only source/protocol gates, real boot/permanent config not executed",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice128-explicit26-r1-boot-944d219c/RESULT.json",
+      "evidenceSha256": "18e9010376e60936a8a0d9e9d417df738166a89f10b425497b6384d0336d08a0",
+      "adoption": "Adopt valid original delegated narrow conclusion; controller technical retests0",
+      "notTested": [
+        "Fullpage/fullbusiness/realimport/publicrelease outside exact scope not passed"
+      ]
+    },
+    {
+      "id": "QF-C94",
+      "sourceCommit": "27d6c9d17b25833a08c9f5898ef665a8b210af59",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "Transfer scoped presentation/optional summary; actual pixels pending C98",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-27d6c9d1/F1-TRANSFER-PRESENTATION-SUMMARY-REVIEW.json",
+      "evidenceSha256": "6227f3ff36f8b917a68b19308eeb02f2e780a4b6944dc06a788ebf01067237cf",
+      "adoption": "Adopt valid original delegated narrow conclusion; controller technical retests0",
+      "notTested": [
+        "Fullpage/fullbusiness/realimport/publicrelease outside exact scope not passed"
+      ]
+    },
+    {
+      "id": "QF-C97",
+      "sourceCommit": "e31ea0f3ccc371a0fb3e3a65f718a6c5408193c2",
+      "result": "PASS_SOURCE_CASCADE_ONLY",
+      "scope": "Catalogue close glyph/hover append CSS only; actual pixels pending C98",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-e31ea0f3/F1-CATALOGUE-CLOSE-HOVER-REVIEW.json",
+      "evidenceSha256": "898cfdc9f37a3d1180d94360454007025bf52a339efe9317887b79d8d012db00",
+      "adoption": "Adopt valid original delegated narrow conclusion; controller technical retests0",
+      "notTested": [
+        "Fullpage/fullbusiness/realimport/publicrelease outside exact scope not passed"
+      ]
+    },
+    {
+      "id": "QF-C98",
+      "sourceCommit": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
+      "result": "PASS_TARGETED_FIX_SOURCE_ONLY",
+      "scope": "SavedRETURN P1 partialraw remains editable; source/protocol independent repeat, actual browser pending",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-65d2787c/F1-SAVED-RETURN-DIRECTION-FIX-REVIEW.json",
+      "evidenceSha256": "f3548e5ae30fc68ed6c4db5f61de91f39958f95d325e6fd03cf8452b34409e32",
+      "adoption": "Adopt valid original delegated narrow conclusion; controller technical retests0",
+      "notTested": [
+        "Fullpage/fullbusiness/realimport/publicrelease outside exact scope not passed"
+      ]
+    },
+    {
+      "id": "DEMO-C89-P16-P18-DIFF",
+      "sourceCommit": "f1809f73af4854bf40d092f7a70094a48c600506",
+      "result": "UI_DIFFERENCE",
+      "scope": "Existing CAT-UI01/03 P16/P18 frozen tabs/header/row and idle refresh gaps; original F2 continued; no extra localPASS",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v014-f1809f7/DICTIONARY-SOURCE-RUNTIME-SUPPLEMENT.json",
+      "evidenceSha256": "c230aa52f675b733e2543ab74ff55189a80ec30c42258fd67948057f9f1deadb",
+      "adoption": "Adopt valid original delegated narrow conclusion; controller technical retests0",
+      "notTested": [
+        "Fullpage/fullbusiness/realimport/publicrelease outside exact scope not passed"
+      ]
+    },
+    {
+      "id": "QB129",
+      "sourceCommit": "6cac8700c0dece997ea77cd9b5af29b4b9ae8507",
+      "result": "PASS_H06_SOURCE_PROTOCOL_STATIC_ONLY",
+      "scope": "Maintained catalogue proof source+14new protocol checks only; actualPG/SQL/MVCC/locks/ACL nottested. FOR SHARE UPDATE privilege requirement explicitly pending actualQA.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice129-h06-maintained-catalogue-6cac8700/RESULT.json",
+      "evidenceSha256": "74e6373f11572fb2454e90279e93e75e97c1f2aad97dd533c3b1d8d91c8410df",
+      "adoption": "Valid delegated narrow conclusion adopted; controller technical retests0",
+      "notTested": [
+        "No wholepage/business/realimport/publicrelease beyond exact scope"
+      ]
+    },
+    {
+      "id": "DEMO-C98-LOCAL40",
+      "sourceCommit": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
+      "result": "PASS_SAVED_RETURN_P1_BROWSER_ONLY",
+      "scope": "Original savedRETURN partial raw input interruption closed; exact signed money/key identity/input retention/discard original readback, zero real save; 40dedup local/wholepages0",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v015-65d2787/SALE-QUANTITY-RETEST.json",
+      "evidenceSha256": "2d6b98deaaeaa7d8bd6d1a9e4c69f8e5189b5187d7c955ff3f0ebc2bcb4a65f9",
+      "adoption": "Valid delegated narrow conclusion adopted; controller technical retests0",
+      "notTested": [
+        "No wholepage/business/realimport/publicrelease beyond exact scope"
+      ]
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-22T22:09:48.904427+00:00",
+  "updatedAt": "2026-10-22T22:28:01.961671+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -9923,6 +10007,15 @@
       "successorCheck": "QB124",
       "fixedCommit": "44f8388918136fb832d19cef8d6a9c864c3be3ae",
       "closureScope": "Only post-close before generator-resume yield race; original full actual source receipts reused",
+      "originalFailureRetained": true
+    },
+    {
+      "findingId": "SALE-QUANTITY-DIRECTION-01",
+      "family": "DOC-SOURCE-04",
+      "originalEvidenceSha256": "d718b5a772f6996f699184dcdff8c150682094afb14a7d926a9f300be49d7bbb",
+      "successorCheck": "DEMO-C98-LOCAL40",
+      "fixedCommit": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
+      "closureScope": "Only original savedRETURN clear->minus->-2/sign transition native browser editing focus and preservation; broaderDOC04/wholepage/real save remains outside",
       "originalFailureRetained": true
     }
   ],
@@ -10773,6 +10866,25 @@
         "QB127"
       ],
       "controllerTechnicalRetests": 0
+    },
+    {
+      "atUtc": "2026-10-22T22:24:28.460716+00:00",
+      "addedCheckIds": [
+        "QB128",
+        "QF-C94",
+        "QF-C97",
+        "QF-C98",
+        "DEMO-C89-P16-P18-DIFF"
+      ],
+      "controllerTechnicalRetests": 0
+    },
+    {
+      "atUtc": "2026-10-22T22:28:01.961671+00:00",
+      "addedCheckIds": [
+        "QB129",
+        "DEMO-C98-LOCAL40"
+      ],
+      "controllerTechnicalRetests": 0
     }
   ],
   "coverageGroups": [
@@ -10812,23 +10924,12 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-22T21:19:44.537760+00:00",
-    "sourceRound": 86,
-    "sourceCommit": "44f8388918136fb832d19cef8d6a9c864c3be3ae",
-    "scope": 104,
-    "localCases": 29,
-    "realImport": false,
-    "publicSwitch": false,
-    "currentPreview": {
-      "url": "http://127.0.0.1:57842/synthetic-unified.html",
-      "source": "4ee77b5db93f8e20eb04f0c7fd73b58b554befa6",
-      "build": "ui-preview-4ee77b5-01-build01",
-      "htmlSha256": "9f28810a66801aa7010ffe40eb6dd0b95078296c760a5d6cf27997f7181e2222",
-      "overlaySha256": "c8a0a2e804f7e6efa6141f953db9269dd8d9bb24088e920486f7ec2a7cc03665",
-      "syntheticOnly": true,
-      "actualInputs": 400,
-      "sourceModules": 383,
-      "wholePageAccepted": false
-    }
+    "sourceRound": 98,
+    "sourceCommit": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
+    "previewUrl": "http://127.0.0.1:57845/synthetic-unified.html",
+    "localBrowserCases": 40,
+    "wholePages": 0,
+    "wholeOverlayClasses": 0,
+    "goalComplete": false
   }
 }

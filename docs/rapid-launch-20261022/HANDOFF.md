@@ -1,8 +1,12 @@
-最新接续：源码C95 `6cac8700c0dece997ea77cd9b5af29b4b9ae8507`。当前实际预览C89 http://127.0.0.1:57844/synthetic-unified.html /HTMLd1a7740c/400输入383模块。Demo39去重局部、整页整类0/104。旧销货RETURN清空数量raw跨OUT而disabled：P1 d718b5a7已F1优先修，不归因用户Chrome；旧有效新SALE范围保留。Xnormal已关、hover54READY待冻结。
+新增有效结论：C95 H06已QB129 source/protocol/static-only通过；实际SQL/MVCC/锁/ACL保持未测，原FOR SHARE需要UPDATE权限必须先核现QA记录，不扩R1 readonly角色。C98 savedRETURN P1已Demo原浏览器定向通过，40去重局部/整页整类0，真实保存审核未做。C已另冻结永久路径metadata review359b2286（旧e48原件保留），尚未安装服务器或制作私有配置。
 
-实际C42 genuineBoundedPool/issuer五purpose只读PASS6.659s，COMMIT/release/dispose/ownedhelperremoved，原app/DB/fragmentidentity不变；原C运维直接采用。正式production91首build被0022media/0023key路径误拒，输出/失败保留、pack0；只准备精确例外，不改SQL/删迁移/放宽private-data。C90已QB126源PASS，C93boot仍待QB，actualbootNOT_DONE。C92已QB127 consumer源PASS，实际44af一次gzip与最终742d四active检查分记，禁止重复源窗口；D3 nextTransferLines仅K。C95H06待QB与C实际PG，不启R3，D1仅K核selecteddeleted资格。NULL27完整v5、人类closed-login和六方案初始化三个分支等待，其他继续。
+最新接续（2026-10-22T22:24:28.460716+00:00）：源码C98 `65d2787c458c09dc86da1d6a3cabc7a0e10b85f7`，GitHub正常分支已回读 `3c61ec4518bc70dfcf2325a7d2bd6e519dd8bec7`，15个原tree/commit编号通过现有认证API精确同步、非强推；普通Git网络失败保留。相同3c61私有恢复包5d9c0928已下载/hash/bundle验证。
 
-Git普通分支87已核，新91推送60s无吞吐/API仍87；C88私有恢复43d4b35a已下载/hash/bundle/notes验证；源95和本次接续记录下一backup待办，不称普通push成功。
+当前可查候选 http://127.0.0.1:57845/synthetic-unified.html ，build ui-preview-65d2787-01-build01，HTML7db64edb，400输入/383模块/undeclared0；原57844保留。QF94/97/98 source-only有效结论已采用，savedRETURN P1已实际定向通过，Demo继续调拨C91/94、X hover，不重旧范围；40去重局部，整页整类仍0。P16/P18新配对明确tabs/header/row/额外idle刷新差异，沿CATUI01/03交原F2，无新增PASS。
+
+C93 boot已QB128源范围通过，actual boot仍未执行。C96精确0022/0023 SQL路径误拒修复已固定、仅等新QB；C98正式源码/物理依赖副本已准备，等QB96一次新build，91失败与pack0原样保留。R1永久review/config有K-only准备，JOB42实际五purpose结论不重验。D3 TransferLines exact2所有权已登记并实施，仅原数据窗口待C；实际docSHA仍缺当前完整Header来源。D1 H06 C95待QB与一次新QA，不启R3；deleted字典观察无合法业务可达反例已撤回，不加无依据过滤。三个已提出的人类业务问题仅相关分支等待。正式网址未切换，49账号/真实sourceMAIN/PUBLISH未执行，整体ACTIVE。
+
+以下为保留的历史接续与失败记录；当前行动只以上方现状、TASKS/currentContinuation及固定证据为准。
 
 当前增量：完整字段v5已发用户确认，仅历史销货所属厅空值/NULL27分支等待。原D1已接续独立H06只读商品证明exact4；D3已接续Transfer14279真实来源consumer exact2及一次必要原gzip窗口。QB125限定PASS已采用，不再读32MB技术复验。R1五purpose metadata e48df427技术冻结，实际JOB42仍准备中、未执行。员工角色popup新P2由F3精确源修复READY待冻结，灰底X交F1。正常Git分支87已验证；后续文档bf推送再次网络60秒无吞吐失败，API仍87，后续新段需保存新恢复包/另行回读，不能称后续已正常推送。
 
