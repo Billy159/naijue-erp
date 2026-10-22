@@ -85,10 +85,12 @@ function capturedStep(value, b) {
  * Existing stores independently validate each prepared payload and own every transaction/receipt.
  */
 export function createPostgresImportExecutor(options) {
-  const o = bag(options, ['pool', 'binding', 'authorization', 'now']);
+  const o = bag(options, ['pool', 'binding', 'authorization', 'now', ...(Object.hasOwn(options ?? {}, 'bootstrap') ? ['bootstrap'] : [])]);
   must(typeof o.pool?.connect === 'function' && typeof o.now === 'function', 'IMPORT_EXECUTION_PROVIDER_REQUIRED');
   const b = binding(o.binding), a = bag(o.authorization, ['assertExecutionAllowed', 'authorizeStep', 'assertAllowed', 'authorizeNativeCommand', 'authorizeClosure']);
   must(Object.values(a).every(fn => typeof fn === 'function'), 'IMPORT_EXECUTION_AUTHORITY_REQUIRED');
+  const bootstrap = Object.hasOwn(o, 'bootstrap') ? bag(o.bootstrap, ['authorizeStageSourceActor', 'stageNewBatch']) : null;
+  must(bootstrap === null || Object.values(bootstrap).every(fn => typeof fn === 'function'), 'IMPORT_EXECUTION_BOOTSTRAP_REQUIRED');
   let targetChecked = false;
   async function checkTarget() {
     if (targetChecked) return;
@@ -110,11 +112,16 @@ export function createPostgresImportExecutor(options) {
       throw error;
     } finally { c.release(discard); }
   }
-  const main = createCutoffImportService({ now: o.now, authorization: { assertAllowed: (...args) => a.assertAllowed(...args) },
-    store: new PostgresCutoffImportStore(o.pool, { nativeAccountingAuthorization: { assertAllowed: (...args) => a.authorizeNativeCommand(...args) } }) });
+  const main = createCutoffImportService({ now: o.now, authorization: { assertAllowed: (actor, command) => bootstrap && command.action === 'IMPORT_STAGE'
+    ? bootstrap.authorizeStageSourceActor(actor, command) : a.assertAllowed(actor, command) },
+    store: new PostgresCutoffImportStore(o.pool, { nativeAccountingAuthorization: { assertAllowed: (...args) => a.authorizeNativeCommand(...args) },
+      ...(bootstrap ? { stageBootstrap: { stageNewBatch: (...args) => bootstrap.stageNewBatch(...args) } } : {}) }) });
   return async original => {
     const step = capturedStep(original, b);
     await a.assertExecutionAllowed(structuredClone(b));
+    // Initial actor does not exist in the empty target yet. Real source-account
+    // authority is checked BEFORE target discovery/connection, then by MAIN again.
+    if (bootstrap && step.kind === 'MAIN' && step.payload.action === 'IMPORT_STAGE') await bootstrap.authorizeStageSourceActor(b.actorAccountId, structuredClone(step.payload));
     const authorized = { kind: step.kind, payload: structuredClone(step.payload) };
     await a.authorizeStep(authorized);
     must(historySettlementRequestHash(authorized.payload) === step.digest && authorized.kind === step.kind, 'IMPORT_EXECUTION_AUTHORIZER_MUTATION');

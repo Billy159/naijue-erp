@@ -4,6 +4,10 @@ import test from 'node:test';
 import { PostgresCatalogueSettingsReadReader, type PgCatalogueSettingsClient, type PgCatalogueSettingsResult } from '../adapters/postgres/src/catalogue-settings-read-reader.ts';
 import { CATALOGUE_SETTINGS_MAX_CATEGORIES, type CatalogueSettingsScopedRead } from '../packages/application/src/catalogue-settings-read-ports.ts';
 import { actor, sid } from './support/synthetic-fixtures.ts';
+import { PostgresProductQueryReader, type PgProductQueryPool } from '../adapters/postgres/src/product-query-reader.ts';
+import { PostgresProductManagementQueryReader } from '../adapters/postgres/src/product-management-query-reader.ts';
+import { PostgresProductDetailsQueryReader } from '../adapters/postgres/src/product-details-query-reader.ts';
+import { CATALOGUE_PRICE_KEYS } from '../packages/application/src/catalogue-price-input.ts';
 interface Step { readonly sql: RegExp; readonly rows?: Record<string, unknown>[]; readonly error?: Error; readonly inspect?: (values: unknown[], sql: string) => void }
 class Client implements PgCatalogueSettingsClient {
   readonly calls: { sql: string; values: unknown[] }[] = []; readonly releases: (Error | boolean | undefined)[] = [];
@@ -23,7 +27,7 @@ function read(kind: 'categories' | 'colors' | 'fits', productCounts: 'NONE' | 'A
   return kind === 'categories' ? { actor, intent: { kind, operation: 'tree', parameters: {} }, grant: { kind, operation: 'tree', productCounts }, signal }
     : { actor, intent: { kind, operation: 'list', parameters }, grant: { kind, operation: 'list' }, signal };
 }
-const reader = (client: Client) => new PostgresCatalogueSettingsReadReader({ async connect() { return client; } });
+const reader = (client: Client) => new PostgresCatalogueSettingsReadReader({ async connect() { return client; } }, { profile: 'catalogue-retained-delete-v22', assertVerified() {} });
 test('catalogue PG construction is inert; invalid/mismatched/aborted requests never acquire a client', async () => {
   assert.throws(() => new PostgresCatalogueSettingsReadReader(undefined as never), /explicit PostgreSQL pool/); let acquired = 0;
   const r = new PostgresCatalogueSettingsReadReader({ async connect() { acquired++; throw new Error('must not acquire'); } });
@@ -89,4 +93,94 @@ test('acquire/begin/query/commit/rollback failures release exactly once; uncerta
 test('abort between reads or while acquiring stops subsequent SQL and releases once; no late facts', async () => {
   const controller = new AbortController(), c = new Client([begin(), { ...count(3), inspect() { controller.abort(); } }, rollback()]); await assert.rejects(() => reader(c).readCategories(read('categories', 'ALL', controller.signal)), { code: 'CATALOGUE_SETTINGS_READ_ABORTED' }); c.done();
   const acquired = new AbortController(), client = new Client([]); await assert.rejects(() => new PostgresCatalogueSettingsReadReader({ async connect() { acquired.abort(); return client; } }).readCategories(read('categories', 'NONE', acquired.signal)), { code: 'CATALOGUE_SETTINGS_READ_ABORTED' }); assert.ok(client.releases[0] instanceof Error); client.done();
+});
+
+// QB-R1-DELETED-COLUMN-01: call the same four actual reader constructors as
+// the R1 host. This column-aware scripted seam is NOT PostgreSQL execution.
+const r1Product = sid('product', 8801), r1Image = sid('product', 8802), r1Group = sid('sizeGroup', 8803);
+const r1Row = { id: r1Product, product_code: 'R1-SYNTHETIC', name: 'R1 retained product', year: null, system_item_code: null,
+  category_name: 'Category', season_name: null, supplier_name: null, thickness: null, retail_price: null };
+const r1ImageRow = { id: r1Image, product_id: r1Product, file_ref: 'private:synth', mime: 'image/png', byte_size: '32', display_order: 4 };
+type R1ReadCase = 'categories' | 'colors' | 'fits' | 'list' | 'basics' | 'specifications' | 'images' | 'image' | 'prices' | 'barcodes';
+const r1Cases: readonly R1ReadCase[] = ['categories', 'colors', 'fits', 'list', 'basics', 'specifications', 'images', 'image', 'prices', 'barcodes'];
+function r1Rows(name: R1ReadCase): Record<string, unknown>[][] {
+  switch (name) {
+    case 'categories': return [[{ total: '1' }], [{ id, parent_id: null, name: 'Category', display_order: 0, version: 1 }], [{ category_id: id, product_count: '1' }]];
+    case 'colors': case 'fits': return [[{ total: '1' }], [nativeEntry]];
+    case 'list': return [[{ exact_total: '1', invalid_category_tree: false }], [r1Row], []];
+    case 'basics': return [[r1Row]];
+    case 'specifications': return [[{ id: r1Product, size_group_id: r1Group, size_group_name: 'Group' }], [], []];
+    case 'images': return [[{ id: r1Product, name: r1Row.name }], [r1ImageRow]];
+    case 'image': return [[r1ImageRow]];
+    case 'prices': return [[{ id: r1Product, version: 1, ...Object.fromEntries(CATALOGUE_PRICE_KEYS.map(k => [k, null])) }]];
+    case 'barcodes': return [[{ id: r1Product, version: 1 }], [{ total: '0' }], []];
+  }
+}
+function r1Pool(name: R1ReadCase, missingColumn = true) {
+  const rows = r1Rows(name), calls: string[] = []; let connected = 0, released = 0;
+  const pool: PgProductQueryPool = { async connect() { connected++; return { async query(sql) {
+    calls.push(sql); if (missingColumn && sql.includes('deleted_at')) throw Object.assign(Error('schema19 protocol: column deleted_at does not exist'), { code: '42703' });
+    if (sql.startsWith('BEGIN') || sql === 'COMMIT' || sql === 'ROLLBACK') return { rows: [], rowCount: 0 };
+    const next = rows.shift(); assert.ok(next, `Unexpected ${name} SQL: ${sql}`); return { rows: structuredClone(next), rowCount: next.length };
+  }, release() { released++; } }; } };
+  return { pool, calls, counts: () => ({ connected, released, pending: rows.length }) };
+}
+function r1Invoke(name: R1ReadCase, pool: PgProductQueryPool, capability?: unknown) {
+  const signal = new AbortController().signal;
+  switch (name) {
+    case 'categories': return new PostgresCatalogueSettingsReadReader(pool, capability as never).readCategories(read('categories', 'ALL'));
+    case 'colors': return new PostgresCatalogueSettingsReadReader(pool, capability as never).readColors(read('colors'));
+    case 'fits': return new PostgresCatalogueSettingsReadReader(pool, capability as never).readFits(read('fits'));
+    case 'list': return new PostgresProductManagementQueryReader(pool, capability as never).readList({ actor, signal, grant: { kind: 'all', totalStock: 'unavailable' }, parameters: { page: 1, pageSize: 100, filter: { productIds: [], categoryIds: [], years: [], seasonIds: [], supplierIds: [], fitIds: [], thicknesses: [], shapeCodes: [] } } });
+    case 'basics': return new PostgresProductQueryReader(pool, capability as never).readBasics({ actor, signal, grant: { productId: r1Product }, parameters: { productId: r1Product } });
+    case 'specifications': return new PostgresProductQueryReader(pool, capability as never).readSpecifications({ actor, signal, grant: { productId: r1Product }, parameters: { productId: r1Product } });
+    case 'images': return new PostgresProductQueryReader(pool, capability as never).readImages({ actor, signal, grant: { productId: r1Product }, parameters: { productId: r1Product } });
+    case 'image': return new PostgresProductQueryReader(pool, capability as never).readImage({ actor, signal, grant: { productId: r1Product }, parameters: { productId: r1Product, imageId: r1Image } });
+    case 'prices': return new PostgresProductDetailsQueryReader(pool, capability as never).readPrices({ actor, signal, grant: { kind: 'prices', productId: r1Product }, parameters: { productId: r1Product }, intent: { kind: 'prices', parameters: { productId: r1Product } } });
+    case 'barcodes': { const parameters = { productId: r1Product, page: 1, pageSize: 20 as const }; return new PostgresProductDetailsQueryReader(pool, capability as never).readBarcodes({ actor, signal, parameters, grant: { kind: 'barcodes', productId: r1Product }, intent: { kind: 'barcodes', parameters } }); }
+  }
+}
+for (const name of r1Cases) test(`QB-R1 schema19 ${name}: actual host-style reader must return retained facts without new-column SQL`, async () => {
+  const f = r1Pool(name), result = await r1Invoke(name, f.pool); assert.ok(result !== null);
+  assert.ok(f.calls.every(sql => !sql.includes('deleted_at'))); assert.equal(f.calls.at(-1), 'COMMIT'); assert.deepEqual(f.counts(), { connected: 1, released: 1, pending: 0 });
+});
+test('QB-R1 capability: host-verified same-pool branch retains soft-delete filtering on all ten affected entries', async () => {
+  for (const name of r1Cases) {
+    const f = r1Pool(name, false); let verified = 0;
+    const capability = { profile: 'catalogue-retained-delete-v22', assertVerified(pool: PgProductQueryPool) { assert.equal(pool, f.pool); verified++; } };
+    assert.ok(await r1Invoke(name, f.pool, capability)); assert.equal(verified, 1); assert.match(f.calls[1]!, /deleted_at IS NULL/);
+    if (name === 'categories' || name === 'colors' || name === 'fits' || name === 'list') {
+      const scoped = name === 'list' ? f.calls.filter(s => /product-management:(count|page) \*\//.test(s)) : f.calls.filter(s => s.startsWith('SELECT'));
+      for (const sql of scoped) assert.match(sql, /deleted_at IS NULL/);
+    }
+    assert.equal(f.calls.at(-1), 'COMMIT'); assert.deepEqual(f.counts(), { connected: 1, released: 1, pending: 0 });
+  }
+});
+test('QB-R1 capability: a number/profile flag or failed/asynchronous proof cannot activate any reader or acquire a client', () => {
+  const constructors = [PostgresCatalogueSettingsReadReader, PostgresProductQueryReader, PostgresProductManagementQueryReader, PostgresProductDetailsQueryReader];
+  for (const Reader of constructors) {
+    const f = r1Pool('basics');
+    for (const capability of [22, true, {}, { profile: 'catalogue-retained-delete-v22' }, { profile: 'other', assertVerified() {} },
+      { profile: 'catalogue-retained-delete-v22', assertVerified() { throw Error('HOST_PROOF_NOT_READY'); } },
+      { profile: 'catalogue-retained-delete-v22', async assertVerified() {} }]) assert.throws(() => new Reader(f.pool, capability as never));
+    let getterCalls = 0; const getter = { profile: 'catalogue-retained-delete-v22', get assertVerified() { getterCalls++; return () => {}; } }; assert.throws(() => new Reader(f.pool, getter as never)); assert.equal(getterCalls, 0);
+    assert.equal(f.counts().connected, 0); assert.equal(f.calls.length, 0);
+  }
+});
+test('QB-R1 capability: new-column SQL errors propagate and roll back without fallback or fabricated empty facts', async () => {
+  const f = r1Pool('basics');
+  await assert.rejects(r1Invoke('basics', f.pool, { profile: 'catalogue-retained-delete-v22', assertVerified() {} }), { code: '42703' });
+  assert.equal(f.calls.at(-1), 'ROLLBACK'); assert.equal(f.calls.length, 3); assert.equal(f.counts().connected, 1);
+});
+test('QB-R1 capability: management candidate count/page use the same explicit schema branch and original grant', async () => {
+  for (const enabled of [false, true]) {
+    const calls: string[] = [], pool: PgProductQueryPool = { async connect() { return { async query(sql, values = []) {
+      calls.push(sql); if (sql.includes('product-management:candidate-count')) { assert.equal(values[0], false); assert.deepEqual(values[1], [r1Product]); return { rows: [{ exact_total: '1' }], rowCount: 1 }; }
+      if (sql.includes('product-management:candidate-page')) return { rows: [{ id: r1Product, label: 'R1-SYNTHETIC R1 retained product', code: 'R1-SYNTHETIC', name: 'R1 retained product' }], rowCount: 1 };
+      return { rows: [], rowCount: 0 };
+    }, release() {} }; } };
+    const capability = enabled ? { profile: 'catalogue-retained-delete-v22' as const, assertVerified(actual: PgProductQueryPool) { assert.equal(actual, pool); } } : null;
+    const result = await new PostgresProductManagementQueryReader(pool, capability).readCandidates({ actor, signal: new AbortController().signal, grant: { kind: 'products', productIds: [r1Product], totalStock: 'unavailable' }, parameters: { kind: 'product', search: '', selectedIds: [], page: 1, pageSize: 20 } });
+    assert.equal(result.exactTotal, 1); assert.equal(result.items[0]!.id, r1Product); assert.ok(calls.filter(sql => sql.includes('product-management:candidate')).every(sql => sql.includes('deleted_at IS NULL') === enabled)); assert.equal(calls.at(-1), 'COMMIT');
+  }
 });

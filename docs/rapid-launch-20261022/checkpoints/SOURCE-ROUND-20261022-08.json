@@ -1,0 +1,240 @@
+{
+  "atUtc": "2026-10-22T07:33:41.495461+00:00",
+  "parent": "fae1ef3ea36dd88f3ac4261b354df23ea8dad3cb",
+  "scope": "Exact owner-ready slices only; source checkpoint is not independent acceptance or deployment",
+  "groups": [
+    {
+      "slice": "F1_CHUNK11",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-11/DELIVERY.json",
+      "receiptSha256": "5700ef1bfd9404480a0acf146712a0014f3d7f19626d31d7122f7308d9cda4da",
+      "files": [
+        {
+          "path": "apps/web/src/application/controller.ts",
+          "sha256": "de799e3563e2cab7916d98977a04fcb3b48d77bf0c5e419a1370226e4f929a52",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/application/application-root.tsx",
+          "sha256": "cecbe793a3170d3667babb547044d4abf467a47ab57857b4cbe74f28c081099b",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/application/routes/payment-settings.tsx",
+          "sha256": "fb071a919abd6428d4e59acb05bbcc35a7d4bb9fb3ede73c121561457d36d45b",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/production-host/mount.tsx",
+          "sha256": "904a9457d89514d89cd7c40e6fedac76a6241b7e8a39f9ac399b9d6c0b2500bd",
+          "owner": "F1"
+        }
+      ]
+    },
+    {
+      "slice": "F3_W5",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/F05-W5-WRITE-v1-RESULT.json",
+      "receiptSha256": "879622a67a43b350099a1b5e1adca44a91636e691d2e4e5b4b8f93ee460286b3",
+      "files": [
+        {
+          "path": "apps/web/src/settings/stores/index.ts",
+          "sha256": "8191e25ecb2eb1be85fde9b82dc8f09b8a82255dca22d0c0cfe5c4db2ceafe8e",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/settings/stores/stores-page.tsx",
+          "sha256": "a8ec888b1c1e50e785eaffa7741ed6ed2bd623742d9c628685fa848f6bf2518f",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/settings/stores/controller.ts",
+          "sha256": "ea7b452825515fd919295b061b2d7a808c9770af7ea5c432218bd24038aac85c",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-contracts.ts",
+          "sha256": "a30dd45043a2b17cce79e62e955006ec3b2d73e11bbe21aee6ed98f629bede02",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-http-client.ts",
+          "sha256": "b24875ab59e72797689721f411d858cc40950704cbadecf76dd12702d1c2d3ee",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-validation.ts",
+          "sha256": "e1706b4f1591c8e35905628193ce9549f4f33df4dd997af65463fd320a94c5dd",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-controller.ts",
+          "sha256": "0e036f8f6102b7a08bc3a8e714bfa2fdd6d9c2db710c4f468a7eef0add8d35fd",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-form.tsx",
+          "sha256": "a57d858c25026abd881a367c04f35603cd56cb5a452958106a52a41b6a853d8f",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-host.tsx",
+          "sha256": "4d16aec91a1700528cd8305da1f939db3656c7b60c28a1a597a8fbd49544a15b",
+          "owner": "F3"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-controller.test.ts",
+          "sha256": "1ce0ddd2ed1826179dd79566521a78ad24d28cf751696d4aa0b51d39d8b6d83a",
+          "owner": "F3"
+        }
+      ]
+    },
+    {
+      "slice": "D1_PREPARE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/MAINTENANCE-PREPARE-RESULT.json",
+      "receiptSha256": "1e3e5d25cb5203c69d0c408784c6dfac4dcd14baae464667028c9548b7c3cc61",
+      "files": [
+        {
+          "path": "packages/application/src/maintenance-commit-ports.ts",
+          "sha256": "33ba5286711b708d7088dbe6e3c0191ead9de50c64f9783d4f2e6a5925e9cebb",
+          "owner": "D1"
+        },
+        {
+          "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+          "sha256": "e3ea8e1e09503daaaf50732796445926a7d6395769137c673fd37e86dbc1422c",
+          "owner": "D1"
+        },
+        {
+          "path": "tests/maintenance-command-postgres-protocol.test.ts",
+          "sha256": "fb300b56466f120b683f5e0e1321084862f7d3eb39e801f22f45aa5ed5da7a01",
+          "owner": "D1"
+        }
+      ]
+    },
+    {
+      "slice": "D2_R1_COMPAT",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W9-R1-COMPAT-RECEIPT.json",
+      "receiptSha256": "81418e2a96596b1511d3f2320fbedb0bf233314f9fbdf98d282f58e9e8a59118",
+      "files": [
+        {
+          "path": "adapters/postgres/src/catalogue-settings-read-reader.ts",
+          "sha256": "bfbedbdb6184cf3996e1d12fcf615a7a4a5fb58a85f4c812f3219e51b81b1bb6",
+          "owner": "D2"
+        },
+        {
+          "path": "adapters/postgres/src/product-management-query-reader.ts",
+          "sha256": "72cf9c1dc554ffda49af3e0c4abfc244863a467158ce6140a92e1371f1e2b0d9",
+          "owner": "D2"
+        },
+        {
+          "path": "adapters/postgres/src/product-query-reader.ts",
+          "sha256": "0358721bcd527550c4ad37d8def75ac48dc369cf71b952ac8538830efb1027a8",
+          "owner": "D2"
+        },
+        {
+          "path": "adapters/postgres/src/product-details-query-reader.ts",
+          "sha256": "5eedff1c89f824ecfb904530024919b40fd1411e843600cb507109d448ce5db0",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/catalogue-settings-read-postgres-protocol.test.ts",
+          "sha256": "3fe5cf87869f6acd82d1f3824774a0915460aa8627e646032afa87f6bfed3e41",
+          "owner": "D2"
+        }
+      ]
+    },
+    {
+      "slice": "D3_BOOTSTRAP1",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/native-bootstrap-slice1/RESULT.json",
+      "receiptSha256": "6fafbd8950655b34ee05b808d30fc8eedaa834f6549a2fe071b7b254e3d138f3",
+      "files": [
+        {
+          "path": "adapters/postgres/src/native-party-import.ts",
+          "sha256": "c58a62929dae2f7f3c19bcfcea0c1f14e9a8a9fa185022e630632bce2283a50f",
+          "owner": "D3"
+        },
+        {
+          "path": "tests/native-party-bootstrap-postgres-protocol.test.ts",
+          "sha256": "0d13a31a8f4bc1fd330e92cd9e7e2d2550021beb279ab3eb0deba277c45647ae",
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/native-bootstrap.mjs",
+          "sha256": "4117a7302ffc52348e690735ae2bb1376ca331e951fcb7886413375d6cf82e79",
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/native-bootstrap.test.mjs",
+          "sha256": "262d2b237d1cdecdee173e2806792af43592e8c84bf7073f05d11a9d4300119d",
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/run.mjs",
+          "sha256": "1811baddcafce9ca1a76ae6d8eb320a2e783498cf4cf72f2de538fbe19497e9c",
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/run.test.mjs",
+          "sha256": "7ad97e9d97f9cf27f6bcb57a185f4971d1887c512db9e0dbbf059247ad72cdb3",
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/production-source-host.mjs",
+          "sha256": "6ce9669a565ab8e7ce9fad58cc3badc86af2adb842ac36a0b4869ef49b3f2bea",
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/production-source-host.test.mjs",
+          "sha256": "1ea081ef27ec622c3967b3a44303ddca05a1fe4d2922e33d0303e8119220b77d",
+          "owner": "D3"
+        }
+      ]
+    },
+    {
+      "slice": "F2_W6",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-CATALOGUE-MAINTENANCE-DELIVERY-v1.json",
+      "receiptSha256": "ba353c04c74b24add88c2d16fdb82c1a0f0218a3eb767d8b9f8fc4693422b30b",
+      "files": [
+        {
+          "path": "apps/web/src/product-settings/catalogue-maintenance-http-client.ts",
+          "sha256": "a0cd0afb86d4b8b74317e3bfa728ab050b591c4bfea7e46fc45a0437df118dc8",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/catalogue-maintenance-state.ts",
+          "sha256": "a581b16ff7032dd216b4a2a21c846defa4b099ff8eb030d720fd9766b46559d3",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/contracts.ts",
+          "sha256": "8b2c2efb137bbda1d674d4c3e74dcd6e5f27c12a0003591a259d94c637c0b121",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/entry-page.tsx",
+          "sha256": "f2b8e215e71732d12e1b65439ea9e47e644f638673e21dd8dedda3df2bc0f3ab",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/entry-view.tsx",
+          "sha256": "11f91681cbe7a5aaa6730c7c3489aad1dd866a59aa9fcfc5fe574a377c0ae2ce",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+          "sha256": "5581ae77e9fd515c5a6fabfb847ee61fc097dd7a6a00cce2e939c96b21b79761",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/read-only-settings-host.tsx",
+          "sha256": "c3c2f27aa27ed3c3f3a2370bfaea2285f8af4ca5a24b77093fe4631f28e235d9",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/product-categories/product-categories-page.tsx",
+          "sha256": "ed2802b94cfa50cf50161c9d1d92d2c435c470a081acc7bdecda215b7daf068d",
+          "owner": "F2"
+        }
+      ]
+    }
+  ],
+  "fileCount": 38
+}

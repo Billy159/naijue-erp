@@ -20,7 +20,7 @@ export class PostgresNativePartyImportStore implements NativePartyImportStore {
     const client = await this.pool.connect(); let began = false, commitAttempted = false, discard: Error | undefined;
     try {
       await client.query('BEGIN ISOLATION LEVEL READ COMMITTED'); began = true;
-      const result = await this.write(client, chunk); commitAttempted = true; await client.query('COMMIT'); return result;
+      const result = await stageNativePartyImportsOnClient(client, chunk); commitAttempted = true; await client.query('COMMIT'); return result;
     } catch (error) {
       if (!began || commitAttempted) discard = error instanceof Error ? error : Error('NATIVE_PARTY_UNKNOWN_OUTCOME');
       // COMMIT may have succeeded remotely. Never roll it back, reconnect or automatically retry.
@@ -31,7 +31,20 @@ export class PostgresNativePartyImportStore implements NativePartyImportStore {
       throw error;
     } finally { client.release(discard); }
   }
-  private async write(client: PgSalesClient, chunk: PreparedNativePartyImportChunk): Promise<{ inserted: number; replayed: number }> {
+
+}
+
+/** Borrow the exact MAIN transaction client. This function never connects,
+ * begins, commits, rolls back or releases. Original native/source/intent/replay
+ * logic is shared with the ordinary stage() adapter, with unchanged validators. */
+export async function stageNativePartyImportsOnClient(client: Pick<PgSalesClient, 'query'>, input: PreparedNativePartyImportChunk): Promise<{ inserted: number; replayed: number }> {
+  const chunk = structuredClone(input); validatePreparedNativePartyImportChunk(chunk);
+  const borrowed: PgSalesClient = { query: client.query.bind(client), release() { throw Error('Borrowed native party writer cannot release its owner client'); } };
+  return new NativePartyTransactionWriter().write(borrowed, chunk);
+}
+
+class NativePartyTransactionWriter {
+  async write(client: PgSalesClient, chunk: PreparedNativePartyImportChunk): Promise<{ inserted: number; replayed: number }> {
     await client.query('/* native-party-import:global-lock */ SELECT naijue_erp.cutoff_import_lock()');
     const schema = (await client.query(`/* native-party-import:schema */ SELECT array_agg(version ORDER BY version) AS installed_versions FROM naijue_erp.schema_migration`)).rows;
     check(schema.length === 1, 'NATIVE_PARTY_SCHEMA_NOT_READY');

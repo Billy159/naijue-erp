@@ -1,5 +1,6 @@
 import type { QueryRead } from '../../loading/latest-query.ts';
 import type { ReadScope } from '../../loading/read-scope.ts';
+import type { CatalogueMaintenanceKind, CatalogueMaintenanceAction, CatalogueMaintenanceClient, CatalogueMaintenanceCommand } from '../catalogue-maintenance-http-client.ts';
 import type { CatalogueSettingsEntry, CatalogueSettingsListQuery, CatalogueSettingsPage, CatalogueSettingsTree, CatalogueSettingsTreeQuery } from '../../../../../packages/application/src/catalogue-settings-read-ports.ts';
 
 export type { CatalogueSettingsCategory, CatalogueSettingsEntry, CatalogueSettingsListQuery, CatalogueSettingsPage, CatalogueSettingsTree, CatalogueSettingsTreeQuery } from '../../../../../packages/application/src/catalogue-settings-read-ports.ts';
@@ -13,6 +14,16 @@ export interface CatalogueSettingsPageProps {
   readonly reader: CatalogueSettingsBrowserReader;
   /** The page clears its child scope before the trusted host invalidates current access. */
   readonly onAccessFailure: (kind: 'unauthenticated' | 'forbidden') => void;
+  readonly maintenance?: CatalogueMaintenanceCapability;
+  readonly onCanLeaveChange?: (guard: (() => boolean) | null) => void;
+}
+/** Explicit UI capability; server independently checks current actor and schema. */
+export interface CatalogueMaintenanceCapability {
+  readonly kind: CatalogueMaintenanceKind;
+  readonly client: CatalogueMaintenanceClient;
+  readonly allowedActions: readonly CatalogueMaintenanceAction[];
+  readonly newRequestKey: () => string;
+  readonly onRecoveryRequired: (command: CatalogueMaintenanceCommand) => void;
 }
 export type CatalogueSettingTab = 'colors' | 'groups' | 'fits' | 'seasons';
 export interface CatalogueEntryPageProps extends CatalogueSettingsPageProps {

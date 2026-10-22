@@ -29,6 +29,11 @@ export class StoreSettingsReadController {
   private async guarded<P, D>(read: QueryRead<P>, execute: () => Promise<D>): Promise<D> {
     try { return await execute(); } catch (error) {
       if (this.scope.active && !read.signal.aborted && error instanceof HttpQueryError && (error.kind === 'unauthenticated' || error.kind === 'forbidden')) {
+        const workspace = this.props.maintenance?.workspace;
+        // A later read denial cannot prove that an already-dispatched command rolled back.
+        // Keep the authenticated session editor reachable; 401 still invalidates all facts.
+        if (error.kind === 'forbidden' && workspace?.matches(this.props.scope) && workspace.hasUnresolvedWrite()) throw error;
+        if (error.kind === 'unauthenticated' && workspace?.matches(this.props.scope)) workspace.dispose();
         this.#accessFailure = error.kind; this.dispose(); try { this.props.onAccessFailure(error.kind); } catch { /* Facts already cleared. */ }
       }
       throw error;

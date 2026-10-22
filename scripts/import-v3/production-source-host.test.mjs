@@ -104,3 +104,21 @@ test('full factory declarations with a missing actual native authorizer retain t
     await assert.rejects(openImportHost({signal:new AbortController().signal,configFile:config}),/NATIVE_PRODUCT_EXACT_SOURCE_AUTHORIZER_REQUIRED/);
   }finally{await rm(root,{recursive:true,force:true});}
 });
+
+test('private bootstrap malformed descriptors fail before native source authorization or database activation',async()=>{
+  const root=await mkdtemp(join(await realpath(tmpdir()),'source-bootstrap-preflight-'));
+  try{
+    for(const variant of ['getter','partial']){
+      const j=job(),native=join(root,'native-'+variant+'.json'),module=join(root,'provider-'+variant+'.mjs'),config=join(root,'job-'+variant+'.json');
+      const bytes=JSON.stringify({schemaVersion:1,validatorVersion:requiredNativeSourceInputs().referenceDecision.validatorVersion,batchId:j.binding.batchId,
+        fixedSourceNamespace:j.binding.fixedSourceNamespace,selection:{entity:'PRODUCT',selectionSha256:j.binding.selectionSha256},mappingFiles:[],decisions:[]});
+      await writeFile(native,bytes);j.sources.referenceDecisionFile=native;j.sources.trustedReferenceDecisionSha256=createHash('sha256').update(bytes).digest('hex');
+      const setup=variant==='getter'?`Object.defineProperty(session,'bootstrap',{enumerable:true,get(){throw Error('BOOTSTRAP_GETTER_MUST_NOT_RUN');}})`:`session.bootstrap={authorizeStageSourceActor:async()=>{}}`;
+      const code=`export const providerVersion='NATIVE_IMPORT_PRODUCTION_PROVIDERS_19_V1';export const sourceGroups=${JSON.stringify(requiredNativeSourceInputs().closureSourceGroups)};
+        export async function openSourceSession({binding}){const session={steps:async function*(){},close:async()=>{},authorizeStep:async()=>{},assertExecutionAllowed:async()=>{},assertAllowed:async()=>{},authorizeNativeCommand:async()=>{},
+          openSources:Object.fromEntries(sourceGroups.map(k=>[k,async()=>{}])),closureScope:binding,nativeProductSourceReader:{}};${setup};return session;}`;
+      await writeFile(module,code);j.providers={path:module,sha256:createHash('sha256').update(code).digest('hex')};await writeFile(config,JSON.stringify(j));
+      await assert.rejects(openImportHost({signal:new AbortController().signal,configFile:config}),{code:'IMPORT_SOURCE_HOST_BOOTSTRAP_REQUIRED'});
+    }
+  }finally{await rm(root,{recursive:true,force:true});}
+});

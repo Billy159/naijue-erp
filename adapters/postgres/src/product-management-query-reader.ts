@@ -11,6 +11,7 @@ import { booleanValue, integerValue, nullableString, stringValue } from "./codec
 import { decodeImportCheckpoint } from "./inventory-cutoff-import-store.ts";
 import { GUARD_CAPABILITY } from "./inventory-publication-guards.ts";
 import type { PgProductQueryPool, PgProductQueryResult } from "./product-query-reader.ts";
+import { catalogueRetainedDeleteEnabled, type CatalogueRetainedDeleteCapability } from "./product-query-reader.ts";
 
 export type PgProductManagementQueryPool = PgProductQueryPool;
 type Query = (sql: string, values?: unknown[]) => Promise<PgProductQueryResult>;
@@ -21,8 +22,8 @@ function count(value: unknown): number {
   const text = stringValue(value); integrity(/^(?:0|[1-9]\d*)$/.test(text) && BigInt(text) <= BigInt(Number.MAX_SAFE_INTEGER), "Invalid exact product count"); return Number(text);
 }
 function scopeValues(grant: ProductManagementReadGrant): unknown[] { return [grant.kind === "all", grant.kind === "products" ? grant.productIds : []]; }
-const SCOPE = `WITH authorized_products AS (SELECT p.* FROM naijue_erp.product p WHERE p.deleted_at IS NULL AND ($1::boolean OR p.id = ANY($2::uuid[])))`;
-const MATCHED = `${SCOPE}, matched_products AS (SELECT p.* FROM authorized_products p
+const scope = (retainedDelete: boolean) => `WITH authorized_products AS (SELECT p.* FROM naijue_erp.product p WHERE ${retainedDelete ? "p.deleted_at IS NULL AND " : ""}($1::boolean OR p.id = ANY($2::uuid[])))`;
+const matched = (retainedDelete: boolean) => `${scope(retainedDelete)}, matched_products AS (SELECT p.* FROM authorized_products p
   WHERE (cardinality($3::uuid[]) = 0 OR p.id = ANY($3::uuid[]))
   AND (cardinality($4::uuid[]) = 0 OR p.category_id = ANY($4::uuid[]) OR EXISTS (
     SELECT 1 FROM naijue_erp.product_category c WHERE c.id = p.category_id AND c.parent_id = ANY($4::uuid[])))
@@ -38,7 +39,7 @@ function listValues(grant: ProductManagementReadGrant, parameters: ProductManage
 /** Reuses the existing complete cutoff publication contract, not a new readiness flag or fixture.
  * Checks the ENTIRE matched product scope and ALL native warehouses before any absence becomes 0.
  * A catalogue-only read never executes this inventory path. */
-async function stockReadiness(query: Query, values: unknown[]): Promise<void> {
+async function stockReadiness(query: Query, values: unknown[], matchedSql: string): Promise<void> {
   const rows = (await query(`/* product-management:publication */ SELECT b.id, b.checkpoint, b.completed_at IS NOT NULL AS completed,
     EXISTS (SELECT 1 FROM naijue_erp.import_record r WHERE r.import_batch_id = b.id AND r.status = 'IMPORTED'
       AND r.target_type = 'IMPORT_BATCH' AND r.target_id = b.id AND r.source_entity_type = 'INVENTORY_SCOPE_APPROVAL'
@@ -53,7 +54,7 @@ async function stockReadiness(query: Query, values: unknown[]): Promise<void> {
   integrity(checkpoint.sequence > 0 && Object.entries(checkpoint.expected).every(([key, expected]) => checkpoint.counts[key as keyof typeof checkpoint.counts] === expected)
     && checkpoint.cursor === Object.values(checkpoint.counts).reduce((sum, amount) => sum + amount, 0), "Published inventory checkpoint is incomplete");
   integrity(booleanValue(one((await query(GUARD_CAPABILITY)).rows).integrity_guards_present), "Sparse inventory guards are unavailable");
-  const row = one((await query(`/* product-management:stock-coverage */ ${MATCHED}
+  const row = one((await query(`/* product-management:stock-coverage */ ${matchedSql}
     SELECT EXISTS (SELECT 1 FROM naijue_erp.warehouse w WHERE NOT EXISTS (
       SELECT 1 FROM naijue_erp.import_record r WHERE r.import_batch_id = $11::uuid AND r.status = 'IMPORTED' AND r.target_type = 'WAREHOUSE' AND r.target_id = w.id)) AS uncovered_warehouse,
     EXISTS (SELECT 1 FROM naijue_erp.sku s JOIN matched_products p ON p.id = s.product_id WHERE NOT EXISTS (
@@ -71,9 +72,10 @@ async function stockReadiness(query: Query, values: unknown[]): Promise<void> {
  * Abort checks stop subsequent work; pool acquisition/in-flight SQL require host driver timeouts. */
 export class PostgresProductManagementQueryReader implements TrustedProductManagementSnapshotReader {
   private readonly pool: PgProductManagementQueryPool;
-  constructor(pool: PgProductManagementQueryPool) {
+  private readonly retainedDelete: boolean;
+  constructor(pool: PgProductManagementQueryPool, capability: CatalogueRetainedDeleteCapability | null = null) {
     if (typeof pool?.connect !== "function") throw new TypeError("Product management reader requires an explicit PostgreSQL pool");
-    this.pool = pool;
+    this.pool = pool; this.retainedDelete = catalogueRetainedDeleteEnabled(pool, capability);
   }
   private async snapshot<T>(signal: AbortSignal, work: (query: Query) => Promise<T>): Promise<T> {
     activeProductManagementRead(signal); const client = await this.pool.connect(); let began = false, committing = false; let discard: Error | undefined;
@@ -94,14 +96,14 @@ export class PostgresProductManagementQueryReader implements TrustedProductManag
   async readList(read: ProductManagementScopedRead<ProductManagementListQuery>): Promise<ProductManagementListPage> {
     checkedProductActor(read.actor); const grant = checkedProductManagementGrant(read.grant), parameters = parseProductManagementListQuery(read.parameters);
     return this.snapshot(read.signal, async query => {
-      const values = listValues(grant, parameters);
-      const status = one((await query(`/* product-management:count */ ${MATCHED} SELECT count(*)::text AS exact_total,
+      const values = listValues(grant, parameters), matchedSql = matched(this.retainedDelete);
+      const status = one((await query(`/* product-management:count */ ${matchedSql} SELECT count(*)::text AS exact_total,
         EXISTS (SELECT 1 FROM matched_products p JOIN naijue_erp.product_category c ON c.id = p.category_id
           JOIN naijue_erp.product_category parent ON parent.id = c.parent_id WHERE parent.parent_id IS NOT NULL) AS invalid_category_tree FROM matched_products`, values)).rows);
       integrity(!booleanValue(status.invalid_category_tree), "Native categories exceed the two-level contract");
       const total = count(status.exact_total);
-      if (grant.totalStock === "all-warehouses") await stockReadiness(query, values);
-      const rows = (await query(`/* product-management:page */ ${MATCHED}
+      if (grant.totalStock === "all-warehouses") await stockReadiness(query, values, matchedSql);
+      const rows = (await query(`/* product-management:page */ ${matchedSql}
         SELECT p.id, p.product_code, p.name, c.name AS category_name, p.year, se.name AS season_name, su.name AS supplier_name,
           p.thickness, p.retail_price::text FROM matched_products p JOIN naijue_erp.product_category c ON c.id = p.category_id
         LEFT JOIN naijue_erp.season se ON se.id = p.season_id LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id
@@ -138,7 +140,7 @@ export class PostgresProductManagementQueryReader implements TrustedProductManag
     checkedProductActor(read.actor); const grant = checkedProductManagementGrant(read.grant), parameters = parseProductManagementCandidateQuery(read.parameters);
     return this.snapshot(read.signal, async query => {
       const candidates = candidateSource(parameters.kind);
-      const sql = `${SCOPE}, native_candidates AS (${candidates}), matched_candidates AS (SELECT * FROM native_candidates
+      const sql = `${scope(this.retainedDelete)}, native_candidates AS (${candidates}), matched_candidates AS (SELECT * FROM native_candidates
         WHERE (cardinality($3::text[]) = 0 OR id = ANY($3::text[])) AND ($4::text = '' OR strpos(lower(search_text), lower($4::text)) > 0))`;
       const values = [...scopeValues(grant), parameters.selectedIds, parameters.search];
       const total = count(one((await query(`/* product-management:candidate-count */ ${sql} SELECT count(*)::text AS exact_total FROM matched_candidates`, values)).rows).exact_total);

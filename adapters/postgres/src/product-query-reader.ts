@@ -12,6 +12,30 @@ export interface PgProductQueryClient {
   release(error?: Error | boolean): void;
 }
 export interface PgProductQueryPool { connect(): Promise<PgProductQueryClient> }
+/** Host-owned startup proof, bound to this exact pool/target. The host must
+ * verify actual retained-delete columns/constraints and runtime access before
+ * issuing this capability. A migration number alone is insufficient. */
+export interface CatalogueRetainedDeleteCapability {
+  readonly profile: "catalogue-retained-delete-v22";
+  readonly assertVerified: (pool: PgProductQueryPool) => void;
+}
+export function catalogueRetainedDeleteEnabled(pool: PgProductQueryPool, capability: CatalogueRetainedDeleteCapability | null): boolean {
+  if (capability === null) return false;
+  if (typeof capability !== "object" || Array.isArray(capability) || Object.getPrototypeOf(capability) !== Object.prototype
+    || Reflect.ownKeys(capability).length !== 2) throw new TypeError("Explicit verified catalogue schema capability required");
+  const profile = Object.getOwnPropertyDescriptor(capability, "profile"), verifier = Object.getOwnPropertyDescriptor(capability, "assertVerified");
+  if (!profile || !("value" in profile) || profile.value !== "catalogue-retained-delete-v22" || !verifier || !("value" in verifier) || typeof verifier.value !== "function")
+    throw new TypeError("Explicit verified catalogue schema capability required");
+  // No discovery, async startup, or retry here. The D1 host owns verification;
+  // callers cannot activate new-column SQL using an unverified version flag.
+  if (Object.prototype.toString.call(verifier.value) === "[object AsyncFunction]") throw new TypeError("Catalogue schema proof must be synchronously verified by the host");
+  const result: unknown = verifier.value(pool);
+  if (result !== undefined) {
+    if (result instanceof Promise) void result.catch(() => {});
+    throw new TypeError("Catalogue schema proof must be synchronously verified by the host");
+  }
+  return true;
+}
 type PgPoolCompatibility = Pool extends PgProductQueryPool ? true : never;
 const pgPoolCompatibility: PgPoolCompatibility = true; void pgPoolCompatibility;
 /** Technical response safeguards, not catalogue/business maxima. Overflow fails, never truncates. */
@@ -53,9 +77,10 @@ const IMAGE_COLUMNS = "i.id, i.product_id, i.file_ref, i.mime, i.byte_size::text
  * or pool acquisition. The trusted host must configure database/pool timeouts separately. */
 export class PostgresProductQueryReader implements TrustedProductSnapshotReader {
   private readonly pool: PgProductQueryPool;
-  constructor(pool: PgProductQueryPool) {
+  private readonly retainedDelete: boolean;
+  constructor(pool: PgProductQueryPool, capability: CatalogueRetainedDeleteCapability | null = null) {
     if (typeof pool?.connect !== "function") throw new TypeError("Product query reader requires an explicit PostgreSQL pool");
-    this.pool = pool;
+    this.pool = pool; this.retainedDelete = catalogueRetainedDeleteEnabled(pool, capability);
   }
   private validate<P extends ProductQuery>(read: ProductScopedRead<P>, parameters: P): void {
     checkedProductActor(read.actor); checkedProductGrant(read.grant, parameters); activeProductRead(read.signal);
@@ -86,7 +111,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
         c.name AS category_name, se.name AS season_name, su.name AS supplier_name
         FROM naijue_erp.product p JOIN naijue_erp.product_category c ON c.id = p.category_id
         LEFT JOIN naijue_erp.season se ON se.id = p.season_id LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id
-        WHERE p.id = $1::uuid AND p.deleted_at IS NULL`, [parameters.productId])).rows);
+        WHERE p.id = $1::uuid${this.retainedDelete ? " AND p.deleted_at IS NULL" : ""}`, [parameters.productId])).rows);
       if (row === null) return null;
       requireDomain(id("product", row.id) === parameters.productId, "INVALID_DATABASE_VALUE", "Mismatched product target");
       return { productId: parameters.productId, code: text(row.product_code), name: text(row.name), categoryLabel: text(row.category_name),
@@ -98,7 +123,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
     const parameters = parseProductQuery(read.parameters); this.validate(read, parameters);
     return this.snapshot(read.signal, async query => {
       const row = oneOrMissing((await query(`SELECT p.id, p.size_group_id, g.name AS size_group_name
-        FROM naijue_erp.product p JOIN naijue_erp.size_group g ON g.id = p.size_group_id WHERE p.id = $1::uuid AND p.deleted_at IS NULL`, [parameters.productId])).rows);
+        FROM naijue_erp.product p JOIN naijue_erp.size_group g ON g.id = p.size_group_id WHERE p.id = $1::uuid${this.retainedDelete ? " AND p.deleted_at IS NULL" : ""}`, [parameters.productId])).rows);
       if (row === null) return null;
       requireDomain(id("product", row.id) === parameters.productId, "INVALID_DATABASE_VALUE", "Mismatched product target");
       const groupId = id("sizeGroup", row.size_group_id);
@@ -138,7 +163,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
   async readImages(read: ProductScopedRead<ProductQuery>): Promise<ProductImageMetadataSet | null> {
     const parameters = parseProductQuery(read.parameters); this.validate(read, parameters);
     return this.snapshot(read.signal, async query => {
-      const product = oneOrMissing((await query("SELECT p.id, p.name FROM naijue_erp.product p WHERE p.id = $1::uuid AND p.deleted_at IS NULL", [parameters.productId])).rows);
+      const product = oneOrMissing((await query(`SELECT p.id, p.name FROM naijue_erp.product p WHERE p.id = $1::uuid${this.retainedDelete ? " AND p.deleted_at IS NULL" : ""}`, [parameters.productId])).rows);
       if (product === null) return null;
       requireDomain(id("product", product.id) === parameters.productId, "INVALID_DATABASE_VALUE", "Mismatched product target");
       const rows = (await query(`SELECT ${IMAGE_COLUMNS} FROM naijue_erp.product_image i WHERE i.product_id = $1::uuid
@@ -153,7 +178,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
     const parameters = parseProductImageQuery(read.parameters); this.validate(read, parameters);
     return this.snapshot(read.signal, async query => {
       const row = oneOrMissing((await query(`SELECT ${IMAGE_COLUMNS} FROM naijue_erp.product_image i
-        JOIN naijue_erp.product p ON p.id = i.product_id WHERE p.id = $1::uuid AND i.id = $2::uuid AND p.deleted_at IS NULL`, [parameters.productId, parameters.imageId])).rows);
+        JOIN naijue_erp.product p ON p.id = i.product_id WHERE p.id = $1::uuid AND i.id = $2::uuid${this.retainedDelete ? " AND p.deleted_at IS NULL" : ""}`, [parameters.productId, parameters.imageId])).rows);
       if (row === null) return null;
       const result = metadata(row, parameters.productId);
       requireDomain(result.id === parameters.imageId, "INVALID_DATABASE_VALUE", "Mismatched image target"); return result;

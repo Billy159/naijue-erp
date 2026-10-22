@@ -4,6 +4,7 @@ import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import { ReadContext, type ReadScope } from '../loading/read-scope.ts';
 import { ownProductFullPageConfiguration } from '../products/product-page-configuration.ts';
 import type { ApplicationConfiguration, ApplicationRoute, ApplicationSnapshot, PartySession, SalesSession, TransferSession, PreparedApplicationRoute, RoutePreparation, RouteStylesheet } from './contracts.ts';
+import type { preparePaymentSettingsSession } from './routes/payment-settings.tsx';
 
 const home = (): ApplicationSnapshot => Object.freeze({ phase: 'home', route: null, scope: null, prepared: null, notice: null });
 function stylesheet(value: RouteStylesheet | undefined): RouteStylesheet {
@@ -23,6 +24,7 @@ export class ApplicationController {
   #partySession: PartySession | null = null;
   #salesSession: SalesSession | null = null;
   #transferSession: TransferSession | null = null;
+  #paymentSession: ReturnType<typeof preparePaymentSettingsSession> | null = null;
   #disposed = false;
   constructor(configuration: ApplicationConfiguration) {
     if (!configuration?.routes || !configuration.http || typeof configuration.presentation?.renderWorkspace !== 'function' || typeof configuration.presentation.renderRouteState !== 'function') throw new TypeError('Explicit host configuration is required.');
@@ -61,7 +63,10 @@ export class ApplicationController {
       || routes.paymentSettings && typeof routes.paymentSettings.view?.canPrepare !== 'boolean') throw new TypeError('Explicit settings view dependencies are required.');
     const staffSettings = routes.staffSettings ? Object.freeze({ stylesheet: stylesheet(routes.staffSettings.stylesheet), view: Object.freeze({ ...routes.staffSettings.view,
       roles: Object.freeze(routes.staffSettings.view.roles.map(role => Object.freeze({ ...role }))) }) }) : undefined;
-    const paymentSettings = routes.paymentSettings ? Object.freeze({ stylesheet: stylesheet(routes.paymentSettings.stylesheet), view: Object.freeze({ ...routes.paymentSettings.view }) }) : undefined;
+    const paymentCommands = routes.paymentSettings?.commands;
+    if (paymentCommands && (routes.paymentSettings?.view.workspace || typeof paymentCommands.newRequestKey !== 'function' || typeof paymentCommands.writesEnabled !== 'function')) throw new TypeError('Payment commands require one session owner and explicit key/write gates.');
+    const paymentSettings = routes.paymentSettings ? Object.freeze({ stylesheet: stylesheet(routes.paymentSettings.stylesheet), view: Object.freeze({ ...routes.paymentSettings.view }),
+      ...(paymentCommands ? { commands: Object.freeze({ ...paymentCommands }) } : {}) }) : undefined;
     this.#configuration = Object.freeze({ http: Object.freeze({ ...configuration.http }), presentation: configuration.presentation, routes: Object.freeze({ ...(inventory ? { inventory } : {}), ...(sales ? { sales } : {}), ...(transfers ? { transfers } : {}), ...(parties ? { parties } : {}), ...(products ? { products } : {}), ...(productCategories ? { productCategories } : {}), ...(productSettings ? { productSettings } : {}), ...(barcodeSchemes ? { barcodeSchemes } : {}), ...(storeSettings ? { storeSettings } : {}), ...(staffSettings ? { staffSettings } : {}), ...(paymentSettings ? { paymentSettings } : {}) }) });
     this.#configuredRoutes = Object.freeze([...(inventory ? ['inventory' as const] : []), ...(sales ? ['sales' as const] : []), ...(transfers ? ['transfers' as const] : []), ...(parties ? ['customers' as const, 'suppliers' as const] : []), ...(products ? ['products' as const] : []), ...(productCategories ? ['product-categories' as const] : []), ...(productSettings ? ['product-settings' as const] : []), ...(barcodeSchemes ? ['barcode-schemes' as const] : []), ...(storeSettings ? ['store-settings' as const] : []), ...(staffSettings ? ['staff-settings' as const] : []), ...(paymentSettings ? ['payment-settings' as const] : [])]);
     const unavailable = (): Promise<never> => Promise.reject(new Error('Route capability is unavailable.'));
@@ -85,6 +90,8 @@ export class ApplicationController {
       this.#partySession?.workspace.dispose(); this.#partySession = null;
       this.#salesSession?.workspace.dispose(); this.#salesSession = null;
       this.#transferSession?.workspace.dispose(); this.#transferSession = null;
+      this.#paymentSession?.workspace.dispose(); this.#paymentSession = null;
+      this.#configuration.routes.paymentSettings?.view.workspace?.dispose();
       this.#leaves.clear();
       this.#publish(home());
     } });
@@ -105,6 +112,7 @@ export class ApplicationController {
     try {
       return (!this.#state.scope?.active || !this.#state.prepared?.canLeave || this.#state.prepared.canLeave() === true)
         && !sessions.some(session => session && !session.workspace.canLeave())
+        && this.#paymentWorkspace()?.canLeave() !== false
         && this.#transferSession?.canLeave?.() !== false && this.#salesSession?.canLeave?.() !== false;
     } catch { return false; }
   }
@@ -178,7 +186,17 @@ export class ApplicationController {
       }
       else if (route === 'payment-settings') {
         const module = await this.#leaves.load('paymentSettings', scope);
-        prepared = module.preparePaymentSettingsRoute(input, kind => this.#readAccessFailure(scope, kind));
+        if (!this.#current(scope)) return false;
+        if (this.#configuration.routes.paymentSettings?.commands) {
+          if (!this.#paymentSession?.workspace.scope.active) {
+            const sessionScope = this.#context.createScope(`application-payment-session-${++this.#sequence}`);
+            try { this.#paymentSession = module.preparePaymentSettingsSession({ ...input, scope: sessionScope, http: this.#httpForScope(sessionScope) }, kind => {
+              if (kind === 'unauthenticated') this.authentication.expire();
+              else if (this.#state.route === 'payment-settings' && this.#state.scope) this.#readAccessFailure(this.#state.scope, kind);
+            }); } catch (error) { sessionScope.dispose(); throw error; }
+          }
+          prepared = this.#paymentSession.prepare(input, kind => this.#readAccessFailure(scope, kind));
+        } else prepared = module.preparePaymentSettingsRoute(input, kind => this.#readAccessFailure(scope, kind));
       }
       else {
         const module = await this.#leaves.load('parties', scope);
@@ -211,6 +229,8 @@ export class ApplicationController {
     this.#context.clear(); this.#partySession?.workspace.dispose(); this.#partySession = null;
     this.#salesSession?.workspace.dispose(); this.#salesSession = null;
     this.#transferSession?.workspace.dispose(); this.#transferSession = null; this.#leaves.clear();
+    this.#paymentSession?.workspace.dispose(); this.#paymentSession = null;
+    this.#configuration.routes.paymentSettings?.view.workspace?.dispose();
     const sales = this.#configuration.routes.sales, transfer = this.#configuration.routes.transfers, products = this.#configuration.routes.products;
     const styles = [...Object.values(this.#configuration.routes).map(route => route.stylesheet), ...(sales?.detailStylesheet ? [sales.detailStylesheet] : []), ...(transfer ? [transfer.detailStylesheet] : []), ...(transfer?.product ? [transfer.product.stylesheet] : []), ...(products?.product ? [products.product.stylesheet] : []), ...(products?.fullPage ? [products.fullPage.stylesheet] : [])];
     for (const provider of new Set(styles)) {
@@ -221,8 +241,9 @@ export class ApplicationController {
   #readAccessFailure(scope: ReadScope, kind: string): void {
     if (!this.#current(scope)) return;
     if (kind === 'unauthenticated') this.authentication.expire();
-    else if (kind === 'forbidden') this.failRoute(scope);
+    else if (kind === 'forbidden' && !(this.#state.route === 'payment-settings' && this.#paymentWorkspace()?.hasUnresolvedWrite())) this.failRoute(scope);
   }
+  #paymentWorkspace() { return this.#paymentSession?.workspace ?? this.#configuration.routes.paymentSettings?.view.workspace; }
   #current(scope: ReadScope): boolean { return !this.#disposed && scope.active && this.#state.scope === scope; }
   #httpForScope(scope: ReadScope, route: ApplicationRoute | null = null): ApplicationConfiguration['http'] {
     const http = this.#configuration.http;
@@ -234,7 +255,8 @@ export class ApplicationController {
         // Read-only transfer/management routes have no unknown-write keys to preserve. A current
         // denial becomes a route-local failure so its same-menu retry can remount.
         // Never generalize this disposal to party or sales command workspaces.
-        else if (response.status === 403 && (route === 'transfers' || route === 'products' || route === 'product-categories' || route === 'product-settings' || route === 'barcode-schemes' || route === 'store-settings' || route === 'staff-settings' || route === 'payment-settings') && this.#state.route === route && this.#state.scope === scope) this.failRoute(scope);
+        else if (response.status === 403 && (route === 'transfers' || route === 'products' || route === 'product-categories' || route === 'product-settings' || route === 'barcode-schemes' || route === 'store-settings' || route === 'staff-settings' || route === 'payment-settings')
+          && !(route === 'payment-settings' && this.#paymentWorkspace()?.hasUnresolvedWrite()) && this.#state.route === route && this.#state.scope === scope) this.failRoute(scope);
       }
       return response;
     } });

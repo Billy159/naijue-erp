@@ -32,6 +32,12 @@ export interface MaintenanceCompletion {
 export interface MaintenanceEvidenceSession {
   assertAllowed(actor: ActorContext, kind: MaintenanceKind, action: string): Promise<void>;
   getReceipt(actorAccountId: string, requestKey: string, kind: MaintenanceKind): Promise<MaintenanceReceipt | undefined>;
+  /** Applicable aggregate writers MUST require this capability before any root/
+   * child mutation; absence must reject, never optional-chain a successful write.
+   * The original immutable audit is inserted once; complete must receive exactly
+   * the same non-secret evidence after actual writes and then insert the receipt.
+   * Optional only for structural compatibility with older independent adapters. */
+  prepare?(input: MaintenanceCompletion): Promise<void>;
   complete(input: MaintenanceCompletion): Promise<MaintenanceResult>;
 }
 export const maintenanceActions: Readonly<Record<MaintenanceKind, readonly string[]>> = Object.freeze({

@@ -3,6 +3,7 @@ import type { MaintenanceCompletion, MaintenanceEvidenceSession, MaintenanceKind
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
+import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import type { PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
 
 export interface MaintenancePgContext {
@@ -49,6 +50,7 @@ class Evidence implements MaintenanceEvidenceSession {
   private actor: string | undefined; private receipt: { key: string; kind: MaintenanceKind } | undefined;
   private identity: Identity | undefined; private readonly allowed = new Set<string>(); private completed = false;
   private administratorLock = false;
+  private preparationAttempted = false; private preparedFingerprint: string | undefined;
   private readonly query: Query; private readonly assertActive: () => void;
   constructor(query: Query, assertActive: () => void) { this.query = query; this.assertActive = assertActive; }
   private bind(actor: string): void {
@@ -108,7 +110,7 @@ class Evidence implements MaintenanceEvidenceSession {
     "INVALID_DATABASE_VALUE", "Persisted maintenance receipt is incoherent");
     return Object.freeze({ result, requestHash: row.request_hash, action: row.action, completedAt: row.completed_at });
   }
-  async complete(input: MaintenanceCompletion): Promise<MaintenanceResult> {
+  private checkedCompletion(input: MaintenanceCompletion): { value: MaintenanceCompletion; result: MaintenanceResult } {
     this.assertActive();
     const value = structuredClone(input); kind(value.kind); this.bind(value.actorAccountId);
     requireDomain(!this.completed && this.receipt?.key === value.requestKey && this.receipt.kind === value.kind
@@ -121,11 +123,25 @@ class Evidence implements MaintenanceEvidenceSession {
       && (value.oldVersion === null ? value.beforeValues === null : value.beforeValues?.version === value.oldVersion),
     "INVALID_MAINTENANCE_EVIDENCE", "Exact old/new version and actual completion time required");
     boundedEvidence(value.beforeValues); boundedEvidence(value.afterValues);
-    await this.query(`/* maintenance:audit */ INSERT INTO naijue_erp.audit_change
+    return { value, result };
+  }
+  async prepare(input: MaintenanceCompletion): Promise<void> {
+    const { value } = this.checkedCompletion(input);
+    requireDomain(!this.preparationAttempted, "TRANSACTION_SCOPE", "Prepare the original maintenance audit exactly once");
+    this.preparationAttempted = true;
+    const audit = await this.query(`/* maintenance:audit */ INSERT INTO naijue_erp.audit_change
       (id,operation_id,actor_account_id,object_type,object_id,action,old_version,new_version,before_values,after_values,occurred_at)
       VALUES($1::uuid,$1::uuid,$2::uuid,$3,$4::uuid,$5,$6,$7,$8::jsonb,$9::jsonb,$10::timestamptz)`,
     [value.operationId, value.actorAccountId, value.kind, value.targetId, value.action, value.oldVersion, value.newVersion,
       value.beforeValues === null ? null : JSON.stringify(value.beforeValues), JSON.stringify(value.afterValues), value.completedAt]);
+    requireDomain(audit.rowCount === 1, "INVALID_DATABASE_VALUE", "Actual original audit insert required before mutation");
+    this.preparedFingerprint = requestHash(value);
+  }
+  async complete(input: MaintenanceCompletion): Promise<MaintenanceResult> {
+    const { value, result } = this.checkedCompletion(input);
+    if (!this.preparationAttempted) await this.prepare(value);
+    requireDomain(this.preparedFingerprint !== undefined && this.preparedFingerprint === requestHash(value),
+      "INVALID_MAINTENANCE_EVIDENCE", "Completion cannot change or bypass the original prepared audit");
     const rows = (await this.query(`/* maintenance:complete */ INSERT INTO naijue_erp.operation_receipt
       (id,actor_account_id,request_key,request_hash,action,target_type,target_id,status,result_data,completed_at)
       VALUES($1::uuid,$2::uuid,$3,$4,$5,$6,$7::uuid,'COMMITTED',$8::jsonb,$9::timestamptz) RETURNING result_data`,

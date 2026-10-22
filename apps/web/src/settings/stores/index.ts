@@ -7,3 +7,8 @@ export { createStoreSettingsMaintenanceDirectory } from './maintenance-http-clie
 export type { StoreMaintenancePreparation, SettingsDirectoryReader } from './maintenance-contracts.ts';
 export { createOrganizationMaintenanceReadClient, createOrganizationStoreSettingsReader, createOrganizationSettingsDirectory } from './maintenance-http-client.ts';
 export type { OrganizationSettingsReadClient } from './maintenance-http-client.ts';
+export { createStoreSettingsCommandClient } from './maintenance-http-client.ts';
+export { createStoreMaintenanceWorkspace, StoreMaintenanceController } from './maintenance-controller.ts';
+export type { StoreMaintenanceWorkspace, StoreWorkspaceOptions, StoreEditorSnapshot } from './maintenance-controller.ts';
+export { StoreCommandError } from './maintenance-contracts.ts';
+export type { StoreCommand, StoreCommandClient, StoreCommandReceipt, StoreCommandResult } from './maintenance-contracts.ts';

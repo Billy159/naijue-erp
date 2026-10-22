@@ -14,7 +14,7 @@ const account = entityId("account", "00000000-0000-4000-8000-000000000001"), tar
 const actor = { accountId: account, hallId: null };
 const completion = (): MaintenanceCompletion => ({ operationId: operation, actorAccountId: account, requestKey: "original-key", requestHash: "a".repeat(64), kind: "PRODUCT", action: "CREATE", targetId: target,
   oldVersion: null, newVersion: 1, beforeValues: null, afterValues: { id: target, version: 1, name: "SYNTHETIC" }, completedAt: "2026-10-22T00:00:00Z" });
-function scripted(options: { role?: string; failAt?: string; prior?: boolean; priorKind?: string; enabled?: boolean } = {}) {
+function scripted(options: { role?: string; failAt?: string; prior?: boolean; priorKind?: string; enabled?: boolean; zeroAudit?: boolean } = {}) {
   const calls: { sql: string; values: unknown[] }[] = [], released: unknown[] = []; let connects = 0;
   const failure = Error("SYNTHETIC_" + options.failAt);
   const expected: MaintenanceResult = { operationId: operation, kind: "PRODUCT", targetId: target, version: 1 };
@@ -23,7 +23,7 @@ function scripted(options: { role?: string; failAt?: string; prior?: boolean; pr
     const rows = sql.includes("maintenance:identity") ? [{ account_id: account, staff_id: "00000000-0000-4000-8000-000000000004", login_enabled: options.enabled ?? true, role: options.role ?? "ADMIN", employment_status: "在职", hall_id: null }]
       : sql.includes("maintenance:receipt") && options.prior ? [{ id: operation, request_hash: "a".repeat(64), action: "CREATE", target_type: options.priorKind ?? "PRODUCT", target_id: target, result_data: expected, completed_at: "2026-10-22T00:00:00.000000Z" }]
         : sql.includes("maintenance:complete") ? [{ result_data: JSON.parse(values[7] as string) }] : [];
-    return { rows, rowCount: rows.length };
+    return { rows, rowCount: sql.includes("maintenance:audit") ? options.zeroAudit ? 0 : 1 : rows.length };
   }, release(error?: unknown) { released.push(error); } }; } };
   return { uow: new PostgresMaintenanceCommandUnitOfWork(pool), calls, released, failure, connects: () => connects, expected };
 }
@@ -122,4 +122,48 @@ test("administrator safety lock precedes original key and current identity locks
     await evidence.assertAllowed(actor, "PRODUCT", "DETAIL"); await evidence.assertAllowed(actor, "ACCOUNT", "EDIT");
   }), { code: "TRANSACTION_SCOPE" });
   assert.equal(p.calls.filter(c => c.sql.includes("maintenance:administrator-lock")).length, 0);
+});
+test("prepared audit precedes actual root/children while complete writes one unchanged receipt only", async () => {
+  const p = scripted(); await p.uow.transaction(async ({ client, evidence }) => {
+    await evidence.getReceipt(account, "original-key", "PRODUCT"); await evidence.assertAllowed(actor, "PRODUCT", "CREATE");
+    const prepared = completion(); await evidence.prepare!(prepared);
+    await client.query("/* synthetic:prepared-root-child-write */ UPDATE SYNTHETIC_ONLY");
+    assert.deepEqual(await evidence.complete(structuredClone(prepared)), p.expected);
+  });
+  const index = (s: string) => p.calls.findIndex(c => c.sql.includes(s));
+  assert.ok(index("maintenance:audit") < index("synthetic:prepared-root-child-write"));
+  assert.ok(index("synthetic:prepared-root-child-write") < index("maintenance:complete"));
+  assert.equal(p.calls.filter(c => c.sql.includes("maintenance:audit")).length, 1);
+  assert.equal(p.calls.filter(c => c.sql.includes("maintenance:complete")).length, 1);
+});
+test("prepared completion rejects changed actual evidence and repeated preparation before receipt", async () => {
+  for (const change of ["evidence", "operation", "time", "repeat"] as const) {
+    const p = scripted(); await assert.rejects(p.uow.transaction(async ({ evidence }) => {
+      await evidence.getReceipt(account, "original-key", "PRODUCT"); await evidence.assertAllowed(actor, "PRODUCT", "CREATE");
+      const prepared = completion(); await evidence.prepare!(prepared);
+      if (change === "repeat") return evidence.prepare!(prepared);
+      return evidence.complete(change === "evidence" ? { ...prepared, afterValues: { ...prepared.afterValues, name: "CHANGED" } }
+        : change === "time" ? { ...prepared, completedAt: "2026-10-22T00:00:01Z" }
+        : { ...prepared, operationId: "00000000-0000-4000-8000-000000000099" });
+    }));
+    assert.ok(!p.calls.some(c => c.sql.includes("maintenance:complete"))); assert.equal(p.calls.at(-1)!.sql, "ROLLBACK");
+  }
+});
+test("prepared failure/zero audit insert rolls back; unknown prepared COMMIT discards without rollback", async () => {
+  const zero = scripted({ zeroAudit: true }); await assert.rejects(zero.uow.transaction(async ({ evidence }) => {
+    await evidence.getReceipt(account, "original-key", "PRODUCT"); await evidence.assertAllowed(actor, "PRODUCT", "CREATE"); await evidence.prepare!(completion());
+  }), { code: "INVALID_DATABASE_VALUE" }); assert.ok(!zero.calls.some(c => c.sql.includes("maintenance:complete")));
+  for (const failAt of ["synthetic:prepared-leaf-failure", "COMMIT"]) {
+    const p = scripted({ failAt }); await assert.rejects(p.uow.transaction(async ({ client, evidence }) => {
+      await evidence.getReceipt(account, "original-key", "PRODUCT"); await evidence.assertAllowed(actor, "PRODUCT", "CREATE"); await evidence.prepare!(completion());
+      await client.query("/* synthetic:prepared-leaf-failure */ UPDATE SYNTHETIC_ONLY"); return evidence.complete(completion());
+    }), error => error === p.failure);
+    assert.equal(p.calls.filter(c => c.sql === "ROLLBACK").length, failAt === "COMMIT" ? 0 : 1);
+    assert.deepEqual(p.released, [failAt === "COMMIT" ? p.failure : undefined]);
+  }
+});
+test("prepared audit capability closes after callback even when retained by a leaf", async () => {
+  const p = scripted(); let escaped: MaintenancePgContext | undefined;
+  await p.uow.transaction(async ctx => { escaped = ctx; await ctx.evidence.getReceipt(account, "original-key", "PRODUCT"); await ctx.evidence.assertAllowed(actor, "PRODUCT", "CREATE"); });
+  const count = p.calls.length; await assert.rejects(escaped!.evidence.prepare!(completion()), { code: "TRANSACTION_CLOSED" }); assert.equal(p.calls.length, count);
 });

@@ -143,13 +143,19 @@ export async function openImportHost({ signal, configFile = process.env.NAIJUE_I
     must(session.closureScope?.batchId === job.binding.batchId && session.closureScope.fixedSourceNamespace === job.binding.fixedSourceNamespace
       && session.closureScope.selectionSha256 === job.binding.selectionSha256 && session.closureScope.authorizedPayloadHash === job.binding.authorizedPayloadHash,
     'IMPORT_SOURCE_HOST_CLOSURE_BINDING');
+    let bootstrap = null; const bootstrapDescriptor = Object.getOwnPropertyDescriptor(session, 'bootstrap');
+    if (bootstrapDescriptor) {
+      must(bootstrapDescriptor.enumerable && Object.hasOwn(bootstrapDescriptor, 'value'), 'IMPORT_SOURCE_HOST_BOOTSTRAP_REQUIRED');
+      bootstrap = bag(bootstrapDescriptor.value, ['authorizeStageSourceActor', 'stageNewBatch'], 'IMPORT_SOURCE_HOST_BOOTSTRAP_REQUIRED');
+      must(Object.values(bootstrap).every(fn => typeof fn === 'function'), 'IMPORT_SOURCE_HOST_BOOTSTRAP_REQUIRED');
+    }
     product = await openNativeProductAuthorizer({ sourceReader: session.nativeProductSourceReader,
       referenceDecisionFile: job.sources.referenceDecisionFile, trustedReferenceDecisionSha256: job.sources.trustedReferenceDecisionSha256, mappingFiles: job.sources.mappingFiles });
     closure = await openAuthorizedHistoryClosureReader({ scope: session.closureScope, openSources: session.openSources,
       trustedSelectionSha256: job.binding.selectionSha256, trustedAuthorizedPayloadHash: job.binding.authorizedPayloadHash });
     active(); pool = databaseGate.activate();
     return {
-      executor: { pool, binding: structuredClone(job.binding), now: () => new Date().toISOString(), authorization: {
+      executor: { pool, binding: structuredClone(job.binding), now: () => new Date().toISOString(), ...(bootstrap ? { bootstrap } : {}), authorization: {
         async assertExecutionAllowed(binding) { active(); must(requestHash(binding) === requestHash(job.binding), 'IMPORT_SOURCE_HOST_BINDING'); await session.assertExecutionAllowed(structuredClone(binding)); active(); },
         async authorizeStep(step) { active(); await session.authorizeStep(step); if (step.kind === 'PRODUCT') await product.authorize(step.payload); active(); },
         async assertAllowed(actor, command) { active(); await session.assertAllowed(actor, command); active(); },

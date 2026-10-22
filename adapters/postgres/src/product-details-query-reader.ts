@@ -8,6 +8,7 @@ import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { booleanValue, nullableString, stringValue, versionFromSql } from "./codec.ts";
 import type { PgProductQueryPool, PgProductQueryResult } from "./product-query-reader.ts";
+import { catalogueRetainedDeleteEnabled, type CatalogueRetainedDeleteCapability } from "./product-query-reader.ts";
 
 type Query = (sql: string, values?: unknown[]) => Promise<PgProductQueryResult>;
 function count(value: unknown): number {
@@ -25,12 +26,13 @@ function price(value: unknown): string | null {
   if (value === null) return null;
   requireDomain(typeof value === "string" && /^(?:0|[1-9]\d{0,15})\.\d{2}$/.test(value), "INVALID_DATABASE_VALUE", "Invalid exact stored price"); return value;
 }
-/** Bounded target-only RR reads. No stock SQL, new columns, filesystem or startup work. */
+/** Bounded target-only RR reads. New columns require the host's verified capability. */
 export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshotReader {
   private readonly pool: PgProductQueryPool;
-  constructor(pool: PgProductQueryPool) {
+  private readonly retainedDelete: boolean;
+  constructor(pool: PgProductQueryPool, capability: CatalogueRetainedDeleteCapability | null = null) {
     if (typeof pool?.connect !== "function") throw new TypeError("Product details require an explicit PostgreSQL pool");
-    this.pool = pool;
+    this.pool = pool; this.retainedDelete = catalogueRetainedDeleteEnabled(pool, capability);
   }
   private async snapshot<T>(signal: AbortSignal, work: (query: Query) => Promise<T>): Promise<T> {
     activeProductRead(signal); const client = await this.pool.connect(); let began = false, committing = false; let discard: Error | undefined;
@@ -49,7 +51,7 @@ export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshot
     checkedProductDetailsScope(read); requireDomain(read.intent.kind === "prices", "FORBIDDEN", "Price-tab grant required");
     return this.snapshot(read.signal, async query => {
       const rows = (await query(`SELECT p.id, p.version, ${CATALOGUE_PRICE_KEYS.map(key => `p.${key}::text AS ${key}`).join(", ")}
-        FROM naijue_erp.product p WHERE p.id = $1::uuid AND p.deleted_at IS NULL`, [read.parameters.productId])).rows;
+        FROM naijue_erp.product p WHERE p.id = $1::uuid${this.retainedDelete ? " AND p.deleted_at IS NULL" : ""}`, [read.parameters.productId])).rows;
       const target = product(rows, read.parameters.productId); if (target === null) return null;
       const prices = {} as Record<CataloguePriceKey, string | null>;
       for (const key of CATALOGUE_PRICE_KEYS) prices[key] = price(rows[0]![key]);
@@ -60,7 +62,7 @@ export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshot
     checkedProductDetailsScope(read); requireDomain(read.intent.kind === "barcodes", "FORBIDDEN", "Barcode-tab grant required");
     const p = read.parameters;
     return this.snapshot(read.signal, async query => {
-      const target = product((await query("SELECT p.id, p.version FROM naijue_erp.product p WHERE p.id = $1::uuid AND p.deleted_at IS NULL", [p.productId])).rows, p.productId);
+      const target = product((await query(`SELECT p.id, p.version FROM naijue_erp.product p WHERE p.id = $1::uuid${this.retainedDelete ? " AND p.deleted_at IS NULL" : ""}`, [p.productId])).rows, p.productId);
       if (target === null) return null;
       const counts = (await query(`SELECT count(*)::text AS total FROM naijue_erp.sku_barcode b
         JOIN naijue_erp.sku s ON s.id = b.sku_id WHERE s.product_id = $1::uuid`, [p.productId])).rows;

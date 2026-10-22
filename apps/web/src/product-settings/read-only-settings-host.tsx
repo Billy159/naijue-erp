@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState, type ComponentType } from 're
 import { SizeGroupsPage } from './size-groups/size-groups-page.tsx';
 import { SeasonsPage } from './seasons/seasons-page.tsx';
 import type { DictionaryBrowserReader, ProductSettingTab } from './size-groups/contracts.ts';
-import type { CatalogueEntryPageProps, CatalogueSettingsBrowserReader } from './colors/contracts.ts';
+import type { CatalogueEntryPageProps, CatalogueSettingsBrowserReader, CatalogueMaintenanceCapability } from './colors/contracts.ts';
 import { ReadScope } from '../loading/read-scope.ts';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import type { ReadOnlyProductSettingTab } from '../application/contracts.ts';
@@ -17,17 +17,24 @@ let attachmentSequence = 0;
  * supplies catalogue enumeration, writes or independent category product counts. */
 export function ReadOnlyProductSettingsHost(props: { readonly scope: ReadScope; readonly reader: DictionaryBrowserReader;
   readonly catalogueReader?: CatalogueSettingsBrowserReader; readonly allowedTabs: readonly ReadOnlyProductSettingTab[]; readonly initialTab: ReadOnlyProductSettingTab;
+  readonly maintenance?: Readonly<Partial<Record<'colors'|'fits',CatalogueMaintenanceCapability>>>;
+  readonly onCanLeaveChange?: (guard:(()=>boolean)|null)=>void;
   readonly onAccessFailure: (kind: 'unauthenticated'|'forbidden') => void }) {
   const [tab, setTab] = useState(props.initialTab);
+  const leaveGuard=useRef<(()=>boolean)|null>(null),[notice,setNotice]=useState('');
+  const receiveGuard=useCallback((guard:(()=>boolean)|null)=>{leaveGuard.current=guard;props.onCanLeaveChange?.(guard);},[props.onCanLeaveChange]);
   const tabFocus = useRef(false);
   const onSettingTab = useCallback((next: ProductSettingTab) => {
+    if(leaveGuard.current&&!leaveGuard.current()){setNotice('请先保存或取消当前编辑。');return;}
+    setNotice('');
     if (props.scope.active && props.allowedTabs.includes(next)) { tabFocus.current = true; setTab(next); }
   }, [props.scope, props.allowedTabs]);
   const fields = { focusSettingTab: tabFocus.current, scope: props.scope, onAccessFailure: props.onAccessFailure, onSettingTab, allowedSettingTabs: props.allowedTabs };
   if (tab === 'groups') return <SizeGroupsPage key="groups" {...fields} reader={props.reader} />;
   if (tab === 'seasons') return <SeasonsPage key="seasons" {...fields} reader={props.reader} />;
   if (!props.catalogueReader) return <p role="alert">此目录只读能力未配置。</p>;
-  return <CatalogueSettingLeaf key={tab} {...fields} reader={props.catalogueReader} kind={tab} />;
+  const maintenance=props.maintenance?.[tab];
+  return <>{notice&&<p role="status">{notice}</p>}<CatalogueSettingLeaf key={tab} {...fields} reader={props.catalogueReader} kind={tab} {...(maintenance&&props.onCanLeaveChange?{maintenance,onCanLeaveChange:receiveGuard}:{})}/></>;
 }
 /** The colors/fits UI code and facts activate only on an explicit enabled tab.
  * Discarded imports have their own scope and cannot remount an older tab/identity. */

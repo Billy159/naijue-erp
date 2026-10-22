@@ -38,3 +38,7 @@
 .catalogue-entry-modal .catalogue-view-note,.catalogue-entry-modal .catalogue-version{margin:0 0 10px;font-size:12px;line-height:20px;color:var(--ca-ink-2)}
 @media(max-width:900px){.catalogue-workbench .catalogue-pagination{flex-wrap:wrap}.catalogue-workbench .catalogue-pagination .actions{margin-left:0}}
 .catalogue-entry-modal.arco-modal .arco-modal-content{max-height:calc(100dvh - 180px);overflow:auto}
+.catalogue-write-error{color:var(--ca-critical);margin:8px 0;line-height:20px}
+.catalogue-write-recovery{padding:10px;background:var(--ca-primary-soft);color:var(--ca-ink);margin:8px 0}
+.catalogue-write-recovery p{margin:0 0 6px}
+.catalogue-write-recovery button+button{margin-left:8px}

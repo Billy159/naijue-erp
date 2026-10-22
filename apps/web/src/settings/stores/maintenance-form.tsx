@@ -5,7 +5,7 @@ import type { ReadScope } from '../../loading/read-scope.ts';
 import { HttpQueryError } from '../../transport/http-query.ts';
 import type { SettingsDirectoryKind, SettingsDirectoryPage, SettingsDirectoryParameters, SettingsDirectoryReader, SettingsReference, StoreMaintenanceDraft, StoreMaintenanceFormProps } from './maintenance-contracts.ts';
 import { settingsReferenceName, settingsSaveUnavailable } from './maintenance-contracts.ts';
-import { SettingsDraftController } from './maintenance-controller.ts';
+import { SettingsDraftController, StoreMaintenanceController, storeRejectionMessage } from './maintenance-controller.ts';
 import { storeMaintenanceDraft, validateStoreMaintenanceDraft } from './maintenance-validation.ts';
 import './source-store-settings.css';
 
@@ -117,17 +117,44 @@ export function StoreMaintenanceForm(props: StoreMaintenanceFormProps) {
   return controller ? <StoreFormContent {...props} controller={controller} /> : null;
 }
 function StoreFormContent(props: StoreMaintenanceFormProps & { readonly controller: SettingsDraftController<StoreMaintenanceDraft> }) {
+  return <SettingsPreparationModal title={`${props.record ? '编辑' : '新增'}${props.kind === 'stores' ? '营业厅' : '仓库'}`} controller={props.controller} close={props.close}>
+    <StoreFormFields {...props} />
+  </SettingsPreparationModal>;
+}
+function StoreFormFields(props: StoreMaintenanceFormProps & {
+  readonly controller: Pick<SettingsDraftController<StoreMaintenanceDraft>, 'getSnapshot' | 'subscribe' | 'update'>;
+  readonly locked?: boolean;
+}) {
   const { controller } = props, state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot), draft = state.draft;
   if (!draft) return null;
-  const editing = props.record !== null, label = props.kind === 'stores' ? '营业厅' : '仓库';
-  return <SettingsPreparationModal title={`${editing ? '编辑' : '新增'}${label}`} controller={controller} close={props.close}>
-    <div className="bs-form-fields iw-form-fields">
-      <SettingsField label="名称" required error={state.errors.name}><Input className="iw-arco-input" aria-label="名称" value={draft.name} maxLength={2048} onChange={name => controller.update({ name })} autoComplete="off" /></SettingsField>
-      {props.kind === 'stores' ? <>
-        <SettingsField label="默认零售客户"><SettingsReferenceSelect scope={props.scope} reader={props.directory} kind="customers" label="默认零售客户" selected={draft.customer ? [draft.customer] : []} onChange={items => controller.update({ customer: items[0] ?? null })} /></SettingsField>
-        <SettingsField label="默认出库仓" error={state.errors.warehouse}><SettingsReferenceSelect scope={props.scope} reader={props.directory} kind="warehouses" label="默认出库仓" hallId={props.record?.id ?? null} selected={draft.warehouse ? [draft.warehouse] : []} onChange={items => controller.update({ warehouse: items[0] ?? null })} /></SettingsField>
-      </> : <SettingsField label="所属营业厅" required error={state.errors.hall}><SettingsReferenceSelect scope={props.scope} reader={props.directory} kind="halls" label="所属营业厅" selected={draft.hall ? [draft.hall] : []} required onChange={items => controller.update({ hall: items[0] ?? null })} /></SettingsField>}
-      {editing && <SettingsField label="使用状态"><div className="bs-switch"><Switch aria-label="使用状态" checked={draft.enabled} onChange={enabled => controller.update({ enabled })} /><span>{draft.enabled ? '正常' : '已停用'}</span></div></SettingsField>}
-    </div>
-  </SettingsPreparationModal>;
+  return <div className="bs-form-fields iw-form-fields">
+    <SettingsField label="名称" required error={state.errors.name}><Input className="iw-arco-input" aria-label="名称" value={draft.name} maxLength={2048} disabled={!!props.locked} onChange={name => controller.update({ name })} autoComplete="off" /></SettingsField>
+    {props.kind === 'stores' ? <>
+      <SettingsField label="默认零售客户"><SettingsReferenceSelect disabled={!!props.locked} scope={props.scope} reader={props.directory} kind="customers" label="默认零售客户" selected={draft.customer ? [draft.customer] : []} onChange={items => controller.update({ customer: items[0] ?? null })} /></SettingsField>
+      <SettingsField label="默认出库仓" error={state.errors.warehouse}><SettingsReferenceSelect disabled={!!props.locked} scope={props.scope} reader={props.directory} kind="warehouses" label="默认出库仓" hallId={props.record?.id ?? null} selected={draft.warehouse ? [draft.warehouse] : []} onChange={items => controller.update({ warehouse: items[0] ?? null })} /></SettingsField>
+    </> : <SettingsField label="所属营业厅" required error={state.errors.hall}><SettingsReferenceSelect disabled={!!props.locked} scope={props.scope} reader={props.directory} kind="halls" label="所属营业厅" selected={draft.hall ? [draft.hall] : []} required onChange={items => controller.update({ hall: items[0] ?? null })} /></SettingsField>}
+    {props.record && <SettingsField label="使用状态"><div className="bs-switch"><Switch aria-label="使用状态" disabled={!!props.locked} checked={draft.enabled} onChange={enabled => controller.update({ enabled })} /><span>{draft.enabled ? '正常' : '已停用'}</span></div></SettingsField>}
+  </div>;
+}
+export function StoreCommandForm(props: StoreMaintenanceFormProps & { readonly controller: StoreMaintenanceController }) {
+  const { controller } = props, state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot), write = state.write;
+  if (state.disposed || !props.scope.active) return null;
+  const pending = write.phase === 'submitting' || write.phase === 'recovering';
+  return <Modal className="bs-modal store-settings-modal settings-preparation-modal iw-arco-modal iw-arco-controls"
+    visible title={`${controller.record ? '编辑' : '新增'}${props.kind === 'stores' ? '营业厅' : '仓库'}`} maskClosable={false} autoFocus={false} focusLock okText="确定" cancelText={write.phase === 'committed' ? '关闭' : '取消'}
+    okButtonProps={{ disabled: !controller.writesEnabled || controller.locked || Boolean(controller.record && !state.dirty), loading: write.phase === 'submitting' }}
+    onOk={() => { void controller.submit(); }} onCancel={() => { if (controller.requestClose()) props.close(); }}>
+    <div onBlur={() => { if (!controller.locked) controller.validate(); }}><StoreFormFields {...props} locked={controller.locked} /></div>
+    {!controller.writesEnabled && !controller.hasUnresolvedWrite && write.phase !== 'committed' && <p className="settings-note" role="status">{settingsSaveUnavailable}</p>}
+    {pending && <p className="settings-note" role="status">{write.phase === 'submitting' ? '正在保存，请等待结果。' : '正在查询原提交的回执…'}</p>}
+    {write.phase === 'committed' && <p className="settings-note" role="status">保存成功。</p>}
+    {write.phase === 'rejected' && <p className="settings-note" role="alert">{write.error?.outcome === 'not-sent' ? '请求尚未发送，请检查填写内容。' : storeRejectionMessage(write.error?.code ?? '')}</p>}
+    {write.phase === 'uncertain' && <section className="settings-note" role="alert"><p>提交结果尚未确认。原提交内容已保留，请勿再次新建或重复保存。</p>
+      {write.error?.code === 'RECEIPT_NOT_FOUND' && <p>暂未查到原回执，仍不能确定是否已保存。</p>}
+      {write.error?.kind === 'forbidden' && <p>当前无权读取原回执，提交结果仍待确认。</p>}
+      <Button onClick={() => { void controller.recover(); }}>查询原提交回执</Button></section>}
+    {state.closePrompt && <section className="settings-close-prompt" role="alert"><strong>放弃本次填写？</strong><p>关闭后将清除本次未保存的内容。</p><div className="bs-row-actions">
+      <Button onClick={() => controller.keepEditing()}>继续填写</Button><Button onClick={() => { if (controller.discard()) props.close(); }}>放弃本次填写</Button>
+    </div></section>}
+  </Modal>;
 }

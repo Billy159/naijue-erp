@@ -76,6 +76,21 @@ test('actual executor reaches existing MAIN store; same-key replay remains autho
   assert.deepEqual(f.auth, ['EXECUTION', 'STEP', 'MAIN', 'EXECUTION', 'STEP', 'MAIN']);
   assert.equal(f.calls.filter(q => q.includes('import-executor:target')).length, 1);
 });
+test('private real-source bootstrap authorization precedes target connect; borrowed hook is not MAIN payload and exact replay does not repeat it',async()=>{
+  const f=fixture();let checks=0,hooks=0;
+  f.options.authorization.assertAllowed=async()=>{throw Error('Initial actor cannot be read from emptynewtarget');};
+  f.options.bootstrap={async authorizeStageSourceActor(actor,command){assert.equal(actor,plan().actorAccountId);assert.deepEqual(command,stage().payload);if(checks++===0)assert.deepEqual(f.calls,[]);},
+    async stageNewBatch(client,input){hooks++;assert.deepEqual(Reflect.ownKeys(client),['query']);assert.deepEqual(input.command,stage().payload);assert.equal(Object.hasOwn(input.command,'bootstrap'),false);await client.query('/* synthetic:private-bootstrap */ SELECT 1');}};
+  const execute=createPostgresImportExecutor(f.options),result=await execute(stage());assert.equal(result.status,'STAGED');assert.equal(hooks,1);assert.equal(checks,2);
+  const callback=f.calls.findIndex(q=>q.includes('synthetic:private-bootstrap')),audit=f.calls.findIndex(q=>q.startsWith('INSERT INTO naijue_erp.audit_change'));assert.ok(callback>0&&callback<audit);
+  f.replay(result);assert.deepEqual(await execute(stage()),result);assert.equal(hooks,1);assert.equal(checks,4);
+});
+test('revoked initial source actor and malformed private bootstrap refuse without any target capability or getter execution',async()=>{
+  const f=fixture();f.options.bootstrap={async authorizeStageSourceActor(){throw Object.assign(Error('private'),{code:'SOURCE_REVOKED'});},async stageNewBatch(){throw Error('mustnotrun');}};
+  await assert.rejects(createPostgresImportExecutor(f.options)(stage()),{code:'SOURCE_REVOKED'});assert.deepEqual(f.calls,[]);
+  let gets=0;const bad=Object.defineProperty({stageNewBatch:async()=>{}},'authorizeStageSourceActor',{enumerable:true,get(){gets++;return async()=>{};}});
+  assert.throws(()=>createPostgresImportExecutor({...f.options,bootstrap:bad}),/IMPORT_EXECUTION_SHAPE/);assert.equal(gets,0);assert.deepEqual(f.calls,[]);
+});
 test('bounded sequence journals technical results only; awaits close and does not label full import', async () => {
   const events = []; let closed = false;
   const result = await runImportSteps({ source: source([stage()], async () => { await Promise.resolve(); closed = true; }),
