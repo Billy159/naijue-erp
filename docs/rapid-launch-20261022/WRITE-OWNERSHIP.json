@@ -204,6 +204,36 @@
           "path": "tests/maintenance-command-postgres-protocol.test.ts",
           "group": "C01_APPROVED_SHARED_MAINTENANCE",
           "fieldGate": "C01_20261022_V1_APPROVED_ONLY"
+        },
+        {
+          "path": "tests/history-revision-posting-postgres-protocol.test.ts",
+          "group": "APPROVED_NATIVE_REAL_SOURCE_OR_HISTORY_POSTING",
+          "fieldGate": "C01_V1_ONLY_NO_UNLISTED_SCHEMA"
+        },
+        {
+          "path": "packages/authentication/src/legacy-passwords.ts",
+          "group": "R1_TRUSTED_LEGACY_CREDENTIAL_COMPATIBILITY_AND_AUTH_COMMIT",
+          "fieldGate": "EXISTING_PASSWORD_HASH_TEXT_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "packages/authentication/src/legacy-passwords.test.ts",
+          "group": "R1_TRUSTED_LEGACY_CREDENTIAL_COMPATIBILITY_AND_AUTH_COMMIT",
+          "fieldGate": "EXISTING_PASSWORD_HASH_TEXT_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "packages/authentication/src/passwords.ts",
+          "group": "R1_TRUSTED_LEGACY_CREDENTIAL_COMPATIBILITY_AND_AUTH_COMMIT",
+          "fieldGate": "EXISTING_PASSWORD_HASH_TEXT_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "adapters/postgres/src/auth-store.ts",
+          "group": "R1_TRUSTED_LEGACY_CREDENTIAL_COMPATIBILITY_AND_AUTH_COMMIT",
+          "fieldGate": "EXISTING_PASSWORD_HASH_TEXT_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "tests/authentication-commit-outcome.test.ts",
+          "group": "R1_TRUSTED_LEGACY_CREDENTIAL_COMPATIBILITY_AND_AUTH_COMMIT",
+          "fieldGate": "EXISTING_PASSWORD_HASH_TEXT_NO_SCHEMA_CHANGE"
         }
       ]
     },
@@ -884,6 +914,36 @@
           "path": "scripts/import-v3/production-source-host.test.mjs",
           "group": "R1_STOCK_AND_REAL_IMPORT_HOST",
           "fieldGate": "C01_20261022_V1_APPROVED_ONLY"
+        },
+        {
+          "path": "scripts/import-v3/prepare-native-bindings.mjs",
+          "group": "APPROVED_NATIVE_REAL_SOURCE_OR_HISTORY_POSTING",
+          "fieldGate": "C01_V1_ONLY_NO_UNLISTED_SCHEMA"
+        },
+        {
+          "path": "scripts/import-v3/prepare-native-bindings.test.mjs",
+          "group": "APPROVED_NATIVE_REAL_SOURCE_OR_HISTORY_POSTING",
+          "fieldGate": "C01_V1_ONLY_NO_UNLISTED_SCHEMA"
+        },
+        {
+          "path": "scripts/import-v3/native-source-authorizers.mjs",
+          "group": "APPROVED_NATIVE_REAL_SOURCE_OR_HISTORY_POSTING",
+          "fieldGate": "C01_V1_ONLY_NO_UNLISTED_SCHEMA"
+        },
+        {
+          "path": "scripts/import-v3/native-source-authorizers.test.mjs",
+          "group": "APPROVED_NATIVE_REAL_SOURCE_OR_HISTORY_POSTING",
+          "fieldGate": "C01_V1_ONLY_NO_UNLISTED_SCHEMA"
+        },
+        {
+          "path": "packages/application/src/native-barcode-import.ts",
+          "group": "B06_EXACT_PREVIOUSLY_APPROVED_BARCODE_BRANCH_ONLY",
+          "fieldGate": "NO_NEW_SCHEMA_NO_UNVERIFIED_BUSINESS_APPROVAL"
+        },
+        {
+          "path": "tests/native-barcode-import.test.ts",
+          "group": "B06_EXACT_PREVIOUSLY_APPROVED_BARCODE_BRANCH_ONLY",
+          "fieldGate": "NO_NEW_SCHEMA_NO_UNVERIFIED_BUSINESS_APPROVAL"
         }
       ]
     },

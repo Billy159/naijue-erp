@@ -18,3 +18,11 @@ B01生产宿主配置冻结：公网Origin=https://1n5635n614.goho.co；外部AP
 InventoryRouteConfiguration.ledger?: true is an explicit UI opt-in. F1 must inject createInventoryLedgerHttpReader(input.http) and the current application access-failure owner; omission preserves the original disabled/unavailable state. F2 owns the leaf implementation. No database field or permission grant added.
 
 Product details read DTO v1 is frozen at packages/application/src/product-details-query-ports.ts; prices/barcodes/stock routes use existing schema1-19 fields only. Prices are all nine exact yuan strings/null; barcodes retain raw text and real SKU identity; product-level default scheme reports UNAVAILABLE until separately approved. ProductWarehouseStockReader is D3-owned and must independently authorize inventory/warehouse scope; absence returns unavailable, never zero.
+
+## Product maintenance v1 frozen at d38c83b (source review pending)
+
+Exact DTO/route snapshot: K/reports/backend/rapid-launch-20261022/D2/W2-PRODUCT-API-v1.json. Real POST /products/maintenance/detail/query and /products/maintenance/candidates/query provide IDs/versions and separately scoped maintenance candidates. POST /products/commands and GET /products/receipts/:requestKey preserve exact original key; new writes require D1 shared driver and approved schema21-23. Missing D3 deletion proof stays unavailable. Source contract freeze does not mean real PostgreSQL or production acceptance. Existing read-details v1 remains unchanged.
+
+## Shared history posting v1
+
+D1/HISTORY-POSTING-CONTRACT-v1.json and inventory-posting.ts define post(sameClient,context,effects). No new pool/transaction or receipt writer. Empty effects do no stock I/O; missing original businessDate blocks quantity effects, never substitutes current date. Actual EX24 adapter/PG evidence still pending.

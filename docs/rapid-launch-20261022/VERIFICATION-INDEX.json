@@ -34,7 +34,7 @@
       "id": "D2-READ-90ff5a4",
       "scope": "14 existing-field read and party adapter files",
       "sourceCommit": "90ff5a4c596c930bfd99d2e9cfd868df43f2c637",
-      "result": "AWAITING_QB",
+      "result": "PASS_SOURCE_PROTOCOL_SCOPED",
       "notTested": [
         "real PostgreSQL",
         "browser",
@@ -46,12 +46,103 @@
       "id": "B01-CORE-881f887",
       "scope": "5 production host core files",
       "sourceCommit": "881f88795e5872374d2f7cc4aa63ab5e11ad99b0",
-      "result": "AWAITING_QB",
+      "result": "PASS_SOURCE_PROTOCOL_SCOPED",
       "notTested": [
         "real sockets",
         "real PostgreSQL",
         "integrated build",
         "production"
+      ]
+    },
+    {
+      "id": "QB-D2-READ-90ff5a4",
+      "sourceCommit": "90ff5a4c596c930bfd99d2e9cfd868df43f2c637",
+      "result": "PASS_SOURCE_PROTOCOL_SCOPED",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice2-d2-90ff5a4c/RESULT.json",
+      "notTested": [
+        "real PostgreSQL",
+        "real import",
+        "browser",
+        "production",
+        "whole parent task"
+      ]
+    },
+    {
+      "id": "QB-HOST-881f887",
+      "sourceCommit": "881f88795e5872374d2f7cc4aa63ab5e11ad99b0",
+      "result": "PASS_SOURCE_PROTOCOL_SCOPED",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice3-b01-881f8879/RESULT.json",
+      "notTested": [
+        "real PostgreSQL",
+        "real import",
+        "browser",
+        "production",
+        "whole parent task"
+      ]
+    },
+    {
+      "id": "QB-EXECUTOR-2c622b3",
+      "sourceCommit": "2c622b350bd0c9a33115c5c5dd0ca0f81ebe80f3",
+      "result": "PASS_SOURCE_TOOL_PROTOCOL_SCOPED",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice4-executor-2c622b35/RESULT.json",
+      "notTested": [
+        "real PostgreSQL",
+        "real import",
+        "browser",
+        "production",
+        "whole parent task"
+      ]
+    },
+    {
+      "id": "QB-PACK-HTML-01",
+      "sourceCommit": "2c622b350bd0c9a33115c5c5dd0ca0f81ebe80f3",
+      "result": "NEED_FIX_DIRECTED_SUCCESSOR_D38C83B",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice5-pack-2c622b35/RESULT.json",
+      "notTested": [
+        "real PostgreSQL",
+        "real import",
+        "browser",
+        "production",
+        "whole parent task"
+      ]
+    },
+    {
+      "id": "QB-STOCK-476f212",
+      "sourceCommit": "476f212efdaf84581a63973f5656b00ee83dc878",
+      "result": "PASS_SOURCE_PROTOCOL_SCOPED",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice6-stock-476f212e/RESULT.json",
+      "notTested": [
+        "real PostgreSQL",
+        "real import",
+        "browser",
+        "production",
+        "whole parent task"
+      ]
+    },
+    {
+      "id": "QB-HISTORY-476f212",
+      "sourceCommit": "476f212efdaf84581a63973f5656b00ee83dc878",
+      "result": "PASS_SOURCE_PROTOCOL_SCOPED",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice7-history-plan-476f212e/RESULT.json",
+      "notTested": [
+        "real PostgreSQL",
+        "real import",
+        "browser",
+        "production",
+        "whole parent task"
+      ]
+    },
+    {
+      "id": "QB-NUMBER-TRANSFER-01",
+      "sourceCommit": "a77089c1a8224df3d1a281054a9c872c054987ed",
+      "result": "NEED_FIX_DIRECTED_D1",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice8-number-a77089c1/RESULT.json",
+      "notTested": [
+        "real PostgreSQL",
+        "real import",
+        "browser",
+        "production",
+        "whole parent task"
       ]
     }
   ],

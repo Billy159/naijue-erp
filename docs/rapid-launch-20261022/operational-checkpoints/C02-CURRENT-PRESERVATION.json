@@ -1,0 +1,93 @@
+{
+  "format": "rapid-launch-current-preservation-v1",
+  "jobId": "c02-current-preservation-20261022-04",
+  "status": "PASS_FRESH_CURRENT_APP_DB_WAL_MEDIA_CONFIG_PRESERVED",
+  "startedAtUtc": "2026-10-22T05:47:06.824543+00:00",
+  "productionDataWrites": false,
+  "productionRestart": false,
+  "schemaChange": false,
+  "credentialValuesExported": false,
+  "restoreRehearsalRepeated": false,
+  "currentDatabaseIdentity": {
+    "instanceId": "6b8bd3a8-7c75-431e-b2a7-a5df3d6c8698",
+    "clusterId": "7691989034661916697",
+    "metadata": {
+      "database": "erp_prod",
+      "role": "erp_prod_app",
+      "read_only": "on",
+      "database_bytes": "9368139443"
+    }
+  },
+  "backupPath": "/srv/naijue-erp/rapid-launch-20261022/backups/rapid-launch-current-20261022-04",
+  "phase": "completed",
+  "physicalStartedAtUtc": "2026-10-22T05:47:07.560801+00:00",
+  "physicalStoppedAtUtc": "2026-10-22T05:52:01.907548+00:00",
+  "services": {
+    "naijue-prod-app-1": {
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "status": "running",
+      "startedAt": "2026-10-19T00:37:33.773668947Z",
+      "restartCount": 0
+    },
+    "naijue-prod-web-1": {
+      "imageId": "sha256:aa52934534a4d083988010753998efa32d7cd1c0856993b213ca5440e50ef02f",
+      "status": "running",
+      "startedAt": "2026-10-17T23:14:04.03396614Z",
+      "restartCount": 0
+    },
+    "naijue-prod-db-1": {
+      "imageId": "sha256:b3721d9bd40bf0da8dde2ef10bb0557d5b6615cbf12f63c448acbf5279b417c2",
+      "status": "running",
+      "startedAt": "2026-10-04T08:15:55.884806205Z",
+      "restartCount": 0
+    }
+  },
+  "archives": {
+    "media": {
+      "path": "/srv/naijue-erp/rapid-launch-20261022/backups/rapid-launch-current-20261022-04/media.protected.tar",
+      "bytes": 83947520,
+      "sha256": "572b6bd5fd8c283fec320e98fb81076640a47a202cfcf583d3ad9059a05e7cbb",
+      "members": 827
+    },
+    "configuration": {
+      "path": "/srv/naijue-erp/rapid-launch-20261022/backups/rapid-launch-current-20261022-04/configuration.protected.tar",
+      "bytes": 552960,
+      "sha256": "ec2e91220c2c82111f72cfa563f23a9248cb87e4f32697b5534a6fa49f24e641",
+      "members": 84
+    },
+    "applicationImages": {
+      "path": "/srv/naijue-erp/rapid-launch-20261022/backups/rapid-launch-current-20261022-04/application-images.protected.tar",
+      "bytes": 368849920,
+      "sha256": "0f58c4ecc2368c13791434a947ef3d5382a123574b294dfd1bb49bd37a259288",
+      "imageIds": [
+        "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+        "sha256:aa52934534a4d083988010753998efa32d7cd1c0856993b213ca5440e50ef02f"
+      ]
+    }
+  },
+  "databaseManifestSha256": "606954c24ccbaded525da369aced1146455ccbb416df22b841b44b8be92611bc",
+  "databaseFiles": 2266,
+  "walRanges": [
+    {
+      "Timeline": 1,
+      "Start-LSN": "2/8E000060",
+      "End-LSN": "2/8E000190"
+    }
+  ],
+  "mediaFiles": 663,
+  "mediaAndConfigurationShapesStable": true,
+  "configurationSourceMap": [
+    "/srv/naijue-erp/prod/formal-20261007-01/config",
+    "/srv/naijue-erp/prod/formal-20261007-01/secrets",
+    "/srv/naijue-erp/prod/formal-20261007-01/approved-references-20261008-login-01",
+    "/srv/naijue-erp/prod/formal-20261007-01/control/diagnostic-r50-416f5e05-db5c77a2",
+    "/srv/naijue-erp/prod/config",
+    "/srv/naijue-erp/prod/secrets"
+  ],
+  "physicalVerifiedOnce": true,
+  "existingRestoreEvidence": "K/reports/controller/restore/RESTORE-RESULT-SCOPED.json",
+  "restoreLimit": "Prior DB/media restore only; new application/new-account startup and production rollback not proven by this backup.",
+  "rollbackBoundary": "Preserve unchanged old DB. New business writes in rewrite DB must be protected; never restore old DB snapshot over new accounting.",
+  "retainedRawContainerCopy": "/tmp/rapid-launch-current-20261022-04",
+  "finishedAtUtc": "2026-10-22T05:58:40.294984+00:00"
+}
