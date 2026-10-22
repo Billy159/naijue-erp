@@ -49,18 +49,18 @@ function MediaGallery(props: GalleryProps) {
     return <p role="alert" className="product-field-hint">商品图片版本已变化。<UIButton disabled={!!props.reloadBlocked} onClick={props.onReloadRequest}>重新读取商品</UIButton></p>;
   if (snapshot.phase === 'error' && snapshot.error instanceof HttpQueryError && ['not-implemented','unavailable'].includes(snapshot.error.kind))
     return <p role="alert" className="product-field-hint">图片服务尚未就绪。<UIButton onClick={read}>重试读取图片</UIButton></p>;
-  return <ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!data}>{data && <div className="product-editor-photos">
-    <p className="product-field-hint">{props.readOnly?'点击图片查看原图。':'点击图片查看原图。图片上传、替换和删除服务尚未就绪。'}</p>
+  return <ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!data}>{data && <div className={`product-editor-photos${props.readOnly ? ' product-readonly-photos' : ''}`}>
+    <p className="product-field-hint">{props.readOnly?'支持 PNG、JPEG、WebP，单张不超过 8 MB；图片随商品保存。':'点击图片查看原图。图片上传、替换和删除服务尚未就绪。'}</p>
     {roles.map(([role, label]) => <section className="product-photo-section" key={role} aria-label={label}><h3>{label}</h3><div className="product-photo-row">
       {data.images.filter(image => image.role === role).map((image, index) => item(image, `${label} ${index + 1}`))}
-      {!data.images.some(image => image.role === role) && <span className="product-field-hint">暂无图片</span>}
+      {!props.readOnly && !data.images.some(image => image.role === role) && <span className="product-field-hint">暂无图片</span>}
     </div></section>)}
     <MediaColors {...props} images={data.images.filter(image => image.role === 'COLOR')} item={item}/>
     {data.images.some(image => image.role === null) && <section className="product-photo-section" aria-label="未分类"><h3>未分类</h3><div className="product-photo-row">{data.images.filter(image => image.role === null).map((image, index) => item(image, `未分类图片 ${index + 1}`))}</div></section>}
     {preview && <MediaOriginalPreview key={`${preview.image.id}:${preview.image.version}`} {...props} media={props.media} image={preview.image} label={preview.label} close={() => setPreview(null)}/>}
   </div>}</ProductReadState>;
 }
-function MediaColors(props: MediaContext & { readonly images: readonly ProductEditorImage[]; readonly item: (image: ProductEditorImage, label: string) => React.ReactNode }) {
+function MediaColors(props: MediaContext & { readonly readOnly?: boolean; readonly images: readonly ProductEditorImage[]; readonly item: (image: ProductEditorImage, label: string) => React.ReactNode }) {
   const { snapshot, read, cancel, cancelled } = useProductRead(props.scope, async input => {
     try { return await props.reader.readProductSpecifications(input); }
     catch (error) { accessFailure(props, error, input.signal); throw error; }
@@ -73,9 +73,9 @@ function MediaColors(props: MediaContext & { readonly images: readonly ProductEd
     {snapshot.phase !== 'success' && <ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!data}>{null}</ProductReadState>}
     <div className="product-photo-row product-color-photos">{rows.map(color => {
       const image = props.images.find(image => image.colorId === color.id);
-      return <div key={color.id} className="product-color-photo"><div className="product-color-photo-name" title={color.label}>{color.label}</div>{image ? props.item(image, `${color.label}配图`) : <span className="product-color-photo-empty">暂无图片</span>}</div>;
+      return <div key={color.id} className="product-color-photo"><div className="product-color-photo-name" title={color.label}>{color.label}</div>{image ? props.item(image, `${color.label}配图`) : !props.readOnly && <span className="product-color-photo-empty">暂无图片</span>}</div>;
     })}</div>
-    {snapshot.phase === 'success' && !rows.length && <p className="product-field-hint">暂无当前颜色</p>}
+    {snapshot.phase === 'success' && !rows.length && <p className="product-field-hint">{props.readOnly ? '先在规格页选择当前颜色。' : '暂无当前颜色'}</p>}
   </section>;
 }
 function MediaThumbnail(props: { readonly image: ProductEditorImage; readonly label: string; readonly open: () => void }) {

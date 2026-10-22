@@ -65,6 +65,7 @@
 /* The frozen Demo photo sections use compact 48 px tiles. */
 .product-editor-photos{display:grid;grid-template-columns:minmax(0,1fr)}
 .product-editor-photos>.product-field-hint{margin:0 0 8px}
+.product-readonly-page .product-readonly-photos>.product-field-hint{color:var(--ca-ink-3)}
 .product-editor-photos .product-photo-section{padding:8px 0 10px;border-bottom:1px solid var(--ca-line)}
 .product-editor-photos .product-photo-section h3{margin:0 0 7px;font-size:13px;font-weight:600}
 .product-photo-row{display:flex;align-items:flex-start;flex-wrap:wrap;gap:6px}
