@@ -1,2 +1,14 @@
 @import '../../inventory/inventory.css';
 @import '../../inventory/ledger.css';
+
+/* F09 / UDC-I02: the initial Arco Input is a direct input, not an
+ * arco-input-wrapper. Keep its idle fill aligned with the Demo selectors;
+ * preserve the white/blue focused state while the action Select loads. */
+.iw-workbench .inventory-product-control .erp-input.iw-product-input.arco-input {
+  background: var(--ca-surface-muted);
+  border-color: transparent;
+}
+.iw-workbench .inventory-product-control .erp-input.iw-product-input.arco-input:focus {
+  background: var(--ca-surface);
+  border-color: var(--ca-control-focus-border);
+}

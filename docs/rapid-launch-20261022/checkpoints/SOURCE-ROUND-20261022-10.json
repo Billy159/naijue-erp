@@ -1,0 +1,241 @@
+{
+  "atUtc": "2026-10-22T07:53:53.455244+00:00",
+  "parent": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+  "scope": "Exact ready slices only, independent review/runtime pending",
+  "groups": [
+    {
+      "slice": "D1_TRANSFER_HISTORY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/TRANSFER-OPERATION-HISTORY-RESULT.json",
+      "receiptSha256": "7ef9ce69680d1c2e346fbe4fd1b1e5e6b08c76a9016cf3dedfd51282789335f5",
+      "files": [
+        {
+          "path": "packages/application/src/transfer-query-ports.ts",
+          "sha256": "2687679be5ea1312708e440e34909f8ca4d3f3f6ee366efc7e0f44b7e9b505d1",
+          "owner": "D1"
+        },
+        {
+          "path": "packages/application/src/transfer-query-validation.ts",
+          "sha256": "fba61ebc471ca93b65200cf713ee32843b6783048dad2bb117c8d9c9dd538c2b",
+          "owner": "D1"
+        },
+        {
+          "path": "packages/application/src/transfer-query-service.ts",
+          "sha256": "e9bf49507a5ac8dacf9ad07c278ab6d8e8970175cbefcf0e25acf686fe4a35e6",
+          "owner": "D1"
+        },
+        {
+          "path": "apps/api/src/transfer-query-http.ts",
+          "sha256": "8d2ca8304b570c1833757d71153373bd6b69a60e1fbe941543647c36f979052c",
+          "owner": "D1"
+        },
+        {
+          "path": "adapters/postgres/src/transfer-query-reader.ts",
+          "sha256": "d229f5bde364ee81c7f69696695dbf670d440ff0d625f58b3822f8365a0c47b4",
+          "owner": "D1"
+        },
+        {
+          "path": "tests/transfer-operation-history-postgres-protocol.test.ts",
+          "sha256": "1992a1baae9e41c910414febce9755ec53bd62577a1484d6451f7088b621f7c3",
+          "owner": "D1"
+        }
+      ]
+    },
+    {
+      "slice": "F1_CHUNK13_CSS",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-13/DELIVERY.json",
+      "receiptSha256": "ace844cadcb78c53fa5fc07eeba82b74b2af8625c9a86939ada8d78514f6adbd",
+      "files": [
+        {
+          "path": "apps/web/src/application/styles/inventory.css",
+          "sha256": "43c176c272b0deba8e6232cbc313e780c68416474740bd683426529b25abb974",
+          "owner": "F1"
+        }
+      ]
+    },
+    {
+      "slice": "D3_BOOTSTRAP_V2",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/native-bootstrap-v2-slice1/RESULT.json",
+      "receiptSha256": "288b0ec83c79de4b080bdde01abda598b2da738f6d6557cc656548c63ed52467",
+      "files": [
+        {
+          "path": "scripts/import-v3/native-bootstrap.mjs",
+          "sha256": "b1526d42f2d36bc98bb4e2999537f07eaa2b066c3cbeac29ffbf1b233ad72832",
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/native-bootstrap.test.mjs",
+          "sha256": "4a70d23d30798f9b289cb8cc06da05be4def7454a4ecc5511044290687e51b59",
+          "owner": "D3"
+        }
+      ]
+    },
+    {
+      "slice": "D2_PREPARE_W10",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W10-PREPARE-RECEIPT.json",
+      "receiptSha256": "6a794178bbcedf2491071df1bd58e1152a33e2039a9b6aae14f7405e7f332afc",
+      "files": [
+        {
+          "path": "packages/application/src/product-maintenance-ports.ts",
+          "sha256": "60a751d0ec286b12542321ddb53f535f218d76fe726caf4103bb41a24dd95512",
+          "owner": "D2"
+        },
+        {
+          "path": "packages/application/src/product-maintenance-service.ts",
+          "sha256": "d0508402f1a7ec89d242b8e21a011a80e5baf97dfa38ae9157859ff0692d6240",
+          "owner": "D2"
+        },
+        {
+          "path": "packages/application/src/payment-maintenance-service.ts",
+          "sha256": "470f5c0e83b6e84dd829320b4ac655f1379297b2797160a2346f523deb00d387",
+          "owner": "D2"
+        },
+        {
+          "path": "packages/application/src/organization-maintenance-service.ts",
+          "sha256": "98ba253a5ae2e03481e801e23f065c1610e534c16c54c2d11d1998fc5f17dfdd",
+          "owner": "D2"
+        },
+        {
+          "path": "packages/application/src/account-maintenance-service.ts",
+          "sha256": "9971493262896bc953c1b6c552592fd61a78d8f5076413ec1cbaa1b3b9abfc5f",
+          "owner": "D2"
+        },
+        {
+          "path": "packages/application/src/staff-maintenance-service.ts",
+          "sha256": "0bf718e6bb33fa698e789ed2b37ec3a2a703670e01f43a369fa9078459b3cd3e",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/product-maintenance-http.ts",
+          "sha256": "909275036b8100dd3d007f79425c3c044afede82c62e3a1123981af73d8a2272",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/payment-maintenance-http.ts",
+          "sha256": "990ce04f61bebf411f96f0b9fc1eb3ed4b776ec17648dc9990001d1281acf7a9",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/organization-maintenance-http.ts",
+          "sha256": "32500228478c0f0e40785af88d676fa10be00c2209ac4bde1fe1326340431f68",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/account-maintenance-http.ts",
+          "sha256": "28f1c86faf12613315a47982794c95fb93b629ad6f74c9f867932713f1ea7578",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/staff-maintenance-http.ts",
+          "sha256": "e6ee1967d304374954e01690cbc77ea9fae9d4946d5af3ef19e17265df4c3ebd",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/product-maintenance.test.ts",
+          "sha256": "a516cc3cdc4195c6a0d378fbb71d259226c19d2f6107ea93cae9b318e6284092",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/payment-maintenance.test.ts",
+          "sha256": "4c28862cc4f5292bcbcc5e7ea1666e15351a0cdd03dbb8acdad8d07a2542c3d4",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/organization-maintenance.test.ts",
+          "sha256": "9ddd2102d59f0644d4477db39c9c3fbd3f5299d29810629105845e12bf77f150",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/account-maintenance.test.ts",
+          "sha256": "bd506b7fa90beadf91933e03b2e7514c06ec93118415dd092394f60e9784b6f5",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/staff-maintenance.test.ts",
+          "sha256": "866c837bf0cd92bf25ac3b246dc7c6a07139488a509a9ba1dfa1ca63ebe8b442",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/product-maintenance-postgres-protocol.test.ts",
+          "sha256": "3b6e7dcd0d0c5b1cc6d78242fba0e621bf70a271fb9fb5e7aafff403f27fd60f",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/payment-maintenance-postgres-protocol.test.ts",
+          "sha256": "52f5e92999a03e6c242cd71ffc98cb092fca454269f9776b1356fafc5819c815",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/account-maintenance-postgres-protocol.test.ts",
+          "sha256": "ff0b6f1cd8a39ce276cd56f2501aee950efd29f4e19da4e961a18155ee8460ed",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/staff-maintenance-postgres-protocol.test.ts",
+          "sha256": "13e301c11c27ca64c648159f26dcf815474a602120cba8becde4e7c6318f4361",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/product-maintenance-http.test.ts",
+          "sha256": "4c991da685fddafcb3997b8bcdafd620968dcd6bbcad9eb1601ecbe06a8ee9c7",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/payment-maintenance-http.test.ts",
+          "sha256": "c8d14736862536f1da6fa8f16078d37a11ce20164582d1e641f81e22b264ceac",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/account-maintenance-http.test.ts",
+          "sha256": "c4b187b9a3e57b47735204e0cf111a529ff1ccd4e71b0dfb233c2c78641ea631",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/staff-maintenance-http.test.ts",
+          "sha256": "1b0caee2cc9c3760fd5a97bab5d9a4f39bc40719f9f9e052b98025f637855cf7",
+          "owner": "D2"
+        }
+      ]
+    },
+    {
+      "slice": "D2_W8_UNCHANGED4",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W8-STAFF-RECEIPT.json",
+      "receiptSha256": "7639089c329044b59222e09b2715c42a3a949ef17f3def887785d51eb2283ba0",
+      "files": [
+        {
+          "path": "packages/application/src/staff-maintenance-ports.ts",
+          "sha256": "23c5045ebd185aa43dc22e1bf47c72414616d613243d96b74f95a40888ec9fe2",
+          "owner": "D2"
+        },
+        {
+          "path": "packages/application/src/staff-maintenance-validation.ts",
+          "sha256": "1a22420f339f2196de698a20843cf44c93e43972e09c1e858f33ff8ec9a0e2c5",
+          "owner": "D2"
+        },
+        {
+          "path": "packages/application/src/staff-maintenance-authorization.ts",
+          "sha256": "faee59d88b3ae6ee8b1854580383893c040e30b8f2ef046f6211f7d10a317e1f",
+          "owner": "D2"
+        },
+        {
+          "path": "adapters/postgres/src/staff-maintenance-store.ts",
+          "sha256": "93026b7110919ccadb368e5f292c151596a3c8392d103ab0084df899dee03553",
+          "owner": "D2"
+        }
+      ],
+      "note": "Other5 W8 files superseded by W10 current ready hashes in same commit"
+    },
+    {
+      "slice": "C_CATALOGUE_SHARED_CONFIG",
+      "owner": "C",
+      "scope": "Optional F2 native catalogue capability fields; runtime gate unchanged; F1 root integration and QF pending",
+      "files": [
+        {
+          "path": "apps/web/src/application/contracts.ts",
+          "sha256": "36cdd195e9fcaffbb0e2c3050cb6b2dc4857ea0220a581c9eea2f1b6f19927dc",
+          "owner": "C"
+        }
+      ]
+    }
+  ],
+  "fileCount": 38
+}

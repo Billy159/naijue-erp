@@ -13,6 +13,7 @@ import type { ProductEditorCapability } from '../products/product-editor-contrac
 import type { StaffSettingsProps } from '../staff-settings/contracts.ts';
 import type { PaymentSettingsProps } from '../payment-settings/contracts.ts';
 import type { ProductFullPageConfiguration } from '../products/product-page-contracts.ts';
+import type { CatalogueMaintenanceCapability } from '../product-settings/colors/contracts.ts';
 
 export type ApplicationRoute = 'inventory' | 'sales' | 'transfers' | 'customers' | 'suppliers' | 'products' | 'product-categories' | 'product-settings' | 'barcode-schemes' | 'store-settings' | 'staff-settings' | 'payment-settings';
 export interface RouteStylesheet {
@@ -61,11 +62,20 @@ export interface ProductsRouteConfiguration {
   readonly maintenance?: ProductEditorCapability;
 }
 export type ReadOnlyProductSettingTab = 'colors' | 'groups' | 'fits' | 'seasons';
-export interface ProductCategoriesRouteConfiguration { readonly stylesheet: RouteStylesheet }
+export interface ProductCategoriesRouteConfiguration {
+  readonly stylesheet: RouteStylesheet;
+  /** Trusted optional native command capability; omission leaves this route read-only. */
+  readonly maintenance?: CatalogueMaintenanceCapability;
+}
 export interface ProductSettingsRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
   readonly allowedTabs: readonly ReadOnlyProductSettingTab[];
   readonly initialTab: ReadOnlyProductSettingTab;
+  /** Only these two dictionary families have approved native maintenance commands. */
+  readonly maintenance?: {
+    readonly colors?: CatalogueMaintenanceCapability;
+    readonly fits?: CatalogueMaintenanceCapability;
+  };
 }
 export interface BarcodeSchemesRouteConfiguration { readonly stylesheet: RouteStylesheet }
 export type ReadOnlyStoreSettingsTab = 'stores' | 'warehouses';

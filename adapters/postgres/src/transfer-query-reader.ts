@@ -4,8 +4,8 @@ import type { EntityId, EntityKind } from "../../../packages/domain/src/values.t
 import { businessDate, entityId } from "../../../packages/domain/src/values.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import type { RuntimeTransferHeader } from "../../../packages/application/src/transfer-ports.ts";
-import type { TransferCatalogSku, TransferDetail, TransferDetailCatalog, TransferDetailQuery, TransferListPage, TransferListQuery, TransferReadScope, TransferReferenceNames, TransferScopedRead, TransferSummary, TransferWarehousePage, TransferWarehouseQuery, TrustedTransferSnapshotReader } from "../../../packages/application/src/transfer-query-ports.ts";
-import { activeTransferRead, checkedTransferReadScope, parseTransferDetailQuery, parseTransferListQuery, parseTransferWarehouseQuery } from "../../../packages/application/src/transfer-query-validation.ts";
+import type { TransferCatalogSku, TransferDetail, TransferDetailCatalog, TransferDetailQuery, TransferHistoryPage, TransferHistoryQuery, TransferListPage, TransferListQuery, TransferReadScope, TransferReferenceNames, TransferScopedRead, TransferSummary, TransferWarehousePage, TransferWarehouseQuery, TrustedTransferSnapshotReader } from "../../../packages/application/src/transfer-query-ports.ts";
+import { activeTransferRead, checkedTransferReadScope, parseTransferDetailQuery, parseTransferHistoryQuery, parseTransferListQuery, parseTransferWarehouseQuery } from "../../../packages/application/src/transfer-query-validation.ts";
 import { booleanValue, integerValue, nullableString, quantityFromSql, stringValue, versionFromSql } from "./codec.ts";
 
 export interface PgTransferQueryResult { readonly rows: Record<string, unknown>[]; readonly rowCount: number | null }
@@ -216,6 +216,28 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
         enabled: booleanValue(row.enabled), hallEnabled: booleanValue(row.hall_enabled) }));
       requireDomain(new Set(items.map(item => item.id)).size === items.length, "INVALID_DATABASE_VALUE", "Duplicate warehouse reference identity");
       return { page: parameters.page, pageSize: parameters.pageSize, exactTotal, items };
+    });
+  }
+  async readHistory(read: TransferScopedRead<TransferHistoryQuery>): Promise<TransferHistoryPage> {
+    const parameters = parseTransferHistoryQuery(read.parameters);
+    const p = new Predicate(checkedTransferReadScope(read.scope)); p.target(parameters.transferId);
+    return this.snapshot(read.signal, async query => {
+      const target = await query(`SELECT h.id ${RELATIONS} WHERE ${p.where()}`, [...p.values]);
+      requireDomain(target.rows.length > 0, "DOCUMENT_NOT_FOUND", "Transfer document is unavailable");
+      requireDomain(id("transfer", one(target).id) === parameters.transferId, "INVALID_DATABASE_VALUE", "Unexpected transfer history target");
+      const source = `${RELATIONS} JOIN naijue_erp.audit_change a ON a.object_id = h.id AND a.object_type = 'TRANSFER' WHERE ${p.where()}`;
+      const exactTotal = count(one(await query(`SELECT COUNT(*)::text AS exact_total ${source}`, [...p.values])).exact_total);
+      const paging = p.page(parameters.page, parameters.pageSize);
+      const rows = (await query(`SELECT a.id, a.operation_id, a.actor_account_id, a.action, ${stamp("a.occurred_at")} AS occurred_at,
+        a.old_version, a.new_version ${source} ORDER BY a.occurred_at DESC, a.id DESC ${paging}`, p.values)).rows;
+      requireDomain(rows.length <= parameters.pageSize && (rows.length === 0
+        || BigInt((parameters.page - 1) * parameters.pageSize) + BigInt(rows.length) <= exactTotal),
+        "INVALID_DATABASE_VALUE", "Transfer history exceeds exact authorized page");
+      const items = rows.map(row => ({ id: id("audit", row.id), operationId: id("operation", row.operation_id),
+        actorAccountId: id("account", row.actor_account_id), action: choice(row.action, ["SAVE", "APPROVE", "UNAPPROVE", "VOID"]),
+        occurredAt: stringValue(row.occurred_at), oldVersion: row.old_version === null ? null : versionFromSql(row.old_version), newVersion: versionFromSql(row.new_version) }));
+      requireDomain(new Set(items.map(item => item.id)).size === items.length, "INVALID_DATABASE_VALUE", "Duplicate transfer audit identity");
+      return { ...parameters, exactTotal, items };
     });
   }
   async readDetail(read: TransferScopedRead<TransferDetailQuery>): Promise<TransferDetail> {

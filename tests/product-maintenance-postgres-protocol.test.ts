@@ -17,7 +17,7 @@ barcodes: [{ id: null, barcode: "000012345 ", colorId: id(6), fitId: id(7), size
 function setup(options: { badSize?: boolean; barcodeCollision?: boolean } = {}) {
   const calls: { sql: string; values: unknown[] }[] = []; let completed = 0, seq = 900;
   const driver: PgProductMaintenanceDriver = { async transaction(work) { return work({ evidence: {
-    async assertAllowed() {}, async getReceipt() { return undefined; }, async complete(c) { completed++; return { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion }; }
+    async assertAllowed() {}, async getReceipt() { return undefined; }, async prepare() {}, async complete(c) { completed++; return { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion }; }
   }, client: { async query(sql, values = []) {
     calls.push({ sql, values: structuredClone(values) }); let rows: Record<string, unknown>[] = [];
     if (/SELECT .*FROM naijue_erp.product_category/.test(sql)) rows = [{ id: id(1) }];

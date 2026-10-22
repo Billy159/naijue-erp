@@ -8,25 +8,31 @@ import { requireDomain } from "../packages/domain/src/errors.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
 const id = (n: number) => sid("paymentAccount", n);
 const account = (key = "create-account") => ({ action: "CREATE", requestKey: key, values: { name: "SYNTHETIC ACCOUNT", enabled: true, paymentMethodId: id(1), hallIds: [id(3), id(2)] } });
-function fixture() {
+function fixture(prepareMode: "ready" | "missing" | "fail" = "ready") {
   let sequence = 100, allow = true, fault = false; const rows = new Map<string, PaymentRecord>(), receipts = new Map<string, MaintenanceReceipt>(), audit: MaintenanceCompletion[] = [];
   const dependencies: PaymentMaintenanceDependencies = { now: () => "2026-10-22T07:00:00Z", newId: kind => sid(kind, sequence++), unitOfWork: {
     async transaction(work) {
+      let prepared: MaintenanceCompletion | undefined;
       const before = structuredClone(rows), priorReceipts = structuredClone(receipts), auditLength = audit.length;
       try { return await work({ evidence: {
         async assertAllowed() { requireDomain(allow, "FORBIDDEN", "SYNTHETIC ROLE DENIED"); },
         async getReceipt(_actor, key) { return structuredClone(receipts.get(key)); },
-        async complete(c) {
+        ...(prepareMode === "missing" ? {} : { async prepare(c: MaintenanceCompletion) { if (prepareMode === "fail") throw Error("SYNTHETIC PREPARE FAILURE"); assert.equal(prepared, undefined); prepared = structuredClone(c); } }),
+        async complete(c) { assert.deepEqual(c, prepared);
           if (fault) throw Error("SYNTHETIC RECEIPT FAILURE"); const result = { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion };
           audit.push(structuredClone(c)); receipts.set(c.requestKey, { result, action: c.action, requestHash: c.requestHash, completedAt: c.completedAt }); return result;
         }
       }, async load(kind, target) { const r = rows.get(target); return r?.kind === kind ? structuredClone(r) : undefined; },
-      async validateChange() {}, async put(previous, next) { requireDomain(rows.get(next.id)?.version === previous?.version, "VERSION_CONFLICT", "Synthetic CAS"); rows.set(next.id, structuredClone(next)); } });
+      async validateChange() {}, async put(previous, next) { assert.ok(prepared, "audit must precede business mutation"); requireDomain(rows.get(next.id)?.version === previous?.version, "VERSION_CONFLICT", "Synthetic CAS"); rows.set(next.id, structuredClone(next)); } });
       } catch (error) { rows.clear(); for (const [k, v] of before) rows.set(k, v); receipts.clear(); for (const [k, v] of priorReceipts) receipts.set(k, v); audit.length = auditLength; throw error; }
     }
   } };
   return { dependencies, service: createPaymentMaintenanceService(dependencies), rows, receipts, audit, revoke: () => { allow = false; }, fault: (v: boolean) => { fault = v; } };
 }
+test("prepared payment: actual root/complete hall set share original prepared evidence and unavailable preparation writes nothing", async () => {
+  for (const mode of ["missing", "fail"] as const) { const f = fixture(mode); await assert.rejects(f.service.execute(actor, "PAYMENT_ACCOUNT", account()), mode === "missing" ? { code: "MAINTENANCE_PREPARE_NOT_READY" } : /SYNTHETIC PREPARE FAILURE/); assert.equal(f.rows.size, 0); assert.equal(f.receipts.size, 0); }
+  const f = fixture(), c = account(), saved = await f.service.execute(actor, "PAYMENT_ACCOUNT", c); assert.deepEqual(await f.service.execute(actor, "PAYMENT_ACCOUNT", c), saved); assert.equal(f.audit.length, 1); assert.ok(Array.isArray(f.audit[0]!.afterValues.payment_halls));
+});
 test("payment save: account multi-hall set, sparse root/relation audit and original-key recovery", async () => {
   const f = fixture(), c = account(), saved = await f.service.execute(actor, "PAYMENT_ACCOUNT", c);
   assert.deepEqual(Object.keys(saved).sort(), ["kind", "operationId", "targetId", "version"]); assert.deepEqual((f.rows.get(saved.targetId)! as Extract<PaymentRecord, { kind: "PAYMENT_ACCOUNT" }>).hallIds, [id(2), id(3)]);

@@ -25,7 +25,7 @@ export function createPaymentMaintenanceHttpPlugin(options: PaymentMaintenanceHt
       if (error instanceof DomainError) {
         const status = ["INVALID_PAYMENT_COMMAND", "INVALID_PARTY_INPUT", "INVALID_ID", "INVALID_HTTP_INPUT", "INVALID_REQUEST"].includes(error.code) ? 400 : error.code === "FORBIDDEN" ? 403
           : ["PAYMENT_NOT_FOUND", "RECEIPT_NOT_FOUND"].includes(error.code) ? 404 : error.code === "PAYMENT_RELATION_TOO_LARGE" ? 413
-          : ["IDEMPOTENCY_CONFLICT", "VERSION_CONFLICT", "VERSION_STORAGE_OVERFLOW", "IMMUTABLE_PAYMENT_METHOD", "INVALID_PAYMENT_STATE", "NO_PAYMENT_CHANGE", "PAYMENT_METHOD_IN_USE", "PAYMENT_REFERENCE_UNAVAILABLE", "PAYMENT_RELATION_IN_USE"].includes(error.code) ? 409 : undefined;
+          : ["IDEMPOTENCY_CONFLICT", "VERSION_CONFLICT", "VERSION_STORAGE_OVERFLOW", "IMMUTABLE_PAYMENT_METHOD", "INVALID_PAYMENT_STATE", "NO_PAYMENT_CHANGE", "PAYMENT_METHOD_IN_USE", "PAYMENT_REFERENCE_UNAVAILABLE", "PAYMENT_RELATION_IN_USE"].includes(error.code) ? 409 : error.code === "MAINTENANCE_PREPARE_NOT_READY" ? 503 : undefined;
         if (status !== undefined) return reply.code(status).send({ error: { code: error.code, message: status === 403 ? "Access denied" : "Payment maintenance rejected" } });
       }
       const code = (error as { code?: string }).code;

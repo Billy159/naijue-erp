@@ -2,7 +2,7 @@ import { entityId } from "../../domain/src/values.ts";
 import { requireDomain } from "../../domain/src/errors.ts";
 import type { TransferActor } from "./transfer-ports.ts";
 import type { TransferQueryAuthorization, TransferQueryDependencies, TransferReadIntent, TransferScopedRead } from "./transfer-query-ports.ts";
-import { activeTransferRead, checkedTransferReadScope, parseTransferDetailQuery, parseTransferListQuery, parseTransferWarehouseQuery } from "./transfer-query-validation.ts";
+import { activeTransferRead, checkedTransferReadScope, parseTransferDetailQuery, parseTransferHistoryQuery, parseTransferListQuery, parseTransferWarehouseQuery } from "./transfer-query-validation.ts";
 
 function checkedActor(actor: TransferActor): TransferActor {
   try {
@@ -24,6 +24,7 @@ export function createTransferQueryService(dependencies: TransferQueryDependenci
   if (typeof dependencies?.authorization?.authorize !== "function" || typeof dependencies?.reader?.readList !== "function"
     || typeof dependencies?.reader?.readDetail !== "function" || typeof dependencies?.reader?.readWarehouses !== "function") throw new TypeError("Transfer queries require explicit trusted authorization and snapshot reader providers");
   const authorize = dependencies.authorization.authorize.bind(dependencies.authorization); const reader = dependencies.reader;
+  const history = reader.readHistory?.bind(reader);
   async function read<P, R>(actor: TransferActor, parameters: P, intent: TransferReadIntent, signal: AbortSignal, work: (read: TransferScopedRead<P>) => Promise<R>): Promise<R> {
     const trustedActor = checkedActor(actor); activeTransferRead(signal);
     const scope = checkedTransferReadScope(await authorize(trustedActor, Object.freeze(intent), signal)); activeTransferRead(signal);
@@ -35,6 +36,13 @@ export function createTransferQueryService(dependencies: TransferQueryDependenci
     },
     readWarehouses(actor: TransferActor, input: unknown, signal: AbortSignal) {
       const parameters = parseTransferWarehouseQuery(input); return read(actor, parameters, { kind: "warehouses", parameters }, signal, reader.readWarehouses.bind(reader));
+    },
+    readHistory(actor: TransferActor, input: unknown, signal: AbortSignal) {
+      const parameters = parseTransferHistoryQuery(input);
+      return read(actor, parameters, { kind: "history", parameters }, signal, scoped => {
+        requireDomain(history !== undefined, "TRANSFER_HISTORY_UNAVAILABLE", "Explicit operation history reader required");
+        return history(scoped);
+      });
     },
     readDetail(actor: TransferActor, input: unknown, signal: AbortSignal) {
       const parameters = parseTransferDetailQuery(input); return read(actor, parameters, { kind: "detail", parameters }, signal, reader.readDetail.bind(reader));

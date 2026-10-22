@@ -50,9 +50,12 @@ export function createPaymentMaintenanceService(dependencies: PaymentMaintenance
         const oldFacts = previous ? facts(previous) : null, newFacts = facts(next), before: Record<string, MaintenanceJsonValue> = {}, after: Record<string, MaintenanceJsonValue> = {};
         for (const [k, v] of Object.entries(newFacts)) if (oldFacts === null || requestHash(v) !== requestHash(oldFacts[k])) { after[k] = v; if (oldFacts !== null) before[k] = oldFacts[k]!; }
         requireDomain(previous === undefined || Object.keys(after).some(k => k !== "version"), "NO_PAYMENT_CHANGE", "No actual payment changes supplied");
-        await tx.validateChange(previous, next); await tx.put(previous, next);
-        const result = await tx.evidence.complete({ operationId, actorAccountId: actor.accountId, requestKey: command.requestKey, requestHash: hash, kind, action: command.action,
-          targetId: id, oldVersion: previous?.version ?? null, newVersion: next.version, beforeValues: previous ? before : null, afterValues: after, completedAt: timestamp });
+        await tx.validateChange(previous, next);
+        const completion = { operationId, actorAccountId: actor.accountId, requestKey: command.requestKey, requestHash: hash, kind, action: command.action,
+          targetId: id, oldVersion: previous?.version ?? null, newVersion: next.version, beforeValues: previous ? before : null, afterValues: after, completedAt: timestamp };
+        requireDomain(typeof tx.evidence.prepare === "function", "MAINTENANCE_PREPARE_NOT_READY", "Original audit preparation is unavailable");
+        await tx.evidence.prepare(completion); await tx.put(previous, next);
+        const result = await tx.evidence.complete(completion);
         requireDomain(result.kind === kind && result.targetId === id && result.operationId === operationId && result.version === next.version, "INVALID_DATABASE_VALUE", "Receipt differs from actual payment save"); return result;
       });
     },

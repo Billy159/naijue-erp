@@ -17,7 +17,7 @@ export function createAccountMaintenanceHttpPlugin(options: AccountMaintenanceHt
     app.setErrorHandler((error, _request, reply) => {
       if (error instanceof DomainError) {
         const status = ["INVALID_ACCOUNT_COMMAND", "INVALID_ACCOUNT_PASSWORD", "INVALID_PARTY_INPUT", "INVALID_ID", "INVALID_HTTP_INPUT", "INVALID_REQUEST"].includes(error.code) ? 400 : error.code === "FORBIDDEN" ? 403
-          : ["ACCOUNT_NOT_FOUND", "RECEIPT_NOT_FOUND"].includes(error.code) ? 404 : ["VERSION_CONFLICT", "IDEMPOTENCY_CONFLICT", "VERSION_STORAGE_OVERFLOW", "NO_ACCOUNT_CHANGE", "INVALID_ACCOUNT_STATE", "ACCOUNT_REFERENCE_UNAVAILABLE", "LAST_AVAILABLE_ADMIN", "ACCOUNT_LOGIN_CONFLICT"].includes(error.code) ? 409 : error.code === "ACCOUNT_CREDENTIALS_NOT_READY" ? 503 : undefined;
+          : ["ACCOUNT_NOT_FOUND", "RECEIPT_NOT_FOUND"].includes(error.code) ? 404 : ["VERSION_CONFLICT", "IDEMPOTENCY_CONFLICT", "VERSION_STORAGE_OVERFLOW", "NO_ACCOUNT_CHANGE", "INVALID_ACCOUNT_STATE", "ACCOUNT_REFERENCE_UNAVAILABLE", "LAST_AVAILABLE_ADMIN", "ACCOUNT_LOGIN_CONFLICT"].includes(error.code) ? 409 : ["ACCOUNT_CREDENTIALS_NOT_READY", "MAINTENANCE_PREPARE_NOT_READY"].includes(error.code) ? 503 : undefined;
         if (status !== undefined) return reply.code(status).send({ error: { code: error.code, message: status === 403 ? "Access denied" : "Account maintenance rejected" } });
       }
       const code = (error as { code?: string }).code;

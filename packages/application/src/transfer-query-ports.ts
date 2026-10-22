@@ -1,6 +1,6 @@
 import type { DocumentStatus } from "../../domain/src/documents.ts";
-import type { BusinessDate, EntityId } from "../../domain/src/values.ts";
-import type { RuntimeTransferHeader, TransferActor, TransferDocument, TransferRole } from "./transfer-ports.ts";
+import type { BusinessDate, EntityId, Version } from "../../domain/src/values.ts";
+import type { RuntimeTransferHeader, TransferAction, TransferActor, TransferDocument, TransferRole } from "./transfer-ports.ts";
 
 /** Technical response bound; frozen UI choices are 20/50/100/200, not additional API business limits. */
 export const TRANSFER_QUERY_MAX_PAGE_SIZE = 200;
@@ -17,7 +17,15 @@ export interface TransferWarehouseQuery { readonly search: string; readonly sele
 export interface TransferWarehouseReference { readonly id: EntityId<"warehouse">; readonly name: string; readonly hallId: EntityId<"hall">; readonly hallName: string; readonly enabled: boolean; readonly hallEnabled: boolean }
 export interface TransferWarehousePage { readonly page: number; readonly pageSize: number; readonly exactTotal: bigint; readonly items: readonly TransferWarehouseReference[] }
 export interface TransferDetailQuery { readonly transferId: EntityId<"transfer"> }
+export interface TransferHistoryQuery { readonly transferId: EntityId<"transfer">; readonly page: number; readonly pageSize: number }
+/** Actual audit metadata only. No source HISTORY rows, private JSON or receipt substitution. */
+export interface TransferHistoryEntry {
+  readonly id: EntityId<"audit">; readonly operationId: EntityId<"operation">; readonly actorAccountId: EntityId<"account">;
+  readonly action: TransferAction; readonly occurredAt: string; readonly oldVersion: Version | null; readonly newVersion: Version;
+}
+export interface TransferHistoryPage extends TransferHistoryQuery { readonly exactTotal: bigint; readonly items: readonly TransferHistoryEntry[] }
 export type TransferReadIntent = { readonly kind: "list"; readonly parameters: TransferListQuery }
+  | { readonly kind: "history"; readonly parameters: TransferHistoryQuery }
   | { readonly kind: "detail"; readonly parameters: TransferDetailQuery }
   | { readonly kind: "warehouses"; readonly parameters: TransferWarehouseQuery };
 /** An intersection of trusted constraints; the full grant is the union of clauses.
@@ -62,6 +70,8 @@ export interface TransferDetail {
  * Fixed-count native relation queries only: no legacy projections, eager catalog, N+1 or write commands.
  * Abort checks stop subsequent work, not an already-running driver query. */
 export interface TrustedTransferSnapshotReader {
+  /** Older independent readers remain structurally valid; history fails closed when absent. */
+  readHistory?(read: TransferScopedRead<TransferHistoryQuery>): Promise<TransferHistoryPage>;
   readList(read: TransferScopedRead<TransferListQuery>): Promise<TransferListPage>;
   readDetail(read: TransferScopedRead<TransferDetailQuery>): Promise<TransferDetail>;
   readWarehouses(read: TransferScopedRead<TransferWarehouseQuery>): Promise<TransferWarehousePage>;

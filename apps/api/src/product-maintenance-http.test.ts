@@ -19,7 +19,7 @@ test("product maintenance HTTP: save/replay/original receipt traverses the actua
   const dependencies: ProductMaintenanceDependencies = { newId: kind => sid(kind, seq++), now: () => "2026-10-22T06:00:00Z", unitOfWork: {
     async transaction(work) { return work({ evidence: {
       async assertAllowed() { if (!granted) throw new DomainError("FORBIDDEN", "PRIVATE_POLICY"); }, async getReceipt(_actor, key) { return receipts.get(key); },
-      async complete(c) { const result = { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion };
+      async prepare() {}, async complete(c) { const result = { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion };
         receipts.set(c.requestKey, { requestHash: c.requestHash, action: c.action, result, completedAt: c.completedAt }); return result; }
     }, async load(target) { return p?.product.id === target ? p : undefined; },
     async readReferences(root) { return { categoryPath: [{ id: root.categoryId, name: "SYNTHETIC CATEGORY" }], sizeGroup: { id: root.sizeGroupId, name: "SYNTHETIC GROUP" },

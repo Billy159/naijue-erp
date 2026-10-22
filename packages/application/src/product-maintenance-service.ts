@@ -133,12 +133,15 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
           "NO_PRODUCT_CHANGE", "No actual product changes supplied");
         if (changedSkus.length) { after.skus = changedSkus.map(skuFacts); before.skus = changedSkus.flatMap(s => oldSkus.has(s.id) ? [skuFacts(oldSkus.get(s.id)!)] : []); }
         if (changedBarcodes.length) { after.barcodes = changedBarcodes.map(barcodeFacts); before.barcodes = changedBarcodes.flatMap(b => oldBarcodes.has(b.id) ? [barcodeFacts(oldBarcodes.get(b.id)!)] : []); }
+        const completion = { operationId, actorAccountId: actor.accountId, requestKey: command.requestKey, requestHash: hash,
+          kind: "PRODUCT" as const, action: command.action, targetId: id, oldVersion: previous?.product.version ?? null, newVersion: nextProduct.version,
+          beforeValues: previous ? before : null, afterValues: after, completedAt: timestamp };
+        requireDomain(typeof tx.evidence.prepare === "function", "MAINTENANCE_PREPARE_NOT_READY", "Original audit preparation is unavailable");
+        await tx.evidence.prepare(completion);
         await tx.putProduct(nextProduct, previous?.product);
         for (const s of changedSkus) await tx.putSku(s, oldSkus.get(s.id));
         for (const b of changedBarcodes) await tx.putBarcode(b, oldBarcodes.get(b.id));
-        const committed = await tx.evidence.complete({ operationId, actorAccountId: actor.accountId, requestKey: command.requestKey, requestHash: hash,
-          kind: "PRODUCT", action: command.action, targetId: id, oldVersion: previous?.product.version ?? null, newVersion: nextProduct.version,
-          beforeValues: previous ? before : null, afterValues: after, completedAt: timestamp });
+        const committed = await tx.evidence.complete(completion);
         const checked = result(committed);
         requireDomain(checked.operationId === operationId && checked.targetId === id && checked.version === nextProduct.version, "INVALID_DATABASE_VALUE", "Product evidence differs from saved aggregate"); return checked;
       });

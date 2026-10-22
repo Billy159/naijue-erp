@@ -2,7 +2,7 @@ import { DomainError } from "../../domain/src/errors.ts";
 import { businessDate, entityId } from "../../domain/src/values.ts";
 import type { EntityId, EntityKind } from "../../domain/src/values.ts";
 import { TRANSFER_QUERY_MAX_PAGE_SIZE } from "./transfer-query-ports.ts";
-import type { TransferDetailQuery, TransferListQuery, TransferWarehouseQuery, TransferReadScope, TransferReadScopeClause } from "./transfer-query-ports.ts";
+import type { TransferDetailQuery, TransferHistoryQuery, TransferListQuery, TransferWarehouseQuery, TransferReadScope, TransferReadScopeClause } from "./transfer-query-ports.ts";
 
 export function invalidTransferQuery(): never { throw new DomainError("INVALID_TRANSFER_QUERY", "Invalid transfer read parameters"); }
 function record(value: unknown, keys: readonly string[], optional: readonly string[] = []): Record<string, unknown> {
@@ -43,6 +43,10 @@ export function parseTransferListQuery(value: unknown): TransferListQuery {
 }
 export function parseTransferDetailQuery(value: unknown): TransferDetailQuery {
   const row = record(value, ["transferId"]); return Object.freeze({ transferId: id("transfer", row.transferId) });
+}
+export function parseTransferHistoryQuery(value: unknown): TransferHistoryQuery {
+  const row = record(value, ["transferId", "page", "pageSize"]);
+  return Object.freeze({ transferId: id("transfer", row.transferId), ...paging(row) });
 }
 export function parseTransferWarehouseQuery(value: unknown): TransferWarehouseQuery {
   const row = record(value, ["search", "selectedIds", "page", "pageSize"]);

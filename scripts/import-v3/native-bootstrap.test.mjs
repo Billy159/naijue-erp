@@ -80,3 +80,35 @@ test('nonempty target or changed source refuses; innerwritefailure remains for M
   const failing=client(f);failing.failAccount=2;await assert.rejects(b.stageBootstrap.stageNewBatch(failing,context(f)),/SYNTHETIC second account failure/);assert.equal(failing.accounts.length,1);assert.ok(failing.calls.every(sql=>!/^(BEGIN|COMMIT|ROLLBACK)\b/.test(sql)));
   await writeFile(f.sourceFile,Buffer.concat([await readFile(f.sourceFile),Buffer.from(' ')]));const untouched=client(f);await assert.rejects(b.stageBootstrap.stageNewBatch(untouched,context(f)),/FILE_CHANGED/);assert.equal(untouched.calls.length,0);
 });
+
+async function planFixture(t, mutate=()=>{}){
+ const f=await fixture(t),source=JSON.parse(await readFile(f.options.accountSourceFile,'utf8')),decisions=JSON.parse(await readFile(f.options.accountDecisionFile,'utf8')),review=JSON.parse(await readFile(f.options.reviewFile,'utf8'));
+ const approvedPlan={schemaVersion:'T03-EMPLOYEE-LOGIN-HISTORY-HANDOFF-v1',state:'USER_CONFIRMED_EMPLOYEE_INPUTS',employees:[{sourceRow:18,currentPersonKey:'current-employee|row-18',identityMatchMethod:'NEW_TO_RETAINED_EMPLOYEE_BASELINE',primarySourceEmployeeCode:null,plannedPreservedEmployeeId:null,runtimeEmployeeId:null,role:'WAREHOUSE',employmentStatusRequested:'在职',loginRequestedByUser:true}]};
+ const pb=Buffer.from(JSON.stringify(approvedPlan)),factsValue={originalEmployeeId:null,originalEmployeeCode:null,currentPersonKey:'current-employee|row-18',approvedPlanSha256:sha(pb)};
+ source.rows[2].sourceFacts=factsValue;
+ const facts={format:'SAFE_ORIGINAL_ACCOUNT_IDENTITY_FACTS_V1',sourceCaptureSha256:'PENDING',rows:source.rows.map((r,i)=>({sourceAccountId:r.sourceAccountId,oldEmployeeLinkFound:i!==2,sourceFacts:i===2?factsValue:{}}))};
+ const original=await f.options.partySource.bootstrapPartyClosure(id(11)),input=structuredClone(original.chunk.rows[0].input);input.source.sourceKey=id(12);input.source.id=id(82);input.source.rowNo='4';input.source.rawFields['来源编号']=id(12);input.source.normalizedFields['来源编号']=id(12);input.source.fieldProvenance.fields['来源编号']={origin:'ORIGINAL',reason:'SYNTHETIC source identity',raw:id(12)};input.nativeSnapshot.id=id(62);
+ const chunk=prepareNativePartyImportChunk([input]),staff={sourceKey:id(12),nativeId:id(62),role:'WAREHOUSE',hallId:null,employmentStatus:'在职',source:input.source};
+ const oldParty=f.options.partySource;f.options.partySource={verify:oldParty.verify,async bootstrapPartyClosure(key){return key===id(12)?{chunk,staff}:oldParty.bootstrapPartyClosure(key);},async authorizePartyChunk(c){validatePreparedNativePartyImportChunk(c);if(c.rows[0].input.source.sourceKey===id(12))assert.equal(c.fingerprint,chunk.fingerprint);else await oldParty.authorizePartyChunk(c);}};
+ const third={...decisions.accounts[1],sourceAccountId:id(12),sourceEmployeeNativeId:null,sourceEmployeeCode:null,staffSourceKey:id(12),nativeAccountId:id(32),nativeStaffId:id(62),identityLink:{kind:'APPROVED_CURRENT_PERSON_PLAN_V1',approvedPlanSha256:sha(pb),currentPersonKey:factsValue.currentPersonKey,sourcePlanRow:18,sourceFactsEvidenceSha256:'PENDING',staffSourceRowId:id(82),staffSourceRowSha256:pin,sourceAccountFacts:factsValue}};
+ decisions.version='NATIVE_ACCOUNT_IDENTITY_CANDIDATE_V2';decisions.accounts.push(third);decisions.unlinked=[];decisions.resolvedOriginalUnlinkedRows=1;
+ mutate({source,decisions,facts,approvedPlan});
+ const planBytes=Buffer.from(JSON.stringify(approvedPlan)),sb=Buffer.from(JSON.stringify(source));facts.sourceCaptureSha256=sha(sb);const fb=Buffer.from(JSON.stringify(facts));
+ decisions.sourceCaptureSha256=sha(sb);decisions.sourceIdentityFactsSha256=sha(fb);decisions.approvedEmployeePlanSha256=sha(planBytes);third.identityLink.sourceFactsEvidenceSha256=sha(fb);const db=Buffer.from(JSON.stringify(decisions));
+ Object.assign(review,{version:'C_NATIVE_ACCOUNT_BOOTSTRAP_REVIEW_V2',sourceCaptureSha256:sha(sb),accountDecisionSha256:sha(db),expectedLinkedRows:2,expectedUnlinkedRows:0,expectedPlanLinkedRows:1,expectedPreparedRows:3,sourceIdentityFactsSha256:sha(fb),approvedEmployeePlanSha256:sha(planBytes)});
+ const factsFile=f.sourceFile.replace('source-private.json','source-facts.json'),planFile=f.sourceFile.replace('source-private.json','approved-plan.json');
+ for(const[path,bytes]of[[f.options.accountSourceFile,sb],[f.options.accountDecisionFile,db],[f.options.reviewFile,Buffer.from(JSON.stringify(review))],[factsFile,fb],[planFile,planBytes]])await writeFile(path,bytes,{mode:0o600});
+ f.options.trustedAccountSourceSha256=sha(sb);f.options.trustedAccountDecisionSha256=sha(db);f.options.trustedReviewSha256=sha(Buffer.from(JSON.stringify(review)));f.options.identityProof={factsFile,trustedFactsSha256:sha(fb),approvedPlanFile:planFile,trustedApprovedPlanSha256:sha(planBytes)};return f;
+}
+test('V2 exact approved-current-person relationship fills the original null employee link and preserves prior native account IDs',async t=>{
+ const f=await planFixture(t),b=await openNativeImportBootstrap(f.options);t.after(()=>b.close());assert.equal(b.report.sourceAccounts,3);assert.equal(b.report.preparedAccounts,3);assert.equal(b.report.originalEmployeeUnlinked,1);assert.equal(b.report.planLinkedAccounts,1);assert.equal(b.report.unlinkedRetained,0);
+ const c=client(f);await b.authorizeStageSourceActor(f.binding.actorAccountId,f.command);assert.equal(c.calls.length,0);await b.stageBootstrap.stageNewBatch(c,context(f));assert.deepEqual(c.accounts.map(x=>x[0]),[id(30),id(31),id(32)]);
+ const captured=JSON.parse(await readFile(f.sourceFile,'utf8'));assert.equal(captured.rows[2].sourceEmployeeNativeId,null);assert.equal(captured.rows[2].sourceEmployeeCode,null);
+});
+test('V2 source plan/facts pin is mandatory and plan-key, source-account facts or source STAFF evidence mismatch refuses',async t=>{
+ const f=await planFixture(t);const {identityProof,...missing}=f.options;await assert.rejects(openNativeImportBootstrap(missing),/CONFIG/);
+ for(const mutate of [({decisions})=>{decisions.accounts[2].identityLink.currentPersonKey='current-employee|row-19';},({source})=>{source.rows[2].sourceFacts.currentPersonKey='changed';},({decisions})=>{decisions.accounts[2].identityLink.staffSourceRowId=id(999);},({approvedPlan})=>{approvedPlan.employees[0].role='ADMIN';}]){
+  const bad=await planFixture(t,mutate);await assert.rejects(openNativeImportBootstrap(bad.options),/EXACT_ACCOUNT_MAPPING|STAFF_FACTS_CHANGED/);
+ }
+ const b=await openNativeImportBootstrap(f.options);t.after(()=>b.close());await writeFile(identityProof.factsFile,'{}');const untouched=client(f);await assert.rejects(b.stageBootstrap.stageNewBatch(untouched,context(f)),/FILE_CHANGED/);assert.equal(untouched.calls.length,0);
+});

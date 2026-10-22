@@ -9,7 +9,7 @@ import { actor, sid } from "../../../tests/support/synthetic-fixtures.ts";
 test("payment HTTP: both write families, no-store, current auth/role, strict body and sanitized fault", async t => {
   let loggedIn = true, allow = true, fault = false, sequence = 100; const persisted: unknown[] = [];
   const dependencies: PaymentMaintenanceDependencies = { now: () => "2026-10-22T07:00:00Z", newId: kind => sid(kind, sequence++), unitOfWork: { async transaction(work) { return work({
-    evidence: { async assertAllowed() { if (!allow) throw new DomainError("FORBIDDEN", "PRIVATE GRANT"); }, async getReceipt() { return undefined; }, async complete(c) { if (fault) throw Error("PRIVATE SQL"); return { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion }; } },
+    evidence: { async assertAllowed() { if (!allow) throw new DomainError("FORBIDDEN", "PRIVATE GRANT"); }, async getReceipt() { return undefined; }, async prepare() {}, async complete(c) { if (fault) throw Error("PRIVATE SQL"); return { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion }; } },
     async load() { return undefined; }, async validateChange() {}, async put(_old, next) { persisted.push(next); }
   }); } } };
   const app = Fastify({ logger: false }); t.after(() => app.close()); app.register(createPaymentMaintenanceHttpPlugin({ authenticate: async () => loggedIn ? actor : null, dependencies })); await app.ready();

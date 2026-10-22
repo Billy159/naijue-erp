@@ -55,8 +55,11 @@ export function createAccountMaintenanceService(dependencies: AccountMaintenance
         }
         const old = previous ? accountMaintenanceFacts(previous) : null, current = accountMaintenanceFacts(next), before: Record<string, MaintenanceJsonValue> = {}, after: Record<string, MaintenanceJsonValue> = {};
         for (const [k, v] of Object.entries(current)) if (old === null || requestHash(v) !== requestHash(old[k])) { after[k] = v; if (old !== null) before[k] = old[k]!; }
-        await tx.put(previous, next, passwordHash);
-        const result = await tx.evidence.complete({ operationId, actorAccountId: actor.accountId, requestKey: command.requestKey, requestHash: hash, kind: "ACCOUNT", action: command.action, targetId: id, oldVersion: previous?.version ?? null, newVersion: next.version, beforeValues: previous ? before : null, afterValues: after, completedAt: timestamp });
+        if (passwordHash !== null) after.account_credentials = [{ account_id: id, action: previous ? "RESET_PASSWORD" : "CREATE" }];
+        const completion = { operationId, actorAccountId: actor.accountId, requestKey: command.requestKey, requestHash: hash, kind: "ACCOUNT" as const, action: command.action, targetId: id, oldVersion: previous?.version ?? null, newVersion: next.version, beforeValues: previous ? before : null, afterValues: after, completedAt: timestamp };
+        requireDomain(typeof tx.evidence.prepare === "function", "MAINTENANCE_PREPARE_NOT_READY", "Original audit preparation is unavailable");
+        await tx.evidence.prepare(completion); await tx.put(previous, next, passwordHash);
+        const result = await tx.evidence.complete(completion);
         requireDomain(result.kind === "ACCOUNT" && result.operationId === operationId && result.targetId === id && result.version === next.version, "INVALID_DATABASE_VALUE", "Receipt differs from actual account save"); return result;
       });
     },

@@ -15,17 +15,19 @@ function values(): ProductWriteValues {
 function sku(colorId = gid(806)): ProductSkuInput { return { id: null, expectedVersion: null, skuCode: `SKU-${colorId}`, colorId, fitId: gid(807), sizeId: gid(808), enabled: true }; }
 function barcode(item: ProductSkuInput, raw = "000012345 "): ProductBarcodeInput { return { id: null, barcode: raw, colorId: item.colorId, fitId: item.fitId, sizeId: item.sizeId, kind: "MAIN", schemeId: gid(805), enabled: true }; }
 function command(key = "create") { const s = sku(); return { action: "CREATE" as const, requestKey: key, values: values(), skus: [s], barcodes: [barcode(s)] }; }
-function fixture() {
+function fixture(prepareMode: "ready" | "missing" | "fail" = "ready") {
   let sequence = 900, product: ProductAggregate | undefined, allow = true, failComplete = false, references = true, deletable = true;
   const receipts = new Map<string, NonNullable<Awaited<ReturnType<ProductMaintenanceEvidence["getReceipt"]>>>>();
   const audit: { before: ProductAuditObject | null; after: ProductAuditObject }[] = []; let writes = 0;
   const dependencies: ProductMaintenanceDependencies = { now: () => "2026-10-22T06:00:00.000Z", newId: kind => sid(kind, sequence++), unitOfWork: {
     async transaction(work) {
+      let prepared: Parameters<ProductMaintenanceEvidence["complete"]>[0] | undefined;
       const before = structuredClone(product), receiptBefore = structuredClone(receipts), auditLength = audit.length, writeCount = writes;
       const evidence: ProductMaintenanceEvidence = {
         async assertAllowed() { requireDomain(allow, "FORBIDDEN", "SYNTHETIC DENIAL"); },
         async getReceipt(_actor, key) { return receipts.get(key); },
-        async complete(c) {
+        ...(prepareMode === "missing" ? {} : { async prepare(c: Parameters<ProductMaintenanceEvidence["complete"]>[0]) { if (prepareMode === "fail") throw Error("SYNTHETIC PREPARE FAILURE"); assert.equal(prepared, undefined); prepared = structuredClone(c); } }),
+        async complete(c) { assert.deepEqual(c, prepared);
           if (failComplete) throw Error("SYNTHETIC RECEIPT FAULT");
           const result = { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion };
           audit.push({ before: c.beforeValues, after: c.afterValues }); receipts.set(c.requestKey, { requestHash: c.requestHash, action: c.action, result, completedAt: c.completedAt }); return result;
@@ -39,7 +41,7 @@ function fixture() {
         async readCandidates(q) { return { ...q, total: 0, items: [] }; },
         async validateReferences() { requireDomain(references, "PRODUCT_SIZE_GROUP_MISMATCH", "SYNTHETIC MISMATCH"); },
         async assertCanDelete() { requireDomain(deletable, "PRODUCT_DELETE_NOT_READY", "SYNTHETIC UNKNOWN STOCK"); },
-        async putProduct(next, previous) { requireDomain(!previous || product?.product.version === previous.version, "VERSION_CONFLICT", "fixture CAS"); writes++; product = { product: structuredClone(next), skus: product?.skus ?? [], barcodes: product?.barcodes ?? [] }; },
+        async putProduct(next, previous) { assert.ok(prepared, "audit must precede business mutation"); requireDomain(!previous || product?.product.version === previous.version, "VERSION_CONFLICT", "fixture CAS"); writes++; product = { product: structuredClone(next), skus: product?.skus ?? [], barcodes: product?.barcodes ?? [] }; },
         async putSku(next) { writes++; if (!product) throw Error("Missing root"); product = { ...product, skus: [...product.skus.filter(s => s.id !== next.id), structuredClone(next)] }; },
         async putBarcode(next) { writes++; if (!product) throw Error("Missing root"); product = { ...product, barcodes: [...product.barcodes.filter(b => b.id !== next.id), structuredClone(next)] }; }
       };
@@ -49,6 +51,10 @@ function fixture() {
   return { service: createProductMaintenanceService(dependencies), state: () => structuredClone(product), receipts, audit, writes: () => writes,
     revoke: () => { allow = false; }, fault: (value: boolean) => { failComplete = value; }, badReferences: () => { references = false; }, unknownStock: () => { deletable = false; } };
 }
+test("prepared product: root and SKU/barcode writes require prepared exact evidence; missing/failing capability writes nothing", async () => {
+  for (const mode of ["missing", "fail"] as const) { const f = fixture(mode); await assert.rejects(f.service.execute(actor, command()), mode === "missing" ? { code: "MAINTENANCE_PREPARE_NOT_READY" } : /SYNTHETIC PREPARE FAILURE/); assert.equal(f.writes(), 0); assert.equal(f.state(), undefined); assert.equal(f.receipts.size, 0); }
+  const f = fixture(), c = command(), saved = await f.service.execute(actor, c); assert.deepEqual(await f.service.execute(actor, c), saved); assert.equal(f.audit.length, 1); assert.equal(f.writes(), 3);
+});
 test("product write: exact nine-price/actual SKU/raw barcode save, creation proof and original-key replay", async () => {
   const f = fixture(), c = command(), other = sku(gid(809)); c.skus.push(other); c.barcodes.push(barcode(other, "00009999"));
   const saved = await f.service.execute(actor, c), state = f.state()!;

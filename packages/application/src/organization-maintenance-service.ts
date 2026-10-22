@@ -22,8 +22,8 @@ export function createOrganizationMaintenanceService(dependencies: OrganizationW
     async execute(actorInput, kindInput, input) {
       const actor = checkedProductActor(actorInput), kind = organizationWriteKind(kindInput), command = parseOrganizationWriteCommand(kind, input), hash = requestHash({ actorAccountId: actor.accountId, kind, command });
       return dependencies.unitOfWork.transaction(async tx => {
-        await tx.lockTopology(); await authorizeOrganizationMaintenance(tx.evidence, actor, kind, command.action);
-        const original = await tx.evidence.getReceipt(actor.accountId, command.requestKey, kind);
+        await tx.lockTopology(); const original = await tx.evidence.getReceipt(actor.accountId, command.requestKey, kind);
+        await authorizeOrganizationMaintenance(tx.evidence, actor, kind, command.action);
         if (original) { requireDomain(original.requestHash === hash && original.action === command.action && original.result.kind === kind, "IDEMPOTENCY_CONFLICT", "Original hall/warehouse key differs"); await authorizeOrganizationMaintenance(tx.evidence, actor, kind, command.action); return original.result; }
         const id = command.action === "CREATE" ? entityId(kind === "HALL" ? "hall" : "warehouse", dependencies.newId(kind === "HALL" ? "hall" : "warehouse")) : command.id;
         const previous = await tx.load(kind, id);
@@ -43,14 +43,17 @@ export function createOrganizationMaintenanceService(dependencies: OrganizationW
         const old = previous ? organizationFacts(previous) : null, facts = organizationFacts(next), before: Record<string, MaintenanceJsonValue> = {}, after: Record<string, MaintenanceJsonValue> = {};
         for (const [k, v] of Object.entries(facts)) if (old === null || requestHash(v) !== requestHash(old[k])) { after[k] = v; if (old !== null) before[k] = old[k]!; }
         requireDomain(previous === undefined || Object.keys(after).some(k => k !== "version"), "NO_ORGANIZATION_CHANGE", "No actual hall/warehouse changes");
-        await tx.validateChange(previous, next); await tx.put(previous, next);
-        const result = await tx.evidence.complete({ operationId, actorAccountId: actor.accountId, requestKey: command.requestKey, requestHash: hash, kind, action: command.action, targetId: id, oldVersion: previous?.version ?? null, newVersion: next.version, beforeValues: previous ? before : null, afterValues: after, completedAt: timestamp });
+        await tx.validateChange(previous, next);
+        const completion = { operationId, actorAccountId: actor.accountId, requestKey: command.requestKey, requestHash: hash, kind, action: command.action, targetId: id, oldVersion: previous?.version ?? null, newVersion: next.version, beforeValues: previous ? before : null, afterValues: after, completedAt: timestamp };
+        requireDomain(typeof tx.evidence.prepare === "function", "MAINTENANCE_PREPARE_NOT_READY", "Original audit preparation is unavailable");
+        await tx.evidence.prepare(completion); await tx.put(previous, next);
+        const result = await tx.evidence.complete(completion);
         requireDomain(result.operationId === operationId && result.kind === kind && result.targetId === id && result.version === next.version, "INVALID_DATABASE_VALUE", "Receipt differs from actual hall/warehouse save"); return result;
       });
     },
     async receipt(actorInput, kindInput, keyInput) {
       const actor = checkedProductActor(actorInput), kind = organizationWriteKind(kindInput), key = partyRequestKey(keyInput);
-      return dependencies.unitOfWork.transaction(async tx => { await authorizeOrganizationMaintenance(tx.evidence, actor, kind, "RECEIPT"); const original = await tx.evidence.getReceipt(actor.accountId, key, kind);
+      return dependencies.unitOfWork.transaction(async tx => { const original = await tx.evidence.getReceipt(actor.accountId, key, kind); await authorizeOrganizationMaintenance(tx.evidence, actor, kind, "RECEIPT");
         requireDomain(original && original.result.kind === kind, "RECEIPT_NOT_FOUND", "Original receipt unavailable"); await authorizeOrganizationMaintenance(tx.evidence, actor, kind, original.action);
         return { requestKey: key, action: original.action, status: "COMMITTED" as const, completedAt: original.completedAt, result: original.result };
       });

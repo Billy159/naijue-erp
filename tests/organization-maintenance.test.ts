@@ -11,19 +11,26 @@ import { PostgresMaintenanceCommandUnitOfWork } from "../adapters/postgres/src/m
 import { requireDomain } from "../packages/domain/src/errors.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
 const id = (n: number) => sid("hall", n), hallValues = { name: "HALL", enabled: true, defaultCustomerId: null, defaultSalesWarehouseId: null }, warehouseValues = { name: "WAREHOUSE", enabled: true, hallId: id(1) };
-function fixture() {
+function fixture(prepareMode: "ready" | "missing" | "fail" = "ready") {
   let sequence = 100, allow = true, fault = false, locks = 0; const rows = new Map<string, OrganizationWriteRecord>(), receipts = new Map<string, MaintenanceReceipt>(), audit: MaintenanceCompletion[] = [];
   const dependencies: OrganizationWriteDependencies = { now: () => "2026-10-22T07:30:00Z", newId: kind => sid(kind, sequence++), unitOfWork: { async transaction(work) {
-    const before = structuredClone(rows), prior = structuredClone(receipts), count = audit.length;
+    let prepared: MaintenanceCompletion | undefined;
+      const before = structuredClone(rows), prior = structuredClone(receipts), count = audit.length;
     try { return await work({ async lockTopology() { locks++; }, evidence: {
       async assertAllowed() { requireDomain(allow, "FORBIDDEN", "SYNTHETIC DENIED"); }, async getReceipt(_actor, key) { return receipts.get(key); },
-      async complete(c) { if (fault) throw Error("SYNTHETIC FAULT"); const result = { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion }; audit.push(structuredClone(c)); receipts.set(c.requestKey, { action: c.action, requestHash: c.requestHash, completedAt: c.completedAt, result }); return result; }
+      ...(prepareMode === "missing" ? {} : { async prepare(c: MaintenanceCompletion) { if (prepareMode === "fail") throw Error("SYNTHETIC PREPARE FAILURE"); assert.equal(prepared, undefined); prepared = structuredClone(c); } }),
+        async complete(c) { assert.deepEqual(c, prepared); if (fault) throw Error("SYNTHETIC FAULT"); const result = { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion }; audit.push(structuredClone(c)); receipts.set(c.requestKey, { action: c.action, requestHash: c.requestHash, completedAt: c.completedAt, result }); return result; }
     }, async load(kind, target) { const row = rows.get(target); return row?.kind === kind ? structuredClone(row) : undefined; }, async validateChange() {},
-    async put(previous, next) { requireDomain(rows.get(next.id)?.version === previous?.version, "VERSION_CONFLICT", "SYNTHETIC CAS"); rows.set(next.id, structuredClone(next)); } });
+    async put(previous, next) { assert.ok(prepared, "audit must precede business mutation"); requireDomain(rows.get(next.id)?.version === previous?.version, "VERSION_CONFLICT", "SYNTHETIC CAS"); rows.set(next.id, structuredClone(next)); } });
     } catch (error) { rows.clear(); for (const [k, v] of before) rows.set(k, v); receipts.clear(); for (const [k, v] of prior) receipts.set(k, v); audit.length = count; throw error; }
   } } };
   return { dependencies, service: createOrganizationMaintenanceService(dependencies), rows, receipts, audit, locks: () => locks, fault: (v: boolean) => { fault = v; }, revoke: () => { allow = false; } };
 }
+test("prepared organization: warehouse creation proof is prepared before INSERT and missing/failing preparation cannot write", async () => {
+  const c = { action: "CREATE", requestKey: "prepared-warehouse", values: warehouseValues };
+  for (const mode of ["missing", "fail"] as const) { const f = fixture(mode); await assert.rejects(f.service.execute(actor, "WAREHOUSE", c), mode === "missing" ? { code: "MAINTENANCE_PREPARE_NOT_READY" } : /SYNTHETIC PREPARE FAILURE/); assert.equal(f.rows.size, 0); assert.equal(f.receipts.size, 0); }
+  const f = fixture(), saved = await f.service.execute(actor, "WAREHOUSE", c); assert.equal(f.audit[0]!.afterValues.created_operation_id, saved.operationId); assert.deepEqual(await f.service.execute(actor, "WAREHOUSE", c), saved); assert.equal(f.audit.length, 1);
+});
 test("organization write: new warehouse creation proof belongs to exact operation; legacy NULL remains unknown", async () => {
   const f = fixture(), c = { action: "CREATE", requestKey: "warehouse", values: warehouseValues }, saved = await f.service.execute(actor, "WAREHOUSE", c);
   const row = f.rows.get(saved.targetId)!; assert.equal(row.kind === "WAREHOUSE" && row.createdOperationId, saved.operationId); assert.equal(f.audit[0]!.afterValues.created_operation_id, saved.operationId);
@@ -53,6 +60,7 @@ function protocol(options: { crossHall?: boolean; defaultEnabled?: boolean; defa
     if (sql.startsWith("SELECT id,hall_id,enabled")) return { rows: [{ id: id(20), hall_id: options.crossHall ? id(999) : id(10), enabled: options.defaultEnabled ?? true }], rowCount: 1 };
     if (sql.startsWith("SELECT id,enabled FROM naijue_erp.hall WHERE id=")) return { rows: [{ id: id(1), enabled: true }], rowCount: 1 };
     if (sql.startsWith("SELECT id,enabled FROM naijue_erp.hall WHERE default")) return { rows: options.defaultReference ? [{ id: id(1), enabled: true }] : [], rowCount: options.defaultReference ? 1 : 0 };
+    if (sql.includes("maintenance:audit")) return { rows: [], rowCount: 1 };
     if (sql.includes("maintenance:complete")) return { rows: [{ result_data: JSON.parse(values[7] as string) as unknown }], rowCount: 1 };
     if (sql === "COMMIT" && options.commitFault) throw Error("UNKNOWN COMMIT");
     return { rows: [], rowCount: sql.startsWith("UPDATE") || sql.startsWith("INSERT") ? 1 : 0 };
@@ -63,7 +71,7 @@ const hallEdit = { action: "EDIT", requestKey: "hall-edit", id: id(10), expected
 test("organization write PG protocol: default sales warehouse requires actual same hall; old read intent unaffected", async () => {
   for (const opts of [{ crossHall: true }, { defaultEnabled: false }]) { const f = protocol(opts); await assert.rejects(f.service.execute(actor, "HALL", hallEdit), { code: "ORGANIZATION_REFERENCE_UNAVAILABLE" }); assert.equal(f.calls.at(-1)!.sql, "ROLLBACK"); assert.ok(!f.calls.some(c => c.sql.startsWith("UPDATE"))); }
   const f = protocol(); const result = await f.service.execute(actor, "HALL", hallEdit); assert.equal(result.version, 4);
-  assert.equal(f.calls[1]!.values[0], "naijue:organization-topology"); assert.ok(f.calls[2]!.sql.includes("maintenance:identity"));
+  assert.equal(f.calls[1]!.values[0], "naijue:organization-topology"); assert.ok(f.calls.findIndex(c => c.values[0]?.toString().startsWith("naijue:receipt:")) < f.calls.findIndex(c => c.sql.includes("maintenance:identity"))); assert.ok(f.calls.findIndex(c => c.sql.includes("maintenance:audit")) < f.calls.findIndex(c => c.sql.startsWith("UPDATE naijue_erp.hall")));
   assert.deepEqual(f.calls.find(c => c.sql.startsWith("UPDATE naijue_erp.hall"))!.values, [id(10), "SOURCE", true, 4, null, id(20), 3]); assert.equal(f.calls.at(-1)!.sql, "COMMIT");
 });
 test("organization write PG protocol: warehouse default protection, immutable unknown creation proof and denial", async () => {

@@ -15,6 +15,7 @@ function setup(options: { otherAdmin?: boolean; employment?: string; role?: stri
     if (sql.startsWith("SELECT id,staff_id,login_name")) return { rows: [{ id: target, staff_id: staffId, login_name: "SOURCE LOGIN", login_enabled: true, auth_version: 7, version: 9, created_at: timestamp, updated_at: timestamp }], rowCount: 1 };
     if (sql.startsWith("SELECT id,role,employment_status")) return { rows: [{ id: staffId, role: options.ownerRole ?? "ADMIN", employment_status: options.employment ?? "在职", hall_id: null }], rowCount: 1 };
     if (sql.includes("account-maintenance:other-admin")) return { rows: [{ available: options.otherAdmin ?? true }], rowCount: 1 };
+    if (sql.includes("maintenance:audit")) return { rows: [], rowCount: 1 };
     if (sql.includes("maintenance:complete")) { if (options.receiptFault) throw Error("SYNTHETIC RECEIPT FAULT"); return { rows: [{ result_data: JSON.parse(values[7] as string) as unknown }], rowCount: 1 }; }
     if (sql === "COMMIT" && options.commitFault) throw Error("UNKNOWN COMMIT");
     return { rows: [], rowCount: sql.startsWith("UPDATE") || sql.startsWith("INSERT") ? 1 : 0 };
@@ -28,7 +29,7 @@ test("account PG protocol: global-admin/key/current/target lock order, CAS+auth 
   assert.ok(admin < key && key < identity && identity < targetLock); assert.match(f.calls[targetLock]!.sql, /ORDER BY id FOR UPDATE/);
   const update = f.calls.find(c => c.sql.startsWith("UPDATE naijue_erp.user_account"))!; assert.match(update.sql, /auth_version=\$9 AND version=\$10/); assert.doesNotMatch(update.sql, /password_hash/); assert.equal(update.values[4], 8); assert.equal(update.values[5], 10); assert.equal(update.values[6], timestamp);
   const session = f.calls.find(c => c.sql.startsWith("UPDATE naijue_erp.auth_session"))!; assert.deepEqual(session.values, [target, "2026-10-22T08:30:00.000000Z"]); assert.match(session.sql, /revoked_at IS NULL/);
-  assert.ok(f.calls.findIndex(c => c.sql.includes("maintenance:audit")) > f.calls.indexOf(session)); assert.equal(f.calls.at(-1)!.sql, "COMMIT"); assert.deepEqual(f.releases, [undefined]);
+  assert.ok(f.calls.findIndex(c => c.sql.includes("maintenance:audit")) < f.calls.indexOf(update)); assert.ok(f.calls.findIndex(c => c.sql.includes("maintenance:complete")) > f.calls.indexOf(session)); assert.equal(f.calls.at(-1)!.sql, "COMMIT"); assert.deepEqual(f.releases, [undefined]);
   assert.ok(f.calls.filter(c => c.sql.includes("maintenance:audit") || c.sql.includes("maintenance:complete")).every(c => !JSON.stringify(c.values).includes("password")));
 });
 test("account PG protocol: last usable admin/current role/inactive staff rejection precedes root mutation", async () => {

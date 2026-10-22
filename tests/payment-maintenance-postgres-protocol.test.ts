@@ -19,7 +19,8 @@ function setup(options: { methodEnabled?: boolean; newHallEnabled?: boolean; met
       if (sql.startsWith("SELECT id,enabled FROM naijue_erp.hall")) return { rows: [{ id: retainedHall, enabled: false }, { id: newHall, enabled: options.newHallEnabled ?? true }], rowCount: 2 };
       if (sql.startsWith("SELECT EXISTS")) return { rows: [{ referenced: options.methodReferenced ?? false }], rowCount: 1 };
       if (sql.startsWith("DELETE FROM naijue_erp.payment_account_hall") && options.retainedSource) throw Object.assign(Error("RETAINED SOURCE"), { code: "23503" });
-      if (sql.includes("maintenance:complete")) { if (options.receiptFault) throw Error("PRIVATE RECEIPT FAULT"); return { rows: [{ result_data: JSON.parse(values[7] as string) as unknown }], rowCount: 1 }; }
+      if (sql.includes("maintenance:audit")) return { rows: [], rowCount: 1 };
+    if (sql.includes("maintenance:complete")) { if (options.receiptFault) throw Error("PRIVATE RECEIPT FAULT"); return { rows: [{ result_data: JSON.parse(values[7] as string) as unknown }], rowCount: 1 }; }
       if (sql === "COMMIT" && options.commitFault) throw Error("UNKNOWN COMMIT");
       return { rows: [], rowCount: sql.startsWith("INSERT") || sql.startsWith("UPDATE") || sql.startsWith("DELETE") ? 1 : 0 };
     }, release(error?: unknown) { releases.push(error); }
@@ -32,7 +33,7 @@ test("payment PG protocol: locked root CAS, minimal link delta, real audit and s
   assert.equal(result.version, 8); assert.equal(f.calls[0]!.sql, "BEGIN ISOLATION LEVEL READ COMMITTED"); assert.equal(f.calls.at(-1)!.sql, "COMMIT"); assert.deepEqual(f.releases, [undefined]);
   const update = f.calls.find(c => c.sql.startsWith("UPDATE naijue_erp.payment_account"))!; assert.match(update.sql, /version=\$5 AND payment_method_id=\$6::uuid/); assert.deepEqual(update.values, [target, "SOURCE ACCOUNT", true, 8, 7, methodId]);
   assert.deepEqual(f.calls.find(c => c.sql.startsWith("DELETE FROM"))!.values, [target, [oldHall]]); assert.deepEqual(f.calls.find(c => c.sql.startsWith("INSERT INTO naijue_erp.payment_account_hall"))!.values, [target, [newHall]]);
-  const audit = f.calls.find(c => c.sql.includes("maintenance:audit"))!; assert.deepEqual(Object.keys(JSON.parse(audit.values[8] as string) as object).sort(), ["payment_halls", "version"]);
+  const audit = f.calls.find(c => c.sql.includes("maintenance:audit"))!; assert.ok(f.calls.indexOf(audit) < f.calls.indexOf(update)); assert.deepEqual(Object.keys(JSON.parse(audit.values[8] as string) as object).sort(), ["payment_halls", "version"]);
   assert.ok(f.calls.findIndex(c => c.sql.includes("maintenance:complete")) > f.calls.findIndex(c => c.sql.startsWith("DELETE FROM")));
   assert.ok(f.calls.every(c => !/inventory|ledger|sales_header|history_|password_hash/.test(c.sql)));
 });

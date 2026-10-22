@@ -57,6 +57,7 @@ export interface ProductMaintenanceEvidence {
     readonly result: { readonly operationId: string; readonly kind: string; readonly targetId: string; readonly version: number };
     readonly completedAt: string;
   } | undefined>;
+  prepare?(input: Parameters<ProductMaintenanceEvidence["complete"]>[0]): Promise<void>;
   complete(input: {
     readonly operationId: string; readonly actorAccountId: string; readonly requestKey: string; readonly requestHash: string;
     readonly kind: "PRODUCT"; readonly action: ProductMaintenanceAction; readonly targetId: string;

@@ -29,7 +29,7 @@ export function createOrganizationMaintenanceHttpPlugin(options: OrganizationMai
       if (error instanceof DomainError) {
         const status = ["INVALID_ORGANIZATION_COMMAND", "INVALID_PARTY_INPUT", "INVALID_ID", "INVALID_HTTP_INPUT", "INVALID_REQUEST"].includes(error.code) ? 400
           : error.code === "FORBIDDEN" ? 403 : ["ORGANIZATION_NOT_FOUND", "RECEIPT_NOT_FOUND"].includes(error.code) ? 404
-          : ["VERSION_CONFLICT", "IDEMPOTENCY_CONFLICT", "INVALID_ORGANIZATION_STATE", "NO_ORGANIZATION_CHANGE", "VERSION_STORAGE_OVERFLOW", "ORGANIZATION_REFERENCE_UNAVAILABLE", "WAREHOUSE_DEFAULT_IN_USE"].includes(error.code) ? 409 : undefined;
+          : ["VERSION_CONFLICT", "IDEMPOTENCY_CONFLICT", "INVALID_ORGANIZATION_STATE", "NO_ORGANIZATION_CHANGE", "VERSION_STORAGE_OVERFLOW", "ORGANIZATION_REFERENCE_UNAVAILABLE", "WAREHOUSE_DEFAULT_IN_USE"].includes(error.code) ? 409 : error.code === "MAINTENANCE_PREPARE_NOT_READY" ? 503 : undefined;
         if (status !== undefined) return reply.code(status).send({ error: { code: error.code, message: status === 403 ? "Access denied" : "Hall/warehouse maintenance rejected" } });
       }
       const code = (error as { code?: string }).code;

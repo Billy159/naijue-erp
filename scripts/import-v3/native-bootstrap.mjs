@@ -34,7 +34,7 @@ const EMPTY_TABLES = ['audit_change', 'auth_session', 'barcode_scheme', 'color',
   'supplier', 'transfer_header', 'transfer_line', 'user_account', 'warehouse'];
 
 export async function openNativeImportBootstrap(options) {
-  const o = own(options, ['binding', 'accountSourceFile', 'trustedAccountSourceSha256', 'accountDecisionFile', 'trustedAccountDecisionSha256', 'reviewFile', 'trustedReviewSha256', 'partySource']);
+  const o = own(options, ['binding', 'accountSourceFile', 'trustedAccountSourceSha256', 'accountDecisionFile', 'trustedAccountDecisionSha256', 'reviewFile', 'trustedReviewSha256', 'partySource', ...(Object.hasOwn(options ?? {}, 'identityProof') ? ['identityProof'] : [])]);
   // Descriptor inspection before clone/file IO; none of these fields is inferred from the command.
   requestHash(o.binding); const b = structuredClone(o.binding);
   must(b.version === 'NATIVE_IMPORT_EXECUTION_19_V1' && uuid(b.batchId) && uuid(b.actorAccountId) && text(b.fixedSourceNamespace)
@@ -49,27 +49,56 @@ export async function openNativeImportBootstrap(options) {
   const source = await pinnedJson(o.accountSourceFile, o.trustedAccountSourceSha256), decisions = await pinnedJson(o.accountDecisionFile, o.trustedAccountDecisionSha256), review = await pinnedJson(o.reviewFile, o.trustedReviewSha256);
   must(source.format === 'PRIVATE_OLD_ACCOUNT_SOURCE_CAPTURE_V1' && Array.isArray(source.rows) && source.rows.length > 0 && source.rows.length <= 49
     && text(source.oldSourceBatchId) && hash(source.oldSourceManifestSha256), 'NATIVE_BOOTSTRAP_ACCOUNT_SOURCE');
-  must(decisions.version === 'NATIVE_ACCOUNT_IDENTITY_CANDIDATE_V1' && decisions.containsCredentials === false && decisions.containsLoginNames === false
+  const planVersion = decisions.version === 'NATIVE_ACCOUNT_IDENTITY_CANDIDATE_V2';
+  must((decisions.version === 'NATIVE_ACCOUNT_IDENTITY_CANDIDATE_V1' || planVersion) && decisions.containsCredentials === false && decisions.containsLoginNames === false
     && decisions.sourceCaptureSha256 === o.trustedAccountSourceSha256 && Array.isArray(decisions.accounts) && Array.isArray(decisions.unlinked), 'NATIVE_BOOTSTRAP_ACCOUNT_DECISIONS');
-  must(review.version === 'C_NATIVE_ACCOUNT_BOOTSTRAP_REVIEW_V1' && review.sourceCaptureSha256 === o.trustedAccountSourceSha256
+  must(review.version === (planVersion ? 'C_NATIVE_ACCOUNT_BOOTSTRAP_REVIEW_V2' : 'C_NATIVE_ACCOUNT_BOOTSTRAP_REVIEW_V1') && review.sourceCaptureSha256 === o.trustedAccountSourceSha256
     && review.accountDecisionSha256 === o.trustedAccountDecisionSha256 && hash(review.stageCommandSha256)
     && review.oldSourceBatchId === source.oldSourceBatchId && review.oldSourceManifestSha256 === source.oldSourceManifestSha256
     && requestHash(review.binding) === requestHash(b) && review.expectedSourceRows === source.rows.length
-    && review.expectedLinkedRows === decisions.accounts.length && review.expectedUnlinkedRows === decisions.unlinked.length
+    && (!planVersion || review.expectedPreparedRows === decisions.accounts.length)
+    && (planVersion || review.expectedLinkedRows === decisions.accounts.length) && review.expectedUnlinkedRows === decisions.unlinked.length
     && ['batchId', 'fixedSourceNamespace', 'selectionSha256'].every(k => decisions[k] === b[k]), 'NATIVE_BOOTSTRAP_REVIEW_BINDING');
   const sourceById = new Map(), nativeAccounts = new Set(), nativeStaff = new Set(), logins = new Set(), prepared = [];
   const linked = source.rows.filter(row => row.sourceEmployeeNativeId !== null), unlinked = source.rows.filter(row => row.sourceEmployeeNativeId === null);
-  must(linked.length === decisions.accounts.length && unlinked.length === decisions.unlinked.length, 'NATIVE_BOOTSTRAP_FULL_ACCOUNT_SET');
+  must(review.expectedLinkedRows === linked.length && (planVersion ? decisions.accounts.length === source.rows.length && decisions.unlinked.length === 0
+    && decisions.resolvedOriginalUnlinkedRows === unlinked.length && review.expectedPlanLinkedRows === unlinked.length : linked.length === decisions.accounts.length && unlinked.length === decisions.unlinked.length), 'NATIVE_BOOTSTRAP_FULL_ACCOUNT_SET');
+  let identityProof, identityFacts, approvedPlan;
+  if (planVersion) {
+    identityProof = own(o.identityProof, ['factsFile', 'trustedFactsSha256', 'approvedPlanFile', 'trustedApprovedPlanSha256']);
+    identityFacts = await pinnedJson(identityProof.factsFile, identityProof.trustedFactsSha256);
+    approvedPlan = await pinnedJson(identityProof.approvedPlanFile, identityProof.trustedApprovedPlanSha256);
+    must(identityFacts.format === 'SAFE_ORIGINAL_ACCOUNT_IDENTITY_FACTS_V1' && identityFacts.sourceCaptureSha256 === o.trustedAccountSourceSha256
+      && Array.isArray(identityFacts.rows) && identityFacts.rows.length === source.rows.length && new Set(identityFacts.rows.map(r => r.sourceAccountId)).size === source.rows.length
+      && approvedPlan.schemaVersion === 'T03-EMPLOYEE-LOGIN-HISTORY-HANDOFF-v1' && approvedPlan.state === 'USER_CONFIRMED_EMPLOYEE_INPUTS' && Array.isArray(approvedPlan.employees)
+      && decisions.sourceIdentityFactsSha256 === identityProof.trustedFactsSha256 && decisions.approvedEmployeePlanSha256 === identityProof.trustedApprovedPlanSha256
+      && review.sourceIdentityFactsSha256 === identityProof.trustedFactsSha256 && review.approvedEmployeePlanSha256 === identityProof.trustedApprovedPlanSha256, 'NATIVE_BOOTSTRAP_PLAN_PROOF');
+  } else must(!Object.hasOwn(o, 'identityProof'), 'NATIVE_BOOTSTRAP_PLAN_PROOF');
+  function exactPlanLink(mapping, row) {
+    if (!planVersion || row.sourceEmployeeNativeId !== null || row.sourceEmployeeCode !== null || mapping.staffSourceKey !== row.sourceAccountId) return false;
+    const f = identityFacts.rows.find(r => r.sourceAccountId === row.sourceAccountId), link = mapping.identityLink;
+    if (!f || f.oldEmployeeLinkFound !== false || !link || link.kind !== 'APPROVED_CURRENT_PERSON_PLAN_V1') return false;
+    const facts = f.sourceFacts, original = row.sourceFacts;
+    if (!facts || !original || facts.originalEmployeeId !== null || facts.originalEmployeeCode !== null || facts.approvedPlanSha256 !== identityProof.trustedApprovedPlanSha256
+      || !['originalEmployeeId', 'originalEmployeeCode', 'currentPersonKey', 'approvedPlanSha256'].every(k => original[k] === facts[k])
+      || requestHash(link.sourceAccountFacts) !== requestHash(facts) || link.approvedPlanSha256 !== facts.approvedPlanSha256
+      || link.currentPersonKey !== facts.currentPersonKey || link.sourceFactsEvidenceSha256 !== identityProof.trustedFactsSha256) return false;
+    const plans = approvedPlan.employees.filter(p => p.currentPersonKey === facts.currentPersonKey);
+    if (plans.length !== 1) return false; const p = plans[0];
+    return p.sourceRow === link.sourcePlanRow && p.identityMatchMethod === 'NEW_TO_RETAINED_EMPLOYEE_BASELINE'
+      && p.primarySourceEmployeeCode === null && p.plannedPreservedEmployeeId === null && p.runtimeEmployeeId === null
+      && p.role === row.sourceRole && p.employmentStatusRequested === row.sourceEmploymentStatus && p.loginRequestedByUser === row.sourceLoginEnabled;
+  }
   for (const row of source.rows) {
     must(text(row.sourceAccountId) && !sourceById.has(row.sourceAccountId) && row.oldSourceBatchId === source.oldSourceBatchId, 'NATIVE_BOOTSTRAP_ACCOUNT_IDENTITY');
     sourceById.set(row.sourceAccountId, row);
     // All captured formats are checked, including retained unlinked records. No password is read.
     wrapTrustedLegacyCredential({ salt: row.credentialSalt, hash: row.credentialHash });
   }
-  must(requestHash(decisions.unlinked.map(r => r.sourceAccountId).sort()) === requestHash(unlinked.map(r => r.sourceAccountId).sort()), 'NATIVE_BOOTSTRAP_UNLINKED_SET');
+  must(planVersion || requestHash(decisions.unlinked.map(r => r.sourceAccountId).sort()) === requestHash(unlinked.map(r => r.sourceAccountId).sort()), 'NATIVE_BOOTSTRAP_UNLINKED_SET');
   for (const mapping of decisions.accounts) {
     const row = sourceById.get(mapping.sourceAccountId);
-    must(row && row.sourceEmployeeNativeId !== null && row.sourceAccountId === row.sourceEmployeeNativeId && mapping.staffSourceKey === row.sourceEmployeeNativeId
+    must(row && (row.sourceEmployeeNativeId !== null ? row.sourceAccountId === row.sourceEmployeeNativeId && mapping.staffSourceKey === row.sourceEmployeeNativeId && !Object.hasOwn(mapping, 'identityLink') : exactPlanLink(mapping, row))
       && mapping.sourceEmployeeNativeId === row.sourceEmployeeNativeId && mapping.sourceEmployeeCode === row.sourceEmployeeCode
       && Number.isSafeInteger(row.sourceAccountVersion) && row.sourceAccountVersion === mapping.sourceAccountVersion
       && uuid(mapping.nativeAccountId) && mapping.nativeAccountId !== row.sourceAccountId && !nativeAccounts.has(mapping.nativeAccountId)
@@ -80,14 +109,15 @@ export async function openNativeImportBootstrap(options) {
     must(staff.sourceKey === mapping.staffSourceKey && staff.nativeId === mapping.nativeStaffId && staff.role === mapping.nativeRole && staff.role === row.sourceRole
       && staff.hallId === mapping.nativeHallId && staff.employmentStatus === row.sourceEmploymentStatus
       && (staff.source.normalizedFields['所属厅来源编号'] || null) === row.sourceHallId
-      && (row.sourceStoreId === null || row.sourceStoreId === row.sourceHallId), 'NATIVE_BOOTSTRAP_STAFF_FACTS_CHANGED');
+      && (row.sourceStoreId === null || row.sourceStoreId === row.sourceHallId)
+      && (row.sourceEmployeeNativeId !== null || mapping.identityLink.staffSourceRowId === staff.source.id && mapping.identityLink.staffSourceRowSha256 === staff.source.rowSha256), 'NATIVE_BOOTSTRAP_STAFF_FACTS_CHANGED');
     must(await party.authorizePartyChunk(closure.chunk) === undefined, 'NATIVE_BOOTSTRAP_PARTY_AUTHORIZATION');
     prepared.push({ sourceAccountId: row.sourceAccountId, nativeId: mapping.nativeAccountId, staffId: mapping.nativeStaffId, loginName: row.loginName,
       passwordHash: wrapTrustedLegacyCredential({ salt: row.credentialSalt, hash: row.credentialHash }), loginEnabled: row.sourceLoginEnabled && row.sourceEnabled,
       sourceRole: row.sourceRole, sourceEmploymentStatus: row.sourceEmploymentStatus, hallId: mapping.nativeHallId, staffSourceKey: mapping.staffSourceKey });
     nativeAccounts.add(mapping.nativeAccountId); nativeStaff.add(mapping.nativeStaffId); logins.add(row.loginName);
   }
-  must(prepared.length === linked.length && new Set(prepared.map(r => r.sourceAccountId)).size === linked.length, 'NATIVE_BOOTSTRAP_FULL_ACCOUNT_SET');
+  must(prepared.length === (planVersion ? source.rows.length : linked.length) && new Set(prepared.map(r => r.sourceAccountId)).size === prepared.length, 'NATIVE_BOOTSTRAP_FULL_ACCOUNT_SET');
   const importer = prepared.filter(row => row.sourceRole === 'ADMIN' && row.sourceEmploymentStatus === '在职' && row.loginEnabled && row.hallId === null)
     .sort((a, b) => a.sourceAccountId < b.sourceAccountId ? -1 : a.sourceAccountId > b.sourceAccountId ? 1 : 0)[0];
   must(importer && importer.nativeId === b.actorAccountId && decisions.importerCandidate.sourceAccountId === importer.sourceAccountId
@@ -97,7 +127,9 @@ export async function openNativeImportBootstrap(options) {
   const active = () => must(!closed, 'NATIVE_BOOTSTRAP_CLOSED');
   async function verifySources() {
     active(); await pinnedJson(o.accountSourceFile, o.trustedAccountSourceSha256); await pinnedJson(o.accountDecisionFile, o.trustedAccountDecisionSha256);
-    await pinnedJson(o.reviewFile, o.trustedReviewSha256); must(await party.verify() === undefined, 'NATIVE_BOOTSTRAP_PARTY_AUTHORIZATION'); active();
+    await pinnedJson(o.reviewFile, o.trustedReviewSha256);
+    if (planVersion) { await pinnedJson(identityProof.factsFile, identityProof.trustedFactsSha256); await pinnedJson(identityProof.approvedPlanFile, identityProof.trustedApprovedPlanSha256); }
+    must(await party.verify() === undefined, 'NATIVE_BOOTSTRAP_PARTY_AUTHORIZATION'); active();
   }
   async function authorizeStageSourceActor(actorAccountId, command) {
     active(); validateCutoffImportCommand(command);
@@ -109,7 +141,7 @@ export async function openNativeImportBootstrap(options) {
   }
   return {
     report: Object.freeze({ kind: 'NATIVE_IMPORT_PRIVATE_SOURCE_ACCOUNT_BOOTSTRAP_V1', sourceAccounts: source.rows.length, preparedAccounts: prepared.length,
-      unlinkedRetained: unlinked.length, importerSourceAccountId: importer.sourceAccountId, importerNativeAccountId: importer.nativeId,
+      unlinkedRetained: decisions.unlinked.length, originalEmployeeUnlinked: unlinked.length, planLinkedAccounts: planVersion ? unlinked.length : 0, importerSourceAccountId: importer.sourceAccountId, importerNativeAccountId: importer.nativeId,
       credentialsExposed: false, newDatabaseWrites: 0, fullImportReady: false }),
     authorizeStageSourceActor,
     stageBootstrap: { async stageNewBatch(client, input) {

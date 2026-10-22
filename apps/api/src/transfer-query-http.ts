@@ -38,7 +38,7 @@ export function createTransferQueryHttpPlugin(options: TransferQueryHttpOptions)
     app.addHook("onResponse", async request => { reads.get(request)?.cleanup(); reads.delete(request); actors.delete(request); });
     app.setErrorHandler((error, _request, reply) => {
       if (error instanceof DomainError) {
-        const statuses: Readonly<Record<string, number>> = { INVALID_TRANSFER_QUERY: 400, FORBIDDEN: 403, DOCUMENT_NOT_FOUND: 404, TRANSFER_READ_TOO_LARGE: 413, TRANSFER_READ_ABORTED: 408 };
+        const statuses: Readonly<Record<string, number>> = { TRANSFER_HISTORY_UNAVAILABLE: 503, INVALID_TRANSFER_QUERY: 400, FORBIDDEN: 403, DOCUMENT_NOT_FOUND: 404, TRANSFER_READ_TOO_LARGE: 413, TRANSFER_READ_ABORTED: 408 };
         const status = Object.hasOwn(statuses, error.code) ? statuses[error.code] : undefined;
         if (status !== undefined) return reply.code(status).send({ error: { code: error.code, message: status === 403 ? "Access denied" : "Transfer read rejected" } });
       }
@@ -49,7 +49,7 @@ export function createTransferQueryHttpPlugin(options: TransferQueryHttpOptions)
       // Malformed trusted facts, unknown SQL failures and provider details never become successful empty pages or leaked errors.
       return reply.code(500).send({ error: { code: "INTERNAL_ERROR", message: "The transfer read could not be completed" } });
     });
-    for (const [url, read] of [["/transfers/query", service.readList], ["/transfers/detail/query", service.readDetail], ["/transfers/warehouses/query", service.readWarehouses]] as const) {
+    for (const [url, read] of [["/transfers/history/query", service.readHistory], ["/transfers/query", service.readList], ["/transfers/detail/query", service.readDetail], ["/transfers/warehouses/query", service.readWarehouses]] as const) {
       app.post(url, { bodyLimit: 65_536 }, async (request, reply) => {
         if (!request.query || typeof request.query !== "object" || Array.isArray(request.query) || Object.keys(request.query).length) invalidTransferQuery();
         if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") {
