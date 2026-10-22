@@ -27,6 +27,8 @@ POLICY = {'Name': 'unless-stopped', 'MaximumRetryCount': 0}
 NO = {'Name': 'no', 'MaximumRetryCount': 0}
 # Reviewed 842f source. A different helper requires a new reviewed boot-tool version.
 DEPLOYMENT_SHA256 = 'a03a8bd34f68b2df1589a4c057a4bb8315368205b0842fc4856bb2aa882fad5a'
+# Explicit exact26-r1 only; adoption depends on C90's independent source review.
+DEPLOYMENT26_SHA256 = '543b1a594c1661e9eb3ffe7d03bbc98d0184a6d9a9cb5694f0c0e63d962ffa38'
 
 
 class Refused(Exception):
@@ -158,10 +160,24 @@ def binding(p):
 
 def deployment_binding(dp):
     """Pure plan shape checks; actual server artifacts are verified only on execution."""
+    selector = dp.get('runtimeSelector', 'schema19')
+    need(selector in ('schema19', 'exact26-r1'), 'UNKNOWN_DEPLOYMENT_RUNTIME_SELECTOR')
+    if selector == 'exact26-r1':
+        refs = dp.get('runtime26')
+        need(isinstance(refs, dict) and set(refs) == {'upgradeReceipt', 'review', 'independentReview', 'buildReceipt', 'sourceManifest', 'buildManifest'},
+             'CLOSED_EXACT26_REFERENCES_REQUIRED')
+        for ref in [*refs.values(), dp.get('newDatabaseReceipt', {})]:
+            need(isinstance(ref, dict) and set(ref) == {'path', 'sha256'} and HASH.fullmatch(ref.get('sha256', '')), 'PINNED_EXACT26_REFERENCE_REQUIRED')
+            safe(ref['path'], exists=False)
+            need(Path(ref['path']) != ROOT and Path(ref['path']).is_relative_to(ROOT), 'PERMANENT_EXACT26_REFERENCE_REQUIRED')
+        need(len({row['path'] for row in refs.values()}) == 6, 'DISTINCT_EXACT26_REFERENCES_REQUIRED')
+    else:
+        need('runtime26' not in dp, 'EXACT26_REFERENCES_REQUIRE_EXPLICIT_SELECTOR')
     need(dp.get('format') == 'naijue-candidate-deployment-v1' and
          re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}', dp.get('buildId', '')) and
          re.fullmatch(r'[a-f0-9]{40}', dp.get('sourceCommit', '')) and
-         dp.get('publicOrigin') == 'https://1n5635n614.goho.co' and dp.get('schemaVersions') == list(range(1, 20)),
+         dp.get('publicOrigin') == 'https://1n5635n614.goho.co' and
+         dp.get('schemaVersions') == list(range(1, 27) if selector == 'exact26-r1' else range(1, 20)),
          'EXACT_DEPLOYMENT_IDENTITY_REQUIRED')
     need(dp.get('releaseDirectory') == str(ROOT / 'releases' / dp['buildId']) and
          HASH.fullmatch(dp.get('archive', {}).get('sha256', '')), 'EXACT_RELEASE_DIRECTORY_AND_ARCHIVE_REQUIRED')
@@ -207,14 +223,16 @@ def load_plan(filename):
              row['activeState'] in ('active', 'inactive') and row['subState'] in ('exited', 'dead') and
              row['dropIns'] == [], 'KNOWN_LEGACY_BASELINE_REQUIRED_NO_EXISTING_DROPINS')
     need(p.get('restartPolicies') == {name: POLICY for name in OLD}, 'EXACT_OLD_RESTART_POLICY_REQUIRED')
+    # Select from the hash-bound base plan before executing either known helper.
+    dp = reference(p.get('deploymentPlan'))
+    deployment_binding(dp)
+    helper_sha = DEPLOYMENT26_SHA256 if dp.get('runtimeSelector') == 'exact26-r1' else DEPLOYMENT_SHA256
     # Execute only the bytes that were actually hash-checked, not a second import path lookup.
-    need(p.get('deploymentTool', {}).get('sha256') == DEPLOYMENT_SHA256, 'REVIEWED_DEPLOYMENT_HELPER_REQUIRED')
+    need(p.get('deploymentTool', {}).get('sha256') == helper_sha, 'REVIEWED_DEPLOYMENT_HELPER_REQUIRED')
     source = reference(p.get('deploymentTool'), False)
     d = types.ModuleType('fixed_deployment_implementation')
     d.__file__ = p['deploymentTool']['path']
     exec(compile(source, d.__file__, 'exec'), d.__dict__)
-    dp = reference(p.get('deploymentPlan'))
-    deployment_binding(dp)
     dp['stageReceipt'] = p['stageReceipt']
     stage = reference(p['stageReceipt'])
     need(stage.get('status') == 'CANDIDATE_STAGED_HEALTH_ONLY_NOT_BUSINESS' and
@@ -222,6 +240,9 @@ def load_plan(filename):
          stage.get('archiveSha256') == dp['archive']['sha256'] and
          stage.get('manifestSha256') == dp['manifest']['sha256'] and
          HASH.fullmatch(stage.get('installedPayloadSha256', '')), 'EXACT_STAGE_RECEIPT_REQUIRED')
+    runtime_pin = d.runtime_binding(dp) if dp.get('runtimeSelector') == 'exact26-r1' else None
+    need(stage.get('schemaVersions') == dp['schemaVersions'] and stage.get('runtime26BindingSha256') == runtime_pin,
+         'STAGED_RUNTIME_SELECTION_OR_REVIEW_CHANGED')
     for role in ('app', 'stageWeb'):
         need(HASH.fullmatch(stage.get('containers', {}).get(role, {}).get('id', '')) and
              HASH.fullmatch(stage['containers'][role].get('specSha256', '')), 'EXACT_CANDIDATE_IDS_REQUIRED')
@@ -250,6 +271,7 @@ def load_plan(filename):
              a.get('oldWebId') == dp['beforeCAS']['services'][OLD[1]]['id'] and
              HASH.fullmatch(a.get('publicContainer', {}).get('id', '')) and
              HASH.fullmatch(a['publicContainer'].get('specSha256', '')), 'EXACT_ACTIVATION_RECEIPT_REQUIRED')
+        need(a.get('runtime26BindingSha256') == runtime_pin, 'ACTIVATED_RUNTIME_SELECTION_OR_REVIEW_CHANGED')
     return p, d, dp, stage
 
 
@@ -357,6 +379,11 @@ def artifacts(p, d, dp, stage):
          'PERSISTED_PAYLOAD_OR_DEPENDENCY_CHANGED')
     need(d.file_identity(dp['runtimeConfiguration']['path']) == dp['runtimeConfiguration']['identity'], 'PRIVATE_RUNTIME_IDENTITY_CHANGED')
     need(d.file_hash(dp['nginxConfiguration']['path']) == dp['nginxConfiguration']['sha256'], 'PROXY_CONFIGURATION_CHANGED')
+    if dp.get('runtimeSelector') == 'exact26-r1':
+        need(stage.get('runtime26BindingSha256') == d.runtime_binding(dp), 'EXACT26_PERSISTED_RUNTIME_BINDING_CHANGED')
+        # Reuse the pinned C90 metadata/source/build gate, without archive/backup replay or PG traffic.
+        d.validate_runtime26(dp, manifest, d.reference(dp['newDatabaseReceipt']), d.json_file(dp['runtimeConfiguration']['path'], private=True))
+        need(d.file_identity(dp['runtimeConfiguration']['path']) == dp['runtimeConfiguration']['identity'], 'PRIVATE_RUNTIME_CHANGED_DURING_METADATA_VALIDATION')
 
 
 def persistent_references(p, dp):
@@ -368,6 +395,10 @@ def persistent_references(p, dp):
              'PERMANENT_PREEXISTING_BOOT_AUDIT_REQUIRED')
     need(Path(dp['runtimeConfiguration']['path']).is_relative_to(ROOT) and
          Path(dp['nginxConfiguration']['path']).is_relative_to(ROOT), 'PERMANENT_RUNTIME_CONFIG_REFERENCE_REQUIRED')
+    if dp.get('runtimeSelector') == 'exact26-r1':
+        for ref in [*dp['runtime26'].values(), dp['newDatabaseReceipt']]:
+            need(Path(ref['path']).is_relative_to(ROOT) and not Path(ref['path']).is_relative_to(owner_root(p)),
+                 'PREEXISTING_PERMANENT_EXACT26_REFERENCE_REQUIRED')
 
 
 def fenced(p):
@@ -427,6 +458,8 @@ def fence(p, d, dp, stage, journal):
     d.check_old(dp, docker)
     old_identity(p, d, dp, docker)
     candidate(p, d, dp, stage, docker)
+    if dp.get('runtimeSelector') == 'exact26-r1':
+        artifacts(p, d, dp, stage)  # Refuse changed metadata before writing any legacy fence.
     state = observe(p, d, dp, stage)
     need(state['publicCandidateByName'] is None, 'PUBLIC_CANDIDATE_EXISTS_BEFORE_FENCE')
     need(state['ownerUnit']['sha256'] is None and state['ownerUnit']['state']['UnitFileState'] in ('', 'not-found'),

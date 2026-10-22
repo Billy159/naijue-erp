@@ -2,7 +2,7 @@
 
 `boot-entry.py` is a separate C-owned preparation tool. It is **not integrated** into the reviewed `deploy-candidate.py` / `rollback-candidate.py` pair. Imports and normal invocations are inert; the default prints `PLAN_ONLY_NOT_EXECUTED`. No server installation, reboot, Docker restart, production switch or persistent availability has been tested by this source delivery.
 
-The deployment helper is reused only at its reviewed SHA256 `a03a8bd34f68b2df1589a4c057a4bb8315368205b0842fc4856bb2aa882fad5a`. Another version is refused before Python import. C must arrange a reviewed source update if that helper changes. The three existing deployment files are not modified by this work.
+The deployment helper remains pinned by exact bytes before Python import. An omitted or explicit `schema19` selector keeps the original helper SHA256 `a03a8bd34f68b2df1589a4c057a4bb8315368205b0842fc4856bb2aa882fad5a`. Only the hash-bound base deployment plan with `runtimeSelector:"exact26-r1"` selects C90 helper SHA256 `543b1a594c1661e9eb3ffe7d03bbc98d0184a6d9a9cb5694f0c0e63d962ffa38`, conditional on C adopting its independent source review. Unknown selectors, helper versions and implicit schema26 plans are refused. This successor does not change the deployment/rollback implementations or execute their stage/activate functions.
 
 ## Why this shape
 
@@ -84,6 +84,18 @@ IDs are lowercase letters/digits/hyphens; replace `UNIQUE` with lowercase concre
 For `arm`, add SHA-bound `fenceReceipt` (the earlier typed `boot-entry.json`) and `activationReceipt`. Stage and activation receipts must be the permanent files `releaseDirectory/stage-receipt.json` and `releaseDirectory/activation-receipt.json`. `bootAudit` and all its evidence must already live under the permanent rapid-launch root, outside this new fence directory. Runtime/proxy configuration references must also remain under that root. This avoids depending on disposable dispatcher bundles after reboot.
 
 `arm` saves copies of both Python helpers and the base plan in its own root. The original base-reference identity is retained only for fence comparison; the boot process imports the checked installed copies. The verified installed payload manifest is consumed directly from `releaseDirectory/payload/release-manifest.json`.
+
+## Explicit exact26 R1 successor
+
+The boot plan format and phase arguments stay unchanged. The SHA-bound `deploymentPlan` supplies the explicit technical selector; no separate auto-upgrade switch exists. Legacy plans keep exact1..19. The successor requires exact1..26, the C90 closed-six `runtime26` references (`upgradeReceipt`, `review`, `independentReview`, `buildReceipt`, `sourceManifest`, `buildManifest`) and the existing C05 `newDatabaseReceipt` as permanent canonical, single-link, non-symlink SHA references below `/srv/naijue-erp/rapid-launch-20261022`. These seven public metadata references must already exist outside the new fence directory. C05 remains the original prefix19 evidence, and C38 remains the actual20..26/final-patch evidence; neither is relabelled or replayed.
+
+Stage and activation must carry exactly C90's `runtime26BindingSha256`, computed from the six public references and private-file path/stat identity. The source/build/archive IDs and stage receipt SHA continue to match through the original checks. The private configuration is never content-hashed or exported. C90's source implementation of stage creation selects `source-confirmed-native-exact26-r1-v1`, closed10, `documentCommands:DISABLED`, and `--exact26-r1`. Boot only starts that same exact candidate CID/spec; it never creates a substitute app or changes its command, mounts, credentials or grants.
+
+The two permanent public files remain individually read-only mounted at `/run/naijue-rewrite/runtime26/C-RUNTIME-REVIEW.json` and `/run/naijue-rewrite/runtime26/INDEPENDENT-REVIEW.json`. C must freeze the permanent-path review bytes and new SHA. JOB42's temporary-path `e48df427...` review cannot be reused as that permanent pin. No missing review path or hash is filled with a placeholder.
+
+Before writing an exact26 legacy fence, and at the existing arm/boot artifact gate, this successor reuses C90's `validate_runtime26` against the installed manifest and permanent public metadata. It checks the C05/C38 migration/source chain, fixed backend source/build graph, exact C41 R1 catalog/target, five metadata-only purposes and the bound closed10 private config. It also checks private file stat identity after reading. This is a bounded file/reference check; it performs no SQL, function re-audit, issuer substitution, backup replay, package reinstall or deployment. It deliberately does not call full `validate_references` at every reboot, which would incorrectly demand a fresh original deployment backup after the accepted activation. Original activation backup/dataReady/QF/QB/write-boundary gates remain with the deployment owner.
+
+The accepted C41 target pins the PG postmaster start and server address. A real PG restart or address change can make the original issuer refuse the old review, as intended. This boot proposal cannot refresh, weaken or self-sign that target. C must record the actual new target/catalog review where required. A prepared/armed owner is still not proof of successful unattended host/PG reboot, public HTTPS or real business readiness; actual boot remains `NOT_DONE` until separately observed.
 
 ## Required boot-actor audit
 
