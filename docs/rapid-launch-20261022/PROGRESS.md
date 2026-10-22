@@ -1,6 +1,6 @@
 # Rapid launch current progress - 2026-10-22
 
-Nine existing C/F1/F2/F3/D1/D2/D3/QF/QB chats and22 tasks; gpt-6.1-sol/xhigh. Do not recreate roles, redispatch in-flight work, or retest unchanged accepted scopes.
+Nine existing C/F1/F2/F3/D1/D2/D3/QF/QB chats and22 tasks; gpt-6-astra/xhigh (C: gpt-6-astra/ultra). Do not recreate roles, redispatch in-flight work, or retest unchanged accepted scopes.
 
 - C00 VERIFIED: current source preservation, screened50 Demo files and finite ownership registered; original openingf8352b3 remains valid.
 - C01 VERIFIED: human confirmed all A-D of C01-20261022-v1 (63columns/6tables/listed constraints), FIELD-APPROVAL-C01-v1.json. D1 exclusively owns0020-0024. No unlisted field approval inferred.
@@ -14,3 +14,5 @@ Nine existing C/F1/F2/F3/D1/D2/D3/QF/QB chats and22 tasks; gpt-6.1-sol/xhigh. Do
 - D3 native preparation did one bounded real-source read, created private identity/party/product candidate artifacts; independent rule/byte review and external C pins still required. Eleven production source factories are incomplete, real import not done. Business cutoff directly source-bound2026-10-04T12:00:00+08:00; C batch/namespace frozen privately.21raw MAIN-to-old candidates require exact occurrence/human-rule confirmation; only their branch waits.
 
 GitHub last verified2c622b3; newer local checkpoints require next push/readback. Only code/redacted continuation records enter Git; real source rows, credentials and protected backups remain private. C is sole server/Git/root/shared-contract owner. Next: save latest role receipts, push current checkpoint, finish real-source mappings/actors, apply R1 ACL and conduct actual query/auth checks before first public batch.
+
+Current model directive: user explicitly changed all eight implementation/review chats to Astra/xhigh and C to Astra/ultra; actual nine tool overrides accepted. Continue existing scopes; original taskbook model lines are historical and overridden.

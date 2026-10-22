@@ -37,8 +37,8 @@
       "prompt": "角色派工提示词/C-主控与集成发布.txt",
       "threadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
       "hostId": "local",
-      "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "ultra",
       "sourceWriteEnabled": false
     },
     "F1": {
@@ -51,7 +51,7 @@
       "prompt": "角色派工提示词/F1-前端单据与公共界面.txt",
       "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
       "hostId": "local",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true
     },
@@ -64,7 +64,7 @@
       "prompt": "角色派工提示词/F2-前端库存与商品.txt",
       "threadId": "01a161d2-6bd9-7181-8386-1ecddddd386a",
       "hostId": "local",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true
     },
@@ -76,7 +76,7 @@
       "prompt": "角色派工提示词/F3-前端基础设置.txt",
       "threadId": "01a161d2-6f11-7412-8001-14719ced78d0",
       "hostId": "local",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true
     },
@@ -90,7 +90,7 @@
       "prompt": "角色派工提示词/D1-后端宿主事务与公共迁移.txt",
       "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
       "hostId": "local",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true
     },
@@ -103,7 +103,7 @@
       "prompt": "角色派工提示词/D2-后端商品与基础资料维护.txt",
       "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
       "hostId": "local",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true
     },
@@ -117,7 +117,7 @@
       "prompt": "角色派工提示词/D3-后端库存历史与导入.txt",
       "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
       "hostId": "local",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true
     },
@@ -129,7 +129,7 @@
       "prompt": "角色派工提示词/QF-前端独立验收.txt",
       "threadId": "01a161d2-717e-7f50-87bc-73a2d91f90a3",
       "hostId": "local",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": false
     },
@@ -141,7 +141,7 @@
       "prompt": "角色派工提示词/QB-后端独立验收.txt",
       "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
       "hostId": "local",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": false
     }
@@ -151,8 +151,8 @@
       "id": "C00",
       "title": "接手、当前源码保全、GitHub首个检查点",
       "owner": "C",
-      "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "ultra",
       "status": "VERIFIED",
       "startDependencies": [],
       "completionDependencies": [],
@@ -182,8 +182,8 @@
       "id": "C01",
       "title": "字段确认与接口冻结",
       "owner": "C",
-      "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "ultra",
       "status": "VERIFIED",
       "startDependencies": [
         "B00"
@@ -216,8 +216,8 @@
       "id": "C02",
       "title": "生产运行与发布准备（和开发并行）",
       "owner": "C",
-      "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "ultra",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -247,7 +247,7 @@
       "id": "B00",
       "title": "数据和API差异输入",
       "owner": "D1",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "CODE_DONE",
       "startDependencies": [
@@ -277,7 +277,7 @@
       "id": "B01",
       "title": "真实生产宿主与端到端装配",
       "owner": "D1",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -306,7 +306,7 @@
       "id": "B02",
       "title": "单据事务、唯一编号与保存审核闭环",
       "owner": "D1",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -335,7 +335,7 @@
       "id": "B03",
       "title": "库存资格与查询热路径",
       "owner": "D3",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -365,7 +365,7 @@
       "id": "B04",
       "title": "商品与资料能力",
       "owner": "D2",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -395,7 +395,7 @@
       "id": "B05",
       "title": "厅仓、人员账号、往来单位、资金配置",
       "owner": "D2",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -425,7 +425,7 @@
       "id": "B06",
       "title": "批次真实导入、发布与历史读取（R1前置）",
       "owner": "D3",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -454,7 +454,7 @@
     },
     {
       "id": "B07",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -487,7 +487,7 @@
       "id": "F01",
       "title": "公共壳、认证、跨模块新增",
       "owner": "F1",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -516,7 +516,7 @@
       "id": "F02",
       "title": "销货/退换与调拨",
       "owner": "F1",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -546,7 +546,7 @@
       "id": "F03",
       "title": "库存",
       "owner": "F2",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -576,7 +576,7 @@
       "id": "F04",
       "title": "商品、分类、字典、条码与图片",
       "owner": "F2",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -605,7 +605,7 @@
       "id": "F05",
       "title": "基础设置",
       "owner": "F3",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -634,7 +634,7 @@
       "id": "F06",
       "title": "历史操作、输出及35/65差异收口",
       "owner": "F1",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -665,8 +665,8 @@
       "id": "C03",
       "title": "同版本集成与最小验收",
       "owner": "C",
-      "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "ultra",
       "status": "NOT_STARTED",
       "startDependencies": [
         "C00"
@@ -695,8 +695,8 @@
       "id": "C04",
       "title": "分批发布",
       "owner": "C",
-      "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "ultra",
       "status": "NOT_STARTED",
       "startDependencies": [
         "C02",
@@ -727,8 +727,8 @@
       "id": "C05",
       "title": "最终接续与收口",
       "owner": "C",
-      "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "ultra",
       "status": "NOT_STARTED",
       "startDependencies": [
         "C04"
@@ -757,7 +757,7 @@
       "id": "QF01",
       "title": "前端独立验收任务",
       "owner": "QF",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "WAITING_FIXED_CANDIDATE",
       "startDependencies": [
@@ -786,7 +786,7 @@
       "id": "QB01",
       "title": "后端独立验收任务",
       "owner": "QB",
-      "model": "gpt-6.1-sol",
+      "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -869,7 +869,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T06:34:05.078899+00:00",
+  "updatedAt": "2026-10-22T06:59:57.641211+00:00",
   "stage": "C00_VERIFIED_SIX_DEVELOPERS_SOURCE_OPEN",
   "lastVerifiedRemoteCommit": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -901,5 +901,18 @@
       "candidateCommit": "768f4794cba6b2b826728d3ae7c258ffe0dd4e5d",
       "reviewer": "QB"
     }
-  ]
+  ],
+  "currentModelDirective": {
+    "source": "User: all chats Astra xhigh; subsequent user: controller Astra Ultra",
+    "controller": {
+      "model": "gpt-6-astra",
+      "reasoningEffort": "ultra"
+    },
+    "otherEightRoles": {
+      "model": "gpt-6-astra",
+      "reasoningEffort": "xhigh"
+    },
+    "actualSettingAction": "send_message_to_thread with explicit model/thinking applied to all nine existing chat IDs; all calls accepted",
+    "historicalModelEvidenceRetained": true
+  }
 }

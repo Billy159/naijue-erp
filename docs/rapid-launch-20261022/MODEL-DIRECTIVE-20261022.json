@@ -1,0 +1,14 @@
+{
+  "recordedAtUtc": "2026-10-22T06:59:57.641211+00:00",
+  "source": "User: all chats Astra xhigh; subsequent user: controller Astra Ultra",
+  "controller": {
+    "model": "gpt-6-astra",
+    "reasoningEffort": "ultra"
+  },
+  "otherEightRoles": {
+    "model": "gpt-6-astra",
+    "reasoningEffort": "xhigh"
+  },
+  "actualSettingAction": "send_message_to_thread with explicit model/thinking applied to all nine existing chat IDs; all calls accepted",
+  "historicalModelEvidenceRetained": true
+}

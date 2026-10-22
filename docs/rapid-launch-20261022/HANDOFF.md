@@ -1,6 +1,6 @@
 # Continue here
 
-Read PROGRESS.md, TASKS.json, WRITE-OWNERSHIP.json, API-CONTRACTS.md, VERIFICATION-INDEX.json and operational-checkpoints. Reuse nine existing chats/22 tasks at gpt-6.1-sol/xhigh. Original architecture and taskbook in references/rapid-launch-taskbook-20261022 remain authoritative; do not restart C00 or repeat sealed18.
+Read PROGRESS.md, TASKS.json, WRITE-OWNERSHIP.json, API-CONTRACTS.md, VERIFICATION-INDEX.json and operational-checkpoints. Reuse nine existing chats/22 tasks at gpt-6-astra/xhigh (C: gpt-6-astra/ultra). Original architecture and taskbook in references/rapid-launch-taskbook-20261022 remain authoritative; do not restart C00 or repeat sealed18.
 
 Only work/erp-local-source-20261022 is the writeable application repo. K=../local-takeover-20261021-control holds local/private reports. Old formal repo and frozen Demo read-only. GitHub remote github is Billy159/naijue-erp; origin is local bundle. Branch codex/local-takeover-wip-20261022-082411, last verified remote2c622b3. New local stages includea770,d38,790,b061 and latest source checkpoint. Push/readback required, no force/reset/broad add; unrelated role WIP is unstaged.
 
@@ -15,3 +15,5 @@ Proactive meaningful reports authorized by human message01a161f7-a5e8-7e10-9059-
 Private B06 execution binding in K/import-authority-binding/EXECUTION-BINDING-C-v1.json: batch aeeba5c6-fb54-4b94-bf80-93d98212a70d, source namespace naijue:tplus:primary-ledger,cutoff2026-10-04T12:00:00+08:00, selection964038...; actualactor/target/payload still to bind. D3 private native candidates require QB independent rule/byte review then C external pins. Current21MAIN aliases cannot use normalization metadata as human approval; preserve exact raw bytes/bindings and ask only specific genuine unresolved rule. Other factories continue.
 
 Meaningful next actions: finish role source fixes/real reads/editor; D1 legacy PBKDF2 compatibility and source credential migration contract; source mapping/authorizers; least-privileged actual R1 target; real import+auth+queries; original-URL phased release and35page/65overlay acceptance. Overall goal remains active and is not completed by this handoff or partial deployment.
+
+Current model directive: user explicitly changed all eight implementation/review chats to Astra/xhigh and C to Astra/ultra; actual nine tool overrides accepted. Continue existing scopes; original taskbook model lines are historical and overridden.
