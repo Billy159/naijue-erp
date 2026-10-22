@@ -66,6 +66,12 @@ export function TransferPageView(props: TransferPageProps) {
   const success = snapshot.success; const data = success?.data; const busy = snapshot.phase === 'loading'; const size = (success?.parameters.pageSize ?? initialSize) as TransferPageSize;
   let dirty = false; try { dirty = !!success && JSON.stringify(transferParameters(draft, size).filter) !== JSON.stringify(success.parameters.filter); } catch { dirty = !!success; }
   const run = (parameters: Readonly<TransferListQuery>) => { setInputError(false); didRead.current = true; const revision = commandRevision; void query.run(parameters).then(outcome => { if (scope.active && outcome.status === 'success') setListRevision(revision); }); };
+  const reset = () => {
+    if (!scope.active || target !== null) return;
+    const cleared = emptyTransferFilter(); setDraft(cleared);
+    if (results.current) { results.current.scrollTop = 0; results.current.scrollLeft = 0; }
+    run(transferParameters(cleared, size));
+  };
   const pendingSize = snapshot.request?.parameters.pageSize; const changingSize = !!data && pendingSize !== undefined && pendingSize !== size;
   if (!scope.active || snapshot.phase === 'disposed') return <div className="tc-empty" role="status"><strong>当前读取范围已关闭</strong><p>旧身份结果已清除，请重新进入调拨页。</p></div>;
   return <div className="transfer-route"><section className="tc-workbench tc-list transfer-list" hidden={target !== null}>
@@ -77,12 +83,12 @@ export function TransferPageView(props: TransferPageProps) {
         <label><span>状态</span><TransferStatusSelect value={draft.statuses} onChange={statuses => setDraft(previous => ({ ...previous, statuses }))} /></label>
         <label><span>调出仓库</span><TransferWarehouseSelect scope={scope} reader={props.references} label="调出仓库" value={draft.from} onChange={from => setDraft(previous => ({ ...previous, from }))} /></label>
         <label><span>调入仓库</span><TransferWarehouseSelect scope={scope} reader={props.references} label="调入仓库" value={draft.to} onChange={to => setDraft(previous => ({ ...previous, to }))} /></label>
-        <div className="tc-filter-actions"><UIButton type="button" className="iw-text-button tc-filter-toggle" aria-expanded={advanced} aria-controls="transfer-extra-filters" onClick={() => setAdvanced(value => !value)}><span className="iw-filter-icon" aria-hidden="true">☷</span><span>{advanced ? '收起筛选' : '高级筛选'}</span>{draft.number.trim() && <span className="iw-filter-count">1</span>}<span aria-hidden="true">{advanced ? '▴' : '▾'}</span></UIButton><UIButton type="submit" className="iw-button iw-primary" disabled={busy}>查询</UIButton><UIButton type="button" className="iw-button" onClick={() => { setDraft(emptyTransferFilter()); setInputError(false); }}>重置</UIButton></div>
+        <div className="tc-filter-actions"><UIButton type="button" className="iw-text-button tc-filter-toggle" aria-expanded={advanced} aria-controls="transfer-extra-filters" onClick={() => setAdvanced(value => !value)}><span className="iw-filter-icon" aria-hidden="true">☷</span><span>{advanced ? '收起筛选' : '高级筛选'}</span>{draft.number.trim() && <span className="iw-filter-count">1</span>}<span aria-hidden="true">{advanced ? '▴' : '▾'}</span></UIButton><UIButton type="submit" className="iw-button iw-primary" disabled={busy}>查询</UIButton><UIButton type="button" className="iw-button" onClick={reset}>重置</UIButton></div>
       </div>
       {advanced && <div className="tc-filter-row tc-filter-secondary" id="transfer-extra-filters"><label className="tc-number-field"><span>调拨单号</span><UIInput className="iw-control" aria-label="调拨单号" autoComplete="off" placeholder="输入单号模糊搜索" value={draft.number} maxLength={200} onChange={nextValue => setDraft(previous => ({ ...previous, number: nextValue }))} /></label></div>}
       {inputError && <p className="transfer-notice" role="alert">筛选条件无效，请检查日期、单号及仓库选择数量。</p>}
     </form>
-    <p className="ui-query-note" role="status">{dirty ? '条件已修改，点击“查询”更新结果；当前仍为上次结果。' : '修改条件后点击“查询”；“重置”仅清空条件，查询后生效。'}</p>
+    <p className="ui-query-note" role="status">{dirty ? '条件已修改，点击“查询”更新结果；当前仍为上次结果。' : '修改条件后点击“查询”；“重置”清空条件并重新查询第 1 页。'}</p>
     {success && commandRevision > listRevision && <p className="transfer-notice" role="status">调拨操作已提交，下方仍是操作前的列表结果。<UIButton type="button" className="iw-link" disabled={busy} onClick={() => run(success.parameters)}>刷新当前列表范围</UIButton></p>}
     {snapshot.phase === 'error' && <p className="transfer-notice" role="alert">调拨查询失败。{data && '以下保留上次成功结果，并非本次新结果。'}{changingSize && ` 本次 ${pendingSize} 张/页读取失败，当前仍为 ${size} 张/页。`}<UIButton type="button" className="iw-link" onClick={() => { if (snapshot.request) run(snapshot.request.parameters); }}>重试</UIButton></p>}
     {busy && <p className="transfer-notice" role="status">{data ? '正在查询，以下仍为上次已执行范围的结果。' : '正在查询调拨单…'}<UIButton type="button" className="iw-link" onClick={() => query.cancel()}>取消本次读取</UIButton></p>}

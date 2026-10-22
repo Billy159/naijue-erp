@@ -21,24 +21,28 @@ interface Props extends ProductEditorFieldsProps {
  readonly selection:ProductSpecSelection;readonly changeSelection:(kind:'colors'|'fits',ids:readonly string[])=>void;
 }
 export function ProductEditorSpecs(props:Props){
- const [adding,setAdding]=useState(false),[selecting,setSelecting]=useState<'colors'|'fits'|null>(null),[names,setNames]=useState<Readonly<Record<string,string>>>({});
+ const [adding,setAdding]=useState(false),[editingSkus,setEditingSkus]=useState(false),[selecting,setSelecting]=useState<'colors'|'fits'|null>(null),[names,setNames]=useState<Readonly<Record<string,string>>>({});
  const label=(kind:string,id:string)=>props.labels[`${kind}:${id}`]??names[`${kind}:${id}`]??'资料未提供';
  const colors=props.selection.colors,fits=props.selection.fits;
  return <div className="product-editor-spec-stack">
   {props.existing&&<ExistingSpecLabels {...props} setNames={setNames}/>}
-  <section><div className="product-editor-section-head"><h3>颜色</h3><UIButton disabled={props.disabled} onClick={()=>setSelecting('colors')}>编辑颜色</UIButton></div><div className="product-editor-spec-values">{colors.length?colors.map(id=><span key={id}>{label('colors',id)}</span>):<span>未设置</span>}</div></section>
-  <section><h3>尺码组</h3><div className="product-editor-group"><span>选择尺码组</span><ProductCandidateSelect scope={props.scope} reader={props.reader} kind="size-groups" label="尺码组" value={props.values.sizeGroupId||null} currentLabel={props.labels[`size-groups:${props.values.sizeGroupId}`]??null} disabled={props.disabled} onAccessFailure={props.onAccessFailure} onChange={(id,name)=>{props.remember(id,name,'size-groups');props.change({sizeGroupId:id??''});}}/></div></section>
-  <section><div className="product-editor-section-head"><h3>版型</h3><UIButton disabled={props.disabled} onClick={()=>setSelecting('fits')}>编辑版型</UIButton></div><div className="product-editor-spec-values">{fits.length?fits.map(id=><span key={id}>{label('fits',id)}</span>):<span>未设置</span>}</div></section>
-  <section><div className="product-editor-section-head"><h3>规格明细</h3><UIButton disabled={props.disabled||!props.values.sizeGroupId} onClick={()=>setAdding(true)}>新增规格</UIButton></div>
+  <section><div className="product-editor-section-head"><h3>颜色</h3><UIButton variant="text" disabled={props.disabled} onClick={()=>setSelecting('colors')}>编辑颜色</UIButton></div><div className="product-editor-spec-values">{colors.length?colors.map(id=><span key={id}>{label('colors',id)}</span>):<span>未设置</span>}</div></section>
+  <section><div className="product-editor-section-head"><h3>尺码组</h3></div><div className="product-editor-group"><span>选择尺码组</span><ProductCandidateSelect scope={props.scope} reader={props.reader} kind="size-groups" label="尺码组" value={props.values.sizeGroupId||null} currentLabel={props.labels[`size-groups:${props.values.sizeGroupId}`]??null} disabled={props.disabled} onAccessFailure={props.onAccessFailure} onChange={(id,name)=>{props.remember(id,name,'size-groups');props.change({sizeGroupId:id??''});}}/></div></section>
+  <section><div className="product-editor-section-head"><h3>版型</h3><UIButton variant="text" disabled={props.disabled} onClick={()=>setSelecting('fits')}>编辑版型</UIButton></div><div className="product-editor-spec-values">{fits.length?fits.map(id=><span key={id}>{label('fits',id)}</span>):<span>未设置</span>}</div></section>
+  {editingSkus&&<StandardOverlay title="规格明细" closeLabel="关闭规格明细" width={900} className="product-sku-maintenance" close={()=>setEditingSkus(false)} footer={close=><UIButton onClick={close}>完成</UIButton>}>
+   <div className="product-editor-section-head"><span>修改随商品保存。</span><UIButton disabled={props.disabled||!props.values.sizeGroupId} onClick={()=>setAdding(true)}>新增规格</UIButton></div>
    <table className="product-editor-spec-table"><thead><tr><th>规格编码</th><th>颜色</th><th>版型</th><th>尺码</th><th>启用</th><th>操作</th></tr></thead><tbody>{props.skus.map((sku,index)=><tr key={sku.id??JSON.stringify([sku.colorId,sku.fitId,sku.sizeId])}><td>{sku.skuCode}</td><td>{label('colors',sku.colorId)}</td><td>{label('fits',sku.fitId)}</td><td>{label('sizes',sku.sizeId)}</td><td><UICheckbox disabled={props.disabled} checked={sku.enabled} onChange={enabled=>props.changeSkus(props.skus.map((item,i)=>i===index?{...item,enabled}:item))}/></td><td>{sku.id===null&&<UIButton disabled={props.disabled} onClick={()=>props.changeSkus(props.skus.filter((_,i)=>i!==index))}>删除未保存规格</UIButton>}</td></tr>)}</tbody></table>
-  </section>{adding&&<AddSku {...props} close={()=>setAdding(false)}/>} {selecting&&<SpecSelection {...props} kind={selecting} names={names} close={()=>setSelecting(null)}/>}</div>;
+  </StandardOverlay>}
+  {adding&&<AddSku {...props} close={()=>setAdding(false)}/>}
+  {selecting&&<SpecSelection {...props} kind={selecting} names={names} close={()=>setSelecting(null)} maintainSkus={()=>setEditingSkus(true)}/>}
+ </div>;
 }
-function SpecSelection(props:Props&{readonly kind:'colors'|'fits';readonly names:Readonly<Record<string,string>>;readonly close:()=>void}){
+function SpecSelection(props:Props&{readonly kind:'colors'|'fits';readonly names:Readonly<Record<string,string>>;readonly close:()=>void;readonly maintainSkus:()=>void}){
  const [query,setQuery]=useState<LatestQuery<ProductMaintenanceCandidateQuery,ProductMaintenanceCandidatePage>|null>(null);
  useEffect(()=>{const next=new LatestQuery<ProductMaintenanceCandidateQuery,ProductMaintenanceCandidatePage>({scope:props.scope,execute:async read=>{try{return await props.reader.readCandidates(read);}catch(error){if(props.scope.active&&!read.signal.aborted&&error instanceof HttpQueryError&&(error.kind==='unauthenticated'||error.kind==='forbidden'))props.onAccessFailure(error);throw error;}}});setQuery(next);return()=>next.dispose();},[props.scope,props.reader,props.kind]);
  return query&&props.scope.active?<SpecSelectionContent {...props} query={query}/>:null;
 }
-function SpecSelectionContent(props:Props&{readonly kind:'colors'|'fits';readonly names:Readonly<Record<string,string>>;readonly close:()=>void;readonly query:LatestQuery<ProductMaintenanceCandidateQuery,ProductMaintenanceCandidatePage>}){
+function SpecSelectionContent(props:Props&{readonly kind:'colors'|'fits';readonly names:Readonly<Record<string,string>>;readonly close:()=>void;readonly maintainSkus:()=>void;readonly query:LatestQuery<ProductMaintenanceCandidateQuery,ProductMaintenanceCandidatePage>}){
  const label=props.kind==='colors'?'颜色':'版型',snapshot=useSyncExternalStore(props.query.subscribe,props.query.getSnapshot,props.query.getSnapshot);
  const [selected,setSelected]=useState([...props.selection[props.kind]]),[search,setSearch]=useState(''),previous=useRef('');
  const remembered=useRef(new Map(props.selection[props.kind].map(id=>[id,{key:id,value:props.labels[`${props.kind}:${id}`]??props.names[`${props.kind}:${id}`]??'资料未提供',code:''}])));
@@ -47,8 +51,8 @@ function SpecSelectionContent(props:Props&{readonly kind:'colors'|'fits';readonl
  const data=snapshot.phase==='success'&&snapshot.success?.parameters.search===search?snapshot.success.data:null;
  const current=new Map((data?.items??[]).map(item=>[item.id,{key:item.id,value:item.name,code:item.code??''}]));
  const rows=new Map([...remembered.current,...current]);
- const apply=()=>{for(const id of selected){const item=rows.get(id);if(item&&item.value!=='资料未提供')props.remember(id,item.value,props.kind);}props.changeSelection(props.kind,selected);props.close();};
- return <StandardOverlay title={`编辑${label}`} closeLabel={`关闭编辑${label}`} className="product-spec-transfer-modal" width={780} close={props.close} onReady={()=>{if(props.query.getSnapshot().phase==='idle')run();}} footer={close=><><UIButton onClick={close}>取消</UIButton><UIButton className="primary" onClick={apply}>确定</UIButton></>}>
+ const apply=()=>{if(props.disabled)return;for(const id of selected){const item=rows.get(id);if(item&&item.value!=='资料未提供')props.remember(id,item.value,props.kind);}props.changeSelection(props.kind,selected);props.close();};
+ return <StandardOverlay title={`编辑${label}`} closeLabel={`关闭编辑${label}`} className="product-spec-transfer-modal" width={780} close={props.close} onReady={()=>{if(props.query.getSnapshot().phase==='idle')run();}} footer={close=><><UIButton className="product-spec-maintain-entry" disabled={props.disabled} onClick={()=>{if(props.disabled)return;apply();props.maintainSkus();}}>确定并维护规格</UIButton><UIButton onClick={close}>取消</UIButton><UIButton className="primary" disabled={props.disabled} onClick={apply}>确定</UIButton></>}>
   <Transfer className="product-spec-transfer" dataSource={[...rows.values()]} targetKeys={selected} showSearch searchPlaceholder={['搜索名称或编码','搜索已选']} titleTexts={[`可选${label}`,`已选${label}`]} operationTexts={['加入已选','移除已选']} filterOption={(q,item)=>`${item.value} ${rows.get(item.key)?.code??''}`.toLocaleLowerCase().includes(q.toLocaleLowerCase())}
    onSearch={(value,direction)=>{if(direction==='source'){props.query.cancel();setSearch(value);}}}
    onChange={keys=>{const next=keys.filter(key=>rows.has(key));for(const id of next)remembered.current.set(id,rows.get(id)!);setSelected(next);}}/>

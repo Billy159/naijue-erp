@@ -92,3 +92,17 @@
 .product-editor .product-price-table input.erp-input:hover{border-color:var(--ca-control-border-hover)}
 .product-editor .product-price-table input.erp-input:focus{border-color:var(--ca-control-focus-border)}
 .product-editor .product-price-wrap>.product-field-hint{margin-top:6px}
+
+/* DATA-PRES-001: three-section Demo body; real SKU maintenance stays in the edit flow. */
+.product-editor-spec-stack{max-width:1000px;gap:0}
+.product-editor-spec-stack>section{padding:7px 0 10px;border-bottom:1px solid var(--ca-line)}
+.product-editor-spec-stack>section h3{font-size:14px;font-weight:600}
+.product-editor-spec-stack>section .product-editor-section-head{justify-content:space-between;min-height:30px;margin:0 0 5px}
+.product-editor-spec-stack>section .product-editor-section-head button{min-height:28px;height:28px;padding:2px 7px;border:0;color:var(--ca-primary-ink);font-size:13px;font-weight:400}
+.product-editor-spec-stack>section .product-editor-section-head button:hover{background:var(--ca-primary-hover-soft)}
+.product-editor-spec-stack .product-editor-spec-values{gap:6px;min-height:27px;align-items:center}
+.product-editor-spec-stack .product-editor-spec-values>span{padding:3px 7px;border-radius:2px;line-height:20px}
+.product-editor-spec-stack .product-editor-group{gap:10px;max-width:none;margin:3px 0 8px;color:var(--ca-ink-2)}
+.product-editor-spec-stack .product-editor-group>.product-editor-select{flex:none;width:min(320px,70%)}
+.product-spec-maintain-entry{margin-right:auto}
+.product-sku-maintenance .product-editor-section-head{justify-content:space-between}

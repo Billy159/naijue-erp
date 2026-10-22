@@ -72,6 +72,12 @@ export function SalesPageView({ controller, references, loadDetailStyles, write 
   const pendingSize = snapshot.request?.parameters.pageSize; const changingSize = !!data && pendingSize !== undefined && pendingSize !== size;
   let dirty = false; try { dirty = !!success && JSON.stringify(salesParameters(draft, size).filter) !== JSON.stringify(success.parameters.filter); } catch { dirty = !!success; }
   const run = (parameters: Readonly<SalesListQuery>) => { setInputError(false); requestedWriteRevision.current = write?.commitRevision ?? 0; void query.run(parameters); };
+  const reset = () => {
+    if (!scope.active || detailActive) return;
+    const cleared = emptySalesFilter(); setDraft(cleared);
+    if (results.current) { results.current.scrollTop = 0; results.current.scrollLeft = 0; }
+    run(salesParameters(cleared, size));
+  };
   const reference = (kind: SalesReferenceKind) => <div className="iw-field sales-reference"><span>{refLabels[kind]}</span><SalesReferenceMultiSelect popupHost={referencePopupHost} active={!detailActive} scope={scope} reader={references} kind={kind} label={refLabels[kind]} value={draft[kind]} onChange={value => setDraft(previous => ({ ...previous, [kind]: value }))} /></div>;
   if (snapshot.phase === 'disposed' || !scope.active) return <div className="iw-empty" role="status"><strong>当前读取范围已关闭</strong><p>旧身份结果已清除，请重新进入销货页。</p></div>;
   const advancedCount = [draft.number.trim(), draft.customer.length > 0, draft.warehouse.length > 0].filter(Boolean).length;
@@ -84,12 +90,12 @@ export function SalesPageView({ controller, references, loadDetailStyles, write 
         <div className="iw-field"><span>状态</span><SalesStatusSelect scope={scope} popupHost={referencePopupHost} active={!detailActive} value={draft.statuses} onChange={statuses => setDraft(value => ({ ...value, statuses }))} /></div>
         <div className="iw-field"><span>业务类型</span><SalesBusinessTypeSelect scope={scope} popupHost={referencePopupHost} active={!detailActive} value={draft.businessTypes} onChange={businessTypes => setDraft(value => ({ ...value, businessTypes }))} /></div>
         {reference('hall')}{reference('salesperson')}
-        <div className="tc-filter-actions"><UIButton type="button" className="iw-text-button tc-filter-toggle" aria-expanded={advanced} aria-controls="sales-extra-filters" onClick={() => setAdvanced(value => !value)}><span aria-hidden="true">☷</span><span>{advanced ? '收起筛选' : '高级筛选'}</span>{advancedCount > 0 && <span className="iw-filter-count">{advancedCount}</span>}<span aria-hidden="true">{advanced ? '▴' : '▾'}</span></UIButton><UIButton type="submit" className="iw-button iw-primary">查询</UIButton><UIButton type="button" className="iw-button" onClick={() => { setDraft(emptySalesFilter()); setInputError(false); }}>重置</UIButton></div>
+        <div className="tc-filter-actions"><UIButton type="button" className="iw-text-button tc-filter-toggle" aria-expanded={advanced} aria-controls="sales-extra-filters" onClick={() => setAdvanced(value => !value)}><span aria-hidden="true">☷</span><span>{advanced ? '收起筛选' : '高级筛选'}</span>{advancedCount > 0 && <span className="iw-filter-count">{advancedCount}</span>}<span aria-hidden="true">{advanced ? '▴' : '▾'}</span></UIButton><UIButton type="submit" className="iw-button iw-primary">查询</UIButton><UIButton type="button" className="iw-button" onClick={reset}>重置</UIButton></div>
       </div>
       {advanced && <div className="tc-filter-row tc-filter-secondary" id="sales-extra-filters"><label className="iw-field"><span>单号</span><UIInput className="iw-control" aria-label="单号" autoComplete="off" placeholder="输入单号模糊搜索" value={draft.number} maxLength={200} onChange={nextValue => setDraft(value => ({ ...value, number: nextValue }))} /></label>{reference('customer')}{reference('warehouse')}</div>}
       {inputError && <p className="iw-alert" role="alert">筛选条件无效，请检查日期顺序及单号。</p>}
     </form>
-    <p className="ui-query-note" role="status" data-pending={dirty}>{dirty ? '条件已修改，点击“查询”更新结果；当前仍为上次结果。' : '修改条件后点击“查询”；“重置”仅清空条件，查询后生效。'}</p>
+    <p className="ui-query-note" role="status" data-pending={dirty}>{dirty ? '条件已修改，点击“查询”更新结果；当前仍为上次结果。' : '修改条件后点击“查询”；“重置”清空条件并重新查询第 1 页。'}</p>
     {data && write && write.commitRevision > appliedWriteRevision && <p className="iw-alert" role="status">本页仍是单据操作前的查询结果，状态、数量和金额尚未刷新；点击“查询”读取当前范围。</p>}
     {snapshot.phase === 'error' && <div className="iw-alert" role="alert">销货查询失败。{data && '以下保留上次成功结果，并非本次新结果。'}{changingSize && ` 本次 ${pendingSize} 张/页读取失败，当前仍显示 ${size} 张/页。`}<UIButton type="button" className="iw-link" onClick={() => { if (snapshot.request) run(snapshot.request.parameters); }}>重试</UIButton></div>}
     {busy && <div className="iw-loading-note" role="status">{data ? changingSize ? `正在按 ${pendingSize} 张/页更新，以下仍为 ${size} 张/页的上次结果。` : '正在更新，以下为上次已执行范围的结果。' : '正在加载销货单…'}<UIButton type="button" className="iw-link" onClick={() => query.cancel()}>取消本次读取</UIButton></div>}
