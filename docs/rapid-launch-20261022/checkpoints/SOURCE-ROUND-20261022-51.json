@@ -1,0 +1,21 @@
+{
+  "atUtc": "2026-10-22T18:36:35.232848+00:00",
+  "parent": "1e78910976aa7541fe165fc91de948bf0b2e003a",
+  "groups": [
+    {
+      "slice": "PRODUCT_TAB_AND_SINGLE_SELECT_SCOPED_CASCADE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-UI-02-DELIVERY-v1.json",
+      "receiptSha256": "2068a550a8df90f87f4882b2051500a4fad7a0dc740de50f3b0c44e76f47d09a",
+      "files": [
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "owner": "F2",
+          "sha256": "f041042a309e88a9ecd681b5ed5e21af35e1b600b120980059d5edf1ca4bfd8f",
+          "bytes": 20133
+        }
+      ]
+    }
+  ],
+  "fileCount": 1,
+  "scope": "CSS-only source cascade correction; no actual browser pixel PASS, no type or whole app regression rerun."
+}

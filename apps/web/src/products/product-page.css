@@ -150,9 +150,11 @@
 :is(.product-editor,.product-readonly-page) :is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-header-nav{padding:0}
 :is(.product-editor,.product-readonly-page) :is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-header-nav::before{display:none}
 :is(.product-editor,.product-readonly-page) :is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-header{display:flex;align-items:center;gap:2px;margin:0;padding:0}
-:is(.product-editor,.product-readonly-page) :is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-header-title{box-sizing:border-box;min-width:68px;height:32px;min-height:32px;margin:0;padding:5px 12px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--ca-ink-2);font-size:13px;font-weight:400;line-height:20px}
-:is(.product-editor,.product-readonly-page) :is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-header-title:hover{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
-:is(.product-editor,.product-readonly-page) :is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-header-title-active{border-bottom-color:var(--ca-primary);color:var(--ca-primary-ink);font-weight:600}
+:is(.product-editor,.product-readonly-page) .erp-tabs-host:is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-header-title{box-sizing:border-box;min-width:68px;height:32px;min-height:32px;margin:0;padding:5px 12px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--ca-ink-2);font-size:13px;font-weight:400;line-height:1.15}
+:is(.product-editor,.product-readonly-page) .erp-tabs-host:is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-header-title:hover{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+:is(.product-editor,.product-readonly-page) .erp-tabs-host:is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-header-title-active{border-bottom-color:var(--ca-primary);color:var(--ca-primary-ink);font-weight:600}
+:is(.product-editor,.product-readonly-page) .erp-tabs-host:is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-header-nav-horizontal>.arco-tabs-header-scroll .arco-tabs-header-title:first-of-type{margin-left:0}
+:is(.product-editor,.product-readonly-page) .erp-tabs-host:is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-header-title-text{padding:0;font:inherit}
 :is(.product-editor,.product-readonly-page) :is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-header-ink{display:none}
 :is(.product-editor,.product-readonly-page) :is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-content,.product-editor-tabs .arco-tabs-content-inner,.product-editor-tabs .arco-tabs-pane{overflow:visible}
 .product-editor .product-editor-body{padding:12px 0 18px;max-height:none;overflow:visible}
@@ -162,9 +164,9 @@
 .product-editor-base-grid .erp-input.arco-input{box-sizing:border-box;width:100%;height:32px;min-height:32px;padding:5px 9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);font:13px var(--ca-font-sans)}
 .product-editor-base-grid .erp-input.arco-input:hover{border-color:var(--ca-control-border-hover)}
 .product-editor-base-grid .erp-input.arco-input:focus{outline:0;border-color:var(--ca-control-focus-border)}
-.product-editor-base-grid .erp-select.arco-select{min-height:32px;border-color:transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted)}
-.product-editor-base-grid .erp-select.arco-select:hover{border-color:var(--ca-control-border-hover)}
-.product-editor-base-grid .erp-select.arco-select-focused{border-color:var(--ca-control-focus-border)}
+.product-editor-base-grid .erp-select.arco-select{min-height:32px;border:0;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted)}
+.product-editor-base-grid .erp-select.arco-select:not(.arco-select-disabled):hover>.arco-select-view{border-color:var(--ca-control-border-hover)}
+.product-editor-base-grid .erp-select.arco-select-focused>.arco-select-view{border-color:var(--ca-control-focus-border)}
 @media(max-width:800px){.product-editor-base-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.product-editor-base-grid{grid-template-columns:1fr}}
 
