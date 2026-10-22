@@ -1,6 +1,7 @@
+import { checkedProductStockOverviewResult } from '../../../../packages/application/src/product-details-query-validation.ts';
 import { entityId, quantity } from '../../../../packages/domain/src/values.ts';
 import { CATALOGUE_PRICE_KEYS } from '../../../../packages/application/src/catalogue-price-input.ts';
-import type { ProductBarcodePage, ProductDetailsPageQuery, ProductPriceDetails, ProductWarehouseStockPage } from '../../../../packages/application/src/product-details-query-ports.ts';
+import type { ProductBarcodePage, ProductDetailsPageQuery, ProductPriceDetails, ProductWarehouseStockPage, ProductStockOverviewQuery, ProductStockOverviewResult } from '../../../../packages/application/src/product-details-query-ports.ts';
 import type { ProductParameters } from '../inventory/product-contracts.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 
@@ -57,4 +58,9 @@ export function productStockResponse(value: unknown, parameters: ProductDetailsP
     else if (!['UNKNOWN', 'MISSING', 'UNMAPPED', 'READ_FAILED'].includes(item.state as string) || item.quantity !== null) invalid();
   }
   return value as ProductWarehouseStockPage;
+}
+
+export function productStockOverviewResponse(value: unknown, parameters: ProductStockOverviewQuery): ProductStockOverviewResult | null {
+  if(value===null)return null;
+  try{return checkedProductStockOverviewResult(value,parameters);}catch{return invalid();}
 }

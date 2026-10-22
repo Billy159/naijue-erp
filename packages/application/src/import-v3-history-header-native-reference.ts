@@ -74,6 +74,8 @@ export function assertExactHistoricalCustomerReference(input:HistoryHeaderNative
 }
 
 function assertBootstrapAccountMetadata(input:HistoryHeaderNativeReferenceInput,value:unknown):void {
+  const positiveIntegerScalar=(v:unknown):boolean=>typeof v==='number'?Number.isSafeInteger(v)&&v>0
+    :typeof v==='string'&&/^[1-9][0-9]*$/.test(v)&&BigInt(v)<=BigInt(Number.MAX_SAFE_INTEGER);
   const record=(v:unknown,keys:readonly string[]):v is JsonObject=>v!==null&&typeof v==='object'&&!Array.isArray(v)
     &&Object.keys(v).length===keys.length&&keys.every(k=>Object.hasOwn(v,k));
   require(input.schemaProfile==='EXACT26'&&input.selection.entity==='STAFF'
@@ -90,7 +92,7 @@ function assertBootstrapAccountMetadata(input:HistoryHeaderNativeReferenceInput,
     &&Array.isArray(proof.accounts)&&proof.accounts.length===1,'BOOTSTRAP26_METADATA');
   const account=(proof.accounts as JsonObject[])[0]!,native=account.native_snapshot as JsonObject;
   require(record(account,['source_account_id','source_account_version','source_employee_native_id','source_employee_code','identity_link_kind','current_person_key','source_plan_row','native_snapshot'])
-    &&text(account.source_account_id)&&/^[1-9][0-9]*$/.test(String(account.source_account_version))
+    &&text(account.source_account_id)&&positiveIntegerScalar(account.source_account_version)
     &&record(native,['id','staff_id','login_enabled','auth_version','version','created_at','updated_at'])&&uuid(native.id)
     &&native.staff_id===input.nativeSnapshot.id&&typeof native.login_enabled==='boolean'&&native.auth_version===1&&native.version===1
     &&typeof native.created_at==='string'&&typeof native.updated_at==='string'&&native.created_at===native.updated_at
@@ -98,7 +100,7 @@ function assertBootstrapAccountMetadata(input:HistoryHeaderNativeReferenceInput,
   if(account.identity_link_kind==='DIRECT_ORIGINAL_EMPLOYEE_V1')require(text(account.source_employee_native_id)&&text(account.source_employee_code)
     &&account.current_person_key===null&&account.source_plan_row===null,'BOOTSTRAP26_ORIGINAL_RELATION');
   else require(account.identity_link_kind==='APPROVED_CURRENT_PERSON_PLAN_V1'&&account.source_employee_native_id===null&&account.source_employee_code===null
-    &&text(account.current_person_key)&&/^[1-9][0-9]*$/.test(String(account.source_plan_row)),'BOOTSTRAP26_CURRENT_PERSON_RELATION');
+    &&text(account.current_person_key)&&positiveIntegerScalar(account.source_plan_row),'BOOTSTRAP26_CURRENT_PERSON_RELATION');
 }
 
 export function prepareV3HistoryHeaderNativeReferenceChunk(inputs:readonly HistoryHeaderNativeReferenceInput[]):PreparedHistoryHeaderNativeReferenceChunk {

@@ -1,7 +1,7 @@
 import type { RouteStylesheet } from '../application/contracts.ts';
 import type { ProductReadOnlyReader, ProductParameters } from '../inventory/product-contracts.ts';
 import type { QueryRead } from '../loading/latest-query.ts';
-import type { ProductBarcodePage, ProductDetailsPageQuery, ProductPriceDetails, ProductWarehouseStockPage } from '../../../../packages/application/src/product-details-query-ports.ts';
+import type { ProductBarcodePage, ProductDetailsPageQuery, ProductPriceDetails, ProductWarehouseStockPage, ProductStockOverviewQuery, ProductStockOverviewResult } from '../../../../packages/application/src/product-details-query-ports.ts';
 
 export const productReadOnlyPageTabs = ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const;
 export type ProductReadOnlyPageTab = typeof productReadOnlyPageTabs[number];
@@ -12,7 +12,9 @@ export interface ProductFullPageReadOnlyReader {
   readonly specs?: { readonly read: ProductReadOnlyReader['readProductSpecifications'] };
   readonly barcodes?: { readonly read: (read: QueryRead<ProductDetailsPageQuery>) => Promise<ProductBarcodePage | null> };
   readonly prices?: { readonly read: (read: QueryRead<ProductParameters>) => Promise<ProductPriceDetails | null> };
-  readonly stock?: { readonly read: (read: QueryRead<ProductDetailsPageQuery>) => Promise<ProductWarehouseStockPage | null> };
+  readonly stock?: { readonly read: (read: QueryRead<ProductDetailsPageQuery>) => Promise<ProductWarehouseStockPage | null>;
+    /** Independent whole-scope contract; absent methods keep the legacy page only. */
+    readonly readOverview?: (read: QueryRead<ProductStockOverviewQuery>) => Promise<ProductStockOverviewResult | null> };
   readonly images?: { readonly read: ProductReadOnlyReader['readProductImages']; readonly readImage: ProductReadOnlyReader['readProductImage'] };
 }
 export interface ProductFullPageConfiguration {

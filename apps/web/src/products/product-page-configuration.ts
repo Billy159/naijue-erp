@@ -30,7 +30,7 @@ export function captureProductFullPageConfiguration(value: unknown): ProductFull
   if (Object.hasOwn(input, 'images')) { const x = own(input.images, ['read', 'readImage']); reader.images = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['images']>['read'], readImage: method(x.readImage) as NonNullable<ProductFullPageReadOnlyReader['images']>['readImage'] }); }
   if (Object.hasOwn(input, 'barcodes')) { const x = own(input.barcodes, ['read']); reader.barcodes = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['barcodes']>['read'] }); }
   if (Object.hasOwn(input, 'prices')) { const x = own(input.prices, ['read']); reader.prices = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['prices']>['read'] }); }
-  if (Object.hasOwn(input, 'stock')) { const x = own(input.stock, ['read']); reader.stock = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['stock']>['read'] }); }
+  if (Object.hasOwn(input, 'stock')) { const x = own(input.stock, ['read'], ['readOverview']); reader.stock = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['stock']>['read'], ...(Object.hasOwn(x,'readOverview')?{readOverview:method(x.readOverview) as NonNullable<NonNullable<ProductFullPageReadOnlyReader['stock']>['readOverview']>}: {}) }); }
   if (!productPageTabAvailable(reader, row.initialTab as ProductReadOnlyPageTab)) return invalid();
   return Object.freeze({ stylesheet: Object.freeze({ load: () => load(), dispose: () => dispose() }), allowedTabs: Object.freeze(tabs), initialTab: row.initialTab as ProductReadOnlyPageTab, reader: Object.freeze(reader) });
 }

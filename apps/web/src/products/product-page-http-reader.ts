@@ -1,12 +1,16 @@
+import type { QueryRead } from '../loading/latest-query.ts';
+import type { ProductStockOverviewQuery } from '../../../../packages/application/src/product-details-query-ports.ts';
 import { createHttpJsonQuery, type HttpQueryOptions } from '../transport/http-query.ts';
-import { parseProductDetailsPageQuery } from '../../../../packages/application/src/product-details-query-validation.ts';
+import { parseProductDetailsPageQuery, parseProductStockOverviewQuery } from '../../../../packages/application/src/product-details-query-validation.ts';
 import type { ProductReadOnlyReader } from '../inventory/product-contracts.ts';
 import { existingProductFullPageReader, type ProductFullPageReadOnlyReader } from './product-page-contracts.ts';
 /** Explicit host composition remains inert and keeps product DTO validators out
  * of startup. Only the selected target/tab's first read loads the existing port. */
-export function createProductFullPageHttpReader(options: HttpQueryOptions, details: readonly ('barcodes' | 'prices' | 'stock')[] = []): ProductFullPageReadOnlyReader {
+export function createProductFullPageHttpReader(options: HttpQueryOptions, details: readonly ('barcodes' | 'prices' | 'stock')[] = [], overview: { readonly stockOverview?: true } = {}): ProductFullPageReadOnlyReader {
   if (!Array.isArray(details) || details.some(tab => !['barcodes', 'prices', 'stock'].includes(tab)) || new Set(details).size !== details.length) throw new TypeError('Explicit supported product read tabs are required.');
   const enabled = new Set(details);
+  if(!overview||Object.getPrototypeOf(overview)!==Object.prototype||Reflect.ownKeys(overview).some(key=>key!=='stockOverview')||Object.hasOwn(overview,'stockOverview')&&overview.stockOverview!==true||overview.stockOverview&&!enabled.has('stock'))throw new TypeError('Explicit stock overview opt-in requires the stock tab.');
+  const overviewEnabled=overview.stockOverview===true;
   const captured = Object.freeze({ ...options });
   const http = createHttpJsonQuery(captured);
   let pending: Promise<ProductReadOnlyReader> | null = null;
@@ -28,6 +32,9 @@ export function createProductFullPageHttpReader(options: HttpQueryOptions, detai
       const parameters = parseProductDetailsPageQuery({ productId: read.parameters.productId, page: read.parameters.page, pageSize: read.parameters.pageSize });
       const validation = await import('./product-page-validation.ts');
       return http.post('/products/stock/query', parameters, read.signal, value => validation.productStockResponse(value, parameters));
-    } } } : {}),
+    }, ...(overviewEnabled?{readOverview:async(read:QueryRead<ProductStockOverviewQuery>)=>{
+      const parameters=parseProductStockOverviewQuery({productId:read.parameters.productId,warehouseMode:read.parameters.warehouseMode}),validation=await import('./product-page-validation.ts');
+      return http.post('/products/stock-overview/query',parameters,read.signal,value=>validation.productStockOverviewResponse(value,parameters));
+    }}:{}) } } : {}),
   } satisfies ProductFullPageReadOnlyReader);
 }

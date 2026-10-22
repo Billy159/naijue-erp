@@ -1,3 +1,5 @@
+import type { QueryRead } from '../loading/latest-query.ts';
+import type { ProductStockOverviewQuery } from '../../../../packages/application/src/product-details-query-ports.ts';
 import type { ProductFullPageReadOnlyReader } from './product-page-contracts.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
@@ -15,6 +17,6 @@ export function guardedProductPageReader(scope: ReadScope, reader: ProductFullPa
     ...(reader.specs ? { specs: Object.freeze({ read: read => run(read.signal, () => reader.specs!.read(read)) }) } : {}),
     ...(reader.barcodes ? { barcodes: Object.freeze({ read: read => run(read.signal, () => reader.barcodes!.read(read)) }) } : {}),
     ...(reader.prices ? { prices: Object.freeze({ read: read => run(read.signal, () => reader.prices!.read(read)) }) } : {}),
-    ...(reader.stock ? { stock: Object.freeze({ read: read => run(read.signal, () => reader.stock!.read(read)) }) } : {}),
+    ...(reader.stock ? { stock: Object.freeze({ read: read => run(read.signal, () => reader.stock!.read(read)), ...(reader.stock.readOverview?{readOverview:(read:QueryRead<ProductStockOverviewQuery>)=>run(read.signal,()=>reader.stock!.readOverview!(read))}: {}) }) } : {}),
     ...(reader.images ? { images: Object.freeze({ read: read => run(read.signal, () => reader.images!.read(read)), readImage: read => run(read.signal, () => reader.images!.readImage(read)) }) } : {}) } satisfies ProductFullPageReadOnlyReader);
 }
