@@ -1,0 +1,241 @@
+{
+  "atUtc": "2026-10-22T19:49:12.843706+00:00",
+  "parent": "16ea5b987b21a6718dfd7c81ac78a8c8f0509f14",
+  "groups": [
+    {
+      "slice": "FINDER_PORTAL_SCOPE_AND_ACTUAL_ANCHOR",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-36/DELIVERY.json",
+      "receiptSha256": "eee305745e1ed3cc167d618f62d8811b69977867b263943168d9ba0f556d7536",
+      "receiptSnapshot": {
+        "chunk": 36,
+        "status": "READY_FOR_C_PIN_V00601_REMAINING_PORTAL_SCOPE_ONLY_NOT_BROWSER_ACCEPTED",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/product-finder.tsx",
+            "sha256": "91642fc7fe4efa8df49cf43b0ec15d75c02e4d8755659f3d8e5abe891781bb8f"
+          },
+          {
+            "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+            "sha256": "c8d2202e2815f95db5011dda0e65773ad6f5603e3e4d11f50a5bf5a070c758ab"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+            "sha256": "bd7ee0fc86c67ef3155d296f32a174960e156e4b8a0e6ab80bee1c50c81399f0"
+          }
+        ],
+        "finding": "SALE-V006-01 remaining actual v009-8755931 portal token namespace and anchor-size gap",
+        "behavior": [
+          "Arco Trigger popup container is the actual nearest .demo-ui owner (otherwise own form), never a new body/global CSS namespace; native document token scope is inherited.",
+          "Shared finder resolves current actual anchor after commit, measures its real input/group control bounds, writes actual root width and list-column variable directly; ResizeObserver/window-resize listeners detach on exit.",
+          "Only current visible anchor renders finder; closed/transitioning old pickers no longer render new global picker payload or extra product cards.",
+          "No native query/selection/price/CAS/key/routing/capability semantics changed; original reference/warehouse popups share actual owner scope."
+        ],
+        "checks": [
+          {
+            "log": "types-2.log",
+            "exitCode": 0,
+            "scope": "Final affected actual Sales/Transfer leaf typed closure."
+          },
+          {
+            "log": "portal-3.log",
+            "exitCode": 0,
+            "scope": "Actual Application -> Sales and Transfer real consumers: portal contained in actual original .demo-ui, one finder, measured DOM probe262.8046875/list + width660 and Transfer280/list+670; Esc/raw/focus and full disposal no orphan."
+          }
+        ],
+        "probeNotes": [
+          "portal1/2 found first closing old reference picker also rendered global product finder; its old zero-width anchor had no root geometry. Visible-anchor guard fixes actual transient ownership, avoiding duplicate hidden cards. Failed logs retained.",
+          "DOM bounds in this check are injected probes; not real browser dimensions or CSS computed-value evidence. No body CSS/template replacement/manual leaf-only proof used."
+        ],
+        "limits": [
+          "C must pin then actual fixed preview recheck real token values/border/shadow/card background/clipping/actual anchor equality for Sales and shared Transfer.",
+          "Reuse v009 closed capture, root660/two adjacent columns and old keyboard facts; do not re-open or broadly rerun them.",
+          "Wholepage still NOT_ACCEPTED; barcode partial lookup/native saved existing UI remain separate unfinished scope.",
+          "No browser,server,PG,full build or business write by F1."
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/product-finder.tsx",
+          "owner": "F1",
+          "sha256": "91642fc7fe4efa8df49cf43b0ec15d75c02e4d8755659f3d8e5abe891781bb8f",
+          "bytes": 8933
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+          "owner": "F1",
+          "sha256": "c8d2202e2815f95db5011dda0e65773ad6f5603e3e4d11f50a5bf5a070c758ab",
+          "bytes": 33098
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+          "owner": "F1",
+          "sha256": "bd7ee0fc86c67ef3155d296f32a174960e156e4b8a0e6ab80bee1c50c81399f0",
+          "bytes": 25003
+        }
+      ]
+    },
+    {
+      "slice": "AUDIT_PLAIN_CELLS_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/AUDIT-PLAIN-CELLS-v1-RESULT.json",
+      "receiptSha256": "5c44d4c7c03e80fe192ec1c9959c8a88c9840ca013c892c183614a2df2d2a3ad",
+      "receiptSnapshot": {
+        "version": "AUDIT-PLAIN-CELLS-v1",
+        "taskId": "F05/O-B08-PLAIN-CELL-RESTORATION",
+        "owner": "F3",
+        "clientDate": "2026-10-23",
+        "atUtc": "2026-10-22T19:27:44.553361+00:00",
+        "status": "SOURCE_READY_MINIMAL_PRESENTATION_CHECK_PASS_AWAITING_C_QF_DEMO",
+        "authority": "C explicit instruction following shared/settings extension6a237/57: restore final Demo plain actor/object list, no new tooltip/entry and no API field deletion",
+        "files": [
+          {
+            "path": "apps/web/src/settings/audit/audit-drawer.tsx",
+            "beforeSha256": "559f349c9d18820a605377c9e4a30115a191324887d2bce60bcba6f752cb863c",
+            "sha256": "94c9387b9002a819ee186f10b5c931f789e1ea4b889e2db557f91873dc0e904d",
+            "bytes": 10728
+          }
+        ],
+        "change": "Only two JSX edits remove extra secondary loginName/object.code small blocks; original actor primary/fallback and object primary expressions and existing attributes unchanged. Natural source wrapping unchanged.",
+        "preserved": {
+          "actorNameNull": "fallback loginName exactly as before",
+          "actorNameAndLoginNull": "未提供",
+          "explicitEmptyName": "空字符串, never guessed/replaced by loginName",
+          "objectNameNull": "未提供, not inferred from code",
+          "apiFields": {
+            "apps/web/src/settings/audit/contracts.ts": "b3865857909ce84733fef399dc24d5250a7cfb36018dafb0f28d4d8222e53352",
+            "apps/web/src/settings/audit/http-reader.ts": "4719a9ed0f0232c1616c4aabfb1de464e2aad7bf794feb555668b9e162c7d56e",
+            "apps/web/src/settings/audit/controller.ts": "cecb28606c592ba433b0519a0d2b649fe3ed74be7196c3fd1326e502159c5ac7",
+            "docs/rapid-launch-20261022/api-contracts/W13-SETTINGS-AUDIT-API-v1.json": "b9dc981a74523681696750af3fe3c60c37ba9f890714cb9cbce731f5462a6b13"
+          },
+          "permissionsPrecisionReadDenied": "No changes; reuse accepted source/protocol evidence",
+          "newTooltipOrEntry": false
+        },
+        "checks": {
+          "strictTypes": {
+            "exitCode": 0,
+            "directRoots": 1,
+            "log": "audit-plain-cells-v1-types.log"
+          },
+          "minimalPresentation": {
+            "exitCode": 0,
+            "evidence": "AUDIT-PLAIN-CELLS-v1-CHECK.json",
+            "log": "audit-plain-cells-v1-dom.log",
+            "cases": 4,
+            "scope": "Actual current Drawer leaf with synthetic read projection: distinct name/login, name-null fallback, both-null, explicit blank; safe loginName/code remain in parsed DTO",
+            "writes": 0
+          },
+          "sourceDiff": "Only two secondary JSX blocks removed; no attribute/primary expression additions",
+          "diffCheck": "PASS"
+        },
+        "reviewDisposition": {
+          "previous": "AUDIT-CELL-METADATA-LAYOUT-REVIEW-v1.json retained as historical source review",
+          "current": "C supplied explicit restore-Demo disposition; implemented without claiming prior second-line approval"
+        },
+        "notMeasured": [
+          "actual new overlay row height/content/pixels in fixed preview",
+          "runtime root configuration/native business/release"
+        ],
+        "wholePagePass": false,
+        "actualChromeControl": false,
+        "browserHarnessControl": false,
+        "activeBrowserOperations": false,
+        "blockers": [],
+        "next": "C exact1 checkpoint; QF only these two cells/NULL fallback if necessary; dedicated Demo actual overlay content/row geometry on necessary new preview; no old native protocol rerun"
+      },
+      "files": [
+        {
+          "path": "apps/web/src/settings/audit/audit-drawer.tsx",
+          "owner": "F3",
+          "sha256": "94c9387b9002a819ee186f10b5c931f789e1ea4b889e2db557f91873dc0e904d",
+          "bytes": 10728
+        }
+      ]
+    },
+    {
+      "slice": "GENUINE_SKU26_SOURCE_CONSUMER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/sku-source26-consumer1/RESULT.json",
+      "receiptSha256": "918816c3d5ee433aee0e8cf3cf126e1cb9e7faa64ed5117cca8e9079759df5b5",
+      "receiptSnapshot": {
+        "taskId": "D3_GENUINE_SKU26_ORIGINAL_SOURCE_AND_REFERENCE_CONSUMER",
+        "atUtc": "2026-10-22T19:32:27.202706+00:00",
+        "status": "SOURCE_READY_NEW4PASS_ACTUAL14999_AND_ORIGINAL15121_NOT_EXECUTION",
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-sku-source26.mjs",
+            "bytes": 18848,
+            "sha256": "bc8bd34ea9676eacc62b95bb20cad17a2fc4e81b1e98e9a8f2743921a361bc20"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-sku-source26.test.mjs",
+            "bytes": 16159,
+            "sha256": "0697e844fd5e95c2adbee69a436f653268a0e9fa3147279b4231c75e942c2ac1"
+          }
+        ],
+        "API": "openReviewedSkuSource26({reviewFile,trustedReviewSha256,binding,authorizedPayloadHash:null|actualhash,baseDirectory,productSnapshotFile,catalogue:closed4}) -> report/verify/rows/authorize/openClosure/close",
+        "behavior": [
+          "Exact C8 SKU_REFERENCE_DECISIONS_ONLY review+actualQB94 PASS, full manifest/35.6MB decisions; no registry reread/new IDs/runtime/source execution authority.",
+          "Reconstructs all canonical rows and complete original aliases from exact base CSVs and reviewed bounded original byte-offset rows. Keeps original source IDs/cells/raw hashes, labels changed canonical normalized fields as existing approved MIGRATION_DERIVED lineage.",
+          "Checks every compact source/canonical/alias/reference/fullnative9/fingerprint against adopted decision; complete prepared stream SHA equals frozen manifest, global original ID/position uniqueness and collision counts verified.",
+          "Uses full product25/COLOR6/FIT6/SIZE/GROUP facts and original dictionary membership, no firstmember/name inference or field stripping. Dictionary map hash verified once and retained metadata lifetime avoids perSKU whole-map reparse.",
+          "Closure SKUS outputs every original source, nativeSKU9 and alias6 through D1 full26 projection, sorted; no import_record row invented outside projection spec. Unknown actual MAIN payload keeps actual openClosure closed.",
+          "No-follow parent/FD+path stat lifetime on all inputs, copy-before-verify mutation refusal and close revocation."
+        ],
+        "checks": {
+          "newSynthetic": 4,
+          "passed": 4,
+          "skipped": 0,
+          "protocolLog": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/sku-source26-consumer1/protocol-first.log",
+            "bytes": 625,
+            "sha256": "cbf3428a9fea63cb749b8ce09513b366a9ebfb4eee8d03b202791d1d34ae8f60"
+          },
+          "actual": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/sku-source26-consumer1/ACTUAL14999-RESULT.json",
+            "bytes": 814,
+            "sha256": "35afc5489128d35c5dae69d260ea170c53f64ca806110a07a9bbfc3331eab246"
+          },
+          "actualCounts": {
+            "canonical": 14999,
+            "originalAliases": 15121,
+            "collisionGroups": 110,
+            "collisionMembers": 232
+          },
+          "actualScript": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/sku-source26-consumer1/consume-actual14999.mjs",
+            "bytes": 3081,
+            "sha256": "cf4645f265ec56c2997cca91a37c093766e4b38775e5aae3f14ac48e5a0f82bc"
+          },
+          "actualLog": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/sku-source26-consumer1/actual-first.log",
+            "bytes": 696,
+            "sha256": "6b787902f9bdb114eaf47443f2e94e6ba66f44b7e7862325c3959645c76ab8c1"
+          },
+          "elapsedMilliseconds": 66665.07241699999,
+          "nodeResourceUsageMaxRSS": 931744,
+          "resourceMeaning": "Only this Node24 heap1024MiB serial source-only process. Not full11factory memory/performance, DB, import or production capacity validation."
+        },
+        "notClaimed": [
+          "All11 real source providers or full49 source account bootstrap",
+          "Real SOURCE/MAIN/STAGE/PUBLISH grant or runtime26 issuer",
+          "PG/native data writes/publication",
+          "Repeated original source/business/size merge/reference QA"
+        ]
+      },
+      "files": [
+        {
+          "path": "scripts/import-v3/native-sku-source26.mjs",
+          "owner": "D3",
+          "sha256": "bc8bd34ea9676eacc62b95bb20cad17a2fc4e81b1e98e9a8f2743921a361bc20",
+          "bytes": 18848
+        },
+        {
+          "path": "scripts/import-v3/native-sku-source26.test.mjs",
+          "owner": "D3",
+          "sha256": "0697e844fd5e95c2adbee69a436f653268a0e9fa3147279b4231c75e942c2ac1",
+          "bytes": 16159
+        }
+      ]
+    }
+  ],
+  "fileCount": 6,
+  "scope": "F1 portal+anchor3, F3 plain audit1, D3 genuine SKU source consumer2. No browser/PG/import/public release claim."
+}

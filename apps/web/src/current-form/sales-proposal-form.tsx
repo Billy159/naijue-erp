@@ -49,7 +49,7 @@ function quantitySummary(rows: readonly SalesProposalLine[], absolute = false): 
 type SpecKind = 'color' | 'fit' | 'size';
 /** One anchored Arco popup for native paged candidates. No second modal picker,
  * no all-catalog fetch and no derived SKU identity. */
-function CandidatePopup({ session, picker, spec, selection, choose, close, keyboardRef, scope, capability }: { readonly keyboardRef: React.Ref<CurrentProductFinderHandle>; readonly scope?: ReadScope; readonly capability?: SalesProductCapability;
+function CandidatePopup({ session, picker, spec, selection, choose, close, keyboardRef, scope, capability, getAnchor }: { readonly getAnchor: () => HTMLElement | null | undefined; readonly keyboardRef: React.Ref<CurrentProductFinderHandle>; readonly scope?: ReadScope; readonly capability?: SalesProductCapability;
   session: SalesProposalSession; picker: NonNullable<SalesProposalSnapshot['picker']>;
   spec?: SpecKind; selection?: { color: { id: string } | null; fit: { id: string } | null };
   choose: (id: string) => void; close: (restoreFocus?: boolean) => void;
@@ -68,7 +68,7 @@ function CandidatePopup({ session, picker, spec, selection, choose, close, keybo
     });
     return () => cancelAnimationFrame(frame);
   }, [picker.kind, picker.phase, picker.page]);
-  if (picker.kind === 'product') return <CurrentProductFinder ref={keyboardRef} products={(picker.result?.items ?? []) as readonly CurrentFormProduct[]} phase={picker.phase} search={picker.search} page={picker.page} exactTotal={picker.result?.exactTotal ?? null} {...(scope ? { scope } : {})} {...(capability ? { capability } : {})} select={choose} close={close} turnPage={page => { void session.page(page); }} retry={() => { void session.retry(); }} />;
+  if (picker.kind === 'product') return <CurrentProductFinder getAnchor={getAnchor} ref={keyboardRef} products={(picker.result?.items ?? []) as readonly CurrentFormProduct[]} phase={picker.phase} search={picker.search} page={picker.page} exactTotal={picker.result?.exactTotal ?? null} {...(scope ? { scope } : {})} {...(capability ? { capability } : {})} select={choose} close={close} turnPage={page => { void session.page(page); }} retry={() => { void session.retry(); }} />;
   let options = (picker.result?.items ?? []).map(item => ({ id: item.id as string, text: 'name' in item ? `${'code' in item && item.code ? `${item.code} · ` : ''}${item.name}` : (item as CurrentFormSku).skuCode }));
   if (spec) {
     const rows = (picker.result?.items ?? []) as readonly CurrentFormSku[];
@@ -126,11 +126,10 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
         if (handler) handler.key(event.key); else if (event.key === 'Escape') dismissPicker(true);
       } else if (event.key === 'ArrowDown' || event.key === 'Enter' && input) { event.preventDefault(); show(event.currentTarget); }
     };
-    const bounds = triggerRef.current?.getBoundingClientRect(), goodsWidth = Math.min(Math.max((bounds?.width || 270) + 390, 660), window.innerWidth - 16);
-    const popupStyle = picker?.kind === 'product' && visible ? { width: goodsWidth, '--pf-list-width': `${Math.min(bounds?.width || 270, goodsWidth - 220)}px` } as React.CSSProperties : undefined;
-    return <Trigger {...(popupStyle ? { popupStyle } : {})} trigger="click" position="bl" popupVisible={visible} escToClose updateOnScroll autoFitPosition unmountOnExit
+    const getAnchor = () => Array.from(formRef.current?.querySelectorAll<HTMLElement>('[data-entry-control]') ?? []).find(node => node.dataset.entryControl === id) ?? (triggerRef.current?.isConnected ? triggerRef.current : null);
+    return <Trigger getPopupContainer={node => node.closest('.demo-ui') ?? formRef.current ?? node.parentElement ?? node} trigger="click" position="bl" popupVisible={visible} escToClose updateOnScroll autoFitPosition unmountOnExit
       onVisibleChange={next => { if (next) { if (!visible) show(); } else if (visible) dismissPicker(); }}
-      popup={() => picker ? <CandidatePopup session={session} picker={picker} keyboardRef={handle => { if (handle) productKeys.current.set(id, handle); else productKeys.current.delete(id); }} {...(scope ? { scope } : {})} {...(productCapability ? { capability: productCapability } : {})} {...(spec ? { spec } : {})} {...(selection ? { selection } : {})} close={restore => dismissPicker(restore ?? true)} choose={selected => {
+      popup={() => picker && visible ? <CandidatePopup getAnchor={getAnchor} session={session} picker={picker} keyboardRef={handle => { if (handle) productKeys.current.set(id, handle); else productKeys.current.delete(id); }} {...(scope ? { scope } : {})} {...(productCapability ? { capability: productCapability } : {})} {...(spec ? { spec } : {})} {...(selection ? { selection } : {})} close={restore => dismissPicker(restore ?? true)} choose={selected => {
         if (spec) { session.selectSpec(spec, selected); setAnchor(null); restorePickerFocus(); }
         else { void session.select(selected).then(() => { if (!session.getSnapshot().picker) { setAnchor(null); restorePickerFocus(); } }); }
       }} /> : <span />}>

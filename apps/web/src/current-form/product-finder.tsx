@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
 import type { CurrentFormProduct } from '../../../../packages/application/src/current-form-ports.ts';
 import { UIButton } from '../components/standard-controls.tsx';
 import { ProductCandidatePreview } from '../components/product-candidate-preview.tsx';
@@ -13,6 +13,7 @@ interface Props {
   readonly products: readonly CurrentFormProduct[]; readonly phase: 'loading' | 'ready' | 'error';
   readonly search: string; readonly page: number; readonly exactTotal: bigint | null;
   readonly scope?: ReadScope; readonly capability?: ProductFinderPreviewCapability;
+  readonly getAnchor?: () => HTMLElement | null | undefined;
   readonly select: (id: string) => void; readonly close: (restoreFocus?: boolean) => void;
   readonly turnPage: (page: number) => void; readonly retry: () => void;
 }
@@ -46,6 +47,20 @@ function CandidateProductData({ product, scope, capability }: { readonly product
  * the original table input. Native pages and exact target reads stay separate. */
 export const CurrentProductFinder = forwardRef<CurrentProductFinderHandle, Props>(function CurrentProductFinder(props, ref) {
   const [index, setIndex] = useState(-1), list = useRef<HTMLDivElement>(null);
+  const [geometry, setGeometry] = useState<{ width: number; list: number } | null>(null);
+  useLayoutEffect(() => {
+    const source = props.getAnchor?.(), anchor = source?.closest<HTMLElement>('.arco-input-group-wrapper') ?? source, view = anchor?.ownerDocument.defaultView;
+    if (!anchor || !view) return;
+    const update = () => {
+      if (!anchor.isConnected) return;
+      const bounds = anchor.getBoundingClientRect(); if (!Number.isFinite(bounds.width) || bounds.width <= 0) return;
+      const width = Math.min(Math.max(bounds.width + 390, 660), Math.max(1, view.innerWidth - 16)), list = Math.min(bounds.width, Math.max(0, width - 220));
+      setGeometry(previous => previous?.width === width && previous.list === list ? previous : { width, list });
+    };
+    update(); const observer = typeof view.ResizeObserver === 'function' ? new view.ResizeObserver(update) : null;
+    observer?.observe(anchor); view.addEventListener('resize', update);
+    return () => { observer?.disconnect(); view.removeEventListener('resize', update); };
+  }, [props.getAnchor]);
   useEffect(() => { setIndex(-1); }, [props.search, props.page]);
   const active = props.products[Math.max(0, index)];
   const key = (value: string) => {
@@ -58,7 +73,7 @@ export const CurrentProductFinder = forwardRef<CurrentProductFinderHandle, Props
     }
   };
   useImperativeHandle(ref, () => ({ key }));
-  return <div className="sales-product-finder pf-inventory-style" role="dialog" aria-label="商品候选" onKeyDown={event => { if (['ArrowDown', 'ArrowUp', 'Enter', 'Escape', 'Tab'].includes(event.key)) { if (event.key !== 'Tab') event.preventDefault(); event.stopPropagation(); key(event.key); } }} onMouseDown={event => event.preventDefault()}>
+  return <div className="sales-product-finder pf-inventory-style" style={geometry ? { width: geometry.width, '--pf-list-width': `${geometry.list}px` } as React.CSSProperties : undefined} role="dialog" aria-label="商品候选" onKeyDown={event => { if (['ArrowDown', 'ArrowUp', 'Enter', 'Escape', 'Tab'].includes(event.key)) { if (event.key !== 'Tab') event.preventDefault(); event.stopPropagation(); key(event.key); } }} onMouseDown={event => event.preventDefault()}>
     <div className="pf-layout"><div className="pf-list" ref={list} role="listbox" aria-label="商品搜索结果">
       <div className="pf-heading"><span>商品款号</span><span>商品名称</span></div>
       {props.phase === 'loading' ? <p role="status">正在查找…</p> : props.phase === 'error' ? <p role="alert">查询失败。<UIButton onClick={props.retry}>重试商品</UIButton></p> : <>

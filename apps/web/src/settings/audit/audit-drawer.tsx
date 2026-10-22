@@ -50,9 +50,9 @@ function AuditContents(props: { readonly controller: SettingsAuditController; re
   const active = controller.available;
   const columns = [
     { title: '时间', width: 158, render: (_: unknown, item: SettingsAuditItem) => <span title={item.occurredAt ?? undefined}>{formatSettingsAuditTime(item.occurredAt)}</span> },
-    { title: '操作人', width: 90, render: (_: unknown, item: SettingsAuditItem) => <span title={item.actor.accountId ?? undefined}>{item.actor.name === null ? label(item.actor.loginName) : label(item.actor.name)}{item.actor.name !== null && item.actor.loginName !== null && item.actor.name !== item.actor.loginName && <small className="settings-audit-secondary">{label(item.actor.loginName)}</small>}</span> },
+    { title: '操作人', width: 90, render: (_: unknown, item: SettingsAuditItem) => <span title={item.actor.accountId ?? undefined}>{item.actor.name === null ? label(item.actor.loginName) : label(item.actor.name)}</span> },
     { title: '模块', width: 92, render: (_: unknown, item: SettingsAuditItem) => auditModuleLabels[item.module] },
-    { title: '对象', width: 145, render: (_: unknown, item: SettingsAuditItem) => <span title={item.object.id}>{label(item.object.name)}{item.object.code !== null && <small className="settings-audit-secondary">{label(item.object.code)}</small>}</span> },
+    { title: '对象', width: 145, render: (_: unknown, item: SettingsAuditItem) => <span title={item.object.id}>{label(item.object.name)}</span> },
     { title: '操作', width: 98, render: (_: unknown, item: SettingsAuditItem) => item.action === null ? '未提供' : item.module === 'ACCOUNT' && item.action === 'DISABLE' ? '登录账号关闭' : item.module === 'ACCOUNT' && item.action === 'RESTORE' ? '登录账号恢复' : auditActionLabels[item.action] },
     { title: '变化字段', render: (_: unknown, item: SettingsAuditItem) => <div>{item.changes.map(change => <div key={change.field} className="settings-audit-change">{change.label}：{formatSettingsAuditValue(change.field, change.before)} → {formatSettingsAuditValue(change.field, change.after)}</div>)}
       {item.credentialActions.map((action, index) => <div key={`credential-${index}`}>{action === 'CREATE' ? '账号凭据：已设置' : '密码：已重置'}</div>)}{!item.changes.length && !item.credentialActions.length && <span>未提供字段变化</span>}</div> },
