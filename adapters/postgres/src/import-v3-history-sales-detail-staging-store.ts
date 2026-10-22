@@ -1,6 +1,7 @@
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { assertNativeImportAccountingGuards } from "./native-import-accounting-capability.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
-import { assertReviewedNativeImportSchema } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { assertReviewedNativeImportSchema, checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { HISTORY_SALES_DETAIL_VERSION, validatePreparedHistorySalesDetailChunk } from "../../../packages/application/src/import-v3-history-sales-detail.ts";
 import type { HistorySalesDetailStagingStore, PreparedHistorySalesDetailChunk, PreparedHistorySalesDetailRow, HistorySalesHeaderBinding, HistorySalesSkuBinding } from "../../../packages/application/src/import-v3-history-sales-detail.ts";
 import type { JsonObject } from "../../../packages/application/src/history-storage-contract.ts";
@@ -52,12 +53,14 @@ async function assertBinding(client:PgSalesClient,scope:{batchId:string;selectio
 /** Only immutable SALES_LINE source+typed row INSERTs. No settlement, live native,
  * stock, progress counter, receipt/action, batch UPDATE or publication writes. */
 export class PostgresHistorySalesDetailStagingStore implements HistorySalesDetailStagingStore {
-  private readonly pool:PgSalesPool;
+  protected readonly pool:PgSalesPool;
   constructor(pool:PgSalesPool){this.pool=pool;}
   async stage(original:PreparedHistorySalesDetailChunk):Promise<{inserted:number;replayed:number}>{
-    const chunk=structuredClone(original);validatePreparedHistorySalesDetailChunk(chunk);
+    const chunk=structuredClone(original);validatePreparedHistorySalesDetailChunk(chunk);return this.stageValidated(chunk);
+  }
+  protected async stageValidated(chunk:PreparedHistorySalesDetailChunk,runtime26?:NativeRuntime26Capability):Promise<{inserted:number;replayed:number}>{
     const client=await this.pool.connect();let began=false,commitAttempted=false;let discard:Error|undefined;
-    try{await client.query("BEGIN ISOLATION LEVEL READ COMMITTED");began=true;const result=await this.write(client,chunk);
+    try{if(runtime26)await runtime26.assertReady(client,"IMPORT_STAGE");await client.query("BEGIN ISOLATION LEVEL READ COMMITTED");began=true;const result=await this.write(client,chunk,runtime26);
       commitAttempted=true;await client.query("COMMIT");return result;
     }catch(error){if(!began||commitAttempted)discard=error instanceof Error?error:new Error("HISTORY_SALES_DETAIL_UNKNOWN_OUTCOME");
       if(began&&!commitAttempted)try{await client.query("ROLLBACK");}catch(rollback){discard=rollback instanceof Error?rollback:new Error("HISTORY_SALES_DETAIL_ROLLBACK_FAILED");
@@ -84,13 +87,10 @@ export class PostgresHistorySalesDetailStagingStore implements HistorySalesDetai
   private async binding(client:PgSalesClient,chunk:PreparedHistorySalesDetailChunk,row:PreparedHistorySalesDetailRow):Promise<void>{
     return assertBinding(client,{batchId:chunk.input.batchId,selectionSha256:chunk.input.selection.selectionSha256},row.header,row.sku,true);
   }
-  private async write(client:PgSalesClient,chunk:PreparedHistorySalesDetailChunk):Promise<{inserted:number;replayed:number}>{
+  private async write(client:PgSalesClient,chunk:PreparedHistorySalesDetailChunk,runtime26?:NativeRuntime26Capability):Promise<{inserted:number;replayed:number}>{
     const input=chunk.input;
     await client.query("/* sales-detail:cutoff */ SELECT naijue_erp.cutoff_import_lock()");
-    const versions=(await client.query("/* sales-detail:schema */ SELECT array_agg(version ORDER BY version) AS versions FROM naijue_erp.schema_migration")).rows;
-    must(versions.length===1,"HISTORY_SALES_DETAIL_SCHEMA","Reviewed migration registry required");
-    const reviewedSchema = assertReviewedNativeImportSchema(versions[0]!.versions,{minimumVersion:11,errorCode:"HISTORY_SALES_DETAIL_SCHEMA"});
-    if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
+    await salesDetailSchema(client,false,runtime26);
     const batches=(await client.query(`/* sales-detail:batch */ SELECT id,mapping_version,status,source_hash,source_name,
       EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED') AS already_published
       FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`,[input.batchId])).rows;
@@ -127,7 +127,21 @@ export class PostgresHistorySalesDetailStagingStore implements HistorySalesDetai
 /** Independent executable exact-ID resolver for the source reader. It does not
  * authenticate files by itself and cannot stage/publish anything. READ ONLY
  * repeatable snapshot here; STAGE subsequently locks/rechecks the same proof. */
-export function createPostgresHistorySalesDetailBindingResolver(pool:PgSalesPool,options:{batchId:string;fixedSourceNamespace:string;selectionSha256:string}){
+type SalesDetailResolverScope={batchId:string;fixedSourceNamespace:string;selectionSha256:string};
+async function salesDetailSchema(client:PgSalesClient,resolver:boolean,runtime26?:NativeRuntime26Capability):Promise<void>{
+  const rows=(await client.query(`/* sales-detail:${resolver?"resolver-schema":"schema"} */ SELECT array_agg(version ORDER BY version) AS versions FROM naijue_erp.schema_migration`)).rows;
+  must(rows.length===1,"HISTORY_SALES_DETAIL_SCHEMA","Reviewed migration registry required");
+  if(runtime26){const versions=rows[0]!.versions;must(Array.isArray(versions)&&versions.length===26&&versions.every((v,i)=>v===i+1),"HISTORY_SALES_DETAIL_SCHEMA","Exact successor prefix26 required");}
+  else{const reviewed=assertReviewedNativeImportSchema(rows[0]!.versions,{minimumVersion:11,errorCode:"HISTORY_SALES_DETAIL_SCHEMA"});if(reviewed.versions.length===18||reviewed.versions.length===19)await assertNativeImportAccountingGuards(client);}
+}
+export class PostgresHistorySalesDetailStagingStore26 extends PostgresHistorySalesDetailStagingStore{
+  private readonly runtime26:NativeRuntime26Capability;
+  constructor(pool:PgSalesPool,runtime26:NativeRuntime26Capability){super(pool);const checked=checkedNativeRuntime26Capability(runtime26);if(!checked)throw TypeError("Actual successor runtime capability required");this.runtime26=checked;}
+  override async stage(original:PreparedHistorySalesDetailChunk):Promise<{inserted:number;replayed:number}>{const chunk=structuredClone(original);validatePreparedHistorySalesDetailChunk(chunk);return this.stageValidated(chunk,this.runtime26);}
+}
+export function createPostgresHistorySalesDetailBindingResolver(pool:PgSalesPool,options:SalesDetailResolverScope){return salesDetailResolver(pool,options);}
+export function createPostgresHistorySalesDetailBindingResolver26(pool:PgSalesPool,options:SalesDetailResolverScope,runtime26:NativeRuntime26Capability){const checked=checkedNativeRuntime26Capability(runtime26);if(!checked)throw TypeError("Actual successor runtime capability required");return salesDetailResolver(pool,options,checked);}
+function salesDetailResolver(pool:PgSalesPool,options:SalesDetailResolverScope,runtime26?:NativeRuntime26Capability){
   const scope=structuredClone(options);
   must(/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(scope.batchId)&&/^[a-z][a-z0-9_.:-]{0,127}$/.test(scope.fixedSourceNamespace)
     &&/^[a-f0-9]{64}$/.test(scope.selectionSha256),"HISTORY_SALES_DETAIL_RESOLVER_SCOPE","Explicit fixed batch/namespace/selection scope required");
@@ -139,10 +153,9 @@ export function createPostgresHistorySalesDetailBindingResolver(pool:PgSalesPool
       "HISTORY_SALES_DETAIL_RESOLVER_QUERY","Literal original header/old SKU and effective canonical source identities required; no name matching");
     const client=await pool.connect();let began=false,commitAttempted=false;let discard:Error|undefined;
     try{
+      if(runtime26)await runtime26.assertReady(client,"IMPORT_STAGE");
       await client.query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY");began=true;
-      const versions=(await client.query("/* sales-detail:resolver-schema */ SELECT array_agg(version ORDER BY version) AS versions FROM naijue_erp.schema_migration")).rows;
-      must(versions.length===1,"HISTORY_SALES_DETAIL_SCHEMA","Reviewed registry required");const reviewedSchema = assertReviewedNativeImportSchema(versions[0]!.versions,{minimumVersion:11,errorCode:"HISTORY_SALES_DETAIL_SCHEMA"});
-    if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
+      await salesDetailSchema(client,true,runtime26);
       const batch=(await client.query(`/* sales-detail:resolver-batch */ SELECT id FROM naijue_erp.import_batch WHERE id=$1::uuid AND source_name=$2
         AND source_hash=$3 AND mapping_version='V2_HISTORY_NULLABLE_1' AND status IN ('STAGED','VALIDATING')
         AND NOT EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED')`,[scope.batchId,scope.fixedSourceNamespace,scope.selectionSha256])).rows;

@@ -2,17 +2,18 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { isDeepStrictEqual } from "node:util";
-import { PostgresHistorySalesDetailStagingStore } from "../adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts";
+import { PostgresHistorySalesDetailStagingStore, PostgresHistorySalesDetailStagingStore26 } from "../adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts";
 import { prepareHistorySalesDetailChunk } from "../packages/application/src/import-v3-history-sales-detail.ts";
 import type { HistorySalesDetailChunk } from "../packages/application/src/import-v3-history-sales-detail.ts";
 import type { PgSalesClient,PgSalesPool,PgSalesResult } from "../adapters/postgres/src/sales-unit-of-work.ts";
 import { syntheticSalesDetailChunk, salesDetailId, salesDetailHash } from "./support/synthetic-sales-detail-fixtures.ts";
 type Row=Record<string,unknown>;
 class Pool implements PgSalesPool{
+ lease:PgSalesClient|undefined;
  calls:{sql:string;v:unknown[]}[]=[];connects=0;releases:unknown[]=[];
  committed={sources:new Map<string,Row>(),lines:new Map<string,Row>()};working=structuredClone(this.committed);
  schema=Array.from({length:14},(_,i)=>i+1);bindingsValid=true;closed=false;nativeMissing=false;failTag:string|undefined;zeroInsert=false;commitApplied=false;rollbackFails=false;failure=new Error("synthetic failure");
- async connect():Promise<PgSalesClient>{this.connects++;return {query:(sql,v=[])=>this.query(sql,v),release:e=>{this.releases.push(e);}};}
+ async connect():Promise<PgSalesClient>{this.connects++;this.lease={query:(sql,v=[])=>this.query(sql,v),release:e=>{this.releases.push(e);}};return this.lease;}
  async query(sql:string,v:unknown[]):Promise<PgSalesResult>{
   this.calls.push({sql,v});const tag=/\/\* sales-detail:([^*]+?) \*\//.exec(sql)?.[1];
   const answer=(rows:Row[]=[])=>({rows,rowCount:rows.length});
@@ -88,4 +89,18 @@ test("sales-detail pg protocol: lost COMMIT ack preserves original uncertain err
  for(const applied of [false,true])for(const rollbackFails of [false,true]){const p=new Pool();p.failTag="COMMIT";p.commitApplied=applied;p.rollbackFails=rollbackFails;
   await assert.rejects(stage(p),e=>e===p.failure);assert.equal(p.connects,1);assert.equal(p.releases[0],p.failure);assert.equal(p.calls.at(-1)?.sql,"COMMIT");
   assert.equal(p.calls.filter(x=>x.sql==="COMMIT").length,1);assert.ok(!p.calls.some(x=>x.sql==="ROLLBACK"));assert.equal(p.committed.lines.size,applied?1:0);}
+});
+
+function salesStageRuntime26(p:Pool,denied=false,booleanProof=false){let proofs=0;return {proofs:()=>proofs,cap:{profile:'EXACT26' as const,contract:'NATIVE_RUNTIME26_V1' as const,async assertReady(client:object,purpose:string){proofs++;assert.equal(client,p.lease);assert.equal(purpose,'IMPORT_STAGE');assert.equal(p.calls.length,0);if(denied)throw Error('NATIVE_RUNTIME26_NOT_READY');if(booleanProof)return true as never;}}};}
+test('salesStage26 same-client proof precedes SQL; missing, boolean, expired and wrong schema fail without target work',async()=>{
+ const p=new Pool(),chunk=prepareHistorySalesDetailChunk(syntheticSalesDetailChunk());assert.throws(()=>new PostgresHistorySalesDetailStagingStore26(p,undefined as never),/runtime capability/);assert.equal(p.connects,0);p.schema=Array.from({length:26},(_,i)=>i+1);await assert.rejects(new PostgresHistorySalesDetailStagingStore(p).stage(chunk),{code:'HISTORY_SALES_DETAIL_SCHEMA'});
+ for(const o of [[true,false],[false,true]]){const x=new Pool();x.schema=Array.from({length:26},(_,i)=>i+1);await assert.rejects(new PostgresHistorySalesDetailStagingStore26(x,salesStageRuntime26(x,o[0],o[1]).cap).stage(chunk));assert.equal(x.calls.length,0);assert.ok(x.releases[0]);}
+ for(const length of [19,27]){const x=new Pool();x.schema=Array.from({length},(_,i)=>i+1);await assert.rejects(new PostgresHistorySalesDetailStagingStore26(x,salesStageRuntime26(x).cap).stage(chunk));assert.equal(x.calls.some(c=>c.sql.includes(':batch')),false);}
+});
+test('salesStage26 keeps original signed line and precise money, exact replay and native/header/source binding refusal',async()=>{
+ const p=new Pool();p.schema=Array.from({length:26},(_,i)=>i+1);const r=salesStageRuntime26(p),next=new PostgresHistorySalesDetailStagingStore26(p,r.cap),chunk=prepareHistorySalesDetailChunk(syntheticSalesDetailChunk());assert.deepEqual(await next.stage(chunk),{inserted:1,replayed:0});const before=structuredClone(p.committed);p.calls=[];p.bindingsValid=false;assert.deepEqual(await next.stage(chunk),{inserted:0,replayed:1});assert.deepEqual(p.committed,before);assert.equal(r.proofs(),2);assert.equal(p.calls.some(c=>c.sql.includes('insert-')),false);
+ const missing=new Pool();missing.schema=p.schema;missing.bindingsValid=false;await assert.rejects(new PostgresHistorySalesDetailStagingStore26(missing,salesStageRuntime26(missing).cap).stage(chunk));assert.equal(missing.committed.lines.size,0);
+});
+test('salesStage26 write failure rolls back while unknown COMMIT discards without retry or misleading rollback',async()=>{
+ for(const tag of ['insert-line','COMMIT']){const p=new Pool();p.schema=Array.from({length:26},(_,i)=>i+1);p.failTag=tag;await assert.rejects(new PostgresHistorySalesDetailStagingStore26(p,salesStageRuntime26(p).cap).stage(prepareHistorySalesDetailChunk(syntheticSalesDetailChunk())),e=>e===p.failure);assert.equal(p.connects,1);assert.equal(p.calls.some(c=>c.sql==='ROLLBACK'),tag!=='COMMIT');if(tag==='COMMIT')assert.ok(p.releases[0]);}
 });

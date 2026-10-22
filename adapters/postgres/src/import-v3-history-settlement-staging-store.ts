@@ -1,6 +1,7 @@
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
-import { assertReviewedNativeImportSchema } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { assertReviewedNativeImportSchema, checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { HISTORY_SETTLEMENT_VERSION,historySettlementRequestHash,validatePreparedHistorySettlementChunk } from "../../../packages/application/src/import-v3-history-settlement.ts";
 import type { HistoryPaymentBinding,HistorySettlementStagingStore,PreparedHistorySettlementChunk,PreparedHistorySettlementRow } from "../../../packages/application/src/import-v3-history-settlement.ts";
 import type { HistorySalesHeaderBinding } from "../../../packages/application/src/import-v3-history-sales-detail.ts";
@@ -14,9 +15,11 @@ function sourceEvidence(chunk:PreparedHistorySettlementChunk,row:PreparedHistory
  const s=row.source;return {id:s.id,batch_id:s.batchId,entity_type:s.entityType,source_key:s.sourceKey,file_ref:s.fileRef,sheet:s.sheet,row_no:s.rowNo,source_file_sha256:s.sourceFileSha256,row_sha256:s.rowSha256,raw_fields:s.rawFields,normalized_fields:s.normalizedFields,
   field_provenance:{...row.fieldProvenance,history_settlement_staging:{validator_version:HISTORY_SETTLEMENT_VERSION,fingerprint:row.fingerprint,selection:{...chunk.input.selection},header:{...row.header},account:{...row.account},method:row.method?{...row.method}:null}}};
 }
-async function schema(client:PgSalesClient,resolver=false):Promise<void>{
+async function schema(client:PgSalesClient,resolver=false,runtime26?:NativeRuntime26Capability):Promise<void>{
  const rows=(await client.query(`/* settlement:${resolver?"resolver-schema":"schema"} */ SELECT array_agg(version ORDER BY version) versions FROM naijue_erp.schema_migration`)).rows;
- must(rows.length===1,"Exact reviewed native payment schema required");assertReviewedNativeImportSchema(rows[0]!.versions,{minimumVersion:17,errorCode:"HISTORY_SETTLEMENT_SCHEMA_NOT_READY"});await assertNativeImportAccountingGuards(client);
+ must(rows.length===1,"Exact reviewed native payment schema required");
+ if(runtime26){const versions=rows[0]!.versions;must(Array.isArray(versions)&&versions.length===26&&versions.every((v,i)=>v===i+1),"Exact successor prefix26 required");}
+ else{assertReviewedNativeImportSchema(rows[0]!.versions,{minimumVersion:17,errorCode:"HISTORY_SETTLEMENT_SCHEMA_NOT_READY"});await assertNativeImportAccountingGuards(client);}
 }
 async function checkHeader(client:PgSalesClient,scope:Scope,h:HistorySalesHeaderBinding,locks:boolean):Promise<void>{
  const rows=(await client.query(`/* settlement:check-header */ SELECT h.id FROM naijue_erp.history_sales_header h
@@ -49,10 +52,13 @@ async function checkPayment(client:PgSalesClient,scope:Scope,p:HistoryPaymentBin
 }
 /** Only original source + typed historical settlement. No native payment writes, stock, progress, receipt or publication. */
 export class PostgresHistorySettlementStagingStore implements HistorySettlementStagingStore {
- private readonly pool:PgSalesPool;constructor(pool:PgSalesPool){if(typeof pool?.connect!=="function")throw TypeError("Explicit settlement pool required");this.pool=pool;}
+ protected readonly pool:PgSalesPool;constructor(pool:PgSalesPool){if(typeof pool?.connect!=="function")throw TypeError("Explicit settlement pool required");this.pool=pool;}
  async stage(original:PreparedHistorySettlementChunk):Promise<{inserted:number;replayed:number}>{
-  validatePreparedHistorySettlementChunk(original);const chunk=structuredClone(original),client=await this.pool.connect();let began=false,committing=false,discard:Error|undefined;
-  try{await client.query("BEGIN ISOLATION LEVEL READ COMMITTED");began=true;const result=await this.write(client,chunk);committing=true;await client.query("COMMIT");return result;}
+  validatePreparedHistorySettlementChunk(original);return this.stageValidated(structuredClone(original));
+ }
+ protected async stageValidated(chunk:PreparedHistorySettlementChunk,runtime26?:NativeRuntime26Capability):Promise<{inserted:number;replayed:number}>{
+  const client=await this.pool.connect();let began=false,committing=false,discard:Error|undefined;
+  try{if(runtime26)await runtime26.assertReady(client,"IMPORT_STAGE");await client.query("BEGIN ISOLATION LEVEL READ COMMITTED");began=true;const result=await this.write(client,chunk,runtime26);committing=true;await client.query("COMMIT");return result;}
   catch(error){if(!began||committing)discard=error instanceof Error?error:Error("Settlement outcome unknown");else try{await client.query("ROLLBACK");}catch(rollback){discard=rollback instanceof Error?rollback:Error("Settlement rollback failed");throw new AggregateError([error,rollback],"Settlement staging and rollback failed; client discarded");}throw error;}
   finally{client.release(discard);}
  }
@@ -69,9 +75,9 @@ export class PostgresHistorySettlementStagingStore implements HistorySettlementS
   if(!sources.length&&!typed.length)return "NEW";
   must(sources.length===1&&typed.length===1&&sources[0]!.id===s.id&&typed[0]!.id===v.id&&sources[0]!.source_equal===true&&typed[0]!.settlement_equal===true,"Changed/partial/orphan/alternate settlement source or projection cannot be adopted");return "REPLAY";
  }
- private async write(client:PgSalesClient,chunk:PreparedHistorySettlementChunk){
+ private async write(client:PgSalesClient,chunk:PreparedHistorySettlementChunk,runtime26?:NativeRuntime26Capability){
   const input=chunk.input,scope={batchId:input.batchId,fixedSourceNamespace:input.fixedSourceNamespace,selectionSha256:input.selection.selectionSha256};
-  await client.query("/* settlement:cutoff */ SELECT naijue_erp.cutoff_import_lock()");await schema(client);
+  await client.query("/* settlement:cutoff */ SELECT naijue_erp.cutoff_import_lock()");await schema(client,false,runtime26);
   const batches=(await client.query(`/* settlement:batch */ SELECT id,mapping_version,status,source_hash,source_name,EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED') already_published
    FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`,[input.batchId])).rows,b=batches[0];
   must(batches.length===1&&b?.id===input.batchId&&b.mapping_version===chunk.mappingVersion&&(b.status==="STAGED"||b.status==="VALIDATING")&&b.source_hash===scope.selectionSha256&&b.source_name===scope.fixedSourceNamespace&&b.already_published===false,"Exact selected open unpublished batch required");
@@ -96,7 +102,14 @@ export class PostgresHistorySettlementStagingStore implements HistorySettlementS
  }
 }
 /** Same selected open scope captured as PhaseA. Reads only, never authenticates file bytes itself. */
-export function createPostgresHistorySettlementBindingResolver(pool:PgSalesPool,options:Scope){
+export class PostgresHistorySettlementStagingStore26 extends PostgresHistorySettlementStagingStore{
+ private readonly runtime26:NativeRuntime26Capability;
+ constructor(pool:PgSalesPool,runtime26:NativeRuntime26Capability){super(pool);const checked=checkedNativeRuntime26Capability(runtime26);if(!checked)throw TypeError("Actual successor runtime capability required");this.runtime26=checked;}
+ override async stage(original:PreparedHistorySettlementChunk):Promise<{inserted:number;replayed:number}>{validatePreparedHistorySettlementChunk(original);return this.stageValidated(structuredClone(original),this.runtime26);}
+}
+export function createPostgresHistorySettlementBindingResolver(pool:PgSalesPool,options:Scope){return settlementResolver(pool,options);}
+export function createPostgresHistorySettlementBindingResolver26(pool:PgSalesPool,options:Scope,runtime26:NativeRuntime26Capability){const checked=checkedNativeRuntime26Capability(runtime26);if(!checked)throw TypeError("Actual successor runtime capability required");return settlementResolver(pool,options,checked);}
+function settlementResolver(pool:PgSalesPool,options:Scope,runtime26?:NativeRuntime26Capability){
  historySettlementRequestHash(options);const scope=structuredClone(options);entityId("operation",scope.batchId);
  must(Object.keys(scope).sort().join(",")==="batchId,fixedSourceNamespace,selectionSha256"&&/^[a-z][a-z0-9_.:-]{0,127}$/.test(scope.fixedSourceNamespace)&&/^[a-f0-9]{64}$/.test(scope.selectionSha256),"Explicit fixed selected resolver scope required");
  return async(query:{entity:"SETTLEMENT";sourceKey:string;rawFields:JsonObject;normalizedFields:JsonObject}):Promise<{header:HistorySalesHeaderBinding;account:HistoryPaymentBinding;method:HistoryPaymentBinding|null}>=>{
@@ -105,7 +118,7 @@ export function createPostgresHistorySettlementBindingResolver(pool:PgSalesPool,
    &&["单据来源编号","账户来源编号"].every(k=>typeof n[k]==="string"&&(n[k] as string).length>0&&raw[k]===n[k])
    &&present===Object.hasOwn(n,methodField)&&(!present||typeof raw[methodField]==="string"&&raw[methodField]===n[methodField]),"Original settlement/header/account/method source identities must agree before connection");
   const client=await pool.connect();let began=false,committing=false,discard:Error|undefined;
-  try{await client.query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY");began=true;await schema(client,true);
+  try{if(runtime26)await runtime26.assertReady(client,"IMPORT_STAGE");await client.query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY");began=true;await schema(client,true,runtime26);
    const batch=(await client.query(`/* settlement:resolver-batch */ SELECT id FROM naijue_erp.import_batch WHERE id=$1::uuid AND source_name=$2 AND source_hash=$3 AND mapping_version='V2_HISTORY_NULLABLE_1'
     AND status IN ('STAGED','VALIDATING') AND NOT EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED')`,[scope.batchId,scope.fixedSourceNamespace,scope.selectionSha256])).rows;must(batch.length===1,"Actual selected open batch required");
    const headers=(await client.query(`/* settlement:resolver-header */ SELECT h.id,s.id source_row_id,s.source_file_sha256,s.row_sha256,h.version

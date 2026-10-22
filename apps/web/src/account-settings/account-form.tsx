@@ -1,5 +1,5 @@
 import { Button, Input, Modal, Select, Switch } from '@arco-design/web-react';
-import { useEffect, useReducer, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useReducer, useRef, useState, useSyncExternalStore, type ComponentProps, type ComponentType } from 'react';
 import { LatestQuery } from '../loading/latest-query.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import type { StaffSettingsPage, StaffSettingsQuery } from '../staff-settings/contracts.ts';
@@ -7,6 +7,8 @@ import { SettingsField } from '../settings/stores/maintenance-form.tsx';
 import type { AccountSettingsProps, AccountStaffCandidate } from './contracts.ts';
 import { accountStaffCandidate } from './response-validation.ts';
 import { accountRejectionMessage, type AccountSettingsController } from './controller.ts';
+// Same Arco runtime, including its supported controlled-empty value.
+const AccountSourceSelect = Select as ComponentType<Omit<ComponentProps<typeof Select>, 'value'> & { readonly value: ComponentProps<typeof Select>['value'] }>;
 const titles = { CREATE: '新增登录账号', EDIT: '编辑登录账号', DISABLE: '确认禁用账号', RESTORE: '确认启用账号', RESET_PASSWORD: '重置密码' };
 export function AccountSettingsForm(props: AccountSettingsProps & { readonly controller: AccountSettingsController; readonly close: () => void }) {
   const { controller } = props, state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot), draft = state.draft, write = state.write;
@@ -19,7 +21,7 @@ export function AccountSettingsForm(props: AccountSettingsProps & { readonly con
   if (!draft || !props.scope.active) return null;
   const full = controller.intent === 'CREATE' || controller.intent === 'EDIT', secret = controller.intent === 'CREATE' || controller.intent === 'RESET_PASSWORD';
   const role = props.roles.find(item => item.value === draft.staff?.role)?.label ?? '未提供';
-  return <Modal className="bs-modal store-settings-modal settings-preparation-modal iw-arco-modal iw-arco-controls" visible title={titles[controller.intent]} maskClosable={false} autoFocus={false} focusLock
+  return <Modal className="bs-modal demo-settings-modal iw-arco-modal iw-arco-controls" visible title={titles[controller.intent]} maskClosable={false} autoFocus={false} focusLock
     okText="确定" cancelText={write.phase === 'committed' ? '关闭' : '取消'}
     okButtonProps={{ disabled: !controller.writesEnabled || controller.locked || controller.intent === 'EDIT' && !state.dirty, loading: write.phase === 'checking' || write.phase === 'submitting' }}
     onOk={() => { const transient = password; setPassword(''); void controller.submit(transient); }} onCancel={() => { if (controller.requestClose()) props.close(); }}>
@@ -63,7 +65,9 @@ function AccountStaffPicker(props: AccountSettingsProps & { readonly selected: A
   const options = new Map<string, { value: string; label: string; disabled: boolean }>();
   if (props.selected) options.set(props.selected.id, { value: props.selected.id, label: props.selected.name, disabled: false });
   for (const item of state.success?.data.items ?? []) options.set(item.id, { value: item.id, label: `${item.name} · ${item.employmentStatus || '状态未提供'}${item.account ? '（已有账号）' : ''}`, disabled: state.phase !== 'success' || item.account !== null });
-  return <div ref={host} className="settings-reference-select settings-single"><Select aria-label="所属员工" value={props.selected?.id ?? ''} options={[...options.values()]} placeholder="请选择员工" showSearch filterOption={false} allowClear={false} disabled={!active || !query} loading={state.phase === 'loading'}
+  return <div ref={host} className="settings-reference-select settings-single demo-settings-single"><AccountSourceSelect className="ui-flat-select" aria-label="所属员工" value={props.selected?.id} options={[...options.values()]} placeholder="请选择员工" showSearch filterOption={false} allowClear={false} disabled={!active || !query} loading={state.phase === 'loading'}
+    renderFormat={() => <span className="ui-single-tag">{props.selected?.name ?? ''}</span>}
+    triggerProps={{ position: 'bl', autoAlignPopupWidth: false, popupStyle: { width: Math.max(180, host.current?.getBoundingClientRect().width ?? 0) } }}
     popupVisible={open && active && !!query} unmountOnExit getPopupContainer={() => { if (!host.current) throw new Error('Account staff picker is not mounted'); return host.current; }}
     onVisibleChange={visible => { if (!active) return; setOpen(visible); if (visible) run(); else query?.cancel(); }} onSearch={search => { if (open) run(search); }}
     onChange={(id: string) => { if (!active || !open || state.phase !== 'success') return; const row = state.success?.data.items.find(item => item.id === id); if (!row || row.account) return; props.onChange(accountStaffCandidate(row)); setOpen(false); }}

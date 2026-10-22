@@ -1,7 +1,7 @@
 /** Synthetic PG boundary only: does not parse SQL or establish engine acceptance. */
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createPostgresHistorySalesDetailBindingResolver } from "../adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts";
+import { createPostgresHistorySalesDetailBindingResolver, createPostgresHistorySalesDetailBindingResolver26 } from "../adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts";
 import type { PgSalesClient, PgSalesPool, PgSalesResult } from "../adapters/postgres/src/sales-unit-of-work.ts";
 import { syntheticSalesDetailChunk, salesDetailId, salesDetailHash } from "./support/synthetic-sales-detail-fixtures.ts";
 
@@ -17,6 +17,7 @@ const fixture = () => {
 
 /** Scripted database replies; SQL semantics still require a real engine run. */
 class ReadOnlyPool implements PgSalesPool {
+  lease:PgSalesClient|undefined;
   connects = 0;
   releases: (Error | boolean | undefined)[] = [];
   calls: { sql: string; values: unknown[] }[] = [];
@@ -36,7 +37,7 @@ class ReadOnlyPool implements PgSalesPool {
   async connect(): Promise<PgSalesClient> {
     this.connects++; this.beforeBorrow?.();
     if (this.failAt === "connect") throw this.failure;
-    return { query: async (sql, values = []): Promise<PgSalesResult> => {
+    this.lease={ query: async (sql, values = []): Promise<PgSalesResult> => {
       this.calls.push({ sql, values });
       const tag = /\/\* sales-detail:([^*]+?) \*\//.exec(sql)?.[1] ?? sql;
       if (tag === "ROLLBACK" && this.failRollback) throw this.rollbackFailure;
@@ -50,7 +51,7 @@ class ReadOnlyPool implements PgSalesPool {
       assert.doesNotMatch(sql, /\b(?:INSERT|UPDATE|DELETE|TRUNCATE)\b|\bFOR SHARE\b|cutoff_import_lock|import_source_key_lock/);
       assert.ok(Object.hasOwn(this.rows, tag), `Unexpected database read: ${tag}`);
       return { rows: structuredClone(this.rows[tag]!), rowCount: this.rows[tag]!.length };
-    }, release: error => { this.releases.push(error); } };
+    }, release: error => { this.releases.push(error); } };return this.lease;
   }
 }
 
@@ -205,4 +206,17 @@ test("sales-detail resolver retains both errors and discards the lease if rollba
   assert.deepEqual(pool.releases, [pool.rollbackFailure]);
   assert.equal(pool.calls.at(-1)!.sql, "ROLLBACK");
   assert.ok(!pool.calls.some(x => x.sql === "COMMIT"));
+});
+
+function salesResolverRuntime26(p:ReadOnlyPool,denied=false,booleanProof=false){let proofs=0;return {proofs:()=>proofs,cap:{profile:'EXACT26' as const,contract:'NATIVE_RUNTIME26_V1' as const,async assertReady(client:object,purpose:string){proofs++;assert.equal(client,p.lease);assert.equal(purpose,'IMPORT_STAGE');assert.equal(p.calls.length,0);if(denied)throw Error('NATIVE_RUNTIME26_NOT_READY');if(booleanProof)return true as never;}}};}
+test('salesResolver26 admits only actual original live client and exact prefix26, preserving legacy19 rejection and preborrow literal checks',async()=>{
+ const f=fixture(),p=new ReadOnlyPool();assert.throws(()=>createPostgresHistorySalesDetailBindingResolver26(p,f.scope,undefined as never),/runtime capability/);assert.equal(p.connects,0);p.rows['resolver-schema']=[{versions:Array.from({length:26},(_,i)=>i+1)}];await assert.rejects(createPostgresHistorySalesDetailBindingResolver(p,f.scope)(f.query));assert.equal(p.calls.some(c=>c.sql.includes('resolver-batch')),false);
+ for(const o of [[true,false],[false,true]]){const x=new ReadOnlyPool();await assert.rejects(createPostgresHistorySalesDetailBindingResolver26(x,f.scope,salesResolverRuntime26(x,o[0],o[1]).cap)(f.query));assert.equal(x.calls.length,0);assert.ok(x.releases[0]);}
+ for(const length of [19,27]){const x=new ReadOnlyPool();x.rows['resolver-schema']=[{versions:Array.from({length},(_,i)=>i+1)}];await assert.rejects(createPostgresHistorySalesDetailBindingResolver26(x,f.scope,salesResolverRuntime26(x).cap)(f.query));assert.equal(x.calls.some(c=>c.sql.includes('resolver-batch')),false);}
+ const malformed=new ReadOnlyPool();await assert.rejects(createPostgresHistorySalesDetailBindingResolver26(malformed,f.scope,salesResolverRuntime26(malformed).cap)({...f.query,sourceKey:'OTHER'}));assert.equal(malformed.connects,0);
+});
+test('salesResolver26 retains exact complete same-batch proofs in read-only snapshot and discards uncertain COMMIT',async()=>{
+ const f=fixture(),p=new ReadOnlyPool();p.rows['resolver-schema']=[{versions:Array.from({length:26},(_,i)=>i+1)}];const r=salesResolverRuntime26(p),resolved=await createPostgresHistorySalesDetailBindingResolver26(p,f.scope,r.cap)(f.query);assert.deepEqual(resolved,f.binding);assert.equal(r.proofs(),1);assert.equal(p.calls[0]!.sql,'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');assert.equal(p.calls.at(-1)!.sql,'COMMIT');
+ const missing=new ReadOnlyPool();missing.rows['resolver-schema']=p.rows['resolver-schema']!;missing.rows['resolver-header']=[];await assert.rejects(createPostgresHistorySalesDetailBindingResolver26(missing,f.scope,salesResolverRuntime26(missing).cap)(f.query));assert.equal(missing.calls.at(-1)!.sql,'ROLLBACK');
+ const lost=new ReadOnlyPool();lost.rows['resolver-schema']=p.rows['resolver-schema']!;lost.failAt='COMMIT';await assert.rejects(createPostgresHistorySalesDetailBindingResolver26(lost,f.scope,salesResolverRuntime26(lost).cap)(f.query),e=>e===lost.failure);assert.equal(lost.connects,1);assert.equal(lost.calls.some(c=>c.sql==='ROLLBACK'),false);assert.ok(lost.releases[0]);
 });
