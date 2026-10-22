@@ -1,0 +1,29 @@
+{
+  "status": "C_FROZEN_EXISTING_FIELD_READ_DTO_NOT_SCHEMA_OR_WRITE_ENABLEMENT",
+  "route": "POST /current-form/products/query",
+  "request": "unchanged",
+  "type": "CurrentFormProduct category?: { readonly id: EntityId<\"category\">; readonly label: string | null }",
+  "semantics": [
+    "One optional grouped property preserves legacy wire: absent means old response does not provide category; not a known empty classification",
+    "New PostgresCurrentFormReader always emits category object from actual p.category_id and LEFT JOIN product_category.name in the same existing repeatable-read snapshot",
+    "id is actual canonicalUUID and required when group present; label is exact existing terminal category name, not path concatenation; NULL only when actual leftjoin name absent; malformed values fail rather than invent label",
+    "Client accepts either absent category or exactly {id,label}; no partial object, aliases, scalar fallback or default; absence/NULL displayedunknown under UI own approved layout",
+    "No units/source_unit DTO or DB field; unit requirement cancelled by original task authority perC",
+    "Same search/count/page/scope/order; unique categoryPK meansno row multiplication; request/read grant andallcommand fencesunchanged"
+  ],
+  "paths": [
+    "packages/application/src/current-form-ports.ts",
+    "adapters/postgres/src/current-form-reader.ts",
+    "tests/current-form-reader.test.ts"
+  ],
+  "registrationNeeded": [
+    "tests/current-form-reader.test.ts"
+  ],
+  "whyGroupedOptional": "One optional atomicgroup avoids independently optional flat fields becoming contradictory; old deployedwire remains representable andnew output strict. C/F1 sync beforechange.",
+  "adoptedAtUtc": "2026-10-22T10:10:21.319082+00:00",
+  "sourceProposal": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/CURRENT-PRODUCT-CATEGORY-DTO-v1.json",
+    "sha256": "87cbb9a561c169f64e8c8df7c659a6e71b08c878d75a1c3a055b899b0ca3459d"
+  },
+  "businessBasis": "Sales category subtotal requested by full-page frozen Demo restoration; source existing product.category_id only. Unit cancelled; no new database fields/constraints/write branch."
+}

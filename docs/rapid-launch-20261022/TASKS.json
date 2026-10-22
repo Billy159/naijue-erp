@@ -8,11 +8,27 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "0d3d59f06fd5c9b660f29f71c1a773b4c00f2b1d",
+    "headObserved": "a8546f3f79fc64581575f4d64f590d3752dde794",
     "workingTreeNotFullyCommitted": true,
     "remoteHeadVerified": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
-    "remoteReadbackMethod": "Last verified exact API ref; later three git pushes failed on network. Do not claim local commits remote.",
-    "pushPendingLocalCommits": true
+    "remoteReadbackMethod": "Exact GitHub API ref; latest source checkpoint is private draft release bundle downloaded/verified, not normal branch push",
+    "pushPendingLocalCommits": true,
+    "recoverableDraftCheckpoint": {
+      "status": "GITHUB_ASSET_DOWNLOADED_HASH_AND_BUNDLE_VERIFIED",
+      "atUtc": "2026-10-22T11:46:35.320693+00:00",
+      "sourceCommit": "a9079af66a92b62223ec53ba62173198e109b133",
+      "prerequisiteCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+      "bundle": {
+        "file": "naijue-erp-source-a9079af.bundle",
+        "bytes": 696637,
+        "sha256": "5d48d559fc9cdabccc09fcdaf3ec4f7ce7a7561cc1a399fa6ce929a3529a13d9"
+      },
+      "draftReleaseTag": "codex-checkpoint-20261022-a7e817b",
+      "draftReleaseUrl": "https://github.com/Billy159/naijue-erp/releases/tag/untagged-ba75756655ef31b66d5d",
+      "remoteBranchReadback": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+      "branchPushComplete": false,
+      "actualSshAttempt": "Strict official-key verified ssh443 existing agent failed publickey; no key/credential/verification changes"
+    }
   },
   "concurrency": {
     "chats": 9,
@@ -212,7 +228,7 @@
         "FIELD-APPROVAL-C01-v1.json"
       ],
       "notTested": [],
-      "nextAction": "Current complete supplements approved and released; freeze precise DTOs, only genuinely new unlisted differences require further approval.",
+      "nextAction": "All schema supplements approved; C frozen existing categoryDTO and codec/stage runtime/oldV2key compatibility; no new unlisted field allowed.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
@@ -251,7 +267,7 @@
         "operational-checkpoints/R1-BUILD-PACK.json"
       ],
       "notTested": [],
-      "nextAction": "Account source captured, ACL applied; finish exact native staff/account bootstrap, independent DB real import, private runtime config, persistent entry ownership and same-version package.",
+      "nextAction": "QA1..26 v5 actual installed/corrected/catalog read; maintenance matrix not yet executed due C carrier runtime failures; job27 bounded readonly runtime probe; keep old/R1 unchanged.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
@@ -312,7 +328,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "R1 native readers and legacy verifier source accepted. Actual source-account mapping/bootstrap, host runtime and real authentication remain.",
+      "nextAction": "Actual full26 catalog/ACL interpretation plus real49 bootstrap/source/executor/issuer; category small slice fixed+QB74 PASS. No production role grant inferred from QA owner.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D1",
@@ -342,7 +358,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
+      "nextAction": "Current approved document/transaction source accepted; real schema26 issuer/current runtime/save approval evidence pending.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D1",
@@ -373,7 +389,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
+      "nextAction": "Inventory overview bounded reader sourceQB65 PASS; actual PG/SQLplan/session still pending; history current source closure per original queue.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D3",
@@ -404,7 +420,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
+      "nextAction": "Read/write leaves and W13/W14 accepted scoped source; W15 read sourceQB69 PASS; codec fixed275ac63 awaitingQB; private stage READY pendingC; images transaction/host still closed.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D2",
@@ -435,7 +451,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
+      "nextAction": "Existing maintenance source preserved; staged media and one product same-client audit/receipt closure remain, no silent oldV2 hash changes.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D2",
@@ -467,7 +483,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Catalogue344 external technical pin issued after QB29; actual header source window authorized. Finish other source factories, exact21 approved barcodes, historical-only2 customers and private45 account mappings.",
+      "nextAction": "Full2956 referencesQB73 PASS/C closed fullref pin signed only source; one-pass new source offset index complete after documented failed first tool, QB new index pending; 11actual factories/full49/MAIN not ready.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D3",
@@ -490,7 +506,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
+      "nextAction": "Explicit26 header/source/typed projection/readback completion, preserve historical identities/signed quantities; no imported real data yet.",
       "title": "基线感知历史修订（R4）",
       "owner": "D3",
       "instructions": "B07 基线感知历史修订（R4）\n路径：D3拥有history修订应用、有效投影、PG叶适配与历史命令插件；迁移由D1集中实施，过账复用D1公共端口。\n依赖：相关字段确认、B06已发布历史基线、B02受控事务/过账合同。\n历史修改按受控revision和当前有效投影实现：原始header/line/source不可变；加版本CAS、原因、操作者、前后值、原请求key；新旧有效库存效果之差记账，金额单改不动库存，已计入切换基线的旧单不得再过整单。历史修订入口、存储增补和收退配平的具体字段在C01确认后实施；不要擅自扩大为历史审核状态迁移。\n最小证据：历史数量增加/减少差额、金额单改、同key重复、权限/版本冲突；调拨两端守恒；读取看到最新有效值且原始值可追溯。复用schema19既有发布/回滚证据，真实导入不是再跑全套合成验证。",
@@ -529,7 +545,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
+      "nextAction": "Sales source/runtime consumers and fixed output stale repair accepted; continue chunk26 common presentation and exact readonly action, no fake row detail.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F1",
@@ -560,7 +576,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
+      "nextAction": "Whole NEW sales21f2 reviewed NEED_FIX; hidden-IN-input fixed10640 QFtargeted PASS; Demo v006 three exact findings assigned originalF1; saved edit trusted prep still missing.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F1",
@@ -591,7 +607,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
+      "nextAction": "Inventory navigation/overview source accepted only; actual linked data/browser/PG runtime remains.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F2",
@@ -621,7 +637,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Five Demo controls fixed/QF queued. Continue W6 catalogue interface; true multi-season and media DTO dependencies explicit.",
+      "nextAction": "P02 chrome and readonly P08/09/11 sourceQF PASS; classifiedP12/returnLabel fixed275ac63 source/DOM, types still externally blocked byF1; write UI remains opt-in closed.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F2",
@@ -651,7 +667,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Payment9 fixed/QF queued; W5 organization frontend implementation continuing.",
+      "nextAction": "Audit P2 and entry sourceQF PASS; no repeated W5/W7. Active new fullDemo B01/B02 UI migration in owned registered view/CSS, root audit injection still needsF1.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F3",
@@ -683,7 +699,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
+      "nextAction": "Existing barcode exact source/consumer work accepted; full runtime data mapping/readback remains.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F1",
@@ -714,7 +730,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Consume QF/QB fixed scoped results and Demo source/browser findings; release applicable business batch after actual data/runtime gates, no unrelated whole-site wait.",
+      "nextAction": "Keep separate source, synthetic, real engine, real import, browser and production; accept delegated scope, dispatch exact fixes, next necessary fixed candidate after F1 chunk26.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
@@ -808,7 +824,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Review only four new frontend slices at842f0db; reuse accepted older scopes.",
+      "nextAction": "Only explicit new slices10640 hidden-entry and275ac63 P12, old accepted scopes reused; browser ownedDemo.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "QF",
@@ -838,7 +854,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Review barcode/header-testfix/bootstrap-closure/W6/W7/historyHTTP/deployment scoped slices at842f0db; reuse slice1-29 accepted ranges.",
+      "nextAction": "Current accepted59-75 metadata indexed, queueMAIN26/codec/new source-index only; no repeated old evidence.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "QB",
@@ -906,8 +922,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T09:05:13.366642+00:00",
-  "stage": "FIXED_DELTA_QA_DEMO_REPAIRS_AND_EXACT26_ENGINE_PREPARATION",
+  "updatedAt": "2026-10-22T17:37:49.572414+00:00",
+  "stage": "ACTIVE_PHASED_LAUNCH_SOURCE_AND_ISOLATED_QA_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -1336,15 +1352,19 @@
       "reasoningEffort": "xhigh",
       "fastRequested": false
     },
-    "exception": {
-      "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
-      "model": "gpt-6-astra",
-      "reasoningEffort": "ultra",
-      "speed": "PRESERVE_EXISTING"
-    },
+    "exception": null,
     "actualAction": "send_message_to_thread accepted explicit model/thinking for C and original eight role Chats; current in-flight generation is not retrospectively changed",
     "fastActualState": "NOT_VERIFIED_INTERFACE_UNAVAILABLE",
-    "blocker": "No serviceTier option in app send tool; no running supported CLI control socket. Computer Use explicitly denied com.openai.codex. Requires UI setting; not falsely recorded as closed."
+    "blocker": "No serviceTier option in app send tool; no running supported CLI control socket. Computer Use explicitly denied com.openai.codex. Requires UI setting; not falsely recorded as closed.",
+    "updatedAtUtc": "2026-10-22T09:54:28.172776+00:00",
+    "latestDemoDirective": {
+      "source": "Direct human message in C: 逐页对比用Sol6.1 x-high吧",
+      "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
+      "action": "send_message_to_thread explicit model/thinking accepted",
+      "supersedes": "Previous Demo Astra Ultra exception"
+    }
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
@@ -1362,15 +1382,16 @@
     "accountIdentity45": "QB35_SCOPED_PASS_C_OUTSIDE_PIN",
     "accountIdentityAdditional4": "D3_EXACT_PLAN_SOURCE_FACTS_READY_QB_QUEUED",
     "deploymentTools": "QB38_SOURCE_PROTOCOL_PASS_REAL_DEPLOY_NOT_RUN",
-    "bootPersistence": "C_HELPER_SOURCE_IN_PROGRESS_NO_INSTALL",
-    "currentSourceCheckpoint": "0d3d59f06fd5c9b660f29f71c1a773b4c00f2b1d",
+    "bootPersistence": "SOURCE_READY_FINAL_RELEASE_MANIFEST_AND_ACTUAL_BOOT_NOT_DONE",
+    "currentSourceCheckpoint": "a8546f3f79fc64581575f4d64f590d3752dde794",
     "currentPreview": {
-      "url": "http://127.0.0.1:57834/synthetic-unified.html",
-      "commit": "9ee77843aeafca0fa3c354c1ff22119549e10620",
-      "build": "ui-preview-9ee7784-01-build01",
-      "htmlSha256": "095bf63aef2ad36e95a7e9ad5bbc5a1ef866b5a44ff82b3a526e1d56428008e4",
-      "scope": "SYNTHETIC_ONLY_WRITES_DISABLED",
-      "notIncluded": "947 prices/de6 password/93 STAFFroot/ea5 reset and specs/cd14 barcode/0d3 account+history"
+      "url": "http://127.0.0.1:57836/synthetic-unified.html",
+      "commit": "21f2afa108e9252ad9829c78077b16d46b579d31",
+      "build": "ui-preview-21f2afa-01-build01",
+      "htmlSha256": "ed2b08c65acd31f01a5c1474e2a29913f10ba49d338da1741a770b4959747fbb",
+      "overlaySha256": "64659b8b27b97d42ce2e062d361b1ec6406727d062f4c6e533e8f4245103db98",
+      "scope": "SYNTHETIC_ONLY_WRITES_DISABLED; scenario body not full app shell geometry",
+      "notIncluded": "Later F2 readonly/P12, D1 category integration and F1 chunk26 WIP"
     },
     "currentDatabase": {
       "name": "erp_rewrite_20261022_r1",
@@ -1383,11 +1404,12 @@
     },
     "schemaSuccessor": {
       "qaDatabase": "erp_qa_rapid26_20261022_01",
-      "installedVersions": "1..25",
-      "status": "PASS_FIXED20_25_INSTALL_AND_MINIMAL_NEGATIVES_ONLY",
+      "installedVersions": "1..26",
+      "actualPatchLevel": "26_v5",
       "accounts": 0,
       "sourceRows": 0,
-      "next": "job19 fixed bundle READY_NOT_STATIC_PARSED_NOT_SUBMITTED; C read/parse then append26 only",
+      "status": "PASS_JOB23_V4_CATALOG_AND_JOB24_V5_HELPER; NOT_ACTUAL_MAINTENANCE_COMMIT_PASS",
+      "matrix": "jobs25/26/28 failed before matrix; job27 hostNode works; job29 existing admin readonly technical socket location + real Node pg readonly handshake submitted, collect sameID",
       "productionTargetStill": "erp_rewrite_20261022_r1 exact1..19 unchanged"
     },
     "latestCandidatePins": [
@@ -1395,28 +1417,133 @@
       "B06-PRODUCT-SEASON-SOURCE-ADOPTION.json",
       "B06-HISTORICAL-CUSTOMER-EXACT2-ADOPTION.json"
     ],
-    "boot": "SOURCE_OFFLINE_READY_NOT_INSTALLED_T16_SAFETY_TRANSITIVE_PROOF_PENDING"
+    "boot": "SOURCE_QB54_OFFLINE24_PASS_JOB17_SAFETY_PROJECTION_ADOPTED_NOT_INSTALLED",
+    "operationReceiptRefs": [
+      {
+        "jobId": "c03-exact26-engine-20261022-19",
+        "status": "PASS_FIXED26_INSTALL_AND_MINIMAL_NEGATIVES_ONLY",
+        "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-engine-20261022-19/release-receipts/c03-exact26-engine-20261022-19/engine-result.json",
+        "sha256": "f5c8ea11c8ba7dfb4af9b8ed236099be5f16d158930899235b1014d6666da6d4",
+        "patchOutcome": null,
+        "matrixAttempted": null,
+        "failureCode": null,
+        "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production"
+      },
+      {
+        "jobId": "c03-exact26-v3-patch-20261022-20",
+        "status": "FAILED_FIRST_ERROR_QA_PRESERVED_NO_REPLAY",
+        "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v3-patch-20261022-20/release-receipts/c03-exact26-v3-patch-20261022-20/engine-result.json",
+        "sha256": "8e18f7b896f0a819fa7b0c03cb899abe69f02036f5115c8fde35012817bb0778",
+        "patchOutcome": "COMMIT_RETURNED_SUCCESS",
+        "matrixAttempted": null,
+        "failureCode": "FIRST_FIXED_SQL_ERROR_STOPPED",
+        "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production"
+      },
+      {
+        "jobId": "c03-exact26-v3-readback-20261022-21",
+        "status": "PASS_READ_ONLY_V3_INSTALL_AND_EMPTY_STATE_CONFIRMED",
+        "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v3-readback-20261022-21/release-receipts/c03-exact26-v3-readback-20261022-21/engine-result.json",
+        "sha256": "0c7155996c7cb6bf2aa0a9dfd25bb5f0cdadd4dd292ad8240673cf8b2202d491",
+        "patchOutcome": null,
+        "matrixAttempted": null,
+        "failureCode": null,
+        "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production"
+      },
+      {
+        "jobId": "c03-exact26-v4-catalog-20261022-22",
+        "status": "FAILED_FIRST_ERROR_NO_REPLAY",
+        "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v4-catalog-20261022-22/release-receipts/c03-exact26-v4-catalog-20261022-22/engine-result.json",
+        "sha256": "0469cf20e01276de37e545e55bd6cc590e7dbafe844a3b1e6eefd705aaa0c8e2",
+        "patchOutcome": "NOT_ATTEMPTED",
+        "matrixAttempted": null,
+        "failureCode": "ONLY_TWO_PRODUCT_GUARD_FUNCTIONS",
+        "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production"
+      },
+      {
+        "jobId": "c03-exact26-v4-catalog-20261022-23",
+        "status": "PASS_FIXED26_V4_PATCH_AND_ACTUAL_CATALOG_ONLY",
+        "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v4-catalog-20261022-23/release-receipts/c03-exact26-v4-catalog-20261022-23/engine-result.json",
+        "sha256": "21ba7df4a3aa373e486bce8e5df091db29fd5391a55d112a091392a256bae267",
+        "patchOutcome": "COMMIT_RETURNED_SUCCESS",
+        "matrixAttempted": null,
+        "failureCode": null,
+        "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production"
+      },
+      {
+        "jobId": "c03-exact26-v5-intent-20261022-24",
+        "status": "PASS_FIXED26_V5_ONE_HELPER_AND_READBACK_ONLY",
+        "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v5-intent-20261022-24/release-receipts/c03-exact26-v5-intent-20261022-24/engine-result.json",
+        "sha256": "00572b3b394b8d0ea77912c0158992dbab9250a668799ef2214cef00b297b031",
+        "patchOutcome": "COMMIT_RETURNED_SUCCESS",
+        "matrixAttempted": null,
+        "failureCode": null,
+        "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production"
+      },
+      {
+        "jobId": "c03-maintenance-matrix-20261022-25",
+        "status": "FAILED_FIRST_ERROR_NO_REPLAY",
+        "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-maintenance-matrix-20261022-25/release-receipts/c03-maintenance-matrix-20261022-25/engine-result.json",
+        "sha256": "ca04271c24ec5af4bc1c99314abf48362fe66fe14d50ef5aff4e5cd198c2211d",
+        "patchOutcome": null,
+        "matrixAttempted": false,
+        "failureCode": "FileNotFoundError",
+        "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production"
+      },
+      {
+        "jobId": "c03-maintenance-matrix-20261022-26",
+        "status": "FAILED_FIRST_ERROR_NO_REPLAY",
+        "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-maintenance-matrix-20261022-26/release-receipts/c03-maintenance-matrix-20261022-26/engine-result.json",
+        "sha256": "12199f1948b4063236cb5c4b5613c0e70cc5ef1d3ff76f1e034b34fba4fbc876",
+        "patchOutcome": null,
+        "matrixAttempted": false,
+        "failureCode": "RUNTIME_CARRIER_COMMAND_FAILED_1",
+        "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production"
+      },
+      {
+        "jobId": "c03-maintenance-matrix-20261022-28",
+        "status": "FAILED_FIRST_ERROR_NO_REPLAY",
+        "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-maintenance-matrix-20261022-28/release-receipts/c03-maintenance-matrix-20261022-28/engine-result.json",
+        "sha256": "108abdfc472d0d9a4b69d6213185f95c90604cbe6f46b6164d2a76afcba12d9f",
+        "patchOutcome": null,
+        "matrixAttempted": false,
+        "failureCode": "FIRST_FIXED_SQL_ERROR_STOPPED",
+        "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production"
+      }
+    ]
   },
   "supplementalRoles": {
     "DEMO_COMPARE": {
       "title": "奈爵 ERP｜Demo 逐页实操对比",
       "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
       "hostId": "local",
-      "model": "gpt-6-astra",
-      "reasoningEffort": "ultra",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
       "sourceWriteEnabled": false,
       "reportRoot": "K/reports/ui-demo-comparison-20261022",
       "scope": "Verified human directive: Demo source first plus real browser page-by-page; reuse QF/QB accepted or in-flight scopes",
-      "candidateCommit": "fae1ef3ea36dd88f3ac4261b354df23ea8dad3cb",
-      "previewStatus": "FIXED_SYNTHETIC_PREVIEW02_HTTP200_HASH_VERIFIED",
-      "previewReportRoot": "K/reports/controller/rapid-launch-20261022/ui-preview-fae1ef3-01",
+      "candidateCommit": "21f2afa108e9252ad9829c78077b16d46b579d31",
+      "previewStatus": "FIXED_SYNTHETIC_HTTP_HASH_VERIFIED_DEMO_V006_INITIAL_FINDINGS",
+      "previewReportRoot": "K/reports/controller/rapid-launch-20261022/ui-preview-21f2afa-01",
       "reportingAuthorization": "User explicit request in this controller chat on2026-10-22 to reuse this exact thread and proactively exchange findings/candidates/retests",
-      "buildId": "ui-preview-fae1ef3-overlay02-build01",
-      "url": "http://127.0.0.1:57832/synthetic-unified.html",
-      "htmlSha256": "80465e190770c428504239ad88074c328f1b946dc5bca93c50fdf605494d1c0d",
-      "overlaySha256": "be92965c31fbd8e968cfd0d3dfc7b217d58627310d85ea7dc4e08305c7a5ce03",
-      "parallelism": "Source two groups; actual browser sequential until isolation verified",
-      "firstResults": "Inventory v001/02 adopted; approved O-I06 retained; oldF09 directed fix; output-print existingR4 queue"
+      "buildId": "ui-preview-21f2afa-01-build01",
+      "url": "http://127.0.0.1:57836/synthetic-unified.html",
+      "htmlSha256": "ed2b08c65acd31f01a5c1474e2a29913f10ba49d338da1741a770b4959747fbb",
+      "overlaySha256": "64659b8b27b97d42ce2e062d361b1ec6406727d062f4c6e533e8f4245103db98",
+      "parallelism": "One Demo and one candidate tab sequential browser; development and QF/QB source QA parallel",
+      "firstResults": "Inventory v001/02 adopted; approved O-I06 retained; oldF09 directed fix; output-print existingR4 queue",
+      "fastRequested": false,
+      "baselinePages": 35,
+      "baselineOverlays": 65,
+      "currentPages": 35,
+      "currentOverlays": 66,
+      "total": 101,
+      "wholePagesPassed": 0,
+      "wholeOverlaysPassed": 0,
+      "wholeSiteHumanSources": [
+        "01a162e7-024a-7e22-980a-e329b32fcd60",
+        "01a162f1-fbeb-7963-99b5-e3f43dd80002"
+      ],
+      "newFindings": "v006-21f2afa/FINDINGS-INITIAL.json, original F1 dispatched"
     }
   },
   "fieldApprovalRecords": [
@@ -1425,49 +1552,207 @@
     "FIELD-APPROVAL-SUPPLEMENT-v3-A.json"
   ],
   "latestAcceptedReceiptRefs": [
-    "QB-SLICE-57",
-    "QB-SLICE-58",
-    "QF-F1-CHUNK18-93ce7b61",
-    "QF-F1-DOC01-ea5ebccf",
-    "QF-F2-DATA001-ea5ebccf",
-    "QF-F2-DATA002-cd14b794",
-    "QB54",
-    "QB55",
-    "QB56",
-    "QF9ee media/season/DOC02–04",
-    "QFde6 password P2 closed",
-    "Demo ec0c F09 LIMITED_UI",
-    "D3 actual42561 source gzip only",
-    "C job18 actual20..25 minimal negatives",
-    "C job17 bounded source projection"
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice59-historical-customer-source-cd14b794/RESULT.json",
+      "sha256": "0499fbe78f048be714ecc7fb152468297a6707433f2519fa927ffa8c868e6b62",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice60-exact2-shared-prepare-a7e817b4/RESULT.json",
+      "sha256": "1518ce71e464d1d4f5a0da7522eb4d3e50b503891d282a068b3c607b1257add8",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice61-product26-pure-prepare-ed2b82cd/RESULT.json",
+      "sha256": "3d6c8a4586f3116a3136ab314057a1892b34ce09b302881a60caa230e559a6e0",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice62-settings-audit-ed2b82cd/RESULT.json",
+      "sha256": "669b3bb0e8979eb3d53b823c2b42607fed1b7aba90e883421c1efde1a9dda754",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice63-bootstrap26-prepare-d4f6583f/RESULT.json",
+      "sha256": "516a587a2ec83e8455c5438cd2da1941cec6f5acb8e1b14536a98d99de095c80",
+      "result": "NEED_FIX"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice64-r01-overview-read-bound-4825fa1d/RESULT.json",
+      "sha256": "18d74e31f2145ac67f063857fa8cf039a76d808ba18c5bb68b557a09ea9794f5",
+      "result": "NEED_FIX"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice64-stock-overview-public-4825fa1d/RESULT.json",
+      "sha256": "d2d7fc59b545e66d83775c8aaa6fd5fa9c5a82bf28a7baa68f3a14d2eec03530",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice65-stock-overview-reader-4825fa1d/RESULT.json",
+      "sha256": "dc37dc50c6c0c82a781dc35a93b2c587af176364711187ca3d68208066105eb8",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice66-product26-writer-4825fa1d/RESULT.json",
+      "sha256": "66583b2f506a4f18b615fab002464e5dbc7066b4ab368b35f583820b7a8547dc",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice67-qb63-f01-scalar-fabb3962/RESULT.json",
+      "sha256": "0029f5b755457433853945f91c00a0830357cb11951f824aad2a5f2f6bfc7b10",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice68-qb64-r01-read-bound-27c6ba68/RESULT.json",
+      "sha256": "d304e500065b8de57992a7aab4063b5a324e521cccf0d57407103d100ab989f9",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice69-controlled-media-read-27c6ba68/RESULT.json",
+      "sha256": "12a3d990b8428b7e51b379637d478116d719cf16f8e6bd5ec6ec536c726f38f9",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice70-party26-original-client-27c6ba68/RESULT.json",
+      "sha256": "5c64a2667a2ef9794668cac41b19d4666316e5f253ae5a83c4d0f58649006c46",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice71-explicit-audit-host-27c6ba68/RESULT.json",
+      "sha256": "d1ad5aae02c19730961cdacfecfe7031292bccefb648bf4d1478e7e253a57755",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice72-product26-composite-authorizer-27c6ba68/RESULT.json",
+      "sha256": "96e544694aeb8b8afe3377ca2ddbfbbe6c2e5202e6d3b86f7787ee96d5dea117",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice73-full2956-reference-v2-59db4528/RESULT.json",
+      "sha256": "d9c721ddaf832288d3043a117a5b8e8194661d63e5f8102bb1f9b618fef92a60",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice74-current-category-a9079af6/RESULT.json",
+      "sha256": "4f184834458f423d5536ed5a9554c8da97c1e781ad6f8fb3c3e851c9c9bbd4d0",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice75-sourcehost26-preflight-a9079af6/RESULT.json",
+      "sha256": "82f3c2e59c4b4fdcf4d71ec670360ca2bff3a1324e3a9e2f2e404b225598daae",
+      "result": "PASS"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-0d3d59f0/F1-CHUNK20-REVIEW.json",
+      "sha256": "213c564da591f8e92d9e3fb3a607504fe45264acd7fed6719e3872c97b29bd1b",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-0d3d59f0/F3-W7-REVIEW.json",
+      "sha256": "97c0918642536984efa09b383f9f5aee40e9055858be9301cd68838bb78c810d",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-9571e461/F1-CHUNK21-REVIEW.json",
+      "sha256": "c7b48f32d79c71d08ece3d394fc24a15ec99760e4aa1959dfde01cce668f8e9a",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-9571e461/F2-DATA-PRES004-NAV-REVIEW.json",
+      "sha256": "950179f00b984b1189c9433552ada875f96323bde3052b5380f87d5fa244873a",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-d4f6583f/F1-CHUNK23-REVIEW.json",
+      "sha256": "5a4b662de1b7403bb0c679492b214f8914fac23f4a2b39025ce058ccc63f24ae",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-d4f6583f/F3-W13-REVIEW.json",
+      "sha256": "7adc3e7b5cc768cdc9fe52d533d7ea00fdaa7cef6ead47b8de6ae5d807991049",
+      "result": "NEED_FIX"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-ed2b82cd/F1-CHUNK22-REVIEW.json",
+      "sha256": "b02ece36b0a1e7c524dea122edbf46ab5a5666165035b506bdf667d3797a13d1",
+      "result": "NEED_FIX"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-4825fa1d/F1-OUTPUT-STALE-FIX-REVIEW.json",
+      "sha256": "ca1ae459b5f8cc735d7d956186e730aa0f7459c0b70cd33ed49173b57cb4d501",
+      "result": "PASS_TARGETED_FIX"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-fabb3962/F2-STOCK-OVERVIEW-REVIEW.json",
+      "sha256": "64a21a732e0761d9e213ec1b6b8891cfe6cc919b1e2b66eeb4a83fcc39c0185f",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-27c6ba68/AUDIT-DENIED-RETRY-FIX-REVIEW.json",
+      "sha256": "bdc90cfdc601d04db057ea7627b6845abe3299b617750ee5df50457855629f68",
+      "result": "PASS_TARGETED_FIX"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-27c6ba68/F2-CHROME-P02-REVIEW.json",
+      "sha256": "ad0e1e7173b3a40a1762cee0c948767808f113ddef0a1fe00884649292d8c1e6",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-27c6ba68/F3-AUDIT-ENTRY-REVIEW.json",
+      "sha256": "8c4247c3ae4eb036e988a4accb9ce4246319e4e525f6fe25ff8c8e08e9a674b0",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-21f2afa1/F1-CHUNK25-REVIEW.json",
+      "sha256": "3454d58caf2eebd05da6e663fa9325876e7733a477489402bc895044a2d79434",
+      "result": "NEED_FIX"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-a9079af6/F2-READONLY-UI-REVIEW.json",
+      "sha256": "9a233634399123918c53907657711c0ee8f1eecb5506a946067eaa583da55925",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-10640f6b/F1-HIDDEN-ENTRY-FIX-REVIEW.json",
+      "sha256": "bb4252fedc6f32d0ec1ae9013188ac226f72c0b42c474f52f54b725b1d9ae7f9",
+      "result": "PASS_TARGETED_FIX"
+    }
   ],
   "newPendingReviews": [
-    "QB cd14 historical-customer-source exact2/new derived candidate",
-    "QF 0d3 F1 chunk20 history13",
-    "QF 0d3 F3 W7 account8",
-    "Demo current9ee DOC02–04 bounded browser comparison"
+    "QF 275ac63 P12 classified read exact7; F1 in-flight type closure must be resolved, no exclusions",
+    "QB 275ac63 MAIN26 source6 and local real codec2",
+    "QB new materialized-source offset index, no full source rescan",
+    "QB f18666c exact3 full closure26 projection/v6 2function only",
+    "QB0e95cc2 private stage2 + genuine product source consumer2/actual2956 scope"
   ],
   "openFindingsCurrent": [
     {
-      "id": "DOC-SOURCE-01/02/03/04",
+      "id": "SALE-V006-01",
       "owner": "F1",
-      "status": "SOURCE_QF_PASS_WAIT_FIXED_BROWSER"
+      "status": "DEMO_ACTUAL_BROWSER_NEED_FIX"
     },
     {
-      "id": "DATA-PRES-001/002/003",
-      "owner": "F2",
-      "status": "FIXED_SOURCE_BROWSER_PENDING_001_002_QF_PASS"
+      "id": "SALE-V006-02",
+      "owner": "F1",
+      "status": "DEMO_ACTUAL_BROWSER_NEED_FIX"
     },
     {
-      "id": "DATA-PRES-004",
-      "owner": "F2/D3/D2/F1",
-      "status": "NAVIGATION_IMPLEMENTATION_OVERVIEW_CONTRACT_FREEZE_IN_PROGRESS"
-    },
-    {
-      "id": "DATA-SRC-003",
-      "owner": "D2/F3",
-      "status": "W13_AUDIT_READ_CONTRACT_FROZEN_SOURCE_IMPLEMENTING"
+      "id": "SALE-V006-03",
+      "owner": "F1",
+      "status": "DEMO_ACTUAL_BROWSER_NEED_FIX"
     }
   ],
-  "historicalFailuresPreserved": true
+  "historicalFailuresPreserved": true,
+  "currentContinuation": {
+    "atUtc": "2026-10-22T17:37:49.572414+00:00",
+    "sourceRound": 36,
+    "modelAllChats": "gpt-6.1-sol/xhigh",
+    "fast": "Requested off, tool has no switch; actual UI state unverified",
+    "fieldApprovalPending": false,
+    "fullReferenceOutsidePin": "a21105ca99f0efff1acf10fda01f1bf62117e2ffd3214d4d43e02f9efc24025b",
+    "realImportAuthorizedByReferencePin": false,
+    "releaseGate": "Actual49/fullnativefactories/26issuer/host/PG+browser relevantbatch/login not complete; originalURL not switched",
+    "privateSourceAndCredentials": "Never Git; Dot on another machine must acquire exact K/A/private-data and existing release reference, cannot infer authority from paths"
+  },
+  "latestReadySource": "All21..26 SQL originals source-only fixed exactD1receipt in round36;26v6 actual patch awaitsQB/engine"
 }

@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T09:05:13.366642+00:00",
+  "updatedAt": "2026-10-22T17:26:37.944141+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -289,6 +289,71 @@
           "path": "tests/sales-native-facts.test.ts",
           "group": "EXACT2_NEW_CURRENT_CUSTOMER_VALIDATION",
           "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_SCHEMA"
+        },
+        {
+          "path": "adapters/postgres/src/native-product-import.ts",
+          "group": "NATIVE_PRODUCT_EXACT26_WRITER",
+          "fieldGate": "APPROVED_PRODUCT_SEASON_V3_AND_FULL_SNAPSHOT_NO_NEW_DDL"
+        },
+        {
+          "path": "tests/native-product-import.test.ts",
+          "group": "NATIVE_PRODUCT_EXACT26_WRITER",
+          "fieldGate": "APPROVED_PRODUCT_SEASON_V3_AND_FULL_SNAPSHOT_NO_NEW_DDL"
+        },
+        {
+          "path": "tests/current-form-reader.test.ts",
+          "group": "CURRENT_FORM_EXISTING_CATEGORY_FACT",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "adapters/postgres/src/history-typed-publication.ts",
+          "group": "EXACT26_MAIN_CLOSURE_SUCCESSOR",
+          "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS"
+        },
+        {
+          "path": "adapters/postgres/src/native-import-record-accounting.ts",
+          "group": "EXACT26_MAIN_CLOSURE_SUCCESSOR",
+          "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS"
+        },
+        {
+          "path": "adapters/postgres/src/history-typed-closure19.ts",
+          "group": "EXACT26_MAIN_CLOSURE_SUCCESSOR",
+          "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS"
+        },
+        {
+          "path": "tests/native-import-record-accounting-postgres-protocol.test.ts",
+          "group": "EXACT26_MAIN_CLOSURE_SUCCESSOR",
+          "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS"
+        },
+        {
+          "path": "tests/history-typed-publication.test.ts",
+          "group": "EXACT26_MAIN_CLOSURE_SUCCESSOR",
+          "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS"
+        },
+        {
+          "path": "tests/history-typed-closure-stage-protocol.test.ts",
+          "group": "EXACT26_MAIN_CLOSURE_SUCCESSOR",
+          "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS"
+        },
+        {
+          "path": "tests/native-import-history-publication-seams.test.ts",
+          "group": "EXACT26_MAIN_CLOSURE_SUCCESSOR",
+          "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS"
+        },
+        {
+          "path": "tests/history-typed-closure26-postgres-protocol.test.ts",
+          "group": "EXACT26_MAIN_CLOSURE_SUCCESSOR",
+          "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS"
+        },
+        {
+          "path": "packages/application/src/history-typed-closure.ts",
+          "group": "EXPLICIT_NATIVE_CLOSURE26_FULL_APPROVED_SHAPES",
+          "fieldGate": "APPROVED_FULL_NATIVE_FIELDS_NO_NEW_SCHEMA_OR_BUSINESS_RULE"
+        },
+        {
+          "path": "tests/history-typed-closure26.test.ts",
+          "group": "EXPLICIT_NATIVE_CLOSURE26_FULL_APPROVED_SHAPES",
+          "fieldGate": "APPROVED_FULL_NATIVE_FIELDS_NO_NEW_SCHEMA_OR_BUSINESS_RULE"
         }
       ]
     },
@@ -855,6 +920,26 @@
           "path": "apps/api/src/settings-audit-http.test.ts",
           "group": "W13_SETTINGS_AUDIT_READ_ONLY",
           "fieldGate": "EXISTING_APPROVED_AUDIT_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "adapters/media/src/sharp-product-image-codec.ts",
+          "group": "CONTROLLED_MEDIA_CODEC_AND_PRIVATE_STAGE",
+          "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS"
+        },
+        {
+          "path": "tests/sharp-product-image-codec.test.ts",
+          "group": "CONTROLLED_MEDIA_CODEC_AND_PRIVATE_STAGE",
+          "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS"
+        },
+        {
+          "path": "adapters/media/src/product-media-stage.ts",
+          "group": "CONTROLLED_MEDIA_CODEC_AND_PRIVATE_STAGE",
+          "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS"
+        },
+        {
+          "path": "tests/product-media-stage.test.ts",
+          "group": "CONTROLLED_MEDIA_CODEC_AND_PRIVATE_STAGE",
+          "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS"
         }
       ]
     },
@@ -1104,6 +1189,36 @@
           "path": "scripts/import-v3/historical-customer-source.test.mjs",
           "group": "EXACT2_HISTORICAL_SOURCE_ONLY_FACTORY",
           "fieldGate": "EXISTING_FIELDS_EXACT_QB50_C_PIN_NO_SQL"
+        },
+        {
+          "path": "adapters/postgres/src/native-catalogue-import.ts",
+          "group": "EXPLICIT_NATIVE_CATALOGUE_SKU26",
+          "fieldGate": "APPROVED_SOURCE_FULL26_FIELDS_ONLY_OLD19_UNCHANGED"
+        },
+        {
+          "path": "adapters/postgres/src/native-sku-import.ts",
+          "group": "EXPLICIT_NATIVE_CATALOGUE_SKU26",
+          "fieldGate": "APPROVED_SOURCE_FULL26_FIELDS_ONLY_OLD19_UNCHANGED"
+        },
+        {
+          "path": "packages/application/src/native-catalogue-import.ts",
+          "group": "EXPLICIT_NATIVE_CATALOGUE_SKU26",
+          "fieldGate": "APPROVED_SOURCE_FULL26_FIELDS_ONLY_OLD19_UNCHANGED"
+        },
+        {
+          "path": "packages/application/src/native-sku-import.ts",
+          "group": "EXPLICIT_NATIVE_CATALOGUE_SKU26",
+          "fieldGate": "APPROVED_SOURCE_FULL26_FIELDS_ONLY_OLD19_UNCHANGED"
+        },
+        {
+          "path": "tests/native-sku-stock-import.test.ts",
+          "group": "EXPLICIT_NATIVE_CATALOGUE_SKU26",
+          "fieldGate": "APPROVED_SOURCE_FULL26_FIELDS_ONLY_OLD19_UNCHANGED"
+        },
+        {
+          "path": "tests/native-catalogue-import.test.ts",
+          "group": "EXPLICIT_NATIVE_CATALOGUE_SKU26",
+          "fieldGate": "APPROVED_SOURCE_FULL26_FIELDS_ONLY_OLD19_UNCHANGED"
         }
       ]
     },
@@ -1517,6 +1632,21 @@
           "path": "apps/web/src/account-settings/index.ts",
           "group": "F05_W7_STANDALONE_ACCOUNT_LEAF",
           "fieldGate": "C01_AND_V2_B_APPROVED_EXISTING_W7_COMMANDS_ONLY"
+        },
+        {
+          "path": "apps/web/src/settings/audit/audit-entry.tsx",
+          "group": "W13_AUDIT_ENTRY_GLUE",
+          "fieldGate": "EXISTING_READ_CONTRACT_NO_DDL"
+        },
+        {
+          "path": "apps/web/src/settings/stores/demo-store-view.tsx",
+          "group": "DEMO_WHOLE_STORE_PAGE_UI_ADAPTATION",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_ONLY_NO_RULE_CHANGE"
+        },
+        {
+          "path": "apps/web/src/settings/stores/demo-store-ui.css",
+          "group": "DEMO_WHOLE_STORE_PAGE_UI_ADAPTATION",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_ONLY_NO_RULE_CHANGE"
         }
       ]
     },
@@ -2058,6 +2188,11 @@
           "path": "apps/web/src/application/routes/account-settings.tsx",
           "group": "W7_ACCOUNT_ROOT_INTEGRATION",
           "fieldGate": "EXISTING_APPROVED_ACCOUNT_CONTRACT_NO_DDL"
+        },
+        {
+          "path": "apps/web/src/sales/document-presentation.tsx",
+          "group": "WHOLE_SALES_UI_SHARED_PRESENTATION",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
         }
       ]
     }
@@ -2073,7 +2208,8 @@
       "docs/rapid-launch-20261022/**",
       "references/demo-ui-baseline/**",
       "references/rapid-launch-taskbook-20261022/**",
-      "scripts/release/**"
+      "scripts/release/**",
+      "scripts/verify-dependencies.mjs"
     ],
     "D1": [
       "adapters/postgres/migrations/**",

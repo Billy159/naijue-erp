@@ -1,0 +1,16 @@
+{
+  "status": "GITHUB_ASSET_DOWNLOADED_HASH_AND_BUNDLE_VERIFIED",
+  "atUtc": "2026-10-22T11:46:35.320693+00:00",
+  "sourceCommit": "a9079af66a92b62223ec53ba62173198e109b133",
+  "prerequisiteCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+  "bundle": {
+    "file": "naijue-erp-source-a9079af.bundle",
+    "bytes": 696637,
+    "sha256": "5d48d559fc9cdabccc09fcdaf3ec4f7ce7a7561cc1a399fa6ce929a3529a13d9"
+  },
+  "draftReleaseTag": "codex-checkpoint-20261022-a7e817b",
+  "draftReleaseUrl": "https://github.com/Billy159/naijue-erp/releases/tag/untagged-ba75756655ef31b66d5d",
+  "remoteBranchReadback": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+  "branchPushComplete": false,
+  "actualSshAttempt": "Strict official-key verified ssh443 existing agent failed publickey; no key/credential/verification changes"
+}

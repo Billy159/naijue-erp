@@ -6,13 +6,17 @@
     "reasoningEffort": "xhigh",
     "fastRequested": false
   },
-  "exception": {
-    "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
-    "model": "gpt-6-astra",
-    "reasoningEffort": "ultra",
-    "speed": "PRESERVE_EXISTING"
-  },
+  "exception": null,
   "actualAction": "send_message_to_thread accepted explicit model/thinking for C and original eight role Chats; current in-flight generation is not retrospectively changed",
   "fastActualState": "NOT_VERIFIED_INTERFACE_UNAVAILABLE",
-  "blocker": "No serviceTier option in app send tool; no running supported CLI control socket. Computer Use explicitly denied com.openai.codex. Requires UI setting; not falsely recorded as closed."
+  "blocker": "No serviceTier option in app send tool; no running supported CLI control socket. Computer Use explicitly denied com.openai.codex. Requires UI setting; not falsely recorded as closed.",
+  "updatedAtUtc": "2026-10-22T09:54:28.172776+00:00",
+  "latestDemoDirective": {
+    "source": "Direct human message in C: 逐页对比用Sol6.1 x-high吧",
+    "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "action": "send_message_to_thread explicit model/thinking accepted",
+    "supersedes": "Previous Demo Astra Ultra exception"
+  }
 }

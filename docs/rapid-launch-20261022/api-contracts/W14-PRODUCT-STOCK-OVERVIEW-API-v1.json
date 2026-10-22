@@ -1,0 +1,177 @@
+{
+  "id": "DATA-PRES004_PRODUCT_STOCK_OVERVIEW_CONTRACT_V1",
+  "status": "FROZEN_D2_D3_READ_CONTRACT_PENDING_IMPLEMENTATION",
+  "atUtc": "2026-10-22T09:00:02.299513+00:00",
+  "problem": "Current ProductWarehouseStockPage.total counts warehouse×SKU identities; page rows cannot establish warehouse aggregate, whole-product total, or NON_ZERO warehouse filter. Existing ProductDetailsPageQuery has only productId/page/pageSize.",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/product-details-query-ports.ts",
+      "sha256": "f690709e4053c86e6703b09348af7b8f889e6d642520d2d63c0dd1d70f4c3091"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/product-details-query-validation.ts",
+      "sha256": "edf4095b26261c5404ad3a0449be0ff957bd017c126eaf37d93b89a9ff924946"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/product-warehouse-stock-reader.ts",
+      "sha256": "bc0840ba11b2f9cc697d529bf42c77d4723d89943d538a6068c088f7c5c66609"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/inventory-query-reader.ts",
+      "sha256": "120b0a83f9ca05fc5aae6979614dfe543674989ce583a115b2e588d25ebc889f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/inventory-query-contracts.ts",
+      "sha256": "b0df511ab37c7816135cac931eb14fbfaf2a99bc63d6f25d3ae024a0007c934d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/inventory-key-admission-reader.ts",
+      "sha256": "016d84bcc23668372076c7784cc993028e37cc7350553713cda2616ba0058e42"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/source-confirmed-read-authorization.ts",
+      "sha256": "3800ffd48bcd5f9eee0df41662533430464c1da5ad033c1a291c48056aa15caf"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/奈爵服饰-8877-Demo/frontend/product-current.js",
+      "sha256": "d5a3ae29d781aa725859196dac6ef4e64f0e3cea08b3cca5c199579c9527b0be",
+      "lines": "120-123",
+      "usedFor": "Read-only stockBody UI behavior: sum all SKU per warehouse, filter warehouse quantity!==0 unless stockAll; global product total separate from visible warehouses."
+    }
+  ],
+  "decision": "Add one bounded whole-warehouse overview query alongside existing warehouse×SKU page. Reuse actual inventory scope, publication/admission and sparse balance semantics; no persistent schema field or alternate inventory engine.",
+  "api": {
+    "proposedRoute": "POST /products/stock-overview/query",
+    "owner": "D2 owns shared product detail DTO/validation/service/HTTP; C freezes public contract before wiring",
+    "request": {
+      "productId": "native product UUID",
+      "warehouseMode": "NON_ZERO | ALL"
+    },
+    "requestRules": [
+      "Both fields required; no client warehouse list, count, label, ready flag, snapshot or fallback. Unknown properties rejected.",
+      "NON_ZERO is warehouse net quantity !=0, retaining negative and UNKNOWN warehouses. It is not positive-only or SKU-level existence.",
+      "ALL includes every currently authorized retained warehouse, including disabled/history-retained warehouses, subject to original current inventory policy.",
+      "Overview is complete bounded warehouse aggregation, no page/pageSize. At most1000 authorized warehouses, matching existing policy bound. Overflow rejects whole query, never truncates."
+    ],
+    "response": {
+      "kind": "PRODUCT_STOCK_OVERVIEW_V1",
+      "productId": "exact requested UUID",
+      "warehouseMode": "exact requested mode",
+      "readReference": "new opaque nonsecret per-read random reference",
+      "coverage": "ALL_BUSINESS_WAREHOUSES | AUTHORIZED_SUBSET",
+      "counts": {
+        "authorizedWarehouses": "integer whole authorized scope",
+        "nonZeroWarehouses": "integer known aggregate!=0",
+        "zeroWarehouses": "integer known aggregate==0",
+        "unknownWarehouses": "integer aggregate unknown",
+        "returnedWarehouses": "integer after mode"
+      },
+      "total": {
+        "state": "KNOWN | UNKNOWN",
+        "quantity": "canonical exact signed integer string when KNOWN, null otherwise",
+        "unknownSkuWarehouseKeys": "integer full-scope unknown key count"
+      },
+      "items": "Full post-mode array in authoritative warehouse order; each {warehouseId,warehouseName,state:KNOWN|UNKNOWN,quantity:string|null,unknownSkuCount:number}"
+    },
+    "totalRules": [
+      "total always covers ALL authorized warehouses and ALL native product SKU identities before display-mode filtering. NON_ZERO/ALL does not redefine the total.",
+      "counts.authorizedWarehouses = nonZeroWarehouses + zeroWarehouses + unknownWarehouses; returned=authorized forALL, nonZero+unknown forNON_ZERO. items.length mustequalreturned.",
+      "All quantities exact decimal integer strings; underlying cell uses signed bigint constraints, aggregates may exceed a single-cell bigint so use PostgreSQL numeric/BigInt and existing up-to100char aggregate validation. Never JavaScript Number summation.",
+      "If any unadmitted original key remains UNKNOWN, its warehouse quantity=null/stateUNKNOWN; product total=null/stateUNKNOWN, count all unknown keys. Do not display partial known subtotal as total.",
+      "An ALL empty array is not a no-warehouse success: current no authorized scope returns403. NON_ZERO empty is valid only wholeauthorized quantities are KNOWN zero."
+    ],
+    "compatibility": "Existing POST /products/stock/query and ProductWarehouseStockPage.total keep warehouse×SKU row semantics. No overloaded total or silent body shape change. Old full product detail validators remain intact until D2 adds separate overview parser/response validator."
+  },
+  "authorization": [
+    "Real session/current account first; existing product stock-tab grant separately required. New overview intent is explicitly routed by D2 to the existing stock-tab permission, not inferred from basic product visibility or client productId.",
+    "D3 calls actual InventoryQueryAuthorization with native product filter and obtains finite current hallIds/warehouses. Hall AND warehouse intersection applies before ANY stock count/aggregate; no admin/empty-array global shortcut.",
+    "Existing createSourceConfirmedPostgresReadAuthorization currently grants inventory reads all native warehouses to authorizedADMIN/WAREHOUSE/SALESPERSON, validates current account/staff/hall and retains disabled warehouse/hall records. Reuse this behavior, do not infer it from role alone.",
+    "Within the same inventory read snapshot independently verify exact authorized IDs/halls/labels and prove full-native-warehouse coverage using a boolean NOT EXISTS comparison. Only then coverage=ALL_BUSINESS_WAREHOUSES. Otherwise AUTHORIZED_SUBSET; never return hidden warehouse IDs/names/quantities/counts.",
+    "F2 uses总库存 only forALL_BUSINESS_WAREHOUSES; AUTHORIZED_SUBSET uses授权范围合计 and说明. This flag is reader-produced proof, not an expansion of permissions."
+  ],
+  "sparseAndUnknown": [
+    "Native product exists and all intended actual SKU identities belong to its size-group memberships. SKU universe comes from sku.product_id, not balance presence, selected visible specs, barcode joins or season-array expansion. Retained historical SKU identities stay included.",
+    "Full product with no trustworthy SKU set/invalid native size membership is NOT_READY/integrity error, not fabricated zero. Unsaved new product remains save-first UI and sends no query.",
+    "For each actual authorized warehouse×SKU key: exact19 published warehouse+SKU membership OR D1-issued exact26 central inventory_key_admission decision. Constructor/runtime must explicitly support26 with same-client assertReady(INVENTORY_ADMISSION). Existing23/24 union is not26 authority.",
+    "Admitted key with valid balance+ledger -> signed actual quantity includingnegative/zero. Admitted key absent balance AND absent ledger -> exactzero; never insert zero balance.",
+    "Unadmitted key -> UNKNOWN/null even when absence exists. Missing balance with ledger, malformed balance/version/lastoperation, invalid references or failed SQL -> whole-read error, neverzero/partial cached success.",
+    "No synthetic nonexistent color/fit/size combinations; not-applicable matrix positions are not SKU identities and contribute neitherzero norunknown."
+  ],
+  "snapshotAndSql": {
+    "transaction": "One D3-owned read-only REPEATABLE READ client. Actual runtime/schema/routines, product existence, complete publication receipt/checkpoint, warehouse proof, all-key status, perwarehouse aggregates, fulltotal/mode counts and readReference are bound to that one read. No nested second stock read or N+1 pages.",
+    "reusable": [
+      "PostgresProductWarehouseStockReader existing current stock authorization, product/publication/warehouse probes and key rules",
+      "inventory-query-reader publishedBatch/catalogStatus full-filter aggregate pattern and aggregate(bigint string)/readReference; these helpers are source patterns, not an already-exposed reusable port",
+      "D1 inventory_key_admission exact SQL/ACL capability; readInventoryKeyAdmissions currently bounded1000keys may not be looped perSKU/page to fake fullscope",
+      "Existing inventory_query fullmatrix for complete stock drilldown; no need to assemble overview from browser matrix/pages"
+    ],
+    "setQuery": "Read native SKU count first and preflight skuCount×authorizedWarehouseCount <=1,000,000 (existing inventory matrix work bound). One bounded set query over actual productSKUs CROSS authorizedwarehouseIDs LEFT balance, central key-admission decision and ledger-presence predicate, grouped BYwarehouse. Validate all-key integrity before display mode. Return at most1000 aggregate rows, never materialize full source history or all SKU×warehouse rows in JS.",
+    "aggregation": "SUM(known signedquantity::numeric); count unknown keys perwarehouse; bool_or(invalid fact) across allkeys. Allwarehouse set retained even no balance. Product total computed from ALL perwarehouse aggregates under same snapshot beforeNON_ZERO. SQL admission computed for exact native keys, not reimplemented from row names or SQL prefix.",
+    "coverageCheck": "Warehouse catalogue equality query returns onlya boolean under same snapshot; no quantity access outside supplied scope. Existing authorization returnsalltoday but fullcoverage mustnotbe guessed.",
+    "modePredicate": "warehouse.state=UNKNOWN OR warehouse.knownQuantity<>0 for NON_ZERO; no quantity>0 predicate. A warehouse with +5 and-5 on distinctSKUs has known net0 and hides inNON_ZERO, as frozenDemo. ALL showsits0.",
+    "failure": "403 denial,404 productnotfound afterproperauthorization,503 notready/integrity/readbound failures per existing error mapping. Abort/failedquery releases originalclient correctly; unknown COMMIT discards, no automaticretry/second transaction."
+  },
+  "paginationAndNavigation": {
+    "overview": "No warehouse pagination inthis bounded overview. Entire array underone readReference; neither frontendfiltering ofcurrentSKU page nor load-all-page loop allowed. Mode toggles mayrequestfreshsnapshot, replace whole overview atomically and ignorestale asyncresponse; do notclaimdifferentrequests shareasnapshot.",
+    "oldStockPage": "Old stockendpoint stillstable warehouse-order then sku_code C/id pagination; total remainsrowcount. Cannotpopulateoverview totals.",
+    "detailedInventory": "F1 supplies navigation/return seam using exact product nativeUUID. Navigate existing inventory query with productIds=[productId], otherfiltersclearedandpage1; current authorization independently rechecks, fullmatrix/full-filter summary/readReference alreadycontracted. No passedwarehousegrant/readReference reusedascredential. Return preserves producteditor state perF1/F2 existingseam."
+  },
+  "implementationOwnership": {
+    "D3existing": [
+      "adapters/postgres/src/product-warehouse-stock-reader.ts: add separate readOverview method afterD2 finalDTO; retainreadStock untouched",
+      "tests/product-warehouse-stock-postgres-protocol.test.ts: add onlynewoverview scopedcases; reuseold7 acceptedcases"
+    ],
+    "D2existing": [
+      "packages/application/src/product-details-query-ports.ts: separateProductStockOverviewQuery/Result/reader seam; explicitstocktab intentmapping",
+      "packages/application/src/product-details-query-validation.ts: newexacttwofield parser/newoutputvalidator; oldthreefieldparserunchanged",
+      "packages/application/src/product-details-query-service.ts and apps/api/src/product-details-query-http.ts: explicitnewroute andscopeadapter"
+    ],
+    "D1": [
+      "actualEXACT26 sameclientINVENTORY_ADMISSION issuer; no counterfeit numericprefix capability",
+      "apps/api/src/postgres-read-api.ts composition onlyifthishostfile isD1registered; otherwiseC routesuniqueowner"
+    ],
+    "F2": [
+      "Demo warehouseoverview/toggle readsnewcomplete DTO; noderivefromv1page",
+      "unknown/negative/authorizedsubset/error/emptyallzero renderedaccurately"
+    ],
+    "F1": [
+      "nativeproduct-ID inventory navigation and returncontract"
+    ],
+    "newSourceFilesNeeded": [],
+    "schemaChanges": {
+      "tables": 0,
+      "columns": 0
+    }
+  },
+  "acceptanceDelta": [
+    "Oneproduct with >20 warehouse×SKU keys: offpage quantityaffectsperwarehouseandfulltotal; overviewcount iswarehousecount, oldendpointtotalstillkeycount.",
+    "Fullscope twoSKUs samewarehouse+5/-5 net0 hidesNON_ZERO, showsALL; negativewarehouse staysvisible; totalsmodeindependent.",
+    "Oneunadmittedkey makesitswarehouseandfulltotal UNKNOWN; retainedinNON_ZERO; 0 onlyafteractualadmission.",
+    "Unauthorizedwarehouse excludedbeforecount/sum; partialscope labeledAUTHORIZED_SUBSET, nohiddenquantity/count leakage; all3roles followexistingcurrentpolicy.",
+    "Sparse admittedno-balance/ledger is0 with0writes; balance missing+ledger present causesentirequeryfailure evenhiddenmode/page.",
+    "All scope aggregates/page/countersreadfromsameRR; snapshotreadreference/staleUIguard; >1000warehouses or1Mkeys failwithoutpartialresults.",
+    "26 missing/wrongpool/badguard failsNOT_READY beforeaggregate; genuineengine profile case C-owned. Scriptedtests do notprovePG.",
+    "Afteractualenvironmentready:1cold and2repeat onrepresentativehighSKU product; onlynewpaths/Demo controls, nooldfullsuite/build/pressuretest."
+  ],
+  "notClaimed": [
+    "Backend overview implemented",
+    "PublicDTOaccepted byD2",
+    "F2UIwired",
+    "ActualPG/profile26/readperformance",
+    "DATA-PRES004 closed"
+  ],
+  "next": "C freeze the minimal overview shape/route withD2, thenD3 implements ownedreader + newscopedchecks; F2 wires onlyafterstable DTO. No extraarchitecture or persistentfields.",
+  "adoptedBy": "D2 shared product read owner; C requested DATA-PRES004 continuation",
+  "adoptedAtUtc": "2026-10-22T09:05:09.778520+00:00",
+  "sourceContractSha256": "d732bf1dfd0a660af9e87439e31e075329b00a4ebe368685cd8bf334dd0d5d22",
+  "d2Seam": {
+    "types": "ProductStockOverviewQuery, ProductStockOverviewResult, ProductStockOverviewScopedRead",
+    "reader": "ProductWarehouseStockReader.readOverview?(read:ProductStockOverviewScopedRead):Promise<ProductStockOverviewResult|null>. Optional structural compatibility only; absent method givesPRODUCT_STOCK_NOT_READY/503, never calls oldreadStock or aggregates pages.",
+    "intent": "New overview scoped intent.kind=stock-overview with exact two-field query. Service explicitly obtains originalstock permission via existing productDetailsIntent(stock,{productId,page:1,pageSize:20}), then binds returned kind:stock/productId grant tooverview. This is authorization-only, no stock-page read. Old authorization kindset and legacyintent/DTOremain unchanged. New checkedProductStockOverviewScope enforces this binding; D3 revalidates it.",
+    "service": "readStockOverview(actor,input,signal), authenticates/authorizes before availability or result; calls reader.readOverview once and returns only sanitized strict result.",
+    "validation": "parseProductStockOverviewQuery and checkedProductStockOverviewResult separate from originalpage parser/result. Closed2keys, closedmode, identity/count/additivity/unknown/fullscope invariant checks; canonical signed aggregate integer strings<=100chars. No Number quantity arithmetic.",
+    "resultCheck": "authorized1..1000, total counters additive, returned count/mode correct, uniquewarehouseIDs; KNOWN rowunknownSkuCount0, UNKNOWN positive andnullquantity; total unknowncount=sumreturned unknowncounts<=1M. KNOWN total equals exactBigInt sumreturned quantities (hiddenwarehouses canonlybeknown0); UNKNOWN totalnull. Reject ratherthan repair.",
+    "readReference": "opaque nonempty bounded<=200 safe ASCII reference, producer-defined randomperread; not reusedas credential or crossrequestsnapshot.",
+    "ownership": "D2 exact4 existing source DTO/validation/service/http + onlyaffected existing tests; D3 actualreader/PG SQL andexact26sameclient proof; no source schema changes."
+  }
+}

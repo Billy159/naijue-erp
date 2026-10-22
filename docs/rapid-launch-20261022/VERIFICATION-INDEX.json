@@ -6924,10 +6924,592 @@
         "Actual PostgreSQL/business/deployment",
         "Actual browser unless separately evidenced"
       ]
+    },
+    {
+      "id": "QB-slice59-historical-customer-source-cd14b794",
+      "scope": "SOURCE-ROUND-20261022-21 的 historical-customer-source.mjs/test.mjs 与 6954 字节 approved-source-exact2-PENDING.json；只审新增来源消费与派生增量，原 QB50 来源、UUID 分配和冲突审计复用",
+      "sourceCommit": "cd14b79453798677e8dde4ffef79f327caeacaee",
+      "result": "PASS",
+      "qualification": "固定两文件的来源读取器源码/合成协议与实际两条派生候选差异通过；SOURCE_ONLY，不构成 native prepared、MAIN、实际表头绑定、数据库或导入授权",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice59-historical-customer-source-cd14b794/RESULT.json",
+      "evidenceSha256": "0499fbe78f048be714ecc7fb152468297a6707433f2519fa927ffa8c868e6b62",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "未重开 QB50 的原来源/分配/碰撞审计，未重新运行三项已通过合成测试或实际来源读取器。",
+        "shared native-party/header prepare 的显式补充来源分支、serializer/同客户端 EXACT26 issuer 接线不在本两文件中；D3 回执列为后续 seam，不能由此来源读取器替代。",
+        "未读取 42561 历史 header gzip 或 XLSX，未验证实际两条 header-native FK 绑定、历史详情显示或当前 UI 过滤。",
+        "未连接 PG/Docker/服务器/浏览器，未执行实际 EXACT26 runtime/schema/COMMIT、stage/MAIN/import/读回/发布。"
+      ]
+    },
+    {
+      "id": "QB-slice60-exact2-shared-prepare-a7e817b4",
+      "scope": "SOURCE-ROUND-20261022-24 的 native-party-import、history-header-native-reference prepare/store、native-import-schema-contract 仅新增 exact2 补充来源及同客户端能力接口。原 BASE_V2 行为和 QB50/QB59 来源审计直接复用",
+      "sourceCommit": "a7e817b4ff92210839e5d665caeead274d40fe5c",
+      "result": "PASS",
+      "qualification": "固定四文件的新增 pure prepare、serialization 与窄运行能力接口源码/协议通过；不包含实际 issuer、运行数据库合法来源 COMMIT 或 native/MAIN 执行授权",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice60-exact2-shared-prepare-a7e817b4/RESULT.json",
+      "evidenceSha256": "1518ce71e464d1d4f5a0da7522eb4d3e50b503891d282a068b3c607b1257add8",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "实际 NativeRuntime26Capability issuer、对象/ACL/角色/目标身份检查及其宿主装配不在本片，不能以结构检查或一个空 verifier 充当已验证运行能力。",
+        "未连接 PG、执行数据库 SQL、实际两条 native 创建、合法来源 header 引用 COMMIT、全批 source/native 授权、MAIN、真实导入或读回。",
+        "C 提供 job19 的 v1 fixed26 安装提交及最小负例结论作为独立已有事实；QB 此次未复核该 job，不能由其最小负例推成合法来源 COMMIT，后继三函数 v2 patch 保持待 C。",
+        "bootstrap_accounts 元数据扩展、22/23 全 snapshot 缺口及 native writer exact26 路径等后续增量不在本四文件内。",
+        "未重跑已通过新增/受影响定向测试或 strict typecheck，未读取 XLSX/gzip、原数据全表或 registry。"
+      ]
+    },
+    {
+      "id": "QB-slice61-product26-pure-prepare-ed2b82cd",
+      "scope": "round25 NATIVE_PRODUCT26_PURE_PREPARE：新 discriminator、season full snapshot、deleted_at/default_barcode_scheme_id NULL、原引用/九价格与显式多季节 legacyScalarCreation；旧已验规则仅复用",
+      "sourceCommit": "ed2b82cd8c7e98a220f2592e8fa2ecaf0178a8bc",
+      "result": "PASS",
+      "qualification": "固定两文件的新 pure EXACT26 准备/证据及实际两商品组成候选通过；不包含全2956引用、310实际准备、授权器、writer、PG 或执行许可",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice61-product26-pure-prepare-ed2b82cd/RESULT.json",
+      "evidenceSha256": "3d6c8a4586f3116a3136ab314057a1892b34ce09b302881a60caa230e559a6e0",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "全2956新引用清单/独立 outside grant，310实际多季节准备、whole-row+同批 SEASON 数据库读回均未核。",
+        "新 V2 composite authorizer、Postgres native writer 显式26分支、新列与同客户端实际能力、D1 guard 新 validator/migration defaults metadata 兼容均为独立后继范围。",
+        "未执行 PG/SQL/native insert、全量读回/MAIN/发布；schemaProfile 只是纯数据 discriminator，不是 runtime 能力。",
+        "没有重跑原来源、旧V1全范围、XLSX/gzip 或已通过测试。"
+      ]
+    },
+    {
+      "id": "QB-slice62-settings-audit-ed2b82cd",
+      "scope": "round25 SETTINGS_AUDIT_READ exact8。仅核新审计查询及 D1 既有同事务身份锁接线；不重验旧维护、媒体、season 实现",
+      "sourceCommit": "ed2b82cd8c7e98a220f2592e8fa2ecaf0178a8bc",
+      "result": "PASS",
+      "qualification": "固定八文件的 W13 新读合同、权限/投影/分页/HTTP 源码及脚本协议通过；实际 SQL/ACL/计划、运行能力与宿主挂载独立待验",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice62-settings-audit-ed2b82cd/RESULT.json",
+      "evidenceSha256": "669b3bb0e8979eb3d53b823c2b42607fed1b7aba90e883421c1efde1a9dda754",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "未连接 PG，未实际执行新 SQL、EXPLAIN、数据库 ACL/运行角色、真实审计数据或真实 exact26 客户排除函数；实际 SQL 语法和计划须由后继引擎层闭环。",
+        "未验证实际 D1 driver/profile issuer 激活、根应用 composition mount/authentication provider、F3 浏览器及正式部署/业务验收。",
+        "可选能力沿既有契约只在构造时检查实际 driver，并不在本片新增 per-query runtime26 issuer或重新签发能力。",
+        "receipt-contract 旧文字中的 ACCOUNT/PRODUCT gate 路径具体先后已由本片 HALL LIST 同安全 mutex/currentidentity 路径实现；按 C 新任务与 D2 当前收据核验，不据旧描述扩大重跑维护范围。",
+        "不把中止检查当作PG在途取消，不把单语句快照当跨请求分页冻结，不把子变更行数当当前关联总数。"
+      ]
+    },
+    {
+      "id": "QB-slice63-bootstrap26-prepare-d4f6583f",
+      "scope": "round26 BOOTSTRAP26_AND_FULL_WAREHOUSE_PREPARE：STAFF26 元数据与 WAREHOUSE26 完整快照及 header 同客户端能力入口；a7 exact2及原schema范围复用",
+      "sourceCommit": "d4f6583fb4be5cf7ba04fee8967c5df58c27c3c5",
+      "result": "NEED_FIX",
+      "qualification": "新 exact3 大部分源码/协议条件满足，但严格 bootstrap 元数据标量校验存在一项 P2 新缺陷；未授任何实际49提交或运行能力",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice63-bootstrap26-prepare-d4f6583f/RESULT.json",
+      "evidenceSha256": "516a587a2ec83e8455c5438cd2da1941cec6f5acb8e1b14536a98d99de095c80",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "expected_counts49/45/4 仅为每条元数据要求值，不代表实际49来源/账号关系全闭包已核或已提交；未读取/执行49实际来源或凭据。",
+        "D3 writer 的普通来源 EXACT26 强制同客户端 runtime 分支、真实 issuer、函数/ACL pins、实际 bootstrap49 COMMIT、MAIN/PUBLISH 均另层待验。",
+        "C 已告知 v3 patch COMMIT 与新insert拒绝rollback返回，以及最后只读trigger查询因拼接char类型失败；整窗FAILED保持。本次QB未复核该引擎窗，不重放patch，也不把子步骤成功写成整窗PASS。",
+        "未执行PG/Docker/浏览器/服务器/发布，未改业务源码、Git、authority或数据。"
+      ]
+    },
+    {
+      "id": "QB-slice64-r01-overview-read-bound-4825fa1d",
+      "scope": "固定round27 D2 public6与D3新reader接线发现的唯一受控错误映射边界",
+      "sourceCommit": "4825fa1da5450baa0abb44a001b61ff20af71509",
+      "result": "NEED_FIX",
+      "qualification": "仅新增跨片producer->HTTP read-bound条件需修；保留QB64原有限PASS和QB65 reader source/protocol PASS，此R01补充不重跑旧范围",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice64-r01-overview-read-bound-4825fa1d/RESULT.json",
+      "evidenceSha256": "18d74e31f2145ac67f063857fa8cf039a76d808ba18c5bb68b557a09ea9794f5",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "未执行真实超限SQL或PG/ACL/计划；错误通过有限依赖注入，来源code来自已审D3新分支。",
+        "未重验旧stock其他6或整个公共HTTP套件。"
+      ]
+    },
+    {
+      "id": "QB-slice64-stock-overview-public-4825fa1d",
+      "scope": "round27 PRODUCT_STOCK_OVERVIEW_CONTRACT_HTTP；独立新概览 DTO/验证/route，无旧stock页汇总或总数字段重定义",
+      "sourceCommit": "4825fa1da5450baa0abb44a001b61ff20af71509",
+      "result": "PASS",
+      "qualification": "D2 新总览公共合同/service/HTTP exact6 的源码与合成协议通过；真实库存授权/SQL/数据库事实由独立 reader 与实际引擎层证明",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice64-stock-overview-public-4825fa1d/RESULT.json",
+      "evidenceSha256": "d2d7fc59b545e66d83775c8aaa6fd5fa9c5a82bf28a7baa68f3a14d2eec03530",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "D3实际库存读取事实、SQL语法/执行/ACL/计划/性能、sameclient26 issuer和宿主mount另层待验；public result一致性不等于事实正确证明。",
+        "F2浏览器、DATA-PRES004整项闭环、正式部署/业务验收未做。",
+        "未重跑旧stock其他已验用例，未查询PG/Docker/服务器或改源。"
+      ]
+    },
+    {
+      "id": "QB-slice65-stock-overview-reader-4825fa1d",
+      "scope": "round27 PRODUCT_STOCK_OVERVIEW_READER，与QB64共同外部45593c98合同；只新overview和构造器兼容，旧stock其他6不重验",
+      "sourceCommit": "4825fa1da5450baa0abb44a001b61ff20af71509",
+      "result": "PASS",
+      "qualification": "D3新readOverview exact2源码与脚本协议通过；SQL执行/真实库存/ACL/issuer/计时未测；跨片HTTP超限映射另记QB64-R01，不归咎reader聚合",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice65-stock-overview-reader-4825fa1d/RESULT.json",
+      "evidenceSha256": "dc37dc50c6c0c82a781dc35a93b2c587af176364711187ca3d68208066105eb8",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "真实SQL语法/执行、数据约束/ACL/计划/计时和原生库存事实未测；脚本grouped回复不证明PG结果。",
+        "D1/C实际EXACT26 issuer/目标/函数/ACL与宿主装配、F2 UI和DATA-PRES004整体未验收。",
+        "未重跑旧stock其他6或原库存读取全范围；未查询PG/Docker/服务器或修改源码。"
+      ]
+    },
+    {
+      "id": "QB-slice66-product26-writer-4825fa1d",
+      "scope": "round27 NATIVE_PRODUCT26_WRITER：独立26适配器、同客户端能力、完整snapshot与SEASON同批来源锁定/读回；旧V1保持原范围",
+      "sourceCommit": "4825fa1da5450baa0abb44a001b61ff20af71509",
+      "result": "PASS",
+      "qualification": "固定writer exact2源码与有限脚本事务协议通过；不是实际SQL/PG/运行能力issuer/来源授权或合法native提交通过",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice66-product26-writer-4825fa1d/RESULT.json",
+      "evidenceSha256": "66583b2f506a4f18b615fab002464e5dbc7066b4ab368b35f583820b7a8547dc",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "真实SQL语法/引擎事务/实际whole-row价格JSON等值、SEASON来源/ACL/锁行为、actual26 issuer及已冻结guard函数未实测。",
+        "新V2 composite source authorizer、完整2956引用独立grant、真实product26合法COMMIT与读回、bootstrap/MAIN/PUBLISH均不是本writer自行授予范围。",
+        "有限copy-on-write协议替身不是数据库证明；没有PG/Docker/服务器/浏览器/部署或业务数据写入。"
+      ]
+    },
+    {
+      "id": "QB-slice67-qb63-f01-scalar-fabb3962",
+      "scope": "round28 exact1，仅source_account_version/source_plan_row严格类型，原arrays反例/object/boolean与合法number/text/null必要受影响范围",
+      "sourceCommit": "fabb3962dd1e75f6e66c3f434a0bd975c9901034",
+      "result": "PASS",
+      "qualification": "仅QB63-F01两个数字标量边界在新固定版本关闭；旧d4 NEED_FIX历史保留，不代表实际bootstrap49/运行能力或PG通过",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice67-qb63-f01-scalar-fabb3962/RESULT.json",
+      "evidenceSha256": "0029f5b755457433853945f91c00a0830357cb11951f824aad2a5f2f6bfc7b10",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "未读取或运行实际49 bootstrap来源/账号、四个人的实际资料或凭据；NULL检查使用两种原合同合成关系fixture，不冒充实际四人再验。",
+        "未验证issuer/ACL/SQL/PG COMMIT、D3 writer26、MAIN/PUBLISH；此修复只封闭纯准备数字标量条件。",
+        "未重验旧a7/exact2/整bootstrap3/库存媒体季节等已验范围。"
+      ]
+    },
+    {
+      "id": "QB-slice68-qb64-r01-read-bound-27c6ba68",
+      "scope": "round29 exact2，仅新overview路由受控超限->503/INVENTORY_NOT_READY及必要原stock映射对照",
+      "sourceCommit": "27c6ba6823749e2dc7d6d6527f53e9f9a59bfdf7",
+      "result": "PASS",
+      "qualification": "仅QB64-R01-F01在新固定版本的HTTP映射关闭；旧有限PASS和旧R01 NEED_FIX报告保持，真实PG未验",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice68-qb64-r01-read-bound-27c6ba68/RESULT.json",
+      "evidenceSha256": "d304e500065b8de57992a7aab4063b5a324e521cccf0d57407103d100ab989f9",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "无实际1M键SQL、PG/ACL/计划、运行issuer、浏览器或部署；定向错误注入不是DB验收。",
+        "未重跑整overview/旧stock套件。"
+      ]
+    },
+    {
+      "id": "QB-slice69-controlled-media-read-27c6ba68",
+      "scope": "round29 W15_CONTROLLED_MEDIA_READ_ONLY；新私有manifest摘要、路径与按次认证授权运输、丰富图片元数据，旧媒体/商品维护已验分支复用",
+      "sourceCommit": "27c6ba6823749e2dc7d6d6527f53e9f9a59bfdf7",
+      "result": "PASS",
+      "qualification": "固定16文件 W15只读membership/metadata/受控字节运输源码与合成协议通过；非真实媒体producer/codec/上传写闭环/PG或运行激活",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice69-controlled-media-read-27c6ba68/RESULT.json",
+      "evidenceSha256": "12a3d990b8428b7e51b379637d478116d719cf16f8e6bd5ec6ec536c726f38f9",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "真实私有root/manifest producer、实际文件映射/摘要/派生图片和运行origin/session/host mount未验证；manifest producer须另证实际存在与派生。",
+        "signature仅文件头/尾格式防误送，不是图像解码或尺寸/像素/压缩炸弹/resource limit证明；实际codec/缩略图生成明确未实施。",
+        "上传/stage所有权/expiry/ADD/REPLACE/EDIT_METADATA/REMOVE及root image write/COMMIT、文件清理均不在本片。",
+        "实际PG parser/ACL/新增image列与retained-delete profile SQL、F2浏览器、部署和正式验收未测。",
+        "未读取真实原图/业务媒体、未重新执行合成文件测试或旧维护/媒体全套。"
+      ]
+    },
+    {
+      "id": "QB-slice70-party26-original-client-27c6ba68",
+      "scope": "round29 NATIVE_PARTY26_ORIGINAL_CLIENT_GATE；DTO26/bootstrap metadata/exact2来源强制能力，传递原对象到共享header写入，旧逻辑不重验",
+      "sourceCommit": "27c6ba6823749e2dc7d6d6527f53e9f9a59bfdf7",
+      "result": "PASS",
+      "qualification": "固定exact3的新26/原客户端能力入口源码与脚本协议通过；不是实际issuer/49账号bootstrap/PG或首STAGE通过",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice70-party26-original-client-27c6ba68/RESULT.json",
+      "evidenceSha256": "5c64a2667a2ef9794668cac41b19d4666316e5f253ae5a83c4d0f58649006c46",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "实际runtime issuer/函数和ACL/真实同client26运行证明、49原来源工厂/全stage执行outside grant、user_account落库或实际49COMMIT未核。",
+        "能力结构本身不签发source/MAIN/PUBLISH许可；真实SQL/约束/锁和数据库结果另层。",
+        "未执行PG/原始来源全扫/凭据读取/源码修改或旧bootstrap套件。"
+      ]
+    },
+    {
+      "id": "QB-slice71-explicit-audit-host-27c6ba68",
+      "scope": "round29 W13_EXPLICIT_AUDIT_HOST，仅新审计plugin按native读profile接线到同pool及D1身份事务；旧public审计源码不重验",
+      "sourceCommit": "27c6ba6823749e2dc7d6d6527f53e9f9a59bfdf7",
+      "result": "PASS",
+      "qualification": "固定exact2显式host mount与scripted composition通过；实际角色/SQL ACL/已部署路由或26能力另层未测",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice71-explicit-audit-host-27c6ba68/RESULT.json",
+      "evidenceSha256": "d1ad5aae02c19730961cdacfecfe7031292bccefb648bf4d1478e7e253a57755",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "运行角色实际audit/receipt/native SELECT及沿原FOR SHARE身份锁所需权限未验证/授予，无新增数据库grant。",
+        "实际PG SQL/ACL/host启动认证请求/F3浏览器/部署/正式业务验收未做。",
+        "后继26 host必须另传实际verified same-driver历史客户cap；本片未发行/安装cap，不能激活exact2到legacy19。",
+        "未重复W13叶实现、其他旧composition/维护/读路由套件。"
+      ]
+    },
+    {
+      "id": "QB-slice72-product26-composite-authorizer-27c6ba68",
+      "scope": "round29 PRODUCT26_COMPOSITE_AUTHORIZER，新openNativeProductAuthorizer26和声明/测试；旧V14MiB与schema1不扩展",
+      "sourceCommit": "27c6ba6823749e2dc7d6d6527f53e9f9a59bfdf7",
+      "result": "PASS",
+      "qualification": "固定exact3新V2闭合outside参考授权器源码/合成协议与实际候选默认拒绝通过；尚无真实全2956参考许可或实际来源授权成功证明",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice72-product26-composite-authorizer-27c6ba68/RESULT.json",
+      "evidenceSha256": "96e544694aeb8b8afe3377ca2ddbfbbe6c2e5202e6d3b86f7787ee96d5dea117",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "实际2956全引用独立审核与C outside full-reference descriptor仍待本队列数据专项；模板中的占位review路径/hash不是授权。",
+        "实际full manifest与genuine sourceReader成功authorize、sourcehost26/11工厂、真实runtime issuer/PG/native事务/MAIN/PUBLISH未验。",
+        "没有重读XLSX/gzip或重新分配ID，未重跑旧V1原scope。"
+      ]
+    },
+    {
+      "id": "QB-slice73-full2956-reference-v2-59db4528",
+      "scope": "FULL2956_REFERENCE_V2",
+      "sourceCommit": null,
+      "result": "PASS",
+      "qualification": "NEW2644_PLUS310_NON_SEASON_REFERENCE_BINDINGS_AND_ALL2956_V2_CANDIDATE_COMPOSITION_ONLY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice73-full2956-reference-v2-59db4528/RESULT.json",
+      "evidenceSha256": "d9c721ddaf832288d3043a117a5b8e8194661d63e5f8102bb1f9b618fef92a60",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "真实数据库当前分类/供应商/season/version状态、实际sourceReader授权、Store26 SQL/锁/ACL/COMMIT或全2956实际落库读回未测。",
+        "11工厂、sourcehost26完整executor、实际runtime issuer、MAIN payload/actor/target和PUBLISH未提供或不在本专项。",
+        "本PASS只允许C按真实报告hash独立考虑签发FULL_REFERENCE_DECISIONS_ONLY closed descriptor；不是MAIN/native执行授权。",
+        "未重读原XLSX/gzip、未改source/native/UUID/authority，也未修改候选PENDING文件或其importAuthorized标志。"
+      ]
+    },
+    {
+      "id": "QB-slice74-current-category-a9079af6",
+      "scope": "round31 CURRENT_FORM_EXISTING_CATEGORY，只原category_id与末级name同现有snapshot组合输出；无单位",
+      "sourceCommit": "a9079af66a92b62223ec53ba62173198e109b133",
+      "result": "PASS",
+      "qualification": "固定exact3现有分类字段读取source/protocol通过；非真实PG/浏览器/上线或任何新schema/write能力",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice74-current-category-a9079af6/RESULT.json",
+      "evidenceSha256": "4f184834458f423d5536ed5a9554c8da97c1e781ad6f8fb3c3e851c9c9bbd4d0",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "真实PG/读取ACL/真实分类名称数据及F1 UI/浏览器/部署未测；scripted replies不证明SQL执行。",
+        "未重验原current-form其他已验范围、旧19/schema或全字典/季节；无单位增量。"
+      ]
+    },
+    {
+      "id": "QB-slice75-sourcehost26-preflight-a9079af6",
+      "scope": "round31 SOURCEHOST26_PREFLIGHT_CAPTURE_ONLY，不开启provider/session/pool，不重验旧19/已验source/headergzip",
+      "sourceCommit": "a9079af66a92b62223ec53ba62173198e109b133",
+      "result": "PASS",
+      "qualification": "固定exact2的独立26 job输入预检/11声明own-data捕获通过；executionReady=false，未有完整26 executor/可执行MAIN",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice75-sourcehost26-preflight-a9079af6/RESULT.json",
+      "evidenceSha256": "82f3c2e59c4b4fdcf4d71ec670360ca2bff3a1324e3a9e2f2e404b225598daae",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "新job检查只核review路径/hash输入形状，不打开或验证真实C full descriptor/manifest；真实参考授权由独立V2 authorizer及其后继消费负责。",
+        "11个声明名/捕获函数不证明11个真实完整producer；实际sameclient runtime、26 MAIN首STAGE/bootstrap SQL closure、完整typed projection/closure store及各native successor未实现或未在本片验证。",
+        "没有sourcehost26完整loader/executor、MAIN可执行、实际target/actor/payload/SQL/PG/import/PUBLISH证明；旧runner仍19-only。",
+        "未读XLSX/已验header gzip，不重验字典/季节/旧19，也未启动连接或修改源。"
+      ]
+    },
+    {
+      "id": "QF-candidate-0d3d59f0-F1-CHUNK20-REVIEW",
+      "scope": "TRANSFER_NATIVE_HISTORY_SHARED_VIEW",
+      "sourceCommit": "0d3d59f06fd5c9b660f29f71c1a773b4c00f2b1d",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-0d3d59f0/F1-CHUNK20-REVIEW.json",
+      "evidenceSha256": "213c564da591f8e92d9e3fb3a607504fe45264acd7fed6719e3872c97b29bd1b",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-candidate-0d3d59f0-F3-W7-REVIEW",
+      "scope": "W7_ACCOUNT_SETTINGS_LEAF",
+      "sourceCommit": "0d3d59f06fd5c9b660f29f71c1a773b4c00f2b1d",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-0d3d59f0/F3-W7-REVIEW.json",
+      "evidenceSha256": "97c0918642536984efa09b383f9f5aee40e9055858be9301cd68838bb78c810d",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-candidate-9571e461-F1-CHUNK21-REVIEW",
+      "scope": "BARCODE_SCHEME_ROUTE_GLUE",
+      "sourceCommit": "9571e461951be33f727e2af45934376c128b90e1",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-9571e461/F1-CHUNK21-REVIEW.json",
+      "evidenceSha256": "c7b48f32d79c71d08ece3d394fc24a15ec99760e4aa1959dfde01cce668f8e9a",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-candidate-9571e461-F2-DATA-PRES004-NAV-REVIEW",
+      "scope": "PRODUCT_INVENTORY_NAVIGATION_LEAF",
+      "sourceCommit": "9571e461951be33f727e2af45934376c128b90e1",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-9571e461/F2-DATA-PRES004-NAV-REVIEW.json",
+      "evidenceSha256": "950179f00b984b1189c9433552ada875f96323bde3052b5380f87d5fa244873a",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-candidate-d4f6583f-F1-CHUNK23-REVIEW",
+      "scope": "PRODUCT_INVENTORY_ROOT_NAVIGATION",
+      "sourceCommit": "d4f6583fb4be5cf7ba04fee8967c5df58c27c3c5",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-d4f6583f/F1-CHUNK23-REVIEW.json",
+      "evidenceSha256": "5a4b662de1b7403bb0c679492b214f8914fac23f4a2b39025ce058ccc63f24ae",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-candidate-d4f6583f-F3-W13-REVIEW",
+      "scope": "W13_SETTINGS_AUDIT_LEAF",
+      "sourceCommit": "d4f6583fb4be5cf7ba04fee8967c5df58c27c3c5",
+      "result": "NEED_FIX",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-d4f6583f/F3-W13-REVIEW.json",
+      "evidenceSha256": "7adc3e7b5cc768cdc9fe52d533d7ea00fdaa7cef6ead47b8de6ae5d807991049",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-candidate-ed2b82cd-F1-CHUNK22-REVIEW",
+      "scope": "DOCUMENT_OUTPUTS_AND_SAVED_CONSUMERS",
+      "sourceCommit": "ed2b82cd8c7e98a220f2592e8fa2ecaf0178a8bc",
+      "result": "NEED_FIX",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-ed2b82cd/F1-CHUNK22-REVIEW.json",
+      "evidenceSha256": "b02ece36b0a1e7c524dea122edbf46ab5a5666165035b506bdf667d3797a13d1",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-candidate-4825fa1d-F1-OUTPUT-STALE-FIX-REVIEW",
+      "scope": "OUTPUT_COMMITTED_STALE_TARGETED_FIX",
+      "sourceCommit": "4825fa1da5450baa0abb44a001b61ff20af71509",
+      "result": "PASS_TARGETED_FIX",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-4825fa1d/F1-OUTPUT-STALE-FIX-REVIEW.json",
+      "evidenceSha256": "ca1ae459b5f8cc735d7d956186e730aa0f7459c0b70cd33ed49173b57cb4d501",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-candidate-fabb3962-F2-STOCK-OVERVIEW-REVIEW",
+      "scope": "STOCK_OVERVIEW_FRONTEND_EXPLICIT_CAPABILITY",
+      "sourceCommit": "fabb3962dd1e75f6e66c3f434a0bd975c9901034",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-fabb3962/F2-STOCK-OVERVIEW-REVIEW.json",
+      "evidenceSha256": "64a21a732e0761d9e213ec1b6b8891cfe6cc919b1e2b66eeb4a83fcc39c0185f",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-candidate-27c6ba68-AUDIT-DENIED-RETRY-FIX-REVIEW",
+      "scope": "AUDIT_DENIED_RETRY_TARGETED_FIX",
+      "sourceCommit": "27c6ba6823749e2dc7d6d6527f53e9f9a59bfdf7",
+      "result": "PASS_TARGETED_FIX",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-27c6ba68/AUDIT-DENIED-RETRY-FIX-REVIEW.json",
+      "evidenceSha256": "bdc90cfdc601d04db057ea7627b6845abe3299b617750ee5df50457855629f68",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-candidate-27c6ba68-F2-CHROME-P02-REVIEW",
+      "scope": "PRODUCT_DEMO_CHROME_P02",
+      "sourceCommit": "27c6ba6823749e2dc7d6d6527f53e9f9a59bfdf7",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-27c6ba68/F2-CHROME-P02-REVIEW.json",
+      "evidenceSha256": "ad0e1e7173b3a40a1762cee0c948767808f113ddef0a1fe00884649292d8c1e6",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-candidate-27c6ba68-F3-AUDIT-ENTRY-REVIEW",
+      "scope": "AUDIT_ENTRY_GLUE_EXPLICIT_CAPABILITIES",
+      "sourceCommit": "27c6ba6823749e2dc7d6d6527f53e9f9a59bfdf7",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-27c6ba68/F3-AUDIT-ENTRY-REVIEW.json",
+      "evidenceSha256": "8c4247c3ae4eb036e988a4accb9ce4246319e4e525f6fe25ff8c8e08e9a674b0",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-candidate-21f2afa1-F1-CHUNK25-REVIEW",
+      "scope": "F1_WHOLE_NEW_SALES_UI_FIRST_CANDIDATE",
+      "sourceCommit": "21f2afa108e9252ad9829c78077b16d46b579d31",
+      "result": "NEED_FIX",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-21f2afa1/F1-CHUNK25-REVIEW.json",
+      "evidenceSha256": "3454d58caf2eebd05da6e663fa9325876e7733a477489402bc895044a2d79434",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-candidate-a9079af6-F2-READONLY-UI-REVIEW",
+      "scope": "PRODUCT_COMPLETE_READONLY_UI_LAYER",
+      "sourceCommit": "a9079af66a92b62223ec53ba62173198e109b133",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-a9079af6/F2-READONLY-UI-REVIEW.json",
+      "evidenceSha256": "9a233634399123918c53907657711c0ee8f1eecb5506a946067eaa583da55925",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "C-c03-exact26-engine-20261022-19",
+      "sourceCommit": null,
+      "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production",
+      "result": "PASS_FIXED26_INSTALL_AND_MINIMAL_NEGATIVES_ONLY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-engine-20261022-19/release-receipts/c03-exact26-engine-20261022-19/engine-result.json",
+      "evidenceSha256": "f5c8ea11c8ba7dfb4af9b8ed236099be5f16d158930899235b1014d6666da6d4",
+      "qualification": "Outcome exactly as receipt; failure history preserved; no replay",
+      "notTested": [
+        "Actual real source import and production business"
+      ]
+    },
+    {
+      "id": "C-c03-exact26-v3-patch-20261022-20",
+      "sourceCommit": null,
+      "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production",
+      "result": "FAILED_FIRST_ERROR_QA_PRESERVED_NO_REPLAY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v3-patch-20261022-20/release-receipts/c03-exact26-v3-patch-20261022-20/engine-result.json",
+      "evidenceSha256": "8e18f7b896f0a819fa7b0c03cb899abe69f02036f5115c8fde35012817bb0778",
+      "qualification": "Outcome exactly as receipt; failure history preserved; no replay",
+      "notTested": [
+        "Actual real source import and production business"
+      ]
+    },
+    {
+      "id": "C-c03-exact26-v3-readback-20261022-21",
+      "sourceCommit": null,
+      "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production",
+      "result": "PASS_READ_ONLY_V3_INSTALL_AND_EMPTY_STATE_CONFIRMED",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v3-readback-20261022-21/release-receipts/c03-exact26-v3-readback-20261022-21/engine-result.json",
+      "evidenceSha256": "0c7155996c7cb6bf2aa0a9dfd25bb5f0cdadd4dd292ad8240673cf8b2202d491",
+      "qualification": "Outcome exactly as receipt; failure history preserved; no replay",
+      "notTested": [
+        "Actual real source import and production business"
+      ]
+    },
+    {
+      "id": "C-c03-exact26-v4-catalog-20261022-22",
+      "sourceCommit": null,
+      "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production",
+      "result": "FAILED_FIRST_ERROR_NO_REPLAY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v4-catalog-20261022-22/release-receipts/c03-exact26-v4-catalog-20261022-22/engine-result.json",
+      "evidenceSha256": "0469cf20e01276de37e545e55bd6cc590e7dbafe844a3b1e6eefd705aaa0c8e2",
+      "qualification": "Outcome exactly as receipt; failure history preserved; no replay",
+      "notTested": [
+        "Actual real source import and production business"
+      ]
+    },
+    {
+      "id": "C-c03-exact26-v4-catalog-20261022-23",
+      "sourceCommit": null,
+      "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production",
+      "result": "PASS_FIXED26_V4_PATCH_AND_ACTUAL_CATALOG_ONLY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v4-catalog-20261022-23/release-receipts/c03-exact26-v4-catalog-20261022-23/engine-result.json",
+      "evidenceSha256": "21ba7df4a3aa373e486bce8e5df091db29fd5391a55d112a091392a256bae267",
+      "qualification": "Outcome exactly as receipt; failure history preserved; no replay",
+      "notTested": [
+        "Actual real source import and production business"
+      ]
+    },
+    {
+      "id": "C-c03-exact26-v5-intent-20261022-24",
+      "sourceCommit": null,
+      "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production",
+      "result": "PASS_FIXED26_V5_ONE_HELPER_AND_READBACK_ONLY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v5-intent-20261022-24/release-receipts/c03-exact26-v5-intent-20261022-24/engine-result.json",
+      "evidenceSha256": "00572b3b394b8d0ea77912c0158992dbab9250a668799ef2214cef00b297b031",
+      "qualification": "Outcome exactly as receipt; failure history preserved; no replay",
+      "notTested": [
+        "Actual real source import and production business"
+      ]
+    },
+    {
+      "id": "C-c03-maintenance-matrix-20261022-25",
+      "sourceCommit": null,
+      "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production",
+      "result": "FAILED_FIRST_ERROR_NO_REPLAY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-maintenance-matrix-20261022-25/release-receipts/c03-maintenance-matrix-20261022-25/engine-result.json",
+      "evidenceSha256": "ca04271c24ec5af4bc1c99314abf48362fe66fe14d50ef5aff4e5cd198c2211d",
+      "qualification": "Outcome exactly as receipt; failure history preserved; no replay",
+      "notTested": [
+        "Actual real source import and production business"
+      ]
+    },
+    {
+      "id": "C-c03-maintenance-matrix-20261022-26",
+      "sourceCommit": null,
+      "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production",
+      "result": "FAILED_FIRST_ERROR_NO_REPLAY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-maintenance-matrix-20261022-26/release-receipts/c03-maintenance-matrix-20261022-26/engine-result.json",
+      "evidenceSha256": "12199f1948b4063236cb5c4b5613c0e70cc5ef1d3ff76f1e034b34fba4fbc876",
+      "qualification": "Outcome exactly as receipt; failure history preserved; no replay",
+      "notTested": [
+        "Actual real source import and production business"
+      ]
+    },
+    {
+      "id": "QF-candidate-10640f6b-F1-HIDDEN-ENTRY-FIX-REVIEW",
+      "scope": "QF_HIDDEN_IN_ENTRY_TARGETED_FIX",
+      "sourceCommit": "10640f6b6d933617d6ef266ef7276508c2979d1c",
+      "result": "PASS_TARGETED_FIX",
+      "qualification": "Delegated SOURCE/PROTOCOL or explicitly named data scope only; no browser/PG/production upgrade",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-10640f6b/F1-HIDDEN-ENTRY-FIX-REVIEW.json",
+      "evidenceSha256": "bb4252fedc6f32d0ec1ae9013188ac226f72c0b42c474f52f54b725b1d9ae7f9",
+      "adoption": "Accepted valid delegated version/range conclusion; controller metadata read only, no technical retest",
+      "notTested": [
+        "Real browser, PostgreSQL, deployment and business acceptance unless separately evidenced"
+      ]
+    },
+    {
+      "id": "C-c03-maintenance-matrix-20261022-28",
+      "sourceCommit": null,
+      "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production",
+      "result": "FAILED_FIRST_ERROR_NO_REPLAY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-maintenance-matrix-20261022-28/release-receipts/c03-maintenance-matrix-20261022-28/engine-result.json",
+      "evidenceSha256": "108abdfc472d0d9a4b69d6213185f95c90604cbe6f46b6164d2a76afcba12d9f",
+      "qualification": "Outcome exactly as receipt; failure history preserved; no replay",
+      "notTested": [
+        "Actual real source import and production business"
+      ]
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-22T09:03:17.179373+00:00",
+  "updatedAt": "2026-10-22T17:34:34.607644+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -7710,6 +8292,64 @@
       ],
       "previousRowsReReviewed": 0,
       "newTests": 0
+    },
+    {
+      "at": "2026-10-22T17:29:22.984672+00:00",
+      "addedCheckIds": [
+        "QB-slice59-historical-customer-source-cd14b794",
+        "QB-slice60-exact2-shared-prepare-a7e817b4",
+        "QB-slice61-product26-pure-prepare-ed2b82cd",
+        "QB-slice62-settings-audit-ed2b82cd",
+        "QB-slice63-bootstrap26-prepare-d4f6583f",
+        "QB-slice64-r01-overview-read-bound-4825fa1d",
+        "QB-slice64-stock-overview-public-4825fa1d",
+        "QB-slice65-stock-overview-reader-4825fa1d",
+        "QB-slice66-product26-writer-4825fa1d",
+        "QB-slice67-qb63-f01-scalar-fabb3962",
+        "QB-slice68-qb64-r01-read-bound-27c6ba68",
+        "QB-slice69-controlled-media-read-27c6ba68",
+        "QB-slice70-party26-original-client-27c6ba68",
+        "QB-slice71-explicit-audit-host-27c6ba68",
+        "QB-slice72-product26-composite-authorizer-27c6ba68",
+        "QB-slice73-full2956-reference-v2-59db4528",
+        "QB-slice74-current-category-a9079af6",
+        "QB-slice75-sourcehost26-preflight-a9079af6",
+        "QF-candidate-0d3d59f0-F1-CHUNK20-REVIEW",
+        "QF-candidate-0d3d59f0-F3-W7-REVIEW",
+        "QF-candidate-9571e461-F1-CHUNK21-REVIEW",
+        "QF-candidate-9571e461-F2-DATA-PRES004-NAV-REVIEW",
+        "QF-candidate-d4f6583f-F1-CHUNK23-REVIEW",
+        "QF-candidate-d4f6583f-F3-W13-REVIEW",
+        "QF-candidate-ed2b82cd-F1-CHUNK22-REVIEW",
+        "QF-candidate-4825fa1d-F1-OUTPUT-STALE-FIX-REVIEW",
+        "QF-candidate-fabb3962-F2-STOCK-OVERVIEW-REVIEW",
+        "QF-candidate-27c6ba68-AUDIT-DENIED-RETRY-FIX-REVIEW",
+        "QF-candidate-27c6ba68-F2-CHROME-P02-REVIEW",
+        "QF-candidate-27c6ba68-F3-AUDIT-ENTRY-REVIEW",
+        "QF-candidate-21f2afa1-F1-CHUNK25-REVIEW",
+        "QF-candidate-a9079af6-F2-READONLY-UI-REVIEW",
+        "C-c03-exact26-engine-20261022-19",
+        "C-c03-exact26-v3-patch-20261022-20",
+        "C-c03-exact26-v3-readback-20261022-21",
+        "C-c03-exact26-v4-catalog-20261022-22",
+        "C-c03-exact26-v4-catalog-20261022-23",
+        "C-c03-exact26-v5-intent-20261022-24",
+        "C-c03-maintenance-matrix-20261022-25",
+        "C-c03-maintenance-matrix-20261022-26"
+      ],
+      "newTests": 0,
+      "previousRowsReReviewed": 0,
+      "note": "Only previously delivered fixed metadata adopted; no source, DB, UI or old accepted tests repeated."
+    },
+    {
+      "at": "2026-10-22T17:34:34.607644+00:00",
+      "addedCheckIds": [
+        "QF-candidate-10640f6b-F1-HIDDEN-ENTRY-FIX-REVIEW",
+        "C-c03-maintenance-matrix-20261022-28"
+      ],
+      "newTests": 0,
+      "previousRowsReReviewed": 0,
+      "note": "Only previously delivered fixed metadata adopted; no source, DB, UI or old accepted tests repeated."
     }
   ],
   "coverageGroups": [
@@ -7732,5 +8372,20 @@
       ],
       "noDoubleCounting": "5+19=24 W10 changed files. Retained4 W8 files are not new W10 changes. Original/failed/repaired/overlapping tests remain separate; no summed single-run PASS count."
     }
-  ]
+  ],
+  "currentFindingState": {
+    "sourceClosed": [
+      "QF-F1-HIDDEN-IN-ENTRY-01 via10640",
+      "QB63-F01 viaQB67",
+      "QB64-R01-F01 viaQB68",
+      "QF-F3-AUDIT-DENIED-RETRY-01 via27c6",
+      "F1 output committed stale via4825"
+    ],
+    "pending": [
+      "SALE-V006-01 candidate two-column+real preview UI P1",
+      "SALE-V006-02 empty paid badge/grid P2",
+      "SALE-V006-03 heading/entry style P2"
+    ],
+    "wholePagesPassed": 0
+  }
 }

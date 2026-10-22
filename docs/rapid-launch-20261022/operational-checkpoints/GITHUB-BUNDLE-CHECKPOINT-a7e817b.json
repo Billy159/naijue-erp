@@ -1,0 +1,14 @@
+{
+  "atUtc": "2026-10-22T09:21:56.904556+00:00",
+  "status": "PASS_GITHUB_PRIVATE_DRAFT_ASSET_DOWNLOAD_EXACT_GIT_BUNDLE",
+  "sourceCommit": "a7e817b4ff92210839e5d665caeead274d40fe5c",
+  "basePrerequisiteCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+  "bundleBytes": 500368,
+  "bundleSha256": "d99e641913638fdf1ab9b0f270d8dc6e035aaf760b5daa69158f098b83e46ba5",
+  "bundleVerifiedAfterDownload": true,
+  "url": "https://github.com/Billy159/naijue-erp/releases/tag/untagged-ba75756655ef31b66d5d",
+  "tag": "codex-checkpoint-20261022-a7e817b",
+  "isDraft": true,
+  "remoteBranchUpdated": false,
+  "branchStillVerified": "8775307b30ba3349bc6c95aa96bb48f13da889eb"
+}

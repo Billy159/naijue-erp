@@ -1,5 +1,5 @@
 {
-  "updatedAtUtc": "2026-10-22T09:03:17.179373+00:00",
+  "updatedAtUtc": "2026-10-22T11:36:11.047128+00:00",
   "contracts": [
     {
       "path": "api-contracts/CURRENT-BARCODE-API-v1.json",
@@ -77,6 +77,21 @@
       "path": "api-contracts/W13-SETTINGS-AUDIT-API-v1.json",
       "sha256": "b9dc981a74523681696750af3fe3c60c37ba9f890714cb9cbce731f5462a6b13",
       "status": "READ_CONTRACT_FROZEN_IMPLEMENTATION_IN_PROGRESS_NO_SCHEMA_CHANGE"
+    },
+    {
+      "path": "api-contracts/W14-PRODUCT-STOCK-OVERVIEW-API-v1.json",
+      "sha256": "45593c984d27e309561939221ed99fd53dc3cf79c9ae0587227ab2c8d35c4db3",
+      "status": "READ_CONTRACT_FROZEN_IMPLEMENTATION_PENDING_NO_SCHEMA_CHANGE"
+    },
+    {
+      "path": "api-contracts/CURRENT-PRODUCT-CATEGORY-DTO-v1.json",
+      "sha256": "b152588b51d1d06be82fd4e95474570f1f6647e9cb39beb0b336eadc7bd66ddb",
+      "status": "C_FROZEN_EXISTING_FIELD_READ_DTO_NOT_SCHEMA_OR_WRITE_ENABLEMENT"
+    },
+    {
+      "path": "api-contracts/CONTROLLED-MEDIA-RUNTIME-v1.json",
+      "sha256": "8d45d614ced8450b9217d3bca06a2eadc9d0fb62027238b419ba7a1dee0a01f5",
+      "status": "C_FROZEN_IMPLEMENTATION_CONTRACT_ACTUAL_RUNTIME_NOT_ENABLED"
     }
   ],
   "restriction": "v3-A product.season_ids one-column explicitly approved; v2-A product_season relationship table rejected. B approved. Existing target schema19 cannot use new fields or new import profile; actual successor guards/PG/readback remain required. DTO/source acceptance is not production write enablement."
