@@ -39,6 +39,10 @@ export function DemoSingleSelectAction(props: DemoSingleSelectActionProps) {
       value={props.value}
       options={props.options.map(option => ({ value: option.value, label: option.label, disabled: !!option.disabled }))}
       aria-label={props.label}
+      {...(props.placeholder !== undefined ? { placeholder: props.placeholder } : {})}
+      {...(props.loading !== undefined ? { loading: props.loading } : {})}
+      {...(props.dropdownRender ? { dropdownRender: props.dropdownRender } : {})}
+      {...(props.required !== undefined ? { 'aria-required': props.required } : {})}
       showSearch={false}
       allowClear={false}
       disabled={props.disabled}

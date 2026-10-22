@@ -4,7 +4,7 @@
  * Production native providers are not implemented by this module. Synthetic protocol providers
  * exercise composition, never establish the missing production authority or header completion.
  */
-import {buildHistoryTypedClosureExpected,captureHistoryTypedClosureStageInput,encodeHistoryClosureValue,historyClosureProjectionRow,HISTORY_CLOSURE_SOURCE_ENTITIES} from '../../packages/application/src/history-typed-closure.ts';
+import {buildHistoryTypedClosureExpected,buildHistoryTypedClosureExpected26,captureHistoryTypedClosureStageInput,encodeHistoryClosureValue,historyClosureProjectionRow,historyClosureProjectionRow26,HISTORY_CLOSURE_SOURCE_ENTITIES} from '../../packages/application/src/history-typed-closure.ts';
 import {HISTORY_COUNT_KEYS} from '../../packages/application/src/history-storage-contract.ts';
 const fail=code=>{throw Error('HISTORY_CLOSURE_READER_'+code);};
 const entities={PARTIES:['HALL','WAREHOUSE','STAFF','CUSTOMER','SUPPLIER'],CATALOGUE:['CATEGORY','COLOR','FIT','SIZE','SIZE_GROUP','SIZE_GROUP_MEMBER','SEASON'],PRODUCTS:['PRODUCT'],SKUS:['SKU'],BARCODES:['BARCODE'],STOCK_CONTRIBUTORS:['INVENTORY_BASELINE'],PAYMENT:['PAYMENT_METHOD','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL'],HEADERS:['SALES_HEADER','TRANSFER_HEADER'],SALES_DETAILS:['SALES_LINE'],SETTLEMENTS:['SETTLEMENT'],TRANSFER_LINES:['TRANSFER_LINE']};
@@ -44,10 +44,10 @@ function scopeCapture(value,selection,payload){
  return structuredClone(s);
 }
 const order=row=>Buffer.from(row.relation+'\0'+row.key,'utf8');
-function rowCapture(value,group,kind,batchId){
+function rowCapture(value,group,kind,batchId,project=historyClosureProjectionRow){
  const raw=own(value,['relation','key','projection'],'ROW');
  if(typeof raw.relation!=='string'||typeof raw.key!=='string')fail('ROW');
- const canonical=historyClosureProjectionRow(raw.relation,raw.projection);
+ const canonical=project(raw.relation,raw.projection);
  if(raw.key!==canonical.key)fail('ROW_KEY');
  const p=canonical.projection;
  if(kind==='sourceRows'?(canonical.relation!=='import_source_row'||!entities[group].includes(p.entity_type)):!relations[group].includes(canonical.relation))fail('ROW_GROUP');
@@ -71,7 +71,11 @@ function sameInput(actual,expected){
  * cannot rewrite the local input. Session close must release only its own temporary resources.
  * Explicit zero groups still verify, drain both complete streams and close; absence is not zero.
  */
-export async function openAuthorizedHistoryClosureReader(options){
+export async function openAuthorizedHistoryClosureReader(options){return openHistoryClosureReader(options,historyClosureProjectionRow,buildHistoryTypedClosureExpected);}
+/** Explicit full26 projection composition. No schema union, source/default grant,
+ * SQL or change to the original11-group ordering and lifecycle contract. */
+export async function openAuthorizedHistoryClosureReader26(options){return openHistoryClosureReader(options,historyClosureProjectionRow26,buildHistoryTypedClosureExpected26);}
+async function openHistoryClosureReader(options,project,buildExpected){
  const config=own(options,['scope','openSources','trustedSelectionSha256','trustedAuthorizedPayloadHash'],'OPTIONS');
  if(!hash(config.trustedSelectionSha256)||!hash(config.trustedAuthorizedPayloadHash))fail('INDEPENDENT_SCOPE_PIN');
  const scope=scopeCapture(config.scope,config.trustedSelectionSha256,config.trustedAuthorizedPayloadHash);
@@ -108,7 +112,7 @@ export async function openAuthorizedHistoryClosureReader(options){
    if(state.head)buffered-=state.head.bytes;
    const item=await state.iterator.next();assertOpen();state.head=undefined;
    if(item.done){state.done=true;return;}
-   const head=rowCapture(item.value,state.group,kind,scope.batchId),key=order(head.row);
+   const head=rowCapture(item.value,state.group,kind,scope.batchId,project),key=order(head.row);
    if(state.previous&&Buffer.compare(state.previous,key)>=0)fail('PROVIDER_ORDER');state.previous=key;state.head=head;
    buffered+=head.bytes;if(buffered>MAX_BUFFERED_BYTES)fail('BUFFER_LIMIT');
   };
@@ -148,7 +152,7 @@ export async function openAuthorizedHistoryClosureReader(options){
      if(documents.length>=MAX_DOCUMENTS||documentBytes>MAX_DOCUMENT_BYTES)fail('DOCUMENT_LIMIT');documents.push(d);
     }}finally{await closeIterator(state,cleanup);}
    }
-   result=await buildHistoryTypedClosureExpected({...scope,documents,sourceRows:merge(sessions,'sourceRows',cleanup),typedRows:merge(sessions,'typedRows',cleanup)});assertOpen();
+   result=await buildExpected({...scope,documents,sourceRows:merge(sessions,'sourceRows',cleanup),typedRows:merge(sessions,'typedRows',cleanup)});assertOpen();
    for(const session of sessions)await verify(session,'AFTER_READ');
   }catch(error){primary=error;failed=true;}
   finally{for(const close of closers.reverse())try{await close();}catch(error){cleanup.push(error);}}

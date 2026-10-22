@@ -1,0 +1,118 @@
+{
+  "atUtc": "2026-10-22T18:59:11.415063+00:00",
+  "parent": "258d54a378faa29f650fa04eca24191511f90ef6",
+  "groups": [
+    {
+      "slice": "DEMO_SINGLE_SELECT_FOUR_OPTIONAL_PRESENTATION_PORTS",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-32/DELIVERY.json",
+      "receiptSha256": "b5464a306068c58cc06e593d1046839c941a7215cff1acedb8e76772fe57e584",
+      "receiptSnapshot": {
+        "chunk": 32,
+        "status": "READY_FOR_C_PIN",
+        "input": "F2/PROD-UI-SOURCE-01-SINGLE-SELECT-SEAM-v1.json",
+        "files": [
+          {
+            "path": "apps/web/src/demo-controls/single-select-contract.ts",
+            "sha256": "b4ae2a03b316f230d508a81da195ebdb30c9dc982d5b69f354ff5bb6928beeef"
+          },
+          {
+            "path": "apps/web/src/demo-controls/single-select-action.tsx",
+            "sha256": "d29311eeabe7350436df39857d87b2966304e51850e02fae55037cdc9abd0724"
+          }
+        ],
+        "change": "Only4 optional public presentation props: placeholder/loading/dropdownRender/required. First3 pass to installed Arco Select; required passes only aria-required. Undefined props are omitted.",
+        "checks": [
+          {
+            "log": "types-1.log",
+            "exitCode": 0,
+            "scope": "Exact2 affected files and installed Arco2.66.16 types."
+          }
+        ],
+        "preserved": [
+          "Existing value/options/onChange guards and no value coercion",
+          "Nonsearch/nonclear defaults, flat/tag/page-size rendering",
+          "Original local portal, supplied popupWidth/placement, scoped stylesheet lease",
+          "No CSS/native query/authorization/paging/default/null/business-validation changes"
+        ],
+        "consumer": "F2 owns year-first actual native50-page/loading/error/retry consumer; C relay exact fixed interface. No F1 product editor writes.",
+        "limits": "No extra low-impact mirror tests; actual F2 consumer/browser comparison remains its original scope. No claim all product fields changed."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/demo-controls/single-select-contract.ts",
+          "owner": "F1",
+          "sha256": "b4ae2a03b316f230d508a81da195ebdb30c9dc982d5b69f354ff5bb6928beeef",
+          "bytes": 1758
+        },
+        {
+          "path": "apps/web/src/demo-controls/single-select-action.tsx",
+          "owner": "F1",
+          "sha256": "d29311eeabe7350436df39857d87b2966304e51850e02fae55037cdc9abd0724",
+          "bytes": 3868
+        }
+      ]
+    },
+    {
+      "slice": "FULL26_AUTHORIZED_CLOSURE_READER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/closure-reader26-slice1/RESULT.json",
+      "receiptSha256": "22473a1eb9d6f2b0f264d8d9062e9f86404b7f94ca403255abed01fed072dc0c",
+      "receiptSnapshot": {
+        "taskId": "D3_EXPLICIT26_AUTHORIZED_CLOSURE_SOURCE_READER",
+        "atUtc": "2026-10-22T18:54:28.151270+00:00",
+        "status": "SOURCE_READY_NEW3_AFFECTED1PASS_NOT_PG_OR_GENUINE_ALL11",
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-history-closure-reader.mjs",
+            "bytes": 13350,
+            "sha256": "37c78fe604ce8ab6d96606800d05f15dcb8cd658a6bbc18719ddbaab85018180"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-history-closure-reader.test.mjs",
+            "bytes": 25111,
+            "sha256": "bea844c115747d025ef69fc2f8199ae67f9c39fadc4f53d687643bb5088f484c"
+          }
+        ],
+        "API": "openAuthorizedHistoryClosureReader26(options), same closed4 scope/openSources/trustedSelectionSha256/trustedAuthorizedPayloadHash as legacy reader",
+        "behavior": [
+          "Private explicit26 projector+buildExpected26 from D1 app; old export remains old shape and rejects fullproduct25.",
+          "All11 required source groups/24 entities, finite relation grouping, global/within-stream sorting, complete scope counters/doc allocation streams and fresh independent source sessions unchanged.",
+          "Full native25 product metadata and multi-season array participate in expected hash; missing/reordered/duplicate/getter metadata refused.",
+          "No caller prehashed row, boolean verification, missing source factory, cached successful grant or SQL; all opened sessions closed on failure and close revokes future operations."
+        ],
+        "checks": {
+          "newSynthetic": 3,
+          "affectedLegacy": 1,
+          "passed": 4,
+          "skipped": 0,
+          "protocolLog": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/closure-reader26-slice1/protocol-first.log",
+            "bytes": 687,
+            "sha256": "f3132b00b9871a05ff41d788fbbce0185de209300ecbf88056c690c4490a5cdf"
+          },
+          "programChecks": "Node24 import/parse via focused tests, pureMJS; no new standalone strict TSC claim"
+        },
+        "notClaimed": [
+          "All11 genuine production factories present",
+          "Real source actor49/bootstrap/full execution grant",
+          "Runtime26/PG/closure persistence/MAIN/PUBLISH"
+        ]
+      },
+      "files": [
+        {
+          "path": "scripts/import-v2/authorized-history-closure-reader.mjs",
+          "owner": "D3",
+          "sha256": "37c78fe604ce8ab6d96606800d05f15dcb8cd658a6bbc18719ddbaab85018180",
+          "bytes": 13350
+        },
+        {
+          "path": "scripts/import-v2/authorized-history-closure-reader.test.mjs",
+          "owner": "D3",
+          "sha256": "bea844c115747d025ef69fc2f8199ae67f9c39fadc4f53d687643bb5088f484c",
+          "bytes": 25111
+        }
+      ]
+    }
+  ],
+  "fileCount": 4,
+  "scope": "Only optional UI presentation seam and separate full26 offline closure reader; no defaults/business schema or old interfaces changed, no actual import/runtime authority."
+}

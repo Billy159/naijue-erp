@@ -1,8 +1,8 @@
 /** Trusted composition protocol fakes only. Never proof of production source authority/OOXML or PG. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {openAuthorizedHistoryClosureReader,HISTORY_CLOSURE_SOURCE_GROUPS,HISTORY_CLOSURE_SOURCE_GROUP_ENTITIES,HISTORY_CLOSURE_SOURCE_GROUP_RELATIONS} from './authorized-history-closure-reader.mjs';
-import {historyClosureProjectionSpec,historyClosureProjectionRow,HISTORY_CLOSURE_SOURCE_ENTITIES} from '../../packages/application/src/history-typed-closure.ts';
+import {openAuthorizedHistoryClosureReader,openAuthorizedHistoryClosureReader26,HISTORY_CLOSURE_SOURCE_GROUPS,HISTORY_CLOSURE_SOURCE_GROUP_ENTITIES,HISTORY_CLOSURE_SOURCE_GROUP_RELATIONS} from './authorized-history-closure-reader.mjs';
+import {historyClosureProjectionSpec,historyClosureProjectionSpec26,historyClosureProjectionRow,historyClosureProjectionRow26,HISTORY_CLOSURE_SOURCE_ENTITIES} from '../../packages/application/src/history-typed-closure.ts';
 import {PostgresHistoryTypedClosureStore} from '../../adapters/postgres/src/history-typed-closure.ts';
 
 const id=n=>`00000000-0000-0000-0000-${String(n).padStart(12,'0')}`,selection='a'.repeat(64),payload='b'.repeat(64);
@@ -202,4 +202,27 @@ test('a falsy thrown provider error is still a primary refusal and is retained w
   try{await assert.rejects(a.expected(),error=>{assert.ok(error instanceof AggregateError);assert.deepEqual(error.errors,[primary,cleanup]);return true;});}finally{await a.close();}
   assert.equal(f.events.filter(e=>e.endsWith(':close:start')).length,11);
  }
+});
+
+function fullProduct26Fixture(hooks={}){
+ const f=fixture(hooks),spec=historyClosureProjectionSpec26().find(s=>s.relation==='product');
+ const p={...Object.fromEntries(spec.columns.map(c=>[c,null])),id:id(100),product_code:'SYNTHETIC-P26',name:'SYNTHETIC FULL PRODUCT',enabled:true,version:1,season_ids:[id(101),id(102)]};
+ f.typed.PRODUCTS=[historyClosureProjectionRow26('product',p)];f.sources.PRODUCTS=[row('import_source_row',{id:id(14),batch_id:id(1),entity_type:'PRODUCT',source_key:'SYNTHETIC-P26',file_ref:'SYNTHETIC.xlsx',sheet:'PRODUCT',source_file_sha256:selection,row_sha256:selection,raw_fields:{来源编号:'SYNTHETIC-P26'},normalized_fields:{来源编号:'SYNTHETIC-P26'},field_provenance:{schema_version:1,literal:'SYNTHETIC_PROTOCOL_ONLY'}})];
+ f.options.scope.expectedCounts.import_source_row++;f.options.scope.expectedSourceEntityCounts.PRODUCT++;return f;
+}
+test('closureReader26 keeps full product25 in all11 independently verified streams while legacy reader refuses new shape',async()=>{
+ const f=fullProduct26Fixture(),next=await openAuthorizedHistoryClosureReader26(f.options),first=await next.expected();assert.equal(f.typed.PRODUCTS[0].projection.season_ids.length,2);assert.equal(Object.keys(f.typed.PRODUCTS[0].projection).length,25);assert.equal(closed(f),11);await next.authorizeStage(first);assert.equal(closed(f),22);
+ for(const group of HISTORY_CLOSURE_SOURCE_GROUPS)assert.ok(f.events.includes(group+':verify:AFTER_READ'));
+ const old=await openAuthorizedHistoryClosureReader(f.options);await assert.rejects(old.expected());await old.close();await next.close();
+});
+test('closureReader26 binds complete metadata and multi-season array without stripping, collapsing or accepting caller row hashes',async()=>{
+ const f=fullProduct26Fixture(),reader=await openAuthorizedHistoryClosureReader26(f.options),expected=await reader.expected();f.typed.PRODUCTS[0].projection.season_ids=null;await assert.rejects(reader.authorizeStage(expected),/NOT_AUTHORIZED/);assert.equal(closed(f),22);await reader.close();
+ for(const change of ['missing','reordered','duplicate','getter']){const x=fullProduct26Fixture(),p=x.typed.PRODUCTS[0].projection;let reads=0;
+  if(change==='missing')delete p.deleted_at;else if(change==='reordered')p.season_ids.reverse();else if(change==='duplicate')p.season_ids=[id(101),id(101)];else Object.defineProperty(p,'default_barcode_scheme_id',{enumerable:true,get(){reads++;return null;}});
+  const r=await openAuthorizedHistoryClosureReader26(x.options);await assert.rejects(r.expected());assert.equal(reads,0);assert.equal(closed(x),11);await r.close();
+ }
+});
+test('closureReader26 preserves finite factories, no boolean verification, operation cleanup and close revocation',async()=>{
+ const missing=fullProduct26Fixture();delete missing.options.openSources.SKUS;await assert.rejects(openAuthorizedHistoryClosureReader26(missing.options),/ALL_SOURCE_FACTORIES_REQUIRED/);assert.deepEqual(missing.events,[]);
+ const flags=fullProduct26Fixture({session:async(g,s)=>{if(g==='PRODUCTS')s.verify=async()=>true;}}),r=await openAuthorizedHistoryClosureReader26(flags.options);await assert.rejects(r.expected(),/VERIFY_MUST_NOT_RETURN_A_PASSED_FLAG/);assert.equal(closed(flags),11);await r.close();await assert.rejects(r.expected(),/CLOSED/);
 });

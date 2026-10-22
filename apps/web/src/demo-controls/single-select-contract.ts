@@ -1,4 +1,4 @@
-import type { Ref } from 'react';
+import type { Ref, ReactNode } from 'react';
 /** Presentation input only. No record model, fetching, storage or native bridge. */
 export interface DemoSingleSelectFocusHandle { focus(): void }
 export interface DemoSingleSelectOption {
@@ -14,6 +14,11 @@ interface CommonProps {
   readonly disabled: boolean;
   readonly open: boolean;
   readonly focusOnMount?: boolean;
+  readonly placeholder?: string;
+  readonly loading?: boolean;
+  readonly dropdownRender?: (menu: ReactNode) => ReactNode;
+  /** Accessibility metadata only; no native value coercion or business validation. */
+  readonly required?: boolean;
   /** Public installed Select focus API; the owner decides whether it still owns focus. */
   readonly focusRef?: Ref<DemoSingleSelectFocusHandle>;
   readonly onOpenChange: (open: boolean) => void;
