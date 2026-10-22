@@ -1,0 +1,94 @@
+{
+  "atUtc": "2026-10-22T23:23:09.793090+00:00",
+  "parent": "bc1cf5ef269f788aded2d85cbad2bbb4aa5ae175",
+  "groups": [
+    {
+      "slice": "fix: restore transfer more popup density and viewport clamp",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-59/DELIVERY.json",
+      "receiptSha256": "9b3775580815b591a8b175040c2286167216b681e65c0b16e0ed265230545939",
+      "receiptSnapshot": {
+        "chunk": 59,
+        "taskId": "F1/TR-UI-04 existing More residual",
+        "atUtc": "2026-10-22T23:22:28.506780+00:00",
+        "status": "READY_EXACT2_MORE_DENSITY_AND_FROZEN_CLAMP",
+        "files": [
+          {
+            "path": "apps/web/src/transfers/document-presentation.tsx",
+            "sha256": "ece3b366038994090e0d68afe066d7893fc9b299e72b30cacc668c9bc2082cc4"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal.css",
+            "sha256": "c713076f9df6065fda08131e67c0ebec37cf65c03404a5265615a08812c43e11"
+          }
+        ],
+        "checks": {
+          "RESULT.json": "PASS_TARGETED_NATIVE_ARCO_MORE_RESIDUAL_MODEL",
+          "types-1.log": "EXIT0_NARROW_STRICT_NOEMIT",
+          "SOURCE-CHECK.json": "PASS_EXACT_TWO_SOURCE_FILES"
+        },
+        "reuseActual": "v017-component-more-6eac13e-attempt03 positive keyboard/outside/internal-long-scroll; no new main count",
+        "notTested": [
+          "New integrated asset actual button/popup text metrics and clamp relative behavior",
+          "Actual external ancestor/window scrolling",
+          "Main native saved document at least4 categories",
+          "Whole overlay/page/native permissions/PG/save/production"
+        ],
+        "blockers": [],
+        "next": "C exact2 pin + QF new affected source + original Demo actual only residual. F1 P13 six confirmed paths next; keep source2 frozen.",
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-59/RESULT.json",
+            "sha256": "b75f9ac9949699524dbf21f705980c5c9bd58d2f37875bf31fb16eddcd899271"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-59/SOURCE-CHECK.json",
+            "sha256": "ee99df21b3d6b9eeb9c0a50c79e15cba4f0e9f4b7b2a4bcc1f6a25051e8cf37e"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-59/PROBE-NOTES.json",
+            "sha256": "2a82deb73b6a698ea497b5ee1273d6b61c758e183e1886e769be78e22985377f"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-59/SOURCE.diff",
+            "sha256": "e204e3b0e1a142d5c0690a272e55627a401a4a21096ad652c3435f2bfb351eb4"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-59/residual-1.log",
+            "sha256": "cf59961a28ec78b6e4ef4565973e61a8c63a587a81fb8cc5ecc43d470a60d6d1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-59/residual-2.log",
+            "sha256": "df44df9b5bca1c0e6bc25ea17651fbca23be552e4deebef08489e5def7a6328d"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-59/residual-3.log",
+            "sha256": "f41e1f5266275ff2ab04585b42b64a14f0da3b3a6ea6542e9deb88b3bad91184"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-59/types-1.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-59/REPORT.md",
+            "sha256": "1941aa63ca94cd98c242dbdb4d72f9a5349bba3d4e3fbb8b1c83974d49903234"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/transfers/document-presentation.tsx",
+          "owner": "F1",
+          "bytes": 13532,
+          "sha256": "ece3b366038994090e0d68afe066d7893fc9b299e72b30cacc668c9bc2082cc4"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.css",
+          "owner": "F1",
+          "bytes": 9565,
+          "sha256": "c713076f9df6065fda08131e67c0ebec37cf65c03404a5265615a08812c43e11"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Original TRUI04 component residual only: 12/13.8 More,12/18 Inter popup, frozen viewport clamp and measurement/listener lifecycle. Keep native focus/outside/internal scrolling; no count/default/author/native DTO or save changes. Actual component geometry pending; main45 unchanged."
+}

@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { Trigger } from '@arco-design/web-react';
 import type { DictionaryBrowserReader, DictionarySizeGroup } from '../product-settings/size-groups/contracts.ts';
 import { validateDictionaryPage, validateDictionarySizeGroup } from '../../../../packages/application/src/dictionary-read-validation.ts';
@@ -73,6 +73,26 @@ function TransferProposalSummaryTags({ items }: { readonly items: readonly { rea
   const host = useRef<HTMLDivElement>(null), opener = useRef<HTMLButtonElement>(null), popup = useRef<HTMLDivElement>(null), id = useId();
   const key = JSON.stringify(items), rest = items.slice(3);
   const [state, setState] = useState({ key, open: false }), visible = rest.length > 0 && state.key === key && state.open;
+  const [popupNode, setPopupNode] = useState<HTMLDivElement | null>(null);
+  const [placement, setPlacement] = useState<{ node: HTMLDivElement; key: string; left: number; top: number } | null>(null);
+  const attachPopup = useCallback((node: HTMLDivElement | null) => { popup.current = node; setPopupNode(node); }, []);
+  useLayoutEffect(() => {
+    const view = popupNode?.ownerDocument.defaultView;
+    if (!popupNode || !view) { setPlacement(null); return; }
+    const place = () => {
+      if (!popupNode.isConnected || !opener.current?.isConnected) return;
+      const anchor = opener.current.getBoundingClientRect();
+      // Frozen transfer-golden.js clamps below the anchor into the viewport;
+      // it deliberately allows overlap near the bottom instead of flipping above.
+      const left = Math.max(8, Math.min(anchor.left, view.innerWidth - 240));
+      const top = Math.max(8, Math.min(anchor.bottom + 4, view.innerHeight - popupNode.offsetHeight - 8));
+      setPlacement(previous => previous?.node === popupNode && previous.key === key && previous.left === left && previous.top === top ? previous : { node: popupNode, key, left, top });
+    };
+    place(); const frame = view.requestAnimationFrame(place);
+    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(place) : null;
+    observer?.observe(popupNode); view.addEventListener('resize', place);
+    return () => { view.cancelAnimationFrame(frame); observer?.disconnect(); view.removeEventListener('resize', place); };
+  }, [popupNode, key]);
   useEffect(() => { setState({ key, open: false }); }, [key]);
   useEffect(() => {
     if (!visible) return;
@@ -85,7 +105,8 @@ function TransferProposalSummaryTags({ items }: { readonly items: readonly { rea
     if (!visible || event.nativeEvent.isComposing || event.key !== 'Escape') return;
     event.preventDefault(); event.stopPropagation(); setState({ key, open: false }); opener.current?.focus({ preventScroll: true });
   };
-  return <div ref={host} className="tc-product-tags transfer-summary-tags" aria-label="商品信息">{items.slice(0, 3).map(item => <span className="tc-product-tag" key={item.id} title={`${item.label} ${item.count}`}>{item.label} {item.count}</span>)}{rest.length > 0 && <Trigger trigger="click" position="bl" popupAlign={{ bottom: 4 }} duration={0} autoFitPosition unmountOnExit escToClose style={{ zIndex: 100 }} popupVisible={visible} onVisibleChange={open => setState({ key, open })} getPopupContainer={node => node.closest('.demo-ui') ?? node.closest('.transfer-proposal-editor') ?? host.current ?? node} popupStyle={{ width: 220, maxWidth: 'calc(100vw - 16px)' }} popup={() => <div ref={popup} id={id} className="tc-more-tags-pop transfer-summary-more" role="dialog" aria-label="其余商品信息" tabIndex={-1} onKeyDown={escape}><strong>其余商品信息</strong>{rest.map(item => <span key={item.id}>{item.label}<b>{item.count}</b></span>)}</div>}><UIButton ref={opener} className="tc-product-tag tc-more-tag" aria-haspopup="dialog" aria-expanded={visible} aria-controls={id} title={rest.map(item => `${item.label} ${item.count}`).join(' · ')} onKeyDown={escape}>+{rest.length} 更多</UIButton></Trigger>}</div>;
+  const positioned = placement?.node === popupNode && placement?.key === key ? placement : null;
+  return <div ref={host} className="tc-product-tags transfer-summary-tags" aria-label="商品信息">{items.slice(0, 3).map(item => <span className="tc-product-tag" key={item.id} title={`${item.label} ${item.count}`}>{item.label} {item.count}</span>)}{rest.length > 0 && <Trigger trigger="click" position="bl" popupAlign={{ bottom: 4 }} duration={0} autoFitPosition={false} unmountOnExit escToClose style={{ position: 'fixed', zIndex: 100, left: positioned ? `${positioned.left}px` : undefined, top: positioned ? `${positioned.top}px` : undefined, visibility: positioned ? 'visible' : 'hidden' }} popupVisible={visible} onVisibleChange={open => setState({ key, open })} getPopupContainer={node => node.closest('.demo-ui') ?? node.closest('.transfer-proposal-editor') ?? host.current ?? node} popupStyle={{ width: 220, maxWidth: 'calc(100vw - 16px)' }} popup={() => <div ref={attachPopup} id={id} className="tc-more-tags-pop transfer-summary-more" role="dialog" aria-label="其余商品信息" tabIndex={-1} onKeyDown={escape}><strong>其余商品信息</strong>{rest.map(item => <span key={item.id}>{item.label}<b>{item.count}</b></span>)}</div>}><UIButton ref={opener} className="tc-product-tag tc-more-tag" aria-haspopup="dialog" aria-expanded={visible} aria-controls={id} title={rest.map(item => `${item.label} ${item.count}`).join(' · ')} onKeyDown={escape}>+{rest.length} 更多</UIButton></Trigger>}</div>;
 }
 export function TransferDocumentSummary({ lines, presentation }: { readonly lines: readonly { readonly productId: string | undefined; readonly quantity: string; readonly category?: { readonly id: string; readonly label: string | null } }[]; readonly presentation?: 'proposal' }) {
   const categories = new Map<string, { label: string; rows: typeof lines[number][] }>();
