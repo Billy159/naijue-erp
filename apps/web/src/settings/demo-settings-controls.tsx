@@ -50,9 +50,13 @@ export function DemoSettingsSingleSelect(props: {
     return () => props.scope.signal.removeEventListener('abort', close);
   }, [props.scope, props.disabled]);
   useEffect(() => { if (!mounted || !open || props.disabled) return; let active = true; queueMicrotask(() => { if (active) refreshPortal(); }); return () => { active = false; }; }, [mounted, open, props.disabled]);
-  return <div ref={host} className="ui-single-host bs-single demo-settings-single demo-store-single"><SourceSingleSelect className="ui-flat-select" aria-label={props.label} placeholder={props.placeholder} value={props.value || undefined} options={[...props.options]} showSearch={!!props.search} filterOption={props.search ? false : true} allowClear={!!props.clear} disabled={!!props.disabled || !props.scope.active} loading={props.loading ?? false}
+  const anchor = host.current?.getBoundingClientRect(), viewportWidth = host.current?.ownerDocument.defaultView?.innerWidth;
+  const popupWidth = anchor && viewportWidth
+    ? Math.min(Math.max(anchor.width, 300), Math.max(180, viewportWidth - anchor.left - 12))
+    : 300;
+  return <div ref={host} className="ui-single-host bs-single demo-settings-single demo-store-single" style={{ position: 'relative' }}><SourceSingleSelect className="ui-flat-select" aria-label={props.label} placeholder={props.placeholder} value={props.value || undefined} options={[...props.options]} showSearch={!!props.search} filterOption={props.search ? false : true} allowClear={!!props.clear} disabled={!!props.disabled || !props.scope.active} loading={props.loading ?? false}
     popupVisible={mounted && open && !props.disabled && props.scope.active} unmountOnExit getPopupContainer={() => { if (!host.current) throw new Error('Store select host not mounted'); return host.current; }}
-    triggerProps={{ position: 'bl', autoAlignPopupWidth: false, popupStyle: { width: Math.max(180, host.current?.getBoundingClientRect().width ?? 0) } }}
+    triggerProps={{ position: 'bl', autoAlignPopupWidth: false, popupStyle: { width: popupWidth } }}
     renderFormat={(_, selected) => <span className="ui-single-tag">{props.options.find(item => item.value === selected)?.label ?? '名称未提供'}</span>}
     dropdownRender={menu => <>{menu}{props.footer}</>}
     onVisibleChange={visible => { if (!props.scope.active || props.disabled) return; setOpen(visible); if (visible) props.onOpen?.(); }}

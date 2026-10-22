@@ -1,0 +1,295 @@
+{
+  "atUtc": "2026-10-22T21:40:10.370641+00:00",
+  "parent": "33f1071486eeca37538aa0bcacf23a798d421108",
+  "groups": [
+    {
+      "slice": "SETTINGS_SELECT_ANCHOR_AND_FROZEN_WIDTH_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/RESULT.json",
+      "receiptSha256": "aa18a407ab9ac233065e61cd8b064da51fa5496b2893ac0fa52224e8f77d8bff",
+      "receiptSnapshot": {
+        "taskId": "F05/SETTINGS-SELECT-ANCHOR-01",
+        "owner": "F3",
+        "priority": "P2",
+        "clientDate": "2026-10-23",
+        "generatedAtObservedUtc": "2026-10-22T21:38:15.304894+00:00",
+        "status": "SOURCE_READY_FOR_C_CHECKPOINT_AND_TARGETED_ACTUAL_ANCHOR_RECHECK",
+        "baselineHead": "bf56610fad9d4f40be3bc1e268bbad46042a3872",
+        "observedHead": "bf56610fad9d4f40be3bc1e268bbad46042a3872",
+        "finding": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v012-4ee77b5/SETTINGS-SELECT-ANCHOR-FINDING.json",
+          "sha256": "df75664b74e539fc1905e9ea5aac686a9b939226de5d2af0ec8b28ce456e14b0"
+        },
+        "sourceCandidateUnderObservation": "4ee77b5db93f8e20eb04f0c7fd73b58b554befa6",
+        "sourceBuildUnderObservation": "ui-preview-4ee77b5-01-build01",
+        "files": [
+          {
+            "path": "apps/web/src/settings/demo-settings-controls.tsx",
+            "beforeSha256": "40b41e442cf5a4a1fbca17c3155aa4380f12801905c40962e4736eab7127118e",
+            "afterSha256": "15c50b84401a793ff301fa0e5c00567af6d545828c93d0eb9123caef72ec884a"
+          }
+        ],
+        "newRFiles": [],
+        "patch": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/exact1.patch",
+          "sha256": "19b07b026f824798a7900cfab5e53ec36c295dfb4797e0c3ef030330ce511d0c"
+        },
+        "scope": "DemoSettingsSingleSelect only: make existing local portal host positioned; match frozen SmallSelect width formula max(anchor width,300), clamped to viewport right with12px gap and180px minimum. No shared F1 CSS or ProductFlat implementation edit.",
+        "actualConsumption": {
+          "callSites": 10,
+          "sourceFiles": 6,
+          "consumers": [
+            {
+              "path": "apps/web/src/staff-settings/staff-page.tsx",
+              "callSites": [
+                "role filter",
+                "employment filter",
+                "login-status filter remains capability-disabled"
+              ],
+              "sha256": "98bad493391775c6b0d03dc3a8510115c163a9685efb0275362500016ee582bc"
+            },
+            {
+              "path": "apps/web/src/staff-settings/staff-form.tsx",
+              "callSites": [
+                "role field"
+              ],
+              "sha256": "81e9936a5cb20e4b3da981375bb19b342d710deb106b90abd03f179563614d44"
+            },
+            {
+              "path": "apps/web/src/payment-settings/payment-page.tsx",
+              "callSites": [
+                "method/account status filter"
+              ],
+              "sha256": "bb2c777b6291c2cbda62b6bd4c35da0a89989ac451b102d0a4d38397fd47f20f"
+            },
+            {
+              "path": "apps/web/src/account-settings/account-page.tsx",
+              "callSites": [
+                "login-enabled status filter"
+              ],
+              "sha256": "4d13fc52a5e448ce8b74a88e0aea8a3465f9bdf4b9480d23b07ff60063ff4fd1"
+            },
+            {
+              "path": "apps/web/src/settings/audit/audit-drawer.tsx",
+              "callSites": [
+                "module filter",
+                "action filter"
+              ],
+              "sha256": "fdf07c42e99392716c03f1035dc94ae4da5b355c16e95cbd4cd342af37923853"
+            },
+            {
+              "path": "apps/web/src/settings/stores/demo-store-view.tsx",
+              "callSites": [
+                "warehouse hall filter",
+                "status filter"
+              ],
+              "sha256": "375b72e09f6d251e52cd0b1286f0ccc3d64db2515c9a9ecc2fac5337585ca7fc"
+            }
+          ],
+          "excludedOtherImplementations": [
+            "AccountStaffPicker custom Select",
+            "SettingsReferenceSelect directory/multi-select",
+            "settings/stores/single-select.tsx",
+            "DemoPageSizeSelect",
+            "ProductFlat DemoSingleSelectAction/C85"
+          ]
+        },
+        "diagnosis": {
+          "localPortal": "Existing popup already renders under correct host; host computed position static leaves absolute trigger without that local positioning reference. Existing minimum width180 mismatches frozen300 default.",
+          "sourceReference": [
+            {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/奈爵服饰-8877-Demo/frontend/basic-settings-v2.jsx",
+              "sha256": "c16e44268ac75f50784c0ce8c8b45826eb267ec85c8cee06596d24ab2a0761fa"
+            },
+            {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/奈爵服饰-8877-Demo/frontend/unified-single-select.jsx",
+              "sha256": "0551d20e63ee3e50e214ee4137b6b4a7fa98b0eb441dd51cea32e01e434dd43d"
+            }
+          ],
+          "fixedPresentation": "Inline position relative on this component host; frozen mount width formula adapted to host ownerDocument viewport. Existing trigger position bl/container/lifecycle unchanged.",
+          "roleLabelsAndOrder": "Passed options and all six callers unchanged; no generic-role mapping or reordering introduced."
+        },
+        "checks": [
+          {
+            "name": "Before source DOM reproduction",
+            "status": "EXPECTED_FAILURE_REPRODUCED",
+            "measuredAnchorFixture": {
+              "hostPosition": "static",
+              "popupWidth": "180px",
+              "popupInsideOwnHost": true
+            }
+          },
+          {
+            "name": "Current Arco DOM geometry declarations",
+            "status": "PASS_LOCAL_DOM",
+            "cases": [
+              {
+                "name": "measured staff anchor",
+                "hostPosition": "relative",
+                "popupWidth": "300px",
+                "popupInsideOwnHost": true,
+                "controlWidthFixture": 178,
+                "controlLeftFixture": 554,
+                "viewportFixture": 1470,
+                "actualBrowserGeometry": "NOT_MEASURED"
+              },
+              {
+                "name": "wide field remains wide",
+                "hostPosition": "relative",
+                "popupWidth": "420px",
+                "popupInsideOwnHost": true,
+                "controlWidthFixture": 420,
+                "controlLeftFixture": 228,
+                "viewportFixture": 1470,
+                "actualBrowserGeometry": "NOT_MEASURED"
+              },
+              {
+                "name": "viewport right clamp",
+                "hostPosition": "relative",
+                "popupWidth": "258px",
+                "popupInsideOwnHost": true,
+                "controlWidthFixture": 178,
+                "controlLeftFixture": 1200,
+                "viewportFixture": 1470,
+                "actualBrowserGeometry": "NOT_MEASURED"
+              },
+              {
+                "name": "frozen 180 minimum",
+                "hostPosition": "relative",
+                "popupWidth": "180px",
+                "popupInsideOwnHost": true,
+                "controlWidthFixture": 178,
+                "controlLeftFixture": 200,
+                "viewportFixture": 320,
+                "actualBrowserGeometry": "NOT_MEASURED"
+              }
+            ],
+            "limit": "Deterministic geometry inputs; no actual-browser x/y proof."
+          },
+          {
+            "name": "Native callback and existing disabled/scope guards",
+            "status": "PASS_LOCAL_DOM",
+            "value": "WAREHOUSE",
+            "callbackCount": 1,
+            "disabledNoPopup": true,
+            "scopeInvalidationClosesLocalPortal": true,
+            "queryCalls": 0,
+            "writeCommands": 0
+          },
+          {
+            "name": "Affected strict types",
+            "status": "PASS",
+            "exitCode": 0,
+            "scope": "Changed control plus six actual consumer roots and transitive dependencies"
+          },
+          {
+            "name": "Source geometry-only normalization and diff",
+            "status": "PASS",
+            "protectedFiles": 12,
+            "fullRemainingSourceEqualsBaseline": true,
+            "diffCheckExitCode": 0
+          }
+        ],
+        "testDriverNote": "First after-run expected popup node removal after20ms although existing Arco exit animation still retained it. Original failure log retained; callback was correct. Driver now observes existing slideDynamicOrigin exit phase then waits300ms for removal. Product source unchanged for this driver correction.",
+        "reusedEvidence": [
+          "C81 staff role source/protocol PASS; Demo83 role synthetic query observation reused",
+          "Current roles/internal enums/query/default/guard semantics unchanged",
+          "C85 ProductFlat fix is a different implementation and is not assumed to cover settings",
+          "Original W7/native/audit accepted suites not rerun"
+        ],
+        "notTested": [
+          "New candidate actual staff role control/popup x/y/width against frozen pair",
+          "Other nine related actual consumer popup positions and right-edge clipping",
+          "Whole settings pages/overlays, PG/server/native query/filter semantics",
+          "Role label/order adaptation, pending login closed classification",
+          "Integrated build or deployment"
+        ],
+        "safetyFacts": {
+          "newGlobalCss": false,
+          "sharedF1FilesChanged": false,
+          "businessRoleOrQueryChanged": false,
+          "loginClosedClassificationImplemented": false,
+          "writesEnabledOrAuthorizationChanged": false,
+          "writeCommands": 0,
+          "requestKeys": 0,
+          "actualChrome": false,
+          "actualBrowserHarness": false,
+          "activeActualBrowserOperations": false,
+          "serverStarted": false,
+          "database": false,
+          "gitMutation": false
+        },
+        "blockers": [],
+        "next": "C checkpoint exact1 and QF only new local anchor/width source and affected types; dedicated Demo actual recheck B04 role popup under the control with300px width at the documented viewport. Related consumers remain actual NOT_RUN, no repeated role/native or old page passes.",
+        "modelRequirement": {
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "xhigh",
+          "fastEnabledByF3": false,
+          "actualFastUiState": "NOT_OBSERVED"
+        },
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/BASELINE.json",
+            "sha256": "9f72d07e4f62c433d3e4167696961ee2ef6e7538247b0c049c814f6edb5a2388"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/source-before.txt",
+            "sha256": "40b41e442cf5a4a1fbca17c3155aa4380f12801905c40962e4736eab7127118e"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/CHECK-before.json",
+            "sha256": "a34d788a4facf572532d1cba18ab289bfad41e788da53aae5a554bed337862dd"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/before.log",
+            "sha256": "fbf64e9dac3e3d4c367244682b55330795610ec0afd2863ac4eea980985e0580"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/CHECK-after.json",
+            "sha256": "ccf2b55f2d8e73cfc90c434e11f018a58055d916f23b566c68fdf4d3d5a201f1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/after-run2.log",
+            "sha256": "a6126dfcdf92c47256dc57ad0e299853741091ae631b2e6df69452107139942c"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/after-run1-transition-check.log",
+            "sha256": "4534924c27eb06eead6b8970657636e2efaceca9ab65ff5a64f5050ca6b7bdf3"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/check-anchor.mjs",
+            "sha256": "1fd021d37599b5a70e643a61713481fa9212fd6c31c9ed9813ca0cb1d5e24a78"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/TYPE-CHECK.json",
+            "sha256": "aaa6847542b4192b2c3dc75f8f09c93da4fb1d09c767316df744085c0035a0b4"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/types.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/tsconfig.json",
+            "sha256": "33cd29697ec0cf92d20ce30375f043ed6c4ac162ffafafbc73009d3e2ab0f4d0"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/SOURCE-PROTECTION.json",
+            "sha256": "88c1ea80c97ea35f32c630309cbc8be96982a3932da62ecdd0050c4915408e98"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/settings-select-anchor-01-v1/exact1.patch",
+            "sha256": "19b07b026f824798a7900cfab5e53ec36c295dfb4797e0c3ef030330ce511d0c"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/settings/demo-settings-controls.tsx",
+          "owner": "F3",
+          "bytes": 9106,
+          "sha256": "15c50b84401a793ff301fa0e5c00567af6d545828c93d0eb9123caef72ec884a"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only original F3 local settings select geometry. Source-ready, not new browser/wholepage/native query acceptance. Old role81 and C85 ProductFlat remain separate."
+}
