@@ -27,7 +27,7 @@ export interface HistoryRevisionCurrent {
   readonly kind: ImportedHistoryKind; readonly documentId: string; readonly version: number;
   readonly previousRevisionId: string | null; readonly importBatchId: string; readonly publishedOperationId: string;
   readonly documentManifestHash: string; readonly sourceStatus: 'DRAFT' | 'APPROVED' | 'VOID';
-  readonly baselineEffect: 'INCLUDED_APPROVED' | 'EXCLUDED_NOT_EFFECTIVE'; readonly businessDate: string;
+  readonly baselineEffect: 'INCLUDED_APPROVED' | 'EXCLUDED_NOT_EFFECTIVE'; readonly businessDate: string | null;
   readonly warehouseId: string | null; readonly fromWarehouseId: string | null; readonly toWarehouseId: string | null;
   readonly lines: readonly HistoryRevisionLine[]; readonly totals: HistoryRevisionTotals | null;
   readonly settlements: readonly HistoryRevisionSettlement[];

@@ -83,7 +83,8 @@ test('real party source factory keeps hall+warehouse cycle atomic, customers bef
     const binding={batchId:id(1),fixedSourceNamespace:'synthetic:party',selectionSha256:pin,cutoffAt:'2026-10-04T12:00:00+08:00',authorizedPayloadHash:'b'.repeat(64)};
     let n=20;const registry=createNativeIdentityRegistry(()=>id(n++));
     const overrides={CUSTOMER:{'来源编号':'c','名称':'synthetic customer','原编码':'001','状态':'正常'},HALL:{'来源编号':'h','厅名称':'synthetic hall','状态':'正常','默认客户来源编号':'c','默认销货仓来源编号':'w'},
-      WAREHOUSE:{'来源编号':'w','仓库名称':'synthetic warehouse','所属厅来源编号':'h','状态':'正常','切换范围':'本次完整核准'}};
+      WAREHOUSE:{'来源编号':'w','仓库名称':'synthetic warehouse','所属厅来源编号':'h','状态':'正常','切换范围':'本次完整核准'},
+      STAFF:{'来源编号':'s','姓名':'synthetic staff','角色':'管理员','所属厅来源编号':'h','任职状态':'在职','联系方式':''}};
     const fields=Object.entries(overrides).map(([entity,over])=>{const t=IMPORT_V2_TABLES.find(t=>t.entity===entity);const normalized={...Object.fromEntries(t.columns.map(c=>[c.name,''])),...over};registry.add(entity,over['来源编号'],normalized);return{entity,normalized,table:t};});
     const party=fields.map(({entity,normalized,table},i)=>{const raw={entity,sourceId:normalized['来源编号'],file:'synthetic.xlsx',sheet:entity,row:2,sourceSha256:pin,data:normalized};return{batchId:binding.batchId,fixedSourceNamespace:binding.fixedSourceNamespace,
       selection:{baseManifestSha256:pin,selectionSha256:pin,approvalSha256:pin,entity,source:'BASE_V2',path:table.file,csvSha256:pin},source:sourceEvidence(raw,JSON.stringify(raw),normalized,binding),
@@ -93,10 +94,14 @@ test('real party source factory keeps hall+warehouse cycle atomic, customers bef
     const review=await registryReview(dir,bytes,binding,files);
     const source=await openNativeBindingRegistry({directory:dir,trustedManifestSha256:hash(bytes),binding,...review});try{
       const chunks=[];for await(const c of source.partyChunks()){await source.authorizePartyChunk(c);chunks.push(c);}
-      assert.deepEqual(chunks.map(c=>c.rows.map(r=>r.entity)),[['CUSTOMER'],['HALL','WAREHOUSE']]);
+      assert.deepEqual(chunks.map(c=>c.rows.map(r=>r.entity)),[['CUSTOMER'],['HALL','WAREHOUSE'],['STAFF']]);
+      const bootstrap=await source.bootstrapPartyClosure('s');assert.equal(bootstrap.chunk.rows.length,4);await source.authorizePartyChunk(bootstrap.chunk);
+      assert.equal(bootstrap.staff.nativeId,registry.get('STAFF','s').nativeId);assert.equal(bootstrap.staff.role,'ADMIN');assert.equal(bootstrap.staff.hallId,registry.get('HALL','h').nativeId);
+      assert.equal(bootstrap.chunk.rows.filter(r=>r.entity==='HALL').length,1);assert.equal(bootstrap.chunk.rows.filter(r=>r.entity==='WAREHOUSE').length,1);
+      await assert.rejects(source.bootstrapPartyClosure('unlinked-source-account'),/REFERENCE_MISSING/);
       const session=await source.openPartyClosure(binding,{group:'PARTIES',signal:new AbortController().signal});await session.verify();
       const sourceRows=[],typedRows=[];for await(const row of session.sourceRows())sourceRows.push(row);for await(const row of session.typedRows())typedRows.push(row);
-      assert.equal(sourceRows.length,3);assert.equal(typedRows.length,8);assert.equal(typedRows.filter(r=>r.relation==='native_party_import_evidence').length,3);
+      assert.equal(sourceRows.length,4);assert.equal(typedRows.length,11);assert.equal(typedRows.filter(r=>r.relation==='native_party_import_evidence').length,4);
       const warehouse=typedRows.find(r=>r.relation==='warehouse');assert.equal(warehouse.projection.hall_id,registry.get('HALL','h').nativeId);
       await session.close();await assert.rejects(session.verify(),/CLOSED/);
     }finally{source.close();}

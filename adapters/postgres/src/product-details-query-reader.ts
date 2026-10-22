@@ -49,7 +49,7 @@ export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshot
     checkedProductDetailsScope(read); requireDomain(read.intent.kind === "prices", "FORBIDDEN", "Price-tab grant required");
     return this.snapshot(read.signal, async query => {
       const rows = (await query(`SELECT p.id, p.version, ${CATALOGUE_PRICE_KEYS.map(key => `p.${key}::text AS ${key}`).join(", ")}
-        FROM naijue_erp.product p WHERE p.id = $1::uuid`, [read.parameters.productId])).rows;
+        FROM naijue_erp.product p WHERE p.id = $1::uuid AND p.deleted_at IS NULL`, [read.parameters.productId])).rows;
       const target = product(rows, read.parameters.productId); if (target === null) return null;
       const prices = {} as Record<CataloguePriceKey, string | null>;
       for (const key of CATALOGUE_PRICE_KEYS) prices[key] = price(rows[0]![key]);
@@ -60,7 +60,7 @@ export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshot
     checkedProductDetailsScope(read); requireDomain(read.intent.kind === "barcodes", "FORBIDDEN", "Barcode-tab grant required");
     const p = read.parameters;
     return this.snapshot(read.signal, async query => {
-      const target = product((await query("SELECT p.id, p.version FROM naijue_erp.product p WHERE p.id = $1::uuid", [p.productId])).rows, p.productId);
+      const target = product((await query("SELECT p.id, p.version FROM naijue_erp.product p WHERE p.id = $1::uuid AND p.deleted_at IS NULL", [p.productId])).rows, p.productId);
       if (target === null) return null;
       const counts = (await query(`SELECT count(*)::text AS total FROM naijue_erp.sku_barcode b
         JOIN naijue_erp.sku s ON s.id = b.sku_id WHERE s.product_id = $1::uuid`, [p.productId])).rows;

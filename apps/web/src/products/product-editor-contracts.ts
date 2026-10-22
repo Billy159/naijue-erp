@@ -6,6 +6,7 @@ import type { ProductReadOnlyReader } from '../inventory/product-contracts.ts';
 import type { DictionaryBrowserReader } from '../product-settings/size-groups/contracts.ts';
 import type { HttpQueryError } from '../transport/http-query.ts';
 import type { ProductFullPageReadOnlyReader } from './product-page-contracts.ts';
+import type { CatalogueSettingsBrowserReader } from '../product-settings/colors/contracts.ts';
 export type { ProductMaintenanceCommand, ProductMaintenanceResult, ProductAggregate, ProductWriteValues, ProductSkuInput, ProductBarcodeInput } from '../../../../packages/application/src/product-maintenance-ports.ts';
 export type { ProductMaintenanceDetail, ProductMaintenanceCandidateQuery, ProductMaintenanceCandidateKind, ProductMaintenanceCandidatePage } from '../../../../packages/application/src/product-maintenance-ports.ts';
 export interface ProductMaintenanceReader {
@@ -21,6 +22,8 @@ export interface ProductEditorCapability {
   readonly onRecoveryRequired: (command: ProductMaintenanceCommand) => void;
   readonly productReader: ProductReadOnlyReader;
   readonly dictionaryReader: Pick<DictionaryBrowserReader, 'readSizeGroups'>;
+  /** Full category-directory enumeration is an explicit independent host grant. */
+  readonly categoryReader?: Pick<CatalogueSettingsBrowserReader, 'readCategories'>;
   readonly stock?: ProductFullPageReadOnlyReader['stock'];
 }
 export interface ProductEditorProps {

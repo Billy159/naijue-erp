@@ -37,6 +37,13 @@
 .product-editor .field>span{line-height:18px}
 .product-editor .erp-input,.product-editor .erp-select-host{width:100%;box-sizing:border-box}
 .product-editor-select .erp-select-host{display:block;width:100%}
+.product-editor-category,.product-editor-category>.arco-cascader{width:100%;min-width:0}
+.product-editor-category .arco-cascader-view{min-height:32px;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted)}
+.product-spec-transfer-modal .product-spec-transfer{width:100%;min-height:296px;font-size:13px}
+.product-spec-transfer-modal .arco-transfer-view{flex:1;min-width:0;height:296px;border-color:var(--ca-line)}
+.product-spec-transfer-modal .arco-transfer-view-header{background:var(--ca-table-head)}
+.product-spec-transfer-modal .arco-transfer-view-item{min-height:31px}
+.product-spec-transfer-modal .product-editor-candidate-pages{font-size:12px}
 .product-editor-candidate-pages{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px}
 .product-editor-error{color:var(--ca-critical);padding:8px 0;margin:0}
 .product-editor-recovery{padding:12px;background:var(--ca-primary-soft);display:flex;align-items:center;gap:12px}

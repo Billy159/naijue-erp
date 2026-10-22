@@ -4,7 +4,7 @@ import type { ActorContext } from "../../../packages/application/src/ports.ts";
 import type { CurrentFormReader } from "../../../packages/application/src/current-form-ports.ts";
 import { checkedCurrentFormActor, activeCurrentFormRead, parseCurrentSalesReferenceQuery,
   parseCurrentTransferWarehouseQuery, parseCurrentFormProductQuery, parseCurrentFormProductSkuQuery,
-  parseCurrentFormSkuBatchQuery } from "../../../packages/application/src/current-form-validation.ts";
+  parseCurrentFormSkuBatchQuery, parseCurrentFormBarcodeQuery } from "../../../packages/application/src/current-form-validation.ts";
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { exactJson } from "./sales-http.ts";
 
@@ -28,13 +28,19 @@ export function createCurrentFormHttpPlugin(options: CurrentFormHttpOptions): Fa
     throw new TypeError("Current form HTTP requires an explicit trusted reader");
   // Capture bound methods before registration so later caller mutation cannot replace a provider.
   const sales = reader.readSalesReferences.bind(reader), warehouses = reader.readTransferWarehouses.bind(reader),
-    products = reader.readProducts.bind(reader), skus = reader.readProductSkus.bind(reader), batch = reader.readSkuBatch.bind(reader);
+    products = reader.readProducts.bind(reader), skus = reader.readProductSkus.bind(reader), batch = reader.readSkuBatch.bind(reader),
+    barcode = reader.readBarcode?.bind(reader);
   const routes: readonly (readonly [string, (actor: ActorContext, body: unknown, signal: AbortSignal) => Promise<unknown>])[] = [
     ["/current-form/sales-references/query", (a, b, s) => sales(a, parseCurrentSalesReferenceQuery(b), s)],
     ["/current-form/transfer-warehouses/query", (a, b, s) => warehouses(a, parseCurrentTransferWarehouseQuery(b), s)],
     ["/current-form/products/query", (a, b, s) => products(a, parseCurrentFormProductQuery(b), s)],
     ["/current-form/product-skus/query", (a, b, s) => skus(a, parseCurrentFormProductSkuQuery(b), s)],
-    ["/current-form/sku-batch/query", (a, b, s) => batch(a, parseCurrentFormSkuBatchQuery(b), s)]
+    ["/current-form/sku-batch/query", (a, b, s) => batch(a, parseCurrentFormSkuBatchQuery(b), s)],
+    ["/current-form/barcode/query", (a, b, s) => {
+      const query = parseCurrentFormBarcodeQuery(b);
+      if (!barcode) throw new DomainError("CURRENT_FORM_READ_UNAVAILABLE", "Explicit current barcode reader unavailable");
+      return barcode(a, query, s);
+    }]
   ];
   return async function currentFormHttp(app) {
     const actors = new WeakMap<object, ActorContext>();
@@ -54,7 +60,7 @@ export function createCurrentFormHttpPlugin(options: CurrentFormHttpOptions): Fa
     app.addHook("onResponse", async request => { reads.get(request)?.cleanup(); reads.delete(request); actors.delete(request); });
     app.setErrorHandler((error, _request, reply) => {
       if (error instanceof DomainError) {
-        const statuses: Readonly<Record<string, number>> = { INVALID_CURRENT_FORM_QUERY: 400, FORBIDDEN: 403, SKU_UNAVAILABLE: 409, CURRENT_FORM_READ_ABORTED: 408 };
+        const statuses: Readonly<Record<string, number>> = { INVALID_CURRENT_FORM_QUERY: 400, FORBIDDEN: 403, SKU_UNAVAILABLE: 409, CURRENT_FORM_READ_ABORTED: 408, CURRENT_FORM_READ_UNAVAILABLE: 503 };
         const status = Object.hasOwn(statuses, error.code) ? statuses[error.code] : undefined;
         if (status !== undefined) return reply.code(status).send({ error: { code: error.code, message: status === 403 ? "Access denied" : "Current form read rejected" } });
       }

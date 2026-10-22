@@ -1,17 +1,18 @@
 import { readCurrentRecentAccount } from "./current-account-recommendations.ts";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
-import type { CurrentFormAuthorization, CurrentFormContext, CurrentFormIdentity, CurrentFormIntent, CurrentFormPage,
+import type { CurrentFormBarcodeQuery, CurrentFormBarcodeResult, CurrentFormAuthorization, CurrentFormContext, CurrentFormIdentity, CurrentFormIntent, CurrentFormPage,
   CurrentFormProduct, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormReader, CurrentFormReadGrant,
   CurrentFormSku, CurrentFormSkuBatchQuery, CurrentSalesReferenceItem, CurrentSalesReferenceQuery,
   CurrentTransferWarehouse, CurrentTransferWarehouseQuery } from "../../../packages/application/src/current-form-ports.ts";
 import { activeCurrentFormRead, checkedCurrentFormActor, checkedCurrentFormGrant, parseCurrentFormProductQuery,
   parseCurrentFormProductSkuQuery, parseCurrentFormSkuBatchQuery, parseCurrentSalesReferenceQuery,
-  parseCurrentTransferWarehouseQuery } from "../../../packages/application/src/current-form-validation.ts";
+  parseCurrentTransferWarehouseQuery, parseCurrentFormBarcodeQuery } from "../../../packages/application/src/current-form-validation.ts";
 import { DomainError, requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import type { EntityId, EntityKind } from "../../../packages/domain/src/values.ts";
 import type { PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
 import { booleanValue } from "./codec.ts";
+import { assertHistoryPublicationSchema19 } from "../../../packages/application/src/history-typed-publication.ts";
 
 type Query = (sql: string, values?: unknown[]) => Promise<PgSalesResult>;
 function denied(): never { throw new DomainError("FORBIDDEN", "Current form is not available to this account"); }
@@ -288,6 +289,52 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
       const items = rows.map(sku); const byId = new Map(items.map(row => [row.id, row]));
       requireDomain(byId.size === items.length && items.every(row => parameters.skuIds.includes(row.id)), "INVALID_DATABASE_VALUE", "Unexpected native SKU batch identity");
       return Object.freeze(parameters.skuIds.map(id => byId.get(id)!));
+    });
+  }
+  readBarcode(actor: ActorContext, input: CurrentFormBarcodeQuery, signal: AbortSignal): Promise<CurrentFormBarcodeResult> {
+    const parameters = parseCurrentFormBarcodeQuery(input);
+    return this.snapshot(actor, { kind: "barcode", parameters }, signal, async (query, identity, grant) => {
+      const schema = (await query("/* current-form:barcode-schema */ SELECT array_agg(version ORDER BY version) versions FROM naijue_erp.schema_migration")).rows;
+      requireDomain(schema.length === 1, "CURRENT_FORM_READ_UNAVAILABLE", "Reviewed exact barcode source schema required");
+      // R1 is exact19. Future prefixes need their own reviewed capability; a new
+      // version number alone must never enable staged/new-creation read paths.
+      assertHistoryPublicationSchema19(schema[0]!.versions);
+      const context = parameters.context;
+      if (context.kind === "SALES") await this.salesHall(query, identity, grant, context.hallId);
+      const warehouseIds = context.kind === "SALES" ? [context.warehouseId] : [context.fromWarehouseId, context.toWarehouseId];
+      const warehouses = (await query(`/* current-form:barcode-warehouses */ SELECT w.id,w.hall_id,w.enabled,h.id native_hall_id,
+        EXISTS(SELECT 1 FROM naijue_erp.inventory_balance b WHERE b.warehouse_id=w.id AND b.quantity<>0) has_nonzero_inventory
+        FROM naijue_erp.warehouse w JOIN naijue_erp.hall h ON h.id=w.hall_id
+        WHERE w.id=ANY($1::uuid[]) ORDER BY w.id LIMIT 3`, [warehouseIds])).rows;
+      if (warehouses.length !== warehouseIds.length) denied();
+      const seen = new Set<string>();
+      for (const w of warehouses) {
+        const warehouseId = id("warehouse", w.id), hallId = id("hall", w.hall_id);
+        if (!warehouseIds.includes(warehouseId) || seen.has(warehouseId) || w.native_hall_id !== hallId
+          || grant.kind === "halls" && !grant.hallIds.includes(hallId)) denied(); seen.add(warehouseId);
+        const enabled = booleanValue(w.enabled), nonzero = booleanValue(w.has_nonzero_inventory);
+        if (context.kind === "SALES" ? hallId !== context.hallId || !enabled
+          : warehouseId === context.fromWarehouseId ? !enabled && !nonzero : !enabled) denied();
+      }
+      const rows = (await query(`/* current-form:barcode */ SELECT b.id binding_id,b.barcode,b.barcode_kind,b.enabled binding_enabled,
+        ${SKU_COLUMNS}, (to_jsonb(p)->>'deleted_at' IS NULL AND to_jsonb(c)->>'deleted_at' IS NULL AND to_jsonb(f)->>'deleted_at' IS NULL
+          AND NOT EXISTS(SELECT 1 FROM naijue_erp.product_category pc WHERE pc.id=p.category_id AND to_jsonb(pc)->>'deleted_at' IS NOT NULL)) references_retained,
+        NOT EXISTS(SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
+          WHERE ib.status<>'IMPORTED' AND ((src.entity_type='SKU' AND src.field_provenance->'native_sku_import'->>'native_sku_id'=s.id::text)
+            OR (src.entity_type='BARCODE' AND src.field_provenance->>'native_sku_id'=s.id::text AND src.field_provenance->>'native_barcode'=b.barcode))) source_published
+        ${SKU_JOINS.replace("JOIN naijue_erp.size_group_member", "LEFT JOIN naijue_erp.size_group_member")}
+        JOIN naijue_erp.sku_barcode b ON b.sku_id=s.id
+        WHERE b.barcode COLLATE "C"=$1::text COLLATE "C" LIMIT 2`, [parameters.barcode])).rows;
+      requireDomain(rows.length <= 1, "INVALID_DATABASE_VALUE", "Exact native barcode resolves multiple identities");
+      const empty = (state: "NOT_FOUND" | "UNAVAILABLE"): CurrentFormBarcodeResult => Object.freeze({ state, barcode: parameters.barcode, binding: null, sku: null });
+      if (rows.length === 0) return empty("NOT_FOUND"); const row = rows[0]!;
+      const bindingId = id("barcode", row.binding_id);
+      requireDomain(row.barcode === parameters.barcode && (row.barcode_kind === "MAIN" || row.barcode_kind === "CONFIRMED_OLD"),
+        "INVALID_DATABASE_VALUE", "Exact retained barcode identity changed");
+      if (!booleanValue(row.binding_enabled) || !booleanValue(row.sku_enabled) || !booleanValue(row.product_enabled)
+        || !booleanValue(row.color_enabled) || !booleanValue(row.fit_enabled) || !booleanValue(row.references_retained) || !booleanValue(row.source_published)
+        || row.member_size_id !== row.size_id) return empty("UNAVAILABLE");
+      return Object.freeze({ state: "FOUND", barcode: parameters.barcode, binding: Object.freeze({ id: bindingId, kind: row.barcode_kind }), sku: sku(row) });
     });
   }
 }

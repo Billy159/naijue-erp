@@ -49,6 +49,12 @@ export interface CurrentFormSku {
   /** No current barcode authority exists in 0001–0008. Missing is not a known null barcode. */
   readonly barcodeAvailability: "UNAVAILABLE";
 }
+export type CurrentFormBarcodeContext = { readonly kind: "SALES"; readonly hallId: EntityId<"hall">; readonly warehouseId: EntityId<"warehouse"> }
+  | { readonly kind: "TRANSFER"; readonly fromWarehouseId: EntityId<"warehouse">; readonly toWarehouseId: EntityId<"warehouse"> };
+export interface CurrentFormBarcodeQuery { readonly context: CurrentFormBarcodeContext; readonly barcode: string }
+export type CurrentFormBarcodeResult = { readonly state: "FOUND"; readonly barcode: string;
+  readonly binding: { readonly id: string; readonly kind: "MAIN" | "CONFIRMED_OLD" }; readonly sku: CurrentFormSku }
+  | { readonly state: "NOT_FOUND" | "UNAVAILABLE"; readonly barcode: string; readonly binding: null; readonly sku: null };
 /** Fresh non-secret native facts, captured in the same proposal snapshot. */
 export interface CurrentFormIdentity {
   readonly accountId: EntityId<"account">; readonly staffId: EntityId<"staff">;
@@ -58,7 +64,8 @@ export type CurrentFormIntent = { readonly kind: "sales-references"; readonly pa
   | { readonly kind: "transfer-warehouses"; readonly parameters: CurrentTransferWarehouseQuery }
   | { readonly kind: "products"; readonly parameters: CurrentFormProductQuery }
   | { readonly kind: "product-skus"; readonly parameters: CurrentFormProductSkuQuery }
-  | { readonly kind: "sku-batch"; readonly parameters: CurrentFormSkuBatchQuery };
+  | { readonly kind: "sku-batch"; readonly parameters: CurrentFormSkuBatchQuery }
+  | { readonly kind: "barcode"; readonly parameters: CurrentFormBarcodeQuery };
 /** A trusted host grant for this form, never request-supplied. Halls constrain the
  * form/warehouse scope, not ownership of shared customer/staff/product/method/account records. */
 export type CurrentFormReadGrant = { readonly kind: "all" }
@@ -68,6 +75,9 @@ export interface CurrentFormAuthorization {
     signal: AbortSignal): Promise<CurrentFormReadGrant>;
 }
 export interface CurrentFormReader {
+  /** Explicit optional availability for older host adapters. A missing method
+   * must reject503; it never falls back to product search or guessed SKU. */
+  readBarcode?(actor: ActorContext, parameters: CurrentFormBarcodeQuery, signal: AbortSignal): Promise<CurrentFormBarcodeResult>;
   readSalesReferences(actor: ActorContext, parameters: CurrentSalesReferenceQuery, signal: AbortSignal): Promise<CurrentFormPage<CurrentSalesReferenceItem>>;
   readTransferWarehouses(actor: ActorContext, parameters: CurrentTransferWarehouseQuery, signal: AbortSignal): Promise<CurrentFormPage<CurrentTransferWarehouse>>;
   readProducts(actor: ActorContext, parameters: CurrentFormProductQuery, signal: AbortSignal): Promise<CurrentFormPage<CurrentFormProduct>>;

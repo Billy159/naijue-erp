@@ -1,2 +1,4 @@
 /* Explicit detail action only; the already-ready sales route owns shared controls. */
 @import '../../sales/detail.css';
+@import '../../current-form/sales-proposal.css';
+@import '../../components/document-scan.css';

@@ -1,0 +1,758 @@
+#!/usr/bin/env python3
+"""Bounded C02 candidate stage/entry activation. Importing this module is inert.
+
+Only the existing T45 dispatcher may execute mutations on naijue-server.
+Private runtime JSON is checked in memory and mounted by reference, never exported.
+No SQL, migration, Docker pull/build/prune, old app/DB change, or backup replay.
+"""
+import argparse
+import contextlib
+import datetime as dt
+import fcntl
+import hashlib
+import http.client
+import json
+import os
+from pathlib import Path, PurePosixPath
+import re
+import socket
+import stat
+import subprocess
+import tarfile
+import time
+
+ROOT = Path('/srv/naijue-erp/rapid-launch-20261022')
+OLD = Path('/srv/naijue-erp/prod')
+ORIGIN = 'https://1n5635n614.goho.co'
+HOST = '1n5635n614.goho.co'
+DATABASE = 'erp_rewrite_20261022_r1'
+ROLE = 'erp_rewrite_runtime_20261022'
+OLD_NAMES = ('naijue-prod-app-1', 'naijue-prod-web-1', 'naijue-prod-db-1')
+HASH = re.compile(r'[a-f0-9]{64}\Z')
+IMAGE = re.compile(r'sha256:[a-f0-9]{64}\Z')
+
+
+class Refused(Exception):
+    pass
+
+
+def need(condition, code):
+    if not condition:
+        raise Refused(code)
+
+
+def now():
+    return dt.datetime.now(dt.timezone.utc).isoformat()
+
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def encoded(value):
+    return (json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=False) + '\n').encode()
+
+
+def relative(value):
+    need(isinstance(value, str) and 0 < len(value) <= 1024 and not re.search(r'[\\\x00-\x20\x7f:]', value), 'UNSAFE_RELATIVE_MEMBER')
+    p = PurePosixPath(value)
+    need(not p.is_absolute() and str(p) == value and all(x not in ('', '.', '..') and not x.startswith('.') for x in p.parts), 'UNSAFE_RELATIVE_MEMBER')
+    return value
+
+
+def canonical(value, kind='file', private=False, root=None):
+    need(isinstance(value, (str, Path)), 'ABSOLUTE_REFERENCE_REQUIRED')
+    p = Path(value)
+    need(p.is_absolute() and str(p) == os.path.normpath(str(value)), 'CANONICAL_ABSOLUTE_REFERENCE_REQUIRED')
+    if root is not None:
+        need(p != root and p.is_relative_to(root), 'REFERENCE_OUTSIDE_OWNED_ROOT')
+    for q in [*reversed(p.parents), p]:
+        need(not q.is_symlink(), 'SYMLINK_REFERENCE_REFUSED')
+    s = p.lstat()
+    need(stat.S_ISDIR(s.st_mode) if kind == 'directory' else stat.S_ISREG(s.st_mode) and s.st_nlink == 1, 'REGULAR_REFERENCE_REQUIRED')
+    need(not s.st_mode & 0o022, 'REFERENCE_WRITABLE_BY_OTHERS')
+    need(p.resolve() == p, 'NONCANONICAL_REFERENCE_REFUSED')
+    if private:
+        need(not (s.st_mode & 0o077), 'PRIVATE_REFERENCE_PERMISSIONS_REQUIRED')
+    return p
+
+
+def bytes_file(filename, limit=2 * 1024 * 1024, private=False):
+    p = canonical(filename, private=private)
+    before = p.lstat()
+    need(before.st_size <= limit, 'REFERENCE_SIZE_LIMIT')
+    fd = os.open(p, os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        opened = os.fstat(fd)
+        need((opened.st_dev, opened.st_ino) == (before.st_dev, before.st_ino), 'REFERENCE_CHANGED')
+        with os.fdopen(fd, 'rb', closefd=False) as f:
+            data = f.read(limit + 1)
+        after = p.lstat()
+        need(len(data) == before.st_size and len(data) <= limit and
+             (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns) ==
+             (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns), 'REFERENCE_CHANGED')
+        return data
+    finally:
+        os.close(fd)
+
+
+def json_file(filename, private=False):
+    try:
+        return json.loads(bytes_file(filename, private=private))
+    except (json.JSONDecodeError, UnicodeError):
+        raise Refused('REFERENCE_JSON_INVALID') from None
+
+
+def reference(ref, limit=2 * 1024 * 1024):
+    need(isinstance(ref, dict) and HASH.fullmatch(ref.get('sha256', '')), 'HASH_BOUND_REFERENCE_REQUIRED')
+    data = bytes_file(ref.get('path'), limit)
+    need(digest(data) == ref['sha256'], 'REFERENCE_SHA256_CHANGED')
+    try:
+        return json.loads(data)
+    except (json.JSONDecodeError, UnicodeError):
+        raise Refused('REFERENCE_JSON_INVALID') from None
+
+
+def fresh_time(value, maximum):
+    try:
+        instant = dt.datetime.fromisoformat(value.replace('Z', '+00:00'))
+        need(instant.tzinfo is not None, 'EVIDENCE_UTC_REQUIRED')
+        age = (dt.datetime.now(dt.timezone.utc) - instant).total_seconds()
+    except (TypeError, ValueError, AttributeError):
+        raise Refused('EVIDENCE_TIME_INVALID') from None
+    need(-30 <= age <= maximum, 'EVIDENCE_STALE_OR_FUTURE')
+
+
+def new_json(filename, value):
+    data = encoded(value)
+    fd = os.open(filename, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(fd, 'wb') as f:
+        f.write(data)
+        f.flush()
+        os.fsync(f.fileno())
+
+
+def replace_json(filename, value):
+    p = canonical(filename, private=True)
+    temporary = p.with_name(p.name + '.new')
+    new_json(temporary, value)
+    os.replace(temporary, p)
+    fd = os.open(p.parent, os.O_RDONLY)
+    try:
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+
+
+def file_identity(filename):
+    s = canonical(filename, private=True).stat()
+    # A private configuration's content/hash never enters public plans or receipts.
+    return {'device': s.st_dev, 'inode': s.st_ino, 'bytes': s.st_size, 'mtimeNs': s.st_mtime_ns,
+            'uid': s.st_uid, 'gid': s.st_gid, 'mode': stat.S_IMODE(s.st_mode)}
+
+
+def member_allowed(name):
+    relative(name)
+    need(not re.search(r'(?:^|[/_.-])(?:secret|private|password|credential|token|backup|fixture|synthetic|test|media|node_modules)(?:s?)(?:$|[/_.-])', name, re.I), 'NON_RUNTIME_ARCHIVE_MEMBER')
+    if name in ('release-manifest.json', 'package.json', 'package-lock.json'):
+        return
+    need(bool(re.fullmatch(r'web/[A-Za-z0-9_./-]+\.(?:html|js|mjs|css|json|svg|woff2?)', name)) or
+         bool(re.fullmatch(r'backend/[A-Za-z0-9_./-]+\.(?:js|mjs|cjs|json)', name)) or
+         bool(re.fullmatch(r'migrations/[0-9]{4}_[A-Za-z0-9_-]+\.sql', name)), 'NON_RUNTIME_ARCHIVE_MEMBER')
+
+
+def verified_archive(archive_ref, manifest_ref, build_id, source_commit):
+    """Read and validate before any destination/daemon action; no tarfile.extract(all)."""
+    manifest_bytes = bytes_file(manifest_ref.get('path'), 16 * 1024 * 1024)
+    need(digest(manifest_bytes) == manifest_ref.get('sha256'), 'RELEASE_MANIFEST_SHA256_MISMATCH')
+    manifest = json.loads(manifest_bytes)
+    need(manifest.get('format') == 'naijue-release-v1' and manifest.get('buildId') == build_id and
+         manifest.get('sourceCommit') == source_commit and manifest.get('publicOrigin') == ORIGIN and manifest.get('apiPrefix') == '/api', 'RELEASE_IDENTITY_MISMATCH')
+    records = manifest.get('members')
+    need(isinstance(records, list) and 1 <= len(records) < 10000, 'FINITE_ARCHIVE_MEMBER_MANIFEST_REQUIRED')
+    expected = {}
+    for row in records:
+        member_allowed(row.get('path'))
+        need(row['path'] != 'release-manifest.json' and row['path'] not in expected and
+             HASH.fullmatch(row.get('sha256', '')) and isinstance(row.get('bytes'), int) and 0 <= row['bytes'] <= 64 * 1024 * 1024, 'INVALID_ARCHIVE_MEMBER_RECORD')
+        expected[row['path']] = row
+    expected['release-manifest.json'] = {'path': 'release-manifest.json', 'bytes': len(manifest_bytes), 'sha256': digest(manifest_bytes)}
+    need({'package.json', 'package-lock.json', 'web/index.html', 'backend/production-main.js'} <= set(expected), 'RUNTIME_ENTRY_MEMBERS_REQUIRED')
+    archive = canonical(archive_ref.get('path'))
+    data = bytes_file(archive, 128 * 1024 * 1024)
+    need(len(data) == archive_ref.get('bytes') and digest(data) == archive_ref.get('sha256'), 'ARCHIVE_SHA256_OR_SIZE_MISMATCH')
+    entries, directories, total, count = {}, set(), 0, 0
+    with tarfile.open(archive, 'r:gz') as tar:
+        for item in tar:
+            count += 1
+            need(count <= 20000, 'ARCHIVE_ENTRY_COUNT_LIMIT')
+            name = item.name
+            if name in ('.', './') and item.isdir():
+                continue
+            if name.startswith('./'):
+                name = name[2:]
+            if item.isdir():
+                name = name.rstrip('/')
+                relative(name)
+                need(name not in directories, 'DUPLICATE_ARCHIVE_DIRECTORY')
+                directories.add(name)
+                continue
+            member_allowed(name)
+            need(item.isfile() and not item.issparse() and not item.linkname and name in expected and name not in entries,
+                 'ARCHIVE_LINK_EXTRA_OR_DUPLICATE_MEMBER')
+            need(item.size == expected[name]['bytes'], 'ARCHIVE_MEMBER_SIZE_MISMATCH')
+            total += item.size
+            need(total <= 256 * 1024 * 1024, 'ARCHIVE_EXPANSION_LIMIT')
+            f = tar.extractfile(item)
+            need(f is not None, 'ARCHIVE_FILE_UNREADABLE')
+            content = f.read(item.size + 1)
+            need(len(content) == item.size and digest(content) == expected[name]['sha256'], 'ARCHIVE_MEMBER_HASH_MISMATCH')
+            entries[name] = content
+    need(set(entries) == set(expected), 'ARCHIVE_MEMBER_SET_MISMATCH')
+    parents = {str(parent) for name in entries for parent in PurePosixPath(name).parents if str(parent) != '.'}
+    need(directories <= parents, 'EXTRA_ARCHIVE_DIRECTORY')
+    need(entries['release-manifest.json'] == manifest_bytes, 'EMBEDDED_RELEASE_MANIFEST_MISMATCH')
+    return manifest, entries
+
+
+def nginx_configuration(app_name):
+    need(re.fullmatch(r'naijue-rewrite-[a-z0-9-]{1,55}-app', app_name), 'EXACT_CANDIDATE_APP_NAME_REQUIRED')
+    return ('''worker_processes 1;
+pid /tmp/nginx.pid;
+error_log /dev/stderr warn;
+events { worker_connections 256; }
+http {
+  server_tokens off;
+  access_log off;
+  client_body_temp_path /tmp/client_body;
+  proxy_temp_path /tmp/proxy;
+  client_max_body_size 64k;
+  server {
+    listen 8080;
+    server_name ''' + HOST + ''';
+    if ($http_host != "''' + HOST + '''") { return 421; }
+    add_header Cache-Control "no-store" always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header X-Frame-Options DENY always;
+    location / {
+      proxy_pass http://''' + app_name + ''':3000;
+      proxy_http_version 1.1;
+      proxy_set_header Connection "";
+      proxy_set_header Host ''' + HOST + ''';
+      proxy_set_header Forwarded "";
+      proxy_set_header X-Forwarded-For "";
+      proxy_set_header X-Real-IP "";
+      proxy_set_header X-Forwarded-Host "";
+      proxy_set_header X-Forwarded-Proto "";
+      proxy_set_header X-Forwarded-Port "";
+      proxy_connect_timeout 5s;
+      proxy_read_timeout 30s;
+      proxy_send_timeout 30s;
+      proxy_next_upstream off;
+      proxy_cache off;
+      proxy_redirect off;
+    }
+  }
+}
+''').encode()
+
+
+def read_plan(filename):
+    p = json_file(filename)
+    required = {'format', 'operationId', 'buildId', 'sourceCommit', 'publicOrigin', 'archive', 'manifest', 'packReceipt', 'backupReceipt',
+                'backupMaxAgeSeconds', 'newDatabaseReceipt', 'schemaVersions', 'releaseDirectory', 'images', 'networks', 'names',
+                'limits', 'runtimeConfiguration', 'nginxConfiguration', 'beforeCAS'}
+    need(isinstance(p, dict) and required <= set(p) and p['format'] == 'naijue-candidate-deployment-v1', 'EXPLICIT_DEPLOYMENT_PLAN_REQUIRED')
+    need(re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,70}', p['operationId']) and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}', p['buildId']) and
+         re.fullmatch(r'[a-f0-9]{40}', p['sourceCommit']) and p['publicOrigin'] == ORIGIN, 'EXACT_BUILD_AND_OPERATION_IDENTITY_REQUIRED')
+    need(p['schemaVersions'] == list(range(1, 20)), 'EXACT_SCHEMA19_REQUIRED')
+    need(isinstance(p['backupMaxAgeSeconds'], int) and 1 <= p['backupMaxAgeSeconds'] <= 86400, 'EXPLICIT_BACKUP_MAX_AGE_REQUIRED')
+    release = Path(p['releaseDirectory'])
+    need(release.parent == ROOT / 'releases' and release.name == p['buildId'], 'EXACT_NEW_RELEASE_DIRECTORY_REQUIRED')
+    need(set(p['images']) == {'node', 'web'}, 'EXACT_TWO_RUNTIME_IMAGES_REQUIRED')
+    for key in ('node', 'web'):
+        need(isinstance(p['images'].get(key), dict) and IMAGE.fullmatch(p['images'][key].get('id', '')), 'IMMUTABLE_LOCAL_IMAGE_ID_REQUIRED')
+    need(p['images']['node'].get('nodeVersion') == '24.21.0' and re.fullmatch(r'11\.[0-9]+\.[0-9]+', p['images']['node'].get('npmVersion', '')), 'EXACT_NODE_AND_NPM_VERSION_REQUIRED')
+    need(p['images']['node'].get('platform') == 'linux/amd64' and p['images']['web'].get('platform') == 'linux/amd64', 'LINUX_AMD64_IMAGE_REQUIRED')
+    for key in ('front', 'data', 'install'):
+        row = p['networks'].get(key)
+        need(isinstance(row, dict) and HASH.fullmatch(row.get('id', '')) and isinstance(row.get('name'), str)
+             and re.fullmatch(r'naijue-prod-(?:front|data|ingress)', row['name']), 'EXPLICIT_EXISTING_NETWORK_REQUIRED')
+    need(p['networks']['front']['name'] == 'naijue-prod-front' and p['networks']['data']['name'] == 'naijue-prod-data' and
+         p['networks']['install']['name'] == 'naijue-prod-ingress', 'NO_NEW_OR_HOST_NETWORK_ALLOWED')
+    need(set(p['names']) == {'app', 'stageWeb', 'publicWeb', 'installer'}, 'EXACT_FOUR_CANDIDATE_NAMES_REQUIRED')
+    for key, suffix in [('app', 'app'), ('stageWeb', 'stage-web'), ('publicWeb', 'web'), ('installer', 'installer')]:
+        need(re.fullmatch(r'naijue-rewrite-[a-z0-9-]{1,55}-' + suffix, p['names'].get(key, '')), 'EXACT_OWNED_CONTAINER_NAMES_REQUIRED')
+    need(len(set(p['names'].values())) == 4, 'DISTINCT_CANDIDATE_NAMES_REQUIRED')
+    for key in ('app', 'web', 'install'):
+        row = p['limits'].get(key)
+        need(isinstance(row, dict) and isinstance(row.get('memoryMiB'), int) and 64 <= row['memoryMiB'] <= 2048
+             and isinstance(row.get('cpus'), (int, float)) and 0.1 <= row['cpus'] <= 2, 'EXPLICIT_FINITE_CONTAINER_LIMITS_REQUIRED')
+    need(re.fullmatch(r'[1-9][0-9]{0,5}:[1-9][0-9]{0,5}', p['limits']['app'].get('user', '')) and p['limits']['web'].get('user') == '101:101', 'NONROOT_APPLICATION_AND_NGINX_UID_REQUIRED')
+    need(set(p['beforeCAS'].get('services', {})) == set(OLD_NAMES), 'EXACT_OLD_THREE_SERVICE_CAS_REQUIRED')
+    need(isinstance(p['beforeCAS'].get('files'), list) and p['beforeCAS']['files'], 'EXACT_OLD_CONFIG_CAS_REQUIRED')
+    for row in p['beforeCAS']['files']:
+        canonical(row.get('path'), root=OLD)
+        need(row['path'].endswith(('.json', '.conf')) and '/secrets/' not in row['path'] and HASH.fullmatch(row.get('sha256', '')), 'PUBLIC_OLD_CONFIG_REFERENCE_ONLY')
+    for expected in p['beforeCAS']['services'].values():
+        need(HASH.fullmatch(expected.get('id', '')) and IMAGE.fullmatch(expected.get('imageId', '')) and
+             isinstance(expected.get('startedAt'), str) and isinstance(expected.get('restartCount'), int), 'COMPLETE_OLD_CONTAINER_IDENTITY_REQUIRED')
+    runtime = p['runtimeConfiguration']
+    need(isinstance(runtime, dict) and Path(runtime.get('path', '')).is_relative_to(ROOT) and isinstance(runtime.get('identity'), dict), 'PRIVATE_RUNTIME_FILE_REFERENCE_REQUIRED')
+    return p
+
+
+def file_hash(filename):
+    return digest(bytes_file(filename, 16 * 1024 * 1024))
+
+
+def validate_references(p):
+    manifest, entries = verified_archive(p['archive'], p['manifest'], p['buildId'], p['sourceCommit'])
+    pack = reference(p['packReceipt'])
+    need(pack.get('status') == 'PACKED_AND_EXTRACTED_READBACK_MATCH' and pack.get('archiveExtractions') == 1 and
+         pack.get('buildId') == p['buildId'] and pack.get('sourceCommit') == p['sourceCommit'] and
+         pack.get('archive', {}).get('sha256') == p['archive']['sha256'] and pack.get('manifestSha256') == p['manifest']['sha256'] and
+         pack.get('members') == len(entries), 'EXACT_PACK_ACCEPTANCE_REQUIRED')
+    backup = reference(p['backupReceipt'])
+    need(backup.get('status') == 'PASS_FRESH_CURRENT_APP_DB_WAL_MEDIA_CONFIG_PRESERVED' and backup.get('physicalVerifiedOnce') is True and
+         backup.get('mediaAndConfigurationShapesStable') is True and backup.get('databaseFiles', 0) > 0 and backup.get('walRanges'), 'COMPLETE_CURRENT_BACKUP_REQUIRED')
+    fresh_time(backup.get('finishedAtUtc'), p['backupMaxAgeSeconds'])
+    for name, before in p['beforeCAS']['services'].items():
+        b = backup.get('services', {}).get(name, {})
+        need(b.get('imageId') == before.get('imageId') and b.get('startedAt') == before.get('startedAt'), 'BACKUP_OLD_RUNTIME_CAS_MISMATCH')
+    db = reference(p['newDatabaseReceipt'])
+    need(db.get('status') == 'PASS_NEW_DATABASE_SCHEMA19_ONLY_NOT_IMPORT_NOT_AUTH' and db.get('actual', {}).get('database') == DATABASE and
+         db['actual'].get('versions') == p['schemaVersions'] and db['actual'].get('tables') == 50, 'EXACT_NEW_DATABASE_SCHEMA_RECEIPT_REQUIRED')
+    migrations = {int(PurePosixPath(row['path']).name.split('_', 1)[0]): row['sha256'] for row in manifest['members'] if row.get('role') == 'migration'}
+    need(migrations == {row['version']: row['sha256'] for row in db.get('appliedMigrations', [])} and set(migrations) == set(range(1, 20)), 'RELEASE_SCHEMA_MIGRATION_HASH_MISMATCH')
+    need(file_identity(p['runtimeConfiguration']['path']) == p['runtimeConfiguration']['identity'], 'PRIVATE_RUNTIME_FILE_IDENTITY_CHANGED')
+    runtime = json_file(p['runtimeConfiguration']['path'], private=True)
+    need(runtime.get('build') == {'buildId': p['buildId'], 'sourceCommit': p['sourceCommit']} and runtime.get('publicOrigin') == ORIGIN and
+         runtime.get('documentCommands') == 'DISABLED' and runtime.get('http') == {'host': '0.0.0.0', 'port': 3000, 'acceptedHosts': [HOST]} and
+         runtime.get('assets') == {'root': '/app/web', 'entry': 'index.html'} and runtime.get('profile') == 'source-confirmed-native-v1', 'R1_RUNTIME_CONFIGURATION_MISMATCH')
+    target = runtime.get('postgres', {}).get('target', {})
+    need(target.get('database') == DATABASE and target.get('user') == ROLE and target.get('host') == 'naijue-prod-db-1' and target.get('port') == 5432,
+         'OLD_OR_WRONG_DATABASE_CONFIGURATION_REFUSED')
+    need(bool(target.get('password')) and file_identity(p['runtimeConfiguration']['path'])['uid'] == int(p['limits']['app']['user'].split(':')[0]),
+         'APPLICATION_PRIVATE_RUNTIME_OWNER_REQUIRED')
+    nginx = p['nginxConfiguration']
+    canonical(nginx['path'], root=ROOT)
+    need(file_hash(nginx['path']) == nginx.get('sha256') and bytes_file(nginx['path']) == nginx_configuration(p['names']['app']), 'EXACT_CANDIDATE_PROXY_CONFIGURATION_REQUIRED')
+    need(file_identity(p['runtimeConfiguration']['path']) == p['runtimeConfiguration']['identity'], 'PRIVATE_RUNTIME_FILE_CHANGED_DURING_VALIDATION')
+    return manifest, entries
+
+
+class Docker:
+    def __init__(self):
+        self.commands = []
+
+    def run(self, args, seconds=60):
+        # Never print raw stdout/stderr/argv, especially runtime mount paths or installation diagnostics.
+        r = subprocess.run(['/usr/bin/docker', *args], capture_output=True, timeout=seconds,
+                           env={'PATH': '/usr/bin:/bin', 'HOME': '/root', 'LANG': 'C.UTF-8'})
+        self.commands.append({'program': 'docker', 'verb': args[0], 'exitCode': r.returncode})
+        need(r.returncode == 0, 'DOCKER_' + re.sub('[^A-Z_]', '', args[0].upper()) + '_FAILED')
+        need(len(r.stdout) <= 4 * 1024 * 1024, 'DOCKER_OUTPUT_LIMIT')
+        return r.stdout
+
+    def inspect(self, name):
+        result = json.loads(self.run(['container', 'inspect', name]))
+        need(len(result) == 1, 'EXACT_CONTAINER_REQUIRED')
+        return result[0]
+
+
+def snapshot(info):
+    return {'id': info['Id'], 'imageId': info['Image'], 'startedAt': info['State']['StartedAt'],
+            'restartCount': info['RestartCount'], 'running': info['State']['Running']}
+
+
+def check_old(p, docker, web_running=True, web_restart=False):
+    for row in p['beforeCAS']['files']:
+        need(file_hash(row['path']) == row['sha256'], 'OLD_CONFIGURATION_CHANGED')
+    for name, expected in p['beforeCAS']['services'].items():
+        current = docker.inspect(name)
+        actual = snapshot(current)
+        need(actual['id'] == expected.get('id') and actual['imageId'] == expected.get('imageId') and
+             actual['restartCount'] == expected.get('restartCount') and actual['running'] is (web_running if name == OLD_NAMES[1] else True), 'OLD_CONTAINER_CAS_CHANGED')
+        if not (name == OLD_NAMES[1] and web_restart):
+            need(actual['startedAt'] == expected.get('startedAt'), 'OLD_CONTAINER_START_CAS_CHANGED')
+        if name != OLD_NAMES[1]:
+            need(not current['HostConfig'].get('PortBindings'), 'OLD_APP_OR_DB_PUBLIC_BINDING_REFUSED')
+        else:
+            need(current['HostConfig'].get('PortBindings') == {'8080/tcp': [{'HostIp': '127.0.0.1', 'HostPort': '18080'}]}, 'EXACT_OLD_ENTRY_BINDING_REQUIRED')
+
+
+def check_images_networks(p, docker):
+    for row in p['images'].values():
+        info = json.loads(docker.run(['image', 'inspect', row['id']]))[0]
+        need(info['Id'] == row['id'] and info['Os'] == 'linux' and info['Architecture'] == 'amd64', 'LOCAL_IMAGE_OS_OR_ID_CHANGED')
+    for key, row in p['networks'].items():
+        info = json.loads(docker.run(['network', 'inspect', row['id']]))[0]
+        need(info['Id'] == row['id'] and info['Name'] == row['name'] and info['Driver'] == 'bridge' and
+             info['Internal'] is (key != 'install'), 'EXISTING_NETWORK_ID_OR_ISOLATION_CHANGED')
+
+
+def own_container_fingerprint(info):
+    # Only the tool's controlled, secret-free spec fields. Runtime config content is not included.
+    value = {'id': info['Id'], 'image': info['Image'], 'config': {k: info['Config'].get(k) for k in ['User', 'WorkingDir', 'Entrypoint', 'Cmd', 'Env', 'Labels']},
+             'host': {k: info['HostConfig'].get(k) for k in ['Binds', 'Mounts', 'PortBindings', 'ReadonlyRootfs', 'CapDrop', 'SecurityOpt', 'Memory', 'MemorySwap', 'NanoCpus', 'RestartPolicy', 'Tmpfs']},
+             'networks': {name: {'id': row.get('NetworkID'), 'aliases': row.get('Aliases')} for name, row in info['NetworkSettings']['Networks'].items()}}
+    return digest(encoded(value))
+
+
+def assert_own(info, p, role, public=False):
+    need(info['Config'].get('Labels', {}).get('naijue.rapid-launch.build-id') == p['buildId'] and
+         info['Config']['Labels'].get('naijue.rapid-launch.archive-sha256') == p['archive']['sha256'] and
+         info['Config']['Labels'].get('naijue.rapid-launch.role') == role, 'FOREIGN_CANDIDATE_CONTAINER_REFUSED')
+    image = p['images']['node' if role == 'app' else 'web']['id']
+    need(info['Image'] == image and info['HostConfig']['ReadonlyRootfs'] and
+         not info['HostConfig'].get('Privileged') and not info['HostConfig'].get('CapAdd'), 'CANDIDATE_IMAGE_OR_PRIVILEGE_CHANGED')
+    ports = info['HostConfig'].get('PortBindings') or {}
+    need(ports == ({'8080/tcp': [{'HostIp': '127.0.0.1', 'HostPort': '18080'}]} if public else {}), 'CANDIDATE_PUBLIC_BINDING_CHANGED')
+
+
+def limits_args(p, key):
+    row = p['limits'][key]
+    return ['--memory', str(row['memoryMiB']) + 'm', '--memory-swap', str(row['memoryMiB']) + 'm', '--cpus', str(row['cpus']), '--pids-limit', '128']
+
+
+def labels(p, role):
+    return ['--label', 'naijue.rapid-launch.build-id=' + p['buildId'], '--label', 'naijue.rapid-launch.archive-sha256=' + p['archive']['sha256'],
+            '--label', 'naijue.rapid-launch.role=' + role, '--label', 'naijue.rapid-launch.created-by=' + p['operationId']]
+
+
+def mount(source, target, readonly=True):
+    need(',' not in str(source) and ',' not in target, 'MOUNT_SEPARATOR_REFUSED')
+    return ['--mount', 'type=bind,src=' + str(source) + ',dst=' + target + (',readonly' if readonly else '')]
+
+
+def create_app(p, docker):
+    args = ['create', '--name', p['names']['app'], '--pull=never', '--network', p['networks']['front']['id'], '--network-alias', p['names']['app'], '--read-only', '--cap-drop=ALL',
+            '--security-opt=no-new-privileges', '--restart=no', '--user', p['limits']['app']['user'], '--workdir', '/app',
+            '--tmpfs', '/tmp:rw,noexec,nosuid,size=16m', *limits_args(p, 'app'), *labels(p, 'app'),
+            *mount(Path(p['releaseDirectory']) / 'payload', '/app'), *mount(p['runtimeConfiguration']['path'], '/run/naijue-rewrite/runtime.json'),
+            '--entrypoint', 'node', p['images']['node']['id'], '/app/backend/production-main.js', '/run/naijue-rewrite/runtime.json']
+    cid = docker.run(args).decode().strip()
+    need(HASH.fullmatch(cid), 'CREATED_CANDIDATE_ID_REQUIRED')
+    docker.run(['network', 'connect', p['networks']['data']['id'], cid])
+    return cid
+
+
+def create_web(p, docker, public=False):
+    name = p['names']['publicWeb' if public else 'stageWeb']
+    args = ['create', '--name', name, '--pull=never', '--network', p['networks']['front']['id'], '--read-only', '--cap-drop=ALL',
+            '--security-opt=no-new-privileges', '--restart=no', '--user', p['limits']['web']['user'], '--tmpfs', '/tmp:rw,noexec,nosuid,size=32m',
+            *limits_args(p, 'web'), *labels(p, 'web'), *mount(p['nginxConfiguration']['path'], '/etc/nginx/nginx.conf')]
+    if public:
+        args += ['--publish', '127.0.0.1:18080:8080/tcp']
+    args += ['--entrypoint', 'nginx', p['images']['web']['id'], '-c', '/etc/nginx/nginx.conf', '-g', 'daemon off;']
+    cid = docker.run(args).decode().strip()
+    need(HASH.fullmatch(cid), 'CREATED_CANDIDATE_ID_REQUIRED')
+    return cid
+
+
+def health(p, docker, app_id, via_web=None):
+    # Executed in the app container to avoid starting a probe image or publishing a stage port.
+    script = """const h=require('node:http');const r=h.get({host:process.argv[1],port:Number(process.argv[2]),path:'/healthz',headers:{Host:'1n5635n614.goho.co'}},s=>{let b='';s.on('data',c=>{b+=c;if(b.length>4096)r.destroy()});s.on('end',()=>{try{const v=JSON.parse(b);if(s.statusCode!==200||v.status!=='HOST_READY'||v.databaseChecked!==false||v.sourceCommit!==process.argv[3]||v.buildId!==process.argv[4])process.exit(2);else process.stdout.write('HEALTH_IDENTITY_MATCH')}catch{process.exit(3)}})});r.setTimeout(3000,()=>{r.destroy();process.exit(4)});r.on('error',()=>process.exit(5));"""
+    for _ in range(15):
+        try:
+            result = docker.run(['exec', app_id, 'node', '-e', script, via_web or '127.0.0.1', '8080' if via_web else '3000', p['sourceCommit'], p['buildId']], 10)
+            need(result == b'HEALTH_IDENTITY_MATCH', 'CANDIDATE_HEALTH_RESPONSE_MISMATCH')
+            return {'path': '/healthz', 'status': 200, 'sourceCommit': p['sourceCommit'], 'buildId': p['buildId'], 'databaseChecked': False}
+        except Refused:
+            time.sleep(1)
+    raise Refused('CANDIDATE_INTERNAL_HEALTH_FAILED')
+
+
+def payload_identity(payload, manifest, include_dependencies=False):
+    expected = {row['path']: row for row in manifest['members']}
+    expected['release-manifest.json'] = None
+    rows, actual = [], set()
+    for directory, dirs, files in os.walk(payload, followlinks=False):
+        for name in dirs:
+            need(not (Path(directory) / name).is_symlink(), 'DEPENDENCY_DIRECTORY_SYMLINK_REFUSED')
+        for name in files:
+            f = Path(directory) / name
+            relative_name = str(f.relative_to(payload))
+            if relative_name.startswith('node_modules/') and not include_dependencies:
+                continue
+            data = bytes_file(f, 64 * 1024 * 1024)
+            if not relative_name.startswith('node_modules/'):
+                need(relative_name in expected, 'EXTRA_RELEASE_PAYLOAD_FILE')
+                actual.add(relative_name)
+                if expected[relative_name] is not None:
+                    row = expected[relative_name]
+                    need(len(data) == row['bytes'] and digest(data) == row['sha256'], 'INSTALLED_RELEASE_BYTES_CHANGED')
+            rows.append({'path': relative_name, 'bytes': len(data), 'sha256': digest(data)})
+            need(len(rows) < 20000, 'INSTALLED_MEMBER_LIMIT')
+    need(actual == set(expected), 'INSTALLED_RELEASE_MEMBER_SET_CHANGED')
+    return digest(encoded(sorted(rows, key=lambda row: row['path'])))
+
+
+def install_linux_dependencies(p, docker, release, manifest):
+    payload = release / 'payload'
+    need(not (payload / 'node_modules').exists(), 'DEPENDENCY_DIRECTORY_EXISTS_NO_REPLAY')
+    version_script = "const c=require('node:child_process');const v=c.execFileSync('npm',['--version'],{encoding:'utf8'}).trim();if(process.versions.node!==process.argv[1]||v!==process.argv[2])process.exit(3);process.stdout.write('EXACT_NODE_NPM')"
+    docker.run(['run', '--name', p['names']['installer'], '--pull=never', '--network', p['networks']['install']['id'], '--read-only',
+                '--cap-drop=ALL', '--security-opt=no-new-privileges', '--restart=no', '--user', '0:0', '--workdir', '/app',
+                '--tmpfs', '/tmp:rw,nosuid,size=256m', *limits_args(p, 'install'), *mount(payload, '/app', False),
+                '--entrypoint', 'node', p['images']['node']['id'], '-e', version_script, p['images']['node']['nodeVersion'], p['images']['node']['npmVersion']])
+    # The version container is retained, never --rm/recreated; npm executes once in a distinct bounded container name.
+    install_name = p['names']['installer'] + '-npm'
+    docker.run(['run', '--name', install_name, '--pull=never', '--network', p['networks']['install']['id'], '--read-only',
+                '--cap-drop=ALL', '--security-opt=no-new-privileges', '--restart=no', '--user', '0:0', '--workdir', '/app',
+                '--tmpfs', '/tmp:rw,nosuid,size=256m', *limits_args(p, 'install'), *mount(payload, '/app', False),
+                '--env', 'HOME=/tmp', '--entrypoint', 'npm', p['images']['node']['id'], 'ci', '--omit=dev', '--ignore-scripts', '--bin-links=false',
+                '--no-audit', '--no-fund', '--cache=/tmp/npm-cache'], 900)
+    need((payload / 'node_modules').is_dir(), 'LINUX_RUNTIME_DEPENDENCIES_MISSING')
+    payload_identity(payload, manifest)
+    need(file_hash(payload / 'release-manifest.json') == p['manifest']['sha256'], 'INSTALLED_RELEASE_MANIFEST_CHANGED')
+    return payload_identity(payload, manifest, True)
+
+
+def write_boundary(p):
+    value = reference(p.get('writeBoundary'))
+    need(value.get('format') == 'naijue-rewrite-write-boundary-v1' and value.get('database') == DATABASE and
+         value.get('buildId') == p['buildId'] and value.get('sourceCommit') == p['sourceCommit'] and value.get('writeAdmission') == 'CLOSED' and
+         type(value.get('newBusinessWrites')) is int and value['newBusinessWrites'] == 0 and
+         value.get('firstBusinessWriteAtUtc') is None and value.get('checkedBy'), 'NEW_WRITES_OR_UNKNOWN_REFUSE_OLD_ENTRY')
+    fresh_time(value.get('checkedAtUtc'), 300)
+    return value
+
+
+def acceptance(p):
+    value = reference(p.get('candidateAcceptance'))
+    need(value.get('format') == 'naijue-candidate-acceptance-v1' and value.get('result') == 'PASS' and
+         value.get('buildId') == p['buildId'] and value.get('sourceCommit') == p['sourceCommit'] and
+         value.get('archiveSha256') == p['archive']['sha256'] and value.get('schemaVersions') == p['schemaVersions'] and
+         value.get('dataReady') is True, 'EXACT_REAL_CANDIDATE_ACCEPTANCE_REQUIRED')
+    fresh_time(value.get('checkedAtUtc'), 86400)
+    for owner in ('QF', 'QB'):
+        source = reference(value.get('evidence', {}).get(owner))
+        need((source.get('result') or source.get('status')) == 'PASS' and source.get('candidateCommit') == p['sourceCommit'] and
+             isinstance(source.get('scope'), (str, list)) and source.get('scope'), 'ORIGINAL_QF_QB_ACCEPTANCE_REQUIRED')
+    return value
+
+
+class Journal:
+    def __init__(self, p, phase):
+        self.path = ROOT / 'operations' / (p['operationId'] + '.json')
+        self.data = {'format': 'naijue-deployment-operation-v1', 'operationId': p['operationId'], 'phase': phase, 'buildId': p['buildId'],
+                     'sourceCommit': p['sourceCommit'], 'archiveSha256': p['archive']['sha256'], 'startedAtUtc': now(), 'status': 'STARTED_NO_REPLAY', 'events': []}
+        new_json(self.path, self.data)
+
+    def event(self, label, **values):
+        self.data['events'].append({'atUtc': now(), 'event': label, **values})
+        replace_json(self.path, self.data)
+
+    def finish(self, status, **values):
+        self.data.update(status=status, finishedAtUtc=now(), **values)
+        replace_json(self.path, self.data)
+        return self.data
+
+
+def exact_host(p):
+    need(os.geteuid() == 0 and socket.gethostname() == 'naijue-server' and os.environ.get('ERP_SHARED_TASK_ID') == 'T45', 'EXISTING_T45_SERVER_CARRIER_REQUIRED')
+    need(not os.environ.get('DOCKER_HOST') and not os.environ.get('DOCKER_CONTEXT'), 'LOCAL_DOCKER_ONLY')
+    job = canonical(os.environ.get('ERP_SHARED_JOB_DIR'), 'directory')
+    need(job.name == p['operationId'] and re.fullmatch(r'/root/erp-release-20261006-01-worker/grant-[a-f0-9]{16}/jobs/[A-Za-z0-9_-]+', str(job)), 'EXACT_SERVER_JOB_NAMESPACE_REQUIRED')
+    canonical(ROOT, 'directory')
+    for name in ('releases', 'operations'):
+        target = ROOT / name
+        if not target.exists():
+            target.mkdir(mode=0o700)
+        canonical(target, 'directory')
+    return job
+
+
+def current_stage(p, docker, manifest):
+    stage = reference(p.get('stageReceipt'))
+    need(stage.get('status') == 'CANDIDATE_STAGED_HEALTH_ONLY_NOT_BUSINESS' and stage.get('buildId') == p['buildId'] and
+         stage.get('sourceCommit') == p['sourceCommit'] and stage.get('archiveSha256') == p['archive']['sha256'] and
+         stage.get('manifestSha256') == p['manifest']['sha256'] and stage.get('releaseDirectory') == p['releaseDirectory'], 'EXACT_STAGED_CANDIDATE_REQUIRED')
+    need(payload_identity(Path(p['releaseDirectory']) / 'payload', manifest, True) == stage.get('installedPayloadSha256'), 'STAGED_PAYLOAD_OR_DEPENDENCIES_CHANGED')
+    need(file_hash(Path(p['releaseDirectory']) / 'payload/release-manifest.json') == p['manifest']['sha256'], 'STAGED_RELEASE_MANIFEST_CHANGED')
+    for role in ('app', 'stageWeb'):
+        expected = stage['containers'][role]
+        info = docker.inspect(expected['id'])
+        assert_own(info, p, 'app' if role == 'app' else 'web')
+        need(own_container_fingerprint(info) == expected['specSha256'] and info['State']['Running'], 'STAGED_CONTAINER_CHANGED_OR_STOPPED')
+    return stage
+
+
+def stage(p, docker, journal, manifest, entries):
+    release = Path(p['releaseDirectory'])
+    need(not release.exists() and not release.is_symlink(), 'RELEASE_EXISTS_NO_REPLAY')
+    release.mkdir(mode=0o700)
+    payload = release / 'payload'
+    payload.mkdir(mode=0o755)
+    journal.event('EXTRACT_EXACT_RELEASE_MEMBERS')
+    for name, content in entries.items():
+        target = payload / name
+        target.parent.mkdir(parents=True, exist_ok=True, mode=0o755)
+        fd = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o444)
+        with os.fdopen(fd, 'wb') as f:
+            f.write(content)
+    journal.event('INSTALL_LOCKED_LINUX_RUNTIME_DEPENDENCIES_ONCE')
+    installed = install_linux_dependencies(p, docker, release, manifest)
+    journal.event('CREATE_PRIVATE_CANDIDATE_APP')
+    app = create_app(p, docker)
+    journal.event('APP_CREATED', containerId=app)
+    docker.run(['start', app])
+    app_health = health(p, docker, app)
+    web = create_web(p, docker)
+    journal.event('PRIVATE_WEB_CREATED', containerId=web)
+    docker.run(['start', web])
+    web_health = health(p, docker, app, p['names']['stageWeb'])
+    check_old(p, docker)
+    containers = {}
+    for role, cid in [('app', app), ('stageWeb', web)]:
+        info = docker.inspect(cid)
+        assert_own(info, p, 'app' if role == 'app' else 'web')
+        containers[role] = {'id': cid, 'specSha256': own_container_fingerprint(info), 'imageId': info['Image']}
+    value = {'format': 'naijue-candidate-stage-v1', 'status': 'CANDIDATE_STAGED_HEALTH_ONLY_NOT_BUSINESS', 'buildId': p['buildId'],
+             'sourceCommit': p['sourceCommit'], 'archiveSha256': p['archive']['sha256'], 'manifestSha256': p['manifest']['sha256'],
+             'releaseDirectory': str(release), 'installedPayloadSha256': installed, 'containers': containers,
+             'health': {'app': app_health, 'proxy': web_health}, 'schemaVersions': p['schemaVersions'], 'database': DATABASE,
+             'databaseQueriedByDeploymentTool': False, 'productionEntryChanged': False, 'businessAcceptance': False, 'finishedAtUtc': now()}
+    new_json(release / 'stage-receipt.json', value)
+    return value
+
+
+def restore_old_entry(p, docker, journal, public_id=None):
+    write_boundary(p)
+    need(file_identity(p['runtimeConfiguration']['path']) == p['runtimeConfiguration']['identity'], 'RUNTIME_CHANGED_REFUSE_OLD_ENTRY')
+    check_old(p, docker, web_running=False)
+    if public_id:
+        info = docker.inspect(public_id)
+        assert_own(info, p, 'web', True)
+        if info['State']['Running']:
+            docker.run(['stop', '--time', '15', public_id], 30)
+        need(not docker.inspect(public_id)['State']['Running'], 'CANDIDATE_ENTRY_STOP_UNCONFIRMED')
+    journal.event('RESTORE_EXACT_OLD_WEB_ID_NO_DB_RESTORE')
+    docker.run(['start', p['beforeCAS']['services'][OLD_NAMES[1]]['id']])
+    check_old(p, docker, web_restart=True)
+    for _ in range(20):
+        info = docker.inspect(p['beforeCAS']['services'][OLD_NAMES[1]]['id'])
+        if info['State']['Running'] and info['State'].get('Health', {}).get('Status') == 'healthy':
+            return snapshot(info)
+        time.sleep(1)
+    raise Refused('OLD_ENTRY_HEALTH_UNCONFIRMED')
+
+
+def activate(p, docker, journal, manifest):
+    acceptance(p)
+    write_boundary(p)
+    staged = current_stage(p, docker, manifest)
+    health(p, docker, staged['containers']['app']['id'], p['names']['stageWeb'])
+    public_id, old_stopped = None, False
+    try:
+        # Persist intent before touching the entry. A lost/unknown Docker outcome is never replayed automatically.
+        journal.event('STOP_EXACT_OLD_WEB_INTENT')
+        docker.run(['stop', '--time', '20', p['beforeCAS']['services'][OLD_NAMES[1]]['id']], 40)
+        old_stopped = True
+        check_old(p, docker, web_running=False)
+        write_boundary(p)
+        validate_references(p)
+        public_id = create_web(p, docker, True)
+        journal.event('PUBLIC_WEB_CREATED', containerId=public_id)
+        docker.run(['start', public_id])
+        observed = health(p, docker, staged['containers']['app']['id'], p['names']['publicWeb'])
+        # Independently check the loopback bound port with the approved Host header, without authentication or DB traffic.
+        connection = http.client.HTTPConnection('127.0.0.1', 18080, timeout=5)
+        try:
+            connection.request('GET', '/healthz', headers={'Host': HOST})
+            response = connection.getresponse()
+            body = response.read(4097)
+            value = json.loads(body)
+            need(response.status == 200 and len(body) <= 4096 and value.get('status') == 'HOST_READY' and
+                 value.get('buildId') == p['buildId'] and value.get('sourceCommit') == p['sourceCommit'] and value.get('databaseChecked') is False,
+                 'ACTUAL_LOOPBACK_ENTRY_HEALTH_MISMATCH')
+        finally:
+            connection.close()
+        check_old(p, docker, web_running=False)
+        write_boundary(p)
+        info = docker.inspect(public_id)
+        assert_own(info, p, 'web', True)
+        result = {'format': 'naijue-entry-activation-v1', 'status': 'ENTRY_ACTIVATED_INTERNAL_HEALTH_ONLY_PENDING_PUBLIC_READBACK',
+                  'buildId': p['buildId'], 'sourceCommit': p['sourceCommit'], 'archiveSha256': p['archive']['sha256'],
+                  'publicContainer': {'id': public_id, 'specSha256': own_container_fingerprint(info)}, 'oldWebId': p['beforeCAS']['services'][OLD_NAMES[1]]['id'],
+                  'health': observed, 'stageReceiptSha256': p['stageReceipt']['sha256'], 'candidateAcceptanceSha256': p['candidateAcceptance']['sha256'],
+                  'backupReceiptSha256': p['backupReceipt']['sha256'], 'database': DATABASE, 'oldAppAndDatabaseUnchanged': True,
+                  'databaseRestorePerformed': False, 'publicHttpsReadbackPerformed': False, 'bootPersistenceVerified': False,
+                  'businessAcceptanceCreatedByDeployment': False, 'finishedAtUtc': now()}
+        new_json(Path(p['releaseDirectory']) / 'activation-receipt.json', result)
+        return result
+    except Exception:
+        journal.event('ACTIVATION_FAILED_RECOVERY_DECISION_REQUIRED', oldWebStopReturned=old_stopped, publicWebId=public_id)
+        # Inspect the precise old ID even when stop timed out; recover only a confirmed stopped old web and a closed write boundary.
+        try:
+            state = docker.inspect(p['beforeCAS']['services'][OLD_NAMES[1]]['id'])
+            if not state['State']['Running']:
+                restored = restore_old_entry(p, docker, journal, public_id)
+                journal.event('OLD_ENTRY_RESTORED', oldWeb=restored)
+            else:
+                check_old(p, docker, web_restart=True)
+        except Exception:
+            journal.event('RECOVERY_UNCONFIRMED_REQUIRES_C_OPERATOR_NO_REPLAY')
+        raise
+
+
+def execute(p, phase):
+    job = exact_host(p)
+    with open('/run/naijue-erp-hdd-test.lock', 'a+') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        journal = Journal(p, phase)
+        docker = Docker()
+        try:
+            manifest, entries = validate_references(p)
+            check_old(p, docker)
+            check_images_networks(p, docker)
+            value = stage(p, docker, journal, manifest, entries) if phase == 'stage' else activate(p, docker, journal, manifest)
+            journal.finish(value['status'], dockerCommands=docker.commands)
+            new_json(job / 'results' / ('candidate-' + phase + '.json'), value)
+            return value
+        except Exception as error:
+            if phase == 'stage':
+                # Stop only exact new containers carrying this operation's immutable creation label. Keep all files/containers.
+                for role, key in [('web', 'stageWeb'), ('app', 'app')]:
+                    try:
+                        info = docker.inspect(p['names'][key])
+                        assert_own(info, p, role)
+                        need(info['Config'].get('Labels', {}).get('naijue.rapid-launch.created-by') == p['operationId'], 'NOT_THIS_OPERATION_CONTAINER')
+                        if info['State']['Running']:
+                            docker.run(['stop', '--time', '15', info['Id']], 30)
+                        journal.event('FAILED_STAGE_CONTAINER_STOPPED', containerId=info['Id'])
+                    except Exception:
+                        journal.event('FAILED_STAGE_CONTAINER_STOP_NOT_CONFIRMED', role=role)
+            code = str(error) if isinstance(error, Refused) else type(error).__name__
+            failure = journal.finish('FAILED_PRESERVED_NO_REPLAY', failureCode=code, dockerCommands=docker.commands,
+                                     requiresOperator=True, oldAppOrDbRollbackAttempted=False)
+            new_json(job / 'results' / ('candidate-' + phase + '.json'), failure)
+            raise Refused(code) from None
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--phase', choices=['stage', 'activate'], required=True)
+    parser.add_argument('--plan', required=True)
+    parser.add_argument('--execute', action='store_true')
+    args = parser.parse_args()
+    p = read_plan(args.plan)
+    if not args.execute:
+        validate_references(p)
+        print(json.dumps({'status': 'PLAN_ONLY_NOT_EXECUTED', 'phase': args.phase, 'buildId': p['buildId'], 'sourceCommit': p['sourceCommit'],
+                          'schemaVersions': p['schemaVersions'], 'releaseDirectory': p['releaseDirectory'], 'database': DATABASE,
+                          'publicBinding': '127.0.0.1:18080', 'requiredWhenActivating': ['stageReceipt', 'candidateAcceptance', 'writeBoundary'],
+                          'databaseRestoreAllowed': False, 'deploymentExecuted': False}))
+    else:
+        result = execute(p, args.phase)
+        print(json.dumps({key: result.get(key) for key in ['status', 'buildId', 'sourceCommit', 'finishedAtUtc']}))
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except Exception as error:
+        print(str(error) if isinstance(error, Refused) else 'CANDIDATE_DEPLOYMENT_FAILED_NO_REPLAY', file=__import__('sys').stderr)
+        raise SystemExit(2)

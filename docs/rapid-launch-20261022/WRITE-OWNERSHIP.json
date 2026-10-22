@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T05:35:41.569876+00:00",
+  "updatedAt": "2026-10-22T07:05:45.532225+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -234,6 +234,26 @@
           "path": "tests/authentication-commit-outcome.test.ts",
           "group": "R1_TRUSTED_LEGACY_CREDENTIAL_COMPATIBILITY_AND_AUTH_COMMIT",
           "fieldGate": "EXISTING_PASSWORD_HASH_TEXT_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "packages/application/src/current-form-validation.ts",
+          "group": "F06_EXACT_CURRENT_BARCODE_READ",
+          "fieldGate": "EXISTING_FIELDS_ONLY"
+        },
+        {
+          "path": "packages/application/src/source-confirmed-current-form-authorization.ts",
+          "group": "F06_EXACT_CURRENT_BARCODE_READ",
+          "fieldGate": "EXISTING_FIELDS_ONLY"
+        },
+        {
+          "path": "tests/current-form-barcode-postgres-protocol.test.ts",
+          "group": "F06_EXACT_CURRENT_BARCODE_READ",
+          "fieldGate": "EXISTING_FIELDS_ONLY"
+        },
+        {
+          "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+          "group": "BOOTSTRAP_AND_EXISTING_APPROVAL_OR_UNRESOLVED_WRITE_GUARD",
+          "fieldGate": "NO_NEW_SCHEMA_AUTHORIZED; actual target execution C only"
         }
       ]
     },
@@ -944,6 +964,51 @@
           "path": "tests/native-barcode-import.test.ts",
           "group": "B06_EXACT_PREVIOUSLY_APPROVED_BARCODE_BRANCH_ONLY",
           "fieldGate": "NO_NEW_SCHEMA_NO_UNVERIFIED_BUSINESS_APPROVAL"
+        },
+        {
+          "path": "adapters/postgres/src/native-party-import.ts",
+          "group": "BOOTSTRAP_AND_EXISTING_APPROVAL_OR_UNRESOLVED_WRITE_GUARD",
+          "fieldGate": "NO_NEW_SCHEMA_AUTHORIZED; actual target execution C only"
+        },
+        {
+          "path": "tests/native-party-bootstrap-postgres-protocol.test.ts",
+          "group": "BOOTSTRAP_AND_EXISTING_APPROVAL_OR_UNRESOLVED_WRITE_GUARD",
+          "fieldGate": "NO_NEW_SCHEMA_AUTHORIZED; actual target execution C only"
+        },
+        {
+          "path": "scripts/import-v3/native-bootstrap.mjs",
+          "group": "BOOTSTRAP_AND_EXISTING_APPROVAL_OR_UNRESOLVED_WRITE_GUARD",
+          "fieldGate": "NO_NEW_SCHEMA_AUTHORIZED; actual target execution C only"
+        },
+        {
+          "path": "scripts/import-v3/native-bootstrap.test.mjs",
+          "group": "BOOTSTRAP_AND_EXISTING_APPROVAL_OR_UNRESOLVED_WRITE_GUARD",
+          "fieldGate": "NO_NEW_SCHEMA_AUTHORIZED; actual target execution C only"
+        },
+        {
+          "path": "packages/application/src/native-product-import.ts",
+          "group": "BOOTSTRAP_AND_EXISTING_APPROVAL_OR_UNRESOLVED_WRITE_GUARD",
+          "fieldGate": "NO_NEW_SCHEMA_AUTHORIZED; actual target execution C only"
+        },
+        {
+          "path": "scripts/import-v2/authorized-native-product-reader.mjs",
+          "group": "BOOTSTRAP_AND_EXISTING_APPROVAL_OR_UNRESOLVED_WRITE_GUARD",
+          "fieldGate": "NO_NEW_SCHEMA_AUTHORIZED; actual target execution C only"
+        },
+        {
+          "path": "scripts/import-v2/authorized-native-product-reader.d.mts",
+          "group": "BOOTSTRAP_AND_EXISTING_APPROVAL_OR_UNRESOLVED_WRITE_GUARD",
+          "fieldGate": "NO_NEW_SCHEMA_AUTHORIZED; actual target execution C only"
+        },
+        {
+          "path": "tests/native-product-size-override.test.ts",
+          "group": "BOOTSTRAP_AND_EXISTING_APPROVAL_OR_UNRESOLVED_WRITE_GUARD",
+          "fieldGate": "NO_NEW_SCHEMA_AUTHORIZED; actual target execution C only"
+        },
+        {
+          "path": "scripts/import-v2/authorized-native-product-reader.test.mjs",
+          "group": "BOOTSTRAP_AND_EXISTING_APPROVAL_OR_UNRESOLVED_WRITE_GUARD",
+          "fieldGate": "NO_NEW_SCHEMA_AUTHORIZED; actual target execution C only"
         }
       ]
     },
@@ -1312,6 +1377,11 @@
         {
           "path": "apps/web/src/payment-settings/controller.test.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/stores/controller.ts",
+          "group": "BOOTSTRAP_AND_EXISTING_APPROVAL_OR_UNRESOLVED_WRITE_GUARD",
+          "fieldGate": "NO_NEW_SCHEMA_AUTHORIZED; actual target execution C only"
         }
       ]
     },
@@ -1911,6 +1981,38 @@
         "scripts/import-v3/production-source-host.test.mjs"
       ],
       "reason": "Exact requested shared seam/real provider allocation; no additional fields authorized."
+    },
+    {
+      "at": "2026-10-22T07:05:45.532225+00:00",
+      "owner": "D1",
+      "addedPaths": [
+        "adapters/postgres/src/inventory-cutoff-import-store.ts"
+      ],
+      "reason": "C exact path allocation: original-source same-client bootstrap, already approved exact size override, or session unresolved write guard. No new schema or repeated old scope."
+    },
+    {
+      "at": "2026-10-22T07:05:45.532225+00:00",
+      "owner": "D3",
+      "addedPaths": [
+        "adapters/postgres/src/native-party-import.ts",
+        "tests/native-party-bootstrap-postgres-protocol.test.ts",
+        "scripts/import-v3/native-bootstrap.mjs",
+        "scripts/import-v3/native-bootstrap.test.mjs",
+        "packages/application/src/native-product-import.ts",
+        "scripts/import-v2/authorized-native-product-reader.mjs",
+        "scripts/import-v2/authorized-native-product-reader.d.mts",
+        "tests/native-product-size-override.test.ts",
+        "scripts/import-v2/authorized-native-product-reader.test.mjs"
+      ],
+      "reason": "C exact path allocation: original-source same-client bootstrap, already approved exact size override, or session unresolved write guard. No new schema or repeated old scope."
+    },
+    {
+      "at": "2026-10-22T07:05:45.532225+00:00",
+      "owner": "F3",
+      "addedPaths": [
+        "apps/web/src/settings/stores/controller.ts"
+      ],
+      "reason": "C exact path allocation: original-source same-client bootstrap, already approved exact size override, or session unresolved write guard. No new schema or repeated old scope."
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",

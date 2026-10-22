@@ -53,6 +53,15 @@ test('money-only correction creates no stock effects and requires revised settle
   const legacy = current(); (legacy.settlements[0] as { amount: string }).amount = '18.50';
   assert.equal(plan(legacy).after.settlements[0]!.amount, '18.50');
 });
+test('unknown original business date remains null for money-only revision and refuses quantity posting without inventing a date', () => {
+  const c = { ...current(), businessDate: null };
+  const p = plan(c, { ...command(), lines: [{ lineId: id(6), dealPrice: '11.00', lineAmount: '22.00' }],
+    totals: { grossAmount: '22.00', orderDiscount: '0.00', netDue: '22.00' }, settlements: [{ settlementId: id(8), amount: '22.00' }] });
+  assert.equal(p.after.businessDate, null); assert.deepEqual(p.effects, []);
+  assert.throws(() => plan(c), { code: 'HISTORY_REVISION_BUSINESS_DATE_UNKNOWN' });
+  const draft = plan({ ...c, sourceStatus: 'DRAFT', baselineEffect: 'EXCLUDED_NOT_EFFECTIVE' });
+  assert.equal(draft.after.businessDate, null); assert.deepEqual(draft.effects, []);
+});
 test('explicit nullable discount stays null while an omitted field retains its effective value', () => {
   const c = current(); (c.lines[0] as { allocatedDiscount: string | null }).allocatedDiscount = '1.00';
   assert.equal(plan(c).after.lines[0]!.allocatedDiscount, '1.00');

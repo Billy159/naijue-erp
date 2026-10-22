@@ -18,7 +18,7 @@ const count = (n: number): Step => ({ sql: /^SELECT count\(\*\)::text AS total F
 const parameters = { search: '100%_\\原值', page: 1, pageSize: 20 as const }, id = sid('category', 1001), childId = sid('category', 1002), deepId = sid('category', 1003);
 const categories = [{ id, parent_id: null, name: '原根分类', display_order: -4, version: 7 }, { id: childId, parent_id: id, name: '同名', display_order: 0, version: 1 }, { id: deepId, parent_id: childId, name: '同名', display_order: 19, version: 1 }];
 const nativeEntry = { id: sid('color', 1004), code: 'UNCHANGED', name: '同名', enabled: false, version: 3 };
-const categoryStep = (rows: Record<string, unknown>[] = categories): Step => ({ sql: /^SELECT id, parent_id, name, display_order, version FROM naijue_erp.product_category ORDER BY display_order, id LIMIT \$1$/, rows, inspect(values) { assert.deepEqual(values, [CATALOGUE_SETTINGS_MAX_CATEGORIES + 1]); } });
+const categoryStep = (rows: Record<string, unknown>[] = categories): Step => ({ sql: /^SELECT id, parent_id, name, display_order, version FROM naijue_erp.product_category WHERE deleted_at IS NULL ORDER BY display_order, id LIMIT \$1$/, rows, inspect(values) { assert.deepEqual(values, [CATALOGUE_SETTINGS_MAX_CATEGORIES + 1]); } });
 function read(kind: 'categories' | 'colors' | 'fits', productCounts: 'NONE' | 'ALL' = 'NONE', signal = new AbortController().signal): CatalogueSettingsScopedRead {
   return kind === 'categories' ? { actor, intent: { kind, operation: 'tree', parameters: {} }, grant: { kind, operation: 'tree', productCounts }, signal }
     : { actor, intent: { kind, operation: 'list', parameters }, grant: { kind, operation: 'list' }, signal };
@@ -48,7 +48,7 @@ test('category NONE capability reads complete bounded native tree but never quer
   assert.ok(result.items.every(item => item.code === null && item.productCount === null)); assert.ok(!c.calls.some(call => /FROM naijue_erp.product\b/.test(call.sql))); c.done();
 });
 test('category ALL capability alone authorizes complete direct product counts, zero only from absent exact group in same snapshot', async () => {
-  const c = new Client([begin(), count(3), categoryStep(), { sql: /^SELECT category_id, count\(\*\)::text AS product_count FROM naijue_erp.product GROUP BY category_id$/, rows: [{ category_id: childId, product_count: '9' }] }, commit()]);
+  const c = new Client([begin(), count(3), categoryStep(), { sql: /^SELECT category_id, count\(\*\)::text AS product_count FROM naijue_erp.product WHERE deleted_at IS NULL GROUP BY category_id$/, rows: [{ category_id: childId, product_count: '9' }] }, commit()]);
   const result = await reader(c).readCategories(read('categories', 'ALL')); assert.deepEqual(result.items.map(item => item.productCount), [0, 9, 0]); assert.equal(c.calls.length, 5); c.done();
 });
 test('explicit empty and out-of-range color pages preserve requested page/total and do not clamp or fetch all', async () => {

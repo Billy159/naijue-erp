@@ -86,7 +86,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
         c.name AS category_name, se.name AS season_name, su.name AS supplier_name
         FROM naijue_erp.product p JOIN naijue_erp.product_category c ON c.id = p.category_id
         LEFT JOIN naijue_erp.season se ON se.id = p.season_id LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id
-        WHERE p.id = $1::uuid`, [parameters.productId])).rows);
+        WHERE p.id = $1::uuid AND p.deleted_at IS NULL`, [parameters.productId])).rows);
       if (row === null) return null;
       requireDomain(id("product", row.id) === parameters.productId, "INVALID_DATABASE_VALUE", "Mismatched product target");
       return { productId: parameters.productId, code: text(row.product_code), name: text(row.name), categoryLabel: text(row.category_name),
@@ -98,7 +98,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
     const parameters = parseProductQuery(read.parameters); this.validate(read, parameters);
     return this.snapshot(read.signal, async query => {
       const row = oneOrMissing((await query(`SELECT p.id, p.size_group_id, g.name AS size_group_name
-        FROM naijue_erp.product p JOIN naijue_erp.size_group g ON g.id = p.size_group_id WHERE p.id = $1::uuid`, [parameters.productId])).rows);
+        FROM naijue_erp.product p JOIN naijue_erp.size_group g ON g.id = p.size_group_id WHERE p.id = $1::uuid AND p.deleted_at IS NULL`, [parameters.productId])).rows);
       if (row === null) return null;
       requireDomain(id("product", row.id) === parameters.productId, "INVALID_DATABASE_VALUE", "Mismatched product target");
       const groupId = id("sizeGroup", row.size_group_id);
@@ -138,7 +138,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
   async readImages(read: ProductScopedRead<ProductQuery>): Promise<ProductImageMetadataSet | null> {
     const parameters = parseProductQuery(read.parameters); this.validate(read, parameters);
     return this.snapshot(read.signal, async query => {
-      const product = oneOrMissing((await query("SELECT p.id, p.name FROM naijue_erp.product p WHERE p.id = $1::uuid", [parameters.productId])).rows);
+      const product = oneOrMissing((await query("SELECT p.id, p.name FROM naijue_erp.product p WHERE p.id = $1::uuid AND p.deleted_at IS NULL", [parameters.productId])).rows);
       if (product === null) return null;
       requireDomain(id("product", product.id) === parameters.productId, "INVALID_DATABASE_VALUE", "Mismatched product target");
       const rows = (await query(`SELECT ${IMAGE_COLUMNS} FROM naijue_erp.product_image i WHERE i.product_id = $1::uuid
@@ -153,7 +153,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
     const parameters = parseProductImageQuery(read.parameters); this.validate(read, parameters);
     return this.snapshot(read.signal, async query => {
       const row = oneOrMissing((await query(`SELECT ${IMAGE_COLUMNS} FROM naijue_erp.product_image i
-        JOIN naijue_erp.product p ON p.id = i.product_id WHERE p.id = $1::uuid AND i.id = $2::uuid`, [parameters.productId, parameters.imageId])).rows);
+        JOIN naijue_erp.product p ON p.id = i.product_id WHERE p.id = $1::uuid AND i.id = $2::uuid AND p.deleted_at IS NULL`, [parameters.productId, parameters.imageId])).rows);
       if (row === null) return null;
       const result = metadata(row, parameters.productId);
       requireDomain(result.id === parameters.imageId, "INVALID_DATABASE_VALUE", "Mismatched image target"); return result;

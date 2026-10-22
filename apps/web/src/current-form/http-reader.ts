@@ -1,7 +1,7 @@
-import type { CurrentFormPage, CurrentFormProduct, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormSku,
+import type { CurrentFormBarcodeQuery, CurrentFormBarcodeResult, CurrentFormPage, CurrentFormProduct, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormSku,
   CurrentFormSkuBatchQuery, CurrentSalesReferenceItem, CurrentSalesReferenceQuery, CurrentTransferWarehouse, CurrentTransferWarehouseQuery } from '../../../../packages/application/src/current-form-ports.ts';
 import { parseCurrentSalesReferenceQuery, parseCurrentTransferWarehouseQuery, parseCurrentFormProductQuery,
-  parseCurrentFormProductSkuQuery, parseCurrentFormSkuBatchQuery } from '../../../../packages/application/src/current-form-validation.ts';
+  parseCurrentFormProductSkuQuery, parseCurrentFormSkuBatchQuery, parseCurrentFormBarcodeQuery } from '../../../../packages/application/src/current-form-validation.ts';
 import { entityId } from '../../../../packages/domain/src/values.ts';
 import type { EntityKind, EntityId } from '../../../../packages/domain/src/values.ts';
 import { createHttpJsonQuery } from '../transport/http-query.ts';
@@ -72,6 +72,21 @@ function sku(value: unknown): CurrentFormSku {
 export function createCurrentFormHttpReader(options: HttpQueryOptions) {
   const http = createHttpJsonQuery(options);
   return Object.freeze({
+    readBarcode(parameters: CurrentFormBarcodeQuery, signal: AbortSignal): Promise<CurrentFormBarcodeResult> {
+      const parsed = parseCurrentFormBarcodeQuery(parameters);
+      return http.post('/current-form/barcode/query', parsed, signal, value => {
+        const row = object(value, ['state', 'barcode', 'binding', 'sku']);
+        if (row.barcode !== parsed.barcode) invalid();
+        if (row.state === 'FOUND') {
+          const binding = object(row.binding, ['id', 'kind']);
+          if (binding.kind !== 'MAIN' && binding.kind !== 'CONFIRMED_OLD') invalid();
+          return Object.freeze({ state: 'FOUND', barcode: parsed.barcode,
+            binding: Object.freeze({ id: id('barcode', binding.id), kind: binding.kind }), sku: sku(row.sku) });
+        }
+        if ((row.state !== 'NOT_FOUND' && row.state !== 'UNAVAILABLE') || row.binding !== null || row.sku !== null) invalid();
+        return Object.freeze({ state: row.state, barcode: parsed.barcode, binding: null, sku: null });
+      });
+    },
     readSalesReferences(parameters: CurrentSalesReferenceQuery, signal: AbortSignal) {
       const parsed = parseCurrentSalesReferenceQuery(parameters);
       return http.post('/current-form/sales-references/query', parsed, signal, value => page(value, parsed, row => salesReference(row, parsed), parsed.kind === 'paymentAccount'));

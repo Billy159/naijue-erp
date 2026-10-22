@@ -49,7 +49,7 @@ export class PostgresCatalogueSettingsReadReader implements CatalogueSettingsRea
     const { intent } = this.validate(read, kind); if (intent.operation !== 'list') throw new Error('Expected catalogue list'); const parameters = intent.parameters;
     return this.snapshot(read.signal, async query => {
       const table = kind === 'colors' ? 'color' : 'fit'; // Fixed internal identifiers only.
-      const predicate = "strpos(lower(name || ' ' || code), lower($1::text)) > 0";
+      const predicate = "deleted_at IS NULL AND strpos(lower(name || ' ' || code), lower($1::text)) > 0";
       const n = total((await query(`SELECT count(*)::text AS total FROM naijue_erp.${table} WHERE ${predicate}`, [parameters.search])).rows);
       const rows = (await query(`SELECT id, code, name, enabled, version FROM naijue_erp.${table} WHERE ${predicate} ORDER BY code COLLATE "C", id LIMIT $2 OFFSET $3`,
         [parameters.search, parameters.pageSize, (parameters.page - 1) * parameters.pageSize])).rows;
@@ -63,9 +63,9 @@ export class PostgresCatalogueSettingsReadReader implements CatalogueSettingsRea
   async readCategories(read: CatalogueSettingsScopedRead): Promise<CatalogueSettingsTree> {
     const { intent, grant } = this.validate(read, 'categories'); if (intent.kind !== 'categories' || grant.kind !== 'categories') throw new Error('Expected category tree');
     return this.snapshot(read.signal, async query => {
-      const n = total((await query('SELECT count(*)::text AS total FROM naijue_erp.product_category')).rows);
+      const n = total((await query('SELECT count(*)::text AS total FROM naijue_erp.product_category WHERE deleted_at IS NULL')).rows);
       requireDomain(n <= CATALOGUE_SETTINGS_MAX_CATEGORIES, 'CATALOGUE_SETTINGS_READ_TOO_LARGE', 'Category tree exceeds technical response bound');
-      const rows = (await query('SELECT id, parent_id, name, display_order, version FROM naijue_erp.product_category ORDER BY display_order, id LIMIT $1', [CATALOGUE_SETTINGS_MAX_CATEGORIES + 1])).rows;
+      const rows = (await query('SELECT id, parent_id, name, display_order, version FROM naijue_erp.product_category WHERE deleted_at IS NULL ORDER BY display_order, id LIMIT $1', [CATALOGUE_SETTINGS_MAX_CATEGORIES + 1])).rows;
       requireDomain(rows.length <= CATALOGUE_SETTINGS_MAX_CATEGORIES, 'CATALOGUE_SETTINGS_READ_TOO_LARGE', 'Category tree exceeds technical response bound');
       const items: CatalogueSettingsCategory[] = rows.map(row => ({ id: nativeId(row.id), parentId: row.parent_id === null ? null : nativeId(row.parent_id),
         name: stringValue(row.name), displayOrder: integerValue(row.display_order), version: integerValue(row.version), code: null, productCount: null, childCount: 0 }));
@@ -74,7 +74,7 @@ export class PostgresCatalogueSettingsReadReader implements CatalogueSettingsRea
       let tree = validateCatalogueSettingsTreeGrant({ total: n, items: items.map(item => ({ ...item, childCount: childCounts.get(item.id) ?? 0 })) }, { ...grant, productCounts: 'NONE' });
       if (grant.productCounts === 'ALL') {
         // Only this independently approved COMPLETE product-count capability accesses product.
-        const rows = (await query('SELECT category_id, count(*)::text AS product_count FROM naijue_erp.product GROUP BY category_id')).rows;
+        const rows = (await query('SELECT category_id, count(*)::text AS product_count FROM naijue_erp.product WHERE deleted_at IS NULL GROUP BY category_id')).rows;
         requireDomain(rows.length <= tree.total, 'INVALID_DATABASE_VALUE', 'Product counts exceed category directory');
         const known = new Set(tree.items.map(item => item.id)), counts = new Map<string, number>();
         for (const row of rows) {

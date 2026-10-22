@@ -32,6 +32,32 @@ export interface PaymentSettingsProps {
   readonly scope: ReadScope; readonly reader?: PaymentSettingsReader;
   readonly directory?: SettingsDirectoryReader; readonly canPrepare: boolean;
   readonly initialTab?: PaymentSettingsKind;
+  /** Keep one workspace for the authenticated session; never create it in a route render. */
+  readonly workspace?: import('./controller.ts').PaymentSettingsWorkspace;
   readonly onAccessFailure: (kind: 'unauthenticated' | 'forbidden') => void;
+}
+export type PaymentCommand = import('../../../../packages/application/src/payment-maintenance-ports.ts').PaymentMaintenanceCommand;
+export interface PaymentCommandResult {
+  readonly operationId: string; readonly kind: 'PAYMENT_METHOD' | 'PAYMENT_ACCOUNT';
+  readonly targetId: string; readonly version: number;
+}
+export interface PaymentCommandReceipt {
+  readonly requestKey: string; readonly action: PaymentCommand['action']; readonly status: 'COMMITTED';
+  readonly completedAt: string; readonly result: PaymentCommandResult;
+}
+export interface PaymentCommandClient {
+  execute(kind: PaymentSettingsKind, command: PaymentCommand, signal: AbortSignal): Promise<PaymentCommandResult>;
+  receipt(kind: PaymentSettingsKind, originalCommand: PaymentCommand, signal: AbortSignal): Promise<PaymentCommandReceipt>;
+}
+export type PaymentErrorKind = 'invalid-request' | 'unauthenticated' | 'forbidden' | 'not-found' | 'conflict' | 'network' | 'timeout' | 'aborted' | 'malformed-response' | 'server';
+export class PaymentClientError extends Error {
+  readonly kind: PaymentErrorKind; readonly code: string;
+  readonly outcome: 'not-sent' | 'rejected' | 'uncertain' | 'read'; readonly status: number | null;
+  constructor(kind: PaymentErrorKind, code: string,
+    outcome: 'not-sent' | 'rejected' | 'uncertain' | 'read', status: number | null = null) {
+    super(({ 'invalid-request': '请求未通过校验。', unauthenticated: '登录已失效。', forbidden: '无权访问当前资料。', 'not-found': '未找到当前资料或回执。', conflict: '资料已改变或有关联限制。', network: '连接中断。', timeout: '请求超时。', aborted: '请求已中止。', 'malformed-response': '服务器返回无效。', server: '服务器暂未完成请求。' } as const)[kind]);
+    this.name = kind === 'aborted' ? 'AbortError' : 'PaymentClientError';
+    this.kind = kind; this.code = code; this.outcome = outcome; this.status = status;
+  }
 }
 export const initialPaymentSettingsQuery: PaymentSettingsQuery = Object.freeze({ search: '', status: 'normal', paymentMethodId: null, page: 1, pageSize: 20 });

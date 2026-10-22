@@ -6,8 +6,10 @@ import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
 import { execFile } from 'node:child_process';
+import childProcess from 'node:child_process';
+import { syncBuiltinESMExports } from 'node:module';
 import { promisify } from 'node:util';
-import {watch,existsSync,renameSync,writeFileSync,symlinkSync} from 'node:fs';
+import {watch,readdirSync,renameSync,writeFileSync,symlinkSync} from 'node:fs';
 import { IMPORT_V2_TABLES } from '../../packages/application/src/import-v2-contract.ts';
 const hash=x=>createHash('sha256').update(x).digest('hex');
 const run=promisify(execFile);
@@ -256,17 +258,29 @@ test('replacement or symlink of newly derived evidence is rejected before select
   for(const attack of ['replacement','symlink']){
     const options=await headerReaderFixture(t),sentinel=join(options.sourceRoot,'untouched-original-sentinel');await writeFile(sentinel,'ORIGINAL MUST REMAIN');
     let attacked=false,attackError,selectedWritten=false,callbacks=0,opened;
-    const watcher=watch(options.spoolParent,{recursive:true},(_event,filename)=>{
-      const relative=String(filename??'');if(relative.endsWith('selected-headers.jsonl'))selectedWritten=true;
-      if(attacked||!relative.endsWith('/evidence.jsonl')||!relative.includes('/history-cell-evidence-'))return;
-      const path=join(options.spoolParent,relative);if(!existsSync(path))return;attacked=true;
-      try{renameSync(path,path+'.displaced');if(attack==='symlink')symlinkSync(sentinel,path);else writeFileSync(path,'FORGED EVIDENCE\n',{mode:0o600});}catch(error){attackError=error;}
-    });t.after(()=>watcher.close());t.after(async()=>{if(opened)await opened.close();});
+    const watcher=watch(options.spoolParent,{recursive:true},(_event,filename)=>{if(String(filename??'').endsWith('selected-headers.jsonl'))selectedWritten=true;});
+    // macOS coalesces filesystem events: a small real extractor may finish and
+    // the reader may release evidence before its creation notification arrives.
+    // Intercept only the REAL subprocess close boundary, before the reader's close
+    // handler resumes. Executable, args, OOXML work, stdout and report stay real.
+    const originalSpawn=childProcess.spawn;
+    childProcess.spawn=function(...args){
+      const child=Reflect.apply(originalSpawn,this,args);
+      if(args[0]==='/usr/bin/python3'&&args[1]?.[0]?.endsWith('/extract-history-cell-evidence.py'))child.prependOnceListener('close',()=>{
+        try{
+          const root=join(options.spoolParent,readdirSync(options.spoolParent).find(p=>p.startsWith('v3-header-reader-')));
+          const nested=readdirSync(root).find(p=>p.startsWith('history-cell-evidence-')),path=join(root,nested,'evidence.jsonl');
+          renameSync(path,path+'.displaced');attacked=true;if(attack==='symlink')symlinkSync(sentinel,path);else writeFileSync(path,'FORGED EVIDENCE\n',{mode:0o600});
+        }catch(error){attackError=error;}
+      });
+      return child;
+    };syncBuiltinESMExports();
+    t.after(()=>watcher.close());t.after(async()=>{if(opened)await opened.close();});
     try{
       await assert.rejects(async()=>{opened=await openAuthorizedV3HeaderReader({...options,resolveNativeBinding:async q=>{callbacks++;return bindingsFor(q);}});});
       assert.equal(attackError,undefined);assert.equal(attacked,true,'actual new evidence pathname was attacked; no silent untested negative');assert.equal(selectedWritten,false);assert.equal(callbacks,0);
       assert.deepEqual(await readdir(options.spoolParent),[]);assert.equal(await readFile(sentinel,'utf8'),'ORIGINAL MUST REMAIN');
-    }finally{watcher.close();}
+    }finally{childProcess.spawn=originalSpawn;syncBuiltinESMExports();watcher.close();}
   }
 });
 test('gzip selected storage preserves raw bytes/hash, source order, whole32 approvals and real header/reference authorizers',async t=>{

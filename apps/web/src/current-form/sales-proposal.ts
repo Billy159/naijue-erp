@@ -5,8 +5,10 @@ import type { ReadScope } from '../loading/read-scope.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import type { createCurrentFormHttpReader } from './http-reader.ts';
 import { currentBusinessDate } from './business-date.ts';
+import { DocumentScanController } from '../components/document-scan-controller.ts';
 import { salesBusinessMode, salesBusinessType, type SalesBusinessMode } from './sales-business-mode.ts';
-export type SalesProposalReader = Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readSalesReferences' | 'readProducts' | 'readProductSkus'>;
+export type SalesProposalReader = Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readSalesReferences' | 'readProducts' | 'readProductSkus'>
+  & Partial<Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readBarcode'>>;
 export type SalesProposalPicker = CurrentSalesReferenceQuery['kind'] | 'product' | 'sku';
 export interface SalesProposalLine {
   readonly key: string;
@@ -70,7 +72,7 @@ export function salesProposalMoney(draft: SalesProposal): { readonly grossMinor:
  * minimum-price authority, approval eligibility, inventory effects or commands. */
 export class SalesProposalSession {
   readonly #scope: ReadScope; readonly #reader: SalesProposalReader; readonly #onAccessFailure: ((error: HttpQueryError) => void) | undefined; readonly #listeners = new Set<() => void>();
-  #request: AbortController | null = null; #sequence = 0; #nextSettlement = 0; #nextLine = 0; #settlementTarget: string | null = null;
+  #request: AbortController | null = null; #sequence = 0; #nextSettlement = 0; #nextLine = 0; #settlementTarget: string | null = null; #revision = 0;
   #state: SalesProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, totals: null, picker: null });
   constructor(scope: ReadScope, reader: SalesProposalReader, onAccessFailure?: (error: HttpQueryError) => void) { this.#scope = scope; this.#reader = reader; this.#onAccessFailure = onAccessFailure; scope.signal.addEventListener('abort', this.dispose, { once: true }); if (!scope.active) this.dispose(); }
   readonly getSnapshot = (): SalesProposalSnapshot => this.#state;
@@ -83,6 +85,7 @@ export class SalesProposalSession {
   #cancelRead(): void { this.#sequence++; this.#request?.abort(); this.#request = null; }
   #edit(draft: SalesProposal): boolean {
     if (this.#state.disposed) return false;
+    this.#revision++;
     const businessType = salesBusinessType(salesBusinessMode(draft.businessType), draft.lines.map(row => row.quantity));
     this.#publish({ draft: { ...draft, businessType }, dirty: true, errors: [], notice: null, totals: null }); return true;
   }
@@ -116,6 +119,33 @@ export class SalesProposalSession {
   }
   removeSettlement(key: string): boolean { return this.#edit({ ...this.#state.draft, settlements: this.#state.draft.settlements.filter(row => row.key !== key) }); }
   clearSalesperson(): boolean { return this.#edit({ ...this.#state.draft, salesperson: null }); }
+  get canScan(): boolean { return !this.#state.disposed && !!this.#reader.readBarcode && !!this.#state.draft.hall && !!this.#state.draft.warehouse; }
+  createScanner(direction: 'IN' | 'OUT'): DocumentScanController {
+    return new DocumentScanController({ scope: this.#scope, ...(this.#onAccessFailure ? { onAccessFailure: this.#onAccessFailure } : {}),
+      target: () => {
+        const { hall, warehouse, businessType } = this.#state.draft;
+        return this.canScan && hall && warehouse && !(direction === 'IN' && businessType === 'SALE')
+          ? { key: `${this.#revision}:${direction}`, context: { kind: 'SALES', hallId: entityId('hall', hall.id), warehouseId: entityId('warehouse', warehouse.id) } } : null;
+      },
+      resolve: (query, signal) => this.#reader.readBarcode!(query, signal),
+      apply: result => {
+        const draft = this.#state.draft, matches = draft.lines.filter(row => row.sku.id === result.sku.id && row.quantity.startsWith('-') === (direction === 'IN'));
+        if (matches.length > 1) return { ok: false, message: '同规格有多条明细，请在原行明确修改数量；未选择或合并价格行。' };
+        const existing = matches[0];
+        if (!existing && draft.lines.length >= 200) return { ok: false, message: '本草稿最多 200 行，未新增明细。' };
+        try {
+          if (existing && !/^-?[1-9]\d{0,18}$/.test(existing.quantity)) throw Error();
+          const next = existing ? (quantity(existing.quantity) + (direction === 'IN' ? -1n : 1n)).toString() : direction === 'IN' ? '-1' : '1'; quantity(next);
+          // Exact lookup supplies identity/names only. No retail/transaction price
+          // is inferred; the new row waits for an explicit price and native prepare.
+          const product: CurrentFormProduct = { id: result.sku.productId, code: result.sku.productCode, name: result.sku.productName, retailPrice: null, minimumPriceAvailability: 'UNAVAILABLE' };
+          const ok = this.#edit({ ...draft, lines: existing ? draft.lines.map(row => row === existing ? { ...row, quantity: next } : row)
+            : [...draft.lines, { key: `local-line-${++this.#nextLine}`, sku: result.sku, product, quantity: next, dealPrice: '', pricingRule: 'UNIT_PRICE', discount: '', isGift: false, zeroConfirmed: false }] });
+          return { ok, message: ok ? `已录入 ${result.sku.skuCode}，数量 ${next}。${existing ? '' : '请填写成交价。'}` : '当前草稿已关闭，未录入。' };
+        } catch { return { ok: false, message: '原行数量尚未有效或已达上限，请先修正原行；未覆盖输入。' }; }
+      },
+    });
+  }
   async openPicker(kind: Exclude<SalesProposalPicker, 'sku' | 'paymentAccount'>): Promise<void> {
     if (this.#state.disposed) return;
     if (kind !== 'hall' && !this.#state.draft.hall) { this.#publish({ notice: '请先选择营业厅。' }); return; }
@@ -222,7 +252,7 @@ export class SalesProposalSession {
   }
   reset(discardConfirmed = false): boolean {
     if (this.#state.disposed || this.#state.dirty && !discardConfirmed) return false;
-    this.#cancelRead(); this.#settlementTarget = null; this.#publish({ draft: empty(), dirty: false, picker: null, errors: [], notice: null, totals: null }); return true;
+    this.#cancelRead(); this.#settlementTarget = null; this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, errors: [], notice: null, totals: null }); return true;
   }
   cancel(discardConfirmed = false): boolean { if (!this.reset(discardConfirmed)) return false; this.dispose(); return true; }
   readonly dispose = (): void => { if (this.#state.disposed) return; this.#cancelRead(); this.#settlementTarget = null; this.#scope.signal.removeEventListener('abort', this.dispose); this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, errors: [], notice: null, totals: null }); this.#listeners.clear(); };

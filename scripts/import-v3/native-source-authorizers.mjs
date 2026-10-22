@@ -100,6 +100,24 @@ export async function openNativeBindingRegistry({ directory, trustedManifestSha2
   return {
     verify, resolveNativeBinding,
     async *partyChunks() { await verify(); for (const chunk of partyChunks()) { active(); yield chunk; } },
+    async bootstrapPartyClosure(staffSourceKey) {
+      await verify(); must(typeof staffSourceKey === 'string' && staffSourceKey.length > 0, 'NATIVE_SOURCE_BOOTSTRAP_STAFF_REQUIRED');
+      const selected = new Map(), root = parties.get(key('STAFF', staffSourceKey)); must(root, 'NATIVE_SOURCE_REFERENCE_MISSING');
+      const targets = { HALL: { '默认客户来源编号': 'CUSTOMER', '默认销货仓来源编号': 'WAREHOUSE' },
+        WAREHOUSE: { '所属厅来源编号': 'HALL' }, STAFF: { '所属厅来源编号': 'HALL' }, CUSTOMER: {}, SUPPLIER: {} };
+      const visit = input => {
+        const entity = input.source.entityType, k = key(entity, input.source.sourceKey); if (selected.has(k)) return;
+        must(selected.size < 100 && lookup(entity, input.source.sourceKey).nativeId === input.nativeSnapshot.id, 'NATIVE_SOURCE_BOOTSTRAP_CLOSURE_BOUND');
+        selected.set(k, input);
+        for (const [field, bound] of Object.entries(input.bindings)) {
+          const target = targets[entity]?.[field]; must(target && bound && typeof bound.sourceKey === 'string', 'NATIVE_SOURCE_BOOTSTRAP_RELATION');
+          const dependency = parties.get(key(target, bound.sourceKey)); must(dependency && dependency.nativeSnapshot.id === bound.nativeId, 'NATIVE_SOURCE_BOOTSTRAP_RELATION'); visit(dependency);
+        }
+      };
+      visit(root); const chunk = prepareNativePartyImportChunk([...selected.values()]); await verify();
+      return { chunk, staff: structuredClone({ sourceKey: root.source.sourceKey, nativeId: root.nativeSnapshot.id, source: root.source,
+        role: root.nativeSnapshot.role, hallId: root.nativeSnapshot.hall_id, employmentStatus: root.nativeSnapshot.employment_status }) };
+    },
     async resolveNativeReferenceBinding(q) {
       await verify(); must(components.has('party-reference-candidates.json'), 'NATIVE_SOURCE_REVIEW_SCOPE_FORBIDDEN'); checked(q); const p = parties.get(key(q.entity, q.sourceKey));
       must(p && ['HALL', 'CUSTOMER', 'STAFF'].includes(q.entity) && requestHash(p.source.rawFields) === requestHash(q.rawFields), 'NATIVE_SOURCE_PARTY_CHANGED');

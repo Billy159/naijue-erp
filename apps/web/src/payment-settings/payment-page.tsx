@@ -1,6 +1,6 @@
 import { Button, Empty, Input, Modal, Table, Tag } from '@arco-design/web-react';
 import { IconSearch } from '@arco-design/web-react/icon';
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { LatestQuery } from '../loading/latest-query.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import { StandardTabs } from '../components/standard-tabs.tsx';
@@ -20,6 +20,7 @@ import './payment-settings.css';
 type Queries = { readonly list: LatestQuery<PaymentSettingsQuery, PageData>; readonly detail: LatestQuery<{ readonly id: string }, PaymentSettingsRecord | null> };
 const emptyRead = Object.freeze({ phase: 'idle' as const, request: null, success: null, error: null });
 const noSubscribe = () => () => {};
+const noEditors = Object.freeze({ methods: null, accounts: null });
 type PaymentTabViewProps = PaymentSettingsProps & { readonly kind: PaymentSettingsKind; readonly onTab: (kind: PaymentSettingsKind) => void;
   readonly filterDraft: PaymentSettingsQuery; readonly onFilterDraft: (query: PaymentSettingsQuery) => void;
   readonly lastQuery: PaymentSettingsQuery; readonly onExecuted: (query: PaymentSettingsQuery) => void;
@@ -57,31 +58,40 @@ function PaymentList(props: Parameters<typeof PaymentContent>[0] & { readonly qu
   const draft = props.filterDraft, method = props.selectedMethod;
   const setDraft = (change: (current: PaymentSettingsQuery) => PaymentSettingsQuery) => props.onFilterDraft(change(draft));
   const setMethod = props.onSelectedMethod;
-  const [editor, setEditor] = useState<PaymentSettingsController | null>(null), [editingId, setEditingId] = useState<string | null>(null);
+  const [localEditor, setEditor] = useState<PaymentSettingsController | null>(null), [editingId, setEditingId] = useState<string | null>(null);
+  const workspace = props.workspace?.matches(scope) ? props.workspace : null;
+  const editors = useSyncExternalStore(workspace?.subscribe ?? noSubscribe, workspace?.getSnapshot ?? (() => noEditors), workspace?.getSnapshot ?? (() => noEditors));
+  const editor = workspace ? editors[props.kind] : localEditor;
+  const openEditor = (record: PaymentSettingsRecord | null) => { if (props.workspace && !workspace) return; if (workspace) workspace.open(props.kind, record); else setEditor(new PaymentSettingsController(scope, props.kind, record)); };
+  const write = useSyncExternalStore(editor?.subscribe ?? noSubscribe, editor?.getSnapshot ?? (() => null), editor?.getSnapshot ?? (() => null))?.write;
+  const refreshed = useRef<string | null>(null);
   const focus = useDialogFocusReturn(scope, editor !== null || editingId !== null);
-  useEffect(() => () => editor?.dispose(), [editor]);
+  useEffect(() => () => localEditor?.dispose(), [localEditor]);
+  useEffect(() => { if (queries && write?.phase === 'committed' && write.result && refreshed.current !== write.result.operationId) { refreshed.current = write.result.operationId; void queries.list.run(props.lastQuery); } }, [queries, write, props.lastQuery]);
   useEffect(() => {
     const error = list.error ?? detail.error;
+    if (error instanceof HttpQueryError && error.kind === 'forbidden' && workspace?.hasUnresolvedWrite()) return;
     if (scope.active && error instanceof HttpQueryError && (error.kind === 'unauthenticated' || error.kind === 'forbidden')) props.onAccessFailure(error.kind);
-  }, [list.error, detail.error, scope, props.onAccessFailure]);
+  }, [list.error, detail.error, scope, props.onAccessFailure, workspace]);
   useEffect(() => {
     if (!editingId || !props.canPrepare || detail.phase !== 'success' || detail.success?.parameters.id !== editingId) return;
     const record = detail.success.data;
-    if (record?.id === editingId && record.kind === props.kind) { setEditor(new PaymentSettingsController(scope, props.kind, record)); setEditingId(null); }
+    if (record?.id === editingId && record.kind === props.kind) { openEditor(record); setEditingId(null); }
   }, [editingId, detail, scope, props.kind, props.canPrepare]);
   const active = scope.active && list.phase !== 'disposed', result = list.success?.data;
   const applied = list.success?.parameters ?? initialPaymentSettingsQuery, busy = list.phase === 'loading';
   const run = (query: PaymentSettingsQuery) => { if (active && queries) { const exact = { ...query, paymentMethodId: props.kind === 'methods' ? null : query.paymentMethodId }; props.onExecuted(exact); void queries.list.run(exact); } };
-  const close = () => { editor?.dispose(); setEditor(null); setEditingId(null); queries?.detail.cancel(); focus.request(); };
+  const close = () => { if (workspace) { if (!workspace.close(props.kind)) return; } else { if (editor && !editor.discard()) return; setEditor(null); } setEditingId(null); queries?.detail.cancel(); focus.request(); };
+  const changeTab = (kind: PaymentSettingsKind) => { if (kind === props.kind) return; if (editor && !editor.requestClose()) return; if (workspace) workspace.close(props.kind); else setEditor(null); props.onTab(kind); };
   if (!active) return null;
   const statusColumn = { title: '状态', width: 100, render: (_: unknown, row: PaymentSettingsRecord) => <Tag className={`iw-status ${row.enabled ? 'normal' : 'off'}`}>{row.enabled ? '正常' : '已停用'}</Tag> };
-  const actionColumn = { title: '操作', width: 76, render: (_: unknown, row: PaymentSettingsRecord) => <div className="bs-row-actions"><Button type="text" size="small" disabled={!props.canPrepare || busy} onClick={event => { if (active && queries) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); setEditingId(row.id); void queries.detail.run({ id: row.id }); } }}>编辑</Button></div> };
+  const actionColumn = { title: '操作', width: 76, render: (_: unknown, row: PaymentSettingsRecord) => <div className="bs-row-actions"><Button type="text" size="small" disabled={!props.canPrepare || busy || editor !== null} onClick={event => { if (active && queries) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); setEditingId(row.id); void queries.detail.run({ id: row.id }); } }}>编辑</Button></div> };
   const columns = props.kind === 'methods' ? [{ title: '名称', dataIndex: 'name' }, statusColumn, actionColumn]
     : [{ title: '账户名称', dataIndex: 'name' }, { title: '所属收款方式', render: (_: unknown, row: PaymentSettingsRecord) => row.kind === 'accounts' ? settingsReferenceName(row.paymentMethod) : '' },
       statusColumn, actionColumn];
   return <section className="store-settings-workbench payment-settings-workbench bs-page iw-workbench iw-arco-controls" aria-label="收款配置">
-    <header className="bs-head iw-head"><h1>收款配置</h1><div className="bs-head-actions"><Button type="text" disabled title="操作记录暂未开放">操作记录</Button><Button type="primary" disabled={!props.canPrepare} onClick={event => { if (active) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); setEditor(new PaymentSettingsController(scope, props.kind, null)); } }}>新增{label}</Button></div></header>
-    <StandardTabs label="收款配置" value={props.kind} className="erp-store-tabs" items={[{ key: 'methods', label: '收款方式' }, { key: 'accounts', label: '资金账户' }]} onChange={props.onTab}>
+    <header className="bs-head iw-head"><h1>收款配置</h1><div className="bs-head-actions"><Button type="text" disabled title="操作记录暂未开放">操作记录</Button><Button type="primary" disabled={!props.canPrepare || editor !== null} onClick={event => { if (active) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); openEditor(null); } }}>新增{label}</Button></div></header>
+    <StandardTabs label="收款配置" value={props.kind} className="erp-store-tabs" items={[{ key: 'methods', label: '收款方式' }, { key: 'accounts', label: '资金账户' }]} onChange={changeTab}>
       <form className="bs-toolbar" role="search" onSubmit={event => { event.preventDefault(); run({ ...draft, page: 1, pageSize: applied.pageSize }); }}>
         <div className="bs-filter-fields"><div className="bs-filter search"><Input className="iw-arco-input iw-search-input" aria-label={props.kind === 'methods' ? '搜索收款方式' : '搜索账户名称'} placeholder={props.kind === 'methods' ? '搜索收款方式' : '搜索账户名称'} maxLength={200} value={draft.search} onChange={search => setDraft(value => ({ ...value, search }))} suffix={<IconSearch />} allowClear /></div>
           {props.kind === 'accounts' && <div className="bs-filter" title={props.reader?.supportsPaymentMethodFilter ? undefined : '当前版本暂不支持按收款方式筛选'}><SettingsReferenceSelect scope={scope} disabled={!props.reader?.supportsPaymentMethodFilter} reader={props.directory} kind="payment-methods" label="全部收款方式" selected={method ? [method] : []} onChange={items => { setMethod(items[0] ?? null); setDraft(value => ({ ...value, paymentMethodId: items[0]?.id ?? null })); }} /></div>}

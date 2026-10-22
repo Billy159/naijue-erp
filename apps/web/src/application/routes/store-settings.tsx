@@ -1,5 +1,5 @@
 import { ReadOnlyStoreSettingsHost } from '../../settings/stores/read-only-host.tsx';
-import { createStoreSettingsHttpReader } from '../../settings/stores/http-reader.ts';
+import { createOrganizationStoreSettingsReader } from '../../settings/stores/maintenance-http-client.ts';
 import type { ApplicationRouteProps, PreparedApplicationRoute, RoutePreparation } from '../contracts.ts';
 
 export function prepareStoreSettingsRoute(input: RoutePreparation, onAccessFailure: (kind: 'unauthenticated' | 'forbidden') => void): PreparedApplicationRoute {
@@ -10,7 +10,7 @@ export function prepareStoreSettingsRoute(input: RoutePreparation, onAccessFailu
     || new Set(configuration.allowedTabs).size !== configuration.allowedTabs.length
     || !configuration.allowedTabs.includes(configuration.initialTab)) throw new TypeError('Explicit read-only store settings configuration is required.');
   if (input.principal.accountId !== input.scope.identity.accountId) throw new TypeError('Store settings identity does not match its scope.');
-  const reader = createStoreSettingsHttpReader(input.http);
+  const reader = createOrganizationStoreSettingsReader(input.http);
   return { View: ({ scope }: ApplicationRouteProps) => <ReadOnlyStoreSettingsHost scope={scope} reader={reader} allowedTabs={configuration.allowedTabs}
     initialTab={configuration.initialTab} allowHallDirectoryRead={configuration.allowHallDirectoryRead} onAccessFailure={onAccessFailure} /> };
 }

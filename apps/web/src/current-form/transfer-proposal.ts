@@ -5,8 +5,10 @@ import type { ReadScope } from '../loading/read-scope.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import type { createCurrentFormHttpReader } from './http-reader.ts';
 import { currentBusinessDate } from './business-date.ts';
+import { DocumentScanController } from '../components/document-scan-controller.ts';
 
-export type TransferProposalReader = Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readTransferWarehouses' | 'readProducts' | 'readProductSkus'>;
+export type TransferProposalReader = Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readTransferWarehouses' | 'readProducts' | 'readProductSkus'>
+  & Partial<Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readBarcode'>>;
 export type TransferProposalPicker = 'FROM' | 'TO' | 'PRODUCT' | 'SKU';
 type Candidate = CurrentTransferWarehouse | CurrentFormProduct | CurrentFormSku;
 export interface TransferProposal {
@@ -31,7 +33,7 @@ function freeze<T>(value: T): T {
 export class TransferProposalSession {
   readonly #scope: ReadScope; readonly #reader: TransferProposalReader; readonly #onAccessFailure: ((error: HttpQueryError) => void) | undefined;
   readonly #listeners = new Set<() => void>();
-  #request: AbortController | null = null; #sequence = 0;
+  #request: AbortController | null = null; #sequence = 0; #revision = 0;
   #state: TransferProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, picker: null });
   constructor(scope: ReadScope, reader: TransferProposalReader, onAccessFailure?: (error: HttpQueryError) => void) {
     this.#scope = scope; this.#reader = reader; this.#onAccessFailure = onAccessFailure;
@@ -52,6 +54,7 @@ export class TransferProposalSession {
   #cancelRead(): void { this.#sequence++; this.#request?.abort(); this.#request = null; }
   #edit(draft: TransferProposal): boolean {
     if (this.#state.disposed) return false;
+    this.#revision++;
     this.#publish({ draft, dirty: true, errors: [], notice: null }); return true;
   }
   setHeader(patch: Pick<Partial<TransferProposal>, 'businessDate' | 'note'>): boolean {
@@ -64,6 +67,26 @@ export class TransferProposalSession {
   removeLine(skuId: string): boolean {
     if (!this.#state.draft.lines.some(row => row.sku.id === skuId)) return false;
     return this.#edit({ ...this.#state.draft, lines: this.#state.draft.lines.filter(row => row.sku.id !== skuId) });
+  }
+  get canScan(): boolean { return !this.#state.disposed && !!this.#reader.readBarcode && !!this.#state.draft.from && !!this.#state.draft.to; }
+  createScanner(): DocumentScanController {
+    return new DocumentScanController({ scope: this.#scope, ...(this.#onAccessFailure ? { onAccessFailure: this.#onAccessFailure } : {}),
+      target: () => {
+        const { from, to } = this.#state.draft;
+        return this.canScan && from && to ? { key: String(this.#revision), context: { kind: 'TRANSFER', fromWarehouseId: from.id, toWarehouseId: to.id } } : null;
+      },
+      resolve: (query, signal) => this.#reader.readBarcode!(query, signal),
+      apply: result => {
+        const draft = this.#state.draft, existing = draft.lines.find(row => row.sku.id === result.sku.id);
+        if (!existing && draft.lines.length >= TRANSFER_PREPARE_MAX_LINES) return { ok: false, message: '本草稿最多 200 个实际规格，未新增明细。' };
+        try {
+          if (existing && !/^[1-9]\d{0,18}$/.test(existing.quantity)) throw Error();
+          const next = existing ? (quantity(existing.quantity) + 1n).toString() : '1'; quantity(next);
+          const ok = this.#edit({ ...draft, lines: existing ? draft.lines.map(row => row === existing ? { ...row, quantity: next } : row) : [...draft.lines, { sku: result.sku, quantity: next }] });
+          return { ok, message: ok ? `已录入 ${result.sku.skuCode}，数量 ${next}。` : '当前草稿已关闭，未录入。' };
+        } catch { return { ok: false, message: '原行数量尚未有效或已达上限，请先修正原行；未覆盖输入。' }; }
+      },
+    });
   }
   async openPicker(kind: Exclude<TransferProposalPicker, 'SKU'>): Promise<void> { await this.#read(kind, '', 1, null); }
   async search(search: string): Promise<void> {
@@ -132,7 +155,7 @@ export class TransferProposalSession {
   }
   reset(discardConfirmed = false): boolean {
     if (this.#state.disposed || this.#state.dirty && !discardConfirmed) return false;
-    this.#cancelRead(); this.#publish({ draft: empty(), dirty: false, picker: null, errors: [], notice: null }); return true;
+    this.#cancelRead(); this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, errors: [], notice: null }); return true;
   }
   cancel(discardConfirmed = false): boolean { if (!this.reset(discardConfirmed)) return false; this.dispose(); return true; }
   /** Route/session owner must dispose on exit; identity invalidation clears all data immediately. */

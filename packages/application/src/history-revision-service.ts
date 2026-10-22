@@ -72,7 +72,7 @@ export function planHistoryRevision(current: HistoryRevisionCurrent, input: Hist
     && (before.version === 1 ? before.previousRevisionId === null : uuid(before.previousRevisionId)), 'HISTORY_REVISION_BASELINE_UNPROVEN');
   must(['DRAFT', 'APPROVED', 'VOID'].includes(before.sourceStatus)
     && before.baselineEffect === (before.sourceStatus === 'APPROVED' ? 'INCLUDED_APPROVED' : 'EXCLUDED_NOT_EFFECTIVE'), 'HISTORY_REVISION_BASELINE_UNPROVEN');
-  businessDate(before.businessDate);
+  if (before.businessDate !== null) businessDate(before.businessDate);
   if (before.kind === 'sales') { must(uuid(before.warehouseId) && before.fromWarehouseId === null && before.toWarehouseId === null && before.totals !== null); totals(before.totals); }
   else must(before.warehouseId === null && uuid(before.fromWarehouseId) && uuid(before.toWarehouseId)
     && before.fromWarehouseId !== before.toWarehouseId && before.totals === null && before.settlements.length === 0);
@@ -109,6 +109,7 @@ export function planHistoryRevision(current: HistoryRevisionCurrent, input: Hist
     (after.settlements as { settlementId: string; direction: 'RECEIVE' | 'REFUND'; amount: string }[])[index] = { ...old, amount: patch.amount };
   }
   must(anyChanged, 'HISTORY_REVISION_EMPTY');
+  must(effects.length === 0 || before.businessDate !== null, 'HISTORY_REVISION_BUSINESS_DATE_UNKNOWN');
   if (moneyChanged) must(after.kind === 'sales' && after.settlements.reduce((sum, s) => sum + (s.direction === 'RECEIVE' ? 1n : -1n) * cents(s.amount), 0n) === cents(after.totals!.netDue), 'SETTLEMENT_MISMATCH');
   (after as { version: number }).version = before.version + 1;
   (after as { previousRevisionId: string }).previousRevisionId = revisionId;

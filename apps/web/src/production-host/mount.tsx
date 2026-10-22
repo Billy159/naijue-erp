@@ -2,6 +2,8 @@ import { UIButton } from '../components/standard-controls.tsx';
 import { createApplication, createDemoFrameWorkspaceRenderer, createRouteStylesheet } from '../application/index.tsx';
 import type { ApplicationConfiguration, ApplicationPresentation } from '../application/contracts.ts';
 import { createProductFullPageHttpReader } from '../products/product-page-http-reader.ts';
+import { createStaffSettingsHttpReader } from '../staff-settings/http-client.ts';
+import { createPaymentSettingsHttpReader } from '../payment-settings/http-client.ts';
 import { parseProductionHostAssets, parseProductionHostConfiguration, productionAssetUrl } from './configuration.ts';
 
 export interface ProductionHostEnvironment {
@@ -15,6 +17,12 @@ export interface ProductionHostEnvironment {
   };
 }
 const mounted = new WeakSet<Element>();
+// Display options for the existing three roles; never an authorization grant.
+const staffRoles = Object.freeze([
+  Object.freeze({ value: 'ADMIN', label: '管理员', requiresHall: false }),
+  Object.freeze({ value: 'WAREHOUSE', label: '仓库', requiresHall: false }),
+  Object.freeze({ value: 'SALESPERSON', label: '营业员', requiresHall: true }),
+]);
 const renderRouteState: ApplicationPresentation['renderRouteState'] = ({ controller, state }) => <section className="production-route-state" aria-label="页面状态">
   {state.phase === 'home' && <p role="status">请从左侧选择业务页面。</p>}
   {state.phase === 'loading' && <><p role="status">正在加载…</p><UIButton type="button" onClick={() => controller.cancelRoute()}>取消加载</UIButton></>}
@@ -31,9 +39,11 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
   }
   const root = input.document.getElementById('naijue-erp-root');
   if (!root || mounted.has(root)) throw new TypeError('One unowned production application root is required.');
-  const staffView = configuration.routes.staffSettings ? input.settingsViews?.staffSettings : undefined;
-  const paymentView = configuration.routes.paymentSettings ? input.settingsViews?.paymentSettings : undefined;
-  if (configuration.routes.staffSettings && !staffView || configuration.routes.paymentSettings && !paymentView) throw new TypeError('Enabled settings require their explicit trusted view adapters.');
+  const http = { ...configuration.http, fetch: input.fetch };
+  const staffView = configuration.routes.staffSettings ? input.settingsViews?.staffSettings
+    ?? { reader: createStaffSettingsHttpReader(http), roles: staffRoles, canPrepare: false } : undefined;
+  const paymentView = configuration.routes.paymentSettings ? input.settingsViews?.paymentSettings
+    ?? { reader: createPaymentSettingsHttpReader(http), canPrepare: false } : undefined;
   // The current F3 slice has no session-level dirty/uncertain-write owner. Do
   // not expose editable production forms until that lifecycle is integrated.
   if (staffView?.canPrepare || paymentView?.canPrepare) throw new TypeError('Editable settings require a configured maintenance session owner.');
@@ -46,7 +56,7 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
     if (!filename) throw new TypeError('An enabled page requires its emitted stylesheet.');
     return createRouteStylesheet({ document: input.document, origin: configuration.http.origin, href: productionAssetUrl(configuration, filename) });
   };
-  const app = createApplication({ http: { ...configuration.http, fetch: input.fetch }, presentation: { renderRouteState, renderWorkspace: createDemoFrameWorkspaceRenderer() }, routes: {
+  const app = createApplication({ http, presentation: { renderRouteState, renderWorkspace: createDemoFrameWorkspaceRenderer() }, routes: {
     ...(configuration.routes.inventory ? { inventory: { stylesheet: stylesheet('inventory'), actions: {}, ...(configuration.routes.inventoryLedger ? { ledger: true as const } : {}) } } : {}),
     ...(configuration.routes.sales ? { sales: { stylesheet: stylesheet('sales'), detailStylesheet: stylesheet('sales-detail'),
       ...(configuration.routes.salesManualCreate ? { commands: { newRequestKey, manualCreate: true as const } } : {}) } } : {}),

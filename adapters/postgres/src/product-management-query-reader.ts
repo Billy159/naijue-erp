@@ -21,7 +21,7 @@ function count(value: unknown): number {
   const text = stringValue(value); integrity(/^(?:0|[1-9]\d*)$/.test(text) && BigInt(text) <= BigInt(Number.MAX_SAFE_INTEGER), "Invalid exact product count"); return Number(text);
 }
 function scopeValues(grant: ProductManagementReadGrant): unknown[] { return [grant.kind === "all", grant.kind === "products" ? grant.productIds : []]; }
-const SCOPE = `WITH authorized_products AS (SELECT p.* FROM naijue_erp.product p WHERE ($1::boolean OR p.id = ANY($2::uuid[])))`;
+const SCOPE = `WITH authorized_products AS (SELECT p.* FROM naijue_erp.product p WHERE p.deleted_at IS NULL AND ($1::boolean OR p.id = ANY($2::uuid[])))`;
 const MATCHED = `${SCOPE}, matched_products AS (SELECT p.* FROM authorized_products p
   WHERE (cardinality($3::uuid[]) = 0 OR p.id = ANY($3::uuid[]))
   AND (cardinality($4::uuid[]) = 0 OR p.category_id = ANY($4::uuid[]) OR EXISTS (

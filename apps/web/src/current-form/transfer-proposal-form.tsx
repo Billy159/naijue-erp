@@ -1,5 +1,7 @@
 import { TransferStatusTag } from '../transfers/transfer-status-tag.tsx';
 import { StandardOverlay } from '../components/standard-overlay.tsx';
+import { DocumentScan } from '../components/document-scan.tsx';
+import type { DocumentScanController } from '../components/document-scan-controller.ts';
 import { UIButton, UIDate, UIInput, UITextArea } from '../components/standard-controls.tsx';
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { TransferProposalSession, type TransferProposal } from './transfer-proposal.ts';
@@ -37,6 +39,7 @@ function TransferDialog({ title, close, children, confirmation = false }: { read
 export function TransferProposalForm({ session, close, preparation }: { readonly session: TransferProposalSession; readonly close: () => void; readonly preparation?: { readonly save: () => void; readonly preparing: boolean; readonly notice: string | null; readonly cancel: () => void } }) {
   const state = useSyncExternalStore(session.subscribe, session.getSnapshot, session.getSnapshot);
   const [confirm, setConfirm] = useState<'reset' | 'cancel' | null>(null);
+  const [scanner, setScanner] = useState<DocumentScanController | null>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => { heading.current?.focus({ preventScroll: true }); }, []);
   if (state.disposed) return <p role="status">草稿已关闭，当前身份资料已清除。</p>;
@@ -58,7 +61,7 @@ export function TransferProposalForm({ session, close, preparation }: { readonly
       <div className="tc-gold-field"><span>调入仓库 <span className="ui-required">*</span></span><UIButton type="button" className="iw-control transfer-proposal-select" aria-label="选择调入仓库" aria-haspopup="dialog" aria-expanded={picker?.kind === 'TO'} onClick={() => { void session.openPicker('TO'); }}><span>{draft.to?.name ?? '选择调入仓库'}</span>{chevron}</UIButton></div>
       <div className="tc-gold-field tc-gold-meta"><span>单号</span><strong className="transfer-read-value">保存后生成</strong></div>
       <div className="tc-gold-field tc-gold-meta"><span>创建者</span><span className="transfer-read-value" title="保存时由当前认证身份确定，不在草稿伪造创建者">当前认证身份</span></div>
-      <div className="tc-gold-entry-actions"><UIButton type="button" className="iw-button iw-primary" disabled title="原生条码读取尚未接入，不会把普通文本当作条码写入">扫码录入</UIButton></div>
+      <div className="tc-gold-entry-actions"><UIButton type="button" className="iw-button iw-primary" disabled={!session.canScan || preparation?.preparing} title={session.canScan ? undefined : '请先选择调出和调入仓库'} onClick={() => { session.closePicker(); setScanner(session.createScanner()); }}>扫码录入</UIButton></div>
     </div></div>
     <label className="tc-note-row"><span>备注</span><UITextArea aria-label="备注" className="iw-control transfer-note-input" rows={1} maxLength={10000} placeholder="填写单据备注" value={draft.note} onChange={nextValue => session.setHeader({ note: nextValue })} /></label>
     <p role="status" className="transfer-proposal-context">本地未保存草稿 · 不改变库存。{preparation ? '保存将先读取原生新单资料，再发送保存命令。' : '条码及可信新单准备尚未接入。'}</p>
@@ -78,6 +81,7 @@ export function TransferProposalForm({ session, close, preparation }: { readonly
       </section>) : <table className="mx-table transfer-proposal-empty-table"><colgroup><col style={{ width: 280 }} /><col style={{ width: 76 }} /><col style={{ width: 88 }} /><col /><col style={{ width: 52 }} /><col style={{ width: 96 }} /></colgroup><thead><tr>{['款号／商品名称', '颜色', '版型', '尺码 / 数量', '小计', '操作'].map(label => <th scope="col" key={label}>{label}</th>)}</tr></thead><tbody><tr className="mx-draft-row"><td><UIButton type="button" className="iw-control transfer-proposal-find" aria-label="调拨行内找货" onClick={() => { void session.openPicker('PRODUCT'); }}><span>商品款号 / 名称 / 条码</span>{chevron}</UIButton></td><td className="transfer-muted">选择颜色</td><td className="transfer-muted">选择版型</td><td className="transfer-muted">选择商品实际规格后显示尺码</td><td>—</td><td>—</td></tr></tbody></table>}
     </div>
     <footer className="tc-foot tc-gold-footer"><strong>{groups.reduce((sum, group) => sum + group.rows.length, 0)}行</strong><span>{draft.lines.length} 个实际规格</span><strong>数量 {totalOf(draft.lines)}</strong><span className="transfer-muted">数量不是实时库存</span></footer>
+    {scanner && <DocumentScan controller={scanner} title="调拨扫码录入" rows={draft.lines.map(row => ({ key: row.sku.id, ...row }))} close={() => setScanner(null)} update={(key, value) => session.setQuantity(key, value)} remove={key => session.removeLine(key)} />}
     {picker && <TransferDialog title={picker.kind === 'FROM' ? '调出仓库' : picker.kind === 'TO' ? '调入仓库' : picker.kind === 'PRODUCT' ? '选择商品' : `${picker.product?.name} · 实际规格`} close={() => session.closePicker()}>
       <section aria-label="当前候选" className="transfer-proposal-candidates">
         {picker.kind !== 'SKU' && <label className="transfer-proposal-search"><span>搜索</span><UIInput className="iw-search" aria-label="搜索候选" placeholder={picker.kind === 'PRODUCT' ? '搜索商品款号或名称' : '搜索仓库名称'} value={picker.search} onChange={nextValue => { void session.search(nextValue); }} /></label>}

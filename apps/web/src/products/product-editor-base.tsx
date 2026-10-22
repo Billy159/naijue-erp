@@ -1,9 +1,14 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { Cascader } from '@arco-design/web-react';
 import { UIInput, UISelect, UIButton } from '../components/standard-controls.tsx';
 import { LatestQuery } from '../loading/latest-query.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import type { ProductWriteValues, ProductMaintenanceReader, ProductMaintenanceCandidateKind, ProductMaintenanceCandidateQuery, ProductMaintenanceCandidatePage } from './product-editor-contracts.ts';
+import type { ProductEditorCapability } from './product-editor-contracts.ts';
+import { validateCatalogueSettingsTree } from '../../../../packages/application/src/catalogue-settings-read-validation.ts';
+import type { CatalogueSettingsTree } from '../product-settings/colors/contracts.ts';
+import { categoryPath, categoryTreeIndex } from '../product-categories/tree-model.ts';
 
 export interface ProductCandidateSelectProps {
   readonly scope: ReadScope; readonly reader: ProductMaintenanceReader; readonly kind: ProductMaintenanceCandidateKind;
@@ -40,6 +45,31 @@ export interface ProductEditorFieldsProps {
  readonly scope:ReadScope;readonly reader:ProductMaintenanceReader;readonly values:ProductWriteValues;readonly labels:Readonly<Record<string,string>>;
  readonly existing:boolean;readonly disabled:boolean;readonly change:(patch:Partial<ProductWriteValues>)=>void;
  readonly remember:(id:string|null,name:string|null,kind:ProductMaintenanceCandidateKind|'sizes')=>void;readonly onAccessFailure:(error:HttpQueryError)=>void;
+ readonly categoryReader?: ProductEditorCapability['categoryReader'];
+ readonly categoryPath?: readonly {readonly id:string;readonly name:string}[];
+}
+interface CategoryOption {value:string;label:string;children?:CategoryOption[]}
+/** Complete authorized hierarchy only. A page of candidates cannot establish roots or leaves. */
+function ProductCategorySelect(props:ProductEditorFieldsProps){
+ const host=useRef<HTMLDivElement>(null),[owner,setOwner]=useState<LatestQuery<Readonly<Record<string,never>>,CatalogueSettingsTree>|null>(null);
+ useEffect(()=>{if(!props.categoryReader)return;const reader=props.categoryReader;
+  const query=new LatestQuery<Readonly<Record<string,never>>,CatalogueSettingsTree>({scope:props.scope,execute:async read=>{try{return validateCatalogueSettingsTree(await reader.readCategories(read));}catch(error){if(props.scope.active&&!read.signal.aborted&&error instanceof HttpQueryError&&(error.kind==='unauthenticated'||error.kind==='forbidden'))props.onAccessFailure(error);throw error;}}});
+  setOwner(query);return()=>query.dispose();
+ },[props.scope,props.categoryReader]);
+ return owner&&props.scope.active?<CategorySelectContent {...props} query={owner} host={host}/>:<UISelect disabled aria-label="商品分类" placeholder="正在准备分类…"/>;
+}
+function CategorySelectContent(props:ProductEditorFieldsProps&{readonly query:LatestQuery<Readonly<Record<string,never>>,CatalogueSettingsTree>;readonly host:{current:HTMLDivElement|null}}){
+ const snapshot=useSyncExternalStore(props.query.subscribe,props.query.getSnapshot,props.query.getSnapshot);
+ const data=snapshot.phase==='success'?snapshot.success?.data:null,index=data?categoryTreeIndex(data.items):null;
+ const options:CategoryOption[]=[];
+ if(index){const nodes=new Map(data!.items.map(item=>[item.id,{value:item.id,label:item.name}as CategoryOption]));for(const [parentId,items]of index.children){const children=items.map(item=>nodes.get(item.id)!);if(parentId===null)options.push(...children);else nodes.get(parentId)!.children=children;}}
+ const path=index&&index.byId.has(props.values.categoryId)?categoryPath(index,props.values.categoryId):props.categoryPath?.at(-1)?.id===props.values.categoryId?props.categoryPath:[];
+ const label=path.length?path.map(item=>item.name).join(' / '):props.labels[`categories:${props.values.categoryId}`]??'';
+ const run=()=>{if(props.scope.active&&!props.disabled)void props.query.run({});};
+ return <div ref={props.host} className="product-editor-category"><Cascader aria-label="商品分类" options={options} value={path.map(item=>item.id)} changeOnSelect expandTrigger="click" allowClear={false} showSearch disabled={props.disabled} loading={snapshot.phase==='loading'} placeholder={label||'选择商品分类'} renderFormat={()=>label} getPopupContainer={()=>props.host.current??document.body}
+  onVisibleChange={visible=>{if(visible&&props.query.getSnapshot().phase!=='success')run();else if(!visible)props.query.cancel();}}
+  onChange={value=>{const id=value.at(-1);if(typeof id!=='string'||!index||snapshot.phase!=='success')return;const item=index.byId.get(id);if(item){props.remember(item.id,categoryPath(index,id).map(node=>node.name).join(' / '),'categories');props.change({categoryId:item.id});}}}
+  dropdownRender={menu=><>{menu}{snapshot.phase==='error'&&<div role="alert">分类读取失败。<UIButton onClick={run}>重试</UIButton></div>}</>}/></div>;
 }
 export function ProductEditorBase(props:ProductEditorFieldsProps){
  const p=props.values;
@@ -48,7 +78,7 @@ export function ProductEditorBase(props:ProductEditorFieldsProps){
  return <div className="product-editor-base-grid">
   <label className="field"><span>款号 *</span><UIInput aria-label="款号" value={p.productCode} readOnly={props.existing} disabled={props.disabled} onChange={productCode=>props.change({productCode})}/></label>
   <label className="field"><span>商品名称 *</span><UIInput aria-label="商品名称" value={p.name} disabled={props.disabled} onChange={name=>props.change({name})}/></label>
-  <label className="field"><span>商品分类 *</span>{choose('categoryId','categories','商品分类')}</label>
+  <label className="field"><span>商品分类 *</span>{props.categoryReader?<ProductCategorySelect {...props}/>:choose('categoryId','categories','商品分类')}</label>
   <label className="field"><span>年份 *</span><ProductCandidateSelect scope={props.scope} reader={props.reader} kind="years" label="年份" value={p.year===null?null:String(p.year)} currentLabel={p.year===null?null:`${p.year}年`} disabled={props.disabled} allowCreate allowClear onAccessFailure={props.onAccessFailure} onChange={year=>{if(year===null)props.change({year:null});else if(/^-?(?:0|[1-9]\d*)$/.test(year)&&Number.isSafeInteger(Number(year))&&Number(year)>=-2147483648&&Number(year)<=2147483647)props.change({year:Number(year)});}}/></label>
   <label className="field"><span>季节 *</span>{choose('seasonId','seasons','季节')}</label>
   <label className="field"><span>供应商 *</span>{choose('supplierId','suppliers','供应商')}</label>

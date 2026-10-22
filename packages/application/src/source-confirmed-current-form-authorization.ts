@@ -1,7 +1,7 @@
 import type { CurrentFormAuthorization, CurrentFormContext, CurrentFormIntent } from "./current-form-ports.ts";
 import { activeCurrentFormRead, checkedCurrentFormActor, parseCurrentFormProductQuery,
   parseCurrentFormProductSkuQuery, parseCurrentFormSkuBatchQuery, parseCurrentSalesReferenceQuery,
-  parseCurrentTransferWarehouseQuery } from "./current-form-validation.ts";
+  parseCurrentTransferWarehouseQuery, parseCurrentFormBarcodeQuery } from "./current-form-validation.ts";
 import { DomainError } from "../../domain/src/errors.ts";
 import { entityId } from "../../domain/src/values.ts";
 
@@ -23,6 +23,7 @@ function formContext(intent: CurrentFormIntent): CurrentFormContext | null {
     case "products": return parseCurrentFormProductQuery(intent.parameters).context;
     case "product-skus": return parseCurrentFormProductSkuQuery(intent.parameters).context;
     case "sku-batch": return parseCurrentFormSkuBatchQuery(intent.parameters).context;
+    case "barcode": return parseCurrentFormBarcodeQuery(intent.parameters).context;
     default: return denied();
   }
 }

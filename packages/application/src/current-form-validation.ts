@@ -3,7 +3,7 @@ import { entityId } from "../../domain/src/values.ts";
 import type { EntityId, EntityKind } from "../../domain/src/values.ts";
 import type { ActorContext } from "./ports.ts";
 import { CURRENT_FORM_MAX_TARGET_SKUS } from "./current-form-ports.ts";
-import type { CurrentFormContext, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormReadGrant,
+import type { CurrentFormBarcodeContext, CurrentFormBarcodeQuery, CurrentFormContext, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormReadGrant,
   CurrentFormSearch, CurrentFormSkuBatchQuery, CurrentSalesReferenceQuery, CurrentTransferWarehouseQuery } from "./current-form-ports.ts";
 
 function invalid(): never { throw new DomainError("INVALID_CURRENT_FORM_QUERY", "Invalid current form query"); }
@@ -62,6 +62,21 @@ export function parseCurrentFormSkuBatchQuery(value: unknown): CurrentFormSkuBat
   if (!Array.isArray(row.skuIds) || row.skuIds.length < 1 || row.skuIds.length > CURRENT_FORM_MAX_TARGET_SKUS) invalid();
   const skuIds = row.skuIds.map((value: unknown) => id("sku", value)); if (new Set(skuIds).size !== skuIds.length) invalid();
   return Object.freeze({ context: context(row.context), skuIds: Object.freeze(skuIds) });
+}
+export function parseCurrentFormBarcodeQuery(value: unknown): CurrentFormBarcodeQuery {
+  const row = record(value, ["context", "barcode"]);
+  if (typeof row.barcode !== "string" || row.barcode.length < 1 || row.barcode.length > 512 || /[\x00-\x1f\x7f]/.test(row.barcode)) invalid();
+  let target: CurrentFormBarcodeContext;
+  if (row.context && typeof row.context === "object" && "kind" in row.context && row.context.kind === "TRANSFER") {
+    const c = record(row.context, ["kind", "fromWarehouseId", "toWarehouseId"]);
+    const fromWarehouseId = id("warehouse", c.fromWarehouseId), toWarehouseId = id("warehouse", c.toWarehouseId);
+    if (fromWarehouseId === toWarehouseId) invalid();
+    target = Object.freeze({ kind: "TRANSFER", fromWarehouseId, toWarehouseId });
+  } else {
+    const c = record(row.context, ["kind", "hallId", "warehouseId"]); if (c.kind !== "SALES") invalid();
+    target = Object.freeze({ kind: "SALES", hallId: id("hall", c.hallId), warehouseId: id("warehouse", c.warehouseId) });
+  }
+  return Object.freeze({ context: target, barcode: row.barcode });
 }
 export function checkedCurrentFormActor(value: ActorContext): ActorContext {
   try {
