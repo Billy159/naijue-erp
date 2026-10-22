@@ -6,6 +6,7 @@ import { ownProductFullPageConfiguration } from '../products/product-page-config
 import type { ApplicationConfiguration, ApplicationRoute, ApplicationSnapshot, PartySession, SalesSession, TransferSession, PreparedApplicationRoute, RoutePreparation, RouteStylesheet } from './contracts.ts';
 import type { preparePaymentSettingsSession } from './routes/payment-settings.tsx';
 import type { prepareStoreSettingsSession } from './routes/store-settings.tsx';
+import type { prepareStaffSettingsSession } from './routes/staff-settings.tsx';
 import type { CatalogueMaintenanceCapability } from '../product-settings/colors/contracts.ts';
 
 const home = (): ApplicationSnapshot => Object.freeze({ phase: 'home', route: null, scope: null, prepared: null, notice: null });
@@ -35,7 +36,9 @@ export class ApplicationController {
   #transferSession: TransferSession | null = null;
   #paymentSession: ReturnType<typeof preparePaymentSettingsSession> | null = null;
   #storeSession: ReturnType<typeof prepareStoreSettingsSession> | null = null;
+  #staffSession: ReturnType<typeof prepareStaffSettingsSession> | null = null;
   #externalPaymentPending = true;
+  #externalStaffPending = true;
   #disposed = false;
   constructor(configuration: ApplicationConfiguration) {
     if (!configuration?.routes || !configuration.http || typeof configuration.presentation?.renderWorkspace !== 'function' || typeof configuration.presentation.renderRouteState !== 'function') throw new TypeError('Explicit host configuration is required.');
@@ -80,8 +83,10 @@ export class ApplicationController {
       ...(storeCommands ? { commands: Object.freeze({ ...storeCommands }) } : {}) }) : undefined;
     if (routes.staffSettings && (typeof routes.staffSettings.view?.canPrepare !== 'boolean' || !Array.isArray(routes.staffSettings.view.roles))
       || routes.paymentSettings && typeof routes.paymentSettings.view?.canPrepare !== 'boolean') throw new TypeError('Explicit settings view dependencies are required.');
+    const staffCommands = routes.staffSettings?.commands;
+    if (staffCommands && (routes.staffSettings?.view.workspace || typeof staffCommands.newRequestKey !== 'function' || typeof staffCommands.writesEnabled !== 'function')) throw new TypeError('Staff commands require one session owner and explicit key/write gates.');
     const staffSettings = routes.staffSettings ? Object.freeze({ stylesheet: stylesheet(routes.staffSettings.stylesheet), view: Object.freeze({ ...routes.staffSettings.view,
-      roles: Object.freeze(routes.staffSettings.view.roles.map(role => Object.freeze({ ...role }))) }) }) : undefined;
+      roles: Object.freeze(routes.staffSettings.view.roles.map(role => Object.freeze({ ...role }))) }), ...(staffCommands ? { commands: Object.freeze({ ...staffCommands }) } : {}) }) : undefined;
     const paymentCommands = routes.paymentSettings?.commands;
     if (paymentCommands && (routes.paymentSettings?.view.workspace || typeof paymentCommands.newRequestKey !== 'function' || typeof paymentCommands.writesEnabled !== 'function')) throw new TypeError('Payment commands require one session owner and explicit key/write gates.');
     const paymentSettings = routes.paymentSettings ? Object.freeze({ stylesheet: stylesheet(routes.paymentSettings.stylesheet), view: Object.freeze({ ...routes.paymentSettings.view }),
@@ -111,7 +116,9 @@ export class ApplicationController {
       this.#transferSession?.workspace.dispose(); this.#transferSession = null;
       this.#paymentSession?.workspace.dispose(); this.#paymentSession = null;
       this.#storeSession?.workspace.dispose(); this.#storeSession = null;
+      this.#staffSession?.workspace.dispose(); this.#staffSession = null;
       this.#externalPaymentIdentity(change);
+      this.#externalStaffIdentity(change);
       this.#leaves.clear();
       this.#publish(home());
     } });
@@ -122,12 +129,16 @@ export class ApplicationController {
         this.#externalPaymentPending = false;
         this.#configuration.routes.paymentSettings?.view.workspace?.dispose();
       }
+      if (this.#externalStaffPending && ['anonymous', 'error', 'cancelled'].includes(this.authentication.getSnapshot().phase)) {
+        this.#externalStaffPending = false;
+        this.#configuration.routes.staffSettings?.view.workspace?.dispose();
+      }
     });
   }
   /** Maintenance presentation follows only the currently verified server principal. It is not an authorization grant. */
   get routes(): readonly ApplicationRoute[] {
     const role = this.authentication.getSnapshot().principal?.role;
-    return this.#configuredRoutes.filter(route => !['customers', 'suppliers'].includes(route) || role === 'ADMIN' || role === 'WAREHOUSE');
+    return this.#configuredRoutes.filter(route => route === 'staff-settings' ? role === 'ADMIN' : !['customers', 'suppliers'].includes(route) || role === 'ADMIN' || role === 'WAREHOUSE');
   }
   readonly getSnapshot = (): ApplicationSnapshot => this.#state;
   readonly subscribe = (listener: () => void): (() => void) => {
@@ -142,6 +153,7 @@ export class ApplicationController {
         && !sessions.some(session => session && !session.workspace.canLeave())
         && this.#paymentWorkspace()?.canLeave() !== false
         && this.#storeSession?.workspace.canLeave() !== false
+        && this.#staffWorkspace()?.canLeave() !== false
         && this.#transferSession?.canLeave?.() !== false && this.#salesSession?.canLeave?.() !== false;
     } catch { return false; }
   }
@@ -154,7 +166,11 @@ export class ApplicationController {
     // page after first authentication. It still blocks every other destination.
     const enterInjectedPayment = route === 'payment-settings' && this.#state.phase === 'home' && !this.#externalPaymentPending
       && !this.#paymentSession && this.#configuration.routes.paymentSettings?.view.workspace?.scope.active === true;
-    if (route !== this.#state.route && !enterInjectedPayment && !this.canLeave()) {
+    const enterInjectedStaff = route === 'staff-settings' && this.#state.phase === 'home' && !this.#externalStaffPending
+      && !this.#staffSession && this.#configuration.routes.staffSettings?.view.workspace?.scope.active === true;
+    if (route !== this.#state.route && !enterInjectedPayment && !enterInjectedStaff && !this.canLeave()) {
+      const staff = this.#staffWorkspace()?.getSnapshot();
+      if (staff && !staff.canLeave()) staff.requestClose();
       this.#publish({ ...this.#state, notice: 'cannot-leave' }); return false;
     }
     if (route !== this.#state.route) { this.#salesSession?.workspace.suspend(); this.#transferSession?.workspace.suspend(); }
@@ -225,7 +241,18 @@ export class ApplicationController {
       }
       else if (route === 'staff-settings') {
         const module = await this.#leaves.load('staffSettings', scope);
-        prepared = module.prepareStaffSettingsRoute(input, kind => this.#readAccessFailure(scope, kind));
+        if (!this.#current(scope)) return false;
+        if (this.#configuration.routes.staffSettings?.commands) {
+          if (!this.#staffSession?.workspace.scope.active) {
+            const sessionScope = this.#context.createScope(`application-staff-session-${++this.#sequence}`);
+            try { this.#staffSession = module.prepareStaffSettingsSession({ ...input, scope: sessionScope, http: this.#httpForScope(sessionScope) }, kind => {
+              if (kind === 'unauthenticated') this.authentication.expire();
+              else if (this.#state.route === 'staff-settings' && this.#state.scope) this.#readAccessFailure(this.#state.scope, kind);
+            }, () => this.#paymentWorkspace()?.hasUnresolvedWrite() === true || this.#storeSession?.workspace.hasUnresolvedWrite() === true); }
+            catch (error) { sessionScope.dispose(); throw error; }
+          }
+          prepared = this.#staffSession.prepare(input, kind => this.#readAccessFailure(scope, kind));
+        } else prepared = module.prepareStaffSettingsRoute(input, kind => this.#readAccessFailure(scope, kind));
       }
       else if (route === 'payment-settings') {
         const module = await this.#leaves.load('paymentSettings', scope);
@@ -274,7 +301,9 @@ export class ApplicationController {
     this.#transferSession?.workspace.dispose(); this.#transferSession = null; this.#leaves.clear();
     this.#paymentSession?.workspace.dispose(); this.#paymentSession = null;
     this.#storeSession?.workspace.dispose(); this.#storeSession = null;
+    this.#staffSession?.workspace.dispose(); this.#staffSession = null;
     this.#configuration.routes.paymentSettings?.view.workspace?.dispose();
+    this.#configuration.routes.staffSettings?.view.workspace?.dispose();
     const sales = this.#configuration.routes.sales, transfer = this.#configuration.routes.transfers, products = this.#configuration.routes.products;
     const styles = [...Object.values(this.#configuration.routes).map(route => route.stylesheet), ...(sales?.detailStylesheet ? [sales.detailStylesheet] : []), ...(transfer ? [transfer.detailStylesheet] : []), ...(transfer?.product ? [transfer.product.stylesheet] : []), ...(products?.product ? [products.product.stylesheet] : []), ...(products?.fullPage ? [products.fullPage.stylesheet] : [])];
     for (const provider of new Set(styles)) {
@@ -288,10 +317,23 @@ export class ApplicationController {
     else if (kind === 'forbidden' && !this.#unresolvedSettingsWrite(this.#state.route)) this.failRoute(scope);
   }
   #unresolvedSettingsWrite(route: ApplicationRoute | null): boolean {
-    return route === 'payment-settings' ? this.#paymentWorkspace()?.hasUnresolvedWrite() === true
-      : route === 'store-settings' && this.#storeSession?.workspace.hasUnresolvedWrite() === true;
+    return (route === 'payment-settings' || route === 'store-settings' || route === 'staff-settings')
+      && (this.#paymentWorkspace()?.hasUnresolvedWrite() === true || this.#storeSession?.workspace.hasUnresolvedWrite() === true || this.#staffWorkspace()?.hasUnresolvedWrite() === true);
   }
   #paymentWorkspace() { return this.#paymentSession?.workspace ?? this.#configuration.routes.paymentSettings?.view.workspace; }
+  #staffWorkspace() { return this.#staffSession?.workspace ?? this.#configuration.routes.staffSettings?.view.workspace; }
+  #externalStaffIdentity(change: IdentityChange): void {
+    const external = this.#configuration.routes.staffSettings?.view.workspace;
+    if (!external) return;
+    if (this.#externalStaffPending && (change.reason === 'initial' || change.reason === 'verification' || change.reason === 'login')) return;
+    if (this.#externalStaffPending && change.reason === 'identity' && change.principal) {
+      this.#externalStaffPending = false;
+      const identity = external.scope.identity, principal = change.principal;
+      if (principal.role === 'ADMIN' && external.scope.active && identity.accountId === principal.accountId && identity.sessionRevision === change.sessionRevision
+        && identity.permissionRevision === JSON.stringify([principal.authVersion, principal.staffId, principal.role, principal.hallId])) return;
+    }
+    this.#externalStaffPending = false; external.dispose();
+  }
   #externalPaymentIdentity(change: IdentityChange): void {
     const external = this.#configuration.routes.paymentSettings?.view.workspace;
     if (!external) return;

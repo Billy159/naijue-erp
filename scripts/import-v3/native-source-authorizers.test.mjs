@@ -7,7 +7,7 @@ import { createHash } from 'node:crypto';
 import { createNativeIdentityRegistry, reviewedPartyBinding, sourceEvidence } from './prepare-native-bindings.mjs';
 import { IMPORT_V2_TABLES } from '../../packages/application/src/import-v2-contract.ts';
 import { requestHash } from '../../packages/application/src/request-hash.ts';
-import { createNativeSourceStepAuthorizer, NATIVE_SOURCE_STEP_KINDS, openNativeBindingRegistry, openReviewedCatalogueSource, openApprovedBarcodeMainDemotions } from './native-source-authorizers.mjs';
+import { createNativeSourceStepAuthorizer, NATIVE_SOURCE_STEP_KINDS, openNativeBindingRegistry, openReviewedCatalogueSource, openApprovedBarcodeMainDemotions, openReviewedProductSeasonSource } from './native-source-authorizers.mjs';
 const id = n => `00000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
 const hash = b => createHash('sha256').update(b).digest('hex'), pin = 'a'.repeat(64);
 async function registryReview(dir, manifest, binding, files) {
@@ -121,4 +121,77 @@ test('exact21 approval proof layer checks all original locators/aliases and revo
  await assert.rejects(reader.proofFor({...source,rowNo:'99'},sku),/EXACT_SOURCE/);await assert.rejects(reader.proofFor(source,{...sku,canonicalSourceKey:id(999)}),/EXACT_SOURCE/);
  await writeFile(af,'{}');await assert.rejects(reader.proofFor(source,sku),/FILE_CHANGED/);
  const bad={...approval,A:{status:'PENDING'}};await writeFile(af,JSON.stringify(bad));await assert.rejects(openApprovedBarcodeMainDemotions({...opts,trustedHumanApprovalSha256:hash(JSON.stringify(bad))}),/APPROVAL/);
+});
+
+async function seasonFixture(t) {
+  const dir = await mkdtemp(join(await realpath(tmpdir()), 'synthetic-season-proof-'));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const binding = { batchId: id(1), fixedSourceNamespace: 'synthetic:no-real-native-grant', selectionSha256: pin };
+  const names = ['春', '夏', '秋', '冬'], codes = ['SEASON_SPRING', 'SEASON_SUMMER', 'SEASON_AUTUMN', 'SEASON_WINTER'];
+  // Deliberately opposite UUID/display ordering: derived stored proof must sort UUIDs.
+  const atoms = names.map((n, i) => ({ entity: 'SEASON', sourceKey: n, nativeId: id(90 - i), values: { name: n, code: codes[i], display_order: i }, references: {}, originalEvidence: { synthetic: true } }));
+  const dictionary = { version: 'NATIVE_CATALOGUE_OCCURRENCE_CANDIDATE_V1', ...binding, groups: [atoms] };
+  const files = { mappingFile: join(dir, 'mapping.json'), reviewFile: join(dir, 'review.json'), dictionaryFile: join(dir, 'dictionary.json'), dictionaryReviewFile: join(dir, 'dictionary-review.json') };
+  const db = Buffer.from(JSON.stringify(dictionary)), dictionarySha = hash(db);
+  const drb = Buffer.from(JSON.stringify({ version: 'NATIVE_CATALOGUE_TECHNICAL_REVIEW_V1', ...binding, mappingSha256: dictionarySha }));
+  await writeFile(files.dictionaryFile, db); await writeFile(files.dictionaryReviewFile, drb);
+  const rawCounts = { '秋': 1099, '冬': 566, '': 48, '春': 404, '秋、冬': 291, '夏': 529, '春、夏': 19 };
+  const sources = [], rows = []; let i = 100;
+  for (const [season, count] of Object.entries(rawCounts)) for (let j = 0; j < count; j++, i++) {
+    const source = { id: id(i), batchId: binding.batchId, entityType: 'PRODUCT', sourceKey: `synthetic-${i}`, sourceFileSha256: pin,
+      sheet: 'synthetic', rowNo: String(i), rowSha256: pin, rawFields: { '季节': season }, normalizedFields: { '季节': season }, fieldProvenance: { schema_version: 1, fields: {} } };
+    const selected = season === '' ? null : season.split('、'); sources.push(source);
+    rows.push({ sourceRowId: source.id, sourceKey: source.sourceKey, sourceEvidenceHash: requestHash(source), nativeProductId: id(10000 + i), sourceFileSha256: pin,
+      sheet: source.sheet, rowNo: source.rowNo, rawSeason: season, normalizedSeason: season,
+      seasonIds: selected?.map(n => atoms.find(a => a.sourceKey === n).nativeId) ?? null, dictionaryNames: selected,
+      dictionaryMappingSha256: dictionarySha, oldScalarWrite: 'UNCHANGED_BY_THIS_CANDIDATE' });
+  }
+  const mapping = { version: 'NATIVE_PRODUCT_SEASON_IDS_SOURCE_CONVERSION_CANDIDATE_V1', ...binding, dictionaryMappingSha256: dictionarySha,
+    sourceProductsSha256: pin, fieldApprovalSha256: pin, rows, knownCounts: { UNKNOWN: 48, SINGLE: 2598, MULTIPLE: 310 }, rawCounts,
+    containsNewUUIDs: false, databaseWrites: 0, importAuthorized: false };
+  const review = { version: 'C_PRODUCT_REFERENCE_DELTA_AND_SEASON_REVIEW_V1', decision: 'ACCEPT_EXACT_QB49_SCOPED_CANDIDATES', binding,
+    independentReview: { result: 'PASS', qualification: 'NEW2_REF_PLUS_OLD2644_PRESERVATION_AND_2956_SEASON_SOURCE_CANDIDATE_ONLY' }, realNativeCommandsOrImportAuthorizedByThisPinAlone: false, components: [] };
+  async function save() {
+    const mb = Buffer.from(JSON.stringify(mapping)); await writeFile(files.mappingFile, mb);
+    review.components = [{ path: files.mappingFile, sha256: hash(mb), bytes: mb.length }];
+    const rb = Buffer.from(JSON.stringify(review)); await writeFile(files.reviewFile, rb);
+    return { ...files, binding, trustedMappingSha256: hash(mb), trustedReviewSha256: hash(rb), trustedDictionarySha256: dictionarySha, trustedDictionaryReviewSha256: hash(drb) };
+  }
+  const product = source => ({ sourceKey: source.sourceKey, nativeId: rows.find(r => r.sourceKey === source.sourceKey).nativeProductId, expectedVersion: 1 });
+  return { sources, mapping, review, save, product, files, options: await save() };
+}
+
+test('season source proof derives sorted storage members from preserved2956 mapping and distinguishes unknown', async t => {
+  const f = await seasonFixture(t), reader = await openReviewedProductSeasonSource(f.options); t.after(() => reader.close());
+  const multiple = f.sources.find(s => s.rawFields['季节'] === '秋、冬'), original = structuredClone(f.mapping.rows.find(r => r.sourceKey === multiple.sourceKey));
+  const proof = await reader.proofFor(multiple, f.product(multiple));
+  assert.equal(proof.state, 'KNOWN'); assert.deepEqual(proof.season_ids, [...original.seasonIds].sort());
+  assert.deepEqual(proof.references.map(r => r.nativeId), proof.season_ids); assert.equal(proof.references[0].nativeSnapshot.name, '冬');
+  assert.deepEqual(f.mapping.rows.find(r => r.sourceKey === multiple.sourceKey), original);
+  await reader.authorizeProof(multiple, f.product(multiple), proof);
+  const unknown = f.sources.find(s => s.rawFields['季节'] === ''), unknownProof = await reader.proofFor(unknown, f.product(unknown));
+  assert.equal(unknownProof.state, 'UNKNOWN'); assert.equal(unknownProof.season_ids, null); assert.deepEqual(unknownProof.references, []);
+  assert.deepEqual(reader.report, { kind: 'PRODUCT_SEASON_SOURCE_PROOF_ONLY_V1', products: 2956, unknown: 48, single: 2598, multiple: 310, multipleMembers: 620, noSql: true, nativeProductAuthorized: false, importReady: false });
+  const changed = structuredClone(proof); changed.season_ids.reverse(); await assert.rejects(reader.authorizeProof(multiple, f.product(multiple), changed), /PROOF_CHANGED/);
+  await assert.rejects(reader.proofFor({ ...multiple, rowNo: '999999' }, f.product(multiple)), /EXACT_SOURCE/);
+  await assert.rejects(reader.proofFor(multiple, { ...f.product(multiple), nativeId: id(9999) }), /EXACT_SOURCE/);
+});
+
+test('season source proof rejects self grant, unknown empty array, reordered mapping and duplicate native identities', async t => {
+  const f = await seasonFixture(t);
+  await assert.rejects(openReviewedProductSeasonSource({ ...f.options, trustedReviewSha256: undefined }), /OUTSIDE_PIN/);
+  f.review.realNativeCommandsOrImportAuthorizedByThisPinAlone = true; await assert.rejects(openReviewedProductSeasonSource(await f.save()), /SEASON_REVIEW/); f.review.realNativeCommandsOrImportAuthorizedByThisPinAlone = false;
+  const unknown = f.mapping.rows.find(r => r.rawSeason === ''); unknown.seasonIds = []; await assert.rejects(openReviewedProductSeasonSource(await f.save()), /MEMBERS/); unknown.seasonIds = null;
+  const multiple = f.mapping.rows.find(r => r.rawSeason === '秋、冬'); multiple.seasonIds.reverse(); await assert.rejects(openReviewedProductSeasonSource(await f.save()), /MEMBERS/); multiple.seasonIds.reverse();
+  f.mapping.rows[1].nativeProductId = f.mapping.rows[0].nativeProductId; await assert.rejects(openReviewedProductSeasonSource(await f.save()), /SEASON_ROW/);
+});
+
+test('season source proof rejects changed private files and does not execute getters', async t => {
+  const f = await seasonFixture(t), reader = await openReviewedProductSeasonSource(f.options); t.after(() => reader.close());
+  const mappingPin = f.options.trustedMappingSha256; f.options.trustedMappingSha256 = 'f'.repeat(64);
+  assert.equal((await reader.proofFor(f.sources[0], f.product(f.sources[0]))).mapping_sha256, mappingPin);
+  let getterCalls = 0; const options = { ...f.options }; Object.defineProperty(options, 'mappingFile', { enumerable: true, get() { getterCalls++; return f.options.mappingFile; } });
+  await assert.rejects(openReviewedProductSeasonSource(options), /CONFIG/); assert.equal(getterCalls, 0);
+  await writeFile(f.files.reviewFile, '{}'); await assert.rejects(reader.proofFor(f.sources[0], f.product(f.sources[0])), /FILE_CHANGED/);
+  reader.close(); await assert.rejects(reader.verify(), /CLOSED/);
 });

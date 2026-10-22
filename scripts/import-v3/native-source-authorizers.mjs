@@ -21,12 +21,100 @@ const hash = s => typeof s === 'string' && /^[a-f0-9]{64}$/.test(s);
 const uuid = s => typeof s === 'string' && /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(s);
 const key = (entity, sourceKey) => JSON.stringify([entity, sourceKey]);
 const same = (a, b) => ['dev', 'ino', 'size', 'mode', 'mtimeMs', 'ctimeMs'].every(k => a[k] === b[k]);
+const exactData = (value, keys) => value && Object.getPrototypeOf(value) === Object.prototype && Reflect.ownKeys(value).length === keys.length
+  && keys.every(k => { const d = Object.getOwnPropertyDescriptor(value, k); return d?.enumerable && Object.hasOwn(d, 'value'); });
 async function load(path, pin, limit) {
   must(hash(pin), 'NATIVE_SOURCE_OUTSIDE_PIN_REQUIRED');
   const before = await lstat(path); must(before.isFile() && !before.isSymbolicLink() && before.size <= limit, 'NATIVE_SOURCE_FILE');
   const bytes = await readFile(path), after = await lstat(path);
   must(bytes.length === before.size && same(before, after) && digest(bytes) === pin, 'NATIVE_SOURCE_FILE_CHANGED');
   return { value: JSON.parse(new TextDecoder('utf8', { fatal: true }).decode(bytes)), path, stat: after };
+}
+/** Narrow source conversion proof only. It cannot authorize a native PRODUCT,
+ * choose an old scalar season, issue a runtime profile or publish a batch. */
+export async function openReviewedProductSeasonSource(options) {
+  must(exactData(options, ['mappingFile', 'trustedMappingSha256', 'reviewFile', 'trustedReviewSha256',
+    'dictionaryFile', 'trustedDictionarySha256', 'dictionaryReviewFile', 'trustedDictionaryReviewSha256', 'binding']), 'PRODUCT_SEASON_CONFIG');
+  options = { ...options };
+  requestHash(options.binding); const b = structuredClone(options.binding);
+  must(uuid(b.batchId) && typeof b.fixedSourceNamespace === 'string' && b.fixedSourceNamespace.length > 0 && hash(b.selectionSha256), 'PRODUCT_SEASON_BINDING');
+  const paths = ['mappingFile', 'reviewFile', 'dictionaryFile', 'dictionaryReviewFile'];
+  must(paths.every(k => typeof options[k] === 'string' && isAbsolute(options[k])), 'PRODUCT_SEASON_PATH');
+  const mapping = await load(options.mappingFile, options.trustedMappingSha256, 4194304);
+  const review = await load(options.reviewFile, options.trustedReviewSha256, 4194304);
+  const dictionary = await load(options.dictionaryFile, options.trustedDictionarySha256, 16777216);
+  const dictionaryReview = await load(options.dictionaryReviewFile, options.trustedDictionaryReviewSha256, 4194304);
+  const m = mapping.value, a = review.value, d = dictionary.value, da = dictionaryReview.value;
+  const bound = v => ['batchId', 'fixedSourceNamespace', 'selectionSha256'].every(k => v?.[k] === b[k]);
+  must(a.version === 'C_PRODUCT_REFERENCE_DELTA_AND_SEASON_REVIEW_V1' && a.decision === 'ACCEPT_EXACT_QB49_SCOPED_CANDIDATES'
+    && a.realNativeCommandsOrImportAuthorizedByThisPinAlone === false && a.independentReview?.result === 'PASS'
+    && a.independentReview.qualification === 'NEW2_REF_PLUS_OLD2644_PRESERVATION_AND_2956_SEASON_SOURCE_CANDIDATE_ONLY'
+    && bound(a.binding) && Array.isArray(a.components), 'PRODUCT_SEASON_REVIEW');
+  const components = a.components.filter(c => c.path === options.mappingFile);
+  must(components.length === 1 && components[0].sha256 === options.trustedMappingSha256 && components[0].bytes === mapping.stat.size, 'PRODUCT_SEASON_REVIEW_COMPONENT');
+  must(m.version === 'NATIVE_PRODUCT_SEASON_IDS_SOURCE_CONVERSION_CANDIDATE_V1' && bound(m)
+    && m.dictionaryMappingSha256 === options.trustedDictionarySha256 && hash(m.sourceProductsSha256) && hash(m.fieldApprovalSha256)
+    && m.containsNewUUIDs === false && m.databaseWrites === 0 && m.importAuthorized === false
+    && Array.isArray(m.rows) && m.rows.length === 2956, 'PRODUCT_SEASON_MAPPING');
+  must(d.version === 'NATIVE_CATALOGUE_OCCURRENCE_CANDIDATE_V1' && bound(d) && Array.isArray(d.groups)
+    && d.groups.every(g => Array.isArray(g) && g.length > 0 && g.length <= 200)
+    && da.version === 'NATIVE_CATALOGUE_TECHNICAL_REVIEW_V1' && bound(da) && da.mappingSha256 === options.trustedDictionarySha256, 'PRODUCT_SEASON_DICTIONARY_REVIEW');
+  const entries = d.groups.flat().filter(e => e.entity === 'SEASON').sort((x, y) => x.values?.display_order - y.values?.display_order);
+  const names = ['春', '夏', '秋', '冬'], codes = ['SEASON_SPRING', 'SEASON_SUMMER', 'SEASON_AUTUMN', 'SEASON_WINTER'];
+  must(entries.length === 4 && new Set(entries.map(e => e.nativeId)).size === 4, 'PRODUCT_SEASON_DICTIONARY');
+  const atoms = new Map(entries.map((e, i) => {
+    must(exactData(e, ['entity', 'sourceKey', 'nativeId', 'values', 'references', 'originalEvidence']) && uuid(e.nativeId)
+      && e.sourceKey === names[i] && exactData(e.values, ['code', 'name', 'display_order']) && e.values.name === names[i]
+      && e.values.code === codes[i] && e.values.display_order === i && exactData(e.references, [])
+      && e.originalEvidence && Object.getPrototypeOf(e.originalEvidence) === Object.prototype, 'PRODUCT_SEASON_DICTIONARY');
+    return [e.sourceKey, { sourceKey: e.sourceKey, nativeId: e.nativeId, nativeSnapshot: { id: e.nativeId, ...e.values } }];
+  }));
+  const choices = new Map([['', null], ...names.map(n => [n, [n]]), ['春、夏', ['春', '夏']], ['秋、冬', ['秋', '冬']]]);
+  const expectedRaw = { '秋': 1099, '冬': 566, '': 48, '春': 404, '秋、冬': 291, '夏': 529, '春、夏': 19 };
+  const counts = { UNKNOWN: 0, SINGLE: 0, MULTIPLE: 0 }, rawCounts = {}, rows = new Map(), ids = new Set(), sourceIds = new Set();
+  for (const row of m.rows) {
+    must(exactData(row, ['sourceRowId', 'sourceKey', 'sourceEvidenceHash', 'nativeProductId', 'sourceFileSha256', 'sheet', 'rowNo',
+      'rawSeason', 'normalizedSeason', 'seasonIds', 'dictionaryNames', 'dictionaryMappingSha256', 'oldScalarWrite'])
+      && uuid(row.sourceRowId) && typeof row.sourceKey === 'string' && row.sourceKey.length > 0 && hash(row.sourceEvidenceHash)
+      && uuid(row.nativeProductId) && row.nativeProductId !== row.sourceKey && hash(row.sourceFileSha256)
+      && typeof row.sheet === 'string' && row.sheet.length > 0 && typeof row.rowNo === 'string' && /^[1-9]\d*$/.test(row.rowNo)
+      && row.dictionaryMappingSha256 === options.trustedDictionarySha256 && row.oldScalarWrite === 'UNCHANGED_BY_THIS_CANDIDATE'
+      && choices.has(row.rawSeason) && row.normalizedSeason === row.rawSeason && !rows.has(row.sourceKey)
+      && !ids.has(row.nativeProductId) && !sourceIds.has(row.sourceRowId), 'PRODUCT_SEASON_ROW');
+    const selected = choices.get(row.rawSeason), expectedIds = selected?.map(n => atoms.get(n).nativeId) ?? null;
+    must(requestHash(row.dictionaryNames) === requestHash(selected) && requestHash(row.seasonIds) === requestHash(expectedIds), 'PRODUCT_SEASON_MEMBERS');
+    counts[selected === null ? 'UNKNOWN' : selected.length === 1 ? 'SINGLE' : 'MULTIPLE']++;
+    rawCounts[row.rawSeason] = (rawCounts[row.rawSeason] ?? 0) + 1;
+    rows.set(row.sourceKey, row); ids.add(row.nativeProductId); sourceIds.add(row.sourceRowId);
+  }
+  must(requestHash(counts) === requestHash({ UNKNOWN: 48, SINGLE: 2598, MULTIPLE: 310 }) && requestHash(counts) === requestHash(m.knownCounts)
+    && requestHash(rawCounts) === requestHash(expectedRaw) && requestHash(rawCounts) === requestHash(m.rawCounts), 'PRODUCT_SEASON_COUNTS');
+  let closed = false; const active = () => must(!closed, 'PRODUCT_SEASON_CLOSED');
+  async function verify() {
+    active(); for (const item of [mapping, review, dictionary, dictionaryReview]) must(same(item.stat, await lstat(item.path)), 'NATIVE_SOURCE_FILE_CHANGED'); active();
+  }
+  async function proofFor(source, product) {
+    await verify(); requestHash(source); requestHash(product); const row = rows.get(source?.sourceKey);
+    must(row && source.entityType === 'PRODUCT' && source.batchId === b.batchId && source.id === row.sourceRowId
+      && source.sourceFileSha256 === row.sourceFileSha256 && source.sheet === row.sheet && source.rowNo === row.rowNo
+      && source.rawFields?.['季节'] === row.rawSeason && source.normalizedFields?.['季节'] === row.normalizedSeason
+      && requestHash(source) === row.sourceEvidenceHash && exactData(product, ['sourceKey', 'nativeId', 'expectedVersion'])
+      && product.sourceKey === row.sourceKey && product.nativeId === row.nativeProductId && product.expectedVersion === 1, 'PRODUCT_SEASON_EXACT_SOURCE');
+    const selected = choices.get(row.rawSeason);
+    // The reviewed mapping keeps dictionary order. The approved storage contract
+    // derives UUID order without changing that mapping or claiming its hash is
+    // the hash of this derived object. Display remains dictionary ordered.
+    const references = selected?.map(n => atoms.get(n)).sort((a, b) => a.nativeId < b.nativeId ? -1 : a.nativeId > b.nativeId ? 1 : 0) ?? [];
+    return structuredClone({ version: 'NATIVE_PRODUCT_SEASON_SELECTION_V1', mapping_sha256: options.trustedMappingSha256,
+      source_key: row.sourceKey, source_season: row.rawSeason, state: selected === null ? 'UNKNOWN' : 'KNOWN',
+      season_ids: selected === null ? null : references.map(r => r.nativeId), references });
+  }
+  await verify();
+  return { report: Object.freeze({ kind: 'PRODUCT_SEASON_SOURCE_PROOF_ONLY_V1', products: rows.size, unknown: counts.UNKNOWN,
+    single: counts.SINGLE, multiple: counts.MULTIPLE, multipleMembers: counts.MULTIPLE * 2, noSql: true, nativeProductAuthorized: false, importReady: false }),
+    verify, proofFor, async authorizeProof(source, product, proof) {
+      requestHash(proof); must(requestHash(proof) === requestHash(await proofFor(source, product)), 'PRODUCT_SEASON_PROOF_CHANGED');
+    }, close() { closed = true; rows.clear(); atoms.clear(); ids.clear(); sourceIds.clear(); m.rows.length = 0; } };
 }
 /** Snapshot resolver only. Exact source readers MUST additionally recheck raw bytes,
  * row/provenance/selection and prepared payloads. normalizedHash is not a source grant. */

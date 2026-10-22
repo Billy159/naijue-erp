@@ -44,11 +44,11 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
     ?? { reader: createStaffSettingsHttpReader(http), roles: staffRoles, canPrepare: false } : undefined;
   const paymentView = configuration.routes.paymentSettings ? input.settingsViews?.paymentSettings
     ?? { reader: createPaymentSettingsHttpReader(http), canPrepare: false } : undefined;
-  // The current F3 slice has no session-level dirty/uncertain-write owner. Do
-  // not expose editable production forms until that lifecycle is integrated.
+  // Session ownership is integrated; production preparation/write gates still
+  // wait for the controller's exact backend and isolated-PG approval.
   if (staffView?.canPrepare || paymentView?.canPrepare) throw new TypeError('Editable settings require a configured maintenance session owner.');
   const crypto = input.document.defaultView?.crypto;
-  if ((configuration.routes.salesManualCreate || configuration.routes.transferManualCreate || configuration.routes.parties || configuration.routes.storeSettings || configuration.routes.paymentSettings && !paymentView?.workspace)
+  if ((configuration.routes.salesManualCreate || configuration.routes.transferManualCreate || configuration.routes.parties || configuration.routes.storeSettings || configuration.routes.staffSettings && !staffView?.workspace || configuration.routes.paymentSettings && !paymentView?.workspace)
     && typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is required.');
   const newRequestKey = () => { if (typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is unavailable.'); return crypto.randomUUID(); };
   const stylesheet = (name: keyof typeof assets.styles) => {
@@ -73,7 +73,8 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
     ], initialTab: configuration.routes.productSettings.initialTab } } : {}),
     ...(configuration.routes.storeSettings ? { storeSettings: { stylesheet: stylesheet('store-settings'), allowedTabs: configuration.routes.storeSettings.allowedTabs,
       initialTab: configuration.routes.storeSettings.initialTab, allowHallDirectoryRead: configuration.routes.storeSettings.allowHallDirectoryRead, commands: { newRequestKey, writesEnabled: () => false } } } : {}),
-    ...(staffView ? { staffSettings: { stylesheet: stylesheet('staff-settings'), view: staffView } } : {}),
+    ...(staffView ? { staffSettings: { stylesheet: stylesheet('staff-settings'), view: staffView,
+      ...(!staffView.workspace ? { commands: { newRequestKey, writesEnabled: () => false } } : {}) } } : {}),
     ...(paymentView ? { paymentSettings: { stylesheet: stylesheet('payment-settings'), view: paymentView,
       ...(!paymentView.workspace ? { commands: { newRequestKey, writesEnabled: () => false } } : {}) } } : {}),
   } });

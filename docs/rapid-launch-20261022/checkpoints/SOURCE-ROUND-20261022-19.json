@@ -1,0 +1,52 @@
+{
+  "atUtc": "2026-10-22T08:39:25.310661+00:00",
+  "parent": "de6ca2b65be87f5a3ea3116cb623d5eba4a7ef07",
+  "groups": [
+    {
+      "slice": "D3_DERIVED_SEASON_SOURCE_PROOF",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/product-season-proof-slice1/RESULT.json",
+      "receiptSha256": "5abcec96cba86655b07d19afbe98dd992438c827f40935f1c22704ac8f680ea9",
+      "files": [
+        {
+          "path": "scripts/import-v3/native-source-authorizers.mjs",
+          "bytes": 37162,
+          "sha256": "cdef4cb102f5b593f3e0aa20351b2127c236befb5d2e507f06e309a79a2cfac6",
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/native-source-authorizers.test.mjs",
+          "bytes": 23495,
+          "sha256": "61e99fe4402a3e2acb4c3e1062e7782789044b06dd9ce9cd7069e75253b73760",
+          "owner": "D3"
+        }
+      ]
+    },
+    {
+      "slice": "F1_W8_STAFF_ROOT_INTEGRATION",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-18/DELIVERY.json",
+      "receiptSha256": "90ac366d60f2c6c0d227dcf919dbd0767751f4ab15b877b418b7ecd6185cd648",
+      "files": [
+        {
+          "path": "apps/web/src/application/controller.ts",
+          "bytes": 33319,
+          "sha256": "2efb40b09acca723874496ede04b201058c9f914aab424e46241d9765e14d269",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/application/routes/staff-settings.tsx",
+          "bytes": 3077,
+          "sha256": "9bf48fa688030cb0f4d43c45f6f8af4aa1a0cdb7d3babdf9984bd6a43a99655b",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/production-host/mount.tsx",
+          "bytes": 8735,
+          "sha256": "8402447ae1d1172f2e6bc545181a24de13b978275b438c163067049391224a55",
+          "owner": "F1"
+        }
+      ]
+    }
+  ],
+  "fileCount": 5,
+  "scope": "Scoped source/proof ready, real issuer/PG and browser pending"
+}
