@@ -1,4 +1,5 @@
 import { createSalesProductCapability } from './sales.tsx';
+import type { DocumentProductInventoryNavigationFactory } from '../../sales/document-presentation.tsx';
 import type { SalesNewDocumentSession } from '../../current-form/sales-create.ts';
 import { createSalesHttpReader, createSalesFilterReferenceHttpReader } from '../../sales/http-reader.ts';
 import type { ApplicationRouteProps, RoutePreparation, SalesSession } from '../contracts.ts';
@@ -9,7 +10,7 @@ import { createCurrentFormHttpReader } from '../../current-form/http-reader.ts';
 
 /** Separately imported opt-in leaf. Read-only routes do not import write clients
  * or session owners merely to render a sales list. */
-export function prepareSalesCommandSession(input: RoutePreparation, onAccessFailure: () => void): SalesSession {
+export function prepareSalesCommandSession(input: RoutePreparation, onAccessFailure: () => void, inventoryNavigation?: DocumentProductInventoryNavigationFactory): SalesSession {
   const configuration = input.configuration.sales, commands = configuration?.commands;
   if (!commands || !configuration.detailStylesheet || typeof commands.newRequestKey !== 'function'
     || commands.preparation && (typeof commands.preparation.prepareCreate !== 'function' || typeof commands.preparation.prepareEdit !== 'function') || commands.existingPreparation && typeof commands.existingPreparation.prepareExisting !== 'function' || commands.manualCreate !== undefined && commands.manualCreate !== true) throw new TypeError('Explicit sales command capability is required.');
@@ -40,7 +41,7 @@ export function prepareSalesCommandSession(input: RoutePreparation, onAccessFail
   }) : undefined;
   const loadDetailStyles = () => configuration.detailStylesheet!.load();
   return Object.freeze({ workspace, ...(manualCreate ? { canLeave: manualCreate.canLeave } : {}), prepare: (route: RoutePreparation) => {
-    const product = createSalesProductCapability(route, onAccessFailure);
+    const product = createSalesProductCapability(route, onAccessFailure, inventoryNavigation?.(route.scope));
     const routeReader = createSalesHttpReader(route.http), references = createSalesFilterReferenceHttpReader(route.http);
     return { View: ({ scope }: ApplicationRouteProps) => <SalesCommandPageHost scope={scope} reader={routeReader} references={references} session={workspace} {...(manualCreate ? { manualCreate } : {})} loadDetailStyles={loadDetailStyles} {...(product ? { product } : {})} /> };
   } });

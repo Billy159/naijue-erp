@@ -101,9 +101,19 @@ export function SalesDocumentSummary({ businessType, lines, grossMinor, discount
   return <footer className="tc-foot tc-gold-footer sale-summary"><div className="sale-summary-detail"><strong data-sales-quantity-summary>{new Set(lines.map(row => row.styleKey)).size} {snapshotCodes ? '款号' : '款'} · 数量 {salesExactQuantity(lines) ?? '待校验'}</strong>{gifts.length > 0 && <span>其中赠品 {salesExactQuantity(gifts) ?? '待校验'}</span>}{[...categories].map(([id, category]) => <span className="tc-product-tag" key={id}>{category.label} {salesExactQuantity(category.rows) ?? '待校验'}</span>)}{extra}</div><div className="sale-summary-primary"><strong>销售金额 ¥{money(grossMinor)}</strong><strong>优惠 ¥{money(discountMinor)}</strong><strong>应结 ¥{money(netDueMinor)}</strong></div></footer>;
 }
 
+/** Ephemeral document owner, never a Products-list return context or DTO. */
+export interface DocumentProductInventoryRequest {
+  readonly product: Selection;
+  readonly targetScope: ReadScope;
+  readonly isCurrent: () => boolean;
+  readonly restore: (refresh: boolean) => boolean;
+}
+export type DocumentProductInventoryNavigation = (request: DocumentProductInventoryRequest) => Promise<boolean>;
+export type DocumentProductInventoryNavigationFactory = (scope: ReadScope) => DocumentProductInventoryNavigation | undefined;
 export interface SalesProductCapability {
   readonly configuration: ProductFullPageConfiguration;
   readonly onUnauthorized?: () => void;
+  readonly openInventory?: DocumentProductInventoryNavigation;
   /** Actual SKU -> product relation, requested only by the user's 查看 action. */
   readonly resolveTarget: (skuId: string, hallId: string, signal: AbortSignal) => Promise<Selection>;
 }
@@ -119,6 +129,7 @@ export function SalesProductPresentation({ scope, capability, children, returnLa
   const [active, setActive] = useState<Active | null>(null), serial = useRef(0), activeRef = useRef<Active | null>(null), opener = useRef<HTMLElement | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const restore = useRef(false), frame = useRef<HTMLDivElement>(null);
+  const productFrame = useRef<HTMLElement>(null), returnFrames = useRef(new Set<number>());
   const current = active && active.parent === scope && active.capability === capability && active.scope.active ? active : null;
   const dismiss = () => { activeRef.current?.scope.dispose(); activeRef.current = null; restore.current = true; setActive(null); };
   const open = scope?.active && capability ? (skuId: string, hallId: string, target?: Selection) => {
@@ -137,11 +148,49 @@ export function SalesProductPresentation({ scope, capability, children, returnLa
       }
     }, () => { if (child.active && scope.active && activeRef.current?.scope === child) { const failed = { ...next, failed: true }; activeRef.current = failed; setActive(failed); } });
   } : undefined;
+  const openInventory = current?.target && current.configuration && capability?.openInventory ? async () => {
+    const owner = current, product = Object.freeze({ ...current.target! });
+    const isCurrent = () => activeRef.current === owner && owner.scope.active && owner.parent.active;
+    if (!isCurrent()) return false;
+    const scroll: { element: Element; top: number; left: number }[] = [];
+    for (let element: Element | null = productFrame.current; element; element = element.parentElement) scroll.push({ element, top: element.scrollTop, left: element.scrollLeft });
+    const scrolling = document.scrollingElement;
+    if (scrolling && !scroll.some(item => item.element === scrolling)) scroll.push({ element: scrolling, top: scrolling.scrollTop, left: scrolling.scrollLeft });
+    const tables = Array.from(productFrame.current?.querySelectorAll('.erp-read-table') ?? []).map(element => ({ top: element.scrollTop, left: element.scrollLeft }));
+    const restoreScroll = (next: Active) => {
+      if (activeRef.current !== next || !next.scope.active || !next.parent.active) return;
+      const apply = () => {
+        if (activeRef.current !== next || !next.scope.active || !next.parent.active || productFrame.current?.closest('[hidden],[inert]')) return;
+        if (document.activeElement === document.body || !document.activeElement?.isConnected) {
+          Array.from(productFrame.current?.querySelectorAll<HTMLButtonElement>('button') ?? []).find(button => button.textContent === '查看详细库存')?.focus({ preventScroll: true });
+        }
+        for (const saved of scroll) if (saved.element.isConnected) { saved.element.scrollTop = saved.top; saved.element.scrollLeft = saved.left; }
+        productFrame.current?.querySelectorAll('.erp-read-table').forEach((element, index) => { const saved = tables[index]; if (saved) { element.scrollTop = saved.top; element.scrollLeft = saved.left; } });
+      };
+      const schedule = (work: () => void) => { const id = requestAnimationFrame(() => { returnFrames.current.delete(id); work(); }); returnFrames.current.add(id); };
+      schedule(() => { apply(); schedule(apply); });
+    };
+    return capability.openInventory!(Object.freeze({ product, targetScope: owner.scope, isCurrent, restore: (refresh: boolean) => {
+      if (!isCurrent()) return false;
+      if (!refresh) { setNotice('库存页面暂不可查看，原单据输入已保留。'); restoreScroll(owner); return true; }
+      const child = new ReadScope(owner.parent.identity, `${owner.parent.routeInstanceId}:sales-product-return:${++serial.current}`, owner.skuId, () => {});
+      let next: Active;
+      const baseReader = capability.configuration.reader, stock = baseReader.stock;
+      const refreshed = { ...baseReader, ...(stock ? { stock: { read: async (read: Parameters<typeof stock.read>[0]) => { try { return await stock.read(read); } finally { if (next) restoreScroll(next); } }, ...(stock.readOverview ? { readOverview: async (read: Parameters<NonNullable<typeof stock.readOverview>>[0]) => { try { return await stock.readOverview!(read); } finally { if (next) restoreScroll(next); } } } : {}) } } : {}) };
+      const reader = guardedProductPageReader(child, refreshed, error => {
+        if (activeRef.current?.scope !== child) return;
+        activeRef.current = null; restore.current = true; setActive(null); setNotice(`商品查看权限或登录状态已变化，原${documentLabel}输入仍保留。`);
+        if (error.kind === 'unauthenticated') capability.onUnauthorized?.();
+      });
+      next = { ...owner, scope: child, configuration: { ...capability.configuration, initialTab: 'stock', reader } };
+      activeRef.current = next; owner.scope.dispose(); setActive(next); setNotice(null); restoreScroll(next); return true;
+    } }));
+  } : undefined;
   useEffect(() => {
     const parent = scope;
     const abort = () => { activeRef.current?.scope.dispose(); activeRef.current = null; setActive(null); };
     parent?.signal.addEventListener('abort', abort, { once: true });
-    return () => { parent?.signal.removeEventListener('abort', abort); activeRef.current?.scope.dispose(); activeRef.current = null; };
+    return () => { parent?.signal.removeEventListener('abort', abort); activeRef.current?.scope.dispose(); activeRef.current = null; returnFrames.current.forEach(cancelAnimationFrame); returnFrames.current.clear(); };
   }, [scope, capability]);
   useEffect(() => {
     if (!restore.current || current) return; restore.current = false;
@@ -149,8 +198,8 @@ export function SalesProductPresentation({ scope, capability, children, returnLa
     if (target?.isConnected && !target.closest('[hidden],[inert]')) target.focus({ preventScroll: true });
     else frame.current?.querySelector<HTMLElement>('button:not(:disabled),h1')?.focus({ preventScroll: true });
   }, [current]);
-  return <><div ref={frame} style={{ width: '100%', minWidth: 0 }} hidden={!!current}>{children(open)}{notice && <p role="status">{notice}</p>}</div>{current && <section style={{ flex: '1 1 0%', width: '100%', minWidth: 0 }} aria-label={viewLabel} onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); dismiss(); } }}>
-    {current.View && current.target && current.configuration ? <current.View parent={current.scope} target={current.target} configuration={current.configuration} reader={current.configuration.reader} close={dismiss} returnLabel={returnLabel} />
+  return <><div ref={frame} style={{ width: '100%', minWidth: 0 }} hidden={!!current}>{children(open)}{notice && <p role="status">{notice}</p>}</div>{current && <section ref={productFrame} style={{ flex: '1 1 0%', width: '100%', minWidth: 0 }} aria-label={viewLabel} onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); dismiss(); } }}>
+    {notice && <p role="status">{notice}</p>}{current.View && current.target && current.configuration ? <current.View parent={current.scope} target={current.target} configuration={current.configuration} reader={current.configuration.reader} close={dismiss} returnLabel={returnLabel} {...(openInventory ? { openInventory } : {})} />
       : current.failed ? <p role="alert">商品资料或规格关系暂不可读取，原单据输入已保留。<UIButton onClick={() => open?.(current.skuId, current.hallId)}>重试商品查看</UIButton><UIButton onClick={dismiss}>{returnLabel}</UIButton></p>
       : <p role="status">正在读取商品关系并准备商品页…<UIButton onClick={dismiss}>{returnLabel}</UIButton></p>}
   </section>}</>;

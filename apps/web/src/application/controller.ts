@@ -9,11 +9,20 @@ import type { prepareStoreSettingsSession } from './routes/store-settings.tsx';
 import type { prepareAccountSettingsSession } from './routes/account-settings.tsx';
 import type { prepareStaffSettingsSession } from './routes/staff-settings.tsx';
 import type { ProductInventoryNavigationRequest } from '../products/contracts.ts';
+import type { DocumentProductInventoryNavigation, DocumentProductInventoryRequest } from '../sales/document-presentation.tsx';
 import { entityId } from '../../../../packages/domain/src/values.ts';
 import type { TransferRouteConfiguration } from './contracts.ts';
 import type { CatalogueMaintenanceCapability } from '../product-settings/colors/contracts.ts';
 
 interface ProductInventoryTrip { readonly request: ProductInventoryNavigationRequest; readonly identity: ReadScope['identity'] }
+type DocumentRoute = 'sales' | 'transfers';
+type RetainedDocument = ApplicationSnapshot & { readonly phase: 'ready'; readonly route: DocumentRoute; readonly scope: ReadScope; readonly prepared: PreparedApplicationRoute };
+interface DocumentInventoryTrip {
+  readonly origin: RetainedDocument;
+  readonly request: DocumentProductInventoryRequest;
+  readonly detach: () => void;
+}
+const sameIdentity = (left: ReadScope['identity'], right: ReadScope['identity']) => left.accountId === right.accountId && left.sessionRevision === right.sessionRevision && left.permissionRevision === right.permissionRevision;
 
 const home = (): ApplicationSnapshot => Object.freeze({ phase: 'home', route: null, scope: null, prepared: null, notice: null });
 function stylesheet(value: RouteStylesheet | undefined): RouteStylesheet {
@@ -67,6 +76,7 @@ export class ApplicationController {
   #externalStaffPending = true;
   #externalAccountPending = true;
   #productTrip: ProductInventoryTrip | null = null;
+  #documentTrip: DocumentInventoryTrip | null = null;
   #disposed = false;
   constructor(configuration: ApplicationConfiguration) {
     if (!configuration?.routes || !configuration.http || typeof configuration.presentation?.renderWorkspace !== 'function' || typeof configuration.presentation.renderRouteState !== 'function') throw new TypeError('Explicit host configuration is required.');
@@ -147,7 +157,7 @@ export class ApplicationController {
     const replaceIdentity = readContextAuthenticationLifecycle(this.#context);
     this.authentication = new AuthenticationController({ client, onIdentityChange: change => {
       // Required order: abort ALL old route/session scopes before the auth controller publishes a replacement principal.
-      replaceIdentity(change); this.#productTrip = null;
+      replaceIdentity(change); this.#productTrip = null; this.#releaseDocumentTrip();
       this.#partySession?.workspace.dispose(); this.#partySession = null;
       this.#salesSession?.workspace.dispose(); this.#salesSession = null;
       this.#transferSession?.workspace.dispose(); this.#transferSession = null;
@@ -184,6 +194,8 @@ export class ApplicationController {
     return this.#configuredRoutes.filter(route => route === 'staff-settings' || route === 'account-settings' ? role === 'ADMIN' : !['customers', 'suppliers'].includes(route) || role === 'ADMIN' || role === 'WAREHOUSE');
   }
   readonly getSnapshot = (): ApplicationSnapshot => this.#state;
+  /** Only the current bounded document round trip retains a second render owner. */
+  get retainedDocument(): ApplicationSnapshot | null { return this.#documentTrip?.origin ?? null; }
   readonly subscribe = (listener: () => void): (() => void) => {
     if (this.#disposed) return () => {};
     this.#listeners.add(listener); return () => { this.#listeners.delete(listener); };
@@ -193,6 +205,7 @@ export class ApplicationController {
     const sessions = [this.#partySession, this.#salesSession, this.#transferSession];
     try {
       return (!this.#state.scope?.active || !this.#state.prepared?.canLeave || this.#state.prepared.canLeave() === true)
+        && (!this.#documentTrip?.origin.prepared.canLeave || this.#documentTrip.origin.prepared.canLeave() === true)
         && !sessions.some(session => session && !session.workspace.canLeave())
         && this.#paymentWorkspace()?.canLeave() !== false
         && this.#storeSession?.workspace.canLeave() !== false
@@ -202,7 +215,10 @@ export class ApplicationController {
     } catch { return false; }
   }
   /** No implicit default route. Call on an actual menu action or an explicitly validated host deep link. */
-  async navigate(route: ApplicationRoute | null): Promise<boolean> { return this.#navigate(route); }
+  async navigate(route: ApplicationRoute | null): Promise<boolean> {
+    if (this.#documentTrip?.origin.route === route && this.#state.route === 'inventory' && this.#state.scope) return this.#returnFromDocumentInventory(this.#state.scope, this.#documentTrip);
+    return this.#navigate(route);
+  }
   async #navigate(route: ApplicationRoute | null, trip?: ProductInventoryTrip): Promise<boolean> {
     if (this.#disposed || !this.authentication.getSnapshot().principal || this.authentication.busy) return false;
     if (route !== null && !this.routes.includes(route)) return false;
@@ -223,6 +239,7 @@ export class ApplicationController {
       this.#publish({ ...this.#state, notice: 'cannot-leave' }); return false;
     }
     if (route !== this.#state.route) { this.#salesSession?.workspace.suspend(); this.#transferSession?.workspace.suspend(); }
+    this.#releaseDocumentTrip();
     this.#productTrip = trip ?? null;
     this.#state.scope?.dispose();
     if (route === null) { this.#publish(home()); return true; }
@@ -240,13 +257,13 @@ export class ApplicationController {
           if (!this.#salesSession) {
             const workspaceScope = this.#context.createScope(`application-sales-session-${++this.#sequence}`);
             let session: SalesSession;
-            try { session = await module.prepareSalesSession({ ...input, scope: workspaceScope, http: this.#httpForScope(workspaceScope) }, () => this.authentication.expire()); }
+            try { session = await module.prepareSalesSession({ ...input, scope: workspaceScope, http: this.#httpForScope(workspaceScope) }, () => this.authentication.expire(), routeScope => this.#documentInventoryNavigation(routeScope, 'sales')); }
             catch (error) { workspaceScope.dispose(); throw error; }
             if (!this.#current(scope) || !workspaceScope.active) { session.workspace.dispose(); return false; }
             this.#salesSession = session;
           }
           prepared = this.#salesSession.prepare(input);
-        } else prepared = module.prepareSalesRoute(input, () => this.authentication.expire());
+        } else prepared = module.prepareSalesRoute(input, () => this.authentication.expire(), this.#documentInventoryNavigation(scope, 'sales'));
       }
       else if (route === 'transfers') {
         const module = await this.#leaves.load('transfers', scope);
@@ -254,10 +271,10 @@ export class ApplicationController {
         if (this.#configuration.routes.transfers?.commands) {
           if (!this.#transferSession) {
             const workspaceScope = this.#context.createScope(`application-transfer-session-${++this.#sequence}`);
-            this.#transferSession = module.prepareTransferSession({ ...input, scope: workspaceScope, http: this.#httpForScope(workspaceScope) }, () => this.authentication.expire());
+            this.#transferSession = module.prepareTransferSession({ ...input, scope: workspaceScope, http: this.#httpForScope(workspaceScope) }, () => this.authentication.expire(), routeScope => this.#documentInventoryNavigation(routeScope, 'transfers'));
           }
           prepared = this.#transferSession.prepare(input);
-        } else prepared = module.prepareTransferRoute(input, () => this.authentication.expire());
+        } else prepared = module.prepareTransferRoute(input, () => this.authentication.expire(), this.#documentInventoryNavigation(scope, 'transfers'));
       }
       else if (route === 'products') {
         const module = await this.#leaves.load('products', scope);
@@ -360,7 +377,7 @@ export class ApplicationController {
   }
   /** Preload the destination's real leaf/CSS before releasing a clean source.
    * Failed preparation therefore keeps the current product page and context. */
-  async #navigationReady(route: 'inventory' | 'products', source: ReadScope): Promise<boolean> {
+  async #navigationReady(route: 'inventory' | 'products' | DocumentRoute, source: ReadScope): Promise<boolean> {
     if (!this.#current(source) || !this.canLeave() || this.authentication.busy) return false;
     const probe = this.#context.createScope(`product-navigation-${++this.#sequence}`);
     try { await this.#leaves.load(route, probe); return this.#current(source) && this.canLeave() && !this.authentication.busy; }
@@ -372,18 +389,88 @@ export class ApplicationController {
     if (!await this.#navigationReady('products', scope)) return false;
     return this.#navigate('products', trip);
   }
+  #documentInventoryNavigation(source: ReadScope, route: DocumentRoute): DocumentProductInventoryNavigation | undefined {
+    if (!this.#configuration.routes.inventory) return;
+    return request => this.#openDocumentInventory(source, route, request);
+  }
+  #validDocumentTarget(source: ReadScope, request: DocumentProductInventoryRequest): boolean {
+    try { return source.active && request.targetScope.active && sameIdentity(source.identity, request.targetScope.identity) && request.isCurrent() === true; }
+    catch { return false; }
+  }
+  async #openDocumentInventory(source: ReadScope, route: DocumentRoute, request: DocumentProductInventoryRequest): Promise<boolean> {
+    const current = () => this.#current(source) && this.#state.phase === 'ready' && this.#state.route === route && !this.authentication.busy
+      && this.routes.includes('inventory') && this.#validDocumentTarget(source, request) && this.canLeave();
+    if (!current() || typeof request.restore !== 'function') return false;
+    let product: { readonly id: string; readonly label: string };
+    try {
+      entityId('product', request.product.id);
+      if (typeof request.product.label !== 'string' || !request.product.label.trim()) return false;
+      product = Object.freeze({ id: request.product.id, label: request.product.label });
+    } catch { return false; }
+    const destination = this.#context.createScope(`document-inventory-${++this.#sequence}`);
+    const cancelPreparation = () => destination.dispose();
+    source.signal.addEventListener('abort', cancelPreparation, { once: true }); request.targetScope.signal.addEventListener('abort', cancelPreparation, { once: true });
+    try {
+      // Prepare the real destination before hiding/releasing any source UI.
+      const module = await this.#leaves.load('inventory', destination);
+      if (!destination.active || !current() || !this.#state.prepared) { destination.dispose(); return false; }
+      const origin: RetainedDocument = { ...this.#state, phase: 'ready', route, scope: source, prepared: this.#state.prepared };
+      let trip: DocumentInventoryTrip;
+      const prepared = module.prepareInventoryRoute({ scope: destination, principal: this.authentication.getSnapshot().principal!, configuration: this.#configuration.routes, http: this.#httpForScope(destination, 'inventory') }, error => this.#readAccessFailure(destination, error.kind), { initialProduct: product, returnToProduct: () => this.#returnFromDocumentInventory(destination, trip) });
+      if (!destination.active || !current()) { destination.dispose(); return false; }
+      const invalidate = () => {
+        if (this.#documentTrip !== trip) return;
+        trip.detach(); this.#documentTrip = null;
+        // A replaced/denied product invalidates its callbacks, while its still
+        // authenticated document owner can safely become visible again.
+        if (source.active && this.#current(destination) && !this.authentication.busy && sameIdentity(source.identity, destination.identity)) {
+          destination.dispose(); this.#publish({ ...origin, notice: null });
+        } else { source.dispose(); this.#publish({ ...this.#state }); }
+      };
+      const detach = () => { source.signal.removeEventListener('abort', invalidate); request.targetScope.signal.removeEventListener('abort', invalidate); };
+      trip = { origin, request, detach };
+      source.signal.addEventListener('abort', invalidate, { once: true }); request.targetScope.signal.addEventListener('abort', invalidate, { once: true });
+      this.#documentTrip = trip; this.#productTrip = null;
+      this.#publish({ phase: 'ready', route: 'inventory', scope: destination, prepared: Object.freeze(prepared), notice: null });
+      return true;
+    } catch { destination.dispose(); return false; }
+    finally { source.signal.removeEventListener('abort', cancelPreparation); request.targetScope.signal.removeEventListener('abort', cancelPreparation); }
+  }
+  async #returnFromDocumentInventory(scope: ReadScope, trip: DocumentInventoryTrip): Promise<boolean> {
+    if (!this.#canReturnDocument(scope, trip) || !await this.#navigationReady(trip.origin.route, scope) || !this.#canReturnDocument(scope, trip)) return false;
+    return this.#restoreDocumentInventory(scope, trip, true);
+  }
+  #canReturnDocument(scope: ReadScope, trip: DocumentInventoryTrip): boolean {
+    return this.#current(scope) && !this.authentication.busy && !!this.authentication.getSnapshot().principal && this.#state.phase === 'ready' && this.#state.route === 'inventory' && this.#documentTrip === trip
+      && sameIdentity(scope.identity, trip.origin.scope.identity) && this.#validDocumentTarget(trip.origin.scope, trip.request);
+  }
+  #restoreDocumentInventory(scope: ReadScope, trip: DocumentInventoryTrip, refresh: boolean): boolean {
+    if (!this.#canReturnDocument(scope, trip) || refresh && !this.canLeave()) return false;
+    // Detach before the presentation replaces its old product read scope.
+    trip.detach();
+    let restored = false;
+    try { restored = trip.request.restore(refresh) === true; } catch { /* A stale/failed owner cannot report successful navigation. */ }
+    if (!restored) { this.#releaseDocumentTrip(); this.#publish({ ...this.#state }); return false; }
+    this.#documentTrip = null; scope.dispose(); this.#publish({ ...trip.origin, notice: null }); return true;
+  }
+  #releaseDocumentTrip(): void {
+    const trip = this.#documentTrip; this.#documentTrip = null;
+    if (trip) { trip.detach(); trip.origin.scope.dispose(); }
+  }
   cancelRoute(): void {
     if (this.#state.phase !== 'loading' || !this.#state.scope) return;
     this.#state.scope.dispose(); this.#productTrip = null; this.#publish({ ...this.#state, phase: 'cancelled', scope: null, prepared: null });
   }
   /** Safe render-boundary failure. Never display raw exception/provider messages. */
   failRoute(scope: ReadScope): void {
+    if (this.#documentTrip?.origin.scope === scope) { this.#releaseDocumentTrip(); this.#publish({ ...this.#state }); return; }
     if (!this.#current(scope)) return;
-    scope.dispose(); this.#productTrip = null; this.#publish({ ...this.#state, phase: 'error', scope: null, prepared: null });
+    if (this.#documentTrip && this.#restoreDocumentInventory(scope, this.#documentTrip, false)) return;
+    scope.dispose(); this.#productTrip = null; this.#releaseDocumentTrip(); this.#publish({ ...this.#state, phase: 'error', scope: null, prepared: null });
   }
   dispose(): void {
     if (this.#disposed) return;
-    this.authentication.dispose(); this.#disposed = true; this.#productTrip = null;
+    this.authentication.dispose(); this.#disposed = true; this.#productTrip = null; this.#releaseDocumentTrip();
     this.#context.clear(); this.#partySession?.workspace.dispose(); this.#partySession = null;
     this.#salesSession?.workspace.dispose(); this.#salesSession = null;
     this.#transferSession?.workspace.dispose(); this.#transferSession = null; this.#leaves.clear();
@@ -459,6 +546,9 @@ export class ApplicationController {
       const response = await http.fetch(url, init);
       if (scope.active && !init.signal?.aborted) {
         if (response.status === 401) this.authentication.expire();
+        // A document-owned inventory read denial returns the retained form;
+        // it never discards that owner or converts denial to empty inventory.
+        else if (response.status === 403 && route === 'inventory' && this.#documentTrip && this.#current(scope)) this.#restoreDocumentInventory(scope, this.#documentTrip, false);
         // A current management denial is route-local. Session-owned unresolved
         // settings commands must retain their original receipt recovery page.
         else if (response.status === 403 && (route === 'transfers' || route === 'products' || route === 'product-categories' || route === 'product-settings' || route === 'barcode-schemes' || route === 'store-settings' || route === 'staff-settings' || route === 'payment-settings' || route === 'account-settings')
