@@ -1,6 +1,6 @@
 import { Button, Empty, Input, Modal, Table, Tag } from '@arco-design/web-react';
 import { IconSearch } from '@arco-design/web-react/icon';
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { LatestQuery } from '../loading/latest-query.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import { StoreSettingsSingleSelect } from '../settings/stores/single-select.tsx';
@@ -11,7 +11,7 @@ import type { SettingsReference } from '../settings/stores/maintenance-contracts
 import { useDialogFocusReturn } from '../components/use-dialog-focus-return.ts';
 import { initialStaffSettingsQuery } from './contracts.ts';
 import type { StaffSettingsPage as PageData, StaffSettingsProps, StaffSettingsQuery, StaffSettingsRecord } from './contracts.ts';
-import { StaffSettingsController } from './controller.ts';
+import { StaffSettingsController, type StaffEditorIntent } from './controller.ts';
 import { StaffSettingsForm } from './staff-form.tsx';
 import './staff-settings.css';
 
@@ -37,24 +37,40 @@ function StaffContent(props: StaffSettingsProps & { readonly queries: Queries | 
   const list = useSyncExternalStore(queries?.list.subscribe ?? noSubscribe, queries?.list.getSnapshot ?? (() => emptyRead), queries?.list.getSnapshot ?? (() => emptyRead));
   const detail = useSyncExternalStore(queries?.detail.subscribe ?? noSubscribe, queries?.detail.getSnapshot ?? (() => emptyRead), queries?.detail.getSnapshot ?? (() => emptyRead));
   const [draft, setDraft] = useState({ ...initialStaffSettingsQuery }), [selectedHall, setSelectedHall] = useState<SettingsReference | null>(null);
-  const [editor, setEditor] = useState<StaffSettingsController | null>(null), [editingId, setEditingId] = useState<string | null>(null);
-  const [employment, setEmployment] = useState<StaffSettingsRecord | null>(null);
-  const focus = useDialogFocusReturn(scope, editor !== null || editingId !== null || employment !== null);
-  useEffect(() => () => editor?.dispose(), [editor]);
+  const workspace = props.workspace?.matches(scope) ? props.workspace : undefined;
+  const sessionEditor = useSyncExternalStore(workspace?.subscribe ?? noSubscribe, workspace?.getSnapshot ?? (() => null), workspace?.getSnapshot ?? (() => null));
+  const [localEditor, setLocalEditor] = useState<StaffSettingsController | null>(null), [editingId, setEditingId] = useState<string | null>(null);
+  const [intent, setIntent] = useState<StaffEditorIntent>('edit');
+  const editor = workspace ? sessionEditor : localEditor;
+  const focus = useDialogFocusReturn(scope, editor !== null || editingId !== null);
+  useEffect(() => () => localEditor?.dispose(), [localEditor]);
   useEffect(() => {
     const error = list.error ?? detail.error;
+    if (error instanceof HttpQueryError && error.kind === 'forbidden' && workspace?.hasUnresolvedWrite()) return;
+    if (error instanceof HttpQueryError && error.kind === 'unauthenticated') workspace?.dispose();
     if (scope.active && error instanceof HttpQueryError && (error.kind === 'unauthenticated' || error.kind === 'forbidden')) props.onAccessFailure(error.kind);
-  }, [list.error, detail.error, scope, props.onAccessFailure]);
+  }, [list.error, detail.error, scope, props.onAccessFailure, workspace]);
   useEffect(() => {
     if (!editingId || !props.canPrepare || detail.phase !== 'success' || detail.success?.parameters.id !== editingId) return;
     const record = detail.success.data;
-    if (record?.id === editingId) { setEditor(new StaffSettingsController(scope, record, props.roles)); setEditingId(null); }
-  }, [editingId, detail, scope, props.roles, props.canPrepare]);
+    if (record?.id === editingId) { if (workspace) workspace.open(record, intent); else setLocalEditor(new StaffSettingsController(scope, record, props.roles, undefined, intent)); setEditingId(null); }
+  }, [editingId, detail, scope, props.roles, props.canPrepare, workspace, intent]);
   const active = scope.active && list.phase !== 'disposed', result = list.success?.data;
   const searchLabel = props.reader?.capabilities?.loginNameSearch ? '搜索姓名或登录账号' : '搜索姓名';
   const applied = list.success?.parameters ?? initialStaffSettingsQuery, busy = list.phase === 'loading';
   const run = (query: StaffSettingsQuery) => { if (active) void queries?.list.run(query); };
-  const close = () => { editor?.dispose(); setEditor(null); setEditingId(null); queries?.detail.cancel(); focus.request(); };
+  const editorState = useSyncExternalStore(editor?.subscribe ?? noSubscribe, editor?.getSnapshot ?? (() => null), editor?.getSnapshot ?? (() => null));
+  const refreshed = useRef<string | null>(null), write = editorState?.write;
+  useEffect(() => {
+    if (queries && write?.phase === 'committed' && write.result && refreshed.current !== write.result.operationId) {
+      refreshed.current = write.result.operationId; void queries.list.run(applied);
+    }
+  }, [queries, write, applied]);
+  const close = () => { if (workspace) { if (!workspace.close()) return; } else { localEditor?.dispose(); setLocalEditor(null); } setEditingId(null); queries?.detail.cancel(); focus.request(); };
+  const openDetail = (row: StaffSettingsRecord, action: StaffEditorIntent, trigger: HTMLElement) => {
+    if (!active || !queries || editor || editingId) return;
+    focus.capture(trigger); setIntent(action); setEditingId(row.id); void queries.detail.run({ id: row.id });
+  };
   if (!active) return null;
   const columns = [
     { title: '姓名', dataIndex: 'name' },
@@ -63,11 +79,11 @@ function StaffContent(props: StaffSettingsProps & { readonly queries: Queries | 
     { title: '所属营业厅', render: (_: unknown, row: StaffSettingsRecord) => settingsReferenceName(row.hall) },
     { title: '员工状态', width: 95, render: (_: unknown, row: StaffSettingsRecord) => <Tag className={`iw-status ${row.employmentStatus === '在职' ? 'normal' : 'off'}`}>{row.employmentStatus || '未提供'}</Tag> },
     { title: '登录权限', width: 95, render: (_: unknown, row: StaffSettingsRecord) => <Tag className={`iw-status ${row.account?.loginEnabled ? 'normal' : 'off'}`}>{row.account?.loginEnabled ? '已开通' : '已关闭'}</Tag> },
-    { title: '操作', width: 158, render: (_: unknown, row: StaffSettingsRecord) => <div className="bs-row-actions"><Button type="text" size="small" disabled={!props.canPrepare || busy} onClick={event => { if (active && queries) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); setEditingId(row.id); void queries.detail.run({ id: row.id }); } }}>编辑</Button>
-      <Button type="text" size="small" disabled={!props.canPrepare || !['在职','离职'].includes(row.employmentStatus)} onClick={event => { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); setEmployment(row); }}>{row.employmentStatus === '离职' ? '恢复在职' : '办理离职'}</Button></div> },
+    { title: '操作', width: 158, render: (_: unknown, row: StaffSettingsRecord) => <div className="bs-row-actions"><Button type="text" size="small" disabled={!props.canPrepare || busy || !!editor || !!editingId} onClick={event => { if (event.currentTarget instanceof HTMLElement) openDetail(row, 'edit', event.currentTarget); }}>编辑</Button>
+      <Button type="text" size="small" disabled={!props.canPrepare || busy || !!editor || !!editingId || !['在职','离职'].includes(row.employmentStatus)} onClick={event => { if (event.currentTarget instanceof HTMLElement) openDetail(row, row.employmentStatus === '离职' ? 'REINSTATE' : 'LEAVE', event.currentTarget); }}>{row.employmentStatus === '离职' ? '恢复在职' : '办理离职'}</Button></div> },
   ];
   return <section className="store-settings-workbench staff-settings-workbench bs-page iw-workbench iw-arco-controls" aria-label="员工与账号">
-    <header className="bs-head iw-head"><h1>员工与账号</h1><div className="bs-head-actions"><Button type="text" disabled title="操作记录暂未开放">操作记录</Button><Button type="primary" disabled={!props.canPrepare} onClick={event => { if (active) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); setEditor(new StaffSettingsController(scope, null, props.roles)); } }}>新增员工</Button></div></header>
+    <header className="bs-head iw-head"><h1>员工与账号</h1><div className="bs-head-actions"><Button type="text" disabled title="操作记录暂未开放">操作记录</Button><Button type="primary" disabled={!props.canPrepare || !!editor || !!editingId} onClick={event => { if (active) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); if (workspace) workspace.open(null); else setLocalEditor(new StaffSettingsController(scope, null, props.roles)); } }}>新增员工</Button></div></header>
     <form className="bs-toolbar" role="search" onSubmit={event => { event.preventDefault(); run({ ...draft, page: 1, pageSize: applied.pageSize }); }}>
       <div className="bs-filter-fields">
         <div className="bs-filter search"><Input className="iw-arco-input iw-search-input" aria-label={searchLabel} placeholder={searchLabel} maxLength={200} value={draft.search} onChange={search => setDraft(value => ({ ...value, search }))} suffix={<IconSearch />} allowClear /></div>
@@ -85,9 +101,7 @@ function StaffContent(props: StaffSettingsProps & { readonly queries: Queries | 
     <div className="bs-table-wrap iw-arco-table" aria-busy={busy}><Table size="small" rowKey="id" columns={columns} data={result ? [...result.items] : []} pagination={false} noDataElement={<Empty description={!queries ? '资料暂不可用' : !result ? '尚未读到资料' : '暂无符合条件的数据'} />} /></div>
     <div className="bs-pager"><StoreSettingsPagination scope={scope} page={applied.page} pageSize={applied.pageSize} total={result?.total ?? null} busy={busy} onPage={page => run({ ...applied, page })} onPageSize={pageSize => run({ ...applied, page: 1, pageSize })} /></div>
     {editor && <StaffSettingsForm {...props} controller={editor} close={close} />}
-    {editingId && !editor && <Modal className="store-settings-modal iw-arco-controls" visible title="编辑员工" maskClosable={false} onCancel={close} okText="确定" cancelText="取消" okButtonProps={{ disabled: true }}><p role="status">{detail.phase === 'loading' ? '正在读取当前资料…' : detail.phase === 'success' ? '员工不存在或不可访问。' : '员工资料读取失败。'}</p>{detail.phase === 'error' && <Button onClick={() => { void queries?.detail.run({ id: editingId }); }}>重试读取</Button>}</Modal>}
-    {employment && <Modal className="store-settings-modal iw-arco-controls" visible title={employment.employmentStatus === '离职' ? '确认恢复在职' : '确认办理离职'} maskClosable={false} onCancel={() => { setEmployment(null); focus.request(); }} okText="确定" cancelText="取消" okButtonProps={{ disabled: true }}>
-      <p>{employment.employmentStatus === '离职' ? `确定恢复「${employment.name}」在职？登录权限仍保持关闭，需要登录时请在编辑员工中手工开通。` : `确定为「${employment.name}」办理离职？办理后登录权限关闭，员工资料、登录账号和历史单据继续保留。恢复在职后登录权限仍保持关闭。`}</p><p className="settings-note">此版本暂未开放此操作。</p>
-    </Modal>}
+    {editingId && !editor && <Modal className="store-settings-modal iw-arco-controls" visible title={intent === 'edit' ? '编辑员工' : intent === 'LEAVE' ? '确认办理离职' : '确认恢复在职'} maskClosable={false} onCancel={close} okText="确定" cancelText="取消" okButtonProps={{ disabled: true }}><p role="status">{detail.phase === 'loading' ? '正在读取当前资料…' : detail.phase === 'success' ? '员工不存在或不可访问。' : '员工资料读取失败。'}</p>{detail.phase === 'error' && <Button onClick={() => { void queries?.detail.run({ id: editingId }); }}>重试读取</Button>}</Modal>}
+
   </section>;
 }
