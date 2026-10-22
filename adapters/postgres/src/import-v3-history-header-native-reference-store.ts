@@ -1,3 +1,5 @@
+import { checkedNativeRuntime26Capability } from '../../../packages/application/src/native-import-schema-contract.ts';
+import type { NativeRuntime26Capability } from '../../../packages/application/src/native-import-schema-contract.ts';
 import { validatePreparedHistoryHeaderNativeReferenceChunk } from '../../../packages/application/src/import-v3-history-header-native-reference.ts';
 import type { HistoryHeaderNativeReferenceStore, PreparedHistoryHeaderNativeReferenceChunk } from '../../../packages/application/src/import-v3-history-header-native-reference.ts';
 import type { PgSalesPool, PgSalesClient } from './sales-unit-of-work.ts';
@@ -19,13 +21,14 @@ export function historyHeaderNativeReferenceEvidence(chunk:PreparedHistoryHeader
 /** Binds EXISTING natives only. Snapshot equality is point-in-time, never a freeze on future native edits. */
 export class PostgresV3HistoryHeaderNativeReferenceStore implements HistoryHeaderNativeReferenceStore {
   private readonly pool:PgSalesPool;
-  constructor(pool:PgSalesPool){this.pool=pool;}
+  private readonly runtime26:NativeRuntime26Capability|undefined;
+  constructor(pool:PgSalesPool,runtime26?:NativeRuntime26Capability){this.pool=pool;this.runtime26=checkedNativeRuntime26Capability(runtime26);}
   async stage(input:PreparedHistoryHeaderNativeReferenceChunk):Promise<{inserted:number;replayed:number}>{
     const chunk=structuredClone(input);validatePreparedHistoryHeaderNativeReferenceChunk(chunk);
     const client=await this.pool.connect();let began=false,commitAttempted=false,discard:Error|undefined;
     try{
       await client.query('BEGIN ISOLATION LEVEL READ COMMITTED');began=true;
-      const result=await insertValidatedHistoryHeaderNativeReferences(client,chunk);commitAttempted=true;await client.query('COMMIT');return result;
+      const result=await insertValidatedHistoryHeaderNativeReferences(client,chunk,this.runtime26);commitAttempted=true;await client.query('COMMIT');return result;
     }catch(error){
       if(!began||commitAttempted)discard=error instanceof Error?error:Error('HISTORY_HEADER_REFERENCE_UNKNOWN_OUTCOME');
       if(began&&!commitAttempted)try{await client.query('ROLLBACK');}catch(rollback){discard=rollback instanceof Error?rollback:Error('HISTORY_HEADER_REFERENCE_ROLLBACK_FAILED');throw new AggregateError([error,rollback],'Native reference staging failed; connection discarded');}
@@ -38,8 +41,11 @@ export class PostgresV3HistoryHeaderNativeReferenceStore implements HistoryHeade
  * Reentrant cutoff/batch locks are rechecked; all native locks precede source/reference access.
  * No automatic retries. Caller must discard its connection on an uncertain COMMIT.
  */
-export async function insertValidatedHistoryHeaderNativeReferences(client:PgSalesClient,input:PreparedHistoryHeaderNativeReferenceChunk):Promise<{inserted:number;replayed:number}>{
+export async function insertValidatedHistoryHeaderNativeReferences(client:PgSalesClient,input:PreparedHistoryHeaderNativeReferenceChunk,runtime26?:NativeRuntime26Capability):Promise<{inserted:number;replayed:number}>{
     const chunk=structuredClone(input);validatePreparedHistoryHeaderNativeReferenceChunk(chunk);
+    const verified=checkedNativeRuntime26Capability(runtime26);
+    require(chunk.selection.source!=='HISTORICAL_CUSTOMER_SUPPLEMENT_V1'||verified!==undefined,'HISTORY_HEADER_REFERENCE_EXACT26_REQUIRED');
+    if(verified)await verified.assertReady(client,'IMPORT_STAGE');
     await client.query('/* history-header-reference:global-lock */ SELECT naijue_erp.cutoff_import_lock()');
     const batches=(await client.query(`/* history-header-reference:batch */ SELECT mapping_version,status,source_hash,source_name FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`,[chunk.batchId])).rows;
     const batch=batches[0];require(batches.length===1&&batch?.mapping_version===chunk.mappingVersion&&['STAGED','VALIDATING'].includes(String(batch.status))

@@ -1,0 +1,51 @@
+{
+  "atUtc": "2026-10-22T09:11:48.637322+00:00",
+  "parent": "9571e461951be33f727e2af45934376c128b90e1",
+  "groups": [
+    {
+      "slice": "EXACT2_SHARED_PREPARE_AND_RUNTIME26_INTERFACE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/EXACT2-PREPARE-RESULT.json",
+      "receiptSha256": "ef3fa6f1a17b897f4a653ce9b1f3fa31fe7df9163688304630272d457a1ad900",
+      "files": [
+        {
+          "path": "packages/application/src/native-party-import.ts",
+          "sha256": "0f1cdf7f843ae3be66482cbdb92007b523a620d6a4e394345da3c9c9415e76f4",
+          "bytes": 13284,
+          "owner": "D1"
+        },
+        {
+          "path": "packages/application/src/import-v3-history-header-native-reference.ts",
+          "sha256": "061a192182af09486b936c9957d4efa82ee92b52d248aa8539968fd80e95c708",
+          "bytes": 15356,
+          "owner": "D1"
+        },
+        {
+          "path": "adapters/postgres/src/import-v3-history-header-native-reference-store.ts",
+          "sha256": "863729e233e5355235cef35749eb1cb18fe2b5e3e29c72ac774f4023242500f3",
+          "bytes": 10610,
+          "owner": "D1"
+        },
+        {
+          "path": "packages/application/src/native-import-schema-contract.ts",
+          "sha256": "8f1b52e96c6b3855dd19fac1dd07e7db02bc9c034b421b2c0862efa7ac75d692",
+          "bytes": 14367,
+          "owner": "D1"
+        }
+      ]
+    },
+    {
+      "slice": "C_W7_OPTIONAL_ROOT_CONTRACT",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/W7-SHARED-CONTRACTS-PROPOSAL.patch",
+      "files": [
+        {
+          "path": "apps/web/src/application/contracts.ts",
+          "bytes": 10569,
+          "sha256": "0dff7f7fe3351b260a1db62e1110317ee1fdc02ed9395a3214e950506a59cd4b",
+          "owner": "C"
+        }
+      ]
+    }
+  ],
+  "fileCount": 5,
+  "scope": "Fixed source prepare only, no runtime issuer; root contract integration/typecheck delegated with F1 successor"
+}

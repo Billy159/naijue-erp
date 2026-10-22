@@ -124,3 +124,24 @@ export function assertReviewedNativeImportSchema(versions: unknown, options: {
     options.errorCode, "Exact explicitly reviewed complete native-import schema prefix required; missing or unknown migrations are rejected");
   return contract;
 }
+
+/** Successor contract only. No issuer/default implementation or new reviewed
+ * schema registration is supplied here. Only an independently reviewed host may
+ * provide this after actual exact1..26 objects, target identity and grants pass. */
+export interface NativeRuntime26Capability {
+  readonly profile: "EXACT26";
+  readonly contract: "NATIVE_RUNTIME26_V1";
+  readonly assertReady: (client: object, purpose: "IMPORT_STAGE" | "IMPORT_PRODUCT_SEASONS" | "IMPORT_PUBLISH" | "PRODUCT_SEASONS_READ" | "PRODUCT_MAINTENANCE" | "INVENTORY_ADMISSION" | "HISTORY_READ" | "CURRENT_FORM_READ" | "CURRENT_CUSTOMER_READ_WRITE") => Promise<void>;
+}
+export function checkedNativeRuntime26Capability(value: NativeRuntime26Capability | undefined): NativeRuntime26Capability | undefined {
+  if (value === undefined) return undefined;
+  if (value === null || typeof value !== "object" || Object.getPrototypeOf(value) !== Object.prototype || Reflect.ownKeys(value).length !== 3)
+    throw new TypeError("Exact26 independently verified runtime capability required");
+  const profile=Object.getOwnPropertyDescriptor(value,"profile"), contract=Object.getOwnPropertyDescriptor(value,"contract"), verify=Object.getOwnPropertyDescriptor(value,"assertReady");
+  if (!profile || !("value" in profile) || profile.value !== "EXACT26" || !contract || !("value" in contract) || contract.value !== "NATIVE_RUNTIME26_V1"
+    || !verify || !("value" in verify) || typeof verify.value !== "function") throw new TypeError("Exact26 independently verified runtime capability required");
+  return Object.freeze({profile:"EXACT26",contract:"NATIVE_RUNTIME26_V1",async assertReady(client:object,purpose:Parameters<NativeRuntime26Capability["assertReady"]>[1]) {
+    const result:unknown=await verify.value(client,purpose);
+    if(result!==undefined)throw new TypeError("Exact26 runtime verification must complete without a boolean substitute");
+  }});
+}

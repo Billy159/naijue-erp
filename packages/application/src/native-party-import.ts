@@ -2,7 +2,7 @@ import { requireDomain } from '../../domain/src/errors.ts';
 import { IMPORT_V2_TABLES } from './import-v2-contract.ts';
 import { HISTORY_MAPPING_VERSION } from './history-storage-contract.ts';
 import type { ImportSourceEvidence, JsonObject } from './history-storage-contract.ts';
-import { prepareV3HistoryHeaderNativeReferenceChunk } from './import-v3-history-header-native-reference.ts';
+import { prepareV3HistoryHeaderNativeReferenceChunk, assertExactHistoricalCustomerReference } from './import-v3-history-header-native-reference.ts';
 import type { HistoryHeaderNativeReferenceInput, HistoryHeaderNativeReferenceSelection, HistoryHeaderReferenceEnumMapping, PreparedHistoryHeaderNativeReferenceChunk } from './import-v3-history-header-native-reference.ts';
 import type { HeaderNativeBinding } from './import-v3-history-header.ts';
 import { requestHash } from './request-hash.ts';
@@ -11,7 +11,8 @@ import { mapHistoryTemporal } from './history-temporal-mapping.ts';
 export const NATIVE_PARTY_IMPORT_VERSION = 'NATIVE_PARTY_IMPORT_V1';
 export const NATIVE_PARTY_IMPORT_CHUNK_LIMIT = 100;
 export type NativePartyImportEntity = 'HALL' | 'CUSTOMER' | 'SUPPLIER' | 'STAFF' | 'WAREHOUSE';
-export interface NativePartyImportSelection extends Omit<HistoryHeaderNativeReferenceSelection, 'entity'> { entity: NativePartyImportEntity }
+export type NativePartyImportSelection = (Omit<Extract<HistoryHeaderNativeReferenceSelection,{source:'BASE_V2'}>, 'entity'> & { entity: NativePartyImportEntity })
+  | Extract<HistoryHeaderNativeReferenceSelection,{source:'HISTORICAL_CUSTOMER_SUPPLEMENT_V1'}>;
 export interface NativePartyImportInput {
   batchId: string; fixedSourceNamespace: string; selection: NativePartyImportSelection; source: ImportSourceEvidence;
   /** Explicit independent UUID and complete native shape. No lookup by name or source UUID reuse. */
@@ -49,12 +50,14 @@ export function prepareNativePartyImportChunk(inputs: readonly NativePartyImport
     const { selection, source: s, nativeSnapshot: n } = input, entity = selection.entity;
     check(['HALL', 'CUSTOMER', 'SUPPLIER', 'STAFF', 'WAREHOUSE'].includes(entity), 'NATIVE_PARTY_ENTITY');
     const table = IMPORT_V2_TABLES.find(t => t.entity === entity)!;
-    check(selection.source === 'BASE_V2' && selection.path === table.file && [selection.baseManifestSha256, selection.selectionSha256, selection.approvalSha256, selection.csvSha256].every(hash), 'NATIVE_PARTY_SELECTION');
+    const historical = selection.source === 'HISTORICAL_CUSTOMER_SUPPLEMENT_V1';
+    if (historical) assertExactHistoricalCustomerReference(input as HistoryHeaderNativeReferenceInput);
+    else check(selection.source === 'BASE_V2' && selection.path === table.file && [selection.baseManifestSha256, selection.selectionSha256, selection.approvalSha256, selection.csvSha256].every(hash), 'NATIVE_PARTY_SELECTION');
     check(input.batchId === first.batchId && input.fixedSourceNamespace === first.fixedSourceNamespace && ['baseManifestSha256', 'selectionSha256', 'approvalSha256'].every(k => selection[k as keyof NativePartyImportSelection] === first.selection[k as keyof NativePartyImportSelection]), 'NATIVE_PARTY_MIXED_SELECTION');
     check(uuid(input.batchId) && text(input.fixedSourceNamespace) && s.batchId === input.batchId && uuid(s.id) && s.entityType === entity && text(s.sourceKey)
       && text(s.fileRef) && text(s.sheet) && typeof s.rowNo === 'string' && /^[1-9]\d*$/.test(s.rowNo) && BigInt(s.rowNo) <= 9223372036854775807n && hash(s.sourceFileSha256) && hash(s.rowSha256), 'NATIVE_PARTY_SOURCE');
     const raw = s.rawFields, normalized = s.normalizedFields;
-    check(Object.keys(normalized).length === table.columns.length && table.columns.every(c => Object.hasOwn(raw, c.name) && raw[c.name] === normalized[c.name]
+    if (!historical) check(Object.keys(normalized).length === table.columns.length && table.columns.every(c => Object.hasOwn(raw, c.name) && raw[c.name] === normalized[c.name]
       && typeof raw[c.name] === 'string' && (raw[c.name] as string).length <= 65536 && !(raw[c.name] as string).includes('\0') && (!c.required || text(raw[c.name])))
       && raw['来源编号'] === s.sourceKey, 'NATIVE_PARTY_EXACT_SOURCE');
     check(s.fieldProvenance.schema_version === 1 && s.fieldProvenance.fields && typeof s.fieldProvenance.fields === 'object' && !Array.isArray(s.fieldProvenance.fields)

@@ -1,4 +1,5 @@
 import type { ComponentType, ReactNode } from 'react';
+import type { AccountSettingsProps } from '../account-settings/contracts.ts';
 import type { ApplicationController } from './controller.ts';
 import type { AuthenticationPrincipal } from '../authentication/contracts.ts';
 import type { InventoryActions } from '../inventory/contracts.ts';
@@ -16,7 +17,7 @@ import type { PaymentSettingsProps } from '../payment-settings/contracts.ts';
 import type { ProductFullPageConfiguration } from '../products/product-page-contracts.ts';
 import type { CatalogueMaintenanceCapability } from '../product-settings/colors/contracts.ts';
 
-export type ApplicationRoute = 'inventory' | 'sales' | 'transfers' | 'customers' | 'suppliers' | 'products' | 'product-categories' | 'product-settings' | 'barcode-schemes' | 'store-settings' | 'staff-settings' | 'payment-settings';
+export type ApplicationRoute = 'inventory' | 'sales' | 'transfers' | 'customers' | 'suppliers' | 'products' | 'product-categories' | 'product-settings' | 'barcode-schemes' | 'store-settings' | 'staff-settings' | 'payment-settings' | 'account-settings';
 export interface RouteStylesheet {
   /** Resolve only when the route's necessary CSS is usable. No construction-time load. */
   readonly load: () => Promise<unknown>;
@@ -115,6 +116,12 @@ export interface PaymentSettingsRouteConfiguration {
     readonly writesEnabled: () => boolean;
   };
 }
+export interface AccountSettingsRouteConfiguration {
+  readonly stylesheet: RouteStylesheet;
+  readonly view: Omit<AccountSettingsProps, 'scope' | 'onAccessFailure'>;
+  /** One authenticated ADMIN session owner; mutually exclusive with view.workspace. */
+  readonly commands?: { readonly newRequestKey: () => string; readonly writesEnabled: () => boolean };
+}
 export interface ApplicationConfiguration {
   /** Exact trusted HTTPS application origin, explicit API prefix and injected fetch. */
   readonly http: HttpQueryOptions;
@@ -134,6 +141,7 @@ export interface ApplicationConfiguration {
     readonly storeSettings?: StoreSettingsRouteConfiguration;
     readonly staffSettings?: StaffSettingsRouteConfiguration;
     readonly paymentSettings?: PaymentSettingsRouteConfiguration;
+    readonly accountSettings?: AccountSettingsRouteConfiguration;
   };
 }
 export interface ApplicationRouteProps { readonly scope: ReadScope }
@@ -171,7 +179,7 @@ export type ApplicationSnapshot = {
 };
 export const routeLabels: Readonly<Record<ApplicationRoute, string>> = Object.freeze({
   inventory: '库存状况表', sales: '销货列表', transfers: '调拨单列表', customers: '客户资料', suppliers: '供应商资料',
-  products: '商品信息', 'product-categories': '商品分类', 'product-settings': '商品设置', 'barcode-schemes': '条码方案', 'store-settings': '营业厅与仓库', 'staff-settings': '员工与账号', 'payment-settings': '收款配置',
+  products: '商品信息', 'product-categories': '商品分类', 'product-settings': '商品设置', 'barcode-schemes': '条码方案', 'store-settings': '营业厅与仓库', 'staff-settings': '员工与账号', 'payment-settings': '收款配置', 'account-settings': '登录账号',
 });
 
 export interface ApplicationPresentation {
