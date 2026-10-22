@@ -74,7 +74,10 @@ export class SettingsAuditController {
     const result = await this.query.run(parameters);
     if (result.status !== 'error' || !this.scope.active || !(result.error instanceof HttpQueryError) || result.error.kind !== 'unauthenticated' && result.error.kind !== 'forbidden') return;
     if (result.error.kind === 'forbidden' && this.#options.hasUnresolvedWrite?.()) return;
-    const kind = result.error.kind; this.#options.scope.dispose(); try { this.#options.onAccessFailure(kind); } catch { /* Parent already cleared. */ }
+    const kind = result.error.kind;
+    try { this.#options.onAccessFailure(kind); }
+    catch { /* Parent cleanup still runs if the host callback fails. */ }
+    finally { this.#options.scope.dispose(); }
   }
   #publish(snapshot: SettingsAuditSnapshot): void { this.#snapshot = Object.freeze(snapshot); for (const listener of [...this.#listeners]) { try { listener(); } catch { /* Cleanup must finish. */ } } }
 }

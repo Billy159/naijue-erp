@@ -1,0 +1,260 @@
+{
+  "atUtc": "2026-10-22T23:51:23.479888+00:00",
+  "parent": "5ddccfb1ee8e39e3c5cd129da3c43c033239ecb7",
+  "groups": [
+    {
+      "slice": "fix: notify audit route owner before disposing current parent scope",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-auth-seam-v1/RESULT.json",
+      "receiptSha256": "ba3a3688cd055cbe4c94d45c174092bde94bc2edc7102e317c1c987157481166",
+      "receiptSnapshot": {
+        "taskId": "DATA-SRC-003/AUTH-SEAM-v1",
+        "owner": "F3",
+        "clientDate": "2026-10-23",
+        "generatedAtObservedUtc": "2026-10-22T23:48:30.980124+00:00",
+        "status": "SOURCE_FIX_READY_LOCAL_REAL_ROOT_REFUSAL_PROOF_FOR_C_CHECKPOINT",
+        "baselineHead": "3a938141cb92bc90aea201480938fdb20b85ff41",
+        "headObservedAtReceipt": "3a938141cb92bc90aea201480938fdb20b85ff41",
+        "rootSourceLastCommit": "6241fc07a1ff952f9c34fe3af27345339dcbecac feat: retain document owner across targeted inventory journey",
+        "scope": "Only existing audit/controller.ts #run refusal notification order: call the existing owner callback while parent scope is active, then always dispose the same old parent in finally. No direct root auth call, new raw callback, new contract or backend change.",
+        "files": [
+          {
+            "path": "apps/web/src/settings/audit/controller.ts",
+            "beforeSha256": "cecb28606c592ba433b0519a0d2b649fe3ed74be7196c3fd1326e502159c5ac7",
+            "afterSha256": "368f017d2528ec03539e29c3d5f9207daf10c7e8eaa4065dfeec464bdf731d44"
+          }
+        ],
+        "patch": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-auth-seam-v1/exact1.patch",
+          "sha256": "893dd27a29770e67e012587a0c6cebbaa4e14276a9e7b7f8816257ec786290e6"
+        },
+        "newRFiles": [],
+        "actualCounterexamples": {
+          "level": "Local execution of real ApplicationController, actual prepared payment route callback, native audit HTTP reader and original SettingsAuditController, using explicit synthetic authenticated-session HTTP and401/403 read responses. No mounted root/DOM/browser/PG.",
+          "failedBefore": [
+            {
+              "case": "current401 pending=false",
+              "observation": {
+                "rootPhase": "ready",
+                "rootScopeActive": false,
+                "authPhase": "authenticated",
+                "parentActive": false,
+                "auditDisposed": true,
+                "auditReadPhase": "disposed",
+                "auditReadDenied": false,
+                "callbacks": [
+                  {
+                    "kind": "unauthenticated",
+                    "parentActiveAtCallback": false,
+                    "rootPhaseBefore": "ready"
+                  }
+                ],
+                "calls": [
+                  {
+                    "path": "/api/auth/session",
+                    "method": "GET"
+                  },
+                  {
+                    "path": "/api/settings/audit/query",
+                    "method": "POST"
+                  }
+                ]
+              }
+            },
+            {
+              "case": "current403 pending=false",
+              "observation": {
+                "rootPhase": "ready",
+                "rootScopeActive": false,
+                "authPhase": "authenticated",
+                "parentActive": false,
+                "auditDisposed": true,
+                "auditReadPhase": "disposed",
+                "auditReadDenied": false,
+                "callbacks": [
+                  {
+                    "kind": "forbidden",
+                    "parentActiveAtCallback": false,
+                    "rootPhaseBefore": "ready"
+                  }
+                ],
+                "calls": [
+                  {
+                    "path": "/api/auth/session",
+                    "method": "GET"
+                  },
+                  {
+                    "path": "/api/settings/audit/query",
+                    "method": "POST"
+                  }
+                ]
+              }
+            },
+            {
+              "case": "current401 pending=true",
+              "observation": {
+                "rootPhase": "ready",
+                "rootScopeActive": false,
+                "authPhase": "authenticated",
+                "parentActive": false,
+                "auditDisposed": true,
+                "auditReadPhase": "disposed",
+                "auditReadDenied": false,
+                "callbacks": [
+                  {
+                    "kind": "unauthenticated",
+                    "parentActiveAtCallback": false,
+                    "rootPhaseBefore": "ready"
+                  }
+                ],
+                "calls": [
+                  {
+                    "path": "/api/auth/session",
+                    "method": "GET"
+                  },
+                  {
+                    "path": "/api/settings/audit/query",
+                    "method": "POST"
+                  }
+                ]
+              }
+            }
+          ],
+          "causalOrder": "Original AuditController disposed parent first; the real callback then reached ApplicationController with inactive scope, so #current rejected handling. Auth stayed authenticated and root stayed ready while its scope was inactive.",
+          "notClaimed": "A served preview or production refusal failure was observed."
+        },
+        "checks": [
+          {
+            "name": "New current/late/cancelled/superseded root-audit seam",
+            "status": "PASS",
+            "cases": 10,
+            "beforePass": 7,
+            "beforeFail": 3,
+            "coverage": [
+              "current401 pending=false",
+              "current403 pending=false",
+              "current401 pending=true",
+              "current403 pending=true",
+              "late401 after route replacement",
+              "cancelled401 read",
+              "superseded401 read",
+              "late403 after route replacement",
+              "cancelled403 read",
+              "superseded403 read"
+            ]
+          },
+          {
+            "name": "Affected strict types",
+            "status": "PASS",
+            "exitCode": 0,
+            "scope": "Changed audit controller + unchanged entry/real root controller/payment route and transitive dependencies"
+          },
+          {
+            "name": "Exact diff and source protection",
+            "status": "PASS",
+            "exitCode": 0,
+            "protectedFiles": 10,
+            "restOfControllerByteIdentical": true
+          }
+        ],
+        "resultingBehavior": {
+          "current401": "Existing current owner callback expires authentication to anonymous and root goes home, with/without pending host flag.",
+          "current403NoPending": "Existing current owner callback transitions root to route error and disposes parent.",
+          "current403Pending": "Original host guard true skips notification/disposal; parent stays active, audit readDenied true. Host port fixture is explicit, not real uncertain-write evidence.",
+          "staleCancelledSuperseded": "401 and403 on old/replaced/cancelled reads never invoke parent callback or affect current/new route/session.",
+          "callbackCleanup": "finally always releases the same old parent even if its supplied callback throws; no forced global auth fallback added."
+        },
+        "notTested": [
+          "Mounted actualApp/DOM/browser error state or focus",
+          "Actual PostgreSQL/roles/session/credential provider or real pending business write/receipt",
+          "C syntheticempty0 adoption/geometry/6filters6columns/input behavior",
+          "Whole existing backend audit/native suites or88popup not rerun",
+          "Integrated build/server/deployment"
+        ],
+        "safetyFacts": {
+          "backendEdited": false,
+          "applicationRootEdited": false,
+          "auditEntryEdited": false,
+          "contractsEdited": false,
+          "authorizationBypassed": false,
+          "oldGuardsRemoved": false,
+          "writeCommands": 0,
+          "requestKeys": 0,
+          "realCredentials": false,
+          "generatedAuditRows": 0,
+          "database": false,
+          "browser": false,
+          "serverStarted": false,
+          "gitMutation": false,
+          "newApplicationFiles": []
+        },
+        "blockers": [],
+        "next": "C pin exact1 and QF only this new callback/scope condition and affected types. C syntheticempty0 remains separately qualified preview data; current old preview is not silently relabeled fixed. Other consumers/formal host continue through original owners.",
+        "authorization": {
+          "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+          "humanProgressMessage": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "conditionalFixAuthorization": "Reproduce an affected refusal seam before changing original F3 controller; satisfied by the three before counterexamples.",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "xhigh",
+          "fastRequested": false,
+          "fastEnabledByF3": false,
+          "actualFastUi": "NOT_OBSERVED"
+        },
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-auth-seam-v1/BASELINE.json",
+            "sha256": "59c357dff9644e48916562267267fff4e1819720d3c631e028c3b44481780196"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-auth-seam-v1/CHECK-before.json",
+            "sha256": "c6ff7acf9379eccb73d0698cdc639accf6ba241e965c057bed84169a7c8a277e"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-auth-seam-v1/before.log",
+            "sha256": "298fa08aec68ddb9877d05afcbafdf86977ff86e1acf3d8aa208c7c23cb0f033"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-auth-seam-v1/CHECK-after.json",
+            "sha256": "e530350ee0c2b28d82e3c0fcf3991da1d192931087f5613572c88474226261bf"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-auth-seam-v1/after.log",
+            "sha256": "6b6ab3b217112f669c78df1dd950b87c836244773f7e3e3bd131a7b4c8d10637"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-auth-seam-v1/check-auth-seam.mjs",
+            "sha256": "4c7d2c391285a8f19069600a165c0cff4e2b1efb53079dedb801f514ba9ba005"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-auth-seam-v1/TYPE-CHECK.json",
+            "sha256": "ee0f35cd5c585c61ac21dc4d70b5eda285ec9adaa5787f7d4e123e9e1ff7027a"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-auth-seam-v1/types.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-auth-seam-v1/tsconfig.json",
+            "sha256": "5aca5f1626e0a8a9c60867403318d4f10ebebe9f629d69ef2b72d873242a0b91"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-auth-seam-v1/SOURCE-PROTECTION.json",
+            "sha256": "f82bf8e5aa1da4f28557e8a1be1ba94d58748629993ea60b56fd5f91f75e997f"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-auth-seam-v1/exact1.patch",
+            "sha256": "893dd27a29770e67e012587a0c6cebbaa4e14276a9e7b7f8816257ec786290e6"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/settings/audit/controller.ts",
+          "owner": "F3",
+          "bytes": 8781,
+          "sha256": "368f017d2528ec03539e29c3d5f9207daf10c7e8eaa4065dfeec464bdf731d44"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only audit current401/403 original owner callback before finally oldparentdispose; actualRoot/Route native reader minimal new10conditions fail3before/pass10after source protocol, pending host-port synthetic. No raw callback, backend or newcap grant. Root notmounted/browser/PG/auditrealdata untested."
+}
