@@ -1,3 +1,5 @@
+import { historicalCustomerExclusionEnabled } from "./party-read-reader.ts";
+import type { HistoricalCustomerExclusionCapability } from "./party-read-reader.ts";
 import { readCurrentRecentAccount } from "./current-account-recommendations.ts";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
 import type { CurrentFormBarcodeQuery, CurrentFormBarcodeResult, CurrentFormAuthorization, CurrentFormContext, CurrentFormIdentity, CurrentFormIntent, CurrentFormPage,
@@ -68,11 +70,13 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
   private readonly pool: PgSalesPool;
   private readonly authorize: CurrentFormAuthorization["authorize"];
   private readonly recommendationTimeoutMillis: number;
-  constructor(pool: PgSalesPool, authorization: CurrentFormAuthorization, options?: { readonly recommendationTimeoutMillis?: number }) {
+  private readonly excludeHistoricalCustomers: boolean;
+  constructor(pool: PgSalesPool, authorization: CurrentFormAuthorization, options?: { readonly recommendationTimeoutMillis?: number; readonly historicalCustomerExclusion?: HistoricalCustomerExclusionCapability }) {
     if (typeof pool?.connect !== "function" || typeof authorization?.authorize !== "function")
       throw new TypeError("Current forms require an explicit PostgreSQL pool and trusted form authorization provider");
     const timeout = options?.recommendationTimeoutMillis ?? 250;
     if (!Number.isInteger(timeout) || timeout < 1 || timeout > 1000) throw new TypeError("Optional account recommendation timeout must be an integer from 1 through 1000 milliseconds");
+    this.excludeHistoricalCustomers = historicalCustomerExclusionEnabled(pool, options?.historicalCustomerExclusion ?? null);
     this.pool = pool; this.authorize = authorization.authorize.bind(authorization); this.recommendationTimeoutMillis = timeout;
   }
   private async identity(query: Query, actor: ActorContext): Promise<CurrentFormIdentity> {
@@ -188,7 +192,8 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
           columns = `r.id, r.name, NULL::text AS code, r.id AS hall_id, r.name AS hall_name, NULL::uuid AS payment_method_id, NULL::text AS payment_method_name`; break;
         }
         case "customer":
-          from = "FROM naijue_erp.customer r"; where = `r.enabled AND (${match("r.name")} OR ${match("r.code")})`;
+          from = "FROM naijue_erp.customer r"; where = `r.enabled AND (${match("r.name")} OR ${match("r.code")})`
+            + (this.excludeHistoricalCustomers ? " AND NOT naijue_erp.is_exact_historical_customer_only(r.id)" : "");
           columns = `r.id, r.name, r.code, NULL::uuid AS hall_id, NULL::text AS hall_name, NULL::uuid AS payment_method_id, NULL::text AS payment_method_name`; break;
         case "salesperson":
           from = "FROM naijue_erp.staff r LEFT JOIN naijue_erp.hall h ON h.id = r.hall_id";

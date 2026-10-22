@@ -1,3 +1,5 @@
+import { historicalCustomerExclusionEnabled } from "./party-read-reader.ts";
+import type { HistoricalCustomerExclusionCapability } from "./party-read-reader.ts";
 import type { SalesDocument, SalesDraft, SalesLineRow } from "../../../packages/domain/src/documents.ts";
 import type { EntityId, EntityKind } from "../../../packages/domain/src/values.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
@@ -34,13 +36,16 @@ function exactMap<K extends EntityKind>(kind: K, rows: readonly Record<string, u
 
 /** Owned by one bound sales transaction. No pool, BEGIN/COMMIT, independent cache,
  * identity grant or document mutation. Every query is through its original client. */
+export interface NativeSalesHistoricalCustomers { readonly target: object; readonly capability: HistoricalCustomerExclusionCapability }
 export class PostgresNativeSalesFacts {
   private readonly query: NativeSalesFactQuery;
+  private readonly excludeHistoricalCustomers: boolean;
   private readonly checkScope: (salesId: EntityId<"sales">) => void;
   private readonly retained: () => readonly Pick<SalesLineRow, "id" | "skuId" | "snapshot">[];
   private readonly verifier: NativeCatalogueCompletenessVerifier["assertComplete"] | undefined;
   constructor(query: NativeSalesFactQuery, checkScope: (salesId: EntityId<"sales">) => void,
-    retained: () => readonly Pick<SalesLineRow, "id" | "skuId" | "snapshot">[], verifier?: NativeCatalogueCompletenessVerifier) {
+    retained: () => readonly Pick<SalesLineRow, "id" | "skuId" | "snapshot">[], verifier?: NativeCatalogueCompletenessVerifier, historicalCustomers?: NativeSalesHistoricalCustomers) {
+    this.excludeHistoricalCustomers = historicalCustomers === undefined ? false : historicalCustomerExclusionEnabled(historicalCustomers.target, historicalCustomers.capability);
     this.query = query; this.checkScope = checkScope; this.retained = retained;
     this.verifier = verifier?.assertComplete.bind(verifier);
   }
@@ -67,7 +72,7 @@ export class PostgresNativeSalesFacts {
     requireDomain(schema.installed === true, "NATIVE_CATALOGUE_FACTS_UNAVAILABLE", "Current native sales schema including the original-method snapshot has not been installed");
     const hall = one((await this.query("/* native-sales-facts:hall */ SELECT id, enabled FROM naijue_erp.hall WHERE id = $1::uuid FOR SHARE", [h.hallId])).rows);
     const warehouse = one((await this.query("/* native-sales-facts:warehouse */ SELECT id, hall_id, enabled FROM naijue_erp.warehouse WHERE id = $1::uuid FOR SHARE", [h.warehouseId])).rows);
-    const customer = one((await this.query("/* native-sales-facts:customer */ SELECT id, enabled FROM naijue_erp.customer WHERE id = $1::uuid FOR SHARE", [h.customerId])).rows);
+    const customer = one((await this.query(`/* native-sales-facts:customer */ SELECT id, enabled FROM naijue_erp.customer WHERE id = $1::uuid${this.excludeHistoricalCustomers ? " AND NOT naijue_erp.is_exact_historical_customer_only(customer.id)" : ""} FOR SHARE`, [h.customerId])).rows);
     let salesperson: NativeSalesReferenceFacts["salesperson"] = null;
     if (h.salespersonId !== null) {
       const row = one((await this.query("/* native-sales-facts:staff */ SELECT id, employment_status FROM naijue_erp.staff WHERE id = $1::uuid FOR SHARE", [h.salespersonId])).rows);

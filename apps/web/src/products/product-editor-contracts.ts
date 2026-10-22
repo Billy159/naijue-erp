@@ -27,6 +27,8 @@ export interface ProductEditorCapability {
   readonly onRecoveryRequired: (command: ProductMaintenanceCommand) => void;
   readonly productReader: ProductReadOnlyReader;
   readonly dictionaryReader: Pick<DictionaryBrowserReader, 'readSizeGroups'>;
+  /** Separate authorized scheme-description read; never executes barcode rules. */
+  readonly barcodeSchemeReader?: Pick<DictionaryBrowserReader, 'readBarcodeScheme'>;
   /** Full category-directory enumeration is an explicit independent host grant. */
   readonly categoryReader?: Pick<CatalogueSettingsBrowserReader, 'readCategories'>;
   readonly stock?: ProductFullPageReadOnlyReader['stock'];

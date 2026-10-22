@@ -1,8 +1,10 @@
+import { historicalCustomerExclusionEnabled } from "./party-read-reader.ts";
+import type { HistoricalCustomerExclusionCapability } from "./party-read-reader.ts";
 import { loadNativeTransferSnapshots } from "./native-transfer-snapshots.ts";
 import { reserveRuntimeDocumentNumber, assertRuntimeDocumentNumber } from "./runtime-document-number.ts";
 import type { RuntimeDocumentNumberInput } from "../../../packages/application/src/runtime-document-number.ts";
 import { PostgresNativeSalesFacts } from "./sales-native-facts.ts";
-import type { NativeCatalogueCompletenessVerifier } from "./sales-native-facts.ts";
+import type { NativeCatalogueCompletenessVerifier, NativeSalesHistoricalCustomers } from "./sales-native-facts.ts";
 import type { NativeSalesReferenceFacts } from "../../../packages/application/src/sales-native-facts.ts";
 import { PostgresPostingBalances } from "./inventory-posting-balances.ts";
 import type { Pool } from "pg";
@@ -81,18 +83,23 @@ function decodeResult(value: unknown): SalesResult {
 export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
   private readonly pool: PgSalesPool;
   private readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier | undefined;
-  constructor(pool: PgSalesPool, options?: { readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier }) {
+  private readonly historicalCustomers: NativeSalesHistoricalCustomers | undefined;
+  constructor(pool: PgSalesPool, options?: { readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier; readonly historicalCustomerExclusion?: HistoricalCustomerExclusionCapability }) {
     this.pool = pool;
     if (options !== undefined && typeof options.catalogueCompleteness?.assertComplete !== "function")
       throw new TypeError("Native catalogue facts require an explicit real completeness verifier");
+    const capability = options?.historicalCustomerExclusion;
+    this.historicalCustomers = historicalCustomerExclusionEnabled(pool, capability ?? null) && capability !== undefined
+      ? Object.freeze({ target: pool, capability: Object.freeze({ profile: capability.profile, assertVerified: capability.assertVerified.bind(capability) }) }) : undefined;
     const verifier = options?.catalogueCompleteness;
     this.catalogueCompleteness = verifier === undefined ? undefined : Object.freeze({ assertComplete: verifier.assertComplete.bind(verifier) });
   }
   async transaction<T>(work: (tx: SalesTransaction) => Promise<T>): Promise<T> {
     const client = await this.pool.connect();
-    const tx = new PostgresSalesTransaction(client, this.catalogueCompleteness);
+    let tx: PostgresSalesTransaction | undefined;
     let began = false; let commitAttempted = false; let discard: Error | undefined;
     try {
+      tx = new PostgresSalesTransaction(client, this.catalogueCompleteness, this.historicalCustomers);
       // Explicit READ COMMITTED: a receipt waiter must see the previous holder's committed receipt after its advisory lock.
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
       const schema = await client.query(`/* sales:current-schema */ SELECT EXISTS (
@@ -104,7 +111,7 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
       commitAttempted = true; await client.query("COMMIT");
       return result;
     } catch (error) {
-      tx.close();
+      tx?.close();
       if (!began || commitAttempted) discard = error instanceof Error ? error : new Error("PostgreSQL transaction failed");
       // A failed COMMIT may already have committed. Preserve the original key
       // and discard the client; ROLLBACK cannot prove that outcome was undone.
@@ -134,12 +141,12 @@ class PostgresSalesTransaction implements SalesTransaction {
   close(): void { this.active = false; }
   private readonly client: PgSalesClient;
   private readonly nativeFacts: PostgresNativeSalesFacts;
-  constructor(client: PgSalesClient, verifier?: NativeCatalogueCompletenessVerifier) {
+  constructor(client: PgSalesClient, verifier?: NativeCatalogueCompletenessVerifier, historicalCustomers?: NativeSalesHistoricalCustomers) {
     this.client = client; this.balances = new PostgresPostingBalances((sql, values) => this.query(sql, values));
     this.nativeFacts = new PostgresNativeSalesFacts((sql, values) => this.query(sql, values), salesId => {
       requireDomain(this.active && this.receiptActor !== undefined && this.sales?.id === salesId,
         "TRANSACTION_SCOPE", "Native facts require the original bound sales actor and target in an active transaction");
-    }, () => [...this.previousLines.values()].filter(line => line.isCurrent).map(line => ({ id: line.id, skuId: line.skuId, snapshot: line.snapshot })), verifier);
+    }, () => [...this.previousLines.values()].filter(line => line.isCurrent).map(line => ({ id: line.id, skuId: line.skuId, snapshot: line.snapshot })), verifier, historicalCustomers);
   }
   private assertNumberScope(input: RuntimeDocumentNumberInput): void {
     requireDomain(this.active && input.kind === "SALES" && input.actorAccountId === this.receiptActor

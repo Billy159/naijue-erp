@@ -106,3 +106,21 @@
 .product-editor-spec-stack .product-editor-group>.product-editor-select{flex:none;width:min(320px,70%)}
 .product-spec-maintain-entry{margin-right:auto}
 .product-sku-maintenance .product-editor-section-head{justify-content:space-between}
+
+/* DATA-PRES-002: actual-SKU barcode groups and read-only scheme description. */
+.product-editor .product-barcode-tools{align-items:flex-end;gap:8px;margin-bottom:5px}
+.product-editor .product-barcode-tools>.field{width:min(360px,65%);gap:4px;margin:0}
+.product-editor .product-barcode-tools+.product-field-hint{margin:4px 0 8px;color:var(--ca-ink-3)}
+.product-barcode-heading{margin:14px 0 12px;font-size:14px;font-weight:600}
+.product-barcode-table-wrap{overflow-x:auto;border:1px solid var(--ca-line)}
+.product-barcode-groups{min-width:720px}
+.product-barcode-groups th,.product-barcode-groups td{height:35px;padding:4px 8px;border-bottom-color:var(--ca-table-grid);font-size:12px}
+.product-barcode-groups th{background:var(--ca-table-head);color:var(--ca-ink-2);font-weight:600}
+.product-barcode-groups tr:last-child td{border-bottom:0}
+.product-barcode-row-actions{display:flex;align-items:center;gap:4px;white-space:nowrap}
+.product-editor .product-barcode-tools>button,.product-barcode-groups button{height:28px;min-height:28px;padding:2px 7px;font-size:13px;font-weight:400;color:var(--ca-primary-ink)}
+.product-editor .product-barcode-tools>button:hover,.product-barcode-groups button:hover{background:var(--ca-primary-hover-soft)}
+.product-barcode-scheme-detail{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px 14px;margin:0;font-size:13px}
+.product-barcode-scheme-detail dt{color:var(--ca-ink-2)}
+.product-barcode-scheme-detail dd{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.product-barcode-add .field{display:flex;flex-direction:column;gap:6px;color:var(--ca-ink-2);font-size:12px}

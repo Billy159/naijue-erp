@@ -165,20 +165,23 @@ test("native sales UoW/service: real seam uses one original scripted client thro
   let escapedQuery: NativeSalesFactQuery | undefined;
   const client: PgSalesClient = { async query(sql, values = []) {
     calls.push(sql);
+    if (sql.includes("document-number:validate")) return { rows: [{ number: "V2-XS-000000000001", actor_account_id: actor.accountId }], rowCount: 1 };
+    if (sql.includes("native-sales-facts:customer")) assert.match(sql, /NOT naijue_erp\.is_exact_historical_customer_only\(customer\.id\)/);
     if (sql.includes("sales:current-schema")) return { rows: [{ current_sales_schema_ready: true }], rowCount: 1 };
     if (sql.includes("native-sales-facts:") || sql.includes("SYNTHETIC-persisted-completeness")) return f.query(sql, values);
     if (sql.includes("sales-authorization:identity")) return { rows: [{ account_id: actor.accountId, staff_id: syntheticSalesIdentity().staffId, login_enabled: true, role: "SALESPERSON", employment_status: "在职", hall_id: ids.hall }], rowCount: 1 };
     if (sql.includes("sales-authorization:hall")) return { rows: [{ id: ids.hall, enabled: true }], rowCount: 1 };
     return { rows: [], rowCount: /^INSERT INTO/.test(sql) ? 1 : 0 };
   }, release() { released++; } };
-  const uow = new PostgresSalesUnitOfWork({ async connect() { connections++; return client; } }, { catalogueCompleteness: { async assertComplete(context) {
+  const pool = { async connect() { connections++; return client; } };
+  const uow = new PostgresSalesUnitOfWork(pool, { historicalCustomerExclusion: { profile: "historical-customer-exact2-v26", assertVerified(target) { assert.equal(target, pool); } }, catalogueCompleteness: { async assertComplete(context) {
     completeCalls++; escapedQuery = context.query; assert.ok(calls.every(sql => !/^INSERT INTO/.test(sql))); assert.deepEqual(context.productIds, [product]);
     await context.query("/* SYNTHETIC-persisted-completeness */ SELECT true AS complete");
   } } });
   const service = createSalesService({ unitOfWork: uow, rules, authorization: { async assertAllowed(context, _action, doc, tx) {
     assert.equal(context.accountId, actor.accountId); assert.equal(doc.header.hallId, ids.hall); const identity = await tx!.getCurrentSalesIdentity(context.accountId); assert.equal(identity?.loginEnabled, true);
   } }, now: () => "2026-10-20T12:00:00Z", newId: kind => sid(kind, sequence++) });
-  const result = await service.execute({ actor, action: "SAVE", requestKey: "SYNTHETIC-native-original-client", expectedVersion: null, draft: syntheticDraft() });
+  const result = await service.execute({ actor, action: "SAVE", requestKey: "SYNTHETIC-native-original-client", expectedVersion: null, draft: { ...syntheticDraft(), header: { ...syntheticDraft().header, number: "V2-XS-000000000001" } } });
   assert.equal(result.status, "DRAFT"); assert.equal(connections, 1); assert.equal(released, 1); assert.equal(completeCalls, 1);
   assert.equal(calls[0], "BEGIN ISOLATION LEVEL READ COMMITTED"); assert.equal(calls.at(-1), "COMMIT");
   assert.equal(calls.filter(sql => sql.includes("sales-authorization:identity")).length, 1);
@@ -229,4 +232,35 @@ test("native method intent: first SAVE retains selected M1 intent and rejects ac
   })); } }, rules, authorization: { async assertAllowed() {} }, now: () => "2026-10-21T08:03:00Z", newId: kind => sid(kind, sequence++) });
   await assert.rejects(() => service.execute({ action: "SAVE", actor, draft: syntheticDraft(), expectedVersion: null, requestKey: "new-selected-method-race" }), { code: "SETTLEMENT_METHOD_MISMATCH" });
   assert.deepEqual(store.snapshot(), before);
+});
+
+test("exact2 native sales facts: original object proof selects same-client predicate and propagates missing source/function", async () => {
+  const target = {}, fixture = pgFixture(); let verified = 0;
+  const capability = { profile: "historical-customer-exact2-v26" as const, assertVerified(actual: object) { assert.equal(actual, target); verified++; } };
+  for (const failure of [undefined, "absent", "function"] as const) {
+    let called = false;
+    const query: NativeSalesFactQuery = async (sql, values) => {
+      if (sql.includes("native-sales-facts:customer")) {
+        called = true; assert.match(sql, /AND NOT naijue_erp\.is_exact_historical_customer_only\(customer\.id\) FOR SHARE$/);
+        if (failure === "absent") return { rows: [], rowCount: 0 };
+        if (failure === "function") throw Object.assign(Error("SYNTHETIC unavailable predicate"), { code: "42883" });
+      }
+      return fixture.query(sql, values);
+    };
+    const reader = new PostgresNativeSalesFacts(query, () => {}, () => [], { async assertComplete() {} }, { target, capability });
+    if (failure) await assert.rejects(reader.load(fixture.draft), { code: failure === "absent" ? "SALES_REFERENCE_UNAVAILABLE" : "42883" });
+    else assert.equal((await reader.load(fixture.draft)).customer.id, ids.customer);
+    assert.equal(called, true);
+  }
+  assert.equal(verified, 3);
+  assert.throws(() => new PostgresNativeSalesFacts(fixture.query, () => {}, () => [], undefined, { target: {}, capability }), /same reference|reference-equal|strictly equal|Values have same structure/);
+});
+test("exact2 sales UoW: renewed object proof failure releases borrowed client before any SQL or callback", async () => {
+  let verified = 0, connects = 0, released = 0, queried = 0, entered = false; const failure = Error("SYNTHETIC proof revoked");
+  const pool = { async connect() { connects++; return { async query() { queried++; return { rows: [], rowCount: 0 }; }, release(error?: Error | boolean) { released++; assert.equal(error, failure); } }; } };
+  const uow = new PostgresSalesUnitOfWork(pool, { catalogueCompleteness: { async assertComplete() {} }, historicalCustomerExclusion: {
+    profile: "historical-customer-exact2-v26", assertVerified(target) { assert.equal(target, pool); if (++verified > 1) throw failure; }
+  } });
+  await assert.rejects(uow.transaction(async () => { entered = true; }), error => error === failure);
+  assert.equal(connects, 1); assert.equal(released, 1); assert.equal(queried, 0); assert.equal(entered, false);
 });
