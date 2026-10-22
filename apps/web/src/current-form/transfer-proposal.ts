@@ -54,6 +54,7 @@ export class TransferProposalSession {
   readonly #listeners = new Set<() => void>();
   #request: AbortController | null = null; #sequence = 0; #revision = 0;
   #seeded = false;
+  readonly #savedLines = new Map<string, { readonly skuId: string; readonly snapshot: TransferDraftDto['lines'][number]['snapshot'] }>();
   #skuRead: AbortController | null = null; #skuSequence = 0;
   #appendBasis: { draft: TransferProposal; pending: TransferPendingEntry; replacement: TransferProposalSnapshot['replacement'] } | null = null;
   #state: TransferProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, picker: null, entry: null, pending: emptyPending(), replacement: null, appendRequest: null });
@@ -79,6 +80,7 @@ export class TransferProposalSession {
       const labels = new Map<string, string>();
       for (const row of draft.lines) { const key = transferProposalRowKey(row.sku), snapshot = row.sourceSnapshot, label = JSON.stringify(snapshot ? [snapshot.productCode, snapshot.productName, snapshot.colorName, snapshot.fitName] : [row.sku.productCode, row.sku.productName, row.sku.colorName, row.sku.fitName]); if (labels.has(key) && labels.get(key) !== label) return false; labels.set(key, label); }
     } catch { return false; }
+    for (const row of draft.lines) if (row.existingLineId && row.sourceSnapshot) this.#savedLines.set(row.existingLineId, Object.freeze({ skuId: row.sku.id, snapshot: row.sourceSnapshot }));
     this.#seeded = true; this.#revision++; this.#publish({ draft, dirty, errors: [], notice: null }); return true;
   }
   markUnchanged(reference: TransferProposal): boolean {
@@ -229,7 +231,8 @@ export class TransferProposalSession {
         if (previous) { if (!/^[1-9]\d{0,18}$/.test(previous.quantity)) throw Error(); const count = quantity((BigInt(previous.quantity) + change.quantity).toString()); next = next.map(row => row === previous ? { ...row, quantity: count.toString() } : row); }
         else {
           const originals = replacement?.originals.filter(row => row.sku.sizeId === change.sku.sizeId && row.sku.sizeGroupId === change.sku.sizeGroupId) ?? [], original = originals.length === 1 ? originals[0] : undefined;
-          next.push({ sku: change.sku, quantity: change.quantity.toString(), product: pending.product, ...(original?.existingLineId ? { existingLineId: original.existingLineId } : {}), ...(original?.sku.id === change.sku.id && original.sourceSnapshot ? { sourceSnapshot: original.sourceSnapshot } : {}) });
+          const provenance = original?.existingLineId ? this.#savedLines.get(original.existingLineId) : undefined;
+          next.push({ sku: change.sku, quantity: change.quantity.toString(), product: pending.product, ...(original?.existingLineId ? { existingLineId: original.existingLineId } : {}), ...(provenance?.skuId === change.sku.id ? { sourceSnapshot: provenance.snapshot } : {}) });
         }
       }
       if (next.length > TRANSFER_PREPARE_MAX_LINES) throw Error();
@@ -328,13 +331,13 @@ export class TransferProposalSession {
   }
   reset(discardConfirmed = false): boolean {
     if (this.#state.disposed || this.#state.dirty && !discardConfirmed) return false;
-    this.#cancelRead(); this.#cancelSkuRead(); this.#appendBasis = null; this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, entry: null, pending: emptyPending(), replacement: null, appendRequest: null, errors: [], notice: null }); return true;
+    this.#savedLines.clear(); this.#cancelRead(); this.#cancelSkuRead(); this.#appendBasis = null; this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, entry: null, pending: emptyPending(), replacement: null, appendRequest: null, errors: [], notice: null }); return true;
   }
   cancel(discardConfirmed = false): boolean { if (!this.reset(discardConfirmed)) return false; this.dispose(); return true; }
   /** Route/session owner must dispose on exit; identity invalidation clears all data immediately. */
   readonly dispose = (): void => {
     if (this.#state.disposed) return;
-    this.#cancelRead(); this.#cancelSkuRead(); this.#appendBasis = null; this.#scope.signal.removeEventListener('abort', this.dispose);
+    this.#savedLines.clear(); this.#cancelRead(); this.#cancelSkuRead(); this.#appendBasis = null; this.#scope.signal.removeEventListener('abort', this.dispose);
     this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, entry: null, pending: emptyPending(), replacement: null, appendRequest: null, errors: [], notice: null }); this.#listeners.clear();
   };
 }

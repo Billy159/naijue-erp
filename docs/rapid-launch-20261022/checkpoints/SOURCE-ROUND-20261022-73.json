@@ -1,0 +1,43 @@
+{
+  "atUtc": "2026-10-22T20:46:56.888031+00:00",
+  "parent": "44db37bf683f318757e6dd52df3461cde74d533b",
+  "groups": [
+    {
+      "slice": "TRANSFER_IMMUTABLE_ORIGINAL_PROVENANCE_DIRECTED_FIX",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-47/DELIVERY.json",
+      "receiptSha256": "378dbc408d5338c03c89ae32ad15b67489d8db5e2158ef41ebb535afdd16b067",
+      "receiptSnapshot": {
+        "chunk": 47,
+        "status": "READY_FOR_C_PIN_TRANSFER_PROVENANCE_TARGETED_FIX",
+        "finding": "QF-F1-TRANSFER-SKU-PROVENANCE-01",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/transfer-proposal.ts",
+            "sha256": "3584fae4fcaf13d1be00ee3d5ccc231e116fe6c72a124d96463efca714453244"
+          }
+        ],
+        "change": "Immutable original SKU/snapshot keyed by original existingLineId, separate from temporary selected SKU; canonical size+group mapping carries the original pointer, original SKU return restores historical snapshot incl NULL barcode. reset/dispose clear origins. No quantity/native/create/CAS/key/input/theme/capture rule change.",
+        "checks": {
+          "types-1.log": "exit0",
+          "transfer-provenance-1.log": "exit0 QF counterexample adapted to fixed expected result, repeated roundtrip both original rows snapshots/IDs/quantities preserved, zero key/SAVE"
+        },
+        "notTested": [
+          "independent QF fixed-version recheck",
+          "Chrome/PG/production"
+        ],
+        "reused": "Original native/create/continuous-entry71/capture/theme checks not rerun.",
+        "blockers": [],
+        "next": "C new exact1 pin; QF only new provenance condition/types."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.ts",
+          "owner": "F1",
+          "sha256": "3584fae4fcaf13d1be00ee3d5ccc231e116fe6c72a124d96463efca714453244",
+          "bytes": 29710
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Exact owner/hash checkpoint only, no technical retest. Prior NEED_FIX history retained; fix closure only by independent QF."
+}
