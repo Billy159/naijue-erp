@@ -1,6 +1,7 @@
 import { DomainError } from "../../domain/src/errors.ts";
 import { activeProductRead, checkedProductActor, parseProductQuery } from "./product-query-validation.ts";
-import { checkedProductDetailsScope, checkedProductStockPage, parseProductDetailsPageQuery, productDetailsIntent } from "./product-details-query-validation.ts";
+import { checkedProductDetailsScope, checkedProductStockPage, parseProductDetailsPageQuery, productDetailsIntent,
+  parseProductStockOverviewQuery, checkedProductStockOverviewScope, checkedProductStockOverviewResult } from "./product-details-query-validation.ts";
 import type { ActorContext } from "./ports.ts";
 import type { ProductQuery } from "./product-query-ports.ts";
 import type { ProductDetailsQueryDependencies, ProductDetailsReadIntent, ProductDetailsScopedRead } from "./product-details-query-ports.ts";
@@ -27,6 +28,16 @@ export function createProductDetailsQueryService(dependencies: ProductDetailsQue
     },
     async readBarcodes(actor: ActorContext, input: unknown, signal: AbortSignal) {
       const p = parseProductDetailsPageQuery(input); return read(actor, productDetailsIntent("barcodes", p), p, signal, scope => reader.readBarcodes(scope));
+    },
+    async readStockOverview(actor: ActorContext, input: unknown, signal: AbortSignal) {
+      const p = parseProductStockOverviewQuery(input), current = checkedProductActor(actor); activeProductRead(signal);
+      // Authorization compatibility only. This never reads or aggregates the legacy stock page.
+      const grant = await authorize(current, productDetailsIntent("stock", { productId: p.productId, page: 1, pageSize: 20 }), signal); activeProductRead(signal);
+      const scope = checkedProductStockOverviewScope({ actor: current, intent: Object.freeze({ kind: "stock-overview", parameters: p }),
+        grant: Object.freeze({ ...grant }), parameters: p, signal });
+      if (stock === null || typeof stock.readOverview !== "function") throw new DomainError("PRODUCT_STOCK_NOT_READY", "Controlled whole-scope stock overview is unavailable");
+      const result = await stock.readOverview(scope); activeProductRead(signal);
+      return result === null ? null : checkedProductStockOverviewResult(result, p);
     },
     async readStock(actor: ActorContext, input: unknown, signal: AbortSignal) {
       const p = parseProductDetailsPageQuery(input);

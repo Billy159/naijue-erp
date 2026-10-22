@@ -2,10 +2,11 @@ import { assertNativeImportAccountingGuards } from "./native-import-accounting-c
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { CATALOGUE_PRICE_KEYS } from "../../../packages/application/src/catalogue-price-input.ts";
-import { nativeProductImportEvidence, validatePreparedNativeProductImportChunk } from "../../../packages/application/src/native-product-import.ts";
-import type { NativeProductImportStore, NativeProductReferences, PreparedNativeProductImportChunk } from "../../../packages/application/src/native-product-import.ts";
+import { nativeProductImportEvidence, nativeProductImportEvidence26, validatePreparedNativeProductImportChunk, validatePreparedNativeProductImportChunk26 } from "../../../packages/application/src/native-product-import.ts";
+import type { NativeProductImportStore, NativeProductReferences, PreparedNativeProductImportChunk, PreparedNativeProductImportChunk26 } from "../../../packages/application/src/native-product-import.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
-import { assertReviewedNativeImportSchema } from "../../../packages/application/src/native-import-schema-contract.ts";
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { checkedNativeRuntime26Capability, assertReviewedNativeImportSchema } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { insertValidatedCatalogueSourceProof } from "./catalogue-completeness.ts";
 import type { PgSalesClient, PgSalesPool } from "./sales-unit-of-work.ts";
 
@@ -27,7 +28,7 @@ export class PostgresNativeProductImportStore implements NativeProductImportStor
     const client = await this.pool.connect(); let began = false, committing = false, discard: Error | undefined;
     try {
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
-      const result = await this.write(client, chunk);
+      const result = await writeNativeProducts(client, chunk);
       committing = true; await client.query("COMMIT"); return result;
     } catch (error) {
       if (!began || committing) discard = error instanceof Error ? error : new Error("Native product import outcome unknown");
@@ -38,9 +39,10 @@ export class PostgresNativeProductImportStore implements NativeProductImportStor
       throw error;
     } finally { client.release(discard); }
   }
-  private async references(client: PgSalesClient, refs: NativeProductReferences): Promise<void> {
+}
+async function verifyReferences(client: PgSalesClient, refs: NativeProductReferences, exact26 = false): Promise<void> {
     const categories = (await client.query(`/* native-product-import:category */ SELECT id, parent_id, name, version
-      FROM naijue_erp.product_category WHERE id=ANY($1::uuid[]) ORDER BY id FOR SHARE`, [refs.category.path.map(part => part.nativeId)])).rows;
+      FROM naijue_erp.product_category WHERE id=ANY($1::uuid[])${exact26 ? " AND deleted_at IS NULL" : ""} ORDER BY id FOR SHARE`, [refs.category.path.map(part => part.nativeId)])).rows;
     requireDomain(categories.length === refs.category.path.length, "NATIVE_PRODUCT_REFERENCE_STALE", "Complete actual category chain required");
     const byId = new Map(categories.map(part => [part.id, part]));
     for (let index = 0; index < refs.category.path.length; index++) {
@@ -73,13 +75,20 @@ export class PostgresNativeProductImportStore implements NativeProductImportStor
       "NATIVE_PRODUCT_REFERENCE_STALE", "Actual explicitly mapped supplier snapshot required");
     }
   }
-  private async write(client: PgSalesClient, chunk: PreparedNativeProductImportChunk): Promise<{ inserted: number; replayed: number }> {
+async function writeNativeProducts(client: PgSalesClient, chunk: PreparedNativeProductImportChunk | PreparedNativeProductImportChunk26,
+  runtime26?: NativeRuntime26Capability): Promise<{ inserted: number; replayed: number }> {
+    const successor = runtime26 ? chunk as PreparedNativeProductImportChunk26 : undefined;
+    const columns = successor ? [...PRODUCT_COLUMNS, "season_ids", "deleted_at", "default_barcode_scheme_id"] : PRODUCT_COLUMNS;
+    const snapshot = successor ? `to_jsonb(p) || jsonb_build_object(${CATALOGUE_PRICE_KEYS.map(key => `'${key}', p.${key}::text`).join(", ")})` : nativeJson;
     await client.query("/* native-product-import:lock */ SELECT naijue_erp.cutoff_import_lock()");
+    if (runtime26) await runtime26.assertReady(client, "IMPORT_PRODUCT_SEASONS");
+    else {
     const schema = (await client.query(`/* native-product-import:schema */ SELECT
       array_agg(version ORDER BY version) AS installed_versions FROM naijue_erp.schema_migration`)).rows;
     requireDomain(schema.length === 1, "NATIVE_PRODUCT_SCHEMA_NOT_READY", "Actual migration registry required");
     const reviewedSchema = assertReviewedNativeImportSchema(schema[0]!.installed_versions, { minimumVersion: 11, errorCode: "NATIVE_PRODUCT_SCHEMA_NOT_READY" });
     if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
+    }
     const batches = (await client.query(`/* native-product-import:batch */ SELECT id, mapping_version, status, source_hash, source_name
       FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`, [chunk.batchId])).rows;
     const batch = batches[0];
@@ -91,7 +100,7 @@ export class PostgresNativeProductImportStore implements NativeProductImportStor
     // Acquire every pre-existing product lock before any source-row access.
     for (const index of indexes) {
       const product = chunk.nativeProducts[index]!;
-      const targets = (await client.query(`/* native-product-import:target */ SELECT p.id, ${nativeJson}=$2::jsonb AS native_equal
+      const targets = (await client.query(`/* native-product-import:target */ SELECT p.id, (${snapshot})=$2::jsonb AS native_equal
         FROM naijue_erp.product p WHERE p.id=$1::uuid OR p.product_code=$3 ORDER BY p.id FOR UPDATE`, [product.id, JSON.stringify(product), product.product_code])).rows;
       if (targets.length === 0) created.add(index);
       else requireDomain(targets.length === 1 && targets[0]!.id === product.id && targets[0]!.native_equal === true,
@@ -100,20 +109,45 @@ export class PostgresNativeProductImportStore implements NativeProductImportStor
     const verifiedReferences = new Set<string>();
     for (const index of indexes) {
       const refs = chunk.rows[index]!.references, fingerprint = requestHash(refs);
-      if (!verifiedReferences.has(fingerprint)) { await this.references(client, refs); verifiedReferences.add(fingerprint); }
+      if (!verifiedReferences.has(fingerprint)) { await verifyReferences(client, refs, Boolean(successor)); verifiedReferences.add(fingerprint); }
+    }
+    if (successor) {
+      const checked = new Set<string>();
+      for (const row of successor.rows) for (const ref of row.seasonSelection.references) {
+        const fingerprint = requestHash(ref);
+        if (checked.has(fingerprint)) continue;
+        const actual = (await client.query(`/* native-product26:season-source */ SELECT n.id,
+          to_jsonb(n)=$4::jsonb AND c.native_snapshot=$4::jsonb AS snapshot_equal
+          FROM naijue_erp.season n JOIN naijue_erp.import_native_catalogue_binding c ON c.season_id=n.id
+          JOIN naijue_erp.import_source_row s ON s.id=c.source_row_id AND s.batch_id=c.batch_id
+            AND s.entity_type=c.entity_type AND s.source_key=c.source_key
+          WHERE n.id=$1::uuid AND c.batch_id=$2::uuid AND c.entity_type='SEASON' AND c.source_key=$3
+          ORDER BY c.source_row_id FOR SHARE OF n,c,s`,
+        [ref.nativeId, successor.batchId, ref.sourceKey, JSON.stringify(ref.nativeSnapshot)])).rows;
+        requireDomain(actual.length === 1 && actual[0]!.id === ref.nativeId && actual[0]!.snapshot_equal === true,
+          "NATIVE_PRODUCT_REFERENCE_STALE", "Whole actual season and immutable same-batch source binding required");
+        checked.add(fingerprint);
+      }
     }
     // Complete native creation before immutable sources. A later proof failure
     // rolls back ALL native rows; no exposed product-without-proof intermediate state.
     for (const index of indexes) if (created.has(index)) {
       const product = chunk.nativeProducts[index]!;
-      const result = await client.query(`/* native-product-import:create */ INSERT INTO naijue_erp.product (${PRODUCT_COLUMNS.join(", ")})
-        VALUES (${PRODUCT_COLUMNS.map((key, position) => `$${position + 1}${key === "id" || key.endsWith("_id") ? "::uuid" : (CATALOGUE_PRICE_KEYS as readonly string[]).includes(key) ? "::numeric" : ""}`).join(", ")}) RETURNING id`,
-      PRODUCT_COLUMNS.map(key => product[key]));
+      const result = await client.query(`/* native-product-import:create */ INSERT INTO naijue_erp.product (${columns.join(", ")})
+        VALUES (${columns.map((key, position) => `$${position + 1}${key === "season_ids" ? "::uuid[]" : key === "deleted_at" ? "::timestamptz" : key === "id" || key.endsWith("_id") ? "::uuid" : (CATALOGUE_PRICE_KEYS as readonly string[]).includes(key) ? "::numeric" : ""}`).join(", ")}) RETURNING id`,
+      columns.map(key => (product as unknown as Record<string, unknown>)[key]));
       requireDomain(result.rowCount === 1 && result.rows.length === 1 && result.rows[0]!.id === product.id, "NATIVE_PRODUCT_CREATE_FAILED", "Exactly one actual native product must be created");
+    }
+    if (successor) for (const index of indexes) {
+      const product = successor.nativeProducts[index]!;
+      const readback = (await client.query(`/* native-product26:readback */ SELECT p.id, (${snapshot})=$2::jsonb AS native_equal
+        FROM naijue_erp.product p WHERE p.id=$1::uuid FOR SHARE`, [product.id, JSON.stringify(product)])).rows;
+      requireDomain(readback.length === 1 && readback[0]!.id === product.id && readback[0]!.native_equal === true,
+        "NATIVE_PRODUCT_TARGET_CONFLICT", "Complete actual native product readback required before immutable source insertion");
     }
     let inserted = 0, replayed = 0;
     for (const index of indexes) {
-      const row = chunk.rows[index]!, s = row.source, product = chunk.nativeProducts[index]!, evidence = nativeProductImportEvidence(chunk, index);
+      const row = chunk.rows[index]!, s = row.source, product = chunk.nativeProducts[index]!, evidence = successor ? nativeProductImportEvidence26(successor, index) : nativeProductImportEvidence(chunk, index);
       const previous = (await client.query(`/* native-product-import:replay */ SELECT
         (to_jsonb(s) || jsonb_build_object('row_no', s.row_no::text))=$2::jsonb AS source_equal
         FROM naijue_erp.import_source_row s WHERE s.id=$1::uuid OR (s.batch_id=$3::uuid AND (
@@ -132,5 +166,37 @@ export class PostgresNativeProductImportStore implements NativeProductImportStor
       inserted++;
     }
     return { inserted, replayed };
+  }
+
+/** Explicit successor entry point. DTO tags do not issue a capability or grant a
+ * source. The host must independently authorize the exact prepared chunk before
+ * calling this trusted adapter. It never publishes or retries uncertain COMMIT. */
+export class PostgresNativeProductImportStore26 {
+  private readonly pool: PgSalesPool;
+  private readonly runtime: NativeRuntime26Capability;
+  constructor(pool: PgSalesPool, runtime: NativeRuntime26Capability) {
+    const checked = checkedNativeRuntime26Capability(runtime);
+    requireDomain(checked, "NATIVE_PRODUCT_SCHEMA_NOT_READY", "Independently verified exact26 runtime required");
+    this.pool = pool; this.runtime = checked;
+  }
+  async stage(input: PreparedNativeProductImportChunk26): Promise<{ inserted: number; replayed: number }> {
+    validatePreparedNativeProductImportChunk26(input);
+    const chunk = structuredClone(input);
+    const client = await this.pool.connect(); let began = false, committing = false, discard: Error | undefined;
+    try {
+      // Reject revoked/wrong-client authority before starting a writer transaction;
+      // recheck actual runtime within the cutoff-locked transaction before targets.
+      await this.runtime.assertReady(client, "IMPORT_PRODUCT_SEASONS");
+      await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
+      const result = await writeNativeProducts(client, chunk, this.runtime);
+      committing = true; await client.query("COMMIT"); return result;
+    } catch (error) {
+      if (!began || committing) discard = error instanceof Error ? error : new Error("Native product26 import outcome unknown");
+      if (began && !committing) try { await client.query("ROLLBACK"); } catch (rollback) {
+        discard = rollback instanceof Error ? rollback : new Error("Native product26 import rollback failed");
+        throw new AggregateError([error, rollback], "Native product26 import failed; discard connection");
+      }
+      throw error;
+    } finally { client.release(discard); }
   }
 }

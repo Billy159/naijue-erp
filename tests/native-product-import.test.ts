@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { PostgresNativeProductImportStore } from "../adapters/postgres/src/native-product-import.ts";
+import { PostgresNativeProductImportStore, PostgresNativeProductImportStore26 } from "../adapters/postgres/src/native-product-import.ts";
 import { CATALOGUE_PRICE_KEYS } from "../packages/application/src/catalogue-price-input.ts";
 import { CATALOGUE_SOURCE_PRICE_FIELDS } from "../packages/application/src/catalogue-source-proof.ts";
 import { IMPORT_V2_TABLES } from "../packages/application/src/import-v2-contract.ts";
-import { nativeProductImportEvidence, NATIVE_PRODUCT_NULLABLE_POLICY, prepareNativeProductImportChunk, stageNativeProductImportChunk } from "../packages/application/src/native-product-import.ts";
-import type { NativeProductImportChunk, NativeProductImportValues } from "../packages/application/src/native-product-import.ts";
+import { nativeProductImportEvidence, nativeProductImportEvidence26, NATIVE_PRODUCT_IMPORT_VERSION_26, NATIVE_PRODUCT_NULLABLE_POLICY, prepareNativeProductImportChunk, prepareNativeProductImportChunk26, stageNativeProductImportChunk } from "../packages/application/src/native-product-import.ts";
+import type { NativeProductImportChunk, NativeProductImportChunk26, NativeProductImportValues, PreparedNativeProductImportChunk26 } from "../packages/application/src/native-product-import.ts";
 import { requestHash } from "../packages/application/src/request-hash.ts";
 
 // Deliberately fictional identities, labels, rows, digests and prices only.
@@ -38,7 +38,9 @@ function input(count = 1, withOptionalReferences = true): NativeProductImportChu
 }
 type RecordRow = Record<string, unknown>;
 /** Transactional copy-on-write SQL protocol fake. NOT PostgreSQL behavior proof. */
-function protocol(chunk = input(), options: { failProofAt?: number; commitUnknown?: boolean; rollbackFails?: boolean; staleReference?: string; wrongBatch?: boolean; missingSchema?: boolean; schemaVersions?: number[] } = {}) {
+function protocol(chunk: NativeProductImportChunk | NativeProductImportChunk26 = input(), options: { runtimeFailureAt?: number; runtimeBoolean?: boolean; badReadback?: boolean; failProofAt?: number; commitUnknown?: boolean; rollbackFails?: boolean; staleReference?: string; wrongBatch?: boolean; missingSchema?: boolean; schemaVersions?: number[] } = {}) {
+  const exact26 = "schemaProfile" in chunk;
+  let runtimeChecks = 0;
   let native = new Map<string, NativeProductImportValues>(), sources = new Map<string, RecordRow>();
   let draftNative = new Map(native), draftSources = new Map(sources), inTransaction = false;
   let connects = 0, proofWrites = 0, nativeWrites = 0; let discarded: Error | boolean | undefined;
@@ -59,19 +61,32 @@ function protocol(chunk = input(), options: { failProofAt?: number; commitUnknow
       source_hash: options.wrongBatch ? "0".repeat(64) : chunk.selection.selectionSha256, source_name: chunk.fixedSourceNamespace }]);
     if (sql.includes("native-product-import:target")) {
       assert.match(sql, /FOR UPDATE/);
-      for (const key of [...Object.keys(prepareNativeProductImportChunk(chunk).nativeProducts[0]!)]) assert.ok(sql.includes(`p.${key}`));
+      if (exact26) assert.match(sql, /to_jsonb\(p\)/);
+      else for (const key of [...Object.keys(prepareNativeProductImportChunk(chunk).nativeProducts[0]!)]) assert.ok(sql.includes(`p.${key}`));
       return result([...draftNative.values()].filter(p => p.id === values[0] || p.product_code === values[2]).map(p => ({ id: p.id, native_equal: requestHash(p) === requestHash(JSON.parse(values[1] as string)) })));
     }
-    if (sql.includes("native-product-import:category")) return result([
+    if (sql.includes("native-product26:season-source")) {
+      assert.equal(values[1], chunk.batchId); assert.match(sql, /FOR SHARE OF n,c,s/);
+      assert.match(sql, /s.entity_type=c.entity_type AND s.source_key=c.source_key/);
+      const snapshot = JSON.parse(values[3] as string);
+      assert.equal(snapshot.id, values[0]);
+      return result(options.staleReference === "missingSeasonSource" ? [] : [{ id: values[0], snapshot_equal: options.staleReference !== "seasonSnapshot" }]);
+    }
+    if (sql.includes("native-product26:readback")) {
+      assert.match(sql, /to_jsonb\(p\)/);
+      const p = draftNative.get(values[0] as string);
+      return result(p ? [{ id: p.id, native_equal: !options.badReadback && requestHash(p) === requestHash(JSON.parse(values[1] as string)) }] : []);
+    }
+    if (sql.includes("native-product-import:category")) { if (exact26) assert.match(sql, /deleted_at IS NULL/); return result([
       { id: id(10), parent_id: null, name: "SYNTHETIC ROOT", version: 2 },
       { id: id(11), parent_id: options.staleReference === "category" ? null : id(10), name: "SYNTHETIC LEAF", version: 3 }
-    ]);
+    ]); }
     if (sql.includes("native-product-import:size-group */")) return result(options.staleReference === "sizeGroup" ? [] : [{ id: id(12), code: "SYNTHETIC_G", name: "SYNTHETIC GROUP" }]);
     if (sql.includes("native-product-import:size-group-member")) {
       assert.match(sql, /FOR SHARE OF m, z/);
       return result(options.staleReference === "emptySizeGroup" ? [] : [{ size_group_id: id(12), size_id: id(15) }]);
     }
-    if (sql.includes("native-product-import:season")) return result([{ id: id(13), code: "SYNTHETIC_SEASON", name: options.staleReference === "season" ? "CHANGED SYNTHETIC" : "SYNTHETIC SEASON" }]);
+    if (sql.includes("native-product-import:season")) return result([{ id: id(13), code: exact26 ? "SEASON_SPRING" : "SYNTHETIC_SEASON", name: options.staleReference === "season" ? "CHANGED SYNTHETIC" : exact26 ? "春" : "SYNTHETIC SEASON" }]);
     if (sql.includes("native-product-import:supplier")) return result([{ id: id(14), code: "SYNTHETIC_SUPPLIER", name: "SYNTHETIC SUPPLIER", enabled: false, version: options.staleReference === "supplier" ? 5 : 4 }]);
     if (sql.includes("native-product-import:create")) {
       const columns = sql.match(/product \(([^)]+)\)/)![1]!.split(/,\s*/);
@@ -96,8 +111,14 @@ function protocol(chunk = input(), options: { failProofAt?: number; commitUnknow
     if (/cutoff_import_lock/.test(sql)) return result([]);
     throw Error(`Unexpected synthetic SQL: ${sql}`);
   }, release(error?: Error | boolean) { discarded = error; } };
-  const store = new PostgresNativeProductImportStore({ async connect() { connects++; return client; } });
-  return { store, calls, native: () => native, sources: () => sources, connects: () => connects, proofWrites: () => proofWrites, nativeWrites: () => nativeWrites, discarded: () => discarded,
+  const pool = { async connect() { connects++; return client; } };
+  const store = new PostgresNativeProductImportStore(pool);
+  const successor = new PostgresNativeProductImportStore26(pool, { profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", async assertReady(target, purpose) {
+    assert.equal(target, client); assert.equal(purpose, "IMPORT_PRODUCT_SEASONS"); runtimeChecks++;
+    if (runtimeChecks === options.runtimeFailureAt) throw Error("SYNTHETIC exact26 runtime rejected");
+    if (options.runtimeBoolean) return true as unknown as undefined;
+  } });
+  return { store, successor, runtimeChecks: () => runtimeChecks, calls, native: () => native, sources: () => sources, connects: () => connects, proofWrites: () => proofWrites, nativeWrites: () => nativeWrites, discarded: () => discarded,
     seedProduct(p: NativeProductImportValues) { native.set(p.id, structuredClone(p)); }, seedSource(s: RecordRow) { sources.set(s.id as string, structuredClone(s)); } };
 }
 
@@ -223,17 +244,79 @@ test("native PRODUCT fails closed for schema/batch mismatch, rollback failure an
   const altered = structuredClone(prepared); (altered.nativeProducts[0]! as { name: string }).name = "SYNTHETIC TAMPER";
   await assert.rejects(h.store.stage(altered), { code: "NATIVE_PRODUCT_PREPARED_CHANGED" }); assert.equal(h.connects(), 0);
 });
-test("native PRODUCT supports reviewed schema11–17 but rejects missing, duplicate or future19 before targets/writes", async () => {
+test("native PRODUCT supports reviewed schema11–17 but rejects missing, duplicate or future20 before targets/writes", async () => {
   const prefix = [1,2,3,4,5,6,7,8,9,10,11];
   for (const schemaVersions of [prefix, [...prefix,12], [...prefix,12,13], [...prefix,12,13,14], [...prefix,12,13,14,15], [...prefix,12,13,14,15,16], [...prefix,12,13,14,15,16,17]]) {
     const approved = protocol(input(), { schemaVersions });
     assert.deepEqual(await approved.store.stage(prepareNativeProductImportChunk(input())), { inserted: 1, replayed: 0 });
   }
-  for (const schemaVersions of [prefix.filter(v => v !== 11), [...prefix,12,12], [...prefix,12,13,14,15,16,17,18,19],
+  for (const schemaVersions of [prefix.filter(v => v !== 11), [...prefix,12,12], [...prefix,12,13,14,15,16,17,18,19,20],
     [...prefix,99], [], [...prefix,12.5]]) {
     const h = protocol(input(), { schemaVersions });
     await assert.rejects(h.store.stage(prepareNativeProductImportChunk(input())), { code: "NATIVE_PRODUCT_SCHEMA_NOT_READY" });
     assert.equal(h.nativeWrites(), 0); assert.equal(h.proofWrites(), 0);
     assert.ok(!h.calls.some(call => call.sql.includes("native-product-import:target"))); assert.equal(h.calls.at(-1)!.sql, "ROLLBACK");
   }
+});
+
+function input26(season: "" | "春" | "春、夏" = "春、夏", count = 1): NativeProductImportChunk26 {
+  const old = input(count, false);
+  return { ...old, schemaProfile: "EXACT26", validatorVersion: NATIVE_PRODUCT_IMPORT_VERSION_26, rows: old.rows.map(original => {
+    const row = structuredClone(original);
+    row.source.rawFields["季节"] = season; row.source.normalizedFields["季节"] = season;
+    (row.source.fieldProvenance.fields as Record<string, unknown>)["季节"] = { origin: "ORIGINAL", reason: "SYNTHETIC ORIGINAL", raw: season };
+    const selected = season === "" ? [] : season === "春" ? [0] : [0, 1];
+    const references = selected.map(i => ({ sourceKey: ["春", "夏"][i]!, nativeId: id(13 + i), nativeSnapshot: {
+      id: id(13 + i), code: ["SEASON_SPRING", "SEASON_SUMMER"][i]!, name: ["春", "夏"][i]!, display_order: i } }));
+    return { ...row, references: { ...row.references, season: season === "春" ? { sourceValue: season, nativeId: id(13), code: "SEASON_SPRING", name: "春", mappingSha256: "3".repeat(64) } : null },
+      seasonSelection: { version: "NATIVE_PRODUCT_SEASON_SELECTION_V1", mapping_sha256: "7".repeat(64), source_key: row.source.sourceKey,
+        source_season: season, state: season === "" ? "UNKNOWN" : "KNOWN", season_ids: season === "" ? null : references.map(r => r.nativeId), references },
+      ...(season === "春、夏" ? { legacyScalarCreation: { state: "LEGACY_SINGLE_SLOT_NOT_APPLICABLE_TO_CONFIRMED_MULTI_SELECTION" as const,
+        value: null, appliesOnlyTo: "FRESH_NATIVE_PRODUCT_IN_NEW_DATABASE" as const, originalSeason: season } } : {}) };
+  }) };
+}
+test("product26 runtime rejects absent forged revoked and wrong-profile inputs before targets; rechecks same client in transaction", async () => {
+  const p = prepareNativeProductImportChunk26(input26());
+  assert.throws(() => new PostgresNativeProductImportStore26({ async connect() { throw Error("must not connect"); } }, undefined as never));
+  for (const options of [{ runtimeFailureAt: 1 }, { runtimeBoolean: true }]) {
+    const h = protocol(input26(), options); await assert.rejects(h.successor.stage(p)); assert.equal(h.calls.length, 0); assert.ok(h.discarded() instanceof Error);
+  }
+  const late = protocol(input26(), { runtimeFailureAt: 2 }); await assert.rejects(late.successor.stage(p), /runtime rejected/);
+  assert.equal(late.calls.at(-1)!.sql, "ROLLBACK"); assert.equal(late.nativeWrites(), 0);
+  const old = protocol(); await assert.rejects(old.store.stage(p)); assert.equal(old.connects(), 0);
+  await assert.rejects(old.successor.stage(prepareNativeProductImportChunk(input()) as PreparedNativeProductImportChunk26)); assert.equal(old.connects(), 0);
+});
+test("product26 writes and reads back full unknown single multi snapshots and exact source once; replay is insert-free", async () => {
+  for (const season of ["", "春", "春、夏"] as const) {
+    const raw = input26(season), p = prepareNativeProductImportChunk26(raw), h = protocol(raw);
+    assert.deepEqual(await h.successor.stage(p), { inserted: 1, replayed: 0 }); assert.equal(h.runtimeChecks(), 2);
+    assert.deepEqual(h.native().get(p.nativeProducts[0]!.id), p.nativeProducts[0]);
+    assert.deepEqual(h.sources().get(p.rows[0]!.source.id), nativeProductImportEvidence26(p, 0).source);
+    const sql = h.calls.map(c => c.sql), readback = sql.findIndex(s => s.includes("product26:readback"));
+    assert.ok(readback > sql.findIndex(s => s.includes("native-product-import:create")) && readback < sql.findIndex(s => s.includes("write-proof")));
+    assert.equal(sql.filter(s => s.includes("product26:season-source")).length, season === "" ? 0 : season === "春" ? 1 : 2);
+    assert.ok(!sql.some(s => s.includes("native-product-import:schema")));
+    assert.deepEqual(await h.successor.stage(p), { inserted: 0, replayed: 1 }); assert.equal(h.nativeWrites(), 1); assert.equal(h.proofWrites(), 1);
+  }
+});
+test("product26 refuses stale whole-season proof and complete-row readback drift; late proof failure rolls back all native rows", async () => {
+  const raw = input26("春、夏", 2), p = prepareNativeProductImportChunk26(raw);
+  for (const options of [{ staleReference: "missingSeasonSource" }, { staleReference: "seasonSnapshot" }, { badReadback: true }, { failProofAt: 2 }]) {
+    const h = protocol(raw, options); await assert.rejects(h.successor.stage(p));
+    assert.equal(h.native().size, 0); assert.equal(h.sources().size, 0); assert.equal(h.calls.at(-1)!.sql, "ROLLBACK");
+  }
+});
+test("product26 rejects native/source adoption and drift including new columns; commit uncertainty is discarded without rollback or retry", async () => {
+  const raw = input26(), p = prepareNativeProductImportChunk26(raw);
+  for (const key of ["season_ids", "deleted_at", "default_barcode_scheme_id"]) {
+    const h = protocol(raw), product = structuredClone(p.nativeProducts[0]!) as unknown as RecordRow;
+    product[key] = key === "season_ids" ? [] : "SYNTHETIC_DRIFT";
+    h.seedProduct(product as unknown as NativeProductImportValues); h.seedSource(nativeProductImportEvidence26(p, 0).source);
+    await assert.rejects(h.successor.stage(p), { code: "NATIVE_PRODUCT_TARGET_CONFLICT" }); assert.equal(h.nativeWrites(), 0);
+  }
+  const orphan = protocol(raw); orphan.seedProduct(p.nativeProducts[0]!);
+  await assert.rejects(orphan.successor.stage(p), { code: "NATIVE_PRODUCT_UNPROVEN_EXISTING_TARGET" });
+  const unknown = protocol(raw, { commitUnknown: true }); await assert.rejects(unknown.successor.stage(p), /acknowledgement lost/);
+  assert.equal(unknown.calls.at(-1)!.sql, "COMMIT"); assert.ok(unknown.discarded() instanceof Error); assert.equal(unknown.connects(), 1);
+  assert.deepEqual(await unknown.successor.stage(p), { inserted: 0, replayed: 1 }); assert.equal(unknown.nativeWrites(), 1);
 });

@@ -31,7 +31,10 @@ export function createProductDetailsQueryHttpPlugin(options: ProductDetailsQuery
     app.addHook("onResponse", async request => { contexts.get(request)?.cleanup(); contexts.delete(request); });
     app.setErrorHandler((error, _request, reply) => {
       const statuses: Readonly<Record<string, number>> = { INVALID_PRODUCT_QUERY: 400, INVALID_PRODUCT_DETAILS_QUERY: 400,
-        FORBIDDEN: 403, PRODUCT_READ_ABORTED: 408, PRODUCT_STOCK_NOT_READY: 503, INVENTORY_NOT_READY: 503 };
+        FORBIDDEN: 403, PRODUCT_READ_ABORTED: 408, PRODUCT_STOCK_NOT_READY: 503, INVENTORY_NOT_READY: 503,
+        INVALID_PRODUCT_STOCK_OVERVIEW_DATA: 503 };
+      if (_request.url.split("?")[0] === "/products/stock-overview/query" && error instanceof DomainError && error.code === "INVENTORY_INTEGRITY_FAILED")
+        return reply.code(503).send({ error: { code: "INVENTORY_NOT_READY", message: "Product stock overview is unavailable" } });
       if (error instanceof DomainError && Object.hasOwn(statuses, error.code)) return reply.code(statuses[error.code]!).send({ error: {
         code: error.code, message: error.code === "FORBIDDEN" ? "Access denied" : "Product details read rejected" } });
       const code = (error as { code?: string }).code;
@@ -40,12 +43,14 @@ export function createProductDetailsQueryHttpPlugin(options: ProductDetailsQuery
       if (code === "FST_ERR_CTP_INVALID_MEDIA_TYPE") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });
       return reply.code(500).send({ error: { code: "INTERNAL_ERROR", message: "The product details read could not be completed" } });
     });
-    for (const [url, read] of [["/products/prices/query", service.readPrices], ["/products/barcodes/query", service.readBarcodes], ["/products/stock/query", service.readStock]] as const) {
+    for (const [url, read] of [["/products/prices/query", service.readPrices], ["/products/barcodes/query", service.readBarcodes], ["/products/stock/query", service.readStock], ["/products/stock-overview/query", service.readStockOverview]] as const) {
       app.post(url, { bodyLimit: 8192 }, async (request, reply) => {
         if (!request.query || typeof request.query !== "object" || Reflect.ownKeys(request.query).length) invalidProductDetailsQuery();
         if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });
         const state = contexts.get(request); if (!state?.actor) throw Error("Missing trusted product details context");
-        return reply.type("application/json").send(await read(state.actor, request.body, state.controller.signal));
+        const result = await read(state.actor, request.body, state.controller.signal);
+        if (url === "/products/stock-overview/query" && result === null) return reply.code(404).send({ error: { code: "PRODUCT_NOT_FOUND", message: "Product was not found" } });
+        return reply.type("application/json").send(result);
       });
     }
   };

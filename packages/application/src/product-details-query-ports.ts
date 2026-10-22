@@ -38,6 +38,28 @@ export interface ProductWarehouseStockPage {
   readonly productId: string; readonly page: number; readonly pageSize: ProductDetailsPageSize;
   readonly total: number; readonly items: readonly ProductWarehouseStockItem[];
 }
+/** Whole authorized-warehouse overview, independent of the warehouse×SKU page. */
+export interface ProductStockOverviewQuery extends ProductQuery { readonly warehouseMode: "NON_ZERO" | "ALL" }
+export interface ProductStockOverviewScopedRead {
+  readonly actor: ActorContext;
+  readonly intent: { readonly kind: "stock-overview"; readonly parameters: ProductStockOverviewQuery };
+  /** Original stock-tab authorization; overview does not widen the host's permission vocabulary. */
+  readonly grant: ProductDetailsReadGrant;
+  readonly parameters: ProductStockOverviewQuery; readonly signal: AbortSignal;
+}
+export interface ProductStockOverviewItem {
+  readonly warehouseId: string; readonly warehouseName: string;
+  readonly state: "KNOWN" | "UNKNOWN"; readonly quantity: string | null; readonly unknownSkuCount: number;
+}
+export interface ProductStockOverviewResult {
+  readonly kind: "PRODUCT_STOCK_OVERVIEW_V1"; readonly productId: string;
+  readonly warehouseMode: "NON_ZERO" | "ALL";
+  readonly readReference: string; readonly coverage: "ALL_BUSINESS_WAREHOUSES" | "AUTHORIZED_SUBSET";
+  readonly counts: { readonly authorizedWarehouses: number; readonly nonZeroWarehouses: number; readonly zeroWarehouses: number;
+    readonly unknownWarehouses: number; readonly returnedWarehouses: number };
+  readonly total: { readonly state: "KNOWN" | "UNKNOWN"; readonly quantity: string | null; readonly unknownSkuWarehouseKeys: number };
+  readonly items: readonly ProductStockOverviewItem[];
+}
 export interface ProductDetailsSnapshotReader {
   readPrices(read: ProductDetailsScopedRead<ProductQuery>): Promise<ProductPriceDetails | null>;
   readBarcodes(read: ProductDetailsScopedRead<ProductDetailsPageQuery>): Promise<ProductBarcodePage | null>;
@@ -47,6 +69,8 @@ export interface ProductDetailsSnapshotReader {
  * alone grants no warehouse access. D2 never implements stock SQL or synthesizes absent rows. */
 export interface ProductWarehouseStockReader {
   readStock(read: ProductDetailsScopedRead<ProductDetailsPageQuery>): Promise<ProductWarehouseStockPage | null>;
+  /** Optional for existing providers only. Missing overview returns 503; never aggregate old pages. */
+  readOverview?(read: ProductStockOverviewScopedRead): Promise<ProductStockOverviewResult | null>;
 }
 export interface ProductDetailsQueryDependencies {
   readonly authorization: ProductDetailsQueryAuthorization; readonly reader: ProductDetailsSnapshotReader;

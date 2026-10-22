@@ -33,6 +33,44 @@ test("product detail HTTP: authenticated price/retained-code reads reach old-fie
     ["/products/prices/query", { productId, defaultBarcodeSchemeId: null }, 400]] as const)
     assert.equal((await app.inject({ method: "POST", url, payload })).statusCode, expected);
 });
+
+test("W14 HTTP overview uses exact new route; zero-only scope is real and legacy stock total remains a row count", async t => {
+  let oldReads = 0, overviewReads = 0; const app = Fastify({ logger: false }); t.after(() => app.close());
+  app.register(createProductDetailsQueryHttpPlugin({ authenticate: async () => actor, dependencies: {
+    authorization: { async authorize(_actor, intent) { return { kind: intent.kind, productId }; } },
+    reader: { async readPrices() { return null; }, async readBarcodes() { return null; } },
+    stockReader: { async readStock(scope) { oldReads++; return { ...scope.parameters, total: 21, items: [] }; }, async readOverview(scope) {
+      overviewReads++; return { kind: "PRODUCT_STOCK_OVERVIEW_V1", productId, warehouseMode: scope.parameters.warehouseMode, readReference: "SYNTHETIC-1", coverage: "AUTHORIZED_SUBSET",
+        counts: { authorizedWarehouses: 2, nonZeroWarehouses: 0, zeroWarehouses: 2, unknownWarehouses: 0, returnedWarehouses: 0 }, total: { state: "KNOWN", quantity: "0", unknownSkuWarehouseKeys: 0 }, items: [] };
+    } }
+  } }));
+  const request = { productId, warehouseMode: "NON_ZERO" };
+  const response = await app.inject({ method: "POST", url: "/products/stock-overview/query", payload: request });
+  assert.equal(response.statusCode, 200, response.body); assert.equal(response.json().total.quantity, "0"); assert.equal(response.json().counts.authorizedWarehouses, 2);
+  assert.equal(response.headers["cache-control"], "no-store"); assert.equal(oldReads, 0); assert.equal(overviewReads, 1);
+  for (const [url, payload] of [["/products/stock-overview/query", { ...request, page: 1 }], ["/products/stock-overview/query?warehouseId=1", request]] as const)
+    assert.equal((await app.inject({ method: "POST", url, payload })).statusCode, 400);
+  const old = await app.inject({ method: "POST", url: "/products/stock/query", payload: { productId, page: 3, pageSize: 20 } });
+  assert.equal(old.statusCode, 200, old.body); assert.equal(old.json().total, 21); assert.equal(oldReads, 1); assert.equal(overviewReads, 1);
+});
+test("W14 HTTP overview unavailable/not-found/denied/integrity/provider failures are explicit and sanitized", async t => {
+  for (const mode of ["missing", "notfound", "denied", "integrity", "malformed", "failure"] as const) {
+    let oldReads = 0; const app = Fastify({ logger: false }); t.after(() => app.close());
+    const stockReader = { async readStock() { oldReads++; return null; }, ...(mode === "missing" ? {} : { async readOverview() {
+      if (mode === "notfound") return null;
+      if (mode === "denied") throw new DomainError("FORBIDDEN", "PRIVATE_PERMISSION");
+      if (mode === "integrity") throw new DomainError("INVENTORY_INTEGRITY_FAILED", "PRIVATE_FACTS");
+      if (mode === "malformed") throw new DomainError("INVALID_PRODUCT_STOCK_OVERVIEW_DATA", "PRIVATE_COUNT");
+      throw Error("PRIVATE_SQL");
+    } }) };
+    app.register(createProductDetailsQueryHttpPlugin({ authenticate: async () => actor, dependencies: {
+      authorization: { async authorize(_actor, intent) { return { kind: intent.kind, productId }; } }, reader: { async readPrices() { return null; }, async readBarcodes() { return null; } }, stockReader
+    } }));
+    const response = await app.inject({ method: "POST", url: "/products/stock-overview/query", payload: { productId, warehouseMode: "NON_ZERO" } });
+    assert.equal(response.statusCode, mode === "notfound" ? 404 : mode === "denied" ? 403 : mode === "failure" ? 500 : 503, response.body);
+    assert.doesNotMatch(response.body, /PRIVATE|"items"/); assert.equal(response.headers["cache-control"], "no-store"); assert.equal(oldReads, 0);
+  }
+});
 test("product detail HTTP: authentication, per-tab denial and provider errors never disclose data or internals", async t => {
   for (const mode of ["unauthenticated", "forbidden", "failure"] as const) {
     let reads = 0; const app = Fastify({ logger: false }); t.after(() => app.close());
