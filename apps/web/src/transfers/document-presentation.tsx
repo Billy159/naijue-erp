@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { Trigger } from '@arco-design/web-react';
 import type { DictionaryBrowserReader, DictionarySizeGroup } from '../product-settings/size-groups/contracts.ts';
 import { validateDictionaryPage, validateDictionarySizeGroup } from '../../../../packages/application/src/dictionary-read-validation.ts';
 import { entityId } from '../../../../packages/domain/src/values.ts';
@@ -68,6 +69,24 @@ export function TransferMatrixTable({ sizes, children, showHeader = true, classN
 export function transferDisplayQuantity(rows: readonly { readonly quantity: string }[]): string {
   return rows.every(row => /^(?:0|[1-9]\d{0,18})$/.test(row.quantity)) ? rows.reduce((sum, row) => sum + BigInt(row.quantity), 0n).toString() : '待校验';
 }
+function TransferProposalSummaryTags({ items }: { readonly items: readonly { readonly id: string; readonly label: string; readonly count: string }[] }) {
+  const host = useRef<HTMLDivElement>(null), opener = useRef<HTMLButtonElement>(null), popup = useRef<HTMLDivElement>(null), id = useId();
+  const key = JSON.stringify(items), rest = items.slice(3);
+  const [state, setState] = useState({ key, open: false }), visible = rest.length > 0 && state.key === key && state.open;
+  useEffect(() => { setState({ key, open: false }); }, [key]);
+  useEffect(() => {
+    if (!visible) return;
+    const doc = host.current?.ownerDocument;
+    const closeOnScroll = (event: Event) => { if (!(event.target instanceof Node && popup.current?.contains(event.target))) setState({ key, open: false }); };
+    doc?.addEventListener('scroll', closeOnScroll, true);
+    return () => doc?.removeEventListener('scroll', closeOnScroll, true);
+  }, [visible, key]);
+  const escape = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (!visible || event.nativeEvent.isComposing || event.key !== 'Escape') return;
+    event.preventDefault(); event.stopPropagation(); setState({ key, open: false }); opener.current?.focus({ preventScroll: true });
+  };
+  return <div ref={host} className="tc-product-tags transfer-summary-tags" aria-label="商品信息">{items.slice(0, 3).map(item => <span className="tc-product-tag" key={item.id} title={`${item.label} ${item.count}`}>{item.label} {item.count}</span>)}{rest.length > 0 && <Trigger trigger="click" position="bl" popupAlign={{ bottom: 4 }} duration={0} autoFitPosition unmountOnExit escToClose style={{ zIndex: 100 }} popupVisible={visible} onVisibleChange={open => setState({ key, open })} getPopupContainer={node => node.closest('.demo-ui') ?? node.closest('.transfer-proposal-editor') ?? host.current ?? node} popupStyle={{ width: 220, maxWidth: 'calc(100vw - 16px)' }} popup={() => <div ref={popup} id={id} className="tc-more-tags-pop transfer-summary-more" role="dialog" aria-label="其余商品信息" tabIndex={-1} onKeyDown={escape}><strong>其余商品信息</strong>{rest.map(item => <span key={item.id}>{item.label}<b>{item.count}</b></span>)}</div>}><UIButton ref={opener} className="tc-product-tag tc-more-tag" aria-haspopup="dialog" aria-expanded={visible} aria-controls={id} title={rest.map(item => `${item.label} ${item.count}`).join(' · ')} onKeyDown={escape}>+{rest.length} 更多</UIButton></Trigger>}</div>;
+}
 export function TransferDocumentSummary({ lines, presentation }: { readonly lines: readonly { readonly productId: string | undefined; readonly quantity: string; readonly category?: { readonly id: string; readonly label: string | null } }[]; readonly presentation?: 'proposal' }) {
   const categories = new Map<string, { label: string; rows: typeof lines[number][] }>();
   for (const line of lines) {
@@ -86,7 +105,7 @@ export function TransferDocumentSummary({ lines, presentation }: { readonly line
       const conflict = !!line.productId && conflicts.has(line.productId), id = conflict ? 'unknown' : line.category?.id ?? 'unknown', label = conflict ? '未知分类' : line.category?.label ?? '未知分类', group = groups.get(id) ?? { label, rows: [] };
       if (group.label !== label) group.label = '未知分类'; group.rows.push(line); groups.set(id, group);
     }
-    return <footer className="tc-foot tc-gold-footer transfer-document-summary transfer-document-summary-proposal"><strong>{lines.some(line => !line.productId) ? '款数待读取' : `${new Set(lines.map(line => line.productId)).size}款`}</strong><strong>数量 {transferDisplayQuantity(lines)}</strong><div className="tc-product-tags" aria-label="商品信息">{[...groups].map(([id, group]) => <span className="tc-product-tag" key={id} title={group.label}>{group.label} {group.rows.some(line => !line.productId) ? '款数待读取' : new Set(group.rows.map(line => line.productId)).size}</span>)}</div></footer>;
+    return <footer className="tc-foot tc-gold-footer transfer-document-summary transfer-document-summary-proposal"><strong>{lines.some(line => !line.productId) ? '款数待读取' : `${new Set(lines.map(line => line.productId)).size}款`}</strong><strong>数量 {transferDisplayQuantity(lines)}</strong><TransferProposalSummaryTags items={[...groups].map(([id, group]) => ({ id, label: group.label, count: group.rows.some(line => !line.productId) ? '款数待读取' : String(new Set(group.rows.map(line => line.productId)).size) }))} /></footer>;
   }
   return <footer className="tc-foot tc-gold-footer transfer-document-summary"><strong>{lines.some(line => !line.productId) ? '款数待读取' : `${new Set(lines.map(line => line.productId)).size} 款`} · 数量 {transferDisplayQuantity(lines)}</strong><div>{[...categories].map(([id, group]) => <span className="tc-product-tag" key={id}>{group.label} {transferDisplayQuantity(group.rows)}</span>)}</div></footer>;
 }

@@ -1,0 +1,123 @@
+{
+  "atUtc": "2026-10-22T22:30:08.399045+00:00",
+  "parent": "57c472225a91d6cb7851199f827fb42d22cf2bf3",
+  "groups": [
+    {
+      "slice": "fix: restore transfer proposal category overflow popup",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-56/DELIVERY.json",
+      "receiptSha256": "6a213b76728c69ba8b82d100e55717213c4d4a1cf368d245a99b6e892a6b107b",
+      "receiptSnapshot": {
+        "chunk": 56,
+        "atUtc": "2026-10-22T22:28:48.576751+00:00",
+        "status": "READY_EXACT2_TRANSFER_PROPOSAL_THREE_TAGS_MORE",
+        "taskId": "F01/TR-UI-01/02/03/04 existing C94 residual",
+        "files": [
+          {
+            "path": "apps/web/src/transfers/document-presentation.tsx",
+            "sha256": "d39191074922b4c8d3f5f2ca56a590213121593ae77976be19b7113ce48e9125"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal.css",
+            "sha256": "bd7b1996579a4059dfc89e725b3bee534135716f98fb3cd1324d9c1d7e7b7763"
+          }
+        ],
+        "scope": [
+          "Only proposal summary shows first3 native category items and +NMore for remaining category count. Existing ID/unknown/count rules unchanged.",
+          "Private helper reuses native Arco Trigger and UIButton; local owner portal, aria-controls/dialog/expanded, Esc opener restoration, outside click, scoped external-scroll close, own-list scroll remains usable, data fingerprint gate avoids stale reopening, unmount cleans popup/listener.",
+          "Frozen source3limit and220px/240px border-box popup shape adapted to native Arco viewport fit. No unit DTO, native IDs/SKUs/quantity/business/save/provider changes."
+        ],
+        "checks": {
+          "types-4.log": "exit0 final strict targeted import closure, unchanged compiler flags",
+          "more-3.log": "exit0 final actual React19 StrictMode/Arco display component, 0/3/6 categories incl native duplicate-product and unknown pending, first3 +3More, only remainder popup, local owner, Esc/outside/scroll/data-change/revert/unmount cleanup, default C94 empty/full output exact and input facts unchanged. Static CSS tokens/layout only.",
+          "SOURCE-CHECK.json": "exact2 scope; reverse imports/private helper/footer slot yields fixed C94 shared file; C94 category/unknown/product-count/quantity/default exports unchanged; entire prior CSS prefix unchanged."
+        },
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-56/SOURCE-CHECK.json",
+            "sha256": "a8f7f8cc4e68ee8642d572e9b392eda5df658e174b01eb0b23d09dcd8958980d"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-56/SOURCE.diff",
+            "sha256": "3f5aaaab40ebfb3f58957afbf6faec8fdd549de115c9cb42c76637aa9bc549f1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-56/FROZEN-SOURCE.json",
+            "sha256": "f60a23e688d3b0313009771a19cf05f3057c473a02b13a0e89e94145bcdbbe0b"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-56/MORE-TAGS-RESULT.json",
+            "sha256": "204b1501b37180432251276ebf4feac191f2435f50a31daea70dd484d059a134"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-56/more-tags-check.mjs",
+            "sha256": "e85f3e757fa5482b0a8b057d2344c93e7e7ec601978646cff0103c0dbee18628"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-56/more-1.log",
+            "sha256": "a4aa7aa4b9b43b688c0f091fa159ac4958b3e2391bbd1154451b4bf1ec2bbda8"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-56/more-2.log",
+            "sha256": "fef987fae752b5c91f79bfa1358de8f0da32e5e22524f49673d7540d367db6fb"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-56/more-3.log",
+            "sha256": "fef987fae752b5c91f79bfa1358de8f0da32e5e22524f49673d7540d367db6fb"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-56/types-1.log",
+            "sha256": "eaf78291e0c5e1ef380b52176118d5512523e18ebb4cb919fb165aabe35c0d44"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-56/types-2-carrier-error.log",
+            "sha256": "e640cf63803a235c48e3ae274040c00be93f4452c741afe4f82ab3f26513d4dc"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-56/types-3.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-56/types-4.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "iterationNotes": [
+          "First types found unsupported public zIndex prop; changed to declared style zIndex without casts/relaxation.",
+          "Second type invocation never executed due incorrect report-root redirection, carrier error retained; corrected exact existing evidence root.",
+          "First UI check expected CSS0 instead of computed0px; corrected probe unit.",
+          "Source review caught frozen universal border-box reset, so initial238/258 size assumption corrected to actual220/240 and affected check rerun. Prior functional pass not represented as final geometry proof.",
+          "Arco React19 ref warnings retained. No old accepted suites replayed."
+        ],
+        "notTested": [
+          "Actual next fixed integrated Application candidate More popup position/clip and keyboard activation against Demo",
+          "Current preserved savedTransfer author fixture has one original SKU, so cannot prove >=4 true category branch. Need suitable native/read-only UI data before actual branch acceptance.",
+          "Whole transfer page/native save/PG/permissions/production acceptance"
+        ],
+        "adaptations": [
+          "Use Arco auto-fit/local portal instead of frozen global body fixed popup; exact viewport pixels pending.",
+          "External scrolling closes; popup own long-list scrolling remains readable.",
+          "No unit facts: approved 数量X kept, no invented件."
+        ],
+        "blockers": [],
+        "next": "C pin exact2 then stop this slice. QF only new cap/popup/lifecycle/default compatibility. Original Demo next necessary integrated candidate only new branch and genuinely affected scope; reuse C98 P1 closed and prior shared tests.",
+        "wholePagePass": false,
+        "realBusinessPass": false
+      },
+      "files": [
+        {
+          "path": "apps/web/src/transfers/document-presentation.tsx",
+          "owner": "F1",
+          "bytes": 11680,
+          "sha256": "d39191074922b4c8d3f5f2ca56a590213121593ae77976be19b7113ce48e9125"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.css",
+          "owner": "F1",
+          "bytes": 8663,
+          "sha256": "bd7b1996579a4059dfc89e725b3bee534135716f98fb3cd1324d9c1d7e7b7763"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Original C94 transfer proposal3tags+remaining More only. Private helper actualArco/localportal/lifecycle; original nativeproductID/unknown facts/default shared branches/quantity/units/save/providers unchanged. Current saved fixture1SKU insufficient >=4class actual evidence; do not invent real identity or business acceptance."
+}
