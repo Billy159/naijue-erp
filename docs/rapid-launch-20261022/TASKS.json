@@ -8,42 +8,43 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+    "headObserved": "6cac8700c0dece997ea77cd9b5af29b4b9ae8507",
     "workingTreeNotFullyCommitted": true,
     "remoteHeadVerified": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
-    "remoteReadbackMethod": "Normal push exit0 plus independent GitHub REST exact ref readback at2026-10-22T21:27:50.617539+00:00",
-    "pushPendingLocalCommits": false,
+    "remoteReadbackMethod": "Normal branch87 verified; draft recovery88 independently downloaded/hash/bundle verified; newer source90 pending next checkpoint",
+    "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
       "format": "PRIVATE_GITHUB_DRAFT_SOURCE_RECOVERY_CHECKPOINT_V1",
-      "atUtc": "2026-10-22T20:07:48.806692+00:00",
-      "sourceCommit": "03fb221ba7cae10a0304a32cb73afc8cc699d206",
+      "atUtc": "2026-10-22T21:40:50.019861+00:00",
+      "sourceCommit": "edc1e9626005f4ccb44fde619253de337a561ab6",
       "branch": "codex/local-takeover-wip-20261022-082411",
-      "normalGitHubBranchObserved": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+      "normalGitHubBranchObserved": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
       "normalPushSucceeded": false,
       "bundle": {
-        "name": "naijue-erp-source-03fb221.bundle",
-        "bytes": 1290636,
-        "sha256": "61fe995af94adeb576b908789625e28c27575293e9beb694c2784b2f597df047",
+        "name": "naijue-erp-source-edc1e96.bundle",
+        "bytes": 1581083,
+        "sha256": "43d4b35ac9b4b76f17bd5763872c29be888f14f1fda66bf4ea5622a0f03c6a28",
         "requiredBaseCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
         "headRef": "HEAD"
       },
       "repository": "Billy159/naijue-erp",
       "draftTag": "codex-checkpoint-20261022-a7e817b",
-      "scope": "Exact source throughC64/current docs; actual C35 temporary issuer and C36 actual application media three-case delta; no private business data/credentials/authority originals",
-      "restore": "Verify SHA and git bundle verify with exact base object; fetch HEAD into a new codex/recovery branch without resetting current checkout. Read docs/rapid-launch-20261022/HANDOFF.md. K/A/private-data/operational references require separately authorized access; no inferred grants.",
+      "scope": "Exact source throughC88/settingsanchor and docs33f1071 including v5 pending field confirmation, C-only metadata/source window/H06 technical freezes; no private data/authority originals/credentials",
+      "restore": "Verify SHA and git bundle verify with exact base; fetch HEAD into NEW codex/recovery branch without reset. Read HANDOFF. K/A/private-data/server references require separately authorized access; no inferred import or write grants.",
       "businessRelease": false,
       "uploadOutcome": "UNCONFIRMED_UNTIL_DOWNLOAD_SHA_AND_BUNDLE_VERIFY",
       "verifiedReadback": {
-        "atUtc": "2026-10-22T20:08:56.024339+00:00",
-        "sourceCommit": "03fb221ba7cae10a0304a32cb73afc8cc699d206",
-        "url": "https://github.com/Billy159/naijue-erp/releases/tag/untagged-2c2d506edb2c8167f485",
+        "atUtc": "2026-10-22T21:42:42.225578+00:00",
+        "sourceCommit": "edc1e9626005f4ccb44fde619253de337a561ab6",
+        "url": "https://github.com/Billy159/naijue-erp/releases/tag/untagged-eca8e7e6042ac6f9014e",
         "isDraft": true,
-        "downloadSha256": "61fe995af94adeb576b908789625e28c27575293e9beb694c2784b2f597df047",
-        "bytes": 1290636,
+        "downloadSha256": "43d4b35ac9b4b76f17bd5763872c29be888f14f1fda66bf4ea5622a0f03c6a28",
+        "bytes": 1581083,
         "bundleVerify": true,
         "metadataByteIdentical": true,
         "notesReadbackMatched": true,
         "normalPushSucceeded": false,
+        "normalBranchSeparatelyVerified": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
         "businessRelease": false
       },
       "verified": true
@@ -941,7 +942,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T21:39:47.745516+00:00",
+  "updatedAt": "2026-10-22T22:09:48.904427+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
   "lastVerifiedRemoteCommit": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1402,7 +1403,7 @@
     "accountIdentityAdditional4": "QB42_IDENTITY_ONLY_ACCEPTED_FALSE_EXECUTION",
     "deploymentTools": "QB38_SOURCE_PROTOCOL_PASS_REAL_DEPLOY_NOT_RUN",
     "bootPersistence": "SOURCE_READY_FINAL_RELEASE_MANIFEST_AND_ACTUAL_BOOT_NOT_DONE",
-    "currentSourceCheckpoint": "44f8388918136fb832d19cef8d6a9c864c3be3ae",
+    "currentSourceCheckpoint": "6cac8700c0dece997ea77cd9b5af29b4b9ae8507",
     "currentPreview": {
       "url": "http://127.0.0.1:57842/synthetic-unified.html",
       "source": "4ee77b5db93f8e20eb04f0c7fd73b58b554befa6",
@@ -1456,7 +1457,7 @@
       ],
       "qaNewImageVersion": 1,
       "actualMedia": "C40_ACTUAL_STAGE_ADD_REPLAY_CONTROLLED_READ_PASS_NO_HTTP",
-      "r1RuntimeCatalog": "PENDING_C41_THEN_INDEPENDENT_REVIEW"
+      "r1RuntimeCatalog": "QB123_METADATA_AND_C42_ACTUAL_FIVE_PURPOSE_READONLY_PASS_NO_FINALHOST"
     },
     "latestCandidatePins": [
       "B06-ACCOUNT-IDENTITY-49.json",
@@ -1593,7 +1594,46 @@
         "bytes": 1348707,
         "sha256": "d542092034a90c45dc10b638db252385137dc7b1e97c52dae1d5d731fd54975c"
       },
-      "qualification": "Actual R1 runtime TCP original readonly catalog only. No issuer/final host/source authority; QB metadata pending. Original program39 label preserved, actual operation41."
+      "qualification": "Original C41 engine status/wording preserved; later QB123 independent metadata PASS adopted. Not live issuer/final host/import.",
+      "independentAdoption": {
+        "checkId": "QB123",
+        "result": "PASS_METADATA_ONLY",
+        "resultSha256": "73c879a85bd5c1318648fd96ea3e0de6970521c93109eacb729dec9d74c1594f",
+        "reviewPin": "e48df42739ab79eecebe2f740713ceee3d880ec7025ad2483814bf50b66b13d8"
+      }
+    },
+    "r1ActualFivePurpose": {
+      "jobId": "c03-r1-runtime26-five-purpose-20261023-42",
+      "result": "PASS_ACTUAL_R1_GENUINE_BOUNDED_ISSUER_FIVE_PURPOSE_READ_ONLY_ONLY",
+      "sourceCommit": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+      "engineCollected": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-runtime26-five-purpose-20261023-42/release-receipts/c03-r1-runtime26-five-purpose-20261023-42/engine-result.json",
+        "bytes": 3817,
+        "sha256": "0145aefd0a3e062dc08c1217419821c98f267a6874bc71004c190fb308a76b41"
+      },
+      "safeProbeCollected": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-runtime26-five-purpose-20261023-42/release-receipts/c03-r1-runtime26-five-purpose-20261023-42/five-purpose-result.json",
+        "bytes": 1521,
+        "sha256": "21b5be653e9b742d6eb5568a71183c0171e126c3f141f9bbcb14ec2ef52dc77b"
+      },
+      "completedPurposes": [
+        "PRODUCT_SEASONS_READ",
+        "CURRENT_CUSTOMER_READ_WRITE",
+        "CURRENT_FORM_READ",
+        "HISTORY_READ",
+        "INVENTORY_ADMISSION"
+      ],
+      "commitOutcome": "RETURNED_SUCCESS",
+      "helperCleanup": "CONFIRMED_EXACT_ATTEMPT_OWNED_HELPER_REMOVED",
+      "actualNetwork": {
+        "id": "428db63aace9e1a9ae07a8b50eec172bee07a29ad8ca25f46158b8fb55ce3bd2",
+        "name": "naijue-prod-data",
+        "driver": "bridge",
+        "scope": "local"
+      },
+      "elapsedSeconds": 6.659,
+      "reviewSha256": "e48df42739ab79eecebe2f740713ceee3d880ec7025ad2483814bf50b66b13d8",
+      "qualification": "Actual readonly metadata purposes only; no finalhost/HTTP/business/49/source/main/publish. Collected digests not asserted unknown server raw. Original C direct acceptance, no duplicateQA."
     }
   },
   "supplementalRoles": {
@@ -1988,40 +2028,54 @@
     }
   ],
   "newPendingReviews": [
-    "Demo fixed83 new module checks;85 served57843 after83 only2geometries",
-    "F3 newactual settings-select anchor directedfix",
-    "F2 P19close visual readonly cause then originalowner fix"
+    "QB C93 boot source",
+    "QB C95 H06proof source",
+    "QF C94 optionalsummary/visual",
+    "F1 RETURN P1 fix",
+    "C exact2SQL packguard fix prep"
   ],
   "openFindingsCurrent": [
     {
       "id": "CAT-UI01-header1px",
       "owner": "F2",
-      "status": "SOURCE84_QF_PASS_WAIT_ACTUAL_C85_BROWSER"
+      "status": "C85_ACTUAL_COLOR_FIT_ONLY_CLOSED_OTHER_HEADERS_UNMEASURED"
     },
     {
       "id": "PROD-UI-SOURCE01-P03P04-popupanchor",
       "owner": "F1",
-      "status": "SOURCE85_QF_PASS_WAIT_ACTUAL_C85_BROWSER"
+      "status": "C85_ACTUAL_P03_P04_ONLY_CLOSED"
     },
     {
       "id": "W7-UI01",
       "owner": "F3",
-      "status": "SOURCE83_QF_PASS_WAIT_ACTUAL_C83_BROWSER"
+      "status": "C83_ACTUAL_FIRST_OPEN_DEFECT_ONLY_CLOSED_OTHER_W7_NOT_ACCEPTED"
     },
     {
       "id": "SETTINGS-SELECT-ANCHOR-01",
       "owner": "F3",
       "candidate": "4ee77b5db93f8e20eb04f0c7fd73b58b554befa6",
-      "status": "DIRECTED_ORIGINAL_OWNER_FIX",
+      "status": "C89_ACTUAL_B04_ONLY_CLOSED_RELATED9_NOTRUN",
       "evidence": "K/reports/ui-demo-comparison-20261022/v012-4ee77b5/SETTINGS-SELECT-ANCHOR-FINDING.json",
       "sha256": "df75664b74e539fc1905e9ea5aac686a9b939226de5d2af0ec8b28ce456e14b0"
+    },
+    {
+      "id": "SCHEME-UI-01-HOVER",
+      "owner": "F1",
+      "status": "NORMAL89_CLOSED_HOVER_VISUAL_FIX54_READY_NOT_ACTUAL"
+    },
+    {
+      "id": "SALE-QUANTITY-DIRECTION-01",
+      "family": "DOC-SOURCE-04",
+      "owner": "F1",
+      "status": "P1_SAVED_RETURN_CLEAR_RAW_TO_DISABLED_OUT_PRIORITY_FIX",
+      "evidenceSha256": "d718b5a772f6996f699184dcdff8c150682094afb14a7d926a9f300be49d7bbb"
     }
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-22T21:25:32.812099+00:00",
-    "sourceRound": 87,
-    "sourceCheckpoint": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+    "atUtc": "2026-10-22T22:09:48.904427+00:00",
+    "sourceRound": 95,
+    "sourceCheckpoint": "6cac8700c0dece997ea77cd9b5af29b4b9ae8507",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -2035,18 +2089,27 @@
       "sourceModules": 383,
       "wholePageAccepted": false
     },
-    "nextPreview": "C85 served57843/HTTP hash verified; Demo checks83 module first then only84/85 geometry",
-    "r1": "QB123 actualR1 metadata PASS; C metadata five-purpose review e48df427 frozen, JOB42 genuine boundedpool/issuer readonly probe in preparation; no finalhost",
+    "nextPreview": "CurrentC89/57844, Demo39local; savedRETURN P1newfound F1priorityfix, C91/94 notbrowserpreviewed",
+    "r1": "Actual C42 genuineBoundedPool/issuer fivepurpose readonly PASS6.659s/COMMIT/release/dispose/helperremoved. Final config/build/stage/49/import notready",
     "qa": "C40 actual Sharp upload/ADD/replay/controlled original+thumbnail PASS; QA11audits11receipts3images/root4. No HTTP/realrole/business acceptance",
-    "import": "QB124 F01only and QB125 Transfer14279 finitejoin PASS adopted. Genuine Transfer consumer Kproposal underway. FullSales2471NULL requires pending complete confirmation; no DDL/mapper changes.",
+    "import": "QB127 C92 consumer sourcePASS; actual44af onepass/final742d fourguards explicitly separate. D3 nextTransferLines Kplan. C95H06pendingQB/actualPG; NULL27v5pending human.",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Normal branch87e94af verified; later docsbf56610 push failed60s transport/API still87; this/new checkpoint pending private recovery or later normal verified push",
-    "goalComplete": false
+    "github": "Normal87verified; source91 push60s failed/API87. Private88 downloaded/hash/bundle/notesverified; source95 nextbackup pending",
+    "goalComplete": false,
+    "demoCoverage": {
+      "scopeItems": 104,
+      "localDeduplicated": 39,
+      "wholePagesAccepted": 0,
+      "wholeOverlayClassesAccepted": 0,
+      "notRun": 65,
+      "waitingIntegration": 7,
+      "latestReceipt": "DEMO-C89-LOCAL39"
+    }
   },
   "latestReadySource": {
-    "sourceRound": 87,
-    "commit": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
-    "qualification": "TRANSFER14279 finite join pendingQB only; no full42561/import/production claim"
+    "sourceRound": 95,
+    "commit": "6cac8700c0dece997ea77cd9b5af29b4b9ae8507",
+    "qualification": "H06source-ready pendingQB/actualPG, noR3/NULL27implementation"
   },
   "pendingUserDecision": [
     {
@@ -2062,15 +2125,17 @@
     },
     {
       "id": "HISTORICAL_SALES_HALL_NULL_2471",
-      "state": "D1_PREPARING_FULL_FIELD_CONSTRAINT_CONFIRMATION_NOT_YET_ASKED",
+      "state": "FULL_V5_SENT_WAIT_EXPLICIT_HUMAN_APPROVAL",
       "onlyDependentBranchWaits": true,
       "factsSha256": "3cbae7ce93b8454abf6840297a2122b4aa56e48162b31f8450ad9e0dc885f776",
-      "status": "FULL_V5_SENT_WAIT_EXPLICIT_HUMAN_APPROVAL"
+      "status": "FULL_V5_SENT_WAIT_EXPLICIT_HUMAN_APPROVAL",
+      "confirmationFile": "SCHEMA-SUPPLEMENT-v5-HISTORY-HALL-NULLABLE.md",
+      "confirmationSha256": "2b3fe399061713462f16270e88f9f925e48249810e84aa5af6bd261658127972"
     }
   ],
   "currentAcceptedReceiptBatch": {
-    "atUtc": "2026-10-22T21:34:42.990488+00:00",
-    "indexRows": 255,
+    "atUtc": "2026-10-22T22:09:48.904427+00:00",
+    "indexRows": 265,
     "controllerTechnicalRetests": 0
   }
 }

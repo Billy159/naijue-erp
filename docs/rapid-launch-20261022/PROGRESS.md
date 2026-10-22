@@ -1,3 +1,9 @@
+最新接续：源码C95 `6cac8700c0dece997ea77cd9b5af29b4b9ae8507`。当前实际预览C89 http://127.0.0.1:57844/synthetic-unified.html /HTMLd1a7740c/400输入383模块。Demo39去重局部、整页整类0/104。旧销货RETURN清空数量raw跨OUT而disabled：P1 d718b5a7已F1优先修，不归因用户Chrome；旧有效新SALE范围保留。Xnormal已关、hover54READY待冻结。
+
+实际C42 genuineBoundedPool/issuer五purpose只读PASS6.659s，COMMIT/release/dispose/ownedhelperremoved，原app/DB/fragmentidentity不变；原C运维直接采用。正式production91首build被0022media/0023key路径误拒，输出/失败保留、pack0；只准备精确例外，不改SQL/删迁移/放宽private-data。C90已QB126源PASS，C93boot仍待QB，actualbootNOT_DONE。C92已QB127 consumer源PASS，实际44af一次gzip与最终742d四active检查分记，禁止重复源窗口；D3 nextTransferLines仅K。C95H06待QB与C实际PG，不启R3，D1仅K核selecteddeleted资格。NULL27完整v5、人类closed-login和六方案初始化三个分支等待，其他继续。
+
+Git普通分支87已核，新91推送60s无吞吐/API仍87；C88私有恢复43d4b35a已下载/hash/bundle/notes验证；源95和本次接续记录下一backup待办，不称普通push成功。
+
 当前增量：完整字段v5已发用户确认，仅历史销货所属厅空值/NULL27分支等待。原D1已接续独立H06只读商品证明exact4；D3已接续Transfer14279真实来源consumer exact2及一次必要原gzip窗口。QB125限定PASS已采用，不再读32MB技术复验。R1五purpose metadata e48df427技术冻结，实际JOB42仍准备中、未执行。员工角色popup新P2由F3精确源修复READY待冻结，灰底X交F1。正常Git分支87已验证；后续文档bf推送再次网络60秒无吞吐失败，API仍87，后续新段需保存新恢复包/另行回读，不能称后续已正常推送。
 
 GitHub正常分支检查点已恢复：源码C87 `87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e` 推送exit0，独立GitHub API回读同一提交；旧private draft恢复包保留。新C85预览已在http://127.0.0.1:57843/synthetic-unified.html实际serve，HTMLa4b82657已HTTP回读；Demo先完成C83模块，再只复表头和flat锚点。本节记录该次已验证的正常分支检查点，后续提交另行回读。

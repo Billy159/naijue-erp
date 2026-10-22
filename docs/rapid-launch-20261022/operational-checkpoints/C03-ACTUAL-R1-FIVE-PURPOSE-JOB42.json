@@ -1,0 +1,33 @@
+{
+  "jobId": "c03-r1-runtime26-five-purpose-20261023-42",
+  "result": "PASS_ACTUAL_R1_GENUINE_BOUNDED_ISSUER_FIVE_PURPOSE_READ_ONLY_ONLY",
+  "sourceCommit": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+  "engineCollected": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-runtime26-five-purpose-20261023-42/release-receipts/c03-r1-runtime26-five-purpose-20261023-42/engine-result.json",
+    "bytes": 3817,
+    "sha256": "0145aefd0a3e062dc08c1217419821c98f267a6874bc71004c190fb308a76b41"
+  },
+  "safeProbeCollected": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-runtime26-five-purpose-20261023-42/release-receipts/c03-r1-runtime26-five-purpose-20261023-42/five-purpose-result.json",
+    "bytes": 1521,
+    "sha256": "21b5be653e9b742d6eb5568a71183c0171e126c3f141f9bbcb14ec2ef52dc77b"
+  },
+  "completedPurposes": [
+    "PRODUCT_SEASONS_READ",
+    "CURRENT_CUSTOMER_READ_WRITE",
+    "CURRENT_FORM_READ",
+    "HISTORY_READ",
+    "INVENTORY_ADMISSION"
+  ],
+  "commitOutcome": "RETURNED_SUCCESS",
+  "helperCleanup": "CONFIRMED_EXACT_ATTEMPT_OWNED_HELPER_REMOVED",
+  "actualNetwork": {
+    "id": "428db63aace9e1a9ae07a8b50eec172bee07a29ad8ca25f46158b8fb55ce3bd2",
+    "name": "naijue-prod-data",
+    "driver": "bridge",
+    "scope": "local"
+  },
+  "elapsedSeconds": 6.659,
+  "reviewSha256": "e48df42739ab79eecebe2f740713ceee3d880ec7025ad2483814bf50b66b13d8",
+  "qualification": "Actual readonly metadata purposes only; no finalhost/HTTP/business/49/source/main/publish. Collected digests not asserted unknown server raw. Original C direct acceptance, no duplicateQA."
+}

@@ -9676,10 +9676,130 @@
       "notTested": [
         "Full42561/Sales2471 NULL/PG/source49/MAIN/PUBLISH/public release"
       ]
+    },
+    {
+      "id": "QF-C88",
+      "sourceCommit": "edc1e9626005f4ccb44fde619253de337a561ab6",
+      "result": "PASS_SOURCE_COMPATIBILITY_ONLY",
+      "scope": "Only settings select local anchor/width source; actualnewpopup not measured",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-edc1e962/F3-SETTINGS-SELECT-ANCHOR-REVIEW.json",
+      "evidenceSha256": "02eec48c129fe0da744251f38a9d8ff61a6fbaf0bf33dc32540dace89654f605",
+      "adoption": "Delegated conclusion adopted without controller technical rerun",
+      "notTested": [
+        "Wholepage/completeoverlay/nativePG/business/public deployment remain outside scope"
+      ]
+    },
+    {
+      "id": "QF-C89",
+      "sourceCommit": "f1809f73af4854bf40d092f7a70094a48c600506",
+      "result": "PASS_SOURCE_CASCADE_ONLY",
+      "scope": "Only catalogue X normal CSS; hover fill/focus indicator retained, not all interaction-state properties unchanged; actualnewX not measured",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-f1809f73/F1-P19-CLOSE-CASCADE-REVIEW.json",
+      "evidenceSha256": "06f1e5fc4484413ffde32eac1222c330e7814b61e1002ecbd38b50449ddaca90",
+      "adoption": "Delegated conclusion adopted without controller technical rerun",
+      "notTested": [
+        "Wholepage/completeoverlay/nativePG/business/public deployment remain outside scope"
+      ]
+    },
+    {
+      "id": "DEMO-C83-SCOPED-35",
+      "sourceCommit": "4ee77b5db93f8e20eb04f0c7fd73b58b554befa6",
+      "result": "PARTIAL_LOCAL6_NEW_CUMULATIVE35",
+      "scope": "Six new deduplicated actual browser local scopes, total35; no wholepage/wholeoverlay/realbusiness acceptance",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v012-4ee77b5/RESULT.json",
+      "evidenceSha256": "467ff9037ff318fd5ee1bcfac94c4e81c96bae794521df3c55678873d97dfb24",
+      "adoption": "Delegated conclusion adopted without controller technical rerun",
+      "notTested": [
+        "Wholepage/completeoverlay/nativePG/business/public deployment remain outside scope"
+      ]
+    },
+    {
+      "id": "QB126",
+      "sourceCommit": "b0d58d38c5221e129410a8eaf2055e30707c88a2",
+      "result": "PASS_SOURCE_DELTA_ONLY",
+      "scope": "Explicit26 release selector only",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice126-explicit26-r1-deploy-selector-b0d58d38/RESULT.json",
+      "evidenceSha256": "66aea6b3fd69430baac77fb0fc57e51ed9486af26ba302ac46b1d32287ed227a",
+      "adoption": "Fixed delegated/original-owner conclusion; controller technical retests0",
+      "notTested": [
+        "No wholeUI/fullbusiness/realimport/publicrelease conclusion outside exact scope"
+      ]
+    },
+    {
+      "id": "QF-C91",
+      "sourceCommit": "fe445c826b511898df7f3ecb7f3b19c756f3dc47",
+      "result": "PASS_SOURCE_COMPATIBILITY_ONLY",
+      "scope": "Transfer specbl/focus source only",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-fe445c82/F1-TRANSFER-SPEC-FOCUS-REVIEW.json",
+      "evidenceSha256": "dc9d99e7e2a25e79fcd080f533ec75664440ce1419a8ca8f31fef7a2feaf3793",
+      "adoption": "Fixed delegated/original-owner conclusion; controller technical retests0",
+      "notTested": [
+        "No wholeUI/fullbusiness/realimport/publicrelease conclusion outside exact scope"
+      ]
+    },
+    {
+      "id": "DEMO-C85-LOCAL37",
+      "sourceCommit": "6670a140d760e1ffb32382e6fb1bdf29cea94d30",
+      "result": "PARTIAL_NEW2_CUMULATIVE37",
+      "scope": "Only COLOR/FIT header36 and P03/P04 flat anchors",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v013-6670a14/RESULT.json",
+      "evidenceSha256": "8fa0298bca985b273ec4c10ddff455c8d9ba9eb0aae272ab3b2099fbc6095bdd",
+      "adoption": "Fixed delegated/original-owner conclusion; controller technical retests0",
+      "notTested": [
+        "No wholeUI/fullbusiness/realimport/publicrelease conclusion outside exact scope"
+      ]
+    },
+    {
+      "id": "DEMO-C89-LOCAL39",
+      "sourceCommit": "f1809f73af4854bf40d092f7a70094a48c600506",
+      "result": "PARTIAL_NEW2_CUMULATIVE39",
+      "scope": "Only B04 popup and X normal; related9 unmeasured/X hover open",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v014-f1809f7/RESULT.json",
+      "evidenceSha256": "ec93dd3ae8adb806673dafeaab900d74a488429aa76d746816e34c4a81abf35f",
+      "adoption": "Fixed delegated/original-owner conclusion; controller technical retests0",
+      "notTested": [
+        "No wholeUI/fullbusiness/realimport/publicrelease conclusion outside exact scope"
+      ]
+    },
+    {
+      "id": "C42-ACTUAL-R1-FIVE-PURPOSE",
+      "sourceCommit": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+      "result": "PASS_ACTUAL_R1_GENUINE_BOUNDED_ISSUER_FIVE_PURPOSE_READ_ONLY_ONLY",
+      "scope": "C original operations owner directly accepts one readonly metadata probe; no duplicateQB",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-runtime26-five-purpose-20261023-42/release-receipts/c03-r1-runtime26-five-purpose-20261023-42/engine-result.json",
+      "evidenceSha256": "0145aefd0a3e062dc08c1217419821c98f267a6874bc71004c190fb308a76b41",
+      "adoption": "Fixed delegated/original-owner conclusion; controller technical retests0",
+      "notTested": [
+        "No wholeUI/fullbusiness/realimport/publicrelease conclusion outside exact scope"
+      ]
+    },
+    {
+      "id": "C-BUILD91-FIRST-FAILURE",
+      "sourceCommit": "fe445c826b511898df7f3ecb7f3b19c756f3dc47",
+      "result": "NEED_SOURCE_FIX_FIRST_BUILD_FAILED_PACK_NOT_RUN",
+      "scope": "First actualproduction build rejects approved SQL0022media/0023key; output retained/pack notrun",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build91-20261023-01/RESULT.json",
+      "evidenceSha256": "b9cf69abc6615161be1c97e1710d213cb23c9eb5350587edab9b4a696f35ee1d",
+      "adoption": "Fixed delegated/original-owner conclusion; controller technical retests0",
+      "notTested": [
+        "No wholeUI/fullbusiness/realimport/publicrelease conclusion outside exact scope"
+      ]
+    },
+    {
+      "id": "QB127",
+      "sourceCommit": "a62c1e504e8b1f1e66256b02a07091bcda77201c",
+      "result": "PASS_CONSUMER_SOURCE_ONLY",
+      "scope": "Genuine Transfer onepass source scope; actual44af evidence reused, final742d four lifetime guards synthetic only",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice127-transfer-header-source26-a62c1e50/RESULT.json",
+      "evidenceSha256": "a2eaddbde544f6b1484fa6d004d958e2f038eedb71258b9c897bdb3204d10477",
+      "adoption": "Fixed delegated/original-owner conclusion; controller technical retests0",
+      "notTested": [
+        "No wholeUI/fullbusiness/realimport/publicrelease conclusion outside exact scope"
+      ]
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-22T21:34:42.990488+00:00",
+  "updatedAt": "2026-10-22T22:09:48.904427+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -10629,6 +10749,28 @@
         "QB124",
         "QF-C84",
         "QF-C85"
+      ],
+      "controllerTechnicalRetests": 0
+    },
+    {
+      "atUtc": "2026-10-22T21:49:09.212699+00:00",
+      "addedCheckIds": [
+        "QF-C88",
+        "QF-C89",
+        "DEMO-C83-SCOPED-35"
+      ],
+      "controllerTechnicalRetests": 0
+    },
+    {
+      "atUtc": "2026-10-22T22:09:48.904427+00:00",
+      "addedCheckIds": [
+        "QB126",
+        "QF-C91",
+        "DEMO-C85-LOCAL37",
+        "DEMO-C89-LOCAL39",
+        "C42-ACTUAL-R1-FIVE-PURPOSE",
+        "C-BUILD91-FIRST-FAILURE",
+        "QB127"
       ],
       "controllerTechnicalRetests": 0
     }
