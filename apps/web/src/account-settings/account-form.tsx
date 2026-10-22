@@ -25,7 +25,7 @@ export function AccountSettingsForm(props: AccountSettingsProps & { readonly con
     okText="确定" cancelText={write.phase === 'committed' ? '关闭' : '取消'}
     okButtonProps={{ disabled: !controller.writesEnabled || controller.locked || controller.intent === 'EDIT' && !state.dirty, loading: write.phase === 'checking' || write.phase === 'submitting' }}
     onOk={() => { const transient = password; setPassword(''); void controller.submit(transient); }} onCancel={() => { if (controller.requestClose()) props.close(); }}>
-    <div className="bs-form-fields iw-form-fields" onBlur={() => { if (!controller.locked) controller.validate(password.length > 0); }}>
+    <div className="bs-form-fields iw-form-fields">
       <SettingsField label="所属员工" required={controller.intent === 'CREATE'} error={state.errors.staff}>
         {controller.intent === 'CREATE' ? <AccountStaffPicker {...props} selected={draft.staff} disabled={controller.locked} onChange={staff => controller.selectStaff(staff)} /> : <div className="bs-readonly">{draft.staff?.name ?? '未提供'}</div>}
       </SettingsField>
