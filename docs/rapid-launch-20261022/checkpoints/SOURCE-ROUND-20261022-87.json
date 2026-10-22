@@ -1,0 +1,117 @@
+{
+  "atUtc": "2026-10-22T21:25:47.018953+00:00",
+  "parent": "8bfeef815602cb95508027aeb7e97728363cce99",
+  "groups": [
+    {
+      "slice": "TRANSFER_HEADER14279_FINITE_JOIN_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/header26-source-candidate1/TRANSFER-ONLY-READY.json",
+      "receiptSha256": "7c40e678ac9c65e8b23ede0aef2f9ab5907a1c6606450971dda2bd0a1c952094",
+      "receiptSnapshot": {
+        "taskId": "D3_TRANSFER_HEADER14279_FINITE_JOIN_READY",
+        "status": "SOURCE_READY_TRANSFER_ONLY_REFERENCE_PENDING_NEW_JOIN_REVIEW",
+        "atUtc": "2026-10-22T21:18:35.288280+00:00",
+        "scope": {
+          "entity": "TRANSFER_HEADER",
+          "rows": 14279,
+          "whole42561Complete": false,
+          "salesHeaderScope": "First1 retained in original partial,2471 blank sales hall gap pending full nullable confirmation; no Sales grant"
+        },
+        "sourceExact2": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-header26-bindings.mjs",
+            "bytes": 7764,
+            "sha256": "a82cc74833279df9347fc79b6348dba34dcfb66f9920fa31c17980d4b219df29"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-header26-bindings.test.mjs",
+            "bytes": 8793,
+            "sha256": "1b9fd928e88002fe0ca42f2b35d0dad2de159f2b68779ae40f782f0f417036b1"
+          }
+        ],
+        "genuineJointCandidate": {
+          "manifest": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-header26-reference-candidate-20261023-D3-run1/TRANSFER-ONLY-CANDIDATE-MANIFEST-v2.json",
+            "bytes": 2866,
+            "sha256": "c8a9cb932904134051b3dd3d8573edc223003cdb73426b16ee752207d2299ac5"
+          },
+          "artifact": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-header26-reference-candidate-20261023-D3-run1/transfer-header26-decisions14279-PENDING.jsonl",
+            "bytes": 32263004,
+            "sha256": "c6f0d4989d794c9e3670d60170017f9a6d3fd6097711ef960ae8b11dd92b0859",
+            "rows": 14279
+          },
+          "status": "TRANSFER_ONLY_REFERENCE_PENDING_NEW_JOIN_REVIEW"
+        },
+        "actualSourceProof": {
+          "root": "Existing independent source-only receipt ba58af0a58270153bd344a23fad7d13a378153e5fdd213ad6789f9d952fef04c / verified gzip code c36b9517bc56cd32fee190094e3dbbe15ba4f3ffe9d6cece99b6557f56842b76",
+          "newWindow": "One fresh full42561 constructor completed before any row emitted. Each14279 transfer record matched that constructor index and existing current mapper/native refs. New row iterator later stopped at unrelated Sales blank hall; no claim that new iterator reached full42561 EOF. Existing source fullEOF QA is reused.",
+          "independentNativeContext": "C partial628 mapping -> HALL/WAREHOUSE/STAFF/CUSTOMER406 complete native snapshots; warehouse created_operation_id NULL under approved26 import contract; no inferred native IDs.",
+          "coverage": "Preserved partial has exactly14279 distinct Transfer +1 Sales. Transfer rows separated byte-for-byte into component without original source/gzip/CSV reread.",
+          "preservedPartial": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/header26-source-candidate1/PRESERVED-PARTIAL-RESULT.json",
+            "bytes": 1112,
+            "sha256": "2efc10c344d408453715ce487ee81879c2fcfc0c92094db03a707623ef070cb7"
+          }
+        },
+        "checks": {
+          "newPure4": {
+            "pass": 4,
+            "fail": 0,
+            "log": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/header26-source-candidate1/protocol-first.log",
+              "bytes": 710,
+              "sha256": "468c04b4a623dc8851856b615c937ba4cdbc68097990000e8241b46145b2dd76"
+            }
+          },
+          "knownGapNegativeOnly": {
+            "pass": 1,
+            "log": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/header26-source-candidate1/protocol-new-gap-only.log",
+              "bytes": 263,
+              "sha256": "3e904388eb1892eb151bf29d6d11e819d379ccae751883772bf74ade49e6f13c"
+            },
+            "notFixOrAcceptance": true
+          }
+        },
+        "unchangedContracts": [
+          "Existing mapper stableImportId and actual prepared header.id foreign keys",
+          "Original nonNULL mapper/schema/DTO contracts; no nullable branch",
+          "No permission expansion, source rewriting, inferred halls or dropped sales rows"
+        ],
+        "reuseNotRepeat": [
+          "Old mapper tests",
+          "Old verified gzip/source QA",
+          "Original32 money/creator hall/exact2/temporal decisions"
+        ],
+        "notTested": [
+          "Independent new Transfer14279 joint review still pending",
+          "Native PG stage/runtime/MAIN/publication",
+          "Full42561 header candidate or blank-hall import"
+        ],
+        "nonActionsAfterFailedWindow": {
+          "originalGzipReads": 0,
+          "originalCSVRereads": 0,
+          "originalRegistryReads": 0,
+          "newNativeUUIDs": 0,
+          "SQL": 0
+        },
+        "next": "C freeze sourceExact2 for this finite Transfer-only scope, route QB only new joint/manifest/preservation scope. Sales stays pending C/D1 full nullable confirmation. No source/MAIN/PUBLISH authority from this READY."
+      },
+      "files": [
+        {
+          "path": "scripts/import-v3/prepare-native-header26-bindings.mjs",
+          "owner": "D3",
+          "sha256": "a82cc74833279df9347fc79b6348dba34dcfb66f9920fa31c17980d4b219df29",
+          "bytes": 7764
+        },
+        {
+          "path": "scripts/import-v3/prepare-native-header26-bindings.test.mjs",
+          "owner": "D3",
+          "sha256": "1b9fd928e88002fe0ca42f2b35d0dad2de159f2b68779ae40f782f0f417036b1",
+          "bytes": 8793
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only Transfer14279 finite join/nonNULL contract. Sales2471 NULL gap pending human confirmation; whole42561 NOT_ACCEPTED; no source import or permission change."
+}
