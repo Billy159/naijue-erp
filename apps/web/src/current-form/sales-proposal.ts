@@ -4,6 +4,8 @@ import { allocateSalesDiscount, discountUnitPrice } from '../../../../packages/d
 import type { ReadScope } from '../loading/read-scope.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import type { createCurrentFormHttpReader } from './http-reader.ts';
+import { currentBusinessDate } from './business-date.ts';
+import { salesBusinessMode, salesBusinessType, type SalesBusinessMode } from './sales-business-mode.ts';
 export type SalesProposalReader = Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readSalesReferences' | 'readProducts' | 'readProductSkus'>;
 export type SalesProposalPicker = CurrentSalesReferenceQuery['kind'] | 'product' | 'sku';
 export interface SalesProposalLine {
@@ -26,7 +28,7 @@ export interface SalesProposalSnapshot {
     readonly product: CurrentFormProduct | null; readonly method: CurrentSalesReferenceItem | null;
     readonly phase: 'loading' | 'ready' | 'error'; readonly result: CurrentFormPage<Candidate> | null } | null;
 }
-const empty = (): SalesProposal => ({ businessType: 'SALE', businessDate: '', note: '', orderDiscount: '0.00', hall: null, customer: null, salesperson: null, warehouse: null, lines: [], settlements: [] });
+const empty = (): SalesProposal => ({ businessType: 'SALE', businessDate: currentBusinessDate(), note: '', orderDiscount: '0.00', hall: null, customer: null, salesperson: null, warehouse: null, lines: [], settlements: [] });
 function freeze<T>(value: T): T { if (value && typeof value === 'object') { Object.values(value).forEach(freeze); Object.freeze(value); } return value; }
 function amount(raw: string): bigint {
   const value = raw.trim(); if (value.length > 102 || !/^\d+(?:\.\d{1,2})?$/.test(value)) throw Error();
@@ -48,12 +50,20 @@ export class SalesProposalSession {
   }
   #publish(patch: Partial<SalesProposalSnapshot>): void { this.#state = freeze({ ...this.#state, ...patch }); for (const listener of [...this.#listeners]) { try { listener(); } catch { /* continue invalidation */ } } }
   #cancelRead(): void { this.#sequence++; this.#request?.abort(); this.#request = null; }
-  #edit(draft: SalesProposal): boolean { if (this.#state.disposed) return false; this.#publish({ draft, dirty: true, errors: [], notice: null, totals: null }); return true; }
+  #edit(draft: SalesProposal): boolean {
+    if (this.#state.disposed) return false;
+    const businessType = salesBusinessType(salesBusinessMode(draft.businessType), draft.lines.map(row => row.quantity));
+    this.#publish({ draft: { ...draft, businessType }, dirty: true, errors: [], notice: null, totals: null }); return true;
+  }
   setHeader(patch: Pick<Partial<SalesProposal>, 'businessDate' | 'note' | 'orderDiscount'>): boolean { return this.#edit({ ...this.#state.draft, ...patch }); }
   setBusinessType(businessType: SalesProposal['businessType']): boolean {
     if (!['SALE', 'RETURN', 'EXCHANGE'].includes(businessType)) return false;
     // Preserve explicit row signs and prices; never silently reverse stock intent.
     return this.#edit({ ...this.#state.draft, businessType, orderDiscount: '0.00' });
+  }
+  setBusinessMode(mode: SalesBusinessMode): boolean {
+    if (mode !== 'SALE' && mode !== 'RETURN_EXCHANGE') return false;
+    return this.setBusinessType(salesBusinessType(mode, this.#state.draft.lines.map(row => row.quantity)));
   }
   #lineKey(keyOrUniqueSku: string): string | null {
     const rows = this.#state.draft.lines;

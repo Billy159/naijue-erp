@@ -4,6 +4,7 @@ import { businessDate, quantity } from '../../../../packages/domain/src/values.t
 import type { ReadScope } from '../loading/read-scope.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import type { createCurrentFormHttpReader } from './http-reader.ts';
+import { currentBusinessDate } from './business-date.ts';
 
 export type TransferProposalReader = Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readTransferWarehouses' | 'readProducts' | 'readProductSkus'>;
 export type TransferProposalPicker = 'FROM' | 'TO' | 'PRODUCT' | 'SKU';
@@ -20,7 +21,7 @@ export interface TransferProposalSnapshot {
     readonly product: CurrentFormProduct | null; readonly phase: 'loading' | 'ready' | 'error';
     readonly result: CurrentFormPage<Candidate> | null } | null;
 }
-const empty = (): TransferProposal => ({ businessDate: '', note: '', from: null, to: null, lines: [] });
+const empty = (): TransferProposal => ({ businessDate: currentBusinessDate(), note: '', from: null, to: null, lines: [] });
 function freeze<T>(value: T): T {
   if (value && typeof value === 'object') { Object.values(value).forEach(freeze); Object.freeze(value); } return value;
 }

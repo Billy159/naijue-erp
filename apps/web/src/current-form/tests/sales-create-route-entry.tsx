@@ -5,3 +5,5 @@ export { prepareSalesCommandSession } from '../../application/routes/sales-comma
 export { prepareSalesRoute } from '../../application/routes/sales.tsx';
 export { draft, result } from '../../sales/commands/fixtures.test-support.ts';
 export { DemoFrame } from '../../demo-presentation/demo-frame.tsx';
+
+export { currentBusinessDate } from '../business-date.ts';

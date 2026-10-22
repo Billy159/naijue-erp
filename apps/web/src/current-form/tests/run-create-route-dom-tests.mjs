@@ -14,7 +14,7 @@ let root;
 try {
   const output = path.join(temp, 'entry.mjs');
   await build({ entryPoints: [path.join(here, 'create-route-entry.tsx')], outfile: output, bundle: true, platform: 'node', format: 'esm', external: ['react', 'react/*', 'react-dom', 'react-dom/*'], banner: { js: "import { createRequire as __createRequire } from 'node:module'; const require = __createRequire(import.meta.url);" }, jsx: 'automatic', loader: { '.css': 'empty' }, logLevel: 'warning' });
-  const { act, createElement, createRoot, ReadContext, prepareTransferSession, prepareTransferRoute, draft, result, DemoFrame } = await import(pathToFileURL(output).href);
+  const { act, createElement, createRoot, ReadContext, prepareTransferSession, prepareTransferRoute, draft, result, DemoFrame, currentBusinessDate } = await import(pathToFileURL(output).href);
   const host = document.getElementById('root'); root = createRoot(host);
   const inFrame = view => createElement(DemoFrame, { navigation: { transfer: { selected: true, onActivate() {} } }, breadcrumb: [{id:'inventory-management',label:'库存管理'},{id:'transfers',label:'调拨单列表'}] }, view);
   const nav = label => Array.from(host.querySelectorAll('.sidebar a')).find(el => el.textContent === label);
@@ -45,7 +45,7 @@ try {
   const change = async (el, value) => { assert.ok(el); await act(async () => { const proto = el instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype; Object.getOwnPropertyDescriptor(proto, 'value').set.call(el, value); el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }); };
   await act(async () => root.render(inFrame(createElement(route.View, { scope: context.createScope('route') })))); await settle(); assert.equal(styles, 0); assert.ok(calls.every(call => call.url.endsWith('/transfers/query')));
   await click(nav('新增调拨单')); await until(() => button('选择调出仓库'), 'actual NEW route opens proposal'); assert.equal(styles, 1);
-  assert.equal(host.querySelector('.breadcrumb').textContent, '库存管理 / 新增调拨单');
+  assert.equal(Array.from(host.querySelectorAll('[aria-label="当前页面路径"] .arco-breadcrumb-item')).map(item=>item.textContent).join(' / '), '库存管理 / 新增调拨单');
   assert.equal(host.querySelector('.sidebar [aria-current=page]').textContent, '新增调拨单');
   await click(button('选择调出仓库')); await click(button('TEST warehouse 20 · TEST hall')); await click(button('选择调入仓库')); await click(button('TEST warehouse 21 · TEST hall'));
   await click(button('添加商品规格')); await click(button('TEST product')); await click(button('TEST · TEST red · TEST fit · 165/S')); await click(button('关闭候选'));
@@ -55,12 +55,12 @@ try {
   await click(nav('调拨单列表')); assert.ok(host.querySelector('.transfer-proposal-editor')); assert.match(host.textContent, /当前有未保存输入/);
   await click(button('保存')); await until(() => session.workspace.getSnapshot().write.phase === 'committed', 'real SAVE boundary committed');
   assert.equal(calls.filter(call => call.url.endsWith('/transfers/prepare-create')).length, 1); assert.equal(calls.filter(call => call.url.endsWith('/transfers/commands')).length, 1);
-  assert.ok(host.querySelector('.transfer-command-editor')); assert.match(host.textContent, /原操作已确认/); assert.equal(session.canLeave(), true);
-  await click(nav('调拨单列表')); assert.equal(host.querySelector('.transfer-list').hidden, false); assert.equal(host.querySelector('.breadcrumb').textContent, '库存管理 / 调拨单列表');
+  assert.ok(host.querySelector('.transfer-command-editor')); assert.equal(host.querySelector('.transfer-command-editor h1').textContent,'调拨单'); assert.equal(host.querySelector('.transfer-command-editor .transfer-read-value strong, .transfer-command-editor strong.transfer-read-value').textContent,'已保存，待读取单号'); assert.doesNotMatch(host.querySelector('.tc-doc-header').textContent,/原生仓库|[0-9a-f]{8}-[0-9a-f]{4}-/); assert.match(host.textContent, /原操作已确认/); assert.equal(session.canLeave(), true);
+  await click(nav('调拨单列表')); assert.equal(host.querySelector('.transfer-list').hidden, false); assert.equal(Array.from(host.querySelectorAll('[aria-label="当前页面路径"] .arco-breadcrumb-item')).map(item=>item.textContent).join(' / '), '库存管理 / 调拨单列表');
   await act(async () => root.render(null));
   const revisited = session.prepare(input); await act(async () => root.render(createElement(revisited.View, { scope: context.createScope('route-revisited') }))); await settle();
   assert.ok(button('新增调拨单')); await click(button('新增调拨单')); await until(() => button('选择调出仓库'), 'NEW after committed route detach opens clean proposal, not prior saved document');
-  assert.equal(host.querySelector('[aria-label="选择调出仓库"]').textContent, '选择调出仓库'); assert.equal(host.querySelector('[aria-label="单据日期"]').value, ''); await click(button('取消新增')); assert.equal(calls.filter(call => call.url.endsWith('/transfers/commands')).length, 1);
+  assert.equal(host.querySelector('[aria-label="选择调出仓库"]').textContent, '选择调出仓库'); assert.equal(host.querySelector('[aria-label="单据日期"]').value, currentBusinessDate()); await click(button('返回列表')); assert.equal(calls.filter(call => call.url.endsWith('/transfers/commands')).length, 1);
   await act(async () => root.unmount()); root = createRoot(host);
   const readonly = prepareTransferRoute({ ...input, configuration: { transfers: { ...input.configuration.transfers, commands: undefined } } });
   await act(async () => root.render(inFrame(createElement(readonly.View, { scope: context.createScope('readonly') })))); await settle(); assert.equal(button('新增调拨单').disabled, true); assert.equal(nav('新增调拨单'), undefined);
@@ -88,7 +88,7 @@ try {
     const renewedInput = { ...input, scope: renewedContext.createScope('renewed-session') };
     const renewed = prepareTransferSession(renewedInput, () => assert.fail('renewed permission unexpectedly denied')).prepare(renewedInput);
     await act(async () => root.render(createElement(renewed.View, { scope: renewedContext.createScope('renewed-route') }))); await settle();
-    await click(button('新增调拨单')); await until(() => button('选择调出仓库'), 'fresh authenticated route can create after access-failure reset'); await click(button('取消新增'));
+    await click(button('新增调拨单')); await until(() => button('选择调出仓库'), 'fresh authenticated route can create after access-failure reset'); await click(button('返回列表'));
     await act(async () => { root.render(null); renewedContext.clear(); });
   }
   console.log('PASS actual route403 recovery: candidate and preparation denial invoke same application access-failure path, no SAVE, fresh authorized session can reopen NEW.');

@@ -41,7 +41,7 @@ export function SalesCommandForm({ session, close }: { readonly session: SalesEd
     ? [{ title: '退回商品', incoming: true, rows: lines.filter(line => BigInt(line.quantity) < 0n) }, { title: '换出商品', incoming: false, rows: lines.filter(line => BigInt(line.quantity) >= 0n) }]
     : [{ title: header?.businessType === 'RETURN' ? '退回商品' : '商品明细', incoming: header?.businessType === 'RETURN', rows: lines }];
   return <section className="sales-detail-page sales-detail-facts tc-workbench tc-editor sale-workbench sale-editor sales-command-editor" aria-label="销货单编辑">
-    <div className="tc-head sale-head sales-document-state"><h1 ref={heading} tabIndex={-1}>{editor?.mode === 'CREATE' ? '新增销货单' : session.editable ? '编辑销货单' : '查看销货单'}</h1>
+    <div className="tc-head sale-head sales-document-state"><h1 ref={heading} tabIndex={-1}>{editor?.detail || write.phase === 'committed' ? '销货单' : editor?.mode === 'CREATE' ? '新增销货单' : session.editable ? '编辑销货单' : '查看销货单'}</h1>
       <SalesStatusTag status={status} />
       <span className="sale-muted">{session.hasDirtyDraft ? '· 有未保存输入' : '· 已保存'}</span><div className="actions">
         <UIButton type="button" className="iw-text-button" disabled={unresolved} onClick={leave}>返回列表</UIButton>
@@ -60,7 +60,7 @@ export function SalesCommandForm({ session, close }: { readonly session: SalesEd
       {field('业务类型', read(salesTypeLabels[header.businessType as 'SALE' | 'RETURN' | 'EXCHANGE']))}
       {field('营业厅', read(names?.hallName))}{field('营业员', read(names?.salespersonName ?? (header.salespersonId === null ? '未指定' : null)))}
       {field('客户', read(names?.customerName))}{field('出库仓', read(names?.warehouseName))}
-      {field('单号', <strong className="sale-number-value">{header.number}</strong>, 'sale-number-field')}
+      {field('单号', <strong className="sale-number-value">{editor?.detail ? header.number : write.phase === 'committed' ? '已保存，待读取单号' : header.number}</strong>, 'sale-number-field')}
       {field('整单优惠 / 抹零', input ? <UIInput className="iw-control" aria-label="整单优惠 / 抹零" inputMode="decimal" value={input.orderDiscount} disabled={lock || header.businessType !== 'SALE'} onChange={nextValue => change({ ...input, orderDiscount: nextValue })} /> : read(salesInputMoney(header.orderDiscount)), 'sale-discount-field')}
       {field('应结金额', <strong className="sale-due-value">{draft ? `¥${salesInputMoney(draft.header.netDue)}` : input ? '输入尚未校验' : `¥${salesInputMoney(header.netDue)}`}</strong>, 'sale-due-field')}
       {field('本单收退明细', <div className="sale-payment-rows">{settlements.map(row => {

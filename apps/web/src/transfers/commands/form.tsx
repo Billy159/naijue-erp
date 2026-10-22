@@ -28,7 +28,7 @@ export function TransferCommandForm({ capability, scope, close }: TransferComman
   const total = lines.reduce((sum, line) => sum + BigInt(line.quantity), 0n);
   const names = editor.detail?.references;
   return <section className="tc-workbench tc-editor transfer-editor transfer-command-editor" aria-label="调拨单编辑">
-    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>{editor.mode === 'CREATE' ? '新增调拨单' : '调拨单'}</h1><TransferStatusTag status={status} /><div className="actions">
+    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>{editor.detail || write.phase === 'committed' ? '调拨单' : editor.mode === 'CREATE' ? '新增调拨单' : '调拨单'}</h1><TransferStatusTag status={status} /><div className="actions">
       <UIButton type="button" className="iw-text-button tc-back-link" onClick={leave} disabled={!workspace.canLeave()}>返回列表</UIButton>
       {status === 'DRAFT' && <><UIButton type="button" className="iw-text-button" disabled={!editor.detail || dirty || unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('VOID'); }}>作废</UIButton>
         <UIButton type="button" className="iw-text-button" disabled={locked || !dirty || editor.inputError} onClick={() => { void workspace.submit('SAVE'); }}>保存</UIButton>
@@ -40,10 +40,10 @@ export function TransferCommandForm({ capability, scope, close }: TransferComman
     {editor.readError && <p className="transfer-command-notice" role="alert">单据读取未完成。<UIButton type="button" className="iw-link" disabled={unresolved} onClick={() => { void workspace.readCurrent(); }}>重新读取当前单据</UIButton></p>}
     {header && <><div className="tc-doc-header"><div className="tc-gold-doc-fields">
       <div className="tc-gold-field"><span>单据日期 *</span>{input ? <UIDate aria-label="单据日期" value={input.businessDate} disabled={locked} onChange={value => update({ ...input, businessDate: value })} /> : <span className="transfer-read-value">{header.businessDate}</span>}</div>
-      <div className="tc-gold-field"><span>调出仓库</span><span className="transfer-read-value" title={header.fromWarehouseId}>{names?.fromWarehouseName ?? `原生仓库 ${header.fromWarehouseId}`}</span></div>
-      <div className="tc-gold-field"><span>调入仓库</span><span className="transfer-read-value" title={header.toWarehouseId}>{names?.toWarehouseName ?? `原生仓库 ${header.toWarehouseId}`}</span></div>
-      <div className="tc-gold-field"><span>单号</span><strong className="transfer-read-value">{header.number}</strong></div>
-      <div className="tc-gold-field"><span>创建者</span><span className="transfer-read-value">{names?.createdByName ?? '保存时由当前认证身份确定'}</span></div>
+      <div className="tc-gold-field"><span>调出仓库</span><span className="transfer-read-value" title={names?.fromWarehouseName ?? undefined}>{names?.fromWarehouseName ?? '仓库名称未提供'}</span></div>
+      <div className="tc-gold-field"><span>调入仓库</span><span className="transfer-read-value" title={names?.toWarehouseName ?? undefined}>{names?.toWarehouseName ?? '仓库名称未提供'}</span></div>
+      <div className="tc-gold-field"><span>单号</span><strong className="transfer-read-value">{editor.detail ? header.number : write.phase === 'committed' ? '已保存，待读取单号' : header.number}</strong></div>
+      <div className="tc-gold-field"><span>创建者</span><span className="transfer-read-value">{names?.createdByName ?? (editor.detail ? '未知' : '保存后记录')}</span></div>
       <div className="tc-gold-entry-actions"><UIButton type="button" className="iw-button iw-primary" disabled title="当前商品选择及原生条码读取尚未接入">扫码录入</UIButton></div>
     </div></div>
     <label className="tc-note-row"><span>备注</span>{input ? <UITextArea aria-label="备注" className="iw-control transfer-note-input" rows={1} maxLength={10000} value={input.note} disabled={locked} onChange={nextValue => update({ ...input, note: nextValue })} /> : <span className="tc-note-read">{editor.detail?.document.header.note || '—'}</span>}</label></>}

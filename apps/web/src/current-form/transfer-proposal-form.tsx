@@ -48,9 +48,7 @@ export function TransferProposalForm({ session, close, preparation }: { readonly
   };
   return <section aria-label="新增调拨草稿" className="tc-workbench tc-editor transfer-editor transfer-proposal-editor">
     <div className="tc-head"><h1 ref={heading} tabIndex={-1}>新增调拨单</h1><TransferStatusTag status="DRAFT" /><span className="transfer-proposal-save-state">未保存</span><div className="actions">
-      <UIButton type="button" className="iw-text-button tc-back-link" onClick={() => discard('cancel')}>取消新增</UIButton>
-      <UIButton type="button" className="iw-text-button" onClick={() => discard('reset')}>重置草稿</UIButton>
-      <UIButton type="button" className="iw-text-button" onClick={() => session.validate()}>校验草稿</UIButton>
+      <UIButton type="button" className="iw-text-button tc-back-link" onClick={() => discard('cancel')}>返回列表</UIButton>
       {preparation ? <UIButton type="button" className="iw-text-button transfer-proposal-save" disabled={preparation.preparing} onClick={preparation.save}>保存</UIButton> : <UIButton type="button" className="iw-text-button" disabled title="需要可信准备服务提供已批准编号及原生快照事实">保存（尚未接入）</UIButton>}
       {['审核', '导出', '打印', '操作历史'].map(label => <UIButton type="button" className="iw-text-button" key={label} disabled title={label === '审核' ? '保存并读取当前单据后才能审核' : `${label}尚未接入`}>{label}</UIButton>)}
     </div></div>

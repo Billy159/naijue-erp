@@ -14,7 +14,7 @@ let root;
 try {
   const output = path.join(temp, 'entry.mjs');
   await build({ entryPoints: [path.join(here, 'sales-create-route-entry.tsx')], outfile: output, bundle: true, platform: 'node', format: 'esm', external: ['react', 'react/*', 'react-dom', 'react-dom/*'], banner: { js: "import { createRequire as __createRequire } from 'node:module'; const require = __createRequire(import.meta.url);" }, jsx: 'automatic', loader: { '.css': 'empty' }, logLevel: 'warning' });
-  const { act, createElement, createRoot, ReadContext, prepareSalesCommandSession, prepareSalesRoute, draft, result, DemoFrame } = await import(pathToFileURL(output).href);
+  const { act, createElement, createRoot, ReadContext, prepareSalesCommandSession, prepareSalesRoute, draft, result, DemoFrame, currentBusinessDate } = await import(pathToFileURL(output).href);
   const host = document.getElementById('root'); root = createRoot(host);
   const inFrame = view => createElement(DemoFrame, { navigation: { sales: { selected: true, onActivate() {} } }, breadcrumb: [{id:'sales-management',label:'销售管理'},{id:'sales',label:'销货单列表'}] }, view);
   const nav = label => Array.from(host.querySelectorAll('.sidebar a')).find(el => el.textContent === label);
@@ -69,14 +69,14 @@ try {
   const click = async el => { assert.ok(el); assert.equal(Boolean(el.disabled), false, el.textContent); await act(async () => { el.focus(); el.dispatchEvent(new MouseEvent('click', { bubbles: true })); }); await settle(); };
   const change = async (el, value) => { assert.ok(el); await act(async () => { const proto = el instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype; Object.getOwnPropertyDescriptor(proto, 'value').set.call(el, value); el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }); };
   const fill = async () => {
-    await click(button('选择营业厅')); await click(button('TEST hall')); await click(button('选择客户')); await click(button('TEST customer')); await click(button('选择仓库')); await click(button('TEST warehouse'));
+    await click(button('选择营业厅')); await click(button('TEST hall')); assert.doesNotMatch(host.querySelector('.sales-proposal-empty-row').textContent,/请先选择营业厅/); await click(button('选择客户')); await click(button('TEST customer')); await click(button('选择仓库')); await click(button('TEST warehouse'));
     await click(button('添加商品规格')); await click(button('TEST product')); await click(button('TEST · TEST red · TEST fit · 165/S')); await click(button('关闭候选'));
     await change(host.querySelector('[aria-label="单据日期"]'), native.header.businessDate); await change(host.querySelector('[aria-label="备注"]'), native.header.note); await change(host.querySelector('[aria-label="TEST-SKU 单价"]'), '10.00');
     await click(button('添加收退明细')); await click(button('TEST method')); await click(button('TEST account')); await change(host.querySelector('[aria-label="收退金额 1"]'), '10.00');
   };
   await act(async () => root.render(inFrame(createElement(route.View, { scope: context.createScope('route') })))); await settle(); assert.equal(styles, 0); assert.equal(calls.length, 0);
   await click(nav('新增销货单')); await until(() => button('选择营业厅'), 'actual SALE NEW route'); assert.equal(styles, 1);
-  assert.equal(host.querySelector('.breadcrumb').textContent, '销售管理 / 新增销货单'); assert.equal(host.querySelector('.sidebar [aria-current=page]').textContent, '新增销货单');
+  assert.equal(Array.from(host.querySelectorAll('[aria-label="当前页面路径"] .arco-breadcrumb-item')).map(item=>item.textContent).join(' / '), '销售管理 / 新增销货单'); assert.equal(host.querySelector('.sidebar [aria-current=page]').textContent, '新增销货单');
   const hallTrigger = button('选择营业厅'); hallTrigger.focus();
   await click(hallTrigger);
   assert.ok(host.querySelector('.arco-modal.sales-proposal-picker'), 'SALE candidate must be an actual Arco Modal shared layer');
@@ -128,20 +128,20 @@ try {
   await click(nav('销货单列表')); assert.ok(host.querySelector('.sales-proposal-editor')); assert.match(host.textContent, /当前有未保存输入/);
   mode = 'proof-missing'; await click(button('保存')); assert.equal(calls.filter(call => call.url.endsWith('/sales/commands')).length, 0); assert.match(host.textContent, /九价完整性/); assert.equal(host.querySelector('[aria-label="TEST-SKU 单价"]').value, '10.00');
   mode = 'success'; await click(button('保存')); await until(() => session.workspace.getSnapshot().command.write.phase === 'committed', 'native SALE SAVE committed');
-  assert.equal(calls.filter(call => call.url.endsWith('/sales/commands')).length, 1); assert.ok(host.querySelector('.sales-command-editor')); assert.match(host.textContent, /原操作已确认/);
+  assert.equal(calls.filter(call => call.url.endsWith('/sales/commands')).length, 1); assert.ok(host.querySelector('.sales-command-editor')); assert.match(host.textContent, /原操作已确认/); assert.equal(host.querySelector('.sales-command-editor h1').textContent,'销货单'); assert.equal(host.querySelector('.sale-number-value').textContent,'已保存，待读取单号');
   await act(async () => root.render(null)); const revisited = session.prepare(input);
   await act(async () => root.render(inFrame(createElement(revisited.View, { scope: context.createScope('revisited') })))); await until(() => button('返回列表'), 'retained native editor after route detour');
-  await click(nav('销货单列表')); assert.equal(host.querySelector('.breadcrumb').textContent, '销售管理 / 销货单列表');
-  await click(nav('新增销货单')); await until(() => button('选择营业厅'), 'clean next SALE NEW'); assert.equal(host.querySelector('[aria-label="单据日期"]').value, '');
+  await click(nav('销货单列表')); assert.equal(Array.from(host.querySelectorAll('[aria-label="当前页面路径"] .arco-breadcrumb-item')).map(item=>item.textContent).join(' / '), '销售管理 / 销货单列表');
+  await click(nav('新增销货单')); await until(() => button('选择营业厅'), 'clean next SALE NEW'); assert.equal(host.querySelector('[aria-label="单据日期"]').value, currentBusinessDate());
   const select = async (el, value) => {
     assert.ok(el); await click(el);
-    const label = { RETURN: '独立退货', EXCHANGE: '独立换货', REFUND: '退款' }[value];
+    const label = { RETURN_EXCHANGE: '退换货', REFUND: '退款' }[value];
     const container = el.closest('.erp-select-host');
     await until(() => [...container.querySelectorAll('[role="option"]')].some(item => item.textContent.trim() === label), `Arco option ${label}`);
     await click([...container.querySelectorAll('[role="option"]')].find(item => item.textContent.trim() === label));
   };
   for (const businessType of ['RETURN', 'EXCHANGE']) {
-    await fill(); await select(host.querySelector('[aria-label="业务类型"]'), businessType); assert.equal(host.querySelector('[aria-label="整单优惠"]').readOnly, true);
+    await fill(); await select(host.querySelector('[aria-label="业务类型"]'), 'RETURN_EXCHANGE'); assert.equal(host.querySelector('[aria-label="整单优惠"]').readOnly, true);
     await change(host.querySelector('[aria-label="TEST-SKU 数量"]'), '-2'); await select(host.querySelector('[aria-label="收退方向 1"]'), 'REFUND');
     native.header.businessType = businessType; native.lines[0].quantity = '-2'; native.lines[0].lineAmount = '-2000'; native.header.grossAmount = '-2000'; native.header.netDue = '-2000'; native.settlements[0].direction = 'REFUND';
     if (businessType === 'EXCHANGE') {
