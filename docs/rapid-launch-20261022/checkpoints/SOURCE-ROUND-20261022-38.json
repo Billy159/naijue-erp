@@ -1,0 +1,27 @@
+{
+  "atUtc": "2026-10-22T17:42:03.607310+00:00",
+  "parent": "3adcdc2225c25d63da0f80ba66b2c6455ba0038b",
+  "groups": [
+    {
+      "slice": "MAIN26_CUTOFF_AND_FINITE_BOOTSTRAP_CALLBACK_CAPABILITY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/CUTOFF26-MAIN-RESULT.json",
+      "receiptSha256": "f325b247b17c340daff66650a5202b505bf70ab4d376dc8529f86e583f951499",
+      "files": [
+        {
+          "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+          "owner": "D1",
+          "bytes": 48111,
+          "sha256": "aab0a2806958122bfabeea28d533827fe804c5292d8f2dfd152f537676906011"
+        },
+        {
+          "path": "tests/import-stage-bootstrap-postgres-protocol.test.ts",
+          "owner": "D1",
+          "bytes": 20304,
+          "sha256": "e615901e013262599ac82cb4c44125859e9a513f81acaf426bf355e952052093"
+        }
+      ]
+    }
+  ],
+  "fileCount": 2,
+  "scope": "New source/protocol only; original19 and replay boundaries retained. Actual49/provider/fullsourcegrant/issuer/MAIN still pending."
+}
