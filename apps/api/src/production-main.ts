@@ -1,0 +1,35 @@
+import { lstat, readFile, realpath } from "node:fs/promises";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
+import { createProductionApplicationApi, parseProductionRuntimeConfiguration } from "./production-provider-composition.ts";
+import { startProductionApplicationHost } from "./production-application-host.ts";
+
+/** C supplies an absolute private JSON configuration path as the sole argument.
+ * Never emit that file, its pathname, parsed configuration or raw error causes. */
+export async function runProductionMain(args: readonly string[]): Promise<void> {
+  if (args.length !== 1 || !args[0] || !path.isAbsolute(args[0]) || path.resolve(args[0]) !== args[0])
+    throw new TypeError("One absolute private runtime configuration path is required");
+  const filename = args[0], stat = await lstat(filename);
+  if (!stat.isFile() || stat.isSymbolicLink() || await realpath(filename) !== filename || stat.size > 65_536 || (stat.mode & 0o077) !== 0)
+    throw new TypeError("A bounded canonical private configuration file is required");
+  const bytes = await readFile(filename);
+  if (bytes.length !== stat.size || bytes.length > 65_536) throw new TypeError("Runtime configuration changed while reading");
+  const config = parseProductionRuntimeConfiguration(JSON.parse(bytes.toString("utf8")) as unknown);
+  const api = await createProductionApplicationApi(config);
+  const host = await startProductionApplicationHost({ api, configuration: config });
+  let stopping = false;
+  const stop = (): void => {
+    if (stopping) return; stopping = true;
+    process.off("SIGTERM", stop); process.off("SIGINT", stop);
+    void host.close().catch(() => { process.stderr.write("Production shutdown failed\n"); process.exitCode = 1; });
+  };
+  process.once("SIGTERM", stop); process.once("SIGINT", stop);
+  process.stdout.write(JSON.stringify({ event: "PRODUCTION_HOST_STARTED", publicOrigin: host.publicOrigin, ...config.build }) + "\n");
+}
+
+// Importing the module is inert, including during a source check.
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  void runProductionMain(process.argv.slice(2)).catch(() => {
+    process.stderr.write("Production startup refused or failed; inspect private operational diagnostics\n"); process.exitCode = 1;
+  });
+}
