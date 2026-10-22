@@ -11,6 +11,8 @@ import type { HistoryRevisionPostingContext, HistoryRevisionPostingEffect, Histo
 import type { InventoryAdmissionRuntime } from "./inventory-key-admission-reader.ts";
 import { readInventoryKeyAdmissions } from "./inventory-key-admission-reader.ts";
 import { addQuantity, businessDate, quantity, version, nextVersion } from "../../../packages/domain/src/values.ts";
+import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 
 type Query = (sql: string, values?: unknown[]) => Promise<PgSalesResult>;
 type PostingProof = Pick<InventoryLedgerRow, "warehouseId" | "skuId" | "quantityDelta" | "operationId" | "postedAt" | "reversesEntryId">
@@ -59,11 +61,24 @@ export class PostgresPostingBalances {
   private readonly firstEffects = new Map<string, PostingProof>();
   private batchId: string | undefined;
   private readonly admissionRuntime: InventoryAdmissionRuntime | null;
+  private runtime26: { readonly client: PgSalesClient; readonly capability: NativeRuntime26Capability } | undefined;
   constructor(query: Query, admissionRuntime: InventoryAdmissionRuntime | null = null) {
     this.query = query; this.admissionRuntime = admissionRuntime;
   }
+  /** Independent successor: business SQL is derived from the exact proof client,
+   * never a separately supplied query wrapper or a copied lease. */
+  static forRuntime26(client: PgSalesClient, capability: NativeRuntime26Capability, assertActive: () => void): PostgresPostingBalances {
+    const checked = checkedNativeRuntime26Capability(capability);
+    if (checked === undefined || typeof client?.query !== "function" || typeof assertActive !== "function")
+      throw new TypeError("Explicit original client, exact26 capability and active transaction required");
+    const balances = new PostgresPostingBalances(async (sql, values) => {
+      assertActive(); const result = await client.query(sql, values); assertActive(); return result;
+    });
+    balances.runtime26 = Object.freeze({ client, capability: checked }); return balances;
+  }
   async lock(keys: readonly Key[]): Promise<void> {
     requireDomain(this.locked === undefined, "TRANSACTION_SCOPE", "Lock the complete posting set exactly once");
+    if (this.runtime26) await this.runtime26.capability.assertReady(this.runtime26.client, "INVENTORY_ADMISSION");
     // IDENTICAL binary JSON tuple order and SQL lock namespace to the cutoff importer.
     const unique = [...new Map(keys.map(row => [key(row.warehouseId, row.skuId), row])).entries()]
       .sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0);
@@ -113,8 +128,9 @@ export class PostgresPostingBalances {
     requireDomain(this.locked?.has(identity) && !this.balances.has(identity), "TRANSACTION_SCOPE", "Only an absent locked posting key can acquire a zero proof");
     if (this.provenZero.has(identity)) return;
     const batchId = await this.publication();
-    if (this.admissionRuntime !== null) {
-      await this.admissionRuntime.assertReady({ query: this.query });
+    if (this.runtime26 !== undefined || this.admissionRuntime !== null) {
+      if (this.runtime26) await this.runtime26.capability.assertReady(this.runtime26.client, "INVENTORY_ADMISSION");
+      else await this.admissionRuntime!.assertReady({ query: this.query });
       const admissions = await readInventoryKeyAdmissions({ query: this.query }, [{ warehouseId, skuId }]);
       requireDomain(admissions[0]?.admitted === true && admissions[0].publishedBatchId === batchId,
         "INVENTORY_NOT_READY", "Exact native admission is unavailable for this published scope");

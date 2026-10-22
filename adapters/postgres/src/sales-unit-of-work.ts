@@ -16,6 +16,8 @@ import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { businessDate, entityId } from "../../../packages/domain/src/values.ts";
 import type { EntityId, EntityKind, Version } from "../../../packages/domain/src/values.ts";
 import { auditJson, booleanValue, integerValue, jsonObject, moneyFromSql, moneyToSql, nullableString, quantityFromSql, stringValue, versionFromSql, versionToSql } from "./codec.ts";
+import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 
 export interface PgSalesResult { readonly rows: Record<string, unknown>[]; readonly rowCount: number | null }
 /** Structural subset of the actual pg PoolClient protocol, also usable by explicitly labelled protocol fakes. */
@@ -84,7 +86,8 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
   private readonly pool: PgSalesPool;
   private readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier | undefined;
   private readonly historicalCustomers: NativeSalesHistoricalCustomers | undefined;
-  constructor(pool: PgSalesPool, options?: { readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier; readonly historicalCustomerExclusion?: HistoricalCustomerExclusionCapability }) {
+  private readonly runtime26: NativeRuntime26Capability | undefined;
+  constructor(pool: PgSalesPool, options?: { readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier; readonly historicalCustomerExclusion?: HistoricalCustomerExclusionCapability; readonly runtime26?: NativeRuntime26Capability }) {
     this.pool = pool;
     if (options !== undefined && typeof options.catalogueCompleteness?.assertComplete !== "function")
       throw new TypeError("Native catalogue facts require an explicit real completeness verifier");
@@ -93,21 +96,30 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
       ? Object.freeze({ target: pool, capability: Object.freeze({ profile: capability.profile, assertVerified: capability.assertVerified.bind(capability) }) }) : undefined;
     const verifier = options?.catalogueCompleteness;
     this.catalogueCompleteness = verifier === undefined ? undefined : Object.freeze({ assertComplete: verifier.assertComplete.bind(verifier) });
+    if (options !== undefined && "runtime26" in options) {
+      const descriptor = Object.getOwnPropertyDescriptor(options, "runtime26");
+      if (!descriptor?.enumerable || !("value" in descriptor) || descriptor.value === undefined)
+        throw new TypeError("Explicit own-data exact26 runtime capability required");
+      this.runtime26 = checkedNativeRuntime26Capability(descriptor.value);
+    }
   }
   async transaction<T>(work: (tx: SalesTransaction) => Promise<T>): Promise<T> {
     const client = await this.pool.connect();
     let tx: PostgresSalesTransaction | undefined;
     let began = false; let commitAttempted = false; let discard: Error | undefined;
     try {
-      tx = new PostgresSalesTransaction(client, this.catalogueCompleteness, this.historicalCustomers);
+      tx = new PostgresSalesTransaction(client, this.catalogueCompleteness, this.historicalCustomers, this.runtime26);
+      if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
       // Explicit READ COMMITTED: a receipt waiter must see the previous holder's committed receipt after its advisory lock.
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
+      if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
       const schema = await client.query(`/* sales:current-schema */ SELECT EXISTS (
         SELECT 1 FROM naijue_erp.schema_migration WHERE version = 10) AS current_sales_schema_ready`);
       requireDomain(schema.rows.length === 1 && schema.rows[0]!.current_sales_schema_ready === true,
         "SALES_SCHEMA_NOT_READY", "The current sales writer requires reviewed schema version 10");
       const result = await work(tx);
       tx.close();
+      if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
       commitAttempted = true; await client.query("COMMIT");
       return result;
     } catch (error) {
@@ -141,8 +153,9 @@ class PostgresSalesTransaction implements SalesTransaction {
   close(): void { this.active = false; }
   private readonly client: PgSalesClient;
   private readonly nativeFacts: PostgresNativeSalesFacts;
-  constructor(client: PgSalesClient, verifier?: NativeCatalogueCompletenessVerifier, historicalCustomers?: NativeSalesHistoricalCustomers) {
-    this.client = client; this.balances = new PostgresPostingBalances((sql, values) => this.query(sql, values));
+  constructor(client: PgSalesClient, verifier?: NativeCatalogueCompletenessVerifier, historicalCustomers?: NativeSalesHistoricalCustomers, runtime26?: NativeRuntime26Capability) {
+    this.client = client; this.balances = runtime26 === undefined ? new PostgresPostingBalances((sql, values) => this.query(sql, values))
+      : PostgresPostingBalances.forRuntime26(client, runtime26, () => requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes"));
     this.nativeFacts = new PostgresNativeSalesFacts((sql, values) => this.query(sql, values), salesId => {
       requireDomain(this.active && this.receiptActor !== undefined && this.sales?.id === salesId,
         "TRANSACTION_SCOPE", "Native facts require the original bound sales actor and target in an active transaction");

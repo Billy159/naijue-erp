@@ -10,6 +10,8 @@ import { businessDate, entityId } from "../../../packages/domain/src/values.ts";
 import type { EntityId, EntityKind, Version } from "../../../packages/domain/src/values.ts";
 import type { PgSalesClient, PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
 import { auditJson, booleanValue, integerValue, jsonObject, nullableString, quantityFromSql, stringValue, versionFromSql, versionToSql } from "./codec.ts";
+import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 
 type PgPoolCompatibility = Pool extends PgSalesPool ? true : never;
 const compatible: PgPoolCompatibility = true; void compatible;
@@ -44,15 +46,31 @@ function result(value: unknown): TransferResult {
 /** Real pg protocol adapter, never an implicit pool, retry, credential, server or migration runner. */
 export class PostgresTransferUnitOfWork implements TransferUnitOfWork {
   private readonly pool: PgSalesPool;
-  constructor(pool: PgSalesPool) { this.pool = pool; }
+  private readonly runtime26: NativeRuntime26Capability | undefined;
+  constructor(pool: PgSalesPool, options?: { readonly runtime26: NativeRuntime26Capability }) {
+    this.pool = pool;
+    if (options !== undefined) {
+      const descriptor = options && Object.getOwnPropertyDescriptor(options, "runtime26");
+      if (!options || Object.getPrototypeOf(options) !== Object.prototype || Reflect.ownKeys(options).length !== 1
+        || !descriptor?.enumerable || !("value" in descriptor) || descriptor.value === undefined)
+        throw new TypeError("Explicit closed exact26 transfer runtime options required");
+      this.runtime26 = checkedNativeRuntime26Capability(descriptor.value);
+    }
+  }
   async transaction<T>(work: (tx: TransferTransaction) => Promise<T>): Promise<T> {
-    const client = await this.pool.connect(); const tx = new PostgresTransferTransaction(client);
+    const client = await this.pool.connect(); let tx: PostgresTransferTransaction | undefined;
     let began = false; let commitAttempted = false; let discard: Error | undefined;
     try {
+      tx = new PostgresTransferTransaction(client, this.runtime26);
+      if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
-      const value = await work(tx); tx.close(); commitAttempted = true; await client.query("COMMIT"); return value;
-    } catch (error) {
+      if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
+      const value = await work(tx);
       tx.close();
+      if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
+      commitAttempted = true; await client.query("COMMIT"); return value;
+    } catch (error) {
+      tx?.close();
       if (!began || commitAttempted) discard = error instanceof Error ? error : new Error("PostgreSQL transaction failed");
       // Never issue a misleading rollback after an uncertain COMMIT response.
       if (began && !commitAttempted) try { await client.query("ROLLBACK"); }
@@ -79,7 +97,10 @@ class PostgresTransferTransaction implements TransferTransaction {
   private readonly warehouseFacts = new Map<string, TransferWarehouseFact | undefined>();
   private readonly skuFacts = new Map<string, TransferSkuFact | undefined>();
   private readonly client: PgSalesClient;
-  constructor(client: PgSalesClient) { this.client = client; this.balances = new PostgresPostingBalances((sql, values) => this.query(sql, values)); }
+  constructor(client: PgSalesClient, runtime26?: NativeRuntime26Capability) {
+    this.client = client; this.balances = runtime26 === undefined ? new PostgresPostingBalances((sql, values) => this.query(sql, values))
+      : PostgresPostingBalances.forRuntime26(client, runtime26, () => requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes"));
+  }
   close(): void { this.active = false; }
   private assertNumberScope(input: RuntimeDocumentNumberInput): void {
     requireDomain(this.active && input.kind === "TRANSFER" && input.actorAccountId === this.receiptActor
