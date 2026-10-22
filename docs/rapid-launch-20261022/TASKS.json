@@ -924,7 +924,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T17:42:50.909973+00:00",
+  "updatedAt": "2026-10-22T17:44:18.913234+00:00",
   "stage": "ACTIVE_PHASED_LAUNCH_SOURCE_AND_ISOLATED_QA_IN_PROGRESS",
   "lastVerifiedRemoteCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1548,7 +1548,17 @@
         "01a162e7-024a-7e22-980a-e329b32fcd60",
         "01a162f1-fbeb-7963-99b5-e3f43dd80002"
       ],
-      "newFindings": "v006-21f2afa/FINDINGS-INITIAL.json, original F1 dispatched"
+      "newFindings": "v006-21f2afa/FINDINGS-INITIAL.json, original F1 dispatched",
+      "latestBrowserResult": {
+        "version": "v006-21f2afa",
+        "resultSha256": "f3c155818a2498c7adf1a2a6343fbe6a8c27d18e03e18628156436d90ccf1e0e",
+        "pairedStates": 4,
+        "sourceRegions": 11,
+        "wholePagePass": false,
+        "sourceCodeUnchanged": true,
+        "newP2": "SALE-V006-04",
+        "originalOwnerDispatched": true
+      }
     }
   },
   "fieldApprovalRecords": [
@@ -1747,6 +1757,14 @@
       "id": "SALE-V006-03",
       "owner": "F1",
       "status": "DEMO_ACTUAL_BROWSER_NEED_FIX"
+    },
+    {
+      "id": "SALE-V006-04",
+      "owner": "F1",
+      "status": "DEMO_ACTUAL_BROWSER_P2_DISPATCHED",
+      "scope": "Correct paid/due amounts but under/over visual state class missing; preserve money/signs",
+      "evidence": "K/reports/ui-demo-comparison-20261022/v006-21f2afa/RESULT.json",
+      "evidenceSha256": "f3c155818a2498c7adf1a2a6343fbe6a8c27d18e03e18628156436d90ccf1e0e"
     }
   ],
   "historicalFailuresPreserved": true,
