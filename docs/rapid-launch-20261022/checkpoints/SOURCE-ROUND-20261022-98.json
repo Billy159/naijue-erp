@@ -1,0 +1,92 @@
+{
+  "atUtc": "2026-10-22T22:15:13.964916+00:00",
+  "parent": "e31ea0f3ccc371a0fb3e3a65f718a6c5408193c2",
+  "groups": [
+    {
+      "slice": "fix: retain editable sales direction for partial quantities",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-55/DELIVERY.json",
+      "receiptSha256": "83453c088b9f40bb17a5628f8d05b17d06a193df616676f3d01af9fc973fc06f",
+      "receiptSnapshot": {
+        "chunk": 55,
+        "atUtc": "2026-10-22T22:14:15.248314+00:00",
+        "status": "READY_EXACT1_P1_SALE_QUANTITY_DIRECTION",
+        "taskId": "F01/SALE-QUANTITY-DIRECTION-01 existing DOC-SOURCE-04 family",
+        "priority": "P1",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+            "sha256": "37c87e04e587a9c63a643ea7ee88a4dff60aac7815162a748a3a0f78c578c82a"
+          }
+        ],
+        "completedScope": "Keep incomplete raw quantity in its actual editing section, bound by native session+row key. Valid signed syntax follows existing sign section and active section; raw text unchanged. No zero filling, model kind/validation/quantity/money/identity/save/provider edits.",
+        "checks": {
+          "before-1.log": "Driver wrong prop stopped before reproduction; corrected from actual SalesCommandForm signature, no application change for driver error. Failure retained.",
+          "before-2.log": "exit0 exact original saved RETURN native full-form failure reproduced: empty OUT/disabled/focusfalse",
+          "after-1.log": "exit0 saved and new RETURN empty/minus/-2, active sign crossover both directions, section switch/raw retention, current Enter/Esc no-op contract, one original positive SALE valid, empty/zero/negativeSALE still invalid. Original SKU/snapshot/pricing retained; exact saved huge BigInt minor total observed.",
+          "warnings": "React19 Arco element.ref warnings and act warnings from direct model validate/focus steps retained; actual critical change/click events use act. Not a browser interaction or warning-free suite claim.",
+          "types-1.log": "exit0 final targeted original strict import closure",
+          "SOURCE-CHECK.json": "Exact3 view blocks only; C89 native model/mode/saved model/preparation bytes unchanged."
+        },
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-55/SOURCE-CHECK.json",
+            "sha256": "e7eedc3ac11bd053302bf5b826f7644db39e5505d2f1c346c1f5e26bf31b56c3"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-55/SOURCE.diff",
+            "sha256": "10cf8836cfe99a7d7db942537b524d911ca6d1803943c739aa9bbd407531dd59"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-55/BEFORE.json",
+            "sha256": "5dc8e88400170c7f1aa6433c15b8e731fe25d504beb7c5f34c02303d993cc64e"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-55/AFTER.json",
+            "sha256": "372aa7806e3c08483616f94495fd5e10a6b9ce5e9d45a3e8d4ee899d7771b75e"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-55/quantity-direction-check.mjs",
+            "sha256": "47884489bb0b5ce56c9be8287e60dc00001fb9498d7ddd58f6130a74e33c399e"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-55/before-1.log",
+            "sha256": "d22716f3dac21c9aa0bc34c0eb904752237de72fef4d971ac76627511e54d665"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-55/before-2.log",
+            "sha256": "5b358a8422a6803f0bd3906750e1224a9942272ea2d4a997bc1329bf4291bdb5"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-55/after-1.log",
+            "sha256": "0f3c930e08afa53a5803e4dc27f6473a91a4607dd045bf777aa87742c201690f"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-55/types-1.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "notTested": [
+          "Original Demo owner next fixed-candidate savedRETURN clear→-2 actual Chrome operation",
+          "Whole Sales page consistency",
+          "Native trusted preparation/SAVE/PG/role/production acceptance"
+        ],
+        "notRepeated": [
+          "Prior passed newSALE broad scope",
+          "Backend/protocol/existing saved lifecycle suites",
+          "Same source old keyboard/candidate control suites"
+        ],
+        "blockers": [],
+        "next": "C pin exact1, QF only this P1 and necessary positive compatibility; next necessary fixed candidate Demo only actual savedRETURN original clear/type path. Source frozen until C pin/release. Hover54 and transfer3tag remain lower priority as routed."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+          "owner": "F1",
+          "bytes": 34966,
+          "sha256": "37c87e04e587a9c63a643ea7ee88a4dff60aac7815162a748a3a0f78c578c82a"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "SavedRETURN P1 SALE-QUANTITY-DIRECTION-01 only view state/session row-key classification of partial raw. No model/provider/businesskind/amount/native/save changes; no zero-fill. Actual browser fix pending next fixed preview, wholepage/real save NOT_PASS."
+}
