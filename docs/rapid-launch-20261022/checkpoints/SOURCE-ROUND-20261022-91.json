@@ -1,0 +1,83 @@
+{
+  "atUtc": "2026-10-22T21:50:25.812410+00:00",
+  "parent": "b0d58d38c5221e129410a8eaf2055e30707c88a2",
+  "groups": [
+    {
+      "slice": "TRANSFER_SPEC_LEFT_ALIGN_AND_SINGLE_FOCUS_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-52/DELIVERY.json",
+      "receiptSha256": "77676b575da5aae1edc5e8c851dc404019ab02eccf653b590c2c1222e1562f0e",
+      "receiptSnapshot": {
+        "chunk": 52,
+        "atUtc": "2026-10-22T21:49:45.640957+00:00",
+        "status": "READY_EXACT2_SPEC_LEFT_ALIGNMENT_AND_PRODUCT_FOCUS",
+        "taskId": "F01/TR-UI-01/02/03/04 existing issues",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+            "sha256": "8b27b138cf2d6da1d4bd3808b251c42386ae75e2f665a3d142545977d86e8808"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal.css",
+            "sha256": "7c189fdc14f752f0d4b209be66a5a0fde38fe796ffeedbebfdaf6b00fe8a9c14"
+          }
+        ],
+        "completedScope": [
+          "Native spec Select adds position bl; existing 250 width,4px gap, local Demo portal, values and events unchanged. Separate implementation from C85 flat Action.",
+          "Only existing product-input reset gains explicit focus-visible selector to beat same-specificity later generic focus ring. Outer focus border remains."
+        ],
+        "checks": {
+          "types-1.log": "exit0 unchanged original strict options, targeted source import closure",
+          "presentation-1.log": "exit0 actual C83 full CSS ordering and native installed Arco geometry calculator with explicit model fixtures",
+          "sourceDiff": "Reversing these exact two substitutions yields C83 source bytes for both files."
+        },
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-52/PRESENTATION-RESULT.json",
+            "sha256": "2aafb9cabbdc36878b2fb328776fed6ac0e2b8866ec51144236c577b50b3a0b8"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-52/CSS-PROBE.json",
+            "sha256": "15d75f9e2b0a5d8b8570d682b7a1647db551231bdb399b5d05041d28e7e87697"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-52/presentation-check.mjs",
+            "sha256": "7c9ec3d13ff34eaf476c087806361b7eb9ce6785201a03beb6a6455a5f506b87"
+          }
+        ],
+        "notTested": [
+          "Next fixed candidate actual left alignment and single focus border",
+          "Real keyboard/selection geometry, whole transfer page",
+          "Actual save/permissions/native PG/production business"
+        ],
+        "notRepeated": [
+          "C78 real Delete/Tab pass retained",
+          "Saved author quantity3to4/remark/viewEsc evidence retained",
+          "C85 flat-control QA",
+          "Prior provider/SKU/owner/save suites/full build/Chrome"
+        ],
+        "remainingExistingIssues": [
+          "Spec menu padding/headerweight/selected tick",
+          "Product entry code/name same line",
+          "Table header/placeholder/action/summary tags and count text/y alignment"
+        ],
+        "blockers": [],
+        "next": "C pin exact2 and release so F1 can continue remaining visual scope in these same files. Original Demo only changed actual anchors/focus; do not replay C78 original behavior. Any extra shared file will be proposed to C before mutation."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+          "owner": "F1",
+          "bytes": 29005,
+          "sha256": "8b27b138cf2d6da1d4bd3808b251c42386ae75e2f665a3d142545977d86e8808"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.css",
+          "owner": "F1",
+          "bytes": 4013,
+          "sha256": "7c189fdc14f752f0d4b209be66a5a0fde38fe796ffeedbebfdaf6b00fe8a9c14"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only Transfer native Select left anchor/focus-visible CSS. Original actual Delete/Tab/saved authors reused. No new browser/save/business acceptance."
+}
