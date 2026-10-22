@@ -87,6 +87,7 @@ export class SalesProposalSession {
   readonly #scope: ReadScope; readonly #reader: SalesProposalReader; readonly #onAccessFailure: ((error: HttpQueryError) => void) | undefined; readonly #listeners = new Set<() => void>();
   #seeded = false;
   #savedWarehouse: { readonly hallId: string; readonly warehouseId: string } | null = null;
+  readonly #savedLines = new Map<string, { readonly skuId: string; readonly snapshot: SalesDraftDto['lines'][number]['snapshot']; readonly product: CurrentFormProduct }>();
   #request: AbortController | null = null; #sequence = 0; #nextSettlement = 0; #nextLine = 0; #settlementTarget: string | null = null; #revision = 0; #entryTarget: 'IN' | 'OUT' | null = null; #inlineSettlement = false;
   #state: SalesProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, totals: null, picker: null, lineEdit: null, entries: emptyEntries() });
   constructor(scope: ReadScope, reader: SalesProposalReader, onAccessFailure?: (error: HttpQueryError) => void) { this.#scope = scope; this.#reader = reader; this.#onAccessFailure = onAccessFailure; scope.signal.addEventListener('abort', this.dispose, { once: true }); if (!scope.active) this.dispose(); }
@@ -107,6 +108,7 @@ export class SalesProposalSession {
       if (!['SALE', 'RETURN', 'EXCHANGE'].includes(draft.businessType) || !Array.isArray(draft.lines) || !draft.lines.length || draft.lines.length > 200 || new Set(draft.lines.map(line => line.key)).size !== draft.lines.length || !Array.isArray(draft.settlements) || draft.settlements.length > 3 || new Set(draft.settlements.map(row => row.key)).size !== draft.settlements.length) return false;
       if (typeof draft.businessDate !== 'string' || typeof draft.note !== 'string' || typeof draft.orderDiscount !== 'string' || draft.lines.some(line => !line.key || line.sku.productId !== line.product.id || typeof line.quantity !== 'string' || typeof line.dealPrice !== 'string')) return false;
     } catch { return false; }
+    for (const line of draft.lines) if (line.sourceSnapshot) this.#savedLines.set(line.key, Object.freeze({ skuId: line.sku.id, snapshot: line.sourceSnapshot, product: line.product }));
     this.#seeded = true; this.#savedWarehouse = draft.hall && draft.warehouse ? { hallId: draft.hall.id, warehouseId: draft.warehouse.id } : null; this.#revision++;
     this.#publish({ draft, dirty, entries: emptyEntries(), lineEdit: null, errors: [], notice: null, totals: null }); return true;
   }
@@ -167,8 +169,17 @@ export class SalesProposalSession {
     const edit = this.#state.lineEdit, draft = this.#state.draft;
     if (this.#state.disposed || this.#state.picker || !edit?.sku || edit.sku.productId !== edit.product.id) return false;
     if (draft.lines.find(row => row.key === edit.key) !== edit.original) { this.#publish({ notice: '原行已变化，请取消改选后重新选择。' }); return false; }
-    const changed = this.#edit({ ...draft, lines: draft.lines.map(row => { if (row.key !== edit.key) return row; const { sourceSnapshot, ...retained } = row; const sameStoredSku = row.sku.id === edit.sku!.id && !!sourceSnapshot; const { category: _currentCategory, ...currentProduct } = edit.product; const product = sameStoredSku ? { ...currentProduct, retailPrice: row.product.retailPrice, ...(row.product.category ? { category: row.product.category } : {}) } : edit.product; return { ...retained, ...(sameStoredSku ? { sourceSnapshot: sourceSnapshot! } : {}), product, sku: edit.sku! }; }) });
-    if (changed) this.#publish({ lineEdit: null });
+    const changed = this.#edit({ ...draft, lines: draft.lines.map(row => {
+      if (row.key !== edit.key) return row;
+      const { sourceSnapshot, ...retained } = row, original = this.#savedLines.get(row.key), restored = original?.skuId === edit.sku!.id;
+      const { category: _currentCategory, ...currentProduct } = edit.product;
+      // A stored reference belongs to the original SKU. A size-only change has
+      // no current price read; do not relabel the old reference as a new fact.
+      const product = restored ? { ...currentProduct, retailPrice: original.product.retailPrice, ...(original.product.category ? { category: original.product.category } : {}) }
+        : sourceSnapshot && edit.product === row.product ? { ...edit.product, retailPrice: null } : edit.product;
+      return { ...retained, ...(restored ? { sourceSnapshot: original.snapshot } : {}), product, sku: edit.sku! };
+    }) });
+    if (changed) this.#publish({ lineEdit: null, ...(this.#state.draft.lines.find(row => row.key === edit.key)?.product.retailPrice === null ? { notice: '新规格参考价尚未读到。可重新选择商品核对参考价，或明确填写成交单价；未确认价格不会保存。' } : {}) });
     return changed;
   }
   cancelLineEdit(): void { this.closePicker(); if (!this.#state.disposed) this.#publish({ lineEdit: null }); }
@@ -398,8 +409,8 @@ export class SalesProposalSession {
   }
   reset(discardConfirmed = false): boolean {
     if (this.#state.disposed || this.#state.dirty && !discardConfirmed) return false;
-    this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); return true;
+    this.#savedLines.clear(); this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); return true;
   }
   cancel(discardConfirmed = false): boolean { if (!this.reset(discardConfirmed)) return false; this.dispose(); return true; }
-  readonly dispose = (): void => { if (this.#state.disposed) return; this.#savedWarehouse = null; this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#scope.signal.removeEventListener('abort', this.dispose); this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); this.#listeners.clear(); };
+  readonly dispose = (): void => { if (this.#state.disposed) return; this.#savedLines.clear(); this.#savedWarehouse = null; this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#scope.signal.removeEventListener('abort', this.dispose); this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); this.#listeners.clear(); };
 }
