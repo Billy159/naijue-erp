@@ -39,3 +39,6 @@ export type DemoSingleSelectActionProps = CommonProps & (
 export function loadDemoSingleSelectAction() {
   return import('./single-select-action.tsx');
 }
+
+/** Existing scoped stylesheet lease; no CSS is loaded at contract import. */
+export { createDemoSingleSelectStyles } from './single-select-styles.ts';

@@ -17,6 +17,7 @@ const noSubscribe = () => () => {};
 interface StoreQueryUi {
   draft: StoreSettingsListQuery; applied: StoreSettingsListQuery;
   hallSelection: { id: string; name: string } | null;
+  readonly tableScroll: { top: number; left: number };
 }
 interface StoreRouteUi {
   readonly reader: StoreSettingsPageProps['reader'];
@@ -30,7 +31,10 @@ const routeQueryUi = new WeakMap<ReadScope, StoreRouteUi>();
 function queryUi(props: StoreSettingsPageProps, kind: StoreSettingsKind): StoreQueryUi {
   let state = routeQueryUi.get(props.scope);
   if (!state || state.reader !== props.reader || state.workspace !== props.maintenance?.workspace) {
-    const empty = (): StoreQueryUi => ({ draft: { ...initialStoreSettingsQuery }, applied: { ...initialStoreSettingsQuery }, hallSelection: null });
+    // Frozen App keeps one table viewport while changing its tab/columns. Share
+    // only that UI position across the two tab states; never retain table facts.
+    const tableScroll = { top: 0, left: 0 };
+    const empty = (): StoreQueryUi => ({ draft: { ...initialStoreSettingsQuery }, applied: { ...initialStoreSettingsQuery }, hallSelection: null, tableScroll });
     state = { reader: props.reader, workspace: props.maintenance?.workspace, tabs: { stores: empty(), warehouses: empty() } };
     routeQueryUi.set(props.scope, state);
     props.scope.signal.addEventListener('abort', () => routeQueryUi.delete(props.scope), { once: true });
@@ -86,7 +90,7 @@ function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: S
   if (hallSelection && !hallOptions.some(option => option.value === hallSelection.id)) hallOptions.push({ value: hallSelection.id, label: hallSelection.name });
   const halls = (search = '', page = 1) => { if (scope.active) void controller.queryHalls({ ...initialStoreSettingsQuery, status: 'all', search, page }); };
   const maintenanceTitle = workspace?.writesEnabled() ? '维护资料' : props.maintenance ? '可填写表单；此版本暂未开放保存' : `${label}维护暂未接入`;
-  const staleState = success && (busy || snapshot.phase === 'error' || draft.search !== displayed.search || draft.status !== displayed.status || draft.hallId !== displayed.hallId)
+  const staleState = success && (busy || snapshot.phase === 'error')
     ? <p className="settings-note" role="status">下方仍为上次成功读取的资料（搜索：{displayed.search || '全部'}；状态：{displayed.status === 'normal' ? '正常' : displayed.status === 'disabled' ? '已停用' : '全部'}；第{displayed.page}页），不是待查条件的新结果。</p> : null;
   return <DemoStoreView scope={scope} kind={props.kind} draft={draft} displayed={displayed} result={result ?? null} busy={busy}
     emptyText={!result ? busy ? '正在读取资料' : snapshot.phase === 'error' ? '当前查询失败' : '等待查询' : result.total ? '此页没有数据，请返回有效页' : '暂无符合条件的数据'}
@@ -99,6 +103,7 @@ function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: S
     onReset={() => { const reset = { ...initialStoreSettingsQuery, pageSize: displayed.pageSize }; setDraft(reset); setHallSelection(null); run(reset); }}
     onPage={page => run({ ...displayed, page })} onPageSize={pageSize => run({ ...displayed, page: 1, pageSize })}
     referenceLabel={storeSettingsReferenceLabel} readState={state} staleState={staleState}
+    tableScroll={props.ui.tableScroll} onTableScroll={position => { props.ui.tableScroll.top = position.top; props.ui.tableScroll.left = position.left; }}
     audit={<SettingsAuditEntry scope={props.scope} {...(props.audit ? { capability: props.audit } : {})} onAccessFailure={props.onAccessFailure} localHasUnresolvedWrite={() => props.maintenance?.workspace?.hasUnresolvedWrite() ?? false} />}
     halls={{ enabled: !!props.allowHallDirectoryRead, loading: hallSnapshot.phase === 'loading', options: hallOptions, onOpen: () => halls(), onSearch: search => halls(search),
       onChange: value => { const item = hallOptions.find(option => option.value === value); setHallSelection(value && item ? { id: value, name: item.label } : null); setDraft(previous => ({ ...previous, hallId: value || null })); },

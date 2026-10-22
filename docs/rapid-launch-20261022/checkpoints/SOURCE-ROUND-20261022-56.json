@@ -1,0 +1,159 @@
+{
+  "atUtc": "2026-10-22T19:05:31.324588+00:00",
+  "parent": "af2c3c202fa01881b67ea739d1d712941c14b126",
+  "groups": [
+    {
+      "slice": "SINGLE_SELECT_INERT_STYLE_FACTORY_EXPORT",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-34/DELIVERY.json",
+      "receiptSha256": "c045128e12740d2cabd5b2cd8ba2522a8f2cc88ec0ec16aa8959b882e5dc7c21",
+      "receiptSnapshot": {
+        "chunk": 34,
+        "status": "READY_FOR_C_PIN_EXISTING_STYLE_FACTORY_EXPORT",
+        "base": "chunk32 C55 unchanged receipt retained",
+        "files": [
+          {
+            "path": "apps/web/src/demo-controls/single-select-contract.ts",
+            "sha256": "8c1e122877f7809abe33c42bde62550685bfa0bc8045b4d52265c6e8e7d12ca0"
+          }
+        ],
+        "change": "Forward-export existing createDemoSingleSelectStyles from its unchanged styles module. F2 actual year consumer imports it from contract; that entry did not yet export it. No new CSS/behavior/props/default/data/permission change.",
+        "evidence": "W7 actual root bundle root-3.log discovered F2 consumer missing export while including current full root. This is an observed integration error, not a W7 runtime result.",
+        "check": "Existing style factory module and exact typed source validated by affected type closure; final log follows as a new check receipt, no overwrite."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/demo-controls/single-select-contract.ts",
+          "owner": "F1",
+          "sha256": "8c1e122877f7809abe33c42bde62550685bfa0bc8045b4d52265c6e8e7d12ca0",
+          "bytes": 1911
+        }
+      ]
+    },
+    {
+      "slice": "STORE_UI_P2_PAGER_SCROLL_DRAFT_NOTE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/STORE-UI-P2-v1-RESULT.json",
+      "receiptSha256": "cc63cc3c9bab435c3f7c7f591575763df87a3de3ec8a881156ba1ae0bcc9f0e3",
+      "receiptSnapshot": {
+        "taskId": "F05/STORE-UI-P2",
+        "version": "STORE-UI-P2-v1",
+        "owner": "F3",
+        "threadId": "01a161d2-6f11-7412-8001-14719ced78d0",
+        "clientDate": "2026-10-23",
+        "atUtc": "2026-10-22T19:02:52.226937+00:00",
+        "status": "SOURCE_READY_TARGETED_REPRO_PASS_AWAITING_C_QF_DEMO",
+        "baseHead": "eb57b347fb69c3ebd174ca787103f10c37acd236",
+        "files": [
+          {
+            "path": "apps/web/src/settings/stores/stores-page.tsx",
+            "beforeSha256": "985f707a015928b024b4e3d96f287b4354d612768198f318daec698f54d3da4b",
+            "sha256": "5e4ca49d3f64fde368e58d7f382c552a546bfa2b95992e617de0bb568f9c71a1",
+            "bytes": 11654
+          },
+          {
+            "path": "apps/web/src/settings/stores/demo-store-view.tsx",
+            "beforeSha256": "f7d34d61abbdeaf273002e2d40b09c0e62a6f3e3691cb3af1889f22261f28009",
+            "sha256": "375b72e09f6d251e52cd0b1286f0ccc3d64db2515c9a9ecc2fac5337585ca7fc",
+            "bytes": 7664
+          },
+          {
+            "path": "apps/web/src/settings/stores/demo-store-ui.css",
+            "beforeSha256": "3f26ff9987a1ee504f9f7e8b27fb7e9f9660faeac695edfd323519b565f188fc",
+            "sha256": "0b60d8f2b676f4a2c6a1895b2add2a01d8eba14014e7a70fed430206882900bf",
+            "bytes": 22496
+          }
+        ],
+        "findings": [
+          {
+            "id": "STORE-UI-01",
+            "cause": "Frozen inventory-refinement.css line40 final 42px/gap10 cascade was omitted; surrounding Arco secondary-button adapter outranked the single-select shell",
+            "fix": "Store-scoped final pager 42px/gap10/color plus source idle/hover/focus shell, selector excludes other pages",
+            "proof": "isolated CSS on actual rendered shell: before 40px/14px/white visible border -> after42px/10px/rgb(240,241,243)/transparent border",
+            "remaining": "Nominal footer48->50/table -2px follows source layout; real browser geometry still needs measurement"
+          },
+          {
+            "id": "STORE-UI-02",
+            "cause": "Per-tab controller key remount loses the single unkeyed table viewport retained by frozen App",
+            "fix": "Share only scroll top/left between exactly two route UI tab states; restore after fresh result DOM; ignore transient empty loading scroll events; identity/route/reader isolation inherited",
+            "proof": "304/12 -> warehouse pending0 ignored -> fresh304/12; warehouse72/3 -> hall72/3; read-only keyed route too; new identity/reader resets0",
+            "remaining": "Native browser overflow clamping and actual viewport values to be checked by dedicated Demo"
+          },
+          {
+            "id": "STORE-UI-03",
+            "cause": "Normal draft/applied mismatch rendered an extra permanent settings-note row absent in Demo",
+            "fix": "Normal pending filter changes no longer insert note; loading/error still identify last successful result and keep native recovery",
+            "proof": "XYZ typing emits no read, no note, keeps old rows; switches preserveXYZ; explicit failedXYZ read shows error and old applied result, retry success clears note",
+            "remaining": "Actual tableY needs new fixed browser preview"
+          }
+        ],
+        "evidenceDirectory": "reports/ui-demo-comparison-20261022/stores-page-20261023",
+        "browserSourceBinding": "STORE-UI-P2-v1-BROWSER-SOURCE-BINDING.json",
+        "bindingLimit": "693 View predates5b363 shared-control adaptation; page and CSS are exact matches, all3 symptoms also reproduced on current pre-fix baseline",
+        "checks": {
+          "before": {
+            "exitCode": 1,
+            "log": "store-ui-p2-before-final-loop.log",
+            "redCases": [
+              "42 expected but40",
+              "extra note true expected false",
+              "scroll0 expected304"
+            ]
+          },
+          "after": {
+            "exitCode": 0,
+            "groups": 5,
+            "log": "store-ui-p2-after-run2-isolation.log",
+            "writes": 0,
+            "requestKeys": 0
+          },
+          "strictTypes": {
+            "exitCode": 0,
+            "roots": 4,
+            "log": "store-ui-p2-types-run1.log"
+          },
+          "leafCssClosure": {
+            "exitCode": 0,
+            "evidence": "store-ui-p2-style-closure.json"
+          },
+          "diffCheck": "PASS",
+          "unaffectedFiles": "protected native controllers/contracts/shared controls/styles unchanged from base; accepted source/protocol/header/tabs/toolbar/20-row checks reused",
+          "initialHarnessRuns": "Three early probes exited137 while reporting a failing DOM-element-vs-null assertion. Replaced it with boolean assertion and isolated CSS; reproducible bounded red loop1.2s. Exact termination mechanism not measured; not an app finding."
+        },
+        "wholePagePass": false,
+        "browserFindingsClosed": false,
+        "actualChromeControl": false,
+        "browserHarnessControl": false,
+        "activeBrowserOperations": false,
+        "notMeasured": [
+          "new fixed preview actual pager background/footer50/table geometry",
+          "native browser scroll clamping and cross-tab viewport",
+          "modal commands/audit host capability; current harness missing commands is not leaf defect",
+          "integrated build/native DB/business/release"
+        ],
+        "blockers": [],
+        "next": "C exact3 checkpoint; QF only these5 targeted source/DOM branches; next necessary exact preview dedicated Demo3 findings only, reuse accepted ranges"
+      },
+      "files": [
+        {
+          "path": "apps/web/src/settings/stores/stores-page.tsx",
+          "owner": "F3",
+          "sha256": "5e4ca49d3f64fde368e58d7f382c552a546bfa2b95992e617de0bb568f9c71a1",
+          "bytes": 11654
+        },
+        {
+          "path": "apps/web/src/settings/stores/demo-store-view.tsx",
+          "owner": "F3",
+          "sha256": "375b72e09f6d251e52cd0b1286f0ccc3d64db2515c9a9ecc2fac5337585ca7fc",
+          "bytes": 7664
+        },
+        {
+          "path": "apps/web/src/settings/stores/demo-store-ui.css",
+          "owner": "F3",
+          "sha256": "0b60d8f2b676f4a2c6a1895b2add2a01d8eba14014e7a70fed430206882900bf",
+          "bytes": 22496
+        }
+      ]
+    }
+  ],
+  "fileCount": 4,
+  "scope": "Only inert style export and store UI3P2 source fixes; browser truegeometry remains new candidate retest. Other shared settings P2 extensions not implied closed."
+}

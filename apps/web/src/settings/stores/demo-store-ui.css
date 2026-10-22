@@ -29,7 +29,7 @@
 .demo-store-workbench.iw-workbench .btn{font-size:13px;min-height:30px;padding:4px 9px;border-radius:var(--ca-radius-control)}
 .demo-store-workbench.iw-workbench .iw-head{margin:0 0 8px;min-height:32px;flex:none}
 .demo-store-workbench .iw-head h1{font-size:20px;margin:0}
-.demo-store-workbench .iw-pagination{display:flex;align-items:center;gap:14px;min-height:40px;flex:none;font-size:13px}
+.demo-store-workbench .iw-pagination{display:flex;align-items:center;gap:10px;min-height:42px;flex:none;font-size:13px;color:var(--ca-ink-2)}
 .demo-store-workbench .iw-pagination .actions{margin-left:auto}
 .demo-store-workbench .iw-jump{display:flex;align-items:center;gap:4px}
 .demo-store-workbench .iw-jump input{width:44px;height:30px;padding:4px;text-align:center;font:inherit}
@@ -98,6 +98,11 @@
 .demo-store-workbench .iw-jump input{height:28px;width:40px;border:1px solid var(--ca-control-border);border-radius:3px}
 .demo-store-workbench .iw-pagination .iw-jump-go{height:28px;min-height:28px;padding:2px 5px;border:0;background:transparent;color:var(--ca-ink-2)}
 .demo-store-workbench .iw-pagination .iw-jump-go:hover{color:var(--ca-primary-ink)}
+/* STORE-UI-01: retain the frozen single-select's idle shell despite the
+ * surrounding Arco secondary-button adapter. This scope excludes other pages. */
+.demo-store-workbench.bs-page .bs-pager .iw-page-size-host .iw-page-size-trigger.arco-btn:not(.arco-btn-disabled){box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;width:100%;height:32px;padding:0 4px 0 10px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);color:var(--ca-ink);font:400 13px Arial,"PingFang SC",sans-serif;box-shadow:none}
+.demo-store-workbench.bs-page .bs-pager .iw-page-size-host .iw-page-size-trigger.arco-btn:not(.arco-btn-disabled):hover{border-color:var(--ca-control-hover-border)}
+.demo-store-workbench.bs-page .bs-pager .iw-page-size-host .iw-page-size-trigger.arco-btn:not(.arco-btn-disabled):focus-visible{outline:0;border-color:var(--ca-control-focus-border)}
 /* SmallSelect complete ordinary single-value branch from its frozen ShadowRoot CSS. */
 :is(.demo-store-workbench,.demo-store-modal) .demo-store-single{display:block;width:100%;min-width:0;font:13px Arial,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ca-ink);--arcoblue-6:var(--ca-primary-rgb);--primary-6:var(--ca-primary-rgb);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2)}
 :is(.demo-store-workbench,.demo-store-modal) .demo-store-single .arco-select{display:block;width:100%;font-size:13px}

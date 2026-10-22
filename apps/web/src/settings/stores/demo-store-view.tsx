@@ -1,6 +1,6 @@
 import { Button, Empty, Input, Table, Tag } from '@arco-design/web-react';
 import { IconSearch } from '@arco-design/web-react/icon';
-import type { ReactNode } from 'react';
+import { useLayoutEffect, useRef, type ReactNode } from 'react';
 import { DemoSettingsTabs, DemoSettingsSingleSelect, DemoSettingsPager } from '../demo-settings-controls.tsx';
 import type { ReadScope } from '../../loading/read-scope.ts';
 import type { StoreSettingsEntry, StoreSettingsKind, StoreSettingsListQuery, StoreSettingsPage, StoreSettingsReference } from './contracts.ts';
@@ -22,10 +22,25 @@ export function DemoStoreView(props: {
   readonly onEdit: (row: StoreSettingsEntry, button: HTMLButtonElement) => void;
   readonly referenceLabel: (reference: StoreSettingsReference | null) => string;
   readonly audit: ReactNode; readonly readState: ReactNode; readonly staleState: ReactNode; readonly children: ReactNode;
+  readonly tableScroll?: { readonly top: number; readonly left: number };
+  readonly onTableScroll?: (position: { readonly top: number; readonly left: number }) => void;
   readonly halls: { readonly enabled: boolean; readonly loading: boolean; readonly options: readonly { readonly value: string; readonly label: string }[];
     readonly onOpen: () => void; readonly onSearch: (search: string) => void; readonly onChange: (value: string) => void; readonly footer: ReactNode };
 }) {
   const label = props.kind === 'stores' ? '营业厅' : '仓库';
+  const table = useRef<HTMLDivElement>(null), scrollReady = useRef(false);
+  useLayoutEffect(() => {
+    scrollReady.current = false;
+    const node = table.current;
+    // A remounted tab initially has no facts. Restoring against that empty DOM
+    // would clamp to zero and erase the shared viewport before its fresh read.
+    if (!node || !props.scope.active || !props.result) return;
+    if (props.tableScroll) {
+      node.scrollTop = props.tableScroll.top; node.scrollLeft = props.tableScroll.left;
+    }
+    scrollReady.current = true;
+    props.onTableScroll?.({ top: node.scrollTop, left: node.scrollLeft });
+  }, [props.scope, props.result, props.tableScroll]);
   const statusColumn = { title: '状态', width: 100, render: (_: unknown, row: StoreSettingsEntry) => <Tag className={`iw-status ${row.enabled ? 'normal' : 'off'}`}>{row.enabled ? '正常' : '已停用'}</Tag> };
   const actionColumn = { title: '操作', width: 76, render: (_: unknown, row: StoreSettingsEntry) => <div className="bs-row-actions"><Button type="text" size="small" disabled={props.editDisabled} title={props.maintenanceTitle} onClick={event => { if (event.currentTarget instanceof HTMLButtonElement) props.onEdit(row, event.currentTarget); }}>编辑</Button></div> };
   const columns = props.kind === 'stores'
@@ -43,7 +58,9 @@ export function DemoStoreView(props: {
       </div><div className="bs-toolbar-actions iw-query-actions"><Button className="btn primary" type="primary" htmlType="submit" disabled={props.busy}>查询</Button><Button className="btn iw-reset" disabled={props.busy} onClick={props.onReset}>重置</Button></div>
     </form>
     {props.readState}{props.staleState}
-    <div className="bs-table-wrap iw-arco-table" aria-busy={props.busy}><Table size="small" rowKey="id" columns={columns} data={props.result ? [...props.result.items] : []} pagination={false} noDataElement={<Empty description={props.emptyText} />} /></div>
+    <div ref={table} className="bs-table-wrap iw-arco-table" aria-busy={props.busy} onScroll={event => {
+      if (scrollReady.current && props.scope.active && props.result) props.onTableScroll?.({ top: event.currentTarget.scrollTop, left: event.currentTarget.scrollLeft });
+    }}><Table size="small" rowKey="id" columns={columns} data={props.result ? [...props.result.items] : []} pagination={false} noDataElement={<Empty description={props.emptyText} />} /></div>
     <DemoSettingsPager label="厅仓列表分页" scope={props.scope} page={props.displayed.page} size={props.displayed.pageSize} total={props.result?.total ?? null} busy={props.busy} onPage={props.onPage} onSize={props.onPageSize} />
     {props.children}
   </section>;
