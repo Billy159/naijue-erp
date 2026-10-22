@@ -8,10 +8,10 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "9ee77843aeafca0fa3c354c1ff22119549e10620",
+    "headObserved": "0d3d59f06fd5c9b660f29f71c1a773b4c00f2b1d",
     "workingTreeNotFullyCommitted": true,
     "remoteHeadVerified": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
-    "remoteReadbackMethod": "Successful push plus gh API exact ref readback this turn",
+    "remoteReadbackMethod": "Last verified exact API ref; later three git pushes failed on network. Do not claim local commits remote.",
     "pushPendingLocalCommits": true
   },
   "concurrency": {
@@ -37,9 +37,10 @@
       "prompt": "角色派工提示词/C-主控与集成发布.txt",
       "threadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
       "hostId": "local",
-      "model": "gpt-6-astra",
-      "reasoningEffort": "ultra",
-      "sourceWriteEnabled": true
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
+      "sourceWriteEnabled": true,
+      "fastRequested": false
     },
     "F1": {
       "title": "前端单据与公共界面",
@@ -51,9 +52,10 @@
       "prompt": "角色派工提示词/F1-前端单据与公共界面.txt",
       "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
       "hostId": "local",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "sourceWriteEnabled": true
+      "sourceWriteEnabled": true,
+      "fastRequested": false
     },
     "F2": {
       "title": "前端库存与商品",
@@ -64,9 +66,10 @@
       "prompt": "角色派工提示词/F2-前端库存与商品.txt",
       "threadId": "01a161d2-6bd9-7181-8386-1ecddddd386a",
       "hostId": "local",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "sourceWriteEnabled": true
+      "sourceWriteEnabled": true,
+      "fastRequested": false
     },
     "F3": {
       "title": "前端基础设置",
@@ -76,9 +79,10 @@
       "prompt": "角色派工提示词/F3-前端基础设置.txt",
       "threadId": "01a161d2-6f11-7412-8001-14719ced78d0",
       "hostId": "local",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "sourceWriteEnabled": true
+      "sourceWriteEnabled": true,
+      "fastRequested": false
     },
     "D1": {
       "title": "后端宿主事务与公共迁移",
@@ -90,9 +94,10 @@
       "prompt": "角色派工提示词/D1-后端宿主事务与公共迁移.txt",
       "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
       "hostId": "local",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "sourceWriteEnabled": true
+      "sourceWriteEnabled": true,
+      "fastRequested": false
     },
     "D2": {
       "title": "后端商品与基础资料维护",
@@ -103,9 +108,10 @@
       "prompt": "角色派工提示词/D2-后端商品与基础资料维护.txt",
       "threadId": "01a161d2-6956-7672-9ce0-1c5ca4b52853",
       "hostId": "local",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "sourceWriteEnabled": true
+      "sourceWriteEnabled": true,
+      "fastRequested": false
     },
     "D3": {
       "title": "后端库存历史与导入",
@@ -117,9 +123,10 @@
       "prompt": "角色派工提示词/D3-后端库存历史与导入.txt",
       "threadId": "01a161d2-6712-7691-80af-5d2fa6a30fab",
       "hostId": "local",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "sourceWriteEnabled": true
+      "sourceWriteEnabled": true,
+      "fastRequested": false
     },
     "QF": {
       "title": "前端独立验收",
@@ -129,9 +136,10 @@
       "prompt": "角色派工提示词/QF-前端独立验收.txt",
       "threadId": "01a161d2-717e-7f50-87bc-73a2d91f90a3",
       "hostId": "local",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "sourceWriteEnabled": false
+      "sourceWriteEnabled": false,
+      "fastRequested": false
     },
     "QB": {
       "title": "后端独立验收",
@@ -141,9 +149,10 @@
       "prompt": "角色派工提示词/QB-后端独立验收.txt",
       "threadId": "01a161d2-73f1-7381-ab03-65a1c3b52aa2",
       "hostId": "local",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "sourceWriteEnabled": false
+      "sourceWriteEnabled": false,
+      "fastRequested": false
     }
   },
   "tasks": [
@@ -151,8 +160,8 @@
       "id": "C00",
       "title": "接手、当前源码保全、GitHub首个检查点",
       "owner": "C",
-      "model": "gpt-6-astra",
-      "reasoningEffort": "ultra",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
       "status": "VERIFIED",
       "startDependencies": [],
       "completionDependencies": [],
@@ -176,14 +185,15 @@
         "sourceWriteEnabled": false,
         "activation": "C explicit checkpoint message",
         "fieldGate": "C01-v1 approved; unlisted new schema still requires explicit human approval."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "C01",
       "title": "字段确认与接口冻结",
       "owner": "C",
-      "model": "gpt-6-astra",
-      "reasoningEffort": "ultra",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
         "B00"
@@ -216,14 +226,15 @@
         "FIELD-APPROVAL-C01-v1.json",
         "FIELD-APPROVAL-SUPPLEMENT-v2-B.json",
         "FIELD-APPROVAL-SUPPLEMENT-v3-A.json"
-      ]
+      ],
+      "fastRequested": false
     },
     {
       "id": "C02",
       "title": "生产运行与发布准备（和开发并行）",
       "owner": "C",
-      "model": "gpt-6-astra",
-      "reasoningEffort": "ultra",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -247,13 +258,14 @@
         "sourceWriteEnabled": false,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "B00",
       "title": "数据和API差异输入",
       "owner": "D1",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "CODE_DONE",
       "startDependencies": [
@@ -277,13 +289,14 @@
         "sourceWriteEnabled": true,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "B01",
       "title": "真实生产宿主与端到端装配",
       "owner": "D1",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -306,13 +319,14 @@
         "sourceWriteEnabled": true,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "B02",
       "title": "单据事务、唯一编号与保存审核闭环",
       "owner": "D1",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -335,13 +349,14 @@
         "sourceWriteEnabled": true,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "B03",
       "title": "库存资格与查询热路径",
       "owner": "D3",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -365,13 +380,14 @@
         "sourceWriteEnabled": true,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "B04",
       "title": "商品与资料能力",
       "owner": "D2",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -395,13 +411,14 @@
         "sourceWriteEnabled": true,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "B05",
       "title": "厅仓、人员账号、往来单位、资金配置",
       "owner": "D2",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -425,13 +442,14 @@
         "sourceWriteEnabled": true,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "B06",
       "title": "批次真实导入、发布与历史读取（R1前置）",
       "owner": "D3",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -456,11 +474,12 @@
         "sourceWriteEnabled": true,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "B07",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -487,13 +506,14 @@
         "sourceWriteEnabled": true,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "F01",
       "title": "公共壳、认证、跨模块新增",
       "owner": "F1",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -516,13 +536,14 @@
         "sourceWriteEnabled": true,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "F02",
       "title": "销货/退换与调拨",
       "owner": "F1",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -546,13 +567,14 @@
         "sourceWriteEnabled": true,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "F03",
       "title": "库存",
       "owner": "F2",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -576,13 +598,14 @@
         "sourceWriteEnabled": true,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "F04",
       "title": "商品、分类、字典、条码与图片",
       "owner": "F2",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -605,13 +628,14 @@
         "sourceWriteEnabled": true,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "F05",
       "title": "基础设置",
       "owner": "F3",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -634,13 +658,14 @@
         "sourceWriteEnabled": true,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "F06",
       "title": "历史操作、输出及35/65差异收口",
       "owner": "F1",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -665,14 +690,15 @@
         "sourceWriteEnabled": true,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "C03",
       "title": "同版本集成与最小验收",
       "owner": "C",
-      "model": "gpt-6-astra",
-      "reasoningEffort": "ultra",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -695,14 +721,15 @@
         "sourceWriteEnabled": false,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "C04",
       "title": "分批发布",
       "owner": "C",
-      "model": "gpt-6-astra",
-      "reasoningEffort": "ultra",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
       "status": "NOT_STARTED",
       "startDependencies": [
         "C02",
@@ -727,14 +754,15 @@
         "sourceWriteEnabled": false,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "C05",
       "title": "最终接续与收口",
       "owner": "C",
-      "model": "gpt-6-astra",
-      "reasoningEffort": "ultra",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
       "status": "NOT_STARTED",
       "startDependencies": [
         "C04"
@@ -757,13 +785,14 @@
         "sourceWriteEnabled": false,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "QF01",
       "title": "前端独立验收任务",
       "owner": "QF",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -786,13 +815,14 @@
         "sourceWriteEnabled": false,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     },
     {
       "id": "QB01",
       "title": "后端独立验收任务",
       "owner": "QB",
-      "model": "gpt-6-astra",
+      "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "status": "RUNNING",
       "startDependencies": [
@@ -815,7 +845,8 @@
         "sourceWriteEnabled": false,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "fastRequested": false
     }
   ],
   "releaseBatches": [
@@ -875,7 +906,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T08:29:49.860274+00:00",
+  "updatedAt": "2026-10-22T09:05:13.366642+00:00",
   "stage": "FIXED_DELTA_QA_DEMO_REPAIRS_AND_EXACT26_ENGINE_PREPARATION",
   "lastVerifiedRemoteCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1298,17 +1329,22 @@
     }
   ],
   "currentModelDirective": {
-    "source": "User: all chats Astra xhigh; subsequent user: controller Astra Ultra",
-    "controller": {
-      "model": "gpt-6-astra",
-      "reasoningEffort": "ultra"
+    "recordedAtUtc": "2026-10-22T08:59:41.384921+00:00",
+    "source": "Direct human message in controller current conversation: 你剩下除了逐页对比都改为sol6.1-x-high吧 不要开fast",
+    "controllerAndNineRoles": {
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
+      "fastRequested": false
     },
-    "otherEightRoles": {
+    "exception": {
+      "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
       "model": "gpt-6-astra",
-      "reasoningEffort": "xhigh"
+      "reasoningEffort": "ultra",
+      "speed": "PRESERVE_EXISTING"
     },
-    "actualSettingAction": "send_message_to_thread with explicit model/thinking applied to all nine existing chat IDs; all calls accepted",
-    "historicalModelEvidenceRetained": true
+    "actualAction": "send_message_to_thread accepted explicit model/thinking for C and original eight role Chats; current in-flight generation is not retrospectively changed",
+    "fastActualState": "NOT_VERIFIED_INTERFACE_UNAVAILABLE",
+    "blocker": "No serviceTier option in app send tool; no running supported CLI control socket. Computer Use explicitly denied com.openai.codex. Requires UI setting; not falsely recorded as closed."
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
@@ -1327,12 +1363,14 @@
     "accountIdentityAdditional4": "D3_EXACT_PLAN_SOURCE_FACTS_READY_QB_QUEUED",
     "deploymentTools": "QB38_SOURCE_PROTOCOL_PASS_REAL_DEPLOY_NOT_RUN",
     "bootPersistence": "C_HELPER_SOURCE_IN_PROGRESS_NO_INSTALL",
-    "currentSourceCheckpoint": "9ee77843aeafca0fa3c354c1ff22119549e10620",
+    "currentSourceCheckpoint": "0d3d59f06fd5c9b660f29f71c1a773b4c00f2b1d",
     "currentPreview": {
-      "commit": "ec0c452305a2cef1dceb89eba65956b09dd47401",
-      "build": "ui-preview-ec0c452-01-build01",
-      "url": "http://127.0.0.1:57833/synthetic-unified.html",
-      "syntheticOnly": true
+      "url": "http://127.0.0.1:57834/synthetic-unified.html",
+      "commit": "9ee77843aeafca0fa3c354c1ff22119549e10620",
+      "build": "ui-preview-9ee7784-01-build01",
+      "htmlSha256": "095bf63aef2ad36e95a7e9ad5bbc5a1ef866b5a44ff82b3a526e1d56428008e4",
+      "scope": "SYNTHETIC_ONLY_WRITES_DISABLED",
+      "notIncluded": "947 prices/de6 password/93 STAFFroot/ea5 reset and specs/cd14 barcode/0d3 account+history"
     },
     "currentDatabase": {
       "name": "erp_rewrite_20261022_r1",
@@ -1344,13 +1382,13 @@
       "productionSwitch": "NOT_DONE"
     },
     "schemaSuccessor": {
-      "status": "20_26_SOURCE_IN_PROGRESS_NO_RUNTIME_CAPABILITY_ISSUED",
-      "knownEngineGaps": [
-        "0013 STAFF refuses liveaccount at deferred commit",
-        "22/23 newcolumns require exact whole snapshot successor",
-        "25 season publication/race and26 exact source predicates require actual engine"
-      ],
-      "humanFieldWaiting": false
+      "qaDatabase": "erp_qa_rapid26_20261022_01",
+      "installedVersions": "1..25",
+      "status": "PASS_FIXED20_25_INSTALL_AND_MINIMAL_NEGATIVES_ONLY",
+      "accounts": 0,
+      "sourceRows": 0,
+      "next": "job19 fixed bundle READY_NOT_STATIC_PARSED_NOT_SUBMITTED; C read/parse then append26 only",
+      "productionTargetStill": "erp_rewrite_20261022_r1 exact1..19 unchanged"
     },
     "latestCandidatePins": [
       "B06-ACCOUNT-IDENTITY-49.json",
@@ -1387,72 +1425,48 @@
     "FIELD-APPROVAL-SUPPLEMENT-v3-A.json"
   ],
   "latestAcceptedReceiptRefs": [
-    "QB39",
-    "QB40",
-    "QB41",
-    "QB42",
-    "QB43",
-    "QB44",
-    "QB45",
-    "QB46",
-    "QB47",
-    "QB48",
-    "QB49",
-    "QB50",
-    "QB51",
-    "QF-F1-CHUNK12-8775307b",
-    "QF-F1-CHUNK14-ec0c4523",
-    "QF-F1-CHUNK15-87713697"
+    "QB-SLICE-57",
+    "QB-SLICE-58",
+    "QF-F1-CHUNK18-93ce7b61",
+    "QF-F1-DOC01-ea5ebccf",
+    "QF-F2-DATA001-ea5ebccf",
+    "QF-F2-DATA002-cd14b794",
+    "QB54",
+    "QB55",
+    "QB56",
+    "QF9ee media/season/DOC02–04",
+    "QFde6 password P2 closed",
+    "Demo ec0c F09 LIMITED_UI",
+    "D3 actual42561 source gzip only",
+    "C job18 actual20..25 minimal negatives",
+    "C job17 bounded source projection"
   ],
   "newPendingReviews": [
-    {
-      "source": "877136977ad5ec8977824623dee59cb71c17293f",
-      "owner": "QB",
-      "scopes": [
-        "D3_APPROVED21_BARCODE_PROOF",
-        "D3_VERIFIED_HEADER_FACTORY",
-        "C_BOOT_ENTRY_SOURCE"
-      ]
-    },
-    {
-      "source": "ecec0bd0a4546a75ee4d8d7761c6e7f11b1136d9",
-      "owner": "QB",
-      "scope": "D2_W11_PRODUCT_SEASON_ARRAY"
-    },
-    {
-      "source": "9ee77843aeafca0fa3c354c1ff22119549e10620",
-      "owner": "QF",
-      "scopes": [
-        "F2_SEASON_V2_AND_MEDIA_RELOAD_FIX",
-        "F1_DOC02_03_04_FIX"
-      ]
-    }
+    "QB cd14 historical-customer-source exact2/new derived candidate",
+    "QF 0d3 F1 chunk20 history13",
+    "QF 0d3 F3 W7 account8",
+    "Demo current9ee DOC02–04 bounded browser comparison"
   ],
   "openFindingsCurrent": [
     {
-      "id": "QF-F2-MEDIA-UNCERTAIN-RELOAD-01",
-      "owner": "F2",
-      "status": "FIXED_SOURCE_WAIT_QF_9ee7784"
-    },
-    {
-      "id": "QF-F3-STAFF-PASSWORD-STATE-01",
-      "owner": "F3",
-      "status": "NEED_FIX_DISPATCHED"
-    },
-    {
-      "id": "DOC-SOURCE-02/03/04",
+      "id": "DOC-SOURCE-01/02/03/04",
       "owner": "F1",
-      "status": "FIXED_SOURCE_WAIT_MINIMAL_BROWSER"
+      "status": "SOURCE_QF_PASS_WAIT_FIXED_BROWSER"
     },
     {
-      "id": "DOC-SOURCE-01",
-      "owner": "C",
-      "status": "AUTHORITY_TRACE"
-    },
-    {
-      "id": "DATA-PRES-001/002/003/004",
+      "id": "DATA-PRES-001/002/003",
       "owner": "F2",
-      "status": "DISPATCHED_ORIGINAL_F04_SCOPE"
+      "status": "FIXED_SOURCE_BROWSER_PENDING_001_002_QF_PASS"
+    },
+    {
+      "id": "DATA-PRES-004",
+      "owner": "F2/D3/D2/F1",
+      "status": "NAVIGATION_IMPLEMENTATION_OVERVIEW_CONTRACT_FREEZE_IN_PROGRESS"
+    },
+    {
+      "id": "DATA-SRC-003",
+      "owner": "D2/F3",
+      "status": "W13_AUDIT_READ_CONTRACT_FROZEN_SOURCE_IMPLEMENTING"
     }
   ],
   "historicalFailuresPreserved": true

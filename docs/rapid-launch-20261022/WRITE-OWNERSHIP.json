@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T08:24:25.338963+00:00",
+  "updatedAt": "2026-10-22T09:05:13.366642+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -279,6 +279,16 @@
           "path": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
           "group": "EXACT2_HISTORICAL_CUSTOMER_EXISTING_SOURCE_GUARD",
           "fieldGate": "NO_NEW_TABLE_OR_FIELD_EXISTING_APPROVED_HISTORICAL_MAPPING_ONLY"
+        },
+        {
+          "path": "adapters/postgres/src/sales-native-facts.ts",
+          "group": "EXACT2_NEW_CURRENT_CUSTOMER_VALIDATION",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_SCHEMA"
+        },
+        {
+          "path": "tests/sales-native-facts.test.ts",
+          "group": "EXACT2_NEW_CURRENT_CUSTOMER_VALIDATION",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_SCHEMA"
         }
       ]
     },
@@ -805,6 +815,46 @@
         {
           "path": "tests/staff-maintenance.test.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/settings-audit-ports.ts",
+          "group": "W13_SETTINGS_AUDIT_READ_ONLY",
+          "fieldGate": "EXISTING_APPROVED_AUDIT_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "packages/application/src/settings-audit-validation.ts",
+          "group": "W13_SETTINGS_AUDIT_READ_ONLY",
+          "fieldGate": "EXISTING_APPROVED_AUDIT_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "packages/application/src/settings-audit-service.ts",
+          "group": "W13_SETTINGS_AUDIT_READ_ONLY",
+          "fieldGate": "EXISTING_APPROVED_AUDIT_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "adapters/postgres/src/settings-audit-reader.ts",
+          "group": "W13_SETTINGS_AUDIT_READ_ONLY",
+          "fieldGate": "EXISTING_APPROVED_AUDIT_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/api/src/settings-audit-http.ts",
+          "group": "W13_SETTINGS_AUDIT_READ_ONLY",
+          "fieldGate": "EXISTING_APPROVED_AUDIT_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "tests/settings-audit-read.test.ts",
+          "group": "W13_SETTINGS_AUDIT_READ_ONLY",
+          "fieldGate": "EXISTING_APPROVED_AUDIT_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "tests/settings-audit-postgres-protocol.test.ts",
+          "group": "W13_SETTINGS_AUDIT_READ_ONLY",
+          "fieldGate": "EXISTING_APPROVED_AUDIT_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/api/src/settings-audit-http.test.ts",
+          "group": "W13_SETTINGS_AUDIT_READ_ONLY",
+          "fieldGate": "EXISTING_APPROVED_AUDIT_FIELDS_NO_SCHEMA_CHANGE"
         }
       ]
     },
@@ -1044,6 +1094,16 @@
           "path": "scripts/import-v3/verified-header-source.test.mjs",
           "group": "B06_VERIFIED_HEADER_SOURCE_FACTORY",
           "fieldGate": "EXISTING_SOURCE_ONLY_NO_SCHEMA_OR_NATIVE_MAPPING_BYPASS"
+        },
+        {
+          "path": "scripts/import-v3/historical-customer-source.mjs",
+          "group": "EXACT2_HISTORICAL_SOURCE_ONLY_FACTORY",
+          "fieldGate": "EXISTING_FIELDS_EXACT_QB50_C_PIN_NO_SQL"
+        },
+        {
+          "path": "scripts/import-v3/historical-customer-source.test.mjs",
+          "group": "EXACT2_HISTORICAL_SOURCE_ONLY_FACTORY",
+          "fieldGate": "EXISTING_FIELDS_EXACT_QB50_C_PIN_NO_SQL"
         }
       ]
     },
@@ -1983,6 +2043,21 @@
           "path": "apps/web/src/components/document-history.tsx",
           "group": "SHARED_DOCUMENT_HISTORY_VIEW",
           "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/web/src/sales/sales-page.tsx",
+          "group": "DEMO_RESET_QUERY_AND_EXISTING_HISTORY_OUTPUT_CONSUMERS",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_SCHEMA"
+        },
+        {
+          "path": "apps/web/src/transfers/transfers-page.tsx",
+          "group": "DEMO_RESET_QUERY_AND_EXISTING_HISTORY_OUTPUT_CONSUMERS",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_SCHEMA"
+        },
+        {
+          "path": "apps/web/src/application/routes/account-settings.tsx",
+          "group": "W7_ACCOUNT_ROOT_INTEGRATION",
+          "fieldGate": "EXISTING_APPROVED_ACCOUNT_CONTRACT_NO_DDL"
         }
       ]
     }

@@ -4888,17 +4888,2046 @@
         "Previously accepted product edit/write recovery tests outside new trigger"
       ],
       "contractQualification": "CONTROLLED-MEDIA-CONTRACT-v1.json absent from this fixed Git object; current read-only external contract exactly matched receipt sha256 and was copied into QF evidence. Its status remains PROPOSED_FOR_C_FREEZE_AND_F2_ALIGNMENT_NOT_IMPLEMENTED; no production or D2 implementation asserted.",
-      "currentFindingStatus": "OPEN_NEED_FIX_NO_SUCCESSOR_QA_ADOPTED",
+      "currentFindingStatus": "CLOSED_IN_DECLARED_SCOPE_ONLY_ORIGINAL_RESULT_RETAINED",
       "runtimeBoundary": "Counterexample DEFECT_CONFIRMED_EXIT_0 confirms a second-key write after unresolved media-triggered reload in actual components with synthetic HTTP. It is not successful business/real-browser/PG acceptance.",
       "wholePagePass": false,
       "businessPass": false,
       "deploymentPass": false,
       "report": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-ec0c4523/REPORT.md",
-      "reportSha256": "1cd56053bb65273cca87b12dc4dcd6003031f69938403f3b9e388a047b9ade60"
+      "reportSha256": "1cd56053bb65273cca87b12dc4dcd6003031f69938403f3b9e388a047b9ade60",
+      "closedBy": [
+        "QF-F2-MEDIA-RELOAD-FIX-9ee77843"
+      ],
+      "historicalBoundaryNote": "Existing findings/runtimeBoundary and successorBoundary fields record the original receipt/adoption; this explicit later closedBy governs only the named finding."
+    },
+    {
+      "id": "QB-SLICE-49",
+      "result": "PASS_SCOPED",
+      "sourceCommit": null,
+      "baseCommit": null,
+      "reviewer": "QB",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice49-product-and-season-candidates/RESULT.json",
+      "evidenceSha256": "6cb856894e976c42279d3165e22057aeaf5b4aae371c8331138b4fec99bb27c0",
+      "receiptResult": "PASS",
+      "receiptRecordedAt": "2026-10-22T08:15:53.989322+00:00",
+      "adoption": "C_INDEX_OF_EXISTING_QA_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "taskId": "B06-ACTUAL2-PRODUCT-AND-SEASON-SOURCE-CANDIDATES",
+      "report": "K/reports/qa-backend/rapid-launch-20261022/QB/slice49-product-and-season-candidates/REPORT.md",
+      "reportSha256": "ac6974fe6f4cbc5f8accfaec0a16687077b63686d595d4263c4f2a1c03598bb5",
+      "qualification": "NEW2_REF_PLUS_OLD2644_PRESERVATION_AND_2956_SEASON_SOURCE_CANDIDATE_ONLY",
+      "notTested": [
+        "全2956 nativeproduct reference manifest/所有生产授权：此2646只新增2和旧2644保全。",
+        "新season_ids schema/source消费、两向引用保护和EXACT19到新版的显式门禁。",
+        "实际PG/导入/原scalar持久化读回与真实310数组保存/并发。",
+        "C独立outside refs/season pins与完整MAIN执行grant；QB未创建authority。"
+      ],
+      "findings": [],
+      "receiptBlockers": [],
+      "qaRecordedChecks": [
+        "2646 reference manifest严格为原2644完整对象+新增2；其他顶层身份/selection不变，只追加原18rule独立pin。旧2644保全不冒充全体引用执行授权。",
+        "两条source对象完整相等于已保全来源；固定UUID/款号/739及740行原裤子→上衣转换有原18rule实际bytes hash2989b31a证明；类别全链、sizeGroup、单季和supplier真实native映射及九价派生逐字段相符。",
+        "2956 sourceKey与原商品集合精确相等，nativeProductId逐键对应既有registry，不重新分配；每条sourceEvidenceHash、源文件/行、raw/normalized季节逐项一致。",
+        "2598单季各为正确单元素数组，48原空白保持null而非[]，310多季逐件核实际四季字典UUID，其中19春夏、291秋冬，每件2个非空唯一成员。专用310文件与总2956子集完整对象相同。",
+        "原2644及新增2标量season引用与各自新单季候选一致，原source对象和旧ref完全保留；无SQL写，不宣称真实PG标量读回。",
+        "v3-A人类批准文件及两份proposal实际hash吻合；仅product.season_ids单列，未转授权旧product_season表。"
+      ],
+      "qaRecordedSideEffects": {
+        "PG": 0,
+        "sourceWrites": 0,
+        "credentialReads": 0,
+        "originalXlsxReread": 0,
+        "oldSourceProgramRerun": 0,
+        "UUIDAllocations": 0,
+        "authorityWrites": 0,
+        "reportsOnly": true
+      },
+      "businessPass": false,
+      "deploymentPass": false,
+      "scope": "Four exact private candidates: reference2646 contains only new2 plus original2644 complete objects; season2956 source conversion plus exact310 multi-season subset. No full2956 native-reference authorization or import acceptance.",
+      "acceptanceLevel": "PRIVATE_CANDIDATE_ARTIFACT_ONLY",
+      "bindingKind": "PRIVATE_ARTIFACT_EXACT_SHA_BYTES_NO_SOURCE_COMMIT_IN_RECEIPT",
+      "sourceCommitNote": "RESULT has no candidateCommit/baseCommit; no commit inferred.",
+      "artifactAcceptance": {
+        "artifacts": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product-reference-and-seasons-candidate-20261022-D3-run2/product-reference-decisions2646-PENDING.json",
+            "bytes": 3680252,
+            "sha256": "8ea52f679e0896b052b6dfc6b62fe457b9409cf61cafe24185a24ec080c3d244"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product-reference-and-seasons-candidate-20261022-D3-run2/exact-two-size-override-rows-PENDING.json",
+            "bytes": 18871,
+            "sha256": "8726ce5b6dcb0241d77dea09bce8ddf1a9d2573318a03f407684de2065075868"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product-reference-and-seasons-candidate-20261022-D3-run2/product-season-source-conversion2956-PENDING.json",
+            "bytes": 2322054,
+            "sha256": "c05e8f46bd20d050877ae431103b52d199c953919b7e8186f822f11081f9f779"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product-reference-and-seasons-candidate-20261022-D3-run2/exact310-multiple-season-members-PENDING.json",
+            "bytes": 264966,
+            "sha256": "586c832879c88db53c6b1d9201a346cdf87c42ca61ddc7300ac4ed98337528e7"
+          }
+        ],
+        "newProductReferences": 2,
+        "originalReferenceObjectsPreserved": 2644,
+        "referenceCandidateTotal": 2646,
+        "seasonSourceCandidateTotal": 2956,
+        "singleSeason": 2598,
+        "unknownNull": 48,
+        "multiSeason": 310,
+        "springSummer": 19,
+        "autumnWinter": 291,
+        "authority": "Existing QB artifact QA only; this index neither creates C outside pins nor grants MAIN execution.",
+        "executionAuthorizedByPinAlone": false,
+        "PG": 0
+      }
+    },
+    {
+      "id": "QB-SLICE-50",
+      "result": "PASS_SCOPED",
+      "sourceCommit": null,
+      "baseCommit": null,
+      "reviewer": "QB",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice50-historical-customer-exact2/RESULT.json",
+      "evidenceSha256": "a97f71f8f33a7ce924dde572dee0d8ee6791719994128db7c8911d4db829207e",
+      "receiptResult": "PASS",
+      "receiptRecordedAt": "2026-10-22T08:25:26.490972+00:00",
+      "adoption": "C_INDEX_OF_EXISTING_QA_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "taskId": "B06-HISTORICAL-CUSTOMER-EXACT2-CANDIDATE",
+      "report": "K/reports/qa-backend/rapid-launch-20261022/QB/slice50-historical-customer-exact2/REPORT.md",
+      "reportSha256": "e633edabc69544e0ef1aa73d71350eab51bf11f2fe4aef2ce271aa9a979d9ad7",
+      "qualification": "EXACT2_ORIGINAL_JSON_NATIVE_MAPPING_AND_HIDDEN_MARKERS_CANDIDATE_ONLY",
+      "notTested": [
+        "D1独立新profile/guard/closure的实现和真实PG COMMIT；0013普通CSV封存分支不得放宽。",
+        "D2当前list/count/detail/newbill/maintenance一致排除，以及历史详情正确保留名称/FK。",
+        "实际42561header的2条native引用绑定、完整执行grant、导入及读回。",
+        "C独立outsidepin；QB不创建授权。"
+      ],
+      "findings": [],
+      "receiptBlockers": [],
+      "qaRecordedChecks": [
+        "原JSON实际字节hash、候选9622字节hash和已采纳合同hash完全对应。",
+        "逐条8原始英文字段、JSON数组序号、原sourceKey/HIST-CUSTOMER前缀/原身份/原单号、原始行hash及字段provenance完整相等；raw与normalized不伪装成CSV。",
+        "sourceRowId独立推导吻合；native UUID均为不同v4，与628party及原registry目标查询无冲突，不重新分配。",
+        "两条原code/name、enabled=false、version=1、created/updated=null及历史header绑定候选逐项正确；261普通客户原映射hash保留，未混入普通CSV。",
+        "historicalOnly=true与visibleInCurrentCustomerList=false保留在不可变来源候选；currentListExcluded只是候选声明，不当作接口实际过滤证据。"
+      ],
+      "qaRecordedSideEffects": {
+        "sourceWrites": 0,
+        "PG": 0,
+        "headerReread": 0,
+        "credentialReads": 0,
+        "UUIDAllocations": 0,
+        "authorityWrites": 0,
+        "reportsOnly": true
+      },
+      "businessPass": false,
+      "deploymentPass": false,
+      "scope": "Exact2 original-JSON historical-customer identity and hidden-marker candidate only; original261 ordinary customer mapping preserved. Candidate currentListExcluded is not actual interface exclusion.",
+      "acceptanceLevel": "PRIVATE_CANDIDATE_ARTIFACT_ONLY",
+      "bindingKind": "PRIVATE_ARTIFACT_EXACT_SHA_BYTES_NO_SOURCE_COMMIT_IN_RECEIPT",
+      "sourceCommitNote": "RESULT has no candidateCommit/baseCommit; no commit inferred.",
+      "artifactAcceptance": {
+        "candidate": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-historical-customer-candidate-20261022-D3-run1/historical-customer-exact2-PENDING.json",
+          "bytes": 9622,
+          "sha256": "7710b449e914eac02adfb7436c3749986ae3dd0d4a30a81140b98b57d8ea87e7"
+        },
+        "exactHistoricalCustomers": 2,
+        "ordinaryCustomerMappingsPreserved": 261,
+        "authority": "Candidate QA does not supply C outside pin, runtime filters, native header binding or full execution grant.",
+        "executionAuthorizedByPinAlone": false,
+        "PG": 0
+      }
+    },
+    {
+      "id": "QB-SLICE-51",
+      "result": "PASS_SCOPED",
+      "sourceCommit": "877136977ad5ec8977824623dee59cb71c17293f",
+      "baseCommit": "ec0c452305a2cef1dceb89eba65956b09dd47401",
+      "reviewer": "QB",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice51-hall-admin-lock-87713697/RESULT.json",
+      "evidenceSha256": "5a6efa42e635c57389b9666a358c4601414193e623374d6f5053e93de322349f",
+      "receiptResult": "PASS",
+      "receiptRecordedAt": "2026-10-22T08:27:36.686432+00:00",
+      "adoption": "C_INDEX_OF_EXISTING_QA_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "taskId": "D1_HALL_ADMIN_LOCK",
+      "report": "K/reports/qa-backend/rapid-launch-20261022/QB/slice51-hall-admin-lock-87713697/REPORT.md",
+      "reportSha256": "788408e8a5290c4465afff8cd8def1a5c586be9a376fd5e37f237053da634bc8",
+      "qualification": "HALL_EARLY_SHARED_MUTEX_SOURCE_PROTOCOL_ONLY",
+      "notTested": [
+        "真实PG并发、最后可用管理员保护和中央schema/guard闭环。",
+        "新guard26以及实际STAFF create/edit/reinstate/无账号audit COMMIT；不将旧source PASS提升。"
+      ],
+      "findings": [],
+      "receiptBlockers": [],
+      "qaRecordedChecks": [
+        "实际diff仅HALL进入prepareIdentity及安全证据注释/新增测试；getReceipt和assertAllowed均先prepareIdentity，再原key/current account+staff及actor hall行锁。",
+        "复用同一advisory key naijue:maintenance:available-admin:v1，单事务仅一次；已拿其他identity且尚未拿admin锁时拒绝迟加入。",
+        "原prepare/complete实现字节逻辑未动；类型注释反映STAFF完整矩阵且凭据仅CREATE/RESET_PASSWORD元数据。"
+      ],
+      "qaRecordedSideEffects": {
+        "sourceWrites": 0,
+        "gitMutations": 0,
+        "credentialReads": 0,
+        "PG": 0,
+        "browser": 0,
+        "Docker": 0,
+        "wholeBuild": 0,
+        "reportsOnly": true
+      },
+      "businessPass": false,
+      "deploymentPass": false,
+      "reusedEvidence": [
+        "D1 HALL-ADMINISTRATOR-LOCK-run1.tap：新增1/1 PASS，0skip；TYPECHECK-run1.log exit0；既有scope未重跑。",
+        "QB40 prepare/complete及QB47/48各叶接线限定结论保留。"
+      ],
+      "evidenceFiles": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/HALL-ADMINISTRATOR-LOCK-run1.tap",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/HALL-ADMINISTRATOR-LOCK-TYPECHECK-run1.log"
+      ],
+      "retestScope": [],
+      "scope": "Fixed exact3; HALL加入既有STAFF/ACCOUNT earlymutex，prepare/complete行为不变。",
+      "acceptanceLevel": "SOURCE_PROTOCOL_ONLY",
+      "wholePagePass": false,
+      "relatedChecks": [
+        {
+          "checkId": "QB-SLICE-40",
+          "scope": "Prior prepare/complete or affected leaf wiring evidence reused, not rerun or promoted to actual PG/last-admin acceptance."
+        },
+        {
+          "checkId": "QB-SLICE-47",
+          "scope": "Prior prepare/complete or affected leaf wiring evidence reused, not rerun or promoted to actual PG/last-admin acceptance."
+        },
+        {
+          "checkId": "QB-SLICE-48",
+          "scope": "Prior prepare/complete or affected leaf wiring evidence reused, not rerun or promoted to actual PG/last-admin acceptance."
+        }
+      ]
+    },
+    {
+      "id": "QB-SLICE-52",
+      "result": "PASS_SCOPED",
+      "sourceCommit": "877136977ad5ec8977824623dee59cb71c17293f",
+      "baseCommit": "ec0c452305a2cef1dceb89eba65956b09dd47401",
+      "reviewer": "QB",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice52-approved21-barcode-proof-87713697/RESULT.json",
+      "evidenceSha256": "a21926816c6baad0bb9c25661c2128d5ace7c0a2119b1725eb08a90a82f3ceba",
+      "receiptResult": "PASS",
+      "receiptRecordedAt": "2026-10-22T08:30:52.717309+00:00",
+      "adoption": "C_INDEX_OF_EXISTING_QA_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "taskId": "D3_APPROVED21_BARCODE_PROOF",
+      "report": "K/reports/qa-backend/rapid-launch-20261022/QB/slice52-approved21-barcode-proof-87713697/REPORT.md",
+      "reportSha256": "78b34c9eceda68572a557fe9fbfe74a28176899ff888bc7122de3681e79ba576",
+      "qualification": "EXACT21_HUMAN_APPROVED_MAIN_DEMOTION_PROOF_LAYER_SOURCE_ONLY",
+      "notTested": [
+        "实际21原始payload逐条factory及全部nativeSKU/scheme/barcode绑定和完整authorizer接线。",
+        "真实PG/sourceproof guard/import、完整MAIN closure与发布。"
+      ],
+      "findings": [],
+      "receiptBlockers": [],
+      "qaRecordedChecks": [
+        "原人类批准文件ffc84668…与精确ROWS 7b04a4a0…实际hash吻合；批准状态为APPROVED_EXACT_21_ROWS_15_GROUPS，selection一致，不重开用户批准。",
+        "prepare将11字段proof绑定原sourceKey/rowSHA/raw条码/oldSku/canonicalSku/保留主码，未绑定转换及额外flag拒绝；原raw/provenance/状态/方案保留，proof进入不可变evidence和fingerprint。",
+        "可信proof factory分别load/rehash实际mapping与human批准，核21/15、组成员、保留主码、已批准canonical alias及原file/sheet/row/hash；proofFor和authorizeProof不可替代完整native/source handler。",
+        "已有stage依然要求外部authorize+store，proof本身不授权SKU/scheme/barcode native ID；未扩入无批准行或商品级条码。"
+      ],
+      "qaRecordedSideEffects": {
+        "sourceWrites": 0,
+        "gitMutations": 0,
+        "credentialReads": 0,
+        "PG": 0,
+        "browser": 0,
+        "Docker": 0,
+        "wholeBuild": 0,
+        "reportsOnly": true
+      },
+      "businessPass": false,
+      "deploymentPass": false,
+      "reusedEvidence": [
+        "D3新增pure2/2、authority1/1，0skip，types exit0；实际C文件消费receipt只证明21/15结构接受，native prepared0。旧source/18/19测试未重跑。"
+      ],
+      "evidenceFiles": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/barcode-demotion-slice1/pure-new-two-first.log",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/barcode-demotion-slice1/authority-new-one-first.log",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/barcode-demotion-slice1/types-first.log",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/barcode-demotion-slice1/actual-pin-consumption-RESULT.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/barcode-demotion-slice1/actual-pin-consumption.mjs",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/barcode-21-decision/ROWS.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/import-business-decisions/HUMAN-REPLY-v1.json"
+      ],
+      "retestScope": [],
+      "scope": "Fixed exact4; 已批准21条15组MAIN→CONFIRMED_OLD的独立凭证层。",
+      "acceptanceLevel": "SOURCE_ONLY_WITH_REUSED_SYNTHETIC_EVIDENCE",
+      "wholePagePass": false,
+      "runtimeBoundary": "Proof layer accepts exact approved21/15 structure; native prepared0. No actual21 per-payload factory/native SKU/scheme/barcode bindings, full authorizer, PG or import grant."
+    },
+    {
+      "id": "QB-SLICE-53",
+      "result": "PASS_SCOPED",
+      "sourceCommit": "877136977ad5ec8977824623dee59cb71c17293f",
+      "baseCommit": "ec0c452305a2cef1dceb89eba65956b09dd47401",
+      "reviewer": "QB",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice53-verified-header-factory-87713697/RESULT.json",
+      "evidenceSha256": "6bfe9b3a971229b97fc6a695227ebbf09d85cd1db12ee3b913d1519c04bb2be5",
+      "receiptResult": "PASS",
+      "receiptRecordedAt": "2026-10-22T08:30:52.818419+00:00",
+      "adoption": "C_INDEX_OF_EXISTING_QA_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "taskId": "D3_VERIFIED_HEADER_FACTORY",
+      "report": "K/reports/qa-backend/rapid-launch-20261022/QB/slice53-verified-header-factory-87713697/REPORT.md",
+      "reportSha256": "fa191622e3b4e6ad256c089e826ad4e3480f5e7384ffd4a86641c057d8392a5f",
+      "qualification": "BOUNDED_GZIP_SOURCE_FACTORY_SOURCE_AND_THREE_SYNTHETIC_SCOPES_ONLY",
+      "notTested": [
+        "实际42561 gzip的本factory构造全读及一次rows全读；不得将3合成scope冒充实际。",
+        "2历史客户及其他header native引用解析、完整11typedclosure/真实PG/import。"
+      ],
+      "findings": [],
+      "receiptBlockers": [],
+      "qaRecordedChecks": [
+        "receipt外部hash及batch/ns/selection/cutoff/stored+rawhash/bytes/两entitycounts固定；首次完整stream含gzip CRC/UTF8/所有record/唯一identity/计数校验完成后才返回factory。",
+        "每轮rows有nofollow FD/fstat+lstat身份约束，压缩128MiB/展开512MiB/单行4MiB/行100000硬上限；EOF再次核两hash/bytes/count。保存的index是完整record的typedhash，rows和authorizeSource精确匹配含overlay/temporal的原记录。",
+        "早退/close/abort释放自有reader资源，保留原gzip，无temp明文副本/源删除/SQL/nativeIDlookup；sourceOnly、nativeBindingsVerified=false、importReady=false明确。"
+      ],
+      "qaRecordedSideEffects": {
+        "sourceWrites": 0,
+        "gitMutations": 0,
+        "credentialReads": 0,
+        "PG": 0,
+        "browser": 0,
+        "Docker": 0,
+        "wholeBuild": 0,
+        "reportsOnly": true
+      },
+      "businessPass": false,
+      "deploymentPass": false,
+      "reusedEvidence": [
+        "D3新增3/3合成scope PASS，0skip：完整读/精确record，坏gzip+rawhash/count/missingpin，metadata变化+早退+close/abort。QB未重跑。",
+        "既有实际42561 source-only完成证据保留；此轮未读取原gzip/OOXML，实际factory42561读取尚未运行。"
+      ],
+      "evidenceFiles": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/verified-header-factory-slice1/tests-first.log"
+      ],
+      "retestScope": [],
+      "scope": "Fixed exact2; Existing sealed gzip consumption factory source, no original parsing.",
+      "acceptanceLevel": "SOURCE_ONLY_WITH_REUSED_SYNTHETIC_EVIDENCE",
+      "wholePagePass": false,
+      "runtimeBoundary": "Three synthetic scopes are reused, not actual42561 factory construction plus rows EOF. Prior42561 source-only evidence is preserved separately; nativeBindingsVerified=false and importReady=false."
+    },
+    {
+      "id": "QF-F1-CHUNK15-87713697",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "sourceCommit": "877136977ad5ec8977824623dee59cb71c17293f",
+      "baseCommit": "ec0c452305a2cef1dceb89eba65956b09dd47401",
+      "reviewer": "QF",
+      "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-87713697/F1-CHUNK15-REVIEW.json",
+      "evidenceSha256": "4b8b2da65ce0b646b7b838c91be99934eb3476be7ef4c3a83fcf0bd3ca229715",
+      "receiptResult": "PASS_SOURCE_PROTOCOL_ONLY",
+      "receiptRecordedAt": "2026-10-22T08:18:35.863673+00:00",
+      "adoption": "C_INDEX_OF_EXISTING_QA_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "taskId": "F01_F04_F05_INTEGRATION",
+      "scope": {
+        "slice": "F1_CHUNK15_W5_W6_ROOT_PLUS_C_CONTRACT",
+        "files": [
+          {
+            "path": "apps/web/src/application/controller.ts",
+            "sha256": "77417cd25c1a07bea6b295c571ebadca2c0aefa318c59cf5aeefe1cc975b4d7d",
+            "owner": "F1",
+            "bytes": 29633,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/application/routes/store-settings.tsx",
+            "sha256": "2bb9a329d577a7ca43c39e8722a668fb5882d81362f583b3223a37b4a4197e2d",
+            "owner": "F1",
+            "bytes": 3567,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/application/routes/product-categories.tsx",
+            "sha256": "ebc2ed253b40ae0413a4f42c265a1ae65d1e659d25194d256e119c380c10e870",
+            "owner": "F1",
+            "bytes": 1691,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/application/routes/product-settings.tsx",
+            "sha256": "4f401b3d72b177f85eea965be0aa1d4222d9894b9a7b45d8a5f2b8d3e12b5a29",
+            "owner": "F1",
+            "bytes": 2247,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/production-host/mount.tsx",
+            "sha256": "02ccb141d0be93f60efed9b28e3feb52f5200db518a5335ebeafb5341a135a0b",
+            "owner": "F1",
+            "bytes": 8579,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/application/contracts.ts",
+            "sha256": "7fb0b714523a8da0e8220fb12ce2ba09fa0b8703b2cd03c980575fa1ae03ef5e",
+            "owner": "C",
+            "bytes": 9730,
+            "gitObjectMatches": true
+          }
+        ],
+        "level": "SOURCE_PROTOCOL_ONLY"
+      },
+      "notTested": [
+        "No actual browser/Demo layout, PG, real role/write session, current integrated build or deployment",
+        "Production write gates remain closed; no full F01/F04/F05 or whole-page acceptance",
+        "F2 media P2 QF-F2-MEDIA-UNCERTAIN-RELOAD-01 remains open on ec0c4523; this six-file slice does not close or re-review it",
+        "Category drag/undo, true multi-season and media write/codec remaining scopes are not included"
+      ],
+      "findings": [],
+      "axes": {
+        "Standards": {
+          "result": "PASS_SCOPE_ONLY",
+          "findings": []
+        },
+        "Spec": {
+          "result": "PASS_SCOPE_ONLY",
+          "findings": []
+        }
+      },
+      "verifiedWithinScope": [
+        "W5 creates one authenticated-session scope/workspace for two bounded hall/warehouse editors only after explicitly configured commands; route scope and session scope remain separate with exact identity matching",
+        "Route error/retry remounts preserve original editor/draft/key. Prepared canLeave, global canLeave and existing live beforeunload consult the same retained workspace",
+        "Unknown write and receipt/list403 preserve the original request and recovery route; ordinary read403 without unresolved commands still fails the route. Closed write gate creates no key and sends no command",
+        "Actual identity/session/permission replacement clears both editors and pending command. Aborted old receipt401 cannot expire the new identity; explicit expiry/final disposal release workspace. Current401 shared helper remains unchanged",
+        "Optional customer provider is explicitly configured through C contract, carried to route directory and called with CUSTOMER as first argument plus current abort signal; absence remains unavailable. Production supplies no guessed customer grant",
+        "W6 CATEGORY/COLOR/FIT matching kind/client/actions/recovery validation, frozen action arrays, explicit original recovery callback and optional route capability pass-through; omitted capability retains read-only branch",
+        "W6 current-scope leave guards block route/home and ignore aborted stale updates; identity abort drops guards; existing F2 leaf state/recovery implementation reused",
+        "Production store session composition uses secure randomUUID request keys and writesEnabled false. Actual production activation and W6 capability injection not asserted"
+      ],
+      "evidencePins": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-15/DELIVERY.json",
+          "sha256": "8a28342825869b4aaaf542a51c21739df690ff39c0844c35eaeb50ee9a911ced",
+          "bytes": 3331,
+          "binding": "developer evidence reviewed and reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-15/settings-integration-check.mjs",
+          "sha256": "ebb9e6c3ad8865ca3a5df9dc69e222b5b8e4e398c6d9d7b7eeda4921135f0adf",
+          "bytes": 14499,
+          "binding": "developer evidence reviewed and reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-15/settings-integration-check-1.log",
+          "sha256": "e69f375568e7cbd9c18efa6653831811fedff76220aa3b7f1f1c22348f11579f",
+          "bytes": 2230,
+          "binding": "developer evidence reviewed and reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-15/settings-integration-check-2.log",
+          "sha256": "db0a4be5dc111c51f50eb1d6d0af3c9379b6e1dbd74f1ea3dec30fe0a8686b95",
+          "bytes": 908,
+          "binding": "developer evidence reviewed and reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-15/tsconfig.json",
+          "sha256": "ec44aece384d338516ac6f5a966f04ddbdafa24422210406445e2cb5ab23d16c",
+          "bytes": 1339,
+          "binding": "developer evidence reviewed and reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-15/types-1.log",
+          "sha256": "8434c4b27bddded76546b2cadf90842fccc1e9157ff56064ef8268cc93116906",
+          "bytes": 1806,
+          "binding": "developer evidence reviewed and reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-15/types-2.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "binding": "developer evidence reviewed and reused, not rerun"
+        }
+      ],
+      "reusedNotRerun": [
+        "F3 W5 accepted leaf protocol and actual-component synthetic DOM",
+        "F2 W6 accepted leaf protocol, synthetic DOM and fixed typecheck",
+        "F1 chunk14 external owner fixed acceptance",
+        "Prior payment/root beforeunload and common transport checks",
+        "New chunk15 developer integration and five-entry types2 evidence"
+      ],
+      "qaRecordedRuntimeChecks": [],
+      "wholePagePass": false,
+      "businessPass": false,
+      "deploymentPass": false,
+      "evidenceQualification": [
+        "Review reads exact Git objects and manifest hash pins, not current working-tree files",
+        "Integration driver uses actual ApplicationController/routes/session/client and ApplicationRoot beforeunload under synthetic responses; production createApplication renderer is stubbed only to capture configuration",
+        "W6 prepared View props and guard callbacks checked directly; actual W6 leaf DOM evidence reused, not full integrated rendering",
+        "Initial CUSTOMER fixture used wrong signature and was corrected; original failure remains. Two exact optional prop diagnostics fixed with conditional spreads; final type log clean",
+        "Developer first-run log runtime Node24.19.0; QF did not claim or perform an additional runtime check on24.21.0",
+        "Expiry runtime check invokes authentication.expire, not an actual HTTP401 response; stale held401 tested with identity revision replacement"
+      ],
+      "commitList": [
+        "877136977ad5ec8977824623dee59cb71c17293f"
+      ],
+      "runtimeBoundary": "Exact six-file W5/W6 root/session/route glue only; actual ApplicationController/native clients use synthetic responses, production renderer capture stub and W6 prepared props. Direct expire is not actual HTTP401; developer runtime24.19.0 retained, no new24.21.0 run. Production write gates remain closed.",
+      "relatedChecks": [
+        {
+          "checkId": "QF-F1-CHUNK14-ec0c4523",
+          "scope": "External-owner targeted closure reused, original49 failure retained."
+        },
+        {
+          "checkId": "QF-F2-MEDIA-READ-ec0c4523",
+          "scope": "Existing media uncertain-reload P2 remains open; this receipt does not close or re-review it."
+        }
+      ]
+    },
+    {
+      "id": "QF-F3-W8-aa480ab2",
+      "result": "NEED_FIX",
+      "sourceCommit": "aa480ab276c46d2824f86490c796afaeb6a15186",
+      "baseCommit": "91a6687b841e199c31de70d7780caa451616529a",
+      "reviewer": "QF",
+      "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-aa480ab2/F3-W8-REVIEW.json",
+      "evidenceSha256": "d25bd5549314e91b804004e9918b0d8a662d6b3ef1f45b13a9dbf1b822d0e46d",
+      "receiptResult": "NEED_FIX",
+      "receiptRecordedAt": "2026-10-22T08:25:48.361367+00:00",
+      "adoption": "C_INDEX_OF_EXISTING_QA_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "taskId": "F05/B05/W8",
+      "scope": {
+        "slice": "F3_W8_STAFF_ACCOUNT_LEAF",
+        "files": [
+          {
+            "path": "apps/web/src/staff-settings/contracts.ts",
+            "sha256": "f43a69cfaa18202cf66f069d3a961812ed268cc843cbcef0a737600f169f0189",
+            "bytes": 5564,
+            "beforeSha256": "6177732fb2725634be85cd44df8057e70c7855521554eee6b62475409eb8a68c",
+            "owner": "F3",
+            "gitObjectMatches": true,
+            "baseMatches": true
+          },
+          {
+            "path": "apps/web/src/staff-settings/controller.ts",
+            "sha256": "46cf3c96aee767e5a8aac0df96132ae2391342a4af4c0c7b4c68089db920bd09",
+            "bytes": 17143,
+            "beforeSha256": "ba7fe83e4bc42d273c70a717053ef886e4565c6013b0988a9e3efbc4fe020e69",
+            "owner": "F3",
+            "gitObjectMatches": true,
+            "baseMatches": true
+          },
+          {
+            "path": "apps/web/src/staff-settings/controller.test.ts",
+            "sha256": "7490e9e36415ce6b7676e5236522483debb1b3afe49e630ae0875ddee6e8d797",
+            "bytes": 16137,
+            "beforeSha256": "6635bd6e078d8e83166ea381e321b24c1bdad8534deddf651f54d3bb19b7c89e",
+            "owner": "F3",
+            "gitObjectMatches": true,
+            "baseMatches": true
+          },
+          {
+            "path": "apps/web/src/staff-settings/http-client.ts",
+            "sha256": "d5c2323b6bf4d85f5cd4c9cef35a18892a9ec9946fb793986120e4bb5a8166b9",
+            "bytes": 14598,
+            "beforeSha256": "8bcacd341bf2a5dd7134605a34b6a6e3226261b7865ae03e1c69e2a883de9c45",
+            "owner": "F3",
+            "gitObjectMatches": true,
+            "baseMatches": true
+          },
+          {
+            "path": "apps/web/src/staff-settings/index.ts",
+            "sha256": "e62690dfd7c7c0581aa8d49939b7dfcc91c3a69904a43ef150bb12d5b5ff51e6",
+            "bytes": 820,
+            "beforeSha256": "eb7aa72476317b4a2dd72fc42d6c23b3f9b64dcefc57257755135390d664af9e",
+            "owner": "F3",
+            "gitObjectMatches": true,
+            "baseMatches": true
+          },
+          {
+            "path": "apps/web/src/staff-settings/staff-form.tsx",
+            "sha256": "537a45ef987c890f3cc224e40b96e0cad6ee87c1bd2ef2293416fb7ded2dec09",
+            "bytes": 10354,
+            "beforeSha256": "a5ee7c2b7b354098ad479a5de6b0e8951f4ef921677ee6f964dc49905bcb4a4a",
+            "owner": "F3",
+            "gitObjectMatches": true,
+            "baseMatches": true
+          },
+          {
+            "path": "apps/web/src/staff-settings/staff-page.tsx",
+            "sha256": "aca2530e924670876c66379fec78048da41c83d7a7e64d1ccc3a6f90bee15f0e",
+            "bytes": 13122,
+            "beforeSha256": "b4fbfbefb2969f9444d2306d2301c6868176f6c974fd191592af4e0ba7148fef",
+            "owner": "F3",
+            "gitObjectMatches": true,
+            "baseMatches": true
+          },
+          {
+            "path": "apps/web/src/staff-settings/response-validation.ts",
+            "sha256": "995921228693847971b821b5aa240bc0f16bac5d085701179e3b6e7426803cca",
+            "bytes": 10506,
+            "beforeSha256": "f9d6023655eaad506cd54bc793d6f239d223b4e3a2d87660414d97cbb0685808",
+            "owner": "F3",
+            "gitObjectMatches": true,
+            "baseMatches": true
+          }
+        ],
+        "level": "SOURCE_PROTOCOL_ONLY_WITH_OPEN_PASSWORD_STATE_FINDING"
+      },
+      "notTested": [
+        "F1 root/session/route/beforeunload and cross-family403 integration pending; leaf scope does not establish root composition",
+        "No actual PG shared prepare/atomic audit/root/child/receipt, credential provider, last usable ADMIN or actual session revocation test",
+        "No browser pixels/CSS, full page regression, integrated build, production write or whole F05/B05 pass",
+        "Production write gate remains closed"
+      ],
+      "findings": [
+        {
+          "role": "QF",
+          "candidateCommit": "aa480ab276c46d2824f86490c796afaeb6a15186",
+          "finding": "QF-F3-STAFF-PASSWORD-STATE-01",
+          "axis": "Spec",
+          "priority": "P2",
+          "file": "apps/web/src/staff-settings/controller.ts",
+          "startLine": 59,
+          "endLine": 63,
+          "requirement": "Current C delegation explicitly asks password only in transient request and not in state/retry/logs. F3 guide narrows its existing proof to clearing the current snapshot at dispatch, which is not the same requirement.",
+          "actual": "StaffSettingsForm password inputs call controller.update({password}); update copies the plaintext into the immutable public editor snapshot and JSON.stringify dirty comparison. A session-owned workspace retains that snapshot while only its route scope is disposed before dispatch.",
+          "evidence": "password-state-counterexample.mjs/log, fixed Git export, Node24.21.0, zero IO, synthetic marker output omitted. Demonstrates snapshot retention and route-scope invalidation model; not actual production or DOM navigation.",
+          "qualification": "After dispatch, current draft password is cleared and write/recovery state contains only safe original action/key/ID/version. No actual log leak, persistence or network disclosure is claimed.",
+          "requestedFix": "Keep plaintext only in an ephemeral input/control-local holder; pass once to submit and clear immediately, including failed validation/detach/cancel as defined. Public/session snapshots retain only nonsecret intent flags. Preserve rejected-password reentry, explicit reset cancellation, new-account opt-out, and original-key recovery. Only affected privacy tests need recheck."
+        }
+      ],
+      "axes": {
+        "Standards": {
+          "result": "PASS_SCOPE_ONLY",
+          "findings": []
+        },
+        "Spec": {
+          "result": "NEED_FIX",
+          "findings": [
+            {
+              "role": "QF",
+              "candidateCommit": "aa480ab276c46d2824f86490c796afaeb6a15186",
+              "finding": "QF-F3-STAFF-PASSWORD-STATE-01",
+              "axis": "Spec",
+              "priority": "P2",
+              "file": "apps/web/src/staff-settings/controller.ts",
+              "startLine": 59,
+              "endLine": 63,
+              "requirement": "Current C delegation explicitly asks password only in transient request and not in state/retry/logs. F3 guide narrows its existing proof to clearing the current snapshot at dispatch, which is not the same requirement.",
+              "actual": "StaffSettingsForm password inputs call controller.update({password}); update copies the plaintext into the immutable public editor snapshot and JSON.stringify dirty comparison. A session-owned workspace retains that snapshot while only its route scope is disposed before dispatch.",
+              "evidence": "password-state-counterexample.mjs/log, fixed Git export, Node24.21.0, zero IO, synthetic marker output omitted. Demonstrates snapshot retention and route-scope invalidation model; not actual production or DOM navigation.",
+              "qualification": "After dispatch, current draft password is cleared and write/recovery state contains only safe original action/key/ID/version. No actual log leak, persistence or network disclosure is claimed.",
+              "requestedFix": "Keep plaintext only in an ephemeral input/control-local holder; pass once to submit and clear immediately, including failed validation/detach/cancel as defined. Public/session snapshots retain only nonsecret intent flags. Preserve rejected-password reentry, explicit reset cancellation, new-account opt-out, and original-key recovery. Only affected privacy tests need recheck."
+            }
+          ]
+        }
+      },
+      "verifiedWithinScope": [
+        "Native joint STAFF plus linked ACCOUNT uses one POST /staff/commands for CREATE/EDIT; LEAVE/REINSTATE use exact original action/key/staff ID/version only, never a second account command",
+        "Exact text and untouched contact null/blank preserved; account:null preserves existing child; actual child ID/version used for edits and null pair for creation; current role and real hall prerequisites checked",
+        "Strict four-field result and five-field receipt bind exact original target/action/key/version; actual W3 detail after proven commit supplies linked child metadata; failed or stale readback stays committed with read-only retry and cannot reopen submit",
+        "Post-dispatch snapshot clears password, pending/write/recovery retain only safe frozen original identity; explicit rejected password reset requires reentry or cancellation; new optional login can be explicitly cancelled",
+        "Uncertain save prohibits duplicate submit/close/editor replacement; GET original receipt only, including 404/403/unknown503 without rollback inference; no password-bearing retry queue or automatic write retry",
+        "Fresh staff detail is read before employment action; changed state rejects rather than reversing requested intent; reinstate does not enable login. Final real backend session revocation and last-admin enforcement remain outside scope",
+        "Session workspace bounds one editor, exact identity matching and abort cleanup; unresolved read403 preserves original key; duplicate close/discard and cancelled detail lifecycle checked by source plus retained targeted tests",
+        "Staff-specific controlled Arco role portal stays local and refreshes after StrictMode replay; no shared component or CSS mutation",
+        "Inert bounded same-origin transport rejects password on non-HTTPS, max16KiB body, safe errors, exact primitive/browser parser boundaries; native pretransaction credential-not-ready rejection is narrower than generic503"
+      ],
+      "evidencePins": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/f05-w8-write-controller-run1.log",
+          "sha256": "077318d1406d0a4fb3f9f8f7f0218a372ee13afcfbc740816028e90d9cbfff47",
+          "bytes": 1361,
+          "binding": "developer evidence reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/f05-w8-write-controller-run2-optout.log",
+          "sha256": "502dac23ad8321b85ad7e4313ac4d6c43736b16c76b43bd06a1c6b07240fc54c",
+          "bytes": 248,
+          "binding": "developer evidence reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/f05-w8-write-http-run1.log",
+          "sha256": "54fc7f386b036e7242b678c578600af64ec4af2677420fd6138ee01981dffe07",
+          "bytes": 845,
+          "binding": "developer evidence reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/f05-w8-write-dom-run1.log",
+          "sha256": "46e782a9ab1f88ee05e96860c80f9a3015fcc9ddcf3af2c76d8e93a4b748d2b0",
+          "bytes": 1190,
+          "binding": "developer evidence reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/f05-w8-write-dom-run2-optout.log",
+          "sha256": "893a356efbbc6100cbd9cb829317979f4080cbee615d0a74f42957409b3144b2",
+          "bytes": 1191,
+          "binding": "developer evidence reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/f05-w8-write-dom-run3-optout.log",
+          "sha256": "893a356efbbc6100cbd9cb829317979f4080cbee615d0a74f42957409b3144b2",
+          "bytes": 1191,
+          "binding": "developer evidence reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/f05-w8-write-dom-run4-optout.log",
+          "sha256": "ff4c58c3372b21b752c432b20aa8d5c8b9ddc00adb033783ee143e493593b02c",
+          "bytes": 565,
+          "binding": "developer evidence reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/f05-w8-write-types-run1.log",
+          "sha256": "6b22a47f773a0df552c1ee925d49026c18b617a79912d3621ab162476cb4530c",
+          "bytes": 671,
+          "binding": "developer evidence reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/f05-w8-write-types-run2.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "binding": "developer evidence reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/f05-w8-write-types-final.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "binding": "developer evidence reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/f05-w8-write-types-final-exit.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "binding": "developer evidence reused, not rerun"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/F05-W8-WRITE-v1-RESULT.json",
+          "sha256": "8c251f11acb2cc0ccb3cadbc85f90b8c4b3d579b26900ef971f829596c069b8a",
+          "bytes": 10302
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/F1-INTEGRATION-W8-STAFF-WRITE-v1.md",
+          "sha256": "e314463880d79c31c57f41509fbd5b3dabb02e340a2c4e7cc77143f215a53df7",
+          "bytes": 6408
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/check-f05-w8-write-http.mjs",
+          "sha256": "4d361661eb09d580e1e894b24de1a316b2c6b4943fd62ecbc96c5588b89b10dc",
+          "bytes": 9831
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/check-f05-w8-write-dom.mjs",
+          "sha256": "f1395b958024b1a5c64a0e9a19bca0cb983d2aca9982d5b139851d0e29e9a6a0",
+          "bytes": 13873
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/check-f05-w8-optout-dom.mjs",
+          "sha256": "31c3a3ff3bb258d765e4898f6c3df2c9ad0ceb244c5f22fc6d5a8c037214e262",
+          "bytes": 9319
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-aa480ab2/PASSWORD-STATE-FINDING.json",
+          "sha256": "4c16281f466ed7d231306992f53fc03d124399fd49a02d97654949b74bb1f430",
+          "bytes": 1643
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-aa480ab2/password-state-counterexample.mjs",
+          "sha256": "07d9af41215a60d7d1a7dca0dc8518b524ed775f028f656b19b1046589ae7088",
+          "bytes": 2034
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-aa480ab2/password-state-counterexample.log",
+          "sha256": "15c62e82905ecf4a0483930d2d9d29eafc40dc56c20c311d0552677db16ab3e0",
+          "bytes": 431
+        }
+      ],
+      "reusedNotRerun": [
+        "Developer controller10 tests (8new+2affected) and directed1 optout",
+        "Developer6 HTTP groups and5 actual React/Arco synthetic DOM groups plus directed6th optout/role group",
+        "Developer final28-root strict typecheck reported actual compiler exit0",
+        "Prior W3 read, W4payment and W5 accepted scope"
+      ],
+      "qaRecordedRuntimeChecks": [
+        {
+          "scope": "new concrete password retained-state counterexample only",
+          "runtime": "Node24.21.0",
+          "result": "DEFECT_CONFIRMED_EXIT_0",
+          "file": "password-state-counterexample.log",
+          "qualification": "Synthetic marker not printed; zero IO. Confirms public snapshot retention before dispatch and after route-scope invalidation, not actual browser navigation or credential disclosure."
+        }
+      ],
+      "wholePagePass": false,
+      "businessPass": false,
+      "deploymentPass": false,
+      "qualifications": [
+        "Current latest delegation requires no password in state. Developer implementation/guide only guarantees dispatch-time clearing; input draft snapshot storage is the remaining P2, not an alleged post-dispatch password retry or logging leak",
+        "Exact frozen W8 JSON lacks MAINTENANCE_PREPARE_NOT_READY. Current backend source known delta and client unknown503 conservative uncertain behavior retained; no generic503 resend classification approved",
+        "Initial own role literal type failure and optout/role portal failures remain, final directed passes reused. Arco React19 ref warnings retained",
+        "Source and base hashes match all8 manifest entries; authority contracts separately copied only after receipt hash match"
+      ],
+      "contractPins": [
+        {
+          "path": "docs/rapid-launch-20261022/api-contracts/W8-STAFF-API-v1.json",
+          "sha256": "f1088cfe44f784023a9430bfc2c6e91bab523819d4f2c2294dbbe88208123669",
+          "binding": "external authority receipt exact hash; copied only to QF report root"
+        },
+        {
+          "path": "docs/rapid-launch-20261022/FIELD-APPROVAL-SUPPLEMENT-v2-B.json",
+          "sha256": "5632560de9fc9544fa622a2210ee0106ea7556749657a8a65924cf4795a29e7d",
+          "binding": "external authority receipt exact hash; copied only to QF report root"
+        }
+      ],
+      "backendReferencePins": [
+        {
+          "path": "packages/application/src/staff-maintenance-ports.ts",
+          "initialSha256": "23c5045ebd185aa43dc22e1bf47c72414616d613243d96b74f95a40888ec9fe2",
+          "currentSha256": "23c5045ebd185aa43dc22e1bf47c72414616d613243d96b74f95a40888ec9fe2",
+          "candidateSha256": "23c5045ebd185aa43dc22e1bf47c72414616d613243d96b74f95a40888ec9fe2",
+          "matchesReceiptCurrent": true
+        },
+        {
+          "path": "packages/application/src/staff-maintenance-validation.ts",
+          "initialSha256": "1a22420f339f2196de698a20843cf44c93e43972e09c1e858f33ff8ec9a0e2c5",
+          "currentSha256": "1a22420f339f2196de698a20843cf44c93e43972e09c1e858f33ff8ec9a0e2c5",
+          "candidateSha256": "1a22420f339f2196de698a20843cf44c93e43972e09c1e858f33ff8ec9a0e2c5",
+          "matchesReceiptCurrent": true
+        },
+        {
+          "path": "packages/application/src/account-maintenance-validation.ts",
+          "initialSha256": "a0ae009227385f0a8d0efa9660df7f7e71a51c71b728312255e43c68d7ba2609",
+          "currentSha256": "a0ae009227385f0a8d0efa9660df7f7e71a51c71b728312255e43c68d7ba2609",
+          "candidateSha256": "a0ae009227385f0a8d0efa9660df7f7e71a51c71b728312255e43c68d7ba2609",
+          "matchesReceiptCurrent": true
+        },
+        {
+          "path": "apps/api/src/staff-maintenance-http.ts",
+          "initialSha256": "02283b17db87d86bd889248c175bc54c5fa9d1f1df95410d3db9a86fefdc7f72",
+          "currentSha256": "e6ee1967d304374954e01690cbc77ea9fae9d4946d5af3ef19e17265df4c3ebd",
+          "candidateSha256": "e6ee1967d304374954e01690cbc77ea9fae9d4946d5af3ef19e17265df4c3ebd",
+          "matchesReceiptCurrent": true
+        }
+      ],
+      "currentFindingStatus": "CLOSED_IN_DECLARED_SCOPE_ONLY_ORIGINAL_RESULT_RETAINED",
+      "runtimeBoundary": "Synthetic zero-IO counterexample confirms plaintext retained in public/session draft snapshot before dispatch and after route-scope invalidation. Post-dispatch snapshot clears plaintext; no actual log leak, persistence, network disclosure or real browser navigation claimed.",
+      "successorBoundary": "F3 five-source repair is reported delivered to C but has no fixed successor QA adopted in this batch; original aa480ab2 NEED_FIX remains open.",
+      "closedBy": [
+        "QF-F3-W8-PASSWORD-FIX-de6ca2b6"
+      ],
+      "historicalBoundaryNote": "Existing findings/runtimeBoundary and successorBoundary fields record the original receipt/adoption; this explicit later closedBy governs only the named finding."
+    },
+    {
+      "id": "QB-SLICE-54",
+      "result": "PASS_SCOPED",
+      "sourceCommit": "877136977ad5ec8977824623dee59cb71c17293f",
+      "baseCommit": "ec0c452305a2cef1dceb89eba65956b09dd47401",
+      "reviewer": "QB",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice54-boot-entry-source-87713697/RESULT.json",
+      "evidenceSha256": "217d9f27aaa4f94538557b3d41b0e4072087dbc008339058b6cf126ab6bb13c8",
+      "receiptResult": "PASS",
+      "receiptRecordedAt": "2026-10-22T08:34:24.769880+00:00",
+      "adoption": "C_INDEX_OF_EXISTING_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "businessPass": false,
+      "deploymentPass": false,
+      "taskId": "C_BOOT_ENTRY_SOURCE",
+      "scope": "Fixed boot exact2 plus explicitly adopted old/new local report evidence. No server/test rerun.",
+      "qualification": "BOOT_TOOL_SOURCE_AND_OFFLINE_SEQUENCE_ONLY_EXECUTION_ACTOR_PROOF_STILL_OPEN",
+      "acceptanceLevel": "SOURCE_AND_OFFLINE_PROTOCOL_ONLY",
+      "notTested": [
+        "实际safety.py解析路径/hash、模块初始化及digest/load_contract/no_symlinks/run/write_json传递行为；当前不能签完整无额外启动器证明。",
+        "实际systemd condition/dropin/install/enable、主机或Docker重启、publicHTTPS/业务、实际stop/零写回退。",
+        "接入deploy/rollback、新schema版本及后续release owner迁移。"
+      ],
+      "findings": [],
+      "receiptBlockers": [
+        "执行前尚缺T16 safety模块传递证据以及C完整bootAudit；这是运行准入缺口，不将本source/offline PASS写成已部署。"
+      ],
+      "qaRecordedChecks": [
+        "SOURCE-ROUND12旧receipt实际hash847c78a5…对应SOURCE-READY-RESULT-v1.json；现RESULT f8f373ae…只作job16补证单独绑定，未冒充旧hash或新测试。两boot源码pin吻合，QB38三文件仅比较固定hash不重审/重测。",
+        "默认plan/import无执行；明确execute、root/hostname/T45 uniquejob及共用flock，boot仅指定systemd cgroup/invocation/已安装helper+plan。deploy helper限定已审SHA后才执行导入。",
+        "fence先保存原unit/CID/policy/状态与持久marker，再对两个旧unit加condition、disable无--now，仅旧web精确CID restart=no；旧app/sharedPG不停止/重建。",
+        "arm核固定fence/activation及永久receipt/audit/runtime路径、payload/dependency/image/network/CID/health后仅安装enable不start；已安装副本保留原binding，boot按既有PG健康→精确app→精确web顺序启动。",
+        "失败保留intent/outcome未知journal且不盲重试；stop-entry持久DISARMED并只停精确新web；restore-legacy需新鲜同binding观察和明确零新写边界，仅恢复旧启动policy，不自动启动旧入口。",
+        "真实job12/13/15/16回执byteshash独立吻合；job15整体PARTIAL及job14历史失败保留。T48完整脱敏控制流只观察/本地状态写，T16直接body仍委托safety，未闭合其真实解析模块及传递行为。"
+      ],
+      "reusedEvidence": [
+        "最终offline-test-result-run4.json：当前source ca3594a9… 24/24 PASS，无真实SSH/Docker/systemd/PG/reboot；旧run1/2/3不累计为新测试。",
+        "C对firewall完整原source审查+job16当前hash相等结论按报告范围采用；未再执行helper或扫描37unit。",
+        "QB38部署/回退三文件source结论保留；本工具未集成进其主流程，EXACT19合同未自动升级新版。"
+      ],
+      "evidenceFiles": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/c02-preparation/boot-persistence/SOURCE-READY-RESULT-v1.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/c02-preparation/boot-persistence/RESULT.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/c02-preparation/boot-persistence/REPORT.md",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/c02-preparation/boot-persistence/offline-test-result-run4.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/c02-preparation/boot-persistence/offline-tests.py",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/operational-checkpoints/C02-BOOT-EVIDENCE-ADOPTION.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-bootstrap-metadata-20261022-12/release-receipts/c02-bootstrap-metadata-20261022-12/boot-runtime-metadata.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-bootstrap-followup-20261022-13/release-receipts/c02-bootstrap-followup-20261022-13/boot-actions-metadata.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-entry-boot-actors-20261022-15/release-receipts/c02-entry-boot-actors-20261022-15/boot-actors.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-entry-boot-actors-20261022-15/release-receipts/c02-entry-boot-actors-20261022-15/monitor-control-projection.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-boot-helper-proof-20261022-16/release-receipts/c02-boot-helper-proof-20261022-16/helper-proof.json"
+      ],
+      "qaRecordedSideEffects": {
+        "sourceWrites": 0,
+        "gitMutations": 0,
+        "credentialReads": 0,
+        "PG": 0,
+        "browser": 0,
+        "Docker": 0,
+        "wholeBuild": 0,
+        "reportsOnly": true
+      },
+      "report": "K/reports/qa-backend/rapid-launch-20261022/QB/slice54-boot-entry-source-87713697/REPORT.md",
+      "reportSha256": "08fe91ef9bed602a8100aca483b6c4fad4109ff7733e19cd676fd0cc248bad28",
+      "runtimeBoundary": "Boot exact2 source/offline sequence only. Actual actor/safety.py transitive proof and complete bootAudit still open at this receipt; prior job15 PARTIAL/job14 failure retained. No actual install/enable/start/reboot/public business/rollback or schema upgrade acceptance."
+    },
+    {
+      "id": "QB-SLICE-55",
+      "result": "PASS_SCOPED",
+      "sourceCommit": "ecec0bd0a4546a75ee4d8d7761c6e7f11b1136d9",
+      "baseCommit": "aa480ab276c46d2824f86490c796afaeb6a15186",
+      "reviewer": "QB",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice55-product-season-array-ecec0bd0/RESULT.json",
+      "evidenceSha256": "7ef546930787f6c8a387cb1b99200e8292ee15503a6551aa53f6e243c21909f4",
+      "receiptResult": "PASS",
+      "receiptRecordedAt": "2026-10-22T08:37:03.401747+00:00",
+      "adoption": "C_INDEX_OF_EXISTING_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "businessPass": false,
+      "deploymentPass": false,
+      "taskId": "D2_W11_PRODUCT_SEASON_ARRAY",
+      "scope": "Fixed ecec0bd0 exact12; approved v3-A season_ids consumer + frozen v2 API.",
+      "qualification": "V2_SINGLE_COLUMN_CONSUMER_SOURCE_PROTOCOL_ONLY_NO_ACTUAL_ISSUER_OR_PG",
+      "acceptanceLevel": "SOURCE_PROTOCOL_ONLY",
+      "notTested": [
+        "D1真实target-bound issuer/字段及双向引用guard/ACL/转换证明/host启用；结构consumer本身不签发能力。",
+        "真实PG parser/并发/中央guard26闭环/完整COMMIT。",
+        "D3实际2956/310字段转换与原scalar保存读回；UI/build/deploy/业务验收。"
+      ],
+      "findings": [],
+      "receiptBlockers": [],
+      "qaRecordedChecks": [
+        "v3-A实际批准及v2合同6e084a74…pin核对；v2禁止seasonId，CREATE要求真实数组但允许[]，EDIT仅原NULL可保持null，已知值不能重置UNKNOWN。重复/空元素/嵌套/缺省UUID整体拒绝后才排序。",
+        "同集合canonical requesthash一致；已存成员顺序无变化时保留，避免虚假版本/audit。一次PRODUCT根CAS，实际season_ids放根before/after，prepare在所有root/children写前，完成使用相同completion。",
+        "array-mode CREATE旧scalar为NULL；UPDATE列清单明确剔除season_id，不从数组首项回写。读取保留实际NULL/[]/数组，references.seasons一条批量字典序查询并核完整成员；新选字典UUID排序锁FOR KEY SHARE。",
+        "v2 full hash带contractVersion2，旧状态hash保留；旧v1已提交同原key/hash在upgrade拒绝之前恢复且重新授权；启用后新v1 full写/旧detail409；未启用v2 503。",
+        "两reader仅独立cap允许时使用数组列；target原pool/driver同步verifier，拒绝getter/async/非void/无效shape；无cap保留EXACT19 scalar SQL，无探测/失败fallback。",
+        "列表/count/stock共享ANY overlap matched产品集合，lateral string_agg只返回一行，candidate仅在authorized_products后unnest+DISTINCT，不扩大商品计数/库存总数；无scope外查询扩张。"
+      ],
+      "reusedEvidence": [
+        "10新增scope+3受影响旧scope最终通过；protocol首轮5pass1断言错误(total/exactTotal)保留，修后仅1受影响复验，另detail扩展复验与旧3重叠不累计。types-final exit0，前两类型错误修复不排除源码。",
+        "QB49仅2956转换候选来源结果复用，不把它升级实际转换/读回。QB48原prepare接线有效结论保留。"
+      ],
+      "evidenceFiles": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W11-season-app-run1.tap",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W11-season-protocol-run1.tap",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W11-season-protocol-affected-run2.tap",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W11-season-read-detail-and-legacy-run1.tap",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W11-season-types-final.log",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/api-contracts/PRODUCT-SEASON-API-v2.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/FIELD-APPROVAL-SUPPLEMENT-v3-A.json"
+      ],
+      "qaRecordedSideEffects": {
+        "sourceWrites": 0,
+        "gitMutations": 0,
+        "credentialReads": 0,
+        "PG": 0,
+        "browser": 0,
+        "Docker": 0,
+        "wholeBuild": 0,
+        "reportsOnly": true
+      },
+      "report": "K/reports/qa-backend/rapid-launch-20261022/QB/slice55-product-season-array-ecec0bd0/REPORT.md",
+      "reportSha256": "265b25018992f88f6d9a3b9e20ca0e485ec22d9529020f476305b7f26245dbc6",
+      "runtimeBoundary": "Approved single season_ids column V2 consumer and API only; no actual target-bound issuer/guards/ACL, PG commit,2956 conversion/scalar preservation or host activation."
+    },
+    {
+      "id": "QB-SLICE-56",
+      "result": "PASS_SCOPED",
+      "sourceCommit": "947db3a58006d65c4b45314f283d4c07054ac9ac",
+      "baseCommit": "16eb3f6b43e41089f52e0e93ee830e6398368525",
+      "reviewer": "QB",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice56-historical-customer-consumers-947db3a5/RESULT.json",
+      "evidenceSha256": "29e111014c5a2056ee1b19a14a14de3d32c2a04ac87dd2da865ee96d3c6b36c4",
+      "receiptResult": "PASS",
+      "receiptRecordedAt": "2026-10-22T08:39:49.604673+00:00",
+      "adoption": "C_INDEX_OF_EXISTING_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "businessPass": false,
+      "deploymentPass": false,
+      "taskId": "D2_W12_EXACT2_CURRENT_CONSUMERS",
+      "scope": "Fixed947db3a5/round17 exact6; D1 exact26 function contract consumer only.",
+      "qualification": "EXACT2_CURRENT_CONSUMER_BRANCH_SOURCE_PROTOCOL_ONLY_NO_ACTUAL_PREDICATE_OR_PG",
+      "acceptanceLevel": "SOURCE_PROTOCOL_ONLY",
+      "notTested": [
+        "实际exact26函数body/search_path/definer/EXECUTE ACL/已pin2sourceclosure/触发器/issuer；这些由D1固定source及C engine窗口另核。",
+        "D1 current-form/sales-native-facts/host启用；实际source导入/header native绑定/typedclosure/读回。",
+        "真实PG/并发权限/浏览器/build/部署/业务验收。"
+      ],
+      "findings": [],
+      "receiptBlockers": [],
+      "qaRecordedChecks": [
+        "当前CUSTOMER list/count/page/candidates/detail统一NOT is_exact_historical_customer_only(customer.id)，在计数/分页前施加；无名称/disabled/编码前缀推断、无私有原source表直接SELECT。",
+        "旧maintenance同一SQL的count和page共用同predicate；current get在原identity advisory+FOR UPDATE范围排除历史客户，RESTORE/EDIT/DISABLE得到未找到。put在真实INSERT/UPDATE前再次按实际target UUID核function，唯一boolean false才可继续，true拒绝/null或畸形结果作为完整性错误。",
+        "HALL defaultCustomer校验同predicate且不因hall.disabled而跳过；普通停用客户原恢复/过滤逻辑和supplier分支保留，历史FK/name及组织描述性读取未改。",
+        "target cap必须指定exactprofile和同步void verifier，准确收到实际pool或D1driver；拒绝getter/async/非void/错target。无cap EXACT19不调用函数，不探测、不捕获缺函数后fallback。",
+        "C已采纳QB50并签outsidepin；已读公共adoption并校验私有pin实际SHA e471ccde…，不将旧receipt/contract中的pending重新作当前待批。"
+      ],
+      "reusedEvidence": [
+        "D2新增5scope+受影响旧3最终通过；后续2受影响复验及1fixture纠正覆盖原scope，不累计为更多唯一项。types-final2 exit0，未扩排除；未重跑旧tests。",
+        "QB50原JSON/native映射与Coutsidepin仅source候选结论，不能替代predicate/sourceproof实际运行。"
+      ],
+      "evidenceFiles": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W12-exact2-run1.tap",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W12-exact2-affected-run2.tap",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W12-exact2-filter-fixture-final.tap",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W12-exact2-types-final2.log",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/EXACT26-HISTORICAL-CUSTOMER-PREDICATE-v1.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/operational-checkpoints/B06-HISTORICAL-CUSTOMER-EXACT2-ADOPTION.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-historical-customer-exact2-review-v1.json"
+      ],
+      "qaRecordedSideEffects": {
+        "sourceWrites": 0,
+        "gitMutations": 0,
+        "credentialReads": 0,
+        "PG": 0,
+        "browser": 0,
+        "Docker": 0,
+        "wholeBuild": 0,
+        "reportsOnly": true
+      },
+      "report": "K/reports/qa-backend/rapid-launch-20261022/QB/slice56-historical-customer-consumers-947db3a5/REPORT.md",
+      "reportSha256": "a5520f25027eb36f53a9345124680eee29ca8c15d14061e0bd0d6d187b16902e",
+      "runtimeBoundary": "Exact2 current consumer branches only. Function body/definer/search_path/ACL/source closure/issuer and actualPG activation not accepted. QB50 artifact plus C outside pin are recognized as adopted, without turning candidate into runtime."
+    },
+    {
+      "id": "QF-F2-MEDIA-RELOAD-FIX-9ee77843",
+      "result": "PASS_TARGETED_FIX",
+      "sourceCommit": "9ee77843aeafca0fa3c354c1ff22119549e10620",
+      "baseCommit": "ecec0bd0a4546a75ee4d8d7761c6e7f11b1136d9",
+      "reviewer": "QF",
+      "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-9ee77843/F2-MEDIA-RELOAD-FIX-REVIEW.json",
+      "evidenceSha256": "547d9098f6a33b0ee4b6296da86d62065795d418c3dafd7f5b9e5d4ce3a56be9",
+      "receiptResult": "PASS_TARGETED_FIX",
+      "receiptRecordedAt": null,
+      "adoption": "C_INDEX_OF_EXISTING_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "businessPass": false,
+      "deploymentPass": false,
+      "taskId": "F2_MEDIA_RELOAD_TARGETED_FIX",
+      "scope": {
+        "slice": "F2_MEDIA_RELOAD_TARGETED_FIX",
+        "files": [],
+        "level": "PASS_TARGETED_FIX",
+        "fileListNote": "This targeted receipt defines behavior/fixed commit without a separate scopeFiles list; no source file set inferred."
+      },
+      "notTested": [
+        "No browser visual acceptance",
+        "No PG, real roles, media uploads or deployment",
+        "React 19 element.ref compatibility warnings emitted, assertions and process passed"
+      ],
+      "axes": {
+        "Standards": [],
+        "Spec": []
+      },
+      "verifiedWithinScope": [
+        "UI reload disabled for submitting/checking/uncertain; parent entry and confirm handlers recheck live controller snapshot",
+        "Original uncertain-command counterexample now retains original editor, one request key and one POST, no detached handoff before original GET receipt",
+        "Committed original receipt precedes authoritative detail reread",
+        "Ordinary nonpending dirty version mismatch still requires explicit discard confirmation"
+      ],
+      "reusedNotRerun": [
+        "Old four media read checks and DOM 403/late-result coverage"
+      ],
+      "qaRecordedRuntimeChecks": [
+        {
+          "driver": "media-reload-fixed-regression.mjs",
+          "log": "media-reload-fixed-regression.log",
+          "result": "PASS_EXIT_0",
+          "runtime": "Node 24.21.0",
+          "environment": "Fixed Git export, actual React/Arco ProductsPageView and HTTP adapter with synthetic fetch only",
+          "adaptation": "Developer regression based on original QF counterexample; only source/output roots rebound to QF"
+        }
+      ],
+      "wholePagePass": false,
+      "receiptTimeNote": "Receipt JSON provides no recorded timestamp; no file mtime or adoption time substituted.",
+      "runtimeEvidencePins": [
+        {
+          "path": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-9ee77843/media-reload-fixed-regression.mjs",
+          "sha256": "7cab976a8a924387532140f12387d7e32d7d10e64f955dea07a289afb5bdb04d",
+          "bytes": 10210
+        },
+        {
+          "path": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-9ee77843/media-reload-fixed-regression.log",
+          "sha256": "55b35ac4d2c1bca4270a8285616162895c881c17bbfab28022fdd7a19fd9c4af",
+          "bytes": 702
+        }
+      ],
+      "closes": [
+        "QF-F2-MEDIA-UNCERTAIN-RELOAD-01"
+      ],
+      "runtimeBoundary": "Targeted original-key reload guard regression at immutable9ee only; actual React/Arco/client with synthetic fetch. No real browser/PG/roles/uploads/deployment."
+    },
+    {
+      "id": "QF-F2-SEASON-V2-9ee77843",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "sourceCommit": "9ee77843aeafca0fa3c354c1ff22119549e10620",
+      "baseCommit": "ecec0bd0a4546a75ee4d8d7761c6e7f11b1136d9",
+      "reviewer": "QF",
+      "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-9ee77843/F2-SEASON-V2-REVIEW.json",
+      "evidenceSha256": "b371264ad1e626275683b01b29ec0615a3c6de126356b007773d5251e3d73c7e",
+      "receiptResult": "PASS_SOURCE_PROTOCOL_ONLY",
+      "receiptRecordedAt": null,
+      "adoption": "C_INDEX_OF_EXISTING_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "businessPass": false,
+      "deploymentPass": false,
+      "taskId": "F2_SEASON_V2",
+      "scope": {
+        "slice": "F2_SEASON_V2",
+        "files": [
+          "apps/web/src/products/product-editor-contracts.ts",
+          "apps/web/src/products/product-maintenance-http-client.ts",
+          "apps/web/src/products/product-editor-state.ts",
+          "apps/web/src/products/product-editor-base.tsx",
+          "apps/web/src/products/product-editor.tsx",
+          "apps/web/src/products/product-page.css"
+        ],
+        "level": "PASS_SOURCE_PROTOCOL_ONLY"
+      },
+      "notTested": [
+        "Reader/client mixed-version guard independently reviewed in source, not claimed as a new executed DOM test",
+        "External authority files SHA-bound; not inside candidate Git tree",
+        "D2 parser/type dependency hashes bound to fixed candidate, not a substitute for D2/D1 actualPG acceptance",
+        "Actual schema/conversion, runtime ACL, PG/audit/receipt persistence, browser layout, production activation and uploads not tested",
+        "C staff optional root contract excluded; no complete production root wiring acceptance"
+      ],
+      "axes": {
+        "Standards": [],
+        "Spec": []
+      },
+      "verifiedWithinScope": [
+        "V2 reader/client explicitly paired by contractVersion; mixed versions block before detail request; defaults remain V1 and host activation unchanged",
+        "Exact V2 detail/command paths and shared native candidate/receipt paths; own seasonIds required, legacy seasonId forbidden, duplicate/malformed arrays rejected without truncation",
+        "Detail validator binds exact selected members to native reference IDs and retains dictionary display order",
+        "Historical NULL survives unrelated-field save; [] means explicit empty; only originally NULL can restore UNKNOWN before save; new V2 draft starts []",
+        "Actual Arco multiple Select with individual IDs, lazy search, 50-row pages, selected labels retained across pages; failed read/retry preserves draft",
+        "Fingerprint canonicalizes season-set order only, preserves NULL/[] distinction and raw barcode/other draft values",
+        "V2 submit uses explicit V2 parser; uncertain original key/body remains immutable; legacy CREATE/EDIT recovery retains exact V1 route/body, no automatic fallback or new key"
+      ],
+      "reusedNotRerun": [
+        {
+          "name": "protocol-v1",
+          "result": "3 passed; 2 route-regex blocked failures retained"
+        },
+        {
+          "name": "protocol-v2",
+          "result": "Only the 2 affected cases rerun and passed after fixed F1 HTTP route change; malformed fixture directly assigned"
+        },
+        {
+          "name": "season-select-dom-v2",
+          "result": "PASS component plus synthetic candidate reader"
+        },
+        {
+          "name": "season-v2-dom-v2",
+          "result": "PASS actual editor/HTTP adapter plus synthetic server seam; V1 harness final clear-selector failure retained"
+        },
+        {
+          "name": "season-v2-types-v3",
+          "result": "Developer strict affected closure PASS_EXIT_0; empty diagnostics log pinned; not a full build"
+        }
+      ],
+      "qaRecordedRuntimeChecks": [],
+      "wholePagePass": false,
+      "receiptTimeNote": "Receipt JSON provides no recorded timestamp; no file mtime or adoption time substituted.",
+      "evidencePinManifest": {
+        "path": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-9ee77843/F2-EVIDENCE-PINS.json",
+        "sha256": "19dc7f8d0cbf02a8abdcadd7a88c3c59b17b90db73e614c697633f3bc60b19c2"
+      },
+      "evidencePins": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/FIELD-APPROVAL-SUPPLEMENT-v3-A.json",
+          "sha256": "cb1bb028f244ba68ce6423ed3066bc1fd09ac4ffaa91d75beda32488bde27829",
+          "source": "external authority, not candidate Git object"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/api-contracts/PRODUCT-SEASON-API-v2.json",
+          "sha256": "6e084a74c2903a56b111bde403fea24f2cd51b1012b35f2975a3e9e7de1ca4c3",
+          "source": "external authority, not candidate Git object"
+        },
+        {
+          "path": "packages/application/src/product-maintenance-ports.ts",
+          "sha256": "e5aec90e935ce524e8973658239385ed61f4d8756d81fa229e8d167fcbda7cec",
+          "owner": "D2",
+          "F2Changed": false
+        },
+        {
+          "path": "packages/application/src/product-maintenance-validation.ts",
+          "sha256": "8d1268bc80e39b761ae0e8efe569c18da830c219c6e715310d8d25ade256199d",
+          "owner": "D2",
+          "F2Changed": false
+        },
+        {
+          "path": "apps/web/src/transport/http-query.ts",
+          "sha256": "fe9679d865c4fb9f02ad860171a326ebf83e47c3b1a7b84a97e97b2c65316223",
+          "owner": "F1",
+          "F2Changed": false
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-season-v2-protocol-v1.mjs",
+          "sha256": "4995ffbc18bd6cc39979d64a28f885de5d64e8180b5480619af6bc238aecc5d3"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-season-v2-protocol-v1.log",
+          "sha256": "41f26d31eb1234ef242c2396f7993022836add1fb5db4756ee94fa729297cd0d"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-season-v2-protocol-v2.mjs",
+          "sha256": "1e2ee73fdfe6720b8de61cf284c0a3269aa96b916ca7592ddf027c34067b1fd7"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-season-v2-protocol-v2.log",
+          "sha256": "66ad9b529f92083f62ee1db8902bcac635e1821d7706b18c70ec182a1b400e17"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-season-select-dom-v2.mjs",
+          "sha256": "7c8fea7d3bdc3496d9db687b42e0a84bdbd38976c458e388d327b5a51a030bdf"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-season-select-dom-v2.log",
+          "sha256": "d1ddf91246640f5d96405f4106bd126f0fbb33bf5c744f56244a622e2bd17951"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-season-v2-dom-v2.mjs",
+          "sha256": "dc738b7fbc0294f7039629d37087da1551626f451dc1035a778ba0442254e983"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-season-v2-dom-v2.cjs",
+          "sha256": "8fab029e4c20aaa265318eea3d8e0ab96e6a5456c4ce417dfdd28fb3466e57ef"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-season-v2-dom-v2.log",
+          "sha256": "4f6152513381b927bd786cbe4cfb31f73f6237fbbf1fc0e4509789519d21492d"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-season-v2-types-v1.log",
+          "sha256": "19a6d178ba8ef5c1e6e11defd7bed71e18e76f539fc57779d3a71dd2901c9c01"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-season-v2-types-v2.log",
+          "sha256": "8434c4b27bddded76546b2cadf90842fccc1e9157ff56064ef8268cc93116906"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F04-season-v2-types-v3.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "runtimeBoundary": "V2 frontend source/protocol only. External authority hashes are separate from candidate Git. Actual D1/D2 target/schema/conversion/PG/ACL/audit/host activation and browser layout remain separate."
+    },
+    {
+      "id": "QF-F1-DOC02-04-9ee77843",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "sourceCommit": "9ee77843aeafca0fa3c354c1ff22119549e10620",
+      "baseCommit": "ecec0bd0a4546a75ee4d8d7761c6e7f11b1136d9",
+      "reviewer": "QF",
+      "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-9ee77843/F1-DOC02-04-REVIEW.json",
+      "evidenceSha256": "d6a60a261a72141923ffd990c1c50a4fafea2ab38b9a19ffee376a0c4dab1b2d",
+      "receiptResult": "PASS_SOURCE_PROTOCOL_ONLY",
+      "receiptRecordedAt": null,
+      "adoption": "C_INDEX_OF_EXISTING_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "businessPass": false,
+      "deploymentPass": false,
+      "taskId": "F1_DOC02_03_04_FIX",
+      "scope": {
+        "slice": "F1_DOC02_03_04_FIX",
+        "files": [
+          "apps/web/src/current-form/sales-proposal.ts",
+          "apps/web/src/current-form/sales-proposal-form.tsx",
+          "apps/web/src/current-form/sales-proposal.css"
+        ],
+        "level": "PASS_SOURCE_PROTOCOL_ONLY"
+      },
+      "notTested": [
+        "DOC-SOURCE-02/03/04 source behavior verified, browser appearance/recheck remains with independent Demo chat",
+        "DOC-SOURCE-01 reset excluded and awaits C decision",
+        "Existing saved-document editor not included",
+        "No full build, PG, real write, role or deployment verification",
+        "Prior native save/CAS/receipt/scanner and pricing protocol checks reused without rerun"
+      ],
+      "axes": {
+        "Standards": [],
+        "Spec": []
+      },
+      "verifiedWithinScope": [
+        "Four identity columns enter one pending line edit, original row remains untouched until explicit confirm; candidate must come from current native SKU result and match product",
+        "Explicit confirm changes only target product/SKU, retains row key and exact quantity/price/pricingRule/discount/gift/zero flags; no merging, stale original-row reference blocks apply",
+        "Cancel/X/Escape and late candidate completion preserve original draft; route identity disposal clears pending edit",
+        "With existing lines business-mode change stays pending; cancel/X/Escape preserves full draft; confirm clears pending ref then invokes existing mode logic once; approved signs/prices/settlement behavior unchanged",
+        "BigInt quantity totals: 3 and 5 sum to 8; return -2/outgoing 5 show separate signed subtotals; empty/invalid remain pending validation, no invented unit"
+      ],
+      "reusedNotRerun": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-17/demo-defects-check-1.log",
+          "result": "PASS_EXIT_0",
+          "qualification": "Actual React/Arco component and synthetic candidate-reader seam; not HTTP server, PG or real browser. Funding preservation test used empty settlements; unchanged source spreads existing draft."
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-17/types-1.log",
+          "result": "Developer two affected TS roots plus dependency closure PASS_EXIT_0; no diagnostics"
+        }
+      ],
+      "qaRecordedRuntimeChecks": [],
+      "wholePagePass": false,
+      "receiptTimeNote": "Receipt JSON provides no recorded timestamp; no file mtime or adoption time substituted.",
+      "evidencePinManifest": {
+        "path": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-9ee77843/F1-DOC-EVIDENCE-PINS.json",
+        "sha256": "cd4cf3f2563359abe152da3db2f92a5f7a91eceb56922a5654a3c4a9948450e0"
+      },
+      "evidencePins": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-17/DELIVERY.json",
+          "sha256": "ebda7dd67f189de055f2b7c5b1a84bb283b16ee94314dc1d3d422a8f5c17bb8d"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-17/demo-defects-check.mjs",
+          "sha256": "8d6a40170fbd89d1d89a3cfdc4f58f31105424b0836d4dd832577110dacb6b49"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-17/demo-defects-check-1.log",
+          "sha256": "07f808ebd60f767a22e4b5437ac4a88cf220a8818a205f21790c4771371aa66a"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-17/types-1.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-17/tsconfig.json",
+          "sha256": "03b1988fd8e39d7e9c075a16d45da2a1c6b510e04f8963bae9e6b5287b75222a"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v002-fae1ef3-overlay02/01-documents/FINDINGS.json",
+          "sha256": "f2a1507a65c034a10a2c3a236899c63d4687bc073464784908c2d110e8103528"
+        }
+      ],
+      "runtimeBoundary": "DOC02-04 source behavior only; independent browser appearance/recheck remains open. DOC01 reset and saved-document editor excluded. Receipt-time awaits-C-decision text is historical, not a reversal of later C/user adoption.",
+      "sourceFindingReferences": [
+        "DOC-SOURCE-02",
+        "DOC-SOURCE-03",
+        "DOC-SOURCE-04"
+      ]
+    },
+    {
+      "id": "QF-F3-W8-PASSWORD-FIX-de6ca2b6",
+      "result": "PASS_TARGETED_FIX",
+      "sourceCommit": "de6ca2b65be87f5a3ea3116cb623d5eba4a7ef07",
+      "baseCommit": "947db3a58006d65c4b45314f283d4c07054ac9ac",
+      "reviewer": "QF",
+      "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-de6ca2b6/F3-W8-PASSWORD-FIX-REVIEW.json",
+      "evidenceSha256": "ed5e5e97fa4073dda4e9d8e01ef5c278be9d02429e7908f4431ddddc97dbd5a0",
+      "receiptResult": "PASS_TARGETED_FIX",
+      "receiptRecordedAt": null,
+      "adoption": "C_INDEX_OF_EXISTING_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "businessPass": false,
+      "deploymentPass": false,
+      "taskId": "F3_W8_PASSWORD_SESSION_STATE_FIX",
+      "scope": {
+        "slice": "F3_W8_PASSWORD_SESSION_STATE_FIX",
+        "files": [
+          "apps/web/src/staff-settings/contracts.ts",
+          "apps/web/src/staff-settings/controller.ts",
+          "apps/web/src/staff-settings/controller.test.ts",
+          "apps/web/src/staff-settings/response-validation.ts",
+          "apps/web/src/staff-settings/staff-form.tsx"
+        ],
+        "level": "PASS_TARGETED_FIX"
+      },
+      "notTested": [
+        "Transient mounted React input state still holds user-entered plaintext while typing; no session/public/retry state retention. This is the intended input boundary, not a physical memory-erasure guarantee.",
+        "Original aa480ab NEED_FIX preserved; this closes only its single P2 on the fixed successor",
+        "No real credentials read or used",
+        "No browser, PG, real role, persistent storage or production acceptance claimed"
+      ],
+      "axes": {
+        "Standards": [],
+        "Spec": []
+      },
+      "verifiedWithinScope": [
+        "Public StaffSettingsDraft no longer has password; update uses explicit safe-field whitelist, old untyped password injection ignored",
+        "Transient plaintext belongs only to mounted form local input; one submit(password) parameter hands it to in-flight command; controller snapshots and original-receipt recovery contain only safe metadata",
+        "Nonsecret passwordIntent and needsPasswordReentry preserve dirty/leave guard across detach; remount requires reentry",
+        "Submit attempt clears local input including failed form validation/overlong input/rejection; definite rejection requires reentry or explicit reset cancellation; new-account opt-out remains possible",
+        "Route detach, cancel/discard and identity abort clear local input; original key receipt recovery and closed production write gate unchanged"
+      ],
+      "reusedNotRerun": [
+        {
+          "name": "7 affected controller cases",
+          "result": "PASS",
+          "log": "qf-staff-password-state-controller-run1.log"
+        },
+        {
+          "name": "3 actual React/Arco plus synthetic HTTP privacy DOM groups",
+          "result": "PASS",
+          "log": "qf-staff-password-state-dom-run1.log",
+          "coverage": "Input-before-submit, route detach/remount/reentry, rejected reset cancellation, validation/overlong input, new-account opt-out, cancel/discard/reopen, identity cleanup"
+        },
+        {
+          "name": "strict types",
+          "result": "Developer PASS_EXIT_0 no diagnostics",
+          "log": "qf-staff-password-state-types-run1.log"
+        },
+        "Other accepted W8 protocol/lifecycle/HTTP and W5/payment scopes unchanged and not rerun"
+      ],
+      "qaRecordedRuntimeChecks": [
+        {
+          "driver": "password-state-fixed-counterexample.mjs",
+          "log": "password-state-fixed-counterexample.log",
+          "result": "PASS_EXIT_0",
+          "runtime": "Node 24.21.0",
+          "environment": "Fixed Git export, synthetic marker, zero IO",
+          "adaptation": "Original QF counterexample with expected fixed invariants; checks public snapshot and surviving session after route disposal; marker value never logged"
+        }
+      ],
+      "wholePagePass": false,
+      "receiptTimeNote": "Receipt JSON provides no recorded timestamp; no file mtime or adoption time substituted.",
+      "evidencePinManifest": {
+        "path": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-de6ca2b6/EVIDENCE-PINS.json",
+        "sha256": "8a1ff6c10f43db0042a33c57f528ce5e4bba3671cd7ea8908868a22708f9605b"
+      },
+      "evidencePins": {
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/QF-STAFF-PASSWORD-STATE-01-FIX-RESULT.json",
+            "sha256": "705f630bf103dd800b7063a42d84920cd37c64dca0cd46b7cd4e07a6455dbcc7"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/QF-STAFF-PASSWORD-STATE-01-FIX.patch",
+            "sha256": "9aecb49d7f47ce7da0c121282864d0f4d145a601d8ecd1f5609d1fd7f0ba431c"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/check-qf-staff-password-state-dom.mjs",
+            "sha256": "41fc4f7751af3429c456433c75d5199b3482347aebd1874a4b3703e46915b1f2"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/qf-staff-password-state-controller-run1.log",
+            "sha256": "c6cb8213eb45636ea4fd883f67c663ee1fed922c4abc9e6580e6c25157073357"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/qf-staff-password-state-dom-run1.log",
+            "sha256": "71b0d38345e53786b352ac45823143f39a025db7dfb978d550348921a9cf651a"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/qf-staff-password-state-types-run1.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-de6ca2b6/password-state-fixed-counterexample.mjs",
+            "sha256": "cfcb017cfe998bba5dc01e6ae3a8266fec295b993e9f063dee550f2f1fe088a1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-de6ca2b6/password-state-fixed-counterexample.log",
+            "sha256": "70c0c58e2e58261392a9c3a446c3f7a5c8893c6d6c3ff83dc472106ad183e5d8"
+          }
+        ],
+        "unchangedW8Files": [
+          {
+            "path": "apps/web/src/staff-settings/http-client.ts",
+            "sha256": "d5c2323b6bf4d85f5cd4c9cef35a18892a9ec9946fb793986120e4bb5a8166b9"
+          },
+          {
+            "path": "apps/web/src/staff-settings/index.ts",
+            "sha256": "e62690dfd7c7c0581aa8d49939b7dfcc91c3a69904a43ef150bb12d5b5ff51e6"
+          },
+          {
+            "path": "apps/web/src/staff-settings/staff-page.tsx",
+            "sha256": "aca2530e924670876c66379fec78048da41c83d7a7e64d1ccc3a6f90bee15f0e"
+          }
+        ]
+      },
+      "runtimeEvidencePins": [
+        {
+          "path": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-de6ca2b6/password-state-fixed-counterexample.mjs",
+          "sha256": "cfcb017cfe998bba5dc01e6ae3a8266fec295b993e9f063dee550f2f1fe088a1",
+          "bytes": 2092
+        },
+        {
+          "path": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-de6ca2b6/password-state-fixed-counterexample.log",
+          "sha256": "70c0c58e2e58261392a9c3a446c3f7a5c8893c6d6c3ff83dc472106ad183e5d8",
+          "bytes": 455
+        }
+      ],
+      "closes": [
+        "QF-F3-STAFF-PASSWORD-STATE-01"
+      ],
+      "originalFailedCandidate": "aa480ab276c46d2824f86490c796afaeb6a15186",
+      "runtimeBoundary": "Closes only public/session/retry plaintext retention. Transient mounted input still holds typed plaintext; no memory-erasure guarantee. Fixed synthetic zero-IO counterexample and retained targeted tests, not actual credentials/browser/PG/production."
+    },
+    {
+      "id": "DEMO-F09-LIMITED-UI-ec0c452",
+      "result": "PASS_LIMITED_UI",
+      "sourceCommit": "ec0c452305a2cef1dceb89eba65956b09dd47401",
+      "baseCommit": null,
+      "reviewer": "INDEPENDENT_DEMO_UI_REVIEW",
+      "evidence": "K/reports/ui-demo-comparison-20261022/v003-ec0c452/01-F09/RESULT.json",
+      "evidenceSha256": "323c5b917c1de4889da2a9841fc80242e0795dbf9b909e970ac77c8842f01beb",
+      "receiptResult": "PASS_LIMITED_UI",
+      "receiptRecordedAt": "2026-10-22T08:36:31.311806+00:00",
+      "adoption": "C_INDEX_OF_EXISTING_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "businessPass": false,
+      "deploymentPass": false,
+      "scope": "库存商品搜索框初始未聚焦与点击聚焦的底色/边框两态",
+      "acceptanceLevel": "LIMITED_UI_TWO_STATES_ONLY",
+      "findingId": "UDC-I02",
+      "duplicateOf": "v14.issue.F09",
+      "closes": [
+        "UDC-I02"
+      ],
+      "candidateIdentity": {
+        "candidateId": "ui-preview-ec0c452-01",
+        "businessCommit": "ec0c452305a2cef1dceb89eba65956b09dd47401",
+        "previewOverlaySha256": "af46121b46f98d93a64c2bb2584831cbcae91c952b6c1d4c646b5c3f378bc522",
+        "buildId": "ui-preview-ec0c452-01-build01",
+        "htmlSha256": "4063cfba656c34e6a6034b7ae51747253296364bf9e14ed6c41fa66fcf227ec3",
+        "htmlBytes": 2488691,
+        "actualBuildInputSha256": "70b87841fd1ec4f4e21b459e595cb652aed1af23397694cfadb28e769dd44afa",
+        "syntheticOnly": true
+      },
+      "demoCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "viewport": {
+        "width": 1470,
+        "height": 724,
+        "dpr": 2,
+        "zoom": 1
+      },
+      "qaRecordedObservations": [
+        {
+          "state": "INITIAL_IDLE",
+          "result": "UI_MATCH",
+          "demo": "截图浅灰底，与分类及仓库控件相同",
+          "candidate": "浅灰底，无白色输入底和灰色细边框",
+          "candidateComputed": {
+            "background": "rgb(240, 241, 243)",
+            "border": "rgba(0, 0, 0, 0)",
+            "rect": {
+              "x": 224,
+              "y": 97,
+              "width": 536.546875,
+              "height": 32
+            }
+          }
+        },
+        {
+          "state": "FOCUSED",
+          "result": "UI_MATCH",
+          "demoComputed": {
+            "selector": ".iw-product-select-host.shadowRoot .arco-select-view",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(25, 120, 255)",
+            "rect": {
+              "x": 224,
+              "y": 97,
+              "width": 536.546875,
+              "height": 32
+            }
+          },
+          "candidateComputed": {
+            "selector": ".arco-select-view",
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(25, 120, 255)",
+            "rect": {
+              "x": 224,
+              "y": 97,
+              "width": 536.546875,
+              "height": 32
+            }
+          },
+          "visual": "两侧白底蓝边及搜索图标位置一致；最近搜索下拉已显示。"
+        }
+      ],
+      "sourceEvidence": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-ec0c452-01/source/apps/web/src/application/styles/inventory.css",
+        "lines": [
+          4,
+          14
+        ],
+        "sha256": "43c176c272b0deba8e6232cbc313e780c68416474740bd683426529b25abb974",
+        "result": "initial direct Arco input uses muted fill and transparent border; focus uses surface and blue border; focused lazy Select visually verified"
+      },
+      "evidencePins": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v003-ec0c452/screenshots/demo-I01-idle-ready.png",
+          "sha256": "7a7fd6615497b95cd1575e8cd9b511a103a3717227878613b10c2bb76cccf29c",
+          "bytes": 331483
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v003-ec0c452/screenshots/demo-I01-focus-ready.png",
+          "sha256": "8e41dc6a54cd8409f591a224a41c9c559f4bebc70909e78d4cbe37320ec5c893",
+          "bytes": 317518
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v003-ec0c452/screenshots/candidate-I01-idle-ready.png",
+          "sha256": "86b21f752f48ea3e75f3532376f90dbd37e5dafbb177b4ea55c14b4ab0043275",
+          "bytes": 178363
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v003-ec0c452/screenshots/candidate-I01-focus-ready.png",
+          "sha256": "e386677c58b7645ab2f02f63b090609d837151788a28995500d9614ef8a35512",
+          "bytes": 183490
+        }
+      ],
+      "excludedScreenshots": [
+        "candidate-I01-idle.png 是入口导航页，非库存初始态",
+        "demo-I01-idle.png 为导航过渡态",
+        "demo-I01-focus.png / candidate-I01-focus.png 为即时过渡截图，改用 ready 图"
+      ],
+      "notTested": [
+        "库存整页严格视觉通过",
+        "查询范围弹窗重新验收",
+        "搜索结果/建议选项/键盘完整交互",
+        "库存数量或真实数据库",
+        "保存审核或生产权限",
+        "最近搜索下拉内部高度精确比较"
+      ],
+      "retainedUserDecision": {
+        "id": "UDC-DECISION-001",
+        "target": "O-I06 已执行查询范围",
+        "result": "RETAIN_CURRENT_UI_DO_NOT_REVERT",
+        "reference": "../../v001-fae1ef3/02-inventory-user-decision/USER-DECISION.json",
+        "retested": false
+      },
+      "supersedesScope": "仅替代 v001 UDC-I02 的当前版本仍存在结论；旧版历史证据保留，不扩成整页 PASS。",
+      "wholePagePass": false,
+      "runtimeBoundary": "Only inventory product-search idle/focus background and border on the fixed synthetic preview, at recorded viewport. Browser observations/screenshots are the actual narrow receipt; embedded candidate.browserVerification=NOT_RUN is earlier preview identity metadata and is not a whole-browser acceptance result. No inventory values/DB/business writes/production or other UI findings closed."
+    },
+    {
+      "id": "D3-HEADER-ACTUAL42561-WINDOW1-87713697",
+      "result": "PASS_ACTUAL42561_GZIP_CONSTRUCTOR_AND_FULL_ROWS_SOURCE_ONLY",
+      "sourceCommit": "877136977ad5ec8977824623dee59cb71c17293f",
+      "baseCommit": null,
+      "reviewer": "D3_AUTHORIZED_SOURCE_EXECUTION",
+      "evidence": "K/reports/backend/rapid-launch-20261022/D3/verified-header-actual-window1/RESULT.json",
+      "evidenceSha256": "2e21925810405cdae177e6ea3f6d1e99b8d6eb53c4b29af32d9b2e8402c5b034",
+      "receiptResult": "PASS_ACTUAL42561_GZIP_CONSTRUCTOR_AND_FULL_ROWS_SOURCE_ONLY",
+      "receiptRecordedAt": "2026-10-22T08:33:09.250Z",
+      "adoption": "C_INDEX_OF_EXISTING_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "businessPass": false,
+      "deploymentPass": false,
+      "taskId": "B06-VERIFIED-HEADER-EXACT42561-ACTUAL-GZIP-WINDOW",
+      "scope": "One actual existing gzip constructor and one complete rows drain:42561 headers,28282 sales plus14279 transfer; source-only, original gzip retained.",
+      "acceptanceLevel": "ACTUAL_GZIP_SOURCE_ONLY",
+      "recordedExecution": {
+        "taskId": "B06-VERIFIED-HEADER-EXACT42561-ACTUAL-GZIP-WINDOW",
+        "status": "PASS_ACTUAL42561_GZIP_CONSTRUCTOR_AND_FULL_ROWS_SOURCE_ONLY",
+        "startedAtUtc": "2026-10-22T08:32:54.996Z",
+        "authority": "C conditional window fulfilled by QB53 PASS, explicitly reaffirmed; one constructor plus one full rows drain only",
+        "candidateCommit": "877136977ad5ec8977824623dee59cb71c17293f",
+        "sourceFactorySha256": "c36b9517bc56cd32fee190094e3dbbe15ba4f3ffe9d6cece99b6557f56842b76",
+        "receiptSha256": "ba58af0a58270153bd344a23fad7d13a378153e5fdd213ad6789f9d952fef04c",
+        "limits": {
+          "heapMiB": 1024,
+          "serial": 1,
+          "maxStoredBytes": 134217728,
+          "maxRawBytes": 536870912,
+          "maxLineBytes": 4194304
+        },
+        "constructorInvocations": 1,
+        "rowsIterations": 1,
+        "actualRows": 42561,
+        "actualCounts": {
+          "SALES_HEADER": 28282,
+          "TRANSFER_HEADER": 14279
+        },
+        "sql": false,
+        "stage": false,
+        "publish": false,
+        "originalWorkbookScan": false,
+        "nativeBindingsVerified": false,
+        "sourceIdentityBefore": {
+          "dev": 16777234,
+          "ino": 83904157,
+          "size": 16931387,
+          "mode": 33152,
+          "mtimeMs": 1792653121282.9326,
+          "ctimeMs": 1792653127347.18
+        },
+        "constructorComplete": true,
+        "constructorElapsedMs": 7060,
+        "readerReport": {
+          "kind": "VERIFIED_HEADER_SOURCE_GZIP_V1",
+          "rows": 42561,
+          "counts": {
+            "SALES_HEADER": 28282,
+            "TRANSFER_HEADER": 14279
+          },
+          "storedBytes": 16931387,
+          "rawBytes": 398749141,
+          "sourceOnly": true,
+          "nativeBindingsVerified": false,
+          "importReady": false,
+          "noSql": true
+        },
+        "fullRowsEof": true,
+        "sourceIdentityAfter": {
+          "dev": 16777234,
+          "ino": 83904157,
+          "size": 16931387,
+          "mode": 33152,
+          "mtimeMs": 1792653121282.9326,
+          "ctimeMs": 1792653127347.18
+        },
+        "originalGzipRetained": true,
+        "readerClosed": true,
+        "elapsedMs": 14249,
+        "sampledMaxRssBytes": 225312768,
+        "sampledMaxHeapUsedBytes": 81259576,
+        "processResourceUsageMaxRssKiB": 220288,
+        "completedAtUtc": "2026-10-22T08:33:09.250Z"
+      },
+      "notTested": [
+        "Native header references/identities and historical-customer bindings remain unverified.",
+        "No SQL, staging, publication, original workbook scan, import readiness, real PG or production acceptance."
+      ],
+      "relatedChecks": [
+        {
+          "checkId": "QB-SLICE-53",
+          "scope": "Prior fixed factory source/synthetic receipt; this subsequent authorized actual gzip window closes only construction/full-rows EOF gap."
+        }
+      ],
+      "sourceOnly": true,
+      "nativeBindingsVerified": false,
+      "importReady": false,
+      "sql": false,
+      "stage": false,
+      "publish": false
+    },
+    {
+      "id": "C-ENGINE-JOB18-EXACT20-25",
+      "result": "PASS_FIXED20_25_INSTALL_AND_MINIMAL_NEGATIVES_ONLY",
+      "sourceCommit": null,
+      "baseCommit": null,
+      "reviewer": "C_AUTHORIZED_ISOLATED_ENGINE_EXECUTION",
+      "evidence": "K/reports/controller/rapid-launch-20261022/server-jobs/c03-exact25-engine-20261022-18/release-receipts/c03-exact25-engine-20261022-18/engine-result.json",
+      "evidenceSha256": "654efa3ba88b8e57567b99325a214a3c906be6296fdbec2d41b4b9b0e881d951",
+      "receiptResult": "PASS_FIXED20_25_INSTALL_AND_MINIMAL_NEGATIVES_ONLY",
+      "receiptRecordedAt": "2026-10-22T08:37:53.973904+00:00",
+      "adoption": "C_INDEX_OF_EXISTING_RECEIPT_NO_NEW_TECHNICAL_REVIEW",
+      "businessPass": false,
+      "deploymentPass": false,
+      "taskId": "c03-exact25-engine-20261022-18",
+      "scope": "Actual isolated PostgreSQL17.11 installation of exact pinned migrations20-25 and minimum negative cases in rollback only. Versions1-19 are reused setup, not newly accepted scopes.",
+      "acceptanceLevel": "ACTUAL_ISOLATED_PG_MIGRATIONS20_25_AND_MINIMAL_ROLLBACK_ONLY",
+      "bindingKind": "EXACT_MIGRATION_SHA256_NO_CANDIDATE_COMMIT_IN_RECEIPT",
+      "sourceCommitNote": "engine-result supplies per-migration hashes, not candidateCommit/baseCommit; no Git commit inferred.",
+      "newMigrationCount": 6,
+      "newMigrationVersions": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "reusedSetupVersions": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "migrationPins": [
+        {
+          "version": 1,
+          "name": "0001_runtime_sales.sql",
+          "sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 2,
+          "name": "0002_sales_pricing_facts.sql",
+          "sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 3,
+          "name": "0003_auth_sessions.sql",
+          "sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 4,
+          "name": "0004_transfer_runtime.sql",
+          "sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 5,
+          "name": "0005_product_read_fields.sql",
+          "sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 6,
+          "name": "0006_party_maintenance.sql",
+          "sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 7,
+          "name": "0007_sparse_inventory_cutoff.sql",
+          "sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 8,
+          "name": "0008_runtime_sparse_first_use.sql",
+          "sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 9,
+          "name": "0009_catalogue_prices_barcodes.sql",
+          "sha256": "bb12e54d7b4989d5b6fe608a9582f4c887980eb19be839f74005d54eb0ac530e",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 10,
+          "name": "0010_sales_settlement_method_snapshot.sql",
+          "sha256": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 11,
+          "name": "0011_history_storage.sql",
+          "sha256": "67d9cb6df4e46c6807330b7ed7dd22305a4d331b111b85275f900caaf5d14965",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 12,
+          "name": "0012_history_header_native_reference.sql",
+          "sha256": "4a42df55804be3f7fb41fca3230364f392ed4338e3a0a80934f7debe7a04b512",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 13,
+          "name": "0013_native_party_import.sql",
+          "sha256": "950f32f8b1298fadd5de4f45be5ec6dc4bc7783db501456c41778f52374f5d54",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 14,
+          "name": "0014_native_catalogue_import.sql",
+          "sha256": "5bc80dd2997c2accf6cc1e492e8db98dbb6dbb6be29034b8417f15d94f2f8022",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 15,
+          "name": "0015_native_import_record_accounting.sql",
+          "sha256": "0cadbcc3dbd76a1e3546e6db983adac7d2b129ad76fcb99eba43cfaf0068794a",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 16,
+          "name": "0016_history_insert_dispatch.sql",
+          "sha256": "518fd6edcadb30f130061986c2074e61f2884a184a731269ab60c9f9afbb8620",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 17,
+          "name": "0017_native_payment_import.sql",
+          "sha256": "d999f9531d925cd320d0d42cf02e00fc6e21b4c010eedb4b90e5e26f1da9b874",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 18,
+          "name": "0018_history_typed_publication.sql",
+          "sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 19,
+          "name": "0019_history_typed_publish_gate.sql",
+          "sha256": "d77d7a50d55fafde4a829817b805a7e295dd06c8c62afcc8363b38e1670ae99b",
+          "scope": "REUSED_EXACT19_SETUP_ONLY"
+        },
+        {
+          "version": 20,
+          "name": "0020_runtime_document_numbers.sql",
+          "sha256": "8e56bbd0124bea56364753c0332a6cd17eaf2d389e843d95ea40c4d291ffc5d4",
+          "scope": "WIP_NEW_ENGINE_PARSE_ONLY"
+        },
+        {
+          "version": 21,
+          "name": "0021_native_maintenance_receipts.sql",
+          "sha256": "904809567388816bb32fc19dd0faed220e3c8f7bbcad2c7baddcd0d6cb47ae61",
+          "scope": "WIP_NEW_ENGINE_PARSE_ONLY"
+        },
+        {
+          "version": 22,
+          "name": "0022_product_media_retained_delete.sql",
+          "sha256": "4caf953912adbfdcdf33a73ac031d1c69e7313047accc050efe636b698225163",
+          "scope": "WIP_NEW_ENGINE_PARSE_ONLY"
+        },
+        {
+          "version": 23,
+          "name": "0023_inventory_key_admission.sql",
+          "sha256": "18ad09f32567dcd5a7fe57681a5f741d617805b2e76b3334c6a0b71f738a0f65",
+          "scope": "WIP_NEW_ENGINE_PARSE_ONLY"
+        },
+        {
+          "version": 24,
+          "name": "0024_history_effective_revisions.sql",
+          "sha256": "180d7ef43210a2f9a414c362b74f3df5fedb0d56d98711d1f6a7a14cbea0f696",
+          "scope": "WIP_NEW_ENGINE_PARSE_ONLY"
+        },
+        {
+          "version": 25,
+          "name": "0025_product_season_selection.sql",
+          "sha256": "3994b45c86424454e47cbdd322b7443e9807a382e7b8621ca12d4a7af3f36248",
+          "scope": "WIP_NEW_ENGINE_PARSE_ONLY"
+        }
+      ],
+      "minimumCases": {
+        "sha256": "9cef87a12ca13d84c961c8ff73facc21d20198243ebe87f80826f353de2f309d",
+        "result": "PASS_ROLLBACK_ONLY",
+        "output": "20|C01-v1 immutable database runtime document number allocation; preserved history numbers\n21|C01-v1 typed maintenance receipts and exact sparse root audit closure; legacy branches preserved\n22|C01-v1 explicit product image roles/default scheme and retained catalogue deletion\n23|C01-v1 immutable post-cutoff native creation and independent exact key admission\n24|C01-v1 HISTORY projection schema foundation; controlled revision writes remain CLOSED pending complete capability\n25|Approved product season_ids array; retained scalar, exact selection and two-way dictionary references\naudit_change|object_account_id|t|t\naudit_change|object_category_id|t|t\naudit_change|object_color_id|t|t\naudit_change|object_customer_id|f|f\naudit_change|object_fit_id|t|t\naudit_change|object_hall_id|t|t\naudit_change|object_history_sales_id|t|t\naudit_change|object_history_transfer_id|t|t\naudit_change|object_payment_account_id|t|t\naudit_change|object_payment_method_id|t|t\naudit_change|object_product_id|t|t\naudit_change|object_sales_id|f|f\naudit_change|object_staff_id|t|t\naudit_change|object_supplier_id|f|f\naudit_change|object_transfer_id|f|f\naudit_change|object_warehouse_id|t|t\noperation_receipt|target_account_id|t|t\noperation_receipt|target_category_id|t|t\noperation_receipt|target_color_id|t|t\noperation_receipt|target_customer_id|f|f\noperation_receipt|target_fit_id|t|t\noperation_receipt|target_hall_id|t|t\noperation_receipt|target_history_sales_id|t|t\noperation_receipt|target_history_transfer_id|t|t\noperation_receipt|target_payment_account_id|t|t\noperation_receipt|target_payment_method_id|t|t\noperation_receipt|target_product_id|t|t\noperation_receipt|target_sales_id|f|f\noperation_receipt|target_staff_id|t|t\noperation_receipt|target_supplier_id|f|f\noperation_receipt|target_transfer_id|f|f\noperation_receipt|target_warehouse_id|t|t"
+      },
+      "readback": {
+        "database": "erp_qa_rapid26_20261022_01",
+        "owner": "erp_qa_owner_20261022_01",
+        "versions": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25
+        ],
+        "accounts": 0,
+        "sourceRows": 0
+      },
+      "postgresVersion": "PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+      "receiptPhase": "empty-new-target-readback",
+      "notTested": [
+        "Full STAFF ACCOUNT HALL legitimate, negative and concurrency matrix",
+        "product media retained references and stock admission cases",
+        "season bidirectional reference race and publication closure",
+        "successor26 source guards, actual issuer ACL and runtime",
+        "actual import, real application/business and production release"
+      ],
+      "oldDatabaseWrites": false,
+      "r1DatabaseWrites": false,
+      "credentialsReadOrExported": false,
+      "realBusinessImported": false,
+      "profileIssued": false,
+      "productionSwitched": false,
+      "runtimeBoundary": "Actual new isolated target has versions1-25, accounts0/sourceRows0. New accepted work is20-25 install plus minimal rollback negatives, not full STAFF/ACCOUNT/HALL/concurrency/media/stock/season matrices,26 issuer/source guard, import, formal writes or release. Original WIP_NEW_ENGINE_PARSE_ONLY labels are retained verbatim in migration pins."
+    },
+    {
+      "id": "QB-SLICE-57",
+      "scope": "Season-derived2956 canonical array and preserved original provenance, no native import",
+      "sourceCommit": "93ce7b61e5b0bb3573b7a2d6a66bda59eaf5214d",
+      "result": "PASS_SOURCE_PROOF_CANDIDATE_ONLY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice57-derived-season-source-proof-93ce7b61/RESULT.json",
+      "evidenceSha256": "cd021c1521420194d43c9dbb6cc331596e265867c1adc2222edbf77237778692",
+      "adoption": "Accepted delegated scoped conclusion; controller did not repeat technical tests",
+      "notTested": [
+        "Actual PostgreSQL/business/deployment",
+        "Actual browser unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QB-SLICE-58",
+      "scope": "D1 exact5 current form/sales predicate/UOW scope only",
+      "sourceCommit": "cd14b79453798677e8dde4ffef79f327caeacaee",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice58-current-form-sales-exact2-cd14b794/RESULT.json",
+      "evidenceSha256": "df5c758125d2a2c94cb919c281c1c7eb7afc32c308a59751ade41eaf272b18cf",
+      "adoption": "Accepted delegated scoped conclusion; controller did not repeat technical tests",
+      "notTested": [
+        "Actual PostgreSQL/business/deployment",
+        "Actual browser unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-F1-CHUNK18-93ce7b61",
+      "scope": "STAFF root exact3 only",
+      "sourceCommit": "93ce7b61e5b0bb3573b7a2d6a66bda59eaf5214d",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-93ce7b61/F1-CHUNK18-REVIEW.json",
+      "evidenceSha256": "aebff7a5108582bcd819a5b4d86c271a4e0694dc8ba9bf75b8ecb1c073c60177",
+      "adoption": "Accepted delegated scoped conclusion; controller did not repeat technical tests",
+      "notTested": [
+        "Actual PostgreSQL/business/deployment",
+        "Actual browser unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-F1-DOC01-ea5ebccf",
+      "scope": "Reset empty-filter page1 and cancellation/error results only",
+      "sourceCommit": "ea5ebccff4481cfb2ae044320f4bad90855eefeb",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-ea5ebccf/F1-DOC01-REVIEW.json",
+      "evidenceSha256": "3d0b0073b35f06ffca52efc46ffa510a1bdd5e61da7319372b98b931b8055507",
+      "adoption": "Accepted delegated scoped conclusion; controller did not repeat technical tests",
+      "notTested": [
+        "Actual PostgreSQL/business/deployment",
+        "Actual browser unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-F2-DATA001-ea5ebccf",
+      "scope": "Product specs sections and real SKU entry only",
+      "sourceCommit": "ea5ebccff4481cfb2ae044320f4bad90855eefeb",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-ea5ebccf/F2-DATA-PRES001-REVIEW.json",
+      "evidenceSha256": "6f387efed798d9763ad474f3b67ca098dc092407bf67519dc1daaae3b2999eb4",
+      "adoption": "Accepted delegated scoped conclusion; controller did not repeat technical tests",
+      "notTested": [
+        "Actual PostgreSQL/business/deployment",
+        "Actual browser unless separately evidenced"
+      ]
+    },
+    {
+      "id": "QF-F2-DATA002-cd14b794",
+      "scope": "Product barcode rows and optional scheme consumer only",
+      "sourceCommit": "cd14b79453798677e8dde4ffef79f327caeacaee",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-cd14b794/F2-DATA-PRES002-REVIEW.json",
+      "evidenceSha256": "fb454090f326a6ca07b6ab5ddb37e49ff5125a90e558f2df1419d28a74363407",
+      "adoption": "Accepted delegated scoped conclusion; controller did not repeat technical tests",
+      "notTested": [
+        "Actual PostgreSQL/business/deployment",
+        "Actual browser unless separately evidenced"
+      ]
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-22T08:17:42.450106+00:00",
+  "updatedAt": "2026-10-22T09:03:17.179373+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -4971,6 +7000,50 @@
       "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-ec0c4523/F1-CHUNK14-REVIEW.json",
       "closureScope": "Targeted immutable ec0c4523 external-owner lifecycle source/protocol regression only. Original49 NEED_FIX remains; no real HTTP401/browser/PG/build/enabled writes, F3W5/F2W6/new staff/session integration or whole-app acceptance.",
       "originalFailureRetained": true
+    },
+    {
+      "findingId": "QF-F2-MEDIA-UNCERTAIN-RELOAD-01",
+      "originalCheck": "QF-F2-MEDIA-READ-ec0c4523",
+      "successorCheck": "QF-F2-MEDIA-RELOAD-FIX-9ee77843",
+      "fixedCommit": "9ee77843aeafca0fa3c354c1ff22119549e10620",
+      "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-9ee77843/F2-MEDIA-RELOAD-FIX-REVIEW.json",
+      "closureScope": "Targeted media reload entry/confirmation guard and original-key receipt regression only at9ee; no browser/PG/real roles/uploads or deployment.",
+      "originalFailureRetained": true,
+      "priorOpenFinding": {
+        "findingId": "QF-F2-MEDIA-UNCERTAIN-RELOAD-01",
+        "checkId": "QF-F2-MEDIA-READ-ec0c4523",
+        "priority": 2,
+        "status": "NEED_FIX_NO_SUCCESSOR_QA_ADOPTED",
+        "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-ec0c4523/F2-MEDIA-READ-REVIEW.json"
+      }
+    },
+    {
+      "findingId": "QF-F3-STAFF-PASSWORD-STATE-01",
+      "originalCheck": "QF-F3-W8-aa480ab2",
+      "successorCheck": "QF-F3-W8-PASSWORD-FIX-de6ca2b6",
+      "fixedCommit": "de6ca2b65be87f5a3ea3116cb623d5eba4a7ef07",
+      "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-de6ca2b6/F3-W8-PASSWORD-FIX-REVIEW.json",
+      "closureScope": "Targeted public/session/retry password state removal atde6; transient mounted input allowed, no physical erasure or real credentials/browser/PG/production claim.",
+      "originalFailureRetained": true,
+      "priorOpenFinding": {
+        "findingId": "QF-F3-STAFF-PASSWORD-STATE-01",
+        "checkId": "QF-F3-W8-aa480ab2",
+        "priority": 2,
+        "status": "NEED_FIX_NO_SUCCESSOR_QA_ADOPTED",
+        "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-aa480ab2/F3-W8-REVIEW.json"
+      }
+    },
+    {
+      "findingId": "UDC-I02",
+      "duplicateOf": "v14.issue.F09",
+      "originalCheck": null,
+      "originalExternalFindingVersion": "v001-fae1ef3",
+      "successorCheck": "DEMO-F09-LIMITED-UI-ec0c452",
+      "fixedCommit": "ec0c452305a2cef1dceb89eba65956b09dd47401",
+      "evidence": "K/reports/ui-demo-comparison-20261022/v003-ec0c452/01-F09/RESULT.json",
+      "closureScope": "库存商品搜索框初始未聚焦与点击聚焦的底色/边框两态",
+      "externalHistoryPreserved": true,
+      "qualification": "Only F09 search input idle/focus fill and border; no other UI or business finding closed."
     }
   ],
   "evidenceGaps": [
@@ -4995,7 +7068,13 @@
         "QB-SLICE-25",
         "QB-SLICE-26"
       ],
-      "scope": "Actual migration20+ SQL/constraints/ACL, maintenance child closure, effective history transaction, numbering races and role/session/runtime assembly require their own fixed evidence; source/protocol scopes do not prove them."
+      "scope": "Actual migration20+ SQL/constraints/ACL, maintenance child closure, effective history transaction, numbering races and role/session/runtime assembly require their own fixed evidence; source/protocol scopes do not prove them.",
+      "partialEvidence": [
+        {
+          "checkId": "C-ENGINE-JOB18-EXACT20-25",
+          "scope": "Actual20-25 install/minimal rollback only; full engine composition/legitimate matrix and26 issuer remain unaccepted."
+        }
+      ]
     },
     {
       "id": "PRIVATE-IMPORT-COMPLETENESS",
@@ -5046,7 +7125,13 @@
         "QF-F1-CHUNK14-ec0c4523",
         "QF-F2-MEDIA-READ-ec0c4523"
       ],
-      "scope": "No real authenticated browser/PG business chain, full Demo page parity, performance or production acceptance is inferred. CSS actual-build proof is limited to its listed assets; chunk08 strict types are not a new integrated build."
+      "scope": "No real authenticated browser/PG business chain, full Demo page parity, performance or production acceptance is inferred. CSS actual-build proof is limited to its listed assets; chunk08 strict types are not a new integrated build.",
+      "partialEvidence": [
+        {
+          "checkId": "DEMO-F09-LIMITED-UI-ec0c452",
+          "scope": "Only F09 two visual states; no whole page or business acceptance."
+        }
+      ]
     },
     {
       "id": "PRODUCT-EDITOR-DEMO-GAPS",
@@ -5231,20 +7316,133 @@
     },
     {
       "id": "QF-F2-MEDIA-UNCERTAIN-RELOAD-01",
-      "status": "OPEN_NEED_FIX",
+      "status": "CLOSED_TARGETED_FIX_ONLY",
       "evidenceChecks": [
         "QF-F2-MEDIA-READ-ec0c4523"
       ],
-      "scope": "Media version mismatch reload/discard can replace an owner while submitting/checking/uncertain, allowing a new command key before original-key receipt resolution. Original pending command is retained but guard bypass remains; accepted image-read subscopes are preserved, no successor repair QA adopted."
+      "scope": "Targeted media reload entry/confirmation guard and original-key receipt regression only at9ee; no browser/PG/real roles/uploads or deployment.",
+      "originalStatus": "OPEN_NEED_FIX",
+      "closedBy": [
+        "QF-F2-MEDIA-RELOAD-FIX-9ee77843"
+      ],
+      "scopeAtOriginalReceipt": "Media version mismatch reload/discard can replace an owner while submitting/checking/uncertain, allowing a new command key before original-key receipt resolution. Original pending command is retained but guard bypass remains; accepted image-read subscopes are preserved, no successor repair QA adopted."
+    },
+    {
+      "id": "QB49-PRODUCT-SEASON-CANDIDATES-NOT-RUNTIME",
+      "status": "CANDIDATE_ONLY",
+      "evidenceChecks": [
+        "QB-SLICE-49"
+      ],
+      "scope": "Exact four artifacts do not establish full2956 native-reference authorization, season_ids schema/consumer/two-way protection/EXACT19-to-new guard, real PG import/scalar preservation/310-array writes, C outside pins or MAIN grant."
+    },
+    {
+      "id": "QB50-HISTORICAL-CUSTOMER-CANDIDATE-NOT-RUNTIME",
+      "status": "CANDIDATE_ONLY",
+      "evidenceChecks": [
+        "QB-SLICE-50"
+      ],
+      "scope": "Exact2 historical candidate does not establish D1 profile/guard/closure, current list/count/detail/newbill/maintenance exclusion, historical name/FK preservation, actual42561 header bindings or real PG execution."
+    },
+    {
+      "id": "QB51-HALL-MUTEX-NOT-PG-ADMIN-SAFETY",
+      "status": "SOURCE_PROTOCOL_ONLY_PG0",
+      "evidenceChecks": [
+        "QB-SLICE-51"
+      ],
+      "scope": "Early shared mutex source does not establish real PG concurrency/last usable administrator safety, central newguard26 or STAFF joint COMMIT/audit behavior."
+    },
+    {
+      "id": "QB52-APPROVED21-PROOF-NOT-NATIVE-IMPORT",
+      "status": "SOURCE_ONLY_NATIVE_PREPARED0",
+      "evidenceChecks": [
+        "QB-SLICE-52"
+      ],
+      "scope": "Approved21/15 proof structure acceptance does not establish actual per-payload factory/native SKU/scheme/barcode binding, full authorizer/sourceproof guard, MAIN closure or PG import."
+    },
+    {
+      "id": "QB53-HEADER-FACTORY-ACTUAL42561-NOT-RUN",
+      "status": "ACTUAL_GZIP_SOURCE_GAP_CLOSED_NATIVE_IMPORT_GAPS_REMAIN",
+      "evidenceChecks": [
+        "QB-SLICE-53"
+      ],
+      "scope": "Actual42561 constructor and one rows drain now have full EOF source-only evidence. Historical-customer/native header references/full11 typed closure/real PG import remain unaccepted.",
+      "originalStatus": "SYNTHETIC_ONLY_FOR_NEW_FACTORY",
+      "scopeAtOriginalReceipt": "New factory actual42561 construction EOF and rows EOF remain unrun; historical-customer/native header references/full11 typed closure/real PG import are not accepted.",
+      "partiallyClosedBy": [
+        "D3-HEADER-ACTUAL42561-WINDOW1-87713697"
+      ]
+    },
+    {
+      "id": "QF-F1-CHUNK15-INTEGRATED-RUNTIME",
+      "status": "SOURCE_PROTOCOL_ONLY",
+      "evidenceChecks": [
+        "QF-F1-CHUNK15-87713697"
+      ],
+      "scope": "W5/W6 six-file glue retains closed production write gates; no actual browser/Demo, PG, role/write session, integrated build, production W6 injection or deployment. Existing F2 media P2 stays open."
+    },
+    {
+      "id": "QF-F3-STAFF-PASSWORD-STATE-01",
+      "status": "CLOSED_TARGETED_FIX_ONLY",
+      "evidenceChecks": [
+        "QF-F3-W8-aa480ab2"
+      ],
+      "scope": "Targeted public/session/retry password state removal atde6; transient mounted input allowed, no physical erasure or real credentials/browser/PG/production claim.",
+      "originalStatus": "OPEN_NEED_FIX",
+      "closedBy": [
+        "QF-F3-W8-PASSWORD-FIX-de6ca2b6"
+      ],
+      "scopeAtOriginalReceipt": "Password input enters immutable public/session draft before dispatch and route-scope disposal retains it. Post-dispatch clearing and safe original-key recovery are preserved; no log/persistence/network disclosure claimed. Five-source successor delivered but not fixed/reviewed here."
+    },
+    {
+      "id": "QB54-BOOT-ACTOR-AND-ACTUAL-EXECUTION",
+      "status": "NOT_ACCEPTED_BY_SOURCE_OFFLINE_RECEIPT",
+      "evidenceChecks": [
+        "QB-SLICE-54"
+      ],
+      "scope": "At receipt time safety.py transitive binding/control-flow and complete bootAudit remain open; no actual systemd install/enable/reboot/stop/zero-write rollback, public business or deploy integration accepted."
+    },
+    {
+      "id": "SEASON-V2-TARGET-ISSUER-PG-CONVERSION-ACTIVATION",
+      "status": "NOT_ACCEPTED_BY_CONSUMER_SOURCE_OR_MINIMAL_ENGINE",
+      "evidenceChecks": [
+        "QB-SLICE-55",
+        "QF-F2-SEASON-V2-9ee77843",
+        "C-ENGINE-JOB18-EXACT20-25"
+      ],
+      "scope": "Paired consumer source plus isolated25 install does not establish target issuer/ACL/two-way race guard, actual2956 conversion/scalar readback, PG audit/receipt COMMIT, frontend/backend host activation or browser layout."
+    },
+    {
+      "id": "QB56-EXACT2-PREDICATE-ISSUER-AND-RUNTIME",
+      "status": "CONSUMER_SOURCE_PROTOCOL_ONLY",
+      "evidenceChecks": [
+        "QB-SLICE-56"
+      ],
+      "scope": "Actual26 predicate body/security/ACL/exact2 source closure and issuer, current-form/sales-native-facts composition, import/header bindings and real PG behavior remain separate."
+    },
+    {
+      "id": "DOC02-04-BROWSER-RECHECK",
+      "status": "SOURCE_FIXED_BROWSER_NOT_ACCEPTED",
+      "evidenceChecks": [
+        "QF-F1-DOC02-04-9ee77843"
+      ],
+      "scope": "Three new-document behavior fixes have source/protocol acceptance only. Independent browser recheck, saved-document editor and DOC01 reset are outside this receipt."
+    },
+    {
+      "id": "C-JOB18-FULL-ENGINE-AND-RELEASE",
+      "status": "MINIMAL_ISOLATED_ENGINE_ONLY",
+      "evidenceChecks": [
+        "C-ENGINE-JOB18-EXACT20-25"
+      ],
+      "scope": "20-25 actual install and rollback negatives do not close full legitimate STAFF/ACCOUNT/HALL and concurrency, media retained references, stock admission, season race/publication,26 source guards/issuer/runtime, actual import or production release."
     }
   ],
   "indexPolicy": {
     "role": "C internal documentation adoption; QF/QB remain the reviewers",
-    "source": "Existing QA RESULT/REVIEW/RECHECK JSON and necessary REPORT only",
+    "source": "Existing QA RESULT/REVIEW/RECHECK JSON and necessary REPORT; explicitly authorized independent UI and execution RESULT receipts are separately labeled.",
     "resultRule": "result remains scoped and preserves old index states; receiptResult is the exact original QA verdict. PASS never implies a whole parent task.",
     "temporalRule": "scope, notTested and receiptBlockers describe each fixed receipt at its recorded time. Explicit closedBy/supersededBy resolve only the stated finding; other successor links do not clear remaining limitations.",
     "historyRule": "All original QA files remain untouched; original NEED_FIX/WAITING results and retained failed runs are preserved.",
-    "performedForIndex": "Read and index existing receipts only; no new tests, source review, build, PG, browser, Git mutation or server action.",
+    "performedForIndex": "Read and index existing receipts only; no new tests, source review, build, PG, browser, Git mutation or server action by this index assistant. Recorded executions belong to the named original reporter.",
     "paths": {
       "R": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
       "K": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control"
@@ -5252,7 +7450,7 @@
   },
   "receiptCoverage": {
     "QB": {
-      "count": 48,
+      "count": 56,
       "slices": [
         1,
         2,
@@ -5301,13 +7499,21 @@
         45,
         46,
         47,
-        48
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56
       ],
-      "latestRecordedAt": "2026-10-22T08:08:59.348324+00:00"
+      "latestRecordedAt": "2026-10-22T08:39:49.604673+00:00"
     },
     "QF": {
-      "count": 24,
-      "latestFixedCandidate": "ec0c452305a2cef1dceb89eba65956b09dd47401",
+      "count": 30,
+      "latestFixedCandidate": "de6ca2b65be87f5a3ea3116cb623d5eba4a7ef07",
       "includes": [
         "F1 chunk05 editor guard",
         "F1 chunk06 sales form",
@@ -5324,15 +7530,32 @@
         "F2 W6 CATEGORY/COLOR/FIT maintenance source/protocol and affected types",
         "F1 chunk12 native sales operation history",
         "F1 chunk14 exact external-owner targeted fix at ec0c4523",
-        "F2 media read NEED_FIX uncertain reload guard"
+        "F2 media read NEED_FIX uncertain reload guard",
+        "F1 chunk15 W5/W6 root/session/route scoped integration",
+        "F3 W8 staff/account leaf NEED_FIX plaintext password in session snapshot",
+        "F2 media pending-reload targeted fix at9ee77843",
+        "F2 season V2 source/protocol at9ee77843",
+        "F1 DOC02-04 source behavior fixes at9ee77843",
+        "F3 W8 password session-state targeted fix atde6ca2b6"
       ]
     },
-    "totalQAReceipts": 72,
+    "totalQAReceipts": 86,
     "existingNonIndependentSummaryOrCheckpointRows": 3,
     "privateArtifactWithoutSourceCommit": [
       "QB-SLICE-35",
-      "QB-SLICE-42"
-    ]
+      "QB-SLICE-42",
+      "QB-SLICE-49",
+      "QB-SLICE-50"
+    ],
+    "totalQAReceiptsCountBasis": "QF + QB receipts only; independent Demo UI and authorized execution receipts counted separately below.",
+    "additionalExecutionAndUIReceipts": {
+      "count": 3,
+      "checks": [
+        "DEMO-F09-LIMITED-UI-ec0c452",
+        "D3-HEADER-ACTUAL42561-WINDOW1-87713697",
+        "C-ENGINE-JOB18-EXACT20-25"
+      ]
+    }
   },
   "evidenceGapClosures": [
     {
@@ -5343,17 +7566,19 @@
       "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice31-header-testfix-842f0dbe/RESULT.json",
       "closureScope": "Deterministic installed attack and subsequent subprocess/global restoration test evidence only.",
       "originalFailureRetained": true
-    }
-  ],
-  "openFindings": [
+    },
     {
-      "findingId": "QF-F2-MEDIA-UNCERTAIN-RELOAD-01",
-      "checkId": "QF-F2-MEDIA-READ-ec0c4523",
-      "priority": 2,
-      "status": "NEED_FIX_NO_SUCCESSOR_QA_ADOPTED",
-      "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-ec0c4523/F2-MEDIA-READ-REVIEW.json"
+      "gapId": "QB53-HEADER-FACTORY-ACTUAL42561-NOT-RUN",
+      "originalCheck": "QB-SLICE-53",
+      "successorCheck": "D3-HEADER-ACTUAL42561-WINDOW1-87713697",
+      "fixedCommit": "877136977ad5ec8977824623dee59cb71c17293f",
+      "evidence": "K/reports/backend/rapid-launch-20261022/D3/verified-header-actual-window1/RESULT.json",
+      "closureScope": "Actual42561 gzip constructor and single full rows EOF only. Native binding/typed closure/PG/import gaps remain.",
+      "partialClosure": true,
+      "historicalReceiptRetained": true
     }
   ],
+  "openFindings": [],
   "incrementalAdoptions": [
     {
       "at": "2026-10-22T07:27:03.510330+00:00",
@@ -5439,6 +7664,52 @@
       "previousRowsReReviewed": 0,
       "newTests": 0,
       "note": "Only requested ec0c F2 media-read receipt. External-owner finding remains closed at exact ec0c targeted fix; new media uncertain-reload finding remains open."
+    },
+    {
+      "at": "2026-10-22T08:37:19.759975+00:00",
+      "addedCheckIds": [
+        "QB-SLICE-49",
+        "QB-SLICE-50",
+        "QB-SLICE-51",
+        "QB-SLICE-52",
+        "QB-SLICE-53",
+        "QF-F1-CHUNK15-87713697",
+        "QF-F3-W8-aa480ab2"
+      ],
+      "previousRowsReReviewed": 0,
+      "newTests": 0,
+      "note": "Only requested QB49-53, QF chunk15 and F3 W8 receipts. QB49 four artifacts contain new2 references, not four new products. QB49/50 bind exact private bytes without invented commit or grant. F3 password-state and existing F2 media P2 remain open; delivered successors lack adopted fixed QA. Prior DOC-SOURCE-01 trace is unchanged."
+    },
+    {
+      "at": "2026-10-22T08:50:43.012592+00:00",
+      "addedCheckIds": [
+        "QB-SLICE-54",
+        "QB-SLICE-55",
+        "QB-SLICE-56",
+        "QF-F2-MEDIA-RELOAD-FIX-9ee77843",
+        "QF-F2-SEASON-V2-9ee77843",
+        "QF-F1-DOC02-04-9ee77843",
+        "QF-F3-W8-PASSWORD-FIX-de6ca2b6",
+        "DEMO-F09-LIMITED-UI-ec0c452",
+        "D3-HEADER-ACTUAL42561-WINDOW1-87713697",
+        "C-ENGINE-JOB18-EXACT20-25"
+      ],
+      "previousRowsReReviewed": 0,
+      "newTests": 0,
+      "note": "QB54-56 and four QF fixed receipts adopted; two original P2 NEED_FIX records retained with targeted successor links. Separate F09 limited UI, actual42561 gzip source-only and isolated20-25 engine receipts.1-19 reused setup not counted as new acceptance. Snapshot had no finalized QB57/QF93 receipt; no future work polled or inferred."
+    },
+    {
+      "at": "2026-10-22T09:03:17.179373+00:00",
+      "addedCheckIds": [
+        "QB-SLICE-57",
+        "QB-SLICE-58",
+        "QF-F1-CHUNK18-93ce7b61",
+        "QF-F1-DOC01-ea5ebccf",
+        "QF-F2-DATA001-ea5ebccf",
+        "QF-F2-DATA002-cd14b794"
+      ],
+      "previousRowsReReviewed": 0,
+      "newTests": 0
     }
   ],
   "coverageGroups": [

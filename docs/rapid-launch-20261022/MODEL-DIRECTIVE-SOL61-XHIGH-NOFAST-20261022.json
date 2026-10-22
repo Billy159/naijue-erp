@@ -1,0 +1,18 @@
+{
+  "recordedAtUtc": "2026-10-22T08:59:41.384921+00:00",
+  "source": "Direct human message in controller current conversation: 你剩下除了逐页对比都改为sol6.1-x-high吧 不要开fast",
+  "controllerAndNineRoles": {
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "xhigh",
+    "fastRequested": false
+  },
+  "exception": {
+    "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
+    "model": "gpt-6-astra",
+    "reasoningEffort": "ultra",
+    "speed": "PRESERVE_EXISTING"
+  },
+  "actualAction": "send_message_to_thread accepted explicit model/thinking for C and original eight role Chats; current in-flight generation is not retrospectively changed",
+  "fastActualState": "NOT_VERIFIED_INTERFACE_UNAVAILABLE",
+  "blocker": "No serviceTier option in app send tool; no running supported CLI control socket. Computer Use explicitly denied com.openai.codex. Requires UI setting; not falsely recorded as closed."
+}

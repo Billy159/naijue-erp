@@ -1,16 +1,17 @@
 # 快速上线当前进度
 
-2026-10-22。整体目标ACTIVE，未完成正式上线。原九角色+既有Demo专项并行，C Astra Ultra，执行/验收 Astra xhigh，Demo Astra Ultra，不重开架构。
+更新 2026-10-22T09:05:13.366642+00:00。整体ACTIVE，尚未正式上线。原九角色与Demo专项持续接续，无重派或重复技术验收。
 
-- 本地固定 9ee77843aeafca0fa3c354c1ff22119549e10620；最后已核GitHub 8775307b30ba3349bc6c95aa96bb48f13da889eb。新源码round08–14已逐片保全，下一步推送。角色WIP不整体暂存/重置/清理。
-- C01-v1 A–D、v2-B、v3-A均明确批准。仅商品season_ids单列，不建product_season；原单值和来源保留，NULL未知与[]明确空选分开。精确21旧码裁决已批。本轮无待用户字段确认。
-- 当前生产app/DB-WAL/媒体/配置保全实测完成，保护备份rapid-launch-current-20261022-04。新库erp_rewrite_20261022_r1仍精确1–19、50表、0账号；runtime ACL已实际应用读回。原库/入口未切换。
-- QB39/43分别关闭D2旧库读取和bootstrap会话设置缺陷；QB44–48各限定源码范围通过。QF ec0c关闭external-owner，877136 W5/W6根接线源通过。未升级为真实PG、整模块或业务PASS。
-- QF-F2-MEDIA-UNCERTAIN-RELOAD-01已给F2；DOC-SOURCE-02/03/04给F1，DOC01追溯原权威。原失败保留，只复验后继具体影响范围。
-- F3 STAFF+ACCOUNT八文件固定aa480ab并交QF/F1根接线；F1 v2路径修复91a6687，F2只复验两受影响项。D2季节12文件已READY待固定。正式writes仍false。
-- 49账号identity已核且C外pin，不代表实际导入。QB49已核2956季节来源（2598单季/48未知/310双季620成员）及商品引用新2/旧2644保全，C已签有限pin。exact2历史客户待QB。42561历史header已有gzip来源，新bounded factory待QB，无原件重扫。
-- D1/D3收敛20–26显式新profile：原0013拒STAFF同时有账号；22/23列变影响完整snapshot；25季节引用/发布与26来源继承均待实际隔离PG。原1–19封存不改，不停trigger，不扩旧EXACT19。
-- 固定预览 http://127.0.0.1:57833/synthetic-unified.html ：ec0c452/build ui-preview-ec0c452-01-build01，360输入匹配、HTTP200/2488691B。仅合成read/draft，旧57831/32保留；专项先F09两态，再未覆盖页。
-- boot源码877136含24离线检查，交QB；job12/13/15/16只读证据识别两旧unit启动旧入口。未安装/重启/发布。T16 safety实际导入路径/hash及传递控制流待查。
+- 最新人类模型裁决：C及原八执行/验收Chat gpt-6.1-sol/xhigh，已通过实际派工参数提交；Demo保持Astra Ultra及原速度。Fast要求关闭，但接口未暴露、电脑工具禁止操作Codex自身界面，实际关闭未核实。内部Astra helper已保存断点结束，不继续新增工作。
+- 本地源码 0d3d59f06fd5c9b660f29f71c1a773b4c00f2b1d，round17–22已固定。GitHub仍已核8775307b30ba3349bc6c95aa96bb48f13da889eb；三次push网络失败，网页/API可连不代表git传输恢复，最新未推送。源文件按owner逐片保全，不能全量暂存WIP。
+- C01-v1 A–D、v2-B、v3-A（product.season_ids单列）、精确21兼容旧码已批；当前无待用户字段确认。310商品两季已由QB57核新derived proof，48未知/2598单季/310双季、620成员；C有限outsidepin已签，不等于真实导入授权。
+- 新QA库erp_qa_rapid26_20261022_01实际1..25安装完成，20..25最小负例全ROLLBACK PASS，accounts/sourceRows0。原1..19仅准备复用；旧库及R1新正式目标仍未改。下一job19固定26增量bundle已备，尚未静态parse或执行。D1真实事务矩阵脚本已备未测，会提交纯合成数据，只能QA使用。
+- QF已关闭图片uncertain reload和STAFF密码状态两P2；STAFF root93、DOC01 ea5、DOC02–04 9ee、规格三段ea5及条码cd14均限定源码PASS。F09仅ec0c浏览器初始/聚焦两态关闭；其他外观仍待固定版本实操。
+- QF正在0d3调拨history13与W7账号leaf8新范围；QB正在cd14 historical customer source2及6954B派生候选，QB58 D1 exact2当前开单/销货消费者已限定源码PASS。旧失败留存。
+- 固定浏览器候选 http://127.0.0.1:57834/synthetic-unified.html =9ee77843/build ui-preview-9ee7784-01-build01，HTML095bf63aef2ad36e95a7e9ad5bbc5a1ef866b5a44ff82b3a526e1d56428008e4。合成预览写禁用；没有后继reset/price/specs/barcode/account/history，不能归错版本。
+- D2/F3正在W13设置操作记录，合同已冻结/源路径登记；D3与D2冻结商品库存完整概览合同，F1/F2并行商品→库存导航。F1 chunk21条码root glue READY待C固定；W7 account route新路径已登记，共享contract补丁待C应用。
+- 42561历史header实际gzip一次constructor+一次全rows来源读取通过，非native binding/导入。11factory/完整proof/EXACT26 issuer/49账号真实COMMIT和同批对账仍未齐。
+- 真实媒体codec/provider/私有文件交付仍缺；受控media链接端口与已批审计基础可复用，不装假实现。依赖报告在K/reports/controller/rapid-launch-20261022/dependency-gap-triage-v1。
+- boot source877136/QB54/24离线检查复用。job17已核固定T16 helper实际源投影，无初始化启动服务操作；接受源级证据，不扩site/pyc扫描。安装、重启、真实开机和回退未测，须最终具体release manifest。
 
-下一步：持续接收原owner/QA回执，固定、定向复验和GitHub保存；D1给固定DDL/minimum cases后C唯一安排新隔离PG；D3完成11factory/MAIN许可与同批真实对账。R1真实登录/权限/页面接线合格即按原授权上线，不等无关维护、历史更正或全站Demo检查。C04/C05及完整交接未完成。
+下一步：C固定F1 chunk21→QF；完成job19必要脚本审查/parse后唯一服务器增量26，收到失败只定向修；继续实际synthetic事务矩阵/issuer及真实导入准备。Git恢复后推送并回读；必要合批新预览交Demo仅受影响项。R1真实登录/读/权限合格即按原URL授权分批上线，不等无关全站页面。C04/C05与完整交接未完成。

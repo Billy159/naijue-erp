@@ -1,5 +1,5 @@
 {
-  "updatedAtUtc": "2026-10-22T08:29:49.860274+00:00",
+  "updatedAtUtc": "2026-10-22T09:03:17.179373+00:00",
   "contracts": [
     {
       "path": "api-contracts/CURRENT-BARCODE-API-v1.json",
@@ -72,6 +72,11 @@
       "sha256": "133f6560bd4a3a3f1c3351222230ecd6ce4a606c464263bca6908c7f00aa1edf",
       "sourceCheckpoint": null,
       "status": "SUCCESSOR_CONTRACT_NOT_ENGINE_OR_RUNTIME_CAPABILITY_ISSUED"
+    },
+    {
+      "path": "api-contracts/W13-SETTINGS-AUDIT-API-v1.json",
+      "sha256": "b9dc981a74523681696750af3fe3c60c37ba9f890714cb9cbce731f5462a6b13",
+      "status": "READ_CONTRACT_FROZEN_IMPLEMENTATION_IN_PROGRESS_NO_SCHEMA_CHANGE"
     }
   ],
   "restriction": "v3-A product.season_ids one-column explicitly approved; v2-A product_season relationship table rejected. B approved. Existing target schema19 cannot use new fields or new import profile; actual successor guards/PG/readback remain required. DTO/source acceptance is not production write enablement."

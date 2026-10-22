@@ -1,0 +1,23 @@
+{
+  "version": "C_DERIVED_PRODUCT_SEASON_PROOF_REVIEW_V1",
+  "recordedAtUtc": "2026-10-22T08:52:36.328673+00:00",
+  "decision": "ACCEPT_EXACT_QB57_DERIVED_SEASON_SOURCE_PROOF_ONLY",
+  "sourceCommit": "93ce7b61e5b0bb3573b7a2d6a66bda59eaf5214d",
+  "acceptedScope": [
+    "All2956 derived source/native/hash aligned; canonical UUID array and matching full atomic dictionary snapshots",
+    "48 UNKNOWN/null;2598 single;310 KNOWN/two atomic seasons,620members;291 only storage order changed",
+    "310 legacy scalar NULL explicit LEGACY_SINGLE_SLOT_NOT_APPLICABLE_TO_CONFIRMED_MULTI_SELECTION only FRESH_NATIVE_PRODUCT_IN_NEW_DATABASE; original source/mapping/scalar preserved"
+  ],
+  "excludedScope": [
+    "Full other-product reference authority and nativePRODUCT prepared/evidence composition",
+    "EXACT26 issuer, runtime ACL, real PG/import, source guards and saved readback",
+    "MAIN execution grant or formal business acceptance"
+  ],
+  "realNativeCommandsOrImportAuthorizedByThisPinAlone": false,
+  "outsidePin": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/derived-product-season-source-proof-review-v1.json",
+  "outsidePinSha256": "dbd8edd9b487df787562ed6385c5adecf4f7538577043af723ad144ba48a0d0f",
+  "reviewPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice57-derived-season-source-proof-93ce7b61/RESULT.json",
+  "reviewSha256": "cd021c1521420194d43c9dbb6cc331596e265867c1adc2222edbf77237778692",
+  "candidateSha256": "883177d8ee8782cb312c06dc6bade6e54b2ce221faa020b3341d168f9fa7ba65",
+  "candidateBytes": 2437344
+}

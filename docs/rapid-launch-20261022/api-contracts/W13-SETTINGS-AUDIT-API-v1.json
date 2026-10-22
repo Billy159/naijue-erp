@@ -1,0 +1,121 @@
+{
+  "version": "D2-W13-SETTINGS-AUDIT-API-v1",
+  "status": "FROZEN_READ_CONTRACT_PENDING_PATH_REGISTRATION_IMPLEMENTATION",
+  "taskIds": [
+    "B04",
+    "B05",
+    "F05"
+  ],
+  "frontEvidence": {
+    "actualReservedFilesExist": false,
+    "reservedOwner": "F3",
+    "requirements": "K/reports/frontend/rapid-launch-20261022/F3/API-REQUIREMENTS.md lines58-66; W0-F05-PLAN.md operation records",
+    "note": "Five registered audit frontend paths do not yet exist; no existing implemented interface was overwritten."
+  },
+  "route": {
+    "method": "POST",
+    "path": "/settings/audit/query",
+    "contentType": "application/json",
+    "bodyLimitBytes": 8192,
+    "cache": "no-store",
+    "body": {
+      "module": "ALL|PRODUCT|CATEGORY|COLOR|FIT|HALL|WAREHOUSE|STAFF|ACCOUNT|PAYMENT_METHOD|PAYMENT_ACCOUNT|CUSTOMER|SUPPLIER",
+      "objectId": "UUID|null; mandatory; nonnull requires a specific module",
+      "objectSearch": "literal string <=200; empty unrestricted",
+      "actorSearch": "literal string <=200; empty unrestricted",
+      "action": "ALL|CREATE|EDIT|DISABLE|RESTORE|DELETE|LEAVE|REINSTATE|RESET_PASSWORD",
+      "dateFrom": "YYYY-MM-DD|null, inclusive Asia/Shanghai local day start",
+      "dateTo": "YYYY-MM-DD|null, inclusive Asia/Shanghai day through next local midnight exclusive",
+      "page": "positive safe integer with safe offset",
+      "pageSize": "20|50|100"
+    }
+  },
+  "response": {
+    "items": "AuditItem[]",
+    "total": "safe exact integer",
+    "page": "requested page",
+    "pageSize": "requested pageSize"
+  },
+  "item": {
+    "id": "actual audit UUID",
+    "operationId": "actual committed operation UUID",
+    "occurredAt": "actual UTC timestamp preserving up to6 fractional digits|null; never fill from receipt/import/current time",
+    "module": "actual object_type closed enum",
+    "object": {
+      "id": "actual retained object UUID",
+      "name": "current safe native name/loginName|null",
+      "code": "current native code if actual applicable|null"
+    },
+    "actor": {
+      "accountId": "actual audit actor UUID|null",
+      "staffId": "actual linked staff UUID|null",
+      "name": "current staff name|null",
+      "loginName": "current account login name|null"
+    },
+    "action": "actual persisted action|null",
+    "oldVersion": "actual positive integer|null",
+    "newVersion": "actual positive integer|null",
+    "changes": "[{field,label,before:AuditValue,after:AuditValue}]",
+    "credentialActions": "[] or actual closed CREATE/RESET_PASSWORD actions from safe account_credentials metadata; no password/hash/tag"
+  },
+  "auditValue": {
+    "ABSENT": "{state:'ABSENT'}: sparse original evidence does not contain this field; not zero/null/unchanged",
+    "NULL": "{state:'NULL'}: actual explicit JSON null",
+    "VALUE": "{state:'VALUE',value:string|boolean|safeInteger}",
+    "IDS": "{state:'IDS',value:UUID[]}: actual root season_ids only",
+    "ROW_COUNT": "{state:'ROW_COUNT',value:nonnegativeInteger}: changed child rows recorded in original sparse audit; not total currently linked rows"
+  },
+  "projection": {
+    "root": "Closed per-module allowlist of actual safe root fields, incl nine product prices as exact strings, IDs/state/version. Only keys actually present before/after appear.",
+    "children": "skus/barcodes/images/accounts/payment_halls projected as counts only, with label explicitly stating changed rows. No arbitrary nested JSON, file_ref, session, token, credential/hash/password/salt/HMAC/request hash/key or result_data returned.",
+    "credentialMetadata": "Only the two closed action names; no credential content or raw audit object. Unknown/malformed permitted-field values reject read as integrity failure, not silently replace with blank.",
+    "labels": "object/actor labels are current native reference labels, not invented historical snapshots; raw stored before/after remain original."
+  },
+  "authorization": {
+    "roles": "Current ADMIN all12 modules; current WAREHOUSE ordinary modules excluding STAFF/ACCOUNT; SALESPERSON denied. ALL removes unauthorized families before count/page; explicit forbidden family gives403 before object lookup.",
+    "driver": "Reuse D1 actual current-identity/hall/role checks in original MaintenancePgUnitOfWork read callback. STAFF/ACCOUNT or ADMIN ALL validates ACCOUNT LIST first; ordinary families validate own LIST; CUSTOMER/SUPPLIER reuse same ADMIN/WAREHOUSE current-identity gate through PRODUCT LIST plus exact leaf query scope, no new shared kind/write authority.",
+    "objects": "Query joins only retained native objects in authorized module scope. Exact objectId is parameterized; nonexistent/unavailable target yields legitimate zero result, never discloses whether forbidden object exists. Logical-deleted retained objects remain available to authorized maintenance audit history.",
+    "historicalCustomer": "Optional existing HistoricalCustomerExclusionCapability bound to actual D1 driver selects same exact26 exclusion in CUSTOMER object scope; absent capability never calls new routine. Host cannot publish exact2 into legacy current profile.",
+    "source": "audit_change joined to COMMITTED operation_receipt by operationId,actor,targetKind,targetId,action and receipt result version; no raw journal or unauthenticated actor inference"
+  },
+  "pagination": {
+    "query": "One statement computes exact total and bounded page after permissions and all filters in the same database snapshot; date filters use Asia/Shanghai; literal strpos search, not LIKE expansion.",
+    "order": "occurred_at DESC NULLS LAST, audit id DESC; ties deterministic. Concurrent new operations can affect later offset-page requests; refresh explicitly, no frozen multi-request snapshot claim.",
+    "bounds": "Bounded100-row response; only SQL safe projection, no full raw16MiB audit fetch. Overflow/unknown typed content fails, never truncates."
+  },
+  "errors": {
+    "400": [
+      "INVALID_SETTINGS_AUDIT_QUERY",
+      "INVALID_HTTP_INPUT"
+    ],
+    "401": [
+      "UNAUTHENTICATED"
+    ],
+    "403": [
+      "FORBIDDEN"
+    ],
+    "413": [
+      "BODY_TOO_LARGE"
+    ],
+    "500": [
+      "INTERNAL_ERROR sanitized; retain last successful frontend page with clear error, do not fabricate empty records"
+    ]
+  },
+  "sourceFilesRequested": [
+    "packages/application/src/settings-audit-ports.ts",
+    "packages/application/src/settings-audit-validation.ts",
+    "packages/application/src/settings-audit-service.ts",
+    "adapters/postgres/src/settings-audit-reader.ts",
+    "apps/api/src/settings-audit-http.ts",
+    "tests/settings-audit-read.test.ts",
+    "tests/settings-audit-postgres-protocol.test.ts",
+    "apps/api/src/settings-audit-http.test.ts"
+  ],
+  "host": "C/D1 owns mounting/authentication/actual driver and exact26 verified capability; D2 supplies createSettingsAuditHttpPlugin and PostgresSettingsAuditUnitOfWork. No DB columns/tables/migrations/indices or shared host changes requested.",
+  "tests": "Only new contract/permission/projection/filter/SQL/sanitizedHTTP and affected integration. No previous maintenance or media retest.",
+  "notClaimed": [
+    "actual DB/production permissions/performance",
+    "browser comparison",
+    "runtime mount/deploy"
+  ]
+}
