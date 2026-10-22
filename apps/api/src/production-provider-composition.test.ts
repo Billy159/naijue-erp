@@ -7,7 +7,7 @@ import { runProductionMain } from "./production-main.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { pbkdf2Sync } from "node:crypto";
 import { wrapTrustedLegacyCredential } from "../../../packages/authentication/src/legacy-passwords.ts";
-import { createPostgresApplicationApi } from "./postgres-read-api.ts";
+import { createPostgresApplicationApi, createSourceConfirmedApplicationReadAuthorization } from "./postgres-read-api.ts";
 
 function config(): ProductionRuntimeConfiguration {
   return { schemaVersion: 1, profile: "source-confirmed-native-v1", documentCommands: "NATIVE_RUNTIME", publicOrigin: PRODUCTION_PUBLIC_ORIGIN,
@@ -44,8 +44,9 @@ test("production reuses confirmed password/current-form rules and isolates calle
   assert.doesNotThrow(() => options.authentication.policy.assertNewPassword("12345678"));
   assert.throws(() => options.authentication.policy.assertNewPassword("字".repeat(342)));
   assert.equal(options.productMedia, null);
-  assert.equal("importedHistoryRead" in options, false); // Requires its own explicit reviewed historical policy.
-  assert.equal("partyRead" in options, false); // D2 leaf composition is a separate delivery.
+  assert.equal("importedHistoryRead" in options, false); // Explicit closed extension constructs an independent HISTORY policy.
+  assert.equal("partyRead" in options, false); // No caller provider overrides the closed native extension.
+  assert.deepEqual(options.nativeReadExtensions, { profile: "source-confirmed-r1-v1" });
   const auth = options.currentForms!.authorization;
   const context = { actor: { accountId: account, hallId: hall }, identity: { accountId: account,
     staffId: entityId("staff", "00000000-0000-4000-8000-000000000003"), role: "SALESPERSON" as const, hallId: hall } };
@@ -77,7 +78,7 @@ test("one real application composition registers protected routes without connec
       assert.equal(response.statusCode, 401, url); assert.equal(response.body.includes("UNEXPECTED_TEST_CONNECTION"), false);
     }
     assert.equal(connects, 0);
-    assert.equal(api.app.hasRoute({ method: "POST", url: "/imported-history/sales/query" }), false);
+    assert.equal(api.app.hasRoute({ method: "POST", url: "/imported-history/sales/query" }), true);
     assert.equal(api.app.hasRoute({ method: "POST", url: "/sales/CREATE" }), false);
   } finally { await api.close(); }
   assert.equal(ends, 1);
@@ -96,8 +97,68 @@ test("R1 explicit read profile installs no command or preparation routes", async
   const api = await createProductionApplicationApi(c, () => driver);
   try {
     for (const url of ["/sales/commands", "/transfers/commands", "/sales/prepare-create", "/transfers/prepare-create"]) assert.equal(api.app.hasRoute({ method: "POST", url }), false);
+    for (const url of ["/products/prices/query", "/products/barcodes/query", "/products/stock/query", "/dictionary-read/size-groups/query",
+      "/imported-history/sales/query", "/imported-history/sales/detail/query", "/imported-history/transfers/query", "/imported-history/transfers/detail/query"]) {
+      assert.equal(api.app.hasRoute({ method: "POST", url }), true, url);
+      const response = await api.app.inject({ method: "POST", url, payload: {}, headers: { origin: PRODUCTION_PUBLIC_ORIGIN } });
+      assert.equal(response.statusCode, 401, url);
+    }
+    assert.equal(api.app.hasRoute({ method: "GET", url: "/customers" }), true);
+    for (const path of ["/customers/commands", "/suppliers/commands"]) assert.equal(api.app.hasRoute({ method: "POST", url: path }), false);
     assert.equal(api.app.hasRoute({ method: "POST", url: "/inventory/query" }), true); assert.equal(connects, 0);
   } finally { await api.close(); }
+});
+test("R1 independent read grants use current native role, exact product/tab, original directory operation and separate HISTORY scope", async () => {
+  const productId = entityId("product", "00000000-0000-4000-8000-000000000010"), signal = new AbortController().signal;
+  for (const role of ["ADMIN", "WAREHOUSE", "SALESPERSON"] as const) {
+    let reads = 0, releases = 0;
+    const policies = createSourceConfirmedApplicationReadAuthorization({ async connect() { return { async query(sql, values) {
+      reads++; assert.match(sql, /application-read:identity/); assert.deepEqual(values, [account]);
+      return { rows: [{ account_id: account, staff_id: "00000000-0000-4000-8000-000000000003", login_enabled: true,
+        role, employment_status: "在职", hall_id: hall, native_hall_id: hall, hall_enabled: true }], rowCount: 1 };
+    }, release() { releases++; } }; } });
+    const actor = { accountId: account, hallId: hall };
+    for (const kind of ["prices", "barcodes", "stock"] as const) {
+      const intent = kind === "prices" ? { kind, parameters: { productId } }
+        : { kind, parameters: { productId, page: 1, pageSize: 20 as const } };
+      assert.deepEqual(await policies.productDetails.authorize(actor, intent, signal), { kind, productId });
+    }
+    assert.deepEqual(await policies.productManagement.authorize(actor, { kind: "list", parameters: {} as never }, signal), { kind: "all", totalStock: "all-warehouses" });
+    assert.deepEqual(await policies.dictionary.authorize(actor, { kind: "barcode-schemes", operation: "detail", parameters: { schemeId: productId } }, signal), { kind: "barcode-schemes", targetId: productId });
+    const history = await policies.importedHistory.authorize(actor, { kind: "sales", operation: "detail", parameters: { documentId: productId } as never }, signal);
+    assert.deepEqual(history, { dataset: "HISTORY", actorAccountId: account, kind: "sales", operation: "detail", targetId: productId,
+      scope: role === "SALESPERSON" ? { kind: "HALL_IDS", hallIds: [hall] } : { kind: "ALL" } });
+    const transfer = policies.importedHistory.authorize(actor, { kind: "transfers", operation: "list", parameters: {} as never }, signal);
+    const directory = policies.settings.authorize(actor, { kind: "warehouses", operation: "detail", parameters: { id: productId } }, signal);
+    const partyList = policies.party.authorize({ ...actor, role }, { kind: "CUSTOMER", operation: "LIST", query: {} as never }, signal);
+    if (role === "SALESPERSON") {
+      for (const attempt of [transfer, directory, partyList]) await assert.rejects(attempt, { code: "FORBIDDEN" });
+    } else { assert.equal((await transfer).scope.kind, "ALL"); assert.equal((await directory).targetId, productId); assert.equal((await partyList).operation, "LIST"); }
+    assert.equal((await policies.party.authorize({ ...actor, role }, { kind: "CUSTOMER", operation: "CANDIDATES", query: {} as never }, signal)).operation, "CANDIDATES");
+    assert.equal(reads, 10); assert.equal(releases, reads);
+  }
+});
+test("R1 extensions deny disabled, stale-hall, inactive, spoofed role and aborted current facts without caching", async () => {
+  let row: Record<string, unknown> = {}, reads = 0, releases = 0;
+  const policies = createSourceConfirmedApplicationReadAuthorization({ async connect() { return { async query() { reads++; return { rows: [row], rowCount: 1 }; }, release() { releases++; } }; } });
+  const actor = { accountId: account, hallId: hall }, intent = { kind: "prices" as const, parameters: { productId: entityId("product", account) } };
+  const valid = { account_id: account, staff_id: "00000000-0000-4000-8000-000000000003", login_enabled: true,
+    role: "ADMIN", employment_status: "在职", hall_id: hall, native_hall_id: hall, hall_enabled: true };
+  for (const change of [{ login_enabled: false }, { hall_id: null }, { employment_status: "离职" }, { hall_enabled: false }, { role: "UNKNOWN" }]) {
+    row = { ...valid, ...change }; await assert.rejects(policies.productDetails.authorize(actor, intent, new AbortController().signal), { code: "FORBIDDEN" });
+  }
+  row = valid; await policies.productDetails.authorize(actor, intent, new AbortController().signal);
+  await assert.rejects(policies.party.authorize({ ...actor, role: "WAREHOUSE" }, { kind: "CUSTOMER", operation: "CANDIDATES", query: {} as never }, new AbortController().signal), { code: "FORBIDDEN" });
+  const abort = new AbortController(); abort.abort(); await assert.rejects(policies.productDetails.authorize(actor, intent, abort.signal), { code: "FORBIDDEN" });
+  assert.equal(reads, 7); assert.equal(releases, 7);
+});
+test("R1 extension selectors reject unknown profiles or explicit policy overrides before pool creation", async () => {
+  const options = productionApplicationOptions({ ...config(), documentCommands: "DISABLED" }); let allocations = 0;
+  for (const change of [{ nativeReadExtensions: { profile: "future" } }, { nativeReadExtensions: { profile: "source-confirmed-r1-v1", enabled: true } },
+    { partyRead: { authorization: { async authorize() { throw Error("must not run"); } } } }]) {
+    await assert.rejects(createPostgresApplicationApi({ ...options, ...change } as never, () => { allocations++; throw Error("must not allocate"); }), TypeError);
+  }
+  assert.equal(allocations, 0);
 });
 
 test("explicit production legacy opt-in reaches actual auth service while default composition remains scrypt-only", async () => {

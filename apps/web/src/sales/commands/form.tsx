@@ -14,18 +14,29 @@ export function SalesCommandForm({ session, close }: { readonly session: SalesEd
   const heading = useRef<HTMLHeadingElement>(null);
   const [confirm, setConfirm] = useState<'leave' | 'adopt' | 'APPROVE' | 'UNAPPROVE' | 'VOID' | null>(null);
   useEffect(() => { heading.current?.focus({ preventScroll: true }); }, []);
-  const { command, input } = state, { editor, write } = command;
+  const { command } = state, { editor, write } = command;
+  const committedRead = useRef<{ owner: SalesEditorSession; operationId: string } | null>(null);
+  useEffect(() => {
+    if (write.phase !== 'committed' || !write.result || !editor || editor.current || editor.readError || editor.phase === 'loading') return;
+    if (committedRead.current?.owner === session && committedRead.current.operationId === write.result.operationId) return;
+    committedRead.current = { owner: session, operationId: write.result.operationId };
+    // Confirmed writes get one read-only refresh. Keep the original command,
+    // CAS and raw input until the user explicitly adopts the current document.
+    void session.commands.readCurrent();
+  }, [session, write.phase, write.result, editor?.salesId, editor?.current, editor?.readError, editor?.phase]);
+  const savedReadback = write.phase === 'committed' ? editor?.current : null;
+  const detail = savedReadback ?? editor?.detail, input = savedReadback ? null : state.input;
   useEffect(() => { setConfirm(null); }, [editor?.salesId, editor?.detail?.document.header.version, editor?.current, write.phase, input]);
   if (command.disposed) return <p role="status">身份或权限已改变，旧身份单据输入已清除。</p>;
   const unresolved = session.commands.hasUnresolvedWrite, working = ['submitting', 'checking', 'replaying'].includes(write.phase);
-  const header = editor?.detail?.document.header ?? editor?.draft?.header, status = editor?.detail?.document.header.status ?? 'DRAFT';
+  const header = detail?.document.header ?? editor?.draft?.header, status = detail?.document.header.status ?? 'DRAFT';
   const base = editor?.draft, preview = base && input ? compileSalesForm(base, input) : null;
   const draft = preview?.ok ? preview.draft : null;
-  const lines = draft?.lines ?? base?.lines ?? editor?.detail?.document.lines ?? [];
-  const settlements = draft?.settlements ?? base?.settlements ?? editor?.detail?.document.settlements ?? [];
+  const lines = savedReadback?.document.lines ?? draft?.lines ?? base?.lines ?? detail?.document.lines ?? [];
+  const settlements = savedReadback?.document.settlements ?? draft?.settlements ?? base?.settlements ?? detail?.document.settlements ?? [];
   const lock = !session.editable, stable = !!editor?.detail && editor.phase === 'ready' && !editor.current && !command.stale && !unresolved
     && write.phase !== 'committed' && editor.detail.stockBasis === 'RUNTIME_LEDGER';
-  const names = editor?.detail?.referenceNames, settlementNames = new Map<string, SalesDetailDto['settlementNames'][number]>(editor?.detail?.settlementNames.map(row => [row.settlementId, row]));
+  const names = detail?.referenceNames, settlementNames = new Map<string, SalesDetailDto['settlementNames'][number]>(detail?.settlementNames.map(row => [row.settlementId, row]));
   const change = (next: SalesFormInput) => { session.updateInput(next); };
   const changeLine = (id: string, patch: Partial<SalesFormInput['lines'][number]>) => { if (input) change({ ...input, lines: input.lines.map(row => row.id === id ? { ...row, ...patch } : row) }); };
   const field = (label: string, content: ReactNode, className = '') => <div className={`tc-gold-field ${className}`}><span className="sale-field-label">{label}</span>{content}</div>;
@@ -60,7 +71,7 @@ export function SalesCommandForm({ session, close }: { readonly session: SalesEd
       {field('业务类型', read(salesTypeLabels[header.businessType as 'SALE' | 'RETURN' | 'EXCHANGE']))}
       {field('营业厅', read(names?.hallName))}{field('营业员', read(names?.salespersonName ?? (header.salespersonId === null ? '未指定' : null)))}
       {field('客户', read(names?.customerName))}{field('出库仓', read(names?.warehouseName))}
-      {field('单号', <strong className="sale-number-value">{editor?.detail ? header.number : write.phase === 'committed' ? '已保存，待读取单号' : header.number}</strong>, 'sale-number-field')}
+      {field('单号', <strong className="sale-number-value">{detail ? header.number : write.phase === 'committed' ? '已保存，待读取单号' : header.number}</strong>, 'sale-number-field')}
       {field('整单优惠 / 抹零', input ? <UIInput className="iw-control" aria-label="整单优惠 / 抹零" inputMode="decimal" value={input.orderDiscount} disabled={lock || header.businessType !== 'SALE'} onChange={nextValue => change({ ...input, orderDiscount: nextValue })} /> : read(salesInputMoney(header.orderDiscount)), 'sale-discount-field')}
       {field('应结金额', <strong className="sale-due-value">{draft ? `¥${salesInputMoney(draft.header.netDue)}` : input ? '输入尚未校验' : `¥${salesInputMoney(header.netDue)}`}</strong>, 'sale-due-field')}
       {field('本单收退明细', <div className="sale-payment-rows">{settlements.map(row => {
@@ -75,9 +86,9 @@ export function SalesCommandForm({ session, close }: { readonly session: SalesEd
     {Object.entries(state.errors).map(([key, message]) => <p className="iw-alert" role="alert" key={key}>{message}</p>)}
     {working && <p role="status">正在处理原操作…<UIButton type="button" className="iw-link" onClick={() => session.commands.cancelWaiting()}>停止等待</UIButton></p>}
     {write.phase === 'uncertain' && <div className="iw-alert" role="status"><strong>原操作结果不确定，不能另建重复操作。</strong><p>原操作键：{write.command?.requestKey}</p><UIButton type="button" className="iw-button" onClick={() => { void session.commands.checkReceipt(); }}>核实原操作回执</UIButton><UIButton type="button" className="iw-button" onClick={() => { void session.commands.replayOriginal(); }}>重放原请求</UIButton></div>}
-    {write.phase === 'committed' && <p role="status">原操作已确认：版本 {write.result?.version}，{write.result ? salesStatusLabels[write.result.status as 'DRAFT' | 'APPROVED' | 'VOID'] : ''}。当前表单仍是原内容。</p>}
+    {write.phase === 'committed' && <p role="status">原操作已确认：版本 {write.result?.version}，{write.result ? salesStatusLabels[write.result.status as 'DRAFT' | 'APPROVED' | 'VOID'] : ''}。{savedReadback ? '下方显示重新读取的已保存单据；继续操作前请采用当前单据。' : '正在核对已保存内容；读取失败可重试，保存不会重复提交。'}</p>}
     {!unresolved && editor && (editor.detail || write.phase === 'committed') && <UIButton type="button" className="iw-button" disabled={editor.phase === 'loading'} onClick={() => { void session.commands.readCurrent(); }}>读取当前单据</UIButton>}
-    {editor?.current && <p role="status">当前版本 {editor.current.document.header.version} 已读取，尚未替换本次输入。<UIButton type="button" className="iw-button" onClick={() => { if (session.hasDirtyDraft) setConfirm('adopt'); else session.adoptCurrent(); }}>采用当前单据</UIButton></p>}
+    {editor?.current && <p role="status">当前版本 {editor.current.document.header.version} 已读取，原操作和输入仍保留。<UIButton type="button" className="iw-button" onClick={() => { if (session.hasDirtyDraft) setConfirm('adopt'); else session.adoptCurrent(); }}>采用当前单据</UIButton></p>}
     {sections.map(section => <section className="sale-entry-section" key={section.title}><div className="tc-section-head sale-section-head"><strong>{section.title}</strong></div><div className="sale-lines sales-table-scroll"><table className="sales-table sale-lines-table"><caption className="sr-only">销货明细 · {section.title}</caption><colgroup>{[270, 100, 122, 84, 80, 95, 90, 108, 99, 142].map((width, index) => <col key={index} style={{ width }} />)}</colgroup><thead><tr>{['款号／商品名称', '颜色', '版型', '尺码', '数量', '参考零售价', '折扣', section.incoming ? '退货单价' : '成交单价', '金额', '操作'].map(label => <th scope="col" key={label}>{label}</th>)}</tr></thead><tbody>{section.rows.map(line => {
       const raw = input?.lines.find(row => row.id === line.id), prefix = `${line.snapshot.productCode} ${line.lineNo}`;
       return <tr key={line.id}><td><div className="sale-product-cell"><strong>{line.snapshot.productCode}</strong><span className="sale-product-name">{line.snapshot.productName}</span></div></td><td>{line.snapshot.colorName}</td><td>{line.snapshot.fitName}</td><td>{line.snapshot.sizeName}</td>

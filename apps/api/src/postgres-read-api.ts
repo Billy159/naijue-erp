@@ -53,6 +53,17 @@ import { createPartySessionAuthenticator } from "./party-authentication.ts";
 import type { ImportedHistoryReadAuthorization } from "../../../packages/application/src/imported-history-query-ports.ts";
 import { PostgresImportedHistoryQueryReader } from "../../../adapters/postgres/src/imported-history-query-reader.ts";
 import { createImportedHistoryQueryHttpPlugin } from "./imported-history-query-http.ts";
+import { requireDomain } from "../../../packages/domain/src/errors.ts";
+import { entityId } from "../../../packages/domain/src/values.ts";
+import type { ActorContext } from "../../../packages/application/src/ports.ts";
+import type { PgReadAuthorizationPool } from "../../../adapters/postgres/src/source-confirmed-read-authorization.ts";
+import type { ProductDetailsQueryAuthorization } from "../../../packages/application/src/product-details-query-ports.ts";
+import { createProductDetailsQueryHttpPlugin } from "./product-details-query-http.ts";
+import { PostgresProductDetailsQueryReader } from "../../../adapters/postgres/src/product-details-query-reader.ts";
+import { PostgresProductWarehouseStockReader } from "../../../adapters/postgres/src/product-warehouse-stock-reader.ts";
+import { PostgresMaintenanceCommandUnitOfWork } from "../../../adapters/postgres/src/maintenance-command-unit-of-work.ts";
+import { PostgresOrganizationMaintenanceReadUnitOfWork } from "../../../adapters/postgres/src/organization-maintenance-store.ts";
+import { createOrganizationMaintenanceReadHttpPlugin } from "./organization-maintenance-http.ts";
 
 export interface PostgresReadApiExplicitAuthorization {
   readonly mode?: never;
@@ -105,6 +116,9 @@ export interface PostgresDocumentCommandsCapability {
   readonly nativeManualTransferPreparation: true;
 }
 export interface PostgresApplicationApiOptions extends PostgresReadApiOptions {
+  /** Closed trusted production selector. It installs independently defined read
+   * policies below, never commands or a fallback from LIVE to HISTORY. */
+  readonly nativeReadExtensions?: { readonly profile: "source-confirmed-r1-v1" };
   readonly documentCommands?: PostgresDocumentCommandsCapability;
   readonly storeSettingsRead?: { readonly authorization: StoreSettingsReadAuthorization };
   readonly productManagementRead?: { readonly authorization: ProductManagementQueryAuthorization };
@@ -115,6 +129,7 @@ export interface PostgresApplicationApiOptions extends PostgresReadApiOptions {
   readonly importedHistoryRead?: { readonly authorization: ImportedHistoryReadAuthorization };
 }
 type ApplicationCapabilities = { readonly commands: PostgresDocumentCommandsCapability | null;
+  readonly nativeReadExtensions: boolean;
   readonly settings: StoreSettingsReadAuthorization | null;
   readonly productManagement: ProductManagementQueryAuthorization | null;
   readonly catalogueSettings: CatalogueSettingsReadAuthorization | null;
@@ -147,6 +162,13 @@ function method<T extends (...args: never[]) => unknown>(value: unknown, name: s
   throw new TypeError("Complete application provider methods required");
 }
 function checkedApplicationCapabilities(options: PostgresApplicationApiOptions): ApplicationCapabilities {
+  const nativeReadExtensions = "nativeReadExtensions" in options;
+  if (nativeReadExtensions) {
+    const extension = exactBag(ownData(options, "nativeReadExtensions"), ["profile"]);
+    if (extension.profile !== "source-confirmed-r1-v1" || options.authorization?.mode !== "source-confirmed-native"
+      || ["storeSettingsRead", "productManagementRead", "catalogueSettingsRead", "dictionaryRead", "partyRead", "importedHistoryRead"].some(k => k in options))
+      throw new TypeError("Native read extensions require only their exact trusted profile and native identity policy");
+  }
   let commands: PostgresDocumentCommandsCapability | null = null, settings: StoreSettingsReadAuthorization | null = null;
   let productManagement: ProductManagementQueryAuthorization | null = null,
     catalogueSettings: CatalogueSettingsReadAuthorization | null = null, dictionary: DictionaryReadAuthorization | null = null,
@@ -194,7 +216,78 @@ function checkedApplicationCapabilities(options: PostgresApplicationApiOptions):
     const bag = exactBag(ownData(options, "importedHistoryRead"), ["authorization"]);
     importedHistory = Object.freeze({ authorize: method<ImportedHistoryReadAuthorization["authorize"]>(bag.authorization, "authorize") });
   }
-  return Object.freeze({ commands, settings, productManagement, catalogueSettings, dictionary, party, importedHistory });
+  return Object.freeze({ commands, nativeReadExtensions, settings, productManagement, catalogueSettings, dictionary, party, importedHistory });
+}
+
+export interface SourceConfirmedApplicationReadAuthorization {
+  readonly settings: StoreSettingsReadAuthorization; readonly productManagement: ProductManagementQueryAuthorization;
+  readonly catalogueSettings: CatalogueSettingsReadAuthorization; readonly dictionary: DictionaryReadAuthorization;
+  readonly party: PartyReadAuthorization; readonly importedHistory: ImportedHistoryReadAuthorization;
+  readonly productDetails: ProductDetailsQueryAuthorization;
+}
+/** Explicit operation policies, based on formal server/security/policies.ts:
+ * masters.list=>ADMIN/WAREHOUSE, masters.candidates=>all current roles,
+ * productMasters.list/barcodes.scheme=>all, products.list/detail and inventory
+ * =>all. Each tab/directory/HISTORY grant is constructed separately here.
+ * HISTORY sales uses exact current hall; restricted transfer remains closed. */
+export function createSourceConfirmedApplicationReadAuthorization(pool: PgReadAuthorizationPool): SourceConfirmedApplicationReadAuthorization {
+  if (typeof pool?.connect !== "function") throw new TypeError("Explicit shared native read pool required");
+  const allowed = (condition: unknown): void => requireDomain(condition, "FORBIDDEN", "Current native read authority unavailable");
+  async function current(actor: ActorContext, signal: AbortSignal): Promise<"ADMIN" | "WAREHOUSE" | "SALESPERSON"> {
+    allowed(!signal.aborted); entityId("account", actor.accountId); if (actor.hallId !== null) entityId("hall", actor.hallId);
+    const client = await pool.connect();
+    try {
+      allowed(!signal.aborted);
+      const rows = (await client.query(`/* application-read:identity */ SELECT a.id account_id,a.staff_id,a.login_enabled,
+        s.role,s.employment_status,s.hall_id,h.id native_hall_id,h.enabled hall_enabled
+        FROM naijue_erp.user_account a JOIN naijue_erp.staff s ON s.id=a.staff_id
+        LEFT JOIN naijue_erp.hall h ON h.id=s.hall_id WHERE a.id=$1::uuid LIMIT 2`, [actor.accountId])).rows;
+      allowed(!signal.aborted && rows.length === 1); const row = rows[0]!;
+      allowed(row.account_id === actor.accountId && typeof row.staff_id === "string" && row.login_enabled === true
+        && row.employment_status === "在职" && (row.role === "ADMIN" || row.role === "WAREHOUSE" || row.role === "SALESPERSON"));
+      entityId("staff", row.staff_id as string);
+      allowed(row.hall_id === actor.hallId && (row.role !== "SALESPERSON" || actor.hallId !== null)
+        && (actor.hallId === null ? row.native_hall_id === null && row.hall_enabled === null : row.native_hall_id === actor.hallId && row.hall_enabled === true));
+      if ("role" in actor) allowed(actor.role === row.role);
+      return row.role as "ADMIN" | "WAREHOUSE" | "SALESPERSON";
+    } finally { client.release(); }
+  }
+  return Object.freeze({
+    settings: Object.freeze<StoreSettingsReadAuthorization>({ async authorize(actor, intent, signal) {
+      allowed((intent.kind === "stores" || intent.kind === "warehouses") && (intent.operation === "list" || intent.operation === "detail"));
+      allowed(await current(actor, signal) !== "SALESPERSON");
+      return { kind: intent.kind, operation: intent.operation, scope: { kind: "ALL" }, references: "REFERENCES", targetId: intent.operation === "detail" ? intent.parameters.id : null };
+    } }),
+    productManagement: Object.freeze<ProductManagementQueryAuthorization>({ async authorize(actor, intent, signal) {
+      allowed(intent.kind === "list" || intent.kind === "candidates"); await current(actor, signal);
+      return { kind: "all", totalStock: "all-warehouses" };
+    } }),
+    catalogueSettings: Object.freeze<CatalogueSettingsReadAuthorization>({ async authorize(actor, intent, signal) {
+      allowed(intent.kind === "categories" ? intent.operation === "tree" : (intent.kind === "colors" || intent.kind === "fits") && intent.operation === "list");
+      await current(actor, signal); return intent.kind === "categories" ? { kind: "categories", operation: "tree", productCounts: "ALL" } : { kind: intent.kind, operation: "list" };
+    } }),
+    dictionary: Object.freeze<DictionaryReadAuthorization>({ async authorize(actor, intent, signal) {
+      allowed((intent.kind === "size-groups" || intent.kind === "seasons" || intent.kind === "barcode-schemes")
+        && (intent.operation === "list" || intent.kind === "barcode-schemes" && intent.operation === "detail"));
+      await current(actor, signal); return { kind: intent.kind, targetId: intent.operation === "detail" ? intent.parameters.schemeId : null };
+    } }),
+    party: Object.freeze<PartyReadAuthorization>({ async authorize(actor, intent, signal) {
+      allowed((intent.kind === "CUSTOMER" || intent.kind === "SUPPLIER") && ["LIST", "DETAIL", "CANDIDATES"].includes(intent.operation));
+      const role = await current(actor, signal); allowed(intent.operation === "CANDIDATES" || role !== "SALESPERSON");
+      return { kind: intent.kind, operation: intent.operation, targetId: intent.operation === "DETAIL" ? intent.id : null };
+    } }),
+    importedHistory: Object.freeze<ImportedHistoryReadAuthorization>({ async authorize(actor, intent, signal) {
+      allowed((intent.kind === "sales" || intent.kind === "transfers") && (intent.operation === "list" || intent.operation === "detail"));
+      const role = await current(actor, signal); allowed(role !== "SALESPERSON" || intent.kind === "sales" && actor.hallId !== null);
+      return { dataset: "HISTORY", actorAccountId: actor.accountId, kind: intent.kind, operation: intent.operation,
+        targetId: intent.operation === "detail" ? intent.parameters.documentId : null,
+        scope: role === "SALESPERSON" ? { kind: "HALL_IDS", hallIds: [actor.hallId!] } : { kind: "ALL" } };
+    } }),
+    productDetails: Object.freeze<ProductDetailsQueryAuthorization>({ async authorize(actor, intent, signal) {
+      allowed(["prices", "barcodes", "stock"].includes(intent.kind)); await current(actor, signal);
+      return { kind: intent.kind, productId: entityId("product", intent.parameters.productId) };
+    } })
+  });
 }
 
 function exactHttpsOrigin(value: unknown): value is string {
@@ -279,6 +372,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     const policies = host.authorization.kind === "source-confirmed-native"
       ? Object.freeze({ ...createSourceConfirmedPostgresReadAuthorization(pool), transfers: createSourceConfirmedTransferQueryAuthorization() })
       : host.authorization.providers;
+    const extensions = capabilities?.nativeReadExtensions ? createSourceConfirmedApplicationReadAuthorization(pool) : null;
     app = Fastify({ logger: false, trustProxy: false, bodyLimit: 65_536 });
     app.addHook("onClose", async () => { await pool.dispose(); });
     const service = createAuthenticationService({ store: new PostgresAuthenticationStore(pool),
@@ -297,6 +391,16 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     app.register(createProductQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.products, reader: new PostgresProductQueryReader(pool), media: host.media } }));
     if (host.currentForms !== null) app.register(createCurrentFormHttpPlugin({ authenticate,
       reader: new PostgresCurrentFormReader(pool, host.currentForms) }));
+    if (extensions) {
+      app.register(createStoreSettingsReadHttpPlugin({ authenticate, dependencies: { authorization: extensions.settings, reader: new PostgresStoreSettingsReadReader(pool) } }));
+      app.register(createProductManagementQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.productManagement, reader: new PostgresProductManagementQueryReader(pool) } }));
+      app.register(createCatalogueSettingsReadHttpPlugin({ authenticate, dependencies: { authorization: extensions.catalogueSettings, reader: new PostgresCatalogueSettingsReadReader(pool) } }));
+      app.register(createDictionaryReadHttpPlugin({ authenticate, dependencies: { authorization: extensions.dictionary, reader: new PostgresDictionaryReadReader(pool) } }));
+      app.register(createPartyReadHttpPlugin({ authenticate: createPartySessionAuthenticator(authentication), dependencies: { authorization: extensions.party, reader: new PostgresPartyReadReader(pool) } }));
+      app.register(createImportedHistoryQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.importedHistory, reader: new PostgresImportedHistoryQueryReader(pool) } }));
+      app.register(createProductDetailsQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.productDetails, reader: new PostgresProductDetailsQueryReader(pool), stockReader: new PostgresProductWarehouseStockReader(pool, policies.inventory) } }));
+      app.register(createOrganizationMaintenanceReadHttpPlugin({ authenticate, unitOfWork: new PostgresOrganizationMaintenanceReadUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool)) }));
+    }
     if (capabilities?.settings) app.register(createStoreSettingsReadHttpPlugin({ authenticate,
       dependencies: { authorization: capabilities.settings, reader: new PostgresStoreSettingsReadReader(pool) } }));
     if (capabilities?.productManagement) app.register(createProductManagementQueryHttpPlugin({ authenticate,

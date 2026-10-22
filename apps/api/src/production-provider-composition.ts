@@ -62,6 +62,7 @@ export function productionApplicationOptions(input: unknown): PostgresApplicatio
   const config = parseProductionRuntimeConfiguration(input);
   return {
     postgres: config.postgres, productMedia: null, authorization: { mode: "source-confirmed-native" },
+    nativeReadExtensions: { profile: "source-confirmed-r1-v1" },
     authentication: { trustedOrigin: config.publicOrigin, now: () => new Date().toISOString(), credentialCompatibility: "legacy-pbkdf2-v1",
       policy: createSourceAuthenticationPolicy(config.authentication.sessionTtlSeconds) },
     currentForms: { authorization: createSourceConfirmedCurrentFormAuthorization() },
