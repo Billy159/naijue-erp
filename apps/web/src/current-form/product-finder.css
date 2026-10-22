@@ -1,6 +1,6 @@
 /* Frozen b8bcfe3 golden-consistency.css211–230, root selector adapted to
  * the actual Arco-triggered native product finder. No Demo store/data/model. */
-.sales-product-finder{box-sizing:border-box;width:100%;font:13px var(--ca-font-sans,Arial,sans-serif);color:var(--ca-ink,#1d2129)}
+.sales-product-finder{--pf-list-width:270px;box-sizing:border-box;width:min(660px,calc(100vw - 16px));font:13px var(--ca-font-sans,Arial,sans-serif);color:var(--ca-ink,#1d2129)}
 .sales-product-finder .pf-layout{display:grid;grid-template-columns:var(--pf-list-width,270px) minmax(0,1fr);gap:8px;align-items:start}
 .sales-product-finder .pf-list p{padding:10px 12px;margin:0;color:var(--ca-ink-2,#667284)}
 .sales-product-finder .pf-list .erp-button{display:block;width:100%;border:0;border-radius:0;background:transparent;color:var(--ca-ink,#1d2129);text-align:left}
@@ -13,7 +13,7 @@
 
 /* Match the inventory product menu: compact result rows and an adjacent data card. */
 .sales-product-finder.pf-inventory-style{z-index:130;overflow:hidden;border:0;background:transparent;box-shadow:none}
-.sales-product-finder.pf-inventory-style .pf-layout{grid-template-columns:var(--pf-list-width) minmax(0,1fr);gap:8px;align-items:start}
+.sales-product-finder.pf-inventory-style .pf-layout{grid-template-columns:var(--pf-list-width,270px) minmax(0,1fr);gap:8px;align-items:start}
 .sales-product-finder.pf-inventory-style .pf-list{overflow:auto;max-height:390px;border:1px solid var(--ca-popover-border);border-radius:5px;background:#fff;box-shadow:var(--ca-shadow-float)}
 .sales-product-finder.pf-inventory-style .pf-heading,.sales-product-finder.pf-inventory-style .pf-list button[data-finder-option]{box-sizing:border-box;display:grid;grid-template-columns:170px minmax(0,1fr);gap:10px;align-items:center}
 .sales-product-finder.pf-inventory-style .pf-heading{min-height:28px;padding:4px 12px;border-bottom:1px solid var(--ca-line);color:var(--ca-ink-2);font-size:12px}

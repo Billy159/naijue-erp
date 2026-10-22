@@ -2,12 +2,14 @@ import { AuthenticationController, readContextAuthenticationLifecycle, type Iden
 import { createAuthHttpClient } from '../authentication/http-client.ts';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import { ReadContext, type ReadScope } from '../loading/read-scope.ts';
-import { ownProductFullPageConfiguration } from '../products/product-page-configuration.ts';
+import { captureProductFullPageConfiguration, ownProductFullPageConfiguration } from '../products/product-page-configuration.ts';
 import type { ApplicationConfiguration, ApplicationRoute, ApplicationSnapshot, PartySession, SalesSession, TransferSession, PreparedApplicationRoute, RoutePreparation, RouteStylesheet } from './contracts.ts';
 import type { preparePaymentSettingsSession } from './routes/payment-settings.tsx';
 import type { prepareStoreSettingsSession } from './routes/store-settings.tsx';
 import type { prepareStaffSettingsSession } from './routes/staff-settings.tsx';
 import type { ProductInventoryNavigationRequest } from '../products/contracts.ts';
+import { entityId } from '../../../../packages/domain/src/values.ts';
+import type { TransferRouteConfiguration } from './contracts.ts';
 import type { CatalogueMaintenanceCapability } from '../product-settings/colors/contracts.ts';
 
 interface ProductInventoryTrip { readonly request: ProductInventoryNavigationRequest; readonly identity: ReadScope['identity'] }
@@ -23,6 +25,25 @@ function catalogueMaintenance(value: CatalogueMaintenanceCapability | undefined,
     || !Array.isArray(value.allowedActions) || value.allowedActions.some(action => !['CREATE', 'EDIT', 'DELETE', 'DISABLE', 'RESTORE'].includes(action))
     || new Set(value.allowedActions).size !== value.allowedActions.length || typeof value.newRequestKey !== 'function' || typeof value.onRecoveryRequired !== 'function') throw new TypeError('Explicit matching catalogue maintenance and recovery capabilities are required.');
   return Object.freeze({ ...value, allowedActions: Object.freeze([...value.allowedActions]) });
+}
+/** Capture route-owned opt-ins independently; never borrow Products access. */
+function documentProduct(route: object) {
+  const descriptor = Object.getOwnPropertyDescriptor(route, 'productFullPage');
+  if (!descriptor) { if ('productFullPage' in route) throw new TypeError('Own product capability required.'); return undefined; }
+  if (!Object.hasOwn(descriptor, 'value')) throw new TypeError('Own product capability required.');
+  return captureProductFullPageConfiguration(descriptor.value);
+}
+function transferSizeGroup(route: TransferRouteConfiguration) {
+  const descriptor = Object.getOwnPropertyDescriptor(route, 'initialSizeGroup');
+  if (!descriptor) { if ('initialSizeGroup' in route) throw new TypeError('Own size group capability required.'); return undefined; }
+  if (!Object.hasOwn(descriptor, 'value') || !descriptor.value || typeof descriptor.value !== 'object') throw new TypeError('Own size group capability required.');
+  const source = descriptor.value as object, id = Object.getOwnPropertyDescriptor(source, 'id'), reader = Object.getOwnPropertyDescriptor(source, 'reader');
+  if (!id || !reader || !Object.hasOwn(id, 'value') || !Object.hasOwn(reader, 'value') || Reflect.ownKeys(source).length !== 2) throw new TypeError('Own size group capability required.');
+  entityId('sizeGroup', id.value);
+  const method = reader.value && Object.getOwnPropertyDescriptor(reader.value, 'readSizeGroups');
+  if (!method || !Object.hasOwn(method, 'value') || typeof method.value !== 'function') throw new TypeError('Native size group reader required.');
+  const readSizeGroups = method.value as NonNullable<TransferRouteConfiguration['initialSizeGroup']>['reader']['readSizeGroups'];
+  return Object.freeze({ id: id.value as string, reader: Object.freeze({ readSizeGroups: readSizeGroups.bind(reader.value) }) });
 }
 /** One authenticated app owner. Construction is inert: no session check, route, stylesheet or business read. */
 export class ApplicationController {
@@ -51,8 +72,10 @@ export class ApplicationController {
     const routes = configuration.routes;
     const inventory = routes.inventory ? Object.freeze({ ...routes.inventory, actions: Object.freeze({ ...routes.inventory.actions }), stylesheet: stylesheet(routes.inventory.stylesheet) }) : undefined;
     if (routes.inventory && (!routes.inventory.actions || (routes.inventory.actions.onOpenCell !== undefined && typeof routes.inventory.actions.onOpenCell !== 'function'))) throw new TypeError('Explicit inventory action capabilities are required.');
-    const sales = routes.sales ? Object.freeze({ stylesheet: stylesheet(routes.sales.stylesheet), ...(routes.sales.detailStylesheet !== undefined ? { detailStylesheet: stylesheet(routes.sales.detailStylesheet) } : {}), ...(routes.sales.commands ? { commands: Object.freeze({ ...routes.sales.commands }) } : {}) }) : undefined;
-    const transfers = routes.transfers ? Object.freeze({ stylesheet: stylesheet(routes.transfers.stylesheet), detailStylesheet: stylesheet(routes.transfers.detailStylesheet), ...(routes.transfers.product ? { product: Object.freeze({ stylesheet: stylesheet(routes.transfers.product.stylesheet) }) } : {}), ...(routes.transfers.commands ? { commands: Object.freeze({ ...routes.transfers.commands }) } : {}) }) : undefined;
+    const salesProduct = routes.sales ? documentProduct(routes.sales) : undefined, transferProduct = routes.transfers ? documentProduct(routes.transfers) : undefined;
+    const sizeGroup = routes.transfers ? transferSizeGroup(routes.transfers) : undefined;
+    const sales = routes.sales ? Object.freeze({ stylesheet: stylesheet(routes.sales.stylesheet), ...(salesProduct ? { productFullPage: salesProduct } : {}), ...(routes.sales.detailStylesheet !== undefined ? { detailStylesheet: stylesheet(routes.sales.detailStylesheet) } : {}), ...(routes.sales.commands ? { commands: Object.freeze({ ...routes.sales.commands }) } : {}) }) : undefined;
+    const transfers = routes.transfers ? Object.freeze({ stylesheet: stylesheet(routes.transfers.stylesheet), ...(transferProduct ? { productFullPage: transferProduct } : {}), ...(sizeGroup ? { initialSizeGroup: sizeGroup } : {}), detailStylesheet: stylesheet(routes.transfers.detailStylesheet), ...(routes.transfers.product ? { product: Object.freeze({ stylesheet: stylesheet(routes.transfers.product.stylesheet) }) } : {}), ...(routes.transfers.commands ? { commands: Object.freeze({ ...routes.transfers.commands }) } : {}) }) : undefined;
     if (sales?.commands && (typeof sales.commands.newRequestKey !== 'function' || !sales.detailStylesheet)
       || transfers?.commands && typeof transfers.commands.newRequestKey !== 'function') throw new TypeError('Command routes require explicit key providers and document styles.');
     const parties = routes.parties ? Object.freeze({ ...routes.parties, stylesheet: stylesheet(routes.parties.stylesheet) }) : undefined;
@@ -334,7 +357,7 @@ export class ApplicationController {
     this.#configuration.routes.paymentSettings?.view.workspace?.dispose();
     this.#configuration.routes.staffSettings?.view.workspace?.dispose();
     const sales = this.#configuration.routes.sales, transfer = this.#configuration.routes.transfers, products = this.#configuration.routes.products;
-    const styles = [...Object.values(this.#configuration.routes).map(route => route.stylesheet), ...(sales?.detailStylesheet ? [sales.detailStylesheet] : []), ...(transfer ? [transfer.detailStylesheet] : []), ...(transfer?.product ? [transfer.product.stylesheet] : []), ...(products?.product ? [products.product.stylesheet] : []), ...(products?.fullPage ? [products.fullPage.stylesheet] : [])];
+    const styles = [...Object.values(this.#configuration.routes).map(route => route.stylesheet), ...(sales?.detailStylesheet ? [sales.detailStylesheet] : []), ...(sales?.productFullPage ? [sales.productFullPage.stylesheet] : []), ...(transfer?.productFullPage ? [transfer.productFullPage.stylesheet] : []), ...(transfer ? [transfer.detailStylesheet] : []), ...(transfer?.product ? [transfer.product.stylesheet] : []), ...(products?.product ? [products.product.stylesheet] : []), ...(products?.fullPage ? [products.fullPage.stylesheet] : [])];
     for (const provider of new Set(styles)) {
       try { provider.dispose(); } catch { /* A failed host asset cleanup must not prevent the other owners/DOM from being released. */ }
     }
