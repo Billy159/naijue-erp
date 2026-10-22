@@ -1,0 +1,41 @@
+{
+  "atUtc": "2026-10-22T20:46:56.948549+00:00",
+  "parent": "93875f7208d37c974733dd9279e24289f0024972",
+  "groups": [
+    {
+      "slice": "CUSTOMER_SUPPLIER_FINITE_VIEWPORT_EXISTING_FRAME_OPT_INS",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-46/DELIVERY.json",
+      "receiptSha256": "c15dc0726895830851093360aaa305a333a08a4d3578d653569a3ac24a940412",
+      "receiptSnapshot": {
+        "chunk": 46,
+        "status": "READY_FOR_C_PIN_FINITE_PARTY_FRAME_OPTIN",
+        "files": [
+          {
+            "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+            "sha256": "d22efdf9d62f72c77615c75dadf2e33511d969575abf3fab67ac34d2e9f1ab1f"
+          }
+        ],
+        "change": "Only customers/suppliers selected routes opt into existing finite demo-frame-viewport. Prior settings/stores/product-settings routes retained. No global body/frame CSS/party leaf/query/scroll-reset change.",
+        "evidence": "Demo v010 customer and candidate customer/supplier geometry; actual party-route.tsx71 bs-page and79 bs-pager reuse frozen BS page layout.",
+        "checks": {
+          "types-1.log": "exit0"
+        },
+        "notTested": [
+          "latest actual candidate customer/supplier page height/table/pager placement",
+          "tab scrolling behavior"
+        ],
+        "blockers": [],
+        "next": "C pin then narrow Demo geometry; F2 party leaf unchanged."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+          "owner": "F1",
+          "sha256": "d22efdf9d62f72c77615c75dadf2e33511d969575abf3fab67ac34d2e9f1ab1f",
+          "bytes": 4422
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Exact owner/hash checkpoint only, no technical retest. Prior NEED_FIX history retained; fix closure only by independent QF."
+}
