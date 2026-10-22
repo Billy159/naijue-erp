@@ -9928,10 +9928,106 @@
       "notTested": [
         "No fullpage/business/realimport/publicrelease beyond exact range"
       ]
+    },
+    {
+      "id": "QB-C101",
+      "sourceCommit": "d03f64304e69b2afc872094599f17f85e99e0c6c",
+      "result": "PASS_RESOURCE_GUARD_SOURCE_ONLY",
+      "scope": "Exact inline SVG graph guard; no duplicate full build",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice131-inline-svg-resource-guard-d03f6430/RESULT.json",
+      "evidenceSha256": "1ff7d20900b563f1a0242910e76b4d90c171271985a5ad93426aedfb9f1e9bca",
+      "adoption": "Existing delegated scoped result adopted without controller technical retest",
+      "notTested": [
+        "No wholepage/wholeoverlay/business/realimport/publicrelease outside exact scope"
+      ]
+    },
+    {
+      "id": "QB-C102",
+      "sourceCommit": "34afa1dba210e51a9c882f16270ed3e42abc9716",
+      "result": "NEED_FIX_PREPARER_TRANSITIVE_CODE_CLOSURE",
+      "scope": "Consumer protocol pass only; QB132-F01 K preparer unpinned transitive imports blocks physical window, original D3 fix dispatched",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice132-transfer-lines26-consumer-preparer-34afa1db/RESULT.json",
+      "evidenceSha256": "2b2a744074adf0283a441c3d67688118998e486c6bc30af20ca1ddb0df5033f6",
+      "adoption": "Existing delegated scoped result adopted without controller technical retest",
+      "notTested": [
+        "No wholepage/wholeoverlay/business/realimport/publicrelease outside exact scope"
+      ]
+    },
+    {
+      "id": "QF-C100",
+      "sourceCommit": "6eac13e213859d406cc570d85cc5065fd463acc7",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "More first3 and lifecycle/source only; isolated component browser separate",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-6eac13e2/F1-TRANSFER-MORE-TAGS-REVIEW.json",
+      "evidenceSha256": "06ff1eac91fada2077784a65d9e2d1b23ba449ec0cf3546523a01f84f783f2a8",
+      "adoption": "Existing delegated scoped result adopted without controller technical retest",
+      "notTested": [
+        "No wholepage/wholeoverlay/business/realimport/publicrelease outside exact scope"
+      ]
+    },
+    {
+      "id": "QF-C103",
+      "sourceCommit": "d3c2188a3cd6df472ce85d221fae575682ba7301",
+      "result": "PASS_SOURCE_CASCADE_ONLY",
+      "scope": "P16/P18 one scoped justify property; actual glyph pending",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-d3c2188a/F2-DICTIONARY-TAB-CENTER-REVIEW.json",
+      "evidenceSha256": "80bb3ceea3e0279f0ade6698f685ba821759221fc7a843b20b3eacfdb6e68f0b",
+      "adoption": "Existing delegated scoped result adopted without controller technical retest",
+      "notTested": [
+        "No wholepage/wholeoverlay/business/realimport/publicrelease outside exact scope"
+      ]
+    },
+    {
+      "id": "QF-C104",
+      "sourceCommit": "60f8007c54476e2c7ccd6483e6e4b2bd03db7e76",
+      "result": "PASS_SOURCE_CASCADE_ONLY",
+      "scope": "Spec32/min32/localInter only; browser geometry pending",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-60f8007c/F1-TRANSFER-SPEC-HEIGHT-FONT-REVIEW.json",
+      "evidenceSha256": "a8a96851ac5aee94764786bfb59288cb797c992f7a363e4c8d11c467104cde26",
+      "adoption": "Existing delegated scoped result adopted without controller technical retest",
+      "notTested": [
+        "No wholepage/wholeoverlay/business/realimport/publicrelease outside exact scope"
+      ]
+    },
+    {
+      "id": "DEMO-C100-LOCAL45",
+      "sourceCommit": "6eac13e213859d406cc570d85cc5065fd463acc7",
+      "result": "PASS_TWO_NEW_LOCAL_SCOPES_TOTAL45",
+      "scope": "P16/P18 table density/header/noidle refresh local, not wholepage; glyph residual remains",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v016-6eac13e/RESULT.json",
+      "evidenceSha256": "1386479b015faedd3deee31696d3a34d73ce602008bf6a6f8e2792f22718d56a",
+      "adoption": "Existing delegated scoped result adopted without controller technical retest",
+      "notTested": [
+        "No wholepage/wholeoverlay/business/realimport/publicrelease outside exact scope"
+      ]
+    },
+    {
+      "id": "DEMO-C100-P09-P13",
+      "sourceCommit": "6eac13e213859d406cc570d85cc5065fd463acc7",
+      "result": "FINDINGS_ONLY_NO_NEW_PASS",
+      "scope": "Readonly prices/images/barcode groups plus C preview stock overview optin/transport missing, original owners dispatched",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v016-6eac13e/PRODUCT-READONLY-SOURCE-RUNTIME-SUPPLEMENT.json",
+      "evidenceSha256": "ac2c79bfb072694ac4709a9e19ba23fed3ca607cb56ce468cf27eb72b482daef",
+      "adoption": "Existing delegated scoped result adopted without controller technical retest",
+      "notTested": [
+        "No wholepage/wholeoverlay/business/realimport/publicrelease outside exact scope"
+      ]
+    },
+    {
+      "id": "C-C103-BUILD-PACK",
+      "sourceCommit": "d3c2188a3cd6df472ce85d221fae575682ba7301",
+      "result": "PASS_ORIGINAL_BUILD_PACK_ONLY",
+      "scope": "Build4.257s/pack2.640s, one original extraction229members; no app/deploy/business",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build103-20261023-01/RESULT.json",
+      "evidenceSha256": "684d27f81e25523c0ae13d0266e6f0c1d65f41413f0132c77490d323e5e45903",
+      "adoption": "Existing delegated scoped result adopted without controller technical retest",
+      "notTested": [
+        "No wholepage/wholeoverlay/business/realimport/publicrelease outside exact scope"
+      ]
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-22T22:38:18.823953+00:00",
+  "updatedAt": "2026-10-22T23:12:47.680426+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -10982,12 +11078,48 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "sourceRound": 100,
-    "sourceCommit": "6eac13e213859d406cc570d85cc5065fd463acc7",
-    "previewUrl": "http://127.0.0.1:57846/synthetic-unified.html",
-    "localBrowserCases": 43,
-    "wholePages": 0,
-    "wholeOverlayClasses": 0,
-    "goalComplete": false
+    "atUtc": "2026-10-22T23:12:47.680426+00:00",
+    "sourceRound": 105,
+    "sourceCheckpoint": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
+    "allModels": "gpt-6.1-sol/xhigh",
+    "fast": "Requested off; actual switch not exposed by tool",
+    "currentPreview": {
+      "url": "http://127.0.0.1:57846/synthetic-unified.html",
+      "source": "6eac13e213859d406cc570d85cc5065fd463acc7",
+      "build": "ui-preview-6eac13e-01-build01",
+      "htmlSha256": "3830c86f6a673c72a6dbeac834d26977ff0ee33e2a11643ce930c5d9811530df",
+      "overlaySha256": "6f698d81c045a4ca58348edf5025b764449e7175090ed7215d8701ca8eddb603",
+      "syntheticOnly": true,
+      "actualInputs": 400,
+      "sourceModules": 383,
+      "wholePageAccepted": false
+    },
+    "nextPreview": "Fixed105 necessary preview with scoped103/104/105 CSS+explicit C-only readonly overview DTO preparing; no old45 retest",
+    "r1": "C103 original build+pack PASS,229members/one extraction. Permanent7 refs/privateconfig/stage preparation; fresh complete backup43 preparation only. No realaccounts/import/publicswitch",
+    "qa": "C40 actual Sharp upload/ADD/replay/controlled original+thumbnail PASS; QA11audits11receipts3images/root4. No HTTP/realrole/business acceptance",
+    "import": "QB132 consumer source limitedPASS, K preparer closureF01 NEED_FIX sent originalD3. No signed physicalwindow or originalread. H06 QA currentpurpose preparation only, no boundedQA capture.",
+    "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
+    "github": "Normal remote through100 6eac13e verified; local105+docs pending exact-object fastforward",
+    "goalComplete": false,
+    "demoCoverage": {
+      "scopeItems": 104,
+      "localDeduplicated": 45,
+      "wholePagesAccepted": 0,
+      "wholeOverlayClassesAccepted": 0,
+      "notRun": 60,
+      "uiDifference": 28,
+      "partial": 6,
+      "waitingIntegration": 9,
+      "approvedException": 1,
+      "latestReceipt": "DEMO-C100-LOCAL45"
+    },
+    "isolatedMorePreview": {
+      "url": "http://127.0.0.1:57847/component-more.html",
+      "source": "6eac13e213859d406cc570d85cc5065fd463acc7",
+      "build": "ui-component-more-6eac13e-01-build03",
+      "htmlSha256": "637992176814f553472ec58e039a88c762ebd586d0651e81bd99a7cb742ab841",
+      "syntheticComponentOnly": true,
+      "mainNativeAuthorExpanded": false
+    }
   }
 }

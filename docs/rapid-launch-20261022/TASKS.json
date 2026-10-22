@@ -8,11 +8,11 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "6eac13e213859d406cc570d85cc5065fd463acc7",
+    "headObserved": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
     "workingTreeNotFullyCommitted": true,
     "remoteHeadVerified": "6eac13e213859d406cc570d85cc5065fd463acc7",
     "remoteReadbackMethod": "Exact original3 additionalobjects, force=false FF/readback through100; conventional Git protocol stillfailed",
-    "pushPendingLocalCommits": false,
+    "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
       "status": "PRIVATE_DRAFT_UPLOAD_DOWNLOAD_SHA_AND_BUNDLE_VERIFY_PASS",
       "atUtc": "2026-10-22T22:17:05.718753+00:00",
@@ -78,7 +78,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "C54/55 fixed+QFpassed, actualDemo C98 active; next original Transfer 3tags+more UI"
+      "currentWork": "C104 QFsourcePASS; next original nested product inventory target+guarded document-return navigation seam; More density awaits exactDemo"
     },
     "F2": {
       "title": "前端库存与商品",
@@ -93,7 +93,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Original CATUI01/03 P16/P18 actual Demo gaps directedfix; do not redo sharedX"
+      "currentWork": "C105 exact2 glyph fixed/QFpending; original readonly P11/P12 directed UI fixes, P10 existing DTO group analysis; no C harness doublewrite"
     },
     "F3": {
       "title": "前端基础设置",
@@ -154,7 +154,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "TransferLines exact2 new source+synthetic implementation; C draft bounded window pending; no repeated SKU/Header consumers"
+      "currentWork": "QB132-F01 complete transitive codeclosure fix original K preparer; physical source window NOT_SIGNED, rawreads0"
     },
     "QF": {
       "title": "前端独立验收",
@@ -167,7 +167,8 @@
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": false,
-      "fastRequested": false
+      "fastRequested": false,
+      "currentWork": "C100/C103/C104 scoped PASS adopted; C105 exact2 cascade next, no duplicate old scopes"
     },
     "QB": {
       "title": "后端独立验收",
@@ -180,7 +181,8 @@
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": false,
-      "fastRequested": false
+      "fastRequested": false,
+      "currentWork": "C101sourcePASS adopted; C102 consumer limitedPASS/preparerF01NEED_FIX; only targetedclosure recheck when fixed"
     }
   },
   "tasks": [
@@ -934,7 +936,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T22:38:18.823953+00:00",
+  "updatedAt": "2026-10-22T23:12:47.680426+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
   "lastVerifiedRemoteCommit": "6eac13e213859d406cc570d85cc5065fd463acc7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1388,14 +1390,14 @@
     "newAccountsInserted": 0,
     "realImport": "NOT_EXECUTED",
     "productionSwitched": false,
-    "freshBackup": "PASS_C02_JOB04",
+    "freshBackup": "C04_HISTORICAL_PRESERVED; FRESH_C43_PREPARATION_NOT_EXECUTED",
     "accountCapture": "PASS_C02_JOB11",
     "bootMetadata": "JOBS12_13_READONLY_PASS; JOB14_BOOT_ACTOR_PROJECTION_QUEUED",
     "accountIdentity45": "QB35_SCOPED_PASS_C_OUTSIDE_PIN",
     "accountIdentityAdditional4": "QB42_IDENTITY_ONLY_ACCEPTED_FALSE_EXECUTION",
     "deploymentTools": "QB38_SOURCE_PROTOCOL_PASS_REAL_DEPLOY_NOT_RUN",
-    "bootPersistence": "QB128_SOURCE_PASS_C96_PIN_UPDATE_PENDING_QB_ACTUAL_NOT_INSTALLED",
-    "currentSourceCheckpoint": "6eac13e213859d406cc570d85cc5065fd463acc7",
+    "bootPersistence": "QB128_AND_QB130_SOURCE_PASS_NOT_INSTALLED",
+    "currentSourceCheckpoint": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
     "currentPreview": {
       "url": "http://127.0.0.1:57846/synthetic-unified.html",
       "source": "6eac13e213859d406cc570d85cc5065fd463acc7",
@@ -1628,36 +1630,16 @@
       "qualification": "Actual readonly metadata purposes only; no finalhost/HTTP/business/49/source/main/publish. Collected digests not asserted unknown server raw. Original C direct acceptance, no duplicateQA."
     },
     "productionBuild": {
-      "id": "C_PRODUCTION_FIXED98_FIRST_BUILD_FAILURE",
-      "atUtc": "2026-10-22T22:38:18.823953+00:00",
-      "status": "FAILED_NEW_INLINE_SVG_EXTERNAL_CLASSIFICATION_PACK_NOT_RUN",
-      "sourceCommit": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
-      "buildId": "r1-65d2787-20261023-01",
-      "sourceRound": 98,
-      "sourceManifestSha256": "d59064e170ebc2dd21b68071555c85d70e5430466c99c5e69564b9513a7c94c1",
-      "buildManifestSha256": "311dbf77db99febde0749ca3157d77467a3b5c464ae2755e8999b0bfca8b600f",
-      "selectedInputs": 1489,
-      "producedBuildFiles": 231,
-      "originalAttempt": {
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build98-20261023-01/BUILD-ATTEMPT.json",
-        "sha256": "7ded2c1971f694c97d0cf01f9bc1d6ca3064c9918f092e6eff63c7ce0db4b308",
-        "exitCode": 1,
-        "elapsedSeconds": 4.273,
-        "error": "UNDECLARED_EXTERNAL_DEPENDENCY"
+      "source": "d3c2188a3cd6df472ce85d221fae575682ba7301",
+      "buildId": "r1-d3c2188-20261023-01",
+      "status": "PASS_ORIGINAL_PRODUCTION_BUILD_PACK_ONLY",
+      "archive": {
+        "file": "release.tar.gz",
+        "bytes": 3913162,
+        "sha256": "161ee57b2d05b39b2c7611275339033a254b11a697a02113c44adcbf04818264"
       },
-      "localizedFailure": "Frontend actual esbuild graph has one embedded SVG dataURI url-token from sales/detail.css with1input+6CSSoutputs. Existing external dependency rule admits backend packages/builtins only, rejects embedded resource. No new package is missing.",
-      "embeddedUriBytes": 212,
-      "embeddedUriSha256": "315e1978e00fb98a377a06cea68c4b841f7ac9b9d34e802e69f85f7a7dda6d6c",
-      "sourceCssSha256": "96c7986227987b49b5499148ea11f3a49ba65da01841e282f4aa4fefecbd3b9b",
-      "packAttempts": 0,
-      "archive": null,
-      "fullGraphValidatorPass": false,
-      "buildAttempts": 1,
-      "retry": false,
-      "prior91FailurePreserved": true,
-      "next": "C helper minimal exact inline resource guard candidate; newfixedsource+newlimitedQB before one new build. No assert bypass/metafile edits/sourceSVG edits/SQL changes.",
-      "runtimeServerPgBrowser": false,
-      "businessAcceptance": false
+      "members": 229,
+      "stage": false
     }
   },
   "supplementalRoles": {
@@ -2115,9 +2097,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-22T22:38:18.823953+00:00",
-    "sourceRound": 100,
-    "sourceCheckpoint": "6eac13e213859d406cc570d85cc5065fd463acc7",
+    "atUtc": "2026-10-22T23:12:47.680426+00:00",
+    "sourceRound": 105,
+    "sourceCheckpoint": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -2131,24 +2113,32 @@
       "sourceModules": 383,
       "wholePageAccepted": false
     },
-    "nextPreview": "C100 P16/P18 actualimpact; More>=4 standaloneexplicit syntheticcomponent fixture Kprep, mainoriginal1SKU notexpanded",
-    "r1": "C98 actual productionbuild fails newlyreached embeddedSVG classification, allfailureoutputs retained/pack0. Precise guardprep newscope. Seven permanentmetadata/config/stagecarrier Kprep; no49/sourceMAIN/publicswitch",
+    "nextPreview": "Fixed105 necessary preview with scoped103/104/105 CSS+explicit C-only readonly overview DTO preparing; no old45 retest",
+    "r1": "C103 original build+pack PASS,229members/one extraction. Permanent7 refs/privateconfig/stage preparation; fresh complete backup43 preparation only. No realaccounts/import/publicswitch",
     "qa": "C40 actual Sharp upload/ADD/replay/controlled original+thumbnail PASS; QA11audits11receipts3images/root4. No HTTP/realrole/business acceptance",
-    "import": "QB127 TransferHeader sourcePASS adopted; D3 TransferLines exact2 implementation/synthetic active, one bounded original window waits finalproducer/preparer freeze+window. H06 C95 QB129sourcePASS, actualQA Kprep/currentACL unknown; NULL27 v5 humanpending.",
+    "import": "QB132 consumer source limitedPASS, K preparer closureF01 NEED_FIX sent originalD3. No signed physicalwindow or originalread. H06 QA currentpurpose preparation only, no boundedQA capture.",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Normal branch6eac13e through100 exactoriginalAPI FF+GET verified; recoverybundle3c61 retained/downloadverified",
+    "github": "Normal remote through100 6eac13e verified; local105+docs pending exact-object fastforward",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
-      "localDeduplicated": 43,
+      "localDeduplicated": 45,
       "wholePagesAccepted": 0,
       "wholeOverlayClassesAccepted": 0,
-      "notRun": 65,
-      "uiDifference": 25,
+      "notRun": 60,
+      "uiDifference": 28,
       "partial": 6,
-      "waitingIntegration": 7,
+      "waitingIntegration": 9,
       "approvedException": 1,
-      "latestReceipt": "DEMO-C98-LOCAL43"
+      "latestReceipt": "DEMO-C100-LOCAL45"
+    },
+    "isolatedMorePreview": {
+      "url": "http://127.0.0.1:57847/component-more.html",
+      "source": "6eac13e213859d406cc570d85cc5065fd463acc7",
+      "build": "ui-component-more-6eac13e-01-build03",
+      "htmlSha256": "637992176814f553472ec58e039a88c762ebd586d0651e81bd99a7cb742ab841",
+      "syntheticComponentOnly": true,
+      "mainNativeAuthorExpanded": false
     }
   },
   "latestReadySource": {
