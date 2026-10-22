@@ -175,7 +175,7 @@
       "owner": "C",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "RUNNING",
       "startDependencies": [
         "B00"
       ],
@@ -189,7 +189,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": null,
+      "nextAction": "Existing API v1 frozen; collect final D1/D2/D3 schema proposals, make one explicit user confirmation request. No new field approved.",
       "write_scope": {
         "sourceWriteEnabled": false,
         "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
@@ -202,7 +202,7 @@
       "owner": "C",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "NOT_STARTED",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -214,7 +214,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": null,
+      "nextAction": "C02 delegated read-only source/operations inventory in progress; C remains sole live-server operator.",
       "write_scope": {
         "sourceWriteEnabled": false,
         "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",
@@ -227,7 +227,7 @@
       "owner": "D1",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "RUNNING",
+      "status": "CODE_DONE",
       "startDependencies": [
         "C00"
       ],
@@ -237,9 +237,12 @@
       "commit": null,
       "remoteCommit": null,
       "checks": [],
-      "evidence": [],
+      "evidence": [
+        "EXISTING-API-MATRIX.json",
+        "K/reports/backend/rapid-launch-20261022/D1/B00-FIELD-ATTACHMENT-READBACK.json"
+      ],
       "notTested": [],
-      "nextAction": "W0 read-only preparation dispatched; no implementation or acceptance result yet.",
+      "nextAction": "QB source-only receipt may adopt B00 factual inventory; no business verification claimed.",
       "write_scope": {
         "sourceWriteEnabled": false,
         "scopeSource": "references/rapid-launch-taskbook-20261022/01-主控完整实施提示词.txt section 5",

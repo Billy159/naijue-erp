@@ -1,0 +1,320 @@
+{
+  "atUtc": "2026-10-22T04:34:54.277728+00:00",
+  "role": "D1/B00",
+  "wirePrefix": "external /api from host; plugin paths below unprefixed",
+  "groups": [
+    {
+      "id": "AUTH",
+      "method": "MIXED",
+      "paths": [
+        "POST /auth/login",
+        "GET /auth/session",
+        "POST /auth/logout",
+        "POST /auth/password"
+      ],
+      "source": "apps/api/src/authentication.ts",
+      "dtoSources": [
+        "packages/authentication/src/ports.ts"
+      ],
+      "composition": "always in existing API; trusted exact HTTPS origin/cookie policy",
+      "leafOwner": "D1",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "SALES_COMMANDS",
+      "method": "MIXED",
+      "paths": [
+        "POST /sales/prepare-create",
+        "POST /sales/commands",
+        "GET /sales/receipts/:requestKey"
+      ],
+      "source": "apps/api/src/sales-http.ts",
+      "dtoSources": [
+        "packages/application/src/ports.ts",
+        "packages/application/src/native-sales-preparation.ts",
+        "apps/api/src/input.ts"
+      ],
+      "composition": "documentCommands explicit opt-in; prepare is not CREATE command",
+      "leafOwner": "D1",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "TRANSFER_COMMANDS",
+      "method": "MIXED",
+      "paths": [
+        "POST /transfers/prepare-create",
+        "POST /transfers/commands",
+        "GET /transfers/receipts/:requestKey"
+      ],
+      "source": "apps/api/src/transfer-http.ts",
+      "dtoSources": [
+        "packages/application/src/transfer-ports.ts",
+        "packages/application/src/native-transfer-preparation.ts",
+        "apps/api/src/transfer-input.ts"
+      ],
+      "composition": "documentCommands explicit opt-in",
+      "leafOwner": "D1",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "INVENTORY",
+      "method": "POST",
+      "paths": [
+        "/inventory/query",
+        "/inventory/candidates/query"
+      ],
+      "source": "apps/api/src/inventory-http.ts",
+      "dtoSources": [
+        "packages/application/src/inventory-query-contracts.ts"
+      ],
+      "composition": "existing core read assembly",
+      "leafOwner": "D3",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "LEDGER",
+      "method": "POST",
+      "paths": [
+        "/inventory/ledger/query"
+      ],
+      "source": "apps/api/src/inventory-ledger-query-http.ts",
+      "dtoSources": [
+        "packages/application/src/inventory-ledger-query-contracts.ts"
+      ],
+      "composition": "existing core read assembly",
+      "leafOwner": "D3",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "SALES_READ",
+      "method": "POST",
+      "paths": [
+        "/sales/query",
+        "/sales/detail/query",
+        "/sales/references/query",
+        "/sales/history/query",
+        "/sales/settlement-statistics/query"
+      ],
+      "source": "apps/api/src/sales-query-http.ts",
+      "dtoSources": [
+        "packages/application/src/sales-query-ports.ts"
+      ],
+      "composition": "existing core read; history endpoint means LIVE audit metadata",
+      "leafOwner": "D1 shared sales read contract; leaf allocation C to confirm",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "TRANSFER_READ",
+      "method": "POST",
+      "paths": [
+        "/transfers/query",
+        "/transfers/detail/query",
+        "/transfers/warehouses/query"
+      ],
+      "source": "apps/api/src/transfer-query-http.ts",
+      "dtoSources": [
+        "packages/application/src/transfer-query-ports.ts"
+      ],
+      "composition": "existing core read",
+      "leafOwner": "D1 shared document read contract; leaf allocation C to confirm",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "PRODUCT_DETAIL",
+      "method": "POST",
+      "paths": [
+        "/products/basics/query",
+        "/products/specifications/query",
+        "/products/images/query",
+        "/products/image/query"
+      ],
+      "source": "apps/api/src/product-query-http.ts",
+      "dtoSources": [
+        "packages/application/src/product-query-ports.ts"
+      ],
+      "composition": "existing core read; explicit ControlledProductMedia or null",
+      "leafOwner": "D2",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "PRODUCT_MANAGEMENT",
+      "method": "POST",
+      "paths": [
+        "/product-management/query",
+        "/product-management/candidates/query"
+      ],
+      "source": "apps/api/src/product-management-query-http.ts",
+      "dtoSources": [
+        "packages/application/src/product-management-query-ports.ts"
+      ],
+      "composition": "productManagementRead explicit opt-in",
+      "leafOwner": "D2",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "CATALOGUE",
+      "method": "POST",
+      "paths": [
+        "/catalogue-settings-read/categories/query",
+        "/catalogue-settings-read/colors/query",
+        "/catalogue-settings-read/fits/query"
+      ],
+      "source": "apps/api/src/catalogue-settings-read-http.ts",
+      "dtoSources": [
+        "packages/application/src/catalogue-settings-read-ports.ts"
+      ],
+      "composition": "catalogueSettingsRead explicit opt-in",
+      "leafOwner": "D2",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "DICTIONARY",
+      "method": "POST",
+      "paths": [
+        "/dictionary-read/size-groups/query",
+        "/dictionary-read/seasons/query",
+        "/dictionary-read/barcode-schemes/query",
+        "/dictionary-read/barcode-scheme/query"
+      ],
+      "source": "apps/api/src/dictionary-read-http.ts",
+      "dtoSources": [
+        "packages/application/src/dictionary-read-ports.ts"
+      ],
+      "composition": "dictionaryRead explicit opt-in; no season/size-group writes",
+      "leafOwner": "D2",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "STORES_WAREHOUSES",
+      "method": "POST",
+      "paths": [
+        "/store-settings-read/stores/query",
+        "/store-settings-read/stores/detail/query",
+        "/store-settings-read/warehouses/query",
+        "/store-settings-read/warehouses/detail/query"
+      ],
+      "source": "apps/api/src/store-settings-read-http.ts",
+      "dtoSources": [
+        "packages/application/src/store-settings-read-ports.ts"
+      ],
+      "composition": "storeSettingsRead explicit opt-in",
+      "leafOwner": "D2",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "PARTY_READ",
+      "method": "GET",
+      "paths": [
+        "/customers",
+        "/customers/candidates",
+        "/customers/:id",
+        "/suppliers",
+        "/suppliers/candidates",
+        "/suppliers/:id"
+      ],
+      "source": "apps/api/src/party-read-http.ts",
+      "dtoSources": [
+        "packages/application/src/party-read-ports.ts"
+      ],
+      "composition": "partyRead explicit opt-in",
+      "leafOwner": "D2",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "PARTY_MAINTENANCE",
+      "method": "MIXED",
+      "paths": [
+        "POST /customers/commands",
+        "GET /customers",
+        "GET /customers/candidates",
+        "GET /customers/:id",
+        "GET /customers/receipts/:requestKey",
+        "POST /suppliers/commands",
+        "GET /suppliers",
+        "GET /suppliers/candidates",
+        "GET /suppliers/:id",
+        "GET /suppliers/receipts/:requestKey"
+      ],
+      "source": "apps/api/src/party-maintenance-http.ts",
+      "dtoSources": [],
+      "composition": "plugin exists, not in current application composition; duplicate GETs if both party plugins mounted",
+      "leafOwner": "D2",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "IMPORTED_HISTORY",
+      "method": "POST",
+      "paths": [
+        "/imported-history/sales/query",
+        "/imported-history/sales/detail/query",
+        "/imported-history/transfers/query",
+        "/imported-history/transfers/detail/query"
+      ],
+      "source": "apps/api/src/imported-history-query-http.ts",
+      "dtoSources": [
+        "packages/application/src/imported-history-query-ports.ts"
+      ],
+      "composition": "importedHistoryRead explicit opt-in; exact19/IMPORTED/closure/FINAL proofs",
+      "leafOwner": "D3",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "id": "CURRENT_FORMS",
+      "method": "POST",
+      "paths": [
+        "/current-form/product-skus/query",
+        "/current-form/products/query",
+        "/current-form/sales-references/query",
+        "/current-form/sku-batch/query",
+        "/current-form/transfer-warehouses/query"
+      ],
+      "source": "apps/api/src/current-form-http.ts",
+      "dtoSources": [
+        "packages/application/src/current-form-ports.ts"
+      ],
+      "composition": "currentForms explicit opt-in; proposals are not grants or SAVE",
+      "leafOwner": "D1",
+      "status": "EXISTING_SOURCE_NOT_PRODUCTION_ACCEPTANCE"
+    }
+  ],
+  "saveActions": [
+    "SAVE",
+    "APPROVE",
+    "UNAPPROVE",
+    "VOID"
+  ],
+  "noExistingCreateAction": true,
+  "writeDtos": {
+    "salesSave": "{ action:SAVE, requestKey, expectedVersion:null|positiveVersion, draft:{header,lines,settlements} }",
+    "salesTransition": "{ action:APPROVE|UNAPPROVE|VOID, requestKey, expectedVersion, salesId }",
+    "transferSave": "{ action:SAVE, requestKey, expectedVersion, draft:{header,lines} }",
+    "transferTransition": "{ action:APPROVE|UNAPPROVE|VOID, requestKey, expectedVersion, transferId }",
+    "result": "operationId, salesId|transferId, version, status, ledgerEntryIds; number absent; read actual detail after save",
+    "receipt": "requestKey, action, status:COMMITTED, completedAt, result; authorization rechecked; no internal hash exposed"
+  },
+  "precisionBoundary": {
+    "prepareSalesInputs": "nonnegative exact RMB/yuan strings, at most two decimals; signed quantities integer strings",
+    "saveAndLiveRead": "exact internal bigint minor units serialize as integer decimal strings; never reinterpret as yuan",
+    "productRetailAndImportedHistory": "exact SQL decimal text remains yuan decimal strings; imported signed quantity/total count remain strings",
+    "null": "preserve explicit historical unknown person/time, nullable master values, zero not equivalent to NULL or missing"
+  },
+  "pagination": "LIVE sales uses20/50/100/200; imported HISTORY also finite20/50/100/200 with separate detail pages; each other leaf owns its current exact validators; do not widen globally",
+  "commonErrors": {
+    "400": "invalid request/JSON/type",
+    "401": "trusted session unresolved or original auth contract rejects",
+    "403": "explicit business policy denied",
+    "404": "document/receipt absent",
+    "409": "version/idempotency/state/inventory readiness rejection",
+    "413": "payload budget",
+    "415": "media type",
+    "500": "sanitized internal/uncertain transport error; no SQL/private detail",
+    "503": "explicit HISTORY runtime/schema unavailable where configured"
+  },
+  "notExisting": [
+    "production executable/listener for public origin",
+    "database-backed unique runtime document numbering",
+    "ordinary product/SKU/nine-price/barcode and organization/account/payment maintenance command assembly",
+    "history correction HTTP command"
+  ],
+  "notChangedInW0": true
+}

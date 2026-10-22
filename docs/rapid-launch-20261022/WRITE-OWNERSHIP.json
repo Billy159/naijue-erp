@@ -1,0 +1,1199 @@
+{
+  "version": "2026-10-22-v1",
+  "updatedAt": "2026-10-22T04:36:42.430990+00:00",
+  "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+  "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
+  "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
+  "writeGate": "CLOSED_PENDING_C00_DEMO_REFERENCE_AND_F1_FINITE_LIST",
+  "roles": {
+    "D1": {
+      "proposal": "reports/backend/rapid-launch-20261022/D1/REQUESTED-WRITE-SCOPE.json",
+      "sourceWriteEnabled": false,
+      "registeredFiles": [
+        {
+          "path": "apps/api/src/postgres-read-api.ts",
+          "group": "B01_NO_FIELD_CHANGE_FIRST_WINDOW",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/api/src/production-application-host.ts",
+          "group": "B01_NO_FIELD_CHANGE_FIRST_WINDOW",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/api/src/production-main.ts",
+          "group": "B01_NO_FIELD_CHANGE_FIRST_WINDOW",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/api/src/production-provider-composition.ts",
+          "group": "B01_NO_FIELD_CHANGE_FIRST_WINDOW",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/api/src/production-application-host.test.ts",
+          "group": "B01_NO_FIELD_CHANGE_FIRST_WINDOW",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/api/src/production-provider-composition.test.ts",
+          "group": "B01_NO_FIELD_CHANGE_FIRST_WINDOW",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "adapters/postgres/src/sales-unit-of-work.ts",
+          "group": "B02_COMMIT_FIX_NO_FIELD_CHANGE",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "adapters/postgres/src/transfer-unit-of-work.ts",
+          "group": "B02_COMMIT_FIX_NO_FIELD_CHANGE",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "tests/runtime-document-commit-outcome.test.ts",
+          "group": "B02_COMMIT_FIX_NO_FIELD_CHANGE",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "packages/application/src/sales-service.ts",
+          "group": "B02_NUMBERING_AFTER_C01",
+          "fieldGate": "AFTER_USER_APPROVAL"
+        },
+        {
+          "path": "packages/application/src/transfer-service.ts",
+          "group": "B02_NUMBERING_AFTER_C01",
+          "fieldGate": "AFTER_USER_APPROVAL"
+        },
+        {
+          "path": "packages/application/src/native-sales-preparation.ts",
+          "group": "B02_NUMBERING_AFTER_C01",
+          "fieldGate": "AFTER_USER_APPROVAL"
+        },
+        {
+          "path": "packages/application/src/native-transfer-preparation.ts",
+          "group": "B02_NUMBERING_AFTER_C01",
+          "fieldGate": "AFTER_USER_APPROVAL"
+        },
+        {
+          "path": "packages/application/src/ports.ts",
+          "group": "B02_NUMBERING_AFTER_C01",
+          "fieldGate": "AFTER_USER_APPROVAL"
+        },
+        {
+          "path": "packages/application/src/transfer-ports.ts",
+          "group": "B02_NUMBERING_AFTER_C01",
+          "fieldGate": "AFTER_USER_APPROVAL"
+        },
+        {
+          "path": "packages/application/src/runtime-document-number.ts",
+          "group": "B02_NUMBERING_AFTER_C01",
+          "fieldGate": "AFTER_USER_APPROVAL"
+        },
+        {
+          "path": "adapters/postgres/src/runtime-document-number.ts",
+          "group": "B02_NUMBERING_AFTER_C01",
+          "fieldGate": "AFTER_USER_APPROVAL"
+        },
+        {
+          "path": "tests/runtime-document-number.test.ts",
+          "group": "B02_NUMBERING_AFTER_C01",
+          "fieldGate": "AFTER_USER_APPROVAL"
+        },
+        {
+          "path": "tests/runtime-document-number-postgres-protocol.test.ts",
+          "group": "B02_NUMBERING_AFTER_C01",
+          "fieldGate": "AFTER_USER_APPROVAL"
+        },
+        {
+          "path": "packages/application/src/native-import-schema-contract.ts",
+          "group": "CENTRAL_MIGRATION_AFTER_C01",
+          "fieldGate": "AFTER_USER_APPROVAL"
+        },
+        {
+          "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+          "group": "CENTRAL_MIGRATION_AFTER_C01",
+          "fieldGate": "AFTER_USER_APPROVAL"
+        },
+        {
+          "path": "tests/integration/migration-manifest.ts",
+          "group": "CENTRAL_MIGRATION_AFTER_C01",
+          "fieldGate": "AFTER_USER_APPROVAL"
+        },
+        {
+          "path": "packages/application/src/inventory-posting.ts",
+          "group": "SHARED_POSTING_CONTRACT_IF_ASSIGNED",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "adapters/postgres/src/inventory-posting-balances.ts",
+          "group": "SHARED_POSTING_CONTRACT_IF_ASSIGNED",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        }
+      ]
+    },
+    "D2": {
+      "proposal": "reports/backend/rapid-launch-20261022/D2/00-FILE-SCOPE.json",
+      "sourceWriteEnabled": false,
+      "registeredFiles": [
+        {
+          "path": "adapters/postgres/src/catalogue-settings-read-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/dictionary-read-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/party-maintenance-store.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/party-read-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/product-management-query-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/product-query-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/store-settings-read-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/catalogue-settings-read-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/catalogue-settings-read-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/dictionary-read-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/dictionary-read-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/party-maintenance-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/party-maintenance-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/party-read-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/party-read-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/product-management-query-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/product-management-query-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/product-query-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/product-query-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/store-settings-read-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/store-settings-read-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "docs/party-maintenance.md",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/catalogue-settings-read-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/catalogue-settings-read-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/catalogue-settings-read-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/dictionary-read-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/dictionary-read-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/dictionary-read-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/party-maintenance-policy.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/party-maintenance-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/party-maintenance-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/party-maintenance-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/party-numbering.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/party-read-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/party-read-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/product-management-query-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/product-management-query-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/product-management-query-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/product-query-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/product-query-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/product-query-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/store-settings-read-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/store-settings-read-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/store-settings-read-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/catalogue-settings-read-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/catalogue-settings-read.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/dictionary-read-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/dictionary-read.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/party-maintenance.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/party-numbering-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/party-numbering.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/party-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/party-read-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/party-read-service.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/product-management-query-reader.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/product-management-query.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/product-query-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/product-query-schema-contract.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/product-query.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/store-settings-read-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/store-settings-read.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/media/src/controlled-product-media.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/account-maintenance-store.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/catalogue-maintenance-store.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/organization-maintenance-store.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/payment-maintenance-store.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/product-details-query-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/product-maintenance-store.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/staff-maintenance-store.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/account-maintenance-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/account-maintenance-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/catalogue-maintenance-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/catalogue-maintenance-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/organization-maintenance-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/organization-maintenance-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/payment-maintenance-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/payment-maintenance-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/product-details-query-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/product-details-query-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/product-maintenance-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/product-maintenance-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/product-media-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/product-media-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/staff-maintenance-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/staff-maintenance-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "docs/organization-staff-payment-maintenance.md",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "docs/product-maintenance.md",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/account-maintenance-authorization.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/account-maintenance-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/account-maintenance-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/account-maintenance-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/catalogue-maintenance-authorization.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/catalogue-maintenance-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/catalogue-maintenance-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/catalogue-maintenance-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/organization-maintenance-authorization.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/organization-maintenance-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/organization-maintenance-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/organization-maintenance-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/payment-maintenance-authorization.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/payment-maintenance-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/payment-maintenance-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/payment-maintenance-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/product-details-query-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/product-details-query-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/product-details-query-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/product-maintenance-authorization.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/product-maintenance-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/product-maintenance-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/product-maintenance-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/staff-maintenance-authorization.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/staff-maintenance-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/staff-maintenance-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/staff-maintenance-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/account-maintenance-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/account-maintenance.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/catalogue-maintenance-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/catalogue-maintenance.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/controlled-product-media.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/integration/rapid-launch-d2-maintenance.integration.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/organization-maintenance-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/organization-maintenance.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/payment-maintenance-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/payment-maintenance.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/product-details-query-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/product-details-query.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/product-maintenance-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/product-maintenance.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/staff-maintenance-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/staff-maintenance.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        }
+      ]
+    },
+    "D3": {
+      "proposal": "reports/backend/rapid-launch-20261022/D3/FILE-OWNERSHIP-PROPOSAL.json",
+      "sourceWriteEnabled": false,
+      "registeredFiles": [
+        {
+          "path": "packages/application/src/inventory-cutoff-scope.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/inventory-query-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/inventory-ledger-query-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/inventory-cutoff-scope-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/inventory-publication-guards.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/inventory-query-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/inventory-ledger-query-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/inventory-cutoff-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/imported-history-query-ports.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/imported-history-query-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/imported-history-query-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/imported-history-query-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/imported-history-query.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "scripts/import-v2/authorized-header-reader.mjs",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "scripts/import-v2/authorized-header-reader.d.mts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "scripts/import-v2/authorized-header-reader.test.mjs",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/inventory-key-admission.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/inventory-key-admission-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/inventory-key-admission.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/inventory-key-admission-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "scripts/import-v3/run.mjs",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "scripts/import-v3/README.md",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "scripts/import-v3/run.test.mjs",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/history-revision-contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/history-revision-service.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/src/history-revision-store.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/history-revision-http.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/history-revision.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "tests/history-revision-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/api/src/history-revision-http.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        }
+      ]
+    },
+    "F2": {
+      "proposal": "reports/frontend/rapid-launch-20261022/F2/W0-FILE-OWNERSHIP-REQUEST-v1.json",
+      "sourceWriteEnabled": false,
+      "registeredFiles": [
+        {
+          "path": "apps/web/src/inventory/inventory-page.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/inventory/inventory.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/inventory/contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/products-page.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page-contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page-configuration.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page-view.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page-base.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page-specs.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page-images.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page-host.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page-http-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/products.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/inventory/product-contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/inventory/product-model.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/inventory/product-tab-basics.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/inventory/product-tab-specifications.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/inventory/product-tab-images.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/inventory/product-drawer.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/transport/product-http-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/product-categories/product-categories-page.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/product-categories/category-tree.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/product-categories/source-product-categories.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/product-settings/read-only-settings-host.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/entry-page.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/entry-view.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/inventory/ledger-contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/inventory/ledger-http-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/inventory/ledger-drawer.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/inventory/ledger.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/inventory/output-adapter.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page-barcodes.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page-prices.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page-stock.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-state.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-editor.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-base.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-specs.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-media.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-maintenance-http-client.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-output-adapter.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/product-settings/catalogue-maintenance-http-client.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/product-settings/catalogue-maintenance-state.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/inventory/ledger.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-state.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/products/product-page-validation.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        }
+      ]
+    },
+    "F3": {
+      "proposal": "reports/frontend/rapid-launch-20261022/F3/FILE-OWNERSHIP-PROPOSAL.json",
+      "sourceWriteEnabled": false,
+      "registeredFiles": [
+        {
+          "path": "apps/web/src/settings/stores/contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/stores/index.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/stores/stores-page.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/stores/source-store-settings.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/parties/party-route.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-http-client.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-controller.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-form.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-host.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/staff-settings/contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/staff-settings/http-client.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/staff-settings/response-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/staff-settings/controller.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/staff-settings/staff-page.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/staff-settings/staff-form.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/staff-settings/staff-settings.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/staff-settings/index.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/payment-settings/contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/payment-settings/http-client.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/payment-settings/response-validation.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/payment-settings/controller.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/payment-settings/payment-page.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/payment-settings/payment-method-form.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/payment-settings/payment-account-form.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/payment-settings/payment-settings.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/payment-settings/index.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/audit/contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/audit/http-reader.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/audit/controller.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/audit/audit-drawer.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/audit/audit.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-controller.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/staff-settings/controller.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/payment-settings/controller.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        }
+      ]
+    },
+    "F1": {
+      "proposal": "PENDING_F1",
+      "sourceWriteEnabled": false,
+      "registeredFiles": []
+    }
+  },
+  "reservedSharedFiles": {
+    "C": [
+      "AGENTS.md",
+      "package.json",
+      "package-lock.json",
+      "tsconfig.json",
+      "tsconfig.build.json",
+      "apps/web/src/application/contracts.ts",
+      "docs/rapid-launch-20261022/**",
+      "references/demo-ui-baseline/**",
+      "references/rapid-launch-taskbook-20261022/**",
+      "scripts/release/**"
+    ],
+    "D1": [
+      "adapters/postgres/migrations/**",
+      "apps/api/src/postgres-read-api.ts",
+      "packages/application/src/native-import-schema-contract.ts",
+      "adapters/postgres/src/native-import-accounting-capability.ts",
+      "tests/integration/migration-manifest.ts"
+    ]
+  },
+  "precedence": [
+    "explicit file owner first",
+    "C shared-contract reservations override directory requests",
+    "F2 inventory components/use-inventory-candidates and inventory transport reserved even if absent from first-wave list",
+    "unlisted new shared path requires C registration before write"
+  ],
+  "reviewers": {
+    "QF": {
+      "sourceWriteEnabled": false,
+      "reports": "K/reports/qa-frontend/rapid-launch-20261022/QF/**"
+    },
+    "QB": {
+      "sourceWriteEnabled": false,
+      "reports": "K/reports/qa-backend/rapid-launch-20261022/QB/**"
+    }
+  },
+  "resourcePolicy": "No new PG, browser or integrated build before C assigns a bounded window. Light focused checks after source opening require result recording; no default full regression."
+}
