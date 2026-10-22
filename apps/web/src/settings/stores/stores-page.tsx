@@ -4,6 +4,7 @@ import { StoreMaintenanceHost } from './maintenance-host.tsx';
 import { UIButton } from '../../components/standard-controls.tsx';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useDialogFocusReturn } from '../../components/use-dialog-focus-return.ts';
+import type { ReadScope } from '../../loading/read-scope.ts';
 import type { StoreSettingsKind, StoreSettingsListQuery, StoreSettingsPageProps } from './contracts.ts';
 import { initialStoreSettingsQuery, StoreSettingsReadController } from './controller.ts';
 import { StoreSettingsReadState } from './read-state.tsx';
@@ -13,19 +14,47 @@ import './source-store-settings.css';
 
 const noEditors = Object.freeze({ stores: null, warehouses: null });
 const noSubscribe = () => () => {};
+interface StoreQueryUi {
+  draft: StoreSettingsListQuery; applied: StoreSettingsListQuery;
+  hallSelection: { id: string; name: string } | null;
+}
+interface StoreRouteUi {
+  readonly reader: StoreSettingsPageProps['reader'];
+  readonly workspace: import('./maintenance-controller.ts').StoreMaintenanceWorkspace | undefined;
+  readonly tabs: Record<StoreSettingsKind, StoreQueryUi>;
+}
+// Query controls only: two tabs per explicit route scope, never rows/results,
+// permissions, commands or credentials. Read-only keyed mounts share the same
+// route UI; every return still creates a new read owner and fresh native query.
+const routeQueryUi = new WeakMap<ReadScope, StoreRouteUi>();
+function queryUi(props: StoreSettingsPageProps, kind: StoreSettingsKind): StoreQueryUi {
+  let state = routeQueryUi.get(props.scope);
+  if (!state || state.reader !== props.reader || state.workspace !== props.maintenance?.workspace) {
+    const empty = (): StoreQueryUi => ({ draft: { ...initialStoreSettingsQuery }, applied: { ...initialStoreSettingsQuery }, hallSelection: null });
+    state = { reader: props.reader, workspace: props.maintenance?.workspace, tabs: { stores: empty(), warehouses: empty() } };
+    routeQueryUi.set(props.scope, state);
+    props.scope.signal.addEventListener('abort', () => routeQueryUi.delete(props.scope), { once: true });
+  }
+  return state.tabs[kind];
+}
 export function StoresPage(props: StoreSettingsPageProps) { return <StoreSettingsPage {...props} kind="stores" />; }
 export function StoreSettingsPage(props: StoreSettingsPageProps & { readonly kind: StoreSettingsKind }) {
+  const ui = queryUi(props, props.kind);
   const [owner, setOwner] = useState<StoreSettingsReadController | null>(null);
   useEffect(() => {
     const controller = new StoreSettingsReadController(props, props.kind); setOwner(controller);
-    queueMicrotask(() => { if (controller.scope.active) void controller.queryList(initialStoreSettingsQuery); });
+    queueMicrotask(() => { if (controller.scope.active) void controller.queryList(ui.applied); });
     return () => controller.dispose();
   }, [props.scope, props.reader, props.kind, props.onAccessFailure, props.allowHallDirectoryRead, props.maintenance?.workspace]);
-  return owner && owner.props.scope === props.scope && owner.props.reader === props.reader && owner.kind === props.kind && owner.props.onAccessFailure === props.onAccessFailure && owner.props.allowHallDirectoryRead === props.allowHallDirectoryRead && owner.props.maintenance?.workspace === props.maintenance?.workspace ? <StoreSettingsContent key={owner.scope.routeInstanceId} {...props} controller={owner} /> : null;
+  return owner && owner.props.scope === props.scope && owner.props.reader === props.reader && owner.kind === props.kind && owner.props.onAccessFailure === props.onAccessFailure && owner.props.allowHallDirectoryRead === props.allowHallDirectoryRead && owner.props.maintenance?.workspace === props.maintenance?.workspace ? <StoreSettingsContent key={owner.scope.routeInstanceId} {...props} controller={owner} ui={ui} /> : null;
 }
-function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: StoreSettingsKind; readonly controller: StoreSettingsReadController }) {
+function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: StoreSettingsKind; readonly controller: StoreSettingsReadController; readonly ui: StoreQueryUi }) {
   const { controller } = props, { list, scope } = controller, snapshot = useSyncExternalStore(list.subscribe, list.getSnapshot, list.getSnapshot), hallSnapshot = useSyncExternalStore(controller.hallDirectory.subscribe, controller.hallDirectory.getSnapshot, controller.hallDirectory.getSnapshot);
-  const [draft, setDraft] = useState<StoreSettingsListQuery>({ ...initialStoreSettingsQuery }), [hallSelection, setHallSelection] = useState<{ id: string; name: string } | null>(null);
+  const [draft, setDraftState] = useState<StoreSettingsListQuery>(() => ({ ...props.ui.draft })), [hallSelection, setHallSelectionState] = useState(props.ui.hallSelection);
+  const setDraft = (next: StoreSettingsListQuery | ((value: StoreSettingsListQuery) => StoreSettingsListQuery)) => {
+    const exact = typeof next === 'function' ? next(draft) : next; props.ui.draft = exact; setDraftState(exact);
+  };
+  const setHallSelection = (next: { id: string; name: string } | null) => { props.ui.hallSelection = next; setHallSelectionState(next); };
   const [editTarget, setEditTarget] = useState<{ id: string | null } | null>(null);
   const workspace = props.maintenance?.workspace?.matches(props.scope) ? props.maintenance.workspace : null;
   const editors = useSyncExternalStore(workspace?.subscribe ?? noSubscribe, workspace?.getSnapshot ?? (() => noEditors), workspace?.getSnapshot ?? (() => noEditors));
@@ -34,12 +63,12 @@ function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: S
   const refreshed = useRef<string | null>(null);
 
   const focus = useDialogFocusReturn(scope, editTarget !== null || editor !== null), label = props.kind === 'stores' ? '营业厅' : '仓库';
-  const success = snapshot.success, result = success?.data, displayed = success?.parameters ?? initialStoreSettingsQuery, busy = snapshot.phase === 'loading';
-  const run = (parameters: StoreSettingsListQuery) => { if (scope.active) void controller.queryList(parameters); };
+  const success = snapshot.success, result = success?.data, displayed = success?.parameters ?? props.ui.applied, busy = snapshot.phase === 'loading';
+  const run = (parameters: StoreSettingsListQuery) => { if (scope.active) { props.ui.applied = { ...parameters }; void controller.queryList(parameters); } };
   const retry = () => run(snapshot.request?.parameters ?? { ...draft, page: 1 });
   useEffect(() => {
     if (scope.active && write?.phase === 'committed' && write.result && refreshed.current !== write.result.operationId) {
-      refreshed.current = write.result.operationId; void controller.queryList(displayed);
+      refreshed.current = write.result.operationId; props.ui.applied = { ...displayed }; void controller.queryList(displayed);
     }
   }, [controller, scope, write, displayed]);
   const closeEditor = () => { if (workspace && !workspace.close(props.kind)) return; setEditTarget(null); focus.request(); };
