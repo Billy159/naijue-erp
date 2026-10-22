@@ -523,6 +523,10 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
       release: error => { rawRelease.call(raw, error); }, active: true, checking: false, pending: 0 };
     const client: PgSalesClient = Object.freeze({ async query(sql: string, values?: unknown[]): Promise<PgSalesResult> {
       if (!lease.active || lease.checking || revoked && sql !== "ROLLBACK") fail("Live verified lease required; only rollback remains available after revocation");
+      // Recheck actual outside files synchronously before dispatching either PG
+      // commit alias. Conservative token matching also covers comments/batches;
+      // matches inside literals only add a file check, never bypass one.
+      if (/\b(?:COMMIT|END)\b/i.test(sql)) filesReady();
       lease.pending++;
       try { return await lease.query(sql, values); } finally { lease.pending--; }
     }, release(error?: Error | boolean): void {

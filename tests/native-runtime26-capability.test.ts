@@ -129,3 +129,27 @@ test("runtime26 concurrent business SQL cannot bypass a pending metadata check",
     assert.ok(!p.calls.some(sql => sql.includes("MUST_NOT_REACH")));
   } finally { f.cleanup(); }
 });
+for (const changed of ["review", "independentReceipt"] as const) test(`QB92 ${changed} revocation after last successful check blocks COMMIT before original driver`, async () => {
+  for (const commitSql of ["COMMIT", " /* bounded comment */ commit work;", "END TRANSACTION;", "SELECT 1; COMMIT;"]) {
+    const f = fixture(); try {
+      const p = scripted(), issuer = await createNativeRuntime26Issuer(p.pool, f.options()), client = await issuer.pool.connect();
+      await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); await issuer.runtime26.assertReady(client, "IMPORT_STAGE");
+      writeFileSync(changed === "review" ? f.reviewFile : f.independent, "{}\n"); const count = p.calls.length;
+      await assert.rejects(client.query(commitSql), { code: "NATIVE_RUNTIME26_NOT_READY" });
+      assert.equal(p.calls.length, count); assert.ok(!p.calls.includes(commitSql));
+      await client.query("ROLLBACK"); client.release(); assert.equal(p.calls.at(-1), "ROLLBACK"); assert.ok(p.releases.at(-1) instanceof Error);
+    } finally { f.cleanup(); }
+  }
+});
+test("QB92 valid pins preserve original unknown COMMIT failure and discard without rollback or retry", async () => {
+  const f = fixture(); try {
+    const p = scripted(), failure = Error("SYNTHETIC_UNKNOWN_COMMIT");
+    const pool = { async connect() { const raw = await p.pool.connect(); return { async query(sql: string) {
+      const result = await raw.query(sql); if (sql === "COMMIT") throw failure; return result;
+    }, release: (error?: Error | boolean) => raw.release(error) }; } };
+    const issuer = await createNativeRuntime26Issuer(pool, f.options()), driver = new PostgresMaintenanceCommandUnitOfWork(issuer.pool);
+    await assert.rejects(driver.transaction(async () => "SYNTHETIC_ONLY"), error => error === failure);
+    assert.equal(p.calls.filter(sql => sql === "COMMIT").length, 1); assert.ok(!p.calls.includes("ROLLBACK")); assert.equal(p.releases.at(-1), failure);
+    assert.equal(p.connects(), 2);
+  } finally { f.cleanup(); }
+});
