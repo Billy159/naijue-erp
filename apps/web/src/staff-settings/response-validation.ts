@@ -12,3 +12,18 @@ export function validateStaffSettingsDraft(draft: Readonly<StaffSettingsDraft>, 
   if (record?.employmentStatus === '离职' && draft.loginEnabled) errors.loginEnabled = '离职员工不能开通登录。';
   return errors;
 }
+
+/** Map frozen native reads without retaining provider extras or auth/credential fields. */
+export function projectStaffSettingsRecord(item: import('../../../../packages/application/src/organization-maintenance-ports.ts').OrganizationMaintenanceRecord): StaffSettingsRecord {
+  if (item.kind !== 'STAFF') throw new TypeError('Expected native staff record');
+  return { id: item.id, name: item.name, role: item.role, hall: item.hall ? { id: item.hall.id, name: item.hall.name } : null,
+    contact: item.contact, employmentStatus: item.employmentStatus, version: item.version,
+    // STAFF account metadata is joined by user_account.staff_id = staff.id.
+    account: item.account ? { id: item.account.id, staffId: item.id, loginName: item.account.loginName, loginEnabled: item.account.loginEnabled, version: item.account.version } : null };
+}
+export function projectAccountSettingsRecord(item: import('../../../../packages/application/src/organization-maintenance-ports.ts').OrganizationMaintenanceRecord): import('./contracts.ts').AccountSettingsRecord {
+  if (item.kind !== 'ACCOUNT' || item.createdAt === null || item.updatedAt === null) throw new TypeError('Expected native account record');
+  return { id: item.id, version: item.version, loginName: item.loginName, loginEnabled: item.loginEnabled,
+    createdAt: item.createdAt, updatedAt: item.updatedAt,
+    staff: { id: item.staff.id, name: item.staff.name, role: item.staff.role, employmentStatus: item.staff.employmentStatus, hallId: item.staff.hallId } };
+}

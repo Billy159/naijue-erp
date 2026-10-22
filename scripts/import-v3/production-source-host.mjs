@@ -34,6 +34,19 @@ export function requiredNativeSourceInputs() {
     sourceProviderRequired: 'Reviewed executable module with all 11 genuine closure source factories and row/native authorizers; absent producers fail before pool creation.'
   };
 }
+/** The source constructor may retain this capability, but cannot issue SQL while
+ * actual factories, source authorization, mapping bytes and closure scope are checked.
+ * Only the host retains activate(); no Pool exists before successful activation. */
+export function createSourcePreflightDatabaseGate(createPool) {
+  must(typeof createPool === 'function', 'IMPORT_SOURCE_HOST_DATABASE_FACTORY');
+  let pool, activated = false, closed = false;
+  const ready = () => { must(activated && !closed, 'IMPORT_SOURCE_HOST_DATABASE_PRECHECK'); return pool; };
+  return {
+    capability: Object.freeze({ connect: async () => ready().connect(), query: async (...args) => ready().query(...args) }),
+    activate() { must(!activated && !closed, 'IMPORT_SOURCE_HOST_DATABASE_PRECHECK'); pool = createPool(); activated = true; return pool; },
+    async close() { if (closed) return; closed = true; if (pool) await pool.end(); }
+  };
+}
 export function validateSourceHostJob(value, at = Date.now()) {
   const c = bag(value, ['version', 'registrationId', 'deadlineUtc', 'maxSteps', 'binding', 'database', 'sources', 'providers']);
   must(c.version === 'NATIVE_IMPORT_SOURCE_HOST19_V1' && typeof c.registrationId === 'string' && /^[a-zA-Z0-9_.:-]{1,120}$/.test(c.registrationId), 'IMPORT_SOURCE_HOST_REGISTRATION');
@@ -105,23 +118,23 @@ export async function openImportHost({ signal, configFile = process.env.NAIJUE_I
   const cancellation = new AbortController(), combined = AbortSignal.any([signal, cancellation.signal]);
   const active = () => must(!combined.aborted && Date.now() < Date.parse(job.deadlineUtc), 'IMPORT_SOURCE_HOST_ABORTED');
   const timer = setTimeout(() => cancellation.abort(), Math.max(1, Date.parse(job.deadlineUtc) - Date.now())); timer.unref();
-  let pool, session, product, closure, sourceClosed = false, closed = false;
+  let pool, databaseGate, session, product, closure, sourceClosed = false, closed = false;
   async function closeSource() { if (!sourceClosed && session) { sourceClosed = true; await session.close(); } }
   async function close() {
     if (closed) return; closed = true; clearTimeout(timer); cancellation.abort(); const errors = [];
     for (const dispose of [async () => { if (closure) await closure.close(); }, async () => { if (product) await product.close(); }, closeSource,
-      async () => { if (pool) await pool.end(); }]) try { await dispose(); } catch (error) { errors.push(error); }
+      async () => { if (databaseGate) await databaseGate.close(); }]) try { await dispose(); } catch (error) { errors.push(error); }
     if (errors.length) throw new AggregateError(errors, 'Import source host close failed');
   }
   try {
     active(); const db = job.database;
     const ca = db.caFile === null ? undefined : new TextDecoder('utf8', { fatal: true }).decode(await pinned(db.caFile, null, 1024 * 1024));
     // Credentials stay with the operator's PG environment/passfile. They are never read into job artifacts or logs.
-    pool = new Pool({ host: db.host, port: db.port, database: db.database, user: db.user,
+    databaseGate = createSourcePreflightDatabaseGate(() => new Pool({ host: db.host, port: db.port, database: db.database, user: db.user,
       ssl: db.tls === 'local-transport' ? false : { rejectUnauthorized: true, ...(ca === undefined ? {} : { ca }) },
       max: 1, connectionTimeoutMillis: 10000, idleTimeoutMillis: 10000, statement_timeout: db.statementTimeoutMs,
-      application_name: 'naijue-controlled-native-import' });
-    session = await module.openSourceSession({ binding: structuredClone(job.binding), sources: structuredClone(job.sources), pool, signal: combined });
+      application_name: 'naijue-controlled-native-import' }));
+    session = await module.openSourceSession({ binding: structuredClone(job.binding), sources: structuredClone(job.sources), pool: databaseGate.capability, signal: combined });
     must(session && typeof session.steps === 'function' && typeof session.close === 'function'
       && typeof session.authorizeStep === 'function' && typeof session.assertExecutionAllowed === 'function'
       && typeof session.assertAllowed === 'function' && typeof session.authorizeNativeCommand === 'function', 'IMPORT_SOURCE_HOST_SESSION_REQUIRED');
@@ -134,7 +147,7 @@ export async function openImportHost({ signal, configFile = process.env.NAIJUE_I
       referenceDecisionFile: job.sources.referenceDecisionFile, trustedReferenceDecisionSha256: job.sources.trustedReferenceDecisionSha256, mappingFiles: job.sources.mappingFiles });
     closure = await openAuthorizedHistoryClosureReader({ scope: session.closureScope, openSources: session.openSources,
       trustedSelectionSha256: job.binding.selectionSha256, trustedAuthorizedPayloadHash: job.binding.authorizedPayloadHash });
-    active();
+    active(); pool = databaseGate.activate();
     return {
       executor: { pool, binding: structuredClone(job.binding), now: () => new Date().toISOString(), authorization: {
         async assertExecutionAllowed(binding) { active(); must(requestHash(binding) === requestHash(job.binding), 'IMPORT_SOURCE_HOST_BINDING'); await session.assertExecutionAllowed(structuredClone(binding)); active(); },

@@ -19,6 +19,7 @@ export interface PaymentSettingsPage {
   readonly page: number; readonly pageSize: 20 | 50 | 100;
 }
 export interface PaymentSettingsReader {
+  readonly supportsPaymentMethodFilter?: true;
   readList(kind: PaymentSettingsKind, read: QueryRead<PaymentSettingsQuery>): Promise<PaymentSettingsPage>;
   readDetail(kind: PaymentSettingsKind, read: QueryRead<{ readonly id: string }>): Promise<PaymentSettingsRecord | null>;
 }

@@ -11,3 +11,13 @@
 
 @media(max-width:1100px){.sales-proposal-editor .sale-doc-fields{grid-template-columns:repeat(3,minmax(0,1fr))}.sales-proposal-editor .sale-payment-field{grid-column:1/-1}.sales-proposal-editor .sale-head{flex-wrap:wrap}.sales-proposal-editor .actions{margin-left:0}.sales-proposal-editor .sale-summary{flex-wrap:wrap}}
 @media(max-width:700px){.sales-proposal-editor .sale-doc-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.sales-proposal-editor .sale-head .actions{width:100%}.sales-proposal-editor .sale-payment-row{grid-template-columns:minmax(70px,1fr) 64px 80px 32px}}
+
+/* Frozen sales-funds-ui field: selected account and editable amount stay in
+ * the document header; only the authorized method/account chooser is modal. */
+.sales-proposal-editor .sale-payment-row{grid-template-columns:minmax(110px,1fr) 72px 106px 36px}
+.sales-proposal-editor .sale-payment-account{min-width:0;width:100%;justify-content:space-between;text-align:left}
+.sales-proposal-editor .sale-payment-account>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sales-proposal-editor .sale-entry-section+[data-business-section]{margin-top:12px}
+.sales-proposal-editor .sale-entry-section .sale-lines{min-height:110px;max-height:min(38dvh,400px)}
+.sales-proposal-editor .sale-summary-primary{font-variant-numeric:tabular-nums}
+@media(max-width:700px){.sales-proposal-editor .sale-payment-row{grid-template-columns:minmax(90px,1fr) 64px 86px 32px}}

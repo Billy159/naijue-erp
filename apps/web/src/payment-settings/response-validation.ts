@@ -9,3 +9,10 @@ export function validatePaymentSettingsDraft(kind: PaymentSettingsKind, draft: R
   // An empty hall list is not silently changed to ALL; B05 must freeze its meaning.
   return errors;
 }
+
+export function projectPaymentSettingsRecord(item: import('../../../../packages/application/src/organization-maintenance-ports.ts').OrganizationMaintenanceRecord): import('./contracts.ts').PaymentSettingsRecord {
+  if (item.kind === 'PAYMENT_METHOD') return { kind: 'methods', id: item.id, name: item.name, enabled: item.enabled, version: item.version };
+  if (item.kind === 'PAYMENT_ACCOUNT') return { kind: 'accounts', id: item.id, name: item.name, enabled: item.enabled, version: item.version,
+    paymentMethod: { id: item.paymentMethod.id, name: item.paymentMethod.name }, halls: item.halls.map(hall => ({ id: hall.id, name: hall.name })) };
+  throw new TypeError('Expected native payment record');
+}

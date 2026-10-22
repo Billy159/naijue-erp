@@ -18,6 +18,8 @@ export interface StaffSettingsPage {
   readonly page: number; readonly pageSize: 20 | 50 | 100;
 }
 export interface StaffSettingsReader {
+  /** Only explicit server capabilities may enable filters; never filter one page locally. */
+  readonly capabilities?: { readonly roleFilter?: true; readonly loginStatusFilter?: true; readonly loginNameSearch?: true };
   readList(read: QueryRead<StaffSettingsQuery>): Promise<StaffSettingsPage>;
   readDetail(read: QueryRead<{ readonly id: string }>): Promise<StaffSettingsRecord | null>;
 }
@@ -35,3 +37,13 @@ export interface StaffSettingsProps {
   readonly onAccessFailure: (kind: 'unauthenticated' | 'forbidden') => void;
 }
 export const initialStaffSettingsQuery: StaffSettingsQuery = Object.freeze({ search: '', role: '', hallId: null, employmentStatus: '在职', loginStatus: '', page: 1, pageSize: 20 });
+
+export interface AccountSettingsRecord {
+  readonly id: string; readonly version: number; readonly loginName: string; readonly loginEnabled: boolean;
+  readonly createdAt: string; readonly updatedAt: string;
+  readonly staff: { readonly id: string; readonly name: string; readonly role: string; readonly employmentStatus: string; readonly hallId: string | null };
+}
+export interface AccountSettingsReader {
+  readList(read: QueryRead<import('../../../../packages/application/src/organization-maintenance-ports.ts').OrganizationListQuery>): Promise<{ readonly page: number; readonly pageSize: 20 | 50 | 100; readonly total: number; readonly items: readonly AccountSettingsRecord[] }>;
+  readDetail(read: QueryRead<{ readonly id: string }>): Promise<AccountSettingsRecord | null>;
+}

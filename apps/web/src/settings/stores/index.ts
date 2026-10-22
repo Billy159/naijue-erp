@@ -5,3 +5,5 @@ export type { StoreSettingsPageProps, StoreSettingsBrowserReader } from './contr
 export { StoreSettingsMaintenanceHost } from './maintenance-host.tsx';
 export { createStoreSettingsMaintenanceDirectory } from './maintenance-http-client.ts';
 export type { StoreMaintenancePreparation, SettingsDirectoryReader } from './maintenance-contracts.ts';
+export { createOrganizationMaintenanceReadClient, createOrganizationStoreSettingsReader, createOrganizationSettingsDirectory } from './maintenance-http-client.ts';
+export type { OrganizationSettingsReadClient } from './maintenance-http-client.ts';

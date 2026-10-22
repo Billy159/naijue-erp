@@ -4,7 +4,7 @@ import { mkdtemp, realpath, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
-import { openImportHost, requiredNativeSourceInputs, validateSourceHostJob } from './production-source-host.mjs';
+import { openImportHost, requiredNativeSourceInputs, validateSourceHostJob, createSourcePreflightDatabaseGate } from './production-source-host.mjs';
 const id = n => `00000000-0000-0000-0000-${String(n).padStart(12, '0')}`;
 const sha = c => c.repeat(64);
 function job(at = Date.now()) {
@@ -66,4 +66,41 @@ test('source module with absent production factories cannot create a pool or use
     await writeFile(module, code); j.providers = { path: module, sha256: createHash('sha256').update(code).digest('hex') }; await writeFile(config, JSON.stringify(j));
     await assert.rejects(openImportHost({ signal: new AbortController().signal, configFile: config }), { code: 'IMPORT_SOURCE_HOST_FACTORIES_REQUIRED' });
   } finally { await rm(root, { recursive: true }); }
+});
+test('QB-SOURCE-PREFLIGHT-01: correctly declared groups cannot query from source constructor before actual factories/native checks', async () => {
+  const root=await mkdtemp(join(await realpath(tmpdir()),'source-preflight-regression-'));
+  try{
+    const j=job(),native=join(root,'native.json'),module=join(root,'provider.mjs'),config=join(root,'job.json'),marker=join(root,'queried-marker');
+    const bytes=JSON.stringify({schemaVersion:1,validatorVersion:requiredNativeSourceInputs().referenceDecision.validatorVersion,batchId:j.binding.batchId,
+      fixedSourceNamespace:j.binding.fixedSourceNamespace,selection:{entity:'PRODUCT',selectionSha256:j.binding.selectionSha256},mappingFiles:[],decisions:[]});
+    await writeFile(native,bytes);j.sources.referenceDecisionFile=native;j.sources.trustedReferenceDecisionSha256=createHash('sha256').update(bytes).digest('hex');
+    const code=`import {writeFile} from 'node:fs/promises';export const providerVersion='NATIVE_IMPORT_PRODUCTION_PROVIDERS_19_V1';
+      export const sourceGroups=${JSON.stringify(requiredNativeSourceInputs().closureSourceGroups)};
+      export async function openSourceSession({pool}){await pool.query('SELECT 1');await writeFile(${JSON.stringify(marker)},'queried');return {openSources:{}};}`;
+    await writeFile(module,code);j.providers={path:module,sha256:createHash('sha256').update(code).digest('hex')};await writeFile(config,JSON.stringify(j));
+    await assert.rejects(openImportHost({signal:new AbortController().signal,configFile:config}),{code:'IMPORT_SOURCE_HOST_DATABASE_PRECHECK'});
+    const {stat}=await import('node:fs/promises');await assert.rejects(stat(marker),{code:'ENOENT'});
+  }finally{await rm(root,{recursive:true,force:true});}
+});
+test('source database gate remains inert until complete preflight, then forwards the same pool and disposes once',async()=>{
+  let created=0,queries=0,connections=0,ended=0;
+  const client={};const gate=createSourcePreflightDatabaseGate(()=>{created++;return {async query(){queries++;return {rows:[]};},async connect(){connections++;return client;},async end(){ended++;}};});
+  await assert.rejects(gate.capability.query('SELECT 1'),/DATABASE_PRECHECK/);await assert.rejects(gate.capability.connect(),/DATABASE_PRECHECK/);
+  assert.equal(created,0);assert.equal(queries,0);assert.equal(connections,0);
+  gate.activate();assert.equal(created,1);await gate.capability.query('SELECT 1');assert.equal(await gate.capability.connect(),client);assert.equal(queries,1);assert.equal(connections,1);
+  await gate.close();await gate.close();assert.equal(ended,1);await assert.rejects(gate.capability.query('SELECT 1'),/DATABASE_PRECHECK/);
+});
+test('full factory declarations with a missing actual native authorizer retain the closed database capability',async()=>{
+  const root=await mkdtemp(join(await realpath(tmpdir()),'source-native-preflight-'));
+  try{
+    const j=job(),native=join(root,'native.json'),module=join(root,'provider.mjs'),config=join(root,'job.json');
+    const bytes=JSON.stringify({schemaVersion:1,validatorVersion:requiredNativeSourceInputs().referenceDecision.validatorVersion,batchId:j.binding.batchId,
+      fixedSourceNamespace:j.binding.fixedSourceNamespace,selection:{entity:'PRODUCT',selectionSha256:j.binding.selectionSha256},mappingFiles:[],decisions:[]});
+    await writeFile(native,bytes);j.sources.referenceDecisionFile=native;j.sources.trustedReferenceDecisionSha256=createHash('sha256').update(bytes).digest('hex');
+    const code=`export const providerVersion='NATIVE_IMPORT_PRODUCTION_PROVIDERS_19_V1';export const sourceGroups=${JSON.stringify(requiredNativeSourceInputs().closureSourceGroups)};
+      export async function openSourceSession({pool,binding}){return {steps:async function*(){},close:async()=>{},authorizeStep:async()=>{},assertExecutionAllowed:async()=>{},assertAllowed:async()=>{},authorizeNativeCommand:async()=>{},
+        openSources:Object.fromEntries(sourceGroups.map(k=>[k,async()=>{}])),closureScope:binding,nativeProductSourceReader:{}};}`;
+    await writeFile(module,code);j.providers={path:module,sha256:createHash('sha256').update(code).digest('hex')};await writeFile(config,JSON.stringify(j));
+    await assert.rejects(openImportHost({signal:new AbortController().signal,configFile:config}),/NATIVE_PRODUCT_EXACT_SOURCE_AUTHORIZER_REQUIRED/);
+  }finally{await rm(root,{recursive:true,force:true});}
 });
