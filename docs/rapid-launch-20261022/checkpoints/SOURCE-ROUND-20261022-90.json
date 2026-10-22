@@ -1,0 +1,58 @@
+{
+  "atUtc": "2026-10-22T21:47:20.212052+00:00",
+  "parent": "f1809f73af4854bf40d092f7a70094a48c600506",
+  "groups": [
+    {
+      "slice": "C_EXPLICIT26_R1_DEPLOYMENT_SELECTOR_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-runtime26-release-script-adopted-20261023-01/RESULT.json",
+      "receiptSha256": "059e0e904e0eb5257ba47f7a2cc0001667f6219fec349ed341d823f305e3b267",
+      "receiptSnapshot": {
+        "taskId": "C_EXPLICIT26_R1_DEPLOYMENT_SELECTOR_SOURCE",
+        "status": "SOURCE_READY_PENDING_QB_NO_SERVER_EXECUTION",
+        "atUtc": "2026-10-22T21:47:20.212052+00:00",
+        "preparedDelta": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-runtime26-release-script-delta-prep-20261023-01/PREPARATION-RESULT.json",
+        "preparedDeltaSha256": "420ef6af2000dd237c06c1db4470e87312e8831c7d0d01a31478bd40bf3db28d",
+        "patchSha256": "64a12641dc22ed9f6b748896d68e3b95eba386223edab42df30ef0419adbcb7b",
+        "checks": {
+          "appliedExactPreparedBytes": true,
+          "localCompile": true,
+          "preparedFocused18": "Adopted helper self-check evidence, not controller re-run",
+          "actualServer": false
+        },
+        "files": [
+          {
+            "path": "scripts/release/deploy-candidate.py",
+            "owner": "C",
+            "bytes": 53722,
+            "sha256": "543b1a594c1661e9eb3ffe7d03bbc98d0184a6d9a9cb5694f0c0e63d962ffa38"
+          },
+          {
+            "path": "scripts/release/DEPLOYMENT.md",
+            "owner": "C",
+            "bytes": 17191,
+            "sha256": "adb00d5cd59e45a8b1a99d5978c3b1eb4be811153cc23e1a0e037f0f72af6efb"
+          }
+        ],
+        "notTested": [
+          "Actual final config/permanent metadata pin/new build/pack/stage/activation/dataReady/public/boot/PG"
+        ],
+        "oldDefaults": "Schema19 preserved; exact26 explicit only"
+      },
+      "files": [
+        {
+          "path": "scripts/release/deploy-candidate.py",
+          "owner": "C",
+          "bytes": 53722,
+          "sha256": "543b1a594c1661e9eb3ffe7d03bbc98d0184a6d9a9cb5694f0c0e63d962ffa38"
+        },
+        {
+          "path": "scripts/release/DEPLOYMENT.md",
+          "owner": "C",
+          "bytes": 17191,
+          "sha256": "adb00d5cd59e45a8b1a99d5978c3b1eb4be811153cc23e1a0e037f0f72af6efb"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only explicit technical deployment selector/source contract. No original19 gate relaxation or actual server/data/public/boot claim."
+}

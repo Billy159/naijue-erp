@@ -144,3 +144,16 @@ Mutating actions require root, hostname `naijue-server`, `ERP_SHARED_TASK_ID=T45
 Only typed, bounded JSON receipts are exported through `ssh-control.py`; no runtime configuration, password, SQL, raw Docker inspect, container output, installation log or credential hash is emitted. Local receipt file references/hashes and non-secret runtime IDs remain reviewable. Unexpected failures report safe error codes and preserve data.
 
 **Not implemented/proven by this slice:** systemd/boot entry ownership, actual nodebase/network facts, real Docker startup, Linux installation/network access, private runtime readiness, real auth/data/HTTPS acceptance, external cutover/readback and actual rollback. Candidate containers deliberately have `restart=no`; C must explicitly bind a compatible boot/startup arrangement before claiming persistent production operation, because the existing `naijue-prod.service` may restart its old Web after reboot. These tools do not silently change that old unit. No actual deployment has been executed as part of this tool delivery.
+
+
+## Explicit exact26 R1 successor (source only; not deployment evidence)
+
+The default plan remains schema19. Select `runtimeSelector: "exact26-r1"` explicitly with the dense schemaVersions 1..26. Unknown selectors or runtime26 inputs without this selector are rejected. Keep documentCommands DISABLED and profile source-confirmed-native-exact26-r1-v1 in the closed ten-field private runtime configuration. No SQL, migration, import or grant is executed by this deployment selector.
+
+The runtime26 object has exactly six distinct permanent ROOT references, each closed to path and sha256: upgradeReceipt, review, independentReview, buildReceipt, sourceManifest, buildManifest. Bind the original C05 prefix19 and actual committed C38 versions20..26 by their source migration hashes; require the exact same fixed-source real build/pack and native backend source/output graph. Prior metadata or health does not satisfy dataReady.
+
+Mount only the explicit metadata files readonly at /run/naijue-rewrite/runtime26/C-RUNTIME-REVIEW.json and /run/naijue-rewrite/runtime26/INDEPENDENT-REVIEW.json, alongside the existing readonly private runtime configuration. Start the same backend production-main.js using --exact26-r1. C must create a NEW permanent-path metadata review and SHA; the temporary JOB42 e48df427 review is not a permanent-host pin. Keep credentials server-only and out of logs, Git and receipts.
+
+The stage receipt, actual accepted candidate and activation bind runtime26BindingSha256 over these public references plus the existing private runtime file identity. They cannot change selector, metadata bytes, version or private config between staging and activation. All existing backup, original-container CAS, exact candidate, QF/QB, actual dataReady, write-boundary and rollback gates remain. Ship rollback-candidate.py from the same fixed source because it imports this module.
+
+Boot persistence is separate: boot-entry.py still limits schema19. This source successor does not establish exact26 boot or public business readiness. No permanent config/package, actual stage, entry switch or import is represented as complete by this addition.
