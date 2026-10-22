@@ -1,0 +1,180 @@
+{
+  "atUtc": "2026-10-22T19:29:15.889815+00:00",
+  "parent": "6a23762d0bd515fd19f684d4ccc08e45a911cb16",
+  "groups": [
+    {
+      "slice": "TRANSFER_EXISTING_PREPARATION_FINAL_EOF_ONLY_FIX",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/TRANSFER-PREPARE-EXISTING-RESULT-v2.json",
+      "receiptSha256": "9793e992a6a0d94a1c69d118b48776c0cdf6711aea2832e0aaec83de0d662b42",
+      "receiptSnapshot": {
+        "task": "D1_TRANSFER_PREPARE_EXISTING_READ_PREPARATION",
+        "version": "V2_EOF_ONLY_ADDITIVE_RECEIPT",
+        "status": "SOURCE_FROZEN_FOR_C_CHECKPOINT_DIFFCHECK_PASS",
+        "atUtc": "2026-10-22T19:22:50.674Z",
+        "priorReceipt": {
+          "path": "TRANSFER-PREPARE-EXISTING-RESULT-v1.json",
+          "sha256": "ea915254d5d4a18f84298ebcec8fb3425ac0aa5225d96bdf682fc25048074dcb",
+          "preserved": true
+        },
+        "sourceClosure": [
+          {
+            "path": "packages/application/src/native-transfer-preparation.ts",
+            "bytes": 17074,
+            "sha256": "e4743206495af96093411f0d53eebe674a4d909d075669f458692670fcc7d3af",
+            "priorSha256": "e4743206495af96093411f0d53eebe674a4d909d075669f458692670fcc7d3af",
+            "change": "UNCHANGED"
+          },
+          {
+            "path": "apps/api/src/transfer-http.ts",
+            "bytes": 12241,
+            "sha256": "7f6d8f6ff9208ce80cff6fac0e1e72919cfc65ca0890ba9d0a3a92509d299268",
+            "priorSha256": "7f6d8f6ff9208ce80cff6fac0e1e72919cfc65ca0890ba9d0a3a92509d299268",
+            "change": "UNCHANGED"
+          },
+          {
+            "path": "tests/native-transfer-preparation.test.ts",
+            "bytes": 15791,
+            "sha256": "9c1c762781ff50255e88119b3d4556fdec791b8357deb1be828412278223d63b",
+            "priorSha256": "ab77e0a3ea0583934a8d56cd33424442f718fdd2a22b98472f7e081af6d8046f",
+            "change": "Exactly one redundant terminal LF removed; all preceding bytes unchanged"
+          },
+          {
+            "path": "apps/api/src/authenticated-document-commands.test.ts",
+            "bytes": 18650,
+            "sha256": "f1fe1a9e4a7f4f3796ab9067f805591db9377aae1f0592784902650116ba2ba0",
+            "priorSha256": "d580d9b18182d8578f5cfaaf7352a83b5b968114c8fc3675ed19c8c11353deab",
+            "change": "Exactly one redundant terminal LF removed; all preceding bytes unchanged"
+          }
+        ],
+        "changedFiles": [
+          "tests/native-transfer-preparation.test.ts",
+          "apps/api/src/authenticated-document-commands.test.ts"
+        ],
+        "logicChanges": 0,
+        "frozenForCCheckpoint": true,
+        "validation": {
+          "newCheck": "TRANSFER-PREPARE-EXISTING-EOF-DIFFCHECK-v2.json",
+          "diffCheckActualExitCode": 0,
+          "output": "",
+          "original12SourceProtocolChecks": "REUSED_V1_UNCHANGED_LOGIC",
+          "originalStrict": "REUSED_V1_UNCHANGED_LOGIC",
+          "testsRerun": 0
+        },
+        "authority": "C requested this read-only whitespace diffcheck and exact EOF-only correction; no index/Git mutation, DB/server or host activation by D1",
+        "actualIssuerOrSourceGrant": false
+      },
+      "files": [
+        {
+          "path": "packages/application/src/native-transfer-preparation.ts",
+          "owner": "D1",
+          "sha256": "e4743206495af96093411f0d53eebe674a4d909d075669f458692670fcc7d3af",
+          "bytes": 17074
+        },
+        {
+          "path": "apps/api/src/transfer-http.ts",
+          "owner": "D1",
+          "sha256": "7f6d8f6ff9208ce80cff6fac0e1e72919cfc65ca0890ba9d0a3a92509d299268",
+          "bytes": 12241
+        },
+        {
+          "path": "tests/native-transfer-preparation.test.ts",
+          "owner": "D1",
+          "sha256": "9c1c762781ff50255e88119b3d4556fdec791b8357deb1be828412278223d63b",
+          "bytes": 15791
+        },
+        {
+          "path": "apps/api/src/authenticated-document-commands.test.ts",
+          "owner": "D1",
+          "sha256": "f1fe1a9e4a7f4f3796ab9067f805591db9377aae1f0592784902650116ba2ba0",
+          "bytes": 18650
+        }
+      ]
+    },
+    {
+      "slice": "EXISTING_DOCUMENT_STRICT_READ_PORTS_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-35/DELIVERY.json",
+      "receiptSha256": "ef72b916e8468de080eb3b7fb82f61bd249232613e06de29795ff615ceabcaf0",
+      "receiptSnapshot": {
+        "chunk": 35,
+        "status": "READY_FOR_C_PIN_READ_PORT_ONLY_NOT_MOUNTED",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/existing-document-preparation.ts",
+            "sha256": "c426744142cdb8e52a435be4384145236a4ce255a17745df0ab7630c976d1411"
+          },
+          {
+            "path": "apps/web/src/current-form/sales-create.ts",
+            "sha256": "71c7ef7f45ec3015dc188a1fa3daa5429277a5f62e5375b3a1f3ab439f2f75fe"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-create.ts",
+            "sha256": "336bdf313069122be0428abf258c21dfcd5511630085c4972689a588e59ff157"
+          }
+        ],
+        "publicTypes": [
+          "sales-create.ts re-exports SalesExistingPreparation",
+          "transfer-create.ts re-exports TransferExistingPreparation"
+        ],
+        "behavior": "Strict inert bounded existing-document HTTP clients and reusable response validators moved to the registered pure module; public type/factory export paths unchanged. No creator/editor/React/CSS/allocator/command dependency in the pure module.",
+        "checks": [
+          {
+            "log": "types-2.log",
+            "exitCode": 0,
+            "scope": "Final3 source closure after extraction."
+          },
+          {
+            "log": "read-port-1.log",
+            "exitCode": 0,
+            "scope": "First wire scenarios before mechanical extraction: closed DTO/CAS/native target, original historicalNULL vs actual new barcode, transfer sameSKU distinct pointers2/3, invalid/repeated pointers/quantities, caller mutation, provider404 no retry/create/SAVE."
+          },
+          {
+            "log": "module-1.log",
+            "exitCode": 0,
+            "scope": "After extraction public re-exports are identical pure factories, construction/import causes zero reads. Exact wire functions moved unchanged; broad scenarios not rerun."
+          }
+        ],
+        "limits": [
+          "Only read port; actual saved UI/session consumer and production provider capability remain unmounted. No fake success when provider absent.",
+          "C owns application/contracts.ts optional commands.existingPreparation fields; same public type paths now exist.",
+          "NativeTransferExistingProposal type is from current registered D1 existing-read source; C must bind/fix its type source together with3-file closure if not yet in Git. F1 did not edit backend.",
+          "Dependent session will follow C frozen 401/403 treatment and block unprepared new identity SAVE; port itself never mutates an existing workspace.",
+          "No database/browser/server/full build/real business write."
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/existing-document-preparation.ts",
+          "owner": "F1",
+          "sha256": "c426744142cdb8e52a435be4384145236a4ce255a17745df0ab7630c976d1411",
+          "bytes": 13004
+        },
+        {
+          "path": "apps/web/src/current-form/sales-create.ts",
+          "owner": "F1",
+          "sha256": "71c7ef7f45ec3015dc188a1fa3daa5429277a5f62e5375b3a1f3ab439f2f75fe",
+          "bytes": 13798
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-create.ts",
+          "owner": "F1",
+          "sha256": "336bdf313069122be0428abf258c21dfcd5511630085c4972689a588e59ff157",
+          "bytes": 9176
+        }
+      ]
+    },
+    {
+      "slice": "C_OPTIONAL_EXISTING_READ_CAPABILITY_PUBLIC_TYPES",
+      "files": [
+        {
+          "path": "apps/web/src/application/contracts.ts",
+          "owner": "C",
+          "sha256": "e49a6697ba6c35bd9f7f020b7b039814871c325d050b6b24c7c2c17a3ea5ea26",
+          "bytes": 11722
+        }
+      ],
+      "scope": "Type-only imports re-exported by same fixed F1 public3 and D1 new transfer type4; no implicit route/write."
+    }
+  ],
+  "fileCount": 8,
+  "scope": "One complete typed snapshot backend4/frontend3/Cshared1. Readports not Session mounted/host enabled. D1v2 only2 EOF LF removals; original12 source/protocol checks reused, new diffcheck0."
+}

@@ -5,11 +5,16 @@ import test from "node:test";
 import type { TestContext } from "node:test";
 import Fastify from "fastify";
 import { createAuthenticatedDocumentCommandsPlugin } from "./authenticated-document-commands.ts";
+import { createTransferHttpPlugin } from "./transfer-http.ts";
+import type { TransferHttpOptions } from "./transfer-http.ts";
+import { createTransferSessionAuthenticator } from "./transfer-authentication.ts";
+import { createNativeTransferExistingPreparation, createNativeTransferPreparation, createNativeManualTransferReferences, parseNativeTransferExistingProposal } from "../../../packages/application/src/native-transfer-preparation.ts";
+import { actor as transferActor } from "../../../tests/support/synthetic-transfer.ts";
 import type { AuthenticatedDocumentCommandsOptions } from "./authenticated-document-commands.ts";
 import { exactJson } from "./sales-http.ts";
 import { fixture, syntheticDraft, ids, sid, snapshot, SYNTHETIC_RULES } from "../../../tests/support/synthetic-fixtures.ts";
 import { fixture as transferFixture, draft as transferDraft } from "../../../tests/support/synthetic-transfer.ts";
-import { requireDomain } from "../../../packages/domain/src/errors.ts";
+import { DomainError, requireDomain } from "../../../packages/domain/src/errors.ts";
 import type { AuthenticationService } from "../../../packages/authentication/src/service.ts";
 
 const origin = "https://synthetic-commands.invalid";
@@ -120,4 +125,67 @@ test("SYNTHETIC over-budget native labels fail preparation explicitly without wr
   assert.equal(oversized.statusCode, 413);
   const commandOversized = await h.app.inject({ method: "POST", url: "/transfers/commands", headers: h.headers, payload: JSON.stringify({ padding: "x".repeat(TRANSFER_COMMAND_MAX_REQUEST_BYTES) }) });
   assert.equal(commandOversized.statusCode, 413);
+});
+
+async function existingTransferHttp(t: TestContext, enable = true, provider?: TransferHttpOptions["existingPreparation"]) {
+  const f = transferFixture(); let active = true, sequence = 20000;
+  const original = transferDraft(); await f.service.execute({ actor: transferActor, action: "SAVE", expectedVersion: null, requestKey: "seed-existing-http", draft: original });
+  const dependencies = { ...f.dependencies, newId: <K extends import("../../../packages/domain/src/values.ts").EntityKind>(kind: K) => sid(kind, sequence++),
+    references: createNativeManualTransferReferences(), unitOfWork: { transaction<T>(work: (tx: import("../../../packages/application/src/transfer-ports.ts").TransferTransaction) => Promise<T>) {
+      return f.store.transaction(tx => work({ ...tx, async getCurrentTransferSnapshots(ids) { return new Map(ids.map(id => [id, { ...snapshot, barcode: "000123" }])); } }));
+    } } };
+  const service: AuthenticationService = { async resolve(value) { return active && value === token ? { accountId: transferActor.accountId, staffId: sid("staff", 16),
+    loginName: "SYNTHETIC", role: transferActor.role, hallId: transferActor.hallId, authVersion: 1 } : null; },
+    async login() { throw Error("SYNTHETIC UNUSED"); }, async logout() {}, async changeOwnPassword() {} };
+  const app = Fastify({ logger: false }); t.after(() => app.close());
+  app.register(createTransferHttpPlugin({ dependencies, authenticate: createTransferSessionAuthenticator({ service, trustedOrigin: origin }),
+    ...(enable ? { existingPreparation: provider ?? createNativeTransferExistingPreparation(dependencies) } : { preparation: createNativeTransferPreparation(dependencies) }) }));
+  await app.ready(); const headers = { cookie: `__Host-naijue_session=${token}`, origin, "content-type": "application/json" };
+  const input = () => ({ businessDate: "2026-10-21", note: null, transferId: original.header.id, expectedVersion: 1,
+    fromWarehouseId: original.header.fromWarehouseId, toWarehouseId: original.header.toWarehouseId,
+    lines: [{ existingLineId: original.lines[0]!.id, skuId: original.lines[0]!.skuId, quantity: "1" }] });
+  return { app, f, input, original, headers, expire: () => { active = false; }, post: (payload: unknown, customHeaders = headers, url = "/transfers/prepare-existing") => app.inject({ method: "POST", url, headers: customHeaders, payload: exactJson(payload) }) };
+}
+test("SYNTHETIC existing transfer HTTP opt-in uses current session/CSRF, exact response and zero business effects", async t => {
+  const old = await existingTransferHttp(t, false); assert.equal((await old.post(old.input())).statusCode, 404);
+  const h = await existingTransferHttp(t), before = h.f.store.snapshot();
+  const response = await h.post(h.input()); assert.equal(response.statusCode, 200); assert.equal(response.headers["cache-control"], "no-store");
+  assert.deepEqual(Object.keys(response.json()).sort(), ["draft", "expectedVersion"]); assert.equal(response.json().expectedVersion, 1);
+  assert.equal(response.json().draft.header.id, h.original.header.id); assert.equal(response.json().draft.header.number, h.original.header.number);
+  assert.equal(response.json().draft.lines[0].quantity, "1"); assert.equal(response.json().draft.lines[0].id, h.original.lines[0]!.id);
+  assert.deepEqual(h.f.store.snapshot(), before); assert.equal(h.app.server.listening, false);
+  assert.equal((await h.post(h.input(), { ...h.headers, origin: "https://untrusted.invalid" })).statusCode, 401);
+  assert.equal((await h.post(h.input(), { ...h.headers, cookie: "" })).statusCode, 401);
+  h.expire(); assert.equal((await h.post(h.input())).statusCode, 401); assert.deepEqual(h.f.store.snapshot(), before);
+});
+test("SYNTHETIC existing transfer HTTP rejects forged pointers/authority, unknown fields, sales intent and invalid quantities", async t => {
+  const h = await existingTransferHttp(t), input = h.input(), before = h.f.store.snapshot();
+  for (const payload of [{ ...input, actor: transferActor }, { ...input, orderDiscount: "0" }, { ...input, expectedVersion: "1" },
+    { ...input, lines: [{ ...input.lines[0], snapshot }] }, { ...input, lines: [{ ...input.lines[0], existingLineId: sid("transferLine", 999) }] },
+    { ...input, lines: [input.lines[0], input.lines[0]] }]) assert.equal((await h.post(payload)).statusCode, 400);
+  for (const quantity of ["-1", "0"]) assert.equal((await h.post({ ...input, lines: [{ ...input.lines[0], quantity }] })).statusCode, 422);
+  assert.equal((await h.post(input, h.headers, "/transfers/prepare-existing?role=ADMIN")).statusCode, 400);
+  const getter = { ...input }; Object.defineProperty(getter, "transferId", { enumerable: true, get() { throw Error("GETTER_MUST_NOT_RUN"); } });
+  assert.throws(() => parseNativeTransferExistingProposal(getter), { code: "INVALID_HTTP_INPUT" }); assert.deepEqual(h.f.store.snapshot(), before);
+});
+test("SYNTHETIC existing transfer HTTP preserves actual version/state/history/ref conflicts and returns no partial draft", async t => {
+  const h = await existingTransferHttp(t), input = h.input(), doc = h.f.store.snapshot().transfers.get(h.original.header.id)!.document;
+  assert.equal((await h.post({ ...input, expectedVersion: 2 })).statusCode, 409);
+  assert.equal((await h.post({ ...input, toWarehouseId: input.fromWarehouseId })).statusCode, 422);
+  h.f.store.seedDocument({ ...doc, header: { ...doc.header, status: "APPROVED" } }); assert.equal((await h.post(input)).statusCode, 409);
+  h.f.store.seedDocument(doc, "CUTOFF_HISTORY"); assert.equal((await h.post(input)).statusCode, 409);
+  h.f.store.seedDocument(doc); h.f.revokeAccess(); const denied = await h.post(input); assert.equal(denied.statusCode, 403); assert.ok(!Object.hasOwn(denied.json(), "draft"));
+  for (const code of ["NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE", "TRANSFER_SNAPSHOT_MISMATCH", "WAREHOUSE_UNAVAILABLE"] as const) {
+    const x = await existingTransferHttp(t, true, { async prepareExisting() { throw new DomainError(code, "PRIVATE_PROVIDER_DETAIL"); } });
+    const response = await x.post(x.input()); assert.equal(response.statusCode, 409); assert.ok(!response.body.includes("PRIVATE")); assert.ok(!Object.hasOwn(response.json(), "draft"));
+  }
+});
+test("SYNTHETIC existing transfer HTTP bounds requests/responses and rejects a returned different target/version", async t => {
+  for (const wrong of ["target", "version", "budget"] as const) {
+    const h = await existingTransferHttp(t, true, { async prepareExisting() { const draft = transferDraft(); return { expectedVersion: wrong === "version" ? 2 : 1,
+      draft: { ...draft, header: { ...draft.header, id: wrong === "target" ? sid("transfer", 999) : draft.header.id, note: wrong === "budget" ? "x".repeat(TRANSFER_COMMAND_MAX_REQUEST_BYTES) : null } } }; } });
+    assert.equal((await h.post(h.input())).statusCode, wrong === "budget" ? 413 : 409);
+    assert.equal((await h.post({ ...h.input(), note: "x".repeat(TRANSFER_PREPARE_MAX_REQUEST_BYTES) })).statusCode, 413);
+    assert.equal((await h.app.inject({ method: "POST", url: "/transfers/prepare-existing", headers: { ...h.headers, "content-type": "text/plain" }, payload: "{}" })).statusCode, 415);
+  }
 });

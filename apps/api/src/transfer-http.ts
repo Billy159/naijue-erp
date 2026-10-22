@@ -1,5 +1,6 @@
 import { TRANSFER_PREPARE_MAX_REQUEST_BYTES, TRANSFER_COMMAND_MAX_REQUEST_BYTES, TRANSFER_PREPARE_MAX_LINES, TRANSFER_PREPARE_MAX_NOTE_LENGTH, transferPreparedDraftFitsSaveBudget } from "../../../packages/application/src/transfer-payload-budget.ts";
-import type { NativeTransferCreateProposal } from "../../../packages/application/src/native-transfer-preparation.ts";
+import { parseNativeTransferExistingProposal } from "../../../packages/application/src/native-transfer-preparation.ts";
+import type { NativeTransferCreateProposal, NativeTransferExistingProposal, NativeTransferExistingPrepared } from "../../../packages/application/src/native-transfer-preparation.ts";
 import type { TransferDraft } from "../../../packages/application/src/transfer-ports.ts";
 import type { IncomingHttpHeaders } from "node:http";
 import type { FastifyPluginAsync } from "fastify";
@@ -19,6 +20,7 @@ export interface TransferHttpOptions {
   readonly dependencies: TransferDependencies;
   /** Explicit native manual-SKU preparation; absent means no preparation route. */
   readonly preparation?: { prepareCreate(actor: TransferActor, proposal: NativeTransferCreateProposal): Promise<TransferDraft> };
+  readonly existingPreparation?: { prepareExisting(actor: TransferActor, proposal: NativeTransferExistingProposal): Promise<NativeTransferExistingPrepared> };
 }
 const statuses: Readonly<Record<string, number>> = {
   TRANSFER_PAYLOAD_TOO_LARGE: 413, INVALID_HTTP_INPUT: 400, INVALID_ID: 400, INVALID_QUANTITY: 400, QUANTITY_OVERFLOW: 422,
@@ -52,6 +54,9 @@ export function createTransferHttpPlugin(options: TransferHttpOptions): FastifyP
   if (options.preparation !== undefined && typeof options.preparation?.prepareCreate !== "function")
     throw new TypeError("Transfer preparation requires an explicit trusted provider");
   const prepare = options.preparation?.prepareCreate.bind(options.preparation);
+  if (options.existingPreparation !== undefined && typeof options.existingPreparation?.prepareExisting !== "function")
+    throw new TypeError("Existing transfer preparation requires an explicit trusted provider");
+  const prepareExisting = options.existingPreparation?.prepareExisting.bind(options.existingPreparation);
   return async function transferHttp(app) {
     const actors = new WeakMap<object, TransferActor>();
     app.addHook("onRequest", async (request, reply) => {
@@ -97,6 +102,16 @@ export function createTransferHttpPlugin(options: TransferHttpOptions): FastifyP
         fromWarehouseId: body.fromWarehouseId, toWarehouseId: body.toWarehouseId, lines });
       requireDomain(transferPreparedDraftFitsSaveBudget(draft), "TRANSFER_PAYLOAD_TOO_LARGE", "Prepared transfer exceeds the bounded SAVE payload budget");
       return reply.type("application/json").send(exactJson(draft));
+    });
+    if (prepareExisting) app.post("/transfers/prepare-existing", { bodyLimit: TRANSFER_PREPARE_MAX_REQUEST_BYTES }, async (request, reply) => {
+      assertNoQuery(request.query);
+      if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });
+      const actor = actors.get(request); if (!actor) throw new Error("Missing trusted actor");
+      const proposal = parseNativeTransferExistingProposal(request.body), prepared = await prepareExisting(actor, proposal);
+      requireDomain(prepared.expectedVersion === proposal.expectedVersion && prepared.draft.header.id === proposal.transferId,
+        "VERSION_CONFLICT", "Prepared transfer target/version differs from the original proposal");
+      requireDomain(transferPreparedDraftFitsSaveBudget(prepared.draft), "TRANSFER_PAYLOAD_TOO_LARGE", "Prepared existing transfer exceeds SAVE budget");
+      return reply.type("application/json").send(exactJson({ expectedVersion: prepared.expectedVersion, draft: prepared.draft }));
     });
     app.post("/transfers/commands", { bodyLimit: TRANSFER_COMMAND_MAX_REQUEST_BYTES }, async (request, reply) => {
       assertNoQuery(request.query);

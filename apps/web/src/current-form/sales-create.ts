@@ -70,6 +70,8 @@ export function createSalesPreparationHttpClient(options: HttpQueryOptions): Sal
     const intent = checkedIntent(input); return http.post('/sales/prepare-create', intent, signal, value => checkedPreparation(value, intent));
   } });
 }
+export { createSalesExistingPreparationHttpClient } from './existing-document-preparation.ts';
+export type { SalesExistingPreparation } from './existing-document-preparation.ts';
 export interface SalesCreateSnapshot { readonly preparing: boolean; readonly notice: string | null; readonly disposed: boolean; readonly nativeHandoff: boolean }
 export class SalesNewDocumentSession {
   readonly proposal: SalesProposalSession; readonly editor: SalesEditorSession;

@@ -2,7 +2,7 @@ import { TRANSFER_PREPARE_MAX_LINES, TRANSFER_PREPARE_MAX_NOTE_LENGTH, TRANSFER_
 import type { SkuSnapshot } from "../../domain/src/documents.ts";
 import { requireDomain } from "../../domain/src/errors.ts";
 import { businessDate, entityId, quantity } from "../../domain/src/values.ts";
-import type { TransferActor, TransferDependencies, TransferDraft, TransferReferences } from "./transfer-ports.ts";
+import type { TransferActor, TransferDependencies, TransferDraft, TransferReferences, TransferTransaction } from "./transfer-ports.ts";
 import { createSourceConfirmedTransferReferences } from "./transfer-policy.ts";
 import { sourceConfirmedCreateDocumentNumber } from "./source-confirmed-document-number.ts";
 
@@ -12,6 +12,11 @@ export interface NativeTransferCreateProposal {
   readonly fromWarehouseId: string; readonly toWarehouseId: string;
   readonly lines: readonly { readonly skuId: string; readonly quantity: string }[];
 }
+export interface NativeTransferExistingProposal extends Omit<NativeTransferCreateProposal, "lines"> {
+  readonly transferId: string; readonly expectedVersion: number;
+  readonly lines: readonly { readonly existingLineId: string | null; readonly skuId: string; readonly quantity: string }[];
+}
+export interface NativeTransferExistingPrepared { readonly expectedVersion: number; readonly draft: TransferDraft }
 const snapshotFields = ["productCode", "productName", "colorName", "fitName", "sizeName", "barcode"] as const;
 function sameSnapshot(a: SkuSnapshot, b: SkuSnapshot): boolean { return snapshotFields.every(key => a[key] === b[key]); }
 
@@ -84,6 +89,104 @@ export function createNativeTransferPreparation(dependencies: TransferDependenci
       requireDomain(transferPreparedDraftFitsSaveBudget(prepared), "TRANSFER_PAYLOAD_TOO_LARGE",
         "Prepared transfer exceeds the bounded SAVE payload budget");
       return structuredClone(prepared);
+    });
+  } });
+}
+
+function transferExistingData(input: unknown, keys: readonly string[]): Record<string, unknown> {
+  requireDomain(input !== null && typeof input === "object" && Object.getPrototypeOf(input) === Object.prototype
+    && Reflect.ownKeys(input).length === keys.length, "INVALID_HTTP_INPUT", "Exact existing transfer proposal required");
+  const result: Record<string, unknown> = {};
+  for (const key of keys) {
+    const d = Object.getOwnPropertyDescriptor(input, key); requireDomain(d && "value" in d && d.enumerable, "INVALID_HTTP_INPUT", "Own proposal data properties required"); result[key] = d.value;
+  }
+  return result;
+}
+/** Closed existing-document read proposal, independent of the original CREATE parser. */
+export function parseNativeTransferExistingProposal(input: unknown): NativeTransferExistingProposal {
+  const row = transferExistingData(input, ["transferId", "expectedVersion", "businessDate", "note", "fromWarehouseId", "toWarehouseId", "lines"]);
+  const text = (v: unknown): string => { requireDomain(typeof v === "string", "INVALID_HTTP_INPUT", "Explicit transfer text required"); return v; };
+  requireDomain(typeof row.expectedVersion === "number" && Number.isInteger(row.expectedVersion) && row.expectedVersion >= 1 && row.expectedVersion <= 2147483647,
+    "INVALID_VERSION", "Actual native integer version required");
+  const note = row.note === null ? null : text(row.note);
+  requireDomain(note === null || note.length <= TRANSFER_PREPARE_MAX_NOTE_LENGTH, "INVALID_HTTP_INPUT", "Bounded transfer note required");
+  const values = row.lines;
+  requireDomain(Array.isArray(values) && Object.getPrototypeOf(values) === Array.prototype && values.length >= 1 && values.length <= TRANSFER_PREPARE_MAX_LINES
+    && Reflect.ownKeys(values).length === values.length + 1, "INVALID_HTTP_INPUT", "Bounded dense current transfer lines required");
+  const lines = Array.from({ length: values.length }, (_, index) => {
+    const d = Object.getOwnPropertyDescriptor(values, String(index)); requireDomain(d && "value" in d && d.enumerable, "INVALID_HTTP_INPUT", "Own line entries required");
+    const line = transferExistingData(d.value, ["existingLineId", "skuId", "quantity"]), count = text(line.quantity);
+    requireDomain(quantity(count) > 0n, "INVALID_TRANSFER_LINE", "Transfer quantities must be positive exact integers");
+    return { existingLineId: line.existingLineId === null ? null : entityId("transferLine", text(line.existingLineId)), skuId: entityId("sku", text(line.skuId)), quantity: count };
+  });
+  const proposal: NativeTransferExistingProposal = { transferId: entityId("transfer", text(row.transferId)), expectedVersion: row.expectedVersion,
+    businessDate: businessDate(text(row.businessDate)), note, fromWarehouseId: entityId("warehouse", text(row.fromWarehouseId)), toWarehouseId: entityId("warehouse", text(row.toWarehouseId)), lines };
+  requireDomain(transferJsonByteLength(proposal) <= TRANSFER_PREPARE_MAX_REQUEST_BYTES, "TRANSFER_PAYLOAD_TOO_LARGE", "Existing transfer preparation exceeds request budget");
+  return proposal;
+}
+function existingTransferReadScope(original: TransferTransaction) {
+  let active = true, attemptedWrite = false;
+  const check = () => requireDomain(active, "TRANSACTION_CLOSED", "Existing transfer preparation context closed");
+  const denied = (): never => { attemptedWrite = true; throw Error("Existing transfer preparation is read-only"); };
+  const tx: TransferTransaction = Object.freeze({
+    getTransfer: (id: Parameters<TransferTransaction["getTransfer"]>[0]) => { check(); return original.getTransfer(id); },
+    getReceipt: (...args: Parameters<TransferTransaction["getReceipt"]>) => { check(); return original.getReceipt(...args); },
+    getWarehouseFact: (id: Parameters<TransferTransaction["getWarehouseFact"]>[0]) => { check(); return original.getWarehouseFact(id); },
+    getSkuFact: (id: Parameters<TransferTransaction["getSkuFact"]>[0]) => { check(); return original.getSkuFact(id); },
+    getCurrentTransferSnapshots: (ids: Parameters<NonNullable<TransferTransaction["getCurrentTransferSnapshots"]>>[0]) => {
+      check(); requireDomain(original.getCurrentTransferSnapshots, "NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE", "Actual native MAIN snapshot capability required"); return original.getCurrentTransferSnapshots(ids);
+    },
+    putRuntimeTransfer: denied, insertReceipt: denied, putBalance: denied, appendLedger: denied, appendAudit: denied,
+    reserveRuntimeDocumentNumber: denied, assertRuntimeDocumentNumber: denied, lockBalances: denied, getBalance: denied, listTransferLedger: denied
+  });
+  return { tx, finish() { check(); requireDomain(!attemptedWrite, "NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE", "Preparation policy attempted a forbidden write"); }, close() { active = false; } };
+}
+/** Same original transaction and transfer policy, zero business DML/number effects.
+ * Existing locks are permitted; this does not claim a PostgreSQL READ ONLY transaction. */
+export function createNativeTransferExistingPreparation(dependencies: TransferDependencies) {
+  const nativeReferences = createNativeManualTransferReferences();
+  return Object.freeze({ async prepareExisting(actorInput: TransferActor, input: NativeTransferExistingProposal): Promise<NativeTransferExistingPrepared> {
+    const actor = structuredClone(actorInput), proposal = parseNativeTransferExistingProposal(input), transferId = entityId("transfer", proposal.transferId);
+    return dependencies.unitOfWork.transaction(async original => {
+      const scope = existingTransferReadScope(original), tx = scope.tx, used = new Set<string>([transferId]);
+      const nextId: TransferDependencies["newId"] = kind => {
+        const id = entityId(kind, dependencies.newId(kind)); requireDomain(!used.has(id), "INVALID_ID", "Generated ids must differ from all retained transfer identities"); used.add(id); return id;
+      };
+      try {
+        requireDomain(!await tx.getReceipt(actor.accountId, `prepare-existing-transfer:${nextId("operation")}`), "IDEMPOTENCY_CONFLICT", "Private preparation nonce already exists");
+        const stored = await tx.getTransfer(transferId); requireDomain(stored, "DOCUMENT_NOT_FOUND", "Existing transfer unavailable");
+        const previous = stored.document;
+        await dependencies.authorization.assertAllowed(actor, "SAVE", previous, undefined, tx);
+        requireDomain(stored.stockBasis === "RUNTIME_LEDGER", "HISTORICAL_POSTING_NOT_IMPLEMENTED", "Cutoff history cannot become runtime transfer editing");
+        requireDomain(previous.header.status === "DRAFT", "INVALID_STATE", "Only an actual draft transfer may be prepared");
+        requireDomain(previous.header.version === proposal.expectedVersion, "VERSION_CONFLICT", "Existing transfer version changed");
+        for (const row of previous.lines) used.add(row.id);
+        const oldLines = new Map(previous.lines.map(row => [row.id as string, row])), pointers = new Set<string>(), fresh = new Set<string>();
+        const header: TransferDraft["header"] = { id: transferId, number: previous.header.number, businessDate: businessDate(proposal.businessDate),
+          fromWarehouseId: entityId("warehouse", proposal.fromWarehouseId), toWarehouseId: entityId("warehouse", proposal.toWarehouseId), note: proposal.note };
+        const lines: TransferDraft["lines"] = proposal.lines.map((row, index) => {
+          const old = row.existingLineId === null ? undefined : oldLines.get(row.existingLineId);
+          requireDomain(row.existingLineId === null || old?.transferId === transferId && old.isCurrent && !pointers.has(row.existingLineId), "INVALID_HTTP_INPUT", "Line pointer must be unique, current and owned by the actual transfer");
+          if (row.existingLineId !== null) pointers.add(row.existingLineId);
+          const retained = old?.skuId === row.skuId, id = retained ? old.id : nextId("transferLine"); if (!retained) fresh.add(id);
+          return { id, transferId, lineNo: index + 1, skuId: entityId("sku", row.skuId), quantity: quantity(row.quantity), isCurrent: true,
+            snapshot: retained ? { ...old.snapshot } : { productCode: "", productName: "", colorName: "", fitName: "", sizeName: "", barcode: null } };
+        });
+        const skeleton: TransferDraft = { header, lines };
+        // Pass the actual previous header so the trusted creation-hall branch is
+        // retained for edits; it must never be treated as a newly-created draft.
+        await dependencies.authorization.assertAllowed(actor, "SAVE", skeleton, previous, tx);
+        const freshLines = lines.filter(row => fresh.has(row.id));
+        const snapshots = freshLines.length ? await tx.getCurrentTransferSnapshots!(freshLines.map(row => row.skuId)) : new Map();
+        const draft: TransferDraft = { header, lines: lines.map(row => {
+          if (!fresh.has(row.id)) return row; const snapshot = snapshots.get(row.skuId);
+          requireDomain(snapshot, "NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE", "New or replaced transfer line requires actual current native MAIN"); return { ...row, snapshot: { ...snapshot } };
+        }) };
+        await nativeReferences.assertValid(tx, actor, "SAVE", previous, draft);
+        await dependencies.references.assertValid(tx, actor, "SAVE", previous, draft);
+        requireDomain(transferPreparedDraftFitsSaveBudget(draft), "TRANSFER_PAYLOAD_TOO_LARGE", "Prepared existing transfer exceeds SAVE budget"); scope.finish();
+        return structuredClone({ expectedVersion: previous.header.version, draft });
+      } finally { scope.close(); }
     });
   } });
 }

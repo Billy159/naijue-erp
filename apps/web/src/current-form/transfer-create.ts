@@ -43,6 +43,8 @@ export function createTransferPreparationHttpClient(options: HttpQueryOptions): 
     return http.post('/transfers/prepare-create', intent, signal, value => checkedPreparation(value, intent));
   } });
 }
+export { createTransferExistingPreparationHttpClient } from './existing-document-preparation.ts';
+export type { TransferExistingPreparation } from './existing-document-preparation.ts';
 export interface TransferCreateSnapshot { readonly preparing: boolean; readonly notice: string | null; readonly disposed: boolean; readonly nativeHandoff: boolean }
 /** One explicit click hands the validated proposal through native preparation to
  * the existing SAVE lifecycle. The workspace owns uncertain outcomes thereafter. */

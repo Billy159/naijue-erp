@@ -1,3 +1,5 @@
+import type { SalesExistingPreparation } from '../current-form/sales-create.ts';
+import type { TransferExistingPreparation } from '../current-form/transfer-create.ts';
 import type { ComponentType, ReactNode } from 'react';
 import type { AccountSettingsProps } from '../account-settings/contracts.ts';
 import type { ApplicationController } from './controller.ts';
@@ -42,7 +44,7 @@ export interface SalesRouteConfiguration {
   readonly detailStylesheet?: RouteStylesheet;
   /** Explicit write-host opt-in only, after native server reference/economics
    * composition is available. Omission preserves the existing read-only route. */
-  readonly commands?: { readonly newRequestKey: () => string; readonly preparation?: SalesFormPreparationProvider; readonly manualCreate?: true };
+  readonly commands?: { readonly newRequestKey: () => string; readonly preparation?: SalesFormPreparationProvider; readonly existingPreparation?: SalesExistingPreparation; readonly manualCreate?: true };
 }
 export interface TransferRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
@@ -59,7 +61,7 @@ export interface TransferRouteConfiguration {
   readonly detailStylesheet: RouteStylesheet;
   /** Omit when the real shared action-style handshake is unavailable. */
   readonly product?: { readonly stylesheet: RouteStylesheet };
-  readonly commands?: { readonly newRequestKey: () => string; readonly preparation?: TransferFormPreparationProvider; readonly manualCreate?: true };
+  readonly commands?: { readonly newRequestKey: () => string; readonly preparation?: TransferFormPreparationProvider; readonly existingPreparation?: TransferExistingPreparation; readonly manualCreate?: true };
 }
 export interface PartiesRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
