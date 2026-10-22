@@ -59,4 +59,6 @@
 .catalogue-workbench .pc-settings-body .erp-read-table .arco-table :is(.arco-table-th,.arco-table-td){box-sizing:border-box;height:34px;min-height:34px;padding:4px 8px;border-bottom:1px solid var(--ca-table-grid);font-size:12px;line-height:18px;vertical-align:middle}
 .catalogue-workbench .pc-settings-body .erp-read-table .arco-table .arco-table-th{height:36px;background:var(--ca-table-head);color:var(--ca-ink-2);font-weight:600}
 .catalogue-workbench .pc-settings-body .erp-read-table :is(.arco-table-th-item,.arco-table-cell){line-height:inherit}
+/* Late Arco small-table padding otherwise forces the 36px header to 37px. */
+.catalogue-workbench .pc-settings-body .erp-read-table .arco-table-th-item{padding:0}
 .catalogue-workbench .pc-settings-body .erp-read-table :is(.arco-table-th,.arco-table-td):last-child{width:100px}
