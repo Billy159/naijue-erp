@@ -6,6 +6,10 @@ export interface OrganizationListQuery {
   readonly search: string; readonly status: "normal" | "disabled" | "all"; readonly hallId: string | null;
   readonly page: number; readonly pageSize: 20 | 50 | 100;
 }
+/** Additive STAFF-only role filter; legacy five-field queries remain unchanged. */
+export type StaffRoleFilter = "" | "ADMIN" | "WAREHOUSE" | "SALESPERSON";
+export interface StaffRoleListQuery extends OrganizationListQuery { readonly role: StaffRoleFilter }
+export type OrganizationReadListQuery = OrganizationListQuery | StaffRoleListQuery;
 export interface OrganizationReference { readonly id: string; readonly name: string; readonly enabled: boolean }
 interface Base { readonly id: string; readonly version: number; readonly createdAt: string | null; readonly updatedAt: string | null }
 export type OrganizationMaintenanceRecord =
@@ -22,7 +26,7 @@ export type OrganizationMaintenanceRecord =
 export interface OrganizationMaintenancePage { readonly kind: OrganizationMaintenanceKind; readonly page: number; readonly pageSize: 20 | 50 | 100; readonly total: number; readonly items: readonly OrganizationMaintenanceRecord[] }
 export interface OrganizationReadTransaction {
   readonly evidence: MaintenanceEvidenceSession;
-  readList(kind: OrganizationMaintenanceKind, query: OrganizationListQuery): Promise<OrganizationMaintenancePage>;
+  readList(kind: OrganizationMaintenanceKind, query: OrganizationReadListQuery): Promise<OrganizationMaintenancePage>;
   readDetail(kind: OrganizationMaintenanceKind, id: string): Promise<OrganizationMaintenanceRecord | null>;
 }
 export interface OrganizationReadUnitOfWork { transaction<T>(work: (tx: OrganizationReadTransaction) => Promise<T>): Promise<T> }

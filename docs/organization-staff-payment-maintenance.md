@@ -26,6 +26,19 @@ explicit null or a real UUID; pageSize is 20/50/100. PAYMENT_METHOD has no hall
 dimension and requires hallId:null. POST `/detail/query` requires exactly `{id}`
 and returns the real record or null. Query strings/extra fields are rejected.
 
+STAFF additionally accepts the exact six-field body consisting of those five
+fields plus `role`: `""`, `ADMIN`, `WAREHOUSE` or `SALESPERSON`, under
+`rapid-launch-20261022/STAFF-ROLE-READ-FILTER-TECHNICAL-FREEZE-v1.json`.
+The empty string means all original roles, including unrecognized historical
+role text; other values match the stored `staff.role` exactly. The role predicate
+is parameterized inside the same matched CTE used by count and page. It grants no
+authority: the actual current ADMIN check still runs before native page SQL.
+Legacy five-field STAFF queries, all other families, name-only search, employment
+and hall filters, ordering, pagination and nullable account DTOs are unchanged.
+Other families reject the added role field. `loginStatus` is not accepted: its
+no-account classification remains pending, and this change advertises no login
+filter or inference about effective login eligibility.
+
 Lists return `{kind,page,pageSize,total,items}`. Count and one page are from one
 SQL statement. STAFF normal/disabled means the stored 在职/离职 state; ACCOUNT
 normal/disabled means its stored loginEnabled flag. An enabled login flag does not

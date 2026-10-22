@@ -5,6 +5,7 @@ import { PostgresMaintenanceCommandUnitOfWork } from "../adapters/postgres/src/m
 import { PostgresOrganizationMaintenanceReadUnitOfWork } from "../adapters/postgres/src/organization-maintenance-store.ts";
 import { createOrganizationMaintenanceReadService } from "../packages/application/src/organization-maintenance-service.ts";
 import type { OrganizationMaintenanceKind } from "../packages/application/src/organization-maintenance-ports.ts";
+import { parseOrganizationListQuery } from "../packages/application/src/organization-maintenance-validation.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
 const id = (n: number) => sid("hall", n), nativeId = id(100), reference = (n: number) => ({ id: id(n), name: `EXACT SOURCE ${n}`, enabled: true });
 const query = { search: "", status: "all", hallId: null, page: 1, pageSize: 20 };
@@ -21,13 +22,13 @@ function record(kind: OrganizationMaintenanceKind): Record<string, unknown> {
     case "PAYMENT_ACCOUNT": return { ...base, name: "PAYMENT ACCOUNT", enabled: true, paymentMethod: reference(41), halls: [reference(42), reference(43)] };
   }
 }
-function setup(kind: OrganizationMaintenanceKind, role: "ADMIN" | "WAREHOUSE" | "SALESPERSON" = "ADMIN", raw = record(kind)) {
+function setup(kind: OrganizationMaintenanceKind, role: "ADMIN" | "WAREHOUSE" | "SALESPERSON" = "ADMIN", raw = record(kind), total = "1") {
   const calls: { sql: string; values: unknown[] }[] = [], releases: unknown[] = [];
   const pool = { async connect() { return { async query(sql: string, values: unknown[] = []) {
     calls.push({ sql, values: structuredClone(values) });
     if (sql.includes("maintenance:identity")) return { rows: [{ account_id: actor.accountId, staff_id: id(901), login_enabled: true, employment_status: "在职", role, hall_id: actor.hallId }], rowCount: 1 };
     if (sql.includes("maintenance:hall")) return { rows: [{ id: actor.hallId, enabled: true }], rowCount: 1 };
-    if (sql.startsWith("WITH matched")) return { rows: [{ total: "1", items: [raw] }], rowCount: 1 };
+    if (sql.startsWith("WITH matched")) return { rows: [{ total, items: [raw] }], rowCount: 1 };
     return { rows: [], rowCount: 0 };
   }, release(error?: unknown) { releases.push(error); } }; } };
   return { calls, releases, service: createOrganizationMaintenanceReadService(new PostgresOrganizationMaintenanceReadUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool))) };
@@ -68,4 +69,53 @@ test("B05 PG protocol: duplicate account halls and fabricated staff timestamps a
   const f = setup("PAYMENT_ACCOUNT", "ADMIN", duplicate); await assert.rejects(f.service.list(actor, "PAYMENT_ACCOUNT", query), { code: "INVALID_DATABASE_VALUE" });
   const g = setup("STAFF", "ADMIN", { ...record("STAFF"), createdAt: "2026-10-22T03:00:00Z" });
   await assert.rejects(g.service.list(actor, "STAFF", query), { code: "INVALID_DATABASE_VALUE" });
+});
+
+test("staff-role v1 exact5 compatibility and STAFF-only exact6 reject invalid or pending filter shapes before connection", async () => {
+  assert.deepEqual(parseOrganizationListQuery(query, "STAFF"), query);
+  for (const role of ["", "ADMIN", "WAREHOUSE", "SALESPERSON"])
+    assert.deepEqual(parseOrganizationListQuery({ ...query, role }, "STAFF"), { ...query, role });
+  const f = setup("STAFF");
+  for (const input of [
+    ...[null, undefined, true, [], {}, "admin", "LEGACY_ROLE", "ADMIN' OR true --"].map(role => ({ ...query, role })),
+    { role: "ADMIN" }, { ...query, page: undefined, role: "ADMIN" },
+    { ...query, role: "ADMIN", loginStatus: "closed" }, { ...query, loginStatus: "" }, { ...query, role: "", extra: true }
+  ]) await assert.rejects(f.service.list(actor, "STAFF", input), { code: "INVALID_ORGANIZATION_QUERY" });
+  for (const kind of ["HALL", "WAREHOUSE", "ACCOUNT", "PAYMENT_METHOD", "PAYMENT_ACCOUNT"] as const)
+    await assert.rejects(f.service.list(actor, kind, { ...query, role: "ADMIN" }), { code: "INVALID_ORGANIZATION_QUERY" });
+  assert.equal(f.calls.length, 0);
+});
+test("staff-role v1 binds each existing role in matched before count/page and keeps ALL unknown roles/account NULL", async () => {
+  for (const role of ["ADMIN", "WAREHOUSE", "SALESPERSON"] as const) {
+    const raw = { ...record("STAFF"), role, employmentStatus: "在职", hall: reference(1), account: null };
+    const f = setup("STAFF", "ADMIN", raw, "21"), search = "SOURCE %' --";
+    const page = await f.service.list(actor, "STAFF", { ...query, role, search, status: "normal", hallId: id(1), page: 2 });
+    assert.equal(page.total, 21); assert.equal(page.page, 2); assert.equal(page.items.length, 1);
+    assert.deepEqual(page.items[0], raw);
+    const call = f.calls.find(c => c.sql.startsWith("WITH matched"))!;
+    assert.deepEqual(call.values, [search, "normal", id(1), 20, 20, null, role]);
+    assert.match(call.sql, /AND \(\$7::text='' OR m\.role=\$7::text\)/);
+    assert.ok(call.sql.indexOf("m.role=$7::text") < call.sql.indexOf("page AS"));
+    assert.match(call.sql, /SELECT count\(\*\)::text FROM matched/);
+    assert.match(call.sql, /ORDER BY display_name COLLATE "C",id LIMIT \$4 OFFSET \$5/);
+    assert.equal(f.calls.filter(c => c.sql.startsWith("WITH matched")).length, 1);
+    assert.ok(!call.sql.includes(search)); assert.ok(!call.sql.includes(`'${role}'`));
+    assert.ok(!/COALESCE\(a\.login_enabled|IS TRUE|IS FALSE/.test(call.sql));
+  }
+  const raw = { ...record("STAFF"), role: "LEGACY_ROLE_UNMAPPED", account: null };
+  for (const input of [query, { ...query, role: "" }]) {
+    const f = setup("STAFF", "ADMIN", raw), page = await f.service.list(actor, "STAFF", input);
+    assert.deepEqual(page.items[0], raw);
+    const call = f.calls.find(c => c.sql.startsWith("WITH matched"))!;
+    assert.equal(call.values.length, Object.hasOwn(input, "role") ? 7 : 6);
+    if (!Object.hasOwn(input, "role")) assert.ok(!call.sql.includes("$7"));
+  }
+});
+test("staff-role v1 request role never grants ADMIN and malformed native booleans still fail", async () => {
+  const denied = setup("STAFF", "WAREHOUSE");
+  await assert.rejects(denied.service.list(actor, "STAFF", { ...query, role: "ADMIN" }), { code: "FORBIDDEN" });
+  assert.ok(!denied.calls.some(c => c.sql.startsWith("WITH matched"))); assert.equal(denied.calls.at(-1)!.sql, "ROLLBACK");
+  const raw = record("STAFF"), account = raw.account as Record<string, unknown>;
+  const malformed = setup("STAFF", "ADMIN", { ...raw, account: { ...account, loginEnabled: null } });
+  await assert.rejects(malformed.service.list(actor, "STAFF", { ...query, role: "" }), { code: "INVALID_DATABASE_VALUE" });
 });
