@@ -27,7 +27,11 @@ export function captureProductFullPageConfiguration(value: unknown): ProductFull
   const reader: { -readonly [K in keyof ProductFullPageReadOnlyReader]: ProductFullPageReadOnlyReader[K] } = {};
   if (Object.hasOwn(input, 'base')) { const x = own(input.base, ['read']); reader.base = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['base']>['read'] }); }
   if (Object.hasOwn(input, 'specs')) { const x = own(input.specs, ['read']); reader.specs = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['specs']>['read'] }); }
-  if (Object.hasOwn(input, 'images')) { const x = own(input.images, ['read', 'readImage']); reader.images = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['images']>['read'], readImage: method(x.readImage) as NonNullable<ProductFullPageReadOnlyReader['images']>['readImage'] }); }
+  if (Object.hasOwn(input, 'images')) { const x = own(input.images, ['read', 'readImage'], ['classified']);
+    type Images=NonNullable<ProductFullPageReadOnlyReader['images']>;type Classified=NonNullable<Images['classified']>;
+    let classified:Classified|undefined;
+    if(Object.hasOwn(x,'classified')){const c=own(x.classified,['media','readSpecifications']),m=own(c.media,['readImages','readOriginal']);classified=Object.freeze({readSpecifications:method(c.readSpecifications) as Classified['readSpecifications'],media:Object.freeze({readImages:method(m.readImages) as Classified['media']['readImages'],readOriginal:method(m.readOriginal) as Classified['media']['readOriginal']})});}
+    reader.images = Object.freeze({ read: method(x.read) as Images['read'], readImage: method(x.readImage) as Images['readImage'],...(classified?{classified}:{}) }); }
   if (Object.hasOwn(input, 'barcodes')) { const x = own(input.barcodes, ['read']); reader.barcodes = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['barcodes']>['read'] }); }
   if (Object.hasOwn(input, 'prices')) { const x = own(input.prices, ['read']); reader.prices = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['prices']>['read'] }); }
   if (Object.hasOwn(input, 'stock')) { const x = own(input.stock, ['read'], ['readOverview']); reader.stock = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['stock']>['read'], ...(Object.hasOwn(x,'readOverview')?{readOverview:method(x.readOverview) as NonNullable<NonNullable<ProductFullPageReadOnlyReader['stock']>['readOverview']>}: {}) }); }

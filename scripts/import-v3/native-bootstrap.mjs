@@ -33,6 +33,24 @@ const EMPTY_TABLES = ['audit_change', 'auth_session', 'barcode_scheme', 'color',
   'product_image', 'sales_header', 'sales_line', 'sales_settlement', 'season', 'size', 'size_group', 'size_group_member', 'sku', 'sku_barcode', 'staff',
   'supplier', 'transfer_header', 'transfer_line', 'user_account', 'warehouse'];
 
+/** Fixed successor SQL for the D1-owned callback capability's finite text/arity
+ * closure. Exporting text grants no ability to execute it or bootstrap a target.
+ * The actual source26 callback must use these exact statements after its full
+ * source/account execution grant and callback-only same-client verification. */
+export const NATIVE_BOOTSTRAP26_SQL = Object.freeze({
+  target: Object.freeze({ arity: 0, sql: `/* native-bootstrap26:target */ SELECT current_database()::text database,current_user::text role,
+        inet_server_addr()::text server_address,inet_server_port() server_port,pg_postmaster_start_time()::text postmaster_started_at,
+        (SELECT array_agg(version ORDER BY version) FROM naijue_erp.schema_migration) versions` }),
+  oneNewBatch: Object.freeze({ arity: 1, sql: `/* native-bootstrap26:one-new-batch */ SELECT id,source_name,source_hash,status,
+        (SELECT count(*)::integer FROM naijue_erp.import_batch) batch_count FROM naijue_erp.import_batch WHERE id=$1::uuid` }),
+  emptyDomain: Object.freeze({ arity: 0, sql: `/* native-bootstrap26:empty-domain */ SELECT ${[...EMPTY_TABLES,
+    'runtime_document_number_allocation', 'history_sales_effective', 'history_transfer_effective', 'history_sales_line_effective',
+    'history_transfer_line_effective', 'history_sales_settlement_effective'].map(name => `EXISTS(SELECT 1 FROM naijue_erp.${name})`).join(' OR ')} existing` }),
+  account: Object.freeze({ arity: 6, sql: `/* native-bootstrap26:account */ INSERT INTO naijue_erp.user_account
+          (id,staff_id,login_name,password_hash,login_enabled,auth_version,version,created_at,updated_at)
+          VALUES ($1::uuid,$2::uuid,$3,$4,$5,1,1,$6::timestamptz,$6::timestamptz) RETURNING id,staff_id,login_enabled,auth_version,version,created_at,updated_at` })
+});
+
 export async function openNativeImportBootstrap(options) {
   const o = own(options, ['binding', 'accountSourceFile', 'trustedAccountSourceSha256', 'accountDecisionFile', 'trustedAccountDecisionSha256', 'reviewFile', 'trustedReviewSha256', 'partySource', ...(Object.hasOwn(options ?? {}, 'identityProof') ? ['identityProof'] : [])]);
   // Descriptor inspection before clone/file IO; none of these fields is inferred from the command.

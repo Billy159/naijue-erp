@@ -9,41 +9,48 @@ import { UIButton } from '../components/standard-controls.tsx';
 import { StandardOverlay } from '../components/standard-overlay.tsx';
 import type { ProductEditorImage, ProductEditorMediaReader, ProductImageRole } from './product-editor-contracts.ts';
 
-interface Props {
-  readonly scope: ReadScope; readonly productId: string | null; readonly reader: ProductReadOnlyReader;
+interface MediaContext {
+  readonly scope:ReadScope; readonly reader:Pick<ProductReadOnlyReader,'readProductSpecifications'|'readProductImages'|'readProductImage'>;
+  readonly onAccessFailure:(error:HttpQueryError)=>void;
+}
+interface Props extends MediaContext {
+  readonly productId: string | null;
   readonly media?: ProductEditorMediaReader; readonly expectedVersion: number | null;
-  readonly onAccessFailure: (error: HttpQueryError) => void; readonly onReloadRequest: () => void;
+  readonly onReloadRequest: () => void;
   readonly reloadBlocked?: boolean;
 }
 const roles: readonly (readonly [ProductImageRole, string])[] = [
   ['MAIN', '主图'], ['WHITE_BACKGROUND', '白底图'], ['HANG_TAG', '吊牌图'], ['DETAIL', '详情图'],
 ];
-function accessFailure(props: Props, error: unknown, signal: AbortSignal) {
+function accessFailure(props: MediaContext, error: unknown, signal: AbortSignal) {
   if (props.scope.active && !signal.aborted && error instanceof HttpQueryError
     && (error.kind === 'unauthenticated' || error.kind === 'forbidden')) props.onAccessFailure(error);
 }
 export function ProductEditorMedia(props: Props) {
   if (!props.productId) return <p className="product-field-hint">图片上传服务尚未就绪；保存商品后可查看已有图片。</p>;
   if (!props.media) return <><p className="product-field-hint">图片分类和维护服务尚未就绪，当前仅可查看已有图片。</p><ProductTab scope={props.scope} reader={props.reader}/></>;
-  return <MediaGallery {...props} media={props.media}/>;
+  return <MediaGallery {...props} productId={props.productId} media={props.media}/>;
 }
-function MediaGallery(props: Props & { readonly media: ProductEditorMediaReader }) {
+type GalleryProps=MediaContext&{readonly productId:string;readonly media:ProductEditorMediaReader}&({readonly readOnly:true}|{readonly readOnly?:false;readonly expectedVersion:number|null;readonly onReloadRequest:()=>void;readonly reloadBlocked?:boolean});
+/** Readonly metadata owns its current version; never lends editor maintenance/reload authority. */
+export function ProductReadOnlyMedia(props:MediaContext&{readonly productId:string;readonly media:ProductEditorMediaReader}){return <MediaGallery {...props} readOnly/>;}
+function MediaGallery(props: GalleryProps) {
   const { snapshot, read, cancel, cancelled } = useProductRead(props.scope, async input => {
     try { return await props.media.readImages(input); }
     catch (error) { accessFailure(props, error, input.signal); throw error; }
   }, (data, target) => {
     if (data.productId !== target.productId) throw new HttpQueryError('malformed-response', 'PRODUCT_MEDIA_TARGET_MISMATCH');
-    if (data.version !== props.expectedVersion) throw new HttpQueryError('conflict', 'PRODUCT_MEDIA_VERSION_MISMATCH');
+    if (!props.readOnly && data.version !== props.expectedVersion) throw new HttpQueryError('conflict', 'PRODUCT_MEDIA_VERSION_MISMATCH');
   });
   const [preview, setPreview] = useState<{ image: ProductEditorImage; label: string } | null>(null);
   const data = snapshot.phase === 'success' ? snapshot.success?.data : null;
   const item = (image: ProductEditorImage, label: string) => <MediaThumbnail key={`${image.id}:${image.version}`} image={image} label={label} open={() => setPreview({ image, label })}/>;
-  if (snapshot.phase === 'error' && snapshot.error instanceof HttpQueryError && snapshot.error.code === 'PRODUCT_MEDIA_VERSION_MISMATCH')
+  if (!props.readOnly && snapshot.phase === 'error' && snapshot.error instanceof HttpQueryError && snapshot.error.code === 'PRODUCT_MEDIA_VERSION_MISMATCH')
     return <p role="alert" className="product-field-hint">商品图片版本已变化。<UIButton disabled={!!props.reloadBlocked} onClick={props.onReloadRequest}>重新读取商品</UIButton></p>;
   if (snapshot.phase === 'error' && snapshot.error instanceof HttpQueryError && ['not-implemented','unavailable'].includes(snapshot.error.kind))
     return <p role="alert" className="product-field-hint">图片服务尚未就绪。<UIButton onClick={read}>重试读取图片</UIButton></p>;
   return <ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!data}>{data && <div className="product-editor-photos">
-    <p className="product-field-hint">点击图片查看原图。图片上传、替换和删除服务尚未就绪。</p>
+    <p className="product-field-hint">{props.readOnly?'点击图片查看原图。':'点击图片查看原图。图片上传、替换和删除服务尚未就绪。'}</p>
     {roles.map(([role, label]) => <section className="product-photo-section" key={role} aria-label={label}><h3>{label}</h3><div className="product-photo-row">
       {data.images.filter(image => image.role === role).map((image, index) => item(image, `${label} ${index + 1}`))}
       {!data.images.some(image => image.role === role) && <span className="product-field-hint">暂无图片</span>}
@@ -53,7 +60,7 @@ function MediaGallery(props: Props & { readonly media: ProductEditorMediaReader 
     {preview && <MediaOriginalPreview key={`${preview.image.id}:${preview.image.version}`} {...props} media={props.media} image={preview.image} label={preview.label} close={() => setPreview(null)}/>}
   </div>}</ProductReadState>;
 }
-function MediaColors(props: Props & { readonly images: readonly ProductEditorImage[]; readonly item: (image: ProductEditorImage, label: string) => React.ReactNode }) {
+function MediaColors(props: MediaContext & { readonly images: readonly ProductEditorImage[]; readonly item: (image: ProductEditorImage, label: string) => React.ReactNode }) {
   const { snapshot, read, cancel, cancelled } = useProductRead(props.scope, async input => {
     try { return await props.reader.readProductSpecifications(input); }
     catch (error) { accessFailure(props, error, input.signal); throw error; }
@@ -78,7 +85,7 @@ function MediaThumbnail(props: { readonly image: ProductEditorImage; readonly la
     {missing ? <span>缩略图不可用</span> : <img key={attempt} src={props.image.thumbnailUrl!} alt={props.label} loading="lazy" decoding="async" onError={() => setFailed(true)}/>}
   </button>{failed && <UIButton className="product-photo-retry" aria-label={`重试缩略图 ${props.label}`} onClick={() => { setAttempt(value => value + 1); setFailed(false); }}>重试</UIButton>}</div>;
 }
-function MediaOriginalPreview(props: Props & { readonly media: ProductEditorMediaReader; readonly image: ProductEditorImage; readonly label: string; readonly close: () => void }) {
+function MediaOriginalPreview(props: MediaContext & { readonly media: ProductEditorMediaReader; readonly image: ProductEditorImage; readonly label: string; readonly close: () => void }) {
   const [decodeFailed, setDecodeFailed] = useState(false);
   const { snapshot, read, cancel, cancelled } = useProductRead(props.scope, async input => {
     try { return await props.media.readOriginal({ ...input, parameters: { productId: input.parameters.productId, imageId: props.image.id } }); }

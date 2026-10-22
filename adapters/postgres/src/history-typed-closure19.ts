@@ -1,3 +1,5 @@
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { captureHistoryTypedClosureStageInput } from "../../../packages/application/src/history-typed-closure.ts";
 import { assertHistoryPublicationSchema19 } from "../../../packages/application/src/history-typed-publication.ts";
@@ -12,21 +14,22 @@ const must = (value: unknown, message: string): void => requireDomain(value, "HI
 /** Independent exact19 STAGE successor. Frozen exact18 entry is unchanged.
  * Trusted internal source-authorized STAGE, never an HTTP/publication capability.
  * Registry and full runtime guards must recognize19 before this can write any row. */
-export class PostgresHistoryTypedClosure19Store {
+class ClosureStageStore {
  private readonly pool: PgSalesPool;
  private readonly authorizeStage: HistoryTypedClosure19StageAuthorization["authorizeStage"];
- constructor(pool: PgSalesPool, config: HistoryTypedClosure19StageAuthorization) {
-  const keys = config && Reflect.ownKeys(config), descriptor = config && Object.getOwnPropertyDescriptor(config, "authorizeStage");
-  if (typeof pool?.connect !== "function" || !config || Object.getPrototypeOf(config) !== Object.prototype || keys?.length !== 1 || keys[0] !== "authorizeStage" || !descriptor?.enumerable || !Object.hasOwn(descriptor, "value") || typeof descriptor.value !== "function") throw TypeError("Explicit own-data whole-source closure authorizer and owned pool required");
-  this.pool = pool; this.authorizeStage = descriptor.value;
- }
+ private readonly runtime26: NativeRuntime26Capability | undefined;
+ constructor(readonlyPool: PgSalesPool, readonlyAuthorize: HistoryTypedClosure19StageAuthorization["authorizeStage"],
+   runtime26?: NativeRuntime26Capability) { this.pool = readonlyPool; this.authorizeStage = readonlyAuthorize; this.runtime26 = runtime26; }
+
  async stage(original: HistoryTypedClosureStageInput): Promise<{ inserted: number; replayed: number }> {
   const input = captureHistoryTypedClosureStageInput(original);
   // Neither an asynchronous caller nor the authorizer can mutate the captured write input.
   const authorizeStage = this.authorizeStage;
-  await authorizeStage(structuredClone(input));
+  const authorized: unknown = await authorizeStage(structuredClone(input));
+  if (this.runtime26) must(authorized === undefined, "Independent exact26 whole-source authorization must complete without a boolean substitute");
   const client = await this.pool.connect(); let began = false, committing = false, discard: Error | undefined;
   try {
+   if (this.runtime26) await this.runtime26.assertReady(client, "IMPORT_STAGE");
    await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
    const result = await this.write(client, input); committing = true; await client.query("COMMIT"); return result;
   } catch (error) {
@@ -37,10 +40,13 @@ export class PostgresHistoryTypedClosure19Store {
  }
  private async write(client: PgSalesClient, input: HistoryTypedClosureStageInput): Promise<{ inserted: number; replayed: number }> {
   await client.query("/* history19-closure:lock */ SELECT naijue_erp.cutoff_import_lock()");
+  if (this.runtime26) await this.runtime26.assertReady(client, "IMPORT_STAGE");
+  else {
   const schema = (await client.query("/* history19-closure:schema */ SELECT array_agg(version ORDER BY version) versions FROM naijue_erp.schema_migration")).rows;
   must(schema.length === 1, "Single exact schema prefix required");
   assertHistoryPublicationSchema19(schema[0]!.versions);
   await assertNativeImportAccountingSchema19Guards(client);
+  }
   const rows = (await client.query(`/* history19-closure:batch */ SELECT id,source_name,source_hash,mapping_version,status,history_payload_hash,
     history_expected_counts=$2::jsonb exact_counts,EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED') published
     FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`, [input.batchId, JSON.stringify(input.plan.expectedCounts)])).rows;
@@ -74,4 +80,33 @@ export class PostgresHistoryTypedClosure19Store {
    SELECT NOT EXISTS((SELECT * FROM actual EXCEPT SELECT * FROM expected) UNION ALL(SELECT * FROM expected EXCEPT SELECT * FROM actual)) exact`, [input.batchId, JSON.stringify(input.documents)])).rows;
   must(result.length === 1 && result[0]!.exact === true, "Exact bidirectional whole document manifest required");
  }
+}
+
+function closureAuthorization(pool: PgSalesPool, config: HistoryTypedClosure19StageAuthorization, keys: readonly string[]) {
+  const own = config && Reflect.ownKeys(config), descriptor = config && Object.getOwnPropertyDescriptor(config, "authorizeStage");
+  if (typeof pool?.connect !== "function" || !config || Object.getPrototypeOf(config) !== Object.prototype
+    || own?.length !== keys.length || keys.some(k => !own.includes(k)) || !descriptor?.enumerable
+    || !Object.hasOwn(descriptor, "value") || typeof descriptor.value !== "function")
+    throw TypeError("Explicit own-data whole-source closure authorizer and owned pool required");
+  return descriptor.value as HistoryTypedClosure19StageAuthorization["authorizeStage"];
+}
+/** Original exact19 entry remains closed to successor configuration. */
+export class PostgresHistoryTypedClosure19Store extends ClosureStageStore {
+  constructor(pool: PgSalesPool, config: HistoryTypedClosure19StageAuthorization) {
+    super(pool, closureAuthorization(pool, config, ["authorizeStage"]));
+  }
+}
+export interface HistoryTypedClosure26StageAuthorization extends HistoryTypedClosure19StageAuthorization {
+  readonly runtime26: NativeRuntime26Capability;
+}
+/** Trusted successor entry only; DTO/registry alone cannot grant stage or publish. */
+export class PostgresHistoryTypedClosure26Store extends ClosureStageStore {
+  constructor(pool: PgSalesPool, config: HistoryTypedClosure26StageAuthorization) {
+    const authorize = closureAuthorization(pool, config, ["authorizeStage", "runtime26"]);
+    const descriptor = Object.getOwnPropertyDescriptor(config, "runtime26");
+    if (!descriptor || !("value" in descriptor)) throw TypeError("Exact26 runtime must be an own data property");
+    const runtime = checkedNativeRuntime26Capability(descriptor.value);
+    if (!runtime) throw TypeError("Independently verified exact26 runtime required");
+    super(pool, authorize, runtime);
+  }
 }

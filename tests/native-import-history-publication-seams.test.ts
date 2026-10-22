@@ -1,3 +1,7 @@
+import { reconcileHistoryTypedPublication } from "../adapters/postgres/src/history-typed-publication.ts";
+import { reconcileNativeImportStockConservation } from "../adapters/postgres/src/native-import-record-accounting.ts";
+import { accountingBatch, accountingTime } from "./support/native-record-accounting-fixtures.ts";
+import { stableImportId } from "../packages/application/src/inventory-cutoff-import.ts";
 /** MAIN/configuration boundaries only. No database/publication acceptance. */
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -77,4 +81,29 @@ test("legacy guard path stays exact; fallback only accepts the separate complete
   const fresh = client(false, true); await assertNativeImportAccountingGuards(fresh.value); assert.equal(fresh.queries.length, 3);
   const missing = client(false, false); await assert.rejects(assertNativeImportAccountingGuards(missing.value), { code: "NATIVE_IMPORT_GUARDS_NOT_READY" });
   await assert.rejects(assertNativeImportAccountingSchema19Guards(old.value), { code: "NATIVE_IMPORT_GUARDS_NOT_READY" });
+});
+
+test("publication26 rechecks exact runtime and immutable/deep/count closures on the original client before returning observed facts",async()=>{
+ const p=plan(),base=accountingBatch(),batch={...base,sourceHash:p.selectionSha256,historyMetadata:{payloadHash:p.authorizedPayloadHash,expectedCounts:p.expectedCounts}},versions=Array.from({length:26},(_,i)=>i+1);
+ for(const fault of ["", "manifest", "deep", "counts"]) {
+  const calls:string[]=[],client:PgSalesClient={release(){assert.fail("not owner");},async query(sql){calls.push(sql);
+   if(sql.includes("history-publication:manifest"))return {rows:[{exact:fault!=="manifest"}],rowCount:1};
+   if(sql.includes("history-publication:documents"))return {rows:[],rowCount:0};
+   if(sql.includes("history-publication:deep-readback")){if(fault==="deep")throw Error("SYNTHETIC actual deep mismatch");return {rows:[],rowCount:1};}
+   if(sql.includes("history-publication:counts"))return {rows:[{manifest_counts:p.expectedCounts,actual_counts:{...p.expectedCounts,...(fault==="counts"?{barcodes:1}:{})}}],rowCount:1};
+   throw Error("Unexpected publication26 SQL");
+  }};let checks=0;const runtime={profile:"EXACT26" as const,contract:"NATIVE_RUNTIME26_V1" as const,async assertReady(c:object,purpose:string){assert.equal(c,client);assert.equal(purpose,"IMPORT_PUBLISH");checks++;}};
+  if(fault)await assert.rejects(reconcileHistoryTypedPublication(client,batch,p,versions,runtime));
+  else assert.deepEqual((await reconcileHistoryTypedPublication(client,batch,p,versions,runtime)).actualCounts,p.expectedCounts);
+  assert.equal(checks,1);assert.ok(calls.every(sql=>!/^BEGIN|^COMMIT|^ROLLBACK|^INSERT|^UPDATE/.test(sql)));
+ }
+});
+test("publication26 and conservation26 revoked runtime cannot become a legacy fallback or successful receipt",async()=>{
+ const calls:string[]=[],client:PgSalesClient={release(){assert.fail("not owner");},async query(sql){calls.push(sql);throw Error("must not query");}},p=plan(),base=accountingBatch(),batch={...base,sourceHash:p.selectionSha256,historyMetadata:{payloadHash:p.authorizedPayloadHash,expectedCounts:p.expectedCounts}},versions=Array.from({length:26},(_,i)=>i+1);
+ const runtime={profile:"EXACT26" as const,contract:"NATIVE_RUNTIME26_V1" as const,async assertReady(c:object,purpose:string){assert.equal(c,client);assert.equal(purpose,"IMPORT_PUBLISH");throw Error("SYNTHETIC revoked");}};
+ await assert.rejects(reconcileHistoryTypedPublication(client,batch,p,versions,runtime),/revoked/);
+ await assert.rejects(reconcileHistoryTypedPublication(client,batch,p,versions));
+ await assert.rejects(reconcileHistoryTypedPublication(client,batch,p,versions.slice(0,25),runtime));
+ const command=accountingPublish(),b=accountingBatch();const transaction={command,batch:{...b,status:"VALIDATING" as const,checkpoint:{...b.checkpoint,sequence:1,cursor:3,counts:{WAREHOUSE:1,SKU:1,INVENTORY_LEDGER:1,IMPORT_BATCH:0}}},operationId:stableImportId("operation",command.actorAccountId,command.requestKey),commandHash:nativeImportAccountingRequestHash(command),now:accountingTime};
+ await assert.rejects(reconcileNativeImportStockConservation(client,transaction,runtime),/revoked/);assert.equal(calls.length,0);
 });

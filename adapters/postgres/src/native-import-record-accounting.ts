@@ -1,3 +1,5 @@
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { COMPLETE_SCOPE_DECISION, stableImportId } from "../../../packages/application/src/inventory-cutoff-import.ts";
@@ -42,7 +44,7 @@ function returned(result: PgSalesResult, expected: Readonly<Record<string, strin
  * Passing a PgSalesClient is a trusted internal seam, not an authorization boundary.
  */
 export async function createNativeImportRecordAccountant(client: PgSalesClient,
-  input: NativeRecordAccountingTransaction): Promise<NativeImportRecordAccountant> {
+  input: NativeRecordAccountingTransaction, runtime26?: NativeRuntime26Capability): Promise<NativeImportRecordAccountant> {
   const transaction = structuredClone(input); const { command, batch, operationId, now } = transaction;
   check(nativeImportAccountingRequestHash(command) === transaction.commandHash, "Accounting metadata must be covered by the original MAIN command hash");
   entityId("operation", operationId);
@@ -52,8 +54,12 @@ export async function createNativeImportRecordAccountant(client: PgSalesClient,
     && (batch.status === "STAGED" || batch.status === "VALIDATING")
     && batch.checkpoint.sequence === command.expectedSequence && batch.checkpoint.cursor === command.expectedCursor,
   "Exact original open V2 batch/checkpoint required");
+  const runtime = checkedNativeRuntime26Capability(runtime26);
+  if (runtime) await runtime.assertReady(client, command.action === "IMPORT_PUBLISH" ? "IMPORT_PUBLISH" : "IMPORT_STAGE");
+  else {
   const schema = (await client.query("/* native-accounting:schema */ SELECT array_agg(version ORDER BY version) AS versions FROM naijue_erp.schema_migration")).rows;
   check(schema.length === 1, "One complete migration registry required"); assertNativeRecordAccountingSchema(schema[0]!.versions);
+  }
   await client.query("/* native-accounting:cutoff */ SELECT naijue_erp.cutoff_import_lock()");
   const batches = (await client.query(`/* native-accounting:batch */ SELECT id,mapping_version,status,source_name,source_hash,source_manifest_ref,checkpoint,
     EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED') AS already_published
@@ -244,9 +250,9 @@ const countText = (value: unknown): number => {
  * NOT a fresh download or a recomputed whole-source-file hash. No mutation/receipt/commit.
  */
 export async function reconcileNativeImportStockConservation(client: PgSalesClient,
-  input: NativeRecordAccountingTransaction): Promise<NativeStockConservationReport> {
+  input: NativeRecordAccountingTransaction, runtime26?: NativeRuntime26Capability): Promise<NativeStockConservationReport> {
   const transaction = structuredClone(input);
-  await createNativeImportRecordAccountant(client, transaction); // same complete schema/batch/hash/approval locks; never creates a claim
+  await createNativeImportRecordAccountant(client, transaction, runtime26); // same complete schema/batch/hash/approval locks; never creates a claim
   const { command, batch } = transaction;
   conservation(command.action === "IMPORT_PUBLISH" && command.stockConservation !== undefined,
     "An independently authorized stockConservation plan must be inside the MAIN original PUBLISH hash");

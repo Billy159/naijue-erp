@@ -10,6 +10,7 @@ export interface ProductFullPageHostProps {
   readonly parent: ReadScope; readonly target: Selection;
   readonly configuration: ProductFullPageConfiguration; readonly reader: ProductFullPageReadOnlyReader;
   readonly close: () => void; readonly openInventory?: () => Promise<boolean>;
+  readonly returnLabel?: string;
 }
 export function ProductFullPageHost(props: ProductFullPageHostProps) {
   const sequence = useRef(0), host=useRef<HTMLElement>(null),header=useRef<HTMLDivElement>(null),heading = useRef<HTMLHeadingElement>(null), [attempt, setAttempt] = useState(0);
@@ -29,7 +30,7 @@ export function ProductFullPageHost(props: ProductFullPageHostProps) {
   const current = attachment?.parent === props.parent && attachment.scope.entityId === props.target.id && attachment.scope.active ? attachment : null;
   if (!props.parent.active) return null;
   return <section ref={host} className="product-full-page product-readonly-page" aria-label="商品只读整页"><div ref={header} className="product-page-header">
-    <div className="product-page-title"><h1 ref={heading} tabIndex={-1}>{props.target.label}</h1><UIButton onClick={props.close}>返回商品信息</UIButton></div></div>
+    <div className="product-page-title"><h1 ref={heading} tabIndex={-1}>{props.target.label}</h1><UIButton onClick={props.close}>{props.returnLabel??'返回商品信息'}</UIButton></div></div>
     {current?.View ? <current.View scope={current.scope} configuration={props.configuration} reader={props.reader} {...(props.openInventory?{openInventory:props.openInventory}: {})} /> : current?.error ? <p role="alert">商品整页组件或样式未准备完成，尚未读取商品资料。<UIButton onClick={() => setAttempt(value => value + 1)}>重试商品整页</UIButton></p> : <p role="status">正在准备商品只读整页…</p>}
   </section>;
 }

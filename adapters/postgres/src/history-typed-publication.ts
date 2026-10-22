@@ -1,3 +1,5 @@
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { requireDomain } from '../../../packages/domain/src/errors.ts';
 import type { CutoffImportBatch } from '../../../packages/application/src/inventory-cutoff-import.ts';
 import type { HistoryTypedClosurePlan } from '../../../packages/application/src/history-typed-closure.ts';
@@ -13,10 +15,17 @@ import type { PgSalesClient } from './sales-unit-of-work.ts';
  * has already received the complete MAIN command on every attempt/replay. This
  * function cannot substitute SQL observations for that independent authorization. */
 export async function reconcileHistoryTypedPublication(client: PgSalesClient, batch: CutoffImportBatch,
-  originalPlan: HistoryTypedClosurePlan, schemaVersions: readonly number[]): Promise<HistoryImportReconciliation> {
+  originalPlan: HistoryTypedClosurePlan, schemaVersions: readonly number[], runtime26?: NativeRuntime26Capability): Promise<HistoryImportReconciliation> {
   const plan = captureHistoryTypedClosurePlan(originalPlan);
-  assertHistoryPublicationSchema19(schemaVersions);
-  await assertNativeImportAccountingSchema19Guards(client);
+  const runtime = checkedNativeRuntime26Capability(runtime26);
+  if (runtime) {
+    requireDomain(Array.isArray(schemaVersions) && schemaVersions.length === 26 && schemaVersions.every((v, i) => v === i + 1),
+      "HISTORY_PUBLICATION_SCHEMA_NOT_READY", "Exact26 complete prefix required with successor runtime");
+    await runtime.assertReady(client, "IMPORT_PUBLISH");
+  } else {
+    assertHistoryPublicationSchema19(schemaVersions);
+    await assertNativeImportAccountingSchema19Guards(client);
+  }
   requireDomain(batch.mappingVersion === 'V2_HISTORY_NULLABLE_1' && batch.historyMetadata !== undefined
     && plan.selectionSha256 === batch.sourceHash && plan.authorizedPayloadHash === batch.historyMetadata.payloadHash
     && requestHash(plan.expectedCounts) === requestHash(batch.historyMetadata.expectedCounts),

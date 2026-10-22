@@ -1,3 +1,5 @@
+import type { ProductParameters } from '../inventory/product-contracts.ts';
+import type { ProductEditorMediaReader } from './product-editor-contracts.ts';
 import type { QueryRead } from '../loading/latest-query.ts';
 import type { ProductStockOverviewQuery } from '../../../../packages/application/src/product-details-query-ports.ts';
 import type { ProductFullPageReadOnlyReader } from './product-page-contracts.ts';
@@ -18,5 +20,5 @@ export function guardedProductPageReader(scope: ReadScope, reader: ProductFullPa
     ...(reader.barcodes ? { barcodes: Object.freeze({ read: read => run(read.signal, () => reader.barcodes!.read(read)) }) } : {}),
     ...(reader.prices ? { prices: Object.freeze({ read: read => run(read.signal, () => reader.prices!.read(read)) }) } : {}),
     ...(reader.stock ? { stock: Object.freeze({ read: read => run(read.signal, () => reader.stock!.read(read)), ...(reader.stock.readOverview?{readOverview:(read:QueryRead<ProductStockOverviewQuery>)=>run(read.signal,()=>reader.stock!.readOverview!(read))}: {}) }) } : {}),
-    ...(reader.images ? { images: Object.freeze({ read: read => run(read.signal, () => reader.images!.read(read)), readImage: read => run(read.signal, () => reader.images!.readImage(read)) }) } : {}) } satisfies ProductFullPageReadOnlyReader);
+    ...(reader.images ? { images: Object.freeze({ read: read => run(read.signal, () => reader.images!.read(read)), readImage: read => run(read.signal, () => reader.images!.readImage(read)),...(reader.images.classified?{classified:Object.freeze({readSpecifications:(read:QueryRead<ProductParameters>)=>run(read.signal,()=>reader.images!.classified!.readSpecifications(read)),media:Object.freeze<ProductEditorMediaReader>({readImages:read=>run(read.signal,()=>reader.images!.classified!.media.readImages(read)),readOriginal:read=>run(read.signal,()=>reader.images!.classified!.media.readOriginal(read))})})}:{}) }) } : {}) } satisfies ProductFullPageReadOnlyReader);
 }

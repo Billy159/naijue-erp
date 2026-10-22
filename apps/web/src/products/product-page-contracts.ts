@@ -1,3 +1,4 @@
+import type { ProductEditorMediaReader } from './product-editor-contracts.ts';
 import type { RouteStylesheet } from '../application/contracts.ts';
 import type { ProductReadOnlyReader, ProductParameters } from '../inventory/product-contracts.ts';
 import type { QueryRead } from '../loading/latest-query.ts';
@@ -15,7 +16,9 @@ export interface ProductFullPageReadOnlyReader {
   readonly stock?: { readonly read: (read: QueryRead<ProductDetailsPageQuery>) => Promise<ProductWarehouseStockPage | null>;
     /** Independent whole-scope contract; absent methods keep the legacy page only. */
     readonly readOverview?: (read: QueryRead<ProductStockOverviewQuery>) => Promise<ProductStockOverviewResult | null> };
-  readonly images?: { readonly read: ProductReadOnlyReader['readProductImages']; readonly readImage: ProductReadOnlyReader['readProductImage'] };
+  readonly images?: { readonly read: ProductReadOnlyReader['readProductImages']; readonly readImage: ProductReadOnlyReader['readProductImage'];
+    /** Independent richer readonly metadata + actual specification labels; no write capability. */
+    readonly classified?: { readonly media: ProductEditorMediaReader; readonly readSpecifications: ProductReadOnlyReader['readProductSpecifications'] } };
 }
 export interface ProductFullPageConfiguration {
   readonly stylesheet: RouteStylesheet;

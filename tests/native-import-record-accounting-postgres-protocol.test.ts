@@ -176,3 +176,19 @@ test("caller mutations after factory creation cannot change the original bound c
   (input.command as unknown as { requestKey: string }).requestKey = "changed-after-binding";
   await accountant.claimMembership(original); assert.equal(accountant.checkpoint().counts.WAREHOUSE, 1); client.done();
 });
+
+test("accounting26 explicit same-client runtime retains exact creator membership accounting without legacy schema widening", async () => {
+  const input=context(),client=new Client([...setup(input).slice(1),...accountingMemberships.flatMap(item=>[proof(item),claimStep()])]);let checks=0;
+  const runtime={profile:"EXACT26" as const,contract:"NATIVE_RUNTIME26_V1" as const,async assertReady(c:object,purpose:string){assert.equal(c,client);assert.equal(purpose,"IMPORT_STAGE");checks++;}};
+  const accountant=await createNativeImportRecordAccountant(client,input,runtime);
+  for(const item of accountingMemberships)await accountant.claimMembership(item);
+  assert.equal(checks,1);assert.deepEqual(accountant.checkpoint().counts,{WAREHOUSE:1,SKU:1,INVENTORY_LEDGER:0,IMPORT_BATCH:0});
+  assert.ok(!client.calls.some(c=>c.sql.includes("native-accounting:schema")));client.done();
+});
+test("accounting26 rejected runtime stops before SQL; legacy no-capability still rejects26",async()=>{
+  for(const boolean of [false,true]){
+    const client=new Client([]);await assert.rejects(createNativeImportRecordAccountant(client,context(),{profile:"EXACT26",contract:"NATIVE_RUNTIME26_V1",async assertReady(){if(boolean)return true as unknown as undefined;throw Error("SYNTHETIC runtime revoked");}}));assert.equal(client.calls.length,0);client.done();
+  }
+  const old=new Client([{match:/native-accounting:schema/,result:row({versions:Array.from({length:26},(_,i)=>i+1)})}]);
+  await assert.rejects(createNativeImportRecordAccountant(old,context()));assert.equal(old.calls.length,1);old.done();
+});
