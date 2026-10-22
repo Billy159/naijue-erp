@@ -157,6 +157,7 @@
 :is(.product-editor,.product-readonly-page) .erp-tabs-host:is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-header-title-text{padding:0;font:inherit}
 :is(.product-editor,.product-readonly-page) :is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-header-ink{display:none}
 :is(.product-editor,.product-readonly-page) :is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-content,.product-editor-tabs .arco-tabs-content-inner,.product-editor-tabs .arco-tabs-pane{overflow:visible}
+:is(.product-editor,.product-readonly-page) :is(.product-editor-tabs,.product-readonly-tabs) .arco-tabs-content-item-active{overflow:visible}
 .product-editor .product-editor-body{padding:12px 0 18px;max-height:none;overflow:visible}
 .product-editor-base-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 14px;max-width:none;margin:0}
 .product-editor-base-grid>.field{display:flex;flex-direction:column;gap:4px;margin:0;min-width:0;color:var(--ca-ink-2);font-size:12px;line-height:16px}

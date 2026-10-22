@@ -117,7 +117,7 @@ function CategorySelectContent(props:ProductEditorFieldsProps&{readonly query:La
 export function ProductEditorBase(props:ProductEditorFieldsProps){
  const p=props.values;
  const choose=(field:'categoryId'|'supplierId'|'defaultBarcodeSchemeId',kind:ProductMaintenanceCandidateKind,label:string)=>
-  <ProductCandidateSelect scope={props.scope} reader={props.reader} kind={kind} label={label} value={p[field]||null} currentLabel={p[field]===null?null:props.labels[`${kind}:${p[field]}`]??null} disabled={props.disabled} allowClear={field!=='categoryId'} onAccessFailure={props.onAccessFailure} onChange={(id,name)=>{props.remember(id,name,kind);props.change({[field]:id??(field==='categoryId'?'':null)});}}/>;
+  <ProductCandidateSelect scope={props.scope} reader={props.reader} kind={kind} label={label} value={p[field]||null} currentLabel={p[field]===null?null:props.labels[`${kind}:${p[field]}`]??null} disabled={props.disabled} required={field==='supplierId'} allowClear={field!=='categoryId'&&field!=='supplierId'} onAccessFailure={props.onAccessFailure} onChange={(id,name)=>{props.remember(id,name,kind);props.change({[field]:id??(field==='categoryId'?'':null)});}}/>;
  return <div className="product-editor-base-grid" role="group" aria-label="商品基础资料">
   <label className="field"><span>款号 *</span><UIInput aria-label="款号" value={p.productCode} readOnly={props.existing} disabled={props.disabled} onChange={productCode=>props.change({productCode})}/></label>
   <label className="field"><span>商品名称 *</span><UIInput aria-label="商品名称" value={p.name} disabled={props.disabled} onChange={name=>props.change({name})}/></label>
