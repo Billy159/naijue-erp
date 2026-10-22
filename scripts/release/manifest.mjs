@@ -219,9 +219,19 @@ function htmlResources(html) {
   requireRelease(configurations === 1, 'PRODUCTION_CONFIGURATION_REQUIRED'); return resources;
 }
 
+// One frozen self-contained sales icon, never a general data-URL or external-resource allowance.
+const inlineSalesDetailCssSource = 'apps/web/src/sales/detail.css';
+function exactEmbeddedCssSvg(kind, owner, item, bytes) {
+  return kind === 'frontend' && item?.external === true && item.kind === 'url-token'
+    && path.posix.extname(owner) === '.css' && typeof item.path === 'string'
+    && Buffer.byteLength(item.path, 'utf8') === 212
+    && sha256(Buffer.from(item.path, 'utf8')) === '315e1978e00fb98a377a06cea68c4b841f7ac9b9d34e802e69f85f7a7dda6d6c'
+    && Buffer.isBuffer(bytes) && bytes.includes(item.path);
+}
+
 /** Verify actual on-disk graph inputs and outputs. No production:true flag is accepted as provenance. */
 async function verifyGraph(kind, component, context) {
-  const { sourceRoot, buildRoot, sources, files, fileBytes, packageJson, lock } = context;
+  const { sourceRoot, buildRoot, sources, sourceBytes, files, fileBytes, packageJson, lock } = context;
   requireRelease(component && typeof component === 'object' && !Array.isArray(component), 'EXPLICIT_COMPONENT_GRAPH_REQUIRED');
   relativeName(component.workingDirectory, true); allowedSource(component.entrySource);
   requireRelease(kind === 'frontend' ? /^apps\/web\/src\/production-host\/entry\.(?:tsx?|mjs|js)$/.test(component.entrySource)
@@ -251,8 +261,10 @@ async function verifyGraph(kind, component, context) {
         const imported = graphPath(sourceRoot, component.workingDirectory, item.path);
         allowedSource(imported);
         requireRelease(Object.hasOwn(graph.inputs, item.path) || Object.keys(graph.inputs).some(candidate => graphPath(sourceRoot, component.workingDirectory, candidate) === imported), 'UNRESOLVED_GRAPH_INPUT');
-      } else requireRelease(kind === 'backend' && (nodeBuiltins.has(item.path)
-        || Object.hasOwn(packageJson.dependencies ?? {}, dependencyName(item.path))), 'UNDECLARED_EXTERNAL_DEPENDENCY');
+      } else requireRelease((relative === inlineSalesDetailCssSource
+        && exactEmbeddedCssSvg(kind, relative, item, sourceBytes.get(relative)))
+        || (kind === 'backend' && (nodeBuiltins.has(item.path)
+        || Object.hasOwn(packageJson.dependencies ?? {}, dependencyName(item.path)))), 'UNDECLARED_EXTERNAL_DEPENDENCY');
     }
   }
   requireRelease(inputs.has(component.entrySource), 'ENTRY_MISSING_FROM_ACTUAL_GRAPH');
@@ -281,8 +293,12 @@ async function verifyGraph(kind, component, context) {
   for (const [name, details] of outputs) {
     for (const item of details.imports) {
       requireRelease(item && typeof item.path === 'string', 'INVALID_OUTPUT_IMPORT');
-      if (item.external) requireRelease(kind === 'backend' && (nodeBuiltins.has(item.path)
-        || Object.hasOwn(packageJson.dependencies ?? {}, dependencyName(item.path))), 'UNDECLARED_EXTERNAL_DEPENDENCY');
+      if (item.external) requireRelease((kind === 'frontend'
+        && Object.entries(details.inputs).some(([input, contribution]) => Number.isSafeInteger(contribution?.bytesInOutput)
+          && contribution.bytesInOutput > 0 && graphPath(sourceRoot, component.workingDirectory, input) === inlineSalesDetailCssSource)
+        && exactEmbeddedCssSvg(kind, name, item, fileBytes.get(name)))
+        || (kind === 'backend' && (nodeBuiltins.has(item.path)
+        || Object.hasOwn(packageJson.dependencies ?? {}, dependencyName(item.path)))), 'UNDECLARED_EXTERNAL_DEPENDENCY');
       else {
         const candidates = [path.resolve(workingAbsolute, item.path), path.resolve(buildRoot, path.dirname(name), item.path)]
           .map(value => path.relative(buildRoot, value).split(path.sep).join('/'));
@@ -354,7 +370,7 @@ export async function validateRelease({ sourceManifest, buildManifest, buildRoot
   requireRelease(sourceMigrations.length > 0 && sameSet(sourceMigrations, [...files.values()].filter(row => row.role === 'migration').map(row => row.sourcePath)), 'MIGRATION_SET_INCOMPLETE');
   const diskMigrations = (await walkFiles(path.join(sourceRoot, 'adapters/postgres/migrations'))).map(name => 'adapters/postgres/migrations/' + name);
   requireRelease(sameSet(sourceMigrations, diskMigrations), 'SOURCE_MIGRATION_DIRECTORY_INCOMPLETE');
-  const context = { sourceRoot, buildRoot, sources, files, fileBytes, packageJson, lock };
+  const context = { sourceRoot, buildRoot, sources, sourceBytes, files, fileBytes, packageJson, lock };
   const frontend = await verifyGraph('frontend', build.components?.frontend, context);
   const backend = await verifyGraph('backend', build.components?.backend, context);
   const htmlRecord = [...files.values()].find(row => row.member === 'web/index.html' && row.role === 'frontend');
