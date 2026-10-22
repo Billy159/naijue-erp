@@ -103,6 +103,13 @@ export class SalesProposalSession {
   setHeader(patch: Pick<Partial<SalesProposal>, 'businessDate' | 'note' | 'orderDiscount'>): boolean { return this.#edit({ ...this.#state.draft, ...patch }); }
   setBusinessType(businessType: SalesProposal['businessType']): boolean {
     if (!['SALE', 'RETURN', 'EXCHANGE'].includes(businessType)) return false;
+    // SALE has no incoming-entry section. Keep its unfinished input visible in
+    // the combined mode until the user completes or explicitly clears it.
+    const incoming = this.#state.entries.IN;
+    if (businessType === 'SALE' && (incoming.product || incoming.query.trim())) {
+      this.#publish({ notice: '退回商品还有未完成录入，请先在“录入退回商品”中完成或清除，再切换销售。' });
+      return false;
+    }
     // Preserve explicit row signs and prices; never silently reverse stock intent.
     return this.#edit({ ...this.#state.draft, businessType, orderDiscount: '0.00' });
   }
