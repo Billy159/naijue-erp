@@ -52,7 +52,7 @@ export class PostgresCutoffScopeReader {
       const scope = await readPublishedCutoffScope(client); commitAttempted = true; await client.query("COMMIT"); return scope;
     } catch (error) {
       if (!began || commitAttempted) discard = error instanceof Error ? error : new Error("Scope read failed");
-      if (began) try { await client.query("ROLLBACK"); } catch (rollbackError) {
+      if (began && !commitAttempted) try { await client.query("ROLLBACK"); } catch (rollbackError) {
         discard = rollbackError instanceof Error ? rollbackError : new Error("Scope rollback failed");
         throw new AggregateError([error, rollbackError], "Scope read and rollback failed; connection discarded");
       }

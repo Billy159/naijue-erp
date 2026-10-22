@@ -54,7 +54,8 @@ export class PostgresTransferUnitOfWork implements TransferUnitOfWork {
     } catch (error) {
       tx.close();
       if (!began || commitAttempted) discard = error instanceof Error ? error : new Error("PostgreSQL transaction failed");
-      if (began) try { await client.query("ROLLBACK"); }
+      // Never issue a misleading rollback after an uncertain COMMIT response.
+      if (began && !commitAttempted) try { await client.query("ROLLBACK"); }
       catch (rollbackError) {
         discard = rollbackError instanceof Error ? rollbackError : new Error("PostgreSQL rollback failed");
         throw new AggregateError([error, rollbackError], "PostgreSQL transaction and rollback failed; connection discarded");

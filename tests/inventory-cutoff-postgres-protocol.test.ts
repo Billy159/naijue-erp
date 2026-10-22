@@ -134,6 +134,19 @@ test("cutoff pg protocol: scope read uses one repeatable snapshot, W+SKU members
   const result = await new PostgresCutoffScopeReader({ async connect() { return client; } }).read(); assert.equal(result.skuIds.length, 1);
   assert.ok(client.calls.every(c => !/^(INSERT|UPDATE|DELETE)/.test(c.sql))); client.done();
 });
+test("D3 read outcome: cutoff scope unknown COMMIT is discarded without rollback or retry", async () => {
+  const failure = new Error("SYNTHETIC scope commit acknowledgment lost");
+  const client = new ProtocolClient([{ match: /^BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY$/ },
+    { match: /FROM naijue_erp.import_batch WHERE status/, rows: [batchRow("IMPORTED", 4, 2)] },
+    { match: /pg_catalog.pg_constraint/, rows: [{ integrity_guards_present: true }] },
+    { match: /FROM naijue_erp.import_record r/, rows: [
+      { target_type: "WAREHOUSE", target_id: cutoffIds.warehouse, target_exists: true },
+      { target_type: "SKU", target_id: cutoffIds.sku, target_exists: true }] },
+    { match: /^COMMIT$/, error: failure }]);
+  await assert.rejects(new PostgresCutoffScopeReader({ async connect() { return client; } }).read(), error => error === failure);
+  assert.equal(client.calls.at(-1)!.sql, "COMMIT"); assert.deepEqual(client.releases, [failure]); client.done();
+});
+
 test("cutoff pg protocol: no published scope and missing native integrity guards fail whole read", async () => {
   const absent = new ProtocolClient([{ match: /^BEGIN/ }, { match: /FROM naijue_erp.import_batch WHERE status/, rows: [] }, rollback()]);
   await assert.rejects(new PostgresCutoffScopeReader({ async connect() { return absent; } }).read(), { code: "INVENTORY_NOT_READY" }); absent.done();

@@ -54,7 +54,7 @@ test('HISTORY DTO preserves nullable persons/local microseconds/exact money; rej
 });
 
 /** Protocol double proves emitted SQL/transaction use, NOT PostgreSQL execution. */
-function protocol(options: { failure?: string; final?: boolean; kind?: ImportedHistoryKind; schema?: number[]; guards?: boolean; mismatch?: boolean } = {}) {
+function protocol(options: { failure?: string; final?: boolean; kind?: ImportedHistoryKind; schema?: number[]; guards?: boolean; mismatch?: boolean; afterQuery?: (tag: string) => void } = {}) {
   const calls: { tag: string; sql: string; values: unknown[] }[] = [], releases: unknown[] = [];
   let connects = 0;
   const client: PgSalesClient = { async query(sql, values = []) {
@@ -68,7 +68,7 @@ function protocol(options: { failure?: string; final?: boolean; kind?: ImportedH
     if (tag === 'imported-history:list-page') rows = options.final ? [headerRow(options.kind ?? 'sales')] : [];
     if (tag === 'imported-history:detail') rows = options.final ? [{ ...headerRow(options.kind ?? 'sales'), line_count: options.mismatch ? 1 : 0, settlement_count: 0 }] : [];
     if (tag.endsWith('-count') && !tag.includes('list-count')) rows = [{ total: '0' }];
-    return { rows, rowCount: rows.length };
+    options.afterQuery?.(tag); return { rows, rowCount: rows.length };
   }, release(error) { releases.push(error); } };
   const pool: PgSalesPool = { async connect() { connects++; return client; } };
   return { pool, calls, releases, connects: () => connects };
@@ -113,6 +113,15 @@ test('protocol: query failure rolls back; unknown COMMIT discards without rollba
   }
   const p = protocol(), cancel = new AbortController(); cancel.abort();
   await assert.rejects(new PostgresImportedHistoryQueryReader(p.pool).readList({ ...scoped(), signal: cancel.signal }), { code: 'IMPORTED_HISTORY_READ_ABORTED' }); assert.equal(p.connects(), 0);
+});
+test('D3 read outcome: HISTORY late abort after confirmed COMMIT keeps the healthy connection', async () => {
+  for (const detail of [false, true]) {
+    const controller = new AbortController();
+    const p = protocol({ afterQuery(tag) { if (tag === 'COMMIT') controller.abort(); } });
+    const reader = new PostgresImportedHistoryQueryReader(p.pool), read = { ...scoped(intent('sales', detail)), signal: controller.signal };
+    await assert.rejects(detail ? reader.readDetail(read) : reader.readList(read), { code: 'IMPORTED_HISTORY_READ_ABORTED' });
+    assert.equal(p.calls.at(-1)!.tag, 'COMMIT'); assert.deepEqual(p.releases, [undefined]); assert.equal(p.connects(), 1);
+  }
 });
 test('four POST-only HTTP endpoints require explicit policy/session; fail closed and sanitize provider errors', async () => {
   let authenticated = true, allowed = true, fail = false, unavailable = false, calls = 0;

@@ -104,7 +104,9 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
     } catch (error) {
       tx.close();
       if (!began || commitAttempted) discard = error instanceof Error ? error : new Error("PostgreSQL transaction failed");
-      if (began) {
+      // A failed COMMIT may already have committed. Preserve the original key
+      // and discard the client; ROLLBACK cannot prove that outcome was undone.
+      if (began && !commitAttempted) {
         try { await client.query("ROLLBACK"); }
         catch (rollbackError) {
           discard = rollbackError instanceof Error ? rollbackError : new Error("PostgreSQL rollback failed");

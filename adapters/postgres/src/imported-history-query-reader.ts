@@ -86,7 +86,7 @@ export class PostgresImportedHistoryQueryReader implements ImportedHistoryReader
   }
   private async snapshot<T>(signal: AbortSignal, work: (query: Query) => Promise<T>): Promise<T> {
     activeImportedHistoryRead(signal); const client = await this.pool.connect();
-    let began = false, committing = false, discard: Error | undefined;
+    let began = false, committing = false, committed = false, discard: Error | undefined;
     const query: Query = (sql, values = []) => { activeImportedHistoryRead(signal); return client.query(sql, values); };
     try {
       await query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'); began = true;
@@ -96,10 +96,10 @@ export class PostgresImportedHistoryQueryReader implements ImportedHistoryReader
       const guardedClient: PgSalesClient = { query, release() { throw new Error('Capability cannot release the read client'); } };
       await assertNativeImportAccountingSchema19Guards(guardedClient);
       const result = await work(query); activeImportedHistoryRead(signal);
-      committing = true; await query('COMMIT'); activeImportedHistoryRead(signal); return result;
+      committing = true; await query('COMMIT'); committed = true; activeImportedHistoryRead(signal); return result;
     } catch (error) {
-      if (!began || committing) discard = error instanceof Error ? error : Error('Historical read outcome uncertain');
-      else try { await client.query('ROLLBACK'); } catch (rollback) { discard = rollback instanceof Error ? rollback : Error('Historical rollback failed'); throw new AggregateError([error, rollback], 'Historical read and rollback failed; client discarded'); }
+      if (!committed && (!began || committing)) discard = error instanceof Error ? error : Error('Historical read outcome uncertain');
+      if (began && !committing) try { await client.query('ROLLBACK'); } catch (rollback) { discard = rollback instanceof Error ? rollback : Error('Historical rollback failed'); throw new AggregateError([error, rollback], 'Historical read and rollback failed; client discarded'); }
       throw error;
     } finally { client.release(discard); }
   }

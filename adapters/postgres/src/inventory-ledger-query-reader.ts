@@ -80,7 +80,7 @@ export class PostgresInventoryLedgerQueryReader implements TrustedInventoryLedge
       activeInventoryLedgerRead(signal); return result;
     } catch (error) {
       if (!committed && (!began || committing)) discard = error instanceof Error ? error : new Error("Inventory ledger snapshot failed");
-      if (began && !committed) {
+      if (began && !committing) {
         try { await client.query("ROLLBACK"); }
         catch (rollbackError) {
           discard = rollbackError instanceof Error ? rollbackError : new Error("Inventory ledger rollback failed");

@@ -154,6 +154,13 @@ test("SCRIPTED ledger PG: query/BEGIN/uncertain COMMIT/rollback failures release
   await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead()), AggregateError); assert.ok(pool.releases[0] instanceof Error); assert.equal(pool.releases.length, 1);
 });
 
+test("D3 read outcome: ledger unknown COMMIT is discarded without rollback or retry", async () => {
+  const pool = new ScriptedPool(); pool.failAt = "COMMIT";
+  await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead()), /SYNTHETIC/);
+  assert.equal(stages(pool).at(-1), "COMMIT"); assert.ok(!stages(pool).includes("ROLLBACK"));
+  assert.equal(pool.connects, 1); assert.equal(pool.releases.length, 1); assert.ok(pool.releases[0] instanceof Error);
+});
+
 test("SOURCE CONTRACT ONLY ledger: no history materialization, aggregate, private imported payload, new database/pool or mutable source projection", () => {
   const source = readFileSync(new URL("../adapters/postgres/src/inventory-ledger-query-reader.ts", import.meta.url), "utf8");
   assert.ok(!/SELECT\s+\*|OFFSET|COUNT\(|SUM\(|INSERT INTO|UPDATE naijue_erp|DELETE FROM|\.listen\(|new Pool\(/i.test(source));

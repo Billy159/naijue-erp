@@ -256,14 +256,16 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
     this.pool = pool;
   }
   private async snapshot<T>(signal: AbortSignal, work: (query: Query) => Promise<T>): Promise<T> {
-    active(signal); const client = await this.pool.connect(); let began = false; let committing = false; let discard: Error | undefined;
+    active(signal); const client = await this.pool.connect(); let began = false; let committing = false; let committed = false; let discard: Error | undefined;
     const query: Query = (sql, values = []) => { active(signal); return client.query(sql, values); };
     try {
       active(signal); await query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true;
-      const result = await work(query); active(signal); committing = true; await query("COMMIT"); active(signal); return result;
+      const result = await work(query); active(signal); committing = true; await query("COMMIT"); committed = true; active(signal); return result;
     } catch (error) {
-      if (!began || committing) discard = error instanceof Error ? error : new Error("Inventory snapshot failed");
-      if (began) try { await client.query("ROLLBACK"); } catch (rollbackError) {
+      if (!committed && (!began || committing)) discard = error instanceof Error ? error : new Error("Inventory snapshot failed");
+      // An attempted COMMIT has an unknown outcome; discard it, never issue a second transaction-ending command.
+      // A confirmed COMMIT followed by cancellation only suppresses the response; the connection is healthy.
+      if (began && !committing) try { await client.query("ROLLBACK"); } catch (rollbackError) {
         discard = rollbackError instanceof Error ? rollbackError : new Error("Inventory rollback failed");
         throw new AggregateError([error, rollbackError], "Inventory read and rollback failed; connection discarded");
       }

@@ -71,6 +71,26 @@ function candidate(pool: ScriptedPool, overrides: Partial<InventoryCandidateQuer
 const code = (expected: string) => (error: unknown) => error instanceof DomainError && error.code === expected;
 const stages = (pool: ScriptedPool) => pool.calls.map(call => /\/\* inventory:([a-z-]+) \*\//.exec(call.sql)?.[1] ?? call.sql);
 
+test("D3 read outcome: inventory and candidates never roll back an attempted COMMIT", async () => {
+  for (const candidates of [false, true]) {
+    const pool = new ScriptedPool(); pool.failAt = "COMMIT";
+    const reader = new PostgresInventoryQueryReader(pool);
+    await assert.rejects(candidates ? reader.readCandidates(candidate(pool)) : reader.readInventory(read(pool)), /SYNTHETIC COMMIT failure/);
+    assert.equal(stages(pool).at(-1), "COMMIT"); assert.ok(!stages(pool).includes("ROLLBACK"));
+    assert.equal(pool.connects, 1); assert.equal(pool.releases.length, 1); assert.ok(pool.releases[0] instanceof Error);
+  }
+});
+test("D3 read outcome: inventory and candidates abort after confirmed COMMIT without discarding the healthy connection", async () => {
+  for (const candidates of [false, true]) {
+    const pool = new ScriptedPool(); const controller = new AbortController();
+    pool.afterQuery = stage => { if (stage === "COMMIT") controller.abort(); };
+    const reader = new PostgresInventoryQueryReader(pool);
+    await assert.rejects(candidates ? reader.readCandidates({ ...candidate(pool), signal: controller.signal }) : reader.readInventory(read(pool, undefined, controller.signal)), code("INVENTORY_READ_ABORTED"));
+    assert.equal(stages(pool).at(-1), "COMMIT"); assert.ok(!stages(pool).includes("ROLLBACK"));
+    assert.deepEqual(pool.releases, [undefined]);
+  }
+});
+
 test("SYNTHETIC PG protocol: constructor is inert; one native RR read keeps negative, explicit zero, proven absence and nonexistent coordinates distinct", async () => {
   const pool = new ScriptedPool(); const reader = new PostgresInventoryQueryReader(pool); assert.equal(pool.connects, 0);
   const result = await reader.readInventory(read(pool)); const product = result.data.products[0]!;
