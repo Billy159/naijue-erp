@@ -40,7 +40,7 @@ export function DemoFrame(props: DemoFrameProps) {
     } : undefined;
     if (target) navigation[id] = target; else delete navigation[id];
   }
-  return <DocumentNavigationContext.Provider value={setDocumentNavigation}><div className={`demo-ui demo-frame${props.navigation['settings/stores']?.selected ? ' demo-frame-viewport' : ''}`}>
+  return <DocumentNavigationContext.Provider value={setDocumentNavigation}><div className={`demo-ui demo-frame${props.navigation['settings/stores']?.selected || props.navigation['product-settings']?.selected ? ' demo-frame-viewport' : ''}`}>
     <div className="app">
       <aside className="sidebar">
         <div className="brand" aria-label="奈爵服饰"><span className="brand-mark" aria-hidden="true">奈</span><span className="brand-name">奈爵服饰</span></div>
