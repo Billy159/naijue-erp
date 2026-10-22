@@ -48,7 +48,7 @@ function ExistingStorePreparation(props: Parameters<typeof StoreMaintenanceHost>
   const item = snapshot.phase === 'success' && snapshot.success?.parameters.id === props.targetId ? snapshot.success.data.item : null;
   if (item && item.kind === props.kind && item.id === props.targetId && props.maintenance?.workspace) return <PrepareStoreCommand {...props} item={item} />;
   if (item && item.kind === props.kind && item.id === props.targetId) return <StoreMaintenanceForm scope={props.scope} kind={props.kind} record={item} directory={props.maintenance?.directory} close={props.close} />;
-  return <Modal className="store-settings-modal iw-arco-controls" visible title={`编辑${props.kind === 'stores' ? '营业厅' : '仓库'}`} maskClosable={false} okText="确定" cancelText="取消" okButtonProps={{ disabled: true }} onCancel={props.close}>
+  return <Modal className="bs-modal demo-store-modal iw-arco-modal iw-arco-controls" autoFocus={false} focusLock visible title={`编辑${props.kind === 'stores' ? '营业厅' : '仓库'}`} maskClosable={false} okText="确定" cancelText="取消" okButtonProps={{ disabled: true }} onCancel={props.close}>
     <p role="status">{snapshot.phase === 'loading' ? '正在读取当前资料…' : snapshot.phase === 'success' ? '记录不存在或不可访问。' : '当前资料读取失败，暂不能编辑。'}</p>
     {snapshot.phase === 'error' && <Button onClick={() => { if (props.targetId) void props.query.run({ id: props.targetId }); }}>重试读取</Button>}
   </Modal>;

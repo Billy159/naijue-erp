@@ -1,5 +1,5 @@
 import { Button, Input, Modal, Select, Switch } from '@arco-design/web-react';
-import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode, type ComponentProps, type ComponentType } from 'react';
 import { LatestQuery } from '../../loading/latest-query.ts';
 import type { ReadScope } from '../../loading/read-scope.ts';
 import { HttpQueryError } from '../../transport/http-query.ts';
@@ -8,6 +8,10 @@ import { settingsReferenceName, settingsSaveUnavailable } from './maintenance-co
 import { SettingsDraftController, StoreMaintenanceController, storeRejectionMessage } from './maintenance-controller.ts';
 import { storeMaintenanceDraft, validateStoreMaintenanceDraft } from './maintenance-validation.ts';
 import './source-store-settings.css';
+import './demo-store-ui.css';
+
+// Same runtime Select; extend only its published controlled-empty value typing.
+const ControlledDirectorySelect = Select as ComponentType<Omit<ComponentProps<typeof Select>, 'value'> & { readonly value: ComponentProps<typeof Select>['value'] }>;
 
 export function SettingsField(props: { readonly label: string; readonly required?: boolean; readonly error?: string | undefined; readonly children: ReactNode }) {
   return <div className="bs-field iw-form-field" role="group" aria-label={props.label}>
@@ -18,11 +22,11 @@ export function SettingsField(props: { readonly label: string; readonly required
 
 export function SettingsPreparationModal<T extends object>(props: {
   readonly title: string; readonly controller: SettingsDraftController<T>; readonly close: () => void;
-  readonly children: ReactNode; readonly staff?: boolean;
+  readonly children: ReactNode; readonly staff?: boolean; readonly demoStore?: boolean;
 }) {
   const state = useSyncExternalStore(props.controller.subscribe, props.controller.getSnapshot, props.controller.getSnapshot);
   if (state.disposed) return null;
-  return <Modal className={`bs-modal store-settings-modal settings-preparation-modal iw-arco-modal iw-arco-controls${props.staff ? ' bs-modal-staff' : ''}`}
+  return <Modal className={`bs-modal ${props.demoStore ? 'demo-store-modal' : 'store-settings-modal settings-preparation-modal'} iw-arco-modal iw-arco-controls${props.staff ? ' bs-modal-staff' : ''}`}
     visible title={props.title} maskClosable={false} autoFocus={false} focusLock
     okText="确定" cancelText="取消" okButtonProps={{ disabled: true }}
     onCancel={() => { if (props.controller.requestClose()) props.close(); }}>
@@ -42,7 +46,7 @@ export function SettingsReferenceSelect(props: {
   readonly scope: ReadScope; readonly reader: SettingsDirectoryReader | undefined;
   readonly kind: SettingsDirectoryKind; readonly label: string;
   readonly selected: readonly SettingsReference[]; readonly multiple?: boolean;
-  readonly required?: boolean; readonly disabled?: boolean; readonly hallId?: string | null;
+  readonly required?: boolean; readonly disabled?: boolean; readonly hallId?: string | null; readonly flatValue?: boolean;
   readonly onChange: (items: readonly SettingsReference[]) => void;
 }) {
   const [binding, setBinding] = useState<{ query: LatestQuery<SettingsDirectoryParameters, SettingsDirectoryPage>; scope: ReadScope; reader: SettingsDirectoryReader; kind: SettingsDirectoryKind; hallId: string | null } | null>(null);
@@ -79,9 +83,10 @@ function DirectorySelect(props: Parameters<typeof SettingsReferenceSelect>[0] & 
   const unavailable = !props.owner || props.kind === 'warehouses' && !props.hallId;
   const canRemoveSelected = !!props.multiple && selected.size > 0;
   const errorText = snapshot.error instanceof HttpQueryError && snapshot.error.kind === 'forbidden' ? '无权读取候选资料。' : '候选资料读取失败。';
-  return <div className="settings-reference-select settings-single" ref={host}>
-    <Select aria-label={props.label} {...(props.multiple ? { mode: 'multiple' as const } : {})}
-      value={props.multiple ? props.selected.map(item => item.id) : props.selected[0]?.id ?? ''}
+  return <div className={`settings-reference-select settings-single${props.flatValue ? ' demo-store-single' : ''}`} ref={host}>
+    <ControlledDirectorySelect {...(props.flatValue ? { className: 'ui-flat-select' } : {})} aria-label={props.label} {...(props.multiple ? { mode: 'multiple' as const } : {})}
+      value={props.multiple ? props.selected.map(item => item.id) : props.selected[0]?.id ?? (props.flatValue ? undefined : '')}
+      {...(props.flatValue ? { renderFormat: () => <span className="ui-single-tag">{props.selected[0] ? settingsReferenceName(props.selected[0]) : ''}</span> } : {})}
       options={[...options.values()]} placeholder="请选择" showSearch filterOption={false}
       allowClear={!props.required} disabled={!active || unavailable && !canRemoveSelected} loading={snapshot.phase === 'loading'}
       popupVisible={open && active && !unavailable} unmountOnExit
@@ -117,7 +122,7 @@ export function StoreMaintenanceForm(props: StoreMaintenanceFormProps) {
   return controller ? <StoreFormContent {...props} controller={controller} /> : null;
 }
 function StoreFormContent(props: StoreMaintenanceFormProps & { readonly controller: SettingsDraftController<StoreMaintenanceDraft> }) {
-  return <SettingsPreparationModal title={`${props.record ? '编辑' : '新增'}${props.kind === 'stores' ? '营业厅' : '仓库'}`} controller={props.controller} close={props.close}>
+  return <SettingsPreparationModal demoStore title={`${props.record ? '编辑' : '新增'}${props.kind === 'stores' ? '营业厅' : '仓库'}`} controller={props.controller} close={props.close}>
     <StoreFormFields {...props} />
   </SettingsPreparationModal>;
 }
@@ -130,9 +135,9 @@ function StoreFormFields(props: StoreMaintenanceFormProps & {
   return <div className="bs-form-fields iw-form-fields">
     <SettingsField label="名称" required error={state.errors.name}><Input className="iw-arco-input" aria-label="名称" value={draft.name} maxLength={2048} disabled={!!props.locked} onChange={name => controller.update({ name })} autoComplete="off" /></SettingsField>
     {props.kind === 'stores' ? <>
-      <SettingsField label="默认零售客户"><SettingsReferenceSelect disabled={!!props.locked} scope={props.scope} reader={props.directory} kind="customers" label="默认零售客户" selected={draft.customer ? [draft.customer] : []} onChange={items => controller.update({ customer: items[0] ?? null })} /></SettingsField>
-      <SettingsField label="默认出库仓" error={state.errors.warehouse}><SettingsReferenceSelect disabled={!!props.locked} scope={props.scope} reader={props.directory} kind="warehouses" label="默认出库仓" hallId={props.record?.id ?? null} selected={draft.warehouse ? [draft.warehouse] : []} onChange={items => controller.update({ warehouse: items[0] ?? null })} /></SettingsField>
-    </> : <SettingsField label="所属营业厅" required error={state.errors.hall}><SettingsReferenceSelect disabled={!!props.locked} scope={props.scope} reader={props.directory} kind="halls" label="所属营业厅" selected={draft.hall ? [draft.hall] : []} required onChange={items => controller.update({ hall: items[0] ?? null })} /></SettingsField>}
+      <SettingsField label="默认零售客户"><SettingsReferenceSelect flatValue disabled={!!props.locked} scope={props.scope} reader={props.directory} kind="customers" label="默认零售客户" selected={draft.customer ? [draft.customer] : []} onChange={items => controller.update({ customer: items[0] ?? null })} /></SettingsField>
+      <SettingsField label="默认出库仓" error={state.errors.warehouse}><SettingsReferenceSelect flatValue disabled={!!props.locked} scope={props.scope} reader={props.directory} kind="warehouses" label="默认出库仓" hallId={props.record?.id ?? null} selected={draft.warehouse ? [draft.warehouse] : []} onChange={items => controller.update({ warehouse: items[0] ?? null })} /></SettingsField>
+    </> : <SettingsField label="所属营业厅" required error={state.errors.hall}><SettingsReferenceSelect flatValue disabled={!!props.locked} scope={props.scope} reader={props.directory} kind="halls" label="所属营业厅" selected={draft.hall ? [draft.hall] : []} required onChange={items => controller.update({ hall: items[0] ?? null })} /></SettingsField>}
     {props.record && <SettingsField label="使用状态"><div className="bs-switch"><Switch aria-label="使用状态" disabled={!!props.locked} checked={draft.enabled} onChange={enabled => controller.update({ enabled })} /><span>{draft.enabled ? '正常' : '已停用'}</span></div></SettingsField>}
   </div>;
 }
@@ -140,7 +145,7 @@ export function StoreCommandForm(props: StoreMaintenanceFormProps & { readonly c
   const { controller } = props, state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot), write = state.write;
   if (state.disposed || !props.scope.active) return null;
   const pending = write.phase === 'submitting' || write.phase === 'recovering';
-  return <Modal className="bs-modal store-settings-modal settings-preparation-modal iw-arco-modal iw-arco-controls"
+  return <Modal className="bs-modal demo-store-modal iw-arco-modal iw-arco-controls"
     visible title={`${controller.record ? '编辑' : '新增'}${props.kind === 'stores' ? '营业厅' : '仓库'}`} maskClosable={false} autoFocus={false} focusLock okText="确定" cancelText={write.phase === 'committed' ? '关闭' : '取消'}
     okButtonProps={{ disabled: !controller.writesEnabled || controller.locked || Boolean(controller.record && !state.dirty), loading: write.phase === 'submitting' }}
     onOk={() => { void controller.submit(); }} onCancel={() => { if (controller.requestClose()) props.close(); }}>

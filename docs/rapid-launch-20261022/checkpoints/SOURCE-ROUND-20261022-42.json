@@ -1,0 +1,89 @@
+{
+  "atUtc": "2026-10-22T18:11:32.561315+00:00",
+  "parent": "ce4b207bb1fcc66b5de48945a4738466712e7686",
+  "groups": [
+    {
+      "slice": "SALE_V006_01_NATIVE_FINDER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-28/DELIVERY.json",
+      "receiptSha256": "7aca57db88c16c0e94cfbbdf1030eb99a7253d264c3f5207982fbcedf68e5521",
+      "files": [
+        {
+          "path": "apps/web/src/current-form/product-finder.tsx",
+          "owner": "F1",
+          "sha256": "526410b459efefcf1ba9fdd1a554ccc5a75e35781d0f1e8d0560e37d3f8cd6d9",
+          "bytes": 7621
+        },
+        {
+          "path": "apps/web/src/current-form/product-finder.css",
+          "owner": "F1",
+          "sha256": "8c7e654175edc5e96270ada8c9acef8b38b0ceb67b2615ea4c9f050d1428bfbb",
+          "bytes": 7105
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+          "owner": "F1",
+          "sha256": "abc668e6ea072a3cc27ff363986eae2cf8d11a10b34b64c1817d6f3f2af2b762",
+          "bytes": 32965
+        }
+      ]
+    },
+    {
+      "slice": "DEMO_STORE_UI_FIRST_SOURCE_SLICE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/DEMO-STORE-UI-v1-RESULT.json",
+      "receiptSha256": "b2101ceddf7852a8f7f5e5bd91b5d98cc4cf089a26efcc7cdc8a63218e8c8bed",
+      "files": [
+        {
+          "path": "apps/web/src/settings/stores/stores-page.tsx",
+          "owner": "F3",
+          "sha256": "b0daf4698df38ed62b8c5dac155699aa9ff64bbff61568c2352967a78906b243",
+          "bytes": 9403
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-form.tsx",
+          "owner": "F3",
+          "sha256": "82b6f9d3ecd2d3987c88ede428cc3182bb572cf62df403942ee33306c0f9b188",
+          "bytes": 15788
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-host.tsx",
+          "owner": "F3",
+          "sha256": "7e0356a6084f27f7c2933f455bdea5b625017dc44a1075b8318675983a6ee397",
+          "bytes": 5703
+        },
+        {
+          "path": "apps/web/src/settings/stores/demo-store-view.tsx",
+          "owner": "F3",
+          "sha256": "5e4d964b25bbb1847a499539c44125d76750133c5c21897dbe5c721f22b805e7",
+          "bytes": 14315
+        },
+        {
+          "path": "apps/web/src/settings/stores/demo-store-ui.css",
+          "owner": "F3",
+          "sha256": "3f26ff9987a1ee504f9f7e8b27fb7e9f9660faeac695edfd323519b565f188fc",
+          "bytes": 21544
+        }
+      ]
+    },
+    {
+      "slice": "CATALOGUE26_GENUINE_SOURCE_FACTORY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/catalogue26-source-slice1/RESULT.json",
+      "receiptSha256": "1e7e4a709c432723e67742ff864be8019e15f43391a4c884376f218c93f85cac",
+      "files": [
+        {
+          "path": "scripts/import-v3/native-source-authorizers.mjs",
+          "owner": "D3",
+          "sha256": "a16b43741fa49ec173410f43be6f54d114eb1f1f1471ab24b49b868e0d9aedc1",
+          "bytes": 43821
+        },
+        {
+          "path": "scripts/import-v3/native-source-authorizers.test.mjs",
+          "owner": "D3",
+          "sha256": "2e218d1042f600d14829b3bb61502f9ef411109b86f41e6ee018e9ed44c88c52",
+          "bytes": 33079
+        }
+      ]
+    }
+  ],
+  "fileCount": 10,
+  "scope": "Only these10 source files; developer targeted checks adopted pending QF/QB; actual browser/PG/import/production not accepted."
+}

@@ -1,3 +1,4 @@
+import { CurrentProductFinder, type CurrentProductFinderHandle } from './product-finder.tsx';
 import { SalesDocumentColumns, SalesDocumentColumnHead, SalesDocumentSummary, SalesProductPresentation, salesPaymentBalance, salesPaymentKind, salesDisplayedDiscount, type SalesProductCapability } from '../sales/document-presentation.tsx';
 import type { ReadScope } from '../loading/read-scope.ts';
 import { Trigger } from '@arco-design/web-react';
@@ -11,7 +12,7 @@ import { SalesProposalSession, salesProposalMoney, type SalesProposalLine, type 
 import { salesInputMoney } from '../sales/commands/form-model.ts';
 import { discountUnitPrice } from '../../../../packages/domain/src/sales-money.ts';
 import { minorAmount } from '../../../../packages/domain/src/values.ts';
-import type { CurrentFormSku } from '../../../../packages/application/src/current-form-ports.ts';
+import type { CurrentFormProduct, CurrentFormSku } from '../../../../packages/application/src/current-form-ports.ts';
 import { salesBusinessMode, type SalesBusinessMode } from './sales-business-mode.ts';
 import './sales-proposal.css';
 import '../sales/detail.css';
@@ -48,13 +49,14 @@ function quantitySummary(rows: readonly SalesProposalLine[], absolute = false): 
 type SpecKind = 'color' | 'fit' | 'size';
 /** One anchored Arco popup for native paged candidates. No second modal picker,
  * no all-catalog fetch and no derived SKU identity. */
-function CandidatePopup({ session, picker, spec, selection, choose, close }: {
+function CandidatePopup({ session, picker, spec, selection, choose, close, keyboardRef, scope, capability }: { readonly keyboardRef: React.Ref<CurrentProductFinderHandle>; readonly scope?: ReadScope; readonly capability?: SalesProductCapability;
   session: SalesProposalSession; picker: NonNullable<SalesProposalSnapshot['picker']>;
   spec?: SpecKind; selection?: { color: { id: string } | null; fit: { id: string } | null };
   choose: (id: string) => void; close: () => void;
 }) {
   const host = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
+    if (picker.kind === 'product') return;
     const element = host.current; if (!element) return;
     const doc = element.ownerDocument, previous = doc.activeElement;
     // Trigger can attach its portal after this child's layout effect. Focus
@@ -65,7 +67,8 @@ function CandidatePopup({ session, picker, spec, selection, choose, close }: {
       (element.querySelector<HTMLElement>('input,button:not(:disabled)') ?? element).focus({ preventScroll: true });
     });
     return () => cancelAnimationFrame(frame);
-  }, [picker.phase, picker.page]);
+  }, [picker.kind, picker.phase, picker.page]);
+  if (picker.kind === 'product') return <CurrentProductFinder ref={keyboardRef} products={(picker.result?.items ?? []) as readonly CurrentFormProduct[]} phase={picker.phase} search={picker.search} page={picker.page} exactTotal={picker.result?.exactTotal ?? null} {...(scope ? { scope } : {})} {...(capability ? { capability } : {})} select={choose} close={close} turnPage={page => { void session.page(page); }} retry={() => { void session.retry(); }} />;
   let options = (picker.result?.items ?? []).map(item => ({ id: item.id as string, text: 'name' in item ? `${'code' in item && item.code ? `${item.code} · ` : ''}${item.name}` : (item as CurrentFormSku).skuCode }));
   if (spec) {
     const rows = (picker.result?.items ?? []) as readonly CurrentFormSku[];
@@ -85,7 +88,7 @@ function CandidatePopup({ session, picker, spec, selection, choose, close }: {
       {options.map(option => <UIButton key={option.id} data-candidate-option type="button" onClick={() => choose(option.id)}>{option.text}</UIButton>)}
       {!options.length && <p>本页无匹配项{picker.result && picker.result.exactTotal > 20n ? '，可翻页继续选择' : ''}</p>}
     </>}</div>
-    {picker.phase === 'ready' && <footer><span>第 {picker.page} 页 / 共 {picker.result?.exactTotal.toString()} 个{spec ? '实际规格' : '候选'}</span><UIButton disabled={picker.page <= 1} onClick={() => { void session.page(picker.page - 1); }}>上一页</UIButton><UIButton disabled={!picker.result || BigInt(picker.page) * 20n >= picker.result.exactTotal} onClick={() => { void session.page(picker.page + 1); }}>下一页</UIButton></footer>}
+    {picker.phase === 'ready' && picker.result && picker.result.exactTotal > 20n && <footer><span>第 {picker.page} 页 / 共 {picker.result?.exactTotal.toString()} 个{spec ? '实际规格' : '候选'}</span><UIButton disabled={picker.page <= 1} onClick={() => { void session.page(picker.page - 1); }}>上一页</UIButton><UIButton disabled={!picker.result || BigInt(picker.page) * 20n >= picker.result.exactTotal} onClick={() => { void session.page(picker.page + 1); }}>下一页</UIButton></footer>}
   </div>;
 }
 export function SalesProposalForm({ session, close, preparation, scope, product: productCapability }: { readonly scope?: ReadScope; readonly product?: SalesProductCapability; readonly session: SalesProposalSession; readonly close: () => void; readonly preparation?: { readonly save: () => void; readonly preparing: boolean; readonly notice: string | null; readonly cancel: () => void } }) {
@@ -96,6 +99,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
   const [anchor, setAnchor] = useState<string | null>(null), [activeSection, setActiveSection] = useState<'IN' | 'OUT'>('OUT');
   const [zeroLine, setZeroLine] = useState<string | null>(null);
   const formRef = useRef<HTMLElement>(null), triggerRef = useRef<HTMLElement | null>(null);
+  const productKeys = useRef(new Map<string, CurrentProductFinderHandle>());
   const movedQuantity = useRef<{ key: string; previous: Element | null } | null>(null);
   useLayoutEffect(() => {
     const target = movedQuantity.current; movedQuantity.current = null;
@@ -111,18 +115,27 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
     live?.focus({ preventScroll: true });
   };
   const dismissPicker = (restore = false) => { session.closePicker(); setAnchor(null); if (restore) restorePickerFocus(); };
-  const candidate = (id: string, label: string, value: ReactNode, open: () => void, disabled = false, spec?: SpecKind, selection?: { color: { id: string } | null; fit: { id: string } | null }, input?: { value: string; change: (value: string) => void; placeholder: string }) => {
+  const candidate = (id: string, label: string, value: ReactNode, open: () => void, disabled = false, spec?: SpecKind, selection?: { color: { id: string } | null; fit: { id: string } | null }, input?: { value: string; change: (value: string) => void; placeholder: string; openUsesInputValue?: boolean }) => {
     const visible = anchor === id && !!picker;
     const show = (target?: HTMLElement) => { if (disabled) return; if (target) triggerRef.current = target; setAnchor(id); open(); };
-    const keyboard = (event: React.KeyboardEvent<HTMLElement>) => { if (event.key === 'ArrowDown' || event.key === 'Enter' && input) { event.preventDefault(); show(event.currentTarget); } };
-    return <Trigger trigger="click" position="bl" popupVisible={visible} escToClose updateOnScroll autoFitPosition unmountOnExit
+    const keyboard = (event: React.KeyboardEvent<HTMLElement>) => {
+      if (event.nativeEvent.isComposing || event.keyCode === 229) return;
+      if (visible && picker?.kind === 'product' && ['ArrowDown', 'ArrowUp', 'Enter', 'Escape', 'Tab'].includes(event.key)) {
+        if (event.key !== 'Tab') event.preventDefault(); event.stopPropagation();
+        const handler = productKeys.current.get(id);
+        if (handler) handler.key(event.key); else if (event.key === 'Escape') dismissPicker(true);
+      } else if (event.key === 'ArrowDown' || event.key === 'Enter' && input) { event.preventDefault(); show(event.currentTarget); }
+    };
+    const bounds = triggerRef.current?.getBoundingClientRect(), goodsWidth = Math.min(Math.max((bounds?.width || 270) + 390, 660), window.innerWidth - 16);
+    const popupStyle = picker?.kind === 'product' && visible ? { width: goodsWidth, '--pf-list-width': `${Math.min(bounds?.width || 270, goodsWidth - 220)}px` } as React.CSSProperties : undefined;
+    return <Trigger {...(popupStyle ? { popupStyle } : {})} trigger="click" position="bl" popupVisible={visible} escToClose updateOnScroll autoFitPosition unmountOnExit
       onVisibleChange={next => { if (next) { if (!visible) show(); } else if (visible) dismissPicker(); }}
-      popup={() => picker ? <CandidatePopup session={session} picker={picker} {...(spec ? { spec } : {})} {...(selection ? { selection } : {})} close={() => dismissPicker(true)} choose={selected => {
+      popup={() => picker ? <CandidatePopup session={session} picker={picker} keyboardRef={handle => { if (handle) productKeys.current.set(id, handle); else productKeys.current.delete(id); }} {...(scope ? { scope } : {})} {...(productCapability ? { capability: productCapability } : {})} {...(spec ? { spec } : {})} {...(selection ? { selection } : {})} close={() => dismissPicker(true)} choose={selected => {
         if (spec) { session.selectSpec(spec, selected); setAnchor(null); restorePickerFocus(); }
         else { void session.select(selected).then(() => { if (!session.getSnapshot().picker) { setAnchor(null); restorePickerFocus(); } }); }
       }} /> : <span />}>
       {input ? <UIInput className="sale-product-input" data-entry-control={id} aria-label={label} role="combobox" aria-expanded={visible} autoComplete="off" placeholder={input.placeholder} value={input.value} disabled={disabled}
-        onKeyDown={keyboard} onClick={event => { triggerRef.current = event.currentTarget; }} onChange={value => { input.change(value); if (!visible) show(); else void session.search(value); }} />
+        onKeyDown={keyboard} onClick={event => { triggerRef.current = event.currentTarget; }} onChange={(value, event) => { triggerRef.current = event.currentTarget; input.change(value); if (!visible) { show(); if (!input.openUsesInputValue) void session.search(value); } else void session.search(value); }} />
         : <UIButton className="sale-select-trigger" data-entry-control={id} aria-label={label} aria-haspopup="dialog" aria-expanded={visible} disabled={disabled} onKeyDown={keyboard} onClick={event => { triggerRef.current = event.currentTarget; }}><span>{value}</span><span aria-hidden="true">⌄</span></UIButton>}
     </Trigger>;
   };
@@ -182,10 +195,10 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
       {section.rows.map(row => {
         const editing = state.lineEdit?.key === row.key ? state.lineEdit : null, product = editing?.product ?? row.product;
         const editOpen = (kind: 'product' | 'sku') => { void session.openLinePicker(row.key, kind); };
-        const identity = (part: 'product' | SpecKind, value: ReactNode) => <UIButton className="sale-identity-trigger" data-line-identity={row.key} aria-label={`修改${part === 'product' ? '商品' : { color: '颜色', fit: '版型', size: '尺码' }[part]} ${row.sku.skuCode}`} disabled={!active || !!state.lineEdit} onClick={event => { triggerRef.current = event.currentTarget; setAnchor(`edit-${row.key}-${part}`); editOpen(part === 'product' ? 'product' : 'sku'); }}><span>{value}</span><span className="sale-edit-mark">改</span></UIButton>;
+        const identity = (part: 'product' | SpecKind, value: ReactNode) => <UIButton className="sale-identity-trigger" data-line-identity={row.key} aria-label={`修改${part === 'product' ? '商品' : { color: '颜色', fit: '版型', size: '尺码' }[part]} ${row.sku.skuCode}`} disabled={!active || !!state.lineEdit} onClick={event => { triggerRef.current = event.currentTarget; setAnchor(`edit-${row.key}-${part}`); editOpen(part === 'product' ? 'product' : 'sku'); if (part === 'product') requestAnimationFrame(() => { const doc = formRef.current?.ownerDocument; if (doc?.activeElement === doc?.body) formRef.current?.querySelector<HTMLInputElement>(`[data-entry-control="edit-${row.key}-product"]`)?.focus({ preventScroll: true }); }); }}><span>{value}</span><span className="sale-edit-mark">改</span></UIButton>;
         const rawPrice = row.isGift ? '0.00' : row.pricingRule === 'DISCOUNT' ? linePrice(row) ?? '' : row.dealPrice;
         return <tr key={row.key} className={editing ? 'sale-identity-editing' : ''}>
-          <td>{editing ? <>{candidate(`edit-${row.key}-product`, '修改商品款号 / 名称', `${product.code} · ${product.name}`, () => editOpen('product'))}<small className="mx-original-hint">原：{row.product.code} / {row.sku.colorName} / {row.sku.fitName} / {row.sku.sizeName} · {row.quantity}</small></> : <div className="sale-product-cell">{identity('product', <><strong>{row.product.code}</strong><span className="sale-product-name">{row.product.name}</span></>)}{row.isGift && <span className="sale-gift">赠品</span>}</div>}</td>
+          <td>{editing ? <>{candidate(`edit-${row.key}-product`, '修改商品款号 / 名称', `${product.code} · ${product.name}`, () => editOpen('product'), false, undefined, undefined, { value: anchor === `edit-${row.key}-product` && picker?.kind === 'product' ? picker.search : product.code, change: () => {}, placeholder: '款号 / 名称 · 条码请扫码录入' })}<small className="mx-original-hint">原：{row.product.code} / {row.sku.colorName} / {row.sku.fitName} / {row.sku.sizeName} · {row.quantity}</small></> : <div className="sale-product-cell">{identity('product', <><strong>{row.product.code}</strong><span className="sale-product-name">{row.product.name}</span></>)}{row.isGift && <span className="sale-gift">赠品</span>}</div>}</td>
           {(['color', 'fit', 'size'] as const).map(kind => <td key={kind}>{editing ? candidate(`edit-${row.key}-${kind}`, `修改${{ color: '颜色', fit: '版型', size: '尺码' }[kind]}`, kind === 'color' ? editing.color?.name ?? '颜色' : kind === 'fit' ? editing.fit?.name ?? '版型' : editing.sku?.sizeName ?? '尺码', () => editOpen('sku'), kind === 'fit' && !editing.color || kind === 'size' && (!editing.color || !editing.fit), kind, editing) : identity(kind, kind === 'color' ? row.sku.colorName : kind === 'fit' ? row.sku.fitName : row.sku.sizeName)}</td>)}
           <td><UIInput data-proposal-quantity={row.key} aria-label={`${row.sku.skuCode} 数量`} className={row.quantity.startsWith('-') ? 'negative' : ''} inputMode="numeric" value={row.quantity} disabled={!active || !!editing} onChange={value => { movedQuantity.current = { key: row.key, previous: formRef.current?.ownerDocument.activeElement ?? null }; session.updateLine(row.key, { quantity: value }); }} /></td>
           <td className="sale-num sale-muted">{product.retailPrice ?? '未记录'}</td>
@@ -195,7 +208,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
         </tr>;
       })}
       {active && <tr className="sale-entry-row" data-entry-direction={section.key}>
-        <td>{candidate(`entry-${section.key}-product`, `${section.title}款号 / 名称`, entry.product ? `${entry.product.code} · ${entry.product.name}` : '商品款号 / 名称', () => entryOpen('product'), !draft.hall || !!state.lineEdit, undefined, undefined, { value: entry.query, change: value => session.updateEntry(section.key, { query: value }), placeholder: '商品款号 / 名称' })}{entry.product && <small>{entry.product.name}</small>}</td>
+        <td>{candidate(`entry-${section.key}-product`, `${section.title}款号 / 名称`, entry.product ? `${entry.product.code} · ${entry.product.name}` : '商品款号 / 名称', () => entryOpen('product'), !draft.hall || !!state.lineEdit, undefined, undefined, { value: entry.query, openUsesInputValue: true, change: value => session.updateEntry(section.key, { query: value }), placeholder: '款号 / 名称 · 条码请扫码录入' })}{entry.product && <small>{entry.product.name}</small>}</td>
         {(['color', 'fit', 'size'] as const).map(kind => <td key={kind}>{candidate(`entry-${section.key}-${kind}`, `${section.title}${{ color: '颜色', fit: '版型', size: '尺码' }[kind]}`, kind === 'color' ? entry.color?.name ?? '颜色' : kind === 'fit' ? entry.fit?.name ?? '版型' : entry.sku?.sizeName ?? '尺码', () => entryOpen('sku'), !entry.product || !!state.lineEdit || kind === 'fit' && !entry.color || kind === 'size' && (!entry.color || !entry.fit), kind, entry)}</td>)}
         <td><UIInput aria-label={`${section.title}本行数量`} className={entry.quantity.startsWith('-') ? 'negative' : ''} inputMode="numeric" value={entry.product ? entry.quantity : ''} disabled={!entry.product || !!state.lineEdit} onChange={value => session.updateEntry(section.key, { quantity: value })} onKeyDown={event => { if (event.key === 'Enter') { event.preventDefault(); completeEntry(section.key); } }} /></td>
         <td className="sale-num sale-muted">{entry.product?.retailPrice ?? ''}</td><td />

@@ -1,19 +1,14 @@
 import { SettingsAuditEntry } from '../audit/audit-entry.tsx';
 import { StoreCommandForm } from './maintenance-form.tsx';
 import { StoreMaintenanceHost } from './maintenance-host.tsx';
-import { StandardTabs } from '../../components/standard-tabs.tsx';
 import { UIButton } from '../../components/standard-controls.tsx';
-import { Button, Empty, Input, Table, Tag } from '@arco-design/web-react';
-import { IconSearch } from '@arco-design/web-react/icon';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
-import type { LatestQuery } from '../../loading/latest-query.ts';
 import { useDialogFocusReturn } from '../../components/use-dialog-focus-return.ts';
-import type { StoreSettingsDetail, StoreSettingsDetailQuery, StoreSettingsEntry, StoreSettingsKind, StoreSettingsListQuery, StoreSettingsPageProps } from './contracts.ts';
+import type { StoreSettingsKind, StoreSettingsListQuery, StoreSettingsPageProps } from './contracts.ts';
 import { initialStoreSettingsQuery, StoreSettingsReadController } from './controller.ts';
 import { StoreSettingsReadState } from './read-state.tsx';
-import { StoreSettingsDetailModal, storeSettingsReferenceLabel } from './detail-modal.tsx';
-import { StoreSettingsSingleSelect } from './single-select.tsx';
-import { StoreSettingsPagination } from './pagination.tsx';
+import { storeSettingsReferenceLabel } from './detail-modal.tsx';
+import { DemoStoreView } from './demo-store-view.tsx';
 import './source-store-settings.css';
 
 const noEditors = Object.freeze({ stores: null, warehouses: null });
@@ -31,7 +26,6 @@ export function StoreSettingsPage(props: StoreSettingsPageProps & { readonly kin
 function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: StoreSettingsKind; readonly controller: StoreSettingsReadController }) {
   const { controller } = props, { list, scope } = controller, snapshot = useSyncExternalStore(list.subscribe, list.getSnapshot, list.getSnapshot), hallSnapshot = useSyncExternalStore(controller.hallDirectory.subscribe, controller.hallDirectory.getSnapshot, controller.hallDirectory.getSnapshot);
   const [draft, setDraft] = useState<StoreSettingsListQuery>({ ...initialStoreSettingsQuery }), [hallSelection, setHallSelection] = useState<{ id: string; name: string } | null>(null);
-  const [target, setTarget] = useState<{ readonly id: string; readonly query: LatestQuery<StoreSettingsDetailQuery, StoreSettingsDetail> } | null>(null);
   const [editTarget, setEditTarget] = useState<{ id: string | null } | null>(null);
   const workspace = props.maintenance?.workspace?.matches(props.scope) ? props.maintenance.workspace : null;
   const editors = useSyncExternalStore(workspace?.subscribe ?? noSubscribe, workspace?.getSnapshot ?? (() => noEditors), workspace?.getSnapshot ?? (() => noEditors));
@@ -39,10 +33,9 @@ function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: S
   const write = useSyncExternalStore(editor?.subscribe ?? noSubscribe, editor?.getSnapshot ?? (() => null), editor?.getSnapshot ?? (() => null))?.write;
   const refreshed = useRef<string | null>(null);
 
-  const focus = useDialogFocusReturn(scope, target !== null || editTarget !== null || editor !== null), label = props.kind === 'stores' ? '营业厅' : '仓库';
+  const focus = useDialogFocusReturn(scope, editTarget !== null || editor !== null), label = props.kind === 'stores' ? '营业厅' : '仓库';
   const success = snapshot.success, result = success?.data, displayed = success?.parameters ?? initialStoreSettingsQuery, busy = snapshot.phase === 'loading';
-  const close = () => { controller.closeDetail(); setTarget(null); focus.request(); };
-  const run = (parameters: StoreSettingsListQuery) => { if (scope.active) { setTarget(null); void controller.queryList(parameters); } };
+  const run = (parameters: StoreSettingsListQuery) => { if (scope.active) void controller.queryList(parameters); };
   const retry = () => run(snapshot.request?.parameters ?? { ...draft, page: 1 });
   useEffect(() => {
     if (scope.active && write?.phase === 'committed' && write.result && refreshed.current !== write.result.operationId) {
@@ -60,13 +53,30 @@ function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: S
   };
   const state = <StoreSettingsReadState snapshot={snapshot} accessFailure={controller.accessFailure} retry={retry} cancel={() => list.cancel()} />;
   if (snapshot.phase === 'disposed') return <section className="store-settings-workbench">{state}{commandForm}</section>;
-  const hallRead = hallSnapshot.success, hallOptions = [{ value: '', label: '全部营业厅' }, ...(hallRead?.data.items ?? []).map(item => ({ value: item.id, label: item.name }))];
+  const hallRead = hallSnapshot.success, hallOptions = (hallRead?.data.items ?? []).map(item => ({ value: item.id, label: item.name }));
   if (hallSelection && !hallOptions.some(option => option.value === hallSelection.id)) hallOptions.push({ value: hallSelection.id, label: hallSelection.name });
   const halls = (search = '', page = 1) => { if (scope.active) void controller.queryHalls({ ...initialStoreSettingsQuery, status: 'all', search, page }); };
-  const view = (row: StoreSettingsEntry) => <UIButton type="button" variant="text" className="settings-name-view" aria-label={`查看${label}：${row.name}`} disabled={busy || snapshot.phase !== 'success'} onClick={event => { if (scope.active && list.getSnapshot().success === success) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); setTarget({ id: row.id, query: controller.openDetail(row.id) }); } }}>{row.name || '（空名称）'}</UIButton>;
-  const statusColumn = { title: '状态', width: 100, render: (_: unknown, row: StoreSettingsEntry) => <Tag className={`iw-status ${row.enabled ? 'normal' : 'off'}`}>{row.enabled ? '正常' : '已停用'}</Tag> };
-  const actionColumn = { title: '操作', width: 76, render: (_: unknown, row: StoreSettingsEntry) => <div className="bs-row-actions"><Button type="text" size="small" disabled={!props.maintenance || busy || editBlocked} title={workspace?.writesEnabled() ? '维护资料' : props.maintenance ? '可填写表单；此版本暂未开放保存' : '编辑、停用与恢复使用维护尚未接入'} onClick={event => { if (scope.active && props.maintenance) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); setEditTarget({ id: row.id }); } }}>编辑</Button></div> };
-  const columns = props.kind === 'stores' ? [{ title: '名称', render: (_: unknown, row: StoreSettingsEntry) => view(row) }, { title: '默认零售客户', render: (_: unknown, row: StoreSettingsEntry) => row.kind === 'stores' ? storeSettingsReferenceLabel(row.defaultCustomer) : '' }, { title: '默认出库仓', render: (_: unknown, row: StoreSettingsEntry) => row.kind === 'stores' ? storeSettingsReferenceLabel(row.defaultWarehouse) : '' }, statusColumn, actionColumn]
-    : [{ title: '仓库名称', render: (_: unknown, row: StoreSettingsEntry) => view(row) }, { title: '所属营业厅', render: (_: unknown, row: StoreSettingsEntry) => row.kind === 'warehouses' ? storeSettingsReferenceLabel(row.hall) : '' }, statusColumn, actionColumn];
-  return <section className="store-settings-workbench bs-page iw-workbench iw-arco-controls" aria-label="营业厅与仓库"><header className="bs-head iw-head"><h1>营业厅与仓库</h1><div className="bs-head-actions"><SettingsAuditEntry scope={props.scope} {...(props.audit ? { capability: props.audit } : {})} onAccessFailure={props.onAccessFailure} localHasUnresolvedWrite={() => props.maintenance?.workspace?.hasUnresolvedWrite() ?? false} /><Button type="primary" disabled={!props.maintenance || editBlocked} title={workspace?.writesEnabled() ? '维护资料' : props.maintenance ? '可填写表单；此版本暂未开放保存' : `${label}新增维护尚未接入`} onClick={event => { if (scope.active && props.maintenance) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); if (workspace) workspace.open(props.kind, null); else setEditTarget({ id: null }); } }}>新增{label}</Button></div></header><StandardTabs className="erp-store-tabs" label="营业厅与仓库" value={props.kind} restoreFocus={!!props.focusTab} items={(['stores','warehouses'] as const).map(key=>({key,label:key==='stores'?'营业厅':'仓库',disabled:key!==props.kind && (!props.onTab || !props.allowedTabs?.includes(key))}))} onChange={changeTab}><form className="bs-toolbar" role="search" onSubmit={event => { event.preventDefault(); run({ ...draft, page: 1, pageSize: displayed.pageSize }); }}><div className="bs-filter-fields"><div className="bs-filter search"><Input className="iw-arco-input iw-search-input" aria-label={`搜索${label}名称`} placeholder={`搜索${label}名称`} maxLength={200} value={draft.search} onChange={search => setDraft(value => ({ ...value, search }))} suffix={<IconSearch />} allowClear /></div>{props.kind === 'warehouses' && <div className="bs-filter" title={props.allowHallDirectoryRead ? undefined : '所属厅目录读取未配置；不能使用交易候选冒充目录'}><StoreSettingsSingleSelect scope={scope} label="所属营业厅" value={draft.hallId ?? ''} disabled={!props.allowHallDirectoryRead || busy} search options={hallOptions} loading={hallSnapshot.phase === 'loading'} onOpen={() => halls()} onSearch={search => halls(search)} onChange={value => { const item = hallOptions.find(option => option.value === value); setHallSelection(value && item ? { id: value, name: item.label } : null); setDraft(previous => ({ ...previous, hallId: value || null })); }} footer={<div className="settings-directory-footer"><StoreSettingsReadState snapshot={hallSnapshot} accessFailure={controller.accessFailure} retry={() => halls(hallSnapshot.request?.parameters.search ?? '', hallSnapshot.request?.parameters.page ?? 1)} cancel={() => controller.hallDirectory.cancel()} />{hallRead && <><span>目录共{hallRead.data.total}个，第{hallRead.parameters.page}页（仅显示本页）</span><UIButton type="button" disabled={hallSnapshot.phase === 'loading' || hallRead.parameters.page <= 1} onClick={() => halls(hallRead.parameters.search, hallRead.parameters.page - 1)}>上一页</UIButton><UIButton type="button" disabled={hallSnapshot.phase === 'loading' || hallRead.parameters.page * hallRead.parameters.pageSize >= hallRead.data.total} onClick={() => halls(hallRead.parameters.search, hallRead.parameters.page + 1)}>下一页</UIButton></>}</div>} /></div>}<div className="bs-filter"><StoreSettingsSingleSelect scope={scope} label={`${label}状态`} value={draft.status} options={[{ label: '正常', value: 'normal' }, { label: '已停用', value: 'disabled' }, { label: '全部', value: 'all' }]} onChange={status => setDraft(value => ({ ...value, status: status as StoreSettingsListQuery['status'] }))} /></div></div><div className="bs-toolbar-actions iw-query-actions"><Button className="btn primary" type="primary" htmlType="submit" disabled={busy}>查询</Button><Button className="btn iw-reset" disabled={busy} onClick={() => { const reset = { ...initialStoreSettingsQuery, pageSize: displayed.pageSize }; setDraft(reset); setHallSelection(null); run(reset); }}>重置</Button></div></form><p className="settings-note">{workspace?.writesEnabled() ? '点击名称查看资料。' : props.maintenance ? '此版本可填写维护表单，暂未开放保存。点击名称查看资料。' : props.audit ? '当前提供真实授权只读查询；新增、编辑、停用与恢复尚未接入。点击名称查看资料。' : '当前仅提供真实授权只读查询；新增、编辑、停用、恢复和操作记录尚未接入。点击名称查看资料。'}</p>{state}{success && (busy || snapshot.phase === 'error' || draft.search !== displayed.search || draft.status !== displayed.status || draft.hallId !== displayed.hallId) && <p className="settings-note" role="status">下方仍为上次成功读取的资料（搜索：{displayed.search || '全部'}；状态：{displayed.status === 'normal' ? '正常' : displayed.status === 'disabled' ? '已停用' : '全部'}；第{displayed.page}页），不是待查条件的新结果。</p>}<div className="bs-table-wrap iw-arco-table" aria-busy={busy}><Table size="small" rowKey="id" columns={columns} data={result ? [...result.items] : []} pagination={false} noDataElement={<Empty description={!result ? busy ? '正在读取资料' : snapshot.phase === 'error' ? '当前查询失败' : '等待查询' : result.total ? '此页没有数据，请返回有效页' : '暂无符合条件的数据'} />} /></div><div className="bs-pager"><StoreSettingsPagination scope={scope} page={displayed.page} pageSize={displayed.pageSize} total={result?.total ?? null} busy={busy} onPage={page => run({ ...displayed, page })} onPageSize={pageSize => run({ ...displayed, page: 1, pageSize })} /></div></StandardTabs>{editTarget && <StoreMaintenanceHost key={editTarget.id ?? 'new'} {...props} scope={props.scope} kind={props.kind} targetId={editTarget.id} onPrepared={() => setEditTarget(null)} close={() => { setEditTarget(null); focus.request(); }} />}{commandForm}{target && <StoreSettingsDetailModal key={target.id} controller={controller} targetId={target.id} query={target.query} close={close} />}</section>;
+  const maintenanceTitle = workspace?.writesEnabled() ? '维护资料' : props.maintenance ? '可填写表单；此版本暂未开放保存' : `${label}维护暂未接入`;
+  const staleState = success && (busy || snapshot.phase === 'error' || draft.search !== displayed.search || draft.status !== displayed.status || draft.hallId !== displayed.hallId)
+    ? <p className="settings-note" role="status">下方仍为上次成功读取的资料（搜索：{displayed.search || '全部'}；状态：{displayed.status === 'normal' ? '正常' : displayed.status === 'disabled' ? '已停用' : '全部'}；第{displayed.page}页），不是待查条件的新结果。</p> : null;
+  return <DemoStoreView scope={scope} kind={props.kind} draft={draft} displayed={displayed} result={result ?? null} busy={busy}
+    emptyText={!result ? busy ? '正在读取资料' : snapshot.phase === 'error' ? '当前查询失败' : '等待查询' : result.total ? '此页没有数据，请返回有效页' : '暂无符合条件的数据'}
+    allowedTabs={props.allowedTabs} focusTab={props.focusTab} onTab={props.onTab ? changeTab : undefined}
+    createDisabled={!props.maintenance || editBlocked} editDisabled={!props.maintenance || busy || editBlocked} maintenanceTitle={maintenanceTitle}
+    onCreate={button => { if (scope.active && props.maintenance) { focus.capture(button); if (workspace) workspace.open(props.kind, null); else setEditTarget({ id: null }); } }}
+    onEdit={(row, button) => { if (scope.active && props.maintenance) { focus.capture(button); setEditTarget({ id: row.id }); } }}
+    onDraft={patch => setDraft(value => ({ ...value, ...patch }))}
+    onQuery={() => run({ ...draft, page: 1, pageSize: displayed.pageSize })}
+    onReset={() => { const reset = { ...initialStoreSettingsQuery, pageSize: displayed.pageSize }; setDraft(reset); setHallSelection(null); run(reset); }}
+    onPage={page => run({ ...displayed, page })} onPageSize={pageSize => run({ ...displayed, page: 1, pageSize })}
+    referenceLabel={storeSettingsReferenceLabel} readState={state} staleState={staleState}
+    audit={<SettingsAuditEntry scope={props.scope} {...(props.audit ? { capability: props.audit } : {})} onAccessFailure={props.onAccessFailure} localHasUnresolvedWrite={() => props.maintenance?.workspace?.hasUnresolvedWrite() ?? false} />}
+    halls={{ enabled: !!props.allowHallDirectoryRead, loading: hallSnapshot.phase === 'loading', options: hallOptions, onOpen: () => halls(), onSearch: search => halls(search),
+      onChange: value => { const item = hallOptions.find(option => option.value === value); setHallSelection(value && item ? { id: value, name: item.label } : null); setDraft(previous => ({ ...previous, hallId: value || null })); },
+      footer: <div className="settings-directory-footer"><StoreSettingsReadState snapshot={hallSnapshot} accessFailure={controller.accessFailure} retry={() => halls(hallSnapshot.request?.parameters.search ?? '', hallSnapshot.request?.parameters.page ?? 1)} cancel={() => controller.hallDirectory.cancel()} />
+        {hallRead && <><span>目录共{hallRead.data.total}个，第{hallRead.parameters.page}页（仅显示本页）</span><UIButton type="button" disabled={hallSnapshot.phase === 'loading' || hallRead.parameters.page <= 1} onClick={() => halls(hallRead.parameters.search, hallRead.parameters.page - 1)}>上一页</UIButton><UIButton type="button" disabled={hallSnapshot.phase === 'loading' || hallRead.parameters.page * hallRead.parameters.pageSize >= hallRead.data.total} onClick={() => halls(hallRead.parameters.search, hallRead.parameters.page + 1)}>下一页</UIButton></>}
+      </div> }}>
+    {editTarget && <StoreMaintenanceHost key={editTarget.id ?? 'new'} {...props} scope={props.scope} kind={props.kind} targetId={editTarget.id} onPrepared={() => setEditTarget(null)} close={() => { setEditTarget(null); focus.request(); }} />}
+    {commandForm}
+  </DemoStoreView>;
 }

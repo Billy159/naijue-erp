@@ -7,7 +7,7 @@ import { createHash } from 'node:crypto';
 import { createNativeIdentityRegistry, reviewedPartyBinding, sourceEvidence } from './prepare-native-bindings.mjs';
 import { IMPORT_V2_TABLES } from '../../packages/application/src/import-v2-contract.ts';
 import { requestHash } from '../../packages/application/src/request-hash.ts';
-import { createNativeSourceStepAuthorizer, NATIVE_SOURCE_STEP_KINDS, openNativeBindingRegistry, openReviewedCatalogueSource, openApprovedBarcodeMainDemotions, openReviewedProductSeasonSource, openReviewedProductEvidenceSource } from './native-source-authorizers.mjs';
+import { createNativeSourceStepAuthorizer, NATIVE_SOURCE_STEP_KINDS, openNativeBindingRegistry, openReviewedCatalogueSource, openApprovedBarcodeMainDemotions, openReviewedProductSeasonSource, openReviewedProductEvidenceSource, openReviewedCatalogueSource26 } from './native-source-authorizers.mjs';
 import { prepareProductEvidenceChunk } from '../../packages/application/src/product-evidence-staging.ts';
 const id = n => `00000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
 const hash = b => createHash('sha256').update(b).digest('hex'), pin = 'a'.repeat(64);
@@ -231,4 +231,34 @@ test('season source proof rejects changed private files and does not execute get
   await assert.rejects(openReviewedProductSeasonSource(options), /CONFIG/); assert.equal(getterCalls, 0);
   await writeFile(f.files.reviewFile, '{}'); await assert.rejects(reader.proofFor(f.sources[0], f.product(f.sources[0])), /FILE_CHANGED/);
   reader.close(); await assert.rejects(reader.verify(), /CLOSED/);
+});
+
+async function catalogue26Fixture(t){
+ const dir=await mkdtemp(join(await realpath(tmpdir()),'synthetic-catalogue26-source-'));t.after(()=>rm(dir,{recursive:true,force:true}));
+ const binding={batchId:id(1),fixedSourceNamespace:'synthetic:catalogue26',selectionSha256:pin,authorizedPayloadHash:'b'.repeat(64)};
+ const root={entity:'CATEGORY',sourceKey:'synthetic-root',nativeId:id(20),values:{name:'SYNTHETIC ROOT',display_order:0},references:{},originalEvidence:{synthetic:true}};
+ const leaf={entity:'CATEGORY',sourceKey:'synthetic-child',nativeId:id(21),values:{name:'SYNTHETIC CHILD',display_order:1},references:{parent_id:{entity:'CATEGORY',sourceKey:root.sourceKey,nativeId:root.nativeId,nativeSnapshot:{id:root.nativeId,parent_id:null,name:root.values.name,display_order:0,version:1}}},originalEvidence:{synthetic:true}};
+ const color={entity:'COLOR',sourceKey:'synthetic-color',nativeId:id(22),values:{code:'007',name:'SYNTHETIC COLOR',enabled:false},references:{},originalEvidence:{synthetic:true}};
+ const value={version:'NATIVE_CATALOGUE_OCCURRENCE_CANDIDATE_V1',...binding,baseManifestSha256:pin,groups:[[root],[leaf],[color]]};
+ const mappingFile=join(dir,'mapping.json'),reviewApprovalFile=join(dir,'outside-review.json');
+ async function save(){const bytes=Buffer.from(JSON.stringify(value));await writeFile(mappingFile,bytes);const review=Buffer.from(JSON.stringify({version:'NATIVE_CATALOGUE_TECHNICAL_REVIEW_V1',...binding,mappingSha256:hash(bytes)}));await writeFile(reviewApprovalFile,review);return {mappingFile,trustedMappingSha256:hash(bytes),reviewApprovalFile,trustedReviewApprovalSha256:hash(review),binding};}
+ return {value,leaf,binding,mappingFile,options:await save(),save};
+}
+test('catalogue26 source consumes preserved original decisions with full parent6/native6 and successor complete closure projections',async t=>{
+ const f=await catalogue26Fixture(t),next=await openReviewedCatalogueSource26(f.options),old=await openReviewedCatalogueSource(f.options);t.after(()=>next.close());t.after(()=>old.close());
+ const chunks=[],legacy=[];for await(const c of next.chunks()){await next.authorize(c);chunks.push(c);}for await(const c of old.chunks())legacy.push(c);
+ assert.equal(chunks.length,3);for(let i=0;i<chunks.length;i++){const n=chunks[i].rows[0],o=legacy[i].rows[0];const {deleted_at,...snapshot}=n.nativeSnapshot;assert.equal(deleted_at,null);assert.deepEqual(snapshot,o.nativeSnapshot);assert.deepEqual(n.source,o.source);assert.deepEqual(n.decisions,o.decisions);assert.equal(Object.hasOwn(n.source.rawFields,'deleted_at'),false);}
+ assert.equal(chunks[1].rows[0].references.parent_id.nativeSnapshot.deleted_at,null);assert.equal(Object.keys(chunks[1].rows[0].references.parent_id.nativeSnapshot).length,6);
+ await assert.rejects(old.authorize(chunks[0]));await assert.rejects(next.authorize(legacy[0]));
+ const session=await next.openClosure(f.binding,{group:'CATALOGUE',signal:new AbortController().signal});t.after(()=>session.close());await session.verify();const source=[],typed=[];for await(const r of session.sourceRows())source.push(r);for await(const r of session.typedRows())typed.push(r);
+ assert.equal(source.length,3);assert.equal(typed.length,6);const natives=typed.filter(r=>r.relation!=='import_native_catalogue_binding');assert.equal(natives.length,3);for(const n of natives){assert.equal(n.projection.deleted_at,null);assert.equal(Object.keys(n.projection).length,6);}
+ const bindings=typed.filter(r=>r.relation==='import_native_catalogue_binding');assert.equal(bindings.length,3);assert.equal(bindings[0].projection.validator_version,'NATIVE_CATALOGUE_IMPORT_V1');assert.equal(bindings[0].projection.native_snapshot.deleted_at,null);
+ assert.deepEqual(typed.map(r=>r.relation+'\0'+r.key),[...typed.map(r=>r.relation+'\0'+r.key)].sort((a,b)=>Buffer.compare(Buffer.from(a),Buffer.from(b))));
+});
+test('catalogue26 source refuses missing review, descriptor getters, replacing original reference metadata, input mutation and lifetime change',async t=>{
+ const f=await catalogue26Fixture(t);await assert.rejects(openReviewedCatalogueSource26({...f.options,trustedReviewApprovalSha256:undefined}),/OUTSIDE_PIN_REQUIRED/);
+ let calls=0;const getter={...f.options};Object.defineProperty(getter,'mappingFile',{enumerable:true,get(){calls++;return f.mappingFile;}});await assert.rejects(openReviewedCatalogueSource26(getter),/OPTIONS/);assert.equal(calls,0);
+ const source=await openReviewedCatalogueSource26(f.options);t.after(()=>source.close());let chunk;for await(const c of source.chunks()){chunk=c;break;}const pending=source.authorize(chunk);chunk.rows[0].nativeSnapshot.name='SUBSTITUTED';await assert.rejects(pending,/INPUT_CHANGED/);
+ await writeFile(f.mappingFile,'{}');await assert.rejects(source.verify(),/FILE_CHANGED/);await source.close();await assert.rejects(source.verify(),/CLOSED/);
+ f.leaf.references.parent_id.nativeSnapshot.deleted_at='SYNTHETIC';await assert.rejects(openReviewedCatalogueSource26(await f.save()),/ORIGINAL_REFERENCE/);
 });

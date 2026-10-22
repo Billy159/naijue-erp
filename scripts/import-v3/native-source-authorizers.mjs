@@ -10,9 +10,9 @@ import { openAuthorizedV3Reader } from '../import-v2/authorized-reader.mjs';
 import { openAuthorizedV3HeaderReader } from '../import-v2/authorized-header-reader.mjs';
 import { NATIVE_BINDING_PACKAGE_VERSION } from './prepare-native-bindings.mjs';
 import { stableImportId } from '../../packages/application/src/inventory-cutoff-import.ts';
-import { prepareNativeCatalogueImportChunk, validatePreparedNativeCatalogueImportChunk, nativeCatalogueSourceEvidence } from '../../packages/application/src/native-catalogue-import.ts';
+import { prepareNativeCatalogueImportChunk, validatePreparedNativeCatalogueImportChunk, nativeCatalogueSourceEvidence, prepareNativeCatalogueImportChunk26, validatePreparedNativeCatalogueImportChunk26, NATIVE_CATALOGUE_IMPORT_VERSION_26 } from '../../packages/application/src/native-catalogue-import.ts';
 import { nativeCatalogueBindingEvidence } from '../../adapters/postgres/src/native-catalogue-import.ts';
-import { historyClosureProjectionRow } from '../../packages/application/src/history-typed-closure.ts';
+import { historyClosureProjectionRow, historyClosureProjectionRow26 } from '../../packages/application/src/history-typed-closure.ts';
 import { validatePreparedNativeBarcode, NATIVE_BARCODE_MAIN_DEMOTION_VERSION } from '../../packages/application/src/native-barcode-import.ts';
 import { historyHeaderNativeReferenceEvidence } from '../../adapters/postgres/src/import-v3-history-header-native-reference-store.ts';
 import { validatePreparedProductEvidenceChunk } from '../../packages/application/src/product-evidence-staging.ts';
@@ -295,7 +295,15 @@ export async function openBoundHeaderReader(options, registry) {
 /** Actual new dictionary mapping bytes are reviewed independently from the old
  * barcode-exclusion approval. C supplies both external pins after QB's source/rule
  * review. No absent code/order/enablement is filled by this source factory. */
-export async function openReviewedCatalogueSource({ mappingFile, trustedMappingSha256, reviewApprovalFile, trustedReviewApprovalSha256, binding }) {
+export async function openReviewedCatalogueSource(options) { return openReviewedCatalogueCore(options); }
+/** Explicit successor consumer: original dictionary decisions stay unchanged;
+ * approved technical NULL metadata and full projection26 are bound separately. */
+export async function openReviewedCatalogueSource26(options) {
+  must(exactData(options, ['mappingFile','trustedMappingSha256','reviewApprovalFile','trustedReviewApprovalSha256','binding']), 'NATIVE_SOURCE_CATALOGUE26_OPTIONS');
+  historySettlementRequestHash(options.binding);
+  return openReviewedCatalogueCore({ ...options, binding: structuredClone(options.binding) }, true);
+}
+async function openReviewedCatalogueCore({ mappingFile, trustedMappingSha256, reviewApprovalFile, trustedReviewApprovalSha256, binding }, successor = false) {
   must(typeof mappingFile === 'string' && isAbsolute(mappingFile) && typeof reviewApprovalFile === 'string' && isAbsolute(reviewApprovalFile), 'NATIVE_SOURCE_CATALOGUE_PATHS');
   const mapping = await load(mappingFile, trustedMappingSha256, 16777216), review = await load(reviewApprovalFile, trustedReviewApprovalSha256, 4194304);
   const m = mapping.value, a = review.value;
@@ -319,10 +327,16 @@ export async function openReviewedCatalogueSource({ mappingFile, trustedMappingS
         entityType: entity, sourceKey, fileRef: mappingFile, sheet: 'reviewed-new-native-dictionary', rowNo: String(++rowNo), sourceFileSha256: trustedMappingSha256,
         rowSha256: digest(Buffer.from(JSON.stringify(entry))), rawFields: raw, normalizedFields: raw, fieldProvenance: { schema_version: 1, fields } };
       const k = key(entity, sourceKey); must(!sourceKeys.has(k), 'NATIVE_SOURCE_CATALOGUE_DUPLICATE'); sourceKeys.add(k);
-      const row = { source: s, sourceKeyField: 'sourceKey', nativeId, decisions: Object.fromEntries(Object.keys(values).map(k => [k, { kind: 'SOURCE_FIELD', field: k }])), references };
+      const selectedReferences = successor ? Object.fromEntries(Object.entries(references).map(([field, ref]) => {
+        must(ref?.nativeSnapshot && !Object.hasOwn(ref.nativeSnapshot, 'deleted_at'), 'NATIVE_SOURCE_CATALOGUE26_ORIGINAL_REFERENCE');
+        return [field, { ...ref, nativeSnapshot: { ...ref.nativeSnapshot, ...(ref.entity === 'CATEGORY' ? { deleted_at: null } : {}) } }];
+      })) : references;
+      const row = { source: s, sourceKeyField: 'sourceKey', nativeId, decisions: Object.fromEntries(Object.keys(values).map(k => [k, { kind: 'SOURCE_FIELD', field: k }])), references: selectedReferences };
       entries.push(entry); return row;
     });
-    const chunk = prepareNativeCatalogueImportChunk({ batchId: binding.batchId, fixedSourceNamespace: binding.fixedSourceNamespace, selection, rows });
+    const input = { batchId: binding.batchId, fixedSourceNamespace: binding.fixedSourceNamespace, selection, rows };
+    const chunk = successor ? prepareNativeCatalogueImportChunk26({ ...input, schemaProfile: 'EXACT26', validatorVersion: NATIVE_CATALOGUE_IMPORT_VERSION_26 })
+      : prepareNativeCatalogueImportChunk(input);
     for (const row of chunk.rows) { const k = key(row.entity, row.targetKey); must(!targets.has(k), 'NATIVE_SOURCE_CATALOGUE_DUPLICATE'); targets.add(k); }
     prepared.push(chunk);
   }
@@ -333,17 +347,24 @@ export async function openReviewedCatalogueSource({ mappingFile, trustedMappingS
   }
   const tables = { CATEGORY: 'product_category', COLOR: 'color', FIT: 'fit', SIZE: 'size', SIZE_GROUP: 'size_group', SEASON: 'season', SIZE_GROUP_MEMBER: 'size_group_member' };
   const order = (a, b) => Buffer.compare(Buffer.from(a.relation + '\0' + a.key), Buffer.from(b.relation + '\0' + b.key));
+  const projection = successor ? historyClosureProjectionRow26 : historyClosureProjectionRow;
   return {
     verify, async *chunks() { await verify(); for (const chunk of prepared) { assertOpen(); yield structuredClone(chunk); } },
-    async authorize(chunk) { await verify(); validatePreparedNativeCatalogueImportChunk(chunk); must(fingerprints.has(chunk.fingerprint), 'NATIVE_SOURCE_CATALOGUE_NOT_AUTHORIZED'); await verify(); },
+    async authorize(chunk) {
+      const captured = successor ? historySettlementRequestHash(chunk) : null;
+      const selected = successor ? structuredClone(chunk) : chunk;
+      await verify(); (successor ? validatePreparedNativeCatalogueImportChunk26 : validatePreparedNativeCatalogueImportChunk)(selected);
+      must(fingerprints.has(selected.fingerprint), 'NATIVE_SOURCE_CATALOGUE_NOT_AUTHORIZED'); await verify();
+      if (successor) must(historySettlementRequestHash(chunk) === captured, 'NATIVE_SOURCE_CATALOGUE_INPUT_CHANGED');
+    },
     async openClosure(scope, context) {
       await verify(); must(context?.group === 'CATALOGUE' && !context.signal?.aborted && scope.batchId === binding.batchId
         && scope.fixedSourceNamespace === binding.fixedSourceNamespace && scope.selectionSha256 === binding.selectionSha256
         && hash(binding.authorizedPayloadHash) && scope.authorizedPayloadHash === binding.authorizedPayloadHash, 'NATIVE_SOURCE_CATALOGUE_CLOSURE_SCOPE');
       let sessionClosed = false; const active = () => { assertOpen(); must(!sessionClosed && !context.signal?.aborted, 'NATIVE_SOURCE_CATALOGUE_CLOSED'); };
-      const sourceRows = flat.map(row => historyClosureProjectionRow('import_source_row', nativeCatalogueSourceEvidence(row))).sort(order);
-      const typedRows = flat.flatMap(row => [historyClosureProjectionRow('import_native_catalogue_binding', nativeCatalogueBindingEvidence(row)),
-        historyClosureProjectionRow(tables[row.entity], row.nativeSnapshot)]).sort(order);
+      const sourceRows = flat.map(row => projection('import_source_row', nativeCatalogueSourceEvidence(row))).sort(order);
+      const typedRows = flat.flatMap(row => [projection('import_native_catalogue_binding', nativeCatalogueBindingEvidence(row)),
+        projection(tables[row.entity], row.nativeSnapshot)]).sort(order);
       return {
         async verify() { active(); await verify(); active(); },
         async *sourceRows() { for (const row of sourceRows) { active(); yield structuredClone(row); } },
