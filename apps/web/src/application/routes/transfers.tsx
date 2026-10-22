@@ -1,3 +1,8 @@
+import { captureProductFullPageConfiguration } from '../../products/product-page-configuration.ts';
+import { createCurrentFormHttpReader } from '../../current-form/http-reader.ts';
+import { entityId } from '../../../../../packages/domain/src/values.ts';
+import type { DocumentProductCapability } from '../../sales/document-presentation.tsx';
+import type { TransferProposalPresentation } from '../../current-form/transfer-proposal-form.tsx';
 import type { TransferNewDocumentSession } from '../../current-form/transfer-create.ts';
 import { TransferPageHost } from '../../transfers/transfers-route.tsx';
 import { createTransferHttpReader, createTransferWarehouseHttpReader } from '../../transfers/http-reader.ts';
@@ -8,7 +13,7 @@ import { HttpQueryError } from '../../transport/http-query.ts';
 import type { ProductReadOnlyReader } from '../../inventory/product-contracts.ts';
 import type { ApplicationRouteProps, PreparedApplicationRoute, RoutePreparation, TransferSession } from '../contracts.ts';
 
-function preparedTransferRoute(input: RoutePreparation, commands?: TransferCommandCapability): PreparedApplicationRoute {
+function preparedTransferRoute(input: RoutePreparation, commands?: TransferCommandCapability, onUnauthorized?: () => void): PreparedApplicationRoute {
   const configuration = input.configuration.transfers;
   if (!configuration) throw new TypeError('Transfer capability was not configured.');
   const reader = createTransferHttpReader(input.http), references = createTransferWarehouseHttpReader(input.http);
@@ -30,10 +35,16 @@ function preparedTransferRoute(input: RoutePreparation, commands?: TransferComma
     } satisfies ProductReadOnlyReader,
     loadStyles: async (): Promise<void> => { await configuration.product!.stylesheet.load(); },
   } : undefined;
-  return { View: ({ scope }: ApplicationRouteProps) => <TransferPageHost scope={scope} reader={reader} references={references} loadDetailStyles={loadDetailStyles} {...(commands ? { commands } : {})} {...(product ? { product } : {})} /> };
+  const productCapability = createTransferProductCapability(input, onUnauthorized);
+  const initialGroup = configuration.initialSizeGroup;
+  if (initialGroup) { entityId('sizeGroup', initialGroup.id); if (typeof initialGroup.reader?.readSizeGroups !== 'function') throw new TypeError('A real native size group reader is required.'); }
+  const presentation: TransferProposalPresentation = Object.freeze({ creatorName: input.principal.loginName,
+    ...(productCapability ? { productCapability } : {}),
+    ...(initialGroup ? { sizeGroupCapability: Object.freeze({ ...initialGroup, ...(onUnauthorized ? { onUnauthorized } : {}) }) } : {}) });
+  return { View: ({ scope }: ApplicationRouteProps) => <TransferPageHost presentation={presentation} scope={scope} reader={reader} references={references} loadDetailStyles={loadDetailStyles} {...(commands ? { commands } : {})} {...(product ? { product } : {})} /> };
 }
 /** Default real read-only path. Commands are never inferred from read access. */
-export function prepareTransferRoute(input: RoutePreparation): PreparedApplicationRoute { return preparedTransferRoute(input); }
+export function prepareTransferRoute(input: RoutePreparation, onUnauthorized?: () => void): PreparedApplicationRoute { return preparedTransferRoute(input, undefined, onUnauthorized); }
 /** One session-owned command workspace, retained across route detach. Explicit
  * host configuration is the capability gate, not an authorization bypass. */
 export function prepareTransferSession(input: RoutePreparation, onAccessFailure: (error: TransferCommandError) => void): TransferSession {
@@ -64,5 +75,18 @@ export function prepareTransferSession(input: RoutePreparation, onAccessFailure:
     },
   }) : undefined;
   const commands = Object.freeze({ workspace, ...(manualCreate ? { manualCreate } : {}), ...(configuration.preparation ? { preparation: configuration.preparation } : {}) });
-  return Object.freeze({ workspace, ...(manualCreate ? { canLeave: manualCreate.canLeave } : {}), prepare: (currentRoute: RoutePreparation) => preparedTransferRoute(currentRoute, commands) });
+  return Object.freeze({ workspace, ...(manualCreate ? { canLeave: manualCreate.canLeave } : {}), prepare: (currentRoute: RoutePreparation) => preparedTransferRoute(currentRoute, commands, () => onAccessFailure(new TransferCommandError('unauthenticated', 'UNAUTHENTICATED', 'read'))) });
+}
+
+/** Transfer owns this opt-in; neither product navigation nor read permission enables it. */
+export function createTransferProductCapability(input: RoutePreparation, onUnauthorized?: () => void): DocumentProductCapability | undefined {
+  const supplied = input.configuration.transfers?.productFullPage; if (!supplied) return undefined;
+  const configuration = captureProductFullPageConfiguration(supplied), reader = createCurrentFormHttpReader(input.http);
+  return Object.freeze({ configuration, ...(onUnauthorized ? { onUnauthorized } : {}), resolveTarget: async (skuId: string, _context: string, signal: AbortSignal) => {
+    if (!input.scope.active || signal.aborted) throw new HttpQueryError('aborted', 'QUERY_ABORTED');
+    const joined = AbortSignal.any([input.scope.signal, signal]);
+    const rows = await reader.readSkuBatch({ context: { kind: 'TRANSFER' }, skuIds: [entityId('sku', skuId)] }, joined), row = rows[0];
+    if (joined.aborted || !row || row.id !== skuId || rows.length !== 1) throw new TypeError('Current transfer SKU product relation unavailable.');
+    return Object.freeze({ id: row.productId, label: `${row.productCode} · ${row.productName}` });
+  } });
 }

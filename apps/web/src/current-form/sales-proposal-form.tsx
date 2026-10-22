@@ -52,7 +52,7 @@ type SpecKind = 'color' | 'fit' | 'size';
 function CandidatePopup({ session, picker, spec, selection, choose, close, keyboardRef, scope, capability }: { readonly keyboardRef: React.Ref<CurrentProductFinderHandle>; readonly scope?: ReadScope; readonly capability?: SalesProductCapability;
   session: SalesProposalSession; picker: NonNullable<SalesProposalSnapshot['picker']>;
   spec?: SpecKind; selection?: { color: { id: string } | null; fit: { id: string } | null };
-  choose: (id: string) => void; close: () => void;
+  choose: (id: string) => void; close: (restoreFocus?: boolean) => void;
 }) {
   const host = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
@@ -130,7 +130,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
     const popupStyle = picker?.kind === 'product' && visible ? { width: goodsWidth, '--pf-list-width': `${Math.min(bounds?.width || 270, goodsWidth - 220)}px` } as React.CSSProperties : undefined;
     return <Trigger {...(popupStyle ? { popupStyle } : {})} trigger="click" position="bl" popupVisible={visible} escToClose updateOnScroll autoFitPosition unmountOnExit
       onVisibleChange={next => { if (next) { if (!visible) show(); } else if (visible) dismissPicker(); }}
-      popup={() => picker ? <CandidatePopup session={session} picker={picker} keyboardRef={handle => { if (handle) productKeys.current.set(id, handle); else productKeys.current.delete(id); }} {...(scope ? { scope } : {})} {...(productCapability ? { capability: productCapability } : {})} {...(spec ? { spec } : {})} {...(selection ? { selection } : {})} close={() => dismissPicker(true)} choose={selected => {
+      popup={() => picker ? <CandidatePopup session={session} picker={picker} keyboardRef={handle => { if (handle) productKeys.current.set(id, handle); else productKeys.current.delete(id); }} {...(scope ? { scope } : {})} {...(productCapability ? { capability: productCapability } : {})} {...(spec ? { spec } : {})} {...(selection ? { selection } : {})} close={restore => dismissPicker(restore ?? true)} choose={selected => {
         if (spec) { session.selectSpec(spec, selected); setAnchor(null); restorePickerFocus(); }
         else { void session.select(selected).then(() => { if (!session.getSnapshot().picker) { setAnchor(null); restorePickerFocus(); } }); }
       }} /> : <span />}>

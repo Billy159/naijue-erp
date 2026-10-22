@@ -2,7 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { createPostgresImportExecutor, runImportSteps } from './run.mjs';
+import { createPostgresImportExecutor, createPostgresImportExecutor26, runImportSteps } from './run.mjs';
+import { prepareNativeBarcode } from '../../packages/application/src/native-barcode-import.ts';
+import { IMPORT_V2_TABLES } from '../../packages/application/src/import-v2-contract.ts';
 import { requestHash } from '../../packages/application/src/request-hash.ts';
 import { cutoffStage, cutoffTime } from '../../tests/support/synthetic-cutoff-fixtures.ts';
 
@@ -133,4 +135,65 @@ test('primary and source-close errors both remain visible; no raw error text goe
 test('CLI with no explicit registered host/cutoff fails without a network or source default', () => {
   const p = spawnSync(process.execPath, [fileURLToPath(new URL('./run.mjs', import.meta.url))], { encoding: 'utf8' });
   assert.equal(p.status, 1); assert.deepEqual(JSON.parse(p.stderr), { error: 'IMPORT_EXECUTION_USAGE' }); assert.equal(p.stdout, '');
+});
+
+function plan26(){return {...plan(),version:'NATIVE_IMPORT_EXECUTION_26_V1'};}
+function barcode26Step(){
+ const n={...Object.fromEntries(IMPORT_V2_TABLES.find(t=>t.entity==='BARCODE').columns.map(c=>[c.name,''])),来源编号:'SYNTHETIC-EXECUTOR-BARCODE',条码:'0001234000',SKU来源编号:'SYNTHETIC-CANONICAL',合并前SKU来源编号:'SYNTHETIC-ORIGINAL',条码性质:'主码',原始条码性质快照:'主码',原条码方案:'SYNTHETIC SCHEME',状态:'正常',绑定范围:'SKU'};
+ const raw={来源编号:n.来源编号,条码:n.条码,SKU来源编号:n.合并前SKU来源编号,条码性质:'主码',原条码方案:n.原条码方案,状态:n.状态,绑定范围:'SKU'};
+ const id=n=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`,b=plan26();
+ const input={batchId:b.batchId,fixedSourceNamespace:b.fixedSourceNamespace,selection:{source:'V3_BARCODE_REPLACEMENT',entity:'BARCODE',path:'business/03历史条码.csv',baseManifestSha256:sha('a'),selectionSha256:b.selectionSha256,approvalSha256:sha('c'),csvSha256:sha('d'),excludedSourceIdsSetSha256:sha('e')},
+  source:{id:id(100),batchId:b.batchId,entityType:'BARCODE',sourceKey:n.来源编号,fileRef:'SYNTHETIC.xlsx',sheet:'BARCODE',rowNo:'2',sourceFileSha256:sha('a'),rowSha256:sha('a'),rawFields:raw,normalizedFields:n,fieldProvenance:{schema_version:1,fields:Object.fromEntries(Object.entries(raw).map(([k,v])=>[k,{origin:'ORIGINAL',reason:'SYNTHETIC source',raw:v}]))}},
+  nativeBarcodeId:id(101),sku:{nativeId:id(102),canonicalSourceKey:n.SKU来源编号,oldSourceSkuKey:n.合并前SKU来源编号},scheme:{id:id(103),snapshot:{id:id(103),name:n.原条码方案,barcode_type:'RAW',rule_description:'SYNTHETIC',code_length:10,rule_version:'1',status:'HISTORICAL'}}};
+ return {kind:'BARCODE',payload:prepareNativeBarcode(input)};
+}
+function executor26Fixture(settings={}){
+ const calls=[],releases=[],proofs=[],auth=[],leases=new WeakMap();let connects=0,nativeExists=false,sourceExists=false;
+ const step=barcode26Step(),b=plan26();
+ const pool={async connect(){connects++;const lease={purpose:connects===1?'target':'native',queries:0,proved:false};const client={async query(sql,values=[]){assert.equal(lease.proved,true);lease.queries++;calls.push({sql,values,purpose:lease.purpose});const answer=rows=>({rows,rowCount:rows.length});
+  if(sql==='COMMIT'&&settings.unknownAt===lease.purpose)throw Error('executor26 COMMIT unknown');
+  if(sql.startsWith('BEGIN')||sql==='COMMIT'||sql==='ROLLBACK'||sql.includes('native-barcode:cutoff'))return answer([]);
+  if(sql.includes('import-executor26:target')){const target=settings.target??b.target;return answer([{database:target.database,role:target.role,server_address:target.serverAddress,server_port:target.serverPort,postmaster_started_at:target.postmasterStartedAt}]);}
+  if(sql.includes('import-executor26:schema'))return answer([{versions:Array.from({length:settings.schema??26},(_,i)=>i+1)}]);
+  if(sql.includes('native-barcode:schema'))return answer([{installed_versions:Array.from({length:26},(_,i)=>i+1)}]);
+  if(sql.includes('native-barcode:batch'))return answer([{id:b.batchId,mapping_version:'V2_HISTORY_NULLABLE_1',status:'STAGED',source_hash:b.selectionSha256,source_name:b.fixedSourceNamespace,already_published:false}]);
+  if(sql.includes('native-barcode:sku-alias'))return answer([{id:step.payload.sku.nativeId}]);
+  if(sql.includes('native-barcode:scheme'))return answer([{exact:true}]);
+  if(sql.includes('native-barcode:target'))return answer(nativeExists?[{id:step.payload.nativeBarcode.id,exact:true}]:[]);
+  if(sql.includes('native-barcode:main'))return answer(nativeExists?[{id:step.payload.nativeBarcode.id}]:[]);
+  if(sql.includes('native-barcode:source-replay'))return answer(sourceExists?[{exact:true}]:[]);
+  if(sql.includes('native-barcode:create')){nativeExists=true;return answer([{id:step.payload.nativeBarcode.id}]);}
+  if(sql.includes('native-barcode:source-create')){sourceExists=true;return answer([{id:step.payload.source.id}]);}
+  throw Error('Unexpected executor26 protocol SQL');
+ },release(error){releases.push(error);}};leases.set(client,lease);return client;}};
+ const runtime26={profile:'EXACT26',contract:'NATIVE_RUNTIME26_V1',async assertReady(client,purpose){const lease=leases.get(client);assert.ok(lease);assert.equal(purpose,'IMPORT_STAGE');assert.equal(lease.queries,0);proofs.push({purpose,lease:lease.purpose});if(settings.denied)throw Error('NATIVE_RUNTIME26_NOT_READY');if(settings.booleanProof)return true;lease.proved=true;}};
+ const options={pool,binding:b,runtime26,now:()=>cutoffTime,bootstrap26:{async authorizeStageSourceActor(){auth.push('SOURCE_ACTOR');if(settings.denyActor)throw Error('SOURCE_ACTOR_REVOKED');},async stageNewBatch26(){throw Error('Actual49bootstrapnotprovidedbyprotocolfixture');}},authorization:{async assertExecutionAllowed(){auth.push('EXECUTION');if(settings.reject)throw Error('SOURCE_REVOKED');if(settings.booleanAuthority)return true;},async authorizeStep(s){auth.push('STEP');if(settings.mutate)s.payload.batchId='MUTATED';},async assertAllowed(){auth.push('MAIN');},async authorizeNativeCommand(){auth.push('NATIVE');},async authorizeClosure(){auth.push('CLOSURE');}}};
+ return {options,step,calls,releases,proofs,auth,connects:()=>connects};
+}
+test('executor26 inert construction requires separate binding, actual runtime and explicit26 bootstrap methods without legacy fallback',()=>{
+ const f=executor26Fixture();createPostgresImportExecutor26(f.options);assert.equal(f.connects(),0);
+ for(const altered of [{...f.options,runtime26:undefined},{...f.options,binding:plan()},{...f.options,bootstrap26:{authorizeStageSourceActor:async()=>{},stageNewBatch:async()=>{}}}])assert.throws(()=>createPostgresImportExecutor26(altered));assert.equal(f.connects(),0);
+ let gets=0;const getter={...f.options};Object.defineProperty(getter,'runtime26',{enumerable:true,get(){gets++;return f.options.runtime26;}});assert.throws(()=>createPostgresImportExecutor26(getter));assert.equal(gets,0);
+ assert.throws(()=>createPostgresImportExecutor({...f.options,bootstrap26:undefined}));
+});
+test('executor26 source revocation, boolean authority, old typed profile and captured-step mutation stop before target borrow',async()=>{
+ for(const setting of [{reject:true},{booleanAuthority:true},{mutate:true}]){const f=executor26Fixture(setting);await assert.rejects(createPostgresImportExecutor26(f.options)(f.step));assert.equal(f.connects(),0);}
+ const f=executor26Fixture(),old={kind:'CATALOGUE',payload:{batchId:plan26().batchId,fixedSourceNamespace:plan26().fixedSourceNamespace,selection:{selectionSha256:plan26().selectionSha256}}};await assert.rejects(createPostgresImportExecutor26(f.options)(old),{code:'IMPORT_EXECUTION26_PROFILE_REQUIRED'});assert.equal(f.connects(),0);assert.deepEqual(f.auth,[]);
+ const actor=executor26Fixture({denyActor:true});await assert.rejects(createPostgresImportExecutor26(actor.options)(stage()),/SOURCE_ACTOR_REVOKED/);assert.equal(actor.connects(),0);
+});
+test('executor26 actual lease and exact target/prefix26 gate precede native work; boolean proof never substitutes verification',async()=>{
+ for(const setting of [{denied:true},{booleanProof:true}]){const f=executor26Fixture(setting);await assert.rejects(createPostgresImportExecutor26(f.options)(f.step));assert.equal(f.connects(),1);assert.equal(f.calls.length,0);assert.ok(f.releases[0]);}
+ for(const setting of [{schema:19},{schema:27},{target:{...plan26().target,database:'OTHER'}}]){const f=executor26Fixture(setting);await assert.rejects(createPostgresImportExecutor26(f.options)(f.step));assert.equal(f.connects(),1);assert.equal(f.calls.some(c=>c.purpose==='native'),false);assert.equal(f.calls.at(-1).sql,'ROLLBACK');}
+});
+test('executor26 routes real concrete successor store under same issued pool, preserves immutable replay and discards uncertain COMMIT',async()=>{
+ const f=executor26Fixture(),execute=createPostgresImportExecutor26(f.options);assert.deepEqual(await execute(f.step),{inserted:1,replayed:0});assert.equal(f.connects(),2);assert.equal(f.proofs.length,2);assert.deepEqual(await execute(f.step),{inserted:0,replayed:1});assert.equal(f.connects(),3);assert.equal(f.proofs.length,3);assert.equal(f.calls.filter(c=>c.sql.includes('import-executor26:target')).length,1);assert.equal(f.calls.filter(c=>c.sql.includes('native-barcode:create')).length,1);assert.equal(f.auth.includes('SOURCE_ACTOR'),false);
+ for(const unknownAt of ['target','native']){const lost=executor26Fixture({unknownAt});await assert.rejects(createPostgresImportExecutor26(lost.options)(lost.step),/COMMIT unknown/);assert.equal(lost.connects(),unknownAt==='target'?1:2);assert.equal(lost.calls.some(c=>c.sql==='ROLLBACK'),false);assert.ok(lost.releases.at(-1));}
+});
+
+test('executor26 CLI selects explicit host26 and executor26 only with exact26 flag, preserving old CLI entry',async t=>{
+ const {mkdtemp,realpath,writeFile,rm}=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join}=await import('node:path'),{createHash}=await import('node:crypto');
+ const dir=await mkdtemp(join(await realpath(tmpdir()),'synthetic-executor26-cli-'));t.after(()=>rm(dir,{recursive:true,force:true}));
+ const host=join(dir,'host.mjs'),text="export async function openImportHost(){throw Object.assign(Error('legacy'),{code:'LEGACY_ENTRY_SELECTED'});} export async function openImportHost26(){throw Object.assign(Error('successor'),{code:'EXACT26_ENTRY_SELECTED'});}";await writeFile(host,text);const pin=createHash('sha256').update(text).digest('hex'),cli=fileURLToPath(new URL('./run.mjs',import.meta.url));
+ for(const successor of [false,true]){const child=spawnSync(process.execPath,['--max-old-space-size=1024',cli,host,pin,join(dir,successor?'new.jsonl':'old.jsonl'),'1',...(successor?['--exact26']:[])],{encoding:'utf8'});assert.equal(child.status,1);assert.match(child.stderr,new RegExp(successor?'EXACT26_ENTRY_SELECTED':'LEGACY_ENTRY_SELECTED'));}
+ const bad=spawnSync(process.execPath,[cli,host,pin,join(dir,'bad.jsonl'),'1','--auto'],{encoding:'utf8'});assert.equal(bad.status,1);assert.match(bad.stderr,/IMPORT_EXECUTION_USAGE/);
 });

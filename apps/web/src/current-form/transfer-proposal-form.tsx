@@ -1,109 +1,109 @@
+import { Trigger, Select } from '@arco-design/web-react';
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { TransferStatusTag } from '../transfers/transfer-status-tag.tsx';
 import { StandardOverlay } from '../components/standard-overlay.tsx';
 import { DocumentScan } from '../components/document-scan.tsx';
 import type { DocumentScanController } from '../components/document-scan-controller.ts';
-import { UIButton, UIDate, UIInput, UITextArea } from '../components/standard-controls.tsx';
-import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
-import { TransferProposalSession, type TransferProposal } from './transfer-proposal.ts';
-import type { CurrentFormSku, CurrentTransferWarehouse } from '../../../../packages/application/src/current-form-ports.ts';
+import { UIButton, UIDate, UIInput } from '../components/standard-controls.tsx';
+import { TransferProposalSession, transferProposalRowKey, type TransferProposalLine, type TransferPendingEntry } from './transfer-proposal.ts';
+import type { CurrentFormProduct, CurrentFormSku, CurrentTransferWarehouse } from '../../../../packages/application/src/current-form-ports.ts';
+import { CurrentProductFinder, type CurrentProductFinderHandle } from './product-finder.tsx';
+import { DocumentProductPresentation, type DocumentProductCapability } from '../sales/document-presentation.tsx';
+import { TransferDocumentSummary, TransferMatrixTable, transferDisplayQuantity, useTransferSizeGroups, type TransferSizeGroupCapability, type TransferDisplaySize } from '../transfers/document-presentation.tsx';
+import type { ReadScope } from '../loading/read-scope.ts';
+import '../transfers/detail.css';
 import './transfer-proposal.css';
 
-const chevron = <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="m3.5 6 4.5 4 4.5-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>;
-type Line = TransferProposal['lines'][number];
-type MatrixLine = Line & { readonly selected: boolean };
-/** Presentation-only grouping. Each input still edits its original native SKU;
- * similarly named sizes are never merged into one writable quantity. */
-function matrixGroups(lines: TransferProposal['lines'], candidates: readonly CurrentFormSku[]) {
-  const groups = new Map<string, { sizes: Map<string, string>; rows: Map<string, { sku: CurrentFormSku; lines: MatrixLine[] }> }>();
-  const known = new Map(candidates.map(sku => [sku.id, sku]));
-  for (const line of lines) if (!known.has(line.sku.id)) known.set(line.sku.id, line.sku);
-  const values = new Map(lines.map(line => [line.sku.id, line]));
-  for (const current of known.values()) {
-    const selected = values.get(current.id), line: MatrixLine = selected ? { ...selected, selected: true } : { sku: current, quantity: '', selected: false };
-    const sku = line.sku;
-    let group = groups.get(sku.sizeGroupId);
-    if (!group) { group = { sizes: new Map(), rows: new Map() }; groups.set(sku.sizeGroupId, group); }
-    group.sizes.set(sku.sizeId, sku.sizeName);
-    const key = `${sku.productId}|${sku.colorId}|${sku.fitId}`;
-    let row = group.rows.get(key);
-    if (!row) { row = { sku, lines: [] }; group.rows.set(key, row); }
-    row.lines.push(line);
-  }
-  return [...groups].map(([id, group]) => ({ id, sizes: [...group.sizes].map(([id, name]) => ({ id, name })), rows: [...group.rows].map(([id, row]) => ({ id, ...row })) }));
+export interface TransferProposalPresentation {
+  readonly scope?: ReadScope; readonly productCapability?: DocumentProductCapability;
+  readonly sizeGroupCapability?: TransferSizeGroupCapability; readonly creatorName?: string;
 }
-function totalOf(lines: readonly Line[]): string {
-  return lines.every(line => /^\d+$/.test(line.quantity)) ? lines.reduce((sum, line) => sum + BigInt(line.quantity), 0n).toLocaleString('zh-CN') : '待校验';
+function Confirm({ title, close, children }: { readonly title: string; readonly close: () => void; readonly children: ReactNode }) {
+  return <StandardOverlay title={title} label={title} closeLabel="关闭弹窗" close={close} role="alertdialog" className="transfer-proposal-confirm" width={420} maskClosable initialFocus="[data-erp-keep-input]">{children}</StandardOverlay>;
 }
-function TransferDialog({ title, close, children, confirmation = false }: { readonly title: string; readonly close: () => void; readonly children: ReactNode; readonly confirmation?: boolean }) {
-  return <StandardOverlay title={title} label={title} closeLabel="关闭弹窗" close={close} role={confirmation ? 'alertdialog' : 'dialog'}
-    className={`transfer-proposal-dialog${confirmation ? ' transfer-proposal-confirm' : ''}`} width={confirmation ? 420 : 540}
-    maskClosable initialFocus={confirmation ? '[data-erp-keep-input]' : '.transfer-proposal-search input'}>{children}</StandardOverlay>;
+function WarehouseCandidates({ session, close }: { readonly session: TransferProposalSession; readonly close: () => void }) {
+  const state = useSyncExternalStore(session.subscribe, session.getSnapshot, session.getSnapshot), picker = state.picker;
+  const input = useRef<HTMLInputElement>(null), [index, setIndex] = useState(-1);
+  useEffect(() => { const frame = requestAnimationFrame(() => input.current?.focus({ preventScroll: true })); return () => cancelAnimationFrame(frame); }, []);
+  useEffect(() => setIndex(-1), [picker?.search, picker?.page]);
+  if (!picker || !['FROM', 'TO'].includes(picker.kind)) return null;
+  const values = (picker.result?.items ?? []) as readonly CurrentTransferWarehouse[];
+  const choose = (id: string) => { void session.select(id).then(ok => { if (ok) close(); }); };
+  return <div className="transfer-reference-popup" role="dialog" aria-label={picker.kind === 'FROM' ? '调出仓库候选' : '调入仓库候选'} onKeyDown={event => {
+    if (event.nativeEvent.isComposing || event.keyCode === 229) return;
+    if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); close(); }
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); if (values.length) setIndex(value => (value + (event.key === 'ArrowDown' ? 1 : values.length - 1) + values.length) % values.length); }
+    if (event.key === 'Enter') { event.preventDefault(); const item = values[index] ?? (values.length === 1 && picker.result?.exactTotal === 1n ? values[0] : null); if (item && picker.phase === 'ready') choose(item.id); }
+  }}>
+    <UIInput ref={input} aria-label="搜索仓库名称" placeholder="搜索仓库名称" value={picker.search} onChange={value => { void session.search(value); }} />
+    {picker.phase === 'loading' ? <p role="status">正在读取仓库…</p> : picker.phase === 'error' ? <p role="alert">仓库读取失败。<UIButton onClick={() => { void session.retry(); }}>重试仓库</UIButton></p> : <div role="listbox" aria-label="当前仓库候选">{values.map((warehouse, position) => <UIButton key={warehouse.id} className="iw-option" role="option" aria-selected={index === position} onMouseEnter={() => setIndex(position)} onClick={() => choose(warehouse.id)}><span>{warehouse.name}</span><small>{warehouse.hallName}{warehouse.enabled ? '' : '（已停用，有库存）'}</small></UIButton>)}{!values.length && <p>无匹配仓库</p>}</div>}
+    {picker.result && picker.result.exactTotal > 20n && <footer><UIButton disabled={picker.page <= 1} onClick={() => { void session.page(picker.page - 1); }}>上一页</UIButton><span>第 {picker.page} 页</span><UIButton disabled={BigInt(picker.page) * 20n >= picker.result.exactTotal} onClick={() => { void session.page(picker.page + 1); }}>下一页</UIButton></footer>}
+    {state.notice && <p role="status">{state.notice}</p>}
+  </div>;
 }
-/** Frozen transfer-golden.js header + transfer-matrix-experiment.js matrix
- * hierarchy, backed by the existing opt-in proposal session, not demo commands. */
-export function TransferProposalForm({ session, close, preparation }: { readonly session: TransferProposalSession; readonly close: () => void; readonly preparation?: { readonly save: () => void; readonly preparing: boolean; readonly notice: string | null; readonly cancel: () => void } }) {
+/** Final frozen transfer matrix hierarchy, using the same real product finder,
+ * retained product whole page, actual SKU quantities and native write owner. */
+export function TransferProposalForm({ session, close, preparation, scope, productCapability, sizeGroupCapability, creatorName }: TransferProposalPresentation & { readonly session: TransferProposalSession; readonly close: () => void; readonly preparation?: { readonly save: () => void; readonly preparing: boolean; readonly notice: string | null; readonly cancel: () => void } }) {
   const state = useSyncExternalStore(session.subscribe, session.getSnapshot, session.getSnapshot);
-  const [confirm, setConfirm] = useState<'reset' | 'cancel' | null>(null);
-  const [scanner, setScanner] = useState<DocumentScanController | null>(null);
-  const heading = useRef<HTMLHeadingElement>(null);
+  const [confirm, setConfirm] = useState(false), [scanner, setScanner] = useState<DocumentScanController | null>(null), [anchor, setAnchor] = useState<string | null>(null);
+  const heading = useRef<HTMLHeadingElement>(null), form = useRef<HTMLElement>(null), productKeys = useRef(new Map<string, CurrentProductFinderHandle>()), opener = useRef<HTMLElement | null>(null);
+  const { draft, pending, picker, replacement } = state;
+  const groupIds = [...draft.lines.map(row => row.sku.sizeGroupId), ...(replacement?.previousPending.skus ?? []).map(sku => sku.sizeGroupId), ...pending.skus.filter(sku => sku.colorId === pending.color?.id && sku.fitId === pending.fit?.id).map(sku => sku.sizeGroupId)];
+  const dictionary = useTransferSizeGroups(scope, sizeGroupCapability, groupIds);
   useEffect(() => { heading.current?.focus({ preventScroll: true }); }, []);
   if (state.disposed) return <p role="status">草稿已关闭，当前身份资料已清除。</p>;
-  const { draft, picker } = state;
-  const groups = matrixGroups(draft.lines, state.entry?.skus ?? []);
-  const discard = (action: 'reset' | 'cancel', confirmed = false) => {
-    const ok = action === 'reset' ? session.reset(confirmed) : session.cancel(confirmed);
-    if (!ok) setConfirm(action); else { setConfirm(null); if (action === 'cancel') close(); }
+  const dismiss = (restore = false) => { session.closePicker(); setAnchor(null); if (restore) requestAnimationFrame(() => opener.current?.isConnected && opener.current.focus({ preventScroll: true })); };
+  const focusProduct = (active = false) => requestAnimationFrame(() => { const id = active && session.getSnapshot().replacement ? 'replacement-product' : 'pending-product'; const input = form.current?.querySelector<HTMLInputElement>(`[data-entry-control="${id}"]`); input?.focus({ preventScroll: true }); input?.select(); });
+  const commit = (confirmed = false) => { if (session.commitPending(confirmed)) focusProduct(); };
+  const selectProduct = (id: string) => { void session.selectPendingProduct(id).then(ok => { if (ok) { setAnchor(null); requestAnimationFrame(() => form.current?.querySelector<HTMLElement>('[data-transfer-spec="color"] input')?.focus()); } }); };
+  const discard = (approved = false) => { if (session.cancel(approved)) { setConfirm(false); close(); } else setConfirm(true); };
+  const openPicker = (id: string, kind: 'FROM' | 'TO' | 'PRODUCT', search = '') => { setAnchor(id); void session.openPicker(kind, search); };
+  const productInput = (id: string, value: string, change: (value: string) => void, open: () => void, label: string, disabled = false, rowKey?: string) => {
+    const visible = anchor === id && picker?.kind === 'PRODUCT', bounds = opener.current?.getBoundingClientRect(), width = Math.min(Math.max((bounds?.width || 270) + 390, 660), window.innerWidth - 16);
+    return <Trigger trigger="click" position="bl" popupVisible={visible} popupStyle={{ width, '--pf-list-width': `${Math.min(bounds?.width || 270, width - 220)}px` } as React.CSSProperties} escToClose updateOnScroll autoFitPosition unmountOnExit onVisibleChange={next => { if (next && !visible && !disabled) open(); else if (!next && visible) dismiss(); }} popup={() => picker ? <CurrentProductFinder ref={handle => { if (handle) productKeys.current.set(id, handle); else productKeys.current.delete(id); }} products={(picker.result?.items ?? []) as readonly CurrentFormProduct[]} search={picker.search} phase={picker.phase} page={picker.page} exactTotal={picker.result?.exactTotal ?? null} {...(scope ? { scope } : {})} {...(productCapability ? { capability: productCapability } : {})} select={selectProduct} close={restore => dismiss(restore ?? true)} turnPage={page => { void session.page(page); }} retry={() => { void session.retry(); }} /> : <span />}>
+      <UIInput className="tc-matrix-product-input" data-entry-control={id} aria-label={label} role="combobox" aria-expanded={visible} autoComplete="off" placeholder="款号 / 名称 · 条码请扫码录入" value={value} disabled={disabled} suffix={<span aria-hidden="true">⌕</span>} onClick={event => { opener.current = event.currentTarget; }} onChange={(next, event) => { opener.current = event.currentTarget; if (rowKey) { if (session.beginReplacement(rowKey)) { session.setPendingQuery(next); openPicker('replacement-product', 'PRODUCT', next); focusProduct(true); } return; } change(next); if (visible) void session.search(next); else openPicker(id, 'PRODUCT', next); }} onKeyDown={event => {
+        if (event.nativeEvent.isComposing || event.keyCode === 229) return;
+        if (visible && ['ArrowDown', 'ArrowUp', 'Enter', 'Escape', 'Tab'].includes(event.key)) { if (event.key !== 'Tab') event.preventDefault(); event.stopPropagation(); const handler = productKeys.current.get(id); if (handler) handler.key(event.key); else if (event.key === 'Escape') dismiss(true); }
+        else if (event.key === 'ArrowDown' || event.key === 'Enter') { event.preventDefault(); opener.current = event.currentTarget; open(); }
+      }} />
+    </Trigger>;
   };
-  return <section aria-label="新增调拨草稿" className="tc-workbench tc-editor transfer-editor transfer-proposal-editor">
-    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>新增调拨单</h1><TransferStatusTag status="DRAFT" /><span className="transfer-proposal-save-state">未保存</span><div className="actions">
-      <UIButton type="button" className="iw-text-button tc-back-link" onClick={() => discard('cancel')}>返回列表</UIButton>
-      {preparation ? <UIButton type="button" className="iw-text-button transfer-proposal-save" disabled={preparation.preparing} onClick={preparation.save}>保存</UIButton> : <UIButton type="button" className="iw-text-button" disabled title="需要可信准备服务提供已批准编号及原生快照事实">保存（尚未接入）</UIButton>}
-      {['审核', '导出', '打印', '操作历史'].map(label => <UIButton type="button" className="iw-text-button" key={label} disabled title={label === '审核' ? '保存并读取当前单据后才能审核' : `${label}尚未接入`}>{label}</UIButton>)}
-    </div></div>
-    <div className="tc-doc-header"><div className="tc-gold-doc-fields">
-      <label className="tc-gold-field"><span>单据日期 <span className="ui-required">*</span></span><UIDate className="iw-control" aria-label="单据日期"  value={draft.businessDate} onChange={nextValue => session.setHeader({ businessDate: nextValue })} /></label>
-      <div className="tc-gold-field"><span>调出仓库 <span className="ui-required">*</span></span><UIButton type="button" className="iw-control transfer-proposal-select" aria-label="选择调出仓库" aria-haspopup="dialog" aria-expanded={picker?.kind === 'FROM'} onClick={() => { void session.openPicker('FROM'); }}><span>{draft.from?.name ?? '选择调出仓库'}</span>{chevron}</UIButton></div>
-      <div className="tc-gold-field"><span>调入仓库 <span className="ui-required">*</span></span><UIButton type="button" className="iw-control transfer-proposal-select" aria-label="选择调入仓库" aria-haspopup="dialog" aria-expanded={picker?.kind === 'TO'} onClick={() => { void session.openPicker('TO'); }}><span>{draft.to?.name ?? '选择调入仓库'}</span>{chevron}</UIButton></div>
-      <div className="tc-gold-field tc-gold-meta"><span>单号</span><strong className="transfer-read-value">保存后生成</strong></div>
-      <div className="tc-gold-field tc-gold-meta"><span>创建者</span><span className="transfer-read-value" title="保存时由当前认证身份确定，不在草稿伪造创建者">当前认证身份</span></div>
-      <div className="tc-gold-entry-actions"><UIButton type="button" className="iw-button iw-primary" disabled={!session.canScan || preparation?.preparing} title={session.canScan ? undefined : '请先选择调出和调入仓库'} onClick={() => { session.closePicker(); setScanner(session.createScanner()); }}>扫码录入</UIButton></div>
-    </div></div>
-    <label className="tc-note-row"><span>备注</span><UITextArea aria-label="备注" className="iw-control transfer-note-input" rows={1} maxLength={10000} placeholder="填写单据备注" value={draft.note} onChange={nextValue => session.setHeader({ note: nextValue })} /></label>
-    <p role="status" className="transfer-proposal-context">本地未保存草稿 · 不改变库存。{preparation ? '保存将先读取原生新单资料，再发送保存命令。' : '条码及可信新单准备尚未接入。'}</p>
-    {(state.notice || state.errors.length > 0 || preparation?.notice || preparation?.preparing) && <div className="transfer-proposal-feedback">
-      {state.notice && <p role="status">{state.notice}</p>}{state.errors.map(error => <p role="alert" key={error}>{error}</p>)}
-      {preparation?.notice && <p role="status">{preparation.notice}</p>}{preparation?.preparing && <p role="status">正在准备新单…<UIButton type="button" className="iw-link" onClick={preparation.cancel}>取消新单准备</UIButton></p>}
-    </div>}
-    <div className="tc-section-head"><strong>调拨明细</strong><span className="transfer-muted">按实际规格录入数量</span><UIButton type="button" className="iw-button" onClick={() => { void session.openPicker('PRODUCT'); }}>添加商品规格</UIButton></div>
-    {state.entry && <p className="transfer-proposal-context" role="status">{state.entry.product.name} · 实际规格第 {state.entry.page} 页，共 {state.entry.exactTotal.toString()} 项。空白数量未加入单据；更多规格可在候选中翻页。</p>}
+  const warehouse = (kind: 'FROM' | 'TO', label: string, value: CurrentTransferWarehouse | null) => <div className="tc-gold-field"><span>{label} <span className="ui-required">*</span></span><Trigger trigger="click" position="bl" popupVisible={anchor === kind && picker?.kind === kind} escToClose updateOnScroll autoFitPosition unmountOnExit popupStyle={{ width: 330 }} onVisibleChange={next => { if (next) openPicker(kind, kind); else if (anchor === kind) dismiss(); }} popup={() => <WarehouseCandidates session={session} close={() => dismiss(true)} />}><UIButton className="iw-control transfer-proposal-select" aria-label={`选择${label}`} aria-haspopup="dialog" aria-expanded={anchor === kind && picker?.kind === kind} onClick={event => { opener.current = event.currentTarget; }} onKeyDown={event => { if (event.key === 'ArrowDown') { event.preventDefault(); opener.current = event.currentTarget; openPicker(kind, kind); } }}><span>{value?.name ?? `选择${label}`}</span><span aria-hidden="true">⌄</span></UIButton></Trigger></div>;
+  const known = new Map<string, CurrentFormSku>(); for (const row of draft.lines) known.set(row.sku.id, row.sku); for (const sku of state.entry?.skus ?? []) known.set(sku.id, sku);
+  const rows = new Map<string, { sku: CurrentFormSku; lines: TransferProposalLine[] }>(); for (const line of draft.lines) { const key = transferProposalRowKey(line.sku), row = rows.get(key) ?? { sku: line.sku, lines: [] }; row.lines.push(line); rows.set(key, row); }
+  const axes = (id: string): TransferDisplaySize[] => {
+    const dictionaryGroup = dictionary.groups.find(group => group.id === id);
+    if (dictionaryGroup) return [...dictionaryGroup.sizes].sort((a, b) => a.displayOrder - b.displayOrder).map(size => ({ id: size.id, label: size.name }));
+    const values = new Map<string, string>(); for (const sku of [...known.values(), ...pending.skus]) if (sku.sizeGroupId === id) values.set(sku.sizeId, sku.sizeName);
+    return [...values].map(([id, label]) => ({ id, label }));
+  };
+  const filledGroups: string[] = [...new Set(draft.lines.map(row => row.sku.sizeGroupId))];
+  const bottomPending = replacement?.previousPending ?? pending, bottomSelected = bottomPending.skus.filter(sku => sku.productId === bottomPending.product?.id && sku.colorId === bottomPending.color?.id && sku.fitId === bottomPending.fit?.id);
+  const entryGroups: string[] = [...new Set(bottomSelected.map(sku => sku.sizeGroupId))]; if (!entryGroups.length) entryGroups.push(sizeGroupCapability?.id ?? '');
+  const quantityKey = (event: React.KeyboardEvent, last: boolean) => { if (event.nativeEvent.isComposing || event.keyCode === 229) return; if (event.key === 'Enter' || event.key === 'Tab' && last) { event.preventDefault(); commit(); } };
+  const renderPendingRow = (p: TransferPendingEntry, groupId: string, sizes: readonly TransferDisplaySize[], id: string, readOnly = false, groupIndex = 0) => {
+    const selected = p.skus.filter(sku => sku.productId === p.product?.id && sku.colorId === p.color?.id && sku.fitId === p.fit?.id);
+    const colors = [...new Map(p.skus.map(sku => [sku.colorId, { value: sku.colorId, label: sku.colorName }])).values()], fits = [...new Map(p.skus.filter(sku => sku.colorId === p.color?.id).map(sku => [sku.fitId, { value: sku.fitId, label: sku.fitName }])).values()];
+    return <tr key={`${id}:${groupId}`} className={`mx-draft-row${readOnly ? ' mx-pending-suspended' : id === 'replacement-product' ? ' mx-inline-replacement' : ''}`}><td className="mx-product">{productInput(id, p.query, value => session.setPendingQuery(value), () => openPicker(id, 'PRODUCT', p.query), id === 'replacement-product' ? '改选商品款号或名称' : '调拨行内找货', readOnly)}{id === 'replacement-product' && <small>原行 · 确认前保留</small>}{p.product && <small title={p.product.name}>{p.product.name}</small>}</td><td className="mx-color"><span {...(!readOnly ? { 'data-transfer-spec': 'color' } : {})}><Select aria-label={`${readOnly ? '暂存' : '录入'}颜色`} size="small" placeholder="颜色" value={p.color?.id ?? []} options={colors} disabled={readOnly || p.phase !== 'ready'} onChange={(id: string) => session.selectPendingSpec('color', id)} unmountOnExit /></span></td><td className="mx-fit-col"><span {...(!readOnly ? { 'data-transfer-spec': 'fit' } : {})}><Select aria-label={`${readOnly ? '暂存' : '录入'}版型`} size="small" placeholder="版型" value={p.fit?.id ?? []} options={fits} disabled={readOnly || !p.color || p.phase !== 'ready'} onChange={(id: string) => session.selectPendingSpec('fit', id)} unmountOnExit /></span></td>{sizes.map((size, index) => { const candidates = selected.filter(sku => sku.sizeGroupId === groupId && sku.sizeId === size.id), sku = candidates.length === 1 ? candidates[0] : null; return <td className={sku ? 'transfer-quantity' : 'mx-size-blank'} key={size.id}>{sku ? <UIInput className="mx-qty-input" disabled={readOnly} aria-label={`${readOnly ? '暂存' : '录入'} ${sku.skuCode} 数量`} inputMode="numeric" value={p.quantities[sku.id] ?? ''} onChange={raw => session.setPendingQuantity(sku.id, raw)} onKeyDown={event => quantityKey(event, groupIndex === entryGroups.length - 1 && !sizes.slice(index + 1).some(size => selected.some(sku => sku.sizeGroupId === groupId && sku.sizeId === size.id)))} /> : ''}</td>; })}<td className="tc-subtotal">{transferDisplayQuantity(Object.values(p.quantities).filter(raw => raw !== '').map(quantity => ({ quantity })))}</td><td className="ui-action-cell"><div className="mx-actions"><UIButton className="iw-link" disabled={readOnly || !p.product || !p.color || !p.fit || p.phase !== 'ready'} onClick={() => commit()}>{id === 'replacement-product' ? '确认' : '录入'}</UIButton><UIButton className="iw-link" disabled={readOnly || !p.query && !replacement} onClick={() => { session.clearPending(); focusProduct(); }}>{id === 'replacement-product' ? '取消' : '清除'}</UIButton></div></td></tr>;
+  };
+  return <DocumentProductPresentation {...(scope ? { scope } : {})} {...(productCapability ? { capability: productCapability } : {})} returnLabel="返回调拨单" viewLabel="调拨商品查看" documentLabel="调拨">{openProduct => <section ref={form} aria-label="新增调拨草稿" className="tc-workbench tc-editor transfer-editor transfer-proposal-editor">
+    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>新增调拨单</h1><TransferStatusTag status="DRAFT" /><div className="actions"><UIButton className="iw-text-button tc-back-link" onClick={() => discard()}>返回列表</UIButton><UIButton className="iw-text-button transfer-proposal-save" disabled={!preparation || preparation.preparing} onClick={preparation?.save}>保存</UIButton>{['审核', '导出', '打印', '操作历史'].map(label => <UIButton className="iw-text-button" key={label} disabled title="保存并读取当前单据后可用">{label}</UIButton>)}</div></div>
+    <div className="tc-doc-header"><div className="tc-gold-doc-fields"><label className="tc-gold-field"><span>单据日期 <span className="ui-required">*</span></span><UIDate className="iw-control" aria-label="单据日期" value={draft.businessDate} onChange={businessDate => session.setHeader({ businessDate })} /></label>{warehouse('FROM', '调出仓库', draft.from)}{warehouse('TO', '调入仓库', draft.to)}<div className="tc-gold-field tc-gold-doc-number"><span>单号</span><span className="transfer-read-value">保存后生成</span></div><div className="tc-gold-field"><span>创建者</span><span className="transfer-read-value" title="由当前认证身份记录">{creatorName || '保存后记录'}</span></div><div className="tc-gold-entry-actions"><UIButton className="iw-button iw-primary" disabled={!session.canScan || preparation?.preparing} title={session.canScan ? undefined : '请先选择调出和调入仓库'} onClick={() => { dismiss(); setScanner(session.createScanner()); }}>扫码录入</UIButton></div></div></div>
+    <label className="tc-note-row"><span>备注</span><UIInput aria-label="备注" className="iw-control transfer-note-input" maxLength={10000} placeholder="填写单据备注" value={draft.note} onChange={note => session.setHeader({ note })} /></label>
+    {(state.notice || state.errors.length > 0 || preparation?.notice || preparation?.preparing) && <div className="transfer-proposal-feedback">{state.notice && <p role="status">{state.notice}</p>}{state.errors.map(error => <p role="alert" key={error}>{error}</p>)}{preparation?.notice && <p role="status">{preparation.notice}</p>}{preparation?.preparing && <p role="status">正在准备新单…<UIButton className="iw-link" onClick={preparation.cancel}>取消准备</UIButton></p>}</div>}
     <div className="transfer-matrix-scroll transfer-proposal-matrix" role="region" aria-label="调拨实际明细" tabIndex={0}>
-      {groups.length ? groups.map(group => <section className="mx-section" key={group.id} data-size-group-id={group.id} style={{ '--mx-table-width': `${592 + group.sizes.length * 64}px` } as import('react').CSSProperties}>
-        <table className="mx-table"><caption className="sr-only">调拨实际明细</caption><colgroup><col style={{ width: 280 }} /><col style={{ width: 76 }} /><col style={{ width: 88 }} />{group.sizes.map(size => <col key={size.id} style={{ width: 64 }} />)}<col style={{ width: 52 }} /><col style={{ width: 96 }} /></colgroup>
-          <thead><tr><th className="mx-product" scope="col">款号／商品名称</th><th className="mx-color" scope="col">颜色</th><th className="mx-fit-col" scope="col">版型</th>{group.sizes.map(size => <th key={size.id} scope="col" title={size.name}>{size.name}</th>)}<th className="tc-subtotal" scope="col">小计</th><th className="ui-action-cell" scope="col">操作</th></tr></thead>
-          <tbody>{group.rows.map(row => <tr key={row.id}><td className="mx-product"><div className="mx-product-line"><strong title={row.sku.productCode}>{row.sku.productCode}</strong><span title={row.sku.productName}>{row.sku.productName}</span></div></td><td className="mx-color">{row.sku.colorName}</td><td className="mx-fit-col">{row.sku.fitName}</td>
-            {group.sizes.map(size => { const lines = row.lines.filter(line => line.sku.sizeId === size.id); return <td className={lines.length ? 'transfer-quantity' : 'mx-size-blank'} key={size.id}>{lines.map(line => <UIInput className="transfer-proposal-quantity" key={line.sku.id} aria-label={`${line.sku.skuCode} 数量`} title={line.sku.skuCode} inputMode="numeric" value={line.quantity} onChange={nextValue => session.setMatrixQuantity(line.sku.id, nextValue)} />)}</td>; })}
-            <td className="tc-subtotal">{totalOf(row.lines.filter(line => line.selected))}</td><td className="ui-action-cell"><div className="mx-actions">{row.lines.filter(line => line.selected).map(line => <UIButton key={line.sku.id} type="button" className="iw-link" aria-label={`删除 ${line.sku.skuCode}`} title={`删除 ${line.sku.sizeName} 实际规格`} onClick={() => session.removeLine(line.sku.id)}>删除{row.lines.filter(line => line.selected).length > 1 ? ` ${line.sku.sizeName}` : ''}</UIButton>)}</div></td></tr>)}</tbody>
-        </table>
-      </section>) : <table className="mx-table transfer-proposal-empty-table"><colgroup><col style={{ width: 280 }} /><col style={{ width: 76 }} /><col style={{ width: 88 }} /><col /><col style={{ width: 52 }} /><col style={{ width: 96 }} /></colgroup><thead><tr>{['款号／商品名称', '颜色', '版型', '尺码 / 数量', '小计', '操作'].map(label => <th scope="col" key={label}>{label}</th>)}</tr></thead><tbody><tr className="mx-draft-row"><td><UIButton type="button" className="iw-control transfer-proposal-find" aria-label="调拨行内找货" onClick={() => { void session.openPicker('PRODUCT'); }}><span>商品款号 / 名称 / 条码</span>{chevron}</UIButton></td><td className="transfer-muted">选择颜色</td><td className="transfer-muted">选择版型</td><td className="transfer-muted">选择商品实际规格后显示尺码</td><td>—</td><td>—</td></tr></tbody></table>}
+      {filledGroups.map(groupId => <TransferMatrixTable key={groupId} sizes={axes(groupId)} label="调拨实际明细">{sizes => [...rows].filter(([, row]) => row.sku.sizeGroupId === groupId).map(([key, row]) => replacement?.key === key ? renderPendingRow(pending, groupId, sizes, 'replacement-product') : <tr key={key} className={replacement?.key === key ? 'mx-edit-source-row' : ''}>
+        <td className="mx-product">{productInput(`row-${key}`, `${row.sku.productCode} ${row.sku.productName}`, () => {}, () => { if (session.beginReplacement(key)) openPicker('replacement-product', 'PRODUCT', row.sku.productCode); }, `更换 ${row.sku.productCode} 商品`, !!replacement, key)}{replacement?.key === key && <small>原行 · 确认前保留</small>}</td>
+        <td className="mx-color"><div className="mx-spec-edit"><span>{row.sku.colorName}</span><UIButton className="iw-link" aria-label={`修改 ${row.sku.productCode} 颜色`} disabled={!!replacement} onClick={() => { if (session.beginReplacement(key)) requestAnimationFrame(() => form.current?.querySelector<HTMLElement>('[data-transfer-spec="color"] input')?.focus()); }}>改</UIButton></div></td>
+        <td className="mx-fit-col"><div className="mx-spec-edit"><span>{row.sku.fitName}</span><UIButton className="iw-link" aria-label={`修改 ${row.sku.productCode} 版型`} disabled={!!replacement} onClick={() => { if (session.beginReplacement(key)) requestAnimationFrame(() => form.current?.querySelector<HTMLElement>('[data-transfer-spec="fit"] input')?.focus()); }}>改</UIButton></div></td>
+        {sizes.map(size => { const matches = [...known.values()].filter(sku => transferProposalRowKey(sku) === key && sku.sizeId === size.id), sku = matches.length === 1 ? matches[0] : null, line = row.lines.find(line => line.sku.id === sku?.id); return <td className={sku ? 'transfer-quantity' : 'mx-size-blank'} key={size.id}>{sku ? <UIInput className="mx-qty-input" aria-label={`${sku.skuCode} 数量`} inputMode="numeric" value={line?.quantity ?? ''} onChange={value => session.setMatrixQuantity(sku.id, value)} /> : '—'}</td>; })}<td className="tc-subtotal">{transferDisplayQuantity(row.lines)}</td><td className="ui-action-cell"><div className="mx-actions"><UIButton className="iw-link" disabled={!openProduct} onClick={() => openProduct?.(row.sku.id, 'TRANSFER', { id: row.sku.productId, label: `${row.sku.productCode} · ${row.sku.productName}` })}>查看</UIButton><UIButton className="iw-link" onClick={() => session.removeGroup(key)}>删除</UIButton></div></td>
+      </tr>)}</TransferMatrixTable>)}
+      <div className={`mx-draft-dock${replacement ? ' mx-replace-mode' : ''}`}>{entryGroups.map((groupId, groupIndex) => <TransferMatrixTable key={groupId} sizes={axes(groupId)} showHeader={!filledGroups.includes(groupId)} className="mx-draft-section" label={replacement ? '改选中的调拨行' : '连续录入调拨行'}>{sizes => renderPendingRow(bottomPending, groupId, sizes, 'pending-product', !!replacement, groupIndex)}</TransferMatrixTable>)}</div>
     </div>
-    <footer className="tc-foot tc-gold-footer"><strong>{new Set(draft.lines.map(row => `${row.sku.productId}|${row.sku.colorId}|${row.sku.fitId}`)).size}行</strong><span>{draft.lines.length} 个实际规格</span><strong>数量 {totalOf(draft.lines)}</strong><span className="transfer-muted">数量不是实时库存</span></footer>
+    {(pending.phase === 'loading' || pending.phase === 'error' || pending.exactTotal !== null && pending.exactTotal > 20n || pending.unmapped.length > 0 || dictionary.phase === 'error' || !sizeGroupCapability) && <div className="transfer-entry-status" role="status">{pending.phase === 'loading' && <span>正在读取实际规格…</span>}{pending.phase === 'error' && <span>规格读取失败，输入保留。<UIButton className="iw-link" onClick={() => { void session.readPendingSkus(); }}>重试规格</UIButton></span>}{pending.exactTotal !== null && pending.exactTotal > 20n && <span>实际规格第 {pending.page} 页 · 共 {pending.exactTotal.toString()} 项<UIButton className="iw-link" disabled={pending.phase === 'loading' || pending.page <= 1} onClick={() => { void session.readPendingSkus(pending.page - 1); }}>上一页规格</UIButton><UIButton className="iw-link" disabled={pending.phase === 'loading' || BigInt(pending.page) * 20n >= pending.exactTotal} onClick={() => { void session.readPendingSkus(pending.page + 1); }}>下一页规格</UIButton></span>}{pending.unmapped.length > 0 && <span>原数量尚未对应：{pending.unmapped.map(row => `${row.sizeName} × ${row.quantity}`).join('；')}</span>}{dictionary.phase === 'error' && <span>部分尺码表头未读取。<UIButton className="iw-link" onClick={dictionary.retry}>重试尺码表头</UIButton></span>}{!sizeGroupCapability && <span>初始尺码组尚未配置；选择真实商品规格后显示实际尺码。</span>}</div>}
+    <TransferDocumentSummary lines={draft.lines.map(line => ({ productId: line.sku.productId, quantity: line.quantity, ...(line.product?.category ? { category: line.product.category } : {}) }))} />
     {scanner && <DocumentScan controller={scanner} title="调拨扫码录入" rows={draft.lines.map(row => ({ key: row.sku.id, ...row }))} close={() => setScanner(null)} update={(key, value) => session.setQuantity(key, value)} remove={key => session.removeLine(key)} />}
-    {picker && <TransferDialog title={picker.kind === 'FROM' ? '调出仓库' : picker.kind === 'TO' ? '调入仓库' : picker.kind === 'PRODUCT' ? '选择商品' : `${picker.product?.name} · 实际规格`} close={() => session.closePicker()}>
-      <section aria-label="当前候选" className="transfer-proposal-candidates">
-        {picker.kind !== 'SKU' && <label className="transfer-proposal-search"><span>搜索</span><UIInput className="iw-search" aria-label="搜索候选" placeholder={picker.kind === 'PRODUCT' ? '搜索商品款号或名称' : '搜索仓库名称'} value={picker.search} onChange={nextValue => { void session.search(nextValue); }} /></label>}
-        <div className="transfer-proposal-options" aria-busy={picker.phase === 'loading'}>
-          {picker.phase === 'loading' && <p className="iw-inline-state" role="status">正在读取当前候选…</p>}
-          {picker.phase === 'error' && <p className="iw-inline-state" role="alert">候选读取失败。<UIButton type="button" className="iw-link" onClick={() => { void session.retry(); }}>重试候选</UIButton></p>}
-          {picker.phase === 'ready' && <><ul>{picker.result?.items.map(item => {
-            const sku = item as CurrentFormSku, warehouse = item as CurrentTransferWarehouse;
-            const label = picker.kind === 'SKU' ? `${sku.productCode} · ${sku.colorName} · ${sku.fitName} · ${sku.sizeName}` : 'name' in item ? item.name + ('hallName' in item ? ` · ${warehouse.hallName}${warehouse.enabled ? '' : '（已停用，有库存）'}` : '') : '';
-            return <li key={item.id}><UIButton type="button" className="iw-option" disabled={picker.kind === 'SKU' && draft.lines.some(row => row.sku.id === item.id)} onClick={() => { void session.select(item.id); }}>{label}</UIButton></li>;
-          })}</ul>{picker.result?.items.length === 0 && <p className="iw-inline-state">无匹配候选</p>}</>}
-        </div>
-        {state.notice && <p className="transfer-proposal-picker-notice" role="status">{state.notice}</p>}
-        <footer><span>第 {picker.page} 页 · 共 {picker.result?.exactTotal.toString() ?? '—'} 项</span><div><UIButton type="button" className="iw-text-button" disabled={picker.phase !== 'ready' || picker.page <= 1} onClick={() => { void session.page(picker.page - 1); }}>上一页</UIButton><UIButton type="button" className="iw-text-button" disabled={picker.phase !== 'ready' || !picker.result || BigInt(picker.page) * 20n >= picker.result.exactTotal} onClick={() => { void session.page(picker.page + 1); }}>下一页</UIButton><UIButton type="button" className="iw-button" onClick={() => session.closePicker()}>关闭候选</UIButton></div></footer>
-      </section>
-    </TransferDialog>}
-    {confirm && <TransferDialog title="放弃未保存输入？" confirmation close={() => setConfirm(null)}><p className="transfer-proposal-confirm-message">将放弃本次未保存输入，是否继续？</p><footer><UIButton type="button" className="iw-button" data-erp-keep-input onClick={() => setConfirm(null)}>保留输入</UIButton><UIButton type="button" className="iw-button iw-primary" onClick={() => discard(confirm, true)}>确认放弃</UIButton></footer></TransferDialog>}
-  </section>;
+    {confirm && <Confirm title="放弃未保存输入？" close={() => setConfirm(false)}><p>将放弃本次未保存输入，是否继续？</p><footer><UIButton data-erp-keep-input onClick={() => setConfirm(false)}>保留输入</UIButton><UIButton className="iw-primary" onClick={() => discard(true)}>确认放弃</UIButton></footer></Confirm>}
+    {state.appendRequest && <Confirm title="追加到已有规格？" close={() => session.cancelAppend()}><p>部分实际规格已在单据中。本次数量将追加到相同规格，确认继续？</p><footer><UIButton data-erp-keep-input onClick={() => session.cancelAppend()}>保留输入</UIButton><UIButton className="iw-primary" onClick={() => commit(true)}>确认追加</UIButton></footer></Confirm>}
+  </section>}</DocumentProductPresentation>;
 }

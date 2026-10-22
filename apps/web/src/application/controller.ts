@@ -236,7 +236,7 @@ export class ApplicationController {
             this.#transferSession = module.prepareTransferSession({ ...input, scope: workspaceScope, http: this.#httpForScope(workspaceScope) }, () => this.authentication.expire());
           }
           prepared = this.#transferSession.prepare(input);
-        } else prepared = module.prepareTransferRoute(input);
+        } else prepared = module.prepareTransferRoute(input, () => this.authentication.expire());
       }
       else if (route === 'products') {
         const module = await this.#leaves.load('products', scope);

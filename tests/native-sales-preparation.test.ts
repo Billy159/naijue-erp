@@ -1,14 +1,14 @@
 /** SYNTHETIC only: no database execution or real catalogue publication. */
 import assert from "node:assert/strict";
 import test from "node:test";
-import { createNativeSalesPreparation, createNativeManualSalesBusinessRules } from "../packages/application/src/native-sales-preparation.ts";
+import { createNativeSalesPreparation, createNativeManualSalesBusinessRules, createNativeSalesExistingPreparation } from "../packages/application/src/native-sales-preparation.ts";
 import type { NativeSalesCreateProposal } from "../packages/application/src/native-sales-preparation.ts";
 import { createNativeTransactionSalesBusinessRules } from "../packages/application/src/sales-native-facts.ts";
 import { salesPreparedDraftFitsSaveBudget } from "../packages/application/src/sales-payload-budget.ts";
 import { createSalesService } from "../packages/application/src/sales-service.ts";
 import type { SalesDependencies } from "../packages/application/src/ports.ts";
 import { DomainError } from "../packages/domain/src/errors.ts";
-import { minorAmount } from "../packages/domain/src/values.ts";
+import { minorAmount, version } from "../packages/domain/src/values.ts";
 import { actor, ids, sid, snapshot } from "./support/synthetic-fixtures.ts";
 import { SyntheticStore } from "./support/synthetic-store.ts";
 const product = sid("product", 100), method = sid("paymentMethod", 101);
@@ -95,4 +95,109 @@ test("SYNTHETIC preparation rejects calculated SQL monetary overflow rather than
   const h = setup(), input = proposal();
   await assert.rejects(h.prepare.prepareCreate(actor, { ...input, lines: [{ ...input.lines[0]!, dealPrice: "9999999999999999.99", quantity: "2" }] }), { code: "MONEY_STORAGE_OVERFLOW" });
   assert.equal(h.store.snapshot().headers.size, 0);
+});
+
+async function existingSetup() {
+  const h = setup(), initial = await h.prepare.prepareCreate(actor, proposal());
+  await createSalesService(h.dependencies).execute({ action: "SAVE", actor, expectedVersion: null, requestKey: "existing-seed", draft: initial });
+  let loaded: Awaited<ReturnType<import("../packages/application/src/ports.ts").SalesTransaction["getSales"]>>;
+  let reference = minorAmount("125"), inspect: import("../packages/application/src/ports.ts").SalesTransaction | undefined;
+  const trace: string[] = [], allocated: string[] = [];
+  const payment2 = sid("paymentAccount", 120), method2 = sid("paymentMethod", 121);
+  const deps: SalesDependencies = { ...h.dependencies, newId: kind => { allocated.push(kind); return h.dependencies.newId(kind); }, unitOfWork: { transaction(work) {
+    return h.dependencies.unitOfWork.transaction(original => {
+      const tx: import("../packages/application/src/ports.ts").SalesTransaction = { ...original,
+        async getSales(id) { trace.push("getSales"); loaded = await original.getSales(id); return loaded; },
+        async getCurrentSalesSnapshots(ids) { trace.push("snapshots"); return original.getCurrentSalesSnapshots!(ids); },
+        async getCurrentSalesReferenceFacts(draft) { trace.push("facts"); const facts = await original.getCurrentSalesReferenceFacts!(draft);
+          return { ...facts, products: facts.products.map(p => ({ ...p, referencePrice: reference })),
+            retainedLines: (loaded?.document.lines ?? []).filter(l => l.isCurrent).map(l => ({ id: l.id, skuId: l.skuId, snapshot: l.snapshot })),
+            paymentAccounts: [...facts.paymentAccounts, { id: payment2, methodId: method2, enabled: true, methodEnabled: true }] };
+        },
+        async putRuntimeSales(d) { trace.push("WRITE:document"); return original.putRuntimeSales(d); },
+        async insertReceipt(r) { trace.push("WRITE:receipt"); return original.insertReceipt(r); },
+        async appendAudit(a) { trace.push("WRITE:audit"); return original.appendAudit(a); },
+        async appendLedger(l) { trace.push("WRITE:ledger"); return original.appendLedger(l); },
+        async putBalance(b) { trace.push("WRITE:balance"); return original.putBalance(b); },
+        async reserveRuntimeDocumentNumber() { trace.push("WRITE:number"); throw Error("MUST_NOT_RESERVE"); }
+      }; return work(tx);
+    });
+  } }, authorization: { async assertAllowed(a, action, document, tx) {
+    trace.push("authorize"); inspect = tx; await h.dependencies.authorization.assertAllowed(a, action, document, tx);
+    if (document.header.hallId !== ids.hall) throw new DomainError("FORBIDDEN", "SYNTHETIC proposed scope denied");
+  } } };
+  const input = (): import("../packages/application/src/native-sales-preparation.ts").NativeSalesExistingProposal => ({ ...proposal(), salesId: initial.header.id, expectedVersion: 1,
+    lines: proposal().lines.map(l => ({ ...l, existingLineId: initial.lines[0]!.id })), settlements: proposal().settlements.map(s => ({ ...s, existingSettlementId: initial.settlements[0]!.id })) });
+  return { ...h, deps, initial, input, trace, allocated, payment2, method2,
+    existing: createNativeSalesExistingPreparation(deps), reference: (s: string) => { reference = minorAmount(s); }, inspect: () => inspect,
+    async changeDocument(change: (d: import("../packages/domain/src/documents.ts").SalesDocument) => import("../packages/domain/src/documents.ts").SalesDocument) {
+      await h.store.transaction(async tx => { const stored = await tx.getSales(initial.header.id); await tx.putRuntimeSales(change(stored!.document)); });
+    } };
+}
+test("SYNTHETIC existing prepare preserves actual id/number/old snapshot/reference, rechecks economics and has zero business writes", async () => {
+  const h = await existingSetup(), before = h.store.snapshot(); h.label("SYNTHETIC current renamed"); h.reference("999");
+  const original = h.input(), input = { ...original, lines: [{ ...original.lines[0]!, dealPrice: null, pricingRule: "DISCOUNT" as const, discountTenths: 50 }] };
+  const prepared = await h.existing.prepareExisting(actor, input);
+  assert.deepEqual(h.store.snapshot(), before); assert.deepEqual(Object.keys(prepared).sort(), ["draft", "expectedVersion"]);
+  assert.equal(prepared.expectedVersion, 1); assert.equal(prepared.draft.header.id, h.initial.header.id); assert.equal(prepared.draft.header.number, h.initial.header.number);
+  assert.equal(prepared.draft.lines[0]!.id, h.initial.lines[0]!.id); assert.deepEqual(prepared.draft.lines[0]!.snapshot, h.initial.lines[0]!.snapshot);
+  assert.equal(prepared.draft.lines[0]!.referencePrice, 125n); assert.equal(prepared.draft.lines[0]!.dealPrice, 63n);
+  assert.equal(prepared.draft.settlements[0]!.id, h.initial.settlements[0]!.id);
+  assert.deepEqual(h.allocated, ["operation"]); assert.ok(!h.trace.some(v => v.startsWith("WRITE:"))); assert.ok(!h.trace.includes("snapshots"));
+  assert.equal(h.trace.filter(v => v === "authorize").length, 2);
+  assert.throws(() => h.inspect()!.getSales(h.initial.header.id), { code: "TRANSACTION_CLOSED" });
+});
+test("SYNTHETIC existing prepare new/replaced SKU ids are server assigned, original rows remain retained on actual SAVE", async () => {
+  const h = await existingSetup(), input = h.input(), before = h.store.snapshot();
+  const changed = { ...input, lines: [{ ...input.lines[0]!, skuId: ids.sku2 }, { ...input.lines[0]!, existingLineId: null, quantity: "1" }],
+    settlements: [{ ...input.settlements[0]!, paymentAccountId: h.payment2, paymentMethodId: h.method2 }] };
+  const p = await h.existing.prepareExisting(actor, changed); assert.deepEqual(h.store.snapshot(), before);
+  assert.deepEqual(p.draft.lines.map(l => l.skuId), [ids.sku2, ids.sku]); assert.deepEqual(p.draft.lines.map(l => l.lineNo), [1, 2]);
+  assert.ok(p.draft.lines.every(l => l.id !== h.initial.lines[0]!.id)); assert.notEqual(p.draft.lines[0]!.id, p.draft.lines[1]!.id);
+  assert.notEqual(p.draft.settlements[0]!.id, h.initial.settlements[0]!.id); assert.ok(!h.trace.some(v => v.startsWith("WRITE:")));
+  await createSalesService(h.deps).execute({ action: "SAVE", actor, expectedVersion: version(p.expectedVersion), requestKey: "save-existing", draft: p.draft });
+  const saved = h.store.snapshot(), retained = saved.lines.get(h.initial.lines[0]!.id)!;
+  assert.equal(retained.isCurrent, false); assert.deepEqual(retained.snapshot, h.initial.lines[0]!.snapshot); assert.equal(retained.skuId, ids.sku);
+});
+test("SYNTHETIC existing prepare rejects foreign, duplicate and noncurrent pointers plus unknown same-account method without mutations", async () => {
+  const h = await existingSetup(), input = h.input();
+  for (const change of [
+    { ...input, lines: [{ ...input.lines[0]!, existingLineId: sid("salesLine", 999) }] },
+    { ...input, lines: [input.lines[0]!, input.lines[0]!] },
+    { ...input, settlements: [{ ...input.settlements[0]!, existingSettlementId: sid("settlement", 999) }] },
+    { ...input, settlements: [input.settlements[0]!, input.settlements[0]!] }
+  ]) { const before = h.store.snapshot(); await assert.rejects(h.existing.prepareExisting(actor, change), { code: "INVALID_HTTP_INPUT" }); assert.deepEqual(h.store.snapshot(), before); }
+  await h.changeDocument(d => ({ ...d, lines: d.lines.map(l => ({ ...l, isCurrent: false })) }));
+  await assert.rejects(h.existing.prepareExisting(actor, input), { code: "INVALID_HTTP_INPUT" });
+  const unknown = await existingSetup(); await unknown.changeDocument(d => ({ ...d, settlements: d.settlements.map(s => ({ ...s, paymentMethodId: null })) }));
+  const before = unknown.store.snapshot(); await assert.rejects(unknown.existing.prepareExisting(actor, unknown.input()), { code: "IMMUTABLE_SETTLEMENT_METHOD" }); assert.deepEqual(unknown.store.snapshot(), before);
+  assert.ok(!h.trace.some(v => v.startsWith("WRITE:"))); assert.ok(!unknown.trace.some(v => v.startsWith("WRITE:")));
+});
+test("SYNTHETIC existing prepare gates original and proposed authority, actual version/state and HISTORY before facts", async () => {
+  const revoked = await existingSetup(); revoked.revoke(); await assert.rejects(revoked.existing.prepareExisting(actor, revoked.input()), { code: "FORBIDDEN" }); assert.ok(!revoked.trace.includes("facts"));
+  const moved = await existingSetup(); await assert.rejects(moved.existing.prepareExisting(actor, { ...moved.input(), hallId: sid("hall", 999) }), { code: "FORBIDDEN" }); assert.ok(!moved.trace.includes("facts"));
+  const versioned = await existingSetup(); await assert.rejects(versioned.existing.prepareExisting(actor, { ...versioned.input(), expectedVersion: 2 }), { code: "VERSION_CONFLICT" }); assert.ok(!versioned.trace.includes("facts"));
+  const approved = await existingSetup(); await approved.changeDocument(d => ({ ...d, header: { ...d.header, status: "APPROVED" } }));
+  await assert.rejects(approved.existing.prepareExisting(actor, approved.input()), { code: "INVALID_STATE" });
+  const history = await existingSetup(); const row = await history.store.transaction(tx => tx.getSales(history.initial.header.id)); history.store.seedCutoffHistory(row!.document);
+  await assert.rejects(history.existing.prepareExisting(actor, history.input()), { code: "HISTORICAL_POSTING_NOT_IMPLEMENTED" }); assert.ok(!history.trace.includes("facts"));
+});
+test("SYNTHETIC existing prepare forbids caught policy write/number attempts and preserves the complete original input", async () => {
+  const h = await existingSetup(), input = h.input(), beforeInput = structuredClone(input), before = h.store.snapshot();
+  const malicious = createNativeSalesExistingPreparation({ ...h.deps, rules: { ...h.deps.rules, async assertDraftChange(_prior, draft, tx) {
+    try { await tx!.reserveRuntimeDocumentNumber!({ kind: "SALES", documentId: draft.header.id, actorAccountId: actor.accountId }); } catch { /* A provider cannot hide a forbidden attempt. */ }
+  } } });
+  await assert.rejects(malicious.prepareExisting(actor, input), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" });
+  assert.deepEqual(input, beforeInput); assert.deepEqual(h.store.snapshot(), before); assert.ok(!h.trace.some(v => v.startsWith("WRITE:")));
+});
+test("SYNTHETIC existing prepare keeps independent signed RETURN/EXCHANGE intent, minimum enforcement and original SAVE budget", async () => {
+  const h = await existingSetup(), input = h.input();
+  for (const businessType of ["RETURN", "EXCHANGE"] as const) {
+    const result = await h.existing.prepareExisting(actor, { ...input, businessType, lines: [{ ...input.lines[0]!, quantity: "-2" }] });
+    assert.equal(result.draft.header.grossAmount, -250n); assert.equal(result.draft.lines[0]!.allocatedDiscount, 0n);
+  }
+  h.minimum("126"); await assert.rejects(h.existing.prepareExisting(actor, input), { code: "BELOW_MINIMUM_PRICE" });
+  h.minimum("0"); h.label("very long".repeat(100000));
+  await assert.rejects(h.existing.prepareExisting(actor, { ...input, lines: [{ ...input.lines[0]!, existingLineId: null }] }), { code: "SALES_PAYLOAD_TOO_LARGE" });
+  assert.ok(!h.trace.some(v => v.startsWith("WRITE:")));
 });

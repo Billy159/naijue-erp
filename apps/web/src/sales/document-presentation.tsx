@@ -109,11 +109,12 @@ export interface SalesProductCapability {
 }
 export interface SalesProductPresentationProps {
   readonly scope?: ReadScope; readonly capability?: SalesProductCapability;
+  readonly returnLabel?: string; readonly viewLabel?: string; readonly documentLabel?: string;
   readonly children: (open: ((skuId: string, hallId: string, target?: Selection) => void) | undefined) => ReactNode;
 }
 /** The same real product whole-page leaf used by Products. The document stays
  * mounted while hidden, retaining input, scroll and its native command owner. */
-export function SalesProductPresentation({ scope, capability, children }: SalesProductPresentationProps) {
+export function SalesProductPresentation({ scope, capability, children, returnLabel = '返回销货单', viewLabel = '销货商品查看', documentLabel = '销货' }: SalesProductPresentationProps) {
   type Active = { scope: ReadScope; parent: ReadScope; capability: SalesProductCapability; target: Selection | null; configuration: ProductFullPageConfiguration | null; View: typeof ProductFullPageHost | null; failed: boolean; skuId: string; hallId: string };
   const [active, setActive] = useState<Active | null>(null), serial = useRef(0), activeRef = useRef<Active | null>(null), opener = useRef<HTMLElement | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
@@ -128,7 +129,7 @@ export function SalesProductPresentation({ scope, capability, children }: SalesP
       if (child.active && scope.active && activeRef.current?.scope === child) {
         const reader = guardedProductPageReader(child, capability.configuration.reader, error => {
           if (activeRef.current?.scope !== child) return;
-          activeRef.current = null; restore.current = true; setActive(null); setNotice('商品查看权限或登录状态已变化，原销货输入仍保留。');
+          activeRef.current = null; restore.current = true; setActive(null); setNotice(`商品查看权限或登录状态已变化，原${documentLabel}输入仍保留。`);
           if (error.kind === 'unauthenticated') capability.onUnauthorized?.();
         });
         const ready = { ...next, configuration: { ...capability.configuration, reader }, target: resolved, View: module.ProductFullPageHost };
@@ -148,9 +149,13 @@ export function SalesProductPresentation({ scope, capability, children }: SalesP
     if (target?.isConnected && !target.closest('[hidden],[inert]')) target.focus({ preventScroll: true });
     else frame.current?.querySelector<HTMLElement>('button:not(:disabled),h1')?.focus({ preventScroll: true });
   }, [current]);
-  return <><div ref={frame} hidden={!!current}>{children(open)}{notice && <p role="status">{notice}</p>}</div>{current && <section aria-label="销货商品查看" onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); dismiss(); } }}>
-    {current.View && current.target && current.configuration ? <current.View parent={current.scope} target={current.target} configuration={current.configuration} reader={current.configuration.reader} close={dismiss} returnLabel="返回销货单" />
-      : current.failed ? <p role="alert">商品资料或规格关系暂不可读取，原单据输入已保留。<UIButton onClick={() => open?.(current.skuId, current.hallId)}>重试商品查看</UIButton><UIButton onClick={dismiss}>返回销货单</UIButton></p>
-      : <p role="status">正在读取商品关系并准备商品页…<UIButton onClick={dismiss}>返回销货单</UIButton></p>}
+  return <><div ref={frame} hidden={!!current}>{children(open)}{notice && <p role="status">{notice}</p>}</div>{current && <section aria-label={viewLabel} onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); dismiss(); } }}>
+    {current.View && current.target && current.configuration ? <current.View parent={current.scope} target={current.target} configuration={current.configuration} reader={current.configuration.reader} close={dismiss} returnLabel={returnLabel} />
+      : current.failed ? <p role="alert">商品资料或规格关系暂不可读取，原单据输入已保留。<UIButton onClick={() => open?.(current.skuId, current.hallId)}>重试商品查看</UIButton><UIButton onClick={dismiss}>{returnLabel}</UIButton></p>
+      : <p role="status">正在读取商品关系并准备商品页…<UIButton onClick={dismiss}>{returnLabel}</UIButton></p>}
   </section>}</>;
 }
+
+/** Same retained-document product view for the transfer consumer. */
+export { SalesProductPresentation as DocumentProductPresentation };
+export type DocumentProductCapability = SalesProductCapability;

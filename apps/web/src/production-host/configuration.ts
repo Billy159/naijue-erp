@@ -1,3 +1,4 @@
+import { entityId } from '../../../../packages/domain/src/values.ts';
 /** Public presentation switches only. The server remains the authorization owner. */
 export interface ProductionHostConfiguration {
   readonly kind: 'naijue-erp-production-host';
@@ -9,7 +10,7 @@ export interface ProductionHostConfiguration {
     readonly staffSettings?: boolean; readonly paymentSettings?: boolean;
     readonly salesManualCreate?: boolean; readonly transferManualCreate?: boolean;
     readonly products?: boolean; readonly productCategories?: boolean; readonly barcodeSchemes?: boolean;
-    readonly productViewer?: boolean; readonly productFullPage?: boolean; readonly salesProductFullPage?: boolean;
+    readonly productViewer?: boolean; readonly productFullPage?: boolean; readonly salesProductFullPage?: boolean; readonly transferProductFullPage?: boolean; readonly transferInitialSizeGroupId?: string;
     readonly parties?: false | { readonly readOnly: true };
     readonly productSettings?: false | { readonly colors: boolean; readonly fits: boolean; readonly groups: boolean; readonly seasons: boolean; readonly initialTab: 'colors' | 'fits' | 'groups' | 'seasons' };
     readonly storeSettings?: false | { readonly allowedTabs: readonly ('stores' | 'warehouses')[]; readonly initialTab: 'stores' | 'warehouses'; readonly allowHallDirectoryRead: boolean };
@@ -36,14 +37,19 @@ export function parseProductionHostConfiguration(value: unknown): ProductionHost
   if (row.kind !== 'naijue-erp-production-host' || typeof http.origin !== 'string' || origin.protocol !== 'https:'
     || origin.origin !== http.origin || origin.username || origin.password || http.basePath !== '/api' || session.verifyOnMount !== true
     || typeof assets.basePath !== 'string' || !/^\/assets\/(?:[A-Za-z0-9_-]+\/)*$/.test(assets.basePath)) return invalid();
-  const booleanKeys = ['inventory', 'sales', 'transfers', 'inventoryLedger', 'salesManualCreate', 'transferManualCreate', 'products', 'productCategories', 'barcodeSchemes', 'productViewer', 'productFullPage', 'salesProductFullPage', 'staffSettings', 'paymentSettings'] as const;
-  const routes = record(row.routes, ['inventory', 'sales', 'transfers'], [...booleanKeys.slice(3), 'parties', 'productSettings', 'storeSettings']);
+  const booleanKeys = ['inventory', 'sales', 'transfers', 'inventoryLedger', 'salesManualCreate', 'transferManualCreate', 'products', 'productCategories', 'barcodeSchemes', 'productViewer', 'productFullPage', 'salesProductFullPage', 'transferProductFullPage', 'staffSettings', 'paymentSettings'] as const;
+  const routes = record(row.routes, ['inventory', 'sales', 'transfers'], [...booleanKeys.slice(3), 'parties', 'productSettings', 'storeSettings', 'transferInitialSizeGroupId']);
   for (const key of booleanKeys) if (Object.hasOwn(routes, key) && typeof routes[key] !== 'boolean') return invalid();
-  for (const [child, parent] of [['inventoryLedger', 'inventory'], ['salesManualCreate', 'sales'], ['transferManualCreate', 'transfers'], ['productViewer', 'products'], ['productFullPage', 'products'], ['salesProductFullPage', 'sales']] as const) {
+  for (const [child, parent] of [['inventoryLedger', 'inventory'], ['salesManualCreate', 'sales'], ['transferManualCreate', 'transfers'], ['productViewer', 'products'], ['productFullPage', 'products'], ['salesProductFullPage', 'sales'], ['transferProductFullPage', 'transfers']] as const) {
     if (routes[child] === true && routes[parent] !== true) return invalid();
   }
   const switches = Object.fromEntries(booleanKeys.filter(key => Object.hasOwn(routes, key)).map(key => [key, routes[key]]));
   const extras: Record<string, unknown> = {};
+  if (Object.hasOwn(routes, 'transferInitialSizeGroupId')) {
+    if (routes.transfers !== true || typeof routes.transferInitialSizeGroupId !== 'string') return invalid();
+    try { entityId('sizeGroup', routes.transferInitialSizeGroupId); } catch { return invalid(); }
+    extras.transferInitialSizeGroupId = routes.transferInitialSizeGroupId;
+  }
   if (Object.hasOwn(routes, 'parties')) {
     if (routes.parties === false) extras.parties = false;
     else { if (record(routes.parties, ['readOnly']).readOnly !== true) return invalid(); extras.parties = Object.freeze({ readOnly: true }); }

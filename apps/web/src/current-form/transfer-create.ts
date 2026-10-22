@@ -55,11 +55,11 @@ export class TransferNewDocumentSession {
   constructor(options: { readonly proposal: TransferProposalSession; readonly workspace: TransferCommandWorkspace; readonly scope: ReadScope; readonly preparation: TransferCreatePreparation; readonly onAccessFailure?: (error: HttpQueryError) => void }) {
     if (!options.workspace.matchesIdentity(options.scope) || !options.proposal.matchesIdentity(options.scope)) throw new TypeError('Preparation and commands must share current identity.');
     this.proposal = options.proposal; this.workspace = options.workspace; this.#scope = options.scope; this.#preparation = options.preparation; this.#onAccessFailure = options.onAccessFailure;
-    let previous = this.proposal.getSnapshot().draft;
+    let previous = this.proposal.getSnapshot();
     this.#unsubscribe = this.proposal.subscribe(() => {
       const state = this.proposal.getSnapshot();
       if (state.disposed) this.dispose();
-      else if (state.draft !== previous) { previous = state.draft; this.cancelPreparation(); }
+      else if (state.draft !== previous.draft || state.pending !== previous.pending || state.replacement !== previous.replacement) { previous = state; this.cancelPreparation(); }
     });
     this.#scope.signal.addEventListener('abort', this.dispose, { once: true });
   }

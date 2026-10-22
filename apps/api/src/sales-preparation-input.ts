@@ -1,4 +1,6 @@
 import type { NativeSalesCreateProposal } from "../../../packages/application/src/native-sales-preparation.ts";
+import { parseNativeSalesExistingProposal } from "../../../packages/application/src/native-sales-preparation.ts";
+import type { NativeSalesExistingProposal } from "../../../packages/application/src/native-sales-preparation.ts";
 import { SALES_PREPARE_MAX_LINES, SALES_PREPARE_MAX_NOTE_LENGTH } from "../../../packages/application/src/sales-payload-budget.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 function object(value: unknown, keys: readonly string[]): Record<string, unknown> {
@@ -30,4 +32,7 @@ export function parseSalesCreateProposal(input: unknown): NativeSalesCreatePropo
       requireDomain(settlement.direction === "RECEIVE" || settlement.direction === "REFUND", "INVALID_HTTP_INPUT", "Explicit direction required");
       return { paymentAccountId: text(settlement.paymentAccountId), paymentMethodId: text(settlement.paymentMethodId), direction: settlement.direction, amount: text(settlement.amount) };
     }) };
+}
+export function parseSalesExistingProposal(input: unknown): NativeSalesExistingProposal {
+  return parseNativeSalesExistingProposal(input);
 }

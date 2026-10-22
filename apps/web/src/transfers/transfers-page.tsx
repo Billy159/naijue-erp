@@ -1,3 +1,4 @@
+import type { TransferProposalPresentation } from '../current-form/transfer-proposal-form.tsx';
 import { TransferStatusTag } from './transfer-status-tag.tsx';
 import { StandardReadTable } from '../components/standard-read-table.tsx';
 import { ExactValue } from '../components/exact-value.tsx';
@@ -21,7 +22,7 @@ const noRevision = () => 0;
 
 export interface TransferPageProps {
   readonly controller: TransferPageController; readonly references: TransferWarehouseReader; readonly loadDetailStyles: () => Promise<unknown>;
-  readonly product?: TransferProductCapability; readonly initialTransferId?: string; readonly commands?: TransferCommandCapability;
+  readonly presentation?: TransferProposalPresentation; readonly product?: TransferProductCapability; readonly initialTransferId?: string; readonly commands?: TransferCommandCapability;
 }
 /** An explicit route activation loads exactly one bounded first page. Editing a
  * draft never changes the executed range or triggers reads. Detail activation
@@ -109,6 +110,6 @@ export function TransferPageView(props: TransferPageProps) {
     </div>
     <TransferPagination scope={scope} active={target === null} page={data?.page ?? 1} pageSize={size} total={data?.exactTotal ?? null} busy={busy} onPage={page => { if (success) run({ ...success.parameters, page }); }} onPageSize={pageSize => { if (success) run({ ...success.parameters, page: 1, pageSize }); else { setInitialSize(pageSize); run(transferParameters(draft, pageSize)); } }} />
   </section>
-  {target && (target.id === null && props.commands?.manualCreate ? <TransferManualCreateHost key={target.activation} parentScope={scope} {...(controller.reader.readHistory ? { historyReader: { readHistory: read => controller.reader.readHistory!(read) } } : {})} capability={props.commands.manualCreate} loadStyles={props.loadDetailStyles} close={() => setTarget(null)} /> : props.commands ? <TransferCommandHost key={`${target.id}:${target.activation}`} parentScope={scope} {...(controller.reader.readHistory ? { historyReader: { readHistory: read => controller.reader.readHistory!(read) } } : {})} transferId={target.id} capability={props.commands} loadStyles={props.loadDetailStyles} close={() => setTarget(null)} /> : target.id && <TransferDetailHost key={`${target.id}:${target.activation}`} parentScope={scope} transferId={target.id} reader={controller.reader} loadDetailStyles={props.loadDetailStyles} close={() => setTarget(null)} {...(props.product ? { product: props.product } : {})} />)}
+  {target && (target.id === null && props.commands?.manualCreate ? <TransferManualCreateHost {...(props.presentation ? { presentation: props.presentation } : {})} key={target.activation} parentScope={scope} {...(controller.reader.readHistory ? { historyReader: { readHistory: read => controller.reader.readHistory!(read) } } : {})} capability={props.commands.manualCreate} loadStyles={props.loadDetailStyles} close={() => setTarget(null)} /> : props.commands ? <TransferCommandHost {...(props.presentation ? { presentation: props.presentation } : {})} key={`${target.id}:${target.activation}`} parentScope={scope} {...(controller.reader.readHistory ? { historyReader: { readHistory: read => controller.reader.readHistory!(read) } } : {})} transferId={target.id} capability={props.commands} loadStyles={props.loadDetailStyles} close={() => setTarget(null)} /> : target.id && <TransferDetailHost {...(props.presentation ? { presentation: props.presentation } : {})} key={`${target.id}:${target.activation}`} parentScope={scope} transferId={target.id} reader={controller.reader} loadDetailStyles={props.loadDetailStyles} close={() => setTarget(null)} {...(props.product ? { product: props.product } : {})} />)}
   </div>;
 }

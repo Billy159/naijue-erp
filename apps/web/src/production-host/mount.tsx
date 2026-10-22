@@ -1,3 +1,4 @@
+import { createDictionaryHttpReader } from '../product-settings/size-groups/http-reader.ts';
 import { UIButton } from '../components/standard-controls.tsx';
 import { createApplication, createDemoFrameWorkspaceRenderer, createRouteStylesheet } from '../application/index.tsx';
 import type { ApplicationConfiguration, ApplicationPresentation } from '../application/contracts.ts';
@@ -62,6 +63,8 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
       ...(configuration.routes.salesProductFullPage ? { productFullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: createProductFullPageHttpReader({ ...configuration.http, fetch: input.fetch }, ['prices', 'barcodes', 'stock']) } } : {}),
       ...(configuration.routes.salesManualCreate ? { commands: { newRequestKey, manualCreate: true as const } } : {}) } } : {}),
     ...(configuration.routes.transfers ? { transfers: { stylesheet: stylesheet('transfers'), detailStylesheet: stylesheet('transfer-detail'), product: { stylesheet: stylesheet('transfer-product') },
+      ...(configuration.routes.transferProductFullPage ? { productFullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: createProductFullPageHttpReader(http, ['prices', 'barcodes', 'stock']) } } : {}),
+      ...(configuration.routes.transferInitialSizeGroupId ? { initialSizeGroup: { id: configuration.routes.transferInitialSizeGroupId, reader: createDictionaryHttpReader(http) } } : {}),
       ...(configuration.routes.transferManualCreate ? { commands: { newRequestKey, manualCreate: true as const } } : {}) } } : {}),
     ...(configuration.routes.parties ? { parties: { stylesheet: stylesheet('parties'), newRequestKey, readOnly: true as const } } : {}),
     ...(configuration.routes.products ? { products: { stylesheet: stylesheet('products'), ...(configuration.routes.productViewer ? { product: { stylesheet: createRouteStylesheet({ document: input.document, origin: configuration.http.origin, href: productionAssetUrl(configuration, assets.productDrawerStyles) }) } } : {}),

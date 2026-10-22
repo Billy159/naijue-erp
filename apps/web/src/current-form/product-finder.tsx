@@ -13,7 +13,7 @@ interface Props {
   readonly products: readonly CurrentFormProduct[]; readonly phase: 'loading' | 'ready' | 'error';
   readonly search: string; readonly page: number; readonly exactTotal: bigint | null;
   readonly scope?: ReadScope; readonly capability?: ProductFinderPreviewCapability;
-  readonly select: (id: string) => void; readonly close: () => void;
+  readonly select: (id: string) => void; readonly close: (restoreFocus?: boolean) => void;
   readonly turnPage: (page: number) => void; readonly retry: () => void;
 }
 function Highlight({ text, query }: { text: string; query: string }) {
@@ -49,7 +49,7 @@ export const CurrentProductFinder = forwardRef<CurrentProductFinderHandle, Props
   useEffect(() => { setIndex(-1); }, [props.search, props.page]);
   const active = props.products[Math.max(0, index)];
   const key = (value: string) => {
-    if (value === 'Escape' || value === 'Tab') { props.close(); return; }
+    if (value === 'Escape' || value === 'Tab') { props.close(value === 'Escape'); return; }
     if (props.phase !== 'ready') return;
     if (value === 'Enter') { const choice = index >= 0 ? props.products[index] : props.products.length === 1 && props.exactTotal === 1n ? props.products[0] : null; if (choice) props.select(choice.id); return; }
     if ((value === 'ArrowDown' || value === 'ArrowUp') && props.products.length) {

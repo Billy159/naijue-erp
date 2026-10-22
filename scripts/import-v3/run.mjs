@@ -10,18 +10,20 @@ import { historySettlementRequestHash } from '../../packages/application/src/imp
 import { PostgresCutoffImportStore } from '../../adapters/postgres/src/inventory-cutoff-import-store.ts';
 import { assertNativeImportAccountingSchema19Guards } from '../../adapters/postgres/src/native-import-accounting-capability.ts';
 import { PostgresNativePartyImportStore } from '../../adapters/postgres/src/native-party-import.ts';
-import { PostgresNativeCatalogueImportStore } from '../../adapters/postgres/src/native-catalogue-import.ts';
-import { PostgresNativeProductImportStore } from '../../adapters/postgres/src/native-product-import.ts';
-import { PostgresNativeSkuImportStore } from '../../adapters/postgres/src/native-sku-import.ts';
-import { PostgresNativeBarcodeImportStore } from '../../adapters/postgres/src/native-barcode-import.ts';
-import { PostgresNativeStockContributorStore } from '../../adapters/postgres/src/native-stock-contributor-import.ts';
-import { PostgresNativePaymentImportStore } from '../../adapters/postgres/src/native-payment-import.ts';
+import { PostgresNativeCatalogueImportStore, PostgresNativeCatalogueImportStore26 } from '../../adapters/postgres/src/native-catalogue-import.ts';
+import { PostgresNativeProductImportStore, PostgresNativeProductImportStore26 } from '../../adapters/postgres/src/native-product-import.ts';
+import { PostgresNativeSkuImportStore, PostgresNativeSkuImportStore26 } from '../../adapters/postgres/src/native-sku-import.ts';
+import { PostgresNativeBarcodeImportStore, PostgresNativeBarcodeImportStore26 } from '../../adapters/postgres/src/native-barcode-import.ts';
+import { PostgresNativeStockContributorStore, PostgresNativeStockContributorStore26 } from '../../adapters/postgres/src/native-stock-contributor-import.ts';
+import { PostgresNativePaymentImportStore, PostgresNativePaymentImportStore26 } from '../../adapters/postgres/src/native-payment-import.ts';
 import { PostgresV3HistoryHeaderNativeReferenceStore } from '../../adapters/postgres/src/import-v3-history-header-native-reference-store.ts';
-import { PostgresV3HistoryHeaderStagingStore } from '../../adapters/postgres/src/import-v3-history-header-staging-store.ts';
-import { PostgresHistorySalesDetailStagingStore } from '../../adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts';
-import { PostgresHistorySettlementStagingStore } from '../../adapters/postgres/src/import-v3-history-settlement-staging-store.ts';
-import { PostgresV3HistoryStagingStore } from '../../adapters/postgres/src/import-v3-history-staging-store.ts';
-import { PostgresHistoryTypedClosure19Store } from '../../adapters/postgres/src/history-typed-closure19.ts';
+import { PostgresV3HistoryHeaderStagingStore, PostgresV3HistoryHeaderStagingStore26 } from '../../adapters/postgres/src/import-v3-history-header-staging-store.ts';
+import { PostgresHistorySalesDetailStagingStore, PostgresHistorySalesDetailStagingStore26 } from '../../adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts';
+import { PostgresHistorySettlementStagingStore, PostgresHistorySettlementStagingStore26 } from '../../adapters/postgres/src/import-v3-history-settlement-staging-store.ts';
+import { PostgresV3HistoryStagingStore, PostgresV3HistoryStagingStore26 } from '../../adapters/postgres/src/import-v3-history-staging-store.ts';
+import { PostgresHistoryTypedClosure19Store, PostgresHistoryTypedClosure26Store } from '../../adapters/postgres/src/history-typed-closure19.ts';
+
+import { checkedNativeRuntime26Capability } from '../../packages/application/src/native-import-schema-contract.ts';
 
 const VERSION = 'NATIVE_IMPORT_EXECUTION_19_V1';
 const STAGES = Object.freeze({ PARTY: PostgresNativePartyImportStore, CATALOGUE: PostgresNativeCatalogueImportStore,
@@ -44,11 +46,11 @@ function bag(value, keys) {
   }
   return result;
 }
-function binding(value) {
+function binding(value, expectedVersion = VERSION) {
   // Reuse the existing descriptor-only encoder, including exact approval Maps, before structuredClone.
   historySettlementRequestHash(value);
   const b = bag(value, ['version', 'batchId', 'actorAccountId', 'fixedSourceNamespace', 'cutoffAt', 'selectionSha256', 'authorizedPayloadHash', 'target']);
-  must(b.version === VERSION && uuid(b.batchId) && uuid(b.actorAccountId)
+  must(b.version === expectedVersion && uuid(b.batchId) && uuid(b.actorAccountId)
     && typeof b.fixedSourceNamespace === 'string' && /^[a-z][a-z0-9_.:-]*$/.test(b.fixedSourceNamespace)
     && hash(b.selectionSha256) && hash(b.authorizedPayloadHash), 'IMPORT_EXECUTION_BINDING');
   must(typeof b.cutoffAt === 'string' && /(?:Z|[+-]\d\d:\d\d)$/.test(b.cutoffAt) && Number.isFinite(Date.parse(b.cutoffAt)), 'IMPORT_EXECUTION_CUTOFF_REQUIRED');
@@ -132,6 +134,73 @@ export function createPostgresImportExecutor(options) {
   };
 }
 
+const VERSION_26 = 'NATIVE_IMPORT_EXECUTION_26_V1';
+const STAGES_26 = Object.freeze({ PARTY: PostgresNativePartyImportStore, CATALOGUE: PostgresNativeCatalogueImportStore26,
+  PRODUCT: PostgresNativeProductImportStore26, SKU: PostgresNativeSkuImportStore26, BARCODE: PostgresNativeBarcodeImportStore26,
+  STOCK_CONTRIBUTOR: PostgresNativeStockContributorStore26, PAYMENT: PostgresNativePaymentImportStore26,
+  HEADER_REFERENCE: PostgresV3HistoryHeaderNativeReferenceStore, HEADER: PostgresV3HistoryHeaderStagingStore26,
+  SALES_DETAIL: PostgresHistorySalesDetailStagingStore26, SETTLEMENT: PostgresHistorySettlementStagingStore26,
+  TRANSFER_LINES: PostgresV3HistoryStagingStore26 });
+function capturedStep26(original, b) {
+  const step = capturedStep(original, b), p = step.payload;
+  if (['CATALOGUE','PRODUCT','SKU'].includes(step.kind)) must(p.schemaProfile === 'EXACT26', 'IMPORT_EXECUTION26_PROFILE_REQUIRED');
+  if (step.kind === 'PARTY' || step.kind === 'HEADER_REFERENCE') must(Array.isArray(p.rows) && p.rows.length > 0
+    && p.rows.every(row => row?.input?.schemaProfile === 'EXACT26'), 'IMPORT_EXECUTION26_PROFILE_REQUIRED');
+  return step;
+}
+/** Explicit successor composition only. Construction is inert, and the concrete
+ * source host must supply the actual D1 issued pool+capability and genuine full
+ * source/49 bootstrap authorization. This module issues none of those grants. */
+export function createPostgresImportExecutor26(options) {
+  const o = bag(options, ['pool','binding','authorization','now','runtime26','bootstrap26']);
+  must(typeof o.pool?.connect === 'function' && typeof o.now === 'function', 'IMPORT_EXECUTION_PROVIDER_REQUIRED');
+  const runtime26 = checkedNativeRuntime26Capability(o.runtime26);
+  must(runtime26 !== undefined, 'IMPORT_EXECUTION26_RUNTIME_REQUIRED');
+  const b = binding(o.binding, VERSION_26), a = bag(o.authorization, ['assertExecutionAllowed','authorizeStep','assertAllowed','authorizeNativeCommand','authorizeClosure']);
+  must(Object.values(a).every(fn => typeof fn === 'function'), 'IMPORT_EXECUTION_AUTHORITY_REQUIRED');
+  const bootstrap = bag(o.bootstrap26, ['authorizeStageSourceActor','stageNewBatch26']);
+  must(Object.values(bootstrap).every(fn => typeof fn === 'function'), 'IMPORT_EXECUTION_BOOTSTRAP_REQUIRED');
+  const completed = async (fn, ...args) => must(await fn(...args) === undefined, 'IMPORT_EXECUTION26_AUTHORITY_RESULT');
+  let targetChecked = false;
+  async function checkTarget() {
+    if (targetChecked) return;
+    const client = await o.pool.connect(); let began = false, committing = false, discard;
+    try {
+      await runtime26.assertReady(client, 'IMPORT_STAGE');
+      await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'); began = true;
+      const rows = (await client.query(`/* import-executor26:target */ SELECT current_database()::text database,current_user::text role,
+        inet_server_addr()::text server_address,inet_server_port() server_port,pg_postmaster_start_time()::text postmaster_started_at`)).rows;
+      const r = rows[0], t = b.target;
+      must(rows.length === 1 && r.database === t.database && r.role === t.role && r.server_address === t.serverAddress
+        && r.server_port === t.serverPort && r.postmaster_started_at === t.postmasterStartedAt, 'IMPORT_EXECUTION_TARGET_MISMATCH');
+      const schemas = (await client.query('/* import-executor26:schema */ SELECT array_agg(version ORDER BY version) versions FROM naijue_erp.schema_migration')).rows;
+      const versions = schemas[0]?.versions;
+      must(schemas.length === 1 && Array.isArray(versions) && versions.length === 26 && versions.every((v,i) => v === i + 1), 'IMPORT_EXECUTION_SCHEMA_REQUIRED');
+      committing = true; await client.query('COMMIT'); targetChecked = true;
+    } catch (error) {
+      if (!began || committing) discard = error instanceof Error ? error : Error('Import target outcome unknown');
+      else try { await client.query('ROLLBACK'); } catch (rollback) { discard = rollback; throw new AggregateError([error,rollback], 'Import target read failed'); }
+      throw error;
+    } finally { client.release(discard); }
+  }
+  const main = createCutoffImportService({ now: o.now, authorization: { assertAllowed: (actor,command) => command.action === 'IMPORT_STAGE'
+    ? completed(bootstrap.authorizeStageSourceActor, actor,command) : completed(a.assertAllowed, actor,command) },
+    store: new PostgresCutoffImportStore(o.pool, { runtime26, nativeAccountingAuthorization: { assertAllowed: (...args) => completed(a.authorizeNativeCommand, ...args) },
+      stageBootstrap26: { stageNewBatch26: (...args) => completed(bootstrap.stageNewBatch26, ...args) } }) });
+  return async original => {
+    const step = capturedStep26(original,b);
+    await completed(a.assertExecutionAllowed,structuredClone(b));
+    if (step.kind === 'MAIN' && step.payload.action === 'IMPORT_STAGE') await completed(bootstrap.authorizeStageSourceActor,b.actorAccountId,structuredClone(step.payload));
+    const authorized = {kind:step.kind,payload:structuredClone(step.payload)};
+    await completed(a.authorizeStep,authorized);
+    must(historySettlementRequestHash(authorized.payload) === step.digest && authorized.kind === step.kind, 'IMPORT_EXECUTION_AUTHORIZER_MUTATION');
+    await checkTarget();
+    if (step.kind === 'MAIN') return main.execute(step.payload);
+    if (step.kind === 'CLOSURE') return new PostgresHistoryTypedClosure26Store(o.pool, { runtime26,authorizeStage: input => completed(a.authorizeClosure,input) }).stage(step.payload);
+    return new STAGES_26[step.kind](o.pool,runtime26).stage(step.payload);
+  };
+}
+
 /** One bounded sequential pass; committed DB receipts, not this journal, decide replay.
  * source.steps must resume from a source/DB-verified checkpoint. No failed step is auto-retried.
  * A COMMITTED event confirms only its store result, not complete import or publication readback.
@@ -180,8 +249,10 @@ async function regularNoLinks(path, directory = false) {
 }
 async function cli(args) {
   // The reviewed host module is operator-owned executable code; its pin is not a source-data approval.
-  must(args.length === 4, 'IMPORT_EXECUTION_USAGE');
-  const [hostFile, hostSha256, journalFile, limit] = args;
+  must(args.length === 4 || args.length === 5, 'IMPORT_EXECUTION_USAGE');
+  const [hostFile, hostSha256, journalFile, limit, profile] = args;
+  const successor = args.length === 5;
+  must(!successor || profile === '--exact26', 'IMPORT_EXECUTION_USAGE');
   must(hash(hostSha256) && isAbsolute(journalFile) && /^[1-9]\d{0,6}$/.test(limit), 'IMPORT_EXECUTION_USAGE');
   await regularNoLinks(hostFile);
   await regularNoLinks(dirname(journalFile), true);
@@ -190,10 +261,11 @@ async function cli(args) {
   const abort = () => controller.abort(); process.once('SIGINT', abort); process.once('SIGTERM', abort);
   try {
     const module = await import(pathToFileURL(hostFile).href);
-    must(typeof module.openImportHost === 'function', 'IMPORT_EXECUTION_PROVIDER_REQUIRED');
-    host = await module.openImportHost({ signal: controller.signal });
+    const entry = successor ? 'openImportHost26' : 'openImportHost';
+    must(typeof module[entry] === 'function', 'IMPORT_EXECUTION_PROVIDER_REQUIRED');
+    host = await module[entry]({ signal: controller.signal });
     must(typeof host?.close === 'function', 'IMPORT_EXECUTION_PROVIDER_REQUIRED');
-    const execute = createPostgresImportExecutor(host.executor);
+    const execute = successor ? createPostgresImportExecutor26(host.executor) : createPostgresImportExecutor(host.executor);
     const result = await runImportSteps({ source: host.source, execute, signal: controller.signal, maxSteps: Number(limit),
       append: async event => { await journal.writeFile(JSON.stringify(event) + '\n'); await journal.sync(); } });
     process.stdout.write(JSON.stringify(result) + '\n');

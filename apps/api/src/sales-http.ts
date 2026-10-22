@@ -1,7 +1,7 @@
 import { SALES_PREPARE_MAX_REQUEST_BYTES, SALES_COMMAND_MAX_REQUEST_BYTES, salesPreparedDraftFitsSaveBudget } from "../../../packages/application/src/sales-payload-budget.ts";
-import type { NativeSalesCreateProposal } from "../../../packages/application/src/native-sales-preparation.ts";
+import type { NativeSalesCreateProposal, NativeSalesExistingProposal, NativeSalesExistingPrepared } from "../../../packages/application/src/native-sales-preparation.ts";
 import type { SalesDraft } from "../../../packages/domain/src/documents.ts";
-import { parseSalesCreateProposal } from "./sales-preparation-input.ts";
+import { parseSalesCreateProposal, parseSalesExistingProposal } from "./sales-preparation-input.ts";
 import type { IncomingHttpHeaders } from "node:http";
 import type { FastifyPluginAsync } from "fastify";
 import type { ActorContext, SalesDependencies } from "../../../packages/application/src/ports.ts";
@@ -18,6 +18,8 @@ export interface SalesHttpOptions {
   readonly dependencies: SalesDependencies;
   /** Explicit native preparation; absent means no preparation endpoint. */
   readonly preparation?: { prepareCreate(actor: ActorContext, proposal: NativeSalesCreateProposal): Promise<SalesDraft> };
+  /** Independently opted-in existing-document preparation; CREATE proof never enables it. */
+  readonly existingPreparation?: { prepareExisting(actor: ActorContext, proposal: NativeSalesExistingProposal): Promise<NativeSalesExistingPrepared> };
 }
 const statuses: Readonly<Record<string, number>> = {
   SALES_PAYLOAD_TOO_LARGE: 413, NATIVE_CATALOGUE_FACTS_UNAVAILABLE: 409, SALES_REFERENCE_UNAVAILABLE: 409,
@@ -62,6 +64,9 @@ export function createSalesHttpPlugin(options: SalesHttpOptions): FastifyPluginA
   if (options.preparation !== undefined && typeof options.preparation?.prepareCreate !== "function")
     throw new TypeError("Sales preparation requires an explicit trusted provider");
   const prepare = options.preparation?.prepareCreate.bind(options.preparation);
+  if (options.existingPreparation !== undefined && typeof options.existingPreparation?.prepareExisting !== "function")
+    throw new TypeError("Existing sales preparation requires an explicit trusted provider");
+  const prepareExisting = options.existingPreparation?.prepareExisting.bind(options.existingPreparation);
   return async function salesHttp(app) {
     const actors = new WeakMap<object, ActorContext>();
     app.addHook("onRequest", async (request, reply) => {
@@ -90,6 +95,16 @@ export function createSalesHttpPlugin(options: SalesHttpOptions): FastifyPluginA
       const draft = await prepare(actor, parseSalesCreateProposal(request.body));
       requireDomain(salesPreparedDraftFitsSaveBudget(draft), "SALES_PAYLOAD_TOO_LARGE", "Prepared sales exceeds SAVE budget");
       return reply.type("application/json").send(exactJson(draft));
+    });
+    if (prepareExisting) app.post("/sales/prepare-existing", { bodyLimit: SALES_PREPARE_MAX_REQUEST_BYTES }, async (request, reply) => {
+      assertNoQuery(request.query);
+      if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });
+      const actor = actors.get(request); if (!actor) throw new Error("Missing trusted actor");
+      const proposal = parseSalesExistingProposal(request.body), prepared = await prepareExisting(actor, proposal);
+      requireDomain(prepared.expectedVersion === proposal.expectedVersion && prepared.draft.header.id === proposal.salesId,
+        "VERSION_CONFLICT", "Prepared target/version differs from the original existing proposal");
+      requireDomain(salesPreparedDraftFitsSaveBudget(prepared.draft), "SALES_PAYLOAD_TOO_LARGE", "Prepared existing sales exceeds SAVE budget");
+      return reply.type("application/json").send(exactJson({ expectedVersion: prepared.expectedVersion, draft: prepared.draft }));
     });
     app.post("/sales/commands", { bodyLimit: SALES_COMMAND_MAX_REQUEST_BYTES }, async (request, reply) => {
       assertNoQuery(request.query);
