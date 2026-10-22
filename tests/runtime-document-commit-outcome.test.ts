@@ -183,3 +183,54 @@ test('runtime26 posting: foreign client proof and closed transaction reject befo
     () => { throw Error('SYNTHETIC_TRANSACTION_CLOSED'); });
   await assert.rejects(closed.lock([{ warehouseId: p.warehouseId, skuId: p.skuId }]), /SYNTHETIC_TRANSACTION_CLOSED/); assert.equal(p.calls.length, 0);
 });
+
+
+import { syntheticDraft, syntheticSku, ids, sid } from './support/synthetic-fixtures.ts';
+import { CATALOGUE_PRICE_KEYS } from '../packages/application/src/catalogue-price-input.ts';
+function h06UowProtocol(failCommit = false) {
+  const calls: string[] = [], released: unknown[] = []; let connections = 0, oldProof = 0;
+  const sku = syntheticSku(), draft = { ...syntheticDraft(), settlements: [] }, failure = Error('H06_SYNTHETIC_COMMIT_UNKNOWN');
+  const client: PgSalesClient = { async query(sql, values = []) {
+    calls.push(sql); if (sql === 'COMMIT' && failCommit) throw failure;
+    let rows: Record<string, unknown>[] = [];
+    if (sql.includes('sales:current-schema')) rows = [{ current_sales_schema_ready: true }];
+    else if (sql.includes('sales-authorization:identity')) rows = [{ account_id: ids.account, staff_id: sid('staff', 16), login_enabled: true, role: 'ADMIN', employment_status: '在职', hall_id: ids.hall }];
+    else if (sql.includes('sales-authorization:hall') || sql.includes('native-sales-facts:hall')) rows = [{ id: ids.hall, enabled: true }];
+    else if (sql.includes('native-sales-facts:schema')) rows = [{ installed: true }];
+    else if (sql.includes('native-sales-facts:warehouse')) rows = [{ id: ids.warehouse, hall_id: ids.hall, enabled: true }];
+    else if (sql.includes('native-sales-facts:customer')) rows = [{ id: ids.customer, enabled: true }];
+    else if (sql.includes('native-sales-facts:sku */')) rows = [{ id: sku.id, product_id: sku.productId, color_id: sku.colorId, fit_id: sku.fitId, size_id: sku.sizeId, enabled: true }];
+    else if (sql.includes('native-sales-facts:product */')) rows = [{ id: sku.productId, product_code: 'SYNTHETIC', name: 'SYNTHETIC', size_group_id: sid('sizeGroup', 50), enabled: true, ...Object.fromEntries(CATALOGUE_PRICE_KEYS.map(k => [k, k === 'retail_price' ? '1.25' : null])) }];
+    else if (sql.includes('native-sales-facts:color */')) rows = [{ id: sku.colorId, name: 'SYNTHETIC', enabled: true }];
+    else if (sql.includes('native-sales-facts:fit */')) rows = [{ id: sku.fitId, name: 'SYNTHETIC', enabled: true }];
+    else if (sql.includes('native-sales-facts:size */')) rows = [{ id: sku.sizeId, name: 'SYNTHETIC' }];
+    else if (sql.includes('native-sales-facts:membership')) rows = [{ size_group_id: (values[0] as string[])[0], size_id: sku.sizeId }];
+    return { rows, rowCount: rows.length };
+  }, release(error) { released.push(error); } };
+  const runtime26: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(target, purpose) { assert.equal(target, client); assert.equal(purpose, 'INVENTORY_ADMISSION'); } };
+  const pool: PgSalesPool = { async connect() { connections++; return client; } };
+  const catalogueCompleteness = { async assertComplete() { oldProof++; } };
+  return { calls, released, pool, runtime26, catalogueCompleteness, oldProof: () => oldProof, connections: () => connections, draft, failure };
+}
+test('H06 UOW private selector is closed, exact26-only, own data and never enables itself by schema', async () => {
+  const p = h06UowProtocol(), base = { catalogueCompleteness: p.catalogueCompleteness, runtime26: p.runtime26 }; let getter = 0;
+  for (const selector of [undefined, null, true, {}, { profile: 'OTHER' }, { profile: 'MAINTAINED_CATALOGUE26_V1', extra: true }, { get profile() { getter++; throw Error('MUST_NOT_READ'); } }])
+    assert.throws(() => new PostgresSalesUnitOfWork(p.pool, { ...base, catalogueReadProof: selector } as never), TypeError);
+  assert.throws(() => new PostgresSalesUnitOfWork(p.pool, { catalogueCompleteness: p.catalogueCompleteness, catalogueReadProof: { profile: 'MAINTAINED_CATALOGUE26_V1' } }), TypeError);
+  assert.throws(() => new PostgresSalesUnitOfWork(p.pool, { ...base, get catalogueReadProof() { getter++; throw Error('MUST_NOT_READ'); } } as never), TypeError);
+  assert.equal(getter, 0); assert.equal(p.connections(), 0);
+  const uow = new PostgresSalesUnitOfWork(p.pool, base);
+  await uow.transaction(async tx => { await tx.getReceipt(ids.account, 'SYNTHETIC-H06'); await tx.getSales(ids.sales); await tx.getCurrentSalesReferenceFacts!(p.draft); });
+  assert.equal(p.oldProof(), 1); assert.ok(!p.calls.some(s => s.includes('maintained-catalogue26:'))); assert.equal(p.calls.at(-1), 'COMMIT');
+});
+test('H06 UOW bound native-facts path consumes private proof, fails closed and rolls back without old-proof fallback', async () => {
+  const p = h06UowProtocol(), uow = new PostgresSalesUnitOfWork(p.pool, { catalogueCompleteness: p.catalogueCompleteness, runtime26: p.runtime26, catalogueReadProof: { profile: 'MAINTAINED_CATALOGUE26_V1' } });
+  await assert.rejects(uow.transaction(async tx => { await tx.getReceipt(ids.account, 'SYNTHETIC-H06'); await tx.getSales(ids.sales); await tx.getCurrentSalesReferenceFacts!(p.draft); }), { code: 'NATIVE_CATALOGUE_FACTS_UNAVAILABLE' });
+  assert.ok(p.calls.some(s => s.includes('maintained-catalogue26:roots'))); assert.equal(p.oldProof(), 0); assert.equal(p.connections(), 1); assert.equal(p.calls.at(-1), 'ROLLBACK'); assert.ok(!p.calls.includes('COMMIT')); assert.deepEqual(p.released, [undefined]);
+});
+test('H06 UOW opt-in keeps closed callback and unknown-COMMIT original error, discard and no replay', async () => {
+  const p = h06UowProtocol(true), uow = new PostgresSalesUnitOfWork(p.pool, { catalogueCompleteness: p.catalogueCompleteness, runtime26: p.runtime26, catalogueReadProof: { profile: 'MAINTAINED_CATALOGUE26_V1' } });
+  let late: (() => Promise<unknown>) | undefined;
+  await assert.rejects(uow.transaction(async tx => { late = () => tx.getReceipt(ids.account, 'SYNTHETIC-H06-LATE'); return 'no-effect'; }), e => e === p.failure);
+  await assert.rejects(late!(), { code: 'TRANSACTION_CLOSED' }); assert.equal(p.connections(), 1); assert.equal(p.calls.filter(s => s === 'COMMIT').length, 1); assert.ok(!p.calls.includes('ROLLBACK')); assert.deepEqual(p.released, [p.failure]);
+});

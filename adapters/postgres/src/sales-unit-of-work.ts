@@ -18,6 +18,7 @@ import type { EntityId, EntityKind, Version } from "../../../packages/domain/src
 import { auditJson, booleanValue, integerValue, jsonObject, moneyFromSql, moneyToSql, nullableString, quantityFromSql, stringValue, versionFromSql, versionToSql } from "./codec.ts";
 import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { createMaintainedCatalogue26TransactionProof } from "./catalogue-completeness.ts";
 
 export interface PgSalesResult { readonly rows: Record<string, unknown>[]; readonly rowCount: number | null }
 /** Structural subset of the actual pg PoolClient protocol, also usable by explicitly labelled protocol fakes. */
@@ -87,7 +88,8 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
   private readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier | undefined;
   private readonly historicalCustomers: NativeSalesHistoricalCustomers | undefined;
   private readonly runtime26: NativeRuntime26Capability | undefined;
-  constructor(pool: PgSalesPool, options?: { readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier; readonly historicalCustomerExclusion?: HistoricalCustomerExclusionCapability; readonly runtime26?: NativeRuntime26Capability }) {
+  private readonly maintainedCatalogue: boolean;
+  constructor(pool: PgSalesPool, options?: { readonly catalogueCompleteness: NativeCatalogueCompletenessVerifier; readonly historicalCustomerExclusion?: HistoricalCustomerExclusionCapability; readonly runtime26?: NativeRuntime26Capability; readonly catalogueReadProof?: { readonly profile: "MAINTAINED_CATALOGUE26_V1" } }) {
     this.pool = pool;
     if (options !== undefined && typeof options.catalogueCompleteness?.assertComplete !== "function")
       throw new TypeError("Native catalogue facts require an explicit real completeness verifier");
@@ -102,13 +104,22 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
         throw new TypeError("Explicit own-data exact26 runtime capability required");
       this.runtime26 = checkedNativeRuntime26Capability(descriptor.value);
     }
+    this.maintainedCatalogue = false;
+    if (options !== undefined && "catalogueReadProof" in options) {
+      const descriptor = Object.getOwnPropertyDescriptor(options, "catalogueReadProof"), selector: unknown = descriptor && "value" in descriptor ? descriptor.value : undefined;
+      if (!descriptor?.enumerable || !selector || typeof selector !== "object" || Object.getPrototypeOf(selector) !== Object.prototype || Reflect.ownKeys(selector).length !== 1
+        || !Object.getOwnPropertyDescriptor(selector, "profile")?.enumerable || !("value" in Object.getOwnPropertyDescriptor(selector, "profile")!)
+        || (selector as { profile?: unknown }).profile !== "MAINTAINED_CATALOGUE26_V1" || !this.runtime26)
+        throw new TypeError("Explicit closed maintained catalogue selector and original exact26 runtime required");
+      this.maintainedCatalogue = true;
+    }
   }
   async transaction<T>(work: (tx: SalesTransaction) => Promise<T>): Promise<T> {
     const client = await this.pool.connect();
     let tx: PostgresSalesTransaction | undefined;
     let began = false; let commitAttempted = false; let discard: Error | undefined;
     try {
-      tx = new PostgresSalesTransaction(client, this.catalogueCompleteness, this.historicalCustomers, this.runtime26);
+      tx = new PostgresSalesTransaction(client, this.catalogueCompleteness, this.historicalCustomers, this.runtime26, this.maintainedCatalogue);
       if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
       // Explicit READ COMMITTED: a receipt waiter must see the previous holder's committed receipt after its advisory lock.
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
@@ -153,13 +164,15 @@ class PostgresSalesTransaction implements SalesTransaction {
   close(): void { this.active = false; }
   private readonly client: PgSalesClient;
   private readonly nativeFacts: PostgresNativeSalesFacts;
-  constructor(client: PgSalesClient, verifier?: NativeCatalogueCompletenessVerifier, historicalCustomers?: NativeSalesHistoricalCustomers, runtime26?: NativeRuntime26Capability) {
+  constructor(client: PgSalesClient, verifier?: NativeCatalogueCompletenessVerifier, historicalCustomers?: NativeSalesHistoricalCustomers, runtime26?: NativeRuntime26Capability, maintainedCatalogue = false) {
     this.client = client; this.balances = runtime26 === undefined ? new PostgresPostingBalances((sql, values) => this.query(sql, values))
       : PostgresPostingBalances.forRuntime26(client, runtime26, () => requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes"));
-    this.nativeFacts = new PostgresNativeSalesFacts((sql, values) => this.query(sql, values), salesId => {
+    const pair = maintainedCatalogue && runtime26 ? createMaintainedCatalogue26TransactionProof(client, runtime26,
+      () => requireDomain(this.active, "TRANSACTION_CLOSED", "Catalogue proof cannot outlive its original sales callback")) : undefined;
+    this.nativeFacts = new PostgresNativeSalesFacts(pair?.query ?? ((sql, values) => this.query(sql, values)), salesId => {
       requireDomain(this.active && this.receiptActor !== undefined && this.sales?.id === salesId,
         "TRANSACTION_SCOPE", "Native facts require the original bound sales actor and target in an active transaction");
-    }, () => [...this.previousLines.values()].filter(line => line.isCurrent).map(line => ({ id: line.id, skuId: line.skuId, snapshot: line.snapshot })), verifier, historicalCustomers);
+    }, () => [...this.previousLines.values()].filter(line => line.isCurrent).map(line => ({ id: line.id, skuId: line.skuId, snapshot: line.snapshot })), pair?.verifier ?? verifier, historicalCustomers);
   }
   private assertNumberScope(input: RuntimeDocumentNumberInput): void {
     requireDomain(this.active && input.kind === "SALES" && input.actorAccountId === this.receiptActor

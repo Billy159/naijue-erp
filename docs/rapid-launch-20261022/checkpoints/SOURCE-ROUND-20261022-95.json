@@ -1,0 +1,261 @@
+{
+  "atUtc": "2026-10-22T22:05:08.867923+00:00",
+  "parent": "27d6c9d17b25833a08c9f5898ef665a8b210af59",
+  "groups": [
+    {
+      "slice": "feat: verify maintained catalogue facts on original transaction",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/H06-MAINTAINED-PROOF-RESULT-v1.json",
+      "receiptSha256": "445ee352cbae1f49e735a20d0429a323f60a255267b7e12d67f2b299d598c7e6",
+      "receiptSnapshot": {
+        "taskId": "D1-H06-MAINTAINED-CATALOGUE-EXACT4-v1",
+        "atUtc": "2026-10-22T22:02:00.097564+00:00",
+        "status": "SOURCE_PROTOCOL_READY_FROZEN_FOR_C_CHECKPOINT_AND_NEW_SCOPE_QB_NOT_HOST_ENABLED",
+        "authority": {
+          "freeze": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/H06-MAINTAINED-CATALOGUE-TECHNICAL-FREEZE-v1.json",
+            "bytes": 2440,
+            "sha256": "668e1d5220f6e7fd49f40f45b240a2c39c20895b1de56c2a15e1c29a015cc24c"
+          },
+          "ownership": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+            "bytes": 109994,
+            "sha256": "13a67ed2b920358c14fd6299af3858c5404a6e36118d39bbac3afeeea902f32f"
+          },
+          "humanCoordinationAuthorizationMessage": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "scope": "C formal initial exact4 read proof only; later R3 composition/actual PG separately coordinated"
+        },
+        "sourceFiles": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/catalogue-completeness.ts",
+            "bytes": 47022,
+            "sha256": "c2177789ba8151d09dff8b282391c1705894421429769dff4afbbf57a22e0b71"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/catalogue-completeness.test.ts",
+            "bytes": 28622,
+            "sha256": "802580661ce7becd3621fe53a92a8dbea21338320f202999abf9884324c6db83"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/sales-unit-of-work.ts",
+            "bytes": 34796,
+            "sha256": "949522cd34027e054fc294e4ea709be83d438c6584a8334394cd0f8b97596227"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/runtime-document-commit-outcome.test.ts",
+            "bytes": 21239,
+            "sha256": "b015a0d7137d17faa9436619f16739c581b8b3b34de61c2cc4c9409cabbe0f2d"
+          }
+        ],
+        "legacyImportedClassRegionSha256": "0f5125d73cc34e057dc62002131ffcdb4100f17b6eccc1701a4f33002d31f23d",
+        "legacyEntireOriginalModuleBodyPreserved": {
+          "bytes": 10897,
+          "sha256": "150f91305d878d3cd9ec5c7b13fd94e811efb67beea34be117ca79267ef1f148",
+          "check": "Removing only four added imports and H06 append yields the byte-identical prior whole module, including old writer."
+        },
+        "implementation": {
+          "entry": "createMaintainedCatalogue26TransactionProof(actualClient,runtime26,transactionGuard) returns private scoped query + verifier pair; query identity must match; actual original client checked with existing INVENTORY_ADMISSION at proof entry/exit; query and in-flight result both check active scope.",
+          "selector": "SalesUOW optional own-data closed catalogueReadProof:{profile:MAINTAINED_CATALOGUE26_V1}, requires runtime26. Unknown/inherited/getter/extra/undefined/boolean selectors denied. Default R1/R2/imported verifier remains unchanged; no production profile/factory/parser edits.",
+          "anchors": [
+            "Unique PRODUCT CREATE audit oldVersion=null/version1/before=null/full root25 and initial native SKU/barcode/image metadata with matching original COMMITTED receipt",
+            "Unique fully published PRODUCT source/input proof/full exact26 native_product25 baseline with raw nine-price recomputation, declared complete canonical SKU aliases/native9 and original barcode source, then continuous maintenance"
+          ],
+          "unchangedImport": "Only a preselected unchanged-source/no-later-audit branch delegates the original imported verifier; never catch a failure to select another anchor.",
+          "replay": "Every adjacent root version, paired sparse before/after keys, actual changes, allowed keys, actor/action/operation/target/time/status/result version, complete child deltas, immutable SKU/barcode identity and true SKU native_creation proofs. Missing/latest-EDIT-only/ambiguous/uncommitted evidence cannot pass. Terminal root25 plus full SKU/barcode/image metadata sets and current dictionary/category/membership relations must match.",
+          "identityAndNulls": "Retain all actual SKU identities, legitimate alias groups, disabled historical children, no-MAIN state and nine-price NULL versus zero; no Cartesian SKU invention, source rewriting, UNKNOWN-to-zero or PRODUCT native_creation kind.",
+          "lifetimeAndErrors": "No pool/BEGIN/COMMIT/DDL/DML in proof, no cross-request cache; private query rejects stale scope both before and after awaited query; revoked runtime or evidence failures have no fallback. Missing evidence schema and pure invalid price evidence become NATIVE_CATALOGUE_FACTS_UNAVAILABLE; unexpected database/runtime/commit errors remain original.",
+          "limits": {
+            "targetProducts": 2000,
+            "queryBatch": 200,
+            "skusPerProduct": 5000,
+            "barcodesAndAliasRows": 20000,
+            "imageMetadata": 1000,
+            "chainSteps": 1024,
+            "chainOverflowRead": 1025,
+            "auditBytes": 16777216,
+            "auditDepth": 16,
+            "categoryPath": 64,
+            "currentSeasonTechnicalReadBound": 1000,
+            "meaning": "Bound overflow is UNAVAILABLE, never truncated PASS; no writer/business quantity contract changed."
+          },
+          "oldCommitRules": "Original UOW closes callback before final runtime proof and COMMIT; precommit failure rolls back; unknown COMMIT preserves original error/key ambiguity, discards once and performs neither rollback-as-proof nor retry."
+        },
+        "protocolResults": {
+          "newUniquePass": 14,
+          "affectedLegacyUniquePass": 1,
+          "totalUniquePass": 15,
+          "newTests": [
+            "H06 1024 complete steps pass; 1025th step fails without a truncated success",
+            "H06 UOW bound native-facts path consumes private proof, fails closed and rolls back without old-proof fallback",
+            "H06 UOW opt-in keeps closed callback and unknown-COMMIT original error, discard and no replay",
+            "H06 UOW private selector is closed, exact26-only, own data and never enables itself by schema",
+            "H06 declared aliases, price evidence and migration defaults fail as unavailable rather than fabricating completeness",
+            "H06 full terminal root and every SKU/barcode/relationship reject missing, extra, or forged current facts",
+            "H06 imported baseline rejects STAGED/price-only/raw tamper/ambiguous alias and binding gaps",
+            "H06 legitimate child enable/version deltas and native additions retain identity while missing before-values fail",
+            "H06 missing/foreign/mismatched/uncommitted receipt and chain gaps never fallback",
+            "H06 native CREATE and sparse price/name/image edits reconstruct full facts without inventing NULL or MAIN",
+            "H06 original client/private query pair rejects foreign or copied query, boolean runtime, revoked and closed scope",
+            "H06 published full import plus maintenance preserves exact canonical aliases and untouched imported routing",
+            "H06 refuses immutable SKU changes, version-only audit and excessive nesting",
+            "H06 source errors propagate without fallback, and closing during an in-flight read invalidates the result"
+          ],
+          "affectedLegacyTests": [
+            "persisted verifier uses original transaction with explicit target binding/published batch/source+product locks"
+          ],
+          "skipped": 0,
+          "finalStrictActualExitCode": 0,
+          "runs": [
+            {
+              "file": "H06-MAINTAINED-PROOF-v1/protocol-run1.log",
+              "pass": 12,
+              "fail": 1,
+              "skip": 0,
+              "meaning": "Original affected imported1 plus initial12 new; failed fixture shared mutable audit/current child object; corrected by independent cloned audit facts; initial raw failure retained."
+            },
+            {
+              "file": "H06-MAINTAINED-PROOF-v1/protocol-run2.log",
+              "pass": 13,
+              "fail": 1,
+              "skip": 0,
+              "meaning": "Final two-anchor/alias/root semantics and expanded negative cases affected; invalid-price error code was INVALID_CATALOGUE_PRICE_INPUT and not yet classified as UNAVAILABLE; actual failure preserved."
+            },
+            {
+              "file": "H06-MAINTAINED-PROOF-v1/protocol-run3-failed-and-schema-only.log",
+              "pass": 2,
+              "fail": 0,
+              "skip": 0,
+              "meaning": "Only failed price classification plus newly affected schema error translation; no double count of source-error test."
+            }
+          ],
+          "strictHistory": "run1 actual exit2 (explicit Object.freeze callback context and fixture annotations); run2 exit0; query error branch then changed, final run3 direct exit0. No masked shell status.",
+          "evidenceKind": "Synthetic driver, persisted JSON fixtures and real current TypeScript execution only; no actual PostgreSQL SQL syntax/locks/visibility/ACL/commit proof."
+        },
+        "postgresFollowupForC": {
+          "needed": "One new H06 actual-role/issuer/database window after source review; C35/C36/C40 and sealed18 run2 are not rerun or counted as H06.",
+          "sameTransactionEvidence": "committed_before predicate uses pg_current_xact_id_if_assigned() and wrap-aware age(row.xmin)>age(current top xid). Ordinary MVCC visibility includes own writes; strict older-than-own excludes own top-level/subtransaction prepared audit/receipt/root/child evidence. A newer concurrent commit can conservatively return UNAVAILABLE; no second pool or guessed xid8 epoch.",
+          "officialReference": "https://www.postgresql.org/docs/17/functions-info.html#FUNCTIONS-PG-SNAPSHOT",
+          "notVerified": "These SQL expressions, original-client issuer execution, own/subtransaction visibility, row locks and actual role ACL have not run on PostgreSQL by D1. C must verify only the new H06 path under original transaction metadata/role.",
+          "requiredNewCases": [
+            "Committed native CREATE→sparse edits incl price/image and exact terminal SKU/barcode/metadata readback",
+            "Published complete26 import→maintenance with all canonical aliases, independent full publication origin/price evidence",
+            "Missing/foreign/prepared/this-transaction audit+receipt or child creation denies; source/child conflicts and1025 overflow deny",
+            "Same actual client plus scope expiry/revoked metadata, rollback on failed proof and unknown COMMIT behavior"
+          ],
+          "reviewAndACL": "C needs a review admitting INVENTORY_ADMISSION for the actual target/role; prior QA maintenance/seasons-only review does not authorize this proof. Audit/receipt/source/closure/alias/product/child/dictionary SELECT and original row-lock rights must be actual-role verified; D1 executed no GRANT."
+        },
+        "separateReadObservationForC": "Existing PostgresNativeSalesFacts selects enabled but not deleted_at for requested color/fit and product. H06 newly rejects a deleted product root; its currentReferences checks full identity/relationship facts without rewriting that shared Sales eligibility policy or D2 writers. Before later R3 activation, C should explicitly review retained-delete eligibility at the selected-SKU policy boundary. This is not claimed as a new host/runtime authorization or as a completed R3 fix.",
+        "untestedAndNotAuthorized": [
+          "Actual H06 PG/SQL/ACL/visibility/rollback/commit",
+          "R3 production composition/profile/listener/URL/host activation",
+          "New write contract/DDL/index/table/audit or receipt format",
+          "Complete real import/SOURCE MAIN authorization/nonzero PUBLISH/HISTORY revision",
+          "NULL27 mapper/schema/profile implementation; its human confirmation is separate and remains pending"
+        ],
+        "boundaries": {
+          "frontendChanged": false,
+          "sharedContractsChanged": false,
+          "migrationsChanged": false,
+          "sourceFilesChanged": 4,
+          "postgresConnected": false,
+          "grantsExecuted": false,
+          "credentialsRead": false,
+          "buildOrServer": false,
+          "gitMutation": false,
+          "stagedVisible": false,
+          "excludedAnomalousProductBarcodes": 2958,
+          "historicalNullPeopleTimesPreserved": true,
+          "frontendRequiredUnchanged": true
+        },
+        "rawEvidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/H06-MAINTAINED-PROOF-v1/protocol-run1-status.json",
+            "bytes": 135,
+            "sha256": "2834df8c8485a1a3a47a2afdda7f5a0d8e027ff26869a5785128e39debf48d27"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/H06-MAINTAINED-PROOF-v1/protocol-run1.log",
+            "bytes": 2421,
+            "sha256": "6e33fb2866ea9296fa7bfc30aeb8dce02c40a396dd7df83d8f73c77c7e124116"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/H06-MAINTAINED-PROOF-v1/protocol-run2-status.json",
+            "bytes": 183,
+            "sha256": "2b6cfe2cbe7f971b6d69229f99425eed5cee246f39bcf0ae3a2b2efe955a74bf"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/H06-MAINTAINED-PROOF-v1/protocol-run2.log",
+            "bytes": 4489,
+            "sha256": "b08d528481c0257469ea87a5804a81c792432dfef571f5be38b175a2f1638127"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/H06-MAINTAINED-PROOF-v1/protocol-run3-failed-and-schema-only.log",
+            "bytes": 369,
+            "sha256": "9d1c2dff11dc551f631f92a4a1187ad58b136403a02ac4d29cff640665b8ad69"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/H06-MAINTAINED-PROOF-v1/protocol-run3-status.json",
+            "bytes": 192,
+            "sha256": "ab377357eb3908b898f790057fb4b8d0ba85242167ab715cc813a13374d30b56"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/H06-MAINTAINED-PROOF-v1/strict-run1-status.json",
+            "bytes": 21,
+            "sha256": "9766b1ab977916a9835cc92ad028ce515fbf1ddd467d6ef55e7d6f51e2028d9c"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/H06-MAINTAINED-PROOF-v1/strict-run1.log",
+            "bytes": 1744,
+            "sha256": "64588552fa23b2e6c49ee6599f89be83f516758160584386c6de65a35b96e5aa"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/H06-MAINTAINED-PROOF-v1/strict-run2-status.json",
+            "bytes": 21,
+            "sha256": "5e00fb07cf7d9f727a93f60788a1a944cd210e5e4c84516c1e91116ca0a956ba"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/H06-MAINTAINED-PROOF-v1/strict-run2.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/H06-MAINTAINED-PROOF-v1/strict-run3-final-status.json",
+            "bytes": 21,
+            "sha256": "5e00fb07cf7d9f727a93f60788a1a944cd210e5e4c84516c1e91116ca0a956ba"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/H06-MAINTAINED-PROOF-v1/strict-run3-final.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "adapters/postgres/src/catalogue-completeness.ts",
+          "owner": "D1",
+          "bytes": 47022,
+          "sha256": "c2177789ba8151d09dff8b282391c1705894421429769dff4afbbf57a22e0b71"
+        },
+        {
+          "path": "tests/catalogue-completeness.test.ts",
+          "owner": "D1",
+          "bytes": 28622,
+          "sha256": "802580661ce7becd3621fe53a92a8dbea21338320f202999abf9884324c6db83"
+        },
+        {
+          "path": "adapters/postgres/src/sales-unit-of-work.ts",
+          "owner": "D1",
+          "bytes": 34796,
+          "sha256": "949522cd34027e054fc294e4ea709be83d438c6584a8334394cd0f8b97596227"
+        },
+        {
+          "path": "tests/runtime-document-commit-outcome.test.ts",
+          "owner": "D1",
+          "bytes": 21239,
+          "sha256": "b015a0d7137d17faa9436619f16739c581b8b3b34de61c2cc4c9409cabbe0f2d"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only explicit26 read-only proof+closed private selector; old imported verifier/default remains. No R3 composition/actualPG/DDL/newfield/writer changes; NULL27 unapproved and untouched. MVCC/locks/own prepared evidence need C new actualQA, source cannot substitute."
+}
