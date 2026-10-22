@@ -1,3 +1,12 @@
+import { constants, closeSync, fstatSync, lstatSync, openSync, readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { isAbsolute } from "node:path";
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import type { PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
+import type { ProductSeasonArrayCapability } from "./product-query-reader.ts";
+import type { HistoricalCustomerExclusionCapability } from "./party-read-reader.ts";
+import type { ProductMediaWriteCapability } from "./product-maintenance-store.ts";
+import { assertMaintenanceDriverPool, maintenanceContextClient, assertMaintenanceProductImagesPrepared } from "./maintenance-command-unit-of-work.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { GUARD_CAPABILITY } from "./inventory-publication-guards.ts";
 import type { PgSalesClient } from "./sales-unit-of-work.ts";
@@ -187,4 +196,373 @@ export async function assertNativeImportAccountingGuards(client: PgSalesClient):
     : (await client.query(NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY)).rows;
   requireDomain(current.length === 1 && current[0]!.accounting_guards_present === true,
     "NATIVE_IMPORT_GUARDS_NOT_READY", "Exact history/native/accounting triggers, deferred identities, receipt FK, unique ownership, indexes and private grants required");
+}
+
+/** Fixed read-only catalog query. Digest uses PostgreSQL JSONB text and built-in
+ * SHA-256, never an application routine or a pretty-printed export file. */
+export const NATIVE_RUNTIME26_METADATA_PROBE = `/* native-runtime26:metadata-v7 */
+WITH observed AS (
+WITH ns AS (SELECT oid,nspname,nspowner,nspacl FROM pg_catalog.pg_namespace WHERE nspname='naijue_erp'),
+rels AS (SELECT c.* FROM pg_catalog.pg_class c JOIN ns ON ns.oid=c.relnamespace WHERE c.relkind IN ('r','p','v','m','S')),
+fns AS (SELECT p.*,l.lanname,pg_catalog.pg_get_function_identity_arguments(p.oid) AS args
+  FROM pg_catalog.pg_proc p JOIN ns ON ns.oid=p.pronamespace JOIN pg_catalog.pg_language l ON l.oid=p.prolang WHERE p.prokind IN ('f','p')),
+acl_roles AS (
+  SELECT oid FROM pg_catalog.pg_roles WHERE rolname IN(current_user,session_user,'erp_qa_owner_20261022_01')
+  UNION SELECT relowner FROM rels UNION SELECT proowner FROM fns UNION SELECT nspowner FROM ns
+  UNION SELECT a.grantee FROM rels r CROSS JOIN LATERAL pg_catalog.aclexplode(coalesce(r.relacl,pg_catalog.acldefault(CASE WHEN r.relkind='S' THEN 'S'::"char" ELSE 'r'::"char" END,r.relowner))) a WHERE a.grantee<>0
+  UNION SELECT a.grantee FROM fns f CROSS JOIN LATERAL pg_catalog.aclexplode(coalesce(f.proacl,pg_catalog.acldefault('f',f.proowner))) a WHERE a.grantee<>0
+  UNION SELECT a.grantee FROM ns CROSS JOIN LATERAL pg_catalog.aclexplode(coalesce(ns.nspacl,pg_catalog.acldefault('n',ns.nspowner))) a WHERE a.grantee<>0
+), members AS (SELECT * FROM pg_catalog.pg_auth_members WHERE member IN(SELECT oid FROM acl_roles) OR roleid IN(SELECT oid FROM acl_roles))
+SELECT pg_catalog.jsonb_build_object(
+ 'format','EXACT26_RUNTIME_CATALOG_EXPORT_V1',
+ 'notice','OBSERVATION_ONLY_NOT_RUNTIME_CAPABILITY_OR_SOURCE_AUTHORITY',
+ 'identity',(SELECT pg_catalog.jsonb_build_object('database',d.datname,'database_oid',d.oid::text,'database_owner',pg_catalog.pg_get_userbyid(d.datdba),
+   'current_user',current_user,'session_user',session_user,'server_version_num',pg_catalog.current_setting('server_version_num'),
+   'server_addr',pg_catalog.inet_server_addr()::text,'server_port',pg_catalog.inet_server_port(),
+   'postmaster_start',pg_catalog.pg_postmaster_start_time()::text,'replication_role',pg_catalog.current_setting('session_replication_role')) FROM pg_catalog.pg_database d WHERE d.datname=pg_catalog.current_database()),
+ 'migration_versions',(SELECT pg_catalog.jsonb_agg(version ORDER BY version) FROM naijue_erp.schema_migration),
+ 'schema',(SELECT pg_catalog.jsonb_build_object('name',nspname,'owner',pg_catalog.pg_get_userbyid(nspowner),'acl',coalesce(nspacl,pg_catalog.acldefault('n',nspowner))::text) FROM ns),
+ 'relations',(SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_object('name',relname,'kind',relkind,'owner',pg_catalog.pg_get_userbyid(relowner),
+   'acl',coalesce(relacl,pg_catalog.acldefault(CASE WHEN relkind='S' THEN 'S'::"char" ELSE 'r'::"char" END,relowner))::text,
+   'row_security',relrowsecurity,'force_row_security',relforcerowsecurity,'persistence',relpersistence) ORDER BY relname),'[]'::jsonb) FROM rels),
+ 'columns',(SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_object('table',r.relname,'number',a.attnum,'name',a.attname,
+   'type',pg_catalog.format_type(a.atttypid,a.atttypmod),'not_null',a.attnotnull,'identity',a.attidentity,'generated',a.attgenerated,
+   'default',pg_catalog.pg_get_expr(d.adbin,d.adrelid),'acl',a.attacl::text) ORDER BY r.relname,a.attnum),'[]'::jsonb)
+   FROM rels r JOIN pg_catalog.pg_attribute a ON a.attrelid=r.oid AND a.attnum>0 AND NOT a.attisdropped
+   LEFT JOIN pg_catalog.pg_attrdef d ON d.adrelid=r.oid AND d.adnum=a.attnum),
+ 'routines',(SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_object('name',proname,'identity_arguments',args,'signature',oid::regprocedure::text,
+   'owner',pg_catalog.pg_get_userbyid(proowner),'language',lanname,'volatility',provolatile,'security_definer',prosecdef,
+   'strict',proisstrict,'leakproof',proleakproof,'parallel',proparallel,'config',proconfig,
+   'acl',coalesce(proacl,pg_catalog.acldefault('f',proowner))::text,'source',prosrc,'body_md5',pg_catalog.md5(prosrc),
+   'body_sha256',pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(prosrc,'UTF8')),'hex'),
+   'definition_sha256',pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(pg_catalog.pg_get_functiondef(oid),'UTF8')),'hex')) ORDER BY proname,args),'[]'::jsonb) FROM fns),
+ 'triggers',(SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_object('table',r.relname,'name',t.tgname,'routine',t.tgfoid::regprocedure::text,
+   'type',t.tgtype,'enabled',t.tgenabled,'deferrable',t.tgdeferrable,'initially_deferred',t.tginitdeferred,
+   'internal',t.tgisinternal,'definition',pg_catalog.pg_get_triggerdef(t.oid,true)) ORDER BY r.relname,t.tgname),'[]'::jsonb)
+   FROM rels r JOIN pg_catalog.pg_trigger t ON t.tgrelid=r.oid),
+ 'constraints',(SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_object('table',r.relname,'name',c.conname,'type',c.contype,
+   'validated',c.convalidated,'deferrable',c.condeferrable,'initially_deferred',c.condeferred,
+   'reference',CASE WHEN c.confrelid=0 THEN NULL ELSE c.confrelid::regclass::text END,
+   'update_action',c.confupdtype,'delete_action',c.confdeltype,'definition',pg_catalog.pg_get_constraintdef(c.oid,true)) ORDER BY r.relname,c.conname),'[]'::jsonb)
+   FROM rels r JOIN pg_catalog.pg_constraint c ON c.conrelid=r.oid),
+ 'indexes',(SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_object('table',r.relname,'name',x.relname,'valid',i.indisvalid,'ready',i.indisready,
+   'unique',i.indisunique,'primary',i.indisprimary,'immediate',i.indimmediate,'definition',pg_catalog.pg_get_indexdef(i.indexrelid),
+   'predicate',pg_catalog.pg_get_expr(i.indpred,i.indrelid)) ORDER BY r.relname,x.relname),'[]'::jsonb)
+   FROM rels r JOIN pg_catalog.pg_index i ON i.indrelid=r.oid JOIN pg_catalog.pg_class x ON x.oid=i.indexrelid),
+ 'policies',(SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_object('table',r.relname,'name',p.polname,'command',p.polcmd,
+   'permissive',p.polpermissive,'roles',p.polroles,'using',pg_catalog.pg_get_expr(p.polqual,p.polrelid),'check',pg_catalog.pg_get_expr(p.polwithcheck,p.polrelid)) ORDER BY r.relname,p.polname),'[]'::jsonb)
+   FROM rels r JOIN pg_catalog.pg_policy p ON p.polrelid=r.oid),
+ 'roles',(SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_object('name',rolname,'superuser',rolsuper,'inherit',rolinherit,'create_role',rolcreaterole,
+   'create_db',rolcreatedb,'login',rolcanlogin,'replication',rolreplication,'bypass_rls',rolbypassrls) ORDER BY rolname),'[]'::jsonb)
+   FROM pg_catalog.pg_roles WHERE oid IN(SELECT oid FROM acl_roles UNION SELECT roleid FROM members UNION SELECT member FROM members)),
+ 'memberships',(SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_object('role',pg_catalog.pg_get_userbyid(roleid),'member',pg_catalog.pg_get_userbyid(member),
+   'grantor',pg_catalog.pg_get_userbyid(grantor),'admin',admin_option,'inherit',inherit_option,'set',set_option)
+   ORDER BY pg_catalog.pg_get_userbyid(roleid),pg_catalog.pg_get_userbyid(member)),'[]'::jsonb) FROM members)
+) AS manifest
+)
+SELECT manifest->'identity' AS identity,manifest->'migration_versions' AS migration_versions,
+ pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to((manifest-'identity')::text,'UTF8')),'hex') AS catalog_sha256,
+ (pg_catalog.jsonb_array_length(manifest->'routines')=121 AND NOT EXISTS(
+   SELECT 1 FROM (VALUES
+    ('assert_history_typed_closure','b0551d6a80e9fdd9709d6ed63820dc8b5a7577e8bfb9deaa19cb0e387de54bce'),
+    ('assert_native_bootstrap_accounts','1e700172f68beb831eb36fdf2788154971438c577a9d8915f13e5969923c32ac'),
+    ('assert_native_product_season_source','3a753b412fa4a648e26c4a2e398a4b52cc694c04dc1352a98513cb2220d4d661'),
+    ('assert_retained_sku_reference','4c956a82b9531b1f385f9aecd9c6d20fa84ce6d434bb0a41d2a0c96ebb7fae5d'),
+    ('assign_runtime_document_number','bca336abcd0ef4a57c22d2ee19564e7ea744257303fb8eec06c822efd551500e'),
+    ('check_hall_default_customer_enabled','6a89df4342530f3a3bdd185abbdd372b3372799b341a17ae9ad65be86ded91ee'),
+    ('cutoff_import_lock','82a621b9cea39c9cc273d5cb790b364fad004875760644633280d2e24e64ccc7'),
+    ('exact_historical_customer_source_matches','ac26aa52f4131d996d6abe0db810a0e0817a12ffa043cdfb2250c951bfd0f011'),
+    ('freeze_cutoff_sales_detail','dcfa1a3abb87368cf2f18663880f9a2ea9377a3599e985e13c7241220fd85a12'),
+    ('freeze_imported_identity','0a17cf0a670ca8c9d34f2de1ec34de9b5197410fc01f82af4273a26e877a44e5'),
+    ('guard_balance_identity','02f2db383ff8c5826c7148f73bb780319c977bffa5798bc233159d83d89e58fc'),
+    ('guard_contributor_link','2937ecd3e974e2ad78e0bfce4790b96d97953d4bf113406a838063b366895983'),
+    ('guard_cutoff_ledger','71ecb569279de61709578ffe2f29d85140993ed155fce07e7beb797307c491b5'),
+    ('guard_exact_historical_customer_current_usage','78e895d72d6f806089d2bc7cb877293e1263d26ba8265dd7f3b5e2203e956245'),
+    ('guard_header_native_reference','1584d2600c763f0d38cd3dd4fa7dd14ea90465ef9376d7165a58d71bce0dec3c'),
+    ('guard_header_native_reference_publication','3419f73d296fcb84f77eff79edaa5034cb90f33a6363d0687d316ee697f785c0'),
+    ('guard_history_closure_stage','d05947c6d7ef430d043c10038cce1d72f7e44e4efb2a2112c499ea8d107d47e0'),
+    ('guard_history_insert','bbd40680f3196904c9c9e986c6f8cef0bee77c4cbb19663b8333e8b6150e1f2f'),
+    ('guard_history_publication','297d9859c6efad3e48e9c8931ab11a810c6b1c73c16ddf262b34ffbc5d11001e'),
+    ('guard_history_typed_publication','fc386026e40ca43d36bdb5e7422001878a7f91c95c2e36bce28272b4d792e506'),
+    ('guard_import_accounting_claim','d592577abd111a82d3edcb44a7d83ece90159a19f4e396740662db59c6706956'),
+    ('guard_import_accounting_publication','b41ad04a99fb7af999c22b13cdc7ad9b747e4df67e3f11bd44e7632d15a747a6'),
+    ('guard_import_batch','0275164994ce931e93d334b753f0f616d039661a73239ac5dbd4482f0720e749'),
+    ('guard_import_record','8a79dbc011cdaf0582e2bd1eefc7ea94fce15d24f6aa1ac0fa25c43afb4e7e16'),
+    ('guard_maintenance_account_event','965d9d3433b929ccd151b9a147eeef713770d7b7311e49c80cfaa3d17b118549'),
+    ('guard_maintenance_audit_actor','e07e156d8f221b51b06c394e8f6d854e2d2119a37a3e5d3f23acff04c21bc9e7'),
+    ('guard_maintenance_before_root','574add1ad436482c7593725ac4b1b58cabe6b982b538cf0e1f22c1783723712f'),
+    ('guard_maintenance_child_write','a19def51718e008e541482dd1e6f2d2ab9257842ce7e66ad6e62aedcfa216d8a'),
+    ('guard_native_catalogue_binding','7418579c0d1c3a1951696a12ad165a421d26b87f0e449d9d7d250497dc2ddc21'),
+    ('guard_native_catalogue_publication','d2eaa009760d63f245d562570ca4c8fce038633da5233a8c7ab7142190a30ceb'),
+    ('guard_native_creation_identity','67cf369716b3d97c92240da48dec5d4b87fbc5df8798f05f3a369acc143fe95a'),
+    ('guard_native_party_import_intent','262e74a37ba12883a4978c4d99b6ecca000d245186b585a9e5b35ad31ccf8d7f'),
+    ('guard_native_payment_binding','774cc9b1604a8d0948f73c7298fa67a10233962af218b89fe0b9675107148d35'),
+    ('guard_native_payment_publication','993b114dfbec87428a42a9f6aa7d0a6ecbeef67fd85bc00754fa4eb80c7e6797'),
+    ('guard_product_image_color','a49cc6bc4c49931eb50c81dd95e08a760b2ea6de73e19a0496611fe63fe22b18'),
+    ('guard_product_season_selection','bd97ac1bc0a8c9a3221c12b794f5976bf0e092a2907aa2dd9e6378b718d29560'),
+    ('guard_referenced_season_identity','8eb0b3435f063f4a653c31f632fe6751fecc3864a375a72753bcf4090bb18f2c'),
+    ('guard_retained_catalogue_delete','dec785b8b1f818b2daa3af4d3872139710cae32178516839e669f59aa6609758'),
+    ('guard_retained_catalogue_reference','91cc169d60ca6db2700ed97e49632504cfba9d957ea467a4777137f946c6923c'),
+    ('guard_runtime_document_number','52d92723d9ecb5f16eb57c5ae50e0f8cf322b4b5f3848ab88712f41aeb0887bd'),
+    ('guard_successor_publication26','d26b985e45541dc7a3c4ae0b1427d4de1cf2def07d74b2a6023187c78cb5d5aa'),
+    ('guard_successor_source26','cdf91a3949d6aefbb16c67f7d82dcf99b60730f9a6884468c064102c9887b710'),
+    ('history_closure_count_map','ef82c0a7124d288103df38503a849b96aa936289b2ee29166b4f0a6529f476d6'),
+    ('history_closure_digest','749101b8670e32814b875adaaf753da6c50ddcd0860d5ca3ebb000f996f1b63b'),
+    ('history_closure_document_rows','f8401b06df7815f63f9a83e781961f55725f82246c87d86b7a99a9c19c482ce1'),
+    ('history_closure_encode','b4ad51b2b17c9248c80de0ead3ae5f50bf5fe887e36597b081ce250a94623a5c'),
+    ('history_closure_finish','94b84af2d05d8a9f34c0135a8c0d70f5b633a9b43e6ec6d2bca8de554e8abac8'),
+    ('history_closure_fold','31ed823c127e85537196de072b76077749d939f3241fa53b9f1c76f8fdba9062'),
+    ('history_closure_projection','0af6d70c56a463c351be1dd732d345bbb533ae98b0b07e36f6ef08a4efd72011'),
+    ('history_closure_projection_columns','a8a3d4d43341d86dfad188d191c3076203e06ea8f1a6919c4d0efddee76286a6'),
+    ('history_closure_projection_key','6e2584dac9f079fe2061570c15b13549a3abac512a2a809835046e6fe2c50222'),
+    ('history_closure_row_hash','c7ef0fdc273f23ab5ec1ae6c870746146dab90a6ecef8ecf319de0704df697bb'),
+    ('history_closure_rows','098ba7215c7c893903e2b72762e2036e94bc23b763f3842e378b3d55b3d3f639'),
+    ('history_closure_seed','532918606a4dd24ebae46a55dfe7d2f0803602798c63742bcd975b7e1179f2c7'),
+    ('history_effective_writes_closed','1110bb0854c27ad0ae2178742e7414bf49aa5509c57bbecf4a595f9f2ed19b97'),
+    ('history_revision_not_enabled','af9df40d3b0ea2128a2f879f0e6092c13ba8447ae28383742020aa9fc0bfba70'),
+    ('import_source_key_lock','07404b25633a5c48ae1a530a48cdebed11107e187d660c99a7e781bb4957fa24'),
+    ('inventory_key_admission','a9d7a2519941605e997e5ab59cff7cf847192ed910ef4107ba09aadc64e0fc7a'),
+    ('inventory_key_lock','c6f444fbbfc527fec7f4031fd0ea7f07eb0a98202b11340e8f7da398fa117079'),
+    ('inventory_runtime_key_admitted','945a2cc1e250ed1cedd3ca2083b80120174d06d015455bd4288d186e0c27f377'),
+    ('is_exact_historical_customer_only','1f35799a742f402d86cde6a979511dc83ae74d62cd5c106ffcef162a68510403'),
+    ('is_native_party_import_insert','a3c8dfac77e8a4f060932aded92f53da97b68bdcf48d2ede19781c3e54c86412'),
+    ('keep_barcode_binding_identity','14f6d02bca58955681e8d03236fb236cbfe3d041d35ecdb326cd3fa7e38d2733'),
+    ('keep_party_native_identity','44c3a7110bf40ef38e73972b493f36279b28124097b31a9a6f25e5adc13ad4b9'),
+    ('keep_sales_line_owner','95f3dc678bbdc8ac47a2f1c76fe13f872bed088e7484aebc46a523fc13cfd241'),
+    ('keep_transfer_header_provenance','92fe79370e044f341cf8290a6d723a588ce53f7591077ceb45f1c9a201ad08c9'),
+    ('keep_transfer_line_owner','763d52e081f96f872adb50658403f5f2f7f83f7c914d002b0e771ebe9c055335'),
+    ('maintenance_account_credential_action','f17617bc8f02fd0731d0a97eaca90553441235e032de1dbf9086e84c987fbe7a'),
+    ('maintenance_action_allowed','186f88822ba597874734cb3349d0b9d95f63e5f8d8a34d3d05014e3420033c17'),
+    ('maintenance_administrator_mutex','d6809b2abf7b3f211cd7422b517e867d0c1378f9e7fe9b98eacde2521c6d1ea8'),
+    ('maintenance_audit_is_current','4537d6df2b73e17e386b100845049da08d3fab3584c87ef8d7095660198bf699'),
+    ('maintenance_check_account_credential','577bf0a5de72c8dc6d080c1b4f18a669398d5738c16b75d11ecc1c89d0156ab7'),
+    ('maintenance_check_product_children','c7edab87301fc05b7f33db2eb9df30b2da0d28ed9154dfa8d11cbba9fdbe6dad'),
+    ('maintenance_check_staff_accounts','ea4e151ccb89d97ed40edc6e3164594bccda0fc28f2879f614f230830fdc0c22'),
+    ('maintenance_complete_row_matches','34c25d78bc34ed57b1acbbdbfbca9b0adfd78dc8dcb6cc8c42cf5673f5da5d21'),
+    ('maintenance_evidence_matches','cb201d859235d7af9ef52616c64b705e5586b11894d57fbc50b2b0a7615abaf3'),
+    ('maintenance_exact_rows_match','8b21824423a27f20074768c09998fba819887c949b4f20b57e35db0815133161'),
+    ('maintenance_payment_halls','d96c975c57af714d458275a383e0e2bdaeef9214d4bc64420207f36bcea55869'),
+    ('maintenance_product_child_row','69145227348d366932814f079f0b63d1bb6109cc36d8bb8c9f8ae53fafd1b9fa'),
+    ('maintenance_root_table','7ed286cf1e5bb8629b02e7cab4412dc0df502d560661be9823d234c466565fe3'),
+    ('maintenance_staff_accounts','a191dc7b42cec0f41f42c6d371a2e959c90019983f4f79cef86db99d2e8fa989'),
+    ('native_creation_operation_valid','118bbe55c39e00948ab087f808812522b565344b924e64916f6cfa91645a3f7a'),
+    ('party_key_values','d23eb5601f984007df5d52661a101a422852e20c0bcd75f1cadd5a5bbbaef649'),
+    ('published_inventory_key','fa8234711ad74b3afd250b2143840baa863f05f1e23c92b85574b48b4208adc6'),
+    ('reject_immutable_change','3daef49e525ad973be82350a1551e979198d21ff58f3f1bb92a4f7292e4d038c'),
+    ('reject_unimplemented_cutoff_write','ac0a450bbd02ec19764b8ed3be32acde2177e394c4f9488230d39ff7c3a41509'),
+    ('safe_maintenance_evidence','4a0d9d21eadf3e839d1d0c23f7efe8a0ef14123dd521a553eefcc7362ab3f927'),
+    ('transfer_header_audit_values','2bd919b807e2bd27e2ef2c3c2520524c84f8ddbd81e9dfc71947c9292ea1f624'),
+    ('transfer_line_audit_values','ce924832c6a9b4a762ff80e031279273f521e4e17139c7d89a4930004313f49e'),
+    ('valid_history_counts','6c143e2bf81bcd53e2c9074aa2ab4e1781c746bc7a99bb0064f378f77de80280'),
+    ('valid_product_season_ids','b6b3932264857c59998025cece6241a4e819b80f9bc72e6bf0ed4e907890cc65'),
+    ('validate_available_administrator_commit','3a9a1bea930614761185af90b8591a539b855647974b68b004869c80f5e5ba18'),
+    ('validate_baseline_source_commit','ec5e9a331d0f8148ec21e28d5e8a4ddb82ac66d923ea2490abee3f3000ed75c9'),
+    ('validate_exact_historical_customer_intent','b9968150e138d455658dd7d437c8026b7bfdce466146b961d64fd2934f099c98'),
+    ('validate_exact_native_reversal','3ef72272c6cb9b7ccbfffc393a31fdd85babdb3efb333baae839482d571f362e'),
+    ('validate_history_closure_commit','e61d2c5dd34792f5ca277cada1dc12a6904b1be95031c0a6c4810080b24dd03b'),
+    ('validate_history_product_proofs','dab49bb495de85d5e66350affd348f85e0595411ea7ab7378104a3963db2a38e'),
+    ('validate_import_accounting_baseline_commit','678cc0b409e43e420365733b21ce8e8ce0aa88b8d3b9b48f9a842edd41120c51'),
+    ('validate_import_accounting_checkpoint_commit','2da056af8fcd97e2fc046d5f6b93b668a4bd523f49e0d0d5a1073bad1b933df7'),
+    ('validate_import_accounting_claim_commit','03a517d099491d51f97e50b8bbf9e5729c1fd9f67a68a9445328379391f1fdf7'),
+    ('validate_import_accounting_final_record_commit','f1fca00daa56873221062706d2009293b6180156e69bfe6f5fc1ca64087ea312'),
+    ('validate_import_batch_commit','1e645ed10e00b6a56ed3820fce160f54a33aa547c815c6fff5a988ef7f7fc9f2'),
+    ('validate_import_operation','0bc6c348d7299fd7ce6ad1e2f98a3057b60eddce3de01e920314c0a1e3dd1e36'),
+    ('validate_import_publish','873d1943b1ada13eeef43f6d28cb792755de48c461b1ebee7810e5278cd5d6e3'),
+    ('validate_import_source_commit','524ec70d51970cfc79f4ec5e9a93f21bf20733781a2202121a4e91d1d6b66f3a'),
+    ('validate_ledger_receipt_source','26f2f325172ef2878d4dffb4f1740d680e63458abd4b25e7a693e352664d15da'),
+    ('validate_maintenance_receipt_commit','7a42aeef2738c9009bc9eaa4ecbf41feefb43b759fbed2514a005166d20ac384'),
+    ('validate_maintenance_root_commit','8556d1ed234adb3bae1d99c9bb8e867db4070eadafa39dbb8b31752c7e24b512'),
+    ('validate_native_creation_commit','a505ceb68946cc14a69b181cd43d6cebbedca9e9ea453c9920c243892f537cd7'),
+    ('validate_native_party_import_commit','5383c9941e06c7748af6603eee56559b102b09305c11771a813c6cf859ad37e3'),
+    ('validate_party_native_commit','dba217f39c61d3f4741a72a565851a41caaa18e44fb57aa2f8e3473d20810762'),
+    ('validate_party_receipt_commit','fafc3389b3458b6d8ec4cad15f6f926dcc20bb059a819c496ed4db260d06b426'),
+    ('validate_sales_commit','f00b31849f4f72d62103fc08cb4e157b4401717a1f2c7c05fc699663715f07a2'),
+    ('validate_sales_effect','e6b2bbec00a6389ed92f9026af20f06c52168d37fe5a59d3ccfc0c29fb7cb1db'),
+    ('validate_sales_settlement','d862252df7c25f0a57db82754bba56a812e3c88b8cd6150f5a198212fd47a591'),
+    ('validate_sparse_balance_commit','84c96a25df3dc2442445d6bbf71444a62d231e30cf83cb635968cc8f6a0cdd09'),
+    ('validate_transfer_balance_commit','9bfaa1cdf1dea76ada35bae56dd40cb3e27c6acd28a93905ee2f06d17a8b2abb'),
+    ('validate_transfer_commit','e6ceac3fddef4e61f649b8ef2d71db56042dc14c7622ca0a5c321de2ab7b3f38'),
+    ('validate_transfer_effect','d901f8e428c9ef2440d9fb48aca3f638eef141bd62f116e88698c6f726ad0c73'),
+    ('validate_transfer_header_commit','6d50fa80e2b445bc45645ff0f5592f2ed4e00836077224c1fe3510b4e563fa0c'),
+    ('validate_transfer_line_commit','1443f443a884f0073209294476daf9a7ff0f45d6d32832e5d14557d513cfc4fb')
+   ) required(name,body_sha256) WHERE NOT EXISTS(
+     SELECT 1 FROM pg_catalog.jsonb_array_elements(manifest->'routines') actual
+     WHERE actual->>'name'=required.name AND actual->>'body_sha256'=required.body_sha256
+   ))) AS source_routines_match
+FROM observed`;
+
+/** Metadata approval only. Whole-source, batch, actor, receipt, conservation and
+ * publication authorizers remain separate mandatory ports at their callers. */
+type Runtime26Purpose = Parameters<NativeRuntime26Capability["assertReady"]>[1];
+const runtime26Purposes: readonly Runtime26Purpose[] = Object.freeze(["IMPORT_STAGE", "IMPORT_PRODUCT_SEASONS", "IMPORT_PUBLISH", "PRODUCT_SEASONS_READ",
+  "PRODUCT_MAINTENANCE", "INVENTORY_ADMISSION", "HISTORY_READ", "CURRENT_FORM_READ", "CURRENT_CUSTOMER_READ_WRITE"]);
+const issuedPools = new WeakSet<object>();
+const runtime26Error = (message: string): Error => Object.assign(Error(message), { code: "NATIVE_RUNTIME26_NOT_READY" });
+function exactData(value: unknown, keys: readonly string[]): Record<string, unknown> {
+  if (value === null || typeof value !== "object" || Object.getPrototypeOf(value) !== Object.prototype
+    || Reflect.ownKeys(value).length !== keys.length) throw runtime26Error("Closed metadata data object required");
+  const result: Record<string, unknown> = Object.create(null) as Record<string, unknown>;
+  for (const k of keys) {
+    const d = Object.getOwnPropertyDescriptor(value, k);
+    if (!d || !("value" in d) || !d.enumerable) throw runtime26Error("Own metadata data properties required");
+    result[k] = d.value;
+  }
+  return result;
+}
+function ownArray(value: unknown): unknown[] {
+  if (!Array.isArray(value) || Object.getPrototypeOf(value) !== Array.prototype
+    || Reflect.ownKeys(value).length !== value.length + 1) throw runtime26Error("Dense own metadata array required");
+  return Array.from({ length: value.length }, (_, i) => {
+    const d = Object.getOwnPropertyDescriptor(value, String(i));
+    if (!d || !("value" in d) || !d.enumerable) throw runtime26Error("Own array data entries required"); return d.value;
+  });
+}
+const sha = (value: unknown): value is string => typeof value === "string" && /^[0-9a-f]{64}$/.test(value);
+function metadataText(value: unknown): value is string { return typeof value === "string" && value.length > 0 && value.length <= 512 && !/[\x00-\x1f\x7f]/.test(value); }
+type FilePin = { readonly path: string; readonly sha256: string; readonly signature: string };
+function statSignature(s: ReturnType<typeof fstatSync>): string { return JSON.stringify([s.dev, s.ino, s.mode, s.size, s.mtimeMs, s.ctimeMs]); }
+function pinnedMetadataFile(path: string, expected: string, limit: number, prior?: FilePin): { pin: FilePin; bytes: Buffer } {
+  if (!isAbsolute(path) || !sha(expected)) throw runtime26Error("Absolute metadata path and independent SHA-256 required");
+  let fd: number | undefined;
+  try {
+    fd = openSync(path, constants.O_RDONLY | constants.O_NOFOLLOW);
+    const before = fstatSync(fd);
+    if (!before.isFile() || (before.mode & 0o022) !== 0 || before.size === 0 || before.size > limit) throw runtime26Error("Bounded non-writable metadata file required");
+    const bytes = readFileSync(fd), after = fstatSync(fd), named = lstatSync(path);
+    const signature = statSignature(before);
+    if (!named.isFile() || signature !== statSignature(after) || signature !== statSignature(named) || bytes.length !== before.size
+      || prior !== undefined && (prior.path !== path || prior.sha256 !== expected || prior.signature !== signature)
+      || createHash("sha256").update(bytes).digest("hex") !== expected) throw runtime26Error("Metadata file pin changed");
+    return { pin: Object.freeze({ path, sha256: expected, signature }), bytes };
+  } finally { if (fd !== undefined) closeSync(fd); }
+}
+function dataMethod(target: object, key: string): (...args: unknown[]) => unknown {
+  for (let current: object | null = target; current !== null; current = Object.getPrototypeOf(current) as object | null) {
+    const d = Object.getOwnPropertyDescriptor(current, key);
+    if (!d) continue;
+    if (!("value" in d) || typeof d.value !== "function") break;
+    return d.value as (...args: unknown[]) => unknown;
+  }
+  throw runtime26Error("Explicit original PostgreSQL data method required");
+}
+export interface NativeRuntime26Issuer {
+  readonly pool: PgSalesPool;
+  readonly runtime26: NativeRuntime26Capability;
+  readonly productSeasonArray: ProductSeasonArrayCapability;
+  readonly historicalCustomerExclusion: HistoricalCustomerExclusionCapability;
+  readonly productMediaWrite: ProductMediaWriteCapability;
+  readonly imageColorSwap: {
+    readonly profile: "product-image-color-swap-v4";
+    readonly assertVerified: ProductMediaWriteCapability["assertVerified"];
+    readonly assertReady: ProductMediaWriteCapability["assertPrepared"];
+  };
+}
+export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, options: {
+  readonly reviewFile: string; readonly trustedReviewSha256: string;
+}): Promise<NativeRuntime26Issuer> {
+  const settings = exactData(options, ["reviewFile", "trustedReviewSha256"]);
+  if (!metadataText(settings.reviewFile) || !sha(settings.trustedReviewSha256) || originalPool === null || typeof originalPool !== "object"
+    || issuedPools.has(originalPool)) throw runtime26Error("One explicitly owned pool and independently pinned review required");
+  const connect = dataMethod(originalPool, "connect");
+  const reviewFile = pinnedMetadataFile(settings.reviewFile, settings.trustedReviewSha256, 64 * 1024);
+  let parsed: unknown;
+  try { parsed = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(reviewFile.bytes)); } catch { throw runtime26Error("UTF-8 metadata review required"); }
+  const review = exactData(parsed, ["version", "decision", "target", "catalog", "purposes", "scope", "independentReview", "realImportExecutionAuthorized"]);
+  if (review.version !== "C_NATIVE_RUNTIME26_REVIEW_V1" || review.decision !== "ACCEPT_EXACT_RUNTIME26_TARGET_METADATA"
+    || review.scope !== "EXACT_TARGET_METADATA_ONLY" || review.realImportExecutionAuthorized !== false) throw runtime26Error("Metadata-only independent review required");
+  const target = exactData(review.target, ["database", "databaseOid", "actingRole", "sessionUser", "serverAddress", "serverPort", "postmasterStart"]);
+  if (![target.database, target.actingRole, target.sessionUser, target.postmasterStart].every(metadataText)
+    || typeof target.databaseOid !== "string" || !/^[1-9][0-9]*$/.test(target.databaseOid)
+    || target.serverAddress !== null && !metadataText(target.serverAddress)
+    || target.serverPort !== null && !(typeof target.serverPort === "number" && Number.isInteger(target.serverPort) && target.serverPort >= 1 && target.serverPort <= 65535))
+    throw runtime26Error("Exact database, process, role and nullable socket identity required");
+  const catalog = exactData(review.catalog, ["format", "sha256", "patchLevel"]);
+  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || catalog.patchLevel !== "26_v7_media_color_swap")
+    throw runtime26Error("Exact reviewed v7 catalog digest required; v6 does not prove the approved image guard");
+  const purposes = ownArray(review.purposes);
+  if (purposes.length === 0 || purposes.length > runtime26Purposes.length || new Set(purposes).size !== purposes.length
+    || purposes.some(p => !runtime26Purposes.includes(p as Runtime26Purpose))) throw runtime26Error("Finite explicitly reviewed runtime purposes required");
+  const allowed = new Set(purposes as Runtime26Purpose[]);
+  const independent = exactData(review.independentReview, ["path", "sha256", "result"]);
+  if (!metadataText(independent.path) || !sha(independent.sha256) || independent.result !== "PASS") throw runtime26Error("Pinned independent PASS receipt required");
+  const independentFile = pinnedMetadataFile(independent.path, independent.sha256, 8 * 1024 * 1024);
+  let revoked = false;
+  const fail = (message: string): never => { revoked = true; throw runtime26Error(message); };
+  function filesReady(): void {
+    if (revoked) throw runtime26Error("Runtime metadata capability revoked");
+    try {
+      pinnedMetadataFile(reviewFile.pin.path, reviewFile.pin.sha256, 64 * 1024, reviewFile.pin);
+      pinnedMetadataFile(independentFile.pin.path, independentFile.pin.sha256, 8 * 1024 * 1024, independentFile.pin);
+    } catch { fail("Independent review files changed or became unavailable"); }
+  }
+  type Lease = { raw: PgSalesClient; query: PgSalesClient["query"]; release: PgSalesClient["release"]; active: boolean; checking: boolean; pending: number };
+  const leases = new WeakMap<object, Lease>(), activeRawClients = new WeakSet<object>();
+  async function verify(client: object, purpose: Runtime26Purpose): Promise<void> {
+    const lease = leases.get(client);
+    if (lease === undefined) throw runtime26Error("Original issuer lease required");
+    if (!allowed.has(purpose) || !lease.active || lease.checking || lease.pending !== 0) fail("Original idle live lease and explicitly reviewed purpose required");
+    filesReady(); lease.checking = true;
+    try {
+      const observed = await lease.query(NATIVE_RUNTIME26_METADATA_PROBE);
+      if (!lease.active || observed.rows.length !== 1 || observed.rowCount !== 1) fail("One actual metadata row on the original lease required");
+      const row = exactData(observed.rows[0], ["identity", "migration_versions", "catalog_sha256", "source_routines_match"]);
+      const identity = exactData(row.identity, ["database", "database_oid", "database_owner", "current_user", "session_user", "server_version_num", "server_addr", "server_port", "postmaster_start", "replication_role"]);
+      if (row.catalog_sha256 !== catalog.sha256 || row.source_routines_match !== true || !exactVersions26(row.migration_versions)
+        || identity.database !== target.database || identity.database_oid !== target.databaseOid || identity.current_user !== target.actingRole
+        || identity.session_user !== target.sessionUser || identity.server_addr !== target.serverAddress || identity.server_port !== target.serverPort
+        || identity.postmaster_start !== target.postmasterStart || identity.replication_role !== "origin") fail("Actual runtime target, exact schema, source bodies or catalog differs from independent review");
+      filesReady();
+    } catch (error) { revoked = true; throw error; } finally { lease.checking = false; }
+  }
+  const pool: PgSalesPool = Object.freeze({ async connect(): Promise<PgSalesClient> {
+    filesReady();
+    const raw = await connect.call(originalPool) as PgSalesClient;
+    if (raw === null || typeof raw !== "object" || activeRawClients.has(raw)) fail("Original pool returned an invalid or already live lease");
+    const rawQuery = dataMethod(raw, "query"), rawRelease = dataMethod(raw, "release");
+    const lease: Lease = { raw, query: (sql, values) => rawQuery.call(raw, sql, values) as Promise<PgSalesResult>,
+      release: error => { rawRelease.call(raw, error); }, active: true, checking: false, pending: 0 };
+    const client: PgSalesClient = Object.freeze({ async query(sql: string, values?: unknown[]): Promise<PgSalesResult> {
+      if (!lease.active || lease.checking || revoked && sql !== "ROLLBACK") fail("Live verified lease required; only rollback remains available after revocation");
+      lease.pending++;
+      try { return await lease.query(sql, values); } finally { lease.pending--; }
+    }, release(error?: Error | boolean): void {
+      if (!lease.active) throw runtime26Error("PostgreSQL lease already released");
+      lease.active = false; activeRawClients.delete(raw);
+      lease.release(lease.checking || lease.pending > 0 || revoked ? error instanceof Error ? error : runtime26Error("Unusable runtime lease discarded") : error);
+    } });
+    leases.set(client, lease); activeRawClients.add(raw);
+    try { await verify(client, purposes[0] as Runtime26Purpose); return client; }
+    catch (error) { client.release(error instanceof Error ? error : true); throw error; }
+  } });
+  function verifiedTarget(value: object, purpose: Runtime26Purpose): void {
+    filesReady(); if (!allowed.has(purpose)) throw runtime26Error("Purpose absent from independent review");
+    if (value !== pool) assertMaintenanceDriverPool(value, pool);
+  }
+  const runtime26: NativeRuntime26Capability = Object.freeze({ profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", assertReady: verify });
+  const productSeasonArray: ProductSeasonArrayCapability = Object.freeze({ profile: "product-season-array-v1", assertVerified(value: object): void {
+    verifiedTarget(value, value === pool ? "PRODUCT_SEASONS_READ" : "PRODUCT_MAINTENANCE");
+  } });
+  const historicalCustomerExclusion: HistoricalCustomerExclusionCapability = Object.freeze({ profile: "historical-customer-exact2-v26", assertVerified(value: object): void {
+    verifiedTarget(value, "CURRENT_CUSTOMER_READ_WRITE");
+  } });
+  const productMediaWrite: ProductMediaWriteCapability = Object.freeze({ profile: "product-media-write-v22", assertVerified(value: object): void {
+    filesReady(); if (!allowed.has("PRODUCT_MAINTENANCE")) throw runtime26Error("Product maintenance purpose absent from independent review");
+    assertMaintenanceDriverPool(value, pool);
+  }, async assertReady(context: Parameters<ProductMediaWriteCapability["assertReady"]>[0]): Promise<void> {
+    await verify(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE");
+  }, async assertPrepared(context: Parameters<ProductMediaWriteCapability["assertPrepared"]>[0], completion: Parameters<ProductMediaWriteCapability["assertPrepared"]>[1]): Promise<void> {
+    assertMaintenanceProductImagesPrepared(context, pool, completion);
+    await verify(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE");
+    assertMaintenanceProductImagesPrepared(context, pool, completion);
+  } });
+  const imageColorSwap = Object.freeze({ profile: "product-image-color-swap-v4" as const,
+    assertVerified: productMediaWrite.assertVerified, assertReady: productMediaWrite.assertPrepared });
+  issuedPools.add(originalPool);
+  try {
+    const first = await pool.connect(); first.release();
+    return Object.freeze({ pool, runtime26, productSeasonArray, historicalCustomerExclusion, productMediaWrite, imageColorSwap });
+  } catch (error) { revoked = true; throw error; }
+}
+function exactVersions26(value: unknown): boolean {
+  try { const versions = ownArray(value); return versions.length === 26 && versions.every((v, i) => v === i + 1); } catch { return false; }
 }

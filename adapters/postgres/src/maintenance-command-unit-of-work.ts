@@ -4,7 +4,7 @@ import type { ActorContext } from "../../../packages/application/src/ports.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
-import type { PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
+import type { PgSalesClient, PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
 
 export interface MaintenancePgContext {
   readonly client: { query(sql: string, values?: unknown[]): Promise<PgSalesResult> };
@@ -12,6 +12,22 @@ export interface MaintenancePgContext {
 }
 export interface MaintenancePgUnitOfWork { transaction<T>(work: (context: MaintenancePgContext) => Promise<T>): Promise<T> }
 type Query = MaintenancePgContext["client"]["query"];
+// Only this constructor/transaction can register a driver or active context.
+// Structural copies, caller booleans and a public prepare method are not proof.
+const ownedDrivers = new WeakMap<object, PgSalesPool>();
+const ownedContexts = new WeakMap<object, { pool: PgSalesPool; client: PgSalesClient; evidence: Evidence; assertActive: () => void }>();
+export function assertMaintenanceDriverPool(driver: object, pool: PgSalesPool): void {
+  requireDomain(ownedDrivers.get(driver) === pool, "NATIVE_RUNTIME26_NOT_READY", "Actual maintenance driver must own the verified pool");
+}
+export function maintenanceContextClient(context: object, pool: PgSalesPool): PgSalesClient {
+  const owned = ownedContexts.get(context);
+  requireDomain(owned !== undefined && owned.pool === pool, "NATIVE_RUNTIME26_NOT_READY", "Original active maintenance context required");
+  owned.assertActive(); return owned.client;
+}
+export function assertMaintenanceProductImagesPrepared(context: object, pool: PgSalesPool, completion: MaintenanceCompletion): void {
+  maintenanceContextClient(context, pool);
+  ownedContexts.get(context)!.evidence.assertProductImagesPrepared(completion);
+}
 type Identity = { readonly accountId: string; readonly hallId: string | null; readonly role: "ADMIN" | "WAREHOUSE" | "SALESPERSON" };
 const uuid = (value: string): string => entityId("product", value);
 function kind(value: MaintenanceKind): void { requireDomain(maintenanceKinds.includes(value), "FORBIDDEN", "Unknown maintenance family"); }
@@ -151,6 +167,17 @@ class Evidence implements MaintenanceEvidenceSession {
     requireDomain(JSON.stringify(persisted) === JSON.stringify(result), "INVALID_DATABASE_VALUE", "Committed receipt result differs from saved root");
     this.completed = true; return persisted;
   }
+  assertProductImagesPrepared(input: MaintenanceCompletion): void {
+    const { value } = this.checkedCompletion(input);
+    requireDomain(value.kind === "PRODUCT" && this.preparedFingerprint !== undefined
+      && this.preparedFingerprint === requestHash(value), "PRODUCT_MEDIA_NOT_READY", "Exact PRODUCT audit must already be inserted on this transaction");
+    const before = value.beforeValues?.images, after = value.afterValues.images;
+    // No image changes is valid in an explicit media command. Otherwise both
+    // changed sets (including an empty removal/addition side) must be present.
+    requireDomain(before === undefined && after === undefined || Array.isArray(after)
+      && (value.beforeValues === null ? before === undefined : Array.isArray(before)),
+    "PRODUCT_MEDIA_NOT_READY", "Complete changed image sets must be in the prepared audit");
+  }
 }
 /** One original client for leaf writes, current permissions, global key, audit and
  * receipt. Caller owns the shared bounded pool. No retry/migration or hidden pool. */
@@ -158,12 +185,15 @@ export class PostgresMaintenanceCommandUnitOfWork implements MaintenancePgUnitOf
   private readonly pool: PgSalesPool;
   constructor(pool: PgSalesPool) {
     if (typeof pool?.connect !== "function") throw new TypeError("Explicit shared PostgreSQL pool required"); this.pool = pool;
+    ownedDrivers.set(this, pool);
   }
   async transaction<T>(work: (context: MaintenancePgContext) => Promise<T>): Promise<T> {
     const client = await this.pool.connect(); let active = true, began = false, commitAttempted = false, discard: Error | undefined;
     const query: Query = (sql, values = []) => { requireDomain(active, "TRANSACTION_CLOSED", "Maintenance context cannot escape its callback"); return client.query(sql, values); };
-    const context = Object.freeze({ client: Object.freeze({ query }), evidence: new Evidence(query,
-      () => requireDomain(active, "TRANSACTION_CLOSED", "Maintenance context cannot escape its callback")) });
+    const assertActive = () => requireDomain(active, "TRANSACTION_CLOSED", "Maintenance context cannot escape its callback");
+    const evidence = new Evidence(query, assertActive);
+    const context = Object.freeze({ client: Object.freeze({ query }), evidence });
+    ownedContexts.set(context, { pool: this.pool, client, evidence, assertActive });
     try {
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
       const result = await work(context); active = false; commitAttempted = true; await client.query("COMMIT"); return result;
@@ -174,6 +204,6 @@ export class PostgresMaintenanceCommandUnitOfWork implements MaintenancePgUnitOf
         throw new AggregateError([error, rollbackError], "Maintenance work and rollback failed; connection discarded");
       }
       throw error;
-    } finally { active = false; client.release(discard); }
+    } finally { active = false; ownedContexts.delete(context); client.release(discard); }
   }
 }
