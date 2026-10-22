@@ -162,6 +162,9 @@ def file_identity(filename):
 
 def member_allowed(name):
     relative(name)
+    # Exact approved migration, not product-media data; archive/hash checks still apply.
+    if name == 'migrations/0022_product_media_retained_delete.sql':
+        return
     need(not re.search(r'(?:^|[/_.-])(?:secret|private|password|credential|token|backup|fixture|synthetic|test|media|node_modules)(?:s?)(?:$|[/_.-])', name, re.I), 'NON_RUNTIME_ARCHIVE_MEMBER')
     if name in ('release-manifest.json', 'package.json', 'package-lock.json'):
         return

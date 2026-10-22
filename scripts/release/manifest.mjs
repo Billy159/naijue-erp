@@ -17,6 +17,15 @@ const productionDesignTokenStyles = new Set([
   'apps/web/src/demo-controls/idle-selection-tokens.css',
   'apps/web/src/demo-presentation/tokens.css',
 ]);
+// Exact already-approved immutable runtime SQL paths; all content/provenance checks remain below.
+const reviewedMigrationSources = new Set([
+  'adapters/postgres/migrations/0022_product_media_retained_delete.sql',
+  'adapters/postgres/migrations/0023_inventory_key_admission.sql',
+]);
+const reviewedMigrationMembers = new Set([
+  'migrations/0022_product_media_retained_delete.sql',
+  'migrations/0023_inventory_key_admission.sql',
+]);
 const roleExtensions = {
   frontend: new Set(['.html', '.js', '.mjs', '.css', '.json', '.svg', '.woff', '.woff2']),
   backend: new Set(['.js', '.mjs', '.cjs', '.json']),
@@ -32,6 +41,7 @@ export function relativeName(value, allowDot = false) {
 }
 function allowedSource(value) {
   relativeName(value);
+  if (reviewedMigrationSources.has(value)) return;
   const segments = value.split('/');
   // Media/secret *data* directories are forbidden; runtime source named controlled-media.ts is legitimate code.
   requireRelease(!excludedGraph.test(value) && !segments.some((part, index) => excludedSegment.test(part)
@@ -42,6 +52,7 @@ function allowedSource(value) {
 }
 export function allowedMember(value, role) {
   relativeName(value);
+  if (role === 'migration' && reviewedMigrationMembers.has(value)) return;
   requireRelease(Object.hasOwn(roleExtensions, role) && roleExtensions[role].has(path.posix.extname(value))
     && !value.split('/').some(part => excludedSegment.test(part) || part === 'node_modules')
     && !/(?:^|[\/._-])(?:keys?|pem|pgpass|env)(?:$|[\/._-])/i.test(value)

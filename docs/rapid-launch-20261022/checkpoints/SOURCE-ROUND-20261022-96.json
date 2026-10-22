@@ -1,0 +1,70 @@
+{
+  "atUtc": "2026-10-22T22:14:33.411138+00:00",
+  "parent": "ba47e0c5444e7c03a6c1e6ac2bc94221bd302ab6",
+  "groups": [
+    {
+      "slice": "fix: admit exact approved SQL migration paths in release guards",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/production-release-migration-guard-fix-adopted-20261023-01/RESULT.json",
+      "receiptSha256": "4916f18a7ab8063f12274e378830bb983ca72da6bd4cfd9a3bf60dbca8bfd079",
+      "receiptSnapshot": {
+        "id": "C_RELEASE_EXACT_TWO_MIGRATION_PATH_GUARD_FIX_ADOPTED_20261023_01",
+        "status": "SOURCE_READY_PENDING_NEW_SCOPE_QB_AND_NEW_BUILD",
+        "atUtc": "2026-10-22T22:14:33.411138+00:00",
+        "prep": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/production-release-migration-guard-fix-prep-20261023-01/RESULT.json",
+        "prepSha256": "77aa4191f1f22b9dd031d2713b6cc66b6f76bc2b1f2e524ae7cf1903573f37da",
+        "patchSha256": "0c00f8190e8f015272276d71ca316e13d5a8804d75151a47bd8f598dbd7e2637",
+        "files": [
+          {
+            "path": "scripts/release/manifest.mjs",
+            "owner": "C",
+            "bytes": 27005,
+            "sha256": "72cc4df218d11e714ae1651b34e469b8434aeb176f6b0014583eb9a7b1f546e0"
+          },
+          {
+            "path": "scripts/release/deploy-candidate.py",
+            "owner": "C",
+            "bytes": 53894,
+            "sha256": "3e9a642f82a5355b797135fc13e5012b502e8b0bd08fbd6481e1f93b82de596d"
+          },
+          {
+            "path": "scripts/release/boot-entry.py",
+            "owner": "C",
+            "bytes": 42351,
+            "sha256": "5439ae471263b168e32d647dca5d6aa3455ac3f88dc7475c0142a027e5c94198"
+          }
+        ],
+        "schema19DefaultPinUnchanged": "a03a8bd34f68b2df1589a4c057a4bb8315368205b0842fc4856bb2aa882fad5a",
+        "exact26NewHelperPin": "3e9a642f82a5355b797135fc13e5012b502e8b0bd08fbd6481e1f93b82de596d",
+        "checksAdopted": {
+          "manifestPathCases": 33,
+          "deployPathCases": 17,
+          "newChecksOnly": true
+        },
+        "noSqlChanges": true,
+        "prior91FailurePreserved": true,
+        "serverOrBuildOrPack": false
+      },
+      "files": [
+        {
+          "path": "scripts/release/manifest.mjs",
+          "owner": "C",
+          "bytes": 27005,
+          "sha256": "72cc4df218d11e714ae1651b34e469b8434aeb176f6b0014583eb9a7b1f546e0"
+        },
+        {
+          "path": "scripts/release/deploy-candidate.py",
+          "owner": "C",
+          "bytes": 53894,
+          "sha256": "3e9a642f82a5355b797135fc13e5012b502e8b0bd08fbd6481e1f93b82de596d"
+        },
+        {
+          "path": "scripts/release/boot-entry.py",
+          "owner": "C",
+          "bytes": 42351,
+          "sha256": "5439ae471263b168e32d647dca5d6aa3455ac3f88dc7475c0142a027e5c94198"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Exact0022/0023 canonical source+member path exceptions only; deploy0022 only; new26 boot hash paired. Default19 and all other guards/content/provenance/hash checks unchanged. No new schema/SQL or actual operation. Prior91 failure retained."
+}
