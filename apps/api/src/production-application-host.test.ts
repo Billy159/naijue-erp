@@ -7,9 +7,10 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import type { PostgresApplicationApi } from "./postgres-read-api.ts";
 import { createProductionRequestHandler, startProductionApplicationHost } from "./production-application-host.ts";
 import { createProductionRuntime26RequestHandler, startProductionRuntime26ApplicationHost } from "./production-application-host.ts";
+import { createProductionRuntime26R2RequestHandler, startProductionRuntime26R2ApplicationHost } from "./production-application-host.ts";
 import { PRODUCTION_PUBLIC_ORIGIN } from "./production-provider-composition.ts";
 import type { ProductionRuntimeConfiguration } from "./production-provider-composition.ts";
-import { runProductionMain, runProductionRuntime26Main } from "./production-main.ts";
+import { runProductionMain, runProductionRuntime26Main, runProductionRuntime26R2Main } from "./production-main.ts";
 
 function config(root: string): ProductionRuntimeConfiguration {
   return { schemaVersion: 1, profile: "source-confirmed-native-v1", documentCommands: "DISABLED", publicOrigin: PRODUCTION_PUBLIC_ORIGIN,
@@ -90,6 +91,26 @@ test("production exact26 host: invalid successor configuration closes its owned 
   await assert.rejects(startProductionRuntime26ApplicationHost({ api: p.api, configuration: { ...exact26Config("/unopened"), documentCommands: "NATIVE_RUNTIME" } as never }), TypeError);
   assert.equal(p.closed(), 1); assert.deepEqual(p.routed, []);
   await assert.rejects(runProductionRuntime26Main([]), TypeError); await assert.rejects(runProductionRuntime26Main(["relative-config.json"]), TypeError);
+});
+test("production R2 exact26 host: separate adapter routes the supplied API while review and existing selectors remain private", async () => {
+  const root = await build(), p = apiDouble();
+  try {
+    const configuration = { ...exact26Config(root), profile: "source-confirmed-native-exact26-r2-v1" as const,
+      documentCommands: "NATIVE_RUNTIME" as const, existingPreparation: { sales: true, transfers: false } };
+    const handle = await createProductionRuntime26R2RequestHandler({ api: p.api, configuration });
+    assert.equal(invoke(handle, "/api/sales/prepare-existing", "POST").body, "API404"); assert.deepEqual(p.routed, ["/sales/prepare-existing"]);
+    const health = invoke(handle, "/healthz").body!; assert.equal(JSON.parse(health).databaseChecked, false);
+    assert.ok(!health.includes("runtime26Review") && !health.includes("existingPreparation") && !health.includes("d".repeat(64)));
+    assert.equal(invoke(handle, "/assets/app.js").body, "SYNTHETIC_EMITTED_BUILD_ONLY");
+    await assert.rejects(createProductionRuntime26RequestHandler({ api: p.api, configuration: configuration as never }), TypeError);
+    assert.equal(p.closed(), 0);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+test("production R2 exact26 host: invalid independent configuration closes owned API and missing CLI input never opens a listener", async () => {
+  const p = apiDouble(), configuration = { ...exact26Config("/unopened"), profile: "source-confirmed-native-exact26-r2-v1" as const,
+    documentCommands: "DISABLED", existingPreparation: { sales: true, transfers: true } };
+  await assert.rejects(startProductionRuntime26R2ApplicationHost({ api: p.api, configuration: configuration as never }), TypeError); assert.equal(p.closed(), 1);
+  await assert.rejects(runProductionRuntime26R2Main([]), TypeError); await assert.rejects(runProductionRuntime26R2Main(["relative-config.json"]), TypeError);
 });
 
 test("invalid build/startup closes owned API once and never opens a listener", async () => {

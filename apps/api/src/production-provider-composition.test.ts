@@ -4,6 +4,8 @@ import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
 import { createProductionApplicationApi, createProductionRuntime26ApplicationApi, parseProductionRuntimeConfiguration, parseProductionRuntime26Configuration, productionApplicationOptions, PRODUCTION_PUBLIC_ORIGIN } from "./production-provider-composition.ts";
 import type { ProductionRuntimeConfiguration, ProductionRuntime26Configuration } from "./production-provider-composition.ts";
+import { createProductionRuntime26R2ApplicationApi, parseProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
+import type { ProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
 import { runProductionMain } from "./production-main.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { createHash, pbkdf2Sync } from "node:crypto";
@@ -13,7 +15,7 @@ import { join } from "node:path";
 import { NATIVE_RUNTIME26_METADATA_PROBE } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
 import { historyDetailQuery, historyListQuery } from "../../../tests/support/imported-history-query-fixtures.ts";
 import { wrapTrustedLegacyCredential } from "../../../packages/authentication/src/legacy-passwords.ts";
-import { createPostgresApplicationApi, createSourceConfirmedApplicationReadAuthorization } from "./postgres-read-api.ts";
+import { createPostgresApplicationApi, createPostgresRuntime26DocumentApplicationApi, createSourceConfirmedApplicationReadAuthorization } from "./postgres-read-api.ts";
 
 function config(): ProductionRuntimeConfiguration {
   return { schemaVersion: 1, profile: "source-confirmed-native-v1", documentCommands: "NATIVE_RUNTIME", publicOrigin: PRODUCTION_PUBLIC_ORIGIN,
@@ -284,6 +286,9 @@ function exact26Driver(observation: ReturnType<typeof exact26Fixture>["observati
       else if (sql.includes("imported-history:schema")) rows = [{ versions: Array.from({ length: 26 }, (_, i) => i + 1) }];
       else if (sql.includes("imported-history:list-count")) rows = [{ total: "0" }];
       else if (sql.includes("imported-history:list-page") || sql.includes("imported-history:detail")) {}
+      else if (sql.includes("sales:current-schema")) rows = [{ current_sales_schema_ready: true }];
+      else if (sql.startsWith("SELECT pg_advisory_xact_lock") || sql.includes("FROM naijue_erp.operation_receipt")
+        || sql.includes("FROM naijue_erp.sales_header") || sql.includes("FROM naijue_erp.transfer_header")) {}
       else throw Error("Unexpected exact26 synthetic composition SQL");
       return { rows, rowCount: rows.length };
     }, release() { releases++; }
@@ -375,5 +380,86 @@ test("production exact26: HISTORY four POST routes use their separate policy and
       assert.ok(p.calls.every(call => !/^(INSERT|UPDATE|DELETE)|nextval|setval/.test(call.sql))); assert.equal(p.counts().allocations, 1); assert.equal(p.counts().releases, p.counts().connects);
     } finally { await api.close(); }
     assert.equal(p.counts().ends, 1);
+  } finally { f.cleanup(); }
+});
+
+function r2Configuration(configuration: ProductionRuntime26Configuration, sales = true, transfers = true): ProductionRuntime26R2Configuration {
+  return { ...configuration, profile: "source-confirmed-native-exact26-r2-v1", documentCommands: "NATIVE_RUNTIME", existingPreparation: { sales, transfers } };
+}
+test("production R2 exact26: closed independent profile requires native commands, exact review and separate two-boolean existing selectors", async () => {
+  const f = exact26Fixture(); try {
+    const config = r2Configuration(f.configuration); assert.deepEqual(parseProductionRuntime26R2Configuration(config), config);
+    assert.throws(() => parseProductionRuntimeConfiguration(config), TypeError); assert.throws(() => parseProductionRuntime26Configuration(config), TypeError);
+    assert.throws(() => parseProductionRuntime26R2Configuration(f.configuration), TypeError);
+    let allocations = 0, getters = 0;
+    for (const change of [{ documentCommands: "DISABLED" }, { profile: "source-confirmed-native-v1" }, { existingPreparation: { sales: true } },
+      { existingPreparation: { sales: "true", transfers: true } }, { existingPreparation: { sales: true, transfers: true, create: true } },
+      { runtime26Review: { ...config.runtime26Review, issuer: true } }, { catalogueCompleteness: true }])
+      await assert.rejects(createProductionRuntime26R2ApplicationApi({ ...config, ...change }, () => { allocations++; throw Error("must not allocate"); }), TypeError);
+    const accessor = Object.defineProperty({ sales: true, transfers: true }, "sales", { enumerable: true, get() { getters++; throw Error("MUST_NOT_RUN"); } });
+    assert.throws(() => parseProductionRuntime26R2Configuration({ ...config, existingPreparation: accessor }), TypeError);
+    const { runtime26Review: _review, existingPreparation: _preparation, ...legacy } = config;
+    await assert.rejects(createPostgresRuntime26DocumentApplicationApi(productionApplicationOptions({ ...legacy, profile: "source-confirmed-native-v1", documentCommands: "DISABLED" }),
+      config.runtime26Review, config.existingPreparation, () => { allocations++; throw Error("must not allocate"); }), TypeError);
+    const original = productionApplicationOptions({ ...legacy, profile: "source-confirmed-native-v1" }), { catalogueCompleteness: _proof, ...missingProof } = original.documentCommands!;
+    await assert.rejects(createPostgresRuntime26DocumentApplicationApi({ ...original, documentCommands: missingProof } as never,
+      config.runtime26Review, config.existingPreparation, () => { allocations++; throw Error("must not allocate"); }), TypeError);
+    assert.equal(allocations, 0); assert.equal(getters, 0);
+  } finally { f.cleanup(); }
+});
+test("production R2 exact26: fresh one-pool composition mounts commands and CREATE with independently selected existing routes", async () => {
+  for (const [sales, transfers] of [[false, false], [true, false], [false, true], [true, true]]) {
+    const f = exact26Fixture(), p = exact26Driver(f.observation);
+    try {
+      const api = await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration, sales, transfers), p.factory);
+      try {
+        assert.equal(api.app.server.listening, false); assert.deepEqual(p.counts(), { allocations: 1, connects: 2, releases: 2, ends: 0 });
+        for (const [kind, enabled] of [["sales", sales], ["transfers", transfers]] as const) {
+          assert.equal(api.app.hasRoute({ method: "POST", url: `/${kind}/commands` }), true);
+          assert.equal(api.app.hasRoute({ method: "POST", url: `/${kind}/prepare-create` }), true);
+          assert.equal(api.app.hasRoute({ method: "POST", url: `/${kind}/prepare-existing` }), enabled);
+          const response = await api.app.inject({ method: "POST", url: `/${kind}/prepare-existing`, payload: {} }); assert.equal(response.statusCode, enabled ? 401 : 404);
+        }
+        assert.equal(p.counts().connects, 2); assert.ok(p.calls.every(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE));
+      } finally { await api.close(); }
+      assert.equal(p.counts().ends, 1);
+    } finally { f.cleanup(); }
+  }
+});
+test("production R2 exact26: command, receipt and existing preparation UOWs all carry the same genuine issuer pool/client gates", async () => {
+  const f = exact26Fixture(), p = exact26Driver(f.observation);
+  try {
+    const api = await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration), p.factory);
+    try {
+      const target = "00000000-0000-4000-8000-000000000010", warehouse = "00000000-0000-4000-8000-000000000011", sku = "00000000-0000-4000-8000-000000000012";
+      const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
+      for (const kind of ["sales", "transfers"] as const) {
+        const command = { action: "APPROVE", expectedVersion: 1, requestKey: `SYNTHETIC-R2-${kind}`, [kind === "sales" ? "salesId" : "transferId"]: target };
+        assert.equal((await api.app.inject({ method: "POST", url: `/${kind}/commands`, headers, payload: command })).statusCode, 404);
+        assert.equal((await api.app.inject({ method: "GET", url: `/${kind}/receipts/missing`, headers })).statusCode, 404);
+        const existing = kind === "sales" ? { salesId: target, expectedVersion: 1, businessType: "SALE", businessDate: "2026-10-23", note: null, hallId: hall,
+          warehouseId: warehouse, customerId: target, salespersonId: null, orderDiscount: "0.00", lines: [{ existingLineId: null, skuId: sku, quantity: "1", dealPrice: "1.25",
+            pricingRule: "UNIT_PRICE", discountTenths: null, isGift: false, zeroConfirmed: false }], settlements: [] }
+          : { transferId: target, expectedVersion: 1, businessDate: "2026-10-23", note: null, fromWarehouseId: warehouse, toWarehouseId: sku,
+            lines: [{ existingLineId: null, skuId: sku, quantity: "1" }] };
+        const response = await api.app.inject({ method: "POST", url: `/${kind}/prepare-existing`, headers, payload: existing }); assert.equal(response.statusCode, 404, response.body);
+      }
+      const commandLeases = new Set(p.calls.filter(call => call.sql.startsWith("SELECT pg_advisory_xact_lock")).map(call => call.lease)); assert.equal(commandLeases.size, 6);
+      for (const lease of commandLeases) {
+        const calls = p.calls.filter(call => call.lease === lease), probes = calls.filter(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE);
+        assert.equal(calls[0]!.sql, NATIVE_RUNTIME26_METADATA_PROBE); assert.ok(probes.length >= 3);
+        assert.equal(probes.length, calls.at(-1)!.sql === "COMMIT" ? 4 : 3);
+      }
+      assert.ok(p.calls.every(call => !/^(INSERT|UPDATE|DELETE)|nextval|setval/.test(call.sql))); assert.equal(p.counts().allocations, 1); assert.equal(p.counts().connects, p.counts().releases);
+    } finally { await api.close(); }
+    assert.equal(p.counts().ends, 1);
+  } finally { f.cleanup(); }
+});
+test("production R2 exact26: missing command purpose aborts startup and closes only its owned original pool", async () => {
+  const f = exact26Fixture(["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ"]), p = exact26Driver(f.observation);
+  try {
+    await assert.rejects(createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration), p.factory), { code: "NATIVE_RUNTIME26_NOT_READY" });
+    assert.equal(p.counts().allocations, 1); assert.equal(p.counts().ends, 1); assert.equal(p.counts().connects, p.counts().releases);
+    assert.ok(p.calls.every(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE));
   } finally { f.cleanup(); }
 });

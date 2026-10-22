@@ -19,7 +19,8 @@ import type { AuthenticationService } from "../../../packages/authentication/src
 
 const origin = "https://synthetic-commands.invalid";
 const token = "S".repeat(43);
-async function setup(t: TestContext, nativePreparation = false, productName = snapshot.productName) {
+async function setup(t: TestContext, nativePreparation = false, productName = snapshot.productName,
+  existing: Pick<AuthenticatedDocumentCommandsOptions, "nativeExistingSalesPreparation" | "nativeExistingTransferPreparation"> = {}) {
   const sales = fixture(); const transfers = transferFixture(); let active = true; let allowed = true; let sequence = 8000;
   const service: AuthenticationService = {
     async resolve(value) { return active && value === token ? { accountId: ids.account, staffId: sid("staff", 16),
@@ -33,7 +34,7 @@ async function setup(t: TestContext, nativePreparation = false, productName = sn
       unitOfWork: { transaction(work) { return transfers.store.transaction(tx => work({ ...tx,
         async getCurrentTransferSnapshots(ids) { return new Map(ids.map(id => [id, { ...snapshot, productName, barcode: "000123" }])); }
       })); } }
-    }, ...(nativePreparation ? { nativeManualTransferPreparation: true as const } : {}) });
+    }, ...(nativePreparation ? { nativeManualTransferPreparation: true as const } : {}), ...existing });
   // Mutation after composition cannot replace the captured session resolver.
   service.resolve = async () => { throw new Error("Must not replace captured authentication"); };
   const app = Fastify({ logger: false }); app.register(plugin); t.after(() => app.close()); await app.ready();
@@ -127,7 +128,7 @@ test("SYNTHETIC over-budget native labels fail preparation explicitly without wr
   assert.equal(commandOversized.statusCode, 413);
 });
 
-async function existingTransferHttp(t: TestContext, enable = true, provider?: TransferHttpOptions["existingPreparation"]) {
+async function existingTransferHttp(t: TestContext, enable = true, provider?: TransferHttpOptions["existingPreparation"], composite = false) {
   const f = transferFixture(); let active = true, sequence = 20000;
   const original = transferDraft(); await f.service.execute({ actor: transferActor, action: "SAVE", expectedVersion: null, requestKey: "seed-existing-http", draft: original });
   const dependencies = { ...f.dependencies, newId: <K extends import("../../../packages/domain/src/values.ts").EntityKind>(kind: K) => sid(kind, sequence++),
@@ -138,7 +139,12 @@ async function existingTransferHttp(t: TestContext, enable = true, provider?: Tr
     loginName: "SYNTHETIC", role: transferActor.role, hallId: transferActor.hallId, authVersion: 1 } : null; },
     async login() { throw Error("SYNTHETIC UNUSED"); }, async logout() {}, async changeOwnPassword() {} };
   const app = Fastify({ logger: false }); t.after(() => app.close());
-  app.register(createTransferHttpPlugin({ dependencies, authenticate: createTransferSessionAuthenticator({ service, trustedOrigin: origin }),
+  if (composite) {
+    const sales = fixture();
+    app.register(createAuthenticatedDocumentCommandsPlugin({ authentication: { service, trustedOrigin: origin }, transfers: dependencies,
+      sales: { unitOfWork: sales.store, rules: SYNTHETIC_RULES, authorization: { async assertAllowed() {} }, now: () => "2026-10-21T12:00:00Z", newId: kind => sid(kind, sequence++) },
+      nativeExistingTransferPreparation: true }));
+  } else app.register(createTransferHttpPlugin({ dependencies, authenticate: createTransferSessionAuthenticator({ service, trustedOrigin: origin }),
     ...(enable ? { existingPreparation: provider ?? createNativeTransferExistingPreparation(dependencies) } : { preparation: createNativeTransferPreparation(dependencies) }) }));
   await app.ready(); const headers = { cookie: `__Host-naijue_session=${token}`, origin, "content-type": "application/json" };
   const input = () => ({ businessDate: "2026-10-21", note: null, transferId: original.header.id, expectedVersion: 1,
@@ -188,4 +194,42 @@ test("SYNTHETIC existing transfer HTTP bounds requests/responses and rejects a r
     assert.equal((await h.post({ ...h.input(), note: "x".repeat(TRANSFER_PREPARE_MAX_REQUEST_BYTES) })).statusCode, 413);
     assert.equal((await h.app.inject({ method: "POST", url: "/transfers/prepare-existing", headers: { ...h.headers, "content-type": "text/plain" }, payload: "{}" })).statusCode, 415);
   }
+});
+
+test("R2 composition existing preparation: independent per-document opt-ins do not imply CREATE and CREATE alone never implies existing", async t => {
+  for (const [sales, transfers] of [[false, false], [true, false], [false, true], [true, true]]) {
+    const h = await setup(t, false, snapshot.productName, { ...(sales ? { nativeExistingSalesPreparation: true as const } : {}), ...(transfers ? { nativeExistingTransferPreparation: true as const } : {}) });
+    for (const [kind, enabled] of [["sales", sales], ["transfers", transfers]] as const) {
+      assert.equal(h.app.hasRoute({ method: "POST", url: `/${kind}/prepare-existing` }), enabled);
+      assert.equal(h.app.hasRoute({ method: "POST", url: `/${kind}/prepare-create` }), false);
+      const response = await h.app.inject({ method: "POST", url: `/${kind}/prepare-existing`, headers: { ...h.headers, origin: "https://untrusted.invalid" }, payload: {} });
+      assert.equal(response.statusCode, enabled ? 401 : 404);
+    }
+    assert.equal(h.sales.store.snapshot().headers.size, 0); assert.equal(h.transfers.store.snapshot().transfers.size, 0);
+  }
+  const createOnly = await setup(t, true);
+  assert.equal(createOnly.app.hasRoute({ method: "POST", url: "/transfers/prepare-create" }), true);
+  assert.equal(createOnly.app.hasRoute({ method: "POST", url: "/transfers/prepare-existing" }), false);
+});
+test("R2 composition existing preparation: trusted composite runs actual transfer prepare-existing with exact response and no business effects", async t => {
+  const h = await existingTransferHttp(t, true, undefined, true), before = h.f.store.snapshot();
+  assert.equal(h.app.hasRoute({ method: "POST", url: "/transfers/prepare-create" }), false);
+  assert.equal(h.app.hasRoute({ method: "POST", url: "/sales/prepare-existing" }), false);
+  const response = await h.post(h.input()); assert.equal(response.statusCode, 200, response.body);
+  assert.deepEqual(Object.keys(response.json()).sort(), ["draft", "expectedVersion"]); assert.equal(response.json().expectedVersion, 1);
+  assert.equal(response.json().draft.header.number, h.original.header.number); assert.equal(response.json().draft.lines[0].id, h.original.lines[0]!.id);
+  assert.equal(response.headers["cache-control"], "no-store"); assert.deepEqual(h.f.store.snapshot(), before); assert.equal(h.app.server.listening, false);
+});
+test("R2 composition existing preparation: missing own-data true, coercion and getters are rejected before providers", () => {
+  let getterCalls = 0;
+  const authentication = { trustedOrigin: origin, service: { async resolve() { return null; }, async login() {}, async logout() {}, async changeOwnPassword() {} } };
+  for (const key of ["nativeExistingSalesPreparation", "nativeExistingTransferPreparation"]) {
+    for (const value of [false, "true", 1, undefined])
+      assert.throws(() => createAuthenticatedDocumentCommandsPlugin({ authentication, [key]: value } as never), /independent own-data true opt-in/);
+    const getter = Object.defineProperty({ authentication }, key, { enumerable: true, get() { getterCalls++; throw Error("MUST_NOT_RUN"); } });
+    assert.throws(() => createAuthenticatedDocumentCommandsPlugin(getter as never), /independent own-data true opt-in/);
+    const inherited = Object.assign(Object.create({ [key]: true }) as object, { authentication });
+    assert.throws(() => createAuthenticatedDocumentCommandsPlugin(inherited as never), /independent own-data true opt-in/);
+  }
+  assert.equal(getterCalls, 0);
 });

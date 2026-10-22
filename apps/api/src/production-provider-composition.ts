@@ -10,6 +10,7 @@ import { createSourceAuthenticationPolicy } from "../../../packages/authenticati
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { createPostgresApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresRuntime26ApplicationApi } from "./postgres-read-api.ts";
+import { createPostgresRuntime26DocumentApplicationApi } from "./postgres-read-api.ts";
 import type { PostgresApplicationApiOptions, PostgresApplicationApi } from "./postgres-read-api.ts";
 
 export const PRODUCTION_PUBLIC_ORIGIN = "https://1n5635n614.goho.co";
@@ -110,4 +111,32 @@ export function productionRuntime26HostConfiguration(input: unknown): Production
 export async function createProductionRuntime26ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
   const config = parseProductionRuntime26Configuration(input);
   return createPostgresRuntime26ApplicationApi(productionApplicationOptions(productionRuntime26HostConfiguration(config)), config.runtime26Review, driver);
+}
+
+/** Explicit R2 command entry. Neither old19 nor R1 accepts these selectors. */
+export interface ProductionRuntime26R2Configuration extends Omit<ProductionRuntimeConfiguration, "profile" | "documentCommands"> {
+  readonly profile: "source-confirmed-native-exact26-r2-v1";
+  readonly documentCommands: "NATIVE_RUNTIME";
+  readonly runtime26Review: ProductionRuntime26Configuration["runtime26Review"];
+  readonly existingPreparation: { readonly sales: boolean; readonly transfers: boolean };
+}
+export function parseProductionRuntime26R2Configuration(input: unknown): ProductionRuntime26R2Configuration {
+  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", "existingPreparation"]);
+  const preparation = bag(c.existingPreparation, ["sales", "transfers"]);
+  if (c.profile !== "source-confirmed-native-exact26-r2-v1" || c.documentCommands !== "NATIVE_RUNTIME"
+    || typeof preparation.sales !== "boolean" || typeof preparation.transfers !== "boolean")
+    throw new TypeError("Explicit R2 native commands and independent existing-preparation selectors required");
+  const { existingPreparation: _preparation, ...metadata } = c;
+  const checked = parseProductionRuntime26Configuration({ ...metadata, profile: "source-confirmed-native-exact26-r1-v1", documentCommands: "DISABLED" });
+  return { ...checked, profile: "source-confirmed-native-exact26-r2-v1", documentCommands: "NATIVE_RUNTIME",
+    existingPreparation: { sales: preparation.sales, transfers: preparation.transfers } };
+}
+export function productionRuntime26R2HostConfiguration(input: unknown): ProductionRuntimeConfiguration {
+  const { runtime26Review: _review, existingPreparation: _preparation, ...base } = parseProductionRuntime26R2Configuration(input);
+  return parseProductionRuntimeConfiguration({ ...base, profile: "source-confirmed-native-v1" });
+}
+export async function createProductionRuntime26R2ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
+  const config = parseProductionRuntime26R2Configuration(input);
+  return createPostgresRuntime26DocumentApplicationApi(productionApplicationOptions(productionRuntime26R2HostConfiguration(config)),
+    config.runtime26Review, config.existingPreparation, driver);
 }

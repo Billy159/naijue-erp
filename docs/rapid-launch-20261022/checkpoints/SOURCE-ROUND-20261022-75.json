@@ -1,0 +1,196 @@
+{
+  "atUtc": "2026-10-22T20:51:08.644991+00:00",
+  "parent": "76b68f680b77e71d279e63977d887f15b2c940bf",
+  "groups": [
+    {
+      "slice": "R2_EXPLICIT26_COMMAND_AND_EXISTING_PREPARATION_COMPOSITION",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R2-EXACT26-COMPOSITION-RESULT-v1.json",
+      "receiptSha256": "3b4bb368add7a147595b6e71c5ee8bff5f25dccce3b74cf6f12ed95dfb42f6aa",
+      "receiptSnapshot": {
+        "version": "D1_R2_EXPLICIT_EXACT26_COMMAND_COMPOSITION_V1",
+        "taskId": "D1-R2-EXACT26-COMPOSITION-v1",
+        "status": "SOURCE_READY_EXACT8_FROZEN_FOR_C_CHECKPOINT_QB_NEW_SCOPE",
+        "role": "D1",
+        "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+        "technicalFreeze": {
+          "path": "docs/rapid-launch-20261022/R2-EXACT26-COMPOSITION-TECHNICAL-FREEZE-v1.json",
+          "sha256": "cd3f5ec2d3fa46fd72cb27fc2aeac940f3590d208ec260b0818b40ab050acdde",
+          "authenticatedSourceRegistration": "C amended WRITE-OWNERSHIP.json before D1 wrote the existing authenticated-document-commands.ts path; actual registry entry verified."
+        },
+        "files": [
+          {
+            "path": "apps/api/src/postgres-read-api.ts",
+            "bytes": 41355,
+            "sha256": "8e4025b2e9460602009c94c835b818f442c00a984b2cbaae16d910cc84e5eae7",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "apps/api/src/production-provider-composition.ts",
+            "bytes": 12010,
+            "sha256": "8b6b5ff090e63301cb15847d30c5976f36ada3ab1122f928c14b5cdabed9aa5d",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "apps/api/src/production-application-host.ts",
+            "bytes": 12508,
+            "sha256": "21840a794bbb19b43e41a6666ab74abb3c6d2fb8cedce9ea61df21ee5ef6ab0a",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "apps/api/src/production-main.ts",
+            "bytes": 6323,
+            "sha256": "900c30c4e218f1a8c131aef95c68869bbd70d91129caa0d98b5825a95e6f9c6f",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "apps/api/src/authenticated-document-commands.ts",
+            "bytes": 5980,
+            "sha256": "63e641e6dd969dd138640816360b0df4e29cef20685aa6a62923dc9dfc120bed",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "apps/api/src/production-provider-composition.test.ts",
+            "bytes": 42493,
+            "sha256": "051f937218462f82dc61e3d0a0b143ad3e94aa54f5d959294c787777ea456a6a",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "apps/api/src/production-application-host.test.ts",
+            "bytes": 11274,
+            "sha256": "5b7a9b4cd6007aab5c0953c8236cd28776ef29e10ac21772013778f890da4c60",
+            "singleTerminalLF": true
+          },
+          {
+            "path": "apps/api/src/authenticated-document-commands.test.ts",
+            "bytes": 22738,
+            "sha256": "742129db9f11adcc5be7382f1029459a0a74eb4db2200ab2ed4ee6a7870c72c8",
+            "singleTerminalLF": true
+          }
+        ],
+        "unchangedC70Dependencies": {
+          "checkpoint": "cd01fb43a3d4ca581d09ceac47144d2b336d1d16",
+          "files": [
+            {
+              "path": "adapters/postgres/src/inventory-posting-balances.ts",
+              "bytes": 22574,
+              "sha256": "c4407f234a615362567d620d1e84bec1018c569c0fb243db94c34cf887a3dab0",
+              "singleTerminalLF": true
+            },
+            {
+              "path": "adapters/postgres/src/sales-unit-of-work.ts",
+              "bytes": 33357,
+              "sha256": "454cc1ae1c7bef479aec9555e5913d1fafeaabab911951202e3a525a7369954a",
+              "singleTerminalLF": true
+            },
+            {
+              "path": "adapters/postgres/src/transfer-unit-of-work.ts",
+              "bytes": 22455,
+              "sha256": "01eb3a96a9bb02c90adeb7de9569fc396d3e62367e66efcc944ef9a85330152e",
+              "singleTerminalLF": true
+            },
+            {
+              "path": "tests/runtime-document-commit-outcome.test.ts",
+              "bytes": 15280,
+              "sha256": "c52953206ba7a9ded838048d0676bf32fe586eb3a01986e49a32573896758032",
+              "singleTerminalLF": true
+            }
+          ]
+        },
+        "implementation": {
+          "profile": "source-confirmed-native-exact26-r2-v1",
+          "configuration": "Separate closed11 own-data config; documentCommands must be NATIVE_RUNTIME; review remains exact {reviewFile,trustedReviewSha256}; existingPreparation required closed {sales:boolean,transfers:boolean}. Legacy9 and R1 closed10 selectors/factories remain separate and reject R2.",
+          "entry": "Independent createProductionRuntime26R2ApplicationApi/createPostgresRuntime26DocumentApplicationApi, R2 host adapter and explicit --exact26-r2 CLI. No command activation through R1.",
+          "pool": "Common composition still creates exactly one fresh owned BoundedPool, obtains genuine runtime26 issuer and passes that exact issuer.pool to every provider. Original pool owns failure/shutdown disposal; no QA pin or raw/hot fallback.",
+          "transactions": "R2 SalesUOW receives genuine runtime26 + exact2 customer exclusion and original imported catalogue completeness. TransferUOW receives genuine runtime26. C70 same actual-client INVENTORY_ADMISSION before BEGIN/within tx/preCOMMIT reused unchanged.",
+          "existingPreparation": "Independent nativeExistingSalesPreparation/nativeExistingTransferPreparation own-data true opt-ins on authenticated composite. Per-kind false config omits that opt-in. CREATE flag alone cannot enable existing; existing-only does not enable CREATE and preserves native revalidation.",
+          "originalProofs": "Original imported product completeness verifier and providers retained; no maintained-product/root-existence/noop proof. No numbering/SAVE/CAS/idempotency semantics or purpose changes.",
+          "host": "Existing captured-assets/Host/API/no-store/public-health boundary reused; private metadata and selectors excluded from public output; invalid R2 config closes its owned API before any listener."
+        },
+        "validation": {
+          "path": "R2-EXACT26-COMPOSITION-VALIDATION-v1.json",
+          "sha256": "0edf664ffd147a4e90113f239928be4b38b9a7fbaea63f8b7b8fd5ac431789c4",
+          "newUnique": 9,
+          "affectedUnique": 8,
+          "pass": 17,
+          "skip": 0,
+          "fail": 0,
+          "firstPass": true,
+          "strictDirectExit": 0,
+          "scope": "Synthetic driver/pinned metadata, real non-listening Fastify composite/inject and in-memory actual preparation code; NOT actual PostgreSQL, locks, grants or deployed host."
+        },
+        "notTested": [
+          "C-coordinated actual PostgreSQL R2 runtime-role grants/catalog/metadata review and real document stock posting",
+          "Actual production host/listener/build/URL activation",
+          "Complete real SOURCE11/49 MAIN/import/per-warehouse conservation/nonzero PUBLISH/audit/replay",
+          "R3 maintained-product proof and commands"
+        ],
+        "boundaries": {
+          "pg": false,
+          "grant": false,
+          "credentials": false,
+          "frontend": false,
+          "sharedBusinessContract": false,
+          "newSchemaPurpose": false,
+          "productionActivation": false,
+          "r1Disabled": true,
+          "stagedHidden": true,
+          "anomalousProductOnlyBarcodesExcluded": 2958,
+          "missingHistoricalPeopleTimesRemainNullable": true,
+          "frontendRequiredUnchanged": true
+        },
+        "next": "C checkpoint exact8 and independent new26 composition/H05 review only; actual database/permissions by C, H06 maintained proof remains separate R3."
+      },
+      "files": [
+        {
+          "path": "apps/api/src/postgres-read-api.ts",
+          "owner": "D1",
+          "sha256": "8e4025b2e9460602009c94c835b818f442c00a984b2cbaae16d910cc84e5eae7",
+          "bytes": 41355
+        },
+        {
+          "path": "apps/api/src/production-provider-composition.ts",
+          "owner": "D1",
+          "sha256": "8b6b5ff090e63301cb15847d30c5976f36ada3ab1122f928c14b5cdabed9aa5d",
+          "bytes": 12010
+        },
+        {
+          "path": "apps/api/src/production-application-host.ts",
+          "owner": "D1",
+          "sha256": "21840a794bbb19b43e41a6666ab74abb3c6d2fb8cedce9ea61df21ee5ef6ab0a",
+          "bytes": 12508
+        },
+        {
+          "path": "apps/api/src/production-main.ts",
+          "owner": "D1",
+          "sha256": "900c30c4e218f1a8c131aef95c68869bbd70d91129caa0d98b5825a95e6f9c6f",
+          "bytes": 6323
+        },
+        {
+          "path": "apps/api/src/authenticated-document-commands.ts",
+          "owner": "D1",
+          "sha256": "63e641e6dd969dd138640816360b0df4e29cef20685aa6a62923dc9dfc120bed",
+          "bytes": 5980
+        },
+        {
+          "path": "apps/api/src/production-provider-composition.test.ts",
+          "owner": "D1",
+          "sha256": "051f937218462f82dc61e3d0a0b143ad3e94aa54f5d959294c787777ea456a6a",
+          "bytes": 42493
+        },
+        {
+          "path": "apps/api/src/production-application-host.test.ts",
+          "owner": "D1",
+          "sha256": "5b7a9b4cd6007aab5c0953c8236cd28776ef29e10ac21772013778f890da4c60",
+          "bytes": 11274
+        },
+        {
+          "path": "apps/api/src/authenticated-document-commands.test.ts",
+          "owner": "D1",
+          "sha256": "742129db9f11adcc5be7382f1029459a0a74eb4db2200ab2ed4ee6a7870c72c8",
+          "bytes": 22738
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Exact checkpoint only. Scoped author checks adopted; new technical acceptance independently assigned, no controller duplicate QA."
+}

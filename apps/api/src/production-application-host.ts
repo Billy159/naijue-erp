@@ -6,7 +6,8 @@ import path from "node:path";
 import type { PostgresApplicationApi } from "./postgres-read-api.ts";
 import { parseProductionRuntimeConfiguration } from "./production-provider-composition.ts";
 import { productionRuntime26HostConfiguration } from "./production-provider-composition.ts";
-import type { ProductionRuntimeConfiguration, ProductionRuntime26Configuration } from "./production-provider-composition.ts";
+import { productionRuntime26R2HostConfiguration } from "./production-provider-composition.ts";
+import type { ProductionRuntimeConfiguration, ProductionRuntime26Configuration, ProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
 
 export interface ProductionApplicationHostOptions { readonly api: PostgresApplicationApi; readonly configuration: ProductionRuntimeConfiguration }
 export interface ProductionApplicationHost { readonly publicOrigin: string; close(): Promise<void> }
@@ -144,6 +145,21 @@ export async function startProductionRuntime26ApplicationHost(options: Productio
   try { configuration = productionRuntime26HostConfiguration(options.configuration); }
   catch (error) {
     try { await options?.api?.close(); } catch (cleanup) { throw new AggregateError([error, cleanup], "Exact26 host configuration and API cleanup failed"); }
+    throw error;
+  }
+  return startProductionApplicationHost({ api: options.api, configuration });
+}
+
+export interface ProductionRuntime26R2ApplicationHostOptions { readonly api: PostgresApplicationApi; readonly configuration: ProductionRuntime26R2Configuration }
+export async function createProductionRuntime26R2RequestHandler(options: ProductionRuntime26R2ApplicationHostOptions,
+  isClosing: () => boolean = () => false): Promise<(request: IncomingMessage, response: ServerResponse) => void> {
+  return createProductionRequestHandler({ api: options.api, configuration: productionRuntime26R2HostConfiguration(options.configuration) }, isClosing);
+}
+export async function startProductionRuntime26R2ApplicationHost(options: ProductionRuntime26R2ApplicationHostOptions): Promise<ProductionApplicationHost> {
+  let configuration: ProductionRuntimeConfiguration;
+  try { configuration = productionRuntime26R2HostConfiguration(options.configuration); }
+  catch (error) {
+    try { await options?.api?.close(); } catch (cleanup) { throw new AggregateError([error, cleanup], "Exact26 R2 host configuration and API cleanup failed"); }
     throw error;
   }
   return startProductionApplicationHost({ api: options.api, configuration });

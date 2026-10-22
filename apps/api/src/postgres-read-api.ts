@@ -383,8 +383,28 @@ export async function createPostgresRuntime26ApplicationApi(options: PostgresApp
   return await composePostgresApi(options, createDriver, capabilities,
     Object.freeze({ reviewFile: pin.reviewFile, trustedReviewSha256: pin.trustedReviewSha256 })) as PostgresApplicationApi;
 }
+export interface Runtime26ExistingPreparation { readonly sales: boolean; readonly transfers: boolean }
+/** Independent R2 successor. Original command providers and catalogue proof are
+ * mandatory; only the existing-prepare selectors are new, explicitly per kind. */
+export async function createPostgresRuntime26DocumentApplicationApi(options: PostgresApplicationApiOptions,
+  review: { readonly reviewFile: string; readonly trustedReviewSha256: string }, existingPreparation: Runtime26ExistingPreparation,
+  createDriver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
+  if (!options || typeof options !== "object" || !("documentCommands" in options) || !("currentForms" in options))
+    throw new TypeError("Exact26 R2 requires explicit native document commands and current forms");
+  const pin = exactBag(review, ["reviewFile", "trustedReviewSha256"]), preparation = exactBag(existingPreparation, ["sales", "transfers"]);
+  if (typeof pin.reviewFile !== "string" || !isAbsolute(pin.reviewFile) || resolve(pin.reviewFile) !== pin.reviewFile
+    || typeof pin.trustedReviewSha256 !== "string" || !/^[0-9a-f]{64}$/.test(pin.trustedReviewSha256)
+    || typeof preparation.sales !== "boolean" || typeof preparation.transfers !== "boolean")
+    throw new TypeError("Closed exact26 review and independent boolean existing-preparation selectors required");
+  const capabilities = checkedApplicationCapabilities(options);
+  if (!capabilities.nativeReadExtensions || capabilities.commands === null) throw new TypeError("Exact26 R2 requires native policies and complete original command proof providers");
+  return await composePostgresApi(options, createDriver, capabilities,
+    Object.freeze({ reviewFile: pin.reviewFile, trustedReviewSha256: pin.trustedReviewSha256 }),
+    Object.freeze({ sales: preparation.sales, transfers: preparation.transfers })) as PostgresApplicationApi;
+}
 async function composePostgresApi(options: PostgresReadApiOptions, createDriver: PostgresPoolDriverFactory | undefined,
-  capabilities: ApplicationCapabilities | null, runtime26Review?: { readonly reviewFile: string; readonly trustedReviewSha256: string }): Promise<PostgresReadApi | PostgresApplicationApi> {
+  capabilities: ApplicationCapabilities | null, runtime26Review?: { readonly reviewFile: string; readonly trustedReviewSha256: string },
+  runtime26ExistingPreparation?: Runtime26ExistingPreparation): Promise<PostgresReadApi | PostgresApplicationApi> {
   const host = checkedHost(options);
   const ownedPool = new BoundedPostgresPool(options.postgres, createDriver);
   let app: FastifyInstance | undefined;
@@ -445,10 +465,14 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       dependencies: { authorization: capabilities.importedHistory, reader: new PostgresImportedHistoryQueryReader(pool) } }));
     if (capabilities?.commands) {
       const c = capabilities.commands;
+      if (issuer !== null && runtime26ExistingPreparation === undefined) throw new TypeError("Exact26 commands require the independent R2 selector");
       app.register(createAuthenticatedDocumentCommandsPlugin({ authentication,
-        sales: { ...c.sales, now: host.now, unitOfWork: new PostgresSalesUnitOfWork(pool, { catalogueCompleteness: c.catalogueCompleteness }) },
-        transfers: { ...c.transfers, now: host.now, unitOfWork: new PostgresTransferUnitOfWork(pool) },
-        nativeManualSalesPreparation: true, nativeManualTransferPreparation: true }));
+        sales: { ...c.sales, now: host.now, unitOfWork: new PostgresSalesUnitOfWork(pool, { catalogueCompleteness: c.catalogueCompleteness,
+          ...(issuer === null ? {} : { runtime26: issuer.runtime26, historicalCustomerExclusion: issuer.historicalCustomerExclusion }) }) },
+        transfers: { ...c.transfers, now: host.now, unitOfWork: new PostgresTransferUnitOfWork(pool, issuer === null ? undefined : { runtime26: issuer.runtime26 }) },
+        nativeManualSalesPreparation: true, nativeManualTransferPreparation: true,
+        ...(runtime26ExistingPreparation?.sales === true ? { nativeExistingSalesPreparation: true } : {}),
+        ...(runtime26ExistingPreparation?.transfers === true ? { nativeExistingTransferPreparation: true } : {}) }));
     }
     await app.ready();
     const readyApp = app;
