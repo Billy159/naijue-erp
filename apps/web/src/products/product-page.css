@@ -199,5 +199,14 @@
 .product-readonly-page .product-price-table thead th{height:34px;background:var(--ca-table-head);color:var(--ca-ink-2);font-size:12px}
 .product-readonly-page .product-price-table tbody th{background:var(--ca-table-head);color:var(--ca-ink);font-weight:400}
 .product-readonly-page .product-readonly-price-value{text-align:left;font-variant-numeric:tabular-nums}
+.product-readonly-page .product-barcode-heading{margin:0 0 5px;font-size:14px;font-weight:600}
+.product-readonly-page .product-barcode-page-note{margin:4px 0 8px;color:var(--ca-ink-3)}
+.product-readonly-page .product-readonly-barcode-table{overflow:auto;border:1px solid var(--ca-line)}
+.product-readonly-page .product-readonly-barcode-table table{min-width:850px}
+.product-readonly-page .product-readonly-barcode-table .erp-read-table .arco-table :is(.arco-table-th,.arco-table-td){box-sizing:border-box;height:35px;padding:4px 8px;border-bottom:1px solid var(--ca-table-grid);font-size:12px;line-height:18px;text-align:left}
+.product-readonly-page .product-readonly-barcode-table .erp-read-table .arco-table-th-item{padding:0;line-height:inherit}
+.product-readonly-page .product-barcode-read-codes{display:flex;flex-direction:column;gap:4px}
+.product-readonly-page .product-barcode-read-codes .product-raw-barcode{white-space:pre-wrap;overflow-wrap:anywhere}
+.product-readonly-page .product-barcode-read-codes small{color:var(--ca-ink-3);font-size:12px}
 @media(max-width:800px){.product-readonly-page .product-readonly-base-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.product-readonly-page .product-readonly-base-grid{grid-template-columns:1fr}}
