@@ -1,6 +1,23 @@
 import type { ActorContext } from "./ports.ts";
 export const maintenanceKinds = ["PRODUCT", "CATEGORY", "COLOR", "FIT", "HALL", "WAREHOUSE", "STAFF", "ACCOUNT", "PAYMENT_METHOD", "PAYMENT_ACCOUNT"] as const;
 export type MaintenanceKind = typeof maintenanceKinds[number];
+/** Host injects HMAC-SHA256 with a stable private 32-byte key. No default,
+ * plaintext/bare SHA/password hash evidence, per-call key or automatic rotation.
+ * Password validation/hashing is separate; a tag only detects changed payloads
+ * under the same original request key. */
+export type CredentialRequestTag = (password: string) => string;
+/** STAFF LEAVE records each affected account's actual complete safe row before
+ * and after, ordered by id, under audit before_values.accounts / after_values.accounts.
+ * Both arrays contain the SAME account IDs. Hash is excluded and must remain
+ * unchanged; login_enabled=false, auth_version/version each advance once,
+ * and all its unrevoked sessions are revoked in the SAME transaction.
+ * REINSTATE never automatically enables accounts. ACCOUNT roots reuse exactly
+ * these safe names (password_hash never enters audit). */
+export interface MaintenanceAccountSafetyEvidence {
+  readonly id: string; readonly staff_id: string; readonly login_name: string;
+  readonly login_enabled: boolean; readonly auth_version: number; readonly version: number;
+  readonly created_at: string | null; readonly updated_at: string | null;
+}
 export const maintenanceReadIntents = Object.freeze(["RECEIPT", "DETAIL", "CANDIDATES", "LIST"] as const);
 export type MaintenanceJsonValue = string | number | boolean | null | readonly MaintenanceJsonValue[] | { readonly [key: string]: MaintenanceJsonValue };
 export interface MaintenanceJsonObject { readonly [key: string]: MaintenanceJsonValue }

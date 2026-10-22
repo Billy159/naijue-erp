@@ -1,7 +1,29 @@
 import { DomainError, requireDomain } from "../../domain/src/errors.ts";
 import { entityId } from "../../domain/src/values.ts";
-import type { OrganizationListQuery, OrganizationMaintenanceKind, OrganizationMaintenanceRecord, OrganizationReference } from "./organization-maintenance-ports.ts";
+import type { OrganizationListQuery, OrganizationMaintenanceKind, OrganizationMaintenanceRecord, OrganizationReference, OrganizationWriteKind, OrganizationWriteCommand, HallWriteValues, WarehouseWriteValues } from "./organization-maintenance-ports.ts";
+import { partyName, partyObject, partyRequestKey } from "./party-maintenance-validation.ts";
 const kinds: readonly string[] = ["HALL", "WAREHOUSE", "STAFF", "ACCOUNT", "PAYMENT_METHOD", "PAYMENT_ACCOUNT"];
+function invalidCommand(): never { throw new DomainError("INVALID_ORGANIZATION_COMMAND", "Invalid hall/warehouse command"); }
+export function organizationWriteKind(value: unknown): OrganizationWriteKind { if (value !== "HALL" && value !== "WAREHOUSE") invalidCommand(); return value; }
+export function parseOrganizationWriteCommand(kindInput: OrganizationWriteKind, input: unknown): OrganizationWriteCommand {
+  const kind = organizationWriteKind(kindInput);
+  if (!input || typeof input !== "object" || Array.isArray(input)) invalidCommand();
+  const action = (input as Record<string, unknown>).action;
+  if (action !== "CREATE" && action !== "EDIT" && action !== "DISABLE" && action !== "RESTORE") invalidCommand();
+  function object(v: unknown, keys: readonly string[]) { try { return partyObject(v, keys); } catch { return invalidCommand(); } }
+  function id(v: unknown): string { try { if (typeof v !== "string") invalidCommand(); return entityId("hall", v); } catch { return invalidCommand(); } }
+  const full = action === "CREATE" || action === "EDIT", row = object(input, ["action", "requestKey", ...(action === "CREATE" ? [] : ["id", "expectedVersion"]), ...(full ? ["values"] : [])]);
+  const requestKey = partyRequestKey(row.requestKey);
+  const target = action === "CREATE" ? null : id(row.id), expected = row.expectedVersion;
+  if (action !== "CREATE" && (typeof expected !== "number" || !Number.isInteger(expected) || expected < 1 || expected > 2147483647)) invalidCommand();
+  if (!full) return { action, requestKey, id: target!, expectedVersion: expected as number };
+  const values = object(row.values, kind === "HALL" ? ["name", "enabled", "defaultCustomerId", "defaultSalesWarehouseId"] : ["name", "enabled", "hallId"]);
+  if (typeof values.enabled !== "boolean") invalidCommand();
+  const base = { name: partyName(values.name), enabled: values.enabled };
+  const parsed: HallWriteValues | WarehouseWriteValues = kind === "HALL" ? { ...base, defaultCustomerId: values.defaultCustomerId === null ? null : id(values.defaultCustomerId), defaultSalesWarehouseId: values.defaultSalesWarehouseId === null ? null : id(values.defaultSalesWarehouseId) }
+    : { ...base, hallId: id(values.hallId) };
+  return action === "CREATE" ? { action, requestKey, values: parsed } : { action, requestKey, id: target!, expectedVersion: expected as number, values: parsed };
+}
 function invalid(): never { throw new DomainError("INVALID_ORGANIZATION_QUERY", "Invalid settings read parameters"); }
 function bag(value: unknown): Record<string, unknown> { requireDomain(value !== null && typeof value === "object" && !Array.isArray(value), "INVALID_DATABASE_VALUE", "Invalid trusted settings record"); return value as Record<string, unknown>; }
 function uuid(value: unknown): string { requireDomain(typeof value === "string", "INVALID_DATABASE_VALUE", "Missing native reference id"); return entityId("hall", value); }

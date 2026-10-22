@@ -48,10 +48,19 @@ function boundedEvidence(value: unknown): void {
 class Evidence implements MaintenanceEvidenceSession {
   private actor: string | undefined; private receipt: { key: string; kind: MaintenanceKind } | undefined;
   private identity: Identity | undefined; private readonly allowed = new Set<string>(); private completed = false;
+  private administratorLock = false;
   private readonly query: Query; private readonly assertActive: () => void;
   constructor(query: Query, assertActive: () => void) { this.query = query; this.assertActive = assertActive; }
   private bind(actor: string): void {
     uuid(actor); requireDomain(this.actor === undefined || this.actor === actor, "TRANSACTION_SCOPE", "One trusted actor per maintenance transaction"); this.actor = actor;
+  }
+  private async prepareIdentity(family: MaintenanceKind): Promise<void> {
+    kind(family);
+    if (family !== "STAFF" && family !== "ACCOUNT") return;
+    requireDomain(this.identity === undefined || this.administratorLock, "TRANSACTION_SCOPE", "Administrator safety lock must precede every identity row lock");
+    if (this.administratorLock) return;
+    await this.query("/* maintenance:administrator-lock */ SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", ["naijue:maintenance:available-admin:v1"]);
+    this.administratorLock = true;
   }
   private async current(actor: string): Promise<Identity> {
     this.assertActive();
@@ -75,6 +84,7 @@ class Evidence implements MaintenanceEvidenceSession {
   }
   async assertAllowed(actor: ActorContext, family: MaintenanceKind, action: string): Promise<void> {
     this.assertActive();
+    await this.prepareIdentity(family);
     const identity = await this.current(actor.accountId); this.role(identity, family);
     const write = maintenanceActions[family].includes(action);
     requireDomain(identity.hallId === actor.hallId && (write || maintenanceReadIntents.some(intent => intent === action)), "FORBIDDEN", "Current maintenance scope/action unavailable");
@@ -84,6 +94,7 @@ class Evidence implements MaintenanceEvidenceSession {
     this.assertActive(); kind(family); const originalKey = key(requestKey); this.bind(actorAccountId);
     requireDomain(this.receipt === undefined || (this.receipt.key === originalKey && this.receipt.kind === family), "TRANSACTION_SCOPE", "One original actor/key/family per transaction");
     this.receipt = { key: originalKey, kind: family };
+    await this.prepareIdentity(family);
     await this.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", [`naijue:receipt:${JSON.stringify([actorAccountId, originalKey])}`]);
     const identity = await this.current(actorAccountId); this.role(identity, family);
     const rows = (await this.query(`/* maintenance:receipt */ SELECT id,request_hash,action,target_type,target_id,result_data,

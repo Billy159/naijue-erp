@@ -5,6 +5,9 @@ import type { ProductFullPageConfiguration } from './product-page-contracts.ts';
 import { captureProductFullPageConfiguration } from './product-page-configuration.ts';
 import { guardedProductPageReader } from './product-page-reader.ts';
 import { ProductFullPageHost } from './product-page-host.tsx';
+import type { ProductEditorCapability, ProductEditorProps } from './product-editor-contracts.ts';
+import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
+import type { ComponentType } from 'react';
 import { ReadScope } from '../loading/read-scope.ts';
 import { useDialogFocusReturn } from '../components/use-dialog-focus-return.ts';
 import { ProductDrawerHost } from '../inventory/product-drawer-host.tsx';
@@ -23,9 +26,12 @@ export interface ProductsPageProps {
   readonly scope: ReadScope; readonly reader: ProductManagementReader;
   readonly product?: ProductManagementProductCapability;
   readonly fullPage?: ProductFullPageConfiguration;
+  readonly maintenance?: ProductEditorCapability;
+  readonly onCanLeaveChange?: (guard: (() => boolean) | null) => void;
   /** Trusted host decides global identity invalidation; local scope is already cleared. */
   readonly onAccessFailure: (error: HttpQueryError) => void;
 }
+const editorLeaves = new AsyncLeafRegistry({ editor: { load: () => import('./product-editor.tsx') } }, { maxRetainedEntries: 1 });
 let attachmentSequence = 0;
 /** Source list loads its default first page on activation (not construction). Each effect owns fresh scope/query,
  * including React StrictMode replay and same-account permission revision changes. */
@@ -52,22 +58,25 @@ function ProductsPageContent(props: ProductsPageProps & { readonly query: Return
   const fullPage = useMemo(() => props.fullPage ? captureProductFullPageConfiguration(props.fullPage) : undefined, [props.fullPage]);
   const [fullTarget, setFullTarget] = useState<{ readonly target: Selection; readonly configuration: ProductFullPageConfiguration } | null>(null);
   const fullActive = !!fullTarget && fullTarget.configuration === fullPage;
-  const list = useRef<HTMLDivElement>(null), visible = useRef(true); visible.current = !fullActive;
+  const maintenance = props.maintenance && props.onCanLeaveChange ? props.maintenance : undefined;
+  const [editTarget, setEditTarget] = useState<{ id: string | null; sequence: number } | null>(null), editSequence = useRef(0), savedEdit = useRef(false);
+  const editing = !!editTarget && !!maintenance;
+  const list = useRef<HTMLDivElement>(null), visible = useRef(true); visible.current = !fullActive && !editing;
   const returnToList = useRef<{ trigger: HTMLElement; scroll: readonly { element: Element; top: number; left: number }[] } | null>(null);
   const fullReader = useMemo(() => fullPage ? guardedProductPageReader(scope, fullPage.reader, props.onAccessFailure) : null, [scope, fullPage, props.onAccessFailure]);
-  const popupHost = useProductsFilterPopupHost(scope, !fullActive);
+  const popupHost = useProductsFilterPopupHost(scope, !fullActive && !editing);
   const productFocus = useDialogFocusReturn(scope, !!selectedProduct);
   useEffect(() => { setSelectedProduct(null); }, [props.product]);
   useEffect(() => { setFullTarget(null); }, [fullPage]);
   useLayoutEffect(() => {
-    if (fullActive || !scope.active || !returnToList.current) return;
+    if (fullActive || editing || !scope.active || !returnToList.current) return;
     const saved = returnToList.current; returnToList.current = null;
     for (const value of saved.scroll) { value.element.scrollTop = value.top; value.element.scrollLeft = value.left; }
     const active = saved.trigger.ownerDocument.activeElement;
     if (active && active !== document.body && active.isConnected && active !== saved.trigger) return;
     if (saved.trigger.isConnected && !saved.trigger.matches(':disabled') && !saved.trigger.closest('[hidden],[inert]')) saved.trigger.focus({ preventScroll: true });
     else list.current?.querySelector<HTMLElement>('h1')?.focus({ preventScroll: true });
-  }, [fullActive, scope]);
+  }, [fullActive, editing, scope]);
   const openFullPage = (target: Selection, trigger: HTMLElement) => {
     if (!scope.active || !fullPage || !visible.current) return;
     const scroll: { element: Element; top: number; left: number }[] = [];
@@ -76,6 +85,21 @@ function ProductsPageContent(props: ProductsPageProps & { readonly query: Return
     visible.current = false; popupHost?.controller.close(); query.cancel(); setSelectedProduct(null);
     returnToList.current = { trigger, scroll }; setFullTarget({ target, configuration: fullPage });
     for (const value of scroll) { value.element.scrollTop = 0; value.element.scrollLeft = 0; }
+  };
+  const openEditor = (id: string | null, trigger: HTMLElement) => {
+    if (!scope.active || !maintenance || !visible.current) return;
+    const scroll: { element: Element; top: number; left: number }[] = [];
+    for (let element: Element | null = list.current; element; element = element.parentElement) scroll.push({ element, top: element.scrollTop, left: element.scrollLeft });
+    const root = document.scrollingElement; if (root && !scroll.some(value => value.element === root)) scroll.push({ element: root, top: root.scrollTop, left: root.scrollLeft });
+    returnToList.current = { trigger, scroll }; savedEdit.current = false;
+    visible.current = false; popupHost?.controller.close(); query.cancel(); setSelectedProduct(null);
+    setEditTarget({ id, sequence: ++editSequence.current });
+    for (const value of scroll) { value.element.scrollTop = 0; value.element.scrollLeft = 0; }
+  };
+  const closeEditor = () => {
+    setEditTarget(null);
+    const success = query.getSnapshot().success;
+    if (savedEdit.current && success && scope.active) void query.run(success.parameters);
   };
   const productSearchReader = useMemo<InventoryReader>(() => ({
     readInventory: async () => { throw new TypeError('Product search presentation has no inventory query capability.'); },
@@ -93,8 +117,8 @@ function ProductsPageContent(props: ProductsPageProps & { readonly query: Return
   const filter = (kind: Exclude<ProductManagementCandidateKind,'product'>) => <ProductFilterControl key={kind} scope={scope} reader={reader} kind={kind} label={labels[kind]} selected={draft[kind]} popupHost={popupHost} onChange={selected => setSelection(kind, selected)} />;
   const closeProduct = () => { productFocus.request(); setSelectedProduct(null); };
   if (snapshot.phase === 'disposed' || !scope.active) return <div className="iw-empty" role="status"><strong>当前读取范围已关闭</strong><p>权限或身份已变化，请重新进入商品信息。旧身份结果已清除。</p></div>;
-  return <div className="products-workspace"><div ref={list} hidden={fullActive} inert={fullActive} className="pm-products pc-workbench pc-products">
-    <div className="pm-head iw-head"><h1 tabIndex={-1}>商品信息</h1><div className="iw-actions iw-head-actions"><UIButton type="button" className="iw-button iw-primary" disabled title="商品新增维护尚未接入；当前仅提供真实授权只读查询">新增商品</UIButton></div></div>
+  return <div className="products-workspace"><div ref={list} hidden={fullActive || editing} inert={fullActive || editing} className="pm-products pc-workbench pc-products">
+    <div className="pm-head iw-head"><h1 tabIndex={-1}>商品信息</h1><div className="iw-actions iw-head-actions"><UIButton type="button" className="iw-button iw-primary" disabled={!maintenance?.allowedActions.includes('CREATE')} title={maintenance?.allowedActions.includes('CREATE') ? '新增商品' : '商品新增维护尚未接入或当前无权操作'} onClick={event => openEditor(null, event.currentTarget)}>新增商品</UIButton></div></div>
     <form className="pm-filters iw-query" aria-label="商品信息筛选" onSubmit={event => { event.preventDefault(); if (visible.current) void query.run({ filter: productFilterParameters(draft), page: 1, pageSize }); }}>
       <div className="pm-filter-row"><CandidateSelector scope={scope} reader={productSearchReader} popupHost={popupHost} kind="product" label="商品" selected={draft.product} categoryIds={noCategories} multiple placeholder="商品款号 / 名称 / 系统货号" {...(props.product ? { productReader: props.product.reader } : {})} onChange={selected => setSelection('product', selected)} />
         {filter('category')}{filter('year')}{filter('season')}
@@ -113,12 +137,25 @@ function ProductsPageContent(props: ProductsPageProps & { readonly query: Return
  { title: '供应商', render: (_, item) => item.supplierLabel ?? '' }, { title: '版型', render: (_, item) => item.fits.map(fit => fit.label).join('、') },
  { title: '厚薄', render: (_, item) => item.thickness ?? '' }, { title: '零售价', align: 'right', render: (_, item) => item.retailPrice ?? '' },
  { title: '总库存', align: 'right', render: (_, item) => <span title={item.totalStock === null ? '全仓总库存未授权或未提供；未知不能按零展示' : '已授权完整全仓范围的精确总库存'}>{item.totalStock === null ? '未提供' : formatQuantity(item.totalStock)}</span> },
- { title: '操作', render: (_, item) => <><UIButton type="button" className="iw-link" disabled={!props.product} title={props.product ? '只读查看；不开放商品维护' : '商品目标查看能力尚未配置'} onClick={event => { if (!scope.active || !props.product) return; productFocus.capture(event.currentTarget); setSelectedProduct({ target: { id: item.id, label: `${item.code} · ${item.name}` }, capability: props.product }); }}>查看</UIButton>{fullPage && <UIButton className="iw-link" aria-label={`整页查看商品：${item.code}`} onClick={event => openFullPage({ id: item.id, label: `${item.code} · ${item.name}` }, event.currentTarget)}>只读整页</UIButton>}</> },
+ { title: '操作', render: (_, item) => maintenance?.allowedActions.includes('EDIT') ? <UIButton className="iw-link" onClick={event => openEditor(item.id, event.currentTarget)}>编辑</UIButton> : <><UIButton type="button" className="iw-link" disabled={!props.product} title={props.product ? '只读查看；不开放商品维护' : '商品目标查看能力尚未配置'} onClick={event => { if (!scope.active || !props.product) return; productFocus.capture(event.currentTarget); setSelectedProduct({ target: { id: item.id, label: `${item.code} · ${item.name}` }, capability: props.product }); }}>查看</UIButton>{fullPage && <UIButton className="iw-link" aria-label={`整页查看商品：${item.code}`} onClick={event => openFullPage({ id: item.id, label: `${item.code} · ${item.name}` }, event.currentTarget)}>只读整页</UIButton>}</> },
 ]} />
       {!result?.items.length && <div className="pm-empty iw-empty"><span className="iw-empty-icon" aria-hidden="true"><EmptyIcon /></span><strong>{result ? '暂无符合条件的商品' : busy ? '正在查询' : snapshot.phase === 'error' ? '查询未完成' : '等待查询'}</strong><p>{result ? '调整筛选条件后重新查询。' : '选择筛选条件后，点击「查询」查看商品信息。'}</p></div>}
     </div></section>
     <div className="pm-pagination pc-pagination"><InventoryPagination scope={scope} page={result?.page ?? 1} pageSize={pageSize} total={result?.exactTotal ?? null} busy={busy}
       onPage={page => { if (success && visible.current) void query.run({ ...success.parameters, page }); }} onPageSize={size => { if (!visible.current) return; if (success) void query.run({ ...success.parameters, page: 1, pageSize: size }); else setInitialSize(size); }} /></div>
     {selectedProduct && props.product && selectedProduct.capability === props.product && <ProductDrawerHost key={selectedProduct.target.id} parentScope={scope} product={selectedProduct.target} reader={props.product.reader} loadStyles={props.product.loadStyles} close={closeProduct} />}
-  </div>{fullActive && fullPage && fullReader && <ProductFullPageHost key={fullTarget.target.id} parent={scope} target={fullTarget.target} configuration={fullPage} reader={fullReader} close={() => setFullTarget(null)} />}</div>;
+  </div>{editing && maintenance && editTarget && props.onCanLeaveChange && <ProductEditorLeaf key={editTarget.sequence} parent={scope} productId={editTarget.id} capability={maintenance} onAccessFailure={props.onAccessFailure} onCanLeaveChange={props.onCanLeaveChange} onClose={closeEditor} onSaved={() => { savedEdit.current = true; }} />}{fullActive && fullPage && fullReader && <ProductFullPageHost key={fullTarget.target.id} parent={scope} target={fullTarget.target} configuration={fullPage} reader={fullReader} close={() => setFullTarget(null)} />}</div>;
+}
+
+function ProductEditorLeaf(props: ProductEditorProps) {
+  const style=useRef<{capability:ProductEditorCapability;promise:Promise<unknown>}|null>(null);
+  const [attempt,setAttempt]=useState(0),[leaf,setLeaf]=useState<{parent:ReadScope;capability:ProductEditorCapability;View:ComponentType<ProductEditorProps>|null;error:boolean}|null>(null);
+  useEffect(()=>{let attached=true;const next={parent:props.parent,capability:props.capability,View:null as ComponentType<ProductEditorProps>|null,error:false};setLeaf(next);
+    if(style.current?.capability!==props.capability){const pending=Promise.resolve().then(()=>props.capability.loadStyles());style.current={capability:props.capability,promise:pending};void pending.catch(()=>{if(style.current?.promise===pending)style.current=null;});}
+    void Promise.all([editorLeaves.load('editor',props.parent),style.current.promise]).then(([module])=>{if(attached&&props.parent.active)setLeaf({...next,View:module.ProductEditor});},()=>{if(attached&&props.parent.active)setLeaf({...next,error:true});});
+    return()=>{attached=false;};
+  },[props.parent,props.capability,attempt]);
+  if(!props.parent.active)return null;
+  const current=leaf?.parent===props.parent&&leaf.capability===props.capability?leaf:null;
+  return current?.View?<current.View {...props}/>:<div className="product-editor-loading-head"><UIButton onClick={props.onClose}>返回商品信息</UIButton>{current?.error?<p role="alert">商品表单或样式未加载，尚未读取编辑资料。<UIButton onClick={()=>setAttempt(value=>value+1)}>重试</UIButton></p>:<p role="status">正在准备商品表单…</p>}</div>;
 }

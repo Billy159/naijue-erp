@@ -20,5 +20,12 @@ export function prepareProductsRoute(input: ProductsRoutePreparation, onAccessFa
   if (input.principal.accountId !== input.scope.identity.accountId) throw new TypeError('Product management identity does not match its read scope.');
   const reader = createProductManagementHttpReader(input.http);
   const product = configuration.product ? { reader: createProductHttpReader(input.http), loadStyles: () => configuration.product!.stylesheet.load() } : undefined;
-  return { View: ({ scope }: ApplicationRouteProps) => <ProductsPageView scope={scope} reader={reader} onAccessFailure={accessFailure} {...(product ? { product } : {})} {...(configuration.fullPage ? { fullPage: configuration.fullPage } : {})} /> };
+  let leaveGuard: (() => boolean) | null = null;
+  const onCanLeaveChange = (guard: (() => boolean) | null) => { if (input.scope.active) leaveGuard = guard; };
+  input.scope.signal.addEventListener('abort', () => { leaveGuard = null; }, { once: true });
+  return {
+    canLeave: () => !input.scope.active || leaveGuard === null || leaveGuard() === true,
+    View: ({ scope }: ApplicationRouteProps) => <ProductsPageView scope={scope} reader={reader} onAccessFailure={accessFailure} onCanLeaveChange={onCanLeaveChange}
+      {...(product ? { product } : {})} {...(configuration.fullPage ? { fullPage: configuration.fullPage } : {})} {...(configuration.maintenance ? { maintenance: configuration.maintenance } : {})} />,
+  };
 }

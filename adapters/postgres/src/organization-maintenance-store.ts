@@ -1,10 +1,71 @@
 import type { MaintenancePgContext, MaintenancePgUnitOfWork } from "./maintenance-command-unit-of-work.ts";
+import type { OrganizationWriteKind, OrganizationWriteRecord, OrganizationWriteTransaction, OrganizationWriteUnitOfWork } from "../../../packages/application/src/organization-maintenance-ports.ts";
+import { booleanValue, stringValue, versionFromSql } from "./codec.ts";
 import type { OrganizationListQuery, OrganizationMaintenanceKind, OrganizationMaintenancePage, OrganizationMaintenanceRecord, OrganizationReadTransaction, OrganizationReadUnitOfWork } from "../../../packages/application/src/organization-maintenance-ports.ts";
 import { organizationKind, parseOrganizationListQuery, projectOrganizationRecord } from "../../../packages/application/src/organization-maintenance-validation.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 const object = (fields: Readonly<Record<string, string>>) => `jsonb_build_object(${Object.entries(fields).flatMap(([key, expression]) => [`'${key}'`, expression]).join(",")})`;
 const reference = (id: string, name: string, enabled: string) => object({ id, name, enabled });
+const nativeUuid = (value: unknown): string => entityId("hall", stringValue(value));
+const organizationTable = (kind: OrganizationWriteKind): "hall" | "warehouse" => kind === "HALL" ? "hall" : "warehouse";
+export class PostgresOrganizationMaintenanceUnitOfWork implements OrganizationWriteUnitOfWork {
+  private readonly driver: MaintenancePgUnitOfWork;
+  constructor(driver: MaintenancePgUnitOfWork) { if (typeof driver?.transaction !== "function") throw new TypeError("Hall/warehouse writes require shared driver"); this.driver = driver; }
+  transaction<T>(work: (tx: OrganizationWriteTransaction) => Promise<T>): Promise<T> {
+    return this.driver.transaction(async context => { const tx = new OrganizationWriteSqlTransaction(context); try { return await work(tx); } finally { tx.close(); } });
+  }
+}
+class OrganizationWriteSqlTransaction implements OrganizationWriteTransaction {
+  readonly evidence: MaintenancePgContext["evidence"]; private readonly context: MaintenancePgContext;
+  private active = true; private topology = false; private loaded: { readonly kind: OrganizationWriteKind; readonly id: string } | undefined;
+  constructor(context: MaintenancePgContext) { this.context = context; this.evidence = context.evidence; }
+  close() { this.active = false; }
+  private query(sql: string, values: unknown[] = []) { requireDomain(this.active, "TRANSACTION_CLOSED", "Organization transaction closed"); return this.context.client.query(sql, values); }
+  async lockTopology() {
+    requireDomain(!this.loaded, "TRANSACTION_SCOPE", "Topology lock precedes native roots");
+    if (!this.topology) { await this.query("SELECT pg_advisory_xact_lock(hashtextextended($1,0))", ["naijue:organization-topology"]); this.topology = true; }
+  }
+  async load(kind: OrganizationWriteKind, id: string): Promise<OrganizationWriteRecord | undefined> {
+    requireDomain(this.topology && this.loaded === undefined, "TRANSACTION_SCOPE", "One locked organization root"); entityId("hall", id); this.loaded = { kind, id };
+    const rows = (await this.query(`SELECT id,name,enabled,version,${kind === "HALL" ? "default_customer_id,default_sales_warehouse_id" : "hall_id,created_operation_id"} FROM naijue_erp.${organizationTable(kind)} WHERE id=$1::uuid FOR UPDATE`, [id])).rows;
+    requireDomain(rows.length <= 1, "INVALID_DATABASE_VALUE", "Organization identity not unique"); if (!rows[0]) return undefined;
+    const row = rows[0], base = { id: nativeUuid(row.id), name: stringValue(row.name), enabled: booleanValue(row.enabled), version: versionFromSql(row.version) };
+    requireDomain(base.id === id, "INVALID_DATABASE_VALUE", "Organization identity mismatch");
+    return kind === "HALL" ? { ...base, kind, defaultCustomerId: row.default_customer_id === null ? null : nativeUuid(row.default_customer_id), defaultSalesWarehouseId: row.default_sales_warehouse_id === null ? null : nativeUuid(row.default_sales_warehouse_id) }
+      : { ...base, kind, hallId: nativeUuid(row.hall_id), createdOperationId: row.created_operation_id === null ? null : nativeUuid(row.created_operation_id) };
+  }
+  private assertRoot(next: OrganizationWriteRecord) { requireDomain(this.loaded?.kind === next.kind && this.loaded.id === next.id, "TRANSACTION_SCOPE", "Change only the locked hall/warehouse"); }
+  async validateChange(previous: OrganizationWriteRecord | undefined, next: OrganizationWriteRecord): Promise<void> {
+    this.assertRoot(next);
+    if (next.kind === "HALL") {
+      if (next.defaultCustomerId !== null) {
+        const rows = (await this.query("SELECT id,enabled FROM naijue_erp.customer WHERE id=$1::uuid FOR SHARE", [next.defaultCustomerId])).rows;
+        requireDomain(rows.length === 1 && rows[0]!.id === next.defaultCustomerId && (!next.enabled || rows[0]!.enabled === true), "ORGANIZATION_REFERENCE_UNAVAILABLE", "Enabled hall requires a real enabled default customer");
+      }
+      if (next.defaultSalesWarehouseId !== null) {
+        const rows = (await this.query("SELECT id,hall_id,enabled FROM naijue_erp.warehouse WHERE id=$1::uuid FOR SHARE", [next.defaultSalesWarehouseId])).rows;
+        requireDomain(rows.length === 1 && rows[0]!.id === next.defaultSalesWarehouseId && rows[0]!.hall_id === next.id && (!next.enabled || rows[0]!.enabled === true), "ORGANIZATION_REFERENCE_UNAVAILABLE", "Default sales warehouse must belong to this hall and be enabled for an enabled hall");
+      }
+    } else {
+      const rows = (await this.query("SELECT id,enabled FROM naijue_erp.hall WHERE id=$1::uuid FOR SHARE", [next.hallId])).rows;
+      const newSelection = previous === undefined || previous.kind !== "WAREHOUSE" || previous.hallId !== next.hallId || !previous.enabled && next.enabled;
+      requireDomain(rows.length === 1 && rows[0]!.id === next.hallId && (!newSelection || rows[0]!.enabled === true), "ORGANIZATION_REFERENCE_UNAVAILABLE", "Explicit warehouse hall selection requires one enabled native hall");
+      const defaults = (await this.query("SELECT id,enabled FROM naijue_erp.hall WHERE default_sales_warehouse_id=$1::uuid ORDER BY id FOR SHARE", [next.id])).rows;
+      requireDomain(defaults.every(h => h.id === next.hallId && (next.enabled || h.enabled === false)), "WAREHOUSE_DEFAULT_IN_USE", "Warehouse move or disable conflicts with a real hall default");
+    }
+  }
+  async put(previous: OrganizationWriteRecord | undefined, next: OrganizationWriteRecord): Promise<void> {
+    this.assertRoot(next); requireDomain(next.version === (previous?.version ?? 0) + 1, "TRANSACTION_SCOPE", "Organization version advances once");
+    const extra = next.kind === "HALL" ? [next.defaultCustomerId, next.defaultSalesWarehouseId] : [next.hallId, next.createdOperationId];
+    const names = next.kind === "HALL" ? ["default_customer_id", "default_sales_warehouse_id"] : ["hall_id", "created_operation_id"];
+    if (previous?.kind === "WAREHOUSE" && next.kind === "WAREHOUSE") requireDomain(previous.createdOperationId === next.createdOperationId, "TRANSACTION_SCOPE", "Historical warehouse creation proof is immutable");
+    const values = [next.id, next.name, next.enabled, next.version, ...extra];
+    const written = previous ? await this.query(`UPDATE naijue_erp.${organizationTable(next.kind)} SET name=$2,enabled=$3,version=$4,${names[0]}=$5${next.kind === "HALL" ? ",default_sales_warehouse_id=$6" : ""} WHERE id=$1::uuid AND version=$7${next.kind === "WAREHOUSE" ? " AND created_operation_id IS NOT DISTINCT FROM $6::uuid" : ""}`, [...values, previous.version])
+      : await this.query(`INSERT INTO naijue_erp.${organizationTable(next.kind)}(id,name,enabled,version,${names.join(",")}) VALUES($1,$2,$3,$4,$5,$6)`, values);
+    requireDomain(written.rowCount === 1, "VERSION_CONFLICT", "Hall/warehouse save did not match exact version");
+  }
+}
 interface Specification { readonly from: string; readonly columns: string; readonly display: string; readonly normal: string; readonly disabled: string; readonly hallFilter: string; readonly record: string }
 function specification(kind: OrganizationMaintenanceKind): Specification {
   const base = { kind: `'${kind}'`, id: "m.id", version: "m.version", createdAt: "m.created_at_value", updatedAt: "m.updated_at_value" };

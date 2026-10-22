@@ -7,6 +7,7 @@ import { maintenanceKinds, maintenanceActions } from "../packages/application/sr
 import type { MaintenanceCompletion, MaintenanceResult } from "../packages/application/src/maintenance-commit-ports.ts";
 import { entityId } from "../packages/domain/src/values.ts";
 import type { PgProductMaintenanceDriver } from "../adapters/postgres/src/product-maintenance-store.ts";
+import { createNodeCredentialRequestTag } from "../packages/authentication/src/passwords.ts";
 const d2DriverCompatibility: PostgresMaintenanceCommandUnitOfWork extends PgProductMaintenanceDriver ? true : never = true;
 void d2DriverCompatibility;
 const account = entityId("account", "00000000-0000-4000-8000-000000000001"), target = "00000000-0000-4000-8000-000000000002", operation = "00000000-0000-4000-8000-000000000003";
@@ -96,4 +97,29 @@ test("maintenance read intents use current role/hall without gaining write compl
     const denied = scripted({ role: "WAREHOUSE" }); await assert.rejects(denied.uow.transaction(({ evidence }) => evidence.assertAllowed(actor, "STAFF", action)), { code: "FORBIDDEN" });
     const admin = scripted(); await admin.uow.transaction(({ evidence }) => evidence.assertAllowed(actor, "ACCOUNT", action));
   }
+});
+test("credential request tags use an explicit stable isolated HMAC key and preserve exact password text", () => {
+  const originalKey = new Uint8Array(32).fill(7), retained = new Uint8Array(originalKey);
+  const tag = createNodeCredentialRequestTag(originalKey); originalKey.fill(0);
+  assert.match(tag("SYNTHETIC-Password"), /^[a-f0-9]{64}$/);
+  assert.equal(tag("SYNTHETIC-Password"), createNodeCredentialRequestTag(retained)("SYNTHETIC-Password"));
+  assert.notEqual(tag("SYNTHETIC-Password"), createNodeCredentialRequestTag(new Uint8Array(32).fill(8))("SYNTHETIC-Password"));
+  assert.notEqual(tag("SYNTHETIC-Password"), tag("SYNTHETIC-Password "));
+  assert.throws(() => createNodeCredentialRequestTag(new Uint8Array(31)), /32-byte/);
+  assert.throws(() => tag("")); assert.throws(() => tag("界".repeat(342)));
+});
+test("administrator safety lock precedes original key and current identity locks for both account and staff", async () => {
+  for (const family of ["ACCOUNT", "STAFF"] as const) {
+    const p = scripted(); await p.uow.transaction(async ({ evidence }) => {
+      await evidence.getReceipt(account, "original-key", family); await evidence.assertAllowed(actor, family, "EDIT");
+    });
+    const admin = p.calls.findIndex(c => c.sql.includes("maintenance:administrator-lock")), identity = p.calls.findIndex(c => c.sql.includes("maintenance:identity"));
+    assert.ok(admin > 0 && admin < identity); assert.equal(p.calls.filter(c => c.sql.includes("maintenance:administrator-lock")).length, 1);
+    assert.deepEqual(p.calls[admin]!.values, ["naijue:maintenance:available-admin:v1"]);
+    assert.ok(admin < p.calls.findIndex(c => c.values[0] === `naijue:receipt:${JSON.stringify([account, "original-key"])}`));
+  }
+  const p = scripted(); await assert.rejects(p.uow.transaction(async ({ evidence }) => {
+    await evidence.assertAllowed(actor, "PRODUCT", "DETAIL"); await evidence.assertAllowed(actor, "ACCOUNT", "EDIT");
+  }), { code: "TRANSACTION_SCOPE" });
+  assert.equal(p.calls.filter(c => c.sql.includes("maintenance:administrator-lock")).length, 0);
 });

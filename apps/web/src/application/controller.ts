@@ -39,7 +39,13 @@ export class ApplicationController {
     if (parties && typeof parties.newRequestKey !== 'function') throw new TypeError('A party request-key provider is required.');
     if (parties && parties.readOnly !== undefined && parties.readOnly !== true) throw new TypeError('Party read-only mode must be explicitly true or omitted.');
     const fullPage = routes.products ? ownProductFullPageConfiguration(routes.products) : undefined;
-    const products = routes.products ? Object.freeze({ stylesheet: stylesheet(routes.products.stylesheet), ...(routes.products.product ? { product: Object.freeze({ stylesheet: stylesheet(routes.products.product.stylesheet) }) } : {}), ...(fullPage ? { fullPage } : {}) }) : undefined;
+    const maintenance = routes.products?.maintenance;
+    if (maintenance !== undefined && (!maintenance || !Array.isArray(maintenance.allowedActions) || typeof maintenance.reader?.readDetail !== 'function'
+      || typeof maintenance.reader.readCandidates !== 'function' || typeof maintenance.client?.execute !== 'function'
+      || typeof maintenance.client.receipt !== 'function' || typeof maintenance.newRequestKey !== 'function'
+      || typeof maintenance.onRecoveryRequired !== 'function')) throw new TypeError('Explicit product maintenance dependencies are required.');
+    const products = routes.products ? Object.freeze({ stylesheet: stylesheet(routes.products.stylesheet), ...(routes.products.product ? { product: Object.freeze({ stylesheet: stylesheet(routes.products.product.stylesheet) }) } : {}), ...(fullPage ? { fullPage } : {}),
+      ...(maintenance ? { maintenance: Object.freeze({ ...maintenance, allowedActions: Object.freeze([...maintenance.allowedActions]) }) } : {}) }) : undefined;
     const productCategories = routes.productCategories ? Object.freeze({ stylesheet: stylesheet(routes.productCategories.stylesheet) }) : undefined;
     const productSettings = routes.productSettings ? Object.freeze({ stylesheet: stylesheet(routes.productSettings.stylesheet), allowedTabs: Object.freeze([...routes.productSettings.allowedTabs]), initialTab: routes.productSettings.initialTab }) : undefined;
     if (productSettings && (!productSettings.allowedTabs.length || productSettings.allowedTabs.some(tab => tab !== 'colors' && tab !== 'groups' && tab !== 'fits' && tab !== 'seasons')
@@ -93,13 +99,21 @@ export class ApplicationController {
     if (this.#disposed) return () => {};
     this.#listeners.add(listener); return () => { this.#listeners.delete(listener); };
   };
+  /** Ordinary navigation only. Identity invalidation/disposal never waits on a leaf guard. */
+  canLeave(): boolean {
+    const sessions = [this.#partySession, this.#salesSession, this.#transferSession];
+    try {
+      return (!this.#state.scope?.active || !this.#state.prepared?.canLeave || this.#state.prepared.canLeave() === true)
+        && !sessions.some(session => session && !session.workspace.canLeave())
+        && this.#transferSession?.canLeave?.() !== false && this.#salesSession?.canLeave?.() !== false;
+    } catch { return false; }
+  }
   /** No implicit default route. Call on an actual menu action or an explicitly validated host deep link. */
   async navigate(route: ApplicationRoute | null): Promise<boolean> {
     if (this.#disposed || !this.authentication.getSnapshot().principal || this.authentication.busy) return false;
     if (route !== null && !this.routes.includes(route)) return false;
     if (route === this.#state.route && this.#state.phase === 'ready') return true;
-    const sessions = [this.#partySession, this.#salesSession, this.#transferSession];
-    if (route !== this.#state.route && (sessions.some(session => session && !session.workspace.canLeave()) || this.#transferSession?.canLeave?.() === false || this.#salesSession?.canLeave?.() === false)) {
+    if (route !== this.#state.route && !this.canLeave()) {
       this.#publish({ ...this.#state, notice: 'cannot-leave' }); return false;
     }
     if (route !== this.#state.route) { this.#salesSession?.workspace.suspend(); this.#transferSession?.workspace.suspend(); }

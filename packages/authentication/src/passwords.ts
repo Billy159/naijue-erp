@@ -1,10 +1,22 @@
-import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
+import { createHmac, randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 import type { PasswordCodec } from "./ports.ts";
 
 // A versioned, exact format with bounded work. No dynamic parameters from an untrusted stored string.
 const PREFIX = "naijue:scrypt:1:32768:8:1:";
 const FORMAT = /^naijue:scrypt:1:32768:8:1:([0-9a-f]{32}):([0-9a-f]{128})$/;
 const MAX_PASSWORD_BYTES = 1024;
+/** Stable server-private key, reused across all instances/restarts. Never a
+ * password hash, bare digest, request-selected salt or generated fallback.
+ * Only this tag may enter the CREATE/RESET_PASSWORD request fingerprint. */
+export function createNodeCredentialRequestTag(secret: Uint8Array): (password: string) => string {
+  if (!(secret instanceof Uint8Array) || secret.byteLength !== 32) throw new TypeError("Explicit 32-byte private credential request key required");
+  const key = Buffer.from(secret);
+  return (password: string): string => {
+    if (typeof password !== "string" || password.length === 0 || Buffer.byteLength(password, "utf8") > MAX_PASSWORD_BYTES)
+      throw new TypeError("Bounded credential request input required");
+    return createHmac("sha256", key).update("naijue:credential-request-tag:v1\0", "utf8").update(password, "utf8").digest("hex");
+  };
+}
 function derive(password: string, salt: Buffer): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     scrypt(password, salt, 64, { N: 32768, r: 8, p: 1, maxmem: 64 * 1024 * 1024 }, (error, result) => error ? reject(error) : resolve(result));

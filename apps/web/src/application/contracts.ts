@@ -9,6 +9,7 @@ import type { SalesFormPreparationProvider } from '../sales/commands/contracts.t
 import type { SalesEditorSession } from '../sales/commands/editor-session.ts';
 import type { TransferFormPreparationProvider } from '../transfers/commands/contracts.ts';
 import type { TransferCommandWorkspace } from '../transfers/commands/controller.ts';
+import type { ProductEditorCapability } from '../products/product-editor-contracts.ts';
 import type { StaffSettingsProps } from '../staff-settings/contracts.ts';
 import type { PaymentSettingsProps } from '../payment-settings/contracts.ts';
 import type { ProductFullPageConfiguration } from '../products/product-page-contracts.ts';
@@ -56,6 +57,8 @@ export interface ProductsRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
   readonly product?: { readonly stylesheet: RouteStylesheet };
   readonly fullPage?: ProductFullPageConfiguration;
+  /** Explicit trusted leaf dependencies; omitted maintenance remains unavailable. */
+  readonly maintenance?: ProductEditorCapability;
 }
 export type ReadOnlyProductSettingTab = 'colors' | 'groups' | 'fits' | 'seasons';
 export interface ProductCategoriesRouteConfiguration { readonly stylesheet: RouteStylesheet }
@@ -107,6 +110,8 @@ export interface ApplicationConfiguration {
 export interface ApplicationRouteProps { readonly scope: ReadScope }
 export interface PreparedApplicationRoute {
   readonly View: ComponentType<ApplicationRouteProps>;
+  /** Active leaf owns draft/uncertain-write protection before ordinary navigation. */
+  readonly canLeave?: () => boolean;
 }
 export interface RoutePreparation {
   readonly scope: ReadScope;

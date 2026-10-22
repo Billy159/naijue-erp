@@ -6,8 +6,15 @@ import { COMPLETE_SCOPE_DECISION } from "../../../packages/application/src/inven
 import { decodeImportCheckpoint } from "./inventory-cutoff-import-store.ts";
 import { booleanValue, quantityFromSql, stringValue, versionFromSql, versionToSql } from "./codec.ts";
 import type { PgSalesResult } from "./sales-unit-of-work.ts";
+import type { PgSalesClient } from "./sales-unit-of-work.ts";
+import type { HistoryRevisionPostingContext, HistoryRevisionPostingEffect, HistoryRevisionPostingPort } from "../../../packages/application/src/inventory-posting.ts";
+import type { InventoryAdmissionRuntime } from "./inventory-key-admission-reader.ts";
+import { readInventoryKeyAdmissions } from "./inventory-key-admission-reader.ts";
+import { addQuantity, businessDate, quantity, version, nextVersion } from "../../../packages/domain/src/values.ts";
 
 type Query = (sql: string, values?: unknown[]) => Promise<PgSalesResult>;
+type PostingProof = Pick<InventoryLedgerRow, "warehouseId" | "skuId" | "quantityDelta" | "operationId" | "postedAt" | "reversesEntryId">
+  & { readonly eventKind: InventoryLedgerRow["eventKind"] | "HISTORY_REVISION" };
 interface Key { readonly warehouseId: EntityId<"warehouse">; readonly skuId: EntityId<"sku"> }
 const key = (warehouse: string, sku: string): string => JSON.stringify([warehouse, sku]);
 const stamp = (column: string): string => `to_char(${column} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
@@ -49,9 +56,12 @@ export class PostgresPostingBalances {
   private locked: Set<string> | undefined;
   private readonly balances = new Map<string, InventoryBalanceRow>();
   private readonly provenZero = new Set<string>();
-  private readonly firstEffects = new Map<string, InventoryLedgerRow>();
+  private readonly firstEffects = new Map<string, PostingProof>();
   private batchId: string | undefined;
-  constructor(query: Query) { this.query = query; }
+  private readonly admissionRuntime: InventoryAdmissionRuntime | null;
+  constructor(query: Query, admissionRuntime: InventoryAdmissionRuntime | null = null) {
+    this.query = query; this.admissionRuntime = admissionRuntime;
+  }
   async lock(keys: readonly Key[]): Promise<void> {
     requireDomain(this.locked === undefined, "TRANSACTION_SCOPE", "Lock the complete posting set exactly once");
     // IDENTICAL binary JSON tuple order and SQL lock namespace to the cutoff importer.
@@ -103,6 +113,18 @@ export class PostgresPostingBalances {
     requireDomain(this.locked?.has(identity) && !this.balances.has(identity), "TRANSACTION_SCOPE", "Only an absent locked posting key can acquire a zero proof");
     if (this.provenZero.has(identity)) return;
     const batchId = await this.publication();
+    if (this.admissionRuntime !== null) {
+      await this.admissionRuntime.assertReady({ query: this.query });
+      const admissions = await readInventoryKeyAdmissions({ query: this.query }, [{ warehouseId, skuId }]);
+      requireDomain(admissions[0]?.admitted === true && admissions[0].publishedBatchId === batchId,
+        "INVENTORY_NOT_READY", "Exact native admission is unavailable for this published scope");
+      const unused = (await this.query(`/* posting:admitted-unused-key */ SELECT
+        NOT EXISTS(SELECT 1 FROM naijue_erp.inventory_balance WHERE warehouse_id=$1::uuid AND sku_id=$2::uuid) AS balance_absent,
+        NOT EXISTS(SELECT 1 FROM naijue_erp.inventory_ledger WHERE warehouse_id=$1::uuid AND sku_id=$2::uuid) AS ledger_absent`, [warehouseId, skuId])).rows;
+      integrity(unused.length === 1 && unused[0]!.balance_absent === true && unused[0]!.ledger_absent === true,
+        "Admitted first use cannot rebuild an already-used missing balance");
+      this.provenZero.add(identity); return;
+    }
     const rows = (await this.query(`/* posting:zero-key */ SELECT w.id AS warehouse_id, s.id AS sku_id,
       EXISTS (SELECT 1 FROM naijue_erp.import_record r WHERE r.import_batch_id = $3::uuid AND r.status = 'IMPORTED'
         AND r.target_type = 'WAREHOUSE' AND r.target_id = w.id) AS warehouse_published,
@@ -122,14 +144,15 @@ export class PostgresPostingBalances {
     integrity(booleanValue(row.balance_absent) && booleanValue(row.ledger_absent) && booleanValue(row.valid_size), "Missing balance is not a previously unused valid native key");
     this.provenZero.add(identity);
   }
-  assertCanAppend(row: InventoryLedgerRow): void {
+  assertCanAppend(row: PostingProof): void {
     const identity = key(row.warehouseId, row.skuId);
     requireDomain(this.locked?.has(identity), "TRANSACTION_SCOPE", "Ledger key must belong to the complete locked posting set");
-    requireDomain(this.balances.has(identity) || (this.provenZero.has(identity) && row.eventKind === "APPROVE" && row.reversesEntryId === null),
+    requireDomain(this.balances.has(identity) || (this.provenZero.has(identity)
+      && (row.eventKind === "APPROVE" || (row.eventKind === "HISTORY_REVISION" && this.admissionRuntime?.profile === "EXACT24")) && row.reversesEntryId === null),
       "INVENTORY_NOT_READY", "Ledger requires an existing balance or explicit first-approval zero proof");
     requireDomain(!this.firstEffects.has(identity), "TRANSACTION_SCOPE", "Persist the first actual balance before another same-key effect");
   }
-  didAppend(row: InventoryLedgerRow): void {
+  didAppend(row: PostingProof): void {
     if (!this.balances.has(key(row.warehouseId, row.skuId))) this.firstEffects.set(key(row.warehouseId, row.skuId), structuredClone(row));
   }
   async put(row: InventoryBalanceRow): Promise<void> {
@@ -152,4 +175,65 @@ export class PostgresPostingBalances {
     requireDomain(result.rowCount === 1, "VERSION_CONFLICT", "Inventory first-insert or compare-and-swap failed");
     this.balances.set(identity, structuredClone(row)); this.firstEffects.delete(identity);
   }
+}
+
+/** Borrowed-client adapter. It cannot COMMIT/ROLLBACK, create a pool or replay
+ * source history. D3 must persist its controlled revision/evidence and close
+ * receipt/audit/projections in the original transaction. */
+export function createPostgresHistoryRevisionPosting(runtime: InventoryAdmissionRuntime): HistoryRevisionPostingPort<Pick<PgSalesClient, "query">> {
+  if (runtime?.profile !== "EXACT24" || typeof runtime.assertReady !== "function") throw new TypeError("Explicit verified exact24 history posting capability required");
+  const assertReady = runtime.assertReady.bind(runtime);
+  return Object.freeze<HistoryRevisionPostingPort<Pick<PgSalesClient, "query">>>({ async post(client, input, effectInput) {
+    const context: HistoryRevisionPostingContext = structuredClone(input), effects: readonly HistoryRevisionPostingEffect[] = structuredClone(effectInput);
+    requireDomain(typeof client?.query === "function" && effects.length <= 20_000, "HISTORY_REVISION_INVALID", "Bounded original-client history posting required");
+    const operationId = entityId("operation", context.operationId); entityId("operation", context.revisionId); entityId("account", context.actorAccountId);
+    entityId("sales", context.documentId);
+    requireDomain((context.kind === "sales" || context.kind === "transfers") && Number.isInteger(context.toVersion) && context.toVersion > 1 && context.toVersion <= 2147483647
+      && typeof context.postedAt === "string" && !Number.isNaN(Date.parse(context.postedAt)) && /(?:Z|[+-]\d{2}:\d{2})$/.test(context.postedAt),
+    "HISTORY_REVISION_INVALID", "Actual revision identities/version/time required");
+    if (effects.length === 0) return Object.freeze({ ledgerEntryIds: Object.freeze([]) });
+    requireDomain(context.businessDate !== null, "HISTORY_REVISION_DATE_UNAVAILABLE", "Stock correction requires the actual original business date");
+    const date = businessDate(context.businessDate), ids = new Set<string>(), endpoints = new Set<string>();
+    const pairs = new Map<string, { from?: typeof entries[number]; to?: typeof entries[number] }>();
+    const entries = effects.map(effect => {
+      const ledgerId = entityId("ledger", effect.ledgerEntryId), warehouseId = entityId("warehouse", effect.warehouseId), skuId = entityId("sku", effect.skuId), delta = quantity(effect.quantityDelta);
+      entityId("salesLine", effect.lineId);
+      const endpointKey = JSON.stringify([effect.lineId, effect.endpoint]);
+      requireDomain(delta !== 0n && !ids.has(ledgerId) && !endpoints.has(endpointKey)
+        && (context.kind === "sales" ? effect.endpoint === "SALES_WAREHOUSE" : effect.endpoint === "FROM" || effect.endpoint === "TO"),
+      "HISTORY_REVISION_INVALID", "Unique nonzero historical line/endpoint effects required"); ids.add(ledgerId); endpoints.add(endpointKey);
+      return { ...effect, ledgerId, warehouseId, skuId, delta };
+    });
+    if (context.kind === "transfers") {
+      for (const entry of entries) {
+        const pair = pairs.get(entry.lineId) ?? {}; if (entry.endpoint === "FROM") pair.from = entry; else pair.to = entry; pairs.set(entry.lineId, pair);
+      }
+      for (const pair of pairs.values()) requireDomain(pair.from && pair.to && pair.from.skuId === pair.to.skuId
+        && pair.from.warehouseId !== pair.to.warehouseId && pair.from.delta + pair.to.delta === 0n,
+      "HISTORY_REVISION_INVALID", "Each historical transfer line must conserve its two exact endpoint deltas");
+    }
+    await assertReady(client);
+    const query: Query = (sql, values = []) => client.query(sql, values);
+    const balances = new PostgresPostingBalances(query, Object.freeze({ profile: "EXACT24", assertReady }));
+    await balances.lock(entries);
+    for (const entry of entries) if (!balances.get(entry.warehouseId, entry.skuId)) await balances.assertZero(entry.warehouseId, entry.skuId);
+    for (const entry of entries) {
+      const previous = balances.get(entry.warehouseId, entry.skuId);
+      const proof: PostingProof = { warehouseId: entry.warehouseId, skuId: entry.skuId, quantityDelta: entry.delta,
+        operationId, postedAt: context.postedAt, eventKind: "HISTORY_REVISION", reversesEntryId: null };
+      balances.assertCanAppend(proof);
+      const result = await query(`/* history-posting:ledger */ INSERT INTO naijue_erp.inventory_ledger
+        (id,operation_id,event_kind,warehouse_id,sku_id,quantity_delta,source_history_revision_id,
+        source_history_sales_line_id,source_history_transfer_line_id,endpoint,source_document_version,reverses_entry_id,source_import_batch_id,business_date,posted_at)
+        VALUES($1::uuid,$2::uuid,'HISTORY_REVISION',$3::uuid,$4::uuid,$5::bigint,$6::uuid,$7::uuid,$8::uuid,$9,$10,NULL,NULL,$11::date,$12::timestamptz)`,
+      [entry.ledgerId, operationId, entry.warehouseId, entry.skuId, entry.delta.toString(), context.revisionId,
+        context.kind === "sales" ? entry.lineId : null, context.kind === "transfers" ? entry.lineId : null,
+        entry.endpoint, context.toVersion, date, context.postedAt]);
+      integrity(result.rowCount === 1, "Exact historical correction ledger was not appended"); balances.didAppend(proof);
+      await balances.put({ warehouseId: entry.warehouseId, skuId: entry.skuId,
+        quantity: previous ? addQuantity(previous.quantity, entry.delta) : entry.delta,
+        version: previous ? nextVersion(previous.version) : version(1), lastOperationId: operationId, updatedAt: context.postedAt });
+    }
+    return Object.freeze({ ledgerEntryIds: Object.freeze(entries.map(entry => entry.ledgerId)) });
+  } });
 }

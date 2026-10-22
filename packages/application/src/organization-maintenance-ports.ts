@@ -1,5 +1,5 @@
 import type { ActorContext } from "./ports.ts";
-import type { MaintenanceEvidenceSession } from "./maintenance-commit-ports.ts";
+import type { MaintenanceEvidenceSession, MaintenanceResult } from "./maintenance-commit-ports.ts";
 /** B05 shared settings reads; physical party tables keep their existing independent APIs. */
 export type OrganizationMaintenanceKind = "HALL" | "WAREHOUSE" | "STAFF" | "ACCOUNT" | "PAYMENT_METHOD" | "PAYMENT_ACCOUNT";
 export interface OrganizationListQuery {
@@ -29,4 +29,35 @@ export interface OrganizationReadUnitOfWork { transaction<T>(work: (tx: Organiza
 export interface OrganizationReadService {
   list(actor: ActorContext, kind: OrganizationMaintenanceKind, input: unknown): Promise<OrganizationMaintenancePage>;
   detail(actor: ActorContext, kind: OrganizationMaintenanceKind, input: unknown): Promise<OrganizationMaintenanceRecord | null>;
+}
+
+/** Hall/warehouse command contract is separate from the frozen six-family read DTO. */
+export type OrganizationWriteKind = "HALL" | "WAREHOUSE";
+export type OrganizationWriteAction = "CREATE" | "EDIT" | "DISABLE" | "RESTORE";
+export interface HallWriteValues { readonly name: string; readonly enabled: boolean; readonly defaultCustomerId: string | null; readonly defaultSalesWarehouseId: string | null }
+export interface WarehouseWriteValues { readonly name: string; readonly enabled: boolean; readonly hallId: string }
+export type OrganizationWriteRecord =
+  | (HallWriteValues & { readonly kind: "HALL"; readonly id: string; readonly version: number })
+  | (WarehouseWriteValues & { readonly kind: "WAREHOUSE"; readonly id: string; readonly version: number; readonly createdOperationId: string | null });
+export type OrganizationWriteCommand = { readonly requestKey: string } & (
+  { readonly action: "CREATE"; readonly values: HallWriteValues | WarehouseWriteValues }
+  | { readonly action: "EDIT"; readonly id: string; readonly expectedVersion: number; readonly values: HallWriteValues | WarehouseWriteValues }
+  | { readonly action: "DISABLE" | "RESTORE"; readonly id: string; readonly expectedVersion: number }
+);
+export interface OrganizationWriteTransaction {
+  readonly evidence: MaintenanceEvidenceSession;
+  /** Serialize topology changes before current identity obtains hall row locks. */
+  lockTopology(): Promise<void>;
+  load(kind: OrganizationWriteKind, id: string): Promise<OrganizationWriteRecord | undefined>;
+  validateChange(previous: OrganizationWriteRecord | undefined, next: OrganizationWriteRecord): Promise<void>;
+  put(previous: OrganizationWriteRecord | undefined, next: OrganizationWriteRecord): Promise<void>;
+}
+export interface OrganizationWriteUnitOfWork { transaction<T>(work: (tx: OrganizationWriteTransaction) => Promise<T>): Promise<T> }
+export interface OrganizationWriteDependencies {
+  readonly unitOfWork: OrganizationWriteUnitOfWork; readonly now: () => string;
+  readonly newId: (kind: "hall" | "warehouse" | "operation") => string;
+}
+export interface OrganizationWriteService {
+  execute(actor: ActorContext, kind: OrganizationWriteKind, input: unknown): Promise<MaintenanceResult>;
+  receipt(actor: ActorContext, kind: OrganizationWriteKind, requestKey: string): Promise<{ readonly requestKey: string; readonly action: string; readonly status: "COMMITTED"; readonly completedAt: string; readonly result: MaintenanceResult }>;
 }
