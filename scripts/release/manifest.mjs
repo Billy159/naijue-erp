@@ -147,6 +147,56 @@ function scanPublicBytes(bytes, name) {
 function dependencyName(specifier) { return specifier.startsWith('@') ? specifier.split('/').slice(0, 2).join('/') : specifier.split('/')[0]; }
 const nodeBuiltins = new Set(builtinModules.flatMap(name => [name, `node:${name}`]));
 
+/** Parse the generated entry's explicit HTML subset; never silently skip alternate resource-attribute syntax. */
+function htmlResources(html) {
+  const allowed = { html: ['lang'], head: [], meta: ['charset', 'name', 'content'], title: [], link: ['rel', 'href'],
+    body: [], div: ['id'], noscript: [], script: ['id', 'type', 'src'] };
+  const resources = []; let cursor = 0, configurations = 0;
+  while ((cursor = html.indexOf('<', cursor)) !== -1) {
+    if (html.startsWith('<!--', cursor)) {
+      const end = html.indexOf('-->', cursor + 4); requireRelease(end !== -1, 'UNSUPPORTED_HTML_SYNTAX'); cursor = end + 3; continue;
+    }
+    const rest = html.slice(cursor), doctype = rest.match(/^<!doctype\s+html\s*>/i), closing = rest.match(/^<\/[a-z][a-z0-9-]*\s*>/i);
+    if (doctype || closing) { cursor += (doctype ?? closing)[0].length; continue; }
+    const start = rest.match(/^<([a-z][a-z0-9-]*)/i); requireRelease(start, 'UNSUPPORTED_HTML_SYNTAX');
+    const tag = start[1].toLowerCase(); requireRelease(Object.hasOwn(allowed, tag), 'UNSUPPORTED_HTML_ELEMENT');
+    cursor += start[0].length; const attributes = new Map(); let selfClosing = false;
+    while (true) {
+      const whitespace = html.slice(cursor).match(/^\s*/)[0]; cursor += whitespace.length;
+      if (html.startsWith('/>', cursor)) { selfClosing = true; cursor += 2; break; }
+      if (html[cursor] === '>') { cursor++; break; }
+      requireRelease(whitespace.length > 0, 'UNSUPPORTED_HTML_ATTRIBUTE_SYNTAX');
+      const nameMatch = html.slice(cursor).match(/^[a-z_:][a-z0-9_:.-]*/i); requireRelease(nameMatch, 'UNSUPPORTED_HTML_ATTRIBUTE_SYNTAX');
+      const name = nameMatch[0].toLowerCase(); cursor += nameMatch[0].length;
+      requireRelease(allowed[tag].includes(name) && !attributes.has(name), 'UNSUPPORTED_OR_DUPLICATE_HTML_ATTRIBUTE');
+      cursor += html.slice(cursor).match(/^\s*/)[0].length;
+      requireRelease(html[cursor] === '=', 'UNSUPPORTED_HTML_ATTRIBUTE_SYNTAX'); cursor++;
+      cursor += html.slice(cursor).match(/^\s*/)[0].length;
+      const quote = html[cursor]; let value;
+      if (quote === '"' || quote === "'") {
+        const end = html.indexOf(quote, ++cursor); requireRelease(end !== -1, 'UNSUPPORTED_HTML_ATTRIBUTE_SYNTAX'); value = html.slice(cursor, end); cursor = end + 1;
+      } else {
+        const unquoted = html.slice(cursor).match(/^[^\s"'`=<>]+/); requireRelease(unquoted, 'UNSUPPORTED_HTML_ATTRIBUTE_SYNTAX');
+        value = unquoted[0]; cursor += value.length;
+      }
+      requireRelease(!/[<>\x00-\x1f\x7f]/.test(value), 'UNSUPPORTED_HTML_ATTRIBUTE_SYNTAX'); attributes.set(name, value);
+      if (name === 'src' || name === 'href') {
+        requireRelease(value.length > 0 && !value.includes('&'), 'UNSUPPORTED_HTML_RESOURCE_ENCODING'); resources.push(value);
+      }
+    }
+    if (tag === 'script') {
+      requireRelease(!selfClosing, 'UNSUPPORTED_HTML_SCRIPT');
+      const end = html.slice(cursor).match(/<\/script\s*>/i); requireRelease(end, 'UNSUPPORTED_HTML_SCRIPT');
+      if (attributes.has('src')) requireRelease((!attributes.has('type') || attributes.get('type') === 'module')
+        && html.slice(cursor, cursor + end.index).trim() === '', 'UNSUPPORTED_HTML_SCRIPT');
+      else { configurations++; requireRelease(configurations === 1 && attributes.get('id') === 'naijue-erp-production-configuration'
+        && attributes.get('type') === 'application/json', 'UNSUPPORTED_HTML_SCRIPT'); }
+      cursor += end.index + end[0].length;
+    }
+  }
+  requireRelease(configurations === 1, 'PRODUCTION_CONFIGURATION_REQUIRED'); return resources;
+}
+
 /** Verify actual on-disk graph inputs and outputs. No production:true flag is accepted as provenance. */
 async function verifyGraph(kind, component, context) {
   const { sourceRoot, buildRoot, sources, files, fileBytes, packageJson, lock } = context;
@@ -300,9 +350,9 @@ export async function validateRelease({ sourceManifest, buildManifest, buildRoot
     && /^\/assets\/(?:[A-Za-z0-9_-]+\/)*$/.test(configuration.assets?.basePath ?? ''), 'PRODUCTION_CONFIGURATION_REQUIRED');
   const assetsOrigin = new URL(configuration.assets.basePath, configuration.http.origin).href;
   let frontendScriptSeen = false;
-  for (const match of html.matchAll(/\b(?:src|href)="([^"]+)"/g)) {
-    requireRelease(match[1].startsWith(assetsOrigin), 'HTML_RESOURCE_OUTSIDE_RELEASE');
-    const member = 'web/' + match[1].slice(assetsOrigin.length);
+  for (const resource of htmlResources(html)) {
+    requireRelease(resource.startsWith(assetsOrigin), 'HTML_RESOURCE_OUTSIDE_RELEASE');
+    const member = 'web/' + resource.slice(assetsOrigin.length);
     relativeName(member); requireRelease(members.has(member), 'HTML_RESOURCE_OUTSIDE_RELEASE');
     if (member === frontendMember) frontendScriptSeen = true;
   }

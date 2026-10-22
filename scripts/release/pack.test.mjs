@@ -6,7 +6,7 @@ import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { packRelease } from './pack.mjs';
-import { sha256 } from './manifest.mjs';
+import { sha256, validateRelease } from './manifest.mjs';
 
 const configured = process.env.PACK_TEST_ROOT;
 const testParent = configured ? path.resolve(configured) : await realpath(os.tmpdir());
@@ -141,4 +141,29 @@ test('CLI returns a nonzero clean code for missing actual manifests', async () =
   const script = fileURLToPath(new URL('./pack.mjs', import.meta.url));
   const run = spawnSync(process.execPath, [script, '--source-manifest', path.join(f.root, 'missing.json'), '--build-manifest', path.join(f.root, 'missing-build.json'), '--build-root', f.buildRoot, '--out', f.options.out], { encoding: 'utf8' });
   assert.equal(run.status, 1); assert.equal(run.stdout, ''); assert.match(run.stderr, /^RELEASE_PACK_FAILED\n$/);
+});
+test('HTML resource closure rejects the QB external-script counterexample and alternate attribute syntax', async () => {
+  for (const [label, tag] of [
+    ['single', "<script src='https://outside.invalid/unlisted.js'></script>"],
+    ['uppercase', '<SCRIPT TYPE="module" SRC="https://outside.invalid/unlisted.js"></SCRIPT>'],
+    ['unquoted', '<script type=module src=https://outside.invalid/unlisted.js></script>'],
+  ]) {
+    const f = await fixture('html-external-' + label), name = 'web/index.html';
+    f.buildData[name] = f.buildData[name].replace('</html>', tag + '</html>');
+    Object.assign(f.build.files.find(row => row.path === name), record(name, f.buildData[name])); await f.save();
+    await assert.rejects(validateRelease(f.options), error => error.code === 'HTML_RESOURCE_OUTSIDE_RELEASE');
+  }
+});
+test('HTML resource closure preserves canonical and alternate same-origin member references', async () => {
+  for (const [label, src] of [
+    ['canonical', 'src="https://1n5635n614.goho.co/assets/tool-check-1/application.js"'],
+    ['single', "src='https://1n5635n614.goho.co/assets/tool-check-1/application.js'"],
+    ['uppercase', 'SRC = "https://1n5635n614.goho.co/assets/tool-check-1/application.js"'],
+    ['unquoted', 'src=https://1n5635n614.goho.co/assets/tool-check-1/application.js'],
+  ]) {
+    const f = await fixture('html-legal-' + label), name = 'web/index.html';
+    f.buildData[name] = f.buildData[name].replace('src="https://1n5635n614.goho.co/assets/tool-check-1/application.js"', src);
+    Object.assign(f.build.files.find(row => row.path === name), record(name, f.buildData[name])); await f.save();
+    assert.equal((await validateRelease(f.options)).manifest.buildId, 'tool-check-1');
+  }
 });

@@ -27,8 +27,8 @@ reads. No all-catalog fetch, inferred default scheme or stock query occurs here.
 Until the proposed product-level default-scheme field is approved and implemented,
 barcode results include `defaultScheme:{state:"UNAVAILABLE",reason:"NO_PRODUCT_SCHEME_FIELD"}`.
 This is neither a stored NULL assignment nor a selection inferred from the first,
-main or most common barcode. Proposed image roles, soft deletion, new maintenance
-receipt types and all product write commands remain unimplemented pending C01.
+main or most common barcode. This frozen drawer DTO v1 is unchanged. The separately
+approved C01 maintenance detail below reads the actual nullable product selection.
 
 `stockReader` is mandatory configuration and may explicitly be null. D3's reader
 must independently apply current warehouse/inventory authority, product/SKU
@@ -42,3 +42,57 @@ These leaf plugins create no listener, pool, accounts or schema and are not yet
 production-host registration. The original media plugin still requires a genuine
 controlled-media provider; images do not become deliverable by registering these
 new read routes. D1 owns final host composition and D3 owns stock SQL/admission.
+
+## C01-approved editable product API v1
+
+`product-maintenance-ports.ts` defines the new editing contract separately from the
+old drawer DTO. Use `createProductMaintenanceHttpPlugin` with the current trusted
+authenticator and `createProductMaintenanceService` dependencies. D1's
+`PostgresMaintenanceCommandUnitOfWork` supplies the sole transaction/client and
+evidence implementation to `PostgresProductMaintenanceUnitOfWork`; D2 never writes
+generic receipt/audit SQL or runs migrations. Production registration and engine
+verification are still separate tasks.
+
+| Route | Exact input | Result |
+| --- | --- | --- |
+| POST `/products/maintenance/detail/query` | `{productId}` | `ProductMaintenanceDetail` with actual root/SKU versions, raw IDs, full editable values and real reference names/category path |
+| POST `/products/maintenance/candidates/query` | `{kind,search,page,pageSize}` | exact count plus one page of native candidates; pageSize 20/50/100 |
+| POST `/products/commands` | CREATE/EDIT/status command union below | strict `{operationId,kind:"PRODUCT",targetId,version}` after known commit |
+| GET `/products/receipts/:requestKey` | no query/body | currently authorized original actor/key receipt |
+
+Candidate kinds: categories, suppliers, seasons, size-groups, colors, fits,
+barcode-schemes, years, thicknesses, collar-pants-types. IDs are actual native UUIDs
+except the last three scalar options, which are actual distinct stored values.
+No default year, default scheme, extra dictionary rows or labels-to-ID matching is
+invented. Inactive selected supplier/reference names are retained in detail; new
+choices use enabled/nondeleted rows where the native model has those states.
+
+CREATE is `{action:"CREATE",requestKey,values,skus,barcodes}`. EDIT also requires
+`id,expectedVersion`. The values object requires exactly productCode, name,
+categoryId, supplierId, seasonId, sizeGroupId, year, systemItemCode, thickness,
+collarPantsType, defaultBarcodeSchemeId, enabled, prices. Prices require all nine
+existing snake_case price keys. NULL and zero remain distinct. New products require
+the frozen Demo's explicit code/supplier/year/season/system code/default scheme and
+at least one actual SKU; original unknown nullable values are not guessed on edit.
+Existing product code is read-only, matching the frozen Demo.
+
+SKU inputs are `{id,expectedVersion,skuCode,colorId,fitId,sizeId,enabled}`. A genuine
+new SKU has explicit id:null and expectedVersion:null; the server assigns its UUID
+and current created_operation_id. Existing coordinate/code identities cannot change.
+Barcode inputs are `{id,barcode,colorId,fitId,sizeId,kind,schemeId,enabled}`. New rows
+use id:null; existing raw binding/provenance cannot be changed. Missing child rows
+are retained, not deleted/recreated. Do not create a Cartesian SKU matrix. Changes
+to a product default scheme never regenerate or rebind existing barcodes.
+
+DISABLE, RESTORE and DELETE require exactly action, requestKey, id, expectedVersion.
+DELETE retains the product identity/deleted_at and is unavailable without D3's
+trusted complete per-warehouse/SKU zero and retained-reference guard. Unknown or
+negative stock cannot be zero. Image attachment writes are not included in this
+core save command yet; they must not be silently discarded or reported successful.
+
+Current authorization is checked inside the D1 transaction for DETAIL/CANDIDATES
+and every command/receipt. Read intents are not persisted operation actions. The
+root CAS, actual child changes, sparse snake_case audit and receipt share one
+transaction. Request replay preserves the same actor/key/hash and result; revoked
+permissions are rechecked. A failure after COMMIT attempt is recovered via the
+original key, without a new key or misleading rollback.
