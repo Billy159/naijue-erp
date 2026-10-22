@@ -16,6 +16,7 @@ import type { StaffSettingsProps } from '../staff-settings/contracts.ts';
 import type { PaymentSettingsProps } from '../payment-settings/contracts.ts';
 import type { ProductFullPageConfiguration } from '../products/product-page-contracts.ts';
 import type { CatalogueMaintenanceCapability } from '../product-settings/colors/contracts.ts';
+import type { DictionaryBrowserReader } from '../product-settings/size-groups/contracts.ts';
 
 export type ApplicationRoute = 'inventory' | 'sales' | 'transfers' | 'customers' | 'suppliers' | 'products' | 'product-categories' | 'product-settings' | 'barcode-schemes' | 'store-settings' | 'staff-settings' | 'payment-settings' | 'account-settings';
 export interface RouteStylesheet {
@@ -45,6 +46,15 @@ export interface SalesRouteConfiguration {
 }
 export interface TransferRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
+  /** Explicit complete product read-only action, independent of other routes. */
+  readonly productFullPage?: ProductFullPageConfiguration;
+  /** Trusted initial dictionary target for the empty draft's matrix.
+   * No first-group inference or generated sizes. Reads retain current server
+   * authorization, scope and cancellation; this is presentation configuration. */
+  readonly initialSizeGroup?: {
+    readonly id: string;
+    readonly reader: Pick<DictionaryBrowserReader, 'readSizeGroups'>;
+  };
   /** Separate full-page detail action CSS. Never loaded with route or shell CSS. */
   readonly detailStylesheet: RouteStylesheet;
   /** Omit when the real shared action-style handshake is unavailable. */
