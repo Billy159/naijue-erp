@@ -1,0 +1,58 @@
+{
+  "atUtc": "2026-10-22T23:47:55.394454+00:00",
+  "status": "C_FIXED_ACTUAL_CANDIDATE_PENDING_NEW_JOIN_SOURCE_REVIEW",
+  "actualResult": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/QB132-F01-fix1/ACTUAL-DELIVERY-RESULT.json",
+    "bytes": 11874,
+    "sha256": "0670484c23b1364fe86f2dd07e2fddd88b00327797e55c93589027c99c96ab2c"
+  },
+  "manifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/transfer-lines-source26-candidate-20261023-D3-run1/CANDIDATE-MANIFEST.json",
+    "bytes": 4781,
+    "sha256": "1efd93016a1345dfd491358ad86d38dd19e4ff75fc7922794dd82bac997f4c4e"
+  },
+  "privateSlotStatsOnly": [
+    {
+      "name": "17\u5386\u53f2\u8c03\u62e8\u660e\u7ec6.csv",
+      "bytes": 61425542,
+      "mode": "0600",
+      "nlink": 1
+    },
+    {
+      "name": "CANDIDATE-MANIFEST.json",
+      "bytes": 4781,
+      "mode": "0600",
+      "nlink": 1
+    },
+    {
+      "name": "PREPARATION-STATE.json",
+      "bytes": 5295,
+      "mode": "0600",
+      "nlink": 1
+    },
+    {
+      "name": "transfer-lines26-decisions261641-PENDING.jsonl",
+      "bytes": 346152449,
+      "mode": "0600",
+      "nlink": 1
+    },
+    {
+      "name": "transfer-lines26-header-line-counts-PENDING.jsonl",
+      "bytes": 2421020,
+      "mode": "0600",
+      "nlink": 1
+    },
+    {
+      "name": "transfer-lines26-original261641-PENDING.jsonl",
+      "bytes": 187837434,
+      "mode": "0600",
+      "nlink": 1
+    }
+  ],
+  "largeArtifactDigests": "Original D3 same-pass receipts; no C largefile rehash or original data reread",
+  "scope": "Actual one-pass 261641source/typed,14279headercoverage,source12typed13. New independent sourcejoin adoption only; oldconsumer6/QB133/mapper/SKU/Header reused.",
+  "originalWindowSpent": true,
+  "realImportExecutionAuthorized": false,
+  "fullHeaderOrDocumentSha": false,
+  "mainPublishAccounts": false
+}

@@ -1,0 +1,157 @@
+{
+  "atUtc": "2026-10-22T23:50:13.913951+00:00",
+  "C43": {
+    "status": "PASS_FRESH_ORIGINAL_BACKUP_AND_SAFE_METADATA_READBACK_ONLY",
+    "elapsedSeconds": 567.123,
+    "backup": {
+      "ageSecondsAtReadback": 0.072836,
+      "backupId": "rapid-launch-current-20261023-43",
+      "backupMaxAgeSeconds": 43200,
+      "backupPath": "/srv/naijue-erp/rapid-launch-20261022/backups/rapid-launch-current-20261023-43",
+      "databaseFiles": 3509,
+      "finishedAtUtc": "2026-10-22T23:27:54.461770+00:00",
+      "mediaFiles": 663,
+      "originalReceipt": {
+        "bytes": 3884,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/c02-current-backup-20261023-43/results/current-preservation.json",
+        "sha256": "aded98cccaad3bf3eaba37dfdb13cc9240ed4ed34618dc8b2cb0ff307acff274"
+      },
+      "pairPreservation": {
+        "bytes": 3829,
+        "finishedAtUtcPresent": false,
+        "path": "/srv/naijue-erp/rapid-launch-20261022/backups/rapid-launch-current-20261023-43/preservation.json",
+        "sha256": "ca54cb05abf4651a749af04055b2a2c258252672c2ec9a0ed3bd1d8941ab6cb9"
+      },
+      "physicalVerifiedOnceByOriginalScript": true,
+      "physicalVerifyRepeatedByWrapper": false,
+      "protectedArchivesOrDbManifestReopened": false,
+      "recordedArchiveStatistics": {
+        "applicationImages": {
+          "bytes": 368849920,
+          "members": null
+        },
+        "configuration": {
+          "bytes": 552960,
+          "members": 84
+        },
+        "media": {
+          "bytes": 83947520,
+          "members": 827
+        }
+      },
+      "restoreLimit": "Prior DB/media restore only; new application/new-account startup and production rollback not proven by this backup.",
+      "restoreRehearsalRepeated": false,
+      "retainedRawContainerCopy": "/tmp/rapid-launch-current-20261023-43",
+      "rollbackBoundary": "Preserve unchanged old DB. New business writes in rewrite DB must be protected; never restore old DB snapshot over new accounting.",
+      "startedAtUtc": "2026-10-22T23:18:27.551506+00:00",
+      "status": "PASS_FRESH_CURRENT_APP_DB_WAL_MEDIA_CONFIG_PRESERVED",
+      "walRangeCount": 1
+    },
+    "currentReceipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-current-backup-20261023-43/release-receipts/c02-current-backup-20261023-43/current-preservation.json",
+      "bytes": 3884,
+      "sha256": "aded98cccaad3bf3eaba37dfdb13cc9240ed4ed34618dc8b2cb0ff307acff274"
+    },
+    "safeReceipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-current-backup-20261023-43/release-receipts/c02-current-backup-20261023-43/backup43-safe-result.json",
+      "bytes": 8480,
+      "sha256": "42cc0b20ab3c252ce2a9d71ca2115d89f9fb78094aa1b49f154e81025513b3aa"
+    },
+    "originalServicesStable": true,
+    "resourcesAfter": {
+      "cpuCount": 4,
+      "diskFreeBytes": 184798846976,
+      "diskTotalBytes": 489861931008,
+      "memAvailableKiB": 15032900
+    },
+    "nonsecretCASReadback": "Collector redacted key, exact C43 wrapper server comparisons accepted; original44 check_old independently recomputed expected pins."
+  },
+  "C44": {
+    "receipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-c103-prepare-files-20261023-44/release-receipts/c03-r1-c103-prepare-files-20261023-44/engine-result.json",
+      "bytes": 2638,
+      "sha256": "bbac98e931e491158744d6a6012a6302f25b965a18359b56f644a8be42351e29"
+    },
+    "value": {
+      "appStarted": false,
+      "dataReady": false,
+      "newDatabaseReceipt": {
+        "path": "/srv/naijue-erp/rapid-launch-20261022/metadata/runtime26-r1-v1/C05-NEW-DATABASE-RECEIPT.json",
+        "sha256": "b4271b7d1d9890ec61146f82da767ef40a50528ff20d3f5f2d2af959f98e786a"
+      },
+      "permanentMetadata": {
+        "buildManifest": {
+          "path": "/srv/naijue-erp/rapid-launch-20261022/metadata/runtime26-r1-v1/builds/r1-d3c2188-20261023-01/build-manifest.json",
+          "sha256": "77cea06d7fe94a194f3396506d8a797a289b5a5e5b1dca59f88e2449d91ef5d8"
+        },
+        "buildReceipt": {
+          "path": "/srv/naijue-erp/rapid-launch-20261022/metadata/runtime26-r1-v1/builds/r1-d3c2188-20261023-01/build-receipt.json",
+          "sha256": "77d43baef570f7a5c0eb00218c70bf0a07199355f970fd087f9b94bcfe0dc3f7"
+        },
+        "independentReview": {
+          "path": "/srv/naijue-erp/rapid-launch-20261022/metadata/runtime26-r1-v1/INDEPENDENT-REVIEW.json",
+          "sha256": "73c879a85bd5c1318648fd96ea3e0de6970521c93109eacb729dec9d74c1594f"
+        },
+        "review": {
+          "path": "/srv/naijue-erp/rapid-launch-20261022/metadata/runtime26-r1-v1/C-RUNTIME-REVIEW.json",
+          "sha256": "359b2286d57069a787139b6b7f250d59338af80142809412d411f381e3c4ad2d"
+        },
+        "sourceManifest": {
+          "path": "/srv/naijue-erp/rapid-launch-20261022/metadata/runtime26-r1-v1/builds/r1-d3c2188-20261023-01/source-manifest.json",
+          "sha256": "5125dbe1aa8c724b0eb4623a4ba3fb254d7f7bda15b4ba8f6cf310865d6e6f8b"
+        },
+        "upgradeReceipt": {
+          "path": "/srv/naijue-erp/rapid-launch-20261022/metadata/runtime26-r1-v1/C38-UPGRADE-RECEIPT.json",
+          "sha256": "dedc24959b12461972debfd829f1e6a16efb20a774850ef7f18f964949ed39ef"
+        }
+      },
+      "preinstallSafety": {
+        "candidateNamesAbsent": true,
+        "networkPinsVerified": true,
+        "newPathsAbsent": true,
+        "originalAppAndDbUnchanged": true,
+        "rootFreeBytesObserved": 184778522624
+      },
+      "preparedPlan": {
+        "path": "/srv/naijue-erp/rapid-launch-20261022/packages/r1-d3c2188-20261023-01/prepared-deployment-plan.json",
+        "sha256": "284c26cf7c862dc3d8c6985da11d578973ce4a8c8e4d88175b7aaf52ddb005a0"
+      },
+      "productionEntryChanged": false,
+      "runtime26BindingSha256": "c9b11371903ff93fb50f41175b89adb17b0d9789cdcf2350c8a4665321ae604f",
+      "runtimeConfiguration": {
+        "identity": {
+          "bytes": 1157,
+          "device": 66304,
+          "gid": 10001,
+          "inode": 14421540,
+          "mode": 384,
+          "mtimeNs": 1792711975064778864,
+          "uid": 10001
+        },
+        "path": "/srv/naijue-erp/rapid-launch-20261022/config/runtime26-r1-v1/r1-d3c2188-20261023-01/private/runtime.json"
+      },
+      "status": "FILES_PREPARED_ORIGINAL_PREFLIGHT_ONLY_NOT_STAGED"
+    },
+    "elapsedSeconds": 2.724557383917272,
+    "privateBodyReadOrHashedByC": false,
+    "localFirstMaterialRefusalAndCorrection": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-c103-prepare44-material-20261023-01/C44-LOCAL-REDACTION-ADAPTATION.json",
+      "bytes": 1033,
+      "sha256": "9b6fd29d5464740172d878b9a63ceb1bc6448dda25f2de27981c834cc9c28a54"
+    }
+  },
+  "C45": {
+    "jobId": "c03-r1-c103-stage-20261023-45",
+    "actualSubmittedOnce": true,
+    "lastStatus": "RUNNING",
+    "actualMaterial": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-c103-stage45-material-20261023-01/RESULT.json",
+      "bytes": 1172,
+      "sha256": "9f59d1b70079b0f0696361e25a0fe3984c8e4a7b974fa3c216482895074790c3"
+    },
+    "privateStageOnly": true,
+    "productionEntryChanged": false
+  },
+  "noRealAccountSourceMainPublish": true,
+  "actualBusinessAcceptance": false
+}

@@ -1,0 +1,44 @@
+{
+  "evidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-6b1158a-20261023-01/RESULT.json",
+    "bytes": 1154,
+    "sha256": "50dcc073f9dbb1944fb14d4afea0ddadc663a9be6f5771894f6cfcc79721dcef"
+  },
+  "result": {
+    "expectedOld": "794bec548e10bf44e33f3b4287cafd15efcd83dc",
+    "target": "6b1158aa4bc278862c685484eda27a93ca8759ef",
+    "objects": [
+      {
+        "commit": "d9fd9a9060eb8172de614e3d250ce4d8268ddffa",
+        "tree": "a75cd2edb982d4ec9b7beac227bf75daa277e275",
+        "changedPaths": 3,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "bc1cf5ef269f788aded2d85cbad2bbb4aa5ae175",
+        "tree": "1c50ac515bbe46b5f1754b5b2100d2ac6c386616",
+        "changedPaths": 3,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "f4feb43ad4b50397817aa652428e5911232c9fe7",
+        "tree": "521c370d4d0f818c9097782aa841f1ca9cd7bc0f",
+        "changedPaths": 3,
+        "returnedShaExact": true
+      },
+      {
+        "commit": "6b1158aa4bc278862c685484eda27a93ca8759ef",
+        "tree": "b460c78448e3ee2762103ae96413025563e27daa",
+        "changedPaths": 6,
+        "returnedShaExact": true
+      }
+    ],
+    "force": false,
+    "status": "PASS_EXACT_ORIGINAL_OBJECTS_NONFORCED_NORMAL_BRANCH_FF_READBACK",
+    "atUtc": "2026-10-22T23:26:45.805215+00:00",
+    "remoteVerified": "6b1158aa4bc278862c685484eda27a93ca8759ef",
+    "commits": 4,
+    "normalGitProtocolPushSucceeded": false
+  },
+  "ordinaryGitProtocolPassed": false
+}

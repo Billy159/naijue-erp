@@ -1,0 +1,44 @@
+{
+  "atUtc": "2026-10-22T23:39:50.048116+00:00",
+  "status": "C_SIGNED_ONCE_BOUNDED_TRANSFER_LINE_PREPARATION_ONLY",
+  "window": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-authority/rapid-launch-20261022/transfer-lines26-source-read-window-v2-20261023-01.json",
+    "bytes": 33195,
+    "sha256": "83a0ca0e62010f4ab6de25f63182f6d829e9077eee44948fb4fc2fc986f0cc4a"
+  },
+  "deadlineUtc": "2026-10-23T00:24:50.048116+00:00",
+  "scope": {
+    "originalRows": 261641,
+    "expectedHeaders": 14279,
+    "sourceFields": 12,
+    "typedFields": 13,
+    "heapMiB": 1024,
+    "serial": 1,
+    "outputCapBytes": 1073741824
+  },
+  "parentIdentity": {
+    "dev": 16777234,
+    "ino": 84367240,
+    "uid": 501,
+    "mode": 16832
+  },
+  "qbClosure": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice133-qb132-f01-runtime-closure-d0f82b50/RESULT.json",
+    "bytes": 9099,
+    "sha256": "e43dc6a8e3661c527a9565303f603deda8eff2ea78f5804f223926ed35305bd0"
+  },
+  "runtimeClosure": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/QB132-F01-fix1/RUNTIME-CLOSURE.json",
+    "bytes": 22201,
+    "sha256": "a40dc0e16d606921ff68b3656f8edfdeae18576d922f508ddb6228da85952427"
+  },
+  "preparer": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-consumer1/QB132-F01-fix1/prepare-once.mjs",
+    "bytes": 32296,
+    "sha256": "540daece1d8bd59305e2e87a5673b30f7f0168b61a2894bda56b9d0d2fbea03f"
+  },
+  "realImportExecutionAuthorized": false,
+  "privateBusinessReadByC": false,
+  "fullHeaderSession": false,
+  "actualPreparationResult": "NOT_YET_EXECUTED"
+}
