@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { PostgresProductWarehouseStockReader } from '../adapters/postgres/src/product-warehouse-stock-reader.ts';
 import type { InventoryAdmissionRuntime } from '../adapters/postgres/src/inventory-key-admission-reader.ts';
-import type { PgSalesPool } from '../adapters/postgres/src/sales-unit-of-work.ts';
+import type { PgSalesClient, PgSalesPool } from '../adapters/postgres/src/sales-unit-of-work.ts';
 import type { ProductDetailsScopedRead, ProductDetailsPageQuery, ProductStockOverviewScopedRead } from '../packages/application/src/product-details-query-ports.ts';
 import type { InventoryQueryAuthorization } from '../packages/application/src/inventory-query-contracts.ts';
 import type { NativeRuntime26Capability } from '../packages/application/src/native-import-schema-contract.ts';
@@ -12,9 +12,9 @@ const id = (n: number) => `00000000-0000-0000-0000-${String(n).padStart(12, '0')
 const parameters = { productId: entityId('product', id(20)), page: 1, pageSize: 20 as const };
 const read = (signal = new AbortController().signal): ProductDetailsScopedRead<ProductDetailsPageQuery> => ({ actor: inventoryActor,
   intent: { kind: 'stock', parameters }, parameters, grant: { kind: 'stock', productId: parameters.productId }, signal });
-function fixture(options: { version?: number; fail?: string; unpublished?: boolean; missingProduct?: boolean; mutate?: (rows: Record<string, unknown>[]) => Record<string, unknown>[]; after?: (tag: string) => void } = {}) {
+function fixture(options: { version?: number; fail?: string; unpublished?: boolean; missingProduct?: boolean; mutate?: (rows: Record<string, unknown>[]) => Record<string, unknown>[]; admissionMutate?: (rows: Record<string, unknown>[]) => Record<string, unknown>[]; after?: (tag: string) => void } = {}) {
   const calls: { tag: string; sql: string; values: unknown[] }[] = [], releases: unknown[] = []; let connects = 0, authorizations = 0;
-  const warehouse = inventoryScope.warehouses[0]!, pool: PgSalesPool = { async connect() { connects++; return { async query(sql, values = []) {
+  const warehouse = inventoryScope.warehouses[0]!, client: PgSalesClient = { async query(sql, values = []) {
     const tag = /\/\* ([^*]+) \*\//.exec(sql)?.[1] ?? sql; calls.push({ tag, sql, values }); if (tag === options.fail) throw Error('SYNTHETIC:' + tag);
     let rows: Record<string, unknown>[] = [];
     if (sql.includes('AS accounting_guards_present')) rows = [{ accounting_guards_present: true }];
@@ -31,10 +31,12 @@ function fixture(options: { version?: number; fail?: string; unpublished?: boole
       { warehouse_id: warehouse.id, warehouse_name: warehouse.label, sku_id: id(42), balance_present: false, quantity: null, version: null, last_operation_id: null, ledger_present: false, warehouse_published: true, sku_published: true }];
     else if (tag === 'inventory-admission:keys') rows = (values[0] as string[]).map((w, i) => ({ warehouse_id: w, sku_id: (values[1] as string[])[i], admitted: true, published_batch_id: id(30),
       warehouse_basis: 'CUTOFF_MEMBER', sku_basis: 'POST_CUTOFF_CREATED', warehouse_created_operation_id: null, sku_created_operation_id: id(60 + i) }));
+    if (tag === 'inventory-admission:keys' && options.admissionMutate) rows = options.admissionMutate(rows);
     options.after?.(tag); return { rows, rowCount: rows.length };
-  }, release(error) { releases.push(error); } }; } };
+  }, release(error) { releases.push(error); } };
+  const pool: PgSalesPool = { async connect() { connects++; return client; } };
   const authorization = { async authorize() { authorizations++; return inventoryScope; } };
-  return { pool, authorization, calls, releases, connects: () => connects, authorizations: () => authorizations, warehouse };
+  return { pool, client, authorization, calls, releases, connects: () => connects, authorizations: () => authorizations, warehouse };
 }
 test('stock v1 separately authorizes inventory and preserves negative/explicit zero/proven absent zero in one snapshot', async () => {
   const f = fixture(), reader = new PostgresProductWarehouseStockReader(f.pool, f.authorization); assert.equal(f.connects(), 0);
@@ -218,4 +220,62 @@ test('overview unknown COMMIT discards without retry, and late confirmed-COMMIT 
   const controller = new AbortController(), late = overviewFixture({ after(tag) { if (tag === 'COMMIT') controller.abort(); } });
   await assert.rejects(new PostgresProductWarehouseStockReader(late.pool, late.authorization).readOverview(overviewRead('ALL', controller.signal)), { code: 'INVENTORY_READ_ABORTED' });
   assert.deepEqual(late.releases, [undefined]); assert.equal(late.calls.at(-1)!.tag, 'COMMIT');
+});
+
+// New exact26 protocol delta only. These finite doubles prove the caller seam,
+// not actual PostgreSQL grants, issuer review or real runtime acceptance.
+test('stock exact26 verifies the original read-only client/purpose before published paginated key reads', async () => {
+  const f = fixture({ version: 26, admissionMutate(rows) { return rows.map((row, n) => n === 2
+    ? { ...row, admitted: false, published_batch_id: null, warehouse_basis: null, sku_basis: null, warehouse_created_operation_id: null, sku_created_operation_id: null } : row); } });
+  let ready = 0;
+  const cap: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(client, purpose) {
+    ready++; assert.equal(client, f.client); assert.equal(purpose, 'INVENTORY_ADMISSION');
+    assert.equal(f.authorizations(), 1); assert.equal(f.calls[0]!.sql, 'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');
+    assert.equal(f.calls.at(-1)!.tag, 'product-stock:schema');
+  } };
+  const legacy: InventoryAdmissionRuntime = { profile: 'EXACT24', async assertReady() { assert.fail('exact26 must use its separate actual-client capability'); } };
+  const result = await new PostgresProductWarehouseStockReader(f.pool, f.authorization, legacy, cap).readStock(read());
+  assert.equal(ready, 1); assert.equal(f.connects(), 1); assert.equal(f.authorizations(), 1);
+  assert.deepEqual(result, { productId: parameters.productId, page: 1, pageSize: 20, total: 3, items: [
+    { warehouseId: f.warehouse.id, warehouseName: f.warehouse.label, skuId: id(40), quantity: '-2', state: 'KNOWN' },
+    { warehouseId: f.warehouse.id, warehouseName: f.warehouse.label, skuId: id(41), quantity: '0', state: 'KNOWN' },
+    { warehouseId: f.warehouse.id, warehouseName: f.warehouse.label, skuId: id(42), quantity: null, state: 'UNKNOWN' }
+  ] });
+  const page = f.calls.find(call => call.tag === 'product-stock:page')!;
+  assert.deepEqual(page.values, [parameters.productId, [f.warehouse.id], inventoryScope.hallIds, id(30), 20, '0']);
+  assert.match(page.sql, /LIMIT \$5 OFFSET \$6::bigint/);
+  assert.equal(f.calls.filter(call => call.tag === 'product-stock:publication').length, 1);
+  assert.equal(f.calls.filter(call => call.tag === 'inventory-admission:keys').length, 1);
+  assert.equal(f.calls.at(-1)!.tag, 'COMMIT'); assert.deepEqual(f.releases, [undefined]);
+  assert.ok(f.calls.every(call => !/^(INSERT|UPDATE|DELETE)/.test(call.sql)));
+});
+test('stock exact26 rejects denied inventory before connection and missing/rejected runtime before data reads', async () => {
+  const denied = fixture({ version: 26 }); let verified = 0;
+  const unused: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady() { verified++; } };
+  const reader = new PostgresProductWarehouseStockReader(denied.pool, { async authorize() { throw Object.assign(Error('SYNTHETIC DENIED'), { code: 'FORBIDDEN' }); } }, null, unused);
+  await assert.rejects(reader.readStock(read()), { code: 'FORBIDDEN' }); assert.equal(denied.connects(), 0); assert.equal(verified, 0);
+  const missing = fixture({ version: 26 });
+  await assert.rejects(new PostgresProductWarehouseStockReader(missing.pool, missing.authorization).readStock(read()), { code: 'INVENTORY_NOT_READY' });
+  assert.ok(!missing.calls.some(call => call.tag === 'product-stock:product')); assert.equal(missing.calls.at(-1)!.tag, 'ROLLBACK');
+  for (const booleanSubstitute of [false, true]) {
+    const f = fixture({ version: 26 }); let checks = 0;
+    const cap = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(client: object, purpose: string) {
+      checks++; assert.equal(client, f.client); assert.equal(purpose, 'INVENTORY_ADMISSION');
+      if (booleanSubstitute) return true; throw Object.assign(Error('SYNTHETIC WRONG POOL/PURPOSE'), { code: 'NATIVE_RUNTIME26_NOT_READY' });
+    } } as unknown as NativeRuntime26Capability;
+    await assert.rejects(new PostgresProductWarehouseStockReader(f.pool, f.authorization, null, cap).readStock(read()),
+      booleanSubstitute ? TypeError : { code: 'NATIVE_RUNTIME26_NOT_READY' });
+    assert.equal(checks, 1); assert.ok(!f.calls.some(call => call.tag === 'product-stock:product'));
+    assert.equal(f.calls.at(-1)!.tag, 'ROLLBACK'); assert.deepEqual(f.releases, [undefined]);
+  }
+});
+test('stock exact26 verified runtime still rejects inventory without a completed publication', async () => {
+  const f = fixture({ version: 26, unpublished: true }); let checked = 0;
+  const cap: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(client, purpose) {
+    checked++; assert.equal(client, f.client); assert.equal(purpose, 'INVENTORY_ADMISSION');
+  } };
+  await assert.rejects(new PostgresProductWarehouseStockReader(f.pool, f.authorization, null, cap).readStock(read()), { code: 'INVENTORY_NOT_READY' });
+  assert.equal(checked, 1); assert.equal(f.calls.filter(call => call.tag === 'product-stock:publication').length, 1);
+  assert.ok(!f.calls.some(call => ['product-stock:page', 'product-stock:count', 'inventory-admission:keys'].includes(call.tag)));
+  assert.equal(f.calls.at(-1)!.tag, 'ROLLBACK'); assert.deepEqual(f.releases, [undefined]);
 });

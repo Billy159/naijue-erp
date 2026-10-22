@@ -23,7 +23,7 @@ const numericCount = (v: unknown): bigint => { must(typeof v === 'string' && /^(
 /** Product stock v1: a product grant never substitutes for current inventory/warehouse authorization.
  * Rows are actual SKU identities × authorized warehouses, paged in SQL; no stock zeroes are persisted.
  * Exact19 works through its published import membership. New-creation qualification remains closed
- * until D1 supplies an independently validated EXACT23/24 runtime capability.
+ * until D1 supplies an independently validated EXACT23/24 or explicit EXACT26 runtime capability.
  */
 export class PostgresProductWarehouseStockReader implements ProductWarehouseStockReader {
   private readonly pool: PgSalesPool;
@@ -52,7 +52,10 @@ export class PostgresProductWarehouseStockReader implements ProductWarehouseStoc
       const profile = versions[0]!.versions as unknown[];
       const legacy = profile.length === 19;
       if (legacy) { assertHistoryPublicationSchema19(profile); await assertNativeImportAccountingSchema19Guards({ query, release() { throw Error('Cannot release borrowed stock client'); } }); }
-      else {
+      else if (profile.length === 26) {
+        must(this.runtime26 !== undefined && profile.every((n, i) => n === i + 1), 'INVENTORY_NOT_READY');
+        await this.runtime26!.assertReady(client, 'INVENTORY_ADMISSION');
+      } else {
         must(this.runtime !== null && profile.length === (this.runtime.profile === 'EXACT23' ? 23 : 24)
           && profile.every((n, i) => n === i + 1), 'INVENTORY_NOT_READY');
         await this.runtime!.assertReady({ query });

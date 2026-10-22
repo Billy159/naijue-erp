@@ -9,6 +9,7 @@ import { parseCurrentSalesReferenceQuery, parseCurrentTransferWarehouseQuery, pa
   parseCurrentFormProductSkuQuery, parseCurrentFormSkuBatchQuery } from "../packages/application/src/current-form-validation.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
 import { DomainError } from "../packages/domain/src/errors.ts";
+import type { NativeRuntime26Capability } from "../packages/application/src/native-import-schema-contract.ts";
 const hall = actor.hallId!, foreignHall = sid("hall", 990), staffId = sid("staff", 991), productId = sid("product", 992), skuId = sid("sku", 993);
 const signal = () => new AbortController().signal;
 const context = { kind: "SALES" as const, hallId: hall };
@@ -20,7 +21,7 @@ function reference(kind: CurrentSalesReferenceQuery["kind"] = "hall"): CurrentSa
   if (kind === "paymentAccount") return { ...search, kind, hallId: hall, paymentMethodId: selectedMethod };
   return { ...search, kind, hallId: hall };
 }
-interface Step { readonly sql: RegExp; readonly rows?: Record<string, unknown>[]; readonly error?: Error; readonly inspect?: (values: unknown[], sql: string) => void }
+interface Step { readonly sql: RegExp; readonly rows?: Record<string, unknown>[]; readonly rawRows?: true; readonly error?: Error; readonly inspect?: (values: unknown[], sql: string) => void }
 class Client implements PgSalesClient {
   readonly calls: { sql: string; values: unknown[] }[] = []; readonly releases: (Error | boolean | undefined)[] = [];
   private readonly steps: Step[];
@@ -28,7 +29,7 @@ class Client implements PgSalesClient {
   async query(sql: string, values: unknown[] = []): Promise<PgSalesResult> {
     this.calls.push({ sql, values: structuredClone(values) }); const step = this.steps.shift(); assert.ok(step, `Unexpected scripted pg call: ${sql}`);
     assert.match(sql, step.sql); step.inspect?.(values, sql); if (step.error) throw step.error;
-    return { rows: structuredClone(step.rows ?? []), rowCount: step.rows?.length ?? 0 };
+    return { rows: step.rawRows ? step.rows ?? [] : structuredClone(step.rows ?? []), rowCount: step.rows?.length ?? 0 };
   }
   release(error?: Error | boolean): void { this.releases.push(error); }
   done(): void { assert.equal(this.steps.length, 0); assert.equal(this.releases.length, 1); }
@@ -493,4 +494,80 @@ test("current product six-character code search excludes unpublished SKU/barcode
   const client = new Client([begin(), identity(), total("1", check), page([], (values, sql) => { check(values, sql); assert.deepEqual(values, ["00%_Ab", 20, 20]); }), commit()]);
   const result = await reader(client).readProducts(actor, { ...search, search: "00%_Ab", page: 2, context: transferContext }, signal());
   assert.equal(result.exactTotal, 1n); assert.deepEqual(result.items, []); readonly(client); client.done();
+});
+
+test("current forms exact26: every read proves CURRENT_FORM_READ on the original borrowed client before BEGIN and within the authorized snapshot", async () => {
+  const client = new Client([begin(), identity(), selectedHall(), total("0"), page([]), commit()]);
+  const checkedAt: number[] = []; let authorized = 0;
+  const runtime26: NativeRuntime26Capability = { profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", async assertReady(target, purpose) {
+    assert.equal(target, client); assert.equal(purpose, "CURRENT_FORM_READ"); checkedAt.push(client.calls.length);
+  } };
+  const r = new PostgresCurrentFormReader({ async connect() { return client; } }, { async authorize(facts, intent) {
+    authorized++; assert.equal(facts.identity.accountId, actor.accountId); assert.equal(intent.kind, "products"); return { kind: "all" };
+  } }, { runtime26 });
+  const result = await r.readProducts(actor, { ...search, context }, signal());
+  assert.equal(result.exactTotal, 0n); assert.deepEqual(checkedAt, [0, 1]); assert.equal(authorized, 1); readonly(client); client.done();
+});
+
+test("current forms exact26: barcode retains warehouse authorization, publication and enabled-reference checks in one readonly snapshot", async () => {
+  const warehouseId = sid("warehouse", 1201), bindingId = sid("barcode", 1202);
+  const input = { context: { ...context, warehouseId }, barcode: "000123" };
+  for (const sourcePublished of [true, false]) {
+    const client = new Client([begin(), identity(), { sql: /current-form:barcode-schema/, rows: [{ versions: Array.from({ length: 26 }, (_, i) => i + 1) }] },
+      selectedHall(), { sql: /current-form:barcode-warehouses/, rows: [{ id: warehouseId, hall_id: hall, native_hall_id: hall, enabled: true, has_nonzero_inventory: false }] },
+      { sql: /current-form:barcode \*\//, rows: [{ ...sku(), binding_id: bindingId, barcode: input.barcode, barcode_kind: "MAIN", binding_enabled: true,
+        references_retained: true, source_published: sourcePublished }], inspect(values, sql) {
+        assert.deepEqual(values, ["000123"]); assert.match(sql, /ib.status<>'IMPORTED'/); assert.match(sql, /references_retained/);
+      } }, commit()]);
+    const runtime26: NativeRuntime26Capability = { profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", async assertReady(target, purpose) {
+      assert.equal(target, client); assert.equal(purpose, "CURRENT_FORM_READ");
+    } };
+    const r = new PostgresCurrentFormReader({ async connect() { return client; } }, allow, { runtime26 });
+    const result = await r.readBarcode(actor, input, signal());
+    assert.equal(result.state, sourcePublished ? "FOUND" : "UNAVAILABLE");
+    assert.equal(result.sku?.id ?? null, sourcePublished ? skuId : null); assert.equal(result.binding?.id ?? null, sourcePublished ? bindingId : null);
+    readonly(client); client.done();
+  }
+  const deniedClient = new Client([begin(), identity(), { sql: /current-form:barcode-schema/, rows: [{ versions: Array.from({ length: 26 }, (_, i) => i + 1) }] }, rollback()]);
+  const runtime26: NativeRuntime26Capability = { profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", async assertReady(target) { assert.equal(target, deniedClient); } };
+  const deniedReader = new PostgresCurrentFormReader({ async connect() { return deniedClient; } }, { async authorize() { return { kind: "halls", hallIds: [foreignHall] }; } }, { runtime26 });
+  await assert.rejects(deniedReader.readBarcode(actor, input, signal()), { code: "FORBIDDEN" }); deniedClient.done();
+});
+
+test("current forms exact26: exact complete own-data 1..26 and explicit proof are both required; no prefix or legacy fallback", async () => {
+  const exact = () => Array.from({ length: 26 }, (_, i) => i + 1), hole = exact(), accessor = exact(), extra = exact();
+  delete hole[3]; Object.defineProperty(accessor, "3", { enumerable: true, get() { throw Error("Schema accessor must not run"); } });
+  Object.assign(extra, { unreviewed: true });
+  const invalid: unknown[] = [exact().slice(0, 19), exact().slice(0, 25), [...exact(), 27], exact().filter(v => v !== 12),
+    [...exact().slice(0, 25), 25], hole, accessor, extra];
+  for (const versions of invalid) {
+    const client = new Client([begin(), identity(), { sql: /current-form:barcode-schema/, rows: [{ versions }], rawRows: true }, rollback()]);
+    const runtime26: NativeRuntime26Capability = { profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", async assertReady(target) { assert.equal(target, client); } };
+    const r = new PostgresCurrentFormReader({ async connect() { return client; } }, allow, { runtime26 });
+    await assert.rejects(r.readBarcode(actor, { context: { ...context, warehouseId: sid("warehouse", 1201) }, barcode: "000123" }, signal()), { code: "CURRENT_FORM_READ_UNAVAILABLE" });
+    assert.ok(!client.calls.some(call => /barcode-warehouses|current-form:barcode \*\//.test(call.sql))); client.done();
+  }
+  const legacy = new Client([begin(), identity(), { sql: /current-form:barcode-schema/, rows: [{ versions: exact() }] }, rollback()]);
+  await assert.rejects(reader(legacy).readBarcode(actor, { context: { ...context, warehouseId: sid("warehouse", 1201) }, barcode: "000123" }, signal())); legacy.done();
+});
+
+test("current forms exact26: invalid, boolean, foreign-client or revoked proof fails closed with original transaction cleanup", async () => {
+  const pool = { async connect() { throw Error("Constructor must not borrow"); } };
+  for (const runtime26 of [null, { profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", assertReady: async () => {}, extra: true },
+    { profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", get assertReady() { throw Error("Capability accessor must not run"); } }])
+    assert.throws(() => new PostgresCurrentFormReader(pool, allow, { runtime26: runtime26 as never }), /Exact26 independently verified runtime capability/);
+  for (const phase of ["boolean", "foreign", "revoked-in-snapshot"] as const) {
+    const client = new Client(phase === "revoked-in-snapshot" ? [begin(), rollback()] : []); let assertions = 0;
+    const failure = Error("SYNTHETIC live proof rejected");
+    const runtime26 = { profile: "EXACT26" as const, contract: "NATIVE_RUNTIME26_V1" as const, async assertReady(target: object) {
+      assertions++; if (phase === "boolean") return false;
+      if (phase === "foreign" || assertions === 2) { assert.equal(target, client); throw failure; }
+    } };
+    const r = new PostgresCurrentFormReader({ async connect() { return client; } }, allow, { runtime26: runtime26 as NativeRuntime26Capability });
+    await assert.rejects(r.readProducts(actor, { ...search, context }, signal()), phase === "boolean" ? /without a boolean substitute/ : error => error === failure);
+    assert.ok(!client.calls.some(call => /current-form:identity|current-form:count|current-form:page/.test(call.sql)));
+    assert.equal(client.releases[0], phase === "revoked-in-snapshot" ? undefined : phase === "boolean" ? client.releases[0] : failure);
+    if (phase === "boolean") assert.ok(client.releases[0] instanceof TypeError);
+    client.done();
+  }
 });

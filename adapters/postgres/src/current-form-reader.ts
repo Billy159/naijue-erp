@@ -15,6 +15,8 @@ import type { EntityId, EntityKind } from "../../../packages/domain/src/values.t
 import type { PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
 import { booleanValue } from "./codec.ts";
 import { assertHistoryPublicationSchema19 } from "../../../packages/application/src/history-typed-publication.ts";
+import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 
 type Query = (sql: string, values?: unknown[]) => Promise<PgSalesResult>;
 function denied(): never { throw new DomainError("FORBIDDEN", "Current form is not available to this account"); }
@@ -36,6 +38,14 @@ function count(rows: readonly Record<string, unknown>[]): bigint {
   requireDomain(rows.length === 1 && typeof rows[0]!.total === "string" && /^(?:0|[1-9]\d*)$/.test(rows[0]!.total),
     "INVALID_DATABASE_VALUE", "Expected one exact native count");
   return BigInt(rows[0]!.total);
+}
+function assertExact26BarcodeSchema(value: unknown): void {
+  requireDomain(Array.isArray(value) && Object.getPrototypeOf(value) === Array.prototype
+    && Object.getOwnPropertyDescriptor(value, "length")?.value === 26 && Reflect.ownKeys(value).length === 27
+    && Array.from({ length: 26 }, (_, i) => {
+      const descriptor = Object.getOwnPropertyDescriptor(value, String(i));
+      return descriptor?.enumerable && Object.hasOwn(descriptor, "value") && descriptor.value === i + 1;
+    }).every(Boolean), "CURRENT_FORM_READ_UNAVAILABLE", "Exact complete independently reviewed barcode schema26 required");
 }
 function hallPredicate(column: string, grant: CurrentFormReadGrant, values: unknown[]): string {
   if (grant.kind === "all") return "TRUE";
@@ -71,12 +81,14 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
   private readonly authorize: CurrentFormAuthorization["authorize"];
   private readonly recommendationTimeoutMillis: number;
   private readonly excludeHistoricalCustomers: boolean;
-  constructor(pool: PgSalesPool, authorization: CurrentFormAuthorization, options?: { readonly recommendationTimeoutMillis?: number; readonly historicalCustomerExclusion?: HistoricalCustomerExclusionCapability }) {
+  private readonly runtime26: NativeRuntime26Capability | undefined;
+  constructor(pool: PgSalesPool, authorization: CurrentFormAuthorization, options?: { readonly recommendationTimeoutMillis?: number; readonly historicalCustomerExclusion?: HistoricalCustomerExclusionCapability; readonly runtime26?: NativeRuntime26Capability }) {
     if (typeof pool?.connect !== "function" || typeof authorization?.authorize !== "function")
       throw new TypeError("Current forms require an explicit PostgreSQL pool and trusted form authorization provider");
     const timeout = options?.recommendationTimeoutMillis ?? 250;
     if (!Number.isInteger(timeout) || timeout < 1 || timeout > 1000) throw new TypeError("Optional account recommendation timeout must be an integer from 1 through 1000 milliseconds");
     this.excludeHistoricalCustomers = historicalCustomerExclusionEnabled(pool, options?.historicalCustomerExclusion ?? null);
+    this.runtime26 = checkedNativeRuntime26Capability(options?.runtime26);
     this.pool = pool; this.authorize = authorization.authorize.bind(authorization); this.recommendationTimeoutMillis = timeout;
   }
   private async identity(query: Query, actor: ActorContext): Promise<CurrentFormIdentity> {
@@ -99,8 +111,10 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
     const client = await this.pool.connect(); let began = false; let committing = false; let committed = false; let discard: Error | undefined;
     const query: Query = async (sql, values = []) => { activeCurrentFormRead(signal); const result = await client.query(sql, values); activeCurrentFormRead(signal); return result; };
     try {
+      if (this.runtime26) await this.runtime26.assertReady(client, "CURRENT_FORM_READ");
       // Mark acknowledged transaction state before checking a cancellation after BEGIN.
       activeCurrentFormRead(signal); await client.query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true; activeCurrentFormRead(signal);
+      if (this.runtime26) await this.runtime26.assertReady(client, "CURRENT_FORM_READ");
       const identity = await this.identity(query, trusted);
       const grant = checkedCurrentFormGrant(await this.authorize(Object.freeze({ actor: trusted, identity }), Object.freeze(intent), signal));
       activeCurrentFormRead(signal); const result = await work(query, identity, grant); activeCurrentFormRead(signal); committing = true;
@@ -321,9 +335,10 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
     return this.snapshot(actor, { kind: "barcode", parameters }, signal, async (query, identity, grant) => {
       const schema = (await query("/* current-form:barcode-schema */ SELECT array_agg(version ORDER BY version) versions FROM naijue_erp.schema_migration")).rows;
       requireDomain(schema.length === 1, "CURRENT_FORM_READ_UNAVAILABLE", "Reviewed exact barcode source schema required");
-      // R1 is exact19. Future prefixes need their own reviewed capability; a new
-      // version number alone must never enable staged/new-creation read paths.
-      assertHistoryPublicationSchema19(schema[0]!.versions);
+      // The default remains exact19. Only an explicit same-client runtime26
+      // proof admits exact1..26; neither path exposes unpublished bindings.
+      if (this.runtime26) assertExact26BarcodeSchema(schema[0]!.versions);
+      else assertHistoryPublicationSchema19(schema[0]!.versions);
       const context = parameters.context;
       if (context.kind === "SALES") await this.salesHall(query, identity, grant, context.hallId);
       const warehouseIds = context.kind === "SALES" ? [context.warehouseId] : [context.fromWarehouseId, context.toWarehouseId];

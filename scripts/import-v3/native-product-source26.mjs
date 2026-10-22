@@ -1,0 +1,45 @@
+/** Genuine source+reference composition. Original rows and reference decisions
+ * come from their separate C-adopted artifacts; no input cache/report grants. */
+import {constants} from 'node:fs';import {open,lstat} from 'node:fs/promises';import {resolve,dirname,isAbsolute} from 'node:path';import {createHash} from 'node:crypto';
+import {openReviewedProductEvidenceSource} from './native-source-authorizers.mjs';import {openNativeProductAuthorizer26} from '../import-v2/authorized-native-product-reader.mjs';
+import {prepareNativeProductImportChunk26,validatePreparedNativeProductImportChunk26,nativeProductImportEvidence26,NATIVE_PRODUCT_IMPORT_VERSION_26,NATIVE_PRODUCT_REFERENCE_DECISION_VERSION_26} from '../../packages/application/src/native-product-import.ts';
+import {historyClosureProjectionRow26} from '../../packages/application/src/history-typed-closure.ts';import {historySettlementRequestHash} from '../../packages/application/src/import-v3-history-settlement.ts';import {requestHash} from '../../packages/application/src/request-hash.ts';
+const exact=(v,keys)=>v&&Object.getPrototypeOf(v)===Object.prototype&&Reflect.ownKeys(v).length===keys.length&&keys.every(k=>{const d=Object.getOwnPropertyDescriptor(v,k);return d?.enumerable&&Object.hasOwn(d,'value');});
+const must=(ok,code)=>{if(!ok)throw Object.assign(Error(code),{code});},hash=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v),digest=b=>createHash('sha256').update(b).digest('hex');
+const same=(a,b)=>['dev','ino','mode','size','mtimeMs','ctimeMs'].every(k=>a[k]===b[k]);
+async function regular(path){must(typeof path==='string'&&isAbsolute(path),'PRODUCT_SOURCE26_PATH');let p=resolve(path),first=true;for(;;){const s=await lstat(p);must(!s.isSymbolicLink()&&(first?s.isFile():s.isDirectory()),'PRODUCT_SOURCE26_REGULAR');first=false;const parent=dirname(p);if(parent===p)return;p=parent;}}
+const order=(a,b)=>Buffer.compare(Buffer.from(a.relation+'\0'+a.key),Buffer.from(b.relation+'\0'+b.key));
+export async function openReviewedProductSource26(options){
+ must(exact(options,['binding','authorizedPayloadHash','source','reference','chunkRows']),'PRODUCT_SOURCE26_OPTIONS');historySettlementRequestHash(options.binding);
+ const o={...options,binding:structuredClone(options.binding)};must(exact(o.binding,['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'])&&hash(o.binding.selectionSha256)
+  &&(o.authorizedPayloadHash===null||hash(o.authorizedPayloadHash))&&Number.isSafeInteger(o.chunkRows)&&o.chunkRows>0&&o.chunkRows<=100,'PRODUCT_SOURCE26_SCOPE');
+ must(exact(o.source,['directory','trustedManifestSha256','reviewRecordFile','trustedReviewRecordSha256'])&&exact(o.reference,['referenceDecisionFile','trustedReferenceDecisionSha256','mappingFiles','reviewFile','trustedReviewSha256']),'PRODUCT_SOURCE26_ARTIFACT_OPTIONS');
+ const sourceOptions={...o.source},referenceOptions={...o.reference};must(referenceOptions.mappingFiles&&Object.getPrototypeOf(referenceOptions.mappingFiles)===Object.prototype,'PRODUCT_SOURCE26_MAPPING_OPTIONS');historySettlementRequestHash(referenceOptions.mappingFiles);referenceOptions.mappingFiles=structuredClone(referenceOptions.mappingFiles);must(hash(referenceOptions.trustedReferenceDecisionSha256),'PRODUCT_SOURCE26_OUTSIDE_PIN');
+ let source,authorizer,manifestFile,closed=false;const chunks=[],fingerprints=new Set();
+ const active=()=>must(!closed,'PRODUCT_SOURCE26_CLOSED');
+ async function close(){closed=true;chunks.length=0;fingerprints.clear();const errors=[];for(const dispose of [async()=>{if(authorizer)await authorizer.close();},async()=>{if(source)await source.close();},async()=>{if(manifestFile)await manifestFile.fd.close();}])try{await dispose();}catch(e){errors.push(e);}if(errors.length)throw new AggregateError(errors,'Product source26 close failed');}
+ async function verify(references=true){active();if(references&&chunks.length)await authorizer.authorize(chunks[0]);await source.verify();await regular(manifestFile.path);must(same(manifestFile.stat,await manifestFile.fd.stat())&&same(manifestFile.stat,await lstat(manifestFile.path)),'PRODUCT_SOURCE26_FILE_CHANGED');active();}
+ try{
+  source=await openReviewedProductEvidenceSource({...sourceOptions,binding:o.binding});
+  authorizer=await openNativeProductAuthorizer26({...referenceOptions,sourceReader:source});
+  await regular(referenceOptions.referenceDecisionFile);const stat=await lstat(referenceOptions.referenceDecisionFile);must(stat.size>0&&stat.size<=8388608,'PRODUCT_SOURCE26_MANIFEST_LIMIT');const fd=await open(referenceOptions.referenceDecisionFile,constants.O_RDONLY|constants.O_NOFOLLOW);manifestFile={path:referenceOptions.referenceDecisionFile,stat,fd};
+  const bytes=await fd.readFile();must(bytes.length===stat.size&&digest(bytes)===referenceOptions.trustedReferenceDecisionSha256&&same(stat,await fd.stat())&&same(stat,await lstat(manifestFile.path)),'PRODUCT_SOURCE26_FILE_CHANGED');
+  const m=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes));must(m.schemaVersion===2&&m.schemaProfile==='EXACT26'&&m.validatorVersion===NATIVE_PRODUCT_REFERENCE_DECISION_VERSION_26&&m.batchId===o.binding.batchId&&m.fixedSourceNamespace===o.binding.fixedSourceNamespace&&m.selection?.selectionSha256===o.binding.selectionSha256,'PRODUCT_SOURCE26_MANIFEST_SCOPE');
+  const decisions=new Map(m.decisions.map(d=>[d.sourceKey,d]));must(decisions.size===m.decisions.length&&decisions.size===source.report.products,'PRODUCT_SOURCE26_COVERAGE');const seen=new Set();let batch=[],rows=0,unknown=0,multi=0;
+  async function flush(){if(!batch.length)return;const chunk=prepareNativeProductImportChunk26({schemaProfile:'EXACT26',validatorVersion:NATIVE_PRODUCT_IMPORT_VERSION_26,batchId:o.binding.batchId,fixedSourceNamespace:o.binding.fixedSourceNamespace,selection:m.selection,rows:batch});await authorizer.authorize(chunk);must(!fingerprints.has(chunk.fingerprint),'PRODUCT_SOURCE26_DUPLICATE');chunks.push(chunk);fingerprints.add(chunk.fingerprint);batch=[];}
+  for await(const original of source.rows()){
+   const d=decisions.get(original.sourceKey);must(d&&!seen.has(original.sourceKey)&&d.sourceRowId===original.id&&d.sourceEvidenceHash===requestHash(original),'PRODUCT_SOURCE26_ORIGINAL_CHANGED');seen.add(original.sourceKey);
+   const row={source:original,product:d.product,blankPricePolicy:d.blankPricePolicy,nullableFieldPolicy:d.nullableFieldPolicy,references:d.references,seasonSelection:d.seasonSelection,
+    ...(Object.hasOwn(d,'sourceTransformation')?{sourceTransformation:d.sourceTransformation}:{}),...(Object.hasOwn(d,'legacyScalarCreation')?{legacyScalarCreation:d.legacyScalarCreation}:{})};
+   batch.push(row);rows++;if(row.seasonSelection.state==='UNKNOWN')unknown++;if(row.seasonSelection.season_ids?.length>1)multi++;if(batch.length===o.chunkRows)await flush();
+  }await flush();must(rows===decisions.size&&seen.size===source.report.products,'PRODUCT_SOURCE26_COVERAGE');await verify(false);
+  return {report:Object.freeze({kind:'REVIEWED_GENUINE_PRODUCT_SOURCE26_REFERENCE_ONLY_V1',products:rows,chunks:chunks.length,unknownSeasons:unknown,multipleSeasons:multi,executionAuthorized:false,newNativeUUIDs:0,noSql:true}),verify,
+   async *chunks(){await verify();for(const chunk of chunks){active();yield structuredClone(chunk);}await verify();},
+   async authorize(input){active();const before=historySettlementRequestHash(input),copy=structuredClone(input);validatePreparedNativeProductImportChunk26(copy);must(fingerprints.has(copy.fingerprint),'PRODUCT_SOURCE26_NOT_AUTHORIZED');await authorizer.authorize(copy);await verify(false);must(historySettlementRequestHash(input)===before,'PRODUCT_SOURCE26_INPUT_CHANGED');},
+   async openClosure(scope,context){await verify();historySettlementRequestHash(scope);must(context?.group==='PRODUCTS'&&!context.signal?.aborted&&scope.batchId===o.binding.batchId&&scope.fixedSourceNamespace===o.binding.fixedSourceNamespace
+     &&scope.selectionSha256===o.binding.selectionSha256&&hash(o.authorizedPayloadHash)&&scope.authorizedPayloadHash===o.authorizedPayloadHash,'PRODUCT_SOURCE26_CLOSURE_SCOPE');let sessionClosed=false;const current=()=>{active();must(!sessionClosed&&!context.signal?.aborted,'PRODUCT_SOURCE26_CLOSED');};
+    const sourceRows=[],typedRows=[];for(const chunk of chunks)for(let i=0;i<chunk.rows.length;i++){sourceRows.push(historyClosureProjectionRow26('import_source_row',nativeProductImportEvidence26(chunk,i).source));typedRows.push(historyClosureProjectionRow26('product',chunk.nativeProducts[i]));}sourceRows.sort(order);typedRows.sort(order);
+    return {async verify(){current();await verify();current();},async *sourceRows(){for(const row of sourceRows){current();yield structuredClone(row);}},async *typedRows(){for(const row of typedRows){current();yield structuredClone(row);}},async *documents(){current();},async close(){sessionClosed=true;sourceRows.length=0;typedRows.length=0;}};
+   },close};
+ }catch(error){try{await close();}catch(cleanup){throw new AggregateError([error,cleanup],'Product source26 construction and cleanup failed');}throw error;}
+}
