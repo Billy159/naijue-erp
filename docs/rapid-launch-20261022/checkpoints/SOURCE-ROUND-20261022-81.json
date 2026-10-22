@@ -1,0 +1,251 @@
+{
+  "atUtc": "2026-10-22T21:00:48.963649+00:00",
+  "parent": "56c9d3a56b9e04100f46e35e7e89fb7b066c037e",
+  "groups": [
+    {
+      "slice": "STAFF_REAL_HTTP_ROLE6_CLIENT_AND_SHARED_QUERY_PARSER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-role-read-filter-v1/RESULT.json",
+      "receiptSha256": "bdfb53518d48d1ee58b5b9aa4207a2d36083d421a8560776aca7f2555113c6f6",
+      "receiptSnapshot": {
+        "taskId": "F05/STAFF-ROLE-READ-FILTER",
+        "owner": "F3",
+        "clientDate": "2026-10-23",
+        "generatedAtObservedUtc": "2026-10-22T20:59:13.543343+00:00",
+        "status": "SOURCE_READY_FOR_C_CHECKPOINT_WITH_MATCHING_D2_ROLE6",
+        "baselineHead": "3a30a5128e8f891db803f7efd8fb174d448aa3a4",
+        "headAtReceipt": "f1e489513c9643dd994624b4c44d1030bd349a01",
+        "authority": {
+          "freeze": "docs/rapid-launch-20261022/STAFF-ROLE-READ-FILTER-TECHNICAL-FREEZE-v1.json",
+          "freezeSha256": "2c1dc13e94ea97c59c47a0036dd02d765c818616bd0fe2084f98066ef819a6ce",
+          "roleOnlyFreezeOverridesProposalExact7": true,
+          "humanProgressAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "xhigh"
+        },
+        "scope": "Real StaffSettingsHttpReader advertises roleFilter and sends required role through the existing shared native query parser; common read client consumes OrganizationReadListQuery. No new parser, backend, UI, contract, schema or write change by F3.",
+        "files": [
+          {
+            "path": "apps/web/src/staff-settings/http-client.ts",
+            "beforeSha256": "d5c2323b6bf4d85f5cd4c9cef35a18892a9ec9946fb793986120e4bb5a8166b9",
+            "afterSha256": "0b856d93defa4a059d21e0144203f6c40bcb45bb1b49c5aca01122a4c1fd3e69"
+          },
+          {
+            "path": "apps/web/src/settings/stores/maintenance-http-client.ts",
+            "beforeSha256": "b24875ab59e72797689721f411d858cc40950704cbadecf76dd12702d1c2d3ee",
+            "afterSha256": "4debfe2557b95545f033dc76786a79a510f9ccbb072466f2173762bb8258acc8"
+          }
+        ],
+        "newRFiles": [],
+        "D2Dependency": {
+          "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/staff-role-read-v1/RESULT.json",
+          "receiptSha256": "a11f9799520dde601e4ae6b00b8d6dc97cdcbaf70176f1576982b0a285b8bcd0",
+          "api": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/staff-role-read-v1/API.json",
+          "apiSha256": "bf687e34c234701eb2143217247b7e5f438529c112d539c8f08a8c79e72a566c",
+          "bindings": [
+            {
+              "path": "packages/application/src/organization-maintenance-ports.ts",
+              "sha256": "2d85aadcc84f58c1ec7e14ef0b4c2e82b95987a7d4aefbfd5ba11ce408b94f25"
+            },
+            {
+              "path": "packages/application/src/organization-maintenance-validation.ts",
+              "sha256": "416d16645d6c886363b301745fb5b74c078accc39a5c0f2275a2489f5b5411da"
+            },
+            {
+              "path": "adapters/postgres/src/organization-maintenance-store.ts",
+              "sha256": "f55fa7db93794b95178dd5de04a0a3875e65559996d67628c719ec81c543bd20"
+            },
+            {
+              "path": "apps/api/src/organization-maintenance-http.test.ts",
+              "sha256": "f82079d847f1304838fc9ea9e3bba96699e771c53ead913fe6ac5bf8fb5ab05b"
+            },
+            {
+              "path": "tests/organization-maintenance-postgres-protocol.test.ts",
+              "sha256": "25cf914211345dab377fcbbc4d0f46e5d463133ddb00815bd78e79af2961df91"
+            },
+            {
+              "path": "docs/organization-staff-payment-maintenance.md",
+              "sha256": "c57eb0bb74311a4b6129d740b1b46bb29c3fd8db48b3f00189ec83633d96281d"
+            }
+          ],
+          "candidateCommit": null,
+          "CVersionPairingRequired": true,
+          "D2TestsNotRerunByF3": true
+        },
+        "checks": [
+          {
+            "name": "Focused native role transport/capability/boundaries",
+            "status": "PASS",
+            "groups": 11,
+            "transportCalls": 9,
+            "coverage": [
+              {
+                "name": "capability comes from implemented native reader; other filters remain unavailable",
+                "status": "PASS"
+              },
+              {
+                "name": "native role6 ADMIN",
+                "status": "PASS"
+              },
+              {
+                "name": "native role6 WAREHOUSE",
+                "status": "PASS"
+              },
+              {
+                "name": "native role6 SALESPERSON",
+                "status": "PASS"
+              },
+              {
+                "name": "ALL sends explicit empty role and preserves unknown historical text/account null",
+                "status": "PASS"
+              },
+              {
+                "name": "NULL/undefined/unknown/case/array/number/whitespace role rejects before transport",
+                "status": "PASS"
+              },
+              {
+                "name": "loginStatus open and closed remain unavailable before transport",
+                "status": "PASS"
+              },
+              {
+                "name": "common client preserves original STAFF exact5 unchanged",
+                "status": "PASS"
+              },
+              {
+                "name": "common shared parser preserves STAFF role6, including explicit empty role",
+                "status": "PASS"
+              },
+              {
+                "name": "common parser rejects illegal/partial/extra STAFF role6 before transport",
+                "status": "PASS"
+              },
+              {
+                "name": "all other organization families reject role6 before transport",
+                "status": "PASS"
+              }
+            ]
+          },
+          {
+            "name": "Affected strict types",
+            "status": "PASS",
+            "exitCode": 0,
+            "scope": "Exact2 TS roots plus StaffSettingsPage and transitive dependencies"
+          },
+          {
+            "name": "Exact source diff/protection",
+            "status": "PASS",
+            "otherRegisteredF3FilesProtected": 48,
+            "diffCheckExitCode": 0,
+            "staffAccountAndCommandCodeByteUnchanged": true,
+            "commonOnlyTypeImportAndSignatureChanged": true
+          }
+        ],
+        "redEvidenceLimit": "Before run reproduces actual old F3 missing capability/nonempty-role rejection/ALL exact5. Shared D2 parser advanced concurrently, so not a frozen old-backend red run. Two common invalid-query before assertions also needed an async wrapper to catch synchronous client throws; driver correction only, final11 pass. Original before artifacts retained.",
+        "preserved": [
+          "All-role unknown historical text/account:null",
+          "Native staff-name-only search text and employment/hall/page/pageSize transport",
+          "Original STAFF direct exact5 request shape",
+          "No role on other five families",
+          "Original W7 ACCOUNT read adapter and all staff command/receipt code byte-identical",
+          "Staff UI/contracts/response projection, W7/audit/payment/fixture source untouched"
+        ],
+        "versionPairing": {
+          "publicationGate": "C must fix and pair this F3 exact2 with matching D2 role6 backend/types/parser; no mixed-version activation. Fixed69/57841 remains old unsupported role filter and its evidence unchanged.",
+          "nativeRoleAll": "New StaffSettingsHttpReader sends exact6 including role empty for ALL. Original exact5 direct common-client callers remain byte-shape compatible.",
+          "sharedStaffReaderConsumer": "W7 staff candidate reader reuses this source STAFF adapter and therefore also sends explicit role empty in the new pair; no W7 account reader/write/form change or retest. Fixed69 cannot be combined with the new frontend.",
+          "pendingLogin": "loginStatusFilter and loginNameSearch remain absent/false. open/closed rejected not-implemented; no closed/no-account interpretation.",
+          "backendFiltering": "F3 checks only real native client request/validation/projection. D2 receipt supplies independent new protocol/inject evidence; actual PG results and browser still unmeasured."
+        },
+        "notTested": [
+          "Actual PG/ACL/matched filtering/counts",
+          "C fixed-pair acceptance and new backend release",
+          "Actual browser role filter/query/pagination",
+          "Fixed69 not upgraded or re-evaluated",
+          "Existing W7 read/write/audit/fixture/native accepted suites not rerun",
+          "No integrated build/server/deployment"
+        ],
+        "safetyFacts": {
+          "backendEdited": false,
+          "schemaChanged": false,
+          "writeSemanticsChanged": false,
+          "writeCommands": 0,
+          "requestKeys": 0,
+          "database": false,
+          "actualBrowser": false,
+          "browserHarness": false,
+          "serverStarted": false,
+          "gitMutation": false,
+          "fastEnabledByF3": false,
+          "actualFastUiState": "NOT_OBSERVED"
+        },
+        "blockers": [],
+        "next": "C fix F3 exact2, pair with matching D2 exact6 hashes, and route only the additive role6 scope for joint acceptance; retain current69 unsupported status. LoginStatus remains independently pending.",
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-role-read-filter-v1/BASELINE.json",
+            "sha256": "4739ff811718291a30f673e41165d49635ee2042513a53ddfd5bc0ac1d74a5e4"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-role-read-filter-v1/CHECK-before.json",
+            "sha256": "b4ded8df2243ad77da2ab163daa180eeeb95fb9180767bd3ff0f92f0439ef9cf"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-role-read-filter-v1/before.log",
+            "sha256": "d11411384c71bba231b2439c80d43d3dcbaed9bc63cca623e7afee525da9fd2f"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-role-read-filter-v1/CHECK-after.json",
+            "sha256": "857d48d25659ba1e54a4ba10a024bd6756d1c8f87fd8319d8d2ab4f88ab42f84"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-role-read-filter-v1/after.log",
+            "sha256": "efd8ceb3f3eca3729a66e7ef4f2d9676e915dca95f1b5258ec03ac97ab082ff1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-role-read-filter-v1/check-role-read.mjs",
+            "sha256": "cb909ac4fea34febb67163e60ed5db9f35c7eac95156ca1ac4de48701b1d35b0"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-role-read-filter-v1/TYPE-CHECK.json",
+            "sha256": "b403cad2b0033714d3e303c53c8ed6ca5397fc7a9f141ef8f681dd77a9cf0869"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-role-read-filter-v1/types.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-role-read-filter-v1/tsconfig.json",
+            "sha256": "70631f4b55b2d9ccf818ce62dc65a811f5ec9de45da3a74d7835b105cff4a168"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-role-read-filter-v1/SOURCE-PROTECTION.json",
+            "sha256": "84fb13af06c171c54c4a91bb642e9e3658622b46871d96eea053271a6866b6df"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-role-read-filter-v1/VERSION-PAIRING.json",
+            "sha256": "91c3daab4f55cd3a7d0116755717caaaf44ff6833caa0a01688b9327df0d13f1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-role-read-filter-v1/exact2.patch",
+            "sha256": "0980bcc18b4243f9168f6a5602e6135cec240adb166b70f48df460335d7c38e1"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/staff-settings/http-client.ts",
+          "owner": "F3",
+          "sha256": "0b856d93defa4a059d21e0144203f6c40bcb45bb1b49c5aca01122a4c1fd3e69",
+          "bytes": 14830
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-http-client.ts",
+          "owner": "F3",
+          "sha256": "4debfe2557b95545f033dc76786a79a510f9ccbb072466f2173762bb8258acc8",
+          "bytes": 21814
+        }
+      ]
+    }
+  ],
+  "backendDependency": "C79 f1e489513c9643dd994624b4c44d1030bd349a01",
+  "controllerScope": "Exact metadata checkpoint only. New same-version role6 source protocol pending QF; old69 preview deliberately does not have this reader."
+}

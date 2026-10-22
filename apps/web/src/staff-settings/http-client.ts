@@ -3,16 +3,19 @@ import { createOrganizationMaintenanceReadClient } from '../settings/stores/main
 import type { StaffSettingsReader, AccountSettingsReader } from './contracts.ts';
 import { projectStaffSettingsRecord, projectAccountSettingsRecord } from './response-validation.ts';
 
-/** B05-READ-v1 has no role/login-status filter or login-name staff search. */
+/** Native STAFF role6 reads require the matching fixed backend. Login-status
+ * filters and login-name staff search remain unavailable. */
 export function createStaffSettingsHttpReader(options: HttpQueryOptions): StaffSettingsReader {
   const client = createOrganizationMaintenanceReadClient(options);
-  return Object.freeze<StaffSettingsReader>({ capabilities: Object.freeze({}),
+  return Object.freeze<StaffSettingsReader>({ capabilities: Object.freeze({ roleFilter: true }),
     async readList(read) {
       const query = read.parameters;
-      if (query.role !== '' || query.loginStatus !== '') throw new HttpQueryError('not-implemented', 'STAFF_FILTER_NOT_AVAILABLE');
+      if (query.loginStatus !== '') throw new HttpQueryError('not-implemented', 'STAFF_FILTER_NOT_AVAILABLE');
       if (!['在职', '离职', 'all'].includes(query.employmentStatus)) throw new HttpQueryError('invalid-request', 'INVALID_STAFF_QUERY');
-      const result = await client.readList('STAFF', { search: query.search, status: query.employmentStatus === '在职' ? 'normal' : query.employmentStatus === '离职' ? 'disabled' : 'all',
-        hallId: query.hallId, page: query.page, pageSize: query.pageSize }, read.signal);
+      // Keep role present even for ALL; the shared native parser validates its exact enum.
+      const parameters = { search: query.search, status: query.employmentStatus === '在职' ? 'normal' as const : query.employmentStatus === '离职' ? 'disabled' as const : 'all' as const,
+        hallId: query.hallId, page: query.page, pageSize: query.pageSize, role: query.role };
+      const result = await client.readList('STAFF', parameters, read.signal);
       return { page: result.page, pageSize: result.pageSize, total: result.total, items: result.items.map(projectStaffSettingsRecord) };
     },
     async readDetail(read) {

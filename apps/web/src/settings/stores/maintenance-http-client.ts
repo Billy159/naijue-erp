@@ -1,7 +1,7 @@
 import type { ReadScope } from '../../loading/read-scope.ts';
 import type { PartyClient } from '../../parties/contracts.ts';
 import { createHttpJsonQuery, HttpQueryError, type HttpQueryOptions } from '../../transport/http-query.ts';
-import type { OrganizationListQuery, OrganizationMaintenanceKind, OrganizationMaintenancePage, OrganizationMaintenanceRecord } from '../../../../../packages/application/src/organization-maintenance-ports.ts';
+import type { OrganizationListQuery, OrganizationReadListQuery, OrganizationMaintenanceKind, OrganizationMaintenancePage, OrganizationMaintenanceRecord } from '../../../../../packages/application/src/organization-maintenance-ports.ts';
 import { parseOrganizationDetailQuery, parseOrganizationListQuery, projectOrganizationRecord } from '../../../../../packages/application/src/organization-maintenance-validation.ts';
 import type { StoreSettingsBrowserReader } from './contracts.ts';
 import type { SettingsDirectoryReader } from './maintenance-contracts.ts';
@@ -38,7 +38,7 @@ const organizationPaths: Readonly<Record<OrganizationMaintenanceKind, string>> =
   ACCOUNT: '/accounts', PAYMENT_METHOD: '/payment/methods', PAYMENT_ACCOUNT: '/payment/accounts',
 });
 export interface OrganizationSettingsReadClient {
-  readList(kind: OrganizationMaintenanceKind, parameters: OrganizationListQuery, signal: AbortSignal): Promise<OrganizationMaintenancePage>;
+  readList(kind: OrganizationMaintenanceKind, parameters: OrganizationReadListQuery, signal: AbortSignal): Promise<OrganizationMaintenancePage>;
   readDetail(kind: OrganizationMaintenanceKind, id: string, signal: AbortSignal): Promise<OrganizationMaintenanceRecord | null>;
 }
 function organizationPath(kind: OrganizationMaintenanceKind): string {
