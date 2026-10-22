@@ -1,0 +1,50 @@
+{
+  "atUtc": "2026-10-22T20:54:15.315652+00:00",
+  "parent": "87f173bbd9f09893e1f8e2203bd673a6ae86135c",
+  "groups": [
+    {
+      "slice": "TRANSFER_PENDING_DELETE_BLUR_ORDER_STANDARDS_FIX",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-49/DELIVERY.json",
+      "receiptSha256": "503b1603eebb902a0005544004ada9977e0c0ce4b461dfbb1bb8f7a741a134d2",
+      "receiptSnapshot": {
+        "chunk": 49,
+        "status": "READY_FOR_C_PIN_PENDING_DELETE_INTENT_FIX",
+        "finding": "QF-F1-TRANSFER-PENDING-DELETE-01",
+        "axis": "Standards P2, Spec0: frozen Demo has same bug; C explicit bugfix authority, no invented human business rule",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+            "sha256": "eda8e5bb46738a4995c8f80cabfcd39bc93147de3bb4b9e1dd5da553f512ba6b"
+          }
+        ],
+        "change": "Explicit pending-delete marker is included in quantity blur exclusion. Delete clears pending without prior commit; Save/Tab/other blur behavior unchanged. No native quantity/identity/permission/CAS/key/receipt changes.",
+        "checks": {
+          "types-2.log": "exit0 after F2 own category-tree Array.from fix; no F1 crosswrite or lib relaxation",
+          "pending-delete-2.log": "exit0 actual StrictMode focused5 -> explicit Delete leaves2 original lines/no5, no prep/key/SAVE. Small return Tab3 -> actual next cell2 -> one prepare/key/SAVE preserving3/2."
+        },
+        "typeClosureDependency": {
+          "path": "apps/web/src/product-categories/category-tree.tsx",
+          "sha256": "e02cef1e38e60340681108fc68ce0a31a7f507c65e8b737b52d8cb9af96e4c3a",
+          "owner": "F2; separate original queue, not this source delivery"
+        },
+        "notTested": [
+          "independent QF fixed-version condition/min-return",
+          "latest Chrome",
+          "PostgreSQL/production"
+        ],
+        "blockers": [],
+        "next": "C exact1 new pin then QF only Delete and minimal Tab/Save return. All native/create/bridge/capture/theme prior checks reused not rerun."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+          "owner": "F1",
+          "sha256": "eda8e5bb46738a4995c8f80cabfcd39bc93147de3bb4b9e1dd5da553f512ba6b",
+          "bytes": 28980
+        }
+      ]
+    }
+  ],
+  "controllerDecision": "Correct explicit pending-delete intent. Old Demo has same ordering defect; Standards P2, Spec0. Existing authorized bugfix, not new human business ruling.",
+  "controllerScope": "Exact metadata/owner checkpoint only; QF original counterexample recheck next."
+}
