@@ -1,4 +1,5 @@
-import { parseProductMaintenanceCommand } from '../../../../packages/application/src/product-maintenance-validation.ts';
+import type { ProductMaintenanceDetail as ProductMaintenanceDetailV1, ProductMaintenanceDetailV2 } from '../../../../packages/application/src/product-maintenance-ports.ts';
+import { parseProductMaintenanceCommand, parseProductMaintenanceCommandV2 } from '../../../../packages/application/src/product-maintenance-validation.ts';
 import { entityId } from '../../../../packages/domain/src/values.ts';
 import { createHttpJsonQuery, HttpQueryError, type HttpQueryOptions } from '../transport/http-query.ts';
 import type { ProductEditorMediaReader, ProductEditorImages, ProductMaintenanceReader, ProductMaintenanceDetail, ProductMaintenanceCandidatePage, ProductMaintenanceCandidateQuery } from './product-editor-contracts.ts';
@@ -28,9 +29,9 @@ const MAX_RESPONSE_CHUNKS = 65_536;
 const commandCodes: Readonly<Record<number, readonly string[]>> = {
   400: ['INVALID_PRODUCT_MAINTENANCE','INVALID_PARTY_INPUT','INVALID_ID','INVALID_HTTP_INPUT','INVALID_REQUEST','INCOMPLETE_CATALOGUE_PRICE_INPUT','INVALID_CATALOGUE_PRICE_INPUT','MONEY_PRECISION','MONEY_OVERFLOW','PRODUCT_SCHEME_REQUIRED','PRODUCT_REQUIRED_FIELDS','PRODUCT_SPEC_REQUIRED','INVALID_JSON'],
   401: ['UNAUTHENTICATED'], 403: ['FORBIDDEN'], 404: ['PRODUCT_NOT_FOUND'],
-  409: ['VERSION_CONFLICT','IDEMPOTENCY_CONFLICT','PRODUCT_DELETED','VERSION_STORAGE_OVERFLOW','INVALID_PRODUCT_STATE','IMMUTABLE_PRODUCT_CODE','IMMUTABLE_SKU_IDENTITY','IMMUTABLE_BARCODE_IDENTITY','PRODUCT_SPEC_CONFLICT','PRODUCT_CODE_CONFLICT','BARCODE_CONFLICT','PRODUCT_REFERENCE_UNAVAILABLE','PRODUCT_SIZE_GROUP_MISMATCH','PRODUCT_IN_USE','NO_PRODUCT_CHANGE','PRODUCT_SPEC_NOT_FOUND'],
+  409: ['PRODUCT_EDIT_CONTRACT_UPGRADE_REQUIRED','PRODUCT_SEASON_UNKNOWN_RESET','VERSION_CONFLICT','IDEMPOTENCY_CONFLICT','PRODUCT_DELETED','VERSION_STORAGE_OVERFLOW','INVALID_PRODUCT_STATE','IMMUTABLE_PRODUCT_CODE','IMMUTABLE_SKU_IDENTITY','IMMUTABLE_BARCODE_IDENTITY','PRODUCT_SPEC_CONFLICT','PRODUCT_CODE_CONFLICT','BARCODE_CONFLICT','PRODUCT_REFERENCE_UNAVAILABLE','PRODUCT_SIZE_GROUP_MISMATCH','PRODUCT_IN_USE','NO_PRODUCT_CHANGE','PRODUCT_SPEC_NOT_FOUND'],
   413: ['BODY_TOO_LARGE','PRODUCT_MAINTENANCE_TOO_LARGE'], 415: ['UNSUPPORTED_MEDIA_TYPE'],
-  500: ['INTERNAL_ERROR'], 503: ['PRODUCT_DELETE_NOT_READY'],
+  500: ['INTERNAL_ERROR'], 503: ['PRODUCT_DELETE_NOT_READY','PRODUCT_SEASON_NOT_READY','MAINTENANCE_PREPARE_NOT_READY'],
 };
 const receiptCodes: Readonly<Record<number, readonly string[]>> = {
   400: ['INVALID_HTTP_INPUT','INVALID_PARTY_INPUT'], 401: ['UNAUTHENTICATED'], 403: ['FORBIDDEN'], 404: ['RECEIPT_NOT_FOUND'], 500: ['INTERNAL_ERROR'],
@@ -83,7 +84,9 @@ function statusKind(status: number): ProductMaintenanceError['kind'] {
 /** Inert, exact two-operation command boundary. Same-origin credentials, bounded
  * streaming/timeout and no automatic retry. The existing read-only POST primitive
  * cannot represent GET receipts or distinguish uncertain command outcomes. */
-export function createProductMaintenanceHttpClient(options: HttpQueryOptions): ProductMaintenanceClient {
+export function createProductMaintenanceHttpClient(options: HttpQueryOptions): ProductMaintenanceClient { return productMaintenanceHttpClient(options, 1); }
+export function createProductMaintenanceHttpClientV2(options: HttpQueryOptions): ProductMaintenanceClient { return productMaintenanceHttpClient(options, 2); }
+function productMaintenanceHttpClient(options: HttpQueryOptions, contractVersion: 1 | 2): ProductMaintenanceClient {
   const base = endpointBase(options), fetch = options.fetch;
   const limit = resourceLimit(options.maxResponseBytes, 512 * 1024, 2 * 1024 * 1024);
   const timeoutMs = resourceLimit(options.timeoutMs, 30_000, 120_000);
@@ -207,32 +210,43 @@ export function createProductMaintenanceHttpClient(options: HttpQueryOptions): P
       throw fail('network', 'NETWORK_ERROR');
     } finally { clearTimeout(timer); }
   }
+  const commandVersion = (command: ProductMaintenanceCommand) => 'values' in command ? (Object.hasOwn(command.values, 'seasonIds') ? 2 : 1) : contractVersion;
+  const parseOriginal = (command: ProductMaintenanceCommand) => commandVersion(command) === 2 ? parseProductMaintenanceCommandV2(command) : parseProductMaintenanceCommand(command);
   return Object.freeze({
+    contractVersion,
     async execute(command, signal) {
-      const input = checked(() => parseProductMaintenanceCommand(command), true);
-      return request('/products/commands', signal, value => validateProductResult(value, input), input);
+      const input = checked(() => { if (contractVersion === 1 && commandVersion(command) === 2) throw new TypeError('V2 capability required'); return parseOriginal(command); }, true);
+      const version = commandVersion(input);
+      // An explicitly retried old immutable CREATE/EDIT keeps its original v1 route/body.
+      return request(version === 2 ? '/products/v2/commands' : '/products/commands', signal, value => validateProductResult(value, input), input);
     },
     async receipt(command, signal) {
-      const input = checked(() => parseProductMaintenanceCommand(command));
+      const input = checked(() => parseOriginal(command));
       return request(`/products/receipts/${encodeURIComponent(input.requestKey)}`, signal, value => validateProductReceipt(value, input));
     },
   } satisfies ProductMaintenanceClient);
 }
 
 function detailFailure(): never { throw new HttpQueryError('malformed-response','INVALID_PRODUCT_MAINTENANCE_RESPONSE'); }
-export function validateProductMaintenanceDetail(value: unknown, productId: string): ProductMaintenanceDetail {
+export function validateProductMaintenanceDetail(value: unknown, productId: string): ProductMaintenanceDetailV1 { return validateProductDetail(value, productId, 1) as ProductMaintenanceDetailV1; }
+export function validateProductMaintenanceDetailV2(value: unknown, productId: string): ProductMaintenanceDetailV2 { return validateProductDetail(value, productId, 2) as ProductMaintenanceDetailV2; }
+function validateProductDetail(value: unknown, productId: string, contractVersion: 1 | 2): ProductMaintenanceDetail {
   try {
     const row=record(value,['productId','version','deletedAt','values','skus','barcodes','references']);
     if(row.productId!==productId || row.deletedAt!==null && (typeof row.deletedAt!=='string' || !Number.isFinite(Date.parse(row.deletedAt)))) return detailFailure();
-    const parsed=parseProductMaintenanceCommand({action:'EDIT',requestKey:'validation-only',id:row.productId,expectedVersion:row.version,values:row.values,skus:row.skus,barcodes:row.barcodes});
+    const parsed=(contractVersion === 2 ? parseProductMaintenanceCommandV2 : parseProductMaintenanceCommand)({action:'EDIT',requestKey:'validation-only',id:row.productId,expectedVersion:row.version,values:row.values,skus:row.skus,barcodes:row.barcodes});
     if(parsed.action!=='EDIT' || parsed.skus.some(s=>s.id===null||s.expectedVersion===null) || parsed.barcodes.some(b=>b.id===null)) return detailFailure();
-    const refs=record(row.references,['categoryPath','supplier','season','sizeGroup','defaultBarcodeScheme']);
+    const refs=record(row.references,['categoryPath','supplier',contractVersion === 2 ? 'seasons' : 'season','sizeGroup','defaultBarcodeScheme']);
     const ref=(value:unknown,extra:readonly string[]=[])=>{const r=record(value,['id','name',...extra]);if(typeof r.id!=='string'||typeof r.name!=='string'||!r.name.trim())throw Error();entityId('product',r.id);return r;};
     if(!Array.isArray(refs.categoryPath)||!refs.categoryPath.length)return detailFailure();
     const categoryIds=refs.categoryPath.map(x=>ref(x).id);
     if(new Set(categoryIds).size!==categoryIds.length || categoryIds.at(-1)!==parsed.values.categoryId || ref(refs.sizeGroup).id!==parsed.values.sizeGroupId)return detailFailure();
     if(refs.supplier===null?parsed.values.supplierId!==null:ref(refs.supplier,['enabled']).id!==parsed.values.supplierId||typeof (refs.supplier as {enabled:unknown}).enabled!=='boolean')return detailFailure();
-    if(refs.season===null?parsed.values.seasonId!==null:ref(refs.season).id!==parsed.values.seasonId)return detailFailure();
+    if ('seasonIds' in parsed.values) {
+      if (!Array.isArray(refs.seasons)) return detailFailure();
+      const expected = new Set(parsed.values.seasonIds ?? []), actual = refs.seasons.map(value => ref(value).id);
+      if (actual.length !== expected.size || new Set(actual).size !== actual.length || actual.some(id => typeof id !== 'string' || !expected.has(id))) return detailFailure();
+    } else if(refs.season===null?parsed.values.seasonId!==null:ref(refs.season).id!==parsed.values.seasonId)return detailFailure();
     if(refs.defaultBarcodeScheme===null){if(parsed.values.defaultBarcodeSchemeId!==null)return detailFailure();}
     else{const r=ref(refs.defaultBarcodeScheme,['ruleVersion','status']);if(r.id!==parsed.values.defaultBarcodeSchemeId||typeof r.ruleVersion!=='string'||!r.ruleVersion.trim()||!['CURRENT','HISTORICAL'].includes(r.status as string))return detailFailure();}
     return value as ProductMaintenanceDetail;
@@ -250,9 +264,11 @@ export function validateProductMaintenanceCandidates(value:unknown, query:Produc
     return value as ProductMaintenanceCandidatePage;
   }catch{return detailFailure();}
 }
-export function createProductMaintenanceHttpReader(options:HttpQueryOptions):ProductMaintenanceReader{
+export function createProductMaintenanceHttpReader(options:HttpQueryOptions):ProductMaintenanceReader { return productMaintenanceHttpReader(options, 1); }
+export function createProductMaintenanceHttpReaderV2(options:HttpQueryOptions):ProductMaintenanceReader { return productMaintenanceHttpReader(options, 2); }
+function productMaintenanceHttpReader(options:HttpQueryOptions, contractVersion:1|2):ProductMaintenanceReader{
  const http=createHttpJsonQuery(options);
- return Object.freeze({readDetail:read=>http.post('/products/maintenance/detail/query',{productId:read.parameters.productId},read.signal,value=>validateProductMaintenanceDetail(value,read.parameters.productId)),
+ return Object.freeze({contractVersion,readDetail:read=>http.post(contractVersion===2?'/products/maintenance/v2/detail/query':'/products/maintenance/detail/query',{productId:read.parameters.productId},read.signal,value=>validateProductDetail(value,read.parameters.productId,contractVersion)),
  readCandidates:read=>{const q=parseProductMaintenanceCandidates({...read.parameters});return http.post('/products/maintenance/candidates/query',q,read.signal,value=>validateProductMaintenanceCandidates(value,q));}} satisfies ProductMaintenanceReader);
 }
 

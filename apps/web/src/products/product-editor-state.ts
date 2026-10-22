@@ -1,6 +1,6 @@
-import { parseProductMaintenanceCommand } from '../../../../packages/application/src/product-maintenance-validation.ts';
+import { parseProductMaintenanceCommand, parseProductMaintenanceCommandV2 } from '../../../../packages/application/src/product-maintenance-validation.ts';
 import { snapshotQueryParameters } from '../loading/query-parameters.ts';
-import { ProductMaintenanceError, type ProductEditorDraft, type ProductEditorOptions, type ProductEditorWriteState, type ProductMaintenanceCommand, type ProductMaintenanceResult } from './product-editor-contracts.ts';
+import { ProductMaintenanceError, type ProductEditorDraft, type ProductEditorOptions, type ProductEditorWriteState, type ProductMaintenanceCommand, type ProductMaintenanceResult, type ProductWriteValues, type ProductSkuInput, type ProductBarcodeInput } from './product-editor-contracts.ts';
 
 const initial = (): ProductEditorWriteState => Object.freeze({ phase: 'idle', command: null, result: null, receipt: null, recovery: 'unqueried', error: null });
 /** One immutable request key/body while an outcome is uncertain. No automatic write retry. */
@@ -24,7 +24,8 @@ export class ProductEditorController {
   #active(sequence: number) { return this.#options.scope.active && this.#state.phase !== 'disposed' && sequence === this.#sequence; }
   async submit(draft: ProductEditorDraft): Promise<void> {
     if (!this.#options.scope.active || !['idle', 'rejected'].includes(this.#state.phase)) throw new Error('当前商品操作尚未完成，请先查回原请求结果。');
-    const command = snapshotQueryParameters(parseProductMaintenanceCommand({ ...draft, requestKey: this.#options.newRequestKey() }));
+    const parse = this.#options.client.contractVersion === 2 ? parseProductMaintenanceCommandV2 : parseProductMaintenanceCommand;
+    const command = snapshotQueryParameters(parse({ ...draft, requestKey: this.#options.newRequestKey() }));
     await this.#execute(command);
   }
   async retryOriginal(): Promise<void> {
@@ -76,4 +77,10 @@ export class ProductEditorController {
     this.#publish({ ...initial(), phase: 'disposed' }); this.#listeners.clear();
     if (pending) this.#options.onRecoveryRequired(pending);
   }
+}
+
+/** Equal season sets are the same draft, while UNKNOWN and explicit empty are distinct. */
+export function productEditorDraftFingerprint(draft:{readonly values:ProductWriteValues;readonly skus:readonly ProductSkuInput[];readonly barcodes:readonly ProductBarcodeInput[]}):string {
+ const values='seasonIds' in draft.values?{...draft.values,seasonIds:draft.values.seasonIds===null?null:[...draft.values.seasonIds].sort()}:draft.values;
+ return JSON.stringify({values,skus:draft.skus,barcodes:draft.barcodes});
 }

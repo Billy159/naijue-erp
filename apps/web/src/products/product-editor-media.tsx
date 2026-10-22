@@ -13,6 +13,7 @@ interface Props {
   readonly scope: ReadScope; readonly productId: string | null; readonly reader: ProductReadOnlyReader;
   readonly media?: ProductEditorMediaReader; readonly expectedVersion: number | null;
   readonly onAccessFailure: (error: HttpQueryError) => void; readonly onReloadRequest: () => void;
+  readonly reloadBlocked?: boolean;
 }
 const roles: readonly (readonly [ProductImageRole, string])[] = [
   ['MAIN', '主图'], ['WHITE_BACKGROUND', '白底图'], ['HANG_TAG', '吊牌图'], ['DETAIL', '详情图'],
@@ -38,7 +39,7 @@ function MediaGallery(props: Props & { readonly media: ProductEditorMediaReader 
   const data = snapshot.phase === 'success' ? snapshot.success?.data : null;
   const item = (image: ProductEditorImage, label: string) => <MediaThumbnail key={`${image.id}:${image.version}`} image={image} label={label} open={() => setPreview({ image, label })}/>;
   if (snapshot.phase === 'error' && snapshot.error instanceof HttpQueryError && snapshot.error.code === 'PRODUCT_MEDIA_VERSION_MISMATCH')
-    return <p role="alert" className="product-field-hint">商品图片版本已变化。<UIButton onClick={props.onReloadRequest}>重新读取商品</UIButton></p>;
+    return <p role="alert" className="product-field-hint">商品图片版本已变化。<UIButton disabled={!!props.reloadBlocked} onClick={props.onReloadRequest}>重新读取商品</UIButton></p>;
   if (snapshot.phase === 'error' && snapshot.error instanceof HttpQueryError && ['not-implemented','unavailable'].includes(snapshot.error.kind))
     return <p role="alert" className="product-field-hint">图片服务尚未就绪。<UIButton onClick={read}>重试读取图片</UIButton></p>;
   return <ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!data}>{data && <div className="product-editor-photos">

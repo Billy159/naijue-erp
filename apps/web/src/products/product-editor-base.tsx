@@ -43,6 +43,7 @@ function CandidateSelectContent(props:ProductCandidateSelectProps&{readonly quer
 }
 export interface ProductEditorFieldsProps {
  readonly scope:ReadScope;readonly reader:ProductMaintenanceReader;readonly values:ProductWriteValues;readonly labels:Readonly<Record<string,string>>;
+ readonly seasonOriginallyUnknown?:boolean;
  readonly existing:boolean;readonly disabled:boolean;readonly change:(patch:Partial<ProductWriteValues>)=>void;
  readonly remember:(id:string|null,name:string|null,kind:ProductMaintenanceCandidateKind|'sizes')=>void;readonly onAccessFailure:(error:HttpQueryError)=>void;
  readonly categoryReader?: ProductEditorCapability['categoryReader'];
@@ -73,16 +74,55 @@ function CategorySelectContent(props:ProductEditorFieldsProps&{readonly query:La
 }
 export function ProductEditorBase(props:ProductEditorFieldsProps){
  const p=props.values;
- const choose=(field:'categoryId'|'supplierId'|'seasonId'|'defaultBarcodeSchemeId',kind:ProductMaintenanceCandidateKind,label:string)=>
+ const choose=(field:'categoryId'|'supplierId'|'defaultBarcodeSchemeId',kind:ProductMaintenanceCandidateKind,label:string)=>
   <ProductCandidateSelect scope={props.scope} reader={props.reader} kind={kind} label={label} value={p[field]||null} currentLabel={p[field]===null?null:props.labels[`${kind}:${p[field]}`]??null} disabled={props.disabled} allowClear={field!=='categoryId'} onAccessFailure={props.onAccessFailure} onChange={(id,name)=>{props.remember(id,name,kind);props.change({[field]:id??(field==='categoryId'?'':null)});}}/>;
  return <div className="product-editor-base-grid">
   <label className="field"><span>款号 *</span><UIInput aria-label="款号" value={p.productCode} readOnly={props.existing} disabled={props.disabled} onChange={productCode=>props.change({productCode})}/></label>
   <label className="field"><span>商品名称 *</span><UIInput aria-label="商品名称" value={p.name} disabled={props.disabled} onChange={name=>props.change({name})}/></label>
   <label className="field"><span>商品分类 *</span>{props.categoryReader?<ProductCategorySelect {...props}/>:choose('categoryId','categories','商品分类')}</label>
   <label className="field"><span>年份 *</span><ProductCandidateSelect scope={props.scope} reader={props.reader} kind="years" label="年份" value={p.year===null?null:String(p.year)} currentLabel={p.year===null?null:`${p.year}年`} disabled={props.disabled} allowCreate allowClear onAccessFailure={props.onAccessFailure} onChange={year=>{if(year===null)props.change({year:null});else if(/^-?(?:0|[1-9]\d*)$/.test(year)&&Number.isSafeInteger(Number(year))&&Number(year)>=-2147483648&&Number(year)<=2147483647)props.change({year:Number(year)});}}/></label>
-  <label className="field"><span>季节 *</span>{choose('seasonId','seasons','季节')}</label>
+  <div className="field"><span>{'seasonIds' in p ? '季节' : '季节 *'}</span>{'seasonIds' in p ? <ProductSeasonSelect scope={props.scope} reader={props.reader} value={p.seasonIds} labels={props.labels} originallyUnknown={!!props.seasonOriginallyUnknown} disabled={props.disabled} onAccessFailure={props.onAccessFailure} remember={(id,name)=>props.remember(id,name,'seasons')} change={seasonIds=>props.change({seasonIds})}/> : <ProductCandidateSelect scope={props.scope} reader={props.reader} kind="seasons" label="季节" value={p.seasonId} currentLabel={p.seasonId?props.labels[`seasons:${p.seasonId}`]??null:null} disabled={props.disabled} allowClear onAccessFailure={props.onAccessFailure} onChange={(seasonId,name)=>{props.remember(seasonId,name,'seasons');props.change({seasonId});}}/>}</div>
   <label className="field"><span>供应商 *</span>{choose('supplierId','suppliers','供应商')}</label>
   {(['thickness','collarPantsType']as const).map((field,index)=><label className="field" key={field}><span>{index===0?'厚薄（可选）':'领型 / 裤型（可选）'}</span><ProductCandidateSelect scope={props.scope} reader={props.reader} kind={index===0?'thicknesses':'collar-pants-types'} label={index===0?'厚薄':'领型 / 裤型'} value={p[field]} currentLabel={p[field]} disabled={props.disabled} allowCreate allowClear onAccessFailure={props.onAccessFailure} onChange={value=>props.change({[field]:value})}/></label>)}
   <label className="field"><span>系统货号 *</span><UIInput aria-label="系统货号" value={p.systemItemCode??''} disabled={props.disabled} onChange={value=>props.change({systemItemCode:value===''?null:value})}/></label>
+ </div>;
+}
+
+interface ProductSeasonSelectProps {
+ readonly scope:ReadScope; readonly reader:ProductMaintenanceReader; readonly value:readonly string[]|null;
+ readonly labels:Readonly<Record<string,string>>; readonly originallyUnknown:boolean; readonly disabled:boolean;
+ readonly change:(ids:readonly string[]|null)=>void; readonly remember:(id:string,name:string)=>void;
+ readonly onAccessFailure:(error:HttpQueryError)=>void;
+}
+/** Individual native season candidates only; opening a dropdown never edits UNKNOWN. */
+export function ProductSeasonSelect(props:ProductSeasonSelectProps) {
+ const [owner,setOwner]=useState<{scope:ReadScope;query:LatestQuery<ProductMaintenanceCandidateQuery,ProductMaintenanceCandidatePage>}|null>(null);
+ const current=useRef(props);current.current=props;
+ useEffect(()=>{
+  const query=new LatestQuery<ProductMaintenanceCandidateQuery,ProductMaintenanceCandidatePage>({scope:props.scope,execute:async read=>{
+   try{return await props.reader.readCandidates(read);}catch(error){if(props.scope.active&&!read.signal.aborted&&error instanceof HttpQueryError&&(error.kind==='unauthenticated'||error.kind==='forbidden'))current.current.onAccessFailure(error);throw error;}
+  }});setOwner({scope:props.scope,query});return()=>query.dispose();
+ },[props.scope,props.reader]);
+ return owner?.scope===props.scope&&props.scope.active?<SeasonSelectContent {...props} query={owner.query}/>:<UISelect disabled aria-label="季节" placeholder="正在准备季节…"/>;
+}
+function SeasonSelectContent(props:ProductSeasonSelectProps&{readonly query:LatestQuery<ProductMaintenanceCandidateQuery,ProductMaintenanceCandidatePage>}) {
+ const snapshot=useSyncExternalStore(props.query.subscribe,props.query.getSnapshot,props.query.getSnapshot);
+ const [open,setOpen]=useState(false),[search,setSearch]=useState('');
+ const selected=props.value??[];
+ const run=(page=1)=>{if(props.scope.active&&!props.disabled)void props.query.run({kind:'seasons',search,page,pageSize:50});};
+ useEffect(()=>{if(!open||props.disabled)return;const timer=setTimeout(()=>run(),180);return()=>clearTimeout(timer);},[search,open,props.disabled]);
+ const data=snapshot.phase==='success'&&snapshot.success?.parameters.search===search?snapshot.success.data:null;
+ const options=(data?.items??[]).map(item=>({value:item.id,label:item.name}));
+ for(const id of selected)if(!options.some(option=>option.value===id))options.push({value:id,label:props.labels[`seasons:${id}`]??'资料未提供'});
+ const choose=(value:unknown)=>{
+  if(props.disabled||!Array.isArray(value)||value.some(id=>typeof id!=='string')||new Set(value).size!==value.length)return;
+  if(value.some(id=>!selected.includes(id)&&!data?.items.some(item=>item.id===id)))return;
+  for(const id of value){const item=data?.items.find(item=>item.id===id);if(item)props.remember(item.id,item.name);}
+  props.change([...value]);
+ };
+ return <div className="product-editor-select product-season-select"><UISelect aria-label="季节" mode="multiple" value={[...selected]} options={options} placeholder={props.value===null?'历史未确认':'选择季节（可多选）'} disabled={props.disabled} showSearch filterOption={false} allowClear maxTagCount="responsive" loading={snapshot.phase==='loading'} popupVisible={open}
+  onVisibleChange={visible=>{setOpen(visible);if(!visible)props.query.cancel();}} onSearch={value=>{props.query.cancel();setSearch(value);}} onChange={choose}
+  dropdownRender={menu=><>{menu}{snapshot.phase==='error'&&<div role="alert">季节候选读取失败。<UIButton onClick={()=>run()}>重试</UIButton></div>}{data&&data.total>data.pageSize&&<div className="product-editor-candidate-pages"><UIButton disabled={data.page<=1} onClick={()=>run(data.page-1)}>上一页</UIButton><span>第 {data.page} 页</span><UIButton disabled={data.page*data.pageSize>=data.total} onClick={()=>run(data.page+1)}>下一页</UIButton></div>}</>}/>
+  {props.value===null?<span className="product-season-hint">历史未确认，未修改时保留。<UIButton disabled={props.disabled} className="iw-link" onClick={()=>props.change([])}>清空季节</UIButton></span>:props.originallyUnknown?<span className="product-season-hint"><UIButton disabled={props.disabled} className="iw-link" onClick={()=>props.change(null)}>保留历史未知</UIButton></span>:null}
  </div>;
 }

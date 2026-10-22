@@ -98,6 +98,12 @@ export interface StaffSettingsRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
   /** Explicit leaf view dependencies; no fabricated HTTP adapter or role grant. */
   readonly view: Omit<StaffSettingsProps, 'scope' | 'onAccessFailure'>;
+  /** Creates one authenticated-session joint STAFF/ACCOUNT owner. Supplying
+   * view.workspace at the same time is invalid; omitted commands remain read-only. */
+  readonly commands?: {
+    readonly newRequestKey: () => string;
+    readonly writesEnabled: () => boolean;
+  };
 }
 export interface PaymentSettingsRouteConfiguration {
   readonly stylesheet: RouteStylesheet;

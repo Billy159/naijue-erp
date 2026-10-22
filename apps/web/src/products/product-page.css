@@ -76,3 +76,6 @@
 .product-color-photo{flex:0 0 48px;min-width:0}
 .product-color-photo-name{overflow:hidden;margin-bottom:4px;color:var(--ca-ink);font-size:12px;text-overflow:ellipsis;white-space:nowrap}
 .product-color-photo-empty{display:grid;place-items:center;box-sizing:border-box;width:48px;height:48px;border:1px solid var(--ca-line);background:var(--ca-surface-subtle);color:var(--ca-ink-3);font-size:11px;text-align:center}
+
+.product-season-hint{display:block;margin-top:3px;color:var(--ca-ink-3);font-size:12px}
+.product-season-hint .iw-link{font-size:12px}

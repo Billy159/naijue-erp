@@ -21,3 +21,8 @@
 .sales-proposal-editor .sale-entry-section .sale-lines{min-height:110px;max-height:min(38dvh,400px)}
 .sales-proposal-editor .sale-summary-primary{font-variant-numeric:tabular-nums}
 @media(max-width:700px){.sales-proposal-editor .sale-payment-row{grid-template-columns:minmax(90px,1fr) 64px 86px 32px}}
+
+.sales-proposal-editor .sale-lines-table .sale-identity-trigger{border:0;background:transparent;width:100%;min-width:0;min-height:28px;padding:3px 0;text-align:left;white-space:normal;color:inherit}
+.sales-proposal-editor .sale-lines-table .sale-identity-trigger:not(:disabled):hover{color:var(--ca-primary,#165dff)}
+.sales-proposal-editor .sale-lines-table .sale-identity-editing td{background:var(--ca-primary-soft,#e8f3ff)}
+.sales-proposal-editor .sale-lines-table .sale-identity-editing td:first-child{box-shadow:inset 3px 0 var(--ca-primary,#165dff)}
