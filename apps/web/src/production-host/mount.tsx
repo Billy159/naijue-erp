@@ -48,7 +48,7 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
   // not expose editable production forms until that lifecycle is integrated.
   if (staffView?.canPrepare || paymentView?.canPrepare) throw new TypeError('Editable settings require a configured maintenance session owner.');
   const crypto = input.document.defaultView?.crypto;
-  if ((configuration.routes.salesManualCreate || configuration.routes.transferManualCreate || configuration.routes.parties || configuration.routes.paymentSettings && !paymentView?.workspace)
+  if ((configuration.routes.salesManualCreate || configuration.routes.transferManualCreate || configuration.routes.parties || configuration.routes.storeSettings || configuration.routes.paymentSettings && !paymentView?.workspace)
     && typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is required.');
   const newRequestKey = () => { if (typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is unavailable.'); return crypto.randomUUID(); };
   const stylesheet = (name: keyof typeof assets.styles) => {
@@ -72,7 +72,7 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
       ...(configuration.routes.productSettings.groups ? ['groups' as const] : []), ...(configuration.routes.productSettings.seasons ? ['seasons' as const] : []),
     ], initialTab: configuration.routes.productSettings.initialTab } } : {}),
     ...(configuration.routes.storeSettings ? { storeSettings: { stylesheet: stylesheet('store-settings'), allowedTabs: configuration.routes.storeSettings.allowedTabs,
-      initialTab: configuration.routes.storeSettings.initialTab, allowHallDirectoryRead: configuration.routes.storeSettings.allowHallDirectoryRead } } : {}),
+      initialTab: configuration.routes.storeSettings.initialTab, allowHallDirectoryRead: configuration.routes.storeSettings.allowHallDirectoryRead, commands: { newRequestKey, writesEnabled: () => false } } } : {}),
     ...(staffView ? { staffSettings: { stylesheet: stylesheet('staff-settings'), view: staffView } } : {}),
     ...(paymentView ? { paymentSettings: { stylesheet: stylesheet('payment-settings'), view: paymentView,
       ...(!paymentView.workspace ? { commands: { newRequestKey, writesEnabled: () => false } } : {}) } } : {}),

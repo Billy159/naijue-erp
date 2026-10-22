@@ -167,3 +167,14 @@ test("prepared audit capability closes after callback even when retained by a le
   await p.uow.transaction(async ctx => { escaped = ctx; await ctx.evidence.getReceipt(account, "original-key", "PRODUCT"); await ctx.evidence.assertAllowed(actor, "PRODUCT", "CREATE"); });
   const count = p.calls.length; await assert.rejects(escaped!.evidence.prepare!(completion()), { code: "TRANSACTION_CLOSED" }); assert.equal(p.calls.length, count);
 });
+
+test("hall maintenance acquires the shared administrator mutex before key identity and hall locks", async () => {
+  const p = scripted(); await p.uow.transaction(async ({ evidence }) => {
+    await evidence.getReceipt(account, "hall-original-key", "HALL"); await evidence.assertAllowed(actor, "HALL", "DISABLE");
+  });
+  const admin = p.calls.findIndex(c => c.sql.includes("maintenance:administrator-lock"));
+  assert.ok(admin > 0 && admin < p.calls.findIndex(c => c.sql.includes("maintenance:identity")));
+  assert.ok(admin < p.calls.findIndex(c => c.values[0] === `naijue:receipt:${JSON.stringify([account, "hall-original-key"])}`));
+  assert.deepEqual(p.calls[admin]!.values, ["naijue:maintenance:available-admin:v1"]);
+  assert.equal(p.calls.filter(c => c.sql.includes("maintenance:administrator-lock")).length, 1);
+});

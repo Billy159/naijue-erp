@@ -7,7 +7,7 @@ import { createHash } from 'node:crypto';
 import { createNativeIdentityRegistry, reviewedPartyBinding, sourceEvidence } from './prepare-native-bindings.mjs';
 import { IMPORT_V2_TABLES } from '../../packages/application/src/import-v2-contract.ts';
 import { requestHash } from '../../packages/application/src/request-hash.ts';
-import { createNativeSourceStepAuthorizer, NATIVE_SOURCE_STEP_KINDS, openNativeBindingRegistry, openReviewedCatalogueSource } from './native-source-authorizers.mjs';
+import { createNativeSourceStepAuthorizer, NATIVE_SOURCE_STEP_KINDS, openNativeBindingRegistry, openReviewedCatalogueSource, openApprovedBarcodeMainDemotions } from './native-source-authorizers.mjs';
 const id = n => `00000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
 const hash = b => createHash('sha256').update(b).digest('hex'), pin = 'a'.repeat(64);
 async function registryReview(dir, manifest, binding, files) {
@@ -106,4 +106,19 @@ test('real party source factory keeps hall+warehouse cycle atomic, customers bef
       await session.close();await assert.rejects(session.verify(),/CLOSED/);
     }finally{source.close();}
   }finally{await rm(dir,{recursive:true,force:true});}
+});
+
+test('exact21 approval proof layer checks all original locators/aliases and revokes changed human approval; no native grant',async t=>{
+ const dir=await mkdtemp(join(await realpath(tmpdir()),'native-main-demotion-synthetic-'));t.after(()=>rm(dir,{recursive:true,force:true}));
+ const binding={batchId:id(1),fixedSourceNamespace:'SYNTHETIC',selectionSha256:pin},groups=[],rows=[];
+ for(let i=0;i<15;i++){
+  const canonical=id(100+i),keptMain={sourceKey:'SYNTHETIC_KEPT_'+i,rawBarcode:'SYNTHETIC_KEPT_BARCODE_'+i,rawKind:'主码',proposedKind:'MAIN',rawSkuSourceKey:canonical,canonicalSkuSourceKey:canonical};const g={canonicalSkuSourceKey:canonical,keptMain,proposedOldSourceKeys:[],proposedOldBarcodes:[]};groups.push(g);
+  for(let j=0;j<(i<6?2:1);j++){const key='SYNTHETIC_OLD_'+rows.length,barcode='SYNTHETIC_CODE_'+rows.length,old=id(200+rows.length);g.proposedOldSourceKeys.push(key);g.proposedOldBarcodes.push(barcode);rows.push({sourceKey:key,rawKind:'主码',proposedKind:'CONFIRMED_OLD',proposedKindDisplay:'已确认旧码',rawBarcode:barcode,proposedOldBarcode:barcode,rawState:'正常',proposedState:'正常',rawSkuSourceKey:old,canonicalSkuSourceKey:canonical,approvedCanonicalAlias:{oldSourceSkuId:old,canonicalSourceSkuId:canonical,mappingFileSha256:pin},keptMain,originalOccurrence:{file:'synthetic.xlsx',sheet:'SYNTHETIC',row:rows.length+2,sourceFileSha256:pin,snapshotRawLineSha256ExcludingLf:pin}});}
+ }
+ const mapping={schemaVersion:1,selectionBinding:{selection:{sha256:pin}},rows,groups},approval={version:'B06_SOURCE_DECISIONS_20261022_V1',selectionSha256:pin,A:{status:'APPROVED_EXACT_21_ROWS_15_GROUPS'},source:{kind:'direct_human_async_question_reply'}},mb=Buffer.from(JSON.stringify(mapping)),ab=Buffer.from(JSON.stringify(approval)),mf=join(dir,'mapping.json'),af=join(dir,'human.json');await writeFile(mf,mb);await writeFile(af,ab);
+ const source={id:id(2),batchId:id(1),entityType:'BARCODE',sourceKey:rows[0].sourceKey,fileRef:'synthetic.xlsx',sheet:'SYNTHETIC',rowNo:'2',sourceFileSha256:pin,rowSha256:pin,rawFields:{'条码':rows[0].rawBarcode,'条码性质':'主码','状态':'正常','SKU来源编号':rows[0].rawSkuSourceKey}},sku={oldSourceSkuKey:rows[0].rawSkuSourceKey,canonicalSourceKey:rows[0].canonicalSkuSourceKey};
+ const opts={mappingFile:mf,trustedMappingSha256:hash(mb),humanApprovalFile:af,trustedHumanApprovalSha256:hash(ab),binding},reader=await openApprovedBarcodeMainDemotions(opts);t.after(()=>reader.close());const proof=await reader.proofFor(source,sku);assert.equal(proof.entrySha256,requestHash(rows[0]));assert.equal(reader.report.rows,21);assert.equal(reader.report.importReady,false);
+ await assert.rejects(reader.proofFor({...source,rowNo:'99'},sku),/EXACT_SOURCE/);await assert.rejects(reader.proofFor(source,{...sku,canonicalSourceKey:id(999)}),/EXACT_SOURCE/);
+ await writeFile(af,'{}');await assert.rejects(reader.proofFor(source,sku),/FILE_CHANGED/);
+ const bad={...approval,A:{status:'PENDING'}};await writeFile(af,JSON.stringify(bad));await assert.rejects(openApprovedBarcodeMainDemotions({...opts,trustedHumanApprovalSha256:hash(JSON.stringify(bad))}),/APPROVAL/);
 });

@@ -6,6 +6,16 @@ import { IMPORT_V2_TABLES } from "./import-v2-contract.ts";
 import { requestHash } from "./request-hash.ts";
 
 export const NATIVE_BARCODE_IMPORT_VERSION = "NATIVE_BARCODE_IMPORT_V1";
+export const NATIVE_BARCODE_MAIN_DEMOTION_VERSION = "NATIVE_BARCODE_EXACT_APPROVED_MAIN_DEMOTION_V1";
+/** Exact reviewed decision descriptor, not an authorization by itself. The trusted
+ * host must separately check decision+human approval pins and original source. */
+export interface NativeBarcodeMainDemotion {
+  readonly version: typeof NATIVE_BARCODE_MAIN_DEMOTION_VERSION;
+  readonly mappingSha256: string; readonly approvalSha256: string; readonly entrySha256: string;
+  readonly sourceKey: string; readonly originalSourceRowSha256: string;
+  readonly oldSourceSkuKey: string; readonly canonicalSourceSkuKey: string; readonly barcode: string;
+  readonly keptMainSourceKey: string; readonly keptMainBarcode: string;
+}
 export interface NativeBarcodeSelection {
   readonly source: "V3_BARCODE_REPLACEMENT"; readonly entity: "BARCODE"; readonly path: "business/03历史条码.csv";
   readonly baseManifestSha256: string; readonly selectionSha256: string; readonly approvalSha256: string;
@@ -17,6 +27,7 @@ export interface NativeBarcodeInput {
   readonly sku: { readonly canonicalSourceKey: string; readonly nativeId: string; readonly oldSourceSkuKey: string };
   /** Original named scheme may only bind an exact existing native scheme, never silently become NULL. */
   readonly scheme: { readonly id: string; readonly snapshot: JsonObject };
+  readonly mainDemotion?: NativeBarcodeMainDemotion;
 }
 export interface PreparedNativeBarcode extends NativeBarcodeInput {
   readonly mappingVersion: typeof HISTORY_MAPPING_VERSION;
@@ -58,11 +69,16 @@ export function prepareNativeBarcode(input: NativeBarcodeInput): PreparedNativeB
     && n["原条码方案"] === raw["原条码方案"] && text(n["原条码方案"])
     && (n["条码性质"] === "主码" || n["条码性质"] === "已确认旧码"),
   "NATIVE_BARCODE_ORIGINAL", "Original SKU binding, raw code, state and scheme must be preserved; PRODUCT rows excluded");
-  // v2 first-wins audit is not an independent business approval. Deliberately
-  // block all 21 old MAIN -> CONFIRMED_OLD conversions until a versioned decision exists.
-  requireDomain(!(raw["条码性质"] === "主码" && n["条码性质"] === "已确认旧码")
-    && raw["条码性质"] === n["条码性质"],
-  "NATIVE_BARCODE_MAIN_DOWNGRADE_NOT_APPROVED", "A historical audit proposal cannot demote an original MAIN barcode");
+  const demotion = row.mainDemotion, isDemotion = raw["条码性质"] === "主码" && n["条码性质"] === "已确认旧码";
+  if (Object.hasOwn(row, "mainDemotion")) requireDomain(isDemotion && demotion && Object.keys(demotion).length === 11
+    && demotion.version === NATIVE_BARCODE_MAIN_DEMOTION_VERSION && [demotion.mappingSha256, demotion.approvalSha256, demotion.entrySha256].every(hash)
+    && demotion.sourceKey === s.sourceKey && demotion.originalSourceRowSha256 === s.rowSha256 && demotion.barcode === raw["条码"]
+    && demotion.oldSourceSkuKey === row.sku.oldSourceSkuKey && demotion.canonicalSourceSkuKey === row.sku.canonicalSourceKey
+    && demotion.oldSourceSkuKey !== demotion.canonicalSourceSkuKey && text(demotion.keptMainSourceKey) && demotion.keptMainSourceKey !== s.sourceKey
+    && text(demotion.keptMainBarcode) && demotion.keptMainBarcode !== demotion.barcode,
+  "NATIVE_BARCODE_MAIN_DOWNGRADE_NOT_APPROVED", "Exact separately authorized MAIN demotion descriptor required");
+  requireDomain(raw["条码性质"] === n["条码性质"] || isDemotion && demotion !== undefined,
+  "NATIVE_BARCODE_MAIN_DOWNGRADE_NOT_APPROVED", "An audit proposal or unbound flag cannot demote an original MAIN barcode");
   for (const [field, value] of Object.entries(raw)) {
     const p = (s.fieldProvenance.fields as Record<string, JsonObject>)[field];
     requireDomain(p && ["ORIGINAL", "MIGRATION_DERIVED", "UNKNOWN"].includes(String(p.origin)) && text(p.reason)
@@ -93,7 +109,8 @@ export function nativeBarcodeSourceEvidence(row: PreparedNativeBarcode): JsonObj
       native_barcode_import: { validator_version: NATIVE_BARCODE_IMPORT_VERSION, selection: { ...row.selection },
         row_fingerprint: row.fingerprint, native_barcode: { ...row.nativeBarcode },
         canonical_source_key: row.sku.canonicalSourceKey, old_source_sku_key: row.sku.oldSourceSkuKey,
-        scheme_snapshot: row.scheme.snapshot } } };
+        scheme_snapshot: row.scheme.snapshot,
+        ...(Object.hasOwn(row, "mainDemotion") ? { main_demotion: row.mainDemotion as unknown as JsonObject } : {}) } } };
 }
 export async function stageNativeBarcode(input: NativeBarcodeInput, options: {
   readonly mode?: "DRY_RUN" | "STAGE"; readonly store?: NativeBarcodeImportStore;

@@ -5,6 +5,7 @@ import type { InventoryActions } from '../inventory/contracts.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
 import type { HttpQueryOptions } from '../transport/http-query.ts';
 import type { PartyWorkspace } from '../parties/controller.ts';
+import type { PartyClient } from '../parties/contracts.ts';
 import type { SalesFormPreparationProvider } from '../sales/commands/contracts.ts';
 import type { SalesEditorSession } from '../sales/commands/editor-session.ts';
 import type { TransferFormPreparationProvider } from '../transfers/commands/contracts.ts';
@@ -86,6 +87,12 @@ export interface StoreSettingsRouteConfiguration {
   /** Explicit UI directory-read intent; every list/detail still requires its
    * own current server grant. Never substitutes a transaction candidate. */
   readonly allowHallDirectoryRead: boolean;
+  /** One authenticated-session command owner. Missing customer candidates remain unavailable. */
+  readonly commands?: {
+    readonly newRequestKey: () => string;
+    readonly writesEnabled: () => boolean;
+    readonly customers?: Pick<PartyClient, 'candidates'>;
+  };
 }
 export interface StaffSettingsRouteConfiguration {
   readonly stylesheet: RouteStylesheet;

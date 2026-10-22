@@ -13,6 +13,7 @@ import { stableImportId } from '../../packages/application/src/inventory-cutoff-
 import { prepareNativeCatalogueImportChunk, validatePreparedNativeCatalogueImportChunk, nativeCatalogueSourceEvidence } from '../../packages/application/src/native-catalogue-import.ts';
 import { nativeCatalogueBindingEvidence } from '../../adapters/postgres/src/native-catalogue-import.ts';
 import { historyClosureProjectionRow } from '../../packages/application/src/history-typed-closure.ts';
+import { validatePreparedNativeBarcode, NATIVE_BARCODE_MAIN_DEMOTION_VERSION } from '../../packages/application/src/native-barcode-import.ts';
 import { historyHeaderNativeReferenceEvidence } from '../../adapters/postgres/src/import-v3-history-header-native-reference-store.ts';
 const must = (ok, code) => { if (!ok) throw Object.assign(Error(code), { code }); };
 const digest = b => createHash('sha256').update(b).digest('hex');
@@ -242,4 +243,45 @@ export function createNativeSourceStepAuthorizer(handlers) {
     const result = await captured[step.kind](step.payload);
     must(result === undefined && historySettlementRequestHash(step) === before, 'NATIVE_SOURCE_AUTHORIZER_PROTOCOL');
   };
+}
+
+/** Narrow proof layer for the human-approved exact21. This is not a native SKU,
+ * scheme or barcode identity grant and cannot replace the actual source authorizer. */
+export async function openApprovedBarcodeMainDemotions({mappingFile,trustedMappingSha256,humanApprovalFile,trustedHumanApprovalSha256,binding}) {
+  must(typeof mappingFile==='string'&&isAbsolute(mappingFile)&&typeof humanApprovalFile==='string'&&isAbsolute(humanApprovalFile),'NATIVE_BARCODE_DEMOTION_PATH');
+  const mapping=await load(mappingFile,trustedMappingSha256,4194304),approval=await load(humanApprovalFile,trustedHumanApprovalSha256,4194304),m=mapping.value,a=approval.value;
+  must(m.schemaVersion===1&&m.selectionBinding?.selection?.sha256===binding.selectionSha256&&m.rows?.length===21&&m.groups?.length===15
+    &&a.version==='B06_SOURCE_DECISIONS_20261022_V1'&&a.selectionSha256===binding.selectionSha256&&a.A?.status==='APPROVED_EXACT_21_ROWS_15_GROUPS'
+    &&a.source?.kind==='direct_human_async_question_reply','NATIVE_BARCODE_DEMOTION_APPROVAL');
+  const groups=new Map(),rows=new Map();
+  for(const g of m.groups){const k=g.keptMain;
+    must(typeof g.canonicalSkuSourceKey==='string'&&!groups.has(g.canonicalSkuSourceKey)&&k?.rawKind==='主码'&&k.proposedKind==='MAIN'
+      &&k.canonicalSkuSourceKey===g.canonicalSkuSourceKey&&k.rawSkuSourceKey===g.canonicalSkuSourceKey&&typeof k.sourceKey==='string'&&typeof k.rawBarcode==='string','NATIVE_BARCODE_DEMOTION_GROUP');groups.set(g.canonicalSkuSourceKey,g);
+  }
+  for(const r of m.rows){const g=groups.get(r.canonicalSkuSourceKey),alias=r.approvedCanonicalAlias,o=r.originalOccurrence;
+    must(g&&!rows.has(r.sourceKey)&&r.rawKind==='主码'&&r.proposedKind==='CONFIRMED_OLD'&&r.proposedKindDisplay==='已确认旧码'
+      &&r.rawBarcode===r.proposedOldBarcode&&r.rawState===r.proposedState&&r.rawSkuSourceKey!==r.canonicalSkuSourceKey
+      &&alias?.oldSourceSkuId===r.rawSkuSourceKey&&alias.canonicalSourceSkuId===r.canonicalSkuSourceKey&&hash(alias.mappingFileSha256)
+      &&r.keptMain?.sourceKey===g.keptMain.sourceKey&&r.keptMain.rawBarcode===g.keptMain.rawBarcode
+      &&g.proposedOldSourceKeys.includes(r.sourceKey)&&g.proposedOldBarcodes.includes(r.rawBarcode)
+      &&o&&hash(o.sourceFileSha256)&&hash(o.snapshotRawLineSha256ExcludingLf)&&typeof o.file==='string'&&typeof o.sheet==='string'
+      &&Number.isSafeInteger(o.row)&&o.row>0,'NATIVE_BARCODE_DEMOTION_ROW');rows.set(r.sourceKey,r);
+  }
+  must([...groups.values()].every(g=>g.proposedOldSourceKeys.length>0&&g.proposedOldSourceKeys.every(k=>rows.get(k)?.canonicalSkuSourceKey===g.canonicalSkuSourceKey)),'NATIVE_BARCODE_DEMOTION_GROUP');
+  let closed=false;const active=()=>must(!closed,'NATIVE_BARCODE_DEMOTION_CLOSED');
+  async function verify(){active();await load(mappingFile,trustedMappingSha256,4194304);await load(humanApprovalFile,trustedHumanApprovalSha256,4194304);active();}
+  function expected(source,sku){const r=rows.get(source.sourceKey),o=r?.originalOccurrence;
+    must(r&&source.batchId===binding.batchId&&source.entityType==='BARCODE'&&source.fileRef===o.file&&source.sheet===o.sheet&&source.rowNo===String(o.row)
+      &&source.sourceFileSha256===o.sourceFileSha256&&source.rowSha256===o.snapshotRawLineSha256ExcludingLf&&source.rawFields['条码']===r.rawBarcode
+      &&source.rawFields['条码性质']===r.rawKind&&source.rawFields['状态']===r.rawState&&source.rawFields['SKU来源编号']===r.rawSkuSourceKey
+      &&sku.oldSourceSkuKey===r.rawSkuSourceKey&&sku.canonicalSourceKey===r.canonicalSkuSourceKey,'NATIVE_BARCODE_DEMOTION_EXACT_SOURCE');
+    return{version:NATIVE_BARCODE_MAIN_DEMOTION_VERSION,mappingSha256:trustedMappingSha256,approvalSha256:trustedHumanApprovalSha256,entrySha256:requestHash(r),sourceKey:r.sourceKey,
+      originalSourceRowSha256:o.snapshotRawLineSha256ExcludingLf,oldSourceSkuKey:r.rawSkuSourceKey,canonicalSourceSkuKey:r.canonicalSkuSourceKey,barcode:r.rawBarcode,
+      keptMainSourceKey:r.keptMain.sourceKey,keptMainBarcode:r.keptMain.rawBarcode};
+  }
+  return{report:{kind:'EXACT21_MAIN_DEMOTION_PROOF_LAYER',rows:21,groups:15,importReady:false,noSql:true},verify,
+    async proofFor(source,sku){await verify();return expected(source,sku);},
+    async authorizeProof(row){await verify();validatePreparedNativeBarcode(row);must(row.fixedSourceNamespace===binding.fixedSourceNamespace&&row.selection.selectionSha256===binding.selectionSha256
+      &&requestHash(row.mainDemotion)===requestHash(expected(row.source,row.sku)),'NATIVE_BARCODE_DEMOTION_PROOF_CHANGED');await verify();},
+    async close(){closed=true;rows.clear();groups.clear();}};
 }

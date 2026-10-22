@@ -58,7 +58,7 @@ class Evidence implements MaintenanceEvidenceSession {
   }
   private async prepareIdentity(family: MaintenanceKind): Promise<void> {
     kind(family);
-    if (family !== "STAFF" && family !== "ACCOUNT") return;
+    if (family !== "STAFF" && family !== "ACCOUNT" && family !== "HALL") return;
     requireDomain(this.identity === undefined || this.administratorLock, "TRANSACTION_SCOPE", "Administrator safety lock must precede every identity row lock");
     if (this.administratorLock) return;
     await this.query("/* maintenance:administrator-lock */ SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", ["naijue:maintenance:available-admin:v1"]);

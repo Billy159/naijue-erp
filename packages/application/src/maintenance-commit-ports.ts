@@ -6,13 +6,12 @@ export type MaintenanceKind = typeof maintenanceKinds[number];
  * Password validation/hashing is separate; a tag only detects changed payloads
  * under the same original request key. */
 export type CredentialRequestTag = (password: string) => string;
-/** STAFF LEAVE records each affected account's actual complete safe row before
- * and after, ordered by id, under audit before_values.accounts / after_values.accounts.
- * Both arrays contain the SAME account IDs. Hash is excluded and must remain
- * unchanged; login_enabled=false, auth_version/version each advance once,
- * and all its unrevoked sessions are revoked in the SAME transaction.
- * REINSTATE never automatically enables accounts. ACCOUNT roots reuse exactly
- * these safe names (password_hash never enters audit). */
+/** Complete actual safe account rows for STAFF CREATE/EDIT/LEAVE/REINSTATE
+ * child changes, sorted by id. Existing identities/created_at cannot be rebound;
+ * security changes advance auth_version/version once and revoke old sessions.
+ * LEAVE and REINSTATE keep login disabled. Credential events are separate closed
+ * metadata in after_values.account_credentials: {account_id,action:CREATE|RESET_PASSWORD}.
+ * Password/hash/salt/HMAC never enter evidence. ACCOUNT roots use these safe names. */
 export interface MaintenanceAccountSafetyEvidence {
   readonly id: string; readonly staff_id: string; readonly login_name: string;
   readonly login_enabled: boolean; readonly auth_version: number; readonly version: number;
