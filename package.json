@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Clean ERP foundation: normalized contracts and synthetic verification only",
+  "description": "Naijue ERP application, native data contracts and controlled production release",
   "engines": {
     "node": ">=24.19.0 <25",
     "npm": ">=11.9.0 <12"
@@ -38,7 +38,9 @@
     "test:web:current-form": "node apps/web/src/current-form/tests/run-dom-tests.mjs && node apps/web/src/current-form/tests/run-create-route-dom-tests.mjs",
     "check:web:new-document-harness": "tsc --noEmit -p apps/web/new-document-browser-harness/tsconfig.json && tsc --noEmit -p apps/web/new-document-browser-harness/tsconfig.sales.json && node apps/web/new-document-browser-harness/build.mjs && node --test apps/web/new-document-browser-harness/inline-assets.test.mjs apps/web/new-document-browser-harness/sales-browser.test.mjs",
     "preflight:import-v2": "node --max-old-space-size=768 scripts/import-v2/run.mjs",
-    "test:history:cell-evidence": "python3 scripts/import-v2/test_history_cell_evidence.py"
+    "test:history:cell-evidence": "python3 scripts/import-v2/test_history_cell_evidence.py",
+    "release:pack": "node scripts/release/pack.mjs",
+    "test:release:pack": "node --test scripts/release/pack.test.mjs"
   },
   "dependencies": {
     "fastify": "5.12.5",

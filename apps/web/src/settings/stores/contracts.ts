@@ -1,3 +1,4 @@
+import type { StoreMaintenancePreparation } from './maintenance-contracts.ts';
 import type { QueryRead } from '../../loading/latest-query.ts';
 import type { ReadScope } from '../../loading/read-scope.ts';
 import type { StoreSettingsDetail, StoreSettingsDetailQuery, StoreSettingsKind, StoreSettingsListQuery, StoreSettingsPage } from '../../../../../packages/application/src/store-settings-read-ports.ts';
@@ -7,6 +8,8 @@ export interface StoreSettingsBrowserReader {
   readDetail(kind: StoreSettingsKind, read: QueryRead<StoreSettingsDetailQuery>): Promise<StoreSettingsDetail>;
 }
 export interface StoreSettingsPageProps {
+  /** Explicit form-preparation capability only. No maintenance command is implied. */
+  readonly maintenance?: StoreMaintenancePreparation;
   readonly scope: ReadScope; readonly reader: StoreSettingsBrowserReader;
   readonly onAccessFailure: (kind: 'unauthenticated' | 'forbidden') => void;
   readonly onTab?: (kind: StoreSettingsKind) => void;

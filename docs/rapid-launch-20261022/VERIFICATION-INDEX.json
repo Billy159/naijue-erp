@@ -11,7 +11,50 @@
         "production",
         "real import"
       ]
+    },
+    {
+      "id": "QB-CLEANUP-768f479",
+      "scope": "11 exact cleanup files only; no whole B02/B03/B06 or PostgreSQL/production acceptance",
+      "sourceCommit": "768f4794cba6b2b826728d3ae7c258ffe0dd4e5d",
+      "result": "PASS_SOURCE_PROTOCOL_SCOPED",
+      "reviewer": "QB",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice1-768f4794/RESULT.json",
+      "reusedChecks": "D1 8/8; D3 92/92 with initial5 RED retained; no C rerun",
+      "notTested": [
+        "real PostgreSQL",
+        "real import",
+        "physical COMMIT loss",
+        "browser",
+        "numbering/new schema",
+        "whole economic lifecycle",
+        "production"
+      ]
+    },
+    {
+      "id": "D2-READ-90ff5a4",
+      "scope": "14 existing-field read and party adapter files",
+      "sourceCommit": "90ff5a4c596c930bfd99d2e9cfd868df43f2c637",
+      "result": "AWAITING_QB",
+      "notTested": [
+        "real PostgreSQL",
+        "browser",
+        "maintenance writes",
+        "production"
+      ]
+    },
+    {
+      "id": "B01-CORE-881f887",
+      "scope": "5 production host core files",
+      "sourceCommit": "881f88795e5872374d2f7cc4aa63ab5e11ad99b0",
+      "result": "AWAITING_QB",
+      "notTested": [
+        "real sockets",
+        "real PostgreSQL",
+        "integrated build",
+        "production"
+      ]
     }
   ],
-  "reusePreparation": "QF/QB W0 active; schema19 and v14 exact scopes in original taskbook; no rerun"
+  "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
+  "updatedAt": "2026-10-22T05:29:04.990417+00:00"
 }

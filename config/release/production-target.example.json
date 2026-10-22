@@ -1,0 +1,22 @@
+{
+  "format": "naijue-production-target-example-v1",
+  "exampleOnly": true,
+  "publicOrigin": "https://1n5635n614.goho.co",
+  "apiPrefix": "/api",
+  "requiredReferences": {
+    "managementConnection": "REQUIRED_ABSOLUTE_EXISTING_CONNECTION_REFERENCE",
+    "currentInventoryReceipt": "REQUIRED_CURRENT_READONLY_ERP_INVENTORY_RECEIPT",
+    "currentEntryCompareAndSwap": "REQUIRED_EXACT_OLD_ENTRY_CONFIGURATION_AND_IMAGE_PINS",
+    "releaseDirectory": "REQUIRED_NEW_ABSOLUTE_ERP_RELEASE_DIRECTORY",
+    "newDatabaseTarget": "REQUIRED_INDEPENDENT_DATABASE_AND_ROLE_REFERENCE",
+    "databaseCredentialFile": "REQUIRED_SERVER_PRIVATE_FILE_REFERENCE_NO_VALUE",
+    "sessionCredentialFile": "REQUIRED_SERVER_PRIVATE_FILE_REFERENCE_NO_VALUE",
+    "controlledMediaRoot": "REQUIRED_SERVER_PRIVATE_MEDIA_REFERENCE",
+    "applicationEntrypoint": "REQUIRED_D1_COMPILED_PRODUCTION_ENTRYPOINT",
+    "frontendBuildManifest": "REQUIRED_F1_PRODUCTION_BUILD_MANIFEST",
+    "schemaApprovalAndManifest": "REQUIRED_CONFIRMED_SCHEMA_IDENTITY_REFERENCE",
+    "freshCompleteBackupReceipt": "REQUIRED_CURRENT_APP_DB_WAL_MEDIA_CONFIG_BACKUP_RECEIPT",
+    "rollbackManifest": "REQUIRED_VERIFIED_OLD_ENTRY_AND_POST_WRITE_BOUNDARY",
+    "finiteResourcePolicy": "REQUIRED_FINITE_POOL_TIMEOUT_AND_PROCESS_LIMITS"
+  }
+}

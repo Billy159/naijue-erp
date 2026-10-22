@@ -13,12 +13,16 @@ import { emptyInventoryFilter, type InventoryActions, type InventoryFilter, type
 import { createInventoryQuery, totalLabel } from './model.ts';
 import { defaultDisplaySettings, InventoryMatrix, type InventoryDisplaySettings } from './inventory-matrix.tsx';
 import { useInventorySettingsPopup } from './settings-popup.ts';
+import type { InventoryLedgerCapability } from './ledger-contracts.ts';
+import type { InventoryCellTarget } from './contracts.ts';
+import { InventoryLedgerDrawer } from './ledger-drawer.tsx';
 
 export interface InventoryPageProps {
   readonly scope: ReadScope;
   readonly reader: InventoryReader;
   readonly productReader: ProductReadOnlyReader;
   readonly actions?: Pick<InventoryActions, 'onOpenCell'>;
+  readonly ledger?: InventoryLedgerCapability;
 }
 const names = { products: '商品', categories: '商品分类', warehouses: '仓库', suppliers: '供应商', fits: '版型', seasons: '季节' };
 function scopeLines(filter: InventoryFilter): string[] {
@@ -44,7 +48,7 @@ export function InventoryPageView(props: InventoryPageProps) {
     ? <InventoryPageContent {...props} query={owner.query} /> : null;
 }
 
-function InventoryPageContent({ scope, reader, productReader, actions = {}, query }: InventoryPageProps & { readonly query: ReturnType<typeof createInventoryQuery> }) {
+function InventoryPageContent({ scope, reader, productReader, actions = {}, ledger, query }: InventoryPageProps & { readonly query: ReturnType<typeof createInventoryQuery> }) {
   const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
   const [draft, setDraft] = useState<InventoryFilter>(emptyInventoryFilter);
   // Only pre-query selection is local. After a success, the applied size is the
@@ -52,6 +56,7 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, quer
   const [initialPageSize, setInitialPageSize] = useState<InventoryPageSize>(100);
   const [advanced, setAdvanced] = useState(false);
   const [product, setProduct] = useState<Selection | null>(null);
+  const [ledgerTarget, setLedgerTarget] = useState<InventoryCellTarget | null>(null);
   const productTrigger = useRef<HTMLElement | null>(null);
   const productSequence = useRef(0);
   const openProduct = (target: Selection) => { productTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; productSequence.current++; setProduct(target); };
@@ -72,7 +77,7 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, quer
   const requestedPageSize = snapshot.request?.parameters.pageSize;
   const sizeChangePending = !!result && requestedPageSize !== undefined && requestedPageSize !== displayedPageSize;
   const dirty = !!success && JSON.stringify(draft) !== JSON.stringify(success.parameters.filter);
-  const run = (parameters: InventoryParameters) => { setCollapsedProducts(new Set()); setCollapsedColors(new Set()); void query.run(parameters); };
+  const run = (parameters: InventoryParameters) => { setLedgerTarget(null); setCollapsedProducts(new Set()); setCollapsedColors(new Set()); void query.run(parameters); };
   const refresh = () => { if (success) run(success.parameters); };
   const setSize = (size: InventoryPageSize) => {
     if (success) run({ ...success.parameters, page: 1, pageSize: size });
@@ -102,9 +107,10 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, quer
     {snapshot.phase === 'error' && <div role="alert" className="iw-alert">{snapshot.error instanceof Error ? snapshot.error.message : '库存查询暂不可用。'} {result && '以下保留上次成功结果，并非本次新结果。'}{sizeChangePending && ` 本次 ${requestedPageSize} 款/页读取失败，当前仍显示 ${displayedPageSize} 款/页；重试可重新读取 ${requestedPageSize} 款/页。`}<UIButton type="button" className="iw-link" onClick={() => { if (snapshot.request) run(snapshot.request.parameters); }}>重试</UIButton></div>}
     {busy && <div className="iw-loading-note" role="status">{result ? sizeChangePending ? `正在按 ${requestedPageSize} 款/页更新，以下仍为 ${displayedPageSize} 款/页的上次结果。` : '正在更新，以下为上次已执行范围的结果。' : '正在加载库存…'}<UIButton type="button" className="iw-link" onClick={() => query.cancel()}>取消本次读取</UIButton></div>}
     {<div className="iw-results" tabIndex={0} role="region" aria-label="库存查询结果" aria-busy={busy}>
-      {result ? result.products.length ? <InventoryMatrix data={result} settings={settings} collapsedProducts={collapsedProducts} collapsedColors={collapsedColors} toggleProduct={id => setCollapsedProducts(value => toggle(value, id))} toggleColor={id => setCollapsedColors(value => toggle(value, id))} actions={{ ...actions, onViewProduct: openProduct }} /> : <div className="iw-empty"><span className="iw-empty-icon" aria-hidden="true"><EmptyIcon /></span><strong>没有匹配的库存结果</strong><p>本次查询已完成，可调整条件后重新查询。</p></div> : <div className="iw-empty"><span className="iw-empty-icon" aria-hidden="true"><EmptyIcon /></span><strong>{busy ? '正在查询' : snapshot.phase === 'error' ? '查询未完成' : '等待查询'}</strong><p>{busy ? '只读取当前条件的商品页。' : snapshot.phase === 'error' ? '请重试，或调整条件后重新查询。' : '设置筛选条件后，点击「查询」查看库存。'}</p></div>}
+      {result ? result.products.length ? <InventoryMatrix data={result} settings={settings} collapsedProducts={collapsedProducts} collapsedColors={collapsedColors} toggleProduct={id => setCollapsedProducts(value => toggle(value, id))} toggleColor={id => setCollapsedColors(value => toggle(value, id))} actions={{ ...actions, ...(ledger ? { onOpenCell: (target: InventoryCellTarget) => { if (scope.active) setLedgerTarget(target); } } : {}), onViewProduct: openProduct }} /> : <div className="iw-empty"><span className="iw-empty-icon" aria-hidden="true"><EmptyIcon /></span><strong>没有匹配的库存结果</strong><p>本次查询已完成，可调整条件后重新查询。</p></div> : <div className="iw-empty"><span className="iw-empty-icon" aria-hidden="true"><EmptyIcon /></span><strong>{busy ? '正在查询' : snapshot.phase === 'error' ? '查询未完成' : '等待查询'}</strong><p>{busy ? '只读取当前条件的商品页。' : snapshot.phase === 'error' ? '请重试，或调整条件后重新查询。' : '设置筛选条件后，点击「查询」查看库存。'}</p></div>}
     </div>}
     <InventoryPagination scope={scope} page={result?.page ?? 1} pageSize={displayedPageSize} total={result?.exactTotalProducts ?? null} busy={busy} onPage={page => { if (success) run({ ...success.parameters, page }); }} onPageSize={setSize} />
+    {ledger && ledgerTarget && <InventoryLedgerDrawer key={`${ledgerTarget.warehouse.id}:${ledgerTarget.skuId}`} parent={scope} target={ledgerTarget} capability={ledger} close={() => setLedgerTarget(null)} />}
     {product && <ProductDrawerHost key={`${product.id}:${productSequence.current}`} parentScope={scope} product={product} reader={productReader} close={closeProduct} />}
     {scopeOpen && success && <StandardOverlay className="iw-scope-dialog" title="已执行查询范围" label="本次查询使用的条件" closeLabel="关闭查询范围" close={() => { setScopeOpen(false); scopeTrigger.current?.focus(); }} width={480}><ul>{scopeLines(success.parameters.filter).map(line => <li key={line}>{line}</li>)}</ul><p className="muted">每页 {success.parameters.pageSize} 款 · 第 {success.parameters.page} 页。当前编辑条件不改变此结果。</p></StandardOverlay>}
   </div>;

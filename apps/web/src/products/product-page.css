@@ -1,12 +1,24 @@
 @import '../inventory/product-drawer.css';
 .product-full-page{min-width:0;color:var(--ca-ink);font:13px/1.5 var(--ca-font-sans);background:var(--ca-surface)}
-.product-page-header{position:sticky;top:0;z-index:2;background:var(--ca-surface);padding:12px 0 8px;border-bottom:1px solid var(--ca-line)}
-.product-page-title{display:flex;align-items:center;gap:12px;margin-top:8px}
+.product-page-header{position:sticky;top:0;z-index:2;background:var(--ca-surface);padding:0 0 8px}
+.product-page-title{display:flex;align-items:center;gap:12px;min-height:32px}
 .product-page-title h1{margin:0;font-size:20px;line-height:30px;min-width:0;overflow-wrap:anywhere}
 .product-page-title>button{margin-left:auto;flex-shrink:0}
 .product-page-title>span,.product-page-missing,.product-page-availability{color:var(--ca-ink-2)}
 .product-page-tab-body{padding:16px 0;min-height:200px}
 .product-full-page .pd-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 24px}
+.product-base-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 14px;margin:0}
+.product-base-grid>div{min-width:0}
+.product-base-grid dt{font-size:12px;line-height:18px;color:var(--ca-ink-2);margin-bottom:6px}
+.product-base-grid dd{margin:0;min-height:32px;line-height:22px;padding:5px 0;overflow-wrap:anywhere}
+.product-price-wrap{max-width:640px}
+.product-price-table{border-collapse:collapse;width:100%;table-layout:fixed}
+.product-price-table th,.product-price-table td{border-bottom:1px solid var(--ca-line);padding:10px 12px;font-weight:400;text-align:left}
+.product-price-table thead th{background:var(--ca-surface-subtle);font-weight:500}
+.product-price-table td{font-variant-numeric:tabular-nums}
+.product-field-hint{color:var(--ca-ink-2);font-size:12px;margin:12px 0}
+.product-barcode-tools,.product-stock-head{display:flex;align-items:center;gap:16px;margin:0 0 16px;min-height:32px}
+.product-raw-barcode{white-space:pre-wrap;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 .product-full-page .pd-fields>div{min-width:0}.product-full-page .pd-fields dd{overflow-wrap:anywhere}
 .product-full-page .pd-spec-stack{display:flex;flex-direction:column;gap:20px}
 .product-page-missing,.product-page-availability{padding:12px;background:var(--ca-surface-subtle);border:1px solid var(--ca-line);font-size:12px}

@@ -1,8 +1,9 @@
 import { UIButton, UIInput } from '../components/standard-controls.tsx';
-import { useEffect, useId, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from 'react';
+import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from 'react';
 import { StandardOverlay } from '../components/standard-overlay.tsx';
 import { passwordByteLength } from './contracts.ts';
 import { AuthenticationController, type AuthenticationSnapshot } from './model.ts';
+import { AuthenticationAccountContext } from './account-menu.tsx';
 import './authentication.css';
 
 const roleLabel = (role: string): string => ({ ADMIN: '管理员', WAREHOUSE: '仓库人员', SALESPERSON: '营业员' })[role] ?? role;
@@ -105,19 +106,24 @@ export interface AuthenticationPanelProps {
 export function AuthenticationPanel({ controller, children }: AuthenticationPanelProps) {
   const state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot);
   const [passwordOpen, setPasswordOpen] = useState(false);
-  const changeButton = useRef<HTMLButtonElement>(null);
+  const changeButton = useRef<HTMLButtonElement>(null), passwordReturnTarget = useRef<HTMLElement | null>(null);
+  const [accountSlots, setAccountSlots] = useState(0);
+  const registerSlot = useCallback((delta: 1 | -1) => setAccountSlots(count => Math.max(0, count + delta)), []);
   useEffect(() => { if (!state.principal) setPasswordOpen(false); }, [state.principal]);
   useEffect(() => () => { controller.cancel(); }, [controller]);
-  const closePassword = () => { setPasswordOpen(false); changeButton.current?.focus(); };
+  const closePassword = () => { setPasswordOpen(false); const target = passwordReturnTarget.current ?? changeButton.current; if (target?.isConnected) target.focus({ preventScroll: true }); };
+  const openPassword = (target: HTMLElement | null) => { passwordReturnTarget.current = target; setPasswordOpen(true); };
   return <section className="auth-panel" aria-label="登录与账号安全">
     {!(passwordOpen && state.principal && state.operation === 'password') && <Status state={state} />}
-    {state.principal ? <>
-      <div className="auth-session"><p>当前账号：<strong>{state.principal.loginName}</strong> <span>{roleLabel(state.principal.role)}</span></p>
-        <div className="auth-actions"><UIButton ref={changeButton} type="button" disabled={controller.busy} onClick={() => setPasswordOpen(true)}>修改密码</UIButton>
+    {state.principal ? <AuthenticationAccountContext.Provider value={{ principal: state.principal, busy: controller.busy, registerSlot,
+      changePassword: openPassword, logout: () => { setPasswordOpen(false); void controller.logout(); } }}>
+      {accountSlots === 0 && <div className="auth-session"><p>当前账号：<strong>{state.principal.loginName}</strong> <span>{roleLabel(state.principal.role)}</span></p>
+        <div className="auth-actions"><UIButton ref={changeButton} type="button" disabled={controller.busy} onClick={event => openPassword(event.currentTarget)}>修改密码</UIButton>
           <UIButton type="button" disabled={state.phase === 'logging-out'} onClick={() => { closePassword(); void controller.logout(); }}>退出登录</UIButton></div></div>
+      }
       {children?.(state.principal)}
       {passwordOpen && <PasswordDialog controller={controller} close={closePassword} />}
-    </> : <>
+    </AuthenticationAccountContext.Provider> : <>
       {state.phase === 'unresolved' && <p role="status">尚未核验当前登录状态。</p>}
       {state.phase === 'resolving' && <p role="status">正在核验登录状态…</p>}
       {state.phase === 'logging-out' && <p role="status">正在退出登录…</p>}

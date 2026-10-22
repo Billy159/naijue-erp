@@ -13,5 +13,8 @@ export function guardedProductPageReader(scope: ReadScope, reader: ProductFullPa
   };
   return Object.freeze({ ...(reader.base ? { base: Object.freeze({ read: read => run(read.signal, () => reader.base!.read(read)) }) } : {}),
     ...(reader.specs ? { specs: Object.freeze({ read: read => run(read.signal, () => reader.specs!.read(read)) }) } : {}),
+    ...(reader.barcodes ? { barcodes: Object.freeze({ read: read => run(read.signal, () => reader.barcodes!.read(read)) }) } : {}),
+    ...(reader.prices ? { prices: Object.freeze({ read: read => run(read.signal, () => reader.prices!.read(read)) }) } : {}),
+    ...(reader.stock ? { stock: Object.freeze({ read: read => run(read.signal, () => reader.stock!.read(read)) }) } : {}),
     ...(reader.images ? { images: Object.freeze({ read: read => run(read.signal, () => reader.images!.read(read)), readImage: read => run(read.signal, () => reader.images!.readImage(read)) }) } : {}) } satisfies ProductFullPageReadOnlyReader);
 }

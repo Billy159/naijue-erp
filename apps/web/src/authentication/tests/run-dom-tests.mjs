@@ -17,7 +17,7 @@ const deferred = () => { let resolve, reject; const promise = new Promise((yes, 
 try {
   const output = path.join(temporary, 'entry.mjs');
   await build({ entryPoints: [path.join(directory, 'dom-entry.tsx')], outfile: output, bundle: true, platform: 'node', format: 'esm', external: ['react','react/*','react-dom','react-dom/*'], banner: { js: "import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);" }, jsx: 'automatic', loader: { '.css': 'empty' }, logLevel: 'warning' });
-  const { act, createElement, createRoot, AuthenticationPanel, AuthenticationController, readContextAuthenticationLifecycle, ReadContext } = await import(pathToFileURL(output).href);
+  const { act, createElement, createRoot, AuthenticationPanel, AuthenticationAccountMenu, AuthenticationController, readContextAuthenticationLifecycle, ReadContext } = await import(pathToFileURL(output).href);
   const host = document.getElementById('root');
   root = createRoot(host);
   const calls = [];
@@ -33,6 +33,7 @@ try {
   const resolve = async (index, value) => { await act(async () => calls[index].operation.resolve(value)); await settle(); };
   const allPasswordsBlank = () => [...host.querySelectorAll('input[type=password]')].every(field => field.value === '');
   const passwordForm = () => host.querySelector('.auth-password-dialog form');
+  if (!process.argv.includes('--account-only')) {
   await render(); assert.equal(calls.length, 0); assert.match(host.textContent, /尚未核验/);
   const invalidLoginSecret = fill('password', 'synthetic-invalid-only');
   await click(button('登录')); assert.equal(calls.length, 0); assert.equal(invalidLoginSecret.value, '');
@@ -97,7 +98,24 @@ try {
   unmountPending.resolve(loginResult('1')); await settle(); assert.equal(controller.getSnapshot().principal, null);
   assert.equal(lifecycle.at(-1).reason, 'cancelled');
   console.log('PASS auth DOM: unmount clears detached password fields, cancels pending login and cannot resurrect identity.');
-  console.log('All 7 authentication DOM groups passed in jsdom. No actual accounts, login, browser/network service, screenshots, cookie-runtime proof or frozen-Demo pixel-parity claim.');
+  } else { await act(async()=>root.unmount()); root=null; }
+  controller.dispose(); controller = new AuthenticationController({ client: {login: async()=>loginResult('1'), session: async()=>principal('1'), logout: async()=>{}, changeOwnPassword: async()=>{}}, onIdentityChange:readContextAuthenticationLifecycle(context) });
+  root = createRoot(host);
+  await act(async()=>root.render(createElement(AuthenticationPanel,{controller,children:account=>createElement('div',null,createElement(AuthenticationAccountMenu),createElement('p',{'data-business':''},account.loginName))})));
+  await act(async()=>controller.resolveSession()); await settle();
+  assert.equal(host.querySelector('.auth-session'),null,'Workspace slot replaces standalone account strip');
+  const accountTrigger=host.querySelector('[aria-label="账号菜单：SYNTHETIC-1"]'); assert.ok(accountTrigger);
+  const menuItems=()=>Array.from(document.querySelectorAll('.auth-account-options [role="menuitem"]'));
+  const waitMenu=async()=>{for(let i=0;i<20&&menuItems().length!==2;i++)await settle();assert.equal(menuItems().length,2,'Wait for Arco Portal menu');};
+  await act(async()=>accountTrigger.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true,cancelable:true}))); await waitMenu();
+  assert.deepEqual(menuItems().map(item=>item.textContent.trim()),['修改密码','退出登录']);
+  await click(menuItems()[0]); await settle();assert.equal(document.activeElement.name,'currentPassword');
+  await act(async()=>host.querySelector('.auth-password-dialog').dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true})));await settle();
+  assert.equal(host.querySelector('.auth-password-dialog'),null);assert.ok(document.activeElement===accountTrigger,'Password Escape returns to surviving account trigger');
+  await click(accountTrigger);await waitMenu();await act(async()=>menuItems()[0].dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true})));await settle();assert.ok(document.activeElement===accountTrigger);
+  await click(accountTrigger);await waitMenu();await click(menuItems()[1]);await settle();assert.equal(host.querySelector('[data-business]'),null);assert.equal(host.querySelector('[aria-haspopup="menu"]'),null);
+  console.log('PASS account topbar slot: actual Arco Portal, password above logout, keyboard open/Escape, password focus return, logout removes old identity and menu.');
+  console.log(process.argv.includes('--account-only') ? 'Affected account-slot checks passed; earlier authentication groups reused from the recorded first run.' : 'All 7 existing authentication groups plus account-slot checks passed in jsdom. No real accounts, browser/network service, cookie-runtime proof or pixel-parity claim.');
 } finally {
   if (root) root.unmount();
   controller?.dispose(); dom.window.close(); await rm(temporary, { recursive: true, force: true });

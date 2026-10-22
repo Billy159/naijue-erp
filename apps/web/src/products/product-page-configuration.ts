@@ -23,11 +23,14 @@ export function captureProductFullPageConfiguration(value: unknown): ProductFull
     tabs.push(d.value);
   }
   if (Reflect.ownKeys(source).length !== source.length + 1 || !tabs.includes(row.initialTab as ProductReadOnlyPageTab)) return invalid();
-  const input = own(row.reader, [], ['base', 'specs', 'images']);
-  const reader: { base?: NonNullable<ProductFullPageReadOnlyReader['base']>; specs?: NonNullable<ProductFullPageReadOnlyReader['specs']>; images?: NonNullable<ProductFullPageReadOnlyReader['images']> } = {};
+  const input = own(row.reader, [], [...productReadOnlyPageTabs]);
+  const reader: { -readonly [K in keyof ProductFullPageReadOnlyReader]: ProductFullPageReadOnlyReader[K] } = {};
   if (Object.hasOwn(input, 'base')) { const x = own(input.base, ['read']); reader.base = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['base']>['read'] }); }
   if (Object.hasOwn(input, 'specs')) { const x = own(input.specs, ['read']); reader.specs = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['specs']>['read'] }); }
   if (Object.hasOwn(input, 'images')) { const x = own(input.images, ['read', 'readImage']); reader.images = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['images']>['read'], readImage: method(x.readImage) as NonNullable<ProductFullPageReadOnlyReader['images']>['readImage'] }); }
+  if (Object.hasOwn(input, 'barcodes')) { const x = own(input.barcodes, ['read']); reader.barcodes = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['barcodes']>['read'] }); }
+  if (Object.hasOwn(input, 'prices')) { const x = own(input.prices, ['read']); reader.prices = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['prices']>['read'] }); }
+  if (Object.hasOwn(input, 'stock')) { const x = own(input.stock, ['read']); reader.stock = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['stock']>['read'] }); }
   if (!productPageTabAvailable(reader, row.initialTab as ProductReadOnlyPageTab)) return invalid();
   return Object.freeze({ stylesheet: Object.freeze({ load: () => load(), dispose: () => dispose() }), allowedTabs: Object.freeze(tabs), initialTab: row.initialTab as ProductReadOnlyPageTab, reader: Object.freeze(reader) });
 }

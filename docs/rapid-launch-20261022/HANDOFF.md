@@ -1,16 +1,19 @@
 # Continue here
 
-Read PROGRESS.md, TASKS.json, WRITE-OWNERSHIP.json and API-CONTRACTS.md. Reuse nine existing chats and22 tasks; do not restart architecture or recreate roles. All dispatch/retry/review gpt-6.1-sol/xhigh.
+Read PROGRESS.md, TASKS.json, WRITE-OWNERSHIP.json, API-CONTRACTS.md and VERIFICATION-INDEX.json. Reuse nine role chats/22 tasks, gpt-6.1-sol/xhigh. Do not restart architecture or completed checks.
 
-Private GitHub https://github.com/Billy159/naijue-erp ; remote github; origin local bundle. Branch codex/local-takeover-wip-20261022-082411. Source8211285 and handoff ab6b837 verified remote. Push211b722 failed HTTP2; later reference commit dc1a174 retained and HTTP/1.1 retry running. Determine actual remote head before claiming uploaded.
+R=work/erp-local-source-20261022 is the only writeable application repo; K=../local-takeover-20261021-control is local evidence. Old formal project and frozen Demo are read-only. Complete taskbook is references/rapid-launch-taskbook-20261022. Screened reference subset has50 files; omitted fonts/screenshots explicit.
 
-R=work/erp-local-source-20261022; K=../local-takeover-20261021-control. Complete taskbook references/rapid-launch-taskbook-20261022. Screened Demo subset references/demo-ui-baseline (50 files; omitted fonts/screenshots documented). Old formal repo and frozen Demo read-only.
+Private GitHub Billy159/naijue-erp, remote github (origin is local bundle). Branch codex/local-takeover-wip-20261022-082411. Latest verified remote768f479; local90ff5a4 and881f887 plus current saved stage require push/readback. Use HTTP/1.1 when necessary, no reset/force/broad add. Only stage fixed receipt hashes; unrelated developer WIP must stay unstaged.
 
-C00 exact finite ownership ready. Developers write only after C explicit checkpoint message. C owns shared contracts/root/Git/release/server; D1 owns central migrations. New fields/constraints/dependent write semantics await explicit user approval.
+Human approval C01-20261022-v1: all A-D confirmed. FIELD-APPROVAL-C01-v1.json and SCHEMA-CHANGE-CONFIRMATION.md/.json contain scope and exact source. D1 owns all central migrations0020-0024, no changes0001-0019. New schema profiles require exact full-prefix hashes and actual coordinated PG routine/ACL evidence. No MAX/version>= fallback. C owns Git/root/shared contracts/release/server.
 
-C01 D1 numbering and D2 maintenance/default barcode scheme proposals received; D3 admission/history proposal pending final. Collect once and ask user once. Do not block existing-field work.
-C02 ordinary SSH identity refused; existing bounded normal-admission status actually READY; private identity/config references remain outside Git. All live production facts still need scoped readback; do not infer from old reports.
+QB11-file cleanup768f479 passed SOURCE/PROTOCOL only; adopt its result without repeat. QB next90ff5a4 read/party and881f887 host core; precise review bindings in K/controller receipts. Frontend views are partial, QF receives immutable source candidate; real browser/PG acceptance remains separate.
 
-Reuse sealed18, do not rerun original target. Schema19 limited combined evidence remains limited. V14=35 pages:21PARTIAL/13BLOCKED/1NEED_FIX;65 overlays:10PARTIAL/55NOT_RUN;0 whole-page PASS. QF/QB indexes in K; C adopts fixed-scope review verdicts, no repeat technical acceptance.
+Meaningful proactive reporting is explicitly authorized by human message01a161f7-a5e8-7e10-9059-9537c28910c2 in this C chat; include REPORTING-AUTHORIZATION.json source in dispatch. C must consume final receipts and schedule next ready work immediately, not wait for user reminders.
 
-Preserve/push/read back each meaningful stage. PUSH_BLOCKED retains local commit; continue independent authorized work, never claim upload or production success without evidence.
+C02 transport scripts/release/ssh-control.py adapts only existing bounded T45 carrier to K/server-jobs, private connection via ERP_RELEASE_CONNECTION_REF. No password/permanent sudo. Status actually READY, Docker direct read denied; use exact dispatcher, fresh unique job and no unknown replay. No fresh complete backup/new target has yet been made. Do not use old DB for rewrite migrations. Preserve real source/DB/media/config; build isolated new target and protect any new business after first write.
+
+B06 source v2 plus v3 barcode amendment are private references, not Git content. Current batch/cutoff and native authority exact pins still need current evidence; never infer from directory dates or fabricate successful imports. Continue independent development while only dependent execution waits.
+
+Goal remains active until all applicable agreed operations are live at the original URL,35 pages/65 overlay categories have effective results, final source is remote and handoff is complete. Partial launch or report completion is not overall completion.

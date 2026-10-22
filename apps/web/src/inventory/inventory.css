@@ -107,3 +107,8 @@
 .iw-search-icon{position:absolute;right:11px;top:9px;width:14px;height:14px;color:var(--ca-ink-2);pointer-events:none}
 .iw-filter-load-state{position:absolute;z-index:1600;top:calc(100% + 4px);left:0;padding:7px 10px;background:var(--ca-popover-bg);border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);box-shadow:var(--ca-shadow-float);font-size:12px}
 .iw-filter-notice{margin:0;padding:6px 8px;color:var(--ca-ink-2);font-size:12px;line-height:18px}
+
+/* Frozen Demo inventory search uses the same muted control fill as its selectors. */
+.iw-workbench .inventory-product-control .arco-input-wrapper{background:var(--ca-surface-muted);border-color:transparent}
+.iw-workbench .inventory-product-control .arco-input-wrapper:hover{border-color:var(--ca-control-hover-border)}
+.iw-workbench .inventory-product-control .arco-input-wrapper-focus{background:var(--ca-surface);border-color:var(--ca-control-focus-border)}

@@ -1,14 +1,15 @@
 # Rapid launch current progress - 2026-10-22
 
-C: 01a161ca-f5d5-7de1-a8ad-1cdd43c96915. Previous turn made concrete progress: 39 source WIP files preserved/pushed, nine role chats started.
+C=01a161ca-f5d5-7de1-a8ad-1cdd43c96915. Nine existing roles and22 tasks, all gpt-6.1-sol/xhigh; do not recreate or redispatch an in-flight scope.
 
-- Verified GitHub source82112855eba3983582c719660b90be79b5024cd0 and handoff ab6b837eb731b401f67cbc13184e79d166899798. Push211b722 failed with HTTP2 framing; retained locally. HTTP/1.1 retry is running for later checkpoint.
-- C00 screened Demo reference ready: 50 files /521947 bytes; frozen b8bcfe3; manifest a84986dc63dfab87579333cf3f9655fb94c14173a2d06c7d52970c65e884ce4f. Source/destination hashes and excerpt ranges recorded. No screenshots or font binaries; not a standalone runnable Demo.
-- Exact finite files for all six developers registered in WRITE-OWNERSHIP.json, no overlaps. Source writes activate only on C explicit checkpoint message. C owns shared contracts/root/Git/deployment; D1 owns migrations, field approval still required.
-- B00 actual API/DTO inventory delivered. Existing-field interface v1 frozen in EXISTING-API-MATRIX.json and API-CONTRACTS.md; no production acceptance claimed.
-- C01 collecting final D1/D2/D3 schema proposals; all new fields/constraints/dependent write semantics NOT_CONFIRMED. Old-field wiring/UI/transaction fixes proceed independently after opening.
-- QF/QB W0 reuse indexes delivered in K. No new module business PASS, no repeat tests.
-- C02 ordinary SSH identity255 rejected without remote commands. Existing bounded normal-admission status now actually READY through2026-11-11; no permanent sudo/password stored. C remains sole live server owner. Current free disk ~7.9GiB; stale resource hold not inherited.
-- No new integrated build, real import, deployment or production data change.
+- C00 VERIFIED: preserved39 WIP source files, screened50 Demo reference files, exact419-file owner registry now has no overlaps. Remote opening checkpoint f8352b3 verified.
+- C01 VERIFIED: human explicitly answered all A-D confirmed for C01-20261022-v1 (63 columns/6 tables and listed constraints). FIELD-APPROVAL-C01-v1.json is authority; only additional unlisted changes need confirmation. D1 owns0020-0024 exact allocation.
+- QB cleanup768f479: scoped SOURCE/PROTOCOL PASS for11 files, no findings/retest. C adopted once; D1/D3 continue other work. Whole B02/B03/B06 and real PG remain unaccepted.
+- D2 read/party14 files saved90ff5a4, D1 production-host5 files saved881f887; QB sequential review dispatched, original checks reused.
+- F1 host13, F2 ledger7 + six-tab15, F3 settings-view28, D3 import executor3 and C02 pack-tool4 have hash-bound receipts, being saved as fixed candidates. These are partial modules, not real business or production PASS.
+- Product editable snapshot/candidates and B05 maintenance contracts are the real next frontend dependencies. D2 continues; D1 supplies one shared maintenance transaction and audit/receipt driver. No duplicate implementation.
+- Meaningful reporting authorization is in REPORTING-AUTHORIZATION.json; all current developers received the human source. C processes completion immediately and obtains idle receipts with wait/read tools.
+- C02 existing bounded admin channel actually READY; ordinary SSH credential was rejected. Docker requires the existing bounded dispatcher. No new deployment/database/import yet. Fresh recoverable app/DB-WAL/media/config backup and actual target inventory are next; old incomplete backup is not reused as complete.
+- GitHub API ref readback confirmed768f479. Later local commits and this stage still require push/readback. Retain local checkpoints across intermittent GitHub transport failures.
 
-Next: finish C00 checkpoint push/readback, send six source-opening messages, issue one complete field confirmation after D3 final proposal, inventory exact production targets through existing bounded channel.
+No integrated production build, real private import, new PG acceptance, public browser acceptance or deployment has been performed in this stage. Preserve historical failures and unknown values. Original sealed18 are not rerun; new evidence only covers affected scopes.

@@ -12,3 +12,9 @@
 - 新维护/六页签/历史修订接口等待D2/D3建议汇入本合同；涉及未批准字段的写语义仍关闭。
 
 B01生产宿主配置冻结：公网Origin=https://1n5635n614.goho.co；外部API前缀/api；保留旧local-https宿主回环合同。实际listen/可信代理和运行配置由C02核真实服务器后写入部署配置，禁止猜测代理网段或放宽校验。生产host应要求显式输入这些值，缺少配置拒绝启动。
+
+## Existing-field read extension v2
+
+InventoryRouteConfiguration.ledger?: true is an explicit UI opt-in. F1 must inject createInventoryLedgerHttpReader(input.http) and the current application access-failure owner; omission preserves the original disabled/unavailable state. F2 owns the leaf implementation. No database field or permission grant added.
+
+Product details read DTO v1 is frozen at packages/application/src/product-details-query-ports.ts; prices/barcodes/stock routes use existing schema1-19 fields only. Prices are all nine exact yuan strings/null; barcodes retain raw text and real SKU identity; product-level default scheme reports UNAVAILABLE until separately approved. ProductWarehouseStockReader is D3-owned and must independently authorize inventory/warehouse scope; absence returns unavailable, never zero.

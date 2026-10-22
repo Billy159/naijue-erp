@@ -3,6 +3,7 @@ import '../demo-presentation/controls.css';
 import { DemoFrame, type DemoNavigationId, type DemoNavigationTarget } from '../demo-presentation/demo-frame.tsx';
 import type { BreadcrumbSegment } from '../components/standard-breadcrumb.tsx';
 import type { ApplicationPresentation, ApplicationRoute } from './contracts.ts';
+import { AuthenticationAccountMenu } from '../authentication/account-menu.tsx';
 
 const destinations: Readonly<Record<ApplicationRoute, DemoNavigationId>> = Object.freeze({
   inventory: 'inventory', sales: 'sales', transfers: 'transfer', customers: 'customers', suppliers: 'suppliers', products: 'products', 'product-categories': 'product-categories', 'product-settings': 'product-settings', 'barcode-schemes': 'barcode-schemes', 'store-settings': 'settings/stores',
@@ -20,8 +21,8 @@ const breadcrumbs: Readonly<Record<ApplicationRoute, readonly BreadcrumbSegment[
   'store-settings': [{ id: 'basic-settings', label: '基础设置' }, { id: 'store-settings', label: '营业厅与仓库' }],
 });
 /** First-party pure workspace composition. No auth, routing effects, reads,
- * role grants, defaults or alternate frame design. Account controls remain in
- * the existing AuthenticationPanel outside this workspace, not invented here. */
+ * role grants, defaults or alternate frame design. The authentication owner
+ * supplies the real account menu through its context. */
 export function createDemoFrameWorkspaceRenderer(): ApplicationPresentation['renderWorkspace'] {
   return ({ controller, state, routeContent }) => {
     const navigation: Partial<Record<DemoNavigationId, DemoNavigationTarget>> = {};
@@ -29,7 +30,7 @@ export function createDemoFrameWorkspaceRenderer(): ApplicationPresentation['ren
       selected: state.route === route,
       onActivate: () => { void controller.navigate(route); },
     };
-    return <DemoFrame navigation={navigation} breadcrumb={state.route ? breadcrumbs[state.route] : []}
+    return <DemoFrame navigation={navigation} breadcrumb={state.route ? breadcrumbs[state.route] : []} topbarActions={<AuthenticationAccountMenu />}
       notice={state.notice === 'cannot-leave' ? <p className="iw-inline-state" role="alert">当前页面有未保存输入或尚未确认的操作，请先处理当前页面后再离开。</p> : null}>
       {routeContent}
     </DemoFrame>;

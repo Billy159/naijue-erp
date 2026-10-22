@@ -21,6 +21,8 @@ export interface InventoryRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
   /** Omit unavailable stock-ledger actions, rather than installing dummy success. */
   readonly actions: Pick<InventoryActions, 'onOpenCell'>;
+  /** Explicit ledger UI opt-in; each real request retains current server authorization. */
+  readonly ledger?: true;
 }
 export interface SalesRouteConfiguration {
   readonly stylesheet: RouteStylesheet;

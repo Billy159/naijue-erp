@@ -1,15 +1,18 @@
 {
   "version": "2026-10-22-v1.2",
-  "purpose": "Implementation handoff plan only; no implementation, deployment or push performed by creation of this package.",
+  "purpose": "Current live rapid-launch execution state; task-specific acceptance is scoped and versioned.",
   "executionStarted": true,
-  "fieldApproval": "NOT_CONFIRMED_FOR_NEW_CHANGES",
+  "fieldApproval": "APPROVED_ALL_A_B_C_D_C01_20261022_V1",
   "github": {
     "url": "https://github.com/Billy159/naijue-erp",
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "ca38c7507ee5cb0372b63231a8fbe7b50aa5f41c",
-    "workingTreeNotFullyCommitted": true
+    "headObserved": "881f88795e5872374d2f7cc4aa63ab5e11ad99b0",
+    "workingTreeNotFullyCommitted": true,
+    "remoteHeadVerified": "768f4794cba6b2b826728d3ae7c258ffe0dd4e5d",
+    "remoteReadbackMethod": "gh API ref readback, exit0",
+    "pushPendingLocalCommits": true
   },
   "concurrency": {
     "chats": 9,
@@ -150,13 +153,13 @@
       "owner": "C",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "CODE_DONE",
+      "status": "VERIFIED",
       "startDependencies": [],
       "completionDependencies": [],
       "fieldGate": "Only new/changed schema or write semantics await relevant explicit approval; existing approved fields, read wiring and preparation proceed.",
       "instructions": "C00 接手、当前源码保全、GitHub首个检查点\n输入：本书、OWNERSHIP最新补充、Git实际状态及最新前后端回执。\n动作：确认目标根与作者；保全当前tracked/untracked源码WIP和lock；只筛选项目代码/脱敏说明，不上传数据备份与凭据；记录旧HEAD与新checkpoint。先形成可从GitHub取得的准确当前版本，再开始新分支修改。不能git add整个项目父目录。为Dot/异机接手补齐必要的可分发Demo UI源码、样式、交互规则及脱敏截图到references/demo-ui-baseline，保留冻结提交/来源路径/文件hash；先筛除真实数据、媒体原件及凭据。新增source-map说明本机路径与仓库相对路径对应。不可分发输入只写私有引用与获取方式；远程接手拿不到时标精确输入缺失，不假设其能访问本机绝对路径。\n完成：远端分支存在且commit与本地一致；PROGRESS和ownership注明九个角色及精确写入范围；现存未测/失败不改绿。",
-      "commit": "82112855eba3983582c719660b90be79b5024cd0",
-      "remoteCommit": "82112855eba3983582c719660b90be79b5024cd0",
+      "commit": "f8352b3be19fa3e717262b5bb28073e559bc0795",
+      "remoteCommit": "f8352b3be19fa3e717262b5bb28073e559bc0795",
       "checks": [
         "39 exact WIP files hash matched; github branch readback equal"
       ],
@@ -166,13 +169,13 @@
         "WRITE-OWNERSHIP.json"
       ],
       "notTested": [],
-      "nextAction": "Push/read back final C00 checkpoint, then explicitly open six roles. Preserve PUSH_BLOCKED if network unavailable and continue independent work per contract.",
+      "nextAction": "Completed C00; reuse checkpoint and screened reference package. Do not repeat.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
         "sourceWriteEnabled": false,
         "activation": "C explicit checkpoint message",
-        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
+        "fieldGate": "C01-v1 approved; unlisted new schema still requires explicit human approval."
       }
     },
     {
@@ -181,7 +184,7 @@
       "owner": "C",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "RUNNING",
+      "status": "VERIFIED",
       "startDependencies": [
         "B00"
       ],
@@ -193,16 +196,21 @@
       "commit": null,
       "remoteCommit": null,
       "checks": [],
-      "evidence": [],
+      "evidence": [
+        "SCHEMA-CHANGE-CONFIRMATION.md",
+        "SCHEMA-CHANGE-CONFIRMATION.json",
+        "FIELD-APPROVAL-C01-v1.json"
+      ],
       "notTested": [],
-      "nextAction": "Existing API v1 frozen; collect final D1/D2/D3 schema proposals, make one explicit user confirmation request. No new field approved.",
+      "nextAction": "Approved A-D only; implement fixed contract; new fields outside version require separate confirmation.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
         "sourceWriteEnabled": false,
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
-      }
+      },
+      "approvalRecord": "FIELD-APPROVAL-C01-v1.json"
     },
     {
       "id": "C02",
@@ -267,7 +275,7 @@
       "owner": "D1",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "READY",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -281,7 +289,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
+      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D1",
@@ -296,7 +304,7 @@
       "owner": "D1",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "READY",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -310,7 +318,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
+      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D1",
@@ -325,7 +333,7 @@
       "owner": "D3",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "READY",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -340,7 +348,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
+      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D3",
@@ -355,7 +363,7 @@
       "owner": "D2",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "READY",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -370,7 +378,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
+      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D2",
@@ -385,7 +393,7 @@
       "owner": "D2",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "READY",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -400,7 +408,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
+      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D2",
@@ -415,7 +423,7 @@
       "owner": "D3",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "READY",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -431,7 +439,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
+      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D3",
@@ -444,7 +452,7 @@
       "id": "B07",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "READY",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -453,7 +461,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
+      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
       "title": "基线感知历史修订（R4）",
       "owner": "D3",
       "instructions": "B07 基线感知历史修订（R4）\n路径：D3拥有history修订应用、有效投影、PG叶适配与历史命令插件；迁移由D1集中实施，过账复用D1公共端口。\n依赖：相关字段确认、B06已发布历史基线、B02受控事务/过账合同。\n历史修改按受控revision和当前有效投影实现：原始header/line/source不可变；加版本CAS、原因、操作者、前后值、原请求key；新旧有效库存效果之差记账，金额单改不动库存，已计入切换基线的旧单不得再过整单。历史修订入口、存储增补和收退配平的具体字段在C01确认后实施；不要擅自扩大为历史审核状态迁移。\n最小证据：历史数量增加/减少差额、金额单改、同key重复、权限/版本冲突；调拨两端守恒；读取看到最新有效值且原始值可追溯。复用schema19既有发布/回滚证据，真实导入不是再跑全套合成验证。",
@@ -477,7 +485,7 @@
       "owner": "F1",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "READY",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -491,7 +499,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
+      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F1",
@@ -506,7 +514,7 @@
       "owner": "F1",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "READY",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -521,7 +529,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
+      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F1",
@@ -536,7 +544,7 @@
       "owner": "F2",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "READY",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -551,7 +559,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
+      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F2",
@@ -566,7 +574,7 @@
       "owner": "F2",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "READY",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -580,7 +588,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
+      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F2",
@@ -595,7 +603,7 @@
       "owner": "F3",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "READY",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -609,7 +617,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
+      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F3",
@@ -624,7 +632,7 @@
       "owner": "F1",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "READY",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -640,7 +648,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "On C checkpoint message implement assigned scope; no unapproved schema/write semantics. Deliver fixed diff/checks for QF/QB.",
+      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F1",
@@ -747,7 +755,7 @@
       "owner": "QF",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "xhigh",
-      "status": "RUNNING",
+      "status": "WAITING_FIXED_CANDIDATE",
       "startDependencies": [
         "C00"
       ],
@@ -761,7 +769,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "W0 read-only preparation dispatched; no implementation or acceptance result yet.",
+      "nextAction": "C saving F1/F2/F3 immutable source candidate; then review only new source/protocol integration, real browser window separately.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "QF",
@@ -790,7 +798,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "W0 read-only preparation dispatched; no implementation or acceptance result yet.",
+      "nextAction": "Adopt cleanup768f479 scoped PASS; sequential next review D2 read90ff5a4 and D1 host881f887; no repeated cleanup tests.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "QB",
@@ -856,7 +864,38 @@
     }
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
-  "baseCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
-  "updatedAt": "2026-10-22T04:47:52.885418+00:00",
-  "stage": "C00_READY_SOURCE_WRITES_AWAIT_C_CHECKPOINT_MESSAGE"
+  "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
+  "updatedAt": "2026-10-22T05:29:04.990417+00:00",
+  "stage": "C00_VERIFIED_SIX_DEVELOPERS_SOURCE_OPEN",
+  "lastVerifiedRemoteCommit": "f8352b3be19fa3e717262b5bb28073e559bc0795",
+  "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
+  "reportingRequiredFields": [
+    "taskId",
+    "completedScope",
+    "changedFiles",
+    "checks",
+    "notTested",
+    "blockers",
+    "nextAction"
+  ],
+  "fieldApprovalRecord": "FIELD-APPROVAL-C01-v1.json",
+  "slices": [
+    {
+      "id": "B02_COMMIT_CLEANUP_ONLY",
+      "parent": "B02",
+      "status": "UNDER_REVIEW",
+      "candidateCommit": "768f4794cba6b2b826728d3ae7c258ffe0dd4e5d",
+      "reviewer": "QB"
+    },
+    {
+      "id": "B03/B06-R1-READ-OUTCOME",
+      "parent": [
+        "B03",
+        "B06"
+      ],
+      "status": "UNDER_REVIEW",
+      "candidateCommit": "768f4794cba6b2b826728d3ae7c258ffe0dd4e5d",
+      "reviewer": "QB"
+    }
+  ]
 }

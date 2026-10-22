@@ -1,0 +1,6 @@
+.inventory-ledger .inventory-ledger-target{margin:0 0 16px;color:var(--ca-ink-2);line-height:1.7;overflow-wrap:anywhere}
+.inventory-ledger-content{min-width:0;font:13px/1.5 var(--ca-font-sans);color:var(--ca-ink)}
+.inventory-ledger-content .erp-read-table{overflow:auto}
+.inventory-ledger-content table{min-width:660px}
+.inventory-ledger-pagination{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin-top:16px}
+.inventory-ledger-empty{padding:32px 8px;text-align:center;color:var(--ca-ink-2)}

@@ -104,7 +104,7 @@ export class ApplicationController {
     const input: RoutePreparation = { scope, principal, configuration: this.#configuration.routes, http: this.#httpForScope(scope, route) };
     try {
       let prepared: PreparedApplicationRoute;
-      if (route === 'inventory') prepared = (await this.#leaves.load('inventory', scope)).prepareInventoryRoute(input);
+      if (route === 'inventory') prepared = (await this.#leaves.load('inventory', scope)).prepareInventoryRoute(input, error => this.#readAccessFailure(scope, error.kind));
       else if (route === 'sales') {
         const module = await this.#leaves.load('sales', scope);
         if (!this.#current(scope)) return false;

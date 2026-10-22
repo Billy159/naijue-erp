@@ -1,10 +1,10 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T04:47:52.885418+00:00",
+  "updatedAt": "2026-10-22T05:26:26.343495+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
-  "writeGate": "OPEN_ONLY_AFTER_C_EXPLICIT_CHECKPOINT_MESSAGE",
+  "writeGate": "OPEN_C_MESSAGE_DISPATCHED",
   "roles": {
     "D1": {
       "proposal": "reports/backend/rapid-launch-20261022/D1/REQUESTED-WRITE-SCOPE.json",
@@ -189,6 +189,21 @@
           "path": "packages/application/src/current-form-service.ts",
           "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
           "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM"
+        },
+        {
+          "path": "packages/application/src/maintenance-commit-ports.ts",
+          "fieldGate": "APPROVED_C01_V1_MAINTENANCE_SHARED_UOW",
+          "group": "D1_SHARED_MAINTENANCE_PORT"
+        },
+        {
+          "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+          "group": "C01_APPROVED_SHARED_MAINTENANCE",
+          "fieldGate": "C01_20261022_V1_APPROVED_ONLY"
+        },
+        {
+          "path": "tests/maintenance-command-postgres-protocol.test.ts",
+          "group": "C01_APPROVED_SHARED_MAINTENANCE",
+          "fieldGate": "C01_20261022_V1_APPROVED_ONLY"
         }
       ]
     },
@@ -841,6 +856,34 @@
         {
           "path": "apps/api/src/history-revision-http.test.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "packages/application/src/inventory-ledger-query-contracts.ts",
+          "fieldGate": "HISTORY_REVISE_NEW_ENUM_OR_PARSER_BRANCH_REQUIRES_C01_USER_APPROVAL"
+        },
+        {
+          "path": "packages/application/src/inventory-ledger-query-validation.ts",
+          "fieldGate": "HISTORY_REVISE_NEW_ENUM_OR_PARSER_BRANCH_REQUIRES_C01_USER_APPROVAL"
+        },
+        {
+          "path": "adapters/postgres/src/product-warehouse-stock-reader.ts",
+          "group": "R1_STOCK_AND_REAL_IMPORT_HOST",
+          "fieldGate": "C01_20261022_V1_APPROVED_ONLY"
+        },
+        {
+          "path": "tests/product-warehouse-stock-postgres-protocol.test.ts",
+          "group": "R1_STOCK_AND_REAL_IMPORT_HOST",
+          "fieldGate": "C01_20261022_V1_APPROVED_ONLY"
+        },
+        {
+          "path": "scripts/import-v3/production-source-host.mjs",
+          "group": "R1_STOCK_AND_REAL_IMPORT_HOST",
+          "fieldGate": "C01_20261022_V1_APPROVED_ONLY"
+        },
+        {
+          "path": "scripts/import-v3/production-source-host.test.mjs",
+          "group": "R1_STOCK_AND_REAL_IMPORT_HOST",
+          "fieldGate": "C01_20261022_V1_APPROVED_ONLY"
         }
       ]
     },
@@ -1757,8 +1800,50 @@
     }
   },
   "resourcePolicy": "No new PG, browser or integrated build before C assigns a bounded window. Light focused checks after source opening require result recording; no default full regression.",
-  "fieldApproval": "NOT_CONFIRMED",
+  "fieldApproval": "APPROVED_C01_20261022_V1_ONLY",
   "demoReferenceManifest": "references/demo-ui-baseline/MANIFEST.json",
   "demoReferenceManifestSha256": "a84986dc63dfab87579333cf3f9655fb94c14173a2d06c7d52970c65e884ce4f",
-  "changesBeyondFiniteList": "Report exact path and reason to C before write; ordinary path allocation needs C registration, not new user approval. Field approval remains required."
+  "changesBeyondFiniteList": "Report exact path and reason to C before write; ordinary path allocation needs C registration, not new user approval. Field approval remains required.",
+  "activatedAt": "2026-10-22T04:52:46.083246+00:00",
+  "activationCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
+  "amendments": [
+    {
+      "at": "2026-10-22T05:06:41.247759+00:00",
+      "owner": "D3",
+      "addedPaths": [
+        "packages/application/src/inventory-ledger-query-contracts.ts",
+        "packages/application/src/inventory-ledger-query-validation.ts"
+      ],
+      "reason": "Reserve two existing ledger DTO/parser paths for later approved history event; no new enum semantics before approval."
+    },
+    {
+      "at": "2026-10-22T05:26:26.343495+00:00",
+      "owner": "D1",
+      "addedPaths": [
+        "packages/application/src/maintenance-commit-ports.ts",
+        "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+        "tests/maintenance-command-postgres-protocol.test.ts"
+      ],
+      "reason": "Exact requested shared seam/real provider allocation; no additional fields authorized."
+    },
+    {
+      "at": "2026-10-22T05:26:26.343495+00:00",
+      "owner": "D3",
+      "addedPaths": [
+        "adapters/postgres/src/product-warehouse-stock-reader.ts",
+        "tests/product-warehouse-stock-postgres-protocol.test.ts",
+        "scripts/import-v3/production-source-host.mjs",
+        "scripts/import-v3/production-source-host.test.mjs"
+      ],
+      "reason": "Exact requested shared seam/real provider allocation; no additional fields authorized."
+    }
+  ],
+  "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
+  "migrationAllocationAuthority": {
+    "owner": "D1",
+    "path": "adapters/postgres/migrations/0020_and_later_new_files_only",
+    "scope": "63 approved fields and corresponding listed constraints only",
+    "requirement": "D1 publishes exact sequence/path mapping once; no edits0001-0019, no other writer"
+  },
+  "migrationAllocation": "MIGRATION-ALLOCATION.json"
 }

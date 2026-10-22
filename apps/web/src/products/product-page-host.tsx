@@ -1,4 +1,3 @@
-import { StandardBreadcrumb } from '../components/standard-breadcrumb.tsx';
 import { useEffect, useLayoutEffect, useRef, useState, type ComponentType } from 'react';
 import { UIButton } from '../components/standard-controls.tsx';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
@@ -23,8 +22,8 @@ export function ProductFullPageHost(props: { readonly parent: ReadScope; readonl
   }, [props.parent, props.target.id, props.configuration, attempt]);
   const current = attachment?.parent === props.parent && attachment.scope.entityId === props.target.id && attachment.scope.active ? attachment : null;
   if (!props.parent.active) return null;
-  return <section className="product-full-page" aria-label="商品只读整页"><div className="product-page-header"><StandardBreadcrumb label="商品查看路径" segments={[{ id: 'list', label: '商品信息' }, { id: 'target', label: props.target.label }, { id: 'mode', label: '只读' }]} />
-    <div className="product-page-title"><h1 ref={heading} tabIndex={-1}>{props.target.label}</h1><span>只读</span><UIButton onClick={props.close}>返回商品信息</UIButton></div></div>
+  return <section className="product-full-page" aria-label="商品只读整页"><div className="product-page-header">
+    <div className="product-page-title"><h1 ref={heading} tabIndex={-1}>{props.target.label}</h1><UIButton onClick={props.close}>返回商品信息</UIButton></div></div>
     {current?.View ? <current.View scope={current.scope} configuration={props.configuration} reader={props.reader} /> : current?.error ? <p role="alert">商品整页组件或样式未准备完成，尚未读取商品资料。<UIButton onClick={() => setAttempt(value => value + 1)}>重试商品整页</UIButton></p> : <p role="status">正在准备商品只读整页…</p>}
   </section>;
 }

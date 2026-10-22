@@ -21,3 +21,9 @@
 .auth-cancel { display: block; margin: 14px auto; }
 @media (max-width: 520px) { .auth-form { padding: 0 14px; } .auth-password-dialog .auth-form { padding: 0; } .auth-session { align-items: stretch; flex-direction: column; } }
 .auth-password-dialog.arco-modal .arco-modal-content { max-height: calc(100dvh - 140px); overflow-y: auto; }
+.auth-account-trigger.arco-btn { display: inline-flex; align-items: center; gap: 8px; max-width: 300px; padding: 4px 8px; border: 0; background: transparent; color: #1d2129; }
+.auth-account-trigger>span:first-child { max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.auth-account-trigger small { color: #86909c; font-size: 12px; font-weight: 400; }
+.auth-account-options { min-width: 148px; border: 1px solid #e5e6eb; border-radius: 4px; background: #fff; box-shadow: 0 4px 16px #00000014; }
+.auth-account-options .arco-menu { padding: 4px; }
+.production-route-state { padding: 24px; }
