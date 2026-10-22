@@ -9037,10 +9037,637 @@
         "sources": 0
       },
       "adoption": "Original operational acceptance; no duplicate QB"
+    },
+    {
+      "id": "QB-slice113-runtime26-retained-read-view-e0b3f4b8",
+      "sourceCommit": "e0b3f4b8bced9203b3fe5668b3e839d3b0283b8a",
+      "result": "PASS",
+      "scope": "严格issuer.pool+已有PRODUCT_SEASONS_READ、同步filesReady与永久撤销，原issuer/livelease实现复用",
+      "qualification": "固定exact2新增catalogueRetainedDelete同步只读issuer view，按C c5dbe技术冻结；无新SQL/purpose/ACL/写权",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice113-runtime26-retained-read-view-e0b3f4b8/RESULT.json",
+      "evidenceSha256": "262f15c3ee07d315ac1ee3d6a1f078c9dde5782f6531ca5094d4a0e477b719e6",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": [
+        "未actual R1 pool/catalogue ACL/runtime/PG/HTTP/生产；同步view源代码证明不等于actual role调用成功。",
+        "无SOURCE/MAIN/STAGE/PUBLISH授权或业务写入增权，实际组合WIP另审。"
+      ]
+    },
+    {
+      "id": "QB-slice121-staff-role-filter-f1e48951",
+      "sourceCommit": "f1e489513c9643dd994624b4c44d1030bd349a01",
+      "result": "PASS",
+      "scope": "旧exact5+STAFF-only exact6、原3角色/空ALL、shared matchedCTE $7及原ADMIN/NULL/DTO边界",
+      "qualification": "固定exact6仅STAFF role additive read filter/source与4新协议；未实际PG角色结果/UI或部署",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice121-staff-role-filter-f1e48951/RESULT.json",
+      "evidenceSha256": "d9f241e34ab44ed300fcd0d6619651ec48f31e830009c16899e6b50b3ffe20d5",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": [
+        "0PG/真实role结果过滤和页计数/ACL/部署生产/浏览器或F3客户端；本source PASS不是实际结果验收。",
+        "loginStatus规则待用户答案，保持closed，不自行选择无账号分类或effective canLogin判断。"
+      ]
+    },
+    {
+      "id": "QB-slice116-ordinary-parties26-source-e8a794f8",
+      "sourceCommit": "e8a794f8491178ae61426e66a539e6a5ee3ac464",
+      "result": "PASS",
+      "scope": "批准ordinary628+单独exact2历史客户、仓库created_operation_id=NULL、ordinary bootstrap_accounts明确拒绝、原来源不重验",
+      "qualification": "固定exact2普通PARTIES26新source/closure/lifetime组合；复用actual630/9chunks，不含49账号bootstrap或真实执行授权",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice116-ordinary-parties26-source-e8a794f8/RESULT.json",
+      "evidenceSha256": "9308e5b71f8e54df197ca52582bfc7925277abc13998b271ff2513e93b162a32",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": [
+        "未actual ordinary-party PG stage/readback、all11 typedclosure、真实MAINpayload/49账号技术source/first-STAGE bootstrap或credential source。",
+        "无runtime/PG/host启停/真实R1ACL/MAIN/SOURCE/PUBLISH/生产或完整导入容量验收；纯MJS未额外声称独立strict TSC。"
+      ]
+    },
+    {
+      "id": "QB-slice114-history-read26-e0b3f4b8",
+      "sourceCommit": "e0b3f4b8bced9203b3fe5668b3e839d3b0283b8a",
+      "result": "PASS",
+      "scope": "closed optional{runtime26}/原client HISTORY_READ首SQL前、实际schema prefix1..26，原四POST与列表详情语义不改",
+      "qualification": "固定exact2显式HISTORY26读取source/合成协议；旧19为默认，未actual runtime/PG/HTTP重验",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice114-history-read26-e0b3f4b8/RESULT.json",
+      "evidenceSha256": "4fedfbf8ab97017c6df608df8cd2dff894ffd03aebfa806e826099a8fec60635",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": [
+        "未实际D1 issued runtime/HISTORY_READ purpose或PG engine/ACL/HTTP endpoints重新验收/生产。",
+        "未SOURCE/MAIN49/import/publication授权、未sealed18或旧整套回归；source PASS不代表真实R1数据已可查。"
+      ]
+    },
+    {
+      "id": "QB-slice112-genuine-product-source26-79ce6c32",
+      "sourceCommit": "79ce6c3270fd45c6599892913172f35ceb9fefdb",
+      "result": "PASS",
+      "scope": "独立来源+fullV2引用authorizer组合、coverage/chunks/lifetime/25列closure与UNKNOWN/MULTIPLE完整保留",
+      "qualification": "固定exact2新genuine PRODUCTS26 source组合/合成协议，复用已存actual2956/30chunks；无实际MAIN授权或PG",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice112-genuine-product-source26-79ce6c32/RESULT.json",
+      "evidenceSha256": "71cee31e3192f157a2d837378b46d549147a1e23813c3ed7454e8f1ecc139763",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": [
+        "未真实actual all11 closure/完整MAIN49 payload或SOURCE/STAGE/PUBLISH grant、runtime26、PG/native写入/HTTP/R1真实数据或生产。",
+        "actual全量20.306s不重跑；实际closure成功未测，只有新小合成full25与实际NULLhash拒绝证据。"
+      ]
+    },
+    {
+      "id": "QB-slice119-history-allocation-subgraph-parser",
+      "sourceCommit": null,
+      "result": "PASS",
+      "scope": "extract-once.mjs/.test.mjs；C operational61d148→delivery69fcc→manifestd794/actual80fcb；未绑某Git source commit",
+      "qualification": "K-only新bounded parser/原始字节透传及小metadata链；采用既存一次实际提取，不是历史native绑定或主键验收",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice119-history-allocation-subgraph-parser/RESULT.json",
+      "evidenceSha256": "5103406235e837e1c5acc17ba80e0ee5e28bcd999e91d48c91f8b890318b8b8c",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": [
+        "本次未读原registry/五输出正文或重hash，未XLSX/gzip/原mapper/旧allocation/sourceQA重验。",
+        "未header native候选join/历史source consumption、历史主键或FK整项验收、actual PG/MAIN/PUBLISH/source grant。",
+        "真实R1升级38/完整catalog不在本任务，无借QA metadata代R1。"
+      ]
+    },
+    {
+      "id": "QB-slice111-current-form26-79ce6c32",
+      "sourceCommit": "79ce6c3270fd45c6599892913172f35ceb9fefdb",
+      "result": "PASS",
+      "scope": "optional checked runtime26同client CURRENT_FORM_READ于BEGIN前和原RR快照内；barcode严格26及旧19兼容",
+      "qualification": "固定D1 exact2新增CurrentForm26/source协议；原C64 manifest分组名误为F1_TRANSFER_ANCHOR，按实际D1文件/receipt审核",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice111-current-form26-79ce6c32/RESULT.json",
+      "evidenceSha256": "3393b20b7b47d7628e77fbb94d718dd8c7ab3c32443535274f36a22df51c60d9",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": [
+        "未actual runtime CURRENT_FORM_READ-purpose/R1角色ACL/catalogue/PG/HTTP/browser/真实性能或生产；C35/36维护QA不授真实R1/SOURCE/MAIN。",
+        "QB109新增来源表三列只读ACL前置仍独立，未在本片授予或实测。"
+      ]
+    },
+    {
+      "id": "QB-slice117-stock26-finite-join-preparer-3fb36e8b",
+      "sourceCommit": "3fb36e8b38203da8e7a0984daf9e024b758e9cd3",
+      "result": "PASS",
+      "scope": "native53warehouse/SKU14999+oldaliases15121字面join、全组覆盖/进程lifetime与C69 immutable candidate chain",
+      "qualification": "固定exact2新有限join/preparer源码/4合成及候选绑定metadata PASS；复用D3已存全38303比对，不重读166MB候选或原来源，不授执行权",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice117-stock26-finite-join-preparer-3fb36e8b/RESULT.json",
+      "evidenceSha256": "bfc0aa06a614545ff69ea5378c731ae9444133741f6951e39e06f80642cca446",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": [
+        "本次未重新读取/哈希166MB候选正文或重跑38303/38314；artifact全内容SHA采用C immutable receipt及D3已有保存全流验证，QB独立核的是源码和metadata链。",
+        "未genuine signed stock consumer/actual native PG stage/readback/baseline posting/真实MAIN/all11闭包/PUBLISH或生产容量。",
+        "preparer参数本身不认证外部文件；后续consumer必须依外部C针和fresh原始offset核验，不能把PENDING候选当自身source authority。"
+      ]
+    },
+    {
+      "id": "QB-slice110-stock-read26-79ce6c32",
+      "sourceCommit": "79ce6c3270fd45c6599892913172f35ceb9fefdb",
+      "result": "PASS",
+      "scope": "原RR READ ONLY中原client INVENTORY_ADMISSION、独立26分支及原publication/UNKNOWN分页接线",
+      "qualification": "固定exact2新增readStock26缺失分支/合成协议；不是B04整项或实际PG验收",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice110-stock-read26-79ce6c32/RESULT.json",
+      "evidenceSha256": "cc34a8dd459b18e9ab2d5461c4c65b1164fc6d52f068952e03b114987a3d282c",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": [
+        "未actual inventory-purpose issuer/PG/ACL/HTTP/browser/performance或生产；C维护purpose QA不等于inventory runtime grant。",
+        "未B04整项/actual publication或source/import执行权限。"
+      ]
+    },
+    {
+      "id": "QB-slice120-r2-explicit-composition-1dc0844c",
+      "sourceCommit": "1dc0844cf73eb430c53019381ba266dc09aab8ae",
+      "result": "PASS",
+      "scope": "closed11/NATIVE_RUNTIME/R2独立factory+CLI，原ownedpool/actualissuerpool+C70 UOW桥，两个existing boolean及CREATE独立",
+      "qualification": "固定exact8新增R2显式组装/H05 opt-ins源码与合成协议；不是actual PG/Grant/运行激活验收",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice120-r2-explicit-composition-1dc0844c/RESULT.json",
+      "evidenceSha256": "705f3b5e1e154221552ddda9f6a347ef1779b7f72c1cc3aa2641f0927483edec",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": [
+        "未actual PG/R2 role grants/fresh catalog/真实R1或R2配置凭据/真实锁/文档stock posting/部署host/listener/build/public URL。",
+        "无真实SOURCE11/49 MAIN/nonzero PUBLISH/守恒/readback/audit/replay/完整导入授权。",
+        "H06 maintained-product R3证明与命令仍另一片，不把本组装PASS扩成R3。"
+      ]
+    },
+    {
+      "id": "QB-slice118-r2-admission26-bridge-cd01fb43",
+      "sourceCommit": "cd01fb43a3d4ca581d09ceac47144d2b336d1d16",
+      "result": "PASS",
+      "scope": "forRuntime26实际proof client派生posting SQL，sales/transfer同client BEGIN前/事务内/preCOMMIT INVENTORY_ADMISSION及原key/lifetime/稀疏资格",
+      "qualification": "固定exact4 R2库存准入桥源码/合成协议PASS；phase2技术selector冻结不代表R2运行组装/权限/PG完成",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice118-r2-admission26-bridge-cd01fb43/RESULT.json",
+      "evidenceSha256": "40586512ad59e383cfdfeba746c3b5e0e0076ca16ccefe285a726da3f93edde9",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": [
+        "未真实PG/target INVENTORY_ADMISSION grant/R1 ACL/credentials/server/HTTP或生产。",
+        "未R2 explicit production composition或激活；phase2技术选择器只是冻结，未R3 maintained-product proof。",
+        "无source/Main49/PUBLISH/完整导入或schema/purpose/UNKNOWN补0增权。"
+      ]
+    },
+    {
+      "id": "QB-slice115-explicit26-r1-production-entry-e8a794f8",
+      "sourceCommit": "e8a794f8491178ae61426e66a539e6a5ee3ac464",
+      "result": "PASS",
+      "scope": "独立closed10 profile/--exact26-r1、DISABLED、唯一freshbounded pool→实际issuer→managed readproviders与失败dispose",
+      "qualification": "固定exact6独立R1 readonly生产入口源码/合成组合协议；未实际R1/PG/配置或host启停",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice115-explicit26-r1-production-entry-e8a794f8/RESULT.json",
+      "evidenceSha256": "2f6cb28154dc051129ebf381696ea4d0d1090c85c43d4d9271b7b3e694850d51",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": [
+        "无真实PG/R1ACL/config凭据读取/host启停/监听/浏览器/构建或生产验收。",
+        "无真实49bootstrap/MAIN/SOURCE/PUBLISH或全11source/非零真实读回；合成managed pool组合不代表生产权限已具备。",
+        "R2/R3/实际写命令仍独立范围。"
+      ]
+    },
+    {
+      "id": "QF-candidate-e0b3f4b8-F1-SALES-EXISTING-REVIEW",
+      "sourceCommit": "e0b3f4b8bced9203b3fe5668b3e839d3b0283b8a",
+      "result": "NEED_FIX",
+      "scope": "SALES_EXISTING_FULL_PROPOSAL_PAGE",
+      "qualification": "Exact delegated range only; no browser/PG/import/production unless separately evidenced.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-e0b3f4b8/F1-SALES-EXISTING-REVIEW.json",
+      "evidenceSha256": "8d94260fa978bfd099bc9498fa7f9c8a89033c49b281f7d567b36f49a0cb150f",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": []
+    },
+    {
+      "id": "QF-candidate-e0b3f4b8-F3-PORTAL-THEME-REVIEW",
+      "sourceCommit": "e0b3f4b8bced9203b3fe5668b3e839d3b0283b8a",
+      "result": "PASS_SOURCE_THEME_ONLY",
+      "scope": "BODY_PORTAL_CONTENT_THEME_ONLY",
+      "qualification": [
+        "Only class source plus type and targeted synthetic token/style proof; not browser Modal sizes/row heights/star pixels or real actions.",
+        "Seven DOM scenarios do not exercise all10 constructors/read-preparation/confirmation paths; those unrendered branches source/type-only.",
+        "Related staff/payment/account/audit browser operations remain NOT_RUN; no automatic operational PASS."
+      ],
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-e0b3f4b8/F3-PORTAL-THEME-REVIEW.json",
+      "evidenceSha256": "8daf54f7cac642b1c5348b9e25a862ccc56c6a57f36c16966f7bbd4d595daea1",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": [
+        "Actual O-B01/O-B02 next-candidate size/padding/input/star",
+        "Other actual browser overlays or business commands",
+        "PG/fullbuild/deploy"
+      ]
+    },
+    {
+      "id": "QF-candidate-e0b3f4b8-F2-CATALOGUE-LEAF-REVIEW",
+      "sourceCommit": "e0b3f4b8bced9203b3fe5668b3e839d3b0283b8a",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "CATALOGUE_DEMO_LEAF_UI_LAYER",
+      "qualification": [
+        "Cascade is selector/specificity declaration oracle, not final browser computed geometry. Intrinsic35 row/tabletop185/real scroll/hover/pixels still unmeasured.",
+        "DemoFrame in synthetic driver does not prove actual App capability/root or real production maintenance ownership. Unknown/absent maintenance remains unavailable.",
+        "Actual693 report is historical UI input, not exact whole successor snapshot acceptance. C63/C66 shell slices remain distinct."
+      ],
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-e0b3f4b8/F2-CATALOGUE-LEAF-REVIEW.json",
+      "evidenceSha256": "f75de34bb8942c670cf1de547560a05b9d68b639c992c387881e97c14230331f",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": [
+        "Real maintenance host injection/save/delete/PG",
+        "Actual final build scroll/density/table/topbar-bottom/browser",
+        "Whole build/deploy"
+      ]
+    },
+    {
+      "id": "QF-candidate-5e106136-F1-SETTINGS-VIEWPORT-REVIEW",
+      "sourceCommit": "5e10613686ace68475b11a8115f5eda70c01b102",
+      "result": "PASS_SOURCE_COMPATIBILITY_ONLY",
+      "scope": "EXISTING_VIEWPORT_PAYMENT_STAFF_ACCOUNT_OPT_INS",
+      "qualification": "Exact delegated range only; no browser/PG/import/production unless separately evidenced.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-5e106136/F1-SETTINGS-VIEWPORT-REVIEW.json",
+      "evidenceSha256": "24b83dd327838f7f07117a3a837913cb04a1021245233e7a325f7df2f9b05c6d",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": []
+    },
+    {
+      "id": "QF-candidate-6b770cb3-F1-TRANSFER-EXISTING-REVIEW",
+      "sourceCommit": "6b770cb3f3dd64f2256c40ffbc71dca1a4a72f0a",
+      "result": "NEED_FIX",
+      "scope": "TRANSFER_EXISTING_FULL_PROPOSAL_PAGE",
+      "qualification": "Exact delegated range only; no browser/PG/import/production unless separately evidenced.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-6b770cb3/F1-TRANSFER-EXISTING-REVIEW.json",
+      "evidenceSha256": "7b1c6e8732de85b863a84870b5be0e0527471719bcb2d77a8c107ac7870e09f1",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": []
+    },
+    {
+      "id": "QF-candidate-6b770cb3-F2-REMOTE-SEARCH-PAIR-REVIEW",
+      "sourceCommit": "6b770cb3f3dd64f2256c40ffbc71dca1a4a72f0a",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "PRODUCT_SIZEGROUP_BARCODE_REMOTE_SEARCH_PAIR",
+      "qualification": "Exact delegated range only; no browser/PG/import/production unless separately evidenced.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-6b770cb3/F2-REMOTE-SEARCH-PAIR-REVIEW.json",
+      "evidenceSha256": "c5b088f9c63135a870f2fecac582eb09431e19a68515ae336564edefb32665b8",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": []
+    },
+    {
+      "id": "QF-candidate-3fb36e8b-F2-YEAR-LABEL-CONTAINER-REVIEW",
+      "sourceCommit": "3fb36e8b38203da8e7a0984daf9e024b758e9cd3",
+      "result": "PASS_SOURCE_EVENT_COMPATIBILITY_ONLY",
+      "scope": "YEAR_COMPOSITE_CONTROL_LABEL_CONTAINER",
+      "qualification": "Exact delegated range only; no browser/PG/import/production unless separately evidenced.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-3fb36e8b/F2-YEAR-LABEL-CONTAINER-REVIEW.json",
+      "evidenceSha256": "238d9d215a4c0591b427ccba6c1ce67f3602c386d5453142c8adfa1e578a73a6",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": []
+    },
+    {
+      "id": "QF-candidate-31cb08dc-F1-TRANSFER-ENTRY-REVIEW",
+      "sourceCommit": "31cb08dc638becb2539618a566a4c568f2768764",
+      "result": "NEED_FIX",
+      "scope": "TRANSFER_CONTINUOUS_ENTRY_SELECTOR_PRESENTATION_RESIDUAL",
+      "qualification": "Exact delegated range only; no browser/PG/import/production unless separately evidenced.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-31cb08dc/F1-TRANSFER-ENTRY-REVIEW.json",
+      "evidenceSha256": "4eaad8db62ccd3cbe8c67a48ed712c0aaab35cc44ea943f313f225813aeded6b",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": []
+    },
+    {
+      "id": "QF-candidate-44db37bf-F1-SALES-PROVENANCE-FIX-REVIEW",
+      "sourceCommit": "44db37bf683f318757e6dd52df3461cde74d533b",
+      "result": "PASS_TARGETED_FIX_SOURCE_ONLY",
+      "scope": "SAVED_SALES_REFERENCE_AND_IMMUTABLE_PROVENANCE_DIRECTED_FIX",
+      "qualification": "Exact delegated range only; no browser/PG/import/production unless separately evidenced.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-44db37bf/F1-SALES-PROVENANCE-FIX-REVIEW.json",
+      "evidenceSha256": "4e1f9286f075ea4248943b646a6610c6872af2a2598f79ee530b06e374cf2611",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": []
+    },
+    {
+      "id": "QF-candidate-93875f72-F1-TRANSFER-PROVENANCE-FIX-REVIEW",
+      "sourceCommit": "93875f7208d37c974733dd9279e24289f0024972",
+      "result": "PASS_TARGETED_FIX_SOURCE_ONLY",
+      "scope": "TRANSFER_IMMUTABLE_ORIGINAL_PROVENANCE_DIRECTED_FIX",
+      "qualification": "Exact delegated range only; no browser/PG/import/production unless separately evidenced.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-93875f72/F1-TRANSFER-PROVENANCE-FIX-REVIEW.json",
+      "evidenceSha256": "aedd357cd772bada8fe6bc3321357a758579811bb16f13c9dfe20453037ae035",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": []
+    },
+    {
+      "id": "QF-candidate-76b68f68-F1-PARTY-VIEWPORT-REVIEW",
+      "sourceCommit": "76b68f680b77e71d279e63977d887f15b2c940bf",
+      "result": "PASS_SOURCE_COMPATIBILITY_ONLY",
+      "scope": "CUSTOMER_SUPPLIER_FINITE_VIEWPORT_EXISTING_FRAME_OPT_INS",
+      "qualification": "Exact delegated range only; no browser/PG/import/production unless separately evidenced.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-76b68f68/F1-PARTY-VIEWPORT-REVIEW.json",
+      "evidenceSha256": "d56579eba2c29b49833f7c94d62c4c71a703b77e07f6defbde8333ee1e089804",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": []
+    },
+    {
+      "id": "QF-candidate-27adc459-F1-CATALOGUE-OVERLAY-SEAM-REVIEW",
+      "sourceCommit": "27adc459150cc27a22868f30abdb7210b70b3677",
+      "result": "PASS_SOURCE_COMPATIBILITY_ONLY",
+      "scope": "OPTIONAL_CATALOGUE_SHARED_OVERLAY_PRESENTATION",
+      "qualification": "Exact delegated range only; no browser/PG/import/production unless separately evidenced.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-27adc459/F1-CATALOGUE-OVERLAY-SEAM-REVIEW.json",
+      "evidenceSha256": "f885d52cb1392b49bae716e265ad7ffbe69535018e01acad8b512893140d7f23",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": []
+    },
+    {
+      "id": "QF-candidate-87f173bb-F2-CATEGORY-TREE-REVIEW",
+      "sourceCommit": "87f173bbd9f09893e1f8e2203bd673a6ae86135c",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "NATIVE_ARCO_CATEGORY_TREE_AND_PAGE_STRUCTURE",
+      "qualification": "Exact delegated range only; no browser/PG/import/production unless separately evidenced.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-87f173bb/F2-CATEGORY-TREE-REVIEW.json",
+      "evidenceSha256": "dfe5e914c94327b176c8410e8a49fa9d417a69ed176bff2a59444bcbcc97821e",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": []
+    },
+    {
+      "id": "QF-candidate-3a30a512-F1-PENDING-DELETE-FIX-REVIEW",
+      "sourceCommit": "3a30a5128e8f891db803f7efd8fb174d448aa3a4",
+      "result": "PASS_TARGETED_FIX_SOURCE_ONLY",
+      "scope": "TRANSFER_PENDING_DELETE_BLUR_ORDER_STANDARDS_FIX",
+      "qualification": "Exact delegated range only; no browser/PG/import/production unless separately evidenced.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-3a30a512/F1-PENDING-DELETE-FIX-REVIEW.json",
+      "evidenceSha256": "2258d442d55937aeb77df3037e972d32d36ebf6743a74accf71c1f8e772e43fa",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": []
+    },
+    {
+      "id": "QF-candidate-d202f322-F3-STAFF-ROLE-READ-REVIEW",
+      "sourceCommit": "d202f322cf68bab6bd5382feffe0bc83b8fe4962",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "STAFF_REAL_HTTP_ROLE6_CLIENT_AND_SHARED_QUERY_PARSER",
+      "qualification": "Exact delegated range only; no browser/PG/import/production unless separately evidenced.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-d202f322/F3-STAFF-ROLE-READ-REVIEW.json",
+      "evidenceSha256": "4e58ee8f462f7972cea3f0d61b3f00e019cac726502573a37c43f221bc6ebff7",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": []
+    },
+    {
+      "id": "QF-candidate-7d50566e-F2-SCHEME-P19-REVIEW",
+      "sourceCommit": "7d50566e838b91a637b9945d55f01811c0ba4b65",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "BARCODE_SCHEME_P19_TABLE_DENSITY_PAGER_AND_SHARED_OVERLAY_CONSUMER",
+      "qualification": "Exact delegated range only; no browser/PG/import/production unless separately evidenced.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-7d50566e/F2-SCHEME-P19-REVIEW.json",
+      "evidenceSha256": "09fc2f802a0123afac94b6059fa08ca1f135eea272b40f41802f7fce4d631058",
+      "adoption": "Delegated conclusion adopted by metadata; no controller technical retest",
+      "notTested": []
+    },
+    {
+      "id": "C-c03-r1-exact26-upgrade-20261023-38",
+      "jobId": "c03-r1-exact26-upgrade-20261023-38",
+      "result": "PASS_ACTUAL_R1_EXACT26_EMPTY_SCHEMA_AND_MINIMAL_READONLY_ACL_ONLY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-exact26-upgrade-20261023-38/release-receipts/c03-r1-exact26-upgrade-20261023-38/engine-result.json",
+      "evidenceSha256": "dedc24959b12461972debfd829f1e6a16efb20a774850ef7f18f964949ed39ef",
+      "scope": "C original bounded operational result only; no real import or public switch",
+      "notTested": [
+        "Real source MAIN/PUBLISH and final runtime app/role business acceptance"
+      ],
+      "adoption": "Original operational acceptance, no duplicate QB",
+      "database": "erp_rewrite_20261022_r1",
+      "databaseOid": "1027659",
+      "tables": 56,
+      "versions": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "businessAccounts": 0,
+      "sourceRows": 0,
+      "migrationOutcome": "COMMIT_RETURNED_SUCCESS",
+      "preservation": {
+        "status": "PASS_R1_SERVER_ONLY_LOGICAL_DUMP_AND_METADATA_PRESERVED",
+        "database": "erp_rewrite_20261022_r1",
+        "path": "/srv/naijue-erp/rapid-launch-20261022/backups/r1-exact19-before26-20261023-38",
+        "dumpBytes": 522537,
+        "dumpSha256": "484d4e976251a87afbe59ad88e1e18f6b2a4cc731fffb6bb9566c8ffbf5fc618",
+        "dumpTocSha256": "65220a7a4fe8023efb3ff7b4eaa3b24cbaa8246eaa2fa60746f150f313655760",
+        "metadataSha256": "ed0b1bb2cfb51ba3575884bbf350814adf209f7bc6ae6be9c8aad2599fda7413",
+        "restoreRehearsal": "NOT_RUN_NO_REPLAY",
+        "dumpExported": false,
+        "credentialValuesReadOrExported": false
+      }
+    },
+    {
+      "id": "C-c03-actual-stage-add-read-20261023-37",
+      "jobId": "c03-actual-stage-add-read-20261023-37",
+      "result": "FAILED_FIRST_ERROR_PRESERVED_NO_RETRY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-actual-stage-add-read-20261023-37/release-receipts/c03-actual-stage-add-read-20261023-37/engine-result.json",
+      "evidenceSha256": "350394f8ff2c1c474eefe414427439a2bd68d68da3fe8859a94fdc981f1e4327",
+      "scope": "C original bounded operational result only; no real import or public switch",
+      "notTested": [
+        "Real source MAIN/PUBLISH and final runtime app/role business acceptance"
+      ],
+      "adoption": "Original operational acceptance, no duplicate QB",
+      "failureCode": "C36_DIRECTORY_0700_UNCHANGED",
+      "runnerOrNodeAttempted": false
+    },
+    {
+      "id": "C-c03-actual-stage-add-read-20261023-40",
+      "jobId": "c03-actual-stage-add-read-20261023-40",
+      "result": "PASS_ACTUAL_STAGE_APPLICATION_ADD_AND_NATIVE_CONTROLLED_READ_DELTA",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-actual-stage-add-read-20261023-40/release-receipts/c03-actual-stage-add-read-20261023-40/engine-result.json",
+      "evidenceSha256": "b84d682cc3add6f54f4dfaeb7ba0484a38cb2cf3f2a21540c314bd8b165a0d4c",
+      "scope": "C original bounded operational result only; no real import or public switch",
+      "notTested": [
+        "Real source MAIN/PUBLISH and final runtime app/role business acceptance"
+      ],
+      "adoption": "Original operational acceptance, no duplicate QB",
+      "qaCounts": {
+        "database": "erp_qa_rapid26_20261022_01",
+        "role": "erp_qa_owner_20261022_01",
+        "accounts": 2,
+        "products": 1,
+        "images": 3,
+        "audits": 11,
+        "receipts": 11,
+        "sources": 0
+      },
+      "rootVersion": 4,
+      "actualResultCollectedSha256": "4a4ada5b85ce989c4e24842543fd2f51229561289dfed4d7cd1c4711439abcf9",
+      "actualResultServerRaw": {
+        "file": "actual-stage-add-read-result.json",
+        "querySha256": "673a834e0a3d1731aa405c8f31ee5fc27ef96a78dfa79137a289172a49b87256",
+        "bytes": 4537
+      },
+      "httpVerified": false
+    },
+    {
+      "id": "C-c03-r1-runtime26-catalog-20261023-39",
+      "jobId": "c03-r1-runtime26-catalog-20261023-39",
+      "result": "FAILED_FIRST_ERROR_NO_REPLAY",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-runtime26-catalog-20261023-39/release-receipts/c03-r1-runtime26-catalog-20261023-39/engine-result.json",
+      "evidenceSha256": "fdf719ad6f9cad59279232651b3d2459c26f678a0c10be24754a66f3d6a321ac",
+      "scope": "C original bounded operational result only; no real import or public switch",
+      "notTested": [
+        "Real source MAIN/PUBLISH and final runtime app/role business acceptance"
+      ],
+      "adoption": "Original operational acceptance, no duplicate QB",
+      "failureCode": "FileNotFoundError",
+      "runnerOrNodeAttempted": "NOT_ATTEMPTED"
+    },
+    {
+      "id": "DEMO-v011-GROUP1-RESULT.json",
+      "sourceCommit": "3fb36e8b38203da8e7a0984daf9e024b758e9cd3",
+      "result": "SCOPED_ACTUAL_BROWSER_LOCAL_CASES_ONLY",
+      "scope": "Exclusive browser owner;29 deduplicated local cases total, whole pages/overlays0. YEAR supplement adds0.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v011-3fb36e8/GROUP1-RESULT.json",
+      "evidenceSha256": "7a6ad9e0d5b05a1790b7f1ccc56c420b29ced7b9de1915341b21ebf67bd4589d",
+      "notTested": [
+        "Actual business saves/roles/PG/import/production"
+      ],
+      "adoption": "Exact browser conclusion adopted without controller repetition"
+    },
+    {
+      "id": "DEMO-v011-GROUP2-RESULT.json",
+      "sourceCommit": "3fb36e8b38203da8e7a0984daf9e024b758e9cd3",
+      "result": "SCOPED_ACTUAL_BROWSER_LOCAL_CASES_ONLY",
+      "scope": "Exclusive browser owner;29 deduplicated local cases total, whole pages/overlays0. YEAR supplement adds0.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v011-3fb36e8/GROUP2-RESULT.json",
+      "evidenceSha256": "1259fccf5cd2a1225ac5b0e168b6fca9ae6b06c7116e81427b886e9404deef4c",
+      "notTested": [
+        "Actual business saves/roles/PG/import/production"
+      ],
+      "adoption": "Exact browser conclusion adopted without controller repetition"
+    },
+    {
+      "id": "DEMO-v011-YEAR-KEYBOARD-SUPPLEMENT.json",
+      "sourceCommit": "3fb36e8b38203da8e7a0984daf9e024b758e9cd3",
+      "result": "SCOPED_ACTUAL_BROWSER_LOCAL_CASES_ONLY",
+      "scope": "Exclusive browser owner;29 deduplicated local cases total, whole pages/overlays0. YEAR supplement adds0.",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v011-3fb36e8/YEAR-KEYBOARD-SUPPLEMENT.json",
+      "evidenceSha256": "674040155e9391d133208239d33294b311acbaa43869ef4c03993947f2781ea2",
+      "notTested": [
+        "Actual business saves/roles/PG/import/production"
+      ],
+      "adoption": "Exact browser conclusion adopted without controller repetition"
+    },
+    {
+      "id": "C-c03-r1-runtime26-catalog-20261023-41",
+      "jobId": "c03-r1-runtime26-catalog-20261023-41",
+      "result": "PASS_ACTUAL_R1_RUNTIME_ROLE_FULL_CATALOG_ONLY_PENDING_QB_REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-runtime26-catalog-20261023-41/release-receipts/c03-r1-runtime26-catalog-20261023-41/engine-result.json",
+      "evidenceSha256": "f820047cdf0d2607ee05083d0d0984d5ad5f5a77f9eaba2988e208f5e98944ef",
+      "catalogServerRaw": {
+        "file": "runtime-catalog-canonical.json",
+        "bytes": 1129627,
+        "serverRawSha256": "b214698f6b0c79c8525123940198c93a454cedea407ceaa1da2f7e4bd84cd3ff",
+        "canonicalSha256": "f62de0a301d485da548324a89e97bd902f184ca45e0778901ab8d4be8dab15c7",
+        "identity": {
+          "database": "erp_rewrite_20261022_r1",
+          "server_addr": "172.18.0.3/32",
+          "server_port": 5432,
+          "current_user": "erp_rewrite_runtime_20261022",
+          "database_oid": "1027659",
+          "session_user": "erp_rewrite_runtime_20261022",
+          "database_owner": "erp_rewrite_owner_20261022",
+          "postmaster_start": "2026-10-04 08:16:07.895273+00",
+          "replication_role": "origin",
+          "server_version_num": "170011"
+        },
+        "counts": {
+          "relations": 60,
+          "columns": 592,
+          "routines": 121,
+          "triggers": 930,
+          "constraints": 529,
+          "indexes": 164,
+          "roles": 3
+        }
+      },
+      "catalogCollected": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-runtime26-catalog-20261023-41/release-receipts/c03-r1-runtime26-catalog-20261023-41/runtime-catalog-canonical.json",
+        "bytes": 1348707,
+        "sha256": "d542092034a90c45dc10b638db252385137dc7b1e97c52dae1d5d731fd54975c"
+      },
+      "qualification": "Actual R1 runtime TCP original readonly catalog only. No issuer/final host/source authority; QB metadata pending. Original program39 label preserved, actual operation41."
+    },
+    {
+      "id": "QF-candidate-4ee77b5d-F3-W7-INITIAL-VALIDATION-REVIEW",
+      "sourceCommit": "4ee77b5db93f8e20eb04f0c7fd73b58b554befa6",
+      "result": "PASS_TARGETED_FIX_SOURCE_ONLY",
+      "scope": "Scoped new source only",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-4ee77b5d/F3-W7-INITIAL-VALIDATION-REVIEW.json",
+      "evidenceSha256": "77685dda291f769bcd6e3b563ac05856af5fa29433681fc196a7340aad798406",
+      "adoption": "Version-bound delegated conclusion adopted without retest",
+      "notTested": []
+    },
+    {
+      "id": "QB122",
+      "sourceCommit": "56c9d3a56b9e04100f46e35e7e89fb7b066c037e",
+      "result": "NEED_FIX",
+      "scope": "Only genuine stock consumer; F01 close lifetime NEED_FIX, original source/reference evidence retained",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice122-genuine-stock26-consumer-56c9d3a5/RESULT.json",
+      "evidenceSha256": "e63ae68c644f3bf9e673d4a2271cfa41a6e9d4313a259f8ae0b02bfb00648cf6",
+      "notTested": [
+        "未实际PG/source49 MAIN/PUBLISH/基线入账/完整11closure/部署或容量；未重读真实offset/166MB/registry/XLSX/gzip。",
+        "反例为close已调用且closed已置true后返回一组、在close promise完成前；不夸称close完成后新请求可读，也未发现closed authorize绕过。"
+      ]
+    },
+    {
+      "id": "QB123",
+      "sourceCommit": null,
+      "result": "PASS",
+      "scope": "Actual R1 C41 full metadata/121function hashes/role ACL only; five-purpose outside review and live issuer remain",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice123-actual-r1-runtime26-metadata-c41/RESULT.json",
+      "evidenceSha256": "73c879a85bd5c1318648fd96ea3e0de6970521c93109eacb729dec9d74c1594f",
+      "adoption": "Delegated fixed-scope conclusion adopted; controller technical retests0",
+      "notTested": [
+        "No whole-page/real import/public release conclusion from this receipt"
+      ]
+    },
+    {
+      "id": "QB124",
+      "sourceCommit": "44f8388918136fb832d19cef8d6a9c864c3be3ae",
+      "result": "PASS",
+      "scope": "Only QB122-F01 post-close async generator lifetime successor; original actual source unchanged/reused",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice124-stock-source26-f01-fix-44f83889/RESULT.json",
+      "evidenceSha256": "bb000a53260524bc30971cf510a399b6280a39a74d17ed9aad739329373cbfac",
+      "adoption": "Delegated fixed-scope conclusion adopted; controller technical retests0",
+      "notTested": [
+        "No whole-page/real import/public release conclusion from this receipt"
+      ]
+    },
+    {
+      "id": "QF-C84",
+      "sourceCommit": "82ff715338b87e971ac896828db357a6049cd860",
+      "result": "PASS_SOURCE_CASCADE_ONLY",
+      "scope": "Single scoped CSS cascade only; actual new header geometry pending Demo",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-82ff7153/F2-CAT-HEADER-CASCADE-REVIEW.json",
+      "evidenceSha256": "982c983865bd1e59350184f8f63c583c9e9ba1526c9e5f3b9ace53472ebabe96",
+      "adoption": "Delegated fixed-scope conclusion adopted; controller technical retests0",
+      "notTested": [
+        "No whole-page/real import/public release conclusion from this receipt"
+      ]
+    },
+    {
+      "id": "QF-C85",
+      "sourceCommit": "6670a140d760e1ffb32382e6fb1bdf29cea94d30",
+      "result": "PASS_SOURCE_COMPATIBILITY_ONLY",
+      "scope": "Single flat host relative-position source compatibility; actual new P03/P04 geometry pending Demo",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-6670a140/F1-FLAT-ANCHOR-COMPATIBILITY-REVIEW.json",
+      "evidenceSha256": "543f2f18296f5d39c9910bdb64070f89e49072f895bf3f8d5151e4916da2be6f",
+      "adoption": "Delegated fixed-scope conclusion adopted; controller technical retests0",
+      "notTested": [
+        "No whole-page/real import/public release conclusion from this receipt"
+      ]
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-22T20:06:46.865983+00:00",
+  "updatedAt": "2026-10-22T21:25:32.812099+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -9157,6 +9784,14 @@
       "closureScope": "库存商品搜索框初始未聚焦与点击聚焦的底色/边框两态",
       "externalHistoryPreserved": true,
       "qualification": "Only F09 search input idle/focus fill and border; no other UI or business finding closed."
+    },
+    {
+      "findingId": "QB122-F01",
+      "originalCheck": "QB122",
+      "successorCheck": "QB124",
+      "fixedCommit": "44f8388918136fb832d19cef8d6a9c864c3be3ae",
+      "closureScope": "Only post-close before generator-resume yield race; original full actual source receipts reused",
+      "originalFailureRetained": true
     }
   ],
   "evidenceGaps": [
@@ -9924,6 +10559,66 @@
       "technicalTestsByC": 0,
       "sourceRound53Correction": "Metadata-only; controller d14 already fixed52, no second code change",
       "adoptedActualOps": "C35 READ ONLY issuer proof; C36 application delta submitted, collect same ID first"
+    },
+    {
+      "atUtc": "2026-10-22T21:09:11.266643+00:00",
+      "addedCheckIds": [
+        "QB-slice113-runtime26-retained-read-view-e0b3f4b8",
+        "QB-slice121-staff-role-filter-f1e48951",
+        "QB-slice116-ordinary-parties26-source-e8a794f8",
+        "QB-slice114-history-read26-e0b3f4b8",
+        "QB-slice112-genuine-product-source26-79ce6c32",
+        "QB-slice119-history-allocation-subgraph-parser",
+        "QB-slice111-current-form26-79ce6c32",
+        "QB-slice117-stock26-finite-join-preparer-3fb36e8b",
+        "QB-slice110-stock-read26-79ce6c32",
+        "QB-slice120-r2-explicit-composition-1dc0844c",
+        "QB-slice118-r2-admission26-bridge-cd01fb43",
+        "QB-slice115-explicit26-r1-production-entry-e8a794f8",
+        "QF-candidate-e0b3f4b8-F1-SALES-EXISTING-REVIEW",
+        "QF-candidate-e0b3f4b8-F3-PORTAL-THEME-REVIEW",
+        "QF-candidate-e0b3f4b8-F2-CATALOGUE-LEAF-REVIEW",
+        "QF-candidate-5e106136-F1-SETTINGS-VIEWPORT-REVIEW",
+        "QF-candidate-6b770cb3-F1-TRANSFER-EXISTING-REVIEW",
+        "QF-candidate-6b770cb3-F2-REMOTE-SEARCH-PAIR-REVIEW",
+        "QF-candidate-3fb36e8b-F2-YEAR-LABEL-CONTAINER-REVIEW",
+        "QF-candidate-31cb08dc-F1-TRANSFER-ENTRY-REVIEW",
+        "QF-candidate-44db37bf-F1-SALES-PROVENANCE-FIX-REVIEW",
+        "QF-candidate-93875f72-F1-TRANSFER-PROVENANCE-FIX-REVIEW",
+        "QF-candidate-76b68f68-F1-PARTY-VIEWPORT-REVIEW",
+        "QF-candidate-27adc459-F1-CATALOGUE-OVERLAY-SEAM-REVIEW",
+        "QF-candidate-87f173bb-F2-CATEGORY-TREE-REVIEW",
+        "QF-candidate-3a30a512-F1-PENDING-DELETE-FIX-REVIEW",
+        "QF-candidate-d202f322-F3-STAFF-ROLE-READ-REVIEW",
+        "QF-candidate-7d50566e-F2-SCHEME-P19-REVIEW",
+        "C-c03-r1-exact26-upgrade-20261023-38",
+        "C-c03-actual-stage-add-read-20261023-37",
+        "C-c03-actual-stage-add-read-20261023-40",
+        "C-c03-r1-runtime26-catalog-20261023-39",
+        "DEMO-v011-GROUP1-RESULT.json",
+        "DEMO-v011-GROUP2-RESULT.json",
+        "DEMO-v011-YEAR-KEYBOARD-SUPPLEMENT.json"
+      ],
+      "controllerTechnicalRetests": 0
+    },
+    {
+      "atUtc": "2026-10-22T21:19:44.537760+00:00",
+      "newIds": [
+        "C-c03-r1-runtime26-catalog-20261023-41",
+        "F3-W7-INITIAL-VALIDATION-REVIEW",
+        "QB122"
+      ],
+      "controllerTechnicalRetests": 0
+    },
+    {
+      "atUtc": "2026-10-22T21:25:32.812099+00:00",
+      "addedCheckIds": [
+        "QB123",
+        "QB124",
+        "QF-C84",
+        "QF-C85"
+      ],
+      "controllerTechnicalRetests": 0
     }
   ],
   "coverageGroups": [
@@ -9948,42 +10643,38 @@
     }
   ],
   "currentFindingState": {
-    "sourceClosed": [
-      "QF-F1-HIDDEN-IN-ENTRY-01 via10640",
-      "QB63-F01 viaQB67",
-      "QB64-R01-F01 viaQB68",
-      "QF-F3-AUDIT-DENIED-RETRY-01 via27c6",
-      "F1 output committed stale via4825",
-      "QB77-F01 viaQB81",
-      "QB80-F01 viaQB88",
-      "QF-F1-INCOMING-PRICE-HEADER-01 via74f240/QF",
-      "F3-STORE-TAB-QUERY-RETURN-01 via6ce728/QF",
-      "QB92-F01 viaQB95 exact1e789109; original NEED_FIX preserved"
+    "closedSourceOnly": [
+      "Sales price/provenance C72",
+      "Transfer provenance C73",
+      "PendingDelete StandardsP2 C78"
     ],
-    "pending": [
-      "V00601 sourcefixed48f8; browser recheck57838",
-      "V00602 actual57837 empty geometry closed; V00603 residual hint and V00604 respective scope only",
-      "TR-UI01..04 F1 wholeUI in progress",
-      "PROD-UI-SOURCE-01 and PROD-UI-02 F2 targeted",
-      "Media v7 actual matrix/host pairing pending",
-      "UNKNOWN Chrome input; human denies operation; controlled probe pending"
+    "open": [
+      "Stock closeF01 fixed86 pending narrow QB",
+      "CAT01 header1px fixed84 pending source QA/new browser",
+      "P03/P04 anchor fixed85 pending source QA/new browser",
+      "W7initialerrors fixed83 sourcePASS pending current83 browser"
     ],
     "wholePagesPassed": 0,
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "sourceCommit": "79ce6c3270fd45c6599892913172f35ceb9fefdb",
-    "wholePagesAccepted": 0,
-    "wholeOverlaysAccepted": 0,
-    "scopeCount": 101,
-    "browserLocalPartialCount": 15,
-    "browserCountMeaning": "15 deduplicated local checks; never whole page/overlay count",
-    "pendingActualBrowser": [
-      "C62 season popup actual mouse hit",
-      "C61 transfer product width",
-      "C63 product-settings inner scroll plus original F2 leaf",
-      "F3 STORE04 source repair not fixed at this snapshot"
-    ],
-    "C36": "PASS_ACTUAL_NEW3_SERVICE_DELTA_POOL_CLOSED_QA_10AUDIT_10RECEIPTS_SOURCE0"
+    "atUtc": "2026-10-22T21:19:44.537760+00:00",
+    "sourceRound": 86,
+    "sourceCommit": "44f8388918136fb832d19cef8d6a9c864c3be3ae",
+    "scope": 104,
+    "localCases": 29,
+    "realImport": false,
+    "publicSwitch": false,
+    "currentPreview": {
+      "url": "http://127.0.0.1:57842/synthetic-unified.html",
+      "source": "4ee77b5db93f8e20eb04f0c7fd73b58b554befa6",
+      "build": "ui-preview-4ee77b5-01-build01",
+      "htmlSha256": "9f28810a66801aa7010ffe40eb6dd0b95078296c760a5d6cf27997f7181e2222",
+      "overlaySha256": "c8a0a2e804f7e6efa6141f953db9269dd8d9bb24088e920486f7ec2a7cc03665",
+      "syntheticOnly": true,
+      "actualInputs": 400,
+      "sourceModules": 383,
+      "wholePageAccepted": false
+    }
   }
 }

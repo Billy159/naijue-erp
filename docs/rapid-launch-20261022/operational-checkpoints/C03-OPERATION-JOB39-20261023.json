@@ -1,0 +1,14 @@
+{
+  "atUtc": "2026-10-22T21:09:11.266643+00:00",
+  "jobId": "c03-r1-runtime26-catalog-20261023-39",
+  "result": "FAILED_FIRST_ERROR_NO_REPLAY",
+  "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-runtime26-catalog-20261023-39/release-receipts/c03-r1-runtime26-catalog-20261023-39/engine-result.json",
+  "evidenceSha256": "fdf719ad6f9cad59279232651b3d2459c26f678a0c10be24754a66f3d6a321ac",
+  "scope": "C original bounded operational result only; no real import or public switch",
+  "notTested": [
+    "Real source MAIN/PUBLISH and final runtime app/role business acceptance"
+  ],
+  "adoption": "Original operational acceptance, no duplicate QB",
+  "failureCode": "FileNotFoundError",
+  "runnerOrNodeAttempted": "NOT_ATTEMPTED"
+}

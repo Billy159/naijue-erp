@@ -1,0 +1,28 @@
+{
+  "version": "C_STAFF_ROLE_READ_FILTER_TECHNICAL_FREEZE_V1",
+  "atUtc": "2026-10-22T20:52:12.269796+00:00",
+  "authority": "Existing approved staff role facts and current front-end role filter requirements; additive read-only technical contract, no DB/write contract change",
+  "sourceProposal": "K/reports/backend/rapid-launch-20261022/D2/staff-read-filters-proposal-v1/PROPOSAL.json",
+  "sourceProposalSha256": "bfc773090813b8483f49fa692bdfab416aa3ac52ba9353093d04353f45edd944",
+  "route": "POST /staff/query",
+  "acceptedPayloads": [
+    "Original exact5 unchanged",
+    "STAFF-only exact6: original5 plus role required"
+  ],
+  "role": [
+    "",
+    "ADMIN",
+    "WAREHOUSE",
+    "SALESPERSON"
+  ],
+  "conditions": [
+    "role predicates before matched count/page same CTE",
+    "Unknown nonempty historical roles retained in ALL only; never map or authorize",
+    "Existing authorization, employment/hall filter, stable sorting, pagination, response/account null semantics, staff-name-only search unchanged",
+    "NULL/unknown/partial/extra keys rejected; other organization families reject role",
+    "No schema, data backfill, permission or success-login inference"
+  ],
+  "loginStatus": "Pending exact human clarification: does closed include no account? Do not implement either classification without answer; role-only work independent. Future login-status additive exact7 may preserve explicit exact6 role compatibility, original exact5 always valid.",
+  "frontend": "Original F3 staff HTTP/common parser consume actual role6 only after fixed backend; role capability can be advertised only by that real implemented reader. loginStatus capability stays false, no fake filters.",
+  "tests": "Only new filter validation, count/page query and existing affected authorization/NULL boundaries; original accepted maintenance suites reused."
+}

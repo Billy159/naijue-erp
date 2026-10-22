@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T20:05:31.632071+00:00",
+  "updatedAt": "2026-10-22T20:56:52.878013+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -404,6 +404,11 @@
           "path": "apps/api/src/authenticated-document-commands.test.ts",
           "group": "EXPLICIT_EXISTING_READ_PREPARATION",
           "fieldGate": "NO_NEW_SCHEMA_OR_WRITE_CONTRACT"
+        },
+        {
+          "path": "apps/api/src/authenticated-document-commands.ts",
+          "group": "R2_EXACT26_EXPLICIT_EXISTING_PREPARATION_ADMISSION_COMPOSITION",
+          "fieldGate": "EXISTING_APPROVED_BUSINESS_CONTRACT_NO_SCHEMA_OR_PURPOSE_CHANGE"
         }
       ]
     },
@@ -1400,6 +1405,36 @@
           "path": "scripts/import-v3/native-party-source26.test.mjs",
           "group": "GENUINE_PARTY26_REVIEWED_SOURCE_CONSUMER",
           "fieldGate": "EXISTING_APPROVED_MAPPING_NO_NEW_IDS_NO_CREDENTIAL_READ_NO_SQL"
+        },
+        {
+          "path": "scripts/import-v3/prepare-native-stock26-bindings.mjs",
+          "group": "FINITE_EXISTING_STOCK26_BINDINGS_CANDIDATE",
+          "fieldGate": "NO_NEW_UUIDS_NO_RULE_CHANGE_NO_SQL"
+        },
+        {
+          "path": "scripts/import-v3/prepare-native-stock26-bindings.test.mjs",
+          "group": "FINITE_EXISTING_STOCK26_BINDINGS_CANDIDATE",
+          "fieldGate": "NO_NEW_UUIDS_NO_RULE_CHANGE_NO_SQL"
+        },
+        {
+          "path": "scripts/import-v3/native-stock-source26.mjs",
+          "group": "GENUINE_NATIVE_STOCK26_SOURCE_CONSUMER",
+          "fieldGate": "EXISTING_APPROVED_SIGNED_STOCK_AND_SOURCE_CLOSURE_NO_NEW_SCHEMA_OR_RULE"
+        },
+        {
+          "path": "scripts/import-v3/native-stock-source26.test.mjs",
+          "group": "GENUINE_NATIVE_STOCK26_SOURCE_CONSUMER",
+          "fieldGate": "EXISTING_APPROVED_SIGNED_STOCK_AND_SOURCE_CLOSURE_NO_NEW_SCHEMA_OR_RULE"
+        },
+        {
+          "path": "scripts/import-v3/prepare-native-header26-bindings.mjs",
+          "group": "FINITE_NATIVE_HEADER26_BINDING_PREPARER",
+          "fieldGate": "EXISTING_STABLE_HISTORY_IDS_AND_APPROVED_HEADER_PARTY_MONEY_FACTS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "scripts/import-v3/prepare-native-header26-bindings.test.mjs",
+          "group": "FINITE_NATIVE_HEADER26_BINDING_PREPARER",
+          "fieldGate": "EXISTING_STABLE_HISTORY_IDS_AND_APPROVED_HEADER_PARTY_MONEY_FACTS_NO_SCHEMA_CHANGE"
         }
       ]
     },
@@ -1618,6 +1653,21 @@
         {
           "path": "apps/web/src/products/product-page-validation.test.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/barcode-schemes/barcode-scheme-view.tsx",
+          "group": "FROZEN_DEMO_P19_BARCODE_SCHEME_LEAF_PRESENTATION",
+          "fieldGate": "READ_ONLY_EXISTING_NATIVE_SCHEME_FIELDS_NO_RULE_INFERENCE_OR_WRITES"
+        },
+        {
+          "path": "apps/web/src/barcode-schemes/barcode-schemes-page.tsx",
+          "group": "FROZEN_DEMO_P19_BARCODE_SCHEME_LEAF_PRESENTATION",
+          "fieldGate": "READ_ONLY_EXISTING_NATIVE_SCHEME_FIELDS_NO_RULE_INFERENCE_OR_WRITES"
+        },
+        {
+          "path": "apps/web/src/barcode-schemes/barcode-schemes.css",
+          "group": "FROZEN_DEMO_P19_BARCODE_SCHEME_LEAF_PRESENTATION",
+          "fieldGate": "READ_ONLY_EXISTING_NATIVE_SCHEME_FIELDS_NO_RULE_INFERENCE_OR_WRITES"
         }
       ]
     },
@@ -2545,6 +2595,42 @@
         "apps/web/src/settings/stores/controller.ts"
       ],
       "reason": "C exact path allocation: original-source same-client bootstrap, already approved exact size override, or session unresolved write guard. No new schema or repeated old scope."
+    },
+    {
+      "atUtc": "2026-10-22T20:39:58.501645+00:00",
+      "owner": "D1",
+      "addedPaths": [
+        "apps/api/src/authenticated-document-commands.ts"
+      ],
+      "reason": "Existing source path explicitly named by C R2 composition technical freeze; omitted registration corrected before D1 edit. Same original provider business and security contracts."
+    },
+    {
+      "atUtc": "2026-10-22T20:44:29.447092+00:00",
+      "owner": "D3",
+      "addedPaths": [
+        "scripts/import-v3/native-stock-source26.mjs",
+        "scripts/import-v3/native-stock-source26.test.mjs"
+      ],
+      "reason": "Original owner requested exact2 genuine stock consumer with fresh independent source/reference pins; source-only allocation, no MAIN/PUBLISH authority."
+    },
+    {
+      "atUtc": "2026-10-22T20:52:12.267766+00:00",
+      "owner": "F2",
+      "addedPaths": [
+        "apps/web/src/barcode-schemes/barcode-scheme-view.tsx",
+        "apps/web/src/barcode-schemes/barcode-schemes-page.tsx",
+        "apps/web/src/barcode-schemes/barcode-schemes.css"
+      ],
+      "reason": "Explicit original F2 P19/SCHEME UI defects; previously unregistered leafs assigned before write. Shared Overlay F1, root route/lazy style F1 unchanged."
+    },
+    {
+      "atUtc": "2026-10-22T20:56:52.877915+00:00",
+      "owner": "D3",
+      "addedPaths": [
+        "scripts/import-v3/prepare-native-header26-bindings.mjs",
+        "scripts/import-v3/prepare-native-header26-bindings.test.mjs"
+      ],
+      "reason": "Finite header native-party join/preparer after stock genuine consumer; stableImportId history primary keys preserved, source/reference-only private candidate, no SQL/newUUID/MAIN."
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",

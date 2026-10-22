@@ -1,0 +1,14 @@
+{
+  "atUtc": "2026-10-22T21:09:11.266643+00:00",
+  "jobId": "c03-actual-stage-add-read-20261023-37",
+  "result": "FAILED_FIRST_ERROR_PRESERVED_NO_RETRY",
+  "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-actual-stage-add-read-20261023-37/release-receipts/c03-actual-stage-add-read-20261023-37/engine-result.json",
+  "evidenceSha256": "350394f8ff2c1c474eefe414427439a2bd68d68da3fe8859a94fdc981f1e4327",
+  "scope": "C original bounded operational result only; no real import or public switch",
+  "notTested": [
+    "Real source MAIN/PUBLISH and final runtime app/role business acceptance"
+  ],
+  "adoption": "Original operational acceptance, no duplicate QB",
+  "failureCode": "C36_DIRECTORY_0700_UNCHANGED",
+  "runnerOrNodeAttempted": false
+}

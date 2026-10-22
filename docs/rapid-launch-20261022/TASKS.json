@@ -8,28 +8,45 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "5180ac0e55ee713b231b3664719b7a52b7d92f8c",
+    "headObserved": "44f8388918136fb832d19cef8d6a9c864c3be3ae",
     "workingTreeNotFullyCommitted": true,
     "remoteHeadVerified": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
-    "remoteReadbackMethod": "Exact GitHub API ref; latest source checkpoint is private draft release bundle downloaded/verified, not normal branch push",
+    "remoteReadbackMethod": "Verified03fb private draft recovery bundle, normal branch877. New source/docs checkpoint upload pending after this commit.",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
-      "type": "PRIVATE_DRAFT_RECOVERABLE_GIT_CHECKPOINT_NOT_BRANCH_PUSH_OR_PRODUCTION",
-      "sourceAndHandoffCommit": "9be8063393ac44a6a990fd3d8f18c60d2227c51f",
-      "prerequisiteCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
-      "atUtc": "2026-10-22T17:38:24.391673+00:00",
+      "format": "PRIVATE_GITHUB_DRAFT_SOURCE_RECOVERY_CHECKPOINT_V1",
+      "atUtc": "2026-10-22T20:07:48.806692+00:00",
+      "sourceCommit": "03fb221ba7cae10a0304a32cb73afc8cc699d206",
+      "branch": "codex/local-takeover-wip-20261022-082411",
+      "normalGitHubBranchObserved": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+      "normalPushSucceeded": false,
       "bundle": {
-        "name": "naijue-erp-source-9be8063.bundle",
-        "bytes": 825891,
-        "sha256": "f26d5f834b8b2d00961829fd004eb31a0a3e3203039b4f03cde0f784bb7aca6b"
+        "name": "naijue-erp-source-03fb221.bundle",
+        "bytes": 1290636,
+        "sha256": "61fe995af94adeb576b908789625e28c27575293e9beb694c2784b2f597df047",
+        "requiredBaseCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+        "headRef": "HEAD"
       },
-      "scope": "Source round1..36, exact schema21..26 source, current model directive, queue/QA index140/handoff; independent source and engine scopes retained",
-      "excluded": "Private raw business data, runtime configuration/credentials, uncommitted owner WIP",
-      "localVerification": "git bundle verify PASS; remote download/readback next",
-      "status": "UPLOADED_DOWNLOADED_HASH_AND_GIT_BUNDLE_VERIFIED",
-      "normalBranchAdvanced": false,
-      "remoteBranchStill": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
-      "draftTag": "codex-checkpoint-20261022-a7e817b"
+      "repository": "Billy159/naijue-erp",
+      "draftTag": "codex-checkpoint-20261022-a7e817b",
+      "scope": "Exact source throughC64/current docs; actual C35 temporary issuer and C36 actual application media three-case delta; no private business data/credentials/authority originals",
+      "restore": "Verify SHA and git bundle verify with exact base object; fetch HEAD into a new codex/recovery branch without resetting current checkout. Read docs/rapid-launch-20261022/HANDOFF.md. K/A/private-data/operational references require separately authorized access; no inferred grants.",
+      "businessRelease": false,
+      "uploadOutcome": "UNCONFIRMED_UNTIL_DOWNLOAD_SHA_AND_BUNDLE_VERIFY",
+      "verifiedReadback": {
+        "atUtc": "2026-10-22T20:08:56.024339+00:00",
+        "sourceCommit": "03fb221ba7cae10a0304a32cb73afc8cc699d206",
+        "url": "https://github.com/Billy159/naijue-erp/releases/tag/untagged-2c2d506edb2c8167f485",
+        "isDraft": true,
+        "downloadSha256": "61fe995af94adeb576b908789625e28c27575293e9beb694c2784b2f597df047",
+        "bytes": 1290636,
+        "bundleVerify": true,
+        "metadataByteIdentical": true,
+        "notesReadbackMatched": true,
+        "normalPushSucceeded": false,
+        "businessRelease": false
+      },
+      "verified": true
     }
   },
   "concurrency": {
@@ -230,7 +247,7 @@
         "FIELD-APPROVAL-C01-v1.json"
       ],
       "notTested": [],
-      "nextAction": "All schema supplements approved; C frozen existing categoryDTO and codec/stage runtime/oldV2key compatibility; no new unlisted field allowed.",
+      "nextAction": "Prior C01/v2B/v3A/v4 and21demotion approvals preserved. Only closed-filter classification and six descriptive scheme initialization wait human answer.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
@@ -269,7 +286,7 @@
         "operational-checkpoints/R1-BUILD-PACK.json"
       ],
       "notTested": [],
-      "nextAction": "QA1..26 v5 actual installed/corrected/catalog read; maintenance matrix not yet executed due C carrier runtime failures; job27 bounded readonly runtime probe; keep old/R1 unchanged.",
+      "nextAction": "Actual R1 backup/20..26 C38PASS; C41 realruntime catalog pending then QB/externalR1 review/config. QA C40actualmediaPASS; no public app switch.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
@@ -330,7 +347,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Actual full26 catalog/ACL interpretation plus real49 bootstrap/source/executor/issuer; category small slice fixed+QB74 PASS. No production role grant inferred from QA owner.",
+      "nextAction": "R2 composition75/QB120 and bridge70/QB118 adopted; H06 maintained catalogue proof K proposal ready, requires C technical freeze/exact ownership before source.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D1",
@@ -453,7 +470,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Existing maintenance source preserved; staged media and one product same-client audit/receipt closure remain, no silent oldV2 hash changes.",
+      "nextAction": "Staffrole79/QB121PASS + F3realclient81/QF scopedPASS adopted; closed-login classification alone waits. C40actualmedia narrowPASS.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D2",
@@ -485,7 +502,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Full2956 referencesQB73 PASS/C closed fullref pin signed only source; one-pass new source offset index complete after documented failed first tool, QB new index pending; 11actual factories/full49/MAIN not ready.",
+      "nextAction": "Stockgenuine80 newQA; original D3 headerpreparer2registered next. Allocation410899 parser119PASS only preservation. Sixscheme seed waits human;49real servercapture exists notMAIN grant.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D3",
@@ -547,7 +564,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Sales source/runtime consumers and fixed output stale repair accepted; continue chunk26 common presentation and exact readonly action, no fake row detail.",
+      "nextAction": "Sales72/Transfer73/Delete78 QF fixes closed. New actualP03/P04 popupanchor originalF1 directed; no stale source69 fix claims.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F1",
@@ -639,7 +656,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "P02 chrome and readonly P08/09/11 sourceQF PASS; classifiedP12/returnLabel fixed275ac63 source/DOM, types still externally blocked byF1; write UI remains opt-in closed.",
+      "nextAction": "Tree77/P19leaf82 QF scopedPASS; newactualpreview pending. CAT01header1px originalF2 minimalfix; oldYEAR/P12/search not re-run.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F2",
@@ -669,7 +686,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Audit P2 and entry sourceQF PASS; no repeated W5/W7. Active new fullDemo B01/B02 UI migration in owned registered view/CSS, root audit injection still needsF1.",
+      "nextAction": "W7initialerrors83 fixed pending narrowQA/browser; roleclient81 QFscopePASS paired79. Unrelated closed filter pending human only.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F3",
@@ -826,7 +843,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Only explicit new slices10640 hidden-entry and275ac63 P12, old accepted scopes reused; browser ownedDemo.",
+      "nextAction": "Adopt72/73/74/76/77/78/81/82 effective ranges. Only83 newtiming review and new fixes; no maincontroller duplicate acceptance.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "QF",
@@ -856,7 +873,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Current accepted59-75 metadata indexed, queueMAIN26/codec/new source-index only; no repeated old evidence.",
+      "nextAction": "Adopt110..121; new80 consumer only and actualR1catalog when ready. No oldreference/source rescans or QAmetadata substituted forR1.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "QB",
@@ -924,8 +941,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T20:06:46.865983+00:00",
-  "stage": "ACTIVE_SOURCE64_ACTUAL_SERVICE_C36_PASS_BROWSER_D6",
+  "updatedAt": "2026-10-22T21:25:32.812099+00:00",
+  "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
   "lastVerifiedRemoteCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -1370,8 +1387,8 @@
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
-    "schema": "EXACT_1_TO_19",
-    "runtimeAcl": "APPLIED_AND_READ_BACK",
+    "schema": "EXACT1..26_FINAL_V6_V7_ACTUAL_R1_C38",
+    "runtimeAcl": "C38_BASELINE_READ_AUTH_PLUS_EXACT_CLASSIFIER_EXECUTE_AND_SOURCE3_SELECT_ONLY",
     "realAccountsCaptured": 49,
     "accountsWithExactOldEmployeeLink": 45,
     "accountsUnlinked": 4,
@@ -1382,37 +1399,64 @@
     "accountCapture": "PASS_C02_JOB11",
     "bootMetadata": "JOBS12_13_READONLY_PASS; JOB14_BOOT_ACTOR_PROJECTION_QUEUED",
     "accountIdentity45": "QB35_SCOPED_PASS_C_OUTSIDE_PIN",
-    "accountIdentityAdditional4": "D3_EXACT_PLAN_SOURCE_FACTS_READY_QB_QUEUED",
+    "accountIdentityAdditional4": "QB42_IDENTITY_ONLY_ACCEPTED_FALSE_EXECUTION",
     "deploymentTools": "QB38_SOURCE_PROTOCOL_PASS_REAL_DEPLOY_NOT_RUN",
     "bootPersistence": "SOURCE_READY_FINAL_RELEASE_MANIFEST_AND_ACTUAL_BOOT_NOT_DONE",
-    "currentSourceCheckpoint": "46b66aa1dcf43a2bdd3e1217c28f5a7a1838a641",
+    "currentSourceCheckpoint": "44f8388918136fb832d19cef8d6a9c864c3be3ae",
     "currentPreview": {
-      "url": "http://127.0.0.1:57838/synthetic-unified.html",
-      "source": "693e215d943fe4c23371aba4c19ace68b77b5720",
-      "build": "ui-preview-693e215-01-build01",
-      "htmlSha256": "2a99a754a645ef065ee1e9986468f77ea5346df8faada0de71dba7ab4a84de9e",
-      "syntheticOnly": true
+      "url": "http://127.0.0.1:57842/synthetic-unified.html",
+      "source": "4ee77b5db93f8e20eb04f0c7fd73b58b554befa6",
+      "build": "ui-preview-4ee77b5-01-build01",
+      "htmlSha256": "9f28810a66801aa7010ffe40eb6dd0b95078296c760a5d6cf27997f7181e2222",
+      "overlaySha256": "c8a0a2e804f7e6efa6141f953db9269dd8d9bb24088e920486f7ec2a7cc03665",
+      "syntheticOnly": true,
+      "actualInputs": 400,
+      "sourceModules": 383,
+      "wholePageAccepted": false
     },
     "currentDatabase": {
       "name": "erp_rewrite_20261022_r1",
-      "schema": "EXACT1_19",
-      "tables": 50,
+      "databaseOid": "1027659",
+      "schema": "EXACT1..26_FINAL_V6_V7",
+      "tables": 56,
       "accounts": 0,
-      "runtimeAcl": "APPLIED_AND_READ_BACK_JOB07",
+      "sourceRows": 0,
+      "allBusinessRows": 0,
+      "upgrade": "C38_COMMIT_RETURNED_SUCCESS",
+      "ownBackup": {
+        "status": "PASS_R1_SERVER_ONLY_LOGICAL_DUMP_AND_METADATA_PRESERVED",
+        "database": "erp_rewrite_20261022_r1",
+        "path": "/srv/naijue-erp/rapid-launch-20261022/backups/r1-exact19-before26-20261023-38",
+        "dumpBytes": 522537,
+        "dumpSha256": "484d4e976251a87afbe59ad88e1e18f6b2a4cc731fffb6bb9566c8ffbf5fc618",
+        "dumpTocSha256": "65220a7a4fe8023efb3ff7b4eaa3b24cbaa8246eaa2fa60746f150f313655760",
+        "metadataSha256": "ed0b1bb2cfb51ba3575884bbf350814adf209f7bc6ae6be9c8aad2599fda7413",
+        "restoreRehearsal": "NOT_RUN_NO_REPLAY",
+        "dumpExported": false,
+        "credentialValuesReadOrExported": false
+      },
+      "runtimeCatalog": "C41_ACTUAL_RUNTIME_TCP_COMPLETE_CAPTURE_PENDING_QB",
+      "fullApplicationConfiguration": "PENDING",
       "realImport": "NOT_STARTED",
       "productionSwitch": "NOT_DONE"
     },
     "schemaSuccessor": {
-      "qaVersion": "EXACT1..26_V7_MEDIA_COLOR_SWAP",
-      "actualJob": "c03-exact26-v6-projection-20261023-31",
-      "v7": "ACTUAL_INSTALLED_AND_NEW_ISOLATED_SWAP_MATRIX_PASS",
-      "r1": "UNCHANGED_EXACT1..19",
+      "qaVersion": "EXACT1..26_FINAL_V7",
+      "r1": "ACTUAL_C38_EXACT1..26_SOURCE68_FINAL",
       "qaAccounts": 2,
-      "qaAudits": 9,
-      "qaReceipts": 9,
-      "qaSources": 0,
       "qaProducts": 1,
-      "qaImages": 2
+      "qaImages": 3,
+      "qaAudits": 11,
+      "qaReceipts": 11,
+      "qaSources": 0,
+      "qaRootVersion": 4,
+      "qaOldImageVersions": [
+        3,
+        3
+      ],
+      "qaNewImageVersion": 1,
+      "actualMedia": "C40_ACTUAL_STAGE_ADD_REPLAY_CONTROLLED_READ_PASS_NO_HTTP",
+      "r1RuntimeCatalog": "PENDING_C41_THEN_INDEPENDENT_REVIEW"
     },
     "latestCandidatePins": [
       "B06-ACCOUNT-IDENTITY-49.json",
@@ -1511,7 +1555,46 @@
         "failureCode": "FIRST_FIXED_SQL_ERROR_STOPPED",
         "scope": "Actual isolated QA engine/carrier only; old/R1 writes false; no real source/import/production"
       }
-    ]
+    ],
+    "r1RuntimeCatalog": {
+      "jobId": "c03-r1-runtime26-catalog-20261023-41",
+      "result": "PASS_ACTUAL_R1_RUNTIME_ROLE_FULL_CATALOG_ONLY_PENDING_QB_REVIEW",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-runtime26-catalog-20261023-41/release-receipts/c03-r1-runtime26-catalog-20261023-41/engine-result.json",
+      "evidenceSha256": "f820047cdf0d2607ee05083d0d0984d5ad5f5a77f9eaba2988e208f5e98944ef",
+      "catalogServerRaw": {
+        "file": "runtime-catalog-canonical.json",
+        "bytes": 1129627,
+        "serverRawSha256": "b214698f6b0c79c8525123940198c93a454cedea407ceaa1da2f7e4bd84cd3ff",
+        "canonicalSha256": "f62de0a301d485da548324a89e97bd902f184ca45e0778901ab8d4be8dab15c7",
+        "identity": {
+          "database": "erp_rewrite_20261022_r1",
+          "server_addr": "172.18.0.3/32",
+          "server_port": 5432,
+          "current_user": "erp_rewrite_runtime_20261022",
+          "database_oid": "1027659",
+          "session_user": "erp_rewrite_runtime_20261022",
+          "database_owner": "erp_rewrite_owner_20261022",
+          "postmaster_start": "2026-10-04 08:16:07.895273+00",
+          "replication_role": "origin",
+          "server_version_num": "170011"
+        },
+        "counts": {
+          "relations": 60,
+          "columns": 592,
+          "routines": 121,
+          "triggers": 930,
+          "constraints": 529,
+          "indexes": 164,
+          "roles": 3
+        }
+      },
+      "catalogCollected": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-runtime26-catalog-20261023-41/release-receipts/c03-r1-runtime26-catalog-20261023-41/runtime-catalog-canonical.json",
+        "bytes": 1348707,
+        "sha256": "d542092034a90c45dc10b638db252385137dc7b1e97c52dae1d5d731fd54975c"
+      },
+      "qualification": "Actual R1 runtime TCP original readonly catalog only. No issuer/final host/source authority; QB metadata pending. Original program39 label preserved, actual operation41."
+    }
   },
   "supplementalRoles": {
     "DEMO_COMPARE": {
@@ -1523,38 +1606,50 @@
       "sourceWriteEnabled": false,
       "reportRoot": "K/reports/ui-demo-comparison-20261022",
       "scope": "Verified human directive: Demo source first plus real browser page-by-page; reuse QF/QB accepted or in-flight scopes",
-      "candidateCommit": "21f2afa108e9252ad9829c78077b16d46b579d31",
-      "previewStatus": "FIXED_SYNTHETIC_HTTP_HASH_VERIFIED_DEMO_V006_INITIAL_FINDINGS",
-      "previewReportRoot": "K/reports/controller/rapid-launch-20261022/ui-preview-21f2afa-01",
+      "candidateCommit": "4ee77b5db93f8e20eb04f0c7fd73b58b554befa6",
+      "previewStatus": "C83_FIXED_SYNTHETIC_HTTP_SHA_VERIFIED_NEW_SCOPES_DISPATCHED",
+      "previewReportRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-3fb36e8-01",
       "reportingAuthorization": "User explicit request in this controller chat on2026-10-22 to reuse this exact thread and proactively exchange findings/candidates/retests",
-      "buildId": "ui-preview-21f2afa-01-build01",
-      "url": "http://127.0.0.1:57836/synthetic-unified.html",
-      "htmlSha256": "ed2b08c65acd31f01a5c1474e2a29913f10ba49d338da1741a770b4959747fbb",
-      "overlaySha256": "64659b8b27b97d42ce2e062d361b1ec6406727d062f4c6e533e8f4245103db98",
+      "buildId": "ui-preview-4ee77b5-01-build01",
+      "url": "http://127.0.0.1:57842/synthetic-unified.html",
+      "htmlSha256": "9f28810a66801aa7010ffe40eb6dd0b95078296c760a5d6cf27997f7181e2222",
+      "overlaySha256": "c8a0a2e804f7e6efa6141f953db9269dd8d9bb24088e920486f7ec2a7cc03665",
       "parallelism": "One Demo and one candidate tab sequential browser; development and QF/QB source QA parallel",
       "firstResults": "Inventory v001/02 adopted; approved O-I06 retained; oldF09 directed fix; output-print existingR4 queue",
       "fastRequested": false,
       "baselinePages": 35,
       "baselineOverlays": 65,
-      "currentPages": 35,
-      "currentOverlays": 66,
-      "total": 101,
+      "currentPages": 37,
+      "currentOverlays": 67,
+      "total": 104,
       "wholePagesPassed": 0,
       "wholeOverlaysPassed": 0,
       "wholeSiteHumanSources": [
         "01a162e7-024a-7e22-980a-e329b32fcd60",
         "01a162f1-fbeb-7963-99b5-e3f43dd80002"
       ],
-      "newFindings": "v006-21f2afa/FINDINGS-INITIAL.json, original F1 dispatched",
+      "newFindings": "CAT01 header1px; P03/P04 shared popup anchor originalF1; W7initial errors fixed83 wait actual browser.",
       "latestBrowserResult": {
-        "version": "v006-21f2afa",
-        "resultSha256": "f3c155818a2498c7adf1a2a6343fbe6a8c27d18e03e18628156436d90ccf1e0e",
-        "pairedStates": 4,
-        "sourceRegions": 11,
-        "wholePagePass": false,
-        "sourceCodeUnchanged": true,
-        "newP2": "SALE-V006-04",
-        "originalOwnerDispatched": true
+        "version": "v011-3fb36e8",
+        "group1Sha256": "7a6ad9e0d5b05a1790b7f1ccc56c420b29ced7b9de1915341b21ebf67bd4589d",
+        "group2Sha256": "1259fccf5cd2a1225ac5b0e168b6fca9ae6b06c7116e81427b886e9404deef4c",
+        "localCases": 29,
+        "wholePagesPassed": 0,
+        "wholeOverlaysPassed": 0
+      },
+      "deduplicatedLocalCases": 29,
+      "statusCounts": {
+        "NOT_RUN": 65,
+        "UI_DIFF": 24,
+        "PARTIAL": 7,
+        "WAITING": 7,
+        "VISUAL_EXCEPTION": 1
+      },
+      "entryMappingCorrection": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v011-3fb36e8/CATEGORY-ENTRY-MAPPING-CORRECTION.json",
+        "sha256": "5045da419b95937337bead42671abfecab6965b0c575446ba35dad1e0c8c24cb",
+        "categoryPage": "P14",
+        "P13": "Product readonly fullpage inventory NOT_RUN; source evidence not page acceptance"
       }
     }
   },
@@ -1893,246 +1988,79 @@
     }
   ],
   "newPendingReviews": [
-    {
-      "owner": "QF",
-      "scope": "New C62 popup/supplier and C63 viewport only; C61 new seam/layout receipt already received"
-    },
-    {
-      "owner": "C",
-      "scope": "Collect C36 same ID; never rerun carrier after unknown commit"
-    },
-    {
-      "owner": "Demo",
-      "scope": "v010 d6 finder/sharedYEAR/new actual root only; new C61/62/63 browser still await next necessary candidate"
-    }
+    "Demo fixed83 new modules;85 built successor later only2geometries",
+    "D3 Transfer14279 new finite joint review after source freeze"
   ],
   "openFindingsCurrent": [
     {
-      "id": "SALE-V006-01",
-      "owner": "F1",
-      "status": "DEMO_ACTUAL_BROWSER_NEED_FIX"
+      "id": "CAT-UI01-header1px",
+      "owner": "F2",
+      "status": "SOURCE84_QF_PASS_WAIT_ACTUAL_C85_BROWSER"
     },
     {
-      "id": "SALE-V006-02",
+      "id": "PROD-UI-SOURCE01-P03P04-popupanchor",
       "owner": "F1",
-      "status": "DEMO_ACTUAL_BROWSER_NEED_FIX"
+      "status": "SOURCE85_QF_PASS_WAIT_ACTUAL_C85_BROWSER"
     },
     {
-      "id": "SALE-V006-03",
-      "owner": "F1",
-      "status": "DEMO_ACTUAL_BROWSER_NEED_FIX"
-    },
-    {
-      "id": "SALE-V006-04",
-      "owner": "F1",
-      "status": "DEMO_ACTUAL_BROWSER_P2_DISPATCHED",
-      "scope": "Correct paid/due amounts but under/over visual state class missing; preserve money/signs",
-      "evidence": "K/reports/ui-demo-comparison-20261022/v006-21f2afa/RESULT.json",
-      "evidenceSha256": "f3c155818a2498c7adf1a2a6343fbe6a8c27d18e03e18628156436d90ccf1e0e"
+      "id": "W7-UI01",
+      "owner": "F3",
+      "status": "SOURCE83_QF_PASS_WAIT_ACTUAL_C83_BROWSER"
     }
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-22T20:06:46.865983+00:00",
-    "sourceRound": 64,
-    "modelAllChats": "gpt-6.1-sol/xhigh",
-    "fast": "Requested off; tool has no switch, actual UI state unverified",
-    "fieldApprovalPending": false,
-    "fullReferenceOutsidePin": "a21105ca99f0efff1acf10fda01f1bf62117e2ffd3214d4d43e02f9efc24025b",
-    "realImportAuthorizedByReferencePin": false,
-    "releaseGate": "Full11 genuine producers/actual49 SOURCE+MAIN+PUBLISH/native app and relevant browser/role checks not complete; originalURL unchanged; no whole-site gate on unrelated pages.",
-    "privateSourceAndCredentials": "Never Git; Dot on another machine must acquire exact K/A/private-data and existing release reference, cannot infer authority from paths",
-    "mediaColorSwapV4": "APPROVED_SOURCE_QB90_QB91_ACTUAL_C33_C34_PASS; actual application C36 submitted",
-    "sourceCheckpoint": "79ce6c3270fd45c6599892913172f35ceb9fefdb",
-    "offsetIndexOutsidePin": "87ec0b318029dc682cd86611d5e9d9d97442988b6bb5bde14ad689fe5a7b88a6",
-    "actualV6Job31": {
-      "jobId": "c03-exact26-v6-projection-20261023-31",
-      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-exact26-v6-projection-20261023-31/release-receipts/c03-exact26-v6-projection-20261023-31/engine-result.json",
-      "evidenceSha256": "6ab797dc8dfeda817421b1e1076e5e954165212a6c1c45b1237c5afe5d521a5b",
-      "result": "PASS_ACTUAL_V6_TWO_FUNCTION_PATCH_AND_CANONICAL_CATALOG_ONLY",
-      "scope": "Only actual2 v6 function COMMIT/readback and pure technical cases; preserve QA2 synthetic accounts/8audits8receipts/source0, no old/R1 writes",
-      "catalog": {
-        "file": "runtime-catalog-canonical.json",
-        "serverRawSha256": "b8201e4d4d18326f8e7769203dd5e62096e916d3d422872f83508d35c880eca4",
-        "bytes": 1123854,
-        "canonicalSha256": "914dc28ca1c5596e12d10c8c094dd87ffcdd70a9c987db3a52eb4e8dc23f236c",
-        "canonicalFormat": "PG_JSONB_TEXT_MINUS_IDENTITY_UTF8_SHA256",
-        "querySha256": "c95dda7ae4adc246bc3cc697ab37d5339de8ad6428e06dca608dc95fb581133c",
-        "identity": {
-          "database": "erp_qa_rapid26_20261022_01",
-          "server_addr": null,
-          "server_port": null,
-          "current_user": "erp_qa_owner_20261022_01",
-          "database_oid": "1029372",
-          "session_user": "t15_prod_bootstrap",
-          "database_owner": "erp_qa_owner_20261022_01",
-          "postmaster_start": "2026-10-04 08:16:07.895273+00",
-          "replication_role": "origin",
-          "server_version_num": "170011"
-        },
-        "counts": {
-          "relations": 60,
-          "columns": 592,
-          "routines": 121,
-          "triggers": 930,
-          "constraints": 529,
-          "indexes": 164,
-          "roles": 2
-        }
-      },
-      "notTested": [
-        "v7 approved image-color single-guard patch not yet installed",
-        "No issuer or SOURCE MAIN execution authority created",
-        "Product/media actual engine matrix untested",
-        "No actual source import/publication or production switch"
-      ]
-    },
+    "atUtc": "2026-10-22T21:25:32.812099+00:00",
+    "sourceRound": 86,
+    "sourceCheckpoint": "44f8388918136fb832d19cef8d6a9c864c3be3ae",
+    "allModels": "gpt-6.1-sol/xhigh",
+    "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "atUtc": "2026-10-22T19:52:21.668261+00:00",
-      "url": "http://127.0.0.1:57840/synthetic-unified.html",
-      "status": 200,
-      "bytes": 2816782,
-      "htmlSha256": "a49b15cfa8a05811e71fdcb1f11b3dcdace98e0e3d6ebfd1accf3b8649b329cd",
-      "sourceCommit": "d6ad29c7d8b105e517a95e70bcb48138b55bd817",
-      "buildId": "ui-preview-d6ad29c-01-build01",
-      "actualBrowserCheck": "NOT_RUN",
+      "url": "http://127.0.0.1:57842/synthetic-unified.html",
+      "source": "4ee77b5db93f8e20eb04f0c7fd73b58b554befa6",
+      "build": "ui-preview-4ee77b5-01-build01",
+      "htmlSha256": "9f28810a66801aa7010ffe40eb6dd0b95078296c760a5d6cf27997f7181e2222",
+      "overlaySha256": "c8a0a2e804f7e6efa6141f953db9269dd8d9bb24088e920486f7ec2a7cc03665",
       "syntheticOnly": true,
-      "realSave": false,
-      "browserVerification": "Dedicated Demo v010 in progress; per-scope evidence only"
+      "actualInputs": 400,
+      "sourceModules": 383,
+      "wholePageAccepted": false
     },
-    "chromeInput": {
-      "cause": "UNKNOWN",
-      "humanReply": "NO_HUMAN_OPERATION",
-      "controlledProbe": "PASS_ONE_SYNTHETIC_PROBE_ONLY",
-      "next": "Necessary inputs with immediate readback; stop if stray input recurs"
-    },
-    "realImportAuthorizedByMetadataPins": false,
-    "issuerQB92": "QB95_TARGETED_SOURCE_FIX_PASS; C35 actual temporary QA issuer READ ONLY PASS and pool closed",
-    "v7ActualJob": "C32_FAILED_BEFORE_SQL; C33_ACTUAL_PATCH_PASS; no replay",
-    "round53": "metadata receipt snapshot only; exact controller d14 was already round52",
-    "v7ActualGuard": "C33 PASS; canonical e37dd0c0b723bd5525c10f1cbcef563397db3135cb81948796a78aaf555d3dc2",
-    "v7ActualMatrix": {
-      "jobId": "c03-media-color-swap-matrix-20261023-34",
-      "result": "PASS_ACTUAL_NEW_SYNTHETIC_MEDIA_COLOR_SWAP_MATRIX_ONLY",
-      "evidenceSha256": "0454b0645285539a0507b6d977f49857dd35bb9719c9a419b6638e8076a55717",
-      "cases": 10,
-      "qaAccounts": 2,
-      "qaProducts": 1,
-      "qaImages": 2,
-      "qaAudits": 9,
-      "qaReceipts": 9,
-      "qaSourceRows": 0,
-      "notThreeImageOrHostBusinessAcceptance": true
-    },
-    "salesExistingReadDto": "SALES-PREPARE-EXISTING-READ-CONTRACT-v1 frozen, zero DML, existing SAVE unchanged",
-    "demoRootAndFinder": "Source59+actual d6 sale finder local PASS; Transfer TR02 anchor offset remains open",
-    "actualRuntime35": {
-      "jobId": "c03-runtime26-live-probe-20261023-35",
-      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-runtime26-live-probe-20261023-35/release-receipts/c03-runtime26-live-probe-20261023-35/engine-result.json",
-      "evidenceSha256": "cbf41f37ee8e151614af57509c2a2a0aa7d6911a1462eac4f7eb498c88236a6b",
-      "status": "PASS_ACTUAL_QA_RUNTIME26_LIVE_LEASE_READ_ONLY_ONLY",
-      "poolClosed": true,
-      "purposes": [
-        "PRODUCT_MAINTENANCE",
-        "PRODUCT_SEASONS_READ"
-      ],
-      "realImportExecutionAuthorized": false
-    },
-    "actualApplication36": {
-      "atUtc": "2026-10-22T20:06:46.865983+00:00",
-      "jobId": "c03-actual-service-media-swap-20261023-36",
-      "sourceCommit": "d6ad29c7d8b105e517a95e70bcb48138b55bd817",
-      "status": "PASS_ACTUAL_D1_D2_SYNTHETIC_SERVICE_COLOR_SWAP_DELTA",
-      "engineEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-actual-service-media-swap-20261023-36/release-receipts/c03-actual-service-media-swap-20261023-36/engine-result.json",
-      "engineSha256": "e40214b6d4ccf59c28e1d315261c97f90e452ecb4676da8b5b6cc19a21d240a1",
-      "actualService": {
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-actual-service-media-swap-20261023-36/release-receipts/c03-actual-service-media-swap-20261023-36/actual-service-result.json",
-        "collectedPrettySha256": "5338ed6daf87b3d4314fa54743368e0e1519240d109253c87dc11d92a7354d2a",
-        "serverRawSha256": "2a7a95012ad6ceebe43ea13e001fccfb1d33f84d6e9fa010622d54359d632668",
-        "difference": "Collector redacts authorization-labelled fields; raw/collected hashes are distinct, both retained"
-      },
-      "cases": [
-        {
-          "case": "actual-service-color-cycle",
-          "status": "PASS_ACTUAL_COMMIT"
-        },
-        {
-          "case": "same-original-key-replay",
-          "status": "PASS_NO_SECOND_WRITE"
-        },
-        {
-          "case": "stale-root-CAS",
-          "status": "PASS_EXPECTED_VERSION_CONFLICT_ROLLBACK"
-        }
-      ],
-      "qaCounts": {
-        "database": "erp_qa_rapid26_20261022_01",
-        "role": "erp_qa_owner_20261022_01",
-        "accounts": 2,
-        "products": 1,
-        "images": 2,
-        "audits": 10,
-        "receipts": 10,
-        "sources": 0
-      },
-      "rootVersion": 3,
-      "imageVersions": [
-        3,
-        3
-      ],
-      "actualD1PreparedContextAndD2Service": true,
-      "poolClosed": true,
-      "linuxDependencyEvidence": {
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-actual-service-media-swap-20261023-36/release-receipts/c03-actual-service-media-swap-20261023-36/locked-linux-package-result.json",
-        "collectedSha256": "7480e93076ac271a7b0f0b3cdbc3c51e4a585355fb7e43cf51fbc10df7555440",
-        "lockedPackages": 6,
-        "actualSharpConstructorPassed": true,
-        "lifecycleScripts": 0
-      },
-      "realStageConstructor": true,
-      "mediaFilesChanged": false,
-      "uploadOrCodecOperations": 0,
-      "realImport": false,
-      "oldDatabaseWrites": false,
-      "r1DatabaseWrites": false,
-      "notTested": [
-        "actual uploads/decoding/files/controlled GET",
-        "HTTP identity/CSRF/actual app runtime role",
-        "real sources/import/MAIN/PUBLISH",
-        "original public URL business release"
-      ],
-      "adoption": "Original C operations acceptance; do not dispatch duplicate QB technical review"
-    },
-    "R1Runtime": "Exact19 empty R1 not switched. Exact26 explicit composition/current+history+stock adapters and minimal actual ACL/target review pending; no QA pin reuse.",
-    "outsideReferencePins": {
-      "product": "a21105ca99f0efff1acf10fda01f1bf62117e2ffd3214d4d43e02f9efc24025b",
-      "sku": "f238530f1b3eec7f5586f7f08e4497982782f53500c65ad6c37a19b6a56f1273",
-      "payment": "ef981a5fdfcb217926eb04452d2ad2c3d0b275794af11841e2cf6637020395a9",
-      "offset": "87ec0b318029dc682cd86611d5e9d9d97442988b6bb5bde14ad689fe5a7b88a6",
-      "scope": "Reference/index metadata only, all false execution authority"
-    },
-    "github": {
-      "normalBranch": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
-      "newExistingHelperHttp1Attempt": "FAILED_REMOTE_UNCHANGED",
-      "latestVerifiedDraftBundleCommit": "eb57b347fb69c3ebd174ca787103f10c37acd236",
-      "next": "New checkpoint after this docs commit; verify download SHA and git bundle verify",
-      "normalPushSucceeded": false
-    },
-    "nextReady": "D1 read-only retained view/production26; D3 HISTORY26+PARTIES; D2 K-only upload-save-controlledread carrier; F1 saved/TR; F2 CAT/search/YEAR mouse; F3 STORE04"
+    "nextPreview": "Fixed85 built, not served; only84header+85anchor; Demo finishes83 scopes first",
+    "r1": "QB123 PASS actual R1 C41 metadata f62de0a only; C preparing separate five-purpose outside review and final R1 host config/live issuer",
+    "qa": "C40 actual Sharp upload/ADD/replay/controlled original+thumbnail PASS; QA11audits11receipts3images/root4. No HTTP/realrole/business acceptance",
+    "import": "QB124 closes only QB122-F01 at86; original actual38303/38314/80933 reused. Transfer14279 READY awaiting freeze/new finite joint review; Sales2471 gap remains awaiting full field confirmation.",
+    "waiting": "Only closed-login classification and six barcode-scheme full initialization need human answer; independent work continues",
+    "github": "03fb private recovery verified; new source/docs upload pending this commit; ordinary branchpush still not successful",
+    "goalComplete": false
   },
   "latestReadySource": {
-    "checkpoint": "79ce6c3270fd45c6599892913172f35ceb9fefdb",
-    "round": 64,
-    "sourceQa": "Valid exact QF/QB receipts in VERIFICATION-INDEX; 62/63 newest affected scope QF pending",
-    "notApplicationOrProductionAcceptance": true
+    "sourceRound": 86,
+    "commit": "44f8388918136fb832d19cef8d6a9c864c3be3ae",
+    "qualification": "Exact scopes only; current browser fixed83."
   },
-  "pendingUserDecision": null,
+  "pendingUserDecision": [
+    {
+      "id": "STAFF_CLOSED_NO_ACCOUNT",
+      "question": "Does closed-login filter include employees without accounts?",
+      "onlyDependentBranchWaits": true
+    },
+    {
+      "id": "BARCODE_SCHEME_INITIALIZATION_V1",
+      "confirmationFile": "BARCODE-SCHEME-INITIALIZATION-CONFIRMATION-v1.md",
+      "proposalSha256": "826e63b33e8e2f52a521d5ba3e930899d61092dfb22f65b11db4f799f7efef00",
+      "onlyDependentBranchWaits": true
+    },
+    {
+      "id": "HISTORICAL_SALES_HALL_NULL_2471",
+      "state": "D1_PREPARING_FULL_FIELD_CONSTRAINT_CONFIRMATION_NOT_YET_ASKED",
+      "onlyDependentBranchWaits": true,
+      "factsSha256": "3cbae7ce93b8454abf6840297a2122b4aa56e48162b31f8450ad9e0dc885f776"
+    }
+  ],
   "currentAcceptedReceiptBatch": {
-    "atUtc": "2026-10-22T20:02:22.939243+00:00",
-    "backendThrough": "QB109",
-    "frontend": "Exact received scopes through59/61; 62/63 pending",
-    "ops": "C35 actual READ ONLY temporary issuer PASS; C36 queued",
-    "browser": "v009 and new v010 d6 local exact scope only; whole pages/overlays0",
-    "sourceCommit": "61517de362bfc6d5be1a682d35714f1325ceb5ab"
+    "atUtc": "2026-10-22T21:25:32.812099+00:00",
+    "indexRows": 254,
+    "controllerTechnicalRetests": 0
   }
 }

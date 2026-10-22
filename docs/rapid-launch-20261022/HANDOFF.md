@@ -1,28 +1,33 @@
-实际C36三项应用链新增验收通过：真实D1事务prepared证明与D2service/store完成双图互换、同原请求重放不再写、过期版本整笔拒绝。QA 2账号/1商品2图/10审计10回执/来源0，root与两图版本3，池关闭。六个Linux锁包SRI实际核验、真实Sharp/私有stage构造通过，未执行上传/解码/文件变动；非HTTP/正式角色/真实导入/生产上线。原C验收直接采用，不另交QB重跑。
+接续增量：QB123已通过实际R1 C41完整目录/函数体/ACL限定验收，C正准备独立五purpose元数据review与最终R1配置/liveissuer；QB124只关闭C86库存F01，原38303实际来源不重跑。QF已通过C84单CSS和C85单锚点的源范围，实际几何仍等新候选Demo，不记浏览器通过。用户明确未操作干扰窗口，原因未知；输入分支按焦点与回读保护继续。
+
+最新接续更新：固定源码已到C86 `44f8388918136fb832d19cef8d6a9c864c3be3ae`。当前实际候选改为C83 `http://127.0.0.1:57842/synthetic-unified.html`、build ui-preview-4ee77b5-01-build01、HTML9f28810a66801aa7010ffe40eb6dd0b95078296c760a5d6cf27997f7181e2222，400输入/383模块，已给Demo。C85只含表头和尺码组锚点两源的小后继已构建未serve，待83模块结束后仅复两几何。分类页原登记P13已更正为P14；P13商品只读库存仍未实际检查，104总量/29局部/整页0不变，原证据保留。
+
+C41已经真正R1 runtime TCP认证并捕获完整目录，canonical f62de0a301d485da548324a89e97bd902f184ca45e0778901ab8d4be8dab15c7，独立QB新元数据待回执，不是issuer或完整host通过。39遗漏.cjs/嵌套输入的旧载体失败保留，41只修传输闭包。新stock消费QB122关闭时序F01已原D3最小修到C86，旧38303实际来源证据不重跑，待单条件复验。新来源映射另发现2471历史销货所属厅/创建厅原空与模型NOTNULL不一致：D1正整理完整字段确认单，未改库、mapper或权限，不猜填/不丢行，仅相关分支等明确确认；14279TRANSFER有限候选从已有partial原字节保留，整42561不记通过。STAFF closed分类和六方案初始化两个用户问题仍等待，其余继续。
 
 # 从这里接续
 
-更新 2026-10-22T20:02:22.939243+00:00。整体 ACTIVE；固定源码 C64 `79ce6c3270fd45c6599892913172f35ceb9fefdb`。正式地址 https://1n5635n614.goho.co/ 未切换，真实来源未导入。35页/66弹层共101项，整页/整弹层接受均0；15个去重局部检查不冒充整项通过。
+历史段落基线为C83，最新状态以上方接续为准。整体 ACTIVE；原正式地址 https://1n5635n614.goho.co/ 未切换，真实来源未导入。现行37页、67弹层共104项，29个去重局部浏览器检查；整页、整弹层通过均0。
 
-- 已采用 QB96–109 和 QF 后继精确有效结论，新增索引只归档回执，主控不重复技术验收。C59 finder portal/audit/SKU consumer、C60真实代码搜索、C61搜索seam/商品全页壳、C62季节popup/供应商不可清空、C63资料页原viewport条件依次保全。62/63最新影响待QF，真实浏览器按候选独立复验。
-- 当前可检查候选 http://127.0.0.1:57840/synthetic-unified.html ，源码d6ad29c7、build ui-preview-d6ad29c-01-build01，HTML a49b15cfa8a05811e71fdcb1f11b3dcdace98e0e3d6ebfd1accf3b8649b329cd。391实际构建输入、未声明差异0，HTTP已回读。含原W7根/年份真实消费者/设置扩展/readports未挂旧单consumer；全写拒绝、合成预览。旧875/693地址原字节保留。
-- 实操已关闭厅仓列表三个P2；销售finder主题/660/真实列表262.8046875对齐局部通过。原TR02共享调拨锚点仍偏14px、STORE04厅仓modal主题缺失、CAT01..03资料UI、季节popup实际鼠标可达性及其他未查范围，仍交原F1/F2/F3定向修复。源码修复不冒称浏览器已关。非人为输入来源 UNKNOWN，用户已明确没操作窗口，必要输入逐次回读，异常仅停输入支路。
-- C33单guard、C34真实PG双图10例、C35真实D1临时issuer/原连接/READ ONLY COMMIT有效结果直接采用；C35池已关闭，仅QA两purpose，不是R1或SOURCE/MAIN授权。QA现2合成账号/1商品2图/9审计9回执/来源0。C36实际D1 prepared proof+D2 service/store互换/原键重放/一次CAS三项已PASS，QA审计/回执现10/10，root/两图版本3，池已关闭，不重复提交；真实Linux锁定Sharp及空私有stage，零上传/真实文件分支。
-- D3真实产品2956/SKU14999/支付1086/offset引用针均执行授权false；full11源工厂/真实49/条码scheme与完整原码allocations等未闭合，不能用临时QA方案或引用针代填。R1现exact19/空目标，与QA严格分离；explicit26生产接线及最小实际ACL/新catalog针仍由C+D1原owner落实，D2库存exact2已获D3明确释放后正式转交，防并行双写。
-- 普通GitHub分支仍8775307，新增一次existing-gh-helper/HTTP1.1方式失败且API回读未更新。此前private draft恢复包eb57b34已下载hash+bundle verify，当前新阶段将另保存，不称普通push成功或业务发布。所有模型gpt-6.1-sol/xhigh，Fast要求关闭但工具无实际开关，不伪称已核UI。
+- R1 已实际完成自身备份和20–26迁移，C38一次事务成功。真实OID1027659、56表、121函数，账号、业务、来源均0；仅增加必要查询权限，没有开启单据写入。自身custom备份522537字节，SHA484d4e976251a87afbe59ad88e1e18f6b2a4cc731fffb6bb9566c8ffbf5fc618，留服务器，恢复演练未测。39在Node/凭据/PG之前因传输遗漏.cjs与嵌套输入失败；41改为原字节平铺闭包一次提交，未改数据库或权限，实际结果按独立回执接续。
+- C40 真实图片链通过：Sharp解码、私有stage上传、D1原事务/D2 ADD、同原key重放，以及原图/缩略图受控读取。QA现2账号/1商品3图/11审计11回执/来源0，root4，旧两图v3、新图v1，池关闭。37因载体目录必须700的失实假设在runner前失败；40只修载体，未改C36文件、未重装依赖。旧失败保留，不回放。尚非HTTP、真实用户权限或生产媒体验收。
+- 当前实际浏览器候选 http://127.0.0.1:57841/synthetic-unified.html ，source69/3fb36e8、build ui-preview-3fb36e8-01-build01、HTML4b2b3246634e1b6fe9d48e64b918185e1049e9c4569e13ab81a60257738d7b4b。398input/381module，候选不可变。v011已实际局部核年份鼠标/键盘、季节秋冬多选、厅仓及付款员工portal、调拨锚点/1222查看/返回保留、资料表密度、设置viewport与24+24非零跨tab滚动。W7独立账号页已接入，只部分通过；3员工不足非零滚动仍待证。69旧role/login能力仍false，不倒改。
+- C72销货金额/原行历史来源、C73调拨历史来源、C78删除与blur顺序已QF定向source PASS。旧失败保留，78归Standards P2修正确删除意图，不冒冻结Demo偏离或人类新业务裁决。C74客户供应商viewport、C76可选Overlay、C77真Arco分类树、C81真实role6客户端、C82 P19叶已获各自有效source结论。C83空白新账号红错时机已固定待最小QF/新浏览器；原校验/权限不变。新fixed83合成预览准备中，尚未serve。
+- 新实操残余：CAT01颜色/版型表头37vs36的1px由原F2处理；P03/P04尺码组popup相对控件左偏75px由F1共享控件核因修复。只复验涉及源，不重已过YEAR/P12/全共享套。
+- C79角色筛选旧exact5保留，新STAFF-only role6，QB121 source PASS；C81 F3真实客户端与其成对，QF scoped PASS。仅登录关闭是否包含无账号分类等待用户。六个原方案全42字段初始化单亦已提交，待明确当前/历史分类及完整初始化合同确认；没有新增表字段，原码和已批准21条性质处理不变。其余继续。
+- D3库存绑定候选QB117/独立reference-only针29470b6f已固；C80 genuineconsumer完成一次真实38303组/38314来源授权消费，80933有符号总量、402负贡献/397负组，新的consumer QA待收。该结果不是库存入账、MAIN或PUBLISH。header有限preparer2已登记原D3接续；历史真实ID始终stableImportId，410899原random allocation仅字节保全，QB119结论不授ID替代权。49账号server-only原捕获已存在，不重复抓取。
+- GitHub普通分支最后8775307未前进；03fb221私有草稿bundle已上传下载SHA及恢复校验。新源码及本接续文档在本次Git保存后追加可恢复检查点；未回读之前不称成功。K/A/private-data/凭据不随Git，跨机须另有授权。
 
-具体版本、回执与等待条件见 TASKS/currentContinuation、VERIFICATION-INDEX 和 HANDOFF。当前无待用户字段批准；已批准A–D/v2-B/v3-A/21码/v4保持。
-
-执行路径：R=/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022唯一应用开发目录；K=/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control为角色/主控证据；A=P/work/local-takeover-20261021-private-authority/rapid-launch-20261022为外部元数据pin，不进Git。冻结Demo b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3 与旧正式工程只读。C独占Git/server/DB/公共合同，各角色唯一文件边界以WRITE-OWNERSHIP为准。原九角色+既有Demo线程ID在TASKS，禁止重建/重复派工。
+调度、开发、验收固定Sol6.1/xhigh。Fast请求关闭，工具没有实际开关不冒实测。主控采用有效回执、不重复技术验收。完整版本化状态见TASKS.json和VERIFICATION-INDEX.json，当前不具备整体完成条件。
 
 接续顺序：
-1. C36 `c03-actual-service-media-swap-20261023-36` 已collect并PASS，状态和SHA见C03-ACTUAL-SERVICE-MEDIA-JOB36.json；禁止回放；任何未知COMMIT先读回原key/状态，不回放。原C32失败before SQL、C33成功及C34/C35原件均保留，不再跑旧矩阵/121结构/大来源。
-2. 只接收现有角色 meaningful回执：D1显式CurrentForm26→production独立26入口/retained view；D2 stock26 exact2和C媒体runner后继；D3 PRODUCTS genuine consumer及完整11工厂缺口；F1 saved桥/原TR残余；F2 CAT/搜索两个consumer；F3 modal主题9。QF/QB对固定新片最小验收，C采用有效结论；已闲时wait/read取最终回执，不让队列停交接。
-3. 下一必要合成候选要包含C61壳/C62季节popup/C63 viewport及就绪modal，再交Demo只新影响；当前d6不可拿来关闭这三后继源码。保持真实CSSinline marker资源闭包与同一固定源码/构建/HTML。仅专用Demo操作一对Chrome标签，不抢浏览器。
-4. 新R1 20..26安装/minimalACL必须先基于当前exact19目标和备份建立独立载体；只相关读取/登录权限，documentCommands DISABLED不借prepare注册写路由。fresh R1实际metadata/canonical独立核，不能复用QA e37/d824针。新增字段/约束/写合同差异仍先交用户确认，其他支路继续。
-5. 分批发布按原授权，符合批次页面/业务实际条件即发，不等无关全站检查；目前真实导入/账号/权限/保存/库存闭环未就绪，不能把预览截图或source QA当业务开放。
-6. GitHub检查点先核当前分支API及private draft tag codex-checkpoint-20261022-a7e817b最新附件。bundle恢复需exact基座8775307；下载SHA+git bundle verify后fetch进新codex/recovery分支，不reset现checkout。Dot跨机器还需获准的K/A/private-data及现有运维引用，缺失保持缺失，不根据路径猜authority。
 
-用户裁决：季节 product.season_ids 真正字典多选；仓库单厅/资金账户多厅/客户供应商分开；取消单位UI与库存校正；精确21条原主码改兼容旧码；图片v4同ID最终互换、版本一次、审计/唯一/全回滚。当前这些都有明确批准，无待确认单。v4原用户回复call_82226439f7bc4059aa8b13a7806c1243，批准记录SHAf7e8fa308fd5219af5e9e6a2276b61113e5ed747276a3929867976274ce553da。
+1. 先读TASKS.currentContinuation、WRITE-OWNERSHIP并核现有Chat状态与排队。保留九角色及唯一Demo Chat；新派工显式Sol61/xhigh及用户主动回报授权01a161f7-a5e8-7e10-9059-9537c28910c2，七项回报。按任务ID/动作/范围/版本/输入去重，不重建架构或空队列。
+2. C独占Git/根配置/服务器/DB。实际运维用R/scripts/release/ssh-control.py和P/monitor/normal-admission-20261013-01/release-connection.json引用；程序可复用凭据，模型不读/输出/入Git。每个job只提交一次；失败先收原回执，新任务仅精准后继，不回放、不清空QA或R1、不猜COMMIT。41成功才交QB actualR1runtime完整catalog，再签R1外部review和组合完整host；QA e37/d824不能替代。
+3. 原C04应用/DB-WAL/媒体/配置备份和C38 R1自身备份都保留。首笔新业务后的回退须保护新账、audit和receipt，不能旧快照覆盖。当前真实源没导入、业务没切换；原URL无新开放事实。
+4. QA已真实合成写到11audit/11receipt/3images/root4。未来入场不能套旧C36的10/2/3。C40实际stage/文件/ADD/受控read范围直接采用；HTTP身份/CSRF/最终role/业务仍另证，不重复旧图片codec/矩阵。
+5. 69/57841固定不可覆盖。新preview从明确83归档和声明overlay构建，再新端口+HTTPsha交Demo，只复新源。原默认CUTOFF保留；optional savedSales只原SKU；F1chunk42的savedTransfer作者fixture接入新预览，真实形状但合成，commands仍拒绝，无PG/成功receipt。role6数据适配须实际native parser和真实合成role过滤，不能只fakecap。候选source/overlay/build必须分开记录。
+6. 全11 genuineproducer、49真实credential bootstrap、SOURCE/MAIN/nonzeroPUBLISH、逐仓守恒、读回及本批实际浏览器/角色尚未完整。不用空producer凑齐，不以source-only reference针代授权。D3已有有效原资料/映射/库存/32money/exact2/creatorhall/temporal证据按范围复用；新header消费只一次必要新join，原registry不重扫，random allocation不替换stable历史ID。
+7. 仅STAFF closed归类和BARCODE-SCHEME-INITIALIZATION-CONFIRMATION-v1两问题等人类。没有答复不记批准，其它角色继续独立就绪工作。原C01/v2B/v3A/v4、仓库单厅/账户多厅、客户供应商分开及21主码转兼容旧码既有批准不重问。
+8. GitHub普通push阻塞如实记录。private draftbundle恢复点必须先断言HEAD，再用base877..HEAD命名范围建包，上传后下载核SHA并git bundle verify；恢复到新codex/recovery分支，不reset当前源码。K/A/私有资料和操作引用跨机缺失不能补造授权。
 
-报告/主动协作授权来源：人类01a161f7-a5e8-7e10-9059-9537c28910c2明确现有子任务完成/受阻/需验收主动回报；后续人类明确Demo专用Chat与主控双向报告/定向复验。7项ID/完成范围/改动文件/检查结果/未测项/阻塞/下一步，只新变化，不反复无状态盘点。所有后继/重试显式gpt-6.1-sol/xhigh；不切模型或Fast。
+角色空闲未主动通知就用wait/read拿最终回执继续；没有实际就绪新工作则记录精确等待，不凑任务、不反复盘点。符合本批条件即按既有授权原URL分批上线，不等待全站无关页面。现整体仍ACTIVE，不能因首批、报告或预算停止而标完成。
