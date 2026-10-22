@@ -26,3 +26,22 @@
 .dictionary-workbench .dictionary-pagination button[aria-current=page]{border-color:var(--ca-primary);background:var(--ca-primary-soft);color:var(--ca-primary-ink)}
 .dictionary-workbench .dictionary-pagination input{box-sizing:border-box;width:42px;height:28px;padding:3px 5px;border:1px solid var(--ca-control-border);border-radius:var(--ca-radius-control);text-align:center;background:var(--ca-surface);color:var(--ca-ink)}
 @media(max-width:900px){.dictionary-workbench .dictionary-pagination{flex-wrap:wrap}.dictionary-workbench .dictionary-pagination .actions{margin-left:0}}
+
+/* Frozen settings tabs and table, mapped to the installed Arco structure.
+   Only P16/P18 opt in; the barcode-schemes consumer keeps its own leaf styles.
+   Specificity also covers the actual bundle's later Arco/shared rules. */
+.dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs .arco-tabs-header-nav{padding:0}
+.dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs .arco-tabs-header-nav::before{display:none}
+.dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs>.arco-tabs>[role=tablist]{border-bottom:1px solid var(--ca-line)}
+.dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs .arco-tabs-header{display:flex;align-items:center;gap:4px;margin:0;padding:0}
+.dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs .arco-tabs-header-title{box-sizing:border-box;min-width:76px;height:34px;min-height:34px;margin:0;padding:5px 12px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--ca-ink-2);font-family:var(--ca-font-sans);font-size:13px;font-weight:400;line-height:1.15}
+.dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs .arco-tabs-header-title:not(.arco-tabs-header-title-disabled):hover{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+.dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs .arco-tabs-header-title-active{border-bottom-color:var(--ca-primary);color:var(--ca-primary-ink);font-weight:600}
+.dictionary-workbench.pc-readonly-settings .erp-tabs-host.dictionary-entry-tabs .arco-tabs-header-title-disabled{color:var(--ca-disabled-ink)}
+.dictionary-workbench.pc-readonly-settings .dictionary-entry-tabs .arco-tabs-header-nav-horizontal>.arco-tabs-header-scroll .arco-tabs-header-title:first-of-type{margin-left:0}
+.dictionary-workbench.pc-readonly-settings .dictionary-entry-tabs .arco-tabs-header-title-text{padding:0;font:inherit}
+.dictionary-workbench.pc-readonly-settings .dictionary-entry-tabs .arco-tabs-header-ink{display:none}
+.dictionary-workbench.pc-readonly-settings .pc-settings-body .erp-read-table .arco-table :is(.arco-table-th,.arco-table-td){box-sizing:border-box;height:34px;min-height:34px;padding:4px 8px;border-bottom:1px solid var(--ca-table-grid);font-size:12px;line-height:18px;vertical-align:middle}
+.dictionary-workbench.pc-readonly-settings .pc-settings-body .erp-read-table .arco-table .arco-table-th{height:36px;background:var(--ca-table-head);color:var(--ca-ink-2);font-weight:600}
+.dictionary-workbench.pc-readonly-settings .pc-settings-body .erp-read-table :is(.arco-table-th-item,.arco-table-cell){line-height:inherit}
+.dictionary-workbench.pc-readonly-settings .pc-settings-body .erp-read-table .arco-table-th-item{padding:0}

@@ -1,0 +1,186 @@
+{
+  "atUtc": "2026-10-22T22:29:00.240552+00:00",
+  "parent": "ba14a15dc5a124f1074b91352c9af584c9313a49",
+  "groups": [
+    {
+      "slice": "fix: restore frozen tabs and table density for readonly dictionaries",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DICTIONARY-P16P18-DELIVERY-v1.json",
+      "receiptSha256": "5b42bdf5e1e55e5e13b020a7492438326aa528feead5d942fa3320d0f4a12e9a",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskId": "CAT-UI-01/03 P16 size-groups + P18 seasons existing issue scope",
+        "role": "F2",
+        "atUtc": "2026-10-22T22:28:08.116222+00:00",
+        "status": "SOURCE_READY_AFFECTED_DOM_TYPES_ACTUAL_BUNDLE_CASCADE_PASS_BROWSER_PENDING",
+        "modelRequested": "gpt-6.1-sol/xhigh",
+        "fastRequested": false,
+        "actualFastState": "NOT_EXPOSED_BY_TOOL",
+        "authority": {
+          "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+          "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "currentExplicitP16P18Dispatch": "Existing CATUI01/03 continued, no new role/architecture",
+          "exact2Ownership": "C actually registered exact2 before R writes, registry SHA25983b67e54b00742756ab2fce1167c3d6d11e58eb3393fb49a3b0f1337c46c7 at acknowledgment; one F2 owner verified before edits."
+        },
+        "input": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v014-f1809f7/DICTIONARY-SOURCE-RUNTIME-SUPPLEMENT.json",
+          "sha256": "c230aa52f675b733e2543ab74ff55189a80ec30c42258fd67948057f9f1deadb"
+        },
+        "completedScope": [
+          "Read all actual source-dictionary consumers: native read-only SettingContent (groups/seasons) and P19 BarcodeSchemesPage.",
+          "Dedicated pc-readonly-settings root and dictionary-entry-tabs class adopt complete applicable frozen tab/header/table layer on existing actual Arco structure, with source36 header/34 readonly rows/pad4x8/line18; inner header padding0 avoids late smallTable37 minimum.",
+          "Tabs target13px/h34/min76/pad5x12/gap4/firstmargin0; native disabled/selected states and keyboard/focus owner retained.",
+          "Remove only always-present normal refresh from heading; unchanged DictionaryReadState loading/cancel/error/retry/idle-read and stale-success notice retained.",
+          "No data/size identity or order/query/paging/source validation/access/maintenance API changes. Fixed pagination/search old source CSS unchanged.",
+          "All15 new selectors require dedicated P16/P18 root; original CSS prefix unchanged, P19/C85 colorfit source and styles not edited. No new application files or write controls."
+        ],
+        "changedFiles": [
+          {
+            "path": "apps/web/src/product-settings/size-groups/setting-page.tsx",
+            "sha256": "136685009fb4f447dea1abd1210323c19e571e40c3651fab47b29a1ccb586e41",
+            "beforeSha256": "6a1e2b829ad92cd4c2057f92e8849557461676afc4d221df2831e4156556eb2d",
+            "fixedCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DICTIONARY-P16P18-source/setting-page.tsx"
+          },
+          {
+            "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
+            "sha256": "5f60ff8600e0a374cc991a9466d38adeb0829fc6eaa8c3e0c123ffeabbf9917f",
+            "beforeSha256": "0774a41018f0e699b21e9f6a898a7526c90f20ee630c8ca0e31d1807a61ddc20",
+            "fixedCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DICTIONARY-P16P18-source/source-dictionary.css"
+          }
+        ],
+        "newApplicationFiles": 0,
+        "unchangedDependencies": [
+          {
+            "path": "apps/web/src/product-settings/read-only-settings-host.tsx",
+            "sha256": "c3c2f27aa27ed3c3f3a2370bfaea2285f8af4ca5a24b77093fe4631f28e235d9",
+            "writtenInThisSlice": false
+          },
+          {
+            "path": "apps/web/src/product-settings/size-groups/size-groups-page.tsx",
+            "sha256": "01ba35ced4f0772cc5c003ed840cd7c1d7ebc9ce8d5869ca2223f69477136747",
+            "writtenInThisSlice": false
+          },
+          {
+            "path": "apps/web/src/product-settings/seasons/seasons-page.tsx",
+            "sha256": "69cb97b174e41cddd894dd3acbe1e79ec479a2c1fda77ee20bec444abd74b611",
+            "writtenInThisSlice": false
+          },
+          {
+            "path": "apps/web/src/product-settings/size-groups/pagination.tsx",
+            "sha256": "ba26eda9f0f93d176c33db49b48963095021957b067df5da00959fa647f64b81",
+            "writtenInThisSlice": false
+          },
+          {
+            "path": "apps/web/src/product-settings/size-groups/read-state.tsx",
+            "sha256": "f2c8e672bf9705d7557c5499a9ffca94246bd977c610cab1417d1ea4d23a6cce",
+            "writtenInThisSlice": false
+          },
+          {
+            "path": "apps/web/src/product-settings/size-groups/read-owner.tsx",
+            "sha256": "28798bbcf9c339a034e805adbc0426da46c0421632f7f76d961887f589a555ac",
+            "writtenInThisSlice": false
+          },
+          {
+            "path": "apps/web/src/components/standard-tabs.tsx",
+            "sha256": "91531b0d80318d6ea11106d66c6b58b88227000b9e144ebe4b43ae242ab64f4d",
+            "writtenInThisSlice": false
+          },
+          {
+            "path": "apps/web/src/components/standard-tabs.css",
+            "sha256": "680996514f1ceddc1cf74755b5cf4e4473491437eebbdb18cebb38d42f68e7f9",
+            "writtenInThisSlice": false
+          },
+          {
+            "path": "apps/web/src/components/standard-read-table.tsx",
+            "sha256": "9e0483783c1d75b85c1941dc5458e227d8fd2f76410d72bf97453021f14f0092",
+            "writtenInThisSlice": false
+          },
+          {
+            "path": "apps/web/src/components/standard-read-table.css",
+            "sha256": "9a33943227d016079e13034ca424c709e18fa92143c679389848a9a824a55836",
+            "writtenInThisSlice": false
+          },
+          {
+            "path": "apps/web/src/barcode-schemes/barcode-schemes-page.tsx",
+            "sha256": "5baaca8a294f88643867b35ccb30e16f4b0e544e61c40da91cd905876a15cad1",
+            "writtenInThisSlice": false
+          },
+          {
+            "path": "apps/web/src/barcode-schemes/barcode-schemes.css",
+            "sha256": "653bdd6029a8c3b019048c8ae6f47e159fb0aeba3b313905edc902261aaac394",
+            "writtenInThisSlice": false
+          },
+          {
+            "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+            "sha256": "d69895a7ae979323a217cbd038764b4df200b17e360df343e6110f396e772757",
+            "writtenInThisSlice": false
+          }
+        ],
+        "checks": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DICTIONARY-P16P18-dom-v1.log",
+            "sha256": "0837dc64b662d632d3d6146ab2b08a769e3eaf0fabcc1997a8318583e1295156",
+            "bytes": 688,
+            "exitCode": 0
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DICTIONARY-P16P18-types.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0,
+            "exitCode": 0
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DICTIONARY-P16P18-cascade-v1.log",
+            "sha256": "4df102aa4be183cecacbfbcb1069c43fa9d70d0bcc9bc2d651181c6c4d764517",
+            "bytes": 391,
+            "exitCode": 0
+          }
+        ],
+        "cascadeResult": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DICTIONARY-P16P18-cascade-result-v1.json",
+          "sha256": "c20b535de0dc8c03823693e5fb72a853017e9bac3e9ad3f4f9a00b546de8804f",
+          "method": "Both actual mounted native leaves through real ReadOnlyProductSettingsHost with immutable actual C89 full inline CSS and matching leaf provenance. Exact added scoped block placed before and after whole actual bundle, native selector/specificity; not simplified stylesheet order or new browser geometry.",
+          "actualC89HtmlSha256": "d1a7740ccf378bfb3138e8f67d5bf012003ca65ad4632e1c43cefbf9e6f4abaa",
+          "nonConsumers": "All added selectors match zero elements on existing actual P19/colorfit DOM; no behavior suites rerun."
+        },
+        "domCoverage": [
+          "Only native two enabled tabs/groups23/seasons3; disabled colorfit skipped; no extra refresh/new/edit/delete buttons or dialogs",
+          "Duplicate group names native distinctIDs and original size order/leading-zero001 preserved",
+          "Native page2 failure503 keeps old page and retry recovers records21–23/fixed pager DOM",
+          "Native season switch and focus restoration; XYZ no-result then clear; Enter not duplicate debounce read",
+          "Arrow navigation returns only allowed group tab and fresh initial page/search"
+        ],
+        "types": "Affected setting-page and host transitive closure strict/exactOptional/noUnchecked with original ES2023,DOM, exit0/0bytes; no compiler lib relaxation.",
+        "warnings": [
+          "Existing React19 Arco element.ref deprecation only."
+        ],
+        "notRun": [
+          "Actual new candidate pixels/tab x228,308,388,468/header36/readonly row34/internal scroll after change",
+          "Real HTTP/PG/role grant/business writes/fullpage acceptance",
+          "Fullbuild/new preview/deployment",
+          "Old list/tree/39cases or accepted colorfit/P19 functional scopes not repeated"
+        ],
+        "blockers": {
+          "sourceSlice": null,
+          "wholePage": "C fixed checkpoint then QF only this new scope; Demo next necessary preview only affected P16/P18 geometry.",
+          "originalUnrelatedWaits": "P10 full barcode DTO/P06 actual media runtime-key-hash retained. X97 and RETURN98 remain original owners; not touched."
+        },
+        "nextStep": "C fix exact2+receipt; QF only P16/P18 new leaf/scopedCSS, reuse accepted pagination/scroll cases. Demo future candidate including these pins only actual affected geometry/idle refresh; no whole issue/page PASS inferred."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/product-settings/size-groups/setting-page.tsx",
+          "owner": "F2",
+          "bytes": 5959,
+          "sha256": "136685009fb4f447dea1abd1210323c19e571e40c3651fab47b29a1ccb586e41"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
+          "owner": "F2",
+          "bytes": 6710,
+          "sha256": "5f60ff8600e0a374cc991a9466d38adeb0829fc6eaa8c3e0c123ffeabbf9917f"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "OriginalCATUI01/03 P16/P18 scoped read-only UI only; preserve nativequery/paging/error recovery/leading-zero IDs/size order. New CSS root only, P19 originalprefix/C85 unaffected; no shared source/schema/write UI changes. Actual pixels pending new fixed preview."
+}
