@@ -1,0 +1,100 @@
+{
+  "atUtc": "2026-10-22T23:14:35.899016+00:00",
+  "parent": "794bec548e10bf44e33f3b4287cafd15efcd83dc",
+  "groups": [
+    {
+      "slice": "fix: restore readonly product price alignment and hint",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P11-READONLY-PRICES-DELIVERY-v1.json",
+      "receiptSha256": "bd1f64a6bfb7217f6c3c532ed2a7dd07e984dee6fcbbb2692f9810c30ebd413c",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskId": "PROD-RO-P11-01 readonly nine price alignment and instruction",
+        "role": "F2",
+        "atUtc": "2026-10-22T23:14:12.786268+00:00",
+        "status": "SOURCE_READY_DOM_TYPES_MATCHED_CASCADE_PASS_BROWSER_PENDING",
+        "authority": {
+          "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+          "ownership": "Existing exact2 unique F2 UI files; no new file"
+        },
+        "modelRequested": "gpt-6.1-sol/xhigh",
+        "fastRequested": false,
+        "input": {
+          "path": "reports/ui-demo-comparison-20261022/v016-6eac13e/PRODUCT-READONLY-SOURCE-RUNTIME-SUPPLEMENT.json",
+          "sha256": "ac2c79bfb072694ac4709a9e19ba23fed3ca607cb56ce468cf27eb72b482daef",
+          "baseSourceAudit": "products-page-20261023/SOURCE-REGION-MATRIX.json reused"
+        },
+        "completedScope": [
+          "Readonly numeric value left alignment, preserving exact decimal string and null未设置 vs0.00.",
+          "Restore exact frozen readonly priceBody top Excel-order instruction and bottom null/zero wording; no paste/input/write behavior added.",
+          "Readonly-only helper font12/colorink3 and footer margin6. Original9 labels/keys/order/native query/validation/readstate/table geometry/editor CSS unchanged.",
+          "C105 related tab center property remains in baseline product CSS, not reverted. Product shell x/y+4 separately outstanding."
+        ],
+        "changedFiles": [
+          {
+            "path": "apps/web/src/products/product-page-prices.tsx",
+            "sha256": "168482ee60426987bf7a40fd99a6de829f3f2312a2c8e713dc0e277b30843ce0",
+            "beforeSha256": "d4702b8fcb5e86a68c9762c3d939c95272ec5e61e604df34e69e836284e732dc",
+            "fixedCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P11-READONLY-PRICES-source/product-page-prices.tsx"
+          },
+          {
+            "path": "apps/web/src/products/product-page.css",
+            "sha256": "2a39acef89fda0b6807b9d8df92f1c7796c64f26742920ce36b9d01084a58cc6",
+            "beforeSha256": "b3a21e750f043ad2636d3a00144261488f271eeacb4d0614ec59682ee2b7a936",
+            "fixedCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P11-READONLY-PRICES-source/product-page.css"
+          }
+        ],
+        "newApplicationFiles": 0,
+        "checks": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P11-READONLY-PRICES-dom-v1.log",
+            "sha256": "b27fdd9eb545b344ad03fdfee7ff060af174ff457acbf0f7e3c2b9ac39a3b7c1",
+            "exitCode": 0,
+            "bytes": 289
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P11-READONLY-PRICES-types.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "exitCode": 0,
+            "bytes": 0
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P11-READONLY-PRICES-cascade-v1.log",
+            "sha256": "6a1f8415a91b5bf05336139a890f29f6f616371cd2862802f050a5e9ba3d2dd8",
+            "exitCode": 0,
+            "bytes": 260
+          }
+        ],
+        "domCoverage": "Actual price leaf native scoped read, all9 keys/order, null/0.00/39.90 exact values, frozen instruction copy, input/select/textarea/button/contenteditable0. Synthetic data only.",
+        "cascadeResult": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P11-READONLY-PRICES-cascade-result-v1.json",
+        "cascadeMethod": "Actual price leaf DOM + actual immutable C100 full stylesheet with exact old readonly align rule replaced at same source position; scoped helper rules before/after all old styles. No simplified final-order or browser claim.",
+        "notRun": [
+          "New candidate browser/real same-value-state pairing",
+          "Fullpage/realHTTP/PG/businesswrite/deployment",
+          "Old45/list/tree/page suites not repeated"
+        ],
+        "blockers": {
+          "sourceSlice": null,
+          "next": "C fix exact2+receipt then QF only P11 delta; future Demo price alignment/copy only.",
+          "nextSlice": "P12 classified empty UI ready for next original UI work after shared product CSS is fixed/released; P10 DTO grouping analysis independent."
+        },
+        "nextStep": "C fixed source checkpoint; keep source immutable until acknowledgment, then proceed P12 without waiting Chrome. No pureUI realbusiness acceptance."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/products/product-page-prices.tsx",
+          "owner": "F2",
+          "bytes": 1687,
+          "sha256": "168482ee60426987bf7a40fd99a6de829f3f2312a2c8e713dc0e277b30843ce0"
+        },
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "owner": "F2",
+          "bytes": 20541,
+          "sha256": "2a39acef89fda0b6807b9d8df92f1c7796c64f26742920ce36b9d01084a58cc6"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "P11 readonly nine prices left aligned, frozen hints restored only; no paste/edit capability or change to precision/null/zero/keys/order/native reads. C105 glyph retained; separate shell xy+4 unresolved; browser pending fixed preview."
+}

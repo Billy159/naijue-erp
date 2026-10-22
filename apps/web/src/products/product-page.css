@@ -190,11 +190,13 @@
 .product-readonly-page .product-price-wrap{max-width:760px}
 .product-readonly-page .product-price-paste{align-items:baseline;gap:12px;margin-bottom:7px}
 .product-readonly-page .product-price-paste strong{font-size:14px;font-weight:600;color:var(--ca-ink)}
+.product-readonly-page .product-price-paste small,.product-readonly-page .product-price-wrap>.product-field-hint{color:var(--ca-ink-3);font-size:12px}
+.product-readonly-page .product-price-wrap>.product-field-hint{display:block;margin:6px 0 0}
 .product-readonly-page .product-price-table{border:1px solid var(--ca-line)}
 .product-readonly-page .product-price-table th,.product-readonly-page .product-price-table td{box-sizing:border-box;height:38px;padding:3px 10px;border-bottom-color:var(--ca-table-grid);font-size:13px}
 .product-readonly-page .product-price-table th:first-child{width:60%}
 .product-readonly-page .product-price-table thead th{height:34px;background:var(--ca-table-head);color:var(--ca-ink-2);font-size:12px}
 .product-readonly-page .product-price-table tbody th{background:var(--ca-table-head);color:var(--ca-ink);font-weight:400}
-.product-readonly-page .product-readonly-price-value{text-align:right;font-variant-numeric:tabular-nums}
+.product-readonly-page .product-readonly-price-value{text-align:left;font-variant-numeric:tabular-nums}
 @media(max-width:800px){.product-readonly-page .product-readonly-base-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.product-readonly-page .product-readonly-base-grid{grid-template-columns:1fr}}
