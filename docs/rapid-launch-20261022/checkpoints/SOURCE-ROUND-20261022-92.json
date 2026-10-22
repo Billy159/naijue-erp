@@ -1,0 +1,156 @@
+{
+  "atUtc": "2026-10-22T22:01:33.957215+00:00",
+  "parent": "fe445c826b511898df7f3ecb7f3b19c756f3dc47",
+  "groups": [
+    {
+      "slice": "GENUINE_TRANSFER_HEADER14279_SINGLE_PASS_CONSUMER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-source26-consumer1/RESULT.json",
+      "receiptSha256": "73c340ebab2b85660f47cf9d5aa7f7b1dccac10d54da0e69060bab59950adc4c",
+      "receiptSnapshot": {
+        "taskId": "D3_GENUINE_TRANSFER_HEADER26_SINGLE_PASS_SOURCE_CONSUMER",
+        "status": "SOURCE_READY_NEW6PASS_ACTUAL14279_ONE_PHYSICAL_GZIP_PASS_REFERENCE_ONLY",
+        "atUtc": "2026-10-22T21:55:58.746752+00:00",
+        "sourceExact2": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-transfer-header-source26.mjs",
+            "bytes": 24997,
+            "sha256": "742d907ca13ea16ebba564d78a98db7172f32e2ff44acc2dcfe33950a772eb30"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-transfer-header-source26.test.mjs",
+            "bytes": 17767,
+            "sha256": "cd34c97c3598a1f2fed24605ac6fd87cfd3dcccb2dab5fa5155e40fc85ed6436"
+          }
+        ],
+        "signature": "openReviewedTransferHeaderSource26({binding,authorizedPayloadHash,reviewFile,trustedReviewSha256,originalSource,parties,cacheParent[,signal]}) -> chunks/authorize/verify/openClosure/close",
+        "checks": {
+          "newSynthetic6": {
+            "pass": 6,
+            "fail": 0,
+            "log": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-source26-consumer1/protocol-first.log",
+              "bytes": 1046,
+              "sha256": "0065577d1602d796440673a4815498c497a4df84f3ba7cfa4c65f84ae557907e"
+            },
+            "scope": [
+              "One physical gzip stream and EOF before first external row; cache-only later reads",
+              "Physical typed22 SQL temporal form with exact6 microseconds, local/instant/NULL distinctions; mapper unchanged",
+              "CRC/UTF8/EOF/count corruption prevents partial reader and removes own cache",
+              "Separate C/source/native pins, substitutions/getters/input capture",
+              "In-flight close after awaited range read on chunks/source/typed/doc callbacks; constructor abort and owned cleanup",
+              "Actual payload missing rejects closure; missing lines prevents complete closure; file/cache drift revokes"
+            ]
+          },
+          "actual": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-source26-consumer1/ACTUAL14279-RESULT.json",
+            "bytes": 1841,
+            "sha256": "2e457b22df48eed30aaed7765b01bd9624c0afe6adb59a3d095ced96158aea3d"
+          },
+          "rows": 14279,
+          "chunks": 143,
+          "constructorCalls": 1,
+          "instrumentedPhysicalStreams": 1,
+          "fullContainerRows": 42561,
+          "containerCounts": {
+            "SALES_HEADER": 28282,
+            "TRANSFER_HEADER": 14279
+          },
+          "preparedFingerprintStreamSha256": "16dc7de36cb15b5b9e08dbc115152fd810f95692fbabc5b56bfae4f51c33fec5",
+          "originalSourceUnchanged": true,
+          "actualMainScopeRejected": true,
+          "cacheParentPreserved": true,
+          "onlyOwnedCacheRemoved": true,
+          "elapsedMilliseconds": 37974.009625,
+          "nodeResourceUsageMaxRSSRaw": 531744,
+          "heapMiB": 1024,
+          "serial": 1
+        },
+        "actualSourceBinding": {
+          "exactActualBaseline": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-source26-consumer1/ACTUAL-SOURCE-BYTES-before-final-lifetime-guard.mjs",
+            "bytes": 24961,
+            "sha256": "44af6ade5b7de462dc23f9dd5ced94f5e1d7fabc6236872ba38eaca9d91a63da"
+          },
+          "bindingRecord": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-source26-consumer1/ACTUAL-SOURCE-BINDING-before-final-lifetime-guard.json",
+            "bytes": 795,
+            "sha256": "11c2172040778a296fad0a795e159fd77c7ffde3c80d1bef0cdd88cba656c142"
+          },
+          "finalDelta": "Only4 outer active checks immediately after awaited verify, for chunk entry/EOF, authorization and session creation. No original-source reader/cache/mapper/columns/fingerprint behavior changed.",
+          "affectedSyntheticOnly": {
+            "pass": 3,
+            "fail": 0,
+            "categories": [
+              4,
+              5,
+              6
+            ],
+            "log": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-source26-consumer1/protocol-affected-lifetime-only.log",
+              "bytes": 581,
+              "sha256": "e3804892bd6befbcecb32d5cb61eba554880cf3ca6e454335627f501e74dd113"
+            }
+          },
+          "actualSourceRerun": false
+        },
+        "verifiedEofComparedToIndependentReceipt": {
+          "storedBytes": 16931387,
+          "storedSha256": "cfdf6af1a7e3cbd8ad4f20fb09100776701636bd599948c237081a6d3f6ed9eb",
+          "rawBytes": 398749141,
+          "rawSha256": "7454d2fbb64a2b4d2714a6973cae165bc785cd58a88f955c0b598e1adf67884e",
+          "mechanism": "Constructor cannot return before compressed/raw digest+length+CRC/UTF8/complete JSONL EOF/count and14279 sourceContext/prepared fold comparisons pass."
+        },
+        "authorityComposition": {
+          "newReferenceReviewSha256": "3cf75d0e37dd2ffe45c6a63cc30e6bc40d136e8da170e3bf6fbfc60b9edd1bef",
+          "independentReview": "QB125 PASS, Transfer14279 only",
+          "sourceReceiptSha256": "ba58af0a58270153bd344a23fad7d13a378153e5fdd213ad6789f9d952fef04c",
+          "nativeContextReviewSha256": "45fffe88e687b76d7772c99b88f6492e1c5bf5dcf454ce37650ed456ce2ba298",
+          "nativeContextRows": 406,
+          "onlyResolvedNativeKinds": [
+            "WAREHOUSE",
+            "HALL"
+          ],
+          "historyIdentityRule": "Existing mapper stableImportId; documents use actual prepared header.id, never random allocation assets",
+          "sourcePhysicalReadAuthority": "C operational TRANSFER14279-SOURCE-WINDOW-v1, one serial pass after6 checks; not PG/MAIN/PUBLISH"
+        },
+        "closureScope": {
+          "source": "Full13 import_source_row with actual history_header_staging proof",
+          "typed": "Full22 history_transfer_header with exact existing SQL temporal text form",
+          "documents": "Exact4 kind/sourceKey/headerSourceRowId/headerId, Transfer only",
+          "actualPayloadHash": null,
+          "actualClosure": "Correctly refused; completeall11/Sales/lines not claimed"
+        },
+        "notTested": [
+          "Actual all11 expected-vs-PG closure",
+          "PG/runtime/MAIN49/bootstrap/import/publication",
+          "Sales2471 nullable branch or whole42561 native mapping",
+          "Whole-import capacity/performance acceptance"
+        ],
+        "nonActions": {
+          "originalCSVReads": 0,
+          "registryReads": 0,
+          "originalMapperQAReruns": 0,
+          "stockActualReruns": 0,
+          "newNativeUUIDs": 0,
+          "SQL": 0
+        },
+        "next": "C freeze final exact2 and independently review only new consumer/one-pass EOF/cache/temporal/lifetime scope. Reuse QB125/reference and original source decisions, actual14279 evidence with explicit final lifetime-only delta; no second original gzip read."
+      },
+      "files": [
+        {
+          "path": "scripts/import-v3/native-transfer-header-source26.mjs",
+          "owner": "D3",
+          "bytes": 24997,
+          "sha256": "742d907ca13ea16ebba564d78a98db7172f32e2ff44acc2dcfe33950a772eb30"
+        },
+        {
+          "path": "scripts/import-v3/native-transfer-header-source26.test.mjs",
+          "owner": "D3",
+          "bytes": 17767,
+          "sha256": "cd34c97c3598a1f2fed24605ac6fd87cfd3dcccb2dab5fa5155e40fc85ed6436"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Only genuine Transfer14279 one physical source pass/cache/full temporal projections/lifetime. Actual44af6ade source bytes preserved separately, final4 active-check delta742d907c only targeted synthetic checks; not actual rerun on final source. No full42561/Sales/PG/MAIN/PUBLISH."
+}
