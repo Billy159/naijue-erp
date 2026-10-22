@@ -1,3 +1,4 @@
+import type { SalesProductCapability } from './document-presentation.tsx';
 import { SalesStatusTag } from './sales-status-tag.tsx';
 import { StandardReadTable } from '../components/standard-read-table.tsx';
 import { UIButton, UIDate, UIInput } from '../components/standard-controls.tsx';
@@ -16,7 +17,7 @@ export interface SalesPageWriteActions {
   readonly commitRevision: number;
   readonly openCreate: () => void; readonly canLeave?: () => boolean; readonly close?: () => void; readonly openExisting: (salesId: string) => void; readonly editor: ReactNode;
 }
-export interface SalesPageProps { readonly controller: SalesPageController; readonly references: SalesReferenceReader; readonly loadDetailStyles?: () => Promise<unknown>; readonly write?: SalesPageWriteActions }
+export interface SalesPageProps { readonly controller: SalesPageController; readonly references: SalesReferenceReader; readonly loadDetailStyles?: () => Promise<unknown>; readonly write?: SalesPageWriteActions; readonly product?: SalesProductCapability }
 const refLabels: Readonly<Record<SalesReferenceKind, string>> = { hall: '营业厅', salesperson: '营业员', customer: '客户', warehouse: '出库仓' };
 // Frozen sales-current.js:7–8. Native timestamps remain authoritative; format
 // only for display, with no locale-dependent parsing of business dates.
@@ -25,7 +26,7 @@ function updatedMinute(timestamp: string): string {
   const parts = Object.fromEntries(updatedClock.formatToParts(new Date(timestamp)).map(({ type, value }) => [type, value]));
   return `${parts.year}-${parts.month}-${parts.day} ${parts.hour}:${parts.minute}`;
 }
-export function SalesPageView({ controller, references, loadDetailStyles, write }: SalesPageProps) {
+export function SalesPageView({ controller, references, loadDetailStyles, write, product }: SalesPageProps) {
   const { list: query, scope, reader } = controller;
   const referencePopupHost = useSalesReferencePopupHost(scope);
   const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
@@ -116,7 +117,7 @@ export function SalesPageView({ controller, references, loadDetailStyles, write 
     </div>
     <SalesPagination scope={scope} active={!detailActive} page={data?.page ?? 1} pageSize={size} total={data?.exactTotal ?? null} busy={busy} onPage={page => { if (success) run({ ...success.parameters, page }); }} onPageSize={pageSize => { if (success) run({ ...success.parameters, page: 1, pageSize }); else setInitialSize(pageSize); }} />
   </section>
-    {target && detailActive && loadDetailStyles && <SalesDetailHost key={`${target.row.id}:${target.sequence}`} parentScope={scope} salesId={target.row.id} reader={reader} loadDetailStyles={loadDetailStyles} close={() => setTarget(null)} />}
+    {target && detailActive && loadDetailStyles && <SalesDetailHost key={`${target.row.id}:${target.sequence}`} parentScope={scope} salesId={target.row.id} reader={reader} {...(product ? { product } : {})} loadDetailStyles={loadDetailStyles} close={() => setTarget(null)} />}
     {write?.active && write.editor}
   </div>;
 }

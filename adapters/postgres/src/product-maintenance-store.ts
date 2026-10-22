@@ -1,9 +1,10 @@
+import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { CATALOGUE_PRICE_KEYS } from "../../../packages/application/src/catalogue-price-input.ts";
 import type { CataloguePriceKey } from "../../../packages/application/src/catalogue-price-input.ts";
 import type { ProductAggregate, ProductBarcodeRecord, ProductDetailReferences, ProductMaintenanceCandidate, ProductMaintenanceCandidatePage, ProductMaintenanceCandidateQuery, ProductMaintenanceEvidence, ProductMaintenanceTransaction, ProductMaintenanceUnitOfWork, ProductSkuRecord, ProductStoredRecord } from "../../../packages/application/src/product-maintenance-ports.ts";
-import { parseProductMaintenanceCandidates, parseProductSeasonIds, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS } from "../../../packages/application/src/product-maintenance-validation.ts";
+import { parseProductMaintenanceCandidates, parseProductSeasonIds, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS, orderProductImageWrites } from "../../../packages/application/src/product-maintenance-validation.ts";
 import { productSeasonArrayEnabled, type ProductSeasonArrayCapability, type PgProductQueryResult } from "./product-query-reader.ts";
 import type { MaintenancePgUnitOfWork } from "./maintenance-command-unit-of-work.ts";
 import type { ProductMaintenanceImageSnapshot, ProductMaintenanceImageMetadata } from "../../../packages/application/src/product-maintenance-ports.ts";
@@ -15,10 +16,34 @@ export interface PgProductMaintenanceContext {
 }
 /** D1's central transaction driver supplies this structure. No local pool/BEGIN/receipt writer. */
 export interface PgProductMaintenanceDriver { transaction<T>(work: (context: PgProductMaintenanceContext) => Promise<T>): Promise<T> }
+/** D1-issued proof of actual image schema/guards/ACL and original same-client prepared closure. */
+export interface ProductMediaWriteCapability {
+  readonly profile: "product-media-write-v22";
+  readonly assertVerified: (driver: object) => void;
+  readonly assertReady: (context: PgProductMaintenanceContext) => Promise<void>;
+  readonly assertPrepared: (context: PgProductMaintenanceContext, completion: Parameters<ProductMaintenanceEvidence["complete"]>[0]) => Promise<void>;
+}
+function mediaCapability(driver: object, proof: ProductMediaWriteCapability | null): ProductMediaWriteCapability | null {
+  if (proof === null) return null;
+  if (typeof proof !== "object" || Array.isArray(proof) || Object.getPrototypeOf(proof) !== Object.prototype || Reflect.ownKeys(proof).length !== 4) throw TypeError("Explicit verified image-write capability required");
+  for (const key of ["profile", "assertVerified", "assertReady", "assertPrepared"]) if (!Object.getOwnPropertyDescriptor(proof, key) || !("value" in Object.getOwnPropertyDescriptor(proof, key)!)) throw TypeError("Image proof requires own data properties");
+  if (proof.profile !== "product-media-write-v22" || typeof proof.assertVerified !== "function" || typeof proof.assertReady !== "function" || typeof proof.assertPrepared !== "function"
+    || Object.prototype.toString.call(proof.assertVerified) === "[object AsyncFunction]") throw TypeError("Actual image-write proof required");
+  const result: unknown = proof.assertVerified(driver);
+  if (result !== undefined) { if (result instanceof Promise) void result.catch(() => {}); throw TypeError("Image startup proof must already be verified"); }
+  return Object.freeze({ profile: proof.profile, assertVerified: proof.assertVerified, assertReady: proof.assertReady, assertPrepared: proof.assertPrepared });
+}
 type SharedDriverCompatibility = MaintenancePgUnitOfWork extends PgProductMaintenanceDriver ? true : never;
 const sharedDriverCompatible: SharedDriverCompatibility = true; void sharedDriverCompatible;
 export interface ProductDeletionGuard { assertCanDelete(context: PgProductMaintenanceContext, product: ProductAggregate): Promise<void> }
 const uuid = (value: unknown): string => entityId("product", stringValue(value));
+function imageFingerprint(i: ProductMaintenanceImageMetadata): string {
+  const milliseconds = Date.parse(i.createdAt), fraction = i.createdAt.match(/\.(\d{1,6})(?:Z|[+-]\d\d:\d\d)$/)?.[1] ?? "";
+  requireDomain(Number.isFinite(milliseconds), "INVALID_DATABASE_VALUE", "Actual image creation time required");
+  // PostgreSQL emits six fractional digits; preserve microseconds while comparing equivalent ISO encodings.
+  const micros = BigInt(milliseconds) * 1000n + BigInt(fraction.padEnd(6, "0").slice(3));
+  return requestHash({ ...i, createdAt: micros.toString(), byteSize: i.byteSize.toString() });
+}
 function storedPrice(value: unknown): string | null {
   if (value === null) return null;
   requireDomain(typeof value === "string" && /^(?:0|[1-9]\d{0,15})\.\d{2}$/.test(value), "INVALID_DATABASE_VALUE", "Invalid stored product price"); return value;
@@ -52,15 +77,17 @@ function rootValues(p: ProductStoredRecord): unknown[] {
 export class PostgresProductMaintenanceUnitOfWork implements ProductMaintenanceUnitOfWork {
   readonly seasonContract?: "product-season-array-v1";
   private readonly driver: PgProductMaintenanceDriver; private readonly deletion: ProductDeletionGuard | null;
-  constructor(driver: PgProductMaintenanceDriver, options: { readonly deletionGuard: ProductDeletionGuard | null; readonly seasonCapability?: ProductSeasonArrayCapability | null }) {
+  private readonly imageCapability: ProductMediaWriteCapability | null;
+  constructor(driver: PgProductMaintenanceDriver, options: { readonly deletionGuard: ProductDeletionGuard | null; readonly seasonCapability?: ProductSeasonArrayCapability | null; readonly mediaWriteCapability?: ProductMediaWriteCapability | null }) {
     if (typeof driver?.transaction !== "function" || !options || !Object.hasOwn(options, "deletionGuard")
       || (options.deletionGuard !== null && typeof options.deletionGuard?.assertCanDelete !== "function")) throw new TypeError("Product maintenance requires D1 driver and explicit deletion guard availability");
     this.driver = driver; this.deletion = options.deletionGuard;
+    this.imageCapability = mediaCapability(driver, options.mediaWriteCapability ?? null);
     if (productSeasonArrayEnabled(driver, options.seasonCapability ?? null)) this.seasonContract = "product-season-array-v1";
   }
   transaction<T>(work: (tx: ProductMaintenanceTransaction) => Promise<T>): Promise<T> {
     return this.driver.transaction(async context => {
-      const tx = new ProductTransaction(context, this.deletion, this.seasonContract !== undefined);
+      const tx = new ProductTransaction(context, this.deletion, this.seasonContract !== undefined, this.imageCapability);
       try { return await work(tx); } finally { tx.close(); }
     });
   }
@@ -69,9 +96,67 @@ class ProductTransaction implements ProductMaintenanceTransaction {
   readonly evidence: ProductMaintenanceEvidence; private active = true; private loadedId: string | undefined;
   private readonly seasonArray: boolean;
   private readonly context: PgProductMaintenanceContext; private readonly deletion: ProductDeletionGuard | null;
-  constructor(context: PgProductMaintenanceContext, deletion: ProductDeletionGuard | null, seasonArray: boolean) { this.seasonArray = seasonArray; this.context = context; this.evidence = context.evidence; this.deletion = deletion; }
+  private readonly imageCapability: ProductMediaWriteCapability | null; private imagesReady = false;
+  private loadedImages: readonly ProductMaintenanceImageMetadata[] | undefined;
+  private imagesWritten = false;
+  private imagesPrepared = false;
+  constructor(context: PgProductMaintenanceContext, deletion: ProductDeletionGuard | null, seasonArray: boolean, imageCapability: ProductMediaWriteCapability | null) { this.seasonArray = seasonArray; this.context = context; this.evidence = context.evidence; this.deletion = deletion; this.imageCapability = imageCapability; }
   close(): void { this.active = false; }
   private query(sql: string, values: unknown[] = []) { requireDomain(this.active, "TRANSACTION_CLOSED", "Product transaction is closed"); return this.context.client.query(sql, values); }
+  async assertImageWriteReady(): Promise<void> {
+    requireDomain(this.active && this.imageCapability !== null && typeof this.evidence.prepare === "function", "PRODUCT_MEDIA_NOT_READY", "Verified prepared image-write capability unavailable");
+    if (this.imagesReady) return;
+    const proof: unknown = this.imageCapability.assertReady(this.context);
+    requireDomain(proof instanceof Promise, "PRODUCT_MEDIA_NOT_READY", "Same-client asynchronous image proof required");
+    const result: unknown = await proof; requireDomain(this.active && result === undefined, "PRODUCT_MEDIA_NOT_READY", "Same-client image proof failed"); this.imagesReady = true;
+  }
+  async assertImagesPrepared(completion: Parameters<ProductMaintenanceEvidence["complete"]>[0]): Promise<void> {
+    requireDomain(this.active && this.imagesReady && !this.imagesPrepared && this.imageCapability !== null, "PRODUCT_MEDIA_NOT_READY", "Original image preflight context required");
+    const proof: unknown = this.imageCapability.assertPrepared(this.context, completion);
+    requireDomain(proof instanceof Promise, "PRODUCT_MEDIA_NOT_READY", "Actual same-client prepared proof required");
+    const result: unknown = await proof;
+    requireDomain(this.active && result === undefined, "PRODUCT_MEDIA_NOT_READY", "Actual prepared image proof failed"); this.imagesPrepared = true;
+  }
+  async loadImages(productId: string): Promise<readonly ProductMaintenanceImageMetadata[]> {
+    requireDomain(this.imagesReady && productId === this.loadedId && this.loadedImages === undefined, "TRANSACTION_SCOPE", "Load images once under the original product lock");
+    const rows = (await this.query(`/* product-maintenance:locked-images */ SELECT id,product_id,file_ref,mime,byte_size::text AS byte_size,display_order,version,image_role,color_id,
+      to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS created_at,created_by_account_id
+      FROM naijue_erp.product_image WHERE product_id=$1::uuid ORDER BY id LIMIT 1001 FOR UPDATE`, [productId])).rows;
+    requireDomain(rows.length <= 1000, "PRODUCT_MAINTENANCE_TOO_LARGE", "Actual image edit bound exceeded");
+    const images = rows.map(r => {
+      const role = r.image_role, colorId = r.color_id === null ? null : uuid(r.color_id), mime = stringValue(r.mime), size = stringValue(r.byte_size), order = integerValue(r.display_order), createdAt = stringValue(r.created_at);
+      requireDomain(uuid(r.product_id) === productId && (role === null || ["MAIN", "WHITE_BACKGROUND", "HANG_TAG", "DETAIL", "COLOR"].includes(role as string)) && (role === "COLOR") === (colorId !== null)
+        && ["image/png", "image/jpeg", "image/webp"].includes(mime) && /^[1-9]\d{0,6}$/.test(size) && BigInt(size) <= 8388608n && order >= -2147483648 && order <= 2147483647
+        && /(?:Z|[+-]\d\d:\d\d)$/.test(createdAt) && Number.isFinite(Date.parse(createdAt)), "INVALID_DATABASE_VALUE", "Invalid actual image row");
+      return Object.freeze({ id: uuid(r.id), productId, fileRef: stringValue(r.file_ref), mime: mime as ProductMaintenanceImageMetadata["mime"], byteSize: BigInt(size), displayOrder: order,
+        version: versionFromSql(r.version), role: role as ProductMaintenanceImageMetadata["role"], colorId, createdAt, createdByAccountId: r.created_by_account_id === null ? null : uuid(r.created_by_account_id) });
+    });
+    requireDomain(new Set(images.map(i => i.id)).size === images.length, "INVALID_DATABASE_VALUE", "Duplicate actual image identity"); this.loadedImages = images; return images;
+  }
+  async writeImages(before: readonly ProductMaintenanceImageMetadata[], after: readonly ProductMaintenanceImageMetadata[]): Promise<void> {
+    requireDomain(this.imagesReady && this.imagesPrepared && this.loadedImages !== undefined && !this.imagesWritten, "TRANSACTION_SCOPE", "Verified prepared and locked image snapshot required"); this.imagesWritten = true;
+    const expectedFinal = new Map(this.loadedImages.map(i => [i.id, i]));
+    const old = new Map(before.map(i => [i.id, i])), following = new Map(after.map(i => [i.id, i]));
+    requireDomain(old.size === before.length && following.size === after.length && before.every(i => this.loadedImages!.some(actual => actual.id === i.id && imageFingerprint(actual) === imageFingerprint(i))), "TRANSACTION_SCOPE", "Image before facts differ from locked rows");
+    const ordered = orderProductImageWrites(before, after);
+    try {
+      for (const i of before) if (!following.has(i.id)) { const result = await this.query("DELETE FROM naijue_erp.product_image WHERE id=$1::uuid AND product_id=$2::uuid AND version=$3", [i.id, this.loadedId, i.version]); requireDomain(result.rowCount === 1, "VERSION_CONFLICT", "Image removal did not match original version"); }
+      for (const i of ordered) {
+        const previous = old.get(i.id);
+        requireDomain(i.productId === this.loadedId && i.version === (previous?.version ?? 0) + 1 && (!previous || i.createdAt === previous.createdAt && i.createdByAccountId === previous.createdByAccountId), "TRANSACTION_SCOPE", "Image identity/version/provenance changed");
+        const values = [i.id, i.productId, i.fileRef, i.mime, i.byteSize.toString(), i.displayOrder, i.createdAt, i.createdByAccountId, i.version, i.role, i.colorId];
+        const result = previous ? await this.query(`UPDATE naijue_erp.product_image SET file_ref=$3,mime=$4,byte_size=$5::bigint,display_order=$6,version=$9,image_role=$10,color_id=$11::uuid
+          WHERE id=$1::uuid AND product_id=$2::uuid AND created_at=$7::timestamptz AND created_by_account_id IS NOT DISTINCT FROM $8::uuid AND version=$12`, [...values, previous.version])
+          : await this.query("INSERT INTO naijue_erp.product_image(id,product_id,file_ref,mime,byte_size,display_order,created_at,created_by_account_id,version,image_role,color_id) VALUES($1::uuid,$2::uuid,$3,$4,$5::bigint,$6,$7::timestamptz,$8::uuid,$9,$10,$11::uuid)", values);
+        requireDomain(result.rowCount === 1, "VERSION_CONFLICT", "Image write did not match original version");
+      }
+      for (const i of before) expectedFinal.delete(i.id); for (const i of after) expectedFinal.set(i.id, i);
+      this.loadedImages = undefined; const actual = await this.loadImages(this.loadedId!);
+      requireDomain(actual.length === expectedFinal.size && actual.every(i => {
+        const expected = expectedFinal.get(i.id); return expected && imageFingerprint(i) === imageFingerprint(expected);
+      }), "INVALID_DATABASE_VALUE", "Actual final image snapshot differs from prepared rows");
+    } catch (error) { if ((error as { code?: string }).code === "23505") requireDomain(false, "COLOR_IMAGE_CONFLICT", "Color image already exists"); throw error; }
+  }
   async readImageSnapshot(productId: string): Promise<ProductMaintenanceImageSnapshot | null> {
     uuid(productId);
     const rows = (await this.query(`/* product-maintenance:images */ SELECT p.id,p.version,COALESCE((SELECT jsonb_agg(to_jsonb(i) ORDER BY i.display_order,i.id)
@@ -223,6 +308,7 @@ class ProductTransaction implements ProductMaintenanceTransaction {
     await this.deletion.assertCanDelete(this.context, previous);
   }
   async putProduct(next: ProductStoredRecord, previous: ProductStoredRecord | undefined): Promise<void> {
+    requireDomain(!this.imagesReady || this.imagesPrepared, "PRODUCT_MEDIA_NOT_READY", "Actual same-client prepared image proof required before root mutation");
     requireDomain(next.id === this.loadedId && next.version === (previous?.version ?? 0) + 1, "TRANSACTION_SCOPE", "Write one locked product version");
     let columns: readonly string[] = ROOT_COLUMNS, parameters = rootValues(next);
     if (this.seasonArray) {

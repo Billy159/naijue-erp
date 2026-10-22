@@ -8,6 +8,9 @@ import { requireDomain } from "../packages/domain/src/errors.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
 import type { ProductMaintenanceImageSnapshot } from "../packages/application/src/product-maintenance-ports.ts";
 import type { ControlledProductMedia } from "../packages/application/src/product-query-ports.ts";
+import { parseProductMaintenanceCommandV2, parseProductMaintenanceMediaCommandV2, orderProductImageWrites } from "../packages/application/src/product-maintenance-validation.ts";
+import { requestHash } from "../packages/application/src/request-hash.ts";
+import type { ProductImageChange, ProductMaintenanceImageMetadata, ProductMaintenanceMediaCommandV2 } from "../packages/application/src/product-maintenance-ports.ts";
 const gid = (n: number) => sid("product", n);
 function imageService(snapshot: ProductMaintenanceImageSnapshot | null, media: ControlledProductMedia | null = null, denied = false, failed = false, missing = false) {
   let reads = 0; const unused = async (): Promise<never> => { throw Error("UNEXPECTED_WRITE_OR_DETAIL"); };
@@ -82,7 +85,7 @@ function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode
       try { return await work(tx); } catch (error) { product = before; receipts.clear(); for (const [k, v] of receiptBefore) receipts.set(k, v); audit.length = auditLength; writes = writeCount; throw error; }
     }
   } };
-  return { service: createProductMaintenanceService(dependencies), state: () => structuredClone(product), receipts, audit, writes: () => writes,
+  return { dependencies, service: createProductMaintenanceService(dependencies), state: () => structuredClone(product), receipts, audit, writes: () => writes,
     activate: () => Object.defineProperty(dependencies.unitOfWork, "seasonContract", { value: "product-season-array-v1" }), seed: (value: ProductAggregate) => { product = structuredClone(value); }, revoke: () => { allow = false; }, fault: (value: boolean) => { failComplete = value; }, badReferences: () => { references = false; }, unknownStock: () => { deletable = false; } };
 }
 test("prepared product: root and SKU/barcode writes require prepared exact evidence; missing/failing capability writes nothing", async () => {
@@ -140,6 +143,87 @@ test("product write: reference/receipt faults roll back root plus all children; 
 function commandV2(key = "v2", seasons: readonly string[] | null = [gid(850), gid(803)]) {
   const { seasonId: _scalar, ...data } = values(); return { ...command(key), values: { ...data, seasonIds: seasons } };
 }
+function mediaFixture(options: { stage?: boolean; guard?: boolean; proof?: boolean; prepare?: "ready" | "missing" | "fail" } = {}) {
+  const base = fixture(options.prepare ?? "ready", true), original = base.dependencies.unitOfWork;
+  let images: readonly ProductMaintenanceImageMetadata[] = [], native = 18000, badStage = "", failImages = false;
+  const events: string[] = [], consumed: string[] = [];
+  const deps: ProductMaintenanceDependencies = { ...base.dependencies, newImageId: () => gid(native++),
+    ...(options.stage === false ? {} : { imageStage: { profile: "PRIVATE_PRODUCT_MEDIA_STAGE_V1" as const, async consume(i) {
+      consumed.push(i.uploadId); if (badStage === "failure") throw Error("SYNTHETIC_STAGE_FAULT");
+      return { profile: "PRIVATE_PRODUCT_MEDIA_STAGE_V1" as const, uploadId: i.uploadId, actorAccountId: i.actor.accountId, productId: badStage === "scope" ? gid(1) : i.productId, commandKey: i.commandKey,
+        fileRef: `staged-product-media:${i.uploadId}`, createdAt: "2026-10-22T05:00:00Z", expiresAt: badStage === "expired" ? "2026-10-22T05:01:00Z" : "2026-10-23T05:00:00Z",
+        original: { mime: "image/png" as const, byteSize: 68n, sha256: "a".repeat(64) }, thumbnail: { mime: "image/webp" as const, byteSize: 60n, sha256: "b".repeat(64), derivedFromOriginalSha256: "a".repeat(64) } };
+    } } }),
+    unitOfWork: { seasonContract: "product-season-array-v1", async transaction(work) {
+      const before = structuredClone(images);
+      try { return await original.transaction(tx => work({ ...tx, evidence: { ...tx.evidence,
+        ...(tx.evidence.prepare ? { async prepare(c) { events.push("prepare"); await tx.evidence.prepare!(c); } } : {}),
+        async complete(c) { events.push("receipt"); return tx.evidence.complete(c); } },
+        async assertImageWriteReady() { events.push("image-proof"); requireDomain(options.guard !== false, "PRODUCT_MEDIA_NOT_READY", "SYNTHETIC_MISSING_PROOF"); },
+        async assertImagesPrepared(c) { assert.equal(c.kind, "PRODUCT"); assert.ok(events.includes("prepare")); requireDomain(options.proof !== false, "PRODUCT_MEDIA_NOT_READY", "SYNTHETIC_PRIVATE_PREPARED_PROOF_DENIED"); events.push("prepared-proof"); },
+        async loadImages() { events.push("image-lock"); return images; },
+        async putProduct(n, p) { events.push("root"); return tx.putProduct(n, p); },
+        async writeImages(b, a) { events.push("images"); if (failImages) throw Error("SYNTHETIC_IMAGE_FAULT"); const ids = new Set(b.map(i => i.id)); images = [...images.filter(i => !ids.has(i.id)), ...a]; }
+      })); } catch (error) { images = before; throw error; }
+    } }
+  };
+  return { ...base, service: createProductMaintenanceService(deps), events, consumed, images: () => structuredClone(images), seedImages: (i: readonly ProductMaintenanceImageMetadata[]) => { images = structuredClone(i); }, stageFault: (v: string) => { badStage = v; }, imageFault: () => { failImages = true; } };
+}
+const addImage = (role: "MAIN" | "COLOR" = "MAIN", uploadId = gid(17001)): ProductImageChange => ({ action: "ADD", uploadId, role, colorId: role === "COLOR" ? gid(806) : null, displayOrder: -2 });
+function mediaCreate(key = "media-new", changes: readonly ProductImageChange[] = [addImage()]) { return { ...commandV2(key), imageChanges: changes }; }
+function mediaEdit(id: string, version: number, changes: readonly ProductImageChange[], key = "media-edit"): ProductMaintenanceMediaCommandV2 {
+  return { action: "EDIT", id, expectedVersion: version, requestKey: key, values: commandV2().values, skus: [], barcodes: [], imageChanges: changes };
+}
+test("W17 media parser preserves old V2 exact parse/hash and rejects malformed extension without implicit normalization", () => {
+  const old = commandV2(), parsed = parseProductMaintenanceCommandV2(old), media = parseProductMaintenanceMediaCommandV2({ ...old, imageChanges: [] });
+  assert.ok(!Object.hasOwn(parsed, "imageChanges")); assert.notEqual(requestHash(parsed), requestHash(media));
+  assert.throws(() => parseProductMaintenanceCommandV2(media), { code: "INVALID_PRODUCT_MAINTENANCE" });
+  for (const imageChanges of [[{ ...addImage(), role: null }], [{ ...addImage(), colorId: gid(2) }], [{ ...addImage(), fileRef: "PRIVATE" }], [{ action: "REMOVE", id: gid(1), expectedVersion: 1 }, { action: "REMOVE", id: gid(1), expectedVersion: 1 }]])
+    assert.throws(() => parseProductMaintenanceMediaCommandV2({ ...old, imageChanges }), { code: "INVALID_PRODUCT_MEDIA_COMMAND" });
+});
+test("W17 legacy V2 receipt survives missing media capability; adding empty imageChanges under its original key conflicts", async () => {
+  const f = mediaFixture({ stage: false, guard: false }), old = commandV2("original-old-key"), saved = await f.service.executeV2(actor, old), hash = f.receipts.get(old.requestKey)!.requestHash;
+  assert.deepEqual(await f.service.executeV2(actor, old), saved); assert.equal(f.receipts.get(old.requestKey)!.requestHash, hash); assert.equal(f.consumed.length, 0);
+  await assert.rejects(f.service.executeV2(actor, { ...old, imageChanges: [] }), { code: "IDEMPOTENCY_CONFLICT" });
+  await assert.rejects(f.service.executeV2(actor, { ...old, requestKey: "new-explicit-media-key", imageChanges: [] }), { code: "PRODUCT_MEDIA_NOT_READY" });
+});
+test("W17 image create prepares complete actual row facts before one root CAS and receipt; original replay consumes no stage twice", async () => {
+  const f = mediaFixture(), c = mediaCreate(), saved = await f.service.executeV2(actor, c), image = f.images()[0]!;
+  assert.notEqual(image.id, (c.imageChanges[0] as { uploadId: string }).uploadId); assert.equal(image.version, 1); assert.equal(image.createdByAccountId, actor.accountId);
+  assert.ok(f.events.indexOf("prepare") < f.events.indexOf("root") && f.events.indexOf("root") < f.events.indexOf("images") && f.events.indexOf("images") < f.events.indexOf("receipt"));
+  assert.ok(f.events.indexOf("prepare") < f.events.indexOf("prepared-proof") && f.events.indexOf("prepared-proof") < f.events.indexOf("root"));
+  const row = (f.audit[0]!.after.images as readonly Record<string, unknown>[])[0]!;
+  assert.deepEqual(Object.keys(row).sort(), ["id", "product_id", "file_ref", "mime", "byte_size", "display_order", "created_at", "created_by_account_id", "version", "image_role", "color_id"].sort()); assert.equal(row.byte_size, "68");
+  assert.deepEqual(await f.service.executeV2(actor, c), saved); assert.equal(f.consumed.length, 1); assert.equal(f.images().length, 1);
+  await assert.rejects(f.service.executeV2(actor, { ...c, imageChanges: [] }), { code: "IDEMPOTENCY_CONFLICT" });
+});
+test("W17 replacement/metadata/removal preserve native image provenance and enforce actual image CAS, never delete blobs", async () => {
+  const f = mediaFixture(), saved = await f.service.executeV2(actor, mediaCreate()), initial = f.images()[0]!;
+  await f.service.executeV2(actor, mediaEdit(saved.targetId, 1, [{ action: "REPLACE", id: initial.id, expectedVersion: 1, uploadId: gid(17002), role: "DETAIL", colorId: null, displayOrder: 5 }]));
+  const replaced = f.images()[0]!; assert.equal(replaced.id, initial.id); assert.equal(replaced.version, 2); assert.equal(replaced.createdAt, initial.createdAt); assert.equal(replaced.createdByAccountId, initial.createdByAccountId);
+  await assert.rejects(f.service.executeV2(actor, mediaEdit(saved.targetId, 2, [{ action: "REMOVE", id: initial.id, expectedVersion: 1 }], "stale-image")), { code: "VERSION_CONFLICT" });
+  await f.service.executeV2(actor, mediaEdit(saved.targetId, 2, [{ action: "EDIT_METADATA", id: initial.id, expectedVersion: 2, role: "WHITE_BACKGROUND", colorId: null, displayOrder: 0 }], "metadata"));
+  assert.equal(f.images()[0]!.version, 3); assert.equal(f.consumed.length, 2);
+  await f.service.executeV2(actor, mediaEdit(saved.targetId, 3, [{ action: "REMOVE", id: initial.id, expectedVersion: 3 }], "remove")); assert.deepEqual(f.images(), []);
+  assert.deepEqual(f.audit.at(-1)!.after.images, []); assert.equal((f.audit.at(-1)!.before!.images as unknown[]).length, 1);
+});
+test("W17 media stage/schema/prepare faults fail before mutation and image/receipt faults roll back the original aggregate", async () => {
+  for (const options of [{ stage: false }, { guard: false }, { proof: false }, { prepare: "missing" as const }, { prepare: "fail" as const }]) {
+    const f = mediaFixture(options); await assert.rejects(f.service.executeV2(actor, mediaCreate())); assert.equal(f.writes(), 0); assert.equal(f.images().length, 0);
+  }
+  for (const reason of ["scope", "expired", "failure"]) { const f = mediaFixture(); f.stageFault(reason); await assert.rejects(f.service.executeV2(actor, mediaCreate())); assert.equal(f.writes(), 0); }
+  for (const mode of ["image", "receipt"] as const) { const f = mediaFixture(); if (mode === "image") f.imageFault(); else f.fault(true); await assert.rejects(f.service.executeV2(actor, mediaCreate())); assert.equal(f.state(), undefined); assert.deepEqual(f.images(), []); assert.equal(f.audit.length, 0); }
+});
+test("W17 final color uniqueness/membership and legacy unknown role are checked against actual retained images", async () => {
+  const f = mediaFixture(), saved = await f.service.executeV2(actor, mediaCreate("color", [addImage("COLOR")])), image = f.images()[0]!;
+  await assert.rejects(f.service.executeV2(actor, mediaEdit(saved.targetId, 1, [addImage("COLOR", gid(17003))])), { code: "COLOR_IMAGE_CONFLICT" });
+  await assert.rejects(f.service.executeV2(actor, mediaEdit(saved.targetId, 1, [{ action: "EDIT_METADATA", id: image.id, expectedVersion: 1, role: "COLOR", colorId: gid(999), displayOrder: 0 }])), { code: "COLOR_IMAGE_CONFLICT" });
+  f.seedImages([{ ...image, role: null, colorId: null, createdByAccountId: null }]);
+  await f.service.executeV2(actor, mediaEdit(saved.targetId, 1, [{ action: "REPLACE", id: image.id, expectedVersion: 1, uploadId: gid(17004), role: null, colorId: null, displayOrder: 0 }]));
+  assert.equal(f.images()[0]!.role, null); assert.equal(f.images()[0]!.createdByAccountId, null);
+  const a = { ...image, role: "COLOR" as const, colorId: gid(1) }, b = { ...image, id: gid(2), role: "COLOR" as const, colorId: gid(2) };
+  assert.throws(() => orderProductImageWrites([a, b], [{ ...a, colorId: gid(2) }, { ...b, colorId: gid(1) }]), { code: "PRODUCT_MEDIA_NOT_READY" });
+});
 test("season v2: canonical multi-set uses one root CAS, prepared audit and original receipt; clear and known-to-unknown differ", async () => {
   const f = fixture("ready", true), c = commandV2(), saved = await f.service.executeV2(actor, c);
   assert.deepEqual(f.state()!.product.seasonIds, [gid(803), gid(850)]); assert.equal(f.state()!.product.seasonId, null);

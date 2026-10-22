@@ -202,7 +202,7 @@ export class ApplicationController {
             this.#salesSession = session;
           }
           prepared = this.#salesSession.prepare(input);
-        } else prepared = module.prepareSalesRoute(input);
+        } else prepared = module.prepareSalesRoute(input, () => this.authentication.expire());
       }
       else if (route === 'transfers') {
         const module = await this.#leaves.load('transfers', scope);

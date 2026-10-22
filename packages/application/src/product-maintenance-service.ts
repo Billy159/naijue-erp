@@ -2,11 +2,12 @@ import { requireDomain } from "../../domain/src/errors.ts";
 import { entityId } from "../../domain/src/values.ts";
 import { checkedProductActor, parseProductQuery, activeProductRead } from "./product-query-validation.ts";
 import { partyRequestKey } from "./party-maintenance-validation.ts";
-import { parseProductMaintenanceCandidates, parseProductMaintenanceCommand, parseProductMaintenanceCommandV2, productMaintenanceVersion, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS } from "./product-maintenance-validation.ts";
+import { parseProductMaintenanceCandidates, parseProductMaintenanceCommand, parseProductMaintenanceCommandV2, parseProductMaintenanceMediaCommandV2, orderProductImageWrites, productMaintenanceVersion, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS } from "./product-maintenance-validation.ts";
 import { authorizeProductMaintenance } from "./product-maintenance-authorization.ts";
 import { requestHash } from "./request-hash.ts";
 import type { ActorContext } from "./ports.ts";
 import type { ProductAggregate, ProductAuditObject, ProductBarcodeRecord, ProductMaintenanceAction, ProductMaintenanceDependencies, ProductMaintenanceDetail, ProductMaintenanceDetailV2, ProductMaintenanceResult, ProductSkuRecord, ProductStoredRecord, ProductMaintenanceImagesDto } from "./product-maintenance-ports.ts";
+import type { ProductMaintenanceMediaCommandV2, ProductMaintenanceTransaction, ProductMaintenanceImageMetadata } from "./product-maintenance-ports.ts";
 
 const coordinate = (row: { readonly colorId: string; readonly fitId: string; readonly sizeId: string }) => JSON.stringify([row.colorId, row.fitId, row.sizeId]);
 function productFacts(p: ProductStoredRecord): ProductAuditObject {
@@ -19,6 +20,8 @@ function skuFacts(s: ProductSkuRecord): ProductAuditObject {
     enabled: s.enabled, version: s.version, created_operation_id: s.createdOperationId };
 }
 function barcodeFacts(b: ProductBarcodeRecord): ProductAuditObject { return { id: b.id, barcode: b.barcode, sku_id: b.skuId, barcode_kind: b.kind, scheme_id: b.schemeId, enabled: b.enabled }; }
+function imageFacts(i: ProductMaintenanceImageMetadata): ProductAuditObject { return { id: i.id, product_id: i.productId, file_ref: i.fileRef, mime: i.mime, byte_size: i.byteSize.toString(), display_order: i.displayOrder,
+  created_at: i.createdAt, created_by_account_id: i.createdByAccountId, version: i.version, image_role: i.role, color_id: i.colorId }; }
 const different = (a: unknown, b: unknown) => requestHash(a) !== requestHash(b);
 function result(value: { readonly operationId: string; readonly kind: string; readonly targetId: string; readonly version: number }): ProductMaintenanceResult {
   requireDomain(value.kind === "PRODUCT", "INVALID_DATABASE_VALUE", "Invalid product receipt kind");
@@ -28,6 +31,47 @@ function result(value: { readonly operationId: string; readonly kind: string; re
 export function createProductMaintenanceService(dependencies: ProductMaintenanceDependencies) {
   if (typeof dependencies?.unitOfWork?.transaction !== "function" || typeof dependencies?.now !== "function" || typeof dependencies?.newId !== "function")
     throw new TypeError("Product maintenance requires an explicit transaction, clock and identifiers");
+  async function images(tx: ProductMaintenanceTransaction, actor: ActorContext, command: ProductMaintenanceMediaCommandV2, productId: string, next: ProductAggregate, timestamp: string, signal: AbortSignal) {
+    const existing = await tx.loadImages!(productId), old = new Map(existing.map(i => [i.id, i])), final = new Map(old);
+    requireDomain(existing.length <= 1000 && old.size === existing.length && existing.every(i => i.productId === productId), "INVALID_DATABASE_VALUE", "Invalid locked image snapshot");
+    const expiries: number[] = [];
+    for (const change of command.imageChanges) {
+      const previous = change.action === "ADD" ? undefined : old.get(change.id);
+      if (change.action !== "ADD") requireDomain(previous && previous.version === change.expectedVersion, previous ? "VERSION_CONFLICT" : "PRODUCT_IMAGE_NOT_FOUND", "Image identity/version changed");
+      if (change.action === "REMOVE") { final.delete(change.id); continue; }
+      requireDomain(!previous || previous.version < 2147483647, "VERSION_STORAGE_OVERFLOW", "Image version exhausted");
+      requireDomain(change.role !== null || previous?.role === null, "INVALID_PRODUCT_MEDIA_COMMAND", "Only an existing unknown role may remain unknown");
+      let content = previous;
+      if (change.action === "ADD" || change.action === "REPLACE") {
+        activeProductRead(signal); const prepared = await dependencies.imageStage!.consume({ actor, productId: command.action === "CREATE" ? null : productId, commandKey: command.requestKey, uploadId: change.uploadId, signal }); activeProductRead(signal);
+        const now = Date.parse(dependencies.now()), expiry = Date.parse(prepared.expiresAt);
+        requireDomain(prepared.profile === "PRIVATE_PRODUCT_MEDIA_STAGE_V1" && prepared.uploadId === change.uploadId && prepared.actorAccountId === actor.accountId
+          && prepared.productId === (command.action === "CREATE" ? null : productId) && prepared.commandKey === command.requestKey, "MEDIA_SCOPE_MISMATCH", "Stage differs from original product command");
+        requireDomain(Number.isFinite(now) && Number.isFinite(expiry) && Number.isFinite(Date.parse(prepared.createdAt)) && now >= Date.parse(prepared.createdAt) && now < expiry, "UPLOAD_EXPIRED", "Stage is not currently valid");
+        requireDomain(prepared.fileRef === `staged-product-media:${change.uploadId}` && ["image/png", "image/jpeg", "image/webp"].includes(prepared.original.mime)
+          && typeof prepared.original.byteSize === "bigint" && prepared.original.byteSize > 0n && prepared.original.byteSize <= 8388608n && /^[a-f0-9]{64}$/.test(prepared.original.sha256)
+          && prepared.thumbnail.mime === "image/webp" && typeof prepared.thumbnail.byteSize === "bigint" && prepared.thumbnail.byteSize > 0n && prepared.thumbnail.byteSize <= 262144n
+          && /^[a-f0-9]{64}$/.test(prepared.thumbnail.sha256) && prepared.thumbnail.derivedFromOriginalSha256 === prepared.original.sha256, "PRODUCT_MEDIA_NOT_READY", "Verified original/thumbnail stage facts required");
+        expiries.push(expiry);
+        const id = previous?.id ?? entityId("product", dependencies.newImageId!());
+        requireDomain(previous !== undefined || id !== change.uploadId && !final.has(id) && !old.has(id), "VERSION_CONFLICT", "Native image identity must be allocated independently");
+        content = { id, productId, fileRef: prepared.fileRef, mime: prepared.original.mime, byteSize: prepared.original.byteSize, displayOrder: change.displayOrder,
+          version: (previous?.version ?? 0) + 1, role: change.role, colorId: change.colorId, createdAt: previous?.createdAt ?? timestamp, createdByAccountId: previous?.createdByAccountId ?? (previous ? null : actor.accountId) };
+      }
+      requireDomain(content, "PRODUCT_IMAGE_NOT_FOUND", "Actual image is unavailable");
+      final.set(content.id, { ...content, version: (previous?.version ?? 0) + 1, role: change.role, colorId: change.colorId, displayOrder: change.displayOrder });
+    }
+    requireDomain(final.size <= 1000, "PRODUCT_MAINTENANCE_TOO_LARGE", "Final image set exceeds readable bound");
+    const colors = new Set(next.skus.map(s => s.colorId)), used = new Set<string>();
+    for (const image of final.values()) {
+      requireDomain(image.role === "COLOR" ? image.colorId !== null && colors.has(image.colorId) && !used.has(image.colorId) : image.colorId === null, "COLOR_IMAGE_CONFLICT", "Final image roles/colors conflict with actual SKU set");
+      if (image.colorId !== null) used.add(image.colorId);
+    }
+    const before = existing.filter(i => !final.has(i.id) || different(imageFacts(i), imageFacts(final.get(i.id)!))).sort((a, b) => a.id.localeCompare(b.id));
+    const after = [...final.values()].filter(i => !old.has(i.id) || different(imageFacts(i), imageFacts(old.get(i.id)!))).sort((a, b) => a.id.localeCompare(b.id));
+    orderProductImageWrites(before, after);
+    return { before, after, expiries };
+  }
   async function detail(actorInput: ActorContext, input: unknown, contractVersion: 1 | 2): Promise<ProductMaintenanceDetail | ProductMaintenanceDetailV2> {
     const actor = checkedProductActor(actorInput), { productId } = parseProductQuery(input);
     return dependencies.unitOfWork.transaction(async tx => {
@@ -59,8 +103,10 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
       return { ...legacy, values: { ...values, seasonIds: p.seasonIds! }, references: { ...rest, seasons } };
     });
   }
-  async function execute(actorInput: ActorContext, input: unknown, contractVersion: 1 | 2): Promise<ProductMaintenanceResult> {
-    const actor = checkedProductActor(actorInput), command = contractVersion === 2 ? parseProductMaintenanceCommandV2(input) : parseProductMaintenanceCommand(input);
+  async function execute(actorInput: ActorContext, input: unknown, contractVersion: 1 | 2, signal = new AbortController().signal): Promise<ProductMaintenanceResult> {
+    const actor = checkedProductActor(actorInput);
+    const mediaCommand = contractVersion === 2 && input && typeof input === "object" && Object.hasOwn(input, "imageChanges") ? parseProductMaintenanceMediaCommandV2(input) : null;
+    const command = mediaCommand ?? (contractVersion === 2 ? parseProductMaintenanceCommandV2(input) : parseProductMaintenanceCommand(input));
     const full = command.action === "CREATE" || command.action === "EDIT";
     const hash = requestHash({ kind: "PRODUCT", actorAccountId: actor.accountId, command, ...(contractVersion === 2 && full ? { contractVersion: 2 } : {}) });
     return dependencies.unitOfWork.transaction(async tx => {
@@ -72,6 +118,12 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
       }
       requireDomain(contractVersion !== 2 || dependencies.unitOfWork.seasonContract === "product-season-array-v1", "PRODUCT_SEASON_NOT_READY", "Verified season array contract is unavailable");
       requireDomain(contractVersion !== 1 || !full || dependencies.unitOfWork.seasonContract === undefined, "PRODUCT_EDIT_CONTRACT_UPGRADE_REQUIRED", "Use the multi-season editor contract");
+      if (mediaCommand !== null) {
+        requireDomain(dependencies.imageStage?.profile === "PRIVATE_PRODUCT_MEDIA_STAGE_V1" && typeof dependencies.imageStage.consume === "function"
+          && typeof tx.assertImageWriteReady === "function" && typeof tx.assertImagesPrepared === "function" && typeof tx.loadImages === "function" && typeof tx.writeImages === "function"
+          && (!mediaCommand.imageChanges.some(c => c.action === "ADD") || typeof dependencies.newImageId === "function"), "PRODUCT_MEDIA_NOT_READY", "Explicit actual stage and image-write capabilities required");
+        activeProductRead(signal); await tx.assertImageWriteReady(); activeProductRead(signal);
+      }
       const id = command.action === "CREATE" ? entityId("product", dependencies.newId("product")) : command.id;
       const previous = await tx.load(id);
       requireDomain(command.action === "CREATE" ? previous === undefined : previous !== undefined, command.action === "CREATE" ? "VERSION_CONFLICT" : "PRODUCT_NOT_FOUND", "Product identity is unavailable");
@@ -134,6 +186,7 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
       requireDomain(next.skus.length <= PRODUCT_MAINTENANCE_MAX_SKUS && next.barcodes.length <= PRODUCT_MAINTENANCE_MAX_BARCODES,
         "PRODUCT_MAINTENANCE_TOO_LARGE", "Saved aggregate would exceed the readable edit bound");
       await tx.validateReferences(previous, next);
+      const imagePlan = mediaCommand !== null ? await images(tx, actor, mediaCommand, id, next, timestamp, signal) : null;
       const oldSkus = new Map((previous?.skus ?? []).map(s => [s.id, s])), oldBarcodes = new Map((previous?.barcodes ?? []).map(b => [b.id, b]));
       const changedSkus = next.skus.filter(s => !oldSkus.has(s.id) || different(s, oldSkus.get(s.id)!));
       const changedBarcodes = next.barcodes.filter(b => !oldBarcodes.has(b.id) || different(b, oldBarcodes.get(b.id)!));
@@ -142,18 +195,22 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
       for (const [key, value] of Object.entries(facts)) if (oldFacts === null || different(value, oldFacts[key]!)) {
         after[key] = value; if (oldFacts !== null) before[key] = oldFacts[key]!;
       }
-      requireDomain(previous === undefined || Object.keys(after).some(key => key !== "version") || changedSkus.length > 0 || changedBarcodes.length > 0,
+      requireDomain(previous === undefined || Object.keys(after).some(key => key !== "version") || changedSkus.length > 0 || changedBarcodes.length > 0 || imagePlan !== null && (imagePlan.before.length > 0 || imagePlan.after.length > 0),
         "NO_PRODUCT_CHANGE", "No actual product changes supplied");
       if (changedSkus.length) { after.skus = changedSkus.map(skuFacts); before.skus = changedSkus.flatMap(s => oldSkus.has(s.id) ? [skuFacts(oldSkus.get(s.id)!)] : []); }
       if (changedBarcodes.length) { after.barcodes = changedBarcodes.map(barcodeFacts); before.barcodes = changedBarcodes.flatMap(b => oldBarcodes.has(b.id) ? [barcodeFacts(oldBarcodes.get(b.id)!)] : []); }
+      if (imagePlan && (imagePlan.before.length || imagePlan.after.length)) { before.images = imagePlan.before.map(imageFacts); after.images = imagePlan.after.map(imageFacts); }
       const completion = { operationId, actorAccountId: actor.accountId, requestKey: command.requestKey, requestHash: hash,
         kind: "PRODUCT" as const, action: command.action, targetId: id, oldVersion: previous?.product.version ?? null, newVersion: nextProduct.version,
         beforeValues: previous ? before : null, afterValues: after, completedAt: timestamp };
       requireDomain(typeof tx.evidence.prepare === "function", "MAINTENANCE_PREPARE_NOT_READY", "Original audit preparation is unavailable");
+      if (imagePlan) { activeProductRead(signal); requireDomain(imagePlan.expiries.every(t => Date.parse(dependencies.now()) < t), "UPLOAD_EXPIRED", "Image stage expired before mutation"); }
       await tx.evidence.prepare(completion);
+      if (imagePlan) await tx.assertImagesPrepared!(completion);
       await tx.putProduct(nextProduct, previous?.product);
       for (const s of changedSkus) await tx.putSku(s, oldSkus.get(s.id));
       for (const b of changedBarcodes) await tx.putBarcode(b, oldBarcodes.get(b.id));
+      if (imagePlan && (imagePlan.before.length || imagePlan.after.length)) await tx.writeImages!(imagePlan.before, imagePlan.after);
       const committed = await tx.evidence.complete(completion);
       const checked = result(committed);
       requireDomain(checked.operationId === operationId && checked.targetId === id && checked.version === nextProduct.version, "INVALID_DATABASE_VALUE", "Product evidence differs from saved aggregate"); return checked;
@@ -213,7 +270,7 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
     detail: (actor: ActorContext, input: unknown): Promise<ProductMaintenanceDetail> => detail(actor, input, 1) as Promise<ProductMaintenanceDetail>,
     detailV2: (actor: ActorContext, input: unknown): Promise<ProductMaintenanceDetailV2> => detail(actor, input, 2) as Promise<ProductMaintenanceDetailV2>,
     execute: (actor: ActorContext, input: unknown) => execute(actor, input, 1),
-    executeV2: (actor: ActorContext, input: unknown) => execute(actor, input, 2),
+    executeV2: (actor: ActorContext, input: unknown, signal?: AbortSignal) => execute(actor, input, 2, signal),
     async receipt(actorInput: ActorContext, requestKeyInput: string) {
       const actor = checkedProductActor(actorInput), key = partyRequestKey(requestKeyInput);
       return dependencies.unitOfWork.transaction(async tx => {

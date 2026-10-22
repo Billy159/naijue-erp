@@ -39,18 +39,24 @@ function discount(raw: string): number {
   if (tenths > 100) throw new Error(); return tenths;
 }
 
-/** This bounded editor changes existing native rows only. Current reference,
+/** This bounded editor changes or explicitly removes existing native rows only. Current reference,
  * product eligibility/minimum prices and permissions remain server authority.
  * Original IDs, barcodes, snapshots, row order and reference-price facts survive. */
 export function compileSalesForm(base: SalesDraftDto, input: SalesFormInput): SalesFormResult {
   const errors: Record<string, string> = {};
-  if (input.lines.length !== base.lines.length || input.lines.some((line, index) => line.id !== base.lines[index]?.id)
-    || input.settlements.length !== base.settlements.length || input.settlements.some((row, index) => row.id !== base.settlements[index]?.id))
-    return { ok: false, errors: Object.freeze({ form: '明细身份或顺序已改变，请重新读取；不能合并或替换原行。' }) };
+  const retainedSubset = <T extends { readonly id: string }>(original: readonly T[], rows: readonly { readonly id: string }[]) => {
+    let previous = -1; const retained: T[] = [];
+    for (const row of rows) { const index = original.findIndex(item => item.id === row.id); if (index <= previous) return null; retained.push(original[index]!); previous = index; }
+    return retained;
+  };
+  const retainedLines = retainedSubset(base.lines, input.lines), retainedSettlements = retainedSubset(base.settlements, input.settlements);
+  if (!retainedLines || !retainedSettlements)
+    return { ok: false, errors: Object.freeze({ form: '原行身份或顺序无效，请重新读取；不能合并、替换或伪造原行。' }) };
+  if (!retainedLines.length) return { ok: false, errors: Object.freeze({ form: '请至少保留一条实际商品明细。' }) };
   let orderDiscount = '0';
   try { orderDiscount = amount(input.orderDiscount); if (base.header.businessType !== 'SALE' && orderDiscount !== '0') throw new Error(); }
   catch { errors.orderDiscount = base.header.businessType === 'SALE' ? '请输入非负金额，最多两位小数。' : '独立退货 / 换货不能使用整单优惠。'; }
-  const lines = base.lines.map((line, index) => {
+  const lines = retainedLines.map((line, index) => {
     const raw = input.lines[index]!; let q = line.quantity, price = line.dealPrice, tenths: number | null = null;
     try {
       if (raw.quantity.length > 21 || !/^-?\d+$/.test(raw.quantity.trim())) throw new Error();
@@ -70,7 +76,7 @@ export function compileSalesForm(base: SalesDraftDto, input: SalesFormInput): Sa
     return { ...line, quantity: q, dealPrice: price, pricingRule: raw.pricingRule, discountTenths: tenths,
       zeroConfirmed: raw.zeroConfirmed, isGift: raw.isGift, lineAmount: (BigInt(q) * BigInt(price)).toString() };
   });
-  const settlements = base.settlements.map((row, index) => {
+  const settlements = retainedSettlements.map((row, index) => {
     const raw = input.settlements[index]!; let value = row.amount;
     try { value = amount(raw.amount); if (!['RECEIVE', 'REFUND'].includes(raw.direction)) throw new Error(); }
     catch { errors[`settlement:${row.id}`] = '请输入非负收退金额，最多两位小数。'; }

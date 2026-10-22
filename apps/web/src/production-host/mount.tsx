@@ -59,6 +59,7 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
   const app = createApplication({ http, presentation: { renderRouteState, renderWorkspace: createDemoFrameWorkspaceRenderer() }, routes: {
     ...(configuration.routes.inventory ? { inventory: { stylesheet: stylesheet('inventory'), actions: {}, ...(configuration.routes.inventoryLedger ? { ledger: true as const } : {}) } } : {}),
     ...(configuration.routes.sales ? { sales: { stylesheet: stylesheet('sales'), detailStylesheet: stylesheet('sales-detail'),
+      ...(configuration.routes.salesProductFullPage ? { productFullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: createProductFullPageHttpReader({ ...configuration.http, fetch: input.fetch }, ['prices', 'barcodes', 'stock']) } } : {}),
       ...(configuration.routes.salesManualCreate ? { commands: { newRequestKey, manualCreate: true as const } } : {}) } } : {}),
     ...(configuration.routes.transfers ? { transfers: { stylesheet: stylesheet('transfers'), detailStylesheet: stylesheet('transfer-detail'), product: { stylesheet: stylesheet('transfer-product') },
       ...(configuration.routes.transferManualCreate ? { commands: { newRequestKey, manualCreate: true as const } } : {}) } } : {}),

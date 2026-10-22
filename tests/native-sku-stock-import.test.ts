@@ -1,14 +1,15 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { IMPORT_V2_TABLES } from "../packages/application/src/import-v2-contract.ts";
-import { prepareNativeSkuImport, stageNativeSkuImport } from "../packages/application/src/native-sku-import.ts";
-import type { NativeSkuImportInput } from "../packages/application/src/native-sku-import.ts";
+import { prepareNativeSkuImport, stageNativeSkuImport, prepareNativeSkuImport26, validatePreparedNativeSkuImport26, nativeSkuAliasEvidence26, NATIVE_SKU_IMPORT_VERSION_26 } from "../packages/application/src/native-sku-import.ts";
+import type { NativeSkuImportInput, NativeSkuImportInput26 } from "../packages/application/src/native-sku-import.ts";
 import { prepareNativeStockGroup, stageNativeStockContributors } from "../packages/application/src/native-stock-contributor-import.ts";
 import type { NativeStockGroupInput } from "../packages/application/src/native-stock-contributor-import.ts";
 import { prepareNativeBarcode, stageNativeBarcode } from "../packages/application/src/native-barcode-import.ts";
 import type { NativeBarcodeInput } from "../packages/application/src/native-barcode-import.ts";
 import type { ImportSourceEvidence, JsonObject } from "../packages/application/src/history-storage-contract.ts";
-import { PostgresNativeSkuImportStore } from "../adapters/postgres/src/native-sku-import.ts";
+import { PostgresNativeSkuImportStore, PostgresNativeSkuImportStore26 } from "../adapters/postgres/src/native-sku-import.ts";
+import type { NativeRuntime26Capability } from "../packages/application/src/native-import-schema-contract.ts";
 import { PostgresNativeStockContributorStore } from "../adapters/postgres/src/native-stock-contributor-import.ts";
 import { PostgresNativeBarcodeImportStore } from "../adapters/postgres/src/native-barcode-import.ts";
 import { CATALOGUE_PRICE_KEYS } from "../packages/application/src/catalogue-price-input.ts";
@@ -58,6 +59,69 @@ function skuInput(): NativeSkuImportInput {
     }, aliases: [{ source: representative, mapping: mapping(representative, "true") }, { source: old, mapping: mapping(old, "false") }],
     importRecord: { id: id(30), reviewedAt: "2026-01-01T00:00:00Z", decisionReason: "Synthetic exact mapping review" } };
 }
+function skuInput26(): NativeSkuImportInput26 {
+  const input = skuInput(); Object.assign(input.references.product.nativeSnapshot, { season_ids: [id(70), id(71)], deleted_at: null, default_barcode_scheme_id: null });
+  input.references.color.nativeSnapshot.deleted_at = null; input.references.fit.nativeSnapshot.deleted_at = null;
+  return { ...input, schemaProfile: 'EXACT26', validatorVersion: NATIVE_SKU_IMPORT_VERSION_26 };
+}
+function sku26Protocol(options: { schema?: number; replay?: boolean; partial?: boolean; badCreate?: boolean; commitUnknown?: boolean } = {}) {
+  const input = skuInput26(), calls: { sql: string; values: unknown[] }[] = [], releases: unknown[] = []; let connects = 0;
+  const client = { async query(sql: string, values: unknown[] = []) {
+    assertSqlBinds(sql, values); calls.push({ sql, values }); const answer = (rows: Record<string, unknown>[] = []) => ({ rows, rowCount: rows.length });
+    if (sql === 'COMMIT') { if (options.commitUnknown) throw Error('SYNTHETIC unknown COMMIT26'); return answer(); }
+    if (/^(BEGIN|ROLLBACK)/.test(sql) || sql.includes('native-sku:cutoff')) return answer();
+    if (sql.includes('native-sku:schema')) return answer([{ installed_versions: Array.from({ length: options.schema ?? 26 }, (_, i) => i + 1) }]);
+    if (sql.includes('native-sku:batch')) return answer([{ id: id(1), mapping_version: 'V2_HISTORY_NULLABLE_1', status: 'STAGED', source_hash: J, source_name: input.fixedSourceNamespace, already_published: false }]);
+    if (sql.includes('native-sku:target')) return answer(options.replay || options.partial ? [{ id: id(50), native_equal: true }] : []);
+    if (sql.includes('native-sku:product')) { assert.match(sql, /'season_ids',p.season_ids/); assert.match(sql, /'deleted_at',p.deleted_at/); assert.match(sql, /'default_barcode_scheme_id',p.default_barcode_scheme_id/); assert.deepEqual(JSON.parse(values[3] as string), input.references.product.nativeSnapshot); return answer([{ id: id(20), size_group_id: id(24), native_equal: true }]); }
+    if (sql.includes('native-sku:catalogue:')) return answer([{ binding_equal: true, native_equal: true }]);
+    if (sql.includes('native-sku:group-member')) return answer([{ size_group_id: id(24), size_id: id(23) }]);
+    if (sql.includes('native-sku:record-replay')) return answer(options.replay || options.partial ? [{ id: input.importRecord.id, import_batch_id: id(1), source_entity_type: 'SKU', source_key: input.canonicalSource.sourceKey,
+      source_record_hash: input.canonicalSource.rowSha256, source_file_ref: input.canonicalSource.fileRef, target_type: 'SKU', target_id: id(50), status: 'IMPORTED', decision_reason: input.importRecord.decisionReason, reviewed_equal: true }] : []);
+    if (sql.includes('native-sku:source-replay') || sql.includes('native-sku:alias-replay')) { const sourceId = values[sql.includes('source-replay') ? 0 : 2]; return answer(options.replay || options.partial && sourceId === id(110) ? [{ equal: true }] : []); }
+    if (sql.includes('native-sku:create')) { const columns = sql.match(/\(([^)]+)\)\s*VALUES/)![1]!.split(','), native = Object.fromEntries(columns.map((c, i) => [c, values[i]]));
+      assert.equal(columns.length, 9); assert.equal(native.created_operation_id, null); return answer([{ id: id(50), native_snapshot: options.badCreate ? { ...native, created_operation_id: id(999) } : native }]); }
+    if (sql.includes('native-sku:source-create')) { const source = JSON.parse(values[0] as string); assert.equal(source.field_provenance.native_sku_import.schema_profile, 'EXACT26'); assert.equal(source.field_provenance.native_sku_import.native_sku.created_operation_id, null); return answer([{ id: source.id }]); }
+    if (sql.includes('native-sku:alias-create')) return answer([{ source_row_id: values[3] }]);
+    if (sql.includes('native-sku:record-create')) return answer([{ id: input.importRecord.id }]);
+    throw Error('Unexpected SKU26 protocol SQL');
+  }, release(error?: unknown) { releases.push(error); } };
+  const pool = { async connect() { connects++; return client; } };
+  const runtime: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(target, purpose) { assert.equal(target, client); assert.equal(purpose, 'IMPORT_STAGE'); } };
+  return { input, client, pool, runtime, calls, releases, connects: () => connects };
+}
+test('SKU26 explicit preparation keeps full product25/color6/fit6 and SKU9 with original alias source semantics', () => {
+  const input = skuInput26(), original = structuredClone(input), prepared = prepareNativeSkuImport26(input); validatePreparedNativeSkuImport26(prepared); assert.deepEqual(input, original);
+  assert.equal(Object.keys(prepared.references.product.nativeSnapshot).length, 25); assert.equal(Object.keys(prepared.nativeSku).length, 9); assert.equal(prepared.nativeSku.created_operation_id, null);
+  assert.deepEqual(prepared.aliases.map(a => a.source), input.aliases.map(a => a.source));
+  assert.equal((nativeSkuAliasEvidence26(prepared, prepared.aliases[0]!).field_provenance as JsonObject).native_sku_import !== undefined, true);
+  assert.throws(() => prepareNativeSkuImport(input), { code: 'NATIVE_SKU_SUCCESSOR_EXPLICIT' });
+  const missing = skuInput26(); delete missing.references.product.nativeSnapshot.season_ids; assert.throws(() => prepareNativeSkuImport26(missing), { code: 'NATIVE_SKU_PRODUCT_SNAPSHOT' });
+  const bad = skuInput26(); bad.references.fit.nativeSnapshot.deleted_at = 'SYNTHETIC'; assert.throws(() => prepareNativeSkuImport26(bad), { code: 'NATIVE_SKU_CATALOGUE_METADATA' });
+  const altered = structuredClone(prepared); (altered.nativeSku as unknown as JsonObject).created_operation_id = id(999); assert.throws(() => validatePreparedNativeSkuImport26(altered));
+});
+test('SKU26 requires actual same-client capability and refuses old store/profile before native target work', async () => {
+  const f = sku26Protocol(), prepared = prepareNativeSkuImport26(f.input);
+  await assert.rejects(new PostgresNativeSkuImportStore(f.pool).stage(prepared)); assert.equal(f.connects(), 0);
+  assert.throws(() => new PostgresNativeSkuImportStore26(f.pool, undefined as never), { code: 'NATIVE_SKU_EXACT26_REQUIRED' });
+  const boolean = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady() { return true; } } as unknown as NativeRuntime26Capability;
+  await assert.rejects(new PostgresNativeSkuImportStore26(f.pool, boolean).stage(prepared), /boolean substitute/); assert.equal(f.calls.length, 0);
+  const wrong = sku26Protocol({ schema: 19 }); await assert.rejects(new PostgresNativeSkuImportStore26(wrong.pool, wrong.runtime).stage(prepareNativeSkuImport26(wrong.input)), { code: 'NATIVE_SKU_SCHEMA_NOT_READY' });
+  assert.ok(!wrong.calls.some(c => c.sql.includes('native-sku:target')));
+});
+test('SKU26 binds full native product facts and creates original aliases atomically; partial replay cannot be adopted', async () => {
+  for (const replay of [false, true]) { const f = sku26Protocol({ replay }), result = await new PostgresNativeSkuImportStore26(f.pool, f.runtime).stage(prepareNativeSkuImport26(f.input));
+    assert.deepEqual(result, replay ? { inserted: 0, replayed: 2 } : { inserted: 2, replayed: 0 });
+    assert.equal(f.calls.filter(c => c.sql.includes('native-sku:source-create')).length, replay ? 0 : 2); assert.equal(f.calls.at(-1)!.sql, 'COMMIT');
+    assert.ok(!f.calls.some(c => /INSERT INTO naijue_erp\.(inventory_ledger|inventory_balance|sku_barcode)/.test(c.sql))); }
+  const partial = sku26Protocol({ partial: true }); await assert.rejects(new PostgresNativeSkuImportStore26(partial.pool, partial.runtime).stage(prepareNativeSkuImport26(partial.input)), { code: 'NATIVE_SKU_PARTIAL_OR_ADOPTED' });
+  assert.ok(!partial.calls.some(c => c.sql.includes('INSERT INTO')));
+});
+test('SKU26 full returned creation metadata must match and unknown COMMIT is discarded without retry', async () => {
+  const bad = sku26Protocol({ badCreate: true }); await assert.rejects(new PostgresNativeSkuImportStore26(bad.pool, bad.runtime).stage(prepareNativeSkuImport26(bad.input)), { code: 'NATIVE_SKU_CREATE_SNAPSHOT' }); assert.equal(bad.calls.at(-1)!.sql, 'ROLLBACK');
+  const unknown = sku26Protocol({ commitUnknown: true }); await assert.rejects(new PostgresNativeSkuImportStore26(unknown.pool, unknown.runtime).stage(prepareNativeSkuImport26(unknown.input)), /unknown COMMIT26/);
+  assert.equal(unknown.calls.at(-1)!.sql, 'COMMIT'); assert.equal(unknown.calls.filter(c => c.sql === 'COMMIT').length, 1); assert.ok(unknown.releases[0] instanceof Error);
+});
 function stockInput(): NativeStockGroupInput {
   const key = "STOCK:synthetic", effective = { ...columns("INVENTORY_BASELINE"), 来源编号: key,
     仓库来源编号: "WH-1", SKU来源编号: id(10), 核准库存数量: "-3", 核准依据: "Synthetic reviewed signed sum",

@@ -1,3 +1,4 @@
+import type { SalesProductCapability } from '../document-presentation.tsx';
 import { UIButton } from '../../components/standard-controls.tsx';
 import { SalesManualCreateHost } from './manual-create-host.tsx';
 import type { SalesManualCreateCapability } from './contracts.ts';
@@ -7,10 +8,10 @@ import type { SalesReader, SalesReferenceReader } from '../contracts.ts';
 import { SalesPageHost } from '../sales-route.tsx';
 import type { SalesEditorSession } from './editor-session.ts';
 import type { SalesHistoryCapability } from '../history-view.tsx';
-type SalesFormComponent = ComponentType<{ readonly session: SalesEditorSession; readonly close: () => void; readonly history?: SalesHistoryCapability }>;
+type SalesFormComponent = ComponentType<{ readonly session: SalesEditorSession; readonly close: () => void; readonly history?: SalesHistoryCapability; readonly product?: SalesProductCapability; readonly scope?: ReadScope }>;
 
 export function SalesCommandPageHost(props: { readonly scope: ReadScope; readonly reader: SalesReader; readonly references: SalesReferenceReader;
-  readonly session: SalesEditorSession; readonly manualCreate?: SalesManualCreateCapability; readonly loadDetailStyles: () => Promise<unknown> }) {
+  readonly session: SalesEditorSession; readonly manualCreate?: SalesManualCreateCapability; readonly loadDetailStyles: () => Promise<unknown>; readonly product?: SalesProductCapability }) {
   const state = useSyncExternalStore(props.session.subscribe, props.session.getSnapshot, props.session.getSnapshot);
   const [styleState, setStyles] = useState<{ readonly scope: ReadScope; readonly session: SalesEditorSession; readonly loader: () => Promise<unknown>; readonly phase: 'idle' | 'loading' | 'ready' | 'error'; readonly Form: SalesFormComponent | null }>(() => ({ scope: props.scope, session: props.session, loader: props.loadDetailStyles, phase: 'idle', Form: null }));
   const styles = styleState.scope === props.scope && styleState.session === props.session && styleState.loader === props.loadDetailStyles ? styleState.phase : 'idle';
@@ -27,14 +28,14 @@ export function SalesCommandPageHost(props: { readonly scope: ReadScope; readonl
   }, [active, manualActive, props.loadDetailStyles, props.scope, props.session, retry]);
   useEffect(() => { setDiscard(false); }, [props.scope, props.session]);
   useEffect(() => () => props.session.suspend(), [props.session]);
-  return <><SalesPageHost scope={props.scope} reader={props.reader} references={props.references} loadDetailStyles={props.loadDetailStyles} write={{
+  return <><SalesPageHost scope={props.scope} reader={props.reader} references={props.references} {...(props.product ? { product: props.product } : {})} loadDetailStyles={props.loadDetailStyles} write={{
     // A confirmed CREATE is a saved document. Classifying it as an active new
     // draft makes the shared NEW navigation return early before opening a new session.
     active, view: state.command.write.phase !== 'committed' && (manualActive || state.command.editor?.mode === 'CREATE') ? 'new' : 'document', canCreate: props.session.canCreate || !!props.manualCreate, preparing: state.preparing, commitRevision: state.commitRevision,
     canLeave: () => props.session.canLeave() && props.manualCreate?.canLeave() !== false,
     close: () => { if (props.session.canLeave() && props.manualCreate?.canLeave() !== false) { props.session.discardEditor(); setManualActive(false); } },
     openCreate: () => { if (props.manualCreate && props.manualCreate.canLeave() && props.session.canLeave()) { setManualActivation(value => value + 1); setManualActive(true); } else if (!props.manualCreate) void props.session.openCreate(); }, openExisting: salesId => { void props.session.openExisting(salesId); },
-    editor: manualActive && props.manualCreate ? <SalesManualCreateHost key={manualActivation} parentScope={props.scope} capability={props.manualCreate} loadStyles={props.loadDetailStyles} close={() => setManualActive(false)} {...(historyReader ? { historyReader } : {})} /> : styles === 'ready' && styleState.Form ? createElement(styleState.Form, { session: props.session, close: () => {}, ...(historyReader ? { history: { scope: props.scope, reader: historyReader } } : {}) }) : <section className="tc-workbench" aria-label="销货单编辑"><h1>销货单</h1>
+    editor: manualActive && props.manualCreate ? <SalesManualCreateHost key={manualActivation} parentScope={props.scope} capability={props.manualCreate} {...(props.product ? { product: props.product } : {})} loadStyles={props.loadDetailStyles} close={() => setManualActive(false)} {...(historyReader ? { historyReader } : {})} /> : styles === 'ready' && styleState.Form ? createElement(styleState.Form, { session: props.session, scope: props.scope, close: () => {}, ...(props.product ? { product: props.product } : {}), ...(historyReader ? { history: { scope: props.scope, reader: historyReader } } : {}) }) : <section className="tc-workbench" aria-label="销货单编辑"><h1>销货单</h1>
       <UIButton type="button" className="iw-button" disabled={props.session.commands.hasUnresolvedWrite} onClick={() => {
         if (state.preparing) { props.session.suspend(); return; }
         if (props.session.hasDirtyDraft) setDiscard(true); else props.session.discardEditor();

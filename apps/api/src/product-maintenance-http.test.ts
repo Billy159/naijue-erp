@@ -34,6 +34,19 @@ const values: ProductWriteValues = { productCode: "SYNTHETIC_01", name: "SYNTHET
   prices: Object.fromEntries(CATALOGUE_PRICE_KEYS.map(k => [k, k === "retail_price" ? "0.00" : null])) as ProductWriteValues["prices"] };
 const command: ProductMaintenanceCommand = { action: "CREATE", requestKey: "synthetic-http-create", values,
   skus: [{ id: null, expectedVersion: null, skuCode: "EXACT-SKU", colorId: id(6), fitId: id(7), sizeId: id(8), enabled: true }], barcodes: [] };
+test("W17 media extended V2 is closed before mutation without actual stage/driver capability and malformed changes stay 400", async t => {
+  let touched = 0; const unexpected = async (): Promise<never> => { touched++; throw Error("UNEXPECTED_MUTATION"); };
+  const tx = { evidence: { async assertAllowed() {}, async getReceipt() { return undefined; }, complete: unexpected }, load: unexpected, readReferences: unexpected,
+    readCandidates: unexpected, validateReferences: unexpected, assertCanDelete: unexpected, putProduct: unexpected, putSku: unexpected, putBarcode: unexpected };
+  const app = Fastify({ logger: false }); t.after(() => app.close()); app.register(createProductMaintenanceHttpPlugin({ authenticate: async () => actor, dependencies: {
+    now: () => "2026-10-23T00:00:00Z", newId: () => id(1), unitOfWork: { seasonContract: "product-season-array-v1", async transaction(work) { return work(tx); } }
+  } }));
+  const { seasonId, ...oldValues } = values, body = { ...command, values: { ...oldValues, seasonIds: [seasonId] }, imageChanges: [] };
+  const closed = await app.inject({ method: "POST", url: "/products/v2/commands", payload: body }); assert.equal(closed.statusCode, 503, closed.body); assert.equal(closed.json().error.code, "PRODUCT_MEDIA_NOT_READY");
+  assert.equal(closed.headers["cache-control"], "no-store"); assert.equal(touched, 0);
+  const invalid = await app.inject({ method: "POST", url: "/products/v2/commands", payload: { ...body, imageChanges: [{ action: "ADD", uploadId: id(17001), role: null, colorId: null, displayOrder: 0 }] } });
+  assert.equal(invalid.statusCode, 400); assert.equal(touched, 0); assert.equal(app.server.listening, false);
+});
 test("product maintenance HTTP: save/replay/original receipt traverses the actual application and rejects authority/client fields", async t => {
   let p: ProductAggregate | undefined, seq = 100, writes = 0, active = true, granted = true;
   const receipts = new Map<string, NonNullable<Awaited<ReturnType<ProductMaintenanceEvidence["getReceipt"]>>>>();

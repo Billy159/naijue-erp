@@ -56,9 +56,10 @@ function warehouse(value: unknown, parameters: CurrentTransferWarehouseQuery): C
     enabled, hallEnabled: boolean(row.hallEnabled), hasNonzeroInventory });
 }
 function product(value: unknown): CurrentFormProduct {
-  const row = object(value, ['id', 'code', 'name', 'retailPrice', 'minimumPriceAvailability']);
+  const row = object(value, ['id', 'code', 'name', 'retailPrice', 'minimumPriceAvailability'], ['category']);
   if (row.minimumPriceAvailability !== 'UNAVAILABLE') invalid();
-  return Object.freeze({ id: id('product', row.id), code: text(row.code), name: text(row.name), retailPrice: price(row.retailPrice), minimumPriceAvailability: 'UNAVAILABLE' });
+  const category = Object.hasOwn(row, 'category') ? object(row.category, ['id', 'label']) : null;
+  return Object.freeze({ id: id('product', row.id), code: text(row.code), name: text(row.name), retailPrice: price(row.retailPrice), minimumPriceAvailability: 'UNAVAILABLE', ...(category ? { category: Object.freeze({ id: id('category', category.id), label: nullableText(category.label) }) } : {}) });
 }
 function sku(value: unknown): CurrentFormSku {
   const row = object(value, ['id', 'skuCode', 'productId', 'productCode', 'productName', 'colorId', 'colorName', 'fitId', 'fitName', 'sizeId', 'sizeName', 'sizeGroupId', 'barcodeAvailability']);

@@ -1,3 +1,4 @@
+import type { SalesProductCapability } from './document-presentation.tsx';
 import { UIButton } from '../components/standard-controls.tsx';
 import { useEffect, useState, type ComponentType } from 'react';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
@@ -9,6 +10,7 @@ import { salesTarget } from './model.ts';
 import { useSalesOwnedScope } from './owned-scope.ts';
 
 export interface SalesDetailActivation {
+  readonly product?: SalesProductCapability;
   readonly parentScope: ReadScope; readonly salesId: string; readonly reader: SalesReader;
   /** Explicit action-only trusted CSS owner. Resolve only when CSS is usable. */
   readonly loadDetailStyles: () => Promise<unknown>;
@@ -29,7 +31,7 @@ export function SalesDetailHost(props: SalesDetailActivation) {
     return () => { attached = false; };
   }, [scope, attempt, leaves]);
   if (!props.parentScope.active) return null;
-  if (View && scope) return <View scope={scope} reader={props.reader} salesId={props.salesId} close={close} />;
+  if (View && scope) return <View scope={scope} reader={props.reader} salesId={props.salesId} close={close} {...(props.product ? { product: props.product } : {})} />;
   return <section className="sales-workbench sales-detail-loading" aria-label="销货单详情"><SalesDetailHeader close={close} />
     {failed ? <p role="alert" className="iw-inline-state">详情组件或样式加载失败。<UIButton type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试加载</UIButton></p> : <p role="status" className="iw-inline-state">正在准备销货单查看…</p>}
   </section>;

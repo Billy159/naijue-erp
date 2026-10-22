@@ -13,6 +13,22 @@ export interface ProductMaintenanceImagesDto {
     readonly byteSize: string; readonly thumbnailUrl: string | null; readonly thumbnailState: "READY" | "UNAVAILABLE";
   })[];
 }
+export type ProductImageChange =
+  | { readonly action: "ADD"; readonly uploadId: string; readonly role: ProductMaintenanceImageRole; readonly colorId: string | null; readonly displayOrder: number }
+  | { readonly action: "REPLACE"; readonly id: string; readonly expectedVersion: number; readonly uploadId: string; readonly role: ProductMaintenanceImageRole | null; readonly colorId: string | null; readonly displayOrder: number }
+  | { readonly action: "EDIT_METADATA"; readonly id: string; readonly expectedVersion: number; readonly role: ProductMaintenanceImageRole | null; readonly colorId: string | null; readonly displayOrder: number }
+  | { readonly action: "REMOVE"; readonly id: string; readonly expectedVersion: number };
+export type ProductMaintenanceMediaCommandV2 = Extract<ProductMaintenanceCommandV2, { readonly action: "CREATE" | "EDIT" }> & { readonly imageChanges: readonly ProductImageChange[] };
+/** Structural consumption seam implemented by the actual verified private stage. */
+export interface ProductImageStageConsumer {
+  readonly profile: "PRIVATE_PRODUCT_MEDIA_STAGE_V1";
+  consume(input: { readonly actor: ActorContext; readonly productId: string | null; readonly commandKey: string; readonly uploadId: string; readonly signal: AbortSignal }): Promise<{
+    readonly profile: "PRIVATE_PRODUCT_MEDIA_STAGE_V1"; readonly uploadId: string; readonly actorAccountId: string; readonly productId: string | null; readonly commandKey: string;
+    readonly fileRef: string; readonly createdAt: string; readonly expiresAt: string;
+    readonly original: { readonly mime: ProductImageMetadata["mime"]; readonly byteSize: bigint; readonly sha256: string };
+    readonly thumbnail: { readonly mime: "image/webp"; readonly byteSize: bigint; readonly sha256: string; readonly derivedFromOriginalSha256: string };
+  }>;
+}
 export type ProductMaintenanceAction = "CREATE" | "EDIT" | "DISABLE" | "RESTORE" | "DELETE";
 export type ProductAuditValue = string | number | boolean | null | readonly ProductAuditValue[] | { readonly [key: string]: ProductAuditValue };
 export interface ProductAuditObject { readonly [key: string]: ProductAuditValue }
@@ -91,6 +107,11 @@ export interface ProductMaintenanceEvidence {
 }
 export interface ProductMaintenanceTransaction {
   readonly evidence: ProductMaintenanceEvidence;
+  assertImageWriteReady?(): Promise<void>;
+  assertImagesPrepared?(completion: Parameters<ProductMaintenanceEvidence["complete"]>[0]): Promise<void>;
+  loadImages?(productId: string): Promise<readonly ProductMaintenanceImageMetadata[]>;
+  /** Supplied rows contain only actual changes. Deletions and unique-safe updates precede additions. */
+  writeImages?(before: readonly ProductMaintenanceImageMetadata[], after: readonly ProductMaintenanceImageMetadata[]): Promise<void>;
   /** One statement owns root/image versions and all retained image facts; optional legacy provider compatibility. */
   readImageSnapshot?(productId: string): Promise<ProductMaintenanceImageSnapshot | null>;
   load(id: string): Promise<ProductAggregate | undefined>;
@@ -109,4 +130,6 @@ export interface ProductMaintenanceDependencies {
   readonly unitOfWork: ProductMaintenanceUnitOfWork; readonly now: () => string;
   readonly newId: (kind: "product" | "sku" | "barcode" | "operation") => string;
   readonly media?: ControlledProductMedia | null;
+  readonly imageStage?: ProductImageStageConsumer | null;
+  readonly newImageId?: () => string;
 }

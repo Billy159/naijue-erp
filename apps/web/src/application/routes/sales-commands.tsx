@@ -1,3 +1,4 @@
+import { createSalesProductCapability } from './sales.tsx';
 import type { SalesNewDocumentSession } from '../../current-form/sales-create.ts';
 import { createSalesHttpReader, createSalesFilterReferenceHttpReader } from '../../sales/http-reader.ts';
 import type { ApplicationRouteProps, RoutePreparation, SalesSession } from '../contracts.ts';
@@ -37,7 +38,8 @@ export function prepareSalesCommandSession(input: RoutePreparation, onAccessFail
   }) : undefined;
   const loadDetailStyles = () => configuration.detailStylesheet!.load();
   return Object.freeze({ workspace, ...(manualCreate ? { canLeave: manualCreate.canLeave } : {}), prepare: (route: RoutePreparation) => {
+    const product = createSalesProductCapability(route, onAccessFailure);
     const routeReader = createSalesHttpReader(route.http), references = createSalesFilterReferenceHttpReader(route.http);
-    return { View: ({ scope }: ApplicationRouteProps) => <SalesCommandPageHost scope={scope} reader={routeReader} references={references} session={workspace} {...(manualCreate ? { manualCreate } : {})} loadDetailStyles={loadDetailStyles} /> };
+    return { View: ({ scope }: ApplicationRouteProps) => <SalesCommandPageHost scope={scope} reader={routeReader} references={references} session={workspace} {...(manualCreate ? { manualCreate } : {})} loadDetailStyles={loadDetailStyles} {...(product ? { product } : {})} /> };
   } });
 }

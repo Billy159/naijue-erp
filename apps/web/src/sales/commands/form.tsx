@@ -1,9 +1,12 @@
+import { SalesDocumentColumns, SalesDocumentColumnHead, SalesDocumentSummary, SalesProductPresentation, salesPaymentBalance, salesPaymentKind, salesDisplayedDiscount, salesRawLinePrice, salesDocumentType, type SalesProductCapability } from '../document-presentation.tsx';
+import type { ReadScope } from '../../loading/read-scope.ts';
+import { StandardOverlay } from '../../components/standard-overlay.tsx';
 import { DocumentOutputActions } from '../../components/document-output.tsx';
 import { salesDocumentOutput } from '../../components/document-output-contracts.ts';
 import { SalesStatusTag } from '../sales-status-tag.tsx';
-import { UIDate, UIButton, UICheckbox, UIInput, UISelect, UITextArea } from '../../components/standard-controls.tsx';
+import { UIDate, UIButton, UIInput } from '../../components/standard-controls.tsx';
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
-import { salesStatusLabels, salesTypeLabels } from '../model.ts';
+import { salesStatusLabels } from '../model.ts';
 import type { SalesDetailDto } from '../contracts.ts';
 import type { SalesEditorSession } from './editor-session.ts';
 import { compileSalesForm, salesInputMoney, type SalesFormInput } from './form-model.ts';
@@ -12,9 +15,10 @@ import { SalesHistoryAction, type SalesHistoryCapability } from '../history-view
 
 /** Bounded full-page editor using the frozen header/sections/columns. Current
  * identity/product/account pickers are explicitly unavailable in this slice. */
-export function SalesCommandForm({ session, close, history }: { readonly session: SalesEditorSession; readonly close: () => void; readonly history?: SalesHistoryCapability }) {
+export function SalesCommandForm({ session, close, history, scope, product }: { readonly scope?: ReadScope; readonly product?: SalesProductCapability; readonly session: SalesEditorSession; readonly close: () => void; readonly history?: SalesHistoryCapability }) {
   const state = useSyncExternalStore(session.subscribe, session.getSnapshot, session.getSnapshot);
   const heading = useRef<HTMLHeadingElement>(null);
+  const [zeroLine, setZeroLine] = useState<string | null>(null);
   const [confirm, setConfirm] = useState<'leave' | 'adopt' | 'APPROVE' | 'UNAPPROVE' | 'VOID' | null>(null);
   useEffect(() => { heading.current?.focus({ preventScroll: true }); }, []);
   const { command } = state, { editor, write } = command;
@@ -35,8 +39,8 @@ export function SalesCommandForm({ session, close, history }: { readonly session
   const header = detail?.document.header ?? editor?.draft?.header, status = detail?.document.header.status ?? 'DRAFT';
   const base = editor?.draft, preview = base && input ? compileSalesForm(base, input) : null;
   const draft = preview?.ok ? preview.draft : null;
-  const lines = savedReadback?.document.lines ?? draft?.lines ?? base?.lines ?? detail?.document.lines ?? [];
-  const settlements = savedReadback?.document.settlements ?? draft?.settlements ?? base?.settlements ?? detail?.document.settlements ?? [];
+  const lines = savedReadback?.document.lines ?? draft?.lines ?? (input && base ? base.lines.filter(line => input.lines.some(row => row.id === line.id)) : base?.lines) ?? detail?.document.lines ?? [];
+  const settlements = savedReadback?.document.settlements ?? draft?.settlements ?? (input && base ? base.settlements.filter(row => input.settlements.some(item => item.id === row.id)) : base?.settlements) ?? detail?.document.settlements ?? [];
   const lock = !session.editable, stable = !!editor?.detail && editor.phase === 'ready' && !editor.current && !command.stale && !unresolved
     && write.phase !== 'committed' && editor.detail.stockBasis === 'RUNTIME_LEDGER';
   const names = detail?.referenceNames, settlementNames = new Map<string, SalesDetailDto['settlementNames'][number]>(detail?.settlementNames.map(row => [row.settlementId, row]));
@@ -51,56 +55,63 @@ export function SalesCommandForm({ session, close, history }: { readonly session
     else if (action === 'adopt') session.adoptCurrent(true);
     else if (action) void session.submit(action);
   };
-  const sections = header?.businessType === 'EXCHANGE'
+  const save = () => {
+    const zero = input?.lines.find(raw => !raw.isGift && !raw.zeroConfirmed && salesRawLinePrice(base?.lines.find(line => line.id === raw.id)?.referencePrice ?? null, raw) === '0');
+    if (zero) setZeroLine(zero.id); else void session.save();
+  };
+  const zero = input?.lines.find(row => row.id === zeroLine);
+  const sections = header && header.businessType !== 'SALE'
     ? [{ title: '退回商品', incoming: true, rows: lines.filter(line => BigInt(line.quantity) < 0n) }, { title: '换出商品', incoming: false, rows: lines.filter(line => BigInt(line.quantity) >= 0n) }]
-    : [{ title: header?.businessType === 'RETURN' ? '退回商品' : '商品明细', incoming: header?.businessType === 'RETURN', rows: lines }];
-  return <section className="sales-detail-page sales-detail-facts tc-workbench tc-editor sale-workbench sale-editor sales-command-editor" aria-label="销货单编辑">
-    <div className="tc-head sale-head sales-document-state"><h1 ref={heading} tabIndex={-1}>{editor?.detail || write.phase === 'committed' ? '销货单' : editor?.mode === 'CREATE' ? '新增销货单' : session.editable ? '编辑销货单' : '查看销货单'}</h1>
+    : [{ title: '商品明细', incoming: false, rows: lines }];
+  return <SalesProductPresentation {...(scope ? { scope } : {})} {...(product ? { capability: product } : {})}>{openProduct => <section className="sales-detail-page sales-detail-facts tc-workbench tc-editor sale-workbench sale-editor sales-command-editor" aria-label="销货单编辑">
+    <div className="tc-head sale-head sales-document-state"><h1 ref={heading} tabIndex={-1}>{editor?.mode === 'CREATE' && write.phase !== 'committed' ? '新增销货单' : session.editable ? '编辑销货单' : '查看销货单'}</h1>
       <SalesStatusTag status={status} />
       <span className="sale-muted">{session.hasDirtyDraft ? '· 有未保存输入' : '· 已保存'}</span><div className="actions">
         <UIButton type="button" className="iw-text-button" disabled={unresolved} onClick={leave}>返回列表</UIButton>
-        <UIButton type="button" className="iw-text-button" disabled={lock || !session.hasDirtyDraft} onClick={() => { void session.save(); }}>保存</UIButton>
+        <UIButton type="button" className="iw-text-button" disabled={lock || !session.hasDirtyDraft} onClick={save}>保存</UIButton>
         {status === 'DRAFT' && <><UIButton type="button" className="iw-text-button" disabled={!stable || session.hasDirtyDraft || !session.actionAllowed('APPROVE') || !base || !settlementBalanced(base)} title="审核须先保存并读取当前单据，收款减退款与应结金额精确配平" onClick={() => setConfirm('APPROVE')}>审核</UIButton>
           <UIButton type="button" className="iw-text-button" disabled={!stable || session.hasDirtyDraft || !session.actionAllowed('VOID')} onClick={() => setConfirm('VOID')}>作废</UIButton></>}
         {status === 'APPROVED' && <UIButton type="button" className="iw-text-button" disabled={!stable || !session.actionAllowed('UNAPPROVE')} title={session.actionAllowed('UNAPPROVE') ? undefined : '业务员不能弃审'} onClick={() => setConfirm('UNAPPROVE')}>弃审</UIButton>}
         <DocumentOutputActions sourceKey={detail ? `${detail.document.header.id}:${detail.document.header.version}` : "unsaved"} {...(detail && (write.phase !== 'committed' || !!savedReadback) && !unresolved && (!command.stale || !!savedReadback) && (!session.hasDirtyDraft || !!savedReadback) ? { getDocument: () => salesDocumentOutput(detail) } : {})} unavailableReason="请先完成保存并读取当前单据" />
         <SalesHistoryAction {...(history ? { capability: history } : {})} {...(detail ? { salesId: detail.document.header.id } : {})} />
       </div></div>
-    {confirm && <div className="iw-alert" role="alert"><p>{confirm === 'leave' ? '离开将放弃本次未保存输入，已保存单据不变。' : confirm === 'adopt' ? '采用当前单据将替换本次未保存输入，原单据不会被强制覆盖。' : confirm === 'APPROVE' ? '审核将按本单实际明细追加库存效果，并计入收退统计。允许负库存。' : confirm === 'UNAPPROVE' ? '弃审将追加原审核库存效果的反向流水，并退出收退统计；确认后还需读取当前单据。' : '作废仅作用于已保存未审核单据，不改库存，作废后不能继续编辑。'}</p><UIButton type="button" className="iw-button" onClick={() => setConfirm(null)}>取消</UIButton><UIButton type="button" className="iw-button iw-primary" onClick={confirmAction}>{confirm === 'leave' ? '放弃修改并返回' : confirm === 'adopt' ? '确认采用当前单据' : `确认${confirm === 'APPROVE' ? '审核' : confirm === 'UNAPPROVE' ? '弃审' : '作废'}`}</UIButton></div>}
+    {confirm && <StandardOverlay role="alertdialog" title="确认操作" label="确认销货单操作" closeLabel="关闭销货单操作确认" close={() => setConfirm(null)} width={620}><p>{confirm === 'leave' ? '离开将放弃本次未保存输入，已保存单据不变。' : confirm === 'adopt' ? '采用当前单据将替换本次未保存输入，原单据不会被强制覆盖。' : confirm === 'APPROVE' ? '审核将按本单实际明细追加库存效果，并计入收退统计。允许负库存。' : confirm === 'UNAPPROVE' ? '弃审将追加原审核库存效果的反向流水，并退出收退统计；确认后还需读取当前单据。' : '作废仅作用于已保存未审核单据，不改库存，作废后不能继续编辑。'}</p><UIButton type="button" className="iw-button" onClick={() => setConfirm(null)}>取消</UIButton><UIButton type="button" className="iw-button iw-primary" onClick={confirmAction}>{confirm === 'leave' ? '放弃修改并返回' : confirm === 'adopt' ? '确认采用当前单据' : `确认${confirm === 'APPROVE' ? '审核' : confirm === 'UNAPPROVE' ? '弃审' : '作废'}`}</UIButton></StandardOverlay>}
     {state.preparing && <p role="status">正在准备当前授权新单资料…<UIButton type="button" className="iw-link" onClick={() => { session.suspend(); close(); }}>取消准备</UIButton></p>}
     {editor?.phase === 'loading' && <p role="status">正在读取销货单…</p>}
     {editor?.readError && <p className="iw-alert" role="alert">当前单据未能读取。<UIButton type="button" className="iw-link" disabled={unresolved} onClick={() => { void session.commands.readCurrent(); }}>重新读取当前单据</UIButton></p>}
     {header && <><div className="tc-doc-header sale-doc-header"><div className="tc-gold-doc-fields sale-doc-fields">
       {field('单据日期', input ? <UIDate aria-label="单据日期" value={input.businessDate} disabled={lock} onChange={value => change({ ...input, businessDate: value })} /> : read(header.businessDate), 'sale-date-field')}
-      {field('业务类型', read(salesTypeLabels[header.businessType as 'SALE' | 'RETURN' | 'EXCHANGE']))}
+      {field('业务类型', read(header.businessType === 'SALE' ? '销售' : '退货/换货'))}
       {field('营业厅', read(names?.hallName))}{field('营业员', read(names?.salespersonName ?? (header.salespersonId === null ? '未指定' : null)))}
       {field('客户', read(names?.customerName))}{field('出库仓', read(names?.warehouseName))}
       {field('单号', <strong className="sale-number-value">{detail ? header.number : write.phase === 'committed' ? '已保存，待读取单号' : header.number}</strong>, 'sale-number-field')}
       {field('整单优惠 / 抹零', input ? <UIInput className="iw-control" aria-label="整单优惠 / 抹零" inputMode="decimal" value={input.orderDiscount} disabled={lock || header.businessType !== 'SALE'} onChange={nextValue => change({ ...input, orderDiscount: nextValue })} /> : read(salesInputMoney(header.orderDiscount)), 'sale-discount-field')}
       {field('应结金额', <strong className="sale-due-value">{draft ? `¥${salesInputMoney(draft.header.netDue)}` : input ? '输入尚未校验' : `¥${salesInputMoney(header.netDue)}`}</strong>, 'sale-due-field')}
-      {field('本单收退明细', <div className="sale-payment-rows">{settlements.map(row => {
+      {field('收款', <><div className="sale-payment-rows">{settlements.map(row => {
         const raw = input?.settlements.find(item => item.id === row.id), labels = settlementNames.get(row.id);
-        return <div key={row.id} className="sale-payment-read">{raw ? <UISelect className="iw-control" aria-label={`收退方向 ${row.lineNo}`} disabled={lock} value={raw.direction} onChange={nextValue => change({ ...input!, settlements: input!.settlements.map(item => item.id === row.id ? { ...item, direction: nextValue as 'RECEIVE' | 'REFUND' } : item) })}><UISelect.Option value="RECEIVE">收款</UISelect.Option><UISelect.Option value="REFUND">退款</UISelect.Option></UISelect> : <span>{row.direction === 'RECEIVE' ? '收款' : '退款'}</span>}
-          <span title="当前账户选择器尚未接入，保持原账户">{labels ? `${labels.methodNameSnapshot} · ${labels.accountNameSnapshot}` : '当前账户名称未提供'}</span>
-          {raw ? <UIInput className="iw-control" aria-label={`收退金额 ${row.lineNo}`} inputMode="decimal" value={raw.amount} disabled={lock} onChange={nextValue => change({ ...input!, settlements: input!.settlements.map(item => item.id === row.id ? { ...item, amount: nextValue } : item) })} /> : <strong>{salesInputMoney(row.amount)}</strong>}</div>;
-      })}{!settlements.length && <span className="sale-read-value">本单没有收退明细</span>}</div>, 'sale-payment-field')}
-    </div></div><label className="sale-note-row"><span className="sale-field-label">备注</span>{input ? <UITextArea className="iw-control" aria-label="备注" rows={1} value={input.note} disabled={lock} onChange={nextValue => change({ ...input, note: nextValue })} /> : <span className="sale-note-read">{header.note ?? '未填写'}</span>}</label></>}
-    <p className="sale-muted">本步只修改原有实际行及收退金额。当前商品、规格、营业厅、客户、仓库及账户选择尚未接入，原身份和条码保持不变。{editor?.detail?.stockBasis === 'CUTOFF_HISTORY' ? '历史单据未开放写入。' : status === 'APPROVED' ? '已审核单据须先弃审再修改。' : status === 'VOID' ? '作废单据仅可查看。' : !base && editor?.detail ? '原单缺少明确价格事实或原付款方式编号，不能推断为新保存或审核意图。' : ''}</p>
+        return <div key={row.id} className={raw ? 'sale-payment-row' : 'sale-payment-read'}><span className="sale-read-value" title={labels?.methodNameSnapshot ?? '原付款方式未知'}>{labels?.methodNameSnapshot ?? '原付款方式未知'}</span><span className="sale-read-value" title={labels?.accountNameSnapshot ?? '原账户未知'}>{labels?.accountNameSnapshot ?? '原账户未知'}</span>
+          {raw ? <UIInput aria-label={`收退金额 ${row.lineNo}`} inputMode="decimal" value={(raw.direction === 'REFUND' ? '-' : '') + raw.amount} disabled={lock} onChange={value => change({ ...input!, settlements: input!.settlements.map(item => item.id === row.id ? { ...item, direction: value.startsWith('-') ? 'REFUND' : 'RECEIVE', amount: value.startsWith('-') ? value.slice(1) : value } : item) })} /> : <strong>{row.direction === 'REFUND' ? '-' : ''}{salesInputMoney(row.amount)}</strong>}
+          {raw && <div className="sale-payment-actions"><UIButton className="sale-link" disabled={lock} aria-label={`删除收退 ${row.lineNo}`} onClick={() => change({ ...input!, settlements: input!.settlements.filter(item => item.id !== row.id) })}>删除</UIButton></div>}</div>;
+      })}{!settlements.length && <span className="sale-read-value">本单没有收退明细</span>}</div><span className={`sale-payment-balance ${salesPaymentKind(draft?.header.netDue ?? (input ? null : header.netDue), input && !draft ? null : settlements.reduce((sum, row) => sum + (row.direction === 'REFUND' ? -1n : 1n) * BigInt(row.amount), 0n).toString(), lines.length)}`}>{salesPaymentBalance(draft?.header.netDue ?? (input ? null : header.netDue), input && !draft ? null : settlements.reduce((sum, row) => sum + (row.direction === 'REFUND' ? -1n : 1n) * BigInt(row.amount), 0n).toString(), lines.length)}</span></>, 'sale-payment-field')}
+    </div></div><label className="sale-note-row"><span className="sale-field-label">备注</span>{input ? <UIInput className="iw-control" aria-label="备注" value={input.note} disabled={lock} onChange={nextValue => change({ ...input, note: nextValue })} /> : <span className="sale-note-read">{header.note ?? '未填写'}</span>}</label></>}
+    {editor?.detail?.stockBasis === 'CUTOFF_HISTORY' ? <p role="status">历史单据仅可查看。</p> : status === 'APPROVED' ? <p role="status">已审核单据须先弃审再修改。</p> : status === 'VOID' ? <p role="status">作废单据仅可查看。</p> : !base && editor?.detail ? <p role="status">原价格或付款方式资料不完整，暂不能保存或审核。</p> : null}
     {(state.notice || command.notice) && <p className="iw-alert" role={Object.keys(state.errors).length || write.phase === 'rejected' ? 'alert' : 'status'}>{state.notice ?? command.notice}</p>}
     {Object.entries(state.errors).map(([key, message]) => <p className="iw-alert" role="alert" key={key}>{message}</p>)}
     {working && <p role="status">正在处理原操作…<UIButton type="button" className="iw-link" onClick={() => session.commands.cancelWaiting()}>停止等待</UIButton></p>}
     {write.phase === 'uncertain' && <div className="iw-alert" role="status"><strong>原操作结果不确定，不能另建重复操作。</strong><p>原操作键：{write.command?.requestKey}</p><UIButton type="button" className="iw-button" onClick={() => { void session.commands.checkReceipt(); }}>核实原操作回执</UIButton><UIButton type="button" className="iw-button" onClick={() => { void session.commands.replayOriginal(); }}>重放原请求</UIButton></div>}
     {write.phase === 'committed' && <p role="status">原操作已确认：版本 {write.result?.version}，{write.result ? salesStatusLabels[write.result.status as 'DRAFT' | 'APPROVED' | 'VOID'] : ''}。{savedReadback ? '下方显示重新读取的已保存单据；继续操作前请采用当前单据。' : '正在核对已保存内容；读取失败可重试，保存不会重复提交。'}</p>}
-    {!unresolved && editor && (editor.detail || write.phase === 'committed') && <UIButton type="button" className="iw-button" disabled={editor.phase === 'loading'} onClick={() => { void session.commands.readCurrent(); }}>读取当前单据</UIButton>}
+    {!unresolved && editor && (command.stale || editor.readError || write.phase === 'committed' && !editor.current) && <UIButton type="button" className="iw-button" disabled={editor.phase === 'loading'} onClick={() => { void session.commands.readCurrent(); }}>读取当前单据</UIButton>}
     {editor?.current && <p role="status">当前版本 {editor.current.document.header.version} 已读取，原操作和输入仍保留。<UIButton type="button" className="iw-button" onClick={() => { if (session.hasDirtyDraft) setConfirm('adopt'); else session.adoptCurrent(); }}>采用当前单据</UIButton></p>}
-    {sections.map(section => <section className="sale-entry-section" key={section.title}><div className="tc-section-head sale-section-head"><strong>{section.title}</strong></div><div className="sale-lines sales-table-scroll"><table className="sales-table sale-lines-table"><caption className="sr-only">销货明细 · {section.title}</caption><colgroup>{[270, 100, 122, 84, 80, 95, 90, 108, 99, 142].map((width, index) => <col key={index} style={{ width }} />)}</colgroup><thead><tr>{['款号／商品名称', '颜色', '版型', '尺码', '数量', '参考零售价', '折扣', section.incoming ? '退货单价' : '成交单价', '金额', '操作'].map(label => <th scope="col" key={label}>{label}</th>)}</tr></thead><tbody>{section.rows.map(line => {
-      const raw = input?.lines.find(row => row.id === line.id), prefix = `${line.snapshot.productCode} ${line.lineNo}`;
+    {sections.map(section => <section className="sale-entry-section" key={section.title}><div className="tc-section-head sale-section-head"><strong>{section.title}</strong></div><div className="sale-lines sales-table-scroll"><table className="sales-table sale-lines-table"><caption className="sr-only">销货明细 · {section.title}</caption><SalesDocumentColumns /><SalesDocumentColumnHead /><tbody>{section.rows.map(line => {
+      const raw = input?.lines.find(row => row.id === line.id), prefix = `${line.snapshot.productCode} ${line.lineNo}`, price = raw ? salesRawLinePrice(line.referencePrice, raw) : line.dealPrice;
       return <tr key={line.id}><td><div className="sale-product-cell"><strong>{line.snapshot.productCode}</strong><span className="sale-product-name">{line.snapshot.productName}</span></div></td><td>{line.snapshot.colorName}</td><td>{line.snapshot.fitName}</td><td>{line.snapshot.sizeName}</td>
         <td>{raw ? <UIInput className="iw-control" aria-label={`${prefix} 数量`} inputMode="numeric" value={raw.quantity} disabled={lock} onChange={nextValue => changeLine(line.id, { quantity: nextValue })} /> : line.quantity}</td><td className="sale-muted">{line.referencePrice === null ? '未记录' : salesInputMoney(line.referencePrice)}</td>
-        <td>{raw ? <><UISelect className="iw-control" aria-label={`${prefix} 计价方式`} value={raw.pricingRule} disabled={lock || raw.isGift} onChange={nextValue => changeLine(line.id, { pricingRule: nextValue as 'UNIT_PRICE' | 'DISCOUNT' })}><UISelect.Option value="UNIT_PRICE">成交单价</UISelect.Option><UISelect.Option value="DISCOUNT" disabled={line.referencePrice === null}>折扣</UISelect.Option></UISelect>{raw.pricingRule === 'DISCOUNT' && <UIInput className="iw-control" aria-label={`${prefix} 折扣（折）`} inputMode="decimal" value={raw.discount} disabled={lock || raw.isGift} onChange={nextValue => changeLine(line.id, { discount: nextValue })} />}</> : line.discountTenths === null ? '未记录' : `${line.discountTenths / 10}折`}</td>
-        <td>{raw ? <UIInput className="iw-control" aria-label={`${prefix} 成交单价`} inputMode="decimal" value={raw.isGift ? '0.00' : raw.pricingRule === 'DISCOUNT' && draft ? salesInputMoney(line.dealPrice) : raw.dealPrice} disabled={lock || raw.isGift || raw.pricingRule === 'DISCOUNT'} onChange={nextValue => changeLine(line.id, { dealPrice: nextValue })} /> : salesInputMoney(line.dealPrice)}</td><td>{preview && !preview.ok ? '待校验' : salesInputMoney(line.lineAmount)}</td>
-        <td className="ui-action-cell">{raw ? <><UICheckbox aria-label={`${prefix} 赠品`} checked={raw.isGift} disabled={lock} onChange={nextValue => changeLine(line.id, { isGift: nextValue })}>赠品</UICheckbox><UICheckbox aria-label={`${prefix} 确认普通零价`} checked={raw.zeroConfirmed} disabled={lock || raw.isGift} onChange={nextValue => changeLine(line.id, { zeroConfirmed: nextValue })}>确认零价</UICheckbox></> : line.isGift ? '赠品' : ''}</td></tr>;
+        <td>{raw && line.referencePrice !== null && !raw.isGift ? <span className="sale-discount-control"><UIInput aria-label={`${prefix} 折扣（折）`} inputMode="decimal" value={raw.pricingRule === 'DISCOUNT' ? raw.discount : salesDisplayedDiscount(line.referencePrice, price)} disabled={lock} onChange={value => changeLine(line.id, { pricingRule: 'DISCOUNT', discount: value, zeroConfirmed: false })} /><span>折</span></span> : line.discountTenths === null ? '' : `${Math.trunc(line.discountTenths / 10)}.${line.discountTenths % 10}折`}</td>
+        <td>{raw ? <UIInput aria-label={`${prefix} 成交单价`} inputMode="decimal" value={raw.isGift ? '0.00' : raw.pricingRule === 'DISCOUNT' ? price === null ? '' : salesInputMoney(price) : raw.dealPrice} disabled={lock || raw.isGift} onChange={value => changeLine(line.id, { pricingRule: 'UNIT_PRICE', dealPrice: value, zeroConfirmed: false })} /> : salesInputMoney(line.dealPrice)}</td><td>{raw && (!/^-?[1-9]\d{0,18}$/.test(raw.quantity) || price === null) ? '待校验' : raw ? salesInputMoney((BigInt(raw.quantity) * BigInt(price!)).toString()) : salesInputMoney(line.lineAmount)}</td>
+        <td className="ui-action-cell"><div className="sale-row-actions"><UIButton className="sale-link" disabled={!openProduct || !header} onClick={() => { if (header) openProduct?.(line.skuId, header.hallId); }}>查看</UIButton>{raw && <><UIButton className="sale-link" disabled={lock} onClick={() => changeLine(line.id, { isGift: !raw.isGift })}>{raw.isGift ? '取消赠品' : '赠品'}</UIButton><UIButton className="sale-link" disabled={lock} aria-label={`删除明细 ${line.lineNo}`} onClick={() => { if (input) change({ ...input, lines: input.lines.filter(row => row.id !== line.id) }); }}>删除</UIButton></>}</div></td></tr>;
     })}</tbody></table></div></section>)}
-    <footer className="tc-foot tc-gold-footer sale-summary"><div className="sale-summary-detail"><strong>{lines.length} 行</strong>{input && !draft && <span>本次输入待校验</span>}</div><div className="sale-summary-primary"><strong>应结 ¥{draft ? salesInputMoney(draft.header.netDue) : header && !input ? salesInputMoney(header.netDue) : '待校验'}</strong>{draft && <strong>收退{settlementBalanced(draft) ? '已配平' : '未配平，不能审核'}</strong>}</div></footer>
-  </section>;
+    {header && <SalesDocumentSummary businessType={salesDocumentType(header.businessType)} snapshotCodes lines={lines.map(line => ({ styleKey: line.snapshot.productCode, quantity: input?.lines.find(row => row.id === line.id)?.quantity ?? line.quantity, isGift: input?.lines.find(row => row.id === line.id)?.isGift ?? line.isGift }))} grossMinor={draft?.header.grossAmount ?? (input ? null : header.grossAmount)} discountMinor={draft?.header.orderDiscount ?? (input ? null : header.orderDiscount)} netDueMinor={draft?.header.netDue ?? (input ? null : header.netDue)} />}
+    {zero && <StandardOverlay role="alertdialog" title="确认普通零价" label="确认普通零价" closeLabel="关闭零价确认" close={() => setZeroLine(null)} width={420}>{dismiss => <><p>成交单价为零。确认按普通商品零价处理？保存仍须通过最低价校验。</p><div className="sales-confirm-actions"><UIButton onClick={dismiss}>返回修改</UIButton><UIButton onClick={() => { const original = base?.lines.find(line => line.id === zero.id); if (salesRawLinePrice(original?.referencePrice ?? null, zero) === '0') changeLine(zero.id, { zeroConfirmed: true }); setZeroLine(null); }}>确认零价</UIButton></div></>}</StandardOverlay>}
+
+  </section>}</SalesProductPresentation>;
 }

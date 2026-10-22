@@ -5,8 +5,8 @@ import type { BreadcrumbSegment } from '../components/standard-breadcrumb.tsx';
 import type { ApplicationPresentation, ApplicationRoute } from './contracts.ts';
 import { AuthenticationAccountMenu } from '../authentication/account-menu.tsx';
 
-const destinations: Readonly<Record<ApplicationRoute, DemoNavigationId>> = Object.freeze({
-  inventory: 'inventory', sales: 'sales', transfers: 'transfer', customers: 'customers', suppliers: 'suppliers', products: 'products', 'product-categories': 'product-categories', 'product-settings': 'product-settings', 'barcode-schemes': 'barcode-schemes', 'store-settings': 'settings/stores', 'staff-settings': 'settings/staff', 'payment-settings': 'settings/payments',
+const destinations: Readonly<Record<ApplicationRoute, DemoNavigationId | null>> = Object.freeze({
+  inventory: 'inventory', sales: 'sales', transfers: 'transfer', customers: 'customers', suppliers: 'suppliers', products: 'products', 'product-categories': 'product-categories', 'product-settings': 'product-settings', 'barcode-schemes': 'barcode-schemes', 'store-settings': 'settings/stores', 'staff-settings': 'settings/staff', 'payment-settings': 'settings/payments', 'account-settings': null,
 });
 const breadcrumbs: Readonly<Record<ApplicationRoute, readonly BreadcrumbSegment[]>> = Object.freeze({
   inventory: [{ id: 'inventory-management', label: '库存管理' }, { id: 'inventory', label: '库存状况表' }],
@@ -21,6 +21,7 @@ const breadcrumbs: Readonly<Record<ApplicationRoute, readonly BreadcrumbSegment[
   'store-settings': [{ id: 'basic-settings', label: '基础设置' }, { id: 'store-settings', label: '营业厅与仓库' }],
   'staff-settings': [{ id: 'basic-settings', label: '基础设置' }, { id: 'staff-settings', label: '员工与账号' }],
   'payment-settings': [{ id: 'basic-settings', label: '基础设置' }, { id: 'payment-settings', label: '收款配置' }],
+  'account-settings': [{ id: 'basic-settings', label: '基础设置' }, { id: 'account-settings', label: '登录账号' }],
 });
 /** First-party pure workspace composition. No auth, routing effects, reads,
  * role grants, defaults or alternate frame design. The authentication owner
@@ -28,10 +29,11 @@ const breadcrumbs: Readonly<Record<ApplicationRoute, readonly BreadcrumbSegment[
 export function createDemoFrameWorkspaceRenderer(): ApplicationPresentation['renderWorkspace'] {
   return ({ controller, state, routeContent }) => {
     const navigation: Partial<Record<DemoNavigationId, DemoNavigationTarget>> = {};
-    for (const route of controller.routes) navigation[destinations[route]] = {
-      selected: state.route === route,
-      onActivate: () => { void controller.navigate(route); },
-    };
+    for (const route of controller.routes) {
+      const destination = destinations[route];
+      if (destination === null) continue; // No account menu is registered yet.
+      navigation[destination] = { selected: state.route === route, onActivate: () => { void controller.navigate(route); } };
+    }
     return <DemoFrame navigation={navigation} breadcrumb={state.route ? breadcrumbs[state.route] : []} topbarActions={<AuthenticationAccountMenu />}
       notice={state.notice === 'cannot-leave' ? <p className="iw-inline-state" role="alert">当前页面有未保存输入或尚未确认的操作，请先处理当前页面后再离开。</p> : null}>
       {routeContent}

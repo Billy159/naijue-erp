@@ -1,26 +1,33 @@
 import { assertNativeImportAccountingGuards } from "./native-import-accounting-capability.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
-import { nativeSkuAliasEvidence, validatePreparedNativeSkuImport } from "../../../packages/application/src/native-sku-import.ts";
-import type { NativeSkuImportStore, NativeSkuReference, PreparedNativeSkuImport } from "../../../packages/application/src/native-sku-import.ts";
+import { nativeSkuAliasEvidence, nativeSkuAliasEvidence26, validatePreparedNativeSkuImport, validatePreparedNativeSkuImport26 } from "../../../packages/application/src/native-sku-import.ts";
+import type { NativeSkuImportStore, NativeSkuReference, PreparedNativeSkuImport, PreparedNativeSkuImport26 } from "../../../packages/application/src/native-sku-import.ts";
 import { CATALOGUE_PRICE_KEYS } from "../../../packages/application/src/catalogue-price-input.ts";
-import { assertReviewedNativeImportSchema } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { assertReviewedNativeImportSchema, checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import type { PgSalesClient, PgSalesPool } from "./sales-unit-of-work.ts";
 
 const PRODUCT_COLUMNS = ["id", "product_code", "name", "category_id", "supplier_id", "season_id", "size_group_id", "year",
   "system_item_code", "thickness", "collar_pants_type", "enabled", "version", ...CATALOGUE_PRICE_KEYS] as const;
 const nativeProductJson = `jsonb_build_object(${PRODUCT_COLUMNS.map(key => `'${key}',p.${key}${(CATALOGUE_PRICE_KEYS as readonly string[]).includes(key) ? "::text" : ""}`).join(",")})`;
+const nativeProductJson26 = `jsonb_build_object(${[...PRODUCT_COLUMNS, "season_ids", "deleted_at", "default_barcode_scheme_id"].map(key => `'${key}',p.${key}${(CATALOGUE_PRICE_KEYS as readonly string[]).includes(key) ? "::text" : ""}`).join(",")})`;
 
 /** Internal source-only schema-14 adapter. No connection unless STAGE was explicitly authorized.
  * Not a barcode/stock/publication creator and not a substitute for a real PostgreSQL acceptance run. */
 export class PostgresNativeSkuImportStore implements NativeSkuImportStore {
-  private readonly pool: PgSalesPool;
+  protected readonly pool: PgSalesPool;
   constructor(pool: PgSalesPool) { this.pool = pool; }
   async stage(input: PreparedNativeSkuImport): Promise<{ inserted: number; replayed: number }> {
     const row = structuredClone(input); validatePreparedNativeSkuImport(row);
+    return this.stageValidated(row);
+  }
+  protected async stageValidated(row: PreparedNativeSkuImport, runtime26?: NativeRuntime26Capability): Promise<{ inserted: number; replayed: number }> {
     const client = await this.pool.connect(); let began = false, committing = false, discard: Error | undefined;
     try {
+      if (runtime26) await runtime26.assertReady(client, "IMPORT_STAGE");
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
-      const result = await this.write(client, row);
+      const result = await this.write(client, row, runtime26);
       committing = true; await client.query("COMMIT"); return result;
     } catch (error) {
       if (!began || committing) discard = error instanceof Error ? error : new Error("Native SKU COMMIT outcome unknown; inspect exact replay before manual retry");
@@ -42,14 +49,19 @@ export class PostgresNativeSkuImportStore implements NativeSkuImportStore {
     requireDomain(bindings.length === 1 && bindings[0]!.binding_equal === true && bindings[0]!.native_equal === true,
       "NATIVE_SKU_CATALOGUE_BINDING", "Exact same-batch dictionary binding and locked native row required");
   }
-  private async write(client: PgSalesClient, row: PreparedNativeSkuImport): Promise<{ inserted: number; replayed: number }> {
+  private async write(client: PgSalesClient, row: PreparedNativeSkuImport, runtime26?: NativeRuntime26Capability): Promise<{ inserted: number; replayed: number }> {
     await client.query("/* native-sku:cutoff */ SELECT naijue_erp.cutoff_import_lock()");
     const versions = (await client.query(`/* native-sku:schema */ SELECT
       array_agg(version ORDER BY version) AS installed_versions FROM naijue_erp.schema_migration`)).rows;
     requireDomain(versions.length === 1, "NATIVE_SKU_SCHEMA_NOT_READY", "Schema migration registry required");
-    const reviewedSchema = assertReviewedNativeImportSchema(versions[0]!.installed_versions,
-      { minimumVersion: 14, errorCode: "NATIVE_SKU_SCHEMA_NOT_READY" });
-    if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
+    if (runtime26) {
+      const installed = versions[0]!.installed_versions;
+      requireDomain(Array.isArray(installed) && installed.length === 26 && installed.every((n, i) => n === i + 1), "NATIVE_SKU_SCHEMA_NOT_READY", "Exact26 snapshot required after actual capability");
+    } else {
+      const reviewedSchema = assertReviewedNativeImportSchema(versions[0]!.installed_versions,
+        { minimumVersion: 14, errorCode: "NATIVE_SKU_SCHEMA_NOT_READY" });
+      if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
+    }
     const batches = (await client.query(`/* native-sku:batch */ SELECT id,mapping_version,status,source_hash,source_name,
       EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED') AS already_published
       FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`, [row.batchId])).rows;
@@ -67,7 +79,7 @@ export class PostgresNativeSkuImportStore implements NativeSkuImportStore {
       "NATIVE_SKU_TARGET_CONFLICT", "Native SKU identity/code/tuple cannot collide or drift");
     const product = row.references.product;
     const products = (await client.query(`/* native-sku:product */ SELECT p.id,p.size_group_id,
-      ${nativeProductJson}=$4::jsonb AS native_equal,
+      ${runtime26 ? nativeProductJson26 : nativeProductJson}=$4::jsonb AS native_equal,
       s.id AS source_row_id FROM naijue_erp.product p JOIN naijue_erp.import_source_row s
         ON s.batch_id=$1::uuid AND s.entity_type='PRODUCT' AND s.source_key=$2 AND s.field_provenance->>'native_product_id'=p.id::text
       WHERE p.id=$3::uuid FOR SHARE OF p,s`, [row.batchId, product.sourceKey, product.nativeId,
@@ -99,7 +111,7 @@ export class PostgresNativeSkuImportStore implements NativeSkuImportStore {
     }
     const previous: boolean[] = [];
     for (const alias of [...row.aliases].sort((a, b) => a.source.sourceKey.localeCompare(b.source.sourceKey))) {
-      const s = alias.source, evidence = nativeSkuAliasEvidence(row, alias);
+      const s = alias.source, evidence = runtime26 ? nativeSkuAliasEvidence26(row as PreparedNativeSkuImport26, alias) : nativeSkuAliasEvidence(row, alias);
       const source = (await client.query(`/* native-sku:source-replay */ SELECT
         (to_jsonb(s)||jsonb_build_object('row_no',s.row_no::text))=$2::jsonb AS equal FROM naijue_erp.import_source_row s
         WHERE s.id=$1::uuid OR (s.batch_id=$3::uuid AND ((s.entity_type='SKU' AND s.source_key=$4)
@@ -121,13 +133,18 @@ export class PostgresNativeSkuImportStore implements NativeSkuImportStore {
       || (fresh && targets.length === 0 && oldRecord.length === 0),
     "NATIVE_SKU_PARTIAL_OR_ADOPTED", "No partial repair or adoption of pre-existing native/source rows");
     if (replay) return { inserted: 0, replayed: row.aliases.length };
-    const created = await client.query(`/* native-sku:create */ INSERT INTO naijue_erp.sku
+    const created = runtime26 ? await client.query(`/* native-sku:create */ INSERT INTO naijue_erp.sku
+      (id,product_id,color_id,fit_id,size_id,sku_code,enabled,version,created_operation_id)
+      VALUES ($1::uuid,$2::uuid,$3::uuid,$4::uuid,$5::uuid,$6,$7,$8,$9::uuid) RETURNING id,to_jsonb(sku) AS native_snapshot`,
+    [k.id, k.product_id, k.color_id, k.fit_id, k.size_id, k.sku_code, k.enabled, k.version, null]) : await client.query(`/* native-sku:create */ INSERT INTO naijue_erp.sku
       (id,product_id,color_id,fit_id,size_id,sku_code,enabled,version)
       VALUES ($1::uuid,$2::uuid,$3::uuid,$4::uuid,$5::uuid,$6,$7,$8) RETURNING id`,
     [k.id, k.product_id, k.color_id, k.fit_id, k.size_id, k.sku_code, k.enabled, k.version]);
     requireDomain(created.rowCount === 1 && created.rows[0]!.id === k.id, "NATIVE_SKU_CREATE_FAILED", "Exactly one native SKU must be created");
+    if (runtime26) requireDomain(created.rows.length === 1 && requestHash(created.rows[0]!.native_snapshot) === requestHash(k),
+      "NATIVE_SKU_CREATE_SNAPSHOT", "Full actual SKU snapshot including explicit NULL creation operation required");
     for (const alias of [...row.aliases].sort((a, b) => a.source.sourceKey.localeCompare(b.source.sourceKey))) {
-      const s = alias.source, e = nativeSkuAliasEvidence(row, alias);
+      const s = alias.source, e = runtime26 ? nativeSkuAliasEvidence26(row as PreparedNativeSkuImport26, alias) : nativeSkuAliasEvidence(row, alias);
       const sr = await client.query(`/* native-sku:source-create */ INSERT INTO naijue_erp.import_source_row
         SELECT x.* FROM jsonb_populate_record(NULL::naijue_erp.import_source_row,$1::jsonb) x RETURNING id`, [JSON.stringify(e)]);
       requireDomain(sr.rowCount === 1 && sr.rows[0]!.id === s.id, "NATIVE_SKU_SOURCE_FAILED", "Exactly one original SKU source row required");
@@ -145,5 +162,15 @@ export class PostgresNativeSkuImportStore implements NativeSkuImportStore {
       row.canonicalSource.fileRef, k.id, record.decisionReason, record.reviewedAt]);
     requireDomain(ir.rowCount === 1 && ir.rows[0]!.id === record.id, "NATIVE_SKU_RECORD_FAILED", "Exactly one reviewed SKU import identity required");
     return { inserted: row.aliases.length, replayed: 0 };
+  }
+}
+export class PostgresNativeSkuImportStore26 extends PostgresNativeSkuImportStore {
+  private readonly runtime26: NativeRuntime26Capability;
+  constructor(pool: PgSalesPool, runtime26: NativeRuntime26Capability) {
+    super(pool); const checked = checkedNativeRuntime26Capability(runtime26);
+    requireDomain(checked, "NATIVE_SKU_EXACT26_REQUIRED", "Explicit actual26 capability required"); this.runtime26 = checked;
+  }
+  override async stage(input: PreparedNativeSkuImport26): Promise<{ inserted: number; replayed: number }> {
+    const row = structuredClone(input); validatePreparedNativeSkuImport26(row); return this.stageValidated(row, this.runtime26);
   }
 }

@@ -5,9 +5,11 @@ import { CATALOGUE_PRICE_KEYS } from "./catalogue-price-input.ts";
 import type { ImportSourceEvidence, JsonObject } from "./history-storage-contract.ts";
 import { IMPORT_V2_TABLES } from "./import-v2-contract.ts";
 import { requestHash } from "./request-hash.ts";
+import { historySettlementRequestHash } from "./import-v3-history-settlement.ts";
 
 /** Source-only creator. No guessed SKU IDs, no barcode MAIN decisions, no publication. */
 export const NATIVE_SKU_IMPORT_VERSION = "NATIVE_SKU_IMPORT_V1";
+export const NATIVE_SKU_IMPORT_VERSION_26 = "NATIVE_SKU_IMPORT_EXACT26_V1";
 export interface NativeSkuSelection {
   readonly source: "BASE_V2"; readonly entity: "SKU"; readonly path: "business/02合法SKU.csv";
   readonly baseManifestSha256: string; readonly selectionSha256: string; readonly approvalSha256: string;
@@ -45,6 +47,12 @@ export interface PreparedNativeSkuImport extends NativeSkuImportInput {
     readonly size_id: string; readonly sku_code: string; readonly enabled: boolean; readonly version: 1 };
   readonly fingerprint: string;
 }
+export interface NativeSkuImportInput26 extends NativeSkuImportInput {
+  readonly schemaProfile: "EXACT26"; readonly validatorVersion: typeof NATIVE_SKU_IMPORT_VERSION_26;
+}
+export interface PreparedNativeSkuImport26 extends PreparedNativeSkuImport, NativeSkuImportInput26 {
+  readonly nativeSku: PreparedNativeSkuImport["nativeSku"] & { readonly created_operation_id: null };
+}
 export interface NativeSkuImportStore { stage(input: PreparedNativeSkuImport): Promise<{ inserted: number; replayed: number }> }
 const hash = (v: unknown): boolean => typeof v === "string" && /^[a-f0-9]{64}$/.test(v);
 const text = (v: unknown): v is string => typeof v === "string" && v.trim().length > 0 && v.length <= 65536 && !v.includes("\0");
@@ -67,6 +75,10 @@ const sourceIdentity = (s: ImportSourceEvidence, batchId: string): void => {
   }
 };
 export function prepareNativeSkuImport(input: NativeSkuImportInput): PreparedNativeSkuImport {
+  requireDomain(!Object.hasOwn(input, "schemaProfile") && !Object.hasOwn(input, "validatorVersion"), "NATIVE_SKU_SUCCESSOR_EXPLICIT", "Successor requires explicit preparer");
+  return prepareNativeSkuCore(input);
+}
+function prepareNativeSkuCore(input: NativeSkuImportInput, successor = false): PreparedNativeSkuImport {
   const row = structuredClone(input), s = row.canonicalSource, n = s.normalizedFields, selection = row.selection;
   entityId("sku", row.batchId); entityId("sku", row.nativeSkuId);
   requireDomain(text(row.fixedSourceNamespace) && selection?.source === "BASE_V2" && selection.entity === "SKU"
@@ -85,8 +97,9 @@ export function prepareNativeSkuImport(input: NativeSkuImportInput): PreparedNat
     && (n["状态"] === "正常" || n["状态"] === "停用"),
   "NATIVE_SKU_CANONICAL", "New native SKU ID must be independent of canonical source identity; exact code/state required");
   const refs = row.references;
-  requireDomain(refs?.product?.nativeSnapshot && Object.keys(refs.product.nativeSnapshot).length === PRODUCT_NATIVE_COLUMNS.length
-    && PRODUCT_NATIVE_COLUMNS.every(key => Object.hasOwn(refs.product.nativeSnapshot, key))
+  const productColumns = [...PRODUCT_NATIVE_COLUMNS, ...(successor ? ["season_ids", "deleted_at", "default_barcode_scheme_id"] : [])];
+  requireDomain(refs?.product?.nativeSnapshot && Object.keys(refs.product.nativeSnapshot).length === productColumns.length
+    && productColumns.every(key => Object.hasOwn(refs.product.nativeSnapshot, key))
     && refs.product.nativeSnapshot.id === refs.product.nativeId
     && text(refs.product.nativeSnapshot.product_code) && text(refs.product.nativeSnapshot.name)
     && Number.isSafeInteger(refs.product.nativeSnapshot.version)
@@ -94,6 +107,17 @@ export function prepareNativeSkuImport(input: NativeSkuImportInput): PreparedNat
     && CATALOGUE_PRICE_KEYS.every(key => refs.product.nativeSnapshot[key] === null
       || typeof refs.product.nativeSnapshot[key] === "string"),
   "NATIVE_SKU_PRODUCT_SNAPSHOT", "Full exact native PRODUCT snapshot, including nine price values, required");
+  if (successor) {
+    const p = refs.product.nativeSnapshot, seasons = p.season_ids;
+    requireDomain(p.deleted_at === null && p.default_barcode_scheme_id === null
+      && (seasons === null || Array.isArray(seasons) && seasons.length <= 4 && seasons.every((value, i) => typeof value === "string"
+        && (i === 0 || typeof seasons[i - 1] === "string" && (seasons[i - 1] as string) < value))),
+    "NATIVE_SKU_PRODUCT_METADATA", "Complete successor product facts and canonical season array required");
+    if (Array.isArray(seasons)) for (const value of seasons) entityId("season", value as string);
+    for (const ref of [refs.color, refs.fit]) requireDomain(ref.nativeSnapshot.deleted_at === null
+      && Object.keys(ref.nativeSnapshot).length === 6 && ["id", "code", "name", "enabled", "version", "deleted_at"].every(k => Object.hasOwn(ref.nativeSnapshot, k)),
+    "NATIVE_SKU_CATALOGUE_METADATA", "Full successor color/fit snapshot with explicit NULL deletion fact required");
+  }
   for (const ref of Object.values(refs)) {
     requireDomain(text(ref.sourceKey) && ref.nativeSnapshot?.id === ref.nativeId, "NATIVE_SKU_REFERENCE", "Exact same-batch reference snapshot required");
     entityId("sku", ref.nativeId);
@@ -134,8 +158,20 @@ export function prepareNativeSkuImport(input: NativeSkuImportInput): PreparedNat
   entityId("sku", row.importRecord.id);
   const nativeSku = { id: row.nativeSkuId, product_id: refs.product.nativeId, color_id: refs.color.nativeId,
     fit_id: refs.fit.nativeId, size_id: refs.size.nativeId, sku_code: n["SKU编码"] as string,
-    enabled: n["状态"] === "正常", version: 1 as const };
+    enabled: n["状态"] === "正常", version: 1 as const, ...(successor ? { created_operation_id: null } : {}) };
   return { ...row, mappingVersion: HISTORY_MAPPING_VERSION, nativeSku, fingerprint: requestHash(row) };
+}
+export function prepareNativeSkuImport26(input: NativeSkuImportInput26): PreparedNativeSkuImport26 {
+  historySettlementRequestHash(input);
+  requireDomain(Reflect.ownKeys(input).length === 10 && ["batchId", "fixedSourceNamespace", "selection", "canonicalSource", "nativeSkuId", "references", "aliases", "importRecord", "schemaProfile", "validatorVersion"].every(k => Object.hasOwn(input, k))
+    && input.schemaProfile === "EXACT26" && input.validatorVersion === NATIVE_SKU_IMPORT_VERSION_26,
+  "NATIVE_SKU_SUCCESSOR_PROFILE", "Explicit exact26 source DTO required");
+  return prepareNativeSkuCore(input, true) as PreparedNativeSkuImport26;
+}
+export function validatePreparedNativeSkuImport26(row: PreparedNativeSkuImport26): void {
+  historySettlementRequestHash(row);
+  const { mappingVersion: _mapping, nativeSku: _native, fingerprint: _fingerprint, ...input } = row;
+  requireDomain(requestHash(prepareNativeSkuImport26(input)) === requestHash(row), "NATIVE_SKU_PREPARED_CHANGED", "Prepared successor SKU changed");
 }
 export function validatePreparedNativeSkuImport(row: PreparedNativeSkuImport): void {
   const { mappingVersion: _mapping, nativeSku: _native, fingerprint: _hash, ...input } = row;
@@ -150,6 +186,11 @@ export function nativeSkuAliasEvidence(row: PreparedNativeSkuImport, alias: Nati
         canonical_source_key: row.canonicalSource.sourceKey, native_sku_id: row.nativeSku.id, mapping: { ...alias.mapping },
         native_sku: { ...row.nativeSku }, references: Object.fromEntries(Object.entries(row.references).map(([key, ref]) => [key,
           { sourceKey: ref.sourceKey, nativeId: ref.nativeId, nativeSnapshot: ref.nativeSnapshot }])) } } };
+}
+export function nativeSkuAliasEvidence26(row: PreparedNativeSkuImport26, alias: NativeSkuAliasInput): JsonObject {
+  validatePreparedNativeSkuImport26(row); const original = nativeSkuAliasEvidence(row, alias), provenance = original.field_provenance as JsonObject;
+  return { ...original, field_provenance: { ...provenance, native_sku_import: { ...(provenance.native_sku_import as JsonObject),
+    schema_profile: "EXACT26", migration_defaults: { version: "NATIVE_SKU_APPROVED_MIGRATION_DEFAULTS_26_V1", created_operation_id: null } } } };
 }
 export async function stageNativeSkuImport(input: NativeSkuImportInput, options: {
   readonly mode?: "DRY_RUN" | "STAGE"; readonly store?: NativeSkuImportStore;
