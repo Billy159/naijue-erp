@@ -1,0 +1,162 @@
+{
+  "atUtc": "2026-10-22T18:28:05.637768+00:00",
+  "parent": "46b66aa1dcf43a2bdd3e1217c28f5a7a1838a641",
+  "groups": [
+    {
+      "slice": "SETTINGS_COMPLETE_UI_SUCCESSOR",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/DEMO-SETTINGS-UI-v1-RESULT.json",
+      "receiptSha256": "749a1b163222158e47734081535fbaf2fbb2573d1c8b03bcfac623a892a1f6c3",
+      "files": [
+        {
+          "path": "apps/web/src/settings/demo-settings-controls.tsx",
+          "owner": "F3",
+          "sha256": "40b41e442cf5a4a1fbca17c3155aa4380f12801905c40962e4736eab7127118e",
+          "bytes": 8852
+        },
+        {
+          "path": "apps/web/src/settings/demo-settings-ui.css",
+          "owner": "F3",
+          "sha256": "94adce56da7f8acc77ae253899d35c0a4472dbb0e448bd932dee8da3aeafc36e",
+          "bytes": 26999
+        },
+        {
+          "path": "apps/web/src/staff-settings/staff-page.tsx",
+          "owner": "F3",
+          "sha256": "4a27e3fc3d3c7a21e458a13d8643aafeb4fe2cc08974832d52f872f312f039ec",
+          "bytes": 13472
+        },
+        {
+          "path": "apps/web/src/staff-settings/staff-form.tsx",
+          "owner": "F3",
+          "sha256": "0c67197164e654e98953c01bcfb91d96e087fa465cc5d8c4df5854839b10535f",
+          "bytes": 10680
+        },
+        {
+          "path": "apps/web/src/staff-settings/staff-settings.css",
+          "owner": "F3",
+          "sha256": "61f2e6aed6f4624ffce7f6f33fcb5d6b962fb91390e3b9cd00a38d6a62a17afa",
+          "bytes": 270
+        },
+        {
+          "path": "apps/web/src/payment-settings/payment-page.tsx",
+          "owner": "F3",
+          "sha256": "d5c7d0dfbbc3e394db259ea2e4e5c43ccdbf8dc71fde8b3eb8d1580c1cbbdeed",
+          "bytes": 13904
+        },
+        {
+          "path": "apps/web/src/payment-settings/payment-method-form.tsx",
+          "owner": "F3",
+          "sha256": "019b11793fd4a36efc91b408e609b90700b7665a6dbca818444a23dc21f6a96d",
+          "bytes": 4282
+        },
+        {
+          "path": "apps/web/src/payment-settings/payment-account-form.tsx",
+          "owner": "F3",
+          "sha256": "bc721e540ee2548a3f65f363360979d35bcdc37d78c2d005e0eaddb761083d57",
+          "bytes": 2510
+        },
+        {
+          "path": "apps/web/src/payment-settings/payment-settings.css",
+          "owner": "F3",
+          "sha256": "a9cf61863688b03dc1f46d2317cca6cd3f021cdaf1ac7b6bdbdc30cb2f5f2a66",
+          "bytes": 290
+        },
+        {
+          "path": "apps/web/src/settings/audit/audit-drawer.tsx",
+          "owner": "F3",
+          "sha256": "559f349c9d18820a605377c9e4a30115a191324887d2bce60bcba6f752cb863c",
+          "bytes": 11024
+        },
+        {
+          "path": "apps/web/src/settings/audit/audit.css",
+          "owner": "F3",
+          "sha256": "a6858f0fbeb82b840edee7ac033a23fddb0eefb5e07bc4229206a34718f0fc86",
+          "bytes": 2147
+        },
+        {
+          "path": "apps/web/src/settings/stores/maintenance-form.tsx",
+          "owner": "F3",
+          "sha256": "c462095e6d4a4ebda1821a22ec9c81a6e90b2ece73dc7436c2ca5eb7f0580195",
+          "bytes": 15842
+        },
+        {
+          "path": "apps/web/src/settings/stores/demo-store-view.tsx",
+          "owner": "F3",
+          "sha256": "f7d34d61abbdeaf273002e2d40b09c0e62a6f3e3691cb3af1889f22261f28009",
+          "bytes": 6586
+        }
+      ]
+    },
+    {
+      "slice": "PRIVATE_MEDIA_READONLY_MANIFEST_PAIRING",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W19-MANIFEST-PAIRING-RECEIPT.json",
+      "receiptSha256": "9cfcc12947436241b5b41720e698db9790364d33103d248932997c68f11738b2",
+      "files": [
+        {
+          "path": "adapters/media/src/product-media-stage.ts",
+          "owner": "D2",
+          "sha256": "72592fdcce89fdac96117749c2a0e87c12c1fbb255aade72755226972cd91cd5",
+          "bytes": 27278
+        },
+        {
+          "path": "tests/product-media-stage.test.ts",
+          "owner": "D2",
+          "sha256": "542f1e9515c44a56a271efa30a5f761e7e78448c84eece65e128421f294a71ab",
+          "bytes": 24635
+        }
+      ]
+    },
+    {
+      "slice": "PAYMENT26_STORE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/payment26-store-slice1/RESULT.json",
+      "receiptSha256": "26e69d3c7218e69c10ec06ae7e4205f77496c8c64ff913548698e6bfbe0e34d7",
+      "files": [
+        {
+          "path": "adapters/postgres/src/native-payment-import.ts",
+          "owner": "D3",
+          "sha256": "600b4455db8a46565a64c830cdff2bf97d232a87665a4f4161724074dcefc673",
+          "bytes": 12693
+        },
+        {
+          "path": "tests/native-payment-import-postgres-protocol.test.ts",
+          "owner": "D3",
+          "sha256": "67866464a10437c64f087edc3baab036ced97026551f20b5c2c50f587bc25e04",
+          "bytes": 9357
+        }
+      ]
+    },
+    {
+      "slice": "HEADER_TRANSFER26_STORES",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/history-header-transfer26-slice1/RESULT.json",
+      "receiptSha256": "d9f5a373fd3554d08f1175c5af031d21314da685b5950d6e70644335787226e5",
+      "files": [
+        {
+          "path": "adapters/postgres/src/import-v3-history-header-staging-store.ts",
+          "owner": "D3",
+          "sha256": "2563ee91ca1d4167ea893f3e7ddd734707e682a7fe5e313e9691ab824b20dbf9",
+          "bytes": 12089
+        },
+        {
+          "path": "adapters/postgres/src/import-v3-history-staging-store.ts",
+          "owner": "D3",
+          "sha256": "52dbe7eb58fa081e46976259f539c0e9a014b7ed7b3e579f45a8489de707b7a0",
+          "bytes": 7114
+        },
+        {
+          "path": "tests/import-v3-history-header-staging.test.ts",
+          "owner": "D3",
+          "sha256": "728a395b1c37b8806c29a6c8eceb37935dbadf00f2eb8f623ebf98a4e0f83174",
+          "bytes": 21660
+        },
+        {
+          "path": "tests/import-v3-history-staging.test.ts",
+          "owner": "D3",
+          "sha256": "f5031b038da815170066b77c84e3caff2698f0f3ba0a7d0ac55daa10ad920c87",
+          "bytes": 13795
+        }
+      ]
+    }
+  ],
+  "fileCount": 21,
+  "scope": "Independent new source/protocol modules only; no browser/PG/host/actual import/production acceptance inferred."
+}

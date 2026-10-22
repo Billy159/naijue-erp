@@ -1,4 +1,4 @@
 @import '../settings/stores/source-store-settings.css';
-.staff-settings-workbench .bs-filter-fields{flex-wrap:wrap}
+@import '../settings/demo-settings-ui.css';
 .staff-settings-workbench .bs-row-actions{gap:6px;white-space:nowrap}
 .staff-settings-workbench .staff-empty-state{padding:12px 0;color:var(--ca-ink-2);line-height:20px}

@@ -1,3 +1,4 @@
 @import '../settings/stores/source-store-settings.css';
+@import '../settings/demo-settings-ui.css';
 .payment-settings-workbench .payment-halls{white-space:normal;overflow-wrap:anywhere}
 .payment-settings-workbench .payment-empty-state{padding:12px 0;color:var(--ca-ink-2);line-height:20px}

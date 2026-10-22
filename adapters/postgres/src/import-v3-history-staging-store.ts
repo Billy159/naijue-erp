@@ -1,3 +1,5 @@
+import { checkedNativeRuntime26Capability } from '../../../packages/application/src/native-import-schema-contract.ts';
+import type { NativeRuntime26Capability } from '../../../packages/application/src/native-import-schema-contract.ts';
 import { validatePreparedHistoryChunk } from '../../../packages/application/src/import-v3-history-staging.ts';
 import type { HistoryStagingStore, PreparedHistoryChunk } from '../../../packages/application/src/import-v3-history-staging.ts';
 import type { PgSalesPool, PgSalesClient } from './sales-unit-of-work.ts';
@@ -5,14 +7,18 @@ const require = (ok: unknown, code: string): void => { if (!ok) throw Error(code
 /** No connection until explicitly invoked. Existing reviewed schema-11 batch/headers/SKU aliases required.
  * Lock order: cutoff -> batch -> existing header/SKU -> immutable evidence+line. No publication path. */
 export class PostgresV3HistoryStagingStore implements HistoryStagingStore {
-  private readonly pool: PgSalesPool;
+  protected readonly pool: PgSalesPool;
   constructor(pool: PgSalesPool) { this.pool = pool; }
   async stage(input: PreparedHistoryChunk): Promise<{inserted:number;replayed:number}> {
     const chunk = structuredClone(input); validatePreparedHistoryChunk(chunk);
+    return this.stageValidated(chunk);
+  }
+  protected async stageValidated(chunk: PreparedHistoryChunk, runtime26?: NativeRuntime26Capability): Promise<{inserted:number;replayed:number}> {
     const client = await this.pool.connect(); let began = false, commitAttempted = false, discard: Error | undefined;
     try {
+      if (runtime26) await runtime26.assertReady(client, 'IMPORT_STAGE');
       await client.query('BEGIN ISOLATION LEVEL READ COMMITTED'); began = true;
-      const result = await this.write(client,chunk);
+      const result = await this.write(client,chunk,runtime26);
       commitAttempted = true; await client.query('COMMIT'); return result;
     } catch (error) {
       if (!began || commitAttempted) discard = error instanceof Error ? error : Error('HISTORY_STAGING_UNKNOWN_OUTCOME');
@@ -23,8 +29,13 @@ export class PostgresV3HistoryStagingStore implements HistoryStagingStore {
       throw error;
     } finally { client.release(discard); }
   }
-  private async write(client: PgSalesClient, chunk: PreparedHistoryChunk): Promise<{inserted:number;replayed:number}> {
+  private async write(client: PgSalesClient, chunk: PreparedHistoryChunk, runtime26?: NativeRuntime26Capability): Promise<{inserted:number;replayed:number}> {
     await client.query('/* history-stage:global-lock */ SELECT naijue_erp.cutoff_import_lock()');
+    if (runtime26) {
+      const schemas = (await client.query('/* history-stage:schema26 */ SELECT array_agg(version ORDER BY version) versions FROM naijue_erp.schema_migration')).rows;
+      const versions = schemas[0]?.versions;
+      require(schemas.length === 1 && Array.isArray(versions) && versions.length === 26 && versions.every((v, i) => v === i + 1), 'HISTORY_STAGE_EXACT26_REQUIRED');
+    }
     const batches = (await client.query(`/* history-stage:batch */ SELECT id, mapping_version, status, source_hash, source_name
       FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`,[chunk.batchId])).rows;
     const batch = batches[0];
@@ -59,5 +70,17 @@ export class PostgresV3HistoryStagingStore implements HistoryStagingStore {
       require(line.rowCount === 1 && line.rows[0]?.id === row.line.id,'HISTORY_STAGING_LINE_INSERT'); inserted++;
     }
     return {inserted,replayed};
+  }
+}
+
+/** Explicit exact26 admission; original immutable header/line columns unchanged. */
+export class PostgresV3HistoryStagingStore26 extends PostgresV3HistoryStagingStore {
+  private readonly runtime26: NativeRuntime26Capability;
+  constructor(pool: PgSalesPool, runtime26: NativeRuntime26Capability) {
+    super(pool); const checked = checkedNativeRuntime26Capability(runtime26);
+    if (!checked) throw TypeError('Actual successor runtime capability required'); this.runtime26 = checked;
+  }
+  override async stage(input: PreparedHistoryChunk): Promise<{inserted:number;replayed:number}> {
+    const chunk = structuredClone(input); validatePreparedHistoryChunk(chunk); return this.stageValidated(chunk, this.runtime26);
   }
 }

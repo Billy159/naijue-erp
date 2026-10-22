@@ -1,10 +1,11 @@
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
-import { assertReviewedNativeImportSchema } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { assertReviewedNativeImportSchema, checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { NATIVE_PAYMENT_IMPORT_VERSION, validatePreparedNativePaymentImportChunk } from "../../../packages/application/src/native-payment-import.ts";
 import type { NativePaymentEntity, NativePaymentReference, PreparedNativePaymentRow, PreparedNativePaymentImportChunk, NativePaymentImportResult, NativePaymentImportStore } from "../../../packages/application/src/native-payment-import.ts";
 import type { JsonObject } from "../../../packages/application/src/history-storage-contract.ts";
 import { assertNativeImportAccountingGuards } from "./native-import-accounting-capability.ts";
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { PgSalesPool, PgSalesClient } from "./sales-unit-of-work.ts";
 const TABLES={PAYMENT_METHOD:"payment_method",PAYMENT_ACCOUNT:"payment_account",PAYMENT_ACCOUNT_HALL:"payment_account_hall"} as const;
 const must=(ok:unknown,message:string):void=>requireDomain(ok,"NATIVE_PAYMENT_STORE",message);
@@ -23,19 +24,23 @@ const targetIdentity=(r:PreparedNativePaymentRow)=>JSON.stringify([r.entity,r.na
 /** Explicit trusted internal creator only. Independent source authorization is mandatory at orchestration.
  * No target adoption/upsert, live command, stock/checkpoint/publication or automatic retry. */
 export class PostgresNativePaymentImportStore implements NativePaymentImportStore {
- private readonly pool:PgSalesPool;constructor(pool:PgSalesPool){if(typeof pool?.connect!=="function")throw TypeError("Explicit payment pool required");this.pool=pool;}
+ protected readonly pool:PgSalesPool;constructor(pool:PgSalesPool){if(typeof pool?.connect!=="function")throw TypeError("Explicit payment pool required");this.pool=pool;}
  async stage(original:PreparedNativePaymentImportChunk):Promise<NativePaymentImportResult>{
-  validatePreparedNativePaymentImportChunk(original);const chunk=structuredClone(original),client=await this.pool.connect();let began=false,committing=false,discard:Error|undefined;
-  try{await client.query("BEGIN ISOLATION LEVEL READ COMMITTED");began=true;const result=await this.write(client,chunk);committing=true;await client.query("COMMIT");return result;}
+  validatePreparedNativePaymentImportChunk(original);return this.stageValidated(structuredClone(original));
+ }
+ protected async stageValidated(chunk:PreparedNativePaymentImportChunk,runtime26?:NativeRuntime26Capability):Promise<NativePaymentImportResult>{
+  const client=await this.pool.connect();let began=false,committing=false,discard:Error|undefined;
+  try{if(runtime26)await runtime26.assertReady(client,"IMPORT_STAGE");await client.query("BEGIN ISOLATION LEVEL READ COMMITTED");began=true;const result=await this.write(client,chunk,runtime26);committing=true;await client.query("COMMIT");return result;}
   catch(error){if(!began||committing)discard=error instanceof Error?error:Error("Payment outcome unknown");
    else try{await client.query("ROLLBACK");}catch(rollback){discard=rollback instanceof Error?rollback:Error("Payment rollback failed");throw new AggregateError([error,rollback],"Payment failure/rollback; client discarded");}throw error;
   }finally{client.release(discard);}
  }
- private async write(client:PgSalesClient,chunk:PreparedNativePaymentImportChunk):Promise<NativePaymentImportResult>{
+ private async write(client:PgSalesClient,chunk:PreparedNativePaymentImportChunk,runtime26?:NativeRuntime26Capability):Promise<NativePaymentImportResult>{
   const input=chunk.input;await client.query("/* native-payment:lock */ SELECT naijue_erp.cutoff_import_lock()");
   const schemas=(await client.query("/* native-payment:schema */ SELECT array_agg(version ORDER BY version) versions FROM naijue_erp.schema_migration")).rows;
-  must(schemas.length===1,"Exact reviewed schema17 required");assertReviewedNativeImportSchema(schemas[0]!.versions,{minimumVersion:17,errorCode:"NATIVE_PAYMENT_SCHEMA_NOT_READY"});
-  await assertNativeImportAccountingGuards(client);
+  must(schemas.length===1,"Exact reviewed schema17 required");
+  if(runtime26){const versions=schemas[0]!.versions;must(Array.isArray(versions)&&versions.length===26&&versions.every((v,i)=>v===i+1),"Exact successor prefix26 required");}
+  else{assertReviewedNativeImportSchema(schemas[0]!.versions,{minimumVersion:17,errorCode:"NATIVE_PAYMENT_SCHEMA_NOT_READY"});await assertNativeImportAccountingGuards(client);}
   const batches=(await client.query(`/* native-payment:batch */ SELECT id,mapping_version,status,source_hash,source_name,
     EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED') already_published FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`,[input.batchId])).rows;
   const b=batches[0];must(batches.length===1&&b?.id===input.batchId&&b.mapping_version===chunk.mappingVersion&&(b.status==="STAGED"||b.status==="VALIDATING")
@@ -90,4 +95,11 @@ export class PostgresNativePaymentImportStore implements NativePaymentImportStor
   }
   return {inserted:fresh.length,replayed,nativeCurrentMatchesCreation:[...targets.values()].every(t=>t.equal)&&[...current.values()].every(Boolean)};
  }
+}
+
+/** Unchanged payment facts under an independently reviewed exact26 runtime only. */
+export class PostgresNativePaymentImportStore26 extends PostgresNativePaymentImportStore {
+ private readonly runtime26:NativeRuntime26Capability;
+ constructor(pool:PgSalesPool,runtime26:NativeRuntime26Capability){super(pool);const checked=checkedNativeRuntime26Capability(runtime26);if(!checked)throw TypeError("Actual successor runtime capability required");this.runtime26=checked;}
+ override async stage(original:PreparedNativePaymentImportChunk):Promise<NativePaymentImportResult>{validatePreparedNativePaymentImportChunk(original);return this.stageValidated(structuredClone(original),this.runtime26);}
 }

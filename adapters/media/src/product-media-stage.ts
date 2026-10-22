@@ -4,10 +4,10 @@ import { link, lstat, mkdir, open, realpath } from "node:fs/promises";
 import path from "node:path";
 import { DomainError, requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
-import { checkedProductActor } from "../../../packages/application/src/product-query-validation.ts";
+import { checkedProductActor, checkedProductGrant } from "../../../packages/application/src/product-query-validation.ts";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
-import type { ProductImageMime } from "../../../packages/application/src/product-query-ports.ts";
-import type { PrivateProductMediaBlob } from "./controlled-product-media.ts";
+import type { ProductImageMime, ProductMediaRead } from "../../../packages/application/src/product-query-ports.ts";
+import type { PrivateProductMediaBlob, PrivateProductMediaManifest, PrivateProductMediaManifestResolver } from "./controlled-product-media.ts";
 import { SharpProductImageCodec, PRODUCT_IMAGE_CODEC_PROFILE, PRODUCT_IMAGE_CODEC_LIMITS } from "./sharp-product-image-codec.ts";
 import type { ValidatedProductImage } from "./sharp-product-image-codec.ts";
 
@@ -140,6 +140,49 @@ export class PrivateProductMediaStage {
     try { const bytes = await this.boundedFile(path.join(this.root, "keys", `${index}.json`), 16384, signal); const record = this.record(bytes);
       ready(stageKey(record.actorAccountId, record.commandKey, record.uploadKey) === index); return { bytes, record };
     } catch (error) { if (isMissing(error)) return null; throw error; }
+  }
+  /** Read-only path index for trusted native DB metadata. This is not an attachment or access grant.
+   * Upload expiry only limits future attachment: existing committed native images remain readable.
+   * The controlled byte provider MUST still freshly authorize/read native membership on every GET.
+   * Resolving this batch reads only manifests/index JSON, never original or thumbnail bytes. */
+  createManifestResolver(): PrivateProductMediaManifestResolver {
+    return Object.freeze({ resolve: (read: ProductMediaRead) => this.resolveNativeManifests(read) });
+  }
+  private async resolveNativeManifests(read: ProductMediaRead): Promise<ReadonlyMap<string, PrivateProductMediaManifest>> {
+    active(read.signal); checkedProductActor(read.actor); const productId = entityId("product", read.productId); checkedProductGrant(read.grant, { productId });
+    ready(Array.isArray(read.images) && read.images.length <= 1000 && new Set(read.images.map(i => i.id)).size === read.images.length);
+    const references = new Map<string, string>();
+    for (const image of read.images) {
+      entityId("product", image.id); ready(image.productId === productId && typeof image.fileRef === "string" && typeof image.byteSize === "bigint"
+        && image.byteSize > 0n && image.byteSize <= BigInt(limits.inputBytesMax) && ["image/png", "image/jpeg", "image/webp"].includes(image.mime));
+      if (!image.fileRef.startsWith("staged-product-media:")) continue; // Legacy refs require their own explicitly approved mapping.
+      const uploadId = image.fileRef.slice("staged-product-media:".length); storedId(uploadId); references.set(image.id, uploadId);
+    }
+    const result = new Map<string, PrivateProductMediaManifest>(); if (!references.size) return result;
+    try {
+      await this.layout(read.signal, false); const cached = new Map<string, StoredStage>(), missingThumbnails = new Set<string>();
+      for (const image of read.images) {
+        const uploadId = references.get(image.id); if (!uploadId) continue;
+        let record = cached.get(uploadId);
+        if (!record) {
+          const bytes = await this.boundedFile(path.join(this.root, "stages", uploadId, "manifest.json"), 16384, read.signal); record = this.record(bytes);
+          const indexed = await this.published(stageKey(record.actorAccountId, record.commandKey, record.uploadKey), read.signal);
+          ready(record.uploadId === uploadId && indexed?.record.uploadId === uploadId && indexed.bytes.equals(bytes));
+          try {
+            const thumbnail = await lstat(path.join(this.root, "stages", uploadId, "thumbnail.webp"));
+            ready(thumbnail.isFile() && !thumbnail.isSymbolicLink() && (thumbnail.mode & 0o777) === 0o600 && BigInt(thumbnail.size).toString() === record.thumbnail.byteSize
+              && (typeof process.getuid !== "function" || thumbnail.uid === process.getuid()));
+          } catch (error) { if (!isMissing(error)) throw error; missingThumbnails.add(uploadId); }
+          cached.set(uploadId, record);
+        }
+        ready(record.fileRef === image.fileRef && (record.productId === null || record.productId === productId)
+          && record.original.mime === image.mime && BigInt(record.original.byteSize) === image.byteSize);
+        result.set(image.id, Object.freeze({ productId, imageId: image.id, fileRef: image.fileRef,
+          original: Object.freeze({ rootKey: this.rootKey, relativePath: `stages/${uploadId}/original.bin`, mime: record.original.mime, byteSize: BigInt(record.original.byteSize), sha256: record.original.sha256 }),
+          thumbnail: missingThumbnails.has(uploadId) ? null : Object.freeze({ rootKey: this.rootKey, relativePath: `stages/${uploadId}/thumbnail.webp`, mime: "image/webp" as const, byteSize: BigInt(record.thumbnail.byteSize), sha256: record.thumbnail.sha256, derivedFromOriginalSha256: record.original.sha256 }) }));
+      }
+      active(read.signal); return result;
+    } catch (error) { if (error instanceof DomainError) throw error; throw new DomainError("PRODUCT_MEDIA_NOT_READY", "Native image private mapping could not be verified"); }
   }
   private async verified(record: StoredStage, bytes: Buffer, signal: AbortSignal): Promise<PreparedProductMediaStage> {
     active(signal); const now = this.instant().getTime(); ready(now >= Date.parse(record.createdAt));

@@ -4,10 +4,8 @@ import { IconSearch } from '@arco-design/web-react/icon';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { LatestQuery } from '../loading/latest-query.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
-import { StandardTabs } from '../components/standard-tabs.tsx';
+import { DemoSettingsTabs, DemoSettingsPager, DemoSettingsSingleSelect } from '../settings/demo-settings-controls.tsx';
 import { useDialogFocusReturn } from '../components/use-dialog-focus-return.ts';
-import { StoreSettingsSingleSelect } from '../settings/stores/single-select.tsx';
-import { StoreSettingsPagination } from '../settings/stores/pagination.tsx';
 import { SettingsReferenceSelect } from '../settings/stores/maintenance-form.tsx';
 import { settingsReferenceName, settingsSaveUnavailable } from '../settings/stores/maintenance-contracts.ts';
 import type { SettingsReference } from '../settings/stores/maintenance-contracts.ts';
@@ -23,7 +21,7 @@ const emptyRead = Object.freeze({ phase: 'idle' as const, request: null, success
 const noSubscribe = () => () => {};
 const noEditors = Object.freeze({ methods: null, accounts: null });
 type PaymentTabViewProps = PaymentSettingsProps & { readonly kind: PaymentSettingsKind; readonly onTab: (kind: PaymentSettingsKind) => void;
-  readonly filterDraft: PaymentSettingsQuery; readonly onFilterDraft: (query: PaymentSettingsQuery) => void;
+  readonly restoreFocus: boolean; readonly filterDraft: PaymentSettingsQuery; readonly onFilterDraft: (query: PaymentSettingsQuery) => void;
   readonly lastQuery: PaymentSettingsQuery; readonly onExecuted: (query: PaymentSettingsQuery) => void;
   readonly selectedMethod: SettingsReference | null; readonly onSelectedMethod: (method: SettingsReference | null) => void };
 export function PaymentSettingsPage(props: PaymentSettingsProps) {
@@ -34,8 +32,8 @@ function PaymentTabView(props: PaymentSettingsProps) {
   const [tab, setTab] = useState<PaymentSettingsKind>(props.initialTab ?? 'methods');
   const [drafts, setDrafts] = useState<Record<PaymentSettingsKind, PaymentSettingsQuery>>({ methods: { ...initialPaymentSettingsQuery }, accounts: { ...initialPaymentSettingsQuery } });
   const [executed, setExecuted] = useState<Record<PaymentSettingsKind, PaymentSettingsQuery>>({ methods: { ...initialPaymentSettingsQuery }, accounts: { ...initialPaymentSettingsQuery } });
-  const [method, setMethod] = useState<SettingsReference | null>(null);
-  return <PaymentContent key={tab} {...props} kind={tab} onTab={setTab} filterDraft={drafts[tab]}
+  const [method, setMethod] = useState<SettingsReference | null>(null), focusTab = useRef(false);
+  return <PaymentContent key={tab} {...props} kind={tab} restoreFocus={focusTab.current} onTab={next => { focusTab.current = true; setTab(next); }} filterDraft={drafts[tab]}
     onFilterDraft={query => setDrafts(value => ({ ...value, [tab]: query }))} lastQuery={executed[tab]}
     onExecuted={query => setExecuted(value => ({ ...value, [tab]: query }))} selectedMethod={method} onSelectedMethod={setMethod} />;
 }
@@ -90,13 +88,13 @@ function PaymentList(props: Parameters<typeof PaymentContent>[0] & { readonly qu
   const columns = props.kind === 'methods' ? [{ title: '名称', dataIndex: 'name' }, statusColumn, actionColumn]
     : [{ title: '账户名称', dataIndex: 'name' }, { title: '所属收款方式', render: (_: unknown, row: PaymentSettingsRecord) => row.kind === 'accounts' ? settingsReferenceName(row.paymentMethod) : '' },
       statusColumn, actionColumn];
-  return <section className="store-settings-workbench payment-settings-workbench bs-page iw-workbench iw-arco-controls" aria-label="收款配置">
+  return <section className="demo-settings-workbench store-settings-workbench payment-settings-workbench bs-page iw-workbench iw-arco-controls" aria-label="收款配置">
     <header className="bs-head iw-head"><h1>收款配置</h1><div className="bs-head-actions"><SettingsAuditEntry scope={scope} {...(props.audit ? { capability: props.audit } : {})} onAccessFailure={props.onAccessFailure} localHasUnresolvedWrite={() => props.workspace?.hasUnresolvedWrite() ?? editor?.hasUnresolvedWrite ?? false} /><Button type="primary" disabled={!props.canPrepare || editor !== null} onClick={event => { if (active) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); openEditor(null); } }}>新增{label}</Button></div></header>
-    <StandardTabs label="收款配置" value={props.kind} className="erp-store-tabs" items={[{ key: 'methods', label: '收款方式' }, { key: 'accounts', label: '资金账户' }]} onChange={changeTab}>
+    <DemoSettingsTabs scope={scope} label="收款配置" value={props.kind} restoreFocus={props.restoreFocus} items={[{ value: 'methods', label: '收款方式' }, { value: 'accounts', label: '资金账户' }]} onChange={changeTab} />
       <form className="bs-toolbar" role="search" onSubmit={event => { event.preventDefault(); run({ ...draft, page: 1, pageSize: applied.pageSize }); }}>
         <div className="bs-filter-fields"><div className="bs-filter search"><Input className="iw-arco-input iw-search-input" aria-label={props.kind === 'methods' ? '搜索收款方式' : '搜索账户名称'} placeholder={props.kind === 'methods' ? '搜索收款方式' : '搜索账户名称'} maxLength={200} value={draft.search} onChange={search => setDraft(value => ({ ...value, search }))} suffix={<IconSearch />} allowClear /></div>
-          {props.kind === 'accounts' && <div className="bs-filter" title={props.reader?.supportsPaymentMethodFilter ? undefined : '当前版本暂不支持按收款方式筛选'}><SettingsReferenceSelect scope={scope} disabled={!props.reader?.supportsPaymentMethodFilter} reader={props.directory} kind="payment-methods" label="全部收款方式" selected={method ? [method] : []} onChange={items => { setMethod(items[0] ?? null); setDraft(value => ({ ...value, paymentMethodId: items[0]?.id ?? null })); }} /></div>}
-          <div className="bs-filter"><StoreSettingsSingleSelect scope={scope} label="状态" value={draft.status} options={[{ value: 'normal', label: '正常' }, { value: 'disabled', label: '已停用' }, { value: 'all', label: '全部' }]} onChange={status => setDraft(value => ({ ...value, status: status as PaymentSettingsQuery['status'] }))} /></div>
+          {props.kind === 'accounts' && <div className="bs-filter" title={props.reader?.supportsPaymentMethodFilter ? undefined : '当前版本暂不支持按收款方式筛选'}><SettingsReferenceSelect flatValue placeholder="全部收款方式" scope={scope} disabled={!props.reader?.supportsPaymentMethodFilter} reader={props.directory} kind="payment-methods" label="全部收款方式" selected={method ? [method] : []} onChange={items => { setMethod(items[0] ?? null); setDraft(value => ({ ...value, paymentMethodId: items[0]?.id ?? null })); }} /></div>}
+          <div className="bs-filter"><DemoSettingsSingleSelect scope={scope} label="状态" placeholder="状态" value={draft.status} options={[{ value: 'normal', label: '正常' }, { value: 'disabled', label: '已停用' }, { value: 'all', label: '全部' }]} onChange={status => setDraft(value => ({ ...value, status: status as PaymentSettingsQuery['status'] }))} /></div>
         </div><div className="bs-toolbar-actions iw-query-actions"><Button className="btn primary" type="primary" htmlType="submit" disabled={!queries || busy}>查询</Button><Button className="btn iw-reset" disabled={!queries || busy} onClick={() => { const reset = { ...initialPaymentSettingsQuery, pageSize: applied.pageSize }; props.onFilterDraft(reset); setMethod(null); run(reset); }}>重置</Button></div>
       </form>
       {!queries && <p className="payment-empty-state" role="status">{label}资料读取暂未开放。{settingsSaveUnavailable}</p>}
@@ -104,9 +102,8 @@ function PaymentList(props: Parameters<typeof PaymentContent>[0] & { readonly qu
       {list.phase === 'error' && <p className="settings-note" role="alert">资料读取失败。<Button type="text" onClick={() => run(list.request?.parameters ?? applied)}>重试</Button></p>}
       {result && list.phase !== 'success' && <p className="settings-note">下方为上次成功读取的结果。</p>}
       <div className="bs-table-wrap iw-arco-table" aria-busy={busy}><Table size="small" rowKey="id" columns={columns} data={result ? [...result.items] : []} pagination={false} noDataElement={<Empty description={!queries ? '资料暂不可用' : !result ? '尚未读到资料' : '暂无符合条件的数据'} />} /></div>
-      <div className="bs-pager"><StoreSettingsPagination scope={scope} page={applied.page} pageSize={applied.pageSize} total={result?.total ?? null} busy={busy} onPage={page => run({ ...applied, page })} onPageSize={pageSize => run({ ...applied, page: 1, pageSize })} /></div>
-    </StandardTabs>
+      <DemoSettingsPager label="收款配置列表分页" scope={scope} page={applied.page} size={applied.pageSize} total={result?.total ?? null} busy={busy} onPage={page => run({ ...applied, page })} onSize={pageSize => run({ ...applied, page: 1, pageSize })} />
     {editor && (props.kind === 'methods' ? <PaymentMethodForm controller={editor} close={close} /> : <PaymentAccountForm {...props} controller={editor} close={close} />)}
-    {editingId && !editor && <Modal className="store-settings-modal iw-arco-controls" visible title={`编辑${label}`} maskClosable={false} onCancel={close} okText="确定" cancelText="取消" okButtonProps={{ disabled: true }}><p role="status">{detail.phase === 'loading' ? '正在读取当前资料…' : detail.phase === 'success' ? '记录不存在或不可访问。' : '当前资料读取失败。'}</p>{detail.phase === 'error' && <Button onClick={() => { void queries?.detail.run({ id: editingId }); }}>重试读取</Button>}</Modal>}
+    {editingId && !editor && <Modal className="bs-modal demo-settings-modal iw-arco-modal iw-arco-controls" autoFocus={false} focusLock visible title={`编辑${label}`} maskClosable={false} onCancel={close} okText="确定" cancelText="取消" okButtonProps={{ disabled: true }}><p role="status">{detail.phase === 'loading' ? '正在读取当前资料…' : detail.phase === 'success' ? '记录不存在或不可访问。' : '当前资料读取失败。'}</p>{detail.phase === 'error' && <Button onClick={() => { void queries?.detail.run({ id: editingId }); }}>重试读取</Button>}</Modal>}
   </section>;
 }

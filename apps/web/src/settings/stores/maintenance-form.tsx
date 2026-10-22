@@ -46,7 +46,7 @@ export function SettingsReferenceSelect(props: {
   readonly scope: ReadScope; readonly reader: SettingsDirectoryReader | undefined;
   readonly kind: SettingsDirectoryKind; readonly label: string;
   readonly selected: readonly SettingsReference[]; readonly multiple?: boolean;
-  readonly required?: boolean; readonly disabled?: boolean; readonly hallId?: string | null; readonly flatValue?: boolean;
+  readonly required?: boolean; readonly disabled?: boolean; readonly hallId?: string | null; readonly flatValue?: boolean; readonly placeholder?: string;
   readonly onChange: (items: readonly SettingsReference[]) => void;
 }) {
   const [binding, setBinding] = useState<{ query: LatestQuery<SettingsDirectoryParameters, SettingsDirectoryPage>; scope: ReadScope; reader: SettingsDirectoryReader; kind: SettingsDirectoryKind; hallId: string | null } | null>(null);
@@ -87,7 +87,7 @@ function DirectorySelect(props: Parameters<typeof SettingsReferenceSelect>[0] & 
     <ControlledDirectorySelect {...(props.flatValue ? { className: 'ui-flat-select' } : {})} aria-label={props.label} {...(props.multiple ? { mode: 'multiple' as const } : {})}
       value={props.multiple ? props.selected.map(item => item.id) : props.selected[0]?.id ?? (props.flatValue ? undefined : '')}
       {...(props.flatValue ? { renderFormat: () => <span className="ui-single-tag">{props.selected[0] ? settingsReferenceName(props.selected[0]) : ''}</span> } : {})}
-      options={[...options.values()]} placeholder="请选择" showSearch filterOption={false}
+      options={[...options.values()]} placeholder={props.placeholder ?? "请选择"} showSearch filterOption={false}
       allowClear={!props.required} disabled={!active || unavailable && !canRemoveSelected} loading={snapshot.phase === 'loading'}
       popupVisible={open && active && !unavailable} unmountOnExit
       getPopupContainer={() => { if (!host.current) throw new Error('Settings directory host not mounted'); return host.current; }}

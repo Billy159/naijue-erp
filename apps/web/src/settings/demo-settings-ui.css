@@ -1,0 +1,150 @@
+/* Complete frozen basic-settings presentation, b8bcfe3. Source selectors are scoped
+ * here; old data/global mounts and shell selectors are intentionally not imported.
+ * basic-settings-v2.css; inventory-workbench.css; inventory-refinement.css;
+ * styles.css (button base); unified-single-select.jsx (SmallSelect controls). */
+:is(.demo-settings-workbench,.demo-settings-audit),.demo-settings-modal{--text:var(--ca-ink);--secondary:var(--ca-ink-2);--primary:var(--ca-link);--primary-fill:var(--ca-primary-fill);--primary-hover:var(--ca-primary-hover);--border:var(--ca-line);--surface:var(--ca-surface);--error:var(--ca-critical);--ui-neutral-tag-bg:var(--ca-neutral-tag-bg);font-family:var(--ca-font-sans)}
+:is(.demo-settings-workbench,.demo-settings-audit).bs-page.iw-workbench{max-height:none;min-height:0;flex:1;display:flex;flex-direction:column;color:var(--text)}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-head.iw-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-head-actions{display:flex;align-items:center;gap:4px}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-tabs{display:flex;gap:20px;border-bottom:1px solid var(--border);margin:0 0 10px;flex:none}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-tabs button{border:0;border-bottom:2px solid transparent;background:transparent;padding:7px 2px 8px;color:var(--secondary);font-size:13px;cursor:pointer}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-tabs button:hover{color:var(--primary)}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-tabs button[aria-selected=true]{color:var(--primary);border-bottom-color:var(--primary-fill);font-weight:600}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-toolbar{display:flex;align-items:center;gap:var(--ca-space-2);margin:0 0 var(--ca-space-2);flex:none}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-filter-fields{display:flex;align-items:center;gap:var(--ca-space-2);flex:1;min-width:0}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-filter{flex:0 1 178px;min-width:128px}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-filter.search{flex:1 1 280px;max-width:440px}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-single{width:100%;min-width:0}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-toolbar-actions{display:flex;align-items:center;gap:var(--ca-space-2);margin-left:auto;flex:none}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-table-wrap{border:1px solid var(--border);overflow:auto;min-height:0;background:var(--surface);flex:0 1 auto}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-row-actions{display:flex;align-items:center;gap:6px;white-space:nowrap}
+:is(.demo-settings-workbench,.demo-settings-audit).bs-page>.bs-pager{flex:none;margin-top:auto;padding-top:var(--ca-space-2);background:var(--surface)}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-pager .iw-pagination{white-space:nowrap;flex-wrap:nowrap}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-pager .iw-pagination>span{flex:none}
+.demo-settings-modal.bs-modal{width:520px!important;max-width:calc(100vw - 32px)}
+.demo-settings-modal .bs-switch{display:flex;align-items:center;gap:var(--ca-space-2);min-height:var(--ui-control)}
+.demo-settings-modal .bs-error{margin:10px 0 0;color:var(--error);line-height:1.5}
+/* Inventory base, density, table, form and modal adapters. */
+:is(.demo-settings-workbench,.demo-settings-audit).iw-workbench{display:flex;flex-direction:column;max-height:calc(100dvh - var(--ui-topbar) - 24px);min-width:0;font-family:var(--ca-font-sans);font-size:12px}
+:is(.demo-settings-workbench,.demo-settings-audit).iw-workbench .btn{font-size:13px;min-height:30px;padding:4px 9px;border-radius:var(--ca-radius-control)}
+:is(.demo-settings-workbench,.demo-settings-audit).iw-workbench .iw-head{margin:0 0 8px;min-height:32px;flex:none}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-head h1{font-size:20px;margin:0}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination{display:flex;align-items:center;gap:14px;min-height:40px;flex:none;font-size:13px}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination .actions{margin-left:auto}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-jump{display:flex;align-items:center;gap:4px}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-jump input{width:44px;height:30px;padding:4px;text-align:center;font:inherit}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination select{height:30px;font-size:13px}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls{--primary-6:var(--ca-primary-rgb);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2);font-family:var(--ca-font-sans)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .arco-btn{height:var(--ui-control);border-radius:var(--ca-radius-control);font-size:13px;padding-inline:9px}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .arco-btn.arco-btn-primary:not(.arco-btn-disabled){background:var(--primary-fill);border-color:var(--primary-fill)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .arco-btn.arco-btn-primary:not(.arco-btn-disabled):hover{background:var(--primary-hover);border-color:var(--primary-hover)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .arco-btn.arco-btn-secondary:not(.arco-btn-disabled){background:var(--ca-surface);border:1px solid var(--ca-control-border);color:var(--ca-ink)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .arco-btn.arco-btn-secondary:not(.arco-btn-disabled):hover{background:var(--ca-surface-subtle);border-color:var(--ca-control-hover-border)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .arco-btn.arco-btn-text:not(.arco-btn-disabled){color:var(--ca-primary-ink);background:transparent}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .arco-btn.arco-btn-text:not(.arco-btn-disabled):hover{background:var(--ca-primary-hover-soft)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-query-actions>.btn{width:72px}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input.arco-input-wrapper,:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .arco-picker{box-sizing:border-box;height:var(--ui-control);min-height:var(--ui-control);padding:4px 9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none;font-size:13px}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input.arco-input-wrapper:hover,:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .arco-picker:hover{border-color:var(--ca-control-hover-border)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input.arco-input-wrapper:focus-within,:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .arco-picker:focus-within{border-color:var(--ca-control-focus-border);box-shadow:none}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input input.arco-input,:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .arco-picker input{box-sizing:border-box;width:100%;height:22px;min-height:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;outline:0;font-size:13px;color:var(--ca-ink)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input input.arco-input:focus,:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input input.arco-input:hover,:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .arco-picker input:focus{border:0;box-shadow:none;outline:0;background:transparent}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input input::placeholder{color:var(--ca-control-placeholder)}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-arco-table .arco-table{font:12px var(--ca-font-sans);color:var(--text)}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-arco-table .arco-table .arco-table-th,:is(.demo-settings-workbench,.demo-settings-audit) .iw-arco-table .arco-table .arco-table-td{box-sizing:border-box;height:var(--ui-row);padding:5px 8px;border-bottom:1px solid var(--ca-table-grid);font-size:12px;line-height:20px;color:var(--ca-ink);background:var(--surface)}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-arco-table .arco-table .arco-table-th{background:var(--ca-table-head);font-weight:600;color:var(--ca-ink-2)}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-arco-table .arco-table .arco-table-th-item{padding:0}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-arco-table .arco-table-tr:hover .arco-table-td{background:var(--ca-table-row-hover)}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-arco-table .arco-table-border .arco-table-container{border:0}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-arco-table .arco-btn.arco-btn-text{height:var(--ui-row-dense);padding-inline:var(--ca-space-1)}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-status.arco-tag{height:22px;line-height:20px;padding:0 6px;border:0;border-radius:3px;font-size:12px;white-space:nowrap}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-status.normal{background:var(--ca-success-soft);color:var(--ca-success)}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-status.off{background:var(--ui-neutral-tag-bg);color:var(--secondary)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls input.iw-arco-input.arco-input{box-sizing:border-box;height:var(--ui-control);min-height:var(--ui-control);padding:4px 9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none;font-size:13px}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls input.iw-arco-input.arco-input:hover{border-color:var(--ca-control-hover-border)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls input.iw-arco-input.arco-input:focus{border-color:var(--ca-control-focus-border);box-shadow:none;outline:0}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input.arco-input-group-wrapper .arco-input-inner-wrapper{box-sizing:border-box;width:100%;height:var(--ui-control);min-height:var(--ui-control);padding-inline:9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none;align-items:center}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input.arco-input-group-wrapper{width:100%;display:inline-flex;vertical-align:middle}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input.arco-input-group-wrapper .arco-input-inner-wrapper:hover{border-color:var(--ca-control-hover-border)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input.arco-input-group-wrapper .arco-input-inner-wrapper:focus-within{border-color:var(--ca-control-focus-border);box-shadow:none}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-search-input .arco-input{height:auto;line-height:normal;font-size:inherit}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-search-input .arco-input-inner-wrapper:hover{border-color:transparent}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-search-input .arco-input-inner-wrapper:focus-within{border-color:var(--ca-control-focus-border);background:var(--ca-surface)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-search-input .arco-input-group-suffix>.arco-icon{width:var(--ui-small);height:var(--ui-small);font-size:var(--ui-small);color:var(--ca-ink-2)}
+.demo-settings-modal .iw-form-fields{display:grid;grid-template-columns:1fr;gap:var(--ca-space-3)}
+.demo-settings-modal .iw-form-field{display:flex;flex-direction:column;gap:var(--ca-space-1);min-width:0;color:var(--text);font-size:var(--ui-font)}
+.demo-settings-modal .iw-form-field>span:first-child{color:var(--secondary);font-size:var(--ui-small);line-height:var(--ca-space-4)}
+.demo-settings-modal .iw-form-field i{color:var(--error);font-style:normal}
+.demo-settings-modal.iw-arco-modal .arco-modal-header{padding:var(--ca-space-3) var(--ca-space-5);height:auto;border-bottom:0}
+.demo-settings-modal.iw-arco-modal .arco-modal-content{padding:var(--ca-space-3) var(--ca-space-5)}
+.demo-settings-modal.iw-arco-modal .arco-modal-footer{padding:var(--ca-space-3) var(--ca-space-5);border-top:1px solid var(--border)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input.arco-input-inner-wrapper,:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input.arco-input-group-wrapper .arco-input-inner-wrapper{box-sizing:border-box;width:100%;height:var(--ui-control);min-height:var(--ui-control);padding-inline:9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none;align-items:center}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input.arco-input-group-wrapper{width:100%;display:inline-flex;vertical-align:middle}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input.arco-input-inner-wrapper:hover,:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input.arco-input-group-wrapper .arco-input-inner-wrapper:hover{border-color:var(--ca-control-hover-border)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input.arco-input-inner-wrapper:focus-within,:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal).iw-arco-controls .iw-arco-input.arco-input-group-wrapper .arco-input-inner-wrapper:focus-within{border-color:var(--ca-control-focus-border);box-shadow:none}
+/* Frozen global button / action base, narrowed to native pager buttons. */
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination .actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control);height:var(--ui-control);padding:0 11px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font);font-weight:500;white-space:nowrap}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination .btn:hover{background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination .btn:disabled{background:var(--ca-control-disabled-bg);color:var(--ca-control-disabled-text);border-color:var(--ca-control-disabled-border)}
+/* Final inventory-refinement pager cascade; original selectors replaced by this page scope. */
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination .actions{display:flex;align-items:center;gap:4px}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination>.ui-single-host{box-sizing:border-box;flex:0 0 108px;width:108px;min-width:108px;max-width:108px;height:32px}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination>span{margin:0;white-space:nowrap}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination .iw-page-number,:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination .iw-page-arrow{display:grid;place-items:center;min-width:28px;width:28px;height:28px;min-height:28px;padding:0;border:1px solid transparent;border-radius:3px;background:transparent;color:var(--ca-ink-2);font-size:13px}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination .iw-page-number:hover,:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination .iw-page-arrow:hover:not(:disabled){background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination .iw-page-number[aria-current=page]{background:var(--ca-primary-selected);border-color:var(--ca-primary);color:var(--ca-primary-ink);font-weight:600}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-page-ellipsis{padding:0 3px}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-jump{margin-left:6px;white-space:nowrap}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-jump input{height:28px;width:40px;border:1px solid var(--ca-control-border);border-radius:3px}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination .iw-jump-go{height:28px;min-height:28px;padding:2px 5px;border:0;background:transparent;color:var(--ca-ink-2)}
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-pagination .iw-jump-go:hover{color:var(--ca-primary-ink)}
+/* SmallSelect complete ordinary single-value branch from its frozen ShadowRoot CSS. */
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single){display:block;width:100%;min-width:0;font:13px Arial,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ca-ink);--arcoblue-6:var(--ca-primary-rgb);--primary-6:var(--ca-primary-rgb);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select{display:block;width:100%;font-size:13px}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select .arco-select-view{box-sizing:border-box;height:32px;min-height:32px;max-height:32px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-size-default.arco-select-single .arco-select-view{padding-inline:3px}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select:hover .arco-select-view{border-color:var(--ca-control-hover-border);background:var(--ca-surface-muted)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select.arco-select-focused .arco-select-view{border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted);box-shadow:none}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-view .arco-select-view-value{display:flex;align-items:center;min-width:0;overflow:hidden}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .ui-single-tag{box-sizing:border-box;display:inline-flex;align-items:center;max-width:100%;height:23px;padding:1px 7px;overflow:hidden;border-radius:3px;background:#fff;color:var(--ca-ink);text-overflow:ellipsis;white-space:nowrap;font:400 13px Arial,"PingFang SC",sans-serif}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .ui-flat-select .ui-single-tag{padding-left:7px;background:transparent}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-view input{min-width:28px;font-size:13px;background:transparent}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-view input::placeholder{color:var(--ca-ink-3)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select .arco-icon-hover{color:var(--ca-ink-2)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-popup{box-sizing:border-box;padding:4px;border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);background:#fff;box-shadow:var(--ca-shadow-float)}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-popup-inner{max-height:288px;overflow:auto}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-option-wrapper{height:30px!important;min-height:30px!important;max-height:30px!important;padding:0 4px!important}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-option{box-sizing:border-box;height:30px!important;min-height:30px!important;max-height:30px!important;padding:0 8px!important;line-height:30px!important;color:var(--ca-ink)!important;background:#fff;font-size:13px!important;font-weight:400!important}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-option-selected{background:var(--ca-surface-subtle)!important;font-weight:400!important}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-option-hover,:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-option:hover{background:var(--ca-popover-hover)!important}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-option-disabled{color:var(--ca-disabled-ink)!important}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-option-content{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-popup .arco-empty{font-size:13px}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-optgroup-label,:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(.demo-settings-single,.demo-store-single) .arco-select-popup .arco-select-group-title{padding:5px 12px;color:var(--ca-ink-3);font-size:11px;background:var(--ca-surface-subtle)}
+/* Source global h1 / shared token aliases; no body, shell, sidebar or #page rules. */
+:is(.demo-settings-workbench,.demo-settings-audit) .iw-head h1{font-size:20px;line-height:30px;margin:0;font-weight:600}
+:is(.demo-settings-workbench,.demo-settings-audit).bs-page.iw-workbench{max-height:none;min-height:0;min-width:0;flex:1}
+/* Formal-only states: conditional read failures, paged directories, draft close and original receipt recovery. */
+:is(.demo-settings-workbench,.demo-settings-audit) .settings-read-state,:is(.demo-settings-workbench,.demo-settings-audit) .settings-note,.demo-settings-modal .settings-note{margin:0 0 8px;font:12px/20px var(--ca-font-sans);color:var(--ca-ink-2);flex:none}
+:is(.demo-settings-workbench,.demo-settings-audit) .settings-read-state button,:is(.demo-settings-workbench,.demo-settings-audit) .settings-directory-footer button{padding:0 3px;border:0;background:transparent;color:var(--ca-primary-ink);font:inherit;cursor:pointer}
+:is(.demo-settings-workbench,.demo-settings-audit) .settings-directory-footer,.demo-settings-modal .settings-directory-footer{padding:8px;border-top:1px solid var(--ca-line);font-size:12px;line-height:20px;white-space:normal;color:var(--ca-ink-2)}
+.demo-settings-modal.arco-modal{max-height:calc(100dvh - 32px);overflow:auto;color:var(--ca-ink);font-size:13px}
+.demo-settings-modal .settings-note{display:block;margin:12px 0 0}
+.demo-settings-modal .settings-close-prompt{margin-top:12px;padding:12px;border:1px solid var(--ca-line);border-radius:var(--ca-radius-control)}
+.demo-settings-modal .bs-row-actions{display:flex;align-items:center;gap:6px}
+.demo-settings-modal .bs-field small.bs-error{margin:0;font-size:12px}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) :is(button,input):focus-visible{outline:2px solid var(--ca-control-focus-border);outline-offset:1px}
+:is(.demo-settings-workbench,.demo-settings-audit,.demo-settings-modal) button:disabled{cursor:not-allowed}
+:is(.demo-settings-workbench,.demo-settings-audit) .bs-tabs button:disabled{color:var(--ca-disabled-ink)}
+@media(max-width:1100px){:is(.demo-settings-workbench,.demo-settings-audit) .bs-toolbar{flex-wrap:wrap}:is(.demo-settings-workbench,.demo-settings-audit) .bs-filter-fields{flex-wrap:wrap}:is(.demo-settings-workbench,.demo-settings-audit) .bs-filter{flex:1 1 145px}:is(.demo-settings-workbench,.demo-settings-audit) .bs-filter.search{max-width:none}}
+@media(max-width:620px){:is(.demo-settings-workbench,.demo-settings-audit) .bs-pager .iw-pagination{flex-wrap:wrap}:is(.demo-settings-workbench,.demo-settings-audit) .bs-pager .actions{margin-left:0}}
+
+/* Complete staff / payment field branches of basic-settings-v2.css. */
+.demo-settings-modal.bs-modal.bs-modal-staff{width:580px!important}
+.demo-settings-modal .bs-staff-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+.demo-settings-modal .bs-checks{display:flex;align-items:center;gap:var(--ca-space-4);min-height:var(--ui-control)}
+.demo-settings-modal .bs-readonly{min-height:var(--ui-control);display:flex;align-items:center;overflow-wrap:anywhere}
+.demo-settings-modal .bs-wide{grid-column:1/-1;padding-top:3px}
+.demo-settings-modal .bs-password-reset{padding:0;margin-top:10px}
+.demo-settings-modal .settings-reference-select.arco-select-multiple .arco-select-view,.demo-settings-modal .settings-reference-select .arco-select.arco-select-multiple .arco-select-view{height:auto;max-height:none;min-height:32px}
+@media(max-width:620px){.demo-settings-modal .bs-staff-fields{grid-template-columns:1fr}.demo-settings-modal .bs-wide{grid-column:auto}}

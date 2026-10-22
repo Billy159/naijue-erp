@@ -1,3 +1,5 @@
+import { checkedNativeRuntime26Capability } from '../../../packages/application/src/native-import-schema-contract.ts';
+import type { NativeRuntime26Capability } from '../../../packages/application/src/native-import-schema-contract.ts';
 import { validatePreparedHistoryHeaderChunk } from '../../../packages/application/src/import-v3-history-header-staging.ts';
 import type { HistoryHeaderStagingStore, PreparedHistoryHeaderChunk, PreparedHistoryHeaderRow } from '../../../packages/application/src/import-v3-history-header-staging.ts';
 import type { HistorySalesHeader } from '../../../packages/application/src/history-storage-contract.ts';
@@ -30,14 +32,18 @@ function nativeTargets(row:PreparedHistoryHeaderRow,header:Record<string,unknown
  * Lock order: global cutoff -> batch -> explicitly source-key-bound native rows -> evidence+header.
  */
 export class PostgresV3HistoryHeaderStagingStore implements HistoryHeaderStagingStore {
-  private readonly pool: PgSalesPool;
+  protected readonly pool: PgSalesPool;
   constructor(pool: PgSalesPool) { this.pool = pool; }
   async stage(input: PreparedHistoryHeaderChunk): Promise<{inserted:number;replayed:number}> {
     const chunk = structuredClone(input); validatePreparedHistoryHeaderChunk(chunk);
+    return this.stageValidated(chunk);
+  }
+  protected async stageValidated(chunk: PreparedHistoryHeaderChunk, runtime26?: NativeRuntime26Capability): Promise<{inserted:number;replayed:number}> {
     const client = await this.pool.connect(); let began = false, commitAttempted = false, discard: Error | undefined;
     try {
+      if (runtime26) await runtime26.assertReady(client, 'IMPORT_STAGE');
       await client.query('BEGIN ISOLATION LEVEL READ COMMITTED'); began = true;
-      const result = await this.write(client,chunk);
+      const result = await this.write(client,chunk,runtime26);
       commitAttempted = true; await client.query('COMMIT'); return result;
     } catch (error) {
       if (!began || commitAttempted) discard = error instanceof Error ? error : Error('HISTORY_HEADER_STAGING_UNKNOWN_OUTCOME');
@@ -49,8 +55,13 @@ export class PostgresV3HistoryHeaderStagingStore implements HistoryHeaderStaging
       throw error;
     } finally { client.release(discard); }
   }
-  private async write(client: PgSalesClient, chunk: PreparedHistoryHeaderChunk): Promise<{inserted:number;replayed:number}> {
+  private async write(client: PgSalesClient, chunk: PreparedHistoryHeaderChunk, runtime26?: NativeRuntime26Capability): Promise<{inserted:number;replayed:number}> {
     await client.query('/* history-header-stage:global-lock */ SELECT naijue_erp.cutoff_import_lock()');
+    if (runtime26) {
+      const schemas = (await client.query('/* history-header-stage:schema26 */ SELECT array_agg(version ORDER BY version) versions FROM naijue_erp.schema_migration')).rows;
+      const versions = schemas[0]?.versions;
+      require(schemas.length === 1 && Array.isArray(versions) && versions.length === 26 && versions.every((v, i) => v === i + 1), 'HISTORY_STAGE_EXACT26_REQUIRED');
+    }
     const batches = (await client.query(`/* history-header-stage:batch */ SELECT id,mapping_version,status,source_hash,source_name
       FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`,[chunk.batchId])).rows;
     const batch = batches[0];
@@ -114,5 +125,17 @@ export class PostgresV3HistoryHeaderStagingStore implements HistoryHeaderStaging
       require(saved.rowCount === 1 && saved.rows[0]?.id === header.id,'HISTORY_HEADER_STAGING_HEADER_INSERT'); inserted++;
     }
     return {inserted,replayed};
+  }
+}
+
+/** Explicit exact26 admission; original immutable header/line columns unchanged. */
+export class PostgresV3HistoryHeaderStagingStore26 extends PostgresV3HistoryHeaderStagingStore {
+  private readonly runtime26: NativeRuntime26Capability;
+  constructor(pool: PgSalesPool, runtime26: NativeRuntime26Capability) {
+    super(pool); const checked = checkedNativeRuntime26Capability(runtime26);
+    if (!checked) throw TypeError('Actual successor runtime capability required'); this.runtime26 = checked;
+  }
+  override async stage(input: PreparedHistoryHeaderChunk): Promise<{inserted:number;replayed:number}> {
+    const chunk = structuredClone(input); validatePreparedHistoryHeaderChunk(chunk); return this.stageValidated(chunk, this.runtime26);
   }
 }

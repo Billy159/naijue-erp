@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { prepareV3HistoryChunk, stageV3HistoryChunk } from '../packages/application/src/import-v3-history-staging.ts';
 import type { V3HistoryChunk } from '../packages/application/src/import-v3-history-staging.ts';
-import { PostgresV3HistoryStagingStore } from '../adapters/postgres/src/import-v3-history-staging-store.ts';
+import { PostgresV3HistoryStagingStore, PostgresV3HistoryStagingStore26 } from '../adapters/postgres/src/import-v3-history-staging-store.ts';
 import type { PgSalesClient, PgSalesPool, PgSalesResult } from '../adapters/postgres/src/sales-unit-of-work.ts';
 const id=(n:number)=>`00000000-0000-0000-0000-${String(n).padStart(12,'0')}`;
 const h='a'.repeat(64);
@@ -14,13 +14,15 @@ function fixture(): V3HistoryChunk {
       header:{sourceKey:'0002',nativeId:id(3)},sku:{sourceKey:'0003',nativeId:id(4)}}]};
 }
 class FakePool implements PgSalesPool {
+  lease:PgSalesClient|undefined; schemaLength=26;
   calls:string[]=[]; committed=new Map<string,{source:Record<string,unknown>;line:Record<string,unknown>}>();
   working=new Map<string,{source:Record<string,unknown>;line:Record<string,unknown>}>();
   pending:Record<string,unknown>|undefined; failLine=false; failLineAt=0; lineAttempts=0; failCommit=false; commitAppliedBeforeFailure=false; failRollback=false;
   readonly commitError=Error('commit unknown'); badBinding=false; closed=false; discarded:Error|undefined; connects=0;
-  async connect():Promise<PgSalesClient> {this.connects++;return {query:async (sql,values=[])=>this.query(sql,values),release:error=>{this.discarded=error instanceof Error ? error : undefined;}};}
+  async connect():Promise<PgSalesClient> {this.connects++;this.lease={query:async (sql,values=[])=>this.query(sql,values),release:error=>{this.discarded=error instanceof Error ? error : undefined;}};return this.lease;}
   async query(sql:string,values:readonly unknown[]):Promise<PgSalesResult> {
     this.calls.push(sql); const answer=(rows:Record<string,unknown>[]=[]):PgSalesResult=>({rows,rowCount:rows.length});
+    if(sql.includes('history-stage:schema26'))return answer([{versions:Array.from({length:this.schemaLength},(_,i)=>i+1)}]);
     if(sql.startsWith('BEGIN')) {this.working=structuredClone(this.committed);return answer();}
     if(sql==='COMMIT') {if(this.failCommit){if(this.commitAppliedBeforeFailure)this.committed=structuredClone(this.working);throw this.commitError;}this.committed=this.working;return answer();}
     if(sql==='ROLLBACK') {if(this.failRollback)throw Error('rollback failed');this.working=structuredClone(this.committed);this.pending=undefined;return answer();}
@@ -99,4 +101,18 @@ test('4 MiB chunk budget measures UTF-8 bytes, not UTF-16 characters',()=>{
   const multibyte=fixture();multibyte.rows[0]!.source.rawFields['extraEvidence']='汉'.repeat(1_500_000);
   assert.ok(JSON.stringify(multibyte).length<4*1024*1024);
   assert.throws(()=>prepareV3HistoryChunk(multibyte),/BYTE_LIMIT/);
+});
+
+function transferRuntime26(pool:FakePool,denied=false,booleanProof=false){let proofs=0;return {proofs:()=>proofs,cap:{profile:'EXACT26' as const,contract:'NATIVE_RUNTIME26_V1' as const,async assertReady(client:object,purpose:string){proofs++;assert.equal(client,pool.lease);assert.equal(purpose,'IMPORT_STAGE');assert.equal(pool.calls.length,0);if(denied)throw Error('NATIVE_RUNTIME26_NOT_READY');if(booleanProof)return true as never;}}};}
+test('transfer26 proves same original client before SQL and refuses missing, boolean, expired and non26 admission',async()=>{
+ const chunk=prepareV3HistoryChunk(fixture()),pool=new FakePool();assert.throws(()=>new PostgresV3HistoryStagingStore26(pool,undefined as never),/runtime capability/);assert.equal(pool.connects,0);
+ for(const opts of [[true,false],[false,true]]){const p=new FakePool(),r=transferRuntime26(p,opts[0],opts[1]);await assert.rejects(new PostgresV3HistoryStagingStore26(p,r.cap).stage(chunk));assert.equal(p.calls.length,0);assert.ok(p.discarded);}
+ for(const length of [19,27]){const p=new FakePool();p.schemaLength=length;await assert.rejects(new PostgresV3HistoryStagingStore26(p,transferRuntime26(p).cap).stage(chunk),/EXACT26_REQUIRED/);assert.equal(p.calls.some(c=>c.includes(':batch')),false);}
+});
+test('transfer26 retains signed source and complete native alias/header binding with immutable replay',async()=>{
+ const p=new FakePool(),r=transferRuntime26(p),next=new PostgresV3HistoryStagingStore26(p,r.cap),chunk=prepareV3HistoryChunk(fixture());assert.deepEqual(await next.stage(chunk),{inserted:1,replayed:0});assert.equal(p.committed.get(id(2))!.line.quantity,'-2');p.calls.length=0;assert.deepEqual(await next.stage(chunk),{inserted:0,replayed:1});assert.equal(r.proofs(),2);assert.equal(p.calls.some(c=>/(?:^|\*\/)\s*(INSERT|UPDATE|DELETE)\b/.test(c)),false);p.committed.get(id(2))!.line.quantity='3';p.calls.length=0;await assert.rejects(next.stage(chunk),/REPLAY_CONFLICT/);
+ const missing=new FakePool();missing.badBinding=true;await assert.rejects(new PostgresV3HistoryStagingStore26(missing,transferRuntime26(missing).cap).stage(chunk));assert.equal(missing.committed.size,0);
+});
+test('transfer26 rolls back failed original line and discards unknown COMMIT without rollback or retry',async()=>{
+ for(const commit of [false,true]){const p=new FakePool();if(commit)p.failCommit=true;else p.failLine=true;await assert.rejects(new PostgresV3HistoryStagingStore26(p,transferRuntime26(p).cap).stage(prepareV3HistoryChunk(fixture())));assert.equal(p.connects,1);assert.equal(p.calls.some(c=>c==='ROLLBACK'),!commit);if(commit)assert.ok(p.discarded);}
 });

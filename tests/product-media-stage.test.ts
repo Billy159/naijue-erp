@@ -1,7 +1,7 @@
 /** Real codec + disposable private files. Authorization is synthetic; no real account, DB or host. */
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, realpath, rm, readdir, readFile, writeFile, lstat, chmod, symlink, unlink, mkdir } from "node:fs/promises";
+import { mkdtemp, realpath, rm, readdir, readFile, writeFile, lstat, chmod, symlink, unlink, mkdir, rename } from "node:fs/promises";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import path from "node:path";
@@ -14,6 +14,7 @@ import { SharpProductImageCodec } from "../adapters/media/src/sharp-product-imag
 import { PrivateControlledProductMedia } from "../adapters/media/src/controlled-product-media.ts";
 import { DomainError } from "../packages/domain/src/errors.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
+import type { ProductMediaRead } from "../packages/application/src/product-query-ports.ts";
 const productId = sid("product", 16001), nativeImageId = sid("product", 16002);
 const signal = () => new AbortController().signal;
 const fixtureImage = (colour = "#123456", format: "png" | "jpeg" | "webp" = "png") => sharp({ create: { width: 80, height: 40, channels: 3, background: colour } }).toFormat(format).toBuffer();
@@ -172,4 +173,50 @@ test("QB80-F01 published-stage recovery fsyncs keys before success on prior comp
     const recovered = await store.stage(f.input); assert.equal(recovered.uploadId, winner.uploadId, branch); assert.equal(keysDurable, 1, branch);
     assert.equal((await readdir(keys)).length, 1, branch); assert.deepEqual(await readFile(path.join(f.root, "stages", winner.uploadId, "original.bin")), original);
   }
+});
+test("W19 read-only stage mapping stays metadata-only after attachment expiry and never guesses legacy paths", async t => {
+  const f = await fixture(t), uploaded = await f.store.stage(f.input), prepared = await f.consume(uploaded.uploadId), resolver = f.store.createManifestResolver();
+  assert.deepEqual(Object.keys(resolver), ["resolve"]); assert.ok(Object.isFrozen(resolver));
+  f.advance(PRODUCT_MEDIA_STAGE_EXPIRY_SECONDS * 1000 + 1); await assert.rejects(f.consume(uploaded.uploadId), { code: "UPLOAD_EXPIRED" });
+  const image = { id: nativeImageId, productId, fileRef: prepared.fileRef, mime: prepared.original.mime, byteSize: prepared.original.byteSize, displayOrder: 0 };
+  const read: ProductMediaRead = { actor: { ...actor, accountId: sid("account", 19001) }, productId, grant: { productId }, images: [image, { ...image, id: sid("product", 19002) }], signal: signal() };
+  const seam = f.store as unknown as { boundedFile(file: string, maximum: number, signal: AbortSignal): Promise<Buffer> }, realRead = seam.boundedFile.bind(f.store), files: string[] = [];
+  t.mock.method(seam, "boundedFile", async (file: string, maximum: number, signal: AbortSignal) => { files.push(file); assert.ok(file.endsWith(".json")); return realRead(file, maximum, signal); });
+  const original = path.join(f.root, prepared.original.relativePath); await rename(original, original + ".retained");
+  const authCount = f.authorizations.length, mapped = await resolver.resolve(read);
+  assert.equal(mapped.size, 2); assert.ok(mapped.has(nativeImageId) && !mapped.has(uploaded.uploadId)); assert.equal(f.authorizations.length, authCount);
+  assert.equal(files.filter(file => file.endsWith("manifest.json")).length, 1); assert.equal(files.length, 2); assert.deepEqual(mapped.get(nativeImageId)!.original, prepared.original);
+  assert.equal((await resolver.resolve({ ...read, images: [{ ...image, fileRef: "https://untrusted.invalid/source.png" }] })).size, 0);
+  const thumbnail = path.join(f.root, prepared.thumbnail.relativePath); await rename(thumbnail, thumbnail + ".retained");
+  assert.equal((await resolver.resolve({ ...read, images: [image] })).get(nativeImageId)!.thumbnail, null);
+});
+test("W19 known stage mapping failure is explicit; malformed refs, wrong native scope or absent publish index never return an empty success", async t => {
+  const f = await fixture(t), uploaded = await f.store.stage(f.input), prepared = await f.consume(uploaded.uploadId), resolver = f.store.createManifestResolver();
+  const image = { id: nativeImageId, productId, fileRef: prepared.fileRef, mime: prepared.original.mime, byteSize: prepared.original.byteSize, displayOrder: 0 };
+  const read: ProductMediaRead = { actor, productId, grant: { productId }, images: [image], signal: signal() };
+  await assert.rejects(resolver.resolve({ ...read, images: [{ ...image, fileRef: "staged-product-media:../outside" }] }), { code: "PRODUCT_MEDIA_NOT_READY" });
+  await assert.rejects(resolver.resolve({ ...read, images: [{ ...image, byteSize: image.byteSize + 1n }] }), { code: "PRODUCT_MEDIA_NOT_READY" });
+  const other = sid("product", 19003); await assert.rejects(resolver.resolve({ ...read, productId: other, grant: { productId: other }, images: [{ ...image, productId: other }] }), { code: "PRODUCT_MEDIA_NOT_READY" });
+  await assert.rejects(resolver.resolve({ ...read, grant: { productId: other } }), { code: "FORBIDDEN" });
+  for (const name of await readdir(path.join(f.root, "keys"))) await unlink(path.join(f.root, "keys", name));
+  await assert.rejects(resolver.resolve(read), { code: "PRODUCT_MEDIA_NOT_READY" });
+});
+test("W19 stage-backed controlled delivery requires fresh native membership and access; published native reads survive expiry but stale revisions fail", async t => {
+  const f = await fixture(t), uploaded = await f.store.stage(f.input), prepared = await f.consume(uploaded.uploadId), resolver = f.store.createManifestResolver();
+  let image = { id: nativeImageId, productId, fileRef: prepared.fileRef, mime: prepared.original.mime, byteSize: prepared.original.byteSize, displayOrder: 0 }, saved = false, allowed = true;
+  const provider = new PrivateControlledProductMedia({ deliveryOrigin: "https://synthetic.invalid", basePath: "/api", privateRoots: { synthetic: f.root }, publicRoots: f.options.publicRoots, manifests: resolver,
+    authorization: { async authorize() { if (!allowed) throw new DomainError("FORBIDDEN", "SYNTHETIC_REVOKED_READ"); return { productId }; } }, reader: { async readCurrentImage() { return saved ? image : null; } } });
+  const read = (): ProductMediaRead => ({ actor, productId, grant: { productId }, images: [image], signal: signal() });
+  const originalLink = await provider.resolveOriginal(read()), revision = new URL(originalLink.url).pathname.split("/").at(-2)!;
+  const request = { actor, productId, imageId: nativeImageId, revision, variant: "original" as const, signal: signal() };
+  await assert.rejects(provider.deliver(request), { code: "PRODUCT_IMAGE_NOT_FOUND" }); // A staged UUID or link never creates native membership.
+  saved = true; f.advance(PRODUCT_MEDIA_STAGE_EXPIRY_SECONDS * 1000 + 1); await assert.rejects(f.consume(uploaded.uploadId), { code: "UPLOAD_EXPIRED" });
+  assert.deepEqual((await provider.deliver(request)).bytes, f.input.bytes);
+  const replacement = await f.store.stage({ ...f.input, commandKey: "actual-new-command", uploadKey: "new-file", bytes: await fixtureImage("#ab2211") });
+  const replacementFacts = await f.store.consume({ actor, productId, commandKey: "actual-new-command", uploadId: replacement.uploadId, signal: signal() });
+  image = { ...image, fileRef: replacementFacts.fileRef, mime: replacementFacts.original.mime, byteSize: replacementFacts.original.byteSize };
+  await assert.rejects(provider.deliver(request), { code: "PRODUCT_IMAGE_NOT_FOUND" });
+  const currentLink = await provider.resolveOriginal(read()), current = { ...request, revision: new URL(currentLink.url).pathname.split("/").at(-2)! };
+  assert.equal((await provider.deliver(current)).bytes.length, Number(replacementFacts.original.byteSize));
+  allowed = false; await assert.rejects(provider.deliver(current), { code: "FORBIDDEN" }); allowed = true; saved = false; await assert.rejects(provider.deliver(current), { code: "PRODUCT_IMAGE_NOT_FOUND" });
 });

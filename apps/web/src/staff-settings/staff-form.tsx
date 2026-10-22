@@ -1,7 +1,8 @@
-import { Button, Checkbox, Input, Modal, Select, Switch } from '@arco-design/web-react';
-import { useEffect, useReducer, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { Button, Checkbox, Input, Modal, Switch } from '@arco-design/web-react';
+import { useEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
 import type { StaffSettingsProps } from './contracts.ts';
 import { staffRejectionMessage, type StaffSettingsController } from './controller.ts';
+import { DemoSettingsSingleSelect } from '../settings/demo-settings-controls.tsx';
 import { SettingsField, SettingsReferenceSelect } from '../settings/stores/maintenance-form.tsx';
 export function StaffSettingsForm(props: StaffSettingsProps & { readonly controller: StaffSettingsController; readonly close: () => void }) {
   const { controller } = props, state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot), draft = state.draft;
@@ -20,14 +21,14 @@ export function StaffSettingsForm(props: StaffSettingsProps & { readonly control
   const roles = props.roles.map(role => ({ value: role.value, label: role.label }));
   if (draft.role && !roles.some(role => role.value === draft.role)) roles.push({ value: draft.role, label: '角色未提供' });
   if (controller.intent !== 'edit') return <StaffSettingsModal title={controller.intent === 'LEAVE' ? '确认办理离职' : '确认恢复在职'} controller={controller} close={props.close} submit={submit} passwordReady={password.length > 0} cancelPasswordReset={cancelPasswordReset}>
-    <p>{controller.intent === 'LEAVE' ? `确定为「${controller.record?.name}」办理离职？办理后登录权限关闭，员工资料、登录账号和历史单据继续保留。恢复在职后登录权限仍保持关闭。` : `确定恢复「${controller.record?.name}」在职？登录权限仍保持关闭，需要登录时请在编辑员工中手工开通。`}</p>
+    {state.write.phase !== 'rejected' && <p>{controller.intent === 'LEAVE' ? `确定为「${controller.record?.name}」办理离职？办理后登录权限关闭，员工资料、登录账号和历史单据继续保留。恢复在职后登录权限仍保持关闭。` : `确定恢复「${controller.record?.name}」在职？登录权限仍保持关闭，需要登录时请在编辑员工中手工开通。`}</p>}
     {state.errors.employment && <p role="alert">{state.errors.employment}</p>}
   </StaffSettingsModal>;
   return <StaffSettingsModal title={`${editing ? '编辑' : '新增'}员工`} controller={controller} close={props.close} submit={submit} passwordReady={password.length > 0} cancelPasswordReset={cancelPasswordReset}>
     <div className="bs-form-fields bs-staff-fields iw-form-fields">
       <SettingsField label="姓名" required error={state.errors.name}><Input className="iw-arco-input" disabled={controller.locked} aria-label="姓名" value={draft.name} onChange={name => controller.update({ name })} autoComplete="off" /></SettingsField>
       <SettingsField label="角色" required error={state.errors.role}><StaffRoleSelect scope={props.scope} value={draft.role} options={roles} disabled={controller.locked || !props.roles.length} onChange={role => { if (props.roles.some(item => item.value === role)) controller.update({ role }); }} /></SettingsField>
-      <SettingsField label="所属营业厅" required={draft.role === 'SALESPERSON' || props.roles.some(role => role.value === draft.role && role.requiresHall)} error={state.errors.hall}><SettingsReferenceSelect disabled={controller.locked} scope={props.scope} reader={props.directory} kind="halls" label="所属营业厅" selected={draft.hall ? [draft.hall] : []} required={draft.role === 'SALESPERSON' || props.roles.some(role => role.value === draft.role && role.requiresHall)} onChange={items => controller.update({ hall: items[0] ?? null })} /></SettingsField>
+      <SettingsField label="所属营业厅" required={draft.role === 'SALESPERSON' || props.roles.some(role => role.value === draft.role && role.requiresHall)} error={state.errors.hall}><SettingsReferenceSelect flatValue disabled={controller.locked} scope={props.scope} reader={props.directory} kind="halls" label="所属营业厅" selected={draft.hall ? [draft.hall] : []} required={draft.role === 'SALESPERSON' || props.roles.some(role => role.value === draft.role && role.requiresHall)} onChange={items => controller.update({ hall: items[0] ?? null })} /></SettingsField>
       <SettingsField label="联系方式" error={state.errors.contact}><Input className="iw-arco-input" disabled={controller.locked} aria-label="联系方式" value={draft.contact} onChange={contact => controller.update({ contact })} autoComplete="off" /></SettingsField>
       {!editing && <div className="bs-wide"><Checkbox disabled={controller.locked} checked={draft.loginEnabled} onChange={toggleLogin}>同步开通登录账号</Checkbox></div>}
       {editing && !hadAccount && !draft.loginEnabled && <SettingsField label="登录账号"><div className="bs-readonly">未开通</div></SettingsField>}
@@ -42,10 +43,12 @@ export function StaffSettingsForm(props: StaffSettingsProps & { readonly control
 function StaffSettingsModal(props: { readonly title: string; readonly controller: StaffSettingsController; readonly close: () => void; readonly children: ReactNode; readonly submit: () => void; readonly passwordReady: boolean; readonly cancelPasswordReset: () => void }) {
   const { controller } = props, state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot), write = state.write;
   if (state.disposed) return null;
-  return <Modal className="bs-modal store-settings-modal settings-preparation-modal bs-modal-staff iw-arco-modal iw-arco-controls"
-    visible title={props.title} maskClosable={false} autoFocus={false} focusLock okText="确定" cancelText={write.phase === 'committed' ? '关闭' : '取消'}
-    okButtonProps={{ disabled: !controller.writesEnabled || controller.locked || Boolean(controller.intent === 'edit' && controller.record && !state.dirty), loading: write.phase === 'submitting' }}
-    onOk={props.submit} onCancel={() => { if (controller.requestClose()) props.close(); }}>
+  const blocked = controller.intent !== 'edit' && write.phase === 'rejected';
+  const acknowledge = () => { if (controller.requestClose()) props.close(); };
+  return <Modal className={`bs-modal demo-settings-modal iw-arco-modal iw-arco-controls${controller.intent === 'edit' ? ' bs-modal-staff' : ''}`}
+    visible title={blocked ? '无法完成操作' : props.title} maskClosable={false} autoFocus={false} focusLock hideCancel={blocked} okText={blocked ? '知道了' : '确定'} cancelText={write.phase === 'committed' ? '关闭' : '取消'}
+    okButtonProps={{ disabled: !blocked && (!controller.writesEnabled || controller.locked || Boolean(controller.intent === 'edit' && controller.record && !state.dirty)), loading: write.phase === 'submitting' }}
+    onOk={blocked ? acknowledge : props.submit} onCancel={() => { if (controller.requestClose()) props.close(); }}>
     <div onBlur={() => { if (!controller.locked) controller.validate(props.passwordReady); }}>{props.children}</div>
     {!controller.writesEnabled && !controller.hasUnresolvedWrite && write.phase !== 'committed' && <p className="settings-note" role="status">此版本暂未开放保存，填写的内容不会保存。</p>}
     {(write.phase === 'submitting' || write.phase === 'recovering') && <p className="settings-note" role="status">{write.phase === 'submitting' ? '正在保存，请等待结果。' : '正在查询原提交的回执…'}</p>}
@@ -63,14 +66,7 @@ function StaffSettingsModal(props: { readonly title: string; readonly controller
   </Modal>;
 }
 
-/** Keep the role popup inside its form; refresh the existing Arco portal after StrictMode replay. */
+/** Frozen role SmallSelect; all allowed values remain caller-owned. */
 function StaffRoleSelect(props: { readonly scope: StaffSettingsProps['scope']; readonly value: string; readonly options: readonly { readonly value: string; readonly label: string }[]; readonly disabled: boolean; readonly onChange: (value: string) => void }) {
-  const host = useRef<HTMLDivElement>(null), [open, setOpen] = useState(false), [, refreshPortal] = useReducer((value: number) => value + 1, 0);
-  useEffect(() => { if (props.disabled || !props.scope.active) setOpen(false); }, [props.disabled, props.scope]);
-  useEffect(() => { if (!open || props.disabled) return; let active = true; queueMicrotask(() => { if (active) refreshPortal(); }); return () => { active = false; }; }, [open, props.disabled]);
-  return <div ref={host} className="settings-single"><Select aria-label="角色" value={props.value} options={[...props.options]} placeholder="请选择" disabled={props.disabled || !props.scope.active}
-    popupVisible={open && !props.disabled && props.scope.active} unmountOnExit
-    getPopupContainer={() => { if (!host.current) throw new Error('Staff role host is not mounted'); return host.current; }}
-    onVisibleChange={visible => { if (props.scope.active && !props.disabled) setOpen(visible); }}
-    onChange={(value: string) => { if (props.scope.active && open && !props.disabled && props.options.some(option => option.value === value)) { setOpen(false); props.onChange(value); } }} /></div>;
+  return <DemoSettingsSingleSelect {...props} label="角色" placeholder="请选择" />;
 }

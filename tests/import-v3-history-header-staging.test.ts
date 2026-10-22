@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { prepareV3HistoryHeaderChunk, stageV3HistoryHeaders, HISTORY_HEADER_STAGING_CHUNK_LIMIT } from '../packages/application/src/import-v3-history-header-staging.ts';
 import type { HistoryHeaderInput } from '../packages/application/src/import-v3-history-header.ts';
-import { PostgresV3HistoryHeaderStagingStore } from '../adapters/postgres/src/import-v3-history-header-staging-store.ts';
+import { PostgresV3HistoryHeaderStagingStore, PostgresV3HistoryHeaderStagingStore26 } from '../adapters/postgres/src/import-v3-history-header-staging-store.ts';
 import type { PgSalesClient, PgSalesPool, PgSalesResult } from '../adapters/postgres/src/sales-unit-of-work.ts';
 import { IMPORT_V2_TABLES } from '../packages/application/src/import-v2-contract.ts';
 const id = (n:number) => `00000000-0000-0000-0000-${String(n).padStart(12,'0')}`;
@@ -28,11 +28,13 @@ function change(row:HistoryHeaderInput, field:string, value:string):void {row.so
 type Stored = {source:Record<string,unknown>;header:Record<string,unknown>};
 /** Synthetic transaction protocol fake only. Never opens pg or proves database execution. */
 class FakePool implements PgSalesPool {
+  lease:PgSalesClient|undefined; schemaLength=26;
   calls:Array<{sql:string;values:unknown[]}> = []; committed:Stored[]=[]; working:Stored[]=[]; pending:Record<string,unknown>|undefined;
   connects=0; discarded:Error|undefined; badBinding=false; badCatalogue=false; failHeaderAt=0; headerAttempts=0; failCommit=false; failRollback=false; closed=false; wrongHash=false; wrongNamespace=false;
-  async connect():Promise<PgSalesClient> {this.connects++;return {query:async(sql,values=[])=>this.query(sql,values),release:error=>{this.discarded=error instanceof Error?error:undefined;}};}
+  async connect():Promise<PgSalesClient> {this.connects++;this.lease={query:async(sql,values=[])=>this.query(sql,values),release:error=>{this.discarded=error instanceof Error?error:undefined;}};return this.lease;}
   async query(sql:string,values:unknown[]):Promise<PgSalesResult> {
     this.calls.push({sql,values}); const answer=(rows:Record<string,unknown>[]=[]):PgSalesResult=>({rows,rowCount:rows.length});
+    if(sql.includes('history-header-stage:schema26'))return answer([{versions:Array.from({length:this.schemaLength},(_,i)=>i+1)}]);
     if(sql.startsWith('BEGIN')){this.working=structuredClone(this.committed);return answer();}
     if(sql==='COMMIT'){if(this.failCommit)throw Error('commit unknown');this.committed=this.working;return answer();}
     if(sql==='ROLLBACK'){if(this.failRollback)throw Error('rollback failed');this.working=structuredClone(this.committed);this.pending=undefined;return answer();}
@@ -142,4 +144,18 @@ test('sales headers preserve full monetary values and map hall/customer/staff vi
   const row=fixture('SALES_HEADER');change(row,'营业员来源编号','old-person');row.creatorHallOverlay.personId='old-person';Object.assign(row.bindings,{'营业员来源编号':{sourceKey:'old-person',nativeId:id(40)}});
   const pool=new FakePool();await store(pool).stage(prepareV3HistoryHeaderChunk([row]));const header=pool.committed[0]!.header;assert.equal(header.gross_amount,'10.00');assert.equal(header.order_discount,'1.00');assert.equal(header.net_due,'8.50');assert.equal(header.salesperson_id,id(40));
   const joins=pool.calls.filter(c=>c.sql.includes('stage:catalogue'));assert.deepEqual(joins.map(c=>c.values[1]),['HALL','CUSTOMER','STAFF']);assert.ok(joins.every(c=>!c.sql.includes('native_snapshot')&&!c.sql.includes('native_version')));assert.match(pool.calls.find(c=>c.sql.includes('stage:replay'))!.sql,/NULL::naijue_erp.history_sales_header/);
+});
+
+function headerRuntime26(pool:FakePool,denied=false,booleanProof=false){let proofs=0;return {proofs:()=>proofs,cap:{profile:'EXACT26' as const,contract:'NATIVE_RUNTIME26_V1' as const,async assertReady(client:object,purpose:string){proofs++;assert.equal(client,pool.lease);assert.equal(purpose,'IMPORT_STAGE');assert.equal(pool.calls.length,0);if(denied)throw Error('NATIVE_RUNTIME26_NOT_READY');if(booleanProof)return true as never;}}};}
+test('header26 proves same original client before SQL and rejects missing, boolean, expired or non26 admission',async()=>{
+ const chunk=prepareV3HistoryHeaderChunk([fixture()]),pool=new FakePool();assert.throws(()=>new PostgresV3HistoryHeaderStagingStore26(pool,undefined as never),/runtime capability/);assert.equal(pool.connects,0);
+ for(const opts of [[true,false],[false,true]]){const p=new FakePool(),runtime=headerRuntime26(p,opts[0],opts[1]);await assert.rejects(new PostgresV3HistoryHeaderStagingStore26(p,runtime.cap).stage(chunk));assert.equal(p.calls.length,0);assert.ok(p.discarded);}
+ for(const length of [19,27]){const p=new FakePool();p.schemaLength=length;const r=headerRuntime26(p);await assert.rejects(new PostgresV3HistoryHeaderStagingStore26(p,r.cap).stage(chunk),/EXACT26_REQUIRED/);assert.equal(p.calls.some(c=>c.sql.includes(':batch')),false);}
+});
+test('header26 preserves complete sales and transfer facts, immutable replay and same-batch native binding refusal',async()=>{
+ for(const entity of ['SALES_HEADER','TRANSFER_HEADER'] as const){const p=new FakePool(),r=headerRuntime26(p),next=new PostgresV3HistoryHeaderStagingStore26(p,r.cap),chunk=prepareV3HistoryHeaderChunk([fixture(entity)]);assert.deepEqual(await next.stage(chunk),{inserted:1,replayed:0});assert.equal(p.committed[0]!.header.created_by_source_key,null);p.calls.length=0;assert.deepEqual(await next.stage(chunk),{inserted:0,replayed:1});assert.equal(r.proofs(),2);assert.equal(p.calls.some(c=>/(?:^|\*\/)\s*(INSERT|UPDATE|DELETE)\b/.test(c.sql)),false);p.committed[0]!.header.version=2;p.calls.length=0;await assert.rejects(next.stage(chunk),/REPLAY_CONFLICT/);}
+ const p=new FakePool();p.badBinding=true;await assert.rejects(new PostgresV3HistoryHeaderStagingStore26(p,headerRuntime26(p).cap).stage(prepareV3HistoryHeaderChunk([fixture()])));assert.equal(p.committed.length,0);
+});
+test('header26 preserves rollback on write failure and discards unknown COMMIT without rollback or retry',async()=>{
+ for(const commit of [false,true]){const p=new FakePool();if(commit)p.failCommit=true;else p.failHeaderAt=1;await assert.rejects(new PostgresV3HistoryHeaderStagingStore26(p,headerRuntime26(p).cap).stage(prepareV3HistoryHeaderChunk([fixture()])));assert.equal(p.connects,1);assert.equal(p.calls.some(c=>c.sql==='ROLLBACK'),!commit);if(commit)assert.ok(p.discarded);}
 });
