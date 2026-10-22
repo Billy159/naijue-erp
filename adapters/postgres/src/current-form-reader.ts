@@ -266,8 +266,27 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
     const parameters = parseCurrentFormProductQuery(input);
     return this.snapshot(actor, { kind: "products", parameters }, signal, async (query, identity, grant) => {
       await this.formContext(query, identity, grant, parameters.context);
+      // Search only admitted native identities. EXISTS keeps a product with many
+      // matching SKUs/main/old codes as one row in both the count and the page.
+      const codes = parameters.search.length < 6 ? "" : ` OR strpos(lower(p.system_item_code), lower($1::text)) > 0 OR EXISTS (
+        SELECT 1 FROM naijue_erp.sku s
+        JOIN naijue_erp.color sc ON sc.id=s.color_id JOIN naijue_erp.fit sf ON sf.id=s.fit_id
+        JOIN naijue_erp.size sz ON sz.id=s.size_id
+        JOIN naijue_erp.size_group_member sm ON sm.size_group_id=p.size_group_id AND sm.size_id=s.size_id
+        WHERE s.product_id=p.id AND s.enabled AND sc.enabled AND sf.enabled
+          AND NOT EXISTS (SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
+            WHERE ib.status<>'IMPORTED' AND src.entity_type='SKU'
+              AND src.field_provenance->'native_sku_import'->>'native_sku_id'=s.id::text)
+          AND (strpos(lower(s.sku_code), lower($1::text)) > 0 OR EXISTS (
+            SELECT 1 FROM naijue_erp.sku_barcode b WHERE b.sku_id=s.id AND b.enabled AND b.barcode_kind IN ('MAIN','CONFIRMED_OLD')
+              AND strpos(lower(b.barcode), lower($1::text)) > 0
+              AND NOT EXISTS (SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
+                WHERE ib.status<>'IMPORTED' AND src.entity_type='BARCODE'
+                  AND src.field_provenance->>'native_sku_id'=s.id::text AND src.field_provenance->>'native_barcode'=b.barcode))))`;
       return this.page(query, parameters, "FROM naijue_erp.product p LEFT JOIN naijue_erp.product_category pc ON pc.id=p.category_id", `p.enabled AND
-        (strpos(lower(p.product_code), lower($1::text)) > 0 OR strpos(lower(p.name), lower($1::text)) > 0)`,
+        NOT EXISTS (SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
+          WHERE ib.status<>'IMPORTED' AND src.entity_type='PRODUCT' AND src.field_provenance->>'native_product_id'=p.id::text) AND
+        (strpos(lower(p.product_code), lower($1::text)) > 0 OR strpos(lower(p.name), lower($1::text)) > 0${codes})`,
         "p.id, p.product_code, p.name, p.retail_price::text, p.enabled, p.category_id, pc.name AS category_name", `p.product_code COLLATE "C", p.id`, [parameters.search], row => {
           requireDomain(row.enabled === true, "INVALID_DATABASE_VALUE", "Ineligible current product");
           return Object.freeze({ id: id("product", row.id), code: text(row.product_code), name: text(row.name), retailPrice: price(row.retail_price), minimumPriceAvailability: "UNAVAILABLE",

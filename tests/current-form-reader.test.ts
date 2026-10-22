@@ -447,3 +447,50 @@ test("current product category rejects missing or malformed native identity or l
     readonly(client); client.done();
   }
 });
+
+test("current product code search uses admitted native SKU/main/old contains matches without count or page fanout", async () => {
+  const row = { id: productId, product_code: "SYNTHETIC CODE", name: "SYNTHETIC PRODUCT", retail_price: null, enabled: true,
+    category_id: sid("category", 1801), category_name: "SYNTHETIC LEAF" };
+  let counted = "";
+  const client = new Client([begin(), identity(), selectedHall(), total("1", (values, sql) => {
+    assert.deepEqual(values, ["000123"]); counted = sql.split("FROM naijue_erp.product p")[1]!;
+    assert.match(sql, /strpos\(lower\(p.system_item_code\), lower\(\$1::text\)\)/);
+    assert.match(sql, /EXISTS \(\s*SELECT 1 FROM naijue_erp.sku s/);
+    assert.match(sql, /strpos\(lower\(s.sku_code\), lower\(\$1::text\)\)/);
+    assert.match(sql, /b.enabled AND b.barcode_kind IN \('MAIN','CONFIRMED_OLD'\)/);
+    assert.match(sql, /strpos\(lower\(b.barcode\), lower\(\$1::text\)\)/);
+    assert.match(sql, /sm.size_group_id=p.size_group_id AND sm.size_id=s.size_id/);
+    assert.match(sql, /s.enabled AND sc.enabled AND sf.enabled/);
+    assert.ok(!/\bDISTINCT\b|\bGROUP BY\b|\bLIKE\b|raw_fields|source_key|import_sku_alias/.test(sql));
+  }), page([row], (values, sql) => {
+    assert.deepEqual(values, ["000123", 20, 0]); assert.equal(sql.split("FROM naijue_erp.product p")[1]!.split("\n      ORDER BY")[0], counted);
+    assert.match(sql, /ORDER BY p.product_code COLLATE "C", p.id LIMIT \$2 OFFSET \$3/);
+  }), commit()]);
+  const result = await reader(client).readProducts(actor, { ...search, search: "000123", context }, signal());
+  assert.equal(result.exactTotal, 1n); assert.equal(result.items.length, 1); assert.equal(result.items[0]!.id, productId);
+  assert.ok(!("skuId" in result.items[0]!)); readonly(client); client.done();
+});
+test("current product short search stays name/code only while explicit staged native product sources remain hidden", async () => {
+  for (const value of ["", "00123"]) {
+    const check = (values: unknown[], sql: string) => {
+      assert.equal(values[0], value); assert.ok(!/sku_barcode|s.sku_code|p.system_item_code/.test(sql));
+      assert.match(sql, /NOT EXISTS \(SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib/);
+      assert.match(sql, /ib.status<>'IMPORTED' AND src.entity_type='PRODUCT'/);
+      assert.match(sql, /src.field_provenance->>'native_product_id'=p.id::text/);
+    };
+    const client = new Client([begin(), identity(), total("0", check), page([], check), commit()]);
+    const result = await reader(client).readProducts(actor, { ...search, search: value, context: transferContext }, signal()); assert.equal(result.exactTotal, 0n); readonly(client); client.done();
+  }
+});
+test("current product six-character code search excludes unpublished SKU/barcode bindings and preserves literal input/page offsets", async () => {
+  const check = (values: unknown[], sql: string) => {
+    assert.equal(values[0], "00%_Ab"); assert.match(sql, /src.entity_type='SKU'/);
+    assert.match(sql, /src.field_provenance->'native_sku_import'->>'native_sku_id'=s.id::text/);
+    assert.match(sql, /src.entity_type='BARCODE'/);
+    assert.match(sql, /src.field_provenance->>'native_sku_id'=s.id::text AND src.field_provenance->>'native_barcode'=b.barcode/);
+    assert.ok(!/\bILIKE\b|\bLIKE\b/.test(sql)); assert.ok(!sql.includes("00%_Ab"));
+  };
+  const client = new Client([begin(), identity(), total("1", check), page([], (values, sql) => { check(values, sql); assert.deepEqual(values, ["00%_Ab", 20, 20]); }), commit()]);
+  const result = await reader(client).readProducts(actor, { ...search, search: "00%_Ab", page: 2, context: transferContext }, signal());
+  assert.equal(result.exactTotal, 1n); assert.deepEqual(result.items, []); readonly(client); client.done();
+});
