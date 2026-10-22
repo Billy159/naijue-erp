@@ -10024,10 +10024,70 @@
       "notTested": [
         "No wholepage/wholeoverlay/business/realimport/publicrelease outside exact scope"
       ]
+    },
+    {
+      "id": "QF-C105",
+      "sourceCommit": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
+      "result": "PASS_SOURCE_CASCADE_ONLY",
+      "scope": "Exact2 scopedcenter rules; actual newglyph pending",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-9a52d0f5/F2-RELATED-TAB-CENTER-REVIEW.json",
+      "evidenceSha256": "cb8fa568e44adc432e092c7d5dffcea13293069432fc73a02ec35020d25af7e3",
+      "adoption": "Delegated conclusion adopted, no controller technical retest",
+      "notTested": [
+        "Fullpage/wholeoverlay/PG/save/production beyond explicit exact scope"
+      ]
+    },
+    {
+      "id": "QF-C106",
+      "sourceCommit": "d9fd9a9060eb8172de614e3d250ce4d8268ddffa",
+      "result": "PASS_SOURCE_CASCADE_ONLY",
+      "scope": "Readonly nine price left/copy only native exactnullzero preserved; browser pending",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-d9fd9a90/F2-P11-READONLY-PRICES-REVIEW.json",
+      "evidenceSha256": "8298bfd99e76f4297b8dc4f8fea4beb914ffbd087b3e17fc806d263383c8dc4c",
+      "adoption": "Delegated conclusion adopted, no controller technical retest",
+      "notTested": [
+        "Fullpage/wholeoverlay/PG/save/production beyond explicit exact scope"
+      ]
+    },
+    {
+      "id": "QF-C107",
+      "sourceCommit": "bc1cf5ef269f788aded2d85cbad2bbb4aa5ae175",
+      "result": "PASS_SOURCE_COMPATIBILITY_ONLY",
+      "scope": "Readonly classified emptycopy/spacing; editor/media original handling unchanged, browser pending",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-bc1cf5ef/F2-P12-READONLY-EMPTY-REVIEW.json",
+      "evidenceSha256": "6d1a45478468921c10e30c11a79cad0cfaa60438f2538d41c46983a63dcf1374",
+      "adoption": "Delegated conclusion adopted, no controller technical retest",
+      "notTested": [
+        "Fullpage/wholeoverlay/PG/save/production beyond explicit exact scope"
+      ]
+    },
+    {
+      "id": "DEMO-C100-MORE-COMPONENT03",
+      "sourceCommit": "6eac13e213859d406cc570d85cc5065fd463acc7",
+      "result": "PASS_TWO_SYNTHETIC_COMPONENT_ONLY_SCOPES_NOT_MAIN",
+      "scope": "TabEnter/Escfocus/outside and18categories internal scroll/rightedge actual; density/clamp remains TR04. Does not increase main45 or wholeclasses",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v017-component-more-6eac13e-attempt03/RESULT.json",
+      "evidenceSha256": "35490771da350d8a670102f2285e16cd68c1f81c10eef1e61d2d3ca0b2d95bcc",
+      "adoption": "Delegated conclusion adopted, no controller technical retest",
+      "notTested": [
+        "Fullpage/wholeoverlay/PG/save/production beyond explicit exact scope"
+      ]
+    },
+    {
+      "id": "DEMO-C100-AUDIT-SEAM",
+      "sourceCommit": "6eac13e213859d406cc570d85cc5065fd463acc7",
+      "result": "WAITING_INTEGRATION_NO_NEW_PASS",
+      "scope": "Paymentmethod actual disabledaudit entry; optional nativecap existing, preview notassembled. F3 K mapping dispatched, no assumption production backend missing",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v016-6eac13e/AUDIT-ENTRY-INTEGRATION-SUPPLEMENT.json",
+      "evidenceSha256": "1be21e23cf4dd3975169692ace69886c0e3ceedf1c5dd67272e423d6c33dcc5a",
+      "adoption": "Delegated conclusion adopted, no controller technical retest",
+      "notTested": [
+        "Fullpage/wholeoverlay/PG/save/production beyond explicit exact scope"
+      ]
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-22T23:12:47.680426+00:00",
+  "updatedAt": "2026-10-22T23:26:36.242729+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -11078,38 +11138,40 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-22T23:12:47.680426+00:00",
-    "sourceRound": 105,
-    "sourceCheckpoint": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
+    "atUtc": "2026-10-22T23:26:36.242729+00:00",
+    "sourceRound": 108,
+    "sourceCheckpoint": "f4feb43ad4b50397817aa652428e5911232c9fe7",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "url": "http://127.0.0.1:57846/synthetic-unified.html",
-      "source": "6eac13e213859d406cc570d85cc5065fd463acc7",
-      "build": "ui-preview-6eac13e-01-build01",
-      "htmlSha256": "3830c86f6a673c72a6dbeac834d26977ff0ee33e2a11643ce930c5d9811530df",
-      "overlaySha256": "6f698d81c045a4ca58348edf5025b764449e7175090ed7215d8701ca8eddb603",
+      "url": "http://127.0.0.1:57848/synthetic-unified.html",
+      "source": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
+      "build": "ui-preview-9a52d0f-01-build01",
+      "pid": 18750,
+      "sessionId": 13216,
+      "htmlSha256": "90192785b057113381f204766b668e6ac208812dc3f3af73618e0a39fc74a872",
+      "overlaySha256": "b4a977c5d0faf9c3fcc4783153a63071a28b33a5f7a1625681242cc6f4392866",
       "syntheticOnly": true,
       "actualInputs": 400,
       "sourceModules": 383,
       "wholePageAccepted": false
     },
-    "nextPreview": "Fixed105 necessary preview with scoped103/104/105 CSS+explicit C-only readonly overview DTO preparing; no old45 retest",
-    "r1": "C103 original build+pack PASS,229members/one extraction. Permanent7 refs/privateconfig/stage preparation; fresh complete backup43 preparation only. No realaccounts/import/publicswitch",
+    "nextPreview": "Current105 delivered Demo only newaffected actual;106/107/108 not included. More108 isolatedPREBUILD preparing, no build before scopedQF.",
+    "r1": "OriginalC103packPASS; actualC43fresh completepreservation RUNNING. 44material only generator ready, requires actual43two receipts; no finalprivateconfig/stage executed",
     "qa": "C40 actual Sharp upload/ADD/replay/controlled original+thumbnail PASS; QA11audits11receipts3images/root4. No HTTP/realrole/business acceptance",
     "import": "QB132 consumer source limitedPASS, K preparer closureF01 NEED_FIX sent originalD3. No signed physicalwindow or originalread. H06 QA currentpurpose preparation only, no boundedQA capture.",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Normal remote through100 6eac13e verified; local105+docs pending exact-object fastforward",
+    "github": "Normal branch794bec5 verified via exact7objects FF/readback; new106107108+thisdoc localpending",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
       "localDeduplicated": 45,
       "wholePagesAccepted": 0,
       "wholeOverlayClassesAccepted": 0,
-      "notRun": 60,
+      "notRun": 59,
       "uiDifference": 28,
       "partial": 6,
-      "waitingIntegration": 9,
+      "waitingIntegration": 10,
       "approvedException": 1,
       "latestReceipt": "DEMO-C100-LOCAL45"
     },
@@ -11119,7 +11181,9 @@
       "build": "ui-component-more-6eac13e-01-build03",
       "htmlSha256": "637992176814f553472ec58e039a88c762ebd586d0651e81bd99a7cb742ab841",
       "syntheticComponentOnly": true,
-      "mainNativeAuthorExpanded": false
-    }
+      "mainNativeAuthorExpanded": false,
+      "actualConclusion": "DEMO component03 two bounded behavior groups; main45 not47; density/placement residual fixedsource108 pendingreview/browser"
+    },
+    "audit": "OriginalO-B08/DATA-SRC003 actualpaymentmethoddisabled becauseC100preview missing optionalreadcap; F3 Kmapping only; no backendmissingclaim"
   }
 }

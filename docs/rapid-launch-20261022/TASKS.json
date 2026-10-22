@@ -8,10 +8,10 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
+    "headObserved": "f4feb43ad4b50397817aa652428e5911232c9fe7",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "6eac13e213859d406cc570d85cc5065fd463acc7",
-    "remoteReadbackMethod": "Exact original3 additionalobjects, force=false FF/readback through100; conventional Git protocol stillfailed",
+    "remoteHeadVerified": "794bec548e10bf44e33f3b4287cafd15efcd83dc",
+    "remoteReadbackMethod": "7exactoriginalcommits/trees forcedfalse normalbranchFF separateGET through docs794bec5",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
       "status": "PRIVATE_DRAFT_UPLOAD_DOWNLOAD_SHA_AND_BUNDLE_VERIFY_PASS",
@@ -78,7 +78,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "C104 QFsourcePASS; next original nested product inventory target+guarded document-return navigation seam; More density awaits exactDemo"
+      "currentWork": "C108More residual fixed/QFpending; next original P13 real target inventory and guarded same-document owner return across6registered files"
     },
     "F2": {
       "title": "前端库存与商品",
@@ -93,7 +93,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "C105 exact2 glyph fixed/QFpending; original readonly P11/P12 directed UI fixes, P10 existing DTO group analysis; no C harness doublewrite"
+      "currentWork": "C106price/C107mediaempty QFsourcePASS; next P10 current-page nativebarcode coordinate grouping; realdefaultScheme pendinghuman"
     },
     "F3": {
       "title": "前端基础设置",
@@ -107,7 +107,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "C88 source/current B04 actual local accepted; no duplicate scope, other9 related consumers unmeasured and closed-login humanpending"
+      "currentWork": "Existing audit readentry integration K-only mapping, no old88popup redo; closedlogin humanpending"
     },
     "D1": {
       "title": "后端宿主事务与公共迁移",
@@ -168,7 +168,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "C100/C103/C104 scoped PASS adopted; C105 exact2 cascade next, no duplicate old scopes"
+      "currentWork": "C105106107 scopedsourcePASS adopted; next108 More residual only"
     },
     "QB": {
       "title": "后端独立验收",
@@ -936,9 +936,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T23:12:47.680426+00:00",
+  "updatedAt": "2026-10-22T23:26:36.242729+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "6eac13e213859d406cc570d85cc5065fd463acc7",
+  "lastVerifiedRemoteCommit": "794bec548e10bf44e33f3b4287cafd15efcd83dc",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1390,20 +1390,22 @@
     "newAccountsInserted": 0,
     "realImport": "NOT_EXECUTED",
     "productionSwitched": false,
-    "freshBackup": "C04_HISTORICAL_PRESERVED; FRESH_C43_PREPARATION_NOT_EXECUTED",
+    "freshBackup": "JOB43_ACTUAL_RUNNING_NO_FINAL_PASS",
     "accountCapture": "PASS_C02_JOB11",
     "bootMetadata": "JOBS12_13_READONLY_PASS; JOB14_BOOT_ACTOR_PROJECTION_QUEUED",
     "accountIdentity45": "QB35_SCOPED_PASS_C_OUTSIDE_PIN",
     "accountIdentityAdditional4": "QB42_IDENTITY_ONLY_ACCEPTED_FALSE_EXECUTION",
     "deploymentTools": "QB38_SOURCE_PROTOCOL_PASS_REAL_DEPLOY_NOT_RUN",
     "bootPersistence": "QB128_AND_QB130_SOURCE_PASS_NOT_INSTALLED",
-    "currentSourceCheckpoint": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
+    "currentSourceCheckpoint": "f4feb43ad4b50397817aa652428e5911232c9fe7",
     "currentPreview": {
-      "url": "http://127.0.0.1:57846/synthetic-unified.html",
-      "source": "6eac13e213859d406cc570d85cc5065fd463acc7",
-      "build": "ui-preview-6eac13e-01-build01",
-      "htmlSha256": "3830c86f6a673c72a6dbeac834d26977ff0ee33e2a11643ce930c5d9811530df",
-      "overlaySha256": "6f698d81c045a4ca58348edf5025b764449e7175090ed7215d8701ca8eddb603",
+      "url": "http://127.0.0.1:57848/synthetic-unified.html",
+      "source": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
+      "build": "ui-preview-9a52d0f-01-build01",
+      "pid": 18750,
+      "sessionId": 13216,
+      "htmlSha256": "90192785b057113381f204766b668e6ac208812dc3f3af73618e0a39fc74a872",
+      "overlaySha256": "b4a977c5d0faf9c3fcc4783153a63071a28b33a5f7a1625681242cc6f4392866",
       "syntheticOnly": true,
       "actualInputs": 400,
       "sourceModules": 383,
@@ -1640,7 +1642,8 @@
       },
       "members": 229,
       "stage": false
-    }
+    },
+    "latestPreparedProductionBuild": "C103 original build+packPASS, nofinalconfig/stage"
   },
   "supplementalRoles": {
     "DEMO_COMPARE": {
@@ -2034,11 +2037,12 @@
     }
   ],
   "newPendingReviews": [
-    "QF C100 More only",
-    "Demo C100 P16/P18 actual geometry",
-    "C inlineSVG exact resourceguard prep afterbuild98 failure",
-    "D3 TransferLines code+Kpreparer freeze beforeactualsourcewindow",
-    "C H06 actualQA plan/currentACL"
+    "QF108 only More newdensity/clamp lifecycle",
+    "Demo105 only actualglyph/spec32font/readonlyUNKNOWNoverview",
+    "D3QB132F01 transitiveclosure fix before unsigned sourcewindow",
+    "C43 freshbackup actualRUNNING; C44 requires real receipts",
+    "C H06 newQA purpose metadata46 Kprepare only",
+    "F3 existing auditentry C preview integration mapping"
   ],
   "openFindingsCurrent": [
     {
@@ -2097,38 +2101,40 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-22T23:12:47.680426+00:00",
-    "sourceRound": 105,
-    "sourceCheckpoint": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
+    "atUtc": "2026-10-22T23:26:36.242729+00:00",
+    "sourceRound": 108,
+    "sourceCheckpoint": "f4feb43ad4b50397817aa652428e5911232c9fe7",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "url": "http://127.0.0.1:57846/synthetic-unified.html",
-      "source": "6eac13e213859d406cc570d85cc5065fd463acc7",
-      "build": "ui-preview-6eac13e-01-build01",
-      "htmlSha256": "3830c86f6a673c72a6dbeac834d26977ff0ee33e2a11643ce930c5d9811530df",
-      "overlaySha256": "6f698d81c045a4ca58348edf5025b764449e7175090ed7215d8701ca8eddb603",
+      "url": "http://127.0.0.1:57848/synthetic-unified.html",
+      "source": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
+      "build": "ui-preview-9a52d0f-01-build01",
+      "pid": 18750,
+      "sessionId": 13216,
+      "htmlSha256": "90192785b057113381f204766b668e6ac208812dc3f3af73618e0a39fc74a872",
+      "overlaySha256": "b4a977c5d0faf9c3fcc4783153a63071a28b33a5f7a1625681242cc6f4392866",
       "syntheticOnly": true,
       "actualInputs": 400,
       "sourceModules": 383,
       "wholePageAccepted": false
     },
-    "nextPreview": "Fixed105 necessary preview with scoped103/104/105 CSS+explicit C-only readonly overview DTO preparing; no old45 retest",
-    "r1": "C103 original build+pack PASS,229members/one extraction. Permanent7 refs/privateconfig/stage preparation; fresh complete backup43 preparation only. No realaccounts/import/publicswitch",
+    "nextPreview": "Current105 delivered Demo only newaffected actual;106/107/108 not included. More108 isolatedPREBUILD preparing, no build before scopedQF.",
+    "r1": "OriginalC103packPASS; actualC43fresh completepreservation RUNNING. 44material only generator ready, requires actual43two receipts; no finalprivateconfig/stage executed",
     "qa": "C40 actual Sharp upload/ADD/replay/controlled original+thumbnail PASS; QA11audits11receipts3images/root4. No HTTP/realrole/business acceptance",
     "import": "QB132 consumer source limitedPASS, K preparer closureF01 NEED_FIX sent originalD3. No signed physicalwindow or originalread. H06 QA currentpurpose preparation only, no boundedQA capture.",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Normal remote through100 6eac13e verified; local105+docs pending exact-object fastforward",
+    "github": "Normal branch794bec5 verified via exact7objects FF/readback; new106107108+thisdoc localpending",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
       "localDeduplicated": 45,
       "wholePagesAccepted": 0,
       "wholeOverlayClassesAccepted": 0,
-      "notRun": 60,
+      "notRun": 59,
       "uiDifference": 28,
       "partial": 6,
-      "waitingIntegration": 9,
+      "waitingIntegration": 10,
       "approvedException": 1,
       "latestReceipt": "DEMO-C100-LOCAL45"
     },
@@ -2138,13 +2144,15 @@
       "build": "ui-component-more-6eac13e-01-build03",
       "htmlSha256": "637992176814f553472ec58e039a88c762ebd586d0651e81bd99a7cb742ab841",
       "syntheticComponentOnly": true,
-      "mainNativeAuthorExpanded": false
-    }
+      "mainNativeAuthorExpanded": false,
+      "actualConclusion": "DEMO component03 two bounded behavior groups; main45 not47; density/placement residual fixedsource108 pendingreview/browser"
+    },
+    "audit": "OriginalO-B08/DATA-SRC003 actualpaymentmethoddisabled becauseC100preview missing optionalreadcap; F3 Kmapping only; no backendmissingclaim"
   },
   "latestReadySource": {
-    "sourceRound": 100,
-    "commit": "6eac13e213859d406cc570d85cc5065fd463acc7",
-    "qualification": "99QFsourcePASS/100MoreQFpending; C100preview57846 activeDemo. 98local43 actual receipt adopted. C98production buildFAILED no pack."
+    "sourceRound": 108,
+    "commit": "f4feb43ad4b50397817aa652428e5911232c9fe7",
+    "qualification": "105106107 independent scopedsourcePASS;108More residual pending QF. Actual current main105, component100 remains; no version mixing."
   },
   "pendingUserDecision": [
     {
@@ -2169,8 +2177,8 @@
     }
   ],
   "currentAcceptedReceiptBatch": {
-    "atUtc": "2026-10-22T22:38:18.823953+00:00",
-    "indexRows": 276,
+    "atUtc": "2026-10-22T23:26:36.242729+00:00",
+    "indexRows": 289,
     "controllerTechnicalRetests": 0
   }
 }
