@@ -11,3 +11,12 @@
 .erp-product-drawer.arco-drawer .iw-product-drawer-body{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden;padding:0}
 .erp-product-drawer.arco-drawer .arco-drawer-content>.erp-overlay-close{position:fixed;top:12px;right:12px}
 .erp-overlay-anchor{position:fixed;inset:0;z-index:1050}
+/* Frozen pc-arco-modal variant. Owners opt in; ordinary overlays keep their
+ * existing spacing, focus, keyboard, portal and drawer behavior. */
+.erp-overlay.erp-overlay-catalogue.arco-modal{font:14px/1.5715 var(--ca-font-sans,Arial,sans-serif);background:var(--ca-surface,#fff);--color-text-1:var(--ca-ink,#232a36);--color-border-2:var(--ca-line,#e1e4e8)}
+.erp-overlay.erp-overlay-catalogue.arco-modal .arco-modal-header{height:auto;padding:11px 14px;border-bottom:1px solid var(--ca-line,#e1e4e8)}
+.erp-overlay.erp-overlay-catalogue.arco-modal .arco-modal-content{padding:12px 14px;line-height:1.5715}
+.erp-overlay.erp-overlay-catalogue.arco-modal .arco-modal-footer{padding:9px 14px;border-top:1px solid var(--ca-line,#e1e4e8)}
+.erp-overlay.erp-overlay-catalogue .erp-overlay-close{top:11px;font-size:14px}
+.erp-overlay.erp-overlay-catalogue.arco-modal .arco-modal-footer .erp-button.arco-btn-secondary:not(.arco-btn-disabled){background:var(--ca-surface,#fff);border:1px solid var(--ca-control-border,#c9ced6);color:var(--ca-ink,#232a36)}
+.erp-overlay.erp-overlay-catalogue.arco-modal .arco-modal-footer .erp-button.arco-btn-secondary:not(.arco-btn-disabled):hover{background:var(--ca-surface-subtle,#f6f7f8);border-color:var(--ca-control-hover-border,#b8bec8)}

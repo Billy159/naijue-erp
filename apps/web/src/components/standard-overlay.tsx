@@ -1,6 +1,7 @@
 import { cloneElement, useCallback, useLayoutEffect, useRef, useState, type ReactElement, type ReactNode } from 'react';
 import { flushSync } from 'react-dom';
 import { Drawer, Modal } from '@arco-design/web-react';
+import { IconClose } from '@arco-design/web-react/icon';
 import { UIButton } from './standard-controls.tsx';
 import './standard-overlay.css';
 
@@ -10,6 +11,8 @@ export interface StandardOverlayProps {
   readonly label?: string;
   readonly children: ReactNode | ((close: () => void) => ReactNode); readonly footer?: ReactNode | ((close: () => void) => ReactNode);
   readonly className?: string; readonly width?: number | string;
+  /** Opt-in frozen catalogue Modal spacing and secondary-button appearance. */
+  readonly presentation?: 'catalogue';
   readonly maskClosable?: boolean; readonly initialFocus?: string;
   /** The continuous scan drawer stays beside the editable document. */
   readonly nonModal?: boolean;
@@ -77,10 +80,10 @@ export function StandardOverlay(props: StandardOverlayProps) {
     const frame = requestAnimationFrame(focus);
     return () => cancelAnimationFrame(frame);
   }, [ready]);
-  const children = <><UIButton data-erp-overlay-close className="erp-overlay-close" aria-label={props.closeLabel} onClick={close}>×</UIButton>{typeof props.children === 'function' ? props.children(close) : props.children}</>;
+  const children = <><UIButton data-erp-overlay-close className="erp-overlay-close" aria-label={props.closeLabel} onClick={close}>{props.presentation === 'catalogue' ? <IconClose aria-hidden /> : '×'}</UIButton>{typeof props.children === 'function' ? props.children(close) : props.children}</>;
   const common = { visible: true, title: props.title, onCancel: close, getPopupContainer: container, closable: false,
     mask: !props.nonModal, maskClosable: props.maskClosable ?? false, focusLock: !props.nonModal, autoFocus: false, escToExit: false,
-    unmountOnExit: true, afterOpen: focus, footer: typeof props.footer === 'function' ? props.footer(close) : props.footer ?? null, className: `erp-overlay ${props.className ?? ''}` };
+    unmountOnExit: true, afterOpen: focus, footer: typeof props.footer === 'function' ? props.footer(close) : props.footer ?? null, className: `erp-overlay ${props.presentation === 'catalogue' ? 'erp-overlay-catalogue ' : ''}${props.className ?? ''}` };
   return <div ref={host} className="erp-overlay-anchor" onKeyDown={event => {
     if (event.key === 'Escape' && !event.defaultPrevented) { event.preventDefault(); event.stopPropagation(); close(); }
     // Drawer enables its FocusLock only after the entrance animation. Keep the
