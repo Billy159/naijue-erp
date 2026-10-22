@@ -1,0 +1,1 @@
+apps/web/unified-browser-harness/harness-app.tsx(15,74): error TS2353: Object literal may only specify known properties, and 'readOnly' does not exist in type 'PartiesRouteConfiguration'.

@@ -1,0 +1,110 @@
+{
+  "createdAt": "2026-10-21T14:12:03.371332+00:00",
+  "files": [
+    {
+      "path": "packages/application/src/native-import-schema-contract.ts",
+      "sha256": "25d8b9340cb40ad91b8af9cf3dbe2c06aab657727f38e9e19c15cca404843541"
+    },
+    {
+      "path": "packages/application/src/native-product-import.ts",
+      "sha256": "3a3ffc256dd2f99c2260d650a2cfde5151dbb9d7928b55d88f815f90561502bf"
+    },
+    {
+      "path": "adapters/postgres/src/native-product-import.ts",
+      "sha256": "d18e570509c0a3cf79f0491dd7d69a7d3090d058e5ea8b670f072818b265cd32"
+    },
+    {
+      "path": "scripts/import-v2/authorized-native-product-reader.mjs",
+      "sha256": "424dce074ea3450cd4ea7f170efc00c2a82338b5e2cd2fcf56eed5c553ff1fef"
+    },
+    {
+      "path": "scripts/import-v2/authorized-native-product-reader.d.mts",
+      "sha256": "f3b0321d4fd9a485ce7c908f6bd7fffe71ebeecf66fbd7946b8dd19786c29d5b"
+    },
+    {
+      "path": "tests/native-import-schema-contract.test.ts",
+      "sha256": "2988de04b15c5ae60e773206e7aed93c03ffd6f379c7f866065d8d91f94f7a86"
+    },
+    {
+      "path": "tests/native-product-authorizer.test.ts",
+      "sha256": "0aef71c831903c67f1b1c4d81254f1c11a971edfd4053e3597cfe71ceb4635ce"
+    },
+    {
+      "path": "tests/native-product-import.test.ts",
+      "sha256": "29bef2349cfa63c20acd31c2f35a4672b8ed45ba3c4d585372b3a56461c2a396"
+    },
+    {
+      "path": "docs/native-product-import.md",
+      "sha256": "50b15e5539f1d0dc7a9406f98d21f7c101b218cea5731c58c2399ae2498a01b3"
+    }
+  ],
+  "schemaCompatibility": {
+    "allowedExactPrefixes": [
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    ],
+    "schema12SqlSha256": "5562014c70f1045f7a81e80d950597d3917a7e3fa81f3c3381a662e6418ec544",
+    "pendingNotAllowed": [
+      13,
+      14
+    ],
+    "missingEarlierOrUnknownFuture": "rejected before native target locks or writes"
+  },
+  "checks": {
+    "focusedTests": {
+      "passed": 36,
+      "failed": 0,
+      "log": "focused.log"
+    },
+    "existingActualSyntheticSourceReader": {
+      "passed": 3,
+      "failed": 0,
+      "log": "existing-source-reader.log"
+    },
+    "typecheck": "passed",
+    "build": "passed",
+    "smokeBuild": "passed",
+    "compileLog": "compile.log",
+    "wholeRepositoryTestSuite": "not run by this task"
+  },
+  "independentReview": {
+    "model": "gpt-6.1-sol",
+    "result": "no concrete blocker; read-only static/synthetic review"
+  },
+  "sharedAuthorizedReaderCoreChanged": false,
+  "frozenLibraryVersion2Changed": false,
+  "databaseConnected": false,
+  "realPostgresqlAcceptance": "NOT_RUN",
+  "realImport": "NOT_RUN",
+  "published": false,
+  "stillRequired": [
+    "review and explicitly register final schema13/14 compatibility before mixed-schema staging",
+    "trusted host original-source/decision pins, complete reviewed semantic reference decisions and actual mapping files",
+    "real PostgreSQL native+source/proof transaction acceptance and full importer/publication"
+  ]
+}

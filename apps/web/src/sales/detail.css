@@ -3,10 +3,6 @@
  * from the sales route: the trusted host readiness capability owns loading. */
 .sales-detail-facts .sales-document-state h1{font-size:20px;line-height:28px;margin:0;font-weight:600}
 .sales-detail-facts .sales-document-state .actions>.iw-text-button{height:32px;min-height:32px;padding:3px 8px;border:0;border-radius:4px;font-size:13px}
-.sales-detail-facts .tc-status{display:inline-block;flex:none;border-radius:4px;padding:3px 7px;font-size:12px;font-weight:500;line-height:20px}
-.sales-detail-facts [data-document-status=pending]{background:var(--ca-warning-soft);color:var(--ca-warning)}
-.sales-detail-facts [data-document-status=effective]{background:var(--ca-success-soft);color:var(--ca-success)}
-.sales-detail-facts [data-document-status=void]{background:var(--ca-neutral-tag-bg);color:var(--ca-neutral-tag-ink)}
 .sales-detail-facts.sale-editor{display:flex;flex-direction:column;gap:0;height:auto;min-height:0;overflow:visible;min-width:0;font:13px var(--ca-font-sans);color:var(--ca-ink)}
 .sales-detail-facts .sales-document-state{display:flex;align-items:center;justify-content:flex-start;flex-wrap:nowrap;gap:8px;min-height:40px;position:static;z-index:auto;margin:0 0 8px;padding:0;border:0;background:#fff}
 .sales-detail-facts .sales-document-state .actions{display:flex;flex-wrap:nowrap;gap:4px;margin-left:auto}

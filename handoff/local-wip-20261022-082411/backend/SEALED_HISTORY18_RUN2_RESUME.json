@@ -1,0 +1,84 @@
+{
+  "atUtc": "2026-10-21T22:54:25.800305+00:00",
+  "status": "REVIEW_ACCEPTED_RESUMABLE_RESOURCE_HOLD_NO_CLEAR",
+  "sourceChangedThisStep": false,
+  "fixedPoint": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/checkpoints/sealed-history18-run1-repair-v1/MANIFEST.json",
+    "bytes": 38876,
+    "sha256": "0c0548af24bbac7857a75a59ac8836aa5a3dcc2299a6424fc6358d007bd9478d"
+  },
+  "effectiveSourcePins": 119,
+  "currentDrift": [],
+  "controllerReview": "PASS_SOURCE_AND_PROTOCOL_SCOPE_ONLY_REPAIRED_PG_STILL_NOT_RUN",
+  "repairPgStatus": "NOT_RUN",
+  "run1": "FULL_FAIL_IMMUTABLE_7OF9_CHILD_PASS_104_CONTEXT_AND_LIFECYCLE_REVERIFIED",
+  "runner": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/sealed_history_pg18_run2.py",
+    "bytes": 9804,
+    "sha256": "0c639cd39547a4711227727f7a6167f7e5ed407734285e822faed641c8adfee2",
+    "syntaxReadOnly": "PASS",
+    "executedThisStep": false
+  },
+  "newTarget": {
+    "data": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-backend-sealed-history-pg18/run-2/data",
+    "port": 55672,
+    "database": "naijue_erp_test_18e00102",
+    "socket": "/private/tmp/nj-sealed18-20261022-r2",
+    "targetAbsent": true,
+    "socketAbsent": true,
+    "portAvailability": "MUST_RECHECK_AFTER_CLEAR_NOT_REPROBED_DURING_FRONTEND_WINDOW"
+  },
+  "resources": {
+    "freeAtThisReadBytes": 2231132160,
+    "requiredBytes": 2298478592,
+    "deficitBytes": 67346432,
+    "reserveBytes": 2147483648,
+    "pgBytes": 134217728,
+    "syntheticLogsContextBytes": 16777216,
+    "budgetReduced": false
+  },
+  "resumeOnlyAfter": [
+    "Controller completes review or provides exact in-scope corrections",
+    "Controller gives new explicit run2 resource CLEAR after frontend pause ACK",
+    "Verify runner pin, all effective source/DDL pins, target/socket absence and unused port",
+    "Fresh free must be at least2298478592 immediately before initialization; else NOT_RUN_RESOURCE and release window without retry"
+  ],
+  "authorizedOneShotCommandAfterThoseConditions": {
+    "cwd": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control",
+    "argv": [
+      "python3",
+      "reports/backend/sealed_history_pg18_run2.py",
+      "run-clear-window-2"
+    ],
+    "executed": false
+  },
+  "expectedEvidence": [
+    "Exact schema1–18 fresh migration and complete synthetic source/native/typed chain",
+    "Nonzero57 closure STAGE, fresh reauthorization for replay, changed input rejected before connection",
+    "Wrong-document exchange keeps unique enabled/global32/per-document16 and must reach23514+exact message+function; omission/substitution must reach same predicate",
+    "Original nonzero PUBLISH continues exact refusal with unchanged FINAL/claims/receipt/audit/live stock",
+    "Result PASS or FAIL retained; finally stop new owned target, pg_ctl3/PID absent, source pins after and owned temporary fixture close checks"
+  ],
+  "prohibited": [
+    "No old target restart/reuse",
+    "No private/header source read",
+    "No production/server/restore activity",
+    "No publication guard change",
+    "No resource-budget reduction/deletion/automatic next target retry"
+  ],
+  "latestNewPg": false,
+  "controllerReviewReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/SEALED18-RUN1-REPAIR-INTAKE.json",
+    "bytes": 24284,
+    "sha256": "235cabbed2615dcf0d6c37bbfaaf9d33272cb0d7f3f534ffd4550d29d675731d"
+  },
+  "controllerReviewRecordedAtUtc": "2026-10-21T22:56:41.590510+00:00",
+  "controllerResourceLatest": {
+    "source": "Direct controller message; not a new backend measurement",
+    "freeBytes": 2229514240,
+    "requiredBytes": 2298478592,
+    "deficitBytes": 68964352,
+    "newClear": false
+  },
+  "stopPoint": "No outstanding independent repair in current scope. Safely stopped at pinned continuation; no polling, test repetition, new target or budget changes."
+}

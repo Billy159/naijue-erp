@@ -2,6 +2,7 @@ import { AuthenticationController, readContextAuthenticationLifecycle } from '..
 import { createAuthHttpClient } from '../authentication/http-client.ts';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import { ReadContext, type ReadScope } from '../loading/read-scope.ts';
+import { ownProductFullPageConfiguration } from '../products/product-page-configuration.ts';
 import type { ApplicationConfiguration, ApplicationRoute, ApplicationSnapshot, PartySession, SalesSession, TransferSession, PreparedApplicationRoute, RoutePreparation, RouteStylesheet } from './contracts.ts';
 
 const home = (): ApplicationSnapshot => Object.freeze({ phase: 'home', route: null, scope: null, prepared: null, notice: null });
@@ -36,13 +37,32 @@ export class ApplicationController {
       || transfers?.commands && typeof transfers.commands.newRequestKey !== 'function') throw new TypeError('Command routes require explicit key providers and document styles.');
     const parties = routes.parties ? Object.freeze({ ...routes.parties, stylesheet: stylesheet(routes.parties.stylesheet) }) : undefined;
     if (parties && typeof parties.newRequestKey !== 'function') throw new TypeError('A party request-key provider is required.');
-    this.#configuration = Object.freeze({ http: Object.freeze({ ...configuration.http }), presentation: configuration.presentation, routes: Object.freeze({ ...(inventory ? { inventory } : {}), ...(sales ? { sales } : {}), ...(transfers ? { transfers } : {}), ...(parties ? { parties } : {}) }) });
-    this.#configuredRoutes = Object.freeze([...(inventory ? ['inventory' as const] : []), ...(sales ? ['sales' as const] : []), ...(transfers ? ['transfers' as const] : []), ...(parties ? ['customers' as const, 'suppliers' as const] : [])]);
+    if (parties && parties.readOnly !== undefined && parties.readOnly !== true) throw new TypeError('Party read-only mode must be explicitly true or omitted.');
+    const fullPage = routes.products ? ownProductFullPageConfiguration(routes.products) : undefined;
+    const products = routes.products ? Object.freeze({ stylesheet: stylesheet(routes.products.stylesheet), ...(routes.products.product ? { product: Object.freeze({ stylesheet: stylesheet(routes.products.product.stylesheet) }) } : {}), ...(fullPage ? { fullPage } : {}) }) : undefined;
+    const productCategories = routes.productCategories ? Object.freeze({ stylesheet: stylesheet(routes.productCategories.stylesheet) }) : undefined;
+    const productSettings = routes.productSettings ? Object.freeze({ stylesheet: stylesheet(routes.productSettings.stylesheet), allowedTabs: Object.freeze([...routes.productSettings.allowedTabs]), initialTab: routes.productSettings.initialTab }) : undefined;
+    if (productSettings && (!productSettings.allowedTabs.length || productSettings.allowedTabs.some(tab => tab !== 'colors' && tab !== 'groups' && tab !== 'fits' && tab !== 'seasons')
+      || new Set(productSettings.allowedTabs).size !== productSettings.allowedTabs.length || !productSettings.allowedTabs.includes(productSettings.initialTab))) throw new TypeError('Product settings require explicit available read-only tabs and a permitted initial tab.');
+    const barcodeSchemes = routes.barcodeSchemes ? Object.freeze({ stylesheet: stylesheet(routes.barcodeSchemes.stylesheet) }) : undefined;
+    if (routes.storeSettings && (!Array.isArray(routes.storeSettings.allowedTabs) || !routes.storeSettings.allowedTabs.length
+      || routes.storeSettings.allowedTabs.some(tab => tab !== 'stores' && tab !== 'warehouses')
+      || new Set(routes.storeSettings.allowedTabs).size !== routes.storeSettings.allowedTabs.length
+      || !routes.storeSettings.allowedTabs.includes(routes.storeSettings.initialTab)
+      || typeof routes.storeSettings.allowHallDirectoryRead !== 'boolean')) throw new TypeError('Store settings require explicit read-only tabs, initial tab and directory-read intent.');
+    const storeSettings = routes.storeSettings ? Object.freeze({ stylesheet: stylesheet(routes.storeSettings.stylesheet), allowedTabs: Object.freeze([...routes.storeSettings.allowedTabs]), initialTab: routes.storeSettings.initialTab, allowHallDirectoryRead: routes.storeSettings.allowHallDirectoryRead }) : undefined;
+    this.#configuration = Object.freeze({ http: Object.freeze({ ...configuration.http }), presentation: configuration.presentation, routes: Object.freeze({ ...(inventory ? { inventory } : {}), ...(sales ? { sales } : {}), ...(transfers ? { transfers } : {}), ...(parties ? { parties } : {}), ...(products ? { products } : {}), ...(productCategories ? { productCategories } : {}), ...(productSettings ? { productSettings } : {}), ...(barcodeSchemes ? { barcodeSchemes } : {}), ...(storeSettings ? { storeSettings } : {}) }) });
+    this.#configuredRoutes = Object.freeze([...(inventory ? ['inventory' as const] : []), ...(sales ? ['sales' as const] : []), ...(transfers ? ['transfers' as const] : []), ...(parties ? ['customers' as const, 'suppliers' as const] : []), ...(products ? ['products' as const] : []), ...(productCategories ? ['product-categories' as const] : []), ...(productSettings ? ['product-settings' as const] : []), ...(barcodeSchemes ? ['barcode-schemes' as const] : []), ...(storeSettings ? ['store-settings' as const] : [])]);
     const unavailable = (): Promise<never> => Promise.reject(new Error('Route capability is unavailable.'));
     this.#leaves = new AsyncLeafRegistry({
       inventory: { load: () => inventory ? import('./routes/inventory.tsx') : unavailable(), loadStyles: () => inventory ? inventory.stylesheet.load() : unavailable() },
       sales: { load: () => sales ? import('./routes/sales.tsx') : unavailable(), loadStyles: () => sales ? sales.stylesheet.load() : unavailable() },
       transfers: { load: () => transfers ? import('./routes/transfers.tsx') : unavailable(), loadStyles: () => transfers ? transfers.stylesheet.load() : unavailable() },
+      products: { load: () => products ? import('./routes/products.tsx') : unavailable(), loadStyles: () => products ? products.stylesheet.load() : unavailable() },
+      productCategories: { load: () => productCategories ? import('./routes/product-categories.tsx') : unavailable(), loadStyles: () => productCategories ? productCategories.stylesheet.load() : unavailable() },
+      productSettings: { load: () => productSettings ? import('./routes/product-settings.tsx') : unavailable(), loadStyles: () => productSettings ? productSettings.stylesheet.load() : unavailable() },
+      barcodeSchemes: { load: () => barcodeSchemes ? import('./routes/barcode-schemes.tsx') : unavailable(), loadStyles: () => barcodeSchemes ? barcodeSchemes.stylesheet.load() : unavailable() },
+      storeSettings: { load: () => storeSettings ? import('./routes/store-settings.tsx') : unavailable(), loadStyles: () => storeSettings ? storeSettings.stylesheet.load() : unavailable() },
       parties: { load: () => parties ? import('./routes/parties.tsx') : unavailable(), loadStyles: () => parties ? parties.stylesheet.load() : unavailable() },
     }, { maxRetainedEntries: 1 });
     const replaceIdentity = readContextAuthenticationLifecycle(this.#context);
@@ -111,6 +131,26 @@ export class ApplicationController {
           prepared = this.#transferSession.prepare(input);
         } else prepared = module.prepareTransferRoute(input);
       }
+      else if (route === 'products') {
+        const module = await this.#leaves.load('products', scope);
+        prepared = module.prepareProductsRoute(input, error => this.#readAccessFailure(scope, error.kind));
+      }
+      else if (route === 'product-categories') {
+        const module = await this.#leaves.load('productCategories', scope);
+        prepared = module.prepareProductCategoriesRoute(input, kind => this.#readAccessFailure(scope, kind));
+      }
+      else if (route === 'product-settings') {
+        const module = await this.#leaves.load('productSettings', scope);
+        prepared = module.prepareProductSettingsRoute(input, kind => this.#readAccessFailure(scope, kind));
+      }
+      else if (route === 'barcode-schemes') {
+        const module = await this.#leaves.load('barcodeSchemes', scope);
+        prepared = module.prepareBarcodeSchemesRoute(input, kind => this.#readAccessFailure(scope, kind));
+      }
+      else if (route === 'store-settings') {
+        const module = await this.#leaves.load('storeSettings', scope);
+        prepared = module.prepareStoreSettingsRoute(input, kind => this.#readAccessFailure(scope, kind));
+      }
       else {
         const module = await this.#leaves.load('parties', scope);
         if (!this.#current(scope)) return false;
@@ -142,12 +182,17 @@ export class ApplicationController {
     this.#context.clear(); this.#partySession?.workspace.dispose(); this.#partySession = null;
     this.#salesSession?.workspace.dispose(); this.#salesSession = null;
     this.#transferSession?.workspace.dispose(); this.#transferSession = null; this.#leaves.clear();
-    const sales = this.#configuration.routes.sales, transfer = this.#configuration.routes.transfers;
-    const styles = [...Object.values(this.#configuration.routes).map(route => route.stylesheet), ...(sales?.detailStylesheet ? [sales.detailStylesheet] : []), ...(transfer ? [transfer.detailStylesheet] : []), ...(transfer?.product ? [transfer.product.stylesheet] : [])];
+    const sales = this.#configuration.routes.sales, transfer = this.#configuration.routes.transfers, products = this.#configuration.routes.products;
+    const styles = [...Object.values(this.#configuration.routes).map(route => route.stylesheet), ...(sales?.detailStylesheet ? [sales.detailStylesheet] : []), ...(transfer ? [transfer.detailStylesheet] : []), ...(transfer?.product ? [transfer.product.stylesheet] : []), ...(products?.product ? [products.product.stylesheet] : []), ...(products?.fullPage ? [products.fullPage.stylesheet] : [])];
     for (const provider of new Set(styles)) {
       try { provider.dispose(); } catch { /* A failed host asset cleanup must not prevent the other owners/DOM from being released. */ }
     }
     this.#publish({ ...home(), phase: 'disposed' }); this.#listeners.clear();
+  }
+  #readAccessFailure(scope: ReadScope, kind: string): void {
+    if (!this.#current(scope)) return;
+    if (kind === 'unauthenticated') this.authentication.expire();
+    else if (kind === 'forbidden') this.failRoute(scope);
   }
   #current(scope: ReadScope): boolean { return !this.#disposed && scope.active && this.#state.scope === scope; }
   #httpForScope(scope: ReadScope, route: ApplicationRoute | null = null): ApplicationConfiguration['http'] {
@@ -157,10 +202,10 @@ export class ApplicationController {
       const response = await http.fetch(url, init);
       if (scope.active && !init.signal?.aborted) {
         if (response.status === 401) this.authentication.expire();
-        // Read-only transfers have no unknown-write keys to preserve. A current
+        // Read-only transfer/management routes have no unknown-write keys to preserve. A current
         // denial becomes a route-local failure so its same-menu retry can remount.
         // Never generalize this disposal to party or sales command workspaces.
-        else if (response.status === 403 && route === 'transfers' && this.#state.route === route && this.#state.scope === scope) this.failRoute(scope);
+        else if (response.status === 403 && (route === 'transfers' || route === 'products' || route === 'product-categories' || route === 'product-settings' || route === 'barcode-schemes' || route === 'store-settings') && this.#state.route === route && this.#state.scope === scope) this.failRoute(scope);
       }
       return response;
     } });

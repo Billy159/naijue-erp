@@ -1,0 +1,4 @@
+{
+  "extends": "../tsconfig.json",
+  "include": ["../apps/api/src/postgres-read-api.ts", "../apps/api/src/postgres-read-api.test.ts", "../apps/api/src/postgres-application-api.test.ts"]
+}

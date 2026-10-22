@@ -1,3 +1,4 @@
+import { UIButton } from '../components/standard-controls.tsx';
 import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 export interface IdleSelectionToken {
@@ -45,7 +46,7 @@ export function IdleSelectionTokens(props: IdleSelectionTokensProps) {
   return <span ref={host} className={`demo-idle-selection demo-idle-selection--${props.variant}`}>
     {props.tokens.slice(0, limit).map(token => <span key={token.id ?? '__unrestricted__'} className="demo-idle-token" title={token.label}>
       <span className="demo-idle-token-label">{token.label}</span>
-      <button type="button" className="demo-idle-token-remove" disabled={props.disabled}
+      <UIButton type="button" className="demo-idle-token-remove" disabled={props.disabled}
         aria-label={token.id === null ? props.allResetLabel : `移除 ${token.label}`} title={token.id === null ? props.allResetLabel : `移除 ${token.label}`}
         onMouseDown={event => { event.preventDefault(); event.stopPropagation(); }}
         onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') event.stopPropagation(); }}
@@ -62,7 +63,7 @@ export function IdleSelectionTokens(props: IdleSelectionTokensProps) {
           });
         }}>
         <svg aria-hidden="true" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="4"><path d="m12 12 24 24m0-24L12 36" /></svg>
-      </button>
+      </UIButton>
     </span>)}
     {hidden.length > 0 && <span className="demo-idle-token-count" title={hidden.map(token => token.label).join('、')}>+{hidden.length} 更多</span>}
   </span>;

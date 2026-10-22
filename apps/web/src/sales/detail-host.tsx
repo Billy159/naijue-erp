@@ -1,3 +1,4 @@
+import { UIButton } from '../components/standard-controls.tsx';
 import { useEffect, useState, type ComponentType } from 'react';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
@@ -30,6 +31,6 @@ export function SalesDetailHost(props: SalesDetailActivation) {
   if (!props.parentScope.active) return null;
   if (View && scope) return <View scope={scope} reader={props.reader} salesId={props.salesId} close={close} />;
   return <section className="sales-workbench sales-detail-loading" aria-label="销货单详情"><SalesDetailHeader close={close} />
-    {failed ? <p role="alert" className="iw-inline-state">详情组件或样式加载失败。<button type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试加载</button></p> : <p role="status" className="iw-inline-state">正在准备销货单查看…</p>}
+    {failed ? <p role="alert" className="iw-inline-state">详情组件或样式加载失败。<UIButton type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试加载</UIButton></p> : <p role="status" className="iw-inline-state">正在准备销货单查看…</p>}
   </section>;
 }

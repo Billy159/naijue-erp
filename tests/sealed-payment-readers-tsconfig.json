@@ -1,0 +1,5 @@
+{
+ "extends":"../tsconfig.json",
+ "include":[],
+ "files":["../scripts/import-v2/authorized-native-payment-reader.d.mts","../scripts/import-v2/authorized-settlement-reader.d.mts","sealed-payment-reader-contract.ts"]
+}

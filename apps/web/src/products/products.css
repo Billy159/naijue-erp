@@ -1,0 +1,49 @@
+@import '../inventory/inventory.css';
+.products-workspace>.pm-products[hidden]{display:none!important}
+.products-workspace .pc-data-table td:last-child:has([aria-label^="整页查看商品"]){width:150px;min-width:150px}
+/* Resolved frozen b8bcfe3 layers: product-current -> product-refinement ->
+ * product-inventory-unified -> product-rework (last). This is not screenshot proof.
+ * The final product-rework explicitly removes the earlier sticky result columns
+ * and table vertical cap, while fixing the inventory-owned pager at the bottom. */
+.pm-products{min-width:0;min-height:100%;display:flex;flex-direction:column;font:13px/1.5 var(--ca-font-sans);color:var(--ca-ink);background:var(--ca-surface);padding-bottom:52px}
+.pm-products .pm-head{min-height:32px;flex:none;margin:0 0 8px}
+.pm-products .pm-head h1{margin:0;font-size:20px;line-height:30px}
+.pm-products .pm-head .iw-button{height:32px;min-height:32px;padding:4px 12px;font-weight:500}
+.pm-products .pm-head .iw-button:disabled{border-color:var(--ca-control-disabled-border);background:var(--ca-control-disabled-bg);color:var(--ca-disabled-ink);cursor:not-allowed}
+.pm-products .pm-filters{box-sizing:border-box;display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;min-width:0;margin:0 0 4px;padding:0 0 8px;border:0;background:transparent;overflow-x:auto;overflow-y:visible}
+.pm-products .pm-filter-row{box-sizing:border-box;display:grid;grid-template-columns:minmax(300px,1fr) 190px 160px 160px 112px 72px 72px;align-items:center;gap:8px;width:100%;min-width:1114px}
+.pm-products .pm-filter-row>*{min-width:0}
+.pm-products .pm-filter-row>button{box-sizing:border-box;width:100%;height:32px;min-height:32px;margin:0;padding:4px 8px;font-size:13px;white-space:nowrap}
+.pm-products .pm-filter-row>.iw-filter-toggle{display:flex;align-items:center;justify-content:center;gap:4px;padding:0 4px;border:0;background:transparent;color:var(--ca-ink-2);font-weight:400}
+.pm-products .pm-filter-row>.iw-filter-toggle:hover{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+.pm-products .pm-more-filters{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:8px;width:calc(100% - 280px);min-width:700px;margin:0;padding:0;border:0}
+.pm-products .pm-list{min-width:0;display:block;flex:none;overflow:visible;border:1px solid var(--ca-line);border-radius:0;background:transparent}
+.pm-products .pm-table-scroll{max-height:none;min-height:0;overflow-x:auto;overflow-y:visible;scrollbar-gutter:auto;overscroll-behavior:auto}
+.pm-products .pc-data-table{width:100%;min-width:1100px;border-collapse:separate;border-spacing:0;font:12px var(--ca-font-sans);font-variant-numeric:tabular-nums}
+.pm-products .pc-data-table :is(th,td){box-sizing:border-box;height:34px;min-height:34px;padding:4px 8px;border-bottom:1px solid var(--ca-table-grid);line-height:18px;vertical-align:middle;white-space:nowrap}
+.pm-products .pc-data-table th{height:36px;background:var(--ca-table-head);color:var(--ca-ink-2);font-size:12px;font-weight:600;text-align:left}
+.pm-products .pc-data-table :is(th,td):last-child{position:static;right:auto;z-index:auto;box-shadow:none;width:62px;min-width:62px;text-align:center}
+.pm-products .pc-data-table td:nth-child(2){max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pm-products .pc-data-table td.num{text-align:right}
+.pm-products .pc-data-table tbody tr:hover>td{background:var(--ca-table-row-hover)}
+.pm-products .pc-data-table td .iw-link{height:26px;min-height:26px;padding:2px 5px;border:0;background:transparent;color:var(--ca-primary-ink);font-size:12px;font-weight:400}
+.pm-products .pc-data-table td .iw-link:hover:not(:disabled){background:var(--ca-primary-hover-soft);text-decoration:underline}
+.pm-products .pc-data-table td .iw-link:disabled{color:var(--ca-disabled-ink);cursor:not-allowed}
+.pm-products .pm-empty{min-height:220px}
+.pm-products .pm-pagination{position:fixed;bottom:0;left:calc(var(--ui-sidebar) + var(--ui-page-space));right:var(--ui-page-space);z-index:40;flex:none;margin:0;padding:6px 0;background:var(--ca-surface);border-top:1px solid var(--ca-line)}
+.pm-products .pm-pagination .iw-pagination{min-height:30px;padding:0;border:0;margin:0}
+.pm-products .pm-pagination .iw-pager-actions{margin-left:auto}
+.pm-products .pm-load-more{margin:4px 8px}
+/* This route owns the shell geometry only while its real page is mounted. */
+.demo-ui:has(.pm-products) .main{min-width:0;min-height:0;display:flex;flex-direction:column;height:100dvh}
+.demo-ui .demo-page:has(>.pm-products),.demo-ui .demo-page:has(>.products-workspace){min-height:0;flex:1;width:100%;margin:0;padding:12px var(--ui-page-space) 64px;overflow:auto;overscroll-behavior:contain}
+@media(max-width:1200px){.pm-products .pm-more-filters{width:700px}}
+@media(max-width:650px){.pm-products .pm-pagination .iw-pagination{flex-wrap:wrap}}
+/* Module-owned viewport positioning prevents horizontally scrolling source filters
+ * from clipping their local popup. Geometry is runtime-tested on Mac, not by CSS text. */
+.pm-products [data-product-viewport-popup]{position:fixed!important;left:var(--pm-popup-left)!important;top:var(--pm-popup-top)!important;width:var(--pm-popup-width)!important;max-height:var(--pm-popup-maxHeight)!important;transform:none!important}
+.pm-products [data-product-viewport-popup]>.arco-trigger-popup{max-width:var(--pm-popup-width);max-height:var(--pm-popup-maxHeight);overflow:auto}
+/* Mac 1470px regression: idle selection121 -> token79 -> text47<48.
+ * The host already reserves its suffix; a lone token needs no second 42px.
+ * Multi-token/count geometry and active Arco/input (32px, visible) stay unchanged. */
+.pm-products .demo-idle-reference .demo-idle-token:only-child{max-width:100%}

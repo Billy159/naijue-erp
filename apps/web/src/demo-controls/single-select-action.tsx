@@ -1,12 +1,10 @@
 export { createDemoSingleSelectStyles } from './single-select-styles.ts';
-import ArcoSelect from '@arco-design/web-react/es/Select/index.js';
-import type { SelectHandle, SelectProps } from '@arco-design/web-react/es/Select/interface.js';
-import { useEffect, useReducer, useRef, useState, type ForwardRefExoticComponent, type RefAttributes } from 'react';
+import { Select } from '@arco-design/web-react';
+import type { SelectProps } from '@arco-design/web-react';
+import type { ComponentRef } from 'react';
+type SelectHandle = ComponentRef<typeof Select>;
+import { useEffect, useImperativeHandle, useReducer, useRef, useState, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 import type { DemoSingleSelectActionProps } from './single-select-contract.ts';
-
-// NodeNext sees the package's ESM leaf as a CJS namespace in types only. The
-// runtime import stays at the real Select leaf, never the all-component barrel.
-const Select = ArcoSelect as unknown as ForwardRefExoticComponent<SelectProps & RefAttributes<SelectHandle>>;
 
 /**
  * Frozen unified-single-select.jsx:56–73 presentation, not a data/DOM bridge.
@@ -16,6 +14,7 @@ const Select = ArcoSelect as unknown as ForwardRefExoticComponent<SelectProps & 
 export function DemoSingleSelectAction(props: DemoSingleSelectActionProps) {
   const host = useRef<HTMLDivElement>(null);
   const select = useRef<SelectHandle | null>(null);
+  useImperativeHandle(props.focusRef, () => ({ focus: () => { select.current?.focus(); } }), []);
   const [mounted, setMounted] = useState(false);
   const [, refreshPortal] = useReducer((value: number) => value + 1, 0);
   useEffect(() => { setMounted(true); }, []);

@@ -1,0 +1,60 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 build
+> tsc -p tsconfig.build.json
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> naijue-erp-rewrite@0.1.0 smoke:build
+> node scripts/smoke-build.mjs
+
+Emitted JS imports and exact arithmetic pass. No server started; no database/client constructed.
+✔ nine-price validator distinguishes explicit null and zero; rejects omissions/undefined/coercion/overflow (3.582648ms)
+✔ source proof requires all raw own keys; reviewed exact-column blank policy never permits missing or whitespace (1.667567ms)
+✔ persisted verifier uses original transaction with explicit target binding/published batch/source+product locks (6.634842ms)
+✔ persisted verifier rejects absent/duplicate/foreign/changed/unpublished proof and source/raw tampering (6.740829ms)
+✔ persisted verifier bounds target batches to 200 without pool/independent transaction or global success cache (47.769715ms)
+✔ SYNTHETIC proof writer locks reviewed batch/native prices then inserts full immutable source evidence, never publishes (21.391005ms)
+✔ SYNTHETIC proof writer mismatch rejects before immutable insert (13.101404ms)
+✔ SYNTHETIC missing source-proof schema is explicit unavailable, never proof or a default verifier (8.01813ms)
+✔ native PRODUCT DRY_RUN validates but never connects; STAGE requires independent exact-file/row/mapping authority (59.138538ms)
+✔ native PRODUCT source directly determines every native field, preserved explicit nulls and exact nine prices (24.980191ms)
+✔ native PRODUCT refuses missing raw/normalized nine-price columns rather than completing with null (29.749449ms)
+✔ native PRODUCT rejects incomplete provenance, transformations, whitespace, unknown states and invalid integer values before connecting (29.842491ms)
+✔ native PRODUCT requires explicit source-to-native reference mappings, full acyclic category path, optional-null decisions and unique product codes (27.981122ms)
+✔ native PRODUCT creates actual rows and immutable source+proof together; all native target locks/creates precede all source access (65.839155ms)
+✔ native PRODUCT exact replay is insert-free; native full-field drift or immutable evidence drift cannot inherit old proof (214.285426ms)
+✔ native PRODUCT refuses existing unproven target, source-only repair, changed mapping and target-code collisions (92.664084ms)
+✔ native PRODUCT validates every actual dictionary reference and rolls back the whole chunk on late proof failure (261.014412ms)
+✔ native PRODUCT commit uncertainty discards once without automatic retry; explicit identical retry resolves committed outcome (350.678276ms)
+✔ native PRODUCT fails closed for schema/batch mismatch, rollback failure and altered prepared values (40.580383ms)
+✔ PRODUCT staging default DRY_RUN never connects or publishes; explicit STAGE requires exact-source authorizer (16.600552ms)
+✔ PRODUCT staging rejects missing raw9 key, changed approved-price values unsupported by this proof, false native mapping and duplicate target (3.996814ms)
+✔ PRODUCT stage invokes real proof writer atomically using cutoff→batch→actual native binding and never publication (5.069806ms)
+✔ PRODUCT exact replay is insert-free, changed/stale replay and missing native product fail with rollback (17.277325ms)
+✔ PRODUCT commit uncertainty discards connection and never automatically retries (6.877045ms)
+✔ PRODUCT SQL boundary rejects altered prepared chunk before acquiring a connection (3.838887ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2373.674545
+Native PRODUCT emitted modules import successfully; no pool, client, service or database constructed.

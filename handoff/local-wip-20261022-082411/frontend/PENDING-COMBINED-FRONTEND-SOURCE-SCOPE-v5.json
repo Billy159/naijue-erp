@@ -1,0 +1,450 @@
+{
+  "schemaVersion": 1,
+  "atUtc": "2026-10-21T23:05:23.317104+00:00",
+  "status": "MIXED_PRIOR_DOM_GREEN_PROFILE_APP_DOM_GREEN_TOOLBAR_DOM_FAIL_RESOURCE_BLOCKED",
+  "sourcePins": [
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/preview-core-pages/main.tsx",
+      "bytes": 9107,
+      "sha256": "ce0541be2be9047725fc5422d1fe228908305e5c6dc16e20a6794cdadd765b4f"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/preview/main.tsx",
+      "bytes": 9017,
+      "sha256": "d6dab01ea0b0d44f446256895b6ea59edacefcb06d87b06a4ffc8c88a470fd0f"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/application/demo-frame-presentation.tsx",
+      "bytes": 3034,
+      "sha256": "4293a30fd11c0ee59f73736314be71b9956a9ffd7340cc6e5dfddca81dd48a98"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/application/styles/shell.css",
+      "bytes": 829,
+      "sha256": "d466ff1f6c15fd1a2c9b1e24e819206a9d9703f126241610043a552cb90e71ef"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/application/tests/run-build-check.mjs",
+      "bytes": 19254,
+      "sha256": "0c0cc653d1b4f16a9d8cd4d8e5ea029a064748e5b24b238bb820a471d29f478d"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-breadcrumb.css",
+      "bytes": 220,
+      "sha256": "d722836c85f077246e8c1ca61d34fa0cdf916e828267c19ce41d93f39e4dc79e"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-breadcrumb.tsx",
+      "bytes": 748,
+      "sha256": "19dda8a3759537279e25e642833b2991f9d05de039b19a9e82d7ee17739b95df"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-pagination.tsx",
+      "bytes": 4966,
+      "sha256": "d22a2615e23d46165fe8174000afa20d286953a22a4e1b800305db9e4f3a6511"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-read-table.tsx",
+      "bytes": 2174,
+      "sha256": "9e0483783c1d75b85c1941dc5458e227d8fd2f76410d72bf97453021f14f0092"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-status-tag.css",
+      "bytes": 525,
+      "sha256": "09341485affc240ac731f3be834ced53e09f9f5db96ccc4524a4c7ae527b4c35"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-status-tag.tsx",
+      "bytes": 651,
+      "sha256": "0032ceab67ba767c7b56a8209c8133a7aba1c3cb1b1493deb45d578e2817f523"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/tests/run-pagination-dom-tests.mjs",
+      "bytes": 9788,
+      "sha256": "fa02b1dea67d26643220861640f81a4abcd68b2c3aeef46acbf40afcf25ad3b0"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/tests/run-read-table-dom-tests.mjs",
+      "bytes": 5593,
+      "sha256": "1db8700ebae0e68a3dd2114609013a572e5070a003ff9a404c19f86b9f8b9026"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/tests/run-status-tag-dom-tests.mjs",
+      "bytes": 3843,
+      "sha256": "ed7021d31d4b5fc88ba6972df6828a1ea0ef1c0ae0a3b2f3574a4df560d476d5"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/sales-proposal-form.tsx",
+      "bytes": 17327,
+      "sha256": "7538616a42512c889dc65b4f2938025223baba310c8266158e36c8ec047f82d3"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/sales-proposal.css",
+      "bytes": 11024,
+      "sha256": "77835522d6954a58a19062c491ca662a2e5db91f0aaaf3530c855c158736994f"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/tests/run-create-route-dom-tests.mjs",
+      "bytes": 13109,
+      "sha256": "3e53d99403bdf4f232c002b0781a9356bc1c4bf7a89f74c3ed37cbd61966a751"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/tests/run-sales-create-route-dom-tests.mjs",
+      "bytes": 20266,
+      "sha256": "9e94125c94c3a8e2d54e4b119e62765f556754ac491bc2b44966d73cd8fe5b48"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/transfer-proposal-form.tsx",
+      "bytes": 14992,
+      "sha256": "fd340d07628766decf7e2a1b5638e11bcad7b631cb9efd750086b06afabebdc9"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/demo-presentation/demo-frame.tsx",
+      "bytes": 4120,
+      "sha256": "aa14fe6bd7ff738c97bb828a3148291bdf5882a5c4ac89f92afcefdc8f6086dc"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/demo-presentation/tests/run-breadcrumb-dom-tests.mjs",
+      "bytes": 4295,
+      "sha256": "3ef6527ea755d2c1197dd79e542ea57f524a0258097d3369d060ed7c492b3d47"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/demo-presentation/tests/run-document-source-restoration.mjs",
+      "bytes": 10361,
+      "sha256": "37706fcceb6f2ec2085dfb0dc30c586d0870ff7626c04ceeab1d417ef45a009c"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/demo-presentation/tests/run-navigation-menu-dom-tests.mjs",
+      "bytes": 5353,
+      "sha256": "c4d7dfd0b08dc8fd402f8ff97755b3bfb9f32f04c2a556fefc70fc6e553090da"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/products/product-page-host.tsx",
+      "bytes": 3545,
+      "sha256": "49bcb0999bb517e854d3f8d79e6d86a829d12ea01868e7529e5c0cc141c3fe6d"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/sales/commands/form.tsx",
+      "bytes": 16662,
+      "sha256": "d671cf96a820d14083d2b100e017a869b44ea010ba5995beacd60acc03b68f89"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/sales/detail-header.tsx",
+      "bytes": 1487,
+      "sha256": "ef4e896ad8960130f91895470e2070c8fcf4fa2d883f8689914d6bbab90b78fa"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/sales/detail.css",
+      "bytes": 6647,
+      "sha256": "6bd54e895dc68aadb686fbaf736739e3a530f8e5aad69c9210a6b38a480a6585"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/sales/sales-page.tsx",
+      "bytes": 14682,
+      "sha256": "5940c49448a416d9c4f9282d85d27c644715fc65476eea770ede7647873bc329"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/sales/sales-status-tag.tsx",
+      "bytes": 565,
+      "sha256": "0fd93b003abe516b0e7170dd7e2dab660b98b640094068dc9426fd5a1de2f895"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/sales/sales.css",
+      "bytes": 7361,
+      "sha256": "9f81a793ca46a15ac246d959a8621c061bec92fe141146da18ad6fd0fe35b15b"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/commands/form.tsx",
+      "bytes": 9207,
+      "sha256": "8cbbaa80330f74988482229080d8d765e88739cefaebf4a05a2711cd9147870f"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/detail-content.tsx",
+      "bytes": 10103,
+      "sha256": "9ed1e5ced86ea03907d8d9108e154435643d23e6f884007231eba41914a212b2"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/detail.css",
+      "bytes": 8557,
+      "sha256": "b52953eac899c244b01f9b014999ab209717cf0c96a2234f049b55f5c8518757"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/read-columns.tsx",
+      "bytes": 601,
+      "sha256": "7caaf175a255f2b3cb460a12653b1843fcd131adbfbed3429fdce19f32999aa6"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/saved-records.tsx",
+      "bytes": 3454,
+      "sha256": "11b59c40db36d99e220b75a173e2c4e96609c11f166e8ab85c6e96e153362933"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/sparse-lines.tsx",
+      "bytes": 5884,
+      "sha256": "c1fe9567271bccc7cd5c9f79f4e04b0d5b76c365d92278caf4d2632f7aa5c0e4"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/tests/run-dom-tests.mjs",
+      "bytes": 31594,
+      "sha256": "a39ab62b2eef594aa06b7d785f1f655cda4e376095ec992920bdd6525928aaac"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/tests/run-saved-records-dom-tests.mjs",
+      "bytes": 8277,
+      "sha256": "69b885b5f04022945f823502de91fa18b54430eb2b4a0ad5d7ae14fea7f0e9d7"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/tests/run-sparse-lines-dom-tests.mjs",
+      "bytes": 11250,
+      "sha256": "7689d9091edb9df77cd13e5e719bc83f995b6193d8b40b9be8bb1a06ba6ea33f"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/transfer-status-tag.tsx",
+      "bytes": 518,
+      "sha256": "c16d800f9a72cfa2854a89f2bb8c80c16ed83c6f6b06a0baf41f78a1a0c938f0"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/transfers-page.tsx",
+      "bytes": 14226,
+      "sha256": "52789ba02a1d92c6e9052b024f6b0e7a9567abf37a43de140cdf22fbbb7b375b"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/transfers.css",
+      "bytes": 7179,
+      "sha256": "3f7bc83d38bfd612bbb87b05e590b272c1c226b5814bb1c97bcab9816353feba"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/README.md",
+      "bytes": 7565,
+      "sha256": "4117a2e0785a7014ba0688de1879d94b2556a70c8ae3794a9df9473d2d2f5e24"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/build.mjs",
+      "bytes": 7995,
+      "sha256": "a1891c651709f076c54bfb841e7ed46275f5fb12671a5a73a9349109c4e7937e"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/harness-app.tsx",
+      "bytes": 3427,
+      "sha256": "9e668b8cc3b22521d196b316a62991fedba318de864b5b3bef7ca8b63b6da5fd"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/main.tsx",
+      "bytes": 4114,
+      "sha256": "1e040bc4aa582b5654444c29b828913b19291f78e27ffa2e15d6c89f398b2b13"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-host.ts",
+      "bytes": 1052,
+      "sha256": "fcb39b4d9db771368da406542428db99f897a3bbd7d30371b35849065419e89e"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-session.test.ts",
+      "bytes": 7085,
+      "sha256": "3fdb10c5ccf8fea4ad2df9f9a9eed9cc269949fa09c49af76f938889544fa49f"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-session.ts",
+      "bytes": 5521,
+      "sha256": "e76add5bbfbe14c8023d478604ada4469bd971791deb75476287312950bcb324"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-toolbar.css",
+      "bytes": 318,
+      "sha256": "26ecf712e84a4a608993e822330f5c08995df2c87209cdef85215afda90dc242"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-toolbar.tsx",
+      "bytes": 3774,
+      "sha256": "9a15d14280754072c5d27390b307b78a81cd35b2efb923ddac5489bf177f319c"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/readonly-transfer-fixtures.test.ts",
+      "bytes": 4670,
+      "sha256": "2f568c450fa06ea0a6589456abd82ef1b530666e7e0e73d4acb69466d4e86b5b"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/readonly-transfer-fixtures.ts",
+      "bytes": 3382,
+      "sha256": "3d3ae2c1873492b0c558b69769b82fb1feff311aa218693ecaa08e39c855317c"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/review-profile.ts",
+      "bytes": 350,
+      "sha256": "0f44243d2002d55d56439ef73f37b8a2922ba75645a823ed9a7ca43c364989ac"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/run-profile-session-dom-tests.mjs",
+      "bytes": 11923,
+      "sha256": "edcf163e57377cead01ea4ed33bc7ea9ad519ece0866e23e6c3d505276998472"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/run-profile-toolbar-dom-tests.mjs",
+      "bytes": 6399,
+      "sha256": "2215ea57aa661fc0cd8adbe2abe5f3da2b7ac910ad8e4d87cea12ae441b8bcbd"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/synthetic-transport.ts",
+      "bytes": 7098,
+      "sha256": "2cfd97ee6c04747e34d6358bba5c72e1f14beb3f37c78d963e925f71abbaf7e4"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/transfer-transport.ts",
+      "bytes": 10189,
+      "sha256": "37560b277fe920e1a3074b1d76e317da517c64322ed8a03f6b30a7e2c042c52c"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/visual-acceptance-host/entry.tsx",
+      "bytes": 5136,
+      "sha256": "3a56452e82deda02391c1198f9421cef208ba014e4f5e60041426baaa54411f7"
+    }
+  ],
+  "sourceCount": 59,
+  "definition": "Incremental changed-source inventory only; not complete build closure or proof that all final bytes passed every test.",
+  "priorCombinedScope": {
+    "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PENDING-COMBINED-FRONTEND-SOURCE-SCOPE-v4.json",
+    "bytes": 14881,
+    "sha256": "fdd90c1cc003d3f315bea7848953ed7515b0c11f1a669d85af09b89a1791d997"
+  },
+  "changedSincePrior46": [
+    {
+      "before": {
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/saved-records.tsx",
+        "bytes": 3462,
+        "sha256": "f4254b8eb7427a086d76a4a4a91b991621cc2b03cff948566fecc0ab3c9948ed"
+      },
+      "after": {
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/saved-records.tsx",
+        "bytes": 3454,
+        "sha256": "11b59c40db36d99e220b75a173e2c4e96609c11f166e8ab85c6e96e153362933"
+      }
+    },
+    {
+      "before": {
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/tests/run-saved-records-dom-tests.mjs",
+        "bytes": 7988,
+        "sha256": "e8b59c2a18d6e0f7de18a65411ee5138748d5985262128086af6bb2d5825f743"
+      },
+      "after": {
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/tests/run-saved-records-dom-tests.mjs",
+        "bytes": 8277,
+        "sha256": "69b885b5f04022945f823502de91fa18b54430eb2b4a0ad5d7ae14fea7f0e9d7"
+      }
+    },
+    {
+      "before": {
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-session.ts",
+        "bytes": 5487,
+        "sha256": "d0a2bff8083e991c4da3f958d5e6dd19512aeb7fdf4fd8c52acd2dbf218a2caf"
+      },
+      "after": {
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-session.ts",
+        "bytes": 5521,
+        "sha256": "e76add5bbfbe14c8023d478604ada4469bd971791deb75476287312950bcb324"
+      }
+    },
+    {
+      "before": {
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-session.test.ts",
+        "bytes": 6930,
+        "sha256": "882d314c946a4fc988f5dd472c5eb0ed25adbcdec64f4764e3daf54a65814a5b"
+      },
+      "after": {
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-session.test.ts",
+        "bytes": 7085,
+        "sha256": "3fdb10c5ccf8fea4ad2df9f9a9eed9cc269949fa09c49af76f938889544fa49f"
+      }
+    }
+  ],
+  "previous46UnchangedCount": 42,
+  "newUniqueFiles": 13,
+  "currentBatch": {
+    "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-READONLY-SOURCE-DOM-CHECKPOINT.json",
+    "bytes": 28040,
+    "sha256": "fa634660c0d85bfe4760a17fdadd730135a7cc7fd357d5fdbee1063a5110dbbe"
+  },
+  "scopes": [
+    "Breadcrumb/Tag and shared shell CSS",
+    "SavedRecords readonly exact snapshot table",
+    "Sparse readonly current-reference table and shared Table/Pagination presentation",
+    "explicit synthetic readonly profile core/private fixtures/actual Application facade",
+    "visible actual Arco tools root and entry/template source, toolbar DOM unresolved"
+  ],
+  "reachability": {
+    "defaultStandardSparse": false,
+    "defaultStandardSavedRecords": true,
+    "explicitReadonlyActualApplicationDom": "PASS_3_GROUPS",
+    "visibleToolbarFullSwitch": "FAIL_OPTION_NOT_FOUND_UNRESOLVED",
+    "fixedV13_1ContainsProfile": false,
+    "newProfileBrowser": "NOT_RUN"
+  },
+  "currentAccepted": {
+    "version": "v13.1-arco-menu-background",
+    "artifact": {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/review-builds/v13.1-arco-menu-background/synthetic-unified.html",
+      "bytes": 2190776,
+      "sha256": "e494b6cbe2c163dc8d3afd1309ea7d7990c8d7b43148ff4ec0430277b4f0ff9c"
+    },
+    "fixedPrompt": {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/unified-browser-harness/review-builds/v13.1-arco-menu-background/PROMPT.txt",
+      "bytes": 9743,
+      "sha256": "f257483924204636484dd9db6d81c7adec55851e835864023dd4caf9de14ded3"
+    },
+    "doesNotContainPendingBatch": true,
+    "historicalUrl": "http://127.0.0.1:57755/v13.1/synthetic-unified.html",
+    "runtimeStatus": "DOWN_CONTROLLER_CONFIRMED",
+    "runtimeEvidence": {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/PREVIEW-RUNTIME-SECOND-EXIT-20261021.json",
+      "bytes": 1438,
+      "sha256": "d7b8d6a70a32c8ea8648e4d487bf7fdfa7d1812955c4ef4b51a0741ff727b4b5"
+    },
+    "previousPid": 81892,
+    "previousExecSession": 24964,
+    "cause": "UNKNOWN",
+    "frontendStartedOrRetriedListener": false
+  },
+  "contract": {
+    "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/application/contracts.ts",
+    "bytes": 7384,
+    "sha256": "202d23bf77e2f4e8ae1632bcf778d2e8db9dd1fe7c49892cd5f44f3b83d282b2"
+  },
+  "build": "NOT_RUN_RESOURCE",
+  "browser": "NOT_RUN_NOT_BUILT",
+  "strictVisualPass": 0,
+  "resourceWindow": {
+    "controllerExclusiveBackendWindow": false,
+    "frontendTestIdle": true,
+    "noNewTemporaryTests": true,
+    "noBuildSnapshotDownload": true,
+    "status": "HOLD_BELOW_2GIB_RESERVE_CONTROLLER_EXPLICIT_STOP",
+    "lastFrontendGuardObservation": {
+      "freeBytes": 2094166016,
+      "reserveBytes": 2147483648,
+      "lightBudgetBytes": 33554432,
+      "lightThresholdBytes": 2181038080,
+      "lightDeficitBytes": 86872064,
+      "guardExitCode": 1,
+      "evidence": "Observed prior tool output in this frontend thread; not a new measurement or a fabricated logfile"
+    },
+    "controllerLatestApproximateFree": "1.89GB; delegated observation, not a frontend fresh measurement",
+    "applicationBudgetBytes": 134217728,
+    "applicationThresholdBytes": 2281701376,
+    "newFreshGuardAfterStop": false,
+    "budgetsReduced": false,
+    "oldEvidenceDeleted": false,
+    "backendWindowReleased": true,
+    "initialPassingLightPreflight": {
+      "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/PROFILE-HEADLESS-LIGHT-BUDGET.json",
+      "bytes": 283,
+      "sha256": "7fee3c47e0d38318e7d03eccf036141d44a67f8385a624098e14affd673eb690"
+    }
+  },
+  "previousCheckpointsPreserved": true,
+  "nextActions": [
+    "Remain idle for tests/builds until space is released and controller gives a new resource window; preserve original 32MiB/128MiB budgets plus2GiB reserve.",
+    "After a passing permitted light guard, run the prepared full mousedown/click/mouseup toolbar option-opening probe. Distinguish portal locator/event simulation from actual product behavior before changing source.",
+    "Write and run a gated actual-toolbar red for outside focus then blur to BODY during pending switch/before restore frame; include explicit Tab/Esc/outside-pointer intent and stale-owner/unmount/revoke cases. This counterexample is not yet written or executed.",
+    "After a demonstrated red, use an operation-owned cancellable focus ticket, preserving ordinary successful Select focus restoration; rerun the same path and necessary affected lifecycle cases.",
+    "Only once toolbar DOM and resource gates pass, build a new immutable combined candidate containing Breadcrumb/Tag+SavedRecords+Sparse+explicit readonly profile. Controller alone mounts it; browser checks remain separate from DOM and the old accepted version."
+  ]
+}

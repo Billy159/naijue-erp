@@ -1,0 +1,1 @@
+{"extends":"../tsconfig.json","include":["../packages/application/src/history-typed-closure.ts","../adapters/postgres/src/history-typed-closure.ts","history-typed-closure*.test.ts"]}

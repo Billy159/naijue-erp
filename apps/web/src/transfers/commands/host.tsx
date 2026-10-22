@@ -1,3 +1,4 @@
+import { UIButton } from '../../components/standard-controls.tsx';
 import { useEffect, useState, type ComponentType } from 'react';
 import { AsyncLeafRegistry } from '../../loading/async-leaf-registry.ts';
 import type { ReadScope } from '../../loading/read-scope.ts';
@@ -34,5 +35,5 @@ export function TransferCommandHost(props: { readonly parentScope: ReadScope; re
   const close = () => { if (!props.capability.workspace.canLeave()) return; props.capability.workspace.suspend(); scope?.dispose(); props.close(); };
   if (!props.parentScope.active) return null;
   if (View && scope) return <View capability={props.capability} scope={scope} close={close} />;
-  return <section className="tc-workbench transfer-detail-loading" aria-label="调拨编辑准备"><div className="tc-head"><h1>{props.transferId ? '调拨单' : '新增调拨单'}</h1><button type="button" className="iw-text-button" onClick={close}>返回列表</button></div>{failed ? <p role="alert">编辑准备失败，未发送业务命令。<button type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试准备</button></p> : <p role="status">{preparing ? '正在准备当前可用资料…' : '正在准备调拨编辑…'}</p>}</section>;
+  return <section className="tc-workbench transfer-detail-loading" aria-label="调拨编辑准备"><div className="tc-head"><h1>{props.transferId ? '调拨单' : '新增调拨单'}</h1><UIButton type="button" className="iw-text-button" onClick={close}>返回列表</UIButton></div>{failed ? <p role="alert">编辑准备失败，未发送业务命令。<UIButton type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试准备</UIButton></p> : <p role="status">{preparing ? '正在准备当前可用资料…' : '正在准备调拨编辑…'}</p>}</section>;
 }

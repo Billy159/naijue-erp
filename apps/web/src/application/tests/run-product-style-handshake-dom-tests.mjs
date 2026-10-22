@@ -6,15 +6,15 @@ import { build } from 'esbuild';
 import { JSDOM } from 'jsdom';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const temporary = await mkdtemp(path.join(here, '.product-style-check-'));
-const dom = new JSDOM('<!doctype html><div id="root"></div>', { url: 'https://synthetic.test/' });
-for (const key of ['window', 'document', 'HTMLElement', 'HTMLDialogElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
+const dom = new JSDOM('<!doctype html><div id="root"></div>', { url: 'https://synthetic.test/', pretendToBeVisual: true });
+for (const key of ['window', 'document', 'navigator', 'HTMLElement', 'HTMLDialogElement', 'HTMLInputElement', 'Element', 'SVGElement', 'MutationObserver', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 dom.window.HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', ''); };
 dom.window.HTMLDialogElement.prototype.close = function () { this.removeAttribute('open'); };
 let root, act;
 try {
   const output = path.join(temporary, 'entry.mjs');
-  await build({ entryPoints: [path.join(here, 'product-styles-entry.tsx')], outfile: output, bundle: true, platform: 'node', format: 'esm', packages: 'external', jsx: 'automatic', loader: { '.css': 'empty' }, logLevel: 'warning' });
+  await build({ entryPoints: [path.join(here, 'product-styles-entry.tsx')], outfile: output, bundle: true, platform: 'node', format: 'esm', external: ['react','react/*','react-dom','react-dom/*'], banner: {js:"import {createRequire} from 'node:module'; const require=createRequire(import.meta.url);"}, loader:{'.css':'empty'}, jsx: 'automatic', loader: { '.css': 'empty' }, logLevel: 'warning' });
   const { createElement: h, StrictMode, createRoot, ProductDrawerHost, ReadContext, createRouteStylesheet } = await import(pathToFileURL(output).href);
   ({ act } = await import(pathToFileURL(output).href));
   const host = document.getElementById('root'); root = createRoot(host);
@@ -33,7 +33,7 @@ try {
   const providerA = createRouteStylesheet({ document, origin: 'https://synthetic.test', href: '/approved/product-action-a.css' });
   const preload = providerA.load(); void preload.catch(() => {}); loadStyles = providerA.load;
   await render(); await settle(); assert.equal(links().length, 1); assert.match(links()[0].href, /approved\/product-action-a\.css$/); assert.equal(reads.length, 0);
-  await close(); assert.equal(host.querySelector('dialog'), null); await act(async () => links()[0].dispatchEvent(new Event('error'))); await assert.rejects(preload); await settle(); assert.equal(reads.length, 0);
+  await close(); assert.equal(host.querySelector('.erp-product-drawer'), null); await act(async () => links()[0].dispatchEvent(new Event('error'))); await assert.rejects(preload); await settle(); assert.equal(reads.length, 0);
   console.log('PASS style handshake 1: caller preload and StrictMode attachments share exactly the configured CSS request; immediate close discards late style failure and never calls relative fallback.');
 
   open = true; await render(); await until(() => links().length === 1, 'Configured retry link');
@@ -54,7 +54,7 @@ try {
 
   loadStyles = undefined; open = true; await render(); await until(() => links().length === 1, 'Legacy inventory default stylesheet');
   assert.match(links()[0].href, /product-drawer\.css$/); const defaultLink = links()[0]; await close();
-  await act(async () => defaultLink.dispatchEvent(new Event('error'))); await settle(); assert.equal(host.querySelector('dialog'), null);
+  await act(async () => defaultLink.dispatchEvent(new Event('error'))); await settle(); assert.equal(host.querySelector('.erp-product-drawer'), null);
   context.clear(); await act(async () => root.unmount()); root = null;
   console.log('PASS style handshake 4: default inventory path remains separately deduplicated/retryable and close-safe after configured consumers; no network, browser or CSS-rendering claim.');
 } finally { if (root) await act(async () => root.unmount()); dom.window.close(); await rm(temporary, { recursive: true, force: true }); }

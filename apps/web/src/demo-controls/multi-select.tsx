@@ -1,3 +1,4 @@
+import { UIButton } from '../components/standard-controls.tsx';
 import { useId, useLayoutEffect, useReducer, useRef, useState, type ComponentType, type ReactNode } from 'react';
 import { ReadScope } from '../loading/read-scope.ts';
 import type { ExclusivePopupController, PopupOwnership } from './popup-ownership.ts';
@@ -122,12 +123,12 @@ export function DemoMultiSelect(props: DemoMultiSelectProps) {
       onOpen={next => { if (next) acquire(); else owned.current?.ownership.close(); }}
       onChange={ids => { if (available()) live.current.onChange(ids); }}
       {...(props.renderMenu ? { renderMenu: menu => open && activation ? props.renderMenu?.(menu, activation.scope) : null } : {})} />
-      : <div className="demo-idle-reference"><button ref={trigger} type="button" className="iw-control demo-multi-trigger" aria-label={`${props.label}，多选`} aria-haspopup="tree" aria-expanded={open}
+      : <div className="demo-idle-reference"><UIButton ref={trigger} type="button" className="iw-control demo-multi-trigger" aria-label={`${props.label}，多选`} aria-haspopup="tree" aria-expanded={open}
         aria-describedby={phase === 'idle' ? undefined : id} aria-busy={phase === 'loading'} disabled={!!disabled} title={selectedLabel}
         onFocus={() => prepare(false)} onClick={event => { event.currentTarget.focus(); if (owned.current?.ownership.active) owned.current.ownership.close(); else prepare(true); }}
         onKeyDown={event => { if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(event.key)) { event.preventDefault(); prepare(true); } }}>
         <span className="demo-idle-trigger-value">{selectedLabel}</span><span aria-hidden="true">⌄</span>
-      </button><IdleSelectionTokens variant="reference" disabled={!!disabled}
+      </UIButton><IdleSelectionTokens variant="reference" disabled={!!disabled}
         tokens={props.value.length ? props.value.map(value => ({ id: value, label: names.get(value) ?? value })) : [{ id: null, label: props.allLabel }]}
         allResetLabel={`重置为${props.allLabel}（不限范围）`} onRemove={id => {
           if (!available() || live.current !== props || id !== null && !props.value.includes(id)) return;
@@ -136,7 +137,7 @@ export function DemoMultiSelect(props: DemoMultiSelectProps) {
           if (props.search) props.onSearch?.('');
           props.onChange(id === null ? [] : props.value.filter(value => value !== id));
         }} /></div>}
-    {!View && phase === 'loading' && <span id={id} className="demo-multi-state" role="status">正在加载{props.label}选项… <button type="button" className="iw-link" onClick={() => { owned.current?.ownership.close(); cancelPending(); }}>取消加载</button></span>}
-    {!View && phase === 'error' && <span id={id} className="demo-multi-state" role="alert">{props.label}选项未加载。<button type="button" className="iw-link" onClick={() => { trigger.current?.focus(); prepare(true); }}>重试加载</button></span>}
+    {!View && phase === 'loading' && <span id={id} className="demo-multi-state" role="status">正在加载{props.label}选项… <UIButton type="button" className="iw-link" onClick={() => { owned.current?.ownership.close(); cancelPending(); }}>取消加载</UIButton></span>}
+    {!View && phase === 'error' && <span id={id} className="demo-multi-state" role="alert">{props.label}选项未加载。<UIButton type="button" className="iw-link" onClick={() => { trigger.current?.focus(); prepare(true); }}>重试加载</UIButton></span>}
   </div>;
 }

@@ -1,3 +1,4 @@
+import { UIButton } from '../../components/standard-controls.tsx';
 import { useEffect, useState, type ComponentType } from 'react';
 import type { ReadScope } from '../../loading/read-scope.ts';
 import { AsyncLeafRegistry } from '../../loading/async-leaf-registry.ts';
@@ -29,5 +30,5 @@ export function TransferManualCreateHost(props: { readonly parentScope: ReadScop
   };
   if (!props.parentScope.active) return null;
   if (ready && scope) return <ready.View session={ready.session} scope={scope} close={close} />;
-  return <section aria-label="新增调拨准备"><h1>新增调拨单</h1><button type="button" onClick={close}>返回列表</button>{failed ? <p role="alert">新建界面准备失败，未发送保存命令。<button type="button" onClick={() => setAttempt(value => value + 1)}>重试界面</button></p> : <p role="status">正在准备新建界面…</p>}</section>;
+  return <section aria-label="新增调拨准备"><h1>新增调拨单</h1><UIButton type="button" onClick={close}>返回列表</UIButton>{failed ? <p role="alert">新建界面准备失败，未发送保存命令。<UIButton type="button" onClick={() => setAttempt(value => value + 1)}>重试界面</UIButton></p> : <p role="status">正在准备新建界面…</p>}</section>;
 }

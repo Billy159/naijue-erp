@@ -23,7 +23,10 @@ test('standalone SALE harness parses cleanly and actual application clicks handl
   const click=async el=>{assert.ok(el);assert.equal(el.disabled,false,el.textContent);el.click();await pause();};
   const change=async(el,value)=>{assert.ok(el);Object.getOwnPropertyDescriptor(w.HTMLInputElement.prototype,'value').set.call(el,value);el.dispatchEvent(new w.Event('input',{bubbles:true}));el.dispatchEvent(new w.Event('change',{bubbles:true}));await pause();};
   const mode=value=>{d.querySelector('#failure').value=value;d.querySelector('#failure').dispatchEvent(new w.Event('change',{bubbles:true}));};
-  await click(d.querySelector('#authorize'));await until(()=>button('退出登录'),'authenticated');await click(d.querySelector('#sale'));await until(()=>button('新增销货单'),'sales page');await click(button('新增销货单'));await until(()=>button('选择营业厅'),'new form');
+  await until(()=>d.querySelector('.auth-form input[type="password"]')?.disabled,'synthetic password disabled');
+  assert.equal(d.querySelector('.auth-form button[type="submit"]').disabled,true);
+  await click(d.querySelector('#authorize'));await until(()=>button('退出登录'),'authenticated');
+  const syntheticPassword=[...d.querySelectorAll('.auth-session button')].find(b=>b.textContent==='无真实密码（合成验收）');assert.ok(syntheticPassword);assert.equal(syntheticPassword.disabled,true); await click(d.querySelector('#sale'));await until(()=>button('新增销货单'),'sales page');await click(button('新增销货单'));await until(()=>button('选择营业厅'),'new form');
   for(const [select,item]of [['选择营业厅','合成营业厅'],['选择客户','合成客户'],['选择仓库','合成销货仓']]){await click(button(select));await click(button(item));}
   await click(button('添加商品规格'));await click(button('合成验收衬衫（非真实商品）'));await click(button('SYN-001 · 合成红色 · Y版（修身） · 165/S'));await click(button('关闭候选'));
   await change(d.querySelector('[aria-label="单据日期"]'),'2026-10-21');await change(d.querySelector('[aria-label="SYN-SKU-70 单价"]'),'39.90');

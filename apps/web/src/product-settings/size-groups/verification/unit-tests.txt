@@ -1,0 +1,27 @@
+✔ dictionary HTTP exposes four read-only routes, current explicit policy, no-store and native unknowns, without opening a listener (1178.633511ms)
+✔ dictionary HTTP authentication and per-kind/target grants fail closed before native reads, without exposing raw messages (46.762255ms)
+✔ dictionary HTTP strict JSON/query/body budgets reject client auth, scope and write fields before policy (26.465365ms)
+✔ dictionary HTTP sanitizes DB failures and malformed DTOs; no untrusted error/detail facts are serialized (65.237778ms)
+✔ dictionary browser transport sends only executed query to same-origin session POST; native unknowns remain null (72.42394ms)
+✔ dictionary browser rejects wrong ranges, extra fields, duplicate IDs and invented applicability, never falls back to static arrays (78.153013ms)
+✔ dictionary browser permission/unavailable/aborted failures stay typed, sanitized, with no retry (10.259919ms)
+✔ dictionary pg is inert; invalid/mismatched/aborted requests never connect (21.402558ms)
+✔ dictionary pg one RR snapshot holds count, parameterized bounded page and ordered member set, preserving same-name distinct IDs (22.523601ms)
+✔ dictionary pg empty and out-of-range pages are explicit, no full catalog loading or member queries (4.249553ms)
+✔ dictionary pg seasons use persisted display order; barcode description/type/status/null length remain stored facts (11.343952ms)
+✔ dictionary pg inconsistent count/page, duplicate/outside members, overflow and corrupt schema values fail rather than silently truncate/guess (10.218543ms)
+✔ dictionary pg acquire/begin/query/commit/rollback failures release once, discard uncertainty and never auto-retry (8.027977ms)
+✔ dictionary pg cancellation between count/page/member reads rolls back and ignores any late facts (0.809423ms)
+✔ dictionary service requires explicit auth/reader; kind and exact target grants never inherit transaction candidate access (46.433673ms)
+✔ dictionary list validation rejects client roles/scope/write fields, bad paging and unsafe identity before authorization (22.352338ms)
+✔ dictionary scheme uses stored type/rule/nulls/status, never derives prefix/length/applicability from its name (5.072933ms)
+✔ dictionary response validation rejects partial/truncated pages, duplicate identities and unordered or too-large member sets (5.961699ms)
+✔ dictionary cancellation before authorization and after awaited policy/read cannot publish any facts (35.634762ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3794.215934

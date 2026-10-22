@@ -1,0 +1,13 @@
+html,body{margin:0;background:#fff;font-family:Arial,'Microsoft YaHei',sans-serif} [hidden]{display:none!important}
+/* Fixture chrome is viewport-external (fixed overlays), never a header/band that
+ * reduces or offsets frozen Demo business viewport geometry. */
+.unified-synthetic-mark{position:fixed;right:10px;bottom:8px;z-index:3500;background:#fff4de;color:#64420b;border:1px solid #bc9449;border-radius:3px;padding:2px 6px;font:11px/16px Arial,'Microsoft YaHei',sans-serif;pointer-events:none}
+.unified-debug{position:fixed;right:10px;bottom:34px;z-index:3501;font:12px/1.5 Arial,'Microsoft YaHei',sans-serif;text-align:right}.unified-debug>summary{display:inline-block;cursor:pointer;padding:3px 7px;background:#fff;border:1px solid #c9cdd4;border-radius:3px}.unified-debug-panel{box-sizing:border-box;text-align:left;width:min(480px,calc(100vw - 20px));max-height:70vh;overflow:auto;padding:12px;margin-top:4px;background:#fff;border:1px solid #c9cdd4;box-shadow:0 4px 20px #0002}.unified-debug-panel p{margin:4px 0}.unified-debug-panel label{display:block;margin:7px 0}.unified-debug-panel button,.unified-debug-panel select{font:inherit;min-height:26px}.unified-debug-panel pre{max-height:160px;overflow:auto;white-space:pre-wrap;font-size:11px}
+#unified-entry{min-height:100dvh;display:grid;place-items:center;background:#f7f8fa}.unified-entry-card{width:min(480px,calc(100vw - 40px));padding:32px;background:#fff;border:1px solid #e5e6eb;border-radius:8px}.unified-entry-card h1{font-size:24px;margin:0 0 14px}.unified-entry-card p{font-size:14px;line-height:1.7;color:#4e5969}.unified-entry-card button{padding:10px 24px;border:0;background:#165dff;color:#fff;border-radius:3px;font-size:15px;cursor:pointer}.unified-entry-card button:disabled{opacity:.5}
+.unified-route-state{padding:24px;font-size:13px}
+/* Synthetic host never offers credentials. Default hides the formal account
+ * band for frozen-Demo geometry; an explicit fixture-only layout toggle reveals
+ * that same synthetic identity band to check real-host available height. */
+#unified-root .auth-form,#unified-root .auth-session,#unified-root .auth-panel>[role=status],#unified-root .auth-panel>.auth-actions,#unified-root .auth-panel>.auth-hint{display:none!important}
+
+#unified-root.show-synthetic-session .auth-session{display:flex!important}

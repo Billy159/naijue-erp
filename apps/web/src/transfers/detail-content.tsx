@@ -1,7 +1,9 @@
+import { TransferStatusTag } from './transfer-status-tag.tsx';
+import { UIButton } from '../components/standard-controls.tsx';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import type { ReadScope } from '../loading/read-scope.ts';
 import type { TransferDetailDto, TransferProductCapability, TransferReader } from './contracts.ts';
-import { createTransferDetailQuery, transferStatusLabels, transferTarget } from './model.ts';
+import { createTransferDetailQuery, transferTarget } from './model.ts';
 import { transferCount } from './format.ts';
 import { transferMatrix, transferMatrixDisplay } from './matrix.ts';
 import { TransferSparseLines } from './sparse-lines.tsx';
@@ -22,10 +24,10 @@ export function TransferDetailContent(props: TransferDetailContentProps) {
   }, [query, props.transferId, props.scope]);
   if (!props.scope.active) return null;
   if (snapshot.success && (snapshot.phase === 'success' || snapshot.phase === 'stale')) return <DetailFacts data={snapshot.success.data} scope={props.scope} accessScope={props.accessScope} close={props.close} {...(props.product ? { product: props.product } : {})} />;
-  return <section className="tc-workbench transfer-detail-loading" aria-label="调拨单详情"><div className="tc-head"><h1 ref={heading} tabIndex={-1}>查看调拨单</h1><button type="button" className="iw-text-button" onClick={props.close}>返回列表</button></div>
-    {snapshot.phase === 'disposed' ? <p role="status" className="iw-inline-state">读取已取消。<button type="button" className="iw-link" onClick={() => setQuery(createTransferDetailQuery(props.scope, props.reader, props.accessScope))}>重新读取</button></p>
-      : snapshot.phase === 'error' ? <p role="alert" className="iw-inline-state">调拨单读取失败。请检查登录及读取权限。<button type="button" className="iw-link" onClick={() => { void query.run(transferTarget(props.transferId)); }}>重试详情</button></p>
-        : <p role="status" className="iw-inline-state">正在读取调拨单…<button type="button" className="iw-link" onClick={() => query.dispose()}>取消读取</button></p>}
+  return <section className="tc-workbench transfer-detail-loading" aria-label="调拨单详情"><div className="tc-head"><h1 ref={heading} tabIndex={-1}>查看调拨单</h1><UIButton type="button" className="iw-text-button" onClick={props.close}>返回列表</UIButton></div>
+    {snapshot.phase === 'disposed' ? <p role="status" className="iw-inline-state">读取已取消。<UIButton type="button" className="iw-link" onClick={() => setQuery(createTransferDetailQuery(props.scope, props.reader, props.accessScope))}>重新读取</UIButton></p>
+      : snapshot.phase === 'error' ? <p role="alert" className="iw-inline-state">调拨单读取失败。请检查登录及读取权限。<UIButton type="button" className="iw-link" onClick={() => { void query.run(transferTarget(props.transferId)); }}>重试详情</UIButton></p>
+        : <p role="status" className="iw-inline-state">正在读取调拨单…<UIButton type="button" className="iw-link" onClick={() => query.dispose()}>取消读取</UIButton></p>}
   </section>;
 }
 function DetailFacts(props: { readonly data: TransferDetailDto; readonly scope: ReadScope; readonly accessScope: ReadScope; readonly close: () => void; readonly product?: TransferProductCapability }) {
@@ -40,9 +42,9 @@ function DetailFacts(props: { readonly data: TransferDetailDto; readonly scope: 
   const actions = header.status === 'DRAFT' ? ['作废', '保存', '审核'] : header.status === 'APPROVED' ? ['弃审'] : [];
   const field = (label: string, value: string, title = value) => <div className="tc-gold-field"><span>{label}</span><span className="transfer-read-value" title={title}>{value}</span></div>;
   return <section className="tc-workbench tc-editor transfer-editor" aria-label="调拨单详情">
-    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>查看调拨单</h1><span className="tc-state-tag" data-document-status={header.status}>{transferStatusLabels[header.status]}</span><span className="transfer-muted">· 只读</span><div className="actions"><button type="button" className="iw-text-button tc-back-link" onClick={props.close}>返回列表</button>{[...actions, '导出', '打印', '操作历史'].map(label => <button key={label} type="button" className="iw-text-button" disabled title={`${label}尚未接入`}>{label}</button>)}</div></div>
+    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>查看调拨单</h1><TransferStatusTag status={header.status} /><span className="transfer-muted">· 只读</span><div className="actions"><UIButton type="button" className="iw-text-button tc-back-link" onClick={props.close}>返回列表</UIButton>{[...actions, '导出', '打印', '操作历史'].map(label => <UIButton key={label} type="button" className="iw-text-button" disabled title={`${label}尚未接入`}>{label}</UIButton>)}</div></div>
     <div className="tc-doc-header"><div className="tc-gold-doc-fields">{field('单据日期', header.businessDate)}{field('调出仓库', data.references.fromWarehouseName, `${data.references.fromHallName} / ${data.references.fromWarehouseName}`)}{field('调入仓库', data.references.toWarehouseName, `${data.references.toHallName} / ${data.references.toWarehouseName}`)}
-      <div className="tc-gold-field"><span>单号</span><strong className="transfer-read-value" title={header.number}>{header.number}</strong></div>{field('创建者', data.references.createdByName)}<div className="tc-gold-entry-actions"><button type="button" className="iw-button iw-primary" disabled title="扫码录入尚未接入">扫码录入</button></div></div></div>
+      <div className="tc-gold-field"><span>单号</span><strong className="transfer-read-value" title={header.number}>{header.number}</strong></div>{field('创建者', data.references.createdByName)}<div className="tc-gold-entry-actions"><UIButton type="button" className="iw-button iw-primary" disabled title="扫码录入尚未接入">扫码录入</UIButton></div></div></div>
     <div className="tc-note-row"><span>备注</span><span className="tc-note-read">{header.note || '—'}</span></div>
     <div className="transfer-readonly-note">{header.status === 'VOID' ? '此单已作废，仅可查看历史。' : header.status === 'APPROVED' ? '已审核，单据只读。' : '当前仅开放单据只读查询。'} 数量为本单当前实际明细，不是仓库实时库存；规格按当前规范资料展示，原保存名称另列于保存记录。</div>
     <div className="tc-section-head"><strong>调拨明细</strong></div>
@@ -53,7 +55,7 @@ function DetailFacts(props: { readonly data: TransferDetailDto; readonly scope: 
         <tbody>{section.rows.map(row => <tr key={row.key}><td className="mx-product"><span className="mx-product-line"><strong title={row.current.productCode}>{row.current.productCode}</strong><span title={row.current.productName}>{row.current.productName}</span></span></td><td className="mx-color" title={row.current.colorName}>{row.current.colorName}</td><td className="mx-fit-col" title={row.current.fitName}>{row.current.fitName}</td>
           {section.group.members.map(size => { const sku = row.skus.get(size.sizeId); const value = sku ? row.quantities.get(sku.skuId) : undefined; const label = `${row.current.productCode} ${row.current.colorName} ${row.current.fitName} ${size.name}`;
             return <td className={sku ? 'transfer-quantity' : 'mx-size-blank'} key={size.sizeId} aria-label={`${label} ${!sku ? '无此规格' : value === undefined ? '无单据明细' : `本单数量 ${value}`}`}>{!sku ? '—' : value === undefined ? '' : transferCount(value.toString())}</td>; })}
-          {Array.from({ length: maxColumns - section.group.members.length }, (_, index) => <td key={`gap:${index}`} className="mx-size-gap" aria-hidden="true" />)}<td className="tc-subtotal">{transferCount(row.total.toString())}</td><td className="ui-action-cell"><div className="mx-actions"><button type="button" className="iw-link" disabled={!props.product} title={props.product ? '查看商品资料' : '商品查看未配置'} onClick={() => openProduct(row.current.productId, `${row.current.productCode} · ${row.current.productName}`)}>查看</button></div></td></tr>)}</tbody></table>
+          {Array.from({ length: maxColumns - section.group.members.length }, (_, index) => <td key={`gap:${index}`} className="mx-size-gap" aria-hidden="true" />)}<td className="tc-subtotal">{transferCount(row.total.toString())}</td><td className="ui-action-cell"><div className="mx-actions"><UIButton type="button" className="iw-link" disabled={!props.product} title={props.product ? '查看商品资料' : '商品查看未配置'} onClick={() => openProduct(row.current.productId, `${row.current.productCode} · ${row.current.productName}`)}>查看</UIButton></div></td></tr>)}</tbody></table>
       </section>)}
       {sections.length === 0 && <p className="tc-empty">本单没有实际明细行</p>}
     </div>}

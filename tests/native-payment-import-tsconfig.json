@@ -1,0 +1,1 @@
+{"extends":"../tsconfig.json","include":["../packages/application/src/native-payment-import.ts","../adapters/postgres/src/native-payment-import.ts","native-payment-import*.test.ts","support/native-payment-fixtures.ts"]}

@@ -1,0 +1,36 @@
+{
+  "slice": "history import lifecycle metadata",
+  "status": "SOURCE_SYNTHETIC_VERIFIED_PG_NOT_RUN",
+  "frozenAtUtc": "2026-10-21T15:20:31Z",
+  "files": {
+    "packages/application/src/history-import-lifecycle.ts": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606",
+    "packages/application/src/inventory-cutoff-import.ts": "2a23cfa999f8e2119e27a4ba8d8c93a5d3ce93fd2005cc5f952f46de554a1ee0",
+    "adapters/postgres/src/history-import-lifecycle.ts": "219726ac9679a1f9e3c85bf7fea8bc772e900c52da25bf319eab248a84cb461d",
+    "adapters/postgres/src/inventory-cutoff-import-store.ts": "33a46ec1c99b4a4e4cbeab05c9132b45bb3ae2afb6609183ca3c8c267284c98f",
+    "tests/history-import-lifecycle.test.ts": "e394a5f19fd631d256e6fdb84ea0d240f164ff549f36c3cae8a6e3b98555e3a6",
+    "tests/history-import-lifecycle-tsconfig.json": "baadc3d077210c18007f440bf6c47403844b01a7e8e91da18fecf36f1d08ad49",
+    "tests/inventory-cutoff-postgres-protocol.test.ts": "64c38edf08c5585291ae5d54b8202c833e0cd167713204e62547cffd13908461",
+    "docs/history-import-lifecycle.md": "965d0c70ce8c790bb105836c72dcae4016d0bd0daa291cee336ca97514df58fc"
+  },
+  "verification": {
+    "historySynthetic": "PASS 34/34 (includes explicit duplicate creator record and STAGE/PUBLISH unknown-COMMIT)",
+    "cutoffAndSaleSourceSynthetic": "PASS 84/84 combined",
+    "focusedTypecheck": "PASS; independently repeated by read-only reviewer",
+    "fullTypecheck": "PASS final whole-repository rerun after parallel UI fixes; frozen metadata four-file hashes unchanged",
+    "build": "PASS final frozen production files",
+    "smokeBuild": "PASS final; no server/database/client constructed",
+    "postgres": "NOT_RUN; cloud engine startup/production connection not authorized",
+    "independentReview": "latest read-only static SQL/mapper/parameter recheck no further definite blocker; not engine or isolation proof"
+  },
+  "boundaries": [
+    "No frozen migration 0011/0012 edits; no new DDL or persisted action",
+    "Counts are independent observations, never checkpoint repair; payloadHash is authorized artifact identity, not SQL content rehash",
+    "Original six-key receipt/result/CAS/audit remain intact",
+    "Current native snapshot drift blocks new publication; exact old operation replay never overwrites natives",
+    "Nonzero historical sales header/line/settlement and unknown source capabilities fail closed",
+    "Existing creator import_record once-only accounting remains unresolved and duplicate path failclosed",
+    "Unsupported stock zero-net baseline lineage not bypassed",
+    "No real user source data in this evidence"
+  ],
+  "closedAtUtc": "2026-10-21T15:24:15Z"
+}

@@ -1,3 +1,4 @@
+import { UIButton } from '../components/standard-controls.tsx';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
 import type { InventoryActions, InventoryCellTarget, InventoryColorFit, InventoryPage, InventoryProduct, InventoryRow, InventorySize, StockTotal } from './contracts.ts';
 import { formatQuantity, totalLabel } from './model.ts';
@@ -73,7 +74,7 @@ function EagerInventoryMatrix(props: MatrixProps) {
 }
 const spacer = <span className="mx-fold-spacer" aria-hidden="true" />;
 function Fold(props: { readonly expanded: boolean; readonly label: string; readonly toggle: () => void }) {
-  return <button type="button" className="mx-fold" aria-expanded={props.expanded} aria-label={`${props.expanded ? '折叠' : '展开'}${props.label}`} onClick={props.toggle}>{props.expanded ? '▾' : '▸'}</button>;
+  return <UIButton type="button" className="mx-fold" aria-expanded={props.expanded} aria-label={`${props.expanded ? '折叠' : '展开'}${props.label}`} onClick={props.toggle}>{props.expanded ? '▾' : '▸'}</UIButton>;
 }
 function Indent(props: { readonly control: ReactNode; readonly children: ReactNode }) {
   return <div className="mx-indent">{props.control}<span>{props.children}</span></div>;
@@ -85,7 +86,7 @@ function ProductIdentity(props: { readonly product: InventoryProduct; readonly s
   </div>}</>;
 }
 function ViewProduct(props: { readonly product: InventoryProduct; readonly actions: InventoryActions }) {
-  return <button type="button" className="mx-view" disabled={!props.actions.onViewProduct} title={props.actions.onViewProduct ? '查看当前商品' : '商品只读抽屉尚未接入'} aria-label={`打开${props.product.code}商品资料`} onClick={event => { event.currentTarget.focus(); props.actions.onViewProduct?.({ id: props.product.id, label: `${props.product.code} ${props.product.name}` }); }}>查看</button>;
+  return <UIButton type="button" className="mx-view" disabled={!props.actions.onViewProduct} title={props.actions.onViewProduct ? '查看当前商品' : '商品只读抽屉尚未接入'} aria-label={`打开${props.product.code}商品资料`} onClick={event => { event.currentTarget.focus(); props.actions.onViewProduct?.({ id: props.product.id, label: `${props.product.code} ${props.product.name}` }); }}>查看</UIButton>;
 }
 function ProductRows(props: MatrixProps & { readonly product: InventoryProduct }) {
   const { product } = props;
@@ -145,7 +146,7 @@ function WarehouseRow(props: MatrixProps & { readonly product: InventoryProduct;
         : group.fit && 'skuId' in cell ? { productId: product.id, productLabel: `${product.code} ${product.name}`, color: group.color, fit: group.fit, size, warehouse: row.warehouse, skuId: cell.skuId, readReference: props.data.readReference } : null;
       const multipleSources = !!sources && sources.length > 1;
       const explanation = multipleSources ? '跨版型汇总包含多个 SKU，请在显示设置中显示版型后查看各自库存流水' : props.actions.onOpenCell ? `查看该仓库 / SKU 库存流水${target ? ` · ${target.fit.label}` : ''}` : '库存流水尚未接入';
-      return <td key={size.id} className="mx-number" aria-colindex={props.window ? index + 4 : undefined}><button type="button" className={`mx-stock${cell.quantity.startsWith('-') ? ' mx-negative' : cell.quantity === '0' ? ' mx-zero' : ''}`} {...(address ? props.window?.bindCell(address) : {})} data-stock-address={props.window ? JSON.stringify(address) : undefined} data-inventory-source-count={sources?.length ?? 1} disabled={!props.actions.onOpenCell || !target} title={explanation} aria-label={`${product.code} ${group.color.label} ${fitLabel} ${row.warehouse.label} ${size.label} 库存${cell.quantity}${multipleSources ? `，${explanation}` : ''}`} onClick={() => { if (target) props.actions.onOpenCell?.(target); }}>{formatQuantity(cell.quantity)}</button></td>;
+      return <td key={size.id} className="mx-number" aria-colindex={props.window ? index + 4 : undefined}><UIButton type="button" className={`mx-stock${cell.quantity.startsWith('-') ? ' mx-negative' : cell.quantity === '0' ? ' mx-zero' : ''}`} {...(address ? props.window?.bindCell(address) : {})} data-stock-address={props.window ? JSON.stringify(address) : undefined} data-inventory-source-count={sources?.length ?? 1} disabled={!props.actions.onOpenCell || !target} title={explanation} aria-label={`${product.code} ${group.color.label} ${fitLabel} ${row.warehouse.label} ${size.label} 库存${cell.quantity}${multipleSources ? `，${explanation}` : ''}`} onClick={() => { if (target) props.actions.onOpenCell?.(target); }}>{formatQuantity(cell.quantity)}</UIButton></td>;
     }} /><td className="mx-total-cell" aria-colindex={props.window ? product.sizes.length + 4 : undefined} title={totalLabel(row.total)}>{totalLabel(row.total)}</td><td className="mx-operation" aria-colindex={props.window ? product.sizes.length + 5 : undefined}><ViewProduct product={product} actions={props.actions} /></td>
   </tr>;
 }

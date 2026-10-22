@@ -1,9 +1,11 @@
+import { assertNativeImportAccountingGuards } from "./native-import-accounting-capability.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { CATALOGUE_PRICE_KEYS } from "../../../packages/application/src/catalogue-price-input.ts";
 import { nativeProductImportEvidence, validatePreparedNativeProductImportChunk } from "../../../packages/application/src/native-product-import.ts";
 import type { NativeProductImportStore, NativeProductReferences, PreparedNativeProductImportChunk } from "../../../packages/application/src/native-product-import.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
+import { assertReviewedNativeImportSchema } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { insertValidatedCatalogueSourceProof } from "./catalogue-completeness.ts";
 import type { PgSalesClient, PgSalesPool } from "./sales-unit-of-work.ts";
 
@@ -12,7 +14,7 @@ const BASE_COLUMNS = ["id", "product_code", "name", "category_id", "supplier_id"
 const PRODUCT_COLUMNS = [...BASE_COLUMNS, ...CATALOGUE_PRICE_KEYS];
 const nativeJson = `jsonb_build_object(${PRODUCT_COLUMNS.map(key => `'${key}', p.${key}${(CATALOGUE_PRICE_KEYS as readonly string[]).includes(key) ? "::text" : ""}`).join(", ")})`;
 
-/** Trusted schema-11 import adapter, NOT live CREATE or a public write endpoint.
+/** Trusted explicitly reviewed schema-11/12 import adapter, NOT live CREATE or a public write endpoint.
  * No DDL, source loader, default authority, dictionaries, SKU/barcode/stock writes,
  * publication, guessed IDs/values, or automatic retry. Default orchestration is DRY_RUN.
  * Cutoff -> batch -> ALL native targets (created if absent) -> immutable sources.
@@ -74,8 +76,10 @@ export class PostgresNativeProductImportStore implements NativeProductImportStor
   private async write(client: PgSalesClient, chunk: PreparedNativeProductImportChunk): Promise<{ inserted: number; replayed: number }> {
     await client.query("/* native-product-import:lock */ SELECT naijue_erp.cutoff_import_lock()");
     const schema = (await client.query(`/* native-product-import:schema */ SELECT
-      array_agg(version ORDER BY version)=ARRAY[1,2,3,4,5,6,7,8,9,10,11] AS ready FROM naijue_erp.schema_migration`)).rows;
-    requireDomain(schema.length === 1 && schema[0]!.ready === true, "NATIVE_PRODUCT_SCHEMA_NOT_READY", "Exact reviewed schema 1-11 required before first native product import");
+      array_agg(version ORDER BY version) AS installed_versions FROM naijue_erp.schema_migration`)).rows;
+    requireDomain(schema.length === 1, "NATIVE_PRODUCT_SCHEMA_NOT_READY", "Actual migration registry required");
+    const reviewedSchema = assertReviewedNativeImportSchema(schema[0]!.installed_versions, { minimumVersion: 11, errorCode: "NATIVE_PRODUCT_SCHEMA_NOT_READY" });
+    if (reviewedSchema.versions.length === 18) await assertNativeImportAccountingGuards(client);
     const batches = (await client.query(`/* native-product-import:batch */ SELECT id, mapping_version, status, source_hash, source_name
       FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`, [chunk.batchId])).rows;
     const batch = batches[0];

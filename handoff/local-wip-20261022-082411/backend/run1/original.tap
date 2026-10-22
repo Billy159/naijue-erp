@@ -1,0 +1,103 @@
+TAP version 13
+# Subtest: fresh schema1–18 synthetic sealed files and nonzero source-semantic closure STAGE; publication remains refused
+    # Subtest: fresh native prerequisite creators establish selected scope and signed/zero lineage without live stock
+    ok 1 - fresh native prerequisite creators establish selected scope and signed/zero lineage without live stock
+      ---
+      duration_ms: 202.313708
+      type: 'test'
+      ...
+    # Subtest: sealed original OOXML -> exact same-batch readonly bindings -> SALE/RETURN/TRANSFER typed headers and replay
+    ok 2 - sealed original OOXML -> exact same-batch readonly bindings -> SALE/RETURN/TRANSFER typed headers and replay
+      ---
+      duration_ms: 962.022875
+      type: 'test'
+      ...
+    # Subtest: sealed whole32 source -> explicit new payment allocation + actual typed dependency bindings -> original payment creators
+    ok 3 - sealed whole32 source -> explicit new payment allocation + actual typed dependency bindings -> original payment creators
+      ---
+      duration_ms: 824.0255
+      type: 'test'
+      ...
+    # Subtest: sealed32 exact cell approvals -> actual source header/old alias resolver -> signed SALE/RETURN typed lines
+    ok 4 - sealed32 exact cell approvals -> actual source header/old alias resolver -> signed SALE/RETURN typed lines
+      ---
+      duration_ms: 2529.238833
+      type: 'test'
+      ...
+    # Subtest: sealed settlement actual typed resolver; second real INSERT rollback, later stage/replay, historical method independent of current account
+    ok 5 - sealed settlement actual typed resolver; second real INSERT rollback, later stage/replay, historical method independent of current account
+      ---
+      duration_ms: 818.680208
+      type: 'test'
+      ...
+    # Subtest: sealed transfer source -> actual immutable imported header and old alias -> typed negative quantity without stock effects
+    ok 6 - sealed transfer source -> actual immutable imported header and old alias -> typed negative quantity without stock effects
+      ---
+      duration_ms: 606.045958
+      type: 'test'
+      ...
+    # Subtest: complete source-derived nonzero57 closure STAGE and exact replay reauthorize whole synthetic file seal; changed input refuses before connection
+    not ok 7 - complete source-derived nonzero57 closure STAGE and exact replay reauthorize whole synthetic file seal; changed input refuses before connection
+      ---
+      duration_ms: 764.582459
+      type: 'test'
+      location: '/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/integration/sealed-history18.integration.ts:159:11'
+      failureType: 'testCodeFailure'
+      error: 'record "h" is not assigned yet'
+      code: '55000'
+      name: 'error'
+      stack: |-
+        /Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/node_modules/pg/lib/client.js:694:17
+        process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        async PostgresHistoryTypedClosureStore.write (file:///Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/work/erp-local-source-20261022/adapters/postgres/src/history-typed-closure.ts:48:3)
+        async PostgresHistoryTypedClosureStore.stage (file:///Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/work/erp-local-source-20261022/adapters/postgres/src/history-typed-closure.ts:29:19)
+        async TestContext.<anonymous> (file:///Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/work/erp-local-source-20261022/tests/integration/sealed-history18.integration.ts:183:21)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/work/erp-local-source-20261022/tests/integration/sealed-history18.integration.ts:159:3)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    # Subtest: same-count crossed document and missing-original/substitute typed line fail actual deep SQL coverage; rollback restores guards/data
+    not ok 8 - same-count crossed document and missing-original/substitute typed line fail actual deep SQL coverage; rollback restores guards/data
+      ---
+      duration_ms: 5.800083
+      type: 'test'
+      location: '/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/integration/sealed-history18.integration.ts:193:11'
+      failureType: 'testCodeFailure'
+      error: 'duplicate key value violates unique constraint "history_sales_line_header_id_line_no_key"'
+      code: '23505'
+      name: 'error'
+      stack: |-
+        /Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/node_modules/pg/lib/client.js:694:17
+        process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        async TestContext.<anonymous> (file:///Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/work/erp-local-source-20261022/tests/integration/sealed-history18.integration.ts:204:32)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async TestContext.<anonymous> (file:///Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/work/erp-local-source-20261022/tests/integration/sealed-history18.integration.ts:193:3)
+        async Test.run (node:internal/test_runner/test:1409:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    # Subtest: original nonzero-history PUBLISH on new18 rejects precisely before FINAL/claim/receipt/audit/stock; prior committed rows remain
+    ok 9 - original nonzero-history PUBLISH on new18 rejects precisely before FINAL/claim/receipt/audit/stock; prior committed rows remain
+      ---
+      duration_ms: 15.745208
+      type: 'test'
+      ...
+    1..9
+not ok 1 - fresh schema1–18 synthetic sealed files and nonzero source-semantic closure STAGE; publication remains refused
+  ---
+  duration_ms: 7233.328334
+  type: 'test'
+  location: '/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/integration/sealed-history18.integration.ts:56:1'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 10
+# suites 0
+# pass 7
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7453.681666

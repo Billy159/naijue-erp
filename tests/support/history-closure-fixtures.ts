@@ -1,0 +1,7 @@
+import { HISTORY_CLOSURE_SOURCE_ENTITIES } from "../../packages/application/src/history-typed-closure.ts";
+import type { HistoryTypedClosureStageInput } from "../../packages/application/src/history-typed-closure.ts";
+export const closureId = (n: number) => `00000000-0000-0000-0000-${String(n).padStart(12,"0")}`;
+export function closureInput(): HistoryTypedClosureStageInput {
+ const sourceEntityCounts = Object.fromEntries(HISTORY_CLOSURE_SOURCE_ENTITIES.map(k => [k, 0])) as HistoryTypedClosureStageInput["plan"]["sourceEntityCounts"];
+ return { batchId: closureId(1), fixedSourceNamespace: "synthetic.closure18", plan: { version: "HISTORY_TYPED_CLOSURE_V1", selectionSha256: "a".repeat(64), authorizedPayloadHash: "b".repeat(64), sourceManifestSha256: "c".repeat(64), typedManifestSha256: "d".repeat(64), documentManifestSha256: "e".repeat(64), expectedCounts: { history_sales_header: 1, history_sales_line: 1, history_sales_settlement: 0, history_transfer_header: 0, history_transfer_line: 0, import_source_row: 2, import_sku_alias: 0, import_stock_contributor: 0, barcodes: 0 }, sourceEntityCounts: { ...sourceEntityCounts, SALES_HEADER: 1, SALES_LINE: 1 }, documentCount: 1 }, documents: [{ kind: "SALES", sourceKey: "OLD-1", headerSourceRowId: closureId(2), headerId: closureId(3), headerSourceSha256: "f".repeat(64), lineCount: 1, settlementCount: 0, sourceDocumentSha256: "1".repeat(64), typedDocumentSha256: "2".repeat(64) }] };
+}

@@ -246,6 +246,24 @@ class CellEvidenceTest(unittest.TestCase):
 
 
 class AuthorizationTest(unittest.TestCase):
+    def test_invalid_evidence_bounds_fail_before_owned_output_and_default_remains_original_hard_cap(self):
+        for value in [0, -1, 1.5, True, None, "192", 512 * 1024 * 1024 + 1]:
+            with self.subTest(value=value), tempfile.TemporaryDirectory() as directory:
+                args = self.fixture(Path(directory))
+                with self.assertRaisesRegex(m.EvidenceError, "PRIVATE_EVIDENCE_BOUND"):
+                    m.run(**args, max_evidence_bytes=value)
+                self.assertEqual(list(args["output_parent"].iterdir()), [])
+        with tempfile.TemporaryDirectory() as directory:
+            _, report = m.run(**self.fixture(Path(directory)))
+            self.assertEqual(report["maxEvidenceBytes"], 536870912)
+
+    def test_lower_evidence_output_cap_rejects_before_over_limit_write_and_cleans_owned_output(self):
+        with tempfile.TemporaryDirectory() as directory:
+            args = self.fixture(Path(directory))
+            with self.assertRaisesRegex(m.EvidenceError, "PRIVATE_EVIDENCE_OUTPUT_LIMIT"):
+                m.run(**args, max_evidence_bytes=1)
+            self.assertEqual(list(args["output_parent"].iterdir()), [])
+
     def fixture(self, root):
         source, base, amendment, out = (root / name for name in ("source", "base", "amendment", "out"))
         for path in (source, base, amendment, out):

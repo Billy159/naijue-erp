@@ -1,0 +1,4 @@
+{"entity":"PRODUCT","来源编号":"SYNTHETIC-PRODUCT-1","款号":"SYNTHETIC-SALE-PRODUCT","商品名称":"合成销售商品","采购价":"0.75","零售价":"1.25","五级批发价（工厂店供货价）":"1.10","六级批发价（贴牌价）":"0.00","七级批发价（批发价）":"","八级批发价（代理商供货价）":"","九级批发价（工厂店零售价）":"","十级批发价（葛玉珠）":"","最低售价":null}
+{"entity":"SKU","来源编号":"SYNTHETIC-OLD-SKU-1","规范SKU来源编号":"SYNTHETIC-SKU-1","商品来源编号":"SYNTHETIC-PRODUCT-1","SKU编码":"SYNTHETIC-SALE-SKU"}
+{"entity":"BARCODE","来源编号":"SYNTHETIC-BARCODE-1","SKU来源编号":"SYNTHETIC-SKU-1","绑定范围":"SKU","条码":"000123-SYNTHETIC-SALE","条码性质":"主码","状态":"正常"}
+{"entity":"WAREHOUSE","来源编号":"SYNTHETIC-WAREHOUSE-1","仓库名称":"SYNTHETIC SALE WAREHOUSE","所属厅来源编号":"SYNTHETIC-HALL-1","状态":"正常"}

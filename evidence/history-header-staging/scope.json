@@ -1,0 +1,27 @@
+{
+  "kind": "HISTORY_HEADER_SOURCE_AND_TYPED_STAGING_SOURCE_VERIFICATION",
+  "syntheticOnly": true,
+  "defaultMode": "DRY_RUN",
+  "frozenSchema11Sha256": "67d9cb6df4e46c6807330b7ed7dd22305a4d331b111b85275f900caaf5d14965",
+  "schema12Sha256": "5562014c70f1045f7a81e80d950597d3917a7e3fa81f3c3381a662e6418ec544",
+  "relatedRegression": {"passed": 66, "failed": 0, "log": "related-tests.tap"},
+  "completeSyntheticApprovedReaderChain": {"passed": 3, "failed": 0, "headers": 33, "numericCells": 66, "approvedMoneyCells": 32, "authenticatedDictionaryEntities": 3},
+  "separateSchema12GuardedWrapperSourceTests": {"passed": 5, "failed": 0},
+  "targetedStrictTypecheck": "PASS",
+  "aggregateTypecheckAtHandoff": "NOT_FULL_PASS_NEW_NATIVE_PARTY_AND_CATALOGUE_SIBLING_TYPE_ERRORS_REPORTED_TO_OWNERS",
+  "independentReview": "CLOSED_NO_REMAINING_BLOCKERS",
+  "fixedReviewFindings": ["deep-clone authenticated money approval values", "require exact directory coverage for every dictionary source at publication"],
+  "realPrivateJsonlRescan": false,
+  "databaseConnected": false,
+  "databaseMigrationExecution": "NOT_RUN",
+  "databaseEngineAcceptance": "NOT_RUN",
+  "realImport": false,
+  "published": false,
+  "liveRequiredFieldsChanged": false,
+  "remaining": [
+    "Historical-only customer supplement needs a separately reviewed original evidence authorization route",
+    "Existing open schema11 batch creation/history validation/publication application entrypoints are separate prerequisites",
+    "Native dictionary creation, reviewed real native mapping coverage and all referenced warehouse bindings must exist",
+    "Fresh guarded schema12 engine, transaction, read-back and restore acceptance has not run"
+  ]
+}

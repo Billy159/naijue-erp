@@ -9,8 +9,9 @@ import type { SalesFormPreparationProvider } from '../sales/commands/contracts.t
 import type { SalesEditorSession } from '../sales/commands/editor-session.ts';
 import type { TransferFormPreparationProvider } from '../transfers/commands/contracts.ts';
 import type { TransferCommandWorkspace } from '../transfers/commands/controller.ts';
+import type { ProductFullPageConfiguration } from '../products/product-page-contracts.ts';
 
-export type ApplicationRoute = 'inventory' | 'sales' | 'transfers' | 'customers' | 'suppliers';
+export type ApplicationRoute = 'inventory' | 'sales' | 'transfers' | 'customers' | 'suppliers' | 'products' | 'product-categories' | 'product-settings' | 'barcode-schemes' | 'store-settings';
 export interface RouteStylesheet {
   /** Resolve only when the route's necessary CSS is usable. No construction-time load. */
   readonly load: () => Promise<unknown>;
@@ -42,6 +43,32 @@ export interface PartiesRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
   /** Required real host key provider. Never fabricated, reused across actions or defaulted. */
   readonly newRequestKey: () => string;
+  /** Explicit presentation-only read mode. Not a server authorization grant;
+   * omission preserves the existing maintenance/session protocol. */
+  readonly readOnly?: true;
+}
+/** Read-only catalogue list; absence never implies a route or catalogue grant. */
+export interface ProductsRouteConfiguration {
+  readonly stylesheet: RouteStylesheet;
+  readonly product?: { readonly stylesheet: RouteStylesheet };
+  readonly fullPage?: ProductFullPageConfiguration;
+}
+export type ReadOnlyProductSettingTab = 'colors' | 'groups' | 'fits' | 'seasons';
+export interface ProductCategoriesRouteConfiguration { readonly stylesheet: RouteStylesheet }
+export interface ProductSettingsRouteConfiguration {
+  readonly stylesheet: RouteStylesheet;
+  readonly allowedTabs: readonly ReadOnlyProductSettingTab[];
+  readonly initialTab: ReadOnlyProductSettingTab;
+}
+export interface BarcodeSchemesRouteConfiguration { readonly stylesheet: RouteStylesheet }
+export type ReadOnlyStoreSettingsTab = 'stores' | 'warehouses';
+export interface StoreSettingsRouteConfiguration {
+  readonly stylesheet: RouteStylesheet;
+  readonly allowedTabs: readonly ReadOnlyStoreSettingsTab[];
+  readonly initialTab: ReadOnlyStoreSettingsTab;
+  /** Explicit UI directory-read intent; every list/detail still requires its
+   * own current server grant. Never substitutes a transaction candidate. */
+  readonly allowHallDirectoryRead: boolean;
 }
 export interface ApplicationConfiguration {
   /** Exact trusted HTTPS application origin, explicit API prefix and injected fetch. */
@@ -55,6 +82,11 @@ export interface ApplicationConfiguration {
     readonly sales?: SalesRouteConfiguration;
     readonly transfers?: TransferRouteConfiguration;
     readonly parties?: PartiesRouteConfiguration;
+    readonly products?: ProductsRouteConfiguration;
+    readonly productCategories?: ProductCategoriesRouteConfiguration;
+    readonly productSettings?: ProductSettingsRouteConfiguration;
+    readonly barcodeSchemes?: BarcodeSchemesRouteConfiguration;
+    readonly storeSettings?: StoreSettingsRouteConfiguration;
   };
 }
 export interface ApplicationRouteProps { readonly scope: ReadScope }
@@ -90,6 +122,7 @@ export type ApplicationSnapshot = {
 };
 export const routeLabels: Readonly<Record<ApplicationRoute, string>> = Object.freeze({
   inventory: '库存状况表', sales: '销货列表', transfers: '调拨单列表', customers: '客户资料', suppliers: '供应商资料',
+  products: '商品信息', 'product-categories': '商品分类', 'product-settings': '商品设置', 'barcode-schemes': '条码方案', 'store-settings': '营业厅与仓库',
 });
 
 export interface ApplicationPresentation {

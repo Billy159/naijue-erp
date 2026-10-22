@@ -9,8 +9,8 @@ import { JSDOM } from 'jsdom';
 // methods and read transports are synthetic; no module/lifecycle mocks.
 const here = path.dirname(fileURLToPath(import.meta.url));
 const temporary = await mkdtemp(path.join(here, '.drawer-lifecycle-tests-'));
-const dom = new JSDOM('<!doctype html><div id="root"></div>', { url: 'https://synthetic.test/' });
-for (const key of ['window', 'document', 'HTMLElement', 'HTMLDialogElement', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
+const dom = new JSDOM('<!doctype html><div id="root"></div>', { url: 'https://synthetic.test/', pretendToBeVisual:true });
+for (const key of ['window', 'document', 'navigator', 'HTMLElement', 'HTMLDialogElement', 'HTMLInputElement', 'HTMLIFrameElement', 'Element', 'SVGElement', 'MutationObserver', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 const dialogs = [];
 let onDialogOpen;
@@ -18,7 +18,7 @@ dom.window.HTMLDialogElement.prototype.showModal = function () { this.setAttribu
 dom.window.HTMLDialogElement.prototype.close = function () { this.removeAttribute('open'); dialogs.push({ kind: 'close', element: this }); };
 let root, act, restoreDispose;
 try {
-  const result = await build({ entryPoints: [path.join(here, 'product-drawer-lifecycle-entry.tsx'), path.join(here, 'product-drawer-deferred-start-entry.tsx')], outdir: temporary, bundle: true, splitting: true, metafile: true, platform: 'node', format: 'esm', packages: 'external', jsx: 'automatic', logLevel: 'warning' });
+  const result = await build({ entryPoints: [path.join(here, 'product-drawer-lifecycle-entry.tsx'), path.join(here, 'product-drawer-deferred-start-entry.tsx')], outdir: temporary, bundle: true, splitting: true, metafile: true, platform: 'node', format: 'esm', external: ['react','react/*','react-dom','react-dom/*'], banner: {js:"import {createRequire} from 'node:module'; const require=createRequire(import.meta.url);"}, loader:{'.css':'empty'}, jsx: 'automatic', logLevel: 'warning' });
   const entry = Object.entries(result.metafile.outputs).find(([, output]) => output.entryPoint?.endsWith('product-drawer-lifecycle-entry.tsx'));
   assert.ok(entry);
   assert.ok(entry[1].imports.some(item => item.kind === 'dynamic-import'), 'The tested host must retain a real lazy drawer import.');
@@ -43,9 +43,9 @@ try {
   const render = async () => { await act(async () => draw()); };
   const settle = async () => { await act(async () => { await new Promise(resolve => setTimeout(resolve, 5)); }); };
   const until = async (predicate, label) => { const deadline = Date.now() + 3000; while (!predicate() && Date.now() < deadline) await settle(); assert.ok(predicate(), label); };
-  const click = async element => { assert.ok(element, 'Expected clickable element'); await act(async () => element.click()); };
+  const click = async element => { assert.ok(element, 'Expected clickable element'); await act(async () => { element.focus?.(); element.click(); }); };
   const button = label => [...host.querySelectorAll('button')].find(element => element.textContent.trim() === label);
-  const drawer = () => host.querySelector('.iw-product-drawer');
+  const drawer = () => host.querySelector('.erp-product-drawer');
   const tab = label => [...host.querySelectorAll('[role=tab]')].find(element => element.textContent === label);
   const active = kind => requests.findLast(request => request.kind === kind && !request.read.signal.aborted);
   const waitRead = async (kind, after = 0) => { await until(() => requests.length > after && active(kind), `Expected active ${kind} read`); await settle(); assert.equal(requests.slice(after).filter(request => request.kind === kind).length, 1, `Exactly one ${kind} transport start per actual action, including StrictMode replay`); return active(kind); };
@@ -60,7 +60,7 @@ try {
   assert.equal(requests.length, 0, 'No product read until drawer code and CSS are ready');
   const abandonedStyle = document.querySelector('link[rel=stylesheet]');
   await click(host.querySelector('[aria-label="关闭商品资料"]'));
-  assert.equal(drawer(), null);
+  assert.ok(drawer() === null, 'Arco product layer is absent');
   await act(async () => abandonedStyle.dispatchEvent(new Event('error')));
   await settle();
   assert.equal(requests.length, 0);
@@ -84,16 +84,18 @@ try {
   assert.ok(disposed.some(scope => scope.routeInstanceId.includes(':base:')));
   assert.ok(disposed.every(scope => !scope.active));
   const mainDialog = drawer();
-  assert.equal(dialogs.filter(event => event.element === mainDialog && event.kind === 'open').length, 2);
-  assert.equal(dialogs.filter(event => event.element === mainDialog && event.kind === 'close').length, 1);
-  assert.equal(document.activeElement, host.querySelector('[aria-label="关闭商品资料"]'));
+  assert.ok(mainDialog.classList.contains('arco-drawer'), 'StrictMode retains one actual Arco Drawer rather than a native dialog');
+  assert.equal(host.querySelectorAll('.erp-product-drawer').length,1);
+  assert.equal(mainDialog.tagName,'DIV');
+  await until(()=>document.activeElement === host.querySelector('[aria-label="关闭商品资料"]'),'Product initial close focus');
+  assert.ok(document.activeElement === host.querySelector('[aria-label="关闭商品资料"]'), `Product close control receives focus; active=${document.activeElement?.tagName}/${document.activeElement?.getAttribute('aria-label')}/${document.activeElement?.textContent?.slice(0,100)}`);
   await resolve(first, base('test-product-1', 'CURRENT FIRST PRODUCT'));
   assert.match(host.textContent, /CURRENT FIRST PRODUCT/);
   const firstTab = tab('基础资料');
   await act(async () => mainDialog.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true, cancelable: true })));
-  assert.equal(document.activeElement, firstTab);
+  assert.ok(document.activeElement?.getAttribute('role')==='tabpanel' && document.activeElement?.getAttribute('aria-labelledby')===firstTab.id, `ShiftTab active=${document.activeElement?.tagName}/${document.activeElement?.getAttribute('role')}/${document.activeElement?.getAttribute('aria-label')}/${document.activeElement?.getAttribute('aria-labelledby')}; expected=${firstTab.id}`);
   await act(async () => mainDialog.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true })));
-  assert.equal(document.activeElement, host.querySelector('[aria-label="关闭商品资料"]'));
+  assert.ok(document.activeElement === host.querySelector('[aria-label="关闭商品资料"]'), `Product close control receives focus; active=${document.activeElement?.tagName}/${document.activeElement?.getAttribute('aria-label')}/${document.activeElement?.textContent?.slice(0,100)}`);
   console.log('PASS StrictMode: real lazy code/CSS gate; pending close/style retry; discarded host/tab/query instances are dead and the replacement reads valid correlated facts.');
 
   let before = requests.length;
@@ -111,12 +113,15 @@ try {
   assert.ok(host.querySelector('img[loading=lazy]'));
   before = requests.length;
   let immediatePreviewCloses = 0;
-  onDialogOpen = element => { if (element.matches('.pd-image-preview')) { immediatePreviewCloses++; element.querySelector('[aria-label="关闭图片预览"]').click(); } };
-  await click(host.querySelector('.pd-thumbnail'));
-  onDialogOpen = undefined; await settle();
-  assert.equal(immediatePreviewCloses, 2, 'The close-before-start probe must observe real preview StrictMode replay');
+  const originalFocus = HTMLElement.prototype.focus;
+  HTMLElement.prototype.focus = function (...args) {
+    originalFocus.apply(this,args);
+    if (this.matches('[aria-label="关闭图片预览"]')) { immediatePreviewCloses++; this.click(); }
+  };
+  try { await click(host.querySelector('.pd-thumbnail')); await settle(); } finally { HTMLElement.prototype.focus = originalFocus; }
+  assert.ok(immediatePreviewCloses >= 1, 'The close-before-start probe observes the actual Arco initial-focus boundary');
   assert.equal(requests.slice(before).filter(request => request.kind === 'original').length, 0, 'Preview closed during attachment must not start its queued original read');
-  assert.equal(host.querySelector('.pd-image-preview'), null);
+  assert.ok(!host.querySelector('.pd-image-preview'),'Inner image layer is absent');
   assert.ok(drawer());
   before = requests.length;
   await click(host.querySelector('.pd-thumbnail'));
@@ -132,7 +137,7 @@ try {
   await resolve(retriedOriginal, { productId: 'test-product-1', imageId: 'TEST-IMAGE', url: png });
   assert.ok(host.querySelector('.pd-image-preview img'));
   await act(async () => host.querySelector('.pd-image-preview').dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true })));
-  assert.equal(host.querySelector('.pd-image-preview'), null);
+  assert.ok(!host.querySelector('.pd-image-preview'),'Inner image layer is absent');
   assert.ok(drawer());
   assert.equal(document.activeElement, host.querySelector('.pd-thumbnail'));
   before = requests.length;
@@ -141,7 +146,7 @@ try {
   await click(host.querySelector('[aria-label="关闭图片预览"]'));
   assert.equal(closedOriginal.read.signal.aborted, true);
   await resolve(closedOriginal, { productId: 'test-product-1', imageId: 'TEST-IMAGE', url: png });
-  assert.equal(host.querySelector('.pd-image-preview'), null);
+  assert.ok(!host.querySelector('.pd-image-preview'),'Inner image layer is absent');
   console.log('PASS StrictMode: tab replacement aborts; images remain thumbnail-only until explicit preview; original-read replay/retry/close and Escape focus restoration work without stale preview.');
 
   before = requests.length;
@@ -149,22 +154,22 @@ try {
   const closed = await waitRead('base', before);
   await click(host.querySelector('[aria-label="关闭商品资料"]'));
   assert.equal(closed.read.signal.aborted, true);
-  assert.equal(drawer(), null);
-  assert.equal(mainDialog.open, false);
+  assert.ok(drawer() === null, 'Arco product layer is absent');
+  assert.equal(mainDialog.isConnected, false, 'Closed Arco Drawer is detached, not a hidden retained target');
   await resolve(closed, base('test-product-1', 'LATE CLOSED PRODUCT'));
-  assert.equal(drawer(), null);
+  assert.ok(drawer() === null, 'Arco product layer is absent');
   open = true; before = requests.length; await render();
   const reopened = await waitRead('base', before);
   assert.notEqual(reopened.read.routeInstanceId, closed.read.routeInstanceId);
   assert.doesNotMatch(host.textContent, /CURRENT FIRST PRODUCT|LATE CLOSED PRODUCT/);
   await resolve(reopened, base('test-product-1', 'REOPENED CURRENT PRODUCT'));
   assert.match(host.textContent, /REOPENED CURRENT PRODUCT/);
-  console.log('PASS StrictMode: close aborts and closes the native dialog; ignored late completion cannot reopen it; same-product remount starts fresh facts and scope.');
+  console.log('PASS StrictMode: close aborts and unmounts the actual Arco Drawer; ignored late completion cannot reopen it; same-product remount starts fresh facts and scope.');
 
   props = { ...props, product: { id: 'test-product-2', label: 'TEST PRODUCT 2' } };
   before = requests.length; await render();
   assert.doesNotMatch(host.textContent, /REOPENED CURRENT PRODUCT/);
-  assert.equal(document.activeElement, host.querySelector('[aria-label="关闭商品资料"]'));
+  assert.ok(document.activeElement === host.querySelector('[aria-label="关闭商品资料"]'), `Product close control receives focus; active=${document.activeElement?.tagName}/${document.activeElement?.getAttribute('aria-label')}/${document.activeElement?.textContent?.slice(0,100)}`);
   const second = await waitRead('base', before);
   assert.equal(second.read.parameters.productId, 'test-product-2');
   assert.equal(second.read.entityId, 'test-product-2');
@@ -223,7 +228,7 @@ try {
   props = { ...props, product: { id: 'test-product-4', label: 'TEST PRODUCT 4' } };
   before = requests.length; await render();
   assert.equal(replacedPreview.read.signal.aborted, true);
-  assert.equal(host.querySelector('.pd-image-preview'), null);
+  assert.ok(!host.querySelector('.pd-image-preview'),'Inner image layer is absent');
   await resolve(replacedPreview, { productId: 'test-product-3', imageId: 'TEST-THIRD-IMAGE', url: png });
   const fourth = await waitRead('base', before);
   await resolve(fourth, base('test-product-4', 'CURRENT FOURTH PRODUCT'));
@@ -234,23 +239,23 @@ try {
   const revokedPreview = await waitRead('original', before);
   await act(async () => contextB.clear());
   assert.equal(revokedPreview.read.signal.aborted, true);
-  assert.equal(host.querySelector('.pd-image-preview'), null);
+  assert.ok(!host.querySelector('.pd-image-preview'),'Inner image layer is absent');
   await resolve(revokedPreview, { productId: 'test-product-4', imageId: 'TEST-FOURTH-IMAGE', url: png });
-  assert.equal(host.querySelector('.pd-image-preview'), null);
+  assert.ok(!host.querySelector('.pd-image-preview'),'Inner image layer is absent');
   console.log('PASS StrictMode: product replacement and identity revocation also abort explicitly opened original-image reads and remove previews despite late completions.');
   before = requests.length;
   await settle();
   assert.equal(requests.length, before);
   assert.equal(host.querySelector('.pd-fields'), null);
   open = false; await render();
-  assert.equal(drawer(), null);
+  assert.ok(drawer() === null, 'Arco product layer is absent');
   const inactive = contextA.createScope('TEST-DRAWER-INACTIVE'); inactive.dispose();
   props = { ...props, parentScope: inactive };
   open = true; await render(); await settle();
   assert.equal(requests.length, before, 'An already-inactive parent must never start a leaf business read');
   assert.equal(host.querySelector('.pd-fields'), null);
-  await act(async () => drawer().dispatchEvent(new Event('cancel', { bubbles: true, cancelable: true })));
-  assert.equal(drawer(), null);
+  await act(async () => drawer().dispatchEvent(new KeyboardEvent('keydown', { key:'Escape', bubbles: true, cancelable: true })));
+  assert.ok(drawer() === null, 'Arco product layer is absent');
   await act(async () => root.unmount()); root = null;
   assert.ok(disposed.every(scope => !scope.active));
   assert.ok(requests.every(request => disposed.some(scope => scope.routeInstanceId === request.read.routeInstanceId && !scope.active)), 'Every queried descendant scope must be disposed after unmount');

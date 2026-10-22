@@ -44,6 +44,11 @@ try {
   const salesRoute = closure(entryFor('routes/sales.tsx'));
   const partiesRoute = closure(entryFor('routes/parties.tsx'));
   const transfersRoute = closure(entryFor('routes/transfers.tsx'));
+  const productsRoute = closure(entryFor('routes/products.tsx'));
+  const categoriesRoute = closure(entryFor('routes/product-categories.tsx'));
+  const settingsRoute = closure(entryFor('routes/product-settings.tsx'));
+  const schemesRoute = closure(entryFor('routes/barcode-schemes.tsx'));
+  const storesRoute = closure(entryFor('routes/store-settings.tsx'));
   const salesDetail = closure(entryFor('../sales/detail-content.tsx'));
   const transferDetail = closure(entryFor('../transfers/detail-content.tsx'));
   const singleSelect = closure(entryFor('../demo-controls/single-select-action.tsx'));
@@ -83,10 +88,20 @@ try {
   const productActionOutput = [...productSearch].find(name => Object.keys(outputs[name].inputs).some(file => file.endsWith('/components/product-candidate-styles.ts')));
   assert.ok(productActionOutput); assert.match(await readFile(path.resolve(workingDirectory, productActionOutput), 'utf8'), /product-candidate-action\.css/);
   const startupInputs = inputsOf(startup);
-  for (const file of startupInputs) assert.doesNotMatch(file, /\/(?:inventory|sales|parties|transfers)\/|synthetic|preview\//);
-  for (const [name, route] of [['startup', startup], ['inventory', inventoryRoute], ['sales', salesRoute]]) {
-    for (const file of inputsOf(route)) assert.doesNotMatch(file, /@arco-design\//, `${name} must not eagerly import Arco JavaScript/CSS`);
+  // Construction must capture the optional full-page capability before any
+  // activation. Only these two pure descriptor/type modules may be eager;
+  // product HTTP readers, UI leaves and query/model code remain deferred.
+  const productCapabilityInputs = new Set(['../products/product-page-configuration.ts', '../products/product-page-contracts.ts']);
+  for (const file of startupInputs) if (!productCapabilityInputs.has(file)) assert.doesNotMatch(file, /\/(?:inventory|sales|parties|transfers|products|product-settings|barcode-schemes|settings\/stores)\/|synthetic|preview\//);
+  for (const file of productCapabilityInputs) {
+    assert.ok(startupInputs.has(file));
+    assert.doesNotMatch(await readFile(path.resolve(workingDirectory, file), 'utf8'), /import\s+(?!type\b)[^;]+from\s+['"](?:react|@arco|.*(?:http-reader|query-controller|product-model|\.tsx)['"])/);
   }
+  // User requirement supersedes the former native-input-only startup policy.
+  // Real authentication/list inputs and buttons require the installed Arco
+  // implementation; business readers/details/fixtures must still remain lazy.
+  assert.ok([...startupInputs].some(file => file.endsWith('/es/Input/input.js')), 'Authentication reaches actual Arco Input');
+  assert.ok([...startupInputs].some(file => file.endsWith('/es/Button/index.js')), 'Authentication reaches actual Arco Button');
   assert.ok([...inputsOf(partiesRoute)].some(file => /@arco-design\/web-react\//.test(file)), 'Explicit parties activation must reach the actual installed Arco implementation');
   assert.ok([...inputsOf(transfersRoute)].some(file => /@arco-design\/web-react\//.test(file)), 'Explicit transfer activation must reach real source controls');
   for (const file of inputsOf(transfersRoute)) assert.doesNotMatch(file, /detail-content\.tsx$|detail\.css$|product-drawer-host\.tsx$|product-http-reader\.ts$|\/tests\//, 'Transfer route excludes detail/product actions and fixtures');
@@ -98,7 +113,11 @@ try {
 
   const styles = Object.fromEntries(await Promise.all(Object.entries(manifest.styles).map(async ([name, file]) => [name, await readFile(path.join(outdir, file), 'utf8')])));
   assert.match(styles.application, /auth-panel/); assert.match(styles.application, /demo-ui/); assert.match(styles.application, /\.sidebar/);
-  assert.doesNotMatch(withoutSharedFocusInputExclusion(styles.application), /iw-workbench|sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.mx-|\.arco-/);
+  assert.doesNotMatch(withoutSharedFocusInputExclusion(styles.application), /iw-workbench|sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.mx-/);
+  for (const component of ['input','btn','picker','checkbox','select','modal','drawer']) assert.ok(styles.application.includes(`.arco-${component}`), `Real host retains shared Arco ${component} CSS after aggregate CSS replacement`);
+  assert.match(styles.application,/erp-date-host/); assert.match(styles.application,/erp-overlay-close/);
+  assert.match(styles.application,/\.erp-breadcrumb/, 'Explicit real-host shell retains shared Breadcrumb styles after aggregate CSS replacement');
+  assert.match(styles.application,/\.erp-document-tag/, 'Explicit real-host shell retains shared domain status Tag styles after aggregate CSS replacement');
   assert.match(styles.inventory, /iw-workbench/); assert.match(styles.inventory, /\.mx-table/);
   assert.doesNotMatch(withoutSharedFocusInputExclusion(styles.inventory), /sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.arco-/);
   assert.match(styles.sales, /sales-workbench/); assert.doesNotMatch(withoutSharedFocusInputExclusion(styles.sales), /party-workbench|\.arco-|sales-detail-(?:facts|page|dialog)|sale-editor|sale-doc-fields|sale-lines-table|sale-summary/);
@@ -126,7 +145,15 @@ try {
   assert.doesNotMatch(styles.transfers, /transfer-editor|\.mx-|\.iw-product-drawer|\.pd-/);
   assert.match(styles['transfer-detail'], /transfer-editor/); assert.match(styles['transfer-detail'], /\.mx-table/);
   assert.doesNotMatch(styles['transfer-detail'], /\.iw-product-drawer|\.pd-tabs|sales-workbench|party-workbench/);
-  assert.match(styles['transfer-product'], /\.iw-product-drawer/); assert.match(styles['transfer-product'], /\.pd-tabs/);
+  assert.match(styles.products, /pm-products/); assert.match(styles['product-categories'], /catalogue-categories/); assert.match(styles['product-settings'], /dictionary-workbench/); assert.match(styles['barcode-schemes'], /dictionary-workbench/);
+  for (const file of inputsOf(settingsRoute)) assert.doesNotMatch(file,/\/product-settings\/(?:colors\/(?:colors-page|entry-page)|fits\/fits-page)\.tsx$/,'Colors/fits UI remains tab-action lazy, even when the settings route is configured');
+  for (const route of [productsRoute,categoriesRoute,settingsRoute,schemesRoute,storesRoute]) for (const file of inputsOf(route)) assert.doesNotMatch(file,/synthetic|\/preview\/|\/tests\/|postgres|current-form\/http-reader/,'Management routes never import fixture/transaction-candidate/database fallbacks');
+  assert.ok([...inputsOf(storesRoute)].some(file=>file.endsWith('/settings/stores/http-reader.ts')),'Stores uses the existing exact read port');
+  assert.ok([...inputsOf(storesRoute)].some(file=>file.endsWith('/components/standard-overlay.tsx')),'New detail route reuses actual Arco overlay adapter');
+  assert.match(styles['store-settings'],/store-settings-workbench/);
+  assert.doesNotMatch(styles['store-settings'],/sales-workbench|transfer-route|transfer-editor|\.mx-|party-workbench/);
+  for (const name of ['product-categories','product-settings','barcode-schemes']) assert.doesNotMatch(styles[name],/sales-workbench|transfer-route|transfer-editor|\.mx-|party-workbench/,'Read-only dictionary CSS does not replace transaction styles');
+  assert.match(styles['transfer-product'], /\.iw-product-drawer/); assert.match(styles['transfer-product'], /\.pd-panel/);
   assert.doesNotMatch(styles['transfer-product'], /\.mx-|\.iw-settings|transfer-editor|sales-workbench|party-workbench/);
   for (const name of ['transfers', 'transfer-detail']) {
     const file = byAbsolute.get(path.join(outdir, manifest.styles[name])); assert.ok(file);
@@ -138,12 +165,12 @@ try {
     startupInputs: [...startupInputs].sort(), startupCode: [...startup].map(name => path.basename(name)),
     routeInputCounts: { inventory: inputsOf(inventoryRoute).size, sales: inputsOf(salesRoute).size, salesDetail: inputsOf(salesDetail).size, parties: inputsOf(partiesRoute).size, transfers: inputsOf(transfersRoute).size, transferDetail: inputsOf(transferDetail).size },
     stylesheetBytes: Object.fromEntries(Object.entries(styles).map(([name, css]) => [name, Buffer.byteLength(css)])),
-    guarantees: ['One shared single-select action and action-only CSS serves all three lightweight pager adapters', 'One shared TreeSelect presentation serves transfer filters and action-lazy sales filters', 'Startup/inventory/sales static closures exclude Arco JS/CSS', 'Parties/transfers use actual installed Arco only after explicit activation',
+    guarantees: ['One shared single-select action and action-only CSS serves all three lightweight pager adapters', 'One shared TreeSelect presentation serves transfer filters and action-lazy sales filters', 'Shared standard inputs/buttons use real Arco from startup; explicit shell graph retains their installed styles', 'Business routes/details/readers remain explicit and lazy',
       'Sales/parties CSS preserves shared controls/tokens but excludes all inventory-specific matrix/settings/drawer assets',
       'Sales route static code/CSS excludes detail content/styles; separate sales-detail CSS is explicit action-only host configuration',
       'Transfer route excludes detail/product code/data/styles; inline-detail and product action assets are separate'],
     boundary: 'Static emitted-import/CSS analysis only. No browser/network waterfall, timing, memory or frozen-Demo visual acceptance.',
   };
   console.log(JSON.stringify(description, null, 2));
-  console.log('PASS: actual split output isolates business routes, inventory-specific CSS and explicit-party/transfer-only Arco JS/CSS plus separate detail/product action assets while preserving necessary shared controls.');
+  console.log('PASS: actual split output retains real shared Arco controls/styles while isolating business routes, inventory CSS and separate detail/product action assets.');
 } finally { await rm(temporary, { recursive: true, force: true }); }

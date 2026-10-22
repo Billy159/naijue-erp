@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ComponentType } from 'react';
 import { createRoot } from 'react-dom/client';
+import type { BreadcrumbSegment } from '../src/components/standard-breadcrumb.tsx';
 import { DemoFrame, type DemoNavigationId } from '../src/demo-presentation/demo-frame.tsx';
 import { AsyncLeafRegistry } from '../src/loading/async-leaf-registry.ts';
 import { ReadContext, type ReadScope } from '../src/loading/read-scope.ts';
@@ -18,7 +19,7 @@ type Ready = { readonly View: ComponentType<{ readonly scope: ReadScope }> };
 const routes: readonly Route[] = ['inventory', 'sales', 'transfers'];
 const labels: Record<Route, string> = { inventory: '库存状况表', sales: '销货单列表', transfers: '调拨单列表' };
 const navigationIds: Record<Route, DemoNavigationId> = { inventory: 'inventory', sales: 'sales', transfers: 'transfer' };
-const breadcrumbs: Record<Route, string> = { inventory: '库存管理 / 库存状况表', sales: '销售管理 / 销货单列表', transfers: '库存管理 / 调拨单列表' };
+const breadcrumbs: Record<Route, readonly BreadcrumbSegment[]> = { inventory: [{id:'inventory-management',label:'库存管理'},{id:'inventory',label:'库存状况表'}], sales: [{id:'sales-management',label:'销售管理'},{id:'sales',label:'销货单列表'}], transfers: [{id:'inventory-management',label:'库存管理'},{id:'transfers',label:'调拨单列表'}] };
 const readKinds: readonly ReadKind[] = ['inventory', 'inventoryCandidates', 'salesList', 'salesDetail', 'salesReferences', 'transferList', 'transferDetail', 'transferWarehouses', 'productBasics', 'productSpecifications', 'productImages', 'productOriginal'];
 
 function lazyProductReader(report: ReportRead): ProductReadOnlyReader {
@@ -79,7 +80,7 @@ function CorePagesPreview() {
     return () => { window.removeEventListener('hashchange', changed); context.clear(); };
   }, [context, leaves]);
   const navigation = Object.fromEntries(routes.map(candidate => [navigationIds[candidate], { href: `#${candidate}`, selected: route === candidate, onActivate: () => { location.hash = candidate; } }]));
-  return <DemoFrame navigation={navigation} breadcrumb={route ? breadcrumbs[route] : '三个核心只读页面 · 合成预览'}
+  return <DemoFrame navigation={navigation} breadcrumb={route ? breadcrumbs[route] : [{id:'preview',label:'三个核心只读页面 · 合成预览'}]}
     topbarActions={<><span className="core-preview-account">TEST ONLY · 无登录 · 无真实账号</span>{route && <button type="button" className="core-preview-close" onClick={() => { location.hash = 'home'; }}>关闭页面</button>}</>}
     notice={<aside className="core-preview-notice" aria-label="合成测试预览说明"><strong>合成数据预览 · 无真实登录/数据库/写入</strong></aside>}
     footer={<footer className="core-preview-footer"><details className="core-preview-details"><summary>预览说明与读取计数</summary><p>TEST ONLY / SYNTHETIC ONLY：这不是正式系统。本文件使用实际库存、销货、调拨只读组件；商品、客户、人员、单号、数量和金额全部为合成测试数据。无真实登录、网络、数据库或写入，未接入的操作保持禁用。</p><output className="core-preview-diagnostics" {...Object.fromEntries(readKinds.map(kind => [`data-read-${kind.toLowerCase()}`, reads[kind]]))}>测试读取次数：库存 {reads.inventory} / 销货列表 {reads.salesList} / 销货详情 {reads.salesDetail} / 调拨列表 {reads.transferList} / 调拨详情 {reads.transferDetail} / 商品基础 {reads.productBasics} / 规格 {reads.productSpecifications} / 图片 {reads.productImages}</output><p>独立下载预览将代码和样式装入一个文件，仅用于查看交互。不是生产懒加载、真实数据、性能、原生浏览器截图、像素或空间内嵌验收。</p></details></footer>}>

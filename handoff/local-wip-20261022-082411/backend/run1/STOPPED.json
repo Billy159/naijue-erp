@@ -1,0 +1,10 @@
+{
+  "atUtc": "2026-10-21T22:43:30.163707+00:00",
+  "exactDataDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-backend-sealed-history-pg18/run-1/data",
+  "port": 55671,
+  "stopAttempted": true,
+  "stopExitCode": 0,
+  "pgCtlStatusExit": 3,
+  "postmasterPidAbsent": true,
+  "deleted": false
+}

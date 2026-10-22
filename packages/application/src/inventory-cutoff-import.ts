@@ -2,6 +2,9 @@ import { requireDomain } from "../../domain/src/errors.ts";
 import { businessDate, entityId, quantity } from "../../domain/src/values.ts";
 import type { BusinessDate, EntityId, Quantity } from "../../domain/src/values.ts";
 import { requestHash } from "./request-hash.ts";
+import { historyImportStageMetadata } from "./history-import-lifecycle.ts";
+import type { HistoryImportStageMetadata } from "./history-import-lifecycle.ts";
+import { hasNativeImportAccountingMetadata, validateNativeImportAccountingCommand } from "./native-import-record-accounting.ts";
 
 /** Approved import metadata only. No source file is opened on the runtime read path. */
 export const CUTOFF_IMPORT_CHUNK_LIMIT = 500;
@@ -16,6 +19,7 @@ export interface CutoffImportBatch {
   readonly cutoffAt: string; readonly mappingVersion: string; readonly inventoryMode: "CUTOFF_STOCK_BASELINE";
   readonly status: "STAGED" | "VALIDATING" | "PASSED" | "IMPORTED" | "FAILED";
   readonly checkpoint: ImportCheckpoint; readonly createdAt: string; readonly completedAt: string | null;
+  readonly historyMetadata?: HistoryImportStageMetadata;
 }
 export interface ApprovedSourceIdentity {
   readonly sourceEntityType: string; readonly sourceKey: string; readonly sourceRecordHash: string; readonly sourceFileRef: string;
@@ -31,7 +35,9 @@ interface ImportEnvelope {
 }
 export type CutoffImportCommand = ImportEnvelope & (
   { readonly action: "IMPORT_STAGE"; readonly sourceName: string; readonly sourceManifestRef: string; readonly sourceHash: string;
-    readonly cutoffAt: string; readonly mappingVersion: string; readonly expected: ImportCounts }
+    readonly cutoffAt: string; readonly mappingVersion: string; readonly expected: ImportCounts;
+    /** Mandatory only for V2; independently authorized with the complete frozen command. */
+    readonly historyMetadata?: HistoryImportStageMetadata }
   | { readonly action: "IMPORT_CHUNK"; readonly expectedSequence: number; readonly expectedCursor: number; readonly items: readonly CutoffImportItem[] }
   | { readonly action: "IMPORT_PUBLISH"; readonly expectedSequence: number; readonly expectedCursor: number;
     /** Explicit reviewed evidence, not an inferred EOF or same-grand-total check. */
@@ -72,17 +78,21 @@ export function stableImportId(purpose: string, ...identity: readonly string[]):
 export function validateCutoffImportCommand(command: CutoffImportCommand): void {
   requireDomain(typeof command === "object" && command !== null && !Array.isArray(command), "INVALID_IMPORT_COMMAND", "Expected an explicit import command");
   entityId("operation", command.batchId); entityId("account", command.actorAccountId);
+  const forbidden = ["validationPassed", "historyValidationPassed", "history_validation_passed", "historyActualCounts", "history_actual_counts"];
+  requireDomain(forbidden.every(k => !Object.hasOwn(command, k)), "CALLER_HISTORY_VALIDATION_FORBIDDEN", "History validation is a same-transaction SQL result, never a caller flag");
+  if (command.action !== "IMPORT_STAGE") requireDomain(!Object.hasOwn(command, "historyMetadata"), "INVALID_HISTORY_IMPORT_METADATA", "Only STAGE may freeze history metadata");
   requireDomain(nonempty(command.requestKey), "INVALID_REQUEST_KEY", "A stable original import request key is required");
   if (command.action === "IMPORT_STAGE") {
     requireDomain(/^[a-z][a-z0-9_.:-]*$/.test(command.sourceName) && nonempty(command.sourceManifestRef)
       && hash(command.sourceHash) && nonempty(command.mappingVersion)
       && Number.isFinite(Date.parse(command.cutoffAt)) && /(?:Z|[+-]\d\d:\d\d)$/.test(command.cutoffAt),
     "INVALID_IMPORT_MANIFEST", "A fixed source namespace and frozen reviewed manifest are required");
-    validateImportCounts(command.expected); return;
+    validateImportCounts(command.expected); historyImportStageMetadata(command.mappingVersion, command.historyMetadata); return;
   }
   counter(command.expectedSequence); counter(command.expectedCursor);
   if (command.action === "IMPORT_PUBLISH") {
     const a = command.approval;
+    requireDomain(a === null || typeof a !== "object" || forbidden.every(k => !Object.hasOwn(a, k)), "CALLER_HISTORY_VALIDATION_FORBIDDEN", "Approval cannot carry a history-validation bypass flag");
     requireDomain(typeof a === "object" && a !== null && a.completeScope === true && a.absentMeansZero === true && a.allFilesVerified === true
       && a.finalDeltaVerified === true && a.noUnresolvedExceptions === true && hash(a.sourceHash) && nonempty(a.sourceManifestRef),
     "INCOMPLETE_IMPORT_SCOPE", "Every complete-scope and final-delta attestation must be explicitly approved");
@@ -112,6 +122,7 @@ export function validateCutoffImportCommand(command: CutoffImportCommand): void 
 }
 export function createCutoffImportService(dependencies: CutoffImportDependencies): { execute(command: CutoffImportCommand): Promise<CutoffImportResult> } {
   return { async execute(command) {
+    if (hasNativeImportAccountingMetadata(command)) validateNativeImportAccountingCommand(command);
     const snapshot = structuredClone(command); validateCutoffImportCommand(snapshot);
     await dependencies.authorization.assertAllowed(snapshot.actorAccountId, snapshot);
     const now = dependencies.now();

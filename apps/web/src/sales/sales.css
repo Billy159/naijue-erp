@@ -3,7 +3,7 @@
  * golden-consistency.css:13–55,91–114; sales-refinement.css final list widths;
  * sales-detail-alignment.css final read-only document geometry.
  * Scoped adaptation only. Shared controls/tokens stay shared; no legacy runtime. */
-.sales-workbench{display:flex;flex-direction:column;min-width:0;height:calc(100dvh - var(--ui-topbar) - 32px);min-height:0;font:13px var(--ca-font-sans);color:var(--ca-ink)}
+.sales-workbench{display:flex;flex-direction:column;box-sizing:border-box;width:100%;max-width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;height:calc(100dvh - var(--ui-topbar) - 32px);min-height:0;font:13px var(--ca-font-sans);color:var(--ca-ink)}
 .sales-workbench>.tc-head{display:flex;align-items:center;gap:12px;min-height:40px;margin:0 0 8px;flex:none;background:#fff}
 .sales-workbench>.tc-head h1{font-size:20px;line-height:28px;margin:0;font-weight:600}
 .sales-workbench>.tc-head>.iw-button{margin-left:auto}
@@ -37,10 +37,6 @@
 .sales-workbench .sales-number{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;padding:0;font-size:13px}
 .sales-workbench .sales-view{padding:0;font-size:13px}
 .sales-unavailable{color:var(--ca-ink-3);font-size:12px}
-.sales-workbench .tc-state-tag{display:inline-block;border-radius:4px;padding:3px 7px;font-size:12px;font-weight:500;line-height:20px}
-.sales-workbench [data-document-status=pending]{background:var(--ca-warning-soft);color:var(--ca-warning)}
-.sales-workbench [data-document-status=effective]{background:var(--ca-success-soft);color:var(--ca-success)}
-.sales-workbench [data-document-status=void]{background:var(--ca-neutral-tag-bg);color:var(--ca-neutral-tag-ink)}
 .sales-workbench .tc-empty{padding:20px 12px;color:var(--ca-ink-2);font-size:13px}
 .sales-workbench .tc-empty strong{font:inherit}.sales-workbench .tc-empty p{font-size:12px;line-height:20px;margin:8px 0}
 .sales-pagination{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:42px;padding:8px 0;flex:none;font-size:12px;flex-wrap:wrap}
@@ -52,10 +48,19 @@
 .sales-workbench[hidden]{display:none}
 /* Lightweight Back frame remains usable while action code/CSS is pending. */
 .sales-detail-loading>.tc-head .actions{display:flex;align-items:center;gap:4px;margin-left:auto}
-@media(max-width:1450px){.sales-workbench .tc-filters{--sales-filter-columns:minmax(100px,.8fr) minmax(100px,.8fr) 155px minmax(138px,1fr) minmax(110px,1.2fr) minmax(110px,1.2fr) max-content;--sales-filter-min-width:0px}}
-@media(max-width:1270px){.sales-workbench .tc-filters{--sales-filter-columns:minmax(88px,.8fr) minmax(88px,.8fr) 155px minmax(115px,1fr) minmax(95px,1.2fr) minmax(95px,1.2fr) max-content}}
+@media(max-width:1450px){.sales-workbench .tc-filters{--sales-filter-columns:minmax(110px,.8fr) minmax(110px,.8fr) 155px minmax(155px,1fr) minmax(140px,1.2fr) minmax(140px,1.2fr) max-content;--sales-filter-min-width:1140px}}
+
 /* Lightweight placeholders remain route-local; heavy TreeSelect CSS is action-only. */
 .demo-multi-host{position:relative;display:block;min-width:0;width:100%}
 .demo-multi-host .demo-multi-trigger{height:32px;font-size:13px}
 .demo-multi-host .demo-multi-state{display:block;font-size:12px;line-height:18px;color:var(--ca-ink-2);padding:4px 0}
 .sales-filter-notice{margin:0;padding:7px 8px;font-size:12px;line-height:18px;color:var(--ca-ink-2)}
+
+/* The light closed-state overlay already reserves 31px for the suffix. A lone
+ * token must use that remaining width, not subtract Arco's 42px reserve again.
+ * Keep the measured multi-token/+N presentation untouched. */
+.sales-workbench .tc-filter-row .demo-idle-selection:not(:has(.demo-idle-token-count))>.demo-idle-token:only-child{max-width:100%}
+/* Keep overflow on the full-height list, not on the short filter form: locally
+ * owned Arco popups can float over the results without a 32px-high clip. */
+.sales-workbench .tc-filters{overflow:visible}
+.sales-workbench .tc-filter-row>.iw-field,.sales-workbench .tc-filter-actions{flex-shrink:0}

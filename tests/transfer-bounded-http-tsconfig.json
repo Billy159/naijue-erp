@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [],
+  "files": [
+    "../packages/application/src/transfer-policy.ts",
+    "../apps/api/src/postgres-application-api.test.ts"
+  ]
+}

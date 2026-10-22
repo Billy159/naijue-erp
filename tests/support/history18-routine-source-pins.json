@@ -1,0 +1,366 @@
+{
+  "functions": [
+    {
+      "signature": "reject_immutable_change()",
+      "md5": "7fd92638ea5903af835fd52e2740df66",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "cutoff_import_lock()",
+      "md5": "7aa5e2e7fbe4580302c34a8b678aba0c",
+      "language": "sql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "import_source_key_lock(text,text,text)",
+      "md5": "01e33162d751072a8104f8f53c154bd9",
+      "language": "sql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "guard_history_insert()",
+      "md5": "300eb6c65679f408959a717015494f00",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "guard_contributor_link()",
+      "md5": "ecc0554f1e8914067c7bed3c4fe74534",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "validate_history_product_proofs(uuid)",
+      "md5": "7cc32bfbd28af764d83b26c8bedd466b",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "guard_history_publication()",
+      "md5": "5f6862cc8715c07622e1ba6b14f9aa68",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "guard_header_native_reference()",
+      "md5": "faf47176d49c0d978face1a778bf36f2",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "guard_header_native_reference_publication()",
+      "md5": "44a507eed6e2e976a268e8527b010228",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "guard_native_party_import_intent()",
+      "md5": "47a9d34680c90a31a9dfbda5e1ac608c",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "is_native_party_import_insert(text,jsonb)",
+      "md5": "7ee15ace84a76a9af4bcd8e17c91a2cc",
+      "language": "sql",
+      "volatile": "v",
+      "definer": true,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "validate_native_party_import_commit()",
+      "md5": "8dca79c15351860d83772154739f87f1",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "keep_party_native_identity()",
+      "md5": "48d51502fec9f9160d3ef6e710bd7e3f",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "validate_party_native_commit()",
+      "md5": "d345ac470c4b19f1d54bd14f05a5b9d3",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "guard_native_catalogue_binding()",
+      "md5": "debe8d23a074918b063fb0056197f4a1",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "guard_native_catalogue_publication()",
+      "md5": "b3369c4c85ae5f59a826f8c5fd684b3b",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "guard_import_accounting_claim()",
+      "md5": "834dc852808d74913841772fe00e32f0",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "validate_import_accounting_claim_commit()",
+      "md5": "0f9be3cc9a993043144cfadd657f45d2",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "validate_import_accounting_checkpoint_commit()",
+      "md5": "2eb1bc28552c1e5cb8d74cc2a4ae95e5",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "validate_import_accounting_baseline_commit()",
+      "md5": "2d612a969054a1936bcbbe8d32d4fc18",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "validate_import_accounting_final_record_commit()",
+      "md5": "8dc8e20662be36d8f84473a3bfc7420f",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "guard_import_accounting_publication()",
+      "md5": "43d9bb4436e19fa4df94c1b51e08246e",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "guard_native_payment_binding()",
+      "md5": "bb21b120553fa5b866bb8033a123a19c",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "guard_native_payment_publication()",
+      "md5": "c51d89d40d0fcf5de709f75047ca75ce",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": true,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "history_closure_encode(jsonb,integer)",
+      "md5": "12ec166bc7ee379141cfe9095920754f",
+      "language": "plpgsql",
+      "volatile": "i",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "history_closure_row_hash(text,text,jsonb)",
+      "md5": "804cae577014c088549e72af8e6472da",
+      "language": "plpgsql",
+      "volatile": "i",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "history_closure_seed(text)",
+      "md5": "9f53b456f3e68d449d30ec590b28f8f3",
+      "language": "plpgsql",
+      "volatile": "i",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "history_closure_fold(bytea,text)",
+      "md5": "f0f846476a0a37f256ac7e6d52f1842a",
+      "language": "plpgsql",
+      "volatile": "i",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "history_closure_finish(text,bigint,bytea)",
+      "md5": "459720c834ed3991aa837112d8540552",
+      "language": "plpgsql",
+      "volatile": "i",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "history_closure_count_map(jsonb,text[])",
+      "md5": "1d973666367e7c5f2c4a42202056a3dd",
+      "language": "plpgsql",
+      "volatile": "i",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog"
+    },
+    {
+      "signature": "history_closure_projection_columns(text)",
+      "md5": "ca93d1438f9bde53fe4f5cafe09b2c37",
+      "language": "plpgsql",
+      "volatile": "i",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "history_closure_projection(text,jsonb)",
+      "md5": "4b53ca33edbe417cbe1eb16c5b85b6b0",
+      "language": "plpgsql",
+      "volatile": "i",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "history_closure_projection_key(text,jsonb)",
+      "md5": "22ba6f524c7c40d597fdb52ac4b79b0e",
+      "language": "plpgsql",
+      "volatile": "i",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "history_closure_rows(uuid)",
+      "md5": "70ecff2a73dd659dca4cc52589bda85d",
+      "language": "sql",
+      "volatile": "s",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "history_closure_document_rows(uuid,text,uuid,boolean)",
+      "md5": "68aca88b40b72f2829f4e1cb44b46bfb",
+      "language": "plpgsql",
+      "volatile": "s",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "history_closure_digest(uuid,text,text,text,uuid,jsonb)",
+      "md5": "0addd270d5265c53aaeeaff8458bdb16",
+      "language": "plpgsql",
+      "volatile": "s",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "assert_history_typed_closure(uuid,jsonb,jsonb)",
+      "md5": "0d7ea7603816f2ea9c80b4f554b006a5",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "guard_history_closure_stage()",
+      "md5": "19d2125ffd289eebb0ec5c8e04528cff",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "validate_history_closure_commit()",
+      "md5": "b42220adaac3e2e46ecc9feb8a3ec735",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    },
+    {
+      "signature": "guard_history_typed_publication()",
+      "md5": "2fa571b4582b80c131b45efeb8f76d48",
+      "language": "plpgsql",
+      "volatile": "v",
+      "definer": false,
+      "public": false,
+      "searchPath": "search_path=pg_catalog,naijue_erp"
+    }
+  ],
+  "source": "Latest exact body bytes from frozen1\u201317/current18 SQL for original immutable/lock/source/publication/native guards; not database observed values",
+  "ddl18Sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da"
+}

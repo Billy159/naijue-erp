@@ -7,7 +7,10 @@ export function createSourceConfirmedTransferAuthorization(): TransferAuthorizat
   return { async assertAllowed(actor, _action, document, previous, tx) {
     requireDomain(tx, "TRANSFER_POLICY_CONTEXT_REQUIRED", "Transfer authorization requires transaction-local trusted warehouse facts");
     requireDomain(["ADMIN", "WAREHOUSE", "SALESPERSON"].includes(actor.role), "FORBIDDEN", "Unknown role");
-    const warehouses = await Promise.all([document.header.fromWarehouseId, document.header.toWarehouseId].map(id => tx.getWarehouseFact(id)));
+    // Both facts use this transaction's one leased client. Read them in order:
+    // the bounded pool deliberately refuses overlapping queries on one client.
+    const warehouses = [await tx.getWarehouseFact(document.header.fromWarehouseId),
+      await tx.getWarehouseFact(document.header.toWarehouseId)];
     requireDomain(warehouses.every((row): row is TransferWarehouseFact => row !== undefined), "WAREHOUSE_UNAVAILABLE", "Both warehouses must exist");
     if (actor.role !== "SALESPERSON") return;
     requireDomain(actor.hallId !== null, "FORBIDDEN", "Salesperson requires an authoritative hall");

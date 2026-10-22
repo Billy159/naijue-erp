@@ -1,0 +1,44 @@
+✔ nine-price validator distinguishes explicit null and zero; rejects omissions/undefined/coercion/overflow (24.597851ms)
+✔ source proof requires all raw own keys; reviewed exact-column blank policy never permits missing or whitespace (7.423795ms)
+✔ persisted verifier uses original transaction with explicit target binding/published batch/source+product locks (23.261235ms)
+✔ persisted verifier rejects absent/duplicate/foreign/changed/unpublished proof and source/raw tampering (8.35724ms)
+✔ persisted verifier bounds target batches to 200 without pool/independent transaction or global success cache (112.847432ms)
+✔ SYNTHETIC proof writer locks reviewed batch/native prices then inserts full immutable source evidence, never publishes (8.214733ms)
+✔ SYNTHETIC proof writer mismatch rejects before immutable insert (5.231395ms)
+✔ SYNTHETIC missing source-proof schema is explicit unavailable, never proof or a default verifier (0.832694ms)
+✔ reviewed native import schemas are explicit complete 11/12 prefixes, never a >= version shortcut (10.125242ms)
+✔ schema12 compatibility review pins the final additive header DDL bytes rather than silently accepting revised SQL (37.715912ms)
+✔ native authorizer projects exact old source DTO/hash, then independently checks complete reviewed reference decisions and mapping bytes (249.257645ms)
+✔ native reference decisions preserve explicit supplier/season null and nullable policy instead of manufacturing references (75.494902ms)
+✔ native authorizer requires independent manifest pin, exact source authority and actual pinned mapping-file set (36.627775ms)
+✔ native authorizer rejects every full reference/decision/source target drift before staging (180.112652ms)
+✔ a self-consistent new decision digest or hash-shaped reference is not authority without all pinned files and exact source authorization (90.988814ms)
+✔ native authorizer rejects missing full/null reference decisions, stale decision digests, duplicate grants and wrong batch selection (84.009717ms)
+✔ native authorizer rehashes both decision and mapping files on every call; symlink/changed bytes cannot reuse old authority (107.352891ms)
+✔ native authorizer rechecks after async exact-source authorization, honors close, and never stages on denial (112.174032ms)
+✔ native PRODUCT DRY_RUN validates but never connects; STAGE requires independent exact-file/row/mapping authority (27.675651ms)
+✔ native PRODUCT source directly determines every native field, preserved explicit nulls and exact nine prices (6.636242ms)
+✔ native PRODUCT refuses missing raw/normalized nine-price columns rather than completing with null (24.46624ms)
+✔ native PRODUCT rejects incomplete provenance, transformations, whitespace, unknown states and invalid integer values before connecting (27.285625ms)
+✔ native PRODUCT requires explicit source-to-native reference mappings, full acyclic category path, optional-null decisions and unique product codes (18.568737ms)
+✔ native PRODUCT creates actual rows and immutable source+proof together; all native target locks/creates precede all source access (50.236241ms)
+✔ native PRODUCT exact replay is insert-free; native full-field drift or immutable evidence drift cannot inherit old proof (175.303185ms)
+✔ native PRODUCT refuses existing unproven target, source-only repair, changed mapping and target-code collisions (42.846765ms)
+✔ native PRODUCT validates every actual dictionary reference and rolls back the whole chunk on late proof failure (77.804881ms)
+✔ native PRODUCT commit uncertainty discards once without automatic retry; explicit identical retry resolves committed outcome (17.76398ms)
+✔ native PRODUCT fails closed for schema/batch mismatch, rollback failure and altered prepared values (26.94518ms)
+✔ native PRODUCT explicitly supports reviewed schema12 but rejects missing11 and unknown13/14/future registry versions before targets/writes (41.637513ms)
+✔ PRODUCT staging default DRY_RUN never connects or publishes; explicit STAGE requires exact-source authorizer (72.462012ms)
+✔ PRODUCT staging rejects missing raw9 key, changed approved-price values unsupported by this proof, false native mapping and duplicate target (6.72967ms)
+✔ PRODUCT stage invokes real proof writer atomically using cutoff→batch→actual native binding and never publication (8.944947ms)
+✔ PRODUCT exact replay is insert-free, changed/stale replay and missing native product fail with rollback (18.806069ms)
+✔ PRODUCT commit uncertainty discards connection and never automatically retries (8.814535ms)
+✔ PRODUCT SQL boundary rejects altered prepared chunk before acquiring a connection (6.12432ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1960.884333

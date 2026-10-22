@@ -103,8 +103,8 @@ for (const point of ["source", "ledger", "balance", "checkpoint", "audit", "rece
 }
 test("cutoff pg protocol: uncertain COMMIT discards connection and never automatically retries", async () => {
   const failure = new Error("synthetic commit acknowledgment lost");
-  const client = new ProtocolClient([begin(), ...receipt(), ...batch(), { match: /^INSERT INTO naijue_erp.import_batch/ }, ...evidence(), { match: /^COMMIT$/, error: failure }, rollback()]);
-  await assert.rejects(execute(client, cutoffStage), error => error === failure); assert.equal(client.releases[0], failure); client.done();
+  const client = new ProtocolClient([begin(), ...receipt(), ...batch(), { match: /^INSERT INTO naijue_erp.import_batch/ }, ...evidence(), { match: /^COMMIT$/, error: failure }]);
+  await assert.rejects(execute(client, cutoffStage), error => error === failure); assert.equal(client.releases[0], failure); assert.ok(!client.calls.some(c => c.sql === "ROLLBACK")); client.done();
 });
 for (const point of ["source", "ledger", "balance", "checkpoint"] as const) {
   test(`cutoff pg protocol: zero-row ${point} result rolls back without advancing checkpoint/evidence`, async () => {

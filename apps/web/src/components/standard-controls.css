@@ -1,0 +1,12 @@
+/* Layout/tokens only. Behaviour, markup and states come from actual Arco. */
+.erp-select-host,.erp-date-host{display:inline-flex;position:relative;min-width:0;width:100%;vertical-align:middle}
+.erp-select.arco-select,.erp-date.arco-picker{width:100%;min-width:0;background:var(--ca-surface,#fff);border:1px solid var(--ca-line,#e5e6eb);border-radius:4px}
+.erp-input.arco-input,.erp-textarea.arco-textarea{min-width:0;font:inherit;color:var(--ca-ink,#1d2129);background:var(--ca-surface,#fff);border:1px solid var(--ca-line,#e5e6eb);border-radius:4px}
+.erp-input.arco-input:focus,.erp-textarea.arco-textarea:focus,.erp-select.arco-select-focused,.erp-date.arco-picker-focused{border-color:var(--ca-primary,#165dff)}
+.erp-date.arco-picker input,.erp-select.arco-select input{height:auto;min-height:0;padding:0;border:0;border-radius:0;outline:none;background:transparent;box-shadow:none;font:inherit}
+.erp-checkbox.arco-checkbox{display:inline-flex;align-items:center;gap:3px;font:inherit;white-space:nowrap}
+.erp-checkbox.arco-checkbox input[type=checkbox]{position:absolute;width:0;height:0;margin:0;padding:0;opacity:0}
+.erp-button.arco-btn{font:inherit}
+.erp-button.arco-btn-default{border-color:var(--ca-line,#e5e6eb);background:var(--ca-surface,#fff);color:var(--ca-ink,#1d2129)}
+.demo-frame .sidebar .erp-button.nav.arco-btn{border:0;background:transparent;text-align:left;justify-content:flex-start;box-shadow:none}
+.erp-date-host .arco-trigger-popup,.erp-select-host .arco-trigger-popup{z-index:1200}

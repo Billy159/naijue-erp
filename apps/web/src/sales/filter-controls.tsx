@@ -1,3 +1,4 @@
+import { UIButton } from '../components/standard-controls.tsx';
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { DemoMultiSelect } from '../demo-controls/multi-select.tsx';
 import type { DemoMultiOption } from '../demo-controls/multi-select-contract.ts';
@@ -77,10 +78,10 @@ function ReferenceRead(props: { readonly scope: ReadScope; readonly reader: Sale
   const selected = props.selectedCount ? `已选 ${salesCount(String(props.selectedCount))} 项`
     : data?.unfilteredTotal !== null && data?.unfilteredTotal !== undefined ? `已选 ${salesCount(data.unfilteredTotal)} 项` : `已选全部${props.label}`;
   return <div className="sales-reference-menu"><div className="inv-filter-tools">{data?.exactTotal !== null && data?.exactTotal !== undefined ? `匹配 ${salesCount(data.exactTotal)} 项` : `正在匹配${props.label}`} · {selected}</div>
-    {props.notice && <p className="sales-filter-notice" role="status">{props.notice}{props.explicit && <> 如需明确只选“{props.explicit.label}”，请<button type="button" className="iw-link" onClick={props.chooseExplicit}>仅选择该项</button>。</>}</p>}
+    {props.notice && <p className="sales-filter-notice" role="status">{props.notice}{props.explicit && <> 如需明确只选“{props.explicit.label}”，请<UIButton type="button" className="iw-link" onClick={props.chooseExplicit}>仅选择该项</UIButton>。</>}</p>}
     {data?.exactTotal !== null && data?.exactTotal !== undefined && props.menu}
     {busy && <p className="iw-inline-state" role="status">正在读取候选…</p>}
-    {data?.phase === 'error' && <p className="iw-inline-state" role="alert">候选读取失败或已变化。<button type="button" className="iw-link" onClick={() => { query.reset(search); void query.loadNext(); }}>重试候选</button></p>}
+    {data?.phase === 'error' && <p className="iw-inline-state" role="alert">候选读取失败或已变化。<UIButton type="button" className="iw-link" onClick={() => { query.reset(search); void query.loadNext(); }}>重试候选</UIButton></p>}
     {data?.phase === 'success' && data.items.length === 0 && <p className="iw-inline-state">没有匹配候选</p>}
     {data?.limitReached && <p className="sales-filter-notice" role="status">已加载 {SALES_REFERENCE_CANDIDATE_LIMIT} 项，尚有更多匹配候选，请输入名称缩小范围。匹配总数未截断。</p>}
   </div>;

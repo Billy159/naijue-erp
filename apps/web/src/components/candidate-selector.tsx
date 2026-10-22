@@ -1,3 +1,4 @@
+import { UIButton, UIInput } from './standard-controls.tsx';
 import { useLayoutEffect, useMemo, useReducer, useRef, useState, type ComponentType } from 'react';
 import { ReadScope } from '../loading/read-scope.ts';
 import type { PopupOwnership } from '../demo-controls/popup-ownership.ts';
@@ -115,12 +116,12 @@ function ProductSelector(props: CandidateSelectorProps) {
             suppressOpen.current = true; input.current?.focus({ preventScroll: true });
             queueMicrotask(() => { suppressOpen.current = false; });
           }} />}
-        <input ref={input} className="iw-product-input" role="combobox" aria-label="商品搜索，多选" aria-expanded={!!activation?.active} aria-autocomplete="list"
+        <UIInput ref={input} className="iw-product-input" role="combobox" aria-label="商品搜索，多选" aria-expanded={!!activation?.active} aria-autocomplete="list"
         disabled={!enabled} value={search} placeholder={props.selected.length ? '' : props.placeholder ?? '商品款号 / 名称 / 系统货号'}
-        onFocus={prepare} onClick={prepare} onChange={event => { setSearch(event.target.value); prepare(); }}
+        onFocus={prepare} onClick={prepare} onChange={nextValue => { setSearch(nextValue); prepare(); }}
         onKeyDown={event => { if (event.key === 'Enter') { event.preventDefault(); event.stopPropagation(); prepare(); } }} /><SearchIcon /></div>}
     {phase === 'loading' && <span className="iw-filter-load-state" role="status">正在加载商品搜索…</span>}
-    {phase === 'error' && <span className="iw-filter-load-state" role="alert">商品搜索未加载。<button type="button" className="iw-link" onClick={prepare}>重试加载</button></span>}
+    {phase === 'error' && <span className="iw-filter-load-state" role="alert">商品搜索未加载。<UIButton type="button" className="iw-link" onClick={prepare}>重试加载</UIButton></span>}
   </div>;
 }
 function SearchIcon() { return <svg className="iw-search-icon" aria-hidden="true" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="4"><circle cx="21" cy="21" r="13"/><path d="m31 31 10 10"/></svg>; }

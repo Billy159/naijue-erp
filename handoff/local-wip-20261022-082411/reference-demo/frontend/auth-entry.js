@@ -1,0 +1,27 @@
+/* Shared employee login. The real Demo validates passwords and roles on the server. */
+(function(){'use strict';const M=MASTER_DATA;if(!M.active){M.ready=Promise.resolve();return}let resolve,signedIn=null;M.ready=new Promise(r=>resolve=r);
+const qa=new URLSearchParams(location.search),apiBase=qa.get('tr-space')?.startsWith('account-qa-')&&qa.get('account-api')==='8880'?'http://127.0.0.1:8880':'http://127.0.0.1:8878';
+const rememberKey=apiBase.endsWith(':8880')?'erp-remember-name:'+qa.get('tr-space'):'erp-remember-name';
+const h=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function preserve(){window.BASIC_SETTINGS?.stash();window.SALES_UI?.stash();window.SALES_RETURNS?.stash?.();const T=window.TRANSFER_UI?.state;if(T?.doc&&M.actor)sessionStorage.setItem('basic-transfer-draft:'+M.key+':'+M.actor.accountId,JSON.stringify({doc:T.doc,baseline:T.baseline,route:T.route}));window.SCAN_WORKBENCH?.unbind()}
+async function request(path,body){const r=await fetch(apiBase+'/runtime/'+path,{credentials:'include',...(body!==undefined?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{})});const value=await r.json();if(!r.ok||!value.ok)throw Error(value.error||'账号操作未完成');return value.data}
+function loginScreen(message=''){let overlay=document.querySelector('.login-overlay');if(overlay){overlay.querySelector('[role=alert]').textContent=message;return}document.querySelector('.app')?.setAttribute('inert','');overlay=document.createElement('section');overlay.className='login-overlay iw-arco-controls';overlay.innerHTML=`<form class="login-panel"><div class="brand" aria-label="奈爵服饰"><span class="brand-mark" aria-hidden="true">奈</span><span class="brand-name">奈爵服饰</span></div><h1>登录</h1><label>登录账号<input name="username" autocomplete="username" required value="${h(localStorage.getItem(rememberKey)||'')}"></label><label>密码<div class="login-password"><input name="password" type="password" autocomplete="current-password" required><button class="btn" type="button" data-show>显示</button></div></label><label class="remember"><input type="checkbox" name="remember" ${localStorage.getItem(rememberKey)?'checked':''}>记住账号</label><div class="basic-error" role="alert">${h(message)}</div><button class="btn primary">登录</button><p><small>忘记密码请联系管理员重置</small></p></form>`;document.body.append(overlay);
+ overlay.querySelector('[data-show]').onclick=e=>{const p=overlay.querySelector('[name=password]');p.type=p.type==='password'?'text':'password';e.target.textContent=p.type==='password'?'显示':'隐藏'};
+ overlay.querySelector('form').onsubmit=async e=>{e.preventDefault();const f=e.target,b=f.querySelector('.primary'),name=f.username.value.trim(),password=f.password.value;b.disabled=true;try{const r=await M.login(name,password);f.password.value='';if(!r.ok){f.querySelector('[role=alert]').textContent=r.error;return}if(f.remember.checked)localStorage.setItem(rememberKey,name);else localStorage.removeItem(rememberKey);if(!M.routeAllowed(location.hash.slice(1)))history.replaceState(null,'','#'+M.landing());overlay.remove();document.querySelector('.app')?.removeAttribute('inert');resolve();location.reload();}catch(x){f.password.value='';f.querySelector('[role=alert]').textContent='登录未完成：'+x.message}finally{b.disabled=false}};overlay.querySelector('[name=username]').focus()
+}
+M.expire=(message='登录已失效，请重新登录')=>{if(signedIn)preserve();signedIn=null;if(M.serverAuth)M.setSessionEmployee(null);loginScreen(message)};M.loginScreen=loginScreen;
+M.logout=async()=>{preserve();if(M.serverAuth)await request('logout',{}).catch(()=>{});localStorage.removeItem(M.authKey);sessionStorage.removeItem(M.authKey);location.reload()};
+if(window.REAL_DATA_MODE){
+ const versions=new Map();
+ M.serverAuth={
+  async login(loginName,password){try{const {employee}=await request('session',{loginName,password});M.setSessionEmployee(employee);signedIn=employee;return {ok:true}}catch(e){return {ok:false,error:e.message}}},
+  async employees(){const rows=await request('employees');rows.forEach(e=>versions.set(e.id,e.authVersion));M.setServerEmployees(rows);return rows},
+  async save(record,password=''){const employee=await request('employees',{record,expectedVersion:versions.get(record.id),password});versions.set(employee.id,employee.authVersion);if(employee.id===M.current()?.id)M.setSessionEmployee(employee);return employee},
+  async refresh(){const {employee}=await request('session');if(!employee){M.expire();return}const old=M.current();M.setSessionEmployee(employee);if(old&&old.id!==employee.id)location.reload();signedIn=employee;}
+ };
+ document.querySelector('.app')?.setAttribute('inert','');
+ request('session').then(({employee})=>{M.setSessionEmployee(employee);if(employee){signedIn=employee;document.querySelector('.login-overlay')?.remove();document.querySelector('.app')?.removeAttribute('inert');resolve()}else loginScreen()}).catch(()=>loginScreen('登录服务暂不可用，请稍后重试'));
+}else{signedIn=M.current();if(signedIn){M.actor=M.context();resolve()}else loginScreen()}
+window.addEventListener('storage',e=>{if(e.key===M.authKey){if(!e.newValue){M.expire();return}const next=JSON.parse(e.newValue);if(!signedIn||signedIn.id!==next.id||signedIn.authVersion!==next.version)location.reload()}else if((e.key===M.key||e.key==='erp-runtime-masters-v1:normal')&&!M.serverAuth&&!M.current())M.expire()});
+setInterval(()=>{if(M.serverAuth&&signedIn)M.serverAuth.refresh().catch(()=>{});else if(M.actor&&!M.current())M.expire()},10000);
+})();

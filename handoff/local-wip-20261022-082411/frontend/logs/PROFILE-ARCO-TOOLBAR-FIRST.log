@@ -1,0 +1,22 @@
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(node)
+
+    at click (file:///Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/work/erp-local-source-20261022/apps/web/unified-browser-harness/run-profile-toolbar-dom-tests.mjs:16:40)
+    at select (file:///Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/work/erp-local-source-20261022/apps/web/unified-browser-harness/run-profile-toolbar-dom-tests.mjs:18:199)
+    at async file:///Users/billy/Desktop/Workspace/project-007-%E4%B8%9A%E5%8A%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/work/erp-local-source-20261022/apps/web/unified-browser-harness/run-profile-toolbar-dom-tests.mjs:21:32 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

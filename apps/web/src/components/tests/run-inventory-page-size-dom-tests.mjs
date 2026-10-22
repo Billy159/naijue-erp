@@ -66,6 +66,36 @@ try {
   await act(async () => document.getElementById('outside').focus()); await settle(); assert.equal(host.querySelector('[role=combobox]').getAttribute('aria-expanded'), 'false');
   await render({ loadAction: undefined, value: 200, disabled: true, onChange: size => chosen.push(size) }); assert.ok(host.querySelector('.arco-select-disabled'));
   console.log('PASS actual Arco action: exactly100/200/500, 150px popup, controlled applied value and busy disable. Popup configuration uses frozen tl placement; jsdom is not layout/pixel acceptance.');
+  // Browser reproduction: selecting a size starts a read, disables the actual
+  // Select and drops focus to BODY. JSDOM does not perform that native blur,
+  // so simulate only this observed browser transition, not component state.
+  let focusScope = context.createScope('TEST-SIZE-RETURN'), focusBusy = false, focusActive = true, appliedSize = '100', selectedSize = '100';
+  const focusRender = () => root.render(h(StrictMode, null, h(DemoPageSizeSelect, { key: 'focus-return', scope: focusScope, active: focusActive, label: '每页焦点测试', value: appliedSize, options: [{ value: '100', label: '100款/页' }, { value: '200', label: '200款/页' }], disabled: focusBusy, onChange: value => { selectedSize = value; focusBusy = true; focusRender(); } })));
+  const startSizeRead = async () => {
+    await act(async () => focusRender()); await settle();
+    if (trigger()) { await click(trigger()); await settle(); }
+    const combo = host.querySelector('[role=combobox]'); assert.ok(combo);
+    await act(async () => combo.focus());
+    if (combo.getAttribute('aria-expanded') !== 'true') await click(host.querySelector('.arco-select-view'));
+    await click([...host.querySelectorAll('[role=option]')].find(option => option.textContent === (appliedSize === '100' ? '200款/页' : '100款/页')));
+    assert.equal(focusBusy, true); assert.ok(host.querySelector('.arco-select-disabled'));
+    await act(async () => document.activeElement.blur()); assert.ok(document.activeElement === document.body);
+  };
+  const finishSizeRead = async (success = true) => { if (success) appliedSize = selectedSize; focusBusy = false; await act(async () => focusRender()); await settle(); };
+  await startSizeRead(); await finishSizeRead();
+  assert.ok(host.contains(document.activeElement), 'After size read readiness the live owner must restore focus lost by disabling its Select');
+  assert.equal(host.querySelector('[role=combobox]').getAttribute('aria-expanded'), 'false');
+  await startSizeRead(); await finishSizeRead(false);
+  assert.ok(host.contains(document.activeElement), 'Failed size read restores focus with original applied value');
+  await startSizeRead(); await act(async () => { document.getElementById('outside').focus(); document.getElementById('outside').blur(); }); await finishSizeRead();
+  assert.ok(document.activeElement === document.body, 'A newer outside focus, even if later blurred, cancels old return ownership');
+  await startSizeRead(); await act(async () => document.getElementById('outside').dispatchEvent(new dom.window.MouseEvent('pointerdown', { bubbles: true }))); await finishSizeRead();
+  assert.ok(document.activeElement === document.body, 'Outside pointer intent cannot be stolen by an old size read');
+  await startSizeRead(); focusActive = false; await act(async () => focusRender()); await finishSizeRead();
+  assert.ok(!host.contains(document.activeElement), 'Inactive retained route must not restore old focus');
+  focusActive = true; focusScope = context.createScope('TEST-SIZE-RETURN-REVOKED'); await startSizeRead(); await act(async () => focusScope.dispose()); await finishSizeRead();
+  assert.ok(!host.contains(document.activeElement), 'Revoked scope cannot restore focus or an old popup');
+  console.log('PASS page-size focus ownership: success/failure readiness restores disabled-lost focus; newer outside focus/pointer, inactive navigation and identity revocation cancel ownership under StrictMode.');
   // Domain adapters reuse the exact same action, but not each other's page math.
   for (const [name, Pager] of [['sales', SalesPagination], ['transfers', TransferPagination]]) {
     const domainScope = context.createScope(`TEST-${name}`); const sizes = []; const pageChanges = [];
@@ -84,7 +114,7 @@ try {
     busy = true; await domainRender(); await click(stale); assert.deepEqual(sizes, [50]);
     busy = false; await domainRender(); await click(host.querySelector('.arco-select-view'));
     active = false; await domainRender(); await click(stale); await settle();
-    await click(host.querySelector('button[aria-label="下一页"]')); assert.deepEqual(pageChanges, []);
+    await click(host.querySelector('[aria-label="下一页"]')); assert.deepEqual(pageChanges, []);
     assert.ok([...host.querySelectorAll('nav button')].every(button => button.disabled));
     assert.equal(host.querySelector('.arco-select'), null); assert.equal(host.querySelector('.arco-trigger'), null); assert.deepEqual(sizes, [50]); assert.match(trigger().textContent, /50张/);
     active = true; await domainRender(); await click(trigger()); await act(async () => domainScope.dispose()); await settle();

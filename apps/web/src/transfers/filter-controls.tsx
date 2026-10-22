@@ -1,4 +1,5 @@
-import { DatePicker } from '@arco-design/web-react';
+import { UIButton } from '../components/standard-controls.tsx';
+import { UIDate } from '../components/standard-controls.tsx';
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode, type RefObject } from 'react';
 import type { ReadScope } from '../loading/read-scope.ts';
 import type { TransferFilterDraft, TransferWarehouse, TransferWarehouseReader } from './contracts.ts';
@@ -11,8 +12,7 @@ import '../demo-controls/multi-select.css';
 import './filter-controls.css';
 
 export function TransferDate(props: { readonly label: string; readonly value: string; readonly onChange: (value: string) => void }) {
-  const host = useRef<HTMLDivElement>(null);
-  return <div className="transfer-date-control" ref={host}><DatePicker value={props.value} format="YYYY-MM-DD" placeholder={props.label} aria-label={props.label} allowClear getPopupContainer={() => host.current ?? document.body} onChange={value => props.onChange(value || '')} /></div>;
+  return <UIDate aria-label={props.label} placeholder={props.label} value={props.value} onChange={props.onChange} />;
 }
 export function TransferStatusSelect(props: { readonly value: TransferFilterDraft['statuses']; readonly onChange: (value: TransferFilterDraft['statuses']) => void }) {
   const terms = { DRAFT: ['weishenhe', 'wsh'], APPROVED: ['yishenhe', 'ysh'], VOID: ['yizuofei', 'yzf'] };
@@ -69,7 +69,7 @@ function WarehouseRead(props: { readonly parent: ReadScope; readonly scope: Read
     {props.selectionNotice && <p className="transfer-filter-notice" role="status">{props.selectionNotice}</p>}
     {data?.exactTotal !== null && data?.exactTotal !== undefined && props.menu}
     {busy && <p className="iw-inline-state" role="status">正在读取仓库…</p>}
-    {data?.phase === 'error' && <p className="iw-inline-state" role="alert">仓库读取失败或候选已变化。<button type="button" className="iw-link" onClick={() => { query.reset(search); void query.loadNext(); }}>重新读取仓库</button></p>}
+    {data?.phase === 'error' && <p className="iw-inline-state" role="alert">仓库读取失败或候选已变化。<UIButton type="button" className="iw-link" onClick={() => { query.reset(search); void query.loadNext(); }}>重新读取仓库</UIButton></p>}
     {data?.phase === 'success' && data.items.length === 0 && <p className="iw-inline-state">没有匹配的仓库</p>}
     {data?.limitReached && <p className="transfer-filter-notice" role="status">已加载 {WAREHOUSE_CANDIDATE_LIMIT} 项，尚有更多匹配仓库，请输入名称缩小范围。匹配总数未截断。</p>}
   </div>;

@@ -1,0 +1,7 @@
+Independent read-only reviewer: /root/restore_catalogue_settings_pages/catalogue_settings_read_backend
+Final review: no remaining substantive authorization, count-null, cancellation/late denial, identity cleanup or old-snapshot defects found.
+Found and fixed: per-node ancestor-path search reconstruction was quadratic; pure synthetic same-machine 5000-chain search 38,243 ms before, 35 ms after. 1000-chain after 10 ms. These are pure-model timings, NOT browser performance acceptance.
+Reviewer compared 2455 nonempty synthetic filters against the original complete-path reference with identical outcomes, covering branches, cross-segment matching, repeated prefixes, empty labels and multilingual text.
+Model regression: 4 tests pass, including a 5000-deep native tree without recursion/truncation.
+Native modal is now closed before explicit parent trigger focus restoration. Actual Mac inert/focus behavior still requires browser verification.
+No files changed by review; no PostgreSQL/browser/network operations.

@@ -1,6 +1,6 @@
 # Native PRODUCT creation — guarded import slice
 
-Status: source implementation and synthetic protocol verification only. No database connection, migration execution, real-data import, service registration or publication is performed by this work. The frozen Mac version1 archive is unchanged.
+Status: source implementation and synthetic protocol verification only. No database connection, migration execution, real-data import, service registration or publication is performed by this work. The frozen Library Mac version2 (`4daa73f`) archive is unchanged; the changes below are later source work, not inside that archive.
 
 ## Entry points and required evidence
 
@@ -14,11 +14,28 @@ The input retains the existing `ProductEvidenceChunk` exact effective selection 
 - Explicit `EXACT_BLANK_IS_HISTORICAL_NULL_V1` policy. Only actual exact empty strings in the known nullable historical fields can become SQL NULL: year, system item code, thickness, collar/pants type, supplier and season. Required references stay required. Whitespace is not a blank. This policy grants no nullable exception to live forms or live commands.
 - Explicit category, size-group, supplier and season decisions. Category supplies an opaque original path value plus the reviewed **complete root-to-leaf native ID/name/version chain**, limited to the existing one/two-level catalogue contract; no path separator or category is guessed. Other nonblank references supply the exact source value, native ID, code/name snapshot and mapping-file digest; supplier includes version/enabled snapshot. Blank optional supplier/season requires explicit null; nonblank unresolved values fail. A size group must contain at least one actual member→size, share-locked through commit; an empty group would violate the existing native reader contract. This minimum check does not claim complete SKU/member mapping. The adapter does not create dictionaries or suppliers. Disabled original supplier references may be retained only when the exact supplied snapshot matches.
 
-`stageNativeProductImportChunk` defaults to genuinely connection-free `DRY_RUN`. `STAGE` requires a trusted independent `authorize` implementation that verifies the actual effective CSV and original snapshot bytes/digests, exact selected row, source→native identity, and every reference mapping/digest. The callback receives a clone and cannot rewrite storage input. A preflight aggregate success or a caller-supplied boolean is not that authorization. **The exact-file/row authorizer and real source loader are still absent; this adapter alone is not a runnable real import.** Direct store calls are a trusted internal integration seam, not an authorization boundary or public API.
+`stageNativeProductImportChunk` defaults to genuinely connection-free `DRY_RUN`. `STAGE` requires a trusted independent `authorize` implementation that verifies the actual effective CSV and original snapshot bytes/digests, exact selected row, source→native identity, and every reference mapping/digest. The callback receives a clone and cannot rewrite storage input. A preflight aggregate success or a caller-supplied boolean is not that authorization. The new thin composition described below reuses the existing exact-source reader and independently validates complete reviewed reference decisions; **the trusted host still must supply the independently approved source/decision pins, native identity resolver, mapping files and review decisions. No production operator configuration or runnable real import is supplied.** Direct store calls are a trusted internal integration seam, not an authorization boundary or public API.
+
+## Thin exact-source + reviewed-reference authorization
+
+`scripts/import-v2/authorized-native-product-reader.mjs` exports `openNativeProductAuthorizer`. Pass the trusted host's already-opened `AuthorizedV3Reader`, not a caller boolean, aggregate report or public request callback. The existing reader and its resolver are unchanged. The new layer validates the complete prepared native DTO, then deliberately projects only `{source,product,blankPricePolicy}` into `prepareProductEvidenceChunk` before calling `sourceReader.authorize`. This recomputes the **old** prepared fingerprint rather than passing `nativeProducts`, references or nullable policy into the old reader's exact-hash contract.
+
+Reference authority is separate from source authority. Required options are:
+
+- `referenceDecisionFile`: a bounded regular JSON file with an **independently supplied** `trustedReferenceDecisionSha256`. Never extract that trust pin from the submitted file or a preflight report.
+- `mappingFiles`: exact logical-name → regular local path set. The approved decision manifest records all corresponding actual byte SHA256 values; every nonnull category/supplier/season/size-group `mappingSha256` must occur in this verified set. These hashes are rechecked before and after asynchronous source authorization. Missing files, changed bytes, symlinks and extra/missing logical files reject the chunk.
+- A complete decision manifest: `{schemaVersion:1,validatorVersion:'NATIVE_PRODUCT_REFERENCE_DECISIONS_V1',batchId,fixedSourceNamespace,selection,mappingFiles:[{name,sha256}],decisions:[...]}`. The batch, fixed namespace and complete effective selection must equal the chunk.
+- Each decision is the **complete** output of `nativeProductReferenceDecision(row)`: source row ID/key/full source-evidence hash, exact native product binding, blank-price and historical nullable policies, full category parent/name/version chain, group code/name/ID, supplier state/version/code/name/ID, season code/name/ID, and explicit null optional-reference decisions. Its `decisionSha256` is `requestHash({validatorVersion,...body})`, the existing typed canonical SHA algorithm, not a raw-JSON file hash. A missing field, partial mapping or any full-reference drift is refused.
+
+The pure decision helper **does not grant approval**: computing a self-consistent digest from untrusted input is insufficient. A human/trusted independent review must approve the complete semantic decisions and the external manifest byte hash. Referenced mapping bytes are retained/verified, not interpreted by a guessed generic dictionary parser. The old exact-source authorization remains mandatory even when the decision manifest and all reference files match. The native evidence stores the derived `reference_decision_sha256` together with the complete reference snapshots and source identity; the host retains the independently approved manifest/pin.
+
+Use `authorize: composite.authorize` in `stageNativeProductImportChunk`. Close the composite when done, and separately close its source reader (the composite does not own that reader). There is no DB driver, SQL, publication, retry, source-row mutation or default resolver in this layer. Technical limits: 4 MiB decision manifest, 16 mapping files, 32 MiB/file and 64 MiB aggregate mapping bytes; limits fail, never truncate. These are resource bounds, not business maxima. This source work does not convert original workbook fields, supply missing native dictionaries, or establish real PostgreSQL compatibility.
 
 ## Transaction and replay
 
-The adapter requires exactly the reviewed schema migration prefix 1–11 and an existing `STAGED`/`VALIDATING` batch bound to the exact selection hash and fixed namespace. It never creates a batch or changes its status.
+The adapter requires an explicitly reviewed complete schema prefix and an existing `STAGED`/`VALIDATING` batch bound to the exact selection hash and fixed namespace. `packages/application/src/native-import-schema-contract.ts` currently allows **only exact 1–11 or exact 1–12**. Schema12's additive header directory/publication coverage was checked with its owner and pins final SQL SHA `5562014c70f1045f7a81e80d950597d3917a7e3fa81f3c3381a662e6418ec544`; native product/source/price-proof shapes and product lock order are unchanged. A source test seals those bytes. This source compatibility pin is not a claim that a database owner actually ran those exact SQL bytes; the migration runner owns before-connect byte verification.
+
+Missing11, empty/partial registries, duplicate or unknown future versions are refused before native target locks/writes. **Planned13/14 remain absent/pending review and therefore rejected**; their owners must freeze final DDL and review native/source/proof/locking/publication compatibility before an explicit new prefix is added. No `>=11`, single `EXISTS(version)` fallback or automatic future-version acceptance is used. The adapter never creates a batch or changes its status.
 
 One bounded original transaction does:
 
@@ -45,4 +62,7 @@ Focused local verification:
 npm run typecheck
 npm run build
 node --test tests/native-product-import.test.ts tests/product-evidence-staging.test.ts tests/catalogue-completeness.test.ts
+node --test tests/native-import-schema-contract.test.ts tests/native-product-authorizer.test.ts
 ```
+
+Authorizer tests use fictional temporary files and a deliberately labeled exact-source **protocol fake** plus the actual old DTO validator; existing reader tests separately cover real synthetic file/preflight authorization. This is not a new claim of end-to-end real input, database execution or production grants. RealPG/real import remain NOT_RUN.

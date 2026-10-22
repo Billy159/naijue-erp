@@ -35,6 +35,7 @@ TABLES = {
 MAX_FILE = 256 * 1024 * 1024
 MAX_XML = 128 * 1024 * 1024
 MAX_ROWS = 100_000
+MAX_EVIDENCE_BYTES = 512 * 1024 * 1024
 SHA = re.compile(r"[a-f0-9]{64}\Z")
 CELL = re.compile(r"([A-Z]{1,3})([1-9][0-9]*)\Z")
 
@@ -357,7 +358,8 @@ def extract_workbook(data, file_ref, expected_sha, entity, canonical):
                "workbookPartSha256": sha(workbook.workbook_bytes), "cells": fields, "temporalEvidence": evidence}
 
 
-def run(*, source_root, base, amendment, approval_file, trusted_sha, output_parent):
+def run(*, source_root, base, amendment, approval_file, trusted_sha, output_parent, max_evidence_bytes=MAX_EVIDENCE_BYTES):
+    require(type(max_evidence_bytes) is int and 0 < max_evidence_bytes <= MAX_EVIDENCE_BYTES, "PRIVATE_EVIDENCE_BOUND")
     source_root, base, amendment = map(root_path, (source_root, base, amendment))
     repo = Path(__file__).resolve().parents[2]
     output_parent = root_path(output_parent)
@@ -381,7 +383,7 @@ def run(*, source_root, base, amendment, approval_file, trusted_sha, output_pare
                         record["selection"] = approved[entity]["selection"]
                         line = (json.dumps(record, ensure_ascii=False, separators=(",", ":")) + "\n").encode("utf-8")
                         total_bytes += len(line)
-                        require(total_bytes <= 512 * 1024 * 1024, "PRIVATE_EVIDENCE_OUTPUT_LIMIT")
+                        require(total_bytes <= max_evidence_bytes, "PRIVATE_EVIDENCE_OUTPUT_LIMIT")
                         stream.write(line)
                         digest.update(line)
                         counts[entity] += 1
@@ -395,13 +397,14 @@ def run(*, source_root, base, amendment, approval_file, trusted_sha, output_pare
                 require(not approved[entity]["rows"], "APPROVED_HEADER_CSV_NOT_FULLY_COVERED")
             stream.flush()
             os.fsync(stream.fileno())
+        require(total_bytes <= max_evidence_bytes, "PRIVATE_EVIDENCE_OUTPUT_LIMIT")
         report = {"kind": "HISTORY_XLSX_CELL_EVIDENCE_V1", "importReady": False, "noSql": True,
                   "sourceRowAuthorizationConnected": False, "rawSnapshotRowsScanned": 0,
                   "binding": "INDEPENDENT_APPROVAL_SHA_TO_SELECTION_TO_BASE_MANIFEST_TO_ORIGINAL_XLSX_AND_HEADER_CSV",
                   "matchedFields": ["来源编号", "原单号", *FIELDS], "headerRows": counts["SALES_HEADER"] + counts["TRANSFER_HEADER"],
                   "numericCellEvidence": numeric_count, "counts": dict(counts), "numericStyles": dict(formats),
                   "sourceFiles": source_files, "selection": {e: a["selection"] for e, a in approved.items()},
-                  "evidenceFile": "evidence.jsonl", "evidenceBytes": total_bytes, "evidenceSha256": digest.hexdigest(),
+                  "evidenceFile": "evidence.jsonl", "evidenceBytes": total_bytes, "evidenceSha256": digest.hexdigest(), "maxEvidenceBytes": max_evidence_bytes,
                   "sourceOriginalsUnchangedAfterRead": True, "dateValuesConverted": False, "timezoneAssigned": False,
                   "timestampPrecisionRounded": False, "dateOnlyMidnightInvented": False,
                   "limitations": ["This authenticates original cell encoding and selected header identity/temporal values, not the full raw-source DTO or native FK bindings.",
@@ -420,10 +423,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     for option in ("source-root", "base", "amendment", "approval-file", "trusted-sha", "output-parent"):
         parser.add_argument("--" + option, required=True)
+    parser.add_argument("--max-evidence-bytes", type=int, default=MAX_EVIDENCE_BYTES)
     try:
         out, result = run(**vars(parser.parse_args()))
         print(json.dumps({"outputDirectory": str(out), "headerRows": result["headerRows"],
                           "numericCellEvidence": result["numericCellEvidence"], "evidenceSha256": result["evidenceSha256"],
+                          "evidenceBytes": result["evidenceBytes"], "maxEvidenceBytes": result["maxEvidenceBytes"],
                           "importReady": False, "noSql": True}, ensure_ascii=False))
     except (EvidenceError, OSError, ValueError, ET.ParseError, zipfile.BadZipFile, KeyError) as error:
         # Do not leak source cell data or filesystem exception payloads to shared logs.

@@ -1,0 +1,85 @@
+{
+  "scope": "source-only native canonical SKU, old aliases, effective SKU barcode and original signed stock contributor staging",
+  "files": [
+    {
+      "path": "packages/application/src/native-sku-import.ts",
+      "sha256": "520069c94358f98514028448784733d2b1e7b0b4c347522a6dc82e36e9fa61c6"
+    },
+    {
+      "path": "packages/application/src/native-barcode-import.ts",
+      "sha256": "4631b2a4b8d707089dc6f80961cc45b611848be23afbaec0e7ee24b5d5552b5a"
+    },
+    {
+      "path": "packages/application/src/native-stock-contributor-import.ts",
+      "sha256": "226e119f76d2b2f03114bdaf10963572ccbb1c9313a1ecd3cfc2338ce940a938"
+    },
+    {
+      "path": "adapters/postgres/src/native-sku-import.ts",
+      "sha256": "1340f2c87246e821efb26856350d02cc35140da535a28276bccd491a3a1d8d92"
+    },
+    {
+      "path": "adapters/postgres/src/native-barcode-import.ts",
+      "sha256": "da767a732573963ecad91639147e3ffc299bb2052f126cb49faf6e2fe11601ba"
+    },
+    {
+      "path": "adapters/postgres/src/native-stock-contributor-import.ts",
+      "sha256": "54d358609a22c358393a3ca023cf611ddb0e43800f187739c03ba072e0e0cca2"
+    },
+    {
+      "path": "tests/native-sku-stock-import.test.ts",
+      "sha256": "964fe95eec16528a2ff23dcb695666a505c52fa8632b01b303d65c345ca1f87f"
+    },
+    {
+      "path": "docs/native-sku-stock-import.md",
+      "sha256": "c5a73b6b3a4ada5e42912b1afaf9987ab85a84c44b2f750b1be692c17f51bbcc"
+    }
+  ],
+  "private_source_in_git": false,
+  "conflict_audit": {
+    "canonical_sku_groups": 15,
+    "other_original_main_candidates": 21,
+    "representative_main_groups": 15,
+    "lexicographic_fallback_groups": 0,
+    "business_decision": "PENDING"
+  },
+  "missing_main_skus": 20,
+  "effective_sku_barcodes": 15018,
+  "excluded_product_barcodes": 2958,
+  "original_stock_contributors": 38314,
+  "effective_stock_keys": 38303,
+  "verification": {
+    "synthetic_tests": "40/40 shared-schema/party/product/SKU focused; 14/14 adjacent party-migration/catalogue focused; full npm test 1602/1602",
+    "typecheck": "BLOCKED_UNRELATED: web current-form TS2488; additional temporary DOM.Iterable CLI override exposed native-sales-schema11-acceptance.ts TS18046",
+    "build": "BLOCKED_UNRELATED_WEB_TS2488: apps/web/src/current-form/transfer-proposal-form.tsx:39",
+    "smoke_build": "passed",
+    "real_postgresql": "NOT_RUN",
+    "real_import": "NOT_RUN",
+    "baseline_ledger_posting": "NOT_IMPLEMENTED",
+    "publication": "NOT_RUN",
+    "scope_typecheck": "passed using temporary include-limited config; temporary file removed"
+  },
+  "blockers": [
+    "independent exact-file/original-row/reference authorizers and native barcode scheme mappings",
+    "business decision for original MAIN downgrade and missing 20 MAIN codes",
+    "audited native-scope checkpoint count integration with existing immutable import_record",
+    "real PostgreSQL migration/trigger/concurrency acceptance"
+  ],
+  "schema_contract": {
+    "reviewed_exact_prefixes": [
+      "1..11",
+      "1..12",
+      "1..13",
+      "1..14"
+    ],
+    "minimum_for_sku_barcode_stock": 14,
+    "minimum_for_party": 13,
+    "minimum_for_product": 11,
+    "migration_sha256": {
+      "0012_history_header_native_reference.sql": "5562014c70f1045f7a81e80d950597d3917a7e3fa81f3c3381a662e6418ec544",
+      "0013_native_party_import.sql": "d7a7b6ca2d00705939bfff87846e0a22870939df81d80e68752bcf08daa63116",
+      "0014_native_catalogue_import.sql": "32a46625af421e032b1e8d3c16fd81f6ca615920286561256b99f4dc1d0d30ed"
+    },
+    "regression": "Unknown 15, missing version, duplicate, wrong type rejected; PRODUCT and PARTY accept reviewed later prefixes",
+    "engine_verification": "NOT_RUN"
+  }
+}

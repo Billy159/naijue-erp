@@ -13,13 +13,14 @@ import { PartySingleSelect } from './party-single-select.tsx';
 
 
 const forms = new AsyncLeafRegistry({ form: { load: () => import('./party-form.tsx') } }, { maxRetainedEntries: 1 });
-export function CustomerPageHost(props: { readonly workspace: PartyWorkspace }) { return <PartyPageHost key="CUSTOMER" workspace={props.workspace} kind="CUSTOMER" />; }
-export function SupplierPageHost(props: { readonly workspace: PartyWorkspace }) { return <PartyPageHost key="SUPPLIER" workspace={props.workspace} kind="SUPPLIER" />; }
-export function PartyPageHost(props: { readonly workspace: PartyWorkspace; readonly kind: PartyKind }) {
+interface PartyHostProps { readonly workspace: PartyWorkspace; readonly readOnly?: true }
+export function CustomerPageHost(props: PartyHostProps) { return <PartyPageHost key="CUSTOMER" {...props} kind="CUSTOMER" />; }
+export function SupplierPageHost(props: PartyHostProps) { return <PartyPageHost key="SUPPLIER" {...props} kind="SUPPLIER" />; }
+export function PartyPageHost(props: PartyHostProps & { readonly kind: PartyKind }) {
   if (!props.workspace.scope.active) return <p role="status" className="iw-inline-state">身份或权限已改变，旧身份结果与草稿已清除。</p>;
-  const controller = props.workspace.get(props.kind); return <PartyPage key={controller.instanceId} controller={controller} />;
+  const controller = props.workspace.get(props.kind); return <PartyPage key={controller.instanceId} controller={controller} {...(props.readOnly ? { readOnly: true } : {})} />;
 }
-function PartyPage({ controller }: { readonly controller: PartyMaintenanceController }) {
+function PartyPage({ controller, readOnly }: { readonly controller: PartyMaintenanceController; readonly readOnly?: true }) {
   const state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot);
   const query = useSyncExternalStore(controller.list.subscribe, controller.list.getSnapshot, controller.list.getSnapshot);
   const applied = query.success?.parameters; const data = query.success?.data; const label = partyLabels[controller.kind];
@@ -63,9 +64,10 @@ function PartyPage({ controller }: { readonly controller: PartyMaintenanceContro
   const run = () => { if (!blocked && !busy) { setNotice(''); void controller.queryList({ search: search.trim(), enabled, page: 1, pageSize: applied?.pageSize ?? size }); } };
   const page = (page: number, pageSize = applied?.pageSize ?? size) => { if (applied && !busy && !blocked) void controller.queryList({ ...applied, page, pageSize }); };
   const activate = (element: EventTarget | null, action: () => void) => { if (!(element instanceof HTMLElement)) return; trigger.current = element; scroll.current = { top: region.current?.scrollTop ?? 0, left: region.current?.scrollLeft ?? 0 }; setNotice(''); action(); };
-  const columns = [{ title: '名称', dataIndex: 'name' }, { title: '编码', dataIndex: 'code', render: (value: string) => <span className="party-code">{value}</span> }, { title: '状态', width: 100, render: (_: unknown, row: PartyRecord) => <Tag className={`iw-status ${row.enabled ? 'normal' : 'off'}`}>{row.enabled ? '正常' : '已停用'}</Tag> }, { title: '操作', width: 76, render: (_: unknown, row: PartyRecord) => <div className="bs-row-actions"><Button type="text" size="small" className="party-edit" data-party-id={row.id} disabled={busy || blocked} onClick={event => activate(event.currentTarget, () => { void controller.openExisting(row.id, 'EDIT'); })}>编辑</Button></div> }];
+  const readOnlyTitle = readOnly ? '当前页面仅开放只读，资料维护写入能力未开放' : undefined;
+  const columns = [{ title: '名称', dataIndex: 'name' }, { title: '编码', dataIndex: 'code', render: (value: string) => <span className="party-code">{value}</span> }, { title: '状态', width: 100, render: (_: unknown, row: PartyRecord) => <Tag className={`iw-status ${row.enabled ? 'normal' : 'off'}`}>{row.enabled ? '正常' : '已停用'}</Tag> }, { title: '操作', width: 76, render: (_: unknown, row: PartyRecord) => <div className="bs-row-actions"><Button type="text" size="small" className="party-edit" data-party-id={row.id} disabled={readOnly || busy || blocked} title={readOnlyTitle} onClick={event => { if (!readOnly) activate(event.currentTarget, () => { void controller.openExisting(row.id, 'EDIT'); }); }}>编辑</Button></div> }];
   return <section className="bs-page iw-workbench iw-arco-controls party-workbench" aria-label={`${label}维护`} ref={container}>
-    <header className="bs-head iw-head"><h1>{label}</h1><div className="bs-head-actions"><Button type="text" disabled title="当前服务尚未提供可读取的操作记录" aria-label="操作记录（暂不可用）">操作记录</Button><Button type="primary" disabled={blocked} onClick={event => activate(event.currentTarget, () => { controller.openCreate(); })}>新增{label}</Button></div></header>
+    <header className="bs-head iw-head"><h1>{label}{readOnly && <small className="party-readonly">（只读）</small>}</h1><div className="bs-head-actions"><Button type="text" disabled title="当前服务尚未提供可读取的操作记录" aria-label="操作记录（暂不可用）">操作记录</Button><Button type="primary" disabled={readOnly || blocked} title={readOnlyTitle} onClick={event => { if (!readOnly) activate(event.currentTarget, () => { controller.openCreate(); }); }}>新增{label}</Button></div></header>
     <form className="bs-toolbar" onSubmit={event => { event.preventDefault(); run(); }}><div className="bs-filter-fields"><div className="bs-filter search"><Input className="iw-arco-input iw-search-input" aria-label="搜索名称或编码" value={search} disabled={blocked} maxLength={200} onChange={value => controller.setFilterDraft({ search: value, enabled })} placeholder="搜索名称或编码" suffix={<IconSearch />} allowClear /></div><div className="bs-filter"><PartySingleSelect label={`${label}状态`} value={enabled} disabled={blocked} options={[{ label: '正常', value: 'ENABLED' }, { label: '已停用', value: 'DISABLED' }, { label: '全部', value: 'ALL' }]} onChange={value => controller.setFilterDraft({ search, enabled: value as PartySearch['enabled'] })} /></div></div><div className="bs-toolbar-actions iw-query-actions"><Button className="btn primary" type="primary" htmlType="submit" disabled={busy || blocked}>查询</Button><Button className="btn iw-reset" disabled={busy || blocked} onClick={() => { controller.setFilterDraft({ search: '', enabled: 'ENABLED' }); setNotice(''); void controller.queryList({ search: '', enabled: 'ENABLED', page: 1, pageSize: applied?.pageSize ?? size }); }}>重置</Button></div></form>
     {notice && <p className="party-notice" role="status">{notice}</p>}
     {busy && <p className="party-read-state" role="status">正在读取{label}…{data ? '下方保留上次已执行结果。' : ''}<Button type="text" size="small" onClick={() => controller.list.cancel()}>取消本次读取</Button></p>}
@@ -73,7 +75,7 @@ function PartyPage({ controller }: { readonly controller: PartyMaintenanceContro
     {state.listStale && !busy && <p className="party-read-state" role="status">资料已变更，列表为先前结果。<Button type="text" disabled={blocked} onClick={() => controller.refreshList()}>刷新已执行查询</Button></p>}
     <div className="bs-table-wrap iw-arco-table party-results" ref={region} aria-busy={busy}><Table className="party-list" size="small" rowKey="id" columns={columns} data={data ? [...data.items] : []} pagination={false} noDataElement={<Empty description={!data ? busy ? '正在读取资料' : query.phase === 'error' ? '当前查询失败' : '等待查询' : '暂无符合条件的数据'} />} /></div>
     <div className="bs-pager"><PartyPagination page={applied?.page ?? 1} pageSize={applied?.pageSize ?? size} total={data?.total ?? null} busy={busy || blocked} onPage={value => page(value)} onPageSize={value => { if (applied) page(1, value); else setSize(value); }} /></div>
-    {state.editor && <PartyFormLeaf controller={controller} getPopupContainer={() => container.current ?? document.body} />}
+    {!readOnly && state.editor && <PartyFormLeaf controller={controller} getPopupContainer={() => container.current ?? document.body} />}
   </section>;
 }
 function PartyFormLeaf(props: { readonly controller: PartyMaintenanceController; readonly getPopupContainer: () => HTMLElement }) {

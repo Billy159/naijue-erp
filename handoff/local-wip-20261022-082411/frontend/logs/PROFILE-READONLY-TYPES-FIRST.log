@@ -1,0 +1,1 @@
+apps/web/unified-browser-harness/readonly-transfer-fixtures.test.ts(24,57): error TS2542: Index signature in type 'readonly { readonly id: EntityId<"transferLine">; readonly transferId: EntityId<"transfer">; readonly lineNo: number; readonly skuId: EntityId<"sku">; readonly quantity: string; readonly snapshot: { ...; }; readonly isCurrent: boolean; }[]' only permits reading.

@@ -1,0 +1,17 @@
+✔ wide readonly facts validate actual reader shape, unique line.id/repeated SKU and original fallback (13.124583ms)
+✔ only explicit readonly transport exposes wide facts/product reads and refuses prepare/save without writes (45.077667ms)
+✔ one closed inert boundary refuses network/password/unsupported methods and writes before retaining any body (24.687209ms)
+✔ reused complete inventory fixture crosses actual HTTP validators with native UUIDs and target-only media (62.031583ms)
+✔ customers and suppliers use independent actual read clients, all party writes fail closed (2.662125ms)
+✔ SALE preserves native pricing/allocation/new SAVE idempotency, uncertain receipt and no approval (2.489208ms)
+✔ TRANSFER preserves native prepare/new SAVE receipt and rejects edit or stock commands (2.139375ms)
+✔ management data is reused without copying and one-shot cancellation/failure stays synthetic (0.903166ms)
+✔ store settings has four explicit typed read operations; unknown facts stay unknown and maintenance never falls back (1.445833ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 223.453167

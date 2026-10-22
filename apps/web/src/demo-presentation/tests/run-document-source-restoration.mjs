@@ -4,16 +4,23 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 import { build, transform } from 'esbuild';
 import { JSDOM } from 'jsdom';
+import { execFileSync } from 'node:child_process';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const source = path.resolve(here, '../..');
 const text = relative => readFile(path.join(source, relative), 'utf8');
-const frozen = process.env.FROZEN_DEMO_UI ?? '/workspace/shared/frozen-demo-ui/extracted/8877-ui-evidence-b8bcfe3';
-const original = name => readFile(path.join(frozen, 'frontend', name), 'utf8');
+const frozen = process.env.FROZEN_DEMO_UI;
+const frozenRepository = path.resolve(source, '../../../../..', '奈爵服饰-8877-Demo');
+const frozenCommit = 'b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3';
+// Local evidence is read from the exact immutable commit, never from the dirty
+// Demo worktree. An explicit exported evidence fixture remains supported.
+const original = name => frozen ? readFile(path.join(frozen, 'frontend', name), 'utf8')
+  : Promise.resolve(execFileSync('git', ['-C', frozenRepository, 'show', frozenCommit + ':frontend/' + name], { encoding: 'utf8', maxBuffer: 2 * 1024 * 1024 }));
 const frame = await text('demo-presentation/frame.css');
 const controls = await text('demo-presentation/controls.css');
 const sales = await text('sales/detail.css');
 const transfers = await text('transfers/transfers.css');
+const documentTags = await text('components/standard-status-tag.css');
 const detail = await text('sales/detail-content.tsx');
 const header = await text('sales/detail-header.tsx');
 const styles = await original('styles.css');
@@ -23,7 +30,7 @@ const transferOriginal = await original('transfer-current.css');
 const final = await original('final-ui.css');
 const statusEnhancer = await original('final-ui.js');
 const enhancer = await original('interaction-common.js');
-const order = await readFile(path.join(frozen, 'LOAD_ORDER.md'), 'utf8');
+const order = frozen ? await readFile(path.join(frozen, 'LOAD_ORDER.md'), 'utf8') : await original('index.html');
 assert.ok(order.indexOf('styles.css') < order.indexOf('golden-consistency.css'));
 assert.ok(order.indexOf('transfer-current.css') < order.indexOf('final-ui.css'));
 assert.ok(order.indexOf('final-ui.css') < order.indexOf('sales-detail-alignment.css'));
@@ -44,7 +51,7 @@ assert.match(header, /\['导出', '打印', '操作历史'\].*disabled title=/);
 assert.doesNotMatch(detail, /readList\(|readReferences\(|productReader|fetch\(/);
 assert.equal((detail.match(/void query\.run\(salesTarget\(props\.salesId\)\)/g) ?? []).length, 2);
 
-const dom = new JSDOM(`<!doctype html><style>${frame.replace(/@import[^;]+;/g, '')}\n${controls.replace(/@import[^;]+;/g, '')}\n${sales}\n${transfers}</style><div class="demo-ui"><button id="button">Button</button><input id="checkbox" type="checkbox"><input id="radio" type="radio"><input id="native"><select id="select"></select><textarea id="textarea"></textarea><span class="arco-picker"><input id="arco-date"></span><span class="arco-tree-select"><input id="arco-search"></span></div>`);
+const dom = new JSDOM(`<!doctype html><style>${frame.replace(/@import[^;]+;/g, '')}\n${controls.replace(/@import[^;]+;/g, '')}\n${sales}\n${transfers}\n${documentTags}</style><div class="demo-ui"><button id="button">Button</button><input id="checkbox" type="checkbox"><input id="radio" type="radio"><input id="native"><select id="select"></select><textarea id="textarea"></textarea><span class="arco-picker"><input id="arco-date"></span><span class="arco-tree-select"><input id="arco-search"></span></div>`);
 const rules = [...dom.window.document.styleSheets[0].cssRules];
 const rule = selector => {
   const matches = rules.filter(item => item.selectorText === selector);
@@ -78,13 +85,15 @@ value('.transfer-list-table th,.transfer-list-table td', 'font-weight', '400');
 value('.transfer-list-table th,.transfer-list-table td', 'height', '44px');
 value('.transfer-list-table th', 'height', '40px');
 value('.transfer-list-table th', 'font-weight', '600');
-value('.transfer-route .tc-state-tag', 'padding', '3px 7px');
-value('.transfer-route .tc-state-tag', 'border-radius', '4px');
-value('.transfer-route .tc-state-tag', 'font-weight', '500');
-value('.transfer-route .tc-state-tag', 'color', 'var(--ca-neutral-tag-ink)');
-value('.transfer-route .tc-state-tag[data-document-status=DRAFT]', 'background', 'var(--ca-warning-soft)');
-value('.transfer-route .tc-state-tag[data-document-status=DRAFT]', 'color', 'var(--ca-warning)');
-value('.transfer-route .tc-state-tag[data-document-status=APPROVED]', 'background', 'var(--ca-success-soft)');
+// Domain adapters retain DRAFT/APPROVED/VOID while shared appearance controls
+// use pending/effective/void. Their mapping is exercised by the real Tag DOM test.
+value('.erp-document-tag.arco-tag', 'padding', '3px 7px');
+value('.erp-document-tag.arco-tag', 'border-radius', '4px');
+value('.erp-document-tag.arco-tag', 'font-weight', '500');
+value('.erp-document-tag[data-status-appearance=void]', 'color', 'var(--ca-neutral-tag-ink)');
+value('.erp-document-tag[data-status-appearance=pending]', 'background', 'var(--ca-warning-soft)');
+value('.erp-document-tag[data-status-appearance=pending]', 'color', 'var(--ca-warning)');
+value('.erp-document-tag[data-status-appearance=effective]', 'background', 'var(--ca-success-soft)');
 for (const table of ['.sales-detail-facts .sale-lines-table', '.transfer-list-table']) {
   value(`${table} .ui-action-cell`, 'position', 'sticky'); value(`${table} .ui-action-cell`, 'right', '0px');
   value(`${table} .ui-action-cell`, 'z-index', '2'); value(`${table} thead .ui-action-cell`, 'z-index', '7');
@@ -103,7 +112,7 @@ try {
   await build({ stdin: { contents: "export { DemoFrame } from './demo-frame.tsx'; export { createElement } from 'react'; export { renderToStaticMarkup } from 'react-dom/server';", resolveDir: path.resolve(source, 'demo-presentation'), loader: 'tsx' }, outfile: output, bundle: true, platform: 'node', format: 'esm', packages: 'external', jsx: 'automatic', logLevel: 'warning' });
   const { DemoFrame, createElement, renderToStaticMarkup } = await import(pathToFileURL(output).href);
   for (const selected of [true, false]) {
-    const rendered = new JSDOM(renderToStaticMarkup(createElement(DemoFrame, { navigation: { inventory: { selected } }, breadcrumb: 'SYNTHETIC', children: 'SYNTHETIC' })));
+    const rendered = new JSDOM(renderToStaticMarkup(createElement(DemoFrame, { navigation: { inventory: { selected } }, breadcrumb: [{id:'test',label:'SYNTHETIC'}], children: 'SYNTHETIC' })));
     assert.equal(rendered.window.document.querySelector('main').classList.contains('demo-page-inventory'), selected);
     rendered.window.close();
   }

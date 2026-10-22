@@ -1,0 +1,124 @@
+import { StandardReadTable } from '../components/standard-read-table.tsx';
+import { UIButton } from '../components/standard-controls.tsx';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import type { ProductFullPageConfiguration } from './product-page-contracts.ts';
+import { captureProductFullPageConfiguration } from './product-page-configuration.ts';
+import { guardedProductPageReader } from './product-page-reader.ts';
+import { ProductFullPageHost } from './product-page-host.tsx';
+import { ReadScope } from '../loading/read-scope.ts';
+import { useDialogFocusReturn } from '../components/use-dialog-focus-return.ts';
+import { ProductDrawerHost } from '../inventory/product-drawer-host.tsx';
+import type { InventoryReader, Selection } from '../inventory/contracts.ts';
+import { CandidateSelector } from '../components/candidate-selector.tsx';
+import { InventoryPagination } from '../components/pagination.tsx';
+import { useProductsFilterPopupHost } from './popup-host.ts';
+import { HttpQueryError } from '../transport/http-query.ts';
+import { formatQuantity } from '../inventory/model.ts';
+import { EmptyIcon } from '../demo-presentation/icons.tsx';
+import { ProductFilterControl } from './filter-control.tsx';
+import { createProductManagementQuery, guardedProductManagementReader } from './query-controller.ts';
+import { emptyProductFilter, productFilterParameters, type ProductFilterDraft, type ProductManagementCandidateKind, type ProductManagementPageSize, type ProductManagementListPage, type ProductManagementProductCapability, type ProductManagementReader } from './contracts.ts';
+
+export interface ProductsPageProps {
+  readonly scope: ReadScope; readonly reader: ProductManagementReader;
+  readonly product?: ProductManagementProductCapability;
+  readonly fullPage?: ProductFullPageConfiguration;
+  /** Trusted host decides global identity invalidation; local scope is already cleared. */
+  readonly onAccessFailure: (error: HttpQueryError) => void;
+}
+let attachmentSequence = 0;
+/** Source list loads its default first page on activation (not construction). Each effect owns fresh scope/query,
+ * including React StrictMode replay and same-account permission revision changes. */
+export function ProductsPageView(props: ProductsPageProps) {
+  const [owner, setOwner] = useState<{ parent: ReadScope; source: ProductManagementReader; scope: ReadScope; reader: ProductManagementReader; query: ReturnType<typeof createProductManagementQuery> } | null>(null);
+  useEffect(() => {
+    const scope = new ReadScope(props.scope.identity, `${props.scope.routeInstanceId}:products:${++attachmentSequence}`, null, () => {});
+    const abort = () => scope.dispose(); props.scope.signal.addEventListener('abort', abort, { once: true }); if (!props.scope.active) abort();
+    const reader = guardedProductManagementReader(scope, props.reader, props.onAccessFailure), query = createProductManagementQuery(scope, reader);
+    setOwner({ parent: props.scope, source: props.reader, scope, reader, query });
+    // StrictMode discards its first attachment before this bounded initial read.
+    queueMicrotask(() => { if (scope.active) void query.run({ filter: productFilterParameters(emptyProductFilter()), page: 1, pageSize: 100 }); });
+    return () => { props.scope.signal.removeEventListener('abort', abort); scope.dispose(); query.dispose(); };
+  }, [props.scope, props.reader, props.onAccessFailure]);
+  return owner?.parent === props.scope && owner.source === props.reader ? <ProductsPageContent key={owner.scope.routeInstanceId} {...props} scope={owner.scope} reader={owner.reader} query={owner.query} /> : null;
+}
+const labels: Readonly<Record<ProductManagementCandidateKind, string>> = Object.freeze({ product: '商品', category: '商品分类', year: '年份', season: '季节', supplier: '供应商', fit: '版型', thickness: '厚薄', shape: '领型 / 裤型' });
+const noCategories: readonly string[] = Object.freeze([]);
+function ProductsPageContent(props: ProductsPageProps & { readonly query: ReturnType<typeof createProductManagementQuery> }) {
+  const { scope, reader, query } = props;
+  const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
+  const [draft, setDraft] = useState<ProductFilterDraft>(emptyProductFilter), [advanced, setAdvanced] = useState(false), [initialSize, setInitialSize] = useState<ProductManagementPageSize>(100);
+  const [selectedProduct, setSelectedProduct] = useState<{ readonly target: Selection; readonly capability: ProductManagementProductCapability }|null>(null);
+  const fullPage = useMemo(() => props.fullPage ? captureProductFullPageConfiguration(props.fullPage) : undefined, [props.fullPage]);
+  const [fullTarget, setFullTarget] = useState<{ readonly target: Selection; readonly configuration: ProductFullPageConfiguration } | null>(null);
+  const fullActive = !!fullTarget && fullTarget.configuration === fullPage;
+  const list = useRef<HTMLDivElement>(null), visible = useRef(true); visible.current = !fullActive;
+  const returnToList = useRef<{ trigger: HTMLElement; scroll: readonly { element: Element; top: number; left: number }[] } | null>(null);
+  const fullReader = useMemo(() => fullPage ? guardedProductPageReader(scope, fullPage.reader, props.onAccessFailure) : null, [scope, fullPage, props.onAccessFailure]);
+  const popupHost = useProductsFilterPopupHost(scope, !fullActive);
+  const productFocus = useDialogFocusReturn(scope, !!selectedProduct);
+  useEffect(() => { setSelectedProduct(null); }, [props.product]);
+  useEffect(() => { setFullTarget(null); }, [fullPage]);
+  useLayoutEffect(() => {
+    if (fullActive || !scope.active || !returnToList.current) return;
+    const saved = returnToList.current; returnToList.current = null;
+    for (const value of saved.scroll) { value.element.scrollTop = value.top; value.element.scrollLeft = value.left; }
+    const active = saved.trigger.ownerDocument.activeElement;
+    if (active && active !== document.body && active.isConnected && active !== saved.trigger) return;
+    if (saved.trigger.isConnected && !saved.trigger.matches(':disabled') && !saved.trigger.closest('[hidden],[inert]')) saved.trigger.focus({ preventScroll: true });
+    else list.current?.querySelector<HTMLElement>('h1')?.focus({ preventScroll: true });
+  }, [fullActive, scope]);
+  const openFullPage = (target: Selection, trigger: HTMLElement) => {
+    if (!scope.active || !fullPage || !visible.current) return;
+    const scroll: { element: Element; top: number; left: number }[] = [];
+    for (let element: Element | null = list.current; element; element = element.parentElement) scroll.push({ element, top: element.scrollTop, left: element.scrollLeft });
+    const root = document.scrollingElement; if (root && !scroll.some(value => value.element === root)) scroll.push({ element: root, top: root.scrollTop, left: root.scrollLeft });
+    visible.current = false; popupHost?.controller.close(); query.cancel(); setSelectedProduct(null);
+    returnToList.current = { trigger, scroll }; setFullTarget({ target, configuration: fullPage });
+    for (const value of scroll) { value.element.scrollTop = 0; value.element.scrollLeft = 0; }
+  };
+  const productSearchReader = useMemo<InventoryReader>(() => ({
+    readInventory: async () => { throw new TypeError('Product search presentation has no inventory query capability.'); },
+    readCandidates: async read => {
+      if (!visible.current) throw new HttpQueryError('aborted', 'QUERY_ABORTED');
+      if (read.parameters.kind !== 'product') throw new TypeError('Only product search presentation is supported.');
+      const data = await reader.readCandidates({ ...read, parameters: { kind: 'product', search: read.parameters.search, selectedIds: [], page: read.parameters.page, pageSize: 20 } });
+      return { page: data.page, exactTotal: data.exactTotal, items: data.items };
+    },
+  }), [reader]);
+  const success = snapshot.success, result = success?.data, busy = snapshot.phase === 'loading';
+  const pageSize = success?.parameters.pageSize ?? initialSize, pendingSize = snapshot.request?.parameters.pageSize;
+  const dirty = !!success && JSON.stringify(productFilterParameters(draft)) !== JSON.stringify(success.parameters.filter);
+  const setSelection = (kind: ProductManagementCandidateKind, selected: readonly Selection[]) => { if (scope.active && visible.current) setDraft(value => ({ ...value, [kind]: selected })); };
+  const filter = (kind: Exclude<ProductManagementCandidateKind,'product'>) => <ProductFilterControl key={kind} scope={scope} reader={reader} kind={kind} label={labels[kind]} selected={draft[kind]} popupHost={popupHost} onChange={selected => setSelection(kind, selected)} />;
+  const closeProduct = () => { productFocus.request(); setSelectedProduct(null); };
+  if (snapshot.phase === 'disposed' || !scope.active) return <div className="iw-empty" role="status"><strong>当前读取范围已关闭</strong><p>权限或身份已变化，请重新进入商品信息。旧身份结果已清除。</p></div>;
+  return <div className="products-workspace"><div ref={list} hidden={fullActive} inert={fullActive} className="pm-products pc-workbench pc-products">
+    <div className="pm-head iw-head"><h1 tabIndex={-1}>商品信息</h1><div className="iw-actions iw-head-actions"><UIButton type="button" className="iw-button iw-primary" disabled title="商品新增维护尚未接入；当前仅提供真实授权只读查询">新增商品</UIButton></div></div>
+    <form className="pm-filters iw-query" aria-label="商品信息筛选" onSubmit={event => { event.preventDefault(); if (visible.current) void query.run({ filter: productFilterParameters(draft), page: 1, pageSize }); }}>
+      <div className="pm-filter-row"><CandidateSelector scope={scope} reader={productSearchReader} popupHost={popupHost} kind="product" label="商品" selected={draft.product} categoryIds={noCategories} multiple placeholder="商品款号 / 名称 / 系统货号" {...(props.product ? { productReader: props.product.reader } : {})} onChange={selected => setSelection('product', selected)} />
+        {filter('category')}{filter('year')}{filter('season')}
+        <UIButton type="button" className="iw-text-button iw-filter-toggle" aria-expanded={advanced} aria-controls="pm-more-filters" onClick={() => setAdvanced(value => !value)}>{advanced ? '收起筛选 ▴' : '高级筛选 ▾'}</UIButton>
+        <UIButton type="submit" className="iw-button iw-primary">查询</UIButton><UIButton type="button" className="iw-button iw-reset" onClick={() => setDraft(emptyProductFilter())}>重置</UIButton></div>
+      {advanced && <div className="pm-more-filters" id="pm-more-filters">{filter('supplier')}{filter('fit')}{filter('thickness')}{filter('shape')}</div>}
+      {dirty && <p className="iw-query-note iw-dirty">条件已修改，点击「查询」后生效；当前仍显示上次已执行条件。</p>}
+    </form>
+    {busy && <div className="iw-loading-note" role="status">{result ? `正在读取${pendingSize !== pageSize ? ` ${pendingSize} 款/页` : ''}，以下保留上次成功结果。` : '正在读取商品信息…'}<UIButton type="button" className="iw-link" onClick={() => query.cancel()}>取消本次读取</UIButton></div>}
+    {snapshot.phase === 'error' && <div className="iw-alert" role="alert">商品查询未完成，请重试或调整条件。{result && '以下保留上次成功结果，并非本次新结果。'}{pendingSize !== pageSize && `本次 ${pendingSize} 款/页读取失败，当前仍为 ${pageSize} 款/页。`}<UIButton type="button" className="iw-link" onClick={() => { if (snapshot.request) void query.run(snapshot.request.parameters); }}>重试</UIButton></div>}
+    <section className="pm-list pc-list-table" aria-busy={busy}><div className="pm-table-scroll table-scroll" tabIndex={0} role="region" aria-label="商品列表，可横向滚动"><StandardReadTable<ProductManagementListPage['items'][number]> label="商品信息" tableClassName="pc-data-table" rows={result?.items ?? []} columns={[
+ { title: '款号', render: (_, item) => <strong className="pc-product-code">{item.code}</strong> },
+ { title: '商品名称', render: (_, item) => <span title={item.name}>{item.name}</span> },
+ { title: '商品分类', render: (_, item) => <span title={item.categoryLabel ?? '未提供'}>{item.categoryLabel ?? ''}</span> },
+ { title: '年份 / 季节', render: (_, item) => [item.year, item.seasonLabel].filter(value => value !== null).join(' / ') },
+ { title: '供应商', render: (_, item) => item.supplierLabel ?? '' }, { title: '版型', render: (_, item) => item.fits.map(fit => fit.label).join('、') },
+ { title: '厚薄', render: (_, item) => item.thickness ?? '' }, { title: '零售价', align: 'right', render: (_, item) => item.retailPrice ?? '' },
+ { title: '总库存', align: 'right', render: (_, item) => <span title={item.totalStock === null ? '全仓总库存未授权或未提供；未知不能按零展示' : '已授权完整全仓范围的精确总库存'}>{item.totalStock === null ? '未提供' : formatQuantity(item.totalStock)}</span> },
+ { title: '操作', render: (_, item) => <><UIButton type="button" className="iw-link" disabled={!props.product} title={props.product ? '只读查看；不开放商品维护' : '商品目标查看能力尚未配置'} onClick={event => { if (!scope.active || !props.product) return; productFocus.capture(event.currentTarget); setSelectedProduct({ target: { id: item.id, label: `${item.code} · ${item.name}` }, capability: props.product }); }}>查看</UIButton>{fullPage && <UIButton className="iw-link" aria-label={`整页查看商品：${item.code}`} onClick={event => openFullPage({ id: item.id, label: `${item.code} · ${item.name}` }, event.currentTarget)}>只读整页</UIButton>}</> },
+]} />
+      {!result?.items.length && <div className="pm-empty iw-empty"><span className="iw-empty-icon" aria-hidden="true"><EmptyIcon /></span><strong>{result ? '暂无符合条件的商品' : busy ? '正在查询' : snapshot.phase === 'error' ? '查询未完成' : '等待查询'}</strong><p>{result ? '调整筛选条件后重新查询。' : '选择筛选条件后，点击「查询」查看商品信息。'}</p></div>}
+    </div></section>
+    <div className="pm-pagination pc-pagination"><InventoryPagination scope={scope} page={result?.page ?? 1} pageSize={pageSize} total={result?.exactTotal ?? null} busy={busy}
+      onPage={page => { if (success && visible.current) void query.run({ ...success.parameters, page }); }} onPageSize={size => { if (!visible.current) return; if (success) void query.run({ ...success.parameters, page: 1, pageSize: size }); else setInitialSize(size); }} /></div>
+    {selectedProduct && props.product && selectedProduct.capability === props.product && <ProductDrawerHost key={selectedProduct.target.id} parentScope={scope} product={selectedProduct.target} reader={props.product.reader} loadStyles={props.product.loadStyles} close={closeProduct} />}
+  </div>{fullActive && fullPage && fullReader && <ProductFullPageHost key={fullTarget.target.id} parent={scope} target={fullTarget.target} configuration={fullPage} reader={fullReader} close={() => setFullTarget(null)} />}</div>;
+}

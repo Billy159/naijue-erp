@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-21",
+  "status": "IMPLEMENTED_NOT_REGISTERED",
+  "unitTests": {
+    "passed": 19,
+    "failed": 0,
+    "kind": "synthetic service, pg protocol, Fastify injection and Fetch transport"
+  },
+  "reactDomLifecycle": "PASS",
+  "independentBrowserBundlesAndScopedCss": "PASS",
+  "finalScopedTypecheck": "PASS",
+  "repositoryTypecheckDuringImplementation": "PASS",
+  "livePostgresAcceptance": "NOT_RUN",
+  "liveAuthenticationAndPermissionPolicy": "NOT_IMPLEMENTED_IN_THIS_LANE",
+  "macVisualComparison": "NOT_RUN",
+  "routeRegistration": "NOT_DONE",
+  "apiRegistration": "NOT_DONE",
+  "frozenBusinessArraysInProduction": false,
+  "writeApis": false,
+  "knownDeniedPathsRetried": false
+}

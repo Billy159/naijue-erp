@@ -1,0 +1,8 @@
+html,body{margin:0;background:#fff;font-family:Arial,'Microsoft YaHei',sans-serif}
+.management-harness-notice{position:sticky;top:0;z-index:3000;padding:8px 16px;background:#fff4de;border-bottom:2px solid #875a12;color:#4f350a;font-size:12px;line-height:1.5}
+.management-harness-notice h1{margin:0 0 3px;font-size:16px;line-height:23px}.management-harness-notice p{margin:2px 0}
+.management-harness-controls{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:5px}.management-harness-controls button,.management-harness-controls select{font:12px Arial,'Microsoft YaHei',sans-serif;padding:3px 7px;min-height:28px}
+.management-harness-state{padding:24px;font-size:13px}.management-request-log{margin:0;padding:4px 16px;background:#f5f6f8;font-size:12px}.management-request-log pre{max-height:140px;overflow:auto;white-space:pre-wrap}
+/* This fixture has no credential service. Do not expose password entry even during
+ * the observer's first commit; the formal AuthenticationPanel is not altered. */
+#management-root .auth-form{display:none!important}#management-root .auth-session button[data-management-synthetic-password]{cursor:not-allowed}

@@ -9,6 +9,7 @@ import type { ProductEvidenceChunk, ProductEvidenceRow } from "./product-evidenc
 import { requestHash } from "./request-hash.ts";
 
 export const NATIVE_PRODUCT_IMPORT_VERSION = "NATIVE_PRODUCT_IMPORT_V1";
+export const NATIVE_PRODUCT_REFERENCE_DECISION_VERSION = "NATIVE_PRODUCT_REFERENCE_DECISIONS_V1";
 /** An explicit reviewed historical blank policy, NOT a change to live CREATE. */
 export const NATIVE_PRODUCT_NULLABLE_POLICY = "EXACT_BLANK_IS_HISTORICAL_NULL_V1";
 interface NamedReference {
@@ -114,6 +115,14 @@ export function validatePreparedNativeProductImportChunk(chunk: PreparedNativePr
   const { mappingVersion: _mapping, fingerprint: _fingerprint, nativeProducts: _products, ...input } = chunk;
   requireDomain(requestHash(prepareNativeProductImportChunk(input)) === requestHash(chunk), "NATIVE_PRODUCT_PREPARED_CHANGED", "Prepared native product import changed");
 }
+/** Pure exact decision descriptor, NOT an authorization. A trusted authorizer
+ * must compare it with an independently pinned reviewed manifest and mapping
+ * bytes; computing a digest from untrusted caller input grants nothing. */
+export function nativeProductReferenceDecision(row: NativeProductImportRow) {
+  const body = { sourceRowId: row.source.id, sourceKey: row.source.sourceKey, sourceEvidenceHash: requestHash(row.source),
+    product: row.product, blankPricePolicy: row.blankPricePolicy, nullableFieldPolicy: row.nullableFieldPolicy, references: row.references };
+  return { ...body, decisionSha256: requestHash({ validatorVersion: NATIVE_PRODUCT_REFERENCE_DECISION_VERSION, ...body }) };
+}
 /** Deterministic immutable metadata shared by first insert and exact replay. */
 export function nativeProductImportEvidence(chunk: PreparedNativeProductImportChunk, index: number) {
   const row = chunk.rows[index]!, s = row.source;
@@ -122,7 +131,8 @@ export function nativeProductImportEvidence(chunk: PreparedNativeProductImportCh
     origin: "MIGRATION_DERIVED", reason: "Reviewed explicit native product creation and source binding", raw: null,
     evidence_ref: chunk.selection.selectionSha256, validator_version: NATIVE_PRODUCT_IMPORT_VERSION, selection: chunk.selection,
     row_fingerprint: requestHash({ selection: chunk.selection, row }), native_product: chunk.nativeProducts[index]!,
-    nullable_field_policy: row.nullableFieldPolicy, references: row.references
+    nullable_field_policy: row.nullableFieldPolicy, references: row.references,
+    reference_decision_sha256: nativeProductReferenceDecision(row).decisionSha256
   } };
   return { fields, source: { id: s.id, batch_id: s.batchId, entity_type: "PRODUCT", source_key: s.sourceKey, file_ref: s.fileRef,
     sheet: s.sheet, row_no: s.rowNo, source_file_sha256: s.sourceFileSha256, row_sha256: s.rowSha256,

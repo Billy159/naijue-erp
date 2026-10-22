@@ -388,7 +388,7 @@ test("SYNTHETIC composition source: no ambient configuration, startup, migration
   const source = readFileSync(new URL("./postgres-read-api.ts", import.meta.url), "utf8");
   assert.doesNotMatch(source, /process\.env|dotenv|\.listen\s*\(|readFile|createSalesHttpPlugin|createTransferHttpPlugin|createPartyMaintenanceHttpPlugin/);
   assert.equal((source.match(/new BoundedPostgresPool\(/g) ?? []).length, 1);
-  assert.equal((source.match(/app\.register\(/g) ?? []).length, 7); // Six existing calls plus explicit optional CURRENT branch.
+  assert.equal((source.match(/app\.register\(/g) ?? []).length, 13); // Original seven plus separately opted-in application settings/commands, three management reads and party reads.
 });
 test("SYNTHETIC CURRENT composition: absent option, including native profile alone, keeps all five routes 404", async t => {
   for (const value of [options(), nativeOptions()]) {

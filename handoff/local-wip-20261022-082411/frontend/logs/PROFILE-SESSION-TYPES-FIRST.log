@@ -1,0 +1,2 @@
+apps/web/unified-browser-harness/profile-session.test.ts(9,9): error TS2502: 'owners' is referenced directly or indirectly in its own type annotation.
+apps/web/unified-browser-harness/profile-session.test.ts(10,12): error TS7023: 'mount' implicitly has return type 'any' because it does not have a return type annotation and is referenced directly or indirectly in one of its return expressions.

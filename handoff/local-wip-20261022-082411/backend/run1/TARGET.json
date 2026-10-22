@@ -1,0 +1,28 @@
+{
+  "atUtc": "2026-10-21T22:43:21.719140+00:00",
+  "status": "READY",
+  "data": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-backend-sealed-history-pg18/run-1/data",
+  "run": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-backend-sealed-history-pg18/run-1",
+  "socket": "/private/tmp/nj-sealed18-20261022-r1",
+  "port": 55671,
+  "database": "naijue_erp_test_18e00101",
+  "suite": "sealed-history-0001-0018",
+  "entry": "tests/integration/sealed-history18.integration.ts",
+  "freeBytes": 2300518400,
+  "requiredBytes": 2298478592,
+  "deficitBytes": 0,
+  "reserveBytes": 2147483648,
+  "pgBudgetBytes": 134217728,
+  "syntheticAndLogsBudgetBytes": 16777216,
+  "runner": {
+    "bytes": 9804,
+    "sha256": "0904452cd22512154bbd9f2ec26ce00f6fdcef5c96178810d160609ae979d946"
+  },
+  "contextFiles": 104,
+  "contextBytes": 1285805,
+  "effectivePinsVerified": 119,
+  "initdbStarted": false,
+  "pgStarted": false,
+  "realPrivateRead": false,
+  "publication": "CLOSED"
+}

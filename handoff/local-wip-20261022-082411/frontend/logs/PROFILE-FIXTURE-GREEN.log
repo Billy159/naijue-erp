@@ -1,0 +1,10 @@
+✔ wide readonly facts validate actual reader shape, unique line.id/repeated SKU and original fallback (12.456375ms)
+✔ only explicit readonly transport exposes wide facts/product reads and refuses prepare/save without writes (34.909166ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 162.442292

@@ -7,6 +7,24 @@ export const MIGRATIONS = [
   [10, "0010_sales_settlement_method_snapshot.sql", "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f"]
 ] as const;
 
+/** Separate opt-in source manifest for a NEW fresh synthetic schema15 target.
+ * Existing MIGRATIONS/suites and prior schema11 evidence remain unchanged.
+ * Bytes/registry recognition are not migration authorization or engine PASS. */
+export const NATIVE_IMPORT_SCHEMA15_MIGRATIONS = [
+  ...MIGRATIONS,
+  [11, "0011_history_storage.sql", "67d9cb6df4e46c6807330b7ed7dd22305a4d331b111b85275f900caaf5d14965"],
+  [12, "0012_history_header_native_reference.sql", "4a42df55804be3f7fb41fca3230364f392ed4338e3a0a80934f7debe7a04b512"],
+  [13, "0013_native_party_import.sql", "950f32f8b1298fadd5de4f45be5ec6dc4bc7783db501456c41778f52374f5d54"],
+  [14, "0014_native_catalogue_import.sql", "5bc80dd2997c2accf6cc1e492e8db98dbb6dbb6be29034b8417f15d94f2f8022"],
+  [15, "0015_native_import_record_accounting.sql", "0cadbcc3dbd76a1e3546e6db983adac7d2b129ad76fcb99eba43cfaf0068794a"],
+] as const;
+
+
+/** Separate history typed synthetic16 chain; exact schema15 suite is unchanged. */
+export const HISTORY_TYPED_SCHEMA16_MIGRATIONS = [
+  ...NATIVE_IMPORT_SCHEMA15_MIGRATIONS,
+  [16, "0016_history_insert_dispatch.sql", "518fd6edcadb30f130061986c2074e61f2884a184a731269ab60c9f9afbb8620"],
+] as const;
 
 export const SPARSE_SCENARIOS = [
   "0006 independent party CREATE/EDIT/DISABLE/RESTORE, duplicate receipt, numbering, rollback and dependency guard",
@@ -66,4 +84,16 @@ export const METHOD_IDENTITY_SCENARIOS = [
   "explicit stored-NULL negative fixture remains unknown across read/reversal, never inferred or eligible as a recent-method fact",
   "original-transaction FOR SHARE actually blocks non-key account method/account enabled/method enabled updates until COMMIT",
   "three actual metadata-change lock waits recheck committed facts, reject without key/effects, then explicit original-key recovery/replay"
+] as const;
+
+/** Independent fresh payment17 target; old15/16 suites retain exact meaning. */
+export const NATIVE_PAYMENT_SCHEMA17_MIGRATIONS = [
+  ...HISTORY_TYPED_SCHEMA16_MIGRATIONS,
+  [17, "0017_native_payment_import.sql", "d999f9531d925cd320d0d42cf02e00fc6e21b4c010eedb4b90e5e26f1da9b874"],
+] as const;
+
+/** SQL-codec-only fresh18 preparation. Does not enable any application writer or publication. */
+export const HISTORY_TYPED_CLOSURE_SCHEMA18_MIGRATIONS = [
+  ...NATIVE_PAYMENT_SCHEMA17_MIGRATIONS,
+  [18, "0018_history_typed_publication.sql", "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da"],
 ] as const;

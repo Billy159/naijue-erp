@@ -1,7 +1,8 @@
-import type { ProductDrawerContentProps } from './product-drawer.tsx';
+import type { ReadScope } from '../loading/read-scope.ts';
+import type { ProductReadOnlyReader } from './product-contracts.ts';
 import { assertProductBasics } from './product-model.ts';
 import { ProductReadState, useProductRead } from './product-tab-state.tsx';
-export function ProductTab({ scope, reader }: ProductDrawerContentProps) {
+export function ProductTab({ scope, reader }: { readonly scope: ReadScope; readonly reader: Pick<ProductReadOnlyReader, 'readProductBasics'> }) {
   const { snapshot, read, cancel, cancelled } = useProductRead(scope, value => reader.readProductBasics(value), assertProductBasics);
   const data = snapshot.success?.data;
   const fields = data ? [['款号', data.code], ['名称', data.name], ['分类', data.categoryLabel], ['年份', data.yearLabel], ['季节', data.seasonLabel], ['供应商', data.supplierLabel], ['系统货号', data.systemCode]] : [];

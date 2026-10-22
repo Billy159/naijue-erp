@@ -60,8 +60,10 @@ try {
   };
   const inputsOf = names => [...new Set([...names].flatMap(name => Object.keys(outputs[name].inputs)))];
   const startup = closure(entryFor('../development-host/entry.ts'));
-  for (const file of inputsOf(startup)) assert.doesNotMatch(file, /\/(?:inventory|sales|parties|transfers)\/|@arco-design\/|\/tests\/|\/preview\/|synthetic/, 'Real startup closure has no eager business leaves, Arco or fixtures');
-  for (const route of ['inventory', 'sales']) for (const file of inputsOf(closure(entryFor(`routes/${route}.tsx`)))) assert.doesNotMatch(file, /@arco-design\//);
+  for (const file of inputsOf(startup)) assert.doesNotMatch(file, /\/(?:inventory|sales|parties|transfers|settings\/stores)\/|\/tests\/|\/preview\/|synthetic/, 'Real startup closure has no eager business leaves or fixtures');
+  assert.ok(inputsOf(startup).some(file=>file.endsWith('/es/Input/input.js')),'Real host authentication uses actual Arco Input');
+  assert.ok(inputsOf(startup).some(file=>file.endsWith('/es/Button/index.js')),'Real host authentication uses actual Arco Button');
+  for (const file of inputsOf(closure(entryFor('routes/store-settings.tsx')))) assert.doesNotMatch(file,/synthetic|\/tests\/|\/preview\/|current-form\/http-reader|postgres/,'Real store route never reaches synthetic/network fallback');
   for (const file of inputsOf(closure(entryFor('routes/transfers.tsx')))) assert.doesNotMatch(file, /detail-content\.tsx$|product-drawer-host\.tsx$|product-http-reader\.ts$|\/tests\//);
   assert.ok(entryFor('../sales/detail-content.tsx')); assert.ok(entryFor('../transfers/detail-content.tsx')); assert.ok(entryFor('../inventory/product-drawer.tsx'));
   assert.ok(entryFor('../components/product-candidate-action.tsx'));
@@ -70,18 +72,31 @@ try {
   for (const file of Object.keys(outputs[productStyles].inputs)) assert.doesNotMatch(file, /dist\/css\/arco\.css|\/es\/style\/index\.css/);
   const css = Object.fromEntries(await Promise.all(Object.entries(result.manifest.styles).map(async ([key, filename]) => [key, await readFile(path.join(outdir, filename), 'utf8')])));
   assert.match(css.application, /auth-panel/); assert.match(css.application, /demo-ui/);
-  assert.doesNotMatch(withoutSharedFocusInputExclusion(css.application), /\.mx-|sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs|\.arco-/);
+  assert.doesNotMatch(withoutSharedFocusInputExclusion(css.application), /\.mx-|sales-workbench|party-workbench|transfer-route|transfer-editor|pd-tabs/);
+  for(const component of ['input','btn','picker','checkbox','select','modal','drawer'])assert.ok(css.application.includes(`.arco-${component}`),`Real host retains installed Arco ${component} styles`);
+  assert.match(css.application,/erp-date-host/);assert.match(css.application,/erp-overlay-close/);
+  assert.match(css['store-settings'],/store-settings-workbench/);assert.match(css['product-full-page'],/product-full-page/);assert.doesNotMatch(css.products,/product-page-tab-body/);assert.doesNotMatch(css.application,/product-page-tab-body/);
   assert.match(css.inventory, /iw-workbench/); assert.doesNotMatch(withoutSharedFocusInputExclusion(css.inventory), /\.arco-/);
   assert.match(css.sales, /sales-workbench/); assert.doesNotMatch(withoutSharedFocusInputExclusion(css.sales), /\.arco-|sale-lines-table|sales-detail-facts/);
   assert.match(css['sales-detail'], /sales-detail-facts/); assert.match(css.transfers, /transfer-route/);
   assert.doesNotMatch(css.transfers, /transfer-editor|pd-tabs|iw-product-drawer/);
   assert.match(css['transfer-detail'], /transfer-editor/); assert.doesNotMatch(css['transfer-detail'], /pd-tabs|iw-product-drawer/);
-  assert.match(css['transfer-product'], /pd-tabs/); assert.match(css['transfer-product'], /iw-product-drawer/); assert.doesNotMatch(css['transfer-product'], /\.mx-/);
+  assert.match(css['transfer-product'], /pd-panel/); assert.match(css['transfer-product'], /iw-product-drawer/); assert.doesNotMatch(css['transfer-product'], /\.mx-/);
   const hostStyles = await readFile(path.join(outdir, result.hostStyles), 'utf8'); assert.match(hostStyles, /background:#fff/);
   assert.doesNotMatch(hostStyles, /@import|sales-workbench|party-workbench|transfer-route|transfer-editor|\.mx-|pd-tabs|\.arco-/);
   assert.equal(await readFile(path.join(outdir, result.manifest.productDrawerStyles), 'utf8'), await readFile(path.resolve(here, '../../inventory/product-drawer.css'), 'utf8'));
   assert.deepEqual(JSON.parse(await readFile(path.join(outdir, 'application-assets.json'), 'utf8')), result.manifest);
   assert.deepEqual(JSON.parse(await readFile(path.join(outdir, 'metafile.json'), 'utf8')), result.metafile);
+  const enabledConfiguration={...configuration,assets:{basePath:'/assets/'},routes:{...configuration.routes,products:true,salesManualCreate:true,transferManualCreate:true,parties:{readOnly:true},productViewer:true,productFullPage:true}};
+  const enabledOutdir=path.join(temporary,'enabled-output');
+  const enabled=await buildDevelopmentHost({configuration:enabledConfiguration,outdir:enabledOutdir});
+  const enabledHtml=await readFile(path.join(enabledOutdir,enabled.html),'utf8'),enabledDom=new JSDOM(enabledHtml,{url:'https://synthetic.test/assets/'});
+  try{
+    const data=JSON.parse(enabledDom.window.document.getElementById('naijue-erp-development-configuration').textContent);
+    assert.deepEqual(data.configuration,enabledConfiguration,'Exact emitted public configuration carries only explicit opt-ins');
+    assert.equal(enabledDom.window.document.querySelector('script[src]').src,'https://synthetic.test/assets/application.js');
+    assert.equal(await readFile(path.join(enabledOutdir,enabled.manifest.entry),'utf8'),await readFile(path.join(outdir,result.manifest.entry),'utf8'),'Opt-ins are parsed public data; code has no config-specific fixture/provider injection');
+  }finally{enabledDom.window.close();}
   // Execute the exact emitted ESM entry against its exact HTML, still in jsdom,
   // with a synthetic fetch. This is not a browser or real HTTP/cookie check.
   const emittedDom = new JSDOM(html, { url: `${configuration.http.origin}${configuration.assets.basePath}`, pretendToBeVisual: true });

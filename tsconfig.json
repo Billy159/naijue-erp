@@ -27,5 +27,8 @@
     "adapters/**/*.ts",
     "tests/**/*.ts",
     "apps/**/*.tsx"
+  ],
+  "exclude": [
+    "apps/web/unified-browser-harness/review-builds/**"
   ]
 }

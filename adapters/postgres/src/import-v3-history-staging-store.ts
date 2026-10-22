@@ -16,7 +16,7 @@ export class PostgresV3HistoryStagingStore implements HistoryStagingStore {
       commitAttempted = true; await client.query('COMMIT'); return result;
     } catch (error) {
       if (!began || commitAttempted) discard = error instanceof Error ? error : Error('HISTORY_STAGING_UNKNOWN_OUTCOME');
-      if (began) try { await client.query('ROLLBACK'); } catch (rollback) {
+      if (began && !commitAttempted) try { await client.query('ROLLBACK'); } catch (rollback) {
         discard = rollback instanceof Error ? rollback : Error('HISTORY_STAGING_ROLLBACK_FAILED');
         throw new AggregateError([error,rollback],'History staging failed; connection discarded');
       }

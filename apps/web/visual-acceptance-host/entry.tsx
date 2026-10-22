@@ -8,9 +8,9 @@ import type { AcceptanceRoute, AcceptanceRouteModule } from './contracts.ts';
 
 // This is a separate synthetic UI-test application, not an alternate production bootstrap.
 const definitions = {
-  inventory: { id: 'inventory', breadcrumb: '库存管理 / 库存状况表', load: () => import('./routes/inventory.tsx') },
-  sales: { id: 'sales', breadcrumb: '销售管理 / 销货单列表', load: () => import('./routes/sales.tsx') },
-  transfers: { id: 'transfer', breadcrumb: '库存管理 / 调拨单列表', load: () => import('./routes/transfers.tsx') },
+  inventory: { id: 'inventory', breadcrumb: [{id:'inventory-management',label:'库存管理'},{id:'inventory',label:'库存状况表'}], load: () => import('./routes/inventory.tsx') },
+  sales: { id: 'sales', breadcrumb: [{id:'sales-management',label:'销售管理'},{id:'sales',label:'销货单列表'}], load: () => import('./routes/sales.tsx') },
+  transfers: { id: 'transfer', breadcrumb: [{id:'inventory-management',label:'库存管理'},{id:'transfers',label:'调拨单列表'}], load: () => import('./routes/transfers.tsx') },
 } as const;
 function selectedRoute(): AcceptanceRoute {
   const route = location.hash.slice(1).replace(/^\//, '');

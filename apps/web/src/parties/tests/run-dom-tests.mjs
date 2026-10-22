@@ -61,7 +61,7 @@ try {
 
   await render(CustomerPageHost); assert.equal(calls.length, 1); assert.equal(calls[0].family, 'customers'); assert.equal(calls[0].search.get('enabled'), 'ENABLED'); assert.equal(calls[0].search.get('pageSize'), '20'); assert.equal(host.querySelectorAll('.arco-table-body tbody tr').length || host.querySelectorAll('tbody tr').length, 20);
   assert.deepEqual(Array.from(host.querySelectorAll('thead th')).map(element => element.textContent.trim()), ['名称', '编码', '状态', '操作']); assert.equal(host.querySelector('button[aria-label="操作记录（暂不可用）"]').disabled, true);
-  await click(host.querySelector('button[aria-label="下一页"]')); assert.equal(calls.at(-1).search.get('page'), '2');
+  await click(host.querySelector('[aria-label="下一页"]')); assert.equal(calls.at(-1).search.get('page'), '2');
   await text(host.querySelector('input[aria-label="搜索名称或编码"]'), 'draft filter'); const beforeDraft = calls.length; assert.equal(calls.length, beforeDraft); await click(button('重置')); assert.equal(calls.length, beforeDraft + 1); assert.equal(calls.at(-1).search.get('page'), '1'); assert.equal(calls.at(-1).search.get('enabled'), 'ENABLED');
   await render(SupplierPageHost); assert.equal(calls.at(-1).family, 'suppliers'); assert.match(host.textContent, /TEST 同名供应商/); assert.doesNotMatch(host.textContent, /TEST 客户/);
   console.log('PASS DOM 1: actual frozen Arco table/control structure, normal-status route-activation page only, reset applies defaults, independent kind lists; unsupported audit explicit.');
@@ -70,7 +70,7 @@ try {
   assert.equal(calls.length, beforeUnapplied); assert.equal(workspace.get('CUSTOMER').list.getSnapshot().success.parameters.search, ''); assert.equal(workspace.get('CUSTOMER').list.getSnapshot().success.parameters.enabled, 'ENABLED');
   await render(SupplierPageHost); await text(host.querySelector('input[aria-label="搜索名称或编码"]'), ' 未执行供应商筛选 '); await selectOption('供应商状态', '全部');
   await render(CustomerPageHost); assert.equal(host.querySelector('input[aria-label="搜索名称或编码"]').value, ' 未执行客户筛选 '); assert.match(host.querySelector('[aria-label="客户状态"]').closest('.arco-select').textContent, /已停用/); assert.equal(calls.length, beforeUnapplied); assert.match(host.textContent, /TEST 客户/);
-  await click(host.querySelector('button[aria-label="下一页"]')); assert.equal(calls.at(-1).search.get('search'), ''); assert.equal(calls.at(-1).search.get('enabled'), 'ENABLED'); assert.equal(calls.at(-1).search.get('page'), '2'); assert.equal(host.querySelector('input[aria-label="搜索名称或编码"]').value, ' 未执行客户筛选 ');
+  await click(host.querySelector('[aria-label="下一页"]')); assert.equal(calls.at(-1).search.get('search'), ''); assert.equal(calls.at(-1).search.get('enabled'), 'ENABLED'); assert.equal(calls.at(-1).search.get('page'), '2'); assert.equal(host.querySelector('input[aria-label="搜索名称或编码"]').value, ' 未执行客户筛选 ');
   await render(SupplierPageHost); assert.equal(host.querySelector('input[aria-label="搜索名称或编码"]').value, ' 未执行供应商筛选 '); assert.match(host.querySelector('[aria-label="供应商状态"]').closest('.arco-select').textContent, /全部/);
   await render(CustomerPageHost); assert.equal(workspace.get('CUSTOMER').list.getSnapshot().success.parameters.page, 2); const beforeDraftReset = calls.length; await click(button('重置')); assert.equal(calls.length, beforeDraftReset + 1); assert.equal(host.querySelector('input[aria-label="搜索名称或编码"]').value, ''); assert.match(host.querySelector('[aria-label="客户状态"]').closest('.arco-select').textContent, /正常/); assert.equal(calls.at(-1).search.get('page'), '1');
   await render(SupplierPageHost); await click(button('重置'));
@@ -113,9 +113,25 @@ try {
   mode = 'normal'; const freshContext = new ReadContext({ accountId: 'TEST-NEW', sessionRevision: '1', permissionRevision: '1' }); const freshScope = freshContext.createScope('TEST-PARTIES'); const freshWorkspace = createPartyWorkspace({ scope: freshScope, client, newRequestKey: () => `TEST-FRESH-${++keyCount}`, onAccessFailure: () => {} });
   await act(async () => root.render(createElement(CustomerPageHost, { workspace: freshWorkspace }))); await settle(); assert.equal(host.querySelector('input[aria-label="搜索名称或编码"]').value, ''); assert.equal(dialog(), null); assert.equal(calls.length, beforeClear + 1); assert.equal(calls.at(-1).search.get('enabled'), 'ENABLED');
   console.log('PASS DOM 8: replacement workspace with reused route ID gets fresh filter/editor identity and only its newly activated bounded default page.');
+  for (const [Component, label] of [[CustomerPageHost, '客户'], [SupplierPageHost, '供应商']]) {
+    await act(async () => root.render(createElement(Component, { workspace: freshWorkspace, readOnly: true }))); await settle();
+    const create = button(`新增${label}`), edit = host.querySelector('.party-edit');
+    assert.equal(create.disabled, true); assert.equal(edit.disabled, true); assert.match(create.title, /只读/); assert.match(edit.title, /只读/);
+    const beforeReadOnlyClick = calls.length, beforeReadOnlyKeys = keyCount;
+    await click(create); await click(edit);
+    assert.equal(dialog(), null); assert.equal(freshWorkspace.get(label === '客户' ? 'CUSTOMER' : 'SUPPLIER').getSnapshot().editor, null);
+    assert.equal(calls.length, beforeReadOnlyClick); assert.equal(keyCount, beforeReadOnlyKeys);
+  }
+  await act(async () => root.render(createElement(CustomerPageHost, { workspace: freshWorkspace }))); await settle();
+  assert.equal(button('新增客户').disabled, false); assert.equal(host.querySelector('.party-edit').disabled, false);
+  await click(button('新增客户')); assert.ok(dialog()); await closeModal(); assert.equal(dialog(), null);
+  console.log('PASS DOM 12: explicit readOnly disables both real Arco write triggers for each kind without read/key/command IO; omission preserves the existing create/edit workflow.');
   await act(async () => root.render(createElement(PartyPagination, { page: 6, pageSize: 20, total: 400, busy: false, onPage: () => {}, onPageSize: () => {} }))); await settle();
-  const actions = host.querySelector('.party-pagination>.actions'); assert.ok(actions); assert.equal(actions.classList.contains('iw-actions'), false); assert.equal(actions.querySelectorAll(':scope > .iw-page-ellipsis').length, 2); assert.equal(actions.querySelectorAll(':scope > .iw-page-button').length, 7); assert.equal(actions.querySelectorAll('span.iw-actions').length, 0); for (const numeric of actions.querySelectorAll('button[aria-label^="第"]')) assert.equal(numeric.parentElement, actions);
-  console.log('PASS DOM 10: actual numeric-window pager emits direct buttons and source ellipsis spans, with no numeric flex wrappers. No geometry is mocked.');
+  const actions = host.querySelector('.party-pagination .arco-pagination'); assert.ok(actions);
+  assert.equal(actions.querySelector('.arco-pagination-item-active')?.textContent.trim(), '6');
+  assert.equal(actions.querySelector('[aria-label="上一页"]').tabIndex, 0); assert.equal(actions.querySelector('[aria-label="下一页"]').tabIndex, 0);
+  assert.ok([...actions.querySelectorAll('.arco-pagination-item')].some(item => item.textContent.trim() === '20'));
+  console.log('PASS DOM 10: actual shared Arco Pagination retains current sixth page and twentieth last page with keyboard-reachable steps; no geometry is mocked.');
   await act(async () => root.unmount()); root = null; workspace.dispose(); candidateScope.dispose(); freshWorkspace.dispose();
-  console.log('All 11 synthetic behavioral DOM groups passed using actual Arco components. CSS is deliberately not rendered: no frozen-Demo pixel/geometry/browser/performance acceptance claim.');
+  console.log('All 12 synthetic behavioral DOM groups passed using actual Arco components. CSS is deliberately not rendered: no frozen-Demo pixel/geometry/browser/performance acceptance claim.');
 } finally { if (root) { const { act } = await import('react'); await act(async () => root.unmount()); root = null; } dom.window.close(); await rm(temp, { recursive: true, force: true }); }

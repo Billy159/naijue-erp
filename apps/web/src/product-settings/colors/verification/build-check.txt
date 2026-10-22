@@ -1,0 +1,2 @@
+PASS three independent page bundles + HTTP reader; frozen-source geometry present, scoped CSS, no fixture/runtime/importer/backend imports or external stylesheet sources.
+NOT RUN: target trusted authorization, route/API registration, native PostgreSQL execution, Mac browser source-by-source visual acceptance.

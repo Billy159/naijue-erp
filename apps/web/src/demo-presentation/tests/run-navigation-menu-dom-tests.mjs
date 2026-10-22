@@ -1,0 +1,53 @@
+import assert from 'node:assert/strict';
+import { mkdtemp, rm } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { build } from 'esbuild';
+import { JSDOM } from 'jsdom';
+const here=path.dirname(fileURLToPath(import.meta.url)), temp=await mkdtemp(path.join(here,'.menu-dom-'));
+const dom=new JSDOM('<!doctype html><div id="root"></div>',{url:'https://synthetic.test/',pretendToBeVisual:true});
+for(const k of ['window','document','navigator','HTMLElement','HTMLInputElement','Element','SVGElement','Node','Event','MouseEvent','KeyboardEvent','MutationObserver','getComputedStyle'])Object.defineProperty(globalThis,k,{configurable:true,value:dom.window[k]});
+globalThis.IS_REACT_ACT_ENVIRONMENT=true;
+globalThis.ResizeObserver=class{observe(){}unobserve(){}disconnect(){}};
+globalThis.requestAnimationFrame=dom.window.requestAnimationFrame.bind(dom.window);globalThis.cancelAnimationFrame=dom.window.cancelAnimationFrame.bind(dom.window);
+dom.window.matchMedia=()=>({matches:false,addListener(){},removeListener(){},addEventListener(){},removeEventListener(){}});
+let root, cleanupAct;
+try{
+ const out=path.join(temp,'entry.mjs');
+ await build({stdin:{resolveDir:here,contents:"export {act,createElement,StrictMode} from 'react';export {createRoot} from 'react-dom/client';export {DemoFrame} from '../demo-frame.tsx';export {useDocumentNavigation} from '../document-navigation.tsx';",loader:'tsx'},outfile:out,bundle:true,platform:'node',format:'esm',external:['react','react/*','react-dom','react-dom/*'],jsx:'automatic',loader:{'.css':'empty'},banner:{js:"import {createRequire} from 'node:module';const require=createRequire(import.meta.url);"},logLevel:'warning'});
+ const {act,createElement:h,StrictMode,createRoot,DemoFrame,useDocumentNavigation}=await import(pathToFileURL(out).href);cleanupAct=act;
+ const host=document.getElementById('root');root=createRoot(host);
+ let count=0,allow=false,view='new';
+ const navigation={inventory:{selected:true,onActivate(){count++;}},products:{href:'/exact-products?tab=base'},sales:{onActivate(){count++;}},'sales/new':{onActivate(){count++;}}};
+ const settle=async()=>{await act(async()=>{await new Promise(r=>setTimeout(r,20));});};
+ function Document(){useDocumentNavigation({kind:'sales',view,canCreate:true,showList:()=>allow,openCreate:()=>allow});return h('p',null,'SYNTHETIC');}
+ const render=async(child=null)=>{await act(async()=>root.render(h(StrictMode,null,h(DemoFrame,{navigation,breadcrumb:[{id:'test',label:'SYNTHETIC'}]},child))));await settle();};
+ const click=async el=>{assert.ok(el);await act(async()=>el.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true})));await settle();};
+ const key=async(el,key,keyCode=0)=>{assert.ok(el);await act(async()=>{el.focus();el.dispatchEvent(new KeyboardEvent('keydown',{key,keyCode,bubbles:true,cancelable:true}));});await settle();};
+ const nav=id=>host.querySelector('[data-nav-id="'+id+'"]');
+ await render();
+ assert.ok(host.querySelector('nav .arco-menu'),'Configured main navigation must use actual Arco Menu');
+ assert.equal(host.querySelectorAll('nav details,nav summary').length,0);
+ assert.ok(nav('inventory').classList.contains('arco-menu-selected'));
+ await click(nav('inventory'));assert.equal(count,1);
+ await key(nav('inventory'),'Enter',13);assert.equal(count,2,'Keyboard Enter invokes onActivate exactly once');
+ assert.equal(nav('products').getAttribute('href'),'/exact-products?tab=base','Exact configured href remains a native destination');
+ assert.equal(nav('settings/staff').getAttribute('aria-disabled'),'true');await click(nav('settings/staff'));assert.equal(count,2);
+ assert.equal(nav('settings/staff').getAttribute('href'),null);
+ await key(nav('inventory'),'ArrowDown',40);
+ let group=host.querySelector('[data-nav-group="transfer-documents"] [aria-expanded]');
+ assert.ok(document.activeElement===group,'ArrowDown reaches actual submenu header');
+ await key(group,'ArrowLeft',37);assert.equal(group.getAttribute('aria-expanded'),'false');
+ await key(group,'ArrowRight',39);assert.equal(group.getAttribute('aria-expanded'),'true');
+ await key(nav('sales'),'Escape',27);
+ const saleGroup=host.querySelector('[data-nav-group="sales-documents"] [aria-expanded]');
+ assert.equal(saleGroup.getAttribute('aria-expanded'),'false');assert.ok(document.activeElement===saleGroup);
+ await key(saleGroup,'Enter',13);assert.equal(saleGroup.getAttribute('aria-expanded'),'true');
+ await render(h(Document));
+ assert.equal(nav('sales/new').getAttribute('aria-current'),'page');
+ await click(nav('sales'));assert.ok(host.querySelector('[role="alert"]'));assert.equal(nav('sales/new').getAttribute('aria-current'),'page','Denied dirty navigation cannot optimistically select another menu item');
+ allow=true;await click(nav('sales'));assert.equal(count,2,'Document callbacks replace outer handlers rather than invoke both');
+ await render();assert.equal(nav('sales/new').getAttribute('aria-current'),null,'Unmount releases document override');
+ console.log('PASS Menu: actual root Arco/controlled selection+open groups, exact href, disabled no activation, keyboard Enter/arrows/Esc, document dirty gate and StrictMode cleanup.');
+}finally{if(root)await cleanupAct(async()=>root.unmount());dom.window.close();await rm(temp,{recursive:true,force:true});}
+

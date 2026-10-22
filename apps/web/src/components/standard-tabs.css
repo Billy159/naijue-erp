@@ -1,0 +1,20 @@
+.erp-tabs-host{min-width:0}
+.erp-tabs-host .arco-tabs-header{margin:0}
+.erp-tabs-host .arco-tabs-header-nav{padding:0 20px}
+.erp-tabs-host .arco-tabs-header-title{padding:11px 0;color:var(--ca-ink-2);font:13px var(--ca-font-sans)}
+.erp-tabs-host .arco-tabs-header-title-active{color:var(--ca-primary-ink);font-weight:500}
+.erp-tabs-host .arco-tabs-header-title-disabled{color:var(--ca-disabled-ink)}
+.erp-tabs-host .arco-tabs-header-ink{background:var(--ca-primary-fill)}
+.erp-tabs-host .arco-tabs-header-title:focus-visible{outline:2px solid var(--ca-control-focus-border);outline-offset:-2px}
+.erp-tabs-host .arco-tabs-content{padding:0}
+.erp-settings-tabs .arco-tabs-header-nav,.erp-store-tabs .arco-tabs-header-nav{padding:0}
+.erp-settings-tabs .arco-tabs-header-title{min-width:76px;box-sizing:border-box;margin:0;padding:7px 12px}
+.erp-store-tabs .arco-tabs-header-title{margin:0 20px 0 0;padding:7px 2px 8px}
+.erp-store-tabs,.erp-store-tabs>.arco-tabs{display:flex;flex-direction:column;flex:1;min-height:0}
+.erp-store-tabs .arco-tabs-content{display:flex;flex-direction:column;flex:1;min-height:0}
+.erp-store-tabs .arco-tabs-content-inner{height:100%}
+.erp-store-tabs .arco-tabs-content-item-active,.erp-store-tabs .arco-tabs-pane{display:flex;flex-direction:column;height:100%;min-height:0}
+.erp-product-tabs,.erp-product-tabs>.arco-tabs{display:flex;flex-direction:column;flex:1;min-height:0}
+.erp-product-tabs .arco-tabs-content{flex:1;min-height:0;overflow:hidden}
+.erp-product-tabs .arco-tabs-content-inner,.erp-product-tabs .arco-tabs-content-item-active,.erp-product-tabs .arco-tabs-pane{height:100%;min-height:0}
+.erp-product-tabs .pd-panel{height:100%;box-sizing:border-box}

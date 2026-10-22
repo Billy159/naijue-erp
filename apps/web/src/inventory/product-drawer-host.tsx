@@ -1,4 +1,6 @@
+import { UIButton } from '../components/standard-controls.tsx';
 import { useEffect, useId, useRef, useState, type ComponentType } from 'react';
+import { StandardOverlay } from '../components/standard-overlay.tsx';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import { ReadScope } from '../loading/read-scope.ts';
 import type { Selection } from './contracts.ts';
@@ -32,8 +34,6 @@ export function ProductDrawerHost(props: { readonly parentScope: ReadScope; read
   const View = leaf?.scope === scope ? leaf.View : null;
   const error = leaf?.scope === scope && leaf.error;
   const [attempt, setAttempt] = useState(0);
-  const dialog = useRef<HTMLDialogElement>(null);
-  const closeButton = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     // Effects may detach and reattach without a new render in StrictMode. Each
     // attachment owns a fresh scope; a disposed instance is never reused.
@@ -45,12 +45,6 @@ export function ProductDrawerHost(props: { readonly parentScope: ReadScope; read
     return () => { props.parentScope.signal.removeEventListener('abort', dispose); next.dispose(); };
   }, [props.parentScope, props.product.id, id]);
   useEffect(() => {
-    const element = dialog.current;
-    if (typeof element?.showModal === 'function') element.showModal(); else element?.setAttribute('open', '');
-    closeButton.current?.focus();
-    return () => { element?.close?.(); };
-  }, [props.parentScope, props.product.id]);
-  useEffect(() => {
     if (!scope) return;
     let attached = true;
     setLeaf({ scope, View: null, error: false });
@@ -58,15 +52,8 @@ export function ProductDrawerHost(props: { readonly parentScope: ReadScope; read
     void Promise.all([leaves.load('drawer', scope), styles]).then(([module]) => { if (attached && scope.active) setLeaf({ scope, View: module.ProductDrawerContent, error: false }); }, () => { if (attached && scope.active) setLeaf({ scope, View: null, error: true }); });
     return () => { attached = false; };
   }, [scope, attempt, props.loadStyles]);
-  return <dialog ref={dialog} className="iw-product-drawer" aria-modal="true" aria-labelledby={`${id}-title`} onCancel={event => { event.preventDefault(); props.close(); }} onClick={event => { if (event.target === event.currentTarget) { const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) props.close(); } }} onKeyDown={event => {
-    if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); props.close(); }
-    if (event.key !== 'Tab') return;
-    const elements = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled),a[href],input:not(:disabled),[tabindex="0"]')).filter(element => element.tabIndex >= 0 && !element.closest('[hidden]'));
-    const first = elements[0], last = elements.at(-1);
-    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
-    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
-  }}>
-    <header className="iw-product-drawer-head"><div className="iw-product-drawer-title"><h2 id={`${id}-title`}>{props.product.label}</h2><small>只读</small></div><button ref={closeButton} type="button" className="iw-text-button" aria-label="关闭商品资料" onClick={props.close}>×</button></header>
-    <div className="iw-product-drawer-body">{View && scope ? <View key={scope.routeInstanceId} scope={scope} reader={props.reader} /> : error ? <div className="iw-inline-state" role="alert">商品查看组件未加载。<button type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试加载</button></div> : <p className="iw-inline-state" role="status">正在准备商品查看…</p>}</div>
-  </dialog>;
+  return <StandardOverlay kind="drawer" className="erp-product-drawer" title={<div className="iw-product-drawer-title"><h2 id={`${id}-title`}>{props.product.label}</h2><small>只读</small></div>}
+    label={props.product.label} closeLabel="关闭商品资料" close={props.close} maskClosable width="min(660px,100vw)">
+    <div className="iw-product-drawer-body">{View && scope ? <View key={scope.routeInstanceId} scope={scope} reader={props.reader} /> : error ? <div className="iw-inline-state" role="alert">商品查看组件未加载。<UIButton type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试加载</UIButton></div> : <p className="iw-inline-state" role="status">正在准备商品查看…</p>}</div>
+  </StandardOverlay>;
 }

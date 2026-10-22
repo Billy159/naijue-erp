@@ -1,0 +1,231 @@
+{
+  "atUtc": "2026-10-21T23:07:08.677742+00:00",
+  "status": "SOURCE_INVENTORY_AND_EXISTING_LOG_PINS_VERIFIED_PARTIAL_DOM_GREEN_TOOLBAR_UNRESOLVED",
+  "checkpointPin": {
+    "bytes": 28040,
+    "sha256": "fa634660c0d85bfe4760a17fdadd730135a7cc7fd357d5fdbee1063a5110dbbe"
+  },
+  "combinedScopePin": {
+    "bytes": 24601,
+    "sha256": "3f233274e9338c8878be24d1bc30802541506dca0a649a96cb00a4fb6af6cc25"
+  },
+  "verified": {
+    "batchSourcePins": 18,
+    "logPins": 13,
+    "combinedChangedSourcePins": 59,
+    "prior46Unchanged": 42,
+    "prior46ExpectedChanged": 4,
+    "newUniqueFiles": 13,
+    "sourceDriftAtIntake": [],
+    "contractUnchanged": true,
+    "fixedHtmlAndPromptUnchanged": true
+  },
+  "scope": {
+    "headless": "Strict profile validator and one-business-owner generation facade; fake-owner6 cases cover orchestration only. Reentry and switch delegate authenticated dirty/uncertain guard to actual navigate(null). revoke/dispose invalidate generations even while busy.",
+    "actualProfile": "Explicit transfer-readonly configuration omits existing transfer commands and mounts actual Application in the same business container. Default standard commands remain unchanged. No ApplicationRoute/contracts/backend grants changed.",
+    "fixtures": "40/83/2000 actual readonly lines,200 canonical sizes; repeated SKU but globally unique line.id. Original matrix fallback is used, not a replacement forced UI. Exact decimal strings, null/empty/leading-zero barcodes, original snapshots and current catalogue references remain distinct.",
+    "actualDomScope": [
+      "inert switch then explicit enter; list3, NEW disabled; actual Sparse+Saved real Arco tables with40+40 rows/40 size members and1499 total elements",
+      "precise product Drawer/list trigger return",
+      "ignored-abort late detail cannot revive disposed owner; product-read revoke clears facts and portals",
+      "actual SALE dirty/uncertain reject both switch and reentry, preserve app/input/receipt key and one SAVE; original receipt verification allows safe disposal"
+    ],
+    "historicalMetadataFix": "Full CUTOFF_HISTORY warning retained in existing metadata paragraph. First1500-node FAIL retained; later1499 with original <1500 limit and40/40/40 unchanged.",
+    "toolbar": "Shared actual Arco UISelect/UIButton source wired, StrictMode tools root, main entry and template source changed; first toolbar DOM failed before selecting an option. Updated pointer helper has not run. No successful end-to-end visible-toolbar assembly claim.",
+    "roots": {
+      "maxLiveBusinessApplicationRoots": 1,
+      "independentToolsReactRoots": 1,
+      "totalMaxRoots": 2,
+      "sameUrl": true,
+      "iframe": false,
+      "linksDirectory": false,
+      "qualification": "Core actual Application tests exercise one business root. Initial toolbar mounting reached actual second tools root, but its full switching/focus suite has not passed."
+    },
+    "readme": {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/erp-local-source-20261022/apps/web/unified-browser-harness/README.md",
+      "scopeCorrection": "Per entered synthetic profile session shares one controller/session; switching creates a new owner. Business1+tools1 explicitly declared. This working README is not a replacement for the fixed accepted PROMPT."
+    }
+  },
+  "failureLedger": [
+    {
+      "id": "PROFILE_HEADLESS_TEST_TYPES",
+      "status": "SCOPED_FIXED",
+      "initialLog": "PROFILE-SESSION-TYPES-FIRST.log",
+      "greenLogs": [
+        "PROFILE-SESSION-HEADLESS-GREEN.log",
+        "PROFILE-SESSION-TYPES-GREEN.log"
+      ],
+      "change": "Separate makeOwner from fixture to remove circular inference."
+    },
+    {
+      "id": "PROFILE_FIXTURE_READONLY_TEST_TYPES",
+      "status": "SCOPED_FIXED",
+      "initialLog": "PROFILE-READONLY-TYPES-FIRST.log",
+      "greenLogs": [
+        "PROFILE-FIXTURE-GREEN.log",
+        "PROFILE-READONLY-TYPES-GREEN.log"
+      ],
+      "change": "Build immutable negative DTO instead of mutating readonly array."
+    },
+    {
+      "id": "PROFILE_HISTORY_DETAIL_1500",
+      "status": "SCOPED_FIXED_DOM_ONLY",
+      "initialLog": "PROFILE-ACTUAL-APPLICATION-FIRST.log",
+      "greenLogs": [
+        "PROFILE-ACTUAL-APPLICATION-GREEN.log",
+        "PROFILE-HISTORY-SAVED-METADATA.log"
+      ],
+      "change": "Merge full warning into existing metadata paragraph; no business fact removed or limit relaxed."
+    },
+    {
+      "id": "PROFILE_TOOLBAR_FIRST_SELECT",
+      "status": "FAIL_UNRESOLVED",
+      "initialLog": "PROFILE-ARCO-TOOLBAR-FIRST.log",
+      "known": "Option locator returned undefined after opening attempt. Product defect versus JSDOM event/portal lookup remains unresolved. Partial initial Arco mounting is not complete toolbar PASS."
+    },
+    {
+      "id": "PROFILE_TOOLBAR_NEWER_INTENT_FOCUS",
+      "status": "SOURCE_REVIEW_PENDING_REPRO_NOT_RUN_RESOURCE",
+      "source": {
+        "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/erp-local-source-20261022/apps/web/unified-browser-harness/profile-toolbar.tsx",
+        "line": 22
+      },
+      "finding": "Restore allows BODY after prior outside focus has blurred, possibly stealing newer intent. This is a controller source-review concern, not an observed product FAIL. Existing prepared test only keeps outside focused.",
+      "newGatedCounterexampleWritten": false,
+      "fixImplemented": false
+    }
+  ],
+  "commandResults": [
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/PROFILE-SESSION-HEADLESS-FIRST.log",
+      "exitCode": 0,
+      "result": "PASS_6_HEADLESS_FAKE_OWNERS"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/PROFILE-SESSION-TYPES-FIRST.log",
+      "exitCode": 2,
+      "result": "FAIL_TEST_FIXTURE_CIRCULAR_TYPES"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/PROFILE-SESSION-HEADLESS-GREEN.log",
+      "exitCode": 0,
+      "result": "PASS_6_AFTER_TEST_FIXTURE_REFACTOR"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/PROFILE-SESSION-TYPES-GREEN.log",
+      "exitCode": 0,
+      "result": "PASS_TYPES_AT_HEADLESS_CHECKPOINT"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/PROFILE-READONLY-FIXTURE-FIRST.log",
+      "exitCode": 0,
+      "result": "PASS_9_FIXTURE_AND_EXISTING_PROTOCOL"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/PROFILE-READONLY-TYPES-FIRST.log",
+      "exitCode": 2,
+      "result": "FAIL_READONLY_NEGATIVE_TEST_ASSIGNMENT"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/PROFILE-FIXTURE-GREEN.log",
+      "exitCode": 0,
+      "result": "PASS_2_IMMUTABLE_NEGATIVE_CASE"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/PROFILE-READONLY-TYPES-GREEN.log",
+      "exitCode": 0,
+      "result": "PASS_TYPES_AT_FIXTURE_CHECKPOINT"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/PROFILE-ACTUAL-APPLICATION-FIRST.log",
+      "exitCode": 1,
+      "result": "FAIL_1500_NODES_WITH_UNCHANGED_LT1500_LIMIT"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/PROFILE-ACTUAL-APPLICATION-GREEN.log",
+      "exitCode": 0,
+      "result": "PASS_3_ACTUAL_APPLICATION_DOM_GROUPS_1499_NODES"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/PROFILE-HISTORY-SAVED-METADATA.log",
+      "exitCode": 0,
+      "result": "PASS_SAVED_METADATA_AND_BOUNDED_ROWS"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/PROFILE-ARCO-TOOLBAR-FIRST.log",
+      "exitCode": 1,
+      "result": "FAIL_OPTION_NOT_FOUND_CAUSE_UNCONFIRMED"
+    },
+    {
+      "file": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/PROFILE-ARCO-TOOLBAR-TYPES.log",
+      "exitCode": 0,
+      "result": "PASS_LATEST_TYPES"
+    }
+  ],
+  "validationLimits": {
+    "latestHarnessTypecheck": "PASS_PROFILE-ARCO-TOOLBAR-TYPES.log",
+    "typeOnlyAfterRuntimeGreen": "Explicit Owner app/transport getter return annotations added after runtime green; latest tsc covers these. Runtime bodies unchanged; no runtime retest claimed at final typed bytes.",
+    "toolbarPointerHelper": "Current mousedown/click/mouseup helper and added observation are unexecuted.",
+    "emittedCss": "NOT_RUN",
+    "newApplicationBuild": "NOT_RUN",
+    "newBrowser": "NOT_RUN",
+    "full35pages65overlays": "NOT_COMPLETE",
+    "strictVisualPass": 0,
+    "react19": "Existing element.ref warning counts retained per log; not warn-free and not all historical warnings attributed to this batch."
+  },
+  "notExecuted": [
+    {
+      "name": "PROFILE-ARCO-TOOLBAR-POINTER",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "apps/web/unified-browser-harness/run-profile-toolbar-dom-tests.mjs"
+      ],
+      "cwd": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/erp-local-source-20261022",
+      "status": "NOT_RUN_RESOURCE",
+      "commandStarted": false,
+      "exitCode": null,
+      "logfile": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/PROFILE-ARCO-TOOLBAR-POINTER.log",
+      "logExists": false,
+      "reason": "Preceding light-budget guard exit1; new pointer helper changes only, no test run."
+    },
+    {
+      "name": "Gated newer-focus/blur/Tab/Esc/outside-pointer counterexample",
+      "status": "NOT_WRITTEN_NOT_RUN_RESOURCE",
+      "commandStarted": false,
+      "exitCode": null
+    },
+    {
+      "name": "Application build and emitted CSS guard",
+      "argv": [
+        "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/naijue-erp-v0.0.1/.runtime/node-v24.21.0-darwin-arm64/bin/node",
+        "apps/web/unified-browser-harness/build.mjs"
+      ],
+      "status": "NOT_RUN_RESOURCE",
+      "commandStarted": false
+    },
+    {
+      "name": "New immutable source-snapshot/source-only rebuild/browser",
+      "status": "NOT_RUN_RESOURCE_NOT_BUILT",
+      "commandStarted": false
+    }
+  ],
+  "inventoryIsCompleteBuildGraph": false,
+  "visibleToolbar": "First option-not-found DOM FAIL unresolved; full pointer helper not run",
+  "focusReview": "SOURCE_REVIEW_PENDING_REPRO; no gated counterexample or fix yet",
+  "readonlySparseReachability": "Actual Application explicit readonly configuration DOM scoped PASS; default standard commands path remains without Sparse",
+  "newBuildAndBrowser": "NOT_RUN_RESOURCE",
+  "strictFullRowVisualPass": 0,
+  "runtime": "DOWN; old HTTP PASS historical; no frontend listener started",
+  "currentAcceptedVersion": "v13.1",
+  "resourceHold": "BELOW_2GIB_RESERVE_NO_NEW_GUARD_OR_TEST_EXECUTED_BY_CONTROLLER",
+  "newTests": false,
+  "newBuild": false,
+  "newListener": false,
+  "nextActions": [
+    "Remain idle for tests/builds until space is released and controller gives a new resource window; preserve original 32MiB/128MiB budgets plus2GiB reserve.",
+    "After a passing permitted light guard, run the prepared full mousedown/click/mouseup toolbar option-opening probe. Distinguish portal locator/event simulation from actual product behavior before changing source.",
+    "Write and run a gated actual-toolbar red for outside focus then blur to BODY during pending switch/before restore frame; include explicit Tab/Esc/outside-pointer intent and stale-owner/unmount/revoke cases. This counterexample is not yet written or executed.",
+    "After a demonstrated red, use an operation-owned cancellable focus ticket, preserving ordinary successful Select focus restoration; rerun the same path and necessary affected lifecycle cases.",
+    "Only once toolbar DOM and resource gates pass, build a new immutable combined candidate containing Breadcrumb/Tag+SavedRecords+Sparse+explicit readonly profile. Controller alone mounts it; browser checks remain separate from DOM and the old accepted version."
+  ]
+}

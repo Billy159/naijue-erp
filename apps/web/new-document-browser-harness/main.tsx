@@ -1,3 +1,4 @@
+import { installSyntheticAuthNotice } from './synthetic-auth-notice.ts';
 import { createApplication, createDemoFrameWorkspaceRenderer } from '../src/application/index.tsx';
 import type { RouteStylesheet } from '../src/application/contracts.ts';
 import { detail as fixtureDetail } from '../src/transfers/commands/fixtures.test-support.ts';
@@ -66,8 +67,9 @@ const http = { origin: 'https://synthetic.invalid', basePath: '/api', fetch: asy
 // Harness bundles existing CSS in main.css; not evidence of production lazy CSS.
 const bundledStyles = (): RouteStylesheet => ({ async load() { if (!document.querySelector('link[href="./main.css"], style[data-harness-style]')) throw Error('Harness CSS unavailable'); }, dispose() {} });
 const app = createApplication({ http, presentation: { renderWorkspace: createDemoFrameWorkspaceRenderer(), renderRouteState: ({ controller, state }) => <section className="harness-state"><p>{state.phase === 'home' ? '请在左侧打开调拨单列表。合成数据仅保存在此页面内存，刷新全部清除。' : `界面状态：${state.phase}`}</p>{['error', 'cancelled'].includes(state.phase) && <button onClick={() => { void controller.navigate(state.route); }}>重试路由</button>}</section> }, routes: { transfers: { stylesheet: bundledStyles(), detailStylesheet: bundledStyles(), commands: { newRequestKey: () => crypto.randomUUID(), manualCreate: true } } } });
+installSyntheticAuthNotice(document.getElementById('root')!);
 app.mount(document.getElementById('root')!);
-document.getElementById('authorize')!.addEventListener('click', () => { failure = 'none'; (document.getElementById('failure') as HTMLSelectElement).value = 'none'; void app.controller.authentication.resolveSession(); });
+document.getElementById('authorize')!.addEventListener('click', () => { failure = 'none'; (document.getElementById('failure') as HTMLSelectElement).value = 'none'; void app.controller.authentication.resolveSession().then(() => app.controller.navigate('transfers')); });
 document.getElementById('home')!.addEventListener('click', () => { void app.controller.navigate(null); });
 document.getElementById('transfer')!.addEventListener('click', () => { void app.controller.navigate('transfers'); });
 document.getElementById('failure')!.addEventListener('change', event => { failure = (event.target as HTMLSelectElement).value as typeof failure; record(`Next synthetic behavior: ${failure}`); });

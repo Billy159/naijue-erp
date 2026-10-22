@@ -9,6 +9,6 @@ export function preparePartySession(input: RoutePreparation, onAccessFailure: ()
   if (!config) throw new TypeError('Party capability was not configured.');
   const workspace = createPartyWorkspace({ scope: input.scope, client: createPartyHttpClient(input.http), newRequestKey: config.newRequestKey, onAccessFailure });
   return Object.freeze({ workspace, prepare: (route: 'customers' | 'suppliers') => ({
-    View: () => route === 'customers' ? <CustomerPageHost workspace={workspace} /> : <SupplierPageHost workspace={workspace} />,
+    View: () => route === 'customers' ? <CustomerPageHost workspace={workspace} {...(config.readOnly ? { readOnly: true } : {})} /> : <SupplierPageHost workspace={workspace} {...(config.readOnly ? { readOnly: true } : {})} />,
   }) });
 }

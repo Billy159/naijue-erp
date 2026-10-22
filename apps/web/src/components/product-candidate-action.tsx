@@ -1,15 +1,14 @@
+import { UIButton } from './standard-controls.tsx';
 export { createInventoryProductSelectStyles } from './product-candidate-styles.ts';
-import ArcoTag from '@arco-design/web-react/es/Tag/index.js';
-import type { TagProps } from '@arco-design/web-react/es/Tag/interface.js';
-import ArcoSelect from '@arco-design/web-react/es/Select/index.js';
-import type { OptionProps, SelectHandle, SelectProps } from '@arco-design/web-react/es/Select/interface.js';
+import { Tag, Select } from '@arco-design/web-react';
+import type { TagProps, SelectOptionProps as OptionProps, SelectProps } from '@arco-design/web-react';
+import type { ComponentRef } from 'react';
+type SelectHandle = ComponentRef<typeof Select>;
 import { useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState, type ComponentType, type CSSProperties, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 import type { Candidate } from '../inventory/contracts.ts';
 import type { ProductCandidateActionProps } from './candidate-selector-contract.ts';
 import { useInventoryCandidates } from './use-inventory-candidates.ts';
 import { ProductCandidatePreview } from './product-candidate-preview.tsx';
-const Select = ArcoSelect as unknown as ForwardRefExoticComponent<SelectProps & RefAttributes<SelectHandle>> & { Option: ComponentType<OptionProps> };
-const Tag = ArcoTag as unknown as ComponentType<TagProps>;
 const remoteSearch = () => undefined;
 
 /** Frozen inventory-select.jsx presentation. Only the active popup owns reads. */
@@ -73,8 +72,8 @@ export function ProductCandidateAction(props: ProductCandidateActionProps) {
     props.onSearch(''); setActiveId(''); select.current?.focus();
   };
   const optionList = recent ? history.length ? history.map((value, index) => <Select.Option key={value} value={`__recent__${index}`}>
-    <span className="inv-recent"><span title={value}>{value}</span><button type="button" aria-label={`删除最近搜索 ${value}`} onMouseDown={event => { event.preventDefault(); event.stopPropagation(); }}
-      onClick={event => { event.preventDefault(); event.stopPropagation(); if (!currentOpen()) return; setHistory(previous => previous.filter(item => item !== value)); }}>×</button></span>
+    <span className="inv-recent"><span title={value}>{value}</span><UIButton type="button" aria-label={`删除最近搜索 ${value}`} onMouseDown={event => { event.preventDefault(); event.stopPropagation(); }}
+      onClick={event => { event.preventDefault(); event.stopPropagation(); if (!currentOpen()) return; setHistory(previous => previous.filter(item => item !== value)); }}>×</UIButton></span>
   </Select.Option>) : [<Select.Option key="empty" value="__recent_empty__" disabled>暂无最近搜索</Select.Option>] : candidates.map(item => <Select.Option key={item.id} value={item.id} {...(item.disabled === undefined ? {} : { disabled: item.disabled })} data-product-id={item.id}
     {...(active?.id === item.id ? { className: 'inv-active-option' } : {})} onMouseEnter={() => { if (currentOpen()) setActiveId(item.id); }}>
     <span className="inv-option-row"><span className="inv-option-code">{item.code}</span><span className="inv-option-name">{item.name}</span></span>
@@ -94,10 +93,10 @@ export function ProductCandidateAction(props: ProductCandidateActionProps) {
     arrowIcon={<svg aria-hidden="true" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="4"><circle cx="21" cy="21" r="13"/><path d="m31 31 10 10"/></svg>}
     maxTagCount={{ count: visibleTagLimit, render: count => <span className="inv-count">+{count} 更多</span>, showPopover: false }}
     renderTag={({ value, closable }) => { const id = String(value); const item = props.selected.find(item => item.id === id); const code = known.get(id)?.code ?? item?.label ?? '';
-      return <Tag className="inv-tag" closable={closable} onClose={() => { if (isCurrent()) props.onChange(props.selected.filter(item => item.id !== id)); }}><button type="button" className="inv-tag-copy"
+      return <Tag className="inv-tag" closable={closable} onClose={() => { if (isCurrent()) props.onChange(props.selected.filter(item => item.id !== id)); }}><UIButton type="button" className="inv-tag-copy"
         title={`点击复制款号 ${code}`} aria-label={`复制款号 ${code}`} onMouseDown={event => event.preventDefault()} onClick={event => { event.stopPropagation(); if (!isCurrent()) return;
           void navigator.clipboard?.writeText(code).then(() => { if (isCurrent()) setCopyStatus(`已复制款号 ${code}`); }, () => { if (isCurrent()) setCopyStatus('复制失败，请检查剪贴板权限'); }); select.current?.focus();
-        }}>{code}</button></Tag>; }}
+        }}>{code}</UIButton></Tag>; }}
     renderFormat={(_option, value) => { const id = typeof value === 'object' && value !== null ? value.value : value; if (typeof id !== 'string') return ''; return known.get(id)?.code ?? props.selected.find(item => item.id === id)?.label ?? ''; }}
     getPopupContainer={() => { if (!host.current) throw new Error('Product search host is not mounted.'); return host.current; }}
     triggerProps={{ position: 'bl', autoAlignPopupWidth: false, popupStyle: { width: popupWidth || undefined } }}
@@ -112,13 +111,13 @@ export function ProductCandidateAction(props: ProductCandidateActionProps) {
       if (!open) return;
       props.onChange(props.selected.filter(item => values.includes(item.id)));
     }}
-    dropdownRender={menu => recent ? <div className="inv-history-menu"><div className="inv-menu-heading"><span>最近搜索</span>{history.length > 0 && <button type="button" aria-label="清空最近搜索" onMouseDown={event => event.preventDefault()} onClick={() => { if (currentOpen()) setHistory([]); }}>清空</button>}</div>{menu}</div>
+    dropdownRender={menu => recent ? <div className="inv-history-menu"><div className="inv-menu-heading"><span>最近搜索</span>{history.length > 0 && <UIButton type="button" aria-label="清空最近搜索" onMouseDown={event => event.preventDefault()} onClick={() => { if (currentOpen()) setHistory([]); }}>清空</UIButton>}</div>{menu}</div>
       : <div className={candidates.length ? 'inv-menu-grid' : 'inv-menu-grid inv-menu-grid-empty'} style={{ '--inv-list-width': `${listWidth}px` } as CSSProperties}>
         <div className="inv-menu-list" onScrollCapture={event => { const element = event.target as HTMLElement; if (element.classList.contains('arco-select-popup-inner') && element.scrollHeight > element.clientHeight && element.scrollTop + element.clientHeight >= element.scrollHeight - 48) void query?.loadNext(); }}>
           {candidates.length > 0 && <div className="inv-result-heading" aria-hidden="true"><span>商品款号</span><span>商品名称</span></div>}{menu}
           {selectionNotice && <p className="inv-no-result" role="status">{selectionNotice}</p>}
           {busy && <p className="inv-no-result" role="status">正在查找…</p>}
-          {current?.phase === 'error' && <p className="inv-no-result" role="alert">候选暂不可读取。<button type="button" className="iw-link" onClick={() => { query?.reset(search); void query?.loadNext(); }}>重试候选</button></p>}
+          {current?.phase === 'error' && <p className="inv-no-result" role="alert">候选暂不可读取。<UIButton type="button" className="iw-link" onClick={() => { query?.reset(search); void query?.loadNext(); }}>重试候选</UIButton></p>}
           {current?.phase === 'success' && !candidates.length && <p className="inv-no-result">没有匹配商品，可继续输入</p>}
           {current?.limitReached && <p className="inv-no-result" role="status">已加载 200 项，请继续输入缩小范围。匹配总数 {current.exactTotal} 项。</p>}
         </div>{active && open && props.activationScope && props.productReader && <ProductCandidatePreview parent={props.activationScope} reader={props.productReader} productId={active.id} />}

@@ -1,0 +1,28 @@
+/* Frozen b8bcfe3 product-inventory-unified.css then product-rework.css; scope narrowed
+   to these native read-only pages. No old global runtime or fixture data is loaded. */
+.dictionary-workbench{display:flex;flex-direction:column;min-width:0;min-height:100%;padding-bottom:52px;font:13px var(--ca-font-sans);color:var(--ca-ink)}
+.dictionary-workbench .pc-page-head{display:flex;align-items:center;flex:none;min-height:32px;margin:0 0 8px}
+.dictionary-workbench .pc-page-head h1{margin:0;font-size:20px;line-height:30px}
+.dictionary-workbench .pc-page-head>button{margin-left:auto}
+.dictionary-workbench button{box-sizing:border-box;height:30px;min-height:30px;padding:3px 8px;border:0;border-radius:var(--ca-radius-control);background:transparent;color:var(--ca-ink-2);font:400 13px var(--ca-font-sans);cursor:pointer}
+.dictionary-workbench button:hover:not(:disabled){background:var(--ca-primary-hover-soft);color:var(--ca-primary-ink)}
+.dictionary-workbench button:disabled{color:var(--ca-disabled-ink);cursor:not-allowed}
+.dictionary-workbench button:focus-visible,.dictionary-workbench input:focus-visible{outline:2px solid var(--ca-control-focus-border);outline-offset:1px}
+.dictionary-workbench :is(.pc-settings,.pc-settings-body){display:flex;flex-direction:column;min-height:0;flex:1;overflow:visible}
+.dictionary-workbench .pc-settings-body{padding:8px 0 0}
+.dictionary-workbench .pc-section-line{display:flex;align-items:center;gap:8px;min-height:32px;margin:0 0 8px}
+.dictionary-workbench .pc-section-line input{box-sizing:border-box;width:280px;max-width:100%;height:32px;min-height:32px;padding:5px 9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);font-size:13px}
+.dictionary-workbench table{width:100%;border-collapse:separate;border-spacing:0;font:12px var(--ca-font-sans);font-variant-numeric:tabular-nums}
+.dictionary-workbench .pc-settings-body table{border:1px solid var(--ca-line)}
+.dictionary-workbench :is(th,td){box-sizing:border-box;height:34px;min-height:34px;padding:4px 8px;border-bottom:1px solid var(--ca-table-grid);line-height:18px;vertical-align:middle;text-align:left}
+.dictionary-workbench th{position:sticky;top:0;z-index:2;height:36px;background:var(--ca-table-head);color:var(--ca-ink-2);font-size:12px;font-weight:600}
+.dictionary-workbench tbody tr:hover>td{background:var(--ca-table-row-hover)}
+.dictionary-workbench td{white-space:pre-wrap;overflow-wrap:anywhere}
+.dictionary-workbench .empty{padding:32px 16px;text-align:center;color:var(--ca-ink-3)}
+.dictionary-workbench .dictionary-read-state,.dictionary-workbench p[role=status]{margin:0 0 8px;color:var(--ca-ink-2);font-size:12px;line-height:20px}
+.dictionary-workbench .dictionary-pagination{position:fixed;bottom:0;left:calc(var(--ui-sidebar) + var(--ui-page-space));right:var(--ui-page-space);z-index:40;display:flex;align-items:center;gap:10px;min-height:32px;margin:0;padding:6px 0;border-top:1px solid var(--ca-line);background:var(--ca-surface);font-size:12px}
+.dictionary-workbench .dictionary-pagination .actions{display:flex;align-items:center;gap:4px;margin-left:auto}
+.dictionary-workbench .dictionary-pagination .actions button{min-width:28px;height:28px;min-height:28px;padding:3px 7px;border:1px solid transparent;font-size:12px}
+.dictionary-workbench .dictionary-pagination button[aria-current=page]{border-color:var(--ca-primary);background:var(--ca-primary-soft);color:var(--ca-primary-ink)}
+.dictionary-workbench .dictionary-pagination input{box-sizing:border-box;width:42px;height:28px;padding:3px 5px;border:1px solid var(--ca-control-border);border-radius:var(--ca-radius-control);text-align:center;background:var(--ca-surface);color:var(--ca-ink)}
+@media(max-width:900px){.dictionary-workbench .dictionary-pagination{flex-wrap:wrap}.dictionary-workbench .dictionary-pagination .actions{margin-left:0}}

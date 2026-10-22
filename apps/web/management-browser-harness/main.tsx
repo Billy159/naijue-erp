@@ -1,0 +1,24 @@
+import { mountManagementHarness } from './harness-app.tsx';
+import type { SyntheticReadFailure } from './synthetic-transport.ts';
+import type { ApplicationRoute } from '../src/application/contracts.ts';
+import '../src/demo-controls/single-select.css';
+import '../src/demo-controls/multi-select.css';
+import '../src/components/product-candidate-action.css';
+import '../src/application/styles/products.css';
+import '../src/application/styles/product-settings.css';
+import '../src/product-categories/source-product-categories.css';
+import '../src/product-settings/colors/source-catalogue-settings.css';
+import '../src/application/styles/barcode-schemes.css';
+import '../src/inventory/product-drawer.css';
+import './harness.css';
+
+const root = document.getElementById('management-root')!, log = document.getElementById('calls')!;
+const harness = mountManagementHarness(root, call => { log.textContent = `${call.method} ${call.path} · SYNTHETIC ONLY\n${log.textContent ?? ''}`.slice(0,10000); });
+const status = document.getElementById('harness-status')!;
+document.getElementById('enter')!.addEventListener('click', () => { void harness.enter().then(ok => { status.textContent = ok ? '已进入实际 Application 商品信息页（合成数据）' : '合成页面未能打开，请查看状态。'; }); });
+document.getElementById('home')!.addEventListener('click', () => { void harness.app.controller.navigate(null); });
+document.getElementById('revoke')!.addEventListener('click', () => { void harness.revoke().then(() => { status.textContent = '模拟身份已清除；可重新“模拟进入”，无需账号密码。'; }); });
+for (const [id,route] of [['products','products'],['categories','product-categories'],['settings','product-settings'],['schemes','barcode-schemes']] as const) document.getElementById(`open-${id}`)!.addEventListener('click', () => { void harness.app.controller.navigate(route as ApplicationRoute); });
+document.getElementById('failure')!.addEventListener('change', event => { const value = (event.target as HTMLSelectElement).value as SyntheticReadFailure; harness.transport.setNextFailure(value); status.textContent = `下一次业务读取：${value}（仅合成注入，不调用真实API）`; });
+document.getElementById('delay')!.addEventListener('click', () => { harness.transport.setNextDelay(3000); status.textContent = '下一次业务读取延迟3秒并故意忽略取消，用于验证旧请求迟到不复活。'; });
+window.addEventListener('pagehide', () => harness.dispose(), { once:true });

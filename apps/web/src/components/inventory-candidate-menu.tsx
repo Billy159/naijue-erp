@@ -1,3 +1,4 @@
+import { UIButton } from './standard-controls.tsx';
 import { useEffect, useRef, type ReactNode } from 'react';
 import type { ReadScope } from '../loading/read-scope.ts';
 import type { CandidateKind, InventoryReader, Selection } from '../inventory/contracts.ts';
@@ -16,10 +17,10 @@ export function InventoryCandidateMenu(props: { readonly scope: ReadScope; reado
   const data = snapshot.search === search ? snapshot : null; const busy = !data || data.phase === 'idle' || data.phase === 'loading';
   const selectedLabel = props.selected.length ? `已选 ${props.selected.length} 项` : data?.unfilteredTotal !== null && data?.unfilteredTotal !== undefined ? `已选 ${data.unfilteredTotal} 项` : `已选全部${props.label}`;
   return <div className="inventory-reference-menu">{props.kind !== 'category' && <div className="inv-filter-tools">{data?.exactTotal !== null && data?.exactTotal !== undefined ? `匹配 ${data.exactTotal} 项` : `正在匹配${props.label}`} · {selectedLabel}</div>}
-    {props.notice && <p className="iw-filter-notice" role="status">{props.notice}{props.explicit && <> 如需只选“{props.explicit.label}”，请<button type="button" className="iw-link" onClick={props.chooseExplicit}>仅选择该项</button>。</>}</p>}
+    {props.notice && <p className="iw-filter-notice" role="status">{props.notice}{props.explicit && <> 如需只选“{props.explicit.label}”，请<UIButton type="button" className="iw-link" onClick={props.chooseExplicit}>仅选择该项</UIButton>。</>}</p>}
     {data?.exactTotal !== null && data?.exactTotal !== undefined && props.menu}
     {busy && <p className="iw-inline-state" role="status">正在读取候选…</p>}
-    {data?.phase === 'error' && <p className="iw-inline-state" role="alert">候选读取失败或范围已变化。<button type="button" className="iw-link" onClick={() => { query?.reset(search); void query?.loadNext(); }}>重试候选</button></p>}
+    {data?.phase === 'error' && <p className="iw-inline-state" role="alert">候选读取失败或范围已变化。<UIButton type="button" className="iw-link" onClick={() => { query?.reset(search); void query?.loadNext(); }}>重试候选</UIButton></p>}
     {data?.phase === 'success' && data.items.length === 0 && <p className="iw-inline-state">没有匹配候选</p>}
     {data?.limitReached && <p className="iw-filter-notice" role="status">已加载 200 项，尚有更多匹配候选，请输入名称缩小范围。匹配总数未截断。</p>}
   </div>;

@@ -67,10 +67,10 @@ try {
   await act(async () => app.mount(host)); await settle(); assert.equal(calls.length, 0);
   await act(async () => { await app.controller.authentication.resolveSession(); }); await settle();
   assert.equal(calls.length, 1); assert.equal(document.querySelectorAll('link').length, 0); assert.ok(host.querySelector('.demo-frame'));
-  assert.equal(host.querySelectorAll('.sidebar a').length, 2); assert.equal(host.querySelectorAll('.sidebar button:disabled').length, 12);
-  assert.deepEqual([...host.querySelectorAll('.sidebar button:disabled')].map(element => element.textContent).filter(text => ['客户', '供应商'].includes(text)), ['客户', '供应商']);
-  assert.ok([...host.querySelectorAll('.sidebar button:disabled')].some(element => element.textContent === '新增销货单'));
-  assert.ok([...host.querySelectorAll('.sidebar button:disabled')].some(element => element.textContent === '新增调拨单'));
+  assert.equal(host.querySelectorAll('.sidebar a').length, 2); assert.equal(host.querySelectorAll('.sidebar [role=menuitem][aria-disabled=true]').length, 12);
+  assert.deepEqual([...host.querySelectorAll('.sidebar [role=menuitem][aria-disabled=true]')].map(element => element.textContent).filter(text => ['客户', '供应商'].includes(text)), ['客户', '供应商']);
+  assert.ok([...host.querySelectorAll('.sidebar [role=menuitem][aria-disabled=true]')].some(element => element.textContent === '新增销货单'));
+  assert.ok([...host.querySelectorAll('.sidebar [role=menuitem][aria-disabled=true]')].some(element => element.textContent === '新增调拨单'));
   await click(navigation('调拨单列表')); assert.equal(count('/transfers/query'), 0); assert.equal(hasStyle('transfers'), true); assert.equal(hasStyle('transfer-detail'), false);
   await click(button('SYNTHETIC cancel')); await ready('transfers'); assert.equal(host.querySelector('.transfer-route'), null); assert.equal(count('/transfers/query'), 0);
   await click(button('SYNTHETIC retry')); await until(() => host.querySelectorAll('.transfer-list-table tbody tr').length === 20, 'One bounded transfer activation page');

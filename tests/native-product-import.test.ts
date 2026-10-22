@@ -38,7 +38,7 @@ function input(count = 1, withOptionalReferences = true): NativeProductImportChu
 }
 type RecordRow = Record<string, unknown>;
 /** Transactional copy-on-write SQL protocol fake. NOT PostgreSQL behavior proof. */
-function protocol(chunk = input(), options: { failProofAt?: number; commitUnknown?: boolean; rollbackFails?: boolean; staleReference?: string; wrongBatch?: boolean; missingSchema?: boolean } = {}) {
+function protocol(chunk = input(), options: { failProofAt?: number; commitUnknown?: boolean; rollbackFails?: boolean; staleReference?: string; wrongBatch?: boolean; missingSchema?: boolean; schemaVersions?: number[] } = {}) {
   let native = new Map<string, NativeProductImportValues>(), sources = new Map<string, RecordRow>();
   let draftNative = new Map(native), draftSources = new Map(sources), inTransaction = false;
   let connects = 0, proofWrites = 0, nativeWrites = 0; let discarded: Error | boolean | undefined;
@@ -54,7 +54,7 @@ function protocol(chunk = input(), options: { failProofAt?: number; commitUnknow
       if (commitUnknown) { commitUnknown = false; throw Error("SYNTHETIC commit acknowledgement lost"); } return result([]);
     }
     assert.equal(inTransaction, true);
-    if (sql.includes("native-product-import:schema")) return result([{ ready: !options.missingSchema }]);
+    if (sql.includes("native-product-import:schema")) return result([{ installed_versions: options.missingSchema ? null : options.schemaVersions ?? [1,2,3,4,5,6,7,8,9,10,11] }]);
     if (sql.includes("native-product-import:batch")) return result([{ id: chunk.batchId, mapping_version: "V2_HISTORY_NULLABLE_1", status: "STAGED",
       source_hash: options.wrongBatch ? "0".repeat(64) : chunk.selection.selectionSha256, source_name: chunk.fixedSourceNamespace }]);
     if (sql.includes("native-product-import:target")) {
@@ -222,4 +222,18 @@ test("native PRODUCT fails closed for schema/batch mismatch, rollback failure an
   const h = protocol(), prepared = prepareNativeProductImportChunk(input());
   const altered = structuredClone(prepared); (altered.nativeProducts[0]! as { name: string }).name = "SYNTHETIC TAMPER";
   await assert.rejects(h.store.stage(altered), { code: "NATIVE_PRODUCT_PREPARED_CHANGED" }); assert.equal(h.connects(), 0);
+});
+test("native PRODUCT supports reviewed schema11–17 but rejects missing, duplicate or future19 before targets/writes", async () => {
+  const prefix = [1,2,3,4,5,6,7,8,9,10,11];
+  for (const schemaVersions of [prefix, [...prefix,12], [...prefix,12,13], [...prefix,12,13,14], [...prefix,12,13,14,15], [...prefix,12,13,14,15,16], [...prefix,12,13,14,15,16,17]]) {
+    const approved = protocol(input(), { schemaVersions });
+    assert.deepEqual(await approved.store.stage(prepareNativeProductImportChunk(input())), { inserted: 1, replayed: 0 });
+  }
+  for (const schemaVersions of [prefix.filter(v => v !== 11), [...prefix,12,12], [...prefix,12,13,14,15,16,17,18,19],
+    [...prefix,99], [], [...prefix,12.5]]) {
+    const h = protocol(input(), { schemaVersions });
+    await assert.rejects(h.store.stage(prepareNativeProductImportChunk(input())), { code: "NATIVE_PRODUCT_SCHEMA_NOT_READY" });
+    assert.equal(h.nativeWrites(), 0); assert.equal(h.proofWrites(), 0);
+    assert.ok(!h.calls.some(call => call.sql.includes("native-product-import:target"))); assert.equal(h.calls.at(-1)!.sql, "ROLLBACK");
+  }
 });

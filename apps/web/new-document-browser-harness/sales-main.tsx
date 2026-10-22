@@ -1,3 +1,4 @@
+import { installSyntheticAuthNotice } from './synthetic-auth-notice.ts';
 import { createApplication, createDemoFrameWorkspaceRenderer } from '../src/application/index.tsx';
 import { detail as fixtureDetail } from '../src/sales/commands/fixtures.test-support.ts';
 import type { SalesDraftDto } from '../src/sales/commands/contracts.ts';
@@ -71,8 +72,9 @@ const http = {origin:'https://synthetic.invalid',basePath:'/api',fetch:async(url
 }};
 const styles=()=>({async load(){},dispose(){}});
 const app=createApplication({http,presentation:{renderWorkspace:createDemoFrameWorkspaceRenderer(),renderRouteState:({state})=><p>合成销货验收：{state.phase}。页面内存接口，无真实数据库或九价凭据。</p>},routes:{sales:{stylesheet:styles(),detailStylesheet:styles(),commands:{newRequestKey:()=>crypto.randomUUID(),manualCreate:true}}}});
+installSyntheticAuthNotice(document.getElementById('root')!);
 app.mount(document.getElementById('root')!);
-document.getElementById('authorize')!.addEventListener('click',()=>{failure='none';(document.getElementById('failure') as HTMLSelectElement).value='none';void app.controller.authentication.resolveSession();});
+document.getElementById('authorize')!.addEventListener('click',()=>{failure='none';(document.getElementById('failure') as HTMLSelectElement).value='none';void app.controller.authentication.resolveSession().then(()=>app.controller.navigate('sales'));});
 document.getElementById('home')!.addEventListener('click',()=>{void app.controller.navigate(null);});
 document.getElementById('sale')!.addEventListener('click',()=>{void app.controller.navigate('sales');});
 document.getElementById('failure')!.addEventListener('change',event=>{failure=(event.target as HTMLSelectElement).value;record(`Synthetic behavior: ${failure}`);});

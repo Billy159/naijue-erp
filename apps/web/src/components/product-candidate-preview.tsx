@@ -1,3 +1,4 @@
+import { UIButton } from './standard-controls.tsx';
 import { useEffect, useState } from 'react';
 import { ReadScope } from '../loading/read-scope.ts';
 import type { ProductReadOnlyReader } from '../inventory/product-contracts.ts';
@@ -33,6 +34,6 @@ function PreviewRead({ scope, reader }: { readonly scope: ReadScope; readonly re
       : <div className="inv-preview-no-photo">该商品尚未提供图片</div> : images.snapshot.phase === 'success' ? <div className="inv-preview-no-photo">图片资料未提供</div> : images.snapshot.phase !== 'error' && <div className="inv-preview-no-photo">正在读取商品图片…</div>}
     {data ? <div className="inv-preview-info">{fields.map(([label, value]) => <div className="inv-preview-field" key={label}><small>{label}</small> {value}</div>)}</div>
       : basics.snapshot.phase === 'success' ? <p className="inv-preview-no-photo">该商品尚未提供资料</p> : basics.snapshot.phase !== 'error' && <p className="inv-preview-no-photo" role="status">正在读取商品资料…</p>}
-    {failed && <p className="inv-preview-no-photo" role="alert">部分资料暂不可读取。<button type="button" className="iw-link" onClick={() => { for (const read of reads) if (read.snapshot.phase === 'error') read.read(); }}>重试资料</button></p>}
+    {failed && <p className="inv-preview-no-photo" role="alert">部分资料暂不可读取。<UIButton type="button" className="iw-link" onClick={() => { for (const read of reads) if (read.snapshot.phase === 'error') read.read(); }}>重试资料</UIButton></p>}
   </aside>;
 }

@@ -1,0 +1,123 @@
+import { assertNativeImportAccountingGuards } from "./native-import-accounting-capability.ts";
+import { requireDomain } from "../../../packages/domain/src/errors.ts";
+import { nativeStockSourceEvidence, validatePreparedNativeStockGroup } from "../../../packages/application/src/native-stock-contributor-import.ts";
+import type { NativeStockContributorStore, PreparedNativeStockGroup } from "../../../packages/application/src/native-stock-contributor-import.ts";
+import { assertReviewedNativeImportSchema } from "../../../packages/application/src/native-import-schema-contract.ts";
+import type { PgSalesClient, PgSalesPool } from "./sales-unit-of-work.ts";
+
+/** Original signed contribution staging only. No ledger/balance/receipt/publication effect. */
+export class PostgresNativeStockContributorStore implements NativeStockContributorStore {
+  private readonly pool: PgSalesPool;
+  constructor(pool: PgSalesPool) { this.pool = pool; }
+  async stage(input: PreparedNativeStockGroup): Promise<{ inserted: number; replayed: number }> {
+    const group = structuredClone(input); validatePreparedNativeStockGroup(group);
+    const client = await this.pool.connect(); let began = false, committing = false, discard: Error | undefined;
+    try {
+      await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
+      const result = await this.write(client, group);
+      committing = true; await client.query("COMMIT"); return result;
+    } catch (error) {
+      if (!began || committing) discard = error instanceof Error ? error : new Error("Stock contribution COMMIT outcome unknown; do not auto-retry");
+      if (began && !committing) try { await client.query("ROLLBACK"); } catch (rollback) {
+        discard = rollback instanceof Error ? rollback : new Error("Stock contribution rollback failed");
+        throw new AggregateError([error, rollback], "Stock contributor staging failed; discard connection");
+      }
+      throw error;
+    } finally { client.release(discard); }
+  }
+  private async write(client: PgSalesClient, group: PreparedNativeStockGroup): Promise<{ inserted: number; replayed: number }> {
+    await client.query("/* native-stock:cutoff */ SELECT naijue_erp.cutoff_import_lock()");
+    const versions = (await client.query(`/* native-stock:schema */ SELECT
+      array_agg(version ORDER BY version) AS installed_versions FROM naijue_erp.schema_migration`)).rows;
+    requireDomain(versions.length === 1, "NATIVE_STOCK_SCHEMA_NOT_READY", "Schema migration registry required");
+    const reviewedSchema = assertReviewedNativeImportSchema(versions[0]!.installed_versions,
+      { minimumVersion: 14, errorCode: "NATIVE_STOCK_SCHEMA_NOT_READY" });
+    if (reviewedSchema.versions.length === 18) await assertNativeImportAccountingGuards(client);
+    const batches = (await client.query(`/* native-stock:batch */ SELECT id,mapping_version,status,source_hash,source_name,
+      EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED') AS already_published
+      FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`, [group.batchId])).rows;
+    const b = batches[0];
+    requireDomain(batches.length === 1 && b?.id === group.batchId && b.mapping_version === group.mappingVersion
+      && (b.status === "STAGED" || b.status === "VALIDATING") && b.source_hash === group.selection.selectionSha256
+      && b.source_name === group.fixedSourceNamespace && b.already_published === false,
+    "NATIVE_STOCK_BATCH", "Exact selected open unpublished import batch required");
+    // 0013 WAREHOUSE owns its original source and formal 0007 import_record.
+    const warehouses = (await client.query(`/* native-stock:warehouse */ SELECT w.id FROM naijue_erp.warehouse w
+      JOIN naijue_erp.import_record r ON r.target_id=w.id AND r.import_batch_id=$1::uuid
+        AND r.source_entity_type='WAREHOUSE' AND r.target_type='WAREHOUSE' AND r.status='IMPORTED'
+        AND r.source_key=$2 WHERE w.id=$3::uuid FOR SHARE OF w,r`,
+    [group.batchId, group.warehouse.sourceKey, group.warehouse.nativeId])).rows;
+    requireDomain(warehouses.length === 1, "NATIVE_STOCK_WAREHOUSE_BINDING", "Exact same-batch imported warehouse required");
+    const skus = (await client.query(`/* native-stock:sku */ SELECT k.id FROM naijue_erp.sku k
+      JOIN naijue_erp.import_record r ON r.target_id=k.id AND r.import_batch_id=$1::uuid
+        AND r.source_entity_type='SKU' AND r.target_type='SKU' AND r.status='IMPORTED'
+        AND r.source_key=$2 WHERE k.id=$3::uuid FOR SHARE OF k,r`,
+    [group.batchId, group.sku.canonicalSourceKey, group.sku.nativeId])).rows;
+    requireDomain(skus.length === 1, "NATIVE_STOCK_SKU_BINDING", "Exact same-batch imported canonical SKU required");
+    const other = (await client.query(`/* native-stock:group-identity */ SELECT canonical_stock_source_key
+      FROM naijue_erp.import_stock_contributor WHERE batch_id=$1::uuid AND warehouse_id=$2::uuid AND canonical_sku_id=$3::uuid
+      ORDER BY canonical_stock_source_key,source_row_id LIMIT 201 FOR SHARE`,
+    [group.batchId, group.warehouse.nativeId, group.sku.nativeId])).rows;
+    requireDomain(other.length <= 200 && other.every(r => r.canonical_stock_source_key === group.canonicalStock["来源编号"]),
+      "NATIVE_STOCK_GROUP_CONFLICT", "A warehouse/canonical SKU cannot acquire a second effective stock group");
+    let inserted = 0, replayed = 0;
+    for (const row of [...group.contributors].sort((a, b) => a.source.sourceKey.localeCompare(b.source.sourceKey))) {
+      const s = row.source, l = row.lineage, evidence = nativeStockSourceEvidence(group, row);
+      const aliases = (await client.query(`/* native-stock:alias */ SELECT a.canonical_sku_id,a.canonical_source_key
+        FROM naijue_erp.import_sku_alias a WHERE a.batch_id=$1::uuid AND a.old_source_sku_id=$2 FOR SHARE`,
+      [group.batchId, l.oldSkuSourceId])).rows;
+      requireDomain(aliases.length === 1 && aliases[0]!.canonical_sku_id === group.sku.nativeId
+        && aliases[0]!.canonical_source_key === group.sku.canonicalSourceKey,
+      "NATIVE_STOCK_ALIAS_BINDING", "Original contributor SKU must have the exact same-batch canonical alias");
+      const previousSource = (await client.query(`/* native-stock:source-replay */ SELECT
+        (to_jsonb(s)||jsonb_build_object('row_no',s.row_no::text))=$2::jsonb AS equal FROM naijue_erp.import_source_row s
+        WHERE s.id=$1::uuid OR (s.batch_id=$3::uuid AND ((s.entity_type='INVENTORY_BASELINE' AND s.source_key=$4)
+          OR (s.source_file_sha256=$5 AND s.sheet=$6 AND s.row_no=$7::bigint))) ORDER BY s.id LIMIT 2 FOR SHARE`,
+      [s.id, JSON.stringify(evidence), group.batchId, s.sourceKey, s.sourceFileSha256, s.sheet, s.rowNo])).rows;
+      const expected = { batch_id: group.batchId, source_row_id: s.id, warehouse_id: group.warehouse.nativeId,
+        canonical_sku_id: group.sku.nativeId, old_source_sku_id: l.oldSkuSourceId,
+        canonical_stock_source_key: group.canonicalStock["来源编号"], source_unit: l.sourceUnit, signed_quantity: l.signedQuantity };
+      const previousContribution = (await client.query(`/* native-stock:contributor-replay */ SELECT
+        ((to_jsonb(c)-'baseline_ledger_id')||jsonb_build_object('signed_quantity',c.signed_quantity::text))=$3::jsonb AS equal,
+        c.baseline_ledger_id FROM naijue_erp.import_stock_contributor c
+        WHERE (c.batch_id=$1::uuid AND c.source_row_id=$2::uuid)
+          OR (c.batch_id=$1::uuid AND c.canonical_stock_source_key=$4 AND c.source_row_id=$2::uuid)
+        ORDER BY c.source_row_id LIMIT 2 FOR SHARE`,
+      [group.batchId, s.id, JSON.stringify(expected), group.canonicalStock["来源编号"]])).rows;
+      requireDomain(previousSource.length <= 1 && previousContribution.length <= 1
+        && (previousSource.length === 0) === (previousContribution.length === 0)
+        && (previousSource.length === 0 || previousSource[0]!.equal === true)
+        && (previousContribution.length === 0 || previousContribution[0]!.equal === true),
+      "NATIVE_STOCK_REPLAY_CONFLICT", "Original signed source and contribution must replay exactly together");
+      if (previousSource.length) {
+        const linkedId = previousContribution[0]!.baseline_ledger_id;
+        if (linkedId !== null) {
+          const linked = (await client.query(`/* native-stock:linked-baseline */ SELECT l.id FROM naijue_erp.inventory_ledger l
+            JOIN naijue_erp.import_record r ON r.import_batch_id=$1::uuid AND r.source_entity_type='INVENTORY_BASELINE'
+              AND r.source_key=$2 AND r.target_type='INVENTORY_LEDGER' AND r.target_id=l.id AND r.status='IMPORTED'
+            WHERE l.id=$3::uuid AND l.event_kind='CUTOFF_BASELINE' AND l.source_import_batch_id=$1::uuid
+              AND l.warehouse_id=$4::uuid AND l.sku_id=$5::uuid AND l.quantity_delta=$6::bigint FOR SHARE OF l,r`,
+          [group.batchId, group.canonicalStock["来源编号"], linkedId, group.warehouse.nativeId,
+            group.sku.nativeId, group.signedQuantity])).rows;
+          requireDomain(linked.length === 1 && linked[0]!.id === linkedId,
+            "NATIVE_STOCK_LINK_CONFLICT", "Replayed original contribution must attach only its exact signed canonical baseline");
+        }
+        replayed++; continue;
+      }
+      const created = await client.query(`/* native-stock:source-create */ INSERT INTO naijue_erp.import_source_row
+        SELECT x.* FROM jsonb_populate_record(NULL::naijue_erp.import_source_row,$1::jsonb) x RETURNING id`, [JSON.stringify(evidence)]);
+      requireDomain(created.rowCount === 1 && created.rows[0]!.id === s.id,
+        "NATIVE_STOCK_SOURCE_FAILED", "Exactly one original signed contributor source required");
+      const contribution = await client.query(`/* native-stock:contributor-create */ INSERT INTO naijue_erp.import_stock_contributor
+        (batch_id,source_row_id,warehouse_id,canonical_sku_id,old_source_sku_id,canonical_stock_source_key,source_unit,signed_quantity,baseline_ledger_id)
+        VALUES ($1::uuid,$2::uuid,$3::uuid,$4::uuid,$5,$6,$7,$8::bigint,NULL) RETURNING source_row_id`,
+      [group.batchId, s.id, group.warehouse.nativeId, group.sku.nativeId,
+        l.oldSkuSourceId, group.canonicalStock["来源编号"], l.sourceUnit, l.signedQuantity]);
+      requireDomain(contribution.rowCount === 1 && contribution.rows[0]!.source_row_id === s.id,
+        "NATIVE_STOCK_CONTRIBUTOR_FAILED", "Exactly one original signed contributor linkage required");
+      inserted++;
+    }
+    requireDomain(inserted === 0 || replayed === 0, "NATIVE_STOCK_PARTIAL_GROUP", "One complete group must be either all new or an exact replay");
+    return { inserted, replayed };
+  }
+}

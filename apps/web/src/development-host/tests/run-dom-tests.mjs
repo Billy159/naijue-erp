@@ -25,7 +25,7 @@ try {
   const root = document.getElementById('naijue-erp-root');
   const settle = async () => { await act(async () => { await new Promise(resolve => setTimeout(resolve, 12)); }); };
   const until = async (check, label) => { const deadline = Date.now() + 5000; while (!check() && Date.now() < deadline) await settle(); assert.ok(check(), label); };
-  const button = label => [...root.querySelectorAll('button')].find(element => element.textContent.trim() === label);
+  const button = label => [...root.querySelectorAll('button,[role=tab]')].find(element => element.textContent.trim() === label);
   const navigation = label => [...root.querySelectorAll('.sidebar a')].find(element => element.textContent.trim() === label);
   const click = async element => { assert.ok(element, 'Expected synthetic test control'); await act(async () => element.click()); await settle(); };
   const submit = async label => { const form = root.querySelector(`form[aria-label="${label}"]`); assert.ok(form); await act(async () => form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))); await settle(); };
@@ -107,6 +107,26 @@ try {
   data.textContent = JSON.stringify({ configuration, assets, principal: 'SYNTHETIC' }); assert.throws(() => startDevelopmentHost(environment));
   data.remove(); assert.throws(() => startDevelopmentHost(environment));
   console.log('PASS host DOM 5: explicit bootstrap session verification is exactly once per owner; false routes have no target; pagehide discards stale identity/read state and bfcache restore recreates only the configured unselected host; invalid payload never starts.');
+
+  const directoryCalls=[], warehouse={kind:'warehouses',id:uuid(7100),name:'SYNTHETIC HOST WAREHOUSE',enabled:true,version:1,createdAt:null,updatedAt:null,stockFacts:null,hall:{id:uuid(6100),name:null}};
+  const directoryFetch=async(url,init)=>{directoryCalls.push({url,init});assert.equal(init.credentials,'same-origin');
+    if(url==='https://synthetic.test/api/auth/session')return json({principal});
+    assert.equal(init.method,'POST');
+    if(url==='https://synthetic.test/api/store-settings-read/warehouses/query')return json({page:1,pageSize:20,total:1,items:[warehouse]});
+    if(url==='https://synthetic.test/api/store-settings-read/warehouses/detail/query')return json({item:warehouse});
+    throw new Error('Real-host adapter must not substitute a transaction candidate or synthetic fallback');
+  };
+  const directoryConfiguration={...configuration,assets:{basePath:'/assets/'},routes:{inventory:false,sales:false,transfers:false,storeSettings:{allowedTabs:['warehouses'],initialTab:'warehouses',allowHallDirectoryRead:false}}};
+  const directoryAssets={...assets,styles:{...assets.styles,'store-settings':'store-settings.css'}};
+  assert.throws(()=>mountDevelopmentHost({...environment,fetch:directoryFetch,configuration:directoryConfiguration,assets}),'Explicit route requires explicit emitted CSS');
+  await act(async()=>{owner=mountDevelopmentHost({...environment,fetch:directoryFetch,configuration:directoryConfiguration,assets:directoryAssets});});await settle();assert.equal(directoryCalls.length,0);
+  await click(button('核验登录状态'));assert.equal(directoryCalls.length,1);assert.deepEqual([...owner.controller.routes],['store-settings']);
+  await click(navigation('营业厅与仓库'));assert.equal(link('store-settings').href,'https://synthetic.test/assets/store-settings.css');assert.equal(directoryCalls.length,1,'Route read waits for explicit CSS');
+  await style('store-settings');await until(()=>root.querySelector('button[aria-label^="查看仓库："]'),'Real host store reader');assert.equal(directoryCalls.length,2);
+  assert.ok(button('营业厅').getAttribute('aria-disabled')==='true','Unconfigured tab remains disabled');assert.ok(root.querySelector('[aria-label="所属营业厅"]').classList.contains('arco-select-disabled'),'No directory intention never grants hall-directory reads');
+  await click(root.querySelector('button[aria-label^="查看仓库："]'));await until(()=>root.querySelector('.erp-store-settings-modal [aria-label="名称"]'),'Real host readonly Arco detail');assert.equal(directoryCalls.length,3);assert.equal(root.querySelector('.erp-store-settings-modal [aria-label="所属营业厅"]').value,'名称未提供');assert.equal(root.querySelectorAll('dialog').length,0);
+  await click(root.querySelector('[aria-label="关闭查看仓库"]'));await act(async()=>owner.dispose());assert.equal(root.childElementCount,0);
+  console.log('PASS host DOM 6: optional warehouse-only configuration, fixed /api exact read paths and /assets CSS, explicit CSS prerequisite, absent directory intent stays disabled, shared Arco detail and clean disposal; no injected synthetic fallback.');
   console.log('SYNTHETIC ONLY: mocked fetch, CSS events and jsdom; no browser, TLS/cookie, server, DB, pixel, timing or performance acceptance.');
 } finally {
   if (owner) { if (act) await act(async () => owner.dispose()); else owner.dispose(); }

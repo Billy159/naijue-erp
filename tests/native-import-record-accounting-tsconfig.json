@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../packages/application/src/native-import-record-accounting.ts",
+    "../adapters/postgres/src/native-import-record-accounting.ts",
+    "../adapters/postgres/src/inventory-cutoff-import-store.ts",
+    "./native-import-record-accounting.test.ts",
+    "./native-import-record-accounting-postgres-protocol.test.ts",
+    "./native-import-accounting-store-postgres-protocol.test.ts",
+    "./native-import-accounting-manifest.test.ts",
+    "./history-insert-dispatch-migration.test.ts",
+    "./schema16-accounting-closure.test.ts",
+    "./native-import-schema-contract.test.ts",
+    "./native-import-record-accounting-migration.test.ts",
+    "./native-import-record-accounting-conservation.test.ts",
+    "./support/native-record-accounting-fixtures.ts"
+  ]
+}

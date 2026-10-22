@@ -1,0 +1,11 @@
+✔ reader opens only after full verification; source rows and prepared PRODUCT/TRANSFER_LINE authorize exactly (6625.987202ms)
+✔ reader refuses unpinned/self-signed approval, missing native resolver and forged aggregate authorization (5579.905442ms)
+✔ reader rejects self-consistently rehashed wrong raw alias, changed snapshot text and duplicate original identity (30605.080429ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43792.127135

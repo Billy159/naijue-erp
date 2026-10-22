@@ -1,0 +1,41 @@
+{
+  "status": "FROZEN_FOR_PARENT_COMPOSITION",
+  "frozenAtUtc": "2026-10-21T16:10:03Z",
+  "sourceFiles": 30,
+  "sourceManifest": "source.sha256",
+  "sourceManifestSha256": "07cbf5beae978302997bdd9429e4fd6bcf69ccb4a954156f37ea3c323aabcf35",
+  "checks": {
+    "newLaneSyntheticTests": {
+      "passed": 30,
+      "failed": 0,
+      "evidence": "unit-tests.txt"
+    },
+    "unchangedDictionarySyntheticRegression": {
+      "passed": 19,
+      "failed": 0,
+      "evidence": "dictionary-regression.txt"
+    },
+    "domLifecycleGroups": {
+      "passed": 4,
+      "evidence": "dom-tests.txt"
+    },
+    "independentBrowserBundle": "PASS build-check.txt",
+    "finalScopedStrictTypecheck": "PASS scoped-typecheck.txt (empty output, exit 0)",
+    "finalWholeTreeTypecheck": "PASS full-typecheck.txt (exit 0)",
+    "separateWebTypecheck": "PASS web-typecheck.txt (before final internal correction; final scoped/whole-tree revalidated)",
+    "independentReview": "PASS independent-review.txt after deep-tree and dialog-close-order fixes"
+  },
+  "authorizationBoundaries": [
+    "No default identity, role or enumeration/count grant",
+    "Category productCounts NONE skips product SQL and returns null; ALL requires separately trusted complete count visibility",
+    "No write capability or enabled write actions",
+    "No importer/DDL/schema/shared Application/package/registry mutation in this lane"
+  ],
+  "notVerified": [
+    "Current target trusted host policy and API registration",
+    "Actual PostgreSQL query parsing/isolation/pool role visibility",
+    "Mac browser per-page visual and native modal inert/focus behavior",
+    "Deployment and live acceptance"
+  ],
+  "source": "8877-ui-evidence-b8bcfe3 per source-provenance.json; production pages use real readers only, no synthetic fallback"
+}

@@ -1,3 +1,4 @@
+import { UIButton } from '../components/standard-controls.tsx';
 import { useEffect, useState, type ComponentType } from 'react';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
@@ -27,6 +28,6 @@ export function TransferDetailHost(props: TransferDetailActivation) {
   }, [scope, attempt, leaves]);
   if (!props.parentScope.active) return null;
   if (View && scope) return <View scope={scope} accessScope={props.parentScope} reader={props.reader} transferId={props.transferId} close={close} {...(props.product ? { product: props.product } : {})} />;
-  return <section className="tc-workbench transfer-detail-loading" aria-label="调拨单详情"><div className="tc-head"><h1>查看调拨单</h1><button type="button" className="iw-text-button" onClick={close}>返回列表</button></div>
-    {failed ? <p role="alert" className="iw-inline-state">详情组件或样式加载失败。<button type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试加载</button></p> : <p role="status" className="iw-inline-state">正在准备调拨单查看…</p>}</section>;
+  return <section className="tc-workbench transfer-detail-loading" aria-label="调拨单详情"><div className="tc-head"><h1>查看调拨单</h1><UIButton type="button" className="iw-text-button" onClick={close}>返回列表</UIButton></div>
+    {failed ? <p role="alert" className="iw-inline-state">详情组件或样式加载失败。<UIButton type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试加载</UIButton></p> : <p role="status" className="iw-inline-state">正在准备调拨单查看…</p>}</section>;
 }

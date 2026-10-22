@@ -1,16 +1,12 @@
 export { createDemoMultiSelectStyles } from './multi-select-styles.ts';
-import ArcoTreeSelect from '@arco-design/web-react/es/TreeSelect/index.js';
-import ArcoTree from '@arco-design/web-react/es/Tree/index.js';
-import type { RefTreeSelectType, TreeSelectProps } from '@arco-design/web-react/es/TreeSelect/interface.js';
-import type { TreeProps } from '@arco-design/web-react/es/Tree/interface.js';
+import { TreeSelect, Tree } from '@arco-design/web-react';
+import type { TreeSelectProps, TreeProps } from '@arco-design/web-react';
+import type { ComponentRef } from 'react';
+type RefTreeSelectType = ComponentRef<typeof TreeSelect>;
 import { useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState, type ComponentType, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 import type { DemoMultiOption, DemoMultiSelectActionProps } from './multi-select-contract.ts';
 import { createCategoryBranchProjection, changeCategoryBranchSelection } from './category-branch-model.ts';
 
-// NodeNext's CJS-namespace type interpretation must not broaden the runtime
-// dependency to the all-component barrel. Keep the actual TreeSelect leaf.
-const TreeSelect = ArcoTreeSelect as unknown as ForwardRefExoticComponent<TreeSelectProps & RefAttributes<RefTreeSelectType>> & { readonly SHOW_ALL: 'all' };
-const Tree = ArcoTree as unknown as ComponentType<TreeProps>;
 const ALL = '__demo_multi_all__';
 // Controlled remote candidates must not retain Arco's stale local hitKeys.
 // This callback does no read; all data ownership stays with the caller.

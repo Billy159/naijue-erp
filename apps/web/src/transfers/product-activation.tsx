@@ -1,3 +1,4 @@
+import { UIButton } from '../components/standard-controls.tsx';
 import { useEffect, useMemo, useState } from 'react';
 import type { ReadScope } from '../loading/read-scope.ts';
 import { ProductDrawerHost } from '../inventory/product-drawer-host.tsx';
@@ -26,5 +27,5 @@ export function TransferProductActivation(props: { readonly parent: ReadScope; r
   if (!props.parent.active) return null;
   if (scope && state?.scope === scope && state.capability === props.capability && state.phase === 'ready') return <ProductDrawerHost parentScope={scope} product={props.product} reader={reader} loadStyles={props.capability.loadStyles} close={close} />;
   const failed = state?.scope === scope && state.capability === props.capability && state.phase === 'error';
-  return <section className="transfer-product-preparing" aria-label="商品查看准备"><p role={failed ? 'alert' : 'status'}>{failed ? <>商品查看样式加载失败。<button type="button" className="iw-link" onClick={() => { setState(null); setAttempt(value => value + 1); }}>重试商品样式</button></> : '正在准备商品资料…'}</p><button type="button" className="iw-text-button" onClick={close}>取消商品查看</button></section>;
+  return <section className="transfer-product-preparing" aria-label="商品查看准备"><p role={failed ? 'alert' : 'status'}>{failed ? <>商品查看样式加载失败。<UIButton type="button" className="iw-link" onClick={() => { setState(null); setAttempt(value => value + 1); }}>重试商品样式</UIButton></> : '正在准备商品资料…'}</p><UIButton type="button" className="iw-text-button" onClick={close}>取消商品查看</UIButton></section>;
 }

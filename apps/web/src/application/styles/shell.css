@@ -1,4 +1,16 @@
-/* Existing authentication plus the first-party frozen-source frame and shared neutral controls. No business leaf CSS. */
+/* Authentication and shared controls now render real Arco. buildApplication
+ * replaces esbuild's aggregate CSS, so this explicit graph must retain the
+ * installed library and shared adapters. Business facts/route code stay lazy. */
+@import '@arco-design/web-react/dist/css/arco.css';
+@import '../../components/standard-controls.css';
+@import '../../components/standard-overlay.css';
+@import '../../components/standard-tabs.css';
 @import '../../authentication/authentication.css';
 @import '../../demo-presentation/frame.css';
 @import '../../demo-presentation/controls.css';
+
+@import '../../components/standard-read-table.css';
+@import '../../components/exact-value.css';
+@import '../../components/standard-pagination.css';
+@import '../../components/standard-breadcrumb.css';
+@import '../../components/standard-status-tag.css';

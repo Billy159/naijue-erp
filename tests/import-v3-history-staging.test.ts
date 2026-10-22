@@ -16,13 +16,14 @@ function fixture(): V3HistoryChunk {
 class FakePool implements PgSalesPool {
   calls:string[]=[]; committed=new Map<string,{source:Record<string,unknown>;line:Record<string,unknown>}>();
   working=new Map<string,{source:Record<string,unknown>;line:Record<string,unknown>}>();
-  pending:Record<string,unknown>|undefined; failLine=false; failLineAt=0; lineAttempts=0; failCommit=false; badBinding=false; closed=false; discarded:Error|undefined; connects=0;
+  pending:Record<string,unknown>|undefined; failLine=false; failLineAt=0; lineAttempts=0; failCommit=false; commitAppliedBeforeFailure=false; failRollback=false;
+  readonly commitError=Error('commit unknown'); badBinding=false; closed=false; discarded:Error|undefined; connects=0;
   async connect():Promise<PgSalesClient> {this.connects++;return {query:async (sql,values=[])=>this.query(sql,values),release:error=>{this.discarded=error instanceof Error ? error : undefined;}};}
   async query(sql:string,values:readonly unknown[]):Promise<PgSalesResult> {
     this.calls.push(sql); const answer=(rows:Record<string,unknown>[]=[]):PgSalesResult=>({rows,rowCount:rows.length});
     if(sql.startsWith('BEGIN')) {this.working=structuredClone(this.committed);return answer();}
-    if(sql==='COMMIT') {if(this.failCommit)throw Error('commit unknown');this.committed=this.working;return answer();}
-    if(sql==='ROLLBACK') {this.working=structuredClone(this.committed);this.pending=undefined;return answer();}
+    if(sql==='COMMIT') {if(this.failCommit){if(this.commitAppliedBeforeFailure)this.committed=structuredClone(this.working);throw this.commitError;}this.committed=this.working;return answer();}
+    if(sql==='ROLLBACK') {if(this.failRollback)throw Error('rollback failed');this.working=structuredClone(this.committed);this.pending=undefined;return answer();}
     if(sql.includes('history-stage:batch')) return answer([{id:id(1),mapping_version:'V2_HISTORY_NULLABLE_1',status:this.closed?'IMPORTED':'STAGED',source_hash:h,source_name:'synthetic-v3'}]);
     if(sql.includes('history-stage:bindings')) return answer(this.badBinding?[]:[{id:id(3)}]);
     if(sql.includes('history-stage:replay')) {const old=this.working.get(String(values[0])); return answer(old?[{source_equal:JSON.stringify(old.source)===values[1],line_equal:JSON.stringify(old.line)===values[2]}]:[]);}
@@ -60,9 +61,13 @@ test('failed line rolls back source and complete chunk; explicit retry succeeds'
   await assert.rejects(store.stage(chunk),/line failed/);assert.equal(pool.committed.size,0);assert.equal(pool.calls.at(-1),'ROLLBACK');
   pool.failLine=false;assert.deepEqual(await store.stage(chunk),{inserted:1,replayed:0});
 });
-test('unknown COMMIT is never automatically retried and discards connection',async()=>{
-  const pool=new FakePool();pool.failCommit=true;await assert.rejects(new PostgresV3HistoryStagingStore(pool).stage(prepareV3HistoryChunk(fixture())),/commit unknown/);
-  assert.equal(pool.connects,1);assert.ok(pool.discarded);assert.equal(pool.calls.filter(s=>s==='COMMIT').length,1);
+test('unknown COMMIT preserves the original error, discards without rollback/retry for either actual outcome',async()=>{
+  for(const applied of [false,true])for(const rollbackFails of [false,true]){
+    const pool=new FakePool();pool.failCommit=true;pool.commitAppliedBeforeFailure=applied;pool.failRollback=rollbackFails;
+    await assert.rejects(new PostgresV3HistoryStagingStore(pool).stage(prepareV3HistoryChunk(fixture())),error=>error===pool.commitError);
+    assert.equal(pool.connects,1);assert.equal(pool.discarded,pool.commitError);assert.equal(pool.calls.filter(s=>s==='COMMIT').length,1);
+    assert.ok(!pool.calls.includes('ROLLBACK'));assert.equal(pool.calls.at(-1),'COMMIT');assert.equal(pool.committed.size,applied?1:0);
+  }
 });
 test('closed/unbound batches and missing native binding fail before source insert',async()=>{
   for(const condition of ['closed','badBinding'] as const){const pool=new FakePool();pool[condition]=true;await assert.rejects(new PostgresV3HistoryStagingStore(pool).stage(prepareV3HistoryChunk(fixture())));assert.ok(!pool.calls.some(s=>s.includes('history-stage:source')));}

@@ -1,0 +1,65 @@
+{
+  "baseline": "8877-ui-evidence-b8bcfe3",
+  "proof": "Frozen static source/load-order only; not browser computed-style or pixel acceptance",
+  "pages": [
+    "PR-10",
+    "PR-11",
+    "PR-12"
+  ],
+  "files": [
+    {
+      "path": "LOAD_ORDER.md",
+      "sha256": "a5806268ab952d3b498add7c7f0b80ea55d3a77c0cf43ba4743287f09cf8dff4"
+    },
+    {
+      "path": "frontend/product-current.js",
+      "sha256": "d5a3ae29d781aa725859196dac6ef4e64f0e3cea08b3cca5c199579c9527b0be"
+    },
+    {
+      "path": "frontend/product-arco.jsx",
+      "sha256": "0b70d765bc42d27872b743ce7bae753ab1920c6e6c3fd9baed33057a0308d057"
+    },
+    {
+      "path": "frontend/product-current.css",
+      "sha256": "b83ee2ee419f6076274fc06280d672194202809a71b529a19a7989659ec2364a"
+    },
+    {
+      "path": "frontend/product-inventory-unified.css",
+      "sha256": "645ae0acece1b438cb04b8e8b642a539f85ec506d2b72d079f02ca4de6ed0da0"
+    },
+    {
+      "path": "frontend/product-rework.css",
+      "sha256": "40d9ce96db6cfc4d6a1e4c531144a05f10a5e44df64073e2a9441468872d0254"
+    },
+    {
+      "path": "frontend/ui-tokens.css",
+      "sha256": "fdb91a2df6218a7a24081831cd4a104c2817fe9e399dcdf934273c1bb465979d"
+    }
+  ],
+  "sourceFacts": {
+    "categorySplitWidth": 280,
+    "settingSearchWidth": 280,
+    "settingRowHeight": 34,
+    "settingHeaderHeight": 36,
+    "settingTabsHeight": 34,
+    "dictModalWidth": 480,
+    "nativeTreeRowMinHeight": 30,
+    "dictModalRadius": 4,
+    "dictModalHeaderMinHeight": 43,
+    "dictModalHeaderPadding": "11px 14px"
+  },
+  "intentionalReadOnlyAdaptations": [
+    "Mandatory exact enumeration authorization",
+    "Independent complete product-count capability; null without it",
+    "No category code native fact; explicit null",
+    "Bounded complete native category tree rejects overflow and corruption",
+    "Native arbitrary-depth hierarchy retained",
+    "All maintenance controls disabled; read-only view uses authorized list snapshot",
+    "Server-side color/fit pagination and debounced search; no candidate or fixture fallback"
+  ],
+  "unverified": [
+    "Host route/API registration and current grant implementation",
+    "Actual PostgreSQL query/transaction/role visibility",
+    "Mac browser source-by-source visual comparison"
+  ]
+}
