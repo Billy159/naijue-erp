@@ -3,10 +3,12 @@ import assert from "node:assert/strict";
 import Fastify from "fastify";
 import type { TestContext } from "node:test";
 import { createPartyMaintenanceHttpPlugin } from "./party-maintenance-http.ts";
+import { createPartyReadHttpPlugin } from "./party-read-http.ts";
+import { createPartyMaintenanceService } from "../../../packages/application/src/party-maintenance-service.ts";
 import type { PartyHttpOptions } from "./party-maintenance-http.ts";
 import { createPartySessionAuthenticator } from "./party-authentication.ts";
 import type { AuthenticationHttpOptions } from "./authentication.ts";
-import type { PartyActor } from "../../../packages/application/src/party-maintenance-ports.ts";
+import type { PartyActor, PartyPage, PartyRecord } from "../../../packages/application/src/party-maintenance-ports.ts";
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { partyActor, partyFixture } from "../../../tests/support/party-synthetic-store.ts";
 
@@ -18,6 +20,38 @@ async function setup(t: TestContext, authenticate?: PartyHttpOptions["authentica
   return { ...f, app, post, auth: (actor: PartyActor | null) => { current = actor; } };
 }
 const create = { action: "CREATE", requestKey: "create", name: "SYNTHETIC NAME" };
+test("SYNTHETIC split party composition: bounded read plugin owns GET; commands and receipts remain available", async t => {
+  const f = partyFixture(), service = createPartyMaintenanceService(f.dependencies), app = Fastify({ logger: false });
+  let reads = 0;
+  app.register(createPartyReadHttpPlugin({ authenticate: async () => partyActor, dependencies: {
+    authorization: { async authorize(_actor, intent) { return { kind: intent.kind, operation: intent.operation, targetId: intent.operation === "DETAIL" ? intent.id : null }; } },
+    reader: {
+      async search(read) {
+        reads++; if (read.intent.operation === "DETAIL") throw Error("Unexpected synthetic detail");
+        const query = read.intent.query, kind = read.intent.kind;
+        return f.dependencies.unitOfWork.transaction<PartyPage<PartyRecord>>(tx => kind === "CUSTOMER" ? tx.searchCustomers(query) : tx.searchSuppliers(query));
+      },
+      async detail(read) {
+        reads++; if (read.intent.operation !== "DETAIL") throw Error("Unexpected synthetic search");
+        return service.detail(read.actor, read.intent.kind, read.intent.id);
+      }
+    }
+  } }));
+  app.register(createPartyMaintenanceHttpPlugin({ authenticate: async () => partyActor, dependencies: f.dependencies, includeReadRoutes: false }));
+  t.after(() => app.close()); await app.ready();
+  for (const family of ["customers", "suppliers"]) {
+    const requestKey = `split-${family}`;
+    const saved = await app.inject({ method: "POST", url: `/${family}/commands`, payload: { ...create, requestKey } });
+    assert.equal(saved.statusCode, 200, saved.body);
+    const list = await app.inject(`/${family}?search=&enabled=ALL&page=1&pageSize=20`);
+    assert.equal(list.statusCode, 200, list.body); assert.equal(list.json().items[0].id, saved.json().partyId);
+    const detail = await app.inject(`/${family}/${saved.json().partyId}`);
+    assert.equal(detail.statusCode, 200); assert.equal(detail.json().name, create.name);
+    const receipt = await app.inject(`/${family}/receipts/${requestKey}`);
+    assert.equal(receipt.statusCode, 200); assert.deepEqual(receipt.json().result, saved.json());
+  }
+  assert.equal(reads, 4); assert.equal(app.server.listening, false);
+});
 test("SYNTHETIC party HTTP: separate route lifecycle, original replay and minimal safe receipts; no listener", async t => {
   const f = await setup(t); assert.equal(f.app.server.listening, false);
   const saved = await f.post(create); assert.equal(saved.statusCode, 200, saved.body); const first = saved.json();

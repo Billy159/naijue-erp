@@ -74,7 +74,8 @@ test("SYNTHETIC party pg protocol: bounded one-statement search is parameterized
 });
 test("SYNTHETIC party pg protocol: commit uncertainty discards connection, no hidden retry", async () => {
   const failure = new Error("SYNTHETIC COMMIT UNCERTAINTY"); const f = protocol(sql => { if (sql === "COMMIT") throw failure; return noRows; });
-  await assert.rejects(f.store.transaction(async () => 1), failure); assert.equal(f.connects(), 1); assert.deepEqual(f.releases, [failure]); assert.equal(f.calls.at(-1)!.sql, "ROLLBACK");
+  await assert.rejects(f.store.transaction(async () => 1), failure); assert.equal(f.connects(), 1); assert.deepEqual(f.releases, [failure]);
+  assert.deepEqual(f.calls.map(call => call.sql), ["BEGIN ISOLATION LEVEL READ COMMITTED", "COMMIT"]);
 });
 test("SYNTHETIC party pg protocol: rollback failure aggregates and discards, escaped handles cannot query", async () => {
   const f = protocol(sql => { if (sql === "ROLLBACK") throw new Error("SYNTHETIC ROLLBACK FAILURE"); return noRows; });

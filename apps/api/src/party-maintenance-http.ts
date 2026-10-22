@@ -7,7 +7,12 @@ import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { assertNoQuery } from "./input.ts";
 
 export interface PartyAuthenticationInput { readonly headers: Readonly<IncomingHttpHeaders>; readonly ip: string; readonly method: string; readonly url: string }
-export interface PartyHttpOptions { readonly authenticate: (input: PartyAuthenticationInput) => Promise<PartyActor | null>; readonly dependencies: PartyDependencies }
+export interface PartyHttpOptions {
+  readonly authenticate: (input: PartyAuthenticationInput) => Promise<PartyActor | null>;
+  readonly dependencies: PartyDependencies;
+  /** False keeps reads owned by the separate bounded party-read plugin. Existing callers retain all routes. */
+  readonly includeReadRoutes?: boolean;
+}
 const statuses: Readonly<Record<string, number>> = { INVALID_PARTY_INPUT: 400, INVALID_ID: 400, INVALID_VERSION: 400, INVALID_HTTP_INPUT: 400,
   FORBIDDEN: 403, PARTY_NOT_FOUND: 404, RECEIPT_NOT_FOUND: 404, VERSION_CONFLICT: 409, IDEMPOTENCY_CONFLICT: 409,
   PARTY_CODE_CONFLICT: 409, PARTY_CODE_EXHAUSTED: 409, CUSTOMER_DEFAULT_IN_USE: 409, INVALID_PARTY_STATE: 409, NO_PARTY_CHANGE: 409, VERSION_STORAGE_OVERFLOW: 409, PARTY_READ_TOO_LARGE: 422 };
@@ -15,6 +20,8 @@ const statuses: Readonly<Record<string, number>> = { INVALID_PARTY_INPUT: 400, I
  * This plugin is non-listening and requires trusted current authentication and policies. */
 export function createPartyMaintenanceHttpPlugin(options: PartyHttpOptions): FastifyPluginAsync {
   if (typeof options?.authenticate !== "function") throw new TypeError("Party HTTP requires explicit trusted authentication");
+  if (options.includeReadRoutes !== undefined && typeof options.includeReadRoutes !== "boolean") throw new TypeError("Party read route availability must be an explicit boolean");
+  const includeReadRoutes = options.includeReadRoutes ?? true;
   const service = createPartyMaintenanceService(options.dependencies);
   return async function partyMaintenanceHttp(app) {
     const actors = new WeakMap<object, PartyActor>();
@@ -43,12 +50,14 @@ export function createPartyMaintenanceHttpPlugin(options: PartyHttpOptions): Fas
         if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });
         return service.execute(parsePartyCommand(request.body, actor(request), kind));
       });
-      app.get(`/${path}`, async request => service.search(actor(request), kind, parsePartySearch(request.query, false, true)));
-      app.get(`/${path}/candidates`, async request => {
-        const { enabled: _enabled, ...query } = parsePartySearch(request.query, true, true);
-        return service.search(actor(request), kind, query, true);
-      });
-      app.get<{ Params: { id: string } }>(`/${path}/:id`, async request => { assertNoQuery(request.query); return service.detail(actor(request), kind, request.params.id); });
+      if (includeReadRoutes) {
+        app.get(`/${path}`, async request => service.search(actor(request), kind, parsePartySearch(request.query, false, true)));
+        app.get(`/${path}/candidates`, async request => {
+          const { enabled: _enabled, ...query } = parsePartySearch(request.query, true, true);
+          return service.search(actor(request), kind, query, true);
+        });
+        app.get<{ Params: { id: string } }>(`/${path}/:id`, async request => { assertNoQuery(request.query); return service.detail(actor(request), kind, request.params.id); });
+      }
       app.get<{ Params: { requestKey: string } }>(`/${path}/receipts/:requestKey`, async request => { assertNoQuery(request.query); return service.receipt(actor(request), kind, request.params.requestKey); });
     }
   };

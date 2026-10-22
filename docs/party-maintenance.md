@@ -21,6 +21,19 @@ The implementation adds:
 
 Register createPartyMaintenanceHttpPlugin with explicit dependencies and an authenticator such as createPartySessionAuthenticator. Registration creates no listener, database, accounts, credentials or data.
 
+For a host that already registers `createPartyReadHttpPlugin`, register maintenance with
+`includeReadRoutes: false`. The read plugin continues owning the bounded list/detail/candidate
+GET routes; maintenance registers only POST commands and GET original receipts. The option
+defaults to true for existing standalone callers. Registering both plugins with maintenance's
+default still duplicates routes and must not be used. Host composition remains owned by D1.
+Supply the existing `PostgresPartyUnitOfWork` on the shared bounded pool, current trusted party
+authentication/policy, `createApprovedPartyCodeAllocator`, clock and identifiers; no schema
+extension or new maintenance type is needed for these customer/supplier commands.
+
+If COMMIT fails after being attempted, this adapter discards the connection without ROLLBACK
+or an automatic retry. Recover the outcome through the authenticated original actor/request-key
+receipt; keep the same key. Failures before the COMMIT attempt still roll back.
+
 Two explicit families: /customers and /suppliers.
 
 - POST /{family}/commands: action CREATE, requestKey and name.

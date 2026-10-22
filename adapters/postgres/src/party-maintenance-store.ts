@@ -37,7 +37,8 @@ export class PostgresPartyUnitOfWork implements PartyUnitOfWork {
       const value = await work(tx); tx.close(); committing = true; await client.query("COMMIT"); return value;
     } catch (error) {
       tx.close(); if (!began || committing) discard = error instanceof Error ? error : new Error("Party transaction failed");
-      if (began) try { await client.query("ROLLBACK"); }
+      // An attempted COMMIT can already have committed. Discard; recover using the original request key.
+      if (began && !committing) try { await client.query("ROLLBACK"); }
       catch (rollbackError) { discard = rollbackError instanceof Error ? rollbackError : new Error("Party rollback failed"); throw new AggregateError([error, rollbackError], "Party transaction and rollback failed; connection discarded"); }
       throw error;
     } finally { client.release(discard); }
