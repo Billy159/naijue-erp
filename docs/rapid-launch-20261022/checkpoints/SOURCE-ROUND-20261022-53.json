@@ -1,0 +1,68 @@
+{
+  "atUtc": "2026-10-22T18:40:12.470660+00:00",
+  "parent": "da61c6a0e34150cdaf3f82389573e584ea378e05",
+  "groups": [
+    {
+      "slice": "DOCUMENT_PRODUCT_STYLE_DISPOSE_FOLLOWUP",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-31/DELIVERY.json",
+      "receiptSha256": "46e22b2abd3853c747dc3405a1421d4d001ad99ec4532227b9210f6b5e359626",
+      "receiptSnapshot": {
+        "chunk": 31,
+        "status": "READY_FOR_C_PIN",
+        "findings": [
+          "SALE-V008-CAPTURE-01",
+          "SALE-V006-01 geometry subpart only"
+        ],
+        "files": [
+          {
+            "path": "apps/web/src/application/controller.ts",
+            "sha256": "d14aa54e3bb8f43231f52f3e8a0860b25f0f52fb7dcf9a4c4c6a1e9c007bce27"
+          },
+          {
+            "path": "apps/web/src/current-form/product-finder.css",
+            "sha256": "67a5401e1d21b3c7f43b196904fcc50247562dc6ee9de918accb24d36bf3de26"
+          }
+        ],
+        "behavior": [
+          "Controller captures each route own productFullPage via existing strict immutable descriptor capture, independently from Products; no fallback.",
+          "Controller captures exact transfer initialSizeGroup id/native reader; constructor does not read.",
+          "Finder root owns660px max viewport width and270px list variable, plus safe var fallback; no dependence on ignored Trigger popupStyle inheritance.",
+          "Application disposal releases newly captured sales/transfer product stylesheet owners too."
+        ],
+        "checks": [
+          {
+            "log": "root-2.log",
+            "exitCode": 0,
+            "scope": "Actual Application -> captured independent sales capability -> actual manual-create -> real ProductCandidatePreview; all3 actual target ports invoked, caller mutation cannot alter captured provider; no sales opt-in does not borrow Products."
+          },
+          {
+            "log": "root-2.log",
+            "exitCode": 0,
+            "scope": "Actual transfer Application -> route -> WIP30 actual new leaf consumes independent product/default-group capture. Does not deliver/pin WIP30."
+          },
+          {
+            "log": "types-1.log",
+            "exitCode": 0,
+            "scope": "Affected real production root typed closure with current WIP30."
+          }
+        ],
+        "limits": [
+          "C full build/pin and actual browser geometry comparison still required.",
+          "SALE-V006-01 / wholepage remain NOT_ACCEPTED; no barcode partial lookup fix in these2 files.",
+          "New transfer UI WIP30 excluded; C must not stage other F1 work.",
+          "Preview target ports may be invoked for multiple transient Portal attachments; no single-trip count or performance claim."
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/application/controller.ts",
+          "owner": "F1",
+          "sha256": "d14aa54e3bb8f43231f52f3e8a0860b25f0f52fb7dcf9a4c4c6a1e9c007bce27",
+          "bytes": 38630
+        }
+      ]
+    }
+  ],
+  "fileCount": 1,
+  "scope": "Only dispose includes explicitly captured sales/transfer product styles; prior round52 remains immutable. Manual message SHA errors corrected by actual JSON+bytes."
+}
