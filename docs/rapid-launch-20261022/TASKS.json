@@ -8,11 +8,11 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "44f8388918136fb832d19cef8d6a9c864c3be3ae",
+    "headObserved": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
-    "remoteReadbackMethod": "Verified03fb private draft recovery bundle, normal branch877. New source/docs checkpoint upload pending after this commit.",
-    "pushPendingLocalCommits": true,
+    "remoteHeadVerified": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+    "remoteReadbackMethod": "Normal push exit0 plus independent GitHub REST exact ref readback at2026-10-22T21:27:50.617539+00:00",
+    "pushPendingLocalCommits": false,
     "recoverableDraftCheckpoint": {
       "format": "PRIVATE_GITHUB_DRAFT_SOURCE_RECOVERY_CHECKPOINT_V1",
       "atUtc": "2026-10-22T20:07:48.806692+00:00",
@@ -941,9 +941,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T21:25:32.812099+00:00",
+  "updatedAt": "2026-10-22T21:27:50.617539+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+  "lastVerifiedRemoteCommit": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2011,8 +2011,8 @@
   "historicalFailuresPreserved": true,
   "currentContinuation": {
     "atUtc": "2026-10-22T21:25:32.812099+00:00",
-    "sourceRound": 86,
-    "sourceCheckpoint": "44f8388918136fb832d19cef8d6a9c864c3be3ae",
+    "sourceRound": 87,
+    "sourceCheckpoint": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -2026,18 +2026,18 @@
       "sourceModules": 383,
       "wholePageAccepted": false
     },
-    "nextPreview": "Fixed85 built, not served; only84header+85anchor; Demo finishes83 scopes first",
+    "nextPreview": "C85 served57843/HTTP hash verified; Demo checks83 module first then only84/85 geometry",
     "r1": "QB123 PASS actual R1 C41 metadata f62de0a only; C preparing separate five-purpose outside review and final R1 host config/live issuer",
     "qa": "C40 actual Sharp upload/ADD/replay/controlled original+thumbnail PASS; QA11audits11receipts3images/root4. No HTTP/realrole/business acceptance",
     "import": "QB124 closes only QB122-F01 at86; original actual38303/38314/80933 reused. Transfer14279 READY awaiting freeze/new finite joint review; Sales2471 gap remains awaiting full field confirmation.",
     "waiting": "Only closed-login classification and six barcode-scheme full initialization need human answer; independent work continues",
-    "github": "03fb private recovery verified; new source/docs upload pending this commit; ordinary branchpush still not successful",
+    "github": "Normal branch push verified87e94af via independent GitHub API; old private recovery assets retained",
     "goalComplete": false
   },
   "latestReadySource": {
-    "sourceRound": 86,
-    "commit": "44f8388918136fb832d19cef8d6a9c864c3be3ae",
-    "qualification": "Exact scopes only; current browser fixed83."
+    "sourceRound": 87,
+    "commit": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+    "qualification": "TRANSFER14279 finite join pendingQB only; no full42561/import/production claim"
   },
   "pendingUserDecision": [
     {

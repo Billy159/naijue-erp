@@ -1,3 +1,5 @@
+GitHub正常分支检查点已恢复：源码C87 `87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e` 推送exit0，独立GitHub API回读同一提交；旧private draft恢复包保留。新C85预览已在http://127.0.0.1:57843/synthetic-unified.html实际serve，HTMLa4b82657已HTTP回读；Demo先完成C83模块，再只复表头和flat锚点。本节记录该次已验证的正常分支检查点，后续提交另行回读。
+
 接续增量：QB123已通过实际R1 C41完整目录/函数体/ACL限定验收，C正准备独立五purpose元数据review与最终R1配置/liveissuer；QB124只关闭C86库存F01，原38303实际来源不重跑。QF已通过C84单CSS和C85单锚点的源范围，实际几何仍等新候选Demo，不记浏览器通过。用户明确未操作干扰窗口，原因未知；输入分支按焦点与回读保护继续。
 
 最新接续更新：固定源码已到C86 `44f8388918136fb832d19cef8d6a9c864c3be3ae`。当前实际候选改为C83 `http://127.0.0.1:57842/synthetic-unified.html`、build ui-preview-4ee77b5-01-build01、HTML9f28810a66801aa7010ffe40eb6dd0b95078296c760a5d6cf27997f7181e2222，400输入/383模块，已给Demo。C85只含表头和尺码组锚点两源的小后继已构建未serve，待83模块结束后仅复两几何。分类页原登记P13已更正为P14；P13商品只读库存仍未实际检查，104总量/29局部/整页0不变，原证据保留。
