@@ -3,6 +3,11 @@ import { createProductManagementHttpReader } from '../../products/http-reader.ts
 import { createProductHttpReader } from '../../transport/product-http-reader.ts';
 import { createDictionaryHttpReader } from '../../product-settings/size-groups/http-reader.ts';
 import { InactiveReadScopeError } from '../../loading/read-scope.ts';
+import type { ProductInventoryNavigationRequest, ProductReturnContext, ProductFilterDraft } from '../../products/contracts.ts';
+import { productFilterParameters } from '../../products/contracts.ts';
+import { parseProductManagementListQuery } from '../../../../../packages/application/src/product-management-query-validation.ts';
+import { entityId } from '../../../../../packages/domain/src/values.ts';
+import { snapshotQueryParameters } from '../../loading/query-parameters.ts';
 import type { HttpQueryError } from '../../transport/http-query.ts';
 import type { ApplicationRouteProps, PreparedApplicationRoute, RoutePreparation, ProductsRouteConfiguration as ApplicationProductsRouteConfiguration } from '../contracts.ts';
 
@@ -15,7 +20,34 @@ export interface ProductsRouteConfiguration extends ApplicationProductsRouteConf
 export type ProductsRoutePreparation = Omit<RoutePreparation, 'configuration'> & {
   readonly configuration: RoutePreparation['configuration'] & { readonly products?: ProductsRouteConfiguration };
 };
-export function prepareProductsRoute(input: ProductsRoutePreparation, onAccessFailure?: (error: HttpQueryError) => void): PreparedApplicationRoute {
+export interface ProductRouteNavigation {
+  readonly openInventory?: (request: ProductInventoryNavigationRequest) => Promise<boolean>;
+  readonly receiveReturnContext?: ProductReturnContext;
+}
+/** Copy only the agreed serializable presentation fields. No commands, result
+ * rows, provider functions or live DOM are retained in a return journey. */
+export function captureProductInventoryRequest(request: ProductInventoryNavigationRequest): ProductInventoryNavigationRequest {
+  const selection = (item: { readonly id: string; readonly label: string }) => {
+    if (!item || typeof item.id !== 'string' || typeof item.label !== 'string' || !item.label.trim() || item.label.length > 1000) throw new TypeError('Invalid navigation target.');
+    return { id: item.id, label: item.label };
+  };
+  const product = selection(request.product), context = request.returnContext;
+  entityId('product', product.id);
+  if (!context || context.version !== 1 || context.product.id !== product.id || context.tab !== 'stock' || !['editor', 'read-only'].includes(context.view) || typeof context.advanced !== 'boolean') throw new TypeError('Invalid product return context.');
+  const selected = (kind: keyof ProductFilterDraft) => context.filterDraft[kind].map(selection);
+  const filterDraft: ProductFilterDraft = { product: selected('product'), category: selected('category'), year: selected('year'), season: selected('season'), supplier: selected('supplier'), fit: selected('fit'), thickness: selected('thickness'), shape: selected('shape') };
+  parseProductManagementListQuery({ page: 1, pageSize: context.initialPageSize, filter: productFilterParameters(filterDraft) });
+  const appliedQuery = context.appliedQuery === null ? null : parseProductManagementListQuery({ ...context.appliedQuery, filter: { ...context.appliedQuery.filter } });
+  const position = (value: { readonly top: number; readonly left: number }) => {
+    if (!value || !Number.isFinite(value.top) || !Number.isFinite(value.left)) throw new TypeError('Invalid return scroll.');
+    return { top: value.top, left: value.left };
+  };
+  if (!Array.isArray(context.listScroll) || context.listScroll.length > 1000) throw new TypeError('Invalid scroll context.');
+  const listScroll = context.listScroll.map(value => { if (!Number.isSafeInteger(value.ancestorDepth) || value.ancestorDepth < 0) throw new TypeError('Invalid scroll ancestor.'); return { ancestorDepth: value.ancestorDepth, ...position(value) }; });
+  return snapshotQueryParameters({ product, returnContext: { version: 1, product: { ...product }, view: context.view, tab: 'stock', filterDraft, appliedQuery, advanced: context.advanced,
+    initialPageSize: context.initialPageSize, listScroll, tableScroll: position(context.tableScroll) } } satisfies ProductInventoryNavigationRequest);
+}
+export function prepareProductsRoute(input: ProductsRoutePreparation, onAccessFailure?: (error: HttpQueryError) => void, navigation: ProductRouteNavigation = {}): PreparedApplicationRoute {
   const configuration = input.configuration.products;
   const accessFailure = onAccessFailure ?? configuration?.onAccessFailure;
   if (!configuration || typeof accessFailure !== 'function') throw new TypeError('Explicit product management query capability and access-failure owner are required.');
@@ -40,7 +72,7 @@ export function prepareProductsRoute(input: ProductsRoutePreparation, onAccessFa
   input.scope.signal.addEventListener('abort', () => { leaveGuard = null; }, { once: true });
   return {
     canLeave: () => !input.scope.active || leaveGuard === null || leaveGuard() === true,
-    View: ({ scope }: ApplicationRouteProps) => <ProductsPageView scope={scope} reader={reader} onAccessFailure={accessFailure} onCanLeaveChange={onCanLeaveChange}
+    View: ({ scope }: ApplicationRouteProps) => <ProductsPageView {...navigation} scope={scope} reader={reader} onAccessFailure={accessFailure} onCanLeaveChange={onCanLeaveChange}
       {...(product ? { product } : {})} {...(configuration.fullPage ? { fullPage: configuration.fullPage } : {})} {...(maintenance ? { maintenance } : {})} />,
   };
 }

@@ -7,7 +7,10 @@ import type { ApplicationConfiguration, ApplicationRoute, ApplicationSnapshot, P
 import type { preparePaymentSettingsSession } from './routes/payment-settings.tsx';
 import type { prepareStoreSettingsSession } from './routes/store-settings.tsx';
 import type { prepareStaffSettingsSession } from './routes/staff-settings.tsx';
+import type { ProductInventoryNavigationRequest } from '../products/contracts.ts';
 import type { CatalogueMaintenanceCapability } from '../product-settings/colors/contracts.ts';
+
+interface ProductInventoryTrip { readonly request: ProductInventoryNavigationRequest; readonly identity: ReadScope['identity'] }
 
 const home = (): ApplicationSnapshot => Object.freeze({ phase: 'home', route: null, scope: null, prepared: null, notice: null });
 function stylesheet(value: RouteStylesheet | undefined): RouteStylesheet {
@@ -39,6 +42,7 @@ export class ApplicationController {
   #staffSession: ReturnType<typeof prepareStaffSettingsSession> | null = null;
   #externalPaymentPending = true;
   #externalStaffPending = true;
+  #productTrip: ProductInventoryTrip | null = null;
   #disposed = false;
   constructor(configuration: ApplicationConfiguration) {
     if (!configuration?.routes || !configuration.http || typeof configuration.presentation?.renderWorkspace !== 'function' || typeof configuration.presentation.renderRouteState !== 'function') throw new TypeError('Explicit host configuration is required.');
@@ -110,7 +114,7 @@ export class ApplicationController {
     const replaceIdentity = readContextAuthenticationLifecycle(this.#context);
     this.authentication = new AuthenticationController({ client, onIdentityChange: change => {
       // Required order: abort ALL old route/session scopes before the auth controller publishes a replacement principal.
-      replaceIdentity(change);
+      replaceIdentity(change); this.#productTrip = null;
       this.#partySession?.workspace.dispose(); this.#partySession = null;
       this.#salesSession?.workspace.dispose(); this.#salesSession = null;
       this.#transferSession?.workspace.dispose(); this.#transferSession = null;
@@ -158,7 +162,8 @@ export class ApplicationController {
     } catch { return false; }
   }
   /** No implicit default route. Call on an actual menu action or an explicitly validated host deep link. */
-  async navigate(route: ApplicationRoute | null): Promise<boolean> {
+  async navigate(route: ApplicationRoute | null): Promise<boolean> { return this.#navigate(route); }
+  async #navigate(route: ApplicationRoute | null, trip?: ProductInventoryTrip): Promise<boolean> {
     if (this.#disposed || !this.authentication.getSnapshot().principal || this.authentication.busy) return false;
     if (route !== null && !this.routes.includes(route)) return false;
     if (route === this.#state.route && this.#state.phase === 'ready') return true;
@@ -174,6 +179,7 @@ export class ApplicationController {
       this.#publish({ ...this.#state, notice: 'cannot-leave' }); return false;
     }
     if (route !== this.#state.route) { this.#salesSession?.workspace.suspend(); this.#transferSession?.workspace.suspend(); }
+    this.#productTrip = trip ?? null;
     this.#state.scope?.dispose();
     if (route === null) { this.#publish(home()); return true; }
     const scope = this.#context.createScope(`application-route-${++this.#sequence}`);
@@ -182,7 +188,7 @@ export class ApplicationController {
     const input: RoutePreparation = { scope, principal, configuration: this.#configuration.routes, http: this.#httpForScope(scope, route) };
     try {
       let prepared: PreparedApplicationRoute;
-      if (route === 'inventory') prepared = (await this.#leaves.load('inventory', scope)).prepareInventoryRoute(input, error => this.#readAccessFailure(scope, error.kind));
+      if (route === 'inventory') prepared = (await this.#leaves.load('inventory', scope)).prepareInventoryRoute(input, error => this.#readAccessFailure(scope, error.kind), trip ? { initialProduct: trip.request.product, returnToProduct: () => this.#returnFromInventory(scope, trip) } : {});
       else if (route === 'sales') {
         const module = await this.#leaves.load('sales', scope);
         if (!this.#current(scope)) return false;
@@ -211,7 +217,14 @@ export class ApplicationController {
       }
       else if (route === 'products') {
         const module = await this.#leaves.load('products', scope);
-        prepared = module.prepareProductsRoute(input, error => this.#readAccessFailure(scope, error.kind));
+        prepared = module.prepareProductsRoute(input, error => this.#readAccessFailure(scope, error.kind), {
+          ...(this.#configuration.routes.inventory ? { openInventory: async (request: ProductInventoryNavigationRequest) => {
+            if (!this.#current(scope) || this.#state.route !== 'products' || !this.canLeave()) return false;
+            let captured: ProductInventoryNavigationRequest; try { captured = module.captureProductInventoryRequest(request); } catch { return false; }
+            if (!await this.#navigationReady('inventory', scope)) return false;
+            return this.#navigate('inventory', { request: captured, identity: scope.identity });
+          } } : {}), ...(trip ? { receiveReturnContext: trip.request.returnContext } : {}),
+        });
       }
       else if (route === 'product-categories') {
         const module = await this.#leaves.load('productCategories', scope);
@@ -268,7 +281,7 @@ export class ApplicationController {
           prepared = this.#paymentSession.prepare(input, kind => this.#readAccessFailure(scope, kind));
         } else prepared = module.preparePaymentSettingsRoute(input, kind => this.#readAccessFailure(scope, kind));
       }
-      else {
+      else if (route === 'customers' || route === 'suppliers') {
         const module = await this.#leaves.load('parties', scope);
         if (!this.#current(scope)) return false;
         if (!this.#partySession) {
@@ -276,26 +289,42 @@ export class ApplicationController {
           this.#partySession = module.preparePartySession({ ...input, scope: workspaceScope, http: this.#httpForScope(workspaceScope) }, () => this.authentication.expire());
         }
         prepared = this.#partySession.prepare(route);
-      }
+      } else throw new TypeError('Route preparation is unavailable.');
       if (!this.#current(scope)) return false;
-      this.#publish({ phase: 'ready', route, scope, prepared: Object.freeze(prepared), notice: null }); return true;
+      this.#publish({ phase: 'ready', route, scope, prepared: Object.freeze(prepared), notice: null });
+      if (route === 'products') this.#productTrip = null;
+      return true;
     } catch {
       if (!this.#current(scope)) return false;
-      scope.dispose(); this.#publish({ phase: 'error', route, scope: null, prepared: null, notice: null }); return false;
+      scope.dispose(); this.#productTrip = null; this.#publish({ phase: 'error', route, scope: null, prepared: null, notice: null }); return false;
     }
+  }
+  /** Preload the destination's real leaf/CSS before releasing a clean source.
+   * Failed preparation therefore keeps the current product page and context. */
+  async #navigationReady(route: 'inventory' | 'products', source: ReadScope): Promise<boolean> {
+    if (!this.#current(source) || !this.canLeave() || this.authentication.busy) return false;
+    const probe = this.#context.createScope(`product-navigation-${++this.#sequence}`);
+    try { await this.#leaves.load(route, probe); return this.#current(source) && this.canLeave() && !this.authentication.busy; }
+    catch { return false; } finally { probe.dispose(); }
+  }
+  async #returnFromInventory(scope: ReadScope, trip: ProductInventoryTrip): Promise<boolean> {
+    if (!this.#current(scope) || this.#state.route !== 'inventory' || this.#productTrip !== trip
+      || scope.identity.accountId !== trip.identity.accountId || scope.identity.sessionRevision !== trip.identity.sessionRevision || scope.identity.permissionRevision !== trip.identity.permissionRevision) return false;
+    if (!await this.#navigationReady('products', scope)) return false;
+    return this.#navigate('products', trip);
   }
   cancelRoute(): void {
     if (this.#state.phase !== 'loading' || !this.#state.scope) return;
-    this.#state.scope.dispose(); this.#publish({ ...this.#state, phase: 'cancelled', scope: null, prepared: null });
+    this.#state.scope.dispose(); this.#productTrip = null; this.#publish({ ...this.#state, phase: 'cancelled', scope: null, prepared: null });
   }
   /** Safe render-boundary failure. Never display raw exception/provider messages. */
   failRoute(scope: ReadScope): void {
     if (!this.#current(scope)) return;
-    scope.dispose(); this.#publish({ ...this.#state, phase: 'error', scope: null, prepared: null });
+    scope.dispose(); this.#productTrip = null; this.#publish({ ...this.#state, phase: 'error', scope: null, prepared: null });
   }
   dispose(): void {
     if (this.#disposed) return;
-    this.authentication.dispose(); this.#disposed = true;
+    this.authentication.dispose(); this.#disposed = true; this.#productTrip = null;
     this.#context.clear(); this.#partySession?.workspace.dispose(); this.#partySession = null;
     this.#salesSession?.workspace.dispose(); this.#salesSession = null;
     this.#transferSession?.workspace.dispose(); this.#transferSession = null; this.#leaves.clear();

@@ -44,7 +44,7 @@ export class PostgresV3HistoryHeaderNativeReferenceStore implements HistoryHeade
 export async function insertValidatedHistoryHeaderNativeReferences(client:PgSalesClient,input:PreparedHistoryHeaderNativeReferenceChunk,runtime26?:NativeRuntime26Capability):Promise<{inserted:number;replayed:number}>{
     const chunk=structuredClone(input);validatePreparedHistoryHeaderNativeReferenceChunk(chunk);
     const verified=checkedNativeRuntime26Capability(runtime26);
-    require(chunk.selection.source!=='HISTORICAL_CUSTOMER_SUPPLEMENT_V1'||verified!==undefined,'HISTORY_HEADER_REFERENCE_EXACT26_REQUIRED');
+    require((chunk.selection.source!=='HISTORICAL_CUSTOMER_SUPPLEMENT_V1'&&!chunk.rows.some(row=>row.input.schemaProfile==='EXACT26'))||verified!==undefined,'HISTORY_HEADER_REFERENCE_EXACT26_REQUIRED');
     if(verified)await verified.assertReady(client,'IMPORT_STAGE');
     await client.query('/* history-header-reference:global-lock */ SELECT naijue_erp.cutoff_import_lock()');
     const batches=(await client.query(`/* history-header-reference:batch */ SELECT mapping_version,status,source_hash,source_name FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`,[chunk.batchId])).rows;

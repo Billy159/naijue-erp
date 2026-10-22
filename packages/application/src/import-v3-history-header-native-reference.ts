@@ -13,6 +13,8 @@ export type HistoryHeaderNativeReferenceSelection = {
 export interface HistoryHeaderReferenceEnumMapping { raw:string|boolean; native:string|boolean; evidenceRef:string }
 export interface HistoryHeaderNativeReferenceInput {
   batchId:string; fixedSourceNamespace:string; selection:HistoryHeaderNativeReferenceSelection; source:ImportSourceEvidence;
+  /** Prepared-data version only; persistence still requires actual same-client capability. */
+  schemaProfile?:"EXACT26";
   /** Full explicit current native record; compared under row lock only when first binding is written. */
   nativeSnapshot:JsonObject;
   bindings:Readonly<Record<string,HeaderNativeBinding|undefined>>;
@@ -71,6 +73,34 @@ export function assertExactHistoricalCustomerReference(input:HistoryHeaderNative
     &&mapping.evidenceRef===selection.approvalSha256,'EXACT2_HISTORICAL_CUSTOMER_BOOLEAN_EVIDENCE');
 }
 
+function assertBootstrapAccountMetadata(input:HistoryHeaderNativeReferenceInput,value:unknown):void {
+  const record=(v:unknown,keys:readonly string[]):v is JsonObject=>v!==null&&typeof v==='object'&&!Array.isArray(v)
+    &&Object.keys(v).length===keys.length&&keys.every(k=>Object.hasOwn(v,k));
+  require(input.schemaProfile==='EXACT26'&&input.selection.entity==='STAFF'
+    &&record(value,['version','profile','binding','authority','expected_counts','staff','accounts']),'BOOTSTRAP26_METADATA');
+  const proof=value as JsonObject,b=proof.binding as JsonObject,a=proof.authority as JsonObject;
+  require(proof.version==='NATIVE_BOOTSTRAP_ACCOUNTS_PROOF_V1'&&proof.profile==='EXACT26'
+    &&record(b,['batch_id','fixed_source_namespace','selection_sha256','authorized_payload_sha256','stage_command_sha256','operation_id','actor_account_id'])
+    &&b.batch_id===input.batchId&&b.fixed_source_namespace===input.fixedSourceNamespace&&b.selection_sha256===input.selection.selectionSha256
+    &&hash(b.authorized_payload_sha256)&&hash(b.stage_command_sha256)&&uuid(b.operation_id)&&uuid(b.actor_account_id)
+    &&record(a,['account_capture_sha256','account_decisions_sha256','identity_review_sha256','bootstrap_execution_review_sha256','source_identity_facts_sha256','approved_employee_plan_sha256','old_source_batch_id','old_source_manifest_sha256'])
+    &&Object.entries(a).every(([k,v])=>k==='old_source_batch_id'?text(v):hash(v))
+    &&requestHash(proof.expected_counts)===requestHash({accounts:49,direct_original_employee_links:45,approved_current_person_links:4})
+    &&requestHash(proof.staff)===requestHash({source_row_id:input.source.id,source_key:input.source.sourceKey,source_row_sha256:input.source.rowSha256,native_staff_id:input.nativeSnapshot.id})
+    &&Array.isArray(proof.accounts)&&proof.accounts.length===1,'BOOTSTRAP26_METADATA');
+  const account=(proof.accounts as JsonObject[])[0]!,native=account.native_snapshot as JsonObject;
+  require(record(account,['source_account_id','source_account_version','source_employee_native_id','source_employee_code','identity_link_kind','current_person_key','source_plan_row','native_snapshot'])
+    &&text(account.source_account_id)&&/^[1-9][0-9]*$/.test(String(account.source_account_version))
+    &&record(native,['id','staff_id','login_enabled','auth_version','version','created_at','updated_at'])&&uuid(native.id)
+    &&native.staff_id===input.nativeSnapshot.id&&typeof native.login_enabled==='boolean'&&native.auth_version===1&&native.version===1
+    &&typeof native.created_at==='string'&&typeof native.updated_at==='string'&&native.created_at===native.updated_at
+    &&mapHistoryTemporal(native.created_at,'DATETIME').instant!==null,'BOOTSTRAP26_ACCOUNT_METADATA');
+  if(account.identity_link_kind==='DIRECT_ORIGINAL_EMPLOYEE_V1')require(text(account.source_employee_native_id)&&text(account.source_employee_code)
+    &&account.current_person_key===null&&account.source_plan_row===null,'BOOTSTRAP26_ORIGINAL_RELATION');
+  else require(account.identity_link_kind==='APPROVED_CURRENT_PERSON_PLAN_V1'&&account.source_employee_native_id===null&&account.source_employee_code===null
+    &&text(account.current_person_key)&&/^[1-9][0-9]*$/.test(String(account.source_plan_row)),'BOOTSTRAP26_CURRENT_PERSON_RELATION');
+}
+
 export function prepareV3HistoryHeaderNativeReferenceChunk(inputs:readonly HistoryHeaderNativeReferenceInput[]):PreparedHistoryHeaderNativeReferenceChunk {
   require(Array.isArray(inputs)&&inputs.length>0&&inputs.length<=HISTORY_HEADER_NATIVE_REFERENCE_CHUNK_LIMIT,'HISTORY_HEADER_REFERENCE_CHUNK_LIMIT');
   const cloned=structuredClone(inputs),first=cloned[0]!;
@@ -78,6 +108,8 @@ export function prepareV3HistoryHeaderNativeReferenceChunk(inputs:readonly Histo
   const identities=new Set<string>(),ids=new Set<string>(),positions=new Set<string>(),targets=new Set<string>();
   const rows=cloned.map(input=>{
     const {source:s,selection,nativeSnapshot:n}=input,entity=selection.entity;
+    require(input.schemaProfile===undefined||input.schemaProfile==="EXACT26",'HISTORY_HEADER_REFERENCE_PROFILE');
+    require(input.schemaProfile===first.schemaProfile,'HISTORY_HEADER_REFERENCE_MIXED_PROFILE');
     const table=IMPORT_V2_TABLES.find(t=>t.entity===entity);
     const historical=selection.source==='HISTORICAL_CUSTOMER_SUPPLEMENT_V1';
     if(historical)assertExactHistoricalCustomerReference(input);
@@ -95,7 +127,8 @@ export function prepareV3HistoryHeaderNativeReferenceChunk(inputs:readonly Histo
     require(s.fieldProvenance.schema_version===1&&s.fieldProvenance.fields&&typeof s.fieldProvenance.fields==='object'
       &&!Array.isArray(s.fieldProvenance.fields),'HISTORY_HEADER_REFERENCE_PROVENANCE');
     const fields:JsonObject={...(s.fieldProvenance.fields as JsonObject)};
-    for(const field of Object.values(fields)){
+    for(const [key,field] of Object.entries(fields)){
+      if(key==='bootstrap_accounts'){assertBootstrapAccountMetadata(input,field);continue;}
       const f=field as JsonObject;require(f&&['ORIGINAL','MIGRATION_DERIVED','UNKNOWN'].includes(String(f.origin))&&typeof f.reason==='string'
         &&Object.hasOwn(f,'raw')&&(f.origin!=='MIGRATION_DERIVED'||text(f.evidence_ref)),'HISTORY_HEADER_REFERENCE_PROVENANCE');
     }

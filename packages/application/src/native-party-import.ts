@@ -15,6 +15,8 @@ export type NativePartyImportSelection = (Omit<Extract<HistoryHeaderNativeRefere
   | Extract<HistoryHeaderNativeReferenceSelection,{source:'HISTORICAL_CUSTOMER_SUPPLEMENT_V1'}>;
 export interface NativePartyImportInput {
   batchId: string; fixedSourceNamespace: string; selection: NativePartyImportSelection; source: ImportSourceEvidence;
+  /** DTO version only, never database capability. */
+  schemaProfile?: "EXACT26";
   /** Explicit independent UUID and complete native shape. No lookup by name or source UUID reuse. */
   nativeSnapshot: JsonObject;
   bindings: Readonly<Record<string, HeaderNativeBinding | undefined>>;
@@ -48,6 +50,8 @@ export function prepareNativePartyImportChunk(inputs: readonly NativePartyImport
   const sources = new Set<string>(), positions = new Set<string>(), natives = new Set<string>(), codes = new Set<string>(), recordIds = new Set<string>();
   const rows = cloned.map(input => {
     const { selection, source: s, nativeSnapshot: n } = input, entity = selection.entity;
+    check((input.schemaProfile === undefined || input.schemaProfile === 'EXACT26') && input.schemaProfile === first.schemaProfile, 'NATIVE_PARTY_PROFILE');
+    check(selection.source === first.selection.source, 'NATIVE_PARTY_MIXED_SOURCE_KIND');
     check(['HALL', 'CUSTOMER', 'SUPPLIER', 'STAFF', 'WAREHOUSE'].includes(entity), 'NATIVE_PARTY_ENTITY');
     const table = IMPORT_V2_TABLES.find(t => t.entity === entity)!;
     const historical = selection.source === 'HISTORICAL_CUSTOMER_SUPPLEMENT_V1';
@@ -67,7 +71,7 @@ export function prepareNativePartyImportChunk(inputs: readonly NativePartyImport
     if (entity !== 'SUPPLIER' && entity !== 'WAREHOUSE') {
       headerReference = prepareV3HistoryHeaderNativeReferenceChunk([input as HistoryHeaderNativeReferenceInput]);
     } else {
-      const keys = entity === 'SUPPLIER' ? ['id', 'code', 'name', 'enabled', 'version', 'created_at', 'updated_at'] : ['id', 'hall_id', 'name', 'enabled', 'version'];
+      const keys = entity === 'SUPPLIER' ? ['id', 'code', 'name', 'enabled', 'version', 'created_at', 'updated_at'] : ['id', 'hall_id', 'name', 'enabled', 'version', ...(input.schemaProfile === 'EXACT26' ? ['created_operation_id'] : [])];
       check(Object.keys(n).length === keys.length && keys.every(k => Object.hasOwn(n, k)) && (entity !== 'SUPPLIER' || n.code === raw['原编码'] && text(n.code))
         && n.name === raw[entity === 'SUPPLIER' ? '名称' : '仓库名称'] && typeof n.enabled === 'boolean', 'NATIVE_PARTY_SUPPLIER_FIELDS');
       check((entity === 'WAREHOUSE' || Object.keys(input.bindings).length === 0) && Object.keys(input.enumMappings).length === 1 && input.enumMappings['状态']?.raw === raw['状态']
@@ -75,6 +79,7 @@ export function prepareNativePartyImportChunk(inputs: readonly NativePartyImport
       check(!['native_hall_id', 'native_customer_id', 'native_staff_id', 'native_supplier_id', 'native_warehouse_id'].some(k => Object.hasOwn(s.fieldProvenance, k)), 'NATIVE_PARTY_COMPETING_BINDING');
     }
     if (entity === 'WAREHOUSE') {
+      if (input.schemaProfile === 'EXACT26') check(n.created_operation_id === null, 'NATIVE_PARTY_APPROVED_CREATION_METADATA');
       check(raw['切换范围'] === '本次完整核准', 'NATIVE_PARTY_WAREHOUSE_SCOPE_NOT_APPROVED');
       const binding = input.bindings['所属厅来源编号'];
       check(Object.keys(input.bindings).length === 1 && binding && binding.sourceKey === raw['所属厅来源编号'] && uuid(binding.nativeId) && n.hall_id === binding.nativeId, 'NATIVE_PARTY_WAREHOUSE_HALL_BINDING');
