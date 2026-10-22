@@ -1,0 +1,27 @@
+{
+  "atUtc": "2026-10-22T18:01:50.374689+00:00",
+  "parent": "84be00299f3347dac13567be3e1775ffb6a4cf98",
+  "groups": [
+    {
+      "slice": "QB80_F01_STAGE_RECOVERY_KEY_DIRECTORY_DURABILITY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W16-QB80-F01-RECEIPT.json",
+      "receiptSha256": "60d8ca2af2c09996bdecb6e822dc588499c367aed59ad1c451dc0272421405b0",
+      "files": [
+        {
+          "path": "adapters/media/src/product-media-stage.ts",
+          "owner": "D2",
+          "sha256": "9a34b3a5c2c8b34d7429bb70344a2985e7ef039654f419c0e555265ea1bbcf8b",
+          "bytes": 23074
+        },
+        {
+          "path": "tests/product-media-stage.test.ts",
+          "owner": "D2",
+          "sha256": "ff1de7b15d9bd9a7d3fb7b1fc5f8fe92e6cf2da1a04d8b04b25c57f9407c0a95",
+          "bytes": 18221
+        }
+      ]
+    }
+  ],
+  "fileCount": 2,
+  "scope": "Only recovery durability fix and one new injected failure counterexample; original11stage/6codec not rerun, actualpowerloss/PG/host/production not tested."
+}

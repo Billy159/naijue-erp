@@ -164,7 +164,9 @@ export class PrivateProductMediaStage {
   private matches(record: StoredStage, binding: Binding): void {
     requireDomain(record.actorAccountId === binding.actor.accountId && record.productId === binding.productId && record.commandKey === binding.commandKey, "MEDIA_SCOPE_MISMATCH", "Original media stage belongs to another command scope");
   }
-  private publicResult(prepared: PreparedProductMediaStage): ProductMediaUploadDto {
+  private async durableResult(prepared: PreparedProductMediaStage, signal: AbortSignal): Promise<ProductMediaUploadDto> {
+    // Every success, including recovery of an already-linked index, must persist that directory.
+    active(signal); await this.syncDirectory(path.join(this.root, "keys")); active(signal);
     return { uploadId: prepared.uploadId, mime: prepared.original.mime, byteSize: prepared.original.byteSize.toString(), expiresAt: prepared.expiresAt };
   }
   private stored(binding: Binding, uploadKey: string, uploadId: string, decoded: ValidatedProductImage): StoredStage {
@@ -189,7 +191,7 @@ export class PrivateProductMediaStage {
         const r = winner.record;
         requireDomain(r.actorAccountId === binding.actor.accountId && r.commandKey === binding.commandKey && r.uploadKey === uploadKey && r.productId === binding.productId
           && r.original.sha256 === digest && r.original.byteSize === bytes.length.toString() && r.original.mime === declaredMime, "IDEMPOTENCY_CONFLICT", "Original upload key has different content or scope");
-        return this.publicResult(await this.verified(r, winner.bytes, signal));
+        return await this.durableResult(await this.verified(r, winner.bytes, signal), signal);
       };
       const prior = await this.published(index, signal); if (prior) return await replay(prior);
       const decoded = await this.codec.decode(bytes, declaredMime, signal); active(signal);
@@ -205,10 +207,10 @@ export class PrivateProductMediaStage {
       try { await link(path.join(directory, "manifest.json"), path.join(this.root, "keys", `${index}.json`)); }
       catch (e) {
         if ((e as NodeJS.ErrnoException).code !== "EEXIST") throw e;
-        const winner = await this.published(index, signal); ready(winner); await this.syncDirectory(path.join(this.root, "keys")); return await replay(winner);
+        const winner = await this.published(index, signal); ready(winner); return await replay(winner);
       }
-      await this.syncDirectory(path.join(this.root, "keys")); await this.syncDirectory(this.root);
-      return this.publicResult(await this.verified(record, manifest, signal));
+      await this.syncDirectory(this.root);
+      return await this.durableResult(await this.verified(record, manifest, signal), signal);
     } catch (error) { if (error instanceof DomainError) throw error; throw new DomainError("PRODUCT_MEDIA_NOT_READY", "Private media stage could not be verified"); }
   }
   async consume(value: ProductMediaConsumeInput): Promise<PreparedProductMediaStage> {

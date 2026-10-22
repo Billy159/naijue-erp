@@ -146,3 +146,30 @@ process.stdout.write(JSON.stringify(result));`;
   assert.equal((await f.consume(a.uploadId)).uploadId, a.uploadId);
   for (const uploadId of await readdir(path.join(f.root, "stages"))) if (uploadId !== a.uploadId) await assert.rejects(f.consume(uploadId), { code: "PRODUCT_MEDIA_NOT_READY" });
 });
+test("QB80-F01 published-stage recovery fsyncs keys before success on prior completed and EEXIST winner paths", async t => {
+  const f = await fixture(t), keys = path.join(f.root, "keys");
+  type FaultSeam = { syncDirectory(directory: string): Promise<void>; published(index: string, signal: AbortSignal): Promise<unknown> };
+  const first = f.store as unknown as FaultSeam, initialSync = first.syncDirectory.bind(f.store); let failInitial = true;
+  t.mock.method(first, "syncDirectory", async (directory: string) => {
+    if (directory === keys && failInitial) { failInitial = false; throw Object.assign(Error("SYNTHETIC_KEYS_FSYNC_FAILURE"), { code: "EIO" }); }
+    return initialSync(directory);
+  });
+  await assert.rejects(f.store.stage(f.input), { code: "PRODUCT_MEDIA_NOT_READY" });
+  const indexNames = await readdir(keys); assert.equal(indexNames.length, 1);
+  const winner = JSON.parse((await readFile(path.join(keys, indexNames[0]!))).toString()), original = await readFile(path.join(f.root, "stages", winner.uploadId, "original.bin"));
+  for (const [branch, skippedProbes] of [["prior", 0], ["completed", 1], ["winner", 2]] as const) {
+    const store = new PrivateProductMediaStage(f.options), seam = store as unknown as FaultSeam;
+    const realSync = seam.syncDirectory.bind(store), realPublished = seam.published.bind(store);
+    let probes = 0, keysAttempts = 0, keysDurable = 0, failKeys = true;
+    t.mock.method(seam, "published", async (index: string, signal: AbortSignal) => ++probes <= skippedProbes ? null : realPublished(index, signal));
+    t.mock.method(seam, "syncDirectory", async (directory: string) => {
+      if (directory === keys) { keysAttempts++; if (failKeys) throw Object.assign(Error(`SYNTHETIC_${branch}_KEYS_FSYNC_FAILURE`), { code: "EIO" }); }
+      await realSync(directory); if (directory === keys) keysDurable++;
+    });
+    await assert.rejects(store.stage(f.input), { code: "PRODUCT_MEDIA_NOT_READY" }, `${branch} cannot succeed while keys fsync fails`);
+    assert.equal(keysAttempts, 1, branch); assert.equal(keysDurable, 0, branch);
+    failKeys = false; probes = 0;
+    const recovered = await store.stage(f.input); assert.equal(recovered.uploadId, winner.uploadId, branch); assert.equal(keysDurable, 1, branch);
+    assert.equal((await readdir(keys)).length, 1, branch); assert.deepEqual(await readFile(path.join(f.root, "stages", winner.uploadId, "original.bin")), original);
+  }
+});
