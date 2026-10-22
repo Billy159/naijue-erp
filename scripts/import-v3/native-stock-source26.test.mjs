@@ -1,4 +1,4 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {mkdtemp,realpath,mkdir,writeFile,rm} from 'node:fs/promises';import {tmpdir} from 'node:os';import {join} from 'node:path';import {createHash} from 'node:crypto';
+import test from 'node:test';import assert from 'node:assert/strict';import {mkdtemp,realpath,mkdir,writeFile,rm,open} from 'node:fs/promises';import {tmpdir} from 'node:os';import {join} from 'node:path';import {createHash} from 'node:crypto';
 import {openReviewedStockSource26} from './native-stock-source26.mjs';import {sourceEvidence} from './prepare-native-bindings.mjs';import {prepareNativeStockGroup} from '../../packages/application/src/native-stock-contributor-import.ts';import {requestHash} from '../../packages/application/src/request-hash.ts';
 const H='a'.repeat(64),payload='b'.repeat(64),id=n=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`,sha=b=>createHash('sha256').update(b).digest('hex');
 const kinds=['SKU','PAYMENT_METHOD','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','INVENTORY_BASELINE','SALES_LINE','SETTLEMENT','TRANSFER_LINE'],all=['BARCODE','CUSTOMER','HALL','INVENTORY_BASELINE','ISSUE','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','PAYMENT_METHOD','PRODUCT','SALES_HEADER','SALES_LINE','SETTLEMENT','SKU','STAFF','SUPPLIER','TRANSFER_HEADER','TRANSFER_LINE','WAREHOUSE'];
@@ -47,4 +47,11 @@ test('stockSource26 cannot let a newly pinned candidate replace original cells o
 test('stockSource26 refuses unknown actual MAIN scope, concurrent input changes, candidate/source pin drift and closed lifetime',async t=>{
  const f=await fixture(t),r=await openReviewedStockSource26({...f.options,authorizedPayloadHash:null});t.after(()=>r.close());await assert.rejects(r.openClosure({...f.b,authorizedPayloadHash:payload},{group:'STOCK_CONTRIBUTORS',signal:new AbortController().signal}),/CLOSURE_SCOPE/);
  const mutable=(await r.groups().next()).value,pending=r.authorize(mutable);mutable.contributors[0].source.rawFields.核准依据='LATE';await assert.rejects(pending,/INPUT_CHANGED/);await writeFile(f.paths.lineage,'CHANGED');await assert.rejects(r.verify(),/FILE_CHANGED/);await r.close();await assert.rejects(r.groups().next(),/CLOSED/);
+});
+test('F01 stockSource26 close queued after the inner range read cannot return a group from the outer generator',async t=>{
+ const f=await fixture(t),reader=await openReviewedStockSource26(f.options),handle=await open(f.paths.decisions,'r'),prototype=Object.getPrototypeOf(handle),originalRead=prototype.read;await handle.close();let armed=true,closeInvoked=false,closePromise;
+ try{
+  prototype.read=async function(...args){const value=await Reflect.apply(originalRead,this,args);if(armed&&value.bytesRead>0){armed=false;queueMicrotask(()=>queueMicrotask(()=>{closeInvoked=true;closePromise=reader.close();}));}return value;};
+  await assert.rejects(reader.groups().next(),{code:'STOCK_SOURCE26_CLOSED'});assert.equal(closeInvoked,true);if(closePromise)await closePromise;
+ }finally{prototype.read=originalRead;if(closePromise)await closePromise;else await reader.close();}
 });
