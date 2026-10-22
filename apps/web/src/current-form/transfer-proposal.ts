@@ -19,6 +19,8 @@ export interface TransferProposal {
 export interface TransferProposalSnapshot {
   readonly draft: TransferProposal; readonly dirty: boolean; readonly disposed: boolean;
   readonly errors: readonly string[]; readonly notice: string | null;
+  /** Only this successfully read SKU page; blank cells never become draft lines. */
+  readonly entry: { readonly product: CurrentFormProduct; readonly skus: readonly CurrentFormSku[]; readonly page: number; readonly exactTotal: bigint } | null;
   readonly picker: { readonly kind: TransferProposalPicker; readonly search: string; readonly page: number;
     readonly product: CurrentFormProduct | null; readonly phase: 'loading' | 'ready' | 'error';
     readonly result: CurrentFormPage<Candidate> | null } | null;
@@ -34,7 +36,7 @@ export class TransferProposalSession {
   readonly #scope: ReadScope; readonly #reader: TransferProposalReader; readonly #onAccessFailure: ((error: HttpQueryError) => void) | undefined;
   readonly #listeners = new Set<() => void>();
   #request: AbortController | null = null; #sequence = 0; #revision = 0;
-  #state: TransferProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, picker: null });
+  #state: TransferProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, picker: null, entry: null });
   constructor(scope: ReadScope, reader: TransferProposalReader, onAccessFailure?: (error: HttpQueryError) => void) {
     this.#scope = scope; this.#reader = reader; this.#onAccessFailure = onAccessFailure;
     scope.signal.addEventListener('abort', this.dispose, { once: true });
@@ -63,6 +65,13 @@ export class TransferProposalSession {
   setQuantity(skuId: string, value: string): boolean {
     if (!this.#state.draft.lines.some(row => row.sku.id === skuId)) return false;
     return this.#edit({ ...this.#state.draft, lines: this.#state.draft.lines.map(row => row.sku.id === skuId ? { ...row, quantity: value } : row) });
+  }
+  setMatrixQuantity(skuId: string, value: string): boolean {
+    if (this.#state.draft.lines.some(row => row.sku.id === skuId)) return this.setQuantity(skuId, value);
+    const sku = this.#state.entry?.skus.find(row => row.id === skuId);
+    if (!sku || value === '') return false;
+    if (this.#state.draft.lines.length >= TRANSFER_PREPARE_MAX_LINES) { this.#publish({ notice: '本草稿最多选择 200 个实际规格。' }); return false; }
+    return this.#edit({ ...this.#state.draft, lines: [...this.#state.draft.lines, { sku, quantity: value }] });
   }
   removeLine(skuId: string): boolean {
     if (!this.#state.draft.lines.some(row => row.sku.id === skuId)) return false;
@@ -107,14 +116,15 @@ export class TransferProposalSession {
     if (this.#state.disposed) return;
     this.#cancelRead(); const sequence = this.#sequence, request = new AbortController(); this.#request = request;
     const signal = AbortSignal.any([request.signal, this.#scope.signal]);
-    this.#publish({ picker: { kind, search, page, product, phase: 'loading', result: null }, notice: null });
+    this.#publish({ picker: { kind, search, page, product, phase: 'loading', result: null }, notice: null, ...(kind === 'SKU' ? { entry: null } : {}) });
     try {
       const result: CurrentFormPage<Candidate> = kind === 'FROM' || kind === 'TO'
         ? await this.#reader.readTransferWarehouses({ direction: kind, search, page, pageSize: 20 }, signal)
         : kind === 'PRODUCT' ? await this.#reader.readProducts({ context: { kind: 'TRANSFER' }, search, page, pageSize: 20 }, signal)
         : await this.#reader.readProductSkus({ context: { kind: 'TRANSFER' }, productId: product!.id, page, pageSize: 20 }, signal);
       if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
-      this.#publish({ picker: { kind, search, page, product, phase: 'ready', result } });
+      this.#publish({ picker: { kind, search, page, product, phase: 'ready', result },
+        ...(kind === 'SKU' && product ? { entry: { product, skus: result.items as readonly CurrentFormSku[], page, exactTotal: result.exactTotal } } : {}) });
     } catch (error) {
       if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
       if (error instanceof HttpQueryError && (error.kind === 'unauthenticated' || error.kind === 'forbidden')) { this.#scope.dispose(); try { this.#onAccessFailure?.(error); } catch { /* Scope already cleared. */ } return; }
@@ -155,13 +165,13 @@ export class TransferProposalSession {
   }
   reset(discardConfirmed = false): boolean {
     if (this.#state.disposed || this.#state.dirty && !discardConfirmed) return false;
-    this.#cancelRead(); this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, errors: [], notice: null }); return true;
+    this.#cancelRead(); this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, entry: null, errors: [], notice: null }); return true;
   }
   cancel(discardConfirmed = false): boolean { if (!this.reset(discardConfirmed)) return false; this.dispose(); return true; }
   /** Route/session owner must dispose on exit; identity invalidation clears all data immediately. */
   readonly dispose = (): void => {
     if (this.#state.disposed) return;
     this.#cancelRead(); this.#scope.signal.removeEventListener('abort', this.dispose);
-    this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, errors: [], notice: null }); this.#listeners.clear();
+    this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, entry: null, errors: [], notice: null }); this.#listeners.clear();
   };
 }

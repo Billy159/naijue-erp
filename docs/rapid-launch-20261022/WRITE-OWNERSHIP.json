@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T07:05:45.532225+00:00",
+  "updatedAt": "2026-10-22T07:10:03.586023+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -254,6 +254,11 @@
           "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
           "group": "BOOTSTRAP_AND_EXISTING_APPROVAL_OR_UNRESOLVED_WRITE_GUARD",
           "fieldGate": "NO_NEW_SCHEMA_AUTHORIZED; actual target execution C only"
+        },
+        {
+          "path": "tests/import-stage-bootstrap-postgres-protocol.test.ts",
+          "group": "EXACT_STAGE_BOOTSTRAP_PROTOCOL",
+          "fieldGate": "NO_NEW_FIELDS"
         }
       ]
     },

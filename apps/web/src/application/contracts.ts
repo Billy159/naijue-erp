@@ -85,6 +85,12 @@ export interface StaffSettingsRouteConfiguration {
 export interface PaymentSettingsRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
   readonly view: Omit<PaymentSettingsProps, 'scope' | 'onAccessFailure'>;
+  /** Creates one command workspace for the authenticated session. Supplying
+   * view.workspace at the same time is invalid: there must be one owner. */
+  readonly commands?: {
+    readonly newRequestKey: () => string;
+    readonly writesEnabled: () => boolean;
+  };
 }
 export interface ApplicationConfiguration {
   /** Exact trusted HTTPS application origin, explicit API prefix and injected fetch. */

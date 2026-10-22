@@ -58,12 +58,26 @@ function decodeBatch(row: Record<string, unknown>): CutoffImportBatch {
     cutoffAt: stringValue(row.cutoff_at), mappingVersion: stringValue(row.mapping_version), inventoryMode: "CUTOFF_STOCK_BASELINE", status: row.status as CutoffImportBatch["status"],
     checkpoint: decodeImportCheckpoint(row.checkpoint), createdAt: stringValue(row.created_at), completedAt: nullableString(row.completed_at) };
 }
+export interface ImportStageBootstrap {
+  /** Trusted private source provider only. Independently binds the exact reviewed
+   * first STAGE and real original actor, creates source-owned native party rows
+   * plus evidence then that actor account. No invented ADMIN/adoption/default.
+   * The enclosing service still authorizes EVERY original command/replay.
+   * This method runs once after batch INSERT, before the first audit/receipt.
+   * No credential/secret is added to MAIN payload, receipt or journal. */
+  stageNewBatch(client: Pick<PgSalesClient, "query">, input: {
+    readonly command: Extract<CutoffImportCommand, { readonly action: "IMPORT_STAGE" }>;
+    readonly now: string; readonly operationId: string;
+  }): Promise<void>;
+}
 /** Pure protocol adapter: constructing it does not connect, migrate, seed, or start a server. */
 export class PostgresCutoffImportStore implements CutoffImportStore {
   private readonly pool: PgSalesPool;
   private readonly nativeAccountingAuthorization: Parameters<typeof authorizeNativeImportAccountingCommand>[1] | undefined;
+  private readonly stageBootstrap: ImportStageBootstrap | undefined;
   constructor(pool: PgSalesPool, options: {
     readonly nativeAccountingAuthorization?: Parameters<typeof authorizeNativeImportAccountingCommand>[1];
+    readonly stageBootstrap?: ImportStageBootstrap;
   } = {}) {
     this.pool = pool;
     const authorization = options.nativeAccountingAuthorization;
@@ -71,6 +85,9 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
       "NATIVE_IMPORT_AUTHORIZATION_REQUIRED", "Explicit independent whole-command native source authorization required");
     this.nativeAccountingAuthorization = authorization === undefined ? undefined
       : Object.freeze({ assertAllowed: authorization.assertAllowed.bind(authorization) });
+    const bootstrap = options.stageBootstrap;
+    requireDomain(bootstrap === undefined || typeof bootstrap?.stageNewBatch === "function", "IMPORT_BOOTSTRAP_REQUIRED", "Explicit private source stage bootstrap required");
+    this.stageBootstrap = bootstrap === undefined ? undefined : Object.freeze({ stageNewBatch: bootstrap.stageNewBatch.bind(bootstrap) });
   }
   async execute(command: CutoffImportCommand, now: string): Promise<CutoffImportResult> {
     const nativeRequested = hasNativeImportAccountingMetadata(command);
@@ -136,6 +153,28 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
       [batch.id, batch.sourceName, batch.sourceManifestRef, batch.sourceHash, batch.cutoffAt, batch.mappingVersion, auditJson(checkpoint), now,
         ...(metadata ? [JSON.stringify(metadata.expectedCounts), metadata.payloadHash] : [])]);
       requireDomain(inserted.rowCount === 1, "IMPORT_INSERT_FAILED", "Staged batch was not inserted");
+      if (this.stageBootstrap) {
+        requireDomain(metadata !== undefined && command.mappingVersion === HISTORY_MAPPING_VERSION,
+          "IMPORT_BOOTSTRAP_SOURCE_REQUIRED", "Bootstrap requires the exact reviewed native history/source STAGE");
+        const frozen = Object.freeze({ command: structuredClone(command), now, operationId }); let active = true;
+        const pending = new Set<Promise<PgSalesResult>>(); let queryFailure: unknown;
+        const borrowed = Object.freeze({ query: (sql: string, values?: unknown[]): Promise<PgSalesResult> => {
+          requireDomain(active, "TRANSACTION_CLOSED", "Stage bootstrap query cannot escape its original callback");
+          requireDomain(pending.size === 0, "TRANSACTION_SCOPE", "Stage bootstrap queries must be sequential and awaited");
+          const start = typeof sql === "string" ? sql.replace(/^(?:\s|\/\*[\s\S]*?\*\/|--[^\n]*(?:\n|$))*/, "") : "";
+          requireDomain(/^(?:SELECT|INSERT|UPDATE|WITH)\b/i.test(start) && !sql.includes(";"),
+            "TRANSACTION_SCOPE", "Stage bootstrap cannot control transactions, sessions or multiple statements");
+          const request = client.query(sql, values); pending.add(request);
+          void request.then(() => pending.delete(request), error => { pending.delete(request); queryFailure ??= error; });
+          return request;
+        } });
+        try {
+          await this.stageBootstrap.stageNewBatch(borrowed, frozen);
+          requireDomain(pending.size === 0, "TRANSACTION_SCOPE", "Stage bootstrap must await all original-client work");
+          if (queryFailure !== undefined) throw queryFailure;
+          requireDomain(requestHash(frozen.command) === digest, "IMPORT_BOOTSTRAP_COMMAND_MUTATION", "Bootstrap cannot change the original frozen MAIN stage");
+        } finally { active = false; if (pending.size) await Promise.allSettled([...pending]); }
+      }
     } else {
       requireDomain(found !== undefined, "IMPORT_BATCH_NOT_FOUND", "Stage an approved frozen manifest before importing data"); batch = decodeBatch(found);
       requireDomain(batch.status === "STAGED" || batch.status === "VALIDATING", "IMPORT_BATCH_FROZEN", "Published, passed, or failed batches cannot accept data");
@@ -226,12 +265,12 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
       old_version, new_version, before_values, after_values, occurred_at) VALUES ($1, $2, $3, 'IMPORT', $4, $5, $6, $7, $8::jsonb, $9::jsonb, $10::timestamptz)`,
     [stableImportId("audit", operationId), operationId, command.actorAccountId, batch.id, command.action, before === null ? null : before.sequence + 1,
       checkpoint.sequence + 1, before === null ? null : auditJson(before), auditJson(checkpoint), now]);
-    requireDomain(nativeCommand === undefined || auditInsert.rowCount === 1, "NATIVE_IMPORT_EVIDENCE_INSERT",
+    requireDomain((nativeCommand === undefined && !(command.action === "IMPORT_STAGE" && this.stageBootstrap)) || auditInsert.rowCount === 1, "NATIVE_IMPORT_EVIDENCE_INSERT",
       "Native accounting requires its one actual original audit insert before receipt/COMMIT");
     const receiptInsert = await client.query(`INSERT INTO naijue_erp.operation_receipt (id, actor_account_id, request_key, request_hash, action, target_type, target_id,
       status, result_data, created_at, completed_at) VALUES ($1, $2, $3, $4, $5, 'IMPORT', $6, 'COMMITTED', $7::jsonb, $8::timestamptz, $8::timestamptz)`,
     [operationId, command.actorAccountId, command.requestKey, digest, command.action, batch.id, auditJson(result), now]);
-    requireDomain(nativeCommand === undefined || receiptInsert.rowCount === 1, "NATIVE_IMPORT_EVIDENCE_INSERT",
+    requireDomain((nativeCommand === undefined && !(command.action === "IMPORT_STAGE" && this.stageBootstrap)) || receiptInsert.rowCount === 1, "NATIVE_IMPORT_EVIDENCE_INSERT",
       "Native accounting requires its one actual original receipt insert before COMMIT");
     return result;
   }
