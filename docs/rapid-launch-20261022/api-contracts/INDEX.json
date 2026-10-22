@@ -1,0 +1,78 @@
+{
+  "updatedAtUtc": "2026-10-22T08:29:49.860274+00:00",
+  "contracts": [
+    {
+      "path": "api-contracts/CURRENT-BARCODE-API-v1.json",
+      "sha256": "d8be2932f046f4d7646d732b8145cb58f3f5fcd509821bc62cc5f4225d835cec",
+      "sourceCheckpoint": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "SOURCE_DTO_FROZEN_NOT_PRODUCTION_WRITE_ENABLEMENT"
+    },
+    {
+      "path": "api-contracts/W5-ORGANIZATION-WRITE-API-v1.json",
+      "sha256": "cb9e587006b5754d8c968fd5a8d1ffe60f1fc43d5414a3db54c43702ef85d676",
+      "sourceCheckpoint": "542e90f15d8dd7c02e186a77dd6778276048deb9",
+      "status": "SOURCE_DTO_FROZEN_NOT_PRODUCTION_WRITE_ENABLEMENT"
+    },
+    {
+      "path": "api-contracts/W6-CATALOGUE-API-v1.json",
+      "sha256": "974499bc68435cbd19770f1f532589c2cf09873403b6be26733c8c1fb79e2f93",
+      "sourceCheckpoint": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "SOURCE_DTO_FROZEN_NOT_PRODUCTION_WRITE_ENABLEMENT"
+    },
+    {
+      "path": "api-contracts/W7-ACCOUNT-API-v1.json",
+      "sha256": "91d87623f7165071a9558ab1d59d52ce986d756fc6def914351ff12ae4a6bee4",
+      "sourceCheckpoint": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "SOURCE_DTO_FROZEN_NOT_PRODUCTION_WRITE_ENABLEMENT"
+    },
+    {
+      "path": "api-contracts/W4-PAYMENT-API-v1.json",
+      "sha256": "ed1c41c36b8fb3a064464da417b90c884a91477cd6c67f08002f5a256ea33026",
+      "sourceCheckpoint": "cac4b9b3c84b0cfd092a7dfacf8c5b41019a57d9",
+      "status": "SOURCE_DTO_FROZEN_NOT_PRODUCTION_WRITE_ENABLEMENT"
+    },
+    {
+      "path": "api-contracts/W8-STAFF-API-v1.json",
+      "sha256": "f1088cfe44f784023a9430bfc2c6e91bab523819d4f2c2294dbbe88208123669",
+      "sourceCheckpoint": null,
+      "status": "FIXED_LEAF_DTO_SHARED_BACKEND_INTEGRATION_PENDING"
+    },
+    {
+      "path": "api-contracts/CONTROLLED-MEDIA-CONTRACT-v1.json",
+      "sha256": "3b05ef21889ca1b888c2f5e08312e9e9a6fb62c0b9bb8938314c416ec47e9776",
+      "sourceCheckpoint": null,
+      "status": "FIXED_LEAF_DTO_SHARED_BACKEND_INTEGRATION_PENDING"
+    },
+    {
+      "path": "api-contracts/PRODUCT-SEASON-API-v2.json",
+      "sha256": "6e084a74c2903a56b111bde403fea24f2cd51b1012b35f2975a3e9e7de1ca4c3",
+      "sourceCheckpoint": null,
+      "status": "APPROVED_SINGLE_COLUMN_V3_A_DTO_FROZEN_IMPLEMENTATION_IN_PROGRESS"
+    },
+    {
+      "path": "api-contracts/HISTORICAL-CUSTOMER-EXACT2-v1.json",
+      "sha256": "b0a809480b31cf8d7b2bacafab214eb5681a6a980a525b57e207f7e36425ebdf",
+      "sourceCheckpoint": null,
+      "status": "EXISTING_FIELDS_EXACT2_SOURCE_CONTRACT_APPROVED_TECHNICAL_ADOPTION_NOT_IMPORT"
+    },
+    {
+      "path": "api-contracts/W8-STAFF-API-v2.json",
+      "sha256": "75142df130416c2a377ffa0a04b03ab82f6e0418d1608143028ead680c20a89b",
+      "sourceCheckpoint": "fd3fd3f6223ddc0436b38add6e11d7b1968012f3",
+      "status": "PREPARE_NOT_READY_EXACT_PREMUTATION_ERROR_SUPPLEMENT_ORIGINAL_RECEIPT_FIRST_NO_GENERIC_503_RETRY"
+    },
+    {
+      "path": "api-contracts/EXACT26-IMPORT-SEASONS-HANDOFF-v2.json",
+      "sha256": "6bf8d7171b8c293e27bbfd5950c80942b3dfc51d67a1c0a2e3060c8298ba3eb2",
+      "sourceCheckpoint": null,
+      "status": "SUCCESSOR_CONTRACT_NOT_ENGINE_OR_RUNTIME_CAPABILITY_ISSUED"
+    },
+    {
+      "path": "api-contracts/EXACT26-HISTORICAL-CUSTOMER-PREDICATE-v1.json",
+      "sha256": "133f6560bd4a3a3f1c3351222230ecd6ce4a606c464263bca6908c7f00aa1edf",
+      "sourceCheckpoint": null,
+      "status": "SUCCESSOR_CONTRACT_NOT_ENGINE_OR_RUNTIME_CAPABILITY_ISSUED"
+    }
+  ],
+  "restriction": "v3-A product.season_ids one-column explicitly approved; v2-A product_season relationship table rejected. B approved. Existing target schema19 cannot use new fields or new import profile; actual successor guards/PG/readback remain required. DTO/source acceptance is not production write enablement."
+}

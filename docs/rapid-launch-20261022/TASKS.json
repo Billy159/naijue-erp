@@ -2,16 +2,16 @@
   "version": "2026-10-22-v1.2",
   "purpose": "Current live rapid-launch execution state; task-specific acceptance is scoped and versioned.",
   "executionStarted": true,
-  "fieldApproval": "APPROVED_ALL_A_B_C_D_C01_20261022_V1",
+  "fieldApproval": "C01_V1_A_D_APPROVED; V2_B_APPROVED; V3_A_PRODUCT_ARRAY_APPROVED; V2_A_RELATION_TABLE_REJECTED",
   "github": {
     "url": "https://github.com/Billy159/naijue-erp",
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "cac4b9b3c84b0cfd092a7dfacf8c5b41019a57d9",
+    "headObserved": "9ee77843aeafca0fa3c354c1ff22119549e10620",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "2c622b350bd0c9a33115c5c5dd0ca0f81ebe80f3",
-    "remoteReadbackMethod": "gh API ref readback, exit0",
+    "remoteHeadVerified": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+    "remoteReadbackMethod": "Successful push plus gh API exact ref readback this turn",
     "pushPendingLocalCommits": true
   },
   "concurrency": {
@@ -39,7 +39,7 @@
       "hostId": "local",
       "model": "gpt-6-astra",
       "reasoningEffort": "ultra",
-      "sourceWriteEnabled": false
+      "sourceWriteEnabled": true
     },
     "F1": {
       "title": "前端单据与公共界面",
@@ -184,7 +184,7 @@
       "owner": "C",
       "model": "gpt-6-astra",
       "reasoningEffort": "ultra",
-      "status": "VERIFIED",
+      "status": "RUNNING",
       "startDependencies": [
         "B00"
       ],
@@ -202,15 +202,21 @@
         "FIELD-APPROVAL-C01-v1.json"
       ],
       "notTested": [],
-      "nextAction": "Approved A-D only; implement fixed contract; new fields outside version require separate confirmation.",
+      "nextAction": "Current complete supplements approved and released; freeze precise DTOs, only genuinely new unlisted differences require further approval.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
         "sourceWriteEnabled": false,
         "activation": "C explicit checkpoint message",
-        "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
+        "fieldGate": "C01-v1 A-D, v2-B and v3-A explicitly approved; unlisted differences still require approval"
       },
-      "approvalRecord": "FIELD-APPROVAL-C01-v1.json"
+      "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
+      "previousApprovedScope": "C01-20261022-v1 A-D remains VERIFIED; this running state is only new supplemental requirements.",
+      "approvalRecords": [
+        "FIELD-APPROVAL-C01-v1.json",
+        "FIELD-APPROVAL-SUPPLEMENT-v2-B.json",
+        "FIELD-APPROVAL-SUPPLEMENT-v3-A.json"
+      ]
     },
     {
       "id": "C02",
@@ -234,7 +240,7 @@
         "operational-checkpoints/R1-BUILD-PACK.json"
       ],
       "notTested": [],
-      "nextAction": "Complete source mapping/real actor initialization, least-privilege ACL, R1 private import and host/PG/browser acceptance, then publish original URL.",
+      "nextAction": "Account source captured, ACL applied; finish exact native staff/account bootstrap, independent DB real import, private runtime config, persistent entry ownership and same-version package.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
@@ -293,7 +299,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
+      "nextAction": "R1 native readers and legacy verifier source accepted. Actual source-account mapping/bootstrap, host runtime and real authentication remain.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D1",
@@ -443,7 +449,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
+      "nextAction": "Catalogue344 external technical pin issued after QB29; actual header source window authorized. Finish other source factories, exact21 approved barcodes, historical-only2 customers and private45 account mappings.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D3",
@@ -592,7 +598,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
+      "nextAction": "Five Demo controls fixed/QF queued. Continue W6 catalogue interface; true multi-season and media DTO dependencies explicit.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F2",
@@ -621,7 +627,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Explicit C00 source opening sent; implement independent registered existing-field scope, field-dependent branches await approval.",
+      "nextAction": "Payment9 fixed/QF queued; W5 organization frontend implementation continuing.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F3",
@@ -667,7 +673,7 @@
       "owner": "C",
       "model": "gpt-6-astra",
       "reasoningEffort": "ultra",
-      "status": "NOT_STARTED",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -682,7 +688,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": null,
+      "nextAction": "Consume QF/QB fixed scoped results and Demo source/browser findings; release applicable business batch after actual data/runtime gates, no unrelated whole-site wait.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
@@ -759,7 +765,7 @@
       "owner": "QF",
       "model": "gpt-6-astra",
       "reasoningEffort": "xhigh",
-      "status": "WAITING_FIXED_CANDIDATE",
+      "status": "RUNNING",
       "startDependencies": [
         "C00"
       ],
@@ -773,7 +779,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Adopt closed CSS and hall-removal scope; next F1 guard/F2 editor/F3 real read immutable candidates.",
+      "nextAction": "Review only four new frontend slices at842f0db; reuse accepted older scopes.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "QF",
@@ -802,7 +808,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Continue fixed review queues; new b0616f5 dependency-order fix and later native/payment slices only; no repeat accepted scope.",
+      "nextAction": "Review barcode/header-testfix/bootstrap-closure/W6/W7/historyHTTP/deployment scoped slices at842f0db; reuse slice1-29 accepted ranges.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "QB",
@@ -869,9 +875,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T06:59:57.641211+00:00",
-  "stage": "C00_VERIFIED_SIX_DEVELOPERS_SOURCE_OPEN",
-  "lastVerifiedRemoteCommit": "f8352b3be19fa3e717262b5bb28073e559bc0795",
+  "updatedAt": "2026-10-22T08:29:49.860274+00:00",
+  "stage": "FIXED_DELTA_QA_DEMO_REPAIRS_AND_EXACT26_ENGINE_PREPARATION",
+  "lastVerifiedRemoteCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -887,9 +893,12 @@
     {
       "id": "B02_COMMIT_CLEANUP_ONLY",
       "parent": "B02",
-      "status": "UNDER_REVIEW",
+      "status": "PASS_SOURCE_PROTOCOL_SCOPED",
       "candidateCommit": "768f4794cba6b2b826728d3ae7c258ffe0dd4e5d",
-      "reviewer": "QB"
+      "reviewer": "QB",
+      "acceptanceIndexId": "QB-CLEANUP-768f479",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice1-768f4794/RESULT.json",
+      "qualification": "PASS_SOURCE_PROTOCOL_SCOPED_NOT_PRODUCTION_NOT_WHOLE_B02_B03_B06"
     },
     {
       "id": "B03/B06-R1-READ-OUTCOME",
@@ -899,6 +908,392 @@
       ],
       "status": "UNDER_REVIEW",
       "candidateCommit": "768f4794cba6b2b826728d3ae7c258ffe0dd4e5d",
+      "reviewer": "QB"
+    },
+    {
+      "id": "D2-W6",
+      "candidateCommit": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "NEED_FIX",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-07.json",
+      "reviewer": "QB",
+      "acceptanceIndexId": "QB-SLICE-33",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice33-catalogue-842f0dbe/RESULT.json",
+      "qualification": "新增维护叶子源/协议可复用，但R1读兼容有P1"
+    },
+    {
+      "id": "D2-W7",
+      "candidateCommit": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "PASS_SCOPED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-07.json",
+      "reviewer": "QB",
+      "acceptanceIndexId": "QB-SLICE-34",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice34-account-842f0dbe/RESULT.json",
+      "qualification": "独立ACCOUNT九文件维护叶子源/协议通过"
+    },
+    {
+      "id": "D1-BARCODE",
+      "candidateCommit": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "PASS_SCOPED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-07.json",
+      "reviewer": "QB",
+      "acceptanceIndexId": "QB-SLICE-30",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice30-barcode-842f0dbe/RESULT.json",
+      "qualification": "仅新增精确条码查询源与协议范围通过"
+    },
+    {
+      "id": "F3-PAYMENT",
+      "candidateCommit": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "PASS_SOURCE_PROTOCOL_ONLY",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-07.json",
+      "reviewer": "QF",
+      "acceptanceIndexId": "QF-F3-PAYMENT-842f0dbe",
+      "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-842f0dbe/F3-PAYMENT-REVIEW.json",
+      "qualification": {
+        "slice": "F3-PAYMENT",
+        "files": [
+          {
+            "path": "apps/web/src/payment-settings/contracts.ts",
+            "sha256": "1941a6f0e051e3d3983a8138491551634efe86c9707f84794d2a54a50ba51ec6",
+            "bytes": 4435,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/payment-settings/controller.ts",
+            "sha256": "001423fda7fd8a78382b98f4cf625ec4e85c4d27357a4612c369ee47f57b64a4",
+            "bytes": 13288,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/payment-settings/controller.test.ts",
+            "sha256": "8c3cdc84bb7cc08a2a873ea44c7d9a5e3aa127d87b7abc748e6f1e970db35261",
+            "bytes": 10827,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/payment-settings/http-client.ts",
+            "sha256": "657d454ae7a090b443f1458bd38ae7fa72d6b53d0a37f88b1e3cba89a8734d9b",
+            "bytes": 13137,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/payment-settings/index.ts",
+            "sha256": "9873b34975f4068a02f852119170f87d79d797789234ce75a6446c75dca6d9fe",
+            "bytes": 677,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/payment-settings/payment-account-form.tsx",
+            "sha256": "c4b8e088be9261cfdbf09be0e808c27f6b92a7afc1de4c5ff94c210a577ab533",
+            "bytes": 2500,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/payment-settings/payment-method-form.tsx",
+            "sha256": "fd943e071571e94315add3c66187efe2136b9263521caf7995f931aa2f216d84",
+            "bytes": 4310,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/payment-settings/payment-page.tsx",
+            "sha256": "b325ed7eba1d444c7d4afb3e0ad0fba71d1b04e4f0cbbae075ef5b994edd4937",
+            "bytes": 13510,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/payment-settings/response-validation.ts",
+            "sha256": "f81f7f6c9da4fb7bb596bff329c95220108361809e0bdc338e7038ab95313554",
+            "bytes": 4094,
+            "gitObjectMatches": true
+          }
+        ],
+        "level": "SOURCE_PROTOCOL_ONLY"
+      }
+    },
+    {
+      "id": "F2-DEMO-CONTROLS",
+      "candidateCommit": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "PASS_SOURCE_PROTOCOL_ONLY",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-07.json",
+      "reviewer": "QF",
+      "acceptanceIndexId": "QF-F2-DEMO-CONTROLS-842f0dbe",
+      "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-842f0dbe/F2-DEMO-CONTROLS-REVIEW.json",
+      "qualification": {
+        "slice": "F2-DEMO-CONTROLS",
+        "files": [
+          {
+            "path": "apps/web/src/products/product-editor-contracts.ts",
+            "sha256": "1e4081c99afe6c8bf275806e691e15e0a9b3cf6b37b7621aa5e223aecda32787",
+            "bytes": 5354,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/products/product-editor-base.tsx",
+            "sha256": "a2c07e7b9e62eaeff092c891a1eba871cf5acef4cd0b7993b2af0fdd82bad5a9",
+            "bytes": 11366,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/products/product-editor-specs.tsx",
+            "sha256": "8f581015806cdcf46ccd24ce13e067e3837e1de78805a9299d30da9f48a7231f",
+            "bytes": 13265,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/products/product-editor.tsx",
+            "sha256": "2b1ad403068c7428306e3184d2325650bfde093529c476b448f6cce4db22c5bb",
+            "bytes": 20573,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/products/product-page.css",
+            "sha256": "4e109b61e9b832e3cdc90804533041523e368d6139683bccb1a669e692f49cbb",
+            "bytes": 5601,
+            "gitObjectMatches": true
+          }
+        ],
+        "level": "SOURCE_PROTOCOL_ONLY"
+      }
+    },
+    {
+      "id": "F1-CHUNK08",
+      "candidateCommit": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "PASS_SOURCE_PROTOCOL_ONLY",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-07.json",
+      "reviewer": "QF",
+      "acceptanceIndexId": "QF-F1-CHUNK08-842f0dbe",
+      "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-842f0dbe/F1-CHUNK08-REVIEW.json",
+      "qualification": {
+        "slice": "F1-CHUNK08",
+        "files": [
+          {
+            "path": "apps/web/src/production-host/mount.tsx",
+            "sha256": "4432d966cb6626b932b117b223cf41c5fd2fc9475931db8801ef2c409466b91b",
+            "bytes": 8315,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/application/routes/staff-settings.tsx",
+            "sha256": "4cff0ee84678a9f5af3cbaaefef5907d2537ab4940b38da3b7c76960788c6552",
+            "bytes": 1186,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/application/routes/payment-settings.tsx",
+            "sha256": "9efdf6d7e931624dc02a7fde0cc00a74c0210c6048d47a5d0af94c48e2dc8178",
+            "bytes": 1158,
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/application/routes/store-settings.tsx",
+            "sha256": "540206b89ef094b44b6813491109069a8edf8cc6ed7edb5d30066d07a38db563",
+            "bytes": 1562,
+            "gitObjectMatches": true
+          }
+        ],
+        "level": "SOURCE_PROTOCOL_ONLY"
+      }
+    },
+    {
+      "id": "D3-HEADER-TESTFIX",
+      "candidateCommit": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "PASS_SCOPED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-07.json",
+      "reviewer": "QB",
+      "acceptanceIndexId": "QB-SLICE-31",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice31-header-testfix-842f0dbe/RESULT.json",
+      "qualification": "仅确定性攻击负例与全局恢复测试修订通过；gzip源沿slice22"
+    },
+    {
+      "id": "D3-BOOTSTRAP-CLOSURE",
+      "candidateCommit": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "PASS_SCOPED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-07.json",
+      "reviewer": "QB",
+      "acceptanceIndexId": "QB-SLICE-32",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice32-bootstrap-closure-842f0dbe/RESULT.json",
+      "qualification": "仅较ef7新增bootstrapPartyClosure来源闭包通过"
+    },
+    {
+      "id": "D3-HISTORY-DATE",
+      "candidateCommit": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "PASS_SCOPED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-07.json",
+      "reviewer": "QB",
+      "acceptanceIndexId": "QB-SLICE-37",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice37-history-date-http-842f0dbe/RESULT.json",
+      "qualification": "未知原业务日期三文件增量及HISTORY HTTP两文件叶子通过"
+    },
+    {
+      "id": "D3-HISTORY-HTTP",
+      "candidateCommit": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "PASS_SCOPED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-07.json",
+      "reviewer": "QB",
+      "acceptanceIndexId": "QB-SLICE-37",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice37-history-date-http-842f0dbe/RESULT.json",
+      "qualification": "未知原业务日期三文件增量及HISTORY HTTP两文件叶子通过"
+    },
+    {
+      "id": "C-DEPLOY",
+      "candidateCommit": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "PASS_SCOPED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-07.json",
+      "reviewer": "QB",
+      "acceptanceIndexId": "QB-SLICE-38",
+      "evidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice38-deployment-tools-842f0dbe/RESULT.json",
+      "qualification": "三文件部署/切换/回退工具源码与纯协议范围通过；未实际部署"
+    },
+    {
+      "id": "F1-CHUNK09",
+      "candidateCommit": "842f0dbe52399f292f6c2fd8a3ab132facb9e7e5",
+      "status": "PASS_SOURCE_PROTOCOL_ONLY",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-07.json",
+      "reviewer": "QF",
+      "acceptanceIndexId": "QF-F1-CHUNK09-842f0dbe",
+      "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/candidate-842f0dbe/F1-CHUNK09-REVIEW.json",
+      "qualification": {
+        "slice": "F1-CHUNK09",
+        "files": [
+          {
+            "path": "apps/web/src/components/document-scan-contracts.ts",
+            "bytes": 1139,
+            "sha256": "790d33abcc4b7aab5d4c7a41c3569b13d60bdbae81d7c001d8f75112130aafb3",
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/components/document-scan-controller.ts",
+            "bytes": 4207,
+            "sha256": "55bc9daf7c8b91b81089df1776449ead2ccf1fc98bb45582282e5fb72adc1dc0",
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/components/document-scan.tsx",
+            "bytes": 4261,
+            "sha256": "b09a8f12c4f3f4969a7d797de5b2c6badb463a186be37413ebf9861f022071e0",
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/components/document-scan.css",
+            "bytes": 1649,
+            "sha256": "7ec2d00a00214d52784586ab2901ecc3b33dba4efb103cc4a86e12d0887fdfba",
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/components/standard-overlay.tsx",
+            "bytes": 6969,
+            "sha256": "e62573e5fdec39669a6086a95d4f8c3a11e73a687536ce7e7d41be129d4b1483",
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/current-form/http-reader.ts",
+            "bytes": 9842,
+            "sha256": "f86c3c0dc3031fb2a3c1575ba0d7f46435abe288456669b525e26f2e14beb7d0",
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal.ts",
+            "bytes": 12587,
+            "sha256": "2cc5467c333126517c198acd1d4c8b475e4353aab77bf9ceac029d231a725f04",
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+            "bytes": 15383,
+            "sha256": "e5d308942e3cab6b46e99438686c61b042cb8fdc7cbbf5e5e7d269b84b915364",
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/current-form/sales-proposal.ts",
+            "bytes": 22683,
+            "sha256": "59915e3905065c50de6908ded0313c1dc43a2c7d08b608bd24c5108853081899",
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+            "bytes": 20254,
+            "sha256": "30d5b719a68c0b22cf832b5e4c34e952bfcf1819a4fd351a0db241c0620316cf",
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/application/styles/sales-detail.css",
+            "bytes": 216,
+            "sha256": "4c51a66cf955da542ed8af9ab042093c1fa5af8ec99104178cbf5646cc9951cc",
+            "gitObjectMatches": true
+          },
+          {
+            "path": "apps/web/src/application/styles/transfer-detail.css",
+            "bytes": 226,
+            "sha256": "0d923f46b9bf50bf4e5b2f1ff33c0d92760317933b7f2403f623a9195b6d86fe",
+            "gitObjectMatches": true
+          }
+        ],
+        "level": "SOURCE_PROTOCOL_ONLY"
+      }
+    },
+    {
+      "id": "F1_CHUNK11",
+      "candidateCommit": "49b4f581c034def949572e358320eeb5b44c255f",
+      "status": "NEED_FIX",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-08.json",
+      "reviewer": "QF",
+      "finding": "QF-F1-PAYMENT-EXTERNAL-OWNER-01",
+      "fixOwner": "F1",
+      "nextAction": "Directed external workspace constructor/identity lifecycle repair only; internal commands checks retained"
+    },
+    {
+      "id": "F3_W5",
+      "candidateCommit": "49b4f581c034def949572e358320eeb5b44c255f",
+      "status": "UNDER_REVIEW_FIXED_DISPATCHED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-08.json",
+      "reviewer": "QF"
+    },
+    {
+      "id": "D1_PREPARE",
+      "candidateCommit": "49b4f581c034def949572e358320eeb5b44c255f",
+      "status": "UNDER_REVIEW_FIXED_DISPATCHED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-08.json",
+      "reviewer": "QB"
+    },
+    {
+      "id": "D2_R1_COMPAT",
+      "candidateCommit": "49b4f581c034def949572e358320eeb5b44c255f",
+      "status": "UNDER_REVIEW_FIXED_DISPATCHED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-08.json",
+      "reviewer": "QB"
+    },
+    {
+      "id": "D3_BOOTSTRAP1",
+      "candidateCommit": "49b4f581c034def949572e358320eeb5b44c255f",
+      "status": "UNDER_REVIEW_FIXED_DISPATCHED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-08.json",
+      "reviewer": "QB"
+    },
+    {
+      "id": "F2_W6",
+      "candidateCommit": "49b4f581c034def949572e358320eeb5b44c255f",
+      "status": "UNDER_REVIEW_FIXED_DISPATCHED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-08.json",
+      "reviewer": "QF"
+    },
+    {
+      "id": "D1_BOOTSTRAP_SESSION_FIX",
+      "candidateCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+      "status": "UNDER_REVIEW_FIXED_DISPATCHED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-09.json",
+      "reviewer": "QB"
+    },
+    {
+      "id": "F1_CHUNK12",
+      "candidateCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+      "status": "UNDER_REVIEW_FIXED_DISPATCHED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-09.json",
+      "reviewer": "QF"
+    },
+    {
+      "id": "D3_SIZE_OVERRIDE2",
+      "candidateCommit": "8775307b30ba3349bc6c95aa96bb48f13da889eb",
+      "status": "UNDER_REVIEW_FIXED_DISPATCHED",
+      "manifest": "checkpoints/SOURCE-ROUND-20261022-09.json",
       "reviewer": "QB"
     }
   ],
@@ -914,5 +1309,151 @@
     },
     "actualSettingAction": "send_message_to_thread with explicit model/thinking applied to all nine existing chat IDs; all calls accepted",
     "historicalModelEvidenceRetained": true
-  }
+  },
+  "operationalState": {
+    "newDatabase": "erp_rewrite_20261022_r1",
+    "schema": "EXACT_1_TO_19",
+    "runtimeAcl": "APPLIED_AND_READ_BACK",
+    "realAccountsCaptured": 49,
+    "accountsWithExactOldEmployeeLink": 45,
+    "accountsUnlinked": 4,
+    "newAccountsInserted": 0,
+    "realImport": "NOT_EXECUTED",
+    "productionSwitched": false,
+    "freshBackup": "PASS_C02_JOB04",
+    "accountCapture": "PASS_C02_JOB11",
+    "bootMetadata": "JOBS12_13_READONLY_PASS; JOB14_BOOT_ACTOR_PROJECTION_QUEUED",
+    "accountIdentity45": "QB35_SCOPED_PASS_C_OUTSIDE_PIN",
+    "accountIdentityAdditional4": "D3_EXACT_PLAN_SOURCE_FACTS_READY_QB_QUEUED",
+    "deploymentTools": "QB38_SOURCE_PROTOCOL_PASS_REAL_DEPLOY_NOT_RUN",
+    "bootPersistence": "C_HELPER_SOURCE_IN_PROGRESS_NO_INSTALL",
+    "currentSourceCheckpoint": "9ee77843aeafca0fa3c354c1ff22119549e10620",
+    "currentPreview": {
+      "commit": "ec0c452305a2cef1dceb89eba65956b09dd47401",
+      "build": "ui-preview-ec0c452-01-build01",
+      "url": "http://127.0.0.1:57833/synthetic-unified.html",
+      "syntheticOnly": true
+    },
+    "currentDatabase": {
+      "name": "erp_rewrite_20261022_r1",
+      "schema": "EXACT1_19",
+      "tables": 50,
+      "accounts": 0,
+      "runtimeAcl": "APPLIED_AND_READ_BACK_JOB07",
+      "realImport": "NOT_STARTED",
+      "productionSwitch": "NOT_DONE"
+    },
+    "schemaSuccessor": {
+      "status": "20_26_SOURCE_IN_PROGRESS_NO_RUNTIME_CAPABILITY_ISSUED",
+      "knownEngineGaps": [
+        "0013 STAFF refuses liveaccount at deferred commit",
+        "22/23 newcolumns require exact whole snapshot successor",
+        "25 season publication/race and26 exact source predicates require actual engine"
+      ],
+      "humanFieldWaiting": false
+    },
+    "latestCandidatePins": [
+      "B06-ACCOUNT-IDENTITY-49.json",
+      "B06-PRODUCT-SEASON-SOURCE-ADOPTION.json",
+      "B06-HISTORICAL-CUSTOMER-EXACT2-ADOPTION.json"
+    ],
+    "boot": "SOURCE_OFFLINE_READY_NOT_INSTALLED_T16_SAFETY_TRANSITIVE_PROOF_PENDING"
+  },
+  "supplementalRoles": {
+    "DEMO_COMPARE": {
+      "title": "奈爵 ERP｜Demo 逐页实操对比",
+      "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
+      "hostId": "local",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "ultra",
+      "sourceWriteEnabled": false,
+      "reportRoot": "K/reports/ui-demo-comparison-20261022",
+      "scope": "Verified human directive: Demo source first plus real browser page-by-page; reuse QF/QB accepted or in-flight scopes",
+      "candidateCommit": "fae1ef3ea36dd88f3ac4261b354df23ea8dad3cb",
+      "previewStatus": "FIXED_SYNTHETIC_PREVIEW02_HTTP200_HASH_VERIFIED",
+      "previewReportRoot": "K/reports/controller/rapid-launch-20261022/ui-preview-fae1ef3-01",
+      "reportingAuthorization": "User explicit request in this controller chat on2026-10-22 to reuse this exact thread and proactively exchange findings/candidates/retests",
+      "buildId": "ui-preview-fae1ef3-overlay02-build01",
+      "url": "http://127.0.0.1:57832/synthetic-unified.html",
+      "htmlSha256": "80465e190770c428504239ad88074c328f1b946dc5bca93c50fdf605494d1c0d",
+      "overlaySha256": "be92965c31fbd8e968cfd0d3dfc7b217d58627310d85ea7dc4e08305c7a5ce03",
+      "parallelism": "Source two groups; actual browser sequential until isolation verified",
+      "firstResults": "Inventory v001/02 adopted; approved O-I06 retained; oldF09 directed fix; output-print existingR4 queue"
+    }
+  },
+  "fieldApprovalRecords": [
+    "FIELD-APPROVAL-C01-v1.json",
+    "FIELD-APPROVAL-SUPPLEMENT-v2-B.json",
+    "FIELD-APPROVAL-SUPPLEMENT-v3-A.json"
+  ],
+  "latestAcceptedReceiptRefs": [
+    "QB39",
+    "QB40",
+    "QB41",
+    "QB42",
+    "QB43",
+    "QB44",
+    "QB45",
+    "QB46",
+    "QB47",
+    "QB48",
+    "QB49",
+    "QB50",
+    "QB51",
+    "QF-F1-CHUNK12-8775307b",
+    "QF-F1-CHUNK14-ec0c4523",
+    "QF-F1-CHUNK15-87713697"
+  ],
+  "newPendingReviews": [
+    {
+      "source": "877136977ad5ec8977824623dee59cb71c17293f",
+      "owner": "QB",
+      "scopes": [
+        "D3_APPROVED21_BARCODE_PROOF",
+        "D3_VERIFIED_HEADER_FACTORY",
+        "C_BOOT_ENTRY_SOURCE"
+      ]
+    },
+    {
+      "source": "ecec0bd0a4546a75ee4d8d7761c6e7f11b1136d9",
+      "owner": "QB",
+      "scope": "D2_W11_PRODUCT_SEASON_ARRAY"
+    },
+    {
+      "source": "9ee77843aeafca0fa3c354c1ff22119549e10620",
+      "owner": "QF",
+      "scopes": [
+        "F2_SEASON_V2_AND_MEDIA_RELOAD_FIX",
+        "F1_DOC02_03_04_FIX"
+      ]
+    }
+  ],
+  "openFindingsCurrent": [
+    {
+      "id": "QF-F2-MEDIA-UNCERTAIN-RELOAD-01",
+      "owner": "F2",
+      "status": "FIXED_SOURCE_WAIT_QF_9ee7784"
+    },
+    {
+      "id": "QF-F3-STAFF-PASSWORD-STATE-01",
+      "owner": "F3",
+      "status": "NEED_FIX_DISPATCHED"
+    },
+    {
+      "id": "DOC-SOURCE-02/03/04",
+      "owner": "F1",
+      "status": "FIXED_SOURCE_WAIT_MINIMAL_BROWSER"
+    },
+    {
+      "id": "DOC-SOURCE-01",
+      "owner": "C",
+      "status": "AUTHORITY_TRACE"
+    },
+    {
+      "id": "DATA-PRES-001/002/003/004",
+      "owner": "F2",
+      "status": "DISPATCHED_ORIGINAL_F04_SCOPE"
+    }
+  ],
+  "historicalFailuresPreserved": true
 }

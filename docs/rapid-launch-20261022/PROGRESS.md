@@ -1,18 +1,16 @@
-# Rapid launch current progress - 2026-10-22
+# 快速上线当前进度
 
-Nine existing C/F1/F2/F3/D1/D2/D3/QF/QB chats and22 tasks; gpt-6-astra/xhigh (C: gpt-6-astra/ultra). Do not recreate roles, redispatch in-flight work, or retest unchanged accepted scopes.
+2026-10-22。整体目标ACTIVE，未完成正式上线。原九角色+既有Demo专项并行，C Astra Ultra，执行/验收 Astra xhigh，Demo Astra Ultra，不重开架构。
 
-- C00 VERIFIED: current source preservation, screened50 Demo files and finite ownership registered; original openingf8352b3 remains valid.
-- C01 VERIFIED: human confirmed all A-D of C01-20261022-v1 (63columns/6tables/listed constraints), FIELD-APPROVAL-C01-v1.json. D1 exclusively owns0020-0024. No unlisted field approval inferred.
-- Actual current production inventory: naijue-prod app/web/db healthy; original127.0.0.1:18080 Oray origin remains. Inventory failure over broad historical-container count retained, corrected exact-prod read succeeded. No old production data change/restart.
-- C02 fresh preservation COMPLETE: actual app/web image archives, physical database+streamed WAL verified once, media and configuration archives stable; finished2026-10-22T05:58:40Z. Protected server backup rapid-launch-current-20261022-04. Old partial backup not relabelled complete.
-- Independent new DB erp_rewrite_20261022_r1 CREATED: migrations1-19 exact hashes,50tables,0accounts. NOLOGIN owner/nonprivileged runtime separated. No real import/auth/production switch; least-privilege runtime ACL still to apply.
-- R1 actual frontend/backend outputs from fixed Git exporta77089c produced. Web158outputs/1294inputs. Package source graph1413inputs,180archive members,3142212bytes; one extracted readback matched. Pack tooling CSS-filename and dependency-key-order false refusals fixed with exact new tests; original failed attempts retained. No running application/browser/production PASS implied.
-- Independent scoped PASS reused: cleanup768, D2 reads90ff, host881, executor2c, stock/history476, maintenancea770, productd38, B05reads790. QF ledger/read tabs/forms plus actualCSS failure recheck and hall-removal fix closed. New reviews remain per exact candidate. Whole parent tasks remain incomplete.
-- D1 new-number transfer prepare defect fixed and independently closed at790; actual PostgreSQL20 sequence/trigger/uniqueness/races still untested. Legacy verifier needed to preserve actual old PBKDF2 credentials; C approved explicit compatibility implementation, no fake admin/reset.
-- D2 W4 payment source saved pending shared0021 relation audit closure and independent review. F3 consumes frozen W3 real reads; F2 editor and F1 layouts/guard continue independently.
-- D3 native preparation did one bounded real-source read, created private identity/party/product candidate artifacts; independent rule/byte review and external C pins still required. Eleven production source factories are incomplete, real import not done. Business cutoff directly source-bound2026-10-04T12:00:00+08:00; C batch/namespace frozen privately.21raw MAIN-to-old candidates require exact occurrence/human-rule confirmation; only their branch waits.
+- 本地固定 9ee77843aeafca0fa3c354c1ff22119549e10620；最后已核GitHub 8775307b30ba3349bc6c95aa96bb48f13da889eb。新源码round08–14已逐片保全，下一步推送。角色WIP不整体暂存/重置/清理。
+- C01-v1 A–D、v2-B、v3-A均明确批准。仅商品season_ids单列，不建product_season；原单值和来源保留，NULL未知与[]明确空选分开。精确21旧码裁决已批。本轮无待用户字段确认。
+- 当前生产app/DB-WAL/媒体/配置保全实测完成，保护备份rapid-launch-current-20261022-04。新库erp_rewrite_20261022_r1仍精确1–19、50表、0账号；runtime ACL已实际应用读回。原库/入口未切换。
+- QB39/43分别关闭D2旧库读取和bootstrap会话设置缺陷；QB44–48各限定源码范围通过。QF ec0c关闭external-owner，877136 W5/W6根接线源通过。未升级为真实PG、整模块或业务PASS。
+- QF-F2-MEDIA-UNCERTAIN-RELOAD-01已给F2；DOC-SOURCE-02/03/04给F1，DOC01追溯原权威。原失败保留，只复验后继具体影响范围。
+- F3 STAFF+ACCOUNT八文件固定aa480ab并交QF/F1根接线；F1 v2路径修复91a6687，F2只复验两受影响项。D2季节12文件已READY待固定。正式writes仍false。
+- 49账号identity已核且C外pin，不代表实际导入。QB49已核2956季节来源（2598单季/48未知/310双季620成员）及商品引用新2/旧2644保全，C已签有限pin。exact2历史客户待QB。42561历史header已有gzip来源，新bounded factory待QB，无原件重扫。
+- D1/D3收敛20–26显式新profile：原0013拒STAFF同时有账号；22/23列变影响完整snapshot；25季节引用/发布与26来源继承均待实际隔离PG。原1–19封存不改，不停trigger，不扩旧EXACT19。
+- 固定预览 http://127.0.0.1:57833/synthetic-unified.html ：ec0c452/build ui-preview-ec0c452-01-build01，360输入匹配、HTTP200/2488691B。仅合成read/draft，旧57831/32保留；专项先F09两态，再未覆盖页。
+- boot源码877136含24离线检查，交QB；job12/13/15/16只读证据识别两旧unit启动旧入口。未安装/重启/发布。T16 safety实际导入路径/hash及传递控制流待查。
 
-GitHub last verified2c622b3; newer local checkpoints require next push/readback. Only code/redacted continuation records enter Git; real source rows, credentials and protected backups remain private. C is sole server/Git/root/shared-contract owner. Next: save latest role receipts, push current checkpoint, finish real-source mappings/actors, apply R1 ACL and conduct actual query/auth checks before first public batch.
-
-Current model directive: user explicitly changed all eight implementation/review chats to Astra/xhigh and C to Astra/ultra; actual nine tool overrides accepted. Continue existing scopes; original taskbook model lines are historical and overridden.
+下一步：持续接收原owner/QA回执，固定、定向复验和GitHub保存；D1给固定DDL/minimum cases后C唯一安排新隔离PG；D3完成11factory/MAIN许可与同批真实对账。R1真实登录/权限/页面接线合格即按原授权上线，不等无关维护、历史更正或全站Demo检查。C04/C05及完整交接未完成。

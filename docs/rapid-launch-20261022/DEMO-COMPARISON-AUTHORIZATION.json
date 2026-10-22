@@ -1,0 +1,32 @@
+{
+  "id": "DEMO-COMPARISON-REPORTING-AUTHORIZATION-20261022",
+  "source": "Direct human message in controller thread01a161ca-f5d5-7de1-a8ad-1cdd43c96915,2026-10-22, beginning with request to connect Demo page-by-page hands-on comparison",
+  "specialistThreadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
+  "authorizedActions": [
+    "specialist meaningful findings/stage/blocker messages to C",
+    "C candidate/scope/directed retest messages to specialist"
+  ],
+  "requiredFields": [
+    "issueId",
+    "page",
+    "candidateVersion",
+    "DemoExpected",
+    "candidateActual",
+    "pairedScreenshots",
+    "steps",
+    "severityAndImpact",
+    "owner",
+    "duplicateOrApprovedDifference",
+    "minimumRetestScope"
+  ],
+  "models": {
+    "C": "gpt-6-astra/ultra",
+    "DEMO_COMPARE": "gpt-6-astra/ultra",
+    "otherExecutionAndQA": "gpt-6-astra/xhigh"
+  },
+  "restrictions": [
+    "no development-source edits by specialist",
+    "no duplicate source/protocol whole review",
+    "no synthetic success labelled real business acceptance"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "atUtc": "2026-10-22T08:19:25.367344+00:00",
+  "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v002-fae1ef3-overlay02/01-documents/FINDINGS.json",
+  "sha256": "f2a1507a65c034a10a2c3a236899c63d4687bc073464784908c2d110e8103528",
+  "candidate": "fae1ef3ea36dd88f3ac4261b354df23ea8dad3cb/overlay02-build01",
+  "decisions": [
+    {
+      "id": "DOC-SOURCE-02",
+      "owner": "F1",
+      "status": "DISPATCHED_ORIGINAL_OWNER_TARGETED_FIX"
+    },
+    {
+      "id": "DOC-SOURCE-03",
+      "owner": "F1",
+      "status": "DISPATCHED_ORIGINAL_OWNER_TARGETED_FIX"
+    },
+    {
+      "id": "DOC-SOURCE-04",
+      "owner": "F1",
+      "status": "DISPATCHED_ORIGINAL_OWNER_TARGETED_FIX"
+    },
+    {
+      "id": "DOC-SOURCE-01",
+      "status": "TRACE_ORIGINAL_RESET_AUTHORITY_BEFORE_FIX",
+      "owner": "C",
+      "claimNotAuthority": "README/tests alone are not human approval"
+    }
+  ],
+  "reuse": "Same-version source/protocol evidence reused; new unsaved-browser gaps only; neither real business nor whole-page PASS",
+  "currentPreview": {
+    "commit": "ec0c452305a2cef1dceb89eba65956b09dd47401",
+    "build": "ui-preview-ec0c452-01-build01",
+    "url": "http://127.0.0.1:57833/synthetic-unified.html",
+    "htmlSha256": "4063cfba656c34e6a6034b7ae51747253296364bf9e14ed6c41fa66fcf227ec3",
+    "overlaySha256": "af46121b46f98d93a64c2bb2584831cbcae91c952b6c1d4c646b5c3f378bc522",
+    "onlySynthetic": true,
+    "nextRetest": "F09 search background initial/focus only; DOC fixes and media uncertain reload not included"
+  }
+}

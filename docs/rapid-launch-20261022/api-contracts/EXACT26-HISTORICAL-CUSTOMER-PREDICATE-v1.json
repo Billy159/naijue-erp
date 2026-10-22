@@ -1,0 +1,46 @@
+{
+  "id": "D1_EXACT26_HISTORICAL_CUSTOMER_PREDICATE_V1",
+  "status": "SOURCE_CONTRACT_PENDING_FINAL_OUTSIDE_PIN_AND_IMPLEMENTATION",
+  "atUtc": "2026-10-22T08:20:24.796977+00:00",
+  "migration": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+  "newTables": 0,
+  "newColumns": 0,
+  "predicate": {
+    "signature": "naijue_erp.is_exact_historical_customer_only(target uuid) RETURNS boolean",
+    "semantics": "TRUE only for the exact two pinned native identities with matching immutable native_party_import_evidence + import_source_row. For either pinned identity, missing/malformed/conflicting proof raises integrity error, never false/current fallback. All other customer IDs FALSE; native existence/authorization remain caller responsibilities.",
+    "nativeIds": [
+      "2e5bd72a-c1cb-4090-90be-091deb49bb2e",
+      "f8a29ce8-e296-4b95-9612-ca7bb62507bd"
+    ],
+    "proof": [
+      "entity CUSTOMER; source HISTORICAL_CUSTOMER_SUPPLEMENT_V1; path dictionaries/historical-customers.json",
+      "exact original sourceJSON SHA79305bfcb0545e5bc26601f839508be2b64a6637cd6fb1ef1819c6989fc38e65 and pinned row/index/sourceKey/native mapping",
+      "raw_fields==normalized_fields; original English8fields preserved; historicalOnly=true andvisibleInCurrentCustomerList=false; exactoriginalpartyidentity andinvoice linkage",
+      "samebatchsource_row+nativecreationintent+typedheaderreference; no alternate mutable marker, disabledflag, displayprefix or nameheuristic"
+    ],
+    "sqlUsage": "AND NOT naijue_erp.is_exact_historical_customer_only(customer.id)",
+    "execution": "STABLE SECURITY DEFINER, fixed search_path=pg_catalog,naijue_erp, returns boolean only; no writes/dynamic SQL/user callbacks. REVOKE ALL FROM PUBLIC. C grants only EXECUTE to actual runtime/import roles; private source table SELECT is not granted via this helper. Exact body/definer/search_path/role ACL are issuer pins."
+  },
+  "consumers": {
+    "D2": [
+      "party currentlist/search/count/page anddetail beforeallcount/page",
+      "party maintenance includingRESTORE aftercurrentauthorizinglock andbeforewrite",
+      "HALL currentdefaultcustomer candidates/selection checks"
+    ],
+    "D1": [
+      "current-form customer candidates",
+      "shared sales-native-facts actualcurrentdraft/create/save facts",
+      "DB sales_header currentcustomer write trigger andhall.default_customer_id selection trigger, plusimmutablehistoricalcustomer update refusal"
+    ],
+    "history": "history_sales_header and original sales/history query FK/name display remain untouched; no helperfilter onhistoricalrelationshipdisplay."
+  },
+  "activation": "Only actualverifiedEXACT26 canselectthisSQL. Original19constructorbranch remainsoriginalSQL anddoesnotprobe/missing-function-catch/fallback. D1 actualissuer mustprove2sourceclosure andfunctionACL beforeCopensnewcurrentread/write. Untilthen exact2remainsSTAGED/private andnot businessready.",
+  "failure": "Unverifiedcapability/missingroutine/invalidproof meansNOT_READY/integrityerror, notemptyorcurrentcustomer. Known2 IDs never become ordinary disabledcustomers.",
+  "sourceCandidatePin": "7710b449e914eac02adfb7436c3749986ae3dd0d4a30a81140b98b57d8ea87e7",
+  "pending": [
+    "QB/Cfinal independentoutsidepin",
+    "D3 exactexistingJSON source/intent/header shape",
+    "26 routine+trigger implementation andC minimalenginecases",
+    "D2 affectedselectionconsumer finitecap andD1 sourceproviderhost proof"
+  ]
+}

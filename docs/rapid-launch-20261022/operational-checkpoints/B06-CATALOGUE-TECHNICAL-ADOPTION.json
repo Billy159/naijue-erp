@@ -1,0 +1,30 @@
+{
+  "id": "B06-CATALOGUE-TECHNICAL-ADOPTION-V1",
+  "reviewFilePrivateRef": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-catalogue-technical-review-v1.json",
+  "reviewSha256": "19f2783aeda822617b06573f2b6f1ec68e3404f343df93677ba80090dfdc4906",
+  "mappingSha256": "bcdde34cbcb3763ab14adb1b2192b9921772e933881396f1a922c3e1a1ce2fe5",
+  "acceptedEntityCounts": {
+    "CATEGORY": 50,
+    "COLOR": 182,
+    "FIT": 6,
+    "SEASON": 4,
+    "SIZE_GROUP": 6,
+    "SIZE": 48,
+    "SIZE_GROUP_MEMBER": 48
+  },
+  "scope": "Exact371636B catalogue mappingcandidate technicaldictionary range only,344entries including4singleseasons; no310combinedproduct mapping/schema/importapproval",
+  "excludedScope": [
+    "310combinedseason productmapping notgranted; latesthuman requires true multiselectschema/projection nottwo combo dictionaryvalues",
+    "Fullproductreference decisions/nativeproductcommands notgranted bycataloguemapping",
+    "Currenttarget/actor/payload/other9factory/schema/import/publication notgranted"
+  ],
+  "reviewEvidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice29-private-dictionary-candidate/RESULT.json",
+  "notTested": [
+    "310combinedseason productmapping notgranted; latesthuman requires true multiselectschema/projection nottwo combo dictionaryvalues",
+    "Fullproductreference decisions/nativeproductcommands notgranted bycataloguemapping",
+    "Currenttarget/actor/payload/other9factory/schema/import/publication notgranted",
+    "No actualPG/DDL/production/sourceimport/publication",
+    "No repeated486987originalrows/header/fullOOXML/UIbrowser extraction",
+    "Existing archivedrawrows matchsourceworkbookSHA; no claim presentUI/backend hidden/disabled completeness"
+  ]
+}

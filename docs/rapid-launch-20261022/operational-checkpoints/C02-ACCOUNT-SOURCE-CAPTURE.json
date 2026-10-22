@@ -1,0 +1,22 @@
+{
+  "format": "rapid-launch-private-account-capture-v1",
+  "jobId": "c02-account-source-capture-20261022-11",
+  "status": "PASS_PRIVATE_OLD_ACCOUNTS_CAPTURED_NO_NEW_ACCOUNTS",
+  "oldDatabaseWrites": false,
+  "newAccountsInserted": 0,
+  "credentialValuesExported": false,
+  "rows": 49,
+  "exactOldEmployeeLinks": 45,
+  "unlinkedRows": 4,
+  "supportedLegacyEnvelopeRows": 49,
+  "unsupportedLegacyRows": 0,
+  "privateCaptureReference": "/srv/naijue-erp/rapid-launch-20261022/private/account-capture-20261022-11/old-accounts.json",
+  "privateCaptureBytes": 136474,
+  "privateCaptureSha256": "6a858fdffb617521a2ea71fc3e509b1981447916076641b6eff5ab0c7612365a",
+  "oldSourceBatchId": "TPLUS-20260922-A2",
+  "oldSourceManifestSha256": "3f247e36c1a1e3c5ee5c38451ed1c70f61aff9d45e46423ba985f22f239446c4",
+  "tagKeyReference": "/srv/naijue-erp/rapid-launch-20261022/private/credential-request-tag-v1.key",
+  "tagKeyAction": "CREATED_ONCE_PRIVATE_32_BYTES",
+  "remaining": "Private exact STAFF source identity map and new trusted account bootstrap; unlinked rows need explicit original relationship, no name matching.",
+  "finishedAtUtc": "2026-10-22T06:54:56.094530+00:00"
+}

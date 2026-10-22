@@ -1,0 +1,12 @@
+{
+  "atUtc": "2026-10-22T08:29:49.860274+00:00",
+  "authority": "FIELD-APPROVAL-SUPPLEMENT-v3-A.json and approved proposal constraints.elements / semantics.legacyScalar",
+  "originalMappingSha256": "c05e8f46bd20d050877ae431103b52d199c953919b7e8186f822f11081f9f779",
+  "decision": [
+    "Keep original reviewed source mapping bytes in dictionary order; derive new fingerprinted prepared values with exact member equality and sorted UUIDs",
+    "Persist canonical UUID order, display dictionary order; no source map overwrite or reuse oldhash for changedderived artifact",
+    "New imported products without existing native scalar use explicit legacy single-slot not applicable NULL for confirmed multi; source remains KNOWN and two-member array/raw original preserved",
+    "Existing scalar values stay unchanged; no firstmember rewrite and no falsely UNKNOWN source",
+    "No newtable/column or changed field approval; actual engine/readback still required"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "C01-SUPPLEMENT-v3-A",
+  "status": "APPROVED",
+  "atUtc": "2026-10-22T07:39:17.188131+00:00",
+  "source": {
+    "kind": "direct human reply in controller Chat",
+    "questionItemId": "[\"request_user_input_async\",\"call_6f85ae5bd25048f29ecb1fea0b1ae470\",0]",
+    "answer": "确认 v3-A 单列方案"
+  },
+  "proposalPins": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/SCHEMA-SUPPLEMENT-v3-PRODUCT-SEASONS.md",
+      "sha256": "bc456c962685c4596d7aec50663b91910ebbcb8c578cc84852b40955c4b39477"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/SCHEMA-SUPPLEMENT-v3-PRODUCT-SEASONS.json",
+      "sha256": "3c4ce0fa6985cb82c538a3288f5e1d28acaf5558e70509e474339ec3b3c88e27"
+    }
+  ],
+  "scope": "0 new tables; product.season_ids uuid[] nullable no default; indexes/checks/two-way reference guards/source310 conversion/DTO and write contract exactly as reviewed; old scalar/source retained",
+  "excluded": "Superseded product_season relation table is not authorized. No other field changes. Actual server writes remain C controlled execution, source completion is not production acceptance."
+}

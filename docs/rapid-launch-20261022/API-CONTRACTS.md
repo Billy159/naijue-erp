@@ -1,3 +1,5 @@
+> Current authority update 2026-10-22: C01-v1 A-D, supplement v2-B and v3-A product.season_ids are explicitly approved. The earlier product_season relation-table proposal is rejected/superseded, preserved only as history. See FIELD-APPROVAL-SUPPLEMENT-v3-A.json and SCHEMA-SUPPLEMENT-v3-PRODUCT-SEASONS.json. Runtime schema remains EXACT19 until C executes and verifies the applicable migration; source contracts alone do not enable writes.
+
 # 接口合同 v1：现有字段接口已冻结
 
 冻结来源：B00当前源码清单，见EXISTING-API-MATRIX.json；源码基准8211285。仅冻结当前实际存在的接口/DTO，不代表生产验收或批准新字段。
@@ -26,3 +28,11 @@ Exact DTO/route snapshot: K/reports/backend/rapid-launch-20261022/D2/W2-PRODUCT-
 ## Shared history posting v1
 
 D1/HISTORY-POSTING-CONTRACT-v1.json and inventory-posting.ts define post(sameClient,context,effects). No new pool/transaction or receipt writer. Empty effects do no stock I/O; missing original businessDate blocks quantity effects, never substitutes current date. Actual EX24 adapter/PG evidence still pending.
+
+## Fixed incremental contracts at 842f0db
+
+Portable exact DTO snapshots are in api-contracts/INDEX.json with source commit and hash. W5 organization is source/protocol accepted at 542e90f; W6 catalogue and W7 accounts are fixed and under QB review. Current-form barcode has exact raw-text and actual-SKU semantics, fixed with F1 scanner at 842f0db. Payment session workspace is F3 source-ready; F1 session integration remains pending. No source DTO snapshot opens production writes.
+
+User requires true multiple independent seasons. Scalar seasonId is a historical source interface, not the final requirement. A new relationship, seasonIds read/write contract, exact source migration, and constraints will be submitted together before dependent DDL/writes. Never create combined dictionary season values or silently choose the first season.
+
+D3 HISTORY revise HTTP source is fixed at 842f0db: POST /imported-history/{sales|transfers}/revise with exact HistoryRevisionCommand; original unknown businessDate remains null for money-only correction, quantity effects require proven original date. Source HTTP is not persistence/EXACT24/real-history acceptance.

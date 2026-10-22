@@ -1,0 +1,204 @@
+{
+  "version": "D2-CONTROLLED-PRODUCT-MEDIA-CONTRACT-v1",
+  "status": "PROPOSED_FOR_C_FREEZE_AND_F2_ALIGNMENT_NOT_IMPLEMENTED",
+  "fieldAuthority": "C01-20261022-v1 product_image.image_role/color_id approved; native metadata/version/creator/time retained. No additional DB fields proposed.",
+  "currentGap": "W2 editor snapshot has no image roles/versions. Existing frozen images/query exposes only id/label/thumbnailUrl; media provider null yields explicit501. This contract supplies real upload/edit/read capability without changing frozen drawer DTO v1.",
+  "roles": [
+    {
+      "value": "MAIN",
+      "label": "主图",
+      "colorId": null,
+      "multiple": true
+    },
+    {
+      "value": "WHITE_BACKGROUND",
+      "label": "白底图",
+      "colorId": null,
+      "multiple": true
+    },
+    {
+      "value": "HANG_TAG",
+      "label": "吊牌图",
+      "colorId": null,
+      "multiple": true
+    },
+    {
+      "value": "DETAIL",
+      "label": "细节图",
+      "colorId": null,
+      "multiple": true
+    },
+    {
+      "value": "COLOR",
+      "label": "颜色配图",
+      "colorId": "actual selected product SKU color UUID",
+      "multiple": "at most one per product/color"
+    }
+  ],
+  "legacy": "Existing image_role=NULL/color_id=NULL means unknown; preserve and display 未分类, never infer MAIN from filename/order. No new MAIN singleton or implicit deletion. Replacement can preserve NULL only for an already unknown-role image; new ADD requires one known role.",
+  "editorRead": {
+    "route": "POST /products/maintenance/images/query",
+    "request": {
+      "productId": "UUID"
+    },
+    "response": {
+      "productId": "UUID",
+      "version": "actual product.version",
+      "images": [
+        {
+          "id": "actual image UUID",
+          "version": "actual image.version",
+          "role": "five-value enum | null for retained unknown",
+          "colorId": "actual color UUID | null",
+          "displayOrder": "actual signed int32",
+          "mime": "image/png | image/jpeg | image/webp",
+          "byteSize": "exact positive decimal integer text",
+          "createdAt": "actual stored timestamp",
+          "createdByAccountId": "actual UUID | null",
+          "thumbnailUrl": "authenticated opaque same configured HTTPS origin URL | null when thumbnail unavailable",
+          "thumbnailState": "READY | UNAVAILABLE"
+        }
+      ]
+    },
+    "rules": "Current product maintenance read authorization; all metadata and root version in one snapshot; stable global ORDER BY display_order,id, grouping by role only in F2. Preserve gaps/equal orders rather than silently renumbering. No fileRef/path/storage URL/raw original/base64 in response. Null creator remains unknown.",
+    "emptyVsFailure": "No actual images => images[]. Metadata/permission/read errors => explicit failure, never []. Missing thumbnail => UNAVAILABLE, never serve original as thumbnail.",
+    "readCompatibility": "Existing images/query and image/query shape and URLs remain; richer editor endpoint is separate. Read/thumbnails do not fetch original bytes; original only on explicit original request."
+  },
+  "upload": {
+    "route": "POST /products/media/uploads",
+    "headers": {
+      "Content-Type": "actual image/png | image/jpeg | image/webp",
+      "X-Media-Upload-Key": "bounded original per-file idempotency key",
+      "X-Product-Command-Key": "reserved original CREATE/EDIT requestKey",
+      "X-Product-Id": "actual UUID for EDIT; omitted only for CREATE draft"
+    },
+    "body": "raw binary, size 1..8388608 bytes exactly native product_image bound; no data URL, JSON base64, remote URL, file path or client MIME trust",
+    "authentication": "Current authenticated ADMIN/WAREHOUSE per D1 product-maintenance policy; validate Origin/CSRF through host, actual target scope for EDIT; CREATE authority for draft. Bind stage to current actor, root-or-new scope, original command key and upload key.",
+    "validation": "Check magic and fully decode via explicit trusted image codec; actual MIME must match supported transport MIME; enforce configured decoded-pixel/dimension limits and abort. Original bytes preserved as uploaded, derived thumbnail stored separately. No SVG/HTML/path import.",
+    "storage": "Private immutable durable blob plus derived thumbnail prepared before DB mutation. Storage root explicit outside dist/web/static, permissions bounded; no public fallback. Existing legacy fileRef resolves only through approved private root mapping with canonical path/symlink containment checks.",
+    "idempotency": "Same actor/command/upload key and exact bytes returns same stage; changed bytes or scope under same key returns409. No auto retry. Stage opaque UUID and private manifest contain ownership/digest/size/mime/expiry; manifest private, never credentials. Actual save revalidates stage ownership/content/expiry.",
+    "response": {
+      "uploadId": "opaque unguessable UUID",
+      "mime": "validated actual MIME",
+      "byteSize": "exact integer text",
+      "expiresAt": "server actual expiry"
+    },
+    "notCommitted": "Upload response only means staged private file, not saved product/image. Image becomes visible only after root transaction commits.",
+    "cleanup": "Cancel/failed save/uncertain COMMIT must not delete staged/original files. C-controlled cleanup only after checking actual image/audit/receipt references and unknown commits; no automatic deletion in D2 implementation."
+  },
+  "write": {
+    "transport": "Extend C-frozen v2 product CREATE/EDIT with mandatory imageChanges array ([] means no image edits). If season DDL is still pending, C may freeze this same independent image extension first; media must not itself require new season relation.",
+    "add": {
+      "action": "ADD",
+      "uploadId": "owned valid staged UUID bound to same original command",
+      "role": "known role",
+      "colorId": "UUID only for COLOR, else null",
+      "displayOrder": "explicit signed int32"
+    },
+    "replace": {
+      "action": "REPLACE",
+      "id": "actual image UUID",
+      "expectedVersion": "actual image.version",
+      "uploadId": "owned valid stage",
+      "role": "known role; legacy null allowed only if preserving unknown",
+      "colorId": "actual compatible color or null",
+      "displayOrder": "explicit signed int32"
+    },
+    "metadata": {
+      "action": "EDIT_METADATA",
+      "id": "actual image UUID",
+      "expectedVersion": "actual image.version",
+      "role": "known role; legacy null only if preserving unknown",
+      "colorId": "actual compatible color or null",
+      "displayOrder": "explicit signed int32"
+    },
+    "remove": {
+      "action": "REMOVE",
+      "id": "actual image UUID",
+      "expectedVersion": "actual image.version"
+    },
+    "rules": [
+      "Existing product same native root expectedVersion and lock; every existing image also actual version CAS. No image may occur twice across operations; no cross-product binding; missing image is error.",
+      "ADD allocates real image UUID, version1, actual time/current actor. REPLACE preserves image id/product/created_at/created_by, increments image.version once; new file/mime/size from validated stage. Metadata edit increments once; REMOVE deletes only actual relation row.",
+      "Check final picture set and actual final product SKU colors in same transaction; COLOR unique(product,color) holds. Existing retained color images prevent removing their SKU-color identity. Non-COLOR requires colorId null.",
+      "One PRODUCT EDIT/CREATE operation/root.version increment even with several image changes. No extra IMAGE root receipt or fake subtype action.",
+      "Full actual changed old/new image row facts including native metadata and role/color in D1 before_values.images/after_values.images. Full unchanged images omitted. REMOVE only in before; ADD only in after.",
+      "Prepare audit first, CAS root, apply removals before conflicting COLOR additions/updates, write real image rows, complete identical original receipt, COMMIT. Any error rolls back DB part; blob retention enables retry/readback.",
+      "Original blob files and previous replacements remain private and preserved; removing display relation does not authorize deleting physical source/history files.",
+      "Root receipt stays exact four keys. Authoritative editor reread supplies new actual image ids/versions. Original-key replay recovers receipt without a second image attachment."
+    ],
+    "errors": {
+      "400": [
+        "INVALID_PRODUCT_MEDIA_COMMAND",
+        "INVALID_MEDIA_TYPE",
+        "INVALID_MEDIA_DIMENSIONS",
+        "INVALID_UPLOAD"
+      ],
+      "401": [
+        "UNAUTHENTICATED"
+      ],
+      "403": [
+        "FORBIDDEN"
+      ],
+      "404": [
+        "PRODUCT_NOT_FOUND",
+        "PRODUCT_IMAGE_NOT_FOUND"
+      ],
+      "409": [
+        "VERSION_CONFLICT",
+        "IDEMPOTENCY_CONFLICT",
+        "MEDIA_SCOPE_MISMATCH",
+        "UPLOAD_EXPIRED",
+        "COLOR_IMAGE_CONFLICT",
+        "PRODUCT_REFERENCE_UNAVAILABLE"
+      ],
+      "413": [
+        "MEDIA_TOO_LARGE"
+      ],
+      "500": [
+        "sanitized INTERNAL_ERROR; original command key readback"
+      ],
+      "503": [
+        "PRODUCT_MEDIA_NOT_READY"
+      ]
+    }
+  },
+  "delivery": {
+    "route": "GET /products/media/:productId/:imageId/:revision/:variant",
+    "variants": [
+      "thumbnail",
+      "original"
+    ],
+    "revision": "Opaque current-content fingerprint from trusted private metadata; no storage path. Verify against current DB row before delivering bytes. v2 metadata uses actual image.version for CAS; URL revision is not an authority token.",
+    "rules": [
+      "Fresh authenticated actor, fresh exact product/image grant and actual image membership on EVERY byte request. URL possession never grants access.",
+      "Replacement/removal or changed content invalidates stale revision. Deleted image/product or revoked permission cannot be served from cache.",
+      "Only private approved path resolution; reject traversal, symlink escapes, arbitrary URLs and unsupported stored MIME. Stream exact bounded original or separate verified thumbnail; never whole catalog preload.",
+      "Cache-Control:no-store, Pragma:no-cache, X-Content-Type-Options:nosniff and actual Content-Type. Generic sanitized errors hide fileRef/root/SQL.",
+      "resolveThumbnails batches metadata and creates controlled URLs without opening original bytes; no original fallback. Missing thumbnail is unavailable until approved processing.",
+      "Credentials remain host/session managed; no access token or raw storage signature in browser-visible URL."
+    ]
+  },
+  "implementationOwners": {
+    "D2": "Use registered controlled-product-media.ts, product-media-http.ts/.test.ts, controlled-product-media.test.ts; extend existing product-maintenance ports/validation/service/store and affected tests for actual image rows; private internal product-query metadata may extend with explicit version but frozen wire DTO does not.",
+    "D1": "Production host mounts providers/routes; configured private media roots and explicit trusted codec dependency/composition; shared prepare/images closure and schema22 applied before consumers.",
+    "F2": "Within own product-editor-media/form/state/client files: exact role/color sections, staging and cancel handling, reserved original command key, imageChanges, authority/version readback. No client path/raw URL save.",
+    "C": "Freeze DTO/transport/resource limits/provider and exact modified-file windows, retain original files, schedule actual storage/PG/browser integration.",
+    "extraPaths": "No new unregistered source paths required by this initial plan. Package/dependency changes belong to C/D1."
+  },
+  "pendingDependencies": [
+    "No image codec dependency currently present in package.json; need explicit production provider/dependency chosen by C/D1. No fake decoder, shell-platform-only processing, or hidden dependency install.",
+    "D1 prepared images audit/closure final contract and migration22; leaf writers must require capability before mutation.",
+    "C immutable private media root mapping and host exact HTTPS deliveryOrigin; no real credentials need to enter chat.",
+    "C release/freeze of affected W2 leaf files and W1 private image metadata test changes.",
+    "Actual new-source upload/replace/delete/revoked-user delivery evidence in scheduled isolated window; current source contract is not runtime acceptance."
+  ],
+  "focusedChecks": [
+    "Upload genuine supported small image then actual root save and thumbnail/original readback",
+    "Bad MIME/path/body/pixel limit rejection and unsupported role/color mismatch",
+    "Root/image stale CAS, conflicting COLOR, wrong actor/command upload binding and expired stage",
+    "Same-key replay returns one root receipt and no second attachment; audit/receipt failure preserves DB atomicity",
+    "Old URL rejected after remove/replace; revoked permission rejects bytes even with old URL",
+    "List/thumbnail never opens original; original files remain after replace/remove; no public output contains storage reference"
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "version": "D2-W6-CATALOGUE-API-v1",
+  "taskId": "B04",
+  "fieldApproval": "C01-20261022-v1",
+  "factory": "createCatalogueMaintenanceHttpPlugin",
+  "adapter": "PostgresCatalogueMaintenanceUnitOfWork(shared MaintenancePgUnitOfWork)",
+  "endpoints": [
+    {
+      "prefix": "/catalogue/categories",
+      "kind": "CATEGORY",
+      "POST": "/commands",
+      "GET": "/receipts/:requestKey"
+    },
+    {
+      "prefix": "/catalogue/colors",
+      "kind": "COLOR",
+      "POST": "/commands",
+      "GET": "/receipts/:requestKey"
+    },
+    {
+      "prefix": "/catalogue/fits",
+      "kind": "FIT",
+      "POST": "/commands",
+      "GET": "/receipts/:requestKey"
+    }
+  ],
+  "commands": {
+    "CREATE": {
+      "action": "CREATE",
+      "requestKey": "original key",
+      "values": "exact complete values below"
+    },
+    "EDIT": {
+      "action": "EDIT",
+      "requestKey": "original key",
+      "id": "native UUID",
+      "expectedVersion": "actual stored root version",
+      "values": "exact complete values below"
+    },
+    "DELETE": {
+      "action": "DELETE",
+      "requestKey": "original key",
+      "id": "native UUID",
+      "expectedVersion": "actual stored version"
+    },
+    "DISABLE/RESTORE": "same id+expectedVersion shape, COLOR/FIT only; CATEGORY rejects"
+  },
+  "values": {
+    "CATEGORY": {
+      "name": "nonblank<=40 characters, exact no normalization",
+      "parentId": "native UUID|null",
+      "displayOrder": "exact signed int32"
+    },
+    "COLOR/FIT": {
+      "name": "nonblank<=40 characters, exact",
+      "code": "nonblank<=12; FIT exactly /^[A-Z]$/",
+      "enabled": "boolean"
+    }
+  },
+  "result": {
+    "operationId": "actual operation UUID",
+    "kind": "CATEGORY|COLOR|FIT",
+    "targetId": "actual root UUID",
+    "version": "new root version"
+  },
+  "receipt": {
+    "requestKey": "original key",
+    "action": "original action",
+    "status": "COMMITTED",
+    "completedAt": "actual trusted completion time",
+    "result": "strict4-key result"
+  },
+  "rules": [
+    "Directory advisory lock precedes current identity and root locks",
+    "Category self/descendant/cyclic/deleted/missing ancestry rejected; newly created/moved parent must be first-level; preexisting deeper unchanged ancestry retained",
+    "Category sibling names unique, color/fit retained names/code unique; code exact and editable without changing SKU or original barcode bindings",
+    "DELETE rejects actual product/SKU/image references or live child category; retains physical root/identity with deleted_at; immutable after deletion",
+    "No category code/enabled columns invented; no size-group/season/scheme writes",
+    "Root CAS, actual sparse snake_case audit and original-key receipt share one D1 transaction",
+    "Deleted catalogue/product rows filtered at directory/list and six drawer SQL roots; unchanged DTOs",
+    "Host must enforce actual schema22 before this source query bundle is deployed"
+  ],
+  "statusCodes": {
+    "400": [
+      "INVALID_CATALOGUE_COMMAND",
+      "INVALID_PARTY_INPUT",
+      "INVALID_ID",
+      "INVALID_HTTP_INPUT"
+    ],
+    "401": [
+      "UNAUTHENTICATED"
+    ],
+    "403": [
+      "FORBIDDEN"
+    ],
+    "404": [
+      "CATALOGUE_NOT_FOUND",
+      "RECEIPT_NOT_FOUND"
+    ],
+    "409": [
+      "VERSION_CONFLICT",
+      "IDEMPOTENCY_CONFLICT",
+      "CATALOGUE_DELETED",
+      "VERSION_STORAGE_OVERFLOW",
+      "INVALID_CATALOGUE_STATE",
+      "NO_CATALOGUE_CHANGE",
+      "CATEGORY_CYCLE",
+      "CATEGORY_DEPTH",
+      "CATALOGUE_NAME_CONFLICT",
+      "CATALOGUE_IN_USE"
+    ]
+  },
+  "pending": [
+    "Atomic multiple-sibling drag reorder/undo is NOT delivered by single-root EDIT displayOrder; needs shared child closure or explicit separate mechanism",
+    "D1 schema22 runtime capability/production assembly",
+    "QB and scheduled actual isolated PostgreSQL verification"
+  ],
+  "demoEvidence": [
+    {
+      "path": "frozen Demo frontend/product-current.js",
+      "lines": [
+        187,
+        208,
+        279
+      ],
+      "scope": "category path/name/depth; name/code form validation; fit uppercase oneletter"
+    },
+    {
+      "path": "frozen Demo frontend/product-catalog.js",
+      "lines": [
+        41
+      ],
+      "scope": "reference protection"
+    }
+  ],
+  "notClaimed": [
+    "real PostgreSQL engine",
+    "migration execution",
+    "browser mutation",
+    "release",
+    "B04 entire task complete"
+  ]
+}

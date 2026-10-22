@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T07:10:03.586023+00:00",
+  "updatedAt": "2026-10-22T08:24:25.338963+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -259,6 +259,26 @@
           "path": "tests/import-stage-bootstrap-postgres-protocol.test.ts",
           "group": "EXACT_STAGE_BOOTSTRAP_PROTOCOL",
           "fieldGate": "NO_NEW_FIELDS"
+        },
+        {
+          "path": "packages/application/src/transfer-query-validation.ts",
+          "group": "TRANSFER_OPERATION_HISTORY_EXISTING_AUDIT_READ",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "tests/transfer-operation-history-postgres-protocol.test.ts",
+          "group": "TRANSFER_OPERATION_HISTORY_EXISTING_AUDIT_READ",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "adapters/postgres/migrations/0025_product_season_selection.sql",
+          "group": "C01_SUPPLEMENT_V3_A_PRODUCT_SEASON_COLUMN",
+          "fieldGate": "FIELD-APPROVAL-SUPPLEMENT-v3-A.json ONLY"
+        },
+        {
+          "path": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+          "group": "EXACT2_HISTORICAL_CUSTOMER_EXISTING_SOURCE_GUARD",
+          "fieldGate": "NO_NEW_TABLE_OR_FIELD_EXISTING_APPROVED_HISTORICAL_MAPPING_ONLY"
         }
       ]
     },
@@ -1014,6 +1034,16 @@
           "path": "scripts/import-v2/authorized-native-product-reader.test.mjs",
           "group": "BOOTSTRAP_AND_EXISTING_APPROVAL_OR_UNRESOLVED_WRITE_GUARD",
           "fieldGate": "NO_NEW_SCHEMA_AUTHORIZED; actual target execution C only"
+        },
+        {
+          "path": "scripts/import-v3/verified-header-source.mjs",
+          "group": "B06_VERIFIED_HEADER_SOURCE_FACTORY",
+          "fieldGate": "EXISTING_SOURCE_ONLY_NO_SCHEMA_OR_NATIVE_MAPPING_BYPASS"
+        },
+        {
+          "path": "scripts/import-v3/verified-header-source.test.mjs",
+          "group": "B06_VERIFIED_HEADER_SOURCE_FACTORY",
+          "fieldGate": "EXISTING_SOURCE_ONLY_NO_SCHEMA_OR_NATIVE_MAPPING_BYPASS"
         }
       ]
     },
@@ -1387,6 +1417,46 @@
           "path": "apps/web/src/settings/stores/controller.ts",
           "group": "BOOTSTRAP_AND_EXISTING_APPROVAL_OR_UNRESOLVED_WRITE_GUARD",
           "fieldGate": "NO_NEW_SCHEMA_AUTHORIZED; actual target execution C only"
+        },
+        {
+          "path": "apps/web/src/account-settings/contracts.ts",
+          "group": "F05_W7_STANDALONE_ACCOUNT_LEAF",
+          "fieldGate": "C01_AND_V2_B_APPROVED_EXISTING_W7_COMMANDS_ONLY"
+        },
+        {
+          "path": "apps/web/src/account-settings/response-validation.ts",
+          "group": "F05_W7_STANDALONE_ACCOUNT_LEAF",
+          "fieldGate": "C01_AND_V2_B_APPROVED_EXISTING_W7_COMMANDS_ONLY"
+        },
+        {
+          "path": "apps/web/src/account-settings/http-client.ts",
+          "group": "F05_W7_STANDALONE_ACCOUNT_LEAF",
+          "fieldGate": "C01_AND_V2_B_APPROVED_EXISTING_W7_COMMANDS_ONLY"
+        },
+        {
+          "path": "apps/web/src/account-settings/controller.ts",
+          "group": "F05_W7_STANDALONE_ACCOUNT_LEAF",
+          "fieldGate": "C01_AND_V2_B_APPROVED_EXISTING_W7_COMMANDS_ONLY"
+        },
+        {
+          "path": "apps/web/src/account-settings/controller.test.ts",
+          "group": "F05_W7_STANDALONE_ACCOUNT_LEAF",
+          "fieldGate": "C01_AND_V2_B_APPROVED_EXISTING_W7_COMMANDS_ONLY"
+        },
+        {
+          "path": "apps/web/src/account-settings/account-form.tsx",
+          "group": "F05_W7_STANDALONE_ACCOUNT_LEAF",
+          "fieldGate": "C01_AND_V2_B_APPROVED_EXISTING_W7_COMMANDS_ONLY"
+        },
+        {
+          "path": "apps/web/src/account-settings/account-page.tsx",
+          "group": "F05_W7_STANDALONE_ACCOUNT_LEAF",
+          "fieldGate": "C01_AND_V2_B_APPROVED_EXISTING_W7_COMMANDS_ONLY"
+        },
+        {
+          "path": "apps/web/src/account-settings/index.ts",
+          "group": "F05_W7_STANDALONE_ACCOUNT_LEAF",
+          "fieldGate": "C01_AND_V2_B_APPROVED_EXISTING_W7_COMMANDS_ONLY"
         }
       ]
     },
@@ -1908,6 +1978,11 @@
           "path": "apps/web/src/application/styles/inventory.css",
           "group": "QF_F1_CSS_01_DIRECTED_FIX",
           "fieldGate": "NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/web/src/components/document-history.tsx",
+          "group": "SHARED_DOCUMENT_HISTORY_VIEW",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
         }
       ]
     }
@@ -1950,7 +2025,7 @@
     }
   },
   "resourcePolicy": "No new PG, browser or integrated build before C assigns a bounded window. Light focused checks after source opening require result recording; no default full regression.",
-  "fieldApproval": "APPROVED_C01_20261022_V1_ONLY",
+  "fieldApproval": "APPROVED_C01_V1_A_D_AND_SUPPLEMENT_V2_B_ONLY",
   "demoReferenceManifest": "references/demo-ui-baseline/MANIFEST.json",
   "demoReferenceManifestSha256": "a84986dc63dfab87579333cf3f9655fb94c14173a2d06c7d52970c65e884ce4f",
   "changesBeyondFiniteList": "Report exact path and reason to C before write; ordinary path allocation needs C registration, not new user approval. Field approval remains required.",
@@ -2027,5 +2102,11 @@
     "scope": "63 approved fields and corresponding listed constraints only",
     "requirement": "D1 publishes exact sequence/path mapping once; no edits0001-0019, no other writer"
   },
-  "migrationAllocation": "MIGRATION-ALLOCATION.json"
+  "migrationAllocation": "MIGRATION-ALLOCATION.json",
+  "currentFieldAuthority": {
+    "original": "FIELD-APPROVAL-C01-v1.json",
+    "maintenanceSupplement": "FIELD-APPROVAL-SUPPLEMENT-v2-B.json",
+    "seasonSupplement": "FIELD-APPROVAL-SUPPLEMENT-v3-A.json",
+    "rejected": "product_season relation table"
+  }
 }

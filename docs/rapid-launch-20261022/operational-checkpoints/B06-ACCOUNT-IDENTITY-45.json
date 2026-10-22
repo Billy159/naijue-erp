@@ -1,0 +1,17 @@
+{
+  "version": "NATIVE_ACCOUNT_IDENTITY_REVIEW_V1",
+  "privateReference": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-account-identity-review45-v1.json",
+  "sha256": "6492fcf874d49ea378ea5a422d8ecca3d42a94cd117bd21cd65e6704111f5436",
+  "candidateSha256": "d221d0cc978a8d949e269a51bbfe443538d7fb59bfbba0a3777a7bd766a00743",
+  "acceptedAccounts": 45,
+  "unresolvedAccounts": 4,
+  "status": "IDENTITY_MAPPING_ONLY_NOT_PG_AUTH_OR_BOOTSTRAP",
+  "sourceCaptureSha256": "6a858fdffb617521a2ea71fc3e509b1981447916076641b6eff5ab0c7612365a",
+  "reviewEvidence": "K/reports/qa-backend/rapid-launch-20261022/QB/slice35-private-account-candidate/RESULT.json",
+  "notTested": [
+    "Actual private credential source bytes or wrapping/verification",
+    "Four unlinked originalsourceFacts relation values",
+    "Actual login/account persistence/PG/import/bootstrap/source-stage command authority",
+    "C external account review pin not written by QB"
+  ]
+}

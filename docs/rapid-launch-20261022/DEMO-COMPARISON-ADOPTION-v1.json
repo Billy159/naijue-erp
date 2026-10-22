@@ -1,0 +1,45 @@
+{
+  "id": "DEMO-COMPARISON-CONTROLLER-ADOPTION-v1",
+  "atUtc": "2026-10-22T07:47:12.483146+00:00",
+  "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v001-fae1ef3/02-inventory-user-decision/FINDINGS.json",
+  "sha256": "26c0d79e7c650be68589bc23d623b8579447fbfa111aabb5118473fc68581e05",
+  "humanDirectiveSources": [
+    {
+      "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
+      "userMessageId": "01a1627a-bc81-7722-b245-7288f5109188",
+      "instruction": "以Demo源码为主，然后也要逐页对比",
+      "verifiedBy": "C read_thread actual user message"
+    },
+    {
+      "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
+      "userMessageId": "01a16281-94c9-7c41-8071-91cbb7423ac0",
+      "instruction": "保持库存已执行查询范围当前居中遮罩列表及右上角关闭样式",
+      "verifiedBy": "C read_thread actual user message"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "UDC-I01",
+      "status": "APPROVED_DIFFERENCE_RETAIN",
+      "scope": "I01/O-I06 only",
+      "realBusinessValidated": false
+    },
+    {
+      "id": "UDC-I02",
+      "duplicateOf": "v14.issue.F09",
+      "status": "F1_SOURCE_FIX_READY_WAIT_FIXED_PREVIEW_TWO_STATE_RECHECK",
+      "owner": "F1",
+      "file": "apps/web/src/application/styles/inventory.css",
+      "minimumRetest": "Inventory initial/focused search only"
+    },
+    {
+      "id": "UDC-I03",
+      "status": "EXISTING_R4_OUTPUT_PRINT_GAP",
+      "owner": "F2",
+      "newDuplicateTaskCreated": false,
+      "blocksR1ByItself": false
+    }
+  ],
+  "sourceQaNotRepeated": true,
+  "laterPreview": "ui-preview-fae1ef3-overlay02-build01 at57832; first inventory findings remain bound to original57831/build01"
+}

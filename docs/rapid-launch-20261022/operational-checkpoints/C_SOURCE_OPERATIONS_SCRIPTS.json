@@ -1,0 +1,37 @@
+{
+  "atUtc": "2026-10-22T08:30:45.641788+00:00",
+  "scope": "C operational tool source continuation only",
+  "files": [
+    {
+      "path": "scripts/release/capture-account-source.py",
+      "sha256": "55ca948bc5b551365a55207ff3e2fdd51b54b60600f4917fef0eb843d4f5d763",
+      "bytes": 5341,
+      "qualification": "C source retained from bounded prior server jobs; no credentials or actual capture files committed"
+    },
+    {
+      "path": "scripts/release/inspect-bootstrap-followup.py",
+      "sha256": "22d0342ef1128ed4717f35a44c50b4c64a706f7b2cc205c890d658a1f7b9a8e4",
+      "bytes": 4998,
+      "qualification": "C source retained from bounded prior server jobs; no credentials or actual capture files committed"
+    },
+    {
+      "path": "scripts/release/inspect-bootstrap-runtime.py",
+      "sha256": "b65e7ff39fb693e44deb78b2cf433a5de98d884ad7f1096af77807ee05e0ea81",
+      "bytes": 6576,
+      "qualification": "C source retained from bounded prior server jobs; no credentials or actual capture files committed"
+    },
+    {
+      "path": "scripts/release/inspect-entry-boot-actors.py",
+      "sha256": "111a66ce6ecfc8d43ea5e61a708b36b3af3901eb9eae2f1be06d1b4b86df4266",
+      "bytes": 5999,
+      "qualification": "C source retained from bounded prior server jobs; no credentials or actual capture files committed"
+    },
+    {
+      "path": "scripts/release/r1-acl-account-metadata.py",
+      "sha256": "14dd82095bebf9ebdce1b25bcd653927562f0692a96eb6acfb4ac0c2a711cc3f",
+      "bytes": 6629,
+      "qualification": "C source retained from bounded prior server jobs; no credentials or actual capture files committed"
+    }
+  ],
+  "actualJobEvidence": "K reports/controller/rapid-launch-20261022/server-jobs; individual failed/partial statuses preserved"
+}
