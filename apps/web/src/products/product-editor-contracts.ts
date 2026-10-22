@@ -1,4 +1,5 @@
 import type { ProductMaintenanceCommand as ProductMaintenanceCommandV1, ProductMaintenanceCommandV2, ProductMaintenanceResult, ProductWriteValues as ProductWriteValuesV1, ProductWriteValuesV2, ProductMaintenanceDetail as ProductMaintenanceDetailV1, ProductMaintenanceDetailV2 } from '../../../../packages/application/src/product-maintenance-ports.ts';
+import type { Selection } from '../inventory/contracts.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
 import type { QueryRead } from '../loading/latest-query.ts';
 import type { ProductMaintenanceCandidateQuery, ProductMaintenanceCandidatePage } from '../../../../packages/application/src/product-maintenance-ports.ts';
@@ -36,6 +37,8 @@ export interface ProductEditorCapability {
   readonly media?: ProductEditorMediaReader;
 }
 export interface ProductEditorProps {
+  readonly initialTab?: 'stock';
+  readonly onOpenInventory?: (product: Selection) => Promise<boolean>;
   readonly parent: ReadScope; readonly productId: string | null; readonly capability: ProductEditorCapability;
   readonly onAccessFailure: (error: HttpQueryError) => void;
   readonly onCanLeaveChange: (guard: (() => boolean) | null) => void;

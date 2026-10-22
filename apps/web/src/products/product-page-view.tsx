@@ -10,7 +10,7 @@ import { parseProductDetailsPageQuery } from '../../../../packages/application/s
 import type { ProductDetailsPageQuery } from '../../../../packages/application/src/product-details-query-ports.ts';
 import { productReadOnlyPageTabs, productPageTabAvailable, type ProductFullPageConfiguration, type ProductFullPageReadOnlyReader, type ProductReadOnlyPageTab } from './product-page-contracts.ts';
 import './product-page.css';
-export interface ProductPageTabProps { readonly scope: ReadScope; readonly reader: ProductFullPageReadOnlyReader }
+export interface ProductPageTabProps { readonly scope: ReadScope; readonly reader: ProductFullPageReadOnlyReader; readonly openInventory?: () => Promise<boolean>; readonly navigationDisabled?: boolean }
 const labels = { base: '基础资料', specs: '规格', barcodes: '条码', prices: '价格', images: '图片', stock: '库存' } as const;
 type AvailableTab = ProductReadOnlyPageTab;
 const leaves = new AsyncLeafRegistry({ base: { load: () => import('./product-page-base.tsx') }, specs: { load: () => import('./product-page-specs.tsx') }, images: { load: () => import('./product-page-images.tsx') }, barcodes: { load: () => import('./product-page-barcodes.tsx') }, prices: { load: () => import('./product-page-prices.tsx') }, stock: { load: () => import('./product-page-stock.tsx') } }, { maxRetainedEntries: 6 });
@@ -35,7 +35,7 @@ function ProductPageTab(props: ProductPageTabProps & { readonly tab: AvailableTa
   }, [props.scope, props.tab, attempt]);
   const current = attachment?.parent === props.scope && attachment.tab === props.tab && attachment.scope.active ? attachment : null;
   if (!props.scope.active) return null;
-  return current?.View ? <current.View scope={current.scope} reader={props.reader} /> : current?.error ? <p role="alert">当前页签组件未加载。<UIButton onClick={() => setAttempt(value => value + 1)}>重试加载页签</UIButton></p> : <p role="status">正在准备当前页签…</p>;
+  return current?.View ? <current.View scope={current.scope} reader={props.reader} {...(props.openInventory?{openInventory:props.openInventory}: {})} /> : current?.error ? <p role="alert">当前页签组件未加载。<UIButton onClick={() => setAttempt(value => value + 1)}>重试加载页签</UIButton></p> : <p role="status">正在准备当前页签…</p>;
 }
 
 /** Bounded server pages for the selected product/tab; no prefetch or client full-catalogue sum. */

@@ -5,8 +5,8 @@ import { ReadScope } from '../loading/read-scope.ts';
 import type { Selection } from '../inventory/contracts.ts';
 import type { ProductFullPageConfiguration, ProductFullPageReadOnlyReader } from './product-page-contracts.ts';
 const leaves = new AsyncLeafRegistry({ page: { load: () => import('./product-page-view.tsx') } }, { maxRetainedEntries: 1 });
-interface ViewProps { readonly scope: ReadScope; readonly configuration: ProductFullPageConfiguration; readonly reader: ProductFullPageReadOnlyReader }
-export function ProductFullPageHost(props: { readonly parent: ReadScope; readonly target: Selection; readonly configuration: ProductFullPageConfiguration; readonly reader: ProductFullPageReadOnlyReader; readonly close: () => void }) {
+interface ViewProps { readonly scope: ReadScope; readonly configuration: ProductFullPageConfiguration; readonly reader: ProductFullPageReadOnlyReader; readonly openInventory?: () => Promise<boolean> }
+export function ProductFullPageHost(props: { readonly parent: ReadScope; readonly target: Selection; readonly configuration: ProductFullPageConfiguration; readonly reader: ProductFullPageReadOnlyReader; readonly close: () => void; readonly openInventory?: () => Promise<boolean> }) {
   const sequence = useRef(0), heading = useRef<HTMLHeadingElement>(null), [attempt, setAttempt] = useState(0);
   const [attachment, setAttachment] = useState<{ parent: ReadScope; scope: ReadScope; View: ComponentType<ViewProps> | null; error: boolean } | null>(null);
   useLayoutEffect(() => { heading.current?.focus({ preventScroll: true }); }, []);
@@ -24,6 +24,6 @@ export function ProductFullPageHost(props: { readonly parent: ReadScope; readonl
   if (!props.parent.active) return null;
   return <section className="product-full-page" aria-label="商品只读整页"><div className="product-page-header">
     <div className="product-page-title"><h1 ref={heading} tabIndex={-1}>{props.target.label}</h1><UIButton onClick={props.close}>返回商品信息</UIButton></div></div>
-    {current?.View ? <current.View scope={current.scope} configuration={props.configuration} reader={props.reader} /> : current?.error ? <p role="alert">商品整页组件或样式未准备完成，尚未读取商品资料。<UIButton onClick={() => setAttempt(value => value + 1)}>重试商品整页</UIButton></p> : <p role="status">正在准备商品只读整页…</p>}
+    {current?.View ? <current.View scope={current.scope} configuration={props.configuration} reader={props.reader} {...(props.openInventory?{openInventory:props.openInventory}: {})} /> : current?.error ? <p role="alert">商品整页组件或样式未准备完成，尚未读取商品资料。<UIButton onClick={() => setAttempt(value => value + 1)}>重试商品整页</UIButton></p> : <p role="status">正在准备商品只读整页…</p>}
   </section>;
 }

@@ -20,3 +20,14 @@ export function productFilterParameters(draft: ProductFilterDraft): ProductManag
     seasonIds: draft.season.map(item => item.id), supplierIds: draft.supplier.map(item => item.id), fitIds: draft.fit.map(item => item.id),
     thicknesses: draft.thickness.map(item => item.id), shapeCodes: draft.shape.map(item => item.id) };
 }
+
+export interface ProductScrollPosition { readonly ancestorDepth: number; readonly top: number; readonly left: number }
+/** UI state only. Never transport result rows, commands, request keys or DOM across routes. */
+export interface ProductReturnContext {
+  readonly version: 1; readonly product: Selection; readonly view: 'editor' | 'read-only'; readonly tab: 'stock';
+  readonly filterDraft: ProductFilterDraft; readonly appliedQuery: ProductManagementListQuery | null;
+  readonly advanced: boolean; readonly initialPageSize: ProductManagementPageSize;
+  readonly listScroll: readonly ProductScrollPosition[];
+  readonly tableScroll: { readonly top: number; readonly left: number };
+}
+export interface ProductInventoryNavigationRequest { readonly product: Selection; readonly returnContext: ProductReturnContext }

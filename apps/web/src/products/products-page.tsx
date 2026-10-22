@@ -20,9 +20,12 @@ import { formatQuantity } from '../inventory/model.ts';
 import { EmptyIcon } from '../demo-presentation/icons.tsx';
 import { ProductFilterControl } from './filter-control.tsx';
 import { createProductManagementQuery, guardedProductManagementReader } from './query-controller.ts';
-import { emptyProductFilter, productFilterParameters, type ProductFilterDraft, type ProductManagementCandidateKind, type ProductManagementPageSize, type ProductManagementListPage, type ProductManagementProductCapability, type ProductManagementReader } from './contracts.ts';
+import { emptyProductFilter, productFilterParameters, type ProductFilterDraft, type ProductManagementCandidateKind, type ProductManagementPageSize, type ProductManagementListPage, type ProductManagementProductCapability, type ProductManagementReader, type ProductReturnContext, type ProductInventoryNavigationRequest } from './contracts.ts';
 
 export interface ProductsPageProps {
+  readonly openInventory?: (request: ProductInventoryNavigationRequest) => Promise<boolean>;
+  /** Fresh route mount only; host binds this UI-only snapshot to the same identity/revision. */
+  readonly receiveReturnContext?: ProductReturnContext;
   readonly scope: ReadScope; readonly reader: ProductManagementReader;
   readonly product?: ProductManagementProductCapability;
   readonly fullPage?: ProductFullPageConfiguration;
@@ -43,9 +46,10 @@ export function ProductsPageView(props: ProductsPageProps) {
     const reader = guardedProductManagementReader(scope, props.reader, props.onAccessFailure), query = createProductManagementQuery(scope, reader);
     setOwner({ parent: props.scope, source: props.reader, scope, reader, query });
     // StrictMode discards its first attachment before this bounded initial read.
-    queueMicrotask(() => { if (scope.active) void query.run({ filter: productFilterParameters(emptyProductFilter()), page: 1, pageSize: 100 }); });
+    const initial = props.receiveReturnContext ? props.receiveReturnContext.appliedQuery : { filter: productFilterParameters(emptyProductFilter()), page: 1, pageSize: 100 as const };
+    queueMicrotask(() => { if (scope.active && initial) void query.run(initial); });
     return () => { props.scope.signal.removeEventListener('abort', abort); scope.dispose(); query.dispose(); };
-  }, [props.scope, props.reader, props.onAccessFailure]);
+  }, [props.scope, props.reader, props.onAccessFailure, props.receiveReturnContext]);
   return owner?.parent === props.scope && owner.source === props.reader ? <ProductsPageContent key={owner.scope.routeInstanceId} {...props} scope={owner.scope} reader={owner.reader} query={owner.query} /> : null;
 }
 const labels: Readonly<Record<ProductManagementCandidateKind, string>> = Object.freeze({ product: '商品', category: '商品分类', year: '年份', season: '季节', supplier: '供应商', fit: '版型', thickness: '厚薄', shape: '领型 / 裤型' });
@@ -53,30 +57,37 @@ const noCategories: readonly string[] = Object.freeze([]);
 function ProductsPageContent(props: ProductsPageProps & { readonly query: ReturnType<typeof createProductManagementQuery> }) {
   const { scope, reader, query } = props;
   const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
-  const [draft, setDraft] = useState<ProductFilterDraft>(emptyProductFilter), [advanced, setAdvanced] = useState(false), [initialSize, setInitialSize] = useState<ProductManagementPageSize>(100);
+  const [draft, setDraft] = useState<ProductFilterDraft>(()=>props.receiveReturnContext?.filterDraft??emptyProductFilter()), [advanced, setAdvanced] = useState(props.receiveReturnContext?.advanced??false), [initialSize, setInitialSize] = useState<ProductManagementPageSize>(props.receiveReturnContext?.initialPageSize??100);
   const [selectedProduct, setSelectedProduct] = useState<{ readonly target: Selection; readonly capability: ProductManagementProductCapability }|null>(null);
-  const fullPage = useMemo(() => props.fullPage ? captureProductFullPageConfiguration(props.fullPage) : undefined, [props.fullPage]);
-  const [fullTarget, setFullTarget] = useState<{ readonly target: Selection; readonly configuration: ProductFullPageConfiguration } | null>(null);
+  const fullPage = useMemo(() => props.fullPage ? captureProductFullPageConfiguration(props.receiveReturnContext?.view==='read-only'&&props.fullPage.allowedTabs.includes('stock')?{...props.fullPage,initialTab:'stock'}:props.fullPage) : undefined, [props.fullPage,props.receiveReturnContext]);
+  const [fullTarget, setFullTarget] = useState<{ readonly target: Selection; readonly configuration: ProductFullPageConfiguration } | null>(()=>props.receiveReturnContext?.view==='read-only'&&fullPage?.allowedTabs.includes('stock')?{target:props.receiveReturnContext.product,configuration:fullPage}:null);
   const fullActive = !!fullTarget && fullTarget.configuration === fullPage;
   const maintenance = props.maintenance && props.onCanLeaveChange ? props.maintenance : undefined;
-  const [editTarget, setEditTarget] = useState<{ id: string | null; sequence: number } | null>(null), editSequence = useRef(0), savedEdit = useRef(false);
+  const [editTarget, setEditTarget] = useState<{ id: string | null; sequence: number; initialTab?: 'stock' } | null>(()=>props.receiveReturnContext?.view==='editor'&&maintenance?{id:props.receiveReturnContext.product.id,sequence:1,initialTab:'stock'}:null), editSequence = useRef(1), savedEdit = useRef(false);
   const editing = !!editTarget && !!maintenance;
   const list = useRef<HTMLDivElement>(null), visible = useRef(true); visible.current = !fullActive && !editing;
   const returnToList = useRef<{ trigger: HTMLElement; scroll: readonly { element: Element; top: number; left: number }[] } | null>(null);
+  const restoredListScroll=useRef(props.receiveReturnContext??null),previousFullPage=useRef(fullPage);
   const fullReader = useMemo(() => fullPage ? guardedProductPageReader(scope, fullPage.reader, props.onAccessFailure) : null, [scope, fullPage, props.onAccessFailure]);
   const popupHost = useProductsFilterPopupHost(scope, !fullActive && !editing);
   const productFocus = useDialogFocusReturn(scope, !!selectedProduct);
   useEffect(() => { setSelectedProduct(null); }, [props.product]);
-  useEffect(() => { setFullTarget(null); }, [fullPage]);
+  useEffect(() => { if(previousFullPage.current!==fullPage){previousFullPage.current=fullPage;setFullTarget(null);} }, [fullPage]);
   useLayoutEffect(() => {
-    if (fullActive || editing || !scope.active || !returnToList.current) return;
+    if (fullActive || editing || !scope.active) return;
+    if(restoredListScroll.current&&(snapshot.phase==='success'||restoredListScroll.current.appliedQuery===null)){
+      const restored=restoredListScroll.current;restoredListScroll.current=null;
+      for(const position of restored.listScroll){let element:Element|null=list.current;for(let depth=0;element&&depth<position.ancestorDepth;depth++)element=element.parentElement;if(element){element.scrollTop=position.top;element.scrollLeft=position.left;}}
+      const table=list.current?.querySelector('.pm-table-scroll');if(table){table.scrollTop=restored.tableScroll.top;table.scrollLeft=restored.tableScroll.left;}
+    }
+    if(!returnToList.current)return;
     const saved = returnToList.current; returnToList.current = null;
     for (const value of saved.scroll) { value.element.scrollTop = value.top; value.element.scrollLeft = value.left; }
     const active = saved.trigger.ownerDocument.activeElement;
     if (active && active !== document.body && active.isConnected && active !== saved.trigger) return;
     if (saved.trigger.isConnected && !saved.trigger.matches(':disabled') && !saved.trigger.closest('[hidden],[inert]')) saved.trigger.focus({ preventScroll: true });
     else list.current?.querySelector<HTMLElement>('h1')?.focus({ preventScroll: true });
-  }, [fullActive, editing, scope]);
+  }, [fullActive, editing, scope, snapshot.phase, snapshot.success]);
   const openFullPage = (target: Selection, trigger: HTMLElement) => {
     if (!scope.active || !fullPage || !visible.current) return;
     const scroll: { element: Element; top: number; left: number }[] = [];
@@ -100,6 +111,15 @@ function ProductsPageContent(props: ProductsPageProps & { readonly query: Return
     setEditTarget(null);
     const success = query.getSnapshot().success;
     if (savedEdit.current && success && scope.active) void query.run(success.parameters);
+  };
+  const navigateInventory = async (product:Selection,view:'editor'|'read-only') => {
+    if(!scope.active||!props.openInventory)return false;
+    const elements:Element[]=[];for(let element:Element|null=list.current;element;element=element.parentElement)elements.push(element);
+    const saved=returnToList.current?.scroll;
+    const scroll=restoredListScroll.current?.listScroll??elements.map((element,ancestorDepth)=>{const position=saved?.find(value=>value.element===element);return {ancestorDepth,top:position?.top??element.scrollTop,left:position?.left??element.scrollLeft};});
+    const table=list.current?.querySelector('.pm-table-scroll');
+    const returnContext:ProductReturnContext={version:1,product,view,tab:'stock',filterDraft:draft,appliedQuery:query.getSnapshot().success?.parameters??null,advanced,initialPageSize:initialSize,listScroll:scroll,tableScroll:restoredListScroll.current?.tableScroll??{top:table?.scrollTop??0,left:table?.scrollLeft??0}};
+    return props.openInventory({product,returnContext});
   };
   const productSearchReader = useMemo<InventoryReader>(() => ({
     readInventory: async () => { throw new TypeError('Product search presentation has no inventory query capability.'); },
@@ -144,7 +164,7 @@ function ProductsPageContent(props: ProductsPageProps & { readonly query: Return
     <div className="pm-pagination pc-pagination"><InventoryPagination scope={scope} page={result?.page ?? 1} pageSize={pageSize} total={result?.exactTotal ?? null} busy={busy}
       onPage={page => { if (success && visible.current) void query.run({ ...success.parameters, page }); }} onPageSize={size => { if (!visible.current) return; if (success) void query.run({ ...success.parameters, page: 1, pageSize: size }); else setInitialSize(size); }} /></div>
     {selectedProduct && props.product && selectedProduct.capability === props.product && <ProductDrawerHost key={selectedProduct.target.id} parentScope={scope} product={selectedProduct.target} reader={props.product.reader} loadStyles={props.product.loadStyles} close={closeProduct} />}
-  </div>{editing && maintenance && editTarget && props.onCanLeaveChange && <ProductEditorLeaf key={editTarget.sequence} parent={scope} productId={editTarget.id} capability={maintenance} onAccessFailure={props.onAccessFailure} onCanLeaveChange={props.onCanLeaveChange} onClose={closeEditor} onSaved={() => { savedEdit.current = true; }} />}{fullActive && fullPage && fullReader && <ProductFullPageHost key={fullTarget.target.id} parent={scope} target={fullTarget.target} configuration={fullPage} reader={fullReader} close={() => setFullTarget(null)} />}</div>;
+  </div>{editing && maintenance && editTarget && props.onCanLeaveChange && <ProductEditorLeaf key={editTarget.sequence} parent={scope} productId={editTarget.id} capability={maintenance} onAccessFailure={props.onAccessFailure} onCanLeaveChange={props.onCanLeaveChange} {...(editTarget.initialTab?{initialTab:editTarget.initialTab}: {})} {...(props.openInventory?{onOpenInventory:(product:Selection)=>navigateInventory(product,'editor')}: {})} onClose={closeEditor} onSaved={() => { savedEdit.current = true; }} />}{fullActive && fullPage && fullReader && <ProductFullPageHost key={fullTarget.target.id} parent={scope} target={fullTarget.target} configuration={fullPage} reader={fullReader} {...(props.openInventory?{openInventory:()=>navigateInventory(fullTarget.target,'read-only')}: {})} close={() => setFullTarget(null)} />}</div>;
 }
 
 function ProductEditorLeaf(props: ProductEditorProps) {

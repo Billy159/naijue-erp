@@ -1,0 +1,76 @@
+{
+  "atUtc": "2026-10-22T09:07:54.431335+00:00",
+  "parent": "a27b074c7caa2c52624d354c95e70d692462ca1d",
+  "groups": [
+    {
+      "slice": "BARCODE_SCHEME_ROUTE_GLUE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-21/DELIVERY.json",
+      "receiptSha256": "1ed999baad85f213c37893e8500ef0dfda373169ec022b3b8e2e58794492049c",
+      "files": [
+        {
+          "path": "apps/web/src/application/routes/products.tsx",
+          "bytes": 3732,
+          "sha256": "cb35280a45650444c7367cd0f6d9009615b20c8bf386233f0ef49dcd2610d01d",
+          "owner": "F1"
+        }
+      ]
+    },
+    {
+      "slice": "PRODUCT_INVENTORY_NAVIGATION_LEAF",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DATA-PRES-004-NAV-DELIVERY-v1.json",
+      "receiptSha256": "4d8a45ed3be403c2fb83537092120405fbd2308daaf60d74f06bb762dee0732f",
+      "files": [
+        {
+          "path": "apps/web/src/products/contracts.ts",
+          "bytes": 2778,
+          "sha256": "c310879f649a6f9e372e1e505a01adf6aced9b1808deb4c010ae051b7194ac93",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/products-page.tsx",
+          "bytes": 22669,
+          "sha256": "39c429e293fd032d74839f33b1dc0a07886d915a7abd46ead328fbf3a40c5933",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-contracts.ts",
+          "bytes": 8112,
+          "sha256": "79e38d85fd4655ac73b97dbf2cc55414b9a9721ca029480e6047783552c471ab",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-editor.tsx",
+          "bytes": 28901,
+          "sha256": "d5e7be7ba9167ef96811cde022befbdb3d06c0ec6cf9339c30546342e15fe362",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page-host.tsx",
+          "bytes": 3437,
+          "sha256": "70fc22b4623ebe45bb24d9d9c43fdcff0e2b50bd1b5cbc46c2d543da801ef39b",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page-view.tsx",
+          "bytes": 7370,
+          "sha256": "e7c0620fc7b65916f09876f1bffb9d1b896f3fd491155f70a327271f368042af",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page-stock.tsx",
+          "bytes": 2528,
+          "sha256": "d44d5508fbfaefb7197000e75278f709100582f96c59485313a0950693e8a76f",
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/inventory/inventory-page.tsx",
+          "bytes": 15809,
+          "sha256": "a98a6bb83121b3267d9434704531a1e2a671abeb9823e15795139ce8de4e1d48",
+          "owner": "F2"
+        }
+      ]
+    }
+  ],
+  "fileCount": 9,
+  "scope": "Scoped source and synthetic DOM ready; QF new scope, integrated root and fixed browser pending"
+}

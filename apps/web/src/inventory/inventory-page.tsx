@@ -18,6 +18,8 @@ import type { InventoryCellTarget } from './contracts.ts';
 import { InventoryLedgerDrawer } from './ledger-drawer.tsx';
 
 export interface InventoryPageProps {
+  readonly initialProduct?: Selection;
+  readonly returnToProduct?: () => Promise<boolean>;
   readonly scope: ReadScope;
   readonly reader: InventoryReader;
   readonly productReader: ProductReadOnlyReader;
@@ -42,15 +44,18 @@ export function InventoryPageView(props: InventoryPageProps) {
   useEffect(() => {
     const query = createInventoryQuery(props.scope, props.reader);
     setOwner({ scope: props.scope, reader: props.reader, query });
+    if(props.initialProduct){const filter={...emptyInventoryFilter(),products:[props.initialProduct]};queueMicrotask(()=>{if(props.scope.active&&query.getSnapshot().phase!=='disposed')void query.run({filter,page:1,pageSize:100});});}
     return () => query.dispose();
-  }, [props.scope, props.reader]);
+  }, [props.scope, props.reader, props.initialProduct]);
   return owner?.scope === props.scope && owner.reader === props.reader
-    ? <InventoryPageContent {...props} query={owner.query} /> : null;
+    ? <InventoryPageContent key={props.scope.routeInstanceId} {...props} query={owner.query} /> : null;
 }
 
-function InventoryPageContent({ scope, reader, productReader, actions = {}, ledger, query }: InventoryPageProps & { readonly query: ReturnType<typeof createInventoryQuery> }) {
+function InventoryPageContent({ scope, reader, productReader, actions = {}, ledger, query, initialProduct, returnToProduct }: InventoryPageProps & { readonly query: ReturnType<typeof createInventoryQuery> }) {
   const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
-  const [draft, setDraft] = useState<InventoryFilter>(emptyInventoryFilter);
+  const [draft, setDraft] = useState<InventoryFilter>(()=>({...emptyInventoryFilter(),products:initialProduct?[initialProduct]:[]}));
+  const [returning,setReturning]=useState(false),[returnError,setReturnError]=useState('');
+  const returnProduct=async()=>{if(!scope.active||returning||!returnToProduct)return;setReturning(true);setReturnError('');try{const moved=await returnToProduct();if(scope.active&&!moved)setReturnError('商品页面暂不可返回，请重试。');}catch{if(scope.active)setReturnError('商品页面暂不可返回，请重试。');}finally{if(scope.active)setReturning(false);}};
   // Only pre-query selection is local. After a success, the applied size is the
   // single visible/next-query source of truth; a pending size lives in request.
   const [initialPageSize, setInitialPageSize] = useState<InventoryPageSize>(100);
@@ -88,7 +93,7 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, ledg
   const settingLabels: Readonly<Record<keyof InventoryDisplaySettings, string>> = { category: '商品分类', supplier: '供应商', fit: '版型', sizeGroup: '尺码组', season: '季节', subtotal: '颜色小计', total: '商品合计', sizeDescription: '显示尺码组说明' };
   if (snapshot.phase === 'disposed') return <div className="iw-empty" role="status"><strong>当前读取范围已关闭</strong><p>请重新进入库存页。旧身份结果已清除。</p></div>;
   return <div className="iw-workbench">
-    <div className="iw-head"><h1>库存状况表</h1><div className="iw-actions iw-head-actions"><UIButton type="button" className="iw-text-button" disabled title="完整查询结果导出尚未接入">导出</UIButton><UIButton type="button" className="iw-text-button" disabled={!result || busy} onClick={refresh}>刷新</UIButton><UIButton type="button" className="iw-text-button" disabled title="完整查询结果打印尚未接入">打印</UIButton></div></div>
+    {returnError&&<p role="alert">{returnError}</p>}<div className="iw-head"><h1>库存状况表</h1>{returnToProduct&&<UIButton variant="text" disabled={returning} onClick={()=>void returnProduct()}>返回商品</UIButton>}<div className="iw-actions iw-head-actions"><UIButton type="button" className="iw-text-button" disabled title="完整查询结果导出尚未接入">导出</UIButton><UIButton type="button" className="iw-text-button" disabled={!result || busy} onClick={refresh}>刷新</UIButton><UIButton type="button" className="iw-text-button" disabled title="完整查询结果打印尚未接入">打印</UIButton></div></div>
     <form className="iw-query" aria-label="库存筛选" onSubmit={event => { event.preventDefault(); run({ filter: draft, page: 1, pageSize: displayedPageSize }); }}>
       <div className="iw-query-row">
         <CandidateSelector {...fields} kind="product" label="商品" selected={draft.products} multiple placeholder="商品款号 / 名称 / 系统货号" onChange={products => setDraft(value => ({ ...value, products }))} />
