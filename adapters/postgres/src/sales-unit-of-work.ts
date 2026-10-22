@@ -1,4 +1,6 @@
 import { loadNativeTransferSnapshots } from "./native-transfer-snapshots.ts";
+import { reserveRuntimeDocumentNumber, assertRuntimeDocumentNumber } from "./runtime-document-number.ts";
+import type { RuntimeDocumentNumberInput } from "../../../packages/application/src/runtime-document-number.ts";
 import { PostgresNativeSalesFacts } from "./sales-native-facts.ts";
 import type { NativeCatalogueCompletenessVerifier } from "./sales-native-facts.ts";
 import type { NativeSalesReferenceFacts } from "../../../packages/application/src/sales-native-facts.ts";
@@ -138,6 +140,21 @@ class PostgresSalesTransaction implements SalesTransaction {
       requireDomain(this.active && this.receiptActor !== undefined && this.sales?.id === salesId,
         "TRANSACTION_SCOPE", "Native facts require the original bound sales actor and target in an active transaction");
     }, () => [...this.previousLines.values()].filter(line => line.isCurrent).map(line => ({ id: line.id, skuId: line.skuId, snapshot: line.snapshot })), verifier);
+  }
+  private assertNumberScope(input: RuntimeDocumentNumberInput): void {
+    requireDomain(this.active && input.kind === "SALES" && input.actorAccountId === this.receiptActor
+      && this.sales?.id === input.documentId && this.sales.version === null,
+    "TRANSACTION_SCOPE", "Number allocation requires the original actor and new sales target");
+  }
+  async reserveRuntimeDocumentNumber(input: RuntimeDocumentNumberInput): Promise<string> {
+    this.assertNumberScope(input);
+    const number = await reserveRuntimeDocumentNumber((sql, values) => this.query(sql, values), input);
+    this.assertNumberScope(input); return number;
+  }
+  async assertRuntimeDocumentNumber(input: RuntimeDocumentNumberInput & { readonly number: string }): Promise<void> {
+    this.assertNumberScope(input);
+    await assertRuntimeDocumentNumber((sql, values) => this.query(sql, values), input);
+    this.assertNumberScope(input);
   }
   async getCurrentSalesReferenceFacts(document: SalesDraft | SalesDocument): Promise<NativeSalesReferenceFacts> {
     requireDomain(this.active && this.receiptActor !== undefined && this.sales?.id === document.header.id,

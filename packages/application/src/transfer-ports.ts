@@ -1,4 +1,5 @@
 import type { InventoryPostingTransaction } from "./inventory-posting.ts";
+import type { RuntimeDocumentNumberTransaction } from "./runtime-document-number.ts";
 import type { DocumentStatus, TransferHeaderRow, TransferLineRow } from "../../domain/src/documents.ts";
 import type { InventoryBalanceRow, InventoryLedgerRow } from "../../domain/src/inventory.ts";
 import type { EntityId, EntityKind, Version } from "../../domain/src/values.ts";
@@ -47,7 +48,7 @@ export interface TransferWarehouseFact {
   readonly hallEnabled: boolean; readonly hasNonzeroInventory: boolean;
 }
 export interface TransferSkuFact { readonly id: EntityId<"sku">; readonly enabled: boolean }
-export interface TransferTransaction extends InventoryPostingTransaction {
+export interface TransferTransaction extends InventoryPostingTransaction, RuntimeDocumentNumberTransaction {
   /** Optional native MAIN-barcode snapshots for explicit manual-SKU preparation.
    * Must be loaded/locked through this original transaction, never client labels. */
   getCurrentTransferSnapshots?(skuIds: readonly EntityId<"sku">[]): Promise<ReadonlyMap<EntityId<"sku">, import("../../domain/src/documents.ts").SkuSnapshot>>;

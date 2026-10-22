@@ -73,9 +73,11 @@ export function createNativeTransferPreparation(dependencies: TransferDependenci
         return { ...line, snapshot: { ...snapshot } };
       }) };
       await dependencies.references.assertValid(tx, actor, "SAVE", undefined, draft);
-      requireDomain(transferPreparedDraftFitsSaveBudget(draft), "TRANSFER_PAYLOAD_TOO_LARGE",
+      const prepared: TransferDraft = tx.reserveRuntimeDocumentNumber ? { ...draft, header: { ...draft.header,
+        number: await tx.reserveRuntimeDocumentNumber({ kind: "TRANSFER", documentId: id, actorAccountId: actor.accountId }) } } : draft;
+      requireDomain(transferPreparedDraftFitsSaveBudget(prepared), "TRANSFER_PAYLOAD_TOO_LARGE",
         "Prepared transfer exceeds the bounded SAVE payload budget");
-      return structuredClone(draft);
+      return structuredClone(prepared);
     });
   } });
 }

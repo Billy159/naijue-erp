@@ -54,9 +54,11 @@ export function createNativeManualSalesBusinessRules(): SalesBusinessRules {
   } satisfies SalesBusinessRules);
 }
 
-/** Read-only preparation; never creates receipts, documents, audit or stock. SAVE
- * still uses its own request key, expectedVersion:null, authorization and native
- * transaction rules. Returned preparation is neither reservation nor access grant.
+/** Preparation never creates business documents, receipts, audit or stock. PG20+
+ * reserves a number only AFTER current authorization and native references pass;
+ * its own acknowledged transaction persists that mapping independently of SAVE.
+ * SAVE still uses its own request key, expectedVersion:null and revalidation.
+ * Legacy transaction compositions retain the old parity helper only.
  * Host must install native transaction rules on SAVE; this function never enables a route. */
 export function createNativeSalesPreparation(dependencies: SalesDependencies) {
   const nativeRules = createNativeManualSalesBusinessRules();
@@ -133,9 +135,11 @@ export function createNativeSalesPreparation(dependencies: SalesDependencies) {
         lines: priced.map((row, index) => ({ ...row, allocatedDiscount: allocations[index]! })), settlements };
       await nativeRules.assertDraftChange(undefined, draft, tx);
       await dependencies.rules.assertDraftChange(undefined, draft, tx);
-      requireDomain(salesPreparedDraftFitsSaveBudget(draft),
+      const prepared: SalesDraft = tx.reserveRuntimeDocumentNumber ? { ...draft, header: { ...draft.header,
+        number: await tx.reserveRuntimeDocumentNumber({ kind: "SALES", documentId: id, actorAccountId: actor.accountId }) } } : draft;
+      requireDomain(salesPreparedDraftFitsSaveBudget(prepared),
         "SALES_PAYLOAD_TOO_LARGE", "Prepared draft exceeds SAVE request budget");
-      return structuredClone(draft);
+      return structuredClone(prepared);
     });
   } });
 }

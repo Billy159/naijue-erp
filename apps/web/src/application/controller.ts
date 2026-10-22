@@ -51,8 +51,13 @@ export class ApplicationController {
       || !routes.storeSettings.allowedTabs.includes(routes.storeSettings.initialTab)
       || typeof routes.storeSettings.allowHallDirectoryRead !== 'boolean')) throw new TypeError('Store settings require explicit read-only tabs, initial tab and directory-read intent.');
     const storeSettings = routes.storeSettings ? Object.freeze({ stylesheet: stylesheet(routes.storeSettings.stylesheet), allowedTabs: Object.freeze([...routes.storeSettings.allowedTabs]), initialTab: routes.storeSettings.initialTab, allowHallDirectoryRead: routes.storeSettings.allowHallDirectoryRead }) : undefined;
-    this.#configuration = Object.freeze({ http: Object.freeze({ ...configuration.http }), presentation: configuration.presentation, routes: Object.freeze({ ...(inventory ? { inventory } : {}), ...(sales ? { sales } : {}), ...(transfers ? { transfers } : {}), ...(parties ? { parties } : {}), ...(products ? { products } : {}), ...(productCategories ? { productCategories } : {}), ...(productSettings ? { productSettings } : {}), ...(barcodeSchemes ? { barcodeSchemes } : {}), ...(storeSettings ? { storeSettings } : {}) }) });
-    this.#configuredRoutes = Object.freeze([...(inventory ? ['inventory' as const] : []), ...(sales ? ['sales' as const] : []), ...(transfers ? ['transfers' as const] : []), ...(parties ? ['customers' as const, 'suppliers' as const] : []), ...(products ? ['products' as const] : []), ...(productCategories ? ['product-categories' as const] : []), ...(productSettings ? ['product-settings' as const] : []), ...(barcodeSchemes ? ['barcode-schemes' as const] : []), ...(storeSettings ? ['store-settings' as const] : [])]);
+    if (routes.staffSettings && (typeof routes.staffSettings.view?.canPrepare !== 'boolean' || !Array.isArray(routes.staffSettings.view.roles))
+      || routes.paymentSettings && typeof routes.paymentSettings.view?.canPrepare !== 'boolean') throw new TypeError('Explicit settings view dependencies are required.');
+    const staffSettings = routes.staffSettings ? Object.freeze({ stylesheet: stylesheet(routes.staffSettings.stylesheet), view: Object.freeze({ ...routes.staffSettings.view,
+      roles: Object.freeze(routes.staffSettings.view.roles.map(role => Object.freeze({ ...role }))) }) }) : undefined;
+    const paymentSettings = routes.paymentSettings ? Object.freeze({ stylesheet: stylesheet(routes.paymentSettings.stylesheet), view: Object.freeze({ ...routes.paymentSettings.view }) }) : undefined;
+    this.#configuration = Object.freeze({ http: Object.freeze({ ...configuration.http }), presentation: configuration.presentation, routes: Object.freeze({ ...(inventory ? { inventory } : {}), ...(sales ? { sales } : {}), ...(transfers ? { transfers } : {}), ...(parties ? { parties } : {}), ...(products ? { products } : {}), ...(productCategories ? { productCategories } : {}), ...(productSettings ? { productSettings } : {}), ...(barcodeSchemes ? { barcodeSchemes } : {}), ...(storeSettings ? { storeSettings } : {}), ...(staffSettings ? { staffSettings } : {}), ...(paymentSettings ? { paymentSettings } : {}) }) });
+    this.#configuredRoutes = Object.freeze([...(inventory ? ['inventory' as const] : []), ...(sales ? ['sales' as const] : []), ...(transfers ? ['transfers' as const] : []), ...(parties ? ['customers' as const, 'suppliers' as const] : []), ...(products ? ['products' as const] : []), ...(productCategories ? ['product-categories' as const] : []), ...(productSettings ? ['product-settings' as const] : []), ...(barcodeSchemes ? ['barcode-schemes' as const] : []), ...(storeSettings ? ['store-settings' as const] : []), ...(staffSettings ? ['staff-settings' as const] : []), ...(paymentSettings ? ['payment-settings' as const] : [])]);
     const unavailable = (): Promise<never> => Promise.reject(new Error('Route capability is unavailable.'));
     this.#leaves = new AsyncLeafRegistry({
       inventory: { load: () => inventory ? import('./routes/inventory.tsx') : unavailable(), loadStyles: () => inventory ? inventory.stylesheet.load() : unavailable() },
@@ -63,6 +68,8 @@ export class ApplicationController {
       productSettings: { load: () => productSettings ? import('./routes/product-settings.tsx') : unavailable(), loadStyles: () => productSettings ? productSettings.stylesheet.load() : unavailable() },
       barcodeSchemes: { load: () => barcodeSchemes ? import('./routes/barcode-schemes.tsx') : unavailable(), loadStyles: () => barcodeSchemes ? barcodeSchemes.stylesheet.load() : unavailable() },
       storeSettings: { load: () => storeSettings ? import('./routes/store-settings.tsx') : unavailable(), loadStyles: () => storeSettings ? storeSettings.stylesheet.load() : unavailable() },
+      staffSettings: { load: () => staffSettings ? import('./routes/staff-settings.tsx') : unavailable(), loadStyles: () => staffSettings ? staffSettings.stylesheet.load() : unavailable() },
+      paymentSettings: { load: () => paymentSettings ? import('./routes/payment-settings.tsx') : unavailable(), loadStyles: () => paymentSettings ? paymentSettings.stylesheet.load() : unavailable() },
       parties: { load: () => parties ? import('./routes/parties.tsx') : unavailable(), loadStyles: () => parties ? parties.stylesheet.load() : unavailable() },
     }, { maxRetainedEntries: 1 });
     const replaceIdentity = readContextAuthenticationLifecycle(this.#context);
@@ -151,6 +158,14 @@ export class ApplicationController {
         const module = await this.#leaves.load('storeSettings', scope);
         prepared = module.prepareStoreSettingsRoute(input, kind => this.#readAccessFailure(scope, kind));
       }
+      else if (route === 'staff-settings') {
+        const module = await this.#leaves.load('staffSettings', scope);
+        prepared = module.prepareStaffSettingsRoute(input, kind => this.#readAccessFailure(scope, kind));
+      }
+      else if (route === 'payment-settings') {
+        const module = await this.#leaves.load('paymentSettings', scope);
+        prepared = module.preparePaymentSettingsRoute(input, kind => this.#readAccessFailure(scope, kind));
+      }
       else {
         const module = await this.#leaves.load('parties', scope);
         if (!this.#current(scope)) return false;
@@ -205,7 +220,7 @@ export class ApplicationController {
         // Read-only transfer/management routes have no unknown-write keys to preserve. A current
         // denial becomes a route-local failure so its same-menu retry can remount.
         // Never generalize this disposal to party or sales command workspaces.
-        else if (response.status === 403 && (route === 'transfers' || route === 'products' || route === 'product-categories' || route === 'product-settings' || route === 'barcode-schemes' || route === 'store-settings') && this.#state.route === route && this.#state.scope === scope) this.failRoute(scope);
+        else if (response.status === 403 && (route === 'transfers' || route === 'products' || route === 'product-categories' || route === 'product-settings' || route === 'barcode-schemes' || route === 'store-settings' || route === 'staff-settings' || route === 'payment-settings') && this.#state.route === route && this.#state.scope === scope) this.failRoute(scope);
       }
       return response;
     } });

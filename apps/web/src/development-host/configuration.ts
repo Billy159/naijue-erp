@@ -18,7 +18,7 @@ export interface DevelopmentHostConfiguration {
 }
 export interface DevelopmentHostAssets {
   readonly entry: string;
-  readonly styles: Readonly<Record<'application' | 'inventory' | 'sales' | 'sales-detail' | 'parties' | 'transfers' | 'transfer-detail' | 'transfer-product', string> & Partial<Record<'products'|'product-categories'|'product-settings'|'barcode-schemes'|'store-settings'|'product-full-page', string>>>;
+  readonly styles: Readonly<Record<'application' | 'inventory' | 'sales' | 'sales-detail' | 'parties' | 'transfers' | 'transfer-detail' | 'transfer-product', string> & Partial<Record<'products'|'product-categories'|'product-settings'|'barcode-schemes'|'store-settings'|'product-full-page'|'staff-settings'|'payment-settings', string>>>;
   readonly productDrawerStyles: string;
 }
 const failure = (): never => { throw new TypeError('Explicit public development-host configuration is required.'); };
@@ -94,7 +94,7 @@ export function parseDevelopmentHostConfiguration(value: unknown): DevelopmentHo
 /** Accept only the builder's finite relative asset surface, not arbitrary URLs or traversals. */
 export function parseDevelopmentHostAssets(value: unknown): DevelopmentHostAssets {
   const row = record(value, ['entry', 'styles', 'productDrawerStyles']);
-  const styles = optionalRecord(row.styles, ['application', 'inventory', 'sales', 'sales-detail', 'parties', 'transfers', 'transfer-detail', 'transfer-product'], ['products','product-categories','product-settings','barcode-schemes','store-settings','product-full-page']);
+  const styles = optionalRecord(row.styles, ['application', 'inventory', 'sales', 'sales-detail', 'parties', 'transfers', 'transfer-detail', 'transfer-product'], ['products','product-categories','product-settings','barcode-schemes','store-settings','product-full-page','staff-settings','payment-settings']);
   const name = (value: unknown, extension: 'js' | 'css'): string => {
     if (typeof value !== 'string' || !new RegExp(`^(?:[A-Za-z0-9_-]+/)*[A-Za-z0-9_-]+\\.${extension}$`).test(value)) return failure();
     return value;

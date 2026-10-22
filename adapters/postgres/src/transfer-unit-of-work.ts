@@ -72,6 +72,7 @@ class PostgresTransferTransaction implements TransferTransaction {
   private active = true;
   private loaded: { readonly id: EntityId<"transfer">; readonly version: Version | null; readonly stockBasis: StoredTransfer["stockBasis"] } | undefined;
   private receiptKey: string | undefined;
+  private receiptActor: EntityId<"account"> | undefined;
   private balancesLocked = false;
   private readonly balances: PostgresPostingBalances;
   private readonly previousLines = new Map<EntityId<"transferLine">, TransferLineRow>();
@@ -80,6 +81,21 @@ class PostgresTransferTransaction implements TransferTransaction {
   private readonly client: PgSalesClient;
   constructor(client: PgSalesClient) { this.client = client; this.balances = new PostgresPostingBalances((sql, values) => this.query(sql, values)); }
   close(): void { this.active = false; }
+  private assertNumberScope(input: RuntimeDocumentNumberInput): void {
+    requireDomain(this.active && input.kind === "TRANSFER" && input.actorAccountId === this.receiptActor
+      && this.loaded?.id === input.documentId && this.loaded.version === null,
+    "TRANSACTION_SCOPE", "Number allocation requires the original actor and new transfer target");
+  }
+  async reserveRuntimeDocumentNumber(input: RuntimeDocumentNumberInput): Promise<string> {
+    this.assertNumberScope(input);
+    const number = await reserveRuntimeDocumentNumber((sql, values) => this.query(sql, values), input);
+    this.assertNumberScope(input); return number;
+  }
+  async assertRuntimeDocumentNumber(input: RuntimeDocumentNumberInput & { readonly number: string }): Promise<void> {
+    this.assertNumberScope(input);
+    await assertRuntimeDocumentNumber((sql, values) => this.query(sql, values), input);
+    this.assertNumberScope(input);
+  }
   private query(sql: string, values: unknown[] = []): Promise<PgSalesResult> {
     requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot escape its callback");
     return this.client.query(sql, values);
@@ -88,6 +104,7 @@ class PostgresTransferTransaction implements TransferTransaction {
     const identity = JSON.stringify([actor, requestKey]);
     requireDomain(this.receiptKey === undefined || this.receiptKey === identity, "TRANSACTION_SCOPE", "One command key per transaction");
     this.receiptKey = identity;
+    this.receiptActor = actor;
     // Deliberately shared with sales: actor/key uniqueness is global, not scoped by document kind.
     await this.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", [`naijue:receipt:${identity}`]);
     const row = (await this.query(`SELECT id, actor_account_id, request_key, request_hash, action, target_type, target_id, status, result_data,
@@ -206,3 +223,5 @@ class PostgresTransferTransaction implements TransferTransaction {
       VALUES ($1,$2,$3,$4,$5,'TRANSFER',$6,$7,$8::jsonb,$9)`, [row.id,row.actorAccountId,row.requestKey,row.requestHash,row.action,row.targetTransferId,row.status,JSON.stringify(row.result),row.completedAt]);
   }
 }
+import { reserveRuntimeDocumentNumber, assertRuntimeDocumentNumber } from "./runtime-document-number.ts";
+import type { RuntimeDocumentNumberInput } from "../../../packages/application/src/runtime-document-number.ts";

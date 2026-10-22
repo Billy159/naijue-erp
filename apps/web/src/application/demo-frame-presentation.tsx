@@ -6,7 +6,7 @@ import type { ApplicationPresentation, ApplicationRoute } from './contracts.ts';
 import { AuthenticationAccountMenu } from '../authentication/account-menu.tsx';
 
 const destinations: Readonly<Record<ApplicationRoute, DemoNavigationId>> = Object.freeze({
-  inventory: 'inventory', sales: 'sales', transfers: 'transfer', customers: 'customers', suppliers: 'suppliers', products: 'products', 'product-categories': 'product-categories', 'product-settings': 'product-settings', 'barcode-schemes': 'barcode-schemes', 'store-settings': 'settings/stores',
+  inventory: 'inventory', sales: 'sales', transfers: 'transfer', customers: 'customers', suppliers: 'suppliers', products: 'products', 'product-categories': 'product-categories', 'product-settings': 'product-settings', 'barcode-schemes': 'barcode-schemes', 'store-settings': 'settings/stores', 'staff-settings': 'settings/staff', 'payment-settings': 'settings/payments',
 });
 const breadcrumbs: Readonly<Record<ApplicationRoute, readonly BreadcrumbSegment[]>> = Object.freeze({
   inventory: [{ id: 'inventory-management', label: '库存管理' }, { id: 'inventory', label: '库存状况表' }],
@@ -19,6 +19,8 @@ const breadcrumbs: Readonly<Record<ApplicationRoute, readonly BreadcrumbSegment[
   'product-settings': [{ id: 'product-management', label: '商品管理' }, { id: 'product-settings', label: '商品设置' }],
   'barcode-schemes': [{ id: 'product-management', label: '商品管理' }, { id: 'barcode-schemes', label: '条码方案' }],
   'store-settings': [{ id: 'basic-settings', label: '基础设置' }, { id: 'store-settings', label: '营业厅与仓库' }],
+  'staff-settings': [{ id: 'basic-settings', label: '基础设置' }, { id: 'staff-settings', label: '员工与账号' }],
+  'payment-settings': [{ id: 'basic-settings', label: '基础设置' }, { id: 'payment-settings', label: '收款配置' }],
 });
 /** First-party pure workspace composition. No auth, routing effects, reads,
  * role grants, defaults or alternate frame design. The authentication owner

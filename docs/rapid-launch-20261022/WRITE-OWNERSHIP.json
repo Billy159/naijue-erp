@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T05:26:26.343495+00:00",
+  "updatedAt": "2026-10-22T05:35:41.569876+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -1758,6 +1758,21 @@
         {
           "path": "apps/web/src/application/routes/imported-history.tsx",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+        },
+        {
+          "path": "apps/web/src/application/styles/staff-settings.css",
+          "group": "F05_INTEGRATION_LAZY_STYLE",
+          "fieldGate": "NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/web/src/application/styles/payment-settings.css",
+          "group": "F05_INTEGRATION_LAZY_STYLE",
+          "fieldGate": "NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/web/src/application/styles/inventory.css",
+          "group": "QF_F1_CSS_01_DIRECTED_FIX",
+          "fieldGate": "NO_SCHEMA_CHANGE"
         }
       ]
     }

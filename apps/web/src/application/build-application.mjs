@@ -23,7 +23,7 @@ export async function buildApplication({ entryPoint, outdir, onSourceInput }) {
   const result = await build({ ...common, entryPoints: { application: entryPoint }, outdir,
     format: 'esm', splitting: true, metafile: true, chunkNames: 'chunks/[name]-[hash]' });
   const styleManifests = {};
-  for (const [name, input] of Object.entries({ application: 'shell', inventory: 'inventory', sales: 'sales', 'sales-detail': 'sales-detail', parties: 'parties', transfers: 'transfers', 'transfer-detail': 'transfer-detail', 'transfer-product': 'transfer-product', products: 'products', 'product-full-page': 'product-full-page', 'product-categories': 'product-categories', 'product-settings': 'product-settings', 'barcode-schemes': 'barcode-schemes', 'store-settings': 'store-settings' })) {
+  for (const [name, input] of Object.entries({ application: 'shell', inventory: 'inventory', sales: 'sales', 'sales-detail': 'sales-detail', parties: 'parties', transfers: 'transfers', 'transfer-detail': 'transfer-detail', 'transfer-product': 'transfer-product', products: 'products', 'product-full-page': 'product-full-page', 'product-categories': 'product-categories', 'product-settings': 'product-settings', 'barcode-schemes': 'barcode-schemes', 'store-settings': 'store-settings', 'staff-settings': 'staff-settings', 'payment-settings': 'payment-settings' })) {
     const css = await build({ ...common, entryPoints: [path.join(here, 'styles', `${input}.css`)], outfile: path.join(outdir, `${name}.css`), metafile: true });
     Object.assign(result.metafile.inputs, css.metafile.inputs);
     // Replace rather than merge the erased eager CSS output metadata.
@@ -33,9 +33,9 @@ export async function buildApplication({ entryPoint, outdir, onSourceInput }) {
   // Existing drawer uses its chunk's import.meta.url. Preserve that action-only URL;
   // no startup or inventory-route stylesheet imports the drawer body/tab CSS.
   await mkdir(path.join(outdir, 'chunks'), { recursive: true });
-  const drawerPath = path.join(here, '../inventory/product-drawer.css'), drawerBytes = await readFile(drawerPath);
-  await onSourceInput?.(drawerPath, drawerBytes);
-  await writeFile(path.join(outdir, 'chunks/product-drawer.css'), drawerBytes);
+  const drawerStyles = await build({ ...common, minify: false, entryPoints: [path.join(here, '../inventory/product-drawer.css')], outfile: path.join(outdir, 'chunks/product-drawer.css'), metafile: true });
+  Object.assign(result.metafile.inputs, drawerStyles.metafile.inputs);
+  Object.assign(result.metafile.outputs, drawerStyles.metafile.outputs);
   const pageSizeStyles = await build({ ...common, entryPoints: [path.join(here, '../demo-controls/single-select.css')], outfile: path.join(outdir, 'chunks/single-select.css'), metafile: true });
   Object.assign(result.metafile.inputs, pageSizeStyles.metafile.inputs);
   Object.assign(result.metafile.outputs, pageSizeStyles.metafile.outputs);

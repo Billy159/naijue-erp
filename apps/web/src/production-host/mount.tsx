@@ -8,6 +8,11 @@ export interface ProductionHostEnvironment {
   readonly document: Document;
   readonly location: Pick<Location, 'origin' | 'protocol'>;
   readonly fetch: ApplicationConfiguration['http']['fetch'];
+  /** Trusted executable adapters, never serialized HTTP guesses or credentials. */
+  readonly settingsViews?: {
+    readonly staffSettings?: NonNullable<ApplicationConfiguration['routes']['staffSettings']>['view'];
+    readonly paymentSettings?: NonNullable<ApplicationConfiguration['routes']['paymentSettings']>['view'];
+  };
 }
 const mounted = new WeakSet<Element>();
 const renderRouteState: ApplicationPresentation['renderRouteState'] = ({ controller, state }) => <section className="production-route-state" aria-label="页面状态">
@@ -26,6 +31,12 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
   }
   const root = input.document.getElementById('naijue-erp-root');
   if (!root || mounted.has(root)) throw new TypeError('One unowned production application root is required.');
+  const staffView = configuration.routes.staffSettings ? input.settingsViews?.staffSettings : undefined;
+  const paymentView = configuration.routes.paymentSettings ? input.settingsViews?.paymentSettings : undefined;
+  if (configuration.routes.staffSettings && !staffView || configuration.routes.paymentSettings && !paymentView) throw new TypeError('Enabled settings require their explicit trusted view adapters.');
+  // The current F3 slice has no session-level dirty/uncertain-write owner. Do
+  // not expose editable production forms until that lifecycle is integrated.
+  if (staffView?.canPrepare || paymentView?.canPrepare) throw new TypeError('Editable settings require a configured maintenance session owner.');
   const crypto = input.document.defaultView?.crypto;
   if ((configuration.routes.salesManualCreate || configuration.routes.transferManualCreate || configuration.routes.parties)
     && typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is required.');
@@ -43,7 +54,7 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
       ...(configuration.routes.transferManualCreate ? { commands: { newRequestKey, manualCreate: true as const } } : {}) } } : {}),
     ...(configuration.routes.parties ? { parties: { stylesheet: stylesheet('parties'), newRequestKey, readOnly: true as const } } : {}),
     ...(configuration.routes.products ? { products: { stylesheet: stylesheet('products'), ...(configuration.routes.productViewer ? { product: { stylesheet: createRouteStylesheet({ document: input.document, origin: configuration.http.origin, href: productionAssetUrl(configuration, assets.productDrawerStyles) }) } } : {}),
-      ...(configuration.routes.productFullPage ? { fullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: createProductFullPageHttpReader({ ...configuration.http, fetch: input.fetch }) } } : {}) } } : {}),
+      ...(configuration.routes.productFullPage ? { fullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: createProductFullPageHttpReader({ ...configuration.http, fetch: input.fetch }, ['prices', 'barcodes', 'stock']) } } : {}) } } : {}),
     ...(configuration.routes.productCategories ? { productCategories: { stylesheet: stylesheet('product-categories') } } : {}),
     ...(configuration.routes.barcodeSchemes ? { barcodeSchemes: { stylesheet: stylesheet('barcode-schemes') } } : {}),
     ...(configuration.routes.productSettings ? { productSettings: { stylesheet: stylesheet('product-settings'), allowedTabs: [
@@ -52,6 +63,8 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
     ], initialTab: configuration.routes.productSettings.initialTab } } : {}),
     ...(configuration.routes.storeSettings ? { storeSettings: { stylesheet: stylesheet('store-settings'), allowedTabs: configuration.routes.storeSettings.allowedTabs,
       initialTab: configuration.routes.storeSettings.initialTab, allowHallDirectoryRead: configuration.routes.storeSettings.allowHallDirectoryRead } } : {}),
+    ...(staffView ? { staffSettings: { stylesheet: stylesheet('staff-settings'), view: staffView } } : {}),
+    ...(paymentView ? { paymentSettings: { stylesheet: stylesheet('payment-settings'), view: paymentView } } : {}),
   } });
   mounted.add(root);
   try { app.mount(root); } catch { app.dispose(); mounted.delete(root); throw new Error('Production application could not mount.'); }

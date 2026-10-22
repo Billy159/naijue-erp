@@ -9,9 +9,11 @@ import type { SalesFormPreparationProvider } from '../sales/commands/contracts.t
 import type { SalesEditorSession } from '../sales/commands/editor-session.ts';
 import type { TransferFormPreparationProvider } from '../transfers/commands/contracts.ts';
 import type { TransferCommandWorkspace } from '../transfers/commands/controller.ts';
+import type { StaffSettingsProps } from '../staff-settings/contracts.ts';
+import type { PaymentSettingsProps } from '../payment-settings/contracts.ts';
 import type { ProductFullPageConfiguration } from '../products/product-page-contracts.ts';
 
-export type ApplicationRoute = 'inventory' | 'sales' | 'transfers' | 'customers' | 'suppliers' | 'products' | 'product-categories' | 'product-settings' | 'barcode-schemes' | 'store-settings';
+export type ApplicationRoute = 'inventory' | 'sales' | 'transfers' | 'customers' | 'suppliers' | 'products' | 'product-categories' | 'product-settings' | 'barcode-schemes' | 'store-settings' | 'staff-settings' | 'payment-settings';
 export interface RouteStylesheet {
   /** Resolve only when the route's necessary CSS is usable. No construction-time load. */
   readonly load: () => Promise<unknown>;
@@ -72,6 +74,15 @@ export interface StoreSettingsRouteConfiguration {
    * own current server grant. Never substitutes a transaction candidate. */
   readonly allowHallDirectoryRead: boolean;
 }
+export interface StaffSettingsRouteConfiguration {
+  readonly stylesheet: RouteStylesheet;
+  /** Explicit leaf view dependencies; no fabricated HTTP adapter or role grant. */
+  readonly view: Omit<StaffSettingsProps, 'scope' | 'onAccessFailure'>;
+}
+export interface PaymentSettingsRouteConfiguration {
+  readonly stylesheet: RouteStylesheet;
+  readonly view: Omit<PaymentSettingsProps, 'scope' | 'onAccessFailure'>;
+}
 export interface ApplicationConfiguration {
   /** Exact trusted HTTPS application origin, explicit API prefix and injected fetch. */
   readonly http: HttpQueryOptions;
@@ -89,6 +100,8 @@ export interface ApplicationConfiguration {
     readonly productSettings?: ProductSettingsRouteConfiguration;
     readonly barcodeSchemes?: BarcodeSchemesRouteConfiguration;
     readonly storeSettings?: StoreSettingsRouteConfiguration;
+    readonly staffSettings?: StaffSettingsRouteConfiguration;
+    readonly paymentSettings?: PaymentSettingsRouteConfiguration;
   };
 }
 export interface ApplicationRouteProps { readonly scope: ReadScope }
@@ -124,7 +137,7 @@ export type ApplicationSnapshot = {
 };
 export const routeLabels: Readonly<Record<ApplicationRoute, string>> = Object.freeze({
   inventory: '库存状况表', sales: '销货列表', transfers: '调拨单列表', customers: '客户资料', suppliers: '供应商资料',
-  products: '商品信息', 'product-categories': '商品分类', 'product-settings': '商品设置', 'barcode-schemes': '条码方案', 'store-settings': '营业厅与仓库',
+  products: '商品信息', 'product-categories': '商品分类', 'product-settings': '商品设置', 'barcode-schemes': '条码方案', 'store-settings': '营业厅与仓库', 'staff-settings': '员工与账号', 'payment-settings': '收款配置',
 });
 
 export interface ApplicationPresentation {

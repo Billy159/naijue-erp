@@ -6,6 +6,7 @@ export interface ProductionHostConfiguration {
   readonly session: { readonly verifyOnMount: true };
   readonly routes: {
     readonly inventory: boolean; readonly sales: boolean; readonly transfers: boolean; readonly inventoryLedger?: boolean;
+    readonly staffSettings?: boolean; readonly paymentSettings?: boolean;
     readonly salesManualCreate?: boolean; readonly transferManualCreate?: boolean;
     readonly products?: boolean; readonly productCategories?: boolean; readonly barcodeSchemes?: boolean;
     readonly productViewer?: boolean; readonly productFullPage?: boolean;
@@ -15,7 +16,7 @@ export interface ProductionHostConfiguration {
   };
 }
 const requiredStyles = ['application', 'inventory', 'sales', 'sales-detail', 'parties', 'transfers', 'transfer-detail', 'transfer-product'] as const;
-const optionalStyles = ['products', 'product-categories', 'product-settings', 'barcode-schemes', 'store-settings', 'product-full-page'] as const;
+const optionalStyles = ['products', 'product-categories', 'product-settings', 'barcode-schemes', 'store-settings', 'product-full-page', 'staff-settings', 'payment-settings'] as const;
 export interface ProductionHostAssets {
   readonly entry: string;
   readonly styles: Readonly<Record<typeof requiredStyles[number], string> & Partial<Record<typeof optionalStyles[number], string>>>;
@@ -35,7 +36,7 @@ export function parseProductionHostConfiguration(value: unknown): ProductionHost
   if (row.kind !== 'naijue-erp-production-host' || typeof http.origin !== 'string' || origin.protocol !== 'https:'
     || origin.origin !== http.origin || origin.username || origin.password || http.basePath !== '/api' || session.verifyOnMount !== true
     || typeof assets.basePath !== 'string' || !/^\/assets\/(?:[A-Za-z0-9_-]+\/)*$/.test(assets.basePath)) return invalid();
-  const booleanKeys = ['inventory', 'sales', 'transfers', 'inventoryLedger', 'salesManualCreate', 'transferManualCreate', 'products', 'productCategories', 'barcodeSchemes', 'productViewer', 'productFullPage'] as const;
+  const booleanKeys = ['inventory', 'sales', 'transfers', 'inventoryLedger', 'salesManualCreate', 'transferManualCreate', 'products', 'productCategories', 'barcodeSchemes', 'productViewer', 'productFullPage', 'staffSettings', 'paymentSettings'] as const;
   const routes = record(row.routes, ['inventory', 'sales', 'transfers'], [...booleanKeys.slice(3), 'parties', 'productSettings', 'storeSettings']);
   for (const key of booleanKeys) if (Object.hasOwn(routes, key) && typeof routes[key] !== 'boolean') return invalid();
   for (const [child, parent] of [['inventoryLedger', 'inventory'], ['salesManualCreate', 'sales'], ['transferManualCreate', 'transfers'], ['productViewer', 'products'], ['productFullPage', 'products']] as const) {
@@ -68,7 +69,7 @@ export function parseProductionHostConfiguration(value: unknown): ProductionHost
     }
   }
   return Object.freeze({ kind: row.kind, http: Object.freeze({ origin: http.origin, basePath: '/api' as const }), assets: Object.freeze({ basePath: assets.basePath }),
-    session: Object.freeze({ verifyOnMount: true as const }), routes: Object.freeze({ ...switches, ...extras }) as unknown as ProductionHostConfiguration['routes'] });
+    session: Object.freeze({ verifyOnMount: true as const }), routes: Object.freeze({ staffSettings: false, paymentSettings: false, ...switches, ...extras }) as unknown as ProductionHostConfiguration['routes'] });
 }
 export function parseProductionHostAssets(value: unknown): ProductionHostAssets {
   const row = record(value, ['entry', 'styles', 'productDrawerStyles']);

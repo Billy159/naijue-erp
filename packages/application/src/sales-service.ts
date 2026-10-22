@@ -83,6 +83,10 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
           requireDomain(!previous || previous.header.status === "DRAFT", "INVALID_STATE", "Only a draft can be edited; approved documents must first be unapproved");
           validateDraft(command.draft);
           await rules.assertDraftChange(previous, command.draft, tx);
+          if (previous) requireDomain(command.draft.header.number === previous.header.number,
+            "DOCUMENT_NUMBER_MISMATCH", "A saved document keeps its original number");
+          else if (tx.assertRuntimeDocumentNumber) await tx.assertRuntimeDocumentNumber({ kind: "SALES", documentId: salesId,
+            actorAccountId: command.actor.accountId, number: command.draft.header.number });
           next = {
             header: { ...command.draft.header, status: "DRAFT", version: previous ? nextVersion(previous.header.version) : version(1),
               createdByAccountId: previous?.header.createdByAccountId ?? command.actor.accountId,

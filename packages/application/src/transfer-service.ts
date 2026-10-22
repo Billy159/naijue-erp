@@ -74,6 +74,10 @@ export function createTransferService(dependencies: TransferDependencies): { exe
       if (command.action === "SAVE") {
         requireDomain(!previous || previous.header.status === "DRAFT", "INVALID_STATE", "Only draft transfers may be edited");
         validateDraft(command.draft);
+        if (previous) requireDomain(command.draft.header.number === previous.header.number,
+          "DOCUMENT_NUMBER_MISMATCH", "A saved document keeps its original number");
+        else if (tx.assertRuntimeDocumentNumber) await tx.assertRuntimeDocumentNumber({ kind: "TRANSFER", documentId: transferId,
+          actorAccountId: command.actor.accountId, number: command.draft.header.number });
         const currentIds = new Set(command.draft.lines.map(line => line.id));
         next = { header: { ...command.draft.header, status: "DRAFT", version: previous ? nextVersion(previous.header.version) : version(1),
           createdByAccountId: previous?.header.createdByAccountId ?? command.actor.accountId,
