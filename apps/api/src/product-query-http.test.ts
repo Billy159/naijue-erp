@@ -15,6 +15,14 @@ import { actor, sid } from "../../../tests/support/synthetic-fixtures.ts";
 const productId = sid("product", 901), imageId = sid("product", 902);
 const parameters = { productId }; const imageParameters = { productId, imageId };
 const routes = ["/products/basics/query", "/products/specifications/query", "/products/images/query", "/products/image/query"] as const;
+test("W15 frozen image DTO routes preserve 501 for absent provider and expose controlled mapping failures as sanitized 503", async t => {
+  const missing = await setup(t, { media: false }), unavailable = await setup(t, { failure: new DomainError("PRODUCT_MEDIA_NOT_READY", "PRIVATE_MAPPING") });
+  for (const [route, input] of [[routes[2], parameters], [routes[3], imageParameters]] as const) {
+    assert.equal((await missing.post(route, input)).statusCode, 501);
+    const r = await unavailable.post(route, input); assert.equal(r.statusCode, 503); assert.equal(r.json().error.code, "PRODUCT_MEDIA_NOT_READY");
+    assert.doesNotMatch(r.body, /PRIVATE|"images"|"url"/); assert.equal(r.headers["cache-control"], "no-store");
+  }
+});
 async function setup(t: TestContext, options: { authenticate?: ProductQueryHttpOptions["authenticate"]; authorize?: ProductQueryAuthorization["authorize"]; failure?: Error; missing?: boolean; media?: boolean } = {}) {
   let policyCalls = 0, readCalls = 0, thumbnails = 0, originals = 0; let currentActor: ActorContext | null = actor; const intents: ProductReadIntent[] = [];
   const check = () => { readCalls++; if (options.failure) throw options.failure; };

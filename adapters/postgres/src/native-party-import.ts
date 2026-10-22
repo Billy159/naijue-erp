@@ -1,6 +1,7 @@
 import { assertNativeImportAccountingGuards } from "./native-import-accounting-capability.ts";
 import { requireDomain } from '../../../packages/domain/src/errors.ts';
-import { assertReviewedNativeImportSchema } from '../../../packages/application/src/native-import-schema-contract.ts';
+import { assertReviewedNativeImportSchema, checkedNativeRuntime26Capability } from '../../../packages/application/src/native-import-schema-contract.ts';
+import type { NativeRuntime26Capability } from '../../../packages/application/src/native-import-schema-contract.ts';
 import { nativePartyStandaloneImportSource, validatePreparedNativePartyImportChunk, NATIVE_PARTY_IMPORT_VERSION } from '../../../packages/application/src/native-party-import.ts';
 import type { NativePartyImportStore, PreparedNativePartyImportChunk, PreparedNativePartyImportRow } from '../../../packages/application/src/native-party-import.ts';
 import type { JsonObject } from '../../../packages/application/src/history-storage-contract.ts';
@@ -8,19 +9,27 @@ import { insertValidatedHistoryHeaderNativeReferences, historyHeaderNativeRefere
 import type { PgSalesClient, PgSalesPool } from './sales-unit-of-work.ts';
 const check = (ok: unknown, code: string): void => requireDomain(ok, code, code);
 const table = (row: PreparedNativePartyImportRow): 'hall' | 'customer' | 'supplier' | 'staff' | 'warehouse' => row.entity.toLowerCase() as 'hall' | 'customer' | 'supplier' | 'staff' | 'warehouse';
+function requirePartyRuntime(chunk: PreparedNativePartyImportChunk, runtime26: NativeRuntime26Capability | undefined): void {
+  const successor = chunk.selection.source === 'HISTORICAL_CUSTOMER_SUPPLEMENT_V1' || chunk.rows.some(row =>
+    row.input.schemaProfile === 'EXACT26' || Object.hasOwn(row.input.source.fieldProvenance.fields as object, 'bootstrap_accounts'));
+  check(!successor || runtime26 !== undefined, 'NATIVE_PARTY_EXACT26_REQUIRED');
+}
 /** Trusted exact reviewed schema-13/14 import adapter, NOT a public command or live PartyService bypass.
  * The caller supplies an explicit pool: no network destination, migration runner, retry,
  * native IDs, codes, account/password/API key or publication authority is invented here.
  */
 export class PostgresNativePartyImportStore implements NativePartyImportStore {
   private readonly pool: PgSalesPool;
-  constructor(pool: PgSalesPool) { this.pool = pool; }
+  private readonly runtime26: NativeRuntime26Capability | undefined;
+  constructor(pool: PgSalesPool, runtime26?: NativeRuntime26Capability) { this.pool = pool; this.runtime26 = checkedNativeRuntime26Capability(runtime26); }
   async stage(input: PreparedNativePartyImportChunk): Promise<{ inserted: number; replayed: number }> {
     const chunk = structuredClone(input); validatePreparedNativePartyImportChunk(chunk);
+    requirePartyRuntime(chunk, this.runtime26);
     const client = await this.pool.connect(); let began = false, commitAttempted = false, discard: Error | undefined;
     try {
+      if (this.runtime26) await this.runtime26.assertReady(client, 'IMPORT_STAGE');
       await client.query('BEGIN ISOLATION LEVEL READ COMMITTED'); began = true;
-      const result = await stageNativePartyImportsOnClient(client, chunk); commitAttempted = true; await client.query('COMMIT'); return result;
+      const result = await new NativePartyTransactionWriter().write(client, chunk, this.runtime26); commitAttempted = true; await client.query('COMMIT'); return result;
     } catch (error) {
       if (!began || commitAttempted) discard = error instanceof Error ? error : Error('NATIVE_PARTY_UNKNOWN_OUTCOME');
       // COMMIT may have succeeded remotely. Never roll it back, reconnect or automatically retry.
@@ -37,19 +46,28 @@ export class PostgresNativePartyImportStore implements NativePartyImportStore {
 /** Borrow the exact MAIN transaction client. This function never connects,
  * begins, commits, rolls back or releases. Original native/source/intent/replay
  * logic is shared with the ordinary stage() adapter, with unchanged validators. */
-export async function stageNativePartyImportsOnClient(client: Pick<PgSalesClient, 'query'>, input: PreparedNativePartyImportChunk): Promise<{ inserted: number; replayed: number }> {
+export async function stageNativePartyImportsOnClient(client: Pick<PgSalesClient, 'query'>, input: PreparedNativePartyImportChunk, runtime26?: NativeRuntime26Capability): Promise<{ inserted: number; replayed: number }> {
   const chunk = structuredClone(input); validatePreparedNativePartyImportChunk(chunk);
-  const borrowed: PgSalesClient = { query: client.query.bind(client), release() { throw Error('Borrowed native party writer cannot release its owner client'); } };
-  return new NativePartyTransactionWriter().write(borrowed, chunk);
+  const verified = checkedNativeRuntime26Capability(runtime26); requirePartyRuntime(chunk, verified);
+  if (verified) await verified.assertReady(client, 'IMPORT_STAGE');
+  // Preserve the actual borrowed object: the issuer binds this exact client.
+  // No connection, transaction ownership or release method is used by this writer.
+  return new NativePartyTransactionWriter().write(client, chunk, verified);
 }
 
 class NativePartyTransactionWriter {
-  async write(client: PgSalesClient, chunk: PreparedNativePartyImportChunk): Promise<{ inserted: number; replayed: number }> {
+  async write(client: Pick<PgSalesClient, 'query'>, chunk: PreparedNativePartyImportChunk, runtime26: NativeRuntime26Capability | undefined): Promise<{ inserted: number; replayed: number }> {
     await client.query('/* native-party-import:global-lock */ SELECT naijue_erp.cutoff_import_lock()');
     const schema = (await client.query(`/* native-party-import:schema */ SELECT array_agg(version ORDER BY version) AS installed_versions FROM naijue_erp.schema_migration`)).rows;
     check(schema.length === 1, 'NATIVE_PARTY_SCHEMA_NOT_READY');
-    const reviewedSchema = assertReviewedNativeImportSchema(schema[0]!.installed_versions, { minimumVersion: 13, errorCode: 'NATIVE_PARTY_SCHEMA_NOT_READY' });
-    if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
+    if (runtime26) {
+      const versions = schema[0]!.installed_versions;
+      check(Array.isArray(versions) && versions.length === 26 && versions.every((n, i) => n === i + 1), 'NATIVE_PARTY_SCHEMA_NOT_READY');
+    } else {
+      const reviewedSchema = assertReviewedNativeImportSchema(schema[0]!.installed_versions, { minimumVersion: 13, errorCode: 'NATIVE_PARTY_SCHEMA_NOT_READY' });
+      // These two borrowed helpers only query; their historical type includes release.
+      if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client as PgSalesClient);
+    }
     const batches = (await client.query(`/* native-party-import:batch */ SELECT mapping_version,status,source_hash,source_name,
       EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED') AS already_published FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`, [chunk.batchId])).rows;
     const batch = batches[0];
@@ -151,13 +169,13 @@ class NativePartyTransactionWriter {
     }
     // Only after ALL new native targets exist do source/reference writers touch immutable originals.
     for (const { row, source } of sourcePlans.sort((a, b) => (a.row.entity === 'WAREHOUSE' ? -1 : rank[a.row.entity]!) - (b.row.entity === 'WAREHOUSE' ? -1 : rank[b.row.entity]!))) {
-      if (row.headerReference) await insertValidatedHistoryHeaderNativeReferences(client, row.headerReference);
+      if (row.headerReference) await insertValidatedHistoryHeaderNativeReferences(client as PgSalesClient, row.headerReference, runtime26);
       else await this.standaloneSource(client, row, source);
       if (row.entity === 'WAREHOUSE') await this.warehouseRecord(client, row);
     }
     return { inserted, replayed };
   }
-  private async standaloneSource(client: PgSalesClient, row: PreparedNativePartyImportRow, source: JsonObject): Promise<void> {
+  private async standaloneSource(client: Pick<PgSalesClient, 'query'>, row: PreparedNativePartyImportRow, source: JsonObject): Promise<void> {
     const s = row.input.source;
     const prior = (await client.query(`/* native-party-import:supplier-source-replay */ SELECT
       to_jsonb(s) IS NOT DISTINCT FROM to_jsonb(jsonb_populate_record(NULL::naijue_erp.import_source_row,$2::jsonb)) AS source_equal
@@ -168,7 +186,7 @@ class NativePartyTransactionWriter {
       FROM jsonb_populate_record(NULL::naijue_erp.import_source_row,$1::jsonb) r RETURNING id`, [JSON.stringify(source)]);
     check(saved.rowCount === 1 && saved.rows[0]?.id === s.id, 'NATIVE_PARTY_SOURCE_INSERT');
   }
-  private async warehouseRecord(client: PgSalesClient, row: PreparedNativePartyImportRow): Promise<void> {
+  private async warehouseRecord(client: Pick<PgSalesClient, 'query'>, row: PreparedNativePartyImportRow): Promise<void> {
     const s = row.input.source, metadata = row.input.warehouseRecord!;
     const record = { id: metadata.id, import_batch_id: s.batchId, source_entity_type: 'WAREHOUSE', source_key: s.sourceKey,
       source_record_hash: s.rowSha256, source_file_ref: s.fileRef, target_type: 'WAREHOUSE', target_id: row.nativeId, status: 'IMPORTED',

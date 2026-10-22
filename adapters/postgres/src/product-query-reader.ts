@@ -206,4 +206,9 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
       requireDomain(result.id === parameters.imageId, "INVALID_DATABASE_VALUE", "Mismatched image target"); return result;
     });
   }
+  async readCurrentImage(read: ProductScopedRead<ProductImageQuery>): Promise<ProductImageMetadata | null> {
+    // Capability was verified against this actual pool by the constructor. Legacy reads remain separate.
+    requireDomain(this.retainedDelete, "PRODUCT_MEDIA_NOT_READY", "Retained-delete-aware media reader unavailable");
+    return this.readImage(read);
+  }
 }

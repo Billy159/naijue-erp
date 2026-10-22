@@ -28,7 +28,7 @@ export function createProductMaintenanceHttpPlugin(options: ProductMaintenanceHt
         const bad = ["INVALID_PRODUCT_MAINTENANCE", "INVALID_PRODUCT_QUERY", "INVALID_PARTY_INPUT", "INVALID_ID", "INVALID_HTTP_INPUT", "INVALID_REQUEST", "INCOMPLETE_CATALOGUE_PRICE_INPUT", "INVALID_CATALOGUE_PRICE_INPUT", "MONEY_PRECISION", "MONEY_OVERFLOW", "PRODUCT_SCHEME_REQUIRED", "PRODUCT_REQUIRED_FIELDS", "PRODUCT_SPEC_REQUIRED"];
         const conflict = ["VERSION_CONFLICT", "IDEMPOTENCY_CONFLICT", "PRODUCT_DELETED", "VERSION_STORAGE_OVERFLOW", "INVALID_PRODUCT_STATE", "IMMUTABLE_PRODUCT_CODE", "IMMUTABLE_SKU_IDENTITY", "IMMUTABLE_BARCODE_IDENTITY", "PRODUCT_SPEC_CONFLICT", "PRODUCT_CODE_CONFLICT", "BARCODE_CONFLICT", "PRODUCT_REFERENCE_UNAVAILABLE", "PRODUCT_SIZE_GROUP_MISMATCH", "PRODUCT_IN_USE", "NO_PRODUCT_CHANGE", "PRODUCT_SPEC_NOT_FOUND", "PRODUCT_EDIT_CONTRACT_UPGRADE_REQUIRED", "PRODUCT_SEASON_UNKNOWN_RESET"];
         const status = bad.includes(error.code) ? 400 : error.code === "FORBIDDEN" ? 403 : ["PRODUCT_NOT_FOUND", "RECEIPT_NOT_FOUND"].includes(error.code) ? 404
-          : conflict.includes(error.code) ? 409 : error.code === "PRODUCT_MAINTENANCE_TOO_LARGE" ? 413 : ["PRODUCT_DELETE_NOT_READY", "MAINTENANCE_PREPARE_NOT_READY", "PRODUCT_SEASON_NOT_READY"].includes(error.code) ? 503 : undefined;
+          : conflict.includes(error.code) ? 409 : error.code === "PRODUCT_READ_ABORTED" ? 408 : error.code === "PRODUCT_MAINTENANCE_TOO_LARGE" ? 413 : ["PRODUCT_DELETE_NOT_READY", "MAINTENANCE_PREPARE_NOT_READY", "PRODUCT_SEASON_NOT_READY", "PRODUCT_MEDIA_NOT_READY"].includes(error.code) ? 503 : undefined;
         if (status !== undefined) return reply.code(status).send({ error: { code: error.code, message: status === 403 ? "Access denied" : "Product maintenance rejected" } });
       }
       const code = (error as { code?: string }).code;
@@ -38,6 +38,14 @@ export function createProductMaintenanceHttpPlugin(options: ProductMaintenanceHt
       return reply.code(500).send({ error: { code: "INTERNAL_ERROR", message: "Product maintenance could not be completed; recover with original request key" } });
     });
     const actor = (request: object) => { const value = actors.get(request); if (!value) throw Error("Missing product actor"); return value; };
+    app.post("/products/maintenance/images/query", { bodyLimit: 8192 }, async (request, reply) => {
+      assertNoQuery(request.query);
+      if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });
+      const controller = new AbortController(), abort = () => controller.abort(), close = () => { if (!reply.raw.writableFinished) controller.abort(); };
+      request.raw.once("aborted", abort); reply.raw.once("close", close);
+      try { return await service.readImages(actor(request), request.body, controller.signal); }
+      finally { request.raw.off("aborted", abort); reply.raw.off("close", close); }
+    });
     app.post("/products/commands", { bodyLimit: 1_048_576 }, async (request, reply) => {
       assertNoQuery(request.query);
       if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });

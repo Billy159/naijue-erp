@@ -33,7 +33,8 @@ export function createProductDetailsQueryHttpPlugin(options: ProductDetailsQuery
       const statuses: Readonly<Record<string, number>> = { INVALID_PRODUCT_QUERY: 400, INVALID_PRODUCT_DETAILS_QUERY: 400,
         FORBIDDEN: 403, PRODUCT_READ_ABORTED: 408, PRODUCT_STOCK_NOT_READY: 503, INVENTORY_NOT_READY: 503,
         INVALID_PRODUCT_STOCK_OVERVIEW_DATA: 503 };
-      if (_request.url.split("?")[0] === "/products/stock-overview/query" && error instanceof DomainError && error.code === "INVENTORY_INTEGRITY_FAILED")
+      if (_request.url.split("?")[0] === "/products/stock-overview/query" && error instanceof DomainError
+        && ["INVENTORY_INTEGRITY_FAILED", "INVENTORY_READ_TOO_LARGE"].includes(error.code))
         return reply.code(503).send({ error: { code: "INVENTORY_NOT_READY", message: "Product stock overview is unavailable" } });
       if (error instanceof DomainError && Object.hasOwn(statuses, error.code)) return reply.code(statuses[error.code]!).send({ error: {
         code: error.code, message: error.code === "FORBIDDEN" ? "Access denied" : "Product details read rejected" } });

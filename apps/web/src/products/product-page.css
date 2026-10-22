@@ -137,3 +137,33 @@
 .product-stock-head button{height:28px;min-height:28px;padding:2px 7px;border:0;background:transparent;color:var(--ca-primary-ink);font-size:13px;font-weight:400}
 .product-stock-head button:hover{background:var(--ca-primary-hover-soft)}
 .product-stock-empty{display:flex;align-items:center;justify-content:center;min-height:90px;color:var(--ca-ink-2);font-size:13px}
+
+/* Frozen product-rework.css 4-19 / product-current.js editor UI, adapted to real Arco header/panel ownership. */
+.product-detail-workbench{--product-sticky-title-height:37px;min-width:0;color:var(--ca-ink);font:13px var(--ca-font-sans)}
+.product-editor .product-detail-sticky{display:flow-root;top:0;z-index:30;padding:0;background:var(--ca-surface)}
+.product-editor .product-editor-head{min-height:32px;margin:0 0 5px;gap:12px}
+.product-editor .product-editor-head h1{margin:0;font-size:20px;line-height:30px}
+.product-editor .product-editor-head>.iw-actions{display:flex;align-items:center;gap:6px}
+.product-editor .product-editor-head>.iw-actions>button{height:32px;min-height:32px;padding:4px 11px;font-size:13px}
+.product-editor .product-editor-tabs>.arco-tabs{overflow:visible}
+.product-editor .product-editor-tabs>.arco-tabs>[role="tablist"]{position:sticky;top:var(--product-sticky-title-height);z-index:30;padding-bottom:2px;border-bottom:1px solid var(--ca-line);background:var(--ca-surface)}
+.product-editor .product-editor-tabs .arco-tabs-header-nav{padding:0}
+.product-editor .product-editor-tabs .arco-tabs-header-nav::before{display:none}
+.product-editor .product-editor-tabs .arco-tabs-header{display:flex;align-items:center;gap:2px;margin:0;padding:0}
+.product-editor .product-editor-tabs .arco-tabs-header-title{box-sizing:border-box;min-width:68px;height:32px;min-height:32px;margin:0;padding:5px 12px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--ca-ink-2);font-size:13px;font-weight:400;line-height:20px}
+.product-editor .product-editor-tabs .arco-tabs-header-title:hover{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+.product-editor .product-editor-tabs .arco-tabs-header-title-active{border-bottom-color:var(--ca-primary);color:var(--ca-primary-ink);font-weight:600}
+.product-editor .product-editor-tabs .arco-tabs-header-ink{display:none}
+.product-editor .product-editor-tabs .arco-tabs-content,.product-editor-tabs .arco-tabs-content-inner,.product-editor-tabs .arco-tabs-pane{overflow:visible}
+.product-editor .product-editor-body{padding:12px 0 18px;max-height:none;overflow:visible}
+.product-editor-base-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 14px;max-width:none;margin:0}
+.product-editor-base-grid>.field{display:flex;flex-direction:column;gap:4px;margin:0;min-width:0;color:var(--ca-ink-2);font-size:12px;line-height:16px}
+.product-editor-base-grid>.field>span{line-height:16px}
+.product-editor-base-grid .erp-input.arco-input{box-sizing:border-box;width:100%;height:32px;min-height:32px;padding:5px 9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);font:13px var(--ca-font-sans)}
+.product-editor-base-grid .erp-input.arco-input:hover{border-color:var(--ca-control-border-hover)}
+.product-editor-base-grid .erp-input.arco-input:focus{outline:0;border-color:var(--ca-control-focus-border)}
+.product-editor-base-grid .erp-select.arco-select{min-height:32px;border-color:transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted)}
+.product-editor-base-grid .erp-select.arco-select:hover{border-color:var(--ca-control-border-hover)}
+.product-editor-base-grid .erp-select.arco-select-focused{border-color:var(--ca-control-focus-border)}
+@media(max-width:800px){.product-editor-base-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.product-editor-base-grid{grid-template-columns:1fr}}

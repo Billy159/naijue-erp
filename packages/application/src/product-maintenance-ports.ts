@@ -1,5 +1,18 @@
 import type { ActorContext } from "./ports.ts";
 import type { CompleteCataloguePrices } from "./catalogue-price-input.ts";
+import type { ControlledProductMedia, ProductImageMetadata } from "./product-query-ports.ts";
+export type ProductMaintenanceImageRole = "MAIN" | "WHITE_BACKGROUND" | "HANG_TAG" | "DETAIL" | "COLOR";
+export interface ProductMaintenanceImageMetadata extends ProductImageMetadata {
+  readonly version: number; readonly role: ProductMaintenanceImageRole | null; readonly colorId: string | null;
+  readonly createdAt: string; readonly createdByAccountId: string | null;
+}
+export interface ProductMaintenanceImageSnapshot { readonly productId: string; readonly version: number; readonly images: readonly ProductMaintenanceImageMetadata[] }
+export interface ProductMaintenanceImagesDto {
+  readonly productId: string; readonly version: number;
+  readonly images: readonly (Omit<ProductMaintenanceImageMetadata, "productId" | "fileRef" | "byteSize"> & {
+    readonly byteSize: string; readonly thumbnailUrl: string | null; readonly thumbnailState: "READY" | "UNAVAILABLE";
+  })[];
+}
 export type ProductMaintenanceAction = "CREATE" | "EDIT" | "DISABLE" | "RESTORE" | "DELETE";
 export type ProductAuditValue = string | number | boolean | null | readonly ProductAuditValue[] | { readonly [key: string]: ProductAuditValue };
 export interface ProductAuditObject { readonly [key: string]: ProductAuditValue }
@@ -78,6 +91,8 @@ export interface ProductMaintenanceEvidence {
 }
 export interface ProductMaintenanceTransaction {
   readonly evidence: ProductMaintenanceEvidence;
+  /** One statement owns root/image versions and all retained image facts; optional legacy provider compatibility. */
+  readImageSnapshot?(productId: string): Promise<ProductMaintenanceImageSnapshot | null>;
   load(id: string): Promise<ProductAggregate | undefined>;
   readReferences(product: ProductStoredRecord): Promise<ProductDetailReferences>;
   readCandidates(query: ProductMaintenanceCandidateQuery): Promise<ProductMaintenanceCandidatePage>;
@@ -93,4 +108,5 @@ export interface ProductMaintenanceUnitOfWork { readonly seasonContract?: "produ
 export interface ProductMaintenanceDependencies {
   readonly unitOfWork: ProductMaintenanceUnitOfWork; readonly now: () => string;
   readonly newId: (kind: "product" | "sku" | "barcode" | "operation") => string;
+  readonly media?: ControlledProductMedia | null;
 }

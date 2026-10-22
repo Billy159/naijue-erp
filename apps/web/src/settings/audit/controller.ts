@@ -7,24 +7,32 @@ export interface SettingsAuditControllerOptions {
   readonly scope: ReadScope; readonly reader?: SettingsAuditReader; readonly allowedModules: readonly SettingsAuditModule[]; readonly target?: SettingsAuditTarget;
   readonly onAccessFailure: (kind: 'unauthenticated' | 'forbidden') => void; readonly hasUnresolvedWrite?: () => boolean;
 }
-export interface SettingsAuditSnapshot { readonly draft: SettingsAuditDraft | null; readonly errors: Readonly<Record<string, string>>; readonly disposed: boolean }
+export interface SettingsAuditSnapshot { readonly draft: SettingsAuditDraft | null; readonly errors: Readonly<Record<string, string>>; readonly disposed: boolean; readonly readDenied: boolean }
 /** One user-opened read layer, independent of every command/recovery workspace. */
 export class SettingsAuditController {
   readonly scope: ReadScope; readonly query: LatestQuery<SettingsAuditQuery, SettingsAuditPage>; readonly allowedModules: readonly SettingsAuditModule[];
-  readonly #options: SettingsAuditControllerOptions; readonly #listeners = new Set<() => void>(); readonly #initial: SettingsAuditDraft;
+  readonly #options: SettingsAuditControllerOptions; readonly #listeners = new Set<() => void>(); readonly #initial: SettingsAuditDraft; readonly #unwatchQuery: () => void;
   #snapshot: SettingsAuditSnapshot; #started = false;
   constructor(options: SettingsAuditControllerOptions) {
     if (new Set(options.allowedModules).size !== options.allowedModules.length || options.allowedModules.some(module => !auditModules.includes(module))) throw new TypeError('Invalid explicit audit presentation capabilities');
     this.#options = options; this.allowedModules = Object.freeze([...options.allowedModules]);
     this.scope = new ReadScope(options.scope.identity, `${options.scope.routeInstanceId}:settings-audit`, options.target?.objectId ?? null, () => {});
     this.#initial = Object.freeze({ ...blankAuditDraft, ...(options.target ? { module: options.target.module, objectId: options.target.objectId } : {}) });
-    this.#snapshot = Object.freeze({ draft: this.#initial, errors: Object.freeze({}), disposed: false });
+    this.#snapshot = Object.freeze({ draft: this.#initial, errors: Object.freeze({}), disposed: false, readDenied: false });
     this.query = new LatestQuery({ scope: this.scope, execute: async read => {
       if (!options.reader) throw new HttpQueryError('not-implemented', 'SETTINGS_AUDIT_NOT_CONFIGURED');
       const page = validateSettingsAuditPage(await options.reader.readQuery(read), read.parameters);
       if (page.items.some(item => !this.allowedModules.includes(item.module))) throw new HttpQueryError('malformed-response', 'INVALID_RESPONSE');
       return page;
     } });
+    // Observe before UI listeners: LatestQuery deliberately drops error during retry,
+    // while retaining success. Redaction outlives that transient request state.
+    this.#unwatchQuery = this.query.subscribe(() => {
+      const read = this.query.getSnapshot();
+      const readDenied = read.phase === 'success' ? false
+        : read.phase === 'error' && read.error instanceof HttpQueryError && read.error.kind === 'forbidden' ? true : this.#snapshot.readDenied;
+      if (!this.#snapshot.disposed && readDenied !== this.#snapshot.readDenied) this.#publish({ ...this.#snapshot, readDenied });
+    });
     options.scope.signal.addEventListener('abort', this.dispose, { once: true }); if (!options.scope.active) this.dispose();
   }
   getSnapshot = (): SettingsAuditSnapshot => this.#snapshot;
@@ -49,7 +57,7 @@ export class SettingsAuditController {
     void this.#run({ ...success.parameters, page });
   }
   pageSize(pageSize: 20 | 50 | 100): void { const state = this.query.getSnapshot(); if (!this.available || state.phase === 'loading' || ![20, 50, 100].includes(pageSize)) return; void this.#run({ ...(state.success?.parameters ?? state.request?.parameters ?? { ...this.#initial, page: 1, pageSize: 20 }), page: 1, pageSize }); }
-  readonly dispose = (): void => { if (this.#snapshot.disposed) return; this.#options.scope.signal.removeEventListener('abort', this.dispose); this.scope.dispose(); this.query.dispose(); this.#publish({ draft: null, errors: Object.freeze({}), disposed: true }); this.#listeners.clear(); };
+  readonly dispose = (): void => { if (this.#snapshot.disposed) return; this.#options.scope.signal.removeEventListener('abort', this.dispose); this.#unwatchQuery(); this.scope.dispose(); this.query.dispose(); this.#publish({ draft: null, errors: Object.freeze({}), disposed: true, readDenied: false }); this.#listeners.clear(); };
   #valid(draft: SettingsAuditDraft): boolean {
     const errors: Record<string, string> = {};
     if (draft.objectSearch.length > 200 || /[\x00-\x1f\x7f]/.test(draft.objectSearch)) errors.objectSearch = '对象搜索最长200字，不能含不可用字符。';

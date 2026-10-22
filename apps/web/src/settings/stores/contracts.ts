@@ -8,6 +8,8 @@ export interface StoreSettingsBrowserReader {
   readDetail(kind: StoreSettingsKind, read: QueryRead<StoreSettingsDetailQuery>): Promise<StoreSettingsDetail>;
 }
 export interface StoreSettingsPageProps {
+  /** Optional actual audit read capability; absent remains unavailable. */
+  readonly audit?: import('../audit/audit-entry.tsx').SettingsAuditCapability;
   /** Explicit form-preparation capability only. No maintenance command is implied. */
   readonly maintenance?: StoreMaintenancePreparation;
   readonly scope: ReadScope; readonly reader: StoreSettingsBrowserReader;

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type Dispatch, type SetStateAction } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore, type Dispatch, type SetStateAction } from 'react';
 import { UIButton, UIInput, UICheckbox } from '../components/standard-controls.tsx';
 import { StandardTabs } from '../components/standard-tabs.tsx';
 import { StandardOverlay } from '../components/standard-overlay.tsx';
@@ -63,6 +63,13 @@ interface Fields extends ProductEditorProps {
  readonly baseline:string;readonly guard:{current:()=>boolean};
 }
 function EditorFields(p:Fields){
+ const workbench=useRef<HTMLDivElement>(null),stickyTitle=useRef<HTMLDivElement>(null);
+ useLayoutEffect(()=>{
+  const host=workbench.current,title=stickyTitle.current;if(!host||!title)return;
+  const measure=()=>{if(p.scope.active&&host.isConnected)host.style.setProperty('--product-sticky-title-height',`${title.getBoundingClientRect().height}px`);};
+  measure();const observer=typeof ResizeObserver==='function'?new ResizeObserver(measure):null;observer?.observe(title);window.addEventListener('resize',measure);
+  return()=>{observer?.disconnect();window.removeEventListener('resize',measure);};
+ },[p.scope]);
  const [reloadConfirm,setReloadConfirm]=useState(false);
  const unresolvedSpecs=hasUnresolvedSpecSelection(p.specSelection,p.skus);
  const state=useSyncExternalStore(p.write.subscribe,p.write.getSnapshot,p.write.getSnapshot),dirty=unresolvedSpecs||productEditorDraftFingerprint({values:p.values,skus:p.skus,barcodes:p.barcodes})!==p.baseline;
@@ -86,7 +93,7 @@ function EditorFields(p:Fields){
  const close=()=>{if(pending)return;if(dirty)p.setLeave(true);else p.onClose();};
  const fields={scope:p.scope,reader:p.capability.reader,values:p.values,labels:p.labels,existing,disabled,change,remember,onAccessFailure:p.onAccessFailure,...(p.capability.categoryReader?{categoryReader:p.capability.categoryReader}:{}),categoryPath:p.detail?.references.categoryPath??[],seasonOriginallyUnknown:!!p.detail&&'seasonIds' in p.detail.values&&p.detail.values.seasonIds===null};
  if(!p.scope.active||state.phase==='disposed')return null;
- return <div className="product-detail-workbench"><div className="product-detail-sticky"><div className="product-editor-head"><h1>{existing?`${p.detail!.values.productCode} · ${p.detail!.values.name}`:`新增商品 · ${p.values.name||'未命名'}`}</h1><div className="iw-actions">
+ return <div ref={workbench} className="product-detail-workbench"><div ref={stickyTitle} className="product-detail-sticky"><div className="product-editor-head"><h1>{existing?`${p.detail!.values.productCode} · ${p.detail!.values.name}`:`新增商品 · ${p.values.name||'未命名'}`}</h1><div className="iw-actions">
   {existing&&can('DELETE')&&<UIButton disabled={pending} className="product-delete" onClick={()=>p.setConfirmDelete(true)}>删除商品</UIButton>}
   {existing&&can(p.values.enabled?'DISABLE':'RESTORE')&&<UIButton disabled={pending||dirty} onClick={()=>void save(p.values.enabled?'DISABLE':'RESTORE')}>{p.values.enabled?'停用':'恢复启用'}</UIButton>}
   <UIButton disabled={pending} onClick={close}>取消</UIButton><UIButton className="primary" disabled={disabled||unresolvedSpecs||existing&&!dirty} onClick={()=>void save()}>保存</UIButton></div></div>
@@ -96,7 +103,7 @@ function EditorFields(p:Fields){
   {(state.phase==='uncertain'||state.phase==='checking')&&<div className="product-editor-recovery" role="status">保存结果尚未确认。<UIButton disabled={state.phase==='checking'} onClick={()=>void p.write.recover().then(finish)}>查回保存结果</UIButton><UIButton disabled={state.phase==='checking'} onClick={()=>void p.write.retryOriginal().then(finish)}>按原请求重试</UIButton></div>}
   {deleted&&<p role="status">该商品已删除，仅可查看。</p>}
   {unresolvedSpecs&&<p className="product-field-hint" role="status">已选颜色或版型尚无启用规格，请在规格页填写实际组合，或移除未使用的选择。</p>}
-  <StandardTabs label="商品详情" value={p.tab} items={tabs.map(([key,label])=>({key,label}))} onChange={p.setTab}><div className="product-editor-body">
+  <StandardTabs className="product-editor-tabs" label="商品详情" value={p.tab} items={tabs.map(([key,label])=>({key,label}))} onChange={p.setTab}><div className="product-editor-body">
    {p.tab==='base'&&<ProductEditorBase {...fields}/>}
    {p.tab==='specs'&&<ProductEditorSpecs {...fields} capability={p.capability} skus={p.skus} changeSkus={changeSkus} selection={p.specSelection} changeSelection={changeSpecSelection}/>}
    {p.tab==='barcodes'&&<BarcodeEditor {...p} disabled={disabled} remember={remember} change={change}/>}

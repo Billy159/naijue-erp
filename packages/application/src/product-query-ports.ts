@@ -49,6 +49,10 @@ export interface TrustedProductSnapshotReader {
   readImages(read: ProductScopedRead<ProductQuery>): Promise<ProductImageMetadataSet | null>;
   readImage(read: ProductScopedRead<ProductImageQuery>): Promise<ProductImageMetadata | null>;
 }
+/** Delivery requires an actual retained-delete-aware reader, distinct from legacy schema19 reads. */
+export interface CurrentProductImageSnapshotReader {
+  readCurrentImage(read: ProductScopedRead<ProductImageQuery>): Promise<ProductImageMetadata | null>;
+}
 export interface ControlledProductMediaLink {
   readonly imageId: string; readonly variant: "thumbnail" | "original"; readonly url: string;
 }
@@ -66,6 +70,8 @@ export interface ControlledProductMedia {
   readonly deliveryOrigin: string;
   resolveThumbnails(read: ProductMediaRead): Promise<readonly ControlledProductMediaLink[]>;
   resolveOriginal(read: ProductMediaRead): Promise<ControlledProductMediaLink>;
+  /** Rich editor only: omitted mappings represent unavailable thumbnails, never original fallback. */
+  resolveAvailableThumbnails?(read: ProductMediaRead): Promise<readonly ControlledProductMediaLink[]>;
 }
 export interface ProductQueryDependencies {
   readonly authorization: ProductQueryAuthorization; readonly reader: TrustedProductSnapshotReader;

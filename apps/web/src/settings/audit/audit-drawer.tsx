@@ -47,7 +47,8 @@ function AuditContents(props: { readonly controller: SettingsAuditController; re
   if (state.disposed || !state.draft || !controller.scope.active) return null;
   const draft = state.draft, busy = read.phase === 'loading', applied = read.success?.parameters ?? read.request?.parameters, page = applied?.page ?? 1, pageSize = applied?.pageSize ?? 20;
   const authError = read.error instanceof HttpQueryError && (read.error.kind === 'forbidden' || read.error.kind === 'unauthenticated');
-  const result = authError ? null : read.success?.data;
+  const restricted = state.readDenied || authError;
+  const result = restricted ? null : read.success?.data;
   const active = controller.available, first = result && result.total > 0 ? (page - 1) * pageSize + 1 : 0;
   const columns = [
     { title: '时间', width: 158, render: (_: unknown, item: SettingsAuditItem) => <span title={item.occurredAt ?? undefined}>{formatSettingsAuditTime(item.occurredAt)}</span> },
@@ -60,8 +61,8 @@ function AuditContents(props: { readonly controller: SettingsAuditController; re
   ];
   const errors = Object.values(state.errors);
   return <Drawer visible width={1040} title="基础设置操作记录" onCancel={props.close} maskClosable={false} className="bs-audit-drawer settings-audit-drawer iw-arco-controls" unmountOnExit
-    footer={<div className="bs-pager"><div className="iw-pagination settings-pagination"><DemoPageSizeSelect scope={controller.scope} label="每页数量" value={String(pageSize)} disabled={!active || busy || !!authError} options={[20, 50, 100].map(size => ({ value: String(size), label: `${size}条/页` }))} onChange={size => controller.pageSize(Number(size) as 20 | 50 | 100)} />
-      <span>{result ? `共 ${result.total.toLocaleString('zh-CN')} 条${first && first <= result.total ? `，当前第 ${first}–${Math.min(page * pageSize, result.total)} 条` : ''}` : busy ? '正在读取' : '尚未读取'}</span><StandardPagination label="操作记录分页" scope={controller.scope} page={page} pageSize={pageSize} total={result?.total ?? null} disabled={!active || busy || !!authError} onPage={next => controller.page(next)} />{result && page > Math.max(1, Math.ceil(result.total / pageSize)) && <Button disabled={busy} onClick={() => controller.page(1)}>返回第一页</Button>}</div></div>}>
+    footer={<div className="bs-pager"><div className="iw-pagination settings-pagination"><DemoPageSizeSelect scope={controller.scope} label="每页数量" value={String(pageSize)} disabled={!active || busy || !!restricted} options={[20, 50, 100].map(size => ({ value: String(size), label: `${size}条/页` }))} onChange={size => controller.pageSize(Number(size) as 20 | 50 | 100)} />
+      <span>{result ? `共 ${result.total.toLocaleString('zh-CN')} 条${first && first <= result.total ? `，当前第 ${first}–${Math.min(page * pageSize, result.total)} 条` : ''}` : busy ? '正在读取' : '尚未读取'}</span><StandardPagination label="操作记录分页" scope={controller.scope} page={page} pageSize={pageSize} total={result?.total ?? null} disabled={!active || busy || !!restricted} onPage={next => controller.page(next)} />{result && page > Math.max(1, Math.ceil(result.total / pageSize)) && <Button disabled={busy} onClick={() => controller.page(1)}>返回第一页</Button>}</div></div>}>
     <form className="bs-log-filters" role="search" onSubmit={event => { event.preventDefault(); controller.apply(); }}>
       <StoreSettingsSingleSelect scope={controller.scope} label="模块" value={draft.module} disabled={!active || controller.targetLocked} options={[{ value: 'ALL', label: '全部模块' }, ...controller.allowedModules.map(module => ({ value: module, label: auditModuleLabels[module] }))]} onChange={module => controller.update({ module: module as typeof draft.module })} />
       <Input className="iw-arco-input" aria-label="数据对象" disabled={!active} value={draft.objectSearch} onChange={objectSearch => controller.update({ objectSearch })} placeholder="数据对象" allowClear maxLength={200} />
@@ -74,7 +75,8 @@ function AuditContents(props: { readonly controller: SettingsAuditController; re
     {errors.length > 0 && <p role="alert" className="settings-audit-note">{errors.join(' ')}</p>}
     {!active && <p role="status" className="settings-audit-note">操作记录读取暂未开放。</p>}
     {busy && <p role="status" className="settings-audit-note">正在读取操作记录…</p>}
-    {read.phase === 'error' && <p role="alert" className="settings-audit-note">{authError ? '当前无权读取操作记录。' : '操作记录读取失败。'}<Button type="text" disabled={!active} onClick={() => controller.retry()}>重试</Button></p>}
+    {read.phase === 'error' && <p role="alert" className="settings-audit-note">{authError ? '当前无权读取操作记录。' : state.readDenied ? '此前读取被拒绝，成功重读前不显示先前记录。' : '操作记录读取失败。'}<Button type="text" disabled={!active} onClick={() => controller.retry()}>重试</Button></p>}
+    {state.readDenied && read.phase !== 'error' && <p role="status" className="settings-audit-note">此前读取被拒绝，成功重读前不显示先前记录。</p>}
     {result && read.phase !== 'success' && <p role="status" className="settings-audit-note">下方为上次成功读取的结果。</p>}
     <p className="settings-audit-note">日期与时间按上海时区显示。对象和操作人名称为当前资料；变化值保留原记录。</p>
     <div className="bs-log-results iw-arco-table" aria-busy={busy}><Table size="small" rowKey="id" columns={columns} data={result ? [...result.items] : []} pagination={false} noDataElement={<Empty description={read.phase === 'success' && result?.total === 0 ? '暂无操作记录' : '尚未读到操作记录'} />} /></div>

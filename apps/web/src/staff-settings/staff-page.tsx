@@ -1,3 +1,4 @@
+import { SettingsAuditEntry } from '../settings/audit/audit-entry.tsx';
 import { Button, Empty, Input, Modal, Table, Tag } from '@arco-design/web-react';
 import { IconSearch } from '@arco-design/web-react/icon';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
@@ -83,7 +84,7 @@ function StaffContent(props: StaffSettingsProps & { readonly queries: Queries | 
       <Button type="text" size="small" disabled={!props.canPrepare || busy || !!editor || !!editingId || !['在职','离职'].includes(row.employmentStatus)} onClick={event => { if (event.currentTarget instanceof HTMLElement) openDetail(row, row.employmentStatus === '离职' ? 'REINSTATE' : 'LEAVE', event.currentTarget); }}>{row.employmentStatus === '离职' ? '恢复在职' : '办理离职'}</Button></div> },
   ];
   return <section className="store-settings-workbench staff-settings-workbench bs-page iw-workbench iw-arco-controls" aria-label="员工与账号">
-    <header className="bs-head iw-head"><h1>员工与账号</h1><div className="bs-head-actions"><Button type="text" disabled title="操作记录暂未开放">操作记录</Button><Button type="primary" disabled={!props.canPrepare || !!editor || !!editingId} onClick={event => { if (active) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); if (workspace) workspace.open(null); else setLocalEditor(new StaffSettingsController(scope, null, props.roles)); } }}>新增员工</Button></div></header>
+    <header className="bs-head iw-head"><h1>员工与账号</h1><div className="bs-head-actions"><SettingsAuditEntry scope={scope} {...(props.audit ? { capability: props.audit } : {})} onAccessFailure={props.onAccessFailure} localHasUnresolvedWrite={() => props.workspace?.hasUnresolvedWrite() ?? editor?.hasUnresolvedWrite ?? false} /><Button type="primary" disabled={!props.canPrepare || !!editor || !!editingId} onClick={event => { if (active) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); if (workspace) workspace.open(null); else setLocalEditor(new StaffSettingsController(scope, null, props.roles)); } }}>新增员工</Button></div></header>
     <form className="bs-toolbar" role="search" onSubmit={event => { event.preventDefault(); run({ ...draft, page: 1, pageSize: applied.pageSize }); }}>
       <div className="bs-filter-fields">
         <div className="bs-filter search"><Input className="iw-arco-input iw-search-input" aria-label={searchLabel} placeholder={searchLabel} maxLength={200} value={draft.search} onChange={search => setDraft(value => ({ ...value, search }))} suffix={<IconSearch />} allowClear /></div>

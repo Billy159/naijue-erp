@@ -7,7 +7,28 @@ import type { ProductAggregate, ProductMaintenanceCommand, ProductMaintenanceDep
 import { CATALOGUE_PRICE_KEYS } from "../../../packages/application/src/catalogue-price-input.ts";
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { actor, sid } from "../../../tests/support/synthetic-fixtures.ts";
+import { PostgresProductMaintenanceUnitOfWork } from "../../../adapters/postgres/src/product-maintenance-store.ts";
 const id = (n: number) => sid("product", n);
+test("W15 richer images HTTP returns exact F2 metadata and distinguishes real empty, denied, missing and failed", async t => {
+  let mode = "image", reads = 0; const unused = async (): Promise<never> => { throw Error("UNEXPECTED_WRITE"); };
+  const dependencies: ProductMaintenanceDependencies = { now: () => "UNUSED", newId: () => "UNUSED", unitOfWork: new PostgresProductMaintenanceUnitOfWork({ async transaction(work) {
+    return work({ evidence: { async assertAllowed() { if (mode === "denied") throw new DomainError("FORBIDDEN", "PRIVATE_ROLE"); }, getReceipt: unused, complete: unused }, client: { async query() {
+      reads++; if (mode === "failure") throw Error("PRIVATE_SQL");
+      const rows = mode === "missing" ? [] : [{ id: id(12001), version: 7, images: mode === "empty" ? [] : [{ id: id(12002), product_id: id(12001), version: 3, image_role: null, color_id: null, file_ref: "PRIVATE_FILE", display_order: 0, mime: "image/png", byte_size: "68", created_at: "2026-10-22T00:00:00.123456Z", created_by_account_id: null, valid_color: true }] }];
+      return { rows, rowCount: rows.length };
+    } } });
+  } }, { deletionGuard: null }) };
+  const app = Fastify({ logger: false }); t.after(() => app.close()); app.register(createProductMaintenanceHttpPlugin({ authenticate: async () => actor, dependencies }));
+  const send = (payload: unknown = { productId: id(12001) }) => app.inject({ method: "POST", url: "/products/maintenance/images/query", payload: JSON.stringify(payload), headers: { "content-type": "application/json" } });
+  const response = await send(); assert.equal(response.statusCode, 200, response.body); assert.equal(response.headers["cache-control"], "no-store");
+  assert.deepEqual(Object.keys(response.json()).sort(), ["images", "productId", "version"]); assert.deepEqual(Object.keys(response.json().images[0]).sort(), ["byteSize", "colorId", "createdAt", "createdByAccountId", "displayOrder", "id", "mime", "role", "thumbnailState", "thumbnailUrl", "version"].sort());
+  assert.equal(response.json().images[0].thumbnailState, "UNAVAILABLE"); assert.equal(response.json().images[0].role, null); assert.doesNotMatch(response.body, /PRIVATE|fileRef/);
+  assert.equal((await send({ productId: id(12001), actor })).statusCode, 400);
+  mode = "empty"; assert.deepEqual((await send()).json().images, []);
+  for (const [next, status] of [["denied", 403], ["missing", 404], ["failure", 500]] as const) {
+    mode = next; const before = reads, r = await send(); assert.equal(r.statusCode, status); assert.doesNotMatch(r.body, /PRIVATE|"images"/); if (next === "denied") assert.equal(reads, before);
+  }
+});
 const values: ProductWriteValues = { productCode: "SYNTHETIC_01", name: "SYNTHETIC", categoryId: id(1), supplierId: id(2), seasonId: id(3), sizeGroupId: id(4),
   year: 2026, systemItemCode: "00001", thickness: null, collarPantsType: null, defaultBarcodeSchemeId: id(5), enabled: true,
   prices: Object.fromEntries(CATALOGUE_PRICE_KEYS.map(k => [k, k === "retail_price" ? "0.00" : null])) as ProductWriteValues["prices"] };

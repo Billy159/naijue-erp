@@ -71,6 +71,23 @@ test("W14 HTTP overview unavailable/not-found/denied/integrity/provider failures
     assert.doesNotMatch(response.body, /PRIVATE|"items"/); assert.equal(response.headers["cache-control"], "no-store"); assert.equal(oldReads, 0);
   }
 });
+test("W14 R01 overview read bound returns controlled 503 without truncation or old stock fallback; legacy mapping stays unchanged", async t => {
+  let overviewReads = 0, oldStockReads = 0; const app = Fastify({ logger: false }); t.after(() => app.close());
+  const tooLarge = () => new DomainError("INVENTORY_READ_TOO_LARGE", "PRIVATE_SKU_WAREHOUSE_BOUND");
+  app.register(createProductDetailsQueryHttpPlugin({ authenticate: async () => actor, dependencies: {
+    authorization: { async authorize(_actor, intent) { return { kind: intent.kind, productId }; } },
+    reader: { async readPrices() { return null; }, async readBarcodes() { return null; } },
+    stockReader: { async readStock() { oldStockReads++; throw tooLarge(); }, async readOverview() { overviewReads++; throw tooLarge(); } }
+  } }));
+  for (const warehouseMode of ["NON_ZERO", "ALL"] as const) {
+    const response = await app.inject({ method: "POST", url: "/products/stock-overview/query", payload: { productId, warehouseMode } });
+    assert.equal(response.statusCode, 503, response.body); assert.equal(response.json().error.code, "INVENTORY_NOT_READY");
+    assert.equal(response.headers["cache-control"], "no-store"); assert.doesNotMatch(response.body, /PRIVATE|"items"|"total"/);
+  }
+  assert.equal(overviewReads, 2); assert.equal(oldStockReads, 0); assert.equal(app.server.listening, false);
+  const legacy = await app.inject({ method: "POST", url: "/products/stock/query", payload: page });
+  assert.equal(legacy.statusCode, 500); assert.equal(legacy.json().error.code, "INTERNAL_ERROR"); assert.equal(oldStockReads, 1);
+});
 test("product detail HTTP: authentication, per-tab denial and provider errors never disclose data or internals", async t => {
   for (const mode of ["unauthenticated", "forbidden", "failure"] as const) {
     let reads = 0; const app = Fastify({ logger: false }); t.after(() => app.close());

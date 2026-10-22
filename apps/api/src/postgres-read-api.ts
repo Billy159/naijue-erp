@@ -1,3 +1,5 @@
+import { createSettingsAuditHttpPlugin } from "./settings-audit-http.ts";
+import { PostgresSettingsAuditUnitOfWork } from "../../../adapters/postgres/src/settings-audit-reader.ts";
 import Fastify from "fastify";
 import type { FastifyInstance } from "fastify";
 import { BoundedPostgresPool } from "../../../adapters/postgres/src/bounded-pool.ts";
@@ -400,6 +402,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       app.register(createImportedHistoryQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.importedHistory, reader: new PostgresImportedHistoryQueryReader(pool) } }));
       app.register(createProductDetailsQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.productDetails, reader: new PostgresProductDetailsQueryReader(pool), stockReader: new PostgresProductWarehouseStockReader(pool, policies.inventory) } }));
       app.register(createOrganizationMaintenanceReadHttpPlugin({ authenticate, unitOfWork: new PostgresOrganizationMaintenanceReadUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool)) }));
+      app.register(createSettingsAuditHttpPlugin({ authenticate, reader: new PostgresSettingsAuditUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool)) }));
     }
     if (capabilities?.settings) app.register(createStoreSettingsReadHttpPlugin({ authenticate,
       dependencies: { authorization: capabilities.settings, reader: new PostgresStoreSettingsReadReader(pool) } }));

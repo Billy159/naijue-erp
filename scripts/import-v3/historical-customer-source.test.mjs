@@ -60,7 +60,8 @@ test('exact2 historical source preserves English fields and derives independent 
   await assert.rejects(reader.referenceCandidateFor({ ...identity, sourceDocumentNumber: 'SOME-OTHER-INVOICE' }), /HEADER_IDENTITY/);
   await assert.rejects(reader.referenceCandidateFor({ ...identity, originalPartyIdentity: id(99) }), /HEADER_IDENTITY/);
   const changed = structuredClone(rows[0]); changed.source.rawFields.originalName = 'renamed'; await assert.rejects(reader.authorizeRow(changed), /DERIVED_ROW_CHANGED/);
-  assert.throws(() => prepareNativePartyImportChunk([{ ...rows[0], ...f.binding, bindings: {}, enumMappings: {} }]), /NATIVE_PARTY_SELECTION/);
+  // Generic source-reader fixtures are not the two independently pinned native identities.
+  assert.throws(() => prepareNativePartyImportChunk([{ ...rows[0], ...f.binding, bindings: {}, enumMappings: { enabled: { raw: false, native: false, evidenceRef: f.options.trustedReviewSha256 } } }]), /EXACT2_HISTORICAL_CUSTOMER_SELECTION/);
 });
 
 test('exact2 historical source rejects re-pinned wrong flags, CSV disguise, extra original keys and native remapping', async t => {

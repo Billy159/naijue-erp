@@ -31,6 +31,17 @@ const member = (id = size1, order = 20) => ({ id, name: id === size1 ? "165/S（
 const sku = (fit = fitId, index = 1) => ({ id: sid("sku", 800 + index), product_id: productId, color_id: colorId, color_name: "完整颜色名称", fit_id: fit, fit_name: fit === fitId ? "Y版（修身）" : "A版（标准）", size_id: size1, member_size_id: size1 });
 const image = () => ({ id: imageId, product_id: productId, file_ref: "SYNTHETIC/private-object", mime: "image/webp", byte_size: "8388608", display_order: 10 });
 const target = (values: unknown[], sql: string) => { assert.equal(values[0], productId); assert.match(sql, /WHERE p.id = \$1::uuid/); assert.ok(!sql.includes(productId)); };
+test("W15 current media reader requires actual-pool retained-delete proof and filters deleted product before returning membership", async () => {
+  let connects = 0;
+  const legacy = new PostgresProductQueryReader({ async connect() { connects++; throw Error("NO_LEGACY_DELIVERY_SQL"); } });
+  await assert.rejects(legacy.readCurrentImage(read(imageParameters)), { code: "PRODUCT_MEDIA_NOT_READY" }); assert.equal(connects, 0);
+  for (const rows of [[image()], []]) {
+    const client = new Client([begin(), { sql: /^SELECT i.id/, rows, inspect(values, sql) { assert.deepEqual(values, [productId, imageId]); assert.match(sql, /AND p.deleted_at IS NULL/); } }, commit()]);
+    const pool = { async connect() { return client; } };
+    const current = new PostgresProductQueryReader(pool, { profile: "catalogue-retained-delete-v22", assertVerified(target) { assert.equal(target, pool); } });
+    const result = await current.readCurrentImage(read(imageParameters)); assert.equal(result?.id ?? null, rows.length ? imageId : null); client.done();
+  }
+});
 test("product pg protocol: constructor does not connect; invalid/aborted/mismatched grant never connects", async () => {
   assert.throws(() => new PostgresProductQueryReader(undefined as never), /explicit PostgreSQL pool/);
   let calls = 0; const r = new PostgresProductQueryReader({ async connect() { calls++; throw new Error("Must not connect"); } });

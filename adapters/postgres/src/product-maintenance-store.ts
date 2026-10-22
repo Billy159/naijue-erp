@@ -6,6 +6,7 @@ import type { ProductAggregate, ProductBarcodeRecord, ProductDetailReferences, P
 import { parseProductMaintenanceCandidates, parseProductSeasonIds, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS } from "../../../packages/application/src/product-maintenance-validation.ts";
 import { productSeasonArrayEnabled, type ProductSeasonArrayCapability, type PgProductQueryResult } from "./product-query-reader.ts";
 import type { MaintenancePgUnitOfWork } from "./maintenance-command-unit-of-work.ts";
+import type { ProductMaintenanceImageSnapshot, ProductMaintenanceImageMetadata } from "../../../packages/application/src/product-maintenance-ports.ts";
 import { booleanValue, integerValue, nullableString, stringValue, versionFromSql } from "./codec.ts";
 
 export interface PgProductMaintenanceContext {
@@ -71,6 +72,32 @@ class ProductTransaction implements ProductMaintenanceTransaction {
   constructor(context: PgProductMaintenanceContext, deletion: ProductDeletionGuard | null, seasonArray: boolean) { this.seasonArray = seasonArray; this.context = context; this.evidence = context.evidence; this.deletion = deletion; }
   close(): void { this.active = false; }
   private query(sql: string, values: unknown[] = []) { requireDomain(this.active, "TRANSACTION_CLOSED", "Product transaction is closed"); return this.context.client.query(sql, values); }
+  async readImageSnapshot(productId: string): Promise<ProductMaintenanceImageSnapshot | null> {
+    uuid(productId);
+    const rows = (await this.query(`/* product-maintenance:images */ SELECT p.id,p.version,COALESCE((SELECT jsonb_agg(to_jsonb(i) ORDER BY i.display_order,i.id)
+      FROM (SELECT i.id,i.product_id,i.file_ref,i.mime,i.byte_size::text AS byte_size,i.display_order,i.version,i.image_role,i.color_id,
+        to_char(i.created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS created_at,i.created_by_account_id,
+        (i.image_role IS DISTINCT FROM 'COLOR' OR EXISTS(SELECT 1 FROM naijue_erp.sku s WHERE s.product_id=p.id AND s.color_id=i.color_id)) AS valid_color
+        FROM naijue_erp.product_image i WHERE i.product_id=p.id ORDER BY i.display_order,i.id LIMIT 1001) i),'[]'::jsonb) AS images
+      FROM naijue_erp.product p WHERE p.id=$1::uuid AND p.deleted_at IS NULL`, [productId])).rows;
+    requireDomain(rows.length <= 1, "INVALID_DATABASE_VALUE", "Unique product metadata required"); if (!rows.length) return null;
+    const root = rows[0]!; requireDomain(uuid(root.id) === productId && Array.isArray(root.images) && root.images.length <= 1000, "INVALID_DATABASE_VALUE", "Bounded actual image snapshot required");
+    const ids = new Set<string>(), colors = new Set<string>(); let previous: { order: number; id: string } | undefined;
+    const images = root.images.map((input): ProductMaintenanceImageMetadata => {
+      requireDomain(input && typeof input === "object" && !Array.isArray(input), "INVALID_DATABASE_VALUE", "Actual image metadata required"); const r = input as Record<string, unknown>;
+      const id = uuid(r.id), role = r.image_role, colorId = r.color_id === null ? null : uuid(r.color_id), displayOrder = integerValue(r.display_order), mime = stringValue(r.mime), bytes = stringValue(r.byte_size), createdAt = stringValue(r.created_at), fileRef = stringValue(r.file_ref);
+      requireDomain(!ids.has(id) && uuid(r.product_id) === productId && fileRef.length > 0 && fileRef.length <= 4096 && !fileRef.includes("\0")
+        && (role === null || ["MAIN", "WHITE_BACKGROUND", "HANG_TAG", "DETAIL", "COLOR"].includes(role as string))
+        && (role === "COLOR" ? colorId !== null && !colors.has(colorId) && r.valid_color === true : colorId === null)
+        && displayOrder >= -2147483648 && displayOrder <= 2147483647 && (!previous || displayOrder > previous.order || displayOrder === previous.order && id > previous.id)
+        && ["image/png", "image/jpeg", "image/webp"].includes(mime) && /^[1-9]\d{0,6}$/.test(bytes) && BigInt(bytes) <= 8388608n
+        && /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{6}Z$/.test(createdAt) && Number.isFinite(Date.parse(createdAt)), "INVALID_DATABASE_VALUE", "Invalid actual image facts");
+      ids.add(id); if (colorId !== null) colors.add(colorId); previous = { order: displayOrder, id };
+      return { id, productId, fileRef, mime: mime as ProductMaintenanceImageMetadata["mime"], byteSize: BigInt(bytes), displayOrder,
+        version: versionFromSql(r.version), role: role as ProductMaintenanceImageMetadata["role"], colorId, createdAt, createdByAccountId: r.created_by_account_id === null ? null : uuid(r.created_by_account_id) };
+    });
+    return { productId, version: versionFromSql(root.version), images };
+  }
   async readReferences(p: ProductStoredRecord): Promise<ProductDetailReferences> {
     requireDomain(p.id === this.loadedId, "TRANSACTION_SCOPE", "Read references for the locked product only");
     const rows = (await this.query(`SELECT su.id AS supplier_id,su.name AS supplier_name,su.enabled AS supplier_enabled,

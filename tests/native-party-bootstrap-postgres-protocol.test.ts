@@ -5,6 +5,7 @@ import { IMPORT_V2_TABLES } from '../packages/application/src/import-v2-contract
 import { prepareNativePartyImportChunk } from '../packages/application/src/native-party-import.ts';
 import { PostgresNativePartyImportStore, stageNativePartyImportsOnClient } from '../adapters/postgres/src/native-party-import.ts';
 import type { PgSalesClient, PgSalesResult } from '../adapters/postgres/src/sales-unit-of-work.ts';
+import type { NativeRuntime26Capability } from '../packages/application/src/native-import-schema-contract.ts';
 const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, '0')}`, hash = 'a'.repeat(64);
 function chunk() {
   const table = IMPORT_V2_TABLES.find(t => t.entity === 'STAFF')!, raw = Object.fromEntries(table.columns.map(c => [c.name, '']));
@@ -18,7 +19,7 @@ function chunk() {
 }
 type Row = Record<string, unknown>;
 class BorrowedClient implements PgSalesClient {
-  calls: string[] = []; releases = 0; failNativeCreate = false;
+  calls: string[] = []; releases = 0; failNativeCreate = false; schemaVersion = 19;
   committed: { native: Row[]; sources: Row[]; intents: Row[] } = { native: [], sources: [], intents: [] };
   working = structuredClone(this.committed);
   release() { this.releases++; }
@@ -27,7 +28,7 @@ class BorrowedClient implements PgSalesClient {
     if (sql.startsWith('BEGIN')) { this.working = structuredClone(this.committed); return answer(); }
     if (sql === 'COMMIT') { this.committed = structuredClone(this.working); return answer(); }
     if (sql === 'ROLLBACK') { this.working = structuredClone(this.committed); return answer(); }
-    if (sql.includes('native-party-import:schema')) return answer([{ installed_versions: Array.from({ length: 19 }, (_, i) => i + 1) }]);
+    if (sql.includes('native-party-import:schema')) return answer([{ installed_versions: Array.from({ length: this.schemaVersion }, (_, i) => i + 1) }]);
     if (sql.includes('AS integrity_guards_present')) return answer([{ integrity_guards_present: true }]);
     if (sql.includes('AS accounting_guards_present')) return answer([{ accounting_guards_present: true }]);
     if (sql.includes(':global-lock')) return answer();
@@ -64,4 +65,39 @@ test('borrowed writer validates before SQL and propagates failure without rollin
   assert.equal(client.releases, 0); assert.equal(client.working.intents.length, 1); assert.equal(client.committed.intents.length, 0);
   assert.ok(client.calls.slice(start).every(sql => !/^(?:BEGIN|COMMIT|ROLLBACK)\b/.test(sql)));
   await client.query('ROLLBACK'); assert.equal(client.working.intents.length, 0); assert.equal(client.working.native.length, 0);
+});
+function successorChunk() {
+  const input = { ...chunk().rows[0]!.input, schemaProfile: 'EXACT26' as const };
+  return prepareNativePartyImportChunk([input]);
+}
+test('party26 DTO never enters the old19 writer even when STAFF native fields are unchanged', async () => {
+  const client = new BorrowedClient(), prepared = successorChunk();
+  assert.deepEqual(prepared.rows[0]!.nativeSnapshot, chunk().rows[0]!.nativeSnapshot);
+  await assert.rejects(stageNativePartyImportsOnClient(client, prepared), /NATIVE_PARTY_EXACT26_REQUIRED/);
+  assert.equal(client.calls.length, 0); let connects = 0;
+  await assert.rejects(new PostgresNativePartyImportStore({ async connect() { connects++; return client; } }).stage(prepared), /NATIVE_PARTY_EXACT26_REQUIRED/);
+  assert.equal(connects, 0); assert.equal(client.calls.length, 0);
+});
+test('party26 verifies original borrowed client before SQL and preserves it through shared header persistence', async () => {
+  const client = new BorrowedClient(); client.schemaVersion = 26; await client.query('BEGIN'); let verified = 0;
+  const cap: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(target, purpose) {
+    assert.equal(target, client); assert.equal(purpose, 'IMPORT_STAGE');
+    if (verified++ === 0) assert.deepEqual(client.calls, ['BEGIN']);
+  } };
+  assert.deepEqual(await stageNativePartyImportsOnClient(client, successorChunk(), cap), { inserted: 1, replayed: 0 });
+  assert.equal(verified, 2); assert.equal(client.working.native.length, 1); assert.equal(client.working.sources.length, 1);
+  assert.equal(client.committed.native.length, 0); assert.equal(client.releases, 0);
+  assert.ok(client.calls.slice(1).every(sql => !/^(BEGIN|COMMIT|ROLLBACK)/.test(sql)));
+  await client.query('ROLLBACK'); assert.equal(client.working.native.length, 0);
+});
+test('party26 rejects failed or boolean capabilities before SQL and rejects a wrong schema before native targets', async () => {
+  for (const verify of [async () => { throw Error('SYNTHETIC wrong target'); }, async () => true]) {
+    const client = new BorrowedClient(), cap = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', assertReady: verify } as unknown as NativeRuntime26Capability;
+    await assert.rejects(stageNativePartyImportsOnClient(client, successorChunk(), cap));
+    assert.equal(client.calls.length, 0); assert.equal(client.releases, 0);
+  }
+  const client = new BorrowedClient(), cap: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(target) { assert.equal(target, client); } };
+  await assert.rejects(stageNativePartyImportsOnClient(client, successorChunk(), cap), /NATIVE_PARTY_SCHEMA_NOT_READY/);
+  assert.ok(!client.calls.some(sql => /native-party-import:(target|batch|create|intent)/.test(sql)));
+  assert.equal(client.working.native.length, 0);
 });

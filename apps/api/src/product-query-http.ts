@@ -37,7 +37,7 @@ export function createProductQueryHttpPlugin(options: ProductQueryHttpOptions): 
     app.setErrorHandler((error, _request, reply) => {
       if (error instanceof DomainError) {
         const statuses: Readonly<Record<string, number>> = { INVALID_PRODUCT_QUERY: 400, FORBIDDEN: 403, PRODUCT_IMAGE_NOT_FOUND: 404,
-          PRODUCT_READ_TOO_LARGE: 413, PRODUCT_READ_ABORTED: 408, PRODUCT_MEDIA_NOT_IMPLEMENTED: 501 };
+          PRODUCT_READ_TOO_LARGE: 413, PRODUCT_READ_ABORTED: 408, PRODUCT_MEDIA_NOT_IMPLEMENTED: 501, PRODUCT_MEDIA_NOT_READY: 503 };
         const status = Object.hasOwn(statuses, error.code) ? statuses[error.code] : undefined;
         if (status !== undefined) return reply.code(status).send({ error: { code: error.code,
           message: status === 403 ? "Access denied" : status === 501 ? "Controlled product media storage/delivery is not implemented" : "Product read rejected" } });

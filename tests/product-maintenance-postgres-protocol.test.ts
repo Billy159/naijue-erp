@@ -8,6 +8,31 @@ import type { ProductMaintenanceCommand, ProductMaintenanceDependencies } from "
 import { CATALOGUE_PRICE_KEYS } from "../packages/application/src/catalogue-price-input.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
 const id = (n: number) => sid("product", n);
+function imageProtocol(options: { absent?: boolean; rows?: readonly Record<string, unknown>[]; fail?: boolean } = {}) {
+  const calls: { sql: string; values: unknown[] }[] = []; let authorized = false;
+  const unused = async (): Promise<never> => { throw Error("UNEXPECTED_WRITE"); };
+  const driver: PgProductMaintenanceDriver = { async transaction(work) { return work({ evidence: { async assertAllowed() { authorized = true; }, getReceipt: unused, complete: unused }, client: { async query(sql, values = []) {
+    assert.ok(authorized); calls.push({ sql, values }); if (options.fail) throw Error("SYNTHETIC_METADATA_FAILURE");
+    const rows = options.absent ? [] : [{ id: id(12001), version: 7, images: options.rows ?? [] }]; return { rows, rowCount: rows.length };
+  } } }); } };
+  return { calls, service: createProductMaintenanceService({ unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null }), now: () => "UNUSED", newId: () => "UNUSED" }) };
+}
+const imageRow = () => ({ id: id(12002), product_id: id(12001), file_ref: "PRIVATE_REAL_REF", mime: "image/png", byte_size: "68", display_order: 0, version: 3, image_role: "COLOR", color_id: id(6), created_at: "2026-10-22T00:00:00.123456Z", created_by_account_id: null, valid_color: true });
+test("W15 product images SQL owns native root+image snapshot in one bounded ordered read without writes or original bytes", async () => {
+  const f = imageProtocol({ rows: [imageRow()] }), result = await f.service.readImages(actor, { productId: id(12001) }, new AbortController().signal);
+  assert.equal(result.version, 7); assert.equal(result.images[0]!.version, 3); assert.equal(result.images[0]!.role, "COLOR"); assert.equal(result.images[0]!.colorId, id(6)); assert.equal(result.images[0]!.thumbnailUrl, null);
+  assert.equal(f.calls.length, 1); assert.deepEqual(f.calls[0]!.values, [id(12001)]); assert.match(f.calls[0]!.sql, /ORDER BY i.display_order,i.id LIMIT 1001/);
+  assert.match(f.calls[0]!.sql, /i.version,i.image_role,i.color_id/); assert.match(f.calls[0]!.sql, /s.product_id=p.id AND s.color_id=i.color_id/);
+  assert.match(f.calls[0]!.sql, /p.deleted_at IS NULL/); assert.doesNotMatch(f.calls[0]!.sql, /\bINSERT\b|\bUPDATE\b|\bDELETE\b/); assert.doesNotMatch(JSON.stringify(result), /PRIVATE_REAL_REF|file_ref/);
+});
+test("W15 product images SQL empty/absent/read failure/bad membership and ordering never become a fabricated image set", async () => {
+  const input = { productId: id(12001) }, signal = new AbortController().signal;
+  assert.deepEqual((await imageProtocol().service.readImages(actor, input, signal)).images, []);
+  await assert.rejects(imageProtocol({ absent: true }).service.readImages(actor, input, signal), { code: "PRODUCT_NOT_FOUND" });
+  await assert.rejects(imageProtocol({ fail: true }).service.readImages(actor, input, signal), /SYNTHETIC_METADATA_FAILURE/);
+  for (const rows of [[{ ...imageRow(), valid_color: false }], [{ ...imageRow(), byte_size: "0" }], [{ ...imageRow(), product_id: id(9) }], [imageRow(), imageRow()], Array.from({ length: 1001 }, () => imageRow())])
+    await assert.rejects(imageProtocol({ rows }).service.readImages(actor, input, signal), { code: "INVALID_DATABASE_VALUE" });
+});
 const command: ProductMaintenanceCommand = { action: "CREATE", requestKey: "leaf-create", values: {
   productCode: "REAL-CODE-0001", name: "SYNTHETIC", categoryId: id(1), supplierId: id(2), sizeGroupId: id(3), seasonId: id(4), year: 2026,
   systemItemCode: "0000123", thickness: null, collarPantsType: null, defaultBarcodeSchemeId: id(5), enabled: true,

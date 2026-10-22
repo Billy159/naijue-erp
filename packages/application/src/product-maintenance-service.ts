@@ -1,12 +1,12 @@
 import { requireDomain } from "../../domain/src/errors.ts";
 import { entityId } from "../../domain/src/values.ts";
-import { checkedProductActor, parseProductQuery } from "./product-query-validation.ts";
+import { checkedProductActor, parseProductQuery, activeProductRead } from "./product-query-validation.ts";
 import { partyRequestKey } from "./party-maintenance-validation.ts";
 import { parseProductMaintenanceCandidates, parseProductMaintenanceCommand, parseProductMaintenanceCommandV2, productMaintenanceVersion, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS } from "./product-maintenance-validation.ts";
 import { authorizeProductMaintenance } from "./product-maintenance-authorization.ts";
 import { requestHash } from "./request-hash.ts";
 import type { ActorContext } from "./ports.ts";
-import type { ProductAggregate, ProductAuditObject, ProductBarcodeRecord, ProductMaintenanceAction, ProductMaintenanceDependencies, ProductMaintenanceDetail, ProductMaintenanceDetailV2, ProductMaintenanceResult, ProductSkuRecord, ProductStoredRecord } from "./product-maintenance-ports.ts";
+import type { ProductAggregate, ProductAuditObject, ProductBarcodeRecord, ProductMaintenanceAction, ProductMaintenanceDependencies, ProductMaintenanceDetail, ProductMaintenanceDetailV2, ProductMaintenanceResult, ProductSkuRecord, ProductStoredRecord, ProductMaintenanceImagesDto } from "./product-maintenance-ports.ts";
 
 const coordinate = (row: { readonly colorId: string; readonly fitId: string; readonly sizeId: string }) => JSON.stringify([row.colorId, row.fitId, row.sizeId]);
 function productFacts(p: ProductStoredRecord): ProductAuditObject {
@@ -160,6 +160,50 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
     });
   }
   return Object.freeze({
+    async readImages(actorInput: ActorContext, input: unknown, signal: AbortSignal): Promise<ProductMaintenanceImagesDto> {
+      const actor = checkedProductActor(actorInput), parameters = parseProductQuery(input); activeProductRead(signal);
+      const snapshot = await dependencies.unitOfWork.transaction(async tx => {
+        await authorizeProductMaintenance(tx.evidence, actor, "DETAIL"); activeProductRead(signal);
+        requireDomain(typeof tx.readImageSnapshot === "function", "PRODUCT_MEDIA_NOT_READY", "Actual image metadata reader unavailable");
+        const result = await tx.readImageSnapshot(parameters.productId); activeProductRead(signal);
+        requireDomain(result, "PRODUCT_NOT_FOUND", "Product is unavailable"); return result;
+      });
+      activeProductRead(signal);
+      requireDomain(snapshot.productId === parameters.productId && Array.isArray(snapshot.images) && snapshot.images.length <= 1000, "INVALID_DATABASE_VALUE", "Invalid product image snapshot");
+      const version = productMaintenanceVersion(snapshot.version), ids = new Set<string>(), colors = new Set<string>();
+      let previous: { order: number; id: string } | undefined;
+      for (const image of snapshot.images) {
+        const id = entityId("product", image.id); productMaintenanceVersion(image.version);
+        requireDomain(!ids.has(id) && image.productId === parameters.productId && typeof image.fileRef === "string" && image.fileRef.length > 0
+          && (image.role === null || ["MAIN", "WHITE_BACKGROUND", "HANG_TAG", "DETAIL", "COLOR"].includes(image.role))
+          && (image.role === "COLOR" ? image.colorId !== null && !colors.has(image.colorId) : image.colorId === null)
+          && Number.isInteger(image.displayOrder) && image.displayOrder >= -2147483648 && image.displayOrder <= 2147483647
+          && (!previous || image.displayOrder > previous.order || image.displayOrder === previous.order && id > previous.id)
+          && ["image/png", "image/jpeg", "image/webp"].includes(image.mime) && typeof image.byteSize === "bigint" && image.byteSize > 0n && image.byteSize <= 8388608n
+          && typeof image.createdAt === "string" && /(?:Z|[+-]\d\d:\d\d)$/.test(image.createdAt) && Number.isFinite(Date.parse(image.createdAt)), "INVALID_DATABASE_VALUE", "Invalid actual image metadata");
+        if (image.colorId !== null) { entityId("color", image.colorId); colors.add(image.colorId); }
+        if (image.createdByAccountId !== null) entityId("account", image.createdByAccountId);
+        ids.add(id); previous = { order: image.displayOrder, id };
+      }
+      const media = dependencies.media ?? null, links = new Map<string, string>();
+      if (media !== null && typeof media.resolveAvailableThumbnails === "function" && snapshot.images.length) {
+        let origin: URL; try { origin = new URL(media.deliveryOrigin); } catch { throw Error("Invalid controlled media origin"); }
+        requireDomain(origin.protocol === "https:" && origin.origin === media.deliveryOrigin && !origin.username && !origin.password, "INVALID_DATABASE_VALUE", "Invalid controlled media origin");
+        const resolved = await media.resolveAvailableThumbnails({ actor, grant: { productId: parameters.productId }, productId: parameters.productId, images: snapshot.images, signal }); activeProductRead(signal);
+        requireDomain(Array.isArray(resolved) && resolved.length <= snapshot.images.length, "INVALID_DATABASE_VALUE", "Invalid controlled thumbnail batch");
+        for (const entry of resolved) {
+          const image = snapshot.images.find(i => i.id === entry.imageId); let url: URL; try { url = new URL(entry.url); } catch { throw Error("Invalid controlled thumbnail link"); }
+          requireDomain(image && !links.has(entry.imageId) && entry.variant === "thumbnail" && url.origin === origin.origin && url.protocol === "https:"
+            && !url.username && !url.password && !url.search && !url.hash && url.href === entry.url
+            && url.pathname.endsWith(`/products/media/${parameters.productId}/${entry.imageId}/${url.pathname.split("/").at(-2)}/thumbnail`)
+            && /^[a-f0-9]{64}$/.test(url.pathname.split("/").at(-2) ?? "") && !entry.url.includes(image.fileRef), "INVALID_DATABASE_VALUE", "Unsafe controlled thumbnail link");
+          links.set(entry.imageId, entry.url);
+        }
+      }
+      return { productId: parameters.productId, version, images: snapshot.images.map(image => ({ id: image.id, version: image.version, role: image.role,
+        colorId: image.colorId, displayOrder: image.displayOrder, mime: image.mime, byteSize: image.byteSize.toString(), createdAt: image.createdAt,
+        createdByAccountId: image.createdByAccountId, thumbnailUrl: links.get(image.id) ?? null, thumbnailState: links.has(image.id) ? "READY" : "UNAVAILABLE" })) };
+    },
     async candidates(actorInput: ActorContext, input: unknown) {
       const actor = checkedProductActor(actorInput), query = parseProductMaintenanceCandidates(input);
       return dependencies.unitOfWork.transaction(async tx => {

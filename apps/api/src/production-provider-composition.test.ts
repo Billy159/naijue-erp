@@ -1,3 +1,4 @@
+import { sessionTokenHash } from "../../../packages/authentication/src/service.ts";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
@@ -183,4 +184,62 @@ test("explicit production legacy opt-in reaches actual auth service while defaul
     assert.ok(response.headers["set-cookie"]?.toString().includes("HttpOnly; Secure; SameSite=Strict"));
     assert.equal(response.body.includes(hash), false); assert.equal(response.body.includes(salt), false); assert.equal(response.body.includes(password), false);
   } finally { await original.close(); await production.close(); }
+});
+
+test("W13 production mount uses shared pool and fresh maintenance identity; counts cannot expose forbidden staff/account modules", async () => {
+  const token = Buffer.alloc(32, 29).toString("base64url"), now = "2026-10-22T00:00:00.000Z";
+  const query = { module: "ALL", objectId: null, objectSearch: "", actorSearch: "", action: "ALL", dateFrom: null, dateTo: null, page: 1, pageSize: 20 };
+  for (const scenario of [
+    { role: "ADMIN", module: "ALL", enabled: true, status: 200, modules: 12 },
+    { role: "WAREHOUSE", module: "ALL", enabled: true, status: 200, modules: 10 },
+    { role: "WAREHOUSE", module: "STAFF", enabled: true, status: 403, modules: 0 },
+    { role: "SALESPERSON", module: "ALL", enabled: true, status: 403, modules: 0 },
+    { role: "ADMIN", module: "ALL", enabled: false, status: 403, modules: 0 }
+  ]) {
+    const calls: { sql: string; values: unknown[] }[] = []; let allocations = 0, connections = 0, releases = 0;
+    const row = { account_id: account, staff_id: "00000000-0000-4000-8000-000000000003", login_name: "SYNTHETIC_AUDIT",
+      password_hash: "SYNTHETIC_UNUSED_CREDENTIAL", login_enabled: true, auth_version: 1, role: "ADMIN", employment_status: "在职", hall_id: hall, hall_enabled: true };
+    const driver = Object.assign(new EventEmitter(), { async connect() { connections++; return Object.assign(new EventEmitter(), {
+      async query(sql: string, values: unknown[] = []) {
+        calls.push({ sql, values }); let rows: Record<string, unknown>[] = [];
+        if (sql.startsWith("BEGIN") || sql === "COMMIT" || sql === "ROLLBACK" || sql.includes("maintenance:administrator-lock")) {}
+        else if (sql.includes("maintenance:identity")) rows = [{ ...row, role: scenario.role, login_enabled: scenario.enabled }];
+        else if (sql.includes("maintenance:hall")) rows = [{ id: hall, enabled: true }];
+        else if (sql.includes("settings-audit:role")) rows = [{ account_id: account, role: scenario.role }];
+        else if (sql.includes("settings-audit:page")) {
+          assert.equal((values[0] as string[]).length, scenario.modules);
+          if (scenario.role === "WAREHOUSE") assert.ok(!(values[0] as string[]).some(m => m === "STAFF" || m === "ACCOUNT"));
+          assert.doesNotMatch(sql, /password|token_hash|request_key|SELECT a\.\*/);
+          rows = [{ total: "0", items: [], too_large: false }];
+        } else if (sql.includes("FROM naijue_erp.auth_session")) rows = [{ token_hash: sessionTokenHash(token), account_id: account,
+          auth_version: 1, created_at: now, expires_at: "2026-10-22T01:00:00.000Z", revoked_at: null }];
+        else if (sql.includes("FROM naijue_erp.user_account a JOIN naijue_erp.staff s")) rows = [row];
+        else if (sql === "SELECT enabled FROM naijue_erp.hall WHERE id = $1 FOR SHARE") rows = [{ enabled: true }];
+        else throw Error("Unexpected synthetic W13 host query");
+        return { rows, rowCount: rows.length };
+      }, release() { releases++; }
+    }); }, async end() {} });
+    const base = productionApplicationOptions({ ...config(), documentCommands: "DISABLED" });
+    const api = await createPostgresApplicationApi({ ...base, authentication: { ...base.authentication, now: () => now } }, () => { allocations++; return driver; });
+    try {
+      assert.equal(connections, 0); assert.equal(api.app.server.listening, false);
+      const request = { method: "POST" as const, url: "/settings/audit/query", payload: { ...query, module: scenario.module },
+        headers: { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${token}` } };
+      const response = await api.app.inject(request); assert.equal(response.statusCode, scenario.status, response.body);
+      assert.equal(response.headers["cache-control"], "no-store");
+      assert.equal(calls.filter(c => c.sql.includes("settings-audit:page")).length, scenario.status === 200 ? 1 : 0);
+      assert.equal(allocations, 1); assert.equal(connections, 2); assert.equal(releases, connections);
+      assert.ok(!calls.some(c => /^(?:INSERT|UPDATE|DELETE)/.test(c.sql)));
+      if (scenario.status === 200) assert.deepEqual(response.json(), { items: [], total: 0, page: 1, pageSize: 20 });
+      assert.equal(api.app.hasRoute({ method: "POST", url: "/settings/audit/commands" }), false);
+      const noOrigin = await api.app.inject({ ...request, headers: { cookie: request.headers.cookie } });
+      assert.equal(noOrigin.statusCode, 401); assert.equal(connections, 2);
+    } finally { await api.close(); }
+  }
+});
+test("W13 stays absent without the explicit native read profile; authenticated route is not created by base composition", async () => {
+  const base = productionApplicationOptions({ ...config(), documentCommands: "DISABLED" }), { nativeReadExtensions: _profile, ...without } = base;
+  const driver = Object.assign(new EventEmitter(), { async connect(): Promise<never> { throw Error("must not connect"); }, async end() {} });
+  const api = await createPostgresApplicationApi(without, () => driver);
+  try { assert.equal(api.app.hasRoute({ method: "POST", url: "/settings/audit/query" }), false); } finally { await api.close(); }
 });

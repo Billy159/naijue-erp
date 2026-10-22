@@ -76,7 +76,7 @@ export function ProductEditorBase(props:ProductEditorFieldsProps){
  const p=props.values;
  const choose=(field:'categoryId'|'supplierId'|'defaultBarcodeSchemeId',kind:ProductMaintenanceCandidateKind,label:string)=>
   <ProductCandidateSelect scope={props.scope} reader={props.reader} kind={kind} label={label} value={p[field]||null} currentLabel={p[field]===null?null:props.labels[`${kind}:${p[field]}`]??null} disabled={props.disabled} allowClear={field!=='categoryId'} onAccessFailure={props.onAccessFailure} onChange={(id,name)=>{props.remember(id,name,kind);props.change({[field]:id??(field==='categoryId'?'':null)});}}/>;
- return <div className="product-editor-base-grid">
+ return <div className="product-editor-base-grid" role="group" aria-label="商品基础资料">
   <label className="field"><span>款号 *</span><UIInput aria-label="款号" value={p.productCode} readOnly={props.existing} disabled={props.disabled} onChange={productCode=>props.change({productCode})}/></label>
   <label className="field"><span>商品名称 *</span><UIInput aria-label="商品名称" value={p.name} disabled={props.disabled} onChange={name=>props.change({name})}/></label>
   <label className="field"><span>商品分类 *</span>{props.categoryReader?<ProductCategorySelect {...props}/>:choose('categoryId','categories','商品分类')}</label>
@@ -84,7 +84,7 @@ export function ProductEditorBase(props:ProductEditorFieldsProps){
   <div className="field"><span>{'seasonIds' in p ? '季节' : '季节 *'}</span>{'seasonIds' in p ? <ProductSeasonSelect scope={props.scope} reader={props.reader} value={p.seasonIds} labels={props.labels} originallyUnknown={!!props.seasonOriginallyUnknown} disabled={props.disabled} onAccessFailure={props.onAccessFailure} remember={(id,name)=>props.remember(id,name,'seasons')} change={seasonIds=>props.change({seasonIds})}/> : <ProductCandidateSelect scope={props.scope} reader={props.reader} kind="seasons" label="季节" value={p.seasonId} currentLabel={p.seasonId?props.labels[`seasons:${p.seasonId}`]??null:null} disabled={props.disabled} allowClear onAccessFailure={props.onAccessFailure} onChange={(seasonId,name)=>{props.remember(seasonId,name,'seasons');props.change({seasonId});}}/>}</div>
   <label className="field"><span>供应商 *</span>{choose('supplierId','suppliers','供应商')}</label>
   {(['thickness','collarPantsType']as const).map((field,index)=><label className="field" key={field}><span>{index===0?'厚薄（可选）':'领型 / 裤型（可选）'}</span><ProductCandidateSelect scope={props.scope} reader={props.reader} kind={index===0?'thicknesses':'collar-pants-types'} label={index===0?'厚薄':'领型 / 裤型'} value={p[field]} currentLabel={p[field]} disabled={props.disabled} allowCreate allowClear onAccessFailure={props.onAccessFailure} onChange={value=>props.change({[field]:value})}/></label>)}
-  <label className="field"><span>系统货号 *</span><UIInput aria-label="系统货号" value={p.systemItemCode??''} disabled={props.disabled} onChange={value=>props.change({systemItemCode:value===''?null:value})}/></label>
+  <label className="field"><span>系统货号 *</span><UIInput aria-label="系统货号" placeholder="输入系统货号" value={p.systemItemCode??''} disabled={props.disabled} onChange={value=>props.change({systemItemCode:value===''?null:value})}/></label>
  </div>;
 }
 

@@ -6,7 +6,40 @@ import type { ProductAggregate, ProductAuditObject, ProductBarcodeInput, Product
 import { CATALOGUE_PRICE_KEYS } from "../packages/application/src/catalogue-price-input.ts";
 import { requireDomain } from "../packages/domain/src/errors.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
+import type { ProductMaintenanceImageSnapshot } from "../packages/application/src/product-maintenance-ports.ts";
+import type { ControlledProductMedia } from "../packages/application/src/product-query-ports.ts";
 const gid = (n: number) => sid("product", n);
+function imageService(snapshot: ProductMaintenanceImageSnapshot | null, media: ControlledProductMedia | null = null, denied = false, failed = false, missing = false) {
+  let reads = 0; const unused = async (): Promise<never> => { throw Error("UNEXPECTED_WRITE_OR_DETAIL"); };
+  const tx: ProductMaintenanceTransaction = { evidence: { async assertAllowed(_actor, kind, action) { assert.equal(kind, "PRODUCT"); assert.equal(action, "DETAIL"); requireDomain(!denied, "FORBIDDEN", "SYNTHETIC DENIED"); }, getReceipt: unused, complete: unused },
+    ...(!missing ? { async readImageSnapshot() { reads++; if (failed) throw Error("PRIVATE_SQL"); return snapshot; } } : {}),
+    load: unused, readReferences: unused, readCandidates: unused, validateReferences: unused, assertCanDelete: unused, putProduct: unused, putSku: unused, putBarcode: unused };
+  return { service: createProductMaintenanceService({ unitOfWork: { async transaction(work) { return work(tx); } }, now: () => "UNUSED", newId: () => "UNUSED", media }), reads: () => reads };
+}
+const imageSnapshot = (): ProductMaintenanceImageSnapshot => ({ productId: gid(12001), version: 7, images: [{ id: gid(12002), productId: gid(12001), version: 3,
+  fileRef: "PRIVATE_ORIGINAL_REF", role: null, colorId: null, mime: "image/png", byteSize: 68n, displayOrder: -3, createdAt: "2026-10-22T00:00:00.123456Z", createdByAccountId: null }] });
+test("W15 richer images preserve actual root/image versions, unknown role/creator and only safe optional thumbnail links", async () => {
+  const snapshot = imageSnapshot(), f = imageService(snapshot), input = { productId: snapshot.productId }, signal = new AbortController().signal;
+  const result = await f.service.readImages(actor, input, signal); assert.equal(f.reads(), 1); assert.equal(result.version, 7); assert.equal(result.images[0]!.version, 3);
+  assert.equal(result.images[0]!.role, null); assert.equal(result.images[0]!.createdByAccountId, null); assert.equal(result.images[0]!.displayOrder, -3);
+  assert.equal(result.images[0]!.byteSize, "68"); assert.equal(result.images[0]!.thumbnailState, "UNAVAILABLE"); assert.equal(result.images[0]!.thumbnailUrl, null);
+  assert.doesNotMatch(JSON.stringify(result), /fileRef|PRIVATE|productId.*productId/);
+  let originalReads = 0, oldBatches = 0;
+  const media: ControlledProductMedia = { deliveryOrigin: "https://synthetic.invalid", async resolveThumbnails() { oldBatches++; return []; }, async resolveOriginal() { originalReads++; throw Error("NOT_REQUESTED"); },
+    async resolveAvailableThumbnails(read) { return [{ imageId: read.images[0]!.id, variant: "thumbnail", url: `https://synthetic.invalid/api/products/media/${snapshot.productId}/${snapshot.images[0]!.id}/${"a".repeat(64)}/thumbnail` }]; } };
+  const ready = await imageService(snapshot, media).service.readImages(actor, input, signal); assert.equal(ready.images[0]!.thumbnailState, "READY"); assert.equal(originalReads, 0); assert.equal(oldBatches, 0);
+});
+test("W15 richer images distinguish real empty, unavailable snapshot, failure, forbidden and malformed metadata", async () => {
+  const snapshot = imageSnapshot(), input = { productId: snapshot.productId }, signal = new AbortController().signal;
+  assert.deepEqual(await imageService({ ...snapshot, images: [] }).service.readImages(actor, input, signal), { productId: snapshot.productId, version: 7, images: [] });
+  await assert.rejects(imageService(null).service.readImages(actor, input, signal), { code: "PRODUCT_NOT_FOUND" });
+  await assert.rejects(imageService(snapshot, null, false, true).service.readImages(actor, input, signal), /PRIVATE_SQL/);
+  await assert.rejects(imageService(snapshot, null, false, false, true).service.readImages(actor, input, signal), { code: "PRODUCT_MEDIA_NOT_READY" });
+  const denied = imageService(snapshot, null, true); await assert.rejects(denied.service.readImages(actor, input, signal), { code: "FORBIDDEN" }); assert.equal(denied.reads(), 0);
+  for (const images of [[snapshot.images[0]!, snapshot.images[0]!], [{ ...snapshot.images[0]!, colorId: gid(1) }], [{ ...snapshot.images[0]!, byteSize: 0n }]])
+    await assert.rejects(imageService({ ...snapshot, images }).service.readImages(actor, input, signal));
+  await assert.rejects(imageService(snapshot).service.readImages(actor, { ...input, role: "ADMIN" }, signal), { code: "INVALID_PRODUCT_QUERY" });
+});
 function values(): ProductWriteValues {
   return { productCode: "ORIGINAL_00001", name: "SYNTHETIC PRODUCT", categoryId: gid(801), supplierId: gid(802), seasonId: gid(803), sizeGroupId: gid(804),
     year: 2026, systemItemCode: "0000123", thickness: null, collarPantsType: null, defaultBarcodeSchemeId: gid(805), enabled: true,
