@@ -1,4 +1,5 @@
 import type { TransferDetail, TransferDetailQuery, TransferListPage, TransferListQuery, TransferSummary, TransferWarehouseQuery, TransferWarehouseReference, TransferWarehousePage as NativeWarehousePage } from '../../../../packages/application/src/transfer-query-ports.ts';
+import type { TransferHistoryReader } from './history-http-reader.ts';
 import type { QueryRead } from '../loading/latest-query.ts';
 import type { ProductReadOnlyReader } from '../inventory/product-contracts.ts';
 
@@ -8,6 +9,7 @@ export type TransferListDto = TransferWire<TransferListPage>;
 export type TransferSummaryDto = TransferWire<TransferSummary>;
 export type TransferDetailDto = TransferWire<TransferDetail>;
 export interface TransferReader {
+  readonly readHistory?: TransferHistoryReader['readHistory'];
   readList(read: QueryRead<TransferListQuery>): Promise<TransferListDto>;
   readDetail(read: QueryRead<TransferDetailQuery>): Promise<TransferDetailDto>;
 }

@@ -1,3 +1,4 @@
+import { TransferHistoryAction, type TransferHistoryCapability } from '../history-view.tsx';
 import { TransferStatusTag } from '../transfer-status-tag.tsx';
 import { UIDate, UIButton, UITextArea } from '../../components/standard-controls.tsx';
 import { useEffect, useRef, useSyncExternalStore } from 'react';
@@ -8,10 +9,10 @@ import { TransferEditableLines } from './editable-lines.tsx';
 import { TransferSavedRecords } from '../saved-records.tsx';
 import type { ReadScope } from '../../loading/read-scope.ts';
 
-export interface TransferCommandFormProps { readonly capability: TransferCommandCapability; readonly scope: ReadScope; readonly close: () => void }
+export interface TransferCommandFormProps { readonly history?: TransferHistoryCapability; readonly capability: TransferCommandCapability; readonly scope: ReadScope; readonly close: () => void }
 /** Source full-page editor, not a generic modal. This bounded first edit slice
  * changes only saved actual-line quantities/date/note; identities stay native. */
-export function TransferCommandForm({ capability, scope, close }: TransferCommandFormProps) {
+export function TransferCommandForm({ capability, scope, close, history }: TransferCommandFormProps) {
   const { workspace } = capability, state = useSyncExternalStore(workspace.subscribe, workspace.getSnapshot, workspace.getSnapshot);
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => { heading.current?.focus(); }, []);
@@ -43,7 +44,8 @@ export function TransferCommandForm({ capability, scope, close }: TransferComman
         <UIButton type="button" className="iw-text-button" disabled={locked || !dirty || editor.inputError} onClick={() => { void workspace.submit('SAVE'); }}>保存</UIButton>
         <UIButton type="button" className="iw-text-button" disabled={!editor.detail || dirty || unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('APPROVE'); }}>审核</UIButton></>}
       {status === 'APPROVED' && <UIButton type="button" className="iw-text-button" disabled={unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail?.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('UNAPPROVE'); }}>弃审</UIButton>}
-      {['导出', '打印', '操作历史'].map(label => <UIButton key={label} type="button" className="iw-text-button" disabled title={`${label}尚未接入`}>{label}</UIButton>)}
+      {['导出', '打印'].map(label => <UIButton key={label} type="button" className="iw-text-button" disabled title={`${label}尚未接入`}>{label}</UIButton>)}
+      <TransferHistoryAction {...(history ? { capability: history } : {})} {...(detail ? { transferId: detail.document.header.id } : {})} />
     </div></div>
     {editor.phase === 'loading' && <p className="transfer-command-notice" role="status">正在读取调拨单…</p>}
     {editor.readError && <p className="transfer-command-notice" role="alert">单据读取未完成。<UIButton type="button" className="iw-link" disabled={unresolved} onClick={() => { void workspace.readCurrent(); }}>重新读取当前单据</UIButton></p>}

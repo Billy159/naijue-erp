@@ -1,3 +1,4 @@
+import { TransferHistoryAction, type TransferHistoryCapability } from './history-view.tsx';
 import { TransferStatusTag } from './transfer-status-tag.tsx';
 import { UIButton } from '../components/standard-controls.tsx';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
@@ -23,14 +24,14 @@ export function TransferDetailContent(props: TransferDetailContentProps) {
     return () => { attached = false; query.cancel(); };
   }, [query, props.transferId, props.scope]);
   if (!props.scope.active) return null;
-  if (snapshot.success && (snapshot.phase === 'success' || snapshot.phase === 'stale')) return <DetailFacts data={snapshot.success.data} scope={props.scope} accessScope={props.accessScope} close={props.close} {...(props.product ? { product: props.product } : {})} />;
+  if (snapshot.success && (snapshot.phase === 'success' || snapshot.phase === 'stale')) return <DetailFacts {...(props.reader.readHistory ? { history: { scope: props.scope, reader: { readHistory: read => props.reader.readHistory!(read) } } } : {})} data={snapshot.success.data} scope={props.scope} accessScope={props.accessScope} close={props.close} {...(props.product ? { product: props.product } : {})} />;
   return <section className="tc-workbench transfer-detail-loading" aria-label="调拨单详情"><div className="tc-head"><h1 ref={heading} tabIndex={-1}>查看调拨单</h1><UIButton type="button" className="iw-text-button" onClick={props.close}>返回列表</UIButton></div>
     {snapshot.phase === 'disposed' ? <p role="status" className="iw-inline-state">读取已取消。<UIButton type="button" className="iw-link" onClick={() => setQuery(createTransferDetailQuery(props.scope, props.reader, props.accessScope))}>重新读取</UIButton></p>
       : snapshot.phase === 'error' ? <p role="alert" className="iw-inline-state">调拨单读取失败。请检查登录及读取权限。<UIButton type="button" className="iw-link" onClick={() => { void query.run(transferTarget(props.transferId)); }}>重试详情</UIButton></p>
         : <p role="status" className="iw-inline-state">正在读取调拨单…<UIButton type="button" className="iw-link" onClick={() => query.dispose()}>取消读取</UIButton></p>}
   </section>;
 }
-function DetailFacts(props: { readonly data: TransferDetailDto; readonly scope: ReadScope; readonly accessScope: ReadScope; readonly close: () => void; readonly product?: TransferProductCapability }) {
+function DetailFacts(props: { readonly history?: TransferHistoryCapability; readonly data: TransferDetailDto; readonly scope: ReadScope; readonly accessScope: ReadScope; readonly close: () => void; readonly product?: TransferProductCapability }) {
   const { data } = props; const { header, lines } = data.document; const sections = transferMatrix(data);
   const [product, setProduct] = useState<{ id: string; label: string; activation: number } | null>(null); const activation = useRef(0); const productTrigger = useRef<HTMLElement | null>(null);
   const heading = useRef<HTMLHeadingElement>(null); useEffect(() => heading.current?.focus(), []);
@@ -42,7 +43,7 @@ function DetailFacts(props: { readonly data: TransferDetailDto; readonly scope: 
   const actions = header.status === 'DRAFT' ? ['作废', '保存', '审核'] : header.status === 'APPROVED' ? ['弃审'] : [];
   const field = (label: string, value: string, title = value) => <div className="tc-gold-field"><span>{label}</span><span className="transfer-read-value" title={title}>{value}</span></div>;
   return <section className="tc-workbench tc-editor transfer-editor" aria-label="调拨单详情">
-    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>查看调拨单</h1><TransferStatusTag status={header.status} /><span className="transfer-muted">· 只读</span><div className="actions"><UIButton type="button" className="iw-text-button tc-back-link" onClick={props.close}>返回列表</UIButton>{[...actions, '导出', '打印', '操作历史'].map(label => <UIButton key={label} type="button" className="iw-text-button" disabled title={`${label}尚未接入`}>{label}</UIButton>)}</div></div>
+    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>查看调拨单</h1><TransferStatusTag status={header.status} /><span className="transfer-muted">· 只读</span><div className="actions"><UIButton type="button" className="iw-text-button tc-back-link" onClick={props.close}>返回列表</UIButton>{[...actions, '导出', '打印'].map(label => <UIButton key={label} type="button" className="iw-text-button" disabled title={`${label}尚未接入`}>{label}</UIButton>)}<TransferHistoryAction {...(props.history ? { capability: props.history } : {})} transferId={header.id} /></div></div>
     <div className="tc-doc-header"><div className="tc-gold-doc-fields">{field('单据日期', header.businessDate)}{field('调出仓库', data.references.fromWarehouseName, `${data.references.fromHallName} / ${data.references.fromWarehouseName}`)}{field('调入仓库', data.references.toWarehouseName, `${data.references.toHallName} / ${data.references.toWarehouseName}`)}
       <div className="tc-gold-field"><span>单号</span><strong className="transfer-read-value" title={header.number}>{header.number}</strong></div>{field('创建者', data.references.createdByName)}<div className="tc-gold-entry-actions"><UIButton type="button" className="iw-button iw-primary" disabled title="扫码录入尚未接入">扫码录入</UIButton></div></div></div>
     <div className="tc-note-row"><span>备注</span><span className="tc-note-read">{header.note || '—'}</span></div>

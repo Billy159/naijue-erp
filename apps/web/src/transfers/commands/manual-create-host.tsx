@@ -1,3 +1,4 @@
+import type { TransferHistoryReader } from '../history-http-reader.ts';
 import { UIButton } from '../../components/standard-controls.tsx';
 import { useEffect, useState, type ComponentType } from 'react';
 import type { ReadScope } from '../../loading/read-scope.ts';
@@ -5,9 +6,9 @@ import { AsyncLeafRegistry } from '../../loading/async-leaf-registry.ts';
 import type { TransferNewDocumentSession } from '../../current-form/transfer-create.ts';
 import type { TransferCommandCapability } from './contracts.ts';
 import { useTransferOwnedScope } from '../owned-scope.ts';
-type ViewProps = { readonly session: TransferNewDocumentSession; readonly scope: ReadScope; readonly close: () => void };
+type ViewProps = { readonly historyReader?: TransferHistoryReader; readonly session: TransferNewDocumentSession; readonly scope: ReadScope; readonly close: () => void };
 /** Loads actual proposal/editor and action styles only after NEW is clicked. */
-export function TransferManualCreateHost(props: { readonly parentScope: ReadScope; readonly capability: NonNullable<TransferCommandCapability['manualCreate']>; readonly loadStyles: () => Promise<unknown>; readonly close: () => void }) {
+export function TransferManualCreateHost(props: { readonly historyReader?: TransferHistoryReader; readonly parentScope: ReadScope; readonly capability: NonNullable<TransferCommandCapability['manualCreate']>; readonly loadStyles: () => Promise<unknown>; readonly close: () => void }) {
   const scope = useTransferOwnedScope(props.parentScope, 'transfer-manual-create', null);
   const [leaves] = useState(() => new AsyncLeafRegistry({ form: { load: () => import('../../current-form/transfer-new-document-form.tsx'), loadStyles: props.loadStyles } }, { maxRetainedEntries: 1 }));
   const [ready, setReady] = useState<{ View: ComponentType<ViewProps>; session: TransferNewDocumentSession } | null>(null);
@@ -29,6 +30,6 @@ export function TransferManualCreateHost(props: { readonly parentScope: ReadScop
     scope?.dispose(); props.close();
   };
   if (!props.parentScope.active) return null;
-  if (ready && scope) return <ready.View session={ready.session} scope={scope} close={close} />;
+  if (ready && scope) return <ready.View session={ready.session} scope={scope} close={close} {...(props.historyReader ? { historyReader: props.historyReader } : {})} />;
   return <section aria-label="新增调拨准备"><h1>新增调拨单</h1><UIButton type="button" onClick={close}>返回列表</UIButton>{failed ? <p role="alert">新建界面准备失败，未发送保存命令。<UIButton type="button" onClick={() => setAttempt(value => value + 1)}>重试界面</UIButton></p> : <p role="status">正在准备新建界面…</p>}</section>;
 }

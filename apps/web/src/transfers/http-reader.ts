@@ -1,3 +1,4 @@
+import { createTransferHistoryHttpReader } from './history-http-reader.ts';
 import { parseTransferDetailQuery, parseTransferListQuery, parseTransferWarehouseQuery } from '../../../../packages/application/src/transfer-query-validation.ts';
 import { createHttpJsonQuery, type HttpQueryOptions } from '../transport/http-query.ts';
 import type { TransferReader, TransferWarehouseReader } from './contracts.ts';
@@ -8,6 +9,7 @@ import { transferDetailResponse, transferListResponse, transferWarehousesRespons
 export function createTransferHttpReader(options: HttpQueryOptions): TransferReader {
   const http = createHttpJsonQuery(options);
   return Object.freeze({
+    readHistory: createTransferHistoryHttpReader(options).readHistory,
     readList(read) {
       const f = read.parameters.filter;
       const body = { filter: { startDate: f.startDate, endDate: f.endDate, statuses: [...f.statuses], fromWarehouseIds: [...f.fromWarehouseIds], toWarehouseIds: [...f.toWarehouseIds], number: f.number }, page: read.parameters.page, pageSize: read.parameters.pageSize };
