@@ -1,0 +1,31 @@
+.mx-transfer-layout{display:block!important}.mx-results{overflow:auto}.mx-section{margin:0 0 14px}.mx-section h3{font-size:13px;margin:0;padding:8px 10px;background:var(--ca-table-head);font-weight:600;position:sticky;left:0}.mx-section h3 small{font-weight:400;color:var(--secondary);margin-left:12px}.mx-table{border-collapse:collapse;table-layout:fixed;min-width:100%;font-size:inherit;background:var(--surface)}.mx-table th,.mx-table td{padding:5px 8px;height:36px;border-bottom:1px solid var(--border);min-width:70px;text-align:right;white-space:nowrap}.mx-table th{position:sticky;top:0;background:var(--ca-table-head);z-index:3}.mx-table td{background:var(--surface)}.mx-table .mx-product{width:240px;min-width:240px;max-width:240px;text-align:left;position:sticky;left:0;z-index:2}.mx-table .mx-product span{display:inline-block;max-width:130px;overflow:hidden;vertical-align:bottom;text-overflow:ellipsis}.mx-table .mx-color{width:92px;min-width:92px;position:sticky;left:240px;z-index:2;text-align:left}.mx-table .mx-warehouse{width:110px;min-width:110px;position:sticky;left:332px;z-index:2;text-align:left}.mx-table th.mx-product,.mx-table th.mx-color,.mx-table th.mx-warehouse{z-index:4}.mx-table input{width:64px;min-width:64px;text-align:right;height:28px;padding:4px 6px}.mx-table input:focus{outline:2px solid var(--primary);outline-offset:-1px;background:var(--primary-light)}.mx-table .mx-product input{width:100%;text-align:left}.mx-table .mx-invalid{color:var(--secondary);background:var(--bg)}.mx-table .mx-actions{display:flex;gap:3px}.mx-table .mx-actions .btn{border:0;padding:3px;min-height:26px;color:var(--primary);background:transparent}.mx-table .mx-entry-hint{text-align:left;white-space:normal;color:var(--secondary)}.mx-entry-table{width:100%}.mx-dialog{width:min(960px,calc(100vw - 32px));border:1px solid var(--border);border-radius:6px;color:var(--text);background:var(--surface);padding:16px;font:inherit}.mx-dialog header,.mx-dialog footer{display:flex;gap:12px;align-items:center;justify-content:flex-end}.mx-dialog header h2{font-size:16px;margin-right:auto}.mx-dialog footer{margin-top:14px}.mx-dialog::backdrop{background:var(--ca-overlay)}.mx-table .mx-subtotal td{background:var(--ca-table-subtotal);font-weight:500}.mx-table .mx-total td{background:var(--ca-table-total);font-weight:600}
+
+.mx-table .mx-fold{padding:0 3px;background:transparent;border:0;color:var(--primary);font:inherit;cursor:pointer}.mx-table .mx-meta{display:block;max-width:224px;overflow:hidden;text-overflow:ellipsis;color:var(--secondary);font-size:12px}.mx-table .mx-fold-row,.mx-table .mx-sum-label{text-align:left}.mx-table .mx-located{outline:2px solid var(--primary);outline-offset:-2px;background:var(--primary-light)}.mx-table .mx-zero{color:var(--secondary)}.mx-results .mx-table{table-layout:fixed}.mx-results .mx-warehouse{overflow:hidden;text-overflow:ellipsis}
+/* Shared matrix boundaries: identity left, totals and actions right. */
+.mx-table th.tc-subtotal,.mx-table td.tc-subtotal,.mx-table .mx-total-cell{position:sticky;right:110px;min-width:76px;width:76px;z-index:4;background:var(--surface);box-shadow:-1px 0 var(--border)}
+.mx-table thead .tc-subtotal,.mx-table thead .mx-total-cell{z-index:7;background:var(--ca-table-head)}
+.mx-table .ui-action-cell{width:110px;min-width:110px;max-width:110px;background:var(--surface)!important}
+.mx-table .mx-subtotal td{background:var(--ca-table-subtotal)}
+.mx-table .mx-total td{background:var(--ca-table-total)}
+.mx-table .mx-subtotal .ui-action-cell{background:var(--ca-table-subtotal)!important}
+.mx-table .mx-total .ui-action-cell{background:var(--ca-table-total)!important}
+.mx-results .mx-section h3{position:sticky;left:0;width:fit-content;min-width:0;max-width:calc(100vw - 330px);white-space:normal}
+.mx-replacement-host{padding:8px!important;white-space:normal!important;text-align:left!important}
+.mx-replacement-panel{border:1px solid var(--primary);padding:12px;background:var(--surface);max-width:calc(100vw - 365px);position:sticky;left:0}
+.mx-replacement-panel header{display:flex;gap:16px;margin-bottom:10px;align-items:center}
+.mx-replacement-fields{display:flex;gap:16px;align-items:end;margin-bottom:10px}
+.mx-replacement-fields label{display:grid;gap:4px}.mx-replacement-fields label:first-child{width:300px}
+.mx-replacement-fields input,.mx-replacement-fields select{width:100%;height:32px}
+.mx-replacement-scroll{overflow-x:auto}.mx-replacement-table{table-layout:fixed;min-width:800px;width:100%;border-collapse:collapse}
+.mx-replacement-table th,.mx-replacement-table td{min-width:76px;text-align:center;padding:6px;border:1px solid var(--border)}
+.mx-replacement-table input,.mx-same-system [data-mx-replace-qty]{width:60px;height:28px}
+.mx-replacement-panel small{display:block;margin-top:8px}
+.mx-replacing.mx-same-system .mx-actions{display:grid;gap:4px}.mx-replacing.mx-same-system .ui-action-cell{width:110px;min-width:110px}
+.sale-editor .sale-doc-header{grid-template-columns:repeat(6,minmax(0,1fr))!important}.sale-doc-header .sale-meta{grid-column:1/-1}
+@media(max-width:1200px){.sale-editor .sale-doc-header{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:760px){.sale-editor .sale-doc-header{grid-template-columns:repeat(2,minmax(0,1fr))!important}.mx-replacement-panel{max-width:calc(100vw - 70px)}.mx-replacement-fields{flex-wrap:wrap}}
+
+/* Replacement occupies its original row; the only group separator is the real size header. */
+.mx-inline-replacement .mx-product input{width:100%;min-width:0;height:30px}.mx-original-hint{display:block;color:var(--secondary);font-size:12px;white-space:normal;margin-top:4px}.mx-inline-replacement .mx-actions{display:flex;align-items:center;gap:3px}.mx-inline-replacement .mx-actions .btn{padding:2px 1px;min-height:26px}.mx-table .mx-inline-replacement .ui-action-cell{width:96px;min-width:96px}.mx-inline-replacement [data-mx-replace-qty]{width:100%;min-width:0}.mx-inline-replacement td{background:#f7faff}
+
+.mx-transfer-layout .mx-actions{justify-content:flex-end}

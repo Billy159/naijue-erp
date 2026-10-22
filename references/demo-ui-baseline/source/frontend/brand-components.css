@@ -1,0 +1,75 @@
+/* Shared semantic color mapping. Page files keep the Demo's existing layout and interactions. */
+
+/* Bespoke Select buttons behave like the same neutral input across modules. */
+.btn.iw-select,.btn.tc-select,.btn.entity-control,
+.btn[data-pc=pick-filter],.btn[data-pc=product-seasons],.btn[data-pc=supplier]{
+ color:var(--ca-ink);background:var(--ca-control-bg);border-color:var(--ca-control-border);
+}
+.btn.iw-select:not(:disabled):hover,.btn.tc-select:not(:disabled):hover,.btn.entity-control:not(:disabled):hover,
+.btn[data-pc=pick-filter]:not(:disabled):hover,.btn[data-pc=product-seasons]:not(:disabled):hover,.btn[data-pc=supplier]:not(:disabled):hover{
+ color:var(--ca-ink);background:var(--ca-control-bg);border-color:var(--ca-control-hover-border);
+}
+.btn.iw-select:focus-visible,.btn.tc-select:focus-visible,.btn.entity-control:focus-visible,
+.btn[data-pc=pick-filter]:focus-visible,.btn[data-pc=product-seasons]:focus-visible,.btn[data-pc=supplier]:focus-visible{
+ border-color:var(--ca-control-focus-border);box-shadow:var(--ca-focus-ring);
+}
+.btn.iw-select:disabled,.btn.tc-select:disabled,.btn.entity-control:disabled,
+.btn[data-pc=pick-filter]:disabled,.btn[data-pc=product-seasons]:disabled,.btn[data-pc=supplier]:disabled{
+ color:var(--ca-control-disabled-text);background:var(--ca-control-disabled-bg);border-color:var(--ca-control-disabled-border);
+}
+.btn:disabled:hover{color:var(--ca-control-disabled-text);background:var(--ca-control-disabled-bg);border-color:var(--ca-control-disabled-border)}
+#pc-dialog :is(input:not([type=checkbox]):not([type=radio]),select,textarea):focus,
+.pc-mode :is(input:not([type=checkbox]):not([type=radio]),select,textarea):focus,
+#tc-dialog :is(input:not([type=checkbox]):not([type=radio]),select,textarea):focus,
+#basic-dialog :is(input:not([type=checkbox]):not([type=radio]),select,textarea):focus{
+ border-color:var(--ca-control-focus-border);box-shadow:var(--ca-focus-ring);
+}
+/* Editable transfer matrix cells use the same form roles as every other input. */
+.tc-workbench .mx-table input:not(:disabled):not(.invalid):not([aria-invalid=true]){
+ color:var(--ca-ink);background:var(--ca-control-bg);border-color:var(--ca-control-border);
+}
+.tc-workbench .mx-table input:not(:disabled):not(.invalid):not([aria-invalid=true]):not(:focus):hover{border-color:var(--ca-control-hover-border)}
+.tc-workbench .mx-table input:not(.invalid):not([aria-invalid=true]):focus,
+.tc-workbench .mx-table input:not(.invalid):not([aria-invalid=true]):focus-visible{
+ outline:0;border-color:var(--ca-control-focus-border);background:var(--ca-control-bg);box-shadow:var(--ca-focus-ring);
+}
+.tc-workbench .mx-table input:is(.invalid,[aria-invalid=true]){
+ color:var(--ca-critical);border-color:var(--ca-critical);
+}
+.tc-workbench .mx-table input:is(.invalid,[aria-invalid=true]):focus{
+ outline:0;box-shadow:0 0 0 2px var(--ca-critical-soft);
+}
+.tc-workbench .mx-table input:disabled{
+ color:var(--ca-control-disabled-text);background:var(--ca-control-disabled-bg);border-color:var(--ca-control-disabled-border);
+}
+
+/* List pagination and data density share one selection and table surface. */
+:is(.iw-pagination,.pc-pagination,.sale-foot,.tc-list-pagination,.pagination) [aria-current=page]{
+ color:var(--ca-nav-selected-text);background:var(--ca-nav-selected-bg);border-color:var(--ca-primary);
+}
+.pc-list-table a{color:var(--ca-link)}
+.pc-list-table a:hover{color:var(--ca-link-hover)}
+:is(.pc-list-table,.tc-list-scroll,.sale-list-scroll,.basic-table,.return-original,.mx-table,.gold-matrix) th{
+ background:var(--ca-table-head);color:var(--ca-ink-2);
+}
+.mx-table .mx-subtotal td,.mx-table .mx-subtotal .ui-action-cell{background:var(--ca-table-subtotal)!important}
+.mx-table .mx-total td,.mx-table .mx-total .ui-action-cell{background:var(--ca-table-total)!important}
+.mx-table tbody tr:not(.mx-subtotal):not(.mx-total):hover td,.basic-table tbody tr:hover td,
+.tc-list-scroll tbody tr:hover td,.sale-list-scroll tbody tr:hover td,.pc-list-table tbody tr:hover td{background:var(--ca-table-row-hover)}
+.mx-table tbody tr:not(.mx-subtotal):not(.mx-total):hover .ui-action-cell,
+:is(.basic-table,.tc-list-scroll,.sale-list-scroll,.pc-list-table) tbody tr:hover .ui-action-cell{background:var(--ca-table-row-hover)!important}
+
+/* Popovers and drawers use the same floating surface, regardless of owner page. */
+:is(.iw-pop,#tc-pop,#sale-header-popup,.entity-picker,.product-finder,.sale-row-menu,#scan-workbench){
+ background:var(--ca-popover-bg);color:var(--ca-ink);border-color:var(--ca-popover-border);box-shadow:var(--ca-shadow-float);
+}
+:is(#tc-dialog,#sale-dialog,#pc-dialog,#basic-dialog,.mx-dialog,.iw-export-dialog,.ui-discard){
+ background:var(--ca-popover-bg);color:var(--ca-ink);border-color:var(--ca-popover-border);box-shadow:var(--ca-shadow-dialog);
+}
+:is(.entity-options>button,#tc-pop .btn,#tc-candidates .btn,.sale-row-menu .btn,.pf-list button):not(:disabled):hover{
+ background:var(--ca-popover-hover);
+}
+:is(.entity-options [aria-selected=true],#tc-pop [aria-selected=true],#tc-candidates [aria-selected=true]){
+ background:var(--ca-primary-selected);color:var(--ca-primary-ink);
+}
+:is(dialog,#tc-dialog,#sale-dialog,#pc-dialog,#basic-dialog,.mx-dialog,.ui-discard)::backdrop{background:var(--ca-overlay)}

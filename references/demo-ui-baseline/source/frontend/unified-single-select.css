@@ -1,0 +1,22 @@
+/* The source selects remain in the DOM for existing form and change handlers. */
+.ui-single-native,.v3-select-wrap select.ui-single-native{position:absolute!important;width:1px!important;height:1px!important;min-height:1px!important;padding:0!important;margin:0!important;opacity:0!important;pointer-events:none!important;overflow:hidden!important}
+.ui-single-host{display:block;width:100%;min-width:0;height:32px;flex:1 1 auto}
+.ui-single-flat::after{content:none!important}
+.ui-single-flat .ui-single-value{padding-left:0;background:transparent}
+.ui-single-source-hidden{display:none!important}
+.v3-select-wrap:has(.ui-single-host) .v3-clear{display:none!important}
+.tc-list .tc-filters .ui-single-host,.tc-editor .tc-gold-field .ui-single-host{display:block;width:100%;height:32px;min-width:0}
+.tc-editor .tc-gold-field .ui-single-host{padding:0;border:0;background:transparent}
+.iw-pagination .iw-select + .ui-single-host,.tc-list-pagination #tc-list-page-size + .ui-single-host{width:108px;min-width:108px;max-width:108px;height:32px;flex:0 0 108px}
+#ledger-filter select[name=type] + .ui-single-host{width:150px;min-width:150px;max-width:180px;flex:0 0 150px}
+.ui-single-entity{flex:0 0 auto;max-width:100%}
+.entity-control,.ui-filter-single,[data-pc=supplier],[data-pc=product-seasons]{box-sizing:border-box;display:flex!important;align-items:center;gap:5px;min-height:32px;height:32px;padding:4px 7px!important;border:1px solid transparent!important;border-radius:4px;background:var(--ca-surface-muted)!important;color:var(--ca-ink)!important;text-align:left;font-size:13px}
+.entity-control:hover,.ui-filter-single:hover,[data-pc=supplier]:hover,[data-pc=product-seasons]:hover{border-color:var(--ca-control-hover-border)!important}
+.entity-control:focus-visible,.ui-filter-single:focus-visible,[data-pc=supplier]:focus-visible,[data-pc=product-seasons]:focus-visible{border-color:var(--ca-control-focus-border)!important;outline:0;box-shadow:none}
+.ui-single-value{display:block;min-width:0;max-width:calc(100% - 25px);height:23px;padding:2px 7px;overflow:hidden;border-radius:3px;background:#fff;text-overflow:ellipsis;white-space:nowrap;line-height:19px}
+.ui-single-arrow{display:inline-flex;align-items:center;justify-content:center;flex:none;width:15px;height:20px;margin-left:auto;color:var(--ca-ink-2)}.ui-single-arrow svg{width:14px;height:14px}
+.entity-control .v3-inline-clear,.ui-filter-single .v3-inline-clear,[data-pc=supplier] .v3-inline-clear,[data-pc=product-seasons] .v3-inline-clear{position:static!important;top:auto!important;right:auto!important;transform:none!important;display:inline-flex;align-items:center;justify-content:center;flex:none;order:1;width:16px;height:20px;margin-left:0;color:var(--ca-ink-2);font-size:15px;line-height:20px}
+.entity-control .ui-single-arrow,.ui-filter-single .ui-single-arrow,[data-pc=supplier] .ui-single-arrow,[data-pc=product-seasons] .ui-single-arrow{order:2;margin-left:auto}
+.v3-inline-clear[hidden]{display:none!important}
+.basic-filters .ui-filter-single{width:160px;flex:none}
+.basic-filters .ui-filter-single .ui-single-value{max-width:calc(100% - 28px)}
