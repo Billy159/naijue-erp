@@ -79,3 +79,16 @@
 
 .product-season-hint{display:block;margin-top:3px;color:var(--ca-ink-3);font-size:12px}
 .product-season-hint .iw-link{font-size:12px}
+
+/* DATA-PRES-003: frozen Demo P05 density; value/edit semantics are unchanged. */
+.product-editor .product-price-wrap{max-width:760px}
+.product-editor .product-price-paste{align-items:baseline;gap:12px;margin-bottom:7px}
+.product-editor .product-price-table{border:1px solid var(--ca-line)}
+.product-editor .product-price-table th,.product-editor .product-price-table td{box-sizing:border-box;height:38px;padding:3px 10px;border-bottom-color:var(--ca-table-grid);font-size:13px}
+.product-editor .product-price-table th:first-child{width:60%}
+.product-editor .product-price-table thead th{height:34px;background:var(--ca-table-head);color:var(--ca-ink-2);font-size:12px}
+.product-editor .product-price-table tbody th{background:var(--ca-table-head);color:var(--ca-ink);font-weight:400}
+.product-editor .product-price-table input.erp-input{height:29px;min-height:29px;padding:3px 8px;border-color:var(--ca-control-border);background:var(--ca-surface);text-align:right;font-variant-numeric:tabular-nums}
+.product-editor .product-price-table input.erp-input:hover{border-color:var(--ca-control-border-hover)}
+.product-editor .product-price-table input.erp-input:focus{border-color:var(--ca-control-focus-border)}
+.product-editor .product-price-wrap>.product-field-hint{margin-top:6px}

@@ -9,10 +9,10 @@ import type { PartyTransaction } from "../packages/application/src/party-mainten
 import { partyActor, partyId } from "./support/party-synthetic-store.ts";
 import { version } from "../packages/domain/src/values.ts";
 
-function protocol(respond: (sql: string, parameters: unknown[]) => PgSalesResult | Promise<PgSalesResult> = () => ({ rows: [], rowCount: 1 })) {
+function protocol(respond: (sql: string, parameters: unknown[]) => PgSalesResult | Promise<PgSalesResult> = () => ({ rows: [], rowCount: 1 }), exact26 = false) {
   const calls: { sql: string; parameters: unknown[] }[] = []; const releases: (Error | boolean | undefined)[] = [];
   let connects = 0; const pool: PgSalesPool = { async connect() { connects++; return { async query(sql, parameters = []) { calls.push({ sql, parameters: structuredClone(parameters) }); return respond(sql, parameters); }, release(error) { releases.push(error); } }; } };
-  return { store: new PostgresPartyUnitOfWork(pool), calls, releases, connects: () => connects };
+  return { store: new PostgresPartyUnitOfWork(pool, exact26 ? { profile: "historical-customer-exact2-v26", assertVerified(target) { assert.equal(target, pool); } } : null), calls, releases, connects: () => connects };
 }
 const native = { id: partyId("customer", 30), code: " 000007-OLD ", name: "SYNTHETIC NATIVE", enabled: true, version: 7, created_at: null, updated_at: null };
 const noRows = { rows: [], rowCount: 1 };
@@ -98,4 +98,33 @@ test("SYNTHETIC atomic party pg protocol: dependency rejection precedes all rena
   const f = protocol(sql => sql.includes("FROM naijue_erp.customer WHERE id") ? { rows: [native], rowCount: 1 } : sql.includes("SELECT EXISTS") ? { rows: [{ used: true }], rowCount: 1 } : noRows);
   await assert.rejects(createPartyMaintenanceService(dependencies(f.store)).execute({ actor: partyActor, kind: "CUSTOMER", action: "EDIT", requestKey: "blocked-pair", id: native.id, expectedVersion: version(7), name: "NOT WRITTEN", enabled: false }), (error: unknown) => (error as { code: string }).code === "CUSTOMER_DEFAULT_IN_USE");
   assert.ok(!f.calls.some(call => call.sql.startsWith("UPDATE") || call.sql.startsWith("INSERT"))); assert.equal(f.calls.at(-1)!.sql, "ROLLBACK");
+});
+
+test("historical exact2: locked current load prevents RESTORE/EDIT/DISABLE and legacy maintenance count/page shares source exclusion", async () => {
+  for (const action of ["RESTORE", "DISABLE", "EDIT"] as const) {
+    const f = protocol(() => noRows, true);
+    const base = { actor: partyActor, kind: "CUSTOMER" as const, requestKey: action, id: native.id, expectedVersion: version(7) };
+    const command = action === "EDIT" ? { ...base, action, name: "SYNTHETIC", enabled: false } : { ...base, action };
+    await assert.rejects(createPartyMaintenanceService(dependencies(f.store)).execute(command), { code: "PARTY_NOT_FOUND" });
+    const load = f.calls.find(q => q.sql.includes("FROM naijue_erp.customer WHERE id"))!; assert.match(load.sql, /AND NOT naijue_erp.is_exact_historical_customer_only\(customer.id\) FOR UPDATE/);
+    assert.ok(f.calls.every(q => !/^(INSERT|UPDATE)/.test(q.sql))); assert.equal(f.calls.at(-1)!.sql, "ROLLBACK");
+  }
+  for (const enabled of ["ALL", "ENABLED", "DISABLED"] as const) {
+    const f = protocol(sql => sql.includes("totals.total") ? { rows: [{ ...native, enabled: enabled === "ENABLED", total: "1" }], rowCount: 1 } : noRows, true);
+    const page = await f.store.transaction(tx => tx.searchCustomers({ search: "", enabled, page: 1, pageSize: 20 }));
+    assert.equal(page.items[0]!.enabled, enabled === "ENABLED"); const query = f.calls.find(q => q.sql.includes("totals.total"))!;
+    assert.equal(query.sql.match(/NOT naijue_erp.is_exact_historical_customer_only\(customer.id\)/g)?.length, 2);
+  }
+});
+test("historical exact2: final party put refuses true or malformed proof, ordinary disabled customer can restore", async () => {
+  for (const proof of [true, null]) {
+    const f = protocol(sql => sql.includes("FROM naijue_erp.customer WHERE id") ? { rows: [{ ...native, enabled: false }], rowCount: 1 }
+      : sql.includes("AS historical_only") ? { rows: [{ historical_only: proof }], rowCount: 1 } : noRows, true);
+    await assert.rejects(createPartyMaintenanceService(dependencies(f.store)).execute({ actor: partyActor, kind: "CUSTOMER", action: "RESTORE", requestKey: "restore", id: native.id, expectedVersion: version(7) }), { code: proof === null ? "INVALID_DATABASE_VALUE" : "PARTY_NOT_FOUND" });
+    assert.ok(f.calls.every(q => !/^(INSERT|UPDATE)/.test(q.sql)));
+  }
+  const f = protocol(sql => sql.includes("FROM naijue_erp.customer WHERE id") ? { rows: [{ ...native, enabled: false }], rowCount: 1 }
+    : sql.includes("AS historical_only") ? { rows: [{ historical_only: false }], rowCount: 1 } : noRows, true);
+  const result = await createPartyMaintenanceService(dependencies(f.store)).execute({ actor: partyActor, kind: "CUSTOMER", action: "RESTORE", requestKey: "restore-current", id: native.id, expectedVersion: version(7) }); assert.equal(result.enabled, true);
+  const proofIndex = f.calls.findIndex(q => q.sql.includes("AS historical_only")), writeIndex = f.calls.findIndex(q => q.sql.startsWith("UPDATE")); assert.ok(proofIndex >= 0 && proofIndex < writeIndex);
 });

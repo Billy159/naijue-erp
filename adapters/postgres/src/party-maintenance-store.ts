@@ -1,3 +1,4 @@
+import { historicalCustomerExclusionEnabled, EXACT_HISTORICAL_CUSTOMER_EXCLUSION, type HistoricalCustomerExclusionCapability } from "./party-read-reader.ts";
 import type { Pool } from "pg";
 import type { CustomerRecord, PartyAudit, PartyKind, PartyPage, PartyReceipt, PartyRecord, PartyResult, PartySearch, PartyTransaction, PartyUnitOfWork, SupplierRecord } from "../../../packages/application/src/party-maintenance-ports.ts";
 import { assertAllocatedPartyCode, partyKind, partyName, partyRequestKey } from "../../../packages/application/src/party-maintenance-validation.ts";
@@ -27,10 +28,10 @@ function result(input: unknown, kind: PartyKind, targetId: string, operationId: 
 /** Inject an existing pg pool only. No connection, migration, seed or listener at construction.
  * Protocol tests do not establish PostgreSQL-engine locking/trigger behavior. */
 export class PostgresPartyUnitOfWork implements PartyUnitOfWork {
-  private readonly pool: PgSalesPool;
-  constructor(pool: PgSalesPool) { if (typeof pool?.connect !== "function") throw new TypeError("Party storage requires an explicit PostgreSQL pool"); this.pool = pool; }
+  private readonly pool: PgSalesPool; private readonly excludeHistorical: boolean;
+  constructor(pool: PgSalesPool, capability: HistoricalCustomerExclusionCapability | null = null) { if (typeof pool?.connect !== "function") throw new TypeError("Party storage requires an explicit PostgreSQL pool"); this.pool = pool; this.excludeHistorical = historicalCustomerExclusionEnabled(pool, capability); }
   async transaction<T>(work: (tx: PartyTransaction) => Promise<T>): Promise<T> {
-    const client = await this.pool.connect(); const tx = new PostgresPartyTransaction(client);
+    const client = await this.pool.connect(); const tx = new PostgresPartyTransaction(client, this.excludeHistorical);
     let began = false; let committing = false; let discard: Error | undefined;
     try {
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
@@ -50,8 +51,8 @@ class PostgresPartyTransaction implements PartyTransaction {
   private receiptIdentity: string | undefined;
   private written = false;
   private codeReserved = false;
-  private readonly client: PgSalesClient;
-  constructor(client: PgSalesClient) { this.client = client; }
+  private readonly client: PgSalesClient; private readonly excludeHistorical: boolean;
+  constructor(client: PgSalesClient, excludeHistorical: boolean) { this.client = client; this.excludeHistorical = excludeHistorical; }
   close(): void { this.active = false; }
   private query(sql: string, values: unknown[] = []): Promise<PgSalesResult> {
     requireDomain(this.active, "TRANSACTION_CLOSED", "Party transaction handle cannot escape callback"); return this.client.query(sql, values);
@@ -74,7 +75,7 @@ class PostgresPartyTransaction implements PartyTransaction {
   private async get(kind: PartyKind, id: string): Promise<PartyRecord | undefined> {
     requireDomain(this.loaded === undefined, "TRANSACTION_SCOPE", "Load one customer OR one supplier per command transaction");
     await this.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", [`naijue:${table(kind)}:${id}`]);
-    const row = (await this.query(`SELECT ${columns} FROM naijue_erp.${table(kind)} WHERE id = $1 FOR UPDATE`, [id])).rows[0];
+    const row = (await this.query(`SELECT ${columns} FROM naijue_erp.${table(kind)} WHERE id = $1${this.excludeHistorical && kind === "CUSTOMER" ? ` AND ${EXACT_HISTORICAL_CUSTOMER_EXCLUSION}` : ""} FOR UPDATE`, [id])).rows[0];
     const previous = row ? record(kind, row) : undefined; this.loaded = { kind, id, previous: structuredClone(previous) }; return previous;
   }
   getCustomer(id: EntityId<"customer">): Promise<CustomerRecord | undefined> { entityId("customer", id); return this.get("CUSTOMER", id) as Promise<CustomerRecord | undefined>; }
@@ -108,6 +109,11 @@ class PostgresPartyTransaction implements PartyTransaction {
     const previous = loaded.previous; assertAllocatedPartyCode(row.code); partyName(row.name);
     requireDomain(row.version === (previous ? previous.version + 1 : 1), "VERSION_CONFLICT", "Party version must advance once");
     requireDomain(!previous || row.code === previous.code && row.createdAt === previous.createdAt, "IMMUTABLE_PARTY_CODE", "Existing code and creation time are immutable");
+    if (this.excludeHistorical && kind === "CUSTOMER") {
+      const proof = (await this.query("SELECT naijue_erp.is_exact_historical_customer_only($1::uuid) AS historical_only", [row.id])).rows;
+      requireDomain(proof.length === 1 && typeof proof[0]!.historical_only === "boolean", "INVALID_DATABASE_VALUE", "Invalid historical customer source proof result");
+      requireDomain(proof[0]!.historical_only === false, "PARTY_NOT_FOUND", "Customer is unavailable for current maintenance");
+    }
     const parameters: unknown[] = [row.id, row.code, row.name, row.enabled, versionToSql(row.version), row.createdAt, row.updatedAt];
     let written: PgSalesResult;
     try {
@@ -131,7 +137,7 @@ class PostgresPartyTransaction implements PartyTransaction {
     requireDomain(row, "INVALID_DATABASE_VALUE", "Missing trusted default-customer dependency result"); return booleanValue(row.used);
   }
   private async search(kind: PartyKind, query: PartySearch): Promise<PartyPage<PartyRecord>> {
-    const filter = "($1::text = '' OR strpos(code, $1) > 0 OR strpos(name, $1) > 0) AND ($2::boolean IS NULL OR enabled = $2)";
+    const filter = "($1::text = '' OR strpos(code, $1) > 0 OR strpos(name, $1) > 0) AND ($2::boolean IS NULL OR enabled = $2)" + (this.excludeHistorical && kind === "CUSTOMER" ? ` AND ${EXACT_HISTORICAL_CUSTOMER_EXCLUSION}` : "");
     const rows = (await this.query(`SELECT page.*, totals.total::text FROM (SELECT COUNT(*) AS total FROM naijue_erp.${table(kind)} WHERE ${filter}) totals
       LEFT JOIN LATERAL (SELECT ${columns} FROM naijue_erp.${table(kind)} WHERE ${filter} ORDER BY name COLLATE "C", id LIMIT $3 OFFSET $4) page ON true`,
       [query.search, query.enabled === "ALL" ? null : query.enabled === "ENABLED", query.pageSize, (query.page - 1) * query.pageSize])).rows;

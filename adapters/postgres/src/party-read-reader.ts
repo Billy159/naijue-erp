@@ -4,13 +4,30 @@ import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import type { PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
 import { booleanValue, nullableString, stringValue, versionFromSql } from "./codec.ts";
+/** D1-issued proof: exact26 function body, immutable exact2 source closure and role EXECUTE ACL. */
+export interface HistoricalCustomerExclusionCapability {
+  readonly profile: "historical-customer-exact2-v26";
+  readonly assertVerified: (target: object) => void;
+}
+export const EXACT_HISTORICAL_CUSTOMER_EXCLUSION = "NOT naijue_erp.is_exact_historical_customer_only(customer.id)";
+export function historicalCustomerExclusionEnabled(target: object, capability: HistoricalCustomerExclusionCapability | null): boolean {
+  if (capability === null) return false;
+  if (typeof capability !== "object" || Array.isArray(capability) || Object.getPrototypeOf(capability) !== Object.prototype
+    || Reflect.ownKeys(capability).length !== 2) throw new TypeError("Verified historical customer capability required");
+  const p = Object.getOwnPropertyDescriptor(capability, "profile"), v = Object.getOwnPropertyDescriptor(capability, "assertVerified");
+  if (!p || !("value" in p) || p.value !== "historical-customer-exact2-v26" || !v || !("value" in v) || typeof v.value !== "function"
+    || Object.prototype.toString.call(v.value) === "[object AsyncFunction]") throw new TypeError("Synchronous exact2 source proof required");
+  const result: unknown = v.value(target);
+  if (result !== undefined) { if (result instanceof Promise) void result.catch(() => {}); throw new TypeError("Synchronous exact2 source proof required"); }
+  return true;
+}
 type Query = (text: string, values?: unknown[]) => Promise<PgSalesResult>;
 const stamp = (column: string) => `to_char(${column} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
 const columns = `id, code, name, enabled, version, ${stamp("created_at")} AS created_at, ${stamp("updated_at")} AS updated_at`;
 /** Real read-only adapter. Abort checks are between bounded queries/acquisition; not in-flight PG cancellation. */
 export class PostgresPartyReadReader implements PartyReadReader {
-  private readonly pool: PgSalesPool;
-  constructor(pool: PgSalesPool) { if (typeof pool?.connect !== "function") throw TypeError("Explicit party read pool required"); this.pool = pool; }
+  private readonly pool: PgSalesPool; private readonly excludeHistorical: boolean;
+  constructor(pool: PgSalesPool, capability: HistoricalCustomerExclusionCapability | null = null) { if (typeof pool?.connect !== "function") throw TypeError("Explicit party read pool required"); this.pool = pool; this.excludeHistorical = historicalCustomerExclusionEnabled(pool, capability); }
   private async snapshot<T>(signal: AbortSignal, work: (query: Query) => Promise<T>): Promise<T> {
     activePartyRead(signal); const client = await this.pool.connect(); let began = false, committing = false, discard: Error | undefined;
     const query: Query = (text, values = []) => { activePartyRead(signal); return client.query(text, values); };
@@ -36,7 +53,7 @@ export class PostgresPartyReadReader implements PartyReadReader {
     const read = checkedPartyReadScope(input), intent = read.intent;
     requireDomain(intent.operation !== "DETAIL", "FORBIDDEN", "Party list grant required");
     const table = intent.kind === "CUSTOMER" ? "customer" : "supplier", p = intent.query;
-    const predicate = "($1::text = '' OR strpos(code, $1) > 0 OR strpos(name, $1) > 0) AND ($2::boolean IS NULL OR enabled = $2)";
+    const predicate = "($1::text = '' OR strpos(code, $1) > 0 OR strpos(name, $1) > 0) AND ($2::boolean IS NULL OR enabled = $2)" + (this.excludeHistorical && intent.kind === "CUSTOMER" ? ` AND ${EXACT_HISTORICAL_CUSTOMER_EXCLUSION}` : "");
     return this.snapshot(read.signal, async query => {
       const parameters = [p.search, p.enabled === "ALL" ? null : p.enabled === "ENABLED"];
       const counts = (await query(`SELECT count(*)::text AS total FROM naijue_erp.${table} WHERE ${predicate}`, parameters)).rows;
@@ -54,7 +71,7 @@ export class PostgresPartyReadReader implements PartyReadReader {
     if (intent.operation !== "DETAIL") throw Error("Invalid trusted party detail intent");
     const table = intent.kind === "CUSTOMER" ? "customer" : "supplier";
     return this.snapshot(read.signal, async query => {
-      const rows = (await query(`SELECT ${columns} FROM naijue_erp.${table} WHERE id=$1`, [intent.id])).rows;
+      const rows = (await query(`SELECT ${columns} FROM naijue_erp.${table} WHERE id=$1${this.excludeHistorical && intent.kind === "CUSTOMER" ? ` AND ${EXACT_HISTORICAL_CUSTOMER_EXCLUSION}` : ""}`, [intent.id])).rows;
       requireDomain(rows.length <= 1, "INVALID_DATABASE_VALUE", "Repeated party identity"); return rows[0] ? this.record(rows[0], read) : undefined;
     });
   }

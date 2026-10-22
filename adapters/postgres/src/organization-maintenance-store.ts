@@ -1,3 +1,4 @@
+import { historicalCustomerExclusionEnabled, EXACT_HISTORICAL_CUSTOMER_EXCLUSION, type HistoricalCustomerExclusionCapability } from "./party-read-reader.ts";
 import type { MaintenancePgContext, MaintenancePgUnitOfWork } from "./maintenance-command-unit-of-work.ts";
 import type { OrganizationWriteKind, OrganizationWriteRecord, OrganizationWriteTransaction, OrganizationWriteUnitOfWork } from "../../../packages/application/src/organization-maintenance-ports.ts";
 import { booleanValue, stringValue, versionFromSql } from "./codec.ts";
@@ -10,16 +11,17 @@ const reference = (id: string, name: string, enabled: string) => object({ id, na
 const nativeUuid = (value: unknown): string => entityId("hall", stringValue(value));
 const organizationTable = (kind: OrganizationWriteKind): "hall" | "warehouse" => kind === "HALL" ? "hall" : "warehouse";
 export class PostgresOrganizationMaintenanceUnitOfWork implements OrganizationWriteUnitOfWork {
-  private readonly driver: MaintenancePgUnitOfWork;
-  constructor(driver: MaintenancePgUnitOfWork) { if (typeof driver?.transaction !== "function") throw new TypeError("Hall/warehouse writes require shared driver"); this.driver = driver; }
+  private readonly driver: MaintenancePgUnitOfWork; private readonly excludeHistorical: boolean;
+  constructor(driver: MaintenancePgUnitOfWork, capability: HistoricalCustomerExclusionCapability | null = null) { if (typeof driver?.transaction !== "function") throw new TypeError("Hall/warehouse writes require shared driver"); this.driver = driver; this.excludeHistorical = historicalCustomerExclusionEnabled(driver, capability); }
   transaction<T>(work: (tx: OrganizationWriteTransaction) => Promise<T>): Promise<T> {
-    return this.driver.transaction(async context => { const tx = new OrganizationWriteSqlTransaction(context); try { return await work(tx); } finally { tx.close(); } });
+    return this.driver.transaction(async context => { const tx = new OrganizationWriteSqlTransaction(context, this.excludeHistorical); try { return await work(tx); } finally { tx.close(); } });
   }
 }
 class OrganizationWriteSqlTransaction implements OrganizationWriteTransaction {
   readonly evidence: MaintenancePgContext["evidence"]; private readonly context: MaintenancePgContext;
+  private readonly excludeHistorical: boolean;
   private active = true; private topology = false; private loaded: { readonly kind: OrganizationWriteKind; readonly id: string } | undefined;
-  constructor(context: MaintenancePgContext) { this.context = context; this.evidence = context.evidence; }
+  constructor(context: MaintenancePgContext, excludeHistorical: boolean) { this.excludeHistorical = excludeHistorical; this.context = context; this.evidence = context.evidence; }
   close() { this.active = false; }
   private query(sql: string, values: unknown[] = []) { requireDomain(this.active, "TRANSACTION_CLOSED", "Organization transaction closed"); return this.context.client.query(sql, values); }
   async lockTopology() {
@@ -40,7 +42,7 @@ class OrganizationWriteSqlTransaction implements OrganizationWriteTransaction {
     this.assertRoot(next);
     if (next.kind === "HALL") {
       if (next.defaultCustomerId !== null) {
-        const rows = (await this.query("SELECT id,enabled FROM naijue_erp.customer WHERE id=$1::uuid FOR SHARE", [next.defaultCustomerId])).rows;
+        const rows = (await this.query(`SELECT id,enabled FROM naijue_erp.customer WHERE id=$1::uuid${this.excludeHistorical ? ` AND ${EXACT_HISTORICAL_CUSTOMER_EXCLUSION}` : ""} FOR SHARE`, [next.defaultCustomerId])).rows;
         requireDomain(rows.length === 1 && rows[0]!.id === next.defaultCustomerId && (!next.enabled || rows[0]!.enabled === true), "ORGANIZATION_REFERENCE_UNAVAILABLE", "Enabled hall requires a real enabled default customer");
       }
       if (next.defaultSalesWarehouseId !== null) {

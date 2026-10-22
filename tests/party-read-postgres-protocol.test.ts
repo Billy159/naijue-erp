@@ -9,7 +9,7 @@ const read = (operation: "LIST" | "DETAIL" | "CANDIDATES" = "LIST", kind: "CUSTO
   intent: operation === "DETAIL" ? { kind, operation, id: ids.customer } : { kind, operation, query: { search: "%' OR 1=1--", enabled: operation === "CANDIDATES" ? "ENABLED" : "ALL", page: 2, pageSize: 20 } },
   grant: { kind, operation, targetId: operation === "DETAIL" ? ids.customer : null },
 });
-function fixture(afterQuery?: (sql: string) => void) {
+function fixture(afterQuery?: (sql: string) => void, exact26 = false) {
   const calls: { sql: string; values: unknown[] }[] = [], releases: unknown[] = []; let connects = 0;
   let fail = "", rollbackFail = false;
   const pool = { async connect() { connects++; return { async query(sql: string, values: unknown[] = []) {
@@ -19,7 +19,7 @@ function fixture(afterQuery?: (sql: string) => void) {
     if (sql.startsWith("SELECT id")) return { rows: [{ id: ids.customer, code: "原编码", name: "原名", enabled: true, version: 1, created_at: null, updated_at: null }], rowCount: 1 };
     return { rows: [], rowCount: 0 };
   }, release(error?: unknown) { releases.push(error); } }; } };
-  return { reader: new PostgresPartyReadReader(pool), calls, releases, connects: () => connects, failure(sql: string, rollback = false) { fail = sql; rollbackFail = rollback; } };
+  return { reader: new PostgresPartyReadReader(pool, exact26 ? { profile: "historical-customer-exact2-v26", assertVerified(target) { assert.equal(target, pool); } } : null), calls, releases, connects: () => connects, failure(sql: string, rollback = false) { fail = sql; rollbackFail = rollback; } };
 }
 test("party native count/page and exact detail use one RR READ ONLY snapshot with parameterized fixed table mapping", async () => {
   for (const kind of ["CUSTOMER", "SUPPLIER"] as const) {
@@ -56,4 +56,28 @@ test("party read known failure rolls back, unknown COMMIT discards without retry
   const f = fixture(); await f.reader.search(read()); const countSql = f.calls[1]!.sql;
   const known = fixture(); known.failure(countSql); await assert.rejects(known.reader.search(read())); assert.equal(known.calls.at(-1)!.sql, "ROLLBACK"); assert.equal(known.releases[0], undefined);
   const failed = fixture(); failed.failure(countSql, true); await assert.rejects(failed.reader.search(read()), AggregateError); assert.ok(failed.releases[0] instanceof Error);
+});
+
+test("historical exact2: read count/page/detail/candidates wire the identical proved predicate; legacy19 and suppliers do not probe it", async () => {
+  for (const enabled of ["ALL", "ENABLED", "DISABLED"] as const) {
+    const f = fixture(undefined, true), scope = read();
+    if (scope.intent.operation === "DETAIL") throw Error("Unexpected test intent");
+    await f.reader.search({ ...scope, intent: { ...scope.intent, query: { ...scope.intent.query, enabled } } });
+    for (const q of f.calls.filter(q => q.sql.startsWith("SELECT"))) assert.match(q.sql, /AND NOT naijue_erp.is_exact_historical_customer_only\(customer.id\)/);
+    assert.equal(f.calls[1]!.values[1], enabled === "ALL" ? null : enabled === "ENABLED");
+  }
+  const detail = fixture(undefined, true); await detail.reader.detail(read("DETAIL")); assert.match(detail.calls[1]!.sql, /WHERE id=\$1 AND NOT naijue_erp.is_exact_historical_customer_only\(customer.id\)/);
+  const candidate = fixture(undefined, true); await candidate.reader.search(read("CANDIDATES")); assert.equal(candidate.calls.filter(q => q.sql.includes("is_exact_historical_customer_only")).length, 2);
+  const supplier = fixture(undefined, true); await supplier.reader.search(read("LIST", "SUPPLIER")); await supplier.reader.detail(read("DETAIL", "SUPPLIER")); assert.ok(supplier.calls.every(q => !q.sql.includes("historical_customer")));
+  const old = fixture(); await old.reader.search(read()); assert.ok(old.calls.every(q => !q.sql.includes("historical_customer")));
+});
+test("historical exact2: proof/missing-function failures propagate and malformed target capability fails without a connection", async () => {
+  const f = fixture(undefined, true); await f.reader.search(read()); const sql = f.calls[1]!.sql;
+  const failed = fixture(undefined, true); failed.failure(sql); await assert.rejects(failed.reader.search(read()), /SYNTHETIC_SQL_FAILURE/);
+  assert.equal(failed.calls.at(-1)!.sql, "ROLLBACK"); assert.equal(failed.calls.filter(q => q.sql.includes("count(*)")).length, 1);
+  const pool = { async connect(): Promise<never> { throw Error("No connection"); } }; let invoked = false;
+  for (const proof of [true, 26, {}, { profile: "historical-customer-exact2-v26", get assertVerified() { invoked = true; return () => {}; } },
+    { profile: "historical-customer-exact2-v26", async assertVerified() { invoked = true; } }, { profile: "historical-customer-exact2-v26", assertVerified() { return Promise.resolve(); } },
+    { profile: "historical-customer-exact2-v26", assertVerified() { throw Error("Wrong database target"); } }]) assert.throws(() => new PostgresPartyReadReader(pool, proof as never));
+  assert.equal(invoked, false);
 });

@@ -50,13 +50,14 @@ test("organization write: full hall save/CAS/status, exact fields and receipt fa
   await f.service.execute(actor, "HALL", { action: "RESTORE", requestKey: "restore", id: saved.targetId, expectedVersion: 2 });
   f.revoke(); await assert.rejects(f.service.receipt(actor, "HALL", "hall"), { code: "FORBIDDEN" });
 });
-function protocol(options: { crossHall?: boolean; defaultEnabled?: boolean; defaultReference?: boolean; role?: string; commitFault?: boolean } = {}) {
+function protocol(options: { crossHall?: boolean; defaultEnabled?: boolean; defaultReference?: boolean; role?: string; commitFault?: boolean; historicalCustomer?: boolean } = {}) {
   const calls: { sql: string; values: unknown[] }[] = [], releases: unknown[] = []; let sequence = 700;
   const driver = new PostgresMaintenanceCommandUnitOfWork({ async connect() { return { async query(sql: string, values: unknown[] = []) {
     calls.push({ sql, values: structuredClone(values) });
     if (sql.includes("maintenance:identity")) return { rows: [{ account_id: actor.accountId, staff_id: id(99), login_enabled: true, employment_status: "在职", role: options.role ?? "ADMIN", hall_id: actor.hallId }], rowCount: 1 };
     if (sql.includes("maintenance:hall")) return { rows: [{ id: actor.hallId, enabled: true }], rowCount: 1 };
     if (sql.startsWith("SELECT id,name,enabled,version")) return { rows: [{ id: id(10), name: "SOURCE", enabled: true, version: 3, default_customer_id: null, default_sales_warehouse_id: null, hall_id: id(1), created_operation_id: null }], rowCount: 1 };
+    if (sql.startsWith("SELECT id,enabled FROM naijue_erp.customer")) { assert.match(sql, /NOT naijue_erp.is_exact_historical_customer_only\(customer.id\)/); return { rows: [], rowCount: 0 }; }
     if (sql.startsWith("SELECT id,hall_id,enabled")) return { rows: [{ id: id(20), hall_id: options.crossHall ? id(999) : id(10), enabled: options.defaultEnabled ?? true }], rowCount: 1 };
     if (sql.startsWith("SELECT id,enabled FROM naijue_erp.hall WHERE id=")) return { rows: [{ id: id(1), enabled: true }], rowCount: 1 };
     if (sql.startsWith("SELECT id,enabled FROM naijue_erp.hall WHERE default")) return { rows: options.defaultReference ? [{ id: id(1), enabled: true }] : [], rowCount: options.defaultReference ? 1 : 0 };
@@ -65,7 +66,7 @@ function protocol(options: { crossHall?: boolean; defaultEnabled?: boolean; defa
     if (sql === "COMMIT" && options.commitFault) throw Error("UNKNOWN COMMIT");
     return { rows: [], rowCount: sql.startsWith("UPDATE") || sql.startsWith("INSERT") ? 1 : 0 };
   }, release(error?: unknown) { releases.push(error); } }; } });
-  return { calls, releases, service: createOrganizationMaintenanceService({ unitOfWork: new PostgresOrganizationMaintenanceUnitOfWork(driver), now: () => "2026-10-22T07:30:00Z", newId: kind => sid(kind, sequence++) }) };
+  return { calls, releases, service: createOrganizationMaintenanceService({ unitOfWork: new PostgresOrganizationMaintenanceUnitOfWork(driver, options.historicalCustomer ? { profile: "historical-customer-exact2-v26", assertVerified(target) { assert.equal(target, driver); } } : null), now: () => "2026-10-22T07:30:00Z", newId: kind => sid(kind, sequence++) }) };
 }
 const hallEdit = { action: "EDIT", requestKey: "hall-edit", id: id(10), expectedVersion: 3, values: { ...hallValues, name: "SOURCE", defaultSalesWarehouseId: id(20) } };
 test("organization write PG protocol: default sales warehouse requires actual same hall; old read intent unaffected", async () => {
@@ -92,4 +93,12 @@ test("organization write HTTP: command routes compose alongside frozen six-famil
   assert.equal((await app.inject({ method: "POST", url: "/organization/halls/commands", payload: { ...payload, actor } })).statusCode, 400);
   assert.equal((await app.inject({ method: "POST", url: "/staff/query", payload: { search: "", status: "all", hallId: null, page: 1, pageSize: 20 } })).statusCode, 200);
   loggedIn = false; assert.equal((await app.inject({ method: "POST", url: "/organization/halls/commands", payload })).statusCode, 401); assert.equal(app.server.listening, false);
+});
+
+test("historical exact2: HALL default assignment uses same source predicate even for disabled halls and stops before audit/root", async () => {
+  for (const enabled of [false, true]) {
+    const f = protocol({ historicalCustomer: true });
+    await assert.rejects(f.service.execute(actor, "HALL", { ...hallEdit, values: { ...hallValues, enabled, defaultCustomerId: id(77) } }), { code: "ORGANIZATION_REFERENCE_UNAVAILABLE" });
+    assert.ok(f.calls.every(q => !/^(INSERT|UPDATE)/.test(q.sql) && !q.sql.includes("maintenance:audit"))); assert.equal(f.calls.at(-1)!.sql, "ROLLBACK");
+  }
 });
