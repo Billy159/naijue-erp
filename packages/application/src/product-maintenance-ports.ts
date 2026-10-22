@@ -109,6 +109,7 @@ export interface ProductMaintenanceTransaction {
   readonly evidence: ProductMaintenanceEvidence;
   assertImageWriteReady?(): Promise<void>;
   assertImagesPrepared?(completion: Parameters<ProductMaintenanceEvidence["complete"]>[0]): Promise<void>;
+  assertImageColorSwapReady?(completion: Parameters<ProductMaintenanceEvidence["complete"]>[0]): Promise<void>;
   loadImages?(productId: string): Promise<readonly ProductMaintenanceImageMetadata[]>;
   /** Supplied rows contain only actual changes. Deletions and unique-safe updates precede additions. */
   writeImages?(before: readonly ProductMaintenanceImageMetadata[], after: readonly ProductMaintenanceImageMetadata[]): Promise<void>;

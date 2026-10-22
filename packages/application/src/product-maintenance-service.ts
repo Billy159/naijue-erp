@@ -2,7 +2,7 @@ import { requireDomain } from "../../domain/src/errors.ts";
 import { entityId } from "../../domain/src/values.ts";
 import { checkedProductActor, parseProductQuery, activeProductRead } from "./product-query-validation.ts";
 import { partyRequestKey } from "./party-maintenance-validation.ts";
-import { parseProductMaintenanceCandidates, parseProductMaintenanceCommand, parseProductMaintenanceCommandV2, parseProductMaintenanceMediaCommandV2, orderProductImageWrites, productMaintenanceVersion, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS } from "./product-maintenance-validation.ts";
+import { parseProductMaintenanceCandidates, parseProductMaintenanceCommand, parseProductMaintenanceCommandV2, parseProductMaintenanceMediaCommandV2, planProductImageWrites, productMaintenanceVersion, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS } from "./product-maintenance-validation.ts";
 import { authorizeProductMaintenance } from "./product-maintenance-authorization.ts";
 import { requestHash } from "./request-hash.ts";
 import type { ActorContext } from "./ports.ts";
@@ -69,8 +69,9 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
     }
     const before = existing.filter(i => !final.has(i.id) || different(imageFacts(i), imageFacts(final.get(i.id)!))).sort((a, b) => a.id.localeCompare(b.id));
     const after = [...final.values()].filter(i => !old.has(i.id) || different(imageFacts(i), imageFacts(old.get(i.id)!))).sort((a, b) => a.id.localeCompare(b.id));
-    orderProductImageWrites(before, after);
-    return { before, after, expiries };
+    const plan = planProductImageWrites(before, after);
+    requireDomain(plan.reinsertIds.length === 0 || typeof tx.assertImageColorSwapReady === "function", "PRODUCT_MEDIA_NOT_READY", "Actual color-swap guard capability required");
+    return { before, after, expiries, reinsertIds: plan.reinsertIds };
   }
   async function detail(actorInput: ActorContext, input: unknown, contractVersion: 1 | 2): Promise<ProductMaintenanceDetail | ProductMaintenanceDetailV2> {
     const actor = checkedProductActor(actorInput), { productId } = parseProductQuery(input);
@@ -207,6 +208,7 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
       if (imagePlan) { activeProductRead(signal); requireDomain(imagePlan.expiries.every(t => Date.parse(dependencies.now()) < t), "UPLOAD_EXPIRED", "Image stage expired before mutation"); }
       await tx.evidence.prepare(completion);
       if (imagePlan) await tx.assertImagesPrepared!(completion);
+      if (imagePlan?.reinsertIds.length) await tx.assertImageColorSwapReady!(completion);
       await tx.putProduct(nextProduct, previous?.product);
       for (const s of changedSkus) await tx.putSku(s, oldSkus.get(s.id));
       for (const b of changedBarcodes) await tx.putBarcode(b, oldBarcodes.get(b.id));

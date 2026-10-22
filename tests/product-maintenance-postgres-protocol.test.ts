@@ -7,7 +7,7 @@ import { createProductMaintenanceService } from "../packages/application/src/pro
 import type { ProductMaintenanceCommand, ProductMaintenanceDependencies } from "../packages/application/src/product-maintenance-ports.ts";
 import { CATALOGUE_PRICE_KEYS } from "../packages/application/src/catalogue-price-input.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
-import type { ProductMediaWriteCapability, PgProductMaintenanceContext } from "../adapters/postgres/src/product-maintenance-store.ts";
+import type { ProductMediaWriteCapability, PgProductMaintenanceContext, ProductImageColorSwapCapability } from "../adapters/postgres/src/product-maintenance-store.ts";
 import type { ProductMaintenanceImageMetadata } from "../packages/application/src/product-maintenance-ports.ts";
 const id = (n: number) => sid("product", n);
 function imageProtocol(options: { absent?: boolean; rows?: readonly Record<string, unknown>[]; fail?: boolean } = {}) {
@@ -20,9 +20,10 @@ function imageProtocol(options: { absent?: boolean; rows?: readonly Record<strin
   return { calls, service: createProductMaintenanceService({ unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null }), now: () => "UNUSED", newId: () => "UNUSED" }) };
 }
 const imageRow = () => ({ id: id(12002), product_id: id(12001), file_ref: "PRIVATE_REAL_REF", mime: "image/png", byte_size: "68", display_order: 0, version: 3, image_role: "COLOR", color_id: id(6), created_at: "2026-10-22T00:00:00.123456Z", created_by_account_id: null, valid_color: true });
-function imageWriteProtocol(options: { capability?: boolean; zeroCas?: boolean; badFinal?: boolean; rejectPrepared?: boolean } = {}) {
+function imageWriteProtocol(options: { capability?: boolean; zeroCas?: boolean; badFinal?: boolean; rejectPrepared?: boolean; cycleCount?: 2 | 3; swap?: boolean; rejectSwap?: boolean; skipReinsert?: boolean } = {}) {
   const calls: { sql: string; values: unknown[] }[] = []; let prepared = false, reads = 0, context: PgProductMaintenanceContext;
   const row = imageRow(), rows = new Map<string, Record<string, unknown>>([[row.id, row]]), v = (command as Extract<ProductMaintenanceCommand, { action: "CREATE" }>).values;
+  if (options.cycleCount) for (let n = 1; n < options.cycleCount; n++) rows.set(id(12002 + n), { ...row, id: id(12002 + n), color_id: id(6 + n), created_by_account_id: actor.accountId });
   const root = { id: id(12001), product_code: v.productCode, name: v.name, category_id: v.categoryId, supplier_id: v.supplierId, season_id: v.seasonId, size_group_id: v.sizeGroupId, year: v.year,
     system_item_code: v.systemItemCode, thickness: v.thickness, collar_pants_type: v.collarPantsType, default_barcode_scheme_id: v.defaultBarcodeSchemeId, enabled: true, version: 7, deleted_at: null, ...v.prices };
   const unused = async (): Promise<never> => { throw Error("UNEXPECTED_SHARED_WRITE"); };
@@ -34,6 +35,10 @@ function imageWriteProtocol(options: { capability?: boolean; zeroCas?: boolean; 
       if (/^(UPDATE|INSERT|DELETE)/.test(sql)) {
         assert.ok(prepared); if (options.zeroCas) return { rows: [], rowCount: 0 };
         if (sql.startsWith("DELETE FROM naijue_erp.product_image")) rows.delete(values[0] as string);
+        if (sql.startsWith("INSERT INTO naijue_erp.product_image") && options.cycleCount) {
+          assert.ok([...rows.values()].every(r => r.image_role !== "COLOR" || r.color_id !== values[10]), "Immediate color uniqueness must hold on every actual row operation");
+          if (options.skipReinsert) return { rows: [], rowCount: 1 }; // Fault: command reports a row but final native reread must reject it.
+        }
         if (sql.startsWith("INSERT INTO naijue_erp.product_image") || sql.startsWith("UPDATE naijue_erp.product_image")) rows.set(values[0] as string, { id: values[0] as string, product_id: values[1] as string,
           file_ref: values[2] as string, mime: values[3] as string, byte_size: values[4] as string, display_order: values[5] as number, created_at: (values[6] as string).replace(/\.(\d{1,6})Z$/, (_match, digits: string) => `.${digits.padEnd(6, "0")}Z`),
           created_by_account_id: values[7] as null, version: values[8] as number, image_role: values[9] as string, color_id: values[10] as string, valid_color: true });
@@ -45,7 +50,12 @@ function imageWriteProtocol(options: { capability?: boolean; zeroCas?: boolean; 
   const proof: ProductMediaWriteCapability = { profile: "product-media-write-v22", assertVerified(target) { assert.equal(target, driver); }, async assertReady(actual) { assert.equal(actual, context); await actual.client.query("/* image-proof:original-client */ SELECT 1"); },
     async assertPrepared(actual, completion) { assert.equal(actual, context); assert.ok(prepared); assert.equal(completion.kind, "PRODUCT"); assert.ok(Array.isArray(completion.afterValues.images));
       if (options.rejectPrepared) throw Error("SYNTHETIC_D1_PRIVATE_PROOF_REJECT"); calls.push({ sql: "PROVE_ORIGINAL_PREPARED_IMAGES", values: [] }); } };
-  const uow = new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null, ...(options.capability === false ? {} : { mediaWriteCapability: proof }) });
+  const swapProof: ProductImageColorSwapCapability = { profile: "product-image-color-swap-v4", assertVerified(target) { assert.equal(target, driver); }, async assertReady(actual, completion) {
+    assert.equal(actual, context); assert.ok(prepared); assert.equal(completion.kind, "PRODUCT");
+    if (options.rejectSwap) throw Object.assign(Error("SYNTHETIC_ACTUAL_V7_GUARD_UNAVAILABLE"), { code: "PRODUCT_MEDIA_NOT_READY" });
+    calls.push({ sql: "PROVE_APPROVED_ACTUAL_COLOR_SWAP_GUARD", values: [] });
+  } };
+  const uow = new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null, ...(options.capability === false ? {} : { mediaWriteCapability: proof }), ...(options.swap ? { imageColorSwapCapability: swapProof } : {}) });
   async function write(replace: boolean) { return uow.transaction(async tx => {
     await tx.assertImageWriteReady!(); const aggregate = (await tx.load(id(12001)))!, previous = await tx.loadImages!(id(12001)), old = previous[0]!;
     const next: ProductMaintenanceImageMetadata = replace ? { ...old, version: 4, fileRef: "NEW_PRIVATE_REF", displayOrder: 2 } : { ...old, id: id(12003), version: 1, createdAt: "2026-10-22T01:00:00.000Z" };
@@ -55,8 +65,38 @@ function imageWriteProtocol(options: { capability?: boolean; zeroCas?: boolean; 
     await tx.evidence.prepare!(completion); await tx.assertImagesPrepared!(completion);
     await tx.putProduct({ ...aggregate.product, version: 8 }, aggregate.product); await tx.writeImages!([old], [next]); return next;
   }); }
-  return { calls, write, proof, driver };
+  async function swap() { return uow.transaction(async tx => {
+    await tx.assertImageWriteReady!(); const aggregate = (await tx.load(id(12001)))!, before = await tx.loadImages!(id(12001));
+    const after = before.map((i, n) => ({ ...i, version: i.version + 1, colorId: before[(n + 1) % before.length]!.colorId }));
+    const facts = (i: ProductMaintenanceImageMetadata) => ({ id: i.id, product_id: i.productId, file_ref: i.fileRef, mime: i.mime, byte_size: i.byteSize.toString(), display_order: i.displayOrder, version: i.version, image_role: i.role, color_id: i.colorId, created_at: i.createdAt, created_by_account_id: i.createdByAccountId });
+    const completion = { operationId: id(12100), actorAccountId: actor.accountId, requestKey: "color-swap-protocol", requestHash: "a".repeat(64), kind: "PRODUCT" as const, action: "EDIT" as const, targetId: aggregate.product.id,
+      oldVersion: 7, newVersion: 8, beforeValues: { images: before.map(facts) }, afterValues: { images: after.map(facts) }, completedAt: "2026-10-22T01:00:00Z" };
+    await tx.evidence.prepare!(completion); await tx.assertImagesPrepared!(completion); await tx.assertImageColorSwapReady!(completion);
+    await tx.putProduct({ ...aggregate.product, version: 8 }, aggregate.product); await tx.writeImages!(before, after); return { before, after };
+  }); }
+  return { calls, write, proof, swapProof, driver, swap };
 }
+test("W18 cycle SQL locks original rows, proves approved guard then deletes all cycle rows before same-ID final inserts", async () => {
+  for (const cycleCount of [2, 3] as const) {
+    const f = imageWriteProtocol({ cycleCount, swap: true }), result = await f.swap(), index = (s: string) => f.calls.findIndex(c => c.sql.includes(s));
+    assert.ok(index("PROVE_ORIGINAL_PREPARED_IMAGES") < index("PROVE_APPROVED_ACTUAL_COLOR_SWAP_GUARD") && index("PROVE_APPROVED_ACTUAL_COLOR_SWAP_GUARD") < index("UPDATE naijue_erp.product SET"));
+    const deletes = f.calls.filter(c => c.sql.startsWith("DELETE FROM naijue_erp.product_image")), inserts = f.calls.filter(c => c.sql.startsWith("INSERT INTO naijue_erp.product_image"));
+    assert.equal(deletes.length, cycleCount); assert.equal(inserts.length, cycleCount);
+    assert.ok(f.calls.indexOf(deletes.at(-1)!) < f.calls.indexOf(inserts[0]!));
+    assert.deepEqual(new Set(deletes.map(c => c.values[0])), new Set(inserts.map(c => c.values[0])));
+    for (const insert of inserts) { const old = result.before.find(i => i.id === insert.values[0])!; assert.equal(insert.values[1], old.productId); assert.equal(insert.values[6], old.createdAt); assert.equal(insert.values[7], old.createdByAccountId); assert.equal(insert.values[8], old.version + 1); }
+    assert.equal(f.calls.filter(c => c.sql.startsWith("UPDATE naijue_erp.product SET")).length, 1); assert.equal(f.calls.filter(c => c.sql.includes("product-maintenance:locked-images")).length, 2);
+    assert.ok(f.calls.every(c => !/^(BEGIN|COMMIT|ROLLBACK)/.test(c.sql))); assert.equal(f.calls.some(c => c.sql.startsWith("UPDATE naijue_erp.product_image")), false);
+  }
+});
+test("W18 absent or stale actual v7 swap proof rejects before root writes; omitted reinsertion is caught by final snapshot", async () => {
+  const absent = imageWriteProtocol({ cycleCount: 2 }); await assert.rejects(absent.swap(), { code: "PRODUCT_MEDIA_NOT_READY" }); assert.ok(absent.calls.every(c => !/^(UPDATE|INSERT|DELETE)/.test(c.sql)));
+  const stale = imageWriteProtocol({ cycleCount: 2, swap: true, rejectSwap: true }); await assert.rejects(stale.swap(), /SYNTHETIC_ACTUAL_V7_GUARD_UNAVAILABLE/); assert.ok(stale.calls.every(c => !/^(UPDATE|INSERT|DELETE)/.test(c.sql)));
+  await assert.rejects(imageWriteProtocol({ cycleCount: 2, swap: true, skipReinsert: true }).swap(), { code: "INVALID_DATABASE_VALUE" });
+  const f = imageWriteProtocol();
+  assert.throws(() => new PostgresProductMaintenanceUnitOfWork(f.driver, { deletionGuard: null, imageColorSwapCapability: { ...f.proof } as never }), /capability/);
+  assert.throws(() => new PostgresProductMaintenanceUnitOfWork(f.driver, { deletionGuard: null, imageColorSwapCapability: { ...f.swapProof, assertVerified() { throw Error("WRONG_SWAP_DRIVER"); } } }), /WRONG_SWAP_DRIVER/);
+});
 test("W17 image PG original-client proof/root lock/CAS and remove-before-add share exact native parameters and final snapshot", async () => {
   const f = imageWriteProtocol(); await f.write(false);
   const index = (s: string) => f.calls.findIndex(c => c.sql.includes(s));

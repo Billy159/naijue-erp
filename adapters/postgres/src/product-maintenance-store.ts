@@ -4,7 +4,7 @@ import { entityId } from "../../../packages/domain/src/values.ts";
 import { CATALOGUE_PRICE_KEYS } from "../../../packages/application/src/catalogue-price-input.ts";
 import type { CataloguePriceKey } from "../../../packages/application/src/catalogue-price-input.ts";
 import type { ProductAggregate, ProductBarcodeRecord, ProductDetailReferences, ProductMaintenanceCandidate, ProductMaintenanceCandidatePage, ProductMaintenanceCandidateQuery, ProductMaintenanceEvidence, ProductMaintenanceTransaction, ProductMaintenanceUnitOfWork, ProductSkuRecord, ProductStoredRecord } from "../../../packages/application/src/product-maintenance-ports.ts";
-import { parseProductMaintenanceCandidates, parseProductSeasonIds, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS, orderProductImageWrites } from "../../../packages/application/src/product-maintenance-validation.ts";
+import { parseProductMaintenanceCandidates, parseProductSeasonIds, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS, planProductImageWrites } from "../../../packages/application/src/product-maintenance-validation.ts";
 import { productSeasonArrayEnabled, type ProductSeasonArrayCapability, type PgProductQueryResult } from "./product-query-reader.ts";
 import type { MaintenancePgUnitOfWork } from "./maintenance-command-unit-of-work.ts";
 import type { ProductMaintenanceImageSnapshot, ProductMaintenanceImageMetadata } from "../../../packages/application/src/product-maintenance-ports.ts";
@@ -22,6 +22,21 @@ export interface ProductMediaWriteCapability {
   readonly assertVerified: (driver: object) => void;
   readonly assertReady: (context: PgProductMaintenanceContext) => Promise<void>;
   readonly assertPrepared: (context: PgProductMaintenanceContext, completion: Parameters<ProductMaintenanceEvidence["complete"]>[0]) => Promise<void>;
+}
+/** Independent v4 approval/actual guard proof. An ordinary image/schema capability cannot enable it. */
+export interface ProductImageColorSwapCapability {
+  readonly profile: "product-image-color-swap-v4";
+  readonly assertVerified: (driver: object) => void;
+  readonly assertReady: (context: PgProductMaintenanceContext, completion: Parameters<ProductMaintenanceEvidence["complete"]>[0]) => Promise<void>;
+}
+function colorSwapCapability(driver: object, proof: ProductImageColorSwapCapability | null): ProductImageColorSwapCapability | null {
+  if (proof === null) return null;
+  if (typeof proof !== "object" || Array.isArray(proof) || Object.getPrototypeOf(proof) !== Object.prototype || Reflect.ownKeys(proof).length !== 3) throw TypeError("Explicit actual color-swap guard capability required");
+  for (const key of ["profile", "assertVerified", "assertReady"]) if (!Object.getOwnPropertyDescriptor(proof, key) || !("value" in Object.getOwnPropertyDescriptor(proof, key)!)) throw TypeError("Color-swap proof requires own data properties");
+  if (proof.profile !== "product-image-color-swap-v4" || typeof proof.assertVerified !== "function" || typeof proof.assertReady !== "function" || Object.prototype.toString.call(proof.assertVerified) === "[object AsyncFunction]") throw TypeError("Actual approved color-swap proof required");
+  const result: unknown = proof.assertVerified(driver);
+  if (result !== undefined) { if (result instanceof Promise) void result.catch(() => {}); throw TypeError("Color-swap startup proof must already be verified"); }
+  return Object.freeze({ profile: proof.profile, assertVerified: proof.assertVerified, assertReady: proof.assertReady });
 }
 function mediaCapability(driver: object, proof: ProductMediaWriteCapability | null): ProductMediaWriteCapability | null {
   if (proof === null) return null;
@@ -78,16 +93,18 @@ export class PostgresProductMaintenanceUnitOfWork implements ProductMaintenanceU
   readonly seasonContract?: "product-season-array-v1";
   private readonly driver: PgProductMaintenanceDriver; private readonly deletion: ProductDeletionGuard | null;
   private readonly imageCapability: ProductMediaWriteCapability | null;
-  constructor(driver: PgProductMaintenanceDriver, options: { readonly deletionGuard: ProductDeletionGuard | null; readonly seasonCapability?: ProductSeasonArrayCapability | null; readonly mediaWriteCapability?: ProductMediaWriteCapability | null }) {
+  private readonly swapCapability: ProductImageColorSwapCapability | null;
+  constructor(driver: PgProductMaintenanceDriver, options: { readonly deletionGuard: ProductDeletionGuard | null; readonly seasonCapability?: ProductSeasonArrayCapability | null; readonly mediaWriteCapability?: ProductMediaWriteCapability | null; readonly imageColorSwapCapability?: ProductImageColorSwapCapability | null }) {
     if (typeof driver?.transaction !== "function" || !options || !Object.hasOwn(options, "deletionGuard")
       || (options.deletionGuard !== null && typeof options.deletionGuard?.assertCanDelete !== "function")) throw new TypeError("Product maintenance requires D1 driver and explicit deletion guard availability");
     this.driver = driver; this.deletion = options.deletionGuard;
     this.imageCapability = mediaCapability(driver, options.mediaWriteCapability ?? null);
+    this.swapCapability = colorSwapCapability(driver, options.imageColorSwapCapability ?? null);
     if (productSeasonArrayEnabled(driver, options.seasonCapability ?? null)) this.seasonContract = "product-season-array-v1";
   }
   transaction<T>(work: (tx: ProductMaintenanceTransaction) => Promise<T>): Promise<T> {
     return this.driver.transaction(async context => {
-      const tx = new ProductTransaction(context, this.deletion, this.seasonContract !== undefined, this.imageCapability);
+      const tx = new ProductTransaction(context, this.deletion, this.seasonContract !== undefined, this.imageCapability, this.swapCapability);
       try { return await work(tx); } finally { tx.close(); }
     });
   }
@@ -100,7 +117,9 @@ class ProductTransaction implements ProductMaintenanceTransaction {
   private loadedImages: readonly ProductMaintenanceImageMetadata[] | undefined;
   private imagesWritten = false;
   private imagesPrepared = false;
-  constructor(context: PgProductMaintenanceContext, deletion: ProductDeletionGuard | null, seasonArray: boolean, imageCapability: ProductMediaWriteCapability | null) { this.seasonArray = seasonArray; this.context = context; this.evidence = context.evidence; this.deletion = deletion; this.imageCapability = imageCapability; }
+  private preparedImagesHash: string | undefined; private swapReady = false;
+  private readonly swapCapability: ProductImageColorSwapCapability | null;
+  constructor(context: PgProductMaintenanceContext, deletion: ProductDeletionGuard | null, seasonArray: boolean, imageCapability: ProductMediaWriteCapability | null, swapCapability: ProductImageColorSwapCapability | null) { this.seasonArray = seasonArray; this.context = context; this.evidence = context.evidence; this.deletion = deletion; this.imageCapability = imageCapability; this.swapCapability = swapCapability; }
   close(): void { this.active = false; }
   private query(sql: string, values: unknown[] = []) { requireDomain(this.active, "TRANSACTION_CLOSED", "Product transaction is closed"); return this.context.client.query(sql, values); }
   async assertImageWriteReady(): Promise<void> {
@@ -115,7 +134,13 @@ class ProductTransaction implements ProductMaintenanceTransaction {
     const proof: unknown = this.imageCapability.assertPrepared(this.context, completion);
     requireDomain(proof instanceof Promise, "PRODUCT_MEDIA_NOT_READY", "Actual same-client prepared proof required");
     const result: unknown = await proof;
-    requireDomain(this.active && result === undefined, "PRODUCT_MEDIA_NOT_READY", "Actual prepared image proof failed"); this.imagesPrepared = true;
+    requireDomain(this.active && result === undefined, "PRODUCT_MEDIA_NOT_READY", "Actual prepared image proof failed"); this.imagesPrepared = true; this.preparedImagesHash = requestHash(completion);
+  }
+  async assertImageColorSwapReady(completion: Parameters<ProductMaintenanceEvidence["complete"]>[0]): Promise<void> {
+    requireDomain(this.active && this.imagesPrepared && !this.swapReady && this.swapCapability !== null && this.preparedImagesHash === requestHash(completion), "PRODUCT_MEDIA_NOT_READY", "Actual prepared context and approved color-swap guard required");
+    const proof: unknown = this.swapCapability.assertReady(this.context, completion);
+    requireDomain(proof instanceof Promise, "PRODUCT_MEDIA_NOT_READY", "Same-client color-swap proof required");
+    const result: unknown = await proof; requireDomain(this.active && result === undefined, "PRODUCT_MEDIA_NOT_READY", "Actual color-swap guard proof failed"); this.swapReady = true;
   }
   async loadImages(productId: string): Promise<readonly ProductMaintenanceImageMetadata[]> {
     requireDomain(this.imagesReady && productId === this.loadedId && this.loadedImages === undefined, "TRANSACTION_SCOPE", "Load images once under the original product lock");
@@ -138,14 +163,15 @@ class ProductTransaction implements ProductMaintenanceTransaction {
     const expectedFinal = new Map(this.loadedImages.map(i => [i.id, i]));
     const old = new Map(before.map(i => [i.id, i])), following = new Map(after.map(i => [i.id, i]));
     requireDomain(old.size === before.length && following.size === after.length && before.every(i => this.loadedImages!.some(actual => actual.id === i.id && imageFingerprint(actual) === imageFingerprint(i))), "TRANSACTION_SCOPE", "Image before facts differ from locked rows");
-    const ordered = orderProductImageWrites(before, after);
+    const plan = planProductImageWrites(before, after), reinsert = new Set(plan.reinsertIds);
+    requireDomain(reinsert.size === 0 || this.swapReady, "PRODUCT_MEDIA_NOT_READY", "Cycle writes require the actual approved guard");
     try {
-      for (const i of before) if (!following.has(i.id)) { const result = await this.query("DELETE FROM naijue_erp.product_image WHERE id=$1::uuid AND product_id=$2::uuid AND version=$3", [i.id, this.loadedId, i.version]); requireDomain(result.rowCount === 1, "VERSION_CONFLICT", "Image removal did not match original version"); }
-      for (const i of ordered) {
+      for (const i of before) if (!following.has(i.id) || reinsert.has(i.id)) { const result = await this.query("DELETE FROM naijue_erp.product_image WHERE id=$1::uuid AND product_id=$2::uuid AND version=$3", [i.id, this.loadedId, i.version]); requireDomain(result.rowCount === 1, "VERSION_CONFLICT", "Image removal did not match original version"); }
+      for (const i of plan.ordered) {
         const previous = old.get(i.id);
         requireDomain(i.productId === this.loadedId && i.version === (previous?.version ?? 0) + 1 && (!previous || i.createdAt === previous.createdAt && i.createdByAccountId === previous.createdByAccountId), "TRANSACTION_SCOPE", "Image identity/version/provenance changed");
         const values = [i.id, i.productId, i.fileRef, i.mime, i.byteSize.toString(), i.displayOrder, i.createdAt, i.createdByAccountId, i.version, i.role, i.colorId];
-        const result = previous ? await this.query(`UPDATE naijue_erp.product_image SET file_ref=$3,mime=$4,byte_size=$5::bigint,display_order=$6,version=$9,image_role=$10,color_id=$11::uuid
+        const result = previous && !reinsert.has(i.id) ? await this.query(`UPDATE naijue_erp.product_image SET file_ref=$3,mime=$4,byte_size=$5::bigint,display_order=$6,version=$9,image_role=$10,color_id=$11::uuid
           WHERE id=$1::uuid AND product_id=$2::uuid AND created_at=$7::timestamptz AND created_by_account_id IS NOT DISTINCT FROM $8::uuid AND version=$12`, [...values, previous.version])
           : await this.query("INSERT INTO naijue_erp.product_image(id,product_id,file_ref,mime,byte_size,display_order,created_at,created_by_account_id,version,image_role,color_id) VALUES($1::uuid,$2::uuid,$3,$4,$5::bigint,$6,$7::timestamptz,$8::uuid,$9,$10,$11::uuid)", values);
         requireDomain(result.rowCount === 1, "VERSION_CONFLICT", "Image write did not match original version");

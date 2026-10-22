@@ -108,17 +108,36 @@ export function parseProductMaintenanceMediaCommandV2(input: unknown): ProductMa
     return { ...legacy, imageChanges: Object.freeze(changes) };
   } catch { throw new DomainError("INVALID_PRODUCT_MEDIA_COMMAND", "Invalid explicit product image changes"); }
 }
-/** Immediate partial unique indexes permit acyclic moves only; never invent a temporary role. */
-export function orderProductImageWrites(before: readonly ProductMaintenanceImageMetadata[], after: readonly ProductMaintenanceImageMetadata[]): readonly ProductMaintenanceImageMetadata[] {
+export interface ProductImageWritePlan { readonly ordered: readonly ProductMaintenanceImageMetadata[]; readonly reinsertIds: readonly string[] }
+/** Plan final rows only. Cycles require a separately verified v4 guard before any SQL mutation. */
+export function planProductImageWrites(before: readonly ProductMaintenanceImageMetadata[], after: readonly ProductMaintenanceImageMetadata[]): ProductImageWritePlan {
+  requireDomain(new Set(before.map(i => i.id)).size === before.length && new Set(after.map(i => i.id)).size === after.length
+    && new Set(before.filter(i => i.role === "COLOR").map(i => i.colorId)).size === before.filter(i => i.role === "COLOR").length
+    && new Set(after.filter(i => i.role === "COLOR").map(i => i.colorId)).size === after.filter(i => i.role === "COLOR").length,
+  "COLOR_IMAGE_CONFLICT", "Unique image identities and final colors required");
   const old = new Map(before.map(i => [i.id, i])), occupied = new Map(before.filter(i => i.role === "COLOR").map(i => [i.colorId!, i.id]));
   const nextIds = new Set(after.map(i => i.id)); for (const i of before) if (!nextIds.has(i.id) && i.role === "COLOR") occupied.delete(i.colorId!);
-  const pending = [...after], ordered: ProductMaintenanceImageMetadata[] = [];
+  const pending = [...after], ordered: ProductMaintenanceImageMetadata[] = [], reinsertIds: string[] = [];
   while (pending.length) {
     const index = pending.findIndex(i => i.role !== "COLOR" || !occupied.has(i.colorId!) || occupied.get(i.colorId!) === i.id);
-    requireDomain(index >= 0, "PRODUCT_MEDIA_NOT_READY", "Circular color-image reassignment requires an approved database protocol");
+    if (index < 0) {
+      // With unique final colors, every blocked node must belong to a closed permutation cycle.
+      const ids = new Set(pending.map(i => i.id));
+      requireDomain(pending.every(i => { const p = old.get(i.id); return p?.role === "COLOR" && i.role === "COLOR" && ids.has(occupied.get(i.colorId!)!)
+        && p.productId === i.productId && p.createdAt === i.createdAt && p.createdByAccountId === i.createdByAccountId && i.version === p.version + 1; }),
+      "INVALID_PRODUCT_MEDIA_COMMAND", "A color cycle must preserve actual image identity/provenance and advance once");
+      for (const i of pending) { occupied.delete(old.get(i.id)!.colorId!); reinsertIds.push(i.id); }
+      continue;
+    }
     const i = pending.splice(index, 1)[0]!, previous = old.get(i.id);
     if (previous?.role === "COLOR") occupied.delete(previous.colorId!);
     if (i.role === "COLOR") occupied.set(i.colorId!, i.id); ordered.push(i);
   }
-  return ordered;
+  return { ordered, reinsertIds };
+}
+/** Existing acyclic API stays closed to reinsert operations without the explicit v4 seam. */
+export function orderProductImageWrites(before: readonly ProductMaintenanceImageMetadata[], after: readonly ProductMaintenanceImageMetadata[]): readonly ProductMaintenanceImageMetadata[] {
+  const plan = planProductImageWrites(before, after);
+  requireDomain(plan.reinsertIds.length === 0, "PRODUCT_MEDIA_NOT_READY", "Circular color-image reassignment requires the verified v4 guard");
+  return plan.ordered;
 }

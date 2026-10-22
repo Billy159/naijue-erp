@@ -8,7 +8,7 @@ import { requireDomain } from "../packages/domain/src/errors.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
 import type { ProductMaintenanceImageSnapshot } from "../packages/application/src/product-maintenance-ports.ts";
 import type { ControlledProductMedia } from "../packages/application/src/product-query-ports.ts";
-import { parseProductMaintenanceCommandV2, parseProductMaintenanceMediaCommandV2, orderProductImageWrites } from "../packages/application/src/product-maintenance-validation.ts";
+import { parseProductMaintenanceCommandV2, parseProductMaintenanceMediaCommandV2, orderProductImageWrites, planProductImageWrites } from "../packages/application/src/product-maintenance-validation.ts";
 import { requestHash } from "../packages/application/src/request-hash.ts";
 import type { ProductImageChange, ProductMaintenanceImageMetadata, ProductMaintenanceMediaCommandV2 } from "../packages/application/src/product-maintenance-ports.ts";
 const gid = (n: number) => sid("product", n);
@@ -143,7 +143,7 @@ test("product write: reference/receipt faults roll back root plus all children; 
 function commandV2(key = "v2", seasons: readonly string[] | null = [gid(850), gid(803)]) {
   const { seasonId: _scalar, ...data } = values(); return { ...command(key), values: { ...data, seasonIds: seasons } };
 }
-function mediaFixture(options: { stage?: boolean; guard?: boolean; proof?: boolean; prepare?: "ready" | "missing" | "fail" } = {}) {
+function mediaFixture(options: { stage?: boolean; guard?: boolean; proof?: boolean; swap?: boolean; prepare?: "ready" | "missing" | "fail" } = {}) {
   const base = fixture(options.prepare ?? "ready", true), original = base.dependencies.unitOfWork;
   let images: readonly ProductMaintenanceImageMetadata[] = [], native = 18000, badStage = "", failImages = false;
   const events: string[] = [], consumed: string[] = [];
@@ -161,6 +161,7 @@ function mediaFixture(options: { stage?: boolean; guard?: boolean; proof?: boole
         async complete(c) { events.push("receipt"); return tx.evidence.complete(c); } },
         async assertImageWriteReady() { events.push("image-proof"); requireDomain(options.guard !== false, "PRODUCT_MEDIA_NOT_READY", "SYNTHETIC_MISSING_PROOF"); },
         async assertImagesPrepared(c) { assert.equal(c.kind, "PRODUCT"); assert.ok(events.includes("prepare")); requireDomain(options.proof !== false, "PRODUCT_MEDIA_NOT_READY", "SYNTHETIC_PRIVATE_PREPARED_PROOF_DENIED"); events.push("prepared-proof"); },
+        async assertImageColorSwapReady() { assert.ok(events.includes("prepared-proof")); requireDomain(options.swap === true, "PRODUCT_MEDIA_NOT_READY", "SYNTHETIC_V4_GUARD_MISSING"); events.push("swap-proof"); },
         async loadImages() { events.push("image-lock"); return images; },
         async putProduct(n, p) { events.push("root"); return tx.putProduct(n, p); },
         async writeImages(b, a) { events.push("images"); if (failImages) throw Error("SYNTHETIC_IMAGE_FAULT"); const ids = new Set(b.map(i => i.id)); images = [...images.filter(i => !ids.has(i.id)), ...a]; }
@@ -222,7 +223,36 @@ test("W17 final color uniqueness/membership and legacy unknown role are checked 
   await f.service.executeV2(actor, mediaEdit(saved.targetId, 1, [{ action: "REPLACE", id: image.id, expectedVersion: 1, uploadId: gid(17004), role: null, colorId: null, displayOrder: 0 }]));
   assert.equal(f.images()[0]!.role, null); assert.equal(f.images()[0]!.createdByAccountId, null);
   const a = { ...image, role: "COLOR" as const, colorId: gid(1) }, b = { ...image, id: gid(2), role: "COLOR" as const, colorId: gid(2) };
-  assert.throws(() => orderProductImageWrites([a, b], [{ ...a, colorId: gid(2) }, { ...b, colorId: gid(1) }]), { code: "PRODUCT_MEDIA_NOT_READY" });
+  assert.throws(() => orderProductImageWrites([a, b], [{ ...a, version: a.version + 1, colorId: gid(2) }, { ...b, version: b.version + 1, colorId: gid(1) }]), { code: "PRODUCT_MEDIA_NOT_READY" });
+});
+test("W18 color-cycle plan selects only closed cycle IDs and exact final rows without a temporary role", () => {
+  const template = imageSnapshot().images[0]!, before = [1, 2, 3].map(n => ({ ...template, id: gid(19000 + n), role: "COLOR" as const, colorId: gid(19100 + n) }));
+  const after = before.map((i, n) => ({ ...i, version: i.version + 1, colorId: before[(n + 1) % before.length]!.colorId }));
+  const free = { ...template, id: gid(19500), role: "MAIN" as const, displayOrder: 5, version: 1 };
+  const plan = planProductImageWrites(before, [...after, free]); assert.deepEqual(new Set(plan.reinsertIds), new Set(before.map(i => i.id)));
+  assert.equal(plan.ordered.length, 4); assert.ok(plan.ordered.every(i => i.role === "COLOR" || i.id === free.id));
+  assert.throws(() => planProductImageWrites(before, [{ ...after[0]!, createdByAccountId: gid(1) }, ...after.slice(1)]), { code: "INVALID_PRODUCT_MEDIA_COMMAND" });
+  assert.throws(() => planProductImageWrites(before, [{ ...after[0]!, version: before[0]!.version + 2 }, ...after.slice(1)]), { code: "INVALID_PRODUCT_MEDIA_COMMAND" });
+});
+test("W18 two/three image cycles keep IDs creator/time and one version, require actual v4 proof, and roll back on failure", async () => {
+  for (const count of [2, 3]) {
+    const f = mediaFixture({ swap: true }), colors = Array.from({ length: count }, (_, n) => gid(806 + n));
+    const c = { ...mediaCreate(`cycle-${count}`, colors.map((colorId, n) => ({ action: "ADD" as const, uploadId: gid(17100 + n), role: "COLOR" as const, colorId, displayOrder: n }))), skus: colors.map(color => sku(color)), barcodes: [] };
+    const saved = await f.service.executeV2(actor, c), before = f.images(); f.seedImages(before.map((i, n) => n === 0 ? { ...i, createdByAccountId: null } : i)); const actualBefore = f.images();
+    f.events.length = 0;
+    const changed = actualBefore.map((i, n) => ({ action: "EDIT_METADATA" as const, id: i.id, expectedVersion: i.version, role: "COLOR" as const, colorId: actualBefore[(n + 1) % count]!.colorId, displayOrder: i.displayOrder }));
+    const swapCommand = mediaEdit(saved.targetId, 1, changed, `swap-${count}`), result = await f.service.executeV2(actor, swapCommand); assert.equal(result.version, 2);
+    assert.ok(f.events.indexOf("prepared-proof") < f.events.indexOf("swap-proof") && f.events.indexOf("swap-proof") < f.events.indexOf("root"));
+    for (const old of actualBefore) { const next = f.images().find(i => i.id === old.id)!; assert.equal(next.version, old.version + 1); assert.equal(next.createdAt, old.createdAt); assert.equal(next.createdByAccountId, old.createdByAccountId); }
+    const audit = f.audit.at(-1)!; assert.equal((audit.before!.images as unknown[]).length, count); assert.equal((audit.after.images as unknown[]).length, count);
+    const eventCount = f.events.length; assert.deepEqual(await f.service.executeV2(actor, swapCommand), result); assert.equal(f.events.length, eventCount);
+    f.imageFault(); const state = f.state(), images = f.images();
+    const reverse = f.images().map((i, n) => ({ ...changed[n]!, id: i.id, expectedVersion: i.version, colorId: actualBefore.find(b => b.id === i.id)!.colorId }));
+    await assert.rejects(f.service.executeV2(actor, mediaEdit(saved.targetId, 2, reverse, `rollback-${count}`))); assert.deepEqual(f.state(), state); assert.deepEqual(f.images(), images);
+  }
+  const missing = mediaFixture(), colors = [gid(806), gid(807)], saved = await missing.service.executeV2(actor, { ...mediaCreate("missing-v4", colors.map((colorId, n) => ({ ...addImage("COLOR", gid(17500 + n)), colorId }))), skus: colors.map(c => sku(c)), barcodes: [] });
+  const before = missing.images(), count = missing.writes(); await assert.rejects(missing.service.executeV2(actor, mediaEdit(saved.targetId, 1, before.map((i, n) => ({ action: "EDIT_METADATA", id: i.id, expectedVersion: i.version, role: "COLOR", colorId: before[1 - n]!.colorId, displayOrder: 0 })))), { code: "PRODUCT_MEDIA_NOT_READY" });
+  assert.equal(missing.writes(), count); assert.deepEqual(missing.images(), before);
 });
 test("season v2: canonical multi-set uses one root CAS, prepared audit and original receipt; clear and known-to-unknown differ", async () => {
   const f = fixture("ready", true), c = commandV2(), saved = await f.service.executeV2(actor, c);

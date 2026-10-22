@@ -1,0 +1,82 @@
+{
+  "atUtc": "2026-10-22T18:16:46.765665+00:00",
+  "parent": "29d2ec29d71ad33e59d5316fcc3d082dc73028bc",
+  "groups": [
+    {
+      "slice": "QF_INCOMING_PRICE_HEADER_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-29/DELIVERY.json",
+      "receiptSha256": "ddc588809d223aaac9668f68a02e25eb4b98bbc43477bb667329f86f471bf224",
+      "files": [
+        {
+          "path": "apps/web/src/sales/document-presentation.tsx",
+          "owner": "F1",
+          "sha256": "0307567d773d47646360b674cf85f32cdb7e2e86a8e3b9fc704c3e987f239f3e",
+          "bytes": 13256
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+          "owner": "F1",
+          "sha256": "c6ef921c5e0434f7e9e964b6ef8ce7731a5e2c44b85f92ec3c333236ff2b62aa",
+          "bytes": 32997
+        },
+        {
+          "path": "apps/web/src/sales/commands/form.tsx",
+          "owner": "F1",
+          "sha256": "172d119514624764a724bb1c6421e5ef3b500a696f0197e0ca21e54c8427a0b9",
+          "bytes": 20850
+        },
+        {
+          "path": "apps/web/src/sales/detail-content.tsx",
+          "owner": "F1",
+          "sha256": "c7ca1f06e114c1c8cdfe35539892160921db9620dd088265636e3b43f39b9f6e",
+          "bytes": 9320
+        }
+      ]
+    },
+    {
+      "slice": "USER_APPROVED_IMAGE_COLOR_CYCLE_WRITER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W18-COLOR-SWAP-RECEIPT.json",
+      "receiptSha256": "9913d386a8fd7794252ab9fe6c298b0c685c95b8ea487a7ca18ab8b903e02599",
+      "files": [
+        {
+          "path": "packages/application/src/product-maintenance-ports.ts",
+          "owner": "D2",
+          "sha256": "dd7c1e7f55a951b146b687f715fb9756a875ee57ac6b598182acdad59ace4081",
+          "bytes": 12375
+        },
+        {
+          "path": "packages/application/src/product-maintenance-validation.ts",
+          "owner": "D2",
+          "sha256": "d669df75663d750d07e56e059752d4324db996c41961b5e0c1bd295d73b3fd33",
+          "bytes": 13899
+        },
+        {
+          "path": "packages/application/src/product-maintenance-service.ts",
+          "owner": "D2",
+          "sha256": "dfa8e6500b3957481d35c499a05c2d065ecdc172190231368e874b9b6a1516bd",
+          "bytes": 30735
+        },
+        {
+          "path": "adapters/postgres/src/product-maintenance-store.ts",
+          "owner": "D2",
+          "sha256": "597e75b30ee4d1f3fdefe29765ee0e8a9a01093a1d7675ca61e740d54942472c",
+          "bytes": 40979
+        },
+        {
+          "path": "tests/product-maintenance.test.ts",
+          "owner": "D2",
+          "sha256": "3767e55bc673e3f074f85d88daae2f4a0493f39f2ffa3d7894b870c3478ae242",
+          "bytes": 37736
+        },
+        {
+          "path": "tests/product-maintenance-postgres-protocol.test.ts",
+          "owner": "D2",
+          "sha256": "10df9e791eb4d4741c85f3ee9a7691f4198f7d18ae8580c624a93a3a6a24a54b",
+          "bytes": 33354
+        }
+      ]
+    }
+  ],
+  "fileCount": 10,
+  "scope": "F1 header context only and D2 approved v4 cycle writer source/protocol; actual guard install/PG/host/production separate and pending."
+}

@@ -19,8 +19,8 @@ export function salesDocumentType(value: string): 'SALE' | 'RETURN' | 'EXCHANGE'
 export function SalesDocumentColumns() {
   return <colgroup>{[270, 100, 122, 84, 80, 95, 90, 108, 99, 142].map((width, index) => <col key={index} style={{ width }} />)}</colgroup>;
 }
-export function SalesDocumentColumnHead() {
-  return <thead><tr>{SALES_DOCUMENT_COLUMNS.map(label => <th key={label} scope="col" className={label === '操作' ? 'ui-action-cell' : undefined}>{label}</th>)}</tr></thead>;
+export function SalesDocumentColumnHead({ incoming = false }: { readonly incoming?: boolean }) {
+  return <thead><tr>{SALES_DOCUMENT_COLUMNS.map(label => <th key={label} scope="col" className={label === '操作' ? 'ui-action-cell' : undefined}>{label === '成交单价' && incoming ? '退货单价' : label}</th>)}</tr></thead>;
 }
 export function salesExactQuantity(rows: readonly { readonly quantity: string }[], absolute = false): string | null {
   try {
