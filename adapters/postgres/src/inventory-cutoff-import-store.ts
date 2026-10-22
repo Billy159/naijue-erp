@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import type { CutoffImportBatch, CutoffImportCommand, CutoffImportItem, CutoffImportResult, CutoffImportStore, ImportCheckpoint, ImportCounts, ImportTarget } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import { COMPLETE_SCOPE_DECISION, stableImportId, validateCutoffImportCommand, validateImportCounts } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
@@ -58,6 +59,78 @@ function decodeBatch(row: Record<string, unknown>): CutoffImportBatch {
     cutoffAt: stringValue(row.cutoff_at), mappingVersion: stringValue(row.mapping_version), inventoryMode: "CUTOFF_STOCK_BASELINE", status: row.status as CutoffImportBatch["status"],
     checkpoint: decodeImportCheckpoint(row.checkpoint), createdAt: stringValue(row.created_at), completedAt: nullableString(row.completed_at) };
 }
+// Exact reviewed first-STAGE SQL, including finite table/column expansions from
+// native-bootstrap, native-party-import and history-header-reference plus the
+// three original capability probes. No caller-supplied SQL registration and no
+// runtime source-file hashing. Any provider query change requires a new review.
+// Fixed query text includes its comments/whitespace; values are data only.
+const bootstrapStatements: ReadonlyMap<string, number> = new Map([
+  ["a7218f6aff8ea5327103354bcd8f5af0ff8c3a75c71956b5baea41d24d7afaa4", 0], // native-bootstrap:target
+  ["6aa91314bcf074cb4042787e9bd82beaf72d73ae524bf39373eb15844e367b30", 1], // native-bootstrap:one-new-batch
+  ["03194e26025d2bac14bedb2ba29cd9ac2e99500a70c331cfd31be1f60ab184ba", 0], // native-bootstrap:empty-domain
+  ["483816d24177e9588ecdd11c15b56f3e1ef1d53cb0c550b6a1d1f757afb85806", 6], // native-bootstrap:account
+  ["e8e78055d84484ad506ec1a34f6e619fdc77c36d28379c3cc60a5766eff280d6", 0], // native-party-import:global-lock
+  ["083ee215dd40071c8898d74e51e25616c98e60be5e1f1bc6829293ba626b8066", 0], // native-party-import:schema
+  ["ea2ee0278fcb8c2a59f1ccb4e6679ef2a81bcff6d8fb40886f9cbdffb1641bc7", 1], // native-party-import:batch
+  ["b3feac7182ef5f86083502c4df2a633883c063730103be8b374dfd3266be120f", 1], // native-party-import:target
+  ["d6bdd0e9b229f3fd3d7d1687226b5f161489982ce29a16186b6fdc257b75c792", 2], // native-party-import:target
+  ["b0b7369c61b7cbd78103817c0757ae7b211c51af1ccfab94a7082a4b2259955f", 2], // native-party-import:target
+  ["0c14b1db81097982735ea2db820d318905fea7955750bcca123d53f0540fdb2f", 1], // native-party-import:target
+  ["9a2030ca3a925fdd9ea349a80e2a5111bcd6d33b73328166d8787de65e7652c9", 1], // native-party-import:target
+  ["cfe63e08ce20bb93317e28ec427e7f958d7efb619bdd3be917619e860b888bd8", 1], // native-party-import:relation-native
+  ["ef67b1917d98f373e158ce733f3bfd55b34280fdd28f55c9bb8486561dd1fb48", 1], // native-party-import:relation-native
+  ["af0c910608cb91311c3c998c545623da0caa13795b58af29d877860466b9a1c7", 1], // native-party-import:relation-native
+  ["29e3ae9eaa3df6db68c2b936b2e9ebadcaaedd5e180bf6c04f9b2c2122cc88c6", 7], // native-party-import:replay
+  ["96664957b6f0703edeeaf5ae411c78461f400b2fdbf44ca2847a4b7af575b7e5", 1], // native-party-import:intent
+  ["a09c3ed3e76f52a4a421db60bb7fa181447de1247ca5fd41252d231007794d7f", 1], // native-party-import:create
+  ["6d365453b94a9c51048b2920617ea40ce116a17e62e757b4dab978ac055277f6", 1], // native-party-import:create
+  ["8b889902aa4c3feea84fd6726ecfb6095199a584c0095a783efebe94316c685b", 1], // native-party-import:create
+  ["40a6fe685bddf1d884429475c3e442be52fac47738bc678092365162b111e249", 1], // native-party-import:create
+  ["c6fb7401505bd39dce9ddbd8efe16444bc700ccaea23b9857b3ec581a46dd77d", 1], // native-party-import:create
+  ["45026f1b506e9628bc07dcf0df93443bb6f9e42e2f599a368668c39033ac0e85", 3], // native-party-import:complete-new-hall
+  ["c9a4f7ea7730f353ebda588e66d2a330b39bf20dc3b1addb5027ca172673dae0", 7], // native-party-import:new-source-identity
+  ["b721f5d7121ecfe4e9f3512b78585888f0b64a7b8ec9ae4863606952b52359c7", 2], // native-party-import:replay-complete
+  ["4158f5ffe6ce0db557fd3589bee63318b1b32aa04a3ee5ce8442f59f6fdceb04", 8], // native-party-import:supplier-source-replay
+  ["50a14e9bfb513577e06c52658bfb316cc56c40ea60f59ef07f11c4784eea05bf", 1], // native-party-import:supplier-source
+  ["78f9aee098ed667a0cf3a26c88b914ef05cf662c6f492cf18b45750b910f9f38", 6], // native-party-import:warehouse-record-replay
+  ["c06e5f3d29cbcdc06a80615b70db06eb780d153de5242bafbcb3eacb0cead669", 1], // native-party-import:warehouse-record
+  ["829e5ba3616daef45fd9075fcfba148bf9fbc4d7df5446b04fe1f75cb03df356", 0], // history-header-reference:global-lock
+  ["2be743bdeb9e00364bcf043bb9903545d0c1e4a88b4293ff15400173bf204830", 1], // history-header-reference:batch
+  ["78f8eef4ec5bf36aa0504473359ca8e6d38a94eac6881558d5e4b9182e6fae7c", 2], // history-header-reference:native
+  ["cd903c961803fdcb0fde02bff607a2181b24d5d947e6d9aa4bd70e6530155e60", 2], // history-header-reference:native
+  ["bdaf6620770db7fa326d267245ffc23129cfa77abad2b404c4f3269a4d6e780a", 2], // history-header-reference:native
+  ["e5a455b0a343ef25e873332b31b669c2fc2085f5cbaa9ca478f1d7e76017b433", 1], // history-header-reference:relation-native
+  ["accda680cbeb37651bb4ef2c1dc834cf23ed1726701db54842bb9cb3fd5d1061", 1], // history-header-reference:relation-native
+  ["a3f112c0949f73b683c4d3efbdca9e83449a2ce7fb23ae800a30fc632505bcc2", 1], // history-header-reference:relation-native
+  ["233dc9b9f30d7479ca8d898c6201a01164f41c9a0bbb1bb139349b626b725590", 9], // history-header-reference:replay
+  ["d287c38019ea79374863710e63d7a6b1eca89b827c8601fcc7faf4fbe4c6a230", 3], // history-header-reference:relation
+  ["cfd6030814aa8fb45601d2a89684753cdeb8eeac657b24a02d1d90f48c0a3ab4", 4], // history-header-reference:relation
+  ["ca4791954b02d20efcce0917ff1d9a20dc0eb7ac52266245b51911d88f4638c4", 4], // history-header-reference:relation
+  ["d3cf564a4cfe45463e52da2c4b464884a300175dfef8f0971218a7b15e7cfdf3", 1], // history-header-reference:source
+  ["963b0302f8b09969c479946b039869e2d1ea86dd9b5f143079afcb271127ad8a", 1], // history-header-reference:reference
+  ["b4364d9b6926e95e3f2cc8769a766b415c8f5772aa0079a2bdc3d4817a7a02e6", 0], // inventory:guards
+  ["6da5b8ef0f0461533414a955399c377b1e6638689f6ad4b98dbd63a82a23ed29", 0], // native-accounting:guards
+  ["065d247b878f75b3962b07c774b6a19cb83cc75cf0878151ef55b36c88aff5ff", 0], // native-accounting:guards
+]);
+function checkedBootstrapValues(sql: string, values: unknown[] | undefined): unknown[] {
+  const arity = typeof sql === "string" ? bootstrapStatements.get(createHash("sha256").update(sql).digest("hex")) : undefined;
+  requireDomain(arity !== undefined, "TRANSACTION_SCOPE", "Bootstrap requires an exact reviewed statement");
+  const input = values === undefined ? [] : values;
+  requireDomain(Array.isArray(input) && Object.getPrototypeOf(input) === Array.prototype && input.length === arity
+    && Reflect.ownKeys(input).length === arity + 1, "TRANSACTION_SCOPE", "Bootstrap requires exact plain parameter values");
+  const result: unknown[] = [];
+  for (let i = 0; i < arity; i++) {
+    const descriptor = Object.getOwnPropertyDescriptor(input, String(i));
+    requireDomain(descriptor !== undefined && Object.hasOwn(descriptor, "value"), "TRANSACTION_SCOPE", "Bootstrap parameters cannot be accessors");
+    const value: unknown = descriptor.value;
+    requireDomain(value === null || typeof value === "string" || typeof value === "boolean"
+      || typeof value === "bigint" || (typeof value === "number" && Number.isFinite(value)),
+      "TRANSACTION_SCOPE", "Bootstrap parameters are scalar data, not executable adapters");
+    result.push(value);
+  }
+  return result;
+}
+
 export interface ImportStageBootstrap {
   /** Trusted private source provider only. Independently binds the exact reviewed
    * first STAGE and real original actor, creates source-owned native party rows
@@ -160,11 +233,12 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
         const pending = new Set<Promise<PgSalesResult>>(); let queryFailure: unknown;
         const borrowed = Object.freeze({ query: (sql: string, values?: unknown[]): Promise<PgSalesResult> => {
           requireDomain(active, "TRANSACTION_CLOSED", "Stage bootstrap query cannot escape its original callback");
-          requireDomain(pending.size === 0, "TRANSACTION_SCOPE", "Stage bootstrap queries must be sequential and awaited");
-          const start = typeof sql === "string" ? sql.replace(/^(?:\s|\/\*[\s\S]*?\*\/|--[^\n]*(?:\n|$))*/, "") : "";
-          requireDomain(/^(?:SELECT|INSERT|UPDATE|WITH)\b/i.test(start) && !sql.includes(";"),
-            "TRANSACTION_SCOPE", "Stage bootstrap cannot control transactions, sessions or multiple statements");
-          const request = client.query(sql, values); pending.add(request);
+          let parameters: unknown[];
+          try {
+            requireDomain(pending.size === 0, "TRANSACTION_SCOPE", "Stage bootstrap queries must be sequential and awaited");
+            parameters = checkedBootstrapValues(sql, values);
+          } catch (error) { queryFailure ??= error; throw error; }
+          const request = client.query(sql, parameters); pending.add(request);
           void request.then(() => pending.delete(request), error => { pending.delete(request); queryFailure ??= error; });
           return request;
         } });

@@ -10,6 +10,18 @@ import { requestHash } from "./request-hash.ts";
 
 export const NATIVE_PRODUCT_IMPORT_VERSION = "NATIVE_PRODUCT_IMPORT_V1";
 export const NATIVE_PRODUCT_REFERENCE_DECISION_VERSION = "NATIVE_PRODUCT_REFERENCE_DECISIONS_V1";
+/** Only the two PRODUCT rows affected by the already approved four-product
+ * pants branch. Raw source cells/identity remain unchanged; this proof grants
+ * nothing until the composite authorizer checks independently pinned rule bytes. */
+export const NATIVE_PRODUCT_SIZE_GROUP_OVERRIDE_VERSION = "NATIVE_PRODUCT_EXACT_SIZE_GROUP_OVERRIDE_V1";
+export interface NativeProductSizeGroupOverride {
+  readonly version: typeof NATIVE_PRODUCT_SIZE_GROUP_OVERRIDE_VERSION;
+  readonly field: "尺码组"; readonly mappingSha256: string;
+}
+const SIZE_GROUP_OVERRIDE_SOURCE_ROWS: Readonly<Record<string, readonly [string, string]>> = {
+  "ce3871bc-1ddb-533a-a164-f4cd8bd3bf1a": ["501XK5399665", "739"],
+  "53641e19-578b-5f6e-9000-0d3a8201a017": ["501XK5399666", "740"]
+};
 /** An explicit reviewed historical blank policy, NOT a change to live CREATE. */
 export const NATIVE_PRODUCT_NULLABLE_POLICY = "EXACT_BLANK_IS_HISTORICAL_NULL_V1";
 interface NamedReference {
@@ -28,6 +40,7 @@ export interface NativeProductReferences {
 export interface NativeProductImportRow extends ProductEvidenceRow {
   readonly nullableFieldPolicy: typeof NATIVE_PRODUCT_NULLABLE_POLICY;
   readonly references: NativeProductReferences;
+  readonly sourceTransformation?: NativeProductSizeGroupOverride;
 }
 export interface NativeProductImportChunk extends Omit<ProductEvidenceChunk, "rows"> {
   readonly rows: readonly NativeProductImportRow[];
@@ -69,9 +82,15 @@ export function prepareNativeProductImportChunk(input: NativeProductImportChunk)
       "NATIVE_PRODUCT_CREATION_CONTRACT", "New native version 1, independent explicit ID and historical nullable policy required");
     const fields = s.fieldProvenance.fields as Record<string, unknown>;
     requireDomain(!Object.hasOwn(fields, "native_product_import"), "NATIVE_PRODUCT_PROVENANCE", "Unaugmented original field provenance required");
+    const transformation = row.sourceTransformation, approvedRow = SIZE_GROUP_OVERRIDE_SOURCE_ROWS[s.sourceKey];
+    if (Object.hasOwn(row, "sourceTransformation")) requireDomain(transformation && Object.keys(transformation).length === 3
+      && transformation.version === NATIVE_PRODUCT_SIZE_GROUP_OVERRIDE_VERSION && transformation.field === "尺码组" && hash(transformation.mappingSha256)
+      && approvedRow && s.sourceFileSha256 === "652c21df52c56d362b11e48bcd1684a690a85a215ee2e2c6a390506d89c474bf"
+      && s.sheet === "01商品" && s.rowNo === approvedRow[1] && raw["款号"] === approvedRow[0]
+      && raw["尺码组"] === "男装裤子尺码" && n["尺码组"] === "男装上衣尺码", "NATIVE_PRODUCT_SIZE_GROUP_OVERRIDE", "Exact approved two source rows and separately pinned size rule required");
     for (const column of columns) {
-      // Non-price corrections require a new versioned transformation contract.
-      requireDomain(Object.hasOwn(raw, column.name) && (priceFields.has(column.name) || raw[column.name] === n[column.name]),
+      // All other non-price source transformations remain closed.
+      requireDomain(Object.hasOwn(raw, column.name) && (priceFields.has(column.name) || raw[column.name] === n[column.name] || (column.name === "尺码组" && transformation !== undefined)),
         "NATIVE_PRODUCT_SOURCE_TRANSFORMATION_UNSUPPORTED", "Missing or changed native product source field cannot be invented");
       const field = fields[column.name] as Record<string, unknown> | undefined;
       requireDomain(field && Object.hasOwn(field, "raw") && requestHash(field.raw) === requestHash(raw[column.name])
@@ -120,7 +139,8 @@ export function validatePreparedNativeProductImportChunk(chunk: PreparedNativePr
  * bytes; computing a digest from untrusted caller input grants nothing. */
 export function nativeProductReferenceDecision(row: NativeProductImportRow) {
   const body = { sourceRowId: row.source.id, sourceKey: row.source.sourceKey, sourceEvidenceHash: requestHash(row.source),
-    product: row.product, blankPricePolicy: row.blankPricePolicy, nullableFieldPolicy: row.nullableFieldPolicy, references: row.references };
+    product: row.product, blankPricePolicy: row.blankPricePolicy, nullableFieldPolicy: row.nullableFieldPolicy, references: row.references,
+    ...(Object.hasOwn(row, "sourceTransformation") ? { sourceTransformation: row.sourceTransformation } : {}) };
   return { ...body, decisionSha256: requestHash({ validatorVersion: NATIVE_PRODUCT_REFERENCE_DECISION_VERSION, ...body }) };
 }
 /** Deterministic immutable metadata shared by first insert and exact replay. */
@@ -132,6 +152,7 @@ export function nativeProductImportEvidence(chunk: PreparedNativeProductImportCh
     evidence_ref: chunk.selection.selectionSha256, validator_version: NATIVE_PRODUCT_IMPORT_VERSION, selection: chunk.selection,
     row_fingerprint: requestHash({ selection: chunk.selection, row }), native_product: chunk.nativeProducts[index]!,
     nullable_field_policy: row.nullableFieldPolicy, references: row.references,
+    ...(Object.hasOwn(row, "sourceTransformation") ? { source_transformation: row.sourceTransformation } : {}),
     reference_decision_sha256: nativeProductReferenceDecision(row).decisionSha256
   } };
   return { fields, source: { id: s.id, batch_id: s.batchId, entity_type: "PRODUCT", source_key: s.sourceKey, file_ref: s.fileRef,

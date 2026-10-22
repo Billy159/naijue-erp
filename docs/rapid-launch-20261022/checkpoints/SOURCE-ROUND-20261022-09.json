@@ -1,0 +1,114 @@
+{
+  "atUtc": "2026-10-22T07:39:17.215366+00:00",
+  "parent": "49b4f581c034def949572e358320eeb5b44c255f",
+  "scope": "Exact ready source only; pending independent scope acceptance",
+  "groups": [
+    {
+      "slice": "D1_BOOTSTRAP_SESSION_FIX",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/BOOTSTRAP-SESSION-BOUNDARY-RESULT.json",
+      "receiptSha256": "ce7ea2301e2054c8b02a551742290b4e7ed6910e28d0f1c11edcfc975413bffe",
+      "files": [
+        {
+          "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+          "sha256": "9b6a9bf5ab7de75bbac27ccd266dfd877a3aee2bba48447a4794d814933b832d",
+          "owner": "D1"
+        },
+        {
+          "path": "tests/import-stage-bootstrap-postgres-protocol.test.ts",
+          "sha256": "ecfd1bde2d106b707a49e49a566a8466b60abb2567b9a119369ac74d7c8563ea",
+          "owner": "D1"
+        }
+      ]
+    },
+    {
+      "slice": "F1_CHUNK12",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-12/DELIVERY.json",
+      "receiptSha256": "667b22933b75a5e0560a7c9436ad2fb234aa859528669299bec69974dad3c738",
+      "files": [
+        {
+          "path": "apps/web/src/sales/history-http-reader.ts",
+          "sha256": "7f01334c0c3f0a7a017a09cccec10b6c88789bb74eed0ceb86303721cc542517",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/sales/history-controller.ts",
+          "sha256": "77a290c48dc01ac31727aff31eab5737b9b05d6213659ce22a54d06c47eb0e6e",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/sales/history-view.tsx",
+          "sha256": "c9b4347773129d27017947d42d8db46deef8e2c497199d16c8832db09f7b2edc",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/sales/contracts.ts",
+          "sha256": "8c030be034473ab97d25ced9019fc9049e987ed87757cddf6d29dff0ec4ea3c1",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/sales/http-reader.ts",
+          "sha256": "8581e73cf3f3effa1a157d5e43dccf443a4c3990977bcc923c594c96220559d8",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/sales/commands/form.tsx",
+          "sha256": "a9e70b56c39527cf0d6dc35baa4bcd8808839a09e6e6d2f3018ffb107efd4d1c",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/sales/commands/page-host.tsx",
+          "sha256": "5838ef2ad6507049a9b9f6d618b633b3bb925ecb4bb718779ada327f06153726",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/sales/commands/manual-create-host.tsx",
+          "sha256": "7fd072c3f7624dfd52cf128d246e9d3aec9ae4ceb696139729a5187081b84b49",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-new-document-form.tsx",
+          "sha256": "cefef8cdfaeb9a372ed39fca511cbd605a246593ceeac1a1d4c3813d6c70f2fe",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/sales/detail-header.tsx",
+          "sha256": "14488e3221d66f943d0889ca8dbae39a6a3b92c351e4b02ea0687c9955aaa65f",
+          "owner": "F1"
+        },
+        {
+          "path": "apps/web/src/sales/detail-content.tsx",
+          "sha256": "86fb564903e3394cfc32243ab244af2d32fc85a87eff3d98614a6412cd4c3f1e",
+          "owner": "F1"
+        }
+      ]
+    },
+    {
+      "slice": "D3_SIZE_OVERRIDE2",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/product-size-override-slice1/RESULT.json",
+      "receiptSha256": "0b66d059ce2b51f9a42be99a77fda92b33a732aa5d7d3fe636bc00d146adf9b9",
+      "files": [
+        {
+          "path": "packages/application/src/native-product-import.ts",
+          "sha256": "48f8abafea05bd5e539827b83721be0bdeb87b01bf1c4b27c1890496081a2011",
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v2/authorized-native-product-reader.mjs",
+          "sha256": "b815b3e5ebd03b74345d35c348cf603e8e9205a8b222e882105bba6d8dd9240b",
+          "owner": "D3"
+        },
+        {
+          "path": "tests/native-product-size-override.test.ts",
+          "sha256": "4c9352e3d061986a71a991573cb0265da9bb12598c936de7e1251a6551c14a37",
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v2/authorized-native-product-reader.test.mjs",
+          "sha256": "174c40876fcc184421dd3f5e3b8e094bebb99e14920db0c329cc132a44fd5f4d",
+          "owner": "D3"
+        }
+      ]
+    }
+  ],
+  "fileCount": 17
+}

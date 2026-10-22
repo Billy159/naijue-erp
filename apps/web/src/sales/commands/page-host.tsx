@@ -6,7 +6,8 @@ import type { ReadScope } from '../../loading/read-scope.ts';
 import type { SalesReader, SalesReferenceReader } from '../contracts.ts';
 import { SalesPageHost } from '../sales-route.tsx';
 import type { SalesEditorSession } from './editor-session.ts';
-type SalesFormComponent = ComponentType<{ readonly session: SalesEditorSession; readonly close: () => void }>;
+import type { SalesHistoryCapability } from '../history-view.tsx';
+type SalesFormComponent = ComponentType<{ readonly session: SalesEditorSession; readonly close: () => void; readonly history?: SalesHistoryCapability }>;
 
 export function SalesCommandPageHost(props: { readonly scope: ReadScope; readonly reader: SalesReader; readonly references: SalesReferenceReader;
   readonly session: SalesEditorSession; readonly manualCreate?: SalesManualCreateCapability; readonly loadDetailStyles: () => Promise<unknown> }) {
@@ -17,6 +18,7 @@ export function SalesCommandPageHost(props: { readonly scope: ReadScope; readonl
   const [manualActive, setManualActive] = useState(false);
   const [manualActivation, setManualActivation] = useState(0);
   const active = manualActive || !!state.command.editor || state.preparing;
+  const historyReader = props.reader.readHistory ? { readHistory: props.reader.readHistory } : undefined;
   useEffect(() => {
     if (!active || manualActive || styles === 'ready') return;
     let attached = true; const owner = { scope: props.scope, session: props.session, loader: props.loadDetailStyles }; setStyles({ ...owner, phase: 'loading', Form: null });
@@ -32,7 +34,7 @@ export function SalesCommandPageHost(props: { readonly scope: ReadScope; readonl
     canLeave: () => props.session.canLeave() && props.manualCreate?.canLeave() !== false,
     close: () => { if (props.session.canLeave() && props.manualCreate?.canLeave() !== false) { props.session.discardEditor(); setManualActive(false); } },
     openCreate: () => { if (props.manualCreate && props.manualCreate.canLeave() && props.session.canLeave()) { setManualActivation(value => value + 1); setManualActive(true); } else if (!props.manualCreate) void props.session.openCreate(); }, openExisting: salesId => { void props.session.openExisting(salesId); },
-    editor: manualActive && props.manualCreate ? <SalesManualCreateHost key={manualActivation} parentScope={props.scope} capability={props.manualCreate} loadStyles={props.loadDetailStyles} close={() => setManualActive(false)} /> : styles === 'ready' && styleState.Form ? createElement(styleState.Form, { session: props.session, close: () => {} }) : <section className="tc-workbench" aria-label="销货单编辑"><h1>销货单</h1>
+    editor: manualActive && props.manualCreate ? <SalesManualCreateHost key={manualActivation} parentScope={props.scope} capability={props.manualCreate} loadStyles={props.loadDetailStyles} close={() => setManualActive(false)} {...(historyReader ? { historyReader } : {})} /> : styles === 'ready' && styleState.Form ? createElement(styleState.Form, { session: props.session, close: () => {}, ...(historyReader ? { history: { scope: props.scope, reader: historyReader } } : {}) }) : <section className="tc-workbench" aria-label="销货单编辑"><h1>销货单</h1>
       <UIButton type="button" className="iw-button" disabled={props.session.commands.hasUnresolvedWrite} onClick={() => {
         if (state.preparing) { props.session.suspend(); return; }
         if (props.session.hasDirtyDraft) setDiscard(true); else props.session.discardEditor();

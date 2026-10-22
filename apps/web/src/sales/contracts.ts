@@ -19,6 +19,7 @@ export interface SalesDetailDto extends Pick<SalesDetail, 'stockBasis' | 'refere
   };
 }
 export interface SalesReader {
+  readonly readHistory?: import('./history-http-reader.ts').SalesHistoryReader['readHistory'];
   readList(read: QueryRead<SalesListQuery>): Promise<SalesListDto>;
   readDetail(read: QueryRead<SalesDetailQuery>): Promise<SalesDetailDto>;
 }

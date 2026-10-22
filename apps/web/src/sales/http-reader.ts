@@ -3,12 +3,14 @@ import { parseSalesFilterReferenceQuery } from '../../../../packages/application
 import { createHttpJsonQuery, type HttpQueryOptions } from '../transport/http-query.ts';
 import type { SalesReader, SalesReferenceReader } from './contracts.ts';
 import { salesDetailResponse, salesListResponse, salesReferencesResponse } from './response-validation.ts';
+import { createSalesHistoryHttpReader } from './history-http-reader.ts';
 
 /** Inert, same-origin read-only composition. Never sends identity, role or scope.
  * No automatic retry, product hydration or fixture fallback. */
 export function createSalesHttpReader(options: HttpQueryOptions): SalesReader {
   const http = createHttpJsonQuery(options);
   return Object.freeze({
+    readHistory: createSalesHistoryHttpReader(options).readHistory,
     readList(read) {
       const f = read.parameters.filter;
       const body = { filter: { startDate: f.startDate, endDate: f.endDate, statuses: f.statuses, businessTypes: f.businessTypes,
