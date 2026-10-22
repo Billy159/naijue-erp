@@ -1,8 +1,15 @@
 /* Final frozen product scheme table and product-arco modal geometry, locally scoped. */
+.dictionary-workbench.pc-schemes-page{padding-bottom:0}
+.dictionary-workbench.pc-schemes-page.pc-schemes-paginated{padding-bottom:52px}
 .dictionary-workbench .pc-schemes{min-height:0;border:1px solid var(--ca-line)}
 .dictionary-workbench .pc-schemes .table-scroll{max-height:calc(100dvh - var(--ui-topbar) - 190px);overflow:auto}
 .dictionary-workbench .pc-schemes table{min-width:920px}
 .dictionary-workbench .pc-schemes :is(th,td):nth-child(3){width:37%;white-space:normal}
+/* Win over StandardReadTable and late Arco styles without changing other lists.
+   The 26px action plus 4px cell padding and border yields the source 35px row. */
+.dictionary-workbench.pc-schemes-page .pc-schemes .erp-read-table .arco-table :is(.arco-table-th,.arco-table-td){box-sizing:border-box;height:34px;min-height:34px;padding:4px 8px;border-bottom:1px solid var(--ca-table-grid);font-size:12px;line-height:18px;vertical-align:middle}
+.dictionary-workbench.pc-schemes-page .pc-schemes .erp-read-table .arco-table .arco-table-th{height:36px;background:var(--ca-table-head);color:var(--ca-ink-2);font-weight:600}
+.dictionary-workbench.pc-schemes-page .pc-schemes .erp-read-table :is(.arco-table-th-item,.arco-table-cell){line-height:inherit}
 .dictionary-workbench .pc-schemes td .btn.ghost{height:26px;min-height:26px;padding:2px 5px;border:0;background:transparent;color:var(--ca-primary-ink);font-size:12px;font-weight:400}
 .dictionary-workbench .pc-schemes td .btn.ghost:hover{text-decoration:underline;background:var(--ca-primary-hover-soft)}
 .dictionary-workbench .pc-scheme-note{margin:0;padding:8px 12px;border-top:1px solid var(--ca-line);background:transparent;color:var(--ca-ink-3);font-size:12px;line-height:1.5}

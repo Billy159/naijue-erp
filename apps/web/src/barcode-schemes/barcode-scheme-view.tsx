@@ -12,7 +12,7 @@ export function BarcodeSchemeView(props: DictionaryPageProps & { readonly scheme
     const result = validateDictionaryScheme(value); if (result.id !== read.parameters.schemeId) throw new Error('Invalid scheme target'); return result;
   }, [props.reader, props.schemeId]);
   const owner = useDictionaryOwner(props, execute, { schemeId: props.schemeId });
-  return <StandardOverlay title="查看条码方案" className="erp-scheme-modal" closeLabel="关闭查看条码方案" close={props.close} maskClosable={false}
+  return <StandardOverlay presentation="catalogue" title="查看条码方案" className="erp-scheme-modal" closeLabel="关闭查看条码方案" close={props.close} maskClosable={false}
     footer={close => <UIButton onClick={close}>关闭</UIButton>}>
     {owner ? <SchemeDetail owner={owner} schemeId={props.schemeId} /> : <p role="status">正在准备读取…</p>}
   </StandardOverlay>;

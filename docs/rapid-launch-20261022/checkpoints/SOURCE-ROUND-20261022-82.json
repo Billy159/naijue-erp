@@ -1,0 +1,160 @@
+{
+  "atUtc": "2026-10-22T21:03:11.988112+00:00",
+  "parent": "d202f322cf68bab6bd5382feffe0bc83b8fe4962",
+  "groups": [
+    {
+      "slice": "BARCODE_SCHEME_P19_TABLE_DENSITY_PAGER_AND_SHARED_OVERLAY_CONSUMER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/SCHEME-UI-P19-DELIVERY-v1.json",
+      "receiptSha256": "cb56716e7989e6191e074219031a896fbc7d0d7915377e4258e2aac067ed6b83",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskId": "P19 / CAT-UI-01+CAT-UI-03 scope extension / SCHEME-UI-01",
+        "role": "F2",
+        "atUtc": "2026-10-22T21:01:08.833394+00:00",
+        "status": "SOURCE_READY_AFFECTED_CHECKS_PASS_PENDING_FIXED_QF_AND_BROWSER",
+        "authority": {
+          "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+          "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "ownershipRegistry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+          "exact3RegisteredByCBeforeSourceWrite": true,
+          "sharedCatalogueOverlayCheckpoint": "27adc459150cc27a22868f30abdb7210b70b3677"
+        },
+        "modelRequested": "gpt-6.1-sol/xhigh",
+        "actualSpeedStatus": "NOT_EXPOSED_BY_TOOL",
+        "input": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v010-d6ad29c/BARCODE-SCHEMES-SOURCE-RUNTIME-SUPPLEMENT.json",
+          "sha256": "6074f91c68942e7042771e8e1f1d59b958051ee9c4a388f30f0a00c8c12be6ba"
+        },
+        "completedScope": [
+          "Consume F1 StandardOverlay presentation=catalogue once; retain native480 width, original async target guard/mask/Esc/focus owner; no duplicate modal shell CSS.",
+          "Local Arco/StandardReadTable specificity fixes header36/cell minimum34/padding4x8/line18/action26. Intrinsic35 normal row remains browser verification.",
+          "Remove normal refresh only; preserve loading/cancel/error/retry/stale-success notices.",
+          "Only show native pagination when total>initial20 OR displayed page>1 OR chosen pageSize!=20; retain50/100 choice and out-of-range recovery; no footer padding on complete small list.",
+          "Retain source footnote location with current factual text; remove broad historical confirmation assertion. No unsupported2026 default/scope/year/rule derivation.",
+          "Raw native CODE128/UNKNOWN, null length/applicability and native IDs unchanged; read-only details remain dedicated server reads."
+        ],
+        "changedFiles": [
+          {
+            "path": "apps/web/src/barcode-schemes/barcode-schemes-page.tsx",
+            "sha256": "5baaca8a294f88643867b35ccb30e16f4b0e544e61c40da91cd905876a15cad1",
+            "beforeSha256": "379ed8e7be2c3734df61987b0aa7c8fe313827b787fa49dca9da4a3d7bb834c4",
+            "fixedCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/SCHEME-UI-P19-source/barcode-schemes-page.tsx"
+          },
+          {
+            "path": "apps/web/src/barcode-schemes/barcode-scheme-view.tsx",
+            "sha256": "d62dd5d6261e746efc6140bcd0aa3340592bc1a0a2e6a9f04df4b414ed02e942",
+            "beforeSha256": "ec13ba4aac46cf58b49e9f6b0ecb35ec3d390fe797894108c1ebfe65fc30a626",
+            "fixedCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/SCHEME-UI-P19-source/barcode-scheme-view.tsx"
+          },
+          {
+            "path": "apps/web/src/barcode-schemes/barcode-schemes.css",
+            "sha256": "653bdd6029a8c3b019048c8ae6f47e159fb0aeba3b313905edc902261aaac394",
+            "beforeSha256": "c45295290d829f49a6162adf0e5a74f54bfe4b09e5acc0b37928abe4153a910f",
+            "fixedCopy": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/SCHEME-UI-P19-source/barcode-schemes.css"
+          }
+        ],
+        "newApplicationFiles": 0,
+        "unchangedSharedDependencies": [
+          {
+            "path": "apps/web/src/components/standard-overlay.tsx",
+            "sha256": "97c22b8d5f917814ce27b77af9efaebd486e6768d9dd349011934ba17137d852",
+            "writtenByF2InThisSlice": false
+          },
+          {
+            "path": "apps/web/src/components/standard-overlay.css",
+            "sha256": "65bb58e5efba8548bd077a9c08b4e60d606b130551e371e8d9b463cc60967084",
+            "writtenByF2InThisSlice": false
+          },
+          {
+            "path": "apps/web/src/components/standard-read-table.tsx",
+            "sha256": "9e0483783c1d75b85c1941dc5458e227d8fd2f76410d72bf97453021f14f0092",
+            "writtenByF2InThisSlice": false
+          },
+          {
+            "path": "apps/web/src/components/standard-read-table.css",
+            "sha256": "9a33943227d016079e13034ca424c709e18fa92143c679389848a9a824a55836",
+            "writtenByF2InThisSlice": false
+          },
+          {
+            "path": "apps/web/src/product-settings/size-groups/pagination.tsx",
+            "sha256": "ba26eda9f0f93d176c33db49b48963095021957b067df5da00959fa647f64b81",
+            "writtenByF2InThisSlice": false
+          },
+          {
+            "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
+            "sha256": "0774a41018f0e699b21e9f6a898a7526c90f20ee630c8ca0e31d1807a61ddc20",
+            "writtenByF2InThisSlice": false
+          }
+        ],
+        "checks": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/SCHEME-UI-P19-dom-v1.log",
+            "sha256": "f364c0a0b73ff871d91b3904aacaf05e90e9b2a4c27d646de10886efed615930",
+            "exitCode": 0,
+            "bytes": 965
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/SCHEME-UI-P19-types.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "exitCode": 0,
+            "bytes": 0
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/SCHEME-UI-P19-cascade-v1.log",
+            "sha256": "540fdc312e0e8dae9e6bbb2a20ea818372424e15ac7bced8b698e412558e02eb",
+            "exitCode": 0,
+            "bytes": 321
+          }
+        ],
+        "cascadeResult": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/SCHEME-UI-P19-cascade-result-v1.json",
+          "sha256": "2673935a7f5978ed4dcfdf824d5555f98eb16964a95ffab381d75de6aa651015",
+          "method": "Actual mounted leaf DOM + native selector/specificity; table library/shared CSS deliberately loaded after leaf. Explicit bounded CSS variable shorthand expansion used because cssstyle loses variable shorthands; no browser computed-value claim."
+        },
+        "domCoverage": [
+          "native duplicate-name distinctIDs CURRENT CODE128/HISTORICAL UNKNOWN and null length/applicability",
+          "catalogue modal480/SVG X/footer close/Tab loop/Esc/mask protection/exact focus return; dedicated detail text not row snapshot",
+          "wrong-ID detail rejected, notfound/retry preserved",
+          "native41 rows page2, stale503 notice/retry and total shrink/out-of-range firstpage recovery",
+          "actual lazy page-size UI sends50 and20 native query values; requiredpager remains for selected size",
+          "scope abort clears rows/detail and discards late result; no business writes"
+        ],
+        "warnings": [
+          "Existing React19 Arco element.ref deprecation only; test act warnings repaired in test harness, no source changes required."
+        ],
+        "notRun": [
+          "actual browser pixels/intrinsic row35/longtext overflow/scroll and final pointer behavior",
+          "real PostgreSQL/role authorization/business saves",
+          "whole-page/fullbuild/deployment"
+        ],
+        "blockers": {
+          "sourceSlice": null,
+          "wholePage": "Actual browser specialist fixed-candidate review remains; this report does not assert wholepage/overlay production PASS.",
+          "unrelatedPending": "P10 full readonly barcode DTO and P06 media runtime/key/hash original waits unchanged; not retried."
+        },
+        "nextStep": "C fix exact3 and receipt, QF only new leaf scope and C76 dependency; Demo specialist only changed P19 density/pager/overlay. Do not repeat accepted CAT/year/search suites."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/barcode-schemes/barcode-schemes-page.tsx",
+          "owner": "F2",
+          "sha256": "5baaca8a294f88643867b35ccb30e16f4b0e544e61c40da91cd905876a15cad1",
+          "bytes": 5365
+        },
+        {
+          "path": "apps/web/src/barcode-schemes/barcode-scheme-view.tsx",
+          "owner": "F2",
+          "sha256": "d62dd5d6261e746efc6140bcd0aa3340592bc1a0a2e6a9f04df4b414ed02e942",
+          "bytes": 2577
+        },
+        {
+          "path": "apps/web/src/barcode-schemes/barcode-schemes.css",
+          "owner": "F2",
+          "sha256": "653bdd6029a8c3b019048c8ae6f47e159fb0aeba3b313905edc902261aaac394",
+          "bytes": 2208
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Exact owner/hash checkpoint only. Initial C metadata parser assumed wrong receipt key before any index/Git mutation; corrected changedFiles. Scoped independent QA next; actual browser and PG separate."
+}
