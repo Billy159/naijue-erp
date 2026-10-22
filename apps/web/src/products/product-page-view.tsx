@@ -17,7 +17,7 @@ const leaves = new AsyncLeafRegistry({ base: { load: () => import('./product-pag
 export function ProductFullPageView(props: ProductPageTabProps & { readonly configuration: ProductFullPageConfiguration }) {
   const [tab, setTab] = useState<ProductReadOnlyPageTab>(props.configuration.initialTab);
   const available = (value: ProductReadOnlyPageTab) => props.configuration.allowedTabs.includes(value) && productPageTabAvailable(props.reader, value);
-  return <><StandardTabs label="商品只读整页页签" value={tab} items={productReadOnlyPageTabs.map(key => ({ key, label: `${labels[key]}${available(key) ? '' : '（未接入）'}`, disabled: !available(key) }))} onChange={value => { if (props.scope.active && available(value)) setTab(value); }}>
+  return <><StandardTabs className="product-readonly-tabs" label="商品只读整页页签" value={tab} items={productReadOnlyPageTabs.map(key => ({ key, label: `${labels[key]}${available(key) ? '' : '（未接入）'}`, disabled: !available(key) }))} onChange={value => { if (props.scope.active && available(value)) setTab(value); }}>
     <section className="product-page-tab-body">{available(tab) && <ProductPageTab key={tab} {...props} tab={tab as AvailableTab} />}</section>
   </StandardTabs>{productReadOnlyPageTabs.some(key => !available(key)) && <p className="product-page-availability" role="status">部分商品资料暂不可查看。</p>}</>;
 }

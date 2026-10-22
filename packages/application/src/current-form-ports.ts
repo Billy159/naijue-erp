@@ -35,6 +35,9 @@ export interface CurrentFormProduct {
   readonly id: EntityId<"product">; readonly code: string; readonly name: string;
   /** Native nullable retail_price, exact yuan text at scale 2. Not a complete nine-price set. */
   readonly retailPrice: string | null; readonly minimumPriceAvailability: "UNAVAILABLE";
+  /** Absent on legacy wire means not provided. New readers return the actual
+   * native category ID and terminal label; missing joined label stays unknown. */
+  readonly category?: { readonly id: EntityId<"category">; readonly label: string | null };
 }
 export interface CurrentFormProductSkuQuery {
   readonly context: CurrentFormContext; readonly productId: EntityId<"product">; readonly page: number; readonly pageSize: 20;

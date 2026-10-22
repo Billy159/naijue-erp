@@ -8,6 +8,6 @@ export function View({ scope, reader }: ProductPageTabProps) {
     ['年份', data.yearLabel], ['季节', data.seasonLabel], ['供应商', data.supplierLabel],
     ['厚薄（可选）', null], ['领型 / 裤型（可选）', null], ['系统货号', data.systemCode]] : [];
   return <ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!data}>
-    <dl className="product-base-grid">{fields.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value ?? '未提供'}</dd></div>)}</dl>
+    <dl className="product-base-grid product-readonly-base-grid" aria-label="商品基础资料">{fields.map(([label, value]) => <div key={label}><dt>{label}</dt><dd className="product-readonly-value">{value ?? '未提供'}</dd></div>)}</dl>
   </ProductReadState>;
 }

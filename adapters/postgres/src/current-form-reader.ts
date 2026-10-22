@@ -266,11 +266,12 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
     const parameters = parseCurrentFormProductQuery(input);
     return this.snapshot(actor, { kind: "products", parameters }, signal, async (query, identity, grant) => {
       await this.formContext(query, identity, grant, parameters.context);
-      return this.page(query, parameters, "FROM naijue_erp.product p", `p.enabled AND
+      return this.page(query, parameters, "FROM naijue_erp.product p LEFT JOIN naijue_erp.product_category pc ON pc.id=p.category_id", `p.enabled AND
         (strpos(lower(p.product_code), lower($1::text)) > 0 OR strpos(lower(p.name), lower($1::text)) > 0)`,
-        "p.id, p.product_code, p.name, p.retail_price::text, p.enabled", `p.product_code COLLATE "C", p.id`, [parameters.search], row => {
+        "p.id, p.product_code, p.name, p.retail_price::text, p.enabled, p.category_id, pc.name AS category_name", `p.product_code COLLATE "C", p.id`, [parameters.search], row => {
           requireDomain(row.enabled === true, "INVALID_DATABASE_VALUE", "Ineligible current product");
-          return Object.freeze({ id: id("product", row.id), code: text(row.product_code), name: text(row.name), retailPrice: price(row.retail_price), minimumPriceAvailability: "UNAVAILABLE" });
+          return Object.freeze({ id: id("product", row.id), code: text(row.product_code), name: text(row.name), retailPrice: price(row.retail_price), minimumPriceAvailability: "UNAVAILABLE",
+            category: Object.freeze({ id: id("category", row.category_id), label: nullableText(row.category_name) }) });
         });
     });
   }

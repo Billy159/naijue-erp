@@ -254,7 +254,7 @@ test("current forms: explicit transfer hall scope precedes count/page without us
 });
 test("current forms: exact native nullable retail only; absent minimum is explicit UNAVAILABLE, never null/zero facts", async () => {
   for (const retail of [null, "0.00", "12.34", "9999999999999999.99"]) {
-    const client = new Client([begin(), identity(), selectedHall(), total(), page([{ id: productId, product_code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC 完整商品", retail_price: retail, enabled: true }], (values, sql) => {
+    const client = new Client([begin(), identity(), selectedHall(), total(), page([{ id: productId, product_code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC 完整商品", retail_price: retail, enabled: true, category_id: sid("category", 1800), category_name: "SYNTHETIC LEAF" }], (values, sql) => {
       assert.deepEqual(values, ["", 20, 0]); assert.match(sql, /p.retail_price::text/); assert.ok(!/minimum_price|sales_header|sku/.test(sql));
     }), commit()]);
     const result = await reader(client).readProducts(actor, { ...search, context }, signal()); assert.equal(result.items[0]!.retailPrice, retail);
@@ -422,4 +422,28 @@ test("current forms: optional cancellation remains cancellation with whole rollb
     ...hints().slice(0, 3), { sql: /current-form:recent-account/, rows: [{ recent_account_id: null, candidate_overflow: false, proof_overflow: false }], inspect() { control.abort(); } }, rollback()]);
   await assert.rejects(() => reader(client).readSalesReferences(actor, reference("paymentAccount"), control.signal), { code: "CURRENT_FORM_READ_ABORTED" });
   assert.ok(!client.calls.some(call => call.sql.includes("eligible-account-fallback"))); client.done();
+});
+
+test("current product category returns real terminal label or explicit unknown in the same authorized page without expanding products", async () => {
+  const categoryId = sid("category", 1801);
+  for (const label of ["SYNTHETIC 原末级分类", null]) {
+    const row = { id: productId, product_code: "SYNTHETIC CODE", name: "SYNTHETIC PRODUCT", retail_price: "0.00", enabled: true, category_id: categoryId, category_name: label };
+    const client = new Client([begin(), identity(), selectedHall(), total("1", (values, sql) => {
+      assert.deepEqual(values, [""]); assert.match(sql, /LEFT JOIN naijue_erp.product_category pc ON pc.id=p.category_id/);
+      assert.doesNotMatch(sql, /GROUP BY|CROSS JOIN|unnest|WITH RECURSIVE|source_unit/);
+    }), page([row], (values, sql) => { assert.deepEqual(values, ["", 20, 0]); assert.match(sql, /p.category_id, pc.name AS category_name/); }), commit()]);
+    const result = await reader(client).readProducts(actor, { ...search, context }, signal());
+    assert.deepEqual(result.items[0]!.category, { id: categoryId, label }); assert.equal(result.exactTotal, 1n);
+    assert.equal(Object.isFrozen(result.items[0]!.category), true); assert.equal("unit" in result.items[0]!, false);
+    readonly(client); client.done();
+  }
+});
+test("current product category rejects missing or malformed native identity or label without inventing fallback facts", async () => {
+  for (const changed of [{ category_id: null }, { category_id: "bad" }, { category_id: undefined }, { category_name: undefined }, { category_name: 0 }, { category_name: "" }, { category_name: "\n" }]) {
+    const row = { id: productId, product_code: "SYNTHETIC CODE", name: "SYNTHETIC PRODUCT", retail_price: null, enabled: true,
+      category_id: sid("category", 1801), category_name: "SYNTHETIC LEAF", ...changed };
+    const client = new Client([begin(), identity(), total("1"), page([row]), rollback()]);
+    await assert.rejects(reader(client).readProducts(actor, { ...search, context: transferContext }, signal()));
+    readonly(client); client.done();
+  }
 });

@@ -1,0 +1,118 @@
+{
+  "atUtc": "2026-10-22T11:38:43.034553+00:00",
+  "parent": "21f2afa108e9252ad9829c78077b16d46b579d31",
+  "groups": [
+    {
+      "slice": "CURRENT_FORM_EXISTING_CATEGORY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/CURRENT-CATEGORY-RESULT.json",
+      "receiptSha256": "accede812d2886f8897fcbc5611df9675bb7f13a7427c62d3e0bd1ef0bb21cfb",
+      "files": [
+        {
+          "path": "packages/application/src/current-form-ports.ts",
+          "sha256": "88ec2dc187ce950eaaa26721b3a8161a1d7a3d233400fbc2c4bd536ce967b135",
+          "bytes": 7082,
+          "owner": "D1"
+        },
+        {
+          "path": "adapters/postgres/src/current-form-reader.ts",
+          "sha256": "a5527265dddac239d064fe13dcd7760629f36f25aa3936b38878f0dd5a860358",
+          "bytes": 31537,
+          "owner": "D1"
+        },
+        {
+          "path": "tests/current-form-reader.test.ts",
+          "sha256": "93c01d69c79a8af5b7d59f8b9b091c17297024ca42e1b8fa6cc0a5e9efddf387",
+          "bytes": 48383,
+          "owner": "D1"
+        }
+      ]
+    },
+    {
+      "slice": "PRODUCT_COMPLETE_READONLY_UI_LAYER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/DEMO-READONLY-DELIVERY-v1.json",
+      "receiptSha256": "5e36f4840124117d63343af89debb238d4c77ed517628e7b3ada85070d884a4f",
+      "files": [
+        {
+          "path": "apps/web/src/products/product-page-host.tsx",
+          "sha256": "50c1fae6ebb8dee648180b6636ac5fa8ed7144a602b6bdd7a4f2fb4dea20f4aa",
+          "bytes": 4146,
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page-view.tsx",
+          "sha256": "7480303747feb6a030f8d53ae3eb9b8e8858b42fd7da8a4af436566e456afade",
+          "bytes": 7404,
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page-base.tsx",
+          "sha256": "4180edeb5f63751d9cec3b941f648785e7eb00d4aeadba330deba25ae34eaa4a",
+          "bytes": 1162,
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page-prices.tsx",
+          "sha256": "d4702b8fcb5e86a68c9762c3d939c95272ec5e61e604df34e69e836284e732dc",
+          "bytes": 1601,
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/inventory/product-tab-specifications.tsx",
+          "sha256": "a4deb4130ad7a27c49005edda33e91db820689fb5a11d71e3c8243c62dd59049",
+          "bytes": 2012,
+          "owner": "F2"
+        },
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "sha256": "07189dbb369209ae737ea303d29fb159729c13ea9cdfff34a1ebe47c1c3490d9",
+          "bytes": 19666,
+          "owner": "F2"
+        }
+      ]
+    },
+    {
+      "slice": "SOURCEHOST26_PREFLIGHT_CAPTURE_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/sourcehost26-input-slice1/RESULT.json",
+      "receiptSha256": "14326d5f171995d2e93bdffa6340fbb7153bf219404b1b54dfa9174ce65cfd8c",
+      "files": [
+        {
+          "path": "scripts/import-v3/production-source-host.mjs",
+          "sha256": "d8f279bfc7a1089b885780911ca6685e0a7b284403068a324118e89015a47b5f",
+          "bytes": 20636,
+          "owner": "D3"
+        },
+        {
+          "path": "scripts/import-v3/production-source-host.test.mjs",
+          "sha256": "00f0f4649e1c8e3996ee7380c1bbf781cc9c127eb2aec21be6996c54500781f0",
+          "bytes": 16943,
+          "owner": "D3"
+        }
+      ]
+    },
+    {
+      "slice": "C_PINNED_SHARP_DEPENDENCY_AND_LOCAL_MANIFEST_CHECK",
+      "files": [
+        {
+          "path": "package.json",
+          "bytes": 6035,
+          "sha256": "19659037138fab259007dc61e1be547a265d5e9b17c002e930443cfa1f35e6b0",
+          "owner": "C"
+        },
+        {
+          "path": "package-lock.json",
+          "bytes": 101136,
+          "sha256": "d206190fdeef0bb0d676ea0305ddafb512842ed6701002cde2a202b9f3ce7396",
+          "owner": "C"
+        },
+        {
+          "path": "scripts/verify-dependencies.mjs",
+          "bytes": 1654,
+          "sha256": "33377df887ac7b612852287c67c08dd09c6eb5a17d0ad82588ca28850b42767e",
+          "owner": "C"
+        }
+      ]
+    }
+  ],
+  "fileCount": 14,
+  "scope": "Readonly UI/category/sourcehost preflight source slices. Sharp exact dependency installed locally; codec implementation/runtime/PG/upload/production unverified."
+}

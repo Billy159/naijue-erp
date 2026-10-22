@@ -5,7 +5,7 @@ import { resolve, dirname, isAbsolute } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { Pool } from 'pg';
 import { requestHash } from '../../packages/application/src/request-hash.ts';
-import { NATIVE_PRODUCT_REFERENCE_DECISION_VERSION } from '../../packages/application/src/native-product-import.ts';
+import { NATIVE_PRODUCT_REFERENCE_DECISION_VERSION, NATIVE_PRODUCT_REFERENCE_DECISION_VERSION_26 } from '../../packages/application/src/native-product-import.ts';
 import { openNativeProductAuthorizer } from '../import-v2/authorized-native-product-reader.mjs';
 import { openAuthorizedHistoryClosureReader, HISTORY_CLOSURE_SOURCE_GROUPS } from '../import-v2/authorized-history-closure-reader.mjs';
 
@@ -33,6 +33,53 @@ export function requiredNativeSourceInputs() {
     bindingOwnedBy: 'C: fixed namespace/batch/account/target and approved exact selection+cutoff; no user UUID question',
     sourceProviderRequired: 'Reviewed executable module with all 11 genuine closure source factories and row/native authorizers; absent producers fail before pool creation.'
   };
+}
+/** Successor source requirements only. The actual MAIN/closure executor and
+ * same-client runtime issuer are supplied by their owners, never inferred here. */
+export function requiredNativeSourceInputs26() {
+  return { configVersion: 'NATIVE_IMPORT_SOURCE_HOST26_V1', providerVersion: 'NATIVE_IMPORT_PRODUCTION_PROVIDERS_26_V1',
+    executionVersion: 'NATIVE_IMPORT_EXECUTION_26_V1', schemaProfile: 'EXACT26',
+    closureSourceGroups: [...HISTORY_CLOSURE_SOURCE_GROUPS],
+    referenceDecision: { schemaVersion: 2, validatorVersion: NATIVE_PRODUCT_REFERENCE_DECISION_VERSION_26,
+      maximumBytes: 8 * 1024 * 1024, reviewVersion: 'C_NATIVE_PRODUCT_REFERENCE26_REVIEW_V1',
+      reviewFileRequired: true, independentlySuppliedReviewPinRequired: true },
+    requiredExecutionDependencies: ['D1 actual same-client NativeRuntime26Capability', 'Exact26 MAIN store including first-STAGE bootstrap SQL closure',
+      'Exact26 complete typed projection and closure store', 'Reviewed concrete successor stores for every actual native step'],
+    executionReady: false };
+}
+/** Only common job routing/bounds are reused from v19. This does not register
+ * schema26 in any old runtime, change V1 validation or open a provider/pool. */
+export function validateSourceHostJob26(value, at = Date.now()) {
+  const c = bag(value, ['version', 'registrationId', 'deadlineUtc', 'maxSteps', 'binding', 'database', 'sources', 'providers']);
+  must(c.version === 'NATIVE_IMPORT_SOURCE_HOST26_V1', 'IMPORT_SOURCE_HOST26_PROFILE');
+  const binding = bag(c.binding, ['version', 'batchId', 'actorAccountId', 'fixedSourceNamespace', 'cutoffAt', 'selectionSha256', 'authorizedPayloadHash', 'target']);
+  must(binding.version === 'NATIVE_IMPORT_EXECUTION_26_V1', 'IMPORT_SOURCE_HOST26_PROFILE');
+  const sourceKeys = ['base', 'v3Amendment', 'v3Approval', 'trustedApprovalSha256', 'approvedMoneyOverlaySha256', 'sourceRoot', 'spoolParent',
+    'maxSpoolBytes', 'maxEvidenceSpoolBytes', 'referenceDecisionFile', 'trustedReferenceDecisionSha256', 'mappingFiles'];
+  const sources = bag(c.sources, [...sourceKeys, 'reviewFile', 'trustedReviewSha256']);
+  filePath(sources.reviewFile); must(hash(sources.trustedReviewSha256), 'IMPORT_SOURCE_HOST26_FULL_REFERENCE_PIN_REQUIRED');
+  const ordinarySources = Object.fromEntries(sourceKeys.map(key => [key, sources[key]]));
+  const common = validateSourceHostJob({ ...c, version: 'NATIVE_IMPORT_SOURCE_HOST19_V1',
+    binding: { ...binding, version: 'NATIVE_IMPORT_EXECUTION_19_V1' }, sources: ordinarySources }, at);
+  return { ...common, version: 'NATIVE_IMPORT_SOURCE_HOST26_V1',
+    binding: { ...common.binding, version: 'NATIVE_IMPORT_EXECUTION_26_V1' },
+    sources: { ...common.sources, reviewFile: sources.reviewFile, trustedReviewSha256: sources.trustedReviewSha256 } };
+}
+/** Captures the finite declared group set before opening executable source code.
+ * Declarations alone are not verified source factories or native authority. */
+export function captureNativeSourceProvider26(module) {
+  const own = key => { const d = Object.getOwnPropertyDescriptor(module ?? {}, key);
+    must(d && Object.hasOwn(d, 'value') && d.enumerable, 'IMPORT_SOURCE_HOST26_PROVIDERS_REQUIRED'); return d.value; };
+  const version = own('providerVersion'), groups = own('sourceGroups'), openSourceSession = own('openSourceSession');
+  must(version === 'NATIVE_IMPORT_PRODUCTION_PROVIDERS_26_V1' && typeof openSourceSession === 'function', 'IMPORT_SOURCE_HOST26_PROVIDERS_REQUIRED');
+  must(Array.isArray(groups) && Object.getPrototypeOf(groups) === Array.prototype
+    && Object.getOwnPropertyDescriptor(groups, 'length')?.value === HISTORY_CLOSURE_SOURCE_GROUPS.length
+    && Reflect.ownKeys(groups).length === HISTORY_CLOSURE_SOURCE_GROUPS.length + 1, 'IMPORT_SOURCE_HOST26_FACTORIES_REQUIRED');
+  const captured = HISTORY_CLOSURE_SOURCE_GROUPS.map((_, i) => { const d = Object.getOwnPropertyDescriptor(groups, String(i));
+    must(d && Object.hasOwn(d, 'value') && d.enumerable && typeof d.value === 'string', 'IMPORT_SOURCE_HOST26_FACTORIES_REQUIRED'); return d.value; });
+  must(new Set(captured).size === HISTORY_CLOSURE_SOURCE_GROUPS.length
+    && [...captured].sort().join(',') === [...HISTORY_CLOSURE_SOURCE_GROUPS].sort().join(','), 'IMPORT_SOURCE_HOST26_FACTORIES_REQUIRED');
+  return Object.freeze({ providerVersion: version, sourceGroups: Object.freeze(captured), openSourceSession });
 }
 /** The source constructor may retain this capability, but cannot issue SQL while
  * actual factories, source authorization, mapping bytes and closure scope are checked.

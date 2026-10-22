@@ -4,7 +4,8 @@ import { mkdtemp, realpath, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
-import { openImportHost, requiredNativeSourceInputs, validateSourceHostJob, createSourcePreflightDatabaseGate } from './production-source-host.mjs';
+import { openImportHost, requiredNativeSourceInputs, validateSourceHostJob, createSourcePreflightDatabaseGate,
+  requiredNativeSourceInputs26, validateSourceHostJob26, captureNativeSourceProvider26 } from './production-source-host.mjs';
 const id = n => `00000000-0000-0000-0000-${String(n).padStart(12, '0')}`;
 const sha = c => c.repeat(64);
 function job(at = Date.now()) {
@@ -18,6 +19,43 @@ function job(at = Date.now()) {
       maxEvidenceSpoolBytes: 167772160, referenceDecisionFile: '/synthetic/native-decision', trustedReferenceDecisionSha256: sha('e'), mappingFiles: { catalogue: '/synthetic/native-mappings' } },
     providers: { path: '/synthetic/frozen-providers.mjs', sha256: sha('f') } };
 }
+function job26(at = Date.now()) {
+  const j = job(at); j.version = 'NATIVE_IMPORT_SOURCE_HOST26_V1'; j.binding.version = 'NATIVE_IMPORT_EXECUTION_26_V1';
+  j.sources.reviewFile = '/synthetic/C-full-reference-review26.json'; j.sources.trustedReviewSha256 = sha('9'); return j;
+}
+test('sourcehost26 explicit job requires full external reference pin and exact26 identity while preserving common destination limits', () => {
+  const j = job26(), captured = validateSourceHostJob26(j); assert.deepEqual(captured, j);
+  j.sources.mappingFiles.catalogue = '/changed-after-capture'; assert.equal(captured.sources.mappingFiles.catalogue, '/synthetic/native-mappings');
+  for (const mutate of [x => { delete x.sources.reviewFile; }, x => { x.sources.trustedReviewSha256 = ''; },
+    x => { x.binding.version = 'NATIVE_IMPORT_EXECUTION_19_V1'; }, x => { x.binding.actorAccountId = null; },
+    x => { x.database.password = 'SYNTHETIC FORBIDDEN'; }, x => { x.database.host = 'remote.invalid'; }]) {
+    const value = job26(); mutate(value); assert.throws(() => validateSourceHostJob26(value));
+  }
+  assert.throws(() => validateSourceHostJob26(job()), { code: 'IMPORT_SOURCE_HOST26_PROFILE' });
+  assert.throws(() => validateSourceHostJob(job26()));
+});
+test('sourcehost26 captures every declared source group without invoking factories or accessor substitutes', () => {
+  let opened = 0, getters = 0; const groups = requiredNativeSourceInputs26().closureSourceGroups;
+  const module = { providerVersion: 'NATIVE_IMPORT_PRODUCTION_PROVIDERS_26_V1', sourceGroups: groups, async openSourceSession() { opened++; } };
+  const captured = captureNativeSourceProvider26(module); groups.pop(); module.openSourceSession = async () => { throw Error('REPLACED'); };
+  assert.equal(captured.sourceGroups.length, 11); assert.equal(opened, 0);
+  for (const list of [[], Array(11).fill('PARTIES'), requiredNativeSourceInputs26().closureSourceGroups.slice(1), [...requiredNativeSourceInputs26().closureSourceGroups, 'EXTRA']]) {
+    assert.throws(() => captureNativeSourceProvider26({ ...module, sourceGroups: list }), { code: 'IMPORT_SOURCE_HOST26_FACTORIES_REQUIRED' });
+  }
+  const bad = { ...module }; Object.defineProperty(bad, 'openSourceSession', { enumerable: true, get() { getters++; return module.openSourceSession; } });
+  assert.throws(() => captureNativeSourceProvider26(bad), { code: 'IMPORT_SOURCE_HOST26_PROVIDERS_REQUIRED' }); assert.equal(getters, 0);
+  const indexed = requiredNativeSourceInputs26().closureSourceGroups; Object.defineProperty(indexed, '0', { enumerable: true, get() { getters++; return 'PARTIES'; } });
+  assert.throws(() => captureNativeSourceProvider26({ ...module, sourceGroups: indexed }), { code: 'IMPORT_SOURCE_HOST26_FACTORIES_REQUIRED' }); assert.equal(getters, 0);
+});
+test('sourcehost26 requirements expose missing actual execution dependencies and never route26 into the old host', async () => {
+  const required = requiredNativeSourceInputs26(); assert.equal(required.executionReady, false);
+  assert.equal(required.referenceDecision.schemaVersion, 2); assert.equal(required.referenceDecision.maximumBytes, 8388608);
+  assert.equal(required.requiredExecutionDependencies.length, 4);
+  const root = await mkdtemp(join(await realpath(tmpdir()), 'sourcehost26-no-old-executor-'));
+  try { const config = join(root, 'job26.json'); await writeFile(config, JSON.stringify(job26()));
+    await assert.rejects(openImportHost({ signal: new AbortController().signal, configFile: config }), { code: 'IMPORT_SOURCE_HOST_REGISTRATION' });
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
 test('real host requires exact explicit job/identity/cutoff; no implicit namespace, UUID, current date or credentials', () => {
   const j = job(); assert.deepEqual(validateSourceHostJob(j), j);
   for (const mutate of [x => { x.binding.cutoffAt = ''; }, x => { x.binding.batchId = null; }, x => { x.binding.fixedSourceNamespace = ''; },

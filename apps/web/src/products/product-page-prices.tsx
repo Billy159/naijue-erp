@@ -8,6 +8,6 @@ export function View({ scope, reader }: ProductPageTabProps) {
   const { snapshot, read, cancel, cancelled } = useProductRead(scope, value => reader.prices!.read(value), productPricesResponse);
   const data = snapshot.success?.data;
   return <ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!data}>
-    {data && <div className="product-price-wrap"><table className="product-price-table"><caption className="sr-only">商品整款价格</caption><thead><tr><th>价格类型</th><th>金额</th></tr></thead><tbody>{CATALOGUE_PRICE_KEYS.map((key, index) => <tr key={key}><th scope="row">{labels[index]}</th><td data-price-key={key}>{data.prices[key] === null ? '未设置' : data.prices[key]}</td></tr>)}</tbody></table><p className="product-field-hint">未设置与价格为零分别显示。</p></div>}
+    {data && <div className="product-price-wrap"><div className="product-price-paste"><strong>价格</strong></div><table className="product-price-table"><caption className="sr-only">商品整款价格</caption><thead><tr><th>价格类型</th><th>金额</th></tr></thead><tbody>{CATALOGUE_PRICE_KEYS.map((key, index) => <tr key={key}><th scope="row">{labels[index]}</th><td className="product-readonly-price-value" data-price-key={key}>{data.prices[key] === null ? '未设置' : data.prices[key]}</td></tr>)}</tbody></table><p className="product-field-hint">未设置与价格为零分别显示。</p></div>}
   </ProductReadState>;
 }

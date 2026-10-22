@@ -6,10 +6,16 @@ import type { Selection } from '../inventory/contracts.ts';
 import type { ProductFullPageConfiguration, ProductFullPageReadOnlyReader } from './product-page-contracts.ts';
 const leaves = new AsyncLeafRegistry({ page: { load: () => import('./product-page-view.tsx') } }, { maxRetainedEntries: 1 });
 interface ViewProps { readonly scope: ReadScope; readonly configuration: ProductFullPageConfiguration; readonly reader: ProductFullPageReadOnlyReader; readonly openInventory?: () => Promise<boolean> }
-export function ProductFullPageHost(props: { readonly parent: ReadScope; readonly target: Selection; readonly configuration: ProductFullPageConfiguration; readonly reader: ProductFullPageReadOnlyReader; readonly close: () => void; readonly openInventory?: () => Promise<boolean> }) {
-  const sequence = useRef(0), heading = useRef<HTMLHeadingElement>(null), [attempt, setAttempt] = useState(0);
+export interface ProductFullPageHostProps {
+  readonly parent: ReadScope; readonly target: Selection;
+  readonly configuration: ProductFullPageConfiguration; readonly reader: ProductFullPageReadOnlyReader;
+  readonly close: () => void; readonly openInventory?: () => Promise<boolean>;
+}
+export function ProductFullPageHost(props: ProductFullPageHostProps) {
+  const sequence = useRef(0), host=useRef<HTMLElement>(null),header=useRef<HTMLDivElement>(null),heading = useRef<HTMLHeadingElement>(null), [attempt, setAttempt] = useState(0);
   const [attachment, setAttachment] = useState<{ parent: ReadScope; scope: ReadScope; View: ComponentType<ViewProps> | null; error: boolean } | null>(null);
   useLayoutEffect(() => { heading.current?.focus({ preventScroll: true }); }, []);
+  useLayoutEffect(()=>{const parent=host.current,title=header.current;if(!parent||!title)return;const measure=()=>{if(props.parent.active&&parent.isConnected)parent.style.setProperty('--product-sticky-title-height',`${title.getBoundingClientRect().height}px`);};measure();const observer=typeof ResizeObserver==='function'?new ResizeObserver(measure):null;observer?.observe(title);window.addEventListener('resize',measure);return()=>{observer?.disconnect();window.removeEventListener('resize',measure);};},[props.parent]);
   useEffect(() => {
     const scope = new ReadScope(props.parent.identity, `${props.parent.routeInstanceId}:full-product:${++sequence.current}`, props.target.id, () => {});
     const next = { parent: props.parent, scope, View: null as ComponentType<ViewProps> | null, error: false }; let attached = true;
@@ -22,7 +28,7 @@ export function ProductFullPageHost(props: { readonly parent: ReadScope; readonl
   }, [props.parent, props.target.id, props.configuration, attempt]);
   const current = attachment?.parent === props.parent && attachment.scope.entityId === props.target.id && attachment.scope.active ? attachment : null;
   if (!props.parent.active) return null;
-  return <section className="product-full-page" aria-label="商品只读整页"><div className="product-page-header">
+  return <section ref={host} className="product-full-page product-readonly-page" aria-label="商品只读整页"><div ref={header} className="product-page-header">
     <div className="product-page-title"><h1 ref={heading} tabIndex={-1}>{props.target.label}</h1><UIButton onClick={props.close}>返回商品信息</UIButton></div></div>
     {current?.View ? <current.View scope={current.scope} configuration={props.configuration} reader={props.reader} {...(props.openInventory?{openInventory:props.openInventory}: {})} /> : current?.error ? <p role="alert">商品整页组件或样式未准备完成，尚未读取商品资料。<UIButton onClick={() => setAttempt(value => value + 1)}>重试商品整页</UIButton></p> : <p role="status">正在准备商品只读整页…</p>}
   </section>;
