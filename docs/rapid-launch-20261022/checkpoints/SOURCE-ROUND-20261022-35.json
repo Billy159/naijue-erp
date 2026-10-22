@@ -1,0 +1,33 @@
+{
+  "atUtc": "2026-10-22T17:33:49.911272+00:00",
+  "parent": "0e95cc26bbdd818869642c530e11c2bc61c90ac2",
+  "groups": [
+    {
+      "slice": "EXPLICIT_FULL_NATIVE_CLOSURE26_PROJECTION",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/CLOSURE26-PROJECTION-RESULT.json",
+      "receiptSha256": "5e0f74c88aaab7e40a6a87f30891dc23618f67b7b2d429c6144ccabe700a5ab8",
+      "files": [
+        {
+          "path": "packages/application/src/history-typed-closure.ts",
+          "owner": "D1",
+          "sha256": "0a995599ed1a78b9f319b41365362a655a243e7b043e58a2104281cea06b2446",
+          "bytes": 36837
+        },
+        {
+          "path": "tests/history-typed-closure26.test.ts",
+          "owner": "D1",
+          "sha256": "ce008dc33abcf4fd3685f9dc5d3404d39621f0f33667c871718461d9eb4b00d2",
+          "bytes": 5707
+        },
+        {
+          "path": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+          "owner": "D1",
+          "sha256": "26b5f9e5a06014409189156a8224743d56772564082027c8a37dfe6cf18e206b",
+          "bytes": 85582
+        }
+      ]
+    }
+  ],
+  "fileCount": 3,
+  "scope": "Source-only explicit26 full approved projections, original19/default and0018 unchanged; v6 actualSQL install/readback and issuer pending."
+}

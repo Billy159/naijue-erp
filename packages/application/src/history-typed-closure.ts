@@ -186,6 +186,14 @@ const expectedMust = (value: unknown): void => requireDomain(value, "INVALID_HIS
  * file selections and original prepared native allocations. Observed SQL rows are not source authority.
  * Complete expected counts are mandatory; a truncated stream cannot establish its own approval. */
 export async function buildHistoryTypedClosureExpected(original: unknown): Promise<HistoryTypedClosureStageInput> {
+ return buildHistoryTypedClosureExpectedUsing(original, historyClosureProjectionRow);
+}
+/** Explicit successor prepared-source projection; no runtime or source grant. */
+export async function buildHistoryTypedClosureExpected26(original: unknown): Promise<HistoryTypedClosureStageInput> {
+ return buildHistoryTypedClosureExpectedUsing(original, historyClosureProjectionRow26);
+}
+async function buildHistoryTypedClosureExpectedUsing(original: unknown,
+ project: (relation: string, value: unknown) => HistoryClosureRow): Promise<HistoryTypedClosureStageInput> {
  const o = stageObject(original, ["batchId", "fixedSourceNamespace", "selectionSha256", "authorizedPayloadHash", "expectedCounts", "expectedSourceEntityCounts", "documents", "sourceRows", "typedRows"]);
  const batchId = stageUuid(o.batchId), fixedSourceNamespace = stageString(o.fixedSourceNamespace, 1024), selectionSha256 = stageHash(o.selectionSha256), authorizedPayloadHash = stageHash(o.authorizedPayloadHash);
  const expectedCounts = stageCounts(o.expectedCounts, HISTORY_COUNT_KEYS), expectedSourceEntityCounts = stageCounts(o.expectedSourceEntityCounts, HISTORY_CLOSURE_SOURCE_ENTITIES);
@@ -210,7 +218,7 @@ export async function buildHistoryTypedClosureExpected(original: unknown): Promi
  // Hard stop before accumulating beyond1M historical identities /256MiB estimate.
  const originalMembership = new Map<string, { entity: string; state: ExpectedDocumentState }>(), typedMembership = new Set<string>(); let identityBytes = 0;
  const canonical = (originalRow: HistoryClosureRow): HistoryClosureRow => {
-  const raw = captureRow(originalRow), row = historyClosureProjectionRow(raw.relation, raw.projection); expectedMust(row.key === raw.key); return row;
+  const raw = captureRow(originalRow), row = project(raw.relation, raw.projection); expectedMust(row.key === raw.key); return row;
  };
  for await (const originalRow of o.sourceRows as Iterable<HistoryClosureRow> | AsyncIterable<HistoryClosureRow>) {
   const row = canonical(originalRow), p = row.projection as Record<string, unknown>;
@@ -801,7 +809,39 @@ Object.freeze(HISTORY_PROJECTION_SPEC);
 export const historyClosureProjectionSpec = (): typeof HISTORY_PROJECTION_SPEC => HISTORY_PROJECTION_SPEC;
 /** Expected-side builder consumes only independently authorized prepared facts, never actual SQL rows. */
 export function historyClosureProjectionRow(relation: string, original: unknown): HistoryClosureRow {
- const spec = HISTORY_PROJECTION_SPEC.find(s => s.relation === relation);
+ return projectHistoryClosureRow(relation, original, HISTORY_PROJECTION_SPEC);
+}
+interface ProjectionSpecification { readonly relation: string; readonly columns: readonly string[]; readonly keys: readonly string[] }
+const SUCCESSOR26_FIELDS: Readonly<Record<string, readonly string[]>> = Object.freeze({
+ product: Object.freeze(["season_ids", "deleted_at", "default_barcode_scheme_id"]),
+ sku: Object.freeze(["created_operation_id"]), warehouse: Object.freeze(["created_operation_id"]),
+ product_category: Object.freeze(["deleted_at"]), color: Object.freeze(["deleted_at"]), fit: Object.freeze(["deleted_at"])
+});
+const HISTORY_PROJECTION_SPEC_26 = Object.freeze(HISTORY_PROJECTION_SPEC.map(spec => Object.freeze({
+ relation: spec.relation, keys: spec.keys, columns: Object.freeze([...spec.columns, ...(SUCCESSOR26_FIELDS[spec.relation] ?? [])])
+})));
+export const historyClosureProjectionSpec26 = (): readonly ProjectionSpecification[] => HISTORY_PROJECTION_SPEC_26;
+export function historyClosureProjectionRow26(relation: string, original: unknown): HistoryClosureRow {
+ const row = projectHistoryClosureRow(relation, original, HISTORY_PROJECTION_SPEC_26), value = row.projection as Record<string, unknown>;
+ // Generic encoding above inspects every nested descriptor before these value reads.
+ if (relation === "product") {
+  const ids = value.season_ids;
+  if (ids !== null) {
+   must(Array.isArray(ids));
+   for (let i = 0; i < (ids as unknown[]).length; i++) {
+    const id = stageUuid((ids as unknown[])[i]); must(i === 0 || (ids as string[])[i - 1]! < id);
+   }
+  }
+ }
+ for (const field of SUCCESSOR26_FIELDS[relation] ?? []) {
+  const v = value[field];
+  if (field === "deleted_at") must(v === null || typeof v === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$/.test(v) && Number.isFinite(Date.parse(v)));
+  else if (field !== "season_ids" && v !== null) stageUuid(v);
+ }
+ return row;
+}
+function projectHistoryClosureRow(relation: string, original: unknown, specs: readonly ProjectionSpecification[]): HistoryClosureRow {
+ const spec = specs.find(s => s.relation === relation);
  must(spec !== undefined); const value = stageObject(original, spec!.columns);
  for (const col of spec!.keys) must(typeof value[col] === "string" && (value[col] as string).length > 0);
  for (const col of spec!.columns) {
