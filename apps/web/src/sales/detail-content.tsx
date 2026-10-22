@@ -1,3 +1,5 @@
+import { DocumentOutputActions } from '../components/document-output.tsx';
+import { salesDocumentOutput } from '../components/document-output-contracts.ts';
 import { UIButton } from '../components/standard-controls.tsx';
 import { useEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
 import type { ReadScope } from '../loading/read-scope.ts';
@@ -33,7 +35,7 @@ function DetailFacts({ data, close, history }: { readonly data: SalesDetailDto; 
     ? [{ title: '退回商品', incoming: true, rows: lines.filter(line => BigInt(line.quantity) < 0n) }, { title: '换出商品', incoming: false, rows: lines.filter(line => BigInt(line.quantity) >= 0n) }]
     : [{ title: header.businessType === 'RETURN' ? '退回商品' : '商品明细', incoming: header.businessType === 'RETURN', rows: lines }];
   return <section className="sales-detail-page sales-detail-facts tc-workbench tc-editor sale-workbench sale-editor" aria-label="销货单详情">
-    <SalesDetailHeader close={close} status={header.status} salesId={header.id} {...(history ? { history } : {})} />
+    <SalesDetailHeader output={<DocumentOutputActions sourceKey={`${header.id}:${header.version}`} getDocument={() => salesDocumentOutput(data)} />} close={close} status={header.status} salesId={header.id} {...(history ? { history } : {})} />
     <div className="tc-doc-header sale-doc-header"><div className="tc-gold-doc-fields sale-doc-fields">
       {field('单据日期', header.businessDate, 'sale-date-field')}
       {field('业务类型', salesTypeLabels[header.businessType])}

@@ -1,3 +1,5 @@
+import { DocumentOutputActions } from '../../components/document-output.tsx';
+import { salesDocumentOutput } from '../../components/document-output-contracts.ts';
 import { SalesStatusTag } from '../sales-status-tag.tsx';
 import { UIDate, UIButton, UICheckbox, UIInput, UISelect, UITextArea } from '../../components/standard-controls.tsx';
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
@@ -61,7 +63,7 @@ export function SalesCommandForm({ session, close, history }: { readonly session
         {status === 'DRAFT' && <><UIButton type="button" className="iw-text-button" disabled={!stable || session.hasDirtyDraft || !session.actionAllowed('APPROVE') || !base || !settlementBalanced(base)} title="审核须先保存并读取当前单据，收款减退款与应结金额精确配平" onClick={() => setConfirm('APPROVE')}>审核</UIButton>
           <UIButton type="button" className="iw-text-button" disabled={!stable || session.hasDirtyDraft || !session.actionAllowed('VOID')} onClick={() => setConfirm('VOID')}>作废</UIButton></>}
         {status === 'APPROVED' && <UIButton type="button" className="iw-text-button" disabled={!stable || !session.actionAllowed('UNAPPROVE')} title={session.actionAllowed('UNAPPROVE') ? undefined : '业务员不能弃审'} onClick={() => setConfirm('UNAPPROVE')}>弃审</UIButton>}
-        {['导出', '打印'].map(label => <UIButton key={label} type="button" className="iw-text-button" disabled title={`${label}尚未接入`}>{label}</UIButton>)}
+        <DocumentOutputActions sourceKey={detail ? `${detail.document.header.id}:${detail.document.header.version}` : "unsaved"} {...(detail && (write.phase !== 'committed' || !!savedReadback) && !unresolved && !command.stale && (!session.hasDirtyDraft || !!savedReadback) ? { getDocument: () => salesDocumentOutput(detail) } : {})} unavailableReason="请先完成保存并读取当前单据" />
         <SalesHistoryAction {...(history ? { capability: history } : {})} {...(detail ? { salesId: detail.document.header.id } : {})} />
       </div></div>
     {confirm && <div className="iw-alert" role="alert"><p>{confirm === 'leave' ? '离开将放弃本次未保存输入，已保存单据不变。' : confirm === 'adopt' ? '采用当前单据将替换本次未保存输入，原单据不会被强制覆盖。' : confirm === 'APPROVE' ? '审核将按本单实际明细追加库存效果，并计入收退统计。允许负库存。' : confirm === 'UNAPPROVE' ? '弃审将追加原审核库存效果的反向流水，并退出收退统计；确认后还需读取当前单据。' : '作废仅作用于已保存未审核单据，不改库存，作废后不能继续编辑。'}</p><UIButton type="button" className="iw-button" onClick={() => setConfirm(null)}>取消</UIButton><UIButton type="button" className="iw-button iw-primary" onClick={confirmAction}>{confirm === 'leave' ? '放弃修改并返回' : confirm === 'adopt' ? '确认采用当前单据' : `确认${confirm === 'APPROVE' ? '审核' : confirm === 'UNAPPROVE' ? '弃审' : '作废'}`}</UIButton></div>}

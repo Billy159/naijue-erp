@@ -1,3 +1,5 @@
+import { DocumentOutputActions } from '../components/document-output.tsx';
+import { transferDocumentOutput } from '../components/document-output-contracts.ts';
 import { TransferHistoryAction, type TransferHistoryCapability } from './history-view.tsx';
 import { TransferStatusTag } from './transfer-status-tag.tsx';
 import { UIButton } from '../components/standard-controls.tsx';
@@ -43,7 +45,7 @@ function DetailFacts(props: { readonly history?: TransferHistoryCapability; read
   const actions = header.status === 'DRAFT' ? ['作废', '保存', '审核'] : header.status === 'APPROVED' ? ['弃审'] : [];
   const field = (label: string, value: string, title = value) => <div className="tc-gold-field"><span>{label}</span><span className="transfer-read-value" title={title}>{value}</span></div>;
   return <section className="tc-workbench tc-editor transfer-editor" aria-label="调拨单详情">
-    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>查看调拨单</h1><TransferStatusTag status={header.status} /><span className="transfer-muted">· 只读</span><div className="actions"><UIButton type="button" className="iw-text-button tc-back-link" onClick={props.close}>返回列表</UIButton>{[...actions, '导出', '打印'].map(label => <UIButton key={label} type="button" className="iw-text-button" disabled title={`${label}尚未接入`}>{label}</UIButton>)}<TransferHistoryAction {...(props.history ? { capability: props.history } : {})} transferId={header.id} /></div></div>
+    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>查看调拨单</h1><TransferStatusTag status={header.status} /><span className="transfer-muted">· 只读</span><div className="actions"><UIButton type="button" className="iw-text-button tc-back-link" onClick={props.close}>返回列表</UIButton>{actions.map(label => <UIButton key={label} type="button" className="iw-text-button" disabled title={`${label}尚未接入`}>{label}</UIButton>)}<DocumentOutputActions sourceKey={`${header.id}:${header.version}`} getDocument={() => transferDocumentOutput(data)} /><TransferHistoryAction {...(props.history ? { capability: props.history } : {})} transferId={header.id} /></div></div>
     <div className="tc-doc-header"><div className="tc-gold-doc-fields">{field('单据日期', header.businessDate)}{field('调出仓库', data.references.fromWarehouseName, `${data.references.fromHallName} / ${data.references.fromWarehouseName}`)}{field('调入仓库', data.references.toWarehouseName, `${data.references.toHallName} / ${data.references.toWarehouseName}`)}
       <div className="tc-gold-field"><span>单号</span><strong className="transfer-read-value" title={header.number}>{header.number}</strong></div>{field('创建者', data.references.createdByName)}<div className="tc-gold-entry-actions"><UIButton type="button" className="iw-button iw-primary" disabled title="扫码录入尚未接入">扫码录入</UIButton></div></div></div>
     <div className="tc-note-row"><span>备注</span><span className="tc-note-read">{header.note || '—'}</span></div>

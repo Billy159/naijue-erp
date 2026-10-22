@@ -1,3 +1,5 @@
+import { DocumentOutputActions } from '../../components/document-output.tsx';
+import { transferDocumentOutput } from '../../components/document-output-contracts.ts';
 import { TransferHistoryAction, type TransferHistoryCapability } from '../history-view.tsx';
 import { TransferStatusTag } from '../transfer-status-tag.tsx';
 import { UIDate, UIButton, UITextArea } from '../../components/standard-controls.tsx';
@@ -44,7 +46,7 @@ export function TransferCommandForm({ capability, scope, close, history }: Trans
         <UIButton type="button" className="iw-text-button" disabled={locked || !dirty || editor.inputError} onClick={() => { void workspace.submit('SAVE'); }}>保存</UIButton>
         <UIButton type="button" className="iw-text-button" disabled={!editor.detail || dirty || unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('APPROVE'); }}>审核</UIButton></>}
       {status === 'APPROVED' && <UIButton type="button" className="iw-text-button" disabled={unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail?.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('UNAPPROVE'); }}>弃审</UIButton>}
-      {['导出', '打印'].map(label => <UIButton key={label} type="button" className="iw-text-button" disabled title={`${label}尚未接入`}>{label}</UIButton>)}
+      <DocumentOutputActions sourceKey={detail ? `${detail.document.header.id}:${detail.document.header.version}` : "unsaved"} {...(detail && (write.phase !== 'committed' || !!savedReadback) && !unresolved && !state.stale && (!dirty || !!savedReadback) ? { getDocument: () => transferDocumentOutput(detail) } : {})} unavailableReason="请先完成保存并读取当前单据" />
       <TransferHistoryAction {...(history ? { capability: history } : {})} {...(detail ? { transferId: detail.document.header.id } : {})} />
     </div></div>
     {editor.phase === 'loading' && <p className="transfer-command-notice" role="status">正在读取调拨单…</p>}

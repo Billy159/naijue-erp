@@ -7,8 +7,11 @@ import { IMPORT_V2_TABLES } from "./import-v2-contract.ts";
 import { prepareProductEvidenceChunk } from "./product-evidence-staging.ts";
 import type { ProductEvidenceChunk, ProductEvidenceRow } from "./product-evidence-staging.ts";
 import { requestHash } from "./request-hash.ts";
+import { historySettlementRequestHash } from "./import-v3-history-settlement.ts";
 
 export const NATIVE_PRODUCT_IMPORT_VERSION = "NATIVE_PRODUCT_IMPORT_V1";
+export const NATIVE_PRODUCT_IMPORT_VERSION_26 = "NATIVE_PRODUCT_IMPORT_V2_EXACT26";
+export const NATIVE_PRODUCT_REFERENCE_DECISION_VERSION_26 = "NATIVE_PRODUCT_REFERENCE_DECISIONS_V2_EXACT26";
 export const NATIVE_PRODUCT_REFERENCE_DECISION_VERSION = "NATIVE_PRODUCT_REFERENCE_DECISIONS_V1";
 /** Only the two PRODUCT rows affected by the already approved four-product
  * pants branch. Raw source cells/identity remain unchanged; this proof grants
@@ -55,6 +58,33 @@ export interface PreparedNativeProductImportChunk extends NativeProductImportChu
   readonly mappingVersion: typeof HISTORY_MAPPING_VERSION; readonly fingerprint: string;
   readonly nativeProducts: readonly NativeProductImportValues[];
 }
+export interface NativeProductSeasonSelection {
+  readonly version: "NATIVE_PRODUCT_SEASON_SELECTION_V1"; readonly mapping_sha256: string;
+  readonly source_key: string; readonly source_season: string; readonly state: "UNKNOWN" | "KNOWN";
+  readonly season_ids: readonly string[] | null;
+  readonly references: readonly { readonly sourceKey: string; readonly nativeId: string;
+    readonly nativeSnapshot: { readonly id: string; readonly code: string; readonly name: string; readonly display_order: number } }[];
+}
+export interface NativeProductLegacyScalarCreation {
+  readonly state: "LEGACY_SINGLE_SLOT_NOT_APPLICABLE_TO_CONFIRMED_MULTI_SELECTION";
+  readonly value: null; readonly appliesOnlyTo: "FRESH_NATIVE_PRODUCT_IN_NEW_DATABASE"; readonly originalSeason: string;
+}
+export interface NativeProductImportRow26 extends NativeProductImportRow {
+  readonly seasonSelection: NativeProductSeasonSelection;
+  readonly legacyScalarCreation?: NativeProductLegacyScalarCreation;
+}
+/** A pure prepared-data discriminator, never a D1 runtime capability. */
+export interface NativeProductImportChunk26 extends Omit<NativeProductImportChunk, "rows"> {
+  readonly schemaProfile: "EXACT26"; readonly validatorVersion: typeof NATIVE_PRODUCT_IMPORT_VERSION_26;
+  readonly rows: readonly NativeProductImportRow26[];
+}
+export interface NativeProductImportValues26 extends NativeProductImportValues {
+  readonly season_ids: readonly string[] | null; readonly deleted_at: null; readonly default_barcode_scheme_id: null;
+}
+export interface PreparedNativeProductImportChunk26 extends NativeProductImportChunk26 {
+  readonly mappingVersion: typeof HISTORY_MAPPING_VERSION; readonly fingerprint: string;
+  readonly nativeProducts: readonly NativeProductImportValues26[];
+}
 export interface NativeProductImportStore {
   /** Whole bounded chunk, native rows plus immutable source/proof in one transaction. */
   stage(chunk: PreparedNativeProductImportChunk): Promise<{ inserted: number; replayed: number }>;
@@ -70,6 +100,12 @@ function namedReference(value: NamedReference | null, sourceValue: unknown, kind
   entityId(kind, value.nativeId);
 }
 export function prepareNativeProductImportChunk(input: NativeProductImportChunk): PreparedNativeProductImportChunk {
+  requireDomain(!Object.hasOwn(input, "schemaProfile") && !Object.hasOwn(input, "validatorVersion")
+    && !input.rows.some(row => Object.hasOwn(row, "seasonSelection") || Object.hasOwn(row, "legacyScalarCreation")),
+  "NATIVE_PRODUCT_SUCCESSOR_REQUIRES_EXPLICIT_PREPARE", "Successor season evidence requires its explicit versioned preparer");
+  return prepareNativeProductCore(input);
+}
+function prepareNativeProductCore(input: NativeProductImportChunk, multipleSeasonKeys: ReadonlySet<string> = new Set()): PreparedNativeProductImportChunk {
   const chunk = structuredClone(input);
   // Reuse exact selection/source identity, all-nine price and bounded chunk gates.
   prepareProductEvidenceChunk(chunk);
@@ -109,7 +145,10 @@ export function prepareNativeProductImportChunk(input: NativeProductImportChunk)
       requireDomain(text(part.name) && part.expectedVersion <= 2147483647 && !categoryIds.has(part.nativeId),
         "NATIVE_PRODUCT_REFERENCE", "Exact acyclic native category path required"); categoryIds.add(part.nativeId);
     }
-    namedReference(refs.sizeGroup, n["尺码组"], "sizeGroup"); namedReference(refs.season, n["季节"], "season"); namedReference(refs.supplier, n["供应商来源编号"], "supplier");
+    namedReference(refs.sizeGroup, n["尺码组"], "sizeGroup");
+    if (multipleSeasonKeys.has(s.sourceKey)) requireDomain(refs.season === null, "NATIVE_PRODUCT_LEGACY_SCALAR", "Confirmed multiple seasons have no legacy scalar slot");
+    else namedReference(refs.season, n["季节"], "season");
+    namedReference(refs.supplier, n["供应商来源编号"], "supplier");
     if (refs.supplier !== null) {
       version(refs.supplier.expectedVersion);
       requireDomain(refs.supplier.expectedVersion <= 2147483647 && typeof refs.supplier.enabled === "boolean",
@@ -128,6 +167,88 @@ export function prepareNativeProductImportChunk(input: NativeProductImportChunk)
       thickness: nullable("厚薄"), collar_pants_type: nullable("领型或裤型"), enabled: n["状态"] === "正常", version: 1 as const, ...prices };
   });
   return { ...chunk, mappingVersion: HISTORY_MAPPING_VERSION, nativeProducts, fingerprint: requestHash(chunk) };
+}
+const exactKeys = (value: object, keys: readonly string[]): boolean => Reflect.ownKeys(value).length === keys.length && keys.every(k => Object.hasOwn(value, k));
+/** Pure source-26 preparation. All original field/price/identity/category/size
+ * checks remain shared. No legacy preparer/store accepts this result. */
+export function prepareNativeProductImportChunk26(input: NativeProductImportChunk26): PreparedNativeProductImportChunk26 {
+  historySettlementRequestHash(input); const chunk = structuredClone(input);
+  requireDomain(exactKeys(chunk, ["schemaProfile", "validatorVersion", "batchId", "fixedSourceNamespace", "selection", "rows"])
+    && chunk.schemaProfile === "EXACT26" && chunk.validatorVersion === NATIVE_PRODUCT_IMPORT_VERSION_26 && Array.isArray(chunk.rows),
+  "NATIVE_PRODUCT_SUCCESSOR_PROFILE", "Explicit exact26 prepared-data contract required");
+  const multiple = new Set<string>();
+  const names = ["春", "夏", "秋", "冬"], codes = ["SEASON_SPRING", "SEASON_SUMMER", "SEASON_AUTUMN", "SEASON_WINTER"];
+  const choices = new Map<string, readonly string[] | null>([["", null], ...names.map(n => [n, [n]] as const), ["春、夏", ["春", "夏"]], ["秋、冬", ["秋", "冬"]]]);
+  for (const row of chunk.rows) {
+    requireDomain(exactKeys(row, ["source", "product", "blankPricePolicy", "nullableFieldPolicy", "references", "seasonSelection",
+      ...(Object.hasOwn(row, "sourceTransformation") ? ["sourceTransformation"] : []), ...(Object.hasOwn(row, "legacyScalarCreation") ? ["legacyScalarCreation"] : [])]),
+    "NATIVE_PRODUCT_SUCCESSOR_ROW", "Exact successor row fields required");
+    const s = row.source, proof = row.seasonSelection, raw = s.rawFields["季节"];
+    requireDomain(typeof raw === "string" && choices.has(raw) && s.normalizedFields["季节"] === raw && proof
+      && exactKeys(proof, ["version", "mapping_sha256", "source_key", "source_season", "state", "season_ids", "references"])
+      && proof.version === "NATIVE_PRODUCT_SEASON_SELECTION_V1" && hash(proof.mapping_sha256) && proof.source_key === s.sourceKey
+      && proof.mapping_sha256 === chunk.rows[0]!.seasonSelection.mapping_sha256
+      && proof.source_season === raw && Array.isArray(proof.references), "NATIVE_PRODUCT_SEASON_PROOF", "Exact original season and independently authorized mapping descriptor required");
+    const expected = choices.get(raw as string)!;
+    if (expected === null) {
+      requireDomain(proof.state === "UNKNOWN" && proof.season_ids === null && proof.references.length === 0 && row.references.season === null
+        && !Object.hasOwn(row, "legacyScalarCreation"), "NATIVE_PRODUCT_SEASON_UNKNOWN", "Original blank remains unknown, never explicit empty");
+      continue;
+    }
+    requireDomain(proof.state === "KNOWN" && Array.isArray(proof.season_ids) && proof.season_ids.length === expected.length
+      && proof.references.length === expected.length, "NATIVE_PRODUCT_SEASON_MEMBERS", "All exact atomic members required");
+    const selectedNames = new Set<string>();
+    for (let i = 0; i < proof.references.length; i++) {
+      const ref = proof.references[i]!, native = ref.nativeSnapshot, nativeId = proof.season_ids![i]!;
+      entityId("season", nativeId);
+      requireDomain(exactKeys(ref, ["sourceKey", "nativeId", "nativeSnapshot"]) && native
+        && exactKeys(native, ["id", "code", "name", "display_order"]) && ref.nativeId === nativeId && native.id === nativeId
+        && ref.sourceKey === native.name && expected.includes(native.name) && !selectedNames.has(native.name)
+        && native.display_order === names.indexOf(native.name) && native.code === codes[native.display_order]
+        && (i === 0 || proof.season_ids![i - 1]! < nativeId), "NATIVE_PRODUCT_SEASON_MEMBERS", "Canonical unique UUID order and complete atomic season snapshots required");
+      selectedNames.add(native.name);
+    }
+    if (expected.length > 1) {
+      const legacy = row.legacyScalarCreation;
+      requireDomain(row.references.season === null && legacy && exactKeys(legacy, ["state", "value", "appliesOnlyTo", "originalSeason"])
+        && legacy.state === "LEGACY_SINGLE_SLOT_NOT_APPLICABLE_TO_CONFIRMED_MULTI_SELECTION" && legacy.value === null
+        && legacy.appliesOnlyTo === "FRESH_NATIVE_PRODUCT_IN_NEW_DATABASE" && legacy.originalSeason === raw,
+      "NATIVE_PRODUCT_LEGACY_SCALAR", "Explicit new-product legacy slot nonapplicability required; no first-member conversion");
+      multiple.add(s.sourceKey);
+    } else {
+      const original = row.references.season, selected = proof.references[0]!;
+      requireDomain(!Object.hasOwn(row, "legacyScalarCreation") && original && original.nativeId === selected.nativeId
+        && original.name === selected.nativeSnapshot.name && original.code === selected.nativeSnapshot.code,
+      "NATIVE_PRODUCT_LEGACY_SCALAR", "Exact existing reviewed single-season reference must be preserved");
+    }
+  }
+  const prepared = prepareNativeProductCore(chunk, multiple);
+  const nativeProducts = prepared.nativeProducts.map((native, i) => ({ ...native,
+    season_ids: chunk.rows[i]!.seasonSelection.season_ids, deleted_at: null, default_barcode_scheme_id: null }));
+  return { ...chunk, mappingVersion: HISTORY_MAPPING_VERSION, nativeProducts, fingerprint: requestHash(chunk) };
+}
+export function validatePreparedNativeProductImportChunk26(chunk: PreparedNativeProductImportChunk26): void {
+  historySettlementRequestHash(chunk);
+  const { mappingVersion: _mapping, fingerprint: _fingerprint, nativeProducts: _products, ...input } = chunk;
+  requireDomain(requestHash(prepareNativeProductImportChunk26(input)) === requestHash(chunk), "NATIVE_PRODUCT_PREPARED_CHANGED", "Prepared successor product changed");
+}
+export function nativeProductReferenceDecision26(row: NativeProductImportRow26) {
+  const { decisionSha256: _old, ...old } = nativeProductReferenceDecision(row);
+  const body = { ...old, seasonSelection: row.seasonSelection,
+    ...(Object.hasOwn(row, "legacyScalarCreation") ? { legacyScalarCreation: row.legacyScalarCreation } : {}) };
+  return { ...body, decisionSha256: requestHash({ validatorVersion: NATIVE_PRODUCT_REFERENCE_DECISION_VERSION_26, ...body }) };
+}
+export function nativeProductImportEvidence26(chunk: PreparedNativeProductImportChunk26, index: number) {
+  validatePreparedNativeProductImportChunk26(chunk);
+  requireDomain(Number.isSafeInteger(index) && index >= 0 && index < chunk.rows.length, "NATIVE_PRODUCT_ROW_INDEX", "Existing product row required");
+  const original = nativeProductImportEvidence(chunk, index), row = chunk.rows[index]!;
+  const fields = { ...original.fields, native_product_import: { ...original.fields.native_product_import,
+    validator_version: NATIVE_PRODUCT_IMPORT_VERSION_26, schema_profile: "EXACT26", season_selection: row.seasonSelection,
+    migration_defaults: { version: "NATIVE_PRODUCT_APPROVED_MIGRATION_DEFAULTS_26_V1", deleted_at: null, default_barcode_scheme_id: null },
+    ...(row.legacyScalarCreation ? { legacy_scalar_creation: row.legacyScalarCreation } : {}),
+    row_fingerprint: requestHash({ validatorVersion: NATIVE_PRODUCT_IMPORT_VERSION_26, schemaProfile: chunk.schemaProfile, selection: chunk.selection, row }),
+    reference_decision_sha256: nativeProductReferenceDecision26(row).decisionSha256 } };
+  return { fields, source: { ...original.source, field_provenance: { ...original.source.field_provenance, fields } } };
 }
 /** Revalidate derived values too; a prepared DTO is not authority to edit targets. */
 export function validatePreparedNativeProductImportChunk(chunk: PreparedNativeProductImportChunk): void {
