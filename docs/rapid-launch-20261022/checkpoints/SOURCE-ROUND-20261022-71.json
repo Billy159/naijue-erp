@@ -1,0 +1,52 @@
+{
+  "atUtc": "2026-10-22T20:37:36.501382+00:00",
+  "parent": "cd01fb43a3d4ca581d09ceac47144d2b336d1d16",
+  "groups": [
+    {
+      "slice": "TRANSFER_CONTINUOUS_ENTRY_SELECTOR_PRESENTATION_RESIDUAL",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-44/DELIVERY.json",
+      "receiptSha256": "1699b1927398b5620d3f320b83ac6d231e040699d6eb791e63305a08353f495e",
+      "receiptSnapshot": {
+        "chunk": 44,
+        "status": "READY_FOR_C_PIN_TRANSFER_DEMO_ENTRY_SPEC_RESIDUAL",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+            "sha256": "eb0268aebd1b9a0fa076d8bd9d0faaf2e4ba29a27455f674d09c1d9757989615"
+          },
+          {
+            "path": "apps/web/src/current-form/transfer-proposal.css",
+            "sha256": "f63d3521a71e4c96ab6c2b39e73720a59b4202e1d10c9f0b4d09adb9f90210b3"
+          }
+        ],
+        "scope": "TR01/03/04 residual continuous-entry controls and styling. Empty subtotal/actions hidden; Demo view/delete actions; Enter/Tab and quantity blur commit locally with actual cell focus; original replacement remains explicit. Installed Arco controlled undefined fixes empty placeholders and reselect, original 250px menu/header/count/local token portal. White empty cells and one outer product focus border. Native pointer/CAS/key/quantity-domain rules unchanged.",
+        "checks": {
+          "types-2.log": "exit0",
+          "transfer-ui-2.log": "exit0 actual full saved StrictMode page, two cells3/2 -> original native save/readback/adopt, repeated same spec, blur5 into one save and no extra commands"
+        },
+        "evidence": "Paired actual Demo/candidate screenshots plus frozen transfer-matrix-experiment.js83-84/136-155 and interaction-common.js16-23. Installed Arco Select/select.js own-value + utils single empty semantics inspected.",
+        "notTested": [
+          "latest candidate Chrome white cells/focus/frame/menu geometry/clipping/matrixY",
+          "actual PG save/approval/inventory; native business rules not relaxed"
+        ],
+        "blockers": [],
+        "next": "C exact pin then narrow Demo TR visual/entry differences only; no accepted Sale theme/capture/general keyboard suite repeats"
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+          "owner": "F1",
+          "sha256": "eb0268aebd1b9a0fa076d8bd9d0faaf2e4ba29a27455f674d09c1d9757989615",
+          "bytes": 28922
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.css",
+          "owner": "F1",
+          "sha256": "f63d3521a71e4c96ab6c2b39e73720a59b4202e1d10c9f0b4d09adb9f90210b3",
+          "bytes": 3906
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Exact owner/hash checkpoint only; existing author checks adopted, independent technical QA assigned separately."
+}
