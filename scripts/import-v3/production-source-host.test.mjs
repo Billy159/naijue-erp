@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { openImportHost, requiredNativeSourceInputs, validateSourceHostJob, createSourcePreflightDatabaseGate,
-  requiredNativeSourceInputs26, validateSourceHostJob26, captureNativeSourceProvider26 } from './production-source-host.mjs';
+  requiredNativeSourceInputs26, validateSourceHostJob26, captureNativeSourceProvider26, validateExecutableSourceHostJob26, createSourcePreflightRuntimeGate26, captureNativeSourceSession26, openImportHost26 } from './production-source-host.mjs';
 const id = n => `00000000-0000-0000-0000-${String(n).padStart(12, '0')}`;
 const sha = c => c.repeat(64);
 function job(at = Date.now()) {
@@ -159,4 +159,45 @@ test('private bootstrap malformed descriptors fail before native source authoriz
       await assert.rejects(openImportHost({signal:new AbortController().signal,configFile:config}),{code:'IMPORT_SOURCE_HOST_BOOTSTRAP_REQUIRED'});
     }
   }finally{await rm(root,{recursive:true,force:true});}
+});
+
+const runtimeReview=()=>({reviewFile:'/synthetic/C-runtime26-v7-review.json',trustedReviewSha256:sha('8')});
+function executableJob26(){return {...job26(),runtime26Review:runtimeReview()};}
+const mockRuntime=()=>({profile:'EXACT26',contract:'NATIVE_RUNTIME26_V1',async assertReady(){}});
+function session26Fixture(){const b=job26().binding;return {async *steps(){},async close(){},async authorizeStep(){},async assertExecutionAllowed(){},async assertAllowed(){},async authorizeNativeCommand(){},async preflight(){},
+ openSources:Object.fromEntries(requiredNativeSourceInputs26().closureSourceGroups.map(group=>[group,async()=>{}])),closureScope:{batchId:b.batchId,fixedSourceNamespace:b.fixedSourceNamespace,selectionSha256:b.selectionSha256,authorizedPayloadHash:b.authorizedPayloadHash,expectedCounts:{},expectedSourceEntityCounts:{}},nativeProductSourceReader:{async authorize(){}},bootstrap26:{async authorizeStageSourceActor(){},async stageNewBatch26(){}}};}
+test('executableHost26 closed9 input captures separate runtime review without changing prior input-only26 contract',()=>{
+ const j=executableJob26(),captured=validateExecutableSourceHostJob26(j);assert.deepEqual(captured,j);j.runtime26Review.reviewFile='/changed';assert.equal(captured.runtime26Review.reviewFile,runtimeReview().reviewFile);const prior=job26();assert.deepEqual(validateSourceHostJob26(prior),prior);
+ for(const mutate of [x=>{delete x.runtime26Review;},x=>{x.runtime26Review.passed=true;},x=>{x.runtime26Review.trustedReviewSha256='';},x=>{x.runtime26Review.reviewFile='relative';},x=>{x.version='NATIVE_IMPORT_SOURCE_HOST19_V1';}]){const value=executableJob26();mutate(value);assert.throws(()=>validateExecutableSourceHostJob26(value));}
+ let reads=0;const getter=executableJob26();Object.defineProperty(getter,'runtime26Review',{enumerable:true,get(){reads++;return runtimeReview();}});assert.throws(()=>validateExecutableSourceHostJob26(getter));assert.equal(reads,0);
+});
+test('executableHost26 deferred gate exposes only actual D1-issued pool and capability after preflight with single original owner cleanup',async()=>{
+ let created=0,ended=0,rawConnects=0,issuedConnects=0;const raw={async connect(){rawConnects++;throw Error('RAW_POOL_MUST_NOT_ESCAPE');},async end(){ended++;}},pool={async connect(){issuedConnects++;return {synthetic:true};}},runtime=mockRuntime();
+ const gate=createSourcePreflightRuntimeGate26(()=>{created++;return raw;},async(original,review)=>{assert.equal(original,raw);assert.deepEqual(review,runtimeReview());return {pool,runtime26:runtime};},runtimeReview());
+ assert.throws(()=>gate.capability.ready(),/DATABASE_PRECHECK/);assert.equal(created,0);const actual=await gate.activate();assert.equal(actual.pool,pool);assert.equal(actual.runtime26,runtime);assert.equal(gate.capability.ready(),actual);await gate.capability.ready().pool.connect();assert.equal(issuedConnects,1);assert.equal(rawConnects,0);assert.throws(()=>gate.activate(),/DATABASE_PRECHECK/);await gate.close();await gate.close();assert.equal(created,1);assert.equal(ended,1);assert.throws(()=>gate.capability.ready(),/DATABASE_PRECHECK/);
+});
+test('executableHost26 failed or racing issuer activation closes original pool once and never leaks a fabricated or getter capability',async()=>{
+ let ended=0,gets=0;const make=()=>({async connect(){throw Error('NOT_CONNECTED');},async end(){ended++;}});
+ const bad=createSourcePreflightRuntimeGate26(make,async()=>{const value={pool:{async connect(){}},runtime26:mockRuntime()};Object.defineProperty(value,'runtime26',{enumerable:true,get(){gets++;return mockRuntime();}});return value;},runtimeReview());await assert.rejects(bad.activate());await bad.close();assert.equal(ended,1);assert.equal(gets,0);
+ let resolve;const race=createSourcePreflightRuntimeGate26(make,()=>new Promise(r=>{resolve=r;}),runtimeReview()),activation=race.activate(),closing=race.close();resolve({pool:{async connect(){}},runtime26:mockRuntime()});await assert.rejects(activation,/DATABASE_PRECHECK/);await closing;assert.equal(ended,2);assert.throws(()=>race.capability.ready(),/DATABASE_PRECHECK/);
+});
+test('executableHost26 captures concrete preflight and all11 source sessions plus exact26 bootstrap without passed flags or accessor substitutes',()=>{
+ const s=session26Fixture(),captured=captureNativeSourceSession26(s,job26().binding),original=captured.openSources.CATALOGUE;s.openSources.CATALOGUE=async()=>{throw Error('REPLACED');};assert.equal(captured.openSources.CATALOGUE,original);s.closureScope.expectedCounts.changed=1;assert.equal(Object.hasOwn(captured.closureScope.expectedCounts,'changed'),false);
+ for(const mutate of [x=>{delete x.preflight;},x=>{delete x.openSources.SKUS;},x=>{x.openSources.PRODUCTS={passed:true};},x=>{x.bootstrap26={authorizeStageSourceActor:async()=>{},stageNewBatch:async()=>{}};},x=>{x.closureScope.authorizedPayloadHash=sha('c');}]){const value=session26Fixture();mutate(value);assert.throws(()=>captureNativeSourceSession26(value,job26().binding));}
+ let gets=0;const getter=session26Fixture();Object.defineProperty(getter,'preflight',{enumerable:true,get(){gets++;return async()=>{};}});assert.throws(()=>captureNativeSourceSession26(getter,job26().binding));assert.equal(gets,0);
+});
+async function negativeHost26Fixture(t,mode){
+ const dir=await mkdtemp(join(await realpath(tmpdir()),'synthetic-executable-host26-'));t.after(()=>rm(dir,{recursive:true,force:true}));const j=executableJob26(),save=async(name,value)=>{const bytes=Buffer.from(typeof value==='string'?value:JSON.stringify(value)),path=join(dir,name);await writeFile(path,bytes);return {path,sha:createHash('sha256').update(bytes).digest('hex')};};
+ const native=await save('native.json',{schemaVersion:2,validatorVersion:'NATIVE_PRODUCT_REFERENCE_DECISIONS_V2_EXACT26',schemaProfile:'EXACT26',batchId:j.binding.batchId,fixedSourceNamespace:j.binding.fixedSourceNamespace,selection:{entity:'PRODUCT',selectionSha256:j.binding.selectionSha256},mappingFiles:[],decisions:[{synthetic:true}]});j.sources.referenceDecisionFile=native.path;j.sources.trustedReferenceDecisionSha256=native.sha;
+ const productReview=await save('native-ref-review.json',{});j.sources.reviewFile=productReview.path;j.sources.trustedReviewSha256=productReview.sha;
+ const qb=await save('QB.json',{result:'PASS',scope:'SYNTHETIC_NEGATIVE_PREFLIGHT_ONLY'}),metadata=await save('C-runtime.json',{version:'C_NATIVE_RUNTIME26_REVIEW_V1',decision:'ACCEPT_EXACT_RUNTIME26_TARGET_METADATA',target:{database:j.binding.target.database,databaseOid:'1',actingRole:j.binding.target.role,sessionUser:j.binding.target.role,serverAddress:j.binding.target.serverAddress,serverPort:j.binding.target.serverPort,postmasterStart:j.binding.target.postmasterStartedAt},catalog:{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V1',patchLevel:'26_v7_media_color_swap',sha256:sha('a')},purposes:['IMPORT_STAGE'],scope:'EXACT_TARGET_METADATA_ONLY',independentReview:{path:qb.path,sha256:qb.sha,result:'PASS'},realImportExecutionAuthorized:false});j.runtime26Review={reviewFile:metadata.path,trustedReviewSha256:metadata.sha};
+ const marker='host26:'+dir;globalThis[marker]={opened:0,closed:0,closedGate:false};t.after(()=>{delete globalThis[marker];});
+ const groups=requiredNativeSourceInputs26().closureSourceGroups,code=`export const providerVersion='NATIVE_IMPORT_PRODUCTION_PROVIDERS_26_V1';export const sourceGroups=${JSON.stringify(groups)};export async function openSourceSession({binding,database}){const m=globalThis[${JSON.stringify(marker)}];m.opened++;${mode==='early'?'database.ready();':''}const close=async()=>{m.closed++;try{database.ready();}catch(e){m.closedGate=e.code==='IMPORT_SOURCE_HOST_DATABASE_PRECHECK';}};${mode==='malformed'?'return {close};':''}return {close,async *steps(){},async authorizeStep(){},async assertExecutionAllowed(){},async assertAllowed(){},async authorizeNativeCommand(){},async preflight(){${mode==='boolean'?'return true;':''}},openSources:Object.fromEntries(sourceGroups.map(g=>[g,async()=>{}])),closureScope:{batchId:binding.batchId,fixedSourceNamespace:binding.fixedSourceNamespace,selectionSha256:binding.selectionSha256,authorizedPayloadHash:binding.authorizedPayloadHash,expectedCounts:{},expectedSourceEntityCounts:{}},nativeProductSourceReader:{async authorize(){}},bootstrap26:{async authorizeStageSourceActor(){},async stageNewBatch26(){}}};}`;
+ const provider=await save('provider.mjs',code);j.providers={path:provider.path,sha256:provider.sha};const config=await save('job.json',j);return {configFile:config.path,marker};
+}
+test('executableHost26 denies provider target access and closes malformed sessions before any pool activation',async t=>{
+ for(const mode of ['early','malformed']){const f=await negativeHost26Fixture(t,mode);await assert.rejects(openImportHost26({signal:new AbortController().signal,configFile:f.configFile}),mode==='early'?/DATABASE_PRECHECK/:/SESSION_REQUIRED/);assert.equal(globalThis[f.marker].opened,1);assert.equal(globalThis[f.marker].closed,mode==='early'?0:1);if(mode==='malformed')assert.equal(globalThis[f.marker].closedGate,true);}
+});
+test('executableHost26 boolean preflight or missing independent native reference grant cannot activate target',async t=>{
+ for(const mode of ['boolean','void']){const f=await negativeHost26Fixture(t,mode);await assert.rejects(openImportHost26({signal:new AbortController().signal,configFile:f.configFile}));assert.equal(globalThis[f.marker].closed,1);assert.equal(globalThis[f.marker].closedGate,true);}
 });

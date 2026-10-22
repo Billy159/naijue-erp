@@ -6,7 +6,7 @@ import type { ApplicationPresentation, ApplicationRoute } from './contracts.ts';
 import { AuthenticationAccountMenu } from '../authentication/account-menu.tsx';
 
 const destinations: Readonly<Record<ApplicationRoute, DemoNavigationId | null>> = Object.freeze({
-  inventory: 'inventory', sales: 'sales', transfers: 'transfer', customers: 'customers', suppliers: 'suppliers', products: 'products', 'product-categories': 'product-categories', 'product-settings': 'product-settings', 'barcode-schemes': 'barcode-schemes', 'store-settings': 'settings/stores', 'staff-settings': 'settings/staff', 'payment-settings': 'settings/payments', 'account-settings': null,
+  inventory: 'inventory', sales: 'sales', transfers: 'transfer', customers: 'customers', suppliers: 'suppliers', products: 'products', 'product-categories': 'product-categories', 'product-settings': 'product-settings', 'barcode-schemes': 'barcode-schemes', 'store-settings': 'settings/stores', 'staff-settings': 'settings/staff', 'payment-settings': 'settings/payments', 'account-settings': 'settings/accounts',
 });
 const breadcrumbs: Readonly<Record<ApplicationRoute, readonly BreadcrumbSegment[]>> = Object.freeze({
   inventory: [{ id: 'inventory-management', label: '库存管理' }, { id: 'inventory', label: '库存状况表' }],
@@ -31,7 +31,7 @@ export function createDemoFrameWorkspaceRenderer(): ApplicationPresentation['ren
     const navigation: Partial<Record<DemoNavigationId, DemoNavigationTarget>> = {};
     for (const route of controller.routes) {
       const destination = destinations[route];
-      if (destination === null) continue; // No account menu is registered yet.
+      if (destination === null) continue;
       navigation[destination] = { selected: state.route === route, onActivate: () => { void controller.navigate(route); } };
     }
     return <DemoFrame navigation={navigation} breadcrumb={state.route ? breadcrumbs[state.route] : []} topbarActions={<AuthenticationAccountMenu />}

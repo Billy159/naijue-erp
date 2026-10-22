@@ -4,7 +4,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { DocumentNavigationContext, type DocumentNavigationBinding } from './document-navigation.tsx';
 
 /** Frozen frontend/index.html hierarchy, with the explicitly approved separate customer/supplier departure. */
-export type DemoNavigationId = 'inventory' | 'transfer' | 'transfer/new' | 'sales' | 'sales/new' | 'products' | 'product-categories' | 'product-settings' | 'barcode-schemes' | 'settings/stores' | 'customers' | 'suppliers' | 'settings/staff' | 'settings/payments';
+export type DemoNavigationId = 'inventory' | 'transfer' | 'transfer/new' | 'sales' | 'sales/new' | 'products' | 'product-categories' | 'product-settings' | 'barcode-schemes' | 'settings/stores' | 'customers' | 'suppliers' | 'settings/staff' | 'settings/payments' | 'settings/accounts';
 export interface DemoNavigationTarget {
   readonly href?: string;
   readonly onActivate?: () => void;

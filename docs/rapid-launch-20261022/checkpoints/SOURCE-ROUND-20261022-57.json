@@ -1,0 +1,552 @@
+{
+  "atUtc": "2026-10-22T19:20:06.160236+00:00",
+  "parent": "87559312f75e4c96db72305d1c42e6ffe50580b4",
+  "groups": [
+    {
+      "slice": "W7_ACTUAL_APPLICATION_ROOT",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-33/DELIVERY.json",
+      "receiptSha256": "a15fdf1ed8b2967ec38a52bc8eb2647380e3c6120a5e628cdcc2f64e94a8ce9f",
+      "receiptSnapshot": {
+        "chunk": 33,
+        "status": "READY_FOR_C_PIN_W7_ROOT_INTEGRATION_NOT_BUSINESS_WRITE_ENABLEMENT",
+        "files": [
+          {
+            "path": "apps/web/src/application/routes/account-settings.tsx",
+            "sha256": "1c787d72505a2e928fb7d6c07ef5e11106bd270566ba659dbdbd49522e401662"
+          },
+          {
+            "path": "apps/web/src/application/controller.ts",
+            "sha256": "313151f4fc1f9f886c269b400267f326b426dca48b802e73c2c864eb39a580e5"
+          },
+          {
+            "path": "apps/web/src/application/demo-frame-presentation.tsx",
+            "sha256": "439e350c2ab35ffeacbf168d3ad8fa3878d73c2aeb6e1c53eef95d771e77e20f"
+          },
+          {
+            "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+            "sha256": "dda3df6a19b0023eda97201434521c8f84b0c99068b1e21c1831a5dc706cfa78"
+          },
+          {
+            "path": "apps/web/src/demo-presentation/navigation-menu.tsx",
+            "sha256": "b99903a89b13aaed33d60b3e4fa466f3cdf08fe50e612a13bfee2979dfe56edc"
+          },
+          {
+            "path": "apps/web/src/production-host/configuration.ts",
+            "sha256": "4ff7e65694665c00332630fc08641cfb61aaf9d29e21123b30f5f173067e434e"
+          },
+          {
+            "path": "apps/web/src/production-host/mount.tsx",
+            "sha256": "0621a7449c6f8c922a73ed915e79079112f8e2af9e914e898916c4c0cedf9391"
+          }
+        ],
+        "base": "C54 full Transfer/root + F3 account leaf2 fixed7939759; C55 optional single-select and chunk34 forwarded style factory separate",
+        "behavior": [
+          "Independent explicit accountSettings capability captured immutably, ADMIN-only actionable settings/accounts navigation; missing/nonADMIN has no account target/read.",
+          "Lazy actual F3 AccountSettingsPage uses existing staff-settings stylesheet; approved separate page is not falsely attributed to frozen Demo.",
+          "Session-scoped native account workspace matches authenticated identity, root never stores password; dirty safe draft and password-only form state participate in navigation/beforeunload guards and explicit discard.",
+          "Identity/anonymous verification/disposal clear account session and injected owner safely. Account preparation requires a session owner, including closed-write owner; no unguarded local password editor.",
+          "Account pending result joins existing staff/payment/store unresolved aggregation. Actual current account list403 and receipt403 preserve original recovery identity/key/version and block navigation/repeat.",
+          "Production accountSettings optional flag/reader routes use existing approved native providers; reuse staff-settings CSS asset. Default canPrepare=false and writesEnabled=false, no JSON write-enable switch."
+        ],
+        "checks": [
+          {
+            "log": "types-2.log",
+            "exitCode": 0,
+            "scope": "Final actual production mount/controller/account route/F3 leaf typed closure; only following source whitespace indentation normalized."
+          },
+          {
+            "log": "root-1.log",
+            "scope": "First actual Application ADMIN menu/lazy page/native list+detail/closed gate/safe draft+password-only navigation+beforeUnload/explicit discard/identity-clear group printed PASS. Whole log exit1 because later probe used wrong recovery button label."
+          },
+          {
+            "log": "root-4.log",
+            "exitCode": 0,
+            "scope": "Only remaining actual root groups: synthetic uncertain EDIT original id/version/key, list403+receipt403 retain recovery/no repeat; nonADMIN no menu/read; anonymous injected account disposal; reject unowned edit preparation; public flag parses."
+          }
+        ],
+        "probeNotes": [
+          "root2 remaining group reached recovery guards but test-local result variable was incorrectly scoped; corrected harness only.",
+          "root3 bundle observed actual F2 year consumer import of missing public style factory; exact existing factory forward-export is separate chunk34, not hidden in this delivery.",
+          "No already-passed F3 leaf controller/HTTP/password suites broadly rerun. React19 element.ref warnings retained."
+        ],
+        "limits": [
+          "C must pin7 files and actual host enable accountSettings explicitly before claiming it is reachable in newest preview.",
+          "Native account backend/provider/isolated PG/QB/QA/credential policy and real write authorization remain C gates; this source does not open business writes.",
+          "No actual credentials, real account mutation, database, server, browser, full build or formal role UAT in this slice.",
+          "Frozen Demo has combined staff/account view; separate page follows approved W7 scope, not old Demo parity."
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/application/routes/account-settings.tsx",
+          "owner": "F1",
+          "sha256": "1c787d72505a2e928fb7d6c07ef5e11106bd270566ba659dbdbd49522e401662",
+          "bytes": 3291
+        },
+        {
+          "path": "apps/web/src/application/controller.ts",
+          "owner": "F1",
+          "sha256": "313151f4fc1f9f886c269b400267f326b426dca48b802e73c2c864eb39a580e5",
+          "bytes": 43698
+        },
+        {
+          "path": "apps/web/src/application/demo-frame-presentation.tsx",
+          "owner": "F1",
+          "sha256": "439e350c2ab35ffeacbf168d3ad8fa3878d73c2aeb6e1c53eef95d771e77e20f",
+          "bytes": 3708
+        },
+        {
+          "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+          "owner": "F1",
+          "sha256": "dda3df6a19b0023eda97201434521c8f84b0c99068b1e21c1831a5dc706cfa78",
+          "bytes": 4142
+        },
+        {
+          "path": "apps/web/src/demo-presentation/navigation-menu.tsx",
+          "owner": "F1",
+          "sha256": "b99903a89b13aaed33d60b3e4fa466f3cdf08fe50e612a13bfee2979dfe56edc",
+          "bytes": 5046
+        },
+        {
+          "path": "apps/web/src/production-host/configuration.ts",
+          "owner": "F1",
+          "sha256": "4ff7e65694665c00332630fc08641cfb61aaf9d29e21123b30f5f173067e434e",
+          "bytes": 7756
+        },
+        {
+          "path": "apps/web/src/production-host/mount.tsx",
+          "owner": "F1",
+          "sha256": "0621a7449c6f8c922a73ed915e79079112f8e2af9e914e898916c4c0cedf9391",
+          "bytes": 10454
+        }
+      ]
+    },
+    {
+      "slice": "EXPLICIT26_EXECUTABLE_SOURCE_HOST",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/executable-host26-slice1/RESULT.json",
+      "receiptSha256": "58e6a6f3cb2230a34d1e00868573b4c2738933b97ff4bb417e880f0610efebaa",
+      "receiptSnapshot": {
+        "taskId": "D3_EXECUTABLE_SOURCE_HOST26_PREFLIGHT_COMPOSITION",
+        "atUtc": "2026-10-22T19:04:45.235207+00:00",
+        "status": "SOURCE_READY_NEW6_AFFECTED2PASS_NO_REAL_RUNTIME_OR_FULL_SOURCE_EXECUTION",
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.mjs",
+            "bytes": 33488,
+            "sha256": "abf95b372f3f78bbd2cb2041956285b69a87470e1d752d8d26b31cb780646cd5"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.test.mjs",
+            "bytes": 26559,
+            "sha256": "558579b6aa4442a1cf207f6d74a4ed950501baca8eb2f723b5e7160f053b10e4"
+          }
+        ],
+        "API": [
+          "validateExecutableSourceHostJob26(closed9 job): existing8 input-only job plus runtime26Review{reviewFile,trustedReviewSha256}; old validateSourceHostJob26 unchanged",
+          "openImportHost26({signal,configFile}) is selected by executor26 CLI --exact26 only",
+          "createSourcePreflightRuntimeGate26(createPool,createIssuer,review): provider receives only ready(), unavailable until preflight; actual D1 original pool+runtime references after activation",
+          "captureNativeSourceSession26: closed11 session methods/real evidence reader/all11factories/bootstrap26/closureScope; no getters/report flags"
+        ],
+        "sequence": [
+          "Strict executable26 job and independently pinned fullreferenceV2 manifest plus C product reference review. Independently pinned runtimev7 metadata/target/QB receipt; frozen provider module declares exact11groups.",
+          "Source module receives only database.ready() closed gate. Capture real session/preflight/authority/bootstrap26 methods; provider preflight and execution authority must complete undefined, no boolean.",
+          "Actual V2 product authorizer and explicit26 closure-reader construct before pool creation. No missing genuine factory or real49 bootstrap defaults.",
+          "Only then create one originalPool and actual D1 createNativeRuntime26Issuer; pass exact returnedpool/runtime to executor and database.ready() callers. No new pool or manufactured deferred capability.",
+          "Deadline/abort, step bound, input digest checks, complete source/PUBLISH expected-plan comparison and all source/authorizer/owner cleanup preserve separation."
+        ],
+        "checks": {
+          "newSynthetic": 6,
+          "affectedLegacy": 2,
+          "passed": 8,
+          "skipped": 0,
+          "protocolLog": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/executable-host26-slice1/protocol-first.log",
+            "bytes": 1198,
+            "sha256": "86cacdf9dc213264e14461579cb9532cc9e7fbdb8dc54feb1481a92627e2285c"
+          },
+          "deterministicInputCaseRecheck": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/executable-host26-slice1/input-case-recheck.log",
+            "bytes": 240,
+            "sha256": "040188bf0553637c48c97d56ea901e62d718a9225a256564329636a834b8e663"
+          },
+          "note": "Input-only assertion reuses a single captured clock fixture; no failing test or expanded regression. Pure MJS Node24 imports/parse; no new TSC claim."
+        },
+        "notClaimed": [
+          "Real C v7 runtime review consumed / PG connection or actual issuer issued",
+          "All11 genuine production providers or49 source execution grant/bootstrap implementation",
+          "Complete SOURCE/MAIN/PUBLISH authorization or actual native data writes",
+          "Synthetic issuer/gate lifecycle tests establish real engine behavior"
+        ],
+        "next": "C freeze exact2/scopedQB. Consume signed SKU/payment reference artifacts with genuine source/closure modules, then remaining stock/history source providers; actual full source/runtime/49 execution still requires C."
+      },
+      "files": [
+        {
+          "path": "scripts/import-v3/production-source-host.mjs",
+          "owner": "D3",
+          "sha256": "abf95b372f3f78bbd2cb2041956285b69a87470e1d752d8d26b31cb780646cd5",
+          "bytes": 33488
+        },
+        {
+          "path": "scripts/import-v3/production-source-host.test.mjs",
+          "owner": "D3",
+          "sha256": "558579b6aa4442a1cf207f6d74a4ed950501baca8eb2f723b5e7160f053b10e4",
+          "bytes": 26559
+        }
+      ]
+    },
+    {
+      "slice": "GENUINE_APPROVED_PAYMENT_SOURCE_CONSUMER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/payment-source26-consumer1/RESULT.json",
+      "receiptSha256": "0048f2fa0731fe17c513cc3bed255a6e3ed197e462069141957c9fae7e4e1b7a",
+      "receiptSnapshot": {
+        "taskId": "D3_GENUINE_PAYMENT_REFERENCE26_SOURCE_CONSUMER",
+        "atUtc": "2026-10-22T19:13:34.907127+00:00",
+        "status": "SOURCE_READY_NEW4PASS_ACTUAL1086_REFERENCE_ONLY_NOT_SQL",
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-payment-source26.mjs",
+            "bytes": 10662,
+            "sha256": "6d798b30b748c1e38b29758b60617a33c0eec7b1c70caf45182c6e67e08cc091"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-payment-source26.test.mjs",
+            "bytes": 7126,
+            "sha256": "546e1780776e3152ffbc31ac884e778204f648d0ea3c60d987bbbf3803a05db0"
+          }
+        ],
+        "API": "openReviewedPaymentSource26({reviewFile,trustedReviewSha256,binding,authorizedPayloadHash:null|full-scope-hash}) -> report/verify/chunks/authorize/openClosure/close",
+        "scope": [
+          "Exact C8key PAYMENT_REFERENCE_DECISIONS_ONLY plus pinned actual QB PASS, full manifest and real artifact bytes. No native UUID/runtime/SOURCE execution authority.",
+          "Validates all prepared chunks, global source keys/UUID/positions across chunks, original locators/rawlineSHA, complete native reference equality across candidate methods/accounts; no pick-first/name lookup.",
+          "Original990 blank sourceIds remain in sourceLocators and existing exact pair-composite sourceKey remains unchanged.",
+          "Full immutable source/native binding and appropriate native identity/relationship26 projections; sorted source and typed closure streams. Actual unknown MAIN payload keeps openClosure closed.",
+          "All pinned files nofollow/parent checks/fd+path stat lifetime, input snapshot/mutation denial, close revokes access."
+        ],
+        "checks": {
+          "newSynthetic": 4,
+          "passed": 4,
+          "skipped": 0,
+          "protocolLog": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/payment-source26-consumer1/protocol-first.log",
+            "bytes": 642,
+            "sha256": "eea965b68c2ec7de28cd0642ddc9d485dd116981593e96ded65291e7177b465a"
+          },
+          "actual": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/payment-source26-consumer1/ACTUAL1086-RESULT.json",
+            "bytes": 750,
+            "sha256": "133d1e288461f186f0ebc2bc012c363ae429cd6973e75fa0260eaa0820980d1b"
+          },
+          "actualCounts": {
+            "rows": 1086,
+            "chunks": 12,
+            "counts": {
+              "PAYMENT_METHOD": 12,
+              "PAYMENT_ACCOUNT": 84,
+              "PAYMENT_ACCOUNT_HALL": 990
+            },
+            "blankOriginalIds": 990
+          },
+          "actualScript": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/payment-source26-consumer1/consume-actual1086.mjs",
+            "bytes": 2332,
+            "sha256": "df70f731e2667feb321c2f0bd7c843b4bc12262a9feb8dce98d537518eb3e8d7"
+          },
+          "actualLog": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/payment-source26-consumer1/actual-first.log",
+            "bytes": 621,
+            "sha256": "8dd23825b9d287e77a2b8e9721225aa2d8222e25da3e0723822afd4a8fa9c882"
+          }
+        },
+        "notClaimed": [
+          "Actual full SOURCE/MAIN/STAGE/PUBLISH execution grant or real49 bootstrap",
+          "Runtime26/PG/native data writes",
+          "C/QB96 original business/source decisions repeated"
+        ]
+      },
+      "files": [
+        {
+          "path": "scripts/import-v3/native-payment-source26.mjs",
+          "owner": "D3",
+          "sha256": "6d798b30b748c1e38b29758b60617a33c0eec7b1c70caf45182c6e67e08cc091",
+          "bytes": 10662
+        },
+        {
+          "path": "scripts/import-v3/native-payment-source26.test.mjs",
+          "owner": "D3",
+          "sha256": "546e1780776e3152ffbc31ac884e778204f648d0ea3c60d987bbbf3803a05db0",
+          "bytes": 7126
+        }
+      ]
+    },
+    {
+      "slice": "SHARED_SETTINGS_PAGER_AND_PAYMENT_SCROLL_P2",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/SETTINGS-UI-P2-EXT-v1-RESULT.json",
+      "receiptSha256": "7d226168241e2993ff5d577a345229da6918b4b9bad678d8828fce8105587245",
+      "receiptSnapshot": {
+        "version": "SETTINGS-UI-P2-EXT-v1",
+        "taskId": "F05/STORE-UI-P2-SHARED-EXTENSION",
+        "owner": "F3",
+        "atUtc": "2026-10-22T19:14:13.699696+00:00",
+        "clientDate": "2026-10-23",
+        "status": "SOURCE_READY_TARGETED_REPRO_PASS_AWAITING_C_QF_DEMO",
+        "newIssueCount": 0,
+        "sameFindingIds": [
+          "STORE-UI-01",
+          "STORE-UI-02"
+        ],
+        "baseHead": "87559312f75e4c96db72305d1c42e6ffe50580b4",
+        "files": [
+          {
+            "path": "apps/web/src/settings/demo-settings-ui.css",
+            "beforeSha256": "94adce56da7f8acc77ae253899d35c0a4472dbb0e448bd932dee8da3aeafc36e",
+            "sha256": "ca127120007e6024584ebe9fc2ce35b23bf3b4c5d64ede0510cbd2339d0bd573",
+            "bytes": 28015
+          },
+          {
+            "path": "apps/web/src/payment-settings/payment-page.tsx",
+            "beforeSha256": "d5c7d0dfbbc3e394db259ea2e4e5c43ccdbf8dc71fde8b3eb8d1580c1cbbdeed",
+            "sha256": "6d024bb1e66256b8fa8b9857481cb8d9eee0ece0038743e8687b7e176ce0d2a9",
+            "bytes": 15440
+          }
+        ],
+        "coverage": {
+          "STORE-UI-01": [
+            "B04",
+            "B05",
+            "B06",
+            "O-B08"
+          ],
+          "STORE-UI-02": [
+            "B05",
+            "B06"
+          ]
+        },
+        "implemented": [
+          "Shared source final pager42px/gap10/color plus settings-only neutral idle shell overriding Arco secondary; no global/F09 changes",
+          "PaymentTabView retains only one top/left UI object shared by the two tab mounts; current scope/reader/workspace owns it",
+          "Restore only on successful-result DOM, ignore loading-empty scroll events, fresh native read still occurs; draft/applied and dirty/unresolved guards unchanged"
+        ],
+        "checks": {
+          "before": {
+            "exitCode": 1,
+            "log": "settings-ui-p2-ext-before.log",
+            "failures": "All4 source CSS consumers40/14 vs42/10; payment scroll0 vs304"
+          },
+          "after": {
+            "exitCode": 0,
+            "groups": 5,
+            "log": "settings-ui-p2-ext-after-run1.log"
+          },
+          "isolationAndDirtyGuard": {
+            "exitCode": 0,
+            "log": "settings-ui-p2-ext-isolation.log",
+            "scope": "reader/workspace/identity/route reset and old identity cleanup; dirty-tab refusal preserves current scroll"
+          },
+          "strictTypes": {
+            "exitCode": 0,
+            "directRoots": 1,
+            "log": "settings-ui-p2-ext-types-run1.log"
+          },
+          "fourConsumerStyleClosure": {
+            "status": "PASS",
+            "evidence": "settings-ui-p2-ext-style-closure.json"
+          },
+          "diffCheck": "PASS",
+          "writes": 0,
+          "requestKeys": 0,
+          "preserved": "Prior Store3 round56 exact hashes unchanged; controllers/contracts/audit content/shared control behavior/global styles unchanged; accepted protocols reused"
+        },
+        "auditMetadataReview": "AUDIT-CELL-METADATA-LAYOUT-REVIEW-v1.json",
+        "sourceRegionMatrix": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/settings-source-20261023/SOURCE-REGION-MATRIX.json",
+          "sha256": "4e8fa94e859c397a359a39ddde5740fd7877167f2ce975aa130725ce20f7a68e",
+          "scope": "Source5b363, not proof current693 browser consumed these leaves"
+        },
+        "notMeasured": [
+          "B04/B05/B06/O-B08 actual new-preview pixels/footer/table/scroll-clamp",
+          "Actual audit secondary metadata line geometry/layout disposition",
+          "Runtime/root/native business/release"
+        ],
+        "wholePagePass": false,
+        "browserFindingsClosed": false,
+        "actualChromeControl": false,
+        "browserHarnessControl": false,
+        "activeBrowserOperations": false,
+        "blockers": [],
+        "next": "C exact2 successor checkpoint -> QF only shared CSS and payment viewport branches; next necessary preview Demo minimal affected scopes. Earlier Store3 round56 stays separate; no repeat of passed header/native checks."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/settings/demo-settings-ui.css",
+          "owner": "F3",
+          "sha256": "ca127120007e6024584ebe9fc2ce35b23bf3b4c5d64ede0510cbd2339d0bd573",
+          "bytes": 28015
+        },
+        {
+          "path": "apps/web/src/payment-settings/payment-page.tsx",
+          "owner": "F3",
+          "sha256": "6d024bb1e66256b8fa8b9857481cb8d9eee0ece0038743e8687b7e176ce0d2a9",
+          "bytes": 15440
+        }
+      ]
+    },
+    {
+      "slice": "YEAR_SHARED_SELECT_ACTUAL_CONSUMER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-UI-SOURCE-01-YEAR-CONSUMER-DELIVERY-v1.json",
+      "receiptSha256": "821694a50e41bad0d56c059d7cf6908e6c58fbee5c72d2d2802e2860332c223a",
+      "receiptSnapshot": {
+        "schemaVersion": 1,
+        "taskId": "PROD-UI-SOURCE-01",
+        "slice": "YEAR-first actual shared flat SingleSelect consumer",
+        "createdAt": "2026-10-22T19:09:12.567604+00:00",
+        "owner": "F2",
+        "status": "SOURCE_DOM_TYPE_PASS_BROWSER_PENDING",
+        "applicationFiles": [
+          {
+            "path": "apps/web/src/products/product-editor-base.tsx",
+            "beforeSha256": "c9919c74544cbd5d6b1de69b9b7bdc2ac27b267798d7ddd153726d847af013a4",
+            "sha256": "f5d28de69cc6c184ec9910dd7c38ff7cc6e9c2b66d5c5987baf705cde7b4415b"
+          }
+        ],
+        "sourceDiff": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-UI-SOURCE-01-YEAR-CONSUMER-source.diff",
+        "sharedInput": {
+          "controllerReported": "four optional props fixed round55, stylesheet forward-export fixed round56; QF seam compatibility pass is not consumer acceptance",
+          "files": [
+            {
+              "path": "apps/web/src/demo-controls/single-select-contract.ts",
+              "sha256": "8c1e122877f7809abe33c42bde62550685bfa0bc8045b4d52265c6e8e7d12ca0"
+            },
+            {
+              "path": "apps/web/src/demo-controls/single-select-action.tsx",
+              "sha256": "d29311eeabe7350436df39857d87b2966304e51850e02fae55037cdc9abd0724"
+            },
+            {
+              "path": "apps/web/src/demo-controls/single-select-styles.ts",
+              "sha256": "8d2858bd480e128e9ca7a791db745db5b7b2f81bfb2a465aebfad0687c73216b"
+            },
+            {
+              "path": "apps/web/src/demo-controls/single-select.css",
+              "sha256": "d92da01d401bde97f3b1fbfed1f9361a9e932956b4704068739e8ef1eca0bbcd"
+            }
+          ],
+          "F2Writes": []
+        },
+        "sourceAuthority": {
+          "commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+          "chain": [
+            {
+              "path": "frontend/product-current.js",
+              "lines": "136-153",
+              "sha256": "d5a3ae29d781aa725859196dac6ef4e64f0e3cea08b3cca5c199579c9527b0be"
+            },
+            {
+              "path": "frontend/product-arco.jsx",
+              "lines": "231-241",
+              "sha256": "0b70d765bc42d27872b743ce7bae753ab1920c6e6c3fd9baed33057a0308d057"
+            },
+            {
+              "path": "frontend/unified-single-select.jsx",
+              "lines": "11-26,56-86",
+              "sha256": "0551d20e63ee3e50e214ee4137b6b4a7fa98b0eb441dd51cea32e01e434dd43d"
+            }
+          ],
+          "reuseClassification": "最小适配：actual migrated shared action and its scoped stylesheet, not duplicate flat lookalike JSX/CSS"
+        },
+        "changes": [
+          "Only kind=years uses ProductYearCandidatePresentation -> actual lazy DemoSingleSelectAction presentation=flat; other generic candidates and ProductSeasonSelect remain on existing paths.",
+          "Uses public contract forward-export createDemoSingleSelectStyles and loadDemoSingleSelectAction; awaits both, disables preparation control, reports/retries failure. Owns style lease through exact read scope; cleanup/abort disposes it and guards all late load completion.",
+          "Shared native onOpen/selected callback forwards to existing controlled state and choose, with active/disabled guards. Remote LatestQuery/native50-item paging/server auth/error retry and current off-page label retained outside shared presentation.",
+          "Frozen popup min(max(host.width,300),max(180,ownerWindow.innerWidth-host.left-12)) measured from actual mounted host, on open and resize/ResizeObserver; shared action owns local portal, bl and autoAlignPopupWidth=false.",
+          "Four new optional slots carry placeholder/required aria/loading/dropdownRender; required changes metadata only, not nullable history validation. No free create/search/clear and no automatic year fill.",
+          "Existing dropdown renderer factored unchanged for common/page/error content; no new provider, aggregation, client-side whole-data search or permissions."
+        ],
+        "checks": {
+          "type": {
+            "entry": "apps/web/src/products/product-editor-base.tsx",
+            "strict": true,
+            "exactOptionalPropertyTypes": true,
+            "noUncheckedIndexedAccess": true,
+            "transitiveSourcesIncluded": true,
+            "exitCode": 0,
+            "log": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-UI-SOURCE-01-YEAR-CONSUMER-types.log",
+            "logBytes": 0,
+            "qualification": "Bounded entry and its actual transitive source closure; not whole application build or all-project acceptance."
+          },
+          "dom": {
+            "exitCode": 0,
+            "log": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-UI-SOURCE-01-YEAR-CONSUMER-dom-v1.log",
+            "cases": [
+              "actual ProductEditor + actual v2 maintenance HTTP client/readers + shared Action under StrictMode",
+              "actual single-select CSS bytes inlined with recognized test-only marker; no false marker without CSS",
+              "flat native selected tag and required metadata; no search/create/clear; other supplier still searchable",
+              "historic NULL unchanged after open/Esc and unrelated name-only saved edit; seasonIds:null retained",
+              "native page2 year2020 chosen and saved numeric2020; Backspace cannot clear",
+              "popup under local year owner and width400.75 ->180 ->400.75 on synthetic1470 viewport/controlled rect resize"
+            ],
+            "qualification": "Synthetic DOM and controlled host geometry only; actual pixel/scroll/hover positioning not measured."
+          },
+          "lifecycle": {
+            "exitCodes": [
+              0,
+              0
+            ],
+            "logs": [
+              "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-UI-SOURCE-01-YEAR-CONSUMER-lifecycle-retry.log",
+              "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PROD-UI-SOURCE-01-YEAR-CONSUMER-lifecycle-load-abort.log"
+            ],
+            "cases": [
+              "real stylesheet factory appends owned link and consumer remains disabled until actual load event",
+              "load error exposes retry and no reads/writes; retry creates new owned link; actual shared style bytes supplied by test asset fixture",
+              "shared loading icon displayed during pending actual HTTP;503 retains open error/retry UI; retry restores real50-page result",
+              "scope abort during page2 aborts actual read signal, removes owned link and shared local action; late page2 cannot mutate/null-fill/remount",
+              "scope abort while CSS pending detaches load/error handlers, removes link and blocks late mount"
+            ],
+            "qualification": "jsdom uses explicit synthetic asset load/error events and actual CSS bytes; test bundle maps import.meta.url to its synthetic browser module URL. No real network/asset deployment claimed."
+          },
+          "warnings": "Existing React19 Arco element.ref deprecation only; no act warnings in final logs.",
+          "intermediateCorrection": "Initially imported style factory from contract before C forward-export was available; used direct existing factory during development; final source consumes C fixed round56 public forward-export and final checks pass."
+        },
+        "unchangedReused": {
+          "productPageCss": {
+            "sha256": "f041042a309e88a9ecd681b5ed5e21af35e1b600b120980059d5edf1ca4bfd8f",
+            "controllerReportedFixed": "04a6e08a2f2571828b62cbbe44f2346dbc697112/round51"
+          },
+          "priorYearBehavior": "7939759f5bc702e8beeb5a47776f7ee8e3101c88/round49; only affected consumer behavior checked, not a repeat full review",
+          "P12SevenFiles": "No changes or retest",
+          "categoryCascaderAndColorFitTransfer": "No changes",
+          "multiSeason": "Excluded from shared single fixed-height CSS"
+        },
+        "remaining": [
+          "Actual final preview must include shared action chunk and single-select.css lease asset or truthful exact inline preview; C owns build/closure.",
+          "Demo owner to verify year flat value/actual popup boundary and real stylesheet winner on final fixed candidate only.",
+          "Other searchable detail singles retain separate remaining flat/search seam registration and source behavior differences; supplier clear and thickness/shape create not changed.",
+          "P10 full readonly barcode contract and P06 actual controlled-media write runtime/key/hash remain existing C/D2 dependencies."
+        ],
+        "notRun": [
+          "real Chrome/browser-harness control",
+          "whole build or release pack",
+          "PostgreSQL or real business mutation",
+          "production deploy",
+          "old accepted P12 full suite"
+        ],
+        "browserResourceStatement": "No actual Chrome/browser-harness control or active input/control handles; exclusive Demo targets untouched.",
+        "next": "C fix this exact one-file consumer with round55/56 shared hashes, QF only this new consumer and changed shared seam scope; Demo final necessary preview checks only year value/popup and separately queued PROD-UI-02 geometry. No re-review of accepted old7/P12.",
+        "reportingAuthorization": {
+          "humanMessageId": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/REPORTING-AUTHORIZATION.json",
+          "destination": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915"
+        }
+      },
+      "files": [
+        {
+          "path": "apps/web/src/products/product-editor-base.tsx",
+          "owner": "F2",
+          "sha256": "f5d28de69cc6c184ec9910dd7c38ff7cc6e9c2b66d5c5987baf705cde7b4415b",
+          "bytes": 20451
+        }
+      ]
+    }
+  ],
+  "fileCount": 14,
+  "scope": "Five independent source/protocol groups only. Transfer existing4 held only for2 EOF whitespace fixes, not included. C contracts existingPreparation WIP excluded until F1 publicports fixed; current preview875 excludes57 successor."
+}

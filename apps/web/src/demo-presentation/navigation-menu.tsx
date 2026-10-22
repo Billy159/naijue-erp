@@ -75,7 +75,7 @@ export function DemoNavigationMenu({ navigation }: Props) {
       {item('products', '商品信息')}{item('product-categories', '商品分类')}{item('product-settings', '商品设置')}{item('barcode-schemes', '条码方案')}
     </Menu.ItemGroup>
     <Menu.ItemGroup key="settings-group" title="基础设置">
-      {item('settings/stores', '营业厅与仓库')}{item('customers', '客户')}{item('suppliers', '供应商')}{item('settings/staff', '员工与账号')}{item('settings/payments', '收款配置')}
+      {item('settings/stores', '营业厅与仓库')}{item('customers', '客户')}{item('suppliers', '供应商')}{item('settings/staff', '员工与账号')}{item('settings/payments', '收款配置')}{navigation['settings/accounts'] && item('settings/accounts', '登录账号')}
     </Menu.ItemGroup>
   </Menu>;
 }

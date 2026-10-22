@@ -1,7 +1,7 @@
 import { SettingsAuditEntry } from '../settings/audit/audit-entry.tsx';
 import { Button, Empty, Input, Modal, Table, Tag } from '@arco-design/web-react';
 import { IconSearch } from '@arco-design/web-react/icon';
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { LatestQuery } from '../loading/latest-query.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import { DemoSettingsTabs, DemoSettingsPager, DemoSettingsSingleSelect } from '../settings/demo-settings-controls.tsx';
@@ -20,7 +20,9 @@ type Queries = { readonly list: LatestQuery<PaymentSettingsQuery, PageData>; rea
 const emptyRead = Object.freeze({ phase: 'idle' as const, request: null, success: null, error: null });
 const noSubscribe = () => () => {};
 const noEditors = Object.freeze({ methods: null, accounts: null });
+interface PaymentTableScroll { top: number; left: number }
 type PaymentTabViewProps = PaymentSettingsProps & { readonly kind: PaymentSettingsKind; readonly onTab: (kind: PaymentSettingsKind) => void;
+  readonly tableScroll: PaymentTableScroll;
   readonly restoreFocus: boolean; readonly filterDraft: PaymentSettingsQuery; readonly onFilterDraft: (query: PaymentSettingsQuery) => void;
   readonly lastQuery: PaymentSettingsQuery; readonly onExecuted: (query: PaymentSettingsQuery) => void;
   readonly selectedMethod: SettingsReference | null; readonly onSelectedMethod: (method: SettingsReference | null) => void };
@@ -29,11 +31,15 @@ export function PaymentSettingsPage(props: PaymentSettingsProps) {
   return <PaymentTabView key={JSON.stringify([identity.accountId, identity.sessionRevision, identity.permissionRevision, props.scope.routeInstanceId])} {...props} />;
 }
 function PaymentTabView(props: PaymentSettingsProps) {
+  const scrollOwner = useRef<{ readonly scope: PaymentSettingsProps['scope']; readonly reader: PaymentSettingsProps['reader']; readonly workspace: PaymentSettingsProps['workspace']; readonly position: PaymentTableScroll } | null>(null);
+  if (!scrollOwner.current || scrollOwner.current.scope !== props.scope || scrollOwner.current.reader !== props.reader || scrollOwner.current.workspace !== props.workspace) {
+    scrollOwner.current = { scope: props.scope, reader: props.reader, workspace: props.workspace, position: { top: 0, left: 0 } };
+  }
   const [tab, setTab] = useState<PaymentSettingsKind>(props.initialTab ?? 'methods');
   const [drafts, setDrafts] = useState<Record<PaymentSettingsKind, PaymentSettingsQuery>>({ methods: { ...initialPaymentSettingsQuery }, accounts: { ...initialPaymentSettingsQuery } });
   const [executed, setExecuted] = useState<Record<PaymentSettingsKind, PaymentSettingsQuery>>({ methods: { ...initialPaymentSettingsQuery }, accounts: { ...initialPaymentSettingsQuery } });
   const [method, setMethod] = useState<SettingsReference | null>(null), focusTab = useRef(false);
-  return <PaymentContent key={tab} {...props} kind={tab} restoreFocus={focusTab.current} onTab={next => { focusTab.current = true; setTab(next); }} filterDraft={drafts[tab]}
+  return <PaymentContent key={tab} {...props} kind={tab} tableScroll={scrollOwner.current.position} restoreFocus={focusTab.current} onTab={next => { focusTab.current = true; setTab(next); }} filterDraft={drafts[tab]}
     onFilterDraft={query => setDrafts(value => ({ ...value, [tab]: query }))} lastQuery={executed[tab]}
     onExecuted={query => setExecuted(value => ({ ...value, [tab]: query }))} selectedMethod={method} onSelectedMethod={setMethod} />;
 }
@@ -82,6 +88,17 @@ function PaymentList(props: Parameters<typeof PaymentContent>[0] & { readonly qu
   const run = (query: PaymentSettingsQuery) => { if (active && queries) { const exact = { ...query, paymentMethodId: props.kind === 'methods' ? null : query.paymentMethodId }; props.onExecuted(exact); void queries.list.run(exact); } };
   const close = () => { if (workspace) { if (!workspace.close(props.kind)) return; } else { if (editor && !editor.discard()) return; setEditor(null); } setEditingId(null); queries?.detail.cancel(); focus.request(); };
   const changeTab = (kind: PaymentSettingsKind) => { if (kind === props.kind) return; if (editor && !editor.requestClose()) return; if (workspace) workspace.close(props.kind); else setEditor(null); props.onTab(kind); };
+  const table = useRef<HTMLDivElement>(null), scrollReady = useRef(false);
+  useLayoutEffect(() => {
+    scrollReady.current = false;
+    const node = table.current;
+    // Frozen App changes columns inside one viewport. Retain only its UI
+    // position across keyed tabs; the new tab still performs a fresh read.
+    if (!node || !active || !result) return;
+    node.scrollTop = props.tableScroll.top; node.scrollLeft = props.tableScroll.left;
+    props.tableScroll.top = node.scrollTop; props.tableScroll.left = node.scrollLeft;
+    scrollReady.current = true;
+  }, [scope, active, result, props.tableScroll]);
   if (!active) return null;
   const statusColumn = { title: '状态', width: 100, render: (_: unknown, row: PaymentSettingsRecord) => <Tag className={`iw-status ${row.enabled ? 'normal' : 'off'}`}>{row.enabled ? '正常' : '已停用'}</Tag> };
   const actionColumn = { title: '操作', width: 76, render: (_: unknown, row: PaymentSettingsRecord) => <div className="bs-row-actions"><Button type="text" size="small" disabled={!props.canPrepare || busy || editor !== null} onClick={event => { if (active && queries) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); setEditingId(row.id); void queries.detail.run({ id: row.id }); } }}>编辑</Button></div> };
@@ -101,7 +118,9 @@ function PaymentList(props: Parameters<typeof PaymentContent>[0] & { readonly qu
       {list.phase === 'loading' && <p className="settings-note" role="status">正在读取资料…</p>}
       {list.phase === 'error' && <p className="settings-note" role="alert">资料读取失败。<Button type="text" onClick={() => run(list.request?.parameters ?? applied)}>重试</Button></p>}
       {result && list.phase !== 'success' && <p className="settings-note">下方为上次成功读取的结果。</p>}
-      <div className="bs-table-wrap iw-arco-table" aria-busy={busy}><Table size="small" rowKey="id" columns={columns} data={result ? [...result.items] : []} pagination={false} noDataElement={<Empty description={!queries ? '资料暂不可用' : !result ? '尚未读到资料' : '暂无符合条件的数据'} />} /></div>
+      <div ref={table} className="bs-table-wrap iw-arco-table" aria-busy={busy} onScroll={event => {
+        if (scrollReady.current && active && result) { props.tableScroll.top = event.currentTarget.scrollTop; props.tableScroll.left = event.currentTarget.scrollLeft; }
+      }}><Table size="small" rowKey="id" columns={columns} data={result ? [...result.items] : []} pagination={false} noDataElement={<Empty description={!queries ? '资料暂不可用' : !result ? '尚未读到资料' : '暂无符合条件的数据'} />} /></div>
       <DemoSettingsPager label="收款配置列表分页" scope={scope} page={applied.page} size={applied.pageSize} total={result?.total ?? null} busy={busy} onPage={page => run({ ...applied, page })} onSize={pageSize => run({ ...applied, page: 1, pageSize })} />
     {editor && (props.kind === 'methods' ? <PaymentMethodForm controller={editor} close={close} /> : <PaymentAccountForm {...props} controller={editor} close={close} />)}
     {editingId && !editor && <Modal className="bs-modal demo-settings-modal iw-arco-modal iw-arco-controls" autoFocus={false} focusLock visible title={`编辑${label}`} maskClosable={false} onCancel={close} okText="确定" cancelText="取消" okButtonProps={{ disabled: true }}><p role="status">{detail.phase === 'loading' ? '正在读取当前资料…' : detail.phase === 'success' ? '记录不存在或不可访问。' : '当前资料读取失败。'}</p>{detail.phase === 'error' && <Button onClick={() => { void queries?.detail.run({ id: editingId }); }}>重试读取</Button>}</Modal>}
