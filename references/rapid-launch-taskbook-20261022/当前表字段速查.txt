@@ -1,0 +1,50 @@
+schema_migration: version, description, applied_at
+customer: id, code, name, enabled, version, created_at, updated_at
+supplier: id, code, name, enabled, version, created_at, updated_at
+hall: id, name, default_customer_id, default_sales_warehouse_id, enabled, version
+warehouse: id, hall_id, name, enabled, version
+staff: id, name, hall_id, role, contact, employment_status, version
+user_account: id, staff_id, login_name, password_hash, login_enabled, auth_version, version, created_at, updated_at
+product_category: id, parent_id, name, display_order, version
+color: id, code, name, enabled, version
+fit: id, code, name, enabled, version
+size: id, code, name
+size_group: id, code, name
+size_group_member: size_group_id, size_id, display_order
+season: id, code, name, display_order
+product: id, product_code, name, category_id, supplier_id, season_id, size_group_id, retail_price, enabled, version, year, system_item_code, thickness, collar_pants_type, purchase_price, wholesale5_price, wholesale6_price, wholesale7_price, wholesale8_price, wholesale9_price, wholesale10_price, minimum_price
+sku: id, product_id, color_id, fit_id, size_id, sku_code, enabled, version
+payment_method: id, name, enabled, version
+payment_account: id, name, payment_method_id, enabled, version
+payment_account_hall: payment_account_id, hall_id
+sales_header: id, number, business_type, business_date, hall_id, salesperson_id, customer_id, warehouse_id, status, gross_amount, order_discount, net_due, note, version, created_by_account_id, created_hall_id, created_at, updated_at, approved_by_account_id, approved_at, stock_basis, import_batch_id
+sales_line: id, sales_id, line_no, sku_id, quantity, reference_price, deal_price, line_amount, allocated_discount, is_gift, product_code_snapshot, product_name_snapshot, color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot, is_current, pricing_rule, discount_tenths, zero_confirmed
+sales_settlement: id, sales_id, line_no, payment_account_id, direction, amount, account_name_snapshot, method_name_snapshot, payment_method_id_snapshot
+operation_receipt: id, actor_account_id, request_key, request_hash, action, target_type, target_id, status, result_data, created_at, completed_at, target_sales_id, target_transfer_id, target_customer_id, target_supplier_id
+audit_change: id, operation_id, actor_account_id, object_type, object_id, action, old_version, new_version, before_values, after_values, occurred_at, object_sales_id, object_transfer_id, object_customer_id, object_supplier_id
+inventory_ledger: id, operation_id, event_kind, warehouse_id, sku_id, quantity_delta, source_sales_line_id, endpoint, source_document_version, reverses_entry_id, business_date, posted_at, source_transfer_line_id, source_import_batch_id
+inventory_balance: warehouse_id, sku_id, quantity, version, last_operation_id, updated_at
+auth_session: token_hash, account_id, auth_version, created_at, expires_at, revoked_at
+transfer_header: id, number, business_date, from_warehouse_id, to_warehouse_id, status, version, note, created_by_account_id, created_hall_id, created_role, created_at, updated_at, approved_by_account_id, approved_at, stock_basis, import_batch_id
+transfer_line: id, transfer_id, line_no, sku_id, quantity, product_code_snapshot, product_name_snapshot, color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot, is_current, current_line_no
+product_image: id, product_id, file_ref, mime, byte_size, display_order, created_at, created_by_account_id, version
+import_batch: id, source_name, source_manifest_ref, source_hash, cutoff_at, mapping_version, inventory_mode, status, checkpoint, created_at, completed_at, history_expected_counts, history_actual_counts, history_payload_hash, history_validation_passed
+import_record: id, import_batch_id, source_entity_type, source_key, source_record_hash, source_file_ref, target_type, target_id, status, decision_reason, reviewed_at
+barcode_scheme: id, name, barcode_type, rule_description, code_length, rule_version, status
+sku_barcode: id, barcode, sku_id, barcode_kind, scheme_id, enabled
+import_source_row: id, batch_id, entity_type, source_key, file_ref, sheet, row_no, source_file_sha256, row_sha256, raw_fields, normalized_fields, field_provenance
+import_sku_alias: batch_id, old_source_sku_id, canonical_sku_id, source_row_id, canonical_source_key, mapping_basis
+history_sales_header: id, source_row_id, batch_id, version, number, business_date, source_status, note, created_by_source_key, approved_by_source_key, created_hall_id, created_hall_provenance, created_hall_reason, created_local_at, updated_local_at, approved_local_at, created_instant, updated_instant, approved_instant, business_type, hall_id, customer_id, warehouse_id, salesperson_id, gross_amount, order_discount, net_due
+history_transfer_header: id, source_row_id, batch_id, version, number, business_date, source_status, note, created_by_source_key, approved_by_source_key, created_hall_id, created_hall_provenance, created_hall_reason, created_local_at, updated_local_at, approved_local_at, created_instant, updated_instant, approved_instant, from_warehouse_id, to_warehouse_id, created_role_source
+history_sales_line: id, source_row_id, batch_id, header_id, line_no, sku_id, quantity, product_code_snapshot, product_name_snapshot, color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot, reference_price, deal_price, line_amount, allocated_discount, is_gift, pricing_method_source, discount_tenths, ordinary_zero_confirmed
+history_transfer_line: id, source_row_id, batch_id, header_id, line_no, sku_id, quantity, product_code_snapshot, product_name_snapshot, color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot
+history_sales_settlement: id, source_row_id, batch_id, header_id, line_no, payment_account_id, direction, amount, account_name_snapshot, method_name_snapshot, payment_method_id_snapshot
+import_stock_contributor: batch_id, source_row_id, warehouse_id, canonical_sku_id, old_source_sku_id, canonical_stock_source_key, source_unit, signed_quantity, baseline_ledger_id
+history_revision: id, document_kind, sales_id, transfer_id, from_version, to_version, actor_account_id, request_key, reason, changed_at, before_facts, after_facts, stock_effect_basis, stock_effect_evidence
+import_header_native_reference: batch_id, entity_type, source_key, source_row_id, native_hall_id, native_customer_id, native_staff_id, native_version, native_snapshot, validator_version
+native_party_import_evidence: batch_id, source_row_id, entity_type, source_key, native_id, native_hall_id, native_customer_id, native_supplier_id, native_staff_id, native_warehouse_id, warehouse_record, native_snapshot, source_snapshot, selection, authorization, row_fingerprint, validator_version, creation_xid, imported_at
+import_native_catalogue_binding: batch_id, entity_type, source_key, source_row_id, category_id, color_id, fit_id, size_id, size_group_id, season_id, member_group_id, member_size_id, native_snapshot, evidence_fingerprint, validator_version
+import_record_accounting_claim: import_batch_id, import_record_id, target_type, target_id, operation_id, checkpoint_sequence, claimed_at, validator_version
+import_native_payment_binding: batch_id, entity_type, source_key, source_row_id, native_payment_method_id, native_payment_account_id, native_hall_id, native_snapshot, evidence_fingerprint, validator_version
+import_history_closure_manifest: batch_id, validator_version, selection_sha256, authorized_payload_hash, source_manifest_sha256, typed_manifest_sha256, document_manifest_sha256, expected_counts, source_entity_counts, document_count
+import_history_document_manifest: batch_id, document_kind, source_key, header_source_row_id, sales_header_id, transfer_header_id, header_source_sha256, line_count, settlement_count, source_document_sha256, typed_document_sha256

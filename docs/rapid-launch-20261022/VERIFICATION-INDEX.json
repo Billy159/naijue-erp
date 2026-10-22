@@ -1,0 +1,17 @@
+{
+  "checks": [
+    {
+      "id": "C00-WIP-PRESERVATION",
+      "scope": "39 source WIP paths matched inventory hashes; commit and remote branch readback",
+      "sourceCommit": "82112855eba3983582c719660b90be79b5024cd0",
+      "result": "PASS_CHECKPOINT_ONLY",
+      "notTested": [
+        "new build",
+        "new business checks",
+        "production",
+        "real import"
+      ]
+    }
+  ],
+  "reusePreparation": "QF/QB W0 active; schema19 and v14 exact scopes in original taskbook; no rerun"
+}

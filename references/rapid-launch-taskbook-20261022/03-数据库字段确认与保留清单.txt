@@ -1,0 +1,173 @@
+数据库字段确认范围与中文表目录
+版本：2026-10-22；当前状态：已有业务裁决保留，本次新增/变更字段尚未获得最终确认。
+
+一、实际盘点依据
+本附件从新工程迁移0001–0019静态抽取：50表、516列；没有连接正式数据库。正式环境实库可能不同，不能把本附件当成正式库已部署状态。
+逐字段类型/约束声明见当前50表字段快照.txt；完整创建/ALTER来源和迁移hash见同名JSON。列声明保留原SQL，后续表级约束替代以ddlStatements及迁移原文为准。
+
+二、固定保留方向
+保留现有50表职责；业务、历史、导入追溯、回执/审计分开，不为减表重新迁库。库存余额负责当前查询，流水负责追溯；金额精确，数量整数；原始历史不改写。
+商品/SKU/尺码/条码/单据/权限等具体业务规则见主控任务书第4节，接手者不能再重新选型。
+
+三、本次C01需要一次提交用户确认的精确差异（技术方向已定，具体新增字段不得假称已批准）
+1. 正常新增SKU/仓的库存资格：初始导入范围和正式新建来源分开。优先复用可信创建回执/审计；若现有结构不足，列出SKU/warehouse需要补充的创建来源字段、类型、可空、旧行处理和约束。原历史缺行不得补零，不增加一套通用导入证明平台。
+2. 历史修订：复用history_revision，增加必要的受控命令、与operation_receipt/audit/inventory_ledger的确切关联及当前有效投影。确认单须逐列写出新增/调整字段、版本CAS、来源约束及数量差额规则。只修改数量/金额等已批准事实，不扩展历史审核状态变更。
+3. 新单号：保留显示前缀，数据库序列生成稳定唯一后缀；明确序列、唯一范围、显示格式和重试保留行为；历史原号不改、不套新唯一约束。
+4. 新维护操作：商品/规格/九价/条码/厅仓/员工账号/资金配置复用现有业务字段；必要时扩展receipt/audit类型与对应受控外键。逐项列真实CRUD/停复用范围，不自造业务字段或恢复被取消功能。
+5. 完整性约束：SKU尺码属于商品尺码组、厅默认销售仓属于本厅、分类无环、单仓单厅、条码不可跨SKU重绑。给约束实现及旧数据异常处理；不把异常静默修成合法值。
+6. 不需要新增业务字段的事务收尾、查询静态能力检查迁移、真实宿主与已有接口装配可先做，不因C01整体未结束阻塞。
+
+确认单每行必须包含：业务中文名｜表.字段｜现有/新增/修改｜类型｜可空/默认｜数据来源｜关联/唯一/枚举｜对应页面和操作｜旧数据保留/迁移方法｜依据｜用户确认状态。
+已有明确确认引用原记录；真正新增差异一次集中向用户确认。这个任务包本身不是用户对新增DDL的批准。
+
+四、50张表中文目录及完整字段名
+
+01. schema_migration — 数据库迁移版本登记（3字段）
+version, description, applied_at
+
+02. customer — 客户（7字段）
+id, code, name, enabled, version, created_at, updated_at
+
+03. supplier — 供应商（7字段）
+id, code, name, enabled, version, created_at, updated_at
+
+04. hall — 营业厅及默认客户/销售仓（6字段）
+id, name, default_customer_id, default_sales_warehouse_id, enabled, version
+
+05. warehouse — 仓库及唯一所属厅（5字段）
+id, hall_id, name, enabled, version
+
+06. staff — 员工资料和业务角色（7字段）
+id, name, hall_id, role, contact, employment_status, version
+
+07. user_account — 登录账号、密码摘要与会话失效版本（9字段）
+id, staff_id, login_name, password_hash, login_enabled, auth_version, version, created_at, updated_at
+
+08. product_category — 商品分类树（5字段）
+id, parent_id, name, display_order, version
+
+09. color — 颜色字典（5字段）
+id, code, name, enabled, version
+
+10. fit — 版型字典（5字段）
+id, code, name, enabled, version
+
+11. size — 尺码身份（3字段）
+id, code, name
+
+12. size_group — 尺码组（只读）（3字段）
+id, code, name
+
+13. size_group_member — 尺码组成员及顺序（3字段）
+size_group_id, size_id, display_order
+
+14. season — 季节字典（只读）（4字段）
+id, code, name, display_order
+
+15. product — 商品款号/基础属性/整款九价（22字段）
+id, product_code, name, category_id, supplier_id, season_id, size_group_id, retail_price, enabled, version, year, system_item_code, thickness, collar_pants_type, purchase_price, wholesale5_price, wholesale6_price, wholesale7_price, wholesale8_price, wholesale9_price, wholesale10_price, minimum_price
+
+16. sku — 商品颜色版型尺码的实际规格（8字段）
+id, product_id, color_id, fit_id, size_id, sku_code, enabled, version
+
+17. payment_method — 收款方式（4字段）
+id, name, enabled, version
+
+18. payment_account — 资金账户（5字段）
+id, name, payment_method_id, enabled, version
+
+19. payment_account_hall — 资金账户适用营业厅（多厅）（2字段）
+payment_account_id, hall_id
+
+20. sales_header — 当前销货/独立退货/换货单头（22字段）
+id, number, business_type, business_date, hall_id, salesperson_id, customer_id, warehouse_id, status, gross_amount, order_discount, net_due, note, version, created_by_account_id, created_hall_id, created_at, updated_at, approved_by_account_id, approved_at, stock_basis, import_batch_id
+
+21. sales_line — 当前销货明细、价格事实与名称快照（20字段）
+id, sales_id, line_no, sku_id, quantity, reference_price, deal_price, line_amount, allocated_discount, is_gift, product_code_snapshot, product_name_snapshot, color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot, is_current, pricing_rule, discount_tenths, zero_confirmed
+
+22. sales_settlement — 单据收款/退款明细（9字段）
+id, sales_id, line_no, payment_account_id, direction, amount, account_name_snapshot, method_name_snapshot, payment_method_id_snapshot
+
+23. operation_receipt — 请求幂等与已提交操作回执（15字段）
+id, actor_account_id, request_key, request_hash, action, target_type, target_id, status, result_data, created_at, completed_at, target_sales_id, target_transfer_id, target_customer_id, target_supplier_id
+
+24. audit_change — 业务修改前后值和操作者审计（15字段）
+id, operation_id, actor_account_id, object_type, object_id, action, old_version, new_version, before_values, after_values, occurred_at, object_sales_id, object_transfer_id, object_customer_id, object_supplier_id
+
+25. inventory_ledger — 不可变库存变动流水（14字段）
+id, operation_id, event_kind, warehouse_id, sku_id, quantity_delta, source_sales_line_id, endpoint, source_document_version, reverses_entry_id, business_date, posted_at, source_transfer_line_id, source_import_batch_id
+
+26. inventory_balance — 仓库/SKU当前库存余额（6字段）
+warehouse_id, sku_id, quantity, version, last_operation_id, updated_at
+
+27. auth_session — 登录会话（6字段）
+token_hash, account_id, auth_version, created_at, expires_at, revoked_at
+
+28. transfer_header — 当前调拨单头（17字段）
+id, number, business_date, from_warehouse_id, to_warehouse_id, status, version, note, created_by_account_id, created_hall_id, created_role, created_at, updated_at, approved_by_account_id, approved_at, stock_basis, import_batch_id
+
+29. transfer_line — 当前调拨规格明细（13字段）
+id, transfer_id, line_no, sku_id, quantity, product_code_snapshot, product_name_snapshot, color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot, is_current, current_line_no
+
+30. product_image — 受控商品图片索引（9字段）
+id, product_id, file_ref, mime, byte_size, display_order, created_at, created_by_account_id, version
+
+31. import_batch — 导入批次及发布状态（15字段）
+id, source_name, source_manifest_ref, source_hash, cutoff_at, mapping_version, inventory_mode, status, checkpoint, created_at, completed_at, history_expected_counts, history_actual_counts, history_payload_hash, history_validation_passed
+
+32. import_record — 逐实体导入记录（11字段）
+id, import_batch_id, source_entity_type, source_key, source_record_hash, source_file_ref, target_type, target_id, status, decision_reason, reviewed_at
+
+33. barcode_scheme — 已确认条码方案描述（7字段）
+id, name, barcode_type, rule_description, code_length, rule_version, status
+
+34. sku_barcode — 原始条码与SKU绑定（6字段）
+id, barcode, sku_id, barcode_kind, scheme_id, enabled
+
+35. import_source_row — 不可变导入原始行与字段来源（12字段）
+id, batch_id, entity_type, source_key, file_ref, sheet, row_no, source_file_sha256, row_sha256, raw_fields, normalized_fields, field_provenance
+
+36. import_sku_alias — 旧规格身份到正式SKU映射（6字段）
+batch_id, old_source_sku_id, canonical_sku_id, source_row_id, canonical_source_key, mapping_basis
+
+37. history_sales_header — 历史销货/退换单头原始快照（27字段）
+id, source_row_id, batch_id, version, number, business_date, source_status, note, created_by_source_key, approved_by_source_key, created_hall_id, created_hall_provenance, created_hall_reason, created_local_at, updated_local_at, approved_local_at, created_instant, updated_instant, approved_instant, business_type, hall_id, customer_id, warehouse_id, salesperson_id, gross_amount, order_discount, net_due
+
+38. history_transfer_header — 历史调拨单头原始快照（22字段）
+id, source_row_id, batch_id, version, number, business_date, source_status, note, created_by_source_key, approved_by_source_key, created_hall_id, created_hall_provenance, created_hall_reason, created_local_at, updated_local_at, approved_local_at, created_instant, updated_instant, approved_instant, from_warehouse_id, to_warehouse_id, created_role_source
+
+39. history_sales_line — 历史销货规格行原始快照（21字段）
+id, source_row_id, batch_id, header_id, line_no, sku_id, quantity, product_code_snapshot, product_name_snapshot, color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot, reference_price, deal_price, line_amount, allocated_discount, is_gift, pricing_method_source, discount_tenths, ordinary_zero_confirmed
+
+40. history_transfer_line — 历史调拨规格行原始快照（13字段）
+id, source_row_id, batch_id, header_id, line_no, sku_id, quantity, product_code_snapshot, product_name_snapshot, color_name_snapshot, fit_name_snapshot, size_name_snapshot, barcode_snapshot
+
+41. history_sales_settlement — 历史收退款原始快照（11字段）
+id, source_row_id, batch_id, header_id, line_no, payment_account_id, direction, amount, account_name_snapshot, method_name_snapshot, payment_method_id_snapshot
+
+42. import_stock_contributor — 来源行对切换库存的贡献（9字段）
+batch_id, source_row_id, warehouse_id, canonical_sku_id, old_source_sku_id, canonical_stock_source_key, source_unit, signed_quantity, baseline_ledger_id
+
+43. history_revision — 历史单据受控修订记录（当前写入关闭）（14字段）
+id, document_kind, sales_id, transfer_id, from_version, to_version, actor_account_id, request_key, reason, changed_at, before_facts, after_facts, stock_effect_basis, stock_effect_evidence
+
+44. import_header_native_reference — 历史表头与正式实体的明确引用（10字段）
+batch_id, entity_type, source_key, source_row_id, native_hall_id, native_customer_id, native_staff_id, native_version, native_snapshot, validator_version
+
+45. native_party_import_evidence — 客户供应商导入证据（19字段）
+batch_id, source_row_id, entity_type, source_key, native_id, native_hall_id, native_customer_id, native_supplier_id, native_staff_id, native_warehouse_id, warehouse_record, native_snapshot, source_snapshot, selection, authorization, row_fingerprint, validator_version, creation_xid, imported_at
+
+46. import_native_catalogue_binding — 商品/规格/条码等导入绑定（15字段）
+batch_id, entity_type, source_key, source_row_id, category_id, color_id, fit_id, size_id, size_group_id, season_id, member_group_id, member_size_id, native_snapshot, evidence_fingerprint, validator_version
+
+47. import_record_accounting_claim — 导入记录与记账声明关联（8字段）
+import_batch_id, import_record_id, target_type, target_id, operation_id, checkpoint_sequence, claimed_at, validator_version
+
+48. import_native_payment_binding — 收款方式/账户/厅关系导入绑定（10字段）
+batch_id, entity_type, source_key, source_row_id, native_payment_method_id, native_payment_account_id, native_hall_id, native_snapshot, evidence_fingerprint, validator_version
+
+49. import_history_closure_manifest — 历史批次发布闭合清单（10字段）
+batch_id, validator_version, selection_sha256, authorized_payload_hash, source_manifest_sha256, typed_manifest_sha256, document_manifest_sha256, expected_counts, source_entity_counts, document_count
+
+50. import_history_document_manifest — 历史逐单发布清单（11字段）
+batch_id, document_kind, source_key, header_source_row_id, sales_header_id, transfer_header_id, header_source_sha256, line_count, settlement_count, source_document_sha256, typed_document_sha256
