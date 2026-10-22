@@ -1,7 +1,7 @@
 import type { SettingsErrors } from '../settings/stores/maintenance-contracts.ts';
 import { validateSettingsName } from '../settings/stores/maintenance-validation.ts';
 import type { StaffRoleOption, StaffSettingsDraft, StaffSettingsRecord } from './contracts.ts';
-export function validateStaffSettingsDraft(draft: Readonly<StaffSettingsDraft>, record: StaffSettingsRecord | null, roles: readonly StaffRoleOption[]): SettingsErrors {
+export function validateStaffSettingsDraft(draft: Readonly<StaffSettingsDraft>, record: StaffSettingsRecord | null, roles: readonly StaffRoleOption[], hasPassword = false): SettingsErrors {
   const errors: Record<string, string> = {}, name = validateSettingsName(draft.name);
   if (name || draft.name.includes('\0')) errors.name = name ?? '名称包含不可用字符。';
   const role = roles.find(item => item.value === draft.role);
@@ -10,8 +10,7 @@ export function validateStaffSettingsDraft(draft: Readonly<StaffSettingsDraft>, 
   if ((record?.account || draft.loginEnabled) && !draft.loginName.trim()) errors.loginName = '请输入登录账号。';
   if (draft.contact.length > 2048 || draft.contact.includes('\0')) errors.contact = '联系方式过长或包含不可用字符。';
   if ((record?.account || draft.loginEnabled) && (new TextEncoder().encode(draft.loginName).byteLength > 256 || draft.loginName.includes('\0'))) errors.loginName = '登录账号过长或包含不可用字符。';
-  if (new TextEncoder().encode(draft.password).byteLength > 1024) errors.password = '密码过长。';
-  if (!record?.account && draft.loginEnabled && !draft.password) errors.password = '请输入初始密码。';
+  if (!record?.account && draft.loginEnabled && !hasPassword) errors.password = '请输入初始密码。';
   if (record?.employmentStatus === '离职' && draft.loginEnabled) errors.loginEnabled = '离职员工不能开通登录。';
   return errors;
 }

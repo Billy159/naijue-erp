@@ -24,11 +24,10 @@ export interface StaffSettingsReader {
   readDetail(read: QueryRead<{ readonly id: string }>): Promise<StaffSettingsRecord | null>;
 }
 export interface StaffRoleOption { readonly value: string; readonly label: string; readonly requiresHall: boolean }
-/** Ephemeral local input only. Passwords are never a read field or saved draft. */
+/** Safe session draft only. Plaintext passwords live exclusively in the mounted input. */
 export interface StaffSettingsDraft {
   readonly name: string; readonly role: string; readonly hall: SettingsReference | null;
   readonly contact: string; readonly loginName: string; readonly loginEnabled: boolean;
-  readonly password: string;
 }
 export interface StaffSettingsProps {
   readonly scope: ReadScope; readonly reader?: StaffSettingsReader;

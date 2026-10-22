@@ -12,7 +12,7 @@ export interface StaffWriteState {
 }
 export interface StaffEditorSnapshot {
   readonly draft: Readonly<StaffSettingsDraft> | null; readonly errors: SettingsErrors; readonly dirty: boolean;
-  readonly closePrompt: boolean; readonly disposed: boolean; readonly write: StaffWriteState; readonly needsPasswordReentry: boolean;
+  readonly closePrompt: boolean; readonly disposed: boolean; readonly write: StaffWriteState; readonly needsPasswordReentry: boolean; readonly passwordIntent: boolean;
   readonly readback: { readonly phase: 'idle' | 'loading' | 'ready' | 'error'; readonly record: StaffSettingsRecord | null; readonly error: StaffClientError | null };
 }
 export interface StaffEditorOptions {
@@ -44,8 +44,8 @@ export class StaffSettingsController {
     if (intent !== 'edit' && !record) throw new TypeError('Employment action requires a current staff detail');
     this.scope = scope; this.intent = intent; this.#record = record ? immutable(safeStaffEditorRecord(record)) : null; this.#roles = immutable(roles); this.#options = options;
     this.#baseline = immutable({ name: record?.name ?? '', role: record?.role ?? '', hall: record?.hall ?? null,
-      contact: record?.contact ?? '', loginName: record?.account?.loginName ?? '', loginEnabled: record ? record.account?.loginEnabled ?? false : true, password: '' });
-    this.#snapshot = Object.freeze({ draft: this.#baseline, errors: Object.freeze({}), dirty: false, closePrompt: false, disposed: false, needsPasswordReentry: false, write: Object.freeze(emptyWrite()), readback: Object.freeze(emptyReadback()) });
+      contact: record?.contact ?? '', loginName: record?.account?.loginName ?? '', loginEnabled: record ? record.account?.loginEnabled ?? false : true });
+    this.#snapshot = Object.freeze({ draft: this.#baseline, errors: Object.freeze({}), dirty: false, closePrompt: false, disposed: false, needsPasswordReentry: false, passwordIntent: false, write: Object.freeze(emptyWrite()), readback: Object.freeze(emptyReadback()) });
     scope.signal.addEventListener('abort', this.#abort, { once: true }); if (!scope.active) this.dispose();
   }
   get record(): StaffSettingsRecord | null { return this.#record; }
@@ -56,34 +56,51 @@ export class StaffSettingsController {
   get locked(): boolean { return this.hasUnresolvedWrite || this.#snapshot.write.phase === 'committed'; }
   update(patch: Partial<StaffSettingsDraft>): void {
     if (!this.scope.active || this.#snapshot.disposed || !this.#snapshot.draft || this.locked || this.intent !== 'edit') return;
-    const draft = immutable({ ...this.#snapshot.draft, ...patch });
-    const needsPasswordReentry = this.#snapshot.needsPasswordReentry
-      && !(typeof patch.password === 'string' && patch.password.length > 0)
-      && !(!this.record?.account && patch.loginEnabled === false);
-    this.#publish({ ...this.#snapshot, draft, errors: Object.freeze({}), dirty: needsPasswordReentry || JSON.stringify(draft) !== JSON.stringify(this.#baseline), needsPasswordReentry, closePrompt: false });
+    const old = this.#snapshot.draft;
+    // Explicit whitelist: untyped callers cannot smuggle password/provider fields into public snapshots.
+    const hall = patch.hall === undefined ? old.hall : patch.hall;
+    const draft = immutable({ name: patch.name ?? old.name, role: patch.role ?? old.role,
+      hall: hall ? { id: hall.id, name: hall.name } : null, contact: patch.contact ?? old.contact,
+      loginName: patch.loginName ?? old.loginName, loginEnabled: patch.loginEnabled ?? old.loginEnabled });
+    const optOut = !this.record?.account && patch.loginEnabled === false;
+    const passwordIntent = !optOut && this.#snapshot.passwordIntent, needsPasswordReentry = !optOut && this.#snapshot.needsPasswordReentry;
+    this.#publish({ ...this.#snapshot, draft, errors: Object.freeze({}), dirty: passwordIntent || JSON.stringify(draft) !== JSON.stringify(this.#baseline), passwordIntent, needsPasswordReentry, closePrompt: false });
+  }
+  /** Nonsecret presence/intent only; the input must never pass plaintext here. */
+  setPasswordIntent(present: boolean): void {
+    if (typeof present !== 'boolean' || !this.#alive() || !this.#snapshot.draft || this.locked || this.intent !== 'edit') return;
+    this.#publish({ ...this.#snapshot, passwordIntent: present, needsPasswordReentry: false, errors: Object.freeze({}),
+      dirty: present || JSON.stringify(this.#snapshot.draft) !== JSON.stringify(this.#baseline) });
+  }
+  passwordInputDetached(): void {
+    if (!this.#alive() || this.locked || !this.#snapshot.passwordIntent) return;
+    this.#publish({ ...this.#snapshot, needsPasswordReentry: true });
   }
   /** Existing reset intent cannot silently disappear after a definite rejection. */
   cancelPasswordReset(): void {
     if (!this.record?.account || !this.#snapshot.draft || this.locked || this.#snapshot.disposed) return;
-    const draft = immutable({ ...this.#snapshot.draft, password: '' });
-    this.#publish({ ...this.#snapshot, draft, needsPasswordReentry: false, errors: Object.freeze({}), dirty: JSON.stringify(draft) !== JSON.stringify(this.#baseline) });
+    this.#publish({ ...this.#snapshot, passwordIntent: false, needsPasswordReentry: false, errors: Object.freeze({}),
+      dirty: JSON.stringify(this.#snapshot.draft) !== JSON.stringify(this.#baseline) });
   }
-  validate(): SettingsErrors {
+  validate(hasPassword = false): SettingsErrors {
     if (!this.#snapshot.draft || this.#snapshot.disposed) return Object.freeze({});
-    const errors: Record<string, string> = this.intent === 'edit' ? { ...validateStaffSettingsDraft(this.#snapshot.draft, this.record, this.#roles) } : {};
+    const errors: Record<string, string> = this.intent === 'edit' ? { ...validateStaffSettingsDraft(this.#snapshot.draft, this.record, this.#roles, hasPassword) } : {};
     if (this.intent !== 'edit' && this.record?.employmentStatus !== (this.intent === 'LEAVE' ? '在职' : '离职')) errors.employment = '员工状态已改变，请关闭并重新读取。';
-    if (this.#snapshot.needsPasswordReentry) errors.password = '上次密码已清除，请重新输入，或取消本次改密。';
+    if ((this.#snapshot.needsPasswordReentry || this.#snapshot.passwordIntent) && !hasPassword) errors.password = '上次密码已清除，请重新输入，或取消本次改密。';
     this.#publish({ ...this.#snapshot, errors: Object.freeze(errors) }); return errors;
   }
-  submit(): Promise<void> {
+  submit(password = ''): Promise<void> {
     const options = this.#options;
-    if (!options || !this.#snapshot.draft || !this.writesEnabled || this.locked || Object.keys(this.validate()).length
-      || this.intent === 'edit' && this.record && !this.#snapshot.dirty) return Promise.resolve();
+    if (!options || !this.#snapshot.draft || !this.writesEnabled || this.locked || Object.keys(this.validate(typeof password === 'string' && password.length > 0)).length
+      || this.intent === 'edit' && this.record && !this.#snapshot.dirty && password === '') return Promise.resolve();
+    if (typeof password !== 'string' || new TextEncoder().encode(password).byteLength > 1024) {
+      this.#publish({ ...this.#snapshot, errors: Object.freeze({ password: '密码过长或不可用，请重新输入。' }), needsPasswordReentry: true }); return Promise.resolve();
+    }
     let command: StaffCommand;
-    try { command = this.#command(options.newRequestKey()); }
+    try { command = this.#command(options.newRequestKey(), password); }
     catch { this.#publish({ ...this.#snapshot, write: { phase: 'rejected', original: null, result: null, error: new StaffClientError('invalid-request', 'INVALID_STAFF_COMMAND', 'not-sent') } }); return Promise.resolve(); }
     const original = staffReceiptIdentity(command), hadPassword = (command.action === 'CREATE' || command.action === 'EDIT') && command.account?.password != null;
-    this.#publish({ ...this.#snapshot, draft: immutable({ ...this.#snapshot.draft, password: '' }), needsPasswordReentry: hadPassword,
+    this.#publish({ ...this.#snapshot, needsPasswordReentry: hadPassword, passwordIntent: hadPassword,
       closePrompt: false, write: { phase: 'submitting', original, result: null, error: null } });
     // No command captured by settlement callbacks or session state. Transport owns only the in-flight body.
     let pending: Promise<StaffCommandResult>;
@@ -99,11 +116,11 @@ export class StaffSettingsController {
       this.#accessFailure(safe);
     });
   }
-  #command(requestKey: string): StaffCommand {
+  #command(requestKey: string, password: string): StaffCommand {
     const draft = this.#snapshot.draft!, record = this.record;
     if (this.intent !== 'edit') return validateStaffCommand({ action: this.intent, requestKey, id: record?.id, expectedVersion: record?.version });
-    const accountChanged = record?.account ? draft.loginName !== record.account.loginName || draft.loginEnabled !== record.account.loginEnabled || draft.password !== '' : draft.loginEnabled;
-    const account = accountChanged ? { id: record?.account?.id ?? null, expectedVersion: record?.account?.version ?? null, loginName: draft.loginName, loginEnabled: draft.loginEnabled, password: draft.password || null } : null;
+    const accountChanged = record?.account ? draft.loginName !== record.account.loginName || draft.loginEnabled !== record.account.loginEnabled || password !== '' : draft.loginEnabled;
+    const account = accountChanged ? { id: record?.account?.id ?? null, expectedVersion: record?.account?.version ?? null, loginName: draft.loginName, loginEnabled: draft.loginEnabled, password: password || null } : null;
     const values = { name: draft.name, role: draft.role, hallId: draft.hall?.id ?? null,
       contact: record && draft.contact === this.#baseline?.contact ? record.contact : draft.contact === '' ? null : draft.contact };
     return validateStaffCommand(record ? { action: 'EDIT', requestKey, id: record.id, expectedVersion: record.version, values, account } : { action: 'CREATE', requestKey, values, account });
@@ -149,11 +166,11 @@ export class StaffSettingsController {
   dispose(): void {
     if (this.#snapshot.disposed) return;
     this.scope.signal.removeEventListener('abort', this.#abort); this.#controller.abort(); this.#record = null; this.#baseline = null;
-    this.#publish({ draft: null, errors: Object.freeze({}), dirty: false, closePrompt: false, disposed: true, needsPasswordReentry: false, write: emptyWrite(), readback: emptyReadback() }); this.#listeners.clear();
+    this.#publish({ draft: null, errors: Object.freeze({}), dirty: false, closePrompt: false, disposed: true, needsPasswordReentry: false, passwordIntent: false, write: emptyWrite(), readback: emptyReadback() }); this.#listeners.clear();
   }
   #alive(): boolean { return this.scope.active && !this.#snapshot.disposed; }
   #commit(original: StaffReceiptIdentity, result: StaffCommandResult): void {
-    this.#publish({ ...this.#snapshot, dirty: false, closePrompt: false, needsPasswordReentry: false, write: { phase: 'committed', original, result, error: null } });
+    this.#publish({ ...this.#snapshot, dirty: false, closePrompt: false, needsPasswordReentry: false, passwordIntent: false, write: { phase: 'committed', original, result, error: null } });
     try { this.#options?.onCommitted?.(result); } catch { /* Host refresh cannot undo a confirmed write. */ }
     void this.readback();
   }

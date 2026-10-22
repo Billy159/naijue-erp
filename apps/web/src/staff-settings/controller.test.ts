@@ -8,11 +8,11 @@ const scope = () => new ReadScope({ accountId: 'a', sessionRevision: 's', permis
 test('role, hall and optional account preparation validate separately and disabling a new account clears credentials', () => {
   const owner = scope(), controller = new StaffSettingsController(owner, null, roles);
   assert.ok(controller.validate().name); assert.ok(controller.validate().role);
-  controller.update({ name: '员工', role: 'SALESPERSON', loginName: 'employee', password: 'synthetic-only' });
-  assert.ok(controller.validate().hall);
-  controller.update({ hall: { id: 'h', name: '厅' } }); assert.deepEqual(controller.validate(), {});
+  controller.update({ name: '员工', role: 'SALESPERSON', loginName: 'employee' });
+  assert.ok(controller.validate(true).hall);
+  controller.update({ hall: { id: 'h', name: '厅' } }); assert.deepEqual(controller.validate(true), {});
   // The form explicitly clears login input when opt-in is removed, never turns it into a saved account.
-  controller.update({ loginEnabled: false, loginName: '', password: '' }); assert.deepEqual(controller.validate(), {});
+  controller.update({ loginEnabled: false, loginName: '' }); assert.deepEqual(controller.validate(), {});
   owner.dispose(); assert.equal(controller.getSnapshot().draft, null);
 });
 test('a resigned employee cannot prepare enabled login and a password leaves no state after invalidation', () => {
@@ -20,7 +20,7 @@ test('a resigned employee cannot prepare enabled login and a password leaves no 
     account: { id: 'account', staffId: 'staff', loginName: 'employee', loginEnabled: false, version: 3 } };
   const controller = new StaffSettingsController(owner, record, roles);
   assert.equal(controller.getSnapshot().draft?.loginEnabled, false);
-  controller.update({ loginEnabled: true, password: 'synthetic-reset' }); assert.ok(controller.validate().loginEnabled);
+  controller.update({ loginEnabled: true }); controller.setPasswordIntent(true); assert.ok(controller.validate().loginEnabled);
   assert.equal(record.account?.loginEnabled, false); owner.dispose();
   assert.equal(controller.getSnapshot().draft, null); assert.equal(controller.getSnapshot().dirty, false);
 });
@@ -45,18 +45,18 @@ const tick = () => new Promise<void>(resolve => setImmediate(resolve));
 
 test('W8 joint CREATE/EDIT preserve exact text, nullable contact and real parent/child versions; success reads actual child', async () => {
   const f = fixture(), editor = new StaffSettingsController(f.owner, currentStaff(), w8Roles, f.options);
-  editor.update({ name: ' 改名 ', loginName: 'new-login', password: 'synthetic-reset' });
-  await editor.submit(); await tick();
+  editor.update({ name: ' 改名 ', loginName: 'new-login' }); editor.setPasswordIntent(true);
+  await editor.submit('synthetic-reset'); await tick();
   assert.deepEqual(f.sent[0], { action: 'EDIT', requestKey: 'w8-1', id: uid(1), expectedVersion: 7, values: { name: ' 改名 ', role: 'ADMIN', hallId: null, contact: null },
     account: { id: uid(2), expectedVersion: 11, loginName: 'new-login', loginEnabled: true, password: 'synthetic-reset' } });
-  assert.equal(editor.getSnapshot().draft?.password, ''); assert.equal(editor.getSnapshot().write.phase, 'committed');
+  assert.equal(Object.hasOwn(editor.getSnapshot().draft!, 'password'), false); assert.equal(editor.getSnapshot().write.phase, 'committed');
   assert.equal(editor.getSnapshot().readback.record?.account?.version, 12); assert.deepEqual(f.fetched, [uid(1)]);
   assert.equal(JSON.stringify(editor.getSnapshot()).includes('synthetic-reset'), false); assert.equal('account' in editor.getSnapshot().write.result!, false);
   await editor.submit(); assert.equal(f.sent.length, 1); f.owner.dispose();
   for (const withAccount of [false, true]) {
     const f2 = fixture(), create = new StaffSettingsController(f2.owner, null, w8Roles, f2.options);
-    create.update({ name: '新员工', role: 'SALESPERSON', hall: { id: uid(5), name: '一厅' }, loginEnabled: withAccount, loginName: 'new-staff', password: withAccount ? 'synthetic-initial' : '' });
-    await create.submit(); assert.equal(f2.sent.length, 1);
+    create.update({ name: '新员工', role: 'SALESPERSON', hall: { id: uid(5), name: '一厅' }, loginEnabled: withAccount, loginName: 'new-staff' });
+    await create.submit(withAccount ? 'synthetic-initial' : ''); assert.equal(f2.sent.length, 1);
     const command = f2.sent[0]!; assert.equal(command.action, 'CREATE');
     if (command.action === 'CREATE') assert.deepEqual(command.account, withAccount ? { id: null, expectedVersion: null, loginName: 'new-staff', loginEnabled: true, password: 'synthetic-initial' } : null);
     f2.owner.dispose();
@@ -70,7 +70,7 @@ test('W8 unchanged account stays null, blank/null contact remains exact, new lin
     f.owner.dispose();
   }
   const f = fixture(), editor = new StaffSettingsController(f.owner, currentStaff(false), w8Roles, f.options);
-  editor.update({ loginEnabled: true, loginName: 'new-linked', password: 'synthetic-new' }); await editor.submit();
+  editor.update({ loginEnabled: true, loginName: 'new-linked' }); await editor.submit('synthetic-new');
   const command = f.sent[0]!; if (command.action !== 'EDIT') assert.fail();
   assert.deepEqual(command.account, { id: null, expectedVersion: null, loginName: 'new-linked', loginEnabled: true, password: 'synthetic-new' }); f.owner.dispose();
 });
@@ -78,8 +78,8 @@ test('W8 pending and uncertain retain only safe original identity, forbid resend
   let reject: (error: unknown) => void = () => {}; let posts = 0, reads = 0; const recovered: StaffReceiptIdentity[] = [];
   const f = fixture({ execute() { posts++; return new Promise((_, no) => { reject = no; }); }, async receipt(original) { recovered.push(original); if (++reads === 1) throw new StaffClientError('not-found', 'RECEIPT_NOT_FOUND', 'read', 404); if (reads === 2) throw new StaffClientError('forbidden', 'FORBIDDEN', 'read', 403); return committedReceipt(original); } });
   const workspace = createStaffSettingsWorkspace({ ...f.options, scope: f.owner, roles: w8Roles }), editor = workspace.open(currentStaff())!;
-  editor.update({ password: 'synthetic-secret' }); const pending = editor.submit();
-  assert.equal(editor.getSnapshot().draft?.password, ''); assert.equal(JSON.stringify(editor.getSnapshot()).includes('synthetic-secret'), false);
+  editor.setPasswordIntent(true); const pending = editor.submit('synthetic-secret');
+  assert.equal(Object.hasOwn(editor.getSnapshot().draft!, 'password'), false); assert.equal(JSON.stringify(editor.getSnapshot()).includes('synthetic-secret'), false);
   const original = editor.getSnapshot().write.original; assert.deepEqual(original, { action: 'EDIT', requestKey: 'w8-1', id: uid(1), expectedVersion: 7 });
   assert.equal(Object.isFrozen(original), true); editor.update({ name: 'ignored' }); await editor.submit(); assert.equal(posts, 1); assert.equal(editor.requestClose(), false); assert.equal(workspace.close(), false);
   reject(new StaffClientError('network', 'NETWORK_ERROR', 'uncertain')); await pending;
@@ -91,16 +91,16 @@ test('W8 pending and uncertain retain only safe original identity, forbid resend
 test('W8 definite rejection requires reset reentry or explicit reset cancellation, gate and last admin remain authoritative', async () => {
   let posts = 0; const f = fixture({ async execute() { posts++; throw new StaffClientError('conflict', 'LAST_AVAILABLE_ADMIN', 'rejected', 409); } });
   const editor = new StaffSettingsController(f.owner, currentStaff(), w8Roles, f.options);
-  editor.update({ name: '拟改名', password: 'synthetic-reset' }); await editor.submit(); assert.equal(editor.getSnapshot().needsPasswordReentry, true);
+  editor.update({ name: '拟改名' }); editor.setPasswordIntent(true); await editor.submit('synthetic-reset'); assert.equal(editor.getSnapshot().needsPasswordReentry, true);
   await editor.submit(); assert.equal(posts, 1); assert.ok(editor.getSnapshot().errors.password);
   editor.cancelPasswordReset(); assert.equal(editor.getSnapshot().needsPasswordReentry, false); await editor.submit(); assert.equal(posts, 2);
   assert.equal(editor.getSnapshot().write.error?.code, 'LAST_AVAILABLE_ADMIN'); assert.equal(currentStaff().account?.loginEnabled, true);
   const readonly = new StaffSettingsController(f.owner, null, w8Roles, { ...f.options, writesEnabled: () => false });
   readonly.update({ name: '不会发送', role: 'ADMIN', loginEnabled: false }); await readonly.submit(); assert.equal(posts, 2);
   const optional = new StaffSettingsController(f.owner, null, w8Roles, f.options);
-  optional.update({ name: '员工', role: 'ADMIN', loginName: 'optional', password: 'synthetic-optional' }); await optional.submit();
+  optional.update({ name: '员工', role: 'ADMIN', loginName: 'optional' }); await optional.submit('synthetic-optional');
   assert.equal(optional.getSnapshot().needsPasswordReentry, true);
-  optional.update({ loginEnabled: false, loginName: '', password: '' }); assert.equal(optional.getSnapshot().needsPasswordReentry, false);
+  optional.update({ loginEnabled: false, loginName: '' }); assert.equal(optional.getSnapshot().needsPasswordReentry, false);
   assert.deepEqual(optional.validate(), {}); await optional.submit(); assert.equal(posts, 4); f.owner.dispose();
 });
 test('W8 lifecycle uses fresh requested state/version, keeps account out of leave/reinstate payload and never enables login', async () => {
@@ -123,12 +123,12 @@ test('W8 strict response and readback failures never manufacture account IDs or 
 test('W8 identity invalidation and 401 clear password, original key and late result; 403 unknown retains identity', async () => {
   let finish: (result: StaffCommandResult) => void = () => {};
   const f = fixture({ execute() { return new Promise(resolve => { finish = resolve; }); } }), editor = new StaffSettingsController(f.owner, currentStaff(), w8Roles, f.options);
-  editor.update({ password: 'synthetic-only' }); const pending = editor.submit(); f.owner.dispose(); finish(outcome({ action: 'EDIT', requestKey: 'w8-1', id: uid(1), expectedVersion: 7 })); await pending;
+  editor.setPasswordIntent(true); const pending = editor.submit('synthetic-only'); f.owner.dispose(); finish(outcome({ action: 'EDIT', requestKey: 'w8-1', id: uid(1), expectedVersion: 7 })); await pending;
   assert.equal(editor.getSnapshot().draft, null); assert.equal(editor.getSnapshot().write.original, null); assert.equal(f.counts().commits, 0); assert.equal(f.fetched.length, 0);
   for (const kind of ['unauthenticated', 'forbidden'] as const) {
     const f2 = fixture({ async execute() { throw new StaffClientError(kind, kind === 'unauthenticated' ? 'UNAUTHENTICATED' : 'FORBIDDEN', 'uncertain'); } });
-    const e = new StaffSettingsController(f2.owner, currentStaff(), w8Roles, f2.options); e.update({ name: '新名', password: 'synthetic-only' }); await e.submit();
-    assert.equal(f2.owner.active, kind === 'forbidden'); assert.equal(e.getSnapshot().draft?.password ?? null, kind === 'forbidden' ? '' : null); f2.owner.dispose();
+    const e = new StaffSettingsController(f2.owner, currentStaff(), w8Roles, f2.options); e.update({ name: '新名' }); e.setPasswordIntent(true); await e.submit('synthetic-only');
+    assert.equal(f2.owner.active, kind === 'forbidden'); assert.equal(Object.hasOwn(e.getSnapshot().draft ?? {}, 'password'), false); f2.owner.dispose();
   }
 });
 test('W8 browser parser enforces exact joint contract and strict receipt binding', () => {
@@ -139,4 +139,16 @@ test('W8 browser parser enforces exact joint contract and strict receipt binding
   assert.throws(() => validateStaffResult({ ...outcome(identity), targetId: uid(5) }, identity));
   assert.throws(() => validateStaffReceipt({ ...committedReceipt(identity), requestKey: 'wrong' }, identity));
   assert.throws(() => validateStaffReceipt({ ...committedReceipt(identity), action: 'LEAVE' }, identity));
+});
+
+test('W8 password privacy: public drafts ignore plaintext injection, only nonsecret intent survives route detach', async () => {
+  const f = fixture(), workspace = createStaffSettingsWorkspace({ ...f.options, scope: f.owner, roles: w8Roles }), editor = workspace.open(currentStaff())!;
+  const marker = 'synthetic-private-input';
+  editor.update({ password: marker } as unknown as Parameters<typeof editor.update>[0]);
+  assert.equal(JSON.stringify(editor.getSnapshot()).includes(marker), false); assert.equal(Object.hasOwn(editor.getSnapshot().draft!, 'password'), false);
+  editor.setPasswordIntent(true); editor.passwordInputDetached();
+  assert.equal(editor.getSnapshot().needsPasswordReentry, true); assert.equal(editor.getSnapshot().dirty, true);
+  const route = scope(); route.dispose(); assert.equal(f.owner.active, true); assert.equal(JSON.stringify(workspace.getSnapshot()!.getSnapshot()).includes(marker), false);
+  await editor.submit(); assert.equal(f.sent.length, 0); assert.ok(editor.getSnapshot().errors.password);
+  editor.cancelPasswordReset(); assert.equal(editor.canLeave(), true); f.owner.dispose();
 });
