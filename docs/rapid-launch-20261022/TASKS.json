@@ -941,7 +941,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T21:27:50.617539+00:00",
+  "updatedAt": "2026-10-22T21:39:47.745516+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
   "lastVerifiedRemoteCommit": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1988,8 +1988,9 @@
     }
   ],
   "newPendingReviews": [
-    "Demo fixed83 new modules;85 built successor later only2geometries",
-    "D3 Transfer14279 new finite joint review after source freeze"
+    "Demo fixed83 new module checks;85 served57843 after83 only2geometries",
+    "F3 newactual settings-select anchor directedfix",
+    "F2 P19close visual readonly cause then originalowner fix"
   ],
   "openFindingsCurrent": [
     {
@@ -2006,6 +2007,14 @@
       "id": "W7-UI01",
       "owner": "F3",
       "status": "SOURCE83_QF_PASS_WAIT_ACTUAL_C83_BROWSER"
+    },
+    {
+      "id": "SETTINGS-SELECT-ANCHOR-01",
+      "owner": "F3",
+      "candidate": "4ee77b5db93f8e20eb04f0c7fd73b58b554befa6",
+      "status": "DIRECTED_ORIGINAL_OWNER_FIX",
+      "evidence": "K/reports/ui-demo-comparison-20261022/v012-4ee77b5/SETTINGS-SELECT-ANCHOR-FINDING.json",
+      "sha256": "df75664b74e539fc1905e9ea5aac686a9b939226de5d2af0ec8b28ce456e14b0"
     }
   ],
   "historicalFailuresPreserved": true,
@@ -2027,11 +2036,11 @@
       "wholePageAccepted": false
     },
     "nextPreview": "C85 served57843/HTTP hash verified; Demo checks83 module first then only84/85 geometry",
-    "r1": "QB123 PASS actual R1 C41 metadata f62de0a only; C preparing separate five-purpose outside review and final R1 host config/live issuer",
+    "r1": "QB123 actualR1 metadata PASS; C metadata five-purpose review e48df427 frozen, JOB42 genuine boundedpool/issuer readonly probe in preparation; no finalhost",
     "qa": "C40 actual Sharp upload/ADD/replay/controlled original+thumbnail PASS; QA11audits11receipts3images/root4. No HTTP/realrole/business acceptance",
-    "import": "QB124 closes only QB122-F01 at86; original actual38303/38314/80933 reused. Transfer14279 READY awaiting freeze/new finite joint review; Sales2471 gap remains awaiting full field confirmation.",
-    "waiting": "Only closed-login classification and six barcode-scheme full initialization need human answer; independent work continues",
-    "github": "Normal branch push verified87e94af via independent GitHub API; old private recovery assets retained",
+    "import": "QB124 F01only and QB125 Transfer14279 finitejoin PASS adopted. Genuine Transfer consumer Kproposal underway. FullSales2471NULL requires pending complete confirmation; no DDL/mapper changes.",
+    "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
+    "github": "Normal branch87e94af verified; later docsbf56610 push failed60s transport/API still87; this/new checkpoint pending private recovery or later normal verified push",
     "goalComplete": false
   },
   "latestReadySource": {
@@ -2055,12 +2064,13 @@
       "id": "HISTORICAL_SALES_HALL_NULL_2471",
       "state": "D1_PREPARING_FULL_FIELD_CONSTRAINT_CONFIRMATION_NOT_YET_ASKED",
       "onlyDependentBranchWaits": true,
-      "factsSha256": "3cbae7ce93b8454abf6840297a2122b4aa56e48162b31f8450ad9e0dc885f776"
+      "factsSha256": "3cbae7ce93b8454abf6840297a2122b4aa56e48162b31f8450ad9e0dc885f776",
+      "status": "FULL_V5_SENT_WAIT_EXPLICIT_HUMAN_APPROVAL"
     }
   ],
   "currentAcceptedReceiptBatch": {
-    "atUtc": "2026-10-22T21:25:32.812099+00:00",
-    "indexRows": 254,
+    "atUtc": "2026-10-22T21:34:42.990488+00:00",
+    "indexRows": 255,
     "controllerTechnicalRetests": 0
   }
 }

@@ -9664,10 +9664,22 @@
       "notTested": [
         "No whole-page/real import/public release conclusion from this receipt"
       ]
+    },
+    {
+      "id": "QB125",
+      "sourceCommit": "87e94aff7e8a2c9c61bd1e1ba9b6e6326449be1e",
+      "result": "PASS_TRANSFER14279_ONLY",
+      "scope": "New finite transfer join/native refs/current stable history IDs and manifest binding only; no full42561/Sales/genuine source/PG",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice125-transfer-header14279-finite-join-87e94aff/RESULT.json",
+      "evidenceSha256": "c9b3bc9a437b4c9d4cac5c300ca033bd9eb9bc1af9dbb37d9bd6c25e465f5fcb",
+      "adoption": "Adopt delegated fixed-scope conclusion; controller technical retests0",
+      "notTested": [
+        "Full42561/Sales2471 NULL/PG/source49/MAIN/PUBLISH/public release"
+      ]
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-22T21:25:32.812099+00:00",
+  "updatedAt": "2026-10-22T21:34:42.990488+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",

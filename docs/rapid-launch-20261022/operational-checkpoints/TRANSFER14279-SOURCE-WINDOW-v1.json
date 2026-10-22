@@ -1,0 +1,42 @@
+{
+  "version": "C_TRANSFER14279_SOURCE_CONSUMER_WINDOW_V1",
+  "atUtc": "2026-10-22T21:36:35.913802+00:00",
+  "referenceReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-transfer-header26-reference-review-v1.json",
+    "bytes": 2553,
+    "sha256": "3cf75d0e37dd2ffe45c6a63cc30e6bc40d136e8da170e3bf6fbfc60b9edd1bef"
+  },
+  "files": [
+    "scripts/import-v3/native-transfer-header-source26.mjs",
+    "scripts/import-v3/native-transfer-header-source26.test.mjs"
+  ],
+  "sourceReadWindow": {
+    "maxFreshGzipPhysicalPasses": 1,
+    "originalSourceProof": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/header-source-window1/RESULT.json",
+      "bytes": 9649,
+      "sha256": "ba58af0a58270153bd344a23fad7d13a378153e5fdd213ad6789f9d952fef04c"
+    },
+    "cacheParent": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-source26-cache-20261023-D3-run1",
+    "cacheParentMode": "0700",
+    "onlyAfterFocusedChecksPass": true,
+    "oneSerialWindow": true,
+    "heapMiB": 1024
+  },
+  "scope": "Genuine source14279 Transfer preparation only; complete42561 container integrity but no Sales mapper; existing stable ID/current nonNULL26 schema unchanged",
+  "actualPayloadHash": null,
+  "realImportExecutionAuthorized": false,
+  "mainAuthorized": false,
+  "publishAuthorized": false,
+  "prohibited": [
+    "Sales2471 nullable branch",
+    "originalCSV or registry re-read",
+    "whole11 empty factories or counts zero",
+    "new UUIDs/PG/DDL/business writes"
+  ],
+  "originalPlan": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-source26-plan1/PLAN.json",
+    "bytes": 12971,
+    "sha256": "3e03dc76d6df4e5812c99a393629bc066337fb449318357f53c44baba9c2dd7c"
+  }
+}

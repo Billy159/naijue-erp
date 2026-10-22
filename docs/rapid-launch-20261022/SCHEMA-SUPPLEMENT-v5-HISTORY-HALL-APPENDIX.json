@@ -1,0 +1,935 @@
+{
+  "taskId": "D1-HISTORY-SALES-HALL-NULL27-CONFIRMATION-v1",
+  "atUtc": "2026-10-22T21:34:20.940816+00:00",
+  "status": "K_ONLY_COMPLETE_FIELD_CONFIRMATION_FOR_C_HUMAN_APPROVAL_NO_IMPLEMENTATION",
+  "reviewPurpose": "C 汇总向用户明确申请这一真实来源兼容差异；本文件不是批准、技术冻结、SOURCE 授权或数据库执行许可。仅相关支路等待。",
+  "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+  "scope": {
+    "sourceWritesByD1": 0,
+    "migrationsWritten": 0,
+    "postgresConnections": 0,
+    "grants": 0,
+    "credentialsRead": false,
+    "testsRun": 0,
+    "frontendChanges": 0,
+    "sharedContractsChanged": 0,
+    "h06": "HELD_PROPOSAL_ONLY_NO_NEW_OWNER_REGISTRATION_NO_IMPLEMENTATION"
+  },
+  "verifiedFailure": {
+    "evidenceFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/header26-source-candidate1/FIRST-FAILURE.json",
+        "bytes": 289,
+        "sha256": "cbfd7ae1ff77e2356dc71c309c7cbb817ec94d656093b3c799fc26a6d848cd7f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/header26-source-candidate1/SALES-HALL-GAP-AGGREGATE.json",
+        "bytes": 855,
+        "sha256": "3cbae7ce93b8454abf6840297a2122b4aa56e48162b31f8450ad9e0dc885f776"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/header26-source-candidate1/PRESERVED-PARTIAL-RESULT.json",
+        "bytes": 1112,
+        "sha256": "2efc10c344d408453715ce487ee81879c2fcfc0c92094db03a707623ef070cb7"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/header26-source-candidate1/TRANSFER-ONLY-PRESERVATION-RESULT.json",
+        "bytes": 924,
+        "sha256": "f5bd86e3a64c042988afb1c0283d2fa5c05c0b48ac136f2d064fddb032a7e6d2"
+      }
+    ],
+    "failureCode": "HEADER26_BINDING_REFERENCE_REQUIRED",
+    "preparedRowsBeforeStop": 14280,
+    "transferHeaders": 14279,
+    "persistedSalesHeaders": 1,
+    "salesHeadersExpected": 28282,
+    "totalHeadersExpected": 42561,
+    "sourceCanonicalSalesSha256": "fb35bbdc82061954bf60d5f1ca1013425677d1c57d71144896fc371cb1958fa2",
+    "sourceCanonicalSalesBytes": 10977428,
+    "salesHallKnown": 25811,
+    "salesHallBlank": 2471,
+    "blankHallWithCreatedHall": 0,
+    "blankHallWithSalesperson": 2406,
+    "blankHallWithoutSalesperson": 65,
+    "blankHallWithoutCustomer": 0,
+    "blankHallWithoutWarehouse": 0,
+    "cause": "SALES_HEADER.所属厅来源编号来源合同 required=false，现有 preparer/mapper/DTO 却必 UUID，0011 hall_id 又 NOT NULL；不是允许删除记录的来源错误。",
+    "evidenceLimits": "仅回读 D3 已保存的失败与聚合证据；D1 未重开 canonical CSV、XLSX、362MB gzip 或全源 registry，未重试准备器。",
+    "preservedPartial": {
+      "rows": 14280,
+      "bytes": 32266503,
+      "sha256": "7fd57bedbda38c7feee91557ff43f7653d99a4b465adbd00550d4d1948e3b9d1",
+      "complete42561Passed": false
+    },
+    "reusableTransferComponent": {
+      "rows": 14279,
+      "bytes": 32263004,
+      "sha256": "c6f0d4989d794c9e3670d60170017f9a6d3fd6097711ef960ae8b11dd92b0859",
+      "manifestBytes": 2536,
+      "manifestSha256": "a198db85c2c96a79548c04d23290af3f0a3af84485e234b009e5abb236f0f003",
+      "meaning": "仅完整调拨组件保全；不是完整销货/42561头/真实导入/PUBLISH通过"
+    }
+  },
+  "exactBusinessDecisionRequested": [
+    "仅 HISTORY 历史销货允许来源所属厅空白映射为真正 NULL/UNKNOWN，完整保留2471单及其明细/结算/仓库/数量/金额/来源。",
+    "有来源厅编号仍必须绑定同批、同来源键的真实 hall UUID；无效或未绑定已知编号继续拒绝，不能以 NULL 消错。",
+    "不从仓库当前厅、人员当前厅、创建厅、唯一候选或默认厅猜补；不建未知营业厅行，不删除空厅记录。",
+    "管理员/仓库现有 ALL 可读已发布空厅历史；营业员 HALL_IDS 不可读空厅，不能借其他字段扩大可见范围。",
+    "通过 additive27 和独立 exact27 入口承载，原 exact19/exact26 版本与默认协议继续严格，现有前端新单/实时单必填不变。"
+  ],
+  "completeHistorySalesHeaderFieldMatrix": [
+    {
+      "column": "id",
+      "sqlType": "uuid",
+      "currentNullable": false,
+      "proposedNullable": false,
+      "detail": "PK；stableImportId(history-sales-header, 原 fixedSourceNamespace, 原 sourceKey) 不变"
+    },
+    {
+      "column": "source_row_id",
+      "sqlType": "uuid",
+      "currentNullable": false,
+      "proposedNullable": false,
+      "detail": "UNIQUE；原来源行身份及与 batch_id 组成的 FK 不变"
+    },
+    {
+      "column": "batch_id",
+      "sqlType": "uuid",
+      "currentNullable": false,
+      "proposedNullable": false,
+      "detail": "FK import_batch(id)；与 id 组成的 UNIQUE 保留"
+    },
+    {
+      "column": "version",
+      "sqlType": "integer",
+      "currentNullable": false,
+      "proposedNullable": false,
+      "detail": "CHECK >0；初次导入仍由触发器限定 =1"
+    },
+    {
+      "column": "number",
+      "sqlType": "text",
+      "currentNullable": false,
+      "proposedNullable": false,
+      "detail": "原单号原值保留"
+    },
+    {
+      "column": "business_date",
+      "sqlType": "date",
+      "currentNullable": true,
+      "proposedNullable": true,
+      "detail": "DDL 已可空；当前发布读回仍另要求有效业务日期，本案不扩展该规则"
+    },
+    {
+      "column": "source_status",
+      "sqlType": "text",
+      "currentNullable": false,
+      "proposedNullable": false,
+      "detail": "DRAFT/APPROVED/VOID 原 CHECK"
+    },
+    {
+      "column": "note",
+      "sqlType": "text",
+      "currentNullable": true,
+      "proposedNullable": true,
+      "detail": "保持原约束与语义"
+    },
+    {
+      "column": "created_by_source_key",
+      "sqlType": "text",
+      "currentNullable": true,
+      "proposedNullable": true,
+      "detail": "缺失保持未知；不补当前人员"
+    },
+    {
+      "column": "approved_by_source_key",
+      "sqlType": "text",
+      "currentNullable": true,
+      "proposedNullable": true,
+      "detail": "缺失保持未知；不补当前人员"
+    },
+    {
+      "column": "created_hall_id",
+      "sqlType": "uuid",
+      "currentNullable": true,
+      "proposedNullable": true,
+      "detail": "已有 hall FK；与所属厅是两个独立事实；UNKNOWN iff NULL 的原约束保留"
+    },
+    {
+      "column": "created_hall_provenance",
+      "sqlType": "text",
+      "currentNullable": false,
+      "proposedNullable": false,
+      "detail": "ORIGINAL/MIGRATION_DERIVED/UNKNOWN；本次缺失创建厅继续 UNKNOWN；有证据的历史创建厅不随所属厅清空"
+    },
+    {
+      "column": "created_hall_reason",
+      "sqlType": "text",
+      "currentNullable": false,
+      "proposedNullable": false,
+      "detail": "非空白原因；MIGRATION_DERIVED 仍须真实 evidence_ref"
+    },
+    {
+      "column": "created_local_at",
+      "sqlType": "timestamp without time zone",
+      "currentNullable": true,
+      "proposedNullable": true,
+      "detail": "保持原约束与语义"
+    },
+    {
+      "column": "updated_local_at",
+      "sqlType": "timestamp without time zone",
+      "currentNullable": true,
+      "proposedNullable": true,
+      "detail": "保持原约束与语义"
+    },
+    {
+      "column": "approved_local_at",
+      "sqlType": "timestamp without time zone",
+      "currentNullable": true,
+      "proposedNullable": true,
+      "detail": "保持原约束与语义"
+    },
+    {
+      "column": "created_instant",
+      "sqlType": "timestamptz",
+      "currentNullable": true,
+      "proposedNullable": true,
+      "detail": "保持原约束与语义"
+    },
+    {
+      "column": "updated_instant",
+      "sqlType": "timestamptz",
+      "currentNullable": true,
+      "proposedNullable": true,
+      "detail": "保持原约束与语义"
+    },
+    {
+      "column": "approved_instant",
+      "sqlType": "timestamptz",
+      "currentNullable": true,
+      "proposedNullable": true,
+      "detail": "保持原约束与语义"
+    },
+    {
+      "column": "business_type",
+      "sqlType": "text",
+      "currentNullable": false,
+      "proposedNullable": false,
+      "detail": "SALE/RETURN/EXCHANGE 原 CHECK"
+    },
+    {
+      "column": "hall_id",
+      "sqlType": "uuid",
+      "currentNullable": false,
+      "proposedNullable": true,
+      "detail": "唯一拟变更物理列：UUID NOT NULL → UUID NULL；无 DEFAULT，原 hall(id) FK 及删除/更新行为保留；不建占位厅"
+    },
+    {
+      "column": "customer_id",
+      "sqlType": "uuid",
+      "currentNullable": false,
+      "proposedNullable": false,
+      "detail": "原 customer(id) FK；不改可空性"
+    },
+    {
+      "column": "warehouse_id",
+      "sqlType": "uuid",
+      "currentNullable": false,
+      "proposedNullable": false,
+      "detail": "原 warehouse(id) FK；逐仓守恒维度不变"
+    },
+    {
+      "column": "salesperson_id",
+      "sqlType": "uuid",
+      "currentNullable": true,
+      "proposedNullable": true,
+      "detail": "原 staff(id) FK；2406 条已知营业员不丢失，65 条缺失保持 NULL；不反推所属厅"
+    },
+    {
+      "column": "gross_amount",
+      "sqlType": "numeric(18,2)",
+      "currentNullable": false,
+      "proposedNullable": false,
+      "detail": "保持原约束与语义"
+    },
+    {
+      "column": "order_discount",
+      "sqlType": "numeric(18,2)",
+      "currentNullable": false,
+      "proposedNullable": false,
+      "detail": "保持原约束与语义"
+    },
+    {
+      "column": "net_due",
+      "sqlType": "numeric(18,2)",
+      "currentNullable": false,
+      "proposedNullable": false,
+      "detail": "保持原约束与语义"
+    }
+  ],
+  "otherObjectsAndConstraints": [
+    {
+      "object": "history_sales_effective",
+      "existingColumns": "header_id uuid PK/FK、version integer NOT NULL CHECK >1、revision_id uuid NOT NULL deferred FK、gross_amount/order_discount/net_due numeric(18,2) NOT NULL；discount>=0",
+      "proposedChange": "无 hall_id 列可改；不新增列。未来逻辑有效读取从基础头继承 nullable hall；版本与金额投影保持。五张 effective 表原关闭写触发器保留。"
+    },
+    {
+      "object": "history_sales_line / history_sales_settlement",
+      "proposedChange": "无 hall_id；所有 batch/header/source FK、金额数量和唯一身份不变；不得因父头厅空过滤子行。"
+    },
+    {
+      "object": "history_transfer_header / transfer effective",
+      "proposedChange": "无销货所属厅列；创建厅本已 nullable，调出/调入仓仍必 UUID 且不同；无字段变更。"
+    },
+    {
+      "object": "import_header_native_reference.native_hall_id",
+      "proposedChange": "列本已 nullable；实体 HALL 引用的非空判别 CHECK 保留。未知所属厅不产生伪 HALL reference；客户/仓库/人员等已知关系照常保全。"
+    },
+    {
+      "object": "views/materialized views",
+      "proposedChange": "当前迁移源码中无历史销货数据库 VIEW/MATERIALIZED VIEW；不存在第二个 hall_id 可空 DDL。C 迁移前仍须核目标实际目录，无新增视图。"
+    },
+    {
+      "object": "keys/indexes/FKs",
+      "proposedChange": "基础头 PK、source_row_id UNIQUE、(batch_id,id) UNIQUE、两类 batch/source FK，以及行/结算/审计/回执/effective 指向头的 FK 全保留；无 hall 索引变更。不得凭 SQL 默认名字猜目标 FK 名。UUID NULL 仍受非空值 FK 校验；无级联/默认/占位数据变化。"
+    },
+    {
+      "object": "stage/immutable/no-truncate/revision guards",
+      "proposedChange": "history_sales_header_stage / guard_history_insert、历史禁止 UPDATE/DELETE/TRUNCATE、history_revision_closed、history_effective_writes_closed、PUBLIC REVOKE 原样；不开放历史修订。"
+    },
+    {
+      "object": "native sales_header / warehouse / staff / hall grants",
+      "proposedChange": "实时销货 hall_id、普通仓库单厅归属、员工/权限类型及前端必填全部保持；不将 HISTORY nullable DTO 接入实时销货 decoder。"
+    }
+  ],
+  "mappingAndIdentity": {
+    "raw": "CSV/raw_fields/normalized_fields 保留原字符串空白 \"\"，不改写为 JSON null、不改来源文件/行哈希；既有 empty reason/provenance保全。仅 typed hallId/hall_id 为显式 null。",
+    "identity": "原 stableImportId(history-sales-header,fixedSourceNamespace,sourceKey) 及 source_row_id 不变；不加27 namespace或重生UUID。已知厅行事实不变；NULL会改变派生typed fingerprint与新closure根，不能挪用旧typed seal。",
+    "strictEntries": "保留 prepareV3HistoryHeader / createNativeHeader26BindingPreparer / 原 PreparedHistoryHeaderChunk 的旧严格语义；新增显式27 mapper/preparer/validator/types（名称由技术冻结确定），只准新入口固定的nullable政策，不能由caller bool放宽旧入口。",
+    "blank": "仅来源字段确实为空 + 无业务厅 binding → hallId:null；空源却给binding拒绝；非空源无binding/错entity/错key/错UUID拒绝；undefined/缺属性/空串/字面null/零UUID不能代替typed null。",
+    "provenance": "已有 fields 对原所属厅空值保留 UNKNOWN + SOURCE_EMPTY/ORIGINAL_KEY_ABSENT + raw；created_hall_*独立，不增冗余未知厅表列或把其与业务厅耦合。",
+    "stage": "新27 staging必须重新验证typed payload、binding、fingerprint及完整来源，不只TS强转。nativeTargets仅在真实空源且typed NULL时省略HALL锁；其余实际原生引用和cutoff/batch/source锁保留。",
+    "replay": "原 jsonb_populate_record + IS NOT DISTINCT FROM 回读保留NULL精确性；同ID同事实幂等，无第二次写；同ID有不同厅/由既有UUID变NULL仍冲突并报告，禁止改写不可变旧头。"
+  },
+  "typedClosureAndNonzeroPublish": {
+    "sqlBodies": "0018 安装 DO 的exact17检查只在当年安装时执行，不是存活函数运行前缀；0019运行守卫逐字段调用 assert_history_typed_closure。已核源函数无需仅因本列nullable改函数体。0026 projection_columns仍列hall_id，projection通过 original->hall_id保留JSON null，NULL编码 n 已存在。拟新增函数0，预计仍121，最终以C实际完整目录验证为准。",
+    "nativeBindingGuard": "0012 guard_header_native_reference_publication 已要求 source==空串 时 native_id必须NULL；非空必须实际引用。可复用此严格SQL函数；不能伪造未知HALL引用或跳过native引用校验。",
+    "lifecycle": "应用 history-import-lifecycle.headerBindings 旧HALL关系为 optional=false；独立27分支只将 SALES_HEADER.所属厅 可空，源空↔typedNULL一致、已知仍真实binding。其他headerConditions/业务日期/状态/数量/金额/仓库/创建厅/时间规则不改。",
+    "versionIdentity": "保持 HISTORY_MAPPING_VERSION=V2_HISTORY_NULLABLE_1，避免改名后guard IF短路；保持 HISTORY_TYPED_CLOSURE_V1 为原NULL可编码算法身份。新的27目标/nullable政策须由独立外层approval/runtime/source授权及fresh authorizedPayloadHash、typed/document/source manifests精确绑定，不冒用旧完整closure批准。",
+    "nativePayloadCompatibility": "现有 PRODUCT25/SKU9/WAREHOUSE6 等未变化的26数据格式及SQL successor guard 中 schema_profile=EXACT26/证据validator仍保留。明确区分 payload语义26 与实际目标runtime27；新27 executor可按有限映射消费未变组件，不将runtime27伪装成26，也不机械把所有证据字符串改成27导致守卫失配。",
+    "publishRequirements": [
+      "独立完整SOURCE/MAIN授权逐次含真实actor、原key、batch/selection/target及新payload hash；元数据review不等于来源执行许可",
+      "相同实际managed client上的MAIN/FINAL/typedPUBLISH准入、cutoff与batch锁及原账务事务；来源/typed/每单据双向覆盖、实际SQL逐字段NULL读回、九项count/global/document roots齐全",
+      "全部2471单参与预期计数、明细/结算/资金事实和逐仓/原SKU/单位守恒；业务厅空不改变仓库身份或库存净变动",
+      "回执/审计/账务/closure/批状态在原事务原子提交；失败全回滚；原key已提交回放不得第二次写，授权撤回仍复验；COMMIT结果未知保留原错误并禁止自动重试/假回滚",
+      "STAGED/VALIDATING始终不进入四个HISTORY读接口；暂存、数量相等、手填passed或nullable迁移成功均不能解除非零发布限制"
+    ],
+    "partialReuse": "复用D3已保全14279调拨组件和已验sourceQA；42561全头候选从未通过。获批后仅一次必要的28282销货新政策准备，并由D3/C封装完整27目标候选，不重扫旧362MB gzip/生成新UUID/把失败原件覆盖。"
+  },
+  "historyReadPermissionAndPages": {
+    "routes": [
+      "POST /imported-history/sales/query",
+      "POST /imported-history/sales/detail/query",
+      "POST /imported-history/transfers/query",
+      "POST /imported-history/transfers/detail/query"
+    ],
+    "dto": "仅显式27 HISTORY sales list/detail同形JSON hallId:uuid|null。旧19/26 ImportedHistorySalesHeader及旧validator保持UUID；新增窄27响应类型/validator/service/reader及HTTP组合选择（技术冻结后命名），由可信固定composition选择，不能由请求参数放宽。其余字段/分页/错误/鉴权/Origin/no-store/取消契约保持。",
+    "reader": "27原actual client验证HISTORY_READ并在原RR只读事务内再验；published/closure/accounting/receipt/audit gates保留。SELECT h.hall_id原值；count/page/detail使用同一权限/筛选条件，不inner join厅表丢NULL头。",
+    "authorization": "ADMIN/WAREHOUSE原ALL才可读NULL；SALESPERSON原当前可信厅 HALL_IDS，h.hall_id=ANY(uuid[])对NULL不成立，DTO validator也必须拒绝NULL混入HALL_IDS。按厅不足/未登录/角色异常原样拒绝；不借仓库厅、创建厅、人员厅扩大权限。ALL传具体hallId过滤仍排除NULL。查询hallId:null仍只是无厅过滤，不新增UNKNOWN筛选语义。",
+    "pages": [
+      "历史销货只读列表/详情：未来对接时ALL范围保留未知厅记录，显示为空或未知；不把NULL展示为现厅；当前apps/web无 imported-history四接口消费者，因此本案不改前端",
+      "现有 /sales/history/query 是实时销货操作审计，不是这四个导入历史接口，无hall字段受影响",
+      "实时销货/新单/维护表单必填、原sales_header decoder及CUTOFF_HISTORY旧列表保持；不自动合并两套列表或扩张页面范围",
+      "历史调拨四接口中的两路语义不改；新增27组合仍需验证其严格发布/权限未受影响"
+    ]
+  },
+  "exact27SuccessorAndAllConsumers": {
+    "migration": "仅在明确批准/owner登记/技术冻结后，由C协调新增0027文件；原0011..0026字节与证据保留。最窄DDL为原history_sales_header.hall_id DROP NOT NULL + schema_migration登记27，无数据UPDATE/DELETE/新表/新索引/新业务函数；迁移目标原exact1..26与旧列/约束须预检，不能用max(version)>=26代替。此处不提供可执行DDL。",
+    "issuer": "新独立EXACT27 capability/checked入口/issuer/review format+version+patch identity；fresh outside review精确绑定原target/OID/role/ACL/nullable列/catalog/完整dense1..27与全部实际routines。若最窄DDL成立，完整121原source函数pin可保留，但新catalog规范摘要一定重取；旧QA/旧26 review不能复用授权。原26cap永远不能证明27target。",
+    "closedLease": "保留原有限9purposes、WeakMap原pool/lease、同client metadata校验、拷贝/raw/foreign/released拒绝、文件pin提交前同步校验/单调撤销/撤销后仅ROLLBACK/原池dispose；无新purpose/SQL万能注册。C先排空停止26旧lease，新27用fresh owned pool，不hot retarget。",
+    "featureViews": "retained-delete-v22/season-array-v1/exact2/media/swap为未变功能合同；新27issuer在实际验证后可派生原功能视图，避免扩大D2业务leaf。不能把runtime27能力当EXACT26交原守卫。库存等真runtime26硬门仍须独立27分支。",
+    "nativeConsumers": "所有源码、来源provider和MAIN/PUBLISH消费者必须显式27actualclient准入或验证可复用功能视图；保留原19/26默认。新消费者不得由schemaVersion大于等于、强转/skip gate/callback原池绕过。下列路径是当前全量检索出的26消费者审计清单，不等于已登记可写文件。",
+    "current26ConsumerInventory": [
+      "adapters/postgres/src/current-form-reader.ts",
+      "adapters/postgres/src/history-typed-closure19.ts",
+      "adapters/postgres/src/history-typed-publication.ts",
+      "adapters/postgres/src/import-v3-history-header-native-reference-store.ts",
+      "adapters/postgres/src/import-v3-history-header-staging-store.ts",
+      "adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts",
+      "adapters/postgres/src/import-v3-history-settlement-staging-store.ts",
+      "adapters/postgres/src/import-v3-history-staging-store.ts",
+      "adapters/postgres/src/imported-history-query-reader.ts",
+      "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "adapters/postgres/src/inventory-posting-balances.ts",
+      "adapters/postgres/src/native-barcode-import.ts",
+      "adapters/postgres/src/native-catalogue-import.ts",
+      "adapters/postgres/src/native-import-accounting-capability.ts",
+      "adapters/postgres/src/native-import-record-accounting.ts",
+      "adapters/postgres/src/native-party-import.ts",
+      "adapters/postgres/src/native-payment-import.ts",
+      "adapters/postgres/src/native-product-import.ts",
+      "adapters/postgres/src/native-sku-import.ts",
+      "adapters/postgres/src/native-stock-contributor-import.ts",
+      "adapters/postgres/src/party-read-reader.ts",
+      "adapters/postgres/src/product-warehouse-stock-reader.ts",
+      "adapters/postgres/src/sales-unit-of-work.ts",
+      "adapters/postgres/src/transfer-unit-of-work.ts",
+      "apps/api/src/postgres-read-api.ts",
+      "apps/api/src/production-main.ts",
+      "apps/api/src/production-provider-composition.ts",
+      "packages/application/src/import-v3-history-header-native-reference.ts",
+      "packages/application/src/native-catalogue-import.ts",
+      "packages/application/src/native-import-schema-contract.ts",
+      "packages/application/src/native-party-import.ts",
+      "packages/application/src/native-product-import.ts",
+      "packages/application/src/native-sku-import.ts",
+      "scripts/import-v2/authorized-native-product-reader.mjs",
+      "scripts/import-v3/native-party-source26.mjs",
+      "scripts/import-v3/native-product-source26.mjs",
+      "scripts/import-v3/native-sku-source26.mjs",
+      "scripts/import-v3/native-source-authorizers.mjs",
+      "scripts/import-v3/production-source-host.mjs",
+      "scripts/import-v3/run.mjs"
+    ],
+    "shapeAndReadCoreInventory": [
+      "packages/application/src/import-v2-contract.ts",
+      "packages/application/src/history-storage-contract.ts",
+      "packages/application/src/import-v3-history-header.ts",
+      "packages/application/src/import-v3-history-header-staging.ts",
+      "packages/application/src/imported-history-query-ports.ts",
+      "packages/application/src/imported-history-query-validation.ts",
+      "packages/application/src/imported-history-query-service.ts",
+      "packages/application/src/history-typed-closure.ts",
+      "packages/application/src/history-typed-publication.ts",
+      "packages/application/src/history-import-lifecycle.ts",
+      "packages/application/src/history-revision-contracts.ts",
+      "apps/api/src/imported-history-query-http.ts",
+      "adapters/postgres/src/history-import-lifecycle.ts",
+      "scripts/import-v3/native-bootstrap.mjs"
+    ],
+    "sourceProtocol": "新增显式NATIVE_IMPORT_EXECUTION_27_V1、--exact27、openImportHost27/Executor27/closed binding+approval和完整11组production-provider target27选择；无flag默认仍NATIVE_IMPORT_EXECUTION_19_V1，--exact26和原闭合8keys/production配置严格不变。双runtime26/runtime27、未知或混合selector拒绝；不自动选最高版本。",
+    "sourceAuthorizers": "native-source-authorizers、SOURCE reviews、authorized-header/closure/native-product readers、prepare-native-bindings及各party/product/SKU/stock/payment resolver全部明确新target27与数据格式有限复用映射；不得只修header mapper遗漏原26硬门。SOURCE approval重新绑定新nullable政策及payload hash；源文件hash和stable IDs不变。",
+    "bootstrap": "原borrowed bootstrap有限43条SQL（39+4）的数据语义不因厅NULL扩张；新增target27 callback admission仍只原IMPORT_STAGE实际borrowed querycontext，用完无效，无通用SQL注册、无原26cap冒充。",
+    "readAndCommandComposition": "新增独立R1/R2 explicit27 profile/parser/factory/CLI，沿原一fresh owned pool→issuer.pool→全部provider；旧R1/26入口和旧19保持。R1始终DISABLED无commands/prepares，R2仍原证明与每事务INVENTORY_ADMISSION；H06未实现不因迁移27绕过原product verifier。",
+    "sharedContracts": "本文件仅提议未来增加窄27协议；D1当前未写共享合同。packages/application共同类型、DDL编号/最终文件集合、consumer归属和C/D1/D2/D3执行顺序须C先统一冻结登记，不能以本清单替代owner或自动派工。",
+    "additionalProtocolClosureInventory": [
+      "scripts/import-v3/prepare-native-stock26-bindings.mjs",
+      "scripts/import-v3/prepare-native-header26-bindings.mjs",
+      "scripts/import-v3/native-stock-source26.mjs",
+      "scripts/import-v3/native-payment-source26.mjs",
+      "scripts/import-v3/prepare-native-bindings.mjs",
+      "scripts/import-v3/native-bootstrap.mjs",
+      "scripts/import-v2/authorized-header-reader.mjs",
+      "scripts/import-v2/authorized-header-reader.d.mts",
+      "scripts/import-v2/authorized-history-closure-reader.mjs",
+      "scripts/import-v2/authorized-history-closure-reader.d.mts",
+      "apps/api/src/production-application-host.ts"
+    ],
+    "current26ConsumerInventoryDescription": "关键词检出的40个26消费者，必须连同 additionalProtocolClosureInventory 和 shapeAndReadCoreInventory 一并审计；文件集合是只读盘点，不是批准可写白名单。"
+  },
+  "controllerSequenceAndRollback": [
+    {
+      "step": 1,
+      "owner": "C",
+      "action": "将本完整字段确认及最终SHA交用户明确同意；只相关NULL27支路等待，H06保持held；其他已授权不冲突工作继续。"
+    },
+    {
+      "step": 2,
+      "owner": "C",
+      "action": "批准后先技术冻结/唯一owner登记；核目标exact26、新备份、实际列/FK/index/trigger/routines/role/ACL、原行数/非空厅原值、无在途写入或leased旧池。C38是19升26前备份，不能冒充pre27 exact26备份；C39本地回执 FAILED_FIRST_ERROR_NO_REPLAY，不称成功issuer或review。"
+    },
+    {
+      "step": 3,
+      "owner": "C及登记owner",
+      "action": "源码先实现/冻结独立27全消费闭包，保留19/26；C协调一个新的最小实际数据库窗口，只测NULL27新增差异，不重复sealed18 run2或已有26同范围。实施迁移27后C采集新完整catalog/121或实际routines/nullable/FK/ACL和新独立review。源码/DDL安装不等于应用激活或SOURCE授权。"
+    },
+    {
+      "step": 4,
+      "owner": "D3/C及登记owner",
+      "action": "获准后一次必要销货准备，复用调拨组件及旧sourceQA，构造新target/payload授权和完整manifest；完整同事务闭包/守恒/审计/重放全部必要新条件满足再提交非零MAIN/PUBLISH；首次失败停，不自动gzip/PG重放。"
+    },
+    {
+      "step": 5,
+      "owner": "C",
+      "action": "27入口启用前保持旧URL和维护边界；R1/R2切换各自需要目标角色/配置/新review/独立受影响验收，不能用QA或源代码结果冒称生产就绪。"
+    },
+    {
+      "step": 6,
+      "owner": "C",
+      "action": "回退前先查是否已存在NULL历史头及业务提交。尚无NULL且有新备份/目标证明时才可审慎逆转列非空并退独立入口；存在任何真实NULL后不能SET NOT NULL、删2471或填假厅。关闭27入口并保全数据，使用保留的26独立目标/在另实例恢复验证或前向修复；不以旧快照覆盖新业务。"
+    }
+  ],
+  "necessaryNewValidationOnly": [
+    "纯协议：空源↔null、known源严格binding、空源夹带binding、undefined/漏属性/空串/假UUID拒绝；stable ID与原sourcehash不变，known行不改。",
+    "纯协议：旧19/26仍拒NULL/27runtime；独立27所有source消费者/闭合selector及默认19不漂移；复制/foreign/raw/released/double-runtime/metadata变更拒绝。",
+    "C实际新27：唯一hall列nullable；NULL可保存、无效非空FK拒绝；实际全部目录/函数pins/ACL、旧非空行和不可变/closed触发器保持。",
+    "C实际新27：非零完整授权、逐字段null与缺键/字符串区分、源typed双向/全局逐单closure、2471不漏计、逐仓原SKU单位守恒、原事务回执审计、失败回滚/原key无第二写/COMMIT结果未知不重试。",
+    "四路HISTORY：STAGED不可见，ALL可读已发布空厅且分页总数一致，HALL_IDS列表与详情均不能见空厅，已知厅原范围有效；无仓库/人员厅fallback，无前端必填变化。"
+  ],
+  "notClaimed": [
+    "新27源码/迁移/测试已完成",
+    "真实数据完整导入或非零PUBLISH已完成",
+    "2471空厅业务已被用户批准",
+    "新的SOURCE执行授权、R1/R2生产激活或实际27元数据",
+    "H06 maintained proof实现或PRODUCT native_creation-kind"
+  ],
+  "reuseWithoutRerun": [
+    "sealed18 run2 真实PostgreSQL合成业务10/10无跳过且停库",
+    "C已固定exact26及C70/C75协议、C35/C36已验QA范围",
+    "D3原sourceQA及保全调拨14279完整组件；原失败和partial不覆盖"
+  ],
+  "sourcePinsForReviewOnly": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0001_runtime_sales.sql",
+      "bytes": 19076,
+      "sha256": "7ebdaec27630149f20ad6aa67075c2c688a2ed40bcc4718c031987d9af3a5cbf"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0002_sales_pricing_facts.sql",
+      "bytes": 1860,
+      "sha256": "14136328eafaf6db8957959d595226a51d6036c5dd44c21e70830c0640b88c98"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0003_auth_sessions.sql",
+      "bytes": 886,
+      "sha256": "5417cbf4fbca4737f8f842ef01ed4249be66b929bace1c2bb9f0f5a8f452bd29"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0004_transfer_runtime.sql",
+      "bytes": 31040,
+      "sha256": "7dc7c0b37fa03ef20b5a86f261b7d8a2185dd1d410caf57473d2661e6cce8f3e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0005_product_read_fields.sql",
+      "bytes": 1229,
+      "sha256": "d10e6e8a96992fa0d233de30843ce1ac9751af59ea09e3fa8df9ff6cbf7ec42a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0006_party_maintenance.sql",
+      "bytes": 14758,
+      "sha256": "13c82389abdc85856313da195a310fa74b1283140c0581b6696a48ffc85f3e6c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql",
+      "bytes": 32196,
+      "sha256": "ba99885d7c8cbb01e2a5cda6c6fce99a82c7c8691c26ba52c2137010430709e7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0008_runtime_sparse_first_use.sql",
+      "bytes": 9720,
+      "sha256": "0988168c117517d8122564cecd41b66e9f34753b27e3b438cb53cbd3029d2262"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql",
+      "bytes": 4477,
+      "sha256": "bb12e54d7b4989d5b6fe608a9582f4c887980eb19be839f74005d54eb0ac530e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0010_sales_settlement_method_snapshot.sql",
+      "bytes": 1316,
+      "sha256": "e7e80a1ddb24b4c6aa622aa7e0eff10b4e57670dc77ad148e7b99a27029acc1f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0011_history_storage.sql",
+      "bytes": 32931,
+      "sha256": "67d9cb6df4e46c6807330b7ed7dd22305a4d331b111b85275f900caaf5d14965"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0012_history_header_native_reference.sql",
+      "bytes": 18141,
+      "sha256": "4a42df55804be3f7fb41fca3230364f392ed4338e3a0a80934f7debe7a04b512"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0013_native_party_import.sql",
+      "bytes": 24529,
+      "sha256": "950f32f8b1298fadd5de4f45be5ec6dc4bc7783db501456c41778f52374f5d54"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0014_native_catalogue_import.sql",
+      "bytes": 12925,
+      "sha256": "5bc80dd2997c2accf6cc1e492e8db98dbb6dbb6be29034b8417f15d94f2f8022"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0015_native_import_record_accounting.sql",
+      "bytes": 18024,
+      "sha256": "0cadbcc3dbd76a1e3546e6db983adac7d2b129ad76fcb99eba43cfaf0068794a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0016_history_insert_dispatch.sql",
+      "bytes": 6891,
+      "sha256": "518fd6edcadb30f130061986c2074e61f2884a184a731269ab60c9f9afbb8620"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0017_native_payment_import.sql",
+      "bytes": 11773,
+      "sha256": "d999f9531d925cd320d0d42cf02e00fc6e21b4c010eedb4b90e5e26f1da9b874"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0018_history_typed_publication.sql",
+      "bytes": 75119,
+      "sha256": "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0019_history_typed_publish_gate.sql",
+      "bytes": 3216,
+      "sha256": "d77d7a50d55fafde4a829817b805a7e295dd06c8c62afcc8363b38e1670ae99b"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0020_runtime_document_numbers.sql",
+      "bytes": 5767,
+      "sha256": "8e56bbd0124bea56364753c0332a6cd17eaf2d389e843d95ea40c4d291ffc5d4"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0021_native_maintenance_receipts.sql",
+      "bytes": 54970,
+      "sha256": "904809567388816bb32fc19dd0faed220e3c8f7bbcad2c7baddcd0d6cb47ae61"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0022_product_media_retained_delete.sql",
+      "bytes": 7259,
+      "sha256": "4caf953912adbfdcdf33a73ac031d1c69e7313047accc050efe636b698225163"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0023_inventory_key_admission.sql",
+      "bytes": 21576,
+      "sha256": "18ad09f32567dcd5a7fe57681a5f741d617805b2e76b3334c6a0b71f738a0f65"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0024_history_effective_revisions.sql",
+      "bytes": 4768,
+      "sha256": "180d7ef43210a2f9a414c362b74f3df5fedb0d56d98711d1f6a7a14cbea0f696"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0025_product_season_selection.sql",
+      "bytes": 5339,
+      "sha256": "3994b45c86424454e47cbdd322b7443e9807a382e7b8621ca12d4a7af3f36248"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+      "bytes": 90739,
+      "sha256": "3753ac1e3d156670d43abbe0eda443df8244f98358af9415686893327e29df7c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/current-form-reader.ts",
+      "bytes": 34634,
+      "sha256": "9c1c7ce16af6e74b5c2a2987c31bca2fd6d574b2ed11c15b2b1c9f5c4f62ebf3"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/history-import-lifecycle.ts",
+      "bytes": 35552,
+      "sha256": "2e789595bba6e53e4c8369d229ea44c8e9f46dc99d2457250ac6ce52451cae51"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/history-typed-closure19.ts",
+      "bytes": 10920,
+      "sha256": "1a15fd9ed19e3641e45df57035276773701b8ef49df90f90bd1f9829cc82ced7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/history-typed-publication.ts",
+      "bytes": 6754,
+      "sha256": "0e563c20a8a0eba2fe8d87593d0d437a06ae83323412e338ee7c9932eee3d597"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/import-v3-history-header-native-reference-store.ts",
+      "bytes": 10672,
+      "sha256": "349970b9ef191013a21c715ca5c48bb1c0497bf8b977b4ba6629fb44b5bd3552"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/import-v3-history-header-staging-store.ts",
+      "bytes": 12089,
+      "sha256": "2563ee91ca1d4167ea893f3e7ddd734707e682a7fe5e313e9691ab824b20dbf9"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts",
+      "bytes": 19561,
+      "sha256": "cd32df6cdf256b17e5387bc00bf33bf9ee2d2d5483b6a3a329089fa15065f5f5"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/import-v3-history-settlement-staging-store.ts",
+      "bytes": 17927,
+      "sha256": "c104b91ec37659e6a410da720ec1ce7b252b21a4920e8dc7bae325dfc289c8c7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/import-v3-history-staging-store.ts",
+      "bytes": 7114,
+      "sha256": "52dbe7eb58fa081e46976259f539c0e9a014b7ed7b3e579f45a8489de707b7a0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/imported-history-query-reader.ts",
+      "bytes": 18629,
+      "sha256": "62573b869be60a311fcd3d9bbc6f8c81fb70a47bd5dc691971641f88aba9f486"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "bytes": 48111,
+      "sha256": "aab0a2806958122bfabeea28d533827fe804c5292d8f2dfd152f537676906011"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/inventory-posting-balances.ts",
+      "bytes": 22574,
+      "sha256": "c4407f234a615362567d620d1e84bec1018c569c0fb243db94c34cf887a3dab0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-barcode-import.ts",
+      "bytes": 9109,
+      "sha256": "0189bb3898c0ca61c460e193a45d22b27a1e84197267e421a5168966b2ca96e9"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-catalogue-import.ts",
+      "bytes": 17699,
+      "sha256": "4dc578d581bc2156f4eed42b74634456c641b060c98fd8556e29a4e1229b65a3"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 62176,
+      "sha256": "5786e25dcaa3d549658f88390bc03702b226b278ef7a880c1690a24dac06ec96"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-import-record-accounting.ts",
+      "bytes": 40053,
+      "sha256": "3728813adaf3c835752a61704c490beb6116898be971e7832580a972639e884a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-party-import.ts",
+      "bytes": 19643,
+      "sha256": "12b81cef1bfe3ea37f4240abca2b88d292e5cb42691615341883d611bb0b9455"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-payment-import.ts",
+      "bytes": 12693,
+      "sha256": "600b4455db8a46565a64c830cdff2bf97d232a87665a4f4161724074dcefc673"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-product-import.ts",
+      "bytes": 17047,
+      "sha256": "bb1fbf0d56fc3de6d8cece71273a6eb4dab13e00db3c7c089c214f5a9f4992d7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-sku-import.ts",
+      "bytes": 15936,
+      "sha256": "12f9ee3d37260843dd5ec69377eabeb806ced5c40a526e3fb8a1e9df8d7f6c30"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-stock-contributor-import.ts",
+      "bytes": 12198,
+      "sha256": "a480c43ee707f6adea2fcfe2598899c60214796113b42af7dff8d2130594e0fc"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/party-read-reader.ts",
+      "bytes": 6903,
+      "sha256": "6a31adef3f82d62f9f5b7de398ec3eb883ac097ad5168633da6a80a8a3dff72d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/product-warehouse-stock-reader.ts",
+      "bytes": 22060,
+      "sha256": "fc911a3b6e0db054814c7c9f5890bb8235a7850b7595ca1a87875b70d8537baa"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/sales-unit-of-work.ts",
+      "bytes": 33357,
+      "sha256": "454cc1ae1c7bef479aec9555e5913d1fafeaabab911951202e3a525a7369954a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/transfer-unit-of-work.ts",
+      "bytes": 22455,
+      "sha256": "01eb3a96a9bb02c90adeb7de9569fc396d3e62367e66efcc944ef9a85330152e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/imported-history-query-http.ts",
+      "bytes": 5849,
+      "sha256": "2ff559ebb653345969d56e0303aa4153034412a7cce1cf91949cf7c749ad1e3a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/postgres-read-api.ts",
+      "bytes": 41355,
+      "sha256": "8e4025b2e9460602009c94c835b818f442c00a984b2cbaae16d910cc84e5eae7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/production-application-host.ts",
+      "bytes": 12508,
+      "sha256": "21840a794bbb19b43e41a6666ab74abb3c6d2fb8cedce9ea61df21ee5ef6ab0a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/production-main.ts",
+      "bytes": 6323,
+      "sha256": "900c30c4e218f1a8c131aef95c68869bbd70d91129caa0d98b5825a95e6f9c6f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/production-provider-composition.ts",
+      "bytes": 12010,
+      "sha256": "8b6b5ff090e63301cb15847d30c5976f36ada3ab1122f928c14b5cdabed9aa5d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/history-import-lifecycle.ts",
+      "bytes": 2871,
+      "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/history-revision-contracts.ts",
+      "bytes": 3962,
+      "sha256": "68ae5c0948b94527c61c9354acc9e081136a2c12ed1b643f0334d44a1295ea25"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/history-storage-contract.ts",
+      "bytes": 6913,
+      "sha256": "0a7e6bc4fa0ca7247971f4372e44669a1022dc0c8f5573b020622c20034cb450"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/history-typed-closure.ts",
+      "bytes": 36837,
+      "sha256": "0a995599ed1a78b9f319b41365362a655a243e7b043e58a2104281cea06b2446"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/history-typed-publication.ts",
+      "bytes": 4011,
+      "sha256": "57d459ca48dd2ffb1a70ab1b8ea5f865adfd73020eafe25eb5b9cfd17d74f005"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/import-v2-contract.ts",
+      "bytes": 20742,
+      "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/import-v3-history-header-native-reference.ts",
+      "bytes": 19244,
+      "sha256": "6b2b53d649250fc40256d2994c9a645ab5888bf334bab41c3a871b3e59586a85"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/import-v3-history-header-staging.ts",
+      "bytes": 5574,
+      "sha256": "f6a2e2ff3d4f38b60aa87c4ae508705a7afbf21b164e588f60152c25e09ad22c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/import-v3-history-header.ts",
+      "bytes": 10991,
+      "sha256": "fcd09fb84c1f7dbfbb7889692933f37dbd99f3de64ea9d9258b85551f1884830"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/imported-history-query-ports.ts",
+      "bytes": 6086,
+      "sha256": "7d52fa5f456d60efcbf03552d49879184d387fcc2c5b0ea8d8fa5697b55446a7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/imported-history-query-service.ts",
+      "bytes": 2870,
+      "sha256": "de42e6047bb68682955960b78221ef25076cd2fc9710de18a5cbce4ed1fea37c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/imported-history-query-validation.ts",
+      "bytes": 18964,
+      "sha256": "fbdbf4d58be9384f6d867f49177578e0605f6dbcb88c6412225b0ffd90311348"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-catalogue-import.ts",
+      "bytes": 20487,
+      "sha256": "2b7e6894158fea6a0948d4128c84f305ad03fedf71deb2fae55f990047eb8008"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-import-schema-contract.ts",
+      "bytes": 14367,
+      "sha256": "8f1b52e96c6b3855dd19fac1dd07e7db02bc9c034b421b2c0862efa7ac75d692"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-party-import.ts",
+      "bytes": 13813,
+      "sha256": "acbbd139de873581a1b7baab99ad8df0bb01188b54b491d9eba1b06b9bd2bb03"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-product-import.ts",
+      "bytes": 24773,
+      "sha256": "e93bfc9f0fd7445a3ba4c36f1ee2930b38d693ad318b1d8c86941c676fd9a7e0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-sku-import.ts",
+      "bytes": 17145,
+      "sha256": "dfe22b0342c8204e8da526c0ee0f9961014f7e05eddb2c31ed052e1bf1d366eb"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-header-reader.d.mts",
+      "bytes": 3042,
+      "sha256": "dcefaf2f60dd588a694acd882e3076e3a201725bef3150ba8cbecf516f53865b"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-header-reader.mjs",
+      "bytes": 27766,
+      "sha256": "d16ee579794f5a5ca6d8710e30d2de9265fad1dee3bc79d1788261affd2bac0d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-history-closure-reader.d.mts",
+      "bytes": 3348,
+      "sha256": "5bb7e040707ca934abc4b4ef32551b35425c87ac294e3599efa985627485e9cf"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-history-closure-reader.mjs",
+      "bytes": 13350,
+      "sha256": "37c78fe604ce8ab6d96606800d05f15dcb8cd658a6bbc18719ddbaab85018180"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-native-product-reader.mjs",
+      "bytes": 22205,
+      "sha256": "6421f74f7c0740eb32883edbfde2b859c68007e282cd037196c19269e71b20e7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-bootstrap.mjs",
+      "bytes": 21222,
+      "sha256": "678003978cdeccc24cc0102835d784c8ac1c982bad2d00a10aa7e2ee76819713"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-party-source26.mjs",
+      "bytes": 13897,
+      "sha256": "4bb8aaea3b0241c47c455e82a6a8a5d7ff1afed06a089e20b517af1ac40425e5"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-payment-source26.mjs",
+      "bytes": 10662,
+      "sha256": "6d798b30b748c1e38b29758b60617a33c0eec7b1c70caf45182c6e67e08cc091"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-product-source26.mjs",
+      "bytes": 9068,
+      "sha256": "1c41c5c2a4c1a7d35504fbde9675b1ea6978df56764337d181212d9b4370d886"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-sku-source26.mjs",
+      "bytes": 18848,
+      "sha256": "bc8bd34ea9676eacc62b95bb20cad17a2fc4e81b1e98e9a8f2743921a361bc20"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-source-authorizers.mjs",
+      "bytes": 43821,
+      "sha256": "a16b43741fa49ec173410f43be6f54d114eb1f1f1471ab24b49b868e0d9aedc1"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-stock-source26.mjs",
+      "bytes": 20630,
+      "sha256": "3a11960f58a8e16bbedc3ffaebcb058235f69398f1aa600035464a037e244a00"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-bindings.mjs",
+      "bytes": 16213,
+      "sha256": "0bd42f0cd8c196f5260c488f204b59e92a0fed3abe249a9bf62862c0556ae15b"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-header26-bindings.mjs",
+      "bytes": 7764,
+      "sha256": "a82cc74833279df9347fc79b6348dba34dcfb66f9920fa31c17980d4b219df29"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-stock26-bindings.mjs",
+      "bytes": 7058,
+      "sha256": "a3a90d355179a0b79a9b64bce87a7e81f698d938ab7653e1f6c9301d8734f418"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.mjs",
+      "bytes": 33488,
+      "sha256": "abf95b372f3f78bbd2cb2041956285b69a87470e1d752d8d26b31cb780646cd5"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/run.mjs",
+      "bytes": 23075,
+      "sha256": "d2a1fc7b79505bfe1ef4f4f38372d9e2b1dd2dfd8418fe7cce2064ee674b3052"
+    }
+  ],
+  "archiveRequirements": "写后实际读回所有新K文件及更新的REPORT/LATEST/CENTRAL；源pins只证明读到的当前基线，不宣称D1有这些文件的写owner。"
+}

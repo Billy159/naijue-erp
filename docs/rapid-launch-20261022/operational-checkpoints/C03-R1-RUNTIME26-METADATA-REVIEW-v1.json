@@ -1,0 +1,32 @@
+{
+  "format": "C_R1_RUNTIME26_METADATA_ONLY_TECHNICAL_FREEZE_V1",
+  "atUtc": "2026-10-22T21:33:01.592581+00:00",
+  "decision": "C_ACCEPTS_EXACT_METADATA_BYTES_ONLY",
+  "reviewFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/runtime26-r1-metadata-five-purpose-review-v1.json",
+  "reviewSha256": "e48df42739ab79eecebe2f740713ceee3d880ec7025ad2483814bf50b66b13d8",
+  "independentReview": "QB123",
+  "independentResultSha256": "73c879a85bd5c1318648fd96ea3e0de6970521c93109eacb729dec9d74c1594f",
+  "catalogSha256": "f62de0a301d485da548324a89e97bd902f184ca45e0778901ab8d4be8dab15c7",
+  "target": {
+    "database": "erp_rewrite_20261022_r1",
+    "databaseOid": "1027659",
+    "actingRole": "erp_rewrite_runtime_20261022",
+    "sessionUser": "erp_rewrite_runtime_20261022",
+    "serverAddress": "172.18.0.3/32",
+    "serverPort": 5432,
+    "postmasterStart": "2026-10-04 08:16:07.895273+00"
+  },
+  "purposes": [
+    "PRODUCT_SEASONS_READ",
+    "CURRENT_CUSTOMER_READ_WRITE",
+    "CURRENT_FORM_READ",
+    "HISTORY_READ",
+    "INVENTORY_ADMISSION"
+  ],
+  "realImportExecutionAuthorized": false,
+  "writeCommandsEnabled": false,
+  "publicReleaseAuthorizedByThisRecord": false,
+  "scope": "Only one JOB42 necessary genuine bounded pool/live issuer/read-only five-purpose check on actual R1. No schema/grant/source/main/publication change, no final host PASS.",
+  "execution": "NOT_STARTED",
+  "requestedModel": "gpt-6.1-sol/xhigh"
+}

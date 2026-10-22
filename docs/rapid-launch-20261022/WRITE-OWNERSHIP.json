@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T20:56:52.878013+00:00",
+  "updatedAt": "2026-10-22T21:39:05.413645+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -409,6 +409,16 @@
           "path": "apps/api/src/authenticated-document-commands.ts",
           "group": "R2_EXACT26_EXPLICIT_EXISTING_PREPARATION_ADMISSION_COMPOSITION",
           "fieldGate": "EXISTING_APPROVED_BUSINESS_CONTRACT_NO_SCHEMA_OR_PURPOSE_CHANGE"
+        },
+        {
+          "path": "adapters/postgres/src/catalogue-completeness.ts",
+          "group": "H06_MAINTAINED_CATALOGUE_READ_PROOF_EXPLICIT26",
+          "fieldGate": "READ_ONLY_EXISTING_APPROVED_AUDIT_RECEIPT_NO_WRITE_CONTRACT_CHANGE"
+        },
+        {
+          "path": "tests/catalogue-completeness.test.ts",
+          "group": "H06_MAINTAINED_CATALOGUE_READ_PROOF_EXPLICIT26",
+          "fieldGate": "READ_ONLY_EXISTING_APPROVED_AUDIT_RECEIPT_NO_WRITE_CONTRACT_CHANGE"
         }
       ]
     },
@@ -1435,6 +1445,16 @@
           "path": "scripts/import-v3/prepare-native-header26-bindings.test.mjs",
           "group": "FINITE_NATIVE_HEADER26_BINDING_PREPARER",
           "fieldGate": "EXISTING_STABLE_HISTORY_IDS_AND_APPROVED_HEADER_PARTY_MONEY_FACTS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "scripts/import-v3/native-transfer-header-source26.mjs",
+          "group": "TRANSFER_HEADER14279_GENUINE_SOURCE_ONLY",
+          "fieldGate": "EXISTING_NON_NULL_SCHEMA_NO_PERMISSION_OR_BUSINESS_RULE_CHANGE"
+        },
+        {
+          "path": "scripts/import-v3/native-transfer-header-source26.test.mjs",
+          "group": "TRANSFER_HEADER14279_GENUINE_SOURCE_ONLY",
+          "fieldGate": "EXISTING_NON_NULL_SCHEMA_NO_PERMISSION_OR_BUSINESS_RULE_CHANGE"
         }
       ]
     },
