@@ -6,7 +6,7 @@ import { transferDocumentOutput } from '../../components/document-output-contrac
 import { TransferHistoryAction, type TransferHistoryCapability } from '../history-view.tsx';
 import { TransferStatusTag } from '../transfer-status-tag.tsx';
 import { UIDate, UIButton, UIInput } from '../../components/standard-controls.tsx';
-import { useEffect, useRef, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import type { TransferCommandCapability, TransferFormInput } from './contracts.ts';
 import { transferStatusLabels } from '../model.ts';
 import { TransferEditableLines } from './editable-lines.tsx';
@@ -16,7 +16,16 @@ import type { ReadScope } from '../../loading/read-scope.ts';
 export interface TransferCommandFormProps { readonly presentation?: TransferProposalPresentation; readonly history?: TransferHistoryCapability; readonly capability: TransferCommandCapability; readonly scope: ReadScope; readonly close: () => void }
 /** Source full-page editor, not a generic modal. This bounded first edit slice
  * changes only saved actual-line quantities/date/note; identities stay native. */
-export function TransferCommandForm({ capability, scope, close, history, presentation }: TransferCommandFormProps) {
+export function TransferCommandForm(props: TransferCommandFormProps) {
+  const workspace = props.capability.workspace, state = useSyncExternalStore(workspace.subscribe, workspace.getSnapshot, workspace.getSnapshot);
+  const [bridge, setBridge] = useState<{ readonly owner: typeof workspace; readonly View: typeof import('../../current-form/transfer-existing-document-form.tsx').TransferExistingDocumentForm } | null>(null);
+  const [failedOwner, setFailedOwner] = useState<typeof workspace | null>(null), enabled = workspace.canUseExistingProposal;
+  useEffect(() => { if (!enabled) return; let live = true; void import('../../current-form/transfer-existing-document-form.tsx').then(module => { if (live) setBridge({ owner: workspace, View: module.TransferExistingDocumentForm }); }, () => { if (live) setFailedOwner(workspace); }); return () => { live = false; }; }, [workspace, enabled]);
+  if (enabled && bridge?.owner === workspace) return <bridge.View {...props} />;
+  if (enabled && workspace.editableExistingProposal && failedOwner !== workspace) return <p role="status">正在准备完整旧单编辑页…</p>;
+  return <TransferNativeCommandForm {...props} key={state.editor?.transferId} />;
+}
+export function TransferNativeCommandForm({ capability, scope, close, history, presentation }: TransferCommandFormProps) {
   const { workspace } = capability, state = useSyncExternalStore(workspace.subscribe, workspace.getSnapshot, workspace.getSnapshot);
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => { heading.current?.focus(); }, []);

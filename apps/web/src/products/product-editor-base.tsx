@@ -40,12 +40,13 @@ function CandidateSelectContent(props:ProductCandidateSelectProps&{readonly quer
   if(found)props.onChange(found.id,props.kind==='years'?`${found.name}年`:found.name);else if(value===props.value)return;else if(props.allowCreate)props.onChange(value,value);
  };
  const menu=(content:ReactNode)=><>{content}{snapshot.phase==='error'&&<div role="alert">候选读取失败。<UIButton onClick={()=>run()}>重试</UIButton></div>}{data&&data.total>data.pageSize&&<div className="product-editor-candidate-pages"><UIButton disabled={data.page<=1} onClick={()=>run(data.page-1)}>上一页</UIButton><span>第 {data.page} 页</span><UIButton disabled={data.page*data.pageSize>=data.total} onClick={()=>run(data.page+1)}>下一页</UIButton></div>}</>;
- if(props.kind==='years')return <ProductYearCandidatePresentation scope={props.scope} value={props.value??''} options={options} disabled={props.disabled} open={open} loading={snapshot.phase==='loading'} dropdownRender={menu} onOpenChange={visible=>{setOpen(visible);if(!visible)props.query.cancel();}} onChange={choose}/>;
+ if(props.kind==='years'||props.kind==='size-groups'||props.kind==='barcode-schemes')return <ProductFlatCandidatePresentation scope={props.scope} label={props.label} placeholder={props.kind==='barcode-schemes'?'选择方案':`选择${props.label}`} year={props.kind==='years'} value={props.value??''} options={options} disabled={props.disabled} open={open} loading={snapshot.phase==='loading'} dropdownRender={menu} {...(props.kind==='years'?{}:{onSearch:(value:string)=>{props.query.cancel();setSearch(value);}})} onOpenChange={visible=>{setOpen(visible);if(!visible)props.query.cancel();}} onChange={choose}/>;
  return <div className="product-editor-select"><UISelect aria-label={props.label} aria-required={props.required||undefined} value={props.value??''} options={options} placeholder={`选择${props.label}`} disabled={props.disabled} showSearch={props.showSearch!==false} filterOption={false} allowClear={!props.required&&!!props.allowClear} allowCreate={!!props.allowCreate} loading={snapshot.phase==='loading'} popupVisible={open} onVisibleChange={visible=>{setOpen(visible);if(!visible)props.query.cancel();}} {...(props.showSearch!==false?{onSearch:setSearch}:{})} onChange={choose}
   dropdownRender={menu}/></div>;
 }
-/** Only the non-search year consumes this shared flat presentation. Remote reads stay above. */
-function ProductYearCandidatePresentation(props:{
+/** Year and the explicit group/scheme pair share presentation; remote ownership stays above. */
+function ProductFlatCandidatePresentation(props:{
+ readonly label:string;readonly placeholder:string;readonly year:boolean;readonly onSearch?:(value:string)=>void;
  readonly scope:ReadScope;readonly value:string;readonly options:readonly {value:string;label:string}[];
  readonly disabled:boolean;readonly open:boolean;readonly loading:boolean;readonly dropdownRender:(menu:ReactNode)=>ReactNode;
  readonly onOpenChange:(open:boolean)=>void;readonly onChange:(value:string)=>void;
@@ -78,9 +79,9 @@ function ProductYearCandidatePresentation(props:{
   return()=>{view.removeEventListener('resize',measure);observer?.disconnect();};
  },[ready,props.scope]);
  const Action=ready?.scope===props.scope&&props.scope.active?ready.Action:null;
- return <div ref={host} className="product-editor-select product-year-select">{Action&&popupWidth!==null?<Action presentation="flat" label="年份" placeholder="选择年份" required value={props.value} options={props.options} disabled={props.disabled} open={props.open} loading={props.loading} dropdownRender={props.dropdownRender} popupWidth={popupWidth} placement="bl"
-  onOpenChange={visible=>{if(visible){if(props.disabled||!props.scope.active)return;measure();}props.onOpenChange(visible);}} onChange={value=>{if(props.scope.active&&!props.disabled)props.onChange(value);}}/>:<UISelect aria-label="年份" aria-required disabled showSearch={false} value={props.value} options={props.options.map(option=>({...option}))} placeholder="正在准备年份…"/>}
-  {failed&&<div role="alert">年份选择暂不可用。<UIButton disabled={!props.scope.active} onClick={()=>setRetry(value=>value+1)}>重试</UIButton></div>}
+ return <div ref={host} className={`product-editor-select product-flat-candidate-select${props.year?' product-year-select':''}`}>{Action&&popupWidth!==null?<Action presentation="flat" label={props.label} placeholder={props.placeholder} required value={props.value} options={props.options} disabled={props.disabled} open={props.open} loading={props.loading} dropdownRender={props.dropdownRender} {...(props.onSearch?{onSearch:props.onSearch}:{})} popupWidth={popupWidth} placement="bl"
+  onOpenChange={visible=>{if(visible){if(props.disabled||!props.scope.active)return;measure();}props.onOpenChange(visible);}} onChange={value=>{if(props.scope.active&&!props.disabled)props.onChange(value);}}/>:<UISelect aria-label={props.label} aria-required disabled showSearch={false} value={props.value} options={props.options.map(option=>({...option}))} placeholder={`正在准备${props.label}…`}/>}
+  {failed&&<div role="alert">{props.label}选择暂不可用。<UIButton disabled={!props.scope.active} onClick={()=>setRetry(value=>value+1)}>重试</UIButton></div>}
  </div>;
 }
 export interface ProductEditorFieldsProps {

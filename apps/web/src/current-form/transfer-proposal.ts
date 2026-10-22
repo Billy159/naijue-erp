@@ -6,12 +6,16 @@ import { HttpQueryError } from '../transport/http-query.ts';
 import type { createCurrentFormHttpReader } from './http-reader.ts';
 import { currentBusinessDate } from './business-date.ts';
 import { DocumentScanController } from '../components/document-scan-controller.ts';
+import type { TransferDraftDto } from '../transfers/commands/contracts.ts';
 
 export type TransferProposalReader = Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readTransferWarehouses' | 'readProducts' | 'readProductSkus'>
   & Partial<Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readBarcode'>>;
 export type TransferProposalPicker = 'FROM' | 'TO' | 'PRODUCT' | 'SKU';
 type Candidate = CurrentTransferWarehouse | CurrentFormProduct | CurrentFormSku;
-export interface TransferProposalLine { readonly sku: CurrentFormSku; readonly quantity: string; readonly product?: CurrentFormProduct }
+export interface TransferProposalLine { readonly sku: CurrentFormSku; readonly quantity: string; readonly product?: CurrentFormProduct; readonly existingLineId?: string; readonly sourceSnapshot?: TransferDraftDto['lines'][number]['snapshot'] }
+/** A saved header supplies the original ID/name only. Enabled/hall facts must
+ * come from current candidate reads and are never filled from the header. */
+export type TransferWarehouseSelection = Pick<CurrentTransferWarehouse, 'id' | 'name'>;
 export function transferProposalRowKey(sku: CurrentFormSku): string { return JSON.stringify([sku.productId, sku.colorId, sku.fitId, sku.sizeGroupId]); }
 export interface TransferPendingEntry {
   readonly query: string; readonly product: CurrentFormProduct | null;
@@ -23,7 +27,7 @@ export interface TransferPendingEntry {
 const emptyPending = (): TransferPendingEntry => ({ query: '', product: null, color: null, fit: null, skus: [], page: 1, exactTotal: null, phase: 'idle', quantities: {}, userEdited: false, unmapped: [] });
 export interface TransferProposal {
   readonly businessDate: string; readonly note: string;
-  readonly from: CurrentTransferWarehouse | null; readonly to: CurrentTransferWarehouse | null;
+  readonly from: TransferWarehouseSelection | null; readonly to: TransferWarehouseSelection | null;
   readonly lines: readonly TransferProposalLine[];
 }
 export interface TransferProposalSnapshot {
@@ -49,6 +53,7 @@ export class TransferProposalSession {
   readonly #scope: ReadScope; readonly #reader: TransferProposalReader; readonly #onAccessFailure: ((error: HttpQueryError) => void) | undefined;
   readonly #listeners = new Set<() => void>();
   #request: AbortController | null = null; #sequence = 0; #revision = 0;
+  #seeded = false;
   #skuRead: AbortController | null = null; #skuSequence = 0;
   #appendBasis: { draft: TransferProposal; pending: TransferPendingEntry; replacement: TransferProposalSnapshot['replacement'] } | null = null;
   #state: TransferProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, picker: null, entry: null, pending: emptyPending(), replacement: null, appendRequest: null });
@@ -63,6 +68,22 @@ export class TransferProposalSession {
     const owner = this.#scope.identity, target = scope.identity;
     return !this.#state.disposed && this.#scope.active && scope.active && owner.accountId === target.accountId
       && owner.sessionRevision === target.sessionRevision && owner.permissionRevision === target.permissionRevision;
+  }
+  initializeFromSaved(value: TransferProposal, dirty = false): boolean {
+    if (this.#seeded || this.#state.disposed || this.#state.dirty || this.#state.draft.lines.length || this.#state.picker) return false;
+    let draft: TransferProposal;
+    try {
+      draft = structuredClone(value);
+      if (typeof draft.businessDate !== 'string' || typeof draft.note !== 'string' || !draft.from || !draft.to || !Array.isArray(draft.lines) || !draft.lines.length || draft.lines.length > TRANSFER_PREPARE_MAX_LINES || draft.lines.some(row => typeof row.quantity !== 'string' || !row.existingLineId)) return false;
+      if (new Set(draft.lines.map(row => row.existingLineId)).size !== draft.lines.length || new Set(draft.lines.map(row => row.sku.id)).size !== draft.lines.length || new Set(draft.lines.map(row => JSON.stringify([transferProposalRowKey(row.sku), row.sku.sizeId]))).size !== draft.lines.length) return false;
+      const labels = new Map<string, string>();
+      for (const row of draft.lines) { const key = transferProposalRowKey(row.sku), snapshot = row.sourceSnapshot, label = JSON.stringify(snapshot ? [snapshot.productCode, snapshot.productName, snapshot.colorName, snapshot.fitName] : [row.sku.productCode, row.sku.productName, row.sku.colorName, row.sku.fitName]); if (labels.has(key) && labels.get(key) !== label) return false; labels.set(key, label); }
+    } catch { return false; }
+    this.#seeded = true; this.#revision++; this.#publish({ draft, dirty, errors: [], notice: null }); return true;
+  }
+  markUnchanged(reference: TransferProposal): boolean {
+    if (!this.#seeded || this.#state.disposed || this.#state.draft !== reference || this.#state.replacement || this.#state.pending.product || this.#state.pending.query.trim()) return false;
+    this.#publish({ dirty: false, notice: null }); return true;
   }
   #publish(patch: Partial<TransferProposalSnapshot>): void {
     this.#state = freeze({ ...this.#state, ...patch });
@@ -206,7 +227,10 @@ export class TransferProposalSession {
       for (const change of changes) {
         const previous = next.find(row => row.sku.id === change.sku.id);
         if (previous) { if (!/^[1-9]\d{0,18}$/.test(previous.quantity)) throw Error(); const count = quantity((BigInt(previous.quantity) + change.quantity).toString()); next = next.map(row => row === previous ? { ...row, quantity: count.toString() } : row); }
-        else next.push({ sku: change.sku, quantity: change.quantity.toString(), product: pending.product });
+        else {
+          const originals = replacement?.originals.filter(row => row.sku.sizeId === change.sku.sizeId && row.sku.sizeGroupId === change.sku.sizeGroupId) ?? [], original = originals.length === 1 ? originals[0] : undefined;
+          next.push({ sku: change.sku, quantity: change.quantity.toString(), product: pending.product, ...(original?.existingLineId ? { existingLineId: original.existingLineId } : {}), ...(original?.sku.id === change.sku.id && original.sourceSnapshot ? { sourceSnapshot: original.sourceSnapshot } : {}) });
+        }
       }
       if (next.length > TRANSFER_PREPARE_MAX_LINES) throw Error();
     } catch { this.#publish({ notice: '原行数量无效或已达数量／200个规格上限，输入已保留。' }); return false; }

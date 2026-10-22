@@ -31,6 +31,8 @@ export interface TransferCommandCapability { readonly workspace: import('./contr
 export interface TransferCommandWorkspaceOptions {
   readonly scope: ReadScope; readonly client: TransferCommandClient; readonly reader: Pick<TransferReader, 'readDetail'>;
   readonly newRequestKey: () => string; readonly onAccessFailure: (error: TransferCommandError) => void;
+  readonly existingPreparation?: import('../../current-form/existing-document-preparation.ts').TransferExistingPreparation;
+  readonly existingReader?: ReturnType<typeof import('../../current-form/http-reader.ts').createCurrentFormHttpReader>;
 }
 /** Raw strings are session-owned too, so invalid input cannot evade leave guards. */
 export interface TransferFormInput { readonly businessDate: string; readonly note: string; readonly quantities: Readonly<Record<string, string>> }
