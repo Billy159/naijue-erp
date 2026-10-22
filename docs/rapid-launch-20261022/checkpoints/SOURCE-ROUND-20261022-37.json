@@ -1,0 +1,33 @@
+{
+  "atUtc": "2026-10-22T17:41:11.287236+00:00",
+  "parent": "9be8063393ac44a6a990fd3d8f18c60d2227c51f",
+  "groups": [
+    {
+      "slice": "NATIVE_CATALOGUE26_EXPLICIT_COMPLETE_SHAPE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/catalogue26-slice1/RESULT.json",
+      "receiptSha256": "c2ef45c699f10744a8699c1c0d47fb4efdcdb9b84f015b36c6546388b933243f",
+      "files": [
+        {
+          "path": "packages/application/src/native-catalogue-import.ts",
+          "bytes": 20487,
+          "owner": "D3",
+          "sha256": "2b7e6894158fea6a0948d4128c84f305ad03fedf71deb2fae55f990047eb8008"
+        },
+        {
+          "path": "adapters/postgres/src/native-catalogue-import.ts",
+          "bytes": 17699,
+          "owner": "D3",
+          "sha256": "4dc578d581bc2156f4eed42b74634456c641b060c98fd8556e29a4e1229b65a3"
+        },
+        {
+          "path": "tests/native-catalogue-import.test.ts",
+          "bytes": 34848,
+          "owner": "D3",
+          "sha256": "7a12648af6b24e3a3715d7bbf01021297977907067fe402965d62e842604b620"
+        }
+      ]
+    }
+  ],
+  "fileCount": 3,
+  "scope": "Source full26 pure preparation/store metadata; actual344 pure candidate still independently reviewed source-only, no actual SQL/native import/issuer/MAIN."
+}

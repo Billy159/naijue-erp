@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
-import { prepareNativeCatalogueImportChunk, stageNativeCatalogueImportChunk, nativeCatalogueSourceEvidence } from "../packages/application/src/native-catalogue-import.ts";
-import type { NativeCatalogueEntity, NativeCatalogueImportChunk, NativeCatalogueImportRow, NativeCatalogueReference, PreparedNativeCatalogueImportRow } from "../packages/application/src/native-catalogue-import.ts";
-import { PostgresNativeCatalogueImportStore, nativeCatalogueBindingEvidence } from "../adapters/postgres/src/native-catalogue-import.ts";
+import { prepareNativeCatalogueImportChunk, stageNativeCatalogueImportChunk, nativeCatalogueSourceEvidence, prepareNativeCatalogueImportChunk26, validatePreparedNativeCatalogueImportChunk26, NATIVE_CATALOGUE_IMPORT_VERSION_26 } from "../packages/application/src/native-catalogue-import.ts";
+import type { NativeCatalogueEntity, NativeCatalogueImportChunk, NativeCatalogueImportChunk26, NativeCatalogueImportRow, NativeCatalogueReference, PreparedNativeCatalogueImportRow } from "../packages/application/src/native-catalogue-import.ts";
+import { PostgresNativeCatalogueImportStore, PostgresNativeCatalogueImportStore26, nativeCatalogueBindingEvidence } from "../adapters/postgres/src/native-catalogue-import.ts";
+import type { NativeRuntime26Capability } from "../packages/application/src/native-import-schema-contract.ts";
 import type { JsonObject } from "../packages/application/src/history-storage-contract.ts";
 import { requestHash } from "../packages/application/src/request-hash.ts";
 const id = (n: number) => `00000000-0000-0000-0000-${String(n).padStart(12, "0")}`;
@@ -48,7 +49,7 @@ test("catalogue shares exact finite schema14–17 contracts and refuses missing,
 });
 type State = { native: Map<string, JsonObject>; sources: Map<string, JsonObject>; bindings: Map<string, JsonObject> };
 /** Transactional SQL protocol fake. NOT evidence for actual PostgreSQL triggers/locks/isolation. */
-function protocol(options: { failBindingAt?: number; commitUnknown?: boolean; wrongBatch?: boolean; missingSchema?: boolean; schemaVersions?: readonly number[]; emptyGroup?: boolean; rollbackFails?: boolean; commitUncommitted?: boolean } = {}) {
+function protocol(options: { failBindingAt?: number; commitUnknown?: boolean; wrongBatch?: boolean; missingSchema?: boolean; schemaVersions?: readonly number[]; emptyGroup?: boolean; rollbackFails?: boolean; commitUncommitted?: boolean; badCreateSnapshot?: boolean } = {}) {
   let state: State = { native: new Map(), sources: new Map(), bindings: new Map() }, draft = structuredClone(state);
   let connects = 0, nativeWrites = 0, sourceWrites = 0, bindingWrites = 0, discarded: Error | boolean | undefined, unknown = options.commitUnknown;
   const calls: { sql: string; values: unknown[] }[] = [];
@@ -76,7 +77,7 @@ function protocol(options: { failBindingAt?: number; commitUnknown?: boolean; wr
     if (sql.includes("native-catalogue-import:create:")) {
       const entity = sql.match(/create:([A-Z_]+)/)![1]!, columns = sql.match(/\(([^)]+)\)\s*VALUES/)![1]!.split(",");
       const n = Object.fromEntries(columns.map((c, i) => [c, values[i]])) as JsonObject;
-      assert.equal(draft.native.has(key(entity, n)), false); draft.native.set(key(entity, n), n); nativeWrites++; return result([{ native_snapshot: n }]);
+      assert.equal(draft.native.has(key(entity, n)), false); draft.native.set(key(entity, n), n); nativeWrites++; return result([{ native_snapshot: options.badCreateSnapshot ? { ...n, deleted_at: 'SYNTHETIC INVALID' } : n }]);
     }
     if (sql.includes("native-catalogue-import:group-member")) return result(options.emptyGroup ? [] : [...draft.native].filter(([k, n]) => k.startsWith("SIZE_GROUP_MEMBER/") && n.size_group_id === values[0]).slice(0, 1).map(([, n]) => ({ size_id: n.size_id })));
     if (sql.includes("native-catalogue-import:reference-binding")) return result([...draft.bindings.values()].filter(x => x.batch_id === values[0] && x.entity_type === values[1] && x.source_key === values[2]).map(x => ({ native_equal: requestHash(x.native_snapshot) === requestHash(JSON.parse(values[3] as string)) })));
@@ -103,12 +104,59 @@ function protocol(options: { failBindingAt?: number; commitUnknown?: boolean; wr
     if (sql.includes("cutoff_import_lock")) return result([]);
     throw Error(`Unexpected synthetic SQL: ${sql}`);
   }, release(error?: Error | boolean) { discarded = error; } };
-  const store = new PostgresNativeCatalogueImportStore({ async connect() { connects++; return client; } });
-  return { store, calls, state: () => state, connects: () => connects, writes: () => [nativeWrites, sourceWrites, bindingWrites], discarded: () => discarded,
+  const pool = { async connect() { connects++; return client; } }, store = new PostgresNativeCatalogueImportStore(pool);
+  return { store, pool, client, calls, state: () => state, connects: () => connects, writes: () => [nativeWrites, sourceWrites, bindingWrites], discarded: () => discarded,
     seedNative(row: PreparedNativeCatalogueImportRow, snapshot = row.nativeSnapshot) { state.native.set(key(row.entity, snapshot), structuredClone(snapshot)); },
     seedSource(row: PreparedNativeCatalogueImportRow) { state.sources.set(row.source.id, nativeCatalogueSourceEvidence(row)); },
     seedBinding(row: PreparedNativeCatalogueImportRow) { state.bindings.set(`${row.entity}/${row.source.sourceKey}`, nativeCatalogueBindingEvidence(row)); } };
 }
+function input26(): NativeCatalogueImportChunk26 {
+  const value = input();
+  for (const row of value.rows) for (const reference of Object.values(row.references)) if (reference.entity === 'CATEGORY') reference.nativeSnapshot.deleted_at = null;
+  return { ...value, schemaProfile: 'EXACT26' as const, validatorVersion: NATIVE_CATALOGUE_IMPORT_VERSION_26 };
+}
+test('catalogue26 preparation preserves original decisions and full NULL tombstone snapshots including parent references', () => {
+  const source = input26(), before = structuredClone(source), prepared = prepareNativeCatalogueImportChunk26(source); validatePreparedNativeCatalogueImportChunk26(prepared); assert.deepEqual(source, before);
+  for (const row of prepared.rows) {
+    assert.equal(row.evidence.schema_profile, 'EXACT26'); assert.equal(row.evidence.validator_version, 'NATIVE_CATALOGUE_IMPORT_V1');
+    assert.equal(Object.hasOwn(row.source.rawFields, 'deleted_at'), false);
+    if (['CATEGORY', 'COLOR', 'FIT'].includes(row.entity)) { assert.equal(row.nativeSnapshot.deleted_at, null); assert.equal(Object.hasOwn(row.evidence.decisions as JsonObject, 'deleted_at'), false); }
+  }
+  assert.equal(prepared.rows[1]!.references.parent_id!.nativeSnapshot.deleted_at, null);
+  assert.throws(() => prepareNativeCatalogueImportChunk(source), { code: 'NATIVE_CATALOGUE_SUCCESSOR_EXPLICIT' });
+  const missing = input26(); delete missing.rows[1]!.references.parent_id!.nativeSnapshot.deleted_at;
+  assert.throws(() => prepareNativeCatalogueImportChunk26(missing), { code: 'NATIVE_CATALOGUE_COLUMNS' });
+  const changed = structuredClone(prepared); changed.rows[0]!.nativeSnapshot.deleted_at = 'SYNTHETIC tombstone'; assert.throws(() => validatePreparedNativeCatalogueImportChunk26(changed));
+});
+test('catalogue26 store requires actual capability and full profile before targets; old store rejects successor DTO without connecting', async () => {
+  const h = protocol(), prepared = prepareNativeCatalogueImportChunk26(input26());
+  await assert.rejects(h.store.stage(prepared)); assert.equal(h.connects(), 0);
+  assert.throws(() => new PostgresNativeCatalogueImportStore26(h.pool, undefined as never), { code: 'NATIVE_CATALOGUE_EXACT26_REQUIRED' });
+  const bool = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady() { return true; } } as unknown as NativeRuntime26Capability;
+  await assert.rejects(new PostgresNativeCatalogueImportStore26(h.pool, bool).stage(prepared), /boolean substitute/); assert.equal(h.calls.length, 0);
+  const cap: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(client, purpose) { assert.equal(client, h.client); assert.equal(purpose, 'IMPORT_STAGE'); } };
+  await assert.rejects(new PostgresNativeCatalogueImportStore26(h.pool, cap).stage(prepared), { code: 'NATIVE_CATALOGUE_SCHEMA_NOT_READY' });
+  assert.equal(h.calls.some(c => c.sql.includes(':target:')), false);
+});
+test('catalogue26 full snapshot creation and exact replay keep same-batch source and dependency rules', async () => {
+  const h = protocol({ schemaVersions: Array.from({ length: 26 }, (_, i) => i + 1) }); let checks = 0;
+  const cap: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(client, purpose) { checks++; assert.equal(client, h.client); assert.equal(purpose, 'IMPORT_STAGE'); } };
+  const store = new PostgresNativeCatalogueImportStore26(h.pool, cap), prepared = prepareNativeCatalogueImportChunk26(input26());
+  assert.equal((await store.stage(prepared)).inserted, 8); assert.equal((await store.stage(prepared)).replayed, 8); assert.equal(checks, 2); assert.deepEqual(h.writes(), [8, 8, 8]);
+  for (const entity of ['CATEGORY', 'COLOR', 'FIT']) assert.ok(h.calls.filter(c => c.sql.includes(`:create:${entity}`)).every(c => c.sql.includes('deleted_at') && c.values.at(-1) === null));
+  assert.equal(h.state().native.get(`COLOR/${id(12)}`)!.deleted_at, null);
+});
+test('catalogue26 rejects mismatched actual full readback and keeps unknown COMMIT outcome without retry', async () => {
+  const versions = Array.from({ length: 26 }, (_, i) => i + 1), prepared = prepareNativeCatalogueImportChunk26(input26());
+  for (const unknown of [false, true]) {
+    const h = protocol({ schemaVersions: versions, badCreateSnapshot: !unknown, commitUnknown: unknown });
+    const cap: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(client) { assert.equal(client, h.client); } };
+    await assert.rejects(new PostgresNativeCatalogueImportStore26(h.pool, cap).stage(prepared), unknown ? /ack lost/ : { code: 'NATIVE_CATALOGUE_CREATE_SNAPSHOT' });
+    assert.equal(h.calls.at(-1)!.sql, unknown ? 'COMMIT' : 'ROLLBACK');
+    if (unknown) { assert.ok(h.discarded() instanceof Error); assert.equal(h.calls.filter(c => c.sql === 'COMMIT').length, 1); }
+    else assert.equal(h.state().native.size, 0);
+  }
+});
 test("catalogue default dry-run is connection-free, stage requires independent exact source/decision authority", async () => {
   const h = protocol(); assert.deepEqual(await stageNativeCatalogueImportChunk(input(), { store: h.store }), { mode: "DRY_RUN", rows: 8, inserted: 0, replayed: 0, published: false, importReady: false });
   await assert.rejects(stageNativeCatalogueImportChunk(input(), { mode: "STAGE", store: h.store }), { code: "NATIVE_CATALOGUE_AUTHORIZATION_REQUIRED" });

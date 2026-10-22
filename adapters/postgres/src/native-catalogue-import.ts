@@ -1,10 +1,12 @@
 import { assertNativeImportAccountingGuards } from "./native-import-accounting-capability.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
-import { assertReviewedNativeImportSchema } from "../../../packages/application/src/native-import-schema-contract.ts";
-import { NATIVE_CATALOGUE_COLUMNS, NATIVE_CATALOGUE_IMPORT_VERSION, nativeCatalogueSourceEvidence,
-  validatePreparedNativeCatalogueImportChunk } from "../../../packages/application/src/native-catalogue-import.ts";
+import { assertReviewedNativeImportSchema, checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { NATIVE_CATALOGUE_COLUMNS, NATIVE_CATALOGUE_COLUMNS_26, NATIVE_CATALOGUE_IMPORT_VERSION, nativeCatalogueSourceEvidence,
+  validatePreparedNativeCatalogueImportChunk, validatePreparedNativeCatalogueImportChunk26 } from "../../../packages/application/src/native-catalogue-import.ts";
+import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import type { NativeCatalogueEntity, NativeCatalogueImportResult, NativeCatalogueImportStore, PreparedNativeCatalogueImportChunk,
-  PreparedNativeCatalogueImportRow } from "../../../packages/application/src/native-catalogue-import.ts";
+  PreparedNativeCatalogueImportRow, PreparedNativeCatalogueImportChunk26 } from "../../../packages/application/src/native-catalogue-import.ts";
 import type { JsonObject } from "../../../packages/application/src/history-storage-contract.ts";
 import type { PgSalesClient, PgSalesPool } from "./sales-unit-of-work.ts";
 
@@ -26,14 +28,18 @@ export function nativeCatalogueBindingEvidence(row: PreparedNativeCatalogueImpor
  * No connection by default, no DDL/source loader/authority implementation, no live
  * field relaxation, no SKU/stock writes, no publication or automatic retry. */
 export class PostgresNativeCatalogueImportStore implements NativeCatalogueImportStore {
-  private readonly pool: PgSalesPool;
+  protected readonly pool: PgSalesPool;
   constructor(pool: PgSalesPool) { this.pool = pool; }
   async stage(input: PreparedNativeCatalogueImportChunk): Promise<NativeCatalogueImportResult> {
     const chunk = structuredClone(input); validatePreparedNativeCatalogueImportChunk(chunk);
+    return this.stageValidated(chunk);
+  }
+  protected async stageValidated(chunk: PreparedNativeCatalogueImportChunk, runtime26?: NativeRuntime26Capability): Promise<NativeCatalogueImportResult> {
     const client = await this.pool.connect(); let began = false, committing = false, discard: Error | undefined;
     try {
+      if (runtime26) await runtime26.assertReady(client, "IMPORT_STAGE");
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
-      const result = await this.write(client, chunk);
+      const result = await this.write(client, chunk, runtime26);
       committing = true; await client.query("COMMIT"); return result;
     } catch (error) {
       if (!began || committing) discard = error instanceof Error ? error : new Error("Native catalogue import outcome unknown");
@@ -44,14 +50,19 @@ export class PostgresNativeCatalogueImportStore implements NativeCatalogueImport
       throw error;
     } finally { client.release(discard); }
   }
-  private async write(client: PgSalesClient, chunk: PreparedNativeCatalogueImportChunk): Promise<NativeCatalogueImportResult> {
+  private async write(client: PgSalesClient, chunk: PreparedNativeCatalogueImportChunk, runtime26?: NativeRuntime26Capability): Promise<NativeCatalogueImportResult> {
     await client.query("/* native-catalogue-import:lock */ SELECT naijue_erp.cutoff_import_lock()");
     const schema = (await client.query(`/* native-catalogue-import:schema */ SELECT
       array_agg(version ORDER BY version) AS installed_versions FROM naijue_erp.schema_migration`)).rows;
     requireDomain(schema.length === 1, "NATIVE_CATALOGUE_SCHEMA_NOT_READY", "Exact reviewed native import schema prefix required");
-    const reviewedSchema = assertReviewedNativeImportSchema(schema[0]!.installed_versions,
-      { minimumVersion: 14, errorCode: "NATIVE_CATALOGUE_SCHEMA_NOT_READY" });
-    if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
+    if (runtime26) {
+      const versions = schema[0]!.installed_versions;
+      requireDomain(Array.isArray(versions) && versions.length === 26 && versions.every((n, i) => n === i + 1), "NATIVE_CATALOGUE_SCHEMA_NOT_READY", "Exact26 snapshot required after actual capability");
+    } else {
+      const reviewedSchema = assertReviewedNativeImportSchema(schema[0]!.installed_versions,
+        { minimumVersion: 14, errorCode: "NATIVE_CATALOGUE_SCHEMA_NOT_READY" });
+      if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
+    }
     const batchRows = (await client.query(`/* native-catalogue-import:batch */ SELECT id,mapping_version,status,source_hash,source_name,
       EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED') AS already_published
       FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`, [chunk.batchId])).rows;
@@ -135,10 +146,12 @@ export class PostgresNativeCatalogueImportStore implements NativeCatalogueImport
     }
     // FK order is topological. All native INSERTs precede every new evidence INSERT.
     for (const row of newRows) {
-      const columns = NATIVE_CATALOGUE_COLUMNS[row.entity];
+      const columns = (runtime26 ? NATIVE_CATALOGUE_COLUMNS_26 : NATIVE_CATALOGUE_COLUMNS)[row.entity];
       const result = await client.query(`/* native-catalogue-import:create:${row.entity} */ INSERT INTO naijue_erp.${TABLES[row.entity]} (${columns.join(",")})
         VALUES (${columns.map((c, i) => `$${i + 1}${c === "id" || c.endsWith("_id") ? "::uuid" : ""}`).join(",")}) RETURNING to_jsonb(${TABLES[row.entity]}) AS native_snapshot`, columns.map(c => row.nativeSnapshot[c]));
       requireDomain(result.rowCount === 1, "NATIVE_CATALOGUE_CREATE_FAILED", "Exactly one actual native dictionary row required");
+      if (runtime26) requireDomain(result.rows.length === 1 && requestHash(result.rows[0]!.native_snapshot) === requestHash(row.nativeSnapshot),
+        "NATIVE_CATALOGUE_CREATE_SNAPSHOT", "Actual full successor snapshot must match creation evidence including NULL tombstone");
     }
     for (const row of newRows) if (row.entity === "SIZE_GROUP") {
       const members = (await client.query(`/* native-catalogue-import:group-member */ SELECT m.size_id FROM naijue_erp.size_group_member m
@@ -161,5 +174,17 @@ export class PostgresNativeCatalogueImportStore implements NativeCatalogueImport
     }
     return { inserted: newRows.length, replayed, nativeCurrentMatchesCreation: [...targets.values()].every(t => t.currentMatchesCreation)
       && [...referenceCurrentMatches.values()].every(Boolean) };
+  }
+}
+/** Separate source26 store. The old store cannot consume new DTOs or metadata. */
+export class PostgresNativeCatalogueImportStore26 extends PostgresNativeCatalogueImportStore {
+  private readonly runtime26: NativeRuntime26Capability;
+  constructor(pool: PgSalesPool, runtime26: NativeRuntime26Capability) {
+    super(pool); const checked = checkedNativeRuntime26Capability(runtime26);
+    requireDomain(checked, "NATIVE_CATALOGUE_EXACT26_REQUIRED", "Explicit actual26 capability required"); this.runtime26 = checked;
+  }
+  override async stage(input: PreparedNativeCatalogueImportChunk26): Promise<NativeCatalogueImportResult> {
+    const chunk = structuredClone(input); validatePreparedNativeCatalogueImportChunk26(chunk);
+    return this.stageValidated(chunk, this.runtime26);
   }
 }

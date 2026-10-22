@@ -3,8 +3,11 @@ import { entityId } from "../../domain/src/values.ts";
 import { HISTORY_MAPPING_VERSION } from "./history-storage-contract.ts";
 import type { ImportSourceEvidence, JsonObject, JsonValue } from "./history-storage-contract.ts";
 import { requestHash } from "./request-hash.ts";
+import { historySettlementRequestHash } from "./import-v3-history-settlement.ts";
 
 export const NATIVE_CATALOGUE_IMPORT_VERSION = "NATIVE_CATALOGUE_IMPORT_V1";
+/** Pure DTO discriminator. The existing binding-table validator_version stays V1. */
+export const NATIVE_CATALOGUE_IMPORT_VERSION_26 = "NATIVE_CATALOGUE_IMPORT_EXACT26_V1";
 export const NATIVE_CATALOGUE_ENTITIES = ["CATEGORY", "COLOR", "FIT", "SIZE", "SIZE_GROUP", "SEASON", "SIZE_GROUP_MEMBER"] as const;
 export type NativeCatalogueEntity = typeof NATIVE_CATALOGUE_ENTITIES[number];
 /** Native schema columns, NOT a claim about original dictionary field names. */
@@ -13,6 +16,9 @@ export const NATIVE_CATALOGUE_COLUMNS: Readonly<Record<NativeCatalogueEntity, re
   FIT: ["id", "code", "name", "enabled", "version"], SIZE: ["id", "code", "name"], SIZE_GROUP: ["id", "code", "name"],
   SEASON: ["id", "code", "name", "display_order"], SIZE_GROUP_MEMBER: ["size_group_id", "size_id", "display_order"]
 };
+export const NATIVE_CATALOGUE_COLUMNS_26: Readonly<Record<NativeCatalogueEntity, readonly string[]>> = Object.freeze(Object.fromEntries(
+  NATIVE_CATALOGUE_ENTITIES.map(entity => [entity, Object.freeze([...NATIVE_CATALOGUE_COLUMNS[entity], ...(["CATEGORY", "COLOR", "FIT"].includes(entity) ? ["deleted_at"] : [])])])
+) as Record<NativeCatalogueEntity, readonly string[]>);
 export interface NativeCatalogueSelection {
   readonly source: "REVIEWED_DICTIONARY_OCCURRENCES_V1";
   readonly baseManifestSha256: string; readonly selectionSha256: string; readonly approvalSha256: string;
@@ -55,6 +61,12 @@ export interface PreparedNativeCatalogueImportChunk extends Omit<NativeCatalogue
   readonly rows: readonly PreparedNativeCatalogueImportRow[]; readonly mappingVersion: typeof HISTORY_MAPPING_VERSION;
   readonly fingerprint: string;
 }
+export interface NativeCatalogueImportChunk26 extends NativeCatalogueImportChunk {
+  readonly schemaProfile: "EXACT26"; readonly validatorVersion: typeof NATIVE_CATALOGUE_IMPORT_VERSION_26;
+}
+export interface PreparedNativeCatalogueImportChunk26 extends PreparedNativeCatalogueImportChunk {
+  readonly schemaProfile: "EXACT26"; readonly validatorVersion: typeof NATIVE_CATALOGUE_IMPORT_VERSION_26;
+}
 export interface NativeCatalogueImportResult {
   readonly inserted: number; readonly replayed: number;
   /** Observation only, never a substitute for publication-time current reconciliation. */
@@ -70,11 +82,12 @@ function exactValue(v: JsonValue, column: string): JsonValue {
     && BigInt(v) >= -2147483648n && BigInt(v) <= 2147483647n) return Number(v);
   return v;
 }
-function validateSnapshot(entity: NativeCatalogueEntity, n: JsonObject): void {
-  const cols = NATIVE_CATALOGUE_COLUMNS[entity];
+function validateSnapshot(entity: NativeCatalogueEntity, n: JsonObject, successor = false): void {
+  const cols = (successor ? NATIVE_CATALOGUE_COLUMNS_26 : NATIVE_CATALOGUE_COLUMNS)[entity];
   requireDomain(Object.keys(n).length === cols.length && cols.every(c => Object.hasOwn(n, c)), "NATIVE_CATALOGUE_COLUMNS", "Exact complete native columns required");
   for (const [key, value] of Object.entries(n)) {
-    if (key === "id" || key.endsWith("_id")) {
+    if (successor && key === "deleted_at") requireDomain(value === null, "NATIVE_CATALOGUE_CREATION_METADATA", "First source creation has explicitly approved NULL tombstone metadata");
+    else if (key === "id" || key.endsWith("_id")) {
       if (key === "parent_id" && value === null) continue;
       entityId("category", value as string);
     } else if (key === "version") requireDomain(value === 1, "NATIVE_CATALOGUE_VERSION", "Creation version is exactly 1");
@@ -86,6 +99,10 @@ function validateSnapshot(entity: NativeCatalogueEntity, n: JsonObject): void {
   if (entity === "FIT") requireDomain(typeof n.code === "string" && /^[A-Z]$/.test(n.code), "NATIVE_CATALOGUE_FIT_CODE", "Existing native one-letter uppercase FIT constraint is unchanged");
 }
 export function prepareNativeCatalogueImportChunk(input: NativeCatalogueImportChunk): PreparedNativeCatalogueImportChunk {
+  requireDomain(!Object.hasOwn(input, "schemaProfile") && !Object.hasOwn(input, "validatorVersion"), "NATIVE_CATALOGUE_SUCCESSOR_EXPLICIT", "Successor requires its explicit preparer");
+  return prepareNativeCatalogueCore(input);
+}
+function prepareNativeCatalogueCore(input: NativeCatalogueImportChunk, successor = false): PreparedNativeCatalogueImportChunk {
   const chunk = structuredClone(input); entityId("category", chunk.batchId);
   const selection = chunk.selection;
   requireDomain(text(chunk.fixedSourceNamespace) && selection?.source === "REVIEWED_DICTIONARY_OCCURRENCES_V1"
@@ -120,6 +137,7 @@ export function prepareNativeCatalogueImportChunk(input: NativeCatalogueImportCh
       requireDomain(row.nativeId !== s.sourceKey, "NATIVE_CATALOGUE_NATIVE_ID", "Explicit independent native allocation required; do not copy source identity into native identity"); n.id = row.nativeId; }
     else requireDomain(row.nativeId === null, "NATIVE_CATALOGUE_MEMBER_ID", "Members have their native composite group/size key, not an invented row ID");
     if (["CATEGORY", "COLOR", "FIT"].includes(entity)) n.version = 1;
+    if (successor && ["CATEGORY", "COLOR", "FIT"].includes(entity)) n.deleted_at = null;
     for (const column of expected) {
       const d = row.decisions[column]!;
       if (d.kind === "SOURCE_FIELD") {
@@ -141,11 +159,11 @@ export function prepareNativeCatalogueImportChunk(input: NativeCatalogueImportCh
       const expectedEntity = column === "parent_id" ? "CATEGORY" : column === "size_id" ? "SIZE" : "SIZE_GROUP";
       requireDomain(ref.entity === expectedEntity && text(ref.sourceKey) && object(ref.nativeSnapshot) && ref.nativeSnapshot.id === ref.nativeId,
         "NATIVE_CATALOGUE_REFERENCES", "Exact source/native dependency identity and snapshot required");
-      entityId("category", ref.nativeId); validateSnapshot(ref.entity, ref.nativeSnapshot); n[column] = ref.nativeId;
+      entityId("category", ref.nativeId); validateSnapshot(ref.entity, ref.nativeSnapshot, successor); n[column] = ref.nativeId;
       if (column === "parent_id") requireDomain(ref.nativeSnapshot.parent_id === null && ref.nativeId !== n.id,
         "NATIVE_CATALOGUE_CATEGORY_DEPTH", "Existing two-level acyclic category contract is unchanged; never reclassify products");
     }
-    validateSnapshot(entity, n);
+    validateSnapshot(entity, n, successor);
     const targetKey = entity === "SIZE_GROUP_MEMBER" ? `${n.size_group_id}/${n.size_id}` : n.id as string;
     const key = JSON.stringify([entity, s.sourceKey]), target = JSON.stringify([entity, targetKey]), position = JSON.stringify([s.sourceFileSha256, s.sheet, s.rowNo]);
     requireDomain(!ids.has(s.id) && !keys.has(key) && !targets.has(target) && !positions.has(position), "NATIVE_CATALOGUE_DUPLICATE", "Repeated dictionary occurrence, identity or target");
@@ -153,10 +171,12 @@ export function prepareNativeCatalogueImportChunk(input: NativeCatalogueImportCh
     if (["COLOR", "FIT", "SIZE_GROUP", "SEASON"].includes(entity)) {
       const code = JSON.stringify([entity, n.code]); requireDomain(!uniqueCodes.has(code), "NATIVE_CATALOGUE_DUPLICATE_CODE", "Native unique code collision; SIZE code intentionally is not globally unique"); uniqueCodes.add(code);
     }
-    const fingerprint = requestHash({ selection, row, nativeSnapshot: n });
+    const fingerprint = requestHash({ selection, row, nativeSnapshot: n, ...(successor ? { schemaProfile: "EXACT26" } : {}) });
     const evidence: JsonObject = { validator_version: NATIVE_CATALOGUE_IMPORT_VERSION, fingerprint, native_snapshot: n,
       target_key: targetKey, source_key_field: row.sourceKeyField, selection: { ...selection }, decisions: decisionEvidence,
-      references: structuredClone(row.references) as unknown as JsonObject };
+      references: structuredClone(row.references) as unknown as JsonObject,
+      ...(successor ? { schema_profile: "EXACT26", migration_defaults: { version: "NATIVE_CATALOGUE_APPROVED_MIGRATION_DEFAULTS_26_V1",
+        ...(["CATEGORY", "COLOR", "FIT"].includes(entity) ? { deleted_at: null } : {}) } } : {}) };
     return { ...row, entity, nativeSnapshot: n, targetKey, fingerprint, evidence };
   });
   // In-chunk references must resolve exactly; others are checked against immutable same-batch bindings by the SQL adapter.
@@ -171,6 +191,20 @@ export function prepareNativeCatalogueImportChunk(input: NativeCatalogueImportCh
       "NATIVE_CATALOGUE_REFERENCE_CONFLICT", "In-chunk reference differs from exact source/native creation decision");
   }
   return { ...chunk, rows, mappingVersion: HISTORY_MAPPING_VERSION, fingerprint: requestHash(chunk) };
+}
+export function prepareNativeCatalogueImportChunk26(input: NativeCatalogueImportChunk26): PreparedNativeCatalogueImportChunk26 {
+  historySettlementRequestHash(input);
+  requireDomain(Reflect.ownKeys(input).length === 6 && ["batchId", "fixedSourceNamespace", "selection", "rows", "schemaProfile", "validatorVersion"].every(k => Object.hasOwn(input, k))
+    && input.schemaProfile === "EXACT26" && input.validatorVersion === NATIVE_CATALOGUE_IMPORT_VERSION_26,
+  "NATIVE_CATALOGUE_SUCCESSOR_PROFILE", "Explicit exact26 source DTO required");
+  return prepareNativeCatalogueCore(input, true) as PreparedNativeCatalogueImportChunk26;
+}
+export function validatePreparedNativeCatalogueImportChunk26(chunk: PreparedNativeCatalogueImportChunk26): void {
+  historySettlementRequestHash(chunk);
+  const input: NativeCatalogueImportChunk26 = { batchId: chunk.batchId, fixedSourceNamespace: chunk.fixedSourceNamespace, selection: chunk.selection,
+    schemaProfile: chunk.schemaProfile, validatorVersion: chunk.validatorVersion,
+    rows: chunk.rows.map(({ source, sourceKeyField, nativeId, decisions, references }) => ({ source, sourceKeyField, nativeId, decisions, references })) };
+  requireDomain(requestHash(prepareNativeCatalogueImportChunk26(input)) === requestHash(chunk), "NATIVE_CATALOGUE_PREPARED_CHANGED", "Prepared successor catalogue changed");
 }
 export function validatePreparedNativeCatalogueImportChunk(chunk: PreparedNativeCatalogueImportChunk): void {
   const input: NativeCatalogueImportChunk = { batchId: chunk.batchId, fixedSourceNamespace: chunk.fixedSourceNamespace, selection: chunk.selection,
