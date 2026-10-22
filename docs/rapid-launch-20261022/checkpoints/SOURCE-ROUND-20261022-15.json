@@ -1,0 +1,75 @@
+{
+  "atUtc": "2026-10-22T08:24:25.338963+00:00",
+  "parent": "aa480ab276c46d2824f86490c796afaeb6a15186",
+  "groups": [
+    {
+      "slice": "D2_W11_PRODUCT_SEASON_ARRAY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W11-SEASON-RECEIPT.json",
+      "receiptSha256": "fe3c97a17fe9b1f8e6c70fd803754dbf41df633e6fd0de5aff7922b68562d6e0",
+      "files": [
+        {
+          "path": "packages/application/src/product-maintenance-ports.ts",
+          "sha256": "e5aec90e935ce524e8973658239385ed61f4d8756d81fa229e8d167fcbda7cec",
+          "owner": "D2"
+        },
+        {
+          "path": "packages/application/src/product-maintenance-validation.ts",
+          "sha256": "8d1268bc80e39b761ae0e8efe569c18da830c219c6e715310d8d25ade256199d",
+          "owner": "D2"
+        },
+        {
+          "path": "packages/application/src/product-maintenance-service.ts",
+          "sha256": "58c9f7d1fce7d767e71ec7fd41f47ec69c7cf9c0d32e376a916854fd1deee91b",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/product-maintenance-http.ts",
+          "sha256": "ba76d1425a59e0d0bfd38b344d3600e63cc307f4a3d64892a65866cae3fabd10",
+          "owner": "D2"
+        },
+        {
+          "path": "adapters/postgres/src/product-maintenance-store.ts",
+          "sha256": "902609625d2428368d095cc5c6cead07801badeeaaff23feee4d76f81c45a3a1",
+          "owner": "D2"
+        },
+        {
+          "path": "adapters/postgres/src/product-query-reader.ts",
+          "sha256": "d21c53263666227c87bd466d008af9864a7bf42c25d3d1d1691240c83bdca383",
+          "owner": "D2"
+        },
+        {
+          "path": "adapters/postgres/src/product-management-query-reader.ts",
+          "sha256": "1a007c70866c38cc82344a3b57daf6a4b04d608d237ff4acc1fd4c8c80c17993",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/product-maintenance.test.ts",
+          "sha256": "23ba8efcfe06ab26bb83d6ccbdcdc895c20bbc58f657973c548fc080afbcd17c",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/product-maintenance-postgres-protocol.test.ts",
+          "sha256": "38b223998cc86186b02c0560f823f3b20ad65063bfb011c29dc2b2fc691bb083",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/product-query-postgres-protocol.test.ts",
+          "sha256": "673f418b584bb5abefec259667b2ca01ca18dac60bce6e2315eb9166488cea6e",
+          "owner": "D2"
+        },
+        {
+          "path": "tests/product-management-query-reader.test.ts",
+          "sha256": "3e68a10d1e489d097cd2cd2ae8e4a6b5d4f563c83be47831e3c0999361e06d0c",
+          "owner": "D2"
+        },
+        {
+          "path": "apps/api/src/product-maintenance-http.test.ts",
+          "sha256": "753a82a4d7e98bb1bfa832a3f9df0912ab7be5369acbf11ff242ce7a5cc29d90",
+          "owner": "D2"
+        }
+      ]
+    }
+  ],
+  "fileCount": 12,
+  "scope": "Approved product single-column consumer source only; actual target proof, PG and data conversion pending"
+}

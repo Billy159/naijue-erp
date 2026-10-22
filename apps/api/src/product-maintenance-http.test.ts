@@ -46,3 +46,26 @@ test("product maintenance HTTP: save/replay/original receipt traverses the actua
   granted = false; const denied = await post(command); assert.equal(denied.statusCode, 403); assert.doesNotMatch(denied.body, /PRIVATE_POLICY/);
   active = false; assert.equal((await post(command)).statusCode, 401); assert.equal(app.server.listening, false);
 });
+
+test("season v2 HTTP: new routes require verified contract; old editor upgrade and malformed bodies use bounded sanitized errors", async t => {
+  let ready = false, active = true;
+  const unitOfWork: ProductMaintenanceDependencies["unitOfWork"] = { async transaction(work) { return work({ evidence: {
+    async assertAllowed() {}, async getReceipt() { return undefined; }, async complete() { throw Error("No write"); }
+  }, async load() { throw Error("Must stop before load"); }, async readReferences() { throw Error("Must stop before refs"); },
+  async readCandidates(q) { return { ...q, total: 0, items: [] }; }, async validateReferences() {}, async assertCanDelete() {}, async putProduct() { throw Error("No write"); }, async putSku() {}, async putBarcode() {} }); } };
+  Object.defineProperty(unitOfWork, "seasonContract", { get: () => ready ? "product-season-array-v1" : undefined });
+  const dependencies = { unitOfWork, now: () => "unused", newId: () => "unused" };
+  const app = Fastify({ logger: false }); t.after(() => app.close()); app.register(createProductMaintenanceHttpPlugin({ authenticate: async () => active ? actor : null, dependencies })); await app.ready();
+  const { seasonId: _scalar, ...data } = values, v2 = { ...command, values: { ...data, seasonIds: [] } };
+  const post = (url: string, payload: unknown) => app.inject({ method: "POST", url, payload: JSON.stringify(payload), headers: { "content-type": "application/json" } });
+  for (const [url, body] of [["/products/v2/commands", v2], ["/products/maintenance/v2/detail/query", { productId: id(1) }]] as const) {
+    const result = await post(url, body); assert.equal(result.statusCode, 503, result.body); assert.equal(result.json().error.code, "PRODUCT_SEASON_NOT_READY"); assert.equal(result.headers["cache-control"], "no-store");
+  }
+  assert.equal((await post("/products/v2/commands", { ...v2, values: { ...v2.values, seasonIds: [null] } })).statusCode, 400);
+  assert.equal((await post("/products/v2/commands?seasonIds=x", v2)).statusCode, 400);
+  ready = true;
+  for (const [url, body] of [["/products/commands", command], ["/products/maintenance/detail/query", { productId: id(1) }]] as const) {
+    const result = await post(url, body); assert.equal(result.statusCode, 409, result.body); assert.equal(result.json().error.code, "PRODUCT_EDIT_CONTRACT_UPGRADE_REQUIRED");
+  }
+  active = false; assert.equal((await post("/products/v2/commands", v2)).statusCode, 401); assert.equal(app.server.listening, false);
+});

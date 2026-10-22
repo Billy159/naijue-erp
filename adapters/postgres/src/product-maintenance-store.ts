@@ -3,8 +3,8 @@ import { entityId } from "../../../packages/domain/src/values.ts";
 import { CATALOGUE_PRICE_KEYS } from "../../../packages/application/src/catalogue-price-input.ts";
 import type { CataloguePriceKey } from "../../../packages/application/src/catalogue-price-input.ts";
 import type { ProductAggregate, ProductBarcodeRecord, ProductDetailReferences, ProductMaintenanceCandidate, ProductMaintenanceCandidatePage, ProductMaintenanceCandidateQuery, ProductMaintenanceEvidence, ProductMaintenanceTransaction, ProductMaintenanceUnitOfWork, ProductSkuRecord, ProductStoredRecord } from "../../../packages/application/src/product-maintenance-ports.ts";
-import { parseProductMaintenanceCandidates, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS } from "../../../packages/application/src/product-maintenance-validation.ts";
-import type { PgProductQueryResult } from "./product-query-reader.ts";
+import { parseProductMaintenanceCandidates, parseProductSeasonIds, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS } from "../../../packages/application/src/product-maintenance-validation.ts";
+import { productSeasonArrayEnabled, type ProductSeasonArrayCapability, type PgProductQueryResult } from "./product-query-reader.ts";
 import type { MaintenancePgUnitOfWork } from "./maintenance-command-unit-of-work.ts";
 import { booleanValue, integerValue, nullableString, stringValue, versionFromSql } from "./codec.ts";
 
@@ -22,13 +22,17 @@ function storedPrice(value: unknown): string | null {
   if (value === null) return null;
   requireDomain(typeof value === "string" && /^(?:0|[1-9]\d{0,15})\.\d{2}$/.test(value), "INVALID_DATABASE_VALUE", "Invalid stored product price"); return value;
 }
-function productRow(r: Record<string, unknown>): ProductStoredRecord {
+function storedSeasons(input: unknown): readonly string[] | null {
+  try { parseProductSeasonIds(input); } catch { requireDomain(false, "INVALID_DATABASE_VALUE", "Invalid stored season array"); }
+  return input === null ? null : Object.freeze([...(input as string[])]);
+}
+function productRow(r: Record<string, unknown>, seasonArray: boolean): ProductStoredRecord {
   const prices = {} as Record<CataloguePriceKey, string | null>; for (const k of CATALOGUE_PRICE_KEYS) prices[k] = storedPrice(r[k]);
   return { id: uuid(r.id), productCode: stringValue(r.product_code), name: stringValue(r.name), categoryId: uuid(r.category_id),
     supplierId: r.supplier_id === null ? null : uuid(r.supplier_id), seasonId: r.season_id === null ? null : uuid(r.season_id), sizeGroupId: uuid(r.size_group_id),
     year: r.year === null ? null : integerValue(r.year), systemItemCode: nullableString(r.system_item_code), thickness: nullableString(r.thickness),
     collarPantsType: nullableString(r.collar_pants_type), defaultBarcodeSchemeId: r.default_barcode_scheme_id === null ? null : uuid(r.default_barcode_scheme_id),
-    enabled: booleanValue(r.enabled), version: versionFromSql(r.version), deletedAt: nullableString(r.deleted_at), prices };
+    enabled: booleanValue(r.enabled), version: versionFromSql(r.version), deletedAt: nullableString(r.deleted_at), prices, ...(seasonArray ? { seasonIds: storedSeasons(r.season_ids) } : {}) };
 }
 function skuRow(r: Record<string, unknown>): ProductSkuRecord {
   return { id: uuid(r.id), productId: uuid(r.product_id), skuCode: stringValue(r.sku_code), colorId: uuid(r.color_id), fitId: uuid(r.fit_id), sizeId: uuid(r.size_id),
@@ -45,23 +49,26 @@ function rootValues(p: ProductStoredRecord): unknown[] {
     p.collarPantsType, p.defaultBarcodeSchemeId, p.enabled, p.version, p.deletedAt, ...CATALOGUE_PRICE_KEYS.map(k => p.prices[k])];
 }
 export class PostgresProductMaintenanceUnitOfWork implements ProductMaintenanceUnitOfWork {
+  readonly seasonContract?: "product-season-array-v1";
   private readonly driver: PgProductMaintenanceDriver; private readonly deletion: ProductDeletionGuard | null;
-  constructor(driver: PgProductMaintenanceDriver, options: { readonly deletionGuard: ProductDeletionGuard | null }) {
+  constructor(driver: PgProductMaintenanceDriver, options: { readonly deletionGuard: ProductDeletionGuard | null; readonly seasonCapability?: ProductSeasonArrayCapability | null }) {
     if (typeof driver?.transaction !== "function" || !options || !Object.hasOwn(options, "deletionGuard")
       || (options.deletionGuard !== null && typeof options.deletionGuard?.assertCanDelete !== "function")) throw new TypeError("Product maintenance requires D1 driver and explicit deletion guard availability");
     this.driver = driver; this.deletion = options.deletionGuard;
+    if (productSeasonArrayEnabled(driver, options.seasonCapability ?? null)) this.seasonContract = "product-season-array-v1";
   }
   transaction<T>(work: (tx: ProductMaintenanceTransaction) => Promise<T>): Promise<T> {
     return this.driver.transaction(async context => {
-      const tx = new ProductTransaction(context, this.deletion);
+      const tx = new ProductTransaction(context, this.deletion, this.seasonContract !== undefined);
       try { return await work(tx); } finally { tx.close(); }
     });
   }
 }
 class ProductTransaction implements ProductMaintenanceTransaction {
   readonly evidence: ProductMaintenanceEvidence; private active = true; private loadedId: string | undefined;
+  private readonly seasonArray: boolean;
   private readonly context: PgProductMaintenanceContext; private readonly deletion: ProductDeletionGuard | null;
-  constructor(context: PgProductMaintenanceContext, deletion: ProductDeletionGuard | null) { this.context = context; this.evidence = context.evidence; this.deletion = deletion; }
+  constructor(context: PgProductMaintenanceContext, deletion: ProductDeletionGuard | null, seasonArray: boolean) { this.seasonArray = seasonArray; this.context = context; this.evidence = context.evidence; this.deletion = deletion; }
   close(): void { this.active = false; }
   private query(sql: string, values: unknown[] = []) { requireDomain(this.active, "TRANSACTION_CLOSED", "Product transaction is closed"); return this.context.client.query(sql, values); }
   async readReferences(p: ProductStoredRecord): Promise<ProductDetailReferences> {
@@ -81,7 +88,9 @@ class ProductTransaction implements ProductMaintenanceTransaction {
     const categoryPath = path.map(c => ({ id: uuid(c.id), name: stringValue(c.name) }));
     const schemeId = nullableString(r.scheme_id);
     requireDomain(schemeId === null || r.scheme_status === "CURRENT" || r.scheme_status === "HISTORICAL", "INVALID_DATABASE_VALUE", "Invalid descriptive scheme status");
-    return { categoryPath, sizeGroup: { id: uuid(r.size_group_id), name: stringValue(r.size_group_name) },
+    const seasons = this.seasonArray ? (await this.query("SELECT id,name FROM naijue_erp.season WHERE id=ANY($1::uuid[]) ORDER BY display_order,id", [p.seasonIds])).rows.map(s => ({ id: uuid(s.id), name: stringValue(s.name) })) : undefined;
+    requireDomain(seasons === undefined || seasons.length === (p.seasonIds?.length ?? 0), "INVALID_DATABASE_VALUE", "Incomplete actual season references");
+    return { ...(seasons === undefined ? {} : { seasons }), categoryPath, sizeGroup: { id: uuid(r.size_group_id), name: stringValue(r.size_group_name) },
       supplier: r.supplier_id === null ? null : { id: uuid(r.supplier_id), name: stringValue(r.supplier_name), enabled: booleanValue(r.supplier_enabled) },
       season: r.season_id === null ? null : { id: uuid(r.season_id), name: stringValue(r.season_name) },
       defaultBarcodeScheme: schemeId === null ? null : { id: uuid(schemeId), name: stringValue(r.scheme_name), ruleVersion: stringValue(r.rule_version), status: r.scheme_status as "CURRENT" | "HISTORICAL" } };
@@ -122,10 +131,10 @@ class ProductTransaction implements ProductMaintenanceTransaction {
   async load(id: string): Promise<ProductAggregate | undefined> {
     entityId("product", id); requireDomain(this.loadedId === undefined, "TRANSACTION_SCOPE", "Load one product aggregate per command"); this.loadedId = id;
     await this.query("SELECT pg_advisory_xact_lock(hashtextextended($1,0))", [`naijue:product:${id}`]);
-    const rows = (await this.query(`SELECT ${ROOT_COLUMNS.map(k => CATALOGUE_PRICE_KEYS.includes(k as CataloguePriceKey) ? `${k}::text AS ${k}` : k === "deleted_at" ? `to_char(deleted_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS deleted_at` : k).join(", ")}
+    const rows = (await this.query(`SELECT ${[...ROOT_COLUMNS, ...(this.seasonArray ? ["season_ids"] : [])].map(k => CATALOGUE_PRICE_KEYS.includes(k as CataloguePriceKey) ? `${k}::text AS ${k}` : k === "deleted_at" ? `to_char(deleted_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS deleted_at` : k).join(", ")}
       FROM naijue_erp.product WHERE id=$1::uuid FOR UPDATE`, [id])).rows;
     requireDomain(rows.length <= 1, "INVALID_DATABASE_VALUE", "Product identity is not unique"); if (!rows[0]) return undefined;
-    const p = productRow(rows[0]); requireDomain(p.id === id, "INVALID_DATABASE_VALUE", "Mismatched product");
+    const p = productRow(rows[0], this.seasonArray); requireDomain(p.id === id, "INVALID_DATABASE_VALUE", "Mismatched product");
     const s = (await this.query(`SELECT id, product_id, sku_code, color_id, fit_id, size_id, enabled, version, created_operation_id
       FROM naijue_erp.sku WHERE product_id=$1::uuid ORDER BY id LIMIT $2 FOR UPDATE`, [id, PRODUCT_MAINTENANCE_MAX_SKUS + 1])).rows;
     requireDomain(s.length <= PRODUCT_MAINTENANCE_MAX_SKUS, "PRODUCT_MAINTENANCE_TOO_LARGE", "SKU edit bound exceeded");
@@ -150,6 +159,14 @@ class ProductTransaction implements ProductMaintenanceTransaction {
     if (p.seasonId !== null) {
       const rows = (await this.query("SELECT id FROM naijue_erp.season WHERE id=$1::uuid FOR SHARE", [p.seasonId])).rows;
       requireDomain(rows.length === 1 && rows[0]!.id === p.seasonId, "PRODUCT_REFERENCE_UNAVAILABLE", "Season is unavailable");
+    }
+    if (this.seasonArray) {
+      requireDomain(Object.hasOwn(p, "seasonIds"), "INVALID_DATABASE_VALUE", "Actual season array required");
+      const selected = storedSeasons(p.seasonIds);
+      if (selected?.length) {
+        const rows = (await this.query("SELECT id FROM naijue_erp.season WHERE id=ANY($1::uuid[]) ORDER BY id FOR KEY SHARE", [[...selected].sort()])).rows;
+        requireDomain(rows.length === selected.length && new Set(rows.map(r => uuid(r.id))).size === selected.length && rows.every(r => selected.includes(uuid(r.id))), "PRODUCT_REFERENCE_UNAVAILABLE", "Selected season is unavailable");
+      }
     }
     const schemes = [...new Set([p.defaultBarcodeSchemeId, ...next.barcodes.map(b => b.schemeId)].filter((id): id is string => id !== null))];
     if (schemes.length) {
@@ -180,11 +197,17 @@ class ProductTransaction implements ProductMaintenanceTransaction {
   }
   async putProduct(next: ProductStoredRecord, previous: ProductStoredRecord | undefined): Promise<void> {
     requireDomain(next.id === this.loadedId && next.version === (previous?.version ?? 0) + 1, "TRANSACTION_SCOPE", "Write one locked product version");
-    const parameters = rootValues(next);
+    let columns: readonly string[] = ROOT_COLUMNS, parameters = rootValues(next);
+    if (this.seasonArray) {
+      requireDomain(Object.hasOwn(next, "seasonIds") && (!previous || next.seasonId === previous.seasonId) && (previous !== undefined || next.seasonId === null), "INVALID_DATABASE_VALUE", "Array contract preserves legacy season provenance");
+      storedSeasons(next.seasonIds);
+      columns = [...ROOT_COLUMNS, "season_ids"]; parameters = [...parameters, next.seasonIds];
+      if (previous) { const index = columns.indexOf("season_id"); columns = columns.filter((_, i) => i !== index); parameters = parameters.filter((_, i) => i !== index); }
+    }
     try {
-      const written = previous ? await this.query(`UPDATE naijue_erp.product SET ${ROOT_COLUMNS.slice(1).map((k, i) => `${k}=$${i + 2}`).join(",")}
+      const written = previous ? await this.query(`UPDATE naijue_erp.product SET ${columns.slice(1).map((k, i) => `${k}=$${i + 2}`).join(",")}
         WHERE id=$1::uuid AND version=$${parameters.length + 1}`, [...parameters, previous.version])
-        : await this.query(`INSERT INTO naijue_erp.product(${ROOT_COLUMNS.join(",")}) VALUES(${parameters.map((_, i) => `$${i + 1}`).join(",")})`, parameters);
+        : await this.query(`INSERT INTO naijue_erp.product(${columns.join(",")}) VALUES(${parameters.map((_, i) => `$${i + 1}`).join(",")})`, parameters);
       requireDomain(written.rowCount === 1, "VERSION_CONFLICT", "Product write did not match exact version");
     } catch (error) { if ((error as { code?: string }).code === "23505") requireDomain(false, "PRODUCT_CODE_CONFLICT", "Product code already exists"); throw error; }
   }

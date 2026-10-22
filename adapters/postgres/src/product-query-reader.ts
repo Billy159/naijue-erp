@@ -36,6 +36,28 @@ export function catalogueRetainedDeleteEnabled(pool: PgProductQueryPool, capabil
   }
   return true;
 }
+/** D1 issues this only after exact schema, reference guards, access and conversion verification. */
+export interface ProductSeasonArrayCapability {
+  readonly profile: "product-season-array-v1";
+  readonly assertVerified: (target: object) => void;
+}
+export function productSeasonArrayEnabled(target: object, capability: ProductSeasonArrayCapability | null): boolean {
+  if (capability === null) return false;
+  if (typeof capability !== "object" || Array.isArray(capability) || Object.getPrototypeOf(capability) !== Object.prototype
+    || Reflect.ownKeys(capability).length !== 2) throw new TypeError("Verified product season capability required");
+  const p = Object.getOwnPropertyDescriptor(capability, "profile"), v = Object.getOwnPropertyDescriptor(capability, "assertVerified");
+  if (!p || !("value" in p) || p.value !== "product-season-array-v1" || !v || !("value" in v) || typeof v.value !== "function"
+    || Object.prototype.toString.call(v.value) === "[object AsyncFunction]") throw new TypeError("Synchronous product season proof required");
+  const result: unknown = v.value(target);
+  if (result !== undefined) { if (result instanceof Promise) void result.catch(() => {}); throw new TypeError("Synchronous product season proof required"); }
+  return true;
+}
+/** One aggregate row per product, including NULL/empty. Never expands product or stock rows. */
+export function productSeasonLabelJoin(array: boolean): string {
+  return array ? `LEFT JOIN LATERAL (SELECT string_agg(d.name,'、' ORDER BY d.display_order,d.id) AS name
+    FROM naijue_erp.season d WHERE d.id=ANY(p.season_ids)) se ON true`
+    : "LEFT JOIN naijue_erp.season se ON se.id = p.season_id";
+}
 type PgPoolCompatibility = Pool extends PgProductQueryPool ? true : never;
 const pgPoolCompatibility: PgPoolCompatibility = true; void pgPoolCompatibility;
 /** Technical response safeguards, not catalogue/business maxima. Overflow fails, never truncates. */
@@ -77,10 +99,10 @@ const IMAGE_COLUMNS = "i.id, i.product_id, i.file_ref, i.mime, i.byte_size::text
  * or pool acquisition. The trusted host must configure database/pool timeouts separately. */
 export class PostgresProductQueryReader implements TrustedProductSnapshotReader {
   private readonly pool: PgProductQueryPool;
-  private readonly retainedDelete: boolean;
-  constructor(pool: PgProductQueryPool, capability: CatalogueRetainedDeleteCapability | null = null) {
+  private readonly retainedDelete: boolean; private readonly seasonArray: boolean;
+  constructor(pool: PgProductQueryPool, capability: CatalogueRetainedDeleteCapability | null = null, seasonCapability: ProductSeasonArrayCapability | null = null) {
     if (typeof pool?.connect !== "function") throw new TypeError("Product query reader requires an explicit PostgreSQL pool");
-    this.pool = pool; this.retainedDelete = catalogueRetainedDeleteEnabled(pool, capability);
+    this.pool = pool; this.retainedDelete = catalogueRetainedDeleteEnabled(pool, capability); this.seasonArray = productSeasonArrayEnabled(pool, seasonCapability);
   }
   private validate<P extends ProductQuery>(read: ProductScopedRead<P>, parameters: P): void {
     checkedProductActor(read.actor); checkedProductGrant(read.grant, parameters); activeProductRead(read.signal);
@@ -110,7 +132,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
       const row = oneOrMissing((await query(`SELECT p.id, p.product_code, p.name, p.year, p.system_item_code, p.retail_price::text,
         c.name AS category_name, se.name AS season_name, su.name AS supplier_name
         FROM naijue_erp.product p JOIN naijue_erp.product_category c ON c.id = p.category_id
-        LEFT JOIN naijue_erp.season se ON se.id = p.season_id LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id
+        ${productSeasonLabelJoin(this.seasonArray)} LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id
         WHERE p.id = $1::uuid${this.retainedDelete ? " AND p.deleted_at IS NULL" : ""}`, [parameters.productId])).rows);
       if (row === null) return null;
       requireDomain(id("product", row.id) === parameters.productId, "INVALID_DATABASE_VALUE", "Mismatched product target");

@@ -13,7 +13,7 @@ const product = { id: productId, product_code: "SYNTHETIC-7100", name: "合成�
   supplier_name: null, thickness: null, retail_price: null };
 const counts = { WAREHOUSE: 1, SKU: 1, INVENTORY_LEDGER: 1, IMPORT_BATCH: 1 };
 const publication = { id: sid("operation", 7105), completed: true, final_approval: true, checkpoint: { sequence: 1, cursor: 4, counts, expected: counts } };
-function fixture(options: { overrides?: Record<string, Record<string, unknown>[]>; fail?: string; rollbackFail?: boolean; onQuery?: (sql: string) => void } = {}) {
+function fixture(options: { overrides?: Record<string, Record<string, unknown>[]>; fail?: string; rollbackFail?: boolean; onQuery?: (sql: string) => void; seasonArray?: boolean } = {}) {
   const queries: { sql: string; values: unknown[] }[] = []; let connections = 0, released = 0; let discarded: Error | boolean | undefined;
   const defaultRows: Record<string, Record<string, unknown>[]> = {
     count: [{ exact_total: "1", invalid_category_tree: false }], page: [product], fits: [{ product_id: productId, id: fitId, name: "Y版原名", code: "Y" }],
@@ -28,7 +28,7 @@ function fixture(options: { overrides?: Record<string, Record<string, unknown>[]
     if (options.fail !== undefined && key === options.fail) throw new Error("SYNTHETIC SQL FAILURE");
     const rows = key ? options.overrides?.[key] ?? defaultRows[key] ?? [] : []; return { rows, rowCount: rows.length };
   }, release(error) { released++; discarded = error; } }; } };
-  return { reader: new PostgresProductManagementQueryReader(pool), queries, counts: () => ({ connections, released, discarded }) };
+  return { reader: new PostgresProductManagementQueryReader(pool, null, options.seasonArray ? { profile: "product-season-array-v1", assertVerified(target) { assert.equal(target, pool); } } : null), queries, counts: () => ({ connections, released, discarded }) };
 }
 function read(grant: ProductManagementReadGrant = { kind: "products", productIds: [productId], totalStock: "unavailable" }, signal = new AbortController().signal) { return { actor, parameters, grant, signal }; }
 test("native product list uses one read-only snapshot, parameterizes 8 filters and explicit product grant before count/page", async () => {
@@ -94,4 +94,21 @@ test("truncated counts and malformed native exact values never produce successfu
     { fits: [{ product_id: sid("product", 7999), id: fitId, name: "other", code: "Y" }] }]) {
     const f = fixture({ overrides }); await assert.rejects(() => f.reader.readList(read())); assert.equal(f.queries.at(-1)!.sql, "ROLLBACK");
   }
+});
+
+test("season v2 reads: ANY filter stays one product row across count/page/stock scope, batch labels and authorized distinct candidates", async () => {
+  const f = fixture({ seasonArray: true, overrides: { page: [{ ...product, season_name: "春、夏" }] } });
+  const result = await f.reader.readList(read({ kind: "all", totalStock: "all-warehouses" })); assert.equal(result.exactTotal, 1); assert.equal(result.items[0]!.seasonLabel, "春、夏"); assert.equal(result.items[0]!.totalStock, "-10");
+  for (const key of ["count", "page", "stock-coverage"]) {
+    const sql = f.queries.find(q => q.sql.includes(`product-management:${key} */`))!.sql;
+    assert.match(sql, /p.season_ids && \$6::uuid\[\]/); assert.doesNotMatch(sql.slice(0, sql.indexOf(") SELECT") + 1), /unnest/);
+  }
+  const page = f.queries.find(q => q.sql.includes("product-management:page"))!.sql;
+  assert.match(page, /string_agg\(d.name,'、' ORDER BY d.display_order,d.id\)/); assert.match(page, /d.id=ANY\(p.season_ids\)/); assert.doesNotMatch(page, /p.season_id/);
+  const g = fixture({ seasonArray: true, overrides: { "candidate-page": [{ id: sid("season", 7103), label: "春" }] } });
+  await g.reader.readCandidates({ ...read(), parameters: { kind: "season", search: "", selectedIds: [], page: 1, pageSize: 20 } });
+  for (const q of g.queries.filter(q => q.sql.includes("product-management:candidate-"))) {
+    assert.match(q.sql, /FROM authorized_products p CROSS JOIN LATERAL unnest\(p.season_ids\)/); assert.match(q.sql, /SELECT DISTINCT d.id/); assert.deepEqual(q.values.slice(0, 2), [false, [productId]]);
+  }
+  const legacy = fixture(); await legacy.reader.readList(read()); assert.ok(legacy.queries.every(q => !q.sql.includes("season_ids"))); assert.match(legacy.queries.find(q => q.sql.includes("product-management:count"))!.sql, /p.season_id = ANY/);
 });

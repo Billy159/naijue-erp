@@ -11,7 +11,7 @@ import { booleanValue, integerValue, nullableString, stringValue } from "./codec
 import { decodeImportCheckpoint } from "./inventory-cutoff-import-store.ts";
 import { GUARD_CAPABILITY } from "./inventory-publication-guards.ts";
 import type { PgProductQueryPool, PgProductQueryResult } from "./product-query-reader.ts";
-import { catalogueRetainedDeleteEnabled, type CatalogueRetainedDeleteCapability } from "./product-query-reader.ts";
+import { catalogueRetainedDeleteEnabled, productSeasonArrayEnabled, productSeasonLabelJoin, type ProductSeasonArrayCapability, type CatalogueRetainedDeleteCapability } from "./product-query-reader.ts";
 
 export type PgProductManagementQueryPool = PgProductQueryPool;
 type Query = (sql: string, values?: unknown[]) => Promise<PgProductQueryResult>;
@@ -23,12 +23,12 @@ function count(value: unknown): number {
 }
 function scopeValues(grant: ProductManagementReadGrant): unknown[] { return [grant.kind === "all", grant.kind === "products" ? grant.productIds : []]; }
 const scope = (retainedDelete: boolean) => `WITH authorized_products AS (SELECT p.* FROM naijue_erp.product p WHERE ${retainedDelete ? "p.deleted_at IS NULL AND " : ""}($1::boolean OR p.id = ANY($2::uuid[])))`;
-const matched = (retainedDelete: boolean) => `${scope(retainedDelete)}, matched_products AS (SELECT p.* FROM authorized_products p
+const matched = (retainedDelete: boolean, seasonArray: boolean) => `${scope(retainedDelete)}, matched_products AS (SELECT p.* FROM authorized_products p
   WHERE (cardinality($3::uuid[]) = 0 OR p.id = ANY($3::uuid[]))
   AND (cardinality($4::uuid[]) = 0 OR p.category_id = ANY($4::uuid[]) OR EXISTS (
     SELECT 1 FROM naijue_erp.product_category c WHERE c.id = p.category_id AND c.parent_id = ANY($4::uuid[])))
   AND (cardinality($5::integer[]) = 0 OR p.year = ANY($5::integer[]))
-  AND (cardinality($6::uuid[]) = 0 OR p.season_id = ANY($6::uuid[]))
+  AND (cardinality($6::uuid[]) = 0 OR ${seasonArray ? "p.season_ids && $6::uuid[]" : "p.season_id = ANY($6::uuid[])"})
   AND (cardinality($7::uuid[]) = 0 OR p.supplier_id = ANY($7::uuid[]))
   AND (cardinality($8::uuid[]) = 0 OR EXISTS (SELECT 1 FROM naijue_erp.sku s WHERE s.product_id = p.id AND s.fit_id = ANY($8::uuid[])))
   AND (cardinality($9::text[]) = 0 OR p.thickness = ANY($9::text[]))
@@ -72,10 +72,10 @@ async function stockReadiness(query: Query, values: unknown[], matchedSql: strin
  * Abort checks stop subsequent work; pool acquisition/in-flight SQL require host driver timeouts. */
 export class PostgresProductManagementQueryReader implements TrustedProductManagementSnapshotReader {
   private readonly pool: PgProductManagementQueryPool;
-  private readonly retainedDelete: boolean;
-  constructor(pool: PgProductManagementQueryPool, capability: CatalogueRetainedDeleteCapability | null = null) {
+  private readonly retainedDelete: boolean; private readonly seasonArray: boolean;
+  constructor(pool: PgProductManagementQueryPool, capability: CatalogueRetainedDeleteCapability | null = null, seasonCapability: ProductSeasonArrayCapability | null = null) {
     if (typeof pool?.connect !== "function") throw new TypeError("Product management reader requires an explicit PostgreSQL pool");
-    this.pool = pool; this.retainedDelete = catalogueRetainedDeleteEnabled(pool, capability);
+    this.pool = pool; this.retainedDelete = catalogueRetainedDeleteEnabled(pool, capability); this.seasonArray = productSeasonArrayEnabled(pool, seasonCapability);
   }
   private async snapshot<T>(signal: AbortSignal, work: (query: Query) => Promise<T>): Promise<T> {
     activeProductManagementRead(signal); const client = await this.pool.connect(); let began = false, committing = false; let discard: Error | undefined;
@@ -96,7 +96,7 @@ export class PostgresProductManagementQueryReader implements TrustedProductManag
   async readList(read: ProductManagementScopedRead<ProductManagementListQuery>): Promise<ProductManagementListPage> {
     checkedProductActor(read.actor); const grant = checkedProductManagementGrant(read.grant), parameters = parseProductManagementListQuery(read.parameters);
     return this.snapshot(read.signal, async query => {
-      const values = listValues(grant, parameters), matchedSql = matched(this.retainedDelete);
+      const values = listValues(grant, parameters), matchedSql = matched(this.retainedDelete, this.seasonArray);
       const status = one((await query(`/* product-management:count */ ${matchedSql} SELECT count(*)::text AS exact_total,
         EXISTS (SELECT 1 FROM matched_products p JOIN naijue_erp.product_category c ON c.id = p.category_id
           JOIN naijue_erp.product_category parent ON parent.id = c.parent_id WHERE parent.parent_id IS NOT NULL) AS invalid_category_tree FROM matched_products`, values)).rows);
@@ -106,7 +106,7 @@ export class PostgresProductManagementQueryReader implements TrustedProductManag
       const rows = (await query(`/* product-management:page */ ${matchedSql}
         SELECT p.id, p.product_code, p.name, c.name AS category_name, p.year, se.name AS season_name, su.name AS supplier_name,
           p.thickness, p.retail_price::text FROM matched_products p JOIN naijue_erp.product_category c ON c.id = p.category_id
-        LEFT JOIN naijue_erp.season se ON se.id = p.season_id LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id
+        ${productSeasonLabelJoin(this.seasonArray)} LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id
         ORDER BY p.product_code COLLATE "C", p.id LIMIT $11 OFFSET $12`, [...values, parameters.pageSize, (parameters.page - 1) * parameters.pageSize])).rows;
       integrity(rows.length <= parameters.pageSize, "Unbounded product page");
       const ids = rows.map(row => entityId("product", stringValue(row.id)));
@@ -139,7 +139,7 @@ export class PostgresProductManagementQueryReader implements TrustedProductManag
   async readCandidates(read: ProductManagementScopedRead<ProductManagementCandidateQuery>): Promise<ProductManagementCandidatePage> {
     checkedProductActor(read.actor); const grant = checkedProductManagementGrant(read.grant), parameters = parseProductManagementCandidateQuery(read.parameters);
     return this.snapshot(read.signal, async query => {
-      const candidates = candidateSource(parameters.kind);
+      const candidates = candidateSource(parameters.kind, this.seasonArray);
       const sql = `${scope(this.retainedDelete)}, native_candidates AS (${candidates}), matched_candidates AS (SELECT * FROM native_candidates
         WHERE (cardinality($3::text[]) = 0 OR id = ANY($3::text[])) AND ($4::text = '' OR strpos(lower(search_text), lower($4::text)) > 0))`;
       const values = [...scopeValues(grant), parameters.selectedIds, parameters.search];
@@ -160,7 +160,7 @@ export class PostgresProductManagementQueryReader implements TrustedProductManag
 }
 /** Only fixed trusted SQL fragments are selected by validated enum. No client field becomes SQL.
  * Dictionary options are native values related to authorized products, not all-account enumeration. */
-function candidateSource(kind: ProductManagementCandidateKind): string {
+function candidateSource(kind: ProductManagementCandidateKind, seasonArray: boolean): string {
   switch (kind) {
     case "product": return `SELECT p.id::text, p.product_code || ' ' || p.name AS label, p.product_code AS code, p.name,
       p.product_code || ' ' || p.name || ' ' || coalesce(p.system_item_code, '') AS search_text, p.product_code AS sort_text FROM authorized_products p`;
@@ -170,7 +170,7 @@ function candidateSource(kind: ProductManagementCandidateKind): string {
       JOIN naijue_erp.product_category c ON c.id = child.id OR c.id = child.parent_id
       LEFT JOIN naijue_erp.product_category parent ON parent.id = c.parent_id`;
     case "year": return `SELECT DISTINCT p.year::text AS id, p.year::text || '年' AS label, p.year::text AS search_text, p.year::text AS sort_text FROM authorized_products p WHERE p.year IS NOT NULL`;
-    case "season": return `SELECT DISTINCT d.id::text, d.name AS label, d.code || ' ' || d.name AS search_text, d.code AS sort_text FROM authorized_products p JOIN naijue_erp.season d ON d.id = p.season_id`;
+    case "season": return `SELECT DISTINCT d.id::text, d.name AS label, d.code || ' ' || d.name AS search_text, d.code AS sort_text FROM authorized_products p ${seasonArray ? "CROSS JOIN LATERAL unnest(p.season_ids) selected(season_id) JOIN naijue_erp.season d ON d.id=selected.season_id" : "JOIN naijue_erp.season d ON d.id = p.season_id"}`;
     case "supplier": return `SELECT DISTINCT d.id::text, d.name AS label, d.code || ' ' || d.name AS search_text, d.code AS sort_text FROM authorized_products p JOIN naijue_erp.supplier d ON d.id = p.supplier_id WHERE d.enabled = true`;
     case "fit": return `SELECT DISTINCT d.id::text, d.name AS label, d.code || ' ' || d.name AS search_text, d.code AS sort_text FROM authorized_products p JOIN naijue_erp.sku s ON s.product_id = p.id JOIN naijue_erp.fit d ON d.id = s.fit_id WHERE d.enabled = true`;
     case "thickness": return `SELECT DISTINCT p.thickness AS id, p.thickness AS label, p.thickness AS search_text, p.thickness AS sort_text FROM authorized_products p WHERE p.thickness IS NOT NULL`;

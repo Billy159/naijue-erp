@@ -127,3 +127,27 @@ test("product pg protocol: native retail price stays an exact nullable decimal i
     await assert.rejects(() => reader(client).readBasics(read(parameters)), { code: "INVALID_DATABASE_VALUE" }); client.done();
   }
 });
+
+test("season v2 basics: verified pool selects stable aggregate label; exact19 remains scalar; missing-column error is not hidden", async () => {
+  for (const selected of [false, true]) {
+    const client = new Client([begin(), { sql: /^SELECT p.id/, rows: [{ ...basic(), season_name: "春、夏" }], inspect(_values, sql) {
+      if (selected) { assert.match(sql, /string_agg\(d.name,'、' ORDER BY d.display_order,d.id\)/); assert.match(sql, /d.id=ANY\(p.season_ids\)/); assert.doesNotMatch(sql, /p.season_id/); }
+      else { assert.doesNotMatch(sql, /season_ids/); assert.match(sql, /se.id = p.season_id/); }
+    } }, commit()]);
+    const pool = { async connect() { return client; } }, r = new PostgresProductQueryReader(pool, null, selected ? { profile: "product-season-array-v1", assertVerified(target) { assert.equal(target, pool); } } : null);
+    assert.equal((await r.readBasics(read(parameters)))!.seasonLabel, "春、夏"); client.done();
+  }
+  const failure = Object.assign(Error("synthetic missing season_ids"), { code: "42703" });
+  const client = new Client([begin(), { sql: /season_ids/, error: failure }, rollback()]), pool = { async connect() { return client; } };
+  const r = new PostgresProductQueryReader(pool, null, { profile: "product-season-array-v1", assertVerified(target) { assert.equal(target, pool); } });
+  await assert.rejects(r.readBasics(read(parameters)), failure); client.done(); assert.equal(client.calls.length, 3);
+});
+test("season v2 capability: static flags, getters, async/thenable proofs and wrong targets cannot enable array SQL", () => {
+  const pool = { async connect(): Promise<PgProductQueryClient> { throw Error("No connection"); } };
+  let invoked = false;
+  const invalid = [true, 25, {}, { profile: "product-season-array-v1", get assertVerified() { invoked = true; return () => {}; } },
+    { profile: "product-season-array-v1", async assertVerified() { invoked = true; } },
+    { profile: "product-season-array-v1", assertVerified() { return Promise.resolve(); } },
+    { profile: "product-season-array-v1", assertVerified() { throw Error("Different target"); } }];
+  for (const proof of invalid) assert.throws(() => new PostgresProductQueryReader(pool, null, proof as never)); assert.equal(invoked, false);
+});

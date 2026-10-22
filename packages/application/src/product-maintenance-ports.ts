@@ -9,7 +9,9 @@ export interface ProductWriteValues {
   readonly systemItemCode: string | null; readonly thickness: string | null; readonly collarPantsType: string | null;
   readonly defaultBarcodeSchemeId: string | null; readonly enabled: boolean; readonly prices: CompleteCataloguePrices;
 }
-export interface ProductStoredRecord extends ProductWriteValues { readonly id: string; readonly version: number; readonly deletedAt: string | null }
+export interface ProductWriteValuesV2 extends Omit<ProductWriteValues, "seasonId"> { readonly seasonIds: readonly string[] | null }
+/** Absent seasonIds means legacy schema. Present null means actual historical UNKNOWN. */
+export interface ProductStoredRecord extends ProductWriteValues { readonly id: string; readonly version: number; readonly deletedAt: string | null; readonly seasonIds?: readonly string[] | null }
 export interface ProductSkuInput {
   readonly id: string | null; readonly expectedVersion: number | null; readonly skuCode: string;
   readonly colorId: string; readonly fitId: string; readonly sizeId: string; readonly enabled: boolean;
@@ -31,7 +33,7 @@ export interface ProductDetailReference { readonly id: string; readonly name: st
 export interface ProductDetailReferences {
   readonly categoryPath: readonly ProductDetailReference[];
   readonly supplier: (ProductDetailReference & { readonly enabled: boolean }) | null;
-  readonly season: ProductDetailReference | null; readonly sizeGroup: ProductDetailReference;
+  readonly season: ProductDetailReference | null; readonly seasons?: readonly ProductDetailReference[]; readonly sizeGroup: ProductDetailReference;
   readonly defaultBarcodeScheme: (ProductDetailReference & { readonly ruleVersion: string; readonly status: "CURRENT" | "HISTORICAL" }) | null;
 }
 export type ProductMaintenanceCandidateKind = "categories" | "suppliers" | "seasons" | "size-groups" | "colors" | "fits" | "barcode-schemes" | "years" | "thicknesses" | "collar-pants-types";
@@ -46,6 +48,15 @@ export interface ProductMaintenanceDetail {
 export type ProductMaintenanceCommand = { readonly requestKey: string } & (
   { readonly action: "CREATE"; readonly values: ProductWriteValues; readonly skus: readonly ProductSkuInput[]; readonly barcodes: readonly ProductBarcodeInput[] }
   | { readonly action: "EDIT"; readonly id: string; readonly expectedVersion: number; readonly values: ProductWriteValues; readonly skus: readonly ProductSkuInput[]; readonly barcodes: readonly ProductBarcodeInput[] }
+  | { readonly action: "DISABLE" | "RESTORE" | "DELETE"; readonly id: string; readonly expectedVersion: number }
+);
+export interface ProductMaintenanceDetailV2 extends Omit<ProductMaintenanceDetail, "values" | "references"> {
+  readonly values: ProductWriteValuesV2;
+  readonly references: Omit<ProductDetailReferences, "season" | "seasons"> & { readonly seasons: readonly ProductDetailReference[] };
+}
+export type ProductMaintenanceCommandV2 = { readonly requestKey: string } & (
+  { readonly action: "CREATE"; readonly values: ProductWriteValuesV2 & { readonly seasonIds: readonly string[] }; readonly skus: readonly ProductSkuInput[]; readonly barcodes: readonly ProductBarcodeInput[] }
+  | { readonly action: "EDIT"; readonly id: string; readonly expectedVersion: number; readonly values: ProductWriteValuesV2; readonly skus: readonly ProductSkuInput[]; readonly barcodes: readonly ProductBarcodeInput[] }
   | { readonly action: "DISABLE" | "RESTORE" | "DELETE"; readonly id: string; readonly expectedVersion: number }
 );
 export interface ProductMaintenanceResult { readonly operationId: string; readonly kind: "PRODUCT"; readonly targetId: string; readonly version: number }
@@ -78,7 +89,7 @@ export interface ProductMaintenanceTransaction {
   putSku(next: ProductSkuRecord, previous: ProductSkuRecord | undefined): Promise<void>;
   putBarcode(next: ProductBarcodeRecord, previous: ProductBarcodeRecord | undefined): Promise<void>;
 }
-export interface ProductMaintenanceUnitOfWork { transaction<T>(work: (tx: ProductMaintenanceTransaction) => Promise<T>): Promise<T> }
+export interface ProductMaintenanceUnitOfWork { readonly seasonContract?: "product-season-array-v1"; transaction<T>(work: (tx: ProductMaintenanceTransaction) => Promise<T>): Promise<T> }
 export interface ProductMaintenanceDependencies {
   readonly unitOfWork: ProductMaintenanceUnitOfWork; readonly now: () => string;
   readonly newId: (kind: "product" | "sku" | "barcode" | "operation") => string;

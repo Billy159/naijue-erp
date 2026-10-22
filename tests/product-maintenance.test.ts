@@ -15,11 +15,12 @@ function values(): ProductWriteValues {
 function sku(colorId = gid(806)): ProductSkuInput { return { id: null, expectedVersion: null, skuCode: `SKU-${colorId}`, colorId, fitId: gid(807), sizeId: gid(808), enabled: true }; }
 function barcode(item: ProductSkuInput, raw = "000012345 "): ProductBarcodeInput { return { id: null, barcode: raw, colorId: item.colorId, fitId: item.fitId, sizeId: item.sizeId, kind: "MAIN", schemeId: gid(805), enabled: true }; }
 function command(key = "create") { const s = sku(); return { action: "CREATE" as const, requestKey: key, values: values(), skus: [s], barcodes: [barcode(s)] }; }
-function fixture(prepareMode: "ready" | "missing" | "fail" = "ready") {
+function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode = false) {
   let sequence = 900, product: ProductAggregate | undefined, allow = true, failComplete = false, references = true, deletable = true;
   const receipts = new Map<string, NonNullable<Awaited<ReturnType<ProductMaintenanceEvidence["getReceipt"]>>>>();
   const audit: { before: ProductAuditObject | null; after: ProductAuditObject }[] = []; let writes = 0;
   const dependencies: ProductMaintenanceDependencies = { now: () => "2026-10-22T06:00:00.000Z", newId: kind => sid(kind, sequence++), unitOfWork: {
+    ...(seasonMode ? { seasonContract: "product-season-array-v1" as const } : {}),
     async transaction(work) {
       let prepared: Parameters<ProductMaintenanceEvidence["complete"]>[0] | undefined;
       const before = structuredClone(product), receiptBefore = structuredClone(receipts), auditLength = audit.length, writeCount = writes;
@@ -35,7 +36,7 @@ function fixture(prepareMode: "ready" | "missing" | "fail" = "ready") {
       };
       const tx: ProductMaintenanceTransaction = { evidence,
         async load(id) { return product?.product.id === id ? structuredClone(product) : undefined; },
-        async readReferences(p) { return { categoryPath: [{ id: p.categoryId, name: "SYNTHETIC CATEGORY" }], sizeGroup: { id: p.sizeGroupId, name: "SYNTHETIC GROUP" },
+        async readReferences(p) { return { ...(Object.hasOwn(p, "seasonIds") ? { seasons: (p.seasonIds ?? []).map(id => ({ id, name: `SYNTHETIC ${id}` })) } : {}), categoryPath: [{ id: p.categoryId, name: "SYNTHETIC CATEGORY" }], sizeGroup: { id: p.sizeGroupId, name: "SYNTHETIC GROUP" },
           supplier: p.supplierId === null ? null : { id: p.supplierId, name: "SYNTHETIC SUPPLIER", enabled: true }, season: p.seasonId === null ? null : { id: p.seasonId, name: "SYNTHETIC SEASON" },
           defaultBarcodeScheme: p.defaultBarcodeSchemeId === null ? null : { id: p.defaultBarcodeSchemeId, name: "SYNTHETIC SCHEME", ruleVersion: "1", status: "CURRENT" } }; },
         async readCandidates(q) { return { ...q, total: 0, items: [] }; },
@@ -49,7 +50,7 @@ function fixture(prepareMode: "ready" | "missing" | "fail" = "ready") {
     }
   } };
   return { service: createProductMaintenanceService(dependencies), state: () => structuredClone(product), receipts, audit, writes: () => writes,
-    revoke: () => { allow = false; }, fault: (value: boolean) => { failComplete = value; }, badReferences: () => { references = false; }, unknownStock: () => { deletable = false; } };
+    activate: () => Object.defineProperty(dependencies.unitOfWork, "seasonContract", { value: "product-season-array-v1" }), seed: (value: ProductAggregate) => { product = structuredClone(value); }, revoke: () => { allow = false; }, fault: (value: boolean) => { failComplete = value; }, badReferences: () => { references = false; }, unknownStock: () => { deletable = false; } };
 }
 test("prepared product: root and SKU/barcode writes require prepared exact evidence; missing/failing capability writes nothing", async () => {
   for (const mode of ["missing", "fail"] as const) { const f = fixture(mode); await assert.rejects(f.service.execute(actor, command()), mode === "missing" ? { code: "MAINTENANCE_PREPARE_NOT_READY" } : /SYNTHETIC PREPARE FAILURE/); assert.equal(f.writes(), 0); assert.equal(f.state(), undefined); assert.equal(f.receipts.size, 0); }
@@ -101,4 +102,56 @@ test("product write: reference/receipt faults roll back root plus all children; 
   f.fault(false); const saved = await f.service.execute(actor, command()), prior = f.state()!; f.unknownStock();
   await assert.rejects(f.service.execute(actor, { action: "DELETE", requestKey: "delete", id: saved.targetId, expectedVersion: 1 }), { code: "PRODUCT_DELETE_NOT_READY" }); assert.deepEqual(f.state(), prior);
   const g = fixture(); g.badReferences(); await assert.rejects(g.service.execute(actor, command()), { code: "PRODUCT_SIZE_GROUP_MISMATCH" }); assert.equal(g.writes(), 0);
+});
+
+function commandV2(key = "v2", seasons: readonly string[] | null = [gid(850), gid(803)]) {
+  const { seasonId: _scalar, ...data } = values(); return { ...command(key), values: { ...data, seasonIds: seasons } };
+}
+test("season v2: canonical multi-set uses one root CAS, prepared audit and original receipt; clear and known-to-unknown differ", async () => {
+  const f = fixture("ready", true), c = commandV2(), saved = await f.service.executeV2(actor, c);
+  assert.deepEqual(f.state()!.product.seasonIds, [gid(803), gid(850)]); assert.equal(f.state()!.product.seasonId, null);
+  assert.deepEqual(f.audit[0]!.after.season_ids, [gid(803), gid(850)]); assert.ok(!Object.hasOwn(f.audit[0]!.after, "seasons"));
+  assert.deepEqual(await f.service.executeV2(actor, commandV2("v2", [gid(803), gid(850)])), saved); assert.equal(f.audit.length, 1);
+  const edit = { action: "EDIT", requestKey: "edit-v2", id: saved.targetId, expectedVersion: 1, values: c.values, skus: [], barcodes: [] };
+  await assert.rejects(f.service.executeV2(actor, edit), { code: "NO_PRODUCT_CHANGE" });
+  await assert.rejects(f.service.executeV2(actor, { ...edit, expectedVersion: 2 }), { code: "VERSION_CONFLICT" });
+  await assert.rejects(f.service.executeV2(actor, { ...edit, values: { ...c.values, seasonIds: null } }), { code: "PRODUCT_SEASON_UNKNOWN_RESET" });
+  const clear = await f.service.executeV2(actor, { ...edit, values: { ...c.values, seasonIds: [] } }); assert.equal(clear.version, 2);
+  assert.deepEqual(f.audit[1]!.before!.season_ids, [gid(803), gid(850)]); assert.deepEqual(f.audit[1]!.after.season_ids, []);
+  await f.service.execute(actor, { action: "DISABLE", requestKey: "disable-old", id: saved.targetId, expectedVersion: 2 });
+  assert.deepEqual(f.state()!.product.seasonIds, []); assert.equal(f.state()!.product.seasonId, null);
+});
+test("season v2: unknown remains NULL, actual legacy scalar remains immutable, editor members match and explicit clear records NULL to []", async () => {
+  const f = fixture(), original = await f.service.execute(actor, command()), state = f.state()!; f.activate(); f.seed({ ...state, product: { ...state.product, seasonIds: null } });
+  const c = commandV2("unused", null), edit = { action: "EDIT", requestKey: "keep-unknown", id: original.targetId, expectedVersion: 1, values: { ...c.values, name: "RENAMED" }, skus: [], barcodes: [] };
+  await f.service.executeV2(actor, edit); assert.equal(f.state()!.product.seasonIds, null); assert.equal(f.state()!.product.seasonId, gid(803));
+  assert.ok(!Object.hasOwn(f.audit[1]!.after, "season_ids"));
+  const read = await f.service.detailV2(actor, { productId: original.targetId }); assert.equal(read.values.seasonIds, null); assert.deepEqual(read.references.seasons, []);
+  assert.ok(!Object.hasOwn(read.values, "seasonId")); assert.ok(!Object.hasOwn(read.references, "season"));
+  await f.service.executeV2(actor, { ...edit, requestKey: "clear-unknown", expectedVersion: 2, values: { ...edit.values, seasonIds: [] } });
+  assert.equal(f.audit[2]!.before!.season_ids, null); assert.deepEqual(f.audit[2]!.after.season_ids, []); assert.equal(f.state()!.product.seasonId, gid(803));
+});
+test("season v2: unavailable and malformed inputs fail without writes; activation rejects scalar editor but recovers committed original key", async () => {
+  const f = fixture(); await assert.rejects(f.service.executeV2(actor, commandV2()), { code: "PRODUCT_SEASON_NOT_READY" }); assert.equal(f.writes(), 0);
+  const original = command(), saved = await f.service.execute(actor, original), old = f.state()!; f.activate(); f.seed({ ...old, product: { ...old.product, seasonIds: [gid(803)] } });
+  assert.deepEqual(await f.service.execute(actor, original), saved);
+  await assert.rejects(f.service.execute(actor, { ...original, requestKey: "new-old" }), { code: "PRODUCT_EDIT_CONTRACT_UPGRADE_REQUIRED" });
+  await assert.rejects(f.service.detail(actor, { productId: saved.targetId }), { code: "PRODUCT_EDIT_CONTRACT_UPGRADE_REQUIRED" });
+  await assert.rejects(f.service.executeV2(actor, commandV2(original.requestKey)), { code: "IDEMPOTENCY_CONFLICT" });
+  const count = f.writes();
+  for (const seasons of [undefined, null, [gid(803), gid(803)], [null], [[gid(803)]], ["bad"], new Array(1)]) {
+    await assert.rejects(f.service.executeV2(actor, { ...commandV2(), values: { ...commandV2().values, seasonIds: seasons } }), { code: "INVALID_PRODUCT_MAINTENANCE" });
+  }
+  await assert.rejects(f.service.executeV2(actor, { ...commandV2(), values: { ...commandV2().values, seasonId: gid(803) } }), { code: "INVALID_PRODUCT_MAINTENANCE" }); assert.equal(f.writes(), count);
+  for (const mode of ["missing", "fail"] as const) { const g = fixture(mode, true); await assert.rejects(g.service.executeV2(actor, commandV2())); assert.equal(g.writes(), 0); }
+  const h = fixture("ready", true); h.fault(true); await assert.rejects(h.service.executeV2(actor, commandV2())); assert.equal(h.state(), undefined); assert.equal(h.receipts.size, 0);
+});
+test("season v2: stored set order is preserved when unchanged; no reorder-only version or invented audit", async () => {
+  const f = fixture("ready", true), c = commandV2(), saved = await f.service.executeV2(actor, c), state = f.state()!;
+  f.seed({ ...state, product: { ...state.product, seasonIds: [gid(850), gid(803)] } });
+  const edit = { action: "EDIT", requestKey: "reorder", id: saved.targetId, expectedVersion: 1, values: c.values, skus: [], barcodes: [] };
+  await assert.rejects(f.service.executeV2(actor, edit), { code: "NO_PRODUCT_CHANGE" });
+  await f.service.executeV2(actor, { ...edit, values: { ...edit.values, name: "OTHER CHANGE" } });
+  assert.deepEqual(f.state()!.product.seasonIds, [gid(850), gid(803)]); assert.ok(!Object.hasOwn(f.audit[1]!.after, "season_ids"));
+  const detail = await f.service.detailV2(actor, { productId: saved.targetId }); assert.deepEqual(detail.references.seasons.map(s => s.id), [gid(850), gid(803)]);
 });
