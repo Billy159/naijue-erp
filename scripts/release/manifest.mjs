@@ -13,6 +13,10 @@ const hashPattern = /^[a-f0-9]{64}$/;
 const excludedSegment = /(?:^|[-_.])(?:synthetic[^/]*|fixtures?[^/]*|tests?|test-only|secrets?|private|credentials?|passwords?|tokens?|backups?|originals?|product-media|media|provenance)(?:$|[-_.])/i;
 const excludedGraph = /(?:unified-browser-harness|new-document-browser-harness|management-browser-harness|visual-acceptance-host|development-host|local-https-application-host|fixturegraph)/i;
 const sourceExtensions = new Set(['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs', '.css', '.json', '.sql', '.svg', '.woff', '.woff2']);
+const productionDesignTokenStyles = new Set([
+  'apps/web/src/demo-controls/idle-selection-tokens.css',
+  'apps/web/src/demo-presentation/tokens.css',
+]);
 const roleExtensions = {
   frontend: new Set(['.html', '.js', '.mjs', '.css', '.json', '.svg', '.woff', '.woff2']),
   backend: new Set(['.js', '.mjs', '.cjs', '.json']),
@@ -31,7 +35,8 @@ function allowedSource(value) {
   const segments = value.split('/');
   // Media/secret *data* directories are forbidden; runtime source named controlled-media.ts is legitimate code.
   requireRelease(!excludedGraph.test(value) && !segments.some((part, index) => excludedSegment.test(part)
-    && !(index === segments.length - 1 && /\.(?:tsx?|[cm]?js)$/.test(part) && !/synthetic|fixture|(?:^|[.-])test(?:[.-]|$)/i.test(part)))
+    && !(index === segments.length - 1 && (productionDesignTokenStyles.has(value)
+      || /\.(?:tsx?|[cm]?js)$/.test(part) && !/synthetic|fixture|(?:^|[.-])test(?:[.-]|$)/i.test(part))))
     && ( /\.(?:tsx?|[cm]?js)$/.test(value) || !/(?:^|[\/._-])(?:keys?|pem|pgpass|env)(?:$|[\/._-])/i.test(value))
     && !/\.(?:test|spec)\.[^.]+$/i.test(value) && sourceExtensions.has(path.posix.extname(value)), 'NON_PRODUCTION_SOURCE');
 }

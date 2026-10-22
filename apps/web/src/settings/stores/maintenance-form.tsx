@@ -69,16 +69,21 @@ function DirectorySelect(props: Parameters<typeof SettingsReferenceSelect>[0] & 
   const run = (search = '', page = 1) => {
     if (active) void props.owner?.run({ search, page, pageSize: 20, hallId: props.hallId ?? null });
   };
-  const current = snapshot.success, options = new Map<string, { value: string; label: string; disabled: boolean }>();
-  for (const item of props.selected) options.set(item.id, { value: item.id, label: settingsReferenceName(item), disabled: true });
-  for (const item of current?.data.items ?? []) options.set(item.id, { value: item.id, label: settingsReferenceName(item), disabled: snapshot.phase !== 'success' });
+  const current = snapshot.success, selected = new Map(props.selected.map(item => [item.id, item]));
+  const candidates = new Map((snapshot.phase === 'success' ? current?.data.items ?? [] : []).map(item => [item.id, item]));
+  const options = new Map<string, { value: string; label: string; disabled: boolean }>();
+  // Arco uses option.disabled for tag removability and clear-all too. Existing
+  // relations must stay removable even when absent from the current page.
+  for (const item of props.selected) options.set(item.id, { value: item.id, label: settingsReferenceName(item), disabled: false });
+  for (const item of current?.data.items ?? []) options.set(item.id, { value: item.id, label: settingsReferenceName(item), disabled: !selected.has(item.id) && snapshot.phase !== 'success' });
   const unavailable = !props.owner || props.kind === 'warehouses' && !props.hallId;
+  const canRemoveSelected = !!props.multiple && selected.size > 0;
   const errorText = snapshot.error instanceof HttpQueryError && snapshot.error.kind === 'forbidden' ? '无权读取候选资料。' : '候选资料读取失败。';
   return <div className="settings-reference-select settings-single" ref={host}>
     <Select aria-label={props.label} {...(props.multiple ? { mode: 'multiple' as const } : {})}
       value={props.multiple ? props.selected.map(item => item.id) : props.selected[0]?.id ?? ''}
       options={[...options.values()]} placeholder="请选择" showSearch filterOption={false}
-      allowClear={!props.required} disabled={!active || unavailable} loading={snapshot.phase === 'loading'}
+      allowClear={!props.required} disabled={!active || unavailable && !canRemoveSelected} loading={snapshot.phase === 'loading'}
       popupVisible={open && active && !unavailable} unmountOnExit
       getPopupContainer={() => { if (!host.current) throw new Error('Settings directory host not mounted'); return host.current; }}
       onVisibleChange={visible => { if (!active) return; setOpen(visible); if (visible) run(); else props.owner?.cancel(); }}
@@ -86,11 +91,11 @@ function DirectorySelect(props: Parameters<typeof SettingsReferenceSelect>[0] & 
       onChange={(value: unknown) => {
         if (!active) return;
         const ids = value === undefined || value === '' ? [] : Array.isArray(value) ? value : [value];
-        if (ids.some(id => typeof id !== 'string' || !options.has(id))) return;
-        const onlyRemoves = ids.every(id => props.selected.some(item => item.id === id));
-        if (!onlyRemoves && (!open || snapshot.phase !== 'success')) return;
+        if (ids.some(id => typeof id !== 'string') || new Set(ids).size !== ids.length) return;
+        const onlyRemoves = ids.every(id => selected.has(id));
+        if (!onlyRemoves && (!open || snapshot.phase !== 'success' || ids.some(id => !selected.has(id) && !candidates.has(id)))) return;
         if (!props.multiple && ids.length > 1 || props.required && !ids.length) return;
-        const known = new Map([...props.selected, ...(current?.data.items ?? [])].map(item => [item.id, item]));
+        const known = new Map([...selected, ...candidates]);
         props.onChange(ids.map(id => known.get(id as string)!)); if (!props.multiple) setOpen(false);
       }}
       dropdownRender={menu => <>{menu}<div className="settings-directory-footer">

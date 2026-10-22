@@ -167,3 +167,27 @@ test('HTML resource closure preserves canonical and alternate same-origin member
     assert.equal((await validateRelease(f.options)).manifest.buildId, 'tool-check-1');
   }
 });
+test('design-token source policy accepts only the two registered production CSS sources', async () => {
+  for (const [label, name] of [
+    ['selection', 'apps/web/src/demo-controls/idle-selection-tokens.css'],
+    ['presentation', 'apps/web/src/demo-presentation/tokens.css'],
+  ]) {
+    const f = await fixture('design-css-' + label), bytes = ':root { --tool-design-color: #123456; }\n';
+    f.source.files.push(record(name, bytes)); await put(f.sourceRoot, name, bytes); await f.save();
+    assert.equal((await validateRelease(f.options)).manifest.buildId, 'tool-check-1');
+  }
+});
+test('design-token source policy still rejects token data and unregistered token directories or CSS', async () => {
+  for (const [index, name] of [
+    'apps/web/src/demo-presentation/tokens.json',
+    'apps/web/src/demo-controls/idle-selection-tokens.json',
+    'apps/web/src/demo-controls/tokens/session.css',
+    'apps/web/src/demo-presentation/secrets/tokens.css',
+    'apps/web/src/demo-presentation/tokens.css.json',
+    'apps/web/src/demo-controls/idle-selection-tokens.backup.css',
+  ].entries()) {
+    const f = await fixture('design-token-data-' + index), bytes = '{}\n';
+    f.source.files.push(record(name, bytes)); await put(f.sourceRoot, name, bytes); await f.save();
+    await assert.rejects(validateRelease(f.options), error => error.code === 'NON_PRODUCTION_SOURCE');
+  }
+});

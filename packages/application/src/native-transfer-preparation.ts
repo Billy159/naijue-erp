@@ -37,8 +37,10 @@ export function createNativeManualTransferReferences(): TransferReferences {
   } } satisfies TransferReferences);
 }
 
-/** No writes or receipt are produced. The returned complete draft can be sent to
- * the existing SAVE command with expectedVersion:null and a stable request key.
+/** No business document/receipt/audit/stock is produced. PG20+ reserves only its
+ * database number after authorization/reference checks. A private preparation
+ * key binds the trusted actor on the original transaction, never a SAVE receipt.
+ * The draft can be sent to SAVE with expectedVersion:null and a stable request key.
  * Host must opt into createNativeManualTransferReferences for SAVE revalidation.
  * Cancellation/transport lifecycle remains the caller's responsibility. */
 export function createNativeTransferPreparation(dependencies: TransferDependencies) {
@@ -61,7 +63,11 @@ export function createNativeTransferPreparation(dependencies: TransferDependenci
       const amount = quantity(line.quantity); requireDomain(amount > 0n, "INVALID_TRANSFER_LINE", "Transfer quantity must be positive");
       return { id: lineId, transferId: id, lineNo: index + 1, skuId: entityId("sku", line.skuId), quantity: amount, isCurrent: true as const };
     });
+    const preparationId = entityId("operation", dependencies.newId("operation"));
+    requireDomain(String(preparationId) !== String(id) && !lineIds.has(preparationId), "INVALID_ID", "Distinct private preparation identity required");
     return dependencies.unitOfWork.transaction(async tx => {
+      requireDomain(!await tx.getReceipt(actor.accountId, `prepare-transfer:${preparationId}`),
+        "IDEMPOTENCY_CONFLICT", "Private preparation identity already exists");
       requireDomain(!await tx.getTransfer(id), "VERSION_CONFLICT", "Generated document identity already exists");
       // Authorization sees only proposed header scope, before sensitive snapshot lookup.
       await dependencies.authorization.assertAllowed(actor, "SAVE", { header, lines: [] }, undefined, tx);

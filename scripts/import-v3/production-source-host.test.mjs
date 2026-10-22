@@ -1,0 +1,69 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, realpath, writeFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { createHash } from 'node:crypto';
+import { openImportHost, requiredNativeSourceInputs, validateSourceHostJob } from './production-source-host.mjs';
+const id = n => `00000000-0000-0000-0000-${String(n).padStart(12, '0')}`;
+const sha = c => c.repeat(64);
+function job(at = Date.now()) {
+  return { version: 'NATIVE_IMPORT_SOURCE_HOST19_V1', registrationId: 'synthetic-one-run', deadlineUtc: new Date(at + 30000).toISOString(), maxSteps: 100,
+    binding: { version: 'NATIVE_IMPORT_EXECUTION_19_V1', batchId: id(1), actorAccountId: id(2), fixedSourceNamespace: 'synthetic-source-system',
+      cutoffAt: '2026-10-04T12:00:00+08:00', selectionSha256: sha('a'), authorizedPayloadHash: sha('b'),
+      target: { database: 'demo_8877_source_host', role: 'synthetic_operator', serverAddress: '127.0.0.1', serverPort: 55555, postmasterStartedAt: 'synthetic' } },
+    database: { host: '127.0.0.1', port: 55555, database: 'demo_8877_source_host', user: 'synthetic_operator', tls: 'local-transport', caFile: null, statementTimeoutMs: 10000 },
+    sources: { base: '/synthetic/base', v3Amendment: '/synthetic/amendment', v3Approval: '/synthetic/independent-approval', trustedApprovalSha256: sha('c'),
+      approvedMoneyOverlaySha256: sha('d'), sourceRoot: '/synthetic/originals', spoolParent: '/synthetic/spool', maxSpoolBytes: 335544320,
+      maxEvidenceSpoolBytes: 167772160, referenceDecisionFile: '/synthetic/native-decision', trustedReferenceDecisionSha256: sha('e'), mappingFiles: { catalogue: '/synthetic/native-mappings' } },
+    providers: { path: '/synthetic/frozen-providers.mjs', sha256: sha('f') } };
+}
+test('real host requires exact explicit job/identity/cutoff; no implicit namespace, UUID, current date or credentials', () => {
+  const j = job(); assert.deepEqual(validateSourceHostJob(j), j);
+  for (const mutate of [x => { x.binding.cutoffAt = ''; }, x => { x.binding.batchId = null; }, x => { x.binding.fixedSourceNamespace = ''; },
+    x => { x.database.password = 'MUST_NOT_APPEAR'; }, x => { x.deadlineUtc = '2000-01-01T00:00:00Z'; }]) {
+    const x = job(); mutate(x); assert.throws(() => validateSourceHostJob(x));
+  }
+});
+test('independent native reference and mapping inputs cannot be omitted or self-substituted by business approval flags', () => {
+  for (const mutate of [x => { x.sources.referenceDecisionFile = null; }, x => { x.sources.trustedReferenceDecisionSha256 = ''; },
+    x => { x.sources.mappingFiles = {}; }, x => { x.sources.nativeReferenceApproved = true; }, x => { x.sources.maxSpoolBytes = 536870913; }]) {
+    const x = job(); mutate(x); assert.throws(() => validateSourceHostJob(x));
+  }
+  let gets = 0; const x = job(); x.sources.mappingFiles = Object.defineProperty({}, 'catalogue', { enumerable: true, get() { gets++; return '/synthetic/map'; } });
+  assert.throws(() => validateSourceHostJob(x)); assert.equal(gets, 0);
+});
+test('TLS verification cannot be disabled for remote targets; private local transport remains explicit', () => {
+  for (const database of [{ ...job().database, host: 'remote.invalid' }, { ...job().database, tls: 'ignore-certificates' }, { ...job().database, tls: 'verify-full', caFile: 'relative.pem' }]) {
+    assert.throws(() => validateSourceHostJob({ ...job(), database }));
+  }
+  assert.equal(validateSourceHostJob({ ...job(), database: { ...job().database, tls: 'verify-full', caFile: null } }).database.tls, 'verify-full');
+});
+test('minimum source shape enumerates every closure factory and exact native-decision schema', () => {
+  const shape = requiredNativeSourceInputs(); assert.equal(shape.closureSourceGroups.length, 11); assert.equal(new Set(shape.closureSourceGroups).size, 11);
+  assert.ok(shape.closureSourceGroups.includes('HEADERS') && shape.closureSourceGroups.includes('STOCK_CONTRIBUTORS'));
+  assert.deepEqual(shape.referenceDecision.referenceKinds, ['category', 'sizeGroup', 'season', 'supplier']); assert.equal(shape.referenceDecision.externalPinRequired, true);
+});
+test('missing real decision file fails before any DB/provider work; old barcode approval is not a native decision', async () => {
+  const root = await mkdtemp(join(await realpath(tmpdir()), 'naijue-source-host-'));
+  try {
+    const config = join(root, 'job.json'), j = job(); j.sources.referenceDecisionFile = join(root, 'missing.json'); await writeFile(config, JSON.stringify(j), { mode: 0o600 });
+    await assert.rejects(openImportHost({ signal: new AbortController().signal, configFile: config }), { code: 'ENOENT' });
+    const native = join(root, 'not-native.json'), bytes = JSON.stringify({ approval: 'only-barcode-exclusion', nativeDbImportAuthorizedByThisFile: false });
+    await writeFile(native, bytes, { mode: 0o600 }); j.sources.referenceDecisionFile = native; j.sources.trustedReferenceDecisionSha256 = createHash('sha256').update(bytes).digest('hex');
+    await writeFile(config, JSON.stringify(j));
+    await assert.rejects(openImportHost({ signal: new AbortController().signal, configFile: config }), { code: 'IMPORT_SOURCE_HOST_NATIVE_DECISION_REQUIRED' });
+  } finally { await rm(root, { recursive: true }); }
+});
+test('source module with absent production factories cannot create a pool or use a synthetic fallback', async () => {
+  const root = await mkdtemp(join(await realpath(tmpdir()), 'naijue-source-host-'));
+  try {
+    const j = job(), native = join(root, 'native.json'), module = join(root, 'provider.mjs'), config = join(root, 'job.json');
+    const bytes = JSON.stringify({ schemaVersion: 1, validatorVersion: requiredNativeSourceInputs().referenceDecision.validatorVersion, batchId: j.binding.batchId,
+      fixedSourceNamespace: j.binding.fixedSourceNamespace, selection: { entity: 'PRODUCT', selectionSha256: j.binding.selectionSha256 }, mappingFiles: [], decisions: [] });
+    await writeFile(native, bytes); j.sources.referenceDecisionFile = native; j.sources.trustedReferenceDecisionSha256 = createHash('sha256').update(bytes).digest('hex');
+    const code = "export const providerVersion='NATIVE_IMPORT_PRODUCTION_PROVIDERS_19_V1'; export const sourceGroups=[]; export async function openSourceSession(){throw Error('MUST_NOT_OPEN');}";
+    await writeFile(module, code); j.providers = { path: module, sha256: createHash('sha256').update(code).digest('hex') }; await writeFile(config, JSON.stringify(j));
+    await assert.rejects(openImportHost({ signal: new AbortController().signal, configFile: config }), { code: 'IMPORT_SOURCE_HOST_FACTORIES_REQUIRED' });
+  } finally { await rm(root, { recursive: true }); }
+});
