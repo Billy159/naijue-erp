@@ -3,6 +3,8 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { createProductionApplicationApi, parseProductionRuntimeConfiguration } from "./production-provider-composition.ts";
 import { startProductionApplicationHost } from "./production-application-host.ts";
+import { createProductionRuntime26ApplicationApi, parseProductionRuntime26Configuration } from "./production-provider-composition.ts";
+import { startProductionRuntime26ApplicationHost } from "./production-application-host.ts";
 
 /** C supplies an absolute private JSON configuration path as the sole argument.
  * Never emit that file, its pathname, parsed configuration or raw error causes. */
@@ -27,9 +29,33 @@ export async function runProductionMain(args: readonly string[]): Promise<void> 
   process.stdout.write(JSON.stringify({ event: "PRODUCTION_HOST_STARTED", publicOrigin: host.publicOrigin, ...config.build }) + "\n");
 }
 
+/** Explicit --exact26-r1 entry only. The legacy entry above never auto-upgrades
+ * a config or reuses an already running pool. Operational files stay private. */
+export async function runProductionRuntime26Main(args: readonly string[]): Promise<void> {
+  if (args.length !== 1 || !args[0] || !path.isAbsolute(args[0]) || path.resolve(args[0]) !== args[0])
+    throw new TypeError("One absolute private exact26 runtime configuration path is required");
+  const filename = args[0], stat = await lstat(filename);
+  if (!stat.isFile() || stat.isSymbolicLink() || await realpath(filename) !== filename || stat.size > 65_536 || (stat.mode & 0o077) !== 0)
+    throw new TypeError("A bounded canonical private exact26 configuration file is required");
+  const bytes = await readFile(filename);
+  if (bytes.length !== stat.size || bytes.length > 65_536) throw new TypeError("Exact26 runtime configuration changed while reading");
+  const config = parseProductionRuntime26Configuration(JSON.parse(bytes.toString("utf8")) as unknown);
+  const api = await createProductionRuntime26ApplicationApi(config);
+  const host = await startProductionRuntime26ApplicationHost({ api, configuration: config });
+  let stopping = false;
+  const stop = (): void => {
+    if (stopping) return; stopping = true;
+    process.off("SIGTERM", stop); process.off("SIGINT", stop);
+    void host.close().catch(() => { process.stderr.write("Exact26 production shutdown failed\n"); process.exitCode = 1; });
+  };
+  process.once("SIGTERM", stop); process.once("SIGINT", stop);
+  process.stdout.write(JSON.stringify({ event: "PRODUCTION_EXACT26_HOST_STARTED", publicOrigin: host.publicOrigin, ...config.build }) + "\n");
+}
+
 // Importing the module is inert, including during a source check.
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
-  void runProductionMain(process.argv.slice(2)).catch(() => {
+  const exact26 = process.argv[2] === "--exact26-r1";
+  void (exact26 ? runProductionRuntime26Main(process.argv.slice(3)) : runProductionMain(process.argv.slice(2))).catch(() => {
     process.stderr.write("Production startup refused or failed; inspect private operational diagnostics\n"); process.exitCode = 1;
   });
 }

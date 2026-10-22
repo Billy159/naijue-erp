@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import path from "node:path";
 import { PostgresImportedCatalogueCompletenessVerifier } from "../../../adapters/postgres/src/catalogue-completeness.ts";
 import type { BoundedPostgresConfig, PostgresPoolDriverFactory } from "../../../adapters/postgres/src/bounded-pool.ts";
 import { createSalesActionAuthorization } from "../../../packages/application/src/sales-authorization.ts";
@@ -8,6 +9,7 @@ import { createSourceConfirmedCurrentFormAuthorization } from "../../../packages
 import { createSourceAuthenticationPolicy } from "../../../packages/authentication/src/source-policy.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { createPostgresApplicationApi } from "./postgres-read-api.ts";
+import { createPostgresRuntime26ApplicationApi } from "./postgres-read-api.ts";
 import type { PostgresApplicationApiOptions, PostgresApplicationApi } from "./postgres-read-api.ts";
 
 export const PRODUCTION_PUBLIC_ORIGIN = "https://1n5635n614.goho.co";
@@ -78,4 +80,34 @@ export function productionApplicationOptions(input: unknown): PostgresApplicatio
  * No fixtures, migrations, seeds, fake authentication or retry loop are composed. */
 export async function createProductionApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
   return createPostgresApplicationApi(productionApplicationOptions(input), driver);
+}
+
+/** Independent R1 successor. The old closed nine-field parser/factory/profile
+ * above remain unchanged and reject this profile. No command enablement here. */
+export interface ProductionRuntime26Configuration extends Omit<ProductionRuntimeConfiguration, "profile" | "documentCommands"> {
+  readonly profile: "source-confirmed-native-exact26-r1-v1";
+  readonly documentCommands: "DISABLED";
+  readonly runtime26Review: { readonly reviewFile: string; readonly trustedReviewSha256: string };
+}
+export function parseProductionRuntime26Configuration(input: unknown): ProductionRuntime26Configuration {
+  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review"]);
+  const review = bag(c.runtime26Review, ["reviewFile", "trustedReviewSha256"]);
+  if (c.profile !== "source-confirmed-native-exact26-r1-v1" || c.documentCommands !== "DISABLED"
+    || !text(review.reviewFile) || !path.isAbsolute(review.reviewFile) || path.resolve(review.reviewFile) !== review.reviewFile
+    || typeof review.trustedReviewSha256 !== "string" || !/^[0-9a-f]{64}$/.test(review.trustedReviewSha256))
+    throw new TypeError("Explicit exact26 R1 profile, disabled commands and closed independent review pin required");
+  const { runtime26Review: _review, ...base } = c;
+  const checked = parseProductionRuntimeConfiguration({ ...base, profile: "source-confirmed-native-v1" });
+  return { ...checked, profile: "source-confirmed-native-exact26-r1-v1", documentCommands: "DISABLED",
+    runtime26Review: { reviewFile: review.reviewFile, trustedReviewSha256: review.trustedReviewSha256 } };
+}
+/** Host-only adaptation after explicit successor validation. The metadata review
+ * never enters public build/health output or the legacy application factory. */
+export function productionRuntime26HostConfiguration(input: unknown): ProductionRuntimeConfiguration {
+  const { runtime26Review: _review, ...base } = parseProductionRuntime26Configuration(input);
+  return parseProductionRuntimeConfiguration({ ...base, profile: "source-confirmed-native-v1" });
+}
+export async function createProductionRuntime26ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
+  const config = parseProductionRuntime26Configuration(input);
+  return createPostgresRuntime26ApplicationApi(productionApplicationOptions(productionRuntime26HostConfiguration(config)), config.runtime26Review, driver);
 }

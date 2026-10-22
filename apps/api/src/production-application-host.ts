@@ -5,7 +5,8 @@ import { lstat, readdir, readFile, realpath } from "node:fs/promises";
 import path from "node:path";
 import type { PostgresApplicationApi } from "./postgres-read-api.ts";
 import { parseProductionRuntimeConfiguration } from "./production-provider-composition.ts";
-import type { ProductionRuntimeConfiguration } from "./production-provider-composition.ts";
+import { productionRuntime26HostConfiguration } from "./production-provider-composition.ts";
+import type { ProductionRuntimeConfiguration, ProductionRuntime26Configuration } from "./production-provider-composition.ts";
 
 export interface ProductionApplicationHostOptions { readonly api: PostgresApplicationApi; readonly configuration: ProductionRuntimeConfiguration }
 export interface ProductionApplicationHost { readonly publicOrigin: string; close(): Promise<void> }
@@ -129,4 +130,21 @@ export async function startProductionApplicationHost(options: ProductionApplicat
     try { await close(); } catch (cleanup) { throw new AggregateError([error, cleanup], "Production startup and cleanup failed"); }
     throw error;
   }
+}
+
+export interface ProductionRuntime26ApplicationHostOptions { readonly api: PostgresApplicationApi; readonly configuration: ProductionRuntime26Configuration }
+/** Explicit successor adapter reuses the original host's captured public output
+ * and request boundary. Private review metadata is never a public asset/health field. */
+export async function createProductionRuntime26RequestHandler(options: ProductionRuntime26ApplicationHostOptions,
+  isClosing: () => boolean = () => false): Promise<(request: IncomingMessage, response: ServerResponse) => void> {
+  return createProductionRequestHandler({ api: options.api, configuration: productionRuntime26HostConfiguration(options.configuration) }, isClosing);
+}
+export async function startProductionRuntime26ApplicationHost(options: ProductionRuntime26ApplicationHostOptions): Promise<ProductionApplicationHost> {
+  let configuration: ProductionRuntimeConfiguration;
+  try { configuration = productionRuntime26HostConfiguration(options.configuration); }
+  catch (error) {
+    try { await options?.api?.close(); } catch (cleanup) { throw new AggregateError([error, cleanup], "Exact26 host configuration and API cleanup failed"); }
+    throw error;
+  }
+  return startProductionApplicationHost({ api: options.api, configuration });
 }

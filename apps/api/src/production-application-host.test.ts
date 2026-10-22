@@ -6,9 +6,10 @@ import path from "node:path";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import type { PostgresApplicationApi } from "./postgres-read-api.ts";
 import { createProductionRequestHandler, startProductionApplicationHost } from "./production-application-host.ts";
+import { createProductionRuntime26RequestHandler, startProductionRuntime26ApplicationHost } from "./production-application-host.ts";
 import { PRODUCTION_PUBLIC_ORIGIN } from "./production-provider-composition.ts";
 import type { ProductionRuntimeConfiguration } from "./production-provider-composition.ts";
-import { runProductionMain } from "./production-main.ts";
+import { runProductionMain, runProductionRuntime26Main } from "./production-main.ts";
 
 function config(root: string): ProductionRuntimeConfiguration {
   return { schemaVersion: 1, profile: "source-confirmed-native-v1", documentCommands: "DISABLED", publicOrigin: PRODUCTION_PUBLIC_ORIGIN,
@@ -25,6 +26,8 @@ function apiDouble() {
   } }, async close() { closed++; }, postgresBackgroundFailureCount: 0 } as unknown as PostgresApplicationApi;
   return { api, routed, closed: () => closed };
 }
+const exact26Config = (root: string) => ({ ...config(root), profile: "source-confirmed-native-exact26-r1-v1" as const,
+  documentCommands: "DISABLED" as const, runtime26Review: { reviewFile: "/unopened-private-metadata-review.json", trustedReviewSha256: "d".repeat(64) } });
 function invoke(handle: (r: IncomingMessage, s: ServerResponse) => void, url: string, method = "GET", host = "1n5635n614.goho.co", headers: Record<string, string> = {}) {
   let status = 0, body: string | Buffer | undefined, responseHeaders: Record<string, unknown> = {};
   const request = { url, method, headers: { host, ...headers } } as IncomingMessage;
@@ -67,6 +70,26 @@ test("host rejects traversal, source/private files and spoofed forwarded Host", 
     assert.equal(invoke(handle, "/", "POST").status, 405);
     closing = true; assert.equal(invoke(handle, "/api/auth/session").status, 503); assert.deepEqual(p.routed, []);
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test("production exact26 host: independent adapter keeps public asset/API boundaries and never emits private review metadata", async () => {
+  const root = await build(), p = apiDouble();
+  try {
+    const configuration = exact26Config(root), handle = await createProductionRuntime26RequestHandler({ api: p.api, configuration });
+    assert.equal(invoke(handle, "/api/current-form/products/query", "POST").body, "API404"); assert.deepEqual(p.routed, ["/current-form/products/query"]);
+    assert.equal(invoke(handle, "/assets/app.js").body, "SYNTHETIC_EMITTED_BUILD_ONLY");
+    const health = invoke(handle, "/healthz").body!; assert.equal(JSON.parse(health).databaseChecked, false);
+    assert.ok(!health.includes("runtime26") && !health.includes(configuration.runtime26Review.reviewFile) && !health.includes("d".repeat(64)));
+    assert.equal(invoke(handle, "/assets/unopened-private-metadata-review.json").status, 404);
+    await assert.rejects(createProductionRequestHandler({ api: p.api, configuration: configuration as never }), TypeError);
+    assert.equal(p.closed(), 0);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+test("production exact26 host: invalid successor configuration closes its owned API before any listener; explicit main rejects missing/relative input", async () => {
+  const p = apiDouble();
+  await assert.rejects(startProductionRuntime26ApplicationHost({ api: p.api, configuration: { ...exact26Config("/unopened"), documentCommands: "NATIVE_RUNTIME" } as never }), TypeError);
+  assert.equal(p.closed(), 1); assert.deepEqual(p.routed, []);
+  await assert.rejects(runProductionRuntime26Main([]), TypeError); await assert.rejects(runProductionRuntime26Main(["relative-config.json"]), TypeError);
 });
 
 test("invalid build/startup closes owned API once and never opens a listener", async () => {

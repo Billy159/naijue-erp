@@ -2,6 +2,7 @@ import { createSettingsAuditHttpPlugin } from "./settings-audit-http.ts";
 import { PostgresSettingsAuditUnitOfWork } from "../../../adapters/postgres/src/settings-audit-reader.ts";
 import Fastify from "fastify";
 import type { FastifyInstance } from "fastify";
+import { isAbsolute, resolve } from "node:path";
 import { BoundedPostgresPool } from "../../../adapters/postgres/src/bounded-pool.ts";
 import type { BoundedPostgresConfig, PostgresPoolDriverFactory } from "../../../adapters/postgres/src/bounded-pool.ts";
 import { PostgresAuthenticationStore } from "../../../adapters/postgres/src/auth-store.ts";
@@ -66,6 +67,7 @@ import { PostgresProductWarehouseStockReader } from "../../../adapters/postgres/
 import { PostgresMaintenanceCommandUnitOfWork } from "../../../adapters/postgres/src/maintenance-command-unit-of-work.ts";
 import { PostgresOrganizationMaintenanceReadUnitOfWork } from "../../../adapters/postgres/src/organization-maintenance-store.ts";
 import { createOrganizationMaintenanceReadHttpPlugin } from "./organization-maintenance-http.ts";
+import { createNativeRuntime26Issuer } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
 
 export interface PostgresReadApiExplicitAuthorization {
   readonly mode?: never;
@@ -365,18 +367,43 @@ export async function createPostgresApplicationApi(options: PostgresApplicationA
   const capabilities = checkedApplicationCapabilities(options);
   return await composePostgresApi(options, createDriver, capabilities) as PostgresApplicationApi;
 }
+/** Separate exact26 R1 entry, never an ambient upgrade of the legacy factory.
+ * The only runtime authority input is a closed independently pinned file pair;
+ * callers cannot supply a pool, issuer, capability callback or command provider. */
+export async function createPostgresRuntime26ApplicationApi(options: PostgresApplicationApiOptions,
+  review: { readonly reviewFile: string; readonly trustedReviewSha256: string }, createDriver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
+  if (!options || typeof options !== "object" || "documentCommands" in options || !("currentForms" in options))
+    throw new TypeError("Exact26 R1 requires explicit current forms and no document commands");
+  const pin = exactBag(review, ["reviewFile", "trustedReviewSha256"]);
+  if (typeof pin.reviewFile !== "string" || !isAbsolute(pin.reviewFile) || resolve(pin.reviewFile) !== pin.reviewFile
+    || typeof pin.trustedReviewSha256 !== "string" || !/^[0-9a-f]{64}$/.test(pin.trustedReviewSha256))
+    throw new TypeError("Closed exact26 independent metadata review pin required");
+  const capabilities = checkedApplicationCapabilities(options);
+  if (!capabilities.nativeReadExtensions) throw new TypeError("Exact26 R1 requires the source-confirmed read policies");
+  return await composePostgresApi(options, createDriver, capabilities,
+    Object.freeze({ reviewFile: pin.reviewFile, trustedReviewSha256: pin.trustedReviewSha256 })) as PostgresApplicationApi;
+}
 async function composePostgresApi(options: PostgresReadApiOptions, createDriver: PostgresPoolDriverFactory | undefined,
-  capabilities: ApplicationCapabilities | null): Promise<PostgresReadApi | PostgresApplicationApi> {
+  capabilities: ApplicationCapabilities | null, runtime26Review?: { readonly reviewFile: string; readonly trustedReviewSha256: string }): Promise<PostgresReadApi | PostgresApplicationApi> {
   const host = checkedHost(options);
-  const pool = new BoundedPostgresPool(options.postgres, createDriver);
+  const ownedPool = new BoundedPostgresPool(options.postgres, createDriver);
   let app: FastifyInstance | undefined;
   try {
+    const issuer = runtime26Review === undefined ? null : await createNativeRuntime26Issuer(ownedPool, runtime26Review);
+    const pool = issuer === null ? ownedPool : issuer.pool;
+    if (issuer !== null) {
+      const admission = await pool.connect();
+      try {
+        for (const purpose of ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ", "INVENTORY_ADMISSION"] as const)
+          await issuer.runtime26.assertReady(admission, purpose);
+      } finally { admission.release(); }
+    }
     const policies = host.authorization.kind === "source-confirmed-native"
       ? Object.freeze({ ...createSourceConfirmedPostgresReadAuthorization(pool), transfers: createSourceConfirmedTransferQueryAuthorization() })
       : host.authorization.providers;
     const extensions = capabilities?.nativeReadExtensions ? createSourceConfirmedApplicationReadAuthorization(pool) : null;
     app = Fastify({ logger: false, trustProxy: false, bodyLimit: 65_536 });
-    app.addHook("onClose", async () => { await pool.dispose(); });
+    app.addHook("onClose", async () => { await ownedPool.dispose(); });
     const service = createAuthenticationService({ store: new PostgresAuthenticationStore(pool),
       now: host.now, policy: host.policy, passwords: host.credentialCompatibility === "legacy-pbkdf2-v1"
         ? createNodeMigratedLegacyPasswords() : createNodeScryptPasswords() });
@@ -390,17 +417,17 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     app.register(createInventoryLedgerQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.inventory, reader: new PostgresInventoryLedgerQueryReader(pool) } }));
     app.register(createSalesQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.sales, reader: new PostgresSalesQueryReader(pool) } }));
     app.register(createTransferQueryHttpPlugin({ authenticate: authenticateTransfer, dependencies: { authorization: policies.transfers, reader: new PostgresTransferQueryReader(pool) } }));
-    app.register(createProductQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.products, reader: new PostgresProductQueryReader(pool), media: host.media } }));
+    app.register(createProductQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.products, reader: new PostgresProductQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null), media: host.media } }));
     if (host.currentForms !== null) app.register(createCurrentFormHttpPlugin({ authenticate,
-      reader: new PostgresCurrentFormReader(pool, host.currentForms) }));
+      reader: new PostgresCurrentFormReader(pool, host.currentForms, issuer === null ? undefined : { runtime26: issuer.runtime26, historicalCustomerExclusion: issuer.historicalCustomerExclusion }) }));
     if (extensions) {
       app.register(createStoreSettingsReadHttpPlugin({ authenticate, dependencies: { authorization: extensions.settings, reader: new PostgresStoreSettingsReadReader(pool) } }));
-      app.register(createProductManagementQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.productManagement, reader: new PostgresProductManagementQueryReader(pool) } }));
+      app.register(createProductManagementQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.productManagement, reader: new PostgresProductManagementQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null) } }));
       app.register(createCatalogueSettingsReadHttpPlugin({ authenticate, dependencies: { authorization: extensions.catalogueSettings, reader: new PostgresCatalogueSettingsReadReader(pool) } }));
       app.register(createDictionaryReadHttpPlugin({ authenticate, dependencies: { authorization: extensions.dictionary, reader: new PostgresDictionaryReadReader(pool) } }));
-      app.register(createPartyReadHttpPlugin({ authenticate: createPartySessionAuthenticator(authentication), dependencies: { authorization: extensions.party, reader: new PostgresPartyReadReader(pool) } }));
-      app.register(createImportedHistoryQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.importedHistory, reader: new PostgresImportedHistoryQueryReader(pool) } }));
-      app.register(createProductDetailsQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.productDetails, reader: new PostgresProductDetailsQueryReader(pool), stockReader: new PostgresProductWarehouseStockReader(pool, policies.inventory) } }));
+      app.register(createPartyReadHttpPlugin({ authenticate: createPartySessionAuthenticator(authentication), dependencies: { authorization: extensions.party, reader: new PostgresPartyReadReader(pool, issuer?.historicalCustomerExclusion ?? null) } }));
+      app.register(createImportedHistoryQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.importedHistory, reader: new PostgresImportedHistoryQueryReader(pool, issuer === null ? undefined : { runtime26: issuer.runtime26 }) } }));
+      app.register(createProductDetailsQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.productDetails, reader: new PostgresProductDetailsQueryReader(pool, issuer?.catalogueRetainedDelete ?? null), stockReader: new PostgresProductWarehouseStockReader(pool, policies.inventory, null, issuer?.runtime26) } }));
       app.register(createOrganizationMaintenanceReadHttpPlugin({ authenticate, unitOfWork: new PostgresOrganizationMaintenanceReadUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool)) }));
       app.register(createSettingsAuditHttpPlugin({ authenticate, reader: new PostgresSettingsAuditUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool)) }));
     }
@@ -425,14 +452,14 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     }
     await app.ready();
     const readyApp = app;
-    return Object.freeze({ app: readyApp, close: () => readyApp.close(), get postgresBackgroundFailureCount() { return pool.backgroundFailureCount; },
+    return Object.freeze({ app: readyApp, close: () => readyApp.close(), get postgresBackgroundFailureCount() { return ownedPool.backgroundFailureCount; },
       ...(capabilities === null ? {} : { trustedOrigin: host.trustedOrigin }) });
   } catch (error) {
     // Even failed registration owns its pool. Both operations are idempotent; explicitly
     // dispose as a fallback if Fastify fails before reaching the close hook.
     const failures: unknown[] = [error];
     try { await app?.close(); } catch (closeError) { failures.push(closeError); }
-    try { await pool.dispose(); } catch (disposeError) { if (!failures.includes(disposeError)) failures.push(disposeError); }
+    try { await ownedPool.dispose(); } catch (disposeError) { if (!failures.includes(disposeError)) failures.push(disposeError); }
     if (failures.length > 1) throw new AggregateError(failures, "PostgreSQL read API construction failed; resource cleanup is not confirmed");
     throw error;
   }

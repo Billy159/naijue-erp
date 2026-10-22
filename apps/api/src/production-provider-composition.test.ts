@@ -2,11 +2,16 @@ import { sessionTokenHash } from "../../../packages/authentication/src/service.t
 import test from "node:test";
 import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
-import { createProductionApplicationApi, parseProductionRuntimeConfiguration, productionApplicationOptions, PRODUCTION_PUBLIC_ORIGIN } from "./production-provider-composition.ts";
-import type { ProductionRuntimeConfiguration } from "./production-provider-composition.ts";
+import { createProductionApplicationApi, createProductionRuntime26ApplicationApi, parseProductionRuntimeConfiguration, parseProductionRuntime26Configuration, productionApplicationOptions, PRODUCTION_PUBLIC_ORIGIN } from "./production-provider-composition.ts";
+import type { ProductionRuntimeConfiguration, ProductionRuntime26Configuration } from "./production-provider-composition.ts";
 import { runProductionMain } from "./production-main.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
-import { pbkdf2Sync } from "node:crypto";
+import { createHash, pbkdf2Sync } from "node:crypto";
+import { mkdtempSync, writeFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { NATIVE_RUNTIME26_METADATA_PROBE } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
+import { historyDetailQuery, historyListQuery } from "../../../tests/support/imported-history-query-fixtures.ts";
 import { wrapTrustedLegacyCredential } from "../../../packages/authentication/src/legacy-passwords.ts";
 import { createPostgresApplicationApi, createSourceConfirmedApplicationReadAuthorization } from "./postgres-read-api.ts";
 
@@ -242,4 +247,133 @@ test("W13 stays absent without the explicit native read profile; authenticated r
   const driver = Object.assign(new EventEmitter(), { async connect(): Promise<never> { throw Error("must not connect"); }, async end() {} });
   const api = await createPostgresApplicationApi(without, () => driver);
   try { assert.equal(api.app.hasRoute({ method: "POST", url: "/settings/audit/query" }), false); } finally { await api.close(); }
+});
+
+/** Synthetic pinned metadata and driver protocol only: no actual approval/PG. */
+function exact26Fixture(purposes = ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ", "INVENTORY_ADMISSION"]) {
+  const directory = mkdtempSync(join(tmpdir(), "d1-production26-synthetic-")), independent = join(directory, "independent.json"), reviewFile = join(directory, "review.json");
+  const hash = (value: string) => createHash("sha256").update(value).digest("hex"), digest = "a".repeat(64);
+  const target = { database: "SYNTHETIC_ONLY", databaseOid: "123", actingRole: "SYNTHETIC_ONLY", sessionUser: "SYNTHETIC_ONLY",
+    serverAddress: null, serverPort: null, postmasterStart: "2026-10-23 00:00:00+00" };
+  const receipt = JSON.stringify({ result: "PASS", notice: "SYNTHETIC_PROTOCOL_ONLY_NOT_ACTUAL_APPROVAL" }); writeFileSync(independent, receipt, { mode: 0o600 });
+  const review = { version: "C_NATIVE_RUNTIME26_REVIEW_V1", decision: "ACCEPT_EXACT_RUNTIME26_TARGET_METADATA", target,
+    catalog: { format: "EXACT26_RUNTIME_CATALOG_EXPORT_V1", sha256: digest, patchLevel: "26_v7_media_color_swap" }, purposes, scope: "EXACT_TARGET_METADATA_ONLY",
+    independentReview: { path: independent, sha256: hash(receipt), result: "PASS" }, realImportExecutionAuthorized: false };
+  const body = JSON.stringify(review); writeFileSync(reviewFile, body, { mode: 0o600 });
+  const configuration: ProductionRuntime26Configuration = { ...config(), profile: "source-confirmed-native-exact26-r1-v1", documentCommands: "DISABLED",
+    runtime26Review: { reviewFile, trustedReviewSha256: hash(body) } };
+  const observation = { identity: { database: target.database, database_oid: target.databaseOid, database_owner: "synthetic_owner", current_user: target.actingRole,
+    session_user: target.sessionUser, server_version_num: "170011", server_addr: null, server_port: null, postmaster_start: target.postmasterStart, replication_role: "origin" },
+    migration_versions: Array.from({ length: 26 }, (_, i) => i + 1), catalog_sha256: digest, source_routines_match: true };
+  return { configuration, observation, cleanup: () => rmSync(directory, { recursive: true, force: true }) };
+}
+function exact26Driver(observation: ReturnType<typeof exact26Fixture>["observation"]) {
+  const calls: { lease: number; sql: string; values: unknown[] }[] = []; let allocations = 0, connects = 0, releases = 0, ends = 0;
+  const token = Buffer.alloc(32, 27).toString("base64url"), now = new Date().toISOString(), expires = new Date(Date.now() + 60_000).toISOString();
+  const driver = Object.assign(new EventEmitter(), { async connect() { const lease = ++connects; return Object.assign(new EventEmitter(), {
+    async query(sql: string, values: unknown[] = []) {
+      calls.push({ lease, sql, values }); let rows: Record<string, unknown>[] = [];
+      if (sql === NATIVE_RUNTIME26_METADATA_PROBE) rows = [structuredClone(observation)];
+      else if (/^(BEGIN|COMMIT|ROLLBACK)/.test(sql)) {}
+      else if (sql.includes("FROM naijue_erp.auth_session")) rows = [{ token_hash: sessionTokenHash(token), account_id: account, auth_version: 1, created_at: now, expires_at: expires, revoked_at: null }];
+      else if (sql.includes("FROM naijue_erp.user_account a JOIN naijue_erp.staff s")) rows = [{ account_id: account, staff_id: "00000000-0000-4000-8000-000000000003", login_name: "SYNTHETIC_RUNTIME26",
+        password_hash: "SYNTHETIC_UNUSED_CREDENTIAL", login_enabled: true, auth_version: 1, role: "ADMIN", employment_status: "在职", hall_id: hall, native_hall_id: hall, hall_enabled: true }];
+      else if (sql === "SELECT enabled FROM naijue_erp.hall WHERE id = $1 FOR SHARE" || sql.includes("current-form:sales-hall")) rows = [{ id: hall, enabled: true }];
+      else if (sql.includes("current-form:count")) rows = [{ total: "0" }];
+      else if (sql.includes("current-form:page")) {}
+      else if (sql.includes("imported-history:schema")) rows = [{ versions: Array.from({ length: 26 }, (_, i) => i + 1) }];
+      else if (sql.includes("imported-history:list-count")) rows = [{ total: "0" }];
+      else if (sql.includes("imported-history:list-page") || sql.includes("imported-history:detail")) {}
+      else throw Error("Unexpected exact26 synthetic composition SQL");
+      return { rows, rowCount: rows.length };
+    }, release() { releases++; }
+  }); }, async end() { ends++; } });
+  return { calls, token, factory: () => { allocations++; return driver; }, counts: () => ({ allocations, connects, releases, ends }) };
+}
+test("production exact26: separate closed selector refuses legacy, command, pin and provider widening before pool allocation", async () => {
+  const f = exact26Fixture(); try {
+    assert.deepEqual(parseProductionRuntime26Configuration(f.configuration), f.configuration);
+    assert.throws(() => parseProductionRuntimeConfiguration(f.configuration), TypeError); assert.throws(() => parseProductionRuntime26Configuration(config()), TypeError);
+    let allocations = 0;
+    for (const change of [{ profile: "source-confirmed-native-v1" }, { documentCommands: "NATIVE_RUNTIME" }, { nativeReadExtensions: { profile: "future" } },
+      { runtime26Review: { ...f.configuration.runtime26Review, extra: true } }, { runtime26Review: { reviewFile: "relative", trustedReviewSha256: "a".repeat(64) } },
+      { runtime26Review: { ...f.configuration.runtime26Review, trustedReviewSha256: true } }])
+      await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, ...change }, () => { allocations++; throw Error("must not allocate"); }), TypeError);
+    assert.equal(allocations, 0);
+  } finally { f.cleanup(); }
+});
+test("production exact26: one owned original pool supplies actual issuer leases to authentication and CURRENT reads with command routes absent", async () => {
+  const f = exact26Fixture(), p = exact26Driver(f.observation);
+  try {
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    try {
+      assert.equal(api.app.server.listening, false); assert.deepEqual(p.counts(), { allocations: 1, connects: 2, releases: 2, ends: 0 });
+      for (const url of ["/sales/commands", "/transfers/commands", "/sales/prepare-create", "/transfers/prepare-create", "/sales/prepare-existing", "/transfers/prepare-existing", "/customers/commands", "/suppliers/commands"])
+        assert.equal(api.app.hasRoute({ method: "POST", url }), false, url);
+      for (const url of ["/current-form/products/query", "/products/stock/query", "/imported-history/sales/query", "/imported-history/sales/detail/query", "/imported-history/transfers/query", "/imported-history/transfers/detail/query"])
+        assert.equal(api.app.hasRoute({ method: "POST", url }), true, url);
+      const response = await api.app.inject({ method: "POST", url: "/current-form/products/query", headers: { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` },
+        payload: { context: { kind: "SALES", hallId: hall }, search: "", page: 1, pageSize: 20 } });
+      assert.equal(response.statusCode, 200, response.body); assert.deepEqual(response.json().items, []); assert.equal(response.headers["cache-control"], "no-store");
+      assert.equal(p.counts().allocations, 1); assert.equal(p.counts().releases, p.counts().connects);
+      const leased = new Map<number, typeof p.calls>();
+      for (const call of p.calls) { const group = leased.get(call.lease) ?? []; group.push(call); leased.set(call.lease, group); }
+      for (const calls of leased.values()) assert.equal(calls[0]!.sql, NATIVE_RUNTIME26_METADATA_PROBE);
+      const formLease = [...leased.values()].find(calls => calls.some(call => call.sql.includes("current-form:count")))!;
+      assert.ok(formLease); assert.equal(formLease.filter(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE).length, 3);
+      assert.equal(formLease.at(-1)!.sql, "COMMIT"); assert.ok(p.calls.every(call => !/^(INSERT|UPDATE|DELETE)|nextval|setval/.test(call.sql)));
+    } finally { await api.close(); }
+    assert.equal(p.counts().ends, 1);
+  } finally { f.cleanup(); }
+});
+test("production exact26: target mismatch or missing readonly-view purpose disposes the original pool without legacy fallback", async () => {
+  for (const failure of ["catalog", "purpose"]) {
+    const f = exact26Fixture(failure === "purpose" ? ["CURRENT_FORM_READ"] : undefined), p = exact26Driver(f.observation);
+    try {
+      if (failure === "catalog") f.observation.catalog_sha256 = "b".repeat(64);
+      await assert.rejects(createProductionRuntime26ApplicationApi(f.configuration, p.factory), { code: "NATIVE_RUNTIME26_NOT_READY" });
+      assert.equal(p.counts().allocations, 1); assert.equal(p.counts().ends, 1); assert.equal(p.counts().connects, failure === "catalog" ? 1 : 2); assert.equal(p.counts().releases, p.counts().connects);
+      assert.ok(p.calls.every(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE));
+    } finally { f.cleanup(); }
+  }
+});
+test("production exact26: live metadata drift denies authenticated reads through the managed pool and shutdown still owns the original pool", async () => {
+  const f = exact26Fixture(), p = exact26Driver(f.observation);
+  try {
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    try {
+      f.observation.catalog_sha256 = "b".repeat(64);
+      const response = await api.app.inject({ method: "POST", url: "/current-form/products/query", headers: { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` },
+        payload: { context: { kind: "SALES", hallId: hall }, search: "", page: 1, pageSize: 20 } });
+      assert.ok(response.statusCode >= 400); assert.equal(p.counts().allocations, 1); assert.equal(p.counts().connects, 3);
+      assert.equal(p.counts().releases, 3); assert.ok(p.calls.every(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE));
+    } finally { await api.close(); }
+    assert.equal(p.counts().ends, 1);
+  } finally { f.cleanup(); }
+});
+test("production exact26: HISTORY four POST routes use their separate policy and original issuer lease while publication stays closed", async () => {
+  const f = exact26Fixture(), p = exact26Driver(f.observation);
+  try {
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    try {
+      for (const kind of ["sales", "transfers"]) for (const detail of [false, true]) {
+        const response = await api.app.inject({ method: "POST", url: `/imported-history/${kind}/${detail ? "detail/" : ""}query`,
+          headers: { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` }, payload: detail ? historyDetailQuery() : historyListQuery() });
+        assert.equal(response.statusCode, 200, response.body); assert.equal(response.json().dataset, "HISTORY");
+        assert.equal(response.json().kind, kind); assert.equal(response.headers["cache-control"], "no-store");
+        if (detail) assert.equal(response.json().document, null); else assert.deepEqual(response.json().documents.items, []);
+      }
+      const snapshots = p.calls.filter(call => call.sql.includes("imported-history:schema")); assert.equal(snapshots.length, 4);
+      for (const snapshot of snapshots) {
+        const calls = p.calls.filter(call => call.lease === snapshot.lease);
+        assert.equal(calls[0]!.sql, NATIVE_RUNTIME26_METADATA_PROBE);
+        assert.ok(calls.filter(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE).length >= 2);
+        assert.equal(calls.at(-1)!.sql, "COMMIT");
+      }
+      const published = p.calls.filter(call => /imported-history:(list-count|list-page|detail)/.test(call.sql)); assert.equal(published.length, 6);
+      assert.ok(published.every(call => call.sql.includes("IMPORTED") && call.sql.includes("IMPORT_BATCH")));
+      assert.ok(p.calls.every(call => !/^(INSERT|UPDATE|DELETE)|nextval|setval/.test(call.sql))); assert.equal(p.counts().allocations, 1); assert.equal(p.counts().releases, p.counts().connects);
+    } finally { await api.close(); }
+    assert.equal(p.counts().ends, 1);
+  } finally { f.cleanup(); }
 });
