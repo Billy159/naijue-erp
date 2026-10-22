@@ -1,0 +1,32 @@
+{
+  "id": "C_PRODUCTION_FIXED98_FIRST_BUILD_FAILURE",
+  "atUtc": "2026-10-22T22:38:18.823953+00:00",
+  "status": "FAILED_NEW_INLINE_SVG_EXTERNAL_CLASSIFICATION_PACK_NOT_RUN",
+  "sourceCommit": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
+  "buildId": "r1-65d2787-20261023-01",
+  "sourceRound": 98,
+  "sourceManifestSha256": "d59064e170ebc2dd21b68071555c85d70e5430466c99c5e69564b9513a7c94c1",
+  "buildManifestSha256": "311dbf77db99febde0749ca3157d77467a3b5c464ae2755e8999b0bfca8b600f",
+  "selectedInputs": 1489,
+  "producedBuildFiles": 231,
+  "originalAttempt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build98-20261023-01/BUILD-ATTEMPT.json",
+    "sha256": "7ded2c1971f694c97d0cf01f9bc1d6ca3064c9918f092e6eff63c7ce0db4b308",
+    "exitCode": 1,
+    "elapsedSeconds": 4.273,
+    "error": "UNDECLARED_EXTERNAL_DEPENDENCY"
+  },
+  "localizedFailure": "Frontend actual esbuild graph has one embedded SVG dataURI url-token from sales/detail.css with1input+6CSSoutputs. Existing external dependency rule admits backend packages/builtins only, rejects embedded resource. No new package is missing.",
+  "embeddedUriBytes": 212,
+  "embeddedUriSha256": "315e1978e00fb98a377a06cea68c4b841f7ac9b9d34e802e69f85f7a7dda6d6c",
+  "sourceCssSha256": "96c7986227987b49b5499148ea11f3a49ba65da01841e282f4aa4fefecbd3b9b",
+  "packAttempts": 0,
+  "archive": null,
+  "fullGraphValidatorPass": false,
+  "buildAttempts": 1,
+  "retry": false,
+  "prior91FailurePreserved": true,
+  "next": "C helper minimal exact inline resource guard candidate; newfixedsource+newlimitedQB before one new build. No assert bypass/metafile edits/sourceSVG edits/SQL changes.",
+  "runtimeServerPgBrowser": false,
+  "businessAcceptance": false
+}

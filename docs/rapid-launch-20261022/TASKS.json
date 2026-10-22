@@ -8,10 +8,10 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "3c61ec4518bc70dfcf2325a7d2bd6e519dd8bec7",
+    "headObserved": "6eac13e213859d406cc570d85cc5065fd463acc7",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "3c61ec4518bc70dfcf2325a7d2bd6e519dd8bec7",
-    "remoteReadbackMethod": "Exact original15 GitHub objects verified+force=false fastforward+independentGET; conventional Git network failed preserved",
+    "remoteHeadVerified": "6eac13e213859d406cc570d85cc5065fd463acc7",
+    "remoteReadbackMethod": "Exact original3 additionalobjects, force=false FF/readback through100; conventional Git protocol stillfailed",
     "pushPendingLocalCommits": false,
     "recoverableDraftCheckpoint": {
       "status": "PRIVATE_DRAFT_UPLOAD_DOWNLOAD_SHA_AND_BUNDLE_VERIFY_PASS",
@@ -934,9 +934,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-22T22:28:01.961671+00:00",
+  "updatedAt": "2026-10-22T22:38:18.823953+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "3c61ec4518bc70dfcf2325a7d2bd6e519dd8bec7",
+  "lastVerifiedRemoteCommit": "6eac13e213859d406cc570d85cc5065fd463acc7",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1395,13 +1395,13 @@
     "accountIdentityAdditional4": "QB42_IDENTITY_ONLY_ACCEPTED_FALSE_EXECUTION",
     "deploymentTools": "QB38_SOURCE_PROTOCOL_PASS_REAL_DEPLOY_NOT_RUN",
     "bootPersistence": "QB128_SOURCE_PASS_C96_PIN_UPDATE_PENDING_QB_ACTUAL_NOT_INSTALLED",
-    "currentSourceCheckpoint": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
+    "currentSourceCheckpoint": "6eac13e213859d406cc570d85cc5065fd463acc7",
     "currentPreview": {
-      "url": "http://127.0.0.1:57845/synthetic-unified.html",
-      "source": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
-      "build": "ui-preview-65d2787-01-build01",
-      "htmlSha256": "7db64edbff7ae7b567876249a9edc3524d6ce84d58dbdb4663ef8720c6d64958",
-      "overlaySha256": "2e50a7c76e85ed0c3f7ad82261f184eda5369c38f54e6f544ee9059dc1f382b1",
+      "url": "http://127.0.0.1:57846/synthetic-unified.html",
+      "source": "6eac13e213859d406cc570d85cc5065fd463acc7",
+      "build": "ui-preview-6eac13e-01-build01",
+      "htmlSha256": "3830c86f6a673c72a6dbeac834d26977ff0ee33e2a11643ce930c5d9811530df",
+      "overlaySha256": "6f698d81c045a4ca58348edf5025b764449e7175090ed7215d8701ca8eddb603",
       "syntheticOnly": true,
       "actualInputs": 400,
       "sourceModules": 383,
@@ -1626,6 +1626,38 @@
       "elapsedSeconds": 6.659,
       "reviewSha256": "e48df42739ab79eecebe2f740713ceee3d880ec7025ad2483814bf50b66b13d8",
       "qualification": "Actual readonly metadata purposes only; no finalhost/HTTP/business/49/source/main/publish. Collected digests not asserted unknown server raw. Original C direct acceptance, no duplicateQA."
+    },
+    "productionBuild": {
+      "id": "C_PRODUCTION_FIXED98_FIRST_BUILD_FAILURE",
+      "atUtc": "2026-10-22T22:38:18.823953+00:00",
+      "status": "FAILED_NEW_INLINE_SVG_EXTERNAL_CLASSIFICATION_PACK_NOT_RUN",
+      "sourceCommit": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
+      "buildId": "r1-65d2787-20261023-01",
+      "sourceRound": 98,
+      "sourceManifestSha256": "d59064e170ebc2dd21b68071555c85d70e5430466c99c5e69564b9513a7c94c1",
+      "buildManifestSha256": "311dbf77db99febde0749ca3157d77467a3b5c464ae2755e8999b0bfca8b600f",
+      "selectedInputs": 1489,
+      "producedBuildFiles": 231,
+      "originalAttempt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build98-20261023-01/BUILD-ATTEMPT.json",
+        "sha256": "7ded2c1971f694c97d0cf01f9bc1d6ca3064c9918f092e6eff63c7ce0db4b308",
+        "exitCode": 1,
+        "elapsedSeconds": 4.273,
+        "error": "UNDECLARED_EXTERNAL_DEPENDENCY"
+      },
+      "localizedFailure": "Frontend actual esbuild graph has one embedded SVG dataURI url-token from sales/detail.css with1input+6CSSoutputs. Existing external dependency rule admits backend packages/builtins only, rejects embedded resource. No new package is missing.",
+      "embeddedUriBytes": 212,
+      "embeddedUriSha256": "315e1978e00fb98a377a06cea68c4b841f7ac9b9d34e802e69f85f7a7dda6d6c",
+      "sourceCssSha256": "96c7986227987b49b5499148ea11f3a49ba65da01841e282f4aa4fefecbd3b9b",
+      "packAttempts": 0,
+      "archive": null,
+      "fullGraphValidatorPass": false,
+      "buildAttempts": 1,
+      "retry": false,
+      "prior91FailurePreserved": true,
+      "next": "C helper minimal exact inline resource guard candidate; newfixedsource+newlimitedQB before one new build. No assert bypass/metafile edits/sourceSVG edits/SQL changes.",
+      "runtimeServerPgBrowser": false,
+      "businessAcceptance": false
     }
   },
   "supplementalRoles": {
@@ -2020,8 +2052,11 @@
     }
   ],
   "newPendingReviews": [
-    "QB C96 exact2 SQLpath guards",
-    "Demo C98 Transfer/Catalogue hover affected actual scope"
+    "QF C100 More only",
+    "Demo C100 P16/P18 actual geometry",
+    "C inlineSVG exact resourceguard prep afterbuild98 failure",
+    "D3 TransferLines code+Kpreparer freeze beforeactualsourcewindow",
+    "C H06 actualQA plan/currentACL"
   ],
   "openFindingsCurrent": [
     {
@@ -2050,8 +2085,9 @@
     {
       "id": "SCHEME-UI-01-HOVER",
       "owner": "F1",
-      "status": "C97_QF_SOURCE_CASCADE_PASS_C98_ACTUAL_PENDING",
-      "fixedCommit": "e31ea0f3ccc371a0fb3e3a65f718a6c5408193c2"
+      "status": "C98_ACTUAL_GLYPH12_HOVER20_FOCUSONLY_CLOSED",
+      "fixedCommit": "e31ea0f3ccc371a0fb3e3a65f718a6c5408193c2",
+      "successorCheck": "DEMO-C98-LOCAL43"
     },
     {
       "id": "SALE-QUANTITY-DIRECTION-01",
@@ -2066,38 +2102,45 @@
     {
       "id": "CAT-UI-01/03-P16P18",
       "owner": "F2",
-      "status": "C89_ACTUAL_DIFFERENCE_ORIGINAL_OWNER_FIX_ACTIVE",
-      "evidenceSha256": "c230aa52f675b733e2543ab74ff55189a80ec30c42258fd67948057f9f1deadb"
+      "status": "C99_QF_SOURCE_PASS_C100_ACTUAL_PENDING",
+      "evidenceSha256": "c230aa52f675b733e2543ab74ff55189a80ec30c42258fd67948057f9f1deadb",
+      "fixedCommit": "57c472225a91d6cb7851199f827fb42d22cf2bf3"
+    },
+    {
+      "id": "TR01/02/03/04-control-geometry-font-default",
+      "owner": "F1",
+      "status": "C98_ACTUAL30VS32_ARIALVSINTER_AND_DEFAULT_CONTRACT_EVIDENCE_OPEN",
+      "next": "K-only locate then scoped visual fix; no first-item identity inference/units DTO addition"
     }
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-22T22:24:28.460716+00:00",
-    "sourceRound": 98,
-    "sourceCheckpoint": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
+    "atUtc": "2026-10-22T22:38:18.823953+00:00",
+    "sourceRound": 100,
+    "sourceCheckpoint": "6eac13e213859d406cc570d85cc5065fd463acc7",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "url": "http://127.0.0.1:57845/synthetic-unified.html",
-      "source": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
-      "build": "ui-preview-65d2787-01-build01",
-      "htmlSha256": "7db64edbff7ae7b567876249a9edc3524d6ce84d58dbdb4663ef8720c6d64958",
-      "overlaySha256": "2e50a7c76e85ed0c3f7ad82261f184eda5369c38f54e6f544ee9059dc1f382b1",
+      "url": "http://127.0.0.1:57846/synthetic-unified.html",
+      "source": "6eac13e213859d406cc570d85cc5065fd463acc7",
+      "build": "ui-preview-6eac13e-01-build01",
+      "htmlSha256": "3830c86f6a673c72a6dbeac834d26977ff0ee33e2a11643ce930c5d9811530df",
+      "overlaySha256": "6f698d81c045a4ca58348edf5025b764449e7175090ed7215d8701ca8eddb603",
       "syntheticOnly": true,
       "actualInputs": 400,
       "sourceModules": 383,
       "wholePageAccepted": false
     },
-    "nextPreview": "C98 actively being checked by Demo. OldC89 retained; future F1 tags/F2 P16P18 not yet integrated.",
-    "r1": "C42 actual originalpool/issuer fivepurpose pass. C permanentmetadata review359b2286 separately frozen, serverinstall/finalconfigpending. C98 formal export/deps prepared, onebuild waits QB96. No49/sourceMAIN/publicswitch.",
+    "nextPreview": "C100 P16/P18 actualimpact; More>=4 standaloneexplicit syntheticcomponent fixture Kprep, mainoriginal1SKU notexpanded",
+    "r1": "C98 actual productionbuild fails newlyreached embeddedSVG classification, allfailureoutputs retained/pack0. Precise guardprep newscope. Seven permanentmetadata/config/stagecarrier Kprep; no49/sourceMAIN/publicswitch",
     "qa": "C40 actual Sharp upload/ADD/replay/controlled original+thumbnail PASS; QA11audits11receipts3images/root4. No HTTP/realrole/business acceptance",
     "import": "QB127 TransferHeader sourcePASS adopted; D3 TransferLines exact2 implementation/synthetic active, one bounded original window waits finalproducer/preparer freeze+window. H06 C95 QB129sourcePASS, actualQA Kprep/currentACL unknown; NULL27 v5 humanpending.",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Normal branch3c61ec4 verified via exact original15 objects REST fastforward. Private same3c61 bundle downloaded/hash/gitverify. Conventional Git network failed retained.",
+    "github": "Normal branch6eac13e through100 exactoriginalAPI FF+GET verified; recoverybundle3c61 retained/downloadverified",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
-      "localDeduplicated": 40,
+      "localDeduplicated": 43,
       "wholePagesAccepted": 0,
       "wholeOverlayClassesAccepted": 0,
       "notRun": 65,
@@ -2105,13 +2148,13 @@
       "partial": 6,
       "waitingIntegration": 7,
       "approvedException": 1,
-      "latestReceipt": "DEMO-C98-LOCAL40"
+      "latestReceipt": "DEMO-C98-LOCAL43"
     }
   },
   "latestReadySource": {
-    "sourceRound": 98,
-    "commit": "65d2787c458c09dc86da1d6a3cabc7a0e10b85f7",
-    "qualification": "C94/97/98 QF passed and C98 savedRETURN P1 actualclosed. C95 H06 QB129 source-only pass, actualQA pending. C96guard QBpending."
+    "sourceRound": 100,
+    "commit": "6eac13e213859d406cc570d85cc5065fd463acc7",
+    "qualification": "99QFsourcePASS/100MoreQFpending; C100preview57846 activeDemo. 98local43 actual receipt adopted. C98production buildFAILED no pack."
   },
   "pendingUserDecision": [
     {
@@ -2136,8 +2179,8 @@
     }
   ],
   "currentAcceptedReceiptBatch": {
-    "atUtc": "2026-10-22T22:28:01.961671+00:00",
-    "indexRows": 272,
+    "atUtc": "2026-10-22T22:38:18.823953+00:00",
+    "indexRows": 276,
     "controllerTechnicalRetests": 0
   }
 }

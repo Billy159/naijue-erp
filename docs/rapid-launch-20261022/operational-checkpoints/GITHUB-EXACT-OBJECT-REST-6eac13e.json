@@ -1,0 +1,8 @@
+{
+  "atUtc": "2026-10-22T22:42:49.326593+00:00",
+  "remoteCommitVerified": "6eac13e213859d406cc570d85cc5065fd463acc7",
+  "method": "Exact original3 tree+commit objects via existing authenticated GitHub API, force=false FF, independent ref GET; localgithub tracking FF",
+  "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-6eac13e-20261023-01/RESULT.json",
+  "evidenceSha256": "8a353e519b467e38d7232cca82ab2208640291a820d3fb5f98288c899b15bc4a",
+  "businessRelease": false
+}
