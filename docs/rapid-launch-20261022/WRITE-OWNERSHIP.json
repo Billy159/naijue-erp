@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T21:54:01.774874+00:00",
+  "updatedAt": "2026-10-22T22:15:14.021503+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -1455,6 +1455,18 @@
           "path": "scripts/import-v3/native-transfer-header-source26.test.mjs",
           "group": "TRANSFER_HEADER14279_GENUINE_SOURCE_ONLY",
           "fieldGate": "EXISTING_NON_NULL_SCHEMA_NO_PERMISSION_OR_BUSINESS_RULE_CHANGE"
+        },
+        {
+          "path": "scripts/import-v3/native-transfer-line-source26.mjs",
+          "group": "TRANSFER_LINES26_GENUINE_SOURCE_ONLY",
+          "fieldGate": "EXISTING26_APPROVED_NO_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
+          "boundary": "D3 sole owner; pure prep + genuine strict outside-source/reference pin consumer; existing mapper/SQL/DTO/run untouched; original-data reads require separate C bounded window"
+        },
+        {
+          "path": "scripts/import-v3/native-transfer-line-source26.test.mjs",
+          "group": "TRANSFER_LINES26_GENUINE_SOURCE_ONLY",
+          "fieldGate": "EXISTING26_APPROVED_NO_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
+          "boundary": "D3 sole owner; pure prep + genuine strict outside-source/reference pin consumer; existing mapper/SQL/DTO/run untouched; original-data reads require separate C bounded window"
         }
       ]
     },
@@ -2651,6 +2663,19 @@
         "scripts/import-v3/prepare-native-header26-bindings.test.mjs"
       ],
       "reason": "Finite header native-party join/preparer after stock genuine consumer; stableImportId history primary keys preserved, source/reference-only private candidate, no SQL/newUUID/MAIN."
+    },
+    {
+      "atUtc": "2026-10-22T22:15:14.021503+00:00",
+      "owner": "D3",
+      "scope": "exact2 TransferLines source consumer only",
+      "files": [
+        "scripts/import-v3/native-transfer-line-source26.mjs",
+        "scripts/import-v3/native-transfer-line-source26.test.mjs"
+      ],
+      "sourcePlan": "K/reports/backend/rapid-launch-20261022/D3/transfer-lines26-source-plan1/PLAN.json",
+      "planSha256": "a079d9381279bc67a64a457163d2c1c59689aed61439c02d3d4915caad515042",
+      "noOriginalDataReadGrant": true,
+      "humanAuthorizationMessage": "01a161f7-a5e8-7e10-9059-9537c28910c2"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
