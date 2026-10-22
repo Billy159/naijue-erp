@@ -15,6 +15,7 @@ import { nativeCatalogueBindingEvidence } from '../../adapters/postgres/src/nati
 import { historyClosureProjectionRow } from '../../packages/application/src/history-typed-closure.ts';
 import { validatePreparedNativeBarcode, NATIVE_BARCODE_MAIN_DEMOTION_VERSION } from '../../packages/application/src/native-barcode-import.ts';
 import { historyHeaderNativeReferenceEvidence } from '../../adapters/postgres/src/import-v3-history-header-native-reference-store.ts';
+import { validatePreparedProductEvidenceChunk } from '../../packages/application/src/product-evidence-staging.ts';
 const must = (ok, code) => { if (!ok) throw Object.assign(Error(code), { code }); };
 const digest = b => createHash('sha256').update(b).digest('hex');
 const hash = s => typeof s === 'string' && /^[a-f0-9]{64}$/.test(s);
@@ -29,6 +30,44 @@ async function load(path, pin, limit) {
   const bytes = await readFile(path), after = await lstat(path);
   must(bytes.length === before.size && same(before, after) && digest(bytes) === pin, 'NATIVE_SOURCE_FILE_CHANGED');
   return { value: JSON.parse(new TextDecoder('utf8', { fatal: true }).decode(bytes)), path, stat: after };
+}
+/** Genuine exact-source consumer of the already reviewed PRODUCT component.
+ * It does not reopen workbooks/materialized snapshots or approve native refs.
+ * The outer explicit product26 authorizer separately binds all target decisions. */
+export async function openReviewedProductEvidenceSource(options) {
+  must(exactData(options,['directory','trustedManifestSha256','reviewRecordFile','trustedReviewRecordSha256','binding']), 'PRODUCT_SOURCE_OPTIONS');
+  const o=Object.fromEntries(Object.keys(options).map(k=>[k,Object.getOwnPropertyDescriptor(options,k).value]));
+  historySettlementRequestHash(o.binding);const binding=structuredClone(o.binding);
+  must(exactData(binding,['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'])&&uuid(binding.batchId)&&typeof binding.fixedSourceNamespace==='string'
+    &&binding.fixedSourceNamespace.length>0&&typeof binding.cutoffAt==='string'&&hash(binding.selectionSha256)&&typeof o.directory==='string'&&isAbsolute(o.directory)
+    &&typeof o.reviewRecordFile==='string'&&isAbsolute(o.reviewRecordFile),'PRODUCT_SOURCE_BINDING');
+  const manifest=await load(join(o.directory,'review-candidate-manifest.json'),o.trustedManifestSha256,4194304),m=manifest.value;
+  const review=await load(o.reviewRecordFile,o.trustedReviewRecordSha256,4194304),a=review.value;
+  must(m.version===NATIVE_BINDING_PACKAGE_VERSION&&['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'].every(k=>m[k]===binding[k])
+    &&Array.isArray(m.files)&&Number.isSafeInteger(m.products)&&m.products>0&&m.products<=50000,'PRODUCT_SOURCE_BINDING');
+  must(a.version==='C_NATIVE_BINDING_PARTIAL_REVIEW_PIN_V1'&&a.decision==='ACCEPT_EXACT_QB_REVIEWED_PARTIAL_ARTIFACT_SCOPE'
+    &&a.manifestSha256===o.trustedManifestSha256&&a.manifestBytes===manifest.stat.size&&a.closedToUnreviewedComponents===true
+    &&a.realNativeCommandsOrImportAuthorizedByThisPinAlone===false&&Array.isArray(a.components)
+    &&['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'].every(k=>a.binding?.[k]===binding[k]),'PRODUCT_SOURCE_COMPONENT_REVIEW_REQUIRED');
+  const selected=m.files.filter(f=>f.name==='product-source-candidates.json'),accepted=a.components.filter(c=>c.component==='product-source-candidates.json');
+  must(selected.length===1&&accepted.length===1&&selected[0].sha256===accepted[0].sha256&&Number.isSafeInteger(selected[0].bytes)
+    &&selected[0].bytes>0&&selected[0].bytes<=33554432,'PRODUCT_SOURCE_COMPONENT_REVIEW_REQUIRED');
+  const opened=await load(join(o.directory,'product-source-candidates.json'),selected[0].sha256,33554432),rows=opened.value;
+  must(opened.stat.size===selected[0].bytes&&Array.isArray(rows)&&rows.length===m.products,'PRODUCT_SOURCE_COMPONENT_COVERAGE');
+  const sources=new Map(),ids=new Set();
+  for(const s of rows){historySettlementRequestHash(s);must(exactData(s,['id','batchId','entityType','sourceKey','fileRef','sheet','rowNo','sourceFileSha256','rowSha256','rawFields','normalizedFields','fieldProvenance'])
+    &&s.entityType==='PRODUCT'&&s.batchId===binding.batchId&&uuid(s.id)&&typeof s.sourceKey==='string'&&s.sourceKey.length>0&&!sources.has(s.sourceKey)&&!ids.has(s.id),'PRODUCT_SOURCE_COMPONENT_ROW');sources.set(s.sourceKey,s);ids.add(s.id);}
+  let closed=false;const active=()=>must(!closed,'PRODUCT_SOURCE_CLOSED');
+  async function verify(){active();for(const item of [manifest,review,opened])must(same(item.stat,await lstat(item.path)),'PRODUCT_SOURCE_FILE_CHANGED');active();}
+  return {report:Object.freeze({kind:'REVIEWED_PRODUCT_EVIDENCE_SOURCE_V1',products:rows.length,sourceComponentSha256:selected[0].sha256,noSql:true,nativeReferenceAuthority:false}),verify,
+    async *rows(){await verify();for(const source of rows){active();yield structuredClone(source);}await verify();},
+    async authorize(input){active();const before=historySettlementRequestHash(input),chunk=structuredClone(input);
+      must(exactData(chunk,['batchId','fixedSourceNamespace','selection','rows','mappingVersion','fingerprint'])&&chunk.rows.every(r=>exactData(r,['source','product','blankPricePolicy'])),'PRODUCT_SOURCE_EXACT_PROJECTION');
+      validatePreparedProductEvidenceChunk(chunk);await verify();
+      must(chunk.batchId===binding.batchId&&chunk.fixedSourceNamespace===binding.fixedSourceNamespace&&chunk.selection.selectionSha256===binding.selectionSha256,'PRODUCT_SOURCE_SCOPE_CHANGED');
+      for(const row of chunk.rows){const expected=sources.get(row.source.sourceKey);must(expected&&requestHash(expected)===requestHash(row.source),'PRODUCT_SOURCE_ORIGINAL_CHANGED');}
+      await verify();must(historySettlementRequestHash(input)===before,'PRODUCT_SOURCE_INPUT_CHANGED');
+    },async close(){closed=true;sources.clear();ids.clear();rows.length=0;}};
 }
 /** Narrow source conversion proof only. It cannot authorize a native PRODUCT,
  * choose an old scalar season, issue a runtime profile or publish a batch. */

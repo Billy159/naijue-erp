@@ -1,0 +1,46 @@
+{
+  "atUtc": "2026-10-22T17:31:53.189211+00:00",
+  "parent": "10640f6b6d933617d6ef266ef7276508c2979d1c",
+  "groups": [
+    {
+      "slice": "PRIVATE_DURABLE_MEDIA_STAGE",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W16-STAGE-RECEIPT.json",
+      "receiptSha256": "652764ff6367dd01e1055328318001f981435760f3da7da85d4eda5bc7e94ce3",
+      "files": [
+        {
+          "path": "adapters/media/src/product-media-stage.ts",
+          "owner": "D2",
+          "bytes": 22929,
+          "sha256": "1f13a6af9d13a290ba6dd39508e9d60c99cf2fdb11e7cd1c131666eb2082a44c"
+        },
+        {
+          "path": "tests/product-media-stage.test.ts",
+          "owner": "D2",
+          "bytes": 15784,
+          "sha256": "58a21afd5001b9b25121e553bd356c8ca351a2fd4b47cd355907170c4d095db9"
+        }
+      ]
+    },
+    {
+      "slice": "GENUINE_PRODUCT_SOURCE_READER_AND_ACTUAL2956_CONSUMPTION",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/product-evidence-source-slice1/RESULT.json",
+      "receiptSha256": "3b9f7d174da03fb707b622c44a861810684713ce771d3ce283ac9034fb9f5175",
+      "files": [
+        {
+          "path": "scripts/import-v3/native-source-authorizers.mjs",
+          "owner": "D3",
+          "bytes": 42014,
+          "sha256": "6a42860d3341f072876e70a39fc0354ab6f568ab49c1e5f2559f59110734dfdf"
+        },
+        {
+          "path": "scripts/import-v3/native-source-authorizers.test.mjs",
+          "owner": "D3",
+          "bytes": 28033,
+          "sha256": "99d2d24ab7bcb15a586d70494ad967bac5c4d5fc624b6baa2dda5987372add5e"
+        }
+      ]
+    }
+  ],
+  "fileCount": 4,
+  "scope": "Actual local codec/private synthetic stage and genuine2956 source authorization distinct from actual PG/native import/production. Independent new scope review pending."
+}

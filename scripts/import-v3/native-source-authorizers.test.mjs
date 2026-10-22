@@ -7,7 +7,8 @@ import { createHash } from 'node:crypto';
 import { createNativeIdentityRegistry, reviewedPartyBinding, sourceEvidence } from './prepare-native-bindings.mjs';
 import { IMPORT_V2_TABLES } from '../../packages/application/src/import-v2-contract.ts';
 import { requestHash } from '../../packages/application/src/request-hash.ts';
-import { createNativeSourceStepAuthorizer, NATIVE_SOURCE_STEP_KINDS, openNativeBindingRegistry, openReviewedCatalogueSource, openApprovedBarcodeMainDemotions, openReviewedProductSeasonSource } from './native-source-authorizers.mjs';
+import { createNativeSourceStepAuthorizer, NATIVE_SOURCE_STEP_KINDS, openNativeBindingRegistry, openReviewedCatalogueSource, openApprovedBarcodeMainDemotions, openReviewedProductSeasonSource, openReviewedProductEvidenceSource } from './native-source-authorizers.mjs';
+import { prepareProductEvidenceChunk } from '../../packages/application/src/product-evidence-staging.ts';
 const id = n => `00000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
 const hash = b => createHash('sha256').update(b).digest('hex'), pin = 'a'.repeat(64);
 async function registryReview(dir, manifest, binding, files) {
@@ -16,6 +17,42 @@ async function registryReview(dir, manifest, binding, files) {
     closedToUnreviewedComponents:true,realNativeCommandsOrImportAuthorizedByThisPinAlone:false};
   const bytes=Buffer.from(JSON.stringify(value)),reviewRecordFile=join(dir,'scope-review.json');await writeFile(reviewRecordFile,bytes);return {reviewRecordFile,trustedReviewRecordSha256:hash(bytes)};
 }
+async function reviewedProductFixture(t) {
+  const dir=await mkdtemp(join(await realpath(tmpdir()),'reviewed-product-source-synthetic-'));t.after(()=>rm(dir,{recursive:true,force:true}));
+  const binding={batchId:id(1),fixedSourceNamespace:'synthetic:product-source',selectionSha256:pin,cutoffAt:'2026-10-04T12:00:00+08:00'};
+  const fields=Object.fromEntries(IMPORT_V2_TABLES.find(t=>t.entity==='PRODUCT').columns.map(c=>[c.name,'']));
+  Object.assign(fields,{'来源编号':'SYNTHETIC PRODUCT','款号':'SYN-001','商品名称':'SYNTHETIC NAME','分类路径':'SYNTHETIC ROOT','尺码组':'SYNTHETIC GROUP','状态':'正常'});
+  const raw={entity:'PRODUCT',sourceId:fields['来源编号'],file:'SYNTHETIC.xlsx',sheet:'PRODUCT',row:2,sourceSha256:pin,data:fields};
+  const source=sourceEvidence(raw,JSON.stringify(raw),fields,binding),sourceBytes=Buffer.from(JSON.stringify([source]));
+  const sourcePath=join(dir,'product-source-candidates.json');await writeFile(sourcePath,sourceBytes);
+  const files=[{name:'product-source-candidates.json',bytes:sourceBytes.length,sha256:hash(sourceBytes)}];
+  const manifest=Buffer.from(JSON.stringify({version:'NATIVE_BINDING_REVIEW_CANDIDATE_V1',...binding,products:1,files}));await writeFile(join(dir,'review-candidate-manifest.json'),manifest);
+  const review=await registryReview(dir,manifest,binding,files);
+  const selection={entity:'PRODUCT',source:'BASE_V2',path:'business/01商品.csv',baseManifestSha256:pin,selectionSha256:pin,approvalSha256:pin,csvSha256:pin};
+  const input={batchId:binding.batchId,fixedSourceNamespace:binding.fixedSourceNamespace,selection,rows:[{source,product:{sourceKey:source.sourceKey,nativeId:id(3),expectedVersion:1},blankPricePolicy:'V03_EXACT_PRICE_COLUMN_BLANK_IS_UNSET'}]};
+  return {sourcePath,input,prepared:prepareProductEvidenceChunk(input),options:{directory:dir,trustedManifestSha256:hash(manifest),...review,binding}};
+}
+test('reviewed product evidence source consumes exact accepted component without opening the identity registry or granting native references',async t=>{
+  const f=await reviewedProductFixture(t),reader=await openReviewedProductEvidenceSource(f.options);t.after(()=>reader.close());
+  const rows=[];for await(const source of reader.rows())rows.push(source);assert.equal(rows.length,1);assert.deepEqual(rows[0],f.input.rows[0].source);
+  await reader.authorize(f.prepared);assert.equal(reader.report.products,1);assert.equal(reader.report.nativeReferenceAuthority,false);
+  const changed=structuredClone(f.input);changed.rows[0].source.rawFields['商品名称']=changed.rows[0].source.normalizedFields['商品名称']='SUBSTITUTED';
+  changed.rows[0].source.fieldProvenance.fields['商品名称'].raw='SUBSTITUTED';await assert.rejects(reader.authorize(prepareProductEvidenceChunk(changed)),/ORIGINAL_CHANGED/);
+  await assert.rejects(reader.authorize({...f.prepared,rows:[{...f.prepared.rows[0],references:{}}]}),/EXACT_PROJECTION/);
+});
+test('reviewed product evidence source rejects absent component approval, missing outside pin and descriptor getters before source access',async t=>{
+  const f=await reviewedProductFixture(t);await assert.rejects(openReviewedProductEvidenceSource({...f.options,trustedReviewRecordSha256:undefined}),/OUTSIDE_PIN/);
+  let calls=0;const getter={...f.options};Object.defineProperty(getter,'directory',{enumerable:true,get(){calls++;return f.options.directory;}});
+  await assert.rejects(openReviewedProductEvidenceSource(getter),/OPTIONS/);assert.equal(calls,0);
+  const {readFile}=await import('node:fs/promises');const review=JSON.parse(await readFile(f.options.reviewRecordFile,'utf8'));review.components=[];const b=Buffer.from(JSON.stringify(review));await writeFile(f.options.reviewRecordFile,b);
+  await assert.rejects(openReviewedProductEvidenceSource({...f.options,trustedReviewRecordSha256:hash(b)}),/COMPONENT_REVIEW_REQUIRED/);
+});
+test('reviewed product evidence source captures scope, detects source file mutation and revokes a closed reader',async t=>{
+  const f=await reviewedProductFixture(t),reader=await openReviewedProductEvidenceSource(f.options);t.after(()=>reader.close());
+  f.options.binding.batchId=id(99);await reader.authorize(f.prepared);
+  await writeFile(f.sourcePath,'[]');await assert.rejects(reader.authorize(f.prepared),/FILE_CHANGED/);
+  await reader.close();await assert.rejects(reader.rows().next(),/CLOSED/);
+});
 test('every direct-store kind needs its real source authorizer; source verdict flags are not accepted', async () => {
   const calls = [], h = Object.fromEntries(NATIVE_SOURCE_STEP_KINDS.map(k => [k, async p => { calls.push(k); assert.equal(p.marker, k); }]));
   const authorize = createNativeSourceStepAuthorizer(h);
