@@ -25,7 +25,7 @@ test("closure26 full product25 SKU9 warehouse6 and dictionary snapshots preserve
  const hashes=[null,[],[id(1)],[id(1),id(2)]].map(season_ids=>historyClosureRowHash(historyClosureProjectionRow26("product",{...upgraded("product"),season_ids})));
  assert.equal(new Set(hashes).size,4);
  for(const season_ids of [[id(2),id(1)],[id(1),id(1)],false,["fake"]])assert.throws(()=>historyClosureProjectionRow26("product",{...upgraded("product"),season_ids}));
- let called=0;const getter=[];Object.defineProperty(getter,"0",{enumerable:true,get(){called++;return id(1);}});
+ let called=0;const getter: unknown[]=[];Object.defineProperty(getter,"0",{enumerable:true,get(){called++;return id(1);}});
  assert.throws(()=>historyClosureProjectionRow26("product",{...upgraded("product"),season_ids:getter}));assert.equal(called,0);
 });
 function input(typedRows:unknown){return {batchId:id(10),fixedSourceNamespace:"SYNTHETIC_ONLY",selectionSha256:"a".repeat(64),authorizedPayloadHash:"b".repeat(64),

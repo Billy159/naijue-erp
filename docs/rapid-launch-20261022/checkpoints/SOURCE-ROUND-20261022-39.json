@@ -1,0 +1,21 @@
+{
+  "atUtc": "2026-10-22T17:49:04.276357+00:00",
+  "parent": "bbe2d8ced3735ab74332adf18917d67eceaffe67",
+  "groups": [
+    {
+      "slice": "QB77_F01_TYPE_ANNOTATION_ONLY",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/QB77-F01-RESULT.json",
+      "receiptSha256": "781d26ff6b8d975c1d74a97b7366c56799502eeea638eab7833161ac49725485",
+      "files": [
+        {
+          "path": "tests/history-typed-closure26.test.ts",
+          "owner": "D1",
+          "sha256": "9b2b7083531840bafc4d1465493d4803b59925b5cc3c7b5762c44219b322b3b4",
+          "bytes": 5718
+        }
+      ]
+    }
+  ],
+  "fileCount": 1,
+  "scope": "Only type annotation; old strict0 claim retracted by author, original failure preserved. Actual tsc run3 exit0 evidence, QB targeted verification pending. Core pure/121/SQL not rerun."
+}
