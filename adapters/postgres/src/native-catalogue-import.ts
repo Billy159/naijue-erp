@@ -51,7 +51,7 @@ export class PostgresNativeCatalogueImportStore implements NativeCatalogueImport
     requireDomain(schema.length === 1, "NATIVE_CATALOGUE_SCHEMA_NOT_READY", "Exact reviewed native import schema prefix required");
     const reviewedSchema = assertReviewedNativeImportSchema(schema[0]!.installed_versions,
       { minimumVersion: 14, errorCode: "NATIVE_CATALOGUE_SCHEMA_NOT_READY" });
-    if (reviewedSchema.versions.length === 18) await assertNativeImportAccountingGuards(client);
+    if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
     const batchRows = (await client.query(`/* native-catalogue-import:batch */ SELECT id,mapping_version,status,source_hash,source_name,
       EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED') AS already_published
       FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`, [chunk.batchId])).rows;

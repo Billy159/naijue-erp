@@ -6,6 +6,8 @@ import { historyImportStageMetadata } from "../../../packages/application/src/hi
 import type { HistoryImportReconciliation } from "../../../packages/application/src/history-import-lifecycle.ts";
 import { assertReviewedNativeImportSchema } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { reconcileHistoryImport } from "./history-import-lifecycle.ts";
+import { reconcileHistoryTypedPublication } from "./history-typed-publication.ts";
+import type { HistoryTypedClosurePlan } from "../../../packages/application/src/history-typed-closure.ts";
 import { authorizeNativeImportAccountingCommand, hasNativeImportAccountingMetadata, validateNativeImportAccountingCommand } from "../../../packages/application/src/native-import-record-accounting.ts";
 import type { NativeImportAccountingCommand } from "../../../packages/application/src/native-import-record-accounting.ts";
 import { createNativeImportRecordAccountant, reconcileNativeImportStockConservation } from "./native-import-record-accounting.ts";
@@ -122,7 +124,7 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
       const metadata = historyImportStageMetadata(command.mappingVersion, command.historyMetadata);
       if (metadata) {
         const versions = await historySchema(client);
-        if (versions.length === 15 || versions.length === 16 || versions.length === 17 || versions.length === 18) await assertNativeImportAccountingGuards(client);
+        if (versions.length === 15 || versions.length === 16 || versions.length === 17 || versions.length === 18 || versions.length === 19) await assertNativeImportAccountingGuards(client);
       }
       checkpoint = { sequence: 0, cursor: 0, counts: zeroCounts(), expected: command.expected }; before = null; status = "STAGED";
       batch = { ...(metadata ? { historyMetadata: metadata } : {}), id: command.batchId, sourceName: command.sourceName, sourceManifestRef: command.sourceManifestRef, sourceHash: command.sourceHash,
@@ -178,6 +180,10 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
         checkpoint = { ...before, sequence: before.sequence + 1, cursor: before.cursor + command.items.length, counts: nextCounts }; status = "VALIDATING";
         }
       } else {
+        const historyClosure = nativeCommand?.action === "IMPORT_PUBLISH" && Object.hasOwn(nativeCommand, "historyClosure")
+          ? (nativeCommand as NativeImportAccountingCommand & { readonly historyClosure: HistoryTypedClosurePlan }).historyClosure : undefined;
+        requireDomain(historyClosure === undefined || batch.historyMetadata !== undefined, "HISTORY_PUBLICATION_PLAN_MISMATCH",
+          "History closure is only valid for the exact historical mapping and metadata");
         requireDomain(command.approval.sourceHash === batch.sourceHash && command.approval.sourceManifestRef === batch.sourceManifestRef,
           "IMPORT_MANIFEST_CONFLICT", "Final approval must refer to the exact frozen reviewed manifest");
         requireDomain(targets.filter(target => target !== "IMPORT_BATCH").every(target => batch.checkpoint.counts[target] === batch.checkpoint.expected[target])
@@ -186,7 +192,9 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
           const versions = await historySchema(client);
           requireDomain(versions.length < 15 || nativeCommand?.action === "IMPORT_PUBLISH", "NATIVE_RECORD_ACCOUNTING_REQUIRED",
             "Schema15 V2 publication requires once-only FINAL and full conservation, never legacy progress");
-          historyReconciliation = await reconcileHistoryImport(client, batch.id, batch.historyMetadata, versions);
+          historyReconciliation = historyClosure === undefined
+            ? await reconcileHistoryImport(client, batch.id, batch.historyMetadata, versions)
+            : await reconcileHistoryTypedPublication(client, batch, historyClosure, versions);
         }
         const finalSource = { sourceEntityType: "INVENTORY_SCOPE_APPROVAL", sourceKey: "FINAL_COMPLETE_SCOPE",
           sourceRecordHash: batch.sourceHash, sourceFileRef: batch.sourceManifestRef };

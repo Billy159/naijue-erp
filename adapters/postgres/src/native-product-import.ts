@@ -79,7 +79,7 @@ export class PostgresNativeProductImportStore implements NativeProductImportStor
       array_agg(version ORDER BY version) AS installed_versions FROM naijue_erp.schema_migration`)).rows;
     requireDomain(schema.length === 1, "NATIVE_PRODUCT_SCHEMA_NOT_READY", "Actual migration registry required");
     const reviewedSchema = assertReviewedNativeImportSchema(schema[0]!.installed_versions, { minimumVersion: 11, errorCode: "NATIVE_PRODUCT_SCHEMA_NOT_READY" });
-    if (reviewedSchema.versions.length === 18) await assertNativeImportAccountingGuards(client);
+    if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
     const batches = (await client.query(`/* native-product-import:batch */ SELECT id, mapping_version, status, source_hash, source_name
       FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`, [chunk.batchId])).rows;
     const batch = batches[0];

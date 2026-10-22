@@ -97,6 +97,15 @@ export const REVIEWED_NATIVE_IMPORT_SCHEMA_CONTRACTS = Object.freeze([
       sha256: "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da",
       compatibility: "Adds complete source-semantic closure manifests and SQL readback; all original provenance/no-adoption/accounting guards plus exact18 runtime routines/ACLs remain required; publication gate remains closed" })
   ]) })
+  ,Object.freeze({ id: "NATIVE_IMPORT_SCHEMA_19_V1", versions: Object.freeze([...REVIEWED_NATIVE_IMPORT_LEGACY_SCHEMA_CONTRACTS[6].versions,18,19] as const), extensions: Object.freeze([
+    ...REVIEWED_NATIVE_IMPORT_LEGACY_SCHEMA_CONTRACTS[6].extensions,
+    Object.freeze({ version: 18, file: "0018_history_typed_publication.sql",
+      sha256: "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da",
+      compatibility: "Adds complete source-semantic closure manifests and SQL readback; all original provenance/no-adoption/accounting guards plus exact18 runtime routines/ACLs remain required; publication gate remains closed" }),
+    Object.freeze({ version: 19, file: "0019_history_typed_publish_gate.sql",
+      sha256: "d77d7a50d55fafde4a829817b805a7e295dd06c8c62afcc8363b38e1670ae99b",
+      compatibility: "Adds independent complete typed publication verification on the original FINAL transaction; exact19 runtime pins, full MAIN source authorization and stock conservation remain mandatory; recognition grants no migration or publication authorization" })
+  ]) })
 ] as const);
 function exactOwnPrefix(value: unknown, expected: readonly number[]): boolean {
   if (!Array.isArray(value) || Object.getPrototypeOf(value) !== Array.prototype) return false;

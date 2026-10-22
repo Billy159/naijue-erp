@@ -147,11 +147,44 @@ export const NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY = `/* native-accounting:g
         AND md5(prosrc)='300eb6c65679f408959a717015494f00') AND (${PAYMENT17_CAPABILITY}) AND (${HISTORY18_CLOSURE_CAPABILITY})))
   AS accounting_guards_present`;
 
+/** Additive19 changes exactly one routine body pin. Frozen18 remains an exact
+ * closed-publication profile; every other routine/ACL/FK/trigger pin is retained. */
+function replaceOne(source: string, before: string, after: string): string {
+  if (source.split(before).length !== 2) throw new Error("Expected exactly one frozen history capability anchor");
+  return source.replace(before, after);
+}
+export const HISTORY19_CLOSURE_CAPABILITY = replaceOne(HISTORY18_CLOSURE_CAPABILITY,
+  "2fa571b4582b80c131b45efeb8f76d48", "8f949220a449bd0184b995d95a7c6334");
+const schemaSelector = "  AND ((SELECT array_agg(version ORDER BY version) FROM naijue_erp.schema_migration)=";
+const selectorOffset = NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY.indexOf(schemaSelector);
+if (selectorOffset < 0 || NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY.lastIndexOf(schemaSelector) !== selectorOffset)
+  throw new Error("Frozen accounting capability selector changed");
+/** SELECT-only probe usable in a READ ONLY snapshot; never invokes the lock-taking closure assertion. */
+export const NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY =
+  NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY.slice(0, selectorOffset)
+  + `  AND (SELECT array_agg(version ORDER BY version) FROM naijue_erp.schema_migration)=ARRAY[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+  AND EXISTS(SELECT 1 FROM pg_catalog.pg_proc WHERE oid=to_regprocedure('naijue_erp.guard_history_insert()')
+    AND md5(prosrc)='300eb6c65679f408959a717015494f00')
+  AND (${PAYMENT17_CAPABILITY}) AND (${HISTORY19_CLOSURE_CAPABILITY}) AS accounting_guards_present`;
+
+export async function assertNativeImportAccountingSchema19Guards(client: PgSalesClient): Promise<void> {
+  const base = (await client.query(GUARD_CAPABILITY)).rows;
+  requireDomain(base.length === 1 && base[0]!.integrity_guards_present === true,
+    "NATIVE_IMPORT_GUARDS_NOT_READY", "Original inventory/source/receipt/audit capability must remain enabled");
+  const current = (await client.query(NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY)).rows;
+  requireDomain(current.length === 1 && current[0]!.accounting_guards_present === true,
+    "NATIVE_IMPORT_GUARDS_NOT_READY", "Exact schema19 publication routine and all original native/accounting/closure capabilities required");
+}
+
 export async function assertNativeImportAccountingGuards(client: PgSalesClient): Promise<void> {
   const base = (await client.query(GUARD_CAPABILITY)).rows;
   requireDomain(base.length === 1 && base[0]!.integrity_guards_present === true,
     "NATIVE_IMPORT_GUARDS_NOT_READY", "Original inventory/source/receipt/audit capability must remain enabled");
   const native = (await client.query(NATIVE_IMPORT_ACCOUNTING_GUARD_CAPABILITY)).rows;
-  requireDomain(native.length === 1 && native[0]!.accounting_guards_present === true,
+  // Prior successful profiles keep their exact two-query path. Only an explicit
+  // complete19 profile can pass the separately pinned successor probe.
+  const current = native.length === 1 && native[0]!.accounting_guards_present === true ? native
+    : (await client.query(NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY)).rows;
+  requireDomain(current.length === 1 && current[0]!.accounting_guards_present === true,
     "NATIVE_IMPORT_GUARDS_NOT_READY", "Exact history/native/accounting triggers, deferred identities, receipt FK, unique ownership, indexes and private grants required");
 }

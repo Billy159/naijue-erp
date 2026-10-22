@@ -11,13 +11,14 @@ import { IMPORT_V2_TABLES } from "../packages/application/src/import-v2-contract
 import type { ImportSourceEvidence, JsonObject } from "../packages/application/src/history-storage-contract.ts";
 import { accountingBatch, accountingChunk, accountingIds, accountingMemberships, accountingPublish, accountingTime, membershipClaims } from "./support/native-record-accounting-fixtures.ts";
 
-test("native record accounting preserves original15 constant and explicitly accepts reviewed15/16/17/18 only", () => {
+test("native record accounting preserves original15 constant and explicitly accepts reviewed15 through additive19 only", () => {
   const versions = Array.from({ length: 15 }, (_, i) => i + 1); assert.doesNotThrow(() => assertNativeRecordAccountingSchema(versions));
   assert.deepEqual(NATIVE_IMPORT_RECORD_ACCOUNTING_SCHEMA, versions);
   assert.doesNotThrow(() => assertNativeRecordAccountingSchema([...versions, 16]));
   assertNativeRecordAccountingSchema([...versions, 16, 17]);
   assertNativeRecordAccountingSchema([...versions, 16, 17, 18]);
-  for (const bad of [null, [], versions.slice(0, 14), [...versions, 16, 17, 18, 19], [...versions, 15], versions.map(String), versions.filter(v => v !== 7)])
+  assertNativeRecordAccountingSchema([...versions, 16, 17, 18, 19]);
+  for (const bad of [null, [], versions.slice(0, 14), [...versions, 16, 17, 18, 19, 20], [...versions, 15], versions.map(String), versions.filter(v => v !== 7)])
     assert.throws(() => assertNativeRecordAccountingSchema(bad), { code: "NATIVE_RECORD_ACCOUNTING_SCHEMA_NOT_READY" });
 });
 test("review text is exact creator-plan UTC microsecond representation, never timestamp readback reconstruction", () => {

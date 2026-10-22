@@ -91,7 +91,7 @@ test("hash/operation mismatch fails before SQL; unknown schema fails before lock
   for (const change of [{ commandHash: "f".repeat(64) }, { operationId: accountingIds.sku }]) {
     const client = new Client([]); await assert.rejects(createNativeImportRecordAccountant(client, { ...context(), ...change })); client.done();
   }
-  for (const versions of [Array.from({ length: 14 }, (_, i) => i + 1), Array.from({ length: 19 }, (_, i) => i + 1)]) {
+  for (const versions of [Array.from({ length: 14 }, (_, i) => i + 1), Array.from({ length: 20 }, (_, i) => i + 1)]) {
     const client = new Client([{ match: /native-accounting:schema/, result: row({ versions }) }]);
     await assert.rejects(createNativeImportRecordAccountant(client, context()), { code: "NATIVE_RECORD_ACCOUNTING_SCHEMA_NOT_READY" }); client.done();
   }

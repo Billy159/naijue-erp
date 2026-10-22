@@ -10,16 +10,31 @@ function ReviewProfileToolbar({ session, changed }: { readonly session: UnifiedP
   const state = useSyncExternalStore(session.subscribe, session.getSnapshot, session.getSnapshot);
   const [selected, setSelected] = useState<UnifiedReviewProfile>(state.profile), attached = useRef(false);
   const host = useRef<HTMLDivElement>(null), applyButton = useRef<HTMLButtonElement>(null);
-  useEffect(() => { attached.current = true; return () => { attached.current = false; }; }, []);
+  const focusIntent = useRef(0), pendingFrame = useRef<number | null>(null);
+  useEffect(() => {
+    attached.current = true;
+    const document = host.current!.ownerDocument;
+    // BODY can mean either a disabled control lost focus or a newer user
+    // action ended without a focus target. Remember actions across the await.
+    const invalidate = () => { focusIntent.current++; };
+    for (const event of ['focusin', 'pointerdown', 'keydown']) document.addEventListener(event, invalidate, true);
+    return () => {
+      attached.current = false;
+      focusIntent.current++;
+      if (pendingFrame.current !== null) cancelAnimationFrame(pendingFrame.current);
+      for (const event of ['focusin', 'pointerdown', 'keydown']) document.removeEventListener(event, invalidate, true);
+    };
+  }, []);
   const busy = ['entering', 'switching', 'revoking'].includes(state.phase), disabled = busy || state.phase === 'disposed';
   const apply = async () => {
-    const target = selected, initiatingControl = applyButton.current, restore = document.activeElement === initiatingControl;
+    const target = selected, initiatingControl = applyButton.current, restore = document.activeElement === initiatingControl, intent = focusIntent.current;
     const ok = await session.switchProfile(target), latest = session.getSnapshot();
     if (ok && attached.current && latest.phase === 'ready' && latest.notice === 'changed' && latest.profile === target) {
       changed(target);
-      requestAnimationFrame(() => {
+      pendingFrame.current = requestAnimationFrame(() => {
+        pendingFrame.current = null;
         const now = session.getSnapshot();
-        if (restore && attached.current && now.phase === 'ready' && now.notice === 'changed' && now.profile === target && (document.activeElement === initiatingControl || document.activeElement === document.body)) host.current?.querySelector<HTMLElement>('.arco-select')?.focus({ preventScroll: true });
+        if (restore && focusIntent.current === intent && attached.current && now.phase === 'ready' && now.notice === 'changed' && now.profile === target && (document.activeElement === initiatingControl || document.activeElement === document.body)) host.current?.querySelector<HTMLElement>('.arco-select')?.focus({ preventScroll: true });
       });
     }
   };

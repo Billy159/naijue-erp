@@ -49,6 +49,9 @@ import type { PartyReadAuthorization } from "../../../packages/application/src/p
 import { PostgresPartyReadReader } from "../../../adapters/postgres/src/party-read-reader.ts";
 import { createPartyReadHttpPlugin } from "./party-read-http.ts";
 import { createPartySessionAuthenticator } from "./party-authentication.ts";
+import type { ImportedHistoryReadAuthorization } from "../../../packages/application/src/imported-history-query-ports.ts";
+import { PostgresImportedHistoryQueryReader } from "../../../adapters/postgres/src/imported-history-query-reader.ts";
+import { createImportedHistoryQueryHttpPlugin } from "./imported-history-query-http.ts";
 
 export interface PostgresReadApiExplicitAuthorization {
   readonly mode?: never;
@@ -105,13 +108,16 @@ export interface PostgresApplicationApiOptions extends PostgresReadApiOptions {
   readonly catalogueSettingsRead?: { readonly authorization: CatalogueSettingsReadAuthorization };
   readonly dictionaryRead?: { readonly authorization: DictionaryReadAuthorization };
   readonly partyRead?: { readonly authorization: PartyReadAuthorization };
+  /** Explicit historical policy only. Native/LIVE authorization never enables this dataset. */
+  readonly importedHistoryRead?: { readonly authorization: ImportedHistoryReadAuthorization };
 }
 type ApplicationCapabilities = { readonly commands: PostgresDocumentCommandsCapability | null;
   readonly settings: StoreSettingsReadAuthorization | null;
   readonly productManagement: ProductManagementQueryAuthorization | null;
   readonly catalogueSettings: CatalogueSettingsReadAuthorization | null;
   readonly dictionary: DictionaryReadAuthorization | null;
-  readonly party: PartyReadAuthorization | null };
+  readonly party: PartyReadAuthorization | null;
+  readonly importedHistory: ImportedHistoryReadAuthorization | null };
 function ownData(value: object, name: string): unknown {
   const descriptor = Object.getOwnPropertyDescriptor(value, name);
   if (!descriptor || !("value" in descriptor)) throw new TypeError("Application capabilities require own data properties");
@@ -141,7 +147,7 @@ function checkedApplicationCapabilities(options: PostgresApplicationApiOptions):
   let commands: PostgresDocumentCommandsCapability | null = null, settings: StoreSettingsReadAuthorization | null = null;
   let productManagement: ProductManagementQueryAuthorization | null = null,
     catalogueSettings: CatalogueSettingsReadAuthorization | null = null, dictionary: DictionaryReadAuthorization | null = null,
-    party: PartyReadAuthorization | null = null;
+    party: PartyReadAuthorization | null = null, importedHistory: ImportedHistoryReadAuthorization | null = null;
   if ("documentCommands" in options) {
     const bag = exactBag(ownData(options, "documentCommands"), ["sales", "transfers", "catalogueCompleteness", "nativeManualSalesPreparation", "nativeManualTransferPreparation"]);
     if (bag.nativeManualSalesPreparation !== true || bag.nativeManualTransferPreparation !== true)
@@ -181,7 +187,11 @@ function checkedApplicationCapabilities(options: PostgresApplicationApiOptions):
     const bag = exactBag(ownData(options, "partyRead"), ["authorization"]);
     party = Object.freeze({ authorize: method<PartyReadAuthorization["authorize"]>(bag.authorization, "authorize") });
   }
-  return Object.freeze({ commands, settings, productManagement, catalogueSettings, dictionary, party });
+  if ("importedHistoryRead" in options) {
+    const bag = exactBag(ownData(options, "importedHistoryRead"), ["authorization"]);
+    importedHistory = Object.freeze({ authorize: method<ImportedHistoryReadAuthorization["authorize"]>(bag.authorization, "authorize") });
+  }
+  return Object.freeze({ commands, settings, productManagement, catalogueSettings, dictionary, party, importedHistory });
 }
 
 function exactHttpsOrigin(value: unknown): value is string {
@@ -292,6 +302,8 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       dependencies: { authorization: capabilities.dictionary, reader: new PostgresDictionaryReadReader(pool) } }));
     if (capabilities?.party) app.register(createPartyReadHttpPlugin({ authenticate: createPartySessionAuthenticator(authentication),
       dependencies: { authorization: capabilities.party, reader: new PostgresPartyReadReader(pool) } }));
+    if (capabilities?.importedHistory) app.register(createImportedHistoryQueryHttpPlugin({ authenticate,
+      dependencies: { authorization: capabilities.importedHistory, reader: new PostgresImportedHistoryQueryReader(pool) } }));
     if (capabilities?.commands) {
       const c = capabilities.commands;
       app.register(createAuthenticatedDocumentCommandsPlugin({ authentication,

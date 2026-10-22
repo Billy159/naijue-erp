@@ -4,6 +4,8 @@ import { validateCutoffImportCommand, validateImportCounts } from "./inventory-c
 import type { CutoffImportCommand, CutoffImportItem, ImportCheckpoint, ImportTarget } from "./inventory-cutoff-import.ts";
 import { requestHash } from "./request-hash.ts";
 import { assertReviewedNativeImportSchema } from "./native-import-schema-contract.ts";
+import type { HistoryTypedClosurePlan } from "./history-typed-closure.ts";
+import { captureHistoryTypedClosurePlan } from "./history-typed-publication.ts";
 
 /** New command metadata, NOT a new receipt action or an authorization grant. */
 export const NATIVE_IMPORT_RECORD_ACCOUNTING_VERSION = "NATIVE_IMPORT_RECORD_ACCOUNTING_V1";
@@ -25,7 +27,9 @@ export type NativeAccountingChunkCommand = Omit<Extract<CutoffImportCommand, { a
 export type NativeAccountingPublishCommand = Extract<CutoffImportCommand, { action: "IMPORT_PUBLISH" }>
   & { readonly accountingVersion: typeof NATIVE_IMPORT_RECORD_ACCOUNTING_VERSION;
     /** Required by the independent full-scope conservation gate; MAIN-command metadata, never an unhashed sidecar. */
-    readonly stockConservation?: NativeStockConservationPlan };
+    readonly stockConservation?: NativeStockConservationPlan;
+    /** Complete source-authorized plan in the original MAIN hash; presence alone grants nothing. */
+    readonly historyClosure?: HistoryTypedClosurePlan };
 export type NativeImportAccountingCommand = NativeAccountingChunkCommand | NativeAccountingPublishCommand;
 export interface NativeImportRecordClaim {
   readonly batchId: string; readonly importRecordId: string; readonly targetType: ImportTarget; readonly targetId: string;
@@ -72,7 +76,7 @@ const dense = (value: unknown): value is unknown[] => Array.isArray(value) && Ob
  * service and original store then apply the SAME raw data-only validator. */
 export function hasNativeImportAccountingMetadata(value: unknown): boolean {
   if (value === null || typeof value !== "object") return false;
-  if (["accountingVersion", "nativeRecord", "stockConservation"].some(key => Object.hasOwn(value, key))) return true;
+  if (["accountingVersion", "nativeRecord", "stockConservation", "historyClosure"].some(key => Object.hasOwn(value, key))) return true;
   const descriptor = Object.getOwnPropertyDescriptor(value, "items");
   const items: unknown = descriptor && Object.hasOwn(descriptor, "value") ? descriptor.value : undefined;
   if (!Array.isArray(items)) return false;
@@ -141,12 +145,14 @@ export function validateNativeImportAccountingCommand(value: unknown): asserts v
   requireDomain(command.accountingVersion === NATIVE_IMPORT_RECORD_ACCOUNTING_VERSION
     && (command.action === "IMPORT_CHUNK" || command.action === "IMPORT_PUBLISH")
     && keys(command, [...envelope, command.action === "IMPORT_CHUNK" ? "items" : "approval",
-      ...(command.action === "IMPORT_PUBLISH" && Object.hasOwn(command, "stockConservation") ? ["stockConservation"] : [])]),
+      ...(command.action === "IMPORT_PUBLISH" && Object.hasOwn(command, "stockConservation") ? ["stockConservation"] : []),
+      ...(command.action === "IMPORT_PUBLISH" && Object.hasOwn(command, "historyClosure") ? ["historyClosure"] : [])]),
   "INVALID_NATIVE_RECORD_ACCOUNTING_COMMAND", "Explicit versioned original CHUNK/PUBLISH command required; no unhashed sidecar or new receipt action");
   if (command.action === "IMPORT_PUBLISH") {
     requireDomain(keys(command.approval, ["completeScope", "absentMeansZero", "allFilesVerified", "finalDeltaVerified",
       "noUnresolvedExceptions", "sourceHash", "sourceManifestRef"]), "INVALID_NATIVE_RECORD_ACCOUNTING_COMMAND", "Exact original final approval required");
     if (Object.hasOwn(command, "stockConservation")) validateNativeStockConservationPlan(command.stockConservation);
+    if (Object.hasOwn(command, "historyClosure")) captureHistoryTypedClosurePlan(command.historyClosure);
     return;
   }
   const recordIds = new Set<string>();

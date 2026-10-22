@@ -32,7 +32,7 @@ export class PostgresNativeBarcodeImportStore implements NativeBarcodeImportStor
     requireDomain(versions.length === 1, "NATIVE_BARCODE_SCHEMA_NOT_READY", "Schema migration registry required");
     const reviewedSchema = assertReviewedNativeImportSchema(versions[0]!.installed_versions,
       { minimumVersion: 14, errorCode: "NATIVE_BARCODE_SCHEMA_NOT_READY" });
-    if (reviewedSchema.versions.length === 18) await assertNativeImportAccountingGuards(client);
+    if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
     const batches = (await client.query(`/* native-barcode:batch */ SELECT id,mapping_version,status,source_hash,source_name,
       EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED') AS already_published
       FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`, [row.batchId])).rows;

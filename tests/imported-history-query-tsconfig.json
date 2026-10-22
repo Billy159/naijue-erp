@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../packages/application/src/imported-history-query-*.ts",
+    "../adapters/postgres/src/imported-history-query-reader.ts",
+    "../apps/api/src/imported-history-query-http.ts",
+    "imported-history-query*.test.ts",
+    "support/imported-history-query-fixtures.ts"
+  ]
+}

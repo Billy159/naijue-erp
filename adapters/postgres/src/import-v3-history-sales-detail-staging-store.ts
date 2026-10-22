@@ -90,7 +90,7 @@ export class PostgresHistorySalesDetailStagingStore implements HistorySalesDetai
     const versions=(await client.query("/* sales-detail:schema */ SELECT array_agg(version ORDER BY version) AS versions FROM naijue_erp.schema_migration")).rows;
     must(versions.length===1,"HISTORY_SALES_DETAIL_SCHEMA","Reviewed migration registry required");
     const reviewedSchema = assertReviewedNativeImportSchema(versions[0]!.versions,{minimumVersion:11,errorCode:"HISTORY_SALES_DETAIL_SCHEMA"});
-    if (reviewedSchema.versions.length === 18) await assertNativeImportAccountingGuards(client);
+    if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
     const batches=(await client.query(`/* sales-detail:batch */ SELECT id,mapping_version,status,source_hash,source_name,
       EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED') AS already_published
       FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`,[input.batchId])).rows;
@@ -142,7 +142,7 @@ export function createPostgresHistorySalesDetailBindingResolver(pool:PgSalesPool
       await client.query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY");began=true;
       const versions=(await client.query("/* sales-detail:resolver-schema */ SELECT array_agg(version ORDER BY version) AS versions FROM naijue_erp.schema_migration")).rows;
       must(versions.length===1,"HISTORY_SALES_DETAIL_SCHEMA","Reviewed registry required");const reviewedSchema = assertReviewedNativeImportSchema(versions[0]!.versions,{minimumVersion:11,errorCode:"HISTORY_SALES_DETAIL_SCHEMA"});
-    if (reviewedSchema.versions.length === 18) await assertNativeImportAccountingGuards(client);
+    if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
       const batch=(await client.query(`/* sales-detail:resolver-batch */ SELECT id FROM naijue_erp.import_batch WHERE id=$1::uuid AND source_name=$2
         AND source_hash=$3 AND mapping_version='V2_HISTORY_NULLABLE_1' AND status IN ('STAGED','VALIDATING')
         AND NOT EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED')`,[scope.batchId,scope.fixedSourceNamespace,scope.selectionSha256])).rows;

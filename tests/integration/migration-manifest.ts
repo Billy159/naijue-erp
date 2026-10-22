@@ -97,3 +97,9 @@ export const HISTORY_TYPED_CLOSURE_SCHEMA18_MIGRATIONS = [
   ...NATIVE_PAYMENT_SCHEMA17_MIGRATIONS,
   [18, "0018_history_typed_publication.sql", "8cd5595ebfc360564928e456b05e74fa8540bd82bea09ce2e253e4240b9871da"],
 ] as const;
+
+/** Independent fresh19 publication suite only. Prior exact18 STAGE evidence stays fixed. */
+export const HISTORY_TYPED_PUBLICATION_SCHEMA19_MIGRATIONS = [
+  ...HISTORY_TYPED_CLOSURE_SCHEMA18_MIGRATIONS,
+  [19, "0019_history_typed_publish_gate.sql", "d77d7a50d55fafde4a829817b805a7e295dd06c8c62afcc8363b38e1670ae99b"],
+] as const;

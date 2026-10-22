@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../packages/application/src/history-typed-publication.ts",
+    "../adapters/postgres/src/history-typed-publication.ts",
+    "../adapters/postgres/src/history-typed-closure19.ts",
+    "../adapters/postgres/src/inventory-cutoff-import-store.ts",
+    "history-typed-publication.test.ts",
+    "integration/history-publication19*.ts"
+  ]
+}

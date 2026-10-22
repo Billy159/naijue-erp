@@ -36,7 +36,7 @@ export class PostgresNativePartyImportStore implements NativePartyImportStore {
     const schema = (await client.query(`/* native-party-import:schema */ SELECT array_agg(version ORDER BY version) AS installed_versions FROM naijue_erp.schema_migration`)).rows;
     check(schema.length === 1, 'NATIVE_PARTY_SCHEMA_NOT_READY');
     const reviewedSchema = assertReviewedNativeImportSchema(schema[0]!.installed_versions, { minimumVersion: 13, errorCode: 'NATIVE_PARTY_SCHEMA_NOT_READY' });
-    if (reviewedSchema.versions.length === 18) await assertNativeImportAccountingGuards(client);
+    if ((reviewedSchema.versions.length === 18 || reviewedSchema.versions.length === 19)) await assertNativeImportAccountingGuards(client);
     const batches = (await client.query(`/* native-party-import:batch */ SELECT mapping_version,status,source_hash,source_name,
       EXISTS(SELECT 1 FROM naijue_erp.import_batch WHERE status='IMPORTED') AS already_published FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`, [chunk.batchId])).rows;
     const batch = batches[0];
