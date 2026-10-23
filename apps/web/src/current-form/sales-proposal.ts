@@ -153,8 +153,20 @@ export class SalesProposalSession {
     return this.#edit({ ...this.#state.draft, businessType, orderDiscount: '0.00' });
   }
   setBusinessMode(mode: SalesBusinessMode): boolean {
-    if (mode !== 'SALE' && mode !== 'RETURN_EXCHANGE') return false;
-    return this.setBusinessType(salesBusinessType(mode, this.#state.draft.lines.map(row => row.quantity)));
+    if (this.#state.disposed || this.#state.lineEdit || mode !== 'SALE' && mode !== 'RETURN_EXCHANGE') return false;
+    if (mode === salesBusinessMode(this.#state.draft.businessType)) return true;
+    // Frozen sales-current.js changeType applies only after the page confirms:
+    // default row directions, no order adjustment/funds, and fresh entry rows.
+    // Keep exact native quantities and identities rather than copying Number().
+    const lines = this.#state.draft.lines.map(row => {
+      if (!/^[+-]?\d{1,19}$/.test(row.quantity)) return row;
+      const value = BigInt(row.quantity), magnitude = value < 0n ? -value : value;
+      return { ...row, quantity: (mode === 'RETURN_EXCHANGE' ? -magnitude : magnitude).toString() };
+    });
+    this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#revision++;
+    this.#publish({ draft: { ...this.#state.draft, businessType: salesBusinessType(mode, lines.map(row => row.quantity)), lines, orderDiscount: '0.00', settlements: [] },
+      entries: emptyEntries(), picker: null, dirty: true, errors: [], notice: null, totals: null });
+    return true;
   }
   #lineKey(keyOrUniqueSku: string): string | null {
     const rows = this.#state.draft.lines;

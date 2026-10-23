@@ -1,0 +1,85 @@
+{
+  "atUtc": "2026-10-23T21:57:43.803890+00:00",
+  "parent": "bc84cf1209a8e904d7463a1128fcda8250ea34a3",
+  "taskId": "F02_OS14_FROZEN_DEMO_MODE_CONFIRM_EFFECTS",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-proposal.ts",
+      "bytes": 56778,
+      "sha256": "6405df5c83e30bd9ee3bafda2d18fc83f0cc48498bbc8c890c0dae2606bb09ef",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "bytes": 54361,
+      "sha256": "464d517543cfe4a9871d3307361ab5ea61f69658b34e5bd858d6c3b0b2c10365",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-112/DELIVERY.json",
+  "ownerReceiptSha256": "f4aae7b523e466fe10de62313e33f5b3527ea2b71f72d63e1ec2267a5fd1eaba",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh; Fast not verified",
+    "finding": "O-S14 existing original mode confirmation difference",
+    "status": "SOURCE_READY_ORIGINAL_MODE_EFFECTS_LOCAL_FULL_PAGE_ONLY",
+    "files": [
+      {
+        "path": "apps/web/src/current-form/sales-proposal.ts",
+        "bytes": 56778,
+        "sha256": "6405df5c83e30bd9ee3bafda2d18fc83f0cc48498bbc8c890c0dae2606bb09ef"
+      },
+      {
+        "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+        "bytes": 54361,
+        "sha256": "464d517543cfe4a9871d3307361ab5ea61f69658b34e5bd858d6c3b0b2c10365"
+      }
+    ],
+    "source": "Frozen b8bcfe3 effective sales-current.js118→259→119; final bridge221-225 only replaces funds display/validation, no mode replacement",
+    "approvalCorrection": "No human approval for visible preserve-sign/funds behavior located. Prior111 interpretation withdrawn; source observations remain historical. C/QF independently confirmed same O-S14 gap.",
+    "change": "Confirmed visible mode defaults signed quantities, clears editable adjustment/settlements and unfinished entries, retains complete row identity/price/gift/snapshots and original native SAVE contract; exact original confirmation wording. Cancel/X/native cancel remain no-op; final virtual due row unchanged and no fake payment.",
+    "checks": {
+      "before-1": "Harness setup failed because onAccessFailure was omitted; fixed fixture only, not production RED.",
+      "before-2": "Synthetic SALE fixture failed native draft arithmetic because allocatedDiscount did not match orderDiscount; corrected fixture to100, no production validator change.",
+      "before-3": "Harness incorrectly queried role=dialog while native SourceDocumentDialog is role=alertdialog; corrected to actual dialog aria-label. Not production RED.",
+      "before-4": "RED actual full saved SalesCommandForm/SalesExistingDocumentForm/SalesProposalForm: cancelling and closing retain exact draft, but confirmed SALE→combined leaves quantity2 instead of -2.",
+      "after-1": "PASS same actual full saved page through original Portal/native confirmation, cancel/X/native cancel event unchanged; confirm line defaults -2/-3, editable discount0/funds[], incomplete entry/search cleared, completed real and local-group lines/price/identity retained, native virtual row -57.00 without a fake settlement. Original page SAVE expectedVersion2, old line pointer, actual/local coordinates, empty settlements and original uncertain request recovery; one local execute/key only. Reverse mode BigInt precision/gift/same-mode no-op/invalid quantity preservation affected checks pass.",
+      "types-1": "Config-only error TS2688: external evidence folder could not resolve node types; not a source failure.",
+      "types-2": "PASS two changed roots with explicit R/node_modules/@types; full imported source closure retained, include=[]; no exclusion of other owners."
+    },
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-112/REPORT.md",
+        "bytes": 1817,
+        "sha256": "224149af947245ceae5bf3247bff052a2e2f9e52b5e4a497fda639dd9f8acd6e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-112/RESULT.json",
+        "bytes": 1082,
+        "sha256": "11db801aa2bac8067cd7dc33be452e77958a0dbf411c254ded213e2840f4456c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-112/CHECKS.json",
+        "bytes": 1564,
+        "sha256": "3f42bbaaa33172dc567d46717a90d0a9008c132b4c5740dd46322f1c8b7f2375"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-112/DEMO-EFFECTIVE-CHAIN.json",
+        "bytes": 6609,
+        "sha256": "5cf5f234f399f5e3ea2b6b0cea45553519921cd30e4644d63872185a2e1a9b13"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-112/SOURCE.diff",
+        "bytes": 5702,
+        "sha256": "4a41c5c0dcd9a82c767b5b93c2e60d04d8e47df58132db636fe5c91e5374b87d"
+      }
+    ],
+    "limitations": [
+      "Actual Chrome pointer/keyboard/focus/layout pending containing fixed successor; native dialog cancel event is local modelled event, not actual browser Escape acceptance.",
+      "No actual service HTTP/PG/native transaction/approval, whole page or production acceptance. Existing rapid-input P1 not rerun or closed.",
+      "Cleared unfinished entry/search is explicit final mode effect; original persisted DTO and request/CAS retained. Invalid raw native quantity remains invalid rather than fabricated NaN/zero."
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "Only confirmed visible setBusinessMode Demo effects/defaultsigns/orderdiscount0/settlements empty/rawentriesclear, cancellation no mutation. Lowlevel setBusinessType/realSKU/price/keys/snapshots/formalSAVE contract preserved. Independent source/newactual pending, no wholebusiness acceptance."
+}
