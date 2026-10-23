@@ -40,7 +40,7 @@
     "Product seasons multi-select",
     "Cancelled features stay cancelled",
     "User-approved centered executed-query-range dialog",
-    "Unreviewed documents all sizes editable; new sales/transfer all valid size groups selectable including no-size"
+    "Complete valid sizes of actual product group, including missing SKU. Other groups forbidden; historical identities/display retained."
   ],
   "existingRoutes": "Original F1/F2/F3,D1/D2/D3,QF/QB; closed Demo Chat never resumed or duplicated",
   "parallelPolicy": "Use real independence/unique files/resources; do not impose fixed three developers or create work to fill slots. Existing owners first; no new duplicate main controller/application. Tool hard limits retained.",
@@ -85,5 +85,14 @@
       "Synthetic success as real business",
       "Static bundle reduction as measured UI performance"
     ]
+  },
+  "latestSizeDirective": {
+    "authoritativeGroup": "Current actual product.size_group_id",
+    "members": "Complete effective members of that group; not existing SKU enumeration",
+    "otherSystemGroupsAllowed": false,
+    "noSizeAllowed": "Only when actual product group contains it",
+    "serverMustRecheckProductGroupAndMembership": true,
+    "missingOrFailedGroup": "Explicit error, never global fallback",
+    "lateResponses": "Cancel/generation ownership on product change"
   }
 }

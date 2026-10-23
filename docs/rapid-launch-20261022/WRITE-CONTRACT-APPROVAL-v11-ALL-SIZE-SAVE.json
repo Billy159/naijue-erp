@@ -1,6 +1,6 @@
 {
   "version": "WRITE_CONTRACT_APPROVAL_V11_ALL_SIZE_SAVE",
-  "status": "EXPLICIT_HUMAN_APPROVED",
+  "status": "SUPERSEDED_BY_LATEST_HUMAN_GROUP_ONLY_CORRECTION",
   "approvedAtRecordedUtc": "2026-10-23T13:18:18.946948+00:00",
   "source": "Direct human asynchronous question reply in current C chat",
   "questionToolCall": "call_5eb27f95cf2041a58d1746b8cd599fe4",
@@ -12,5 +12,8 @@
   "scope": "Exact one recommended all-size SAVE contract: 29 original-owner production files,0tables/columns,3function replacements+1function+1deferredtrigger; no blanket unrelated write/schema permission",
   "newTables": 0,
   "newColumns": 0,
-  "implementationStatus": "AUTHORIZED_NOT_IMPLEMENTED_NOT_ACCEPTED"
+  "implementationStatus": "NEW_CODE_DELEGATION_AND_DEPENDENT_WRITES_NOT_APPROVED_PENDING_EXACT_REVISION",
+  "supersededAtRecordedUtc": "2026-10-23T13:24:26.875141+00:00",
+  "latestHumanDirective": "组内全尺码可选；商品实际所属组为硬边界。不得将本条扩大解释为已批准v11全部新编号、受托补规格及依赖写合同变化。",
+  "originalAnswerRetainedAsHistory": true
 }

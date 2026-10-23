@@ -50,7 +50,9 @@
             "functionsOrTypes": [
               "PostgresSalesTransaction.resolveDocumentSkus"
             ],
-            "scope": "Bind original actor/key/document/runtime/client to resolver"
+            "scope": "Bind original actor/key/document/runtime/client to resolver",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -63,7 +65,9 @@
               "PostgresTransferTransaction.resolveDocumentSkus",
               "getSkuFact"
             ],
-            "scope": "Bind same scope; valid global size criterion"
+            "scope": "Bind same scope; valid global size criterion",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -80,7 +84,9 @@
             "functionsOrTypes": [
               "createSalesService.execute"
             ],
-            "scope": "Original key/current authority/CAS; proposal hash before generated IDs, resolve+prepare+SAVE on original transaction"
+            "scope": "Original key/current authority/CAS; proposal hash before generated IDs, resolve+prepare+SAVE on original transaction",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -92,7 +98,9 @@
             "functionsOrTypes": [
               "createTransferService.execute"
             ],
-            "scope": "Same transfer command transaction; original two-ended posting unchanged"
+            "scope": "Same transfer command transaction; original two-ended posting unchanged",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -107,7 +115,9 @@
               "createNativeSalesPreparation",
               "createNativeSalesExistingPreparation"
             ],
-            "scope": "Reuse current pricing/pointers/snapshot preparation inside outer SAVE; public prepares remain zero business writes"
+            "scope": "Reuse current pricing/pointers/snapshot preparation inside outer SAVE; public prepares remain zero business writes",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -122,7 +132,9 @@
               "createNativeTransferPreparation",
               "createNativeTransferExistingPreparation"
             ],
-            "scope": "Reuse original create/existing preparation without nested transaction; readonly views unchanged"
+            "scope": "Reuse original create/existing preparation without nested transaction; readonly views unchanged",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -135,7 +147,9 @@
               "SalesCommand",
               "SalesTransaction.resolveDocumentSkus"
             ],
-            "scope": "Keep legacy draft envelope; add SAVE proposal variant and internal same-transaction port"
+            "scope": "Keep legacy draft envelope; add SAVE proposal variant and internal same-transaction port",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -148,7 +162,9 @@
               "TransferCommand",
               "TransferTransaction.resolveDocumentSkus"
             ],
-            "scope": "Same independent transfer SAVE variant/port"
+            "scope": "Same independent transfer SAVE variant/port",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -186,7 +202,9 @@
               "NATIVE_RUNTIME26_METADATA_PROBE",
               "createNativeRuntime26Issuer"
             ],
-            "scope": "Exact v11 function/trigger catalog pins, no new purposes/grants/legacy fallback"
+            "scope": "Exact v11 function/trigger catalog pins, no new purposes/grants/legacy fallback",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -263,7 +281,9 @@
               "readSkuBatch",
               "readBarcode"
             ],
-            "scope": "Actual-SKU candidates/scan no default-group pruning; no dictionary/SKU Cartesian invention"
+            "scope": "Actual-SKU candidates/scan no default-group pruning; no dictionary/SKU Cartesian invention",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -291,7 +311,9 @@
               "withDocumentSpecificationMaintenanceContext",
               "Evidence"
             ],
-            "scope": "Narrow internal same-client append context, never ordinary general EDIT delegation"
+            "scope": "Narrow internal same-client append context, never ordinary general EDIT delegation",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -383,7 +405,9 @@
             "functionsOrTypes": [
               "PostgresNativeSalesFacts.load"
             ],
-            "scope": "Global valid size identities and original current facts"
+            "scope": "Global valid size identities and original current facts",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -482,7 +506,9 @@
             "functionsOrTypes": [
               "createSalesHttpPlugin"
             ],
-            "scope": "Original URL/error mapping/result shape; no new public route"
+            "scope": "Original URL/error mapping/result shape; no new public route",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -509,7 +535,9 @@
             "functionsOrTypes": [
               "createTransferHttpPlugin"
             ],
-            "scope": "Same original transfer URL/result"
+            "scope": "Same original transfer URL/result",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -537,7 +565,9 @@
               "currentReferences",
               "createMaintainedCatalogue26TransactionProof"
             ],
-            "scope": "Global valid size references plus exact same-SAVE append overlay on proven committed baseline; other committed-before stays"
+            "scope": "Global valid size references plus exact same-SAVE append overlay on proven committed baseline; other committed-before stays",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -608,7 +638,9 @@
               "parseDocumentSkuSelection",
               "documentCreatedSkuCode"
             ],
-            "scope": "NEW shared internal selection parsing and explicit NJNEW rule only"
+            "scope": "NEW shared internal selection parsing and explicit NJNEW rule only",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -620,7 +652,9 @@
             "functionsOrTypes": [
               "parseSalesCommand"
             ],
-            "scope": "Accept mutually exclusive proposal or legacy draft for SAVE only"
+            "scope": "Accept mutually exclusive proposal or legacy draft for SAVE only",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -632,7 +666,9 @@
             "functionsOrTypes": [
               "parseTransferCommand"
             ],
-            "scope": "Same transfer wire variant"
+            "scope": "Same transfer wire variant",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -644,7 +680,9 @@
             "functionsOrTypes": [
               "resolveDocumentSpecificationSelections"
             ],
-            "scope": "NEW exact-tuple resolution, product order locks, baseline proof, append-only normal PRODUCT context; no pool/BEGIN/COMMIT"
+            "scope": "NEW exact-tuple resolution, product order locks, baseline proof, append-only normal PRODUCT context; no pool/BEGIN/COMMIT",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -656,7 +694,9 @@
             "functionsOrTypes": [
               "loadNativeTransferSnapshots"
             ],
-            "scope": "Real SKU facts + separate locked enabled MAIN read; verified genuine absence only, any valid dictionary size"
+            "scope": "Real SKU facts + separate locked enabled MAIN read; verified genuine absence only, any valid dictionary size",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -671,7 +711,9 @@
               "inventory_key_admission",
               "validate_document_specification_commit"
             ],
-            "scope": "NEW proposed SQL successor of frozenv10 only; original migrations unchanged"
+            "scope": "NEW proposed SQL successor of frozenv10 only; original migrations unchanged",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         }
       ]
@@ -704,7 +746,9 @@
             "functionsOrTypes": [
               "stockReadiness"
             ],
-            "scope": "Actual-size validity instead of default membership"
+            "scope": "Actual-size validity instead of default membership",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -715,7 +759,9 @@
             "functionsOrTypes": [
               "readSpecifications"
             ],
-            "scope": "Default member union actual native SKU size IDs, no dropped foreign-group SKU"
+            "scope": "Default member union actual native SKU size IDs, no dropped foreign-group SKU",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -970,7 +1016,9 @@
             "functionsOrTypes": [
               "validateReferences"
             ],
-            "scope": "Default group is display; real size exists/valid membership; preserve other reference checks"
+            "scope": "Default group is display; real size exists/valid membership; preserve other reference checks",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -1138,7 +1186,9 @@
               "ProductMaintenanceTransaction",
               "internal document append types"
             ],
-            "scope": "Internal same-tx type only; normal public product DTO unchanged"
+            "scope": "Internal same-tx type only; normal public product DTO unchanged",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -1151,7 +1201,9 @@
               "skuFacts",
               "appendDocumentSkusOnTransaction"
             ],
-            "scope": "Extract/reuse original immutable record/sparse audit/append order; no public delegate"
+            "scope": "Extract/reuse original immutable record/sparse audit/append order; no public delegate",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -1310,7 +1362,9 @@
               "readStock",
               "readOverview"
             ],
-            "scope": "Both same-file methods consume exact valid-size/key semantics"
+            "scope": "Both same-file methods consume exact valid-size/key semantics",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -1341,7 +1395,9 @@
               "pageProducts",
               "productMatrices"
             ],
-            "scope": "Couple validity flags, size projection and matrix; default members union actual SKU sizes"
+            "scope": "Couple validity flags, size projection and matrix; default members union actual SKU sizes",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -1352,7 +1408,9 @@
             "functionsOrTypes": [
               "readLedger"
             ],
-            "scope": "Valid dictionary size, default group metadata, real warehouse/SKU provenance"
+            "scope": "Valid dictionary size, default group metadata, real warehouse/SKU provenance",
+            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
+            "independentExistingImplementationFixesAllowed": true
           }
         },
         {
@@ -4039,6 +4097,11 @@
         }
       ],
       "constraint": "Only exactv11 scope, no parallel writers, C alone installs SQL/server/build/Git; tests originalowner needed only."
+    },
+    {
+      "atUtc": "2026-10-23T13:24:26.875141+00:00",
+      "source": "Latest direct human v11 group-only correction",
+      "change": "Supersede prior broad v11 release. Preserve ownership/WIP but hold new code/delegation/SQL write semantics. Keep actual product-group membership as input boundary; independent legal SKU/UI and approved implementation fixes continue. No reset/duplicate task."
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
@@ -4054,7 +4117,7 @@
     "maintenanceSupplement": "FIELD-APPROVAL-SUPPLEMENT-v2-B.json",
     "seasonSupplement": "FIELD-APPROVAL-SUPPLEMENT-v3-A.json",
     "rejected": "product_season relation table",
-    "allSizeWriteContract": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json"
+    "allSizeWriteContract": "V11_SCOPE_SUPERSEDED_GROUP_ONLY_CONFIRMED_NEW_WRITES_PENDING"
   },
   "ownershipTransfers": [
     {
