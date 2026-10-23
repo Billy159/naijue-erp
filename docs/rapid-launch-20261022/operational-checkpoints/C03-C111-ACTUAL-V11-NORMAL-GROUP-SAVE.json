@@ -1,0 +1,94 @@
+{
+  "atUtc": "2026-10-23T23:01:22.319546+00:00",
+  "jobId": "c03-v11-c106-product-resume-20261024-111",
+  "status": "PASS_ACTUAL_V11_NORMAL_GROUP_SAVE_REPLAY_ROLLBACK_AND_TRANSFER_CONSERVATION",
+  "receipts": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v11-c106-product-resume-20261024-111/release-submission/release-receipts/c03-v11-c106-product-resume-20261024-111/engine-result.json",
+      "bytes": 16142,
+      "sha256": "e839dc627f5fe159f5ebcd967881024055135d13d9a01b232b2f277748b511d0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v11-c106-product-resume-20261024-111/release-submission/release-receipts/c03-v11-c106-product-resume-20261024-111/qa110-actual-result.json",
+      "bytes": 28278,
+      "sha256": "c66011f72b32e38e3a871c39d649f888fb02ebbb94492bf0868d94c7a8d0ee18"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v11-c106-product-resume-20261024-111/release-submission/release-receipts/c03-v11-c106-product-resume-20261024-111/job.json",
+      "bytes": 535,
+      "sha256": "21c57e71d58d9707c78eb98b39cbbe8c0d63fc5f03a735e598d458c5dd8b1e51"
+    }
+  ],
+  "actualBusinessProductionAcceptance": false,
+  "beforeCounts": {
+    "accounts": 50,
+    "audits": 17,
+    "barcodes": 1,
+    "claims": 2,
+    "halls": 1,
+    "images": 0,
+    "importRecords": 2,
+    "inventoryBalance": 0,
+    "inventoryLedger": 0,
+    "products": 1,
+    "receipts": 17,
+    "skus": 1,
+    "sourceRows": 57,
+    "staff": 50,
+    "warehouses": 2
+  },
+  "afterCounts": {
+    "accounts": 50,
+    "audits": 26,
+    "barcodes": 1,
+    "claims": 2,
+    "halls": 1,
+    "images": 0,
+    "importRecords": 2,
+    "inventoryBalance": 4,
+    "inventoryLedger": 4,
+    "products": 2,
+    "receipts": 26,
+    "skus": 5,
+    "sourceRows": 57,
+    "staff": 50,
+    "warehouses": 2
+  },
+  "original49Unchanged": true,
+  "originalProductUnchanged": true,
+  "groupMembersUnchanged": true,
+  "accountTransitions": [
+    {
+      "authVersion": 4,
+      "loginEnabled": false,
+      "role": "WAREHOUSE",
+      "step": "ACTUAL_CURRENT_BASELINE",
+      "version": 4
+    },
+    {
+      "authVersion": 5,
+      "loginEnabled": false,
+      "role": "SALESPERSON",
+      "staffVersion": 2,
+      "step": "NORMAL_STAFF_ROLE_HALL_EDIT_COMMITTED",
+      "version": 5
+    },
+    {
+      "authVersion": 6,
+      "loginEnabled": true,
+      "role": "SALESPERSON",
+      "step": "NORMAL_ACCOUNT_RESTORE_COMMITTED",
+      "version": 6
+    },
+    {
+      "authVersion": 7,
+      "loginEnabled": false,
+      "role": "SALESPERSON",
+      "step": "NORMAL_ACCOUNT_DISABLE_COMMITTED",
+      "version": 7
+    }
+  ],
+  "independentQA": "PENDING_ORIGINAL_QB_INCREMENTAL",
+  "qualification": "Originalnarrowv11 isolatedQA1032586/ownerDBrole withrealapplicationemployee authorization,transactions,rollback andconservation. DoesnotproveR1nonowner writeACL orformaldata/business/performance. Fileqa110 namein111 intentional inheritedfilename; internaljob111 authoritative.",
+  "predecessor110": "Carrier variable shadowKeyError BEFOREPG retained, no oldoperation replay"
+}
