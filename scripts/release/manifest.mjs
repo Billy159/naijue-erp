@@ -17,6 +17,11 @@ const productionDesignTokenStyles = new Set([
   'apps/web/src/demo-controls/idle-selection-tokens.css',
   'apps/web/src/demo-presentation/tokens.css',
 ]);
+const productionMediaAdapterSources = new Set([
+  'adapters/media/src/controlled-product-media.ts',
+  'adapters/media/src/product-media-stage.ts',
+  'adapters/media/src/sharp-product-image-codec.ts',
+]);
 // Exact already-approved immutable runtime SQL paths; all content/provenance checks remain below.
 const reviewedMigrationSources = new Set([
   'adapters/postgres/migrations/0022_product_media_retained_delete.sql',
@@ -48,6 +53,7 @@ function allowedSource(value) {
   const segments = value.split('/');
   // Media/secret *data* directories are forbidden; runtime source named controlled-media.ts is legitimate code.
   requireRelease(!excludedGraph.test(value) && !segments.some((part, index) => excludedSegment.test(part)
+    && !(index === 1 && part === 'media' && productionMediaAdapterSources.has(value))
     && !(index === segments.length - 1 && (productionDesignTokenStyles.has(value)
       || /\.(?:tsx?|[cm]?js)$/.test(part) && !/synthetic|fixture|(?:^|[.-])test(?:[.-]|$)/i.test(part))))
     && ( /\.(?:tsx?|[cm]?js)$/.test(value) || !/(?:^|[\/._-])(?:keys?|pem|pgpass|env)(?:$|[\/._-])/i.test(value))

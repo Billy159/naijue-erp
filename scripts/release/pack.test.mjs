@@ -257,6 +257,32 @@ test('design-token source policy still rejects token data and unregistered token
     await assert.rejects(validateRelease(f.options), error => error.code === 'NON_PRODUCTION_SOURCE');
   }
 });
+test('backend media runtime source paths remain production code', async () => {
+  const f = await fixture('backend-media-runtime');
+  for (const name of [
+    'adapters/media/src/controlled-product-media.ts',
+    'adapters/media/src/product-media-stage.ts',
+    'adapters/media/src/sharp-product-image-codec.ts',
+  ]) {
+    const bytes = 'export const runtimeMediaCode = true;\n';
+    f.source.files.push(record(name, bytes)); await put(f.sourceRoot, name, bytes);
+  }
+  await f.save();
+  assert.equal((await validateRelease(f.options)).manifest.buildId, 'tool-check-1');
+});
+test('backend media runtime source paths do not permit data or other media files', async () => {
+  for (const [index, name] of [
+    'adapters/media/src/controlled-product-media.json',
+    'adapters/media/src/product-media-stage.test.ts',
+    'adapters/media/src/other.ts',
+    'adapters/media/private/controlled-product-media.ts',
+    'adapters/media/src/private/controlled-product-media.ts',
+  ].entries()) {
+    const f = await fixture('backend-media-excluded-' + index), bytes = '{}\n';
+    f.source.files.push(record(name, bytes)); await put(f.sourceRoot, name, bytes); await f.save();
+    await assert.rejects(validateRelease(f.options), error => error.code === 'NON_PRODUCTION_SOURCE');
+  }
+});
 test('package dependency identity ignores key order but rejects missing extra and changed exact versions', async () => {
   for (const scenario of ['reordered', 'missing', 'extra', 'version']) {
     const f = await fixture('dependency-identity-' + scenario);
