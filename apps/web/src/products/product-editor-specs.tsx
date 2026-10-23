@@ -79,13 +79,20 @@ function AddSku(props:Props&{readonly close:()=>void}){
  const [colorId,setColor]=useState<string|null>(null),[fitId,setFit]=useState<string|null>(null),[sizeId,setSize]=useState<string>(''),[skuCode,setCode]=useState(''),[sizes,setSizes]=useState<readonly DictionarySize[]|null>(null),[error,setError]=useState(''),[retry,setRetry]=useState(0);
  useEffect(()=>{
   const controller=new AbortController(),abort=()=>controller.abort();props.scope.signal.addEventListener('abort',abort,{once:true});
-  const name=props.labels[`size-groups:${props.values.sizeGroupId}`];
-  if(!name){setError('尺码组名称未提供，请重新选择尺码组。');return()=>props.scope.signal.removeEventListener('abort',abort);}
-  void props.capability.dictionaryReader.readSizeGroups({parameters:{search:name,page:1,pageSize:100},signal:controller.signal,identity:props.scope.identity,routeInstanceId:props.scope.routeInstanceId,entityId:props.scope.entityId}).then(page=>{
-   if(controller.signal.aborted)return;const group=page.items.find(item=>item.id===props.values.sizeGroupId);if(group)setSizes(group.sizes);else setError('当前未读到所选尺码组的尺码资料。');
-  },e=>{if(controller.signal.aborted)return;setError('尺码资料读取失败。');if(e instanceof HttpQueryError&&(e.kind==='unauthenticated'||e.kind==='forbidden'))props.onAccessFailure(e);});
+  const current=()=>props.scope.active&&!controller.signal.aborted;
+  setSizes(null);setError('');
+  // The selected native ID is authoritative; names and one result page are not.
+  void(async()=>{
+   for(let page=1;current();page++){
+    const result=await props.capability.dictionaryReader.readSizeGroups({parameters:{search:'',page,pageSize:100},signal:controller.signal,identity:props.scope.identity,routeInstanceId:props.scope.routeInstanceId,entityId:props.scope.entityId});
+    if(!current())return;
+    const group=result.items.find(item=>item.id===props.values.sizeGroupId);
+    if(group){setSizes(group.sizes);return;}
+    if(page*result.pageSize>=result.total){setError('当前未读到所选尺码组的尺码资料。');return;}
+   }
+  })().catch(e=>{if(!current())return;setError('尺码资料读取失败。');if(e instanceof HttpQueryError&&(e.kind==='unauthenticated'||e.kind==='forbidden'))props.onAccessFailure(e);});
   return()=>{props.scope.signal.removeEventListener('abort',abort);controller.abort();};
- },[props.scope,props.values.sizeGroupId,retry]);
+ },[props.scope,props.capability.dictionaryReader,props.values.sizeGroupId,retry]);
  const save=()=>{const size=sizes?.find(s=>s.id===sizeId);if(!colorId||!fitId||!size||!skuCode.trim()){setError('请填写规格编码并选择颜色、版型和尺码。');return;}
   if(props.skus.some(s=>s.colorId===colorId&&s.fitId===fitId&&s.sizeId===sizeId)){setError('该规格组合已存在。');return;}
   props.remember(size.id,size.name,'sizes');props.changeSkus([...props.skus,{id:null,expectedVersion:null,skuCode,colorId,fitId,sizeId,enabled:true}]);props.close();
