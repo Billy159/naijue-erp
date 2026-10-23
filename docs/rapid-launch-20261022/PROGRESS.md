@@ -1,3 +1,11 @@
+当前接续 2026-10-23T02:30:55.143713+00:00：按当前人类新裁决，原Demo对比Chat已关闭，C接管104项，后续独立浏览器UI/性能并入原QF，QB继续后端；不恢复/新建重复Chat。最新整项0、局部48，57未检/30差异/6部分/10待接/1批准例外，v021/v022仅截图/INTAKE不加通过。UI与后端技能适用边界见本目录两份20261023当前directive，继续原22任务/原owner。
+
+F1首次pointer实际最小RED→GREEN/strict检查已交并固定source115 `1e873a1d9bde0390d4cd6e9940d8794199487f92`，浏览器未复验；其后直接完整SALE→混合退换/编辑查看→调拨，不逐CSS构建。F2商品基础/规格正在实现原Demo结构及firstvisit页签，F1唯一StandardTabs接缝，F2两个新动态重叶已精确登记；F3完整付款维护lazy/真实cap接线在做。原有效局部保留。D2已收到F3实际method-filter缺口，沿既有organization list查补，不重复API；两后端技能已交D1/D2/D3按问题使用，不换架构/扩池/新字段。现有WIP独立保全。
+
+实际可看仍固定113/57850（source1578a5b0/build01/HTML748f119f），不含115或产品WIP。C103生产包仍原值，正式地址未切换。C48原上传观察超时；只读核实dispatcherREADY、control48存在但request/tmp/receipt全无、仅8public文件一项partial，故尚未start，正准备精确prefix续传，不重run48/旧45。C49真实FILE输入和genuinepre/native3成功后在23ACL综合判定失败，事务回滚和释放成功、post未做/3acq；QB136确认rawNULL可误拒但实际触发字段未知，C50只读23行见证载体准备，尚无H06/新purpose/GRANT。
+
+GitHub正常分支最后已独立回读826af55；source115/本次directive待下一精确同步。用户未批三原分支仍只各相关等待；无49账号/真实导入/MAIN/PUBLISH/新业务测试写。整体ACTIVE，以下为历史。
+
 当前候选更新 2026-10-23T01:53:36.954793+00:00：固定113真实预览已开放 http://127.0.0.1:57850/synthetic-unified.html ，build ui-preview-1578a5b-01-build01/source1578a5b0，HTML748f119f…，PID30991/session30700，三关键HTTP精确200。400仓库输入/383源模块+981锁依赖=1364实际模块，undeclared0。只含106–113与明确paymentaudit0合成overlay，原W0/1SKU作者原字节；未来F1冷pointer与backend114不在本UI。Demo已收新受影响范围，旧48不重跑。源码完成/合成界面/正式业务验收继续分层。
 
 GitHub正常分支已原对象精确同步9提交并独立GET回读01accc753a0354d8753c28826b896bdcd2eca67a；新文档另待下段同步。正式地址未切换，其余C48离线恢复/C49明确FILE输入/D3完整Header+Line/F1chunk62/63继续，整体ACTIVE。以下保留历史。

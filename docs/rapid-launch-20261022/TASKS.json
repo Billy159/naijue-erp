@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "01accc753a0354d8753c28826b896bdcd2eca67a",
+    "headObserved": "1e873a1d9bde0390d4cd6e9940d8794199487f92",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "01accc753a0354d8753c28826b896bdcd2eca67a",
+    "remoteHeadVerified": "826af55bd65a88f8fc899c449c79fcb3e1eb50e8",
     "remoteReadbackMethod": "9 exactoriginal tree+commit objects nonforced normalFF plus independentGET",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -936,9 +936,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T01:53:36.954793+00:00",
+  "updatedAt": "2026-10-23T02:30:55.143713+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "01accc753a0354d8753c28826b896bdcd2eca67a",
+  "lastVerifiedRemoteCommit": "826af55bd65a88f8fc899c449c79fcb3e1eb50e8",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1703,6 +1703,12 @@
         "categoryPage": "P14",
         "P13": "Product readonly fullpage inventory NOT_RUN; source evidence not page acceptance"
       }
+    },
+    "demoCurrentDirective": {
+      "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
+      "status": "CLOSED_BY_DIRECT_HUMAN",
+      "nextOwner": "Existing QF01",
+      "doNotResume": true
     }
   },
   "fieldApprovalRecords": [
@@ -2110,11 +2116,11 @@
     }
   ],
   "newPendingReviews": [
-    "C48lockedoffline recovery preparation",
-    "C49FILE metadata preparation",
-    "C113serve/Demo affectedonly",
-    "D3fullHeader/onceLinejoin Kprep,newwindowunsigned",
-    "F1chunk62coldpointer+63S01"
+    "FullUIstate candidates→C sharedbuild→existingQF source/browser/perf, no perCSSbuild",
+    "D2nativepaymentMethodfilter exactpaths/contract and F3wire",
+    "D3newHeadercapture carrier limitedQB thenCwindow",
+    "C50finite23ACL witness prepare, noH06 yet",
+    "C48 exactsameinitialpublictransfer resume, notstage started"
   ],
   "openFindingsCurrent": [
     {
@@ -2173,9 +2179,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-23T01:53:36.954793+00:00",
-    "sourceRound": 114,
-    "sourceCheckpoint": "f8d563b72e022ba47d3804084fcfd0b555af3042",
+    "atUtc": "2026-10-23T02:30:55.143713+00:00",
+    "sourceRound": 115,
+    "sourceCheckpoint": "1e873a1d9bde0390d4cd6e9940d8794199487f92",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -2194,12 +2200,12 @@
       "syntheticOnly": true,
       "wholePageAccepted": false
     },
-    "nextPreview": "113actualonlynewaffected Demo inprogress; F1coldpointer futurefix notincluded",
-    "r1": "C43/C44PASS; C45npm TIMEOUT905.854s beforeapp/web. C47 exactinstaller stopped, old3unchanged. C48 lockedoffline recovery Kprep, no replay/publicswitch",
-    "qa": "C46beforePG STOP missingnonemptyENV. C49 explicitregistered PASSWORD_FILE-only Kprep/no fallback. H06notrun; priorC40Sharp subset preserved",
+    "nextPreview": "Source115 coldpointer frozen; F1 completeSALE/F2 productbase-spec/F3 paymentfullstates WIP. Next shared fullstate build only. Current113 actualUI unchanged.",
+    "r1": "C48 notstarted: initialcontrolupload timedout, no request/tmp/receipt and dispatcherREADY verified02:19Z; exactpublicprefix resume Kprep, no runreplay. C43/C44 retained; no candidateapp/publicswitch.",
+    "qa": "C49FILE actualinput/genuinepreCOMMIT/native3e37 passed, 23ACLguard failed, rollback/release/dispose passed, postnotrun/3acq. QB136 rawNULL false-reject condition confirmed but actualpredicate UNKNOWN. C50 finite23row witness Kprep; noH06/purpose/GRANT.",
     "import": "QB134 actual261641/14279 receipt-chainPASS; C outside48238f/c8016d signed realImportfalse; newcopiesgenuineNOTRUN. C114pureexport QB135sourcePASS. FullHeader/onceLinejoin Kprep",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Normal branch remote01accc7 independentlyGETverified exactoriginal9commits nonforcedFF; subsequentmetadata pendingnextsync",
+    "github": "Normal remote826af55 independentlyverified; source115 and currentdirectives pending next exactsync",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -2223,7 +2229,9 @@
       "actualConclusion": "DEMO108 component density/font/clamp/window-scroll residuals pass; native48 not incremented, nativeancestor and>=4native categories untested"
     },
     "audit": "QF113timingPASS; twoapprovedpaymentaudit0 overlays in113synthetic only, actualentrypending",
-    "demoSession": "Human Demo已登录; dedicatedChat notified"
+    "demoSession": "Human Demo已登录; dedicatedChat notified",
+    "uiMigration": "OriginalDemo closedbyhuman. C evidencehandoff→existingQF browser/perf, old104/48/0whole reused. F1wholeSALE andStandardTabs shared seam, F2 firstvisit product6tabs, F3 payment maintenance/lazy sourceimplementation running.",
+    "backend": "Twoinstalled skills applied tooriginalD1D2D3. D2 investigates native paymentMethod filter blockingF3; existing orglist only, newexactpath registration/contract beforewrite; D1H06 andD3carrier continue withoutoldQA repeats."
   },
   "latestReadySource": {
     "round": 114,
@@ -2263,5 +2271,7 @@
     "C46",
     "C47",
     "DEMO-C105-S01-NEW-DIFFS"
-  ]
+  ],
+  "currentUIDirective": "UI-DIRECT-MIGRATION-20261023-02.json",
+  "currentBackendSkillDirective": "BACKEND-SKILLS-DIRECTIVE-20261023.json"
 }

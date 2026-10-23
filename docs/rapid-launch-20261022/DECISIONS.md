@@ -31,3 +31,7 @@ Source/protocol acceptance is not actual COMMIT acceptance: original0013 prohibi
 ## 2026-10-22T18:05:14.024029+00:00 用户批准图片颜色互换补充v4
 
 用户直接回复“确认图片颜色互换补充 v4”，来源questionItemId call_82226439f7bc4059aa8b13a7806c1243/0。按WRITE-CONTRACT-APPROVAL-v4-MEDIA-COLOR-SWAP.json放行单守卫image retained-id DELETE/final重新插入分支，0新表列/索引；原身份、创建信息、一次版本、完整审计、final唯一性和整事务回滚保持。只是实施批准，source/SQL/真实PG/业务未通过；其他未批差异仍须确认。
+
+## 2026-10-23T02:30:55.143713+00:00 当前人类：整页Demo迁入与后端技能接续
+
+采用UI-DIRECT-MIGRATION-20261023-02.json与BACKEND-SKILLS-DIRECTIVE-20261023.json。原Demo专项已关闭，C接104项证据，不恢复/新建重复任务；原QF负责后续实际浏览器和性能、QB后端，C不重复验收。F1完整SALE/退换/编辑查看/调拨，F2商品六页签/库存，F3设置独占现有有限叶文件；84个既有源路径补登记，另F1 StandardTabs与F2两个首次访问动态叶精确登记。先完整可运行状态再必要合批构建，保持已验局部；不能靠仿写逐点修补、删功能或样式类名宣称复用。原35/65及新增入口合104不缩分母。React19.1.1/Arco2.66.16固定；用户三前端、两后端技能仅辅助既有架构，数量金额权限/真实SKU/事务幂等/未知、全部后续裁决及字段确认保持。原正式地址分批授权继续，无新增server/DB权限。

@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T01:46:47.563018+00:00",
+  "updatedAt": "2026-10-23T02:28:13.623868+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -1712,6 +1712,222 @@
           "group": "CAT_UI_01_03_P16_P18_FROZEN_UI",
           "fieldGate": "READ_ONLY_UI_NO_SCHEMA_OR_WRITE",
           "boundary": "F2 soleowner, read-only specific scope; preserve P19 sharedCSS consumer and unrelated color/fit current proof; no shared StandardTabs/Table edits"
+        },
+        {
+          "path": "apps/web/src/products/candidate-window.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/products/filter-control.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/products/http-reader.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/products/popup-host.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/products/products-route.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/products/query-controller.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/colors-page.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/http-reader.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/pagination.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/read-owner.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/read-state.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/product-settings/fits/fits-page.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/product-settings/seasons/seasons-page.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/contracts.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/http-reader.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/pagination.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/read-owner.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/read-state.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/size-groups-page.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/product-categories/tree-model.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/inventory/display-projection.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/inventory/inventory-matrix.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/inventory/inventory-route.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/inventory/model.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/inventory/product-drawer-frame.css",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/inventory/product-drawer-host.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/inventory/product-drawer.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/inventory/product-tab-state.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/inventory/settings-popup.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/inventory/windowing/fixtures.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/inventory/windowing/index.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/inventory/windowing/model.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/inventory/windowing/render-plan.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/inventory/windowing/session.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/products/product-editor-barcodes.tsx",
+          "group": "PRODUCT_FIRST_VISIT_HEAVY_LEAF",
+          "fieldGate": "CLIENT_UI_ONLY_NO_DTO_OR_BACKEND_SCHEMA_WRITE_CHANGE",
+          "boundary": "F2 unique writer. Keep default existing behavior and frozen UI, stabilize visited state; exact additive minimal seam/leaf extraction only."
+        },
+        {
+          "path": "apps/web/src/products/product-editor-prices.tsx",
+          "group": "PRODUCT_FIRST_VISIT_HEAVY_LEAF",
+          "fieldGate": "CLIENT_UI_ONLY_NO_DTO_OR_BACKEND_SCHEMA_WRITE_CHANGE",
+          "boundary": "F2 unique writer. Keep default existing behavior and frozen UI, stabilize visited state; exact additive minimal seam/leaf extraction only."
         }
       ]
     },
@@ -1932,6 +2148,126 @@
           "path": "apps/web/src/settings/demo-settings-ui.css",
           "group": "FROZEN_DEMO_COMPLETE_UI_PRESENTATION_ONLY",
           "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/web/src/settings/stores/detail-modal.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/settings/stores/http-reader.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/settings/stores/pagination.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/settings/stores/read-only-host.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/settings/stores/read-state.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/settings/stores/single-select.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/settings/stores/style-entry.css",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/settings/warehouses/warehouses-page.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/parties/contracts.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/parties/controller.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/parties/http-client.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/parties/index.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/parties/parties.css",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/parties/party-candidate-options.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/parties/party-candidate-selector.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/parties/party-form.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/parties/party-pagination.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/parties/party-single-select.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/parties/response-validation.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/parties/source-settings.css",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F3 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
         }
       ]
     },
@@ -2534,6 +2870,192 @@
           "group": "SHARED_MULTI_FIRST_POINTER_01",
           "fieldGate": "UI_ONLY_EXISTING_CONTRACT_UNCHANGED",
           "boundary": "F1 sole owner idle-shell first actual pointer/focus handoff only; preserve Arco native action/Portal/current scope guards. K tests no new R test path."
+        },
+        {
+          "path": "apps/web/src/sales/commands/fixtures.test-support.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/sales/commands/index.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/sales/commands/validation.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/sales/controller.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/sales/filter-controls.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/sales/index.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/sales/model.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/sales/owned-scope.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/sales/reference-candidates.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/sales/reference-popup-host.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/sales/sales-pagination.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/sales/sales-status-tag.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/sales/sales.css",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/fixtures.test-support.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/index.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/commands/validation.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/controller.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/filter-controls.css",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/filter-controls.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/format.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/index.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/model.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/owned-scope.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/pagination.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/product-activation.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/read-columns.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/scope.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/transfer-status-tag.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/transfers.css",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/transfers/warehouse-candidates.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F1 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
+        },
+        {
+          "path": "apps/web/src/components/standard-tabs.tsx",
+          "group": "PRODUCT_FIRST_VISIT_TABS_SHARED_SEAM",
+          "fieldGate": "CLIENT_UI_ONLY_NO_DTO_OR_BACKEND_SCHEMA_WRITE_CHANGE",
+          "boundary": "F1 unique writer. Keep default existing behavior and frozen UI, stabilize visited state; exact additive minimal seam/leaf extraction only."
         }
       ]
     }
@@ -2728,6 +3250,136 @@
       "reason": "Actual Demo v020 cold first pointer swallowed by idle-to-native focus preparation; original F1 located exact shell and requested registration before write",
       "evidenceSha256": "856d930aad96d7b296cd1c145fb351b198e10d16356dfaf662ef4e2254200fb7",
       "humanAuthorizationMessage": "01a161f7-a5e8-7e10-9059-9537c28910c2"
+    },
+    {
+      "atUtc": "2026-10-23T02:16:03.836143+00:00",
+      "owner": "F1",
+      "addedPaths": [
+        "apps/web/src/sales/commands/fixtures.test-support.ts",
+        "apps/web/src/sales/commands/index.ts",
+        "apps/web/src/sales/commands/validation.ts",
+        "apps/web/src/sales/controller.ts",
+        "apps/web/src/sales/filter-controls.tsx",
+        "apps/web/src/sales/index.ts",
+        "apps/web/src/sales/model.ts",
+        "apps/web/src/sales/owned-scope.ts",
+        "apps/web/src/sales/reference-candidates.ts",
+        "apps/web/src/sales/reference-popup-host.ts",
+        "apps/web/src/sales/sales-pagination.tsx",
+        "apps/web/src/sales/sales-status-tag.tsx",
+        "apps/web/src/sales/sales.css",
+        "apps/web/src/transfers/commands/fixtures.test-support.ts",
+        "apps/web/src/transfers/commands/index.ts",
+        "apps/web/src/transfers/commands/validation.ts",
+        "apps/web/src/transfers/controller.ts",
+        "apps/web/src/transfers/filter-controls.css",
+        "apps/web/src/transfers/filter-controls.tsx",
+        "apps/web/src/transfers/format.ts",
+        "apps/web/src/transfers/index.ts",
+        "apps/web/src/transfers/model.ts",
+        "apps/web/src/transfers/owned-scope.ts",
+        "apps/web/src/transfers/pagination.tsx",
+        "apps/web/src/transfers/product-activation.tsx",
+        "apps/web/src/transfers/read-columns.tsx",
+        "apps/web/src/transfers/scope.ts",
+        "apps/web/src/transfers/transfer-status-tag.tsx",
+        "apps/web/src/transfers/transfers.css",
+        "apps/web/src/transfers/warehouse-candidates.ts"
+      ],
+      "scope": "Finite existing production UI leaf paths for current tasks, original valid patches preserved; no blanket future directory grant",
+      "reason": "Direct human current message whole Demo UI migration and original F1/F2/F3 continuation",
+      "sharedFiles": "Existing shared F1/C allocations unchanged; new paths or cross-role edits require C exact registration"
+    },
+    {
+      "atUtc": "2026-10-23T02:16:03.836143+00:00",
+      "owner": "F2",
+      "addedPaths": [
+        "apps/web/src/products/candidate-window.ts",
+        "apps/web/src/products/filter-control.tsx",
+        "apps/web/src/products/http-reader.ts",
+        "apps/web/src/products/popup-host.ts",
+        "apps/web/src/products/products-route.tsx",
+        "apps/web/src/products/query-controller.ts",
+        "apps/web/src/product-settings/colors/colors-page.tsx",
+        "apps/web/src/product-settings/colors/http-reader.ts",
+        "apps/web/src/product-settings/colors/pagination.tsx",
+        "apps/web/src/product-settings/colors/read-owner.tsx",
+        "apps/web/src/product-settings/colors/read-state.tsx",
+        "apps/web/src/product-settings/fits/fits-page.tsx",
+        "apps/web/src/product-settings/seasons/seasons-page.tsx",
+        "apps/web/src/product-settings/size-groups/contracts.ts",
+        "apps/web/src/product-settings/size-groups/http-reader.ts",
+        "apps/web/src/product-settings/size-groups/pagination.tsx",
+        "apps/web/src/product-settings/size-groups/read-owner.tsx",
+        "apps/web/src/product-settings/size-groups/read-state.tsx",
+        "apps/web/src/product-settings/size-groups/size-groups-page.tsx",
+        "apps/web/src/product-categories/tree-model.ts",
+        "apps/web/src/inventory/display-projection.ts",
+        "apps/web/src/inventory/inventory-matrix.tsx",
+        "apps/web/src/inventory/inventory-route.tsx",
+        "apps/web/src/inventory/model.ts",
+        "apps/web/src/inventory/product-drawer-frame.css",
+        "apps/web/src/inventory/product-drawer-host.tsx",
+        "apps/web/src/inventory/product-drawer.tsx",
+        "apps/web/src/inventory/product-tab-state.tsx",
+        "apps/web/src/inventory/settings-popup.ts",
+        "apps/web/src/inventory/windowing/fixtures.ts",
+        "apps/web/src/inventory/windowing/index.ts",
+        "apps/web/src/inventory/windowing/model.ts",
+        "apps/web/src/inventory/windowing/render-plan.ts",
+        "apps/web/src/inventory/windowing/session.ts"
+      ],
+      "scope": "Finite existing production UI leaf paths for current tasks, original valid patches preserved; no blanket future directory grant",
+      "reason": "Direct human current message whole Demo UI migration and original F1/F2/F3 continuation",
+      "sharedFiles": "Existing shared F1/C allocations unchanged; new paths or cross-role edits require C exact registration"
+    },
+    {
+      "atUtc": "2026-10-23T02:16:03.836143+00:00",
+      "owner": "F3",
+      "addedPaths": [
+        "apps/web/src/settings/stores/detail-modal.tsx",
+        "apps/web/src/settings/stores/http-reader.ts",
+        "apps/web/src/settings/stores/pagination.tsx",
+        "apps/web/src/settings/stores/read-only-host.tsx",
+        "apps/web/src/settings/stores/read-state.tsx",
+        "apps/web/src/settings/stores/single-select.tsx",
+        "apps/web/src/settings/stores/style-entry.css",
+        "apps/web/src/settings/warehouses/warehouses-page.tsx",
+        "apps/web/src/parties/contracts.ts",
+        "apps/web/src/parties/controller.ts",
+        "apps/web/src/parties/http-client.ts",
+        "apps/web/src/parties/index.ts",
+        "apps/web/src/parties/parties.css",
+        "apps/web/src/parties/party-candidate-options.tsx",
+        "apps/web/src/parties/party-candidate-selector.tsx",
+        "apps/web/src/parties/party-form.tsx",
+        "apps/web/src/parties/party-pagination.tsx",
+        "apps/web/src/parties/party-single-select.tsx",
+        "apps/web/src/parties/response-validation.ts",
+        "apps/web/src/parties/source-settings.css"
+      ],
+      "scope": "Finite existing production UI leaf paths for current tasks, original valid patches preserved; no blanket future directory grant",
+      "reason": "Direct human current message whole Demo UI migration and original F1/F2/F3 continuation",
+      "sharedFiles": "Existing shared F1/C allocations unchanged; new paths or cross-role edits require C exact registration"
+    },
+    {
+      "atUtc": "2026-10-23T02:28:13.623868+00:00",
+      "owner": "F1",
+      "addedPaths": [
+        "apps/web/src/components/standard-tabs.tsx"
+      ],
+      "reason": "Original F2 requested current editor static-import and destroy-on-hide lifecycle fix. Sharedtabs single F1 owner; 2 precise newF2 dynamic leaves. No other writer or architecture replacement.",
+      "humanAuthorization": "Direct current C UI migration/on-demand/rendering request 2026-10-23"
+    },
+    {
+      "atUtc": "2026-10-23T02:28:13.623868+00:00",
+      "owner": "F2",
+      "addedPaths": [
+        "apps/web/src/products/product-editor-barcodes.tsx",
+        "apps/web/src/products/product-editor-prices.tsx"
+      ],
+      "reason": "Original F2 requested current editor static-import and destroy-on-hide lifecycle fix. Sharedtabs single F1 owner; 2 precise newF2 dynamic leaves. No other writer or architecture replacement.",
+      "humanAuthorization": "Direct current C UI migration/on-demand/rendering request 2026-10-23"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
