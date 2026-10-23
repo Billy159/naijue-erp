@@ -12,6 +12,34 @@ const result = { operationId: id(3), kind: 'PRODUCT' as const, targetId: id(2), 
 const receipt = () => ({ requestKey: 'product-key-1', action: 'DISABLE', status: 'COMMITTED', completedAt: '2026-10-22T06:00:00Z', result });
 const json = (value: unknown, status = 200) => new Response(JSON.stringify(value), { status, headers: { 'content-type': 'application/json' } });
 
+test('V1 CREATE and EDIT under V2 restore the old uncertain command and retry its identical V1 route/body/key',async()=>{
+ const {createProductMaintenanceHttpClientV2}=await import('./product-maintenance-http-client.ts');
+ for(const action of ['CREATE','EDIT']as const){
+  const ctx=context(),target=action==='CREATE'?null:id(2),first=ctx.createScope(`old-v1-${action}`,target),wire:{path:string;init:RequestInit}[]=[],held:ProductMaintenanceCommand[]=[];let keys=0;
+  const oldClient=createProductMaintenanceHttpClient({origin:'https://erp.example',basePath:'/api',fetch:async(path,init)=>{wire.push({path,init});throw Error('lost V1 reply');}});
+  const old=new ProductEditorController({scope:first,client:oldClient,newRequestKey:()=>`v1-original-${action}-${++keys}`,onAccessFailure:()=>assert.fail(),onRecoveryRequired:(command,identity)=>{assert.equal(identity,first.identity);held.push(command);}});
+  const detail=maintenanceDetail(),data={values:detail.values,skus:action==='CREATE'?detail.skus.map(s=>({...s,id:null,expectedVersion:null})):detail.skus,barcodes:action==='CREATE'?detail.barcodes.map(b=>({...b,id:null})):detail.barcodes};
+  await old.submit(action==='CREATE'?{action,...data}:{action,id:id(2),expectedVersion:1,...data});assert.equal(old.getSnapshot().phase,'uncertain');first.dispose();assert.equal(held.length,1);
+  const original=held[0]!,bytes=JSON.stringify(original),expectedResult={...result,version:action==='CREATE'?1:2};
+  const v2=createProductMaintenanceHttpClientV2({origin:'https://erp.example',basePath:'/api',fetch:async(path,init)=>{wire.push({path,init});return init.method==='GET'?json({error:{code:'RECEIPT_NOT_FOUND',message:'absent'}},404):json(expectedResult);}});
+  const restored=new ProductEditorController({scope:ctx.createScope(`new-v2-${action}`,target),client:v2,originalCommand:original,newRequestKey:()=>assert.fail('Upgrade must not allocate a key'),onAccessFailure:()=>assert.fail(),onRecoveryRequired:()=>assert.fail('Confirmed command must not detach as pending')});
+  assert.equal(restored.getSnapshot().phase,'uncertain');assert.equal(wire.length,1,'Restore itself is zero GET/POST');assert.equal(JSON.stringify(restored.getSnapshot().command),bytes);
+  await restored.recover();assert.equal(restored.getSnapshot().recovery,'absent');assert.equal(wire[1]!.path,`https://erp.example/api/products/receipts/${original.requestKey}`);assert.equal(wire[1]!.init.method,'GET');
+  await restored.retryOriginal();assert.equal(restored.getSnapshot().phase,'committed');assert.equal(wire[2]!.path,wire[0]!.path);assert.equal(wire[2]!.path,'https://erp.example/api/products/commands');assert.equal(wire[2]!.init.body,wire[0]!.init.body);assert.equal(JSON.stringify(restored.getSnapshot().command),bytes);assert.equal(keys,1);
+  const after=restored.getSnapshot().command!;assert.ok('values'in after&&Object.hasOwn(after.values,'seasonId')&&!Object.hasOwn(after.values,'seasonIds'));ctx.clear();
+ }
+});
+test('V1 under V2 restore still rejects invalid or mixed original schema and V1 capability still rejects V2/media',()=>{
+ const ctx=context(),scope=ctx.createScope('restore-schema-boundary',id(2)),detail=maintenanceDetail(),{seasonId:_,...values}=detail.values;
+ const v1:ProductMaintenanceCommand={action:'EDIT',requestKey:'v1-original-schema',id:id(2),expectedVersion:1,values:detail.values,skus:detail.skus,barcodes:detail.barcodes};
+ const options={scope,client:{contractVersion:2 as 1|2,execute:async()=>assert.fail('No IO'),receipt:async()=>assert.fail('No IO')},newRequestKey:()=>assert.fail('No key'),onAccessFailure:()=>assert.fail(),onRecoveryRequired:()=>assert.fail()};
+ assert.throws(()=>new ProductEditorController({...options,originalCommand:{...v1,expectedVersion:0}}));
+ assert.throws(()=>new ProductEditorController({...options,originalCommand:{...v1,values:{...v1.values,seasonIds:[]}}}));
+ const v2:ProductMaintenanceCommand={...v1,values:{...values,seasonIds:[id(6)]}};
+ assert.throws(()=>new ProductEditorController({...options,client:{...options.client,contractVersion:1},originalCommand:v2}));
+ assert.throws(()=>new ProductEditorController({...options,client:{...options.client,contractVersion:1},originalCommand:{...v2,imageChanges:[{action:'ADD',uploadId:id(21),role:'MAIN',colorId:null,displayOrder:0}]}}));ctx.clear();
+});
+
 test('restored v1/v2/media commands start uncertain without IO or a new key and retain exact immutable payloads', () => {
  const detail=maintenanceDetail(),{seasonId:_,...v2}=detail.values;
  const originals:ProductMaintenanceCommand[]=[

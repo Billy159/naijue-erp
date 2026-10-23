@@ -15,7 +15,8 @@ export class ProductEditorController {
     if (typeof options.newRequestKey !== 'function' || typeof options.onRecoveryRequired !== 'function' || typeof options.onAccessFailure !== 'function') throw new TypeError('Explicit product editor session owners are required.');
     if (options.originalCommand !== undefined) {
       const command = snapshotQueryParameters(options.originalCommand);
-      const parse = options.client.contractVersion === 2 ? (Object.hasOwn(command,'imageChanges') ? parseProductMaintenanceMediaCommandV2 : parseProductMaintenanceCommandV2) : parseProductMaintenanceCommand;
+      const version = 'values' in command ? (Object.hasOwn(command.values,'seasonIds') ? 2 : 1) : options.client.contractVersion;
+      const parse = options.client.contractVersion === 2 && version === 2 ? (Object.hasOwn(command,'imageChanges') ? parseProductMaintenanceMediaCommandV2 : parseProductMaintenanceCommandV2) : parseProductMaintenanceCommand;
       // Validate through the existing versioned contract, retaining the exact
       // original field/array order and payload rather than rebuilding a request.
       parse(command);
