@@ -1,0 +1,24 @@
+{
+  "atUtc": "2026-10-23T13:30:01.349338+00:00",
+  "parent": "2a3c634e34bc21cc6962d082f6909fa0e830c520",
+  "taskId": "B07_C01_APPROVED_CURRENT_EFFECTIVE_HISTORY_READ",
+  "files": [
+    {
+      "path": "adapters/postgres/src/imported-history-query-reader.ts",
+      "owner": "D3",
+      "bytes": 22521,
+      "sha256": "7286a639f4b03a78c47be577fbbae3a660bb525d26b0f1af079d99fb3cba5426"
+    },
+    {
+      "path": "tests/imported-history-query.test.ts",
+      "owner": "D3",
+      "bytes": 30350,
+      "sha256": "6602d9eb46e91308eb04dd9212bf3c2cf6ecf02d828bcbc9820c77d4709512e7"
+    }
+  ],
+  "ownerReceipt": "K/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json#historyB07DraftEditContinuation",
+  "scope": "Original explicit26 HISTORY_READ list/detail consumes approved existing five effective projections with exact revision/document/op/version/basis. Preserve immutable source identity/status/people/time null and legacy19 original behavior. No history writes, size/code/delegate rule changes.",
+  "checksAdopted": "Owner four new and two necessary affected scripted cases; original strict0. Initial one new SQL assertion also hit existing metadata query; refined to businessSQL and only failed case rerun. No original suite repeated.",
+  "remaining": "Actual PG/HTTP/effective history not measured; real transactional history store/controlled guards/host not yet implemented. C01-approved numeric patch remains independent from extra full-DRAFT edit proposed differences.",
+  "qualification": "SOURCE_FIXED_ONLY; original QB independent exact projection delta next, no whole B07/real business/production acceptance."
+}

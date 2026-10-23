@@ -55,7 +55,8 @@ test('HISTORY DTO preserves nullable persons/local microseconds/exact money; rej
 });
 
 /** Protocol double proves emitted SQL/transaction use, NOT PostgreSQL execution. */
-function protocol(options: { failure?: string; final?: boolean; kind?: ImportedHistoryKind; schema?: number[]; guards?: boolean; mismatch?: boolean; afterQuery?: (tag: string) => void } = {}) {
+function protocol(options: { failure?: string; final?: boolean; kind?: ImportedHistoryKind; schema?: number[]; guards?: boolean; mismatch?: boolean; afterQuery?: (tag: string) => void;
+  transform?: (tag: string, sql: string, rows: Record<string, unknown>[]) => Record<string, unknown>[] } = {}) {
   const calls: { tag: string; sql: string; values: unknown[] }[] = [], releases: unknown[] = [];
   let connects = 0;
   const client: PgSalesClient = { async query(sql, values = []) {
@@ -69,11 +70,81 @@ function protocol(options: { failure?: string; final?: boolean; kind?: ImportedH
     if (tag === 'imported-history:list-page') rows = options.final ? [headerRow(options.kind ?? 'sales')] : [];
     if (tag === 'imported-history:detail') rows = options.final ? [{ ...headerRow(options.kind ?? 'sales'), line_count: options.mismatch ? 1 : 0, settlement_count: 0 }] : [];
     if (tag.endsWith('-count') && !tag.includes('list-count')) rows = [{ total: '0' }];
+    if (sql.includes(' AS effective_valid')) rows = rows.map(row => ({ ...row, effective_valid: true }));
+    rows = options.transform?.(tag, sql, rows) ?? rows;
     options.afterQuery?.(tag); return { rows, rowCount: rows.length };
   }, release(error) { releases.push(error); } };
   const pool: PgSalesPool = { async connect() { connects++; return client; } };
   return { pool, client, calls, releases, connects: () => connects };
 }
+
+function effectiveProtocol(kind: ImportedHistoryKind, failStage?: string) {
+  return protocol({ final: true, kind, schema: Array.from({ length: 26 }, (_, i) => i + 1), transform(tag, sql, rows) {
+    if (tag === 'imported-history:list-page' || tag === 'imported-history:detail') {
+      assert.match(sql, /coalesce\(e.version,h.version\)/); assert.match(sql, /er.to_version=e.version/);
+      assert.match(sql, /er\.document_kind=/); assert.match(sql, /er\.operation_id IS NOT NULL/);
+      rows = rows.map(row => ({ ...row, source_status: 'DRAFT', version: 3, line_count: 1, settlement_count: kind === 'sales' ? 1 : 0,
+        ...(kind === 'sales' ? { gross_amount: '-3.69', order_discount: '0.00', net_due: '-3.69' } : {}) }));
+    }
+    if (tag === 'imported-history:line-count') rows = [{ total: '1' }];
+    if (tag === 'imported-history:settlement-count') rows = [{ total: kind === 'sales' ? '1' : '0' }];
+    if (tag === 'imported-history:line-page') {
+      assert.match(sql, /coalesce\(le.quantity,l.quantity\)/); assert.match(sql, /lr.to_version<=\$5::integer/);
+      assert.match(sql, /lr\.(sales_id|transfer_id)=l.header_id/);
+      if (kind === 'sales') assert.match(sql, /CASE WHEN le.line_id IS NULL THEN l.allocated_discount ELSE le.allocated_discount END/);
+      rows = [{ id: id(20), line_no: 1, sku_id: id(21), quantity: '-3', product_code_snapshot: null, product_name_snapshot: null,
+        color_name_snapshot: null, fit_name_snapshot: null, size_name_snapshot: null, barcode_snapshot: null, effective_valid: true,
+        ...(kind === 'sales' ? { reference_price: null, deal_price: '1.23', line_amount: '-3.69', allocated_discount: null,
+          is_gift: null, pricing_method_source: null, discount_tenths: null, ordinary_zero_confirmed: null } : {}) }];
+    }
+    if (tag === 'imported-history:settlement-page') {
+      assert.match(sql, /coalesce\(se.amount,s.amount\)/); assert.match(sql, /sr.to_version<=\$5::integer/);
+      rows = [{ id: id(22), line_no: 1, payment_account_id: id(23), direction: 'REFUND', amount: '3.69',
+        account_name_snapshot: null, method_name_snapshot: null, payment_method_id_snapshot: null, effective_valid: true }];
+    }
+    return tag === failStage ? rows.map(row => ({ ...row, effective_valid: false })) : rows;
+  } });
+}
+function effectiveRuntime(p: ReturnType<typeof protocol>): NativeRuntime26Capability {
+  // Scripted protocol capability only; no real runtime/permission grant is claimed.
+  return { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(client, purpose) { assert.equal(client, p.client); assert.equal(purpose, 'HISTORY_READ'); } };
+}
+test('history effective projection26: sales list/detail expose the current version, exact amounts and nullable discount without replacing original metadata', async () => {
+  const p = effectiveProtocol('sales'), reader = new PostgresImportedHistoryQueryReader(p.pool, { runtime26: effectiveRuntime(p) });
+  const list = await reader.readList(scoped()), detail = await reader.readDetail(scoped(intent('sales', true)));
+  assert.equal(list.documents.items[0]!.version, 3); assert.deepEqual(detail.document, list.documents.items[0]);
+  assert.equal(detail.document!.sourceStatus, 'DRAFT'); assert.equal(detail.document!.businessDate, null); assert.equal(detail.document!.updatedInstant, null);
+  assert.deepEqual(detail.document!.createdBy, header('sales').createdBy);
+  if (detail.document!.kind === 'sales') { assert.equal(detail.document!.grossAmount, '-3.69'); assert.equal(detail.document!.netDue, '-3.69'); }
+  assert.equal(detail.lines.total, '1'); assert.equal(detail.lines.items[0]!.quantity, '-3'); assert.equal(detail.lines.items[0]!.skuId, id(21));
+  const line = detail.lines.items[0]!; assert.ok('dealPrice' in line); assert.equal(line.dealPrice, '1.23'); assert.equal(line.allocatedDiscount, null); assert.equal(line.referencePrice, null);
+  assert.equal(detail.settlements.items[0]!.amount, '3.69'); assert.equal(detail.settlements.items[0]!.paymentMethodIdSnapshot, null);
+  for (const call of p.calls.filter(call => call.tag === 'imported-history:line-page' || call.tag === 'imported-history:settlement-page')) assert.equal(call.values[4], 3);
+  assert.equal(p.connects(), 2); assert.deepEqual(p.releases, [undefined, undefined]);
+  assert.ok(!p.calls.some(call => /INSERT INTO|UPDATE naijue|DELETE FROM|FOR UPDATE/.test(call.sql)));
+});
+test('history effective projection26: transfer uses its actual current line quantity and retains source dates/warehouses with no sales projection query', async () => {
+  const p = effectiveProtocol('transfers'), detail = await new PostgresImportedHistoryQueryReader(p.pool, { runtime26: effectiveRuntime(p) }).readDetail(scoped(intent('transfers', true)));
+  assert.equal(detail.document!.version, 3); assert.equal(detail.document!.sourceStatus, 'DRAFT'); assert.equal(detail.lines.items[0]!.quantity, '-3');
+  assert.equal(detail.document!.businessDate, null); assert.equal(detail.document!.kind, 'transfers');
+  if (detail.document!.kind === 'transfers') { assert.equal(detail.document!.fromWarehouseId, id(5)); assert.equal(detail.document!.toWarehouseId, id(6)); }
+  assert.equal(detail.settlements.total, '0'); assert.ok(!p.calls.some(call => call.tag.startsWith('imported-history:settlement') || call.sql.includes('history_sales_effective')));
+  assert.equal(p.calls.at(-1)!.tag, 'COMMIT'); assert.deepEqual(p.releases, [undefined]);
+});
+test('history effective projection26: contradictory document/revision or ahead-of-head line and settlement bindings reject the whole read', async () => {
+  for (const kind of ['sales', 'transfers'] as const) for (const stage of ['imported-history:list-page', 'imported-history:detail', 'imported-history:line-page', ...(kind === 'sales' ? ['imported-history:settlement-page'] : [])]) {
+    const p = effectiveProtocol(kind, stage), reader = new PostgresImportedHistoryQueryReader(p.pool, { runtime26: effectiveRuntime(p) });
+    await assert.rejects(stage === 'imported-history:list-page' ? reader.readList(scoped(intent(kind))) : reader.readDetail(scoped(intent(kind, true))), { code: 'INVALID_DATABASE_VALUE' });
+    assert.equal(p.calls.at(-1)!.tag, 'ROLLBACK'); assert.deepEqual(p.releases, [undefined]);
+  }
+});
+test('history effective projection26: untouched exact26 falls through to original facts and exact19 never references the new projection tables', async () => {
+  const p = protocol({ final: true, schema: Array.from({ length: 26 }, (_, i) => i + 1) });
+  const detail = await new PostgresImportedHistoryQueryReader(p.pool, { runtime26: effectiveRuntime(p) }).readDetail(scoped(intent('sales', true)));
+  assert.deepEqual(detail.document, header('sales')); assert.equal(detail.lines.total, '0');
+  const old = protocol({ final: true }); await new PostgresImportedHistoryQueryReader(old.pool).readList(scoped());
+  assert.ok(!old.calls.filter(call => call.tag.startsWith('imported-history:')).some(call => /history_(sales|transfer).*_effective|history_revision/.test(call.sql)));
+});
 test('HISTORY26: each sales and transfer list/detail proves the original client before SQL and preserves publication filtering', async () => {
   for (const kind of ['sales', 'transfers'] as const) {
     const p = protocol({ schema: Array.from({ length: 26 }, (_, i) => i + 1), final: true, kind }); let calls = 0, previousQueries = 0;
