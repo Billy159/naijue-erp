@@ -30,9 +30,9 @@ function DetailFacts({ data, scope, close, history, product }: { readonly scope:
   const { header, lines, settlements } = data.document;
   const settlementNames = new Map(data.settlementNames.map(names => [names.settlementId, names]));
   const field = (label: string, value: ReactNode, className = '') => <div className={`tc-gold-field ${className}`} key={label}><span className="sale-field-label">{label}</span><span className="sale-read-value" title={typeof value === 'string' ? value : undefined}>{value}</span></div>;
-  const sections = header.businessType === 'EXCHANGE'
+  const sections = header.businessType !== 'SALE'
     ? [{ title: '退回商品', incoming: true, rows: lines.filter(line => BigInt(line.quantity) < 0n) }, { title: '换出商品', incoming: false, rows: lines.filter(line => BigInt(line.quantity) >= 0n) }]
-    : [{ title: header.businessType === 'RETURN' ? '退回商品' : '商品明细', incoming: header.businessType === 'RETURN', rows: lines }];
+    : [{ title: '商品明细', incoming: false, rows: lines }];
   return <SalesProductPresentation scope={scope} {...(product ? { capability: product } : {})}>{openProduct => <section className="sales-detail-page sales-detail-facts tc-workbench tc-editor sale-workbench sale-editor" aria-label="销货单详情">
     <SalesDetailHeader output={<DocumentOutputActions sourceKey={`${header.id}:${header.version}`} getDocument={() => salesDocumentOutput(data)} />} close={close} status={header.status} salesId={header.id} {...(history ? { history } : {})} />
     <div className="tc-doc-header sale-doc-header"><div className="tc-gold-doc-fields sale-doc-fields">
@@ -43,7 +43,7 @@ function DetailFacts({ data, scope, close, history, product }: { readonly scope:
       {field('客户', data.referenceNames.customerName)}
       {field('出库仓', data.referenceNames.warehouseName)}
       <div className="tc-gold-field sale-number-field"><span className="sale-field-label">单号</span><strong className="sale-number-value">{header.number}</strong></div>
-      {field('整单优惠 / 抹零', `¥${salesMoney(header.orderDiscount)}`, 'sale-discount-field')}
+      {field('整单优惠 / 抹零', header.businessType === 'SALE' ? `¥${salesMoney(header.orderDiscount)}` : '', 'sale-discount-field')}
       <div className="tc-gold-field sale-due-field"><span className="sale-field-label">应结金额</span><strong className="sale-due-value">{header.netDue.startsWith('-') ? '-¥' + salesMoney(header.netDue.slice(1)) : '¥' + salesMoney(header.netDue)}</strong></div>
       <div className="tc-gold-field sale-payment-field"><span className="sale-field-label">收款</span><div className="sale-payment-rows">{settlements.map(line => {
         const names = settlementNames.get(line.id)!;
@@ -51,7 +51,7 @@ function DetailFacts({ data, scope, close, history, product }: { readonly scope:
       })}{!settlements.length && <span className="sale-read-value">本单没有收退明细</span>}</div><span className={`sale-payment-balance ${salesPaymentKind(header.netDue, settlements.reduce((sum, row) => sum + (row.direction === 'REFUND' ? -1n : 1n) * BigInt(row.amount), 0n).toString(), lines.length)}`}>{salesPaymentBalance(header.netDue, settlements.reduce((sum, row) => sum + (row.direction === 'REFUND' ? -1n : 1n) * BigInt(row.amount), 0n).toString(), lines.length)}</span></div>
     </div></div>
     <div className="sale-note-row"><span className="sale-field-label">备注</span><span className="sale-note-read">{header.note ?? '未填写'}</span></div>
-    {sections.map(section => <section className="sale-entry-section" key={section.title}><div className="tc-section-head sale-section-head"><strong>{section.title}</strong></div>
+    {sections.map(section => <section className="sale-entry-section" key={section.title} data-business-section={section.incoming ? 'in' : 'out'}><div className="tc-section-head sale-section-head"><strong>{section.title}</strong></div>
       <div className="sale-lines sales-table-scroll"><table className="sales-table sale-lines-table sales-lines"><caption className="sr-only">销货明细 · {section.title}</caption><SalesDocumentColumns /><SalesDocumentColumnHead incoming={section.incoming} /><tbody>
       {section.rows.map(line => <tr key={line.id}><td><div className="sale-product-cell"><strong title={line.snapshot.productCode}>{line.snapshot.productCode}</strong><span className="sale-product-name" title={line.snapshot.productName}>{line.snapshot.productName}</span>{line.isGift && <span className="sale-gift">赠品</span>}</div></td><td title={line.snapshot.colorName}>{line.snapshot.colorName}</td><td title={line.snapshot.fitName}>{line.snapshot.fitName}</td><td title={line.snapshot.sizeName}>{line.snapshot.sizeName}</td><td className={`sales-numeric ${line.quantity.startsWith('-') ? 'negative' : ''}`}>{header.businessType !== 'SALE' ? line.quantity.startsWith('-') ? '退回 ' : '换出 ' : ''}{line.quantity}</td><td className="sales-numeric sale-muted">{line.referencePrice === null ? '未记录' : salesMoney(line.referencePrice)}</td><td className="sales-numeric">{line.discountTenths === null ? '未记录' : `${Math.trunc(line.discountTenths / 10)}.${line.discountTenths % 10}折`}</td><td className="sales-numeric">{salesMoney(line.dealPrice)}</td><td className="sales-numeric">{salesMoney(line.lineAmount)}</td><td className="ui-action-cell"><UIButton type="button" className="iw-link" disabled={!openProduct} title={openProduct ? undefined : '商品只读页尚未接入'} onClick={() => openProduct?.(line.skuId, header.hallId)}>查看</UIButton></td></tr>)}
       {!section.rows.length && <tr><td colSpan={10}>本单没有实际明细行</td></tr>}

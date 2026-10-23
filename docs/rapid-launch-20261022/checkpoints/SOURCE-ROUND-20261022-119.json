@@ -1,0 +1,95 @@
+{
+  "atUtc": "2026-10-23T02:52:40.151863+00:00",
+  "parent": "d9d73860b6dfa0789d0c3702fc93f82eb80ea037",
+  "groups": [
+    {
+      "slice": "F1 chunk64 mixed return/exchange and shared read-only page states",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-64/DELIVERY.json",
+      "receiptSha256": "829a8df6a8091e09f3240bc91b43390d108d599a7d546564273f5dbd5ce20d0b",
+      "receiptSnapshot": {
+        "chunk": 64,
+        "taskId": "F1-FULL-SALES-MIXED-READ-EDIT-CONTINUATION",
+        "atUtc": "2026-10-23T02:51:23.997706+00:00",
+        "status": "READY_EXACT2_MIXED_RENDERREAD_AND_READONLY_SOURCE_ONLY",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+            "beforeSha256": "4415bf0565e29a3db4104927e2abee536a6dee5974238dd074d62576169ea75f",
+            "sha256": "b764515040f6a06cf4360725c1433ad9ef5a863069635fc034c36ba24c1fe9e8"
+          },
+          {
+            "path": "apps/web/src/sales/detail-content.tsx",
+            "beforeSha256": "c7ca1f06e114c1c8cdfe35539892160921db9620dd088265636e3b43f39b9f6e",
+            "sha256": "85d126c1806e5e83297d4e402071c09c2391c2b4018a8f71934c1cd887d21f91"
+          }
+        ],
+        "checks": {
+          "mixed-1": "EXIT0_NATIVE_PROPOSAL_AND_READONLY_SYNTHETIC_USER_EVENT",
+          "types-2": "EXIT0_STRICT_SCOPED_NOEMIT",
+          "source": "PASS_EXACT2_RENDERREAD_ONLY"
+        },
+        "wholePagePass": false,
+        "notTested": [
+          "Next fixed browser actual geometry/long table and full native state variants",
+          "Native business save/audit/PG/permissions/recovery/production",
+          "Formal <=2000ms representative cold+2repeat performance"
+        ],
+        "blockers": [],
+        "next": "C exact2 freeze/adopt with same complete page batch; QF affected mixed/readonly UI. Next F1 original T02 matrix and deferred S01 page closure after fixed pins.",
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-64/INPUT.json",
+            "sha256": "342d07e8c96f86a3e9ed3de2a46fc4238266cb3d957cbaf3830c259e3e57601f"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-64/RESULT.json",
+            "sha256": "038bcc66224f81db407dfb69468cd426f4e9cf50da1493ecdada64d85f8aed4d"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-64/SOURCE-CHECK.json",
+            "sha256": "2d3b205bb0d9f332ef8890649d2b1bc141c256db8c061111256d2283c17e02ae"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-64/SOURCE.diff",
+            "sha256": "c9673724e38b629cdb5c7afe1c66a9168bd728e3094774bf55912d69c408495c"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-64/PROBE-NOTES.json",
+            "sha256": "b32ae5df92c4e7db5320d40031d6dc5768689fc42cdb08d0b7620e48183adcd4"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-64/REPORT.md",
+            "sha256": "87c61c99c8a8d61dcbd18ba4fb5255e682fe12ef323fbefed0593160d2e70b1c"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-64/mixed-1.log",
+            "sha256": "75e152709eff1b8324f59af20b3cca9d35bba2bd3f95407ae69be13f27f405c3"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-64/types-1.log",
+            "sha256": "4013b59add40e5a85ae003a597a86fe596fee81c1540aa6dd437d3ad370ce871"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-64/types-2.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+          "owner": "F1",
+          "bytes": 41392,
+          "sha256": "b764515040f6a06cf4360725c1433ad9ef5a863069635fc034c36ba24c1fe9e8"
+        },
+        {
+          "path": "apps/web/src/sales/detail-content.tsx",
+          "owner": "F1",
+          "bytes": 9331,
+          "sha256": "85d126c1806e5e83297d4e402071c09c2391c2b4018a8f71934c1cd887d21f91"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Freeze exact2 original mixed/readonly complete page continuation after C117; Demo renderRead adaptation, existing signed quantities/SKU/DTO/money/session preserved. New mixed DOM/type evidence adopted; QF only new scope under shared next candidate. Save0, PostgreSQL/permissions/performance/browser not accepted by source checks."
+}
