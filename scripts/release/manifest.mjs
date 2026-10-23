@@ -290,10 +290,7 @@ async function verifyGraph(kind, component, context) {
     if (reviewedRuntimeMediaMember(relative, kind)) {
       requireRelease(details.entryPoint !== undefined
         && graphPath(sourceRoot, component.workingDirectory, details.entryPoint) === productEditorMediaRuntimeSource
-        && sources.has(productEditorMediaRuntimeSource)
-        && Object.entries(details.inputs).some(([input, contribution]) => Number.isSafeInteger(contribution?.bytesInOutput)
-          && contribution.bytesInOutput > 0
-          && graphPath(sourceRoot, component.workingDirectory, input) === productEditorMediaRuntimeSource),
+        && sources.has(productEditorMediaRuntimeSource),
       'RUNTIME_MEDIA_CHUNK_SOURCE_REQUIRED');
     }
     if (details.entryPoint !== undefined) {
@@ -323,6 +320,29 @@ async function verifyGraph(kind, component, context) {
       const css = path.relative(buildRoot, path.resolve(workingAbsolute, details.cssBundle)).split(path.sep).join('/');
       requireRelease(outputs.has(css), 'CSS_OUTPUT_OUTSIDE_RELEASE');
     }
+  }
+  // esbuild may put a lazy entry's implementation into a shared static chunk.
+  // Require the exact frozen source in this entry's static output closure;
+  // an unrelated output or a future dynamic import cannot satisfy the guard.
+  for (const [name] of outputs) {
+    if (!reviewedRuntimeMediaMember(name, kind)) continue;
+    const pending = [name], visited = new Set(); let sourcePresent = false;
+    while (pending.length && !sourcePresent) {
+      const current = pending.pop();
+      if (visited.has(current)) continue;
+      visited.add(current);
+      const details = outputs.get(current);
+      sourcePresent = Object.entries(details.inputs).some(([input, contribution]) => Number.isSafeInteger(contribution?.bytesInOutput)
+        && contribution.bytesInOutput > 0
+        && graphPath(sourceRoot, component.workingDirectory, input) === productEditorMediaRuntimeSource);
+      for (const item of details.imports) {
+        if (item.external || item.kind !== 'import-statement') continue;
+        const target = [path.resolve(workingAbsolute, item.path), path.resolve(buildRoot, path.dirname(current), item.path)]
+          .map(value => path.relative(buildRoot, value).split(path.sep).join('/')).find(candidate => outputs.has(candidate));
+        if (target !== undefined) pending.push(target);
+      }
+    }
+    requireRelease(sourcePresent, 'RUNTIME_MEDIA_CHUNK_SOURCE_REQUIRED');
   }
   for (const [name, record] of files) {
     if (record.role !== kind || outputs.has(name)) continue;

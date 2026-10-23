@@ -85,6 +85,18 @@ async function runtimeMediaChunkFixture(label, mutation) {
   entry.imports.push({ path: output, kind: 'dynamic-import' });
   if (mutation === 'wrong-entry') graph.outputs[output].entryPoint = component.entrySource;
   if (mutation === 'zero-source') graph.outputs[output].inputs[sourceName].bytesInOutput = 0;
+  if (mutation?.startsWith('facade-')) {
+    const sharedMember = 'web/chunks/chunk-ABCDEF23.js', sharedText = 'export const ProductEditorMedia=()=>null;\n';
+    const sharedOutput = path.relative(f.sourceRoot, path.join(f.buildRoot, sharedMember)).split(path.sep).join('/');
+    graph.outputs[sharedOutput] = { bytes: Buffer.byteLength(sharedText), imports: [],
+      inputs: { [sourceName]: { bytesInOutput: Buffer.byteLength(sharedText) } } };
+    graph.outputs[output].inputs = {};
+    if (mutation === 'facade-unrelated') entry.imports.push({ path: sharedOutput, kind: 'import-statement' });
+    else graph.outputs[output].imports.push({ path: sharedOutput,
+      kind: mutation === 'facade-static' ? 'import-statement' : 'dynamic-import' });
+    f.buildData[sharedMember] = sharedText;
+    f.build.files.push(record(sharedMember, sharedText, { role: 'frontend', member: sharedMember }));
+  }
   component.inputs.push(sourceRecord); f.buildData[member] = emitted;
   f.build.files.push(record(member, emitted, { role: 'frontend', member }));
   f.buildData[component.metafile] = JSON.stringify(graph);
@@ -110,6 +122,16 @@ test('runtime media chunk v1 keeps media data, arbitrary runtime names, roles an
     assert.throws(() => allowedMember(member, 'frontend'), error => error.code === 'NON_RELEASE_MEMBER');
   }
   assert.throws(() => allowedMember('web/chunks/product-editor-media-ABCDEFG2.js', 'backend'), error => error.code === 'NON_RELEASE_MEMBER');
+});
+test('runtime media facade v2 accepts a frozen entry whose implementation is in its static shared chunk', async () => {
+  const f = await runtimeMediaChunkFixture('facade-static', 'facade-static');
+  assert.equal((await validateRelease(f.options)).manifest.buildId, 'tool-check-1');
+});
+test('runtime media facade v2 rejects implementation present only in dynamic or unrelated outputs', async () => {
+  for (const mutation of ['facade-dynamic', 'facade-unrelated']) {
+    const f = await runtimeMediaChunkFixture(mutation, mutation);
+    await assert.rejects(validateRelease(f.options), error => error.code === 'RUNTIME_MEDIA_CHUNK_SOURCE_REQUIRED');
+  }
 });
 
 test('tiny tool fixture packs, extracts once, verifies members and refuses overwrite', async () => {
