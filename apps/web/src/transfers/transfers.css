@@ -4,7 +4,7 @@
 .transfer-route{display:flex;flex:1;min-width:0;min-height:0;font:13px var(--ca-font-sans);color:var(--ca-ink);--primary-6:var(--ca-primary-rgb);--arcoblue-6:var(--ca-primary-rgb);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2);--color-border-2:var(--ca-control-border)}
 .transfer-route .tc-workbench{box-sizing:border-box;min-width:0;width:100%;background:var(--ca-surface)}
 .transfer-route .tc-head{display:flex;align-items:center;gap:8px;min-height:40px;flex:none;margin-bottom:8px;background:var(--ca-surface)}
-.transfer-route .tc-head h1{margin:0;font-size:20px;font-weight:600;line-height:28px;outline:none}.transfer-route .tc-head>.iw-button{margin-left:auto}
+.transfer-route .tc-head h1{margin:0;font-size:20px;font-weight:600;line-height:28px;outline:none}.transfer-route .tc-head>.btn{margin-left:auto}
 .transfer-route .tc-head .actions{display:flex;align-items:center;margin-left:auto;gap:0;border:1px solid var(--ca-control-border);border-radius:4px;overflow:hidden;flex-wrap:wrap}
 .transfer-route .tc-head .actions>.iw-text-button{height:28px;min-height:28px;padding:2px 11px;border:0;border-radius:0;font-size:12px}.transfer-route .tc-head .actions>.iw-text-button+.iw-text-button{border-left:1px solid var(--ca-line)}
 .transfer-list{display:flex;flex-direction:column;max-width:100%;overflow-x:auto;overflow-y:hidden;height:calc(100dvh - var(--ui-topbar,48px) - 32px);min-height:0}.transfer-list[hidden]{display:none!important}
@@ -13,7 +13,7 @@
 /* Only field labels stack their caption/control. The source ShadowRoot kept
  * nested Arco checkbox labels isolated; this ordinary host must not restyle them. */
 .transfer-route .tc-filter-row>label{display:flex;flex-direction:column;gap:4px;align-items:stretch;min-width:0;font-size:12px;color:var(--ca-ink-2)}
-.transfer-route .tc-filter-secondary>label:first-child{grid-column:span 2}.transfer-route .tc-filter-actions{grid-column:-2/-1;display:flex;align-items:center;justify-self:end;gap:8px;white-space:nowrap}.transfer-route .tc-filter-actions>.iw-button{min-width:70px}
+.transfer-route .tc-filter-secondary>label:first-child{grid-column:span 2}.transfer-route .tc-filter-actions{grid-column:-2/-1;display:flex;align-items:center;justify-self:end;gap:8px;white-space:nowrap}.transfer-route .tc-filter-actions>.btn:not(.tc-filter-toggle){min-width:70px}
 .transfer-route .tc-filter-toggle{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:0;height:32px;padding:0 5px;font-size:12px;font-weight:400}.transfer-route .tc-filter-toggle[aria-expanded=true]{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
 .transfer-route .tc-filter-toggle .iw-filter-icon{font-size:15px;line-height:1}
 .transfer-route .tc-number-field>.iw-control{padding:4px 10px}.transfer-route .ui-query-note{margin:0 0 8px;font-size:12px;line-height:20px;color:var(--ca-ink-3);flex:none}
@@ -37,3 +37,21 @@
 /* Narrow windows scroll the bounded full-height list, never the document/body
  * or a short filter strip that would clip the locally owned candidate popup. */
 .transfer-list>.tc-filters{overflow:visible}
+
+.transfer-list .tc-number-field>input.iw-control{box-sizing:border-box;width:100%;min-width:0;height:32px;min-height:32px;margin:0;padding:4px 10px;border:1px solid transparent;border-radius:4px;background:var(--ca-surface-muted);color:var(--ca-ink);font:13px var(--ca-font-sans)}
+.transfer-list .tc-number-field>input.iw-control:focus{outline:none;border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted)}
+/* Same frozen query-note state shared with the SALE list. */
+.transfer-list .ui-query-note{flex:none;font-size:12px;color:var(--ca-ink-2);line-height:1.6;margin:0;padding:6px 0 8px;min-height:28px}
+.transfer-list .ui-query-note[data-pending=true]{font-weight:600;color:var(--ca-primary)}
+
+/* Frozen styles.css44-52, transfer-current.css tc-link, and final golden list actions. */
+.transfer-list .btn{font:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control);height:var(--ui-control);padding:0 11px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font);font-weight:500;white-space:nowrap}
+.transfer-list .btn:hover:not(:disabled){background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
+.transfer-list .btn.primary{background:var(--ca-primary-fill);color:var(--ca-on-primary);border-color:var(--ca-primary-fill)}
+.transfer-list .btn.primary:hover:not(:disabled){background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}
+.transfer-list .btn.primary:active{background:var(--ca-primary-active);border-color:var(--ca-primary-active)}
+.transfer-list .btn:disabled{cursor:not-allowed;background:var(--ca-control-disabled-bg);color:var(--ca-control-disabled-text);border-color:var(--ca-control-disabled-border)}
+.transfer-list .tc-filter-actions>.tc-filter-toggle.btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:0;height:32px;padding:0 5px;border:0;background:transparent;color:var(--ca-ink-2);font-size:12px;font-weight:400}
+.transfer-list .tc-filter-actions>.tc-filter-toggle.btn:hover,.transfer-list .tc-filter-actions>.tc-filter-toggle.btn[aria-expanded=true]{border:0;background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+.transfer-list .transfer-list-table .btn.tc-link{color:var(--ca-primary-ink);border:0;background:transparent;padding:0;min-height:24px}
+.transfer-list .transfer-list-table .btn.tc-link:hover,.transfer-list .transfer-list-table .btn.tc-link:focus-visible{text-decoration:underline;color:var(--ca-primary-hover);background:transparent}

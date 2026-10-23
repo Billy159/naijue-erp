@@ -6,7 +6,7 @@
 .sales-workbench{display:flex;flex-direction:column;box-sizing:border-box;width:100%;max-width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;height:calc(100dvh - var(--ui-topbar) - 32px);min-height:0;font:13px var(--ca-font-sans);color:var(--ca-ink)}
 .sales-workbench>.tc-head{display:flex;align-items:center;gap:12px;min-height:40px;margin:0 0 8px;flex:none;background:#fff}
 .sales-workbench>.tc-head h1{font-size:20px;line-height:28px;margin:0;font-weight:600}
-.sales-workbench>.tc-head>.iw-button{margin-left:auto}
+.sales-workbench>.tc-head>.btn{margin-left:auto}
 .sales-workbench .tc-filters{display:flex;flex-direction:column;gap:8px;align-items:stretch;flex:none;margin:0 0 14px;padding:0;border:0;background:transparent;--sales-filter-columns:minmax(120px,.8fr) minmax(120px,.8fr) 155px minmax(180px,1fr) minmax(168px,1.2fr) minmax(168px,1.2fr) max-content;--sales-filter-min-width:1204px}
 .sales-workbench .tc-filter-row{display:grid;grid-template-columns:var(--sales-filter-columns);align-items:end;gap:8px;min-width:var(--sales-filter-min-width)}
 .sales-workbench .iw-field{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:4px;min-width:0;width:auto;max-width:none;margin:0;color:var(--ca-ink-2);font-size:12px}
@@ -16,7 +16,7 @@
 .sales-workbench .iw-field input::placeholder{color:var(--ca-ink-3)}
 .sales-workbench .tc-filter-secondary>.iw-field{grid-column:span 2}
 .sales-workbench .tc-filter-actions{display:flex;grid-column:-2/-1;justify-self:end;align-items:center;gap:8px;white-space:nowrap}
-.sales-workbench .tc-filter-actions>.iw-button{min-width:70px}
+.sales-workbench .tc-filter-actions>.btn:not(.tc-filter-toggle){min-width:70px}
 .sales-workbench .tc-filter-toggle{gap:5px;min-width:0;height:32px;padding:0 5px;font-size:12px;font-weight:400}
 .sales-workbench .tc-filter-toggle:hover,.sales-workbench .tc-filter-toggle[aria-expanded=true]{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
 .sales-workbench .ui-query-note{flex:none;font-size:12px;color:var(--ca-ink-2);line-height:1.6;margin:0;padding:6px 0 8px;min-height:28px}
@@ -66,16 +66,19 @@
 .sales-workbench .tc-filters{overflow:visible}
 .sales-workbench .tc-filter-row>.iw-field,.sales-workbench .tc-filter-actions{flex-shrink:0}
 
-/* Direct list DOM now consumes frozen sales-current.js list() and the existing
- * final table dimensions above; no generic Arco Table wrapper alters density.
- * styles.css44–52 and golden-consistency.css100–102, scoped to actual Buttons. */
-.sales-workbench .tc-filter-actions>.iw-button.erp-button{background:var(--ca-button-secondary-bg);border-color:var(--ca-button-secondary-border);color:var(--ca-button-secondary-text)}
-.sales-workbench .tc-filter-actions>.iw-button.erp-button:hover:not(:disabled){background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
-.sales-workbench .tc-filter-actions>.iw-button.iw-primary.erp-button{background:var(--ca-primary-fill);border-color:var(--ca-primary-fill);color:var(--ca-on-primary)}
-.sales-workbench .tc-filter-actions>.iw-button.iw-primary.erp-button:hover:not(:disabled){background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}
-.sales-workbench .tc-filter-actions>.tc-filter-toggle.erp-button{border:0;background:transparent;color:var(--ca-ink-2)}
-.sales-workbench .tc-filter-actions>.tc-filter-toggle.erp-button:hover,.sales-workbench .tc-filter-actions>.tc-filter-toggle.erp-button[aria-expanded=true]{border:0;background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
-.sales-workbench .tc-filters .erp-input.iw-control:not(:focus){border-color:transparent;background:var(--ca-surface-muted)}
-.sales-workbench .tc-filters .erp-input.iw-control:focus{border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted)}
+/* Native advanced number input: frozen styles/golden-consistency source field,
+ * controlled through the unchanged formal raw filter draft. */
+.sales-workbench .tc-filters input.iw-control{box-sizing:border-box;width:100%;min-width:0;height:32px;min-height:32px;margin:0;padding:4px 10px;border:1px solid transparent;border-radius:4px;background:var(--ca-surface-muted);color:var(--ca-ink);font:13px var(--ca-font-sans)}
+.sales-workbench .tc-filters input.iw-control:focus{outline:none;border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted)}
 
-.sales-workbench .tc-filter-actions>.iw-button.erp-button:disabled{background:var(--ca-control-disabled-bg);color:var(--ca-control-disabled-text);border-color:var(--ca-control-disabled-border)}
+/* Frozen styles.css44-52, transfer-current.css tc-link, and final golden list actions. */
+.sales-workbench .btn{font:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control);height:var(--ui-control);padding:0 11px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font);font-weight:500;white-space:nowrap}
+.sales-workbench .btn:hover:not(:disabled){background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
+.sales-workbench .btn.primary{background:var(--ca-primary-fill);color:var(--ca-on-primary);border-color:var(--ca-primary-fill)}
+.sales-workbench .btn.primary:hover:not(:disabled){background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}
+.sales-workbench .btn.primary:active{background:var(--ca-primary-active);border-color:var(--ca-primary-active)}
+.sales-workbench .btn:disabled{cursor:not-allowed;background:var(--ca-control-disabled-bg);color:var(--ca-control-disabled-text);border-color:var(--ca-control-disabled-border)}
+.sales-workbench .tc-filter-actions>.tc-filter-toggle.btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:0;height:32px;padding:0 5px;border:0;background:transparent;color:var(--ca-ink-2);font-size:12px;font-weight:400}
+.sales-workbench .tc-filter-actions>.tc-filter-toggle.btn:hover,.sales-workbench .tc-filter-actions>.tc-filter-toggle.btn[aria-expanded=true]{border:0;background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+.sales-workbench .sales-list .btn.tc-link{color:var(--ca-primary-ink);border:0;background:transparent;padding:0;min-height:24px}
+.sales-workbench .sales-list .btn.tc-link:hover,.sales-workbench .sales-list .btn.tc-link:focus-visible{text-decoration:underline;color:var(--ca-primary-hover);background:transparent}

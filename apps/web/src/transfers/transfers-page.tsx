@@ -1,11 +1,10 @@
 import type { TransferProposalPresentation } from '../current-form/transfer-proposal-form.tsx';
 import { TransferStatusTag } from './transfer-status-tag.tsx';
-import { StandardReadTable } from '../components/standard-read-table.tsx';
 import { ExactValue } from '../components/exact-value.tsx';
-import { UIButton, UIInput } from '../components/standard-controls.tsx';
+import { UIButton } from '../components/standard-controls.tsx';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useDocumentNavigation } from '../demo-presentation/document-navigation.tsx';
-import type { TransferFilterDraft, TransferListQuery, TransferProductCapability, TransferWarehouseReader, TransferSummaryDto } from './contracts.ts';
+import type { TransferFilterDraft, TransferListQuery, TransferProductCapability, TransferWarehouseReader } from './contracts.ts';
 import { emptyTransferFilter } from './contracts.ts';
 import type { TransferPageController } from './controller.ts';
 import { TransferManualCreateHost } from './commands/manual-create-host.tsx';
@@ -75,38 +74,33 @@ export function TransferPageView(props: TransferPageProps) {
   };
   const pendingSize = snapshot.request?.parameters.pageSize; const changingSize = !!data && pendingSize !== undefined && pendingSize !== size;
   if (!scope.active || snapshot.phase === 'disposed') return <div className="tc-empty" role="status"><strong>当前读取范围已关闭</strong><p>旧身份结果已清除，请重新进入调拨页。</p></div>;
-  return <div className="transfer-route"><section className="tc-workbench tc-list transfer-list" hidden={target !== null}>
-    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>调拨单列表</h1><UIButton type="button" className="iw-button iw-primary" disabled={!props.commands?.preparation && !props.commands?.manualCreate} title={props.commands?.preparation || props.commands?.manualCreate ? undefined : '当前可用商品、仓库、原条码及编号准备尚未接入'} onClick={create}>新增调拨单</UIButton></div>
-    <form key={target ? 'detail' : 'list'} className="tc-filters tc-filters-two-row" aria-label="调拨筛选" onSubmit={event => { event.preventDefault(); try { run(transferParameters(draft, size)); } catch { setInputError(true); } }}>
+  return <div className="transfer-route"><section className="tc-workbench tc-list transfer-list" data-document-list="transfer" hidden={target !== null}>
+    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>调拨单列表</h1><button type="button" className="btn primary" disabled={!props.commands?.preparation && !props.commands?.manualCreate} title={props.commands?.preparation || props.commands?.manualCreate ? undefined : '当前可用商品、仓库、原条码及编号准备尚未接入'} onClick={create}>新增调拨单</button></div>
+    <form id="tc-list-filter" key={target ? 'detail' : 'list'} className="tc-filters tc-filters-two-row" aria-label="调拨筛选" onSubmit={event => { event.preventDefault(); try { run(transferParameters(draft, size)); } catch { setInputError(true); } }}>
       <div className="tc-filter-row tc-filter-primary">
-        <label><span>开始日期</span><TransferDate label="开始日期" value={draft.startDate} onChange={value => setDraft(previous => ({ ...previous, startDate: value }))} /></label>
-        <label><span>结束日期</span><TransferDate label="结束日期" value={draft.endDate} onChange={value => setDraft(previous => ({ ...previous, endDate: value }))} /></label>
-        <label><span>状态</span><TransferStatusSelect value={draft.statuses} onChange={statuses => setDraft(previous => ({ ...previous, statuses }))} /></label>
+        <label className="tc-date-field"><span>开始日期</span><TransferDate label="开始日期" value={draft.startDate} onChange={value => setDraft(previous => ({ ...previous, startDate: value }))} /></label>
+        <label className="tc-date-field"><span>结束日期</span><TransferDate label="结束日期" value={draft.endDate} onChange={value => setDraft(previous => ({ ...previous, endDate: value }))} /></label>
+        <label className="tc-status-field"><span>状态</span><TransferStatusSelect value={draft.statuses} onChange={statuses => setDraft(previous => ({ ...previous, statuses }))} /></label>
         <label><span>调出仓库</span><TransferWarehouseSelect scope={scope} reader={props.references} label="调出仓库" value={draft.from} onChange={from => setDraft(previous => ({ ...previous, from }))} /></label>
         <label><span>调入仓库</span><TransferWarehouseSelect scope={scope} reader={props.references} label="调入仓库" value={draft.to} onChange={to => setDraft(previous => ({ ...previous, to }))} /></label>
-        <div className="tc-filter-actions"><UIButton type="button" className="iw-text-button tc-filter-toggle" aria-expanded={advanced} aria-controls="transfer-extra-filters" onClick={() => setAdvanced(value => !value)}><span className="iw-filter-icon" aria-hidden="true">☷</span><span>{advanced ? '收起筛选' : '高级筛选'}</span>{draft.number.trim() && <span className="iw-filter-count">1</span>}<span aria-hidden="true">{advanced ? '▴' : '▾'}</span></UIButton><UIButton type="submit" className="iw-button iw-primary" disabled={busy}>查询</UIButton><UIButton type="button" className="iw-button" onClick={reset}>重置</UIButton></div>
+        <div className="tc-filter-actions"><button type="button" className="btn tc-filter-toggle" aria-expanded={advanced} aria-controls="transfer-extra-filters" onClick={() => setAdvanced(value => !value)}><span className="iw-filter-icon" aria-hidden="true">☷</span><span>{advanced ? '收起筛选' : '高级筛选'}</span>{draft.number.trim() && <span className="iw-filter-count">1</span>}<span aria-hidden="true">{advanced ? '▴' : '▾'}</span></button><button type="submit" className="btn primary" disabled={busy}>查询</button><button type="button" className="btn" onClick={reset}>重置</button></div>
       </div>
-      {advanced && <div className="tc-filter-row tc-filter-secondary" id="transfer-extra-filters"><label className="tc-number-field"><span>调拨单号</span><UIInput className="iw-control" aria-label="调拨单号" autoComplete="off" placeholder="输入单号模糊搜索" value={draft.number} maxLength={200} onChange={nextValue => setDraft(previous => ({ ...previous, number: nextValue }))} /></label></div>}
+      {advanced && <div className="tc-filter-row tc-filter-secondary" id="transfer-extra-filters"><label className="tc-number-field"><span>调拨单号</span><input className="iw-control" name="q" aria-label="调拨单号" autoComplete="off" placeholder="输入单号模糊搜索" value={draft.number} maxLength={200} onChange={event => { const number = event.currentTarget.value; setDraft(previous => ({ ...previous, number })); }} /></label></div>}
       {inputError && <p className="transfer-notice" role="alert">筛选条件无效，请检查日期、单号及仓库选择数量。</p>}
     </form>
-    <p className="ui-query-note" role="status">{dirty ? '条件已修改，点击“查询”更新结果；当前仍为上次结果。' : '修改条件后点击“查询”；“重置”清空条件并重新查询第 1 页。'}</p>
+    <p className="ui-query-note" role="status" data-pending={dirty}>{dirty ? '条件已修改，点击“查询”更新结果。' : '修改条件后点击“查询”；“重置”恢复全部结果。'}</p>
     {success && commandRevision > listRevision && <p className="transfer-notice" role="status">调拨操作已提交，下方仍是操作前的列表结果。<UIButton type="button" className="iw-link" disabled={busy} onClick={() => run(success.parameters)}>刷新当前列表范围</UIButton></p>}
     {snapshot.phase === 'error' && <p className="transfer-notice" role="alert">调拨查询失败。{data && '以下保留上次成功结果，并非本次新结果。'}{changingSize && ` 本次 ${pendingSize} 张/页读取失败，当前仍为 ${size} 张/页。`}<UIButton type="button" className="iw-link" onClick={() => { if (snapshot.request) run(snapshot.request.parameters); }}>重试</UIButton></p>}
-    {busy && <p className="transfer-notice" role="status">{data ? '正在查询，以下仍为上次已执行范围的结果。' : '正在查询调拨单…'}<UIButton type="button" className="iw-link" onClick={() => query.cancel()}>取消本次读取</UIButton></p>}
+    {busy && data && <p className="transfer-notice" role="status">{data ? '正在查询，以下仍为上次已执行范围的结果。' : '正在查询调拨单…'}<UIButton type="button" className="iw-link" onClick={() => query.cancel()}>取消本次读取</UIButton></p>}
     <div ref={results} className="tc-list-scroll transfer-results" role="region" aria-label="调拨查询结果" aria-busy={busy} tabIndex={0}>
-      {data ? data.items.length ? <StandardReadTable<TransferSummaryDto> label="调拨单列表" tableClassName="transfer-list-table" rows={data.items} columns={[
- { title: '日期', dataIndex: 'businessDate' },
- { title: '调拨单号', render: (_, row) => <UIButton type="button" className="iw-link transfer-number" title={row.number} onClick={() => open(row.id)}>{row.number}</UIButton> },
- { title: '状态', render: (_, row) => <TransferStatusTag status={row.status} /> },
- { title: '调出仓库', render: (_, row) => <span title={`${row.fromHallName} / ${row.fromWarehouseName}`}>{row.fromWarehouseName}</span> },
- { title: '调入仓库', render: (_, row) => <span title={`${row.toHallName} / ${row.toWarehouseName}`}>{row.toWarehouseName}</span> },
- { title: '商品信息', render: () => <span className="transfer-muted" title="原生单据未保存历史分类快照，不根据当前商品分类推断">历史分类未提供</span> },
- { title: '数量', align: 'right', className: 'tc-num', render: (_, row) => <ExactValue label="数量" text={transferCount(row.totalQuantity)} active={target === null} /> },
- { title: '创建者', render: (_, row) => <span title={row.createdByName}>{row.createdByName}</span> },
- { title: '最后更新', render: (_, row) => <span title={row.updatedAt}>{transferUpdatedMinute(row.updatedAt)}</span> },
- { title: '操作', className: 'ui-action-cell', render: (_, row) => <UIButton type="button" className="iw-link transfer-view" onClick={() => open(row.id)}>查看</UIButton> },
-]} />
-        : <div className="tc-empty">没有符合条件的调拨单</div> : <div className="tc-empty"><strong>{busy ? '正在查询调拨单' : snapshot.phase === 'error' ? '查询未完成' : '尚未读取调拨单'}</strong><p>没有已完成的查询结果。</p></div>}
+      {data ? <><table className="transfer-list-table" aria-label="调拨单列表"><thead><tr>{['日期', '调拨单号', '状态', '调出仓库', '调入仓库', '商品信息', '数量', '创建者', '最后更新', '操作'].map(title => <th key={title} scope="col" className={title === '操作' ? 'ui-action-cell' : undefined}>{title}</th>)}</tr></thead><tbody>{data.items.map(row => <tr key={row.id}>
+        <td>{row.businessDate}</td><td><button type="button" className="btn tc-link transfer-number" title={row.number} onClick={() => open(row.id)}>{row.number}</button></td><td><TransferStatusTag status={row.status} /></td>
+        <td title={`${row.fromHallName} / ${row.fromWarehouseName}`}>{row.fromWarehouseName}</td><td title={`${row.toHallName} / ${row.toWarehouseName}`}>{row.toWarehouseName}</td>
+        <td><span className="transfer-muted" title="原生单据未保存历史分类快照，不根据当前商品分类推断">历史分类未提供</span></td><td className="tc-num"><ExactValue label="数量" text={transferCount(row.totalQuantity)} active={target === null} /></td>
+        <td title={row.createdByName}>{row.createdByName}</td><td title={row.updatedAt}>{transferUpdatedMinute(row.updatedAt)}</td><td className="ui-action-cell"><button type="button" className="btn tc-link transfer-view" onClick={() => open(row.id)}>查看</button></td>
+      </tr>)}</tbody></table>{data.items.length === 0 && <div className="tc-empty">没有符合条件的调拨单</div>}</>
+        : busy ? <div className="iw-loading" role="status"><span className="iw-spinner" aria-hidden="true" /><strong>正在查询调拨单</strong><span>请稍候，正在整理查询结果…</span><UIButton type="button" className="iw-link" onClick={() => query.cancel()}>取消本次读取</UIButton></div>
+          : snapshot.phase === 'error' ? <div className="tc-empty">查询未完成</div> : <div className="tc-empty" role="status"><strong>尚未读取调拨单</strong><p>点击“查询”读取当前条件。</p></div>}
     </div>
     <TransferPagination scope={scope} active={target === null} page={data?.page ?? 1} pageSize={size} total={data?.exactTotal ?? null} busy={busy} onPage={page => { if (success) run({ ...success.parameters, page }); }} onPageSize={pageSize => { if (success) run({ ...success.parameters, page: 1, pageSize }); else { setInitialSize(pageSize); run(transferParameters(draft, pageSize)); } }} />
   </section>
