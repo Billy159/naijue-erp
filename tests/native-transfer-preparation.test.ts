@@ -107,6 +107,17 @@ test("SYNTHETIC existing transfer preserves original id/number/snapshot, explici
   assert.ok(!h.trace.includes("snapshots")); assert.ok(!h.trace.some(v => v.startsWith("WRITE:"))); assert.deepEqual(h.allocated, ["operation"]);
   assert.throws(() => h.captured()!.getTransfer(h.initial.header.id), { code: "TRANSACTION_CLOSED" });
 });
+test("SYNTHETIC existing transfer forwards current identity, rejects revocation and closes forwarded access", async () => {
+  const h = await existingSetup(), before = h.store.snapshot();
+  const prepared = await h.existing.prepareExisting(actor, h.input());
+  assert.equal(prepared.draft.header.id, h.initial.header.id);
+  assert.deepEqual(h.store.snapshot(), before);
+  await assert.rejects(h.captured()!.getCurrentTransferIdentity!(actor.accountId), code("TRANSACTION_CLOSED"));
+  h.store.seedIdentity({ ...h.store.snapshot().identities.get(actor.accountId)!, loginEnabled: false });
+  const revoked = h.store.snapshot();
+  await assert.rejects(h.existing.prepareExisting(actor, h.input()), code("FORBIDDEN"));
+  assert.deepEqual(h.store.snapshot(), revoked);
+});
 test("SYNTHETIC existing transfer new/replaced SKU gets distinct server ids and unchanged SAVE retains old snapshot", async () => {
   const h = await existingSetup(), before = h.store.snapshot(), input = h.input();
   const p = await h.existing.prepareExisting(actor, { ...input, lines: [{ ...input.lines[0]!, skuId: ids.sku2 }, { ...input.lines[0]!, existingLineId: null, quantity: "1" }] });

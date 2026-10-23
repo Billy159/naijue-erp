@@ -131,6 +131,10 @@ function existingTransferReadScope(original: TransferTransaction) {
   const tx: TransferTransaction = Object.freeze({
     getTransfer: (id: Parameters<TransferTransaction["getTransfer"]>[0]) => { check(); return original.getTransfer(id); },
     getReceipt: (...args: Parameters<TransferTransaction["getReceipt"]>) => { check(); return original.getReceipt(...args); },
+    getCurrentTransferIdentity: async (accountId: Parameters<NonNullable<TransferTransaction["getCurrentTransferIdentity"]>>[0]) => {
+      check(); requireDomain(original.getCurrentTransferIdentity, "FORBIDDEN", "Original transaction identity is required");
+      const identity = await original.getCurrentTransferIdentity(accountId); check(); return identity;
+    },
     getWarehouseFact: (id: Parameters<TransferTransaction["getWarehouseFact"]>[0]) => { check(); return original.getWarehouseFact(id); },
     getSkuFact: (id: Parameters<TransferTransaction["getSkuFact"]>[0]) => { check(); return original.getSkuFact(id); },
     getCurrentTransferSnapshots: (ids: Parameters<NonNullable<TransferTransaction["getCurrentTransferSnapshots"]>>[0]) => {

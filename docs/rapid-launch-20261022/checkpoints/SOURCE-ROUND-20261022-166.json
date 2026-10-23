@@ -1,0 +1,49 @@
+{
+  "atUtc": "2026-10-23T11:23:17.836358+00:00",
+  "parent": "ffcf9339d3dbc75dd917e8448fa4c2d056328022",
+  "taskId": "D1_SPEC02_EXISTING_TRANSFER_READ_SCOPE_IDENTITY_FORWARD",
+  "files": [
+    {
+      "path": "packages/application/src/native-transfer-preparation.ts",
+      "bytes": 17443,
+      "beforeSha256": "e4743206495af96093411f0d53eebe674a4d909d075669f458692670fcc7d3af",
+      "sha256": "259475d91ee3b3f3fedad12f1e4fc3eedb5dd40ec3fb550e56804deeb8fc300d",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/native-transfer-preparation.test.ts",
+      "bytes": 16558,
+      "beforeSha256": "9c1c762781ff50255e88119b3d4556fdec791b8357deb1be828412278223d63b",
+      "sha256": "ca4629d2bfcd5fb51116ebc9860f885e3c27c7ce9198d5f68056394ae6ae7968",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/SPEC-02-EXISTING-PREPARE-IDENTITY-FORWARD-RESULT-v1.json",
+  "ownerReceiptBytes": 5419,
+  "ownerReceiptSha256": "4994b1ab00793ea97f34976327177c2280f3ff5c4327900145bc5ddbdc39ae4e",
+  "scope": "Only4 lines in original readonly scope forward original getCurrentTransferIdentity(accountId), require original provider and check wrapped scope both before and after await. No copied policy/provider/new interface or business writes. Missing original identity port fails FORBIDDEN.",
+  "preserved": "Every other original source byte, all denied write/number methods, attempted-write poisoning/finish/close checks remain. C163 exact7 and original transfer-service write body unchanged.",
+  "checksAdopted": {
+    "minimumRed": "Normal authorized existing prepare was blocked with FORBIDDEN/Transfer action requires current transaction identity because scope dropped the port.",
+    "affected": {
+      "chunk_id": "3f0654",
+      "wall_time_seconds": 0.030085875,
+      "exit_code": 0,
+      "original_token_count": 127,
+      "output": "✔ SYNTHETIC existing transfer preserves original id/number/snapshot, explicit quantity and has zero business or number writes (6.681583ms)\n✔ SYNTHETIC existing transfer forwards current identity, rejects revocation and closes forwarded access (1.856667ms)\n✔ SYNTHETIC existing transfer enforces positive-only intent, strict proposal and poisons caught number/write attempts (1.077ms)\nℹ tests 3\nℹ suites 0\nℹ pass 3\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 113.044125\n"
+    },
+    "strict": {
+      "rootCount": 2,
+      "chunk_id": "503500",
+      "wall_time_seconds": 0.8079505,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  "independentReview": "QB179 NEED_FIX same SPEC-02-EXISTING-PREPARATION-IDENTITY-FORWARD; successor only this consumer/readonly/active/closed/poison range. Original19/H06/catalog not rerun.",
+  "notTested": [
+    "Actual PostgreSQL lock-wait revocation/replay race, normal QA80 sample, HTTP and formal performance."
+  ],
+  "next": "QB only affected exact2 recheck then C80 original normal service sample on fresh backup."
+}
