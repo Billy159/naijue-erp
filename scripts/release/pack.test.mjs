@@ -6,7 +6,7 @@ import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { packRelease } from './pack.mjs';
-import { sha256, validateRelease } from './manifest.mjs';
+import { sha256, validateRelease, allowedMember } from './manifest.mjs';
 
 const configured = process.env.PACK_TEST_ROOT;
 const testParent = configured ? path.resolve(configured) : await realpath(os.tmpdir());
@@ -67,6 +67,50 @@ async function fixture(name) {
   await save(); return { options, root, sourceRoot, buildRoot, source, build, sourceData, buildData, save };
 }
 const rejects = async (f, code) => assert.rejects(packRelease(f.options), error => error.code === code);
+
+async function runtimeMediaChunkFixture(label, mutation) {
+  const f = await fixture('runtime-media-' + label);
+  const sourceName = 'apps/web/src/products/product-editor-media.tsx';
+  const sourceText = 'export const ProductEditorMedia = () => null;\n';
+  await put(f.sourceRoot, sourceName, sourceText);
+  const sourceRecord = record(sourceName, sourceText); f.source.files.push(sourceRecord);
+  const component = f.build.components.frontend, graph = JSON.parse(f.buildData[component.metafile]);
+  const member = 'web/chunks/product-editor-media-ABCDEFG2.js', emitted = 'export const ProductEditorMedia=()=>null;\n';
+  const output = path.relative(f.sourceRoot, path.join(f.buildRoot, member)).split(path.sep).join('/');
+  graph.inputs[sourceName] = { bytes: Buffer.byteLength(sourceText), imports: [] };
+  graph.inputs[component.entrySource].imports.push({ path: sourceName, kind: 'dynamic-import' });
+  graph.outputs[output] = { bytes: Buffer.byteLength(emitted), entryPoint: sourceName, imports: [],
+    inputs: { [sourceName]: { bytesInOutput: Buffer.byteLength(emitted) } } };
+  const entry = Object.values(graph.outputs).find(value => value.entryPoint === component.entrySource);
+  entry.imports.push({ path: output, kind: 'dynamic-import' });
+  if (mutation === 'wrong-entry') graph.outputs[output].entryPoint = component.entrySource;
+  if (mutation === 'zero-source') graph.outputs[output].inputs[sourceName].bytesInOutput = 0;
+  component.inputs.push(sourceRecord); f.buildData[member] = emitted;
+  f.build.files.push(record(member, emitted, { role: 'frontend', member }));
+  f.buildData[component.metafile] = JSON.stringify(graph);
+  Object.assign(f.build.files.find(row => row.path === component.metafile), record(component.metafile, f.buildData[component.metafile]));
+  await f.save(); return f;
+}
+test('runtime media chunk v1 accepts only actual frozen media UI entry and positive source contribution', async () => {
+  const f = await runtimeMediaChunkFixture('valid');
+  assert.equal((await validateRelease(f.options)).manifest.buildId, 'tool-check-1');
+});
+test('runtime media chunk v1 rejects a matching filename without its exact source provenance', async () => {
+  for (const mutation of ['wrong-entry', 'zero-source']) {
+    const f = await runtimeMediaChunkFixture(mutation, mutation);
+    await assert.rejects(validateRelease(f.options), error => error.code === 'RUNTIME_MEDIA_CHUNK_SOURCE_REQUIRED');
+  }
+});
+test('runtime media chunk v1 keeps media data, arbitrary runtime names, roles and directories rejected', () => {
+  for (const member of ['web/chunks/product-editor-media-ABCDEFG2.json', 'web/chunks/product-editor-media-ABCDEFG2.css',
+    'web/chunks/product-editor-media-ABCDEFG2.png', 'web/chunks/other-media-ABCDEFG2.js',
+    'web/chunks/product-editor-media-ABCDEFG22.js', 'web/chunks/product-editor-media-abcdefgh.js',
+    'web/media/product-editor-media-ABCDEFG2.js', 'web/chunks/private/product-editor-media-ABCDEFG2.js',
+    'web/assets/product-media/image.png']) {
+    assert.throws(() => allowedMember(member, 'frontend'), error => error.code === 'NON_RELEASE_MEMBER');
+  }
+  assert.throws(() => allowedMember('web/chunks/product-editor-media-ABCDEFG2.js', 'backend'), error => error.code === 'NON_RELEASE_MEMBER');
+});
 
 test('tiny tool fixture packs, extracts once, verifies members and refuses overwrite', async () => {
   const f = await fixture('normal');

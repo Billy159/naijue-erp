@@ -1,0 +1,75 @@
+{
+  "atUtc": "2026-10-23T03:31:09.794233+00:00",
+  "parent": "9d07a682727db46ab6885ef879e78ec94eee6b74",
+  "groups": [
+    {
+      "slice": "C actual runtime UI media chunk exact allowlist with frozen source provenance",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/runtime-media-chunk-guard-20261023-01/RESULT.json",
+      "receiptSha256": "b409ec59a5141f8472ee55e3f3f11d7267bc9f186a417d3836490c9fcaa99d93",
+      "receiptSnapshot": {
+        "taskId": "C_RUNTIME_MEDIA_CHUNK_EXACT_SOURCE_GUARD_V1",
+        "atUtc": "2026-10-23T03:31:09.794233+00:00",
+        "parent": "9d07a682727db46ab6885ef879e78ec94eee6b74",
+        "status": "SOURCE_EXACT2_AND_NEW_SCOPED_TESTS_PASS_PENDING_QB",
+        "cause": "C122 actual original production build208 outputs failed NON_RELEASE_MEMBER only for actual product-editor-media runtime chunk; real media data remains excluded",
+        "files": [
+          {
+            "path": "scripts/release/manifest.mjs",
+            "owner": "C",
+            "bytes": 29145,
+            "beforeSha256": "2e31a641bd2ee171bb0a9c99acb1215f878c1b497efae9ba4192c822f5ab61fb",
+            "sha256": "48febfabb4a55086b171a6fbce01b678ed08c99eb8b1f0e8ecd3017dc52bdd09"
+          },
+          {
+            "path": "scripts/release/pack.test.mjs",
+            "owner": "C",
+            "bytes": 19271,
+            "beforeSha256": "4a37c8fea8783d1f2956084e090b574bd5f4a5f31a5f4c62ee331ff9bb50149d",
+            "sha256": "6701e81d2c9893ad34fd4c5168d79c29286b2dce535d705359406198b8778d1c"
+          }
+        ],
+        "change": "Allow only frontend web/chunks/product-editor-media-[A-Z0-9]{8}.js last segment and require exact frozen product-editor-media.tsx entryPoint and positive bytesInOutput; retain all other member/source/hash/graph/secret guards",
+        "checks": {
+          "red": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/runtime-media-chunk-guard-20261023-01/red.log",
+            "sha256": "6968836e56d19565d395c2414fb2f38b545b83e881462a9399bef0dd8962c2f9",
+            "exitCode": 1
+          },
+          "green": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/runtime-media-chunk-guard-20261023-01/green.log",
+            "sha256": "c588517b667fd8cf7b2fb6142734fe0554cef8646278c19a0d9ad039a77143d7",
+            "exitCode": 0,
+            "tests": 3,
+            "pass": 3,
+            "fail": 0,
+            "durationMs": 103.273917
+          },
+          "noFullSuiteRerun": true
+        },
+        "unmeasured": [
+          "Independent QB new guard review",
+          "New immutable original production build and pack",
+          "Real application/browser/performance/deployment"
+        ],
+        "next": "Original QB only new member/provenance guard; after PASS C builds new immutable source once, never continues failed C122 manifests"
+      },
+      "files": [
+        {
+          "path": "scripts/release/manifest.mjs",
+          "owner": "C",
+          "bytes": 29145,
+          "beforeSha256": "2e31a641bd2ee171bb0a9c99acb1215f878c1b497efae9ba4192c822f5ab61fb",
+          "sha256": "48febfabb4a55086b171a6fbce01b678ed08c99eb8b1f0e8ecd3017dc52bdd09"
+        },
+        {
+          "path": "scripts/release/pack.test.mjs",
+          "owner": "C",
+          "bytes": 19271,
+          "beforeSha256": "4a37c8fea8783d1f2956084e090b574bd5f4a5f31a5f4c62ee331ff9bb50149d",
+          "sha256": "6701e81d2c9893ad34fd4c5168d79c29286b2dce535d705359406198b8778d1c"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Freeze exact2 C release guard/test only; 3 new targeted checks adopted, independentQB and new immutable build/pack pending. Preserve media data exclusion and C122 failure history. No application/PG/browser/deploy claim."
+}

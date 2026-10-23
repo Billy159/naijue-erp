@@ -33,6 +33,9 @@ const roleExtensions = {
   metadata: new Set(['.json']),
   evidence: new Set(['.json']),
 };
+const productEditorMediaRuntimeSource = 'apps/web/src/products/product-editor-media.tsx';
+const reviewedRuntimeMediaMember = (value, role) => role === 'frontend'
+  && /^web\/chunks\/product-editor-media-[A-Z0-9]{8}\.js$/.test(value);
 export function relativeName(value, allowDot = false) {
   requireRelease(typeof value === 'string' && value.length <= 1024 && (allowDot && value === '.'
     || value.length > 0 && !value.startsWith('/') && !/[\\\x00-\x20\x7f:]/.test(value)
@@ -53,8 +56,10 @@ function allowedSource(value) {
 export function allowedMember(value, role) {
   relativeName(value);
   if (role === 'migration' && reviewedMigrationMembers.has(value)) return;
+  const runtimeMedia = reviewedRuntimeMediaMember(value, role), segments = value.split('/');
   requireRelease(Object.hasOwn(roleExtensions, role) && roleExtensions[role].has(path.posix.extname(value))
-    && !value.split('/').some(part => excludedSegment.test(part) || part === 'node_modules')
+    && !segments.some((part, index) => (excludedSegment.test(part)
+      && !(runtimeMedia && index === segments.length - 1)) || part === 'node_modules')
     && !/(?:^|[\/._-])(?:keys?|pem|pgpass|env)(?:$|[\/._-])/i.test(value)
     && !excludedGraph.test(value) && !/\.(?:test|spec)\.[^.]+$/i.test(value), 'NON_RELEASE_MEMBER');
   requireRelease(role === 'frontend' ? value.startsWith('web/')
@@ -282,6 +287,15 @@ async function verifyGraph(kind, component, context) {
     requireRelease(files.get(relative)?.role === kind && !outputs.has(relative) && details && details.bytes === files.get(relative).bytes
       && details.inputs && typeof details.inputs === 'object' && !Array.isArray(details.inputs), 'GRAPH_OUTPUT_NOT_PACKAGED');
     for (const input of Object.keys(details.inputs)) requireRelease(inputs.has(graphPath(sourceRoot, component.workingDirectory, input)), 'UNKNOWN_OUTPUT_INPUT');
+    if (reviewedRuntimeMediaMember(relative, kind)) {
+      requireRelease(details.entryPoint !== undefined
+        && graphPath(sourceRoot, component.workingDirectory, details.entryPoint) === productEditorMediaRuntimeSource
+        && sources.has(productEditorMediaRuntimeSource)
+        && Object.entries(details.inputs).some(([input, contribution]) => Number.isSafeInteger(contribution?.bytesInOutput)
+          && contribution.bytesInOutput > 0
+          && graphPath(sourceRoot, component.workingDirectory, input) === productEditorMediaRuntimeSource),
+      'RUNTIME_MEDIA_CHUNK_SOURCE_REQUIRED');
+    }
     if (details.entryPoint !== undefined) {
       const entry = graphPath(sourceRoot, component.workingDirectory, details.entryPoint);
       requireRelease(inputs.has(entry), 'UNFROZEN_OUTPUT_ENTRY');
