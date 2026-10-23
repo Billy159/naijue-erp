@@ -1,0 +1,31 @@
+{
+  "atUtc": "2026-10-23T06:50:53.987261+00:00",
+  "parent": "1ad0eea65a6ce4eb6a55f4f6b949602bda342402",
+  "taskId": "F03_QF2_I01_ACTION_COLUMN_STICKY_01",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/inventory-matrix.tsx",
+      "owner": "F2",
+      "bytes": 31328,
+      "sha256": "7d0dc1b69e56f8af2a348556f4cc0b06313bf10eeecdcee16d2ecb8125497cbf"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory.css",
+      "owner": "F2",
+      "bytes": 55000,
+      "sha256": "b68ee32fd347fdef3821d0f5906239aaca769e0c709b4689fb2396222831f2ff"
+    }
+  ],
+  "scope": [
+    "Actual4operationcell consumers use Frozen interaction-common class",
+    "Consume original final sticky right0/leftauto bodyz2 theadz7 shadow/nowrap inside inventory scope, old70px/bgs retain"
+  ],
+  "checksAdopted": {
+    "F2": "Affected strict TS exit0/CSS transform exit0 warnings0; no windowing/model/BigInt/SKU/callback change; no newmirror tests"
+  },
+  "notTested": [
+    "Newfixedactual left/middle/right positions/bgs/layers",
+    "RealPG/fullledger/fullqueryoutput/business/performance"
+  ],
+  "next": "One integrated UI candidate includes146F1+145pairedledger andthis2; originalQF2 only newsticky, old5 reused"
+}

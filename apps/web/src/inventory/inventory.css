@@ -330,6 +330,11 @@
 .inventory-source-workbench .mx-table th.tc-subtotal,.inventory-source-workbench .mx-table td.tc-subtotal,.inventory-source-workbench .mx-table .mx-total-cell{position:sticky;right:110px;min-width:76px;width:76px;z-index:4;background:var(--surface);box-shadow:-1px 0 var(--border)}
 .inventory-source-workbench .mx-table thead .tc-subtotal,.inventory-source-workbench .mx-table thead .mx-total-cell{z-index:7;background:var(--ca-table-head)}
 .inventory-source-workbench .mx-table .ui-action-cell{width:110px;min-width:110px;max-width:110px;background:var(--surface)!important}
+/* Frozen interaction-common.js actions() assigns this class to header/body.
+ * Resolve interaction-common.css sticky/left + final-ui.css4 z2/shadow locally;
+ * the source thead z7 and final inventory-refinement.css70px widths remain. */
+.inventory-source-workbench .mx-table .ui-action-cell{position:sticky!important;right:0!important;left:auto!important;z-index:2;box-shadow:var(--ca-shadow-sticky);white-space:nowrap!important}
+.inventory-source-workbench .mx-table thead .ui-action-cell{z-index:7}
 .inventory-source-workbench .mx-table .mx-subtotal td{background:var(--ca-table-subtotal)}
 .inventory-source-workbench .mx-table .mx-total td{background:var(--ca-table-total)}
 .inventory-source-workbench .mx-table .mx-subtotal .ui-action-cell{background:var(--ca-table-subtotal)!important}
