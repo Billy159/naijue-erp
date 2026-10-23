@@ -117,11 +117,14 @@ async function page(context: MaintenancePgContext, kind: OrganizationMaintenance
   const role = "role" in checked ? checked.role : undefined;
   const paymentMethodId = "paymentMethodId" in checked ? checked.paymentMethodId : undefined;
   const s = specification(kind);
+  const search = kind === "STAFF"
+    ? "(strpos(lower(m.name),lower($1::text))>0 OR strpos(lower(COALESCE(a.login_name,'')),lower($1::text))>0)"
+    : `strpos(lower(${s.display}),lower($1::text))>0`;
   const timestamp = (column: "created_at" | "updated_at") => kind === "ACCOUNT" ? `to_char(m.${column} AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"')` : "NULL::text";
   // Explicit column whitelist: account reads never select password_hash or tokens.
   const rows = (await context.client.query(`WITH matched AS (SELECT ${s.columns},${s.display} AS display_name,
     ${timestamp("created_at")} AS created_at_value,${timestamp("updated_at")} AS updated_at_value FROM ${s.from}
-    WHERE strpos(lower(${s.display}),lower($1::text))>0 AND ($2::text='all' OR ($2='normal' AND ${s.normal}) OR ($2='disabled' AND ${s.disabled}))
+    WHERE ${search} AND ($2::text='all' OR ($2='normal' AND ${s.normal}) OR ($2='disabled' AND ${s.disabled}))
     AND ($3::uuid IS NULL OR ${s.hallFilter}) AND ($6::uuid IS NULL OR m.id=$6::uuid)${role === undefined ? "" : " AND ($7::text='' OR m.role=$7::text)"}${paymentMethodId === undefined ? "" : " AND ($7::uuid IS NULL OR m.payment_method_id=$7::uuid)"}),
     page AS (SELECT * FROM matched ORDER BY display_name COLLATE "C",id LIMIT $4 OFFSET $5)
     SELECT (SELECT count(*)::text FROM matched) AS total,COALESCE((SELECT jsonb_agg(${s.record} ORDER BY m.display_name COLLATE "C",m.id) FROM page m),'[]'::jsonb) AS items`,

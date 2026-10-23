@@ -119,6 +119,40 @@ test("staff-role v1 request role never grants ADMIN and malformed native boolean
   const malformed = setup("STAFF", "ADMIN", { ...raw, account: { ...account, loginEnabled: null } });
   await assert.rejects(malformed.service.list(actor, "STAFF", { ...query, role: "" }), { code: "INVALID_DATABASE_VALUE" });
 });
+test("staff-search F05: one literal search matches original staff name OR the linked login name before the same count/page filters", async () => {
+  const original = record("STAFF");
+  for (const search of ["SOURCE STAFF", "source login", "LOGIN %_ ' OR true --"]) {
+    for (const includeRole of [false, true]) {
+      const f = setup("STAFF", "ADMIN", original, "21");
+      const input = { ...query, search, status: "disabled", hallId: id(1), page: 2, ...(includeRole ? { role: "WAREHOUSE" } : {}) };
+      const page = await f.service.list(actor, "STAFF", input); assert.equal(page.total, 21); assert.equal(page.items.length, 1); assert.deepEqual(page.items[0], original);
+      const index = f.calls.findIndex(c => c.sql.startsWith("WITH matched")), call = f.calls[index]!;
+      assert.ok(f.calls.slice(0, index).some(c => c.sql.includes("maintenance:identity")));
+      assert.match(call.sql, /WHERE \(strpos\(lower\(m\.name\),lower\(\$1::text\)\)>0 OR strpos\(lower\(COALESCE\(a\.login_name,''\)\),lower\(\$1::text\)\)>0\) AND \(\$2::text='all'/);
+      assert.deepEqual(call.values, [search, "disabled", id(1), 20, 20, null, ...(includeRole ? ["WAREHOUSE"] : [])]);
+      assert.match(call.sql, /LEFT JOIN naijue_erp\.user_account a ON a\.staff_id=m\.id/);
+      assert.match(call.sql, /SELECT count\(\*\)::text FROM matched/); assert.match(call.sql, /page AS \(SELECT \* FROM matched ORDER BY display_name COLLATE "C",id LIMIT \$4 OFFSET \$5\)/);
+      assert.equal(f.calls.filter(c => c.sql.startsWith("WITH matched")).length, 1); assert.ok(!call.sql.includes(search));
+      assert.ok(!/password_hash|token_hash|auth_session|\bLIKE\b|COALESCE\(a\.login_enabled/.test(call.sql));
+    }
+  }
+  const noAccount = { ...original, account: null }, f = setup("STAFF", "ADMIN", noAccount);
+  assert.deepEqual((await f.service.list(actor, "STAFF", { ...query, search: "SOURCE STAFF" })).items, [noAccount]);
+});
+test("staff-search F05: account search does not grant staff access, alter other families, or introduce the pending login-status filter", async () => {
+  for (const role of ["WAREHOUSE", "SALESPERSON"] as const) {
+    const denied = setup("STAFF", role); await assert.rejects(denied.service.list(actor, "STAFF", { ...query, search: "SOURCE LOGIN" }), { code: "FORBIDDEN" });
+    assert.ok(!denied.calls.some(c => c.sql.startsWith("WITH matched"))); assert.equal(denied.calls.at(-1)!.sql, "ROLLBACK");
+  }
+  for (const kind of ["WAREHOUSE", "ACCOUNT"] as const) {
+    const f = setup(kind); await f.service.list(actor, kind, { ...query, search: "SOURCE" });
+    const sql = f.calls.find(c => c.sql.startsWith("WITH matched"))!.sql;
+    assert.ok(!sql.includes("COALESCE(a.login_name")); assert.match(sql, new RegExp(`WHERE strpos\\(lower\\(m\\.${kind === "ACCOUNT" ? "login_name" : "name"}\\),lower\\(\\$1::text\\)\\)>0 AND`));
+  }
+  const f = setup("STAFF");
+  await assert.rejects(f.service.list(actor, "STAFF", { ...query, search: "SOURCE LOGIN", loginStatus: "closed" }), { code: "INVALID_ORGANIZATION_QUERY" });
+  assert.equal(f.calls.length, 0);
+});
 
 test("payment-method-filter v1 preserves exact5 and validates PAYMENT_ACCOUNT-only exact6 before connection", async () => {
   assert.deepEqual(parseOrganizationListQuery(query, "PAYMENT_ACCOUNT"), query);
