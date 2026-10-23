@@ -11,6 +11,6 @@ export function TransferNewDocumentForm({ session, scope, close, historyReader, 
   const state = useSyncExternalStore(session.subscribe, session.getSnapshot, session.getSnapshot);
   const command = useSyncExternalStore(session.workspace.subscribe, session.workspace.getSnapshot, session.workspace.getSnapshot);
   if (!scope.active || state.disposed) return <p role="status">新单会话已关闭。</p>;
-  if (command.editor) return <TransferCommandForm {...(presentation ? { presentation } : {})} capability={{ workspace: session.workspace }} scope={scope} close={close} {...(historyReader ? { history: { scope, reader: historyReader } } : {})} />;
+  if (command.editor || session.workspace.hasUnresolvedWrite) return <TransferCommandForm {...(presentation ? { presentation } : {})} capability={{ workspace: session.workspace }} scope={scope} close={close} {...(historyReader ? { history: { scope, reader: historyReader } } : {})} />;
   return <TransferProposalForm {...presentation} scope={scope} session={session.proposal} close={close} preparation={{ save: () => { void session.save(); }, preparing: state.preparing, notice: state.notice, cancel: () => session.cancelPreparation() }} />;
 }

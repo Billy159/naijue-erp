@@ -1,0 +1,71 @@
+{
+  "atUtc": "2026-10-23T18:38:03.636222+00:00",
+  "parent": "7f24890c9977892f143cb061bae287aad371ad33",
+  "taskId": "F04_T02_GROUP_COORDINATE_PAGE_SAVE",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/transfer-proposal.ts",
+      "bytes": 39877,
+      "sha256": "42fdb77e621ad9177f947afa27a1082d95e3b8fe03e8faa06dc7461d4e2533eb",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-create.ts",
+      "bytes": 10337,
+      "sha256": "07a304d77c40d8f5c8120e11a46373d876cabcfce2da53a933613ec334be65c4",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-existing-document.ts",
+      "bytes": 14739,
+      "sha256": "1297845f793c67e14895d3a72a0104730baff74b146a402b8c9e904c78822fdc",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-new-document-form.tsx",
+      "bytes": 1820,
+      "sha256": "f58690b244bed2b00e07d7fdd9ae6bdda4293aa42ba35e00509820b14fbc0182",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/form.tsx",
+      "bytes": 13737,
+      "sha256": "c648ae631e71d4b5436d6801e03703d6eb44c856bcaa068f0153cd614cf15c45",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/transfers.tsx",
+      "bytes": 9687,
+      "sha256": "312c035bcb29046d5338722289f0ca3176cdb8cab4cb05048e20748ad4e15776",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-98/DELIVERY.json",
+  "ownerReceiptSha256": "c33c2091b4b62827bad0a56fd5a1fd3129a2a6dc87f8e5b74c6c8aee1ac9ddad",
+  "scope": [
+    "Original TransferProposalSession captures native same-SAVE skuId or exact spec per line; no group/code/barcode/new IDs in command; original target/null, original actual line pointers retained, quantity/duplicate/pointer ambiguity rejected",
+    "Actual current product group members continue hard boundary; read/validated group cache enables replacement carry by actual size ID, including missing target SKU; unrelated groups never mixed",
+    "New and saved TransferNewDocumentSession/ExistingDocumentSession top SAVE use original96 workspace for coordinate inputs and exact captured state before-dispatch; read-only prepares stay knownSKU-only",
+    "Original native recovery UI extracted locally and reused before a confirmed server editor/ID exists; no fake draft; original saved result triggers actual detail readback/adopt",
+    "Original manual-create route canLeave explicitly checks unresolved write before editor/ID; old guard reproduced true and now false; pending row new-size Enter notice points to top SAVE"
+  ],
+  "checksAdopted": {
+    "before-1": "RED original public page top SAVE sends0 for entered missing actual-group member",
+    "after-1": "Harness assertion expected historical size label rendered, but existing native matrix deliberately shows current canonical size; corrected expectation without production change",
+    "after-2": "First2 page scenarios PASS, replacement test saved catalog incorrectly included old unused color tuple rejected by original strict DTO validator",
+    "after-3": "Diagnostic harness JSON BigInt serialization fixed only",
+    "after-4": "Same replacement fixture source invalidity confirmed; no production weaken",
+    "after-5": "PASS3 actual React new/existing/replacement full page top SAVE, original receipt recovery/no-ID, original pointer/CAS and actual native readback with synthetic ports",
+    "guard-before-1": "RED original actual prepareTransferSession route permits leaving unknown SAVE with no document ID",
+    "guard-after-1": "PASS exact original route+real HTTP command adapter lost reply now canLeave false",
+    "types-1": "PASS exact5 full imported closure",
+    "types-2": "PASS exact6 including actual route closure0"
+  },
+  "qualification": "SOURCE_READY_T02_GROUP_COORDINATE_PAGE_SAVE_PATH_NOT_FULL_T02_ACCEPTANCE",
+  "limitations": [
+    "No PG/backend transaction/actual native SKU allocation or real HTTP service grant tested",
+    "No actual Chrome/Demo full T02 visual or keyboard acceptance",
+    "Pending missing-SKU Enter remains local until top SAVE, further Demo interaction completion open",
+    "Sales coordinate new/existing page SAVE still next delta"
+  ]
+}

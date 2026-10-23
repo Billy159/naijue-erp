@@ -8,6 +8,7 @@ import type { createCurrentFormHttpReader } from './http-reader.ts';
 import { currentBusinessDate } from './business-date.ts';
 import { DocumentScanController } from '../components/document-scan-controller.ts';
 import type { TransferDraftDto } from '../transfers/commands/contracts.ts';
+import { parseNativeTransferSaveProposal, type NativeTransferSaveProposal } from '../../../../packages/application/src/native-transfer-preparation.ts';
 
 export type TransferProposalReader = Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readTransferWarehouses' | 'readProducts' | 'readProductSkus'>
   & Partial<Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readBarcode' | 'readSizeGroups'>>;
@@ -58,6 +59,7 @@ export class TransferProposalSession {
   #request: AbortController | null = null; #sequence = 0; #revision = 0;
   #seeded = false;
   readonly #savedLines = new Map<string, { readonly skuId: string; readonly snapshot: TransferDraftDto['lines'][number]['snapshot'] }>();
+  readonly #sizeGroups = new Map<string, DictionarySizeGroup>();
   #skuRead: AbortController | null = null; #skuSequence = 0;
   #appendBasis: { draft: TransferProposal; pending: TransferPendingEntry; replacement: TransferProposalSnapshot['replacement'] } | null = null;
   #state: TransferProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, picker: null, entry: null, matrixQuantities: {}, pending: emptyPending(), replacement: null, appendRequest: null });
@@ -69,9 +71,14 @@ export class TransferProposalSession {
   readonly getSnapshot = (): TransferProposalSnapshot => this.#state;
   readonly subscribe = (listener: () => void): (() => void) => { this.#listeners.add(listener); return () => { this.#listeners.delete(listener); }; };
   get canReadSizeGroups(): boolean { return !!this.#reader.readSizeGroups; }
-  readSizeGroups(parameters: DictionaryListQuery, signal: AbortSignal) {
+  async readSizeGroups(parameters: DictionaryListQuery, signal: AbortSignal) {
     if (!this.#reader.readSizeGroups) throw new TypeError('Current product group read is unavailable.');
-    return this.#reader.readSizeGroups(parameters, signal);
+    const page = await this.#reader.readSizeGroups(parameters, signal);
+    if (!signal.aborted && !this.#state.disposed && this.#scope.active) {
+      for (const group of page.items) this.#sizeGroups.set(group.id, freeze(structuredClone(group)));
+      if (this.#state.replacement && !this.#state.pending.userEdited) this.#publish({ pending: this.#mapReplacement(this.#state.pending) });
+    }
+    return page;
   }
   matchesIdentity(scope: ReadScope): boolean {
     const owner = this.#scope.identity, target = scope.identity;
@@ -124,6 +131,7 @@ export class TransferProposalSession {
   setMatrixSizeQuantity(rowKey: string, group: DictionarySizeGroup, sizeId: string, raw: string): boolean {
     const anchor = this.#state.draft.lines.find(row => transferProposalRowKey(row.sku) === rowKey), size = group.sizes.find(size => size.id === sizeId);
     if (this.#state.disposed || !anchor?.product?.sizeGroupId || anchor.product.sizeGroupId !== group.id || !size) return false;
+    this.#sizeGroups.set(group.id, freeze(structuredClone(group)));
     const known = [...this.#state.draft.lines.map(row => row.sku), ...(this.#state.entry?.skus ?? [])].find(sku => transferProposalRowKey(sku) === rowKey && sku.sizeId === sizeId);
     if (known) return this.setMatrixQuantity(known.id, raw);
     const key = JSON.stringify([rowKey, sizeId]), values = { ...this.#state.matrixQuantities };
@@ -134,9 +142,11 @@ export class TransferProposalSession {
   setPendingSizeQuantity(group: DictionarySizeGroup, sizeId: string, raw: string): boolean {
     const pending = this.#state.pending;
     if (this.#state.disposed || !pending.product?.sizeGroupId || pending.product.sizeGroupId !== group.id || !pending.color || !pending.fit || !group.sizes.some(size => size.id === sizeId)) return false;
+    this.#sizeGroups.set(group.id, freeze(structuredClone(group)));
     const sku = pending.skus.find(sku => sku.colorId === pending.color!.id && sku.fitId === pending.fit!.id && sku.sizeId === sizeId);
     if (sku) return this.setPendingQuantity(sku.id, raw);
-    this.#pending({ ...pending, sizeQuantities: { ...pending.sizeQuantities, [sizeId]: raw }, userEdited: true }); return true;
+    const mapped = this.#mapReplacement(pending);
+    this.#pending({ ...mapped, sizeQuantities: { ...mapped.sizeQuantities, [sizeId]: raw }, userEdited: true }); return true;
   }
   removeLine(skuId: string): boolean {
     const original = this.#state.draft.lines.find(row => row.sku.id === skuId); if (!original) return false;
@@ -201,13 +211,15 @@ export class TransferProposalSession {
   #mapReplacement(pending: TransferPendingEntry): TransferPendingEntry {
     const replacement = this.#state.replacement;
     if (!replacement || pending.userEdited) return pending;
-    const quantities: Record<string, string> = {}, unmapped: { skuId: string; sizeName: string; quantity: string }[] = [];
+    const quantities: Record<string, string> = {}, sizeQuantities: Record<string, string> = {}, unmapped: { skuId: string; sizeName: string; quantity: string }[] = [];
     for (const original of replacement.originals) {
       const matches = pending.skus.filter(sku => sku.productId === pending.product?.id && sku.colorId === pending.color?.id && sku.fitId === pending.fit?.id && sku.sizeId === original.sku.sizeId && sku.sizeGroupId === original.sku.sizeGroupId);
-      if (matches.length !== 1 || Object.hasOwn(quantities, matches[0]!.id)) unmapped.push({ skuId: original.sku.id, sizeName: original.sku.sizeName, quantity: original.quantity });
+      const group = pending.product?.sizeGroupId ? this.#sizeGroups.get(pending.product.sizeGroupId) : undefined;
+      if (matches.length === 0 && pending.color && pending.fit && group?.id === original.sku.sizeGroupId && group.sizes.some(size => size.id === original.sku.sizeId) && !Object.hasOwn(sizeQuantities, original.sku.sizeId)) sizeQuantities[original.sku.sizeId] = original.quantity;
+      else if (matches.length !== 1 || Object.hasOwn(quantities, matches[0]!.id)) unmapped.push({ skuId: original.sku.id, sizeName: original.sku.sizeName, quantity: original.quantity });
       else quantities[matches[0]!.id] = original.quantity;
     }
-    return { ...pending, quantities, unmapped };
+    return { ...pending, quantities, sizeQuantities, unmapped };
   }
   selectPendingSpec(kind: 'color' | 'fit', id: string): boolean {
     const pending = this.#state.pending;
@@ -244,7 +256,7 @@ export class TransferProposalSession {
   commitPending(confirmAppend = false): boolean {
     const { pending, replacement, draft } = this.#state;
     if (this.#state.disposed || !pending.product || pending.query !== pending.product.code || !pending.color || !pending.fit || pending.phase !== 'ready' || pending.exactTotal === null) return false;
-    if (Object.values(pending.sizeQuantities).some(raw => raw !== '' && raw !== '0')) { this.#publish({ notice: '组内新尺码尚无真实 SKU，数量草稿已保留；需由正式保存准备解析规格后才能保存。' }); return false; }
+    if (Object.values(pending.sizeQuantities).some(raw => raw !== '' && raw !== '0')) { this.#publish({ notice: '本行包含新尺码，数量已保留；点击顶部保存完成本行和单据。' }); return false; }
     if (replacement && replacement.originals.some(original => !draft.lines.includes(original))) { this.#publish({ notice: '原行数量已变化，请取消后重新改选。' }); return false; }
     if (replacement && pending.unmapped.length) { this.#publish({ notice: '原规格数量尚未对应到唯一实际规格；请继续读取其他页、调整原行或更换规格。' }); return false; }
     const changes: { sku: CurrentFormSku; quantity: bigint }[] = [];
@@ -349,6 +361,48 @@ export class TransferProposalSession {
     if ((picker.kind === 'FROM' ? draft.to : draft.from)?.id === id) { this.#publish({ notice: '调出和调入仓库不能相同。' }); return false; }
     this.closePicker(); return this.#edit({ ...draft, ...(picker.kind === 'FROM' ? { from: selected } : { to: selected }) });
   }
+  get hasSpecificationInputs(): boolean {
+    return !!this.#state.pending.product || !!this.#state.pending.query.trim() || Object.values(this.#state.matrixQuantities).some(cell => cell.quantity !== '' && cell.quantity !== '0');
+  }
+  /** Capture coordinates for the approved original SAVE, never a prepared SKU. */
+  saveProposal(transferId: string | null): NativeTransferSaveProposal | null {
+    const { draft, pending, replacement, matrixQuantities } = this.#state;
+    if (this.#state.disposed || !this.#scope.active) return null;
+    try {
+      if (!draft.from || !draft.to || replacement && replacement.originals.some(row => !draft.lines.includes(row))) throw Error();
+      const lines: NativeTransferSaveProposal['lines'][number][] = [], coordinates = new Set<string>(), pointers = new Set<string>();
+      const append = (line: NativeTransferSaveProposal['lines'][number], coordinate: readonly string[]) => {
+        const key = JSON.stringify(coordinate);
+        if (coordinates.has(key) || line.existingLineId !== null && pointers.has(line.existingLineId)) throw Error();
+        coordinates.add(key); if (line.existingLineId !== null) pointers.add(line.existingLineId); lines.push(line);
+      };
+      for (const row of draft.lines.filter(row => !replacement?.originals.includes(row))) append({ existingLineId: row.existingLineId ?? null, skuId: row.sku.id, quantity: row.quantity }, [row.sku.productId, row.sku.colorId, row.sku.fitId, row.sku.sizeId]);
+      for (const cell of Object.values(matrixQuantities)) if (cell.quantity !== '' && cell.quantity !== '0') {
+        if (!cell.product.sizeGroupId || !draft.lines.some(row => transferProposalRowKey(row.sku) === cell.rowKey && row.product?.id === cell.product.id)) throw Error();
+        const spec = { productId: cell.product.id, colorId: cell.colorId, fitId: cell.fitId, sizeId: cell.sizeId };
+        append({ existingLineId: null, spec, quantity: cell.quantity }, Object.values(spec));
+      }
+      if (pending.product || pending.query.trim() || replacement) {
+        if (!pending.product?.sizeGroupId || pending.query !== pending.product.code || !pending.color || !pending.fit || pending.phase !== 'ready' || pending.unmapped.length) throw Error();
+        const pointer = (sizeId: string): string | null => {
+          const matches = replacement?.originals.filter(row => row.sku.sizeId === sizeId && row.sku.sizeGroupId === pending.product!.sizeGroupId) ?? [];
+          if (matches.length > 1) throw Error(); return matches[0]?.existingLineId ?? null;
+        };
+        let filled = false;
+        for (const [skuId, raw] of Object.entries(pending.quantities)) if (raw !== '' && raw !== '0') {
+          const sku = pending.skus.find(row => row.id === skuId && row.productId === pending.product!.id && row.colorId === pending.color!.id && row.fitId === pending.fit!.id && row.sizeGroupId === pending.product!.sizeGroupId); if (!sku) throw Error();
+          append({ existingLineId: pointer(sku.sizeId), skuId, quantity: raw }, [sku.productId, sku.colorId, sku.fitId, sku.sizeId]); filled = true;
+        }
+        for (const [sizeId, raw] of Object.entries(pending.sizeQuantities)) if (raw !== '' && raw !== '0') {
+          const spec = { productId: pending.product.id, colorId: pending.color.id, fitId: pending.fit.id, sizeId };
+          append({ existingLineId: pointer(sizeId), spec, quantity: raw }, Object.values(spec)); filled = true;
+        }
+        if (!filled && !replacement) throw Error();
+      }
+      const proposal = parseNativeTransferSaveProposal({ transferId, businessDate: draft.businessDate, note: draft.note === '' ? null : draft.note, fromWarehouseId: draft.from.id, toWarehouseId: draft.to.id, lines });
+      this.#publish({ errors: [], notice: null }); return freeze(proposal);
+    } catch { this.#publish({ errors: ['请核对当前尺码组、行改选和数量；重复规格请在原行调整，原输入已保留。'], notice: '保存资料未通过校验，未发送业务命令。' }); return null; }
+  }
   /** Explicit local validation/handoff only. The caller receives proposals, not authority. */
   validate(): TransferProposal | null {
     if (Object.values(this.#state.matrixQuantities).some(cell => cell.quantity !== '' && cell.quantity !== '0')) { this.#publish({ notice: '组内新尺码尚无真实 SKU，矩阵数量草稿已保留；未发送保存。' }); return null; }
@@ -377,6 +431,6 @@ export class TransferProposalSession {
   readonly dispose = (): void => {
     if (this.#state.disposed) return;
     this.#savedLines.clear(); this.#cancelRead(); this.#cancelSkuRead(); this.#appendBasis = null; this.#scope.signal.removeEventListener('abort', this.dispose);
-    this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, entry: null, matrixQuantities: {}, pending: emptyPending(), replacement: null, appendRequest: null, errors: [], notice: null }); this.#listeners.clear();
+    this.#sizeGroups.clear(); this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, entry: null, matrixQuantities: {}, pending: emptyPending(), replacement: null, appendRequest: null, errors: [], notice: null }); this.#listeners.clear();
   };
 }

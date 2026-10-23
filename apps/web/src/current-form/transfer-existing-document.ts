@@ -68,6 +68,18 @@ export class TransferExistingDocumentSession {
     const proposal = this.#state.proposal;
     if (this.#state.disposed || this.#state.phase !== 'ready' || this.#state.preparing || !proposal || !this.owner.editableExistingProposal) return false;
     if (!this.hasDirtyDraft && !this.owner.hasDirtyDraft) { this.#publish({ notice: '内容未改变，无需保存。' }); return false; }
+    if (proposal.hasSpecificationInputs && this.#original) {
+      const intent = proposal.saveProposal(this.#original.document.header.id); if (!intent) return false;
+      const originalIds = new Set(this.#original.document.lines.map(row => row.id as string));
+      if (intent.lines.some(row => row.existingLineId !== null && !originalIds.has(row.existingLineId))) { this.#publish({ notice: '原行关系已变化，输入已保留；未发送保存。' }); return false; }
+      const captured = proposal.getSnapshot(), ownerInput = this.owner.getSnapshot().editor?.input, request = new AbortController(), sequence = ++this.#sequence; this.#request = request;
+      this.#publish({ preparing: true, notice: null });
+      try {
+        return await this.owner.submitProposal({ ...intent, note: captured.draft.note === (this.#original.document.header.note ?? '') ? this.#original.document.header.note : intent.note }, () => this.#current(sequence, request)
+          && this.owner.getSnapshot().editor?.input === ownerInput && this.owner.getSnapshot().editor?.detail === this.#original && proposal.getSnapshot().draft === captured.draft
+          && proposal.getSnapshot().pending === captured.pending && proposal.getSnapshot().matrixQuantities === captured.matrixQuantities && proposal.getSnapshot().replacement === captured.replacement);
+      } finally { if (this.#request === request) { this.#request = null; if (!this.#state.disposed) this.#publish({ preparing: false }); } }
+    }
     const value = proposal.validate(); if (!value || !value.from || !value.to || !this.#original) return false;
     const originalIds = new Set<string>(this.#original.document.lines.map(row => row.id));
     if (value.lines.some(row => row.existingLineId !== undefined && !originalIds.has(row.existingLineId))) { this.#publish({ notice: '原行关系已变化，输入已保留；未发送保存。' }); return false; }

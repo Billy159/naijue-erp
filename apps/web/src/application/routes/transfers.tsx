@@ -58,7 +58,7 @@ export function prepareTransferSession(input: RoutePreparation, onAccessFailure:
   const newDocumentAccessFailure = (error: HttpQueryError) => onAccessFailure(new TransferCommandError(error.kind === 'unauthenticated' ? 'unauthenticated' : 'forbidden', error.kind === 'unauthenticated' ? 'UNAUTHENTICATED' : 'FORBIDDEN', 'read'));
   let currentNewDocument: TransferNewDocumentSession | null = null;
   const manualCreate = configuration.manualCreate ? Object.freeze({
-    canLeave: () => workspace.getSnapshot().editor ? workspace.canLeave() : !currentNewDocument || currentNewDocument.getSnapshot().disposed || currentNewDocument.getSnapshot().nativeHandoff || (!currentNewDocument.getSnapshot().preparing && !currentNewDocument.proposal.getSnapshot().dirty),
+    canLeave: () => !workspace.hasUnresolvedWrite && (workspace.getSnapshot().editor ? workspace.canLeave() : !currentNewDocument || currentNewDocument.getSnapshot().disposed || currentNewDocument.getSnapshot().nativeHandoff || (!currentNewDocument.getSnapshot().preparing && !currentNewDocument.proposal.getSnapshot().dirty)),
     open: async () => {
       if (currentNewDocument && !currentNewDocument.getSnapshot().disposed) {
         if (!workspace.getSnapshot().editor && !currentNewDocument.getSnapshot().nativeHandoff) return currentNewDocument;

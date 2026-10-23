@@ -71,6 +71,17 @@ export class TransferNewDocumentSession {
   cancelPreparation(): void { this.#sequence++; this.#request?.abort(); this.#request = null; if (!this.#state.disposed) this.#publish({ preparing: false, notice: null }); }
   async save(): Promise<boolean> {
     if (this.#state.disposed || this.#state.nativeHandoff || this.#state.preparing || !this.#scope.active || this.workspace.getSnapshot().editor || !this.workspace.canLeave()) return false;
+    if (this.proposal.hasSpecificationInputs) {
+      const intent = this.proposal.saveProposal(null); if (!intent) return false;
+      const captured = this.proposal.getSnapshot(), sequence = ++this.#sequence, request = new AbortController(); this.#request = request;
+      this.#publish({ preparing: true, nativeHandoff: true, notice: null });
+      try {
+        return await this.workspace.submitProposal(intent, () => !this.#state.disposed && this.#scope.active && !request.signal.aborted && sequence === this.#sequence
+          && this.proposal.getSnapshot().draft === captured.draft && this.proposal.getSnapshot().pending === captured.pending && this.proposal.getSnapshot().matrixQuantities === captured.matrixQuantities && this.proposal.getSnapshot().replacement === captured.replacement);
+      } finally {
+        if (this.#request === request) { this.#request = null; if (!this.#state.disposed) this.#publish({ preparing: false, nativeHandoff: !!this.workspace.getSnapshot().editor || this.workspace.hasUnresolvedWrite, notice: this.workspace.getSnapshot().write.phase === 'rejected' ? this.workspace.getSnapshot().notice : null }); }
+      }
+    }
     const proposal = this.proposal.validate(); if (!proposal) return false;
     const intent = checkedIntent(transferPreparationIntent(proposal)), sequence = ++this.#sequence, request = new AbortController(); this.#request = request;
     this.#publish({ preparing: true, notice: '正在读取原生新单准备；尚未发送保存命令。' });

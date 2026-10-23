@@ -26,6 +26,11 @@ export function TransferCommandForm(props: TransferCommandFormProps) {
   if (enabled && workspace.editableExistingProposal && failedOwner !== workspace) return <p role="status">正在准备完整旧单编辑页…</p>;
   return <TransferNativeCommandForm {...props} key={state.editor?.transferId} />;
 }
+function TransferCommandRecovery({ workspace }: { readonly workspace: TransferCommandCapability['workspace'] }) {
+  const state = useSyncExternalStore(workspace.subscribe, workspace.getSnapshot, workspace.getSnapshot), write = state.write;
+  return <>{['submitting', 'checking', 'replaying'].includes(write.phase) && <p className="transfer-command-notice" role="status">{write.phase === 'checking' ? '正在核实原操作回执…' : '正在提交原操作…'}<UIButton type="button" className="iw-link" onClick={() => workspace.cancelWaiting()}>停止等待</UIButton></p>}
+    {write.phase === 'uncertain' && <div className="transfer-command-recovery" role="status"><strong>原操作结果不确定，请勿重复新建操作。</strong><span>操作键：{write.command?.requestKey}</span><UIButton type="button" className="iw-button" onClick={() => { void workspace.checkReceipt(); }}>核实原操作回执</UIButton><UIButton type="button" className="iw-button" onClick={() => { void workspace.replayOriginal(); }}>重放原请求</UIButton></div>}</>;
+}
 export function TransferNativeCommandForm({ capability, scope, close, history, presentation }: TransferCommandFormProps) {
   const { workspace } = capability, state = useSyncExternalStore(workspace.subscribe, workspace.getSnapshot, workspace.getSnapshot);
   const heading = useRef<HTMLHeadingElement>(null);
@@ -40,11 +45,12 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
     void workspace.readCurrent();
   }, [workspace, scope, write.phase, write.result, editor?.transferId, editor?.current, editor?.readError, editor?.phase]);
   useEffect(() => { setDiscard(false); }, [workspace, editor?.transferId, write.phase]);
-  if (!scope.active || state.disposed || !editor) return null;
+  if (!scope.active || state.disposed) return null;
+  if (!editor) return <section className="tc-workbench tc-editor transfer-editor transfer-command-editor" aria-label="调拨单编辑"><div className="tc-head"><h1 ref={heading} tabIndex={-1}>新增调拨单</h1></div><TransferCommandRecovery workspace={workspace} />{state.notice && <p className="transfer-command-notice" role="status">{state.notice}</p>}</section>;
   const savedReadback = write.phase === 'committed' ? editor.current : null;
   const detail = savedReadback ?? editor.detail;
   const header = detail?.document.header ?? editor.draft?.header, input = savedReadback ? null : editor.input;
-  const working = ['submitting', 'checking', 'replaying'].includes(write.phase), unresolved = workspace.hasUnresolvedWrite;
+  const unresolved = workspace.hasUnresolvedWrite;
   const status = detail?.document.header.status ?? 'DRAFT';
   const editable = editor.phase === 'ready' && !!editor.draft && !!input && !unresolved && !state.stale && !editor.current && write.phase !== 'committed';
   const locked = !editable, dirty = workspace.hasDirtyDraft;
@@ -75,8 +81,7 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
     <label className="tc-note-row"><span>备注</span>{input ? <UIInput aria-label="备注" className="iw-control transfer-note-input" maxLength={10000} value={input.note} disabled={locked} onChange={nextValue => update({ ...input, note: nextValue })} /> : <span className="tc-note-read">{header.note || '—'}</span>}</label></>}
     {(editor.detail?.stockBasis === 'CUTOFF_HISTORY' || status === 'APPROVED' || status === 'VOID') && <p className="transfer-readonly-note">{editor.detail?.stockBasis === 'CUTOFF_HISTORY' ? '历史单据仅供查看。' : status === 'APPROVED' ? '已审核，弃审后才能修改。' : '此单已作废，仅可查看。'}</p>}
     {state.notice && <p className="transfer-command-notice" role={editor.inputError || write.phase === 'rejected' ? 'alert' : 'status'}>{state.notice}</p>}
-    {working && <p className="transfer-command-notice" role="status">{write.phase === 'checking' ? '正在核实原操作回执…' : '正在提交原操作…'}<UIButton type="button" className="iw-link" onClick={() => workspace.cancelWaiting()}>停止等待</UIButton></p>}
-    {write.phase === 'uncertain' && <div className="transfer-command-recovery" role="status"><strong>原操作结果不确定，请勿重复新建操作。</strong><span>操作键：{write.command?.requestKey}</span><UIButton type="button" className="iw-button" onClick={() => { void workspace.checkReceipt(); }}>核实原操作回执</UIButton><UIButton type="button" className="iw-button" onClick={() => { void workspace.replayOriginal(); }}>重放原请求</UIButton></div>}
+    <TransferCommandRecovery workspace={workspace} />
     {write.phase === 'committed' && <p className="transfer-command-notice" role="status">原操作已确认：版本 {write.result?.version}，{write.result ? transferStatusLabels[write.result.status] : ''}。库存流水 {write.result?.ledgerEntryIds.length} 条。{savedReadback ? '下方显示重新读取的已保存单据；继续操作前请采用当前单据。' : '正在核对已保存内容；读取失败可重试，保存不会重复提交。'}</p>}
     {!unresolved && (editor.detail && write.phase !== 'idle' || write.phase === 'committed') && <UIButton type="button" className="iw-button transfer-read-current" disabled={editor.phase === 'loading'} onClick={() => { void workspace.readCurrent(); }}>读取当前单据</UIButton>}
     {editor.current && <p className="transfer-command-notice" role="status">已读取当前版本 {editor.current.document.header.version}，尚未替换原草稿。<UIButton type="button" className="iw-button" onClick={() => workspace.adoptCurrent()}>采用当前单据</UIButton></p>}
