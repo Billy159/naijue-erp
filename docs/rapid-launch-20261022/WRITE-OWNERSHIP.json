@@ -725,6 +725,11 @@
           "path": "tests/history-revision-postgres-protocol.test.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
           "scope": "C01 approved numeric revision only: existing line/totals/settlement amounts, same original controlled transaction. Full header/identity/add-delete/state changes excluded pending exact approval."
+        },
+        {
+          "path": "adapters/postgres/patches/0026-v12-history-numeric-revision.sql",
+          "group": "C01_APPROVED_HISTORY_NUMERIC_CLOSED_GUARD_IMPLEMENTATION",
+          "fieldGate": "ONLY_EXISTING_APPROVED_C01_H01_H07_NUMERIC_RULES_NO_FULL_DRAFT_EXPANSION"
         }
       ]
     },
@@ -4104,6 +4109,15 @@
       "atUtc": "2026-10-23T13:24:26.875141+00:00",
       "source": "Latest direct human v11 group-only correction",
       "change": "Supersede prior broad v11 release. Preserve ownership/WIP but hold new code/delegation/SQL write semantics. Keep actual product-group membership as input boundary; independent legal SKU/UI and approved implementation fixes continue. No reset/duplicate task."
+    },
+    {
+      "atUtc": "2026-10-23T13:50:46.758575+00:00",
+      "owner": "D1",
+      "addedPaths": [
+        "adapters/postgres/patches/0026-v12-history-numeric-revision.sql"
+      ],
+      "reason": "Implement already explicitly approved C01 history numeric guard/receipt/audit/delta rules replacing foundation closed guards, no new fields or expanded edit rules. Original1..26 preserved, C sole actual installation.",
+      "existingSharedContract": "packages/application/src/native-import-schema-contract.ts alreadyD1, only exact HISTORY_REVISION application purpose scoped to existing approved business; no GRANT broadening"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
