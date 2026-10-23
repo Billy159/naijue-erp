@@ -1,5 +1,6 @@
 import { businessDate, entityId, quantity } from '../../../../packages/domain/src/values.ts';
 import { checkedInventoryLedgerTimestamp, inventoryLedgerBefore, parseInventoryLedgerQuery } from '../../../../packages/application/src/inventory-ledger-query-validation.ts';
+import { INVENTORY_LEDGER_BUSINESS_TYPES } from '../../../../packages/application/src/inventory-ledger-query-contracts.ts';
 import type { InventoryLedgerCursor, InventoryLedgerEntry, InventoryLedgerPage, InventoryLedgerQuery, InventoryLedgerReader } from './ledger-contracts.ts';
 import { LatestQuery } from '../loading/latest-query.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
@@ -26,7 +27,8 @@ function cursor(value: unknown): InventoryLedgerCursor | null {
 /** Browser shape/target validation, separate from server authorization. No fabricated read scope. */
 export function checkedLedgerPage(value: unknown, parameters: InventoryLedgerQuery): InventoryLedgerPage {
   try {
-    const row = object(value, ['pageSize', 'labelBasis', 'warehouse', 'sku', 'entries', 'nextCursor']);
+    const numbered = parameters.page !== undefined;
+    const row = object(value, ['pageSize', 'labelBasis', 'warehouse', 'sku', 'entries', 'nextCursor', ...(numbered ? ['page', 'filteredTotal'] : [])]);
     if (row.pageSize !== parameters.pageSize || row.labelBasis !== 'CURRENT_REFERENCE') return invalid();
     const warehouse = object(row.warehouse, ['id', 'label', 'hallId']);
     if (uuid(warehouse.id) !== parameters.warehouseId) return invalid();
@@ -42,7 +44,7 @@ export function checkedLedgerPage(value: unknown, parameters: InventoryLedgerQue
     if (!Array.isArray(row.entries) || row.entries.length > parameters.pageSize) return invalid();
     const ids = new Set<string>(); let previous = parameters.after;
     for (const raw of row.entries) {
-      const item = object(raw, ['id', 'operationId', 'eventKind', 'quantityDelta', 'source', 'sourceDocumentVersion', 'reversesEntryId', 'businessDate', 'postedAt']);
+      const item = object(raw, ['id', 'operationId', 'eventKind', 'quantityDelta', 'source', 'sourceDocumentVersion', 'reversesEntryId', 'businessDate', 'postedAt', ...(numbered ? ['display'] : [])]);
       const entryId = entityId('ledger', uuid(item.id)); uuid(item.operationId);
       if (!['APPROVE', 'UNAPPROVE', 'CUTOFF_BASELINE', 'HISTORY_REVISION'].includes(item.eventKind as string) || typeof item.quantityDelta !== 'string' || quantity(item.quantityDelta) === 0n) return invalid();
       businessDate(text(item.businessDate));
@@ -69,8 +71,29 @@ export function checkedLedgerPage(value: unknown, parameters: InventoryLedgerQue
       }
       else if (kind === 'CUTOFF_BASELINE') { const source = object(item.source, ['kind', 'importBatchId', 'endpoint']); uuid(source.importBatchId); if (!baseline || source.endpoint !== 'IMPORT_BASELINE') return invalid(); }
       else return invalid();
+      if (numbered) {
+        const display = object(item.display, ['date', 'businessType', 'sourceNumber', 'operator', 'balanceTransition', 'navigation']);
+        const date = businessDate(text(display.date)), filter = parameters.filter!;
+        if (!INVENTORY_LEDGER_BUSINESS_TYPES.includes(display.businessType as never) || display.navigation !== 'NOT_CHECKED'
+          || (filter.dateFrom !== null && date < filter.dateFrom) || (filter.dateTo !== null && date > filter.dateTo)
+          || (filter.businessType !== null && display.businessType !== filter.businessType)) return invalid();
+        if (display.sourceNumber !== null) text(display.sourceNumber);
+        const operator = object(display.operator, ['accountId', 'name', 'labelBasis']);
+        if (operator.labelBasis !== 'CURRENT_REFERENCE' || (operator.accountId === null && operator.name !== null)) return invalid();
+        if (operator.accountId !== null) uuid(operator.accountId);
+        if (operator.name !== null) text(operator.name);
+        const transition = object(display.balanceTransition, ['state', 'before', 'after', 'reason']);
+        if (transition.state !== 'UNKNOWN' || transition.before !== null || transition.after !== null || transition.reason !== 'NO_RECORDED_BALANCE_TRANSITION') return invalid();
+        // The authoritative source-number predicate uses PostgreSQL's locale.
+        // A second JavaScript lowercase filter could reject a valid DB match.
+      }
     }
     const next = cursor(row.nextCursor);
+    if (numbered) {
+      if (row.page !== parameters.page || typeof row.filteredTotal !== 'string' || !/^(0|[1-9]\d{0,127})$/.test(row.filteredTotal) || next !== null) return invalid();
+      const remaining = BigInt(row.filteredTotal) - (BigInt(parameters.page!) - 1n) * 20n;
+      if (row.entries.length !== Number(remaining < 0n ? 0n : remaining > 20n ? 20n : remaining)) return invalid();
+    }
     if (next && (row.entries.length !== parameters.pageSize || !previous || next.entryId !== previous.entryId || next.postedAt !== previous.postedAt)) return invalid();
     return value as InventoryLedgerPage;
   } catch { return invalid(); }
@@ -78,8 +101,10 @@ export function checkedLedgerPage(value: unknown, parameters: InventoryLedgerQue
 export function createInventoryLedgerHttpReader(options: HttpQueryOptions): InventoryLedgerReader {
   const http = createHttpJsonQuery(options);
   return Object.freeze({ readLedger: read => {
-    const { warehouseId, skuId, pageSize, after } = read.parameters;
-    const parameters = parseInventoryLedgerQuery({ warehouseId, skuId, pageSize, after: after ? { postedAt: after.postedAt, entryId: after.entryId } : null });
+    const { warehouseId, skuId, pageSize, after, page, filter } = read.parameters;
+    const numbered = page !== undefined || filter !== undefined;
+    const parameters = parseInventoryLedgerQuery({ warehouseId, skuId, pageSize, after: after ? { postedAt: after.postedAt, entryId: after.entryId } : null,
+      ...(numbered ? { page, filter: filter ? { dateFrom: filter.dateFrom, dateTo: filter.dateTo, businessType: filter.businessType, source: filter.source } : filter } : {}) });
     return http.post('/inventory/ledger/query', parameters, read.signal, value => checkedLedgerPage(value, parameters));
   } } satisfies InventoryLedgerReader);
 }

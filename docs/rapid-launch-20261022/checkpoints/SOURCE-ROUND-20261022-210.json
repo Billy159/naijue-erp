@@ -1,0 +1,111 @@
+{
+  "atUtc": "2026-10-23T19:32:44.192216+00:00",
+  "parent": "cd6046a238e7b779f1deae2a96472c9d1141be54",
+  "taskId": "F2-I07-I08-NATIVE-LEDGER-01",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/ledger-contracts.ts",
+      "bytes": 1204,
+      "sha256": "6c14f7e5564dd9bb46673a8c9240307b72357c991b8a6afb61104ddda8721718",
+      "beforeSha256": "ed4ba0bab7ac27b7f2b9e9b279cb2d395a5ac409cb60118f2ec4d111066ee029",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/inventory/ledger-http-reader.ts",
+      "bytes": 10793,
+      "sha256": "15b600312cbd11966a1645acffa3ca0cc7bb66ed6f184da8bea631d6e8d57984",
+      "beforeSha256": "721af12d0789b42e0cc15cb21f5878143eea81b1c5c363343e593a256460a40f",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/inventory/ledger-drawer.tsx",
+      "bytes": 14050,
+      "sha256": "ffe475ba79ea9faa0e6f04826f910b9ada64677c72584f0e22500809e135bd33",
+      "beforeSha256": "be670295c9673e7c78f6a97767de09a7d6814783bb86a291a73e296bf6d4efd3",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/inventory/ledger.css",
+      "bytes": 7323,
+      "sha256": "1761af8b66c951c216049a6eae0150ec073e1a679f1c7ef1a23d293ed4582ba1",
+      "beforeSha256": "25ad71c2c62881f8af702123cab51673f728780e775f6e024f9207022137c1e8",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/inventory/ledger.test.ts",
+      "bytes": 10582,
+      "sha256": "18d6ba474e63bd4cd67de1326c56edf804b288752b8b3cf0c85b9746409ee8a5",
+      "beforeSha256": "1f0f1fdefe192eeda47f252bc99c85177baee99a3a5008fa055c5ed0300198a5",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/I07-I08-NATIVE-LEDGER-01/RESULT.json",
+  "ownerReceiptSha256": "63972b86e387c2d9cbf9ca75ede53b97c530e02c8622390310b723e35c091c53",
+  "ownerDelivery": {
+    "taskId": "F2-I07-I08-NATIVE-LEDGER-01",
+    "owner": "F2",
+    "atUtc": "2026-10-23T19:25:55.073184+00:00",
+    "status": "SOURCE_READY_EXACT5_RELEASED_FOR_C_FREEZE; ACTUAL_QA_AND_HOST_NAV_PENDING",
+    "authority": "C original I07/I08 exact5 delegation; human reporting authorization01a161f7-a5e8-7e10-9059-9537c28910c2; gpt-6.1-sol/xhigh; Fast unverifiable",
+    "root": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+    "backend": "C208 exact6 all pins matched before source work; same original POST /inventory/ledger/query; no independent DTO/API or backend/schema changes",
+    "files": [
+      {
+        "path": "apps/web/src/inventory/ledger-contracts.ts",
+        "bytes": 1204,
+        "sha256": "6c14f7e5564dd9bb46673a8c9240307b72357c991b8a6afb61104ddda8721718",
+        "beforeSha256": "ed4ba0bab7ac27b7f2b9e9b279cb2d395a5ac409cb60118f2ec4d111066ee029"
+      },
+      {
+        "path": "apps/web/src/inventory/ledger-http-reader.ts",
+        "bytes": 10793,
+        "sha256": "15b600312cbd11966a1645acffa3ca0cc7bb66ed6f184da8bea631d6e8d57984",
+        "beforeSha256": "721af12d0789b42e0cc15cb21f5878143eea81b1c5c363343e593a256460a40f"
+      },
+      {
+        "path": "apps/web/src/inventory/ledger-drawer.tsx",
+        "bytes": 14050,
+        "sha256": "ffe475ba79ea9faa0e6f04826f910b9ada64677c72584f0e22500809e135bd33",
+        "beforeSha256": "be670295c9673e7c78f6a97767de09a7d6814783bb86a291a73e296bf6d4efd3"
+      },
+      {
+        "path": "apps/web/src/inventory/ledger.css",
+        "bytes": 7323,
+        "sha256": "1761af8b66c951c216049a6eae0150ec073e1a679f1c7ef1a23d293ed4582ba1",
+        "beforeSha256": "25ad71c2c62881f8af702123cab51673f728780e775f6e024f9207022137c1e8"
+      },
+      {
+        "path": "apps/web/src/inventory/ledger.test.ts",
+        "bytes": 10582,
+        "sha256": "18d6ba474e63bd4cd67de1326c56edf804b288752b8b3cf0c85b9746409ee8a5",
+        "beforeSha256": "1f0f1fdefe192eeda47f252bc99c85177baee99a3a5008fa055c5ed0300198a5"
+      }
+    ],
+    "completed": [
+      "Whole original gold.js ledgerRender layout: native identity/current actual selected-cell quantity, last30 Shanghai days, dates/type/source form, six columns, exact filtered total,20-row numbered pager, empty/read states. Original full inventory-ledger.css31 blocks78 declarations preserve order with carrier-only selectors; native header/body/compact-table/date/source dependencies mapped to public components.",
+      "Numbered mode exact page/filter/display/count decoder and HTTP projection through LatestQuery immutable null-prototype snapshot. Legacy exact4 body/keyset still accepted unchanged. Exact signed BigInt quantities/counts and raw6fraction timestamps retained. DB-locale source substring is never re-filtered in JavaScript.",
+      "Original public StandardOverlay/StandardReadTable/StandardPagination plus UIDate/UIInput and actual DemoSingleSelectAction+style lease. Date/type/source draft changes make no IO, query resets page1; pager retains executed conditions. Failed reads preserve labelled prior facts, true empty only after successful0; child dispose/cancel ignores late facts.",
+      "Source action seam optional onOpenSource(entry):boolean|Promise<boolean>; exact original entry only, no ID grant/N+1. Unbound stays disabled with reason; false/error shows visible feedback; pending prevents duplicate row clicks; closed/changed success ignores late result. F1 alone owns actual host.",
+      "Known absent before/after fields render unknown→unknown; current operator reference remains current not invented historical staff. Unsupported native purchase option retained disabled instead of mapped to UNKNOWN."
+    ],
+    "checks": {
+      "node24": "Old4 targeted ledger groups PASS after decoder edit; new numbered4 initially3pass+1assertion-message mismatch; replaced only assertion with HttpQueryError.kind and failedgroup PASS. Legacy/source/history semantics not weakened.",
+      "strict": "PASS final exact5 affected transitive closure0diagnostics",
+      "syntheticActualDOM": "Final React19 StrictMode4groups PASS: one initial read/default30days/native six columns/exact selected quantity; draft vs executed/page2/invalid date/source literal; prior success/error/retry/trueempty/cancel; close+late+parent. Additional real public type popup/disabledpurchase/change draft/search icon+host false feedback PASS, no row prefetch.",
+      "css": "Complete original31blocks78declarations preserved in order, CSS parser PASS/bundlewarnings0",
+      "corrections": "UISelect first extra StrictMode probe had expanded state but missing portal; replaced consumer with already existing public DemoSingleSelectAction/style lease whose actual popup/selection now pass. Initial DOM harness lacked HTMLIFrameElement; added existing JSDOM global only. Shared UIDate calendar-popup interaction probe did not complete in JSDOM, no success claim; date typing/query checks passed."
+    },
+    "notTested": [
+      "Actual Chrome layout/screenshots/type/calendar popup focus pixels and independent QF2 acceptance",
+      "Actual PG/network/HTTP/session/security/performance/deployment/fullpreviewbuild",
+      "Actual F1 source-document route/current permission integration; synthetic callback demonstrates intent/refusal only",
+      "Recorded per-ledger beforeAfter facts remain absent; candidate DB fields unapproved/unimplemented",
+      "Whole I07/I08 acceptance and104leaves not counted"
+    ],
+    "blockers": [
+      "No F2 source blocker for current readonly scope. Source host pending F1/C; real balances require separately approved factual fields."
+    ],
+    "next": "C fixed exact5 then targeted QF2 actual for this increment; F1 connects approved callback on original routes. F2 proceeds two independent new P2 fixes in separate batches, no further write to released5 until new directed finding."
+  },
+  "qualification": "SOURCE_FIXED_ONLY; owner targeted checks adopted; independent affected acceptance and actual browser/business/performance remain separate. No build or deployment claimed."
+}
