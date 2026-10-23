@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T02:28:13.623868+00:00",
+  "updatedAt": "2026-10-23T03:52:53.434608+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -3056,6 +3056,10 @@
           "group": "PRODUCT_FIRST_VISIT_TABS_SHARED_SEAM",
           "fieldGate": "CLIENT_UI_ONLY_NO_DTO_OR_BACKEND_SCHEMA_WRITE_CHANGE",
           "boundary": "F1 unique writer. Keep default existing behavior and frozen UI, stabilize visited state; exact additive minimal seam/leaf extraction only."
+        },
+        {
+          "path": "apps/web/src/components/standard-tabs.css",
+          "fieldGate": "Existing product native tabs scoped CSS only; default Arco/Drawer unchanged; no backend fields or write contract"
         }
       ]
     }

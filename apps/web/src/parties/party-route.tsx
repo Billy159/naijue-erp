@@ -1,17 +1,15 @@
 import { SettingsAuditEntry, type SettingsAuditCapability } from '../settings/audit/audit-entry.tsx';
 import type { SettingsAuditDrawerProps } from '../settings/audit/contracts.ts';
-import { Input, Button, Table, Tag, Empty } from '@arco-design/web-react';
+import { Input, Button, Table, Tag, Empty, Modal } from '@arco-design/web-react';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { IconSearch } from '@arco-design/web-react/icon';
 import '@arco-design/web-react/dist/css/arco.css';
 import '../demo-presentation/controls.css';
-import './source-settings.css';
 import './parties.css';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import { partyLabels, type PartyKind, type PartyPageSize, type PartyRecord, type PartySearch } from './contracts.ts';
 import type { PartyMaintenanceController, PartyWorkspace } from './controller.ts';
-import { PartyPagination } from './party-pagination.tsx';
-import { PartySingleSelect } from './party-single-select.tsx';
+import { DemoSettingsPager, DemoSettingsSingleSelect } from '../settings/demo-settings-controls.tsx';
 
 
 const forms = new AsyncLeafRegistry({ form: { load: () => import('./party-form.tsx') } }, { maxRetainedEntries: 1 });
@@ -68,21 +66,28 @@ function PartyPage({ controller, readOnly, audit }: { readonly controller: Party
   const activate = (element: EventTarget | null, action: () => void) => { if (!(element instanceof HTMLElement)) return; trigger.current = element; scroll.current = { top: region.current?.scrollTop ?? 0, left: region.current?.scrollLeft ?? 0 }; setNotice(''); action(); };
   const readOnlyTitle = readOnly ? '当前页面仅开放只读，资料维护写入能力未开放' : undefined;
   const columns = [{ title: '名称', dataIndex: 'name' }, { title: '编码', dataIndex: 'code', render: (value: string) => <span className="party-code">{value}</span> }, { title: '状态', width: 100, render: (_: unknown, row: PartyRecord) => <Tag className={`iw-status ${row.enabled ? 'normal' : 'off'}`}>{row.enabled ? '正常' : '已停用'}</Tag> }, { title: '操作', width: 76, render: (_: unknown, row: PartyRecord) => <div className="bs-row-actions"><Button type="text" size="small" className="party-edit" data-party-id={row.id} disabled={readOnly || busy || blocked} title={readOnlyTitle} onClick={event => { if (!readOnly) activate(event.currentTarget, () => { void controller.openExisting(row.id, 'EDIT'); }); }}>编辑</Button></div> }];
-  return <section className="bs-page iw-workbench iw-arco-controls party-workbench" aria-label={`${label}维护`} ref={container}>
-    <header className="bs-head iw-head"><h1>{label}{readOnly && <small className="party-readonly">（只读）</small>}</h1><div className="bs-head-actions"><SettingsAuditEntry scope={controller.scope} {...(audit ? { capability: audit, onAccessFailure: audit.onAccessFailure } : {})} localHasUnresolvedWrite={() => controller.hasUnresolvedWrite} /><Button type="primary" disabled={readOnly || blocked} title={readOnlyTitle} onClick={event => { if (!readOnly) activate(event.currentTarget, () => { controller.openCreate(); }); }}>新增{label}</Button></div></header>
-    <form className="bs-toolbar" onSubmit={event => { event.preventDefault(); run(); }}><div className="bs-filter-fields"><div className="bs-filter search"><Input className="iw-arco-input iw-search-input" aria-label="搜索名称或编码" value={search} disabled={blocked} maxLength={200} onChange={value => controller.setFilterDraft({ search: value, enabled })} placeholder="搜索名称或编码" suffix={<IconSearch />} allowClear /></div><div className="bs-filter"><PartySingleSelect label={`${label}状态`} value={enabled} disabled={blocked} options={[{ label: '正常', value: 'ENABLED' }, { label: '已停用', value: 'DISABLED' }, { label: '全部', value: 'ALL' }]} onChange={value => controller.setFilterDraft({ search, enabled: value as PartySearch['enabled'] })} /></div></div><div className="bs-toolbar-actions iw-query-actions"><Button className="btn primary" type="primary" htmlType="submit" disabled={busy || blocked}>查询</Button><Button className="btn iw-reset" disabled={busy || blocked} onClick={() => { controller.setFilterDraft({ search: '', enabled: 'ENABLED' }); setNotice(''); void controller.queryList({ search: '', enabled: 'ENABLED', page: 1, pageSize: applied?.pageSize ?? size }); }}>重置</Button></div></form>
+  return <section className="demo-settings-workbench bs-page iw-workbench iw-arco-controls party-workbench" aria-label={`${label}维护`} ref={container}>
+    <header className="bs-head iw-head"><h1>{label}</h1><div className="bs-head-actions"><SettingsAuditEntry scope={controller.scope} {...(audit ? { capability: audit, onAccessFailure: audit.onAccessFailure } : {})} localHasUnresolvedWrite={() => controller.hasUnresolvedWrite} /><Button type="primary" disabled={readOnly || blocked} title={readOnlyTitle} onClick={event => { if (!readOnly) activate(event.currentTarget, () => { controller.openCreate(); }); }}>新增{label}</Button></div></header>
+    <form className="bs-toolbar" onSubmit={event => { event.preventDefault(); run(); }}><div className="bs-filter-fields"><div className="bs-filter search"><Input className="iw-arco-input iw-search-input" aria-label="搜索名称或编码" value={search} disabled={blocked} maxLength={200} onChange={value => controller.setFilterDraft({ search: value, enabled })} placeholder="搜索名称或编码" suffix={<IconSearch />} allowClear /></div><div className="bs-filter"><DemoSettingsSingleSelect scope={controller.scope} label={`${label}状态`} placeholder="状态" value={enabled} disabled={blocked} options={[{ label: '正常', value: 'ENABLED' }, { label: '已停用', value: 'DISABLED' }, { label: '全部', value: 'ALL' }]} onChange={value => controller.setFilterDraft({ search, enabled: value as PartySearch['enabled'] })} /></div></div><div className="bs-toolbar-actions iw-query-actions"><Button className="btn primary" type="primary" htmlType="submit" disabled={busy || blocked}>查询</Button><Button className="btn iw-reset" disabled={busy || blocked} onClick={() => { controller.setFilterDraft({ search: '', enabled: 'ENABLED' }); setNotice(''); void controller.queryList({ search: '', enabled: 'ENABLED', page: 1, pageSize: applied?.pageSize ?? size }); }}>重置</Button></div></form>
     {notice && <p className="party-notice" role="status">{notice}</p>}
     {busy && <p className="party-read-state" role="status">正在读取{label}…{data ? '下方保留上次已执行结果。' : ''}<Button type="text" size="small" onClick={() => controller.list.cancel()}>取消本次读取</Button></p>}
     {query.phase === 'error' && <p className="bs-error party-read-state" role="alert">当前查询失败，未得到新结果。{data ? '下方仍为上次成功结果。' : ''}<Button type="text" disabled={blocked} onClick={() => { if (query.request) void controller.queryList(query.request.parameters); }}>重试查询</Button></p>}
     {state.listStale && !busy && <p className="party-read-state" role="status">资料已变更，列表为先前结果。<Button type="text" disabled={blocked} onClick={() => controller.refreshList()}>刷新已执行查询</Button></p>}
     <div className="bs-table-wrap iw-arco-table party-results" ref={region} aria-busy={busy}><Table className="party-list" size="small" rowKey="id" columns={columns} data={data ? [...data.items] : []} pagination={false} noDataElement={<Empty description={!data ? busy ? '正在读取资料' : query.phase === 'error' ? '当前查询失败' : '等待查询' : '暂无符合条件的数据'} />} /></div>
-    <div className="bs-pager"><PartyPagination page={applied?.page ?? 1} pageSize={applied?.pageSize ?? size} total={data?.total ?? null} busy={busy || blocked} onPage={value => page(value)} onPageSize={value => { if (applied) page(1, value); else setSize(value); }} /></div>
+    <DemoSettingsPager scope={controller.scope} label="客户供应商列表分页" page={applied?.page ?? 1} size={applied?.pageSize ?? size} total={data?.total ?? null} busy={busy || blocked} onPage={value => page(value)} onSize={value => { if (applied) page(1, value); else setSize(value); }} />
     {!readOnly && state.editor && <PartyFormLeaf controller={controller} getPopupContainer={() => container.current ?? document.body} />}
   </section>;
 }
 function PartyFormLeaf(props: { readonly controller: PartyMaintenanceController; readonly getPopupContainer: () => HTMLElement }) {
   const { controller } = props; const [module, setModule] = useState<Awaited<ReturnType<typeof forms.load<'form'>>> | null>(null); const [error, setError] = useState(false); const [retry, setRetry] = useState(0);
+  const state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot), editor = state.editor;
   useEffect(() => { let attached = true; setError(false); void forms.load('form', controller.scope).then(value => { if (attached && controller.scope.active) setModule(value); }, () => { if (attached && controller.scope.active) setError(true); }); return () => { attached = false; }; }, [controller, retry]);
-  if (!controller.scope.active) return null;
-  return module ? <module.PartyForm {...props} /> : <div className="party-modal-backdrop"><section className="arco-modal bs-modal iw-arco-modal iw-arco-controls party-modal" role="dialog" aria-modal="true" aria-label="准备资料表单"><header className="arco-modal-header"><strong>资料表单</strong><Button type="text" onClick={() => controller.requestClose()}>关闭</Button></header><div className="arco-modal-content"><p role={error ? 'alert' : 'status'}>{error ? '表单暂不可加载。' : '正在准备表单…'}{error && <Button type="text" onClick={() => setRetry(value => value + 1)}>重试表单</Button>}</p>{controller.getSnapshot().editor?.closePrompt && <div role="alert"><p>尚有未保存内容，放弃本次填写？</p><Button onClick={() => controller.keepEditing()}>继续填写</Button><Button onClick={() => controller.discardEditor()}>放弃本次填写</Button></div>}</div></section></div>;
+  if (!controller.scope.active || state.disposed || !editor) return null;
+  const verb = { CREATE: '新增', EDIT: '编辑', DISABLE: '停用', RESTORE: '恢复' }[editor.action];
+  return module ? <module.PartyForm {...props} /> : <Modal className="demo-ui demo-settings-modal bs-modal iw-arco-modal iw-arco-controls party-modal" visible title={`${verb}${partyLabels[controller.kind]}`}
+    getPopupContainer={props.getPopupContainer} onCancel={() => { controller.requestClose(); }} okText="确定" cancelText="取消" maskClosable={false} autoFocus={false} focusLock okButtonProps={{ disabled: true }}>
+    <p role={error ? 'alert' : 'status'}>{error ? '表单暂不可加载。' : '正在准备表单…'}{error && <Button type="text" onClick={() => setRetry(value => value + 1)}>重试表单</Button>}</p>
+    {state.notice && <p className="bs-error" role="alert">{state.notice}</p>}
+    {editor.closePrompt && <section className="party-close-confirm" role="alert"><strong>放弃本次填写？</strong><p>本次未保存的内容将丢弃，已保存的资料保持不变。</p><div className="iw-actions"><Button onClick={() => controller.keepEditing()}>继续填写</Button><Button onClick={() => controller.discardEditor()}>放弃本次填写</Button></div></section>}
+  </Modal>;
 }

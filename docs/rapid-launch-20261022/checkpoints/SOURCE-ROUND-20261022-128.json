@@ -1,0 +1,353 @@
+{
+  "atUtc": "2026-10-23T03:52:53.434608+00:00",
+  "parent": "9ea2850facd36b4e2ff023370bf97cdab49c1c19",
+  "groups": [
+    {
+      "slice": "F3 actual Party complete shared native Modal/Select/Pager/CSS source consumers",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/party-complete-ui-v1/RESULT.json",
+      "receiptSha256": "0ea8d52235a538ee8785267c9a1da7f56b1556d6542518e319d1e2c915d3b92d",
+      "receiptSnapshot": {
+        "taskId": "F05/PARTY-COMPLETE-UI-v1",
+        "clientDate": "2026-10-23",
+        "atUtc": "2026-10-23T03:50:06.705655+00:00",
+        "status": "SOURCE_IMPLEMENTED_CHECKED_FOR_C_FIXED_CANDIDATE",
+        "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+        "baseHead": "8dbb521d668f2475c5b39e1e25b214a4258fa38d",
+        "headObserved": "82d01cae78b08440068f04adb2883e686ea6e81f",
+        "entryIds": [
+          "B03",
+          "O-B03"
+        ],
+        "files": [
+          {
+            "path": "apps/web/src/parties/party-route.tsx",
+            "beforeSha256": "0fcf69f781740f8aa3aa2e37eef3dacc55f3b3a5e8f51ced01b59905d44f804c",
+            "sha256": "6529cc4529310183d4ba683cc6309d856617e56e44e8009f12e8c6acb552c6c6",
+            "bytes": 12713
+          },
+          {
+            "path": "apps/web/src/parties/party-form.tsx",
+            "beforeSha256": "02e822d1820012c9e3592efa872fa53b9dc8beaaacec92f3b85613c11911ac78",
+            "sha256": "d538219b6a6b99f7ca50a65674758e78cf5a6dbb6c044171c3bab415ea0f4b4f",
+            "bytes": 5756
+          }
+        ],
+        "actualChangedScope": "Exact2 only; previously proposed private party-pagination.tsx edit unnecessary because the page directly consumes existing DemoSettingsPager. No new application files.",
+        "sourceMap": [
+          {
+            "region": "客户/供应商完整列表",
+            "demoSource": "冻结b8bcfe3 frontend/basic-settings.js settings route -> basic-settings-v2.jsx App header/columns/Table179-183 + Filters55-66",
+            "currentSource": "application/routes/parties.tsx -> CustomerPageHost/SupplierPageHost -> PartyPage (party-route.tsx)",
+            "actualUse": "Existing native page/row structure retained; actual page now consumes DemoSettingsSingleSelect and DemoSettingsPager. Source-DOM9 checks cover native23row fixture, explicit query and paging.",
+            "necessaryAdaptation": "User-approved CUSTOMER/SUPPLIER split removes combined party labels/tag filter/tag column. Native remote search/enabled/page/pageSize/total remain authoritative, drafts remain separate.",
+            "sourceClass": "MINIMAL_ADAPTATION_SOURCE_CHANGED_BROWSER_PENDING",
+            "owner": "F3",
+            "wholePageAccepted": false
+          },
+          {
+            "region": "筛选与分页",
+            "demoSource": "basic-settings-v2.jsx SmallSelect/Filters/Pager -> unified-single-select.jsx Choice + inventory-workbench.js paginationMarkup; final inventory-refinement.css",
+            "currentSource": "party-route.tsx -> settings/demo-settings-controls.tsx -> DemoSettingsSingleSelect/DemoSettingsPager -> DemoPageSizeSelect",
+            "actualUse": "Actual leaf graph includes shared source controls and scoped demo-settings-ui.css; private party-single-select.tsx and party-pagination.tsx no longer in this page graph. Old files retained, not deleted or rewritten.",
+            "necessaryAdaptation": "Existing UI components map native ENABLED/DISABLED/ALL; current scope supplies same guards. Server remote paging replaces Demo matched/slice.",
+            "sourceClass": "DIRECT_EXISTING_MIGRATED_UI_CONSUMER",
+            "owner": "F3",
+            "wholePageAccepted": false
+          },
+          {
+            "region": "新增/编辑名称/编码/状态与Modal",
+            "demoSource": "basic-settings-v2.jsx Field/Readonly/Fields72-98, App Modal184-186; basic-settings-v2.css and inventory-workbench.css form/modal adapters",
+            "currentSource": "party-route.tsx PartyFormLeaf -> lazy party-form.tsx PartyForm; migrated demo-settings-modal stylesheet",
+            "actualUse": "Existing formal Field/Readonly/name/code/enabled branches preserved. Both kinds checked with raw000001 code and current native version3. Normal form code changes only add existing migrated scope/theme classes.",
+            "necessaryAdaptation": "Approved split omits tags; generated code remains server-owned; original controller/CAS/key/receipt/permissions/version/unknown facts unchanged.",
+            "sourceClass": "MINIMAL_ADAPTATION_SOURCE_REUSED_CURRENT_SCOPE_APPLIED",
+            "owner": "F3",
+            "wholePageAccepted": false
+          },
+          {
+            "region": "准备/失败/重试/取消/放弃",
+            "demoSource": "basic-settings-v2.jsx App native Arco Modal wrapper; loading lifecycle is required native added state, not a frozen Demo function",
+            "currentSource": "party-route.tsx PartyFormLeaf",
+            "actualUse": "Handwritten backdrop/section removed; native Arco Modal matches full source title/footer/mask/autoFocus settings and existing theme classes, same controller close/discard/retry callbacks. First open, cleanEsc, dirtyCancel, retryDraft and late code tested.",
+            "necessaryAdaptation": "Latest human attachment5.6/5.9/5.10 requires loading/error/retry and stable drafts. No new backend/recovery/permission system.",
+            "sourceClass": "DEMO_MODAL_REUSE_WITH_APPROVED_NATIVE_LIFECYCLE_CONTENT",
+            "owner": "F3",
+            "wholePageAccepted": false
+          },
+          {
+            "region": "最终CSS来源与作用域",
+            "demoSource": "index.html source CSS order; basic-settings-v2.jsx injected Arco+settingsCSS; unified Choice local styles; prior migrated shared demo-settings-ui.css trace",
+            "currentSource": "party-route.tsx stops importing parties/source-settings.css; shared Demo controls import settings/demo-settings-ui.css; parties.css retains existing conditional native state rules",
+            "actualUse": "Leaf build33inputs9virtualoutputs includes shared scoped CSS; old global bs stylesheet absent. No shared/global/root stylesheet edited. Actual full-build/CSS cascade/HTTP pixels pending C/QF.",
+            "necessaryAdaptation": "Reuse existing migrated scoped presentation instead of a second page-specific copy. Read-only write gate and audit capabilities remain unchanged; remove only unapproved heading suffix.",
+            "sourceClass": "DIRECT_EXISTING_MIGRATED_SCOPED_CSS_CONSUMER",
+            "owner": "F3",
+            "wholePageAccepted": false
+          }
+        ],
+        "checks": {
+          "newSourceDomGroups": [
+            {
+              "name": "party actual page consumes shared migrated Demo filter, pager and viewport",
+              "status": "PASS",
+              "nativeCalls": [
+                {
+                  "path": "/api/customers",
+                  "query": {
+                    "search": "",
+                    "enabled": "ENABLED",
+                    "page": "1",
+                    "pageSize": "20"
+                  },
+                  "method": "GET"
+                }
+              ]
+            },
+            {
+              "name": "loading form is the native Demo Modal with original footer and Escape close",
+              "status": "PASS",
+              "nativeCalls": [
+                {
+                  "path": "/api/customers",
+                  "query": {
+                    "search": "",
+                    "enabled": "ENABLED",
+                    "page": "1",
+                    "pageSize": "20"
+                  },
+                  "method": "GET"
+                }
+              ]
+            },
+            {
+              "name": "shared status choices change native draft only until explicit query",
+              "status": "PASS",
+              "nativeCalls": [
+                {
+                  "path": "/api/customers",
+                  "query": {
+                    "search": "",
+                    "enabled": "ENABLED",
+                    "page": "1",
+                    "pageSize": "20"
+                  },
+                  "method": "GET"
+                },
+                {
+                  "path": "/api/customers",
+                  "query": {
+                    "search": "",
+                    "enabled": "ALL",
+                    "page": "1",
+                    "pageSize": "20"
+                  },
+                  "method": "GET"
+                }
+              ]
+            },
+            {
+              "name": "loading failure retains stable native editor, draft and dirty cancel prompt",
+              "status": "PASS",
+              "nativeCalls": [
+                {
+                  "path": "/api/customers",
+                  "query": {
+                    "search": "",
+                    "enabled": "ENABLED",
+                    "page": "1",
+                    "pageSize": "20"
+                  },
+                  "method": "GET"
+                }
+              ]
+            },
+            {
+              "name": "customer and supplier full source Fields retain exact independent code/version/status",
+              "status": "PASS",
+              "nativeCalls": [
+                {
+                  "path": "/api/customers",
+                  "query": {
+                    "search": "",
+                    "enabled": "ENABLED",
+                    "page": "1",
+                    "pageSize": "20"
+                  },
+                  "method": "GET"
+                },
+                {
+                  "path": "/api/customers/00000000-0000-4000-8000-000000000001",
+                  "query": {},
+                  "method": "GET"
+                },
+                {
+                  "path": "/api/suppliers",
+                  "query": {
+                    "search": "",
+                    "enabled": "ENABLED",
+                    "page": "1",
+                    "pageSize": "20"
+                  },
+                  "method": "GET"
+                },
+                {
+                  "path": "/api/suppliers/00000000-0000-4000-8000-000000000001",
+                  "query": {},
+                  "method": "GET"
+                }
+              ]
+            },
+            {
+              "name": "read-only host keeps disabled native actions and source header without extra suffix",
+              "status": "PASS",
+              "nativeCalls": [
+                {
+                  "path": "/api/suppliers",
+                  "query": {
+                    "search": "",
+                    "enabled": "ENABLED",
+                    "page": "1",
+                    "pageSize": "20"
+                  },
+                  "method": "GET"
+                }
+              ]
+            },
+            {
+              "name": "close cancels detail and late success cannot reopen another context",
+              "status": "PASS",
+              "nativeCalls": [
+                {
+                  "path": "/api/customers",
+                  "query": {
+                    "search": "",
+                    "enabled": "ENABLED",
+                    "page": "1",
+                    "pageSize": "20"
+                  },
+                  "method": "GET"
+                },
+                {
+                  "path": "/api/customers/00000000-0000-4000-8000-000000000001",
+                  "query": {},
+                  "method": "GET"
+                }
+              ]
+            },
+            {
+              "name": "scope abort detaches code load and clears modal without writes or auth replay",
+              "status": "PASS",
+              "nativeCalls": [
+                {
+                  "path": "/api/customers",
+                  "query": {
+                    "search": "",
+                    "enabled": "ENABLED",
+                    "page": "1",
+                    "pageSize": "20"
+                  },
+                  "method": "GET"
+                }
+              ]
+            },
+            {
+              "name": "shared pager retains executed range independently from unapplied search",
+              "status": "PASS",
+              "nativeCalls": [
+                {
+                  "path": "/api/customers",
+                  "query": {
+                    "search": "",
+                    "enabled": "ENABLED",
+                    "page": "1",
+                    "pageSize": "20"
+                  },
+                  "method": "GET"
+                },
+                {
+                  "path": "/api/customers",
+                  "query": {
+                    "search": "",
+                    "enabled": "ENABLED",
+                    "page": "2",
+                    "pageSize": "20"
+                  },
+                  "method": "GET"
+                },
+                {
+                  "path": "/api/customers",
+                  "query": {
+                    "search": "未执行草稿",
+                    "enabled": "ENABLED",
+                    "page": "1",
+                    "pageSize": "20"
+                  },
+                  "method": "GET"
+                }
+              ]
+            }
+          ],
+          "uniqueGroupCount": 9,
+          "types": "PASS exact2 + real transitive dependencies, existing strict/noEmit",
+          "leafBuild": {
+            "write": false,
+            "inputCount": 33,
+            "virtualOutputCount": 9,
+            "sharedUiInGraph": true,
+            "scopedDemoCssInGraph": true,
+            "oldGlobalSourceCssInGraph": false,
+            "privatePartySelectInGraph": false,
+            "privatePartyPagerInGraph": false
+          },
+          "diffCheck": "PASS",
+          "commands": 0,
+          "requestKeys": 0,
+          "allDataSynthetic": true,
+          "oldCommandCasReceiptAuthSuites": "REUSED_NOT_RERUN",
+          "driverCorrection": "Arco Empty uses one placeholder tbody row; targeted paging check now verifies native total0 and rendered Empty rather than requiring zero physicaltr. Eight passed groups reused; no source change for this correction."
+        },
+        "preserved": [
+          "Native controllers/http/DTOs/validation/CAS/request keys/receipts/permissions unchanged",
+          "Customer and supplier independent identities and original text codes",
+          "Original real write gate and optional audit capability; no invented formal host",
+          "Existing parent viewport/focus/draft lifetime logic; no root/shared component or CSS edits"
+        ],
+        "unmeasured": [
+          "Actual Chrome paired full page/new/edit/readOnly/selected/scroll/keyboard consistency",
+          "Central full candidate/build resource closure/HTTP/source version and actual runtime dedup",
+          "Cold1/repeat2 bytes/latency/representative scale/formal performance",
+          "Actual registered-isolated save/readback/permission/transaction/PG and production deployment"
+        ],
+        "blockingOwnSource": [],
+        "externalSeams": [
+          "C/F1 production prepare/audit capability remains its own pending integration; no self-created capability or hidden feature"
+        ],
+        "wholePagePass": false,
+        "actualBrowser": false,
+        "actualPG": false,
+        "next": "C fixed exact2 and next necessary integrated candidate; original QF compares actual B03/O-B03 affected page/dialog states. Preserve prior valid scopes and do not rerun backend suites.",
+        "skillApplied": "anti-over-defense fully read. Existing project source-binding/REGISTER/receipts retained as explicitly required; no new audit/admission/contract/approval framework; no additional unrelated test rounds.",
+        "modelRequirement": {
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "xhigh",
+          "fastEnabledByF3": false
+        }
+      },
+      "files": [
+        {
+          "path": "apps/web/src/parties/party-route.tsx",
+          "owner": "F3",
+          "bytes": 12713,
+          "sha256": "6529cc4529310183d4ba683cc6309d856617e56e44e8009f12e8c6acb552c6c6"
+        },
+        {
+          "path": "apps/web/src/parties/party-form.tsx",
+          "owner": "F3",
+          "bytes": 5756,
+          "sha256": "d538219b6a6b99f7ca50a65674758e78cf5a6dbb6c044171c3bab415ea0f4b4f"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Freeze exact2 and adopt9 scopedsourceDOM/type/leafgraph groups. ExistingpublicUI consumer reuse, no newchecks/framework/wholepage/realPG/performance claim. C127 preview alreadybuilding excludes this source128. Register existing standard-tabs.css soleF1 for alreadyrequested product native header; no simultaneous sharedCSS writer."
+}

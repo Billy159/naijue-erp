@@ -15,7 +15,7 @@ export function PartyForm(props: { readonly controller: PartyMaintenanceControll
   const pending = ['submitting', 'checking', 'replaying'].includes(write.phase); const uncertain = write.phase === 'uncertain'; const locked = pending || uncertain || editor.phase !== 'ready';
   const unchanged = editor.action === 'EDIT' && editor.record?.name === editor.draftName && editor.record.enabled === editor.draftEnabled;
   const incompatible = editor.action === 'DISABLE' && !editor.record?.enabled || editor.action === 'RESTORE' && editor.record?.enabled;
-  return <Modal className="bs-modal iw-arco-modal iw-arco-controls party-modal" visible title={`${verb}${label}`} getPopupContainer={props.getPopupContainer} onCancel={() => { controller.requestClose(); }} onOk={() => { void controller.submit(); }} confirmLoading={pending} okText="确定" cancelText="取消" maskClosable={false} autoFocus={false} focusLock
+  return <Modal className="demo-ui demo-settings-modal bs-modal iw-arco-modal iw-arco-controls party-modal" visible title={`${verb}${label}`} getPopupContainer={props.getPopupContainer} onCancel={() => { controller.requestClose(); }} onOk={() => { void controller.submit(); }} confirmLoading={pending} okText="确定" cancelText="取消" maskClosable={false} autoFocus={false} focusLock
     okButtonProps={{ disabled: locked || editing && !validName(editor.draftName) || unchanged || !!incompatible || !!editor.current || editor.record !== null && editor.record.version >= 2147483647 }}>
     {editor.phase === 'loading' && <p role="status">正在读取当前{label}…</p>}
     {editor.phase === 'error' && <p className="bs-error" role="alert">当前资料读取失败，不能提交；已输入内容未改变。<Button type="text" onClick={() => { void controller.retryDetail(); }}>重试资料</Button></p>}
