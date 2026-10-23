@@ -5,6 +5,8 @@ export interface DemoSingleSelectOption {
   readonly value: string;
   readonly label: string;
   readonly disabled?: boolean;
+  /** Original optgroup label from an explicit trusted caller; never inferred. */
+  readonly groupLabel?: string;
 }
 
 interface CommonProps {
@@ -31,7 +33,7 @@ interface CommonProps {
 }
 
 /**
- * Narrow common subset needed by the three page-size controls: ungrouped,
+ * Narrow common subset needed by the three page-size controls: unchanged ungrouped,
  * non-clear, controlled applied value. Search is opt-in; no option list is invented.
  * Other single values may use the original tag or flat presentation explicitly.
  */

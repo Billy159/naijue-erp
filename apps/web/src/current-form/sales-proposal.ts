@@ -90,6 +90,8 @@ export class SalesProposalSession {
   readonly #scope: ReadScope; readonly #reader: SalesProposalReader; readonly #onAccessFailure: ((error: HttpQueryError) => void) | undefined; readonly #listeners = new Set<() => void>();
   #seeded = false;
   readonly #specSkus = new Map<string, readonly CurrentFormSku[]>();
+  readonly #dictionaryGroups = new Map<string, DictionarySizeGroup>();
+  #dictionaryComplete = false;
   #savedWarehouse: { readonly hallId: string; readonly warehouseId: string } | null = null;
   readonly #savedLines = new Map<string, { readonly skuId: string; readonly snapshot: SalesDraftDto['lines'][number]['snapshot']; readonly product: CurrentFormProduct }>();
   #request: AbortController | null = null; #sequence = 0; #nextSettlement = 0; #nextLine = 0; #settlementTarget: string | null = null; #revision = 0; #entryTarget: { readonly direction: 'IN' | 'OUT'; readonly key: string } | null = null; #nextEntry = 0; #nextEntryOrder = 0; #inlineSettlement = false;
@@ -240,10 +242,14 @@ export class SalesProposalSession {
     const rows = picker.specSkus ?? picker.result!.items as readonly CurrentFormSku[];
     let patch: Partial<Pick<SalesProposalEntry, 'color' | 'fit' | 'size' | 'sizeGroup' | 'sku'>>;
     if (kind === 'size') {
-      const group = this.#state.sizeGroups.groups.find(group => group.sizes.some(size => size.id === id));
-      const size = group?.sizes.find(size => size.id === id);
       const legacy = rows.find(row => row.id === id || row.sizeId === id);
-      const chosen = size ?? (legacy ? { id: legacy.sizeId, name: legacy.sizeName } : null);
+      const sizeId = legacy?.sizeId ?? id;
+      const group = this.#state.sizeGroups.groups.find(group => group.sizes.some(size => size.id === sizeId));
+      const size = group?.sizes.find(size => size.id === sizeId);
+      // A current product group is a hard boundary, not a default display group.
+      // Legacy synthetic readers may lack the dictionary method; they can bind
+      // only an exact returned native SKU, never another dictionary coordinate.
+      const chosen = size ?? (!this.#reader.readSizeGroups && legacy ? { id: legacy.sizeId, name: legacy.sizeName } : null);
       if (!chosen || !selection.color || !selection.fit) return false;
       const sku = rows.find(row => row.productId === selection.product!.id && row.colorId === selection.color!.id && row.fitId === selection.fit!.id && row.sizeId === chosen.id) ?? null;
       patch = { size: { id: chosen.id, name: chosen.name }, sizeGroup: group ? { id: group.id, name: group.name } : null, sku };
@@ -345,13 +351,13 @@ export class SalesProposalSession {
     if (!p || p.phase !== 'ready' || !p.result || !Number.isSafeInteger(page) || page < 1 || BigInt(page - 1) * 20n >= p.result.exactTotal) return;
     await this.#read(p.kind, p.search, page, p.product, p.method);
   }
-  async retry(): Promise<void> { const p = this.#state.picker; if (p?.phase === 'error') await this.#read(p.kind, p.search, p.page, p.product, p.method); }
+  async retry(): Promise<void> { const p = this.#state.picker; if (p?.phase === 'error' && p.kind === 'sku') { this.#dictionaryGroups.clear(); this.#dictionaryComplete = false; } if (p?.phase === 'error') await this.#read(p.kind, p.search, p.page, p.product, p.method); }
   closePicker(): void { this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; if (!this.#state.disposed) this.#publish({ picker: null }); }
   async #read(kind: SalesProposalPicker, search: string, page: number, product: CurrentFormProduct | null, method: CurrentSalesReferenceItem | null): Promise<void> {
     if (this.#state.disposed) return;
     this.#cancelRead(); const sequence = this.#sequence, request = new AbortController(); this.#request = request;
     const signal = AbortSignal.any([request.signal, this.#scope.signal]); const hall = this.#state.draft.hall;
-    this.#publish({ picker: { kind, search, page, product, method, phase: 'loading', result: null }, notice: null });
+    this.#publish({ picker: { kind, search, page, product, method, phase: 'loading', result: null }, ...(kind === 'sku' ? { sizeGroups: { phase: 'unavailable' as const, groups: [] } } : {}), notice: null });
     try {
       const hallId = hall ? entityId('hall', hall.id) : null;
       let result: CurrentFormPage<Candidate>;
@@ -363,20 +369,37 @@ export class SalesProposalSession {
         if (!this.#specSkus.has(key)) {
           const rows = [...result.items] as CurrentFormSku[];
           for (let next = 1; BigInt(next - 1) * 20n < result.exactTotal; next++) {
+            if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
             if (next !== page) rows.push(...(await this.#reader.readProductSkus({ ...query, page: next }, signal)).items);
           }
           if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
           this.#specSkus.set(key, Object.freeze(rows));
         }
-        if (this.#reader.readSizeGroups && this.#state.sizeGroups.phase !== 'ready') {
-          const groups: DictionarySizeGroup[] = [];
-          for (let next = 1; ; next++) {
-            const data = await this.#reader.readSizeGroups({ search: '', page: next, pageSize: 100 }, signal);
-            groups.push(...data.items);
-            if (next * data.pageSize >= data.total) break;
+        if (this.#reader.readSizeGroups) {
+          const skus = this.#specSkus.get(key) ?? [];
+          const declared = product && 'sizeGroupId' in product && typeof product.sizeGroupId === 'string' ? product.sizeGroupId : null;
+          const projected = new Set(skus.map(sku => sku.sizeGroupId));
+          // Only explicit current product metadata is the hard boundary. An
+          // existing SKU, a default group or a complete global dictionary cannot
+          // supply missing product metadata, including for zero-SKU products.
+          if (!declared) throw new Error('CURRENT_PRODUCT_SIZE_GROUP_MISSING');
+          if (projected.size > 1 || [...projected].some(id => id !== declared)) throw new Error('CURRENT_PRODUCT_SIZE_GROUP_CONFLICT');
+          const assigned = declared;
+          if (!this.#dictionaryComplete) {
+            const groups: DictionarySizeGroup[] = [];
+            for (let next = 1; ; next++) {
+              const data = await this.#reader.readSizeGroups({ search: '', page: next, pageSize: 100 }, signal);
+              if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
+              groups.push(...data.items);
+              if (next * data.pageSize >= data.total) break;
+            }
+            for (const group of groups) this.#dictionaryGroups.set(group.id, group);
+            this.#dictionaryComplete = true;
           }
           if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
-          this.#publish({ sizeGroups: { phase: 'ready', groups } });
+          const actual = this.#dictionaryGroups.get(assigned);
+          if (!actual) throw new Error('CURRENT_PRODUCT_SIZE_GROUP_MISSING');
+          this.#publish({ sizeGroups: { phase: 'ready', groups: [actual] } });
         }
       }
       else {
@@ -390,7 +413,7 @@ export class SalesProposalSession {
     } catch (error) {
       if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
       if (error instanceof HttpQueryError && ['unauthenticated', 'forbidden'].includes(error.kind)) { this.#scope.dispose(); try { this.#onAccessFailure?.(error); } catch { /* Scope already cleared. */ } return; }
-      this.#publish({ picker: { kind, search, page, product, method, phase: 'error', result: null }, notice: '候选读取失败，未改变草稿。可明确重试。' });
+      this.#publish({ picker: { kind, search, page, product, method, phase: 'error', result: null }, notice: error instanceof Error && error.message.startsWith('CURRENT_PRODUCT_SIZE_GROUP_') ? '商品所属尺码组资料缺失或不一致，请重新读取或核对商品资料；未使用其他尺码组，原输入已保留。' : '候选读取失败，未改变草稿。可明确重试。' });
     } finally { if (this.#request === request) this.#request = null; }
   }
   async select(id: string, initialQuantity: '1' | '-1' = '1'): Promise<boolean> {
@@ -485,8 +508,8 @@ export class SalesProposalSession {
   }
   reset(discardConfirmed = false): boolean {
     if (this.#state.disposed || this.#state.dirty && !discardConfirmed) return false;
-    this.#savedLines.clear(); this.#specSkus.clear(); this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); return true;
+    this.#savedLines.clear(); this.#specSkus.clear(); this.#dictionaryGroups.clear(); this.#dictionaryComplete = false; this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#revision++; this.#publish({ draft: empty(), dirty: false, sizeGroups: { phase: 'unavailable', groups: [] }, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); return true;
   }
   cancel(discardConfirmed = false): boolean { if (!this.reset(discardConfirmed)) return false; this.dispose(); return true; }
-  readonly dispose = (): void => { if (this.#state.disposed) return; this.#savedLines.clear(); this.#specSkus.clear(); this.#savedWarehouse = null; this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#scope.signal.removeEventListener('abort', this.dispose); this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); this.#listeners.clear(); };
+  readonly dispose = (): void => { if (this.#state.disposed) return; this.#savedLines.clear(); this.#specSkus.clear(); this.#dictionaryGroups.clear(); this.#dictionaryComplete = false; this.#savedWarehouse = null; this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#scope.signal.removeEventListener('abort', this.dispose); this.#publish({ draft: empty(), dirty: false, disposed: true, sizeGroups: { phase: 'unavailable', groups: [] }, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); this.#listeners.clear(); };
 }

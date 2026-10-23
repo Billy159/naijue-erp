@@ -48,6 +48,8 @@ export function DemoSingleSelectAction(props: DemoSingleSelectActionProps) {
     return () => doc?.removeEventListener('keydown', escape);
   }, [props.open, props.disabled, props.onOpenChange]);
   const pageSize = props.presentation === 'page-size';
+  const grouped = props.options.some(option => option.groupLabel !== undefined);
+  const groups = grouped ? [...new Set(props.options.map(option => option.groupLabel))] : [];
   return <div ref={host} className="demo-single-select ui-single-host" onKeyDown={event => {
     if (!props.open || event.nativeEvent.isComposing || event.keyCode === 229 || event.key !== 'Escape') return;
     // The remote-page footer is outside Select's input key handler. Keep the
@@ -57,7 +59,7 @@ export function DemoSingleSelectAction(props: DemoSingleSelectActionProps) {
     <ControlledSelect ref={select}
       className={pageSize ? 'ui-page-size-select' : props.presentation === 'flat' ? 'ui-flat-select' : ''}
       value={props.value === '' ? undefined : props.value}
-      options={props.options.map(option => ({ value: option.value, label: option.label, disabled: !!option.disabled }))}
+      {...(!grouped ? { options: props.options.map(option => ({ value: option.value, label: option.label, disabled: !!option.disabled })) } : {})}
       aria-label={props.label}
       {...(props.placeholder !== undefined ? { placeholder: props.placeholder } : {})}
       {...(props.loading !== undefined ? { loading: props.loading } : {})}
@@ -88,6 +90,9 @@ export function DemoSingleSelectAction(props: DemoSingleSelectActionProps) {
         props.onOpenChange(false);
         props.onChange(value, option);
       }}
-    /><div ref={portal} className="demo-single-select-portal" style={{ position: 'fixed', inset: 0, zIndex: 2000, pointerEvents: 'none' }} />
+    >{grouped && groups.map(group => {
+      const options = props.options.filter(option => option.groupLabel === group).map(option => <Select.Option key={option.value} value={option.value} disabled={!!option.disabled}>{option.label}</Select.Option>);
+      return group === undefined ? options : <Select.OptGroup key={group} label={group}>{options}</Select.OptGroup>;
+    })}</ControlledSelect><div ref={portal} className="demo-single-select-portal" style={{ position: 'fixed', inset: 0, zIndex: 2000, pointerEvents: 'none' }} />
   </div>;
 }

@@ -112,10 +112,10 @@ function SalesCandidateTrigger({ sourceSpecAnchor, ...props }: TriggerProps & { 
 }
 /** Frozen unified-single-select Choice presentation. Data/selection still belong
  * to the native proposal; only the current bounded page becomes options. */
-function SalesReferenceField({ session, picker, visible, label, value, selected, disabled, open, close, clear }: {
+function SalesReferenceField({ session, picker, visible, label, value, selected, disabled, open, close, clear, account = false }: {
   readonly session: SalesProposalSession; readonly picker: SalesProposalSnapshot['picker']; readonly visible: boolean;
-  readonly label: string; readonly value: string; readonly selected: { readonly id: string; readonly name: string } | null;
-  readonly disabled: boolean; readonly open: () => void; readonly close: () => void; readonly clear?: () => void;
+  readonly label: string; readonly value: string; readonly selected: { readonly id: string; readonly name: string; readonly code?: string | null } | null;
+  readonly disabled: boolean; readonly open: () => void; readonly close: () => void; readonly clear?: () => void; account?: boolean;
 }) {
   const host = useRef<HTMLDivElement>(null), [popupWidth, setPopupWidth] = useState(300);
   useLayoutEffect(() => {
@@ -125,8 +125,15 @@ function SalesReferenceField({ session, picker, visible, label, value, selected,
     measure(); view.addEventListener('resize', measure);
     return () => view.removeEventListener('resize', measure);
   }, [visible]);
-  const options: { value: string; label: string; disabled?: boolean }[] = visible && picker?.phase === 'ready' ? (picker.result?.items ?? []).map(item => ({ value: item.id as string, label: 'name' in item ? item.name : item.skuCode })) : [];
-  if (selected && !options.some(option => option.value === selected.id)) options.unshift({ value: selected.id, label: selected.name, disabled: true });
+  const options: { value: string; label: string; disabled?: boolean; groupLabel?: string }[] = visible && picker?.phase === 'ready' ? (picker.result?.items ?? []).map(item => ({ value: item.id as string, label: 'name' in item ? account && 'code' in item && item.code && !item.name.trimStart().startsWith(item.code) ? `${item.code} ${item.name}` : item.name : item.skuCode })) : [];
+  const recommendationRows = visible && picker?.phase === 'ready' && picker.kind === 'paymentAccount' && picker.result?.recommendationAvailability === 'AVAILABLE' ? picker.result.items : [];
+  if (account && recommendationRows.length && recommendationRows.every(item => 'isRecommended' in item && typeof item.isRecommended === 'boolean') && recommendationRows.some(item => 'isRecommended' in item && item.isRecommended === true)) {
+    for (const option of options) {
+      const item = recommendationRows.find(item => item.id === option.value)!;
+      option.groupLabel = 'isRecommended' in item && item.isRecommended === true ? '推荐' : '全部账户';
+    }
+  }
+  if (selected && !options.some(option => option.value === selected.id)) options.unshift({ value: selected.id, label: account && selected.code && !selected.name.trimStart().startsWith(selected.code) ? `${selected.code} ${selected.name}` : selected.name, disabled: true });
   return <div ref={host} className="sale-reference-field"><DemoSingleSelectAction presentation="flat" label={label} placeholder={value} value={selected?.id ?? ''} options={options} disabled={disabled} open={visible} popupWidth={popupWidth} {...(clear ? { allowClear: true, onClear: clear } : {})}
     loading={visible && picker?.phase === 'loading'} onSearch={text => { if (visible && session.getSnapshot().picker === picker) void session.search(text); }}
     onOpenChange={next => {
@@ -177,10 +184,10 @@ function CandidatePopup({ session, picker, spec, selection, choose, close, keybo
       if (nodes.length) { event.preventDefault(); nodes[(current + (event.key === 'ArrowDown' ? 1 : nodes.length - 1) + nodes.length) % nodes.length]?.focus(); }
     }
   }}>
-    {spec && <div className="mx-spec-menu-head">选择{{ color: '颜色', fit: '版型', size: '尺码' }[spec]}<span>{options.length} 项</span></div>}
+    {spec && <div className="mx-spec-menu-head">选择{{ color: '颜色', fit: '版型', size: '尺码' }[spec]}<span>{spec === 'size' && sizeGroups.length ? sizeGroups.reduce((sum, group) => sum + group.sizes.length, 0) : options.length} 项</span></div>}
     <div className={`sales-inline-options${spec ? ' mx-spec-menu-options' : ''}`} {...(spec ? { role: 'listbox', 'aria-label': `可选${{ color: '颜色', fit: '版型', size: '尺码' }[spec]}` } : {})}>{picker.phase === 'loading' ? <p role="status">正在读取…</p> : picker.phase === 'error' ? <p role="alert">读取失败。<button type="button" className="btn" onClick={() => { void session.retry(); }}>重试</button></p> : <>
-      {sizeGroups.length ? sizeGroups.map(group => <div role="group" aria-label={group.name} data-size-group={group.id} key={group.id}><div className="mx-spec-menu-head">{group.name}</div>{group.sizes.map(size => <button type="button" className="btn" data-candidate-option data-mx-spec-option={size.id} role="option" aria-selected={size.id === selected} key={size.id} onClick={() => choose(size.id)}><span>{size.name}</span>{size.id === selected && <span aria-hidden="true">✓</span>}</button>)}</div>) : options.map(option => <button className="btn" key={option.id} data-candidate-option {...(spec ? { 'data-mx-spec-option': option.id } : {})} {...(spec ? { role: 'option', 'aria-selected': option.id === selected } : {})} type="button" onClick={() => choose(option.id)}><span>{option.text}</span>{spec && option.id === selected && <span aria-hidden="true">✓</span>}</button>)}
-      {!sizeGroups.length && !options.length && <p>本页无匹配项{picker.result && picker.result.exactTotal > 20n ? '，可翻页继续选择' : ''}</p>}
+      {sizeGroups.length ? sizeGroups.map(group => <div role="group" aria-label={group.name} data-size-group={group.id} key={group.id}>{group.sizes.map(size => <button type="button" className="btn" data-candidate-option data-mx-spec-option={size.id} role="option" aria-selected={size.id === selected} key={size.id} onClick={() => choose(size.id)}><span>{size.name}</span>{size.id === selected && <span aria-hidden="true">✓</span>}</button>)}</div>) : options.map(option => <button className="btn" key={option.id} data-candidate-option {...(spec ? { 'data-mx-spec-option': option.id } : {})} {...(spec ? { role: 'option', 'aria-selected': option.id === selected } : {})} type="button" onClick={() => choose(option.id)}><span>{option.text}</span>{spec && option.id === selected && <span aria-hidden="true">✓</span>}</button>)}
+      {(sizeGroups.length ? sizeGroups.every(group => !group.sizes.length) : !options.length) && <p>{spec === 'size' ? '本组暂无可用尺码' : '本页无匹配项'}{picker.result && picker.result.exactTotal > 20n ? '，可翻页继续选择' : ''}</p>}
     </>}</div>
     {picker.phase === 'ready' && picker.result && !spec && picker.result.exactTotal > 20n && <footer><span>第 {picker.page} 页 / 共 {picker.result?.exactTotal.toString()} 个{spec ? '实际规格' : '候选'}</span><button type="button" className="btn" disabled={picker.page <= 1} onClick={() => { void session.page(picker.page - 1); }}>上一页</button><button type="button" className="btn" disabled={!picker.result || BigInt(picker.page) * 20n >= picker.result.exactTotal} onClick={() => { void session.page(picker.page + 1); }}>下一页</button></footer>}
   </div>;
@@ -234,7 +241,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
         : <button type="button" className={"btn " + (`sale-select-trigger${spec ? ` mx-spec-picker${selection?.[spec === 'size' ? 'size' : spec] ? ' has-value' : ''}` : ''}`)} data-entry-control={id} aria-label={label} aria-haspopup={spec ? 'listbox' : 'dialog'} aria-expanded={visible} disabled={disabled} onKeyDown={keyboard} onClick={event => { triggerRef.current = event.currentTarget; }}><span>{value}</span>{spec ? <svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4" /></svg> : <span aria-hidden="true">⌄</span>}</button>}
     </SalesCandidateTrigger>;
   };
-  const reference = (id: string, label: string, placeholder: string, selected: { readonly id: string; readonly name: string } | null, open: () => void, disabled = false, clear?: () => void) => <SalesReferenceField session={session} picker={anchor === id ? picker : null} visible={anchor === id && !!picker} label={label} value={placeholder} selected={selected} disabled={disabled}
+  const reference = (id: string, label: string, placeholder: string, selected: { readonly id: string; readonly name: string } | null, open: () => void, disabled = false, clear?: () => void) => <SalesReferenceField session={session} picker={anchor === id ? picker : null} visible={anchor === id && !!picker} label={label} value={placeholder} selected={selected} disabled={disabled} account={id.startsWith('account-')}
     {...(clear ? { clear } : {})} open={() => { setAnchor(id); open(); }} close={() => { if (anchor === id) dismissPicker(); }} />;
   const cancelMode = () => { modeToConfirm.current = null; setPendingMode(null); };
   const chooseMode = (mode: SalesBusinessMode) => {

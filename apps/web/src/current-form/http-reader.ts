@@ -28,27 +28,29 @@ function price(value: unknown): string | null {
   if (typeof value !== 'string' || !/^(?:0|[1-9]\d{0,15})\.\d{2}$/.test(value)) invalid(); return value;
 }
 function page<T extends { readonly id: string }>(value: unknown, parameters: { readonly page: number; readonly pageSize: 20 },
-  decode: (row: unknown) => T, account = false): CurrentFormPage<T> {
+  decode: (row: unknown, recommendation?: 'AVAILABLE' | 'UNAVAILABLE') => T, account = false): CurrentFormPage<T> {
   const row = object(value, ['page', 'pageSize', 'exactTotal', 'items'], account ? ['recommendationAvailability'] : []);
   if (row.page !== parameters.page || row.pageSize !== 20 || typeof row.exactTotal !== 'string' || !/^(?:0|[1-9]\d{0,19})$/.test(row.exactTotal)) invalid();
   const total = BigInt(row.exactTotal); const remaining = total - BigInt((parameters.page - 1) * 20);
   const expected = remaining < 0n ? 0 : remaining > 20n ? 20 : Number(remaining);
   const input = array(row.items); if (input.length !== expected) invalid();
-  const items = input.map(decode); if (new Set(items.map(item => item.id)).size !== items.length) invalid();
   if (account && row.recommendationAvailability !== 'AVAILABLE' && row.recommendationAvailability !== 'UNAVAILABLE') invalid();
+  const recommendation = account ? row.recommendationAvailability as 'AVAILABLE' | 'UNAVAILABLE' : undefined;
+  const items = input.map(item => decode(item, recommendation)); if (new Set(items.map(item => item.id)).size !== items.length) invalid();
   return Object.freeze({ page: parameters.page, pageSize: 20, exactTotal: total, items: Object.freeze(items),
     ...(account ? { recommendationAvailability: row.recommendationAvailability as 'AVAILABLE' | 'UNAVAILABLE' } : {}) });
 }
-function salesReference(value: unknown, parameters: CurrentSalesReferenceQuery): CurrentSalesReferenceItem {
-  const row = object(value, ['id', 'name', 'code', 'hallId', 'hallName', 'paymentMethodId', 'paymentMethodName']);
+function salesReference(value: unknown, parameters: CurrentSalesReferenceQuery, recommendation?: 'AVAILABLE' | 'UNAVAILABLE'): CurrentSalesReferenceItem {
+  const row = object(value, ['id', 'name', 'code', 'hallId', 'hallName', 'paymentMethodId', 'paymentMethodName'], ['isRecommended']);
   const kind = ({ hall: 'hall', customer: 'customer', salesperson: 'staff', warehouse: 'warehouse', paymentMethod: 'paymentMethod', paymentAccount: 'paymentAccount' } as const)[parameters.kind];
   const nativeId = id(kind, row.id), hallId = row.hallId === null ? null : id('hall', row.hallId), hallName = nullableText(row.hallName);
   const paymentMethodId = row.paymentMethodId === null ? null : id('paymentMethod', row.paymentMethodId), paymentMethodName = nullableText(row.paymentMethodName);
   if ((hallId === null) !== (hallName === null) || (paymentMethodId === null) !== (paymentMethodName === null)) invalid();
   if (parameters.kind === 'hall' ? hallId !== nativeId : parameters.kind === 'warehouse' ? hallId !== parameters.hallId : parameters.kind === 'salesperson' ? false : hallId !== null) invalid();
   if (parameters.kind === 'paymentAccount' ? paymentMethodId !== parameters.paymentMethodId : paymentMethodId !== null) invalid();
-  if (parameters.kind === 'customer' ? row.code === null : row.code !== null) invalid();
-  return Object.freeze({ id: nativeId, name: text(row.name), code: nullableText(row.code), hallId, hallName, paymentMethodId, paymentMethodName });
+  if (parameters.kind === 'customer' ? row.code === null : parameters.kind !== 'paymentAccount' && row.code !== null) invalid();
+  if (Object.hasOwn(row, 'isRecommended') && (parameters.kind !== 'paymentAccount' || recommendation !== 'AVAILABLE' || typeof row.isRecommended !== 'boolean')) invalid();
+  return Object.freeze({ ...(Object.hasOwn(row, 'isRecommended') ? { isRecommended: boolean(row.isRecommended) } : {}), id: nativeId, name: text(row.name), code: nullableText(row.code), hallId, hallName, paymentMethodId, paymentMethodName });
 }
 function warehouse(value: unknown, parameters: CurrentTransferWarehouseQuery): CurrentTransferWarehouse {
   const row = object(value, ['id', 'name', 'hallId', 'hallName', 'enabled', 'hallEnabled', 'hasNonzeroInventory']);
@@ -58,10 +60,11 @@ function warehouse(value: unknown, parameters: CurrentTransferWarehouseQuery): C
     enabled, hallEnabled: boolean(row.hallEnabled), hasNonzeroInventory });
 }
 function product(value: unknown): CurrentFormProduct {
-  const row = object(value, ['id', 'code', 'name', 'retailPrice', 'minimumPriceAvailability'], ['category']);
+  const row = object(value, ['id', 'code', 'name', 'retailPrice', 'minimumPriceAvailability'], ['category', 'sizeGroupId']);
   if (row.minimumPriceAvailability !== 'UNAVAILABLE') invalid();
   const category = Object.hasOwn(row, 'category') ? object(row.category, ['id', 'label']) : null;
-  return Object.freeze({ id: id('product', row.id), code: text(row.code), name: text(row.name), retailPrice: price(row.retailPrice), minimumPriceAvailability: 'UNAVAILABLE', ...(category ? { category: Object.freeze({ id: id('category', category.id), label: nullableText(category.label) }) } : {}) });
+  const sizeGroupId = Object.hasOwn(row, 'sizeGroupId') ? id('sizeGroup', row.sizeGroupId) : undefined;
+  return Object.freeze({ id: id('product', row.id), code: text(row.code), name: text(row.name), retailPrice: price(row.retailPrice), minimumPriceAvailability: 'UNAVAILABLE', ...(sizeGroupId !== undefined ? { sizeGroupId } : {}), ...(category ? { category: Object.freeze({ id: id('category', category.id), label: nullableText(category.label) }) } : {}) });
 }
 function sku(value: unknown): CurrentFormSku {
   const row = object(value, ['id', 'skuCode', 'productId', 'productCode', 'productName', 'colorId', 'colorName', 'fitId', 'fitName', 'sizeId', 'sizeName', 'sizeGroupId', 'barcodeAvailability']);
@@ -95,7 +98,7 @@ export function createCurrentFormHttpReader(options: HttpQueryOptions) {
     },
     readSalesReferences(parameters: CurrentSalesReferenceQuery, signal: AbortSignal) {
       const parsed = parseCurrentSalesReferenceQuery(parameters);
-      return http.post('/current-form/sales-references/query', parsed, signal, value => page(value, parsed, row => salesReference(row, parsed), parsed.kind === 'paymentAccount'));
+      return http.post('/current-form/sales-references/query', parsed, signal, value => page(value, parsed, (row, recommendation) => salesReference(row, parsed, recommendation), parsed.kind === 'paymentAccount'));
     },
     readTransferWarehouses(parameters: CurrentTransferWarehouseQuery, signal: AbortSignal) {
       const parsed = parseCurrentTransferWarehouseQuery(parameters);
