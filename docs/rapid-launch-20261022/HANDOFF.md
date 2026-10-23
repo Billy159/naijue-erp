@@ -1,3 +1,7 @@
+当前候选更新 2026-10-23T01:53:36.954793+00:00：固定113真实预览已开放 http://127.0.0.1:57850/synthetic-unified.html ，build ui-preview-1578a5b-01-build01/source1578a5b0，HTML748f119f…，PID30991/session30700，三关键HTTP精确200。400仓库输入/383源模块+981锁依赖=1364实际模块，undeclared0。只含106–113与明确paymentaudit0合成overlay，原W0/1SKU作者原字节；未来F1冷pointer与backend114不在本UI。Demo已收新受影响范围，旧48不重跑。源码完成/合成界面/正式业务验收继续分层。
+
+GitHub正常分支已原对象精确同步9提交并独立GET回读01accc753a0354d8753c28826b896bdcd2eca67a；新文档另待下段同步。正式地址未切换，其余C48离线恢复/C49明确FILE输入/D3完整Header+Line/F1chunk62/63继续，整体ACTIVE。以下保留历史。
+
 当前接续 2026-10-23T01:50:23.018198+00:00：source114 `f8d563b72e022ba47d3804084fcfd0b555af3042`，Header纯export已QB135限定PASS；QF110导航/111几何/112字体/113审计时序已采用，不重复验收。固定113新整合一次原build通过，57850尚未serve；actual仍105/57848，More108/57849单列，不混版本。
 
 C45原私有stage在npm安装超时905.854秒，未创建候选app/web；C47有限日志记录120次ETIMEDOUT提及，核属后安全停止残留installer，原三服务一致。失败/partial保留；C48原锁完整性离线cache仅准备，不重extract/重跑45。C46新QA元数据在PG前缺非空ENV密码停止，PG0；C49仅准备现有登记PASSWORD_FILE明确输入，缺失仍停，不借空密码/owner/R1。C43完整备份及C44最终配置/metadata保全继续保留，无公网切换、49账号/真实导入/MAIN/PUBLISH。

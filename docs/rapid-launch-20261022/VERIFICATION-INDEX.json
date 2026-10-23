@@ -10270,10 +10270,18 @@
       "evidenceBytes": 3195,
       "evidenceSha256": "e305721c5e77ebe3661a3710ee6506fc28e941a0489d18667a61b068f3b8e09f",
       "adoption": "C adopts effective scoped receipt; no duplicate technical review"
+    },
+    {
+      "id": "C113-SYNTHETIC-PREVIEW-HTTP",
+      "result": "PASS_THREE_EXACT_HTTP_INPUTS_SYNTHETIC_ONLY",
+      "sourceCommit": "1578a5b0823af4c85a33aaecd629babdae3f4d5c",
+      "scope": "Only fixed113 originalbuild/400repo inputs383modules+981deps and three exactHTTP bytes. Synthetic audit0 data, no browser/PG/save acceptance",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-1578a5b-01/SERVER.json",
+      "evidenceSha256": "532ff5094332e5e9ce790bb79fe936061e81ecb8f0e8974d8aac14a6a46e118f"
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-23T01:50:23.018198+00:00",
+  "updatedAt": "2026-10-23T01:53:36.954793+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -11324,30 +11332,33 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-23T01:50:23.018198+00:00",
+    "atUtc": "2026-10-23T01:53:36.954793+00:00",
     "sourceRound": 114,
     "sourceCheckpoint": "f8d563b72e022ba47d3804084fcfd0b555af3042",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "url": "http://127.0.0.1:57848/synthetic-unified.html",
-      "source": "9a52d0f5f976bba945f6f6d1ae7eaa84ecfe60b4",
-      "build": "ui-preview-9a52d0f-01-build01",
-      "pid": 18750,
-      "sessionId": 13216,
-      "htmlSha256": "90192785b057113381f204766b668e6ac208812dc3f3af73618e0a39fc74a872",
-      "overlaySha256": "b4a977c5d0faf9c3fcc4783153a63071a28b33a5f7a1625681242cc6f4392866",
-      "syntheticOnly": true,
+      "url": "http://127.0.0.1:57850/synthetic-unified.html",
+      "source": "1578a5b0823af4c85a33aaecd629babdae3f4d5c",
+      "build": "ui-preview-1578a5b-01-build01",
+      "pid": 30991,
+      "sessionId": 30700,
+      "htmlSha256": "748f119f360e29b6b34a05a1f0f0497614c8c928a7747385f92f642aa32285fa",
+      "identitySha256": "0149220af4ec1b303e34d11e3f749f4fb8bb3331c28f9762906bc12662663055",
+      "provenanceSha256": "ac766a6fedb43bc7773dd6870d5693398f5bcc4cc622cb5f84dc3dd86331f208",
       "actualInputs": 400,
       "sourceModules": 383,
+      "lockedDependencyModules": 981,
+      "totalModules": 1364,
+      "syntheticOnly": true,
       "wholePageAccepted": false
     },
-    "nextPreview": "Fixed1131578a5b0 once originalbuildPASS,57850 not yetserved;106-113+paymentaudit0, excludes futurecoldpointerfix",
+    "nextPreview": "113actualonlynewaffected Demo inprogress; F1coldpointer futurefix notincluded",
     "r1": "C43/C44PASS; C45npm TIMEOUT905.854s beforeapp/web. C47 exactinstaller stopped, old3unchanged. C48 lockedoffline recovery Kprep, no replay/publicswitch",
     "qa": "C46beforePG STOP missingnonemptyENV. C49 explicitregistered PASSWORD_FILE-only Kprep/no fallback. H06notrun; priorC40Sharp subset preserved",
     "import": "QB134 actual261641/14279 receipt-chainPASS; C outside48238f/c8016d signed realImportfalse; newcopiesgenuineNOTRUN. C114pureexport QB135sourcePASS. FullHeader/onceLinejoin Kprep",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Lastremote6b1158a verified;109-114/newdocs pending exactobjects sync",
+    "github": "Normal branch remote01accc7 independentlyGETverified exactoriginal9commits nonforcedFF; subsequentmetadata pendingnextsync",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
