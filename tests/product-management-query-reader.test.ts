@@ -4,6 +4,7 @@ import test from "node:test";
 import { PostgresProductManagementQueryReader } from "../adapters/postgres/src/product-management-query-reader.ts";
 import type { PgProductManagementQueryPool } from "../adapters/postgres/src/product-management-query-reader.ts";
 import type { ProductManagementListQuery, ProductManagementReadGrant } from "../packages/application/src/product-management-query-ports.ts";
+import type { NativeRuntime26Capability } from "../packages/application/src/native-import-schema-contract.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
 
 const productId = sid("product", 7100), fitId = sid("fit", 7101);
@@ -13,7 +14,8 @@ const product = { id: productId, product_code: "SYNTHETIC-7100", name: "合成�
   supplier_name: null, thickness: null, retail_price: null };
 const counts = { WAREHOUSE: 1, SKU: 1, INVENTORY_LEDGER: 1, IMPORT_BATCH: 1 };
 const publication = { id: sid("operation", 7105), completed: true, final_approval: true, checkpoint: { sequence: 1, cursor: 4, counts, expected: counts } };
-function fixture(options: { overrides?: Record<string, Record<string, unknown>[]>; fail?: string; rollbackFail?: boolean; onQuery?: (sql: string) => void; seasonArray?: boolean } = {}) {
+function fixture(options: { overrides?: Record<string, Record<string, unknown>[]>; fail?: string; rollbackFail?: boolean; onQuery?: (sql: string) => void; seasonArray?: boolean;
+  runtime26?: NativeRuntime26Capability; respond?: (key: string, values: unknown[]) => Record<string, unknown>[] | undefined } = {}) {
   const queries: { sql: string; values: unknown[] }[] = []; let connections = 0, released = 0; let discarded: Error | boolean | undefined;
   const defaultRows: Record<string, Record<string, unknown>[]> = {
     count: [{ exact_total: "1", invalid_category_tree: false }], page: [product], fits: [{ product_id: productId, id: fitId, name: "Y版原名", code: "Y" }],
@@ -24,13 +26,106 @@ function fixture(options: { overrides?: Record<string, Record<string, unknown>[]
   const pool: PgProductManagementQueryPool = { async connect() { connections++; return { async query(sql, values = []) {
     queries.push({ sql, values }); options.onQuery?.(sql);
     if (sql === "ROLLBACK" && options.rollbackFail) throw new Error("SYNTHETIC ROLLBACK");
-    const key = sql.match(/\/\* (?:product-management|inventory):([^ ]+) \*\//)?.[1];
+    const key = sql.match(/\/\* (?:product-management|inventory(?:-admission)?):([^ ]+) \*\//)?.[1];
     if (options.fail !== undefined && key === options.fail) throw new Error("SYNTHETIC SQL FAILURE");
-    const rows = key ? options.overrides?.[key] ?? defaultRows[key] ?? [] : []; return { rows, rowCount: rows.length };
+    const rows = key ? options.respond?.(key, values) ?? options.overrides?.[key] ?? defaultRows[key] ?? [] : []; return { rows, rowCount: rows.length };
   }, release(error) { released++; discarded = error; } }; } };
-  return { reader: new PostgresProductManagementQueryReader(pool, null, options.seasonArray ? { profile: "product-season-array-v1", assertVerified(target) { assert.equal(target, pool); } } : null), queries, counts: () => ({ connections, released, discarded }) };
+  return { reader: new PostgresProductManagementQueryReader(pool, null, options.seasonArray ? { profile: "product-season-array-v1", assertVerified(target) { assert.equal(target, pool); } } : null, options.runtime26), queries, counts: () => ({ connections, released, discarded }) };
 }
 function read(grant: ProductManagementReadGrant = { kind: "products", productIds: [productId], totalStock: "unavailable" }, signal = new AbortController().signal) { return { actor, parameters, grant, signal }; }
+const importedWarehouse = sid("warehouse", 7200), newWarehouse = sid("warehouse", 7201), importedSku = sid("sku", 7202), nativeSku = sid("sku", 7203), creation = sid("operation", 7204);
+function nativeFixture(options: { newWarehouse?: boolean; emptyCutoff?: boolean; additionalSkus?: string[];
+  transform?: (key: string, rows: Record<string, unknown>[]) => Record<string, unknown>[]; runtimeResult?: boolean } = {}) {
+  const additionalSkus = options.additionalSkus ?? [nativeSku]; let verified = 0;
+  const runtime26: NativeRuntime26Capability = { profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", async assertReady(client, purpose) {
+    assert.equal(typeof (client as { query: unknown }).query, "function"); assert.equal(purpose, "INVENTORY_ADMISSION");
+    assert.equal(f.queries.at(-1)!.sql, "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); verified++;
+    if (options.runtimeResult !== undefined) return options.runtimeResult as never;
+  } };
+  const cutoffCounts = { WAREHOUSE: 1, SKU: options.emptyCutoff ? 0 : 1, INVENTORY_LEDGER: 0, IMPORT_BATCH: 1 };
+  const f = fixture({ runtime26, overrides: {
+    publication: [{ ...publication, checkpoint: { sequence: 2, cursor: Object.values(cutoffCounts).reduce((a, b) => a + b, 0), counts: cutoffCounts, expected: cutoffCounts } }],
+    "stock-coverage": [{ uncovered_warehouse: options.newWarehouse === true, uncovered_sku: additionalSkus.length > 0, invalid_size: false, missing_sizes: false, invalid_balance: false }],
+    stock: [{ id: productId, quantity: options.emptyCutoff ? "0" : "-10" }]
+  }, respond(key, values) {
+    let rows: Record<string, unknown>[];
+    switch (key) {
+      case "stock-sku-witness": rows = options.emptyCutoff ? [] : [{ id: importedSku }]; break;
+      case "stock-native-sku-witness": rows = [{ id: nativeSku, created_operation_id: creation }]; break;
+      case "stock-warehouse-witness": rows = [{ id: importedWarehouse }]; break;
+      case "stock-additional-warehouses": rows = options.newWarehouse && (values[1] === null || newWarehouse > String(values[1])) ? [{ id: newWarehouse }] : []; break;
+      case "stock-additional-skus": rows = additionalSkus.filter(id => values.at(-1) === null || id > String(values.at(-1))).slice(0, 1000).map(id => ({ id })); break;
+      case "keys": rows = (values[0] as string[]).map((warehouseId, i) => {
+        const skuId = (values[1] as string[])[i]!, native = skuId !== importedSku;
+        return { warehouse_id: warehouseId, sku_id: skuId, admitted: true, published_batch_id: publication.id,
+          warehouse_basis: warehouseId === newWarehouse ? "POST_CUTOFF_CREATED" : "CUTOFF_MEMBER", sku_basis: native ? "POST_CUTOFF_CREATED" : "CUTOFF_MEMBER",
+          warehouse_created_operation_id: warehouseId === newWarehouse ? creation : null, sku_created_operation_id: native ? creation : null };
+      }); break;
+      default: return undefined;
+    }
+    return options.transform?.(key, rows) ?? rows;
+  } });
+  return { ...f, verified: () => verified };
+}
+test("SPEC-01 native additions: a valid new empty warehouse or new SKU remains readable through the public admission helper", async () => {
+  for (const options of [{ newWarehouse: true, additionalSkus: [] }, { additionalSkus: [nativeSku] }]) {
+    const f = nativeFixture(options), result = await f.reader.readList(read({ kind: "all", totalStock: "all-warehouses" }));
+    assert.equal(result.exactTotal, 1); assert.equal(result.items[0]!.totalStock, "-10"); assert.equal(f.verified(), 1);
+    assert.equal(f.counts().connections, 1); assert.equal(f.queries.at(-1)!.sql, "COMMIT");
+    assert.ok(f.queries.some(q => q.sql.includes("inventory-admission:keys")));
+  }
+});
+test("SPEC-01 empty cutoff: one real native SKU witnesses the new warehouse without replacing matched business IDs or inventing balances", async () => {
+  const f = nativeFixture({ newWarehouse: true, emptyCutoff: true });
+  const result = await f.reader.readList(read({ kind: "products", productIds: [productId], totalStock: "all-warehouses" }));
+  assert.equal(result.exactTotal, 1); assert.equal(result.items[0]!.id, productId); assert.equal(result.items[0]!.totalStock, "0");
+  const keys = f.queries.filter(q => q.sql.includes("inventory-admission:keys"));
+  assert.deepEqual(keys.map(q => q.values), [[[newWarehouse], [nativeSku]], [[importedWarehouse], [nativeSku]]]);
+  assert.equal(f.queries.filter(q => q.sql.includes("stock-native-sku-witness")).length, 1);
+  const scope = f.queries.find(q => q.sql.includes("stock-additional-skus"))!;
+  assert.deepEqual(scope.values.slice(0, 10), [false, [productId], [productId], parameters.filter.categoryIds, ["2026"], parameters.filter.seasonIds, parameters.filter.supplierIds, [fitId], ["厚%_literal"], ["ROUND"]]);
+  assert.match(scope.sql, /JOIN matched_products p/); assert.match(scope.sql, /LIMIT 1000/);
+});
+test("SPEC-01 rejection: false admission, substituted key/cutoff/basis/creation or missing witness cannot become zero", async () => {
+  const cases: { key: string; change: Record<string, unknown>; code: string }[] = [
+    { key: "keys", change: { admitted: false }, code: "PRODUCT_MANAGEMENT_STOCK_NOT_READY" },
+    ...[{ published_batch_id: sid("operation", 7990) }, { warehouse_id: importedWarehouse }, { sku_id: importedSku },
+      { warehouse_basis: "CUTOFF_MEMBER" }, { sku_basis: "CUTOFF_MEMBER" }, { sku_created_operation_id: null },
+      { sku_created_operation_id: sid("operation", 7991) }, { admitted: "true" }].map(change => ({ key: "keys", change, code: "PRODUCT_MANAGEMENT_INTEGRITY_FAILED" }))
+  ];
+  for (const { key, change, code } of cases) {
+    const f = nativeFixture({ newWarehouse: true, emptyCutoff: true, transform(stage, rows) { return stage === key ? rows.map(row => ({ ...row, ...change })) : rows; } });
+    await assert.rejects(() => f.reader.readList(read({ kind: "all", totalStock: "all-warehouses" })), { code });
+    assert.equal(f.queries.at(-1)!.sql, "ROLLBACK"); assert.ok(!f.queries.some(q => q.sql.includes("product-management:stock */")));
+  }
+  const missing = nativeFixture({ newWarehouse: true, emptyCutoff: true, transform(key, rows) { return key === "stock-native-sku-witness" ? [] : rows; } });
+  await assert.rejects(() => missing.reader.readList(read({ kind: "all", totalStock: "all-warehouses" })), { code: "PRODUCT_MANAGEMENT_STOCK_NOT_READY" });
+  assert.ok(!missing.queries.some(q => q.sql.includes("inventory-admission:keys")));
+});
+test("SPEC-01 batches: 1001 new matched SKUs use two exact-key batches and retain all filters", async () => {
+  const skus = Array.from({ length: 1001 }, (_, i) => sid("sku", 8000 + i)), f = nativeFixture({ additionalSkus: skus });
+  await f.reader.readList(read({ kind: "all", totalStock: "all-warehouses" }));
+  const calls = f.queries.filter(q => q.sql.includes("inventory-admission:keys"));
+  assert.equal(calls.length, 2); assert.deepEqual(calls.map(q => (q.values[1] as string[]).length), [1000, 1]);
+  assert.deepEqual(calls.flatMap(q => q.values[1] as string[]), skus);
+  const batches = f.queries.filter(q => q.sql.includes("stock-additional-skus"));
+  assert.equal(batches.length, 2); assert.equal(batches[0]!.values[11], null); assert.equal(batches[1]!.values[11], skus[999]);
+  assert.deepEqual(batches[0]!.values.slice(0, 11), batches[1]!.values.slice(0, 11));
+});
+test("SPEC-01 runtime: boolean substitution fails before stock work; catalogue-only grants and candidates never request inventory capability", async () => {
+  const denied = nativeFixture({ runtimeResult: true });
+  await assert.rejects(() => denied.reader.readList(read({ kind: "all", totalStock: "all-warehouses" })), TypeError);
+  assert.deepEqual(denied.queries.map(q => q.sql), ["BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY", "ROLLBACK"]);
+  const catalogue = nativeFixture(); assert.equal((await catalogue.reader.readList(read())).items[0]!.totalStock, null);
+  await catalogue.reader.readCandidates({ ...read(), parameters: { kind: "product", search: "", selectedIds: [], page: 1, pageSize: 20 } });
+  assert.equal(catalogue.verified(), 0); assert.ok(!catalogue.queries.some(q => /publication|inventory-admission|stock-coverage/.test(q.sql)));
+});
+test("SPEC-01 cancellation: an admission completing after abort never publishes a stock total", async () => {
+  const abort = new AbortController(), f = nativeFixture({ transform(key, rows) { if (key === "keys") abort.abort(); return rows; } });
+  await assert.rejects(() => f.reader.readList(read({ kind: "all", totalStock: "all-warehouses" }, abort.signal)), { code: "PRODUCT_MANAGEMENT_READ_ABORTED" });
+  assert.equal(f.queries.at(-1)!.sql, "ROLLBACK"); assert.equal(f.counts().released, 1);
+  assert.ok(!f.queries.some(q => q.sql.includes("product-management:stock */")));
+});
 test("native product list uses one read-only snapshot, parameterizes 8 filters and explicit product grant before count/page", async () => {
   const f = fixture(); assert.equal(f.counts().connections, 0);
   const result = await f.reader.readList(read()); assert.equal(result.items[0]!.retailPrice, null); assert.equal(result.items[0]!.totalStock, null);

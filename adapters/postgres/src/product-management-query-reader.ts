@@ -5,13 +5,15 @@ import { activeProductManagementRead, checkedProductManagementCandidatePage, che
   parseProductManagementCandidateQuery, parseProductManagementListQuery } from "../../../packages/application/src/product-management-query-validation.ts";
 import { checkedProductActor } from "../../../packages/application/src/product-query-validation.ts";
 import { COMPLETE_SCOPE_DECISION } from "../../../packages/application/src/inventory-cutoff-import.ts";
-import { requireDomain } from "../../../packages/domain/src/errors.ts";
+import { checkedNativeRuntime26Capability, type NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { DomainError, requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { booleanValue, integerValue, nullableString, stringValue } from "./codec.ts";
 import { decodeImportCheckpoint } from "./inventory-cutoff-import-store.ts";
 import { GUARD_CAPABILITY } from "./inventory-publication-guards.ts";
-import type { PgProductQueryPool, PgProductQueryResult } from "./product-query-reader.ts";
+import type { PgProductQueryClient, PgProductQueryPool, PgProductQueryResult } from "./product-query-reader.ts";
 import { catalogueRetainedDeleteEnabled, productSeasonArrayEnabled, productSeasonLabelJoin, type ProductSeasonArrayCapability, type CatalogueRetainedDeleteCapability } from "./product-query-reader.ts";
+import { readInventoryKeyAdmissions } from "./inventory-key-admission-reader.ts";
 
 export type PgProductManagementQueryPool = PgProductQueryPool;
 type Query = (sql: string, values?: unknown[]) => Promise<PgProductQueryResult>;
@@ -39,7 +41,7 @@ function listValues(grant: ProductManagementReadGrant, parameters: ProductManage
 /** Reuses the existing complete cutoff publication contract, not a new readiness flag or fixture.
  * Checks the ENTIRE matched product scope and ALL native warehouses before any absence becomes 0.
  * A catalogue-only read never executes this inventory path. */
-async function stockReadiness(query: Query, values: unknown[], matchedSql: string): Promise<void> {
+async function stockReadiness(query: Query, values: unknown[], matchedSql: string, runtime26?: NativeRuntime26Capability): Promise<void> {
   const rows = (await query(`/* product-management:publication */ SELECT b.id, b.checkpoint, b.completed_at IS NOT NULL AS completed,
     EXISTS (SELECT 1 FROM naijue_erp.import_record r WHERE r.import_batch_id = b.id AND r.status = 'IMPORTED'
       AND r.target_type = 'IMPORT_BATCH' AND r.target_id = b.id AND r.source_entity_type = 'INVENTORY_SCOPE_APPROVAL'
@@ -64,8 +66,71 @@ async function stockReadiness(query: Query, values: unknown[], matchedSql: strin
     EXISTS (SELECT 1 FROM matched_products p WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.size_group_member m WHERE m.size_group_id = p.size_group_id)) AS missing_sizes,
     EXISTS (SELECT 1 FROM naijue_erp.inventory_balance b JOIN naijue_erp.sku s ON s.id = b.sku_id JOIN matched_products p ON p.id = s.product_id
       WHERE b.version <= 0 OR b.last_operation_id IS NULL) AS invalid_balance`, [...values, batchId])).rows);
-  requireDomain(!booleanValue(row.uncovered_warehouse) && !booleanValue(row.uncovered_sku), "PRODUCT_MANAGEMENT_STOCK_NOT_READY", "Requested all-warehouse stock is outside the complete published scope");
+  const additionalWarehouses = booleanValue(row.uncovered_warehouse), additionalSkus = booleanValue(row.uncovered_sku);
+  if (additionalWarehouses || additionalSkus) {
+    requireDomain(runtime26 !== undefined, "PRODUCT_MANAGEMENT_STOCK_NOT_READY", "Requested all-warehouse stock is outside the complete published scope");
+    await stockAdditions(query, values, matchedSql, batchId, additionalWarehouses, additionalSkus);
+  }
   integrity(!booleanValue(row.invalid_size) && !booleanValue(row.missing_sizes) && !booleanValue(row.invalid_balance), "Native inventory facts are inconsistent");
+}
+/** Qualify only non-cutoff dimensions through the original public SQL decision.
+ * One real opposite-dimension witness avoids a warehouses × SKUs expansion.
+ * All identities are checked in bounded batches on the same RR snapshot. */
+async function stockAdditions(query: Query, values: unknown[], matchedSql: string, batchId: string, warehouses: boolean, skus: boolean): Promise<void> {
+  const admissions = async (keys: { warehouseId: string; skuId: string }[]) => {
+    try { return await readInventoryKeyAdmissions({ query }, keys); }
+    catch (error) {
+      if (error instanceof DomainError && error.code === "INVENTORY_INTEGRITY_FAILED")
+        throw new DomainError("PRODUCT_MANAGEMENT_INTEGRITY_FAILED", "Invalid native inventory admission evidence");
+      throw error;
+    }
+  };
+  if (warehouses) {
+    let witness = (await query(`/* product-management:stock-sku-witness */ SELECT s.id FROM naijue_erp.import_record r
+      JOIN naijue_erp.sku s ON s.id=r.target_id WHERE r.import_batch_id=$1::uuid AND r.status='IMPORTED' AND r.target_type='SKU'
+      ORDER BY s.id LIMIT 1`, [batchId])).rows;
+    let basis: "CUTOFF_MEMBER" | "POST_CUTOFF_CREATED" = "CUTOFF_MEMBER", operationId: string | null = null;
+    if (!witness.length) {
+      witness = (await query(`/* product-management:stock-native-sku-witness */ SELECT s.id,s.created_operation_id
+        FROM naijue_erp.sku s WHERE s.created_operation_id IS NOT NULL ORDER BY s.id LIMIT 1`)).rows;
+      basis = "POST_CUTOFF_CREATED";
+    }
+    requireDomain(witness.length > 0, "PRODUCT_MANAGEMENT_STOCK_NOT_READY", "No retained native SKU witness is available for warehouse qualification");
+    const sku = one(witness), skuId = entityId("sku", stringValue(sku.id));
+    if (basis === "POST_CUTOFF_CREATED") operationId = entityId("operation", stringValue(sku.created_operation_id));
+    let cursor: string | null = null, checked = 0;
+    for (;;) {
+      const rows = (await query(`/* product-management:stock-additional-warehouses */ SELECT w.id FROM naijue_erp.warehouse w
+        WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.import_record r WHERE r.import_batch_id=$1::uuid AND r.status='IMPORTED' AND r.target_type='WAREHOUSE' AND r.target_id=w.id)
+        AND ($2::uuid IS NULL OR w.id>$2::uuid) ORDER BY w.id LIMIT 1000`, [batchId, cursor])).rows;
+      integrity(rows.length <= 1000 && (rows.length > 0 || checked > 0), "Uncovered warehouse qualification returned an invalid identity batch");
+      if (!rows.length) break;
+      const keys = rows.map(row => { const warehouseId = entityId("warehouse", stringValue(row.id)); integrity(cursor === null || warehouseId > cursor, "Warehouse qualification did not advance"); cursor = warehouseId; return { warehouseId, skuId }; });
+      for (const decision of await admissions(keys)) {
+        requireDomain(decision.admitted, "PRODUCT_MANAGEMENT_STOCK_NOT_READY", "New warehouse creation is not qualified");
+        integrity(decision.publishedBatchId === batchId && decision.warehouseBasis === "POST_CUTOFF_CREATED" && decision.skuBasis === basis
+          && (basis === "CUTOFF_MEMBER" || decision.skuCreatedOperationId === operationId), "Warehouse admission differs from its native witness");
+      }
+      checked += rows.length; if (rows.length < 1000) break;
+    }
+  }
+  if (skus) {
+    const warehouseId = entityId("warehouse", stringValue(one((await query(`/* product-management:stock-warehouse-witness */ SELECT id FROM naijue_erp.warehouse ORDER BY id LIMIT 1`)).rows).id));
+    let cursor: string | null = null, checked = 0;
+    for (;;) {
+      const rows = (await query(`/* product-management:stock-additional-skus */ ${matchedSql} SELECT s.id FROM naijue_erp.sku s JOIN matched_products p ON p.id=s.product_id
+        WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.import_record r WHERE r.import_batch_id=$11::uuid AND r.status='IMPORTED' AND r.target_type='SKU' AND r.target_id=s.id)
+        AND ($12::uuid IS NULL OR s.id>$12::uuid) ORDER BY s.id LIMIT 1000`, [...values, batchId, cursor])).rows;
+      integrity(rows.length <= 1000 && (rows.length > 0 || checked > 0), "Uncovered SKU qualification returned an invalid identity batch");
+      if (!rows.length) break;
+      const keys = rows.map(row => { const skuId = entityId("sku", stringValue(row.id)); integrity(cursor === null || skuId > cursor, "SKU qualification did not advance"); cursor = skuId; return { warehouseId, skuId }; });
+      for (const decision of await admissions(keys)) {
+        requireDomain(decision.admitted, "PRODUCT_MANAGEMENT_STOCK_NOT_READY", "New SKU creation is not qualified");
+        integrity(decision.publishedBatchId === batchId && decision.skuBasis === "POST_CUTOFF_CREATED", "SKU admission differs from its published creation basis");
+      }
+      checked += rows.length; if (rows.length < 1000) break;
+    }
+  }
 }
 /** Native schema has no product created_at. Ordering is explicitly product_code COLLATE C,id;
  * original Demo's created-time ordering is not invented. Construction performs no I/O.
@@ -73,16 +138,18 @@ async function stockReadiness(query: Query, values: unknown[], matchedSql: strin
 export class PostgresProductManagementQueryReader implements TrustedProductManagementSnapshotReader {
   private readonly pool: PgProductManagementQueryPool;
   private readonly retainedDelete: boolean; private readonly seasonArray: boolean;
-  constructor(pool: PgProductManagementQueryPool, capability: CatalogueRetainedDeleteCapability | null = null, seasonCapability: ProductSeasonArrayCapability | null = null) {
+  private readonly runtime26: NativeRuntime26Capability | undefined;
+  constructor(pool: PgProductManagementQueryPool, capability: CatalogueRetainedDeleteCapability | null = null, seasonCapability: ProductSeasonArrayCapability | null = null, runtime26?: NativeRuntime26Capability) {
     if (typeof pool?.connect !== "function") throw new TypeError("Product management reader requires an explicit PostgreSQL pool");
     this.pool = pool; this.retainedDelete = catalogueRetainedDeleteEnabled(pool, capability); this.seasonArray = productSeasonArrayEnabled(pool, seasonCapability);
+    this.runtime26 = checkedNativeRuntime26Capability(runtime26);
   }
-  private async snapshot<T>(signal: AbortSignal, work: (query: Query) => Promise<T>): Promise<T> {
+  private async snapshot<T>(signal: AbortSignal, work: (query: Query, client: PgProductQueryClient) => Promise<T>): Promise<T> {
     activeProductManagementRead(signal); const client = await this.pool.connect(); let began = false, committing = false; let discard: Error | undefined;
     const query: Query = (sql, values = []) => { activeProductManagementRead(signal); return client.query(sql, values); };
     try {
       activeProductManagementRead(signal); await query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true;
-      const result = await work(query); activeProductManagementRead(signal); committing = true; await query("COMMIT"); began = false;
+      const result = await work(query, client); activeProductManagementRead(signal); committing = true; await query("COMMIT"); began = false;
       activeProductManagementRead(signal); return result;
     } catch (error) {
       if (!began || committing) discard = error instanceof Error ? error : new Error("Product management snapshot failed");
@@ -95,14 +162,15 @@ export class PostgresProductManagementQueryReader implements TrustedProductManag
   }
   async readList(read: ProductManagementScopedRead<ProductManagementListQuery>): Promise<ProductManagementListPage> {
     checkedProductActor(read.actor); const grant = checkedProductManagementGrant(read.grant), parameters = parseProductManagementListQuery(read.parameters);
-    return this.snapshot(read.signal, async query => {
+    return this.snapshot(read.signal, async (query, client) => {
+      if (grant.totalStock === "all-warehouses" && this.runtime26) { await this.runtime26.assertReady(client, "INVENTORY_ADMISSION"); activeProductManagementRead(read.signal); }
       const values = listValues(grant, parameters), matchedSql = matched(this.retainedDelete, this.seasonArray);
       const status = one((await query(`/* product-management:count */ ${matchedSql} SELECT count(*)::text AS exact_total,
         EXISTS (SELECT 1 FROM matched_products p JOIN naijue_erp.product_category c ON c.id = p.category_id
           JOIN naijue_erp.product_category parent ON parent.id = c.parent_id WHERE parent.parent_id IS NOT NULL) AS invalid_category_tree FROM matched_products`, values)).rows);
       integrity(!booleanValue(status.invalid_category_tree), "Native categories exceed the two-level contract");
       const total = count(status.exact_total);
-      if (grant.totalStock === "all-warehouses") await stockReadiness(query, values, matchedSql);
+      if (grant.totalStock === "all-warehouses") await stockReadiness(query, values, matchedSql, this.runtime26);
       const rows = (await query(`/* product-management:page */ ${matchedSql}
         SELECT p.id, p.product_code, p.name, c.name AS category_name, p.year, se.name AS season_name, su.name AS supplier_name,
           p.thickness, p.retail_price::text FROM matched_products p JOIN naijue_erp.product_category c ON c.id = p.category_id

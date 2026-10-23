@@ -514,7 +514,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       reader: new PostgresCurrentFormReader(pool, host.currentForms, issuer === null ? undefined : { runtime26: issuer.runtime26, historicalCustomerExclusion: issuer.historicalCustomerExclusion }) }));
     if (extensions) {
       app.register(createStoreSettingsReadHttpPlugin({ authenticate, dependencies: { authorization: extensions.settings, reader: new PostgresStoreSettingsReadReader(pool) } }));
-      app.register(createProductManagementQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.productManagement, reader: new PostgresProductManagementQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null) } }));
+      app.register(createProductManagementQueryHttpPlugin({ authenticate, dependencies: { authorization: extensions.productManagement, reader: new PostgresProductManagementQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null, issuer?.runtime26) } }));
       app.register(createCatalogueSettingsReadHttpPlugin({ authenticate, dependencies: { authorization: extensions.catalogueSettings, reader: new PostgresCatalogueSettingsReadReader(pool) } }));
       app.register(createDictionaryReadHttpPlugin({ authenticate, dependencies: { authorization: extensions.dictionary, reader: new PostgresDictionaryReadReader(pool) } }));
       app.register(createPartyReadHttpPlugin({ authenticate: createPartySessionAuthenticator(authentication), dependencies: { authorization: extensions.party, reader: new PostgresPartyReadReader(pool, issuer?.historicalCustomerExclusion ?? null) } }));
