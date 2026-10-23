@@ -1,0 +1,30 @@
+{
+  "status": "C_ADOPTED_QB134_RECEIPT_CHAIN_ONLY_TWO_OUTSIDE_PINS",
+  "atUtc": "2026-10-23T01:40:08.600758+00:00",
+  "sourceReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/transfer-line26-source-copy-review-v1.json",
+    "bytes": 1161,
+    "sha256": "48238f077638eaf909b2de82746edfd4644a77fc8cacb8fc7914a373cf4660fc"
+  },
+  "referenceReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-transfer-line26-reference-review-v1.json",
+    "bytes": 1277,
+    "sha256": "c8016d02835b3494fd5f1ee49529b48211b72588227e0ff5e4cd56e5bf458fb2"
+  },
+  "manifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-lines-source26-candidate-20261023-D3-run1/CANDIDATE-MANIFEST.json",
+    "bytes": 4781,
+    "sha256": "1efd93016a1345dfd491358ad86d38dd19e4ff75fc7922794dd82bac997f4c4e"
+  },
+  "independentReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice134-transfer-lines26-actual-source-native-join/RESULT.json",
+    "bytes": 15517,
+    "sha256": "7edf0a8415c90761f06911b8ca92e627a945d942c59611c92ce6429cd9fd513f",
+    "result": "PASS"
+  },
+  "physicalWindowV2Spent": true,
+  "genuineNewCopyConsumer": "NOT_RUN_NEXT_SEPARATE_FINITE_SESSION",
+  "realImportExecutionAuthorized": false,
+  "largeBodiesRehashedByC": 0,
+  "scope": "New source copy/reference finite authority only, not documents/full11/PG/MAIN/PUBLISH"
+}

@@ -1,0 +1,83 @@
+{
+  "atUtc": "2026-10-23T01:43:26.542324+00:00",
+  "parent": "1578a5b0823af4c85a33aaecd629babdae3f4d5c",
+  "groups": [
+    {
+      "slice": "feat: expose existing transfer Header source typed document projection",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-projection-export1/RESULT.json",
+      "receiptSha256": "7c4b3008b85383603e988588e8d69cfcbc13f82dc277ecc79c34e11ac47233af",
+      "receiptSnapshot": {
+        "taskId": "D3_TRANSFER_HEADER26_PURE_PROJECTION_EXPORT",
+        "status": "SOURCE_ONLY_EXACT2_READY_FOR_QB_MINIMAL_INCREMENT",
+        "atUtc": "2026-10-23T01:41:54.013494+00:00",
+        "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+        "scope": "One pure projection export reusing existing evidence/typed/doc4 expressions. Mapper, SQL, DTO and original openClosure stay byte-equivalent outside additive export. No authority grant.",
+        "files": [
+          {
+            "path": "scripts/import-v3/native-transfer-header-source26.mjs",
+            "baselineSha256": "742d907ca13ea16ebba564d78a98db7172f32e2ff44acc2dcfe33950a772eb30",
+            "bytes": 25454,
+            "sha256": "9c4026f871a49d17385b06597e8832734c9af7b54642719c2ec909850283c2cd",
+            "fixedSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-projection-export1/fixed-source/scripts/import-v3/native-transfer-header-source26.mjs"
+          },
+          {
+            "path": "scripts/import-v3/native-transfer-header-source26.test.mjs",
+            "baselineSha256": "cd34c97c3598a1f2fed24605ac6fd87cfd3dcccb2dab5fa5155e40fc85ed6436",
+            "bytes": 18688,
+            "sha256": "32744bcd7eb6fef665a56daec5b059769174633892db45642b603e620ed791a0",
+            "fixedSource": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-projection-export1/fixed-source/scripts/import-v3/native-transfer-header-source26.test.mjs"
+          }
+        ],
+        "checks": {
+          "newSamePreparedExportEqualsExistingSession": {
+            "tests": 1,
+            "pass": 1,
+            "fail": 0,
+            "exitCode": 0,
+            "runner": "Node24.21.0 --max-old-space-size=1024 --test --test-concurrency=1 --test-name-pattern=transfer projection export:",
+            "stdoutSummary": "tests 1, pass 1, fail 0, duration_ms 180.321542",
+            "assertions": [
+              "full sourceRow deep equality",
+              "full typedRow deep equality",
+              "full document deep equality",
+              "source12/typed22/doc4 keys",
+              "prepared unchanged"
+            ]
+          },
+          "oldSixRepeated": false,
+          "actual14279Repeated": false
+        },
+        "businessSourceReads": 0,
+        "newLineCopyReads": 0,
+        "pg": 0,
+        "uuid": 0,
+        "main": false,
+        "publish": false,
+        "notTested": [
+          "New actual Header capture",
+          "Actual Line genuine consumer",
+          "actual documentSHA",
+          "all11",
+          "PG",
+          "business acceptance"
+        ],
+        "next": "C freeze exact2/QB new pure-export equivalence only. D3 prepares K-only full AST closure and bounded capture carrier; no source session until a new C read window."
+      },
+      "files": [
+        {
+          "path": "scripts/import-v3/native-transfer-header-source26.mjs",
+          "owner": "D3",
+          "bytes": 25454,
+          "sha256": "9c4026f871a49d17385b06597e8832734c9af7b54642719c2ec909850283c2cd"
+        },
+        {
+          "path": "scripts/import-v3/native-transfer-header-source26.test.mjs",
+          "owner": "D3",
+          "bytes": 18688,
+          "sha256": "32744bcd7eb6fef665a56daec5b059769174633892db45642b603e620ed791a0"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Existing Header exact2 sole D3 additive pure export source12 typed22 doc4 only; no source session or schema/write contract change. Original1 same-prepared equivalence reused; independent QB pending, old6/actual14279 not rerun."
+}

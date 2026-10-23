@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-22T22:24:47.114518+00:00",
+  "updatedAt": "2026-10-23T01:40:08.600758+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -2698,6 +2698,19 @@
         "apps/web/src/product-settings/size-groups/source-dictionary.css"
       ],
       "evidenceSha256": "c230aa52f675b733e2543ab74ff55189a80ec30c42258fd67948057f9f1deadb",
+      "humanAuthorizationMessage": "01a161f7-a5e8-7e10-9059-9537c28910c2"
+    },
+    {
+      "atUtc": "2026-10-23T01:40:08.600758+00:00",
+      "owner": "D3",
+      "scope": "Existing Header exact2 pure projection export for current full source12 typed22 doc4; no schema or write contract change",
+      "files": [
+        "scripts/import-v3/native-transfer-header-source26.mjs",
+        "scripts/import-v3/native-transfer-header-source26.test.mjs"
+      ],
+      "sourcePlan": "K/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-plan1/PLAN.json",
+      "planSha256": "610a059b0a78e8690a40e2209350b26111948c6a1fbcbe4c9d43293cdc7cbbae",
+      "noOriginalDataReadGrant": true,
       "humanAuthorizationMessage": "01a161f7-a5e8-7e10-9059-9537c28910c2"
     }
   ],
