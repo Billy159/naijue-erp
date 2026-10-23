@@ -37,6 +37,9 @@
 .demo-ui .demo-page{min-width:0;padding:12px var(--ui-page-space) 16px;margin:auto;max-width:none;background:#fff}
 /* golden-consistency.css:4 overrides only the non-inventory page spacing. */
 .demo-ui .demo-page:not(.demo-page-inventory){padding:16px 20px}
+/* Frozen product-rework.css:2. These are the actual adapted product roots.
+   Retained hidden/inert document descendants must not affect the active page. */
+.demo-ui .demo-page:has(:is(.product-full-page,.product-detail-workbench):not([hidden],[inert],[hidden] *,[inert] *)){padding:12px var(--ui-page-space) 16px}
 /* Frozen basic-settings-v2.css:2–8 bounds the settings page, not each row.
    The real host's account/status header remains a normal, non-shrinking flex
    sibling. Only this selected route consumes the remaining viewport; other

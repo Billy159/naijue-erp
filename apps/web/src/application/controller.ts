@@ -193,6 +193,13 @@ export class ApplicationController {
     const role = this.authentication.getSnapshot().principal?.role;
     return this.#configuredRoutes.filter(route => route === 'staff-settings' || route === 'account-settings' ? role === 'ADMIN' : !['customers', 'suppliers'].includes(route) || role === 'ADMIN' || role === 'WAREHOUSE');
   }
+  /** Presentation admission from the explicit existing create configuration.
+   * The native mounted page still enforces current write/dirty/session gates. */
+  canEnterDocumentCreation(route: 'sales' | 'transfers'): boolean {
+    const commands = this.#configuration.routes[route]?.commands;
+    return this.authentication.getSnapshot().principal !== null && this.routes.includes(route)
+      && !!commands && (commands.manualCreate === true || !!commands.preparation);
+  }
   readonly getSnapshot = (): ApplicationSnapshot => this.#state;
   /** Only the current bounded document round trip retains a second render owner. */
   get retainedDocument(): ApplicationSnapshot | null { return this.#documentTrip?.origin ?? null; }

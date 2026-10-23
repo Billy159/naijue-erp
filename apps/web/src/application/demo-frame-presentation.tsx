@@ -34,7 +34,11 @@ export function createDemoFrameWorkspaceRenderer(): ApplicationPresentation['ren
       if (destination === null) continue;
       navigation[destination] = { selected: state.route === route, onActivate: () => { void controller.navigate(route); } };
     }
-    return <DemoFrame navigation={navigation} breadcrumb={state.route ? breadcrumbs[state.route] : []} topbarActions={<AuthenticationAccountMenu />}
+    const enterDocumentRoute = {
+      ...(controller.canEnterDocumentCreation('sales') ? { sales: () => controller.navigate('sales') } : {}),
+      ...(controller.canEnterDocumentCreation('transfers') ? { transfer: () => controller.navigate('transfers') } : {}),
+    };
+    return <DemoFrame enterDocumentRoute={enterDocumentRoute} navigation={navigation} breadcrumb={state.route ? breadcrumbs[state.route] : []} topbarActions={<AuthenticationAccountMenu />}
       notice={state.notice === 'cannot-leave' ? <p className="iw-inline-state" role="alert">当前页面有未保存输入或尚未确认的操作，请先处理当前页面后再离开。</p> : null}>
       {routeContent}
     </DemoFrame>;

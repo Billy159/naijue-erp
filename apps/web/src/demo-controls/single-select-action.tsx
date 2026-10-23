@@ -3,6 +3,9 @@ import { Select } from '@arco-design/web-react';
 import type { SelectProps } from '@arco-design/web-react';
 import type { ComponentRef } from 'react';
 type SelectHandle = ComponentRef<typeof Select>;
+// Arco controls an own value property containing undefined. Its declaration
+// predates exactOptionalPropertyTypes; keep explicit empty controlled state.
+const ControlledSelect = Select as unknown as ForwardRefExoticComponent<Omit<SelectProps, 'value'> & { readonly value: SelectProps['value'] | undefined } & RefAttributes<SelectHandle>>;
 import { useEffect, useImperativeHandle, useReducer, useRef, useState, type ForwardRefExoticComponent, type RefAttributes } from 'react';
 import type { DemoSingleSelectActionProps } from './single-select-contract.ts';
 
@@ -32,11 +35,28 @@ export function DemoSingleSelectAction(props: DemoSingleSelectActionProps) {
     queueMicrotask(() => { if (active) refreshPortal(); });
     return () => { active = false; };
   }, [mounted, props.open, props.disabled]);
+  useEffect(() => {
+    if (!props.open || props.disabled) return;
+    const element = host.current, doc = element?.ownerDocument;
+    // A remote-page footer can unmount while its bounded page loads, leaving
+    // focus on body. Keep Esc owned by this still-open local layer only.
+    const escape = (event: KeyboardEvent) => {
+      if (!doc || !element?.isConnected || doc.activeElement !== doc.body || event.isComposing || event.keyCode === 229 || event.key !== 'Escape') return;
+      event.preventDefault(); event.stopPropagation(); props.onOpenChange(false); select.current?.focus();
+    };
+    doc?.addEventListener('keydown', escape);
+    return () => doc?.removeEventListener('keydown', escape);
+  }, [props.open, props.disabled, props.onOpenChange]);
   const pageSize = props.presentation === 'page-size';
-  return <div ref={host} className="demo-single-select ui-single-host" style={props.presentation === 'flat' ? { position: 'relative' } : undefined}>
-    <Select ref={select}
+  return <div ref={host} className="demo-single-select ui-single-host" onKeyDown={event => {
+    if (!props.open || event.nativeEvent.isComposing || event.keyCode === 229 || event.key !== 'Escape') return;
+    // The remote-page footer is outside Select's input key handler. Keep the
+    // same source Esc dismissal for all descendants of this local layer.
+    event.preventDefault(); event.stopPropagation(); props.onOpenChange(false); select.current?.focus();
+  }} style={props.presentation === 'flat' ? { position: 'relative' } : undefined}>
+    <ControlledSelect ref={select}
       className={pageSize ? 'ui-page-size-select' : props.presentation === 'flat' ? 'ui-flat-select' : ''}
-      value={props.value}
+      value={props.value === '' ? undefined : props.value}
       options={props.options.map(option => ({ value: option.value, label: option.label, disabled: !!option.disabled }))}
       aria-label={props.label}
       {...(props.placeholder !== undefined ? { placeholder: props.placeholder } : {})}
