@@ -101,6 +101,6 @@ export function DemoFrame(props: DemoFrameProps) {
       const pending = pendingLeave; setPendingLeave(null);
       if (pending.owner.discard()) { setNavigationBlocked(false); pending.resume(); }
       else setNavigationBlocked(true);
-    }}>放弃修改并离开</button></>}><div className="ui-confirm-body"><p>{pendingLeave.owner.saved ? '离开将放弃本次修改，已保存单据保持原样。' : '此新单尚未保存。离开将放弃本次录入，不会产生销货单或库存变动。'}</p></div></SourceDocumentDialog>}
+    }}>放弃修改并离开</button></>}><div className="ui-confirm-body"><p>{pendingLeave.owner.saved ? '离开将放弃本次修改，已保存单据保持原样。' : <>此新单尚未保存。离开将放弃本次录入，不会产生{documentName}单或库存变动。</>}</p></div></SourceDocumentDialog>}
   </div></DocumentNavigationContext.Provider></DocumentLeaveContext.Provider>;
 }

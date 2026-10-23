@@ -34,6 +34,8 @@ function SavedTransferDocument({ model, ...props }: TransferCommandFormProps & {
     <TransferHistoryAction {...(props.history ? { capability: props.history } : {})} transferId={original.document.header.id} />
   </>;
   return <><TransferProposalForm {...props.presentation} scope={props.scope} creatorName={original.references.createdByName ?? '未知'} session={state.proposal} close={leave}
+    navigationLeave={{ canDiscard: !state.preparing && workspace.editableExistingProposal,
+      discard: () => props.scope.active && workspace.existingDocument === model && !model.getSnapshot().preparing && workspace.discardEditor() }}
     saved={{ number: original.document.header.number, actions, records: <TransferSavedRecords data={original} />, ...(native.notice ? { feedback: <p role="status">{native.notice}</p> } : {}) }}
     preparation={{ preparing: state.preparing, notice: state.notice, save: () => { void workspace.submit('SAVE'); }, cancel: () => model.cancelPreparation() }} />
     {confirm === 'leave' && <SourceDocumentDialog title="有未保存的修改" label="有未保存的修改" closeLabel="关闭弹窗" close={() => setConfirm(null)} className="transfer-source-discard" initialFocus="[data-erp-keep-input]" footer={<><button type="button" className="btn" data-erp-keep-input onClick={() => setConfirm(null)}>继续编辑</button><button type="button" className="btn primary" onClick={() => { setConfirm(null); if (workspace.discardEditor()) props.close(); }}>放弃修改并离开</button></>}><div className="ui-confirm-body"><p>离开后，本次未保存的修改将丢失。</p></div></SourceDocumentDialog>}

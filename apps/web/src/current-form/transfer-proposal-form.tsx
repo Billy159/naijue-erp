@@ -1,4 +1,5 @@
 import { Trigger, Select, type SelectProps } from '@arco-design/web-react';
+import { useDocumentLeave } from '../demo-presentation/document-navigation.tsx';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore, type ComponentType, type ReactNode } from 'react';
 import { TransferStatusTag } from '../transfers/transfer-status-tag.tsx';
 import { SourceDocumentDialog } from '../components/standard-overlay.tsx';
@@ -59,8 +60,10 @@ function TransferWarehouseField({ session, picker, visible, label, selected, opp
 }
 /** Final frozen transfer matrix hierarchy, using the same real product finder,
  * retained product whole page, actual SKU quantities and native write owner. */
-export function TransferProposalForm({ session, close, preparation, scope, productCapability, sizeGroupCapability, creatorName, saved }: TransferProposalPresentation & { readonly session: TransferProposalSession; readonly close: () => void; readonly saved?: { readonly number: string; readonly actions: ReactNode; readonly feedback?: ReactNode; readonly records?: ReactNode }; readonly preparation?: { readonly save: () => void; readonly preparing: boolean; readonly notice: string | null; readonly cancel: () => void } }) {
+export function TransferProposalForm({ session, close, preparation, scope, productCapability, sizeGroupCapability, creatorName, saved, navigationLeave }: TransferProposalPresentation & { readonly session: TransferProposalSession; readonly close: () => void; readonly navigationLeave?: { readonly canDiscard: boolean; readonly discard: () => boolean }; readonly saved?: { readonly number: string; readonly actions: ReactNode; readonly feedback?: ReactNode; readonly records?: ReactNode }; readonly preparation?: { readonly save: () => void; readonly preparing: boolean; readonly notice: string | null; readonly cancel: () => void } }) {
   const state = useSyncExternalStore(session.subscribe, session.getSnapshot, session.getSnapshot);
+  useDocumentLeave({ dirty: state.dirty || !!state.replacement, canDiscard: navigationLeave?.canDiscard ?? !preparation?.preparing, saved: !!saved,
+    discard: navigationLeave?.discard ?? (() => !preparation?.preparing && session.reset(true)) });
   const [dockPinned, setDockPinned] = useState(false), [confirm, setConfirm] = useState(false), [scanner, setScanner] = useState<DocumentScanController | null>(null), [anchor, setAnchor] = useState<string | null>(null);
   const heading = useRef<HTMLHeadingElement>(null), form = useRef<HTMLElement>(null), matrix = useRef<HTMLDivElement>(null), productKeys = useRef(new Map<string, CurrentProductFinderHandle>()), opener = useRef<HTMLElement | null>(null);
   const { draft, pending, picker, replacement } = state;

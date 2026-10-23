@@ -1,0 +1,91 @@
+{
+  "atUtc": "2026-10-23T20:55:57.252404+00:00",
+  "parent": "c837afa8a13d1ee6307dc8f091005b6539ddcfb3",
+  "taskId": "F03_ORIGINAL_T02_DIRTY_LEFT_NAVIGATION",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+      "bytes": 35301,
+      "sha256": "0a448d1fcdd940b0259c0c06a9c3bfbec2a0cbe503b7e1c9407cc7dc6c5b23ac",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-new-document-form.tsx",
+      "bytes": 2115,
+      "sha256": "6cda6591883d5bfffbe804b54ac641c575b438db57976984ad6154d78cbd56f2",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-existing-document-form.tsx",
+      "bytes": 5479,
+      "sha256": "f236ebc5ae9f9ad7a607409d45dd1874f9310db55d04af1418447aba05db4b81",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/form.tsx",
+      "bytes": 14086,
+      "sha256": "6a43c1457032e17d76a88b0c6d76dfd827a45cabcaee5fa1e2504ab34e5126ff",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+      "bytes": 8155,
+      "sha256": "ab5f4cf44bc225373d74a808210b8177bf2bbab4542d41ba50d087c6cf628a19",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-109/DELIVERY.json",
+  "ownerReceiptSha256": "8e44e0701b43f9c05762c01f8e67a2838f8b932310bf08893971d08c1936f1e2",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh",
+    "status": "SOURCE_READY_ORIGINAL_T02_DIRTY_LEFT_NAVIGATION_ONLY",
+    "files": [
+      {
+        "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+        "bytes": 35301,
+        "sha256": "0a448d1fcdd940b0259c0c06a9c3bfbec2a0cbe503b7e1c9407cc7dc6c5b23ac"
+      },
+      {
+        "path": "apps/web/src/current-form/transfer-new-document-form.tsx",
+        "bytes": 2115,
+        "sha256": "6cda6591883d5bfffbe804b54ac641c575b438db57976984ad6154d78cbd56f2"
+      },
+      {
+        "path": "apps/web/src/current-form/transfer-existing-document-form.tsx",
+        "bytes": 5479,
+        "sha256": "f236ebc5ae9f9ad7a607409d45dd1874f9310db55d04af1418447aba05db4b81"
+      },
+      {
+        "path": "apps/web/src/transfers/commands/form.tsx",
+        "bytes": 14086,
+        "sha256": "6a43c1457032e17d76a88b0c6d76dfd827a45cabcaee5fa1e2504ab34e5126ff"
+      },
+      {
+        "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+        "bytes": 8155,
+        "sha256": "ab5f4cf44bc225373d74a808210b8177bf2bbab4542d41ba50d087c6cf628a19"
+      }
+    ],
+    "changes": [
+      "Original TransferProposalForm registers existing DocumentLeaveContext hook already used by SALE183; dirty/replacement includes local raw rows, no new dialog/router/contracts",
+      "Original new-session live scope/preparing/unresolved command guard only resets proposal after explicit discard. Saved full-page callback uses original workspace.discardEditor under actual model/preparation owner; original native command form registers same hook, unresolved keys cannot be discarded",
+      "Existing DemoFrame retains exact original clicked route and existing dialog cancel/continue/discard semantics; only the hardcoded new-sale phrase now uses existing documentName, so T02 says transfer while bound SALE is unchanged. No geometry changes",
+      "Original actual C217 synthetic harness uses createApplication/createDemoFrameWorkspaceRenderer, matching the exercised actual-Application route seam; original216 quantity model untouched"
+    ],
+    "checks": {
+      "before-1/2": "Synthetic current-form fixture incorrectly read nonexistent catalog sizeName/group.id; original strict reader rejected before navigation. Fixed fixture joins actual groupMember by native sizeId/uses sizeGroupId, no source validator changes",
+      "before-3": "RED original actual Application/DemoFrame/T02 manual route: draft quantity7+raw note, canLeave false; original Inventory click only notice and no native leave dialog. JSON/DOM retained, consistent with QF actual217",
+      "after-1": "PASS actual original Application/route/manualNew: close+Continue preserve identical draft/qty7/note, explicit discard resets via original owner then actual Inventory route gate succeeds,0write/key; next original New action clean. Actual in-flight native sameSAVE then reply-loss uncertain keeps exact original JSON/key and pending2; left nav cannot discard or navigate. Original saved full-proposal and native pages Continue preserve dirty state, confirm calls original workspace discard before destination;0prep/key/write. Arco ref notices and harness act warnings retained",
+      "types-1": "PASS exact5 source roots complete strict imported source closure0"
+    },
+    "limitations": [
+      "JSDOM modeled native HTML dialog only; no actual Chrome Escape/focus/geometry or whole linked page acceptance",
+      "One synthetic native request only to prove immutable in-flight/unknown-key protection; not server/PG/permissions/save acceptance",
+      "No98/209/215/216 quantity or full-suite repetition; no C contracts/control records/Git/serve/whole-build/server/Chrome modified",
+      "Frozen Demo source used read-only; original reported dialog geometry unchanged"
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "Original actual217 USER-DIRTY-LEFT-NAV finding only. Existing DocumentLeave hook and original discard/unknown guard reused; exact5 source frozen. Owner JSDOM/strict adopted, originalQF source and actual successor pending. This source notinserved220; no backend/save/performance/wholepage acceptance."
+}

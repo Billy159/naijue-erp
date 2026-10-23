@@ -1,4 +1,5 @@
 import { DocumentProductPresentation } from '../../sales/document-presentation.tsx';
+import { useDocumentLeave } from '../../demo-presentation/document-navigation.tsx';
 import { TransferDocumentSummary } from '../document-presentation.tsx';
 import type { TransferProposalPresentation } from '../../current-form/transfer-proposal-form.tsx';
 import { DocumentOutputActions } from '../../components/document-output.tsx';
@@ -37,6 +38,8 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
   const [discard, setDiscard] = useState(false);
   useEffect(() => { heading.current?.focus(); }, []);
   const editor = state.editor, write = state.write;
+  useDocumentLeave({ dirty: workspace.hasDirtyDraft || workspace.hasUnresolvedWrite, canDiscard: scope.active && !workspace.hasUnresolvedWrite,
+    saved: !!editor?.detail || write.phase === 'committed', discard: () => scope.active && workspace.discardEditor() });
   const committedRead = useRef<{ owner: typeof workspace; operationId: string } | null>(null);
   useEffect(() => {
     if (!scope.active || write.phase !== 'committed' || !write.result || !editor || editor.current || editor.readError || editor.phase === 'loading') return;
