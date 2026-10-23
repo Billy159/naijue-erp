@@ -300,15 +300,44 @@ test("D3 read outcome: ledger unknown COMMIT is discarded without rollback or re
   assert.equal(pool.connects, 1); assert.equal(pool.releases.length, 1); assert.ok(pool.releases[0] instanceof Error);
 });
 
-test("SOURCE CONTRACT ONLY ledger: no history materialization, aggregate, private imported payload, new database/pool or mutable source projection", () => {
+test("SOURCE CONTRACT ONLY ledger: bounded legacy keyset and authorized numbered count/page without history materialization, private payload or writes", async () => {
   const source = readFileSync(new URL("../adapters/postgres/src/inventory-ledger-query-reader.ts", import.meta.url), "utf8");
-  assert.ok(!/SELECT\s+\*|OFFSET|COUNT\(|SUM\(|INSERT INTO|UPDATE naijue_erp|DELETE FROM|\.listen\(|new Pool\(/i.test(source));
+  // Global read-only/no-reconstruction rules still apply to both modes. A
+  // SELECT * of the explicitly scoped display CTE is not a base-table dump.
+  assert.ok(!/SELECT\s+\*\s+FROM\s+naijue_erp\.|SUM\(|INSERT INTO|UPDATE naijue_erp|DELETE FROM|\.listen\(|new Pool\(/i.test(source));
   assert.ok(!source.includes("readPublishedCutoffScope(") && !source.includes("readInventory(") && !source.includes("readDetail("));
   assert.ok(!/sl\.(?:sku_id|quantity|product_name_snapshot|is_current)|tl\.(?:sku_id|quantity|product_name_snapshot|is_current)/.test(source));
   assert.ok(source.includes("sl.sales_id AS source_sales_id") && source.includes("tl.transfer_id AS source_transfer_id"));
   assert.ok(source.includes("r.source_record_hash = b.source_hash") && !source.includes("b.source_hash AS"));
   assert.ok(source.includes("ORDER BY b.id LIMIT 2") && source.includes("LIMIT $6"));
   assert.ok(source.includes("s.size_id") && source.includes("m.size_group_id = p.size_group_id AND m.size_id = s.size_id"));
+
+  // Exercise each real query branch through the existing scripted driver, so
+  // the former whole-file prohibition remains strict on the legacy branch.
+  const legacy = new ScriptedPool(); await new PostgresInventoryLedgerQueryReader(legacy).readLedger(ledgerRead());
+  const legacyPage = legacy.calls.find(call => call.sql.includes("/* inventory-ledger:entries */")); assert.ok(legacyPage);
+  assert.ok(!/SELECT\s+\*|OFFSET|COUNT\(|SUM\(/i.test(legacyPage.sql));
+  assert.deepEqual(stages(legacy), ["BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY", "warehouse", "sku", "publication", "guards", "entries", "COMMIT"]);
+  assert.ok(legacyPage.sql.includes("(l.posted_at, l.id) < ($4::timestamptz, $5::uuid)") && legacyPage.sql.includes("ORDER BY l.posted_at DESC, l.id DESC LIMIT $6"));
+  assert.deepEqual(legacyPage.values, [ledgerWarehouse.id, ledgerWarehouse.hallId, ledgerParameters().skuId, null, null, 21]);
+
+  const numbered = new ScriptedPool(); numbered.entries = Array.from({ length: 25 }, (_, n) => ledgerDisplayEntry(n));
+  const result = await new PostgresInventoryLedgerQueryReader(numbered).readLedger(ledgerRead(ledgerNumberedParameters({ page: 2 })));
+  const count = numbered.calls.find(call => call.sql.includes("/* inventory-ledger:filtered-count */"));
+  const page = numbered.calls.find(call => call.sql.includes("/* inventory-ledger:numbered-entries */")); assert.ok(count && page);
+  assert.deepEqual(stages(numbered), ["BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY", "warehouse", "sku", "publication", "guards", "filtered-count", "numbered-entries", "COMMIT"]);
+  assert.equal(result.data.filteredTotal, "25"); assert.equal(result.data.entries.length, 5); assert.equal(result.data.pageSize, 20);
+  const countCteEnd = count.sql.indexOf(" SELECT count(*)::text AS total FROM ledger_display WHERE ");
+  const pageCteEnd = page.sql.indexOf(" SELECT * FROM ledger_display WHERE "); assert.ok(countCteEnd > 0 && pageCteEnd > 0);
+  assert.equal(count.sql.slice(count.sql.indexOf("WITH ledger_display"), countCteEnd), page.sql.slice(page.sql.indexOf("WITH ledger_display"), pageCteEnd));
+  assert.equal(count.sql.slice(count.sql.lastIndexOf(" WHERE ") + 7), page.sql.slice(page.sql.lastIndexOf(" WHERE ") + 7, page.sql.indexOf("\n          ORDER BY posted_at")));
+  for (const query of [count, page]) {
+    assert.ok(query.sql.includes("l.warehouse_id = $1::uuid AND w.hall_id = $2::uuid AND l.sku_id = $3::uuid"));
+    assert.ok(query.sql.includes("display_date >=") && query.sql.includes("display_date <=") && query.sql.includes("display_business_type=$6::text") && query.sql.includes("strpos(lower(coalesce(display_source_number,'')),lower($7::text))>0"));
+  }
+  assert.ok(page.sql.includes("ORDER BY posted_at DESC, id DESC LIMIT $8 OFFSET $9::bigint"));
+  assert.deepEqual(page.values.slice(0, 7), count.values); assert.deepEqual(page.values.slice(7), [20, "20"]);
+  assert.deepEqual(legacy.releases, [undefined]); assert.deepEqual(numbered.releases, [undefined]);
 });
 
 test("SCRIPTED ledger PG: abort while COMMIT completes suppresses direct-reader result without misreporting or rolling back completed read", async () => {

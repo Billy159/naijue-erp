@@ -1,0 +1,49 @@
+{
+  "atUtc": "2026-10-23T22:01:49.238880+00:00",
+  "parent": "e885f9518840466330d4a590b702784861147f20",
+  "taskId": "D3_QB194_F01_AFFECTED_LEGACY_NUMBERED_SOURCE_ASSERTION",
+  "files": [
+    {
+      "path": "tests/inventory-ledger-query-postgres-protocol.test.ts",
+      "bytes": 36301,
+      "sha256": "7023649104b012ea7c196abfb721d20e8cd746d65e684f6b7ed72d49a7826b66",
+      "owner": "D3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json",
+  "ownerReceiptSha256AtPin": "8b20996bd7390ac9b68e1ba306accae4e5d8fd987ef5f4a354a62c68f48f6e34",
+  "ownerDelivery": {
+    "atUtc": "2026-10-23T22:00:14.099Z",
+    "finding": "QB194-F01",
+    "baseSource": "C208 9bb08f2a3076a53ee9c0f1d749bb290f86fcfb78",
+    "status": "SOURCE_READY_TEST_ONLY_CORRECTION_FOR_C_FREEZE_ORIGINAL_QB_DIFFERENCE_REVIEW",
+    "file": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/inventory-ledger-query-postgres-protocol.test.ts",
+      "bytes": 36301,
+      "sha256": "7023649104b012ea7c196abfb721d20e8cd746d65e684f6b7ed72d49a7826b66"
+    },
+    "change": "Only original affected SOURCE CONTRACT ONLY ledger case in existing PG protocol test. Global no persistent writes, base-table SELECT-star dump, SUM/current-balance reconstruction, listener/pool creation, detail/history preload or mutable line payload remains. Both actual original query branches exercised through existing scripted driver. Legacy still exact bounded keyset and no SELECT-star/COUNT/OFFSET; numbered verifies exact key/current scope and same RR transaction stage order, identical scoped CTE and date/type/source predicate for COUNT/page, bound20 LIMIT/OFFSET, independent total25/page2 visible5, same params and confirmed release. Does not delete/skip the original required test or change production to evade it.",
+    "check": {
+      "node": "24.21.0",
+      "commandPattern": "^SOURCE CONTRACT ONLY ledger:",
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "exitCode": 0,
+      "firstFixRunPassed": true,
+      "environment": "Source assertions plus scripted branch query protocol only; no actual PostgreSQL."
+    },
+    "adoptedWithoutRepeat": "Original new6+affected2/strict source208 evidence, historical union, B07, C79 and H06 unchanged accepted scope. No broad test/build/typecheck rerun.",
+    "productionChanges": 0,
+    "otherSourceFilesChanged": 0,
+    "notRun": [
+      "Actual PG/SQL plan/performance",
+      "HTTP/UI/F2/F1 integration",
+      "Before/after real values and source navigation",
+      "v13 fields/DDL/guards/writers",
+      "Git/server/SSH/Chrome/build/root matrices"
+    ],
+    "next": "C freezes exact1 current test bytes/pin; original QB reviews F01 difference and this one case only. Original C208 production facts remain unchanged; before/after UNKNOWN and navigation NOT_CHECKED, v13 pending human confirmation."
+  },
+  "qualification": "Only one affected existing test contract scoped to approved legacy/numbered branches. No production reader/SQL/interface change. One selectedcase PASS adopted, not real PG/performance; originalQB independent incremental review pending. No UIbuild neededfor thistest-only source."
+}
