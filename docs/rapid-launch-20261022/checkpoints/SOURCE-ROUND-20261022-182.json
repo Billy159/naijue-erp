@@ -1,0 +1,30 @@
+{
+  "atUtc": "2026-10-23T13:54:33.907541+00:00",
+  "parent": "a7aa1c9d28aa69e2b3b65449ef63b6106a844f72",
+  "taskId": "F05_QF2_C173_ROUTE_CONTEXT_AND_TAB_LINEHEIGHT_REPAIR",
+  "files": [
+    {
+      "path": "apps/web/src/payment-settings/payment-page.tsx",
+      "owner": "F3",
+      "bytes": 19125,
+      "sha256": "2617030777e4b5235ef7112877dabf4e4815ec434758293a5378ee8f93fb36e5"
+    },
+    {
+      "path": "apps/web/src/payment-settings/controller.ts",
+      "owner": "F3",
+      "bytes": 14484,
+      "sha256": "5c600060dfa3cb7b820b1d51316b331dbcb68185396da4b4937919443575af5a"
+    },
+    {
+      "path": "apps/web/src/payment-settings/payment-settings.css",
+      "owner": "F3",
+      "bytes": 3429,
+      "sha256": "0c3f8e16588c25f6e064151186551c3eaa7ef09f091f8f9622f4edd5bd7d01b8"
+    }
+  ],
+  "ownerReceipt": "K/reports/frontend/rapid-launch-20261022/F3/payment-route-context-v1/RESULT.json",
+  "ownerReceiptSha256": "c03ade0913f52cea28d12ce8f34baa106b66deab064cd76bb47b68e13de1dbcd",
+  "scope": "Existing payment workspace owns two-tab presentation context across ordinary route leave/return. Effects dispose, freshread uses retained executed query; account/permission invalidation clears context. Exact existing Arco1.15 local tab line-height, no global cache/persistence or DOM retention.",
+  "checksAdopted": "Owner three new affected real React/http-reader synthetic groups and strict2roots0/CSS0/diffcheck. Original48/last4groups/closedP2 not repeated. Before fixture selection flaw retained and not labelled full RED.",
+  "qualification": "SOURCE_FIXED_ONLY; actual QF2 route context and tab/filter/table geometry twoP2 remain OPEN until new immutable runtime minimal retest. No realwrite/PG/formalperformance accepted."
+}

@@ -12,7 +12,7 @@ import { settingsReferenceName, settingsSaveUnavailable } from '../settings/stor
 import type { SettingsReference } from '../settings/stores/maintenance-contracts.ts';
 import { initialPaymentSettingsQuery } from './contracts.ts';
 import type { PaymentSettingsPage as PageData, PaymentSettingsProps, PaymentSettingsQuery, PaymentSettingsKind, PaymentSettingsRecord } from './contracts.ts';
-import { PaymentSettingsController } from './controller.ts';
+import { createPaymentSettingsViewState, PaymentSettingsController, type PaymentSettingsViewState } from './controller.ts';
 import './payment-settings.css';
 
 const paymentForms = new AsyncLeafRegistry({ 'payment-maintenance': { load: async () => {
@@ -35,17 +35,18 @@ export function PaymentSettingsPage(props: PaymentSettingsProps) {
   return <PaymentTabView key={JSON.stringify([identity.accountId, identity.sessionRevision, identity.permissionRevision, props.scope.routeInstanceId])} {...props} />;
 }
 function PaymentTabView(props: PaymentSettingsProps) {
-  const scrollOwner = useRef<{ readonly scope: PaymentSettingsProps['scope']; readonly reader: PaymentSettingsProps['reader']; readonly workspace: PaymentSettingsProps['workspace']; readonly position: PaymentTableScroll } | null>(null);
-  if (!scrollOwner.current || scrollOwner.current.scope !== props.scope || scrollOwner.current.reader !== props.reader || scrollOwner.current.workspace !== props.workspace) {
-    scrollOwner.current = { scope: props.scope, reader: props.reader, workspace: props.workspace, position: { top: 0, left: 0 } };
+  const owner = props.workspace?.matches(props.scope) ? props.workspace : null;
+  const binding = useRef<{ readonly scope: PaymentSettingsProps['scope']; readonly owner: typeof owner; readonly view: PaymentSettingsViewState } | null>(null);
+  if (!binding.current || binding.current.scope !== props.scope || binding.current.owner !== owner) {
+    binding.current = { scope: props.scope, owner, view: owner?.getViewState(props.initialTab) ?? createPaymentSettingsViewState(props.initialTab) };
   }
-  const [tab, setTab] = useState<PaymentSettingsKind>(props.initialTab ?? 'methods');
-  const [drafts, setDrafts] = useState<Record<PaymentSettingsKind, PaymentSettingsQuery>>({ methods: { ...initialPaymentSettingsQuery }, accounts: { ...initialPaymentSettingsQuery } });
-  const [executed, setExecuted] = useState<Record<PaymentSettingsKind, PaymentSettingsQuery>>({ methods: { ...initialPaymentSettingsQuery }, accounts: { ...initialPaymentSettingsQuery } });
-  const [method, setMethod] = useState<SettingsReference | null>(null), focusTab = useRef(false);
-  return <PaymentContent key={tab} {...props} kind={tab} tableScroll={scrollOwner.current.position} restoreFocus={focusTab.current} onTab={next => { focusTab.current = true; setTab(next); }} filterDraft={drafts[tab]}
-    onFilterDraft={query => setDrafts(value => ({ ...value, [tab]: query }))} lastQuery={executed[tab]}
-    onExecuted={query => setExecuted(value => ({ ...value, [tab]: query }))} selectedMethod={method} onSelectedMethod={setMethod} />;
+  const ui = binding.current.view, tab = ui.tab, focusTab = useRef(false), [, refresh] = useState(0);
+  const update = (change: () => void) => { if (props.scope.active) { change(); refresh(value => value + 1); } };
+  return <PaymentContent key={tab} {...props} kind={tab} tableScroll={ui.tableScroll} restoreFocus={focusTab.current}
+    onTab={next => update(() => { focusTab.current = true; ui.tab = next; })} filterDraft={ui.drafts[tab]}
+    onFilterDraft={query => update(() => { ui.drafts[tab] = query; })} lastQuery={ui.executed[tab]}
+    onExecuted={query => update(() => { ui.executed[tab] = query; })} selectedMethod={ui.method}
+    onSelectedMethod={method => update(() => { ui.method = method; })} />;
 }
 function PaymentContent(props: PaymentTabViewProps) {
   const [binding, setBinding] = useState<{ readonly scope: PaymentSettingsProps['scope']; readonly reader: PaymentSettingsProps['reader']; readonly kind: PaymentSettingsKind; readonly queries: Queries } | null>(null);
@@ -87,7 +88,7 @@ function PaymentList(props: Parameters<typeof PaymentContent>[0] & { readonly qu
     if (record?.id === editingId && record.kind === props.kind) { openEditor(record); setEditingId(null); }
   }, [editingId, detail, scope, props.kind, props.canPrepare]);
   const active = scope.active && list.phase !== 'disposed', result = list.success?.data;
-  const applied = list.success?.parameters ?? initialPaymentSettingsQuery, busy = list.phase === 'loading';
+  const applied = list.success?.parameters ?? props.lastQuery, busy = list.phase === 'loading';
   const run = (query: PaymentSettingsQuery) => { if (active && queries) { const exact = { ...query, paymentMethodId: props.kind === 'methods' ? null : query.paymentMethodId }; props.onExecuted(exact); void queries.list.run(exact); } };
   const close = () => { if (workspace) { if (!workspace.close(props.kind)) return; } else { if (editor && !editor.discard()) return; setEditor(null); } setEditingId(null); queries?.detail.cancel(); focus.request(); };
   const changeTab = (kind: PaymentSettingsKind) => { if (kind === props.kind) return; if (editor && !editor.requestClose()) return; if (workspace) workspace.close(props.kind); else setEditor(null); props.onTab(kind); };

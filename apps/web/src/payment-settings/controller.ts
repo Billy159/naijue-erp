@@ -1,6 +1,6 @@
 import type { ReadScope } from '../loading/read-scope.ts';
-import type { SettingsErrors } from '../settings/stores/maintenance-contracts.ts';
-import { PaymentClientError, type PaymentCommand, type PaymentCommandClient, type PaymentCommandResult, type PaymentSettingsDraft, type PaymentSettingsKind, type PaymentSettingsRecord } from './contracts.ts';
+import type { SettingsErrors, SettingsReference } from '../settings/stores/maintenance-contracts.ts';
+import { initialPaymentSettingsQuery, PaymentClientError, type PaymentCommand, type PaymentCommandClient, type PaymentCommandResult, type PaymentSettingsDraft, type PaymentSettingsKind, type PaymentSettingsRecord, type PaymentSettingsQuery } from './contracts.ts';
 import { validatePaymentCommand, validatePaymentResult, validatePaymentReceipt, validatePaymentSettingsDraft } from './response-validation.ts';
 
 export interface PaymentWriteState {
@@ -135,10 +135,25 @@ export class PaymentSettingsController {
   }
 }
 
+/** Bounded presentation context owned by the existing authenticated workspace.
+ * Route requests/results and DOM stay with the mounted page. */
+export interface PaymentSettingsViewState {
+  tab: PaymentSettingsKind;
+  drafts: Record<PaymentSettingsKind, PaymentSettingsQuery>;
+  executed: Record<PaymentSettingsKind, PaymentSettingsQuery>;
+  method: SettingsReference | null;
+  readonly tableScroll: { top: number; left: number };
+}
+export function createPaymentSettingsViewState(tab: PaymentSettingsKind = 'methods'): PaymentSettingsViewState {
+  return { tab, drafts: { methods: { ...initialPaymentSettingsQuery }, accounts: { ...initialPaymentSettingsQuery } },
+    executed: { methods: { ...initialPaymentSettingsQuery }, accounts: { ...initialPaymentSettingsQuery } },
+    method: null, tableScroll: { top: 0, left: 0 } };
+}
 export interface PaymentWorkspaceOptions extends Omit<PaymentEditorOptions, 'hasOtherUnresolvedWrite'> { readonly scope: ReadScope }
 /** Two bounded session editors. No localStorage, shared global cache or route-owned command. */
 export function createPaymentSettingsWorkspace(options: PaymentWorkspaceOptions) {
   let snapshot: Readonly<Record<PaymentSettingsKind, PaymentSettingsController | null>> = Object.freeze({ methods: null, accounts: null });
+  let viewState: PaymentSettingsViewState | null = null;
   const listeners = new Set<() => void>();
   const notify = () => { for (const listener of [...listeners]) { try { listener(); } catch { /* Consumer only. */ } } };
   const matches = (scope: ReadScope) => options.scope.active && scope.active
@@ -149,8 +164,12 @@ export function createPaymentSettingsWorkspace(options: PaymentWorkspaceOptions)
     if (editor && !editor.discard()) return false;
     snapshot = Object.freeze({ ...snapshot, [kind]: null }); notify(); return true;
   };
-  options.scope.signal.addEventListener('abort', () => { for (const editor of Object.values(snapshot)) editor?.dispose(); snapshot = Object.freeze({ methods: null, accounts: null }); notify(); listeners.clear(); }, { once: true });
+  options.scope.signal.addEventListener('abort', () => { for (const editor of Object.values(snapshot)) editor?.dispose(); snapshot = Object.freeze({ methods: null, accounts: null }); viewState = null; notify(); listeners.clear(); }, { once: true });
   return Object.freeze({ scope: options.scope, matches,
+    getViewState: (initialTab?: PaymentSettingsKind): PaymentSettingsViewState | null => {
+      if (!options.scope.active) return null;
+      return viewState ??= createPaymentSettingsViewState(initialTab);
+    },
     getSnapshot: () => snapshot,
     subscribe: (listener: () => void) => { listeners.add(listener); return () => { listeners.delete(listener); }; },
     open(kind: PaymentSettingsKind, record: PaymentSettingsRecord | null): PaymentSettingsController | null {
