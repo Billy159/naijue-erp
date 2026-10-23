@@ -18,3 +18,22 @@
 .erp-product-tabs .arco-tabs-content{flex:1;min-height:0;overflow:hidden}
 .erp-product-tabs .arco-tabs-content-inner,.erp-product-tabs .arco-tabs-content-item-active,.erp-product-tabs .arco-tabs-pane{height:100%;min-height:0}
 .erp-product-tabs .pd-panel{height:100%;box-sizing:border-box}
+
+/* Frozen product-current.js editor/workspaceHead. Product source header only;
+ * default Arco Tabs and Drawer rules above are unchanged. Final inheritance:
+ * styles.css39/179, ui-review.css43, then product-rework.css4-13. */
+.erp-source-product-tabs{min-width:0;color:var(--ca-ink);font:13px var(--ca-font-sans)}
+.erp-source-product-tabs .pc-page-head h1{font-weight:600}
+.erp-source-product-tabs .pc-page-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.erp-source-product-tabs .tabs{overflow-x:auto;flex-wrap:nowrap}
+.erp-source-product-tabs .tabs button{flex-shrink:0}
+.erp-source-product-tabs .pc-detail-sticky{position:sticky;top:0;z-index:30;padding:0 0 2px;background:var(--ca-surface);border-bottom:1px solid var(--ca-line)}
+.erp-source-product-tabs .pc-detail-sticky .pc-page-head{min-height:32px;margin:0 0 5px}
+.erp-source-product-tabs .pc-detail-sticky .pc-page-head h1{margin:0;font-size:20px;line-height:30px}
+.erp-source-product-tabs .pc-detail-sticky .tabs{display:flex;align-items:center;gap:2px;margin:0;padding:0;border:0;background:transparent}
+.erp-source-product-tabs .pc-detail-sticky .tabs button{box-sizing:border-box;min-width:68px;height:32px;min-height:32px;padding:5px 12px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--ca-ink-2);font-size:13px;font-weight:400}
+.erp-source-product-tabs .pc-detail-sticky .tabs button:hover{background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+.erp-source-product-tabs .pc-detail-sticky .tabs button.active{border-bottom-color:var(--ca-primary);color:var(--ca-primary-ink);font-weight:600}
+.erp-source-product-tabs .pc-detail-sticky .actions{display:flex;align-items:center;gap:6px}
+.erp-source-product-tabs .pc-detail-sticky .actions>button{height:32px;min-height:32px;padding:4px 11px;font-size:13px}
+.erp-source-product-tabs .pc-detail-body.pc-editor-body{padding:12px 0 18px;max-height:none;overflow:visible}

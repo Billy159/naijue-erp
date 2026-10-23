@@ -1,4 +1,4 @@
-import type { ProductMaintenanceCommand as ProductMaintenanceCommandV1, ProductMaintenanceCommandV2, ProductMaintenanceResult, ProductWriteValues as ProductWriteValuesV1, ProductWriteValuesV2, ProductMaintenanceDetail as ProductMaintenanceDetailV1, ProductMaintenanceDetailV2 } from '../../../../packages/application/src/product-maintenance-ports.ts';
+import type { ProductMaintenanceCommand as ProductMaintenanceCommandV1, ProductMaintenanceCommandV2, ProductMaintenanceMediaCommandV2, ProductMaintenanceResult, ProductWriteValues as ProductWriteValuesV1, ProductWriteValuesV2, ProductMaintenanceDetail as ProductMaintenanceDetailV1, ProductMaintenanceDetailV2 } from '../../../../packages/application/src/product-maintenance-ports.ts';
 import type { Selection } from '../inventory/contracts.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
 import type { QueryRead } from '../loading/latest-query.ts';
@@ -7,10 +7,10 @@ import type { ProductReadOnlyReader } from '../inventory/product-contracts.ts';
 import type { DictionaryBrowserReader } from '../product-settings/size-groups/contracts.ts';
 import type { HttpQueryError } from '../transport/http-query.ts';
 import type { ProductFullPageReadOnlyReader } from './product-page-contracts.ts';
-import type { CatalogueSettingsBrowserReader } from '../product-settings/colors/contracts.ts';
+import type { CatalogueSettingsBrowserReader, CatalogueMaintenanceCapability } from '../product-settings/colors/contracts.ts';
 export type { ProductMaintenanceResult, ProductAggregate, ProductSkuInput, ProductBarcodeInput, ProductMaintenanceCommandV2, ProductMaintenanceDetailV2, ProductWriteValuesV2 } from '../../../../packages/application/src/product-maintenance-ports.ts';
 export type { ProductMaintenanceCandidateQuery, ProductMaintenanceCandidateKind, ProductMaintenanceCandidatePage } from '../../../../packages/application/src/product-maintenance-ports.ts';
-export type ProductMaintenanceCommand = ProductMaintenanceCommandV1 | ProductMaintenanceCommandV2;
+export type ProductMaintenanceCommand = ProductMaintenanceCommandV1 | ProductMaintenanceCommandV2 | ProductMaintenanceMediaCommandV2;
 export type ProductMaintenanceDetail = ProductMaintenanceDetailV1 | ProductMaintenanceDetailV2;
 export type ProductWriteValues = ProductWriteValuesV1 | ProductWriteValuesV2;
 export interface ProductMaintenanceReader {
@@ -35,6 +35,9 @@ export interface ProductEditorCapability {
   readonly stock?: ProductFullPageReadOnlyReader['stock'];
   /** Opt in only when the richer authenticated media endpoint is mounted. */
   readonly media?: ProductEditorMediaReader;
+  readonly mediaUpload?:ProductMediaUploader;
+  /** Existing explicit catalogue grants supplied by the trusted product host. */
+  readonly catalogueMaintenance?: {readonly colors?:CatalogueMaintenanceCapability;readonly fits?:CatalogueMaintenanceCapability};
 }
 export interface ProductEditorProps {
   readonly initialTab?: 'stock';
@@ -97,3 +100,6 @@ export interface ProductEditorMediaReader {
     readonly productId: string; readonly imageId: string; readonly url: string;
   }>;
 }
+
+/** Existing media-upload HTTP bridge: raw File bytes, original root/file keys. */
+export type ProductMediaUploader=(input:{readonly file:File;readonly productId:string|null;readonly commandKey:string;readonly uploadKey:string;readonly signal:AbortSignal})=>Promise<{readonly uploadId:string;readonly mime:'image/png'|'image/jpeg'|'image/webp';readonly byteSize:string;readonly expiresAt:string}>;

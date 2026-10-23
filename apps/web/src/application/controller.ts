@@ -100,8 +100,11 @@ export class ApplicationController {
       || typeof maintenance.reader.readCandidates !== 'function' || typeof maintenance.client?.execute !== 'function'
       || typeof maintenance.client.receipt !== 'function' || typeof maintenance.newRequestKey !== 'function'
       || typeof maintenance.onRecoveryRequired !== 'function')) throw new TypeError('Explicit product maintenance dependencies are required.');
+    const productColors = catalogueMaintenance(maintenance?.catalogueMaintenance?.colors, 'COLOR');
+    const productFits = catalogueMaintenance(maintenance?.catalogueMaintenance?.fits, 'FIT');
     const products = routes.products ? Object.freeze({ stylesheet: stylesheet(routes.products.stylesheet), ...(routes.products.product ? { product: Object.freeze({ stylesheet: stylesheet(routes.products.product.stylesheet) }) } : {}), ...(fullPage ? { fullPage } : {}),
-      ...(maintenance ? { maintenance: Object.freeze({ ...maintenance, allowedActions: Object.freeze([...maintenance.allowedActions]) }) } : {}) }) : undefined;
+      ...(maintenance ? { maintenance: Object.freeze({ ...maintenance, allowedActions: Object.freeze([...maintenance.allowedActions]),
+        ...(maintenance.catalogueMaintenance ? { catalogueMaintenance: Object.freeze({ ...(productColors ? { colors: productColors } : {}), ...(productFits ? { fits: productFits } : {}) }) } : {}) }) } : {}) }) : undefined;
     const categoryMaintenance = catalogueMaintenance(routes.productCategories?.maintenance, 'CATEGORY');
     const colorMaintenance = catalogueMaintenance(routes.productSettings?.maintenance?.colors, 'COLOR');
     const fitMaintenance = catalogueMaintenance(routes.productSettings?.maintenance?.fits, 'FIT');

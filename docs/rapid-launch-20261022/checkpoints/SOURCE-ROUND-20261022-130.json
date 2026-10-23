@@ -1,0 +1,105 @@
+{
+  "atUtc": "2026-10-23T04:07:39.800204+00:00",
+  "parent": "c011dadff79afb78a940fb4d49cf75ce1a289a08",
+  "groups": [
+    {
+      "slice": "F1 originalnative product fullpage Tabs/header plus explicitcatalogue capture",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-68/DELIVERY.json",
+      "receiptSha256": "370f1c9da906836a73e16087f06dceb84e012d509a7f436dba0b70a6c1b2ca82",
+      "receiptSnapshot": {
+        "chunk": 68,
+        "taskId": "F1-PRODUCT-NATIVE-TABS-AND-EXPLICIT-CATALOGUE-SEAM",
+        "atUtc": "2026-10-23T03:59:18.246797+00:00",
+        "status": "READY_EXACT3_SHARED_DEPENDENCY_NOT_PRODUCT_PAGE_ACCEPTANCE",
+        "files": [
+          {
+            "path": "apps/web/src/components/standard-tabs.tsx",
+            "beforeSha256": "a2552102ea372327b2e51527d51ebf101b9ffb86c2a9cf3a40265981fd10450a",
+            "sha256": "83487f26044b4a50a6f094598f47be6d4b65ae264e9be1e789a9a43fa17ec58a"
+          },
+          {
+            "path": "apps/web/src/components/standard-tabs.css",
+            "beforeSha256": "680996514f1ceddc1cf74755b5cf4e4473491437eebbdb18cebb38d42f68e7f9",
+            "sha256": "58b40d95b82e72537092ccd62aa7ef4eb4ef3de4e72490796ee0761087d6c0d7"
+          },
+          {
+            "path": "apps/web/src/application/controller.ts",
+            "beforeSha256": "a2f85a509683a3618af2ae8a2dca6e0114d4203c66e315c03285b2041ba28e28",
+            "sha256": "1ef1f099e116b62c07d2d2f6f92608858b19bfcf9ff8953d1b40666a1e32ea3a"
+          }
+        ],
+        "exports": {
+          "module": "apps/web/src/components/standard-tabs.tsx",
+          "component": "ProductDetailTabs",
+          "type": "ProductDetailTabsProps<Key>",
+          "existingProps": "Same StandardTabsProps items/value/onChange/panels(active)/children/restoreFocus",
+          "addedProps": {
+            "heading": "real h1 ReactNode, existing focus ref retained",
+            "actions": "existing action ReactNode",
+            "headerRef": "optional Ref<HTMLDivElement> covers source sticky title and native tab header",
+            "afterHeader": "optional existing feedback/recovery ReactNode before body"
+          }
+        },
+        "source": [
+          "Frozen b8bcfe3 product-current.js13,125-134",
+          "styles.css39,116-119,179 + ui-review.css43 + product-rework.css4-13"
+        ],
+        "checks": {
+          "native-tabs-1": "EXIT0_REUSED_EXISTING_TABS_CASES_ON_NEW_NATIVE_PRODUCT_COMPONENT",
+          "types-1": "EXIT0_TABS",
+          "types-2": "EXIT0_TABS_PLUS_AFFECTED_CONTROLLER_CHAIN"
+        },
+        "defaultArcoDrawer": "Implementation unchanged; previous effective evidence reused, not rerun",
+        "catalogueCapture": "Explicit products.maintenance.catalogueMaintenance colors/fits only; existing helper used, no role/other-route auto grant",
+        "wholePagePass": false,
+        "realBusinessPass": false,
+        "performance": "NOT_MEASURED",
+        "blockers": [],
+        "next": "C pin original shared slice and forward exact export/API to F2; F2 consumes source header/tab/body composition; C next necessary integrated candidate and original QF affected scope",
+        "evidence": [
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-68/REPORT.md",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-68/SOURCE.diff",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-68/TABS-RESULT.json",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-68/native-tabs-1.log",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-68/types-2.log"
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/components/standard-tabs.tsx",
+          "owner": "F1",
+          "bytes": 7969,
+          "sha256": "83487f26044b4a50a6f094598f47be6d4b65ae264e9be1e789a9a43fa17ec58a"
+        },
+        {
+          "path": "apps/web/src/components/standard-tabs.css",
+          "owner": "F1",
+          "bytes": 3676,
+          "sha256": "58b40d95b82e72537092ccd62aa7ef4eb4ef3de4e72490796ee0761087d6c0d7"
+        },
+        {
+          "path": "apps/web/src/application/controller.ts",
+          "owner": "F1",
+          "bytes": 52332,
+          "sha256": "1ef1f099e116b62c07d2d2f6f92608858b19bfcf9ff8953d1b40666a1e32ea3a"
+        }
+      ]
+    },
+    {
+      "slice": "F2 stableexact1 existingproducteditor UI capability/knownmedia shape",
+      "receiptSourceThread": "01a161d2-6bd9-7181-8386-1ecddddd386a",
+      "ownerReportedReadySha256": "865d4edf7e9b89cb8e28f337c5319b534f6433573cb37f02f7d6353794d629ff",
+      "files": [
+        {
+          "path": "apps/web/src/products/product-editor-contracts.ts",
+          "owner": "F2",
+          "bytes": 8871,
+          "beforeSha256": "79e38d85fd4655ac73b97dbf2cc55414b9a9721ca029480e6047783552c471ab",
+          "sha256": "865d4edf7e9b89cb8e28f337c5319b534f6433573cb37f02f7d6353794d629ff"
+        }
+      ],
+      "checks": "OriginalF2 affected contract strict PASS, all imported DTO/types alreadyexisting; no runtime/defaultgrant/activation. OtherproductwholeUI remainsWIP excluded."
+    }
+  ],
+  "controllerScope": "Freeze exact4 pairedsource dependencies; originalsourcechecks adopted, currentUI actualC127 does not include this. Next complete F2UI candidate QF affectedwholepage and defaultArco unchangedscope reuse. No backendfield/authority/change or realbusiness/performance claim."
+}

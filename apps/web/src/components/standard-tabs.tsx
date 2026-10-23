@@ -1,5 +1,5 @@
 import { Tabs } from '@arco-design/web-react';
-import { cloneElement, useLayoutEffect, useRef, type ReactElement, type ReactNode, type HTMLAttributes } from 'react';
+import { cloneElement, useId, useLayoutEffect, useRef, useState, type ReactElement, type ReactNode, type HTMLAttributes, type Ref } from 'react';
 import './standard-tabs.css';
 
 export interface StandardTab<Key extends string> { readonly key: Key; readonly label: string; readonly disabled?: boolean }
@@ -55,5 +55,65 @@ export function StandardTabs<Key extends string>(props: StandardTabsProps<Key>) 
           : item.key === props.value ? props.children : null}
       </Tabs.TabPane>)}
     </Tabs>
+  </div>;
+}
+
+export type ProductDetailTabsProps<Key extends string> = StandardTabsProps<Key> & {
+  /** Pass the real h1, retaining the consumer's heading focus/ref. */
+  readonly heading: ReactNode;
+  readonly actions: ReactNode;
+  readonly headerRef?: Ref<HTMLDivElement>;
+  /** Existing error/recovery presentation belongs after the sticky header. */
+  readonly afterHeader?: ReactNode;
+};
+
+/** Frozen product-current.js workspaceHead/editor: a native sticky title and
+ * div.tabs/button header. Drawer StandardTabs remains the original Arco UI.
+ * Only visited presentation nodes are retained; business drafts/reads stay in
+ * their existing consumer owners and receive the same explicit active flag. */
+export function ProductDetailTabs<Key extends string>(props: ProductDetailTabsProps<Key>) {
+  const host = useRef<HTMLDivElement>(null), id = useId();
+  const [visited, setVisited] = useState<ReadonlySet<Key>>(() => new Set([props.value]));
+  useLayoutEffect(() => {
+    setVisited(previous => previous.has(props.value) ? previous : new Set([...previous, props.value]));
+  }, [props.value]);
+  const focusActive = () => {
+    const element = host.current; if (!element?.isConnected) return;
+    const active = element.ownerDocument.activeElement;
+    if (active && active !== element.ownerDocument.body && active.isConnected
+      && !(element.contains(active) && active.matches('[role="tab"]'))) return;
+    element.querySelector<HTMLElement>('[role="tab"][aria-selected="true"]')?.focus({ preventScroll: true });
+  };
+  useLayoutEffect(() => {
+    if (!props.restoreFocus) return;
+    const frame = requestAnimationFrame(focusActive);
+    return () => cancelAnimationFrame(frame);
+  }, []);
+  const choose = (key: Key, keyboard = false) => {
+    const item = props.items.find(item => item.key === key && !item.disabled);
+    if (!item || item.key === props.value) return;
+    props.onChange(item.key);
+    if (keyboard) requestAnimationFrame(focusActive);
+  };
+  return <div ref={host} className={`erp-tabs-host erp-source-product-tabs ${props.className ?? ''}`}>
+    <div ref={props.headerRef} className="pc-detail-sticky"><div className="gold-head iw-head pc-page-head">{props.heading}<div className="actions iw-head-actions">{props.actions}</div></div>
+      <div className="tabs" role="tablist" aria-label={props.label}>{props.items.map((item, index) => <button key={item.key} type="button" role="tab" id={`${id}-tab-${index}`} aria-controls={`${id}-panel-${index}`} aria-selected={item.key === props.value} tabIndex={item.key === props.value ? 0 : -1} disabled={!!item.disabled} className={item.key === props.value ? 'active' : ''} onClick={() => choose(item.key)} onKeyDown={event => {
+        if (event.nativeEvent.isComposing || event.keyCode === 229) return;
+        const enabled = props.items.filter(item => !item.disabled), current = enabled.findIndex(value => value.key === item.key);
+        const key = event.key === 'ArrowRight' ? enabled[(current + 1) % enabled.length]?.key
+          : event.key === 'ArrowLeft' ? enabled[(current + enabled.length - 1) % enabled.length]?.key
+          : event.key === 'Home' ? enabled[0]?.key : event.key === 'End' ? enabled.at(-1)?.key
+          : event.key === 'Enter' || event.key === ' ' ? item.key : undefined;
+        if (key !== undefined) { event.preventDefault(); event.stopPropagation(); choose(key, true); }
+      }}>{item.label}</button>)}</div>
+    </div>
+    {props.afterHeader}
+    {props.items.map((item, index) => {
+      const active = item.key === props.value;
+      if (!active && (!props.panels || !visited.has(item.key))) return null;
+      return <section key={item.key} id={`${id}-panel-${index}`} role="tabpanel" aria-labelledby={`${id}-tab-${index}`} aria-hidden={active ? undefined : true} hidden={!active} inert={!active} className="pc-editor-body pc-detail-body" style={{ display: active ? undefined : 'none' }}>
+        {props.panels ? props.panels[item.key]?.({ active }) : props.children}
+      </section>;
+    })}
   </div>;
 }
