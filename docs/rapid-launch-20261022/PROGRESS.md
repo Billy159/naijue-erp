@@ -1,3 +1,9 @@
+增量实绩 2026-10-23T08:11:51.000311+00:00：C153完整新候选已一次原build及3关键HTTP逐字200，http://127.0.0.1:57858/synthetic-unified.html ，source f3b20351a51bd7f23bdf226931cdd107027411a9/build ui-preview-f3b2035-01-build01；HTML3146892B/931ea8de，identity2be131e7/provenance9fc114c0，403输入386源码+981锁依赖=1367、undeclared0。原103款只读NDJSON由实际F2reader消费，未新增身份/能力/fixture/写成功；原audit0声明移debugpanel保留真边界，CSP仅frame-src self供原srcdoc。不是真实PG/业务/性能或正式发布。原QF仍在147必要filled模块，收尾后交QF2只新完整输出/背景；当前尚未交浏览器lease。原未知稿保护，单一临时target串行交接，不冒真正隔离。QF2 C153单route限定sourcePASS采用，不重152/旧48。
+
+用户已批v7原D1精确5已固定C154 e28a71ea1adbe0c247328f7a0937aadfb3a3ccbe，原guard body d26b985e→a055abd4、issuer精确26_v9_empty_history_publication_dispatch，3fixture仅私有label；新3SQLsource+受影响3共6/strict4roots有效采用，尚非实际SQL通过。原QB正在新5限定验收；C74原单函数执行载体已按49accounts/57source/2audit2receipt/VALIDATING1/1准备，不要求清空已提交步骤，不执行PUBLISH或重STAGE/CHUNK；等待原QBsource结论后沿既有通道实际安装和目录读回，再原D2同key/time恢复。GitHub已独立核b2f847b（150–153+v7批准记录共5commit）；154和本记录下一非强推。104/local48/整页0保持，正式数据/切换仍false，目标ACTIVE。
+
+以下历史保留。
+
 当前接续 2026-10-23T08:04:22.263824+00:00：固定源码C153 f3b20351a51bd7f23bdf226931cdd107027411a9；实际UI仍C147 http://127.0.0.1:57857/synthetic-unified.html / ade0aa6-build01。C150完整受权筛选输出10已QB167有限源码协议PASS、C151原生键流水3已QB168 PASS；C152库存原生导出/打印7已QF2源码限定PASS，C153准确route1交QF2定向配对。下一完整C153候选在原机制57858准备，尚未build/HTTP，F1整页chunk77及D1v9在途不混入。原147保持不可变，不把新源当浏览器或真实PG/性能通过。
 
 实际新QA1032586：C71 original STAGE与warehouseCHUNK均已提交；C72只读核VALIDATING seq1/cursor1、49staff+49accounts/57source/audit2receipt2，PUBLISH无receipt、products/SKU0。失败明确为原publicationguard无条件核两条真实历史客户证明，并非v6回退。C73取得原at2026-10-23T07:39:06.726000Z与原PUBLISH hash cf07266d…；D2只接续PUBLISH入口ready，不重STAGE/creators/CHUNK、不换key/时间。用户已明确“确认 v7 空历史发布分派”，批准记录WRITE-CONTRACT-APPROVAL-v7-EMPTY-HISTORY-PUBLISH.json。原D1仅v9单函数/issuer接续，所有缺失/未知及任意客户历史引用仍原严格证明；尚未实际安装v9/PUBLISH/nativeCREATE/H06。原v6 C70安装+QB166新目录配对有效采用。
