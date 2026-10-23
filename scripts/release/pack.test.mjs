@@ -134,6 +134,22 @@ test('runtime media facade v2 rejects implementation present only in dynamic or 
   }
 });
 
+test('approved runtime SQL patches require exact frozen source, distinct member and complete inclusion', async () => {
+  const f = await fixture('runtime-sql-patches');
+  const sourcePath = 'adapters/postgres/patches/0026-v11-document-specification-save.sql';
+  const member = 'patches/0026-v11-document-specification-save.sql', bytes = '-- TOOL ONLY, never executed\nSELECT 11;\n';
+  await put(f.sourceRoot, sourcePath, bytes);
+  await assert.rejects(validateRelease(f.options), error => error.code === 'SOURCE_MIGRATION_DIRECTORY_INCOMPLETE');
+  f.source.files.push(record(sourcePath, bytes)); await f.save();
+  await assert.rejects(validateRelease(f.options), error => error.code === 'MIGRATION_SET_INCOMPLETE');
+  f.buildData[member] = bytes;
+  const patch = record(member, bytes, { role: 'migration', member, sourcePath }); f.build.files.push(patch); await f.save();
+  assert((await validateRelease(f.options)).manifest.members.some(row => row.path === member && row.sourcePath === sourcePath));
+  patch.sourcePath = 'adapters/postgres/migrations/0001_initial.sql'; await f.save();
+  await assert.rejects(validateRelease(f.options), error => error.code === 'MIGRATION_SOURCE_IDENTITY_MISMATCH');
+  assert.throws(() => allowedMember('patches/0026-v12-history-numeric-revision.sql', 'migration'), error => error.code === 'MEMBER_ROLE_PATH_MISMATCH');
+});
+
 test('tiny tool fixture packs, extracts once, verifies members and refuses overwrite', async () => {
   const f = await fixture('normal');
   const script = fileURLToPath(new URL('./pack.mjs', import.meta.url));

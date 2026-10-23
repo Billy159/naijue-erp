@@ -31,6 +31,13 @@ const reviewedMigrationMembers = new Set([
   'migrations/0022_product_media_retained_delete.sql',
   'migrations/0023_inventory_key_admission.sql',
 ]);
+// Approved successors to migration 0026 travel as separate patches; packaging never executes them.
+export const runtimeSqlPatches = new Map([
+  ['adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql', 'patches/0026-v8-bootstrap-field-provenance.sql'],
+  ['adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql', 'patches/0026-v9-empty-history-publication-dispatch.sql'],
+  ['adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql', 'patches/0026-v10-native-creation-trigger-record-scope.sql'],
+  ['adapters/postgres/patches/0026-v11-document-specification-save.sql', 'patches/0026-v11-document-specification-save.sql'],
+]);
 const roleExtensions = {
   frontend: new Set(['.html', '.js', '.mjs', '.css', '.json', '.svg', '.woff', '.woff2']),
   backend: new Set(['.js', '.mjs', '.cjs', '.json']),
@@ -49,7 +56,7 @@ export function relativeName(value, allowDot = false) {
 }
 function allowedSource(value) {
   relativeName(value);
-  if (reviewedMigrationSources.has(value)) return;
+  if (reviewedMigrationSources.has(value) || runtimeSqlPatches.has(value)) return;
   const segments = value.split('/');
   // Media/secret *data* directories are forbidden; runtime source named controlled-media.ts is legitimate code.
   requireRelease(!excludedGraph.test(value) && !segments.some((part, index) => excludedSegment.test(part)
@@ -61,7 +68,7 @@ function allowedSource(value) {
 }
 export function allowedMember(value, role) {
   relativeName(value);
-  if (role === 'migration' && reviewedMigrationMembers.has(value)) return;
+  if (role === 'migration' && (reviewedMigrationMembers.has(value) || [...runtimeSqlPatches.values()].includes(value))) return;
   const runtimeMedia = reviewedRuntimeMediaMember(value, role), segments = value.split('/');
   requireRelease(Object.hasOwn(roleExtensions, role) && roleExtensions[role].has(path.posix.extname(value))
     && !segments.some((part, index) => (excludedSegment.test(part)
@@ -399,17 +406,23 @@ export async function validateRelease({ sourceManifest, buildManifest, buildRoot
     fileBytes.set(name, bytes); total += bytes.length; requireRelease(total <= 256 * 1024 * 1024, 'BUILD_SIZE_LIMIT');
     if (record.role === 'metadata' || record.role === 'migration') {
       requireRelease(record.sourcePath && (record.role !== 'metadata' || record.sourcePath === record.member), 'DIRECT_SOURCE_PROVENANCE_REQUIRED');
-      if (record.role === 'migration') requireRelease(/^adapters\/postgres\/migrations\/[0-9]{4}_[A-Za-z0-9_-]+\.sql$/.test(record.sourcePath)
-        && path.posix.basename(record.sourcePath) === path.posix.basename(record.member), 'MIGRATION_SOURCE_IDENTITY_MISMATCH');
+      if (record.role === 'migration') requireRelease(runtimeSqlPatches.get(record.sourcePath) === record.member
+        || /^adapters\/postgres\/migrations\/[0-9]{4}_[A-Za-z0-9_-]+\.sql$/.test(record.sourcePath)
+          && record.member === 'migrations/' + path.posix.basename(record.sourcePath), 'MIGRATION_SOURCE_IDENTITY_MISMATCH');
       matches(bytes, sources.get(record.sourcePath));
     }
   }
   requireRelease(sameSet(await walkFiles(buildRoot), [...files.keys()]), 'UNLISTED_BUILD_MEMBERS');
   requireRelease(members.has('package.json') && members.has('package-lock.json'), 'RUNTIME_PACKAGE_AND_LOCK_REQUIRED');
-  const sourceMigrations = [...sources.keys()].filter(name => name.startsWith('adapters/postgres/migrations/'));
+  const sourceMigrations = [...sources.keys()].filter(name => name.startsWith('adapters/postgres/migrations/') || runtimeSqlPatches.has(name));
   requireRelease(sourceMigrations.length > 0 && sameSet(sourceMigrations, [...files.values()].filter(row => row.role === 'migration').map(row => row.sourcePath)), 'MIGRATION_SET_INCOMPLETE');
   const diskMigrations = (await walkFiles(path.join(sourceRoot, 'adapters/postgres/migrations'))).map(name => 'adapters/postgres/migrations/' + name);
-  requireRelease(sameSet(sourceMigrations, diskMigrations), 'SOURCE_MIGRATION_DIRECTORY_INCOMPLETE');
+  const diskPatches = [];
+  for (const name of runtimeSqlPatches.keys()) {
+    try { await lstat(path.join(sourceRoot, name)); diskPatches.push(name); }
+    catch (error) { if (error.code !== 'ENOENT') throw error; }
+  }
+  requireRelease(sameSet(sourceMigrations, [...diskMigrations, ...diskPatches]), 'SOURCE_MIGRATION_DIRECTORY_INCOMPLETE');
   const context = { sourceRoot, buildRoot, sources, sourceBytes, files, fileBytes, packageJson, lock };
   const frontend = await verifyGraph('frontend', build.components?.frontend, context);
   const backend = await verifyGraph('backend', build.components?.backend, context);

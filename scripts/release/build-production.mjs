@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { boundedFile, canonicalAbsolute, checkedRecord, matches, readJson, relativeName, requireRelease, sha256, validateRelease, walkFiles, ReleaseError } from './manifest.mjs';
+import { boundedFile, canonicalAbsolute, checkedRecord, matches, readJson, relativeName, requireRelease, sha256, validateRelease, walkFiles, runtimeSqlPatches, ReleaseError } from './manifest.mjs';
 
 const FRONTEND_BUILDER = 'apps/web/src/production-host/build-production-host.mjs';
 const FRONTEND_ENTRY = 'apps/web/src/production-host/entry.ts';
@@ -184,9 +184,10 @@ export async function buildProduction(options) {
     graphs[kind] = { workingDirectory, entrySource, entryOutput, metafile, inputs: inputs.sort((a, b) => a.path.localeCompare(b.path)) };
   }
   for (const name of frozen.records.keys()) {
-    if (!name.startsWith('adapters/postgres/migrations/')) continue;
-    requireRelease(/^adapters\/postgres\/migrations\/[0-9]{4}_[A-Za-z0-9_-]+\.sql$/.test(name), 'UNEXPECTED_MIGRATION_EXPORT_MEMBER');
-    await select(name); const target = path.join(buildRoot, 'migrations', path.basename(name));
+    const patchMember = runtimeSqlPatches.get(name);
+    if (!patchMember && !name.startsWith('adapters/postgres/migrations/')) continue;
+    requireRelease(patchMember || /^adapters\/postgres\/migrations\/[0-9]{4}_[A-Za-z0-9_-]+\.sql$/.test(name), 'UNEXPECTED_MIGRATION_EXPORT_MEMBER');
+    await select(name); const target = path.join(buildRoot, patchMember ?? 'migrations/' + path.basename(name));
     await mkdir(path.dirname(target), { recursive: true }); await writeFile(target, await boundedFile(sourceRoot, name), { flag: 'wx' });
   }
   for (const name of ['package.json', 'package-lock.json']) await writeFile(path.join(buildRoot, name), await boundedFile(sourceRoot, name), { flag: 'wx' });
@@ -194,10 +195,11 @@ export async function buildProduction(options) {
   for (const name of await walkFiles(buildRoot)) {
     const bytes = await boundedFile(buildRoot, name);
     const role = ['web/metafile.json', 'web/production-build.json', 'backend/metafile.json'].includes(name) ? 'evidence'
-      : name.startsWith('web/') ? 'frontend' : name.startsWith('backend/') ? 'backend' : name.startsWith('migrations/') ? 'migration' : 'metadata';
+      : name.startsWith('web/') ? 'frontend' : name.startsWith('backend/') ? 'backend' : name.startsWith('migrations/') || [...runtimeSqlPatches.values()].includes(name) ? 'migration' : 'metadata';
     const record = { path: name, bytes: bytes.length, sha256: sha256(bytes), role, member: role === 'evidence' ? null : name };
     if (role === 'metadata') record.sourcePath = name;
-    if (role === 'migration') record.sourcePath = 'adapters/postgres/migrations/' + path.basename(name);
+    if (role === 'migration') record.sourcePath = [...runtimeSqlPatches].find(([, member]) => member === name)?.[0]
+      ?? 'adapters/postgres/migrations/' + path.basename(name);
     if (role === 'frontend' && !graphOutputs.has(name)) {
       // Preserve provenance without manufacturing an esbuild output. The frozen pack contract decides whether this copy is allowed.
       const original = [...selected.values()].find(row => row.sha256 === record.sha256 && row.bytes === record.bytes);

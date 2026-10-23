@@ -62,7 +62,8 @@ async function fixture(name, dependencies = false, syntheticGraph = false) {
     'apps/web/src/production-host/configuration.ts': 'export const onlyToolPlaceholder = true;',
     'apps/web/src/production-host/entry.ts': syntheticGraph ? 'import "./fixture-data.ts"; export const tiny=1;' : 'export const tiny: number=1;',
     'apps/api/src/production-main.ts': 'import { readFile } from "node:fs/promises"; export async function unused() { return readFile("never-called"); }',
-    'adapters/postgres/migrations/0001_initial.sql': '-- TOOL ONLY, never executed\nCREATE SCHEMA tool_check;\n' };
+    'adapters/postgres/migrations/0001_initial.sql': '-- TOOL ONLY, never executed\nCREATE SCHEMA tool_check;\n',
+    'adapters/postgres/patches/0026-v11-document-specification-save.sql': '-- TOOL ONLY, never executed\nSELECT 11;\n' };
   if (syntheticGraph) data['apps/web/src/production-host/fixture-data.ts'] = 'export const simulated=1;';
   for (const [name, bytes] of Object.entries(data)) await put(sourceRoot, name, bytes);
   const sourceCommit = await commitFixtureTree(sourceRoot);
@@ -83,6 +84,9 @@ test('small real esbuild graphs produce the two frozen pack manifests without ru
   assert(build.components.frontend.inputs.some(row => row.path === 'apps/web/src/production-host/entry.ts'));
   assert(build.components.backend.inputs.some(row => row.path === 'apps/api/src/production-main.ts'));
   assert.equal(await readFile(path.join(f.options.buildRoot, 'migrations/0001_initial.sql'), 'utf8'), '-- TOOL ONLY, never executed\nCREATE SCHEMA tool_check;\n');
+  assert.equal(await readFile(path.join(f.options.buildRoot, 'patches/0026-v11-document-specification-save.sql'), 'utf8'), '-- TOOL ONLY, never executed\nSELECT 11;\n');
+  assert(build.files.some(row => row.member === 'patches/0026-v11-document-specification-save.sql'
+    && row.sourcePath === 'adapters/postgres/patches/0026-v11-document-specification-save.sql' && row.role === 'migration')); 
 });
 test('uncommitted source mutation cannot be labelled as the proof commit', async () => {
   const f = await fixture('wip'); await put(f.sourceRoot, 'apps/api/src/production-main.ts', 'changed after export');

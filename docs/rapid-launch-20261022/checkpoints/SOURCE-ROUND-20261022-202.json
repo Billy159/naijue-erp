@@ -1,0 +1,46 @@
+{
+  "taskId": "C03_RUNTIME_APPROVED_PATCH_PACKAGE_CLOSURE",
+  "atUtc": "2026-10-23T18:40:25.484074+00:00",
+  "owner": "C",
+  "model": "gpt-6.1-sol/xhigh",
+  "fast": "Requested off actual switch unavailable",
+  "files": [
+    {
+      "path": "scripts/release/build-production.mjs",
+      "bytes": 19601,
+      "sha256": "33d0c33cd600a0d66e18fec008f21afa53b21b70cf45534062c65b41e126b435",
+      "owner": "C"
+    },
+    {
+      "path": "scripts/release/manifest.mjs",
+      "bytes": 31717,
+      "sha256": "d15360d79a9e8deee3fdab53788c7af089d2ca70772254bb41975239b4fd2310",
+      "owner": "C"
+    },
+    {
+      "path": "scripts/release/build-production.test.mjs",
+      "bytes": 9804,
+      "sha256": "373f406aca52eaeaf1352f3fdefb31732b1b4f1b11507d567fbf2022093db812",
+      "owner": "C"
+    },
+    {
+      "path": "scripts/release/pack.test.mjs",
+      "bytes": 23465,
+      "sha256": "8b796aacc9c39db51d90290e373e3b85524ce5f0d54ccb951d7863fea6f13723",
+      "owner": "C"
+    }
+  ],
+  "fix": "Original build and pack include exact approved v8/v9/v10/v11 patch source bytes as distinct patches members with original frozen content/provenance/completeness. No SQL execution, no auto patch application, v12 excluded. Original migrations remain unchanged.",
+  "checks": {
+    "targetedFirst": "1 PASS /1 UNSAFE_RELATIVE_PATH from new whole source walk meeting existing dot proof. Fixed exact known patch path lookup without widening names.",
+    "targetedSecond": "2 PASS /0fail /0skip",
+    "originalReleaseTestsExitCode": 0
+  },
+  "notTested": [
+    "Actual production build/pack",
+    "SQL installation/business",
+    "Stage/production deployment"
+  ],
+  "parent": "d624824ab5cd64f28f4a30388e0cb2ce8feb2e22",
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-c200-production-prep-20261024-01/release-tool-repair/RESULT.json"
+}
