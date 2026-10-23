@@ -1,5 +1,9 @@
 import { PostgresPostingBalances } from "./inventory-posting-balances.ts";
 import { loadNativeTransferSnapshots } from "./native-transfer-snapshots.ts";
+import { createMaintainedCatalogue26TransactionProof } from './catalogue-completeness.ts';
+import type { MaintainedCatalogue26TransactionProof } from './catalogue-completeness.ts';
+import { resolveNativeDocumentSpecifications } from './native-document-specification.ts';
+import type { DocumentSpecificationResolution } from '../../../packages/application/src/document-specification.ts';
 import type { Pool } from "pg";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import type { TransferAuditRow, TransferDocument, TransferReceiptRow, TransferResult, TransferTransaction, TransferUnitOfWork, StoredTransfer, RuntimeTransferHeader, TransferWarehouseFact, TransferSkuFact, TransferCurrentIdentity } from "../../../packages/application/src/transfer-ports.ts";
@@ -61,7 +65,7 @@ export class PostgresTransferUnitOfWork implements TransferUnitOfWork {
     const client = await this.pool.connect(); let tx: PostgresTransferTransaction | undefined;
     let began = false; let commitAttempted = false; let discard: Error | undefined;
     try {
-      tx = new PostgresTransferTransaction(client, this.runtime26);
+      tx = new PostgresTransferTransaction(client, this.runtime26, this.pool);
       if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
       if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
@@ -99,9 +103,25 @@ class PostgresTransferTransaction implements TransferTransaction {
   private readonly warehouseFacts = new Map<string, TransferWarehouseFact | undefined>();
   private readonly skuFacts = new Map<string, TransferSkuFact | undefined>();
   private readonly client: PgSalesClient;
-  constructor(client: PgSalesClient, runtime26?: NativeRuntime26Capability) {
+  private readonly specificationCatalogue: MaintainedCatalogue26TransactionProof | undefined;
+  private readonly specificationRuntime: NativeRuntime26Capability | undefined;
+  private readonly specificationPool: PgSalesPool | undefined;
+  constructor(client: PgSalesClient, runtime26?: NativeRuntime26Capability, pool?: PgSalesPool) {
     this.client = client; this.balances = runtime26 === undefined ? new PostgresPostingBalances((sql, values) => this.query(sql, values))
       : PostgresPostingBalances.forRuntime26(client, runtime26, () => requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes"));
+    this.specificationRuntime=runtime26;this.specificationPool=pool;
+    this.specificationCatalogue=runtime26?createMaintainedCatalogue26TransactionProof(client,runtime26,
+      ()=>requireDomain(this.active,'TRANSACTION_CLOSED','Catalogue proof must remain on its original transfer transaction')):undefined;
+  }
+  async resolveDocumentSkus(input: DocumentSpecificationResolution): Promise<readonly EntityId<'sku'>[]> {
+    const bound = () => requireDomain(this.active && input.scope.kind === 'TRANSFER' && input.scope.actor.accountId === this.receiptActor
+      && input.scope.documentId === this.loaded?.id && (this.loaded.version === null || this.loaded.stockBasis === 'RUNTIME_LEDGER'),
+      'TRANSACTION_SCOPE','Specification append requires the original bound transfer SAVE');
+    bound();await this.getCurrentTransferIdentity(input.scope.actor.accountId);
+    requireDomain(this.specificationRuntime && this.specificationPool && this.specificationCatalogue,
+      'NATIVE_CATALOGUE_FACTS_UNAVAILABLE','Reviewed exact26 catalogue authority required');
+    return resolveNativeDocumentSpecifications({pool:this.specificationPool,client:this.client,runtime:this.specificationRuntime,
+      catalogue:this.specificationCatalogue,assertBound:bound},input);
   }
   close(): void { this.active = false; }
   private assertNumberScope(input: RuntimeDocumentNumberInput): void {

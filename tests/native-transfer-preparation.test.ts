@@ -30,18 +30,19 @@ test("SYNTHETIC protocol: bounded exact MAIN snapshot query locks all source ide
     calls.push(sql);
     if (sql.includes(":schema")) return { rows: [{ installed: true }], rowCount: 1 };
     assert.deepEqual(values, [[ids.sku]]);
-    for (const clause of ["b.barcode_kind = 'MAIN'", "b.enabled", "s.enabled AND p.enabled AND c.enabled AND f.enabled",
-      "m.size_group_id = p.size_group_id AND m.size_id = s.size_id", "FOR SHARE OF s, p, c, f, sz, m, b"])
+    if (sql.includes(':main')) { assert.match(sql,/enabled AND barcode_kind='MAIN'/); return {rows:[{sku_id:ids.sku,barcode:native.barcode}],rowCount:1}; }
+    for (const clause of ["s.enabled AND p.enabled AND c.enabled AND f.enabled",
+      "m.size_group_id = p.size_group_id AND m.size_id = s.size_id", "FOR SHARE OF s, p, c, f, sz, m"])
       assert.ok(sql.includes(clause));
     return { rows: [row], rowCount: 1 };
   }, [ids.sku, ids.sku]);
-  assert.deepEqual(result.get(ids.sku), native); assert.equal(calls.length, 2);
+  assert.deepEqual(result.get(ids.sku), native); assert.equal(calls.length, 3);
 });
-test("SYNTHETIC protocol: absent schema, no MAIN, disabled SKU, cross-group size, duplicate/foreign rows fail closed", async () => {
+test("SYNTHETIC protocol: absent schema, missing/disabled/cross-group SKU, duplicate/foreign targets or invalid MAIN fail closed", async () => {
   for (const rows of [[], [row, row], [{ ...row, id: sid("sku", 9999) }], [{ ...row, barcode: null }]]) {
-    await assert.rejects(loadNativeTransferSnapshots(async sql => ({ rows: sql.includes(":schema") ? [{ installed: true }] : rows, rowCount: rows.length }), [ids.sku]));
+    await assert.rejects(loadNativeTransferSnapshots(async sql => ({ rows: sql.includes(":schema") ? [{ installed: true }] : sql.includes(':main') ? rows.map(r=>({sku_id:r.id,barcode:r.barcode})):rows, rowCount: rows.length }), [ids.sku]));
   }
-  // The JOIN/WHERE excludes absent MAIN, disabled SKU and cross-group size alike.
+  // The target JOIN/WHERE still excludes missing/disabled/cross-group SKU facts.
   let calls = 0;
   await assert.rejects(loadNativeTransferSnapshots(async () => { calls++; return { rows: [{ installed: false }], rowCount: 1 }; }, [ids.sku]), code("NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE"));
   assert.equal(calls, 1);

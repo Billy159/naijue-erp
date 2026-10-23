@@ -262,7 +262,11 @@ SELECT pg_catalog.jsonb_build_object(
 )
 SELECT manifest->'identity' AS identity,manifest->'migration_versions' AS migration_versions,
  pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to((manifest-'identity')::text,'UTF8')),'hex') AS catalog_sha256,
- (pg_catalog.jsonb_array_length(manifest->'routines')=121 AND NOT EXISTS(
+ (pg_catalog.jsonb_array_length(manifest->'routines')=122
+  AND EXISTS(SELECT 1 FROM pg_catalog.pg_trigger t WHERE t.tgrelid=to_regclass('naijue_erp.audit_change')
+    AND t.tgname='document_specification_commit' AND t.tgfoid=to_regprocedure('naijue_erp.validate_document_specification_commit()')
+    AND t.tgenabled='O' AND t.tgtype=5 AND t.tgdeferrable AND t.tginitdeferred AND NOT t.tgisinternal)
+  AND NOT EXISTS(
    SELECT 1 FROM (VALUES
     ('assert_history_typed_closure','b0551d6a80e9fdd9709d6ed63820dc8b5a7577e8bfb9deaa19cb0e387de54bce'),
     ('assert_native_bootstrap_accounts','69b87a72c52a81aba7f9fd380f3acbcb8df8fbcaa6ca72ccca4ac20e26ab42c7'),
@@ -289,12 +293,12 @@ SELECT manifest->'identity' AS identity,manifest->'migration_versions' AS migrat
     ('guard_import_batch','0275164994ce931e93d334b753f0f616d039661a73239ac5dbd4482f0720e749'),
     ('guard_import_record','8a79dbc011cdaf0582e2bd1eefc7ea94fce15d24f6aa1ac0fa25c43afb4e7e16'),
     ('guard_maintenance_account_event','965d9d3433b929ccd151b9a147eeef713770d7b7311e49c80cfaa3d17b118549'),
-    ('guard_maintenance_audit_actor','e07e156d8f221b51b06c394e8f6d854e2d2119a37a3e5d3f23acff04c21bc9e7'),
+    ('guard_maintenance_audit_actor','ac0ce9c91f34b9d8d34eb5e7d26f595319bfa6ad3dfe3ae33a4f2f5edf1eb217'),
     ('guard_maintenance_before_root','574add1ad436482c7593725ac4b1b58cabe6b982b538cf0e1f22c1783723712f'),
     ('guard_maintenance_child_write','a19def51718e008e541482dd1e6f2d2ab9257842ce7e66ad6e62aedcfa216d8a'),
     ('guard_native_catalogue_binding','7418579c0d1c3a1951696a12ad165a421d26b87f0e449d9d7d250497dc2ddc21'),
     ('guard_native_catalogue_publication','d2eaa009760d63f245d562570ca4c8fce038633da5233a8c7ab7142190a30ceb'),
-    ('guard_native_creation_identity','08e70b819b36f93f853e1ad2650c51a05758a5271bb47474d931af8ee3fdfff2'),
+    ('guard_native_creation_identity','4827b76ff4df9beae18411033d2e6e13a04eea2d648aa58bb67d179145d107dc'),
     ('guard_native_party_import_intent','262e74a37ba12883a4978c4d99b6ecca000d245186b585a9e5b35ad31ccf8d7f'),
     ('guard_native_payment_binding','774cc9b1604a8d0948f73c7298fa67a10233962af218b89fe0b9675107148d35'),
     ('guard_native_payment_publication','993b114dfbec87428a42a9f6aa7d0a6ecbeef67fd85bc00754fa4eb80c7e6797'),
@@ -358,6 +362,7 @@ SELECT manifest->'identity' AS identity,manifest->'migration_versions' AS migrat
     ('validate_available_administrator_commit','3a9a1bea930614761185af90b8591a539b855647974b68b004869c80f5e5ba18'),
     ('validate_baseline_source_commit','ec5e9a331d0f8148ec21e28d5e8a4ddb82ac66d923ea2490abee3f3000ed75c9'),
     ('validate_exact_historical_customer_intent','b9968150e138d455658dd7d437c8026b7bfdce466146b961d64fd2934f099c98'),
+    ('validate_document_specification_commit','b02bff6115bcf2c87758f8313a57a1a693733ba3ea192fcb1657bd176c587c06'),
     ('validate_exact_native_reversal','3ef72272c6cb9b7ccbfffc393a31fdd85babdb3efb333baae839482d571f362e'),
     ('validate_history_closure_commit','e61d2c5dd34792f5ca277cada1dc12a6904b1be95031c0a6c4810080b24dd03b'),
     ('validate_history_product_proofs','dab49bb495de85d5e66350affd348f85e0595411ea7ab7378104a3963db2a38e'),
@@ -478,8 +483,8 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     || target.serverPort !== null && !(typeof target.serverPort === "number" && Number.isInteger(target.serverPort) && target.serverPort >= 1 && target.serverPort <= 65535))
     throw runtime26Error("Exact database, process, role and nullable socket identity required");
   const catalog = exactData(review.catalog, ["format", "sha256", "patchLevel"]);
-  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || catalog.patchLevel !== "26_v10_native_creation_record_scope")
-    throw runtime26Error("Exact reviewed v8 catalog digest required; prior catalogs do not prove the approved bootstrap envelope");
+  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || catalog.patchLevel !== "26_v11_document_specification_save")
+    throw runtime26Error("Exact reviewed v11 catalog digest required; earlier catalogs do not prove the document append closure");
   const purposes = ownArray(review.purposes);
   if (purposes.length === 0 || purposes.length > runtime26Purposes.length || new Set(purposes).size !== purposes.length
     || purposes.some(p => !runtime26Purposes.includes(p as Runtime26Purpose))) throw runtime26Error("Finite explicitly reviewed runtime purposes required");

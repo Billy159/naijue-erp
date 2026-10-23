@@ -19,6 +19,9 @@ import { auditJson, booleanValue, integerValue, jsonObject, moneyFromSql, moneyT
 import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { createMaintainedCatalogue26TransactionProof } from "./catalogue-completeness.ts";
+import type { MaintainedCatalogue26TransactionProof } from './catalogue-completeness.ts';
+import { resolveNativeDocumentSpecifications } from './native-document-specification.ts';
+import type { DocumentSpecificationResolution } from '../../../packages/application/src/document-specification.ts';
 
 export interface PgSalesResult { readonly rows: Record<string, unknown>[]; readonly rowCount: number | null }
 /** Structural subset of the actual pg PoolClient protocol, also usable by explicitly labelled protocol fakes. */
@@ -119,7 +122,7 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
     let tx: PostgresSalesTransaction | undefined;
     let began = false; let commitAttempted = false; let discard: Error | undefined;
     try {
-      tx = new PostgresSalesTransaction(client, this.catalogueCompleteness, this.historicalCustomers, this.runtime26, this.maintainedCatalogue);
+      tx = new PostgresSalesTransaction(client, this.catalogueCompleteness, this.historicalCustomers, this.runtime26, this.maintainedCatalogue, this.pool);
       if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
       // Explicit READ COMMITTED: a receipt waiter must see the previous holder's committed receipt after its advisory lock.
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
@@ -164,15 +167,38 @@ class PostgresSalesTransaction implements SalesTransaction {
   close(): void { this.active = false; }
   private readonly client: PgSalesClient;
   private readonly nativeFacts: PostgresNativeSalesFacts;
-  constructor(client: PgSalesClient, verifier?: NativeCatalogueCompletenessVerifier, historicalCustomers?: NativeSalesHistoricalCustomers, runtime26?: NativeRuntime26Capability, maintainedCatalogue = false) {
+  private readonly specificationCatalogue: MaintainedCatalogue26TransactionProof | undefined;
+  private readonly specificationRuntime: NativeRuntime26Capability | undefined;
+  private readonly specificationPool: PgSalesPool | undefined;
+  private readonly specificationNativeFacts: PostgresNativeSalesFacts | undefined;
+  private specificationResolved = false;
+  constructor(client: PgSalesClient, verifier?: NativeCatalogueCompletenessVerifier, historicalCustomers?: NativeSalesHistoricalCustomers, runtime26?: NativeRuntime26Capability, maintainedCatalogue = false, pool?: PgSalesPool) {
     this.client = client; this.balances = runtime26 === undefined ? new PostgresPostingBalances((sql, values) => this.query(sql, values))
       : PostgresPostingBalances.forRuntime26(client, runtime26, () => requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes"));
     const pair = maintainedCatalogue && runtime26 ? createMaintainedCatalogue26TransactionProof(client, runtime26,
       () => requireDomain(this.active, "TRANSACTION_CLOSED", "Catalogue proof cannot outlive its original sales callback")) : undefined;
+    this.specificationCatalogue = pair ?? (runtime26 ? createMaintainedCatalogue26TransactionProof(client,runtime26,
+      ()=>requireDomain(this.active,'TRANSACTION_CLOSED','Document specification proof cannot escape its original SAVE')) : undefined);
+    this.specificationRuntime = runtime26; this.specificationPool = pool;
     this.nativeFacts = new PostgresNativeSalesFacts(pair?.query ?? ((sql, values) => this.query(sql, values)), salesId => {
       requireDomain(this.active && this.receiptActor !== undefined && this.sales?.id === salesId,
         "TRANSACTION_SCOPE", "Native facts require the original bound sales actor and target in an active transaction");
     }, () => [...this.previousLines.values()].filter(line => line.isCurrent).map(line => ({ id: line.id, skuId: line.skuId, snapshot: line.snapshot })), pair?.verifier ?? verifier, historicalCustomers);
+    const specificationPair=this.specificationCatalogue;
+    this.specificationNativeFacts=specificationPair?new PostgresNativeSalesFacts(specificationPair.query,salesId=>{
+      requireDomain(this.active && this.specificationResolved && this.receiptActor!==undefined && this.sales?.id===salesId,
+        'TRANSACTION_SCOPE','Native proposal facts require the original resolved SAVE target');
+    },()=>[...this.previousLines.values()].filter(l=>l.isCurrent).map(l=>({id:l.id,skuId:l.skuId,snapshot:l.snapshot})),specificationPair.verifier,historicalCustomers):undefined;
+  }
+  async resolveDocumentSkus(input: DocumentSpecificationResolution): Promise<readonly EntityId<'sku'>[]> {
+    const bound = () => requireDomain(this.active && input.scope.kind === 'SALES' && input.scope.actor.accountId === this.receiptActor
+      && input.scope.documentId === this.sales?.id && (this.sales.version === null || this.sales.stockBasis === 'RUNTIME_LEDGER'),
+      'TRANSACTION_SCOPE','Specification append requires the original bound sales SAVE');
+    bound(); await this.getCurrentSalesIdentity(input.scope.actor.accountId);
+    requireDomain(this.specificationRuntime && this.specificationPool && this.specificationCatalogue,
+      'NATIVE_CATALOGUE_FACTS_UNAVAILABLE','Reviewed exact26 maintained catalogue authority required');
+    const ids=await resolveNativeDocumentSpecifications({pool:this.specificationPool,client:this.client,runtime:this.specificationRuntime,
+      catalogue:this.specificationCatalogue,assertBound:bound},input);this.specificationResolved=true;return ids;
   }
   private assertNumberScope(input: RuntimeDocumentNumberInput): void {
     requireDomain(this.active && input.kind === "SALES" && input.actorAccountId === this.receiptActor
@@ -193,7 +219,7 @@ class PostgresSalesTransaction implements SalesTransaction {
     requireDomain(this.active && this.receiptActor !== undefined && this.sales?.id === document.header.id,
       "TRANSACTION_SCOPE", "Native facts require the original receipt actor and loaded sales target");
     await this.getCurrentSalesIdentity(this.receiptActor);
-    return this.nativeFacts.load(document);
+    return (this.specificationResolved?this.specificationNativeFacts!:this.nativeFacts).load(document);
   }
   async getCurrentSalesSnapshots(skuIds: readonly EntityId<"sku">[]): Promise<ReadonlyMap<EntityId<"sku">, SalesLineRow["snapshot"]>> {
     requireDomain(this.active && this.receiptActor !== undefined && this.sales !== undefined,

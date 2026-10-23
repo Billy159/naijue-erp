@@ -4,6 +4,8 @@ import type { ActorContext } from "../../../packages/application/src/ports.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
+import type { DocumentSpecificationSaveScope } from "../../../packages/application/src/document-specification.ts";
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { PgSalesClient, PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
 
 export interface MaintenancePgContext {
@@ -16,6 +18,15 @@ type Query = MaintenancePgContext["client"]["query"];
 // Structural copies, caller booleans and a public prepare method are not proof.
 const ownedDrivers = new WeakMap<object, PgSalesPool>();
 const ownedContexts = new WeakMap<object, { pool: PgSalesPool; client: PgSalesClient; evidence: Evidence; assertActive: () => void }>();
+interface DocumentAppendScope { readonly parent: DocumentSpecificationSaveScope; readonly productId: string; readonly operationId: string; readonly requestKey: string; readonly expectedVersion: number; readonly skuFacts: readonly Record<string, string | number | boolean>[] }
+/** Identity-bearing token, issued only after this borrowed context completed its
+ * exact append. A shape-compatible object or an arbitrary current xid is not proof. */
+export interface DocumentAppendEvidence { readonly purpose: 'DOCUMENT_SKU_APPEND_V1' }
+const documentAppends = new WeakMap<object, { client: PgSalesClient; completion: MaintenanceCompletion; parent: DocumentSpecificationSaveScope; active: () => void }>();
+export function readDocumentAppendEvidence(token: DocumentAppendEvidence, client: PgSalesClient): Readonly<{ completion: MaintenanceCompletion; parent: DocumentSpecificationSaveScope }> {
+  const actual = documentAppends.get(token); requireDomain(actual?.client === client, 'TRANSACTION_SCOPE', 'Original same-client document append proof required');
+  actual.active(); return { completion: structuredClone(actual.completion), parent: structuredClone(actual.parent) };
+}
 export function assertMaintenanceDriverPool(driver: object, pool: PgSalesPool): void {
   requireDomain(ownedDrivers.get(driver) === pool, "NATIVE_RUNTIME26_NOT_READY", "Actual maintenance driver must own the verified pool");
 }
@@ -68,7 +79,13 @@ class Evidence implements MaintenanceEvidenceSession {
   private administratorLock = false;
   private preparationAttempted = false; private preparedFingerprint: string | undefined;
   private readonly query: Query; private readonly assertActive: () => void;
-  constructor(query: Query, assertActive: () => void) { this.query = query; this.assertActive = assertActive; }
+  private readonly document: DocumentAppendScope | undefined;
+  private completion: MaintenanceCompletion | undefined;
+  constructor(query: Query, assertActive: () => void, document?: DocumentAppendScope) { this.query = query; this.assertActive = assertActive; this.document = document; }
+  documentCompletion(): MaintenanceCompletion {
+    this.assertActive(); requireDomain(this.document && this.completed && this.completion, 'TRANSACTION_SCOPE', 'Actual exact document append must complete');
+    return structuredClone(this.completion);
+  }
   private bind(actor: string): void {
     uuid(actor); requireDomain(this.actor === undefined || this.actor === actor, "TRANSACTION_SCOPE", "One trusted actor per maintenance transaction"); this.actor = actor;
   }
@@ -97,6 +114,11 @@ class Evidence implements MaintenanceEvidenceSession {
     return this.identity = Object.freeze({ accountId: actor, hallId, role: row.role });
   }
   private role(identity: Identity, family: MaintenanceKind): void {
+    if (this.document) {
+      const actor = this.document.parent.actor;
+      requireDomain(family === 'PRODUCT' && identity.accountId === actor.accountId && identity.hallId === actor.hallId,
+        'FORBIDDEN', 'Delegated append retains the original current document actor'); return;
+    }
     kind(family); requireDomain(identity.role === "ADMIN" || (identity.role === "WAREHOUSE" && family !== "STAFF" && family !== "ACCOUNT"),
       "FORBIDDEN", "Current role cannot maintain this family");
   }
@@ -104,12 +126,14 @@ class Evidence implements MaintenanceEvidenceSession {
     this.assertActive();
     await this.prepareIdentity(family);
     const identity = await this.current(actor.accountId); this.role(identity, family);
+    if (this.document) requireDomain(action === 'EDIT', 'FORBIDDEN', 'Document delegation authorizes only this product append');
     const write = maintenanceActions[family].includes(action);
     requireDomain(identity.hallId === actor.hallId && (write || maintenanceReadIntents.some(intent => intent === action)), "FORBIDDEN", "Current maintenance scope/action unavailable");
     if (write) this.allowed.add(`${family}:${action}`);
   }
   async getReceipt(actorAccountId: string, requestKey: string, family: MaintenanceKind): Promise<MaintenanceReceipt | undefined> {
     this.assertActive(); kind(family); const originalKey = key(requestKey); this.bind(actorAccountId);
+    if (this.document) requireDomain(originalKey === this.document.requestKey && family === 'PRODUCT', 'TRANSACTION_SCOPE', 'Exact internal append key required');
     requireDomain(this.receipt === undefined || (this.receipt.key === originalKey && this.receipt.kind === family), "TRANSACTION_SCOPE", "One original actor/key/family per transaction");
     this.receipt = { key: originalKey, kind: family };
     await this.prepareIdentity(family);
@@ -139,6 +163,15 @@ class Evidence implements MaintenanceEvidenceSession {
       && (value.oldVersion === null ? value.beforeValues === null : value.beforeValues?.version === value.oldVersion),
     "INVALID_MAINTENANCE_EVIDENCE", "Exact old/new version and actual completion time required");
     boundedEvidence(value.beforeValues); boundedEvidence(value.afterValues);
+    if (this.document) {
+      const d = this.document;
+      requireDomain(value.kind === 'PRODUCT' && value.action === 'EDIT' && value.targetId === d.productId && value.operationId === d.operationId
+        && value.actorAccountId === d.parent.actor.accountId && value.requestKey === d.requestKey && value.completedAt === d.parent.completedAt
+        && value.oldVersion === d.expectedVersion && value.newVersion === d.expectedVersion + 1
+        && requestHash(value.beforeValues) === requestHash({ version: d.expectedVersion, skus: [] })
+        && requestHash(value.afterValues) === requestHash({ version: d.expectedVersion + 1, skus: d.skuFacts }),
+      'TRANSACTION_SCOPE', 'Document append cannot mutate retained root, SKU, barcode or image facts');
+    }
     return { value, result };
   }
   async prepare(input: MaintenanceCompletion): Promise<void> {
@@ -165,7 +198,7 @@ class Evidence implements MaintenanceEvidenceSession {
     requireDomain(rows.length === 1, "INVALID_DATABASE_VALUE", "Actual maintenance receipt insert required");
     const persisted = checkedResult(rows[0]!.result_data, value.kind);
     requireDomain(JSON.stringify(persisted) === JSON.stringify(result), "INVALID_DATABASE_VALUE", "Committed receipt result differs from saved root");
-    this.completed = true; return persisted;
+    this.completed = true; this.completion = structuredClone(value); return persisted;
   }
   assertProductImagesPrepared(input: MaintenanceCompletion): void {
     const { value } = this.checkedCompletion(input);
@@ -178,6 +211,33 @@ class Evidence implements MaintenanceEvidenceSession {
       && (value.beforeValues === null ? before === undefined : Array.isArray(before)),
     "PRODUCT_MEDIA_NOT_READY", "Complete changed image sets must be in the prepared audit");
   }
+}
+/** Borrow the original managed document client. The caller's bound document
+ * guard and issuer are checked before/after; this function never starts, commits,
+ * releases or acquires a connection. The exact parent is closed by the deferred
+ * database constraint before the outer SAVE may commit. */
+export async function withDocumentSpecificationMaintenanceContext<T>(input: {
+  readonly pool: PgSalesPool; readonly client: PgSalesClient; readonly runtime: NativeRuntime26Capability;
+  readonly assertBound: () => void; readonly append: DocumentAppendScope;
+}, work: (context: MaintenancePgContext) => Promise<T>): Promise<Readonly<{ value: T; proof: DocumentAppendEvidence }>> {
+  const append = structuredClone(input.append); input.assertBound();
+  uuid(append.productId); uuid(append.operationId); uuid(append.parent.documentId); uuid(append.parent.operationId); key(append.requestKey);
+  requireDomain(append.operationId !== append.parent.operationId && append.requestKey === `doc-spec:${append.parent.operationId}:${append.productId}`
+    && integer(append.expectedVersion) && append.skuFacts.length > 0, 'TRANSACTION_SCOPE', 'Exact original document append scope required');
+  await input.runtime.assertReady(input.client, 'PRODUCT_MAINTENANCE'); input.assertBound();
+  let open = true;
+  const active = () => { requireDomain(open, 'TRANSACTION_CLOSED', 'Borrowed append context is closed'); input.assertBound(); };
+  const query: Query = async (sql, values = []) => { active(); const r = await input.client.query(sql, values); active(); return r; };
+  const evidence = new Evidence(query, active, append);
+  const context = Object.freeze({ client: Object.freeze({ query }), evidence });
+  ownedContexts.set(context, { pool: input.pool, client: input.client, evidence, assertActive: active });
+  try {
+    const value = await work(context), completion = evidence.documentCompletion();
+    await input.runtime.assertReady(input.client, 'PRODUCT_MAINTENANCE'); input.assertBound();
+    const proof: DocumentAppendEvidence = Object.freeze({ purpose: 'DOCUMENT_SKU_APPEND_V1' });
+    documentAppends.set(proof, { client: input.client, completion, parent: append.parent, active: input.assertBound });
+    return Object.freeze({ value, proof });
+  } finally { open = false; ownedContexts.delete(context); }
 }
 /** One original client for leaf writes, current permissions, global key, audit and
  * receipt. Caller owns the shared bounded pool. No retry/migration or hidden pool. */

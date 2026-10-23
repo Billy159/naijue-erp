@@ -10,6 +10,9 @@ import { checkedNativeRuntime26Capability, type NativeRuntime26Capability } from
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import { COMPLETE_SCOPE_DECISION } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import type { PgSalesClient } from "./sales-unit-of-work.ts";
+import { readDocumentAppendEvidence } from './maintenance-command-unit-of-work.ts';
+import type { DocumentAppendEvidence } from './maintenance-command-unit-of-work.ts';
+import type { MaintenanceCompletion } from '../../../packages/application/src/maintenance-commit-ports.ts';
 
 /** Explicit import-origin verifier. No defaults, DDL, publication or synthetic
  * fixture exception. Joins immutable per-row source provenance to a published
@@ -248,7 +251,12 @@ function replayChildren(kind: "skus" | "barcodes" | "images", before: unknown, a
 /** Only the trusted explicit26 UOW creates this pair. The runtime issuer checks
  * the actual managed client, never a supplied query wrapper. The verifier accepts
  * only its own query, with a fresh proof for every call and no fallback on error. */
-export function createMaintainedCatalogue26TransactionProof(client: PgSalesClient, runtimeInput: NativeRuntime26Capability, guard: () => void): Readonly<{ query: FactQuery; verifier: NativeCatalogueCompletenessVerifier }> {
+export interface MaintainedCatalogue26TransactionProof {
+  readonly query: FactQuery; readonly verifier: NativeCatalogueCompletenessVerifier;
+  captureDocumentAppendBaseline(productIds: readonly string[]): Promise<void>;
+  registerDocumentAppend(proof: DocumentAppendEvidence): void;
+}
+export function createMaintainedCatalogue26TransactionProof(client: PgSalesClient, runtimeInput: NativeRuntime26Capability, guard: () => void): Readonly<MaintainedCatalogue26TransactionProof> {
   const runtime = checkedNativeRuntime26Capability(runtimeInput); if (!runtime || typeof client?.query !== "function" || typeof guard !== "function") throw TypeError("Original exact26 client and active transaction required");
   const active = () => { const result: unknown = guard(); if (result !== undefined) throw TypeError("Transaction guard must not return a success substitute"); };
   const query: FactQuery = async (sql, values) => {
@@ -261,6 +269,14 @@ export function createMaintainedCatalogue26TransactionProof(client: PgSalesClien
     active(); return result;
   };
   const legacy = new PostgresImportedCatalogueCompletenessVerifier();
+  const captured = new Map<string, number>(), appends = new Map<string, MaintenanceCompletion>(); let capturing = false;
+  const pendingAudit = (audit: Facts, productId: string): boolean => {
+    const p = appends.get(productId); if (!p) return false;
+    return audit.id === p.operationId && audit.operation_id === p.operationId && audit.actor_account_id === p.actorAccountId
+      && audit.request_key === p.requestKey && audit.request_hash === p.requestHash && audit.old_version === p.oldVersion
+      && audit.new_version === p.newVersion && audit.action === 'EDIT' && equal(audit.before_values, p.beforeValues) && equal(audit.after_values, p.afterValues)
+      && instant(audit.occurred_at) === instant(p.completedAt);
+  };
   const verifier: NativeCatalogueCompletenessVerifier = Object.freeze({ async assertComplete(context: Parameters<NativeCatalogueCompletenessVerifier["assertComplete"]>[0]) {
     active(); complete(context.query === query, "Proof requires its private original transaction query"); await runtime.assertReady(client, "INVENTORY_ADMISSION"); active();
     const ids = [...new Set(context.productIds.map(v => entityId("product", v)))].sort(); complete(ids.length > 0 && ids.length <= SALES_NATIVE_FACT_MAX_LINES, "Bounded product targets required");
@@ -270,7 +286,7 @@ export function createMaintainedCatalogue26TransactionProof(client: PgSalesClien
       const rows = (await query(`/* maintained-catalogue26:roots */ SELECT ${MAINTAINED_ROOT.map(k => CATALOGUE_PRICE_KEYS.includes(k as typeof CATALOGUE_PRICE_KEYS[number]) ? `p.${k}::text AS ${k}` : k === "deleted_at" ? `to_char(p.deleted_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS deleted_at` : `p.${k}`).join(",")},${committedBefore("p")} AS committed_before
         FROM naijue_erp.product p WHERE p.id=ANY($1::uuid[]) ORDER BY p.id LIMIT $2 FOR SHARE`, [batch, batch.length + 1])).rows;
       complete(rows.length === batch.length, "Complete current product roots required");
-      for (const r of rows) { complete(r.committed_before === true && batch.includes(r.id as typeof ids[number]) && !roots.has(uuid(r.id)), "Foreign, duplicate or uncommitted product root"); const { committed_before: _c, ...facts } = r; roots.set(uuid(r.id), rootFacts(facts)); }
+      for (const r of rows) { complete((r.committed_before === true || !capturing && appends.get(uuid(r.id))?.newVersion === r.version) && batch.includes(r.id as typeof ids[number]) && !roots.has(uuid(r.id)), "Foreign, duplicate or uncommitted product root"); const { committed_before: _c, ...facts } = r; roots.set(uuid(r.id), rootFacts(facts)); }
     }
     for (const productId of ids) {
       const current = roots.get(productId)!; complete(current.deleted_at === null, "Deleted product is unavailable for native sales");
@@ -290,13 +306,13 @@ export function createMaintainedCatalogue26TransactionProof(client: PgSalesClien
         WHERE a.object_type='PRODUCT' AND a.object_id=$1::uuid AND (a.new_version>$2 OR a.old_version IS NULL)
         ORDER BY a.new_version,a.id LIMIT $3 FOR SHARE OF a`, [productId, baselineVersion, CHAIN_LIMIT + 1])).rows;
       complete(audits.length <= CHAIN_LIMIT, "Maintenance chain exceeds 1024 steps; proof was not truncated");
-      if (source && audits.length === 0 && baselineVersion === current.version) {
+      if (!capturing && source && audits.length === 0 && baselineVersion === current.version) {
         // An explicit routing decision, never exception handling or fallback.
         complete(source.published === true, "Unchanged import still requires full publication"); await legacy.assertComplete({ productIds: [productId], query }); continue;
       }
       let state: Facts | undefined; const sets = { skus: new Map<string, Facts>(), barcodes: new Map<string, Facts>(), images: new Map<string, Facts>() };
       if (source) {
-        complete(source.published === true && baselineVersion < (current.version as number), "Maintained import requires a published earlier full baseline");
+        complete(source.published === true && (baselineVersion < (current.version as number) || capturing && baselineVersion === current.version), "Maintained import requires a published earlier full baseline");
         const metadata = sourceIdentity(source), recorded = ownObject(ownObject(metadata.fields).native_product_import);
         complete(metadata.schema_version === 1 && metadata.native_product_id === productId && recorded.validator_version === "NATIVE_PRODUCT_IMPORT_V2_EXACT26" && recorded.schema_profile === "EXACT26", "Full immutable exact26 import origin required"); digest(recorded.row_fingerprint);
         state = rootFacts(recorded.native_product); complete(state.id === productId && state.version === baselineVersion && baselineVersion === 1 && state.deleted_at === null && state.default_barcode_scheme_id === null, "Imported baseline identity/version or approved migration defaults differ");
@@ -310,7 +326,7 @@ export function createMaintainedCatalogue26TransactionProof(client: PgSalesClien
         const operationId = uuid(audit.operation_id); uuid(audit.id); uuid(audit.actor_account_id); label(audit.request_key); digest(audit.request_hash);
         complete(!operations.has(operationId), "Repeated audit operation"); operations.add(operationId);
         const result = exactFacts(audit.result_data, ["operationId", "kind", "targetId", "version"]);
-        complete(audit.committed_before === true && audit.receipt_id === operationId && audit.receipt_actor === audit.actor_account_id && audit.object_type === "PRODUCT" && audit.object_id === productId && audit.target_type === "PRODUCT" && audit.target_id === productId && audit.receipt_action === audit.action && audit.status === "COMMITTED"
+        complete((audit.committed_before === true || !capturing && pendingAudit(audit, productId)) && audit.receipt_id === operationId && audit.receipt_actor === audit.actor_account_id && audit.object_type === "PRODUCT" && audit.object_id === productId && audit.target_type === "PRODUCT" && audit.target_id === productId && audit.receipt_action === audit.action && audit.status === "COMMITTED"
           && instant(audit.occurred_at) === instant(audit.completed_at) && result.operationId === operationId && result.kind === "PRODUCT" && result.targetId === productId && result.version === audit.new_version, "Matching previously committed audit and original receipt required");
         complete(["CREATE", "EDIT", "DISABLE", "RESTORE", "DELETE"].includes(audit.action as string), "Invalid maintenance action");
         auditJsonEvidence(audit.before_values); auditJsonEvidence(audit.after_values); totalBytes += Buffer.byteLength(JSON.stringify([audit.before_values, audit.after_values])); complete(totalBytes <= AUDIT_BYTES, "Complete chain exceeds the audit byte bound");
@@ -332,8 +348,14 @@ export function createMaintainedCatalogue26TransactionProof(client: PgSalesClien
         (${committedBefore("s")} AND (s.created_operation_id IS NULL OR (${committedBefore("r")} AND ${committedBefore("a")}))) AS committed_before
         FROM naijue_erp.sku s LEFT JOIN naijue_erp.operation_receipt r ON r.id=s.created_operation_id LEFT JOIN naijue_erp.audit_change a ON a.operation_id=s.created_operation_id
         WHERE s.product_id=$1::uuid ORDER BY s.id LIMIT $2 FOR SHARE OF s`, [productId, SKU_LIMIT + 1])).rows;
-      complete(actualSkus.length > 0 && actualSkus.length <= SKU_LIMIT, "Full bounded current SKU set required");
-      for (const row of actualSkus) { complete(row.committed_before === true, "Uncommitted SKU creation/update"); const sku = ownObject(row.facts); if (sku.created_operation_id !== null) complete(row.native_creation_valid === true, "SKU creation operation is not proven"); }
+      complete((actualSkus.length > 0 || capturing) && actualSkus.length <= SKU_LIMIT, "Full bounded current SKU set required");
+      for (const row of actualSkus) {
+        const sku = ownObject(row.facts), append = appends.get(productId);
+        const expected = append?.afterValues.skus;
+        complete(row.committed_before === true || !capturing && append && sku.created_operation_id === append.operationId
+          && Array.isArray(expected) && expected.some(s => equal(s, sku)), "Uncommitted SKU creation/update");
+        if (sku.created_operation_id !== null) complete(row.native_creation_valid === true, "SKU creation operation is not proven");
+      }
       complete(sameChildren(sets.skus, children("skus", actualSkus.map(r => r.facts), productId)), "Complete current SKU set differs from replay");
       const barcodes = (await query(`/* maintained-catalogue26:barcodes */ SELECT to_jsonb(b) AS facts,${committedBefore("b")} AS committed_before FROM naijue_erp.sku_barcode b JOIN naijue_erp.sku s ON s.id=b.sku_id WHERE s.product_id=$1::uuid ORDER BY b.id LIMIT $2 FOR SHARE OF b`, [productId, BARCODE_LIMIT + 1])).rows;
       complete(barcodes.length <= BARCODE_LIMIT && barcodes.every(r => r.committed_before === true), "Full committed bounded barcode set required");
@@ -343,8 +365,19 @@ export function createMaintainedCatalogue26TransactionProof(client: PgSalesClien
       await currentReferences(query, current, sets.skus, sets.barcodes);
     }
     active(); await runtime.assertReady(client, "INVENTORY_ADMISSION"); active();
+    if (capturing) for (const [id, root] of roots) captured.set(id, root.version as number);
   } });
-  return Object.freeze({ query, verifier });
+  return Object.freeze({ query, verifier,
+    async captureDocumentAppendBaseline(productIds: readonly string[]) {
+      active(); complete(!capturing && productIds.every(id => !appends.has(id)), 'Capture the complete committed baseline before the first append');
+      capturing = true; try { await verifier.assertComplete({ productIds:productIds.map(id=>entityId('product',id)), query }); } finally { capturing = false; }
+    },
+    registerDocumentAppend(proof: DocumentAppendEvidence) {
+      active(); const { completion: p } = readDocumentAppendEvidence(proof, client);
+      complete(!capturing && !appends.has(p.targetId) && captured.get(p.targetId) === p.oldVersion, 'Exact previously verified committed baseline required');
+      appends.set(p.targetId, p);
+    }
+  });
 }
 async function importChildren(query: FactQuery, source: Facts, productId: string, sets: { skus: Map<string, Facts>; barcodes: Map<string, Facts> }): Promise<void> {
   // All declared aliases are read, rather than selecting the first source row.
