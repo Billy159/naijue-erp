@@ -149,7 +149,7 @@ export function StoreCommandForm(props: StoreMaintenanceFormProps & { readonly c
     visible title={`${controller.record ? '编辑' : '新增'}${props.kind === 'stores' ? '营业厅' : '仓库'}`} maskClosable={false} autoFocus={false} focusLock okText="确定" cancelText={write.phase === 'committed' ? '关闭' : '取消'}
     okButtonProps={{ disabled: !controller.writesEnabled || controller.locked || Boolean(controller.record && !state.dirty), loading: write.phase === 'submitting' }}
     onOk={() => { void controller.submit(); }} onCancel={() => { if (controller.requestClose()) props.close(); }}>
-    <div onBlur={() => { if (!controller.locked) controller.validate(); }}><StoreFormFields {...props} locked={controller.locked} /></div>
+    <StoreFormFields {...props} locked={controller.locked} />
     {!controller.writesEnabled && !controller.hasUnresolvedWrite && write.phase !== 'committed' && <p className="settings-note" role="status">{settingsSaveUnavailable}</p>}
     {pending && <p className="settings-note" role="status">{write.phase === 'submitting' ? '正在保存，请等待结果。' : '正在查询原提交的回执…'}</p>}
     {write.phase === 'committed' && <p className="settings-note" role="status">保存成功。</p>}

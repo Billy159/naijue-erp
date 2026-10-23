@@ -1,6 +1,5 @@
 import { SettingsAuditEntry } from '../audit/audit-entry.tsx';
-import { StoreCommandForm } from './maintenance-form.tsx';
-import { StoreMaintenanceHost } from './maintenance-host.tsx';
+import { StoreMaintenanceFormView, StoreMaintenanceHost } from './maintenance-host.tsx';
 import { UIButton } from '../../components/standard-controls.tsx';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useDialogFocusReturn } from '../../components/use-dialog-focus-return.ts';
@@ -76,7 +75,7 @@ function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: S
     }
   }, [controller, scope, write, displayed]);
   const closeEditor = () => { if (workspace && !workspace.close(props.kind)) return; setEditTarget(null); focus.request(); };
-  const commandForm = editor && <StoreCommandForm scope={props.scope} kind={props.kind} record={editor.record} controller={editor} directory={props.maintenance?.directory} close={closeEditor} />;
+  const commandForm = editor && <StoreMaintenanceFormView scope={props.scope} kind={props.kind} record={editor.record} controller={editor} directory={props.maintenance?.directory} close={closeEditor} />;
   const editBlocked = !!editor || !!editTarget || !!props.maintenance?.workspace && !workspace;
   const changeTab = (kind: StoreSettingsKind) => {
     if (!scope.active || kind === props.kind || editTarget) return;
