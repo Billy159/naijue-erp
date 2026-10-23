@@ -95,4 +95,7 @@
 .settings-reference-select .arco-select.arco-select-multiple .arco-select-view{height:auto;max-height:none;min-height:32px}
 .settings-reference-select .settings-directory-footer{padding:8px;border-top:1px solid var(--ca-line);white-space:normal;line-height:20px;color:var(--ca-ink-2);font-size:12px}
 .settings-reference-select .settings-note{display:block;color:var(--ca-ink-2);font-size:12px;line-height:20px}
+/* Frozen unified-single-select #portal: escape modal scrolling while staying in its focus scope. */
+.settings-reference-select>.settings-directory-portal{position:fixed;inset:0;z-index:2000;pointer-events:none}
+.settings-reference-select>.settings-directory-portal>*{pointer-events:auto}
 @media(max-width:620px){.settings-preparation-modal .bs-staff-fields{grid-template-columns:1fr}}

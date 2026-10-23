@@ -62,7 +62,7 @@ export function SettingsReferenceSelect(props: {
 function DirectorySelect(props: Parameters<typeof SettingsReferenceSelect>[0] & { readonly owner: LatestQuery<SettingsDirectoryParameters, SettingsDirectoryPage> | null }) {
   const empty = useRef(Object.freeze({ phase: 'idle' as const, request: null, success: null, error: null }));
   const snapshot = useSyncExternalStore(props.owner?.subscribe ?? (() => () => {}), props.owner?.getSnapshot ?? (() => empty.current), props.owner?.getSnapshot ?? (() => empty.current));
-  const [open, setOpen] = useState(false), host = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false), portal = useRef<HTMLDivElement>(null);
   const active = props.scope.active && !props.disabled && snapshot.phase !== 'disposed';
   useEffect(() => {
     const clear = () => setOpen(false);
@@ -83,14 +83,14 @@ function DirectorySelect(props: Parameters<typeof SettingsReferenceSelect>[0] & 
   const unavailable = !props.owner || props.kind === 'warehouses' && !props.hallId;
   const canRemoveSelected = !!props.multiple && selected.size > 0;
   const errorText = snapshot.error instanceof HttpQueryError && snapshot.error.kind === 'forbidden' ? '无权读取候选资料。' : '候选资料读取失败。';
-  return <div className={`settings-reference-select settings-single${props.flatValue ? ' demo-store-single' : ''}`} ref={host}>
+  return <div className={`settings-reference-select settings-single${props.flatValue ? ' demo-store-single' : ''}`}>
     <ControlledDirectorySelect {...(props.flatValue ? { className: 'ui-flat-select' } : {})} aria-label={props.label} {...(props.multiple ? { mode: 'multiple' as const } : {})}
       value={props.multiple ? props.selected.map(item => item.id) : props.selected[0]?.id ?? (props.flatValue ? undefined : '')}
       {...(props.flatValue ? { renderFormat: () => <span className="ui-single-tag">{props.selected[0] ? settingsReferenceName(props.selected[0]) : ''}</span> } : {})}
       options={[...options.values()]} placeholder={props.placeholder ?? "请选择"} showSearch filterOption={false}
       allowClear={!props.required} disabled={!active || unavailable && !canRemoveSelected} loading={snapshot.phase === 'loading'}
       popupVisible={open && active && !unavailable} unmountOnExit
-      getPopupContainer={() => { if (!host.current) throw new Error('Settings directory host not mounted'); return host.current; }}
+      getPopupContainer={() => { if (!portal.current) throw new Error('Settings directory portal not mounted'); return portal.current; }}
       onVisibleChange={visible => { if (!active) return; setOpen(visible); if (visible) run(); else props.owner?.cancel(); }}
       onSearch={search => { if (open) run(search); }}
       onChange={(value: unknown) => {
@@ -109,6 +109,7 @@ function DirectorySelect(props: Parameters<typeof SettingsReferenceSelect>[0] & 
           <Button size="mini" disabled={snapshot.phase === 'loading' || current.data.page <= 1} onClick={() => run(current.parameters.search, current.data.page - 1)}>上一页</Button>
           <Button size="mini" disabled={snapshot.phase === 'loading' || current.data.page * current.data.pageSize >= current.data.total} onClick={() => run(current.parameters.search, current.data.page + 1)}>下一页</Button></>}
       </div></>} />
+    <div ref={portal} className="settings-directory-portal" />
     {unavailable && <small className="settings-note">{props.kind === 'warehouses' && !props.hallId ? '请先创建营业厅和本厅仓库。' : '候选资料暂未开放。'}</small>}
   </div>;
 }
@@ -133,7 +134,7 @@ function StoreFormFields(props: StoreMaintenanceFormProps & {
   const { controller } = props, state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot), draft = state.draft;
   if (!draft) return null;
   return <div className="bs-form-fields iw-form-fields">
-    <SettingsField label="名称" required error={state.errors.name}><Input className="iw-arco-input" aria-label="名称" value={draft.name} maxLength={2048} disabled={!!props.locked} onChange={name => controller.update({ name })} autoComplete="off" /></SettingsField>
+    <SettingsField label="名称" required error={state.errors.name}><Input className="iw-arco-input" aria-label="名称" value={draft.name} maxLength={2048} disabled={!!props.locked} onChange={name => controller.update({ name })} autoComplete="off" autoFocus /></SettingsField>
     {props.kind === 'stores' ? <>
       <SettingsField label="默认零售客户"><SettingsReferenceSelect flatValue disabled={!!props.locked} scope={props.scope} reader={props.directory} kind="customers" label="默认零售客户" selected={draft.customer ? [draft.customer] : []} onChange={items => controller.update({ customer: items[0] ?? null })} /></SettingsField>
       <SettingsField label="默认出库仓" error={state.errors.warehouse}><SettingsReferenceSelect flatValue disabled={!!props.locked} scope={props.scope} reader={props.directory} kind="warehouses" label="默认出库仓" hallId={props.record?.id ?? null} selected={draft.warehouse ? [draft.warehouse] : []} onChange={items => controller.update({ warehouse: items[0] ?? null })} /></SettingsField>

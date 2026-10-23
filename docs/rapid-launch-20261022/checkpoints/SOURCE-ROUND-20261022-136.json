@@ -1,0 +1,126 @@
+{
+  "atUtc": "2026-10-23T05:03:45.374739+00:00",
+  "parent": "4c25a553e92a9e35f4933a5456567e3a73dfce89",
+  "owner": "F3",
+  "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/SETTINGS-MAINTENANCE-FOCUS-POPUP-RESULT.json",
+  "receiptSnapshot": {
+    "taskId": "F05/SETTINGS-MAINTENANCE-FOCUS-POPUP",
+    "clientDate": "2026-10-23",
+    "atUtc": "2026-10-23T05:03:09.924744+00:00",
+    "status": "SOURCE_READY_FOR_C_FIXED_CANDIDATE",
+    "findings": [
+      "SETTINGS-MAINTENANCE-INITIAL-FOCUS-01",
+      "SETTINGS-MAINTENANCE-POPUP-CLIP-01"
+    ],
+    "parentObserved": "4c25a553e92a9e35f4933a5456567e3a73dfce89",
+    "files": [
+      {
+        "path": "apps/web/src/settings/stores/maintenance-form.tsx",
+        "beforeSha256": "b6d8a734fb5e3660eedf4e16917624d42fdb9382c8006915885c7c77406221de",
+        "sha256": "a1e3131cbffd37c89955d7b190145597cab5b44e4680bfa5b216d25912d0a5cc",
+        "bytes": 15851
+      },
+      {
+        "path": "apps/web/src/settings/stores/source-store-settings.css",
+        "beforeSha256": "be508197d1f849c0a62c1d24918847bf761f460c39d0b280d76bc7f3e447d998",
+        "sha256": "756ecbedef98eae6eabe8ba12d52f597b4b594c9b9028955b4891f7ae692b3f0",
+        "bytes": 13623
+      },
+      {
+        "path": "apps/web/src/payment-settings/payment-method-form.tsx",
+        "beforeSha256": "9a7ceca62833026b5e9da7f96f680dc6ad5106563ba62e2bbd429dd3c798e257",
+        "sha256": "c5e35a0426bca5e5261e42d4090c1ede1bf74b680af98e14bee0e3d08232e5f6",
+        "bytes": 4234
+      },
+      {
+        "path": "apps/web/src/payment-settings/payment-account-form.tsx",
+        "beforeSha256": "bc721e540ee2548a3f65f363360979d35bcdc37d78c2d005e0eaddb761083d57",
+        "sha256": "33cde41c853e16c77ce4d0417452dede176d91c0d34472115161d7bf1d544a9f",
+        "bytes": 2520
+      }
+    ],
+    "changes": [
+      "Keep previously delivered StoreFormFields name Input autoFocus; same-file superset explicitly accepted by C, no separate checkpoint required.",
+      "Add native first-name Input autoFocus separately in PaymentMethodForm and PaymentAccountForm; original Modal and close paths unchanged.",
+      "SettingsReferenceSelect keeps popup in its own DOM/Modal focus scope but mounts it inside the frozen Demo-style fixed viewport portal. Preserve existing modal scrolling rather than attaching the popup to body or adding a global key handler.",
+      "Add only the frozen fixed/inset0/z2000/pointer-pass-through portal declarations to existing leaf source-store-settings.css. Native options, selection callbacks and queries unchanged."
+    ],
+    "sourceReuse": {
+      "demo": "frozen b8bcfe3 frontend/unified-single-select.jsx styles #portal, makeHost/Choice fixed local popup container",
+      "current": "settings/stores/maintenance-form.tsx DirectorySelect -> its own settings-directory-portal, CSS from source-store-settings.css",
+      "necessaryAdaptation": "Existing React owner/ref and scoped CSS replace the old ShadowRoot/global mount; popup remains within original form focus scope and inherits original settings theme.",
+      "owner": "F3",
+      "newFrameworkOrApplicationFile": false
+    },
+    "checks": {
+      "reusedHallFocus": "Prior SETTINGS-MAINTENANCE-INITIAL-FOCUS-01-RESULT.json Hall new/edit local name-focus/Esc/restore proof adopted, not rerun. Name Input prop preserved.",
+      "paymentFocus": {
+        "methodsNew": "PASS name initial focus, one native Escape closes, original trigger restored, save disabled",
+        "accountsNew": "PASS account-name initial focus, one native Escape closes, original trigger restored, save disabled",
+        "log": "settings-focus-popup-payment.log"
+      },
+      "warehouse": {
+        "status": "PASS_NATIVE_DOM_ONLY",
+        "nameInitialFocus": true,
+        "fixedPortalWithinSameModal": true,
+        "portalPointerEvents": "none with popup child auto",
+        "nativeOptionsRetained": 20,
+        "originalNativeIdSelected": "00000000-0000-4000-8000-000000000101",
+        "selection": "single",
+        "dirtyDiscardRemovesPortal": true,
+        "log": "settings-focus-popup-warehouse.log"
+      },
+      "accountPopup": {
+        "status": "PASS_NATIVE_DOM_ONLY",
+        "fixedPortalWithinSameModal": true,
+        "nativeOptionsRetained": 20,
+        "originalNativeIdsSelected": [
+          "00000000-0000-4000-8000-000000000031",
+          "00000000-0000-4000-8000-000000000034"
+        ],
+        "selection": "multiple",
+        "nativeEscapeClosesPopupOnly": true,
+        "dirtyDiscardRemovesPortal": true,
+        "log": "settings-focus-popup-account-targeted.log"
+      },
+      "driverCorrection": "Initial multiple-select click targeted the role=option li wrapper, whose installed Arco multi mode delegates choice to inner .arco-select-option/Checkbox. Retargeted only account-popup case to actual option label; no source change and no repeated passed focus/warehouse cases.",
+      "strictTypes": "PASS three actual TSX roots and real transitive dependencies with existing tsconfig",
+      "diffCheck": "PASS",
+      "commands": 0,
+      "requestKeys": 0,
+      "allDataSynthetic": true,
+      "actualGeometryAndHitTesting": "NOT_MEASURED_BY_F3; QF actual fixed candidate required",
+      "oldBackendAndC125ElevenOrStaffC129Suites": "REUSED_NOT_RERUN"
+    },
+    "actualFindingScopeFromQF": [
+      "Hall new/edit initial focus",
+      "Warehouse new initial focus and Hall single popup clip",
+      "Payment method new initial focus",
+      "Payment account new initial focus and multiple Halls popup clip"
+    ],
+    "sourcePotentialOtherConsumers": [
+      "Hall default customer/warehouse directory",
+      "Staff hall directory",
+      "Payment account method directory",
+      "Payment list method filter directory"
+    ],
+    "consumerQualification": "Other source consumers are not automatically new failures or browser PASS; original QF determines affected actual scope. No public Tabs/Pager/F1 files changed.",
+    "preserved": [
+      "Warehouse exactly one Hall; payment account multiple Halls",
+      "All original native IDs/options, remote query/total/page semantics",
+      "Native controllers/DTO/backend/permissions/auditcap/save gate",
+      "Earlier Hall name autoFocus source fix and its original proof"
+    ],
+    "unmeasured": [
+      "Actual Chrome first/eighth warehouse option and account fourth option hit testing/viewport clipping",
+      "Current complete candidate build/HTTP/rendered style/source binding by C/QF",
+      "Formal performance/actual save/permissions/PG/production deployment"
+    ],
+    "blockers": [],
+    "next": "C fixed complete exact4 superset once; next necessary complete candidate original QF retests both findings actual affected consumers. Do not reintroduce an attribute-only checkpoint/build.",
+    "model": "gpt-6.1-sol/xhigh",
+    "fastEnabledByF3": false,
+    "antiOverDefense": "Direct existing portal/ref/leaf CSS only; no new focus/portal framework, global key listener, approval/admission/contract/audit system or expanded old test rounds."
+  },
+  "scope": "Freeze exact4 originalfocus and ownModal portal source fix; necessary newconsumer selfchecks adopted. ActualQF geometry/hittest/newnative Esc pending samecompletecandidate. No business/permission/DTO changes. RegisteredF1 sharedpagination exactfile only sameownershipdoc."
+}

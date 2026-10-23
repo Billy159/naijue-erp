@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T04:46:10.675593+00:00",
+  "updatedAt": "2026-10-23T05:02:00.175992+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -3086,6 +3086,12 @@
         {
           "path": "apps/web/src/components/standard-tabs.css",
           "fieldGate": "Existing product native tabs scoped CSS only; default Arco/Drawer unchanged; no backend fields or write contract"
+        },
+        {
+          "path": "apps/web/src/components/standard-pagination.tsx",
+          "group": "F01_SHARED_PAGINATION_EMPTY_CURRENT_PAGE",
+          "fieldGate": "NO_SCHEMA_CHANGE",
+          "scope": "F1 sole writer; preserve exacttotal/query and reuse original number1 render for empty results. NoCSSfile assigned."
         }
       ]
     }
