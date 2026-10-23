@@ -1,10 +1,12 @@
 import type { TransferAction, TransferDraft, TransferResult } from '../../../../../packages/application/src/transfer-ports.ts';
+import type { NativeTransferSaveProposal } from '../../../../../packages/application/src/native-transfer-preparation.ts';
 import type { TransferDetailDto, TransferReader, TransferWire } from '../contracts.ts';
 import type { ReadScope } from '../../loading/read-scope.ts';
 
 /** Existing native wire contract. Identity, role, creation and approval facts stay server-owned. */
 export type TransferDraftDto = TransferWire<TransferDraft>;
 export type TransferCommandDto = { readonly action: 'SAVE'; readonly requestKey: string; readonly expectedVersion: number | null; readonly draft: TransferDraftDto }
+  | { readonly action: 'SAVE'; readonly requestKey: string; readonly expectedVersion: number | null; readonly proposal: NativeTransferSaveProposal }
   | { readonly action: Exclude<TransferAction, 'SAVE'>; readonly requestKey: string; readonly expectedVersion: number; readonly transferId: string };
 export type TransferCommandResultDto = TransferWire<TransferResult>;
 export interface TransferCommandReceiptDto { readonly requestKey: string; readonly action: TransferAction; readonly status: 'COMMITTED'; readonly completedAt: string; readonly result: TransferCommandResultDto }

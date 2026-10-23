@@ -21,7 +21,8 @@ test('workspace construction is inert; CREATE saves once with null CAS and no in
   const pending = h.controller.submit('SAVE'); assert.equal(h.controller.getSnapshot().write.phase, 'submitting');
   assert.equal(await h.controller.submit('SAVE'), false); Object.assign(input.header, { note: 'changed after prepare' });
   assert.equal(await pending, true); assert.equal(h.commands.length, 1); const command = h.commands[0]!;
-  assert.equal(command.expectedVersion, null); assert.equal(command.action === 'SAVE' && command.draft.header.note, 'TEST 独立退货');
+  assert.ok(command.action === 'SAVE' && 'draft' in command);
+  assert.equal(command.expectedVersion, null); assert.equal(command.draft.header.note, 'TEST 独立退货');
   assert.equal(h.controller.getSnapshot().write.result?.status, 'DRAFT'); assert.equal(h.controller.getSnapshot().stale, true);
   assert.equal(h.controller.getSnapshot().editor?.detail, null); assert.equal(await h.controller.submit('APPROVE'), false);
   assert.equal(h.controller.canLeave(), true); h.controller.dispose();
@@ -158,7 +159,7 @@ test('retained settlement/account cannot replace its original method identity in
 test('selected M1/account A intent survives a current-account method race and a definitive mismatch rejection', async () => {
   const currentAccountMethod = uuid(26), sent: SalesCommandDto[] = [];
   const client = createSalesCommandHttpClient({ origin: 'https://synthetic.test', basePath: '/api', fetch: async (_url, init) => {
-    const command = JSON.parse(init.body as string) as SalesCommandDto; sent.push(command); assert.equal(command.action, 'SAVE');
+    const command = JSON.parse(init.body as string) as SalesCommandDto; sent.push(command); assert.equal(command.action, 'SAVE'); assert.ok('draft' in command);
     assert.equal(command.draft.settlements[0]?.paymentMethodId, uuid(25));
     assert.notEqual(command.draft.settlements[0]?.paymentMethodId, currentAccountMethod);
     assert.equal(command.draft.settlements[0]?.paymentAccountId, draft().settlements[0]?.paymentAccountId);

@@ -1,6 +1,7 @@
 import { HttpQueryError } from '../../transport/http-query.ts';
 import { TransferExistingDocumentSession } from '../../current-form/transfer-existing-document.ts';
 import { entityId } from '../../../../../packages/domain/src/values.ts';
+import { parseNativeTransferSaveProposal, type NativeTransferSaveProposal } from '../../../../../packages/application/src/native-transfer-preparation.ts';
 import { transferDetailResponse } from '../response-validation.ts';
 import type { TransferDetailDto } from '../contracts.ts';
 import { TransferCommandError, type TransferCommandDto, type TransferCommandEditor, type TransferCommandReceiptDto, type TransferCommandResultDto,
@@ -104,6 +105,23 @@ export class TransferCommandWorkspace {
     this.#publish({ ...this.#state, editor: Object.freeze({ ...editor, draft, input: frozenSnapshot(input), inputError: false }), notice: null }); return true;
   }
   submit(action: TransferCommandDto['action']): Promise<boolean> { return action === 'SAVE' && this.#existing?.getSnapshot().phase === 'ready' ? this.#existing.save() : this.#submit(action); }
+  /** Same SAVE/key/recovery owner. Coordinates never become local native IDs. */
+  submitProposal(value: NativeTransferSaveProposal, beforeDispatch?: () => boolean): Promise<boolean> {
+    const editor = this.#state.editor, header = editor?.detail?.document.header;
+    if (!this.#active() || this.hasUnresolvedWrite || this.#state.write.phase === 'committed' || this.#state.stale || editor?.current || editor && editor.phase !== 'ready') return Promise.resolve(false);
+    let proposal: NativeTransferSaveProposal;
+    try { proposal = parseNativeTransferSaveProposal(value); }
+    catch { this.#notice('规格及保存资料未通过校验，输入已保留，未发送请求。'); return Promise.resolve(false); }
+    if (proposal.transferId === null ? editor !== null : !editor || editor.mode !== 'EXISTING' || proposal.transferId !== editor.transferId || !header || header.status !== 'DRAFT' || editor.detail?.stockBasis !== 'RUNTIME_LEDGER' || header.version >= Number.MAX_SAFE_INTEGER) return Promise.resolve(false);
+    let command: TransferCommandDto;
+    try {
+      const requestKey = this.#options.newRequestKey();
+      if (!validRequestKey(requestKey) || this.#usedKeys.has(requestKey) || this.#usedKeys.size >= 1024) throw new Error();
+      command = validateTransferCommand({ action: 'SAVE', requestKey, expectedVersion: header?.version ?? null, proposal });
+      this.#usedKeys.add(requestKey);
+    } catch { this.#notice('无法准备新的操作身份或合同，未发送请求。'); return Promise.resolve(false); }
+    return this.#send(command, false, beforeDispatch);
+  }
   async #submit(action: TransferCommandDto['action'], beforeDispatch?: () => boolean): Promise<boolean> {
     const editor = this.#state.editor;
     if (!this.#active() || !editor || editor.phase !== 'ready' || this.hasUnresolvedWrite || this.#state.write.phase === 'committed' || editor.current || this.#state.stale) return false;
@@ -250,7 +268,9 @@ export class TransferCommandWorkspace {
     if ((command.action === 'APPROVE' || command.action === 'UNAPPROVE') && count !== undefined && result.ledgerEntryIds.length !== count * 2) throw new TransferCommandError('malformed-response', 'UNCONFIRMED_POSTING_COUNT', 'uncertain');
     this.#mutationRevision++;
     this.#knownDocument = Object.freeze({ version: result.version, status: result.status });
-    this.#publish({ ...this.#state, write: Object.freeze({ phase: 'committed', command, result, receipt, recovery: receipt ? 'found' : 'unqueried', error: null }), stale: true,
+    const editor = this.#state.editor ?? Object.freeze({ mode: 'EXISTING' as const, transferId: result.transferId, phase: 'ready' as const, detail: null, draft: null, input: null, inputError: false, current: null, readError: null });
+    if (!this.#state.editor) this.#stockBasis = 'RUNTIME_LEDGER';
+    this.#publish({ ...this.#state, editor, write: Object.freeze({ phase: 'committed', command, result, receipt, recovery: receipt ? 'found' : 'unqueried', error: null }), stale: true,
       notice: '原操作已确认；显示内容不是最新单据，请重新读取并明确采用后继续。' });
   }
   #editableDraft(detail: TransferDetailDto): TransferDraftDto | null { if (detail.stockBasis !== 'RUNTIME_LEDGER' || detail.document.header.status !== 'DRAFT') return null; try { return draftFromTransferDetail(detail); } catch { return null; } }

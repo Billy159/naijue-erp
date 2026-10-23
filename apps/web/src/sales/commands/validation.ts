@@ -1,4 +1,5 @@
 import { allocateSalesDiscount, discountUnitPrice } from '../../../../../packages/domain/src/sales-money.ts';
+import { parseNativeSalesSaveProposal } from '../../../../../packages/application/src/native-sales-preparation.ts';
 import { businessDate, minorAmount, quantity } from '../../../../../packages/domain/src/values.ts';
 import type { SalesDetailDto } from '../contracts.ts';
 import type { SalesCommandDto, SalesCommandReceiptDto, SalesCommandResultDto, SalesDraftDto } from './contracts.ts';
@@ -74,20 +75,25 @@ export function validateSalesCommand(value: unknown): SalesCommandDto {
   const copy: unknown = structuredClone(value);
   const action = (copy as { action?: unknown } | null)?.action;
   choice(action, ['SAVE', 'APPROVE', 'UNAPPROVE', 'VOID']);
-  const row = object(copy, ['action', 'requestKey', 'expectedVersion', action === 'SAVE' ? 'draft' : 'salesId']);
+  const proposal = action === 'SAVE' && Object.hasOwn(copy as object, 'proposal');
+  const row = object(copy, ['action', 'requestKey', 'expectedVersion', action === 'SAVE' ? proposal ? 'proposal' : 'draft' : 'salesId']);
   if (!validRequestKey(row.requestKey)) invalid();
   if (action === 'SAVE') {
     if (row.expectedVersion !== null && !version(row.expectedVersion)) invalid();
-    row.draft = validateSalesDraft(row.draft);
+    if (proposal) {
+      const parsed = parseNativeSalesSaveProposal(row.proposal);
+      if ((parsed.salesId === null) !== (row.expectedVersion === null)) invalid();
+      row.proposal = parsed;
+    } else row.draft = validateSalesDraft(row.draft);
   } else { if (!version(row.expectedVersion)) invalid(); id(row.salesId); }
   return frozenSnapshot(copy as SalesCommandDto);
 }
 export function validateSalesResult(value: unknown, command: SalesCommandDto): SalesCommandResultDto {
   const row = object(value, ['operationId', 'salesId', 'version', 'status', 'ledgerEntryIds']);
   id(row.operationId); id(row.salesId); positive(row.version);
-  const salesId = command.action === 'SAVE' ? command.draft.header.id : command.salesId;
+  const salesId = command.action === 'SAVE' ? 'proposal' in command ? command.proposal.salesId : command.draft.header.id : command.salesId;
   const expected = command.expectedVersion === null ? 1 : command.expectedVersion + 1;
-  if (!Number.isSafeInteger(expected) || row.salesId !== salesId || row.version !== expected
+  if (!Number.isSafeInteger(expected) || salesId !== null && row.salesId !== salesId || row.version !== expected
     || row.status !== ({ SAVE: 'DRAFT', APPROVE: 'APPROVED', UNAPPROVE: 'DRAFT', VOID: 'VOID' } as const)[command.action]) invalid();
   const entries = array(row.ledgerEntryIds, 2000); entries.forEach(id);
   if (new Set(entries).size !== entries.length || (command.action === 'SAVE' || command.action === 'VOID' ? entries.length !== 0 : entries.length === 0)) invalid();

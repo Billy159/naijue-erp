@@ -1,4 +1,5 @@
 import { businessDate, quantity } from '../../../../../packages/domain/src/values.ts';
+import { parseNativeTransferSaveProposal } from '../../../../../packages/application/src/native-transfer-preparation.ts';
 import type { TransferDetailDto } from '../contracts.ts';
 import type { TransferCommandDto, TransferCommandReceiptDto, TransferCommandResultDto, TransferDraftDto, TransferFormInput } from './contracts.ts';
 function invalid(): never { throw new TypeError('Invalid native transfer command contract.'); }
@@ -27,14 +28,19 @@ export function validateTransferDraft(value: unknown): TransferDraftDto {
 export function validateTransferCommand(value: unknown): TransferCommandDto {
   const copy: unknown = structuredClone(value), action = (copy as { action?: unknown } | null)?.action;
   if (!['SAVE', 'APPROVE', 'UNAPPROVE', 'VOID'].includes(action as string)) invalid();
-  const row = object(copy, ['action', 'requestKey', 'expectedVersion', action === 'SAVE' ? 'draft' : 'transferId']); if (!validRequestKey(row.requestKey)) invalid();
-  if (action === 'SAVE') { if (row.expectedVersion !== null && !version(row.expectedVersion)) invalid(); row.draft = validateTransferDraft(row.draft); }
+  const proposal = action === 'SAVE' && Object.hasOwn(copy as object, 'proposal');
+  const row = object(copy, ['action', 'requestKey', 'expectedVersion', action === 'SAVE' ? proposal ? 'proposal' : 'draft' : 'transferId']); if (!validRequestKey(row.requestKey)) invalid();
+  if (action === 'SAVE') {
+    if (row.expectedVersion !== null && !version(row.expectedVersion)) invalid();
+    if (proposal) { const parsed = parseNativeTransferSaveProposal(row.proposal); if ((parsed.transferId === null) !== (row.expectedVersion === null)) invalid(); row.proposal = parsed; }
+    else row.draft = validateTransferDraft(row.draft);
+  }
   else { if (!version(row.expectedVersion)) invalid(); id(row.transferId); } return frozenSnapshot(copy as TransferCommandDto);
 }
 export function validateTransferResult(value: unknown, command: TransferCommandDto): TransferCommandResultDto {
   const row = object(value, ['operationId', 'transferId', 'version', 'status', 'ledgerEntryIds']); id(row.operationId); id(row.transferId);
-  const target = command.action === 'SAVE' ? command.draft.header.id : command.transferId, next = command.expectedVersion === null ? 1 : command.expectedVersion + 1;
-  if (!Number.isSafeInteger(next) || row.transferId !== target || row.version !== next || row.status !== ({ SAVE: 'DRAFT', APPROVE: 'APPROVED', UNAPPROVE: 'DRAFT', VOID: 'VOID' } as const)[command.action]) invalid();
+  const target = command.action === 'SAVE' ? 'proposal' in command ? command.proposal.transferId : command.draft.header.id : command.transferId, next = command.expectedVersion === null ? 1 : command.expectedVersion + 1;
+  if (!Number.isSafeInteger(next) || target !== null && row.transferId !== target || row.version !== next || row.status !== ({ SAVE: 'DRAFT', APPROVE: 'APPROVED', UNAPPROVE: 'DRAFT', VOID: 'VOID' } as const)[command.action]) invalid();
   const entries = array(row.ledgerEntryIds, 4000); entries.forEach(id);
   if (new Set(entries).size !== entries.length || (command.action === 'SAVE' || command.action === 'VOID' ? entries.length !== 0 : entries.length === 0 || entries.length % 2 !== 0)) invalid();
   return frozenSnapshot(value as TransferCommandResultDto);

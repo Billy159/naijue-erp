@@ -11,10 +11,12 @@ export function detail(status: 'DRAFT' | 'APPROVED' | 'VOID' = 'DRAFT', version 
   lines: value.document.lines.map(line => ({ ...line, pricingRule: 'UNIT_PRICE', zeroConfirmed: false })) } };
 }
 export function draft(): SalesDraftDto { return draftFromSalesDetail(detail()); }
-export function save(expectedVersion: number | null = null): SalesCommandDto { return { action: 'SAVE', requestKey: 'TEST.sales:original', expectedVersion, draft: draft() }; }
+export function save(expectedVersion: number | null = null): Extract<SalesCommandDto, { readonly draft: SalesDraftDto }> { return { action: 'SAVE', requestKey: 'TEST.sales:original', expectedVersion, draft: draft() }; }
 export function stateCommand(action: 'APPROVE' | 'UNAPPROVE' | 'VOID' = 'APPROVE', expectedVersion = 2): SalesCommandDto { return { action, requestKey: `TEST.sales:${action}`, expectedVersion, salesId: uuid(1) }; }
 export function result(command: SalesCommandDto): SalesCommandResultDto {
-  return { operationId: uuid(100), salesId: command.action === 'SAVE' ? command.draft.header.id : command.salesId, version: command.expectedVersion === null ? 1 : command.expectedVersion + 1,
+  const target = command.action === 'SAVE' ? 'proposal' in command ? command.proposal.salesId : command.draft.header.id : command.salesId;
+  if (target === null) throw new TypeError('New proposal tests must supply an explicit server result, not fabricate a document ID.');
+  return { operationId: uuid(100), salesId: target, version: command.expectedVersion === null ? 1 : command.expectedVersion + 1,
     status: command.action === 'APPROVE' ? 'APPROVED' : command.action === 'VOID' ? 'VOID' : 'DRAFT', ledgerEntryIds: command.action === 'APPROVE' || command.action === 'UNAPPROVE' ? [uuid(101)] : [] };
 }
 export function receipt(command: SalesCommandDto): SalesCommandReceiptDto { return { requestKey: command.requestKey, action: command.action, status: 'COMMITTED', completedAt: '2026-10-20T00:00:00+08:00', result: result(command) }; }

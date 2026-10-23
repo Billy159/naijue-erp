@@ -34,7 +34,8 @@ test('valid edit saves only explicit native fields at original CAS, double click
   h.session.updateInput({ ...input, note: 'TEST 用户修改', lines: input.lines.map(line => ({ ...line, quantity: '-2', dealPrice: '10.01' })) });
   const pending = h.session.save(); assert.equal(await h.session.save(), false); assert.equal(await pending, true); assert.equal(h.keys, 1);
   const command = h.commands[0]!; assert.equal(command.expectedVersion, 2); assert.equal(command.action, 'SAVE');
-  if (command.action === 'SAVE') { assert.equal(command.draft.lines[0]?.dealPrice, '1001'); assert.equal(command.draft.lines[0]?.quantity, '-2'); assert.equal(command.draft.header.netDue, '-2002'); assert.equal(command.draft.lines[0]?.snapshot.barcode, draft().lines[0]?.snapshot.barcode); }
+  assert.ok(command.action === 'SAVE' && 'draft' in command);
+  assert.equal(command.draft.lines[0]?.dealPrice, '1001'); assert.equal(command.draft.lines[0]?.quantity, '-2'); assert.equal(command.draft.header.netDue, '-2002'); assert.equal(command.draft.lines[0]?.snapshot.barcode, draft().lines[0]?.snapshot.barcode);
   assert.equal(h.session.editable, false); assert.equal(h.session.canLeave(), true); h.session.dispose();
 });
 test('current read preserves raw invalid edit and requires explicit discard to adopt', async () => {

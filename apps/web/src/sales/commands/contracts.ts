@@ -1,5 +1,6 @@
 import type { SalesDraft, SalesPricingRule } from '../../../../../packages/domain/src/documents.ts';
 import type { SalesAction, SalesResult } from '../../../../../packages/application/src/ports.ts';
+import type { NativeSalesSaveProposal } from '../../../../../packages/application/src/native-sales-preparation.ts';
 import type { SalesDetailDto, SalesReader } from '../contracts.ts';
 import type { ReadScope } from '../../loading/read-scope.ts';
 
@@ -14,6 +15,7 @@ export type SalesDraftDto = Omit<Wire<SalesDraft>, 'lines' | 'settlements'> & { 
   readonly settlements: readonly (Omit<Wire<SalesDraft['settlements'][number]>, 'paymentMethodId'> & { readonly paymentMethodId: string })[];
 };
 export type SalesCommandDto = { readonly action: 'SAVE'; readonly requestKey: string; readonly expectedVersion: number | null; readonly draft: SalesDraftDto }
+  | { readonly action: 'SAVE'; readonly requestKey: string; readonly expectedVersion: number | null; readonly proposal: NativeSalesSaveProposal }
   | { readonly action: Exclude<SalesAction, 'SAVE'>; readonly requestKey: string; readonly expectedVersion: number; readonly salesId: string };
 export type SalesCommandResultDto = Wire<SalesResult>;
 export interface SalesCommandReceiptDto {

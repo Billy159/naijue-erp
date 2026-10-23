@@ -10,7 +10,9 @@ export function detail(status: 'DRAFT' | 'APPROVED' | 'VOID' = 'DRAFT', v = 2): 
 }
 export const draft = () => draftFromTransferDetail(detail());
 export function result(command: TransferCommandDto, count = 4): TransferCommandResultDto {
-  return { transferId: entityId('transfer', command.action === 'SAVE' ? command.draft.header.id : command.transferId), operationId: entityId('operation', uuid(400)), version: version(command.expectedVersion === null ? 1 : command.expectedVersion + 1),
+  const target = command.action === 'SAVE' ? 'proposal' in command ? command.proposal.transferId : command.draft.header.id : command.transferId;
+  if (target === null) throw new TypeError('New proposal tests must supply an explicit server result, not fabricate a document ID.');
+  return { transferId: entityId('transfer', target), operationId: entityId('operation', uuid(400)), version: version(command.expectedVersion === null ? 1 : command.expectedVersion + 1),
     status: ({ SAVE: 'DRAFT', APPROVE: 'APPROVED', UNAPPROVE: 'DRAFT', VOID: 'VOID' } as const)[command.action],
     ledgerEntryIds: command.action === 'SAVE' || command.action === 'VOID' ? [] : Array.from({ length: count }, (_, index) => entityId('ledger', uuid(500 + index))) };
 }

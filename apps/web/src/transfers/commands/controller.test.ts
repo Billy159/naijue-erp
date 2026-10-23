@@ -26,7 +26,7 @@ test('SYNTHETIC existing edit: raw invalid quantity persists, blocks SAVE/APPROV
   h.workspace.suspend(); assert.equal(h.workspace.getSnapshot().editor!.input!.quantities[before.lines[0]!.id], '1.5');
   assert.equal(h.workspace.updateInput({ ...input, note: 'TEST EDIT', quantities: { ...input.quantities, [before.lines[0]!.id]: '7' } }), true);
   assert.equal(await h.workspace.submit('APPROVE'), false); assert.equal(await h.workspace.submit('SAVE'), true);
-  const command = h.commands[0]!; assert.equal(command.action, 'SAVE'); if (command.action !== 'SAVE') throw Error();
+  const command = h.commands[0]!; assert.equal(command.action, 'SAVE'); assert.ok('draft' in command);
   assert.equal(command.expectedVersion, 2); assert.equal(command.draft.header.fromWarehouseId, before.header.fromWarehouseId); assert.equal(command.draft.header.toWarehouseId, before.header.toWarehouseId);
   assert.equal(command.draft.lines[0]!.skuId, before.lines[0]!.skuId); assert.deepEqual(command.draft.lines[0]!.snapshot, before.lines[0]!.snapshot);
   assert.equal(command.draft.lines[0]!.quantity, '7'); h.workspace.dispose();

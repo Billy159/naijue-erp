@@ -1,0 +1,107 @@
+{
+  "atUtc": "2026-10-23T18:23:10.524762+00:00",
+  "parent": "43439fd16205089b6187c10586b4812c41df52cf",
+  "taskId": "F01_F02_V11_SAME_SAVE_COMMAND_OWNER_AND_TRANSPORT",
+  "files": [
+    {
+      "path": "apps/web/src/sales/commands/contracts.ts",
+      "bytes": 5906,
+      "sha256": "1cdaac5dcffe2efa04895fb80fd82f5fff4890d05860c3093e26ee7057204c61",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/commands/validation.ts",
+      "bytes": 10201,
+      "sha256": "dc9f4606c093ef27082eefc224021e26e439e60cd2b3e1158a259b0dcd433565",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/commands/controller.ts",
+      "bytes": 23393,
+      "sha256": "ebf27ea39f59113d1ec0a9b6a33bb1f717fdb46bdae3c06e84d7dc649a527d86",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/commands/http-client.ts",
+      "bytes": 13801,
+      "sha256": "bb66557f00998b3088a2989c2386a1831371fc204ca9a54a0fa73ed2a0ae7992",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/commands/fixtures.test-support.ts",
+      "bytes": 2908,
+      "sha256": "57ca0dcd6f6d3fac57f3dbe844a55dd0659c87b9289ce9e5fd44d911d5961e72",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/contracts.ts",
+      "bytes": 5264,
+      "sha256": "a39d33ddc502959d53b08eb28e4bd5f91680f31aaef1858afee6d218d2207e80",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/validation.ts",
+      "bytes": 7372,
+      "sha256": "5a826679ec0976492c41f219b27006e2cf1f76dd38efb9ec5c4d1769089c425e",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/controller.ts",
+      "bytes": 28456,
+      "sha256": "6820589fac350c6f0007da5ba062d1e379a7f35473be71c98b04880b800372ce",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/http-client.ts",
+      "bytes": 13309,
+      "sha256": "1374cfd7b5b310b49fa9aaaed2e91108ea1d1b52118ba5735463c44f02d11c77",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/fixtures.test-support.ts",
+      "bytes": 2325,
+      "sha256": "d9b9c877dd815813bf76bc1220aa5aef76eb904b786075f0a0b9328c23a41091",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/commands/controller.test.ts",
+      "bytes": 25870,
+      "sha256": "53f5e6a5e4f1d94f59fe5b31cb65e986882fbcd5291aec6e24ed62d378372ba3",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/commands/editor-session.test.ts",
+      "bytes": 10980,
+      "sha256": "4863ac8897a261d2e2f1d2ade8f451ec56deac19444cfe8300843d88e6d32703",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/controller.test.ts",
+      "bytes": 9542,
+      "sha256": "0bdd768dbddff9251fabf8c03c9ef9711dd007cb666237f0adf7a56339cdc7c9",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-96/DELIVERY.json",
+  "ownerReceiptSha256": "4643eef5c104faa60287d2504a8a5dc63060b8af6260ae79fd6ab6fc73bdd78e",
+  "scope": [
+    "Exact native proposal/draft mutually exclusive SAVE DTO and formal application parsers; explicit null new target versus original CAS",
+    "Original workspace submitProposal, existing target/runtime-DRAFT/CAS and before-dispatch guard; same immutable key/body/receipt/replay",
+    "Actual server result validates UUID/version/status/target, no native editor/ID allocated before confirmed result; read/adopt original saved document afterward",
+    "Exact new formal native spec error allowlist; safe unknown response remains uncertain",
+    "Fixtures never fabricate new proposal result ID;3 original legacy assertion files add explicit draft narrowing, no skipped/weakened assertion"
+  ],
+  "checksAdopted": {
+    "before-1": "RED old exact validator rejects approved proposal",
+    "after-1": "HARNESS_ERROR missing JSON response Content-Type, no source changed for fix",
+    "after-2": "PASS8 focused command/owner/HTTP pairs",
+    "after-3": "PASS8 including actualtarget mismatch and oldidentity late response negative",
+    "types-1": "PASS original exact10 full production closure",
+    "types-2": "PASS full imported closure exact13 + unchanged HTTPtestroot"
+  },
+  "qualification": "SOURCE_FIXED_OWNER_TARGETED_SELFCHECK_ONLY. No actual Chrome/HTTPservice/PG/commit/recovery/performance/productionrelease accepted. Current196 preview does not include this source. Independent new affected QA needed, old passed suites reused. Interface/command-owner/transport only; actual page fullproposal mapping still in progress, no fake docID or prepared SKU before confirmed SAVE.",
+  "limitations": [
+    "Page submit mapping/new and existing sales/transfer UI not connected yet; no activation claimed",
+    "No browser/whole build/PG/backend same transaction/deploy pass"
+  ]
+}
