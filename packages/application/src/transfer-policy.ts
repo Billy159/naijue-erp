@@ -1,24 +1,35 @@
 import { requireDomain } from "../../domain/src/errors.ts";
+import { entityId } from "../../domain/src/values.ts";
 import type { TransferAuthorization, TransferDocument, TransferReferences, TransferWarehouseFact } from "./transfer-ports.ts";
 
+function validIdentityId(kind: "account" | "staff" | "hall", value: unknown): boolean {
+  try { return typeof value === "string" && entityId(kind, value) === value; } catch { return false; }
+}
 /** Source-confirmed transfer policy: unlike sales, salespeople may approve others' visible transfers and unapprove them.
  * Current account role/hall and creation snapshots are trusted server facts, never client-selected personnel. */
 export function createSourceConfirmedTransferAuthorization(): TransferAuthorization {
   return { async assertAllowed(actor, _action, document, previous, tx) {
     requireDomain(tx, "TRANSFER_POLICY_CONTEXT_REQUIRED", "Transfer authorization requires transaction-local trusted warehouse facts");
-    requireDomain(["ADMIN", "WAREHOUSE", "SALESPERSON"].includes(actor.role), "FORBIDDEN", "Unknown role");
+    requireDomain(typeof tx.getCurrentTransferIdentity === "function", "FORBIDDEN", "Transfer action requires current transaction identity");
+    const identity = await tx.getCurrentTransferIdentity(actor.accountId);
+    requireDomain(identity && validIdentityId("account", actor.accountId) && identity.accountId === actor.accountId
+      && validIdentityId("staff", identity.staffId) && identity.loginEnabled === true && identity.employmentStatus === "在职"
+      && ["ADMIN", "WAREHOUSE", "SALESPERSON"].includes(identity.role)
+      && identity.role === actor.role && identity.hallId === actor.hallId
+      && (identity.hallId === null ? identity.hallEnabled === null : validIdentityId("hall", identity.hallId) && identity.hallEnabled === true),
+    "FORBIDDEN", "Current account is not authorized for transfer actions");
     // Both facts use this transaction's one leased client. Read them in order:
     // the bounded pool deliberately refuses overlapping queries on one client.
     const warehouses = [await tx.getWarehouseFact(document.header.fromWarehouseId),
       await tx.getWarehouseFact(document.header.toWarehouseId)];
     requireDomain(warehouses.every((row): row is TransferWarehouseFact => row !== undefined), "WAREHOUSE_UNAVAILABLE", "Both warehouses must exist");
-    if (actor.role !== "SALESPERSON") return;
-    requireDomain(actor.hallId !== null, "FORBIDDEN", "Salesperson requires an authoritative hall");
+    if (identity.role !== "SALESPERSON") return;
+    requireDomain(identity.hallId !== null, "FORBIDDEN", "Salesperson requires an authoritative hall");
     const creator = previous?.header ?? ("createdRole" in document.header ? (document as TransferDocument).header : undefined);
     // New drafts acquire trusted creation facts in the service, so their eventual creator branch is known here.
-    const createdHere = creator ? creator.createdRole === "SALESPERSON" && creator.createdHallId === actor.hallId
+    const createdHere = creator ? creator.createdRole === "SALESPERSON" && creator.createdHallId === identity.hallId
       && typeof creator.createdByAccountId === "string" : true;
-    requireDomain(createdHere || warehouses.some(row => row?.hallId === actor.hallId), "FORBIDDEN", "Transfer is outside current hall visibility");
+    requireDomain(createdHere || warehouses.some(row => row?.hallId === identity.hallId), "FORBIDDEN", "Transfer is outside current hall visibility");
   } };
 }
 /** Required explicit selection by composition. No disabled-source, SKU or hall fact is inferred from syntax or labels. */

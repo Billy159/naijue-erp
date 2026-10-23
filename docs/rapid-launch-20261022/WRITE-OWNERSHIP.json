@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T09:32:49.877080+00:00",
+  "updatedAt": "2026-10-23T09:37:05.884379+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -458,6 +458,12 @@
           "group": "AUDIT_SPEC02_CURRENT_TRANSFER_IDENTITY_AFFECTED_TEST_FIXTURE",
           "fieldGate": "TEST_ONLY_NO_ASSERTION_WEAKENING",
           "boundary": "D1 sole test fixture adaptation to new transaction-local current identity port; only affected number protocol case, no broad rerun or business-rule change"
+        },
+        {
+          "path": "tests/transfer-service.test.ts",
+          "group": "AUDIT_SPEC02_CURRENT_TRANSFER_IDENTITY_AFFECTED_TEST_FIXTURE",
+          "fieldGate": "TEST_ONLY_KEEP_EXISTING_ASSERTIONS_ACTIONS_EXPECTATIONS",
+          "boundary": "D1 sole existing test; only two identified sourcepolicy positive cases seed current syntheticidentity explicitly, never auto-echo HTTP actor in support"
         }
       ]
     },

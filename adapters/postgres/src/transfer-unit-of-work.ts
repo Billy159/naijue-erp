@@ -2,7 +2,7 @@ import { PostgresPostingBalances } from "./inventory-posting-balances.ts";
 import { loadNativeTransferSnapshots } from "./native-transfer-snapshots.ts";
 import type { Pool } from "pg";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
-import type { TransferAuditRow, TransferDocument, TransferReceiptRow, TransferResult, TransferTransaction, TransferUnitOfWork, StoredTransfer, RuntimeTransferHeader, TransferWarehouseFact, TransferSkuFact } from "../../../packages/application/src/transfer-ports.ts";
+import type { TransferAuditRow, TransferDocument, TransferReceiptRow, TransferResult, TransferTransaction, TransferUnitOfWork, StoredTransfer, RuntimeTransferHeader, TransferWarehouseFact, TransferSkuFact, TransferCurrentIdentity } from "../../../packages/application/src/transfer-ports.ts";
 import type { TransferLineRow } from "../../../packages/domain/src/documents.ts";
 import type { InventoryBalanceRow, InventoryLedgerRow } from "../../../packages/domain/src/inventory.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
@@ -91,6 +91,8 @@ class PostgresTransferTransaction implements TransferTransaction {
   private loaded: { readonly id: EntityId<"transfer">; readonly version: Version | null; readonly stockBasis: StoredTransfer["stockBasis"] } | undefined;
   private receiptKey: string | undefined;
   private receiptActor: EntityId<"account"> | undefined;
+  private identityLoaded = false;
+  private identity: TransferCurrentIdentity | undefined;
   private balancesLocked = false;
   private readonly balances: PostgresPostingBalances;
   private readonly previousLines = new Map<EntityId<"transferLine">, TransferLineRow>();
@@ -120,6 +122,38 @@ class PostgresTransferTransaction implements TransferTransaction {
   private query(sql: string, values: unknown[] = []): Promise<PgSalesResult> {
     requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot escape its callback");
     return this.client.query(sql, values);
+  }
+  async getCurrentTransferIdentity(accountId: EntityId<"account">): Promise<TransferCurrentIdentity | undefined> {
+    const check = (): void => {
+      requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot escape its callback");
+      requireDomain(this.receiptActor === accountId && this.loaded !== undefined, "TRANSACTION_SCOPE", "Bind the receipt actor and transfer target before identity lookup");
+    };
+    check();
+    if (this.identityLoaded) return this.identity;
+    // Match sales ordering: receipt key, document, account/staff, then hall.
+    const rows = (await this.query(`/* transfer-authorization:identity */ SELECT a.id AS account_id, a.staff_id, a.login_enabled,
+      s.role, s.employment_status, s.hall_id
+      FROM naijue_erp.user_account a JOIN naijue_erp.staff s ON s.id = a.staff_id
+      WHERE a.id = $1::uuid FOR SHARE OF a, s`, [accountId])).rows;
+    check();
+    requireDomain(rows.length <= 1, "FORBIDDEN", "Current transfer identity is ambiguous");
+    const row = rows[0];
+    if (!row) { this.identityLoaded = true; return undefined; }
+    const nativeAccountId = id("account", row.account_id);
+    requireDomain(nativeAccountId === accountId, "FORBIDDEN", "Current identity must match the receipt account");
+    const hallId = nullableId("hall", row.hall_id);
+    // A fresh READ COMMITTED statement sees hall changes after identity lock
+    // waits, without trying to lock a nullable outer-join side.
+    const halls = hallId === null ? [] : (await this.query(`/* transfer-authorization:hall */ SELECT id, enabled
+      FROM naijue_erp.hall WHERE id = $1::uuid FOR SHARE`, [hallId])).rows;
+    check();
+    requireDomain(halls.length <= 1, "FORBIDDEN", "Current transfer hall is ambiguous");
+    const hall = halls[0];
+    const hallEnabled = hallId === null ? null : !!hall && id("hall", hall.id) === hallId && booleanValue(hall.enabled);
+    this.identity = Object.freeze({ accountId: nativeAccountId, staffId: id("staff", row.staff_id), loginEnabled: booleanValue(row.login_enabled),
+      role: stringValue(row.role), employmentStatus: stringValue(row.employment_status), hallId, hallEnabled });
+    this.identityLoaded = true;
+    return this.identity;
   }
   async getReceipt(actor: EntityId<"account">, requestKey: string): Promise<TransferReceiptRow | undefined> {
     const identity = JSON.stringify([actor, requestKey]);

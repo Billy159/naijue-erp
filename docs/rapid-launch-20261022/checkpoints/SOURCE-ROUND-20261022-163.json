@@ -1,0 +1,67 @@
+{
+  "atUtc": "2026-10-23T09:47:26.639638+00:00",
+  "parent": "32d7c45ea1a53efb9f04854443f7035ec3e6f4d7",
+  "taskId": "B02_SPEC02_TRANSACTION_CURRENT_TRANSFER_IDENTITY",
+  "files": [
+    {
+      "path": "packages/application/src/transfer-policy.ts",
+      "owner": "D1",
+      "bytes": 5027,
+      "sha256": "690bd28632ac65e88d773a5c59045bd65e260e2f93127b092f92e608cf9c43a2",
+      "beforeSha256": "9a54a66edfb3f0d3d5f5ac6ccd26951fd234f336b2a26532b36f0d6c9df1a7e2"
+    },
+    {
+      "path": "packages/application/src/transfer-ports.ts",
+      "owner": "D1",
+      "bytes": 7283,
+      "sha256": "67ab74de2c8fcefba354ad8e5ae95fb824b8b1845221a2308f55a89886773efe",
+      "beforeSha256": "7013b806e7e3e0b46faa0cb8a94571bda4eeeaf43454db10522698d1cc3ff835"
+    },
+    {
+      "path": "adapters/postgres/src/transfer-unit-of-work.ts",
+      "owner": "D1",
+      "bytes": 24793,
+      "sha256": "58889a0ea81170e693874700d7f11c41df9e70a83ee75d70fa3a5ee632493c6c",
+      "beforeSha256": "01eb3a96a9bb02c90adeb7de9569fc396d3e62367e66efcc944ef9a85330152e"
+    },
+    {
+      "path": "tests/transfer-current-identity.test.ts",
+      "owner": "D1",
+      "bytes": 11948,
+      "sha256": "7172bbe4228987a9475d3f61f951ca2e2dae3c4171a45a9ac9c47baec38384de",
+      "beforeSha256": null
+    },
+    {
+      "path": "tests/support/synthetic-transfer.ts",
+      "owner": "D1",
+      "bytes": 9983,
+      "sha256": "900a7f0347ebddaf7280b49801fbe41f844b4068c5ad2e111f0ee5c2f435001e",
+      "beforeSha256": "8efa93b5736a713c7c2e14ad0c83c1ff9d9acc15fcc8dc82e84817f4809cb0f0"
+    },
+    {
+      "path": "tests/runtime-document-number-postgres-protocol.test.ts",
+      "owner": "D1",
+      "bytes": 11521,
+      "sha256": "0bff016761057462b93eb7cb029066830d3870b903c55db6358abc7b45bcacd0",
+      "beforeSha256": "de41abec46c35b22677cec0b2752f96c87083efdbef6617582802c0f88b4ef06"
+    },
+    {
+      "path": "tests/transfer-service.test.ts",
+      "owner": "D1",
+      "bytes": 15722,
+      "sha256": "035447a41d8a8fb8ba29ba73623a3bb1cbf41dab31661c071e9b899ccb84ef2e",
+      "beforeSha256": "b81b37c0215e4a68a4b738c6d0781402130616b9489f68c31224cc605ac6948d"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/SPEC-02-TRANSFER-CURRENT-IDENTITY-RESULT-v1.json",
+  "ownerReceiptSha256": "fd62868bab8e49d40079fed68b20f811be6a939071960c6fabc1edace077f25b",
+  "scope": "Original transfer transaction receipt-key/document then account+staff FORSHARE then separatehall FORSHARE; policy requires current usable identity and role/hall match before action and replay. Existing permissions and transfer-service byte-for-byte retained; no DDL/newpermission/role systems. Targetscope cache rechecks active+actor+target before/after await.",
+  "checksAdopted": {
+    "red": "Actual publicTransferService+PostgresTransferUOW with scripted DB boundary: doclockpause→loginfalse oldpolicy incorrectly SAVE succeeds, expectedrejection RED; samecase green afterfix.",
+    "green": "11new+8actuallyaffected unique19 PASS0skip; exact7 strictroots0. Two existing service positives explicitidentityseed and numberprotocol twoidentityhandlers only, assertions/actions/expectations unchanged."
+  },
+  "notTested": [
+    "ActualPostgres concurrency lock/revoke/replay, parser/SQL execution/persistence/perf/HTTP/business/deploy."
+  ],
+  "next": "OriginalQB only newexact7 transfer currentidentity delta; C actual race window after existing79 readonly input on unchanged QA counts, no concurrent writes to samebatch."
+}

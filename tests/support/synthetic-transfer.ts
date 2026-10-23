@@ -6,6 +6,7 @@ import type { InventoryBalanceRow, InventoryLedgerRow } from "../../packages/dom
 import type { StoredTransfer, TransferActor, TransferAuditRow, TransferDependencies, TransferDocument, TransferDraft, TransferReceiptRow, TransferSkuFact, TransferTransaction, TransferUnitOfWork, TransferWarehouseFact } from "../../packages/application/src/transfer-ports.ts";
 import { createTransferService } from "../../packages/application/src/transfer-service.ts";
 import { createSourceConfirmedTransferAuthorization, createSourceConfirmedTransferReferences } from "../../packages/application/src/transfer-policy.ts";
+import type { TransferCurrentIdentity } from "../../packages/application/src/transfer-ports.ts";
 import { sid, snapshot } from "./synthetic-fixtures.ts";
 export { sid };
 export const ids = { transfer: sid("transfer", 200), fromWarehouse: sid("warehouse", 201), toWarehouse: sid("warehouse", 202),
@@ -20,15 +21,17 @@ export function draft(quantities: readonly string[] = ["2"]): TransferDraft {
       lineNo: index + 1, skuId: ids.sku, quantity: quantity(count), snapshot, isCurrent: true })) };
 }
 interface Tables {
+  identities: Map<EntityId<"account">, TransferCurrentIdentity>;
   transfers: Map<EntityId<"transfer">, StoredTransfer>;
   balances: Map<string, InventoryBalanceRow>; ledger: InventoryLedgerRow[]; audit: TransferAuditRow[];
   receipts: Map<string, TransferReceiptRow>; warehouses: Map<EntityId<"warehouse">, TransferWarehouseFact>; skus: Map<EntityId<"sku">, TransferSkuFact>;
 }
 export class SyntheticTransferStore implements TransferUnitOfWork {
-  private tables: Tables = { transfers: new Map(), balances: new Map(), ledger: [], audit: [], receipts: new Map(), warehouses: new Map(), skus: new Map() };
+  private tables: Tables = { identities: new Map(), transfers: new Map(), balances: new Map(), ledger: [], audit: [], receipts: new Map(), warehouses: new Map(), skus: new Map() };
   private tail: Promise<unknown> = Promise.resolve();
   failNextAt: string | undefined;
   snapshot(): Tables { return structuredClone(this.tables); }
+  seedIdentity(row: TransferCurrentIdentity): void { this.tables.identities.set(row.accountId, structuredClone(row)); }
   seedBalance(row: InventoryBalanceRow): void { this.tables.balances.set(balanceKey(row.warehouseId,row.skuId), structuredClone(row)); }
   removeBalance(warehouse: EntityId<"warehouse">, sku: EntityId<"sku">): void { this.tables.balances.delete(balanceKey(warehouse,sku)); }
   seedWarehouse(row: TransferWarehouseFact): void { this.tables.warehouses.set(row.id, structuredClone(row)); }
@@ -38,17 +41,19 @@ export class SyntheticTransferStore implements TransferUnitOfWork {
   transaction<T>(work: (tx: TransferTransaction) => Promise<T>): Promise<T> {
     const run = async (): Promise<T> => {
       const tables = structuredClone(this.tables); let active = true; let loaded: EntityId<"transfer"> | undefined; let locked: Set<string> | undefined;
+      let receiptActor: EntityId<"account"> | undefined;
       const counts = new Map<string,number>();
       const point = (name: string): void => { requireDomain(active,"TRANSACTION_CLOSED","Closed synthetic transaction"); const n=(counts.get(name)??0)+1; counts.set(name,n);
         if (this.failNextAt===name || this.failNextAt===`${name}:${n}`) { this.failNextAt=undefined; throw new Error(`SYNTHETIC injected failure: ${name}:${n}`); } };
       const tx: TransferTransaction = {
+        async getCurrentTransferIdentity(accountId) { point("identity"); requireDomain(receiptActor===accountId && loaded!==undefined,"TRANSACTION_SCOPE","Bind receipt actor and target first"); return structuredClone(tables.identities.get(accountId)); },
         async getTransfer(id) { point("read"); requireDomain(loaded===undefined,"TRANSACTION_SCOPE","Load once"); loaded=id; return structuredClone(tables.transfers.get(id)); },
         async putRuntimeTransfer(document) { point("document"); requireDomain(loaded===document.header.id,"TRANSACTION_SCOPE","Wrong target");
           const previous=tables.transfers.get(loaded); requireDomain(!previous || previous.stockBasis==="RUNTIME_LEDGER","HISTORICAL_POSTING_NOT_IMPLEMENTED","Not runtime");
           requireDomain(document.header.version===(previous ? previous.document.header.version+1:1),"VERSION_CONFLICT","CAS failed");
           for(const l of document.lines) for(const old of tables.transfers.values()) requireDomain(!old.document.lines.some(other=>other.id===l.id && other.transferId!==l.transferId),"FOREIGN_LINE_ID","Wrong line owner");
           tables.transfers.set(loaded,structuredClone({ document,stockBasis:"RUNTIME_LEDGER" })); },
-        async getReceipt(account,key) { point("receiptRead"); return structuredClone(tables.receipts.get(receiptKey(account,key))); },
+        async getReceipt(account,key) { point("receiptRead"); receiptActor=account; return structuredClone(tables.receipts.get(receiptKey(account,key))); },
         async insertReceipt(row) { point("receipt"); const identity=receiptKey(row.actorAccountId,row.requestKey); requireDomain(!tables.receipts.has(identity),"RECEIPT_UNIQUE","Duplicate original key"); tables.receipts.set(identity,structuredClone(row)); },
         async getWarehouseFact(id) { point("warehouse"); return structuredClone(tables.warehouses.get(id)); },
         async getSkuFact(id) { point("sku"); return structuredClone(tables.skus.get(id)); },
@@ -68,6 +73,7 @@ export class SyntheticTransferStore implements TransferUnitOfWork {
 }
 export function fixture(options: { readonly authorization?: TransferDependencies["authorization"]; readonly references?: TransferDependencies["references"] } = {}) {
   const store = new SyntheticTransferStore();
+  store.seedIdentity({accountId:ids.account,staffId:sid("staff",241),loginEnabled:true,role:"SALESPERSON",employmentStatus:"在职",hallId:ids.hall,hallEnabled:true});
   for(const warehouseId of [ids.fromWarehouse,ids.toWarehouse]) {
     store.seedWarehouse({ id:warehouseId,hallId:ids.hall,enabled:true,hallEnabled:true,hasNonzeroInventory:false });
     for(const skuId of [ids.sku,ids.sku2]) store.seedBalance({ warehouseId,skuId,quantity:quantity("0"),version:version(1),lastOperationId:null,updatedAt:"2026-10-20T00:00:00Z" });

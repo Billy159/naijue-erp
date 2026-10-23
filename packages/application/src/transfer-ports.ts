@@ -48,7 +48,16 @@ export interface TransferWarehouseFact {
   readonly hallEnabled: boolean; readonly hasNonzeroInventory: boolean;
 }
 export interface TransferSkuFact { readonly id: EntityId<"sku">; readonly enabled: boolean }
+/** Current native identity facts held by the original command transaction. */
+export interface TransferCurrentIdentity {
+  readonly accountId: EntityId<"account">; readonly staffId: EntityId<"staff">;
+  readonly loginEnabled: boolean; readonly role: string; readonly employmentStatus: string;
+  readonly hallId: EntityId<"hall"> | null; readonly hallEnabled: boolean | null;
+}
 export interface TransferTransaction extends InventoryPostingTransaction, RuntimeDocumentNumberTransaction {
+  /** Native action policy requires this port. Bind the receipt actor and target
+   * first; retain account/staff/hall locks until this transaction completes. */
+  getCurrentTransferIdentity?(accountId: EntityId<"account">): Promise<TransferCurrentIdentity | undefined>;
   /** Optional native MAIN-barcode snapshots for explicit manual-SKU preparation.
    * Must be loaded/locked through this original transaction, never client labels. */
   getCurrentTransferSnapshots?(skuIds: readonly EntityId<"sku">[]): Promise<ReadonlyMap<EntityId<"sku">, import("../../domain/src/documents.ts").SkuSnapshot>>;

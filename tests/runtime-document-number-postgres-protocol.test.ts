@@ -80,6 +80,8 @@ function actualTransferPreparationProtocol() {
     calls.push({ sql, values }); let rows: Record<string, unknown>[] = [];
     if (sql.includes("native-transfer-snapshots:schema")) rows = [{ installed: true }];
     else if (sql.includes("native-transfer-snapshots:targets")) rows = [{ id: id(904), product_code: "SYNTHETIC_P", product_name: "SYNTHETIC", color_name: "C", fit_name: "F", size_name: "S", barcode: "000123" }];
+    else if (sql.includes("transfer-authorization:identity")) rows = [{ account_id: actor.accountId, staff_id: id(905), login_enabled: true, role: "ADMIN", employment_status: "在职", hall_id: actor.hallId }];
+    else if (sql.includes("transfer-authorization:hall")) rows = [{ id: actor.hallId, enabled: true }];
     else if (sql.includes("FROM naijue_erp.warehouse w JOIN naijue_erp.hall")) rows = [{ id: values[0], hall_id: actor.hallId, enabled: values[0] === id(903) ? destinationEnabled : true, hall_enabled: true, has_nonzero_inventory: false }];
     else if (sql.includes("FROM naijue_erp.sku s JOIN naijue_erp.product")) rows = [{ id: id(904), enabled: true }];
     else if (sql.includes("document-number:existing") || sql.includes("document-number:validate")) {

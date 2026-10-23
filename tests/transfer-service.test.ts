@@ -85,6 +85,7 @@ test("SYNTHETIC transfer: cutoff history is never reversed as runtime ledger",as
 });
 test("SYNTHETIC transfer policy: salesperson may approve and unapprove a visible transfer made by another salesperson",async()=>{
   const f=fixture(); await f.service.execute(save()); const other={...actor,accountId:sid("account",240)};
+  f.store.seedIdentity({accountId:other.accountId,staffId:sid("staff",242),loginEnabled:true,role:"SALESPERSON",employmentStatus:"在职",hallId:ids.hall,hallEnabled:true});
   await f.service.execute({...action("APPROVE",1),actor:other}); await f.service.execute({...action("UNAPPROVE",2),actor:other}); assert.equal(f.balance(ids.fromWarehouse),0n);
 });
 test("SYNTHETIC transfer policy: trusted creator hall OR either endpoint hall, not creator current hall or client-selected worker",async()=>{
@@ -92,6 +93,7 @@ test("SYNTHETIC transfer policy: trusted creator hall OR either endpoint hall, n
   for(const warehouseId of [ids.fromWarehouse,ids.toWarehouse]) f.store.seedWarehouse({id:warehouseId,hallId:ids.otherHall,enabled:true,hallEnabled:true,hasNonzeroInventory:false});
   await f.service.execute(action("APPROVE",1)); // original hall creation remains visible even after both warehouse halls differ
   const outsider={...actor,hallId:sid("hall",999)}; await assert.rejects(f.service.execute({...action("UNAPPROVE",2),actor:outsider}),{code:"FORBIDDEN"});
+  f.store.seedIdentity({...f.store.snapshot().identities.get(actor.accountId)!,hallId:ids.otherHall});
   await f.service.execute({...action("UNAPPROVE",2),actor:{...actor,hallId:ids.otherHall}}); // endpoint branch
 });
 test("SYNTHETIC transfer policy: SAVE checks old and proposed scope, preserving original creator role/hall",async()=>{
