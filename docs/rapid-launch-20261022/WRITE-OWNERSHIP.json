@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T03:52:53.434608+00:00",
+  "updatedAt": "2026-10-23T04:31:03.338493+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -1467,6 +1467,26 @@
           "group": "TRANSFER_LINES26_GENUINE_SOURCE_ONLY",
           "fieldGate": "EXISTING26_APPROVED_NO_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
           "boundary": "D3 sole owner; pure prep + genuine strict outside-source/reference pin consumer; existing mapper/SQL/DTO/run untouched; original-data reads require separate C bounded window"
+        },
+        {
+          "path": "scripts/import-v2/authorized-sales-detail-reader.mjs",
+          "group": "B06_ORIGINAL_SALES_LINES_AND_SETTLEMENTS_SOURCE_CONSUMER",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE_NO_GUESSED_BINDING"
+        },
+        {
+          "path": "scripts/import-v2/authorized-sales-detail-reader.test.mjs",
+          "group": "B06_ORIGINAL_SALES_LINES_AND_SETTLEMENTS_SOURCE_CONSUMER",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE_NO_GUESSED_BINDING"
+        },
+        {
+          "path": "scripts/import-v2/authorized-settlement-reader.mjs",
+          "group": "B06_ORIGINAL_SALES_LINES_AND_SETTLEMENTS_SOURCE_CONSUMER",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE_NO_GUESSED_BINDING"
+        },
+        {
+          "path": "scripts/import-v2/authorized-settlement-reader.test.mjs",
+          "group": "B06_ORIGINAL_SALES_LINES_AND_SETTLEMENTS_SOURCE_CONSUMER",
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE_NO_GUESSED_BINDING"
         }
       ]
     },
