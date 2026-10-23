@@ -72,7 +72,7 @@ export class TransferProposalSession {
   readonly #savedLines = new Map<string, { readonly skuId: string; readonly snapshot: TransferDraftDto['lines'][number]['snapshot'] }>();
   readonly #sizeGroups = new Map<string, DictionarySizeGroup>();
   #skuRead: AbortController | null = null; #skuSequence = 0;
-  #appendBasis: { draft: TransferProposal; pending: TransferPendingEntry; replacement: TransferProposalSnapshot['replacement'] } | null = null;
+  #appendBasis: { draft: TransferProposal; pending: TransferPendingEntry; replacement: TransferProposalSnapshot['replacement']; matrixQuantities: TransferProposalSnapshot['matrixQuantities'] } | null = null;
   #state: TransferProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, picker: null, entry: null, matrixQuantities: {}, pending: emptyPending(), replacement: null, appendRequest: null });
   constructor(scope: ReadScope, reader: TransferProposalReader, onAccessFailure?: (error: HttpQueryError) => void) {
     this.#scope = scope; this.#reader = reader; this.#onAccessFailure = onAccessFailure;
@@ -118,10 +118,10 @@ export class TransferProposalSession {
     for (const listener of [...this.#listeners]) { try { listener(); } catch { /* Other subscribers still receive invalidation. */ } }
   }
   #cancelRead(): void { this.#sequence++; this.#request?.abort(); this.#request = null; }
-  #edit(draft: TransferProposal): boolean {
+  #edit(draft: TransferProposal, matrixQuantities = this.#state.matrixQuantities): boolean {
     if (this.#state.disposed) return false;
     this.#revision++; this.#appendBasis = null;
-    this.#publish({ draft, dirty: true, errors: [], notice: null, appendRequest: null }); return true;
+    this.#publish({ draft, matrixQuantities, dirty: true, errors: [], notice: null, appendRequest: null }); return true;
   }
   setHeader(patch: Pick<Partial<TransferProposal>, 'businessDate' | 'note'>): boolean {
     return this.#edit({ ...this.#state.draft, ...patch });
@@ -144,7 +144,10 @@ export class TransferProposalSession {
     if (this.#state.disposed || !anchor?.product?.sizeGroupId || anchor.product.sizeGroupId !== group.id || !size) return false;
     this.#sizeGroups.set(group.id, freeze(structuredClone(group)));
     const local = this.#state.draft.lines.find(row => row.sku === null && transferProposalRowKey(transferProposalLineIdentity(row)) === rowKey && transferProposalLineIdentity(row).sizeId === sizeId);
-    if (local) return this.#edit({ ...this.#state.draft, lines: this.#state.draft.lines.map(row => row === local ? { ...row, quantity: raw } : row) });
+    if (local) {
+      const matrixQuantities = { ...this.#state.matrixQuantities }; delete matrixQuantities[JSON.stringify([rowKey, sizeId])];
+      return this.#edit({ ...this.#state.draft, lines: this.#state.draft.lines.map(row => row === local ? { ...row, quantity: raw } : row) }, matrixQuantities);
+    }
     const known = [...this.#state.draft.lines.flatMap(row => row.sku ? [row.sku] : []), ...(this.#state.entry?.skus ?? [])].find(sku => transferProposalRowKey(sku) === rowKey && sku.sizeId === sizeId);
     if (known) return this.setMatrixQuantity(known.id, raw);
     const key = JSON.stringify([rowKey, sizeId]), values = { ...this.#state.matrixQuantities };
@@ -268,7 +271,7 @@ export class TransferProposalSession {
   }
   cancelAppend(): void { if (!this.#state.disposed) { this.#appendBasis = null; this.#publish({ appendRequest: null }); } }
   commitPending(confirmAppend = false): boolean {
-    const { pending, replacement, draft } = this.#state;
+    const { pending, replacement, draft, matrixQuantities } = this.#state;
     if (this.#state.disposed || !pending.product || pending.query !== pending.product.code || !pending.color || !pending.fit || pending.phase !== 'ready' || pending.exactTotal === null) return false;
     if (replacement && replacement.originals.some(original => !draft.lines.includes(original))) { this.#publish({ notice: '原行数量已变化，请取消后重新改选。' }); return false; }
     if (replacement && pending.unmapped.length) { this.#publish({ notice: '原规格数量尚未对应到唯一实际规格；请继续读取其他页、调整原行或更换规格。' }); return false; }
@@ -292,25 +295,30 @@ export class TransferProposalSession {
       if (!changes.length && !replacement || new Set(changes.map(lineCoordinate)).size !== changes.length) throw Error();
     } catch { this.#publish({ notice: '数量或商品实际尺码组无效；请核对，原始输入已保留。' }); return false; }
     const retained = draft.lines.filter(row => !replacement?.originals.includes(row)), duplicates = retained.filter(row => changes.some(change => lineCoordinate(change) === lineCoordinate(row)));
-    if (duplicates.length) {
-      if (!confirmAppend) { this.#appendBasis = { draft, pending, replacement }; this.#publish({ appendRequest: { kind: replacement ? 'replace' : 'entry', quantity: changes.reduce((sum, change) => sum + BigInt(change.quantity), 0n).toString() } }); return false; }
-      if (!this.#appendBasis || this.#appendBasis.draft !== draft || this.#appendBasis.pending !== pending || this.#appendBasis.replacement !== replacement) { this.cancelAppend(); this.#publish({ notice: '数量或录入已变化，请重新确认追加。' }); return false; }
+    const matchingMatrixKey = (line: TransferProposalLine) => { const selected = transferProposalLineIdentity(line); return JSON.stringify([transferProposalRowKey(selected), selected.sizeId]); };
+    const matrixDuplicate = changes.some(change => { const cell = matrixQuantities[matchingMatrixKey(change)]; return cell && cell.quantity !== '' && cell.quantity !== '0'; });
+    if (duplicates.length || matrixDuplicate) {
+      if (!confirmAppend) { this.#appendBasis = { draft, pending, replacement, matrixQuantities }; this.#publish({ appendRequest: { kind: replacement ? 'replace' : 'entry', quantity: changes.reduce((sum, change) => sum + BigInt(change.quantity), 0n).toString() } }); return false; }
+      if (!this.#appendBasis || this.#appendBasis.draft !== draft || this.#appendBasis.pending !== pending || this.#appendBasis.replacement !== replacement || this.#appendBasis.matrixQuantities !== matrixQuantities) { this.cancelAppend(); this.#publish({ notice: '数量或录入已变化，请重新确认追加。' }); return false; }
     }
-    let next = [...retained];
+    let next = [...retained]; const nextMatrix = { ...matrixQuantities };
     try {
       for (const change of changes) {
         const selected = transferProposalLineIdentity(change), previous = next.find(row => lineCoordinate(row) === lineCoordinate(change));
-        if (previous) { if (!/^[1-9]\d{0,18}$/.test(previous.quantity)) throw Error(); const value = quantity((BigInt(previous.quantity) + BigInt(change.quantity)).toString()); next = next.map(row => row === previous ? { ...row, quantity: value.toString() } : row); }
+        const matrixKey = matchingMatrixKey(change), cell = matrixQuantities[matrixKey]; let addition = BigInt(change.quantity);
+        if (cell && cell.quantity !== '') { if (!/^(?:0|[1-9]\d{0,18})$/.test(cell.quantity)) throw Error(); addition = quantity((addition + quantity(cell.quantity)).toString()); }
+        delete nextMatrix[matrixKey];
+        if (previous) { if (!/^[1-9]\d{0,18}$/.test(previous.quantity)) throw Error(); const value = quantity((BigInt(previous.quantity) + addition).toString()); next = next.map(row => row === previous ? { ...row, quantity: value.toString() } : row); }
         else {
           const originals = replacement?.originals.filter(row => { const identity = transferProposalLineIdentity(row); return identity.sizeId === selected.sizeId && identity.sizeGroupId === selected.sizeGroupId; }) ?? [], original = originals.length === 1 ? originals[0] : undefined;
           const provenance = original?.existingLineId ? this.#savedLines.get(original.existingLineId) : undefined;
           const pointer = original?.existingLineId ? { existingLineId: original.existingLineId } : {};
-          next.push(change.sku ? { ...change, ...pointer, ...(provenance?.skuId === change.sku.id ? { sourceSnapshot: provenance.snapshot } : {}) } : { ...change, ...pointer });
+          next.push(change.sku ? { ...change, quantity: addition.toString(), ...pointer, ...(provenance?.skuId === change.sku.id ? { sourceSnapshot: provenance.snapshot } : {}) } : { ...change, quantity: addition.toString(), ...pointer });
         }
       }
       if (next.length > TRANSFER_PREPARE_MAX_LINES) throw Error();
     } catch { this.#publish({ notice: '原行数量无效或已达数量／200个规格上限，输入已保留。' }); return false; }
-    this.#cancelSkuRead(); this.closePicker(); const ok = this.#edit({ ...draft, lines: next });
+    this.#cancelSkuRead(); this.closePicker(); const ok = this.#edit({ ...draft, lines: next }, nextMatrix);
     if (ok) this.#publish({ pending: replacement?.previousPending ?? emptyPending(), replacement: null, appendRequest: null, entry: { product: pending.product, skus: pending.skus, page: pending.page, exactTotal: pending.exactTotal } });
     return ok;
   }
