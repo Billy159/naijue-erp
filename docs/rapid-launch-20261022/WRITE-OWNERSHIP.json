@@ -3304,6 +3304,16 @@
           "path": "apps/web/src/components/candidate-selector-contract.ts",
           "group": "F06_EXISTING_SHARED_DEMO_SOURCE_HOST",
           "fieldGate": "UI_INTERNAL_HOST_ONLY_NO_NEW_BUSINESS_AUTHORIZATION"
+        },
+        {
+          "path": "apps/web/src/components/pagination.tsx",
+          "group": "F06_ORIGINAL_SHARED_PAGINATION_SOURCE_HOST",
+          "fieldGate": "OPTIONAL_DOM_CLASS_AND_ACCESSIBLE_LABEL_PASS_THROUGH_DEFAULTS_UNCHANGED"
+        },
+        {
+          "path": "apps/web/src/components/inventory-page-size.tsx",
+          "group": "F06_ORIGINAL_SHARED_PAGINATION_SOURCE_HOST",
+          "fieldGate": "OPTIONAL_DOM_CLASS_AND_ACCESSIBLE_LABEL_PASS_THROUGH_DEFAULTS_UNCHANGED"
         }
       ]
     }
@@ -3715,6 +3725,16 @@
       ],
       "reason": "F2 complete Demo P01 needs original host DOM without extra iw-field/label wrapper; optional sourceHost on same existing selector, keep current candidate/data/permission behavior. One shared owner, no duplicated control/system.",
       "humanSource": "Current C direct human whole-page Demo copy and original-owner shared-component requirement"
+    },
+    {
+      "atUtc": "2026-10-23T13:06:58.314923+00:00",
+      "owner": "F1",
+      "addedPaths": [
+        "apps/web/src/components/pagination.tsx",
+        "apps/web/src/components/inventory-page-size.tsx"
+      ],
+      "reason": "F2 frozen P01 original pager root needs className/label/selectAria without extra wrapper. Optional pass-through only on existing shared pagination and page-size controls; inventory defaults stay unchanged.",
+      "humanSource": "Current direct whole-page Demo copy and same-control reuse requirement"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
