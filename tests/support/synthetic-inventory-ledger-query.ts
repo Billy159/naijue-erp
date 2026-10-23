@@ -8,6 +8,14 @@ export const ledgerBatchId = inventoryId("operation", 450);
 export function ledgerParameters(overrides: Partial<InventoryLedgerQuery> = {}): InventoryLedgerQuery {
   return parseInventoryLedgerQuery({ warehouseId: ledgerWarehouse.id, skuId: ledgerSkuId, pageSize: 20, after: null, ...overrides });
 }
+export function ledgerNumberedParameters(overrides: Partial<InventoryLedgerQuery> = {}): InventoryLedgerQuery {
+  return ledgerParameters({ page: 1, filter: { dateFrom: null, dateTo: null, businessType: null, source: "" }, ...overrides });
+}
+export function ledgerDisplayEntry(n = 0): InventoryLedgerEntry {
+  return { ...ledgerEntry(n), display: { date: "2026-10-21", businessType: "RETURN", sourceNumber: `SYNTHETIC-RETURN-${n}`,
+    operator: { accountId: inventoryActor.accountId, name: "SYNTHETIC current operator", labelBasis: "CURRENT_REFERENCE" },
+    balanceTransition: { state: "UNKNOWN", before: null, after: null, reason: "NO_RECORDED_BALANCE_TRANSITION" }, navigation: "NOT_CHECKED" } };
+}
 export function ledgerEntry(n = 0, kind: Exclude<InventoryLedgerSource["kind"], "HISTORY_REVISION"> = "SALES"): InventoryLedgerEntry {
   const source: InventoryLedgerSource = kind === "SALES" ? { kind, salesId: inventoryId("sales", 500), salesLineId: inventoryId("salesLine", 510 + n), endpoint: "SALES_WAREHOUSE" }
     : kind === "TRANSFER" ? { kind, transferId: inventoryId("transfer", 520), transferLineId: inventoryId("transferLine", 530 + n), endpoint: "TO" }

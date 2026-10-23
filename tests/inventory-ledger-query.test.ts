@@ -4,11 +4,55 @@ import { DomainError } from "../packages/domain/src/errors.ts";
 import { createInventoryLedgerQueryService } from "../packages/application/src/inventory-ledger-query-service.ts";
 import { checkedInventoryLedgerSnapshot, parseInventoryLedgerQuery } from "../packages/application/src/inventory-ledger-query-validation.ts";
 import type { InventoryLedgerQueryDependencies } from "../packages/application/src/inventory-ledger-query-contracts.ts";
-import { inventoryActor, inventoryId, inventoryScope, ledgerEntry, ledgerParameters, ledgerRead, ledgerSnapshot, ledgerWarehouse } from "./support/synthetic-inventory-ledger-query.ts";
+import { inventoryActor, inventoryId, inventoryScope, ledgerEntry, ledgerDisplayEntry, ledgerNumberedParameters, ledgerParameters, ledgerRead, ledgerSnapshot, ledgerWarehouse } from "./support/synthetic-inventory-ledger-query.ts";
 const code = (expected: string) => (error: unknown) => error instanceof DomainError && error.code === expected;
 function service(overrides: Partial<InventoryLedgerQueryDependencies> = {}) {
   return createInventoryLedgerQueryService({ authorization: { async authorize() { return inventoryScope; } }, reader: { async readLedger(read) { return ledgerSnapshot(read); } }, ...overrides });
 }
+
+test("SYNTHETIC ledger numbered: paired mode, exact filter dates, closed types and20-row page preserve legacy parsing", () => {
+  assert.equal(ledgerParameters().page, undefined);
+  const q = ledgerNumberedParameters({ page: Number.MAX_SAFE_INTEGER, filter: { dateFrom: "2026-10-01", dateTo: "2026-10-24", businessType: "RETURN", source: "  单号  " } });
+  assert.equal(q.filter!.source, "单号"); assert.ok(Object.isFrozen(q.filter));
+  for (const value of [{ ...q, filter: undefined }, { ...q, page: undefined }, { ...q, page: 0 }, { ...q, page: 1.5 },
+    { ...q, pageSize: 100 }, { ...q, after: { postedAt: "2026-10-20T18:20:30.123456Z", entryId: inventoryId("ledger", 9) } },
+    { ...q, filter: { ...q.filter, dateFrom: "2026-02-30" } }, { ...q, filter: { ...q.filter, dateFrom: "2026-10-25" } },
+    { ...q, filter: { ...q.filter, businessType: "inferred-return" } }, { ...q, filter: { ...q.filter, extraActor: inventoryActor } }]) {
+    assert.throws(() => parseInventoryLedgerQuery(value), code("INVALID_INVENTORY_LEDGER_QUERY"));
+  }
+});
+test("SYNTHETIC ledger numbered: original current permission precedes filtered page/count and unknown fields cannot become grants/zeroes", async () => {
+  let authorized = 0, reads = 0;
+  const q = ledgerNumberedParameters(), deps = { authorization: { async authorize() { authorized++; return inventoryScope; } },
+    reader: { async readLedger(read: ReturnType<typeof ledgerRead>) { assert.equal(authorized, 1); reads++;
+      const s = ledgerSnapshot(read, [ledgerDisplayEntry()]); return { ...s, data: { ...s.data, page: 1, filteredTotal: "1" } }; } } };
+  const result = await createInventoryLedgerQueryService(deps).readLedger(inventoryActor, q, new AbortController().signal);
+  assert.equal(reads, 1); assert.equal(result.data.filteredTotal, "1"); assert.equal(result.data.entries[0]!.display!.balanceTransition.before, null);
+  const read = ledgerRead(q), s = ledgerSnapshot(read, [ledgerDisplayEntry()]);
+  const complete = { ...s, data: { ...s.data, page: 1, filteredTotal: "1" } };
+  for (const display of [{ ...ledgerDisplayEntry().display, navigation: "ALLOWED" },
+    { ...ledgerDisplayEntry().display, balanceTransition: { state: "KNOWN", before: "0", after: "2", reason: "NO_RECORDED_BALANCE_TRANSITION" } }]) {
+    assert.throws(() => checkedInventoryLedgerSnapshot({ ...complete, data: { ...complete.data, entries: [{ ...ledgerDisplayEntry(), display }] } }, q, read.scope), code("INVALID_INVENTORY_LEDGER_RESPONSE"));
+  }
+  const denied = createInventoryLedgerQueryService({ ...deps, authorization: { async authorize() { throw new DomainError("FORBIDDEN", "denied"); } } });
+  await assert.rejects(denied.readLedger(inventoryActor, q, new AbortController().signal), code("FORBIDDEN")); assert.equal(reads, 1);
+});
+test("SYNTHETIC ledger numbered HTTP: the existing endpoint carries numbered input and exact total without a second route", async () => {
+  const { default: Fastify } = await import("fastify");
+  const { createInventoryLedgerQueryHttpPlugin } = await import("../apps/api/src/inventory-ledger-query-http.ts");
+  const app = Fastify();
+  app.register(createInventoryLedgerQueryHttpPlugin({ authenticate: async () => inventoryActor, dependencies: {
+    authorization: { async authorize() { return inventoryScope; } }, reader: { async readLedger(read) {
+      const s = ledgerSnapshot(read, [ledgerDisplayEntry()]); return { ...s, data: { ...s.data, page: 1, filteredTotal: "1" } };
+    } }
+  } }));
+  try {
+    const response = await app.inject({ method: "POST", url: "/inventory/ledger/query", payload: ledgerNumberedParameters() });
+    assert.equal(response.statusCode, 200); assert.equal(response.json().filteredTotal, "1"); assert.equal(response.json().entries[0].display.navigation, "NOT_CHECKED");
+    assert.equal(response.headers["cache-control"], "no-store");
+    assert.equal((await app.inject({ method: "POST", url: "/inventory/ledger/query", payload: { ...ledgerNumberedParameters(), pageSize: 100 } })).statusCode, 400);
+  } finally { await app.close(); }
+});
 
 test("SYNTHETIC ledger service: explicit providers, same inventory policy, copied identity and exact narrowed warehouse/hall", async () => {
   assert.throws(() => createInventoryLedgerQueryService({} as InventoryLedgerQueryDependencies), /explicit trusted inventory authorization/);

@@ -5,7 +5,7 @@ import { PostgresInventoryLedgerQueryReader } from "../adapters/postgres/src/inv
 import type { PgInventoryLedgerQueryClient, PgInventoryLedgerQueryPool, PgInventoryLedgerQueryResult } from "../adapters/postgres/src/inventory-ledger-query-reader.ts";
 import { DomainError } from "../packages/domain/src/errors.ts";
 import { inventoryLedgerBefore } from "../packages/application/src/inventory-ledger-query-validation.ts";
-import { inventoryId, ledgerBatchId, ledgerEntry, ledgerParameters, ledgerRead, ledgerSnapshot, ledgerWarehouse } from "./support/synthetic-inventory-ledger-query.ts";
+import { inventoryId, ledgerBatchId, ledgerEntry, ledgerParameters, ledgerNumberedParameters, ledgerDisplayEntry, ledgerRead, ledgerSnapshot, ledgerWarehouse } from "./support/synthetic-inventory-ledger-query.ts";
 import type { InventoryLedgerEntry } from "../packages/application/src/inventory-ledger-query-contracts.ts";
 import type { NativeRuntime26Capability } from "../packages/application/src/native-import-schema-contract.ts";
 
@@ -63,11 +63,76 @@ class ScriptedPool implements PgInventoryLedgerQueryPool, PgInventoryLedgerQuery
         const after = values[3] === null ? null : { postedAt: values[3] as string, entryId: values[4] as InventoryLedgerEntry["id"] };
         rows = this.entries.filter(entry => after === null || inventoryLedgerBefore({ postedAt: entry.postedAt, entryId: entry.id }, after)).slice(0, Number(values[5])).map(nativeEntry); break;
       }
+      case "filtered-count":
+      case "numbered-entries": {
+        const filtered = this.entries.filter(entry => {
+          const d = entry.display!;
+          return (values[3] === null || d.date >= String(values[3])) && (values[4] === null || d.date <= String(values[4]))
+            && (values[5] === null || d.businessType === values[5]) && d.sourceNumber!.toLowerCase().includes(String(values[6]).toLowerCase());
+        });
+        rows = stage === "filtered-count" ? [{ total: String(filtered.length) }] : filtered.slice(Number(values[8]), Number(values[8]) + Number(values[7])).map(entry => ({
+          ...nativeEntry(entry), display_date: entry.display!.date, display_business_type: entry.display!.businessType,
+          display_source_number: entry.display!.sourceNumber, display_operator_account_id: entry.display!.operator.accountId, display_operator_name: entry.display!.operator.name
+        })); break;
+      }
       default: assert.ok(["BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY", "COMMIT", "ROLLBACK"].includes(stage), `Unexpected scripted SQL stage ${stage}`); rows = [];
     }
     rows = this.transform?.(stage, rows) ?? rows; this.afterQuery?.(stage); return { rows, rowCount: rows.length };
   }
 }
+
+test("SCRIPTED ledger numbered: authority-scoped same-snapshot predicates/count and20 rows preserve exact source type and unknown transitions", async () => {
+  const pool = new ScriptedPool(); pool.entries = Array.from({ length: 45 }, (_, n) => ledgerDisplayEntry(n));
+  // Return type is a source fact even though the original synthetic delta is negative.
+  const result = await new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(ledgerNumberedParameters({ page: 2,
+    filter: { dateFrom: "2026-10-21", dateTo: "2026-10-21", businessType: "RETURN", source: "synthetic-return" } })));
+  assert.equal(result.data.filteredTotal, "45"); assert.equal(result.data.page, 2); assert.equal(result.data.entries.length, 20);
+  assert.equal(result.data.entries[0]!.id, pool.entries[20]!.id); assert.equal(result.data.nextCursor, null);
+  assert.deepEqual(result.data.entries[0]!.display!.balanceTransition, { state: "UNKNOWN", before: null, after: null, reason: "NO_RECORDED_BALANCE_TRANSITION" });
+  assert.equal(result.data.entries[0]!.display!.navigation, "NOT_CHECKED"); assert.equal(result.data.entries[0]!.display!.operator.labelBasis, "CURRENT_REFERENCE");
+  const count = pool.calls.find(c => c.sql.includes("inventory-ledger:filtered-count"))!, page = pool.calls.find(c => c.sql.includes("inventory-ledger:numbered-entries"))!;
+  assert.equal(count.sql.slice(count.sql.indexOf("WITH ledger_display"), count.sql.indexOf(" SELECT count(*)")), page.sql.slice(page.sql.indexOf("WITH ledger_display"), page.sql.indexOf(" SELECT *")));
+  assert.deepEqual(page.values.slice(0, 7), count.values); assert.deepEqual(page.values.slice(7), [20, "20"]);
+  assert.ok(count.sql.includes("w.hall_id = $2::uuid") && count.sql.includes("l.sku_id = $3::uuid") && count.sql.includes("'Asia/Shanghai'") && count.sql.includes("l.business_date"));
+  assert.ok(count.sql.includes("sh.business_type") && count.sql.includes("l.endpoint='TO'") && !count.sql.includes("quantity_delta>"));
+  assert.ok(count.sql.includes("receipt.actor_account_id") && !count.sql.includes("created_by_account_id"));
+  assert.ok(![count, page].some(c => /inventory_balance|SUM\(|INSERT INTO|UPDATE naijue|DELETE FROM/.test(c.sql)));
+  assert.deepEqual(pool.releases, [undefined]); assert.equal(stages(pool).filter(s => s === "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY").length, 1);
+});
+
+test("SCRIPTED ledger numbered: filters, empty/out-of-range pages and exact count are independent of page rows", async () => {
+  for (const [page, count] of [[1, 20], [3, 5], [4, 0]] as const) {
+    const pool = new ScriptedPool(); pool.entries = Array.from({ length: 45 }, (_, n) => ledgerDisplayEntry(n));
+    const snapshot = await new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(ledgerNumberedParameters({ page })));
+    assert.equal(snapshot.data.filteredTotal, "45"); assert.equal(snapshot.data.entries.length, count);
+  }
+  for (const filter of [{ dateFrom: "2026-10-22", dateTo: null, businessType: null, source: "" },
+    { dateFrom: null, dateTo: null, businessType: "SALE" as const, source: "" },
+    { dateFrom: null, dateTo: null, businessType: null, source: "';%_任意" }]) {
+    const pool = new ScriptedPool(); pool.entries = [ledgerDisplayEntry()];
+    const snapshot = await new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(ledgerNumberedParameters({ filter })));
+    assert.equal(snapshot.data.filteredTotal, "0"); assert.deepEqual(snapshot.data.entries, []);
+    assert.ok(pool.calls.filter(c => c.sql.includes("ledger_display")).every(c => !c.sql.includes("';%_任意")));
+  }
+});
+
+test("SCRIPTED ledger numbered: contradictory count/display or read failure rejects and releases without partial data", async () => {
+  for (const mutation of ["count", "businessType", "operator", "identity", "unknown"] as const) {
+    const pool = new ScriptedPool(); pool.entries = [ledgerDisplayEntry()];
+    pool.transform = (stage, rows) => mutation === "count" && stage === "filtered-count" ? [{ total: "2" }]
+      : stage !== "numbered-entries" ? rows : rows.map(row => ({ ...row,
+        ...(mutation === "businessType" ? { display_business_type: "guessed-from-sign" } : {}),
+        ...(mutation === "operator" ? { display_operator_account_id: "not-uuid" } : {}),
+        ...(mutation === "identity" ? { sku_id: inventoryId("sku", 999) } : {}),
+        ...(mutation === "unknown" ? { display_operator_account_id: null, display_operator_name: "fabricated operator" } : {}) }));
+    await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(ledgerNumberedParameters({ filter: {
+      dateFrom: null, dateTo: null, businessType: null, source: "SYNTHETIC" } }))));
+    assert.equal(stages(pool).at(-1), "ROLLBACK"); assert.deepEqual(pool.releases, [undefined]);
+  }
+  const failed = new ScriptedPool(); failed.entries = [ledgerDisplayEntry()]; failed.failAt = "numbered-entries";
+  await assert.rejects(new PostgresInventoryLedgerQueryReader(failed).readLedger(ledgerRead(ledgerNumberedParameters())), /numbered-entries/);
+  assert.equal(stages(failed).at(-1), "ROLLBACK"); assert.deepEqual(failed.releases, [undefined]);
+});
 
 test("SCRIPTED ledger native key admission: existing verified runtime and one same-snapshot exact key decision admit genuine new dimensions without granting legacy or fabricating entries", async () => {
   // Injected protocol test double only: this supplies no actual runtime/PG grant.
