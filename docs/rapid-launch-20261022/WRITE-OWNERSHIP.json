@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T04:31:03.338493+00:00",
+  "updatedAt": "2026-10-23T04:46:10.675593+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -1948,6 +1948,12 @@
           "group": "PRODUCT_FIRST_VISIT_HEAVY_LEAF",
           "fieldGate": "CLIENT_UI_ONLY_NO_DTO_OR_BACKEND_SCHEMA_WRITE_CHANGE",
           "boundary": "F2 unique writer. Keep default existing behavior and frozen UI, stabilize visited state; exact additive minimal seam/leaf extraction only."
+        },
+        {
+          "path": "apps/web/src/transport/response-validation.ts",
+          "group": "F04_EXISTING_PRODUCT_READ_OPTIONAL_FIELDS_COMPATIBILITY",
+          "fieldGate": "EXISTING_APPROVED_DB_FIELDS_ONLY_NO_SCHEMA_CHANGE",
+          "scope": "Only productBasicsResponse/productImagesResponse optional compatible field decoding; other functions unchanged. F2 sole file writer this slice."
         }
       ]
     },
