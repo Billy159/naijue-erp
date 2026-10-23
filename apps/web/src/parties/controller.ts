@@ -19,6 +19,7 @@ export interface PartyFilterDraft { readonly search: string; readonly enabled: P
 export interface PartySnapshot { readonly filterDraft: PartyFilterDraft; readonly editor: PartyEditor | null; readonly write: PartyWriteState; readonly listStale: boolean; readonly disposed: boolean; readonly notice: string | null }
 let controllerInstance = 0;
 const defaultFilterDraft = (): PartyFilterDraft => Object.freeze({ search: '', enabled: 'ENABLED' });
+const initialListQuery = (): PartySearch => ({ ...defaultFilterDraft(), page: 1, pageSize: 20 });
 const idleWrite = (): PartyWriteState => Object.freeze({ phase: 'idle', command: null, result: null, error: null, receipt: 'unchecked' });
 export interface PartyWorkspaceOptions {
   readonly scope: ReadScope; readonly client: PartyClient;
@@ -38,6 +39,9 @@ export class PartyMaintenanceController {
   readonly scope: ReadScope;
   readonly client: PartyClient;
   readonly kind: PartyKind;
+  /** Same per-kind session owner as filterDraft; presentation only, never a result cache. */
+  readonly tableScroll = { top: 0, left: 0 };
+  #executedQuery: PartySearch = initialListQuery();
   readonly #options: PartyWorkspaceOptions;
   readonly #hasOtherUnresolvedWrite: () => boolean;
   readonly #listeners = new Set<() => void>();
@@ -61,6 +65,7 @@ export class PartyMaintenanceController {
   }
   readonly getSnapshot = (): PartySnapshot => this.#state;
   readonly subscribe = (listener: () => void): (() => void) => { if (this.#state.disposed) return () => {}; this.#listeners.add(listener); return () => { this.#listeners.delete(listener); }; };
+  get executedQuery(): PartySearch { return this.#executedQuery; }
   get hasUnresolvedWrite(): boolean { return unresolved(this.#state.write); }
   get hasDirtyDraft(): boolean {
     const editor = this.#state.editor;
@@ -76,12 +81,15 @@ export class PartyMaintenanceController {
   }
   async queryList(parameters: PartySearch): Promise<void> {
     const executed = validateSearch(parameters);
+    if (!this.scope.active || this.#state.disposed) return;
+    this.#executedQuery = executed;
     const result = await this.list.run(executed);
     if (result.status !== 'success' || !this.scope.active) return;
     const pages = Math.max(1, Math.ceil(result.data.total / executed.pageSize));
     if (executed.page > pages) {
       this.#publish({ ...this.#state, notice: '页码已超出当前结果，正在读取最后一页。' });
-      const adjusted = await this.list.run({ ...executed, page: pages });
+      this.#executedQuery = { ...executed, page: pages };
+      const adjusted = await this.list.run(this.#executedQuery);
       if (adjusted.status !== 'success') return;
     }
     this.#publish({ ...this.#state, listStale: false });
@@ -181,6 +189,7 @@ export class PartyMaintenanceController {
     if (this.#state.disposed) return;
     this.#generation++; this.#read?.abort(); this.#write?.abort(); this.#read = null; this.#write = null; this.list.dispose();
     this.scope.signal.removeEventListener('abort', this.#abort);
+    this.#executedQuery = initialListQuery(); this.tableScroll.top = 0; this.tableScroll.left = 0;
     this.#publish({ filterDraft: defaultFilterDraft(), editor: null, write: idleWrite(), listStale: false, disposed: true, notice: '身份或权限已改变，旧身份资料和草稿已清除。' }); this.#listeners.clear();
   }
   #replaceEditor(): boolean {
