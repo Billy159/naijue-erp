@@ -1,3 +1,14 @@
+实际续接 2026-10-23T13:47:28.032694+00:00：
+
+1. 最新尺码规则仍是实际商品所属组硬边界。C180 2fc317c已固定只读真实sizeGroupId（含零SKU）及已有服务端payment推荐旗标，原membership不动；新SAVE/编号/委托未获当前批准。F1 chunk91当前仅在途UI/检查，未DELIVERY冻结，下一候选不得混WIP或以旧175全局组选择放行。
+2. 交付口径纠正：175是销货录单主体/continuous/table/finalfunds和四层CSS的局部源码迁入，不能称销货所有区域/相关状态整页完成。176共享载体、177真实原token/base、178P01完整list source已固定，仍待适用新候选/独立实操。当前可打开173 http://127.0.0.1:57865/synthetic-unified.html （只收款配置新模块，HTML0709bb6d、PID50115）；不含后继174..180。
+3. QF2双侧173 actual发现2P2：普通菜单离开返回丢tab/draft/applied，及tab行高使filter/table下移4.5547px。原F3受影响修复，旧有效表格24/20/4/分页/modal输入取消事实采用，不重48。QF2自有3A913C…+7F93D5…1470x668；旧DB7未保存及3BC保护，未清场/未转lease。用户新Demo已登录并实际确认。真实cap/PG/性能/whole仍未通过。
+4. C92实际只读原80key无仓/receipt/audit，QA原计数/rootv1保持。C93真实v10仅guard_native_creation_identity单函数COMMIT，2.973973813秒，新QA canonical32dc259f；原56counts/ACL/其它metadata/正式服务/R1保持，无业务DML。旧42703现场/原80保留，不重放；94按原normalservice/真实ownedPool诊断getter接续准备，未实际执行，不能标仓CREATE或authrace已过。
+5. QB182year、183singlefn source、184history effective read限定结论采用；179读投影不是历史真实写入。原D3明确release的两个absent history store/protocol路径已一次移交D1，仅C01已批numeric范围，不扩大完整DRAFT加删/身份/状态编辑。
+6. 实际执行曾出现平台中断：F1/D1 network权限撤销，F2/F3/QB/QF2与94helper额度错误。已保全断点；当前用户继续后F1/D1一次原线程接续已实测active执行，其他同档原断点有界接续，无额度查询/账号操作/换模型/绕权限/重试循环。仅凭发消息不宣称运行，后继核真实回执。
+
+整体104/局部48/整页0/整类0保持；源码、候选、sourceQA、实际UI、真实业务、上线分级。gpt-6.1-sol/xhigh，Fast工具开关未核。目标ACTIVE。
+
 最新覆盖裁决 2026-10-23T13:24:26.875141+00:00：人类纠正v11为【商品真实所属组内全部有效尺码】，不是全系统组。商品组为硬选择边界，后端按保存时真实归属+成员校验；旧SKU记录/历史回显保留不成为新增跨组入口。先前跨组/默认展示方案及29文件新写放行已撤回，现有WIP保全不reset。新编号/受托补规格/新SAVE与证明和SQL合同待原确认单精确收窄后再确认；组内方向无需再问。原Demo整页/已知SKU/完整组内字典/独立验收/性能与数据保护继续。v11尚未实际SQL安装；v10实现bug修复独立推进。当前可看新迁入收款173 http://127.0.0.1:57865/synthetic-unified.html ，不含175新SALE；后继整合必须包含本次组内修复，不得将旧175全系统选择验为批准差异。
 
 最新人类确认 2026-10-23T13:18:18.946948+00:00：明确回复“确认 v11 全尺码保存方案”。仅exact29生产文件及0表列/3替换函数+1新函数/1延迟trigger的具体方案放行，D1/D2/D3按唯一文件owner实施，原条件/独立验收/数据保护保持；不是已实现/真实保存通过。记录WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json。原Demo整页迁移和当前173独立实操并行。
