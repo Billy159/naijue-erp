@@ -1,0 +1,65 @@
+{
+  "jobId": "c03-c214-linux-install-only-20261024-01",
+  "status": "PASS_ISOLATED_C214_LINUX_INSTALL_AND_NATIVE_LOAD_ONLY",
+  "sourceCommit": "1eef32a45da5f422415077b2c4074d0d83b6aeee",
+  "buildId": "r1-1eef32a-20261024-01",
+  "installOutcome": "RETURNED_SUCCESS",
+  "archive": {
+    "bytes": 1291565,
+    "sha256": "9d9b8b96bca5535360de7cd2e7d5c51d55b90539c05fb2e60e382295a88c94c7"
+  },
+  "manifestSha256": "157931367958df66a3b81c0c114c11eb7e0775e92913d9bc67dca4387fcbd143",
+  "installedPayloadSha256": "3121be15d58fa8f3d7277a45c364430e170c9f69cd894f4c600cb5ffb7666a76",
+  "installedPackageRecords": 111,
+  "nativeLoad": {
+    "platform": "linux",
+    "arch": "x64",
+    "node": "24.21.0",
+    "sharp": "0.35.5",
+    "vips": "8.18.7",
+    "nativeLoaded": true
+  },
+  "existingContainersUnchanged": true,
+  "ownedStoppedContainers": {
+    "naijue-c214-20261024-01-installer": {
+      "id": "3a0dd2363f27471cef87ff5b99273d15af6f43078607aa92a74b15ef99a6f542",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "running": false,
+      "exitCode": 0,
+      "networkMode": "none"
+    },
+    "naijue-c214-20261024-01-installer-npm": {
+      "id": "cc38cb244eb8405e045cc1a0e37b08d544a6db46f4609f6f1843c2b1b88a5845",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "running": false,
+      "exitCode": 0,
+      "networkMode": "none"
+    },
+    "naijue-c214-20261024-01-native": {
+      "id": "121ca8c458f3c0d088894e2aa677a563d240258ef9e68ad341ea105396319879",
+      "imageId": "sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f",
+      "running": false,
+      "exitCode": 0,
+      "networkMode": "none"
+    }
+  },
+  "cacheSourceWritten": false,
+  "appStarted": false,
+  "webStarted": false,
+  "runtimeConfigurationRead": false,
+  "metadataWritten": false,
+  "issuerCreated": false,
+  "databaseCalls": 0,
+  "productionEntryChanged": false,
+  "businessAcceptance": false,
+  "automaticRetry": false,
+  "elapsedSeconds": 31.286,
+  "atUtc": "2026-10-23T20:55:14.455261+00:00",
+  "dispatcherElapsedSeconds": 31.348403344862163,
+  "actualReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c214-linux-install-only-20261024-01/release-submission/release-receipts/c03-c214-linux-install-only-20261024-01/engine-result.json",
+    "bytes": 7687,
+    "sha256": "4e56543fd896078c5fa36096bcb6ca3a3a38a9865708020cf5700c0d4316e910"
+  },
+  "qualification": "Actual fixed214 target Linux ci and native load only. Current220 browser candidate not installed, no app start, no metadata/issuer/PG, no public switch. OldC54actual dependency cache method reused; no current failure replay/rootcause claim based only on package count."
+}

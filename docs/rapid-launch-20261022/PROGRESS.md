@@ -1,3 +1,7 @@
+实际部署依赖进展：固定214=1eef32a／包9d9b8b96…已沿原T45完成目标Linux离线npm ci及Sharp0.35.5/vips8.18.7加载，exit0／31.3484秒，安装payload3121be15…、111条依赖记录；原5个正式/旧私有容器前后身份启动信息一致，3个本工单network-none容器已停。原缓存只读复制，无PG/metadata/issuer/app启动/公网切换。此证据只属214，不能冒220最新前端已部署。具体回执见 operational-checkpoints/C03-C214-LINUX-INSTALL.json；新应用仍待原QB新实际review及原stage依赖，不重跑已成功安装。
+
+最新独立实操回执已采用（源码217及220，限定范围）：原QFv059固定217的SALE组内缺SKU录入/取消确认/查看返回和T02矩阵+底行合并限定通过；原左导航仍OPEN由F1修，跨颜色9现场未测。QF2在220实际关闭尺码下拉立即关闭故障：首次箭头及两次重开稳定，所属组三成员完整，取消原SKU不变；未用成员/独有跨组样例及真实保存未测。QF2继续独占220，整页/整类0、局部48/104不变。C214独立Linux安装已沿原T45提交一次，状态QUEUED，未把准备/排队当安装通过。GitHub最近准确733f560a，本接续待下一固定检查点。
+
 当前接续（2026-10-24北京时间；源码及可看候选220）：
 
 - 可打开 http://127.0.0.1:57873/synthetic-unified.html 。固定source220=1b46a5d975d1e9c1b25bb695dd666c04cc342740，build ui-preview-1b46a5d-01-build01；原一次build0、413输入/1368模块，HTML3414020B/726295ed…，PID6596/session55096。三关键HTTP逐字及版本头一致。18声明合成适配无业务UI/CSS覆盖，218尺码点击/219完整Empty已入本版；220 productionmount不被本合成harness挂载，不能冒默认客户实际接入验收。
