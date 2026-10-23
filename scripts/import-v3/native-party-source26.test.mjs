@@ -4,6 +4,9 @@ import {IMPORT_V2_TABLES} from '../../packages/application/src/import-v2-contrac
 import {prepareNativePartyImportChunk} from '../../packages/application/src/native-party-import.ts';
 import {openReviewedPartySource26} from './native-party-source26.mjs';
 const id=n=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`,H='a'.repeat(64),payload='b'.repeat(64),sha=b=>createHash('sha256').update(b).digest('hex');
+function syntheticBootstrapProjection(){return {async verify(){},async enhanceStaff(original){const input=structuredClone(original);input.source.fieldProvenance.fields.bootstrap_accounts={origin:'MIGRATION_DERIVED',reason:'SYNTHETIC proof shape only, no execution authority',evidence_ref:H,raw:{
+ version:'NATIVE_BOOTSTRAP_ACCOUNTS_PROOF_V1',profile:'EXACT26',binding:{batch_id:input.batchId,fixed_source_namespace:input.fixedSourceNamespace,selection_sha256:input.selection.selectionSha256,authorized_payload_sha256:payload,stage_command_sha256:H,operation_id:id(9000),actor_account_id:id(9001)},
+ authority:{account_capture_sha256:H,account_decisions_sha256:H,identity_review_sha256:H,bootstrap_execution_review_sha256:H,source_identity_facts_sha256:H,approved_employee_plan_sha256:H,old_source_batch_id:'SYNTHETIC',old_source_manifest_sha256:H},expected_counts:{accounts:49,direct_original_employee_links:45,approved_current_person_links:4},staff:{source_row_id:input.source.id,source_key:input.source.sourceKey,source_row_sha256:input.source.rowSha256,native_staff_id:input.nativeSnapshot.id},accounts:[{source_account_id:'SYNTHETIC-account',source_account_version:1,source_employee_native_id:'SYNTHETIC-staff',source_employee_code:'001',identity_link_kind:'DIRECT_ORIGINAL_EMPLOYEE_V1',current_person_key:null,source_plan_row:null,native_snapshot:{id:id(9002),staff_id:input.nativeSnapshot.id,login_enabled:false,auth_version:1,version:1,created_at:'2026-10-24T00:00:00.000Z',updated_at:'2026-10-24T00:00:00.000Z'}}]}};return input;}};}
 async function fixture(t){
  const directory=await mkdtemp(join(await realpath(tmpdir()),'synthetic-party-source26-'));t.after(()=>rm(directory,{recursive:true,force:true}));
  const binding={batchId:id(1),fixedSourceNamespace:'synthetic.party26',cutoffAt:'2026-10-04T12:00:00+08:00',selectionSha256:H};
@@ -31,6 +34,26 @@ test('partySource26 ordinary reviewed rows preserve the hall/warehouse cycle, or
  for await(const row of session.sourceRows())source.push(row);for await(const row of session.typedRows())typed.push(row);
  assert.equal(source.length,5);assert.equal(typed.length,13);assert.equal(new Set(typed.map(r=>r.relation+'\0'+r.key)).size,13);assert.equal(Object.keys(typed.find(r=>r.relation==='warehouse').projection).length,6);
  assert.equal(typed.filter(r=>r.relation==='native_party_import_evidence').length,5);assert.ok(typed.every(r=>!r.relation.includes('account')));await session.close();await assert.rejects(session.verify(),/CLOSED/);
+});
+test('partySource26 bootstrap shared projection: exact dependency closure and later PARTIES/typed source use the same enhanced STAFF',async t=>{
+ const f=await fixture(t),r=await openReviewedPartySource26(f.options);t.after(()=>r.close());
+ const before=await r.bootstrapPartyClosure('SYNTHETIC-STAFF');assert.equal(before.chunk.rows.length,4);await r.authorizePartyChunk(before.chunk);
+ await r.bindBootstrapAccounts(syntheticBootstrapProjection());assert.equal(r.report.bootstrapAccountsCovered,true);
+ const after=await r.bootstrapPartyClosure('SYNTHETIC-STAFF');await r.authorizePartyChunk(after.chunk);await assert.rejects(r.authorizePartyChunk(before.chunk),/ROW_CHANGED/);
+ const chunks=[];for await(const chunk of r.chunks())chunks.push(chunk);const staff=chunks.flatMap(c=>c.rows).find(row=>row.entity==='STAFF');
+ assert.deepEqual(staff.input,after.chunk.rows.find(row=>row.entity==='STAFF').input);assert.ok(staff.input.source.fieldProvenance.fields.bootstrap_accounts);
+ const session=await r.openClosure({...f.options.binding,authorizedPayloadHash:payload},{group:'PARTIES',signal:new AbortController().signal}),sources=[],typed=[];
+ for await(const row of session.sourceRows())sources.push(row);for await(const row of session.typedRows())typed.push(row);
+ const source=sources.find(row=>row.projection.entity_type==='STAFF').projection;
+ const evidence=typed.find(row=>row.relation==='native_party_import_evidence'&&row.projection.entity_type==='STAFF').projection;
+ assert.deepEqual(evidence.source_snapshot,source);assert.ok(JSON.stringify(source.field_provenance).includes('NATIVE_BOOTSTRAP_ACCOUNTS_PROOF_V1'));await session.close();
+});
+test('partySource26 bootstrap shared projection: cannot change original STAFF identity or rebind after chunk exposure',async t=>{
+ const f=await fixture(t),r=await openReviewedPartySource26(f.options);t.after(()=>r.close());const projection=syntheticBootstrapProjection(),enhance=projection.enhanceStaff;
+ projection.enhanceStaff=async input=>{const changed=await enhance(input);changed.nativeSnapshot.name='SYNTHETIC substituted name';return changed;};
+ await assert.rejects(r.bindBootstrapAccounts(projection),/HISTORY_HEADER_REFERENCE_NATIVE_FIELDS|PARTY_SOURCE26_BOOTSTRAP_SOURCE_CHANGED/);
+ for await(const chunk of r.chunks())assert.ok(chunk.rows.length>0);
+ await assert.rejects(r.bindBootstrapAccounts(syntheticBootstrapProjection()),/BOOTSTRAP_BINDING/);
 });
 test('partySource26 requires exact outside review and cannot substitute identity49 or self-declared bootstrap metadata',async t=>{
  const f=await fixture(t);await assert.rejects(openReviewedPartySource26({...f.options,source:{...f.options.source,trustedReviewRecordSha256:undefined}}),/OUTSIDE_PIN/);

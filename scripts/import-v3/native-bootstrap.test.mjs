@@ -4,7 +4,7 @@ import { mkdtemp, realpath, writeFile, rm, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
-import { openNativeImportBootstrap } from './native-bootstrap.mjs';
+import { openNativeImportBootstrap, openNativeImportBootstrap26, NATIVE_BOOTSTRAP26_SQL } from './native-bootstrap.mjs';
 import { IMPORT_V2_TABLES } from '../../packages/application/src/import-v2-contract.ts';
 import { HISTORY_COUNT_KEYS, HISTORY_MAPPING_VERSION } from '../../packages/application/src/history-storage-contract.ts';
 import { prepareNativePartyImportChunk, validatePreparedNativePartyImportChunk } from '../../packages/application/src/native-party-import.ts';
@@ -59,6 +59,41 @@ function client(f){const calls=[],accounts=[],intents=new Map(),natives=new Set(
   }};
 }
 const context=f=>({command:f.command,now:'2026-10-22T00:00:00Z',operationId:stableImportId('operation',f.binding.actorAccountId,f.command.requestKey)});
+
+async function exact26Fixture(t){
+ const f=await fixture(t),source=JSON.parse(await readFile(f.options.accountSourceFile)),decisions=JSON.parse(await readFile(f.options.accountDecisionFile)),review=JSON.parse(await readFile(f.options.reviewFile));
+ const template=(await f.options.partySource.bootstrapPartyClosure(id(10))).chunk.rows[0].input,inputs=new Map();
+ const bootstrapAt='2026-10-24T00:00:00.123Z';f.binding.version='NATIVE_IMPORT_EXECUTION_26_V1';f.binding.actorAccountId=id(300);f.command.actorAccountId=id(300);
+ const plan={schemaVersion:'T03-EMPLOYEE-LOGIN-HISTORY-HANDOFF-v1',state:'USER_CONFIRMED_EMPLOYEE_INPUTS',employees:Array.from({length:4},(_,i)=>({sourceRow:1000+i,currentPersonKey:'synthetic-current-'+i,identityMatchMethod:'NEW_TO_RETAINED_EMPLOYEE_BASELINE',primarySourceEmployeeCode:null,plannedPreservedEmployeeId:null,runtimeEmployeeId:null,role:'WAREHOUSE',employmentStatusRequested:'在职',loginRequestedByUser:true}))};
+ const planBytes=Buffer.from(JSON.stringify(plan)),planHash=sha(planBytes);
+ source.rows=Array.from({length:49},(_,i)=>({...source.rows[0],sourceAccountId:id(100+i),loginName:'SYNTHETIC_EXACT26_'+i,sourceEmployeeNativeId:i<45?id(100+i):null,sourceEmployeeCode:i<45?'E'+i:null,sourceRole:i===0?'ADMIN':'WAREHOUSE',...(i<45?{}:{sourceFacts:{originalEmployeeId:null,originalEmployeeCode:null,currentPersonKey:'synthetic-current-'+(i-45),approvedPlanSha256:planHash}})}));
+ const sourceBytes=Buffer.from(JSON.stringify(source)),facts={format:'SAFE_ORIGINAL_ACCOUNT_IDENTITY_FACTS_V1',sourceCaptureSha256:sha(sourceBytes),rows:source.rows.map((r,i)=>({sourceAccountId:r.sourceAccountId,oldEmployeeLinkFound:i<45,sourceFacts:r.sourceFacts??{}}))},factsBytes=Buffer.from(JSON.stringify(facts));
+ decisions.version='NATIVE_ACCOUNT_IDENTITY_CANDIDATE_V2';decisions.unlinked=[];decisions.resolvedOriginalUnlinkedRows=4;decisions.sourceCaptureSha256=sha(sourceBytes);decisions.sourceIdentityFactsSha256=sha(factsBytes);decisions.approvedEmployeePlanSha256=planHash;
+ decisions.accounts=source.rows.map((r,i)=>{
+  const input=structuredClone(template);input.schemaProfile='EXACT26';input.source.id=id(800+i);input.source.sourceKey=r.sourceAccountId;input.source.rowNo=String(i+2);input.source.rawFields['来源编号']=r.sourceAccountId;input.source.normalizedFields['来源编号']=r.sourceAccountId;input.source.rawFields['角色']=r.sourceRole==='ADMIN'?'管理员':'仓库';input.source.normalizedFields['角色']=input.source.rawFields['角色'];input.enumMappings['角色']={raw:input.source.rawFields['角色'],native:r.sourceRole,evidenceRef:'synthetic-role'};input.nativeSnapshot.id=id(600+i);input.nativeSnapshot.role=r.sourceRole;inputs.set(r.sourceAccountId,input);
+  return {...decisions.accounts[0],sourceAccountId:r.sourceAccountId,sourceEmployeeNativeId:r.sourceEmployeeNativeId,sourceEmployeeCode:r.sourceEmployeeCode,staffSourceKey:r.sourceAccountId,nativeAccountId:id(300+i),nativeStaffId:id(600+i),sourceRole:r.sourceRole,nativeRole:r.sourceRole,...(i<45?{}:{identityLink:{kind:'APPROVED_CURRENT_PERSON_PLAN_V1',approvedPlanSha256:planHash,currentPersonKey:r.sourceFacts.currentPersonKey,sourcePlanRow:1000+i-45,sourceFactsEvidenceSha256:sha(factsBytes),staffSourceRowId:input.source.id,staffSourceRowSha256:pin,sourceAccountFacts:r.sourceFacts}})};
+ });
+ decisions.importerCandidate={sourceAccountId:id(100),nativeAccountId:id(300)};
+ const decisionBytes=Buffer.from(JSON.stringify(decisions)),identityBytes=Buffer.from(JSON.stringify({result:'SYNTHETIC_C_IDENTITY_ONLY',accounts:49}));
+ Object.assign(review,{version:'C_NATIVE_ACCOUNT_BOOTSTRAP_REVIEW_V2',binding:f.binding,sourceCaptureSha256:sha(sourceBytes),accountDecisionSha256:sha(decisionBytes),stageCommandSha256:requestHash(f.command),stageRequestKey:f.command.requestKey,operationId:stableImportId('operation',f.binding.actorAccountId,f.command.requestKey),bootstrapAt,identityReviewSha256:sha(identityBytes),expectedSourceRows:49,expectedLinkedRows:45,expectedUnlinkedRows:0,expectedPlanLinkedRows:4,expectedPreparedRows:49,sourceIdentityFactsSha256:sha(factsBytes),approvedEmployeePlanSha256:planHash,importerSourceAccountId:id(100)});
+ const factsFile=f.sourceFile.replace('source-private.json','facts26.json'),approvedPlanFile=f.sourceFile.replace('source-private.json','plan26.json'),identityReviewFile=f.sourceFile.replace('source-private.json','identity26.json');
+ for(const[path,bytes]of[[f.options.accountSourceFile,sourceBytes],[f.options.accountDecisionFile,decisionBytes],[f.options.reviewFile,Buffer.from(JSON.stringify(review))],[factsFile,factsBytes],[approvedPlanFile,planBytes],[identityReviewFile,identityBytes]])await writeFile(path,bytes,{mode:0o600});
+ Object.assign(f.options,{binding:f.binding,trustedAccountSourceSha256:sha(sourceBytes),trustedAccountDecisionSha256:sha(decisionBytes),trustedReviewSha256:sha(Buffer.from(JSON.stringify(review))),bootstrapAt,identityReviewFile,trustedIdentityReviewSha256:sha(identityBytes),identityProof:{factsFile,trustedFactsSha256:sha(factsBytes),approvedPlanFile,trustedApprovedPlanSha256:planHash}});
+ f.options.partySource={async verify(){},async bootstrapPartyClosure(key){const input=inputs.get(key);assert.ok(input);return{chunk:prepareNativePartyImportChunk([input]),staff:{sourceKey:key,nativeId:input.nativeSnapshot.id,role:input.nativeSnapshot.role,hallId:null,employmentStatus:'在职',source:input.source}};},async authorizePartyChunk(chunk){validatePreparedNativePartyImportChunk(chunk);for(const row of chunk.rows)assert.deepEqual(row.input,inputs.get(row.input.source.sourceKey));},async bindBootstrapAccounts(projection){for(const[key,input]of inputs)inputs.set(key,await projection.enhanceStaff(input));await projection.verify();}};
+ const c=client(f),query=c.query.bind(c);c.query=async(sql,values=[])=>{const result=await query(sql.replaceAll('native-bootstrap26:','native-bootstrap:'),values);if(sql===NATIVE_BOOTSTRAP26_SQL.target.sql)result.rows[0].versions=Array.from({length:26},(_,i)=>i+1);if(sql.includes('native-party-import:schema'))result.rows[0].installed_versions=Array.from({length:26},(_,i)=>i+1);if(sql===NATIVE_BOOTSTRAP26_SQL.account.sql)Object.assign(result.rows[0],{login_enabled:values[4],auth_version:1,version:1,created_at:new Date(values[5]),updated_at:new Date(values[5])});return result;};
+ return {...f,c,inputs,bootstrapAt,runtime:{profile:'EXACT26',contract:'NATIVE_RUNTIME26_V1',async assertReady(target,purpose){assert.equal(target,c);assert.equal(purpose,'IMPORT_STAGE');}}};
+}
+test('bootstrap26 real-source seam: exact49 source proof and same-client callback use one shared enhanced STAFF source without credentials in projection',async t=>{
+ const f=await exact26Fixture(t),b=await openNativeImportBootstrap26(f.options);t.after(()=>b.close());assert.equal(b.report.preparedAccounts,49);assert.equal(b.report.planLinkedAccounts,4);assert.equal(b.now(),f.bootstrapAt);
+ for(const input of f.inputs.values()){const proof=input.source.fieldProvenance.fields.bootstrap_accounts.raw;assert.equal(proof.binding.operation_id,stableImportId('operation',f.binding.actorAccountId,f.command.requestKey));assert.equal(proof.expected_counts.accounts,49);assert.equal(proof.accounts[0].native_snapshot.created_at,f.bootstrapAt);assert.ok(!JSON.stringify(proof).includes('SYNTHETIC_EXACT26_')&&!JSON.stringify(proof).includes('credential'));}
+ await b.bootstrap26.stageNewBatch26(f.c,{...context(f),now:f.bootstrapAt},f.runtime);assert.equal(f.c.accounts.length,49);assert.equal(f.c.accounts[0][0],f.binding.actorAccountId);assert.ok(!f.c.calls.some(sql=>/BEGIN|COMMIT|ROLLBACK|new Pool/.test(sql)));
+});
+test('bootstrap26 real-source seam: wrong timestamp, denied original-client runtime and changed authority stop before source writes',async t=>{
+ const f=await exact26Fixture(t),b=await openNativeImportBootstrap26(f.options);t.after(()=>b.close());
+ await assert.rejects(b.bootstrap26.stageNewBatch26(f.c,context(f),f.runtime),/EXECUTION_BINDING/);assert.equal(f.c.calls.length,0);
+ await assert.rejects(b.bootstrap26.stageNewBatch26(f.c,{...context(f),now:f.bootstrapAt},{...f.runtime,async assertReady(){throw Error('SYNTHETIC_WRONG_ORIGINAL_CLIENT');}}),/WRONG_ORIGINAL_CLIENT/);assert.equal(f.c.calls.length,0);
+ await writeFile(f.options.identityReviewFile,'{}');await assert.rejects(b.bootstrap26.authorizeStageSourceActor(f.binding.actorAccountId,f.command),/FILE_CHANGED/);assert.equal(f.c.calls.length,0);
+});
 test('private bootstrap source authorization precedes DB; pinned real-role mapping prepares every linked account and excludes only explicitunlinked',async t=>{
   const f=await fixture(t),b=await openNativeImportBootstrap(f.options);t.after(()=>b.close());const c=client(f);await b.authorizeStageSourceActor(f.binding.actorAccountId,f.command);assert.equal(c.calls.length,0);
   assert.equal(b.report.sourceAccounts,3);assert.equal(b.report.preparedAccounts,2);assert.equal(b.report.unlinkedRetained,1);assert.ok(!JSON.stringify(b.report).includes(f.privateLoginMarker));

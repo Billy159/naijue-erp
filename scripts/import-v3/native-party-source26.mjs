@@ -1,5 +1,6 @@
-/** Ordinary reviewed party source26. Account bootstrap metadata has a separate
- * private first-STAGE authority and cannot enter through this component reader. */
+/** Ordinary reviewed party source26. Original component bytes cannot self-declare
+ * account proof. The separate private bootstrap binds its reviewed STAFF projection
+ * once, before chunks/closure are exposed, so both phases consume the same source. */
 import {constants} from 'node:fs';
 import {open,lstat} from 'node:fs/promises';
 import {join,resolve,dirname,isAbsolute} from 'node:path';
@@ -26,11 +27,11 @@ export async function openReviewedPartySource26(options){
  must(exact(o.source,['directory','trustedManifestSha256','reviewRecordFile','trustedReviewRecordSha256'])&&(o.historical===null||exact(o.historical,['sourceFile','candidateFile','reviewFile','contractFile','trustedReviewSha256'])),'PARTY_SOURCE26_ARTIFACT_OPTIONS');
  const source={...o.source},historicalOptions=o.historical===null?null:{...o.historical};
  must(typeof source.directory==='string'&&isAbsolute(source.directory),'PARTY_SOURCE26_PATH');
- let closed=false,historicalReader;const files=[],chunks=[],fingerprints=new Set(),inputs=new Map(),nativeIds=new Set(),sourceIds=new Set(),positions=new Set(),codes=new Set(),recordIds=new Set();
+ let closed=false,historicalReader,bootstrapVerify,bootstrapBound=false,exposed=false;const files=[],chunks=[],fingerprints=new Set(),inputs=new Map(),nativeIds=new Set(),sourceIds=new Set(),positions=new Set(),codes=new Set(),recordIds=new Set();
  const counts={HALL:0,WAREHOUSE:0,STAFF:0,CUSTOMER:0,SUPPLIER:0};
  const active=()=>must(!closed,'PARTY_SOURCE26_CLOSED');
  async function load(path,pin,limit){must(hash(pin),'PARTY_SOURCE26_OUTSIDE_PIN');await regular(path);const stat=await lstat(path);must(stat.size>0&&stat.size<=limit,'PARTY_SOURCE26_FILE_LIMIT');const fd=await open(path,constants.O_RDONLY|constants.O_NOFOLLOW),file={path,stat,fd};files.push(file);const bytes=await fd.readFile();must(bytes.length===stat.size&&digest(bytes)===pin&&same(stat,await fd.stat())&&same(stat,await lstat(path)),'PARTY_SOURCE26_FILE_CHANGED');return {value:JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes)),bytes:bytes.length};}
- async function verify(){active();for(const f of files){await regular(f.path);must(same(f.stat,await f.fd.stat())&&same(f.stat,await lstat(f.path)),'PARTY_SOURCE26_FILE_CHANGED');}if(historicalReader)await historicalReader.verify();active();}
+ async function verify(){active();for(const f of files){await regular(f.path);must(same(f.stat,await f.fd.stat())&&same(f.stat,await lstat(f.path)),'PARTY_SOURCE26_FILE_CHANGED');}if(historicalReader)await historicalReader.verify();if(bootstrapVerify)must(await bootstrapVerify()===undefined,'PARTY_SOURCE26_BOOTSTRAP_AUTHORITY');active();}
  async function close(){closed=true;chunks.length=0;for(const m of [fingerprints,inputs,nativeIds,sourceIds,positions,codes,recordIds])m.clear();const errors=[];try{if(historicalReader)await historicalReader.close();}catch(e){errors.push(e);}for(const f of files)try{await f.fd.close();}catch(e){errors.push(e);}files.length=0;if(errors.length)throw new AggregateError(errors,'Party source26 close failed');}
  function add(input){
   const entity=input.source.entityType,key=JSON.stringify([entity,input.source.sourceKey]),position=JSON.stringify([input.source.sourceFileSha256,input.source.sheet,input.source.rowNo]);
@@ -67,10 +68,22 @@ export async function openReviewedPartySource26(options){
   const hallWarehouse=all.filter(r=>['HALL','WAREHOUSE'].includes(r.source.entityType));must(hallWarehouse.length<=100,'PARTY_SOURCE26_ATOMIC_BOUND');
   if(hallWarehouse.length){const chunk=prepareNativePartyImportChunk(hallWarehouse);must(!fingerprints.has(chunk.fingerprint),'PARTY_SOURCE26_DUPLICATE_CHUNK');chunks.push(chunk);fingerprints.add(chunk.fingerprint);}
   append(all.filter(r=>r.source.entityType==='STAFF'));must(chunks.reduce((n,c)=>n+c.rows.length,0)===ordinary.length+historicalCount,'PARTY_SOURCE26_COVERAGE');await verify();
-  return {report:Object.freeze({kind:'REVIEWED_ORDINARY_PARTY_SOURCE26_REFERENCE_ONLY_V1',ordinaryParties:ordinary.length,historicalCustomers:historicalCount,rows:inputs.size,counts:Object.freeze({...counts}),chunks:chunks.length,bootstrapAccountsCovered:false,executionAuthorized:false,newNativeUUIDs:0,noSql:true}),verify,
-   async *chunks(){await verify();for(const chunk of chunks){active();yield structuredClone(chunk);}await verify();},
+  async function authorizeRows(chunk){validatePreparedNativePartyImportChunk(chunk);for(const row of chunk.rows){const expected=inputs.get(JSON.stringify([row.entity,row.input.source.sourceKey]));must(expected&&requestHash(expected)===requestHash(row.input),'PARTY_SOURCE26_ROW_CHANGED');}await verify();}
+  const result={report:Object.freeze({kind:'REVIEWED_ORDINARY_PARTY_SOURCE26_REFERENCE_ONLY_V1',ordinaryParties:ordinary.length,historicalCustomers:historicalCount,rows:inputs.size,counts:Object.freeze({...counts}),chunks:chunks.length,bootstrapAccountsCovered:false,executionAuthorized:false,newNativeUUIDs:0,noSql:true}),verify,
+   async bootstrapPartyClosure(sourceKey){await verify();const staff=inputs.get(JSON.stringify(['STAFF',sourceKey]));must(staff,'PARTY_SOURCE26_STAFF_IDENTITY');const selected=new Map();
+    function include(input){const key=JSON.stringify([input.source.entityType,input.source.sourceKey]);if(selected.has(key))return;selected.set(key,input);for(const [field,binding]of Object.entries(input.bindings)){const entity=targets[input.source.entityType]?.[field],parent=inputs.get(JSON.stringify([entity,binding.sourceKey]));must(parent&&parent.nativeSnapshot.id===binding.nativeId,'PARTY_SOURCE26_RELATION');include(parent);}}
+    include(staff);must(selected.size<=100,'PARTY_SOURCE26_ATOMIC_BOUND');return {chunk:prepareNativePartyImportChunk([...selected.values()]),staff:{sourceKey,nativeId:staff.nativeSnapshot.id,role:staff.nativeSnapshot.role,hallId:staff.nativeSnapshot.hall_id,employmentStatus:staff.nativeSnapshot.employment_status,source:structuredClone(staff.source)}};},
+   async authorizePartyChunk(chunk){await authorizeRows(chunk);},
+   async bindBootstrapAccounts(projection){must(!bootstrapBound&&!exposed&&exact(projection,['verify','enhanceStaff'])&&Object.values(projection).every(fn=>typeof fn==='function'),'PARTY_SOURCE26_BOOTSTRAP_BINDING');await verify();const replacements=new Map();
+    for(const [key,input]of inputs){if(input.source.entityType!=='STAFF')continue;const enhanced=await projection.enhanceStaff(structuredClone(input));prepareNativePartyImportChunk([enhanced]);const unchanged=structuredClone(enhanced);must(Object.hasOwn(unchanged.source.fieldProvenance.fields,'bootstrap_accounts'),'PARTY_SOURCE26_BOOTSTRAP_BINDING');delete unchanged.source.fieldProvenance.fields.bootstrap_accounts;
+     must(requestHash(unchanged)===requestHash(input),'PARTY_SOURCE26_BOOTSTRAP_SOURCE_CHANGED');replacements.set(key,enhanced);}
+    const rebuilt=chunks.map(chunk=>prepareNativePartyImportChunk(chunk.rows.map(row=>replacements.get(JSON.stringify([row.entity,row.input.source.sourceKey]))??row.input)));
+    must(await projection.verify()===undefined,'PARTY_SOURCE26_BOOTSTRAP_AUTHORITY');for(const [key,input]of replacements)inputs.set(key,input);chunks.splice(0,chunks.length,...rebuilt);fingerprints.clear();for(const chunk of chunks)fingerprints.add(chunk.fingerprint);
+    bootstrapVerify=projection.verify;bootstrapBound=true;result.report=Object.freeze({...result.report,bootstrapAccountsCovered:true});await verify();
+   },
+   async *chunks(){exposed=true;await verify();for(const chunk of chunks){active();yield structuredClone(chunk);}await verify();},
    async authorize(input){active();const before=checkedHash(input),chunk=structuredClone(input);validatePreparedNativePartyImportChunk(chunk);must(fingerprints.has(chunk.fingerprint),'PARTY_SOURCE26_NOT_AUTHORIZED');for(const row of chunk.rows){const expected=inputs.get(JSON.stringify([row.entity,row.input.source.sourceKey]));must(expected&&requestHash(expected)===requestHash(row.input),'PARTY_SOURCE26_ROW_CHANGED');}await verify();must(checkedHash(input)===before,'PARTY_SOURCE26_INPUT_CHANGED');},
-   async openClosure(scope,context){checkedHash(scope);const s=structuredClone(scope);await verify();must(context?.group==='PARTIES'&&!context.signal?.aborted&&s.batchId===o.binding.batchId&&s.fixedSourceNamespace===o.binding.fixedSourceNamespace&&s.selectionSha256===o.binding.selectionSha256&&hash(o.authorizedPayloadHash)&&s.authorizedPayloadHash===o.authorizedPayloadHash,'PARTY_SOURCE26_CLOSURE_SCOPE');
+   async openClosure(scope,context){exposed=true;checkedHash(scope);const s=structuredClone(scope);await verify();must(context?.group==='PARTIES'&&!context.signal?.aborted&&s.batchId===o.binding.batchId&&s.fixedSourceNamespace===o.binding.fixedSourceNamespace&&s.selectionSha256===o.binding.selectionSha256&&hash(o.authorizedPayloadHash)&&s.authorizedPayloadHash===o.authorizedPayloadHash,'PARTY_SOURCE26_CLOSURE_SCOPE');
     let sessionClosed=false;const current=()=>{active();must(!sessionClosed&&!context.signal?.aborted,'PARTY_SOURCE26_CLOSED');},sourceRows=[],typedRows=[];
     for(const chunk of chunks)for(const row of chunk.rows){const original=row.headerReference?historyHeaderNativeReferenceEvidence(row.headerReference,0):{source:nativePartyStandaloneImportSource(row)};sourceRows.push(historyClosureProjectionRow26('import_source_row',original.source));
      if(original.reference)typedRows.push(historyClosureProjectionRow26('import_header_native_reference',original.reference));
@@ -78,6 +91,6 @@ export async function openReviewedPartySource26(options){
      for(const [entity,column]of [['HALL','native_hall_id'],['WAREHOUSE','native_warehouse_id'],['STAFF','native_staff_id'],['CUSTOMER','native_customer_id'],['SUPPLIER','native_supplier_id']])intent[column]=row.entity===entity?row.nativeId:null;
      typedRows.push(historyClosureProjectionRow26('native_party_import_evidence',intent),historyClosureProjectionRow26(row.entity.toLowerCase(),row.nativeSnapshot));}
     sourceRows.sort(order);typedRows.sort(order);return {async verify(){current();await verify();current();},async *sourceRows(){for(const row of sourceRows){current();yield structuredClone(row);}},async *typedRows(){for(const row of typedRows){current();yield structuredClone(row);}},async *documents(){current();},async close(){sessionClosed=true;sourceRows.length=0;typedRows.length=0;}};
-   },close};
+   },close};return result;
  }catch(error){try{await close();}catch(cleanup){throw new AggregateError([error,cleanup],'Party source26 construction and cleanup failed');}throw error;}
 }

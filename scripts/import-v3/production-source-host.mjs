@@ -259,9 +259,10 @@ export function createSourcePreflightRuntimeGate26(createPool,createIssuer,revie
  * or all11 concrete closure factories. Captures own functions without accessors. */
 export function captureNativeSourceSession26(value,binding) {
   const s=bag(value,['steps','close','authorizeStep','assertExecutionAllowed','assertAllowed','authorizeNativeCommand','preflight',
-    'openSources','closureScope','nativeProductSourceReader','bootstrap26'],'IMPORT_SOURCE_HOST_SESSION_REQUIRED');
+    'openSources','closureScope','nativeProductSourceReader','bootstrap26',...(Object.hasOwn(value??{},'now')?['now']:[])],'IMPORT_SOURCE_HOST_SESSION_REQUIRED');
   for(const key of ['steps','close','authorizeStep','assertExecutionAllowed','assertAllowed','authorizeNativeCommand','preflight'])
     must(typeof s[key]==='function','IMPORT_SOURCE_HOST_SESSION_REQUIRED');
+  if(Object.hasOwn(s,'now'))must(typeof s.now==='function','IMPORT_SOURCE_HOST_SESSION_REQUIRED');
   const factories=bag(s.openSources,HISTORY_CLOSURE_SOURCE_GROUPS,'IMPORT_SOURCE_HOST_FACTORIES_REQUIRED');
   must(Object.values(factories).every(fn=>typeof fn==='function'),'IMPORT_SOURCE_HOST_FACTORIES_REQUIRED');
   historySettlementRequestHash(s.closureScope);const scope=structuredClone(s.closureScope);
@@ -275,6 +276,17 @@ export function captureNativeSourceSession26(value,binding) {
 }
 /** Explicit exact26 host. No provider/source defaults, migrations, real49
  * bootstrap substitutes, raw-pool exposure or executable source authority. */
+/** Pure metadata/target check only; execution still requires separately pinned
+ * real source/session authority and the original independently issued client. */
+export function validateSourceHostRuntimeReview26(metadata,binding) {
+  bag(metadata,['version','decision','target','catalog','purposes','scope','independentReview','realImportExecutionAuthorized'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
+  must(metadata.version==='C_NATIVE_RUNTIME26_REVIEW_V1'&&metadata.decision==='ACCEPT_EXACT_RUNTIME26_TARGET_METADATA'
+    &&metadata.scope==='EXACT_TARGET_METADATA_ONLY'&&metadata.realImportExecutionAuthorized===false&&metadata.catalog?.format==='EXACT26_RUNTIME_CATALOG_EXPORT_V1'&&hash(metadata.catalog?.sha256)&&metadata.catalog?.patchLevel==='26_v11_document_specification_save','IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
+  const target=bag(metadata.target,['database','databaseOid','actingRole','sessionUser','serverAddress','serverPort','postmasterStart'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW'),b=binding.target;
+  must(target.database===b.database&&target.actingRole===b.role&&target.serverAddress===b.serverAddress&&target.serverPort===b.serverPort
+    &&target.postmasterStart===b.postmasterStartedAt,'IMPORT_SOURCE_HOST26_RUNTIME_TARGET');
+}
+
 export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMPORT_JOB_FILE}) {
   must(signal instanceof AbortSignal&&!signal.aborted,'IMPORT_SOURCE_HOST_ABORTED');filePath(configFile);
   const bytes=await pinned(configFile,null,1048576),job=validateExecutableSourceHostJob26(JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes)));
@@ -289,12 +301,7 @@ export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMP
   // still checked by the genuine source session and product authorizer below.
   await pinned(job.sources.reviewFile,job.sources.trustedReviewSha256,4194304);
   const metadata=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(await pinned(job.runtime26Review.reviewFile,job.runtime26Review.trustedReviewSha256,65536)));
-  bag(metadata,['version','decision','target','catalog','purposes','scope','independentReview','realImportExecutionAuthorized'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
-  must(metadata.version==='C_NATIVE_RUNTIME26_REVIEW_V1'&&metadata.decision==='ACCEPT_EXACT_RUNTIME26_TARGET_METADATA'
-    &&metadata.scope==='EXACT_TARGET_METADATA_ONLY'&&metadata.realImportExecutionAuthorized===false&&metadata.catalog?.patchLevel==='26_v7_media_color_swap','IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
-  const target=bag(metadata.target,['database','databaseOid','actingRole','sessionUser','serverAddress','serverPort','postmasterStart'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW'),b=job.binding.target;
-  must(target.database===b.database&&target.actingRole===b.role&&target.serverAddress===b.serverAddress&&target.serverPort===b.serverPort
-    &&target.postmasterStart===b.postmasterStartedAt,'IMPORT_SOURCE_HOST26_RUNTIME_TARGET');
+  validateSourceHostRuntimeReview26(metadata,job.binding);
   const independent=bag(metadata.independentReview,['path','sha256','result'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
   must(independent.result==='PASS','IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');await pinned(independent.path,independent.sha256,8388608);
   await pinned(job.providers.path,job.providers.sha256,4194304);const module=captureNativeSourceProvider26(await import(pathToFileURL(job.providers.path).href));
@@ -323,7 +330,7 @@ export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMP
     closure=await openAuthorizedHistoryClosureReader26({scope:session.closureScope,openSources:session.openSources,
       trustedSelectionSha256:job.binding.selectionSha256,trustedAuthorizedPayloadHash:job.binding.authorizedPayloadHash});
     active();const runtime=await gate.activate();active();
-    return {executor:{pool:runtime.pool,runtime26:runtime.runtime26,binding:structuredClone(job.binding),now:()=>new Date().toISOString(),bootstrap26:session.bootstrap26,
+    return {executor:{pool:runtime.pool,runtime26:runtime.runtime26,binding:structuredClone(job.binding),now:session.now??(()=>new Date().toISOString()),bootstrap26:session.bootstrap26,
       authorization:{async assertExecutionAllowed(binding){active();must(requestHash(binding)===requestHash(job.binding),'IMPORT_SOURCE_HOST_BINDING');await completed(session.assertExecutionAllowed,structuredClone(binding));active();},
         async authorizeStep(step){active();await completed(session.authorizeStep,step);if(step.kind==='PRODUCT')await product.authorize(step.payload);active();},
         async assertAllowed(actor,command){active();await completed(session.assertAllowed,actor,command);active();},
