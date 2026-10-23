@@ -11,24 +11,24 @@ export interface TransferSizeGroupCapability {
   readonly id: string; readonly reader: Pick<DictionaryBrowserReader, 'readSizeGroups'>;
   readonly onUnauthorized?: () => void;
 }
-/** Read-only display axes only. An actual native SKU is still required for every
- * enabled quantity input; a dictionary member never creates a writable cell. */
+/** Read-only complete dictionary axes. Missing-SKU member inputs are local
+ * coordinates; the dictionary never allocates or authorizes a native SKU. */
 export function useTransferSizeGroups(parent: ReadScope | undefined, capability: TransferSizeGroupCapability | undefined, requestedIds: readonly string[]) {
   const [state, setState] = useState<{ parent: ReadScope; capability: TransferSizeGroupCapability; phase: 'loading' | 'ready' | 'error'; groups: readonly DictionarySizeGroup[] } | null>(null), [attempt, setAttempt] = useState(0);
-  const wanted = [...new Set([...(capability ? [capability.id] : []), ...requestedIds])].sort(), key = wanted.join('|');
+  const wanted = [...new Set(requestedIds.length ? requestedIds : capability ? [capability.id] : [])].sort(), key = wanted.join('|');
   const cache = useRef<{ parent: ReadScope; capability: TransferSizeGroupCapability; values: Map<string, DictionarySizeGroup> } | null>(null);
   useEffect(() => {
     if (!parent?.active || !capability) return;
     const scope = new ReadScope(parent.identity, `${parent.routeInstanceId}:transfer-size-axis:${key}`, capability.id, () => {});
     let attached = true; const abort = () => { scope.dispose(); if (cache.current?.parent === parent) cache.current = null; if (attached) setState(null); }; parent.signal.addEventListener('abort', abort, { once: true });
     const found = cache.current?.parent === parent && cache.current.capability === capability ? new Map(cache.current.values) : new Map<string, DictionarySizeGroup>();
-    setState({ parent, capability, phase: 'loading', groups: [...found.values()] });
+    setState({ parent, capability, phase: 'loading', groups: [...found.values()].filter(group => wanted.includes(group.id)) });
     void (async () => {
       try {
         wanted.forEach(id => entityId('sizeGroup', id));
-        // Existing native dictionary is paged. A finite budget never becomes
-        // an implicit first-group/default/UPPER selection or endless catalogue read.
-        for (let page = 1; page <= 10 && !wanted.every(id => found.has(id)); page++) {
+        // Read the native paged dictionary until exact requested current product
+        // groups are found or its real total ends; no global-group fallback.
+        for (let page = 1; !wanted.every(id => found.has(id)); page++) {
           const parameters = Object.freeze({ search: '', page, pageSize: 100 as const });
           const result = await capability.reader.readSizeGroups({ parameters, signal: scope.signal, identity: scope.identity, routeInstanceId: scope.routeInstanceId, entityId: capability.id });
           if (!attached || !scope.active || !parent.active) return;
@@ -38,11 +38,11 @@ export function useTransferSizeGroups(parent: ReadScope | undefined, capability:
         }
         if (!attached || !scope.active || !parent.active) return;
         cache.current = { parent, capability, values: found };
-        setState({ parent, capability, phase: wanted.every(id => found.has(id)) ? 'ready' : 'error', groups: [...found.values()] });
+        setState({ parent, capability, phase: wanted.every(id => found.has(id)) ? 'ready' : 'error', groups: [...found.values()].filter(group => wanted.includes(group.id)) });
       } catch (error) {
         if (!attached || !scope.active || !parent.active) return;
         if (error instanceof HttpQueryError && ['unauthenticated', 'forbidden'].includes(error.kind)) { cache.current = null; found.clear(); if (error.kind === 'unauthenticated') capability.onUnauthorized?.(); }
-        setState({ parent, capability, phase: 'error', groups: [...found.values()] });
+        setState({ parent, capability, phase: 'error', groups: [...found.values()].filter(group => wanted.includes(group.id)) });
       }
     })();
     return () => { attached = false; parent.signal.removeEventListener('abort', abort); scope.dispose(); };

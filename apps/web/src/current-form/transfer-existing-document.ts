@@ -41,7 +41,20 @@ export class TransferExistingDocumentSession {
       if (this.owner.getSnapshot().editor?.input !== this.#inputReference) { this.#unavailable(); return; }
       if (rows.length !== ids.length || rows.some((row, index) => row.id !== ids[index]) || new Set(rows.map(row => row.id)).size !== rows.length) throw new TypeError('Incomplete actual saved transfer SKU relation.');
       const header = document.header, names = this.#original.references;
-      const draft: TransferProposal = { businessDate: input.businessDate, note: input.note, from: { id: header.fromWarehouseId, name: names.fromWarehouseName ?? '仓库名称未提供' }, to: { id: header.toWarehouseId, name: names.toWarehouseName ?? '仓库名称未提供' }, lines: document.lines.map((row, index) => { const sku = rows[index]!, product: CurrentFormProduct = { id: sku.productId, code: sku.productCode, name: sku.productName, retailPrice: null, minimumPriceAvailability: 'UNAVAILABLE' }; return { sku, product, quantity: input.quantities[row.id]!, existingLineId: row.id, sourceSnapshot: row.snapshot }; }) };
+      const products = new Map<string, CurrentFormProduct>();
+      for (const sku of rows) {
+        if (products.has(sku.productId)) continue;
+        for (let page = 1; ; page++) {
+          const found = await this.#reader.readProducts({ context: { kind: 'TRANSFER' }, search: sku.productCode, page, pageSize: 20 }, AbortSignal.any([request.signal, this.#scope.signal]));
+          if (!this.#current(sequence, request)) return;
+          const actual = found.items.find(product => product.id === sku.productId);
+          if (actual) { products.set(actual.id, actual); break; }
+          if (BigInt(page) * 20n >= found.exactTotal) break;
+        }
+      }
+      if (this.owner.getSnapshot().editor?.input !== this.#inputReference) { this.#unavailable(); return; }
+
+      const draft: TransferProposal = { businessDate: input.businessDate, note: input.note, from: { id: header.fromWarehouseId, name: names.fromWarehouseName ?? '仓库名称未提供' }, to: { id: header.toWarehouseId, name: names.toWarehouseName ?? '仓库名称未提供' }, lines: document.lines.map((row, index) => { const sku = rows[index]!, product: CurrentFormProduct = { ...(products.get(sku.productId)?.sizeGroupId ? { sizeGroupId: products.get(sku.productId)!.sizeGroupId! } : {}), id: sku.productId, code: sku.productCode, name: sku.productName, retailPrice: null, minimumPriceAvailability: 'UNAVAILABLE' }; return { sku, product, quantity: input.quantities[row.id]!, existingLineId: row.id, sourceSnapshot: row.snapshot }; }) };
       const proposal = new TransferProposalSession(this.#scope, this.#reader, error => { if (error.kind === 'unauthenticated') this.owner.expireExistingIdentity(); });
       if (!proposal.initializeFromSaved(draft, this.#initialDirty)) { proposal.dispose(); this.#unavailable(); return; }
       let previous = proposal.getSnapshot();

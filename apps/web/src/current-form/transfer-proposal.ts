@@ -1,3 +1,4 @@
+import type { DictionaryListQuery, DictionarySizeGroup } from '../../../../packages/application/src/dictionary-read-ports.ts';
 import { TRANSFER_PREPARE_MAX_LINES, TRANSFER_PREPARE_MAX_NOTE_LENGTH } from '../../../../packages/application/src/transfer-payload-budget.ts';
 import type { CurrentFormPage, CurrentFormProduct, CurrentFormSku, CurrentTransferWarehouse } from '../../../../packages/application/src/current-form-ports.ts';
 import { businessDate, quantity } from '../../../../packages/domain/src/values.ts';
@@ -9,7 +10,7 @@ import { DocumentScanController } from '../components/document-scan-controller.t
 import type { TransferDraftDto } from '../transfers/commands/contracts.ts';
 
 export type TransferProposalReader = Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readTransferWarehouses' | 'readProducts' | 'readProductSkus'>
-  & Partial<Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readBarcode'>>;
+  & Partial<Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readBarcode' | 'readSizeGroups'>>;
 export type TransferProposalPicker = 'FROM' | 'TO' | 'PRODUCT' | 'SKU';
 type Candidate = CurrentTransferWarehouse | CurrentFormProduct | CurrentFormSku;
 export interface TransferProposalLine { readonly sku: CurrentFormSku; readonly quantity: string; readonly product?: CurrentFormProduct; readonly existingLineId?: string; readonly sourceSnapshot?: TransferDraftDto['lines'][number]['snapshot'] }
@@ -21,10 +22,11 @@ export interface TransferPendingEntry {
   readonly query: string; readonly product: CurrentFormProduct | null;
   readonly color: { readonly id: string; readonly name: string } | null; readonly fit: { readonly id: string; readonly name: string } | null;
   readonly skus: readonly CurrentFormSku[]; readonly page: number; readonly exactTotal: bigint | null;
+  readonly sizeQuantities: Readonly<Record<string, string>>;
   readonly phase: 'idle' | 'loading' | 'ready' | 'error'; readonly quantities: Readonly<Record<string, string>>;
   readonly userEdited: boolean; readonly unmapped: readonly { readonly skuId: string; readonly sizeName: string; readonly quantity: string }[];
 }
-const emptyPending = (): TransferPendingEntry => ({ query: '', product: null, color: null, fit: null, skus: [], page: 1, exactTotal: null, phase: 'idle', quantities: {}, userEdited: false, unmapped: [] });
+const emptyPending = (): TransferPendingEntry => ({ query: '', product: null, color: null, fit: null, skus: [], page: 1, exactTotal: null, phase: 'idle', quantities: {}, sizeQuantities: {}, userEdited: false, unmapped: [] });
 export interface TransferProposal {
   readonly businessDate: string; readonly note: string;
   readonly from: TransferWarehouseSelection | null; readonly to: TransferWarehouseSelection | null;
@@ -33,6 +35,7 @@ export interface TransferProposal {
 export interface TransferProposalSnapshot {
   readonly draft: TransferProposal; readonly dirty: boolean; readonly disposed: boolean;
   readonly errors: readonly string[]; readonly notice: string | null;
+  readonly matrixQuantities: Readonly<Record<string, { readonly rowKey: string; readonly product: CurrentFormProduct; readonly colorId: string; readonly fitId: string; readonly sizeId: string; readonly sizeName: string; readonly quantity: string }>>;
   readonly pending: TransferPendingEntry;
   readonly replacement: { readonly key: string; readonly originals: readonly TransferProposalLine[]; readonly previousPending: TransferPendingEntry } | null;
   readonly appendRequest: { readonly kind: 'entry' | 'replace'; readonly quantity: string } | null;
@@ -57,7 +60,7 @@ export class TransferProposalSession {
   readonly #savedLines = new Map<string, { readonly skuId: string; readonly snapshot: TransferDraftDto['lines'][number]['snapshot'] }>();
   #skuRead: AbortController | null = null; #skuSequence = 0;
   #appendBasis: { draft: TransferProposal; pending: TransferPendingEntry; replacement: TransferProposalSnapshot['replacement'] } | null = null;
-  #state: TransferProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, picker: null, entry: null, pending: emptyPending(), replacement: null, appendRequest: null });
+  #state: TransferProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, picker: null, entry: null, matrixQuantities: {}, pending: emptyPending(), replacement: null, appendRequest: null });
   constructor(scope: ReadScope, reader: TransferProposalReader, onAccessFailure?: (error: HttpQueryError) => void) {
     this.#scope = scope; this.#reader = reader; this.#onAccessFailure = onAccessFailure;
     scope.signal.addEventListener('abort', this.dispose, { once: true });
@@ -65,6 +68,11 @@ export class TransferProposalSession {
   }
   readonly getSnapshot = (): TransferProposalSnapshot => this.#state;
   readonly subscribe = (listener: () => void): (() => void) => { this.#listeners.add(listener); return () => { this.#listeners.delete(listener); }; };
+  get canReadSizeGroups(): boolean { return !!this.#reader.readSizeGroups; }
+  readSizeGroups(parameters: DictionaryListQuery, signal: AbortSignal) {
+    if (!this.#reader.readSizeGroups) throw new TypeError('Current product group read is unavailable.');
+    return this.#reader.readSizeGroups(parameters, signal);
+  }
   matchesIdentity(scope: ReadScope): boolean {
     const owner = this.#scope.identity, target = scope.identity;
     return !this.#state.disposed && this.#scope.active && scope.active && owner.accountId === target.accountId
@@ -84,7 +92,7 @@ export class TransferProposalSession {
     this.#seeded = true; this.#revision++; this.#publish({ draft, dirty, errors: [], notice: null }); return true;
   }
   markUnchanged(reference: TransferProposal): boolean {
-    if (!this.#seeded || this.#state.disposed || this.#state.draft !== reference || this.#state.replacement || this.#state.pending.product || this.#state.pending.query.trim()) return false;
+    if (!this.#seeded || this.#state.disposed || this.#state.draft !== reference || this.#state.replacement || this.#state.pending.product || this.#state.pending.query.trim() || Object.values(this.#state.matrixQuantities).some(cell => cell.quantity !== '')) return false;
     this.#publish({ dirty: false, notice: null }); return true;
   }
   #publish(patch: Partial<TransferProposalSnapshot>): void {
@@ -111,13 +119,35 @@ export class TransferProposalSession {
     if (this.#state.draft.lines.length >= TRANSFER_PREPARE_MAX_LINES) { this.#publish({ notice: '本草稿最多选择 200 个实际规格。' }); return false; }
     return this.#edit({ ...this.#state.draft, lines: [...this.#state.draft.lines, { sku, quantity: value, ...(this.#state.entry?.product.id === sku.productId ? { product: this.#state.entry.product } : {}) }] });
   }
+  /** Validated dictionary coordinates stay local; native lines always retain
+   * real SKU IDs. The approved formal preparation must resolve new specs. */
+  setMatrixSizeQuantity(rowKey: string, group: DictionarySizeGroup, sizeId: string, raw: string): boolean {
+    const anchor = this.#state.draft.lines.find(row => transferProposalRowKey(row.sku) === rowKey), size = group.sizes.find(size => size.id === sizeId);
+    if (this.#state.disposed || !anchor?.product?.sizeGroupId || anchor.product.sizeGroupId !== group.id || !size) return false;
+    const known = [...this.#state.draft.lines.map(row => row.sku), ...(this.#state.entry?.skus ?? [])].find(sku => transferProposalRowKey(sku) === rowKey && sku.sizeId === sizeId);
+    if (known) return this.setMatrixQuantity(known.id, raw);
+    const key = JSON.stringify([rowKey, sizeId]), values = { ...this.#state.matrixQuantities };
+    if (raw === '') delete values[key];
+    else values[key] = { rowKey, product: anchor.product, colorId: anchor.sku.colorId, fitId: anchor.sku.fitId, sizeId, sizeName: size.name, quantity: raw };
+    this.#edit({ ...this.#state.draft }); this.#publish({ matrixQuantities: values }); return true;
+  }
+  setPendingSizeQuantity(group: DictionarySizeGroup, sizeId: string, raw: string): boolean {
+    const pending = this.#state.pending;
+    if (this.#state.disposed || !pending.product?.sizeGroupId || pending.product.sizeGroupId !== group.id || !pending.color || !pending.fit || !group.sizes.some(size => size.id === sizeId)) return false;
+    const sku = pending.skus.find(sku => sku.colorId === pending.color!.id && sku.fitId === pending.fit!.id && sku.sizeId === sizeId);
+    if (sku) return this.setPendingQuantity(sku.id, raw);
+    this.#pending({ ...pending, sizeQuantities: { ...pending.sizeQuantities, [sizeId]: raw }, userEdited: true }); return true;
+  }
   removeLine(skuId: string): boolean {
-    if (!this.#state.draft.lines.some(row => row.sku.id === skuId)) return false;
-    return this.#edit({ ...this.#state.draft, lines: this.#state.draft.lines.filter(row => row.sku.id !== skuId) });
+    const original = this.#state.draft.lines.find(row => row.sku.id === skuId); if (!original) return false;
+    const key = transferProposalRowKey(original.sku), lines = this.#state.draft.lines.filter(row => row.sku.id !== skuId), ok = this.#edit({ ...this.#state.draft, lines });
+    if (ok && !lines.some(row => transferProposalRowKey(row.sku) === key)) this.#publish({ matrixQuantities: Object.fromEntries(Object.entries(this.#state.matrixQuantities).filter(([, cell]) => cell.rowKey !== key)) });
+    return ok;
   }
   removeGroup(key: string): boolean {
     if (!this.#state.draft.lines.some(row => transferProposalRowKey(row.sku) === key)) return false;
-    return this.#edit({ ...this.#state.draft, lines: this.#state.draft.lines.filter(row => transferProposalRowKey(row.sku) !== key) });
+    const ok = this.#edit({ ...this.#state.draft, lines: this.#state.draft.lines.filter(row => transferProposalRowKey(row.sku) !== key) });
+    if (ok) this.#publish({ matrixQuantities: Object.fromEntries(Object.entries(this.#state.matrixQuantities).filter(([, cell]) => cell.rowKey !== key)) }); return ok;
   }
   #cancelSkuRead(): void { this.#skuSequence++; this.#skuRead?.abort(); this.#skuRead = null; }
   #pending(pending: TransferPendingEntry): void {
@@ -149,17 +179,23 @@ export class TransferProposalSession {
     try {
       const result = await this.#reader.readProductSkus({ context: { kind: 'TRANSFER' }, productId: product.id, page, pageSize: 20 }, signal);
       if (signal.aborted || this.#state.disposed || sequence !== this.#skuSequence || this.#state.pending.product?.id !== product.id) return;
+      const all = [...result.items];
+      if (!product.sizeGroupId) throw new Error('CURRENT_PRODUCT_SIZE_GROUP_MISSING');
+      for (let nextPage = 1; BigInt(nextPage - 1) * 20n < result.exactTotal; nextPage++) {
+        if (nextPage !== page) all.push(...(await this.#reader.readProductSkus({ context: { kind: 'TRANSFER' }, productId: product.id, page: nextPage, pageSize: 20 }, signal)).items);
+        if (signal.aborted || this.#state.disposed || sequence !== this.#skuSequence || this.#state.pending.product?.id !== product.id) return;
+      }
+      if (all.some(sku => sku.productId !== product.id || sku.sizeGroupId !== product.sizeGroupId)) throw new Error('CURRENT_PRODUCT_SIZE_GROUP_CONFLICT');
       const now = this.#state.pending, known = new Map<string, CurrentFormSku>();
       for (const sku of now.skus) if (now.quantities[sku.id] || this.#state.draft.lines.some(row => row.sku.id === sku.id)) known.set(sku.id, sku);
-      for (const sku of result.items) { if (sku.productId !== product.id) throw new TypeError('Foreign product SKU.'); known.set(sku.id, sku); }
-      if (known.size > TRANSFER_PREPARE_MAX_LINES) throw new TypeError('Pending SKU budget exceeded.');
+      for (const sku of all) { if (sku.productId !== product.id) throw new TypeError('Foreign product SKU.'); known.set(sku.id, sku); }
       for (const sku of now.skus) if (known.size < TRANSFER_PREPARE_MAX_LINES) known.set(sku.id, sku);
       const next = { ...now, phase: 'ready' as const, skus: [...known.values()], page, exactTotal: result.exactTotal };
       this.#publish({ pending: this.#mapReplacement(next) });
     } catch (error) {
       if (signal.aborted || this.#state.disposed || sequence !== this.#skuSequence) return;
       if (error instanceof HttpQueryError && ['unauthenticated', 'forbidden'].includes(error.kind)) { this.#scope.dispose(); try { this.#onAccessFailure?.(error); } catch { /* cleared first */ } return; }
-      this.#publish({ pending: { ...this.#state.pending, phase: 'error' }, notice: '实际规格未能读取，输入仍保留，可明确重试。' });
+      this.#publish({ pending: { ...this.#state.pending, phase: 'error' }, notice: error instanceof Error && error.message.startsWith('CURRENT_PRODUCT_SIZE_GROUP_') ? '商品实际所属尺码组缺失或不一致，未使用其他组；输入已保留。' : '实际规格未能读取，输入仍保留，可明确重试。' });
     } finally { if (this.#skuRead === request) this.#skuRead = null; }
   }
   #mapReplacement(pending: TransferPendingEntry): TransferPendingEntry {
@@ -178,9 +214,9 @@ export class TransferProposalSession {
     if (this.#state.disposed || !pending.product || pending.phase !== 'ready') return false;
     const sku = pending.skus.find(sku => kind === 'color' ? sku.colorId === id : sku.colorId === pending.color?.id && sku.fitId === id);
     if (!sku) return false;
-    if (Object.values(pending.quantities).some(raw => raw !== '') && pending.userEdited) { this.#publish({ notice: '已有尚未完成的数量输入，请先完成、清除或取消当前改选。' }); return false; }
-    const next = kind === 'color' ? { ...pending, color: { id: sku.colorId, name: sku.colorName }, fit: null, quantities: {}, userEdited: false }
-      : { ...pending, fit: { id: sku.fitId, name: sku.fitName }, quantities: {}, userEdited: false };
+    if ([...Object.values(pending.quantities), ...Object.values(pending.sizeQuantities)].some(raw => raw !== '') && pending.userEdited) { this.#publish({ notice: '已有尚未完成的数量输入，请先完成、清除或取消当前改选。' }); return false; }
+    const next = kind === 'color' ? { ...pending, color: { id: sku.colorId, name: sku.colorName }, fit: null, quantities: {}, sizeQuantities: {}, userEdited: false }
+      : { ...pending, fit: { id: sku.fitId, name: sku.fitName }, quantities: {}, sizeQuantities: {}, userEdited: false };
     this.#pending(this.#mapReplacement(next)); this.closePicker(); return true;
   }
   setPendingQuantity(skuId: string, raw: string): boolean {
@@ -192,6 +228,7 @@ export class TransferProposalSession {
     if (this.#state.disposed || this.#state.replacement) return false;
     const originals = this.#state.draft.lines.filter(row => transferProposalRowKey(row.sku) === key), first = originals[0];
     if (!first) return false;
+    if (Object.values(this.#state.matrixQuantities).some(cell => cell.rowKey === key && cell.quantity !== '' && cell.quantity !== '0')) { this.#publish({ notice: '本行还有尚未解析的新尺码数量，请先保存或清除该输入后再改选；原输入已保留。' }); return false; }
     this.closePicker(); this.#cancelSkuRead();
     const product: CurrentFormProduct = first.product ?? { id: first.sku.productId, code: first.sku.productCode, name: first.sku.productName, retailPrice: null, minimumPriceAvailability: 'UNAVAILABLE' };
     const previousPending = this.#state.pending;
@@ -207,6 +244,7 @@ export class TransferProposalSession {
   commitPending(confirmAppend = false): boolean {
     const { pending, replacement, draft } = this.#state;
     if (this.#state.disposed || !pending.product || pending.query !== pending.product.code || !pending.color || !pending.fit || pending.phase !== 'ready' || pending.exactTotal === null) return false;
+    if (Object.values(pending.sizeQuantities).some(raw => raw !== '' && raw !== '0')) { this.#publish({ notice: '组内新尺码尚无真实 SKU，数量草稿已保留；需由正式保存准备解析规格后才能保存。' }); return false; }
     if (replacement && replacement.originals.some(original => !draft.lines.includes(original))) { this.#publish({ notice: '原行数量已变化，请取消后重新改选。' }); return false; }
     if (replacement && pending.unmapped.length) { this.#publish({ notice: '原规格数量尚未对应到唯一实际规格；请继续读取其他页、调整原行或更换规格。' }); return false; }
     const changes: { sku: CurrentFormSku; quantity: bigint }[] = [];
@@ -313,6 +351,7 @@ export class TransferProposalSession {
   }
   /** Explicit local validation/handoff only. The caller receives proposals, not authority. */
   validate(): TransferProposal | null {
+    if (Object.values(this.#state.matrixQuantities).some(cell => cell.quantity !== '' && cell.quantity !== '0')) { this.#publish({ notice: '组内新尺码尚无真实 SKU，矩阵数量草稿已保留；未发送保存。' }); return null; }
     if (this.#state.disposed) return null;
     if (this.#state.replacement) { this.#publish({ errors: ['请先确认或取消当前行改选。'] }); return null; }
     if (this.#state.pending.product || this.#state.pending.query.trim() || Object.values(this.#state.pending.quantities).some(raw => raw !== '')) { this.#publish({ errors: ['请完成或清除底部尚未完成的录入。'] }); return null; }
@@ -331,13 +370,13 @@ export class TransferProposalSession {
   }
   reset(discardConfirmed = false): boolean {
     if (this.#state.disposed || this.#state.dirty && !discardConfirmed) return false;
-    this.#savedLines.clear(); this.#cancelRead(); this.#cancelSkuRead(); this.#appendBasis = null; this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, entry: null, pending: emptyPending(), replacement: null, appendRequest: null, errors: [], notice: null }); return true;
+    this.#savedLines.clear(); this.#cancelRead(); this.#cancelSkuRead(); this.#appendBasis = null; this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, entry: null, matrixQuantities: {}, pending: emptyPending(), replacement: null, appendRequest: null, errors: [], notice: null }); return true;
   }
   cancel(discardConfirmed = false): boolean { if (!this.reset(discardConfirmed)) return false; this.dispose(); return true; }
   /** Route/session owner must dispose on exit; identity invalidation clears all data immediately. */
   readonly dispose = (): void => {
     if (this.#state.disposed) return;
     this.#savedLines.clear(); this.#cancelRead(); this.#cancelSkuRead(); this.#appendBasis = null; this.#scope.signal.removeEventListener('abort', this.dispose);
-    this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, entry: null, pending: emptyPending(), replacement: null, appendRequest: null, errors: [], notice: null }); this.#listeners.clear();
+    this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, entry: null, matrixQuantities: {}, pending: emptyPending(), replacement: null, appendRequest: null, errors: [], notice: null }); this.#listeners.clear();
   };
 }

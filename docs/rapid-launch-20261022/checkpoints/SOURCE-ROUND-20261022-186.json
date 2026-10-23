@@ -1,0 +1,72 @@
+{
+  "atUtc": "2026-10-23T14:08:18.631684+00:00",
+  "parent": "6932c59606893754a85ee8b68d47dac8cc0acdd3",
+  "taskId": "F02_T02_ALL_EFFECTIVE_OWN_GROUP_MATRIX_INPUT",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/transfer-proposal.ts",
+      "owner": "F1",
+      "bytes": 34637,
+      "sha256": "08cd9ab4c9054a5661a1a664b73fe7fd3e36a8ace474925ace5f749177ca1a9a"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+      "owner": "F1",
+      "bytes": 33837,
+      "sha256": "3b5f44d6fde2729809fa841b3a011825c82a049199edd635cc4cba746a504011"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-existing-document.ts",
+      "owner": "F1",
+      "bytes": 13250,
+      "sha256": "32ca43acee9f79caf0dba68f7cd24f911fb3a537115e86d582b75847de74dc24"
+    },
+    {
+      "path": "apps/web/src/transfers/document-presentation.tsx",
+      "owner": "F1",
+      "bytes": 13511,
+      "sha256": "34c043c2b48572ccdcbb7110cb6531be9f2b75e4b8f1f084e414081bae59ac6e"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-92/DELIVERY.json",
+  "ownerReceiptSha256": "20dfdb3b39f675c4e045da172f81a0df3e4e104bb5837d2ed900be9caa55ddaa",
+  "typeFollowup": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-92/TYPE-FOLLOWUP.json",
+    "bytes": 524,
+    "sha256": "0b655ddbd93fae51acdbf98de7e76626d266f56309303cb3cda7ef40a64631d6",
+    "receipt": {
+      "status": "PASS_ONLY_PREVIOUSLY_FAILED_STRICT_CLOSURE_AFTER_D1_FIX",
+      "exitCode": 0,
+      "log": "types-3.log",
+      "scope": "Same original exact4 entry closure/include[]; no changes to frontend bytes or excluded files since frozen DELIVERY",
+      "trigger": "D1 original owner confirmed ID generator generic K and SAVE narrowing corrected",
+      "reused": [
+        "after-2 DOM",
+        "cleanup-1 new cleanup branches",
+        "existing-2 actual saved model"
+      ],
+      "notRepeated": "No previous passing DOM/wholeapp/PG/Chrome repeated"
+    }
+  },
+  "scope": [
+    "Complete actual product-group dictionary member matrix cells including no-SKU local coords in filled/pending/unreviewed",
+    "No initial-group config required once actual product metadata exists; no unrelated/no-size group leakage",
+    "All native SKU pages contribute color/fit candidates, no selected-page truncation",
+    "Saved existing model reads current product metadata independently of SKU; original native IDs/snapshots/quantities retained",
+    "Local matrix and pending coordinate quantities independent; clearing/removing exact row owns exact coordinates; summary includes local entered quantity",
+    "No fake SKU/native line; missing-spec SAVE remains explicit unresolved until fixed approved contract consumer"
+  ],
+  "checksAdopted": {
+    "affectedDom": "after-2 EXIT0 (new/seeded unreviewed filled3+2,XL4/12/5, unrelated group hidden, no initial config fallback)",
+    "cleanupOnly": "cleanup-1 EXIT0 after new cleanup/summary delta; original larger cases not replayed",
+    "actualSavedModel": "existing-2 EXIT0 actual TransferCommandForm->workspace->existing model->proposal, metadata1 and no write/key/prepare",
+    "typeClosure": "types-2 EXIT2 only external D1 in-flight native-sales-preparation.ts258/278/291 EntityId union; sent original owner, no excludes/mutations; final green pending owner fix"
+  },
+  "qualification": "SOURCE_FIXED_ONLY; owner original failed shared strict types-2 historical, new types-3 pass without any exact4 source change. No new Chrome/real SAVE/PG/wholeT02 pass; missing-SKU save consumer depends on D1 current approved narrowed v11 implementation. Unified184 remains separate immutable earlier preview source.",
+  "remaining": [
+    "Approved revised-v11 actual spec SAVE not connected until D1 fixed DTO/response is delivered",
+    "No actual latest Chrome, integrated build, PG/save/approve or complete T02 migration/wholepage acceptance",
+    "Pending product with no color/fit read capability cannot invent them; retains unavailable input state",
+    "Source-page/discard/drawers/output/keyboard actual comparison remains on original QF route"
+  ]
+}
