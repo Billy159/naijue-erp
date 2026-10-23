@@ -1,0 +1,45 @@
+{
+  "atUtc": "2026-10-23T09:36:01.674427+00:00",
+  "parent": "4c6b75978cda2e64ae8f7b94f2a73193a706234c",
+  "taskId": "F03_SPEC03_CURRENT_OUTPUT_ACCESS_AND_ROUTE_RECOVERY",
+  "files": [
+    {
+      "path": "apps/web/src/application/controller.ts",
+      "owner": "F1",
+      "bytes": 52361,
+      "sha256": "b47ad5112f612b01f9ca10d42d76cd4fa41c94688481cd2dcb5ac86354266ecb",
+      "beforeSha256": "1ef1f099e116b62c07d2d2f6f92608858b19bfcf9ff8953d1b40666a1e32ea3a"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory-output.tsx",
+      "owner": "F2",
+      "bytes": 7184,
+      "sha256": "f81000b02e191e218faec129b3e5dc67a80c4d3d653a08190890ada804af4836",
+      "beforeSha256": "a1276af47734f760ef90eaa7135e4947d229bf6be19c8db7f790963f70865b58"
+    }
+  ],
+  "scope": "Current output access failure notifies original owner before finally disposing old scope; same-ready-route fastpath requires active current scope. Existing generation/abort/old403+401 protection and all ordinary output data/UI unchanged.",
+  "checksAdopted": {
+    "F1": "Real ApplicationController syntheticauth probe RED deadready→GREEN4 branch controls; targeted strict controller graph0. No business IO.",
+    "F2": "Real outputleaf/ReadScope syntheticDOM RED activefalse403→GREEN export/print403,current401,freshscope,oldcancelled403; affected strict0.",
+    "earlierValidEvidence": "C153 QF2 complete103/208/503/cancel and unchanged sameconsumer UI not rerun."
+  },
+  "ownerReceipts": [
+    {
+      "path": "K/F1/chunk79/DELIVERY.json",
+      "sha256": "a6e62afa3fb2a83b2279a658313d36dac07aecdab499a817a4ed02def539e465"
+    },
+    {
+      "path": "K/F2/SPEC-03-output-access-v1/RESULT.json",
+      "sha256": "9fcc0282e12a2079f4f1677857b6b293c271347f252dad2bf0b45e87a0fdf2a4"
+    }
+  ],
+  "notTested": [
+    "Actual combined browser/HTTP403 recovery, genuine session401 logout, realPG/production build/stage/deploy/performance."
+  ],
+  "preservedTestSetupFailures": [
+    "F1 initialK ESM resolve failure",
+    "F1 inherited wholeproject768MiB OOM and three unrelatedowner diagnostics; finaltargetedstrict passed, no wholeproject claim."
+  ],
+  "next": "Original QF commoncontroller1 source and QF2 actualinventoryleaf use two-line scope; fixed completecandidate after source pin, sharedChrome serial after current QF module, no old output repetition."
+}

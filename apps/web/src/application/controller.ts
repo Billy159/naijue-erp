@@ -232,7 +232,7 @@ export class ApplicationController {
   async #navigate(route: ApplicationRoute | null, trip?: ProductInventoryTrip): Promise<boolean> {
     if (this.#disposed || !this.authentication.getSnapshot().principal || this.authentication.busy) return false;
     if (route !== null && !this.routes.includes(route)) return false;
-    if (route === this.#state.route && this.#state.phase === 'ready') return true;
+    if (route === this.#state.route && this.#state.phase === 'ready' && this.#state.scope?.active) return true;
     // An already-dirty injected owner must be able to enter its own recovery
     // page after first authentication. It still blocks every other destination.
     const enterInjectedPayment = route === 'payment-settings' && this.#state.phase === 'home' && !this.#externalPaymentPending

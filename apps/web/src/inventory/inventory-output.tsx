@@ -46,7 +46,10 @@ export function InventoryOutputContent(props: InventoryOutputContentProps) {
       if (!current()) return;
       setPreview(null); setReady(false);
       if (failure instanceof HttpQueryError && (failure.kind === 'unauthenticated' || failure.kind === 'forbidden')) {
-        props.scope.dispose(); props.capability.onAccessFailure(failure); return;
+        // The route owner must observe the current active scope before release.
+        try { props.capability.onAccessFailure(failure); }
+        finally { props.scope.dispose(); }
+        return;
       }
       setError(true);
     } finally {
