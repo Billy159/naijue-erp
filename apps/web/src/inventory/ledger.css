@@ -4,3 +4,8 @@
 .inventory-ledger-content table{min-width:660px}
 .inventory-ledger-pagination{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin-top:16px}
 .inventory-ledger-empty{padding:32px 8px;text-align:center;color:var(--ca-ink-2)}
+
+/* Original gold.js ledger-identity / inventory-ledger.css6-7.
+ * Quantity is the original selected cell + readReference context, never a page sum. */
+.inventory-ledger .ledger-identity{font-size:13px;line-height:20px}
+.inventory-ledger .ledger-identity p{margin:3px 0 0;color:var(--ca-ink-2)}

@@ -76,6 +76,12 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, ledg
   const settingsPosition = settingsPopup.position;
   const success = snapshot.success;
   const result = success?.data;
+  // This is the selected, already executed native cell, not a balance reconstructed
+  // from a ledger page. A different readReference cannot relabel the old target.
+  const ledgerProduct=result?.readReference===ledgerTarget?.readReference?result?.products.find(row=>row.id===ledgerTarget?.productId):undefined;
+  const ledgerGroup=ledgerProduct?.colorFits.find(row=>row.color.id===ledgerTarget?.color.id&&row.fit.id===ledgerTarget?.fit.id);
+  const ledgerCell=ledgerGroup?.rows.find(row=>row.warehouse.id===ledgerTarget?.warehouse.id)?.cells[ledgerTarget?.size.id??''];
+  const ledgerQuantity=ledgerCell?.state==='known'&&ledgerCell.skuId===ledgerTarget?.skuId?ledgerCell.quantity:null;
   const busy = snapshot.phase === 'loading';
   const displayedPageSize = success?.parameters.pageSize ?? initialPageSize;
   const requestedPageSize = snapshot.request?.parameters.pageSize;
@@ -117,7 +123,7 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, ledg
       {result?.products.length?<InventoryMatrix data={result} settings={settings} collapsedProducts={collapsedProducts} collapsedColors={collapsedColors} toggleProduct={id=>setCollapsedProducts(value=>toggle(value,id))} toggleColor={id=>setCollapsedColors(value=>toggle(value,id))} actions={{...actions,...(ledger?{onOpenCell:(target:InventoryCellTarget)=>{if(scope.active)setLedgerTarget(target);}}:{}),onViewProduct:openProduct}}/>:!busy&&<div className="iw-empty-host"><Empty description={<div className="inv-empty-copy"><strong>{emptyTitle}</strong><span>{emptyDescription}</span></div>}/></div>}
     </div>
     <InventoryPagination scope={scope} page={result?.page??1} pageSize={displayedPageSize} total={result?.exactTotalProducts??null} busy={busy} onPage={page=>{if(success)run({...success.parameters,page});}} onPageSize={setSize}/>
-    {ledger&&ledgerTarget&&<InventoryLedgerDrawer key={`${ledgerTarget.warehouse.id}:${ledgerTarget.skuId}`} parent={scope} target={ledgerTarget} capability={ledger} close={()=>setLedgerTarget(null)}/>}
+    {ledger&&ledgerTarget&&<InventoryLedgerDrawer key={`${ledgerTarget.warehouse.id}:${ledgerTarget.skuId}`} parent={scope} target={ledgerTarget} currentQuantity={ledgerQuantity} capability={ledger} close={()=>setLedgerTarget(null)}/>}
     {product&&<ProductDrawerHost key={`${product.id}:${productSequence.current}`} parentScope={scope} product={product} reader={productReader} close={closeProduct}/>}
     {scopeOpen&&success&&<StandardOverlay className="iw-scope-dialog" title="已执行查询范围" label="本次查询使用的条件" closeLabel="关闭查询范围" close={()=>{setScopeOpen(false);scopeTrigger.current?.focus();}} width={480}><ul>{scopeLines(success.parameters.filter).map(line=><li key={line}>{line}</li>)}</ul><p className="muted">每页 {success.parameters.pageSize} 款 · 第 {success.parameters.page} 页。当前编辑条件不改变此结果。</p></StandardOverlay>}
   </div>;

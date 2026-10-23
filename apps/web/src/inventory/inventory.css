@@ -117,6 +117,24 @@
  * matrix-experiments.css and final inventory-refinement.css. Root/widget aliases
  * only; no source declarations or other route CSS changed. */
 
+/* The native carriers also consume ui-tokens.css49-57 aliases and styles.css41,
+ * 44-52 button/actions rules. Keep them local to this workbench. */
+.inventory-source-workbench{
+ --primary:var(--ca-link);--primary-fill:var(--ca-primary-fill);--primary-hover:var(--ca-primary-hover);--primary-light:var(--ca-primary-soft);
+ --bg:var(--ca-bg);--surface:var(--ca-surface);--border:var(--ca-line);
+ --text:var(--ca-ink);--secondary:var(--ca-ink-2);--disabled:var(--ca-disabled-ink);--selected:var(--ca-table-selected);--hover:var(--ca-table-row-hover);--subtle:var(--ca-surface-subtle);
+ --warning:var(--ca-warning);--error:var(--ca-critical);--error-light:var(--ca-critical-soft);
+ --ui-thumb-bg:var(--ca-surface-muted);--ui-neutral-tag-bg:var(--ca-neutral-tag-bg);
+}
+.inventory-source-workbench .actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.inventory-source-workbench .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control);height:var(--ui-control);padding:0 11px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font);font-weight:500;white-space:nowrap}
+.inventory-source-workbench .btn:hover{background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
+.inventory-source-workbench .btn.primary{background:var(--ca-primary-fill);color:var(--ca-on-primary);border-color:var(--ca-primary-fill)}
+.inventory-source-workbench .btn.primary:hover{background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}
+.inventory-source-workbench .btn.primary:active{background:var(--ca-primary-active);border-color:var(--ca-primary-active)}
+.inventory-source-workbench .btn.ghost{background:transparent;border-color:transparent;color:var(--ca-button-text)}
+.inventory-source-workbench .btn.ghost:hover{background:var(--ca-primary-hover-soft);color:var(--ca-button-text-hover)}
+.inventory-source-workbench .btn:disabled{background:var(--ca-control-disabled-bg);color:var(--ca-control-disabled-text);border-color:var(--ca-control-disabled-border)}
 .inventory-source-workbench .main,.inventory-source-workbench main{background:var(--ca-surface)}
 .inventory-source-workbench .btn.primary,.inventory-source-workbench .iw-pop .btn.primary,.inventory-source-workbench #gold-drawer .btn.primary{background:var(--primary-fill);color:white;border-color:var(--primary-fill)}
 .inventory-source-workbench .btn.primary:hover,.inventory-source-workbench .iw-pop .btn.primary:hover{background:var(--primary-hover)}

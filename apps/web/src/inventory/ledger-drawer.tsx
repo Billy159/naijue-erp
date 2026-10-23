@@ -10,7 +10,7 @@ import { createInventoryLedgerQuery, ledgerSourceLabel } from './ledger-http-rea
 import { formatQuantity } from './model.ts';
 import './ledger.css';
 
-export function InventoryLedgerDrawer(props: { readonly parent: ReadScope; readonly target: InventoryCellTarget; readonly capability: InventoryLedgerCapability; readonly close: () => void }) {
+export function InventoryLedgerDrawer(props: { readonly parent: ReadScope; readonly target: InventoryCellTarget; readonly currentQuantity?:string|null; readonly capability: InventoryLedgerCapability; readonly close: () => void }) {
   const [ready, setReady] = useState(false), sequence = useRef(0);
   const [scope, setScope] = useState<ReadScope | null>(null);
   useEffect(() => {
@@ -22,7 +22,7 @@ export function InventoryLedgerDrawer(props: { readonly parent: ReadScope; reado
   }, [props.parent, props.target.skuId, props.target.warehouse.id]);
   if (!props.parent.active) return null;
   return <StandardOverlay kind="drawer" width={880} title="库存流水" label="库存流水" closeLabel="关闭库存流水" className="inventory-ledger" close={props.close} onReady={() => setReady(true)}>
-    <p className="inventory-ledger-target">{props.target.productLabel} · {props.target.color.label} · {props.target.fit.label} · {props.target.size.label} · {props.target.warehouse.label}</p>
+    <div className="inventory-ledger-target ledger-identity"><strong>{props.target.productLabel}</strong><p>{props.target.color.label} · {props.target.fit.label} · {props.target.size.label} · {props.target.warehouse.label} · 当前库存 {props.currentQuantity==null?'未提供':formatQuantity(props.currentQuantity)}</p></div>
     {ready && scope?.active ? <LedgerContent key={scope.routeInstanceId} scope={scope} target={props.target} capability={props.capability} /> : <p role="status">正在准备库存流水…</p>}
   </StandardOverlay>;
 }
@@ -34,7 +34,7 @@ function LedgerContent(props: { readonly scope: ReadScope; readonly target: Inve
     setQuery(next); let attached = true;
     queueMicrotask(() => {
       if (!attached || !props.scope.active) return;
-      try { void next.run(parseInventoryLedgerQuery({ warehouseId: props.target.warehouse.id, skuId: props.target.skuId, pageSize: 50, after: null })); }
+      try { void next.run(parseInventoryLedgerQuery({ warehouseId: props.target.warehouse.id, skuId: props.target.skuId, pageSize: 20, after: null })); }
       catch { setInvalidTarget(true); }
     });
     return () => { attached = false; next.dispose(); };
@@ -55,7 +55,7 @@ function LedgerResults({ query, target }: { readonly query: ReturnType<typeof cr
   if (snapshot.phase === 'disposed') return null;
   return <div className="inventory-ledger-content">
     {busy && <p role="status">正在读取流水…<UIButton onClick={() => query.cancel()}>取消读取</UIButton></p>}
-    {snapshot.phase === 'idle' && <p role="status">读取已取消。<UIButton onClick={() => { void query.run(parseInventoryLedgerQuery({ warehouseId: target.warehouse.id, skuId: target.skuId, pageSize: 50, after: null })); }}>重新读取</UIButton></p>}
+    {snapshot.phase === 'idle' && <p role="status">读取已取消。<UIButton onClick={() => { void query.run(parseInventoryLedgerQuery({ warehouseId: target.warehouse.id, skuId: target.skuId, pageSize: 20, after: null })); }}>重新读取</UIButton></p>}
     {snapshot.phase === 'error' && <p role="alert">流水读取失败。{data ? '以下保留上次成功读取的一页。' : '未把读取失败显示为无流水。'}<UIButton onClick={() => { if (snapshot.request) void query.run(snapshot.request.parameters); }}>重试</UIButton></p>}
     {data && <><StandardReadTable<InventoryLedgerEntry> label="当前仓库规格库存流水" rows={data.entries} columns={[
       { title: '业务日期', dataIndex: 'businessDate' },
