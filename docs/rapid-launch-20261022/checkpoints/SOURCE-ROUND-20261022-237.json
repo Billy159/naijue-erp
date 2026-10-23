@@ -1,0 +1,97 @@
+{
+  "atUtc": "2026-10-23T23:29:23.637248+00:00",
+  "parent": "300df9edab65da4ad72fb45b75986794c209472e",
+  "taskId": "F1_O_S14_SELECTED_WORKLINE_CONFIRMATION_PRESERVATION",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-proposal.ts",
+      "bytes": 57512,
+      "sha256": "58eae944652e83df9f9a27ae1b625539d1588aa29368b1dede7c499b65bbf5aa",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-122/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "491d7c6568a38a42832d22f526b31d9cc309fb97167a24ca643afc66a4a43757",
+  "ownerDelivery": {
+    "taskId": "DOC-SOURCE-03 / O-S14 selected work confirmed retention",
+    "scope": "Original source mapping continuation; no new finding ID",
+    "files": [
+      {
+        "path": "apps/web/src/current-form/sales-proposal.ts",
+        "bytes": 57512,
+        "sha256": "58eae944652e83df9f9a27ae1b625539d1588aa29368b1dede7c499b65bbf5aa",
+        "beforeBytes": 56778,
+        "beforeSha256": "6405df5c83e30bd9ee3bafda2d18fc83f0cc48498bbc8c890c0dae2606bb09ef"
+      }
+    ],
+    "checks": "before1 original new page selected lost RED; after1 forward/reverse retained GREEN; types1 EXIT0; setBusinessType and all native SAVE trailing source byte unchanged",
+    "notTested": [
+      "Native browser comparison of selected-confirm-after state",
+      "No wholeO-S14 or complete six-case acceptance",
+      "No HTTP SAVE/PG/permissions/real data",
+      "No new build/serve/preview by F1",
+      "No repeat of passed completed-line effects or dismiss suite"
+    ],
+    "blockers": "C pin/integration and original QA successor native state pending",
+    "next": "C pin this original one-file fix; original QA on successor only selected working confirmation/after state, alongside pending233 mapping check; no new issue ID or whole suite",
+    "sourceFrozenUntilCPin": true,
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-122/PROOF.json",
+        "bytes": 3016,
+        "sha256": "3f810822be3e369ff23d14195e197eaededc9dcea0f5c5637472fe0676000190"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-122/RESULT.json",
+        "bytes": 757,
+        "sha256": "06a233b4a4f296c56febc17bd03dbc1de4a50158a94b3d46d6bb74f6c7214f42"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-122/REPORT.md",
+        "bytes": 945,
+        "sha256": "4894aea81c13edb17400e4e9544038df7a958aa9321c4385109c650e5a066cfa"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-122/SOURCE.diff",
+        "bytes": 2611,
+        "sha256": "b663b2ee25dba1d506bc258e05a91f5446f2ad0ab0441302ff8f9ac1e0ce8027"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-122/before-1.log",
+        "bytes": 1057,
+        "sha256": "d5fa8b44dd628f6019c43d9d71d8f4eb75593fae59786ebfdf437704ca3156d0"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-122/after-1.log",
+        "bytes": 485,
+        "sha256": "06d7950cbfe268f546a813c1ce8866b2af3675d4aa2f26f63ffc0668eeceed6f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-122/types-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-122/FROZEN-SOURCE.txt",
+        "bytes": 1227,
+        "sha256": "b6606dfd6d92bd9dbbe3c698baa11ffe8ad41607438a3cdad950bc4597ec3994"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-122/selected-work-confirm-retain-check.mjs",
+        "bytes": 14599,
+        "sha256": "e464eb588b28b4f5a2dbb5d478e81fbd67ae79cc6ba1018a2b593f1734e0e657"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-122/tsconfig.json",
+        "bytes": 700,
+        "sha256": "553d0bc82b4f00aac0ee0c805c600cd768c192ed552a50d136b13061e77ffdb9"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-122/BEFORE-CONFIRMED-STATE.json",
+        "bytes": 123,
+        "sha256": "96d773c7ea72d126b110452951fa30789dee8fa1372e6dcede18679f1140ce0a"
+      }
+    ]
+  },
+  "qualification": "Originalmodule owner necessary targeted source checks adopted; independent source/newfixed browser actual pending, not current233. No shareddefault glyph change/backendsave/schema/wholepage or formalperformance acceptance."
+}
