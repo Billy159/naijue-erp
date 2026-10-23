@@ -4,6 +4,8 @@ import type { ProductReadOnlyReader } from '../inventory/product-contracts.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
 import type { DemoMultiSelectPopupHost } from '../demo-controls/multi-select.tsx';
 export interface CandidateSelectorProps {
+  /** Original page host only; the same candidate owner and scope remain active. */
+  readonly sourceHost?: { readonly id?: string; readonly className: string; readonly ariaLabel?: string };
   readonly label: string;
   readonly kind: CandidateKind;
   readonly selected: readonly Selection[];

@@ -1,0 +1,36 @@
+{
+  "atUtc": "2026-10-23T13:13:28.419227+00:00",
+  "parent": "4bfe72805e43acedb4517f1bc97b3c3e386b8241",
+  "taskId": "F06_SHARED_ORIGINAL_DEMO_HOST_ADAPTERS",
+  "files": [
+    {
+      "path": "apps/web/src/components/candidate-selector.tsx",
+      "owner": "F1",
+      "bytes": 12480,
+      "sha256": "25ca3758ac6472854c6a8428c0090b62fc17d38815ecf81be1feeb67cbbaac98"
+    },
+    {
+      "path": "apps/web/src/components/candidate-selector-contract.ts",
+      "owner": "F1",
+      "bytes": 1580,
+      "sha256": "d55f14fbac2e42488cf084d8bec67a2fb6e86d5676ece79565cfa6cf87893160"
+    },
+    {
+      "path": "apps/web/src/components/pagination.tsx",
+      "owner": "F1",
+      "bytes": 1292,
+      "sha256": "e3b6bb247e042d6ebef140a8876a960d07cca504d351088d42361fe67f417219"
+    },
+    {
+      "path": "apps/web/src/components/inventory-page-size.tsx",
+      "owner": "F1",
+      "bytes": 1053,
+      "sha256": "67f2cfa13717c58d2baac4c2e35894fef75511e3ce2d6c79c77be2621c9214be"
+    }
+  ],
+  "ownerReceipt": "K/reports/frontend/rapid-launch-20261022/F1/chunk-88/DELIVERY.json",
+  "ownerReceiptSha256": "ae102ae0f710a2aae83b7fe648d6404b39710120e7d6b7ec546bf6233de5340a",
+  "scope": "Same original shared CandidateSelector optional sourceHost and existing pager optional class/nav/select accessible labels. Original roots and defaults/data/permission/cache intact; no extra wrapper/second UI system.",
+  "checksAdopted": "Original native React consumer two default/custom groups, idle0request; chunk87 type5 exact shared closure reused; no duplicate tests.",
+  "qualification": "Source consumer only; actual new whole-page/broader consumers not accepted. Required original shared token/base dependency still F1 in progress for complete SALE/P01 candidate."
+}

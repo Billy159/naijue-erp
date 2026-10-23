@@ -30,7 +30,7 @@ function ReferenceSelector(props: CandidateSelectorProps) {
     const item = options.get(option.id); if (!item || 'disabled' in item && item.disabled) return;
     setExplicit(item); setNotice(reason === 'branch-exclusion' ? '已选择整个分类分支，当前查询不支持只排除其中一个子分类。' : props.kind === 'category' ? '全部分类范围可能包含未分类商品，不能从全部范围排除单项。' : search.trim() ? '搜索结果不代表全部范围，不能据此排除单项。' : '候选尚未完整确认，不能从全部范围排除单项。');
   };
-  return <div className="iw-field"><label>{props.label}</label><DemoMultiSelect scope={props.scope} popupHost={props.popupHost ?? null}
+  return <div id={props.sourceHost?.id} className={props.sourceHost?.className ?? "iw-field"} aria-label={props.sourceHost?.ariaLabel}>{!props.sourceHost && <label>{props.label}</label>}<DemoMultiSelect scope={props.scope} popupHost={props.popupHost ?? null}
     ownerKey={ownerKey} label={props.label} allLabel={props.kind === 'category' ? '全部分类' : `全部${props.label}`}
     {...(props.kind === 'category' ? { hierarchy: 'category-branches' as const } : {})}
     options={candidates.map(item => inventoryMultiOption(item, currentIds))}
@@ -99,11 +99,11 @@ function ProductSelector(props: CandidateSelectorProps) {
     void pending.current;
   };
   const enabled = props.scope.active && !!props.popupHost && !props.popupHost.controller.disposed;
-  return <div ref={host} className="iw-field iw-product-field inventory-product-control" onBlur={event => {
+  return <div ref={host} id={props.sourceHost?.id} className={props.sourceHost?.className ?? "iw-field iw-product-field inventory-product-control"} aria-label={props.sourceHost?.ariaLabel} onBlur={event => {
     if (event.currentTarget.contains(event.relatedTarget as Node | null)) return;
     const ticket = generation.current; queueMicrotask(() => { if (attached.current && generation.current === ticket && !host.current?.contains(document.activeElement)) owned.current?.ownership.close(); });
   }}>
-    <label>{props.label}</label>
+    {!props.sourceHost && <label>{props.label}</label>}
     {View ? <View {...props} search={search} onSearch={setSearch} open={!!activation?.active} activationScope={activation}
       focusOnMount={!!host.current?.contains(document.activeElement)} onOpen={next => { if (next) open(); else owned.current?.ownership.close(); }} />
       : <div className={`iw-product-search-shell${props.selected.length ? ' iw-product-search-shell--selected' : ''}`} onClick={event => { if (event.target === event.currentTarget) { input.current?.focus(); prepare(); } }}>
