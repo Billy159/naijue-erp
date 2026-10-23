@@ -2097,6 +2097,30 @@
           "group": "F03_FULL_QUERY_OUTPUT_FIRST_STREAM_TARGETED_CHECKS",
           "fieldGate": "NO_SCHEMA_OR_WRITE_CHANGE",
           "scope": "Existing node:test only newUTF8/frames/complete/ref/count/exactsum/cancel/permissions/outputprojection; no oldtransport/wholesite repetition"
+        },
+        {
+          "path": "apps/web/src/products/demo-source/product-current.css",
+          "group": "F04_COMPLETE_FROZEN_DEMO_PRODUCT_PAGE_UI",
+          "fieldGate": "NO_BACKEND_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
+          "source": "Frozen Demo b8bcfe3 frontend/product-current.css"
+        },
+        {
+          "path": "apps/web/src/products/demo-source/product-refinement.css",
+          "group": "F04_COMPLETE_FROZEN_DEMO_PRODUCT_PAGE_UI",
+          "fieldGate": "NO_BACKEND_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
+          "source": "Frozen Demo b8bcfe3 frontend/product-refinement.css"
+        },
+        {
+          "path": "apps/web/src/products/demo-source/product-inventory-unified.css",
+          "group": "F04_COMPLETE_FROZEN_DEMO_PRODUCT_PAGE_UI",
+          "fieldGate": "NO_BACKEND_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
+          "source": "Frozen Demo b8bcfe3 frontend/product-inventory-unified.css"
+        },
+        {
+          "path": "apps/web/src/products/demo-source/product-rework.css",
+          "group": "F04_COMPLETE_FROZEN_DEMO_PRODUCT_PAGE_UI",
+          "fieldGate": "NO_BACKEND_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
+          "source": "Frozen Demo b8bcfe3 frontend/product-rework.css"
         }
       ]
     },
@@ -3646,6 +3670,18 @@
         "tests/native-document-size-editing.test.ts"
       ],
       "reason": "Original owner targeted real-existing-SKU unreviewed append/replace regression under current human all-size instruction; no production change or new role."
+    },
+    {
+      "atUtc": "2026-10-23T12:54:17.380646+00:00",
+      "owner": "F2",
+      "addedPaths": [
+        "apps/web/src/products/demo-source/product-current.css",
+        "apps/web/src/products/demo-source/product-refinement.css",
+        "apps/web/src/products/demo-source/product-inventory-unified.css",
+        "apps/web/src/products/demo-source/product-rework.css"
+      ],
+      "reason": "Current human mandatory whole-page frozen Demo copy. F2 exact four complete page stylesheet sources and actual dependency order; no shared/global or second UI runtime ownership.",
+      "source": "Current C human explicit abandon rewritten UI and copy Demo page directive 2026-10-23"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
