@@ -2,7 +2,7 @@
 # T45 is the existing operations carrier, not a restart of the historical task queue.
 # Original client SHA256: 54019fb135469fb60b4720a21922bb2923ccf36c644d7734131124eeee2a88a6
 """Temporary SSH identity + one bounded root dispatcher; no password fallback."""
-import argparse, base64, fcntl, hashlib, json, os, re, shlex, subprocess, sys
+import argparse, base64, fcntl, hashlib, json, os, re, shlex, subprocess, sys, tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -15,6 +15,7 @@ PROJECT=Path(__file__).resolve().parents[2]
 CONTROL=PROJECT.parent/'local-takeover-20261021-control'
 JOB_ROOT=CONTROL/'reports/controller/rapid-launch-20261022/server-jobs'
 HISTORY=JOB_ROOT/'job-registry.json'
+CONTROL_PATH=None
 
 def ident(value):
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,70}',value):raise ValueError('UNIQUE_JOB_ID_REQUIRED')
@@ -33,6 +34,8 @@ def state():
 
 def remote(cfg,command,data=None):
     args=['/usr/bin/ssh','-i',cfg['keyFile'],'-o','IdentitiesOnly=yes','-o','IdentityAgent=none','-o','BatchMode=yes','-o','PasswordAuthentication=no','-o','KbdInteractiveAuthentication=no','-o','StrictHostKeyChecking=yes','-o','ConnectTimeout=10','-o','ServerAliveInterval=20','-o','ServerAliveCountMax=3',cfg['host'],command]
+    if CONTROL_PATH:
+        args[1:1]=['-o','ControlMaster=auto','-o','ControlPersist=60','-o','ControlPath='+CONTROL_PATH]
     p=subprocess.run(args,input=data,capture_output=True,timeout=40)
     if p.returncode:raise ValueError('LEASED_CHANNEL_OR_DISPATCHER_FAILED_NO_PASSWORD_FALLBACK')
     return p.stdout
@@ -160,15 +163,24 @@ def end_grant(cfg,force,reason):
     return dict(value,reason=reason)
 
 def main():
+    global CONTROL_PATH
     parser=argparse.ArgumentParser();sub=parser.add_subparsers(dest='action',required=True);sub.add_parser('status');end=sub.add_parser('end');end.add_argument('--force',action='store_true');end.add_argument('--reason',choices=['T51_COMPLETE','USER_STOP'],default='USER_STOP')
     run=sub.add_parser('run');run.add_argument('--task',required=True);run.add_argument('--job-id',required=True);run.add_argument('--source-dir',required=True);run.add_argument('--script',required=True);run.add_argument('--output-dir',required=True);run.add_argument('--timeout-seconds',type=int,default=3600);run.add_argument('--phase-arg',action='append',default=[]);run.add_argument('--rewrite',action='append',default=[]);run.add_argument('--evidence')
     get=sub.add_parser('collect');get.add_argument('--task',required=True);get.add_argument('--job-id',required=True);get.add_argument('--output-dir',required=True)
     args=parser.parse_args();cfg=state()
-    if args.action=='status':print(json.dumps({'status':'CLOSED','grantId':cfg['grantId'],'reason':cfg.get('revokedReason')} if cfg.get('installed')=='REVOKED' else dispatch(cfg,'status'),ensure_ascii=False))
-    elif args.action=='end':print(json.dumps(end_grant(cfg,args.force,args.reason),ensure_ascii=False))
-    elif args.action=='collect':collect(cfg,args)
-    else:
-        with (HERE/'release-client.lock').open('a+') as lock:fcntl.flock(lock,fcntl.LOCK_EX);submit(cfg,args)
+    with tempfile.TemporaryDirectory(prefix='erp-ssh-',dir='/tmp') as channel:
+        CONTROL_PATH=str(Path(channel)/'control')
+        try:
+            if args.action=='status':print(json.dumps({'status':'CLOSED','grantId':cfg['grantId'],'reason':cfg.get('revokedReason')} if cfg.get('installed')=='REVOKED' else dispatch(cfg,'status'),ensure_ascii=False))
+            elif args.action=='end':print(json.dumps(end_grant(cfg,args.force,args.reason),ensure_ascii=False))
+            elif args.action=='collect':collect(cfg,args)
+            else:
+                with (HERE/'release-client.lock').open('a+') as lock:fcntl.flock(lock,fcntl.LOCK_EX);submit(cfg,args)
+        finally:
+            if Path(CONTROL_PATH).exists():
+                try:subprocess.run(['/usr/bin/ssh','-S',CONTROL_PATH,'-O','exit',cfg['host']],stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=5)
+                except (OSError,subprocess.TimeoutExpired):pass
+            CONTROL_PATH=None
 
 if __name__=='__main__':
     try:main()
