@@ -1,0 +1,49 @@
+{
+  "atUtc": "2026-10-23T20:25:37.677695+00:00",
+  "parent": "024aa9ce565014a4184bfed02a33cd167b449bb4",
+  "taskId": "F05_DEFAULT_CUSTOMER_EXISTING_READER_HOST_WIRING",
+  "files": [
+    {
+      "path": "apps/web/src/production-host/mount.tsx",
+      "bytes": 13905,
+      "sha256": "326a62410a786771766f59318c13f558fda02fcff3f8ca3aa2e6863ad114f71f",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-108/DELIVERY.json",
+  "ownerReceiptSha256": "7fb16218f0da6bb9fd190764d0dac317fe4ca0474331107ceaaceedb63a41c91",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh",
+    "status": "SOURCE_READY_EXISTING_STORE_CUSTOMER_CANDIDATE_HOST_SEAM_ONLY",
+    "files": [
+      {
+        "path": "apps/web/src/production-host/mount.tsx",
+        "bytes": 13905,
+        "sha256": "326a62410a786771766f59318c13f558fda02fcff3f8ca3aa2e6863ad114f71f"
+      }
+    ],
+    "changes": [
+      "Original mounted storeSettings.commands.customers provides only native PartyClient.candidates method; dynamic import original client inside first explicit read, no standalone preload/client cache owner",
+      "Original F3 directory still fixes CUSTOMER and maps native page/search/pageSize/total/error/abort; only native same-origin client, cookies and existing HTTP/permission ownership. No supplier mixing, new DTO/API/filter/actor/role or command capability",
+      "Existing selected customer and warehouse single-hall identity untouched; original maintenance/writesEnabled predicates unchanged, omitted maintenance stays false; original212 pending product shutdown callbacks untouched"
+    ],
+    "checks": {
+      "before-1/2": "Synthetic hall reference omitted required native enabled fact; strict original DTO rejected. Only fixture corrected, no validator weakening",
+      "before-3": "Probe selected aria-label group wrapper instead of observed combobox; no source conclusion",
+      "before-4": "RED actual mounted ProductionHost original hall edit first default-customer combobox click dispatches0 customer reads because host omitted candidate provider; original error and DOM retained",
+      "after-1": "First native GET and result worked; harness page2 click did not wait original Portal pointer-interactive state, no source UI fix",
+      "after-2": "Native page2 worked after correct Portal wait; probe then used Escape, which legitimately closes the original entire hall modal, so subsequent selector was absent; switched probe to original outside-field popup close without changing leaf behavior",
+      "after-3": "PASS actual mounted ProductionHost original hall list/edit/default customer selector first click exactly1GET CUSTOMER, originalpage20 and41total, direct exact Unicode/spaces search/page2/pageSize50, originalselected retained, no candidate prefetch/supplier/write; close cancellation/late body suppression; native403 error kind/code/status and visible failure unchanged; authVersion replacement cancels oldscope/late data and next route has0candidate preload; write gate remains false",
+      "types-1": "PASS exactmount source root complete strict imported closure0"
+    },
+    "limitations": [
+      "JSDOM+synthetic native HTTP ports only, no actual Chrome native focus/geometry/timing/full linked page acceptance",
+      "No real server/PG/role/permission/business write/deployment PASS",
+      "Original F3 leaf code/contracts/C reservation untouched; existing directory protocol and host3phase evidence reused, not full-suite rerun",
+      "Native dynamic import placement/source verified; no separate real-browser network code-chunk waterfall measured"
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "SOURCE_FIXED_READONLY_CUSTOMER_HOST_SEAM_ONLY; originalF3/PartyClient reused via lazy candidate read; writegates unchangedfalse. NativeHTTPsynthetic/JSDOM checks notChrome/realpermission/PG/business."
+}
