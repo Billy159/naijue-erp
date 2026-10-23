@@ -10,7 +10,7 @@ import { createSourceAuthenticationPolicy } from "../../../packages/authenticati
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { createPostgresApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresRuntime26ApplicationApi } from "./postgres-read-api.ts";
-import { createPostgresRuntime26DocumentApplicationApi } from "./postgres-read-api.ts";
+import { createPostgresRuntime26MediaApplicationApi, createPostgresRuntime26DocumentApplicationApi } from "./postgres-read-api.ts";
 import type { PostgresApplicationApiOptions, PostgresApplicationApi } from "./postgres-read-api.ts";
 
 export const PRODUCTION_PUBLIC_ORIGIN = "https://1n5635n614.goho.co";
@@ -139,4 +139,30 @@ export async function createProductionRuntime26R2ApplicationApi(input: unknown, 
   const config = parseProductionRuntime26R2Configuration(input);
   return createPostgresRuntime26DocumentApplicationApi(productionApplicationOptions(productionRuntime26R2HostConfiguration(config)),
     config.runtime26Review, config.existingPreparation, driver);
+}
+
+/** R3 uses the original media implementation with an explicit private root.
+ * R1/R2 remain closed to these fields and never acquire maintenance routes. */
+export interface ProductionRuntime26R3Configuration extends Omit<ProductionRuntime26R2Configuration, "profile"> {
+  readonly profile: "source-confirmed-native-exact26-r3-v1";
+  readonly productMedia: { readonly root: string; readonly rootKey: string };
+}
+export function parseProductionRuntime26R3Configuration(input: unknown): ProductionRuntime26R3Configuration {
+  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", "existingPreparation", "productMedia"]);
+  const media = bag(c.productMedia, ["root", "rootKey"]);
+  if (c.profile !== "source-confirmed-native-exact26-r3-v1" || !text(media.root) || !path.isAbsolute(media.root)
+    || path.resolve(media.root) !== media.root || typeof media.rootKey !== "string" || !/^[A-Za-z0-9_-]{1,100}$/.test(media.rootKey))
+    throw new TypeError("Explicit R3 private product media root and key required");
+  const { productMedia: _media, ...base } = c;
+  const checked = parseProductionRuntime26R2Configuration({ ...base, profile: "source-confirmed-native-exact26-r2-v1" });
+  return { ...checked, profile: "source-confirmed-native-exact26-r3-v1", productMedia: { root: media.root, rootKey: media.rootKey } };
+}
+export function productionRuntime26R3HostConfiguration(input: unknown): ProductionRuntimeConfiguration {
+  const { productMedia: _media, ...base } = parseProductionRuntime26R3Configuration(input);
+  return productionRuntime26R2HostConfiguration({ ...base, profile: "source-confirmed-native-exact26-r2-v1" });
+}
+export async function createProductionRuntime26R3ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
+  const config = parseProductionRuntime26R3Configuration(input);
+  return createPostgresRuntime26MediaApplicationApi(productionApplicationOptions(productionRuntime26R3HostConfiguration(config)),
+    config.runtime26Review, config.existingPreparation, { ...config.productMedia, publicRoots: [config.assets.root] }, driver);
 }

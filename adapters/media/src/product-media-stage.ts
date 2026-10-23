@@ -34,7 +34,7 @@ export interface PreparedProductMediaStage {
   readonly profile: typeof PRODUCT_MEDIA_STAGE_PROFILE; readonly uploadId: string; readonly fileRef: string;
   readonly actorAccountId: string; readonly productId: string | null; readonly commandKey: string; readonly uploadKey: string;
   readonly createdAt: string; readonly expiresAt: string; readonly original: PrivateProductMediaBlob;
-  readonly thumbnail: PrivateProductMediaBlob & { readonly derivedFromOriginalSha256: string };
+  readonly thumbnail: PrivateProductMediaBlob & { readonly mime: "image/webp"; readonly derivedFromOriginalSha256: string };
 }
 type Binding = { actor: ActorContext; productId: string | null; commandKey: string };
 type StoredBlob = { mime: ProductImageMime; byteSize: string; sha256: string; width: number; height: number; channels?: number; derivedFromOriginalSha256?: string };

@@ -1,3 +1,5 @@
+import { AsyncLocalStorage } from "node:async_hooks";
+import { randomUUID } from "node:crypto";
 import { createSettingsAuditHttpPlugin } from "./settings-audit-http.ts";
 import { PostgresSettingsAuditUnitOfWork } from "../../../adapters/postgres/src/settings-audit-reader.ts";
 import Fastify from "fastify";
@@ -68,6 +70,15 @@ import { PostgresMaintenanceCommandUnitOfWork } from "../../../adapters/postgres
 import { PostgresOrganizationMaintenanceReadUnitOfWork } from "../../../adapters/postgres/src/organization-maintenance-store.ts";
 import { createOrganizationMaintenanceReadHttpPlugin } from "./organization-maintenance-http.ts";
 import { createNativeRuntime26Issuer } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
+import { PrivateProductMediaStage } from "../../../adapters/media/src/product-media-stage.ts";
+import { PrivateControlledProductMedia } from "../../../adapters/media/src/controlled-product-media.ts";
+import { SharpProductImageCodec } from "../../../adapters/media/src/sharp-product-image-codec.ts";
+import { PostgresProductMaintenanceUnitOfWork } from "../../../adapters/postgres/src/product-maintenance-store.ts";
+import { authorizeProductMaintenance } from "../../../packages/application/src/product-maintenance-authorization.ts";
+import { activeProductRead } from "../../../packages/application/src/product-query-validation.ts";
+import type { ProductMaintenanceTransaction, ProductMaintenanceUnitOfWork } from "../../../packages/application/src/product-maintenance-ports.ts";
+import { createProductMaintenanceHttpPlugin } from "./product-maintenance-http.ts";
+import { createProductMediaHttpPlugin } from "./product-media-http.ts";
 
 export interface PostgresReadApiExplicitAuthorization {
   readonly mode?: never;
@@ -336,7 +347,8 @@ function checkedHost(options: PostgresReadApiOptions) {
     trustedOrigin: auth.trustedOrigin, now: auth.now, policy: auth.policy, credentialCompatibility: auth.credentialCompatibility,
     authorization: checkedAuthorization(options.authorization), currentForms: checkedCurrentForms(options),
     media: media === null ? null : Object.freeze({ deliveryOrigin: media.deliveryOrigin,
-      resolveThumbnails: media.resolveThumbnails.bind(media), resolveOriginal: media.resolveOriginal.bind(media) })
+      resolveThumbnails: media.resolveThumbnails.bind(media), resolveOriginal: media.resolveOriginal.bind(media),
+      ...(media.resolveAvailableThumbnails === undefined ? {} : { resolveAvailableThumbnails: media.resolveAvailableThumbnails.bind(media) }) })
   };
 }
 function checkedCurrentForms(options: PostgresReadApiOptions): CurrentFormAuthorization | null {
@@ -389,6 +401,26 @@ export interface Runtime26ExistingPreparation { readonly sales: boolean; readonl
 export async function createPostgresRuntime26DocumentApplicationApi(options: PostgresApplicationApiOptions,
   review: { readonly reviewFile: string; readonly trustedReviewSha256: string }, existingPreparation: Runtime26ExistingPreparation,
   createDriver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
+  return composeRuntime26DocumentApplicationApi(options, review, existingPreparation, createDriver);
+}
+/** R3 mounts the existing product/media leaves with the same owned pool and issuer.
+ * Private storage configuration is supplied by the production host, never HTTP. */
+export interface Runtime26ProductMediaConfiguration {
+  readonly root: string; readonly rootKey: string; readonly publicRoots: readonly string[];
+}
+export async function createPostgresRuntime26MediaApplicationApi(options: PostgresApplicationApiOptions,
+  review: { readonly reviewFile: string; readonly trustedReviewSha256: string }, existingPreparation: Runtime26ExistingPreparation,
+  media: Runtime26ProductMediaConfiguration, createDriver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
+  if (options.productMedia !== null || !media || !isAbsolute(media.root) || resolve(media.root) !== media.root
+    || !/^[A-Za-z0-9_-]{1,100}$/.test(media.rootKey) || !Array.isArray(media.publicRoots) || media.publicRoots.length === 0
+    || media.publicRoots.some(root => typeof root !== "string" || !isAbsolute(root)))
+    throw new TypeError("Explicit original private media root and public build roots required");
+  return composeRuntime26DocumentApplicationApi(options, review, existingPreparation, createDriver,
+    Object.freeze({ root: media.root, rootKey: media.rootKey, publicRoots: Object.freeze([...media.publicRoots]) }));
+}
+async function composeRuntime26DocumentApplicationApi(options: PostgresApplicationApiOptions,
+  review: { readonly reviewFile: string; readonly trustedReviewSha256: string }, existingPreparation: Runtime26ExistingPreparation,
+  createDriver?: PostgresPoolDriverFactory, media?: Runtime26ProductMediaConfiguration): Promise<PostgresApplicationApi> {
   if (!options || typeof options !== "object" || !("documentCommands" in options) || !("currentForms" in options))
     throw new TypeError("Exact26 R2 requires explicit native document commands and current forms");
   const pin = exactBag(review, ["reviewFile", "trustedReviewSha256"]), preparation = exactBag(existingPreparation, ["sales", "transfers"]);
@@ -400,11 +432,11 @@ export async function createPostgresRuntime26DocumentApplicationApi(options: Pos
   if (!capabilities.nativeReadExtensions || capabilities.commands === null) throw new TypeError("Exact26 R2 requires native policies and complete original command proof providers");
   return await composePostgresApi(options, createDriver, capabilities,
     Object.freeze({ reviewFile: pin.reviewFile, trustedReviewSha256: pin.trustedReviewSha256 }),
-    Object.freeze({ sales: preparation.sales, transfers: preparation.transfers })) as PostgresApplicationApi;
+    Object.freeze({ sales: preparation.sales, transfers: preparation.transfers }), media) as PostgresApplicationApi;
 }
 async function composePostgresApi(options: PostgresReadApiOptions, createDriver: PostgresPoolDriverFactory | undefined,
   capabilities: ApplicationCapabilities | null, runtime26Review?: { readonly reviewFile: string; readonly trustedReviewSha256: string },
-  runtime26ExistingPreparation?: Runtime26ExistingPreparation): Promise<PostgresReadApi | PostgresApplicationApi> {
+  runtime26ExistingPreparation?: Runtime26ExistingPreparation, runtime26ProductMedia?: Runtime26ProductMediaConfiguration): Promise<PostgresReadApi | PostgresApplicationApi> {
   const host = checkedHost(options);
   const ownedPool = new BoundedPostgresPool(options.postgres, createDriver);
   let app: FastifyInstance | undefined;
@@ -430,6 +462,46 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     const authentication = Object.freeze({ service, trustedOrigin: host.trustedOrigin });
     const authenticate = createSalesSessionAuthenticator(authentication);
     const authenticateTransfer = createTransferSessionAuthenticator(authentication);
+    const productReader = new PostgresProductQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null);
+    let productMedia = host.media;
+    if (runtime26ProductMedia !== undefined) {
+      if (issuer === null) throw new TypeError("R3 requires the original exact26 issuer");
+      const driver = new PostgresMaintenanceCommandUnitOfWork(pool);
+      const originalWork = new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null,
+        seasonCapability: issuer.productSeasonArray, mediaWriteCapability: issuer.productMediaWrite, imageColorSwapCapability: issuer.imageColorSwap });
+      // consume runs within the original product transaction. It must not acquire
+      // a second lease (including when the configured pool has just one slot).
+      const currentWork = new AsyncLocalStorage<{ tx: ProductMaintenanceTransaction; active: boolean }>();
+      const unitOfWork: ProductMaintenanceUnitOfWork = { seasonContract: "product-season-array-v1", transaction: work => originalWork.transaction(async tx => {
+        const scope = { tx, active: true };
+        try { return await currentWork.run(scope, () => work(tx)); } finally { scope.active = false; }
+      }) };
+      const stage = new PrivateProductMediaStage({ ...runtime26ProductMedia, codec: new SharpProductImageCodec(), now: () => new Date(host.now()),
+        async authorize(input, signal) {
+          activeProductRead(signal);
+          const action = input.productId === null ? "CREATE" : "EDIT";
+          if (input.purpose === "CONSUME") {
+            const scope = currentWork.getStore();
+            requireDomain(scope?.active, "PRODUCT_MEDIA_NOT_READY", "Original active product transaction required");
+            await authorizeProductMaintenance(scope.tx.evidence, input.actor, action);
+          } else await originalWork.transaction(async tx => {
+            await authorizeProductMaintenance(tx.evidence, input.actor, action);
+            if (input.productId !== null) {
+              const product = await tx.load(input.productId);
+              requireDomain(product !== undefined, "PRODUCT_NOT_FOUND", "Product unavailable");
+              requireDomain(product.product.deletedAt === null, "PRODUCT_DELETED", "Deleted product is read-only");
+            }
+          });
+          activeProductRead(signal);
+        } });
+      const media = new PrivateControlledProductMedia({ deliveryOrigin: host.trustedOrigin, basePath: "/api",
+        privateRoots: { [runtime26ProductMedia.rootKey]: runtime26ProductMedia.root }, publicRoots: runtime26ProductMedia.publicRoots,
+        manifests: stage.createManifestResolver(), authorization: policies.products, reader: productReader });
+      productMedia = media;
+      app.register(createProductMaintenanceHttpPlugin({ authenticate, dependencies: { unitOfWork, now: host.now,
+        newId: () => randomUUID(), newImageId: () => randomUUID(), imageStage: stage, media } }));
+      app.register(createProductMediaHttpPlugin({ authenticate, provider: media, imageStage: stage }));
+    }
     // Each register call deliberately preserves the existing plugin's Fastify encapsulation:
     // independent error handlers, per-request identity and independent abort controllers.
     app.register(createAuthenticationHttpPlugin(authentication));
@@ -437,7 +509,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     app.register(createInventoryLedgerQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.inventory, reader: new PostgresInventoryLedgerQueryReader(pool) } }));
     app.register(createSalesQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.sales, reader: new PostgresSalesQueryReader(pool) } }));
     app.register(createTransferQueryHttpPlugin({ authenticate: authenticateTransfer, dependencies: { authorization: policies.transfers, reader: new PostgresTransferQueryReader(pool) } }));
-    app.register(createProductQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.products, reader: new PostgresProductQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null), media: host.media } }));
+    app.register(createProductQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.products, reader: productReader, media: productMedia } }));
     if (host.currentForms !== null) app.register(createCurrentFormHttpPlugin({ authenticate,
       reader: new PostgresCurrentFormReader(pool, host.currentForms, issuer === null ? undefined : { runtime26: issuer.runtime26, historicalCustomerExclusion: issuer.historicalCustomerExclusion }) }));
     if (extensions) {

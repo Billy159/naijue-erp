@@ -1,0 +1,517 @@
+{
+  "atUtc": "2026-10-23T04:06:12.901547+00:00",
+  "parent": "855fb1e8a16e4407dbfb74f76bb8131774ef7622",
+  "groups": [
+    {
+      "slice": "D1 ready original implementation delta",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R3-MEDIA-COMPOSITION-RESULT-v1.json",
+      "receiptSha256": "0585ebe83d486a6dd5ad27826a4d710b1061e964fc85a1fd34567efda60c077b",
+      "receiptSnapshot": {
+        "taskId": "D1-R3-MEDIA-COMPOSITION",
+        "atUtc": "2026-10-23T04:02:17.195977+00:00",
+        "status": "SOURCE_READY_FOCUSED_SYNTHETIC_PASS_AWAIT_ORIGINAL_QB_AND_C_RUNTIME",
+        "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/postgres-read-api.ts",
+            "bytes": 47329,
+            "sha256": "7efa6030e1ecbb896c8f384cc0b1edcc96777b7670e344506dd7b515743c1499"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/production-provider-composition.ts",
+            "bytes": 14264,
+            "sha256": "f29ec68ab92aa9f44ff6679981df470f976def039bd7e30738f62a00d09e5e03"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/production-application-host.ts",
+            "bytes": 13712,
+            "sha256": "7ad89daa46b573f3300ae3d04bf67ef9cf51792f660dcdc63da96781cd247646"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/production-main.ts",
+            "bytes": 8206,
+            "sha256": "4ceeecb54768cb57f67060c13c4e4e75feeeecb0cf9737940e416b190d962489"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/production-provider-composition.test.ts",
+            "bytes": 51997,
+            "sha256": "744c0acd03546c5a2cf4f9f4ca84e03a04892130a7b0ff655f306db123a4eb3a"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/production-application-host.test.ts",
+            "bytes": 13097,
+            "sha256": "3e1c863b8e522f83c9a6c33f5a07dff53cfb2a9c7305950ca10b392490c9ce47"
+          }
+        ],
+        "implementation": [
+          "Explicit --exact26-r3 / source-confirmed-native-exact26-r3-v1 successor reuses R2 original commands, review, existingPreparation and original production host lifecycle.",
+          "Private productMedia root/rootKey supplied by C only. public origin reused; /api controlled link prefix; actual public assets root used as public exclusion root. No new environment discovery or service framework.",
+          "One owned BoundedPostgresPool and actual issuer pool feed original authentication, product reader, maintenance driver/store, seasons/media-write/prepared/color-swap proof, existing HTTP plugins and private stage/provider.",
+          "Stage UPLOAD uses original PRODUCT CREATE/EDIT current maintenance authorization and existing target/deleted checks. CONSUME uses original product transaction through local AsyncLocalStorage; no second lease, including max1/pending0.",
+          "The same actual PrivateProductMediaStage serves raw uploads, consume and createManifestResolver. Actual Sharp codec and PrivateControlledProductMedia are retained. Existing rich resolveAvailableThumbnails is preserved when host methods are captured.",
+          "Original product service/store own root/SKU/barcode/image/audit/receipt write semantics. No new SQL/schema/DTO/business fields or capability implementation. DELETE remains explicit null guard/unavailable.",
+          "Original R1/R2 parsers reject R3 fields/profile. H06 catalogue proof opt-in is not enabled by R3; current default imported catalogue verifier is retained."
+        ],
+        "verification": {
+          "uniqueNewChecks": 3,
+          "affectedExistingChecks": 2,
+          "skip": 0,
+          "new": [
+            {
+              "test": "production R3 media: explicit private root is isolated from R1/R2 and missing maintenance purpose closes its owned pool",
+              "result": "PASS",
+              "toolChunk": "f27f68"
+            },
+            {
+              "test": "production R3 media: real private stage, original prepared transaction, rich read and controlled bytes share one bounded pool",
+              "result": "PASS",
+              "toolChunk": "51263f",
+              "details": "Actual local Sharp decode/private temp files; synthetic original driver responses; max1/pending0; unauth401; exact upload4keys; same upload-key replay; revoked upload403; missing target404; original CREATE image+audit/receipt same lease; replay no new business writes; rich READY; private refs omitted; authenticated WEBP GET; pool releases balanced/background0/end1."
+            },
+            {
+              "test": "production R3 media host: original API prefix and public build boundary keep private media configuration out of assets/health",
+              "result": "PASS",
+              "toolChunk": "d8c1a4"
+            }
+          ],
+          "adoptedAffected": [
+            {
+              "test": "production exact26: one owned original pool supplies actual issuer leases to authentication and CURRENT reads with command routes absent",
+              "result": "PASS",
+              "toolChunk": "d8c1a4"
+            },
+            {
+              "test": "production R2 exact26: fresh one-pool composition mounts commands and CREATE with independently selected existing routes",
+              "result": "PASS",
+              "toolChunk": "d8c1a4",
+              "cases": "Independent sales/transfers true/false combinations; media commands remain absent."
+            }
+          ],
+          "strictTypes": "tsc -p tsconfig.json --noEmit exit0; full current project source, no build or DB",
+          "initialFocusedFailures": "New synthetic fixture initially omitted existing CREATE-required supplier/default scheme/system code; then counted FOR UPDATE as a write and returned three rather than six SQL timestamp fraction digits. Fixed only new fixture/assertions and reran only that failed check; production semantics/old assertions unchanged."
+        },
+        "dependencyOwnedByD2": {
+          "stageTypeNarrowing": "PreparedProductMediaStage.thumbnail.mime image/webp now matches existing consumer and runtime facts. D2 made its own edit.",
+          "uploadHttp": "Existing D2 upload bridge and product-not-found404/deleted409 error map consumed; D1 did not edit leaf source/tests."
+        },
+        "runtimeConfigurationForC": {
+          "profile": "source-confirmed-native-exact26-r3-v1",
+          "entry": "apps/api/src/production-main.ts --exact26-r3 <existing-private-config-path>",
+          "newPrivateValues": [
+            "productMedia.root",
+            "productMedia.rootKey"
+          ],
+          "existingValues": "All original R2 configuration and new independent review explicitly covering PRODUCT_MAINTENANCE in addition to original R2 purposes. C supplies actual private runtime values/roots/install; no value/key copied into this report.",
+          "configurationOnlyNoNewApprovalFlow": true
+        },
+        "limits": {
+          "actualPG": false,
+          "actualHttpListener": false,
+          "browser": false,
+          "build": false,
+          "serverOrCredentials": false,
+          "git": false,
+          "frontendModified": false,
+          "sharedContractModified": false,
+          "fullRealImportComplete": false,
+          "publicationRestrictionsRemoved": false,
+          "stagedExposed": false,
+          "h06OptInActivated": false,
+          "defaultR1R2Upgraded": false,
+          "completeR3Acceptance": false
+        },
+        "next": "C freezes/checkpoints exact source along with D2 leaves and routes original QB affected review, then coordinates existing actual isolated DB/runtime checks and private config install. Reuse accepted original checks; no sealed18 rerun. H06 finite52 remains separate; its QB148 source/protocol PASS is C-reported only until actual result exists."
+      },
+      "files": [
+        {
+          "path": "apps/api/src/postgres-read-api.ts",
+          "owner": "D1",
+          "bytes": 47329,
+          "beforeSha256": "8e4025b2e9460602009c94c835b818f442c00a984b2cbaae16d910cc84e5eae7",
+          "sha256": "7efa6030e1ecbb896c8f384cc0b1edcc96777b7670e344506dd7b515743c1499"
+        },
+        {
+          "path": "apps/api/src/production-provider-composition.ts",
+          "owner": "D1",
+          "bytes": 14264,
+          "beforeSha256": "8b6b5ff090e63301cb15847d30c5976f36ada3ab1122f928c14b5cdabed9aa5d",
+          "sha256": "f29ec68ab92aa9f44ff6679981df470f976def039bd7e30738f62a00d09e5e03"
+        },
+        {
+          "path": "apps/api/src/production-application-host.ts",
+          "owner": "D1",
+          "bytes": 13712,
+          "beforeSha256": "21840a794bbb19b43e41a6666ab74abb3c6d2fb8cedce9ea61df21ee5ef6ab0a",
+          "sha256": "7ad89daa46b573f3300ae3d04bf67ef9cf51792f660dcdc63da96781cd247646"
+        },
+        {
+          "path": "apps/api/src/production-main.ts",
+          "owner": "D1",
+          "bytes": 8206,
+          "beforeSha256": "900c30c4e218f1a8c131aef95c68869bbd70d91129caa0d98b5825a95e6f9c6f",
+          "sha256": "4ceeecb54768cb57f67060c13c4e4e75feeeecb0cf9737940e416b190d962489"
+        },
+        {
+          "path": "apps/api/src/production-provider-composition.test.ts",
+          "owner": "D1",
+          "bytes": 51997,
+          "beforeSha256": "051f937218462f82dc61e3d0a0b143ad3e94aa54f5d959294c787777ea456a6a",
+          "sha256": "744c0acd03546c5a2cf4f9f4ca84e03a04892130a7b0ff655f306db123a4eb3a"
+        },
+        {
+          "path": "apps/api/src/production-application-host.test.ts",
+          "owner": "D1",
+          "bytes": 13097,
+          "beforeSha256": "5b7a9b4cd6007aab5c0953c8236cd28776ef29e10ac21772013778f890da4c60",
+          "sha256": "3e1c863b8e522f83c9a6c33f5a07dff53cfb2a9c7305950ca10b392490c9ce47"
+        }
+      ]
+    },
+    {
+      "slice": "D2 ready original implementation delta",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/MEDIA-UPLOAD-HTTP-R3-ERROR-DELTA-v1.json",
+      "receiptSha256": "87b3fb6be8ae8e1e1d5474e57c17128613991bc4a4a8e6b065d547eba35a17db",
+      "receiptSnapshot": {
+        "baseDelivery": {
+          "status": "SOURCE_READY_LOCAL_HTTP_CHECKS_PASS_HOST_INTEGRATION_PENDING",
+          "owner": "D2",
+          "completedAt": "2026-10-23T03:57:33Z",
+          "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+          "observedHeadAtDelivery": "855fb1e8a16e4407dbfb74f76bb8131774ef7622",
+          "files": [
+            {
+              "path": "apps/api/src/product-media-http.ts",
+              "sha256": "86dfa60c91339f4d872a0f71d2af0d88d25a13c9c199153d505e798e0a2eaeaa",
+              "change": "Raw binary POST bridge; optional actual imageStage, original GET retained."
+            },
+            {
+              "path": "apps/api/src/product-media-http.test.ts",
+              "sha256": "c7c79c07b0f506d02553b984a192fe317ca13aa407ad1a99712b1da65222b866",
+              "change": "Four HTTP transport tests plus the previous POST absence expectation updated to explicit stage-unavailable 503."
+            },
+            {
+              "path": "adapters/media/src/product-media-stage.ts",
+              "sha256": "fc636afe2209bcd7aeb1d4f434f99abdac57af81936141bdc1278d6274a9d302",
+              "change": "D1-requested single type refinement: PreparedProductMediaStage.thumbnail.mime is literal image/webp. Runtime unchanged."
+            }
+          ],
+          "http": {
+            "method": "POST",
+            "path": "/products/media/uploads",
+            "body": "Raw File/Blob/ArrayBuffer bytes, not multipart/base64/JSON",
+            "contentTypes": [
+              "image/png",
+              "image/jpeg",
+              "image/webp"
+            ],
+            "maxBytes": 8388608,
+            "headers": {
+              "x-command-key": "Original final V2 root requestKey",
+              "x-upload-key": "Original stable per-file key",
+              "x-product-id": "Actual existing product UUID; omit only CREATE/null draft"
+            },
+            "keyFormat": "[A-Za-z0-9._:-]{1,200}",
+            "authentication": "Existing session authenticate supplies trusted ActorContext; no client actor/role",
+            "output": {
+              "status": 200,
+              "exactKeys": [
+                "uploadId",
+                "mime",
+                "byteSize",
+                "expiresAt"
+              ],
+              "byteSizeType": "decimal string"
+            },
+            "errors": {
+              "400": [
+                "INVALID_HTTP_INPUT",
+                "INVALID_ID",
+                "INVALID_UPLOAD",
+                "INVALID_MEDIA_TYPE",
+                "INVALID_MEDIA_DIMENSIONS"
+              ],
+              "401": [
+                "UNAUTHENTICATED"
+              ],
+              "403": [
+                "FORBIDDEN"
+              ],
+              "408": [
+                "PRODUCT_READ_ABORTED"
+              ],
+              "409": [
+                "IDEMPOTENCY_CONFLICT",
+                "MEDIA_SCOPE_MISMATCH",
+                "UPLOAD_EXPIRED"
+              ],
+              "413": [
+                "BODY_TOO_LARGE",
+                "MEDIA_TOO_LARGE"
+              ],
+              "415": [
+                "UNSUPPORTED_MEDIA_TYPE"
+              ],
+              "500": [
+                "INTERNAL_ERROR"
+              ],
+              "503": [
+                "PRODUCT_MEDIA_NOT_READY"
+              ]
+            },
+            "cancellation": "AbortController forwarded to stage; raw request aborted / unfinished response close listeners removed in finally",
+            "downstream": "Returned uploadId goes to existing V2 imageChanges with same original root requestKey",
+            "composition": "ProductMediaHttpOptions.imageStage?: Pick<PrivateProductMediaStage,stage> | null; missing/null is 503. D1 supplies same actual stage for upload/consume/manifest resolver."
+          },
+          "checks": {
+            "focusedHttp": {
+              "status": "PASS",
+              "tests": 5,
+              "failures": 0,
+              "command": "node --test --test-concurrency=1 --test-name-pattern='media upload HTTP|W15 media HTTP authenticates' apps/api/src/product-media-http.test.ts",
+              "log": "MEDIA-UPLOAD-HTTP-focused-tests.log",
+              "scope": "Fastify inject with a scripted stage port; not real codec/PG/session/browser"
+            },
+            "strictTypes": {
+              "status": "PASS",
+              "exitCode": 0,
+              "files": [
+                "adapters/media/src/product-media-stage.ts",
+                "apps/api/src/product-media-http.ts",
+                "apps/api/src/product-media-http.test.ts"
+              ],
+              "options": "--noEmit --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noFallthroughCasesInSwitch --noImplicitOverride --verbatimModuleSyntax --allowImportingTsExtensions --module NodeNext --moduleResolution NodeNext --target ES2023 --skipLibCheck --types node --lib ES2023,DOM"
+            },
+            "diffCheck": {
+              "status": "PASS",
+              "exitCode": 0,
+              "scope": "exact three changed owner files"
+            },
+            "reused": "C36 actual color swap and C40 actual stage/ADD/same-key replay/native controlled reads; not rerun."
+          },
+          "barcodeReadOnly": {
+            "query": {
+              "path": "POST /products/barcodes/query",
+              "bodyKeys": [
+                "productId",
+                "page",
+                "pageSize"
+              ],
+              "pageSizes": [
+                20,
+                50,
+                100
+              ],
+              "itemKeys": [
+                "id",
+                "barcode",
+                "skuId",
+                "skuCode",
+                "colorId",
+                "fitId",
+                "sizeId",
+                "kind",
+                "schemeId",
+                "enabled"
+              ],
+              "kindValues": [
+                "MAIN",
+                "CONFIRMED_OLD"
+              ],
+              "note": "schemeId and MAIN/CONFIRMED_OLD do not establish imported provenance, operator/time history, or arbitrary notes; DTO has no such fields."
+            },
+            "maintenance": {
+              "paths": [
+                "POST /products/commands",
+                "POST /products/v2/commands"
+              ],
+              "supported": "CREATE/EDIT supplied barcode array can insert new exact raw barcode binding or toggle existing enabled. Existing raw barcode/SKU/kind/scheme cannot change; omitted existing entries remain retained.",
+              "notDeletion": "DISABLE/RESTORE/DELETE actions are product-root actions. No per-barcode DELETE/REMOVE in existing command."
+            },
+            "sku": {
+              "read": "POST /products/specifications/query {productId} returns product coordinates and real SKU IDs; /products/maintenance/v2/detail/query gives editable aggregate SKU code/enabled/version.",
+              "gap": "No dedicated per-SKU detail HTTP entrance identified in product-owned routes; existing paged barcode row provides skuId+skuCode."
+            },
+            "provenanceHistoryNotes": "No existing barcode provenance/history-note DTO or writer identified. New fields/delete semantics require C/user decision; no implementation added.",
+            "sourceReferences": [
+              "apps/api/src/product-details-query-http.ts",
+              "packages/application/src/product-details-query-ports.ts",
+              "packages/application/src/product-details-query-validation.ts",
+              "adapters/postgres/src/product-details-query-reader.ts",
+              "packages/application/src/product-maintenance-validation.ts",
+              "packages/application/src/product-maintenance-service.ts",
+              "adapters/postgres/src/product-maintenance-store.ts",
+              "packages/application/src/product-query-ports.ts"
+            ]
+          },
+          "remaining": "D1 production composition and C R3 activation/actual HTTP-session-browser verification. R1 unchanged. D2 performed no PG/server/host/build/deploy/Git mutation.",
+          "handoff": "Exact HTTP contract sent directly to original F2 and stage API/type refinement to D1 under existing human authorization. C receives this receipt and current source pins."
+        },
+        "currentErrorDelta": {
+          "status": "SOURCE_READY_ERROR_MAPPING_DELTA_PASS",
+          "owner": "D2",
+          "cause": "D1 R3 actual stage authorization propagates existing PRODUCT_NOT_FOUND / PRODUCT_DELETED; map them consistently with the existing maintenance HTTP handler.",
+          "supersedes": "MEDIA-UPLOAD-HTTP-DELIVERY-v1.json source pins for the two HTTP files and corresponding error-code list only; retain all earlier scope/evidence limits.",
+          "files": [
+            {
+              "path": "apps/api/src/product-media-http.ts",
+              "sha256": "ffd1083894063482106b0dbcaacf68f6c942e834c2c2dbfc062a891ba883309d",
+              "change": "PRODUCT_NOT_FOUND=404, PRODUCT_DELETED=409"
+            },
+            {
+              "path": "apps/api/src/product-media-http.test.ts",
+              "sha256": "067088ce968091c61d04062d3755aff69627f5ba7f53362625e72c3be81a40d8",
+              "change": "Add both existing errors to the current error-mapping test"
+            }
+          ],
+          "checks": {
+            "affectedTest": {
+              "passed": 1,
+              "failed": 0,
+              "output": "✔ media upload HTTP preserves stage refusal/conflict/cancellation errors and never converts unknown failures to success (128.510334ms)\nℹ tests 1\nℹ suites 0\nℹ pass 1\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 285.532834\n"
+            },
+            "strictExactTwo": {
+              "exitCode": 0
+            },
+            "diffCheck": {
+              "exitCode": 0
+            },
+            "notRepeated": "Full HTTP/stage/codec/PG suites were not rerun."
+          },
+          "remaining": "D1/C own R3 host integration and activation; no D2 PG/server/build/deploy/Git mutations.",
+          "compositionClarification": "D1 reports local synthetic R3 chain PASS with original pool max1/pending0 and AsyncLocalStorage reusing current transaction evidence for CONSUME. This is D1-reported evidence, not a D2 rerun or production acceptance. C40 old max2 fixture is not a production precondition."
+        }
+      },
+      "files": [
+        {
+          "path": "apps/api/src/product-media-http.ts",
+          "owner": "D2",
+          "bytes": 7115,
+          "beforeSha256": "b7ccf416b9b3bb1665030cbe7bb861c976877979a9343001109aad7f1fbdbb99",
+          "sha256": "ffd1083894063482106b0dbcaacf68f6c942e834c2c2dbfc062a891ba883309d"
+        },
+        {
+          "path": "apps/api/src/product-media-http.test.ts",
+          "owner": "D2",
+          "bytes": 10528,
+          "beforeSha256": "fe402926210322eaab9e9842173dc4d6d00298d9d92580f1df048fccd3d40e78",
+          "sha256": "067088ce968091c61d04062d3755aff69627f5ba7f53362625e72c3be81a40d8"
+        },
+        {
+          "path": "adapters/media/src/product-media-stage.ts",
+          "owner": "D2",
+          "bytes": 27307,
+          "beforeSha256": "72592fdcce89fdac96117749c2a0e87c12c1fbb255aade72755226972cd91cd5",
+          "sha256": "fc636afe2209bcd7aeb1d4f434f99abdac57af81936141bdc1278d6274a9d302"
+        }
+      ]
+    },
+    {
+      "slice": "D3 ready original implementation delta",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json",
+      "receiptSha256": "320feabbfa62a54bb77a27d0260d3b36545bc29c465ff7c235c21329c8ae6954",
+      "receiptSnapshot": {
+        "taskId": "D3_CAPTURED_TRANSFER_LINE_GLOBAL_ORDER_ADAPTER",
+        "paths": [
+          "scripts/import-v3/native-transfer-line-source26.mjs",
+          "scripts/import-v3/native-transfer-line-source26.test.mjs"
+        ],
+        "scope": "Add pure capturedTransferLineRows26(index,kind,readRow,current) to existing registered consumer: TL26JOIN1 per-document index -> globally byte-sorted source12/typed13 streams for original full11 merger. It opens no files, confers no authority and preserves originals/mapping/docSHA. One Uint32 order array, no full DTO graph.",
+        "existingConsumerAndActualReplayChanged": false,
+        "newTest": "Node24 --max-old-space-size=1024 --test --test-concurrency=1 --test-name-pattern=captured transfer closure order: scripts/import-v3/native-transfer-line-source26.test.mjs",
+        "newTestResult": {
+          "tests": 1,
+          "pass": 1,
+          "fail": 0,
+          "scope": "Global source+typed order/full projections, old->canonical SKU fields, negative quantity, post-await close refusal; in-memory synthetic only."
+        },
+        "pending": "C freeze original exact2 and original QB only this new adapter. Do not repeat old genuine consumer/full261641, original6 or complete capture."
+      },
+      "files": [
+        {
+          "path": "scripts/import-v3/native-transfer-line-source26.mjs",
+          "owner": "D3",
+          "bytes": 35303,
+          "beforeSha256": "a8ac7e2a5f847d386a825d1ad0769e3d0db47a5ba0cebaaf3d46d1eb6aebbcbe",
+          "sha256": "587128f1534b5466f0b627d9fc1a1bf513dcf3ee381a1acf9f5e4486cf6b73c9"
+        },
+        {
+          "path": "scripts/import-v3/native-transfer-line-source26.test.mjs",
+          "owner": "D3",
+          "bytes": 27199,
+          "beforeSha256": "00ba449d8be148c410a1e536f503f7636a9a5d336b7f250ab13282b4bb03b738",
+          "sha256": "d0117cef062549ff317ce8c1ef1c59adda85b7995ec6cba47c31f083b6a3e5e8"
+        }
+      ]
+    },
+    {
+      "slice": "F3 ready original implementation delta",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/STAFF-FOCUS-RESULT.json",
+      "receiptSha256": "84af4d9062e7f3fd825cd6b5d9078905a660f55e13eacd2c0f7dbb46839c61dd",
+      "receiptSnapshot": {
+        "taskId": "F05/O-B04-staff-focus",
+        "clientDate": "2026-10-23",
+        "atUtc": "2026-10-23T03:59:36.389395+00:00",
+        "status": "SOURCE_FIXED_DIRECTLY_RELEVANT_CHECKS_PASS",
+        "files": [
+          {
+            "path": "apps/web/src/staff-settings/staff-form.tsx",
+            "beforeSha256": "81e9936a5cb20e4b3da981375bb19b342d710deb106b90abd03f179563614d44",
+            "sha256": "25c56a5b5066c9ed1db0ae5998a5ac27dfb56d60941e48728d66840b3b77e538"
+          }
+        ],
+        "change": "Remove only the whole-form onBlur wrapper; preserve existing directly migrated Fields/Modal and explicit native submit validation.",
+        "source": {
+          "frozenCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+          "demo": "frontend/basic-settings-v2.jsx Fields74-98 + App Modal184-186; no all-form blur validation",
+          "current": "application/routes/staff-settings.tsx -> staff-page.tsx -> StaffSettingsForm/StaffSettingsModal",
+          "adaptation": "Original formal submit/validation/password/controller behavior retained; remove non-Demo premature UI validation only",
+          "owner": "F3",
+          "actualBrowserVersion": "Pending next C integrated candidate/QF; source not browser acceptance"
+        },
+        "checks": {
+          "existingW8DomSetup": "Reused in memory; old historical script and old cases unchanged/not rerun. Only current focus/explicit submit case executed.",
+          "before": {
+            "focusErrorCount": 4,
+            "dirty": false,
+            "commands": 0,
+            "requestKeys": 0
+          },
+          "after": {
+            "focusErrorCount": 0,
+            "dirty": false,
+            "explicitSubmitStillValidates": true,
+            "commands": 0,
+            "requestKeys": 0
+          },
+          "strictTypes": "PASS this actual source root and real transitive dependencies using existing tsconfig options",
+          "diffCheck": "PASS",
+          "logs": [
+            "staff-focus-before.log",
+            "staff-focus-after.log",
+            "staff-focus-types.log"
+          ]
+        },
+        "unchanged": "Native controllers/http/DTO/password input lifecycle, formal prepare/audit capability, public Tabs/Pager, layout/field ordering and previous accepted scope",
+        "unmeasured": [
+          "Actual browser affected first-open/focus behavior",
+          "Formal performance or actual save/permissions/PG/deployment"
+        ],
+        "blockers": [],
+        "next": "C fixed exact1; original QF tests only this actual affected focus consumer in the next necessary integrated candidate. Reuse previous W8 protocol/other UI evidence.",
+        "antiOverDefense": "No new framework or admission/contract/audit/approval flow; no broad retest or new acceptance threshold. Existing mandatory C source-binding receipt format reused.",
+        "model": "gpt-6.1-sol/xhigh",
+        "fastEnabledByF3": false
+      },
+      "files": [
+        {
+          "path": "apps/web/src/staff-settings/staff-form.tsx",
+          "owner": "F3",
+          "bytes": 10592,
+          "beforeSha256": "81e9936a5cb20e4b3da981375bb19b342d710deb106b90abd03f179563614d44",
+          "sha256": "25c56a5b5066c9ed1db0ae5998a5ac27dfb56d60941e48728d66840b3b77e538"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Freeze12 ready originalowner files. D1 localrealSharp/syntheticDB focused3+affected2 and strict; D2 transport5+actualerror1 and strict; D3 newpureglobalorder1; F3 newfocus/submit+strict adopted only. OriginalQA review then necessary actualPG/HTTP/host/frontend affected tests remain. No newbackendfield/schema/index/write semantics. C128 actualbuild/pack excludes129; currentbrowser127 excludes128/129. F1 shared exact3 waits pairedF2 stabletype, not included. Existinganti-over-defense/no new process preserved."
+}

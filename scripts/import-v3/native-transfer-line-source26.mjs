@@ -111,6 +111,28 @@ export function createNativeTransferLine26BindingPreparer(options){
 }
 export function transferLineSourceEvidence26(row,selection){const s=row.source;return {id:s.id,batch_id:s.batchId,entity_type:s.entityType,source_key:s.sourceKey,file_ref:s.fileRef,sheet:s.sheet,row_no:s.rowNo,source_file_sha256:s.sourceFileSha256,row_sha256:s.rowSha256,raw_fields:s.rawFields,normalized_fields:s.normalizedFields,field_provenance:{...s.fieldProvenance,history_staging:{validator_version:'V3_TRANSFER_LINE_STAGE_1',fingerprint:row.fingerprint,selection}}};}
 
+/** Adapt the saved TL26JOIN1 index to an existing closure session's globally
+ * ordered stream. Caller retains the adopted artifacts/FDs and supplies its
+ * existing readRow/current operations. This pure adapter opens no files and
+ * grants no source, payload or import authority. */
+export async function* capturedTransferLineRows26(index,kind,readRow,current){
+ current();must(Buffer.isBuffer(index)&&index.length>=64&&index.subarray(0,9).toString('ascii')==='TL26JOIN1'&&index.readUInt32LE(12)===1&&['sourceRows','typedRows'].includes(kind)&&typeof readRow==='function','TRANSFER_LINE26_CAPTURED_INDEX');
+ const rows=index.readUInt32LE(16),headers=index.readUInt32LE(20),recordBytes=index.readUInt32LE(24),records=index.readUInt32LE(28),sourceOrderBytes=index.readUInt32LE(32),typedOrderBytes=index.readUInt32LE(36),directoryBytes=index.readUInt32LE(40);
+ must(recordBytes===256&&records===rows*256&&sourceOrderBytes===rows*4&&typedOrderBytes===rows*4&&directoryBytes===headers*36&&index.readUInt32LE(44)===64&&index.length===64+records+sourceOrderBytes+typedOrderBytes+directoryBytes,'TRANSFER_LINE26_CAPTURED_INDEX');
+ const source=kind==='sourceRows',relation=source?'import_source_row':'history_transfer_line',keyAt=source?64:128,keyLengthAt=source?60:61,order=new Uint32Array(rows);
+ const key=n=>{const at=64+n*256,length=index[at+keyLengthAt];must(length>0&&length<=64,'TRANSFER_LINE26_CAPTURED_KEY');return index.subarray(at+keyAt,at+keyAt+length);};
+ for(let n=0;n<rows;n++)order[n]=n;
+ // Saved permutations are grouped by document for documentSHA. Full11 streams
+ // instead require global relation/primary-key order; one uint32 array suffices.
+ order.sort((a,b)=>Buffer.compare(key(a),key(b)));
+ for(const n of order){
+  current();const at=64+n*256,offset=Number(index.readBigUInt64LE(at+(source?4:16))),bytes=index.readUInt32LE(at+(source?12:24));must(Number.isSafeInteger(offset),'TRANSFER_LINE26_CAPTURED_OFFSET');
+  const ref={offset,bytes,sha256:index.subarray(at+(source?192:224),at+(source?224:256)).toString('hex'),key:decode(key(n)),ordinal:index.readUInt32LE(at)},raw=await readRow(ref);current();
+  const row=historyClosureProjectionRow26(relation,raw.projection);must(raw.relation===relation&&raw.key===row.key&&row.key===ref.key,'TRANSFER_LINE26_CAPTURED_ROW');yield row;current();
+ }
+ current();
+}
+
 /** The new source review adopts exact finite original/canonical copies; the
  * separate reference review adopts the new join. Neither authorizes execution. */
 export async function openReviewedTransferLineSource26(options){

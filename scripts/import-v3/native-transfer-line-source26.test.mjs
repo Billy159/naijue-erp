@@ -4,7 +4,7 @@ import {mkdtemp,realpath,mkdir,writeFile,readFile,open,rm,rename,symlink} from '
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
-import {createNativeTransferLine26BindingPreparer,openReviewedTransferLineSource26} from './native-transfer-line-source26.mjs';
+import {createNativeTransferLine26BindingPreparer,openReviewedTransferLineSource26,transferLineSourceEvidence26,capturedTransferLineRows26} from './native-transfer-line-source26.mjs';
 import {stableImportId} from '../../packages/application/src/inventory-cutoff-import.ts';
 import {prepareV3HistoryChunk} from '../../packages/application/src/import-v3-history-staging.ts';
 import {IMPORT_V2_TABLES} from '../../packages/application/src/import-v2-contract.ts';
@@ -73,6 +73,17 @@ test('transfer lines category1: pure existing mapper preserves signed quantity, 
  const changed=model();changed.headers[0].historyId=id(999);changed.headers[0].header.id=id(999);assert.throws(()=>prepare(changed),/HEADER_REFERENCE/);
  const input=model(),q=prepare(input);input.headers[0].header.fromWarehouseId=id(999);input.skus[0].nativeSku.id=id(999);const kept=q.prepare({rawLine:input.rawLines[0],canonical:input.canonicals[0]});assert.equal(kept.prepared.line.sku_id,id(30));q.close();
  const invalid=model(),v=prepare(invalid),bad={...invalid.canonicals[0],原数量:'2'};assert.throws(()=>v.prepare({rawLine:invalid.rawLines[0],canonical:bad}),/NATIVE_BINDING/);v.close();
+});
+test('captured transfer closure order: saved document-grouped offsets yield globally sorted full source12/typed13 and stop after close',async()=>{
+ const m=model(),p=prepare(m),prepared=m.rawLines.map((rawLine,n)=>p.prepare({rawLine,canonical:m.canonicals[n]}).prepared);p.finish();
+ const pairs=prepared.map(r=>({source:historyClosureProjectionRow26('import_source_row',transferLineSourceEvidence26(r,m.selection)),typed:historyClosureProjectionRow26('history_transfer_line',r.line)})).sort((a,b)=>-order(a.source,b.source));
+ // The adapter only uses the saved offset/key section. Domain membership was
+ // established by the original producer; these two synthetic groups expose
+ // the ordering difference without opening that producer or any artifact.
+ const n=pairs.length,index=Buffer.alloc(64+n*256+n*4*2+n*36),buffers={sourceRows:[],typedRows:[]};index.write('TL26JOIN1');for(const [at,v]of [[12,1],[16,n],[20,n],[24,256],[28,n*256],[32,n*4],[36,n*4],[40,n*36],[44,64]])index.writeUInt32LE(v,at);
+ for(let i=0;i<n;i++){const at=64+i*256;index.writeUInt32LE(i,at);for(const [kind,row,keyAt,lengthAt,offsetAt,bytesAt,shaAt]of [['sourceRows',pairs[i].source,64,60,4,12,192],['typedRows',pairs[i].typed,128,61,16,24,224]]){const b=Buffer.from(JSON.stringify(row)+'\n'),key=Buffer.from(row.key),offset=buffers[kind].reduce((s,x)=>s+x.length,0);index.writeBigUInt64LE(BigInt(offset),at+offsetAt);index.writeUInt32LE(b.length,at+bytesAt);index[at+lengthAt]=key.length;key.copy(index,at+keyAt);Buffer.from(sha(b),'hex').copy(index,at+shaAt);buffers[kind].push(b);}}
+ assert.ok(order(pairs[0].source,pairs[1].source)>0);for(const kind of ['sourceRows','typedRows']){const bytes=Buffer.concat(buffers[kind]),seen=[],rows=[];for await(const row of capturedTransferLineRows26(index,kind,async r=>{const b=bytes.subarray(r.offset,r.offset+r.bytes);assert.equal(sha(b),r.sha256);seen.push(r.offset);return JSON.parse(b.toString());},()=>{}))rows.push(row);const expected=pairs.map(p=>p[kind==='sourceRows'?'source':'typed']).sort(order);assert.deepEqual(rows,expected);assert.equal(seen.length,n);if(kind==='sourceRows'){assert.equal(rows.find(r=>r.projection.raw_fields.SKU来源编号==='SKU-OLD').projection.normalized_fields.SKU来源编号,'SKU-CANONICAL');assert.equal(Object.keys(rows[0].projection).length,12);}else{assert.equal(Object.keys(rows[0].projection).length,13);assert.ok(rows.some(r=>r.projection.quantity==='-2'));}}
+ let active=true;const current=()=>assert.ok(active,'CAPTURE_CLOSED'),bytes=Buffer.concat(buffers.sourceRows),iter=capturedTransferLineRows26(index,'sourceRows',async r=>{active=false;return JSON.parse(bytes.subarray(r.offset,r.offset+r.bytes).toString());},current);await assert.rejects(iter.next(),/CAPTURE_CLOSED/);
 });
 test('transfer lines category2: genuine reader independently joins finite copies, complete source12/typed13 and staging provenance without opening original paths',async t=>{
  const f=await fixture(t),reader=await openReviewedTransferLineSource26(f.options);t.after(()=>reader.close());assert.equal(reader.report.rows,2);assert.equal(reader.report.headers,1);assert.equal(reader.report.originalSourceReads,0);assert.equal(reader.report.documentDigestsComplete,false);

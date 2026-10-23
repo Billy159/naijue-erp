@@ -1,11 +1,14 @@
+import sharp from "sharp";
+import { realpathSync } from "node:fs";
+import { CATALOGUE_PRICE_KEYS } from "../../../packages/application/src/catalogue-price-input.ts";
 import { sessionTokenHash } from "../../../packages/authentication/src/service.ts";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
 import { createProductionApplicationApi, createProductionRuntime26ApplicationApi, parseProductionRuntimeConfiguration, parseProductionRuntime26Configuration, productionApplicationOptions, PRODUCTION_PUBLIC_ORIGIN } from "./production-provider-composition.ts";
 import type { ProductionRuntimeConfiguration, ProductionRuntime26Configuration } from "./production-provider-composition.ts";
-import { createProductionRuntime26R2ApplicationApi, parseProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
-import type { ProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
+import { createProductionRuntime26R3ApplicationApi, parseProductionRuntime26R3Configuration, createProductionRuntime26R2ApplicationApi, parseProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
+import type { ProductionRuntime26R3Configuration, ProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
 import { runProductionMain } from "./production-main.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { createHash, pbkdf2Sync } from "node:crypto";
@@ -269,13 +272,15 @@ function exact26Fixture(purposes = ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_RE
     migration_versions: Array.from({ length: 26 }, (_, i) => i + 1), catalog_sha256: digest, source_routines_match: true };
   return { configuration, observation, cleanup: () => rmSync(directory, { recursive: true, force: true }) };
 }
-function exact26Driver(observation: ReturnType<typeof exact26Fixture>["observation"]) {
+function exact26Driver(observation: ReturnType<typeof exact26Fixture>["observation"], extra?: (sql: string, values: unknown[]) => Record<string, unknown>[] | undefined) {
   const calls: { lease: number; sql: string; values: unknown[] }[] = []; let allocations = 0, connects = 0, releases = 0, ends = 0;
   const token = Buffer.alloc(32, 27).toString("base64url"), now = new Date().toISOString(), expires = new Date(Date.now() + 60_000).toISOString();
   const driver = Object.assign(new EventEmitter(), { async connect() { const lease = ++connects; return Object.assign(new EventEmitter(), {
     async query(sql: string, values: unknown[] = []) {
       calls.push({ lease, sql, values }); let rows: Record<string, unknown>[] = [];
-      if (sql === NATIVE_RUNTIME26_METADATA_PROBE) rows = [structuredClone(observation)];
+      const supplied = extra?.(sql, values);
+      if (supplied !== undefined) rows = supplied;
+      else if (sql === NATIVE_RUNTIME26_METADATA_PROBE) rows = [structuredClone(observation)];
       else if (/^(BEGIN|COMMIT|ROLLBACK)/.test(sql)) {}
       else if (sql.includes("FROM naijue_erp.auth_session")) rows = [{ token_hash: sessionTokenHash(token), account_id: account, auth_version: 1, created_at: now, expires_at: expires, revoked_at: null }];
       else if (sql.includes("FROM naijue_erp.user_account a JOIN naijue_erp.staff s")) rows = [{ account_id: account, staff_id: "00000000-0000-4000-8000-000000000003", login_name: "SYNTHETIC_RUNTIME26",
@@ -313,7 +318,7 @@ test("production exact26: one owned original pool supplies actual issuer leases 
     const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
     try {
       assert.equal(api.app.server.listening, false); assert.deepEqual(p.counts(), { allocations: 1, connects: 2, releases: 2, ends: 0 });
-      for (const url of ["/sales/commands", "/transfers/commands", "/sales/prepare-create", "/transfers/prepare-create", "/sales/prepare-existing", "/transfers/prepare-existing", "/customers/commands", "/suppliers/commands"])
+      for (const url of ["/products/media/uploads", "/products/v2/commands", "/sales/commands", "/transfers/commands", "/sales/prepare-create", "/transfers/prepare-create", "/sales/prepare-existing", "/transfers/prepare-existing", "/customers/commands", "/suppliers/commands"])
         assert.equal(api.app.hasRoute({ method: "POST", url }), false, url);
       for (const url of ["/current-form/products/query", "/products/stock/query", "/imported-history/sales/query", "/imported-history/sales/detail/query", "/imported-history/transfers/query", "/imported-history/transfers/detail/query"])
         assert.equal(api.app.hasRoute({ method: "POST", url }), true, url);
@@ -414,6 +419,7 @@ test("production R2 exact26: fresh one-pool composition mounts commands and CREA
       const api = await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration, sales, transfers), p.factory);
       try {
         assert.equal(api.app.server.listening, false); assert.deepEqual(p.counts(), { allocations: 1, connects: 2, releases: 2, ends: 0 });
+        for (const url of ["/products/media/uploads", "/products/v2/commands"]) assert.equal(api.app.hasRoute({ method: "POST", url }), false);
         for (const [kind, enabled] of [["sales", sales], ["transfers", transfers]] as const) {
           assert.equal(api.app.hasRoute({ method: "POST", url: `/${kind}/commands` }), true);
           assert.equal(api.app.hasRoute({ method: "POST", url: `/${kind}/prepare-create` }), true);
@@ -462,4 +468,93 @@ test("production R2 exact26: missing command purpose aborts startup and closes o
     assert.equal(p.counts().allocations, 1); assert.equal(p.counts().ends, 1); assert.equal(p.counts().connects, p.counts().releases);
     assert.ok(p.calls.every(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE));
   } finally { f.cleanup(); }
+});
+
+function r3Configuration(base: ProductionRuntime26Configuration, root: string): ProductionRuntime26R3Configuration {
+  return { ...r2Configuration(base), profile: "source-confirmed-native-exact26-r3-v1", productMedia: { root, rootKey: "native-images" } };
+}
+test("production R3 media: explicit private root is isolated from R1/R2 and missing maintenance purpose closes its owned pool", async () => {
+  const f = exact26Fixture(), p = exact26Driver(f.observation), c = r3Configuration(f.configuration, "/private-original-images");
+  try {
+    assert.deepEqual(parseProductionRuntime26R3Configuration(c), c);
+    assert.throws(() => parseProductionRuntime26Configuration(c), TypeError);
+    assert.throws(() => parseProductionRuntime26R2Configuration(c), TypeError);
+    await assert.rejects(createProductionRuntime26R3ApplicationApi({ ...c, productMedia: { root: "relative", rootKey: "native" } }, p.factory), TypeError);
+    assert.equal(p.counts().allocations, 0);
+    await assert.rejects(createProductionRuntime26R3ApplicationApi(c, p.factory), { code: "NATIVE_RUNTIME26_NOT_READY" });
+    assert.equal(p.counts().ends, 1); assert.equal(p.counts().connects, p.counts().releases);
+  } finally { f.cleanup(); }
+});
+test("production R3 media: real private stage, original prepared transaction, rich read and controlled bytes share one bounded pool", async () => {
+  const purposes = ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ", "INVENTORY_ADMISSION", "PRODUCT_MAINTENANCE"];
+  const f = exact26Fixture(purposes), root = mkdtempSync(join(realpathSync(tmpdir()), "d1-r3-media-synthetic-"));
+  let image: Record<string, unknown> | undefined, productId: string | undefined, audit: unknown[] | undefined, receipt: Record<string, unknown> | undefined;
+  let denied = false;
+  const p = exact26Driver(f.observation, (sql, values) => {
+    if (sql.includes("maintenance:identity") && denied) return [];
+    if (sql.includes("maintenance:hall")) return [{ id: hall, enabled: true }];
+    if (sql.includes("maintenance:receipt")) return receipt ? [receipt] : [];
+    if (sql.includes("FROM naijue_erp.product WHERE id=$1::uuid FOR UPDATE")) return [];
+    if (sql.includes("FROM naijue_erp.product_category") || sql.includes("FROM naijue_erp.size_group WHERE")) return [{ id: values[0] }];
+    if (sql.includes("FROM naijue_erp.size_group_member")) return (values[1] as string[]).map(size_id => ({ size_id }));
+    if (sql.includes("FROM naijue_erp.supplier")) return [{ id: values[0], enabled: true }];
+    if (sql.includes("FROM naijue_erp.barcode_scheme")) return (values[0] as string[]).map(id => ({ id }));
+    if (sql.includes("FROM naijue_erp.color WHERE") || sql.includes("FROM naijue_erp.fit WHERE")) return (values[0] as string[]).map(id => ({ id, enabled: true, retained: true }));
+    if (sql.includes("FROM naijue_erp.product_image WHERE product_id")) return image ? [image] : [];
+    if (sql.includes("maintenance:audit")) { audit = values; return [{}]; }
+    if (sql.startsWith("INSERT INTO naijue_erp.product(")) { productId = values[0] as string; return [{}]; }
+    if (sql.startsWith("INSERT INTO naijue_erp.sku(")) return [{}];
+    if (sql.startsWith("INSERT INTO naijue_erp.product_image(")) {
+      image = Object.fromEntries(["id", "product_id", "file_ref", "mime", "byte_size", "display_order", "created_at", "created_by_account_id", "version", "image_role", "color_id"].map((key, i) => [key, values[i]])); return [{}];
+    }
+    if (sql.includes("maintenance:complete")) {
+      receipt = { id: values[0], request_hash: values[3], action: values[4], target_type: values[5], target_id: values[6], result_data: JSON.parse(values[7] as string), completed_at: values[8] };
+      return [{ result_data: receipt.result_data }];
+    }
+    if (sql.includes("product-maintenance:images")) return [{ id: productId, version: 1, images: image ? [{ ...image, created_at: (image.created_at as string).replace(/\.(\d{3})Z$/, ".$1000Z"), valid_color: true }] : [] }];
+    if (sql.includes("FROM naijue_erp.product_image i")) return image ? [image] : [];
+    return undefined;
+  });
+  const c = r3Configuration(f.configuration, root); (c.postgres as { maxPendingAcquisitions: number }).maxPendingAcquisitions = 0;
+  try {
+    const api = await createProductionRuntime26R3ApplicationApi(c, p.factory);
+    try {
+      assert.equal(api.app.server.listening, false);
+      for (const url of ["/products/media/uploads", "/products/v2/commands", "/products/maintenance/images/query", "/products/maintenance/v2/detail/query"]) {
+        assert.equal(api.app.hasRoute({ method: "POST", url }), true);
+        assert.equal((await api.app.inject({ method: "POST", url, payload: {} })).statusCode, 401);
+      }
+      const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` }, commandKey = "synthetic-r3-original-command";
+      const bytes = await sharp({ create: { width: 8, height: 4, channels: 3, background: "#123456" } }).png().toBuffer();
+      const uploadHeaders = { ...headers, "content-type": "image/png", "x-command-key": commandKey, "x-upload-key": "original-image" };
+      const upload = () => api.app.inject({ method: "POST", url: "/products/media/uploads", headers: uploadHeaders, payload: bytes });
+      const staged = await upload(); assert.equal(staged.statusCode, 200, staged.body); assert.deepEqual(Object.keys(staged.json()).sort(), ["byteSize", "expiresAt", "mime", "uploadId"]);
+      assert.deepEqual((await upload()).json(), staged.json());
+      denied = true; assert.equal((await upload()).statusCode, 403); denied = false;
+      const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
+      const missingTarget = await api.app.inject({ method: "POST", url: "/products/media/uploads", headers: { ...uploadHeaders, "x-product-id": id(999) }, payload: bytes });
+      assert.equal(missingTarget.statusCode, 404, missingTarget.body);
+      const command = { action: "CREATE", requestKey: commandKey, values: { productCode: "R3-SYNTHETIC", name: "Synthetic only", categoryId: id(91), supplierId: id(96), seasonIds: [], sizeGroupId: id(92),
+        year: 2026, systemItemCode: "00001", thickness: null, collarPantsType: null, defaultBarcodeSchemeId: id(97), enabled: true,
+        prices: Object.fromEntries(CATALOGUE_PRICE_KEYS.map(k => [k, k === "retail_price" ? "1.00" : null])) },
+        skus: [{ id: null, expectedVersion: null, skuCode: "R3-SYNTHETIC-SKU", colorId: id(93), fitId: id(94), sizeId: id(95), enabled: true }], barcodes: [],
+        imageChanges: [{ action: "ADD", uploadId: staged.json().uploadId, role: "MAIN", colorId: null, displayOrder: 0 }] };
+      const send = () => api.app.inject({ method: "POST", url: "/products/v2/commands", headers, payload: command });
+      const saved = await send(); assert.equal(saved.statusCode, 200, saved.body); assert.ok(audit && image && receipt);
+      const writeCount = p.calls.filter(c => /^(?:\/\* maintenance:(?:audit|complete) \*\/ )?(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)).length;
+      assert.deepEqual((await send()).json(), saved.json());
+      assert.equal(p.calls.filter(c => /^(?:\/\* maintenance:(?:audit|complete) \*\/ )?(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)).length, writeCount);
+      const writes = p.calls.filter(c => c.sql.includes("maintenance:audit") || c.sql.startsWith("INSERT INTO naijue_erp.product") || c.sql.startsWith("INSERT INTO naijue_erp.sku") || c.sql.includes("maintenance:complete"));
+      assert.equal(new Set(writes.map(c => c.lease)).size, 1); assert.ok(writes[0]!.sql.includes("maintenance:audit"));
+      const rich = await api.app.inject({ method: "POST", url: "/products/maintenance/images/query", headers, payload: { productId } });
+      assert.equal(rich.statusCode, 200, rich.body); assert.equal(rich.json().images[0].thumbnailState, "READY");
+      const link = new URL(rich.json().images[0].thumbnailUrl); assert.equal(link.origin, PRODUCTION_PUBLIC_ORIGIN); assert.ok(link.pathname.startsWith("/api/products/media/"));
+      assert.doesNotMatch(rich.body, /fileRef|staged-product-media|original.bin/);
+      const delivered = await api.app.inject({ method: "GET", url: link.pathname.slice(4), headers });
+      assert.equal(delivered.statusCode, 200, delivered.body); assert.equal(delivered.headers["content-type"], "image/webp"); assert.ok(delivered.rawPayload.length > 0);
+      assert.equal((await api.app.inject({ method: "GET", url: link.pathname.slice(4) })).statusCode, 401);
+      assert.equal(p.counts().allocations, 1); assert.equal(p.counts().connects, p.counts().releases); assert.equal(api.postgresBackgroundFailureCount, 0);
+    } finally { await api.close(); }
+    assert.equal(p.counts().ends, 1);
+  } finally { f.cleanup(); rmSync(root, { recursive: true, force: true }); }
 });

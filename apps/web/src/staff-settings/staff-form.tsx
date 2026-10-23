@@ -49,7 +49,7 @@ function StaffSettingsModal(props: { readonly title: string; readonly controller
     visible title={blocked ? '无法完成操作' : props.title} maskClosable={false} autoFocus={false} focusLock hideCancel={blocked} okText={blocked ? '知道了' : '确定'} cancelText={write.phase === 'committed' ? '关闭' : '取消'}
     okButtonProps={{ disabled: !blocked && (!controller.writesEnabled || controller.locked || Boolean(controller.intent === 'edit' && controller.record && !state.dirty)), loading: write.phase === 'submitting' }}
     onOk={blocked ? acknowledge : props.submit} onCancel={() => { if (controller.requestClose()) props.close(); }}>
-    <div onBlur={() => { if (!controller.locked) controller.validate(props.passwordReady); }}>{props.children}</div>
+    {props.children}
     {!controller.writesEnabled && !controller.hasUnresolvedWrite && write.phase !== 'committed' && <p className="settings-note" role="status">此版本暂未开放保存，填写的内容不会保存。</p>}
     {(write.phase === 'submitting' || write.phase === 'recovering') && <p className="settings-note" role="status">{write.phase === 'submitting' ? '正在保存，请等待结果。' : '正在查询原提交的回执…'}</p>}
     {write.phase === 'committed' && <p className="settings-note" role="status">保存成功。{state.readback.phase === 'loading' ? '正在读取最新员工与账号资料…' : state.readback.phase === 'ready' ? '已读取最新员工与账号资料。' : ''}</p>}

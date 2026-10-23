@@ -7,10 +7,10 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import type { PostgresApplicationApi } from "./postgres-read-api.ts";
 import { createProductionRequestHandler, startProductionApplicationHost } from "./production-application-host.ts";
 import { createProductionRuntime26RequestHandler, startProductionRuntime26ApplicationHost } from "./production-application-host.ts";
-import { createProductionRuntime26R2RequestHandler, startProductionRuntime26R2ApplicationHost } from "./production-application-host.ts";
+import { createProductionRuntime26R3RequestHandler, startProductionRuntime26R3ApplicationHost, createProductionRuntime26R2RequestHandler, startProductionRuntime26R2ApplicationHost } from "./production-application-host.ts";
 import { PRODUCTION_PUBLIC_ORIGIN } from "./production-provider-composition.ts";
 import type { ProductionRuntimeConfiguration } from "./production-provider-composition.ts";
-import { runProductionMain, runProductionRuntime26Main, runProductionRuntime26R2Main } from "./production-main.ts";
+import { runProductionMain, runProductionRuntime26Main, runProductionRuntime26R2Main, runProductionRuntime26R3Main } from "./production-main.ts";
 
 function config(root: string): ProductionRuntimeConfiguration {
   return { schemaVersion: 1, profile: "source-confirmed-native-v1", documentCommands: "DISABLED", publicOrigin: PRODUCTION_PUBLIC_ORIGIN,
@@ -132,4 +132,24 @@ test("runtime entry refuses public or linked config before constructing applicat
     const linked = path.join(root, "runtime-link.json"); await symlink(filename, linked);
     await assert.rejects(runProductionMain([linked]), /private configuration/);
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test("production R3 media host: original API prefix and public build boundary keep private media configuration out of assets/health", async () => {
+  const root = await build(), p = apiDouble();
+  try {
+    const configuration = { ...exact26Config(root), profile: "source-confirmed-native-exact26-r3-v1" as const,
+      documentCommands: "NATIVE_RUNTIME" as const, existingPreparation: { sales: true, transfers: false }, productMedia: { root: root + "-private-media", rootKey: "native" } };
+    const handle = await createProductionRuntime26R3RequestHandler({ api: p.api, configuration });
+    invoke(handle, "/api/products/media/uploads", "POST"); invoke(handle, "/api/products/media/product/image/revision/thumbnail");
+    assert.deepEqual(p.routed, ["/products/media/uploads", "/products/media/product/image/revision/thumbnail"]);
+    assert.equal(invoke(handle, "/assets/app.js").body, "SYNTHETIC_EMITTED_BUILD_ONLY");
+    const health = invoke(handle, "/healthz").body!;
+    assert.ok(!health.includes("productMedia") && !health.includes(configuration.productMedia.root) && !health.includes("runtime26Review"));
+    assert.equal(invoke(handle, "/assets/manifest.json").status, 404);
+    await assert.rejects(createProductionRuntime26R2RequestHandler({ api: p.api, configuration: configuration as never }), TypeError);
+  } finally { await rm(root, { recursive: true, force: true }); }
+  await assert.rejects(startProductionRuntime26R3ApplicationHost({ api: p.api, configuration: {} as never }), TypeError);
+  assert.equal(p.closed(), 1);
+  await assert.rejects(runProductionRuntime26R3Main([]), TypeError);
+  await assert.rejects(runProductionRuntime26R3Main(["relative-config.json"]), TypeError);
 });
