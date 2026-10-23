@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "443329a173a27a1797e9723cb0a132ed8de44f0a",
+    "headObserved": "de97d9efdbd6d250949dc9eb2bd226a972302021",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "cd6046a238e7b779f1deae2a96472c9d1141be54",
+    "remoteHeadVerified": "1eef32a45da5f422415077b2c4074d0d83b6aeee",
     "remoteReadbackMethod": "Exact3 original objects/nonforcedFF/independentGET",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -963,9 +963,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T19:38:19.596117+00:00",
+  "updatedAt": "2026-10-23T19:58:32.484762+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "cd6046a238e7b779f1deae2a96472c9d1141be54",
+  "lastVerifiedRemoteCommit": "1eef32a45da5f422415077b2c4074d0d83b6aeee",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1425,19 +1425,23 @@
     "deploymentTools": "C63_ACTUAL_PRODUCTION_CI_NATIVE_APP_PROXY_KEY_RESOURCES_PASS_NOT_BUSINESS",
     "bootPersistence": "QB128_AND_QB130_SOURCE_PASS_NOT_INSTALLED",
     "currentSourceCheckpoint": {
-      "round": 213,
-      "commit": "443329a173a27a1797e9723cb0a132ed8de44f0a",
-      "latestServedPreviewRound": 207,
-      "qualification": "210ledger/211empty/212hostdispose/213sizepopup fixed not yet built or browser accepted; original103 docnav still in flight"
+      "round": 215,
+      "commit": "de97d9efdbd6d250949dc9eb2bd226a972302021",
+      "latestServedPreviewRound": 214,
+      "qualification": "T02 newcombined matrix/bottom sourceP2 directed repair;215 notin214. Source/actual/business/performance separate."
     },
     "currentPreview": {
-      "sourceRound": 207,
-      "sourceCommit": "fa9dc429b62a317062dc98dc5dc8df5c79d0ada3",
-      "buildId": "ui-preview-fa9dc42-01-build01",
-      "url": "http://127.0.0.1:57869/synthetic-unified.html",
-      "htmlBytes": 3387809,
-      "htmlSha256": "dbea0f5f94afda0d504e0df1444544aad186940c2d917d7bcf2a4979f5af4f1a",
-      "qualification": "SYNTHETIC_ONLY; no210-213/noPG/save/approval/formalperformance"
+      "sourceRound": 214,
+      "sourceCommit": "1eef32a45da5f422415077b2c4074d0d83b6aeee",
+      "buildId": "ui-preview-1eef32a-01-build01",
+      "url": "http://127.0.0.1:57870/synthetic-unified.html",
+      "htmlBytes": 3404937,
+      "htmlSha256": "baa577c4eaaef91ee5807de0f1ab73506e848f19e3ad4ab7619645c34dceb962",
+      "actualInputs": 412,
+      "actualModulesIncludingDependencies": 1367,
+      "pid": 98631,
+      "session": 75035,
+      "qualification": "SYNTHETIC_ONLY; I07 ledger/source navigation unavailable inthisharness; no215/noPG/business/formalperformance"
     },
     "currentDatabase": {
       "name": "erp_rewrite_20261022_r1",
@@ -1678,7 +1682,7 @@
     "v11DatabasePatchExecuted": false,
     "browserLease": {
       "owner": "QF2",
-      "scope": "C207 P01 inset/source205 and shared idle/source207 affected actual only",
+      "scope": "Fixed214 originalP01 inset/idle then213size/211empty affected actual",
       "candidateTarget": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
       "demoTarget": "7F93D5A61A99F1C00FB3C0F089081F1F",
       "viewport": "1470x668 DPR2",
@@ -1688,7 +1692,9 @@
         "DB7CA658365B213EEE3EB1333946E5BA",
         "3BC874911D0D2415D093603E264B0D67"
       ],
-      "allOthers": "NO_BROWSER; serialized only; no independent contexts proven"
+      "allOthers": "NO_BROWSER; serialized only; no independent contexts proven",
+      "sourceCommit": "1eef32a45da5f422415077b2c4074d0d83b6aeee",
+      "url": "http://127.0.0.1:57870/synthetic-unified.html"
     }
   },
   "supplementalRoles": {
@@ -2358,15 +2364,70 @@
       "bytes": 1015,
       "sha256": "dcbfafac485576d3f821033d752d326020b7e9b8d8482dad37ef1223a8de55c6",
       "result": "PASS_LIMITED_C198_ORIGINAL_P2_SOURCE_RETEST"
+    },
+    {
+      "id": "QF-V052",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v052-qf-c207-spec-class-rapid-actual/RESULT.json",
+      "bytes": 9474,
+      "sha256": "d7b566ab99c6879d4802b6396b352ed729916c0f0cd8f1fbe872b52e0f193e7a",
+      "result": "PASS_SCOPED_C207_SPEC_CLASS_NATIVE_TWO_FAST_DIAGNOSTICS_NOT_REPRODUCED_HISTORICAL_P1_OPEN",
+      "scope": "CLASS_SCOPED_ACTUAL_PASS_TWO_FAST_DIAGNOSTICS_NOT_REPRODUCED_OLD_P1_OPEN",
+      "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+    },
+    {
+      "id": "QF-V053",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v053-qf-c209-sales-local-line-source/RESULT.json",
+      "bytes": 12133,
+      "sha256": "89a49b00fede69b8038a0f6d0c2d57f2cf59a57c6aed0c6132388c981f480eb7",
+      "result": "PASS_BOUNDED_C209_SALES_LOCAL_SPEC_LINE_SOURCE_PENDING_ACTUAL",
+      "scope": "SOURCE209_ONLY",
+      "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+    },
+    {
+      "id": "QF-V054",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v054-qf-c214-ledger-source-host-source/RESULT.json",
+      "bytes": 13643,
+      "sha256": "658f1c81fc8158c5d9d8682fdf875a0f51aa776fe0f67d3a61759329ea486b70",
+      "result": "PASS_BOUNDED_C214_ORIGINAL_LEDGER_SOURCE_DOCUMENT_HOST_SOURCE_PENDING_ACTUAL",
+      "scope": "SOURCE214_DOCUMENT_HOST_ONLY",
+      "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+    },
+    {
+      "id": "QF2-C212",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c212-product-recovery-host-dispose-fix-source-01/RESULT.json",
+      "bytes": 1169,
+      "sha256": "7e44b72c5bfdfeb9cd0c3dbef728c2c30a154ce7a50a294cab6de46c10c74fda",
+      "result": "PASS_SOURCE_LIMITED_HOST_DISPOSE_FIX",
+      "scope": "SOURCE212_ORIGINAL_P2_ONLY_CLOSED",
+      "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+    },
+    {
+      "id": "QF2-C210",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c210-native-ledger-frozen-source-01/RESULT.json",
+      "bytes": 1546,
+      "sha256": "1c2de446743b040c1238216a962a7a75bba651202fafa43601e8f3baa059c862",
+      "result": "PASS_SOURCE_LIMITED_NEW_LEDGER_CONSUMER",
+      "scope": "SOURCE210_NEW_LEDGER_CONSUMER_ONLY",
+      "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+    },
+    {
+      "id": "QF2-C214-P01",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c214-product-list-fix-actual-01/RESULT.json",
+      "bytes": 1456,
+      "sha256": "a66f8ed05fb841d4cb1a903bb63453dd8bba123bf9c9c94b74a82dfbd0b3c294",
+      "result": "PASS_ORIGINAL_TWO_FINDINGS_LIMITED_ACTUAL_C214",
+      "scope": "ACTUAL214_ORIGINAL_TWO_P01_FINDINGS_ONLY_RESIDUALS_OPEN",
+      "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
     }
   ],
   "newPendingReviews": [
-    "Original QB human/toolresume: QA101 fourpurpose andR1C103 exactmetadata; B07source203/ledger208 pending. No QB2/repeated oldops.",
-    "C102 normalSAVE prepared/disabled; independent newmetadata review pending; no issuer oractual runner execution.",
-    "QF offline final207CLASS/fast andsource209; QF2 source212/new210 then sole207P01 actual. No213fix actual in207.",
-    "F1 originalchunk103 readonly source-doc host exact11, temporary contracts.ts owner; T02 local Enter next.",
-    "Newcomplete213 UI/production prepare; actualbuild afterQF2 measurement clean.",
-    "V13 two nullable ledger quantities/check/beforeguard human confirmation pending; onlythisbranch waits."
+    "OriginalQB human/toolresume QA101fourpurpose/R1C103; noQB2 oroldopsrepeat",
+    "C102prepared/disabled pendingnewmetadata independentreview",
+    "QF215 newmatrix-first bottom-second counterexample; F1targetedRED/fix; othervalidscope adopted",
+    "QF2sole214 originalP01 limitedpass,213size/211empty actualthenclean",
+    "C nextreadonlyledgerUI syntheticfixture/modulepreview preparation; 214notavailableledger",
+    "V13 humanconfirmation onlyrelatedDDL/writer branch waits",
+    "B07 retainedactualIDs captured; finiteDRAFT input planready, approved/NULLdate/v12/currentWRITE stillmissing"
   ],
   "openFindingsCurrent": [
     {
@@ -2583,15 +2644,15 @@
     {
       "id": "QF2-P01-PAGE-INSET-01",
       "owner": "F2",
-      "status": "SOURCE205_FIXED_NEW_ACTUAL_RETEST_PENDING",
-      "version": "205",
+      "status": "CLOSED_LIMITED_C214_ACTUAL_QF2",
+      "version": "214",
       "next": "QF2 nextfixed actual P01inset only"
     },
     {
       "id": "QF2-P01-IDLE-FILTER-SURFACE-01",
       "owner": "F1",
-      "status": "C207_FIXED_QFV051_SOURCE_PASS_ACTUAL_RETEST_PENDING",
-      "version": "actual196",
+      "status": "CLOSED_ORIGINAL_BG_AND_TRUNCATION_ONLY_C214_ACTUAL_RESIDUAL_SEPARATE",
+      "version": "214",
       "next": "Exactshared idle inputs/tokens, QF source then QF2 P01 consumers"
     },
     {
@@ -2612,8 +2673,22 @@
       "id": "QF2-P-RECOVERY-HOST-DISPOSE-CALLBACK-01",
       "severity": "P2",
       "owner": "F1",
-      "status": "SOURCE212_FIXED_QF2_AFFECTED_SOURCE_RETEST_IN_PROGRESS",
+      "status": "CLOSED_LIMITED_C212_SOURCE_RETEST_QF2",
       "version": "212"
+    },
+    {
+      "id": "QF2-P01-IDLE-FILTER-RESIDUAL-01",
+      "owner": "F1",
+      "status": "TOKEN_X_PLUS4_SEARCH13_VS14_UNCLASSIFIED_REMAINING_DIFFERENCE_OWNER_DIRECTED",
+      "version": "214"
+    },
+    {
+      "id": "DOC-215-T02-MATRIX-ENTRY-COORDINATE-01",
+      "owner": "F1",
+      "status": "NEW_SOURCE_P2_COMPOSITION_COUNTEREXAMPLE_OWNER_RED_FIX_PENDING",
+      "version": "215",
+      "severity": "P2",
+      "actualBrowserReproduced": false
     }
   ],
   "historicalFailuresPreserved": true,
@@ -3429,13 +3504,97 @@
       "newProduction": "r1-c213-production-prep-20261024-01 PREPARING_NOT_BUILT;209 retained unexecuted superseded input",
       "B07Baseline": "Existing real publication run2 retained but threeDRAFT/nonNULLdate; no actual IDs/OID/currentmetadata captured; D1 narrow continuation pending",
       "openP1": "Rapid quantity/mixedprice causeUNKNOWN; one new nonreproduction does not close"
+    },
+    "latestRound215": {
+      "atUtc": "2026-10-23T19:58:32.484762+00:00",
+      "latestSource": {
+        "round": 215,
+        "commit": "de97d9efdbd6d250949dc9eb2bd226a972302021",
+        "latestServedPreviewRound": 214,
+        "qualification": "T02 newcombined matrix/bottom sourceP2 directed repair;215 notin214. Source/actual/business/performance separate."
+      },
+      "runtime": {
+        "sourceRound": 214,
+        "sourceCommit": "1eef32a45da5f422415077b2c4074d0d83b6aeee",
+        "buildId": "ui-preview-1eef32a-01-build01",
+        "url": "http://127.0.0.1:57870/synthetic-unified.html",
+        "htmlBytes": 3404937,
+        "htmlSha256": "baa577c4eaaef91ee5807de0f1ab73506e848f19e3ad4ab7619645c34dceb962",
+        "actualInputs": 412,
+        "actualModulesIncludingDependencies": 1367,
+        "pid": 98631,
+        "session": 75035,
+        "qualification": "SYNTHETIC_ONLY; I07 ledger/source navigation unavailable inthisharness; no215/noPG/business/formalperformance"
+      },
+      "production214": "Actualbuild0/4.659sec/pack0/225members/1291565B9d9b8b96/oneextract; NOT Linuxinstall/privateapp/deploy",
+      "B07ActualCapture": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/operational-checkpoints/C03-B07-RETAINED-READONLY-CAPTURE.json",
+      "B07Remaining": "AllDRAFT/nonNULLdate; v12/HREV/newwriteprovider/currentreview andAPPROVED/NULLdate stillmissing",
+      "F1Next": "Originalmatrix-vs-bottom215 sourceP2 necessaryRED/fix first, thenP01 tokenx+4/searchfont residual only ifexactcascade evidenced",
+      "QF2": "Sole214P01 actuallimitedpass; size/empty inprogress thenclean",
+      "nextSyntheticPreview": "ui-preview-de97d9e-01 C-ownedfiniteledgerUI fixture/wiring implementation; formalgrant/realbusiness neverclaimed",
+      "independentAdopted": [
+        {
+          "id": "QF-V052",
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v052-qf-c207-spec-class-rapid-actual/RESULT.json",
+          "bytes": 9474,
+          "sha256": "d7b566ab99c6879d4802b6396b352ed729916c0f0cd8f1fbe872b52e0f193e7a",
+          "result": "PASS_SCOPED_C207_SPEC_CLASS_NATIVE_TWO_FAST_DIAGNOSTICS_NOT_REPRODUCED_HISTORICAL_P1_OPEN",
+          "scope": "CLASS_SCOPED_ACTUAL_PASS_TWO_FAST_DIAGNOSTICS_NOT_REPRODUCED_OLD_P1_OPEN",
+          "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+        },
+        {
+          "id": "QF-V053",
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v053-qf-c209-sales-local-line-source/RESULT.json",
+          "bytes": 12133,
+          "sha256": "89a49b00fede69b8038a0f6d0c2d57f2cf59a57c6aed0c6132388c981f480eb7",
+          "result": "PASS_BOUNDED_C209_SALES_LOCAL_SPEC_LINE_SOURCE_PENDING_ACTUAL",
+          "scope": "SOURCE209_ONLY",
+          "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+        },
+        {
+          "id": "QF-V054",
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v054-qf-c214-ledger-source-host-source/RESULT.json",
+          "bytes": 13643,
+          "sha256": "658f1c81fc8158c5d9d8682fdf875a0f51aa776fe0f67d3a61759329ea486b70",
+          "result": "PASS_BOUNDED_C214_ORIGINAL_LEDGER_SOURCE_DOCUMENT_HOST_SOURCE_PENDING_ACTUAL",
+          "scope": "SOURCE214_DOCUMENT_HOST_ONLY",
+          "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+        },
+        {
+          "id": "QF2-C212",
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c212-product-recovery-host-dispose-fix-source-01/RESULT.json",
+          "bytes": 1169,
+          "sha256": "7e44b72c5bfdfeb9cd0c3dbef728c2c30a154ce7a50a294cab6de46c10c74fda",
+          "result": "PASS_SOURCE_LIMITED_HOST_DISPOSE_FIX",
+          "scope": "SOURCE212_ORIGINAL_P2_ONLY_CLOSED",
+          "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+        },
+        {
+          "id": "QF2-C210",
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c210-native-ledger-frozen-source-01/RESULT.json",
+          "bytes": 1546,
+          "sha256": "1c2de446743b040c1238216a962a7a75bba651202fafa43601e8f3baa059c862",
+          "result": "PASS_SOURCE_LIMITED_NEW_LEDGER_CONSUMER",
+          "scope": "SOURCE210_NEW_LEDGER_CONSUMER_ONLY",
+          "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+        },
+        {
+          "id": "QF2-C214-P01",
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c214-product-list-fix-actual-01/RESULT.json",
+          "bytes": 1456,
+          "sha256": "a66f8ed05fb841d4cb1a903bb63453dd8bba123bf9c9c94b74a82dfbd0b3c294",
+          "result": "PASS_ORIGINAL_TWO_FINDINGS_LIMITED_ACTUAL_C214",
+          "scope": "ACTUAL214_ORIGINAL_TWO_P01_FINDINGS_ONLY_RESIDUALS_OPEN",
+          "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+        }
+      ]
     }
   },
   "latestReadySource": {
-    "round": 213,
-    "commit": "443329a173a27a1797e9723cb0a132ed8de44f0a",
-    "latestServedPreviewRound": 207,
-    "qualification": "210ledger/211empty/212hostdispose/213sizepopup fixed not yet built or browser accepted; original103 docnav still in flight"
+    "round": 215,
+    "commit": "de97d9efdbd6d250949dc9eb2bd226a972302021",
+    "latestServedPreviewRound": 214,
+    "qualification": "T02 newcombined matrix/bottom sourceP2 directed repair;215 notin214. Source/actual/business/performance separate."
   },
   "pendingUserDecision": [
     {

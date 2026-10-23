@@ -1,3 +1,15 @@
+最新接续（2026-10-24，北京时间；源码215、运行候选214）：
+
+- 实际可看：http://127.0.0.1:57870/synthetic-unified.html ，固定source214=1eef32a45da5f422415077b2c4074d0d83b6aeee／build ui-preview-1eef32a-01-build01。一次编译0，HTML3404937B／baa577c4…，412输入／1367模块；PID98631/session75035，3关键HTTP200逐字及版本头一致。原207保留。当前QF2独占原两个受控目标，已切新214，不操作保护DB7/3BC。
+- 原QFv052：CLASS原生30px/SVG10限定实测通过；数量12和退换价格10本次各一次未复现，原P1原因UNKNOWN继续OPEN。QFv053接受209 SALE本地组内缺规格行；QFv054接受214原流水单据详情接缝，均只限定源码、不冒Chrome/真实权限。QF2独立接受210新ledger消费者并关闭212宿主退休回调源问题；主控采用结论不重验。
+- QF2已在214关闭原P01页面偏移/搜索框白底/默认文字截断：7主要区域xywh差0、按需年份候选和Esc无额外查询。token内侧x+4px、search13px对Demo14px残差仍单列交原F1，不算公共控件全像素或整页通过。QF2继续本组尺码下拉及库存空态的受影响复验，结束明确clean/release。
+- 新源215=de97d9e：T02本地组内缺SKU Enter/确认6文件已固定并交原QF；不在214。QF发现新组合源反例DOC-215-T02-MATRIX-ENTRY-COORDINATE-01/P2：先matrix缺规格4，再底行同规格2可能留隐藏重复map。已交原F1真实模型定向RED→修，沿Demo原重复录入确认/取消，不能丢任一输入；未冒实际复现或关闭。
+- 同固定214生产build实际0／4.659秒，pack225成员／1291565B／9d9b8b96…，一次解包读回一致。仅本地生产包，不是Linux安装、新私有应用、数据就绪或公网切换；202旧包和213/209未执行准备保留，不重构建旧输入。
+- C实际将原已发布非空run2保全物物理CoW到私有隔离副本，socket-only PG17.11、全部READ ONLY读回OID16385/schema naijue_erp/migration19。header3均DRAFT且日期非空，lines33/settlements2/source57/claim5/receipt3/audit3、原ledger1/balance1=-7；UUID及hash私有捕获，不复制行值入Git。原件从未启动，副本已停。首轮误查public后formatter失败保留，修为原schema后成功，无DML/DDL/重PUBLISH。D1已基于实际指针补有限DRAFT接续，APPROVED/NULLdate/v12/真实WRITE仍缺。
+- 新215合成ledger预览接入由C原槽实施中：只有限UI标记数据和原严格reader，原103商品/SKU/组身份保留，无真实权限/业务证据。当前214合成harness尚未开放I07/source导航，不能记实际可用；原生产源码host214存在不替代实际接入。此新完整模块另固定候选，不改当前214。
+
+GitHub准确已回读1eef32a（6原提交非强制前进），本段与215下一精确同步。原QB接续工具与v13确认仅相关分支等待；C102执行仍关闭。104／局部48／整页0／整类0；整体ACTIVE，gpt-6.1-sol/xhigh，Fast工具无开关未核验。下方历史保留，以本段与TASKS.currentContinuation为当前依据。
+
 最新接续（2026-10-24 北京时间，source213）：
 
 - 新增固定源码：210=225fa384（F2 原 I07/I08 流水筛选、精确总数、20条编号及完整 Demo 界面消费者5文件）；211=0b4cce5（库存空态图标仅56→48）；212=28ac1e6（F1 整宿主关闭时退休恢复回调1文件）；213=443329a（F2 新增规格尺码下拉复用既有公共单选1文件）。原owner定向检查采用，QF2仅验新增/受影响范围，未登记整页或真实业务通过。
