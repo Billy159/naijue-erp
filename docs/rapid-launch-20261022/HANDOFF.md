@@ -1,3 +1,15 @@
+当前接续 2026-10-23T05:15:17.802350+00:00：开发最新C138 `f0a0deda3e03b2a53b5f4177c5651f5219b3220d`；当前可打开完整合成候选C137 http://127.0.0.1:57854/synthetic-unified.html ，原QF仍先收C134同标签SALE模块，再接137，不把新源码当已浏览器通过。
+
+部署优先继续：根因A已实证解决（xtend4.0.2/CLI cache下一级_cacache接错，54真实Linux离线ci、56原生Sharp成功）。61进入最终HTML声明版本核对失败：旧PUBLIC-CONFIG仍引用C103asset目录；已修本轮实际构建输入，源码仍C132，新build r1-c28ea3f-20261023-02，HTML css/js均新版本，4.122秒原build/208成员1303210B包5ea76a5c通过。没有patchHTML/代理或弱化版本核对。62传输仍40s超时，C只读核无request/.tmp/result、dispatcherREADY、8已传文件完整，未执行/安装，保留partial不重放。138只修原client同CLI一次认证连接复用，原认证/主机校验/40s和job边界不变；QB新delta后用新63同02包。A通过/B尚待实际完整成功，不能称部署解除或正式已上线。
+
+前端未停：137实际一次build/3HTTP通过，400输入383源码+981锁依赖=1364，HTML3075123B/d2dac148。完整含F2产品六页签/UI媒体与普通读optional接线、F1调拨source矩阵/共享native层、F3focus/portal两P2、S01empty current1。135/136只prebuild合批未各构建。QF134实际pending多行/下一空行、显式SKU/原输入返回、单Add多Delete/25.00、规格inline→250上方menu/双Esc已有限证据；filledrow38.5对Demo39残差交F1。QF仍接mixed/700。全站104、局部48、整页整类0，未批准差异/未接入仍未完成。F2原F03库存source继续，F3准确等同版137回执及宿主真实cap，不凑任务。
+
+导入并行：28282销货Header六字段来源身份候选真实一次7.488秒，10775442B/5490f64e，42561容器一遍gzip且0rows再扫；QB154新候选一次流读规则/唯一/完整性通过并采用。它只作source→稳定历史ID，不证明完整Header/厅/PG/FK/导入，原D3据此继续80918细行/25779收退；NULL27只卡相关分支，旧source/大调拨不再重读。D2普通read5与F2同批source135已QB155通过，真PG/业务待做。QA H0652真实缺原生CREATE链，原D2freshV2fixture待C真实cutoff及候选前提读取，未造batch/audit链。
+
+GitHub最后已精确对象非强推同步并独立回读5a05b485，135–138及本记录继续同步。后续构建PUBLIC-CONFIG.assets.basePath必须使用本次实际buildId，不能再逐字复用旧build路径。九角色22任务、模型gpt-6.1-sol/xhigh/Fast关闭请求、字段确认、数据保护、必要UI/业务/性能验收和分批发布继续；目标未完成。
+
+以下历史保留；当前执行以上方及TASKS/currentContinuation为准。
+
 当前接续 2026-10-23T04:48:38.086762+00:00：最新开发固定C134 `934f981798957481e98427bd4def658dd60ffa1d`；实际应用包仍C132 `c28ea3f74d7fa2e4b1be1fb13bee99f5df70780e` / `r1-c28ea3f-20261023-01`，两者分开绑定。
 
 部署优先：C132原构建4.82秒、208成员包1303229B/5be77a55真实通过。59在任何永久安装前0.819秒拒NON_RUNTIME_ARCHIVE_MEMBER，原因部署工具旧正则误拒合法商品配图JS；C134只补原localpack相同exactpattern，2新检查红绿及207实际成员名字通过，QB153定向采用。原60同包、同lock、同Linux/Node/npm、54已成功离线cache、原nginx修复/真实模块检查已提交传输；仍待真实ci/start/resources，不把准备称解除。原失败59/131及45/48等保留，无公网切换/业务导入。

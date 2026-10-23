@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "934f981798957481e98427bd4def658dd60ffa1d",
+    "headObserved": "f0a0deda3e03b2a53b5f4177c5651f5219b3220d",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "c28ea3f74d7fa2e4b1be1fb13bee99f5df70780e",
+    "remoteHeadVerified": "5a05b485cb3a9e38bfbce9e98af17c958abd8daf",
     "remoteReadbackMethod": "Exact3 original objects/nonforcedFF/independentGET",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -78,7 +78,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "C134chunk70 exact5 fixed/released nextT02 source; nextpreviewQF affectedSALE"
+      "currentWork": "C137emptyPagerfixed; sourceSALE filledrow0.5px actualresidual target; QF134mixedcontinue"
     },
     "F2": {
       "title": "前端库存与商品",
@@ -93,7 +93,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Wholeproduct6tabs/nativeSharedTabs/media realHTTP WIP; C130contractstable"
+      "currentWork": "C135productfixed/released; originalF03 inventorysource+sourcechoiceUI working, twooldDOMtestselectors registered no semanticassert weakening"
     },
     "F3": {
       "title": "前端基础设置",
@@ -107,7 +107,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "OriginalQF newP2 maintenance initialfocus/2Esc sourcefix active"
+      "currentWork": "C136exact4fixed; waits nextactual137 QFtwoP2/realhostcap, no sourceWIP or fakework"
     },
     "D1": {
       "title": "后端宿主事务与公共迁移",
@@ -154,7 +154,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "C133sourceidentity6 QB152 adopted; originalonewindow options preparation no sourceopened"
+      "currentWork": "Actual6fieldcandidate QB154adopted; prepare original80918/25779 source binding consumption minimalremainingproof"
     },
     "QF": {
       "title": "前端独立验收",
@@ -182,7 +182,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "C149/C150sourceprotocol adopted, onlynextnewdelta"
+      "currentWork": "QB154actualidentity/QB155ordinaryprojectionadopted;C138originaltransportdelta"
     }
   },
   "tasks": [
@@ -936,9 +936,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T04:48:38.086762+00:00",
+  "updatedAt": "2026-10-23T05:15:17.802350+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "c28ea3f74d7fa2e4b1be1fb13bee99f5df70780e",
+  "lastVerifiedRemoteCommit": "5a05b485cb3a9e38bfbce9e98af17c958abd8daf",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1397,20 +1397,20 @@
     "accountIdentityAdditional4": "QB42_IDENTITY_ONLY_ACCEPTED_FALSE_EXECUTION",
     "deploymentTools": "QB38_SOURCE_PROTOCOL_PASS_REAL_DEPLOY_NOT_RUN",
     "bootPersistence": "QB128_AND_QB130_SOURCE_PASS_NOT_INSTALLED",
-    "currentSourceCheckpoint": "934f981798957481e98427bd4def658dd60ffa1d",
+    "currentSourceCheckpoint": "f0a0deda3e03b2a53b5f4177c5651f5219b3220d",
     "currentPreview": {
-      "url": "http://127.0.0.1:57852/synthetic-unified.html",
-      "source": "82d01cae78b08440068f04adb2883e686ea6e81f",
-      "build": "ui-preview-82d01ca-01-build01",
-      "pid": 55188,
-      "sessionId": 83161,
-      "htmlSha256": "14f4761b7dc45360b4b6fd439626430025f3cb9906e6b00abed50cf24842aa49",
-      "identitySha256": "80555aa26168e83f98293c6df0b82548f6bec8bb1ae049ecf84f0d6050987d85",
-      "provenanceSha256": "862ffd9cf96efd0936bddb40d88a049eef3f900a5956942462ef39a93627a4fe",
-      "actualInputs": 402,
-      "sourceModules": 385,
+      "url": "http://127.0.0.1:57854/synthetic-unified.html",
+      "source": "ad339df588d301dfab717ef09492a9c0f7bc500b",
+      "build": "ui-preview-ad339df-01-build01",
+      "pid": 71880,
+      "sessionId": 42330,
+      "htmlSha256": "d2dac1482361311380f6ed2efc2d1940bb8a5b42c4a708f6c93ff2b43d7b4f74",
+      "identitySha256": "3e615e88a7bf36e9bd194bc8dcfff48b4d90fd2e7194f2bec9b53a1e37085628",
+      "provenanceSha256": "0a7078ebaa876d4ed3a794b701306aaf7731439a628bd27bfbaf689a0b625c8c",
+      "actualInputs": 400,
+      "sourceModules": 383,
       "lockedDependencyModules": 981,
-      "totalModules": 1366,
+      "totalModules": 1364,
       "syntheticOnly": true,
       "wholePageAccepted": false
     },
@@ -2213,15 +2213,21 @@
     {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice153-c134-deploy-media-runtime-member/RESULT.json",
       "result": "PASS_SCOPED_ADOPTED_NO_REPEAT"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice154-sales-header-source-identities-actual/RESULT.json",
+      "result": "PASS_SCOPED_ADOPTED_NO_REPEAT"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice155-c135-ordinary-product-read-projection/RESULT.json",
+      "result": "PASS_SCOPED_ADOPTED_NO_REPEAT"
     }
   ],
   "newPendingReviews": [
-    "Actualprivate stage60 currentC132 fullci/native/start/HTML-declaredmodule",
-    "C134 integratedSALE preview then originalQF affectednative states",
-    "OriginalF3 maintenanceinitialfocus sourcefix",
-    "OriginalD2/F2 existingread optionalfields pairedsource",
-    "C source-onlyHeader6 actualwindow",
-    "C actualQA freshnativeCREATE prerequisites then originalD1CREATE1proof"
+    "QB C138 SSHperprocessreuse delta then actual63",
+    "QF actual134SALE remaining then actual137fullproduct/T02/settings/empty",
+    "C actualQA nativeCREATE existingprerequisites window afterdeployment",
+    "D3 actualSalesLine/Settlement sourceclosure prep using adopted6field identities"
   ],
   "openFindingsCurrent": [
     {
@@ -2308,12 +2314,12 @@
     {
       "id": "SALE-ENTRY-PENDING-ROW-01",
       "owner": "F1",
-      "status": "C134_SOURCE_FIXED_NEXTACTUALQF_PENDING"
+      "status": "C134_ACTUAL_QF_V026_STRUCTURE_FIXED_SCOPED"
     },
     {
       "id": "SALE-LINE-ROW-HEIGHT-01",
       "owner": "F1",
-      "status": "C131_SOURCE_FIXED_BROWSER_PENDING"
+      "status": "C134_ACTUAL_FILLED38_5_VSDEMO39_RESIDUAL_ORIGINALF1"
     },
     {
       "id": "SALE-PAYMENT-PRESENTATION-01",
@@ -2338,39 +2344,44 @@
     {
       "id": "SETTINGS-MAINTENANCE-INITIAL-FOCUS-01",
       "owner": "F3",
-      "status": "C127_ACTUAL_V025_P2_ORIGINALOWNER_FIXING",
+      "status": "C136_SOURCE_FIXED_ACTUAL137_QF_PENDING",
       "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v025-qf-82d01ca-current/SETTINGS-MAINTENANCE-FOCUS-FINDING.json"
+    },
+    {
+      "id": "SETTINGS-MAINTENANCE-POPUP-CLIP-01",
+      "owner": "F3",
+      "status": "C136_SOURCE_FIXED_ACTUAL137_QF_PENDING"
     }
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-23T04:48:38.086762+00:00",
-    "sourceRound": 134,
-    "sourceCheckpoint": "934f981798957481e98427bd4def658dd60ffa1d",
+    "atUtc": "2026-10-23T05:15:17.802350+00:00",
+    "sourceRound": 138,
+    "sourceCheckpoint": "f0a0deda3e03b2a53b5f4177c5651f5219b3220d",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "url": "http://127.0.0.1:57852/synthetic-unified.html",
-      "source": "82d01cae78b08440068f04adb2883e686ea6e81f",
-      "build": "ui-preview-82d01ca-01-build01",
-      "pid": 55188,
-      "sessionId": 83161,
-      "htmlSha256": "14f4761b7dc45360b4b6fd439626430025f3cb9906e6b00abed50cf24842aa49",
-      "identitySha256": "80555aa26168e83f98293c6df0b82548f6bec8bb1ae049ecf84f0d6050987d85",
-      "provenanceSha256": "862ffd9cf96efd0936bddb40d88a049eef3f900a5956942462ef39a93627a4fe",
-      "actualInputs": 402,
-      "sourceModules": 385,
+      "url": "http://127.0.0.1:57854/synthetic-unified.html",
+      "source": "ad339df588d301dfab717ef09492a9c0f7bc500b",
+      "build": "ui-preview-ad339df-01-build01",
+      "pid": 71880,
+      "sessionId": 42330,
+      "htmlSha256": "d2dac1482361311380f6ed2efc2d1940bb8a5b42c4a708f6c93ff2b43d7b4f74",
+      "identitySha256": "3e615e88a7bf36e9bd194bc8dcfff48b4d90fd2e7194f2bec9b53a1e37085628",
+      "provenanceSha256": "0a7078ebaa876d4ed3a794b701306aaf7731439a628bd27bfbaf689a0b625c8c",
+      "actualInputs": 400,
+      "sourceModules": 383,
       "lockedDependencyModules": 981,
-      "totalModules": 1366,
+      "totalModules": 1364,
       "syntheticOnly": true,
       "wholePageAccepted": false
     },
-    "nextPreview": "C134 fullF1SALE source fixed; originalsame16overlay newpreview934f981 preparation, onlybuilderidentity differs. ActualQF stillC12757852, F2wholeUIWIP excluded.",
-    "r1": "C132 actual build4.82s/pack208members1303229B PASS. Job59 failed0.819s NON_RUNTIME_ARCHIVE_MEMBER beforepermanentinstall on legitimate product-editor-media chunk. Originaltool exactpattern fix C134/QB153PASS; sameunchangedC132package newstage60 originaltransport running submission. No duplicateci or publicswitch. Cachelayout actual54npmci/native56 success remainsvalid.",
-    "qa": "C52 actualH06UNAVAILABLE truthfulCREATEanchor/SKUcreation/chain gaps. OriginalD2 exactexistingV2 freshQAfixture prepared; mustreadactualsupplier/scheme/cutoffPublished beforeanyCREATE; no fakebatch or sourceauthority. D1 waits actualcommit receipt/detail/counts forCREATE1 case.",
-    "import": "C133 source identity6fields/oneverifiedscan QB152PASS noactualphysicalreadyet. OriginalD3 preparing one17MBgzip42561 container constructor/28282sales6fields output for C. Transfer actualclosure/QB146 reused, noPG/all11/MAIN/PUBLISH.",
+    "nextPreview": "C137 actualserved fullproduct/T02/F3twoP2/empty1.135/136onlyPREBUILD_SUPERSEDED notbuilt. No newApp/cap/uploader/identities.",
+    "r1": "61 originalstage35.362s failed exactHTML module build because stalePUBLICCONFIG assetsbase referencedC103. New132-02 sourceunchanged/configonlybasepath corrected originalbuild4.122s/pack2081303210B5ea76a5c passed; original62 submission40s timeoutbeforeexecution (all8observedfilescomplete,no request/tmp/result,dispatcherREADY). C138 originalclientoneprocess ControlMasterreuse fix; new63 same02package ready awaiting originalQB clientdelta before submit. No newnpm version/lock/cache/timeout/publicswitch.",
+    "qa": "C52truthfulUNAVAILABLE retained; existingnativeQAfixture ready but Cactualsupplier/scheme/cutoff prerequisites read notrun whileprioritydeploy unresolved. D1 waitsactualcommit receipt/detail/counts; nofakeIMPORTED/nativeaudit.",
+    "import": "Actual28282sixfieldsourceidentities10775442B5490f64e once7488ms/1gzip42561/0rows, QB154allcandidate1streamPASS adopted. D3 originalSalesDetail/Settlement now consumesourceidentitylocator, nooldsource reread/PG/fullheader claim. TransferactualQB146 reused.",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "C132 c28ea3f actualremote6objectsFF independentGET PASS;133/134 andthiscontinuation nextsync",
+    "github": "Actualnormal5a05b485FFreadback;135-138 and currentcontinuation nextsync",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -2395,27 +2406,27 @@
     },
     "audit": "C127 actualQF closed dualEsc/focus and same-scopefilter retention",
     "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
-    "uiMigration": "ActualC127 Home/placeholder/audit4named closes adopted; product6tabs onfirstvisit retaininput/DOM/keyboard localqualified; P01list sourcegeometry difference routedF2. C134F1pendingmultirows/mixedsingle-table/readonly/native700confirm sourcefixed nextnecessarypreview. Newhallmodal BODYinitialfocus/Esc P2 originalF3 activelyfixing. Whole0/local48/104 retained.",
-    "backend": "C129R3/uploadQB149, C131hostURLQB150, C132media sourceclassifierQB151 adopted. D2 optionalordinaryread thickness/collar/imagesrole/color sourceREADY mustpairF2exactdecoder beforefreeze/release; oldbarcodehistorical/delete semantics stillgap.",
+    "uiMigration": "137sourceF2full28/productreadpairedD2sourceQB155;F171/72sourceT02;F3exact4sourcefocus/portal;F173emptypager. QF134actualpending-row/firstinline250menu/paymentUIfixed scoped; filledrow38.5vs39 residualopenF1. No wholepass;104/local48/whole0.",
+    "backend": "Ordinaryread optionalprojection exact5QB155adopted noPG; old149-154adopted. F2nextoriginalF03 sourceinventoryUI actualwork, O-I06approvedcenteredscope retained, source-basedSKUchoice ready nofirstguess.",
     "productionBuild": {
       "source": "c28ea3f74d7fa2e4b1be1fb13bee99f5df70780e",
-      "buildId": "r1-c28ea3f-20261023-01",
-      "buildElapsedSeconds": 4.82,
-      "selectedSourceInputs": 1497,
-      "buildFiles": 210,
-      "archiveBytes": 1303229,
-      "archiveSha256": "5be77a55ba1e4de22360bb2796272cb4504d5d3c1373ff60fc8aab63a33b6537",
+      "buildId": "r1-c28ea3f-20261023-02",
+      "buildElapsedSeconds": 4.122,
+      "archiveBytes": 1303210,
+      "archiveSha256": "5ea76a5c6f3319175613cb9955c342457289acb20fecadcb8fe78702a1d5b030",
       "members": 208,
-      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build132-20261023-01/pack01/pack-receipt.json",
-      "stage": "60_SUBMISSION_IN_PROGRESS_NOT_YET_PASS",
-      "publicConfigurationUnchanged": true,
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build132-20261023-02/pack01/pack-receipt.json",
+      "assetBasePath": "/assets/r1-c28ea3f-20261023-02/",
+      "actualHTMLCSSAndJSPointToCurrentBuild": true,
+      "stage": "63_PREPARED_NOT_EXECUTED",
       "R3WriteActivation": false
-    }
+    },
+    "actualQFBrowser": "C13457853 currentSALE phase2; queued137samecandidate tab after native draft cleanup"
   },
   "latestReadySource": {
-    "round": 134,
-    "commit": "934f981798957481e98427bd4def658dd60ffa1d",
-    "review": "QB153 deployment tool only PASS adopted; F1chunk70 exact5 selfchecks adopted actualnextpreview pending; QB152 source-only identities adopted"
+    "round": 138,
+    "commit": "f0a0deda3e03b2a53b5f4177c5651f5219b3220d",
+    "review": "OriginalC transport oneconnectionreuse delta originalQB pending; UI137actualserved; source135D2QB155/sourceidentityactualQB154 adopted"
   },
   "pendingUserDecision": [
     {

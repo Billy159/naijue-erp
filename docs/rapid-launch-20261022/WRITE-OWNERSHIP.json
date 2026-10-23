@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T05:02:00.175992+00:00",
+  "updatedAt": "2026-10-23T05:13:31.512037+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -1954,6 +1954,18 @@
           "group": "F04_EXISTING_PRODUCT_READ_OPTIONAL_FIELDS_COMPATIBILITY",
           "fieldGate": "EXISTING_APPROVED_DB_FIELDS_ONLY_NO_SCHEMA_CHANGE",
           "scope": "Only productBasicsResponse/productImagesResponse optional compatible field decoding; other functions unchanged. F2 sole file writer this slice."
+        },
+        {
+          "path": "apps/web/src/inventory/tests/run-display-projection-dom-tests.mjs",
+          "group": "F03_NATIVE_DEMO_DOM_ORACLE_ADAPTATION",
+          "scope": "Only source markup/selectors and explicit source-selection carrier; retain all exact quantity/identity/query/cancel/paging assertions, no skips or weaker criteria.",
+          "fieldGate": "NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/web/src/inventory/tests/run-inventory-query-lifecycle-dom-tests.mjs",
+          "group": "F03_NATIVE_DEMO_DOM_ORACLE_ADAPTATION",
+          "scope": "Only source markup/selectors and explicit source-selection carrier; retain all exact quantity/identity/query/cancel/paging assertions, no skips or weaker criteria.",
+          "fieldGate": "NO_SCHEMA_CHANGE"
         }
       ]
     },
