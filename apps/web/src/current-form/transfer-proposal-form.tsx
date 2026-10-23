@@ -25,7 +25,7 @@ export interface TransferProposalPresentation {
   readonly sizeGroupCapability?: TransferSizeGroupCapability; readonly creatorName?: string;
 }
 function Confirm({ title, close, children, footer, discard = false }: { readonly title: string; readonly close: () => void; readonly children: ReactNode; readonly footer: ReactNode; readonly discard?: boolean }) {
-  return <SourceDocumentDialog title={title} label={title} closeLabel="关闭弹窗" close={close} className={discard ? 'transfer-source-discard' : 'transfer-source-matrix'} initialFocus="[data-erp-keep-input]" footer={footer}><div className={discard ? 'ui-confirm-body' : 'mx-dialog-body'}>{children}</div></SourceDocumentDialog>;
+  return <SourceDocumentDialog title={title} label={title} closeLabel="关闭弹窗" close={close} className={discard ? 'transfer-source-discard' : 'transfer-source-matrix'} {...(!discard ? { initialFocus: '[data-erp-keep-input]' } : {})} footer={footer}><div className={discard ? 'ui-confirm-body' : 'mx-dialog-body'}>{children}</div></SourceDocumentDialog>;
 }
 /** Frozen unified-single-select transferData/Choice, fed only the native
  * direction-specific candidate page. No local warehouse/stock/permission inference. */

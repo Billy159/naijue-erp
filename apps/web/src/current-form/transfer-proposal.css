@@ -52,3 +52,10 @@
 /* Frozen golden-consistency search field and inline replacement, native input. */
 .transfer-proposal-editor .tc-matrix-product-input:focus{border-color:var(--ca-primary);outline:0;box-shadow:var(--ca-focus-ring);background-color:#fff}
 .transfer-proposal-editor .mx-inline-replacement .tc-matrix-product-input{height:30px;min-height:30px;background:#fff;border:1px solid var(--ca-line);font-size:12px}
+
+/* Frozen transfer-current parent font + styles.css input floor (ui-control32),
+ * matrix input padding and golden height28: preserve the minimum that makes
+ * native quantities32px. UIInput is the input itself, not a wrapper descendant.
+ * Base cell36px and draft48px stay unchanged; table layout determines the row. */
+.transfer-proposal-editor .mx-table{font-size:var(--ui-font)}
+.transfer-proposal-editor .mx-section .mx-table input.mx-qty-input{min-height:var(--ui-control);padding:4px 6px;font-size:var(--ui-font)}

@@ -1,0 +1,46 @@
+{
+  "atUtc": "2026-10-23T12:33:07.023312+00:00",
+  "parent": "75d2357429dedd5f131e8cb4d3602444985ac5cb",
+  "taskId": "F01_PRECEDING_T02_P2_STYLE_AND_NEW_LEAVE_FOCUS",
+  "findings": [
+    "DOC-147-T02-CORE-SOURCE",
+    "DOC-165-NEW-TRANSFER-LEAVE-INITIAL-FOCUS-01"
+  ],
+  "files": [
+    {
+      "path": "apps/web/src/current-form/transfer-proposal.css",
+      "bytes": 12945,
+      "beforeSha256": "5d41e89bb0dc6d944dbd5eb514d0bf9c64a37ab6e803c99238264422bb8a06b3",
+      "sha256": "a9113941e3b3861fad59dbb5df7de4922074251f612c84f15cb34e02c95ad703",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+      "bytes": 32317,
+      "beforeSha256": "de3d71267df2ff6fd876d42c6ccc86be4ff452ad96455b652310b7986b8a34f7",
+      "sha256": "697bf0244b4e8a5c9e34b014cdb7aae6034527fdc0c0d55d1eee313d390d83c4",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-85/DELIVERY.json",
+  "ownerReceiptBytes": 2723,
+  "ownerReceiptSha256": "7781e83058336f290c0a5f5d12beb2271f0469add1a838507b4b51fa2a533f44",
+  "scope": "Exact actual native input leaf gets missing source min floor/own font/padding and table font; only new discard Confirm skips footer focus override, non-discard960 keeps original focus. Shared helper unchanged.",
+  "checksAdopted": {
+    "runtime": "Node24.21.0",
+    "before-1": "EXIT1_row12/input28,minauto,font11,padding4x12/headerFocusFalse",
+    "after-1": "EXIT0_source row/font13token/min32token/pad4x6/headerFocusTrue,original3+2/same draft and note",
+    "types-1": "EXIT0",
+    "css-1": "EXIT0_current transfer-detail CSS closure no warnings"
+  },
+  "qualification": "JSDOM token declaration/native-focus facade only; actual41px row/32px input rectangles and Chrome actual focus pending QF fixed successor. No real save/PG/performance/wholepage pass.",
+  "preserved": [
+    "ordinary td36 and draft48 declarations",
+    "qtyheight28 declaration plus restored original32 minimum, no hardcoded41row",
+    "SKU identity/count/labels/missing-cells handling and original handlers in this P2 delta",
+    "old440 size/body/Continue/Esc proof reused, oldSALEfocus not reopened",
+    "append960 footer focus and shared SourceDocumentDialog untouched"
+  ],
+  "newUserP1": "Original profile10vs11/absent-size capability exclusion withdrawn by latest human instruction; this receipt is only preceding P2 fix, P1 fullgroups/noSKU editable cells/unreviewed saved edit begins separately after pin to preserve immutable bytes.",
+  "next": "F1 samefile P1 successor maywrite afterthispin. Noallsize/pricebusinessclosure fromthisprecedingP2. Sourceonly, futurefixedactualrequired."
+}
