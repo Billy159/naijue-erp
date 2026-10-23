@@ -14,7 +14,7 @@ export interface ProductionHostConfiguration {
     readonly productViewer?: boolean; readonly productFullPage?: boolean; readonly salesProductFullPage?: boolean; readonly transferProductFullPage?: boolean; readonly transferInitialSizeGroupId?: string;
     readonly parties?: false | { readonly readOnly: boolean };
     /** Explicit UI composition only; omitted flags stay false. Server authorizes every operation. */
-    readonly maintenance?: { readonly storeSettings?: boolean; readonly staffSettings?: boolean; readonly paymentSettings?: boolean; readonly accountSettings?: boolean };
+    readonly maintenance?: { readonly products?: boolean; readonly storeSettings?: boolean; readonly staffSettings?: boolean; readonly paymentSettings?: boolean; readonly accountSettings?: boolean };
     readonly productSettings?: false | { readonly colors: boolean; readonly fits: boolean; readonly groups: boolean; readonly seasons: boolean; readonly initialTab: 'colors' | 'fits' | 'groups' | 'seasons' };
     readonly storeSettings?: false | { readonly allowedTabs: readonly ('stores' | 'warehouses')[]; readonly initialTab: 'stores' | 'warehouses'; readonly allowHallDirectoryRead: boolean };
   };
@@ -58,7 +58,7 @@ export function parseProductionHostConfiguration(value: unknown): ProductionHost
     else { const readOnly = record(routes.parties, ['readOnly']).readOnly; if (typeof readOnly !== 'boolean') return invalid(); extras.parties = Object.freeze({ readOnly }); }
   }
   if (Object.hasOwn(routes, 'maintenance')) {
-    const names = ['storeSettings', 'staffSettings', 'paymentSettings', 'accountSettings'] as const;
+    const names = ['products', 'storeSettings', 'staffSettings', 'paymentSettings', 'accountSettings'] as const;
     const maintenance = record(routes.maintenance, [], names);
     for (const name of names) if (Object.hasOwn(maintenance, name) && (typeof maintenance[name] !== 'boolean' || maintenance[name] === true && !routes[name])) return invalid();
     extras.maintenance = Object.freeze({ ...maintenance });

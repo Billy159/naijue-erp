@@ -5,6 +5,8 @@ import { UIButton } from '../components/standard-controls.tsx';
 import { createApplication, createDemoFrameWorkspaceRenderer, createRouteStylesheet } from '../application/index.tsx';
 import type { ApplicationConfiguration, ApplicationPresentation } from '../application/contracts.ts';
 import { createProductFullPageHttpReader } from '../products/product-page-http-reader.ts';
+import { createProductHttpReader } from '../transport/product-http-reader.ts';
+import { createProductMaintenanceHttpClientV2, createProductMaintenanceHttpReaderV2, createProductEditorMediaHttpReader, createProductMediaUploadHttpClient } from '../products/product-maintenance-http-client.ts';
 import { createStaffSettingsHttpReader } from '../staff-settings/http-client.ts';
 import { createPaymentSettingsHttpReader } from '../payment-settings/http-client.ts';
 import { parseProductionHostAssets, parseProductionHostConfiguration, productionAssetUrl } from './configuration.ts';
@@ -62,7 +64,7 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
     || paymentView?.canPrepare && !paymentView.workspace && maintenance?.paymentSettings !== true
     || accountView?.canPrepare && !accountView.workspace && maintenance?.accountSettings !== true) throw new TypeError('Editable settings require a configured maintenance session owner.');
   const crypto = input.document.defaultView?.crypto;
-  if ((configuration.routes.salesManualCreate || configuration.routes.salesExistingEdit || configuration.routes.transferManualCreate || configuration.routes.transferExistingEdit || configuration.routes.parties || configuration.routes.storeSettings || configuration.routes.staffSettings && !staffView?.workspace || configuration.routes.paymentSettings && !paymentView?.workspace || configuration.routes.accountSettings && !accountView?.workspace)
+  if ((maintenance?.products || configuration.routes.salesManualCreate || configuration.routes.salesExistingEdit || configuration.routes.transferManualCreate || configuration.routes.transferExistingEdit || configuration.routes.parties || configuration.routes.storeSettings || configuration.routes.staffSettings && !staffView?.workspace || configuration.routes.paymentSettings && !paymentView?.workspace || configuration.routes.accountSettings && !accountView?.workspace)
     && typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is required.');
   const newRequestKey = () => { if (typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is unavailable.'); return crypto.randomUUID(); };
   const stylesheet = (name: keyof typeof assets.styles) => {
@@ -70,6 +72,7 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
     if (!filename) throw new TypeError('An enabled page requires its emitted stylesheet.');
     return createRouteStylesheet({ document: input.document, origin: configuration.http.origin, href: productionAssetUrl(configuration, filename) });
   };
+  const productStyles = configuration.routes.products ? stylesheet('products') : null;
   const app = createApplication({ http, presentation: { renderRouteState, renderWorkspace: createDemoFrameWorkspaceRenderer() }, routes: {
     ...(configuration.routes.inventory ? { inventory: { stylesheet: stylesheet('inventory'), actions: {}, ...(configuration.routes.inventoryLedger ? { ledger: true as const } : {}) } } : {}),
     ...(configuration.routes.sales ? { sales: { stylesheet: stylesheet('sales'), detailStylesheet: stylesheet('sales-detail'),
@@ -80,7 +83,15 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
       ...(configuration.routes.transferInitialSizeGroupId ? { initialSizeGroup: { id: configuration.routes.transferInitialSizeGroupId, reader: createDictionaryHttpReader(http) } } : {}),
       ...(configuration.routes.transferManualCreate || configuration.routes.transferExistingEdit ? { commands: { newRequestKey, ...(configuration.routes.transferManualCreate ? { manualCreate: true as const } : {}), ...(configuration.routes.transferExistingEdit ? { existingPreparation: createTransferExistingPreparationHttpClient(http) } : {}) } } : {}) } } : {}),
     ...(configuration.routes.parties ? { parties: { stylesheet: stylesheet('parties'), newRequestKey, ...(configuration.routes.parties.readOnly ? { readOnly: true as const } : {}) } } : {}),
-    ...(configuration.routes.products ? { products: { stylesheet: stylesheet('products'), ...(configuration.routes.productViewer ? { product: { stylesheet: createRouteStylesheet({ document: input.document, origin: configuration.http.origin, href: productionAssetUrl(configuration, assets.productDrawerStyles) }) } } : {}),
+    ...(configuration.routes.products ? { products: { stylesheet: productStyles!, ...(configuration.routes.productViewer ? { product: { stylesheet: createRouteStylesheet({ document: input.document, origin: configuration.http.origin, href: productionAssetUrl(configuration, assets.productDrawerStyles) }) } } : {}),
+      ...(maintenance?.products ? { maintenance: { loadStyles: () => productStyles!.load(), reader: createProductMaintenanceHttpReaderV2(http), client: createProductMaintenanceHttpClientV2(http), newRequestKey,
+        allowedActions: ['CREATE', 'EDIT', 'DISABLE', 'RESTORE', 'DELETE'] as const,
+        onRecoveryRequired: (command, identity) => { if (!controller) throw new Error('Product session owner is unavailable.'); controller.productRecovery.retain(command, identity); },
+        recovery: { read: (identity, productId) => controller?.productRecovery.read(identity, productId) ?? null,
+          resolved: (identity, requestKey) => { if (!controller) throw new Error('Product session owner is unavailable.'); controller.productRecovery.resolved(identity, requestKey); } },
+        productReader: createProductHttpReader(http), dictionaryReader: createDictionaryHttpReader(http), media: createProductEditorMediaHttpReader(http), mediaUpload: createProductMediaUploadHttpClient(http),
+        ...(configuration.routes.productFullPage ? { stock: createProductFullPageHttpReader(http, ['stock']).stock } : {}),
+      } } : {}),
       ...(configuration.routes.productFullPage ? { fullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: createProductFullPageHttpReader({ ...configuration.http, fetch: input.fetch }, ['prices', 'barcodes', 'stock']) } } : {}) } } : {}),
     ...(configuration.routes.productCategories ? { productCategories: { stylesheet: stylesheet('product-categories') } } : {}),
     ...(configuration.routes.barcodeSchemes ? { barcodeSchemes: { stylesheet: stylesheet('barcode-schemes') } } : {}),

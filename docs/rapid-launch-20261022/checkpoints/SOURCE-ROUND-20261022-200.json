@@ -1,0 +1,44 @@
+{
+  "atUtc": "2026-10-23T18:23:10.607591+00:00",
+  "parent": "760becab10a1a5745ab0bc80139713d435ab4321",
+  "taskId": "F06_TRUSTED_APPLICATION_PRODUCT_RECOVERY_OWNER",
+  "files": [
+    {
+      "path": "apps/web/src/application/controller.ts",
+      "bytes": 54871,
+      "sha256": "1972852c9bc43b9c3a45f8290c29b5fba44d28b1835273caf71971186f81abd1",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/production-host/configuration.ts",
+      "bytes": 8771,
+      "sha256": "217484ba695fba93ce4ead44efbfb52492ea7bb4b023b436aee1fad238b7c938",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/production-host/mount.tsx",
+      "bytes": 13698,
+      "sha256": "80191202e5164a1803789c7ab0f4ccb4631b63c101d2a3a7d523a8ab10f9c8b0",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-97/DELIVERY.json",
+  "ownerReceiptSha256": "d2d275b4fcee62f3e0937c0d03cc3e611bc4293b2a60f044d84af3e0a5602301",
+  "scope": [
+    "Original Application pending commands by current actual route identity and actual product target/null CREATE; immutable full frontend V1/V2/MediaV2 union retained with exact original body/order, no persistence/new manager/key/server ID",
+    "Read/resolved exact current account+session+permission and key; identity binding/map cleared BEFORE old scopes dispose, so old callback cannot refill; different pending key cannot overwrite same target",
+    "Explicit routes.maintenance.products UI flag default omitted/false; native v2 reader/client/media upload/dictionary/product read composed, same products stylesheet lease reused; current verified native ADMIN/WAREHOUSE role affordance only",
+    "Original public ProductEditor recovery before detail read; DELETE404 and CREATE no-ID reuse F2 existing receipt/retry UI"
+  ],
+  "checksAdopted": {
+    "before-1": "RED exact public parser lacks approved product composition flag",
+    "after-1": "PASS original ProductionHost+auth+Application current route, real native HTTP adapters with synthetic endpoint ports and actual ProductEditor/public new-product button; no-automatic-IO and identity-before-dispose negatives",
+    "types-1": "PASS strict complete imported source closure 0"
+  },
+  "qualification": "SOURCE_FIXED_OWNER_TARGETED_SELFCHECK_ONLY. No actual Chrome/HTTPservice/PG/commit/recovery/performance/productionrelease accepted. Current196 preview does not include this source. Independent new affected QA needed, old passed suites reused. OriginalApplication currenttrusted identity+target stable owner; old callbacks cannot repopulate newidentity. Default maintenance.products optinfalse; server remains actual authorization owner.",
+  "limitations": [
+    "F2 QF2 old V1 CREATE/EDIT under V2 parser repair still separate; not passed here",
+    "No real HTTP service/PG/Chrome/production metadata or six-tab/whole-page pass",
+    "Full v11 sales/transfer UI SAVE mapping remains next source delta"
+  ]
+}

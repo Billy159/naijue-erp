@@ -1,7 +1,9 @@
 import { AuthenticationController, readContextAuthenticationLifecycle, type IdentityChange } from '../authentication/model.ts';
 import { createAuthHttpClient } from '../authentication/http-client.ts';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
-import { ReadContext, type ReadScope } from '../loading/read-scope.ts';
+import { ReadContext, type ReadIdentity, type ReadScope } from '../loading/read-scope.ts';
+import { snapshotQueryParameters } from '../loading/query-parameters.ts';
+import type { ProductMaintenanceCommand } from '../products/product-editor-contracts.ts';
 import { captureProductFullPageConfiguration, ownProductFullPageConfiguration } from '../products/product-page-configuration.ts';
 import type { ApplicationConfiguration, ApplicationRoute, ApplicationSnapshot, PartySession, SalesSession, TransferSession, PreparedApplicationRoute, RoutePreparation, RouteStylesheet } from './contracts.ts';
 import type { preparePaymentSettingsSession } from './routes/payment-settings.tsx';
@@ -76,6 +78,8 @@ export class ApplicationController {
   #externalStaffPending = true;
   #externalAccountPending = true;
   #productTrip: ProductInventoryTrip | null = null;
+  #productRecoveryIdentity: ReadIdentity | null = null;
+  readonly #productRecovery = new Map<string | null, ProductMaintenanceCommand>();
   #documentTrip: DocumentInventoryTrip | null = null;
   #disposed = false;
   constructor(configuration: ApplicationConfiguration) {
@@ -160,6 +164,8 @@ export class ApplicationController {
     const replaceIdentity = readContextAuthenticationLifecycle(this.#context);
     this.authentication = new AuthenticationController({ client, onIdentityChange: change => {
       // Required order: abort ALL old route/session scopes before the auth controller publishes a replacement principal.
+      // Clear the binding first: old editor disposal can hand back its command.
+      this.#productRecoveryIdentity = null; this.#productRecovery.clear();
       replaceIdentity(change); this.#productTrip = null; this.#releaseDocumentTrip();
       this.#partySession?.workspace.dispose(); this.#partySession = null;
       this.#salesSession?.workspace.dispose(); this.#salesSession = null;
@@ -204,6 +210,24 @@ export class ApplicationController {
       && !!commands && (commands.manualCreate === true || !!commands.preparation);
   }
   readonly getSnapshot = (): ApplicationSnapshot => this.#state;
+  /** Original pending product commands live only in this authenticated app owner. */
+  readonly productRecovery = Object.freeze({
+    retain: (command: ProductMaintenanceCommand, identity: ReadIdentity): void => {
+      if (!this.#matchesProductRecoveryIdentity(identity)) return;
+      const target = command.action === 'CREATE' ? null : command.id, previous = this.#productRecovery.get(target);
+      if (previous && previous.requestKey !== command.requestKey) return;
+      this.#productRecovery.set(target, snapshotQueryParameters(command));
+    },
+    read: (identity: ReadIdentity, productId: string | null): ProductMaintenanceCommand | null => this.#matchesProductRecoveryIdentity(identity) ? this.#productRecovery.get(productId) ?? null : null,
+    resolved: (identity: ReadIdentity, requestKey: string): void => {
+      if (!this.#matchesProductRecoveryIdentity(identity)) return;
+      for (const [target, command] of this.#productRecovery) if (command.requestKey === requestKey) this.#productRecovery.delete(target);
+    },
+  });
+  #matchesProductRecoveryIdentity(identity: ReadIdentity): boolean {
+    const owner = this.#productRecoveryIdentity;
+    return !this.#disposed && !!owner && owner.accountId === identity.accountId && owner.sessionRevision === identity.sessionRevision && owner.permissionRevision === identity.permissionRevision;
+  }
   /** Only the current bounded document round trip retains a second render owner. */
   get retainedDocument(): ApplicationSnapshot | null { return this.#documentTrip?.origin ?? null; }
   readonly subscribe = (listener: () => void): (() => void) => {
@@ -288,7 +312,15 @@ export class ApplicationController {
       }
       else if (route === 'products') {
         const module = await this.#leaves.load('products', scope);
-        prepared = module.prepareProductsRoute(input, error => this.#readAccessFailure(scope, error.kind), {
+        if (!this.#current(scope)) return false;
+        this.#productRecoveryIdentity = scope.identity;
+        const products = input.configuration.products, maintenance = products?.maintenance;
+        // Mirror the current native maintenance role rule for UI affordances.
+        // The server still authorizes each request independently.
+        const productInput = products && maintenance ? { ...input, configuration: { ...input.configuration, products: { ...products, maintenance: { ...maintenance,
+          allowedActions: input.principal.role === 'ADMIN' || input.principal.role === 'WAREHOUSE' ? maintenance.allowedActions : [],
+        } } } } : input;
+        prepared = module.prepareProductsRoute(productInput, error => this.#readAccessFailure(scope, error.kind), {
           ...(this.#configuration.routes.inventory ? { openInventory: async (request: ProductInventoryNavigationRequest) => {
             if (!this.#current(scope) || this.#state.route !== 'products' || !this.canLeave()) return false;
             let captured: ProductInventoryNavigationRequest; try { captured = module.captureProductInventoryRequest(request); } catch { return false; }
