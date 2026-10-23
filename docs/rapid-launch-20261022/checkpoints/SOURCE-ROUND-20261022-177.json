@@ -1,0 +1,24 @@
+{
+  "atUtc": "2026-10-23T13:20:09.508551+00:00",
+  "parent": "a8ebd029a3b793e33b49082e6c245a90c0ff8226",
+  "taskId": "F06_FROZEN_DEMO_REQUIRED_COMMON_BASE",
+  "files": [
+    {
+      "path": "apps/web/src/demo-presentation/tokens.css",
+      "owner": "F1",
+      "bytes": 5596,
+      "sha256": "1916631f9f044ef267c191854eca770b04f16ee413ed19a8a53d97bc7c22df0b"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/controls.css",
+      "owner": "F1",
+      "bytes": 17750,
+      "sha256": "a6284392289d36978a0d82ab77b21b5e9ee7e0b739257f55a91cec1d76b39bae"
+    }
+  ],
+  "ownerReceipt": "K/reports/frontend/rapid-launch-20261022/F1/chunk-89/DELIVERY.json",
+  "frozenDemo": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "scope": "Frozen ui-tokens complete48 aliases and applicable native styles.css base in existing single demo root; old99ca/ui values retained; original shell/frame only. Shared base must be in SALE/P01 candidate, not private fallbacks.",
+  "checksAdopted": "Original owner affected CSS/actual component consumer/strict checks accepted at exact scope. No independent browser/HTTP/PG/whole-page/performance acceptance inferred.",
+  "qualification": "SOURCE_FIXED_ONLY; C178 new full candidate pending C actual build and corresponding QF/QF2 independent affected review."
+}

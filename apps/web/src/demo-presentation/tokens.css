@@ -1,6 +1,6 @@
 /* Frozen Demo b8bcfe3 ui-tokens.css: scoped semantic roles and geometry.
    Final golden-consistency.css makes the application surface white.
-   No source runtime, compatibility aliases, external font fetches or data modules. */
+   Original template aliases share these same semantic roles; no source runtime, external font fetches or data modules. */
 .demo-ui{
  color-scheme:light;
  /* Foundation: neutral surfaces and ink do not carry a second blue accent. */
@@ -43,6 +43,20 @@
  --ui-sidebar:208px;--ui-topbar:44px;--ui-page-space:16px;--ui-group-height:26px;--ui-color-width:104px;--ui-warehouse-width:96px;--ui-size-width:76px;
  --ui-table-grid:var(--ca-table-grid);--ui-table-heading:var(--ca-table-head);
  --ui-drawer-select:560px;--ui-drawer-detail:880px;--ui-panel:320px;
+
+ /* Compatibility aliases for existing templates. Each points to a role above. */
+ --primary:var(--ca-link);--primary-fill:var(--ca-primary-fill);--primary-hover:var(--ca-primary-hover);--primary-active:var(--ca-primary-active);--primary-light:var(--ca-primary-soft);--accent:var(--ca-primary);
+ --bg:var(--ca-bg);--sidebar:var(--ca-sidebar);--surface:var(--ca-surface);--border:var(--ca-line);--strong:var(--ca-line-strong);
+ --text:var(--ca-ink);--secondary:var(--ca-ink-2);--disabled:var(--ca-disabled-ink);--selected:var(--ca-table-selected);--hover:var(--ca-table-row-hover);--subtle:var(--ca-surface-subtle);
+ --success:var(--ca-success);--success-light:var(--ca-success-soft);--warning:var(--ca-warning);--warning-light:var(--ca-warning-soft);
+ --error:var(--ca-critical);--error-light:var(--ca-critical-soft);--info:var(--ca-info);--info-light:var(--ca-info-soft);
+ --ui-overlay:var(--ca-overlay);--ui-transfer-overlay:var(--ca-overlay);--ui-photo-shadow:var(--ca-shadow-float);
+ --ui-thumb-bg:var(--ca-surface-muted);--ui-photo-bg:var(--ca-surface-subtle);--ui-info-photo-bg:var(--ca-surface-subtle);--ui-photo-stage-bg:var(--ca-surface-subtle);
+ --ui-history-ink:var(--ca-ink-2);--ui-legacy-bg:var(--ca-surface-subtle);--ui-legacy-line:var(--ca-line-strong);
+ --ui-group-bg:var(--ca-surface-subtle);--ui-context-bg:var(--ca-surface-subtle);--ui-context-line:var(--ca-line-strong);
+ --ui-context-ink:var(--ca-ink-2);--ui-neutral-tag-bg:var(--ca-neutral-tag-bg);--ui-neutral-tag-ink:var(--ca-neutral-tag-ink);
+ --ui-match-ink:var(--ca-primary-ink);--surface-subtle:var(--ca-surface-subtle);--surface-alt:var(--ca-table-head);
+ --selected-bg:var(--ca-primary-selected);--background:var(--ca-bg);--muted:var(--ca-ink-2);--danger:var(--ca-critical);
 
  --ca-bg:#fff;
 }
