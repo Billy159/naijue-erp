@@ -230,8 +230,8 @@ function htmlResources(html) {
   requireRelease(configurations === 1, 'PRODUCTION_CONFIGURATION_REQUIRED'); return resources;
 }
 
-// One frozen self-contained sales icon, never a general data-URL or external-resource allowance.
-const inlineSalesDetailCssSource = 'apps/web/src/sales/detail.css';
+// One exact frozen icon in its two document CSS consumers, never a general data-URL allowance.
+const inlineDocumentCssSources = new Set(['apps/web/src/sales/detail.css', 'apps/web/src/current-form/transfer-proposal.css']);
 function exactEmbeddedCssSvg(kind, owner, item, bytes) {
   return kind === 'frontend' && item?.external === true && item.kind === 'url-token'
     && path.posix.extname(owner) === '.css' && typeof item.path === 'string'
@@ -272,7 +272,7 @@ async function verifyGraph(kind, component, context) {
         const imported = graphPath(sourceRoot, component.workingDirectory, item.path);
         allowedSource(imported);
         requireRelease(Object.hasOwn(graph.inputs, item.path) || Object.keys(graph.inputs).some(candidate => graphPath(sourceRoot, component.workingDirectory, candidate) === imported), 'UNRESOLVED_GRAPH_INPUT');
-      } else requireRelease((relative === inlineSalesDetailCssSource
+      } else requireRelease((inlineDocumentCssSources.has(relative)
         && exactEmbeddedCssSvg(kind, relative, item, sourceBytes.get(relative)))
         || (kind === 'backend' && (nodeBuiltins.has(item.path)
         || Object.hasOwn(packageJson.dependencies ?? {}, dependencyName(item.path)))), 'UNDECLARED_EXTERNAL_DEPENDENCY');
@@ -312,7 +312,7 @@ async function verifyGraph(kind, component, context) {
       requireRelease(item && typeof item.path === 'string', 'INVALID_OUTPUT_IMPORT');
       if (item.external) requireRelease((kind === 'frontend'
         && Object.entries(details.inputs).some(([input, contribution]) => Number.isSafeInteger(contribution?.bytesInOutput)
-          && contribution.bytesInOutput > 0 && graphPath(sourceRoot, component.workingDirectory, input) === inlineSalesDetailCssSource)
+          && contribution.bytesInOutput > 0 && inlineDocumentCssSources.has(graphPath(sourceRoot, component.workingDirectory, input)))
         && exactEmbeddedCssSvg(kind, name, item, fileBytes.get(name)))
         || (kind === 'backend' && (nodeBuiltins.has(item.path)
         || Object.hasOwn(packageJson.dependencies ?? {}, dependencyName(item.path)))), 'UNDECLARED_EXTERNAL_DEPENDENCY');

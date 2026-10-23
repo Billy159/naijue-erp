@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T07:58:02.966630+00:00",
+  "updatedAt": "2026-10-23T09:32:49.877080+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -440,6 +440,24 @@
           "group": "USER_APPROVED_V7_EMPTY_HISTORY_PUBLICATION_DISPATCH",
           "fieldGate": "WRITE-CONTRACT-APPROVAL-v7-EMPTY-HISTORY-PUBLISH.json ONLY",
           "scope": "Single existingpublicationguard naturalemptybranch; originalclassifier/matcher/realpairconditions andallotherguards remain; noQAflag/namespace/unknownzero"
+        },
+        {
+          "path": "packages/application/src/transfer-policy.ts",
+          "group": "AUDIT_SPEC02_CURRENT_TRANSFER_IDENTITY_EXISTING_POLICY_FIX",
+          "fieldGate": "NO_NEW_SCHEMA_OR_BUSINESS_PERMISSION_RULE_REVALIDATE_EXISTING_CURRENT_IDENTITY",
+          "boundary": "D1 sole owner; original transaction-local identity/locks and replay handling; no DB DDL/GRANT/production test write, minimal affected verification only"
+        },
+        {
+          "path": "tests/transfer-current-identity.test.ts",
+          "group": "AUDIT_SPEC02_CURRENT_TRANSFER_IDENTITY_EXISTING_POLICY_FIX",
+          "fieldGate": "NO_NEW_SCHEMA_OR_BUSINESS_PERMISSION_RULE_REVALIDATE_EXISTING_CURRENT_IDENTITY",
+          "boundary": "D1 sole owner; original transaction-local identity/locks and replay handling; no DB DDL/GRANT/production test write, minimal affected verification only"
+        },
+        {
+          "path": "tests/support/synthetic-transfer.ts",
+          "group": "AUDIT_SPEC02_CURRENT_TRANSFER_IDENTITY_AFFECTED_TEST_FIXTURE",
+          "fieldGate": "TEST_ONLY_NO_ASSERTION_WEAKENING",
+          "boundary": "D1 sole test fixture adaptation to new transaction-local current identity port; only affected number protocol case, no broad rerun or business-rule change"
         }
       ]
     },
