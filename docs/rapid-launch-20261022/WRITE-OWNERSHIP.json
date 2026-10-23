@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T07:10:21.136110+00:00",
+  "updatedAt": "2026-10-23T07:58:02.966630+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -434,6 +434,12 @@
           "group": "USER_APPROVED_V6_BOOTSTRAP_FIELD_ENVELOPE",
           "fieldGate": "WRITE-CONTRACT-APPROVAL-v6-BOOTSTRAP-PROVENANCE.json ONLY",
           "scope": "Existingstandard origin/reason/raw/evidence_ref, unchanged innerstrict7; onefunction successor patch, original0026 untouched; no genericguard change"
+        },
+        {
+          "path": "adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql",
+          "group": "USER_APPROVED_V7_EMPTY_HISTORY_PUBLICATION_DISPATCH",
+          "fieldGate": "WRITE-CONTRACT-APPROVAL-v7-EMPTY-HISTORY-PUBLISH.json ONLY",
+          "scope": "Single existingpublicationguard naturalemptybranch; originalclassifier/matcher/realpairconditions andallotherguards remain; noQAflag/namespace/unknownzero"
         }
       ]
     },
@@ -2056,6 +2062,12 @@
           "group": "F03_EXISTING_DEMO_FULL_FILTER_EXPORT_PRINT",
           "fieldGate": "READ_ONLY_EXISTING_FIELDS_NO_SCHEMA_OR_WRITE_CHANGE",
           "scope": "Lazy originalDemo export/print dialogs/requestlifecycle; no newUI system/syntheticcap/retailunit defaults"
+        },
+        {
+          "path": "apps/web/src/inventory/output-adapter.test.ts",
+          "group": "F03_FULL_QUERY_OUTPUT_FIRST_STREAM_TARGETED_CHECKS",
+          "fieldGate": "NO_SCHEMA_OR_WRITE_CHANGE",
+          "scope": "Existing node:test only newUTF8/frames/complete/ref/count/exactsum/cancel/permissions/outputprojection; no oldtransport/wholesite repetition"
         }
       ]
     },

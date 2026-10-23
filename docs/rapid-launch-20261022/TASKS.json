@@ -125,7 +125,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "C149v6six frozen/QB165PASS/actualC70patch passed; waits actualC71 nativeCREATE beforeoriginalH06 minimal."
+      "currentWork": "v7 explicituserapproved singlepubguard successorpatch+issuerpin andnecessarytargetedchecks; existingclassifiers/v6 unchanged."
     },
     "D2": {
       "title": "后端商品与基础资料维护",
@@ -140,7 +140,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Kproducer c7d32 fixed/49rawdeep equal/pureprepare PASS; actualC70 v8ready, originalrunnerC71 pendingnewoutside."
+      "currentWork": "Same originalp.at/key/command hashes recovered; onlyPUBLISH checkpointresume source ddbad9… prepared, waitsactual approvedv9patch/outside."
     },
     "D3": {
       "title": "后端库存历史与导入",
@@ -962,9 +962,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T07:29:50.301664+00:00",
+  "updatedAt": "2026-10-23T08:04:22.263824+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "6adf9c1a60dbc2fb8dee3679fdc1ee2aecb52e77",
+  "lastVerifiedRemoteCommit": "de3192cc158fe1cf10c36216692dd2aa6ab3ca66",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1777,7 +1777,8 @@
     "FIELD-APPROVAL-SUPPLEMENT-v2-B.json",
     "FIELD-APPROVAL-SUPPLEMENT-v3-A.json",
     "WRITE-CONTRACT-APPROVAL-v4-MEDIA-COLOR-SWAP.json",
-    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v6-BOOTSTRAP-PROVENANCE.json"
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v6-BOOTSTRAP-PROVENANCE.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v7-EMPTY-HISTORY-PUBLISH.json"
   ],
   "latestAcceptedReceiptRefs": [
     {
@@ -2438,9 +2439,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-23T07:29:50.301664+00:00",
-    "sourceRound": 149,
-    "sourceCheckpoint": "ef60d3220ce0cb668e3a6bafb9e42539dd2d7f62",
+    "atUtc": "2026-10-23T08:04:22.263824+00:00",
+    "sourceRound": 153,
+    "sourceCheckpoint": "f3b20351a51bd7f23bdf226931cdd107027411a9",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -2460,12 +2461,21 @@
       "syntheticOnly": true,
       "wholePageAccepted": false
     },
-    "nextPreview": "C147 fullintegration actuallybuilt/served57857; QF currentexclusive firstpager/oldSALE+TRANSFER440 only, QF2 newsticky next explicitcleanhandoff. C148 backendseason not counted as147actual.",
+    "nextPreview": {
+      "source": "f3b20351a51bd7f23bdf226931cdd107027411a9",
+      "sourceRound": 153,
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-f3b2035-01",
+      "reservedUrl": "http://127.0.0.1:57858/synthetic-unified.html",
+      "status": "PREBUILD_IN_PROGRESS_NO_BUILD_OR_HTTP_YET",
+      "excludes": "F1 chunk77 WIP and D1 v9 WIP",
+      "owner": "C",
+      "notEvidenceOf": "Actual PG/native business/performance/production deployment"
+    },
     "r1": "C63实际COMPLETED exit0 32.301s：固定C132/build r1-c28ea3f-20261023-02完整生产依赖安装成功，Linux x64 Node24.21 Sharp0.35.5原生加载；APP/proxy health200，HTML与真实声明current application.js 200且manifest精确。依赖根因A及实际私有安装启动B均完成；dataReady/业务验收/正式切换false。保留45/48/60/61/62失败现场，未改正式三服务/公网。",
     "qa": "C70 actualv8 onefunction COMMIT_RETURNED_SUCCESS/newbody69b87 andcanonical35f7f772, newQA1032586, registry1..26/all8businesscounts0/role-owner-ACL preserved. C69 SQL NOT_ATTEMPTED public/privateJSON serialization bytepin mismatch; revised70 exacttypedsemantic proves samecatalogcontent thenpatch; failed69/67/68 retained. QB165 sourceSQLPASS, newoutsideactualdelta review pendingoriginalQB; C71 same149+newD2Kc7d32 compiled752469B/92inputs, originalkey actualrunner notexecuted, nativeCREATE/H06 notpass.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Independentremote6adf9c1a verified;149andthisactualrecord next nonforceFF.",
+    "github": "Independent remote de3192cc158fe1cf10c36216692dd2aa6ab3ca66 verified; C150-C153 and current controller records next exact nonforced sync.",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -2490,8 +2500,8 @@
     },
     "audit": "C127 actualQF closed dualEsc/focus and same-scopefilter retention",
     "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
-    "uiMigration": "Direct Frozen source/functions/finalCSS mapped into actual consumers retained. C143 QF4 document closes +QF2fivevisual closes limited, old137 settingstwoP2 adopted. C145 oldtransfer consumes existing native SourceDocumentDialog sourcePASS but notbuilt. Whole0/local48/104.",
-    "backend": "QB164 approvedseason3 sourceprotocolPASS adopted; QB165 v6fixed6/Kseam sourceSQLPASS adopted. C70 actualonefuncnewQA done, notSTAGE/nativeCREATE. D3 fullquery originalB03 output+F2 adapter/lazyUI/targetedtests in flight, F1 exactroute waits actualadapter/Page props proof; no fakeports/wholepage.",
+    "uiMigration": "Whole-page direct frozen source reuse continues original F1 chunk77 WIP, independent of backend/output waits. QF v033 new T02 toolbar/finder/footer and SALE footer P2 routed original F1; preview auditNotice49px is C-only harness seam. Fixed C152 F2 full output exact7 QF2 scoped sourcePASS, C153 F1 inventory route1 ready; next integrated C153 preview preparation uses original16 overlays plus precisely declared new readonly output stream and notice/print CSP changes. Source/synthetic UI/actual business/performance separate.",
+    "backend": "QB166 actual v8 metadata pairing, QB167 C150 full-filter output exact10 and QB168 C151 nativeledger exact3 scoped PASS adopted. C71 original STAGE+warehouseCHUNK actually committed; PUBLISH rejected exact historicalcustomer proof, C72/C73 readback checkpoint/time recovered. v7 human explicitly approved; original D1 narrow v9 guard/issuer implementation in flight. D2 resume original PUBLISH only ready, no stage/chunk replay. D3 next exact reader/test primary native-key increment released, D1 host remains unique owner.",
     "productionBuild": {
       "source": "c28ea3f74d7fa2e4b1be1fb13bee99f5df70780e",
       "buildId": "r1-c28ea3f-20261023-02",
@@ -2506,7 +2516,7 @@
       "R3WriteActivation": false,
       "actualStageReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-current-private-stage-20261023-63/release-submission/release-receipts/c03-r1-current-private-stage-20261023-63/engine-result.json"
     },
-    "actualQFBrowser": "C147 QF firstpager/oldSALE+TRANSFER native440 actuallimited closed; QF2 sticky left/mid/right actuallimited closed, newsummary backgroundP2 originalF2 repair. Both explicitnativecleanrelease; browsercurrentlyC awaitingnextcompletecandidate, no trueisolation.",
+    "actualQFBrowser": "QF exclusive C147 whole SALE/T02 necessary new baseline; first two paired whole frames received, no whole-page PASS. Protected original unknown two-SKU diagnostic draft retained; one C-authorized temporary QF-owned sameversion target8B3DE068590F435122BC465D97098B67, serial Chrome not isolated. QF2 offline C153 one-route pairing, waits explicit browser handoff.",
     "frontendAcceptance": {
       "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "parentTask": "QF01",
@@ -2565,13 +2575,29 @@
           "status": "LIMITED_ACTUAL_MODULE_CLOSED_CLEAN_RELEASED",
           "next": "F2newsummarysurface exactfix nextcompletecandidate, oldgeometry/firstpager/leave scopes reused",
           "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c147-action-column-sticky-01"
+        },
+        {
+          "owner": "QF",
+          "version": "C147 ade0aa6/ui-preview-ade0aa6-01-build01",
+          "scope": "New whole SALE/T02 core regions only; existing valid48 reused",
+          "status": "STAGE1_PAIRED_FRAMES_FINDINGS_ORIGINAL_F1_IN_PROGRESS",
+          "next": "Necessary filled/core/payment/bottom entry; replacement arrived stop old scope, clean own temp target and explicit release",
+          "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v033-qf-147-whole-doc-baseline"
+        },
+        {
+          "owner": "QF2",
+          "version": "C152 e6e2a60 exact7 / C153 f3b2035 route1",
+          "scope": "Original full output adapter/native export/print and route pairing; summary action surface only",
+          "status": "C152_SOURCE_SCOPED_PASS_C153_ROUTE_REVIEW_IN_PROGRESS",
+          "next": "Await fixed C153 actual preview and explicit QF browser handoff, no parallel Chrome",
+          "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2"
         }
       ],
       "browser": {
         "trueIsolationVerified": false,
         "toolInventory": "browsers=[]; Local browser use is disabled in Work settings",
         "mode": "SHARED_CHROME_SERIAL_MODULE_HANDOFF",
-        "currentOwner": "C_RESERVED_NEXT_COMPLETE_CANDIDATE",
+        "currentOwner": "QF",
         "demoTab": "DB7CA658365B213EEE3EB1333946E5BA",
         "candidateTab": "3BC874911D0D2415D093603E264B0D67",
         "QF2CurrentTargets": [
@@ -2579,7 +2605,8 @@
           "DB7CA658365B213EEE3EB1333946E5BA"
         ],
         "QF2MayOperate": false,
-        "condition": "QF147v031 andQF2stickyactual both nativecleanrelease explicit. Summarysurface newP2 originalF2, nextfixedactual onlyaffectedcolors; no concurrentChrome."
+        "condition": "QF whole-doc147 baseline exclusive. Originaltarget contains unknown synthetic2SKU diagnostic draft; protected not discarded. May temporary own sameversion worktarget only to preserve unknown draft, serial/no trueisolation, cleanupcloseown target afterward.",
+        "temporaryWorkingTarget": "8B3DE068590F435122BC465D97098B67"
       },
       "backendReviewers": [
         "QB"
@@ -2592,20 +2619,36 @@
       "actingRole": "erp_qa_owner_20261022_01",
       "sourceTemplate": "Existing known QA schema-only+schema_migration26, no business or credentials copied",
       "owner": "C",
-      "status": "ACTUAL_V8_ONE_FUNCTION_READBACK_WAIT_ORIGINAL_ISSUER_NEW_BASELINE",
+      "status": "ORIGINAL_STAGE_AND_CHUNK_COMMITTED_PUBLISH_BLOCKED_APPROVED_V7_IMPLEMENTATION",
       "businessScope": "Explicit synthetic genuine baseline thennativeCREATE/H06; not real49 import/UAT/source MAIN or production",
       "constraints": "OldQA root4/audits/receipts retained; R1/production untouched. No weakening firstSTAGE guard, no fakeIMPORTED/nativeaudit. Actual OID/catalog capture before originalissuer use.",
       "databaseOid": "1032586",
       "catalogSha256": "35f7f77227c5962e54b507b7253046f139bc3d69bdc36910b12202ef6ec8c3a1",
-      "businessTablesEmpty": 55,
+      "businessTablesEmpty": false,
       "oldQaPreserved": true,
       "baselinePublished": false,
       "nativeCreateAttempted": false,
       "issuerIssued": true,
-      "actualStageCommitted": false,
-      "lastActualError": "23514 invalid versioned field provenance / guard_history_insert line22",
-      "lastActualRequestKey": "D2_BASELINE26_STAGE_V1",
-      "patchLevel": "26_v8_bootstrap_field_provenance"
+      "actualStageCommitted": true,
+      "lastActualError": "23514 Pinned historical customer source closure is absent or inconsistent / guard_successor_publication26 -> is_exact_historical_customer_only",
+      "lastActualRequestKey": "D2_BASELINE26_PUBLISH_V1",
+      "patchLevel": "26_v8_bootstrap_field_provenance",
+      "actualWarehouseChunkCommitted": true,
+      "actualCheckpoint": {
+        "status": "VALIDATING",
+        "sequence": 1,
+        "cursor": 1,
+        "staff": 49,
+        "accounts": 49,
+        "sourceRows": 57,
+        "audits": 2,
+        "receipts": 2,
+        "products": 0,
+        "skus": 0
+      },
+      "originalStageAt": "2026-10-23T07:39:06.726000Z",
+      "originalPublishCommandSha256": "cf07266d19e1b26a5abc37a77479f6dad834a1f326e9f265f242a5e428e6873b",
+      "originalStageAndChunkReplayForbidden": true
     },
     "actualSourceProjection": {
       "status": "ACTUAL_SOURCE_TYPED_PROJECTIONS_COMPLETED_REFERENCE_ONLY",
@@ -2683,12 +2726,30 @@
       "newCatalogCanonicalSha256": "35f7f77227c5962e54b507b7253046f139bc3d69bdc36910b12202ef6ec8c3a1",
       "newFunctionBodySha256": "69b87a72c52a81aba7f9fd380f3acbcb8df8fbcaa6ca72ccca4ac20e26ab42c7",
       "businessDataWritten": false
+    },
+    "nextPreviewOwnedSeam": {
+      "owner": "C",
+      "baseCandidate": "C147 ade0aa6 immutable",
+      "path": "apps/web/unified-browser-harness/harness-app.tsx",
+      "baseOverlaySha256": "54100cfe7a881ff2a2330753db5ae9de220dce421472f4db070b3c40d159efc0",
+      "change": "Move same original synthetic paymentaudit0 notice from global root.before into existing preview debugpanel or only own settingsscope; do not change notice truth/fixture/realrenderer/controller/cap, do not mutate147",
+      "nextBuild": "First next complete F1 page/F2 output integration; not isolatedCSSbuild",
+      "status": "READY_PREVIEW_OWNER_CHANGE_NEXT_IMMUTABLE_BUILD"
+    },
+    "publicationV7": {
+      "status": "EXPLICIT_USER_APPROVED_IMPLEMENTATION_RELEASED",
+      "answer": "确认 v7 空历史发布分派",
+      "approval": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v7-EMPTY-HISTORY-PUBLISH.json",
+      "actualDatabasePatch": false,
+      "originalStageAt": "2026-10-23T07:39:06.726000Z",
+      "resumeOriginalPublishKey": "D2_BASELINE26_PUBLISH_V1"
     }
   },
   "latestReadySource": {
-    "round": 149,
-    "commit": "ef60d3220ce0cb668e3a6bafb9e42539dd2d7f62",
-    "review": "QB165 fixedv6 limitedsourcePASS; actualC70 singlefunctionnewQA PASS, no baselineyet"
+    "round": 153,
+    "commit": "f3b20351a51bd7f23bdf226931cdd107027411a9",
+    "actualPreviewStill": "C147 ade0aa6",
+    "nextPreviewStatus": "PREBUILD_NOT_HTTP"
   },
   "pendingUserDecision": [
     {
