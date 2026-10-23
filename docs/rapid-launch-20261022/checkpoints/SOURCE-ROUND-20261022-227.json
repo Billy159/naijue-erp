@@ -1,0 +1,100 @@
+{
+  "atUtc": "2026-10-23T22:18:13.647930+00:00",
+  "parent": "b816edc9a9378880626982c942398fd1e63e1261",
+  "taskId": "F1_QF2_I07_DATE_TODAY_DRAFT_01_NATIVE_POINTER_BLUR",
+  "files": [
+    {
+      "path": "apps/web/src/components/standard-controls.tsx",
+      "bytes": 6439,
+      "sha256": "480dbd9b38832a7a1daadfcb7f0c91c4f5cab629859cbee98d94c922bd027f12",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-114/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "b2ed4642219bb0199496ed8026a43ae037c1de95383c5e9ec69680eac034c2a7",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh; Fast not verified",
+    "finding": "QF2-I07-DATE-TODAY-DRAFT-01",
+    "status": "SOURCE_READY_TODAY_ORIGINAL_CHANGE_BLUR_SEAM_ACTUAL_PENDING",
+    "files": [
+      {
+        "path": "apps/web/src/components/standard-controls.tsx",
+        "bytes": 6439,
+        "sha256": "480dbd9b38832a7a1daadfcb7f0c91c4f5cab629859cbee98d94c922bd027f12"
+      }
+    ],
+    "diagnosis": "Local original I07 split press/release exposes input blur to host-external native Drawer scroll before native Today click, original relatedTarget branch bypasses pointerInside; after-source exactToday commits via original Arco chain. Actual independent QF2 root event trace pending (not claimed observed).",
+    "change": "Reuse existing inside-pointer blur protection across relatedTarget branches; pointerup/cancel release active throughout mounted UIDate to avoid stale initial click flag. No custom Today/onChange/app write, second calendar or date business changes.",
+    "checks": {
+      "before-1": "Split native Today down/up gets pointer-events:none on release after actual original I07 blur; no PASS.",
+      "before-2": "Invocation path typo caused module-not-found, no product result; original log retained.",
+      "before-3": "Instrumented same failing split pointer: after down original input still9/24, relatedTarget original drawer scroll, panel exit before click. Initial scratch trace later overwritten as described.",
+      "before-4": "Exact before source re-read through existing two-state harness loader preserves durable BEFORE-DOWN trace; same release failure. No old actual scenario rerun.",
+      "before-single-act-1": "PASS even with exact Today expected on original before source when all user.click wrapped in one act, proving this batching was an inadequate proxy for actual discrete mouse phases. Saved separately, not current fix PASS.",
+      "after-1": "PASS original actual I07/UIDate split pointer down->blur->up->click commits exact10/24 from9/24, native picker closes; original executed ledger filter unchanged/read1.",
+      "affected-1": "PASS only changed boundaries: initial closed-icon pointerup then Tab outside closes preserving rawdate; partial2026- Today split pointer commits nativeToday; ordinary in-view day15 same path commits correctly. All draft-only/read1, no duplicated query.",
+      "types-1": "PASS standard-controls and original I07 complete strict imported closure, include=[], original declarations preserved; no broad suite rerun."
+    },
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-114/REPORT.md",
+        "bytes": 1966,
+        "sha256": "967603b74429dec1409672e83cd3594dc1bb155f185ab60f76cf2346df6c89ed"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-114/DIAGNOSIS.json",
+        "bytes": 6362,
+        "sha256": "94c1b531ce3b60d9c6f49d3127c77e05c8f42e05ca8c5f4aa4725f9bda997e9c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-114/CHECKS.json",
+        "bytes": 1480,
+        "sha256": "f8c97ee8c5af756365796f3a99c98acc6f929984babbea3d6d1119e0f008065d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-114/RESULT.json",
+        "bytes": 3797,
+        "sha256": "85741c204ecb09186a842a0dae281eecc312ef44fdc891c125f5d043f6d4bb86"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-114/AFFECTED-RESULT.json",
+        "bytes": 22258,
+        "sha256": "29538a329cbfde3d99b749f98d3adab01e7d4f9a0b7bf1205ef18b2767cb0eb3"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-114/SOURCE.diff",
+        "bytes": 1711,
+        "sha256": "09dee102b59f91b52d6a5d48a5687e27181d50824acf2bf752d98598a8e45cbb"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-114/BEFORE-DOWN-TRACE.json",
+        "bytes": 2727,
+        "sha256": "54ecd1a68e7898c5843180d584601880e0da861b4ac08a45a2a8b1a543b26c51"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-114/AFTER-DOWN-TRACE.json",
+        "bytes": 2724,
+        "sha256": "5f480a3c57796a5768d4beb4c73693d77d4bc4d41d96204469dd9fde4f63b495"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-114/SPLIT-TRACE.json",
+        "bytes": 3767,
+        "sha256": "387ea0243bfb8622ba35db9d135c9ea5cdc841bf9d5d61e26529e66535bf161d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-114/SINGLE-ACT-TRACE.json",
+        "bytes": 3767,
+        "sha256": "a284d51023be357bce734ab4b8f24365e795ac88f4a5246c8be7b12da6de8c85"
+      }
+    ],
+    "limitations": [
+      "Actual source222 Today remains OPEN_PENDING_CONTAINING_SUCCESSOR; local exact date commit is not actual browser closure.",
+      "No full public regression/old pointer finding rerun, no Chrome/HTTP/PG/production build/service/Git/C total writes.",
+      "Original date panel dimensions and F2 carrier geometry are separate open evidence, not changed.",
+      "Old110 Today PASS scoped assertion/batching gap corrected; actual input query/date business semantics remain unchanged."
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "Original owner split native pointer-down/up original I07 RED/GREEN and affected partial/day/Tab plus strict checks adopted; no Chrome or real business/performance result. Geometry CSS separate."
+}

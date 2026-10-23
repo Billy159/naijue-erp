@@ -53,12 +53,11 @@ export function UIDate({ value, onChange, disabled, className, ...inputProps }: 
   const [open, setOpen] = useState(false);
   const pointerInside = useRef(false);
   useEffect(() => {
-    if (!open) return;
     const release = () => { pointerInside.current = false; };
     document.addEventListener('pointerup', release, true);
     document.addEventListener('pointercancel', release, true);
     return () => { document.removeEventListener('pointerup', release, true); document.removeEventListener('pointercancel', release, true); pointerInside.current = false; };
-  }, [open]);
+  }, []);
   const calendarValue = useRef('');
   // Passing an unfinished string (e.g. "2026-") to DatePicker's value makes
   // its formatter replace the user's text with "Invalid Date" on rerender.
@@ -67,9 +66,12 @@ export function UIDate({ value, onChange, disabled, className, ...inputProps }: 
   // Input forwards click handlers to its inner input; the native trigger must
   // also contain the calendar suffix so Arco receives that same click.
   return <span ref={host} className="erp-date-host" onPointerDownCapture={() => { pointerInside.current = true; }} onBlurCapture={event => {
+    // A nonfocusable calendar cell/footer can move focus to the Drawer scroll
+    // container on mousedown. Keep the native picker until its click selects.
+    if (pointerInside.current) return;
     if (event.relatedTarget instanceof Node) {
       if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
-    } else if (!pointerInside.current) {
+    } else {
       queueMicrotask(() => { if (host.current?.isConnected && !host.current.contains(document.activeElement)) setOpen(false); });
     }
   }} onKeyDownCapture={event => {
