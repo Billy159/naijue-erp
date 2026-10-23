@@ -15,6 +15,6 @@ export function SalesPagination(props: { readonly scope: ReadScope; readonly act
         const size = salesPageSizes.find(size => String(size) === value); if (size !== undefined) props.onPageSize(size);
       }} />
       <span>{props.total === null ? '尚未查询' : `共 ${salesCount(props.total)} 张，当前第 ${facts.first}–${facts.last} 张`}</span></div>
-    <StandardPagination {...props} label="销货单列表分页" disabled={unavailable} hideOnSinglePage={false} stepText requireSafePageEnd pageSummary={`第 ${props.page} / ${salesCount(facts.pages.toString())} 页`} />
+    <StandardPagination {...props} label="销货单列表分页" disabled={unavailable} hideOnSinglePage={false} showJump={false} stepText requireSafePageEnd pageSummary={`第 ${props.page} / ${salesCount(facts.pages.toString())} 页`} />
   </footer>;
 }

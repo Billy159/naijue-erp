@@ -1,0 +1,89 @@
+{
+  "atUtc": "2026-10-23T03:48:30.630214+00:00",
+  "parent": "4c1ce505c7c79d93a72691a8d789a1efb5c7068a",
+  "groups": [
+    {
+      "slice": "F1 S01 native source table/list current20 summary first load",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-67/DELIVERY.json",
+      "receiptSha256": "2447b0b71e47e0707af3cd61f148bcd38916b81ba25494a5ea0b2146b21186f1",
+      "receiptSnapshot": {
+        "chunk": 67,
+        "taskId": "F1-S01-DIRECT-LIST-UI-CONTINUATION",
+        "atUtc": "2026-10-23T03:47:11.017312+00:00",
+        "status": "READY_EXACT3_SOURCE_AND_TARGETED_CHECKS_NOT_BROWSER",
+        "files": [
+          {
+            "path": "apps/web/src/sales/sales-page.tsx",
+            "beforeSha256": "87efcc7af3bbccd0394191189cac6dfd2aefe71b188a5659c02d7aeeb62ef527",
+            "sha256": "f935793c44458d6d341852c130fef75f7710f1c6dc9ad0529c58e33e722b2672"
+          },
+          {
+            "path": "apps/web/src/sales/sales-pagination.tsx",
+            "beforeSha256": "a0a0bedf00998da70add2e243ad0cc9db74d8e92723ca1c6944a3c2b62df5361",
+            "sha256": "9af87801b57be4778b6323587ae1b64343cdbe128c5ce04173de2998d610e4a0"
+          },
+          {
+            "path": "apps/web/src/sales/sales.css",
+            "beforeSha256": "9f81a793ca46a15ac246d959a8621c061bec92fe141146da18ad6fd0fe35b15b",
+            "sha256": "c229ee180be366ca39ddc00bf55c0e6dabdda6059a8b330c009f6c3224588baf"
+          }
+        ],
+        "checks": {
+          "list-3": "EXIT0_NATIVE_HTTP_CLIENT_AND_UNCHANGED_DECODER_SYNTHETIC21_EMPTY_PAGE2_ERROR_RETRY_CREATE_CANCEL",
+          "types-1": "EXIT0_STRICT_SCOPED",
+          "source-1": "EXIT0_FINAL_CSS_PARSE_COPIED_DISABLED_MEDIA_AND_SOURCE_HEADERS_WIDTHS"
+        },
+        "sourceReferences": [
+          "Frozen b8bcfe3 frontend/sales-current.js76-98 list",
+          "frontend/golden-consistency.css31,47-58,98-114",
+          "frontend/sales-refinement.css final sales table widths",
+          "frontend/styles.css44-52",
+          "Current sales-page -> sales-route/commands page-host and sales.css -> application/styles/sales.css"
+        ],
+        "wholePagePass": false,
+        "wholeDirectReuseComplete": false,
+        "realBusinessPass": false,
+        "performance": "NOT_MEASURED",
+        "blockers": [],
+        "remaining": [
+          "Shared StandardPagination source UI migration needs its existing owner/exact registration; current wrapper stays source-incomplete",
+          "Historical category unavailable is retained, never reconstructed",
+          "C next necessary fixed candidate and affected S01 browser pairs including finite empty/20/page2 fixture; old120 excludes67",
+          "Original T02 remaining source queue continues; no repeat old closed controls or full SALE tests"
+        ],
+        "evidence": [
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-67/REPORT.md",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-67/LIST-RESULT.json",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-67/SOURCE-RESULT.json",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-67/SOURCE.diff",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-67/list-1.log",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-67/list-2.log",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-67/list-3.log",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-67/source-1.log",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-67/types-1.log"
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/sales/sales-page.tsx",
+          "owner": "F1",
+          "bytes": 15469,
+          "sha256": "f935793c44458d6d341852c130fef75f7710f1c6dc9ad0529c58e33e722b2672"
+        },
+        {
+          "path": "apps/web/src/sales/sales-pagination.tsx",
+          "owner": "F1",
+          "bytes": 1849,
+          "sha256": "9af87801b57be4778b6323587ae1b64343cdbe128c5ce04173de2998d610e4a0"
+        },
+        {
+          "path": "apps/web/src/sales/sales.css",
+          "owner": "F1",
+          "bytes": 9295,
+          "sha256": "c229ee180be366ca39ddc00bf55c0e6dabdda6059a8b330c009f6c3224588baf"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Freeze originalF1 exact3. Adopt existing actual HTTP/decoder synthetic21/empty/page2/503 scoped checks and types/source only, no new repetition. Next same integrated candidate QF affected list only; wholeS01/SALE/directUI not complete, sharedPagination source gap explicit, actualPG/performance/save/deployment not tested."
+}

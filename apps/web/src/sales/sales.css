@@ -48,7 +48,8 @@
 .sales-workbench[hidden]{display:none}
 /* Lightweight Back frame remains usable while action code/CSS is pending. */
 .sales-detail-loading>.tc-head .actions{display:flex;align-items:center;gap:4px;margin-left:auto}
-@media(max-width:1450px){.sales-workbench .tc-filters{--sales-filter-columns:minmax(110px,.8fr) minmax(110px,.8fr) 155px minmax(155px,1fr) minmax(140px,1.2fr) minmax(140px,1.2fr) max-content;--sales-filter-min-width:1140px}}
+@media(max-width:1450px){.sales-workbench .tc-filters{--sales-filter-columns:minmax(100px,.8fr) minmax(100px,.8fr) 155px minmax(138px,1fr) minmax(110px,1.2fr) minmax(110px,1.2fr) max-content;--sales-filter-min-width:0px}}
+@media(max-width:1270px){.sales-workbench .tc-filters{--sales-filter-columns:minmax(88px,.8fr) minmax(88px,.8fr) 155px minmax(115px,1fr) minmax(95px,1.2fr) minmax(95px,1.2fr) max-content}}
 
 /* Lightweight placeholders remain route-local; heavy TreeSelect CSS is action-only. */
 .demo-multi-host{position:relative;display:block;min-width:0;width:100%}
@@ -64,3 +65,17 @@
  * owned Arco popups can float over the results without a 32px-high clip. */
 .sales-workbench .tc-filters{overflow:visible}
 .sales-workbench .tc-filter-row>.iw-field,.sales-workbench .tc-filter-actions{flex-shrink:0}
+
+/* Direct list DOM now consumes frozen sales-current.js list() and the existing
+ * final table dimensions above; no generic Arco Table wrapper alters density.
+ * styles.css44–52 and golden-consistency.css100–102, scoped to actual Buttons. */
+.sales-workbench .tc-filter-actions>.iw-button.erp-button{background:var(--ca-button-secondary-bg);border-color:var(--ca-button-secondary-border);color:var(--ca-button-secondary-text)}
+.sales-workbench .tc-filter-actions>.iw-button.erp-button:hover:not(:disabled){background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
+.sales-workbench .tc-filter-actions>.iw-button.iw-primary.erp-button{background:var(--ca-primary-fill);border-color:var(--ca-primary-fill);color:var(--ca-on-primary)}
+.sales-workbench .tc-filter-actions>.iw-button.iw-primary.erp-button:hover:not(:disabled){background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}
+.sales-workbench .tc-filter-actions>.tc-filter-toggle.erp-button{border:0;background:transparent;color:var(--ca-ink-2)}
+.sales-workbench .tc-filter-actions>.tc-filter-toggle.erp-button:hover,.sales-workbench .tc-filter-actions>.tc-filter-toggle.erp-button[aria-expanded=true]{border:0;background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
+.sales-workbench .tc-filters .erp-input.iw-control:not(:focus){border-color:transparent;background:var(--ca-surface-muted)}
+.sales-workbench .tc-filters .erp-input.iw-control:focus{border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted)}
+
+.sales-workbench .tc-filter-actions>.iw-button.erp-button:disabled{background:var(--ca-control-disabled-bg);color:var(--ca-control-disabled-text);border-color:var(--ca-control-disabled-border)}
