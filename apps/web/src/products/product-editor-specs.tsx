@@ -103,7 +103,7 @@ function AddSku(props:Props&{readonly close:()=>void}){
   <div className="product-editor-fields"><label className="field"><span>规格编码 *</span><UIInput aria-label="规格编码" value={skuCode} onChange={setCode}/></label>
   <label className="field"><span>颜色 *</span><ProductCandidateSelect scope={props.scope} reader={props.reader} kind="colors" label="颜色" value={colorId} currentLabel={colorId?(props.labels[`colors:${colorId}`]??null):null} disabled={false} onAccessFailure={props.onAccessFailure} onChange={(id,name)=>{setColor(id);props.remember(id,name,'colors');}}/></label>
   <label className="field"><span>版型 *</span><ProductCandidateSelect scope={props.scope} reader={props.reader} kind="fits" label="版型" value={fitId} currentLabel={fitId?(props.labels[`fits:${fitId}`]??null):null} disabled={false} onAccessFailure={props.onAccessFailure} onChange={(id,name)=>{setFit(id);props.remember(id,name,'fits');}}/></label>
-  <label className="field"><span>尺码 *</span><NativeGroupSizeSelect scope={props.scope} sizes={sizes} value={sizeId} onChange={setSize}/></label></div>
+  <div className="field"><span>尺码 *</span><NativeGroupSizeSelect scope={props.scope} sizes={sizes} value={sizeId} onChange={setSize}/></div></div>
   {error&&<p role="alert">{error}{sizes===null&&<UIButton onClick={()=>{setError('');setRetry(v=>v+1);}}>重试</UIButton>}</p>}
  </StandardOverlay>;
 }

@@ -1,0 +1,49 @@
+{
+  "atUtc": "2026-10-23T20:13:13.785247+00:00",
+  "parent": "753bd09b115fce1118b1680d77daaf2032683ab0",
+  "taskId": "QF2-P-SIZE-DROPDOWN-OPEN-01",
+  "files": [
+    {
+      "path": "apps/web/src/products/product-editor-specs.tsx",
+      "bytes": 19121,
+      "sha256": "4f98a427513aad0f4d36214831e861d57ca83183d444ab04722c701a65c0fd17",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-P-SIZE-DROPDOWN-OPEN-01/ACTUAL-214-RETRY-01/RESULT.json",
+  "ownerReceiptSha256": "fc616c25ac0ccd9378467de358d75179625dceee198fcba6e5bcf230323aef88",
+  "ownerDelivery": {
+    "taskId": "QF2-P-SIZE-DROPDOWN-OPEN-01",
+    "owner": "F2",
+    "atUtc": "2026-10-23T20:12:05.348187+00:00",
+    "status": "SOURCE_READY_EXACT1_RELEASED; ORIGINAL214_ACTUAL_CAUSE_CONFIRMED; NEW_FIXED_BROWSER_QA_PENDING",
+    "authority": "C explicit exclusive214 diagnostic window and original exact leaf repair; user reporting01a161f7-a5e8-7e10-9059-9537c28910c2; gpt-6.1-sol/xhigh Fast unverifiable",
+    "files": [
+      {
+        "path": "apps/web/src/products/product-editor-specs.tsx",
+        "bytes": 19121,
+        "sha256": "4f98a427513aad0f4d36214831e861d57ca83183d444ab04722c701a65c0fd17",
+        "beforeSha256": "2c312c77c5fc7a73366698e03cf57652e49f19f275ec9aa91cb8bec4235d966e"
+      }
+    ],
+    "actualCause": "One real CDP physical arrow click triggers SVG click→controlled size open→native outer label forwards a second click to its implicit associated internal Select input→size closes. Actual trace false→true→false and final no options, matching original QF symptom. Color also gets forwarded input click but its searchable Select view uses installed Arco canFocusInput/open propagation guard. No empty group, schema or selection rule implicated.",
+    "actualProof": [
+      "size-trace.json native SVG click4/open5/forwarded input click8/close9; source214 original19125B unchanged during diagnosis",
+      "label-default-prevented-ab.json/png: exactly one temporary label default prevention on original page; same physical arrow then expandedtrue/options3 stable; intervention and trace removed before cleanup. This is causal A/B only, not new-source ChromePASS."
+    ],
+    "change": "Only AddSku size field outer label becomes div with same field class/visual span. Existing native combo retains aria-label尺码 and required; removing invalid implicit label association eliminates the forwarded extra click. No event suppression runtime patch, replacement component, shared control, source data, group traversal, validation, SKU identity or save logic changed.",
+    "checks": [
+      "Exact single-line tag-only diff; all other source bytes preserved",
+      "Regression replays two distinct event commits observed in Chrome: suppress JSDOM batched automatic label forwarding then explicitly replay the associated-input click if that implicit association exists. Archived213 RED actual ariafalse; fixed leaf GREEN aria true/options present/real own member selection/local draft identity. This is synthetic trace replay, not browser e2e.",
+      "Affected leaf TypeScript transitive closure0diagnostics",
+      "Old source213/old original JSDOM success retained. Its act-batched label event sequence failed to catch the browser commit-between-clicks behaviour; no old PASS relabelled as actual."
+    ],
+    "notTested": [
+      "Actual new fixed code in Chrome; C must freeze/build then QF2 independently recheck original arrow/center settled state",
+      "Real dictionary body/native write/save/PG/production/Git/fullbuild not exercised"
+    ],
+    "browserRelease": "WINDOW-CLEAN-RELEASE.json: candidate+Demo I01/basic/scroll0/no layers/editorSave0/trace absent. AddSku Cancel/parent3 rows unchanged/完成/editor Save disabled thenCancel. No unapproved targets or source mutations in browser. F2 no further browser calls.",
+    "next": "C freeze this exact1 then independent QF2 original narrow size dropdown actual; same problem ID kept open until actual closure. F2 proceeds same original Empty full region repair using already acquired native final rules."
+  },
+  "qualification": "Actual original214 trace confirmed native label activation doubleclick; new source exact wrapper label-to-div only. Newsource nativeChrome independent retest pending; original213/JSDOM not accepted asactual."
+}
