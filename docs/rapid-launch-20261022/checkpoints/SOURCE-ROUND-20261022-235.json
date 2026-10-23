@@ -1,0 +1,171 @@
+{
+  "atUtc": "2026-10-23T23:23:28.793638+00:00",
+  "parent": "b2cc2dfad735d83dc8cb29293ed760a4e3e78fdf",
+  "taskId": "F2_P16P18_NATIVE_BLOCK_FLOW_IN_ACTUAL_FRAME",
+  "files": [
+    {
+      "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
+      "bytes": 37110,
+      "sha256": "2bd21647371ab72f5a9e8466f842d8851c9e7aca20f2f72f83dc220e9441698a",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/actual233-bottom-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "65a5cd20fd102e5ca1e5134fd75728bfd0d5878624a1703d2847aa6450e0451d",
+  "ownerDelivery": {
+    "taskId": "QF2-P16P18-FRAME-ANCESTOR-01",
+    "subscope": "ACTUAL233_BOTTOM_ROW_OCCLUSION",
+    "parentTask": "F04-P16-P18-EXISTING-WHOLE-MIGRATION",
+    "owner": "F2",
+    "atUtc": "2026-10-23T23:20:45.673072+00:00",
+    "status": "SOURCE_READY_EXACT1_NATIVE_MAIN_FLOW_LOCAL_CHECK_PASS_NEW_BROWSER_REACHABILITY_PENDING",
+    "authority": {
+      "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "model": "gpt-6.1-sol/xhigh; Fast not verified"
+    },
+    "completedScope": "Append one private display:block rule on mapped main with direct pc-readonly-settings child. Restore original main#page native block formatting context inside actual viewport frame; public Frame remains flex for other pages. All previous CSS including accepted232 six ancestor selectors, source64px reserve and fixed pager remain byte unchanged. No padding/offset/height growth.",
+    "sourceReason": "Source Frame.css55 explicitly turns actual viewport .demo-page into flex container; original native main#page has no author display override in source stylesheet chain and UA block. Actual233 root543 equals main623 minus16+64 padding; visible body468 is shorter than table718. This supports the added flex-context/shrunk-child overflow explanation. No new browser display winner/A-B or repaired pixel proof claimed.",
+    "files": [
+      {
+        "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
+        "bytes": 37110,
+        "sha256": "2bd21647371ab72f5a9e8466f842d8851c9e7aca20f2f72f83dc220e9441698a",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/actual233-bottom-01/source/apps/web/src/product-settings/size-groups/source-dictionary.css",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/actual233-bottom-01/before/apps/web/src/product-settings/size-groups/source-dictionary.css",
+          "bytes": 36729,
+          "sha256": "5c9fca55c2efd32ffc0b68aed59bc6505b430e123185cd69dd5eb5342aeae256"
+        }
+      }
+    ],
+    "checks": {
+      "status": "PASS_LOCAL_NATIVE_MAIN_FLOW_ADAPTER_ACTUAL_GEOMETRY_RECHECK_PENDING",
+      "sourceMain": {
+        "element": "main#page",
+        "nativeUA": "block",
+        "sourceStylesheetDisplayHits": []
+      },
+      "before": {
+        "actualDemoFrameDisplay": "flex"
+      },
+      "after": [
+        {
+          "kind": "groups",
+          "mainDisplay": "block",
+          "paddingBottom": "64px",
+          "mainOverflow": "auto",
+          "flexGrow": "1",
+          "minHeight": "0px",
+          "bodyOverflow": "visible",
+          "rows": 20,
+          "lastRow": "合成尺码组 20165/S、170/M、175/L",
+          "pagerPosition": "fixed",
+          "pagerBottom": "0px"
+        },
+        {
+          "kind": "seasons",
+          "mainDisplay": "block",
+          "paddingBottom": "64px",
+          "mainOverflow": "auto",
+          "flexGrow": "1",
+          "minHeight": "0px",
+          "bodyOverflow": "visible",
+          "rows": 4,
+          "lastRow": "合成季节 4",
+          "pagerPosition": "fixed",
+          "pagerBottom": "0px"
+        }
+      ],
+      "checks": {
+        "onlyOnePrivateRuleAdded": true,
+        "allExistingBlocksAndOrderUnchanged": true,
+        "source232SixSelectorsAnd64pxReserveUnchanged": true,
+        "cssParse": true,
+        "cssBundleWarnings": 0,
+        "frameCssWarnings": 0,
+        "componentHarnessWarnings": [
+          "\"import.meta\" is not available with the \"cjs\" output format and will be empty"
+        ],
+        "old630Rerun": false,
+        "source232SuiteRerun": false,
+        "businessSuiteRerun": false
+      },
+      "qualification": "Real React DemoFrame/host/current leaves with20 group rows and4 seasons, local CSS/DOM only. JSDOM cannot prove last-row reachability, scrollHeight, rectangles, hit testing or repaired browser pixels. Actual233 raw is original failure evidence; new pinned containing candidate/QF2 must verify last row and footer naturally."
+    },
+    "actualInputEvidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c233-dictionary-native-actual-01/browser/P16-CANDIDATE-COLD.json",
+        "bytes": 19529,
+        "sha256": "ff664e9ff53f253943e22b6d5e5dc577695ad44fabeafb0fdcd90afb308589fb"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c233-dictionary-native-actual-01/browser/P16-CANDIDATE-BOTTOM.json",
+        "bytes": 1795,
+        "sha256": "c269b0fa54bd84d606def71277dd0aaac8531ddf60c318bb28319cf6f20aaa72"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c233-dictionary-native-actual-01/browser/P16-DEMO-TOP.json",
+        "bytes": 13360,
+        "sha256": "55f2ec179a7895b3758beb2afa54ce290977b089516e3f5cc9e135afa19bbf0f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c233-dictionary-native-actual-01/browser/p16-candidate-bottom.png",
+        "bytes": 138568,
+        "sha256": "ed5b8b3929f4c5dd7a650353dfec122ebbed99727da95662b701771aa6105786"
+      }
+    ],
+    "priorEvidenceRetained": "Source232 selector fix remains valid. Old630 native fixture mapping is not actual Frame/scroll proof and was not rerun. Actual233 native six-group Demo differs in scale; no synthetic20 rows added to Demo or compared as same business data.",
+    "untested": [
+      "New containing candidate20-row bottom reachability and footer hit testing/scroll/pixels",
+      "Actual paired main display winner requested once via C for QF2 natural path; not yet received at freeze time",
+      "No Chrome/full candidate build/realHTTP/PG/writes/deployment; no old630/source232/protocol/P19 suites rerun"
+    ],
+    "warning": "Local CJS component harness retains existing empty-import-meta warning; CSS/frame CSS bundles0warning. Page-size action/style URL not opened; no source workaround for test.",
+    "blocker": "No source blocker. F2 NO_CHROME; C pins/integrates and original sole QF2 must verify actual last row/footer, with one necessary carrier-display raw if still needed.",
+    "next": "C pin exact1 -> next necessary containing candidate -> original QF2 actual20 rows/end-of-scroll last row center hits row and footer controls remain reachable; keep source232 and approved old scopes, close only actual affected finding if evidence passes.",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/actual233-bottom-01/SOURCE-MANIFEST.json",
+        "bytes": 2859,
+        "sha256": "390c84e4672f458d519ce8bc73650c063c12f67bbb09b32706d1a956ba448cb4"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/actual233-bottom-01/CHECKS.json",
+        "bytes": 1750,
+        "sha256": "fd9e7973511c4f9849d776be510c68f7976c0b0a0c7c85971a2865fec0b90263"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/actual233-bottom-01/checks.log",
+        "bytes": 309,
+        "sha256": "452681a42ce66bd0f51f4d0c49a459e6307682a3d97c3039e030b787b3a82afb"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/actual233-bottom-01/added.css",
+        "bytes": 381,
+        "sha256": "84f59ca6f4bc100d50b8d9519e716323d38e6cdf35f165dcd4bb668a2f517842"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/actual233-bottom-01/source.diff",
+        "bytes": 842,
+        "sha256": "d2fb66df3519a23b48ab867dd651531c89635cd7ebff540d4244c087255a93fc"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/actual233-bottom-01/verify-flow.mjs",
+        "bytes": 9275,
+        "sha256": "c79ad3bc729d46b9948cc2b31da7fd2ad726d94701acb8a8f4bb4ea8e9aa7e77"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/actual233-bottom-01/bundle-warnings.json",
+        "bytes": 139,
+        "sha256": "d3462351c023f5f140fc83f466c39eb2d8ec0276e47fc175c6c329484583362e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/actual233-bottom-01/actual-host-dom.html",
+        "bytes": 10126,
+        "sha256": "019785fd714147739984846c2d03e2c80104469f2bcb5b95564a6c9a4637d612"
+      }
+    ]
+  },
+  "qualification": "Necessary targeted owner source checks adopted; publicslot requires explicitF2consumer, nativeblockflow actualscroll/hitTest pending containing successor. No priorfixedgeometry/SQL or commonfullsuite rerun and no wholepage/performance acceptance; notinrunning233."
+}

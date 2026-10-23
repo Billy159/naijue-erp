@@ -79,3 +79,9 @@
 .pc-readonly-settings .dictionary-read-state,.pc-readonly-settings p[role=status]{margin:0 0 8px;color:var(--ca-ink-2);font-size:12px;line-height:20px}
 .pc-readonly-settings [role=tab]:disabled{color:var(--ca-disabled-ink);cursor:not-allowed}
 /* END complete frozen P16/P18 native pages. */
+
+/* Frozen main#page uses normal block flow inside .main. The actual viewport
+ * frame makes .demo-page a flex container; restore the native inner formatting
+ * context for these two dictionaries so visible table overflow cannot outgrow
+ * a shrunk flex child and bypass the existing 64px footer reserve. */
+:is(#page,.demo-page):where(:has(>.pc-readonly-settings)){display:block}
