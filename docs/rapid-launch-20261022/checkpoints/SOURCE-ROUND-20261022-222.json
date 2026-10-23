@@ -1,0 +1,60 @@
+{
+  "atUtc": "2026-10-23T21:18:19.617566+00:00",
+  "parent": "8ad69f4caba87e2d8f237c268d9defd3a439ce00",
+  "taskId": "F01_ORIGINAL_UIDATE_NATIVE_MOUSE_TRIGGER_BOUNDARY",
+  "files": [
+    {
+      "path": "apps/web/src/components/standard-controls.tsx",
+      "bytes": 6297,
+      "sha256": "063c9cc238c32897a26441d18af65432c108a80726ae970dc7b97fdfb0e5a9c1",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/components/standard-controls.css",
+      "bytes": 2092,
+      "sha256": "c2ec088f27c03dd682f5cc9149247cf12e5bfdc20587e52edde13caeb4e81578",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-110/DELIVERY.json",
+  "ownerReceiptSha256": "dc5a5d70af5cc47bd888dcd98781e0f500ece5f670ccb3dfddc1793419c20f7b",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh",
+    "finding": "QF2-I07-DATE-MOUSE-OPEN-01",
+    "status": "SOURCE_READY_ORIGINAL_UIDATE_NATIVE_TRIGGER_BOUNDARY_ACTUAL_PENDING",
+    "files": [
+      {
+        "path": "apps/web/src/components/standard-controls.tsx",
+        "bytes": 6297,
+        "sha256": "063c9cc238c32897a26441d18af65432c108a80726ae970dc7b97fdfb0e5a9c1"
+      },
+      {
+        "path": "apps/web/src/components/standard-controls.css",
+        "bytes": 2092,
+        "sha256": "c2ec088f27c03dd682f5cc9149247cf12e5bfdc20587e52edde13caeb4e81578"
+      }
+    ],
+    "diagnosis": {
+      "actualInput": "QF2 fixed220 first+second actual SVG clicks focus only, calendar absent; ArrowDown opens original267x355 calendar, ledgerread1. Read paired DEMO-DATE-FIRST-MOUSE.json (actual artifact filename) first mouse opens native267x341 for unchanged2026-09-24; stableDOM shows suffix SVG is input sibling",
+      "sourceCause": "Installed Arco2.66.16 DatePicker picker.js425 click Trigger clones UIInput; Input/input.js116-151 forwards props.onClick only to InputComponent, suffix wrapper own click only focuses. SVG sibling click cannot bubble through inner input handler. UIDate ArrowDown separately controls existing open state, explaining keyboard success. No label doubleactivation inferred",
+      "fix": "Only original custom trigger gets an undecorated native span event boundary around the existing unchanged UIInput. Arco original Trigger clones handler/ref onto this shared input+suffix ancestor; no icon-direct setOpen, new picker/component system or state/query rewrite. Existing CSS carrier inline-flex/min-width0/width100percent only; no padding/border/height/font added"
+    },
+    "checks": {
+      "before-1": "RED original I07 Drawer+UIDate native component Node24 pointer trace matches actual observation: firstmousefalse, secondmousefalse, ArrowDowntrue, active starts date, initial ledger read1; SVG composedPath excludes INPUT, wrapper focuses input. BEFORE-TRACE.json retained",
+      "after-1": "Mouse opens original calendar; subsequent fixture query incorrectly expected Today button/a but native Arco renders span.arco-link. Only observed DOM selector corrected",
+      "after-2": "Process exited137, log0bytes; cause not established and not counted PASS. Probe then uses safe boolean DOM assertions and starts clear-only check with picker explicitly closed, preserving existing open/clear semantics rather than changing production state",
+      "after-3": "PASS local actual original I07 Drawer/UIDate first suffix mouse+repeated clickToClose=false, native Today selection changes draft only/valid date; executed original filter unchanged and ledger read remains1. Separate originalUIDate incomplete raw2026- without InvalidDate, ArrowDown/Escape, nativeclear from closed state and disabled no-open/no-change. No new query",
+      "types-1": "PASS standard-controls.tsx plus original I07 ledger drawer complete strict imported source closure0",
+      "css-parse": "PASS existing standard-controls.css parse only; no production build"
+    },
+    "limitations": [
+      "Actual browser problem remains OPEN_PENDING_SUCCESSOR_I07_ACTUAL. Local JSDOM success is not claimed a Chrome fix, focus, layout or pixel acceptance",
+      "Original paired267x341/267x355 and3pxbaseline observations retained; no hardcoded height/position change or unsupported attribution",
+      "No old public suite/48/task98/209/PG/realHTTP/permission/date-business rule/endpoint acceptance. No F2 ledger or C root/contracts/control file written",
+      "Only first native component boundary, raw/clear/keyboard and original query timing checks; C/QF public source and QF2 exact successor actual consumer remain required"
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "OriginalQF2 actual220 DATE-MOUSE-OPEN event seam exact2 public controls fixed. OriginalArco Trigger reused; no newcalendar/queries/business rules/font-height-position changes. Owner JSDOM/strict adopted, originalQF independent source and QF2 containing successor actual pending. Notinserved221, no whole business/performance acceptance."
+}

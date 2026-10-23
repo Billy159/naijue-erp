@@ -64,6 +64,8 @@ export function UIDate({ value, onChange, disabled, className, ...inputProps }: 
   // its formatter replace the user's text with "Invalid Date" on rerender.
   // Keep its last valid calendar value while its own input holds raw typing.
   if (value === '' || (/^\d{4}-\d{2}-\d{2}$/.test(value) && dayjs(value).isValid() && dayjs(value).format('YYYY-MM-DD') === value)) calendarValue.current = value;
+  // Input forwards click handlers to its inner input; the native trigger must
+  // also contain the calendar suffix so Arco receives that same click.
   return <span ref={host} className="erp-date-host" onPointerDownCapture={() => { pointerInside.current = true; }} onBlurCapture={event => {
     if (event.relatedTarget instanceof Node) {
       if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
@@ -79,10 +81,10 @@ export function UIDate({ value, onChange, disabled, className, ...inputProps }: 
       });
     }
   }}><DatePicker className={classes('erp-date', className)} value={calendarValue.current} disabled={!!disabled} format="YYYY-MM-DD" allowClear unmountOnExit
-    triggerElement={<UIInput {...inputProps} className={classes('erp-date-input', className)} value={value} disabled={!!disabled} allowClear suffix={<IconCalendar />}
+    triggerElement={<span className="erp-date-trigger"><UIInput {...inputProps} className={classes('erp-date-input', className)} value={value} disabled={!!disabled} allowClear suffix={<IconCalendar />}
       placeholder={inputProps.placeholder ?? 'YYYY-MM-DD'} onChange={next => { if (!disabled) onChange(next); }} onKeyDown={event => {
         if (!disabled && event.key === 'ArrowDown') { event.preventDefault(); setOpen(true); }
-      }} />}
+      }} /></span>}
     popupVisible={open} onVisibleChange={visible => setOpen(!!visible)} getPopupContainer={() => host.current ?? document.body}
     onChange={next => { if (!disabled) onChange(next || ''); }} /></span>;
 }

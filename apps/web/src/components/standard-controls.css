@@ -1,5 +1,6 @@
 /* Layout/tokens only. Behaviour, markup and states come from actual Arco. */
 .erp-select-host,.erp-date-host{display:inline-flex;position:relative;min-width:0;width:100%;vertical-align:middle}
+.erp-date-trigger{display:inline-flex;min-width:0;width:100%}
 .erp-select.arco-select,.erp-date.arco-picker{width:100%;min-width:0;background:var(--ca-surface,#fff);border:1px solid var(--ca-line,#e5e6eb);border-radius:4px}
 .erp-input.arco-input,.erp-textarea.arco-textarea{min-width:0;font:inherit;color:var(--ca-ink,#1d2129);background:var(--ca-surface,#fff);border:1px solid var(--ca-line,#e5e6eb);border-radius:4px}
 .erp-input.arco-input:focus,.erp-textarea.arco-textarea:focus,.erp-select.arco-select-focused,.erp-date.arco-picker-focused{border-color:var(--ca-primary,#165dff)}
