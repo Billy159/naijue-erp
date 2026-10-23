@@ -1,0 +1,67 @@
+{
+  "atUtc": "2026-10-23T18:03:42.143191+00:00",
+  "parent": "47f9d307469f63da2a292555a71cb0dbb7cdac4c",
+  "taskId": "F05_STAFF_REAL_LOGIN_SEARCH_PAIRED_CAP",
+  "files": [
+    {
+      "path": "apps/web/src/staff-settings/http-client.ts",
+      "bytes": 14850,
+      "sha256": "7b3c3cda65afb8dc81597b9bb65c1665bbbebb3c247684ffddf71cef12f51542",
+      "owner": "F3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-login-name-cap-v1/RESULT.json",
+  "ownerReceiptSha256": "98e4022f6a601d2655cbe25f04e5ae1c6289dc9f6b8426504d1a29b957e7aafd",
+  "ownerDelivery": {
+    "task": "F3-F05-STAFF-LOGIN-NAME-CAP-V1",
+    "clientDate": "2026-10-24",
+    "createdAt": "2026-10-23T18:00:53.866797+00:00",
+    "status": "SOURCE_READY_FOR_C_FIXED_PAIRED_BACKEND_FRONTEND_CANDIDATE",
+    "files": [
+      {
+        "path": "apps/web/src/staff-settings/http-client.ts",
+        "beforeSha256": "0b856d93defa4a059d21e0144203f6c40bcb45bb1b49c5aca01122a4c1fd3e69",
+        "afterSha256": "7b3c3cda65afb8dc81597b9bb65c1665bbbebb3c247684ffddf71cef12f51542",
+        "bytes": 14850
+      }
+    ],
+    "pairedBackend": {
+      "checkpoint": "C193",
+      "commit": "f904b5a3b3abd1bf0e50bb1b0d53c263993a15ba",
+      "path": "adapters/postgres/src/organization-maintenance-store.ts",
+      "fixedFileSha256": "af451a268262dde4cd09a0f1973d1cf990619b734e1346fbfb86966120bbbad1",
+      "fact": "Existing POST/staff/query search matches m.name OR uniquely linked real a.login_name; no new field/endpoint. F3 only read this fixed source; no backend tests or PG rerun."
+    },
+    "change": "Reader capabilities adds loginNameSearch:true so existing C187 page consumes its existing search-name-or-login label. The original name search stays supported. No page/layout/DTO/projection/transport mutation.",
+    "existingNativeReadBody": "UNCHANGED_BYTE_FOR_BYTE from async readList through rest of file",
+    "nativeReadBodySha256": "7a565a64b299cf2a661799c58eee28a0b8a50c61ca9145765a3ca73f7a9e4220",
+    "preserved": [
+      "roleFilter:true",
+      "original six-field POST/staff/query payload and same search field",
+      "native real account projection; no fabricated usernames",
+      "loginStatusFilter remains absent and nonempty loginStatus rejected before transport",
+      "closed/no-account classification remains undecided",
+      "all write flags and formal host gates unchanged"
+    ],
+    "checks": {
+      "CONSUMER-CHECK.json": {
+        "status": "PASS_SINGLE_NEW_LOGIN_SEARCH_CONSUMER_WIRE_SCOPE",
+        "sha256": "b110ea3b15159e648cf5acae590185ad3c7af4c17e86d08c07f349c624fbc6c7"
+      },
+      "TYPECHECK.json": {
+        "status": "PASS",
+        "sha256": "29dac052a9da6c714890942ca692e45fb8a367cb74498f470d5156037974747d"
+      }
+    },
+    "newConsumerGroupsPassed": 1,
+    "commandCalls": 0,
+    "requestKeys": 0,
+    "actualBrowser": false,
+    "actualPG": false,
+    "formalRuntime": false,
+    "productionDeployment": false,
+    "oldStaffSixAndRoleProtocolSuites": "REUSED_NOT_RERUN",
+    "next": "C fixes exact1 and includes C193 plus this frontend capability together in a future current candidate/QA. Current184/189 and prior runtime are not asserted to include it. Await that paired runtime and original QF2 feedback; no duplicate migration work."
+  },
+  "qualification": "SOURCE_FIXED_OWNER_TARGETED_CHECKS_ONLY. No actual PostgreSQL/HTTP/frontend-runtime/SAVE/performance/release accepted. Existing independent results reused; only new affected delta route to original QA. Paired backend C193 only; loginStatus remains unsupported and closed-noaccount human decision pending. Current189 runtime does not include this cap."
+}

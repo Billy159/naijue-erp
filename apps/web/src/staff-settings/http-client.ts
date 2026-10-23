@@ -3,11 +3,11 @@ import { createOrganizationMaintenanceReadClient } from '../settings/stores/main
 import type { StaffSettingsReader, AccountSettingsReader } from './contracts.ts';
 import { projectStaffSettingsRecord, projectAccountSettingsRecord } from './response-validation.ts';
 
-/** Native STAFF role6 reads require the matching fixed backend. Login-status
- * filters and login-name staff search remain unavailable. */
+/** Native STAFF role6 reads search names or real linked logins on the paired backend.
+ * Login-status filtering remains unavailable. */
 export function createStaffSettingsHttpReader(options: HttpQueryOptions): StaffSettingsReader {
   const client = createOrganizationMaintenanceReadClient(options);
-  return Object.freeze<StaffSettingsReader>({ capabilities: Object.freeze({ roleFilter: true }),
+  return Object.freeze<StaffSettingsReader>({ capabilities: Object.freeze({ roleFilter: true, loginNameSearch: true }),
     async readList(read) {
       const query = read.parameters;
       if (query.loginStatus !== '') throw new HttpQueryError('not-implemented', 'STAFF_FILTER_NOT_AVAILABLE');
