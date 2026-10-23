@@ -251,7 +251,7 @@
   gap: 5px;
   min-width: 0;
 }
-:is(.sales-proposal-editor,.sales-detail-facts) .sale-payment-row :is(select, input, .erp-select-host) {
+:is(.sales-proposal-editor,.sales-detail-facts) .sale-payment-row > :is(input, .sale-reference-field) {
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
@@ -261,13 +261,15 @@
   border-radius: var(--ca-radius-control);
   font-size: 13px;
 }
-:is(.sales-proposal-editor,.sales-detail-facts) .sale-payment-row :is(select, input) {
+:is(.sales-proposal-editor,.sales-detail-facts) .sale-payment-row > input {
   padding: 4px 8px;
   border: 1px solid transparent;
   background: var(--ca-surface-muted);
   color: var(--ca-ink);
 }
-:is(.sales-proposal-editor,.sales-detail-facts) .sale-payment-row input { text-align: right; font-variant-numeric: tabular-nums; }
+:is(.sales-proposal-editor,.sales-detail-facts) .sale-payment-row > input { text-align: right; font-variant-numeric: tabular-nums; }
+/* Preserve the source ShadowRoot library default-size input rule inside the light-DOM payment owner. */
+:is(.sales-proposal-editor,.sales-detail-facts) .sale-payment-row > .sale-reference-field .arco-select-size-default.arco-select-single input {font-size:14px}
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-payment-actions { display: grid; grid-template-columns: 36px 36px; align-items: center; justify-content: end; gap: 8px; white-space: nowrap; }
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-payment-actions [data-rf-add] { grid-column: 1; }
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-payment-actions [data-rf-remove] { grid-column: 2; }
