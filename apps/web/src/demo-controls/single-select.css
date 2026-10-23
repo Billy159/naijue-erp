@@ -1,8 +1,6 @@
 /* Action-only component leaf styles, never the all-library/global stylesheet.
  * Frozen source and exact extraction ranges are recorded in source-provenance.json.
  * The caller's existing lazy style loader must load this entry before mounting. */
-@import '@arco-design/web-react/es/Select/style/index.css';
-@import '@arco-design/web-react/es/Trigger/style/index.css';
 /* Frozen unified-single-select.jsx:10; declarations unchanged, selectors scoped. */
 .demo-single-select{display:block;width:100%;min-width:0;font:13px Arial,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ca-ink);--arcoblue-6:var(--ca-primary-rgb);--primary-6:var(--ca-primary-rgb);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2)}
 /* Frozen unified-single-select.jsx:12; declarations unchanged, selectors scoped. */

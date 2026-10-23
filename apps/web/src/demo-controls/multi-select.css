@@ -1,12 +1,4 @@
 /* Action-only installed component leaves. No global Arco CSS or reset. */
-@import '@arco-design/web-react/es/TreeSelect/style/index.css';
-@import '@arco-design/web-react/es/Tree/style/index.css';
-@import '@arco-design/web-react/es/InputTag/style/index.css';
-@import '@arco-design/web-react/es/_class/OverflowEllipsis/style/index.css';
-@import '@arco-design/web-react/es/Tag/style/index.css';
-@import '@arco-design/web-react/es/Checkbox/style/index.css';
-@import '@arco-design/web-react/es/Trigger/style/index.css';
-@import '@arco-design/web-react/es/Empty/style/index.css';
 /* Frozen inventory-filters.jsx presentation, shared without domain ownership. */
 .demo-multi-select{position:relative;display:block;width:100%;min-width:0}
 .demo-multi-select .arco-tree-select{display:block;width:100%;font-size:13px}.demo-multi-select .arco-tree-select .arco-tree-select-view{height:32px;min-height:32px;max-height:32px;overflow:hidden;border:1px solid transparent;border-radius:4px;background:var(--ca-surface-muted);box-shadow:none}.demo-multi-select .arco-tree-select:hover .arco-tree-select-view{border-color:transparent;background:var(--ca-surface-muted)}.demo-multi-select .arco-tree-select.arco-tree-select-focused .arco-tree-select-view{border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted);box-shadow:none}
