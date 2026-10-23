@@ -10,7 +10,7 @@
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
     "headObserved": "ef60d3220ce0cb668e3a6bafb9e42539dd2d7f62",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "13ceab7930041a0940447f9a0ddae7c0b91c6935",
+    "remoteHeadVerified": "ed2aa9fbf4817387949ba4290ae5a6a8731ea4cf",
     "remoteReadbackMethod": "Exact3 original objects/nonforcedFF/independentGET",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -80,7 +80,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "C164 focus1/C165 native lists4 and C162 saved6 fixed; QFsourcePASS. Ready for actual-specific findings; not duplicate oldmenus/payment/pager."
+      "currentWork": "C164/165 currentQFactual; chunk83 exact5 CSS dedup now CregisteredF1 solewriter b583957, deleting19duplicate libraryimports, preserveDemo/rootbase/leases. No fullbuild or unrelatedsource."
     },
     "F2": {
       "title": "前端库存与商品",
@@ -170,7 +170,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "C165 exact4 sourcePASS; C164focus sourcefixedsamebytes. Offline untilC explicitChromegrant after toolrecovery, actualunmeasuredmodules next.",
+      "currentWork": "SoleC165Chrome focusconsumeractualclosed; continuing newS01/T01 andremainingmixed/T02/saved. Source/common/perf167 only laterexactaffectedcheck, no old158repeat.",
       "scope": "登录与公共壳、销货/退换、调拨列表/开单/编辑/详情/相关弹层；公共控件主验",
       "matrixOwner": true
     },
@@ -201,7 +201,7 @@
       "fastRequested": false,
       "scope": "商品列表与六页签、分类/字典/条码/图片、库存、基础设置、客户供应商、员工账号、收款配置及相关弹层",
       "reportRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2",
-      "currentWork": "C actualrestoredoriginalChrome, explicitlyregranted latestC165 sole8B3+Demo; originalSPEC03 only actualinprogress. C162toolfailed0 preserved; norepeat153/backend.",
+      "currentWork": "C165SPEC03 limitedactualPASS/cleanreleasedC, no morebrowser untilfutureexplicitgrant. Strongold403/401/PGnotmeasured.",
       "authorizationSource": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "fastVerification": "Tool has no exposed switch; requested off, actual unverified"
     }
@@ -962,9 +962,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T11:41:50.272683+00:00",
+  "updatedAt": "2026-10-23T11:57:50.909739+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "13ceab7930041a0940447f9a0ddae7c0b91c6935",
+  "lastVerifiedRemoteCommit": "ed2aa9fbf4817387949ba4290ae5a6a8731ea4cf",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2325,6 +2325,20 @@
       "sha256": "26cff3524a78ad2217ee3d021fd195e4a8d983b15992f27b9dbf38ac3b89d9ad",
       "result": "QF_C165_EXACT4_SOURCE_ONLY",
       "adoption": "C adopts independent conclusion; no repeated technical acceptance."
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c162-output-access-actual-01/C165-BROWSER-RESULT.json",
+      "bytes": 6410,
+      "sha256": "4ad6ae911a0fb059eb45ab9667f3d73cdfc99112137f94318b48c4fa0b354206",
+      "result": "PASS_LIMITED_SYNTHETIC_BROWSER_CURRENT403_SAME_MENU_AND_CANCELLED_REQUEST_RECOVERY",
+      "adoption": "C adopts scoped independent result, no repeatedtechnicalacceptance. Strongignoreabort old403/actual401/PG/formalperf remainnotmeasured."
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v037-qf-ffcf933-focus-lists-related/FOCUS-RESULT.json",
+      "bytes": 7318,
+      "sha256": "1ff72e3a7cc2c82c797c663b728e7e9af7f757415e56b9ae05c51574654aa484",
+      "result": "PASS_LIMITED_ACTUAL_NEW_SALE_LEAVE_FOCUS_ONLY",
+      "adoption": "OriginalQF initial+two reopen/headerclose/continue/Esc/opener and owninput preservation; no repeatedtechnicalacceptance or wholepageclaim."
     }
   ],
   "newPendingReviews": [
@@ -2495,9 +2509,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-23T11:41:50.272683+00:00",
-    "sourceRound": 166,
-    "sourceCheckpoint": "7bfddbc6c18eb73a4c403c3aae006797ff9e7077",
+    "atUtc": "2026-10-23T11:57:50.909739+00:00",
+    "sourceRound": 167,
+    "sourceCheckpoint": "195222fb97f2a41c352ae5fcd973700f63b0e760",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -2525,12 +2539,12 @@
       "formalPerformanceAccepted": false,
       "scope": "C165 native S01/T01 lists4 plus C164 newSALEleave focus1; inherited C162saved/edit/view6 and C160 recovery2. Source/fixture/caps original finite103/write-refusal unchanged. Source QA only; actual browser not yet."
     },
-    "nextPreview": null,
+    "nextPreview": "Fixed167 exact5CSS only; original fullproduction167 PREBUILD preparing, no167 actualbuild/pack/browser yet. Current165 immutableactualUI/production166builtpack separately valid.",
     "r1": "C63实际COMPLETED exit0 32.301s：固定C132/build r1-c28ea3f-20261023-02完整生产依赖安装成功，Linux x64 Node24.21 Sharp0.35.5原生加载；APP/proxy health200，HTML与真实声明current application.js 200且manifest精确。依赖根因A及实际私有安装启动B均完成；dataReady/业务验收/正式切换false。保留45/48/60/61/62失败现场，未改正式三服务/公网。",
     "qa": "C75 original PUBLISH-only/nativeCREATE actualPASS + C78 H06 actual limitedsinglechain QB174 + C79 primary/ledger actual9contracts QB178 adopted. QA49account57source1product1SKU5audit5receipt protected as finalC79; stocktab/newwarehouse/race/nonemptyledger/real49/formalcutover untested.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
-    "waiting": "ActualfreshC82 nowPASS and166originalbuild/packPASS; C80 normalservices/raceKinputs originalD1 finalcheck, C83 approvedR1v6/v7 andC84 newprivate166 preparation parallel. QF2SPEC03actual165 soleChrome thenQFfocus/lists/mixed/T02/saved. Threehumanbranchesonlywait; no newapproval or wholebackendrecheck.",
-    "github": "Through13ceab7930041a0940447f9a0ddae7c0b91c6935 exact8 nonforced GitHub commits independently readback PASS; currentactualsegment nextsync.",
+    "waiting": "C80 originalD1 normalservice/race inputfinalchecks, C83 R1approvedv6/v7 andC84 private166prepare. C82freshactual and166buildpackPASS. QF sole165 actualmodule; F1 exact5 CSSsharedperformance repair inparallel. Onlyexistingthreehumanbrancheswait.",
+    "github": "Independent readbacked2aa9fbf4817387949ba4290ae5a6a8731ea4cf; source167/currentsegment next nonforcedsync.",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -2572,7 +2586,7 @@
       "activationAuthorizedByCurrentEvidence": false,
       "boundary": "Complete fixed166 includes160/161/163/164/165/166 repairs. Private132 valid but older. R1 approvedv6/v7 runtime83 and newprivate16684 preparation only; notlateststage/data/business/formalcutover."
     },
-    "actualQFBrowser": "C original tool recovery succeeded, only knownERPtarget metadata byC. English-only mac-approve didnotmatch actualChinese permission sheet; exactlocalizedconstants inRAM usingoriginalhelper approved existingauthorizedconnection. Pendingdaemon list_tabs exit0. C explicitly regranted QF2 sole8B3+Demo latest165 SPEC03; QFoffline. Unknown3BC notread/moved; oldQF2C162actual0 remains toolNOT_TESTED, no freshcleanbyC.",
+    "actualQFBrowser": "QF2 exact165SPEC03 limitedPASS/cleanrelease adopted. C explicitlysolegranted QF 8B3+Demo for initialfocus/newlists/mixed/T02/savedunmeasured. No otherdriver, protected3BC unchanged; actualbusiness notpassed.",
     "frontendAcceptance": {
       "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "parentTask": "QF01",
@@ -2684,8 +2698,8 @@
           "owner": "QF2",
           "version": "C165 ffcf933/ui-preview-ffcf933-01-build01",
           "scope": "SPEC03 current403/same-menu freshscope/lateisolation only; inherited160leaf/controller samebytes",
-          "status": "ACTUAL_IN_PROGRESS_SOLE_BROWSER_LEASE",
-          "next": "Moduleresult andcleanreleaseC thenC grantsQF; no old153fulloutputretake",
+          "status": "LIMITED_ACTUAL_PASSED_CLEAN_RELEASED_C",
+          "next": "No oldoutput/common/backendrepeat; affectednewCSS only afterfixedsourceandCgrant",
           "report": "K/reports/qa-frontend/rapid-launch-20261022/QF2/c162-output-access-actual-01"
         }
       ],
@@ -2693,20 +2707,24 @@
         "trueIsolationVerified": false,
         "toolInventory": "browsers=[]; Local browser use is disabled in Work settings",
         "mode": "SHARED_CHROME_SERIAL_MODULE_HANDOFF",
-        "currentOwner": "QF2",
+        "currentOwner": "QF",
         "demoTab": "DB7CA658365B213EEE3EB1333946E5BA",
         "candidateTab": "8B3DE068590F435122BC465D97098B67",
         "QF2CurrentTargets": [],
-        "QF2MayOperate": true,
+        "QF2MayOperate": false,
         "condition": "QF2 BROWSER-RELEASE.json actualclean release adopted; C explicitly grants sole8B3+Demo toQF. No navigation of protected3BC874; actual new page check awaits C fixed candidate; true isolation remains unverified.",
         "temporaryWorkingTarget": "8B3DE068590F435122BC465D97098B67",
         "workingTarget": "8B3DE068590F435122BC465D97098B67",
         "candidateVersion": "C165 ffcf933/ui-preview-ffcf933-01-build01",
-        "QFMayOperate": false,
+        "QFMayOperate": true,
         "protectedUnknownTarget": "3BC874911D0D2415D093603E264B0D67",
-        "owner": "QF2",
-        "status": "C_EXPLICIT_REGRANT_AFTER_ACTUAL_CONNECTION_RECOVERY",
-        "connection": "Existingdefaultdaemon actuallyconnected after originaldocumentedupgrade andoneactualChineseapproval. No config/profile/permissionreset or alternatebrowserdriver."
+        "owner": "QF",
+        "status": "C_EXPLICIT_GRANTED_QF_AFTER_QF2_C165_CLEAN_RELEASE",
+        "connection": "Existingdefaultdaemon actuallyconnected after originaldocumentedupgrade andoneactualChineseapproval. No config/profile/permissionreset or alternatebrowserdriver.",
+        "cleanReceipt": "QF2/c162-output-access-actual-01/C165-CLEAN-HANDOFF.json",
+        "cleanBytes": 2327,
+        "cleanSha256": "e08d718cd62971033b657d50cbed5cbc510a11891dc1e6e92ab7b7da566681ee",
+        "viewportQualification": "Candidate1470x724/DPR2scale1, Demo last1470x668. QF mustset/check equalviewport beforevisual geometry."
       },
       "backendReviewers": [
         "QB"
@@ -2714,10 +2732,11 @@
       "QB2Created": false,
       "authorization": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "latestQF2ActualReceipt": {
-        "path": "QF2/c153-output-actual-01/BROWSER-RESULT.json",
-        "bytes": 8457,
-        "sha256": "7dcd9a1712668db1638ae645d5a4a9a0094b23a02786b07b65547bcdee5ec7dd",
-        "status": "PASS_LIMITED_SYNTHETIC_BROWSER_OUTPUT_AND_AFFECTED_SURFACES",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c162-output-access-actual-01/C165-BROWSER-RESULT.json",
+        "bytes": 6410,
+        "sha256": "4ad6ae911a0fb059eb45ab9667f3d73cdfc99112137f94318b48c4fa0b354206",
+        "result": "PASS_LIMITED_SYNTHETIC_BROWSER_CURRENT403_SAME_MENU_AND_CANCELLED_REQUEST_RECOVERY",
+        "adoption": "C adopts scoped independent result, no repeatedtechnicalacceptance. Strongignoreabort old403/actual401/PG/formalperf remainnotmeasured.",
         "wholePagePassed": false,
         "realBusinessPassed": false,
         "formalPerformancePassed": false
@@ -2961,14 +2980,14 @@
         "id": "SPEC-03",
         "owner": "F2 outputleaf;F1 controller",
         "fixedSource": "C160 6b14180346ed096c83f443ebd0fcd5520b22d7a3 retainedin162",
-        "status": "QF_CONTROLLER_AND_QF2_LEAF_SOURCE_PASS_ACTUAL_TOOL_BLOCKED",
-        "next": "Only403/recovery/late minimum on165 sameoriginalconsumer aftertoolrecovers; old153fulloutput evidence reused"
+        "status": "SOURCE_QF_AND_QF2_PASS_C165_QF2_LIMITED_ACTUAL_PASS",
+        "next": "Strongignoredabort old403 DOMevidence retained/actualnotmeasured, 401notmeasured; no repeatold153 or backend"
       },
       {
         "id": "QF158_NEW_SALE_LEAVE_INITIAL_FOCUS",
         "owner": "F1",
-        "status": "SOURCE_FIXED_QF_SAMEBYTES_ADOPTED_ACTUAL_PENDING",
-        "next": "Exactnew440 initialheaderclose/continue/Esc/opener only; no old440/700/fullhelper rerun",
+        "status": "C165_QF_ACTUAL_NAMED_FOCUS_CONSUMER_CLOSED",
+        "next": "No old440/700/helperrepeat; otheractualmodules continue originalQF",
         "fixedSource": "C164 fb65d3c inheritedC165"
       }
     ],
@@ -3010,15 +3029,34 @@
       "restoreRehearsalRepeated": false,
       "formalCutoverOrNewBusinessAcceptance": false,
       "result": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-current-backup-20261023-82/release-submission/release-receipts/c02-current-backup-20261023-82/backup82-safe-result.json"
+    },
+    "cssSharing167": {
+      "source": "195222fb97f2a41c352ae5fcd973700f63b0e760",
+      "owner": "F1",
+      "files": 5,
+      "removedImports": 19,
+      "unchangedBaseBytes": 608389,
+      "finiteAffectedOutputs": 8,
+      "finiteStaticUncompressedReductionBytes": 1295839,
+      "fullProductionBuild": false,
+      "actualConsumerCascadePassed": false,
+      "firstScreenTransferReductionOrPerformancePassed": false,
+      "next": "Originalfullprod167build/pack; independent affectedsource/actualcascade only."
+    },
+    "r1ApprovedRuntime83": {
+      "jobId": "c03-r1-approved-v6-v7-runtime-20261023-83",
+      "status": "FAILED_EXIT1_0_819831S_NO_ENGINE_EXPORT",
+      "qualification": "Originaljob.json only/exports0; no actualapprovedDDL/v9success claimed. Preserve83, neverreplay.",
+      "next": "OriginalC helper narrowstartupcarrier diagnosis/new85; identicalSQL/target/oldhash/fresh82/transaction/catalogue guards. Private84disabled until actualR1v9 andissuerreview aligned."
     }
   },
   "latestReadySource": {
-    "round": 166,
-    "commit": "7bfddbc6c18eb73a4c403c3aae006797ff9e7077",
+    "round": 167,
+    "commit": "195222fb97f2a41c352ae5fcd973700f63b0e760",
     "actualPreviewRound": 165,
     "actualPreviewSource": "ffcf9339d3dbc75dd917e8448fa4c2d056328022",
     "actualQaRunnerSource": "cb3e2d75fea43ba4e0c25d6e4752d8a13684e8e1",
-    "qualification": "Current166 includes165 identicalfront plus narrow backendwrapper fix. Currentproduction actual159 notlatest166; business/scale/formalcutover not accepted."
+    "qualification": "Exact5CSS19libraryimports removed. Finite8CSS/basebyteidentity passed; full167prodgraph/newactualcascade/performance notyet. UIcurrent165/production166 explicitlyseparate."
   },
   "pendingUserDecision": [
     {
