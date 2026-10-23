@@ -60,7 +60,7 @@ export function InventoryLedgerDrawer(props: { readonly parent: ReadScope; reado
     return () => { props.parent.signal.removeEventListener('abort', abort); child.dispose(); };
   }, [props.parent, props.target.skuId, props.target.warehouse.id]);
   if (!props.parent.active) return null;
-  return <StandardOverlay kind="drawer" width={880} title="库存流水" label="库存流水" closeLabel="关闭库存流水" className="inventory-ledger" close={props.close} onReady={() => setReady(true)}>
+  return <StandardOverlay kind="drawer" closePlacement="header" width={880} title={<h2 className="inventory-ledger-title">库存流水</h2>} label="库存流水" closeLabel="关闭库存流水" className="inventory-ledger" close={props.close} onReady={() => setReady(true)}>
     <div className="inventory-ledger-target ledger-identity"><strong>{props.target.productLabel}</strong><p>{props.target.color.label} · {props.target.fit.label} · {props.target.size.label} · {props.target.warehouse.label} · 当前库存 {props.currentQuantity == null ? '未提供' : formatQuantity(props.currentQuantity)}</p></div>
     {ready && scope?.active ? <LedgerContent key={scope.routeInstanceId} scope={scope} target={props.target} capability={props.capability} /> : <p role="status">正在准备库存流水…</p>}
   </StandardOverlay>;

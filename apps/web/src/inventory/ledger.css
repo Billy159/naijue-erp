@@ -32,14 +32,20 @@
 @media(max-width:750px){.inventory-ledger.arco-drawer #ledger-filter{grid-template-columns:1fr 1fr 1.2fr}.inventory-ledger.arco-drawer #ledger-filter [data-ledger-source]{grid-column:1/3}.inventory-ledger.arco-drawer #ledger-filter .btn{width:100%}}
 
 /* Native flat Select dependency is the existing public single-select.css lease. */
-/* Carrier equivalents of styles.css141-147, inventory-workbench.css27.
- * StandardOverlay owns the layer, close/focus/Esc; StandardReadTable owns rows. */
-.inventory-ledger.arco-drawer{max-width:96vw;color:var(--ca-ink);font:13px/1.5 var(--ca-font-sans)}
+/* Complete outer/header/body carrier: native styles.css139-147 plus final
+ * interaction-common ui-icon flow and original Arco parent font. The public
+ * closePlacement="header" seam moves the same close into normal header flow;
+ * header height follows the actual title/close, with no fixed height/offset.
+ * StandardOverlay retains layer/focus/Esc; StandardReadTable retains rows. */
+.inventory-ledger.arco-drawer{box-sizing:border-box;max-width:96vw;max-height:100dvh;border:1px solid var(--ca-popover-border);box-shadow:var(--ca-shadow-dialog);background:var(--ca-popover-bg);color:var(--ca-ink);font:14px/1.5 Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "noto sans", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif}
 .inventory-ledger.arco-drawer .arco-drawer-scroll{height:100%;display:flex;flex-direction:column;overflow:hidden}
-.inventory-ledger.arco-drawer .arco-drawer-header{padding:12px 16px;min-height:53px;background:var(--ca-surface);border-bottom:1px solid var(--ca-line)}
-.inventory-ledger.arco-drawer .arco-drawer-header-title{font-size:18px;font-weight:700;line-height:27px}
-.inventory-ledger.arco-drawer .arco-drawer-content{flex:1;min-height:0;padding:12px 16px}
-.inventory-ledger.arco-drawer .erp-overlay-close{position:fixed;top:12px;right:16px}
+.inventory-ledger.arco-drawer .arco-drawer-header{height:auto;min-height:0;padding:12px 16px;justify-content:space-between;gap:12px;background:var(--ca-surface);border-bottom:1px solid var(--ca-line)}
+.inventory-ledger.arco-drawer .arco-drawer-header-title{flex:1;min-width:0;color:inherit;font-size:18px;font-weight:600;line-height:27px}
+.inventory-ledger.arco-drawer .inventory-ledger-title{margin:0;font:inherit;color:inherit}
+.inventory-ledger.arco-drawer .arco-drawer-content{flex:1;min-height:0;padding:12px 16px;color:inherit}
+/* Final native interaction-common.css ui-icon layout overrides the original
+ * ledger-close28px base. The one public close must be a header-flow child. */
+.inventory-ledger.arco-drawer .erp-overlay-close{position:static;top:auto;right:auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:30px;min-height:30px;width:30px;padding:5px;vertical-align:middle}
 .inventory-ledger-content{display:flex;flex-direction:column;flex:1;min-height:0;min-width:0;overflow:hidden}
 .inventory-ledger .inventory-ledger-target{margin:0;overflow-wrap:anywhere}
 .inventory-ledger .ledger-identity strong{font-weight:700}
@@ -65,3 +71,6 @@
 .inventory-ledger .ledger-read-state{flex:none;margin:0 0 8px;color:var(--ca-ink-2)}
 
 .inventory-ledger #ledger-filter .ledger-type-placeholder{width:100%;height:32px;text-align:left;background:var(--ca-surface-muted);color:var(--ca-ink);border-color:transparent}
+
+/* Final native gold.css ledger header scroll behaviour, scoped to this table. */
+.inventory-ledger .ledger-scroll .erp-read-table .arco-table-th{position:sticky;top:0;z-index:1}

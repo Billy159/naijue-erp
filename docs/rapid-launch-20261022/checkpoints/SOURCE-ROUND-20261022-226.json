@@ -1,0 +1,176 @@
+{
+  "atUtc": "2026-10-23T22:16:34.819677+00:00",
+  "parent": "5c1560c0fa546cc5e58154192fa41a29acd059e5",
+  "taskId": "F2_QF2_I07_CARRIER_INSET_01_FULL_NATIVE_CARRIER",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/ledger-drawer.tsx",
+      "bytes": 14118,
+      "sha256": "61ba9e3071c0ef4327c36b3159983fdf630233aee0533cdbe19f50b6f7e289d4",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/inventory/ledger.css",
+      "bytes": 8508,
+      "sha256": "00bdd3de934ee55835b0f7756ada0b9a2f5fa2055a660f3a5433392164223036",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "26a75e4e0979ef497fa1200c755cc2828b79a0d16468f98b7d1cb49432764ec9",
+  "ownerDelivery": {
+    "taskId": "QF2-I07-CARRIER-INSET-01",
+    "owner": "F2",
+    "atUtc": "2026-10-23T22:11:15.888458+00:00",
+    "status": "SOURCE_READY_EXACT2_LOCAL_CARRIER_CHECKS_PASS_PENDING_C_FIXED_BUILD_QF2_ACTUAL",
+    "model": "gpt-6.1-sol/xhigh; Fast not verified",
+    "reportingAuthorization": {
+      "humanMessageId": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "record": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/REPORTING-AUTHORIZATION.json",
+      "recipientC": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915"
+    },
+    "completedScope": "Complete original I07 outer/header/title/close/body carrier and original table-header sticky dependency on registered ledger leaves only; one existing public close in normal header flow. No per-region translation/position nudge or inferred fixed55px.",
+    "files": [
+      {
+        "path": "apps/web/src/inventory/ledger-drawer.tsx",
+        "bytes": 14118,
+        "sha256": "61ba9e3071c0ef4327c36b3159983fdf630233aee0533cdbe19f50b6f7e289d4",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/source/apps/web/src/inventory/ledger-drawer.tsx",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/before/apps/web/src/inventory/ledger-drawer.tsx",
+          "bytes": 14050,
+          "sha256": "ffe475ba79ea9faa0e6f04826f910b9ada64677c72584f0e22500809e135bd33"
+        }
+      },
+      {
+        "path": "apps/web/src/inventory/ledger.css",
+        "bytes": 8508,
+        "sha256": "00bdd3de934ee55835b0f7756ada0b9a2f5fa2055a660f3a5433392164223036",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/source/apps/web/src/inventory/ledger.css",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/before/apps/web/src/inventory/ledger.css",
+          "bytes": 7323,
+          "sha256": "1761af8b66c951c216049a6eae0150ec073e1a679f1c7ef1a23d293ed4582ba1"
+        }
+      }
+    ],
+    "requiredReadOnlyPublic": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-overlay.tsx",
+        "bytes": 9069,
+        "sha256": "1652044e456d5a7eae992ce3148fd23dd024ab9e1bc5a65d4bc7b0c163b9ac06",
+        "readOnly": true,
+        "sourceRound": 223
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-overlay.css",
+        "bytes": 9087,
+        "sha256": "98bfc12e982c089f4d4769fbd5229be8cc790a59ecaaa65dcf46d5350efc58da",
+        "readOnly": true,
+        "sourceRound": 223
+      }
+    ],
+    "checks": {
+      "strict": "0 diagnostics in changed drawer full imported source closure; no exclusions",
+      "nativeCss": "original prefix byte identical,31blocks/78declarations and order preserved; CSS parse+bundle0warnings",
+      "dom": "Actual ledger+realinstalledArco+public223 StrictMode one flow close/native h2+label/one ready read/pending cancel+lateignored/parentactive/openerrestore pass",
+      "flow": "Actual stylesheet declarations on real DOM pass; source-flow model predicts original identity607/68/846/43 form123 table189 footer615; explicitly not browser pixels"
+    },
+    "untested": [
+      "New containing immutable build and browser actual carrier pixels/scroll/close lifecycle",
+      "No date mouse retest; QF2 current exclusive window is separate",
+      "No whole page/full module/performance/business data/backend/production deployment acceptance"
+    ],
+    "blocker": "No source blocker. Shared header-close seam resolved by fixed223. F2 NO_CHROME; only original C can pin/integrate and grant original QF2 limited actual.",
+    "next": "C pin exact2 -> containing build -> original QF2 source/actual only affected I07 carrier/close lifecycle; reuse accepted ledger data checks and separate date conclusion. F2 browser remains released.",
+    "historicalStatusSuperseded": [
+      "DIAGNOSIS-STATUS.json",
+      "PUBLIC-SEAM-DEPENDENCY.json",
+      "PROPOSED-private-carrier.css (proposal; final source includes native h2+sticky dependency)"
+    ],
+    "browserState": "STOP/CLEAN/RELEASE already at browser222-rev2/WINDOW-CLEAN-RELEASE.json; no Chrome operations for this implementation/local verification",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/SOURCE-MANIFEST.json",
+        "bytes": 2708,
+        "sha256": "8ae429bb7c3d12f8acf6b8261bcc29850996ed0e08fbab1339b8b27e0db919f8"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/source.diff",
+        "bytes": 5040,
+        "sha256": "dfd4b71c9d692fb60ab38792374029d78580c831ae7812327dade9609678b299"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/CHECKS.json",
+        "bytes": 3379,
+        "sha256": "27939152920a3f1d433774ffef67eeaca4cc6321a8d158d3548fb6292488e3bc"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/SOURCE-CHECKS.json",
+        "bytes": 561,
+        "sha256": "d807c7efb39529d29ecc54068085f183107018b0ed14871ce8ce724d7cb44e6c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/FLOW-CHECKS.json",
+        "bytes": 1435,
+        "sha256": "75bbc66facd26c3eb12e960b8247e7ca1e92a110afdbb6812b47bdf4f6a1f3fd"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/SOURCE-TO-CARRIER-MAP.json",
+        "bytes": 2890,
+        "sha256": "9a13144f3d3b904105c1f5ba1302fc1cf8d813d9181a9dd648d814871641d0f5"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/strict.log",
+        "bytes": 71,
+        "sha256": "1da4fed9817bb6eca7f46a4a5c1f299710192554b06db46f01034b0dbefa089b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/source-checks.log",
+        "bytes": 231,
+        "sha256": "21c8ec69c23f3d0346cee6ed7458a1b4e1c5a162ed479c8147ecdb79627ea806"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/carrier-dom.log",
+        "bytes": 636,
+        "sha256": "312499a221342d4db574f2d2acfcdefe80ffc7bab1c5c73bd6c3652f4a436ccd"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/flow-checks.log",
+        "bytes": 172,
+        "sha256": "e3b25f3979c425163deeecd2da21eb8cdb575a0ec45ecb2936b496237bddb418"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/verify-carrier-dom.cjs",
+        "bytes": 7705,
+        "sha256": "336e9fc03bd350eb5d3786e44e099b78cbfc7deb9e4c3fb13abff72c2835f929"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/check-carrier-source.cjs",
+        "bytes": 3805,
+        "sha256": "4ddfadf097d15db6a00253bb139f8c1e479545be1619feba0d3d6abda18f28d4"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/check-carrier-flow.cjs",
+        "bytes": 6233,
+        "sha256": "970b1b1fb7428a31e3329d80383c9d107cb962022662b20aebbeb52c9062955d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/actual-carrier-dom.html",
+        "bytes": 27950,
+        "sha256": "5d05f96d787ed57a2f95ea7e7305bd78c201ae722c7e56ddfc8e4f70c7ffa4ad"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/browser222-rev2/ACTUAL-ROOT-CAUSE.json",
+        "bytes": 1350,
+        "sha256": "b2e0ee5c208b75366b3caab80c71279e06f945eca6c05204b00efe57fff9befc"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/browser222-rev2/WINDOW-CLEAN-RELEASE.json",
+        "bytes": 1418,
+        "sha256": "d7ff9cb64dfa4575ca5271f4ae6bc6658ef87839fd47cf4762da9d92c1b4b032"
+      }
+    ]
+  },
+  "qualification": "Original F2 targeted source/lifecycle checks adopted. Actual pixels and affected close lifecycle require one successor candidate/QF2. No Chrome/real PG/formal business/performance acceptance from this source pin."
+}
