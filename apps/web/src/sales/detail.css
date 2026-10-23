@@ -476,3 +476,27 @@
  * default32px on this technical carrier; source input/row geometry stays owned
  * by the existing table declarations, without a guessed fixed row height. */
 .sales-proposal-editor .sale-lines-table .sale-identity-trigger{height:auto;min-height:0;padding:2px 0}
+
+/* Frozen native sales modal: styles.css139–140, sales-current.css3,
+ * styles.css44–48 buttons, brand-components.css66–75 and interaction-common icon.
+ * Route-owned React carrier replaces only source globals/innerHTML. */
+.sales-proposal-editor .sale-source-dialog{box-sizing:border-box;border:1px solid var(--ca-popover-border);border-radius:6px;width:700px;max-width:calc(100vw - 32px);max-height:calc(100dvh - 48px);padding:0;color:var(--ca-ink);background:var(--ca-popover-bg);box-shadow:var(--ca-shadow-dialog);font:var(--ui-font,13px)/1.5 var(--ca-font-sans)}
+/* Resolved frozen --ca-overlay: native backdrop has no .demo-ui ancestor. */
+.sales-proposal-editor .sale-source-dialog::backdrop{background:rgb(22 34 52 / 30%)}
+.sales-proposal-editor .sale-source-dialog[open]{display:flex;flex-direction:column}
+.sales-proposal-editor .sale-source-dialog>header{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--ca-line);gap:12px}
+.sales-proposal-editor .sale-source-dialog h2{font-size:18px;margin:0;font-weight:600}
+.sales-proposal-editor .sale-source-dialog footer{display:flex;justify-content:flex-end;gap:8px;padding:16px;border-top:1px solid var(--ca-line)}
+.sales-proposal-editor .sale-source-dialog .sale-dialog-body{padding:18px;overflow:auto}
+.sales-proposal-editor .sale-source-dialog p{margin:0}
+.sales-proposal-editor .sale-source-dialog .btn{font:inherit;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control,32px);height:var(--ui-control,32px);padding:0 11px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font,13px);font-weight:500;white-space:nowrap;cursor:pointer}
+.sales-proposal-editor .sale-source-dialog .btn:hover{background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
+.sales-proposal-editor .sale-source-dialog .btn.primary{background:var(--ca-primary-fill);color:var(--ca-on-primary);border-color:var(--ca-primary-fill)}
+.sales-proposal-editor .sale-source-dialog .btn.primary:hover{background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}
+.sales-proposal-editor .sale-source-dialog .btn.primary:active{background:var(--ca-primary-active);border-color:var(--ca-primary-active)}
+.sales-proposal-editor .sale-source-dialog .ui-icon{display:inline-flex!important;align-items:center;justify-content:center;min-width:30px!important;min-height:30px!important;width:30px;padding:5px!important;border:0!important;background:transparent!important;color:var(--ca-primary-ink);vertical-align:middle}
+.sales-proposal-editor .sale-source-dialog .ui-icon svg{flex-shrink:0;pointer-events:none}
+.sales-proposal-editor .sale-source-dialog .ui-icon:hover{background:var(--ca-primary-hover-soft)!important}
+.sales-proposal-editor .sale-source-dialog .ui-icon:focus-visible{outline:2px solid var(--ca-primary);outline-offset:-2px}
+/* Native single-select host inserted after the source line direction select. */
+.sales-proposal-editor .sale-line-direction{display:block;width:100%;min-width:0;height:32px;flex:1 1 auto}

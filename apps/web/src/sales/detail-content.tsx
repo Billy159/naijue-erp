@@ -30,9 +30,7 @@ function DetailFacts({ data, scope, close, history, product }: { readonly scope:
   const { header, lines, settlements } = data.document;
   const settlementNames = new Map(data.settlementNames.map(names => [names.settlementId, names]));
   const field = (label: string, value: ReactNode, className = '') => <div className={`tc-gold-field ${className}`} key={label}><span className="sale-field-label">{label}</span><span className="sale-read-value" title={typeof value === 'string' ? value : undefined}>{value}</span></div>;
-  const sections = header.businessType !== 'SALE'
-    ? [{ title: '退回商品', incoming: true, rows: lines.filter(line => BigInt(line.quantity) < 0n) }, { title: '换出商品', incoming: false, rows: lines.filter(line => BigInt(line.quantity) >= 0n) }]
-    : [{ title: '商品明细', incoming: false, rows: lines }];
+  const sections = [{ title: '商品明细', incoming: false, rows: lines }];
   return <SalesProductPresentation scope={scope} {...(product ? { capability: product } : {})}>{openProduct => <section className="sales-detail-page sales-detail-facts tc-workbench tc-editor sale-workbench sale-editor" aria-label="销货单详情">
     <SalesDetailHeader output={<DocumentOutputActions sourceKey={`${header.id}:${header.version}`} getDocument={() => salesDocumentOutput(data)} />} close={close} status={header.status} salesId={header.id} {...(history ? { history } : {})} />
     <div className="tc-doc-header sale-doc-header"><div className="tc-gold-doc-fields sale-doc-fields">

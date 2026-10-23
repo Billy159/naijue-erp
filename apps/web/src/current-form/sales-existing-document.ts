@@ -33,7 +33,7 @@ export class SalesExistingDocumentSession {
   }
   readonly getSnapshot = (): SalesExistingDocumentSnapshot => this.#state;
   readonly subscribe = (listener: () => void) => { this.#listeners.add(listener); return () => { this.#listeners.delete(listener); }; };
-  get hasDirtyDraft(): boolean { return !this.#state.disposed && this.owner.getSnapshot().command.write.phase !== 'committed' && !!this.#state.proposal && (this.#state.proposal.getSnapshot().dirty || !!this.#state.proposal.getSnapshot().lineEdit || Object.values(this.#state.proposal.getSnapshot().entries).some(entry => !!entry.product || !!entry.query.trim())); }
+  get hasDirtyDraft(): boolean { return !this.#state.disposed && this.owner.getSnapshot().command.write.phase !== 'committed' && !!this.#state.proposal && (this.#state.proposal.getSnapshot().dirty || !!this.#state.proposal.getSnapshot().lineEdit || Object.values(this.#state.proposal.getSnapshot().entries).flat().some(entry => !!entry.product || !!entry.query.trim())); }
   canLeave(): boolean { return this.owner.getSnapshot().command.write.phase === 'committed' || !this.#state.preparing && !this.hasDirtyDraft; }
   async initialize(): Promise<void> {
     if (this.#state.disposed || this.#state.phase !== 'idle') return;
