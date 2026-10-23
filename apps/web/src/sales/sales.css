@@ -32,7 +32,7 @@
 .sales-table .sales-numeric{text-align:right}
 .sales-workbench .sales-list{table-layout:fixed;min-width:1220px}
 .sales-workbench .sales-list th,.sales-workbench .sales-list td{height:44px;padding:4px 10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:normal}
-.sales-workbench .sales-list th{height:40px}
+.sales-workbench .sales-list th{height:40px;font-size:12px}
 .sales-workbench .sales-list th:nth-child(1){width:90px}.sales-workbench .sales-list th:nth-child(2){width:180px}.sales-workbench .sales-list th:nth-child(3){width:75px}.sales-workbench .sales-list th:nth-child(4){width:90px}.sales-workbench .sales-list th:nth-child(5){width:110px}.sales-workbench .sales-list th:nth-child(6){width:80px}.sales-workbench .sales-list th:nth-child(7){width:240px}.sales-workbench .sales-list th:nth-child(8){width:60px}.sales-workbench .sales-list th:nth-child(9){width:80px}.sales-workbench .sales-list th:nth-child(10){width:145px}.sales-workbench .sales-list th:nth-child(11){width:70px}
 .sales-workbench .sales-number{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;padding:0;font-size:13px}
 .sales-workbench .sales-view{padding:0;font-size:13px}
@@ -71,8 +71,8 @@
 .sales-workbench .tc-filters input.iw-control{box-sizing:border-box;width:100%;min-width:0;height:32px;min-height:32px;margin:0;padding:4px 10px;border:1px solid transparent;border-radius:4px;background:var(--ca-surface-muted);color:var(--ca-ink);font:13px var(--ca-font-sans)}
 .sales-workbench .tc-filters input.iw-control:focus{outline:none;border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted)}
 
-/* Frozen styles.css44-52, transfer-current.css tc-link, and final golden list actions. */
-.sales-workbench .btn{font:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control);height:var(--ui-control);padding:0 11px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font);font-weight:500;white-space:nowrap}
+/* Frozen styles.css44-52 plus final transfer-current.css workspace font/padding reset and tc-link. */
+.sales-workbench .btn{font:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control);height:var(--ui-control);padding:4px 9px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font);font-weight:400;white-space:nowrap}
 .sales-workbench .btn:hover:not(:disabled){background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
 .sales-workbench .btn.primary{background:var(--ca-primary-fill);color:var(--ca-on-primary);border-color:var(--ca-primary-fill)}
 .sales-workbench .btn.primary:hover:not(:disabled){background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}

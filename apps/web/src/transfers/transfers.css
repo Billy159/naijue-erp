@@ -19,7 +19,7 @@
 .transfer-route .tc-number-field>.iw-control{padding:4px 10px}.transfer-route .ui-query-note{margin:0 0 8px;font-size:12px;line-height:20px;color:var(--ca-ink-3);flex:none}
 .transfer-route .transfer-notice{margin:0 0 8px;padding:8px;font-size:12px;line-height:20px;flex:none;color:var(--ca-ink-2);background:var(--ca-surface-subtle)}
 .transfer-results{flex:1;min-height:0;overflow:auto;border:1px solid var(--ca-line);scrollbar-gutter:stable}
-.transfer-list-table{width:100%;min-width:1220px;table-layout:fixed;border-collapse:collapse;font-size:13px}.transfer-list-table th,.transfer-list-table td{box-sizing:border-box;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-bottom:1px solid var(--ca-line);padding:4px 10px;height:44px;font-weight:400}.transfer-list-table th{position:sticky;top:0;z-index:2;height:40px;color:var(--ca-ink-2);font-weight:600;background:var(--ca-table-head)}
+.transfer-list-table{width:100%;min-width:1220px;table-layout:fixed;border-collapse:collapse;font-size:13px}.transfer-list-table th,.transfer-list-table td{box-sizing:border-box;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-bottom:1px solid var(--ca-line);padding:4px 10px;height:44px;font-weight:400}.transfer-list-table th{position:sticky;top:0;z-index:2;height:40px;font-size:12px;color:var(--ca-ink-2);font-weight:600;background:var(--ca-table-head)}
 .transfer-list-table th:nth-child(1){width:90px}.transfer-list-table th:nth-child(2){width:180px}.transfer-list-table th:nth-child(3){width:75px}.transfer-list-table th:nth-child(4),.transfer-list-table th:nth-child(5){width:135px}.transfer-list-table th:nth-child(6){width:240px}.transfer-list-table th:nth-child(7){width:65px}.transfer-list-table th:nth-child(8){width:75px}.transfer-list-table th:nth-child(9){width:150px}.transfer-list-table th:nth-child(10){width:70px}
 /* interaction-common.js:4 plus final-ui.css:4 and golden-consistency.css:54. */
 .transfer-list-table .ui-action-cell{position:sticky;right:0;left:auto;z-index:2;width:70px;min-width:70px;background:var(--ca-surface);box-shadow:var(--ca-shadow-sticky);white-space:nowrap}
@@ -44,8 +44,8 @@
 .transfer-list .ui-query-note{flex:none;font-size:12px;color:var(--ca-ink-2);line-height:1.6;margin:0;padding:6px 0 8px;min-height:28px}
 .transfer-list .ui-query-note[data-pending=true]{font-weight:600;color:var(--ca-primary)}
 
-/* Frozen styles.css44-52, transfer-current.css tc-link, and final golden list actions. */
-.transfer-list .btn{font:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control);height:var(--ui-control);padding:0 11px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font);font-weight:500;white-space:nowrap}
+/* Frozen styles.css44-52 plus final transfer-current.css workspace font/padding reset and tc-link; T01 td buttons retain source26px. */
+.transfer-list .btn{font:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control);height:var(--ui-control);padding:4px 9px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font);font-weight:400;white-space:nowrap}
 .transfer-list .btn:hover:not(:disabled){background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
 .transfer-list .btn.primary{background:var(--ca-primary-fill);color:var(--ca-on-primary);border-color:var(--ca-primary-fill)}
 .transfer-list .btn.primary:hover:not(:disabled){background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}
@@ -53,5 +53,5 @@
 .transfer-list .btn:disabled{cursor:not-allowed;background:var(--ca-control-disabled-bg);color:var(--ca-control-disabled-text);border-color:var(--ca-control-disabled-border)}
 .transfer-list .tc-filter-actions>.tc-filter-toggle.btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:0;height:32px;padding:0 5px;border:0;background:transparent;color:var(--ca-ink-2);font-size:12px;font-weight:400}
 .transfer-list .tc-filter-actions>.tc-filter-toggle.btn:hover,.transfer-list .tc-filter-actions>.tc-filter-toggle.btn[aria-expanded=true]{border:0;background:var(--ca-surface-subtle);color:var(--ca-primary-ink)}
-.transfer-list .transfer-list-table .btn.tc-link{color:var(--ca-primary-ink);border:0;background:transparent;padding:0;min-height:24px}
+.transfer-list .transfer-list-table .btn.tc-link{color:var(--ca-primary-ink);border:0;background:transparent;padding:0;min-height:24px;height:26px}
 .transfer-list .transfer-list-table .btn.tc-link:hover,.transfer-list .transfer-list-table .btn.tc-link:focus-visible{text-decoration:underline;color:var(--ca-primary-hover);background:transparent}
