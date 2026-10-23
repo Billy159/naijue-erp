@@ -1,3 +1,7 @@
+最新人类裁决 2026-10-23T03:21:56.364151+00:00：全站所有有冻结Demo对应实现的UI无条件直接复用，撤销“偏离多才迁入/相似即可保留仿写”；已实际直接迁入且同版有效证据保留，仿写/未知/未接均未完成。完整附件已逐字保存 `USER-DIRECT-REUSE-ALL-20261023.txt`（SHAf2d160b9bf852481e2ae74db1fe5b146c8408331dc83b6f8f4b8f4cd1603df28），当前指令见`UI-DIRECT-REUSE-ALL-20261023-03.json`。原八执行与验收角色已收到增量，Sol61/xhigh/不Fast，不新建重复工程或恢复关闭Demo Chat。现37+67=104、局部48、整页整类0；销货整页未通过Demo一致性验收。当前实际看C120/57851；C122审计两P2源修复未进当前浏览器。
+
+后端两技能/原owner继续：真实Header14279一次捕获已QB141来源链限定通过并签非导入outside；finaljoin新收尾F01原D3在修、无实际join窗。C50有效ACL真实证据QB140采用，仅rawNULL错误谓词修正，不增GRANT；H06新52准备。原C48离线缓存未命中已C53有界确认，C54准确_cacache布局后继准备不重run48。新C122生产构建输出后被严格guard拒唯一合法media命名JS chunk，尚无新pack/上线/性能PASS，正作精确兼容修复而不放宽数据保护。GitHub已核952fcdf，其后源码与本裁决下一同步。以下旧历史保留。
+
 当前接续 2026-10-23T03:02:06.253342+00:00：固定源码C121 `bbd62485d1e5e559b09066563ad09a0a8c2f522b`。C116资金账户原生方式筛选已QB138限定source/protocol PASS，C120实际HTTP reader成对能力已接。完整SALE、混合退换与只读状态、商品基础规格及六页签首次加载保留、收款维护lazy/current集中一次新预览已实际开放 http://127.0.0.1:57851/synthetic-unified.html ，source120 f3ab7655/build01，HTML7225ed4a，402仓库输入/385模块+981锁依赖=1366，三关键HTTP逐字200。C121仅生产CSS输出边界尚未新构建，不冒在此预览。原QF独占原Demo+候选tab接新范围，原Demo Chat关闭不恢复；全部合成拒写，非真实保存/审核/正式性能PASS。
 
 QF v023收口104总项不缩，57未检/30差异/7局部条目/9待接/1批准例外，去重局部48、整页整类0。readonly frame4px仍开；两audit P2焦点/同scope筛选保留已交F3。C120已移除两无效rawCSS外引，compiled样式/CSP保持，待原QF最小复验，旧有效范围不重验。

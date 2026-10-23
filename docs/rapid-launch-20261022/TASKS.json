@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "bbd62485d1e5e559b09066563ad09a0a8c2f522b",
+    "headObserved": "3019b1071af05820865d662ff202ac141651d152",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "c637c149b5507e76a8c8ea9aa30f0fd6de3d8698",
+    "remoteHeadVerified": "952fcdffcfbb743aee45ce9ea54be197e607f9a8",
     "remoteReadbackMethod": "Exact3 original objects/nonforcedFF/independentGET",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -936,9 +936,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T03:02:06.253342+00:00",
+  "updatedAt": "2026-10-23T03:21:56.364151+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "c637c149b5507e76a8c8ea9aa30f0fd6de3d8698",
+  "lastVerifiedRemoteCommit": "952fcdffcfbb743aee45ce9ea54be197e607f9a8",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2266,9 +2266,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-23T03:02:06.253342+00:00",
-    "sourceRound": 121,
-    "sourceCheckpoint": "bbd62485d1e5e559b09066563ad09a0a8c2f522b",
+    "atUtc": "2026-10-23T03:21:56.364151+00:00",
+    "sourceRound": 122,
+    "sourceCheckpoint": "3019b1071af05820865d662ff202ac141651d152",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -2288,11 +2288,11 @@
       "wholePageAccepted": false
     },
     "nextPreview": "C120 complete page batch LIVE57851; C121 production CSS output change fixed but not in synthetic build, actual production graph pending.",
-    "r1": "C48 exact existing transfer resume / request1 / start1; actual offline npm failed exit1 after17.067s. Cache105 seeded,45partial retained by rename, no app/web/health/publicswitch. C51 finite failure diagnostic prepared, not submitted; no replay48.",
-    "qa": "C50 actual23ACL witness complete2.824s,4acq/4outerSET/window0/native3e37, known pre+capture+post COMMIT/release/dispose. Effective/identity/shape all valid, only rawNULL representation failed. QB new actual witness review pending; noH06/purpose/GRANT.",
-    "import": "QB139 only cleanup F01 fixed/passed and public snapshot preserved; new Header-only C window not yet signed; final Line/Header/docSHA join still K preparation.",
+    "r1": "C53 bounded48 diagnosticPASS: ENOTCACHED1/no cached response, noOOM/Error/networknone, node_modules absent. Exactnpm primary joinscache/_cacache; C54correct-layout freshcache/install candidate Kpreparing. C48 failed preserved,no replay/publicswitch.",
+    "qa": "QB140 actual50 effectiveACL pass/rawNULL-only accepted; C candidate exact3nonnull fix e33f3c44 prepared,no original49replay; D1 originalH06 probe unchanged,52 Knewpurpose/carrier preparing.",
+    "import": "ActualHeader capture1/14279/43.87s QB141 limitedPASS; newoutside fbec2112 signed realImportfalse. Finaljoin QB142 found new incomplete-manifest FD-close F01, originalD3 fixing, no join physical window.",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Normal branch c637c149 independently verified exact3commits;116–121 and this handoff pending next exact-object FF.",
+    "github": "Normal branch952fcdff independently verified exact7commits; source122 and this latest directive pending next checkpoint",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -2317,8 +2317,9 @@
     },
     "audit": "113 actualaudit0 consumer confirmed, twoP2 focus/same-scope retention open and assigned originalF3; current120 not repaired yet. Synthetic0 is not formal audit data.",
     "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
-    "uiMigration": "C116 payment/C117 fullSALE+sharedtabs/C118 productbase-specs6tabs/C119 mixed-readonly/C120 real filter reader fixed and built once; originalQF browser/source/perf, old48 effective evidence reused.",
-    "backend": "D2 native method-filter exact6 QB138 source/protocol PASS + C120 paired actual HTTP adapter. Real PG/filter/ACL/representative performance not tested; originalskills/stack/owner boundaries retained."
+    "uiMigration": "Latest human: ALL Demo-matching UI must directly reuse actual source layer, not conditional on visual deviation. Current121/122 partial implementations require provenance classification; rewritten/unknown/unconnected never complete. OriginalQF on actualC120; originalowners received directive. No repeat old valid same-source scope.",
+    "backend": "D2 native method-filter exact6 QB138 source/protocol PASS + C120 paired actual HTTP adapter. Real PG/filter/ACL/representative performance not tested; originalskills/stack/owner boundaries retained.",
+    "productionBuild": "C122attempt01 failed before build due missing raw Git commit proof, diagnosed ENOENT and supplied exact proof. Distinctattempt02 original esbuild/output completed208files but strictreleaseguard NON_RELEASE_MEMBER rejected only product-editor-media-JIGDZJR6.js runtimechunk. Both failures preserved/no pack; C precise source-provenance guard compatibility fix pending, no bypass or performancePASS."
   },
   "latestReadySource": {
     "round": 121,
@@ -2356,6 +2357,12 @@
     "QF113-RUNTIME-v023",
     "C120-SYNTHETIC-PREVIEW-HTTP"
   ],
-  "currentUIDirective": "UI-DIRECT-MIGRATION-20261023-02.json",
+  "currentUIDirective": {
+    "path": "docs/rapid-launch-20261022/UI-DIRECT-REUSE-ALL-20261023-03.json",
+    "sha256": "42f8ab5f5ae2319fc92ec3d0c05b070c6f61e49fa2a6430959327809c29ddf92",
+    "authorityAttachmentSha256": "f2d160b9bf852481e2ae74db1fe5b146c8408331dc83b6f8f4b8f4cd1603df28",
+    "status": "ALL_DEMO_UI_DIRECT_REUSE_UNCONDITIONAL",
+    "supersedes": "UI-DIRECT-MIGRATION-20261023-02.json"
+  },
   "currentBackendSkillDirective": "BACKEND-SKILLS-DIRECTIVE-20261023.json"
 }

@@ -1,0 +1,61 @@
+{
+  "version": "20261023-03",
+  "status": "CURRENT_DIRECT_HUMAN_AUTHORITY",
+  "atUtc": "2026-10-23T03:21:56.364151+00:00",
+  "userAttachment": {
+    "path": "/Users/billy/.codex/attachments/0cddc06f-9cb4-47d1-b11e-f09fdcafc0d5/已粘贴的文本.txt",
+    "bytes": 18061,
+    "sha256": "f2d160b9bf852481e2ae74db1fe5b146c8408331dc83b6f8f4b8f4cd1603df28",
+    "fullTextSaved": "docs/rapid-launch-20261022/USER-DIRECT-REUSE-ALL-20261023.txt",
+    "fullyRead": true
+  },
+  "supersedesConditionalScope": {
+    "previous": "UI-DIRECT-MIGRATION-20261023-02.json",
+    "revoked": [
+      "Only whole-page migration when core regions differ substantially",
+      "Keep rewritten implementation merely because appearance is close"
+    ]
+  },
+  "mandatoryScope": "ALL applicable UI with frozen Demo counterpart must directly reuse the complete actual UI layer. Rewritten/unknown/unconnected remains incomplete. Existing directly migrated same-version accepted scope is retained without repeated migration/review.",
+  "frozenDemoCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "evidenceRequired": [
+    "Actual Demo file/function/component/dynamic entry/final CSS and order",
+    "Current import and entry/actual use",
+    "Necessary state/React adaptation preserving visible behavior",
+    "Unique owner",
+    "Exact source/build/resources/HTTP/browser pair"
+  ],
+  "classification": [
+    "ORIGINAL_MIGRATED",
+    "MINIMAL_NECESSARY_ADAPTATION",
+    "REWRITTEN_NOT_COMPLETE",
+    "NOT_CONNECTED",
+    "UNKNOWN_PENDING_CHECK"
+  ],
+  "approvedDifferences": [
+    "Warehouse single hall",
+    "Funds multiple halls",
+    "Customer/supplier separate",
+    "Self password change",
+    "Product seasons multi-select",
+    "Cancelled features stay cancelled",
+    "User-approved centered executed-query-range dialog"
+  ],
+  "existingRoutes": "Original F1/F2/F3,D1/D2/D3,QF/QB; closed Demo Chat never resumed or duplicated",
+  "parallelPolicy": "Use real independence/unique files/resources; do not impose fixed three developers or create work to fill slots. Existing owners first; no new duplicate main controller/application. Tool hard limits retained.",
+  "executionModel": "gpt-6.1-sol/xhigh",
+  "fast": "Requested off; actual setting not exposed",
+  "skills": [
+    "vercel-react-best-practices",
+    "vercel-composition-patterns",
+    "arco-design",
+    "web-design-guidelines",
+    "nodejs-backend-patterns",
+    "supabase-postgres-best-practices"
+  ],
+  "businessArchitectureUnchanged": true,
+  "newFieldApprovalStillRequired": true,
+  "wholePageAcceptanceOnlyByExistingIndependentRoute": true,
+  "sourceOrBuildOrSyntheticNotBusinessAcceptance": true,
+  "goalComplete": false
+}
