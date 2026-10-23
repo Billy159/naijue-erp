@@ -52,6 +52,7 @@ export function SalesNativeCommandForm({ session, close, history, scope, product
   const header = detail?.document.header ?? editor?.draft?.header, status = detail?.document.header.status ?? 'DRAFT';
   const base = editor?.draft, preview = base && input ? compileSalesForm(base, input) : null;
   const draft = preview?.ok ? preview.draft : null;
+  const due = draft?.header.netDue ?? (input ? null : header?.netDue ?? null);
   const lines = savedReadback?.document.lines ?? draft?.lines ?? (input && base ? base.lines.filter(line => input.lines.some(row => row.id === line.id)) : base?.lines) ?? detail?.document.lines ?? [];
   const settlements = savedReadback?.document.settlements ?? draft?.settlements ?? (input && base ? base.settlements.filter(row => input.settlements.some(item => item.id === row.id)) : base?.settlements) ?? detail?.document.settlements ?? [];
   const lock = !session.editable, stable = !!editor?.detail && editor.phase === 'ready' && !editor.current && !command.stale && !unresolved
@@ -73,9 +74,7 @@ export function SalesNativeCommandForm({ session, close, history, scope, product
     if (zero) setZeroLine(zero.id); else void session.save();
   };
   const zero = input?.lines.find(row => row.id === zeroLine);
-  const sections = header && header.businessType !== 'SALE'
-    ? [{ title: '退回商品', incoming: true, rows: lines.filter(line => BigInt(line.quantity) < 0n) }, { title: '换出商品', incoming: false, rows: lines.filter(line => BigInt(line.quantity) >= 0n) }]
-    : [{ title: '商品明细', incoming: false, rows: lines }];
+  const sections = [{ title: '商品明细', incoming: false, rows: lines }];
   return <SalesProductPresentation {...(scope ? { scope } : {})} {...(product ? { capability: product } : {})}>{openProduct => <section className="sales-detail-page sales-detail-facts tc-workbench tc-editor sale-workbench sale-editor sales-command-editor" aria-label="销货单编辑">
     <div className="tc-head sale-head sales-document-state"><h1 ref={heading} tabIndex={-1}>{editor?.mode === 'CREATE' && write.phase !== 'committed' ? '新增销货单' : session.editable ? '编辑销货单' : '查看销货单'}</h1>
       <SalesStatusTag status={status} />
@@ -99,7 +98,7 @@ export function SalesNativeCommandForm({ session, close, history, scope, product
       {field('客户', read(names?.customerName))}{field('出库仓', read(names?.warehouseName))}
       {field('单号', <strong className="sale-number-value">{detail ? header.number : write.phase === 'committed' ? '已保存，待读取单号' : header.number}</strong>, 'sale-number-field')}
       {field('整单优惠 / 抹零', input ? <UIInput className="iw-control" aria-label="整单优惠 / 抹零" inputMode="decimal" value={input.orderDiscount} disabled={lock || header.businessType !== 'SALE'} onChange={nextValue => change({ ...input, orderDiscount: nextValue })} /> : read(salesInputMoney(header.orderDiscount)), 'sale-discount-field')}
-      {field('应结金额', <strong className="sale-due-value">{draft ? `¥${salesInputMoney(draft.header.netDue)}` : input ? '输入尚未校验' : `¥${salesInputMoney(header.netDue)}`}</strong>, 'sale-due-field')}
+      {field('应结金额', <strong className="sale-due-value">{due === null ? '输入尚未校验' : `${due.startsWith('-') ? '-¥' : '¥'}${salesInputMoney(due.replace(/^-/, ''))}`}</strong>, 'sale-due-field')}
       {field('收款', <><div className="sale-payment-rows">{settlements.map(row => {
         const raw = input?.settlements.find(item => item.id === row.id), labels = settlementNames.get(row.id);
         return <div key={row.id} className={raw ? 'sale-payment-row' : 'sale-payment-read'}><span className="sale-read-value" title={labels?.methodNameSnapshot ?? '原付款方式未知'}>{labels?.methodNameSnapshot ?? '原付款方式未知'}</span><span className="sale-read-value" title={labels?.accountNameSnapshot ?? '原账户未知'}>{labels?.accountNameSnapshot ?? '原账户未知'}</span>
@@ -115,7 +114,7 @@ export function SalesNativeCommandForm({ session, close, history, scope, product
     {write.phase === 'committed' && <p role="status">原操作已确认：版本 {write.result?.version}，{write.result ? salesStatusLabels[write.result.status as 'DRAFT' | 'APPROVED' | 'VOID'] : ''}。{savedReadback ? '下方显示重新读取的已保存单据；继续操作前请采用当前单据。' : '正在核对已保存内容；读取失败可重试，保存不会重复提交。'}</p>}
     {!unresolved && editor && (command.stale || editor.readError || write.phase === 'committed' && !editor.current) && <UIButton type="button" className="iw-button" disabled={editor.phase === 'loading'} onClick={() => { void session.commands.readCurrent(); }}>读取当前单据</UIButton>}
     {editor?.current && <p role="status">当前版本 {editor.current.document.header.version} 已读取，原操作和输入仍保留。<UIButton type="button" className="iw-button" onClick={() => { if (session.hasDirtyDraft) setConfirm('adopt'); else session.adoptCurrent(); }}>采用当前单据</UIButton></p>}
-    {sections.map(section => <section className="sale-entry-section" key={section.title}><div className="tc-section-head sale-section-head"><strong>{section.title}</strong></div><div className="sale-lines sales-table-scroll"><table className="sales-table sale-lines-table"><caption className="sr-only">销货明细 · {section.title}</caption><SalesDocumentColumns /><SalesDocumentColumnHead incoming={section.incoming} /><tbody>{section.rows.map(line => {
+    {sections.map(section => <section className="sale-entry-section" key={section.title}><div className="tc-section-head sale-section-head"><strong>{section.title}</strong></div><div className="sale-lines sales-table-scroll"><table className="sales-table sale-lines-table" aria-label={`销货明细 · ${section.title}`}><SalesDocumentColumns /><SalesDocumentColumnHead incoming={section.incoming} /><tbody>{section.rows.map(line => {
       const raw = input?.lines.find(row => row.id === line.id), prefix = `${line.snapshot.productCode} ${line.lineNo}`, price = raw ? salesRawLinePrice(line.referencePrice, raw) : line.dealPrice;
       return <tr key={line.id}><td><div className="sale-product-cell"><strong>{line.snapshot.productCode}</strong><span className="sale-product-name">{line.snapshot.productName}</span></div></td><td>{line.snapshot.colorName}</td><td>{line.snapshot.fitName}</td><td>{line.snapshot.sizeName}</td>
         <td>{raw ? <UIInput className="iw-control" aria-label={`${prefix} 数量`} inputMode="numeric" value={raw.quantity} disabled={lock} onChange={nextValue => changeLine(line.id, { quantity: nextValue })} /> : line.quantity}</td><td className="sale-muted">{line.referencePrice === null ? '未记录' : salesInputMoney(line.referencePrice)}</td>

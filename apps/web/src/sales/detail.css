@@ -17,8 +17,8 @@
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-lines-table tbody tr:hover td{background:var(--ca-table-row-hover,#f2f3f5)}
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-lines-table .ui-action-cell{position:sticky;right:0;z-index:2;box-shadow:-1px 0 var(--ca-line,#e5e6eb);white-space:nowrap}
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-lines-table thead .ui-action-cell{z-index:7}
-:is(.sales-proposal-editor,.sales-detail-facts) .sale-product-cell{display:flex;align-items:center;gap:6px}
-:is(.sales-proposal-editor,.sales-detail-facts) .sale-product-cell strong{font-weight:500;flex:none;max-width:52%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+:is(.sales-proposal-editor,.sales-detail-facts) .sale-product-cell{display:flex;align-items:center;gap:5px;min-height:30px;outline-offset:2px}
+:is(.sales-proposal-editor,.sales-detail-facts) .sale-product-cell strong{flex:none;max-width:52%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-product-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-gift{flex:none;padding:1px 5px;background:var(--ca-primary-soft,#e8f3ff);color:var(--ca-primary,#165dff);border-radius:3px;font-size:11px}
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-num{text-align:right;font-variant-numeric:tabular-nums}
@@ -165,7 +165,7 @@
   border-radius: 0;
   background: #fff;
 }
-:is(.sales-proposal-editor,.sales-detail-facts) .sale-lines-table { width: 100%; min-width: 1060px; table-layout: fixed; border-collapse: collapse; }
+:is(.sales-proposal-editor,.sales-detail-facts) .sale-lines-table { width: 100%; min-width: 1060px; table-layout: fixed; border-collapse: collapse; border-spacing: 0; font-variant-numeric: tabular-nums; }
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-lines-table th,
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-lines-table td {
   box-sizing: border-box;

@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T05:30:04.190236+00:00",
+  "updatedAt": "2026-10-23T05:37:30.795524+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -1487,6 +1487,12 @@
           "path": "scripts/import-v2/authorized-settlement-reader.test.mjs",
           "group": "B06_ORIGINAL_SALES_LINES_AND_SETTLEMENTS_SOURCE_CONSUMER",
           "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE_NO_GUESSED_BINDING"
+        },
+        {
+          "path": "scripts/import-v2/sealed-payment-source.mjs",
+          "group": "B06_ORIGINAL_SETTLEMENT_FINITE_SOURCE_ENTRY",
+          "fieldGate": "NO_SCHEMA_CHANGE_EXISTING_APPROVED_SOURCE_ONLY",
+          "scope": "Only optional explicit materializedSource for SETTLEMENT, existing normalize/spool/verify and all legacy PAYMENT paths unchanged. Originalreader tests; no wrapper or new source authority."
         }
       ]
     },
@@ -3448,6 +3454,11 @@
       "change": "Only added QF2 report-only independent frontend scope, max10roles/original22tasks. QF primary documents/common/matrix, QF2 data/inventory. Backend QB unchanged. No developer/source/build/server/DB ownership transfer.",
       "model": "gpt-6.1-sol/xhigh",
       "fast": "Requested off; actual tool switch unavailable"
+    },
+    {
+      "atUtc": "2026-10-23T05:37:30.795524+00:00",
+      "source": "C continuation of original80918/25779 finite-source scope, D3 exact shared-source seam request",
+      "change": "Register original sealed-payment-source.mjs solely D3; existing Sales/Settlement authorize/mapper/32money and legacy PAYMENT path preserved; only explicit materialized-source input path. No PG/data/schema/build/server permission expansion."
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",

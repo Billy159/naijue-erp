@@ -15,7 +15,7 @@ import type { DemoSingleSelectActionProps } from './single-select-contract.ts';
  * lease before mounting. Nothing is registered on document/window at import.
  */
 export function DemoSingleSelectAction(props: DemoSingleSelectActionProps) {
-  const host = useRef<HTMLDivElement>(null);
+  const host = useRef<HTMLDivElement>(null), portal = useRef<HTMLDivElement>(null);
   const select = useRef<SelectHandle | null>(null);
   useImperativeHandle(props.focusRef, () => ({ focus: () => { select.current?.focus(); } }), []);
   const [mounted, setMounted] = useState(false);
@@ -70,12 +70,12 @@ export function DemoSingleSelectAction(props: DemoSingleSelectActionProps) {
       popupVisible={mounted && props.open && !props.disabled}
       unmountOnExit
       getPopupContainer={() => {
-        // Arco only asks after mounting. Never fall back to a document-global
-        // body portal that could survive its route/drawer/session owner.
-        if (!host.current) throw new Error('The Demo single-select host is not mounted.');
-        return host.current;
+        // Frozen makeHost #portal uses viewport coordinates while staying
+        // under its owner. Route/identity teardown removes this same layer.
+        if (!portal.current) throw new Error('The Demo single-select host is not mounted.');
+        return portal.current;
       }}
-      triggerProps={{ position: pageSize ? 'tl' : props.placement ?? 'bl', autoAlignPopupWidth: false, popupStyle: { width: pageSize ? 150 : props.popupWidth } }}
+      triggerProps={{ position: pageSize ? 'tl' : props.placement ?? 'bl', autoAlignPopupWidth: false, style: { pointerEvents: 'auto' }, popupStyle: { width: pageSize ? 150 : props.popupWidth } }}
       renderFormat={(_option, selected) => {
         const value = typeof selected === 'object' ? selected.value : selected;
         return <span className="ui-single-tag">{props.options.find(item => item.value === value)?.label ?? value}</span>;
@@ -88,6 +88,6 @@ export function DemoSingleSelectAction(props: DemoSingleSelectActionProps) {
         props.onOpenChange(false);
         props.onChange(value, option);
       }}
-    />
+    /><div ref={portal} className="demo-single-select-portal" style={{ position: 'fixed', inset: 0, zIndex: 2000, pointerEvents: 'none' }} />
   </div>;
 }

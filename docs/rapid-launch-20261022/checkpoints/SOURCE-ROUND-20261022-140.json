@@ -1,0 +1,45 @@
+{
+  "atUtc": "2026-10-23T05:43:18.355368+00:00",
+  "parent": "f26746d8dae40b1072c85e683eea3296d0c33e9f",
+  "taskId": "F1_C134_SALE_AFFECTED_NATIVE_CONSUMERS",
+  "files": [
+    {
+      "path": "apps/web/src/demo-controls/single-select-action.tsx",
+      "owner": "F1",
+      "bytes": 5933,
+      "sha256": "0fe8e7858363067c9f300fe9933bf51101a2952999a648821fe8d3f0525a29f2"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "owner": "F1",
+      "bytes": 47977,
+      "sha256": "8101a9e985ef58d12af953d5471dbadfa15fe28a209f7f1a0955a3a2f7b8af9d"
+    },
+    {
+      "path": "apps/web/src/sales/commands/form.tsx",
+      "owner": "F1",
+      "bytes": 22052,
+      "sha256": "8df73ddd866b3f51c65ad4e0879f5e3a28a36e5cdf7f77f2b553f5db1da43089"
+    },
+    {
+      "path": "apps/web/src/sales/detail.css",
+      "owner": "F1",
+      "bytes": 35216,
+      "sha256": "6cd092ff7f8a7f36383a0a5bdc438e638a65254c2d8f85247de64cb8103f0a37"
+    }
+  ],
+  "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-74/DELIVERY.json",
+  "scope": [
+    "Original Select viewport-scoped portal, no body/global CSS/newUI",
+    "Mixed OUT Tab focuses actual sole next empty row",
+    "Actual SalesCommandForm cutoff readonly RETURN uses native single table",
+    "Nativecode strong/-currency order preserved exactamount",
+    "Only missing originalminheight/borderspacing/caption source declarations restored; 0.5 row residual not closed"
+  ],
+  "checksAdopted": "Original F1 affectedtypes/CSS/portal consumers/mixedFocus beforeBODY->afterINPUT/nativeHistory actual publicconsumer before2tables->after1; no duplicatecontroller technicalretest",
+  "notTested": [
+    "Actual newfixedbrowser geometry/hit/nativeEsc/rowheight",
+    "Realwrite/review/permission/PG/performance"
+  ],
+  "next": "QF original documents/public newaffectedsource and exactbrowser after completecandidate; oldpending/payment/spec/48 reuse. Samefixedcandidate includes F03 whenintegrated."
+}

@@ -63,8 +63,14 @@ function SalesModeConfirmation({ mode, cancel, confirm }: { readonly mode: Sales
 function signedQuantity(raw: string, direction: string): string { return (direction === 'IN' ? '-' : '') + raw.replace(/^[+-]/, ''); }
 /** Frozen direction(select) rendered by unified-single-select nativeData. */
 function SalesRowDirection({ label, quantity, disabled, change }: { readonly label: string; readonly quantity: string; readonly disabled: boolean; readonly change: (direction: string) => void }) {
-  const [open, setOpen] = useState(false);
-  return <div className="sale-line-direction"><DemoSingleSelectAction presentation="tag" label={label} value={quantity.startsWith('-') ? 'IN' : 'OUT'} options={[{ value: 'IN', label: '退回 −' }, { value: 'OUT', label: '换出 ＋' }]} popupWidth={150} disabled={disabled} open={open} onOpenChange={setOpen} onChange={change} /></div>;
+  const [open, setOpen] = useState(false), [popupWidth, setPopupWidth] = useState(300);
+  const host = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const element = host.current, view = element?.ownerDocument.defaultView; if (!open || !element || !view) return;
+    const measure = () => { const bounds = element.getBoundingClientRect(); setPopupWidth(Math.min(Math.max(bounds.width, 300), Math.max(180, view.innerWidth - bounds.left - 12))); };
+    measure(); view.addEventListener('resize', measure); return () => view.removeEventListener('resize', measure);
+  }, [open]);
+  return <div ref={host} className="sale-line-direction"><DemoSingleSelectAction presentation="tag" label={label} value={quantity.startsWith('-') ? 'IN' : 'OUT'} options={[{ value: 'IN', label: '退回 −' }, { value: 'OUT', label: '换出 ＋' }]} popupWidth={popupWidth} disabled={disabled} open={open} onOpenChange={setOpen} onChange={change} /></div>;
 }
 /** Same guarded Portal reattachment used by the shared native Select action.
  * A replacement row may first mount already-open under StrictMode replay. */
@@ -228,7 +234,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
   const completeEntry = (direction: 'IN' | 'OUT', key: string) => {
     const appended = session.appendEntry(direction, key);
     if (appended) requestAnimationFrame(() => {
-      const input = formRef.current?.querySelector<HTMLInputElement>(`[data-entry-empty="${direction}"] .sale-product-input`);
+      const input = formRef.current?.querySelector<HTMLInputElement>('[data-entry-empty] .sale-product-input');
       input?.focus({ preventScroll: true }); input?.select();
     });
     return appended;
@@ -261,7 +267,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
       {(['hall', 'salesperson', 'customer', 'warehouse'] as const).map(kind => <div className="tc-gold-field" key={kind}><span className="sale-field-label">{labels[kind]}{kind !== 'salesperson' && <em> *</em>}</span><div className="sale-reference-control">{reference(kind, `选择${labels[kind]}`, `请选择${labels[kind]}`, draft[kind], () => { void session.openPicker(kind); }, !!state.lineEdit || kind !== 'hall' && !draft.hall)}{kind === 'salesperson' && draft.salesperson && <UIButton className="sale-clear-reference" aria-label="清除营业员" onClick={() => session.clearSalesperson()}>×</UIButton>}</div></div>)}
       <div className="tc-gold-field sale-number-field"><span className="sale-field-label">单号</span><strong className="sale-number-value">{saved?.number ?? '保存后生成'}</strong></div>
       <div className="tc-gold-field sale-discount-field"><span className="sale-field-label">整单优惠 / 抹零</span>{combined ? <span className="sale-read-value" /> : <UIInput aria-label="整单优惠" inputMode="decimal" value={draft.orderDiscount} onChange={value => session.setHeader({ orderDiscount: value })} />}</div>
-      <div className="tc-gold-field sale-due-field"><span className="sale-field-label">应结金额</span><strong className="sale-due-value">{totals ? `¥${salesInputMoney(totals.netDueMinor)}` : '待填写'}</strong></div>
+      <div className="tc-gold-field sale-due-field"><span className="sale-field-label">应结金额</span><strong className="sale-due-value">{totals ? `${totals.netDueMinor.startsWith('-') ? '-¥' : '¥'}${salesInputMoney(totals.netDueMinor.replace(/^-/, ''))}` : '待填写'}</strong></div>
       <div className="tc-gold-field sale-payment-field" aria-label="本单收退明细"><span className="sale-field-label">收款</span><div className="sale-payment-rows">
         {paymentRows.map((row, index) => <div className="sale-payment-row" key={row.key ?? 'empty'}>
           {reference(`method-${index}`, `付款方式 ${index + 1}`, '付款方式', row.method, () => { void session.openPaymentPicker(row.key, 'paymentMethod'); }, !draft.hall || !!state.lineEdit, row.key && paymentRows.length === 1 ? () => { dismissPicker(); session.removeSettlement(row.key!); } : undefined)}
@@ -276,7 +282,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
       const active = true;
       return <section className="sale-entry-section" key={section.key} data-business-section="out"><div className="tc-section-head sale-section-head"><strong>{section.title}</strong><div>
         {active && <UIButton className="sale-link" disabled={!session.canScan || preparation?.preparing || !!state.lineEdit} title={session.canScan ? undefined : '请先选择营业厅和仓库'} onClick={() => { dismissPicker(); setScanner({ controller: session.createScanner(section.key), direction: section.key }); }}>扫码录入</UIButton>}
-      </div></div><div className="sale-lines"><table className="sale-lines-table"><caption className="sr-only">{section.title}</caption><SalesDocumentColumns /><SalesDocumentColumnHead incoming={false} /><tbody>
+      </div></div><div className="sale-lines"><table className="sale-lines-table" aria-label={section.title}><SalesDocumentColumns /><SalesDocumentColumnHead incoming={false} /><tbody>
       {section.rows.map(row => {
         const editing = state.lineEdit?.key === row.key ? state.lineEdit : null, product = editing?.product ?? row.product;
         const editOpen = (kind: 'product' | 'sku') => { void session.openLinePicker(row.key, kind); };
@@ -284,7 +290,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
           triggerRef.current = event.currentTarget;
           if (!session.beginLineEdit(row.key)) return;
           setAnchor(null);
-          requestAnimationFrame(() => { const doc = formRef.current?.ownerDocument; if (doc?.activeElement === doc?.body) formRef.current?.querySelector<HTMLElement>(`[data-entry-control="edit-${row.key}-${part}"]`)?.focus({ preventScroll: true }); }); }}><span>{value}</span><span className="sale-edit-mark mx-spec-edit-mark" aria-hidden="true">改</span></UIButton>;
+          requestAnimationFrame(() => { const doc = formRef.current?.ownerDocument; if (doc?.activeElement === doc?.body) formRef.current?.querySelector<HTMLElement>(`[data-entry-control="edit-${row.key}-${part}"]`)?.focus({ preventScroll: true }); }); }}><span className="mx-spec-edit-value">{value}</span><span className="sale-edit-mark mx-spec-edit-mark" aria-hidden="true">改</span></UIButton>;
         const rawPrice = row.isGift ? '0.00' : row.pricingRule === 'DISCOUNT' ? linePrice(row) ?? '' : row.dealPrice;
         return <tr key={row.key} className={editing ? 'sale-identity-editing sale-identity-edit mx-replacing mx-inline-replacement' : ''}>
           <td>{editing ? <>{candidate(`edit-${row.key}-product`, '修改商品款号 / 名称', `${product.code} · ${product.name}`, () => editOpen('product'), false, undefined, undefined, { value: anchor === `edit-${row.key}-product` && picker?.kind === 'product' ? picker.search : product.code, change: () => {}, placeholder: '款号 / 名称 · 条码请扫码录入' })}<small className="mx-original-hint">原：{row.sourceSnapshot?.productCode ?? row.product.code} / {row.sourceSnapshot?.colorName ?? row.sku.colorName} / {row.sourceSnapshot?.fitName ?? row.sku.fitName} / {row.sourceSnapshot?.sizeName ?? row.sku.sizeName} · {row.quantity}</small></> : <div className="sale-product-cell">{identity('product', <><strong>{row.sourceSnapshot?.productCode ?? row.product.code}</strong><span className="sale-product-name">{row.sourceSnapshot?.productName ?? row.product.name}</span></>)}{row.isGift && <span className="sale-gift">赠品</span>}</div>}</td>
