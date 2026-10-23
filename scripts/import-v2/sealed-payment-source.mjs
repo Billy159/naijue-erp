@@ -67,12 +67,13 @@ export async function openSealedPaymentSource(options,mode){
  if(!parentStat.isDirectory()||(parentStat.mode&0o077)!==0||[base,amendment,repo].some(r=>within(parent,r)))fail('PRIVATE_SPOOL_OUTSIDE_INPUT_REPO');
  const directory=await mkdtemp(join(parent,'payment-source-'));await chmod(directory,0o700);const directoryStat=await lstat(directory),path=join(directory,'selected.jsonl');
  const same=(a,b)=>a.dev===b.dev&&a.ino===b.ino;
- let output,materialized,materializedReport,closed=false,spoolBytes=0,spoolRows=0,spoolSha256,spoolStat,rawRows=0,preflight=null,approvedSet;
+ let output,materialized,materializedReport,finiteHandle,closed=false,spoolBytes=0,spoolRows=0,spoolSha256,spoolStat,rawRows=0,preflight=null,approvedSet;
  const selections=new Map(),sourceHashes=new Map(),counts=Object.fromEntries(entities.map(e=>[e,0]));
  const assertOpen=()=>{if(closed)fail('CLOSED');};
  const close=async()=>{
   if(closed)return;closed=true;sourceHashes.clear();selections.clear();
   if(materialized){await materialized.close();materialized=undefined;}
+  if(finiteHandle){const h=finiteHandle;finiteHandle=undefined;await h.close();}
   if(output){const h=output;output=undefined;await h.close();}
   let stat;try{stat=await lstat(directory);}catch(error){if(error.code==='ENOENT')return;throw error;}
   if(!same(stat,directoryStat)||stat.isSymbolicLink())fail('SPOOL_CHANGED');await rm(directory,{recursive:true,force:false});
@@ -153,7 +154,15 @@ export async function openSealedPaymentSource(options,mode){
    if(position!==spoolBytes||digest.digest('hex')!==spoolSha256)fail('SPOOL_CHANGED');assertOpen();return fd;
   }catch(error){await fd.close();throw error;}
  };
- const verify=async()=>{assertOpen();await pinnedApproval(approval,config.trustedApprovalSha256);const fd=await handle();await fd.close();assertOpen();};
+ const heldHandle=async()=>{
+  assertOpen();await safeAncestors(path);const dir=await lstat(directory),stat=await finiteHandle.stat(),named=await lstat(path);
+  if(!same(dir,directoryStat)||(dir.mode&0o777)!==0o700||[stat,named].some(s=>!s.isFile()||s.isSymbolicLink()||!same(s,spoolStat)||s.size!==spoolBytes||s.mode!==spoolStat.mode||s.mtimeMs!==spoolStat.mtimeMs||s.ctimeMs!==spoolStat.ctimeMs))fail('SPOOL_CHANGED');
+  assertOpen();return finiteHandle;
+ };
+ // Complete the original content seal before retaining the finite reader FD.
+ // Per-row authorization then checks that same sealed file, not a full rescan.
+ if(materializedReport)try{finiteHandle=await handle();await heldHandle();}catch(error){await close();throw error;}
+ const verify=async()=>{assertOpen();await pinnedApproval(approval,config.trustedApprovalSha256);if(materializedReport)await heldHandle();else{const fd=await handle();await fd.close();}assertOpen();};
  const check=record=>{assertOpen();const source=record.source;if(sourceHashes.get(JSON.stringify([source?.entityType,source?.sourceKey]))!==requestHash(record))fail('SOURCE_NOT_AUTHORIZED');};
  async function* spoolText(fd){
   const decoder=new TextDecoder('utf8',{fatal:true,ignoreBOM:true}),buffer=Buffer.alloc(65536),digest=createHash('sha256');let position=0;
@@ -163,9 +172,9 @@ export async function openSealedPaymentSource(options,mode){
  return {config,assertOpen,verify,check,selection:entity=>structuredClone(selections.get(entity)),moneyApprovals:()=>structuredClone(approvedSet),close,
   report:{kind:mode==='PAYMENT'?'NATIVE_PAYMENT_SOURCE_READER':'HISTORY_SETTLEMENT_SOURCE_READER',importReady:false,noSql:true,preflight,...(materializedReport?{materializedSource:materializedReport}:{}),rawRowsScanned:rawRows,selectedRows:spoolRows,counts:{...counts},spoolBytes,spoolSha256,rowHashAlgorithm:'SHA256_JSONL_UTF8_EXCLUDING_LF_RETAINING_CR_V1',originalWorkbooksReparsed:false,nativeBindingsVerified:false},
   async *rows(entity){
-   assertOpen();if(entity!==undefined&&!entities.includes(entity))fail('ENTITY_NOT_SUPPORTED');await pinnedApproval(approval,config.trustedApprovalSha256);const fd=await handle();
+   assertOpen();if(entity!==undefined&&!entities.includes(entity))fail('ENTITY_NOT_SUPPORTED');await pinnedApproval(approval,config.trustedApprovalSha256);const fd=materializedReport?await heldHandle():await handle();
    try{for await(const line of lines(spoolText(fd))){assertOpen();const record=JSON.parse(line);check(record);if(entity===undefined||record.source.entityType===entity)yield {...record,...(mode==='SETTLEMENT'?{moneyApprovals:structuredClone(approvedSet)}:{})};}}
-   finally{await fd.close();}
+   finally{if(!materializedReport)await fd.close();}
   }
  };
 }

@@ -1,0 +1,25 @@
+{
+  "atUtc": "2026-10-23T06:19:56.257834+00:00",
+  "parent": "a135cfc243809df2df1f6ee94abe5b8f05f5e354",
+  "taskId": "B06_FINITE_SETTLEMENT_CACHE_VERIFY_N_PLUS_ONE",
+  "files": [
+    {
+      "path": "scripts/import-v2/sealed-payment-source.mjs",
+      "owner": "D3",
+      "bytes": 17868,
+      "sha256": "8ec14d73f882c73ef217a1b31d765b5f06c2d1b85277fc17738aad149cd5bb70"
+    },
+    {
+      "path": "scripts/import-v2/authorized-settlement-reader.test.mjs",
+      "owner": "D3",
+      "bytes": 12198,
+      "sha256": "dfbadf3688ab4f41c51559d1515cf2b58b0fffaf16d9f5cff3a4bdee1e85e6cc"
+    }
+  ],
+  "scope": "Only explicit finite SETTLEMENT existing spool: complete initial content seal and same heldFD, subsequent authorize lifetime stat/path/approval checks; rows still complete EOF SHA/record hashes. Original legacy PAYMENT untouched.",
+  "checksAdopted": "Original new settlement finite cache:1/1 passed: ctor fullcache1, once rows2 total, 3 authorizes still2, equal-length rewrite refused+cleanup. Initial mock.restore API mistake corrected and preserved, not a production failure.",
+  "notTested": [
+    "Actual25779/source/PG/import/performance"
+  ],
+  "next": "OriginalQB only new cache test+existing K consume-finite-once.mjs chain. C original one physical call produces real80918/25779 source/typed closures, not MAIN/PUBLISH."
+}

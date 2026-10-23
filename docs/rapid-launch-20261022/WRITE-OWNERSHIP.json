@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T05:44:16.857417+00:00",
+  "updatedAt": "2026-10-23T06:12:55.951486+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -1148,11 +1148,13 @@
         },
         {
           "path": "packages/application/src/inventory-ledger-query-contracts.ts",
-          "fieldGate": "HISTORY_REVISE_NEW_ENUM_OR_PARSER_BRANCH_REQUIRES_C01_USER_APPROVAL"
+          "fieldGate": "C01_V1_A_D_APPROVED_HISTORY_REVISION_EXISTING_EVENT_AND_SOURCE_READ_ONLY",
+          "scope": "Only recognize already explicitly approved C01v1 HISTORY_REVISION and approved historical source IDs; no new schema/state/write semantics. New unlisted differences still require user confirmation."
         },
         {
           "path": "packages/application/src/inventory-ledger-query-validation.ts",
-          "fieldGate": "HISTORY_REVISE_NEW_ENUM_OR_PARSER_BRANCH_REQUIRES_C01_USER_APPROVAL"
+          "fieldGate": "C01_V1_A_D_APPROVED_HISTORY_REVISION_EXISTING_EVENT_AND_SOURCE_READ_ONLY",
+          "scope": "Only recognize already explicitly approved C01v1 HISTORY_REVISION and approved historical source IDs; no new schema/state/write semantics. New unlisted differences still require user confirmation."
         },
         {
           "path": "scripts/import-v3/production-source-host.mjs",
@@ -3465,6 +3467,11 @@
       "atUtc": "2026-10-23T05:37:30.795524+00:00",
       "source": "C continuation of original80918/25779 finite-source scope, D3 exact shared-source seam request",
       "change": "Register original sealed-payment-source.mjs solely D3; existing Sales/Settlement authorize/mapper/32money and legacy PAYMENT path preserved; only explicit materialized-source input path. No PG/data/schema/build/server permission expansion."
+    },
+    {
+      "atUtc": "2026-10-23T06:12:55.951486+00:00",
+      "source": "User confirmed all C01-20261022-v1 A-D; FIELD-APPROVAL-C01-v1.json. SCHEMA-CHANGE-CONFIRMATION.md:290-291 explicitly approves inventory_ledger HISTORY_REVISION and source history columns.",
+      "change": "D3 original ledger enum/parser C01 condition fulfilled only for already approved HISTORY_REVISION read branch; no new enum invented/DDL/write contract approval. F2 remains sole web consumer writer. Existing synthetic finite-source cache N+1 fix released to original D3 sealed-payment-source/test paths, no new file or permission."
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
