@@ -1,3 +1,11 @@
+增量实绩 2026-10-23T09:04:52.520672+00:00：原D3 QB172-F01修复已固定C157 cb3e2d75fea43ba4e0c25d6e4752d8a13684e8e1，准确reader/protocol2；cutoffSKU0时只取实际有created_operation_id的native SKU见证，再经原helper核同batch/warehouse/SKU各自basis及准确operation，不以非空当授权、不造member或0。原QB仅F01受影响复验在途，原host及已验150/151范围复用，实际新读/性能仍未测。
+
+QF2 C153有限actual输出和底色模块已PASS，原报告8457B/7dcd9a17、release1678B/ed5d8db7：真实XLSX103款208明细含首100页外记录、print预览同集合、last executed过滤、有效503重试和取消迟到隔离、summary/action最终背景关闭，新增发现0。原始请求235.3/77.8/95.9ms属合成UI，不当PG或正式≤2000ms证明；整页/整弹层0及局部48/104保持。QF2已cleanrelease，C显式将唯一8B3+Demo交原QF，未知3BC874稿保护。QF采用有效矩阵、不重旧模块；F1完整SALE/T02最终收尾，新QF SOURCE P2 DOC-156-T02-FILLED-ROW-SOURCE（普通filled误受48px，非draft原source36/actual旧41）已原owner按原finalcascade定向修，只source结论、没有156actual几何证据。新完整候选合批，不为单CSS构建。
+
+H06原C77实际FAILED exit2/0.26788650010712445s，pgInvoked NOT_ATTEMPTED/h06Invokedfalse；根因已核为C最终PLAN.review.status与原载体exact枚举不一致，原要求C_SIGNED_SOLE_PURPOSE_WITH_REUSED_QB170_171、实际填C_FINAL_SOLE_INVENTORY_ADMISSION_EFFECTIVE_QB170_171_REUSED。数据库、原H06业务证明和权限未调用/放宽。保留77现场，明确修订78仅记录枚举/新job路径及pins，原90源码/包字节、soleIA和有效QB170/171复用，不重STAGE/CHUNK/PUBLISH/CREATE、不另开审查队列；actualH06仍未通过。C75已提交基线/nativeCREATE事实保留，旧QA/正式三服务不动。最新可看UI仍C156 http://127.0.0.1:57859/synthetic-unified.html，source157不是已构建UI。GitHub最后独立400cf1e，本段下一非强推；正式数据未就绪/地址未切换，目标ACTIVE继续。
+
+以下历史保留。
+
 增量实绩 2026-10-23T08:51:39.042159+00:00：完整T02原源迁入released5已固定C156 6d43aabd5dee8dcafb4f89f6f7344e7f60800714，原一次build和3HTTP逐字200已实际成功，http://127.0.0.1:57859/synthetic-unified.html /ui-preview-6d43aab-01-build01，HTML3148279B/adecdc733e、identityd39b9023/provenance51cff030，403输入386源码+981锁依赖=1367、undeclared0。原16harness overlay15逐字153，仅builder身份/说明变化，不覆盖released业务5；SALE在途3与后续sales/detail.css未合入。T02完整toolbar/finder/native input/matrix/连续底行/改选/行操作/footer/source layers及final CSS走实际入口，来源映射K/F1/chunk77，尚未Chrome整页验收或真实保存/业务性能。原QF已准确source156、等待QF2模块cleanrelease，未抢窗口。
 
 QF147完整基线v033已采用RESULT14725B/ab07a434、FINDINGS11538B/1b5b7b7f；新增SALE mode/menu与同行付款同enabled外观P2已原F1同整页stage2修，未复现duplicatehint不关闭、不把动画中420误判stable。QF明确cleanhandoff已C采用并将8B3+Demo唯一本模块授QF2，原未知3BC874未动。QF2正在实际153 fulloutput，已真实下载读回103款208明细，包含首100页外101–103且无subtotal/total；其余print/失败/取消/输入/时值继续，同纯合成fixture不冒PG或正式性能。104/local48/整页整类0仍有效。
