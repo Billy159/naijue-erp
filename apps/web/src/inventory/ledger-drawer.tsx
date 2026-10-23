@@ -60,7 +60,7 @@ function LedgerResults({ query, target }: { readonly query: ReturnType<typeof cr
     {data && <><StandardReadTable<InventoryLedgerEntry> label="当前仓库规格库存流水" rows={data.entries} columns={[
       { title: '业务日期', dataIndex: 'businessDate' },
       { title: '来源', render: (_, item) => ledgerSourceLabel(item) },
-      { title: '操作', render: (_, item) => item.eventKind === 'APPROVE' ? '审核' : item.eventKind === 'UNAPPROVE' ? '弃审' : '切换基线' },
+      { title: '操作', render: (_, item) => item.eventKind === 'APPROVE' ? '审核' : item.eventKind === 'UNAPPROVE' ? '弃审' : item.eventKind === 'HISTORY_REVISION' ? '历史修订' : '切换基线' },
       { title: '数量变化', align: 'right', render: (_, item) => formatQuantity(item.quantityDelta) },
       { title: '记录时间（UTC）', dataIndex: 'postedAt' },
     ]} />{!data.entries.length && <p className="inventory-ledger-empty" role="status">该仓库规格在本页范围内没有库存流水。</p>}

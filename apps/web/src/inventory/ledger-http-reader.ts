@@ -44,18 +44,29 @@ export function checkedLedgerPage(value: unknown, parameters: InventoryLedgerQue
     for (const raw of row.entries) {
       const item = object(raw, ['id', 'operationId', 'eventKind', 'quantityDelta', 'source', 'sourceDocumentVersion', 'reversesEntryId', 'businessDate', 'postedAt']);
       const entryId = entityId('ledger', uuid(item.id)); uuid(item.operationId);
-      if (!['APPROVE', 'UNAPPROVE', 'CUTOFF_BASELINE'].includes(item.eventKind as string) || typeof item.quantityDelta !== 'string' || quantity(item.quantityDelta) === 0n) return invalid();
+      if (!['APPROVE', 'UNAPPROVE', 'CUTOFF_BASELINE', 'HISTORY_REVISION'].includes(item.eventKind as string) || typeof item.quantityDelta !== 'string' || quantity(item.quantityDelta) === 0n) return invalid();
       businessDate(text(item.businessDate));
       const point = { postedAt: checkedInventoryLedgerTimestamp(item.postedAt, invalid), entryId };
       if (ids.has(entryId) || previous && !inventoryLedgerBefore(point, previous)) return invalid();
       ids.add(entryId); previous = point;
       const baseline = item.eventKind === 'CUTOFF_BASELINE';
-      if (baseline ? item.sourceDocumentVersion !== null : typeof item.sourceDocumentVersion !== 'number' || !Number.isSafeInteger(item.sourceDocumentVersion) || item.sourceDocumentVersion < 1 || item.sourceDocumentVersion > 2147483647) return invalid();
+      const historyRevision = item.eventKind === 'HISTORY_REVISION';
+      if (baseline ? item.sourceDocumentVersion !== null : typeof item.sourceDocumentVersion !== 'number' || !Number.isSafeInteger(item.sourceDocumentVersion) || item.sourceDocumentVersion < (historyRevision ? 2 : 1) || item.sourceDocumentVersion > 2147483647) return invalid();
       if ((item.eventKind === 'UNAPPROVE') !== (item.reversesEntryId !== null)) return invalid();
       if (item.reversesEntryId !== null && uuid(item.reversesEntryId) === entryId) return invalid();
       const kind = (item.source as { kind?: unknown } | null)?.kind;
+      if ((kind === 'HISTORY_REVISION') !== historyRevision) return invalid();
       if (kind === 'SALES') { const source = object(item.source, ['kind', 'salesId', 'salesLineId', 'endpoint']); uuid(source.salesId); uuid(source.salesLineId); if (baseline || source.endpoint !== 'SALES_WAREHOUSE') return invalid(); }
       else if (kind === 'TRANSFER') { const source = object(item.source, ['kind', 'transferId', 'transferLineId', 'endpoint']); uuid(source.transferId); uuid(source.transferLineId); if (baseline || !['FROM', 'TO'].includes(source.endpoint as string)) return invalid(); }
+      else if (kind === 'HISTORY_REVISION') {
+        if ((item.source as { documentKind?: unknown }).documentKind === 'SALES') {
+          const source = object(item.source, ['kind', 'documentKind', 'revisionId', 'salesId', 'salesLineId', 'endpoint']);
+          uuid(source.revisionId); uuid(source.salesId); uuid(source.salesLineId); if (source.endpoint !== 'SALES_WAREHOUSE') return invalid();
+        } else {
+          const source = object(item.source, ['kind', 'documentKind', 'revisionId', 'transferId', 'transferLineId', 'endpoint']);
+          uuid(source.revisionId); uuid(source.transferId); uuid(source.transferLineId); if (source.documentKind !== 'TRANSFER' || !['FROM', 'TO'].includes(source.endpoint as string)) return invalid();
+        }
+      }
       else if (kind === 'CUTOFF_BASELINE') { const source = object(item.source, ['kind', 'importBatchId', 'endpoint']); uuid(source.importBatchId); if (!baseline || source.endpoint !== 'IMPORT_BASELINE') return invalid(); }
       else return invalid();
     }
@@ -84,5 +95,6 @@ export function createInventoryLedgerQuery(scope: ReadScope, reader: InventoryLe
   } });
 }
 export function ledgerSourceLabel(entry: InventoryLedgerEntry): string {
+  if (entry.source.kind === 'HISTORY_REVISION') return entry.source.documentKind === 'SALES' ? '历史销货单修订' : entry.source.endpoint === 'FROM' ? '历史调拨出库修订' : '历史调拨入库修订';
   return entry.source.kind === 'SALES' ? '销货单' : entry.source.kind === 'TRANSFER' ? (entry.source.endpoint === 'FROM' ? '调拨出库' : '调拨入库') : '切换库存基线';
 }

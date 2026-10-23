@@ -13,11 +13,23 @@ type Row = Record<string, unknown>;
 const stages = (pool: ScriptedPool) => pool.calls.map(call => /\/\* inventory(?:-ledger)?:([a-z-]+) \*\//.exec(call.sql)?.[1] ?? call.sql);
 const code = (expected: string) => (error: unknown) => error instanceof DomainError && error.code === expected;
 function nativeEntry(entry: InventoryLedgerEntry): Row {
+  const history = entry.source.kind === "HISTORY_REVISION" ? entry.source : null;
   return { id: entry.id, operation_id: entry.operationId, event_kind: entry.eventKind, warehouse_id: ledgerWarehouse.id, sku_id: ledgerParameters().skuId,
     quantity_delta: entry.quantityDelta, source_sales_line_id: entry.source.kind === "SALES" ? entry.source.salesLineId : null,
     source_sales_id: entry.source.kind === "SALES" ? entry.source.salesId : null, source_transfer_line_id: entry.source.kind === "TRANSFER" ? entry.source.transferLineId : null,
     source_transfer_id: entry.source.kind === "TRANSFER" ? entry.source.transferId : null, source_import_batch_id: entry.source.kind === "CUTOFF_BASELINE" ? entry.source.importBatchId : null,
+    source_history_revision_id: history?.revisionId ?? null, source_history_sales_line_id: history?.documentKind === "SALES" ? history.salesLineId : null,
+    source_history_transfer_line_id: history?.documentKind === "TRANSFER" ? history.transferLineId : null,
+    history_revision_id: history?.revisionId ?? null, history_document_kind: history?.documentKind ?? null,
+    history_revision_operation_id: history ? entry.operationId : null, history_revision_version: history ? entry.sourceDocumentVersion : null,
+    history_sales_id: history?.documentKind === "SALES" ? history.salesId : null, history_revision_sales_id: history?.documentKind === "SALES" ? history.salesId : null,
+    history_transfer_id: history?.documentKind === "TRANSFER" ? history.transferId : null, history_revision_transfer_id: history?.documentKind === "TRANSFER" ? history.transferId : null,
+    history_sales_batch_id: history?.documentKind === "SALES" ? ledgerBatchId : null, history_transfer_batch_id: history?.documentKind === "TRANSFER" ? ledgerBatchId : null,
     endpoint: entry.source.endpoint, source_document_version: entry.sourceDocumentVersion, reverses_entry_id: entry.reversesEntryId, business_date: entry.businessDate, posted_at: entry.postedAt };
+}
+function historyEntries(): InventoryLedgerEntry[] {
+  return [{ ...ledgerEntry(0), eventKind: "HISTORY_REVISION", sourceDocumentVersion: 2, source: { kind: "HISTORY_REVISION", documentKind: "SALES", revisionId: inventoryId("operation", 12000), salesId: inventoryId("sales", 12001), salesLineId: inventoryId("salesLine", 12002), endpoint: "SALES_WAREHOUSE" } },
+    { ...ledgerEntry(1), eventKind: "HISTORY_REVISION", sourceDocumentVersion: 3, source: { kind: "HISTORY_REVISION", documentKind: "TRANSFER", revisionId: inventoryId("operation", 12003), transferId: inventoryId("transfer", 12004), transferLineId: inventoryId("transferLine", 12005), endpoint: "FROM" } }];
 }
 class ScriptedPool implements PgInventoryLedgerQueryPool, PgInventoryLedgerQueryClient {
   calls: { sql: string; values: unknown[] }[] = []; releases: (Error | boolean | undefined)[] = []; connects = 0;
@@ -53,6 +65,35 @@ class ScriptedPool implements PgInventoryLedgerQueryPool, PgInventoryLedgerQuery
     rows = this.transform?.(stage, rows) ?? rows; this.afterQuery?.(stage); return { rows, rowCount: rows.length };
   }
 }
+
+test("SCRIPTED ledger history revision: both exact historical variants preserve signed quantities, microsecond keyset and old baseline", async () => {
+  const pool = new ScriptedPool(); pool.entries = [...historyEntries(), ledgerEntry(2, "CUTOFF_BASELINE")]; const reader = new PostgresInventoryLedgerQueryReader(pool);
+  const first = await reader.readLedger(ledgerRead(ledgerParameters({ pageSize: 1 }))); assert.deepEqual(first.data.entries, [pool.entries[0]]); assert.ok(first.data.nextCursor);
+  const second = await reader.readLedger(ledgerRead(ledgerParameters({ pageSize: 1, after: first.data.nextCursor }))); assert.deepEqual(second.data.entries, [pool.entries[1]]); assert.ok(second.data.nextCursor);
+  const third = await reader.readLedger(ledgerRead(ledgerParameters({ pageSize: 1, after: second.data.nextCursor }))); assert.equal(third.data.entries[0]!.source.kind, "CUTOFF_BASELINE"); assert.equal(third.data.nextCursor, null);
+  assert.equal(first.data.entries[0]!.quantityDelta, "-9223372036854775808"); assert.equal(first.data.entries[0]!.postedAt, "2026-10-20T18:20:30.123456Z");
+  const sql = pool.calls.find(call => call.sql.includes("inventory-ledger:entries"))!.sql;
+  assert.ok(sql.includes("LEFT JOIN naijue_erp.history_revision") && sql.includes("LEFT JOIN naijue_erp.history_sales_line") && sql.includes("LEFT JOIN naijue_erp.history_transfer_line"));
+  assert.ok(sql.includes("l.warehouse_id = $1::uuid AND w.hall_id = $2::uuid AND l.sku_id = $3::uuid") && sql.includes("ORDER BY l.posted_at DESC, l.id DESC LIMIT $6"));
+  assert.equal(/event_kind\s*(?:!=|<>)|OFFSET|COUNT\(/i.test(sql), false);
+});
+
+test("SCRIPTED ledger history revision: missing or mixed revision/source/operation/version/batch relationships reject the whole page", async () => {
+  const mutations: ((row: Row) => Row)[] = [
+    row => ({ ...row, history_revision_id: null }), row => ({ ...row, source_history_revision_id: null }),
+    row => ({ ...row, history_revision_operation_id: inventoryId("operation", 999) }), row => ({ ...row, history_revision_version: 99 }),
+    row => ({ ...row, history_revision_sales_id: inventoryId("sales", 999) }), row => ({ ...row, history_sales_batch_id: inventoryId("operation", 999) }),
+    row => ({ ...row, source_import_batch_id: ledgerBatchId }), row => ({ ...row, source_history_transfer_line_id: inventoryId("transferLine", 999) }),
+    row => ({ ...row, event_kind: "APPROVE" }), row => ({ ...row, source_document_version: 1, history_revision_version: 1 }),
+    row => ({ ...row, reverses_entry_id: inventoryId("ledger", 999) }), row => ({ ...row, endpoint: "FROM" })
+  ];
+  for (const mutate of mutations) {
+    const pool = new ScriptedPool(); pool.entries = historyEntries(); pool.transform = (stage, rows) => stage === "entries" ? rows.map((row, n) => n === 0 ? mutate(row) : row) : rows;
+    await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead())); assert.equal(stages(pool).at(-1), "ROLLBACK"); assert.equal(stages(pool).includes("COMMIT"), false);
+  }
+  const pool = new ScriptedPool(); pool.entries = historyEntries(); pool.transform = (stage, rows) => stage === "entries" ? rows.map((row, n) => n === 1 ? { ...row, history_transfer_id: null } : row) : rows;
+  await assert.rejects(new PostgresInventoryLedgerQueryReader(pool).readLedger(ledgerRead(ledgerParameters({ pageSize: 1 })))); assert.equal(stages(pool).at(-1), "ROLLBACK");
+});
 
 test("SCRIPTED ledger PG: inert constructor, same native exact-key RR READ ONLY snapshot and three distinct provenance variants", async () => {
   const pool = new ScriptedPool(); const reader = new PostgresInventoryLedgerQueryReader(pool); assert.equal(pool.connects, 0);

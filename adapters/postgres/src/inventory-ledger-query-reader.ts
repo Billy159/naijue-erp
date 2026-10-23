@@ -49,7 +49,23 @@ async function publishedKey(query: Query, warehouseId: string, skuId: string): P
 }
 function decodeEntry(row: Row, publishedBatchId: string): InventoryLedgerEntry {
   let source: InventoryLedgerSource;
-  if (row.source_sales_line_id !== null) {
+  if (row.event_kind === "HISTORY_REVISION") {
+    integrity(row.source_sales_line_id === null && row.source_transfer_line_id === null && row.source_import_batch_id === null && row.source_sales_id === null && row.source_transfer_id === null,
+      "Historical revision cannot use live or baseline provenance");
+    integrity(row.source_history_revision_id !== null && row.history_revision_id === row.source_history_revision_id && row.history_revision_operation_id === row.operation_id
+      && row.history_revision_version === row.source_document_version && Number.isInteger(row.history_revision_version) && Number(row.history_revision_version) > 1,
+      "Exact historical revision operation/version is unavailable");
+    const revisionId = id("operation", row.source_history_revision_id);
+    if (row.history_document_kind === "SALES") {
+      integrity(row.source_history_sales_line_id !== null && row.source_history_transfer_line_id === null && row.history_transfer_id === null && row.history_revision_transfer_id === null
+        && row.history_sales_id === row.history_revision_sales_id && row.history_sales_batch_id === publishedBatchId, "Exact historical sales line/revision/batch is unavailable");
+      source = { kind: "HISTORY_REVISION", documentKind: "SALES", revisionId, salesId: id("sales", row.history_sales_id), salesLineId: id("salesLine", row.source_history_sales_line_id), endpoint: row.endpoint as "SALES_WAREHOUSE" };
+    } else {
+      integrity(row.history_document_kind === "TRANSFER" && row.source_history_sales_line_id === null && row.source_history_transfer_line_id !== null && row.history_sales_id === null && row.history_revision_sales_id === null
+        && row.history_transfer_id === row.history_revision_transfer_id && row.history_transfer_batch_id === publishedBatchId, "Exact historical transfer line/revision/batch is unavailable");
+      source = { kind: "HISTORY_REVISION", documentKind: "TRANSFER", revisionId, transferId: id("transfer", row.history_transfer_id), transferLineId: id("transferLine", row.source_history_transfer_line_id), endpoint: row.endpoint as "FROM" | "TO" };
+    }
+  } else if (row.source_sales_line_id !== null) {
     integrity(row.source_transfer_line_id === null && row.source_import_batch_id === null && row.source_transfer_id === null, "Native ledger source is not a closed sales variant");
     source = { kind: "SALES", salesId: id("sales", row.source_sales_id), salesLineId: id("salesLine", row.source_sales_line_id), endpoint: row.endpoint as "SALES_WAREHOUSE" };
   } else if (row.source_transfer_line_id !== null) {
@@ -59,6 +75,7 @@ function decodeEntry(row: Row, publishedBatchId: string): InventoryLedgerEntry {
     integrity(row.source_sales_id === null && row.source_transfer_id === null && row.source_import_batch_id === publishedBatchId, "Baseline source is not the published native cutoff");
     source = { kind: "CUTOFF_BASELINE", importBatchId: publishedBatchId, endpoint: row.endpoint as "IMPORT_BASELINE" };
   }
+  if (row.event_kind !== "HISTORY_REVISION") integrity(row.source_history_revision_id === null && row.source_history_sales_line_id === null && row.source_history_transfer_line_id === null, "Nonrevision ledger has historical provenance");
   // The application response checker independently validates exact enums, quantity, timestamp and closed-source invariants.
   return { id: id("ledger", row.id), operationId: id("operation", row.operation_id), eventKind: row.event_kind as InventoryLedgerEntry["eventKind"],
     quantityDelta: stringValue(row.quantity_delta), source, sourceDocumentVersion: row.source_document_version as number | null,
@@ -114,10 +131,20 @@ export class PostgresInventoryLedgerQueryReader implements TrustedInventoryLedge
       const rows = (await query(`/* inventory-ledger:entries */ SELECT l.id, l.operation_id, l.event_kind, l.warehouse_id, l.sku_id,
         l.quantity_delta::text AS quantity_delta, l.source_sales_line_id, sl.sales_id AS source_sales_id,
         l.source_transfer_line_id, tl.transfer_id AS source_transfer_id, l.source_import_batch_id, l.endpoint,
+        l.source_history_revision_id, l.source_history_sales_line_id, l.source_history_transfer_line_id,
+        hr.id AS history_revision_id, hr.document_kind AS history_document_kind, hr.operation_id AS history_revision_operation_id,
+        hr.to_version AS history_revision_version, hr.sales_id AS history_revision_sales_id, hr.transfer_id AS history_revision_transfer_id,
+        hsl.header_id AS history_sales_id, hsh.batch_id AS history_sales_batch_id,
+        htl.header_id AS history_transfer_id, hth.batch_id AS history_transfer_batch_id,
         l.source_document_version, l.reverses_entry_id, to_char(l.business_date, 'YYYY-MM-DD') AS business_date, ${stamp("l.posted_at")} AS posted_at
         FROM naijue_erp.inventory_ledger l JOIN naijue_erp.warehouse w ON w.id = l.warehouse_id
         LEFT JOIN naijue_erp.sales_line sl ON sl.id = l.source_sales_line_id
         LEFT JOIN naijue_erp.transfer_line tl ON tl.id = l.source_transfer_line_id
+        LEFT JOIN naijue_erp.history_revision hr ON hr.id = l.source_history_revision_id
+        LEFT JOIN naijue_erp.history_sales_line hsl ON hsl.id = l.source_history_sales_line_id
+        LEFT JOIN naijue_erp.history_sales_header hsh ON hsh.id = hsl.header_id
+        LEFT JOIN naijue_erp.history_transfer_line htl ON htl.id = l.source_history_transfer_line_id
+        LEFT JOIN naijue_erp.history_transfer_header hth ON hth.id = htl.header_id
         WHERE l.warehouse_id = $1::uuid AND w.hall_id = $2::uuid AND l.sku_id = $3::uuid
           AND ($4::timestamptz IS NULL OR (l.posted_at, l.id) < ($4::timestamptz, $5::uuid))
         ORDER BY l.posted_at DESC, l.id DESC LIMIT $6`, [parameters.warehouseId, warehouse.hallId, parameters.skuId,

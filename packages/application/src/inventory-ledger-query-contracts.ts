@@ -20,9 +20,11 @@ export interface InventoryLedgerSku {
 export type InventoryLedgerSource =
   | { readonly kind: "SALES"; readonly salesId: EntityId<"sales">; readonly salesLineId: EntityId<"salesLine">; readonly endpoint: "SALES_WAREHOUSE" }
   | { readonly kind: "TRANSFER"; readonly transferId: EntityId<"transfer">; readonly transferLineId: EntityId<"transferLine">; readonly endpoint: "FROM" | "TO" }
+  | { readonly kind: "HISTORY_REVISION"; readonly documentKind: "SALES"; readonly revisionId: EntityId<"operation">; readonly salesId: EntityId<"sales">; readonly salesLineId: EntityId<"salesLine">; readonly endpoint: "SALES_WAREHOUSE" }
+  | { readonly kind: "HISTORY_REVISION"; readonly documentKind: "TRANSFER"; readonly revisionId: EntityId<"operation">; readonly transferId: EntityId<"transfer">; readonly transferLineId: EntityId<"transferLine">; readonly endpoint: "FROM" | "TO" }
   | { readonly kind: "CUTOFF_BASELINE"; readonly importBatchId: string; readonly endpoint: "IMPORT_BASELINE" };
 export interface InventoryLedgerEntry {
-  readonly id: EntityId<"ledger">; readonly operationId: EntityId<"operation">; readonly eventKind: "APPROVE" | "UNAPPROVE" | "CUTOFF_BASELINE";
+  readonly id: EntityId<"ledger">; readonly operationId: EntityId<"operation">; readonly eventKind: "APPROVE" | "UNAPPROVE" | "CUTOFF_BASELINE" | "HISTORY_REVISION";
   readonly quantityDelta: string; readonly source: InventoryLedgerSource; readonly sourceDocumentVersion: number | null;
   readonly reversesEntryId: EntityId<"ledger"> | null; readonly businessDate: BusinessDate;
   /** Exact PostgreSQL UTC timestamp, always six fractional digits; never JS Date/millisecond truncation. */

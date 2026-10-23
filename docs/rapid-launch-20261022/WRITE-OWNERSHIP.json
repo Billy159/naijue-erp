@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T06:12:55.951486+00:00",
+  "updatedAt": "2026-10-23T06:26:44.567771+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -1501,6 +1501,12 @@
           "group": "B06_EXISTING_FINITE_SOURCE_SYNTHETIC_TEST_SUPPORT",
           "fieldGate": "NO_SCHEMA_CHANGE_TEST_ONLY",
           "scope": "Only shared synthetic finite-offset/index fixture for original authorized SalesDetail/Settlement affected tests; original PAYMENT defaults unchanged. No real source, new wrapper or broad test suite."
+        },
+        {
+          "path": "tests/support/synthetic-inventory-ledger-query.ts",
+          "group": "EXISTING_LEDGER_QUERY_TEST_TYPE_ALIGNMENT_ONLY",
+          "fieldGate": "NO_SCHEMA_NO_WRITE_SEMANTICS",
+          "scope": "Only ledgerEntry helper parameter excludes HISTORY_REVISION because existing helper creates only original3 variants; old behavior/assertions unchanged, newhistory cases stay original PGprotocol test."
         }
       ]
     },

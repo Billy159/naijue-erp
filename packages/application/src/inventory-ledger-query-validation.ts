@@ -60,6 +60,14 @@ function source(value: unknown): InventoryLedgerSource {
     const row = record(value, ["kind", "transferId", "transferLineId", "endpoint"], reject); if (row.endpoint !== "FROM" && row.endpoint !== "TO") reject();
     return Object.freeze({ kind, transferId: id("transfer", row.transferId, reject), transferLineId: id("transferLine", row.transferLineId, reject), endpoint: row.endpoint });
   }
+  if (kind === "HISTORY_REVISION") {
+    if ((value as { documentKind?: unknown }).documentKind === "SALES") {
+      const row = record(value, ["kind", "documentKind", "revisionId", "salesId", "salesLineId", "endpoint"], reject); if (row.endpoint !== "SALES_WAREHOUSE") reject();
+      return Object.freeze({ kind, documentKind: "SALES", revisionId: id("operation", row.revisionId, reject), salesId: id("sales", row.salesId, reject), salesLineId: id("salesLine", row.salesLineId, reject), endpoint: "SALES_WAREHOUSE" });
+    }
+    const row = record(value, ["kind", "documentKind", "revisionId", "transferId", "transferLineId", "endpoint"], reject); if (row.documentKind !== "TRANSFER" || row.endpoint !== "FROM" && row.endpoint !== "TO") reject();
+    return Object.freeze({ kind, documentKind: "TRANSFER", revisionId: id("operation", row.revisionId, reject), transferId: id("transfer", row.transferId, reject), transferLineId: id("transferLine", row.transferLineId, reject), endpoint: row.endpoint });
+  }
   if (kind !== "CUTOFF_BASELINE") reject();
   const row = record(value, ["kind", "importBatchId", "endpoint"], reject); if (row.endpoint !== "IMPORT_BASELINE") reject();
   return Object.freeze({ kind, importBatchId: id("operation", row.importBatchId, reject), endpoint: "IMPORT_BASELINE" });
@@ -68,13 +76,14 @@ function entry(value: unknown): InventoryLedgerEntry {
   const reject: Reject = invalidInventoryLedgerResponse;
   const row = record(value, ["id", "operationId", "eventKind", "quantityDelta", "source", "sourceDocumentVersion", "reversesEntryId", "businessDate", "postedAt"], reject);
   const provenance = source(row.source);
-  if (!["APPROVE", "UNAPPROVE", "CUTOFF_BASELINE"].includes(row.eventKind as string)) reject();
+  if (!["APPROVE", "UNAPPROVE", "CUTOFF_BASELINE", "HISTORY_REVISION"].includes(row.eventKind as string)) reject();
   const eventKind = row.eventKind as InventoryLedgerEntry["eventKind"];
   try { if (quantity(row.quantityDelta as string) === 0n) reject(); } catch { reject(); }
   const reversesEntryId = row.reversesEntryId === null ? null : id("ledger", row.reversesEntryId, reject);
   if ((eventKind === "UNAPPROVE") !== (reversesEntryId !== null) || (eventKind === "CUTOFF_BASELINE") !== (provenance.kind === "CUTOFF_BASELINE")) reject();
+  if ((eventKind === "HISTORY_REVISION") !== (provenance.kind === "HISTORY_REVISION")) reject();
   if (eventKind === "CUTOFF_BASELINE" ? row.sourceDocumentVersion !== null : typeof row.sourceDocumentVersion !== "number"
-    || !Number.isSafeInteger(row.sourceDocumentVersion) || row.sourceDocumentVersion < 1 || row.sourceDocumentVersion > 2147483647) reject();
+    || !Number.isSafeInteger(row.sourceDocumentVersion) || row.sourceDocumentVersion < (eventKind === "HISTORY_REVISION" ? 2 : 1) || row.sourceDocumentVersion > 2147483647) reject();
   let date; try { if (typeof row.businessDate !== "string") reject(); date = businessDate(row.businessDate); } catch { return reject(); }
   const entryId = id("ledger", row.id, reject); if (reversesEntryId === entryId) reject();
   return Object.freeze({ id: entryId, operationId: id("operation", row.operationId, reject), eventKind, quantityDelta: row.quantityDelta as string,

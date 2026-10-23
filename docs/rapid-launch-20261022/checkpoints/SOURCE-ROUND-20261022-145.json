@@ -1,0 +1,71 @@
+{
+  "atUtc": "2026-10-23T06:31:44.433463+00:00",
+  "parent": "04e937f08e7604c6caf7947ac95aeea1a973a544",
+  "taskId": "F02_EXISTING_TRANSFER_LEAVE_AND_B03_B07_APPROVED_HISTORY_LEDGER_PAIR",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/transfer-existing-document-form.tsx",
+      "owner": "F1",
+      "bytes": 5242,
+      "sha256": "7dd981d56714718d6f81580c51eeb48f17ce6f88602fff50fa98bcbab627986e"
+    },
+    {
+      "path": "apps/web/src/inventory/ledger-http-reader.ts",
+      "owner": "F2",
+      "bytes": 8422,
+      "sha256": "721af12d0789b42e0cc15cb21f5878143eea81b1c5c363343e593a256460a40f"
+    },
+    {
+      "path": "apps/web/src/inventory/ledger-drawer.tsx",
+      "owner": "F2",
+      "bytes": 6538,
+      "sha256": "be670295c9673e7c78f6a97767de09a7d6814783bb86a291a73e296bf6d4efd3"
+    },
+    {
+      "path": "packages/application/src/inventory-ledger-query-contracts.ts",
+      "owner": "D3",
+      "bytes": 4522,
+      "sha256": "0059debf502a8e28cd7213883e81ae3452ed3ddce893673d7c226569e6eeab6f"
+    },
+    {
+      "path": "packages/application/src/inventory-ledger-query-validation.ts",
+      "owner": "D3",
+      "bytes": 10895,
+      "sha256": "6bf21251f16a468da1f646c7227cc567ce71d96b0cbe5d4f4ef033bc56af5ec3"
+    },
+    {
+      "path": "adapters/postgres/src/inventory-ledger-query-reader.ts",
+      "owner": "D3",
+      "bytes": 16978,
+      "sha256": "5a3701aa5a3d0282a5a47e6a9461aaf7ea84ec28ba27251dd06675a923668ee7"
+    },
+    {
+      "path": "tests/inventory-ledger-query-postgres-protocol.test.ts",
+      "owner": "D3",
+      "bytes": 22229,
+      "sha256": "ee20c71aff6e05ed6628f78a40976aa573294ce30e0255f47beef2e4ccc82cb2"
+    },
+    {
+      "path": "tests/support/synthetic-inventory-ledger-query.ts",
+      "owner": "D3",
+      "bytes": 2919,
+      "sha256": "9d3ec4df998acdd78a0d62bff37ec10e4620e625ce92ff54a03c3f246ee04405"
+    }
+  ],
+  "scope": [
+    "Existing transfer wrapper consumes original shared native440 leave dialog, original discard and approve/void unchanged",
+    "Backend and frontend canonical shared readunion jointly recognize already C01v1 approved HISTORY_REVISION/truehistoryFK relations, old3/event/permission/keyset/precision retained",
+    "Test support only old3-kind Exclude parameter, no changed fixture behavior"
+  ],
+  "checksAdopted": {
+    "F1": "Affectedstrict/publicactual oldworkspace/proposal no writes, continue/close/cancel retain exactmodel/draft/input/note, originaldiscard once/reopen3; JSDOM notactualnativeEsc",
+    "F2": "Affectedstrict; originalledger4/4; 6valid20reject syntheticconsumer paired currentD3validator, initial fixture omitted scope.warehouses corrected",
+    "D3": "New2 scripted protocol tests and final complete affectedstrict including originaltests; first oldtesthelper expandedunion type corrected, no oldsuite repeat"
+  },
+  "notTested": [
+    "Actual newfixedbrowser oldtransferleave",
+    "RealPostgreSQL/historyledger HTTP/roles/relation/performance",
+    "Fullinventory ledger6cols/filter/count or wholefilteredoutput not implemented bythis delta"
+  ],
+  "next": "OriginalQB only pairedbackend/frontend newHISTORY_REVISION range, QF2 sourceconsumer; originalQF nativeleave after necessary integratedcandidate. C1435visual fixes remain separatelyactual currentversion."
+}

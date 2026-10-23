@@ -8,7 +8,7 @@ export const ledgerBatchId = inventoryId("operation", 450);
 export function ledgerParameters(overrides: Partial<InventoryLedgerQuery> = {}): InventoryLedgerQuery {
   return parseInventoryLedgerQuery({ warehouseId: ledgerWarehouse.id, skuId: ledgerSkuId, pageSize: 20, after: null, ...overrides });
 }
-export function ledgerEntry(n = 0, kind: InventoryLedgerSource["kind"] = "SALES"): InventoryLedgerEntry {
+export function ledgerEntry(n = 0, kind: Exclude<InventoryLedgerSource["kind"], "HISTORY_REVISION"> = "SALES"): InventoryLedgerEntry {
   const source: InventoryLedgerSource = kind === "SALES" ? { kind, salesId: inventoryId("sales", 500), salesLineId: inventoryId("salesLine", 510 + n), endpoint: "SALES_WAREHOUSE" }
     : kind === "TRANSFER" ? { kind, transferId: inventoryId("transfer", 520), transferLineId: inventoryId("transferLine", 530 + n), endpoint: "TO" }
     : { kind, importBatchId: ledgerBatchId, endpoint: "IMPORT_BASELINE" };
