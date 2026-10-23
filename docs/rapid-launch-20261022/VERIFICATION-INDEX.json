@@ -10725,10 +10725,96 @@
         "STAGE/PUBLISH/nativeCREATE/H06 unless explicitactualreceipt"
       ],
       "recordedAtUtc": "2026-10-23T07:29:50.301664+00:00"
+    },
+    {
+      "id": "QFv045",
+      "scope": "Only receipt-bound new affected scope; old valid checks adopted, no C technical rerun",
+      "result": "PASS_BOUNDED_C188_READONLY_SOURCE_AND_C191_HOST_WIRING_NO_RUNTIME_OR_FORMAL_WRITE",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v045-qf-c188-readonly-c191-host-source/RESULT.json",
+      "sha256": "1ca1f23e5c96dfe345c07a72096bdaccdaa6318696c4912fd15106ef36627425",
+      "reviewer": "QF",
+      "notTested": [
+        "wholepage/104 total closure",
+        "formal business/performance/production"
+      ]
+    },
+    {
+      "id": "QFv046",
+      "scope": "Only receipt-bound new affected scope; old valid checks adopted, no C technical rerun",
+      "result": "PASS_BOUNDED_C196_NATIVE_SPEC_LEAF_SOURCE_FIX_PENDING_NATIVE_ACTUAL",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v046-qf-c196-native-spec-leaf-source/RESULT.json",
+      "sha256": "3efe39d2934c3f3b2b4e32da9bc728716927b2330a229a34ac1ae033c8994ee7",
+      "reviewer": "QF",
+      "notTested": [
+        "wholepage/104 total closure",
+        "formal business/performance/production"
+      ]
+    },
+    {
+      "id": "QFv047",
+      "scope": "Only receipt-bound new affected scope; old valid checks adopted, no C technical rerun",
+      "result": "PASS_BOUNDED_C199_SAME_SAVE_PROPOSAL_TRANSPORT_OWNER_SOURCE_PAGE_WIRING_PENDING",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v047-qf-c199-save-proposal-transport-source/RESULT.json",
+      "sha256": "3f31387f5a8a643c3578461e03391c9c7c55b93f4ed22c1a9f718b4200140a11",
+      "reviewer": "QF",
+      "notTested": [
+        "wholepage/104 total closure",
+        "formal business/performance/production"
+      ]
+    },
+    {
+      "id": "QFv048",
+      "scope": "Only receipt-bound new affected scope; old valid checks adopted, no C technical rerun",
+      "result": "BOUNDED_C201_T02_PAGE_SAVE_SOURCE_CHECKED_ONE_CANCELLATION_PATH_OPEN",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v048-qf-c201-transfer-page-save-source/RESULT.json",
+      "sha256": "1c87b5cc37beca8c0685bbed8a79ce1f94d0b5b7bce757b819921989e58b5993",
+      "reviewer": "QF",
+      "notTested": [
+        "wholepage/104 total closure",
+        "formal business/performance/production"
+      ]
+    },
+    {
+      "id": "QF2-C196-payment",
+      "scope": "Only receipt-bound new affected scope; old valid checks adopted, no C technical rerun",
+      "result": "PASS_LIMITED_C196_PAYMENT_2P2_ACTUAL_RETEST",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c196-payment-affected-actual-01/RESULT.json",
+      "sha256": "af5af7d42f15d2b2ef0998ea4b6a4e919e7f8e4bd9295e81ae0ad54b68169251",
+      "reviewer": "QF2",
+      "notTested": [
+        "wholepage/104 total closure",
+        "formal business/performance/production"
+      ]
+    },
+    {
+      "id": "C101-ACTUAL-V11-SHAPE",
+      "scope": "Approved exact QA schema delta and actual metadata readback only",
+      "result": "PASS_ACTUAL_QA_V11_SHAPE_PATCH_AND_CATALOG_ONLY",
+      "sourceCommit": "47f9d307469f63da2a292555a71cb0dbb7cdac4c",
+      "evidence": "docs/rapid-launch-20261022/operational-checkpoints/C03-ACTUAL101-V11-SHAPE.json",
+      "reviewer": "C original ops owner",
+      "notTested": [
+        "v11 actual normal SAVE/rollback/first inventory/use/revoke business groups",
+        "Actual frontend HTTP/PG",
+        "R1 v11 apply/new private stage/formal switch"
+      ]
+    },
+    {
+      "id": "C202-ACTUAL-BUILD-PACK",
+      "scope": "Original production build and exact approved runtime SQL package closure",
+      "result": "PASS_ACTUAL_BUILD_PACK_ONLY",
+      "sourceCommit": "79553bbb1f5df0b1400beea04916e1b0bf620fde",
+      "evidence": "docs/rapid-launch-20261022/operational-checkpoints/C03-PRODUCTION202-BUILD-PACK.json",
+      "reviewer": "C original build owner",
+      "notTested": [
+        "New202 Linux dependency install/private start",
+        "New UI browser/real business/performance",
+        "Formal URL switch"
+      ]
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-23T18:18:06.263385+00:00",
+  "updatedAt": "2026-10-23T18:52:05.479233+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
