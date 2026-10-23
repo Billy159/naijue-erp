@@ -21,7 +21,24 @@ export async function buildApplication({ entryPoint, outdir, onSourceInput }) {
   const common = { absWorkingDir: here, bundle: true, platform: 'browser', target: 'es2022', minify: true, plugins,
     legalComments: 'none', define: { 'process.env.NODE_ENV': '"production"' }, logLevel: 'warning' };
   const result = await build({ ...common, entryPoints: { application: entryPoint }, outdir,
-    format: 'esm', splitting: true, metafile: true, chunkNames: 'chunks/[name]-[hash]' });
+    format: 'esm', splitting: true, metafile: true, chunkNames: 'chunks/[name]-[hash]', write: false });
+  // This host explicitly loads shell/leaf CSS below. esbuild's automatic CSS
+  // siblings are not its loading contract, and must not become duplicate assets.
+  // Preserve every JS byte returned by the same single ESM splitting build.
+  for (const file of result.outputFiles) {
+    if (file.path.endsWith('.css')) continue;
+    if (!file.path.endsWith('.js')) throw new Error('Unexpected application output requires an explicit asset owner.');
+    const relative = path.relative(outdir, file.path);
+    if (relative.startsWith('..') || path.isAbsolute(relative)) throw new Error('Application output escaped its version directory.');
+    await mkdir(path.dirname(file.path), { recursive: true });
+    await writeFile(file.path, file.contents);
+  }
+  // Do not leave automatic cssBundle references pointing at files we did not
+  // emit. Actual explicit CSS builds below append their real output metadata.
+  for (const [filename, output] of Object.entries(result.metafile.outputs)) {
+    if (filename.endsWith('.css')) delete result.metafile.outputs[filename];
+    else delete output.cssBundle;
+  }
   const styleManifests = {};
   for (const [name, input] of Object.entries({ application: 'shell', inventory: 'inventory', sales: 'sales', 'sales-detail': 'sales-detail', parties: 'parties', transfers: 'transfers', 'transfer-detail': 'transfer-detail', 'transfer-product': 'transfer-product', products: 'products', 'product-full-page': 'product-full-page', 'product-categories': 'product-categories', 'product-settings': 'product-settings', 'barcode-schemes': 'barcode-schemes', 'store-settings': 'store-settings', 'staff-settings': 'staff-settings', 'payment-settings': 'payment-settings' })) {
     const css = await build({ ...common, entryPoints: [path.join(here, 'styles', `${input}.css`)], outfile: path.join(outdir, `${name}.css`), metafile: true });
