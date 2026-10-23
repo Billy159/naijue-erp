@@ -1,3 +1,16 @@
+最新接续（2026-10-24 北京时间；源码219、运行候选217）：
+
+- 当前实际入口：http://127.0.0.1:57872/synthetic-unified.html 。固定217=753bd09b115fce1118b1680d77daaf2032683ab0／build ui-preview-753bd09-01-build01；1次编译0、HTML3412884B／8dacbc00…、413输入／1368模块，PID3888/session31695，3关键HTTP逐字和版本头一致。18个明确C合成适配，业务UI/CSS来自固定源码，不是覆盖开发页面。原214/207保留。
+- 本版新增可检查I07完整流水UI/筛选/分页，明确只绑定原TEST-001蓝/Y/165-S/总仓格，24行纯UI数据；新增厅/批次marker和合成码逐项标fiction，当前格原数量-2不用于反推历史，前后量UNKNOWN、无保存审核/真实账本/权限结论。其它目标明确未提供，不假空或0。原单跳转缺真实synthetic来源仍不可达。15项必要适配检查采用，原9类型诊断/新0保留，不冒fullTypes。215未执行准备已保留，被217替代。
+- 216=ed3dd96调拨matrix4→底行同规格2问题已由原QFv056限定源关闭：取消保4/2，确认单份6并清隐藏map，后改7且其它色9不动；原真实React/模型RED与GREEN采用，不重98/209/absent。217控件残差已QFv057限定源通过，待新实际。QF当前独占217先新SALE209/T02 215+216录入实际；结束clean后交QF2 I07和P01剩余指标，双方不并抢Chrome。
+- 尺码下拉214实际仍失败后，F2已用原生事件确认：SVG点击展开，label.control再向INPUT补发点击，菜单关掉；仅一次临时阻止label activation的A/B证明原因，非新源码通过。新218=e843614仅label.field→div.field，原aria-label/required、所属组/成员/Save逐字未变，QF2限定源通过；actual保持OPEN到后继新候选。218不在217，不倒绑旧图。
+- 新219=4922292迁入库存Empty完整区域：补原app承载，同一个公共Empty，完整13条Shadow base+local同序同scope保持相对specificity（原3class48/4赢2class56/12），局部SVG inline/baseline挡全局Icon渗入；七区/result前缀不改、不硬编码尺寸。原211字号48子项通过保留，完整几何尾项仍OPEN，219源/后继实际由QF2验。219不在217。
+- QFv058已按唯一汇总职责接入QF2三份214actual，逐范围绑定docs/common207与P01/size/Empty214，不统一提升全站版本；104行状态/48局部/整页0/整类0保持。174营业厅仓库完整模块QF2限定sourcePASS；默认客户候选provider在production mount漏注入，C已确认既有PartyClient和F3目录适配均存在，交唯一mount owner F1最小接线，不新增API/DTO/权限/写gate。
+- 原F3本轮接续tool一次thread not found，未派成功、未改其叶文件；上述现有adapter无F3源改需求，接缝沿原F1文件owner推进。原QB三次同错误仍待人类原Chat接续，仅新实际runtime review/C102分支停，不建QB2。v13确认仍未到，不实施DDL/writer。
+- 真实B07输入已只读捕获，D1给私有JSON Pointer的有限DRAFT计划；没有APPROVED/NULLdate或v12/currentWRITE证据。新生产包最近仍214（实际4.659秒/225成员/9d9b8b96…），本217只是本地UI预览，不是新Linux应用/正式发布。字段批准、原12h备份有效期、数据保护及既有正式分批条件不变。
+
+GitHub准确已回读0f0f670，含215及上一阶段接续；216–219和本段下一精确同步。整体ACTIVE，gpt-6.1-sol/xhigh，Fast无工具开关未核验。下方历史保留，最新以本段与TASKS.currentContinuation为准。
+
 最新接续（2026-10-24，北京时间；源码215、运行候选214）：
 
 - 实际可看：http://127.0.0.1:57870/synthetic-unified.html ，固定source214=1eef32a45da5f422415077b2c4074d0d83b6aeee／build ui-preview-1eef32a-01-build01。一次编译0，HTML3404937B／baa577c4…，412输入／1367模块；PID98631/session75035，3关键HTTP200逐字及版本头一致。原207保留。当前QF2独占原两个受控目标，已切新214，不操作保护DB7/3BC。

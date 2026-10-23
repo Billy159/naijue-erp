@@ -11002,10 +11002,75 @@
         "Wholepage/104completion",
         "ActualPG/permissions/business/transactions/performance/deployment beyond named scope"
       ]
+    },
+    {
+      "id": "QF-V056",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v056-qf-c216-matrix-entry-source-retest/RESULT.json",
+      "bytes": 11330,
+      "sha256": "3f876c532a44eaccc483f40e28fea3bf7b3ff0d99eda0b1e8187297e66a2a4fa",
+      "result": "BOUNDED_C216_MATRIX_ENTRY_SOURCE_FINDING_REMEDIATED_ACTUAL_PENDING",
+      "scope": "CLOSED_ONLY_SOURCE216_NAMED_MATRIX_COMPOSITION_FINDING_ACTUAL_PENDING",
+      "adoption": "C adopts original independent reviewer conclusion; no duplicate technical verification",
+      "notTested": [
+        "Actualbusiness/PG/permission/transactions/performance/deploy beyond named scope",
+        "Wholepage/104completion"
+      ]
+    },
+    {
+      "id": "QF-V057",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v057-qf-c217-idle-residual-source/RESULT.json",
+      "bytes": 11105,
+      "sha256": "f88e8e0c471c069ee9bcfef15bd18051db0bb73b5d9751662b020f5c1ef26444",
+      "result": "BOUNDED_C217_ORIGINAL_IDLE_RESIDUAL_SOURCE_REMEDIATED_ACTUAL_PENDING",
+      "scope": "SOURCE217_COMMON_CSS_DELTA_ONLY_ACTUAL_PENDING",
+      "adoption": "C adopts original independent reviewer conclusion; no duplicate technical verification",
+      "notTested": [
+        "Actualbusiness/PG/permission/transactions/performance/deploy beyond named scope",
+        "Wholepage/104completion"
+      ]
+    },
+    {
+      "id": "QF-V058",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v058-qf-adopt-qf2-c214-scoped/RESULT.json",
+      "bytes": 5996,
+      "sha256": "da973464b6b2eb7ce774e42cbdbbc78b4fe113e6cfb2c6e614653f2d415d4aa9",
+      "result": "ADOPTED_QF2_C214_THREE_ACTUAL_SCOPES_AND_C174_STORES_SOURCE_ONLY",
+      "scope": "ADOPT_QF2_RESULTS_BY_SCOPE_NO_DUPLICATE_REVIEW",
+      "adoption": "C adopts original independent reviewer conclusion; no duplicate technical verification",
+      "notTested": [
+        "Actualbusiness/PG/permission/transactions/performance/deploy beyond named scope",
+        "Wholepage/104completion"
+      ]
+    },
+    {
+      "id": "QF2-C174",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c174-stores-complete-frozen-source-01/RESULT.json",
+      "bytes": 1021,
+      "sha256": "9539dd03a56bcb4cbf8856ed3f1064cc1ed8a811caa5e624af177b2c82ac2ae9",
+      "result": "PASS_SOURCE_LIMITED_COMPLETE_STORE_HALL_WAREHOUSE_MODULE",
+      "scope": "SOURCE174_COMPLETE_STORE_MODULE_ONLY_WRITE_CUSTOMER_GAPS_RETAINED",
+      "adoption": "C adopts original independent reviewer conclusion; no duplicate technical verification",
+      "notTested": [
+        "Actualbusiness/PG/permission/transactions/performance/deploy beyond named scope",
+        "Wholepage/104completion"
+      ]
+    },
+    {
+      "id": "QF2-C218",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c218-size-label-activation-fix-source-01/RESULT.json",
+      "bytes": 1436,
+      "sha256": "f5c1dcd88a30e52d62ca1210617fc20087956effa62b57074b69b45eaf3fe563",
+      "result": "PASS_SOURCE_LIMITED_SIZE_LABEL_ACTIVATION_FIX_ACTUAL_PENDING",
+      "scope": "SOURCE218_SINGLE_NATIVE_LABEL_FIX_ONLY_ACTUAL_OPEN",
+      "adoption": "C adopts original independent reviewer conclusion; no duplicate technical verification",
+      "notTested": [
+        "Actualbusiness/PG/permission/transactions/performance/deploy beyond named scope",
+        "Wholepage/104completion"
+      ]
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-23T19:58:32.484762+00:00",
+  "updatedAt": "2026-10-23T20:22:55.572731+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -12321,82 +12386,59 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-23T19:58:32.484762+00:00",
-    "latestSource": 215,
-    "servedPreview": 214,
-    "runtime": {
-      "sourceRound": 214,
-      "sourceCommit": "1eef32a45da5f422415077b2c4074d0d83b6aeee",
-      "buildId": "ui-preview-1eef32a-01-build01",
-      "url": "http://127.0.0.1:57870/synthetic-unified.html",
-      "htmlBytes": 3404937,
-      "htmlSha256": "baa577c4eaaef91ee5807de0f1ab73506e848f19e3ad4ab7619645c34dceb962",
-      "actualInputs": 412,
-      "actualModulesIncludingDependencies": 1367,
-      "pid": 98631,
-      "session": 75035,
-      "qualification": "SYNTHETIC_ONLY; I07 ledger/source navigation unavailable inthisharness; no215/noPG/business/formalperformance"
-    },
-    "browserOwner": "QF2 214only",
-    "independentAdopted": [
+    "atUtc": "2026-10-23T20:22:55.572731+00:00",
+    "latestSource": 219,
+    "servedPreview": 217,
+    "browserOwner": "QF sole217 documents; QF2 next distinctI07/P01 consumer scope",
+    "adopted": [
       {
-        "id": "QF-V052",
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v052-qf-c207-spec-class-rapid-actual/RESULT.json",
-        "bytes": 9474,
-        "sha256": "d7b566ab99c6879d4802b6396b352ed729916c0f0cd8f1fbe872b52e0f193e7a",
-        "result": "PASS_SCOPED_C207_SPEC_CLASS_NATIVE_TWO_FAST_DIAGNOSTICS_NOT_REPRODUCED_HISTORICAL_P1_OPEN",
-        "scope": "CLASS_SCOPED_ACTUAL_PASS_TWO_FAST_DIAGNOSTICS_NOT_REPRODUCED_OLD_P1_OPEN",
-        "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+        "id": "QF-V056",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v056-qf-c216-matrix-entry-source-retest/RESULT.json",
+        "bytes": 11330,
+        "sha256": "3f876c532a44eaccc483f40e28fea3bf7b3ff0d99eda0b1e8187297e66a2a4fa",
+        "result": "BOUNDED_C216_MATRIX_ENTRY_SOURCE_FINDING_REMEDIATED_ACTUAL_PENDING",
+        "scope": "CLOSED_ONLY_SOURCE216_NAMED_MATRIX_COMPOSITION_FINDING_ACTUAL_PENDING",
+        "adoption": "C adopts original independent reviewer conclusion; no duplicate technical verification"
       },
       {
-        "id": "QF-V053",
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v053-qf-c209-sales-local-line-source/RESULT.json",
-        "bytes": 12133,
-        "sha256": "89a49b00fede69b8038a0f6d0c2d57f2cf59a57c6aed0c6132388c981f480eb7",
-        "result": "PASS_BOUNDED_C209_SALES_LOCAL_SPEC_LINE_SOURCE_PENDING_ACTUAL",
-        "scope": "SOURCE209_ONLY",
-        "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+        "id": "QF-V057",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v057-qf-c217-idle-residual-source/RESULT.json",
+        "bytes": 11105,
+        "sha256": "f88e8e0c471c069ee9bcfef15bd18051db0bb73b5d9751662b020f5c1ef26444",
+        "result": "BOUNDED_C217_ORIGINAL_IDLE_RESIDUAL_SOURCE_REMEDIATED_ACTUAL_PENDING",
+        "scope": "SOURCE217_COMMON_CSS_DELTA_ONLY_ACTUAL_PENDING",
+        "adoption": "C adopts original independent reviewer conclusion; no duplicate technical verification"
       },
       {
-        "id": "QF-V054",
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v054-qf-c214-ledger-source-host-source/RESULT.json",
-        "bytes": 13643,
-        "sha256": "658f1c81fc8158c5d9d8682fdf875a0f51aa776fe0f67d3a61759329ea486b70",
-        "result": "PASS_BOUNDED_C214_ORIGINAL_LEDGER_SOURCE_DOCUMENT_HOST_SOURCE_PENDING_ACTUAL",
-        "scope": "SOURCE214_DOCUMENT_HOST_ONLY",
-        "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+        "id": "QF-V058",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v058-qf-adopt-qf2-c214-scoped/RESULT.json",
+        "bytes": 5996,
+        "sha256": "da973464b6b2eb7ce774e42cbdbbc78b4fe113e6cfb2c6e614653f2d415d4aa9",
+        "result": "ADOPTED_QF2_C214_THREE_ACTUAL_SCOPES_AND_C174_STORES_SOURCE_ONLY",
+        "scope": "ADOPT_QF2_RESULTS_BY_SCOPE_NO_DUPLICATE_REVIEW",
+        "adoption": "C adopts original independent reviewer conclusion; no duplicate technical verification"
       },
       {
-        "id": "QF2-C212",
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c212-product-recovery-host-dispose-fix-source-01/RESULT.json",
-        "bytes": 1169,
-        "sha256": "7e44b72c5bfdfeb9cd0c3dbef728c2c30a154ce7a50a294cab6de46c10c74fda",
-        "result": "PASS_SOURCE_LIMITED_HOST_DISPOSE_FIX",
-        "scope": "SOURCE212_ORIGINAL_P2_ONLY_CLOSED",
-        "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+        "id": "QF2-C174",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c174-stores-complete-frozen-source-01/RESULT.json",
+        "bytes": 1021,
+        "sha256": "9539dd03a56bcb4cbf8856ed3f1064cc1ed8a811caa5e624af177b2c82ac2ae9",
+        "result": "PASS_SOURCE_LIMITED_COMPLETE_STORE_HALL_WAREHOUSE_MODULE",
+        "scope": "SOURCE174_COMPLETE_STORE_MODULE_ONLY_WRITE_CUSTOMER_GAPS_RETAINED",
+        "adoption": "C adopts original independent reviewer conclusion; no duplicate technical verification"
       },
       {
-        "id": "QF2-C210",
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c210-native-ledger-frozen-source-01/RESULT.json",
-        "bytes": 1546,
-        "sha256": "1c2de446743b040c1238216a962a7a75bba651202fafa43601e8f3baa059c862",
-        "result": "PASS_SOURCE_LIMITED_NEW_LEDGER_CONSUMER",
-        "scope": "SOURCE210_NEW_LEDGER_CONSUMER_ONLY",
-        "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
-      },
-      {
-        "id": "QF2-C214-P01",
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c214-product-list-fix-actual-01/RESULT.json",
-        "bytes": 1456,
-        "sha256": "a66f8ed05fb841d4cb1a903bb63453dd8bba123bf9c9c94b74a82dfbd0b3c294",
-        "result": "PASS_ORIGINAL_TWO_FINDINGS_LIMITED_ACTUAL_C214",
-        "scope": "ACTUAL214_ORIGINAL_TWO_P01_FINDINGS_ONLY_RESIDUALS_OPEN",
-        "adoption": "Original independent reviewer conclusion adopted by C; no duplicate technical verification"
+        "id": "QF2-C218",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c218-size-label-activation-fix-source-01/RESULT.json",
+        "bytes": 1436,
+        "sha256": "f5c1dcd88a30e52d62ca1210617fc20087956effa62b57074b69b45eaf3fe563",
+        "result": "PASS_SOURCE_LIMITED_SIZE_LABEL_ACTIVATION_FIX_ACTUAL_PENDING",
+        "scope": "SOURCE218_SINGLE_NATIVE_LABEL_FIX_ONLY_ACTUAL_OPEN",
+        "adoption": "C adopts original independent reviewer conclusion; no duplicate technical verification"
       }
     ],
-    "production214Checkpoint": "docs/rapid-launch-20261022/operational-checkpoints/C03-PRODUCTION214-BUILD-PACK.json",
-    "actualReadonlyRetainedCapture": "docs/rapid-launch-20261022/operational-checkpoints/C03-B07-RETAINED-READONLY-CAPTURE.json",
-    "newOpenSourceP2": "DOC-215-T02-MATRIX-ENTRY-COORDINATE-01",
-    "countsUnchanged": "104 total /48 partial /0wholepage /0wholeoverlay"
+    "actualUI217Checkpoint": "docs/rapid-launch-20261022/operational-checkpoints/C03-UI217-HTTP-LEDGER-UI.json",
+    "countsUnchanged": "104total/48partial/0wholepage/0wholeoverlay",
+    "notAccepted": "218actual/219fullregionactual/I07realbusiness/formalperformance"
   }
 }
