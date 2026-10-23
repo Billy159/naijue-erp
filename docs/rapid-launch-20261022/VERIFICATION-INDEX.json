@@ -10344,7 +10344,7 @@
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-23T03:21:56.364151+00:00",
+  "updatedAt": "2026-10-23T03:51:21.658266+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -11356,6 +11356,19 @@
         "C-BUILD98-FIRST-FAILURE"
       ],
       "controllerTechnicalRetests": 0
+    },
+    {
+      "atUtc": "2026-10-23T03:51:21.658266+00:00",
+      "addedCheckIds": [
+        "QB143",
+        "QB144",
+        "C124-SELFCHECK",
+        "C125-SELFCHECK",
+        "C127-SELFCHECK",
+        "ACTUAL-TRANSFER-JOIN-PENDING-QA"
+      ],
+      "controllerTechnicalRetests": 0,
+      "notWholePageBusinessPass": true
     }
   ],
   "coverageGroups": [
@@ -11395,9 +11408,9 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-23T03:21:56.364151+00:00",
-    "sourceRound": 122,
-    "sourceCheckpoint": "3019b1071af05820865d662ff202ac141651d152",
+    "atUtc": "2026-10-23T03:51:21.658266+00:00",
+    "sourceRound": 127,
+    "sourceCheckpoint": "82d01cae78b08440068f04adb2883e686ea6e81f",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -11416,12 +11429,12 @@
       "syntheticOnly": true,
       "wholePageAccepted": false
     },
-    "nextPreview": "C120 complete page batch LIVE57851; C121 production CSS output change fixed but not in synthetic build, actual production graph pending.",
-    "r1": "C53 bounded48 diagnosticPASS: ENOTCACHED1/no cached response, noOOM/Error/networknone, node_modules absent. Exactnpm primary joinscache/_cacache; C54correct-layout freshcache/install candidate Kpreparing. C48 failed preserved,no replay/publicswitch.",
-    "qa": "QB140 actual50 effectiveACL pass/rawNULL-only accepted; C candidate exact3nonnull fix e33f3c44 prepared,no original49replay; D1 originalH06 probe unchanged,52 Knewpurpose/carrier preparing.",
-    "import": "ActualHeader capture1/14279/43.87s QB141 limitedPASS; newoutside fbec2112 signed realImportfalse. Finaljoin QB142 found new incomplete-manifest FD-close F01, originalD3 fixing, no join physical window.",
+    "nextPreview": "One combined C127 preview preparation; actual browser remainsC12057851. F2/Party WIP excluded.",
+    "r1": "C54 actual offline npm/install and directAPP health passed; privateWEB request failed,54APP/WEB stopped by originalhelper. New55 read-only diagnostic submitted once, no oldservice/publicswitch/install replay.",
+    "qa": "QB145 newfinite52 has one missingassertIdentity import F01; originalD1 fixing onlythat. PLANdisabled/newpurposePENDING; originalH06/C50 unchanged.",
+    "import": "Actual onegenuineLine261641+capturedHeader14279 join completed321.196s/1consumer/1join/cleanup[]; manifestb3ebb01d, output1.131GB; originalQB newactualsmallmetadata chain pending. NoPG/all11/MAIN/PUBLISH.",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Normal branch952fcdff independently verified exact7commits; source122 and this latest directive pending next checkpoint",
+    "github": "Normal952fcdff last verified; newsource122–127/latestUIauthority/publicjoinrecipe and this state pending exact sync.",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -11444,10 +11457,10 @@
       "mainNativeAuthorExpanded": false,
       "actualConclusion": "DEMO108 component density/font/clamp/window-scroll residuals pass; native48 not incremented, nativeancestor and>=4native categories untested"
     },
-    "audit": "113 actualaudit0 consumer confirmed, twoP2 focus/same-scope retention open and assigned originalF3; current120 not repaired yet. Synthetic0 is not formal audit data.",
+    "audit": "C122 twoP2 sourcefix not in actualC120 browser; same nextC127 candidate affectedretest.",
     "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
-    "uiMigration": "Latest human: ALL Demo-matching UI must directly reuse actual source layer, not conditional on visual deviation. Current121/122 partial implementations require provenance classification; rewritten/unknown/unconnected never complete. OriginalQF on actualC120; originalowners received directive. No repeat old valid same-source scope.",
+    "uiMigration": "All matchingDemoUI direct actualsource unconditionally. C124F1exact8/C125F3exact3/C127F1list exact3 fixed and selfchecks adopted; QF newactualcandidate pending/wholepage0. F1 nativeproductTabs and actualSALE3issues/F2productcomplete/F3Party continue originalowners.",
     "backend": "D2 native method-filter exact6 QB138 source/protocol PASS + C120 paired actual HTTP adapter. Real PG/filter/ACL/representative performance not tested; originalskills/stack/owner boundaries retained.",
-    "productionBuild": "C122attempt01 failed before build due missing raw Git commit proof, diagnosed ENOENT and supplied exact proof. Distinctattempt02 original esbuild/output completed208files but strictreleaseguard NON_RELEASE_MEMBER rejected only product-editor-media-JIGDZJR6.js runtimechunk. Both failures preserved/no pack; C precise source-provenance guard compatibility fix pending, no bypass or performancePASS."
+    "productionBuild": "C125 original9.377s FAILED sourceguard falsely rejected exact376B lazyfacade with positive6617B implementation in staticsharedchunk. C126 fixes existingstaticclosure guard,2newaffectedchecks PASS, originalQB newdelta pending. No oldmanifests continued/pack."
   }
 }

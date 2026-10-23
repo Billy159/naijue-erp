@@ -1,3 +1,9 @@
+当前接续 2026-10-23T03:51:21.658266+00:00：按本轮用户 anti-over-defense 指令，C已完整读技能并通知原八角色；不新增无关审批、准入、审计、契约或检查体系，已有项目必要机制和用户全部业务/UI/性能/字段确认/数据保护/发布要求仍有效。直接修实际缺口、采用同版有效结论，整项未完成不能冒PASS。
+
+固定源码C127 `82d01cae78b08440068f04adb2883e686ea6e81f`：F1调拨/首页开单/提示/frame及S01原生列表，F3厅仓按需表单，C123/126发布守卫修复均已分段保存。当前实际仍 http://127.0.0.1:57851/synthetic-unified.html （C120），下一同次C127候选准备中，F2/往来WIP不混入。37页+67弹层=104、去重局部48、整页整类0；销货整页未通过Demo一致性验收。QF最新SALE3个实际问题交原F1，产品nativeTabs交共享原owner。
+
+真实调拨联接一次已完成321.196秒：261641行/14279单、1consumer/1join、cleanup[]，产物manifest b3ebb01d；原QB只验新增smallmetadata链，不重读1.13GB或旧261641。没有SQL导入/all11/MAIN/PUBLISH。C54离线安装与APP内部health通过，私有WEB连接关失败后已按原逻辑停止54候选，原正式入口不变；新55只读诊断一次已提交。D1新52仅缺named import的F01原owner修，未执行；后端图片原HTTP/host缺口已交原D2/D1直接接线，无新表字段。C125生产build因真实lazy facade与原source正贡献跨sharedchunk误拒失败，C126现有guard精确修，2新检查通过、QB只新delta；不续旧失败pack。GitHub最新已核952fcdf，本段下一精确同步。以下历史保留。
+
 最新人类裁决 2026-10-23T03:21:56.364151+00:00：全站所有有冻结Demo对应实现的UI无条件直接复用，撤销“偏离多才迁入/相似即可保留仿写”；已实际直接迁入且同版有效证据保留，仿写/未知/未接均未完成。完整附件已逐字保存 `USER-DIRECT-REUSE-ALL-20261023.txt`（SHAf2d160b9bf852481e2ae74db1fe5b146c8408331dc83b6f8f4b8f4cd1603df28），当前指令见`UI-DIRECT-REUSE-ALL-20261023-03.json`。原八执行与验收角色已收到增量，Sol61/xhigh/不Fast，不新建重复工程或恢复关闭Demo Chat。现37+67=104、局部48、整页整类0；销货整页未通过Demo一致性验收。当前实际看C120/57851；C122审计两P2源修复未进当前浏览器。
 
 后端两技能/原owner继续：真实Header14279一次捕获已QB141来源链限定通过并签非导入outside；finaljoin新收尾F01原D3在修、无实际join窗。C50有效ACL真实证据QB140采用，仅rawNULL错误谓词修正，不增GRANT；H06新52准备。原C48离线缓存未命中已C53有界确认，C54准确_cacache布局后继准备不重run48。新C122生产构建输出后被严格guard拒唯一合法media命名JS chunk，尚无新pack/上线/性能PASS，正作精确兼容修复而不放宽数据保护。GitHub已核952fcdf，其后源码与本裁决下一同步。以下旧历史保留。
