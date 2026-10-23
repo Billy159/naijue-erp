@@ -44,12 +44,27 @@
         {
           "path": "adapters/postgres/src/sales-unit-of-work.ts",
           "group": "B02_COMMIT_FIX_NO_FIELD_CHANGE",
-          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "PostgresSalesTransaction.resolveDocumentSkus"
+            ],
+            "scope": "Bind original actor/key/document/runtime/client to resolver"
+          }
         },
         {
           "path": "adapters/postgres/src/transfer-unit-of-work.ts",
           "group": "B02_COMMIT_FIX_NO_FIELD_CHANGE",
-          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "PostgresTransferTransaction.resolveDocumentSkus",
+              "getSkuFact"
+            ],
+            "scope": "Bind same scope; valid global size criterion"
+          }
         },
         {
           "path": "tests/runtime-document-commit-outcome.test.ts",
@@ -59,32 +74,82 @@
         {
           "path": "packages/application/src/sales-service.ts",
           "group": "B02_NUMBERING_AFTER_C01",
-          "fieldGate": "AFTER_USER_APPROVAL"
+          "fieldGate": "AFTER_USER_APPROVAL",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "createSalesService.execute"
+            ],
+            "scope": "Original key/current authority/CAS; proposal hash before generated IDs, resolve+prepare+SAVE on original transaction"
+          }
         },
         {
           "path": "packages/application/src/transfer-service.ts",
           "group": "B02_NUMBERING_AFTER_C01",
-          "fieldGate": "AFTER_USER_APPROVAL"
+          "fieldGate": "AFTER_USER_APPROVAL",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "createTransferService.execute"
+            ],
+            "scope": "Same transfer command transaction; original two-ended posting unchanged"
+          }
         },
         {
           "path": "packages/application/src/native-sales-preparation.ts",
           "group": "B02_NUMBERING_AFTER_C01",
-          "fieldGate": "AFTER_USER_APPROVAL"
+          "fieldGate": "AFTER_USER_APPROVAL",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "NativeSalesSaveProposal",
+              "prepareNativeSalesOnTransaction",
+              "createNativeSalesPreparation",
+              "createNativeSalesExistingPreparation"
+            ],
+            "scope": "Reuse current pricing/pointers/snapshot preparation inside outer SAVE; public prepares remain zero business writes"
+          }
         },
         {
           "path": "packages/application/src/native-transfer-preparation.ts",
           "group": "B02_NUMBERING_AFTER_C01",
-          "fieldGate": "AFTER_USER_APPROVAL"
+          "fieldGate": "AFTER_USER_APPROVAL",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "NativeTransferSaveProposal",
+              "prepareNativeTransferOnTransaction",
+              "createNativeTransferPreparation",
+              "createNativeTransferExistingPreparation"
+            ],
+            "scope": "Reuse original create/existing preparation without nested transaction; readonly views unchanged"
+          }
         },
         {
           "path": "packages/application/src/ports.ts",
           "group": "B02_NUMBERING_AFTER_C01",
-          "fieldGate": "AFTER_USER_APPROVAL"
+          "fieldGate": "AFTER_USER_APPROVAL",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "SalesCommand",
+              "SalesTransaction.resolveDocumentSkus"
+            ],
+            "scope": "Keep legacy draft envelope; add SAVE proposal variant and internal same-transaction port"
+          }
         },
         {
           "path": "packages/application/src/transfer-ports.ts",
           "group": "B02_NUMBERING_AFTER_C01",
-          "fieldGate": "AFTER_USER_APPROVAL"
+          "fieldGate": "AFTER_USER_APPROVAL",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "TransferCommand",
+              "TransferTransaction.resolveDocumentSkus"
+            ],
+            "scope": "Same independent transfer SAVE variant/port"
+          }
         },
         {
           "path": "packages/application/src/runtime-document-number.ts",
@@ -114,7 +179,15 @@
         {
           "path": "adapters/postgres/src/native-import-accounting-capability.ts",
           "group": "CENTRAL_MIGRATION_AFTER_C01",
-          "fieldGate": "AFTER_USER_APPROVAL"
+          "fieldGate": "AFTER_USER_APPROVAL",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "NATIVE_RUNTIME26_METADATA_PROBE",
+              "createNativeRuntime26Issuer"
+            ],
+            "scope": "Exact v11 function/trigger catalog pins, no new purposes/grants/legacy fallback"
+          }
         },
         {
           "path": "tests/integration/migration-manifest.ts",
@@ -179,7 +252,19 @@
         {
           "path": "adapters/postgres/src/current-form-reader.ts",
           "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
-          "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM"
+          "group": "SHARED_DOCUMENT_READ_AND_CURRENT_FORM",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "SKU_JOINS",
+              "sku",
+              "readProducts",
+              "readProductSkus",
+              "readSkuBatch",
+              "readBarcode"
+            ],
+            "scope": "Actual-SKU candidates/scan no default-group pruning; no dictionary/SKU Cartesian invention"
+          }
         },
         {
           "path": "packages/application/src/current-form-ports.ts",
@@ -199,7 +284,15 @@
         {
           "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
           "group": "C01_APPROVED_SHARED_MAINTENANCE",
-          "fieldGate": "C01_20261022_V1_APPROVED_ONLY"
+          "fieldGate": "C01_20261022_V1_APPROVED_ONLY",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "withDocumentSpecificationMaintenanceContext",
+              "Evidence"
+            ],
+            "scope": "Narrow internal same-client append context, never ordinary general EDIT delegation"
+          }
         },
         {
           "path": "tests/maintenance-command-postgres-protocol.test.ts",
@@ -284,7 +377,14 @@
         {
           "path": "adapters/postgres/src/sales-native-facts.ts",
           "group": "EXACT2_NEW_CURRENT_CUSTOMER_VALIDATION",
-          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_SCHEMA"
+          "fieldGate": "EXISTING_APPROVED_FIELDS_NO_NEW_SCHEMA",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "PostgresNativeSalesFacts.load"
+            ],
+            "scope": "Global valid size identities and original current facts"
+          }
         },
         {
           "path": "tests/sales-native-facts.test.ts",
@@ -376,7 +476,14 @@
         {
           "path": "apps/api/src/sales-http.ts",
           "group": "EXISTING_SALES_READ_PREPARATION_ONLY",
-          "fieldGate": "NO_SAVE_CONTRACT_SCHEMA_CHANGE"
+          "fieldGate": "NO_SAVE_CONTRACT_SCHEMA_CHANGE",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "createSalesHttpPlugin"
+            ],
+            "scope": "Original URL/error mapping/result shape; no new public route"
+          }
         },
         {
           "path": "tests/native-sales-preparation.test.ts",
@@ -396,7 +503,14 @@
         {
           "path": "apps/api/src/transfer-http.ts",
           "group": "EXPLICIT_EXISTING_READ_PREPARATION",
-          "fieldGate": "NO_NEW_SCHEMA_OR_WRITE_CONTRACT"
+          "fieldGate": "NO_NEW_SCHEMA_OR_WRITE_CONTRACT",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "createTransferHttpPlugin"
+            ],
+            "scope": "Same original transfer URL/result"
+          }
         },
         {
           "path": "tests/native-transfer-preparation.test.ts",
@@ -416,7 +530,15 @@
         {
           "path": "adapters/postgres/src/catalogue-completeness.ts",
           "group": "H06_MAINTAINED_CATALOGUE_READ_PROOF_EXPLICIT26",
-          "fieldGate": "READ_ONLY_EXISTING_APPROVED_AUDIT_RECEIPT_NO_WRITE_CONTRACT_CHANGE"
+          "fieldGate": "READ_ONLY_EXISTING_APPROVED_AUDIT_RECEIPT_NO_WRITE_CONTRACT_CHANGE",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "currentReferences",
+              "createMaintainedCatalogue26TransactionProof"
+            ],
+            "scope": "Global valid size references plus exact same-SAVE append overlay on proven committed baseline; other committed-before stays"
+          }
         },
         {
           "path": "tests/catalogue-completeness.test.ts",
@@ -474,6 +596,83 @@
           "path": "adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql",
           "group": "B00_NATIVE_CREATION_TRIGGER_RECORD_SCOPE_IMPLEMENTATION_FIX",
           "fieldGate": "EXISTING_APPROVED_SEMANTICS_NO_NEW_SCHEMA_OR_WRITE_CONTRACT"
+        },
+        {
+          "path": "packages/application/src/document-specification.ts",
+          "group": "EXPLICIT_V11_ALL_SIZE_SAVE",
+          "fieldGate": "ONLY_EXACT_APPROVED_V11_WRITE_CONTRACT",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "DocumentSkuSelection",
+              "parseDocumentSkuSelection",
+              "documentCreatedSkuCode"
+            ],
+            "scope": "NEW shared internal selection parsing and explicit NJNEW rule only"
+          }
+        },
+        {
+          "path": "apps/api/src/input.ts",
+          "group": "EXPLICIT_V11_ALL_SIZE_SAVE",
+          "fieldGate": "ONLY_EXACT_APPROVED_V11_WRITE_CONTRACT",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "parseSalesCommand"
+            ],
+            "scope": "Accept mutually exclusive proposal or legacy draft for SAVE only"
+          }
+        },
+        {
+          "path": "apps/api/src/transfer-input.ts",
+          "group": "EXPLICIT_V11_ALL_SIZE_SAVE",
+          "fieldGate": "ONLY_EXACT_APPROVED_V11_WRITE_CONTRACT",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "parseTransferCommand"
+            ],
+            "scope": "Same transfer wire variant"
+          }
+        },
+        {
+          "path": "adapters/postgres/src/native-document-specification.ts",
+          "group": "EXPLICIT_V11_ALL_SIZE_SAVE",
+          "fieldGate": "ONLY_EXACT_APPROVED_V11_WRITE_CONTRACT",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "resolveDocumentSpecificationSelections"
+            ],
+            "scope": "NEW exact-tuple resolution, product order locks, baseline proof, append-only normal PRODUCT context; no pool/BEGIN/COMMIT"
+          }
+        },
+        {
+          "path": "adapters/postgres/src/native-transfer-snapshots.ts",
+          "group": "EXPLICIT_V11_ALL_SIZE_SAVE",
+          "fieldGate": "ONLY_EXACT_APPROVED_V11_WRITE_CONTRACT",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "loadNativeTransferSnapshots"
+            ],
+            "scope": "Real SKU facts + separate locked enabled MAIN read; verified genuine absence only, any valid dictionary size"
+          }
+        },
+        {
+          "path": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+          "group": "EXPLICIT_V11_ALL_SIZE_SAVE",
+          "fieldGate": "ONLY_EXACT_APPROVED_V11_WRITE_CONTRACT",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "guard_maintenance_audit_actor",
+              "guard_native_creation_identity",
+              "inventory_key_admission",
+              "validate_document_specification_commit"
+            ],
+            "scope": "NEW proposed SQL successor of frozenv10 only; original migrations unchanged"
+          }
         }
       ]
     },
@@ -499,11 +698,25 @@
         },
         {
           "path": "adapters/postgres/src/product-management-query-reader.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "stockReadiness"
+            ],
+            "scope": "Actual-size validity instead of default membership"
+          }
         },
         {
           "path": "adapters/postgres/src/product-query-reader.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "readSpecifications"
+            ],
+            "scope": "Default member union actual native SKU size IDs, no dropped foreign-group SKU"
+          }
         },
         {
           "path": "adapters/postgres/src/store-settings-read-reader.ts",
@@ -751,7 +964,14 @@
         },
         {
           "path": "adapters/postgres/src/product-maintenance-store.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "validateReferences"
+            ],
+            "scope": "Default group is display; real size exists/valid membership; preserve other reference checks"
+          }
         },
         {
           "path": "adapters/postgres/src/staff-maintenance-store.ts",
@@ -911,11 +1131,28 @@
         },
         {
           "path": "packages/application/src/product-maintenance-ports.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "ProductMaintenanceTransaction",
+              "internal document append types"
+            ],
+            "scope": "Internal same-tx type only; normal public product DTO unchanged"
+          }
         },
         {
           "path": "packages/application/src/product-maintenance-service.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "productFacts",
+              "skuFacts",
+              "appendDocumentSkusOnTransaction"
+            ],
+            "scope": "Extract/reuse original immutable record/sparse audit/append order; no public delegate"
+          }
         },
         {
           "path": "packages/application/src/product-maintenance-validation.ts",
@@ -1066,7 +1303,15 @@
           "group": "EXPLICIT_RUNTIME26_STOCK_READ_NEW_BRANCH",
           "fieldGate": "NO_SCHEMA_OR_BUSINESS_RULE_CHANGE",
           "transferredFrom": "D3",
-          "transferAuthority": "C after D3 explicit no in-flight/queued/unreceipted work and release in current controller reply"
+          "transferAuthority": "C after D3 explicit no in-flight/queued/unreceipted work and release in current controller reply",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "readStock",
+              "readOverview"
+            ],
+            "scope": "Both same-file methods consume exact valid-size/key semantics"
+          }
         },
         {
           "path": "tests/product-warehouse-stock-postgres-protocol.test.ts",
@@ -1087,11 +1332,28 @@
         },
         {
           "path": "adapters/postgres/src/inventory-query-reader.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "catalogStatus",
+              "verifyCandidateMembership",
+              "pageProducts",
+              "productMatrices"
+            ],
+            "scope": "Couple validity flags, size projection and matrix; default members union actual SKU sizes"
+          }
         },
         {
           "path": "adapters/postgres/src/inventory-ledger-query-reader.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "approvedV11Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "functionsOrTypes": [
+              "readLedger"
+            ],
+            "scope": "Valid dictionary size, default group metadata, real warehouse/SKU provenance"
+          }
         },
         {
           "path": "adapters/postgres/src/inventory-cutoff-scope-reader.ts",
@@ -3735,6 +3997,48 @@
       ],
       "reason": "F2 frozen P01 original pager root needs className/label/selectAria without extra wrapper. Optional pass-through only on existing shared pagination and page-size controls; inventory defaults stay unchanged.",
       "humanSource": "Current direct whole-page Demo copy and same-control reuse requirement"
+    },
+    {
+      "atUtc": "2026-10-23T13:18:18.946948+00:00",
+      "source": "Direct human confirmation: 确认 v11 全尺码保存方案",
+      "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+      "exactProductionFiles": 29,
+      "owners": {
+        "D1": 21,
+        "D2": 6,
+        "D3": 2,
+        "total": 29,
+        "new": 3,
+        "typescript": 28,
+        "sql": 1
+      },
+      "newlyRegistered": [
+        {
+          "path": "packages/application/src/document-specification.ts",
+          "owner": "D1"
+        },
+        {
+          "path": "apps/api/src/input.ts",
+          "owner": "D1"
+        },
+        {
+          "path": "apps/api/src/transfer-input.ts",
+          "owner": "D1"
+        },
+        {
+          "path": "adapters/postgres/src/native-document-specification.ts",
+          "owner": "D1"
+        },
+        {
+          "path": "adapters/postgres/src/native-transfer-snapshots.ts",
+          "owner": "D1"
+        },
+        {
+          "path": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+          "owner": "D1"
+        }
+      ],
+      "constraint": "Only exactv11 scope, no parallel writers, C alone installs SQL/server/build/Git; tests originalowner needed only."
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
@@ -3749,7 +4053,8 @@
     "original": "FIELD-APPROVAL-C01-v1.json",
     "maintenanceSupplement": "FIELD-APPROVAL-SUPPLEMENT-v2-B.json",
     "seasonSupplement": "FIELD-APPROVAL-SUPPLEMENT-v3-A.json",
-    "rejected": "product_season relation table"
+    "rejected": "product_season relation table",
+    "allSizeWriteContract": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json"
   },
   "ownershipTransfers": [
     {

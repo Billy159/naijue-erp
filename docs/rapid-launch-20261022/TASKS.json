@@ -1754,7 +1754,8 @@
     "FIELD-APPROVAL-SUPPLEMENT-v3-A.json",
     "WRITE-CONTRACT-APPROVAL-v4-MEDIA-COLOR-SWAP.json",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v6-BOOTSTRAP-PROVENANCE.json",
-    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v7-EMPTY-HISTORY-PUBLISH.json"
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v7-EMPTY-HISTORY-PUBLISH.json",
+    "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json"
   ],
   "latestAcceptedReceiptRefs": [
     {
@@ -3043,7 +3044,7 @@
       ]
     },
     "allSizeP1": {
-      "status": "UI_AND_KNOWN_SKU_IMPLEMENTATION_CONTINUES; EXACT_V11_NEW_WRITE_CONTRACT_WAIT_EXPLICIT_HUMAN_CONFIRMATION",
+      "status": "EXPLICIT_V11_APPROVED_ORIGINAL_OWNERS_IMPLEMENTING_NOT_ACCEPTED",
       "owner": [
         "F1",
         "D1",
@@ -3058,7 +3059,9 @@
         "complete paged candidate domain",
         "continuous multi-character input"
       ],
-      "lesson": "Existing records are not the permitted input domain; small existing-SKU fixtures and source checks cannot close real page/business gaps."
+      "lesson": "Existing records are not the permitted input domain; small existing-SKU fixtures and source checks cannot close real page/business gaps.",
+      "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+      "answer": "确认 v11 全尺码保存方案"
     },
     "qa80": {
       "job": "c03-native-qa-new-warehouse-transfer-auth-20261023-80",
@@ -3098,15 +3101,6 @@
       "status": "FULL_V5_SENT_WAIT_EXPLICIT_HUMAN_APPROVAL",
       "confirmationFile": "SCHEMA-SUPPLEMENT-v5-HISTORY-HALL-NULLABLE.md",
       "confirmationSha256": "2b3fe399061713462f16270e88f9f925e48249810e84aa5af6bd261658127972"
-    },
-    {
-      "id": "ALL_SIZE_SAVE_V11",
-      "status": "WAIT_EXPLICIT_HUMAN_CONFIRMATION",
-      "confirmationFile": "WRITE-CONTRACT-SUPPLEMENT-v11-ALL-SIZE-SAVE.md",
-      "technicalDetails": "WRITE-CONTRACT-SUPPLEMENT-v11-ALL-SIZE-SAVE.json",
-      "onlyDependentBranchWaits": true,
-      "newColumns": 0,
-      "newTables": 0
     }
   ],
   "currentAcceptedReceiptBatch": [
