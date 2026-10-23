@@ -312,7 +312,7 @@ body:has(.inventory-source-workbench) .iw-bootstrap .iw-query-actions .iw-filter
 .inventory-source-workbench .iw-empty-host{display:flex;align-items:center;justify-content:center;width:100%;font:13px Arial,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ca-ink)}
 .inventory-source-workbench .iw-empty-host .arco-empty{padding:0}
 .inventory-source-workbench .iw-empty-host .arco-empty-wrapper{color:var(--ca-ink-3)}
-.inventory-source-workbench .iw-empty-host .arco-empty-image{font-size:56px;line-height:1;margin-bottom:12px}
+.inventory-source-workbench .iw-empty-host .arco-empty-image{font-size:48px;line-height:1;margin-bottom:12px}
 .inventory-source-workbench .iw-empty-host .arco-icon{width:1em;height:1em}
 .inventory-source-workbench .iw-empty-host .arco-empty-description{font-size:13px;color:var(--ca-ink-2)}
 .inventory-source-workbench .inv-empty-copy{display:flex;flex-direction:column;align-items:center;gap:6px}
