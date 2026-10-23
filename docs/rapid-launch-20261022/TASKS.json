@@ -962,9 +962,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T09:24:40.835783+00:00",
+  "updatedAt": "2026-10-23T09:58:20.931526+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "bc4b70172e03cdb819ab49f32a1868febe8d1750",
+  "lastVerifiedRemoteCommit": "6b14180346ed096c83f443ebd0fcd5520b22d7a3",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2449,21 +2449,21 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-23T09:24:40.835783+00:00",
-    "sourceRound": 158,
-    "sourceCheckpoint": "37cc7f6a0aff1b9955bcf3c88d08c78f8af703ee",
+    "atUtc": "2026-10-23T09:58:20.931526+00:00",
+    "sourceRound": 163,
+    "sourceCheckpoint": "fee4b18a5f867def54dbd014fa2784898d1465a5",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "sourceRound": 158,
-      "sourceCommit": "37cc7f6a0aff1b9955bcf3c88d08c78f8af703ee",
-      "buildId": "ui-preview-37cc7f6-01-build01",
-      "url": "http://127.0.0.1:57860/synthetic-unified.html",
-      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-37cc7f6-01",
-      "htmlBytes": 3149677,
-      "htmlSha256": "018903bf31c0942432b3349bbd1da5a6c73aa319af26477d63ca2e7def7b53f1",
-      "identitySha256": "a19634827a2def0583dbf9e7b86b88945b16356a6489a19121c7e1ec50af1b3c",
-      "provenanceSha256": "96faa836d4081c316c174a5516e44b9b9b135e5f6cfb36129da391c1631432b8",
+      "sourceRound": 162,
+      "sourceCommit": "32d7c45ea1a53efb9f04854443f7035ec3e6f4d7",
+      "buildId": "ui-preview-32d7c45-01-build01",
+      "url": "http://127.0.0.1:57861/synthetic-unified.html",
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-32d7c45-01",
+      "htmlBytes": 3153537,
+      "htmlSha256": "34e44018b239b9dc8d1510a9fd23613aaa0deeec748c15e81640b9deeec1c0b0",
+      "identitySha256": "def3cb479f7f14ede6f65ebe7e73100830d3adc428a6181ed41652619d80aa47",
+      "provenanceSha256": "020dc52743540ce53f09a69855140643abd40895f5e0231239da408f0a01338b",
       "actualInputCount": 403,
       "sourceModuleInputCount": 386,
       "dependencyModuleCount": 981,
@@ -2471,20 +2471,20 @@
       "undeclaredDifferences": 0,
       "actualBuildInvocations": 1,
       "actualHTTPKeyResources": 3,
-      "serverPid": 19599,
-      "serverSession": 38634,
+      "serverPid": 26501,
+      "serverSession": 62164,
       "syntheticOnly": true,
       "wholePageAccepted": false,
       "realBusinessAccepted": false,
       "formalPerformanceAccepted": false,
-      "scope": "Frozen whole77 remainingexact5, inherited1564 and native read source157; real production builder is separate, this finite harness is not production architecture or business proof."
+      "scope": "Newwhole saved/edit/view162 exact6 plus retained158 newSALE/T02 and160 recovery2; original authors/finite103/output/readfaults/write-refusal unexpanded. C160 PREBUILD neverbuilt/served, supersededbeforebuild."
     },
     "nextPreview": null,
     "r1": "C63实际COMPLETED exit0 32.301s：固定C132/build r1-c28ea3f-20261023-02完整生产依赖安装成功，Linux x64 Node24.21 Sharp0.35.5原生加载；APP/proxy health200，HTML与真实声明current application.js 200且manifest精确。依赖根因A及实际私有安装启动B均完成；dataReady/业务验收/正式切换false。保留45/48/60/61/62失败现场，未改正式三服务/公网。",
     "qa": "C76 v9 installed and QB170 exact actual catalogue pairing PASS. C75 actual original PUBLISH-only + original supplier/createV2 tail COMPLETED0 in4.726843853946775s. Original batch IMPORTEDseq2cursor2/historyvalidationtrue; root0207...800/SKU801/op802 v1 actual created proof/audit/receipt/detail passed. Final49staff49account/57source/product1sku1/audit5receipt5/record2claims2. Pool disposed/background0; oldQA root4 and original formal3 services preserved. H06 not run, original D1 preparing necessary newtarget fixture; no real49/MAIN/formal switch.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
-    "waiting": "Human-only STAFF closed-login/six realbarcode schemes/v5 historicalhallNULL related branches. D3 actual-readKinput and QB175 narrowexistingreadpurpose pairing in progress. F1 original共用编辑查看S04/T03 next ready work active; source158 no longer waits77 paperwork. QF new158 fixedwholepage actual in progress, not waiting nextWIP. QF2 idleafter completebounded153 module/cleanrelease; no repeat or fakework. C production158 input preparation in originalrelease pipeline independent, activation requires originaldata/business/batch evidence.",
-    "github": "Independent GitHub bc4b70172e03cdb819ab49f32a1868febe8d1750 verified; full source158 and this actual candidate/QB174 record next nonforced sync.",
+    "waiting": "Only original human branches STAFFclosedlogin/sixrealbarcode schemes/v5 historicalhallNULL wait. Current QF actual158 module/focusreceipt+cleanup, QF source160 publiccontroller1 and162saved6 pending. QF2 source160outputleaf PASS, next162actual403 afterlease. D1 SPEC02 Kactual race preparation on normalservice/newseparateQAobjects after completed79; no mutate original49. F1 original S01/T01 remainingwhole source work + newactualfocusfix, not repeatedclosed105/143regions. Actual production package159 ready but not current source163 release/business/formalswitch; later stage must bind correctcurrent source and native metadata. No frontend depends on current3human decisions except its precisebranch.",
+    "github": "GitHub independent verified6b14180346ed096c83f443ebd0fcd5520b22d7a3; source161/162/163 and actual segment/current record next nonforced sync.",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -2510,20 +2510,23 @@
     "audit": "C127 actualQF closed dualEsc/focus and same-scopefilter retention",
     "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
     "uiMigration": "C156 complete T02 exact5 original F1 source blocks/final CSS fixed and actual built/HTTP57859, QF source only pending QA2 release. QF147 wholecore report v033 effective; newSALE menu/payment P2 original F1 whole77 in progress, no duplicate-unsaved claim. QF2 exclusiveC153 actual defaultXLSX downloaded/read103products208rows including101-103 beyondpage, no subtotal/total; still print/error/lifecycle/timing scope in progress, notPG/fullpage.",
-    "backend": "QB173 C157 F01 source/protocol PASS and QB174 C78 single nativeCREATE chain actualH06 PASS adopted, prior failures retained. ActualQA1032586 root800v1/SKU801/op802/counts preserved; no claim allnewwarehouse/negative/nonemptychildren/scaleperf. OriginalD3 prepares page/output/candidates/ledger and optional productStock actual read input on exactC157 export; no independent batchbalance public API invented. Samepool PRODUCT_SEASONS_READ existing marker necessary alongsideIA; QB175 only narrow pairing on priorC76/QB170/QB164 effective captured metadata, no grant/newSQL/fullcatalog review.",
+    "backend": "QB174 actualH06 singlechain and QB175 sameQA IA+seasonread pairing adopted; QB177 C161 productmanagement native-key exact3 source/protocolPASS adopted. C163 currentidentity exact7 frozen/originalQB incremental queued. NewC79 actual exact157 primary/ledger read27(9contracts×3) completed0/12.54787s, currentidentity/warehouse verified, normalEOF complete, one summary-return rollback/release/dispose/background0. 58readlease86naturalmetadata; protected QA counts and formal service shapes unchanged. Optional stockprovider omitted/unmeasured; actualbothnewwarehouse/productmanagement161 and actual163 lock-revoke race stillnext C/D1 normalservice sample after79; no MAIN/R3/real49 or scaleperf claim.",
     "productionBuild": {
       "owner": "C",
-      "sourceRound": 158,
-      "sourceCommit": "37cc7f6a0aff1b9955bcf3c88d08c78f8af703ee",
-      "status": "EXACT_PRODUCTION_EXPORT_PUBLIC_CONFIGURATION_AND_LOCKED_DEPENDENCIES_PREPARATION",
-      "sourceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-fixed158-20261023-01",
-      "buildDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build158-20261023-01",
-      "actualBuildPerformed": false,
+      "sourceRound": 159,
+      "sourceCommit": "4c6b75978cda2e64ae8f7b94f2a73193a706234c",
+      "buildId": "r1-4c6b759-20261023-01",
+      "status": "ACTUAL_ORIGINAL_BUILD_AND_PACK_PASSED_NOT_STAGE_OR_ACTIVATED",
+      "buildSeconds": 4.909,
+      "packSeconds": 3.349,
+      "buildDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build159-20261023-01",
+      "actualBuildPerformed": true,
+      "actualPackPerformed": true,
       "actualNewStagePerformed": false,
       "activationAuthorizedByCurrentEvidence": false,
-      "boundary": "Original build-production/pack/stage retained. Production graph must exclude all syntheticharness/fixtures; formal app/db/url unchanged."
+      "boundary": "Fixed159 contains158 UI plus exactSVGconsumer guardfix. Does not include160/161/163 later repairs. Original158 firstbuild failure preserved. OriginalR1 source132 installedprivateapp unchanged; data/business/formalcutover stillunready."
     },
-    "actualQFBrowser": "QF sole8B3+Demo; C158 actual complete candidate ready and exact URL/hashes dispatched. QF new5 source check then actualSALE/mixed/T02; browser navigation/result not yet received. QF2 current153 output actualPASS cleanreleased. Protected3BC874 unchanged, sharedChrome serial true isolation unverified.",
+    "actualQFBrowser": "QF sole8B3+Demo actualC158 firstSALE module ending; 2SKU qty3+2/unit10/sum50 and1款5件/oneleavehint/inputretain/new440geometry effective observations pending finalreceipt. NewnewSALEleavefocus Demo close vs candidate continue observed, originalF1 targetedfix priority. C162 actualHTTP ready for next relatedsaved/newoutputrecovery; C grants QF2 only after explicit QFcleanhandoff. Protected3BC874 unchanged, sharedChrome serial not trulyisolated.",
     "frontendAcceptance": {
       "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "parentTask": "QF01",
@@ -2721,6 +2724,21 @@
         "bytes": 10715,
         "sha256": "ae44b721d837618030994c210ed7a1146a2690fcae6c7fc80b0c589c7cda4764",
         "scope": "One committed nativeCREATEchain, oneSKU, emptyimage/barcode actualH06; not other variants or full business/performance."
+      },
+      "actualPrimaryInventoryRead79": {
+        "status": "ACTUAL_COMPLETED_WAIT_ORIGINAL_QB_MODULE_CONCLUSION",
+        "sourceCommit": "cb3e2d75fea43ba4e0c25d6e4752d8a13684e8e1",
+        "jobId": "c03-native-qa-inventory-read-20261023-79",
+        "reads": 27,
+        "stockTabPassed": false,
+        "countsUnchanged": true,
+        "actualReceipt": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-native-qa-inventory-read-20261023-79/release-submission/release-receipts/c03-native-qa-inventory-read-20261023-79/inventory-actual-read-result.json",
+          "bytes": 52697,
+          "sha256": "64c7b993f594dd208f18efb725d043bfcc5ec94321671c85d0687b6fc006c9b3"
+        },
+        "bothNewWarehousePassed": false,
+        "representativePerformancePassed": false
       }
     },
     "actualSourceProjection": {
@@ -2849,6 +2867,58 @@
         "nativeCreationOperationValid": true,
         "auditAndReceiptAndDetail": true,
         "H06Run": false
+      }
+    },
+    "auditFixes": [
+      {
+        "id": "SPEC-01",
+        "owner": "D2 reader;D1 host",
+        "fixedSource": "C161 570f1b45a5b2aa3f5ebf671cb27a8e8ccc654127",
+        "status": "QB177_SOURCE_PROTOCOL_PASS_NOT_ACTUAL_NEW_WAREHOUSE",
+        "next": "C/D1 normallycreated nativewarehouse sharedsample then exactconsumeractualread, no repeatmaininventory173"
+      },
+      {
+        "id": "SPEC-02",
+        "owner": "D1",
+        "fixedSource": "C163 fee4b18a5f867def54dbd014fa2784898d1465a5",
+        "status": "SOURCE_FROZEN_RED_TO_GREEN_19_TARGETED_CHECKS_QB_PENDING",
+        "next": "OriginalQB onlyexact7; actualcontrolledlock/revoke/replay after79, original49protected"
+      },
+      {
+        "id": "SPEC-03",
+        "owner": "F2 outputleaf;F1 controller",
+        "fixedSource": "C160 6b14180346ed096c83f443ebd0fcd5520b22d7a3 retainedin162",
+        "status": "LEAF_QF2_SOURCE_PASS_PUBLIC_CONTROLLER_QF_PENDING_BROWSER_UNMEASURED",
+        "next": "QF2 limited403recovery/newscope protection on162 afterQFcleanhandoff; old153103/208/503/cancel reused"
+      },
+      {
+        "id": "QF158_NEW_SALE_LEAVE_INITIAL_FOCUS",
+        "owner": "F1",
+        "status": "ACTUAL_FOUND_DISPATCHED_ORIGINAL_OWNER",
+        "next": "OriginalQF finalexactid/evidence; localcallsite defaultfocus alignment only, oldshared440/700/sourcezero unchanged"
+      }
+    ],
+    "performanceEvidence": {
+      "production159Graph": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build159-20261023-01/BUILD-GRAPH-OBSERVATION.json",
+        "frontendInputs": 1345,
+        "javascriptOutputs": 167,
+        "allJavascriptOutputBytes": 2108167,
+        "staticEntryJavascriptFiles": 29,
+        "staticEntryJavascriptBytes": 1069813,
+        "dynamicImportEdges": 65,
+        "runtimeArcoJsModulePositiveOutputDuplicates": 0,
+        "duplicatedCssModuleKinds": 10,
+        "fullArcoCssOutputConsumers": 3,
+        "status": "STATIC_GRAPH_BASELINE_ONLY_CSS_DEDUP_STILL_OPEN_NOT_FIRSTSCREEN_TRANSFER_OR_UI_PASS"
+      },
+      "actual79": {
+        "readLease": 58,
+        "naturalMetadataProbes": 86,
+        "allReadSqlCalls": 345,
+        "allReadSqlElapsedMs": 5154.343062999994,
+        "metadataSpecificTimeSeparated": false,
+        "scope": "SingleSKU only; no scaleperf claim or unsupported metadata-rootcause claim."
       }
     }
   },
