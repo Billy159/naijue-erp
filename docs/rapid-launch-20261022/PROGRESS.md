@@ -1,3 +1,15 @@
+当前接续（2026-10-24北京时间；固定源码及可看候选222）：
+
+- 当前入口 http://127.0.0.1:57875/synthetic-unified.html ，source222=4c0cf711772d4426da03bf9a768a8f4d6abc3418/build ui-preview-4c0cf71-01-build01；一次原build0，413输入/1368模块，HTML3415012B/c9c2b79c…，PID11736/session56799，三关键HTTP逐字与版本头一致。18合成适配不覆盖业务UI/CSS，命令收据拒绝、真实PG/保存权限/正式性能未通过。221/220旧候选保留准确原证。
+- 原QF221实际限定通过T02 LEFTNAV：X/继续/Esc保原SKU70数量7及note，确认原Inventory，再新增无ghost。清场4461B/7dde1794…包含结果，长报告离线补；savedfull/未决命令真实场景未测、原source证据分开，不冒整页通过。
+- 222只F1公共UIDate两叶，原Arco事件接缝改用无装饰native共同触发边界，仍原Trigger/日历/业务事件。原QF正离线只核该delta，QF2新222日期实操尚未发生，不把220失败或JSDOM当修后实际。
+- QF2完整I07有限实操已回：20+4、草稿与已执行条件分离、503明确失败非空/重试24、Esc重入/取消保旧20等仅pureUI。DATE鼠标和CARRIER -1x/-3y/+2w两项P2未闭。原F2已证横向缺原dialog1pxborder，需补最终header/fontwinner；C现给F2独占222≤5min只读style窗，QF/QF2/F1/C不碰浏览器，保护DB7/3BC及其它标签。最终clean后再唯一交QA，独立浏览器上下文未证明。
+- QFv063已纠正7行陈旧元数据，不再强制全行永远NOT_RUN：当前104=37+67；NOT_RUN54/差异31/局部UI行10/待接入8/批准例外1，整页0/整类0/未完104。旧48保历史baseline；当前明确索引已核逻辑scope52，不按版本/点击次数重复加，不冒全站统计已完整。未验/待接入仍未完成。
+- 原F1继续销货整页主任务：先交已存在最新whole-copy源码/依赖/实际入口证明去重，若真实仍有旧仿写核心区才继续直接迁入；不因旧locator或旧“仿写”标签重做已完页，也不把局部修复当整页已复制。
+- 实际214生产包Linux离线安装/native成功保留；此处222仅本地UI候选。原QB新实际review/metadata/C102及v13用户确认仍仅相关分支等待；没有PG写/新app/公网切换。GitHub最近准确8ad69f4c，本次222及接续下一精确同步。整体ACTIVE，gpt-6.1-sol/xhigh，Fast工具无开关未核验。
+
+下方历史保留，以本段和TASKS.currentContinuation当前字段为准。
+
 新增I07日期鼠标入口问题已沿原F1公共owner诊断，原QF去重/主验、QF2补Demo实际并继续该模块；没有重复派工或改日期规则。214实际构建图已记录单套React/ReactDOM/Arco来源与0公共JS重复输出/65动态边，但静态入口闭包1124089未压缩字节不是实际首屏传输，不能当性能PASS。GitHub最近准确28036077。
 
 最新固定源码221=601fde4a1ea65cbf3738d7eb4ee4798823341913：原F1将调拨草稿接入既有离开确认，精确5文件/原真实组件RED→GREEN/strict0已保全，原QFv060限定源码已通过；221不在当前220，后继PREBUILD已就绪，未build/serve/actual。当前QF2独占220继续I07；220尺码下拉立即关闭、完整库存Empty五区、P01 token位置与search14两个残差已分别实操关闭限定范围，不扩为整页或真实业务通过。当前整体104/48/整页0/整类0。实际214Linux安装/native PASS与最新UI源码版本继续分开。

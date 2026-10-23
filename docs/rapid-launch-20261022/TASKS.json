@@ -964,9 +964,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T21:06:48.564690+00:00",
+  "updatedAt": "2026-10-23T21:30:12.177318+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "280360770cd1a76255c10e60d2da9f425d5bce8d",
+  "lastVerifiedRemoteCommit": "8ad69f4caba87e2d8f237c268d9defd3a439ce00",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2527,17 +2527,62 @@
       "result": "BOUNDED_C221_T02_LEFT_NAV_SOURCE_REMEDIATED_ACTUAL_PENDING",
       "scope": "ONLY_ORIGINAL_T02_LEFTNAV_SOURCE221_REMEDIATED_ACTUAL_PENDING",
       "adoption": "C adopts independent QF boundedsource conclusion; actual217 OPEN retained until successor retest"
+    },
+    {
+      "id": "QF-V061",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v061-qf-adopt-qf2-c220-three-scopes/RESULT.json",
+      "bytes": 5945,
+      "sha256": "47dee7219030d411ea7e3d0cf859aff8e2dcbcd32301e7a86cae2dc46037ebbb",
+      "result": "ADOPTED_QF2_C220_SIZE_OPEN_EMPTY_REGION_P01_IDLE_SCOPES_ONLY",
+      "scope": "QF sole matrix adopts priorQF2 three220actual scopes without retest",
+      "adoption": "C adopts original independent conclusion; no duplicate technical verification"
+    },
+    {
+      "id": "QF-V062",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v062-qf-c220-ledger-date-mouse-dedup/RESULT.json",
+      "bytes": 4603,
+      "sha256": "d389aa48cf15b999130899bb9d48c8b0d071c9984e2fea1afd9887707d75f2d3",
+      "result": "REGISTERED_ONE_PROVISIONAL_DATE_MOUSE_FINDING_NO_RETEST_NO_DUPLICATE_DISPATCH",
+      "scope": "OneDATE-MOUSE issue underUSER-UI-DATES O-I08 relatedO-I07/O-C01; no duplicate dispatch",
+      "adoption": "C adopts original independent conclusion; no duplicate technical verification"
+    },
+    {
+      "id": "QF-V063",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v063-qf-current-row-metadata-correction/RESULT.json",
+      "bytes": 6010,
+      "sha256": "7bc94a84ac11c2f8eb5e48637655442de3a2230accd6973cdea6aa2d5835684a",
+      "result": "CORRECTED_AFFECTED_CURRENT_ROWS_FROM_EXISTING_EVIDENCE_NO_TECHNICAL_RETEST",
+      "scope": "Seven affectedrow metadata correction from existing evidence, no technical retest; historical48/currentknownindexed52, not wholepage",
+      "adoption": "C adopts original independent conclusion; no duplicate technical verification"
+    },
+    {
+      "id": "QF2-C220-I07-ACTUAL",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-ledger-ui-first-actual-01/RESULT.json",
+      "bytes": 908,
+      "sha256": "5da2c5286553219bdd998044c3a34200003f789738413a3e07bba657807f7ff4",
+      "result": "NEED_FIX_LIMITED_NEW_I07_ACTUAL_UI_C220",
+      "scope": "Finitefiction I07 UI partial observed; DATE mouse andcarrier P2 open, no wholemodule/realbusiness/performance",
+      "adoption": "C adopts original independent conclusion; no duplicate technical verification"
+    },
+    {
+      "id": "QF-C221-LEFTNAV-ACTUAL-STAGE",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-601fde4-leftnav-actual/BROWSER-CLEAN-RELEASE.json",
+      "bytes": 4461,
+      "sha256": "7dde1794923676e747bc778ca99d8d4f7de463b02a80a2c949e9978a4159f1dd",
+      "result": "PASS_NAMED_T02_LEFTNAV_NATIVE_ACTUAL221_AND_CLEAN",
+      "scope": "T02 original LEFTNAV named actual pass: X/Continue/Esc retain nativeSKU70 quantity7 and ownnote; confirm actualInventory; reenterNew noteempty/noSKU70quantity/noownnote; returnInventory directly no layer. No Save or command attempted.",
+      "adoption": "Original QF seven-field stage plus fixedclean contains result. Long report follows, no savedfull/unknown-key business acceptance"
     }
   ],
   "newPendingReviews": [
-    "QF unique104 matrix adoption offline; newDATEdedup, fixedF1 newsource only whenready",
-    "QF2 sole220 newI07UI finalmodule; named size/fullEmpty/P01 residuals actualclosed scoped, unused/foreign stilluntested",
-    "QFv060221 boundedsourcePASS; C221 PREBUILDready, successoractualafterQF2clean/newDATEnecessaryintegration",
-    "OriginalQB human/toolresume actualQA101fourpurpose/R1C103; C102disabled,noissuer/nobusinessrunner",
-    "V13 humanconfirmation onlyrelatedDDL/writer waits",
-    "B07 retainedactualDRAFT inputs captured, APPROVED/NULLdate/v12/currentWRITE missing",
-    "C214 actualLinux install/native complete; newapp metadata review/issuer awaits originalQB toolhumanresume. Do not repeatinstall as unchanged queued.",
-    "F1 only newI07DATE actual220 mouseentrydiagnosis; QF2 supplies pairedDemo, no duplicatetask/publicfullrerun"
+    "QF222 exact2publicUIDate source andlong221actual report offline; totalmatrix newI07 final/results adoption no retest",
+    "F2sole222 bounded I07 carrier finalstyle capture then clean/release and originalledgerfix, no DATE/F1writes",
+    "QF2 NO_CHROME untilCexplicitnextfixedDATEconsumer grant; effectiveold220scopes reused",
+    "OriginalF1 wholeSales directcopy remaining-or-existing-provenance delivery, no duplicate migration from oldregisterlabels",
+    "OriginalQB human/toolresume actualQA101fourpurpose/R1C103; C102disabled/noissuer/businessrunner",
+    "V13 explicit humanconfirmation onlyrelatedDDL/writer waits",
+    "B07 retainedactualDRAFT captured, approved/NULLdate/v12/currentWRITE stillmissing",
+    "C214 actualLinuxci/native complete; newapp metadata/issuer waits originalQB, do not repeat successfulinstall"
   ],
   "openFindingsCurrent": [
     {
@@ -2806,89 +2851,98 @@
     {
       "id": "QF2-I07-DATE-MOUSE-OPEN-01",
       "owner": "F1",
-      "severity": "P2_PENDING_ORIGINAL_QF_DUPLICATE_ID_MERGE",
-      "status": "ACTUAL220_MOUSE_FAILURE_WITH_NATIVE_DEMO_FIRSTCLICK_SUCCESS_PAIRED_ORIGINAL_F1_DIAGNOSIS_INPROGRESS",
-      "version": "220",
+      "severity": "P2",
+      "status": "SOURCE222_OWNER_FIXED_INDEPENDENT_SOURCE_AND_NEW_ACTUAL_PENDING",
+      "version": "222",
       "actualBrowserReproduced": true,
       "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-ledger-ui-first-actual-01/browser",
       "next": "UniqueoriginalF1 commonUIDate diagnosis; no newcomponent/rule or parallelF2writes. QF2 continues remainingI07actual.",
-      "demoPair": "QF2 c220-ledger-ui-first-actual-01/browser/DATE-FIRST-MOUSE.json anddemo-calendar-first-mouse.png. Demo cleanup not yetconfirmed; QF2stillsole, noClease granted."
+      "demoPair": "QF2 c220-ledger-ui-first-actual-01/browser/DATE-FIRST-MOUSE.json anddemo-calendar-first-mouse.png. Demo cleanup not yetconfirmed; QF2stillsole, noClease granted.",
+      "parentUserRequirement": "USER-UI-DATES",
+      "primaryRow": "O-I08",
+      "relatedRows": [
+        "O-I07",
+        "O-C01"
+      ]
+    },
+    {
+      "id": "QF2-I07-CARRIER-INSET-01",
+      "owner": "F2",
+      "severity": "P2",
+      "version": "220 actual/222styletracepending",
+      "status": "PAIRED_ACTUAL220_OPEN_ORIGINAL_F2_FINAL_CARRIER_CASCADE_DIAGNOSIS",
+      "actualBrowserReproduced": true,
+      "next": "Onebounded existingowner read-onlystylewindow then exactregisteredledger leaf fix; no innerregionoffset masking"
     }
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-23T21:03:57.270085+00:00",
-    "sourceRound": 221,
-    "sourceCheckpoint": "601fde4a1ea65cbf3738d7eb4ee4798823341913",
+    "atUtc": "2026-10-23T21:30:12.177318+00:00",
+    "sourceRound": 222,
+    "sourceCheckpoint": "4c0cf711772d4426da03bf9a768a8f4d6abc3418",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "sourceRound": 220,
-      "sourceCommit": "1b46a5d975d1e9c1b25bb695dd666c04cc342740",
-      "buildId": "ui-preview-1b46a5d-01-build01",
-      "url": "http://127.0.0.1:57873/synthetic-unified.html",
+      "sourceRound": 222,
+      "sourceCommit": "4c0cf711772d4426da03bf9a768a8f4d6abc3418",
+      "buildId": "ui-preview-4c0cf71-01-build01",
+      "url": "http://127.0.0.1:57875/synthetic-unified.html",
       "resources": [
         {
           "path": "synthetic-unified.html",
           "status": 200,
-          "bytes": 3414020,
-          "sha256": "726295ed1157ef2f9c9fbb50404331ff69d9b39fd8c66af83da6aa7d1bcadb58",
+          "bytes": 3415012,
+          "sha256": "c9c2b79ceeb1a69e21b498e07d2c7de74bd853b0aa5e4962eb8e2a84049bcfca",
           "sameImmutableBuild": true
         },
         {
           "path": "candidate-identity.json",
           "status": 200,
-          "bytes": 4443,
-          "sha256": "eded4be77dcdca056eaa048207732b57f692812bcf7a8b5846e2723192c560db",
+          "bytes": 4683,
+          "sha256": "301e59a8cfc7006648cc5e942b5135f9f281cd51da6e7bcf7cac74ad295d5208",
           "sameImmutableBuild": true
         },
         {
           "path": "provenance.json",
           "status": 200,
           "bytes": 51504,
-          "sha256": "9206a14c4860f8354067ee1f5ff58f4c82b9c31e7fbf9fda1f5a4825654f7645",
+          "sha256": "42091729d48b3b080083029c8d932cb8922d0780cbb11ee8f2d93b17acee679c",
           "sameImmutableBuild": true
         }
       ],
-      "serverPid": 6596,
-      "serverSession": 55096,
+      "serverPid": 11736,
+      "serverSession": 56799,
       "actualBuildInvocations": 1,
       "postbuildAdditionalBuildInvocations": 0,
       "actualHTTPKeyResources": 3,
       "actualInputCount": 413,
       "actualModuleInputCountIncludingDependencies": 1368,
       "syntheticOnly": true,
-      "scope": "Includes218same-group native size click and219complete Empty region, inherited217newfiction-only24row ledger/P01 residual. productionmount220 not consumed. Original commands/receipts refused.",
+      "scope": "Contains221namedLEFTNAV nowactualpassed on221;222UIDate pointer source/actualQA pending. Originalledgercarrier unchanged/F2onlystylesdiagnostic.18Cfiction-onlyadapters/commandsreceipts refused.",
       "wholePageAccepted": false,
       "realBusinessAccepted": false,
       "formalPerformanceAccepted": false
     },
-    "nextPreview": {
-      "sourceRound": 221,
-      "sourceCommit": "601fde4a1ea65cbf3738d7eb4ee4798823341913",
-      "owner": "C",
-      "status": "PREBUILD_READY_RELEASED_BUILD0_SERVE0_HTTP0",
-      "sourceReview": "QF_V060_LIMITED_SOURCE_PASS_ACTUAL_PENDING",
-      "outputRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-601fde4-01",
-      "candidateId": "ui-preview-601fde4-01"
-    },
+    "nextPreview": null,
     "r1": "C103 actualCOMPLETED0/3.224639846s/v11 approved schema COMMIT+readback; R1 runtime-role canonical53ea114e/122routines/newdeferred trigger. All56business/source counts0 except schema26 unchanged. No newmetadata/issuer/app/data/publicswitch.",
     "qa": "C101 actual v11 COMMIT0/3.575635193s/newcanonical5717b1be/122routines/newdeferred trigger; current50/original49/productv2/12auditreceipt/stock0 preserved. Business SAVE8groups NOT_TESTED.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Original3 business decisions remain; narrowedv11 alreadyapproved. OriginalQB runtime toolresume action requested. Newv13 exact2columns/guard concreteconfirmation requested; only itswritebranch waits.",
-    "github": "Verified280360770cd1a76255c10e60d2da9f425d5bce8d; current source221 review andnewDATE queue next checkpoint",
+    "github": "Verified8ad69f4caba87e2d8f237c268d9defd3a439ce00; fixed222 andactual221/222 continuation next exact sync",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
-      "localDeduplicated": 48,
+      "localDeduplicated": 52,
       "wholePagesAccepted": 0,
       "wholeOverlayClassesAccepted": 0,
-      "notRun": 57,
-      "uiDifference": 30,
-      "partial": 7,
-      "waitingIntegration": 9,
+      "notRun": 54,
+      "uiDifference": 31,
+      "partial": 10,
+      "waitingIntegration": 8,
       "approvedException": 1,
-      "latestReceipt": "QFv059 named217actual andQF2nativeSize220 limitedclosure adopted;104/48/whole0 unchanged, no wholepage/business increase"
+      "latestReceipt": "QFv063 onlysevenrow metadata correction from actual/source evidence; no retest; I07 twoP2open; additional221actualreport notyet includedinmatrix snapshot",
+      "legacyBaselineLocalDeduplicated": 48,
+      "logicalCountQualification": "52 knownindexed accepted logicalscopes in affectedmetadata scope; not wholepages or complete fullsite census. Repeatedversions/arrowclicks/reentries not newcases."
     },
     "isolatedMorePreview": {
       "url": "http://127.0.0.1:57849/component-more.html",
@@ -2905,26 +2959,29 @@
     "backend": "C102 original normalSAVE inputcomplete, actual101 bound to newQA5717b1be and42274B983c47cc; independentreviewPENDING/PLANdisabled/issuer0/PG0. OriginalQB Chat read/list valid but3 sends notfound; human originalQB resume requested, noQB2. New208D3 numberedledger readonlysource ready originalQB pending; F2 native consumer inprogress. BeforeAfter2columns v13 proposal exactuserconfirmationpending, noDDL/writer changes. B07source203 noissuer/host/actual.",
     "productionBuild": "C214fixed1eef32a actual localbuild/pack plus targetLinux originaloffline npmci0/native Sharp loaded0/dispatcher31.3484s;111installedrecords/payload3121be15d58f. Protected5containers unchanged, owned3stopped networknone. No newapp/metadata/issuer/PG/data/publicswitch. Source220 remains localUI only.",
     "actualQFBrowser": {
-      "owner": "QF2",
+      "owner": "F2",
+      "status": "C_EXPLICIT_SOLE_F2_C222_I07_STYLE_DIAGNOSTIC_GRANTED_MAX5MIN",
       "candidateTarget": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
       "demoTarget": "7F93D5A61A99F1C00FB3C0F089081F1F",
       "viewport": "1470x668/DPR2",
+      "candidateVersion": "4c0cf711772d4426da03bf9a768a8f4d6abc3418/ui-preview-4c0cf71-01-build01",
+      "candidateUrl": "http://127.0.0.1:57875/synthetic-unified.html",
+      "scope": "Only missing final I07 carrier outer/header/title/close/body computed+matched styles, originalnative read-only entries. No date/filter/page/write or QA duplication.",
       "protected": [
-        "DB7CA658365B213EEE3EB1333946E5BA non-owned unsaved edit",
-        "3BC874911D0D2415D093603E264B0D67 unknown"
+        "DB7CA658365B213EEE3EB1333946E5BA unsaved",
+        "3BC874911D0D2415D093603E264B0D67 unknown",
+        "allother tabs"
       ],
-      "oldCandidate8B3": "No target found, not reused",
-      "login": "Human newDemo login acknowledged and QF2 actual confirmed. No credentials read.",
-      "status": "C_EXPLICIT_SOLE_QF2_C220_ACTUAL_GRANTED",
-      "candidateScrollTop": 0,
-      "demoTableScrollTop": 0,
-      "cleanReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-753bd09-actual/BROWSER-CLEAN-RELEASE.json",
-      "candidateVersion": "1b46a5d975d1e9c1b25bb695dd666c04cc342740/ui-preview-1b46a5d-01-build01",
-      "candidateUrl": "http://127.0.0.1:57873/synthetic-unified.html",
-      "scope": "218 size;219completeEmpty;217P01residual actualconsumer;newI07UI only. No old48/source recheck or realSave.",
-      "cleanReceiptBytes": 2803,
-      "cleanReceiptSha256": "edd42c835d159d26d8169635cda6e8f700d215ef99e1c9748769533049dcc357",
-      "isolation": "Not proven independent contexts; serialized exclusive same two owned targets. QF/F1/F2/C no Chrome."
+      "cleanReceipt": {
+        "id": "QF-C221-LEFTNAV-ACTUAL-STAGE",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-601fde4-leftnav-actual/BROWSER-CLEAN-RELEASE.json",
+        "bytes": 4461,
+        "sha256": "7dde1794923676e747bc778ca99d8d4f7de463b02a80a2c949e9978a4159f1dd",
+        "result": "PASS_NAMED_T02_LEFTNAV_NATIVE_ACTUAL221_AND_CLEAN",
+        "scope": "T02 original LEFTNAV named actual pass: X/Continue/Esc retain nativeSKU70 quantity7 and ownnote; confirm actualInventory; reenterNew noteempty/noSKU70quantity/noownnote; returnInventory directly no layer. No Save or command attempted.",
+        "adoption": "Original QF seven-field stage plus fixedclean contains result. Long report follows, no savedfull/unknown-key business acceptance"
+      },
+      "isolation": "Only serialized exclusive same two owned targets, independentcontexts notproved. QF/QF2/F1/C noChrome."
     },
     "frontendAcceptance": {
       "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
@@ -3923,22 +3980,49 @@
     },
     "latestActualAdoptions": [
       {
-        "id": "QF2-C220-EMPTY-ACTUAL",
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-empty-region-fix-actual-01/RESULT.json",
-        "bytes": 756,
-        "sha256": "ab4043f4ebe7ff6ebbe86321d33160caef8efcca1fa2016d7cefe5c3d2ec2c38",
-        "result": "PASS_COMPLETE_EMPTY_REGION_ACTUAL_C220",
-        "scope": "CLOSED_ONLY_ORIGINAL_COMPLETE_NATIVE_EMPTY_REGION_GEOMETRY_AT220",
-        "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance"
+        "id": "QF-V061",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v061-qf-adopt-qf2-c220-three-scopes/RESULT.json",
+        "bytes": 5945,
+        "sha256": "47dee7219030d411ea7e3d0cf859aff8e2dcbcd32301e7a86cae2dc46037ebbb",
+        "result": "ADOPTED_QF2_C220_SIZE_OPEN_EMPTY_REGION_P01_IDLE_SCOPES_ONLY",
+        "scope": "QF sole matrix adopts priorQF2 three220actual scopes without retest",
+        "adoption": "C adopts original independent conclusion; no duplicate technical verification"
       },
       {
-        "id": "QF2-C220-P01-RESIDUAL-ACTUAL",
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-P01-idle-residuals-actual-01/RESULT.json",
-        "bytes": 672,
-        "sha256": "6c6c984b4ce64cfd89eb9c838269fd4a372acfcbce9131fcdbeccc4c235c95d7",
-        "result": "PASS_ORIGINAL_TWO_P01_IDLE_RESIDUALS_ACTUAL_C220",
-        "scope": "CLOSED_ONLY_P01_TOKEN_X_AND_SEARCH_FONT_RESIDUAL_AT220",
-        "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance"
+        "id": "QF-V062",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v062-qf-c220-ledger-date-mouse-dedup/RESULT.json",
+        "bytes": 4603,
+        "sha256": "d389aa48cf15b999130899bb9d48c8b0d071c9984e2fea1afd9887707d75f2d3",
+        "result": "REGISTERED_ONE_PROVISIONAL_DATE_MOUSE_FINDING_NO_RETEST_NO_DUPLICATE_DISPATCH",
+        "scope": "OneDATE-MOUSE issue underUSER-UI-DATES O-I08 relatedO-I07/O-C01; no duplicate dispatch",
+        "adoption": "C adopts original independent conclusion; no duplicate technical verification"
+      },
+      {
+        "id": "QF-V063",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v063-qf-current-row-metadata-correction/RESULT.json",
+        "bytes": 6010,
+        "sha256": "7bc94a84ac11c2f8eb5e48637655442de3a2230accd6973cdea6aa2d5835684a",
+        "result": "CORRECTED_AFFECTED_CURRENT_ROWS_FROM_EXISTING_EVIDENCE_NO_TECHNICAL_RETEST",
+        "scope": "Seven affectedrow metadata correction from existing evidence, no technical retest; historical48/currentknownindexed52, not wholepage",
+        "adoption": "C adopts original independent conclusion; no duplicate technical verification"
+      },
+      {
+        "id": "QF2-C220-I07-ACTUAL",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-ledger-ui-first-actual-01/RESULT.json",
+        "bytes": 908,
+        "sha256": "5da2c5286553219bdd998044c3a34200003f789738413a3e07bba657807f7ff4",
+        "result": "NEED_FIX_LIMITED_NEW_I07_ACTUAL_UI_C220",
+        "scope": "Finitefiction I07 UI partial observed; DATE mouse andcarrier P2 open, no wholemodule/realbusiness/performance",
+        "adoption": "C adopts original independent conclusion; no duplicate technical verification"
+      },
+      {
+        "id": "QF-C221-LEFTNAV-ACTUAL-STAGE",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-601fde4-leftnav-actual/BROWSER-CLEAN-RELEASE.json",
+        "bytes": 4461,
+        "sha256": "7dde1794923676e747bc778ca99d8d4f7de463b02a80a2c949e9978a4159f1dd",
+        "result": "PASS_NAMED_T02_LEFTNAV_NATIVE_ACTUAL221_AND_CLEAN",
+        "scope": "T02 original LEFTNAV named actual pass: X/Continue/Esc retain nativeSKU70 quantity7 and ownnote; confirm actualInventory; reenterNew noteempty/noSKU70quantity/noownnote; returnInventory directly no layer. No Save or command attempted.",
+        "adoption": "Original QF seven-field stage plus fixedclean contains result. Long report follows, no savedfull/unknown-key business acceptance"
       }
     ],
     "actualLinux214": {
@@ -4049,13 +4133,71 @@
         "adoption": "C adopts independent QF boundedsource conclusion; actual217 OPEN retained until successor retest"
       },
       "newCalendarIssue": "QF2-I07-DATE-MOUSE-OPEN-01 actual220 iconclick twice fails/ArrowDown works; nativeDemo firstmouseopens paired. OriginalF1 offline diagnosis, originalQFdedup. QF2 I07 remainingmodule/accurateclean stillinprogress."
+    },
+    "currentActualLeftNav221": {
+      "id": "QF-C221-LEFTNAV-ACTUAL-STAGE",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-601fde4-leftnav-actual/BROWSER-CLEAN-RELEASE.json",
+      "bytes": 4461,
+      "sha256": "7dde1794923676e747bc778ca99d8d4f7de463b02a80a2c949e9978a4159f1dd",
+      "result": "PASS_NAMED_T02_LEFTNAV_NATIVE_ACTUAL221_AND_CLEAN",
+      "scope": "T02 original LEFTNAV named actual pass: X/Continue/Esc retain nativeSKU70 quantity7 and ownnote; confirm actualInventory; reenterNew noteempty/noSKU70quantity/noownnote; returnInventory directly no layer. No Save or command attempted.",
+      "adoption": "Original QF seven-field stage plus fixedclean contains result. Long report follows, no savedfull/unknown-key business acceptance"
+    },
+    "latestRound222": {
+      "atUtc": "2026-10-23T21:30:12.177318+00:00",
+      "source": "4c0cf711772d4426da03bf9a768a8f4d6abc3418",
+      "currentRuntime": {
+        "sourceRound": 222,
+        "sourceCommit": "4c0cf711772d4426da03bf9a768a8f4d6abc3418",
+        "buildId": "ui-preview-4c0cf71-01-build01",
+        "url": "http://127.0.0.1:57875/synthetic-unified.html",
+        "resources": [
+          {
+            "path": "synthetic-unified.html",
+            "status": 200,
+            "bytes": 3415012,
+            "sha256": "c9c2b79ceeb1a69e21b498e07d2c7de74bd853b0aa5e4962eb8e2a84049bcfca",
+            "sameImmutableBuild": true
+          },
+          {
+            "path": "candidate-identity.json",
+            "status": 200,
+            "bytes": 4683,
+            "sha256": "301e59a8cfc7006648cc5e942b5135f9f281cd51da6e7bcf7cac74ad295d5208",
+            "sameImmutableBuild": true
+          },
+          {
+            "path": "provenance.json",
+            "status": 200,
+            "bytes": 51504,
+            "sha256": "42091729d48b3b080083029c8d932cb8922d0780cbb11ee8f2d93b17acee679c",
+            "sameImmutableBuild": true
+          }
+        ],
+        "serverPid": 11736,
+        "serverSession": 56799,
+        "actualBuildInvocations": 1,
+        "postbuildAdditionalBuildInvocations": 0,
+        "actualHTTPKeyResources": 3,
+        "actualInputCount": 413,
+        "actualModuleInputCountIncludingDependencies": 1368,
+        "syntheticOnly": true,
+        "scope": "Contains221namedLEFTNAV nowactualpassed on221;222UIDate pointer source/actualQA pending. Originalledgercarrier unchanged/F2onlystylesdiagnostic.18Cfiction-onlyadapters/commandsreceipts refused.",
+        "wholePageAccepted": false,
+        "realBusinessAccepted": false,
+        "formalPerformanceAccepted": false
+      },
+      "sourceQA": "OriginalQF after221actual nowoffline onlyexact2publicdelta pending",
+      "dateActual": "NOT_ACCEPTED_PENDING_QF2_CONTAINING_CANDIDATE",
+      "I07carrier": "F2 offlineprovedmissingborder, finalheader/fontwinner requiresjustgrantedread-onlystylewindow; no sourcefixyet",
+      "wholeSalesNext": "OriginalF1 must first return existing latestwholepage directcopy provenance to avoid duplicate migration; if realremaining oldrewrite region proven, continue originalwholecopy task, not endlesslocalpatches"
     }
   },
   "latestReadySource": {
-    "round": 221,
-    "commit": "601fde4a1ea65cbf3738d7eb4ee4798823341913",
-    "latestServedPreviewRound": 220,
-    "qualification": "OriginalF1 exact5 T02 LEFTNAV fixedsource221; QFv060 independent boundedsourcePASS, notinserved220/actualsuccessorpending."
+    "round": 222,
+    "commit": "4c0cf711772d4426da03bf9a768a8f4d6abc3418",
+    "latestServedPreviewRound": 222,
+    "qualification": "Actual fixed222 build/serve/3HTTPmatched; ownerfixedUIDateexact2. Independent source/publicconsumeractual pending. T02 original221 namedactualpass adopted, not wholepage/business."
   },
   "pendingUserDecision": [
     {

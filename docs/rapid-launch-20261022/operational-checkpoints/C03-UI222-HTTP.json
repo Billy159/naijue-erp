@@ -1,0 +1,36 @@
+{
+  "atUtc": "2026-10-23T21:27:25.038999+00:00",
+  "taskId": "C03_UI222_FIXED_THREE_HTTP",
+  "status": "PASS_FIXED_C222_THREE_KEY_HTTP",
+  "sourceCommit": "4c0cf711772d4426da03bf9a768a8f4d6abc3418",
+  "buildId": "ui-preview-4c0cf71-01-build01",
+  "url": "http://127.0.0.1:57875/synthetic-unified.html",
+  "checks": [
+    {
+      "path": "synthetic-unified.html",
+      "status": 200,
+      "bytes": 3415012,
+      "sha256": "c9c2b79ceeb1a69e21b498e07d2c7de74bd853b0aa5e4962eb8e2a84049bcfca",
+      "sameImmutableBuild": true
+    },
+    {
+      "path": "candidate-identity.json",
+      "status": 200,
+      "bytes": 4683,
+      "sha256": "301e59a8cfc7006648cc5e942b5135f9f281cd51da6e7bcf7cac74ad295d5208",
+      "sameImmutableBuild": true
+    },
+    {
+      "path": "provenance.json",
+      "status": 200,
+      "bytes": 51504,
+      "sha256": "42091729d48b3b080083029c8d932cb8922d0780cbb11ee8f2d93b17acee679c",
+      "sameImmutableBuild": true
+    }
+  ],
+  "serverPid": 11736,
+  "serverSession": 56799,
+  "actualInputs": 413,
+  "actualModulesIncludingDependencies": 1368,
+  "qualification": "Fixed222 synthetic local preview includes original221LEFTNAV and222UIDate native Trigger boundary, independent source review and actualnewdate stillpending. Original ledger carrier unchangedfrom220, read-onlystyle diagnostic reservedoriginalF2 thenactualQA. No realPG/permissions/save/performance or formaldeployment acceptance."
+}
