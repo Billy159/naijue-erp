@@ -3043,7 +3043,7 @@
       ]
     },
     "allSizeP1": {
-      "status": "IMPLEMENTING_UI_AND_EXISTING_REAL_SKU_BRANCH; NEW_WRITE_SEMANTICS_CONCRETE_CONFIRMATION_PENDING_PREPARATION",
+      "status": "UI_AND_KNOWN_SKU_IMPLEMENTATION_CONTINUES; EXACT_V11_NEW_WRITE_CONTRACT_WAIT_EXPLICIT_HUMAN_CONFIRMATION",
       "owner": [
         "F1",
         "D1",
@@ -3098,6 +3098,15 @@
       "status": "FULL_V5_SENT_WAIT_EXPLICIT_HUMAN_APPROVAL",
       "confirmationFile": "SCHEMA-SUPPLEMENT-v5-HISTORY-HALL-NULLABLE.md",
       "confirmationSha256": "2b3fe399061713462f16270e88f9f925e48249810e84aa5af6bd261658127972"
+    },
+    {
+      "id": "ALL_SIZE_SAVE_V11",
+      "status": "WAIT_EXPLICIT_HUMAN_CONFIRMATION",
+      "confirmationFile": "WRITE-CONTRACT-SUPPLEMENT-v11-ALL-SIZE-SAVE.md",
+      "technicalDetails": "WRITE-CONTRACT-SUPPLEMENT-v11-ALL-SIZE-SAVE.json",
+      "onlyDependentBranchWaits": true,
+      "newColumns": 0,
+      "newTables": 0
     }
   ],
   "currentAcceptedReceiptBatch": [
