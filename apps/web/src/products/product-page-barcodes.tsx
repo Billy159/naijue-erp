@@ -9,7 +9,7 @@ import { ProductPagedRead, type ProductPageTabProps } from './product-page-view.
 
 export function View({ scope, reader }: ProductPageTabProps) {
   return <ProductPagedRead<ProductBarcodePage> scope={scope} read={reader.barcodes!.read} validate={productBarcodesResponse} label="商品条码分页">{data => <>
-    <div className="pc-barcode-tools product-barcode-tools"><div className="field"><span className="pc-field-caption">主条码默认方案</span><div className="pc-arco-host"><span className="pc-read-value">未提供</span></div></div><button type="button" className="btn ghost" disabled>查看方案</button></div>
+    <div className="pc-barcode-tools product-barcode-tools"><div className="field"><span className="pc-field-caption">主条码默认方案</span><div id="pc-detail-scheme" className="pc-arco-host"><span className="pc-read-value">未提供</span></div></div><button type="button" className="btn ghost" disabled>查看方案</button></div>
     {data.items.length && reader.specs ? <LabeledPage key={`${data.productId}:${data.version}:${data.page}:${data.pageSize}`} scope={scope} reader={reader} data={data} />
       : <BarcodeGroups data={data} specifications={null} />}
   </>}</ProductPagedRead>;

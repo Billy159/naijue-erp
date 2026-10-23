@@ -111,7 +111,7 @@ function EditorFields(p:Fields){
  const heading=<h1>{`${p.values.productCode||'新增商品'} · ${p.values.name||'未命名'}`}</h1>;
  const actions=<>{existing&&can('DELETE')&&<button type="button" className="btn ghost pc-danger product-delete" disabled={pending} onClick={()=>p.setConfirmDelete(true)}>删除商品</button>}{existing&&can(p.values.enabled?'DISABLE':'RESTORE')&&<button type="button" className="btn" disabled={pending||dirty} onClick={()=>void save(p.values.enabled?'DISABLE':'RESTORE')}>{p.values.enabled?'停用':'恢复启用'}</button>}<button type="button" className="btn" disabled={pending} onClick={close}>取消</button><button type="button" className="btn primary" disabled={disabled||unresolvedSpecs||mediaBlocked||existing&&!dirty} onClick={()=>void save()}>保存</button></>;
  const afterHeader=<>
-  {(p.error||state.error)&&<p role="alert" className="product-editor-error">{p.error||state.error?.message}{existing&&state.error?.kind==='conflict'&&<UIButton onClick={requestReload}>读取最新商品</UIButton>}</p>}
+  <div id="pc-editor-error" className="inline-error" role="alert">{(p.error||state.error)&&<>{p.error||state.error?.message}{existing&&state.error?.kind==='conflict'&&<UIButton onClick={requestReload}>读取最新商品</UIButton>}</>}</div>
   {mediaUploads.some(row=>row.phase==='uploading')&&<p role="status">正在准备图片，请稍候。</p>}
   {state.phase==='submitting'&&<p role="status">正在保存商品，请保留当前页面。</p>}
   {(state.phase==='uncertain'||state.phase==='checking')&&<div className="product-editor-recovery" role="status">保存结果尚未确认。<UIButton disabled={state.phase==='checking'} onClick={()=>void p.write.recover().then(finish)}>查回保存结果</UIButton><UIButton disabled={state.phase==='checking'} onClick={()=>void p.write.retryOriginal().then(finish)}>按原请求重试</UIButton></div>}

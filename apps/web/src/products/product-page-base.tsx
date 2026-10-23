@@ -12,12 +12,12 @@ export function View({ scope, reader }: ProductPageTabProps) {
 export function ProductReadOnlyBaseSource({data,inDrawer=false}:{readonly data:ProductBasics;readonly inDrawer?:boolean}){
  const fields=[
   {label:'款号',value:data.code,required:true},{label:'商品名称',value:data.name,required:true},
-  {label:'商品分类',value:data.categoryLabel,required:false},{label:'年份',value:data.yearLabel,required:true},
-  {label:'季节',value:data.seasonLabel,required:false},{label:'供应商',value:data.supplierLabel,required:true},
-  {label:'厚薄（可选）',value:data.thickness??null,required:false},{label:'领型 / 裤型（可选）',value:data.collarPantsType??null,required:false},
+  {label:'商品分类',value:data.categoryLabel,required:false,control:'category'},{label:'年份',value:data.yearLabel,required:true,control:'year'},
+  {label:'季节',value:data.seasonLabel,required:false,control:'season'},{label:'供应商',value:data.supplierLabel,required:true,control:'supplier'},
+  {label:'厚薄（可选）',value:data.thickness??null,required:false,control:'thickness'},{label:'领型 / 裤型（可选）',value:data.collarPantsType??null,required:false,control:'shape'},
   {label:'系统货号',value:data.systemCode,required:true},
  ];
- return <ProductBaseSourceGrid className={inDrawer?'pd-source-base':'product-base-grid product-readonly-base-grid'} fields={fields.map(field=>({...field,required:!inDrawer&&field.required,content:['款号','商品名称','系统货号'].includes(field.label)?<span className="pc-read-value">{field.value??'未提供'}</span>:<div className="pc-arco-host"><span className="pc-read-value">{field.value??'未提供'}</span></div>}))}/>;
+ return <ProductBaseSourceGrid className={inDrawer?'pd-source-base':'product-base-grid product-readonly-base-grid'} fields={fields.map(field=>({...field,required:!inDrawer&&field.required,content:['款号','商品名称','系统货号'].includes(field.label)?<span className="pc-read-value">{field.value??'未提供'}</span>:<div id={`pc-detail-${field.control}`} className="pc-arco-host" data-control={field.control}><span className="pc-read-value">{field.value??'未提供'}</span></div>}))}/>;
 }
 
 export interface ProductBaseSourceField {readonly label:string;readonly required:boolean;readonly content:ReactNode}
