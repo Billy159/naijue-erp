@@ -1,0 +1,38 @@
+{
+  "atUtc": "2026-10-23T18:53:59.175030+00:00",
+  "parent": "5bb47b923613b8440980c1889e5f9e5732e2ef05",
+  "taskId": "DOC-201-TRANSFER-HANDOFF-CANCEL-01",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/transfer-create.ts",
+      "bytes": 10492,
+      "sha256": "8d743bf73320921cac9e6f39da653e5937d416e7571b732fb03b0dd5307a93ac",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-create.ts",
+      "bytes": 15061,
+      "sha256": "866381e0b2c1f3f5b2b97ce06757e571bf440cfc19d25f8f118dd08074f9b72a",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-100/DELIVERY.json",
+  "ownerReceiptSha256": "386f3b219c41a467313cf309dd210862245e8b0adf1699fd9cbaea7a0fb98bd7",
+  "cause": "Spec save set nativeHandoff=true before dispatch; proposal subscription cancel cleared request and old finally skipped recomputation, leaving a false handoff after not-sent rejection",
+  "change": "Do not assign handoff during local preparation; original command owner determines handoff at settlement even when local cancellation already cleared request, unless a newer local preparation is active. Existing dispatched uncertain is retained, not converted to not sent.",
+  "checksAdopted": {
+    "before-1": "Harness write failed before test launch due encoding, no source evidence",
+    "before-2": "RED original transfer actual session factory + real native HTTP client: immediate draft-change sends0 but handoff true",
+    "after-1": "Both transfer affected branches passed, SALE fixture failed mandatory customer business-code decode (source decoder retained)",
+    "sale-2": "Exact mandatory customer code diagnosed, test only fixed",
+    "sale-3": "PASS only SALE before-dispatch retry and after-dispatch unknown/replay with actual route guard; log printed PASS4 although2, detailed result correct2",
+    "transfer-4": "PASS2 only transfer affected branches and actual original manual-create route guard",
+    "sale-before-5": "RED only SALE original before-source exact same handoff defect after fixture correction",
+    "types-1": "PASS exact2 whole imported source closure0"
+  },
+  "qualification": "SOURCE_READY_ORIGINAL_SPEC_SAVE_CANCELLATION_AFFECTED_BRANCH_ONLY",
+  "limitations": [
+    "Synthetic local HTTP fetch endpoints, no actual backend/PG/Chrome",
+    "No previous page/rapidqty/mixedprice/full-module PASS repeated or closed"
+  ]
+}

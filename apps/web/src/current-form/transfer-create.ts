@@ -74,12 +74,15 @@ export class TransferNewDocumentSession {
     if (this.proposal.hasSpecificationInputs) {
       const intent = this.proposal.saveProposal(null); if (!intent) return false;
       const captured = this.proposal.getSnapshot(), sequence = ++this.#sequence, request = new AbortController(); this.#request = request;
-      this.#publish({ preparing: true, nativeHandoff: true, notice: null });
+      this.#publish({ preparing: true, notice: null });
       try {
         return await this.workspace.submitProposal(intent, () => !this.#state.disposed && this.#scope.active && !request.signal.aborted && sequence === this.#sequence
           && this.proposal.getSnapshot().draft === captured.draft && this.proposal.getSnapshot().pending === captured.pending && this.proposal.getSnapshot().matrixQuantities === captured.matrixQuantities && this.proposal.getSnapshot().replacement === captured.replacement);
       } finally {
-        if (this.#request === request) { this.#request = null; if (!this.#state.disposed) this.#publish({ preparing: false, nativeHandoff: !!this.workspace.getSnapshot().editor || this.workspace.hasUnresolvedWrite, notice: this.workspace.getSnapshot().write.phase === 'rejected' ? this.workspace.getSnapshot().notice : null }); }
+        if (this.#request === request) this.#request = null;
+        // Local cancellation may already have cleared #request. The command
+        // owner distinguishes not-sent rejection from a dispatched unknown.
+        if (!this.#request && !this.#state.disposed) this.#publish({ preparing: false, nativeHandoff: !!this.workspace.getSnapshot().editor || this.workspace.hasUnresolvedWrite, notice: this.workspace.getSnapshot().write.phase === 'rejected' ? this.workspace.getSnapshot().notice : null });
       }
     }
     const proposal = this.proposal.validate(); if (!proposal) return false;

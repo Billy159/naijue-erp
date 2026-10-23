@@ -100,12 +100,15 @@ export class SalesNewDocumentSession {
     if (this.proposal.hasSpecificationInputs) {
       const intent = this.proposal.saveProposal(null); if (!intent) return false;
       const captured = this.proposal.getSnapshot(), sequence = ++this.#sequence, request = new AbortController(); this.#request = request;
-      this.#publish({ preparing: true, nativeHandoff: true, notice: null });
+      this.#publish({ preparing: true, notice: null });
       try {
         return await this.editor.commands.submitProposal(intent, () => !this.#state.disposed && this.#scope.active && !request.signal.aborted && sequence === this.#sequence
           && this.proposal.getSnapshot().draft === captured.draft && this.proposal.getSnapshot().entries === captured.entries && this.proposal.getSnapshot().lineEdit === captured.lineEdit);
       } finally {
-        if (this.#request === request) { this.#request = null; if (!this.#state.disposed) this.#publish({ preparing: false, nativeHandoff: !!this.editor.getSnapshot().command.editor || this.editor.commands.hasUnresolvedWrite, notice: this.editor.getSnapshot().command.write.phase === 'rejected' ? this.editor.getSnapshot().command.notice : null }); }
+        if (this.#request === request) this.#request = null;
+        // Only the original command owner can classify cancelled preparation
+        // as not sent; a dispatched unknown must retain its original recovery.
+        if (!this.#request && !this.#state.disposed) this.#publish({ preparing: false, nativeHandoff: !!this.editor.getSnapshot().command.editor || this.editor.commands.hasUnresolvedWrite, notice: this.editor.getSnapshot().command.write.phase === 'rejected' ? this.editor.getSnapshot().command.notice : null });
       }
     }
     const proposal = this.proposal.validate(); if (!proposal) return false;
