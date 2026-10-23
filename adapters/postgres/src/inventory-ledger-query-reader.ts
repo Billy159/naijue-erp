@@ -11,6 +11,9 @@ import { COMPLETE_SCOPE_DECISION } from "../../../packages/application/src/inven
 import { decodeImportCheckpoint } from "./inventory-cutoff-import-store.ts";
 import { GUARD_CAPABILITY } from "./inventory-publication-guards.ts";
 import { booleanValue, stringValue } from "./codec.ts";
+import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { readInventoryKeyAdmissions } from "./inventory-key-admission-reader.ts";
 
 export interface PgInventoryLedgerQueryResult { readonly rows: Record<string, unknown>[]; readonly rowCount: number | null }
 export interface PgInventoryLedgerQueryClient { query(text: string, values?: unknown[]): Promise<PgInventoryLedgerQueryResult>; release(error?: Error | boolean): void }
@@ -25,7 +28,7 @@ const id = <K extends EntityKind>(kind: K, value: unknown): EntityId<K> => entit
 const stamp = (column: string) => `to_char(${column} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
 
 /** Only constant-size publication evidence and exact key membership, not a history/source reconciliation. */
-async function publishedKey(query: Query, warehouseId: string, skuId: string): Promise<string> {
+async function publishedKey(query: Query, warehouseId: string, skuId: string, runtime26: NativeRuntime26Capability | undefined): Promise<string> {
   const rows = (await query(`/* inventory-ledger:publication */ SELECT b.id, b.checkpoint, b.completed_at IS NOT NULL AS completed,
     EXISTS (SELECT 1 FROM naijue_erp.import_record r WHERE r.import_batch_id = b.id AND r.status = 'IMPORTED'
       AND r.target_type = 'IMPORT_BATCH' AND r.target_id = b.id AND r.source_entity_type = 'INVENTORY_SCOPE_APPROVAL'
@@ -43,9 +46,15 @@ async function publishedKey(query: Query, warehouseId: string, skuId: string): P
   const checkpoint = decodeImportCheckpoint(row.checkpoint);
   integrity(checkpoint.sequence > 0 && Object.entries(checkpoint.expected).every(([kind, expected]) => checkpoint.counts[kind as keyof typeof checkpoint.counts] === expected)
     && checkpoint.cursor === Object.values(checkpoint.counts).reduce((sum, value) => sum + value, 0), "Published inventory checkpoint is incomplete");
-  requireDomain(booleanValue(row.warehouse_published) && booleanValue(row.sku_published), "INVENTORY_NOT_READY", "Exact inventory key publication is unavailable");
+  if (!runtime26) requireDomain(booleanValue(row.warehouse_published) && booleanValue(row.sku_published), "INVENTORY_NOT_READY", "Exact inventory key publication is unavailable");
   integrity(booleanValue(one(await query(GUARD_CAPABILITY)).integrity_guards_present), "Native inventory publication guards are unavailable");
-  return id("operation", row.id);
+  const batchId = id("operation", row.id);
+  if (runtime26) {
+    const [admission] = await readInventoryKeyAdmissions({ query }, [{ warehouseId, skuId }]);
+    requireDomain(admission!.admitted, "INVENTORY_NOT_READY", "Exact inventory key is outside the approved creation/cutoff scope");
+    integrity(admission!.publishedBatchId === batchId, "Inventory key admission differs from the published cutoff");
+  }
+  return batchId;
 }
 function decodeEntry(row: Row, publishedBatchId: string): InventoryLedgerEntry {
   let source: InventoryLedgerSource;
@@ -84,15 +93,16 @@ function decodeEntry(row: Row, publishedBatchId: string): InventoryLedgerEntry {
 /** Inert injected driver seam. No pool construction, listener, migrations or database connection on construction. */
 export class PostgresInventoryLedgerQueryReader implements TrustedInventoryLedgerSnapshotReader {
   private readonly pool: PgInventoryLedgerQueryPool;
-  constructor(pool: PgInventoryLedgerQueryPool) {
-    if (typeof pool?.connect !== "function") throw new TypeError("Inventory ledger reader requires an explicit PostgreSQL pool"); this.pool = pool;
+  private readonly runtime26: NativeRuntime26Capability | undefined;
+  constructor(pool: PgInventoryLedgerQueryPool, runtime26?: NativeRuntime26Capability) {
+    if (typeof pool?.connect !== "function") throw new TypeError("Inventory ledger reader requires an explicit PostgreSQL pool"); this.pool = pool; this.runtime26 = checkedNativeRuntime26Capability(runtime26);
   }
-  private async snapshot<T>(signal: AbortSignal, work: (query: Query) => Promise<T>): Promise<T> {
+  private async snapshot<T>(signal: AbortSignal, work: (query: Query, client: PgInventoryLedgerQueryClient) => Promise<T>): Promise<T> {
     activeInventoryLedgerRead(signal); const client = await this.pool.connect(); let began = false; let committing = false; let committed = false; let discard: Error | undefined;
     const query: Query = async (sql, values = []) => { activeInventoryLedgerRead(signal); return client.query(sql, values); };
     try {
       activeInventoryLedgerRead(signal); await query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true;
-      const result = await work(query); activeInventoryLedgerRead(signal); committing = true; await query("COMMIT"); committed = true;
+      const result = await work(query, client); activeInventoryLedgerRead(signal); committing = true; await query("COMMIT"); committed = true;
       // A late abort suppresses publication, but a confirmed completed read transaction needs no rollback/discard.
       activeInventoryLedgerRead(signal); return result;
     } catch (error) {
@@ -112,7 +122,8 @@ export class PostgresInventoryLedgerQueryReader implements TrustedInventoryLedge
     const warehouse = supplied.warehouses.find(item => item.id === parameters.warehouseId);
     requireDomain(warehouse, "FORBIDDEN", "Requested warehouse is outside authorized inventory scope");
     const scope = checkedInventoryScope({ hallIds: [warehouse.hallId], warehouses: [warehouse] });
-    return this.snapshot(read.signal, async query => {
+    return this.snapshot(read.signal, async (query, client) => {
+      if (this.runtime26) { await this.runtime26.assertReady(client, "INVENTORY_ADMISSION"); activeInventoryLedgerRead(read.signal); }
       const warehouses = await query(`/* inventory-ledger:warehouse */ SELECT w.id, w.hall_id, w.name FROM naijue_erp.warehouse w
         JOIN naijue_erp.hall h ON h.id = w.hall_id WHERE w.id = $1::uuid AND w.hall_id = $2::uuid LIMIT 2`, [parameters.warehouseId, warehouse.hallId]);
       requireDomain(warehouses.rows.length > 0, "FORBIDDEN", "Authorized inventory warehouse is unavailable");
@@ -127,7 +138,7 @@ export class PostgresInventoryLedgerQueryReader implements TrustedInventoryLedge
         WHERE s.id = $1::uuid LIMIT 2`, [parameters.skuId]);
       requireDomain(skus.rows.length > 0, "SKU_NOT_FOUND", "Exact inventory SKU is unavailable");
       const s = one(skus); integrity(s.id === parameters.skuId && booleanValue(s.size_member), "Invalid canonical SKU/size-group identity");
-      const batchId = await publishedKey(query, parameters.warehouseId, parameters.skuId);
+      const batchId = await publishedKey(query, parameters.warehouseId, parameters.skuId, this.runtime26);
       const rows = (await query(`/* inventory-ledger:entries */ SELECT l.id, l.operation_id, l.event_kind, l.warehouse_id, l.sku_id,
         l.quantity_delta::text AS quantity_delta, l.source_sales_line_id, sl.sales_id AS source_sales_id,
         l.source_transfer_line_id, tl.transfer_id AS source_transfer_id, l.source_import_batch_id, l.endpoint,

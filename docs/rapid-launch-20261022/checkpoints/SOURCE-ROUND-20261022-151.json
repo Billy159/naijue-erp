@@ -1,0 +1,39 @@
+{
+  "atUtc": "2026-10-23T07:40:26.086479+00:00",
+  "parent": "2ec6ddd456817710f12208272565a5c06eaba0d2",
+  "taskId": "B03_EXISTING_Z02_NATIVE_LEDGER_KEY_ADMISSION",
+  "files": [
+    {
+      "path": "adapters/postgres/src/inventory-ledger-query-reader.ts",
+      "owner": "D3",
+      "bytes": 18133,
+      "sha256": "f0b3d39e80b96fbf9e805de2c647cfcfeecc9e7f31e636041dc12717729a0df0"
+    },
+    {
+      "path": "tests/inventory-ledger-query-postgres-protocol.test.ts",
+      "owner": "D3",
+      "bytes": 26996,
+      "sha256": "8b36c424421abd896c6184bb8db89a0c57890183043c4f8c0ec9c565f731bf00"
+    },
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "owner": "D1",
+      "bytes": 47384,
+      "sha256": "21b38bb070a56fb1a3043d012e2a061918e646fbcd291014b57c8d3787b3869c"
+    }
+  ],
+  "scope": [
+    "Originalruntime26 optional exactobject injected bysamehost/samepool",
+    "SameRR originalclient assertReadyINVENTORY_ADMISSION then original singleexactkey readInventoryKeyAdmissions+samepublishedBatch",
+    "Legacywithoutcap import-only remains, no DTO/DDL/newcap/defaultzero/entry fabrication"
+  ],
+  "checksAdopted": {
+    "D3": "New1 group scripted ledger native key admission coversmember/new combos/host/key/scope/batch/missingcreation/falsegrant/no-cap/emptyledger;strict testclosure PASS",
+    "D1": "Original affectedhost1 andexactentrystrict PASS; no repeatedD3tests"
+  },
+  "notTested": [
+    "ActualPG/HTTP/UI/newtarget nativekey rows/performance",
+    "Maininventory fullnativekey successor notimplemented bythisdelta"
+  ],
+  "next": "OriginalQB exact3 only whenC150inprogress done; true C71 baseline separate149 program, no mixidentity"
+}

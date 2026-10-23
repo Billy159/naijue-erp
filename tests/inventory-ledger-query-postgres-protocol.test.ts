@@ -7,10 +7,11 @@ import { DomainError } from "../packages/domain/src/errors.ts";
 import { inventoryLedgerBefore } from "../packages/application/src/inventory-ledger-query-validation.ts";
 import { inventoryId, ledgerBatchId, ledgerEntry, ledgerParameters, ledgerRead, ledgerSnapshot, ledgerWarehouse } from "./support/synthetic-inventory-ledger-query.ts";
 import type { InventoryLedgerEntry } from "../packages/application/src/inventory-ledger-query-contracts.ts";
+import type { NativeRuntime26Capability } from "../packages/application/src/native-import-schema-contract.ts";
 
 // SCRIPTED DRIVER ONLY: this does not connect to PostgreSQL or prove SQL execution, isolation, indexes or performance.
 type Row = Record<string, unknown>;
-const stages = (pool: ScriptedPool) => pool.calls.map(call => /\/\* inventory(?:-ledger)?:([a-z-]+) \*\//.exec(call.sql)?.[1] ?? call.sql);
+const stages = (pool: ScriptedPool) => pool.calls.map(call => /\/\* inventory(?:-ledger|-admission)?:([a-z-]+) \*\//.exec(call.sql)?.[1] ?? call.sql);
 const code = (expected: string) => (error: unknown) => error instanceof DomainError && error.code === expected;
 function nativeEntry(entry: InventoryLedgerEntry): Row {
   const history = entry.source.kind === "HISTORY_REVISION" ? entry.source : null;
@@ -39,7 +40,7 @@ class ScriptedPool implements PgInventoryLedgerQueryPool, PgInventoryLedgerQuery
   async connect() { this.connects++; return this; }
   release(error?: Error | boolean) { this.releases.push(error); }
   async query(sql: string, values: unknown[] = []): Promise<PgInventoryLedgerQueryResult> {
-    this.calls.push({ sql, values: structuredClone(values) }); const stage = /\/\* inventory(?:-ledger)?:([a-z-]+) \*\//.exec(sql)?.[1] ?? sql;
+    this.calls.push({ sql, values: structuredClone(values) }); const stage = /\/\* inventory(?:-ledger|-admission)?:([a-z-]+) \*\//.exec(sql)?.[1] ?? sql;
     if (stage === this.failAt || (stage === "ROLLBACK" && this.failRollback)) throw new Error(`SYNTHETIC PRIVATE ${stage} failure`);
     let rows: Row[];
     switch (stage) {
@@ -56,6 +57,8 @@ class ScriptedPool implements PgInventoryLedgerQueryPool, PgInventoryLedgerQuery
           checkpoint: { sequence: 3, cursor: 4, counts, expected: counts } }]; break;
       }
       case "guards": rows = [{ integrity_guards_present: true }]; break;
+      case "keys": rows = (values[0] as string[]).map((warehouseId, i) => ({ warehouse_id: warehouseId, sku_id: (values[1] as string[])[i], admitted: true, published_batch_id: ledgerBatchId,
+        warehouse_basis: "POST_CUTOFF_CREATED", sku_basis: "POST_CUTOFF_CREATED", warehouse_created_operation_id: inventoryId("operation", 15000), sku_created_operation_id: inventoryId("operation", 15001) })); break;
       case "entries": {
         const after = values[3] === null ? null : { postedAt: values[3] as string, entryId: values[4] as InventoryLedgerEntry["id"] };
         rows = this.entries.filter(entry => after === null || inventoryLedgerBefore({ postedAt: entry.postedAt, entryId: entry.id }, after)).slice(0, Number(values[5])).map(nativeEntry); break;
@@ -65,6 +68,36 @@ class ScriptedPool implements PgInventoryLedgerQueryPool, PgInventoryLedgerQuery
     rows = this.transform?.(stage, rows) ?? rows; this.afterQuery?.(stage); return { rows, rowCount: rows.length };
   }
 }
+
+test("SCRIPTED ledger native key admission: existing verified runtime and one same-snapshot exact key decision admit genuine new dimensions without granting legacy or fabricating entries", async () => {
+  // Injected protocol test double only: this supplies no actual runtime/PG grant.
+  const runtime = (pool: ScriptedPool, verify: () => void = () => {}): NativeRuntime26Capability => ({ profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", async assertReady(client, purpose) {
+    assert.equal(client, pool); assert.equal(purpose, "INVENTORY_ADMISSION"); assert.equal(stages(pool).at(-1), "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); verify();
+  } });
+  for (const [warehouseBasis, skuBasis] of [["CUTOFF_MEMBER", "POST_CUTOFF_CREATED"], ["POST_CUTOFF_CREATED", "CUTOFF_MEMBER"], ["POST_CUTOFF_CREATED", "POST_CUTOFF_CREATED"]]) {
+    const pool = new ScriptedPool(); let ready = 0;
+    pool.transform = (stage, rows) => stage === "publication" ? rows.map(row => ({ ...row, warehouse_published: warehouseBasis === "CUTOFF_MEMBER", sku_published: skuBasis === "CUTOFF_MEMBER" }))
+      : stage === "keys" ? rows.map(row => ({ ...row, warehouse_basis: warehouseBasis, sku_basis: skuBasis,
+        warehouse_created_operation_id: warehouseBasis === "CUTOFF_MEMBER" ? null : row.warehouse_created_operation_id, sku_created_operation_id: skuBasis === "CUTOFF_MEMBER" ? null : row.sku_created_operation_id })) : rows;
+    const result = await new PostgresInventoryLedgerQueryReader(pool, runtime(pool, () => { ready++; })).readLedger(ledgerRead());
+    assert.equal(ready, 1); assert.equal(result.data.entries[0]!.quantityDelta, "-9223372036854775808"); assert.equal(result.data.entries[0]!.postedAt, "2026-10-20T18:20:30.123456Z");
+    const keys = pool.calls.filter(call => call.sql.includes("inventory-admission:keys")); assert.equal(keys.length, 1); assert.deepEqual(keys[0]!.values, [[ledgerWarehouse.id], [ledgerParameters().skuId]]); assert.deepEqual(pool.releases, [undefined]);
+    assert.ok(pool.calls.every(call => !/\bINSERT\s+INTO|\bUPDATE\s+naijue_erp|\bDELETE\s+FROM/i.test(call.sql)));
+  }
+  const legacy = new ScriptedPool(); legacy.transform = (stage, rows) => stage === "publication" ? rows.map(row => ({ ...row, sku_published: false })) : rows;
+  await assert.rejects(new PostgresInventoryLedgerQueryReader(legacy).readLedger(ledgerRead()), code("INVENTORY_NOT_READY")); assert.equal(stages(legacy).includes("keys"), false); assert.equal(stages(legacy).includes("entries"), false);
+  const mutations: ((rows: Row[]) => Row[])[] = [
+    rows => rows.map(row => ({ ...row, admitted: false })), rows => rows.map(row => ({ ...row, published_batch_id: inventoryId("operation", 999) })),
+    rows => rows.map(row => ({ ...row, warehouse_id: inventoryId("warehouse", 999) })), rows => rows.map(row => ({ ...row, sku_created_operation_id: null })), _rows => []
+  ];
+  for (const mutate of mutations) { const pool = new ScriptedPool(); pool.transform = (stage, rows) => stage === "keys" ? mutate(rows) : rows;
+    await assert.rejects(new PostgresInventoryLedgerQueryReader(pool, runtime(pool)).readLedger(ledgerRead())); assert.equal(stages(pool).includes("entries"), false); assert.equal(stages(pool).at(-1), "ROLLBACK"); assert.deepEqual(pool.releases, [undefined]);
+  }
+  const denied = new ScriptedPool(); await assert.rejects(new PostgresInventoryLedgerQueryReader(denied, runtime(denied, () => { throw Error("HOST_NOT_READY"); })).readLedger(ledgerRead()), /HOST_NOT_READY/);
+  assert.deepEqual(stages(denied), ["BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY", "ROLLBACK"]);
+  const booleanGrant = new ScriptedPool(); await assert.rejects(new PostgresInventoryLedgerQueryReader(booleanGrant, { profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", async assertReady() { return true; } } as unknown as NativeRuntime26Capability).readLedger(ledgerRead()), /without a boolean substitute/); assert.equal(stages(booleanGrant).includes("keys"), false);
+  const empty = new ScriptedPool(); empty.entries = []; const result = await new PostgresInventoryLedgerQueryReader(empty, runtime(empty)).readLedger(ledgerRead()); assert.deepEqual(result.data.entries, []); assert.equal(result.data.nextCursor, null);
+});
 
 test("SCRIPTED ledger history revision: both exact historical variants preserve signed quantities, microsecond keyset and old baseline", async () => {
   const pool = new ScriptedPool(); pool.entries = [...historyEntries(), ledgerEntry(2, "CUTOFF_BASELINE")]; const reader = new PostgresInventoryLedgerQueryReader(pool);
