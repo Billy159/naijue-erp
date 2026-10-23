@@ -27,13 +27,39 @@ export function ProductEditor(props:ProductEditorProps){
   return {...props.capability,...(props.capability.stock?{stock:{read:read=>guarded(read,()=>props.capability.stock!.read(read)),...(props.capability.stock.readOverview?{readOverview:read=>guarded(read,()=>props.capability.stock!.readOverview!(read))}: {})}}:{}),productReader:{readProductBasics:read=>guarded(read,()=>source.readProductBasics(read)),readProductSpecifications:read=>guarded(read,()=>source.readProductSpecifications(read)),readProductImages:read=>guarded(read,()=>source.readProductImages(read)),readProductImage:read=>guarded(read,()=>source.readProductImage(read))}} satisfies ProductEditorProps['capability'];
  },[props.capability,props.parent,props.onAccessFailure]);
  const [editorTab,setEditorTab]=useState<ProductReadOnlyPageTab>(props.initialTab??'base');
- const [activeId,setActiveId]=useState(props.productId),[revision,setRevision]=useState(0),[owner,setOwner]=useState<{parent:ReadScope;id:string|null;revision:number;scope:ReadScope}|null>(null);
+ const [activeId,setActiveId]=useState(props.productId),[revision,setRevision]=useState(0),[owner,setOwner]=useState<{parent:ReadScope;id:string|null;revision:number;scope:ReadScope;originalCommand:ProductMaintenanceCommand|null}|null>(null);
  useEffect(()=>{setActiveId(props.productId);setEditorTab(props.initialTab??'base');},[props.parent,props.productId]);
- useEffect(()=>{const scope=new ReadScope(props.parent.identity,`${props.parent.routeInstanceId}:product-editor:${++editorSequence}`,activeId,()=>{}),abort=()=>scope.dispose();props.parent.signal.addEventListener('abort',abort,{once:true});if(!props.parent.active)scope.dispose();setOwner({parent:props.parent,id:activeId,revision,scope});return()=>{props.parent.signal.removeEventListener('abort',abort);scope.dispose();};},[props.parent,activeId,revision]);
+ useEffect(()=>{const scope=new ReadScope(props.parent.identity,`${props.parent.routeInstanceId}:product-editor:${++editorSequence}`,activeId,()=>{}),abort=()=>scope.dispose();props.parent.signal.addEventListener('abort',abort,{once:true});if(!props.parent.active)scope.dispose();const originalCommand=scope.active?capability.recovery?.read(scope.identity,activeId)??null:null;setOwner({parent:props.parent,id:activeId,revision,scope,originalCommand});return()=>{props.parent.signal.removeEventListener('abort',abort);scope.dispose();};},[props.parent,activeId,revision,capability.recovery]);
  if(!props.parent.active||owner?.parent!==props.parent||owner.id!==activeId||owner.revision!==revision||!owner.scope.active)return null;
  if((capability.client.contractVersion??1)!==(capability.reader.contractVersion??1))return <p role="alert">商品维护服务版本尚未对齐，请稍后重新打开。</p>;
  const reload=(id:string,tab:ProductReadOnlyPageTab=editorTab)=>{setEditorTab(tab);setActiveId(id);setRevision(v=>v+1);};
- return <section className="product-editor" aria-label={activeId?'编辑商品':'新增商品'}>{activeId?<ExistingEditor key={owner.scope.routeInstanceId} {...props} capability={capability} scope={owner.scope} editorTab={editorTab} targetId={activeId} reload={reload}/>:<EditorForm key={owner.scope.routeInstanceId} {...props} capability={capability} scope={owner.scope} editorTab={editorTab} detail={null} reload={reload}/>}</section>;
+ return <section className="product-editor" aria-label={activeId?'编辑商品':'新增商品'}>{owner.originalCommand?<RestoredEditor key={owner.scope.routeInstanceId} {...props} capability={capability} scope={owner.scope} editorTab={editorTab} originalCommand={owner.originalCommand} reload={reload}/>:activeId?<ExistingEditor key={owner.scope.routeInstanceId} {...props} capability={capability} scope={owner.scope} editorTab={editorTab} targetId={activeId} reload={reload}/>:<EditorForm key={owner.scope.routeInstanceId} {...props} capability={capability} scope={owner.scope} editorTab={editorTab} detail={null} reload={reload}/>}</section>;
+}
+/** Reuse the original recovery actions before reading details: a committed
+ * DELETE may already return 404, while CREATE has no saved target ID yet. */
+function RestoredEditor(props:ProductEditorProps&{readonly scope:ReadScope;readonly originalCommand:ProductMaintenanceCommand;readonly editorTab:ProductReadOnlyPageTab;readonly reload:(id:string,tab?:ProductReadOnlyPageTab)=>void}){
+ const [write,setWrite]=useState<ProductEditorController|null>(null);
+ useEffect(()=>{const state=new ProductEditorController({scope:props.scope,client:props.capability.client,originalCommand:props.originalCommand,newRequestKey:props.capability.newRequestKey,onRecoveryRequired:props.capability.onRecoveryRequired,onAccessFailure:e=>props.onAccessFailure(new HttpQueryError(e.kind==='unauthenticated'?'unauthenticated':'forbidden',e.code,e.status))});setWrite(state);return()=>state.dispose();},[props.scope,props.capability,props.originalCommand]);
+ return write&&props.scope.active?<RestoredEditorView {...props} write={write}/>:null;
+}
+function RestoredEditorView(props:ProductEditorProps&{readonly scope:ReadScope;readonly write:ProductEditorController;readonly editorTab:ProductReadOnlyPageTab;readonly reload:(id:string,tab?:ProductReadOnlyPageTab)=>void}){
+ const state=useSyncExternalStore(props.write.subscribe,props.write.getSnapshot,props.write.getSnapshot),busy=state.phase==='submitting'||state.phase==='checking';
+ useEffect(()=>{props.onCanLeaveChange(()=>!['submitting','checking'].includes(props.write.getSnapshot().phase));return()=>props.onCanLeaveChange(null);},[props.write,props.onCanLeaveChange]);
+ const finish=()=>{const completed=committedProductWrite(props.write,props.scope,props.capability);if(completed){props.onSaved(completed.result.targetId);if(completed.command.action==='DELETE')props.onClose();else props.reload(completed.result.targetId,props.editorTab);}};
+ if(!props.scope.active||state.phase==='disposed')return null;
+ return <div className="pc-detail-workbench product-detail-workbench product-source-ui"><div className="pc-detail-sticky"><div className="gold-head iw-head pc-page-head"><h1>商品操作结果待确认</h1><div className="actions iw-head-actions"><button type="button" className="btn" disabled={busy} onClick={props.onClose}>返回商品信息</button></div></div></div>
+  {state.phase==='submitting'&&<p role="status">正在按原请求确认商品操作，请保留当前页面。</p>}
+  <ProductRecoveryActions write={props.write} phase={state.phase} finish={finish}/>
+  {state.error&&<div id="pc-editor-error" className="inline-error" role="alert">{state.error.message}</div>}
+ </div>;
+}
+function committedProductWrite(write:ProductEditorController,scope:ReadScope,capability:ProductEditorProps['capability']){
+ const state=write.getSnapshot();if(!scope.active||state.phase!=='committed'||!state.command||!state.result)return null;
+ capability.recovery?.resolved(scope.identity,state.command.requestKey);
+ return {command:state.command,result:state.result};
+}
+function ProductRecoveryActions(props:{readonly write:ProductEditorController;readonly phase:ReturnType<ProductEditorController['getSnapshot']>['phase'];readonly finish:()=>void}){
+ return props.phase==='uncertain'||props.phase==='checking'?<div className="product-editor-recovery" role="status">保存结果尚未确认。<UIButton disabled={props.phase==='checking'} onClick={()=>void props.write.recover().then(props.finish)}>查回保存结果</UIButton><UIButton disabled={props.phase==='checking'} onClick={()=>void props.write.retryOriginal().then(props.finish)}>按原请求重试</UIButton></div>:null;
 }
 function ExistingEditor(props:ProductEditorProps&{readonly scope:ReadScope;readonly targetId:string;readonly editorTab:ProductReadOnlyPageTab;readonly reload:(id:string,tab?:ProductReadOnlyPageTab)=>void}){
  const {snapshot,read,cancel,cancelled}=useProductRead(props.scope,async input=>{try{return await props.capability.reader.readDetail(input);}catch(error){if(props.scope.active&&!input.signal.aborted&&error instanceof HttpQueryError&&(error.kind==='unauthenticated'||error.kind==='forbidden'))props.onAccessFailure(error);throw error;}},(value,p)=>{(props.capability.reader.contractVersion===2?validateProductMaintenanceDetailV2:validateProductMaintenanceDetail)(value,p.productId);});
@@ -94,7 +120,7 @@ function EditorFields(p:Fields){
  const remember=(id:string|null,name:string|null,kind:string)=>{if(id&&name)p.setLabels(current=>({...current,[`${kind}:${id}`]:name}));};
  const changeSkus=(skus:readonly ProductSkuInput[])=>{p.setSkus(skus);const actual=actualSpecSelection(skus);p.setSpecSelection({colors:[...new Set([...p.specSelection.colors,...actual.colors])],fits:[...new Set([...p.specSelection.fits,...actual.fits])]});};
  const changeSpecSelection=(kind:'colors'|'fits',ids:readonly string[])=>{p.setSpecSelection({...p.specSelection,[kind]:ids});const selected=new Set(ids);p.setSkus(p.skus.map(s=>s.enabled&&!selected.has(kind==='colors'?s.colorId:s.fitId)?{...s,enabled:false}:s));};
- const finish=()=>{const result=p.write.getSnapshot().result;if(result){p.onSaved(result.targetId);if(p.write.getSnapshot().command?.action==='DELETE')p.onClose();else p.reload(result.targetId,currentTab.current);}};
+ const finish=()=>{const completed=committedProductWrite(p.write,p.scope,p.capability);if(completed){p.onSaved(completed.result.targetId);if(completed.command.action==='DELETE')p.onClose();else p.reload(completed.result.targetId,currentTab.current);}};
  const save=async(action:ProductMaintenanceCommand['action']=existing?'EDIT':'CREATE')=>{p.setError('');try{
   if(!can(action)||pending||(action==='CREATE'||action==='EDIT')&&(unresolvedSpecs||mediaBlocked))return;
   if(action==='CREATE')await p.write.submit({action,values:p.values,skus:p.skus,barcodes:p.barcodes,...(mediaDirty?{imageChanges}:{})});
@@ -114,7 +140,7 @@ function EditorFields(p:Fields){
   <div id="pc-editor-error" className="inline-error" role="alert">{(p.error||state.error)&&<>{p.error||state.error?.message}{existing&&state.error?.kind==='conflict'&&<UIButton onClick={requestReload}>读取最新商品</UIButton>}</>}</div>
   {mediaUploads.some(row=>row.phase==='uploading')&&<p role="status">正在准备图片，请稍候。</p>}
   {state.phase==='submitting'&&<p role="status">正在保存商品，请保留当前页面。</p>}
-  {(state.phase==='uncertain'||state.phase==='checking')&&<div className="product-editor-recovery" role="status">保存结果尚未确认。<UIButton disabled={state.phase==='checking'} onClick={()=>void p.write.recover().then(finish)}>查回保存结果</UIButton><UIButton disabled={state.phase==='checking'} onClick={()=>void p.write.retryOriginal().then(finish)}>按原请求重试</UIButton></div>}
+  <ProductRecoveryActions write={p.write} phase={state.phase} finish={finish}/>
   {deleted&&<p role="status">该商品已删除，仅可查看。</p>}
   {unresolvedSpecs&&<p className="product-field-hint" role="status">已选颜色或版型尚无启用规格，请在规格页填写实际组合，或移除未使用的选择。</p>}
  </>;

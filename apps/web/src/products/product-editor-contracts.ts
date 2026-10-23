@@ -1,6 +1,6 @@
 import type { ProductMaintenanceCommand as ProductMaintenanceCommandV1, ProductMaintenanceCommandV2, ProductMaintenanceMediaCommandV2, ProductMaintenanceResult, ProductWriteValues as ProductWriteValuesV1, ProductWriteValuesV2, ProductMaintenanceDetail as ProductMaintenanceDetailV1, ProductMaintenanceDetailV2 } from '../../../../packages/application/src/product-maintenance-ports.ts';
 import type { Selection } from '../inventory/contracts.ts';
-import type { ReadScope } from '../loading/read-scope.ts';
+import type { ReadIdentity, ReadScope } from '../loading/read-scope.ts';
 import type { QueryRead } from '../loading/latest-query.ts';
 import type { ProductMaintenanceCandidateQuery, ProductMaintenanceCandidatePage } from '../../../../packages/application/src/product-maintenance-ports.ts';
 import type { ProductReadOnlyReader } from '../inventory/product-contracts.ts';
@@ -25,7 +25,12 @@ export interface ProductEditorCapability {
   readonly reader: ProductMaintenanceReader; readonly client: ProductMaintenanceClient;
   readonly newRequestKey: () => string;
   readonly allowedActions: readonly ProductMaintenanceCommand['action'][];
-  readonly onRecoveryRequired: (command: ProductMaintenanceCommand) => void;
+  readonly onRecoveryRequired: (command: ProductMaintenanceCommand, identity: ReadIdentity) => void;
+  /** The existing session owner binds pending commands to this exact identity/target. */
+  readonly recovery?: {
+    readonly read: (identity: ReadIdentity, productId: string | null) => ProductMaintenanceCommand | null;
+    readonly resolved: (identity: ReadIdentity, requestKey: string) => void;
+  };
   readonly productReader: ProductReadOnlyReader;
   readonly dictionaryReader: Pick<DictionaryBrowserReader, 'readSizeGroups'>;
   /** Separate authorized scheme-description read; never executes barcode rules. */
@@ -70,9 +75,11 @@ export interface ProductMaintenanceClient {
 }
 export interface ProductEditorOptions {
   readonly scope: ReadScope; readonly client: ProductMaintenanceClient; readonly newRequestKey: () => string;
+  /** Already submitted request; restoring it allocates no key and performs no IO. */
+  readonly originalCommand?: ProductMaintenanceCommand;
   readonly onAccessFailure: (error: ProductMaintenanceError) => void;
   /** The session owner must retain the original command when detaching an unsettled editor. */
-  readonly onRecoveryRequired: (command: ProductMaintenanceCommand) => void;
+  readonly onRecoveryRequired: (command: ProductMaintenanceCommand, identity: ReadIdentity) => void;
 }
 export interface ProductEditorWriteState {
   readonly phase: 'idle' | 'submitting' | 'checking' | 'uncertain' | 'rejected' | 'committed' | 'disposed';

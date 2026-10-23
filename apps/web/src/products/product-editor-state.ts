@@ -13,6 +13,15 @@ export class ProductEditorController {
   readonly #abort = () => this.dispose();
   constructor(options: ProductEditorOptions) {
     if (typeof options.newRequestKey !== 'function' || typeof options.onRecoveryRequired !== 'function' || typeof options.onAccessFailure !== 'function') throw new TypeError('Explicit product editor session owners are required.');
+    if (options.originalCommand !== undefined) {
+      const command = snapshotQueryParameters(options.originalCommand);
+      const parse = options.client.contractVersion === 2 ? (Object.hasOwn(command,'imageChanges') ? parseProductMaintenanceMediaCommandV2 : parseProductMaintenanceCommandV2) : parseProductMaintenanceCommand;
+      // Validate through the existing versioned contract, retaining the exact
+      // original field/array order and payload rather than rebuilding a request.
+      parse(command);
+      if ((command.action === 'CREATE' ? null : command.id) !== options.scope.entityId) throw new TypeError('Original product command does not match this editor target.');
+      this.#state = Object.freeze({ ...initial(), phase: 'uncertain', command });
+    }
     this.#options = options; options.scope.signal.addEventListener('abort', this.#abort, { once: true });
     if (!options.scope.active) this.dispose();
   }
@@ -82,7 +91,7 @@ export class ProductEditorController {
     const pending = ['submitting', 'checking', 'uncertain'].includes(this.#state.phase) ? this.#state.command : null;
     ++this.#sequence; this.#options.scope.signal.removeEventListener('abort', this.#abort);
     this.#publish({ ...initial(), phase: 'disposed' }); this.#listeners.clear();
-    if (pending) this.#options.onRecoveryRequired(pending);
+    if (pending) this.#options.onRecoveryRequired(pending, this.#options.scope.identity);
   }
 }
 

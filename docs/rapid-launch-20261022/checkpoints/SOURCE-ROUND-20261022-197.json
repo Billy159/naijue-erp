@@ -1,0 +1,80 @@
+{
+  "atUtc": "2026-10-23T18:08:35.342809+00:00",
+  "parent": "44d0e95afe8a0eeb335590b7fe91fdc329c5323d",
+  "taskId": "F2-PRODUCT-RECOVERY-SEAM-01",
+  "files": [
+    {
+      "path": "apps/web/src/products/product-editor-contracts.ts",
+      "bytes": 9378,
+      "sha256": "a9d55e3cc2eb83ea5125e011dea6d4d100a8d1d0e3f6de75cdd12a9c082502d6",
+      "beforeBytes": 8871,
+      "beforeSha256": "865d4edf7e9b89cb8e28f337c5319b534f6433573cb37f02f7d6353794d629ff",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-editor-state.ts",
+      "bytes": 8574,
+      "sha256": "951d4fd14351d9e7e3247660f9a081099388a7be87b73b4029f2edb3a298c106",
+      "beforeBytes": 7772,
+      "beforeSha256": "2e6cde3c9b9dce6e35d79b7ac51b3a947a6e74d4e4a7fb4ed2fd649a735586e2",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-editor.tsx",
+      "bytes": 31703,
+      "sha256": "ee804e8221675789c2f2caea2e10b9aacee42ebdb90017c42004b2e002e49673",
+      "beforeBytes": 27981,
+      "beforeSha256": "a7cd269ca0ad9b823bb5bb3be5109778c4a9baa6497664d0348c2ff566440124",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-editor-state.test.ts",
+      "bytes": 23978,
+      "sha256": "a4063387129dc06d1c95fcef32b4669a394b53a43f341df9269bd67d55fd2d40",
+      "beforeBytes": 17393,
+      "beforeSha256": "cea3201b9779c8460031615c624c562746cacbe21567f458c60c9f654f5eb2bb",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-RECOVERY-SEAM-01/RESULT.json",
+  "ownerReceiptSha256": "bb1795d8c6d06e7da05569e9fe7d5f96df05060a8341ca49862bf06b4041c561",
+  "api": "API.md",
+  "apiSha256": "6fcafd9935bf30e61af2b0286bc90086d8ec401d8ce3b0d6277ce3063c91e79d",
+  "implemented": [
+    "Options.originalCommand validates via existing client version/parser and retains immutable original snapshot bytes/ordering; seeded uncertain, no new key or automatic IO; native target match required",
+    "onRecoveryRequired(command, originalScope.identity); legacy single-argument callbacks remain compatible",
+    "Capability.recovery.read(identity,productId|null) reads only host-held matching command; optional seam; no app/session owner or persistence added",
+    "Actual committed state only notifies recovery.resolved(identity,originalKey), then uses existing saved/reload/close callbacks",
+    "Restored editor reuses existing recovery actions before detail read; committed DELETE404 and CREATE no-target cases remain recoverable without fabricating aggregate facts",
+    "Normal six-tab form reuses same completion/action helpers; no six-tab DOM/CSS/business feature migration rerun"
+  ],
+  "checksAdopted": [
+    {
+      "name": "Targeted original/new product state and raw-media-key/body tests",
+      "result": "PASS_8_FAIL_0",
+      "log": "state.log"
+    },
+    {
+      "name": "Actual ProductEditor/ReadContext/Controller/public buttons StrictMode with synthetic host/client ports",
+      "result": "PASS_4_SCENARIOS",
+      "details": "dom-result.json",
+      "log": "dom.log",
+      "capture": "delete-confirmed-dom.html"
+    },
+    {
+      "name": "Affected actual transitive TypeScript graph, including changed test source",
+      "result": "PASS_DIAGNOSTICS_0",
+      "log": "strict.log"
+    },
+    {
+      "name": "Changed-lines trailing whitespace and one final LF",
+      "result": "PASS"
+    }
+  ],
+  "qualification": "SOURCE_FIXED_OWNER_AFFECTED_CHECKS_ONLY. CompleteV1/V2/MediaV2 originalcommand recovery seam only; actual stable trusted Application/session owner remains F1 not yet connected. No real HTTP/PG/Chrome/recovery/deployment pass; current196 preview excludes197.",
+  "remaining": [
+    "No actual F1 host integration or production session recovery conclusion",
+    "No real HTTP/PG/Chrome/production mutation or deployment",
+    "Old six-tabs/48/inventory full DOM/whole104 acceptance not rerun or incremented"
+  ]
+}
