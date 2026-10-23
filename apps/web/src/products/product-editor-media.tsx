@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ReadScope } from '../loading/read-scope.ts';
 import type { ProductReadOnlyReader } from '../inventory/product-contracts.ts';
 import { ProductTab } from '../inventory/product-tab-images.tsx';
-import { ProductReadState, useProductRead } from '../inventory/product-tab-state.tsx';
+import { useProductPanelActive, ProductReadState, useProductRead } from '../inventory/product-tab-state.tsx';
 import { assertProductSpecifications } from '../inventory/product-model.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import { UIButton } from '../components/standard-controls.tsx';
@@ -35,6 +35,7 @@ type GalleryProps=MediaContext&{readonly productId:string;readonly media:Product
 /** Readonly metadata owns its current version; never lends editor maintenance/reload authority. */
 export function ProductReadOnlyMedia(props:MediaContext&{readonly productId:string;readonly media:ProductEditorMediaReader}){return <MediaGallery {...props} readOnly/>;}
 function MediaGallery(props: GalleryProps) {
+  const active=useProductPanelActive();
   const { snapshot, read, cancel, cancelled } = useProductRead(props.scope, async input => {
     try { return await props.media.readImages(input); }
     catch (error) { accessFailure(props, error, input.signal); throw error; }
@@ -43,6 +44,7 @@ function MediaGallery(props: GalleryProps) {
     if (!props.readOnly && data.version !== props.expectedVersion) throw new HttpQueryError('conflict', 'PRODUCT_MEDIA_VERSION_MISMATCH');
   });
   const [preview, setPreview] = useState<{ image: ProductEditorImage; label: string } | null>(null);
+  useEffect(()=>{if(!active)setPreview(null);},[active]);
   const data = snapshot.phase === 'success' ? snapshot.success?.data : null;
   const item = (image: ProductEditorImage, label: string) => <MediaThumbnail key={`${image.id}:${image.version}`} image={image} label={label} open={() => setPreview({ image, label })}/>;
   if (!props.readOnly && snapshot.phase === 'error' && snapshot.error instanceof HttpQueryError && snapshot.error.code === 'PRODUCT_MEDIA_VERSION_MISMATCH')
@@ -57,7 +59,7 @@ function MediaGallery(props: GalleryProps) {
     </div></section>)}
     <MediaColors {...props} images={data.images.filter(image => image.role === 'COLOR')} item={item}/>
     {data.images.some(image => image.role === null) && <section className="product-photo-section" aria-label="未分类"><h3>未分类</h3><div className="product-photo-row">{data.images.filter(image => image.role === null).map((image, index) => item(image, `未分类图片 ${index + 1}`))}</div></section>}
-    {preview && <MediaOriginalPreview key={`${preview.image.id}:${preview.image.version}`} {...props} media={props.media} image={preview.image} label={preview.label} close={() => setPreview(null)}/>}
+    {active && preview && <MediaOriginalPreview key={`${preview.image.id}:${preview.image.version}`} {...props} media={props.media} image={preview.image} label={preview.label} close={() => setPreview(null)}/>}
   </div>}</ProductReadState>;
 }
 function MediaColors(props: MediaContext & { readonly readOnly?: boolean; readonly images: readonly ProductEditorImage[]; readonly item: (image: ProductEditorImage, label: string) => React.ReactNode }) {

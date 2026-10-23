@@ -84,3 +84,7 @@ export function productEditorDraftFingerprint(draft:{readonly values:ProductWrit
  const values='seasonIds' in draft.values?{...draft.values,seasonIds:draft.values.seasonIds===null?null:[...draft.values.seasonIds].sort()}:draft.values;
  return JSON.stringify({values,skus:draft.skus,barcodes:draft.barcodes});
 }
+
+export interface ProductSpecSelection {readonly colors:readonly string[];readonly fits:readonly string[]}
+export function actualSpecSelection(skus:readonly ProductSkuInput[]):ProductSpecSelection {const active=skus.filter(s=>s.enabled);return {colors:[...new Set(active.map(s=>s.colorId))],fits:[...new Set(active.map(s=>s.fitId))]};}
+export function hasUnresolvedSpecSelection(selection:ProductSpecSelection,skus:readonly ProductSkuInput[]):boolean {const actual=actualSpecSelection(skus);return selection.colors.some(id=>!actual.colors.includes(id))||selection.fits.some(id=>!actual.fits.includes(id));}

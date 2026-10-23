@@ -1,0 +1,334 @@
+{
+  "atUtc": "2026-10-23T02:50:53.633506+00:00",
+  "parent": "a413603a349dbbdda98f45260740935740c0bbf0",
+  "groups": [
+    {
+      "slice": "F2-PRODUCT-BASE-SPECS-WHOLE-01",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-BASE-SPECS-WHOLE-DELIVERY-v1.json",
+      "receiptSha256": "ac28388fb0b5424d1b07c569940b1ee25e768885cf93dd1c10043c8a6b21bac1",
+      "receiptSnapshot": {
+        "taskId": "F2-PRODUCT-BASE-SPECS-WHOLE-01",
+        "owner": "F2",
+        "status": "SOURCE_READY_AFFECTED_DOM_TYPES_IMPORT_GRAPH_CASCADE_PASS_BROWSER_PENDING",
+        "writableRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+        "reportRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2",
+        "authorization": "Existing direct human reporting authorization sourceMessageId 01a161f7-a5e8-7e10-9059-9537c28910c2 plus C current whole-page migration instruction/new2file registration; original Demo chat closed and never contacted",
+        "files": [
+          {
+            "path": "apps/web/src/products/product-editor.tsx",
+            "beforeSha256": "0bff698e2c403808522e1eef119ea68be4bab9dbf7e44124d86f13b463c114dd",
+            "afterSha256": "c2fa66eb07e6e82f9d392283d754aefaf7f35774644ebfcec8e0a8bc34491757",
+            "new": false
+          },
+          {
+            "path": "apps/web/src/products/product-editor-base.tsx",
+            "beforeSha256": "ab3b1299d8baff150f3decd7fe08481852e95083c74a0fde80d0225d56675e5c",
+            "afterSha256": "75ea1a5eb8c3e982046fb390f2ab0260421706e04385950a0577035087d90ee2",
+            "new": false
+          },
+          {
+            "path": "apps/web/src/products/product-editor-specs.tsx",
+            "beforeSha256": "86fac99520f3f092528de0191d90a0fea68b354abdff97f6340d500192a5c804",
+            "afterSha256": "4baf49a378a4c4d68d735cda9d6592760370a8c873ca9bfe37a503cd05fb41a3",
+            "new": false
+          },
+          {
+            "path": "apps/web/src/products/product-editor-state.ts",
+            "beforeSha256": "eb662b89e255e47dec03da5b28ce693713eb6ca91790761dbc2ed7e1fd705b51",
+            "afterSha256": "8f28c81cd5d6073471009d8a4784b24c4752a1c0487293bd15835aca0d8b79cc",
+            "new": false
+          },
+          {
+            "path": "apps/web/src/products/product-editor-barcodes.tsx",
+            "beforeSha256": "388d89af0834657067fe7e3e7cbfd16c30bc11fb756764014d0262b63d7c3f99",
+            "afterSha256": "7a9eb9549de16564b2ddf9e660c0204aae5f7d0b6115ae1188b8a6da4463109f",
+            "new": false
+          },
+          {
+            "path": "apps/web/src/products/product-editor-prices.tsx",
+            "beforeSha256": null,
+            "afterSha256": "54fe586f8098f68f43d54718373288e5a92ec2c9a410467749d2fbf33d2323d0",
+            "new": true
+          },
+          {
+            "path": "apps/web/src/products/product-editor-media.tsx",
+            "beforeSha256": "8263986a9770445138122bbabd6ae925e9c804fd1c7ceafe9bcbeb5146fcdd3a",
+            "afterSha256": "d4010f3fc4b2a9c3dcad80dc929cd2762ae85ac1bf46aeddddbc9d339ac8eea5",
+            "new": false
+          },
+          {
+            "path": "apps/web/src/products/product-page-base.tsx",
+            "beforeSha256": "4180edeb5f63751d9cec3b941f648785e7eb00d4aeadba330deba25ae34eaa4a",
+            "afterSha256": "ff4e5413033c1c86340dec5981abe802dc8181505b248efd153c74f0ae7c9539",
+            "new": false
+          },
+          {
+            "path": "apps/web/src/products/product-page-view.tsx",
+            "beforeSha256": "7480303747feb6a030f8d53ae3eb9b8e8858b42fd7da8a4af436566e456afade",
+            "afterSha256": "f06af2dcee9c1f474fdd988a32a37137282cbf6bbfec4cf6233f5c9109ca01f4",
+            "new": false
+          },
+          {
+            "path": "apps/web/src/products/product-page-stock.tsx",
+            "beforeSha256": "fa8f08bd390ad30bdcbdf8c91a892d809b883a43099a7bfaa7ead6679805c846",
+            "afterSha256": "87fd47a7fe7757f5a3ea1c46af6eed9a7dc21872defddf2b9d163f2d7203f285",
+            "new": false
+          },
+          {
+            "path": "apps/web/src/products/product-page.css",
+            "beforeSha256": "55f820dc22ae834fb61cf7fc008834583b6723b07d62b3e2ae6c0a107af0aa4b",
+            "afterSha256": "3b6b4ef6790cd1310ed3c83359a9ac02dfb96b60fd67b4ff9b399a67ee25f224",
+            "new": false
+          },
+          {
+            "path": "apps/web/src/inventory/product-tab-state.tsx",
+            "beforeSha256": "13eec8cabc8cffe54afc513f93c7cc324df67672ada3eabec5295f4792bd7d76",
+            "afterSha256": "771b60e28c64204d65e683deeda3addad3b23eb6be2048549fbf6ef2375e500b",
+            "new": false
+          },
+          {
+            "path": "apps/web/src/inventory/product-tab-images.tsx",
+            "beforeSha256": "4b5bbec541698f0c82d5ba69d3b96d0148d6cb8ccf888a8ef027c86b4d4af24f",
+            "afterSha256": "1cb3ac861e42fcf7ef51e38feff318015ef87b6415bf5ad573e4c0af3ac1046b",
+            "new": false
+          }
+        ],
+        "sharedDependency": {
+          "path": "apps/web/src/components/standard-tabs.tsx",
+          "owner": "F1",
+          "sha256ObservedDuringPassedChecks": "a2552102ea372327b2e51527d51ebf101b9ffb86c2a9cf3a40265981fd10450a",
+          "writtenByF2": false,
+          "api": "panels[key]({active}), original children default behavior unchanged"
+        },
+        "checks": [
+          {
+            "label": "types-v2",
+            "exitCode": 0,
+            "logBytes": 0,
+            "log": "PRODUCT-BASE-SPECS-WHOLE-types-v2.log"
+          },
+          {
+            "label": "editor-dom-final",
+            "exitCode": 0,
+            "logBytes": 936,
+            "log": "PRODUCT-BASE-SPECS-WHOLE-editor-dom-final.log"
+          },
+          {
+            "label": "lifecycle-final",
+            "exitCode": 0,
+            "logBytes": 527,
+            "log": "PRODUCT-BASE-SPECS-WHOLE-lifecycle-final.log"
+          },
+          {
+            "label": "import-graph-final",
+            "exitCode": 0,
+            "logBytes": 220,
+            "log": "PRODUCT-BASE-SPECS-WHOLE-import-graph-final.log"
+          }
+        ],
+        "cascade": "PASS exact1 required marker rule only; current actual editor/readonly DOM + actual immutable C113 full inlineCSS, first/last order. No browser geometry.",
+        "syntheticEditorProof": [
+          "original ProductEditor stable draft/controller",
+          "filled/new9fields, 3spec sections, actualTransfer cancel",
+          "visited DOM/draft/scroll retained; no unused tab candidate reads",
+          "synthetic rejected EDIT preserves productVersion4/SKUversion7/nativeIDs/raw00001234/legacyNULL/0.00/requestKey exactly once",
+          "extracted nine-price paste retains blank/null vs0 and input identity",
+          "all6 editor visited; images/stock unavailable remain explicit; no fake save/SKU"
+        ],
+        "syntheticReadonlyProof": [
+          "actual ProductFullPageHost + native HTTP DTO readers; all6 firstvisit reads only",
+          "successful all6 revisit reads remain zero; stable DOM and scroll state",
+          "hidden request abort; ignored-abort late result discarded; exact interrupted request resume on activation",
+          "explicit user cancel and failed read require explicit user retry",
+          "parent scope disposal clears all visited panels and data"
+        ],
+        "knownWarnings": [
+          "Arco existing React19 element.ref compatibility warning observed in editor DOM harness; no upgrade/patch made"
+        ],
+        "sourceFacts": [
+          "Original write-controller bytes prefix identical; only pure spec helper/type appended to eliminate initial Transfer import",
+          "New2files exact editor inline leaf extraction + active overlay guard; no backend/shared/root/manifest/package/lock writes",
+          "No Git/build/server/PG/browser/deploy commands by F2"
+        ],
+        "notProven": [
+          "fresh QF browser/pointer/keyboard geometry and performance",
+          "whole-page independent acceptance; original count remains0",
+          "real business save/SKU/new-master creation/PG/roles/production",
+          "full build/release/resource closure/deployment"
+        ],
+        "blockers": [],
+        "next": "C freeze exact13 with F1 shared seam into one candidate and hand affected whole product base/specs plus six-tab activation to QF; F2 no full build or independent browser rerun. Other finite source migration leaves stay existing queue.",
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-BASE-SPECS-WHOLE-check-results-v1.json",
+            "sha256": "00354d70b12a40e42bb0f3c9434172bad48725b31869a4018822e976257ea361"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-BASE-SPECS-WHOLE-import-graph-v1.json",
+            "sha256": "b34809e5c3ed15225faf5eeb30501cc335da972d43b9f2baac245799e04aa20a"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-BASE-SPECS-WHOLE-cascade-result-v1.json",
+            "sha256": "ac3e7eeec153c8e71838972a402ea408310d6fcb7a7e0025cb24c5578e4aad06"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-BASE-SPECS-WHOLE-FILES-v1.json",
+            "sha256": "7390c548f4b87a8752cf0eab1587369b3b32efa60b6374e48158b0a4f75b5f8a"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-BASE-SPECS-WHOLE-exact13.patch",
+            "sha256": "892e5408f5b316b30620b719ccc3d6381d0e6313d0b388a56d37deb12a77e439"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-BASE-SPECS-WHOLE-SOURCE-RUNTIME-MAP-v1.json",
+            "sha256": "6989ba00200bf1ff02e60a3f41af0035556bafb7d3271f33c0d175abc5eedfe9"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/products/product-editor.tsx",
+          "owner": "F2",
+          "bytes": 21265,
+          "sha256": "c2fa66eb07e6e82f9d392283d754aefaf7f35774644ebfcec8e0a8bc34491757",
+          "newAtGitParent": false
+        },
+        {
+          "path": "apps/web/src/products/product-editor-base.tsx",
+          "owner": "F2",
+          "bytes": 22298,
+          "sha256": "75ea1a5eb8c3e982046fb390f2ab0260421706e04385950a0577035087d90ee2",
+          "newAtGitParent": false
+        },
+        {
+          "path": "apps/web/src/products/product-editor-specs.tsx",
+          "owner": "F2",
+          "bytes": 13765,
+          "sha256": "4baf49a378a4c4d68d735cda9d6592760370a8c873ca9bfe37a503cd05fb41a3",
+          "newAtGitParent": false
+        },
+        {
+          "path": "apps/web/src/products/product-editor-state.ts",
+          "owner": "F2",
+          "bytes": 7195,
+          "sha256": "25b8154b21d41d35dc56188801c4f757cd278cee66f0ad5fc3d90cc095c705bc",
+          "newAtGitParent": false
+        },
+        {
+          "path": "apps/web/src/products/product-editor-barcodes.tsx",
+          "owner": "F2",
+          "bytes": 11589,
+          "sha256": "7a9eb9549de16564b2ddf9e660c0204aae5f7d0b6115ae1188b8a6da4463109f",
+          "newAtGitParent": true
+        },
+        {
+          "path": "apps/web/src/products/product-editor-prices.tsx",
+          "owner": "F2",
+          "bytes": 2186,
+          "sha256": "54fe586f8098f68f43d54718373288e5a92ec2c9a410467749d2fbf33d2323d0",
+          "newAtGitParent": true
+        },
+        {
+          "path": "apps/web/src/products/product-editor-media.tsx",
+          "owner": "F2",
+          "bytes": 9951,
+          "sha256": "d4010f3fc4b2a9c3dcad80dc929cd2762ae85ac1bf46aeddddbc9d339ac8eea5",
+          "newAtGitParent": false
+        },
+        {
+          "path": "apps/web/src/products/product-page-base.tsx",
+          "owner": "F2",
+          "bytes": 1713,
+          "sha256": "ff4e5413033c1c86340dec5981abe802dc8181505b248efd153c74f0ae7c9539",
+          "newAtGitParent": false
+        },
+        {
+          "path": "apps/web/src/products/product-page-view.tsx",
+          "owner": "F2",
+          "bytes": 8592,
+          "sha256": "f06af2dcee9c1f474fdd988a32a37137282cbf6bbfec4cf6233f5c9109ca01f4",
+          "newAtGitParent": false
+        },
+        {
+          "path": "apps/web/src/products/product-page-stock.tsx",
+          "owner": "F2",
+          "bytes": 7053,
+          "sha256": "87fd47a7fe7757f5a3ea1c46af6eed9a7dc21872defddf2b9d163f2d7203f285",
+          "newAtGitParent": false
+        },
+        {
+          "path": "apps/web/src/products/product-page.css",
+          "owner": "F2",
+          "bytes": 22066,
+          "sha256": "3b6b4ef6790cd1310ed3c83359a9ac02dfb96b60fd67b4ff9b399a67ee25f224",
+          "newAtGitParent": false
+        },
+        {
+          "path": "apps/web/src/inventory/product-tab-state.tsx",
+          "owner": "F2",
+          "bytes": 5118,
+          "sha256": "771b60e28c64204d65e683deeda3addad3b23eb6be2048549fbf6ef2375e500b",
+          "newAtGitParent": false
+        },
+        {
+          "path": "apps/web/src/inventory/product-tab-images.tsx",
+          "owner": "F2",
+          "bytes": 6356,
+          "sha256": "1cb3ac861e42fcf7ef51e38feff318015ef87b6415bf5ad573e4c0af3ac1046b",
+          "newAtGitParent": false
+        }
+      ]
+    }
+  ],
+  "gitBaselineReconciliation": [
+    {
+      "path": "apps/web/src/products/product-editor-barcodes.tsx",
+      "gitBaseline": "ABSENT_AT_PARENT",
+      "registeredF2NewLeaf": true,
+      "receiptBeforeSha256": "388d89af0834657067fe7e3e7cbfd16c30bc11fb756764014d0262b63d7c3f99",
+      "meaning": "Receipt before pin for barcodes describes F2 intermediate WIP, not parent Git; both new leaves were explicitly registered before implementation."
+    },
+    {
+      "path": "apps/web/src/products/product-editor-prices.tsx",
+      "gitBaseline": "ABSENT_AT_PARENT",
+      "registeredF2NewLeaf": true,
+      "receiptBeforeSha256": null,
+      "meaning": "Receipt before pin for barcodes describes F2 intermediate WIP, not parent Git; both new leaves were explicitly registered before implementation."
+    }
+  ],
+  "controllerScope": "Freeze exact13 original F2 complete product base/specification UI and six-tab lifecycle. Consume fixed C117 F1 StandardTabs. Scoped source DOM/types/import graph/cascade adopted only. Original QF receives next integrated candidate for new UI/lifecycle/performance, no whole-page/real save/PostgreSQL/build acceptance inferred. C113 remains actual browser until new fixed source build/HTTP.",
+  "formatOnlyAmendment": {
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-BASE-SPECS-WHOLE-EOF-AMENDMENT-v1.json",
+    "sha256": "8dec25ce4916075dbe4782a569a4f1d6e2a79621e3372bc63d9c680b272d7f66",
+    "receiptSnapshot": {
+      "taskId": "F2-PRODUCT-BASE-SPECS-WHOLE-01",
+      "amendment": "EOF-ONLY-01",
+      "status": "SOURCE_READY_FORMAT_ONLY_ORIGINAL_EVIDENCE_REUSED",
+      "originalDelivery": "PRODUCT-BASE-SPECS-WHOLE-DELIVERY-v1.json",
+      "file": "apps/web/src/products/product-editor-state.ts",
+      "beforeSha256": "8f28c81cd5d6073471009d8a4784b24c4752a1c0487293bd15835aca0d8b79cc",
+      "afterSha256": "25b8154b21d41d35dc56188801c4f757cd278cee66f0ad5fc3d90cc095c705bc",
+      "exactChange": "Remove one LF at EOF: two trailing LF bytes become one; all preceding bytes identical.",
+      "removedBytes": 1,
+      "other12FilesUnchanged": true,
+      "checksReused": [
+        "Strict TS",
+        "affected editor DOM",
+        "readonly lifecycle DOM",
+        "import graph",
+        "matched source cascade"
+      ],
+      "checksRerun": [],
+      "parentBaselineClarification": {
+        "apps/web/src/products/product-editor-barcodes.tsx": "ABSENT_AT_PARENT per C; original receipt before388d describes intermediate WIP, not Git parent",
+        "apps/web/src/products/product-editor-prices.tsx": "ABSENT_AT_PARENT per C"
+      },
+      "notProven": [
+        "new browser wholepage acceptance",
+        "real business save",
+        "deployment"
+      ]
+    },
+    "meaning": "Remove only one surplus final LF; other12 and all semantic source checks reused; initial failed freeze preserved without commit."
+  }
+}

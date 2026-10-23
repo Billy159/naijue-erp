@@ -7,14 +7,16 @@ import type { ProductImage, ProductImageParameters, ProductImageSummary } from '
 import type { ProductReadOnlyReader } from './product-contracts.ts';
 interface ImageTabProps { readonly scope: ReadScope; readonly reader: Pick<ProductReadOnlyReader, 'readProductImages' | 'readProductImage'> }
 import { assertProductImage, assertProductImages } from './product-model.ts';
-import { ProductReadState, useProductRead } from './product-tab-state.tsx';
+import { useProductPanelActive, ProductReadState, useProductRead } from './product-tab-state.tsx';
 export function ProductTab({ scope, reader }: ImageTabProps) {
+  const active=useProductPanelActive();
   const { snapshot, read, cancel, cancelled } = useProductRead(scope, value => reader.readProductImages(value), assertProductImages);
   const data = snapshot.success?.data;
   const [image, setImage] = useState<ProductImageSummary | null>(null);
+  useEffect(()=>{if(!active)setImage(null);},[active]);
   return <ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!data}>{data && <>
     {data.images.length ? <><p className="pd-hint">点击图片查看大图</p><div className="pd-images">{data.images.map(item => <Thumbnail key={item.id} image={item} open={() => setImage(item)} />)}</div></> : <p className="iw-inline-state">暂无图片</p>}
-    {image && <ImagePreview key={image.id} scope={scope} reader={reader} image={image} close={() => setImage(null)} />}
+    {active && image && <ImagePreview key={image.id} scope={scope} reader={reader} image={image} close={() => setImage(null)} />}
   </>}</ProductReadState>;
 }
 function Thumbnail({ image, open }: { readonly image: ProductImageSummary; readonly open: (button: HTMLButtonElement) => void }) {

@@ -168,6 +168,7 @@
 .product-editor-base-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 14px;max-width:none;margin:0}
 .product-editor-base-grid>.field{display:flex;flex-direction:column;gap:4px;margin:0;min-width:0;color:var(--ca-ink-2);font-size:12px;line-height:16px}
 .product-editor-base-grid>.field>span{line-height:16px}
+.product-required-mark{color:var(--ca-critical)}
 .product-editor-base-grid .erp-input.arco-input{box-sizing:border-box;width:100%;height:32px;min-height:32px;padding:5px 9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);font:13px var(--ca-font-sans)}
 .product-editor-base-grid .erp-input.arco-input:hover{border-color:var(--ca-control-border-hover)}
 .product-editor-base-grid .erp-input.arco-input:focus{outline:0;border-color:var(--ca-control-focus-border)}

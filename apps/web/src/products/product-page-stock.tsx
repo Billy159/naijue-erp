@@ -6,14 +6,15 @@ import type { ProductWarehouseStockItem, ProductWarehouseStockPage, ProductStock
 import { productStockResponse, productStockOverviewResponse } from './product-page-validation.ts';
 import { ProductPagedRead, type ProductPageTabProps } from './product-page-view.tsx';
 import { LatestQuery } from '../loading/latest-query.ts';
-import { ProductReadState } from '../inventory/product-tab-state.tsx';
+import { useProductPanelActive, useProductQueryActivity, ProductReadState } from '../inventory/product-tab-state.tsx';
 import { formatQuantity } from '../inventory/model.ts';
 
 const states = { UNKNOWN: '未知', MISSING: '缺少库存记录', UNMAPPED: '未映射', READ_FAILED: '读取失败' } as const;
 type StockRow = ProductWarehouseStockItem & { readonly id: string };
 export function View({ scope, reader, openInventory, navigationDisabled }: ProductPageTabProps) {
+  const active=useProductPanelActive();
   const [navigating,setNavigating]=useState(false),[navigationError,setNavigationError]=useState('');
-  const navigate=async()=>{if(!scope.active||navigationDisabled||navigating||!openInventory)return;setNavigating(true);setNavigationError('');try{const moved=await openInventory();if(scope.active&&!moved)setNavigationError('暂未离开商品页，请确认未保存资料后重试。');}catch{if(scope.active)setNavigationError('库存详情暂不可打开，请重试。');}finally{if(scope.active)setNavigating(false);}};
+  const navigate=async()=>{if(!active||!scope.active||navigationDisabled||navigating||!openInventory)return;setNavigating(true);setNavigationError('');try{const moved=await openInventory();if(scope.active&&!moved)setNavigationError('暂未离开商品页，请确认未保存资料后重试。');}catch{if(scope.active)setNavigationError('库存详情暂不可打开，请重试。');}finally{if(scope.active)setNavigating(false);}};
   const navigation=<UIButton variant="text" disabled={!openInventory||navigationDisabled||navigating} onClick={()=>void navigate()}>查看详细库存</UIButton>;
   return <>{navigationError&&<p role="alert">{navigationError}</p>}{reader.stock?.readOverview?<StockOverview scope={scope} read={reader.stock.readOverview} navigation={navigation}/>:<LegacyStock scope={scope} reader={reader} navigation={navigation}/>}</>;
 }
@@ -32,17 +33,19 @@ let overviewSequence=0;
 type OverviewReader=NonNullable<NonNullable<ProductPageTabProps['reader']['stock']>['readOverview']>;
 function StockOverview(props:{readonly scope:ProductPageTabProps['scope'];readonly read:OverviewReader;readonly navigation:ReactNode}){
   const [owner,setOwner]=useState<{id:number;scope:ProductPageTabProps['scope'];read:OverviewReader;query:LatestQuery<ProductStockOverviewQuery,ProductStockOverviewResult|null>}|null>(null);
-  useEffect(()=>{const query=new LatestQuery<ProductStockOverviewQuery,ProductStockOverviewResult|null>({scope:props.scope,execute:async read=>productStockOverviewResponse(await props.read(read),read.parameters)});let attached=true;setOwner({id:++overviewSequence,scope:props.scope,read:props.read,query});queueMicrotask(()=>{if(attached&&props.scope.active&&props.scope.entityId)void query.run(parseProductStockOverviewQuery({productId:props.scope.entityId,warehouseMode:'NON_ZERO'}));});return()=>{attached=false;query.dispose();};},[props.scope,props.read]);
+  useEffect(()=>{const query=new LatestQuery<ProductStockOverviewQuery,ProductStockOverviewResult|null>({scope:props.scope,execute:async read=>productStockOverviewResponse(await props.read(read),read.parameters)});setOwner({id:++overviewSequence,scope:props.scope,read:props.read,query});return()=>{query.dispose();};},[props.scope,props.read]);
+  useProductQueryActivity(owner?.scope===props.scope&&owner.read===props.read?owner.query:null,props.scope.entityId?parseProductStockOverviewQuery({productId:props.scope.entityId,warehouseMode:'NON_ZERO'}):null);
   return owner?.scope===props.scope&&owner.read===props.read&&props.scope.active?<StockOverviewResults key={owner.id} {...props} query={owner.query}/>:null;
 }
 function StockOverviewResults(props:{readonly scope:ProductPageTabProps['scope'];readonly navigation:ReactNode;readonly query:LatestQuery<ProductStockOverviewQuery,ProductStockOverviewResult|null>}){
+  const active=useProductPanelActive();
   const snapshot=useSyncExternalStore(props.query.subscribe,props.query.getSnapshot,props.query.getSnapshot),[mode,setMode]=useState<ProductStockOverviewQuery['warehouseMode']>('NON_ZERO'),[cancelled,setCancelled]=useState(false);
-  const run=(warehouseMode=mode)=>{if(props.scope.active&&props.scope.entityId){setCancelled(false);void props.query.run(parseProductStockOverviewQuery({productId:props.scope.entityId,warehouseMode}));}};
+  const run=(warehouseMode=mode)=>{if(active&&props.scope.active&&props.scope.entityId){setCancelled(false);void props.query.run(parseProductStockOverviewQuery({productId:props.scope.entityId,warehouseMode}));}};
   // A mode/target error never re-labels the previous successful snapshot as current.
   const data=snapshot.phase==='success'&&snapshot.success?.parameters.warehouseMode===mode?snapshot.success.data:null;
   const phase=snapshot.phase==='success'&&snapshot.success?.parameters.warehouseMode!==mode?'idle':snapshot.phase;
   const label=data?.coverage==='AUTHORIZED_SUBSET'?'授权范围合计':'总库存';
-  return <><div className="product-stock-head"><strong>{label}：{data?(data.total.state==='KNOWN'?formatQuantity(data.total.quantity!):'未知'):'未提供'}</strong><div><UIButton variant="text" aria-pressed={mode==='ALL'} onClick={()=>{if(!props.scope.active)return;const next=mode==='ALL'?'NON_ZERO':'ALL';setMode(next);run(next);}}>{mode==='ALL'?'仅看有库存':'查看全部仓库'}</UIButton>{props.navigation}</div></div>
+  return <><div className="product-stock-head"><strong>{label}：{data?(data.total.state==='KNOWN'?formatQuantity(data.total.quantity!):'未知'):'未提供'}</strong><div><UIButton variant="text" aria-pressed={mode==='ALL'} onClick={()=>{if(!active||!props.scope.active)return;const next=mode==='ALL'?'NON_ZERO':'ALL';setMode(next);run(next);}}>{mode==='ALL'?'仅看有库存':'查看全部仓库'}</UIButton>{props.navigation}</div></div>
    <ProductReadState phase={phase} retry={()=>run()} cancel={()=>{setCancelled(true);props.query.cancel();}} cancelled={cancelled} empty={!data}>
     {data&&<><table className="product-stock-overview" aria-label="商品逐仓库存概览"><thead><tr><th>仓库</th><th className="num">现存量</th></tr></thead><tbody>{data.items.map(item=><tr key={item.warehouseId}><td>{item.warehouseName}</td><td className="num">{item.state==='KNOWN'?formatQuantity(item.quantity!):'未知'}</td></tr>)}</tbody></table>
      {!data.items.length&&<div className="product-stock-empty">{data.coverage==='AUTHORIZED_SUBSET'?'当前授权仓库库存均为 0。':'各仓库当前库存为 0'}</div>}

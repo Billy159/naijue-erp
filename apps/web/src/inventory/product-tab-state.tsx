@@ -1,39 +1,65 @@
 import { UIButton } from '../components/standard-controls.tsx';
-import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import type { LatestQuery, QueryRead, QuerySnapshot } from '../loading/latest-query.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
 import { createProductQuery } from './product-model.ts';
 import type { ProductParameters } from './product-contracts.ts';
+
+/** Local product-panel visibility only. Defaults preserve existing drawer/route reads. */
+export const ProductPanelActivity = createContext(true);
+export const useProductPanelActive = () => useContext(ProductPanelActivity);
+/** Retain successful pages; interrupt in-flight reads while hidden and resume only
+ * that same request on return. Explicit user cancellation is never auto-retried. */
+export function useProductQueryActivity<P, D>(query: LatestQuery<P, D> | null, initial: P | null) {
+  const active = useProductPanelActive();
+  const owner = useRef<{ query: LatestQuery<P, D>; started: boolean; interrupted: P | null } | null>(null);
+  useEffect(() => {
+    if (!query) return;
+    if (owner.current?.query !== query) owner.current = { query, started: false, interrupted: null };
+    const value = owner.current;
+    let attached = true;
+    if (!active) {
+      const snapshot = query.getSnapshot();
+      if (snapshot.phase === 'loading' && snapshot.request) {
+        value.interrupted = snapshot.request.parameters as P;
+        query.cancel();
+      }
+    } else queueMicrotask(() => {
+      if (!attached || owner.current !== value || query.getSnapshot().phase === 'disposed') return;
+      const parameters = value.interrupted ?? (!value.started ? initial : null);
+      value.started = true; value.interrupted = null;
+      if (parameters !== null) void query.run(parameters);
+    });
+    return () => { attached = false; };
+  }, [query, active]);
+  return active;
+}
 
 const idleSnapshot: QuerySnapshot<ProductParameters, never> = Object.freeze({ phase: 'idle', request: null, success: null, error: null });
 const emptySnapshot = () => idleSnapshot;
 const noSubscription = () => () => {};
 
 export function useProductRead<T>(scope: ReadScope, execute: (read: QueryRead<ProductParameters>) => Promise<T>, validate: (data: T, parameters: Readonly<ProductParameters>) => void) {
+  const panelActive = useProductPanelActive();
   const [cancelled, setCancelled] = useState(false);
-  type Attachment = { readonly scope: ReadScope; readonly query: LatestQuery<ProductParameters, T>; pending: boolean };
+  type Attachment = { readonly scope: ReadScope; readonly query: LatestQuery<ProductParameters, T> };
   const [attachment, setAttachment] = useState<Attachment | null>(null);
   const activeAttachment = useRef<Attachment | null>(null);
   const query = attachment?.scope === scope && scope.active ? attachment.query : null;
   const snapshot = useSyncExternalStore<QuerySnapshot<ProductParameters, T>>(query?.subscribe ?? noSubscription, query?.getSnapshot ?? emptySnapshot, query?.getSnapshot ?? emptySnapshot);
   const current = () => activeAttachment.current?.scope === scope && scope.active ? activeAttachment.current : null;
-  const read = () => { setCancelled(false); const value = current(); if (value && scope.entityId) { value.pending = false; void value.query.run({ productId: scope.entityId }); } };
+  const read = () => { if (!panelActive) return; setCancelled(false); const value = current(); if (value && scope.entityId) { void value.query.run({ productId: scope.entityId }); } };
   useEffect(() => {
     // Queries, like their scopes, belong to one effect attachment. StrictMode
     // cleanup must not leave the next setup reading through a disposed query.
     const next = createProductQuery(scope, execute, validate);
-    const value = { scope, query: next, pending: true };
-    const parameters = scope.entityId ? Object.freeze({ productId: scope.entityId }) : null;
+    const value = { scope, query: next };
     activeAttachment.current = value; setAttachment(value);
     setCancelled(false);
-    // Let synchronous effect cleanup detach StrictMode's discarded attachment
-    // before starting transport. Explicit cancel/retry also consumes this start.
-    queueMicrotask(() => {
-      if (activeAttachment.current === value && value.pending && scope.active && parameters) { value.pending = false; void next.run(parameters); }
-    });
-    return () => { value.pending = false; if (activeAttachment.current === value) activeAttachment.current = null; next.dispose(); };
+    return () => { if (activeAttachment.current === value) activeAttachment.current = null; next.dispose(); };
   }, [scope]);
-  return { snapshot, read, cancelled, cancel: () => { setCancelled(true); const value = current(); if (value) { value.pending = false; value.query.cancel(); } } };
+  useProductQueryActivity(query, scope.entityId ? { productId: scope.entityId } : null);
+  return { snapshot, read, cancelled, cancel: () => { setCancelled(true); const value = current(); if (value) { value.query.cancel(); } } };
 }
 export function ProductReadState(props: { readonly phase: string; readonly retry: () => void; readonly cancel: () => void; readonly empty: boolean; readonly cancelled: boolean; readonly children: ReactNode }) {
   if (props.phase === 'loading') return <p className="iw-inline-state" role="status">正在读取当前页签… <UIButton type="button" className="iw-link" onClick={props.cancel}>取消读取</UIButton></p>;
