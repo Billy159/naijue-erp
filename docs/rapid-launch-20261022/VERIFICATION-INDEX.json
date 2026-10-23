@@ -10278,10 +10278,73 @@
       "scope": "Only fixed113 originalbuild/400repo inputs383modules+981deps and three exactHTTP bytes. Synthetic audit0 data, no browser/PG/save acceptance",
       "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-1578a5b-01/SERVER.json",
       "evidenceSha256": "532ff5094332e5e9ce790bb79fe936061e81ecb8f0e8974d8aac14a6a46e118f"
+    },
+    {
+      "id": "QB137",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice137-header-capture-carrier-c637c149/RESULT.json",
+      "evidenceBytes": 11706,
+      "evidenceSha256": "d6a7f86a8d8eec02a5d4213779a4151f495a089648cd6ec43ca94c84bcce3a23",
+      "result": "NEED_FIX",
+      "scope": "Effective limited original-owner/reviewer scope only; history preserved, not whole-page or realbusiness PASS",
+      "adoption": "C adopts original effective conclusion without duplicate technical review"
+    },
+    {
+      "id": "QB138",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice138-payment-method-filter-b5fe3c69/RESULT.json",
+      "evidenceBytes": 10933,
+      "evidenceSha256": "f99d127c0cb2d84808e7f9c8308e73b66ce6650a5b9200ec644adc56b7fd5de0",
+      "result": "PASS",
+      "scope": "Effective limited original-owner/reviewer scope only; history preserved, not whole-page or realbusiness PASS",
+      "adoption": "C adopts original effective conclusion without duplicate technical review"
+    },
+    {
+      "id": "QB139",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice139-qb137-f01-cleanup-fix1/RESULT.json",
+      "evidenceBytes": 10956,
+      "evidenceSha256": "37a64dd31a8e8d866174feebc0c1898c9c66ca06ffc1336efff2de74f8e56cce",
+      "result": "PASS",
+      "scope": "Effective limited original-owner/reviewer scope only; history preserved, not whole-page or realbusiness PASS",
+      "adoption": "C adopts original effective conclusion without duplicate technical review"
+    },
+    {
+      "id": "C48",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-c103-offline-resume-20261023-48/release-receipts/c03-r1-c103-offline-resume-20261023-48/engine-result.json",
+      "evidenceBytes": 214,
+      "evidenceSha256": "9cd4b6dd24eca8a4ee0098ea4b4cbc2d4d3b3b6d81bf2a59ecf20113ec0d9aa3",
+      "result": "FAILED_FIRST_ERROR_PRESERVED_NO_REPLAY",
+      "scope": "Effective limited original-owner/reviewer scope only; history preserved, not whole-page or realbusiness PASS",
+      "adoption": "C adopts original effective conclusion without duplicate technical review"
+    },
+    {
+      "id": "C50",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-h06-qa-acl-witness-20261023-50/release-receipts/c03-h06-qa-acl-witness-20261023-50/engine-result.json",
+      "evidenceBytes": 15591,
+      "evidenceSha256": "bf24f9fb32cc5100b26e2104cda2dbdf95754ab446baafcba8d5baec0ea03bef",
+      "result": "CAPTURED_23ACL_WITNESS_NOT_H06_ACCEPTED",
+      "scope": "Effective limited original-owner/reviewer scope only; history preserved, not whole-page or realbusiness PASS",
+      "adoption": "C adopts original effective conclusion without duplicate technical review"
+    },
+    {
+      "id": "QF113-RUNTIME-v023",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v023-qf-1578a5b-affected/RESULT.json",
+      "evidenceBytes": 5442,
+      "evidenceSha256": "9ef6f799ef87adaeb82bd5efd39d32100ecc3adc4ac6e6b9f2943d51e3745bea",
+      "result": "PARTIAL_UI_VERIFIED_NEEDS_FIX_AND_COVERAGE",
+      "scope": "Effective limited original-owner/reviewer scope only; history preserved, not whole-page or realbusiness PASS",
+      "adoption": "C adopts original effective conclusion without duplicate technical review"
+    },
+    {
+      "id": "C120-SYNTHETIC-PREVIEW-HTTP",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-f3ab765-01/SERVER.json",
+      "evidenceBytes": 1431,
+      "evidenceSha256": "f04abc69024695c2db9d8191d4ac8c4d76f8175b9436e454aa43d975e865a0d7",
+      "result": "PASS_THREE_EXACT_HTTP_INPUTS_SYNTHETIC_ONLY",
+      "scope": "Effective limited original-owner/reviewer scope only; history preserved, not whole-page or realbusiness PASS",
+      "adoption": "C adopts original effective conclusion without duplicate technical review"
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-23T02:30:55.143713+00:00",
+  "updatedAt": "2026-10-23T03:02:06.253342+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -11332,33 +11395,33 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-23T02:30:55.143713+00:00",
-    "sourceRound": 115,
-    "sourceCheckpoint": "1e873a1d9bde0390d4cd6e9940d8794199487f92",
+    "atUtc": "2026-10-23T03:02:06.253342+00:00",
+    "sourceRound": 121,
+    "sourceCheckpoint": "bbd62485d1e5e559b09066563ad09a0a8c2f522b",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "url": "http://127.0.0.1:57850/synthetic-unified.html",
-      "source": "1578a5b0823af4c85a33aaecd629babdae3f4d5c",
-      "build": "ui-preview-1578a5b-01-build01",
-      "pid": 30991,
-      "sessionId": 30700,
-      "htmlSha256": "748f119f360e29b6b34a05a1f0f0497614c8c928a7747385f92f642aa32285fa",
-      "identitySha256": "0149220af4ec1b303e34d11e3f749f4fb8bb3331c28f9762906bc12662663055",
-      "provenanceSha256": "ac766a6fedb43bc7773dd6870d5693398f5bcc4cc622cb5f84dc3dd86331f208",
-      "actualInputs": 400,
-      "sourceModules": 383,
+      "url": "http://127.0.0.1:57851/synthetic-unified.html",
+      "source": "f3ab765526e6eb281ce1ea9aa5b76d670ec5d6a4",
+      "build": "ui-preview-f3ab765-01-build01",
+      "pid": 43478,
+      "sessionId": 73060,
+      "htmlSha256": "7225ed4afa6181372d91247d4705df4e114dba7dc0c98e4373c556961eb25d9d",
+      "identitySha256": "c95e24453b78535001af3535721fbcd33f8d12b713c90d5dfbefc79884206b64",
+      "provenanceSha256": "202dcf279217786a1a4f2ce0b9fcc23016d9b30dce8f61b684321ac7a4a372fa",
+      "actualInputs": 402,
+      "sourceModules": 385,
       "lockedDependencyModules": 981,
-      "totalModules": 1364,
+      "totalModules": 1366,
       "syntheticOnly": true,
       "wholePageAccepted": false
     },
-    "nextPreview": "Source115 coldpointer frozen; F1 completeSALE/F2 productbase-spec/F3 paymentfullstates WIP. Next shared fullstate build only. Current113 actualUI unchanged.",
-    "r1": "C48 notstarted: initialcontrolupload timedout, no request/tmp/receipt and dispatcherREADY verified02:19Z; exactpublicprefix resume Kprep, no runreplay. C43/C44 retained; no candidateapp/publicswitch.",
-    "qa": "C49FILE actualinput/genuinepreCOMMIT/native3e37 passed, 23ACLguard failed, rollback/release/dispose passed, postnotrun/3acq. QB136 rawNULL false-reject condition confirmed but actualpredicate UNKNOWN. C50 finite23row witness Kprep; noH06/purpose/GRANT.",
-    "import": "QB134 actual261641/14279 receipt-chainPASS; C outside48238f/c8016d signed realImportfalse; newcopiesgenuineNOTRUN. C114pureexport QB135sourcePASS. FullHeader/onceLinejoin Kprep",
+    "nextPreview": "C120 complete page batch LIVE57851; C121 production CSS output change fixed but not in synthetic build, actual production graph pending.",
+    "r1": "C48 exact existing transfer resume / request1 / start1; actual offline npm failed exit1 after17.067s. Cache105 seeded,45partial retained by rename, no app/web/health/publicswitch. C51 finite failure diagnostic prepared, not submitted; no replay48.",
+    "qa": "C50 actual23ACL witness complete2.824s,4acq/4outerSET/window0/native3e37, known pre+capture+post COMMIT/release/dispose. Effective/identity/shape all valid, only rawNULL representation failed. QB new actual witness review pending; noH06/purpose/GRANT.",
+    "import": "QB139 only cleanup F01 fixed/passed and public snapshot preserved; new Header-only C window not yet signed; final Line/Header/docSHA join still K preparation.",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Normal remote826af55 independentlyverified; source115 and currentdirectives pending next exactsync",
+    "github": "Normal branch c637c149 independently verified exact3commits;116–121 and this handoff pending next exact-object FF.",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -11367,10 +11430,10 @@
       "wholeOverlayClassesAccepted": 0,
       "notRun": 57,
       "uiDifference": 30,
-      "partial": 6,
-      "waitingIntegration": 10,
+      "partial": 7,
+      "waitingIntegration": 9,
       "approvedException": 1,
-      "latestReceipt": "DEMO-C105-S01-NEW-DIFFS"
+      "latestReceipt": "QF113-RUNTIME-v023"
     },
     "isolatedMorePreview": {
       "url": "http://127.0.0.1:57849/component-more.html",
@@ -11381,9 +11444,9 @@
       "mainNativeAuthorExpanded": false,
       "actualConclusion": "DEMO108 component density/font/clamp/window-scroll residuals pass; native48 not incremented, nativeancestor and>=4native categories untested"
     },
-    "audit": "QF113timingPASS; twoapprovedpaymentaudit0 overlays in113synthetic only, actualentrypending",
-    "demoSession": "Human Demo已登录; dedicatedChat notified",
-    "uiMigration": "OriginalDemo closedbyhuman. C evidencehandoff→existingQF browser/perf, old104/48/0whole reused. F1wholeSALE andStandardTabs shared seam, F2 firstvisit product6tabs, F3 payment maintenance/lazy sourceimplementation running.",
-    "backend": "Twoinstalled skills applied tooriginalD1D2D3. D2 investigates native paymentMethod filter blockingF3; existing orglist only, newexactpath registration/contract beforewrite; D1H06 andD3carrier continue withoutoldQA repeats."
+    "audit": "113 actualaudit0 consumer confirmed, twoP2 focus/same-scope retention open and assigned originalF3; current120 not repaired yet. Synthetic0 is not formal audit data.",
+    "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
+    "uiMigration": "C116 payment/C117 fullSALE+sharedtabs/C118 productbase-specs6tabs/C119 mixed-readonly/C120 real filter reader fixed and built once; originalQF browser/source/perf, old48 effective evidence reused.",
+    "backend": "D2 native method-filter exact6 QB138 source/protocol PASS + C120 paired actual HTTP adapter. Real PG/filter/ACL/representative performance not tested; originalskills/stack/owner boundaries retained."
   }
 }
