@@ -1,13 +1,13 @@
 import { requireDomain } from "../../domain/src/errors.ts";
 import { entityId } from "../../domain/src/values.ts";
 import { checkedProductActor, parseProductQuery, activeProductRead } from "./product-query-validation.ts";
-import { partyRequestKey } from "./party-maintenance-validation.ts";
+import { partyName, partyRequestKey } from "./party-maintenance-validation.ts";
 import { parseProductMaintenanceCandidates, parseProductMaintenanceCommand, parseProductMaintenanceCommandV2, parseProductMaintenanceMediaCommandV2, planProductImageWrites, productMaintenanceVersion, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS } from "./product-maintenance-validation.ts";
 import { authorizeProductMaintenance } from "./product-maintenance-authorization.ts";
 import { requestHash } from "./request-hash.ts";
 import type { ActorContext } from "./ports.ts";
 import type { ProductAggregate, ProductAuditObject, ProductBarcodeRecord, ProductMaintenanceAction, ProductMaintenanceDependencies, ProductMaintenanceDetail, ProductMaintenanceDetailV2, ProductMaintenanceResult, ProductSkuRecord, ProductStoredRecord, ProductMaintenanceImagesDto } from "./product-maintenance-ports.ts";
-import type { ProductMaintenanceMediaCommandV2, ProductMaintenanceTransaction, ProductMaintenanceImageMetadata } from "./product-maintenance-ports.ts";
+import type { DocumentProductSkuAppendInput, ProductSkuInput, ProductMaintenanceMediaCommandV2, ProductMaintenanceTransaction, ProductMaintenanceImageMetadata } from "./product-maintenance-ports.ts";
 
 const coordinate = (row: { readonly colorId: string; readonly fitId: string; readonly sizeId: string }) => JSON.stringify([row.colorId, row.fitId, row.sizeId]);
 function productFacts(p: ProductStoredRecord): ProductAuditObject {
@@ -19,6 +19,18 @@ function skuFacts(s: ProductSkuRecord): ProductAuditObject {
   return { id: s.id, product_id: s.productId, color_id: s.colorId, fit_id: s.fitId, size_id: s.sizeId, sku_code: s.skuCode,
     enabled: s.enabled, version: s.version, created_operation_id: s.createdOperationId };
 }
+function newSkuRecord(item: Pick<ProductSkuInput, "skuCode" | "colorId" | "fitId" | "sizeId" | "enabled">, id: string, productId: string, operationId: string): ProductSkuRecord {
+  return { id, productId, skuCode: item.skuCode, colorId: item.colorId, fitId: item.fitId, sizeId: item.sizeId,
+    enabled: item.enabled, version: 1, createdOperationId: operationId };
+}
+function productRootDelta(previous: ProductStoredRecord | undefined, next: ProductStoredRecord) {
+  const after: Record<string, ProductAuditObject[string]> = {}, before: Record<string, ProductAuditObject[string]> = {};
+  const facts = productFacts(next), oldFacts = previous ? productFacts(previous) : null;
+  for (const [key, value] of Object.entries(facts)) if (oldFacts === null || different(value, oldFacts[key]!)) {
+    after[key] = value; if (oldFacts !== null) before[key] = oldFacts[key]!;
+  }
+  return { before, after };
+}
 function barcodeFacts(b: ProductBarcodeRecord): ProductAuditObject { return { id: b.id, barcode: b.barcode, sku_id: b.skuId, barcode_kind: b.kind, scheme_id: b.schemeId, enabled: b.enabled }; }
 function imageFacts(i: ProductMaintenanceImageMetadata): ProductAuditObject { return { id: i.id, product_id: i.productId, file_ref: i.fileRef, mime: i.mime, byte_size: i.byteSize.toString(), display_order: i.displayOrder,
   created_at: i.createdAt, created_by_account_id: i.createdByAccountId, version: i.version, image_role: i.role, color_id: i.colorId }; }
@@ -26,6 +38,55 @@ const different = (a: unknown, b: unknown) => requestHash(a) !== requestHash(b);
 function result(value: { readonly operationId: string; readonly kind: string; readonly targetId: string; readonly version: number }): ProductMaintenanceResult {
   requireDomain(value.kind === "PRODUCT", "INVALID_DATABASE_VALUE", "Invalid product receipt kind");
   return { operationId: entityId("operation", value.operationId), kind: "PRODUCT", targetId: entityId("product", value.targetId), version: productMaintenanceVersion(value.version) };
+}
+/** Borrowed original transaction only: no new authority, IDs, pool or commit.
+ * D1's current parent-SAVE evidence must authorize this exact append purpose. */
+export async function appendProductSkusInTransaction(tx: ProductMaintenanceTransaction, original: DocumentProductSkuAppendInput): Promise<{
+  readonly result: ProductMaintenanceResult; readonly addedSkus: readonly ProductSkuRecord[];
+}> {
+  const input = structuredClone(original), actor = checkedProductActor(input.actor), productId = entityId("product", input.productId);
+  const expectedVersion = productMaintenanceVersion(input.expectedVersion), operationId = entityId("operation", input.operationId), requestKey = partyRequestKey(input.requestKey);
+  requireDomain(typeof input.completedAt === "string" && Number.isFinite(Date.parse(input.completedAt)) && /(?:Z|[+-]\d{2}:\d{2})$/.test(input.completedAt), "INVALID_ACTION_TIME", "Trusted action time with timezone required");
+  requireDomain(Array.isArray(input.skus) && input.skus.length > 0 && input.skus.length <= PRODUCT_MAINTENANCE_MAX_SKUS, "PRODUCT_SPEC_REQUIRED", "Only actual missing document specifications may be appended");
+  const ids = new Set<string>(), codes = new Set<string>(), coordinates = new Set<string>();
+  const skus = input.skus.map(row => {
+    const id = entityId("sku", row.id); entityId("color", row.colorId); entityId("fit", row.fitId); entityId("size", row.sizeId);
+    const code = partyName(row.skuCode), key = coordinate(row);
+    requireDomain(row.productId === productId && row.version === 1 && row.createdOperationId === operationId && row.enabled === true
+      && code === `NJNEW-${id.replaceAll("-", "").toLowerCase()}`, "INVALID_PRODUCT_MAINTENANCE", "Exact new document SKU identity, code and creation operation required");
+    requireDomain(!ids.has(id) && !codes.has(code) && !coordinates.has(key), "PRODUCT_SPEC_CONFLICT", "Repeated new SKU identity, code or coordinate");
+    ids.add(id); codes.add(code); coordinates.add(key); return newSkuRecord(row, id, productId, operationId);
+  });
+  const hash = requestHash({ kind: "DOCUMENT_SKU_APPEND_V1", actorAccountId: actor.accountId, productId, expectedVersion, skus });
+  await authorizeProductMaintenance(tx.evidence, actor, "EDIT");
+  const receipt = await tx.evidence.getReceipt(actor.accountId, requestKey, "PRODUCT");
+  if (receipt) {
+    requireDomain(receipt.requestHash === hash && receipt.action === "EDIT", "IDEMPOTENCY_CONFLICT", "Original append key has different content");
+    await authorizeProductMaintenance(tx.evidence, actor, "EDIT");
+    const saved = result(receipt.result);
+    requireDomain(saved.operationId === operationId && saved.targetId === productId && saved.version === expectedVersion + 1, "INVALID_DATABASE_VALUE", "Append receipt differs from original operation");
+    return { result: saved, addedSkus: skus };
+  }
+  const previous = await tx.load(productId);
+  requireDomain(previous !== undefined, "PRODUCT_NOT_FOUND", "Product identity is unavailable");
+  requireDomain(previous.product.version === expectedVersion, "VERSION_CONFLICT", "Product version changed");
+  requireDomain(previous.product.deletedAt === null, "PRODUCT_DELETED", "Deleted product identity is retained read-only");
+  requireDomain(previous.product.enabled, "PRODUCT_REFERENCE_UNAVAILABLE", "Document specification requires an enabled product");
+  requireDomain(expectedVersion < 2147483647, "VERSION_STORAGE_OVERFLOW", "Product version exhausted");
+  requireDomain(previous.skus.every(s => !ids.has(s.id) && !coordinates.has(coordinate(s)) && !codes.has(s.skuCode)), "PRODUCT_SPEC_CONFLICT", "Retained SKU identity, code or coordinate cannot be recreated or restored");
+  const next: ProductAggregate = { product: { ...previous.product, version: expectedVersion + 1 }, skus: [...previous.skus, ...skus], barcodes: previous.barcodes };
+  requireDomain(next.skus.length <= PRODUCT_MAINTENANCE_MAX_SKUS, "PRODUCT_MAINTENANCE_TOO_LARGE", "Saved aggregate would exceed readable SKU bound");
+  await tx.validateReferences(previous, next);
+  const { before, after } = productRootDelta(previous.product, next.product);
+  before.skus = []; after.skus = skus.map(skuFacts);
+  const completion = { operationId, actorAccountId: actor.accountId, requestKey, requestHash: hash, kind: "PRODUCT" as const, action: "EDIT" as const,
+    targetId: productId, oldVersion: expectedVersion, newVersion: next.product.version, beforeValues: before, afterValues: after, completedAt: input.completedAt };
+  requireDomain(typeof tx.evidence.prepare === "function", "MAINTENANCE_PREPARE_NOT_READY", "Original audit preparation is unavailable");
+  await tx.evidence.prepare(completion); await tx.putProduct(next.product, previous.product);
+  for (const sku of skus) await tx.putSku(sku, undefined);
+  const saved = result(await tx.evidence.complete(completion));
+  requireDomain(saved.operationId === operationId && saved.targetId === productId && saved.version === next.product.version, "INVALID_DATABASE_VALUE", "Product evidence differs from saved append");
+  return { result: saved, addedSkus: skus };
 }
 /** Actual aggregate rules; persistence/evidence use one explicitly supplied D1 transaction. */
 export function createProductMaintenanceService(dependencies: ProductMaintenanceDependencies) {
@@ -148,8 +209,7 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
           if (item.id === null) {
             requireDomain(![...skus.values()].some(s => coordinate(s) === coordinate(item)), "PRODUCT_SPEC_CONFLICT", "Existing SKU coordinate cannot be recreated");
             const skuId = entityId("sku", dependencies.newId("sku")); requireDomain(!skus.has(skuId), "PRODUCT_SPEC_CONFLICT", "New SKU id already exists");
-            skus.set(skuId, { id: skuId, productId: id, skuCode: item.skuCode, colorId: item.colorId, fitId: item.fitId, sizeId: item.sizeId,
-              enabled: item.enabled, version: 1, createdOperationId: operationId });
+            skus.set(skuId, newSkuRecord(item, skuId, id, operationId));
           } else {
             const old = skus.get(item.id);
             requireDomain(old && old.version === item.expectedVersion, "VERSION_CONFLICT", "SKU version changed");
@@ -191,11 +251,7 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
       const oldSkus = new Map((previous?.skus ?? []).map(s => [s.id, s])), oldBarcodes = new Map((previous?.barcodes ?? []).map(b => [b.id, b]));
       const changedSkus = next.skus.filter(s => !oldSkus.has(s.id) || different(s, oldSkus.get(s.id)!));
       const changedBarcodes = next.barcodes.filter(b => !oldBarcodes.has(b.id) || different(b, oldBarcodes.get(b.id)!));
-      const after: Record<string, ProductAuditObject[string]> = {}, before: Record<string, ProductAuditObject[string]> = {};
-      const facts = productFacts(nextProduct), oldFacts = previous ? productFacts(previous.product) : null;
-      for (const [key, value] of Object.entries(facts)) if (oldFacts === null || different(value, oldFacts[key]!)) {
-        after[key] = value; if (oldFacts !== null) before[key] = oldFacts[key]!;
-      }
+      const { before, after } = productRootDelta(previous?.product, nextProduct);
       requireDomain(previous === undefined || Object.keys(after).some(key => key !== "version") || changedSkus.length > 0 || changedBarcodes.length > 0 || imagePlan !== null && (imagePlan.before.length > 0 || imagePlan.after.length > 0),
         "NO_PRODUCT_CHANGE", "No actual product changes supplied");
       if (changedSkus.length) { after.skus = changedSkus.map(skuFacts); before.skus = changedSkus.flatMap(s => oldSkus.has(s.id) ? [skuFacts(oldSkus.get(s.id)!)] : []); }

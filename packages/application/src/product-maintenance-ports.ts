@@ -89,6 +89,13 @@ export type ProductMaintenanceCommandV2 = { readonly requestKey: string } & (
   | { readonly action: "DISABLE" | "RESTORE" | "DELETE"; readonly id: string; readonly expectedVersion: number }
 );
 export interface ProductMaintenanceResult { readonly operationId: string; readonly kind: "PRODUCT"; readonly targetId: string; readonly version: number }
+/** Internal same-SAVE append input. D1 supplies true provider-issued records and
+ * its original purpose-bound evidence; this is never a public product command. */
+export interface DocumentProductSkuAppendInput {
+  readonly actor: ActorContext; readonly productId: string; readonly expectedVersion: number;
+  readonly operationId: string; readonly requestKey: string; readonly completedAt: string;
+  readonly skus: readonly ProductSkuRecord[];
+}
 /** Structural seam implemented by D1's common driver; D2 does not write shared receipt/audit SQL. */
 export interface ProductMaintenanceEvidence {
   assertAllowed(actor: ActorContext, kind: "PRODUCT", action: ProductMaintenanceAction | "RECEIPT" | "DETAIL" | "CANDIDATES"): Promise<void>;

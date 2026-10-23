@@ -1,0 +1,98 @@
+{
+  "atUtc": "2026-10-23T14:06:39.773942+00:00",
+  "parent": "75f1f4a4664491623a437ecc907eb1ed5460e121",
+  "taskId": "B02_V11_GROUP_ONLY_INTERNAL_SKU_APPEND",
+  "files": [
+    {
+      "path": "packages/application/src/product-maintenance-service.ts",
+      "bytes": 36283,
+      "sha256": "13ac4d13252e30d11c8faafc00ac5365078f9c05ec9e1a7f74e864742b59ee55",
+      "owner": "D2"
+    },
+    {
+      "path": "packages/application/src/product-maintenance-ports.ts",
+      "bytes": 12822,
+      "sha256": "2ce19430be4a92c90e959eedd077a2be9cecf67b39891e8e79f7280570567be6",
+      "owner": "D2"
+    },
+    {
+      "path": "adapters/postgres/src/product-maintenance-store.ts",
+      "bytes": 42147,
+      "sha256": "3cc36901fefbc5e0e2a573f2385c1983b28b900db3f228d35b6fd98a6be3b44c",
+      "owner": "D2"
+    },
+    {
+      "path": "tests/product-maintenance.test.ts",
+      "bytes": 44792,
+      "sha256": "04c967ae58d3e340ac411e4fab2381e9c705fbb1b52b6f573283e87704f4209d",
+      "owner": "D2"
+    },
+    {
+      "path": "tests/product-maintenance-postgres-protocol.test.ts",
+      "bytes": 41645,
+      "sha256": "2041ec84485d788e5a4bcad9b6a00ffa1a8cb30201aa8eb6dd574164bff47516",
+      "owner": "D2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/V11-GROUP-INTERNAL-APPEND-v1.json",
+  "ownerReceiptSha256": "355b3480b965a0010f9f79cd4996326a3bb890981e7f0ec7c46c8885cd7da2c1",
+  "approval": "Human call_5a599b4fb02548d18f3d029c883d1148 approved narrowed group-only SAVE details; exact3 D2 production plus2 related tests",
+  "scope": {
+    "input": "DocumentProductSkuAppendInput {actor,productId,expectedVersion,operationId,requestKey,completedAt,skus:readonly ProductSkuRecord[]}",
+    "helper": "appendProductSkusInTransaction(tx,input): Promise<{result:ProductMaintenanceResult,addedSkus:readonly ProductSkuRecord[]}>",
+    "borrowedFactory": "withProductMaintenanceTransaction(context:PgProductMaintenanceContext,work,{seasonArray:boolean})",
+    "writeSequence": "Capture input; validate actual new records; original evidence current PRODUCT EDIT authorization and original-key hash/receipt; actual aggregate load/CAS; enabled/nondeleted product; forbid retained ID/code/coordinate reuse including disabled source SKUs; original full reference/group validation; prepare original sparse PRODUCT audit; root version+1; insert only new SKUs; original completion receipt.",
+    "hash": "requestHash({kind:DOCUMENT_SKU_APPEND_V1,actorAccountId,productId,expectedVersion,skus})",
+    "sharedOriginalCode": "Normal product service and internal append share newSkuRecord, productRootDelta, productFacts and skuFacts. Existing public command DTO and authority stay unchanged.",
+    "newRecords": "D1 supplies original provider-issued actual UUIDs and operations. New code exactly NJNEW- plus that SKU UUID lower-case32hex, version1/enabledtrue/createdOperationId matches original PRODUCT op.",
+    "borrowedLifetime": "Creates only ProductTransaction(context,null,seasonArray,null,null); work/finally close. No pool/connect/BEGIN/COMMIT/ROLLBACK/release or new authority. D1 original registered same-client context supplies narrow parent-purpose evidence and real runtime verification.",
+    "sourceIdentity": "Old product values/season arrays/prices/group/code retained; only root version advances; old SKU IDs/codes/NULL creation/barcodes retained. Audit before={version:v,skus:[]} and after={version:v+1,skus:fullOriginalSKU9}.",
+    "groupBoundary": "Original product-maintenance-store validateReferences membership SQL/predicate remains unchanged. No client group, no global size criterion, no read/projection/inventory edits."
+  },
+  "checksAdopted": {
+    "red": "New helper test invocation initially failed because original module had no appendProductSkusInTransaction export, then the same targeted seam passed after implementation.",
+    "targetedCommand": "node --test --test-name-pattern=\"v11 group append|v11 borrowed product append|all-size seam PG|root edit/sparse audit|actual root/SKU/raw-barcode|missing membership\" tests/product-maintenance.test.ts tests/product-maintenance-postgres-protocol.test.ts",
+    "passed": 9,
+    "newCases": 5,
+    "affectedOriginalCases": 4,
+    "skippedInThisInvocation": 0,
+    "proven": [
+      "Exact PRODUCT root-only version delta and newSKU9 sparse audit/receipt",
+      "Original key replay, changed-content conflict, source identity/NULL creation preservation",
+      "CAS, duplicate/rebind/invalid record rejection, member mismatch before mutation",
+      "Missing/failing prepared evidence and simulated outer SAVE failure rollback of product/audit/receipt",
+      "Borrowed original client has no transaction SQL/receipt writer and rejects escaped calls after close",
+      "Foreign/no-size outside actual product group rejected and denied evidence does not query storage"
+    ],
+    "strict": {
+      "status": "PASS_AFFECTED_STRICT_NO_EMIT",
+      "exitCode": 0,
+      "scope": "Strict noEmit dependency graph of exact3 source + 2 test files; no excludes added",
+      "trigger": "D1 notified original shared in-progress type graph completed; reran only the original failed strict invocation.",
+      "testsRerun": false,
+      "sourceChangedByD2": false,
+      "newExclusions": false
+    },
+    "actualPg": "NOT_RUN",
+    "newSql": "D1/C only, not installed by D2",
+    "notClaimed": [
+      "Actual same-SAVE resolver/delegation/DB deferred closure",
+      "End-to-end document SAVE/reopen",
+      "Production deployment or acceptance"
+    ],
+    "strictHistory": [
+      {
+        "status": "NOT_PASS_SHARED_D1_IN_PROGRESS",
+        "exitCode": 2,
+        "d2Diagnostics": 0,
+        "scope": "Strict noEmit dependency graph of exact3 source + 2 test files; no excludes added",
+        "externalDiagnostics": [
+          "native-sales-preparation.ts258/278/291: salesLine/settlement identity generic mismatch",
+          "sales-service.ts67-95: in-progress SAVE draft/proposal union not yet narrowed"
+        ],
+        "ownerNotified": "D1 original owner; D2 did not edit those files or hide diagnostics"
+      }
+    ]
+  },
+  "qualification": "INDEPENDENT_SOURCE_MODULE_FIXED_ONLY. D1 original19 parent SAVE/delegation/SQL still WIP, no PostgreSQL/real SAVE/build/deploy. Original D2 strict external diagnostics preserved; once D1 graph ready only affected strict recheck, not accepted wholegraph now. Current-group guard unchanged; source170/QB182 reused."
+}

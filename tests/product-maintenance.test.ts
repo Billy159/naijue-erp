@@ -1,7 +1,7 @@
 /** Synthetic aggregate rules, not real-engine/schema/host evidence. */
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createProductMaintenanceService } from "../packages/application/src/product-maintenance-service.ts";
+import { appendProductSkusInTransaction, createProductMaintenanceService } from "../packages/application/src/product-maintenance-service.ts";
 import type { ProductAggregate, ProductAuditObject, ProductBarcodeInput, ProductMaintenanceDependencies, ProductMaintenanceEvidence, ProductMaintenanceTransaction, ProductSkuInput, ProductWriteValues } from "../packages/application/src/product-maintenance-ports.ts";
 import { CATALOGUE_PRICE_KEYS } from "../packages/application/src/catalogue-price-input.ts";
 import { requireDomain } from "../packages/domain/src/errors.ts";
@@ -10,7 +10,7 @@ import type { ProductMaintenanceImageSnapshot } from "../packages/application/sr
 import type { ControlledProductMedia } from "../packages/application/src/product-query-ports.ts";
 import { parseProductMaintenanceCommandV2, parseProductMaintenanceMediaCommandV2, orderProductImageWrites, planProductImageWrites } from "../packages/application/src/product-maintenance-validation.ts";
 import { requestHash } from "../packages/application/src/request-hash.ts";
-import type { ProductImageChange, ProductMaintenanceImageMetadata, ProductMaintenanceMediaCommandV2 } from "../packages/application/src/product-maintenance-ports.ts";
+import type { DocumentProductSkuAppendInput, ProductImageChange, ProductMaintenanceImageMetadata, ProductMaintenanceMediaCommandV2 } from "../packages/application/src/product-maintenance-ports.ts";
 const gid = (n: number) => sid("product", n);
 function imageService(snapshot: ProductMaintenanceImageSnapshot | null, media: ControlledProductMedia | null = null, denied = false, failed = false, missing = false) {
   let reads = 0; const unused = async (): Promise<never> => { throw Error("UNEXPECTED_WRITE_OR_DETAIL"); };
@@ -143,6 +143,50 @@ test("product write: reference/receipt faults roll back root plus all children; 
 function commandV2(key = "v2", seasons: readonly string[] | null = [gid(850), gid(803)]) {
   const { seasonId: _scalar, ...data } = values(); return { ...command(key), values: { ...data, seasonIds: seasons } };
 }
+function appendInput(): DocumentProductSkuAppendInput {
+  const operationId = gid(42000), productId = gid(41000), skuId = gid(42001);
+  return { actor, productId, expectedVersion: 7, operationId, requestKey: `doc-spec:${gid(41999)}:${productId}`,
+    completedAt: "2026-10-23T14:00:00.000000Z", skus: [{ id: skuId, productId, skuCode: `NJNEW-${skuId.replaceAll("-", "")}`,
+      colorId: gid(806), fitId: gid(807), sizeId: gid(810), enabled: true, version: 1, createdOperationId: operationId }] };
+}
+function appendFixture(mode: "ready" | "missing" | "fail" = "ready") {
+  const f = fixture(mode, true), input = appendInput();
+  const imported = { id: gid(41001), productId: input.productId, skuCode: "SOURCE-0000123 ", colorId: gid(806), fitId: gid(807), sizeId: gid(808), enabled: false, version: 3, createdOperationId: null };
+  const prior: ProductAggregate = { product: { ...values(), id: input.productId, seasonIds: null, version: 7, deletedAt: null }, skus: [imported],
+    barcodes: [{ id: gid(41002), barcode: "00001 retained ", skuId: imported.id, kind: "CONFIRMED_OLD", schemeId: null, enabled: false }] };
+  f.seed(prior);
+  return { ...f, input, prior, append: (value = input) => f.dependencies.unitOfWork.transaction(tx => appendProductSkusInTransaction(tx, value)) };
+}
+test("v11 group append: one PRODUCT EDIT preserves master/source identity, prepares exact SKU9 and replays original key", async () => {
+  const f = appendFixture(), { result, addedSkus } = await f.append(), state = f.state()!;
+  assert.deepEqual(state.product, { ...f.prior.product, version: 8 }); assert.deepEqual(state.skus[0], f.prior.skus[0]); assert.deepEqual(state.barcodes, f.prior.barcodes);
+  assert.deepEqual(addedSkus, f.input.skus); assert.equal(result.operationId, f.input.operationId); assert.equal(result.version, 8);
+  assert.deepEqual(f.audit[0]!.before, { version: 7, skus: [] });
+  const after = f.audit[0]!.after; assert.deepEqual(Object.keys(after).sort(), ["skus", "version"]);
+  assert.deepEqual(after.skus, [{ id: f.input.skus[0]!.id, product_id: f.input.productId, sku_code: f.input.skus[0]!.skuCode, color_id: gid(806), fit_id: gid(807), size_id: gid(810), enabled: true, version: 1, created_operation_id: f.input.operationId }]);
+  assert.equal(f.receipts.get(f.input.requestKey)!.requestHash, requestHash({ kind: "DOCUMENT_SKU_APPEND_V1", actorAccountId: actor.accountId,
+    productId: f.input.productId, expectedVersion: 7, skus: f.input.skus }));
+  const writes = f.writes(); assert.deepEqual(await f.append(), { result, addedSkus }); assert.equal(f.writes(), writes); assert.equal(f.audit.length, 1);
+  await assert.rejects(f.append({ ...f.input, skus: [{ ...f.input.skus[0]!, sizeId: gid(811) }] }), { code: "IDEMPOTENCY_CONFLICT" });
+});
+test("v11 group append: original CAS and identity conflicts reject without restoring or replacing an existing SKU", async () => {
+  for (const change of [{ expectedVersion: 6 }, { skus: [{ ...appendInput().skus[0]!, sizeId: gid(808) }] }]) {
+    const f = appendFixture(); await assert.rejects(f.append({ ...f.input, ...change })); assert.deepEqual(f.state(), f.prior); assert.equal(f.writes(), 0);
+  }
+  for (const change of [{ version: 2 }, { enabled: false }, { createdOperationId: gid(49999) }, { productId: gid(49998) }, { skuCode: "invented-legacy-code" }]) {
+    const f = appendFixture(); await assert.rejects(f.append({ ...f.input, skus: [{ ...f.input.skus[0]!, ...change }] })); assert.equal(f.writes(), 0);
+  }
+  const f = appendFixture(); f.badReferences();
+  await assert.rejects(f.append(), { code: "PRODUCT_SIZE_GROUP_MISMATCH" }); assert.equal(f.audit.length, 0); assert.equal(f.writes(), 0);
+});
+test("v11 group append: missing/failing evidence and enclosing SAVE failure retain no product or receipt mutations", async () => {
+  for (const mode of ["missing", "fail"] as const) { const f = appendFixture(mode); await assert.rejects(f.append()); assert.deepEqual(f.state(), f.prior); assert.equal(f.writes(), 0); }
+  const f = appendFixture();
+  await assert.rejects(f.dependencies.unitOfWork.transaction(async tx => { await appendProductSkusInTransaction(tx, f.input); throw Error("SYNTHETIC_PARENT_SAVE_FAILED"); }), /PARENT_SAVE_FAILED/);
+  assert.deepEqual(f.state(), f.prior); assert.equal(f.audit.length, 0); assert.equal(f.receipts.size, 0); assert.equal(f.writes(), 0);
+  f.revoke(); await assert.rejects(f.append(), { code: "FORBIDDEN" });
+  assert.equal(f.writes(), 0);
+});
 test("all-size seam: existing V2 EDIT appends an absent size, preserves imported SKU identity/NULL creation, and reopens with original versions", async () => {
   const f = fixture("ready", true), productId = gid(40000), oldSku = { id: gid(40001), productId, skuCode: "SOURCE-KEEP-0001", colorId: gid(806), fitId: gid(807), sizeId: gid(808), enabled: true, version: 3, createdOperationId: null };
   const oldBarcode = { id: gid(40002), barcode: "000001 SOURCE", skuId: oldSku.id, kind: "MAIN" as const, schemeId: gid(805), enabled: true };

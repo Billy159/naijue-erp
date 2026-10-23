@@ -1,10 +1,10 @@
 /** D2 leaf SQL protocol only; D1 owns actual transaction/receipt/audit execution and schema. */
 import test from "node:test";
 import assert from "node:assert/strict";
-import { PostgresProductMaintenanceUnitOfWork } from "../adapters/postgres/src/product-maintenance-store.ts";
+import { PostgresProductMaintenanceUnitOfWork, withProductMaintenanceTransaction } from "../adapters/postgres/src/product-maintenance-store.ts";
 import type { PgProductMaintenanceDriver } from "../adapters/postgres/src/product-maintenance-store.ts";
-import { createProductMaintenanceService } from "../packages/application/src/product-maintenance-service.ts";
-import type { ProductMaintenanceCommand, ProductMaintenanceDependencies } from "../packages/application/src/product-maintenance-ports.ts";
+import { appendProductSkusInTransaction, createProductMaintenanceService } from "../packages/application/src/product-maintenance-service.ts";
+import type { DocumentProductSkuAppendInput, ProductMaintenanceCommand, ProductMaintenanceDependencies, ProductMaintenanceTransaction } from "../packages/application/src/product-maintenance-ports.ts";
 import { CATALOGUE_PRICE_KEYS } from "../packages/application/src/catalogue-price-input.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
 import type { ProductMediaWriteCapability, PgProductMaintenanceContext, ProductImageColorSwapCapability } from "../adapters/postgres/src/product-maintenance-store.ts";
@@ -140,9 +140,9 @@ const command: Extract<ProductMaintenanceCommand, { action: "CREATE" }> = { acti
 }, skus: [{ id: null, expectedVersion: null, skuCode: "0001-A", colorId: id(6), fitId: id(7), sizeId: id(8), enabled: true }],
 barcodes: [{ id: null, barcode: "000012345 ", colorId: id(6), fitId: id(7), sizeId: id(8), kind: "MAIN", schemeId: id(5), enabled: true }] };
 function setup(options: { badSize?: boolean; barcodeCollision?: boolean; seasonArray?: boolean; retained?: boolean; selectedGroup?: string; members?: readonly string[] } = {}) {
-  const calls: { sql: string; values: unknown[] }[] = []; let completed = 0, seq = 900;
+  const calls: { sql: string; values: unknown[] }[] = [], prepared: unknown[] = []; let completed = 0, seq = 900;
   const driver: PgProductMaintenanceDriver = { async transaction(work) { return work({ evidence: {
-    async assertAllowed() {}, async getReceipt() { return undefined; }, async prepare() {}, async complete(c) { completed++; return { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion }; }
+    async assertAllowed() {}, async getReceipt() { return undefined; }, async prepare(c) { prepared.push(structuredClone(c)); }, async complete(c) { completed++; return { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion }; }
   }, client: { async query(sql, values = []) {
     calls.push({ sql, values: structuredClone(values) }); let rows: Record<string, unknown>[] = [];
     if (options.retained && sql.includes("FROM naijue_erp.product WHERE")) { const v = command.values; rows = [{ id: id(20), product_code: v.productCode, name: v.name,
@@ -163,8 +163,39 @@ function setup(options: { badSize?: boolean; barcodeCollision?: boolean; seasonA
   } } }); } };
   const dependencies: ProductMaintenanceDependencies = { newId: kind => sid(kind, seq++), now: () => "2026-10-22T06:00:00Z",
     unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null, ...(options.seasonArray ? { seasonCapability: { profile: "product-season-array-v1" as const, assertVerified(target: object) { assert.equal(target, driver); } } } : {}) }) };
-  return { service: createProductMaintenanceService(dependencies), calls, completed: () => completed };
+  return { service: createProductMaintenanceService(dependencies), calls, driver, prepared, completed: () => completed };
 }
+function borrowedAppendInput(): DocumentProductSkuAppendInput {
+  const skuId = id(40001), operationId = id(40000);
+  return { actor, productId: id(20), expectedVersion: 7, operationId, requestKey: `doc-spec:${id(39999)}:${id(20)}`,
+    completedAt: "2026-10-23T14:00:00.000000Z", skus: [{ id: skuId, productId: id(20), skuCode: `NJNEW-${skuId.replaceAll("-", "")}`,
+      colorId: id(6), fitId: id(7), sizeId: id(9), enabled: true, version: 1, createdOperationId: operationId }] };
+}
+test("v11 borrowed product append PG: original leased context writes root/SKU only, keeps actual group locks and closes without commit/release", async () => {
+  const f = setup({ retained: true, members: [id(8), id(9)] }); let escaped!: ProductMaintenanceTransaction;
+  const saved = await f.driver.transaction(context => withProductMaintenanceTransaction(context, async tx => {
+    escaped = tx; return appendProductSkusInTransaction(tx, borrowedAppendInput());
+  }, { seasonArray: true }));
+  assert.equal(saved.result.version, 8); assert.equal(f.completed(), 1); assert.equal(f.prepared.length, 1);
+  const writes = f.calls.filter(c => /^(INSERT|UPDATE)/.test(c.sql)); assert.equal(writes.length, 2);
+  assert.match(writes[0]!.sql, /^UPDATE naijue_erp.product/); assert.match(writes[0]!.sql, /version=\$\d+/);
+  assert.match(writes[1]!.sql, /^INSERT INTO naijue_erp.sku/); assert.equal(writes[1]!.values[5], id(9)); assert.equal(writes[1]!.values[8], borrowedAppendInput().operationId);
+  assert.deepEqual(f.calls.find(c => c.sql.includes("FROM naijue_erp.size_group_member"))!.values, [id(3), [id(8), id(9)]]);
+  assert.ok(f.calls.every(c => !/^(BEGIN|COMMIT|ROLLBACK)|INSERT INTO naijue_erp\.(?:audit_change|operation_receipt|sku_barcode|inventory_)/.test(c.sql)));
+  const count = f.calls.length;
+  await assert.rejects(escaped.readCandidates({ kind: "years", search: "", page: 1, pageSize: 20 }), { code: "TRANSACTION_CLOSED" }); assert.equal(f.calls.length, count);
+});
+test("v11 borrowed product append PG: foreign/no-size outside actual product group and denied purpose cannot mutate", async () => {
+  const f = setup({ retained: true, members: [id(8)] });
+  await assert.rejects(f.driver.transaction(context => withProductMaintenanceTransaction(context,
+    tx => appendProductSkusInTransaction(tx, borrowedAppendInput()), { seasonArray: true })), { code: "PRODUCT_SIZE_GROUP_MISMATCH" });
+  assert.equal(f.prepared.length, 0); assert.ok(f.calls.every(c => !/^(INSERT|UPDATE|BEGIN|COMMIT|ROLLBACK)/.test(c.sql))); assert.equal(f.completed(), 0);
+  let queries = 0;
+  await assert.rejects(withProductMaintenanceTransaction({ client: { async query() { queries++; throw Error("Must not query"); } }, evidence: {
+    async assertAllowed() { throw Object.assign(Error("SYNTHETIC_PARENT_DENIED"), { code: "FORBIDDEN" }); }, async getReceipt() { throw Error("Must not query"); }, async complete() { throw Error("Must not complete"); }
+  } }, tx => appendProductSkusInTransaction(tx, borrowedAppendInput()), { seasonArray: true }), { code: "FORBIDDEN" });
+  assert.equal(queries, 0);
+});
 test("product leaf PG: actual root/SKU/raw-barcode inserts stay in injected D1 context with explicit nullable prices and creation operation", async () => {
   const f = setup(), result = await f.service.execute(actor, command);
   const writes = f.calls.filter(c => c.sql.startsWith("INSERT")); assert.equal(writes.length, 3); assert.equal(f.completed(), 1);

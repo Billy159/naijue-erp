@@ -109,6 +109,15 @@ export class PostgresProductMaintenanceUnitOfWork implements ProductMaintenanceU
     });
   }
 }
+/** Internal borrowed scope. The caller owns actual runtime/evidence authority and
+ * the surrounding transaction; closing this leaf never releases or commits it. */
+export async function withProductMaintenanceTransaction<T>(context: PgProductMaintenanceContext,
+  work: (tx: ProductMaintenanceTransaction) => Promise<T>, options: { readonly seasonArray: boolean }): Promise<T> {
+  if (typeof context?.client?.query !== "function" || typeof context?.evidence?.assertAllowed !== "function"
+    || typeof work !== "function" || typeof options?.seasonArray !== "boolean") throw new TypeError("Original borrowed product context and explicit season contract required");
+  const tx = new ProductTransaction(context, null, options.seasonArray, null, null);
+  try { return await work(tx); } finally { tx.close(); }
+}
 class ProductTransaction implements ProductMaintenanceTransaction {
   readonly evidence: ProductMaintenanceEvidence; private active = true; private loadedId: string | undefined;
   private readonly seasonArray: boolean;
