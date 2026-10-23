@@ -101,3 +101,28 @@ export async function paymentSourceFixture(t,change=()=>{}){
  const spoolParent=await mkdtemp(join(tmpdir(),'sales-detail-private-spool-'));t.after(()=>rm(spoolParent,{recursive:true,force:true}));
  return {base:await realpath(bundle.base),v3Amendment:await realpath(bundle.amendment),v3Approval:await realpath(bundle.approval),trustedApprovalSha256:hash(await readFile(bundle.approval)),approvedMoneyOverlaySha256,spoolParent:await realpath(spoolParent),batchId:id(1),fixedSourceNamespace:'synthetic-payment-reader'};
 }
+
+// Synthetic reviewed offsets for the two original finite history readers.
+export async function materializedHistoryFixture(t,entity,change=()=>{}){
+ const entities=['SKU','PAYMENT_METHOD','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','INVENTORY_BASELINE','SALES_LINE','SETTLEMENT','TRANSFER_LINE'];
+ const all=['BARCODE','CUSTOMER','HALL','INVENTORY_BASELINE','ISSUE','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','PAYMENT_METHOD','PRODUCT','SALES_HEADER','SALES_LINE','SETTLEMENT','SKU','STAFF','SUPPLIER','TRANSFER_HEADER','TRANSFER_LINE','WAREHOUSE'];
+ const options=await paymentSourceFixture(t,context=>{
+  const sample=context.sourceRows[0];
+  for(const [i,e]of entities.entries())if(!context.sourceRows.some(r=>r.entity===e))context.sourceRows.push({entity:e,sourceId:'synthetic-offset-'+e,file:sample.file,sheet:'OFFSET-'+e,row:1000+i,sourceSha256:sample.sourceSha256,data:{'来源编号':'synthetic-offset-'+e}});
+  change(context);
+ });
+ const root=await mkdtemp(join(await realpath(tmpdir()),'synthetic-history-offsets-'));t.after(()=>rm(root,{recursive:true,force:true}));
+ const manifestFile=join(options.base,'manifest.json'),baseBytes=await readFile(manifestFile),sourceFile=join(options.base,'snapshots/all-business-source-rows.jsonl'),source=await readFile(sourceFile);
+ const rows=new Map(entities.map(e=>[e,[]])),counts=Object.fromEntries(all.map(e=>[e,0]));let start=0;
+ while(start<source.length){const end=source.indexOf(10,start),line=source.subarray(start,end),raw=JSON.parse(line);counts[raw.entity]++;
+  if(rows.has(raw.entity))rows.get(raw.entity).push({entity:raw.entity,sourceKey:raw.sourceId,sourceLocator:{file:raw.file,sheet:raw.sheet,row:raw.row,sourceSha256:raw.sourceSha256},identityKind:raw.sourceId===''?'ORIGINAL_LOCATOR_ONLY':'ORIGINAL_SOURCE_KEY_AND_LOCATOR',offset:start,length:line.length,sha256:hash(line)});start=end+1;
+ }
+ const artifacts=[];for(const e of entities){const bytes=Buffer.from(rows.get(e).map(r=>JSON.stringify(r)+'\n').join('')),path=join(root,e+'.jsonl');await writeFile(path,bytes);artifacts.push({entity:e,path,rows:rows.get(e).length,bytes:bytes.length,sha256:hash(bytes)});}
+ const index={version:'MATERIALIZED_SOURCE_OFFSET_INDEX_CANDIDATE_V1',status:'COMPLETE_PINNED_SOURCE_INDEX_NOT_NATIVE_AUTHORITY',source:{path:sourceFile,bytes:source.length,sha256:hash(source),rows:Object.values(counts).reduce((a,b)=>a+b,0)},manifest:{path:manifestFile,sha256:hash(baseBytes)},indexRows:artifacts.reduce((s,f)=>s+f.rows,0),indexBytes:artifacts.reduce((s,f)=>s+f.bytes,0),expectedEntityCounts:counts,observedEntityCounts:{...counts},artifacts,offsetEncoding:'UTF8_BYTE_OFFSET_LENGTH_EXCLUDES_LF_RETAINS_CR_V1',scannedOriginalWorkbooks:false,scannedVerifiedHeaderGzip:false,nativeUUIDsAllocated:0,sql:false,importAuthorized:false};
+ const indexManifestFile=join(root,'INDEX-CANDIDATE.json'),indexBytes=Buffer.from(JSON.stringify(index));await writeFile(indexManifestFile,indexBytes);
+ const qbFile=join(root,'synthetic-review-result.json'),qb=Buffer.from(JSON.stringify({result:'PASS',scope:'SYNTHETIC_FINITE_READER_ONLY'}));await writeFile(qbFile,qb);
+ const decision=JSON.parse(await readFile(options.v3Approval)),binding={batchId:options.batchId,fixedSourceNamespace:options.fixedSourceNamespace,cutoffAt:'2026-10-04T12:00:00+08:00',selectionSha256:decision.selectionSha256};
+ const review={version:'C_MATERIALIZED_SOURCE_OFFSET_INDEX_REVIEW_V1',decision:'ACCEPT_EXACT_SOURCE_OFFSET_BINDINGS',binding,indexManifest:{path:indexManifestFile,sha256:hash(indexBytes),bytes:indexBytes.length},source:{...index.source},scope:'OFFSET_ROWS_ONLY',independentReview:{path:qbFile,sha256:hash(qb),result:'PASS'},realImportExecutionAuthorized:false};
+ const reviewFile=join(root,'synthetic-outside-review.json'),reviewBytes=Buffer.from(JSON.stringify(review));await writeFile(reviewFile,reviewBytes);
+ return {...options,materializedSource:{indexManifestFile,trustedIndexManifestSha256:hash(indexBytes),reviewFile,trustedReviewSha256:hash(reviewBytes),binding,entities:[entity]}};
+}

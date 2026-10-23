@@ -4,6 +4,7 @@ import {createHash} from 'node:crypto';
 import {constants} from 'node:fs';
 import {open,lstat} from 'node:fs/promises';
 import {isAbsolute,resolve,dirname} from 'node:path';
+import {parseV2Csv} from '../../packages/application/src/import-v2.ts';
 const ENTITIES=Object.freeze(['SKU','PAYMENT_METHOD','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','INVENTORY_BASELINE','SALES_LINE','SETTLEMENT','TRANSFER_LINE']);
 const ALL_ENTITIES=Object.freeze(['BARCODE','CUSTOMER','HALL','INVENTORY_BASELINE','ISSUE','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','PAYMENT_METHOD','PRODUCT','SALES_HEADER','SALES_LINE','SETTLEMENT','SKU','STAFF','SUPPLIER','TRANSFER_HEADER','TRANSFER_LINE','WAREHOUSE']);
 const digest=b=>createHash('sha256').update(b).digest('hex');
@@ -80,7 +81,20 @@ export async function openReviewedMaterializedSource(options){
   for(const entity of entities){const f=artifacts.get(entity),loaded=await pinned(f.path,f.sha256,f.bytes,134217728);indices.set(entity,parseIndex(loaded.bytes,entity));}
   await verify();
   async function readAt(position,length){const b=Buffer.allocUnsafe(length);let n=0;while(n<length){active();const result=await source.fd.read(b,n,length-n,position+n);must(result.bytesRead>0,'OFFSET_SOURCE_SHORT_READ');n+=result.bytesRead;}return b;}
-  return {report:Object.freeze({kind:'REVIEWED_MATERIALIZED_OFFSET_SOURCE_V1',entities:Object.freeze([...entities]),rows:entities.reduce((s,e)=>s+artifacts.get(e).rows,0),sourceSha256:m.source.sha256,noFullSnapshotScan:true,noSql:true,nativeReferenceAuthority:false}),verify,
+  return {manifest:structuredClone(original),report:Object.freeze({kind:'REVIEWED_MATERIALIZED_OFFSET_SOURCE_V1',entities:Object.freeze([...entities]),rows:entities.reduce((s,e)=>s+artifacts.get(e).rows,0),sourceSha256:m.source.sha256,baseDirectory:dirname(m.manifest.path),baseManifestSha256:m.manifest.sha256,binding:Object.freeze({...binding}),noFullSnapshotScan:true,noSql:true,nativeReferenceAuthority:false}),verify,
+   async *records(relative,columns,exactHeader=true){active();must(!busy,'OFFSET_SOURCE_SERIAL_ONLY');busy=true;
+    try{
+     must(typeof relative==='string'&&relative.endsWith('.csv')&&!relative.includes('\\')&&!relative.startsWith('/')&&!relative.split('/').some(p=>!p||p==='.'||p==='..'),'OFFSET_SOURCE_CSV_PATH');
+     const matches=original.payloadFiles.filter(f=>f.file===relative);must(matches.length===1,'OFFSET_SOURCE_CSV_MANIFEST');const expected=matches[0];
+     const loaded=await pinned(resolve(dirname(m.manifest.path),relative),expected.sha256,expected.bytes,134217728);
+     async function* text(){yield decode(loaded.bytes);}let header,rows=0;
+     for await(const cells of parseV2Csv(text())){active();
+      if(!header){header=cells;must(new Set(header).size===header.length&&(!columns||(exactHeader?JSON.stringify(header)===JSON.stringify(columns):columns.every(c=>header.includes(c)))),'OFFSET_SOURCE_CSV_HEADER');continue;}
+      must(cells.length===header.length&&++rows<=1000000,'OFFSET_SOURCE_CSV_ROW');yield Object.fromEntries(header.map((name,i)=>[name,cells[i]]));
+     }
+     must(header,'OFFSET_SOURCE_CSV_EMPTY');await verify();
+    }finally{busy=false;}
+   },
    async *chunks(entity,chunkRows=100){active();must(indices.has(entity),'OFFSET_SOURCE_ENTITY_NOT_OPEN');must(Number.isSafeInteger(chunkRows)&&chunkRows>0&&chunkRows<=1000,'OFFSET_SOURCE_CHUNK_BOUND');must(!busy,'OFFSET_SOURCE_SERIAL_ONLY');busy=true;
     try{await verify();const selected=indices.get(entity);let chunk=[],chunkBytes=0;
      for(const entry of selected){active();const bytes=await readAt(entry.offset,entry.length);must(digest(bytes)===entry.sha256,'OFFSET_SOURCE_RAW_CHANGED');

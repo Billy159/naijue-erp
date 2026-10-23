@@ -8,7 +8,7 @@ import {openReviewedMaterializedSource} from './verified-offset-source.mjs';
 const hash=b=>createHash('sha256').update(b).digest('hex'),pin='a'.repeat(64);
 const entities=['SKU','PAYMENT_METHOD','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','INVENTORY_BASELINE','SALES_LINE','SETTLEMENT','TRANSFER_LINE'];
 const all=['BARCODE','CUSTOMER','HALL','INVENTORY_BASELINE','ISSUE','PAYMENT_ACCOUNT','PAYMENT_ACCOUNT_HALL','PAYMENT_METHOD','PRODUCT','SALES_HEADER','SALES_LINE','SETTLEMENT','SKU','STAFF','SUPPLIER','TRANSFER_HEADER','TRANSFER_LINE','WAREHOUSE'];
-async function fixture(t){
+async function fixture(t,csvFiles={}){
  const dir=await mkdtemp(join(await realpath(tmpdir()),'synthetic-reviewed-offset-'));t.after(()=>rm(dir,{recursive:true,force:true}));
  const snapshots=join(dir,'snapshots'),indices=join(dir,'indices');await mkdir(snapshots);await mkdir(indices);
  const sourceFile=join(snapshots,'all-business-source-rows.jsonl'),manifestFile=join(dir,'manifest.json'),indexManifestFile=join(indices,'INDEX-CANDIDATE.json'),reviewFile=join(dir,'C-synthetic-review.json'),qbFile=join(dir,'QB-synthetic-result.json');
@@ -19,7 +19,9 @@ async function fixture(t){
   indexRows.set(entity,{entity,sourceKey:sourceId,sourceLocator:{file:row.file,sheet:row.sheet,row:row.row,sourceSha256:pin},identityKind:sourceId===''?'ORIGINAL_LOCATOR_ONLY':'ORIGINAL_SOURCE_KEY_AND_LOCATOR',offset,length:b.length,sha256:hash(b)});offset+=b.length+1;
  }
  const source=Buffer.concat(lines);await writeFile(sourceFile,source);
- const base={payloadFiles:[{file:'snapshots/all-business-source-rows.jsonl',bytes:source.length,sha256:hash(source)}],sourceInputSha256:{'SYNTHETIC.xlsx':pin}},baseBytes=Buffer.from(JSON.stringify(base));await writeFile(manifestFile,baseBytes);
+ const payloadFiles=[{file:'snapshots/all-business-source-rows.jsonl',bytes:source.length,sha256:hash(source)}];
+ for(const [file,text]of Object.entries(csvFiles)){await writeFile(join(dir,file),text);payloadFiles.push({file,bytes:Buffer.byteLength(text),sha256:hash(text)});}
+ const base={payloadFiles,sourceInputSha256:{'SYNTHETIC.xlsx':pin}},baseBytes=Buffer.from(JSON.stringify(base));await writeFile(manifestFile,baseBytes);
  const counts=Object.fromEntries(all.map(e=>[e,entities.includes(e)?1:0]));const artifacts=[];
  for(const entity of entities){const bytes=Buffer.from(JSON.stringify(indexRows.get(entity))+'\n'),path=join(indices,entity+'.jsonl');await writeFile(path,bytes);artifacts.push({entity,path,rows:1,bytes:bytes.length,sha256:hash(bytes)});}
  const index={version:'MATERIALIZED_SOURCE_OFFSET_INDEX_CANDIDATE_V1',status:'COMPLETE_PINNED_SOURCE_INDEX_NOT_NATIVE_AUTHORITY',source:{path:sourceFile,bytes:source.length,sha256:hash(source),rows:raw.length},manifest:{path:manifestFile,sha256:hash(baseBytes)},indexRows:raw.length,indexBytes:artifacts.reduce((s,f)=>s+f.bytes,0),expectedEntityCounts:counts,observedEntityCounts:{...counts},artifacts,offsetEncoding:'UTF8_BYTE_OFFSET_LENGTH_EXCLUDES_LF_RETAINS_CR_V1',scannedOriginalWorkbooks:false,scannedVerifiedHeaderGzip:false,nativeUUIDsAllocated:0,sql:false,importAuthorized:false};
@@ -30,6 +32,17 @@ async function fixture(t){
  async function saveIndexRow(entity){const f=index.artifacts.find(f=>f.entity===entity),b=Buffer.from(JSON.stringify(indexRows.get(entity))+'\n');const old=f.bytes;await writeFile(f.path,b);f.bytes=b.length;f.sha256=hash(b);index.indexBytes+=b.length-old;return save();}
  return {dir,sourceFile,source,raw,index,indexRows,review,qbFile,reviewFile,indexManifestFile,save,saveIndexRow,options:await save()};
 }
+test('offset finite CSV records use the reviewed base manifest and original CSV parser alongside selected raw rows',async t=>{
+ const f=await fixture(t,{'canonical.csv':'source,original,extra\r\n0001,"中文,原文",retained\r\n0002,"two\nlines",tail\r\n'}),reader=await openReviewedMaterializedSource(f.options);t.after(()=>reader.close());
+ const rows=[];for await(const row of reader.records('canonical.csv',['source','original'],false))rows.push(row);
+ assert.deepEqual(rows,[{source:'0001',original:'中文,原文',extra:'retained'},{source:'0002',original:'two\nlines',extra:'tail'}]);
+ assert.equal(reader.report.baseDirectory,f.dir);assert.equal(reader.report.baseManifestSha256,f.index.manifest.sha256);assert.deepEqual(reader.report.binding,f.options.binding);
+ await assert.rejects(async()=>{for await(const _ of reader.records('canonical.csv',['wrong'])){}},/CSV_HEADER/);
+ await assert.rejects(async()=>{for await(const _ of reader.records('../canonical.csv')){}},/CSV_PATH/);
+ await assert.rejects(async()=>{for await(const _ of reader.records('unlisted.csv')){}},/CSV_MANIFEST/);
+ let count=0;for await(const chunk of reader.chunks('SKU'))count+=chunk.length;assert.equal(count,1);
+ await writeFile(join(f.dir,'canonical.csv'),'changed');await assert.rejects(reader.verify(),/FILE_CHANGED/);
+});
 test('offset source retains exact raw UTF8 CR and blank locator-only identity under independently pinned selected indices',async t=>{
  const f=await fixture(t),reader=await openReviewedMaterializedSource(f.options);t.after(()=>reader.close());
  const chunks=[];for await(const c of reader.chunks('SKU',1))chunks.push(c);assert.equal(chunks.length,1);const row=chunks[0][0];assert.deepEqual(row.raw,f.raw[0]);assert.equal(row.rawLine.endsWith('\r'),true);assert.equal(hash(Buffer.from(row.rawLine)),row.index.sha256);

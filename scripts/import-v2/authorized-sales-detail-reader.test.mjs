@@ -7,6 +7,7 @@ import { createHash } from 'node:crypto';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { IMPORT_V2_TABLES } from '../../packages/application/src/import-v2-contract.ts';
+import {materializedHistoryFixture} from './payment-source-fixture.test-support.mjs';
 const hash=x=>createHash('sha256').update(x).digest('hex');
 const run=promisify(execFile);
 // Independent fully synthetic sealed fixture; no private inputs, frozen core imports or DB.
@@ -104,6 +105,26 @@ async function salesFixture(t,change=()=>{}){
 }
 const bindingFor=q=>({header:{sourceKey:q.normalizedFields['单据来源编号'],nativeId:id(2),sourceRowId:id(3),sourceFileSha256:'d'.repeat(64),rowSha256:'e'.repeat(64),version:1},
  sku:{oldSourceSkuKey:q.rawFields['SKU来源编号'],canonicalSourceKey:q.normalizedFields['SKU来源编号'],nativeId:id(4),aliasSourceRowId:id(5),importRecordId:id(6)}});
+test('sales finite offset source: selected original rows and pinned canonical aliases retain whole32 through existing authorization',async t=>{
+ const {openAuthorizedSalesDetailReader}=await import('./authorized-sales-detail-reader.mjs'),{prepareHistorySalesDetailChunk}=await import('../../packages/application/src/import-v3-history-sales-detail.ts');
+ const options=await materializedHistoryFixture(t,'SALES_LINE');
+ // An unrelated sealed-bundle file is deliberately unavailable: this entry
+ // consumes the selected reviewed offsets, not another full-bundle preflight.
+ await rm(join(options.base,IMPORT_V2_TABLES.find(t=>t.entity==='BARCODE').file));
+ const reader=await openAuthorizedSalesDetailReader({...options,resolveNativeBinding:bindingFor});t.after(()=>reader.close());
+ assert.equal(reader.report.preflight,null);assert.equal(reader.report.materializedSource.noFullSnapshotScan,true);assert.equal(reader.report.rawRowsScanned,32);assert.equal(reader.report.selectedRows,32);
+ let count=0;for await(const record of reader.rows()){
+  assert.equal(record.moneyApprovals.size,32);assert.equal(record.source.rawFields['SKU来源编号'],'old-001');assert.equal(record.source.normalizedFields['SKU来源编号'],'sku');
+  const chunk=prepareHistorySalesDetailChunk({batchId:options.batchId,fixedSourceNamespace:options.fixedSourceNamespace,selection:record.selection,moneyApprovals:record.moneyApprovals,rows:[{source:record.source,...bindingFor(record.source)}]});
+  await reader.authorize(chunk);assert.equal(chunk.rows[0].line.quantity,'-2');assert.equal(chunk.rows[0].line.deal_price,'1.00');assert.equal(chunk.rows[0].line.line_amount,'-2.06');count++;
+ }
+ assert.equal(count,32);await reader.close();assert.deepEqual(await readdir(options.spoolParent),[]);
+ const wrong=await materializedHistoryFixture(t,'SALES_LINE');await assert.rejects(openAuthorizedSalesDetailReader({...wrong,approvedMoneyOverlaySha256:'f'.repeat(64)}),/SELECTION/);assert.deepEqual(await readdir(wrong.spoolParent),[]);
+ const changed=await materializedHistoryFixture(t,'SALES_LINE',({sourceRows})=>{sourceRows.find(r=>r.entity==='SALES_LINE').data['原品名']='changed';});
+ await assert.rejects(openAuthorizedSalesDetailReader(changed),/NONMONEY_REWRITE/);assert.deepEqual(await readdir(changed.spoolParent),[]);
+ const money=await materializedHistoryFixture(t,'SALES_LINE',({sourceRows})=>{sourceRows.find(r=>r.entity==='SALES_LINE').data['原成交单价']='9.99';});
+ await assert.rejects(openAuthorizedSalesDetailReader(money),/MONEY_CELL_NOT_APPROVED/);assert.deepEqual(await readdir(money.spoolParent),[]);
+});
 test('sales adopted source bindings: six-field header and original SKU alias feed existing reader authorization without a PG resolver',async t=>{
  const {openAuthorizedSalesDetailReader,resolveSalesDetailSourceBinding}=await import('./authorized-sales-detail-reader.mjs'),{prepareHistorySalesDetailChunk}=await import('../../packages/application/src/import-v3-history-sales-detail.ts'),options=await salesFixture(t),headers=new Map(),skus=new Map();
  const reader=await openAuthorizedSalesDetailReader({...options,resolveNativeBinding:q=>resolveSalesDetailSourceBinding(q,headers,skus)});t.after(()=>reader.close());let count=0;

@@ -1,0 +1,72 @@
+{
+  "atUtc": "2026-10-23T05:51:28.227378+00:00",
+  "parent": "5acf91506a56fe4e991b2587fc9f5f77ba7c6acd",
+  "taskId": "B06_ORIGINAL_SALES_SETTLEMENT_FINITE_SOURCE_ENTRY",
+  "files": [
+    {
+      "path": "scripts/import-v3/verified-offset-source.mjs",
+      "owner": "D3",
+      "bytes": 14481,
+      "sha256": "3da64bdb8ba59a9675863cb622606fcc95ee46a2b817aec3bf01e3cc54fe0b64"
+    },
+    {
+      "path": "scripts/import-v3/verified-offset-source.test.mjs",
+      "owner": "D3",
+      "bytes": 11256,
+      "sha256": "e0a7f493373d6895c59a3276a76f26fb65372347708e4faa84043502081b2e4b"
+    },
+    {
+      "path": "scripts/import-v2/authorized-sales-detail-reader.mjs",
+      "owner": "D3",
+      "bytes": 15522,
+      "sha256": "924dfa50986241f203d56753a03a5b09f497c4727ac85937cea05d97da72474f"
+    },
+    {
+      "path": "scripts/import-v2/authorized-sales-detail-reader.test.mjs",
+      "owner": "D3",
+      "bytes": 22284,
+      "sha256": "92986e98dd81bce395592519f07b80931ef4013b6eaab1b421f6da9b3fb01370"
+    },
+    {
+      "path": "scripts/import-v2/sealed-payment-source.mjs",
+      "owner": "D3",
+      "bytes": 16931,
+      "sha256": "3eb5ebe9cf2392b4e1dec9c512666951288653a0fff94abe4a8e7200a2413fc4"
+    },
+    {
+      "path": "scripts/import-v2/authorized-settlement-reader.test.mjs",
+      "owner": "D3",
+      "bytes": 10459,
+      "sha256": "845b82b0d2c834dc6cb2268da4149085e8defeb92fa5b3f2791543426927062e"
+    },
+    {
+      "path": "scripts/import-v2/payment-source-fixture.test-support.mjs",
+      "owner": "D3",
+      "bytes": 19578,
+      "sha256": "f66018b888aeddbb05677a12ba6a3a6d3510e05b1e5bc6a9b910d7a2eaeaf852"
+    }
+  ],
+  "scope": "Original openAuthorizedSalesDetailReader/openAuthorizedSettlementReader optional materializedSource uses exact6 openReviewedMaterializedSource options. entities must be only SALES_LINE or SETTLEMENT respectively. Reuses original collect/spool/authorize/mappers. No new wrapper.",
+  "checksAdopted": {
+    "newTests": 3,
+    "newPass": 3,
+    "newFail": 0,
+    "testNames": [
+      "offset finite CSV records",
+      "sales finite offset source:",
+      "settlement finite offset source:"
+    ],
+    "scope": "CSV quoted/newline/leading-zero parser; selected rows with unrelated whole-bundle CSV unavailable; exact original CR and raw row hash; old->canonical alias; whole32; pinned overlay/money rewrite/nonmoney rewrite rejection; existing reader authorize+original mapper; methodB vs accountA; original missing method NULL; cleanup.",
+    "affectedSharedLegacyTest": "sealed native payment reader authenticates all selected original occurrences before exact independent method/account/recommendation decisions",
+    "affectedSharedLegacyPass": 1,
+    "reason": "Shared sealed-payment-source collect callback was refactored, so exactly one existing basic PAYMENT synthetic test was run. No original accepted QB callback/header/genuine-source suites repeated."
+  },
+  "qualification": "Finite path sets preflight:null and materializedSource to actual reviewed reader report, never full-preflight PASS. Existing legacy preflight branch remains. PAYMENT has no materializedSource option.",
+  "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json",
+  "notTested": [
+    "Actual80918/25779 or rawsource",
+    "PostgreSQL/import/MAIN/PUBLISH",
+    "No permission or sourceauthority expansion"
+  ],
+  "next": "OriginalQB onlynew3+shared PAYMENT1 affected, original Header154/callback157/oldgenuine consumers reused. C uses original reviewedSKU rows() once for newfunctional alias.id binding projection, then originalfinite selectedsource readers; no fullsnapshot/preflight replay."
+}

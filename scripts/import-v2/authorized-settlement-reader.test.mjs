@@ -1,15 +1,33 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {readFile,readdir} from 'node:fs/promises';
+import {readFile,readdir,rm} from 'node:fs/promises';
 import {join} from 'node:path';
-import {paymentSourceFixture,id} from './payment-source-fixture.test-support.mjs';
+import {paymentSourceFixture,materializedHistoryFixture,id} from './payment-source-fixture.test-support.mjs';
+import {IMPORT_V2_TABLES} from '../../packages/application/src/import-v2-contract.ts';
 import {prepareHistorySettlementChunk} from '../../packages/application/src/import-v3-history-settlement.ts';
 import {openAuthorizedSettlementReader,resolveSettlementSourceBinding} from './authorized-settlement-reader.mjs';
 const binding=q=>({header:{sourceKey:'sale-header',nativeId:id(100),sourceRowId:id(101),sourceFileSha256:'d'.repeat(64),rowSha256:'e'.repeat(64),version:1},
  account:{entity:'PAYMENT_ACCOUNT',sourceKey:'account',nativeId:id(20),sourceRowId:id(102),sourceFileSha256:'d'.repeat(64),rowSha256:'e'.repeat(64),fingerprint:'f'.repeat(64),nativeSnapshot:{id:id(20),name:'original account',payment_method_id:id(10),enabled:true,version:1}},
  method:q.rawFields.原收款方式来源编号?{entity:'PAYMENT_METHOD',sourceKey:'method-B',nativeId:id(11),sourceRowId:id(103),sourceFileSha256:'d'.repeat(64),rowSha256:'e'.repeat(64),fingerprint:'f'.repeat(64),nativeSnapshot:{id:id(11),name:'original methodB',enabled:true,version:1}}:null});
 const input=(o,r)=>({batchId:o.batchId,fixedSourceNamespace:o.fixedSourceNamespace,selection:r.selection,moneyApprovals:r.moneyApprovals,rows:[{source:r.source,...binding({rawFields:r.source.rawFields})}]});
+test('settlement finite offset source: original CR, methodB and absent NULL retain whole32 through existing authorization',async t=>{
+ const options=await materializedHistoryFixture(t,'SETTLEMENT'),original=(await readFile(join(options.base,'snapshots/all-business-source-rows.jsonl'),'utf8')).split('\n').find(l=>l.includes('"sourceId":"settlement-1"'));
+ await rm(join(options.base,IMPORT_V2_TABLES.find(t=>t.entity==='BARCODE').file));
+ const reader=await openAuthorizedSettlementReader({...options,resolveNativeBinding:binding});t.after(()=>reader.close());
+ assert.equal(reader.report.preflight,null);assert.equal(reader.report.materializedSource.noFullSnapshotScan,true);assert.equal(reader.report.rawRowsScanned,2);assert.equal(reader.report.selectedRows,2);
+ let count=0;for await(const record of reader.rows()){
+  assert.equal(record.moneyApprovals.size,32);const chunk=prepareHistorySettlementChunk(input(options,record));await reader.authorize(chunk);
+  if(record.source.sourceKey==='settlement-1'){assert.equal(record.source.rowSha256,createHash('sha256').update(original).digest('hex'));assert.equal(chunk.rows[0].settlement.payment_method_id_snapshot,id(11));assert.equal(chunk.rows[0].account.nativeSnapshot.payment_method_id,id(10));assert.equal(chunk.rows[0].settlement.amount,'7.03');}
+  else{assert.equal(Object.hasOwn(record.source.rawFields,'原收款方式来源编号'),false);assert.equal(Object.hasOwn(record.source.normalizedFields,'原收款方式来源编号'),false);assert.equal(chunk.rows[0].settlement.payment_method_id_snapshot,null);assert.equal(chunk.rows[0].settlement.amount,'0.00');}count++;
+ }
+ assert.equal(count,2);await reader.close();assert.deepEqual(await readdir(options.spoolParent),[]);
+ const wrong=await materializedHistoryFixture(t,'SETTLEMENT');await assert.rejects(openAuthorizedSettlementReader({...wrong,approvedMoneyOverlaySha256:'f'.repeat(64)}),/SELECTION/);assert.deepEqual(await readdir(wrong.spoolParent),[]);
+ const changed=await materializedHistoryFixture(t,'SETTLEMENT',({sourceRows})=>{sourceRows.find(r=>r.sourceId==='settlement-1').data.原账户显示名='changed';});
+ await assert.rejects(openAuthorizedSettlementReader(changed),/NONMONEY_REWRITE/);assert.deepEqual(await readdir(changed.spoolParent),[]);
+ const money=await materializedHistoryFixture(t,'SETTLEMENT',({sourceRows})=>{sourceRows.find(r=>r.sourceId==='settlement-1').data.金额='8.03';});
+ await assert.rejects(openAuthorizedSettlementReader(money),/MONEY_CELL_NOT_APPROVED/);assert.deepEqual(await readdir(money.spoolParent),[]);
+});
 test('settlement adopted source bindings: original methodB or absent NULL feeds existing reader authorization independently of account methodA',async t=>{
  const options=await paymentSourceFixture(t),headers=new Map(),accounts=new Map(),methods=new Map(),reader=await openAuthorizedSettlementReader({...options,resolveNativeBinding:q=>resolveSettlementSourceBinding(q,headers,accounts,methods)});t.after(()=>reader.close());let count=0;
  for await(const record of reader.rows()){const q={rawFields:record.source.rawFields,normalizedFields:record.source.normalizedFields},b=binding(q);headers.set(b.header.sourceKey,b.header);accounts.set(b.account.sourceKey,b.account);if(b.method)methods.set(b.method.sourceKey,b.method);const resolved=resolveSettlementSourceBinding(q,headers,accounts,methods),chunk=prepareHistorySettlementChunk({...input(options,record),rows:[{source:record.source,...resolved}]});await reader.authorize(chunk);assert.equal(Object.hasOwn(resolved.header,'hallId'),false);assert.equal(chunk.rows[0].settlement.payment_method_id_snapshot,b.method?.nativeId??null);assert.equal(resolved.account.nativeSnapshot.payment_method_id,id(10));if(b.method){assert.equal(resolved.method.nativeId,id(11));assert.throws(()=>resolveSettlementSourceBinding(q,headers,accounts,new Map()),/BINDING_MISMATCH/);}else assert.equal(resolved.method,null);resolved.header.nativeId=id(99);assert.equal(headers.get(b.header.sourceKey).nativeId,id(100));count++;}assert.equal(count,2);
