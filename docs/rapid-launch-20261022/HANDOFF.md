@@ -1,3 +1,11 @@
+当前接续 2026-10-23T07:29:50.301664+00:00：用户v6已明确批准并落实固定C149ef60d3220ce0cb668e3a6bafb9e42539dd2d7f62，原QB165源/SQL/producer有限PASS。实际C70新QA1032586单函数补丁已COMMIT_RETURNED_SUCCESS，body69b87a72…/canonical35f7f77227c5962e54b507b7253046f139bc3d69bdc36910b12202ef6ec8c3a1；1..26registry、QAowner/ACL/search_path及8业务计数0保持，未写业务。原69在SQL前因把public导出字节pin用于root原JSON而停止，70严格typedsemanticdf3a…证同内容/private688c…publice55f…后修订执行，旧69/67/68保留。完整actualcatalogue普通collect超时后仅压缩补取原public export，0重SQL/任务。下一原QB只新actual一函数目录配对、复用160；C71 fixed149+Kc7d32原完整runner已一次编译752469B/92inputs，原请求键/57source不变，实际STAGE/PUBLISH/nativeCREATE/H06仍NOT_RUN，real49/MAIN/正式切换false。
+
+实际UI仍C147 http://127.0.0.1:57857/synthetic-unified.html ，sourceade0aa6/build01/HTML3122695B74a01d31。QF首pager/旧SALE+TRANSFER440及QF2操作列0/160/322固定几何均有限实际关闭，原143九项/旧48不重；新summary操作格浅蓝对Demo浅灰P2已原F2修最终级联。两组explicitcleanrelease，Chrome归C，无真正隔离会话，不双抢。37+67=104/local48/整页整类0；缺合法多组readonly/真实PG/perf仍未测。
+
+C148已批季节读3已QB164限定通过。D3全筛选provider+F2原lazy输出/单产品校验复用/必要stream测试并行，原F1仅应用route等实际adapter/Page输出props到位后接，准确文件不存在时不预接不反复盘点；readwire对齐非actual接口就绪。COMMIT+正常EOF前无成功输出，默认print与银泰缺真实字段独立。原server依赖A+B通过保持，数据/正式业务未就绪。GitHub已独立核6adf9c1a，149和本实际接续资料下一非强推；源/Demo/旧QA/正式三服务保留。Sol61/xhigh/Fast要求off但工具无实际开关，十角色/22任务/原owner继续，目标ACTIVE。
+
+以下历史保留。
+
 当前接续 2026-10-23T07:07:31.422731+00:00：完整新UI候选147已一次原build及3关键HTTP实际通过，http://127.0.0.1:57857/synthetic-unified.html ，source ade0aa60c93c18d5ef3eb57dfcb4266113615c80/build ui-preview-ade0aa6-01-build01，HTML3122695B/74a01d31，400输入383源码+981锁依赖=1364，undeclared0。原16受控overlay/身份/能力/拒写不扩；146F1 five及147F2sticky2各原QF/QF2源码限定通过。QF目前独占同原Demo/候选两target实际首pager和旧SALE+TRANSFER440，nativecleanrelease后C交QF2只新sticky；没有真正并行浏览器控制。104/local48/整页整类0，143原九项实际关闭直接复用，旧预览不代表新修复。
 
 v6用户已明确确认“确认 v6 封装修复”，原问题call_98bcff5aa7b74e54a69c2e9407971f9d item0，批准原文/docSHA见WRITE-CONTRACT-APPROVAL-v6-BOOTSTRAP-PROVENANCE.json。D1原TS+独立R/adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql单函数补丁+issuer精准bodypin/26_v8_bootstrap_field_provenance及D2原Kproducer放行；原0011/0016/成功0026文件保留，raw原七键不变，49/45/4/同STAGE/事务/audit/receipt不放宽。不新表列/回填/兼容裸7/正式数据测试。C唯一后续新QA1032586 apply/readback/newjob同原key；67/68保留，尚无新SQL/真实STAGE成功。其他人类未决仅相关分支等。
