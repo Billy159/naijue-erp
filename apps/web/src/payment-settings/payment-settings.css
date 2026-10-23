@@ -1,4 +1,30 @@
-@import '../settings/stores/source-store-settings.css';
 @import '../settings/demo-settings-ui.css';
-.payment-settings-workbench .payment-halls{white-space:normal;overflow-wrap:anywhere}
+/* Frozen b8bcfe3 basic-settings-v2.css payment page and modal, copied as one
+ * layout. Only selectors are narrowed; shared inventory control/density styles
+ * remain in demo-settings-ui.css and the existing reference-select dependency. */
+.payment-settings-workbench.bs-page.iw-workbench{max-height:none;min-height:0;flex:1;display:flex;flex-direction:column;color:var(--text)}
+.payment-settings-workbench .bs-head.iw-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.payment-settings-workbench .bs-head-actions{display:flex;align-items:center;gap:4px}
+.payment-settings-workbench .bs-tabs{display:flex;gap:20px;border-bottom:1px solid var(--border);margin:0 0 10px;flex:none}
+.payment-settings-workbench .bs-tabs button{border:0;border-bottom:2px solid transparent;background:transparent;padding:7px 2px 8px;color:var(--secondary);font-size:13px;cursor:pointer}
+.payment-settings-workbench .bs-tabs button:hover{color:var(--primary)}
+.payment-settings-workbench .bs-tabs button[aria-selected=true]{color:var(--primary);border-bottom-color:var(--primary-fill);font-weight:600}
+.payment-settings-workbench .bs-toolbar{display:flex;align-items:center;gap:var(--ca-space-2);margin:0 0 var(--ca-space-2);flex:none}
+.payment-settings-workbench .bs-filter-fields{display:flex;align-items:center;gap:var(--ca-space-2);flex:1;min-width:0}
+.payment-settings-workbench .bs-filter{flex:0 1 178px;min-width:128px}
+.payment-settings-workbench .bs-filter.search{flex:1 1 280px;max-width:440px}
+.payment-settings-workbench .bs-single,.payment-settings-workbench .bs-multi{width:100%;min-width:0}
+.payment-settings-workbench .bs-toolbar-actions{display:flex;align-items:center;gap:var(--ca-space-2);margin-left:auto;flex:none}
+.payment-settings-workbench .bs-table-wrap{border:1px solid var(--border);overflow:auto;min-height:0;background:var(--surface);flex:0 1 auto}
+.payment-settings-workbench .bs-row-actions{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.payment-settings-workbench.bs-page>.bs-pager{flex:none;margin-top:auto;padding-top:var(--ca-space-2);background:var(--surface)}
+.payment-settings-workbench .bs-pager .iw-pagination{white-space:nowrap;flex-wrap:nowrap}
+.payment-settings-workbench .bs-pager .iw-pagination>span{flex:none}
+.payment-settings-modal.bs-modal{width:520px!important;max-width:calc(100vw - 32px)}
+.payment-settings-modal .bs-readonly{min-height:var(--ui-control);display:flex;align-items:center;overflow-wrap:anywhere}
+.payment-settings-modal .bs-switch{display:flex;align-items:center;gap:var(--ca-space-2);min-height:var(--ui-control)}
+.payment-settings-modal .bs-error{margin:10px 0 0;color:var(--error);line-height:1.5}
+@media(max-width:1100px){.payment-settings-workbench .bs-toolbar{flex-wrap:wrap}.payment-settings-workbench .bs-filter-fields{flex-wrap:wrap}.payment-settings-workbench .bs-filter{flex:1 1 145px}.payment-settings-workbench .bs-filter.search{max-width:none}}
+@media(max-width:620px){.payment-settings-workbench .bs-pager .iw-pagination{flex-wrap:wrap}.payment-settings-workbench .bs-pager .actions{margin-left:0}}
+/* Native read/command states are outside the frozen successful-page structure. */
 .payment-settings-workbench .payment-empty-state{padding:12px 0;color:var(--ca-ink-2);line-height:20px}
