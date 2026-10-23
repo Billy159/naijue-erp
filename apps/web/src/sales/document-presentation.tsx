@@ -121,23 +121,24 @@ export interface SalesProductCapability {
 export interface SalesProductPresentationProps {
   readonly scope?: ReadScope; readonly capability?: SalesProductCapability;
   readonly returnLabel?: string; readonly viewLabel?: string; readonly documentLabel?: string;
-  readonly children: (open: ((skuId: string, hallId: string, target?: Selection) => void) | undefined) => ReactNode;
+  readonly children: (open: ((skuId: string | null, hallId: string, target?: Selection) => void) | undefined) => ReactNode;
 }
 /** The same real product whole-page leaf used by Products. The document stays
  * mounted while hidden, retaining input, scroll and its native command owner. */
 export function SalesProductPresentation({ scope, capability, children, returnLabel = '返回销货单', viewLabel = '销货商品查看', documentLabel = '销货' }: SalesProductPresentationProps) {
-  type Active = { scope: ReadScope; parent: ReadScope; capability: SalesProductCapability; target: Selection | null; configuration: ProductFullPageConfiguration | null; View: typeof ProductFullPageHost | null; failed: boolean; skuId: string; hallId: string };
+  type Active = { scope: ReadScope; parent: ReadScope; capability: SalesProductCapability; target: Selection | null; configuration: ProductFullPageConfiguration | null; View: typeof ProductFullPageHost | null; failed: boolean; skuId: string | null; hallId: string };
   const [active, setActive] = useState<Active | null>(null), serial = useRef(0), activeRef = useRef<Active | null>(null), opener = useRef<HTMLElement | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const restore = useRef(false), frame = useRef<HTMLDivElement>(null);
   const productFrame = useRef<HTMLElement>(null), returnFrames = useRef(new Set<number>());
   const current = active && active.parent === scope && active.capability === capability && active.scope.active ? active : null;
   const dismiss = () => { activeRef.current?.scope.dispose(); activeRef.current = null; restore.current = true; setActive(null); };
-  const open = scope?.active && capability ? (skuId: string, hallId: string, target?: Selection) => {
+  const open = scope?.active && capability ? (skuId: string | null, hallId: string, target?: Selection) => {
+    if (skuId === null && !target) return;
     activeRef.current?.scope.dispose(); setNotice(null); opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    const child = new ReadScope(scope.identity, `${scope.routeInstanceId}:sales-product:${++serial.current}`, skuId, () => {});
+    const child = new ReadScope(scope.identity, `${scope.routeInstanceId}:sales-product:${++serial.current}`, skuId ?? target!.id, () => {});
     const next: Active = { scope: child, parent: scope, capability, target: null, configuration: null, View: null, failed: false, skuId, hallId }; activeRef.current = next; setActive(next);
-    void Promise.all([import('../products/product-page-host.tsx'), target ? Promise.resolve(target) : capability.resolveTarget(skuId, hallId, child.signal)]).then(([module, resolved]) => {
+    void Promise.all([import('../products/product-page-host.tsx'), target ? Promise.resolve(target) : capability.resolveTarget(skuId!, hallId, child.signal)]).then(([module, resolved]) => {
       if (child.active && scope.active && activeRef.current?.scope === child) {
         const reader = guardedProductPageReader(child, capability.configuration.reader, error => {
           if (activeRef.current?.scope !== child) return;
@@ -174,7 +175,7 @@ export function SalesProductPresentation({ scope, capability, children, returnLa
     return capability.openInventory!(Object.freeze({ product, targetScope: owner.scope, isCurrent, restore: (refresh: boolean) => {
       if (!isCurrent()) return false;
       if (!refresh) { setNotice('库存页面暂不可查看，原单据输入已保留。'); restoreScroll(owner); return true; }
-      const child = new ReadScope(owner.parent.identity, `${owner.parent.routeInstanceId}:sales-product-return:${++serial.current}`, owner.skuId, () => {});
+      const child = new ReadScope(owner.parent.identity, `${owner.parent.routeInstanceId}:sales-product-return:${++serial.current}`, owner.skuId ?? owner.target!.id, () => {});
       let next: Active;
       const baseReader = capability.configuration.reader, stock = baseReader.stock;
       const refreshed = { ...baseReader, ...(stock ? { stock: { read: async (read: Parameters<typeof stock.read>[0]) => { try { return await stock.read(read); } finally { if (next) restoreScroll(next); } }, ...(stock.readOverview ? { readOverview: async (read: Parameters<NonNullable<typeof stock.readOverview>>[0]) => { try { return await stock.readOverview!(read); } finally { if (next) restoreScroll(next); } } } : {}) } } : {}) };

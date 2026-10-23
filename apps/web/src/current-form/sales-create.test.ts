@@ -49,7 +49,7 @@ test('SALE proposal→native preparation→existing editor SAVE/null CAS; no sna
   const h = await setup(); assert.equal(h.commands.length, 0); assert.equal(await h.session.save(), true);
   const intent = h.intents[0]!; assert.deepEqual(intent.lines, [{ skuId: sku.id, quantity: '1', dealPrice: '10.00', pricingRule: 'UNIT_PRICE', discountTenths: null, isGift: false, zeroConfirmed: false }]);
   assert.equal('number' in intent, false); assert.equal('key' in intent.settlements[0]!, false); assert.equal(h.commands.length, 1);
-  const command = h.commands[0]!; if (command.action !== 'SAVE') throw Error(); assert.equal(command.expectedVersion, null); assert.equal(command.draft.lines[0]!.snapshot.barcode, native.lines[0]!.snapshot.barcode);
+  const command = h.commands[0]!; if (command.action !== 'SAVE') throw Error(); assert.ok('draft' in command); assert.equal(command.expectedVersion, null); assert.equal(command.draft.lines[0]!.snapshot.barcode, native.lines[0]!.snapshot.barcode);
   assert.equal(h.editor.getSnapshot().command.write.phase, 'committed'); assert.equal(await h.session.save(), false);
 });
 test('canonical yuan intent does not infer absent price and discounts serialize one unambiguous rule', async () => {
@@ -124,7 +124,7 @@ test('native RETURN negative and EXCHANGE mixed signs use existing null-CAS SAVE
   h.proposal.setBusinessType(businessType);h.proposal.updateLine(sku.id,{quantity:'-2'});
   if(businessType==='EXCHANGE'){await h.proposal.openPicker('product');await h.proposal.select(product.id);await h.proposal.select(second.id);h.proposal.closePicker();h.proposal.updateLine(second.id,{dealPrice:'10.00',quantity:'1'});}
   h.proposal.updateSettlement(h.proposal.getSnapshot().draft.settlements[0]!.key,{direction:'REFUND'});
-  assert.equal(await h.session.save(),true);assert.equal(h.commands.length,1);const command=h.commands[0]!;if(command.action!=='SAVE')throw Error();
+  assert.equal(await h.session.save(),true);assert.equal(h.commands.length,1);const command=h.commands[0]!;if(command.action!=='SAVE')throw Error();assert.ok('draft' in command);
   assert.equal(command.expectedVersion,null);assert.equal(command.draft.header.businessType,businessType);assert.deepEqual(command.draft.lines.map(row=>row.quantity),businessType==='RETURN'?['-2']:['-2','1']);
  }
 });
@@ -137,6 +137,6 @@ test('EXCHANGE same SKU opposing different-price rows preserve order and indepen
  }});
  h.proposal.setBusinessType('EXCHANGE');await h.proposal.openPicker('product');await h.proposal.select(product.id);await h.proposal.select(sku.id);h.proposal.closePicker();
  const [a,b]=h.proposal.getSnapshot().draft.lines;h.proposal.updateLine(a!.key,{quantity:'-2',dealPrice:'10.00'});h.proposal.updateLine(b!.key,{quantity:'3',dealPrice:'8.00'});
- assert.equal(await h.session.save(),true);assert.ok(captured);const command=h.commands[0]!;if(command.action!=='SAVE')throw Error();
+ assert.equal(await h.session.save(),true);assert.ok(captured);const command=h.commands[0]!;if(command.action!=='SAVE')throw Error();assert.ok('draft' in command);
  assert.equal(command.draft.lines.length,2);assert.notEqual(command.draft.lines[0]!.id,command.draft.lines[1]!.id);assert.deepEqual(command.draft.lines.map(row=>row.lineNo),[1,2]);assert.equal(command.draft.header.netDue,'400');
 });

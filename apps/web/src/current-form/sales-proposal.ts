@@ -13,14 +13,21 @@ import { parseNativeSalesSaveProposal, type NativeSalesSaveProposal } from '../.
 export type SalesProposalReader = Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readSalesReferences' | 'readProducts' | 'readProductSkus'>
   & Partial<Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readBarcode' | 'readSizeGroups'>>;
 export type SalesProposalPicker = CurrentSalesReferenceQuery['kind'] | 'product' | 'sku';
-export interface SalesProposalLine {
+interface SalesProposalLineFields {
   readonly key: string;
-  readonly sku: CurrentFormSku; readonly product: CurrentFormProduct; readonly quantity: string; readonly dealPrice: string;
+  readonly product: CurrentFormProduct; readonly quantity: string; readonly dealPrice: string;
   readonly sourceSnapshot?: SalesDraftDto['lines'][number]['snapshot'];
   readonly pricingRule: 'UNIT_PRICE' | 'DISCOUNT'; readonly discount: string; readonly isGift: boolean; readonly zeroConfirmed: boolean;
 }
-export type SalesProposalPricingLine = Omit<SalesProposalLine, 'sku' | 'sourceSnapshot'>;
+export interface SalesProposalSpecification {
+  readonly color: SalesSpecChoice; readonly fit: SalesSpecChoice; readonly size: SalesSpecChoice; readonly sizeGroup: SalesSpecChoice;
+}
+export type SalesProposalLine = SalesProposalLineFields & ({ readonly sku: CurrentFormSku; readonly specification?: never } | { readonly sku: null; readonly specification: SalesProposalSpecification });
+export type SalesProposalPricingLine = Omit<SalesProposalLine, 'sku' | 'specification' | 'sourceSnapshot'>;
 export interface SalesSpecChoice { readonly id: string; readonly name: string }
+export function salesProposalLineSelection(line: SalesProposalLine) {
+  return line.sku ? { color: { id: line.sku.colorId, name: line.sku.colorName }, fit: { id: line.sku.fitId, name: line.sku.fitName }, size: { id: line.sku.sizeId, name: line.sku.sizeName }, sizeGroup: null } : line.specification;
+}
 export interface SalesProposalEntry {
   readonly key: string; readonly order: number | null; readonly pricingRule: SalesProposalLine['pricingRule']; readonly discount: string; readonly isGift: boolean; readonly zeroConfirmed: boolean;
   readonly product: CurrentFormProduct | null; readonly sku: CurrentFormSku | null;
@@ -114,9 +121,9 @@ export class SalesProposalSession {
     try {
       draft = structuredClone(value);
       if (!['SALE', 'RETURN', 'EXCHANGE'].includes(draft.businessType) || !Array.isArray(draft.lines) || !draft.lines.length || draft.lines.length > 200 || new Set(draft.lines.map(line => line.key)).size !== draft.lines.length || !Array.isArray(draft.settlements) || draft.settlements.length > 3 || new Set(draft.settlements.map(row => row.key)).size !== draft.settlements.length) return false;
-      if (typeof draft.businessDate !== 'string' || typeof draft.note !== 'string' || typeof draft.orderDiscount !== 'string' || draft.lines.some(line => !line.key || line.sku.productId !== line.product.id || typeof line.quantity !== 'string' || typeof line.dealPrice !== 'string')) return false;
+      if (typeof draft.businessDate !== 'string' || typeof draft.note !== 'string' || typeof draft.orderDiscount !== 'string' || draft.lines.some(line => !line.key || !line.sku || line.sku.productId !== line.product.id || typeof line.quantity !== 'string' || typeof line.dealPrice !== 'string')) return false;
     } catch { return false; }
-    for (const line of draft.lines) if (line.sourceSnapshot) this.#savedLines.set(line.key, Object.freeze({ skuId: line.sku.id, snapshot: line.sourceSnapshot, product: line.product }));
+    for (const line of draft.lines) if (line.sku && line.sourceSnapshot) this.#savedLines.set(line.key, Object.freeze({ skuId: line.sku.id, snapshot: line.sourceSnapshot, product: line.product }));
     this.#seeded = true; this.#savedWarehouse = draft.hall && draft.warehouse ? { hallId: draft.hall.id, warehouseId: draft.warehouse.id } : null; this.#revision++;
     this.#publish({ draft, dirty, entries: emptyEntries(), lineEdit: null, errors: [], notice: null, totals: null }); return true;
   }
@@ -152,7 +159,7 @@ export class SalesProposalSession {
   #lineKey(keyOrUniqueSku: string): string | null {
     const rows = this.#state.draft.lines;
     if (rows.some(row => row.key === keyOrUniqueSku)) return keyOrUniqueSku;
-    const matches = rows.filter(row => row.sku.id === keyOrUniqueSku);
+    const matches = rows.filter(row => row.sku?.id === keyOrUniqueSku);
     return matches.length === 1 ? matches[0]!.key : null;
   }
   updateLine(keyOrUniqueSku: string, patch: Partial<Pick<SalesProposalLine, 'quantity' | 'dealPrice' | 'pricingRule' | 'discount' | 'isGift' | 'zeroConfirmed'>>): boolean {
@@ -170,7 +177,7 @@ export class SalesProposalSession {
     if (this.#state.lineEdit && this.#state.lineEdit.key !== key) { this.#publish({ notice: '请先确认或取消当前行的改选。' }); return false; }
     if (!this.#state.lineEdit) {
       this.closePicker(); this.#settlementTarget = null; this.#entryTarget = null;
-      this.#publish({ lineEdit: { key, original, quantity: original.quantity, dealPrice: original.dealPrice, pricingRule: original.pricingRule, discount: original.discount, isGift: original.isGift, zeroConfirmed: original.zeroConfirmed, product: original.product, sku: original.sku, color: { id: original.sku.colorId, name: original.sku.colorName }, fit: { id: original.sku.fitId, name: original.sku.fitName }, size: { id: original.sku.sizeId, name: original.sku.sizeName }, sizeGroup: null, skuPage: 1 } });
+      this.#publish({ lineEdit: { key, original, quantity: original.quantity, dealPrice: original.dealPrice, pricingRule: original.pricingRule, discount: original.discount, isGift: original.isGift, zeroConfirmed: original.zeroConfirmed, product: original.product, sku: original.sku, ...salesProposalLineSelection(original), skuPage: 1 } });
     }
     return true;
   }
@@ -181,17 +188,18 @@ export class SalesProposalSession {
   confirmLineEdit(): boolean {
     const edit = this.#state.lineEdit, draft = this.#state.draft;
     if (this.#state.disposed || this.#state.picker || !edit) return false;
-    if (!edit.sku || edit.sku.productId !== edit.product.id) { this.#publish({ notice: '所选尺码的真实 SKU 尚未建立；改选及原单输入均已保留。' }); return false; }
+    const identity = this.#localLineIdentity(edit);
+    if (!identity) { this.#publish({ notice: '请选择商品实际组内的完整规格；改选及原单输入均已保留。' }); return false; }
     if (draft.lines.find(row => row.key === edit.key) !== edit.original) { this.#publish({ notice: '原行已变化，请取消改选后重新选择。' }); return false; }
     const changed = this.#edit({ ...draft, lines: draft.lines.map(row => {
       if (row.key !== edit.key) return row;
-      const { sourceSnapshot, ...retained } = row, original = this.#savedLines.get(row.key), restored = original?.skuId === edit.sku!.id;
+      const { sourceSnapshot, sku: _oldSku, specification: _oldSpecification, ...retained } = row, original = this.#savedLines.get(row.key), restored = !!identity.sku && original?.skuId === identity.sku.id;
       const { category: _currentCategory, ...currentProduct } = edit.product;
       // A stored reference belongs to the original SKU. A size-only change has
       // no current price read; do not relabel the old reference as a new fact.
       const product = restored ? { ...currentProduct, retailPrice: original.product.retailPrice, ...(original.product.category ? { category: original.product.category } : {}) }
         : sourceSnapshot && edit.product === row.product ? { ...edit.product, retailPrice: null } : edit.product;
-      return { ...retained, quantity: edit.quantity, dealPrice: edit.dealPrice, pricingRule: edit.pricingRule, discount: edit.discount, isGift: edit.isGift, zeroConfirmed: edit.zeroConfirmed, ...(restored ? { sourceSnapshot: original.snapshot } : {}), product, sku: edit.sku! };
+      return { ...retained, quantity: edit.quantity, dealPrice: edit.dealPrice, pricingRule: edit.pricingRule, discount: edit.discount, isGift: edit.isGift, zeroConfirmed: edit.zeroConfirmed, ...(restored ? { sourceSnapshot: original!.snapshot } : {}), product, ...identity };
     }) });
     if (changed) this.#publish({ lineEdit: null, ...(this.#state.draft.lines.find(row => row.key === edit.key)?.product.retailPrice === null ? { notice: '新规格参考价尚未读到。可重新选择商品核对参考价，或明确填写成交单价；未确认价格不会保存。' } : {}) });
     return changed;
@@ -269,9 +277,17 @@ export class SalesProposalSession {
     else if (target) { const entry = this.#entry(target.direction, target.key); if (entry) this.#replaceEntry(target.direction, { ...entry, ...patch, skuPage: picker.page }); }
     this.closePicker(); return true;
   }
+  #localLineIdentity(row: { readonly product: CurrentFormProduct; readonly sku: CurrentFormSku | null; readonly color: SalesSpecChoice | null; readonly fit: SalesSpecChoice | null; readonly size: SalesSpecChoice | null; readonly sizeGroup: SalesSpecChoice | null }): Pick<Extract<SalesProposalLine, { sku: CurrentFormSku }>, 'sku'> | Pick<Extract<SalesProposalLine, { sku: null }>, 'sku' | 'specification'> | null {
+    if (row.sku) return row.sku.productId === row.product.id && (!row.color || row.sku.colorId === row.color.id) && (!row.fit || row.sku.fitId === row.fit.id) && (!row.size || row.sku.sizeId === row.size.id) ? { sku: row.sku } : null;
+    if (!row.color || !row.fit || !row.size || !row.product.sizeGroupId || row.sizeGroup?.id !== row.product.sizeGroupId || !this.#dictionaryGroups.get(row.product.sizeGroupId)?.sizes.some(size => size.id === row.size!.id)) return null;
+    return { sku: null, specification: { color: row.color, fit: row.fit, size: row.size, sizeGroup: row.sizeGroup } };
+  }
+  get canConfirmLineEdit(): boolean { const edit = this.#state.lineEdit; return !!edit && !this.#state.picker && !!this.#localLineIdentity(edit) && this.#state.draft.lines.find(row => row.key === edit.key) === edit.original; }
+  canAppendEntry(direction: 'IN' | 'OUT', key?: string): boolean { const entry = this.#entry(direction, key); return !!entry?.product && entry.query === entry.product.code && !!this.#localLineIdentity({ ...entry, product: entry.product }); }
   appendEntry(direction: 'IN' | 'OUT', key?: string): boolean {
     const entry = this.#entry(direction, key), draft = this.#state.draft;
-    if (this.#state.disposed || this.#state.lineEdit || !entry?.product || entry.query !== entry.product.code || !entry.sku || entry.sku.productId !== entry.product.id || entry.sku.colorId !== entry.color?.id || entry.sku.fitId !== entry.fit?.id) {
+    const identity = entry?.product ? this.#localLineIdentity({ ...entry, product: entry.product }) : null;
+    if (this.#state.disposed || this.#state.lineEdit || !entry?.product || entry.query !== entry.product.code || !identity) {
       this.#publish({ notice: entry?.size && !entry.sku ? `所选 ${entry.product?.code ?? ''} / ${entry.color?.name ?? ''} / ${entry.fit?.name ?? ''} / ${entry.size.name} 尚无真实 SKU；数量、价格及尺码输入已保留。` : '请选择款号、颜色、版型及尺码后完成录入。' }); return false;
     }
     if (draft.lines.length >= 200 || !/^-?[1-9]\d{0,18}$/.test(entry.quantity) || entry.quantity.startsWith('-') !== (direction === 'IN') || direction === 'IN' && draft.businessType === 'SALE') {
@@ -279,7 +295,7 @@ export class SalesProposalSession {
     }
     try { quantity(entry.quantity); } catch { this.#publish({ notice: '数量超出可用范围，输入已保留。' }); return false; }
     this.closePicker();
-    const ok = this.#edit({ ...draft, lines: [...draft.lines, { key: `local-line-${++this.#nextLine}`, sku: entry.sku, product: entry.product, quantity: entry.quantity, dealPrice: entry.dealPrice, pricingRule: entry.pricingRule, discount: entry.discount, isGift: entry.isGift, zeroConfirmed: entry.zeroConfirmed }] });
+    const ok = this.#edit({ ...draft, lines: [...draft.lines, { key: `local-line-${++this.#nextLine}`, ...identity, product: entry.product, quantity: entry.quantity, dealPrice: entry.dealPrice, pricingRule: entry.pricingRule, discount: entry.discount, isGift: entry.isGift, zeroConfirmed: entry.zeroConfirmed }] });
     if (ok) this.clearEntry(direction, entry.key);
     return ok;
   }
@@ -321,7 +337,7 @@ export class SalesProposalSession {
       },
       resolve: (query, signal) => this.#reader.readBarcode!(query, signal),
       apply: result => {
-        const draft = this.#state.draft, matches = draft.lines.filter(row => row.sku.id === result.sku.id && row.quantity.startsWith('-') === (direction === 'IN'));
+        const draft = this.#state.draft, matches = draft.lines.filter(row => row.sku?.id === result.sku.id && row.quantity.startsWith('-') === (direction === 'IN'));
         if (matches.length > 1) return { ok: false, message: '同规格有多条明细，请在原行明确修改数量；未选择或合并价格行。' };
         const existing = matches[0];
         if (!existing && draft.lines.length >= 200) return { ok: false, message: '本草稿最多 200 行，未新增明细。' };
@@ -476,7 +492,7 @@ export class SalesProposalSession {
     this.closePicker(); return this.#edit({ ...draft, [p.kind]: item });
   }
   get hasSpecificationInputs(): boolean {
-    return !!this.#state.lineEdit && !this.#state.lineEdit.sku || Object.values(this.#state.entries).flat().some(entry => (entry.product || entry.query.trim()) && !entry.sku);
+    return this.#state.draft.lines.some(row => row.sku === null) || !!this.#state.lineEdit && !this.#state.lineEdit.sku || Object.values(this.#state.entries).flat().some(entry => (entry.product || entry.query.trim()) && !entry.sku);
   }
   /** Visible money/quantity intent includes pending coordinates without making a SKU. */
   get pricingLines(): readonly SalesProposalPricingLine[] | null {
@@ -499,10 +515,8 @@ export class SalesProposalSession {
       const yuan = (raw: string) => { const value = amount(raw); return `${value / 100n}.${(value % 100n).toString().padStart(2, '0')}`; };
       const tenths = (raw: string) => { if (!/^\d{1,2}(?:\.\d)?$/.test(raw.trim())) throw Error(); const [whole, fraction = '0'] = raw.trim().split('.'), value = Number(whole) * 10 + Number(fraction); if (value > 100) throw Error(); return value; };
       const selection = (row: { readonly product: CurrentFormProduct; readonly sku: CurrentFormSku | null; readonly color: SalesSpecChoice | null; readonly fit: SalesSpecChoice | null; readonly size: SalesSpecChoice | null; readonly sizeGroup: SalesSpecChoice | null }) => {
-        if (!row.color || !row.fit || !row.size) throw Error();
-        if (row.sku) { if (row.sku.productId !== row.product.id || row.sku.colorId !== row.color.id || row.sku.fitId !== row.fit.id || row.sku.sizeId !== row.size.id) throw Error(); return { skuId: row.sku.id }; }
-        if (!row.product.sizeGroupId || row.sizeGroup?.id !== row.product.sizeGroupId || !this.#dictionaryGroups.get(row.product.sizeGroupId)?.sizes.some(size => size.id === row.size!.id)) throw Error();
-        return { spec: { productId: row.product.id, colorId: row.color.id, fitId: row.fit.id, sizeId: row.size.id } };
+        const identity = this.#localLineIdentity(row); if (!identity) throw Error();
+        return identity.sku ? { skuId: identity.sku.id } : { spec: { productId: row.product.id, colorId: identity.specification.color.id, fitId: identity.specification.fit.id, sizeId: identity.specification.size.id } };
       };
       const price = (row: SalesProposalPricingLine) => {
         const value = row.isGift ? 0n : row.pricingRule === 'UNIT_PRICE' ? amount(row.dealPrice) : row.product.retailPrice === null ? null : discountUnitPrice(minorAmount(amount(row.product.retailPrice).toString()), tenths(row.discount));
@@ -513,7 +527,7 @@ export class SalesProposalSession {
       const lines: NativeSalesSaveProposal['lines'][number][] = draft.lines.map(row => {
         const edited = lineEdit?.key === row.key ? lineEdit : null;
         if (edited && edited.original !== row) throw Error();
-        return { existingLineId: originalLines.has(row.key) ? row.key : null, ...(edited ? selection(edited) : { skuId: row.sku.id }), ...price(edited ?? row) };
+        return { existingLineId: originalLines.has(row.key) ? row.key : null, ...(edited ? selection(edited) : row.sku ? { skuId: row.sku.id } : selection({ product: row.product, sku: null, ...row.specification })), ...price(edited ?? row) };
       });
       for (const direction of ['IN', 'OUT'] as const) for (const entry of entries[direction]) if (entry.product || entry.query.trim()) {
         if (!entry.product || entry.query !== entry.product.code || entry.quantity.startsWith('-') !== (direction === 'IN')) throw Error();
@@ -549,7 +563,7 @@ export class SalesProposalSession {
           price = discountUnitPrice(minorAmount(amount(row.product.retailPrice).toString()), Number(whole) * 10 + Number(fraction));
         }
         if (price === 0n && !row.isGift && !row.zeroConfirmed) throw Error(); gross.push(q * price);
-      } catch { errors.push(`${row.sku.skuCode}：请核对${draft.businessType === 'SALE' ? '正整数' : '非零带符号整数'}数量、非负两位单价或有明确参考价的 0～10 折；普通零价须确认。`); }
+      } catch { errors.push(`${row.sku?.skuCode ?? row.product.code}：请核对${draft.businessType === 'SALE' ? '正整数' : '非零带符号整数'}数量、非负两位单价或有明确参考价的 0～10 折；普通零价须确认。`); }
     }
     let discount = 0n, settled = 0n;
     try { discount = amount(draft.orderDiscount); if (draft.businessType !== 'SALE') { if (discount !== 0n) throw Error(); } else if (gross.length === draft.lines.length) allocateSalesDiscount(gross.map(value => minorAmount(value.toString())), minorAmount(discount.toString())); }

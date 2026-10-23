@@ -1,0 +1,115 @@
+{
+  "atUtc": "2026-10-23T19:13:09.984223+00:00",
+  "parent": "9bb08f2a3076a53ee9c0f1d749bb290f86fcfb78",
+  "taskId": "F03_LOCAL_GROUP_SPEC_LINE_ENTER_CONFIRM",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-proposal.ts",
+      "bytes": 55788,
+      "sha256": "102907cf8311284b846eeb9e5ea5f95c9cbeb7ad340c2d223b9c9543e771dcbc",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "bytes": 54502,
+      "sha256": "86a174e71eda7c1c0f09311149db79e23bd2fcf7c9f26fc3493f45cebe004aff",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-create.ts",
+      "bytes": 15193,
+      "sha256": "56ec55364db19607f9d2598fbff3a53279ba67e1801157d15d10fa836044d2a9",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-existing-document.ts",
+      "bytes": 21055,
+      "sha256": "9e4319036da44e1f79431c5431467947d7d97c300b4c54c92d6318eaddba07e0",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/document-presentation.tsx",
+      "bytes": 18590,
+      "sha256": "6544acc410c495e50c76539655e3d87fa584400b19972b717ae82ebf6f1d4fb1",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal.test.ts",
+      "bytes": 12785,
+      "sha256": "740f390ee121b18d7a8a24ece2847558edda97f0562d4d3b9363e0fba327276a",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-create.test.ts",
+      "bytes": 18130,
+      "sha256": "25517b0bf6400d520274c685daa3058dfb48d8c33c8be7ee596faff61d66da29",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-102/DELIVERY.json",
+  "ownerReceiptSha256": "18af7c457e1888967e42d38678d2b871c5e50d751f6d12be7ac08f968fc1d88a",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh",
+    "status": "SOURCE_READY_SALES_LOCAL_SPEC_ENTER_ROW_CONFIRM_ONLY_ACTUAL_OPEN",
+    "files": [
+      {
+        "path": "apps/web/src/current-form/sales-proposal.ts",
+        "bytes": 55788,
+        "sha256": "102907cf8311284b846eeb9e5ea5f95c9cbeb7ad340c2d223b9c9543e771dcbc"
+      },
+      {
+        "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+        "bytes": 54502,
+        "sha256": "86a174e71eda7c1c0f09311149db79e23bd2fcf7c9f26fc3493f45cebe004aff"
+      },
+      {
+        "path": "apps/web/src/current-form/sales-create.ts",
+        "bytes": 15193,
+        "sha256": "56ec55364db19607f9d2598fbff3a53279ba67e1801157d15d10fa836044d2a9"
+      },
+      {
+        "path": "apps/web/src/current-form/sales-existing-document.ts",
+        "bytes": 21055,
+        "sha256": "9e4319036da44e1f79431c5431467947d7d97c300b4c54c92d6318eaddba07e0"
+      },
+      {
+        "path": "apps/web/src/sales/document-presentation.tsx",
+        "bytes": 18590,
+        "sha256": "6544acc410c495e50c76539655e3d87fa584400b19972b717ae82ebf6f1d4fb1"
+      },
+      {
+        "path": "apps/web/src/current-form/sales-proposal.test.ts",
+        "bytes": 12785,
+        "sha256": "740f390ee121b18d7a8a24ece2847558edda97f0562d4d3b9363e0fba327276a"
+      },
+      {
+        "path": "apps/web/src/current-form/sales-create.test.ts",
+        "bytes": 18130,
+        "sha256": "25517b0bf6400d520274c685daa3058dfb48d8c33c8be7ee596faff61d66da29"
+      }
+    ],
+    "changes": [
+      "Sales local line explicit union: existing real CurrentFormSku OR sku:null plus actual selected color/fit/size/group labels, no invented SKU ID/code/barcode/snapshot",
+      "Original Enter/Tab append and original row confirm/cancel use same actual product-group dictionary membership; one next blank row and local editable quantity/price/gift/remove/summary preserved",
+      "Same96/99 SAVE emits only actual skuId or approved four spec coordinates, preserves actual saved line/settlement pointers/CAS. Original read-only prepare explicitly refuses local coordinates",
+      "Original product whole-page action accepts explicit null sku only with actual selected product target; it reads real productId without SKU resolution, original return preserves draft. Without target real SKU still required. Native scans remain restricted to actual SKU rows",
+      "Only2 original known consumer test files add explicit nonnull/legacy draft assertions under C registration; original expected values/hash/amount tests not weakened/skipped"
+    ],
+    "checks": {
+      "before-1": "RED actual original source Enter0 rows for selected current-group missingSKU member",
+      "after-1": "PASS actual original React new Enter/local+known Tab/blank focus, editable quantity/price/gift, enabled real product 查看 with actual product read and0SKU resolver, source return preserves local input, full top SAVE actual persisted SKU readback; original saved confirm/cancel/raw continuation preserves pointer/CAS/settlement exact same SAVE",
+      "types-1": "PASS exact5 production complete imported closure0",
+      "known-consumers-1": "Expected old knownSKU nullable assumption and earlier96 legacy SAVE-draft assumption exposed in concrete2testpaths",
+      "known-consumers-2": "PASS exact5production+registered2known-testroots full imported closure0"
+    },
+    "limitations": [
+      "Source/React synthetic native ports only, no actual Chrome Enter/focus/pixel PASS",
+      "Actual rapid quantity12-to121 and mixedprice10-to1 causeUNKNOWN remain OPEN",
+      "No real server/PG/product read grants or native SKU allocation verified here",
+      "T02 missingSKU Enter/row-confirm still next family; ledger source-document host seam queued from C/F2"
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "SOURCE_FIXED_ONLY; originalactualidentity/fourcoordinateSAVE retained, no fakeSKU. IndependentQF/Chrome/PG stillrequired; T02 counterpart separateopen."
+}

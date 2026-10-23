@@ -107,7 +107,7 @@ export class SalesExistingDocumentSession {
       intent = frozenSnapshot({ salesId: this.#original!.document.header.id, expectedVersion: this.#original!.document.header.version,
         businessType: value.businessType, businessDate: value.businessDate, hallId: value.hall.id, customerId: value.customer.id, salespersonId: value.salesperson?.id ?? null, warehouseId: value.warehouse.id, orderDiscount: toYuan(value.orderDiscount),
         note: value.note === (this.#original!.document.header.note ?? '') ? this.#original!.document.header.note : value.note,
-        lines: value.lines.map(line => ({ existingLineId: originalLines.has(line.key) ? line.key : null, skuId: line.sku.id, quantity: line.quantity, dealPrice: line.pricingRule === 'DISCOUNT' ? null : line.isGift ? '0.00' : toYuan(line.dealPrice), pricingRule: line.pricingRule, discountTenths: line.pricingRule === 'DISCOUNT' ? tenths(line.discount) : null, isGift: line.isGift, zeroConfirmed: line.zeroConfirmed })),
+        lines: value.lines.map(line => { if (!line.sku) throw new TypeError('Local specifications must use SAVE proposal.'); return ({ existingLineId: originalLines.has(line.key) ? line.key : null, skuId: line.sku.id, quantity: line.quantity, dealPrice: line.pricingRule === 'DISCOUNT' ? null : line.isGift ? '0.00' : toYuan(line.dealPrice), pricingRule: line.pricingRule, discountTenths: line.pricingRule === 'DISCOUNT' ? tenths(line.discount) : null, isGift: line.isGift, zeroConfirmed: line.zeroConfirmed }); }),
         settlements: value.settlements.map(row => { if (!row.account || !row.method || row.account.paymentMethodId !== row.method.id) throw new TypeError('Incomplete actual settlement.'); return { existingSettlementId: originalSettlements.has(row.key) ? row.key : null, paymentAccountId: row.account.id, paymentMethodId: row.method.id, direction: row.direction, amount: toYuan(row.amount) }; }) });
     } catch { this.#publish({ notice: '请完成原单的实际规格、价格及收退款资料；输入已保留，未发送保存。' }); return false; }
     const request = new AbortController(), sequence = ++this.#sequence; this.#request = request; const captured = proposal.getSnapshot(), ownerInput = this.owner.getSnapshot().input;
@@ -141,7 +141,7 @@ export class SalesExistingDocumentSession {
       const prepared = draft.lines[index]!, reference = row.product.retailPrice === null ? null : yuanMinor(row.product.retailPrice);
       const [whole, fraction = '0'] = row.discount.trim().split('.');
       const price = row.isGift ? '0' : row.pricingRule === 'UNIT_PRICE' ? yuanMinor(row.dealPrice) : reference === null ? null : discountUnitPrice(minorAmount(reference), Number(whole) * 10 + Number(fraction)).toString();
-      if (price === null || prepared.dealPrice !== price || prepared.lineAmount !== (BigInt(row.quantity) * BigInt(price)).toString()
+      if (!row.sku || price === null || prepared.dealPrice !== price || prepared.lineAmount !== (BigInt(row.quantity) * BigInt(price)).toString()
         || originals.get(row.key)?.skuId !== row.sku.id && reference !== null && prepared.referencePrice !== reference) throw new DisplayedPriceChanged();
     });
   }

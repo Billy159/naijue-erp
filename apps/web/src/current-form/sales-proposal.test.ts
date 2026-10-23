@@ -38,6 +38,7 @@ test('SALE proposal only reads explicit current picks; prices are never defaulte
   const { session, queries } = setup(); assert.equal(queries.length, 0); await session.openPicker('customer'); assert.equal(queries.length, 0);
   await fill(session); assert.equal(session.getSnapshot().draft.lines[0]!.dealPrice, ''); assert.equal(session.validate(), null);
   session.updateLine(sku.id, { dealPrice: '2.35', quantity: '2' }); const draft = session.validate()!;
+  assert.ok(draft.lines[0]!.sku);
   assert.equal(draft.businessType, 'SALE'); assert.equal(draft.lines[0]!.sku.barcodeAvailability, 'UNAVAILABLE'); assert.equal(draft.lines[0]!.product.minimumPriceAvailability, 'UNAVAILABLE');
   assert.equal(session.getSnapshot().totals?.netDueMinor, '470'); assert.equal('number' in draft, false); assert.equal('id' in draft, false); assert.ok(Object.isFrozen(draft));
 });

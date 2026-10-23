@@ -25,9 +25,9 @@ export function salesPreparationIntent(proposal: SalesProposal): NativeSalesCrea
   if (!proposal.hall || !proposal.customer || !proposal.warehouse) throw new TypeError('Required current references missing.');
   return checkedIntent({ businessType: proposal.businessType, businessDate: proposal.businessDate, note: proposal.note === '' ? null : proposal.note,
     hallId: proposal.hall.id, customerId: proposal.customer.id, salespersonId: proposal.salesperson?.id ?? null, warehouseId: proposal.warehouse.id,
-    orderDiscount: yuan(proposal.orderDiscount), lines: proposal.lines.map(row => ({ skuId: row.sku.id, quantity: row.quantity,
+    orderDiscount: yuan(proposal.orderDiscount), lines: proposal.lines.map(row => { if (!row.sku) throw new TypeError('Local specifications use the original SAVE proposal, never read-only preparation.'); return ({ skuId: row.sku.id, quantity: row.quantity,
       dealPrice: row.pricingRule === 'DISCOUNT' ? null : row.isGift ? '0.00' : yuan(row.dealPrice), pricingRule: row.pricingRule,
-      discountTenths: row.pricingRule === 'DISCOUNT' ? tenths(row.discount) : null, isGift: row.isGift, zeroConfirmed: row.zeroConfirmed })),
+      discountTenths: row.pricingRule === 'DISCOUNT' ? tenths(row.discount) : null, isGift: row.isGift, zeroConfirmed: row.zeroConfirmed }); }),
     settlements: proposal.settlements.map(row => { if (!row.method || !row.account || row.account.paymentMethodId !== row.method.id) throw new TypeError('Incomplete settlement selection.'); return { paymentAccountId: row.account.id, paymentMethodId: row.method.id, direction: row.direction, amount: yuan(row.amount) }; }) });
 }
 function keys(value: unknown, expected: readonly string[]): void {
