@@ -40,8 +40,10 @@ class ScriptedPool implements PgInventoryQueryPool, PgInventoryQueryClient {
       case "warehouses": rows = this.scope.warehouses.filter(w => (values[0] as string[]).includes(w.id)).map(w => ({ id: w.id, hall_id: w.hallId, name: w.label, published: true })); break;
       case "candidate-integrity": rows = [{ ...this.flags }]; break;
       case "catalog-status": rows = [{ ...this.flags, exact_total: String(this.count), quantity: sql.includes("'0'::text AS quantity") ? "0" : (BigInt(this.negative) * BigInt(this.count)).toString() }]; break;
-      case "products": {
-        const offset = Number(values[9]); const length = Math.min(Number(values[8]), Math.max(0, this.count - offset));
+      case "products":
+      case "output-products": {
+        const offset = stage === "products" ? Number(values[9]) : values[9] === null ? 0 : Number(String(values[9]).slice(-12)) - 1000 + 1;
+        const length = Math.min(Number(values[stage === "products" ? 8 : 10]), Math.max(0, this.count - offset));
         rows = Array.from({ length }, (_, i) => ({ id: productId(offset + i), product_code: `NATIVE-${String(offset + i).padStart(6, "0")}`, name: "Synthetic native product",
           size_group_id: groupId, size_group_name: "Native source group", category_name: "Native category", supplier_name: null, season_name: null })); break;
       }
@@ -70,6 +72,38 @@ function candidate(pool: ScriptedPool, overrides: Partial<InventoryCandidateQuer
 }
 const code = (expected: string) => (error: unknown) => error instanceof DomainError && error.code === expected;
 const stages = (pool: ScriptedPool) => pool.calls.map(call => /\/\* inventory:([a-z-]+) \*\//.exec(call.sql)?.[1] ?? call.sql);
+
+test("inventory full output PG: one RR snapshot, one full summary and bounded keyset batches produce the complete filter only after COMMIT", async () => {
+  const pool = new ScriptedPool(); pool.count = 203; const reader = new PostgresInventoryQueryReader(pool), iterator = reader.readInventoryOutput(read(pool))[Symbol.asyncIterator]();
+  assert.equal(pool.connects, 0); const first = await iterator.next(); assert.equal(first.value.kind, "summary"); assert.equal(stages(pool).includes("output-products"), false);
+  const frames = [first.value]; for (;;) { const frame = await iterator.next(); if (frame.done) break; if (frame.value.kind === "complete") assert.equal(stages(pool).at(-1), "COMMIT"); frames.push(frame.value); }
+  assert.equal(frames.filter(f => f.kind === "product").length, 203); const last = frames.at(-1)!; assert.equal(last.kind, "complete"); if (last.kind === "complete") { assert.equal(last.emittedProducts, 203); assert.equal(last.allMatchesTotal.knownQuantity, "-406"); }
+  assert.equal(stages(pool).filter(s => s === "catalog-status").length, 1); assert.equal(stages(pool).filter(s => s === "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY").length, 1); assert.deepEqual(pool.releases, [undefined]);
+  const chunks = pool.calls.filter(c => c.sql.includes("inventory:output-products")); assert.equal(chunks.length, 3);
+  assert.deepEqual(chunks.map(c => c.values[10]), [100, 100, 100]); assert.equal(chunks[1]!.values[9], productId(99)); assert.equal(chunks[2]!.values[9], productId(199));
+  assert.ok(chunks.every(c => !c.sql.includes("OFFSET") && c.sql.includes('p.product_code COLLATE "C",p.id') && c.sql.includes("LIMIT $11")));
+  const empty = new ScriptedPool(); empty.count = 0; const kinds = []; for await (const frame of new PostgresInventoryQueryReader(empty).readInventoryOutput(read(empty))) kinds.push(frame.kind);
+  assert.deepEqual(kinds, ["summary", "complete"]); assert.equal(stages(empty).includes("output-products"), false); assert.equal(stages(empty).at(-1), "COMMIT");
+});
+
+test("inventory full output PG: failure, uncertain COMMIT, postcommit abort and consumer cancellation never publish completion or leak a connection", async () => {
+  for (const failAt of ["balances", "COMMIT"]) {
+    const pool = new ScriptedPool(); pool.failAt = failAt; const kinds: string[] = [];
+    await assert.rejects(async () => { for await (const frame of new PostgresInventoryQueryReader(pool).readInventoryOutput(read(pool))) kinds.push(frame.kind); });
+    assert.equal(kinds.includes("complete"), false); assert.equal(pool.releases.length, 1); assert.equal(pool.releases[0] instanceof Error, failAt === "COMMIT"); assert.equal(stages(pool).includes("ROLLBACK"), failAt !== "COMMIT");
+  }
+  const canceled = new ScriptedPool(); canceled.count = 203; const iterator = new PostgresInventoryQueryReader(canceled).readInventoryOutput(read(canceled))[Symbol.asyncIterator]();
+  await iterator.next(); await iterator.next(); await iterator.return?.(undefined); assert.equal(stages(canceled).filter(s => s === "output-products").length, 1); assert.equal(stages(canceled).at(-1), "ROLLBACK"); assert.deepEqual(canceled.releases, [undefined]);
+  const controller = new AbortController(), late = new ScriptedPool(); late.afterQuery = stage => { if (stage === "COMMIT") controller.abort(); }; const kinds: string[] = [];
+  await assert.rejects(async () => { for await (const frame of new PostgresInventoryQueryReader(late).readInventoryOutput(read(late, undefined, controller.signal))) kinds.push(frame.kind); }, code("INVENTORY_READ_ABORTED"));
+  assert.equal(kinds.includes("complete"), false); assert.equal(stages(late).includes("ROLLBACK"), false); assert.deepEqual(late.releases, [undefined]);
+  const broken = new ScriptedPool(); broken.failAt = "balances"; broken.failRollback = true;
+  await assert.rejects(async () => { for await (const _ of new PostgresInventoryQueryReader(broken).readInventoryOutput(read(broken))) {} }, AggregateError);
+  assert.equal(broken.releases.length, 1); assert.ok(broken.releases[0] instanceof Error);
+  const incomplete = new ScriptedPool(); incomplete.count = 101; incomplete.transform = (stage, rows) => stage === "balances" ? rows.map(r => ({ ...r, quantity: "1" })) : rows;
+  const seen: string[] = []; await assert.rejects(async () => { for await (const frame of new PostgresInventoryQueryReader(incomplete).readInventoryOutput(read(incomplete))) seen.push(frame.kind); }, code("INVENTORY_INTEGRITY_FAILED"));
+  assert.equal(seen.includes("complete"), false); assert.equal(stages(incomplete).at(-1), "ROLLBACK");
+});
 
 test("inventory season array: verified current selection drives full-filter summary, bounded page and labels without scalar fallback or multiplied stock", async () => {
   const pool = new ScriptedPool(); pool.count = 102; let proofs = 0;

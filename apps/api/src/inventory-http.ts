@@ -1,7 +1,9 @@
 import type { IncomingHttpHeaders } from "node:http";
+import { Readable } from "node:stream";
 import type { FastifyPluginAsync } from "fastify";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
 import type { InventoryQueryDependencies } from "../../../packages/application/src/inventory-query-contracts.ts";
+import { encodeInventoryOutputFrame } from "../../../packages/application/src/inventory-query-contracts.ts";
 import { checkedInventoryActor, createInventoryQueryService } from "../../../packages/application/src/inventory-query-service.ts";
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { rejectInventoryInput } from "../../../packages/application/src/inventory-query-validation.ts";
@@ -68,5 +70,22 @@ export function createInventoryHttpPlugin(options: InventoryHttpOptions): Fastif
           .header("X-Inventory-Readiness", snapshot.readiness).send(snapshot.data);
       });
     }
+    app.post("/inventory/output/query", { bodyLimit: 65_536 }, async (request, reply) => {
+      if (!request.query || typeof request.query !== "object" || Array.isArray(request.query) || Object.keys(request.query).length) rejectInventoryInput();
+      if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });
+      const actor = actors.get(request), state = reads.get(request); if (!actor || !state) throw new Error("Missing trusted inventory request context");
+      const iterator = service.readOutput(actor, request.body, state.controller.signal)[Symbol.asyncIterator](), first = await iterator.next();
+      if (first.done || first.value.kind !== "summary") throw new Error("Inventory output summary is unavailable");
+      async function* body() {
+        try {
+          yield encodeInventoryOutputFrame(first.value!);
+          for (;;) { const next = await iterator.next(); if (next.done) break; yield encodeInventoryOutputFrame(next.value); }
+        } finally { await iterator.return?.(undefined); }
+      }
+      const stream = Readable.from(body(), { objectMode: false });
+      stream.once("close", () => { state.cleanup(); reads.delete(request); actors.delete(request); });
+      return reply.header("X-Inventory-Read-Reference", first.value.readReference).header("X-Inventory-Readiness", "ready")
+        .type("application/x-ndjson").send(stream);
+    });
   };
 }

@@ -2,8 +2,8 @@ import type { ActorContext } from "./ports.ts";
 import { DomainError } from "../../domain/src/errors.ts";
 import { entityId } from "../../domain/src/values.ts";
 import type { InventoryCandidateQuery, InventoryQuery, InventoryQueryDependencies, InventoryReadIntent, InventoryReadScope } from "./inventory-query-contracts.ts";
-import { checkedCandidateSnapshot, checkedInventorySnapshot } from "./inventory-query-response.ts";
-import { checkedInventoryScope, parseInventoryCandidateQuery, parseInventoryQuery } from "./inventory-query-validation.ts";
+import { checkedCandidateSnapshot, checkedInventorySnapshot, checkedInventoryOutputFrames } from "./inventory-query-response.ts";
+import { checkedInventoryScope, parseInventoryCandidateQuery, parseInventoryQuery, parseInventoryOutputQuery } from "./inventory-query-validation.ts";
 
 export function checkedInventoryActor(actor: ActorContext): ActorContext {
   try {
@@ -23,6 +23,7 @@ export function createInventoryQueryService(dependencies: InventoryQueryDependen
   const authorize = dependencies.authorization.authorize.bind(dependencies.authorization);
   const readInventory = dependencies.reader.readInventory.bind(dependencies.reader);
   const readCandidates = dependencies.reader.readCandidates.bind(dependencies.reader);
+  const readOutput = dependencies.reader.readInventoryOutput?.bind(dependencies.reader);
   async function scopeFor(actor: ActorContext, intent: InventoryReadIntent, signal: AbortSignal): Promise<InventoryReadScope> {
     active(signal);
     const scope = checkedInventoryScope(await authorize(actor, Object.freeze(intent), signal));
@@ -30,6 +31,14 @@ export function createInventoryQueryService(dependencies: InventoryQueryDependen
     return scope;
   }
   return Object.freeze({
+    async *readOutput(actor: ActorContext, input: unknown, signal: AbortSignal) {
+      const trustedActor = checkedInventoryActor(actor), parameters = parseInventoryOutputQuery(input);
+      let scope = await scopeFor(trustedActor, { kind: "inventory", parameters }, signal);
+      if (parameters.filter.warehouseIds.some(id => !scope.warehouses.some(w => w.id === id))) throw new DomainError("FORBIDDEN", "Requested output warehouse is outside authorized scope");
+      if (parameters.filter.warehouseIds.length) scope = Object.freeze({ hallIds: scope.hallIds, warehouses: Object.freeze(scope.warehouses.filter(w => parameters.filter.warehouseIds.includes(w.id))) });
+      if (!readOutput) throw new DomainError("INVENTORY_NOT_READY", "Complete inventory output provider is unavailable");
+      for await (const frame of checkedInventoryOutputFrames(readOutput(Object.freeze({ actor: trustedActor, scope, parameters, signal })), parameters, scope)) { active(signal); yield frame; active(signal); }
+    },
     async readInventory(actor: ActorContext, input: unknown, signal: AbortSignal) {
       const trustedActor = checkedInventoryActor(actor); const parameters: InventoryQuery = parseInventoryQuery(input);
       let scope = await scopeFor(trustedActor, { kind: "inventory", parameters }, signal);

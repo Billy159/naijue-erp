@@ -2,6 +2,7 @@ import { DomainError } from "../../domain/src/errors.ts";
 import { entityId, quantity } from "../../domain/src/values.ts";
 import type { EntityId, EntityKind } from "../../domain/src/values.ts";
 import type { InventoryCandidateKind, InventoryCandidateQuery, InventoryQuery, InventoryReadScope, InventoryStockTotal } from "./inventory-query-contracts.ts";
+import { INVENTORY_TEXT_MAX_CHARS, INVENTORY_TOTAL_MAX_CHARS, INVENTORY_SCOPE_MAX_ITEMS } from "./inventory-query-contracts.ts";
 
 // Technical request/response resource bounds, not business quantity or catalog-size rules.
 export const INVENTORY_MAX_SELECTIONS = 100;
@@ -15,7 +16,7 @@ export function record(value: unknown, required: readonly string[], optional: re
   if (!required.every(key => Object.hasOwn(result, key)) || Object.keys(result).some(key => !required.includes(key) && !optional.includes(key))) reject();
   return result;
 }
-export function textValue(value: unknown, reject: Reject = rejectInventoryInput, empty = false, max = 1000): string {
+export function textValue(value: unknown, reject: Reject = rejectInventoryInput, empty = false, max = INVENTORY_TEXT_MAX_CHARS): string {
   if (typeof value !== "string" || (!empty && value.length === 0) || value.length > max || /[\u0000-\u001f\u007f]/.test(value)) reject();
   return value;
 }
@@ -56,6 +57,10 @@ export function parseInventoryQuery(value: unknown): InventoryQuery {
     fitIds: selections("fit", filter.fits), seasonIds: selections("season", filter.seasons)
   }) });
 }
+export function parseInventoryOutputQuery(value: unknown): InventoryQuery {
+  const row = record(value, ["filter"]);
+  return parseInventoryQuery({ filter: row.filter, page: 1, pageSize: 100 });
+}
 export function parseInventoryCandidateQuery(value: unknown): InventoryCandidateQuery {
   const row = record(value, ["kind", "search", "page", "pageSize", "selectedIds", "categoryIds"]);
   if (!KINDS.includes(row.kind as InventoryCandidateKind)) rejectInventoryInput();
@@ -71,8 +76,8 @@ export function parseInventoryCandidateQuery(value: unknown): InventoryCandidate
 export function checkedInventoryScope(value: InventoryReadScope): InventoryReadScope {
   const reject = rejectInventoryResponse;
   const scope = record(value, ["hallIds", "warehouses"], [], reject);
-  const hallIds = arrayValue(scope.hallIds, 1000, reject).map(id => idValue("hall", id, reject));
-  const warehouses = arrayValue(scope.warehouses, 1000, reject).map(item => {
+  const hallIds = arrayValue(scope.hallIds, INVENTORY_SCOPE_MAX_ITEMS, reject).map(id => idValue("hall", id, reject));
+  const warehouses = arrayValue(scope.warehouses, INVENTORY_SCOPE_MAX_ITEMS, reject).map(item => {
     const row = record(item, ["id", "hallId", "label"], [], reject);
     return Object.freeze({ id: idValue("warehouse", row.id, reject), hallId: idValue("hall", row.hallId, reject), label: textValue(row.label, reject) });
   });
@@ -82,7 +87,7 @@ export function checkedInventoryScope(value: InventoryReadScope): InventoryReadS
   return Object.freeze({ hallIds: Object.freeze(hallIds), warehouses: Object.freeze(warehouses) });
 }
 export function exactInteger(value: unknown, cell: boolean): bigint {
-  const text = textValue(value, rejectInventoryResponse, false, 100);
+  const text = textValue(value, rejectInventoryResponse, false, INVENTORY_TOTAL_MAX_CHARS);
   if (!/^(?:0|[1-9]\d*|-[1-9]\d*)$/.test(text)) rejectInventoryResponse();
   try { return cell ? quantity(text) : BigInt(text); } catch { return rejectInventoryResponse(); }
 }

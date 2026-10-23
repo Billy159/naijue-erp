@@ -5,7 +5,7 @@ import Fastify from "fastify";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
 import type { InventoryQueryDependencies, TrustedInventorySnapshotReader } from "../../../packages/application/src/inventory-query-contracts.ts";
 import { DomainError } from "../../../packages/domain/src/errors.ts";
-import { candidateParameters, inventoryActor, inventoryParameters, inventoryScope, syntheticCandidateSnapshot, syntheticInventorySnapshot } from "../../../tests/support/synthetic-inventory-query.ts";
+import { candidateParameters, inventoryActor, inventoryParameters, inventoryScope, syntheticCandidateSnapshot, syntheticInventorySnapshot, syntheticInventoryReader, syntheticInventoryOutput } from "../../../tests/support/synthetic-inventory-query.ts";
 import { createInventoryHttpPlugin } from "./inventory-http.ts";
 import { createSalesSessionAuthenticator } from "./authentication.ts";
 import { inventoryId } from "../../../tests/support/synthetic-inventory-query.ts";
@@ -23,6 +23,47 @@ async function setup(t: TestContext, options: { authenticate?: InventoryHttpOpti
   const post = (body: unknown, url = "/inventory/query") => app.inject({ method: "POST", url, payload: JSON.stringify(body), headers: { "content-type": "application/json" } });
   return { app, calls, post };
 }
+test("inventory full output HTTP: existing plugin streams all products with metadata, private headers and an explicit final completion frame", async t => {
+  const f = await setup(t, { reader: { ...syntheticInventoryReader(103), async readInventory() { throw Error("Output cannot use current-page reads"); } } });
+  const response = await f.post({ filter: inventoryParameters().filter }, "/inventory/output/query"); assert.equal(response.statusCode, 200, response.body);
+  assert.match(String(response.headers["content-type"]), /^application\/x-ndjson/); assert.equal(response.headers["cache-control"], "no-store"); assert.equal(response.headers.pragma, "no-cache");
+  const frames = response.body.trimEnd().split("\n").map(line => JSON.parse(line)); assert.equal(frames.length, 105); assert.equal(frames[0].kind, "summary"); assert.equal(frames.at(-1).kind, "complete");
+  assert.equal(frames.at(-1).emittedProducts, 103); assert.equal(frames.at(-1).allMatchesTotal.knownQuantity, "-206"); assert.equal(response.headers["x-inventory-read-reference"], frames[0].readReference);
+  assert.equal(f.calls.authorize, 1); assert.equal(f.app.server.listening, false);
+});
+
+test("inventory full output HTTP: original trusted Origin, exact filter body and current warehouse permission run before output", async t => {
+  let opened = 0; const base = syntheticInventoryReader(); const reader: TrustedInventorySnapshotReader = { ...base, async *readInventoryOutput(read) { opened++; yield* syntheticInventoryOutput(read); } };
+  const authenticate = createSalesSessionAuthenticator({ trustedOrigin: "https://synthetic-erp.example", service: {
+    async login() { throw Error("unused"); }, async logout() {}, async changeOwnPassword() {}, async resolve() { return { ...inventoryActor, staffId: inventoryId("staff", 90), loginName: "SYNTHETIC", role: "SYNTHETIC", authVersion: 1 }; }
+  } });
+  const f = await setup(t, { reader, authenticate }), url = "/inventory/output/query", payload = { filter: inventoryParameters().filter }, cookie = `__Host-naijue_session=${"A".repeat(43)}`;
+  for (const origin of [undefined, "https://other.example"]) { const response = await f.app.inject({ method: "POST", url, payload, headers: { cookie, ...(origin ? { origin } : {}) } }); assert.equal(response.statusCode, 401); }
+  assert.equal(opened, 0);
+  for (const body of [{ ...payload, page: 1 }, { ...payload, actor: inventoryActor }, { filter: { ...payload.filter, warehouses: [{ id: inventoryId("warehouse", 999), label: "forged" }] } }]) {
+    const response = await f.app.inject({ method: "POST", url, payload: body, headers: { cookie, origin: "https://synthetic-erp.example" } }); assert.ok([400, 403].includes(response.statusCode));
+  }
+  assert.equal(opened, 0); const valid = await f.app.inject({ method: "POST", url, payload, headers: { cookie, origin: "https://synthetic-erp.example" } }); assert.equal(valid.statusCode, 200); assert.equal(opened, 1);
+});
+
+test("inventory full output HTTP: a failure after all product data never emits a successful completion and always closes the provider", async t => {
+  let products = 0, closed = false; const f = await setup(t, { reader: { ...syntheticInventoryReader(), async *readInventoryOutput(read) {
+    try { for await (const frame of syntheticInventoryOutput(read, 2)) { if (frame.kind === "complete") throw new Error("SYNTHETIC commit failed"); if (frame.kind === "product") products++; yield frame; } } finally { closed = true; }
+  } } });
+  let body = "", failed = false; try { body = (await f.post({ filter: inventoryParameters().filter }, "/inventory/output/query")).body; } catch { failed = true; }
+  assert.equal(products, 2); assert.equal(closed, true); assert.equal(body.includes('"kind":"complete"'), false); assert.ok(failed || body.length > 0);
+});
+test("inventory full output HTTP: disconnected stream aborts the original read, closes its provider and removes request listeners", async t => {
+  const app = Fastify({ logger: false }); t.after(() => app.close()); let response: import("node:http").ServerResponse | undefined, raw: import("node:http").IncomingMessage | undefined, forwarded: AbortSignal | undefined, closed = false;
+  let release!: () => void, entered!: () => void; const gate = new Promise<void>(r => { release = r; }), reading = new Promise<void>(r => { entered = r; });
+  app.addHook("onRequest", async (request, reply) => { response = reply.raw; raw = request.raw; });
+  app.register(createInventoryHttpPlugin({ authenticate: async () => inventoryActor, dependencies: { authorization: { async authorize() { return inventoryScope; } }, reader: { ...syntheticInventoryReader(), async *readInventoryOutput(read) {
+    forwarded = read.signal; try { for await (const frame of syntheticInventoryOutput(read)) { if (frame.kind === "product") { entered(); await gate; } yield frame; } } finally { closed = true; }
+  } } } })); await app.ready();
+  const pending = app.inject({ method: "POST", url: "/inventory/output/query", payload: { filter: inventoryParameters().filter } }).then(value => value, error => error);
+  await reading; assert.ok(response); assert.ok(raw); response.emit("close"); assert.equal(forwarded?.aborted, true); release(); await pending;
+  assert.equal(closed, true); assert.equal(raw.listenerCount("aborted"), 0); assert.equal(app.server.listening, false);
+});
 test("SYNTHETIC inventory HTTP: required trusted providers, no listener and DTO-compatible read-only routes", async t => {
   assert.throws(() => createInventoryHttpPlugin({} as InventoryHttpOptions), /trusted authentication/);
   assert.throws(() => createInventoryHttpPlugin({ authenticate: async () => inventoryActor } as unknown as InventoryHttpOptions), /trusted authorization/);

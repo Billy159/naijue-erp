@@ -42,6 +42,51 @@ export interface InventoryQueryPage {
   readonly allMatchesTotal: InventoryStockTotal;
   readonly readReference: string;
 }
+export interface InventoryOutputSummary {
+  readonly kind: "summary"; readonly readReference: string; readonly exactTotalProducts: number;
+  readonly warehouseLabels: readonly string[]; readonly allMatchesTotal: InventoryStockTotal;
+}
+export type InventoryOutputFrame = InventoryOutputSummary
+  | { readonly kind: "product"; readonly product: InventoryQueryProduct }
+  | { readonly kind: "complete"; readonly readReference: string; readonly exactTotalProducts: number;
+      readonly emittedProducts: number; readonly allMatchesTotal: InventoryStockTotal };
+// Existing DTO validation bounds, shared with the output decoder. These are
+// per-product/chunk work bounds, never a maximum number of output products.
+export const INVENTORY_MATRIX_CHUNK_MAX_UNITS = 1_000_000;
+export const INVENTORY_PRODUCT_MAX_SIZES = 1000;
+export const INVENTORY_PRODUCT_MAX_VARIANTS = 10000;
+export const INVENTORY_TEXT_MAX_CHARS = 1000;
+export const INVENTORY_TOTAL_MAX_CHARS = 100;
+export const INVENTORY_SCOPE_MAX_ITEMS = 1000;
+const outputWorstText = String.fromCharCode(0xd800).repeat(INVENTORY_TEXT_MAX_CHARS);
+const outputWorstId = "00000000-0000-0000-0000-000000000000";
+const outputWorstTotal = { knownQuantity: "9".repeat(INVENTORY_TOTAL_MAX_CHARS), unknownCells: 0, completeness: "complete" };
+// These templates serialize to ASCII, including escaped unpaired surrogates:
+// JSON string length is therefore its exact UTF-8 byte length.
+const outputJsonBytes = (value: unknown): number => JSON.stringify(value).length;
+const outputSelectionBytes = outputJsonBytes({ id: outputWorstId, label: outputWorstText });
+const outputTotalEntryBytes = outputJsonBytes(outputWorstId) + 1 + outputJsonBytes(outputWorstTotal) + 1;
+const outputCellEntryBytes = outputJsonBytes(outputWorstId) + 1 + outputJsonBytes({ state: "known", skuId: outputWorstId, quantity: "9".repeat(INVENTORY_TOTAL_MAX_CHARS) }) + 1;
+const outputProductFixedBytes = outputJsonBytes({ id: outputWorstId, code: outputWorstText, name: outputWorstText, categoryLabel: outputWorstText, supplierLabel: outputWorstText, seasonLabel: outputWorstText,
+  sizeGroup: { id: outputWorstId, label: outputWorstText }, sizes: [], colorFits: [], sizeTotals: {}, total: outputWorstTotal });
+const outputVariantFixedBytes = outputJsonBytes({ color: { id: outputWorstId, label: outputWorstText }, fit: { id: outputWorstId, label: outputWorstText }, rows: [], sizeTotals: {}, total: outputWorstTotal }) + 1;
+const outputRowFixedBytes = outputJsonBytes({ warehouse: { id: outputWorstId, label: outputWorstText }, cells: {}, total: outputWorstTotal }) + 1;
+/** UTF-8 bytes excluding LF. Conservative mathematical bounds, not allocation
+ * targets. Every row costs at least two work units (row plus one size cell),
+ * and every variant size-total has at least one corresponding warehouse cell.
+ * JSON escaping can use six bytes per UTF-16 code unit; an ordinary 8/32MiB
+ * response limit cannot be substituted for this entire-output contract. */
+export const INVENTORY_OUTPUT_FRAME_MAX_BYTES = Object.freeze({
+  summary: outputJsonBytes({ kind: "summary", readReference: "r".repeat(200), exactTotalProducts: Number.MAX_SAFE_INTEGER, warehouseLabels: [], allMatchesTotal: outputWorstTotal })
+    + INVENTORY_SCOPE_MAX_ITEMS * (outputJsonBytes(outputWorstText) + 1),
+  product: outputJsonBytes({ kind: "product", product: {} }) + outputProductFixedBytes
+    + INVENTORY_PRODUCT_MAX_SIZES * (outputSelectionBytes + 1 + outputTotalEntryBytes)
+    + INVENTORY_PRODUCT_MAX_VARIANTS * outputVariantFixedBytes
+    + Math.floor(INVENTORY_MATRIX_CHUNK_MAX_UNITS / 2) * outputRowFixedBytes
+    + INVENTORY_MATRIX_CHUNK_MAX_UNITS * (outputCellEntryBytes + outputTotalEntryBytes),
+  complete: outputJsonBytes({ kind: "complete", readReference: "r".repeat(200), exactTotalProducts: Number.MAX_SAFE_INTEGER, emittedProducts: Number.MAX_SAFE_INTEGER, allMatchesTotal: outputWorstTotal })
+});
+export function encodeInventoryOutputFrame(frame: InventoryOutputFrame): string { return JSON.stringify(frame) + "\n"; }
 export interface InventoryQueryCandidate extends InventorySelection {
   readonly disabled?: boolean; readonly parentLabel?: string; readonly depth?: 0 | 1;
   /** Required only for product candidates; native projection, never parsed from label. */
@@ -117,6 +162,10 @@ export interface InventoryScopedRead<P> {
 export interface TrustedInventorySnapshotReader {
   readInventory(read: InventoryScopedRead<InventoryQuery>): Promise<InventoryReadSnapshot<InventoryQueryPage>>;
   readCandidates(read: InventoryScopedRead<InventoryCandidateQuery>): Promise<InventoryReadSnapshot<InventoryCandidatePage>>;
+  /** Complete executed filter in one RR snapshot, with bounded native product batches.
+   * The final complete frame is emitted only after confirmed read COMMIT.
+   * Ordinary page-only providers may omit output; absence never grants a partial export. */
+  readInventoryOutput?(read: InventoryScopedRead<InventoryQuery>): AsyncIterable<InventoryOutputFrame>;
 }
 export interface InventoryQueryDependencies {
   readonly authorization: InventoryQueryAuthorization;

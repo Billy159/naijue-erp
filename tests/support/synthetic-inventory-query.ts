@@ -1,7 +1,7 @@
 import { entityId } from "../../packages/domain/src/values.ts";
 import type { EntityKind } from "../../packages/domain/src/values.ts";
 import type { ActorContext } from "../../packages/application/src/ports.ts";
-import type { InventoryCandidatePage, InventoryCandidateQuery, InventoryQuery, InventoryQueryColorFit, InventoryQueryPage, InventoryQueryProduct, InventoryReadScope, InventoryReadSnapshot, InventoryScopedRead, InventoryStockTotal, TrustedInventorySnapshotReader } from "../../packages/application/src/inventory-query-contracts.ts";
+import type { InventoryCandidatePage, InventoryCandidateQuery, InventoryQuery, InventoryQueryColorFit, InventoryQueryPage, InventoryQueryProduct, InventoryReadScope, InventoryReadSnapshot, InventoryScopedRead, InventoryStockTotal, TrustedInventorySnapshotReader, InventoryOutputFrame } from "../../packages/application/src/inventory-query-contracts.ts";
 
 /** Deterministic finite TEST DOUBLE only. Never imported by application/composition code. */
 export const inventoryId = <K extends EntityKind>(kind: K, n: number) => entityId(kind, `00000000-0000-0000-0000-${String(n).padStart(12, "0")}`);
@@ -62,5 +62,11 @@ export function syntheticCandidateSnapshot(read: InventoryScopedRead<InventoryCa
   } };
 }
 export function syntheticInventoryReader(count = 1): TrustedInventorySnapshotReader {
-  return { async readInventory(read) { return syntheticInventorySnapshot(read, count); }, async readCandidates(read) { return syntheticCandidateSnapshot(read); } };
+  return { async readInventory(read) { return syntheticInventorySnapshot(read, count); }, async readCandidates(read) { return syntheticCandidateSnapshot(read); }, readInventoryOutput(read) { return syntheticInventoryOutput(read, count); } };
+}
+export async function* syntheticInventoryOutput(read: InventoryScopedRead<InventoryQuery>, count = 1): AsyncIterable<InventoryOutputFrame> {
+  const { readReference, data } = syntheticInventorySnapshot({ ...read, parameters: { ...read.parameters, page: 1, pageSize: 100 } }, count);
+  yield { kind: "summary", readReference, exactTotalProducts: count, warehouseLabels: data.warehouseLabels, allMatchesTotal: data.allMatchesTotal };
+  for (let i = 0; i < count; i++) yield { kind: "product", product: syntheticProduct(i, read.scope) };
+  yield { kind: "complete", readReference, exactTotalProducts: count, emittedProducts: count, allMatchesTotal: data.allMatchesTotal };
 }

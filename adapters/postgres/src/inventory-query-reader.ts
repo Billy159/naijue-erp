@@ -1,6 +1,7 @@
 import type { Pool } from "pg";
 import { randomUUID } from "node:crypto";
-import type { InventoryCandidatePage, InventoryCandidateQuery, InventoryQuery, InventoryQueryCandidate, InventoryQueryColorFit, InventoryQueryPage, InventoryQueryProduct, InventoryReadScope, InventoryReadSnapshot, InventoryScopedRead, InventorySelection, InventoryStockCell, InventoryStockTotal, TrustedInventorySnapshotReader } from "../../../packages/application/src/inventory-query-contracts.ts";
+import { INVENTORY_MATRIX_CHUNK_MAX_UNITS, INVENTORY_PRODUCT_MAX_SIZES, INVENTORY_PRODUCT_MAX_VARIANTS, INVENTORY_TEXT_MAX_CHARS, INVENTORY_TOTAL_MAX_CHARS } from "../../../packages/application/src/inventory-query-contracts.ts";
+import type { InventoryCandidatePage, InventoryCandidateQuery, InventoryQuery, InventoryQueryCandidate, InventoryQueryColorFit, InventoryQueryPage, InventoryQueryProduct, InventoryReadScope, InventoryReadSnapshot, InventoryScopedRead, InventorySelection, InventoryStockCell, InventoryStockTotal, InventoryOutputFrame, TrustedInventorySnapshotReader } from "../../../packages/application/src/inventory-query-contracts.ts";
 import { checkedInventoryActor } from "../../../packages/application/src/inventory-query-service.ts";
 import { checkedCandidateSnapshot, checkedInventorySnapshot } from "../../../packages/application/src/inventory-query-response.ts";
 import { checkedInventoryScope, parseInventoryCandidateQuery, parseInventoryQuery, record } from "../../../packages/application/src/inventory-query-validation.ts";
@@ -25,7 +26,7 @@ const pgPoolCompatibility: PgPoolCompatibility = true; void pgPoolCompatibility;
 export const INVENTORY_READ_MAX_PAGE_SIZES = 50_000;
 export const INVENTORY_READ_MAX_PAGE_SKUS = 50_000;
 export const INVENTORY_READ_MAX_PAGE_BALANCES = 250_000;
-export const INVENTORY_READ_MAX_MATRIX_UNITS = 1_000_000;
+export const INVENTORY_READ_MAX_MATRIX_UNITS = INVENTORY_MATRIX_CHUNK_MAX_UNITS;
 type Query = (sql: string, values?: unknown[]) => Promise<PgInventoryQueryResult>;
 type Row = Record<string, unknown>;
 const id = (kind: EntityKind, value: unknown): string => entityId(kind, stringValue(value));
@@ -37,12 +38,12 @@ function active(signal: AbortSignal): void {
 }
 function label(value: unknown): string {
   const text = stringValue(value);
-  integrity(text.trim().length > 0 && text.length <= 1000 && !/[\u0000-\u001f\u007f]/.test(text), "Invalid native inventory label");
+  integrity(text.trim().length > 0 && text.length <= INVENTORY_TEXT_MAX_CHARS && !/[\u0000-\u001f\u007f]/.test(text), "Invalid native inventory label");
   return text;
 }
 function aggregate(value: unknown): bigint {
   const text = stringValue(value);
-  integrity(/^(?:0|[1-9]\d*|-[1-9]\d*)$/.test(text) && text.length <= 100, "Invalid exact inventory aggregate");
+  integrity(/^(?:0|[1-9]\d*|-[1-9]\d*)$/.test(text) && text.length <= INVENTORY_TOTAL_MAX_CHARS, "Invalid exact inventory aggregate");
   return BigInt(text);
 }
 function count(value: unknown): number {
@@ -209,7 +210,7 @@ function pageProducts(productRows: readonly Row[], sizeRows: readonly Row[], sku
   }
   let units = 0;
   return [...products.values()].map(product => {
-    integrity(product.sizes.length > 0, "Native product size columns are unavailable"); bounded(product.sizes, 1000);
+    integrity(product.sizes.length > 0, "Native product size columns are unavailable"); bounded(product.sizes, INVENTORY_PRODUCT_MAX_SIZES);
     const variants = new Map<string, { color: InventorySelection; fit: InventorySelection; skus: Map<string, string> }>();
     for (const sku of product.skus) {
       const key = `${sku.color.id}:${sku.fit.id}`; const previous = variants.get(key);
@@ -218,7 +219,7 @@ function pageProducts(productRows: readonly Row[], sizeRows: readonly Row[], sku
         previous.skus.set(sku.sizeId, sku.id);
       } else variants.set(key, { color: sku.color, fit: sku.fit, skus: new Map([[sku.sizeId, sku.id]]) });
     }
-    bounded([...variants.keys()], 10000);
+    bounded([...variants.keys()], INVENTORY_PRODUCT_MAX_VARIANTS);
     units += 1 + product.sizes.length + variants.size * (1 + scope.warehouses.length * (1 + product.sizes.length));
     bounded({ length: units }, INVENTORY_READ_MAX_MATRIX_UNITS);
     const colorFits: InventoryQueryColorFit[] = [...variants.values()].map(variant => {
@@ -245,6 +246,36 @@ function pageProducts(productRows: readonly Row[], sizeRows: readonly Row[], sku
       sizeGroup: { id: product.groupId, label: label(product.row.size_group_name) }, sizes: product.sizes, colorFits,
       sizeTotals: quantities(product.sizes, colorFits), total: totalOf(colorFits.map(group => group.total)) };
   });
+}
+
+const productSelection = (seasonArray: boolean) => `SELECT p.id, p.product_code, p.name, p.size_group_id, g.name AS size_group_name, c.name AS category_name,
+          su.name AS supplier_name, se.name AS season_name FROM matched_products mp JOIN naijue_erp.product p ON p.id = mp.id
+        JOIN naijue_erp.product_category c ON c.id = p.category_id JOIN naijue_erp.size_group g ON g.id = p.size_group_id
+        LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id ${productSeasonLabelJoin(seasonArray)}`;
+async function productMatrices(query: Query, values: unknown[], products: Row[], input: InventoryQuery, scope: InventoryReadScope, seasonArray: boolean): Promise<InventoryQueryProduct[]> {
+  bounded(products, input.pageSize); const pageIds = products.map(row => id("product", row.id));
+  let sizes: Row[] = []; let skus: Row[] = []; let balances: Row[] = [];
+  if (pageIds.length) {
+    sizes = (await query(`/* inventory:sizes */ SELECT p.id AS product_id, p.size_group_id, m.size_id, s.name AS size_name, m.display_order
+      FROM naijue_erp.product p JOIN naijue_erp.size_group_member m ON m.size_group_id = p.size_group_id
+      JOIN naijue_erp.size s ON s.id = m.size_id WHERE p.id = ANY($1::uuid[])
+      ORDER BY p.id, m.display_order, s.id LIMIT $2`, [pageIds, INVENTORY_READ_MAX_PAGE_SIZES + 1])).rows;
+    bounded(sizes, INVENTORY_READ_MAX_PAGE_SIZES);
+    skus = (await query(`/* inventory:skus */ SELECT s.id, s.product_id, s.color_id, s.fit_id, s.size_id, c.name AS color_name, f.name AS fit_name
+      FROM naijue_erp.sku s JOIN naijue_erp.color c ON c.id = s.color_id JOIN naijue_erp.fit f ON f.id = s.fit_id
+      JOIN naijue_erp.product p ON p.id = s.product_id LEFT JOIN naijue_erp.size_group_member m ON m.size_group_id = p.size_group_id AND m.size_id = s.size_id
+      WHERE s.product_id = ANY($1::uuid[]) AND (cardinality($2::uuid[]) = 0 OR s.fit_id = ANY($2::uuid[]))
+      ORDER BY p.id, c.code COLLATE "C", c.id, f.code COLLATE "C", f.id, m.display_order, s.size_id, s.id LIMIT $3`,
+    [pageIds, input.filter.fitIds, INVENTORY_READ_MAX_PAGE_SKUS + 1])).rows;
+    bounded(skus, INVENTORY_READ_MAX_PAGE_SKUS);
+    balances = (await query(`/* inventory:balances */ ${catalog(seasonArray)}
+      SELECT b.warehouse_id, b.sku_id, b.quantity::text, b.version, b.last_operation_id FROM naijue_erp.inventory_balance b
+      JOIN filtered_skus s ON s.id = b.sku_id JOIN authorized_warehouses w ON w.id = b.warehouse_id
+      WHERE s.product_id = ANY($9::uuid[]) ORDER BY b.warehouse_id, b.sku_id LIMIT $10`,
+    [...values, pageIds, INVENTORY_READ_MAX_PAGE_BALANCES + 1])).rows;
+    bounded(balances, INVENTORY_READ_MAX_PAGE_BALANCES);
+  }
+  return pageProducts(products, sizes, skus, balances, scope);
 }
 
 /** Injected native PostgreSQL protocol reader. No Pool construction, legacy projection, source-file read,
@@ -274,42 +305,64 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
       throw error;
     } finally { client.release(discard); }
   }
+  private async *streamSnapshot<T>(signal: AbortSignal, work: (query: Query) => AsyncIterable<T>): AsyncIterable<T> {
+    active(signal); const client = await this.pool.connect(); let began = false, committing = false, committed = false;
+    let discard: Error | undefined, failure: unknown;
+    const query: Query = (sql, values = []) => { active(signal); return client.query(sql, values); };
+    try {
+      active(signal); await query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true;
+      for await (const frame of work(query)) { active(signal); yield frame; active(signal); }
+      active(signal); committing = true; await query("COMMIT"); committed = true; active(signal);
+    } catch (error) {
+      failure = error; if (!committed && (!began || committing)) discard = error instanceof Error ? error : new Error("Inventory output snapshot failed"); throw error;
+    } finally {
+      try {
+        // Generator return on cancellation also leaves a transaction to close.
+        if (began && !committing) try { await client.query("ROLLBACK"); }
+        catch (error) { discard = error instanceof Error ? error : new Error("Inventory output rollback failed"); throw new AggregateError([...(failure === undefined ? [] : [failure]), error], "Inventory output rollback failed; client discarded"); }
+      } finally { client.release(discard); }
+    }
+  }
+  async *readInventoryOutput(read: InventoryScopedRead<InventoryQuery>): AsyncIterable<InventoryOutputFrame> {
+    checkedInventoryActor(read.actor); const input = { ...checkedParameters(read.parameters), page: 1, pageSize: 100 as const }, scope = inventoryScope(read.scope, input), seasonArray = this.seasonArray;
+    let completion: Extract<InventoryOutputFrame, { kind: "complete" }> | undefined;
+    yield* this.streamSnapshot<InventoryOutputFrame>(read.signal, async function* (query) {
+      const batchId = await publishedBatch(query); await verifyWarehouses(query, scope, batchId);
+      const values = parameters(scope, input.filter, batchId), status = await catalogStatus(query, values, seasonArray), readReference = `inventory:${randomUUID()}`;
+      const warehouseLabels = scope.warehouses.map(w => w.label);
+      yield { kind: "summary", readReference, exactTotalProducts: status.exactTotal, warehouseLabels, allMatchesTotal: status.allMatchesTotal };
+      let count = 0, sum = 0n, lastCode: string | null = null, lastId: string | null = null;
+      while (count < status.exactTotal) {
+        const products = (await query(`/* inventory:output-products */ ${catalog(seasonArray)} ${productSelection(seasonArray)}
+          WHERE ($9::text IS NULL OR (p.product_code COLLATE "C",p.id) > ($9::text COLLATE "C",$10::uuid))
+          ORDER BY p.product_code COLLATE "C",p.id LIMIT $11`, [...values, lastCode, lastId, 100])).rows;
+        const pageInput = { ...input, page: count / 100 + 1 }, matrices = await productMatrices(query, values, products, input, scope, seasonArray);
+        const page = checkedInventorySnapshot({ readReference, readiness: "ready", data: { page: pageInput.page, pageSize: 100, exactTotalProducts: status.exactTotal,
+          products: matrices, warehouseLabels, allMatchesTotal: status.allMatchesTotal, readReference } }, pageInput, scope).data;
+        for (const product of page.products) {
+          if (lastCode !== null) { const order = Buffer.compare(Buffer.from(lastCode), Buffer.from(product.code)); integrity(order < 0 || order === 0 && lastId! < product.id, "Inventory output keyset did not advance"); }
+          lastCode = product.code; lastId = product.id; count++; sum += BigInt(product.total.knownQuantity);
+          yield { kind: "product", product };
+        }
+      }
+      integrity(count === status.exactTotal && sum.toString() === status.allMatchesTotal.knownQuantity, "Complete inventory output differs from full-filter summary");
+      completion = { kind: "complete", readReference, exactTotalProducts: count, emittedProducts: count, allMatchesTotal: status.allMatchesTotal };
+    });
+    // The transaction generator returns normally only after confirmed COMMIT.
+    active(read.signal); integrity(completion, "Complete inventory output is unavailable"); yield completion;
+  }
   async readInventory(read: InventoryScopedRead<InventoryQuery>): Promise<InventoryReadSnapshot<InventoryQueryPage>> {
     checkedInventoryActor(read.actor); const input = checkedParameters(read.parameters); const scope = inventoryScope(read.scope, input);
     return this.snapshot(read.signal, async query => {
       const batchId = await publishedBatch(query); await verifyWarehouses(query, scope, batchId);
       const values = parameters(scope, input.filter, batchId); const status = await catalogStatus(query, values, this.seasonArray);
       const products = (await query(`/* inventory:products */ ${catalog(this.seasonArray)}
-        SELECT p.id, p.product_code, p.name, p.size_group_id, g.name AS size_group_name, c.name AS category_name,
-          su.name AS supplier_name, se.name AS season_name FROM matched_products mp JOIN naijue_erp.product p ON p.id = mp.id
-        JOIN naijue_erp.product_category c ON c.id = p.category_id JOIN naijue_erp.size_group g ON g.id = p.size_group_id
-        LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id ${productSeasonLabelJoin(this.seasonArray)}
+        ${productSelection(this.seasonArray)}
         ORDER BY p.product_code COLLATE "C", p.id LIMIT $9 OFFSET $10::bigint`, [...values, input.pageSize, String((input.page - 1) * input.pageSize)])).rows;
-      bounded(products, input.pageSize); const pageIds = products.map(row => id("product", row.id));
-      let sizes: Row[] = []; let skus: Row[] = []; let balances: Row[] = [];
-      if (pageIds.length) {
-        sizes = (await query(`/* inventory:sizes */ SELECT p.id AS product_id, p.size_group_id, m.size_id, s.name AS size_name, m.display_order
-          FROM naijue_erp.product p JOIN naijue_erp.size_group_member m ON m.size_group_id = p.size_group_id
-          JOIN naijue_erp.size s ON s.id = m.size_id WHERE p.id = ANY($1::uuid[])
-          ORDER BY p.id, m.display_order, s.id LIMIT $2`, [pageIds, INVENTORY_READ_MAX_PAGE_SIZES + 1])).rows;
-        bounded(sizes, INVENTORY_READ_MAX_PAGE_SIZES);
-        skus = (await query(`/* inventory:skus */ SELECT s.id, s.product_id, s.color_id, s.fit_id, s.size_id, c.name AS color_name, f.name AS fit_name
-          FROM naijue_erp.sku s JOIN naijue_erp.color c ON c.id = s.color_id JOIN naijue_erp.fit f ON f.id = s.fit_id
-          JOIN naijue_erp.product p ON p.id = s.product_id LEFT JOIN naijue_erp.size_group_member m ON m.size_group_id = p.size_group_id AND m.size_id = s.size_id
-          WHERE s.product_id = ANY($1::uuid[]) AND (cardinality($2::uuid[]) = 0 OR s.fit_id = ANY($2::uuid[]))
-          ORDER BY p.id, c.code COLLATE "C", c.id, f.code COLLATE "C", f.id, m.display_order, s.size_id, s.id LIMIT $3`,
-        [pageIds, input.filter.fitIds, INVENTORY_READ_MAX_PAGE_SKUS + 1])).rows;
-        bounded(skus, INVENTORY_READ_MAX_PAGE_SKUS);
-        balances = (await query(`/* inventory:balances */ ${catalog(this.seasonArray)}
-          SELECT b.warehouse_id, b.sku_id, b.quantity::text, b.version, b.last_operation_id FROM naijue_erp.inventory_balance b
-          JOIN filtered_skus s ON s.id = b.sku_id JOIN authorized_warehouses w ON w.id = b.warehouse_id
-          WHERE s.product_id = ANY($9::uuid[]) ORDER BY b.warehouse_id, b.sku_id LIMIT $10`,
-        [...values, pageIds, INVENTORY_READ_MAX_PAGE_BALANCES + 1])).rows;
-        bounded(balances, INVENTORY_READ_MAX_PAGE_BALANCES);
-      }
+      const matrices = await productMatrices(query, values, products, input, scope, this.seasonArray);
       const readReference = `inventory:${randomUUID()}`;
       return checkedInventorySnapshot({ readReference, readiness: "ready", data: { page: input.page, pageSize: input.pageSize, exactTotalProducts: status.exactTotal,
-        products: pageProducts(products, sizes, skus, balances, scope), warehouseLabels: scope.warehouses.map(row => row.label), allMatchesTotal: status.allMatchesTotal, readReference } }, input, scope);
+        products: matrices, warehouseLabels: scope.warehouses.map(row => row.label), allMatchesTotal: status.allMatchesTotal, readReference } }, input, scope);
     });
   }
   async readCandidates(read: InventoryScopedRead<InventoryCandidateQuery>): Promise<InventoryReadSnapshot<InventoryCandidatePage>> {

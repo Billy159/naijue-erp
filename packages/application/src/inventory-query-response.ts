@@ -1,8 +1,9 @@
 import { DomainError } from "../../domain/src/errors.ts";
 import { Buffer } from "node:buffer";
-import type { InventoryCandidatePage, InventoryCandidateQuery, InventoryQuery, InventoryQueryCandidate, InventoryQueryColorFit, InventoryQueryPage, InventoryQueryProduct, InventoryQueryRow, InventoryReadScope, InventoryReadSnapshot, InventorySelection, InventoryStockCell, InventoryStockTotal } from "./inventory-query-contracts.ts";
+import type { InventoryCandidatePage, InventoryCandidateQuery, InventoryQuery, InventoryQueryCandidate, InventoryQueryColorFit, InventoryQueryPage, InventoryQueryProduct, InventoryQueryRow, InventoryReadScope, InventoryReadSnapshot, InventorySelection, InventoryStockCell, InventoryStockTotal, InventoryOutputFrame, InventoryOutputSummary } from "./inventory-query-contracts.ts";
 import { equalTotal, exactInteger, idValue, numberValue, record, rejectInventoryResponse as reject, stockTotal, sumTotals, textValue } from "./inventory-query-validation.ts";
 import type { EntityKind } from "../../domain/src/values.ts";
+import { INVENTORY_MATRIX_CHUNK_MAX_UNITS, INVENTORY_PRODUCT_MAX_SIZES, INVENTORY_PRODUCT_MAX_VARIANTS } from "./inventory-query-contracts.ts";
 
 const ZERO: InventoryStockTotal = Object.freeze({ knownQuantity: "0", unknownCells: 0, completeness: "complete" });
 function list(value: unknown, max: number): unknown[] { if (!Array.isArray(value) || value.length > max) reject(); return value; }
@@ -11,7 +12,7 @@ function selection(kind: EntityKind, value: unknown): InventorySelection {
   return Object.freeze({ id: idValue(kind, row.id, reject), label: textValue(row.label, reject) });
 }
 function selectionList(kind: EntityKind, value: unknown): readonly InventorySelection[] {
-  const result = list(value, 1000).map(item => selection(kind, item));
+  const result = list(value, INVENTORY_PRODUCT_MAX_SIZES).map(item => selection(kind, item));
   if (new Set(result.map(item => item.id)).size !== result.length) reject();
   return Object.freeze(result);
 }
@@ -37,7 +38,7 @@ function cellTotal(value: InventoryStockCell): InventoryStockTotal {
 interface MatrixBudget { units: number; readonly skuCoordinates: Map<string, string> }
 function spend(budget: MatrixBudget, units: number): void {
   budget.units += units;
-  if (budget.units > 1_000_000) reject(); // Technical validation-work budget; never truncate a matrix.
+  if (budget.units > INVENTORY_MATRIX_CHUNK_MAX_UNITS) reject(); // Never truncate a matrix.
 }
 function product(value: unknown, scope: InventoryReadScope, query: InventoryQuery, budget: MatrixBudget): InventoryQueryProduct {
   const row = record(value, ["id", "code", "name", "categoryLabel", "supplierLabel", "seasonLabel", "sizeGroup", "sizes", "colorFits", "sizeTotals", "total"], [], reject);
@@ -50,7 +51,7 @@ function product(value: unknown, scope: InventoryReadScope, query: InventoryQuer
   if (sizes.length === 0) reject();
   spend(budget, sizes.length);
   const variants = new Set<string>();
-  const colorFits = list(row.colorFits, 10000).map(item => {
+  const colorFits = list(row.colorFits, INVENTORY_PRODUCT_MAX_VARIANTS).map(item => {
     spend(budget, 1);
     const group = record(item, ["color", "fit", "rows", "sizeTotals", "total"], [], reject);
     const color = selection("color", group.color); const fit = selection("fit", group.fit);
@@ -127,6 +128,36 @@ export function checkedInventorySnapshot(value: unknown, query: InventoryQuery, 
   const data: InventoryQueryPage = Object.freeze({ page: query.page, pageSize: query.pageSize, exactTotalProducts,
     products: Object.freeze(products), warehouseLabels: Object.freeze(warehouseLabels), allMatchesTotal, readReference });
   return Object.freeze({ readReference, readiness, data });
+}
+export async function* checkedInventoryOutputFrames(values: AsyncIterable<unknown>, query: InventoryQuery, scope: InventoryReadScope): AsyncIterable<InventoryOutputFrame> {
+  let summary: InventoryOutputSummary | undefined, completion: Extract<InventoryOutputFrame, { kind: "complete" }> | undefined, completed = false, count = 0, sum = 0n, previous: InventoryQueryProduct | undefined;
+  const ids = new Set<string>(), budget: MatrixBudget = { units: 0, skuCoordinates: new Map() };
+  for await (const value of values) {
+    if (completed) reject();
+    const kind = record(value, ["kind"], ["readReference", "exactTotalProducts", "warehouseLabels", "allMatchesTotal", "product", "emittedProducts"], reject).kind;
+    if (!summary) {
+      const row = record(value, ["kind", "readReference", "exactTotalProducts", "warehouseLabels", "allMatchesTotal"], [], reject);
+      const reference = textValue(row.readReference, reject, false, 200); if (kind !== "summary" || !/^[A-Za-z0-9._:-]{1,200}$/.test(reference)) reject();
+      const exactTotalProducts = numberValue(row.exactTotalProducts, 0, reject); if (query.filter.productIds.length && exactTotalProducts > query.filter.productIds.length) reject();
+      const labels = list(row.warehouseLabels, scope.warehouses.length).map(v => textValue(v, reject));
+      if (labels.length !== scope.warehouses.length || labels.some((v, i) => v !== scope.warehouses[i]!.label)) reject();
+      summary = Object.freeze({ kind: "summary", readReference: reference, exactTotalProducts, warehouseLabels: Object.freeze(labels), allMatchesTotal: stockTotal(row.allMatchesTotal) });
+      yield summary; continue;
+    }
+    if (kind === "product") {
+      const row = record(value, ["kind", "product"], [], reject); if (count % 100 === 0) budget.units = 0;
+      const current = product(row.product, scope, query, budget);
+      if (ids.has(current.id) || ++count > summary.exactTotalProducts) reject(); ids.add(current.id);
+      if (previous) { const order = Buffer.compare(Buffer.from(previous.code), Buffer.from(current.code)); if (order > 0 || order === 0 && previous.id >= current.id) reject(); }
+      previous = current; sum += BigInt(current.total.knownQuantity); yield Object.freeze({ kind: "product", product: current }); continue;
+    }
+    const row = record(value, ["kind", "readReference", "exactTotalProducts", "emittedProducts", "allMatchesTotal"], [], reject);
+    if (kind !== "complete" || row.readReference !== summary.readReference || row.exactTotalProducts !== summary.exactTotalProducts
+      || row.emittedProducts !== count || count !== summary.exactTotalProducts || sum.toString() !== summary.allMatchesTotal.knownQuantity) reject();
+    equalTotal(stockTotal(row.allMatchesTotal), summary.allMatchesTotal); completed = true;
+    completion = Object.freeze({ kind: "complete", readReference: summary.readReference, exactTotalProducts: count, emittedProducts: count, allMatchesTotal: summary.allMatchesTotal });
+  }
+  if (!summary || !completion) reject(); yield completion;
 }
 export function checkedCandidateSnapshot(value: unknown, query: InventoryCandidateQuery, scope: InventoryReadScope): InventoryReadSnapshot<InventoryCandidatePage> {
   const { row: envelopeRow, readReference, readiness } = envelope(value);

@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import type { InventoryQueryDependencies, InventoryQueryPage, InventoryReadScope, InventoryReadSnapshot } from "../packages/application/src/inventory-query-contracts.ts";
+import type { InventoryQueryDependencies, InventoryQueryPage, InventoryReadScope, InventoryReadSnapshot, InventoryOutputFrame } from "../packages/application/src/inventory-query-contracts.ts";
+import { INVENTORY_OUTPUT_FRAME_MAX_BYTES, encodeInventoryOutputFrame } from "../packages/application/src/inventory-query-contracts.ts";
 import { createInventoryQueryService } from "../packages/application/src/inventory-query-service.ts";
 import { DomainError } from "../packages/domain/src/errors.ts";
-import { candidateParameters, inventoryActor, inventoryId, inventoryParameters, inventoryScope, syntheticCandidateSnapshot, syntheticInventoryReader, syntheticInventorySnapshot } from "./support/synthetic-inventory-query.ts";
+import { candidateParameters, inventoryActor, inventoryId, inventoryParameters, inventoryScope, syntheticCandidateSnapshot, syntheticInventoryReader, syntheticInventorySnapshot, syntheticInventoryOutput } from "./support/synthetic-inventory-query.ts";
 import type { InventoryPage, CandidatePage } from "../apps/web/src/inventory/contracts.ts";
 // Compile-time cross-layer DTO compatibility, with no application dependency on web runtime code.
 const compatibleInventory = (value: InventoryQueryPage): InventoryPage => value;
@@ -14,6 +15,41 @@ function service(reader = syntheticInventoryReader(), authorization: InventoryQu
   return createInventoryQueryService({ reader, authorization });
 }
 function hasCode(code: string) { return (error: unknown) => error instanceof DomainError && error.code === code; }
+async function outputFrames(values: AsyncIterable<InventoryOutputFrame>) { const frames = []; for await (const frame of values) frames.push(frame); return frames; }
+
+test("inventory full output application: one current authorization and full native product stream preserve scope, totals, unknown distinctions and shared encoding", async () => {
+  let authorized = 0, outputs = 0; const reader = syntheticInventoryReader(203);
+  const s = service({ ...reader, async readInventory() { throw Error("Output must not stitch ordinary pages"); }, async *readInventoryOutput(read) {
+    outputs++; assert.deepEqual(read.scope.warehouses, inventoryScope.warehouses); assert.equal(read.parameters.pageSize, 100); assert.equal(JSON.stringify(read.parameters).includes("SPOOFED"), false); yield* syntheticInventoryOutput(read, 203);
+  } }, { async authorize(_actor, intent) { authorized++; assert.equal(intent.kind, "inventory"); return inventoryScope; } });
+  const frames = await outputFrames(s.readOutput(inventoryActor, { filter: { ...inventoryParameters().filter, warehouses: [{ id: inventoryScope.warehouses[0]!.id, label: "SPOOFED" }] } }, signal()));
+  assert.equal(authorized, 1); assert.equal(outputs, 1); assert.equal(frames.length, 205); assert.equal(frames[0]!.kind, "summary"); const last = frames.at(-1)!;
+  assert.equal(last.kind, "complete"); if (last.kind === "complete") { assert.equal(last.emittedProducts, 203); assert.equal(last.allMatchesTotal.knownQuantity, "-406"); }
+  const product = frames.find(f => f.kind === "product")!; assert.equal(product.kind, "product"); if (product.kind === "product") assert.deepEqual(Object.values(product.product.colorFits[0]!.rows[0]!.cells).map(c => c.state), ["known", "known", "known", "not-applicable"]);
+  for (const frame of frames) { const wire = encodeInventoryOutputFrame(frame); assert.ok(wire.endsWith("\n")); assert.deepEqual(JSON.parse(wire), frame); assert.ok(Buffer.byteLength(wire) - 1 <= INVENTORY_OUTPUT_FRAME_MAX_BYTES[frame.kind]); }
+});
+
+test("inventory full output application: incomplete, corrupt, cross-scope, reordered and inconsistent streams never release completion", async () => {
+  const referenceRead = { actor: inventoryActor, scope: inventoryScope, parameters: { page: 1, pageSize: 100 as const, filter: { productIds: [], categoryIds: [], warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] } }, signal: signal() };
+  const valid = await outputFrames(syntheticInventoryOutput(referenceRead, 2));
+  const modes: ((f: any[]) => void)[] = [f => { f.pop(); }, f => { f.at(-1).readReference = "wrong"; }, f => { f.at(-1).emittedProducts = 1; }, f => { f[0].allMatchesTotal.knownQuantity = "0"; },
+    f => { [f[1], f[2]] = [f[2], f[1]]; }, f => { f[2] = f[1]; }, f => { f[1].product.colorFits[0].rows[0].warehouse.id = inventoryId("warehouse", 999); }, f => { f.push(f[1]); }];
+  for (const change of modes) {
+    let closed = false; const frames = structuredClone(valid); change(frames); const seen: string[] = [];
+    const s = service({ ...syntheticInventoryReader(), async *readInventoryOutput() { try { yield* frames; } finally { closed = true; } } });
+    await assert.rejects(async () => { for await (const frame of s.readOutput(inventoryActor, { filter: inventoryParameters().filter }, signal())) seen.push(frame.kind); }, hasCode("INVALID_INVENTORY_RESPONSE"));
+    assert.equal(seen.includes("complete"), false); assert.equal(closed, true);
+  }
+});
+
+test("inventory full output application: rejected input, revoked warehouse, absent provider, abort and early consumer return do not become partial success", async () => {
+  let authorizations = 0, opened = 0, closed = 0; const s = service({ ...syntheticInventoryReader(), async *readInventoryOutput(read) { opened++; try { yield* syntheticInventoryOutput(read, 2); } finally { closed++; } } }, { async authorize() { authorizations++; return inventoryScope; } });
+  await assert.rejects(outputFrames(s.readOutput(inventoryActor, inventoryParameters(), signal())), hasCode("INVALID_INVENTORY_INPUT")); assert.equal(authorizations, 0);
+  await assert.rejects(outputFrames(s.readOutput(inventoryActor, { filter: { ...inventoryParameters().filter, warehouses: [{ id: inventoryId("warehouse", 999), label: "foreign" }] } }, signal())), hasCode("FORBIDDEN")); assert.equal(opened, 0);
+  const iterator = s.readOutput(inventoryActor, { filter: inventoryParameters().filter }, signal())[Symbol.asyncIterator](); await iterator.next(); await iterator.return?.(undefined); assert.equal(opened, 1); assert.equal(closed, 1);
+  const controller = new AbortController(); controller.abort(); await assert.rejects(outputFrames(s.readOutput(inventoryActor, { filter: inventoryParameters().filter }, controller.signal)), hasCode("INVENTORY_READ_ABORTED")); assert.equal(opened, 1);
+  const pageOnly = syntheticInventoryReader(); delete pageOnly.readInventoryOutput; await assert.rejects(outputFrames(service(pageOnly).readOutput(inventoryActor, { filter: inventoryParameters().filter }, signal())), hasCode("INVENTORY_NOT_READY"));
+});
 
 test("SYNTHETIC inventory application: explicit providers only; authorized snapshot returns distinct negative/explicit-zero/complete-source-no-stock/nonexistent facts", async () => {
   assert.throws(() => createInventoryQueryService({} as InventoryQueryDependencies), /explicit trusted/);
