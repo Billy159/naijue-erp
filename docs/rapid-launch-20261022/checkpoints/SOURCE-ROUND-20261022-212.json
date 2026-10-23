@@ -1,0 +1,41 @@
+{
+  "atUtc": "2026-10-23T19:32:44.356683+00:00",
+  "parent": "0b4cce5a10c7d50659885e3af87df9ab9e9db9e1",
+  "taskId": "QF2-P-RECOVERY-HOST-DISPOSE-CALLBACK-01",
+  "files": [
+    {
+      "path": "apps/web/src/production-host/mount.tsx",
+      "bytes": 13717,
+      "sha256": "a7b67543cd6a2c5858ae8bbabc72c91df5ba6ce180dd3aa440146b133a8c60b1",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-104/DELIVERY.json",
+  "ownerReceiptSha256": "5d833ba092fdbc97acfc244232b9fbff870873ce5b63b68f014474fdfcb69818",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh",
+    "status": "SOURCE_READY_QF2_PENDING_HOST_DISPOSE_ONLY",
+    "files": [
+      {
+        "path": "apps/web/src/production-host/mount.tsx",
+        "bytes": 13717,
+        "sha256": "a7b67543cd6a2c5858ae8bbabc72c91df5ba6ce180dd3aa440146b133a8c60b1"
+      }
+    ],
+    "result": "RESULT.json",
+    "checks": {
+      "before-1": "Harness public-assets fixture omitted required9 asset keys; no source finding claimed",
+      "before-2": "RED Node24.21 actual mounted ProductionHost -> original ProductsPage edit -> original restored ProductEditor pending DELETE -> owner.dispose reports exact Product session owner unavailable",
+      "after-1": "PASS3 actual mounted original-editor phases uncertain/checking/submitting; exact original same-key/body explicit retry, context/scope disposed before DOM unmount, no uncaught errors,0new shutdown/late callback IO, late response ignored",
+      "types-1": "PASS exact mount root complete strict imported closure0"
+    },
+    "limitations": [
+      "Synthetic HTTP ports and JSDOM only; not actual Chrome/real service/PG",
+      "Source198/200 accepted identity/auth/role/product protocol branches reused, not rerun or reaccepted",
+      "chunk103 ledger host11 still separate in progress"
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "SOURCE_FIXED_ONLY; owner targeted checks adopted; independent affected acceptance and actual browser/business/performance remain separate. No build or deployment claimed."
+}

@@ -86,9 +86,11 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
     ...(configuration.routes.products ? { products: { stylesheet: productStyles!, ...(configuration.routes.productViewer ? { product: { stylesheet: createRouteStylesheet({ document: input.document, origin: configuration.http.origin, href: productionAssetUrl(configuration, assets.productDrawerStyles) }) } } : {}),
       ...(maintenance?.products ? { maintenance: { loadStyles: () => productStyles!.load(), reader: createProductMaintenanceHttpReaderV2(http), client: createProductMaintenanceHttpClientV2(http), newRequestKey,
         allowedActions: ['CREATE', 'EDIT', 'DISABLE', 'RESTORE', 'DELETE'] as const,
-        onRecoveryRequired: (command, identity) => { if (!controller) throw new Error('Product session owner is unavailable.'); controller.productRecovery.retain(command, identity); },
+        // Whole-host disposal retires this owner before pending editors hand back.
+        // The current Application still owns identity checks while it is mounted.
+        onRecoveryRequired: (command, identity) => { controller?.productRecovery.retain(command, identity); },
         recovery: { read: (identity, productId) => controller?.productRecovery.read(identity, productId) ?? null,
-          resolved: (identity, requestKey) => { if (!controller) throw new Error('Product session owner is unavailable.'); controller.productRecovery.resolved(identity, requestKey); } },
+          resolved: (identity, requestKey) => { controller?.productRecovery.resolved(identity, requestKey); } },
         productReader: createProductHttpReader(http), dictionaryReader: createDictionaryHttpReader(http), media: createProductEditorMediaHttpReader(http), mediaUpload: createProductMediaUploadHttpClient(http),
         ...(configuration.routes.productFullPage ? { stock: createProductFullPageHttpReader(http, ['stock']).stock } : {}),
       } } : {}),
