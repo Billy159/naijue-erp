@@ -1,3 +1,13 @@
+当前接续更新（固定229已运行，C106实际恢复完成）：
+
+- 可打开 http://127.0.0.1:57876/synthetic-unified.html ，source5669bd5411061818055c44789a1892574e3dfb94／ui-preview-5669bd5-01-build01，HTML3416386B/43b55c46…、identity4556B/a47b1291…、provenance51504B/6eaff6eb…；413输入/1368模块，原一次build0，PID22315/session61681，3关键HTTP字节及原版本头一致。首个检查脚本误用header名称已保留，HTML逐字结果复用、后两GET补齐，无新build。旧222保留。
+- 226库存弹窗／227Today／228日历padding／229销货pending-only均纳入，QFv071–074有效有限结论采用。QF2现独占229只补日期与carrier/close，clean后交QF O-S14，再交QF2 B01/B02。共享Chrome不并抢，保护原未保存/未知标签；UI合成与真实业务/性能分开。
+- C106实际COMPLETED0/4.226789339秒：原商品键无已提交回执且商品不存在，原5fixtures回执逐项相符；同一QA账号真实v4/auth4/WAREHOUSE/无厅/禁登，beforeafter一致、0写、不消耗disablekey。原runner预想v5/营业员并非当前事实，D1从恢复断点精确修订；不重原105、不换产品key。基础商品真实必填scheme/supplier/year/systemCode已有，barcode候选完整1条未自动选择；8组V11业务仍未开始。
+- 当前104分母、55已索引逻辑范围、整页0/整类0保持。B01/B02源174已就绪，合成入口默认客户provider/本页audit尚未接通，不用ProductionHost220替代直接Application实际。F2继续原P16/P18核已冻整页复制证据或实际迁移缺口，不因陈旧标签重做。C107真实R1TCP只读准备进行；HREV非owner写身份/host未登记，v13未批分支仍等待。
+- GitHub已回读f178ace6（223–227及上段），本229和当前事实下一精确同步。gpt-6.1-sol/xhigh，Fast无开关未核；正式地址未切，整体ACTIVE。
+
+以下历史保留，以本段和TASKS.currentContinuation为当前事实。
+
 当前接续（2026-10-24北京时间；固定源码227／当前可看222）：
 
 - 当前入口 http://127.0.0.1:57875/synthetic-unified.html ，原source222=4c0cf711772d4426da03bf9a768a8f4d6abc3418/build ui-preview-4c0cf71-01-build01。原进程停后已证socket拒绝/lsof空/PID消失，恢复同一serve PID13963/session51535，无重构建；identity GET200与原3资源pin一致。18合成适配，不冒真实保存、权限或正式性能。

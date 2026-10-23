@@ -11095,7 +11095,7 @@
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-23T22:20:24.809338+00:00",
+  "updatedAt": "2026-10-23T22:33:31.241880+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -12612,6 +12612,46 @@
       "scope": "Named mouse opening PASS; Today and calendar geometry OPEN; no whole date, page, real business or formal performance acceptance",
       "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
       "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
+    },
+    {
+      "id": "QF-V071",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v071-qf-adopt-qf2-c222-date-final/RESULT.json",
+      "bytes": 4483,
+      "sha256": "4caebfd31124e5ceaedd0aaccfb43b52e695d941886aa39319c857b32bd3d17d",
+      "result": "ADOPTED_QF2_C222_MOUSE_SCOPE_CLOSED_TODAY_AND_VISUAL_OPEN_NEED_FIX",
+      "scope": "Original fixedphase scopedsource or adoptedactual only, not wholepage/PG/performance",
+      "adoption": "C adopts independent conclusion without duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:33:31.241880+00:00"
+    },
+    {
+      "id": "QF-V072",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v072-qf-c227-date-today-pointer-blur-source/RESULT.json",
+      "bytes": 10906,
+      "sha256": "3d1d6cf7e0131021565c5c56d257c8d85134e20a03c189a004492cbd95c40b52",
+      "result": "PASS_BOUNDED_C227_ORIGINAL_TODAY_POINTER_BLUR_SOURCE_ACTUAL_PENDING",
+      "scope": "Original fixedphase scopedsource or adoptedactual only, not wholepage/PG/performance",
+      "adoption": "C adopts independent conclusion without duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:33:31.241880+00:00"
+    },
+    {
+      "id": "QF-V073",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v073-qf-c228-date-body-padding-source/RESULT.json",
+      "bytes": 7181,
+      "sha256": "824962ca2b68975f2423e414d5b9736c0ed57d432f53b83b07df8e1fe92b11a1",
+      "result": "PASS_BOUNDED_C228_SCOPED_NATIVE_DATE_BODY_PADDING_SOURCE_ACTUAL_PENDING",
+      "scope": "Original fixedphase scopedsource or adoptedactual only, not wholepage/PG/performance",
+      "adoption": "C adopts independent conclusion without duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:33:31.241880+00:00"
+    },
+    {
+      "id": "QF-V074",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v074-qf-c229-pending-only-mode-gate-source/RESULT.json",
+      "bytes": 7133,
+      "sha256": "425faf550f25e770557c677b32590a5eb8fef6c377600bc779aedb0d305ed1c0",
+      "result": "PASS_BOUNDED_C229_ORIGINAL_PENDING_ONLY_MODE_GATE_SOURCE_ACTUAL_PENDING",
+      "scope": "Original fixedphase scopedsource or adoptedactual only, not wholepage/PG/performance",
+      "adoption": "C adopts independent conclusion without duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:33:31.241880+00:00"
     }
   ],
   "coverageGroups": [
@@ -12651,10 +12691,10 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-23T22:20:24.809338+00:00",
+    "atUtc": "2026-10-23T22:33:31.241880+00:00",
     "latestSource": 220,
     "servedPreview": 217,
-    "browserOwner": "NONE pending successor; QF2 final222 clean/release",
+    "browserOwner": "QF2_SOLE_229_DATE_CARRIER_THEN_C_CLEAN_TO_QF_O_S14",
     "adopted": [
       {
         "id": "QF-V056",
@@ -12980,8 +13020,8 @@
       "approvedException": 1,
       "qualification": "55 known indexed logical scopes, not whole-site completed census or whole-page pass. Repeated versions/actions are not new cases. Sole QF owns104 matrix."
     },
-    "latestSourceRound": 227,
-    "latestSourceCheckpoint": "af9e77f27bc7be94d4d15a2e9ef4265b80970b1d",
+    "latestSourceRound": 229,
+    "latestSourceCheckpoint": "5669bd5411061818055c44789a1892574e3dfb94",
     "currentBackend": "QB191/192 accepted new v11 metadata only. C104 actual proved private/public JSON value equality and differing serialization byte hashes, strict bytepair corrected. C105 actualPG failed PRODUCT_SCHEME_REQUIRED at NORMAL_PRODUCT_FIXTURE after4COLOR+1CUSTOMER commits; original product key UNKNOWN, eightgroups NOT_STARTED. OriginalD1 precise fixture diagnosis + C106 original-key/account recovery active. No formal write/publicswitch.",
     "operationalReceipts": {
       "c03-c101-c102-result-bytepair-20261024-104": {
@@ -13003,6 +13043,103 @@
           "phase": "NORMAL_PRODUCT_FIXTURE"
         }
       }
-    }
+    },
+    "currentPreview": {
+      "sourceRound": 229,
+      "sourceCommit": "5669bd5411061818055c44789a1892574e3dfb94",
+      "buildId": "ui-preview-5669bd5-01-build01",
+      "url": "http://127.0.0.1:57876/synthetic-unified.html",
+      "resources": [
+        {
+          "path": "/synthetic-unified.html",
+          "status": 200,
+          "bytes": 3416386,
+          "sha256": "43b55c46543a2aec1bf477206bec6649bd833c8e05b768b197f0210ba668d05e",
+          "bodyMatched": true,
+          "identityHeadersMatched": true,
+          "evidence": "Original tool command asserts status200 and body==local before failing wrong-header lookup; response dumped exact three actual header values",
+          "repeatedGET": false
+        },
+        {
+          "path": "/candidate-identity.json",
+          "status": 200,
+          "bytes": 4556,
+          "sha256": "a47b129174b1ab0f445bd8a80e084b562b8db3d753baf3826d84af534669d2df",
+          "bodyMatched": true,
+          "identityHeadersMatched": true
+        },
+        {
+          "path": "/provenance.json",
+          "status": 200,
+          "bytes": 51504,
+          "sha256": "6eaff6ebe96af4fa8404d141db173c6214ef8e2c2c2328a197494cee8d64a884",
+          "bodyMatched": true,
+          "identityHeadersMatched": true
+        }
+      ],
+      "serverPid": 22315,
+      "serverSession": 61681,
+      "actualBuildInvocations": 1,
+      "actualHTTPGETRequests": 3,
+      "actualInputCount": 413,
+      "actualModuleInputCountIncludingDependencies": 1368,
+      "syntheticOnly": true,
+      "scope": "Contains223-229 fixedbusiness,18declaredfictiononlyoverlays. QF2SOLE actualDATE+carrier, thenQF O-S14. No business commands/PG/formalperformance acceptance.",
+      "wholePageAccepted": false,
+      "realBusinessAccepted": false,
+      "formalPerformanceAccepted": false,
+      "firstHTTPHeaderCheckScriptMistakePreserved": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-5669bd5-01/HTTP-FIRST-HEADER-NAME-MISMATCH.json"
+    },
+    "actualC106": {
+      "atUtc": "2026-10-23T22:33:31.241880+00:00",
+      "status": "ACTUAL_C106_ORIGINAL_KEY_RECOVERY_COMPLETE_NO_BUSINESS_PASS",
+      "jobId": "c03-v11-c105-original-key-recovery-20261024-106",
+      "receipts": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v11-c105-original-key-recovery-20261024-106/release-submission/release-receipts/c03-v11-c105-original-key-recovery-20261024-106/engine-result.json",
+          "bytes": 15908,
+          "sha256": "ea03d29e13c8228d233296a2b68072ea8dbe83789dbe90c6413d73eb7d3d8b15"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v11-c105-original-key-recovery-20261024-106/release-submission/release-receipts/c03-v11-c105-original-key-recovery-20261024-106/qa106-actual-result.json",
+          "bytes": 11853,
+          "sha256": "0ded3579311c432bdb797113b0eae9987c5ab40f887e45b2bbf8ab0470c2e88d"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v11-c105-original-key-recovery-20261024-106/release-submission/release-receipts/c03-v11-c105-original-key-recovery-20261024-106/job.json",
+          "bytes": 586,
+          "sha256": "563cd51014bf292fee77b6dac4ebbab9d5d8938f1ad4592e608020e5a04446e8"
+        }
+      ],
+      "elapsedSeconds": 4.226789339911193,
+      "productKeyRecovered": "NO_COMMITTED_RECEIPT_AND_ORIGINAL_PRODUCT_ABSENT",
+      "fiveCommittedFixturesPreserved": true,
+      "account": {
+        "version": 4,
+        "authVersion": 4,
+        "loginEnabled": false,
+        "staffRole": "WAREHOUSE",
+        "hallId": null,
+        "action": "ALREADY_DISABLED_NO_WRITE"
+      },
+      "fixtureReferencePrerequisites": "Normalbase detail has nonnullscheme/supplier/year/systemCode,complete1scheme returned; candidateSelectedfalse; exactvaluesonlycontrollednotGit",
+      "counts": {
+        "accounts": 50,
+        "staff": 50,
+        "products": 1,
+        "skus": 1,
+        "barcodes": 1,
+        "sourceRows": 57,
+        "inventoryBalance": 0,
+        "inventoryLedger": 0,
+        "audits": 17,
+        "receipts": 17
+      },
+      "allEightV11BusinessGroups": "NOT_STARTED",
+      "formalBusinessWrite": false,
+      "old105Replayed": false,
+      "runtimePurposeMetadataOnlyReviewReused": "QB191"
+    },
+    "latestGitHubVerified": "f178ace6e49456b0b27b5f2431ecbef38e1d6944"
   }
 }

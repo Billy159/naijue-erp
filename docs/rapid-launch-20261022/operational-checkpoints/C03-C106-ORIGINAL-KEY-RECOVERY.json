@@ -1,0 +1,50 @@
+{
+  "atUtc": "2026-10-23T22:33:31.241880+00:00",
+  "status": "ACTUAL_C106_ORIGINAL_KEY_RECOVERY_COMPLETE_NO_BUSINESS_PASS",
+  "jobId": "c03-v11-c105-original-key-recovery-20261024-106",
+  "receipts": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v11-c105-original-key-recovery-20261024-106/release-submission/release-receipts/c03-v11-c105-original-key-recovery-20261024-106/engine-result.json",
+      "bytes": 15908,
+      "sha256": "ea03d29e13c8228d233296a2b68072ea8dbe83789dbe90c6413d73eb7d3d8b15"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v11-c105-original-key-recovery-20261024-106/release-submission/release-receipts/c03-v11-c105-original-key-recovery-20261024-106/qa106-actual-result.json",
+      "bytes": 11853,
+      "sha256": "0ded3579311c432bdb797113b0eae9987c5ab40f887e45b2bbf8ab0470c2e88d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v11-c105-original-key-recovery-20261024-106/release-submission/release-receipts/c03-v11-c105-original-key-recovery-20261024-106/job.json",
+      "bytes": 586,
+      "sha256": "563cd51014bf292fee77b6dac4ebbab9d5d8938f1ad4592e608020e5a04446e8"
+    }
+  ],
+  "elapsedSeconds": 4.226789339911193,
+  "productKeyRecovered": "NO_COMMITTED_RECEIPT_AND_ORIGINAL_PRODUCT_ABSENT",
+  "fiveCommittedFixturesPreserved": true,
+  "account": {
+    "version": 4,
+    "authVersion": 4,
+    "loginEnabled": false,
+    "staffRole": "WAREHOUSE",
+    "hallId": null,
+    "action": "ALREADY_DISABLED_NO_WRITE"
+  },
+  "fixtureReferencePrerequisites": "Normalbase detail has nonnullscheme/supplier/year/systemCode,complete1scheme returned; candidateSelectedfalse; exactvaluesonlycontrollednotGit",
+  "counts": {
+    "accounts": 50,
+    "staff": 50,
+    "products": 1,
+    "skus": 1,
+    "barcodes": 1,
+    "sourceRows": 57,
+    "inventoryBalance": 0,
+    "inventoryLedger": 0,
+    "audits": 17,
+    "receipts": 17
+  },
+  "allEightV11BusinessGroups": "NOT_STARTED",
+  "formalBusinessWrite": false,
+  "old105Replayed": false,
+  "runtimePurposeMetadataOnlyReviewReused": "QB191"
+}
