@@ -308,13 +308,25 @@ body:has(.inventory-source-workbench) .iw-bootstrap .iw-query-actions .iw-filter
 .inventory-source-workbench .iw-results>.iw-loading:has(+.inventory-source-matrix){position:absolute;inset:0;z-index:15;background:var(--ca-surface)}
 .inventory-source-workbench .iw-number[aria-disabled=true]{cursor:default}
 
-/* Direct inventory-select.jsx318-344 Empty JSX/shadow declarations, local host alias. */
+/* Complete native I01 Empty region: actual ShadowRoot Empty base + local
+ * rules in their source order. One common scope preserves relative specificity:
+ * library three-class48/4 beats later two-class56/12, as in frozen runtime.
+ * The outside host keeps inventory-refinement.css75/79 fixed region geometry;
+ * its native :host font/centering is already represented here. */
 .inventory-source-workbench .iw-empty-host{display:flex;align-items:center;justify-content:center;width:100%;font:13px Arial,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ca-ink)}
+.inventory-source-workbench .iw-empty-host .arco-empty{width:100%;padding:10px 0;box-sizing:border-box}
+.inventory-source-workbench .iw-empty-host .arco-empty .arco-empty-wrapper{width:100%;box-sizing:border-box;text-align:center;color:rgb(var(--gray-5))}
+.inventory-source-workbench .iw-empty-host .arco-empty .arco-empty-wrapper .arco-empty-image{font-size:48px;line-height:1;margin-bottom:4px}
+.inventory-source-workbench .iw-empty-host .arco-empty .arco-empty-wrapper img{height:80px}
+.inventory-source-workbench .iw-empty-host .arco-empty .arco-empty-description{color:rgb(var(--gray-5));font-size:14px}
 .inventory-source-workbench .iw-empty-host .arco-empty{padding:0}
-.inventory-source-workbench .iw-empty-host .arco-empty-wrapper{color:var(--ca-ink-3)}
-.inventory-source-workbench .iw-empty-host .arco-empty-image{font-size:48px;line-height:1;margin-bottom:12px}
-.inventory-source-workbench .iw-empty-host .arco-icon{width:1em;height:1em}
-.inventory-source-workbench .iw-empty-host .arco-empty-description{font-size:13px;color:var(--ca-ink-2)}
-.inventory-source-workbench .inv-empty-copy{display:flex;flex-direction:column;align-items:center;gap:6px}
-.inventory-source-workbench .inv-empty-copy strong{font-size:15px;line-height:22px;font-weight:600;color:var(--ca-ink)}
-.inventory-source-workbench .inv-empty-copy span{line-height:20px;color:var(--ca-ink-2)}
+.inventory-source-workbench .iw-empty-host .arco-empty .arco-empty-wrapper{color:var(--ca-ink-3)}
+.inventory-source-workbench .iw-empty-host .arco-empty .arco-empty-image{font-size:56px;line-height:1;margin-bottom:12px}
+.inventory-source-workbench .iw-empty-host .arco-empty .arco-icon{width:1em;height:1em}
+.inventory-source-workbench .iw-empty-host .arco-empty .arco-empty-description{font-size:13px;color:var(--ca-ink-2)}
+.inventory-source-workbench .iw-empty-host .inv-empty-copy{display:flex;flex-direction:column;align-items:center;gap:6px}
+.inventory-source-workbench .iw-empty-host .inv-empty-copy strong{font-size:15px;line-height:22px;font-weight:600;color:var(--ca-ink)}
+.inventory-source-workbench .iw-empty-host .inv-empty-copy span{line-height:20px;color:var(--ca-ink-2)}
+/* ShadowRoot had only Empty CSS. Restore the native SVG defaults locally;
+ * the document-wide Arco Icon stylesheet must not enter this region. */
+.inventory-source-workbench .iw-empty-host .arco-empty .arco-icon{display:inline;vertical-align:baseline}

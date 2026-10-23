@@ -1,0 +1,147 @@
+{
+  "atUtc": "2026-10-23T20:17:59.928407+00:00",
+  "parent": "e8436142486a070b309870abb0e2475eca6023d2",
+  "taskId": "QF2-I01-EMPTY-ICON-SIZE-01",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/inventory-page.tsx",
+      "bytes": 21269,
+      "sha256": "d63ccc0129b78c6bafcee020eb365cf3c04be2e2944d0be5c74d72fd8a4e9984",
+      "beforeSha256": "b8edd8c12a962e2d825eea2cd95e701540cb8bd6e3e1ba25aa63a01b6ff39c53",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory.css",
+      "bytes": 112717,
+      "sha256": "5e70b5b67898f162cd55ee48734986388072566392c71ca9958f4d989d2f9aab",
+      "beforeSha256": "e35e83755d3f0d58780994ff6fc3cba5aa06847f54539bae1d1cb066dd291eed",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I01-EMPTY-ICON-SIZE-01/ACTUAL-214-REGION-01/RESULT.json",
+  "ownerReceiptSha256": "991b2512fbba417900ddba4f76f89f37cad7591486646722aae35f5d35fef6be",
+  "ownerDelivery": {
+    "taskId": "QF2-I01-EMPTY-ICON-SIZE-01",
+    "owner": "F2",
+    "atUtc": "2026-10-23T20:17:03.314180+00:00",
+    "status": "SOURCE_READY_EXACT2_RELEASED; OLD_FONT48_ACTUAL_PASS_RETAINED; FULL_REGION_NEW_ACTUAL_PENDING",
+    "authority": "C original same-task complete Empty-region repair; registered inventory.css plus minimal inventory-page consumer; user reporting01a161f7-a5e8-7e10-9059-9537c28910c2; gpt-6.1-sol/xhigh Fast unverifiable",
+    "files": [
+      {
+        "path": "apps/web/src/inventory/inventory-page.tsx",
+        "bytes": 21269,
+        "sha256": "d63ccc0129b78c6bafcee020eb365cf3c04be2e2944d0be5c74d72fd8a4e9984",
+        "beforeSha256": "b8edd8c12a962e2d825eea2cd95e701540cb8bd6e3e1ba25aa63a01b6ff39c53"
+      },
+      {
+        "path": "apps/web/src/inventory/inventory.css",
+        "bytes": 112717,
+        "sha256": "5e70b5b67898f162cd55ee48734986388072566392c71ca9958f4d989d2f9aab",
+        "beforeSha256": "e35e83755d3f0d58780994ff6fc3cba5aa06847f54539bae1d1cb066dd291eed"
+      }
+    ],
+    "sourceEntryMap": {
+      "sourceEntry": "Frozen inventory-select.jsx318-347 INVENTORY_EMPTY.mount; actual Demo shadowStyles captured from owned7F93 target",
+      "sourceStyle": "Actual Shadow style: component Empty/style/index.css base then local native rules, same order",
+      "sourceDOM": "host -> ShadowRoot(style + app<div>) -> Empty",
+      "currentEntry": "apps/web/src/inventory/inventory-page.tsx129 waiting/no-results branch; host -> inventory-native-empty-root<div> -> same public Empty",
+      "currentStyle": "apps/web/src/inventory/inventory.css final native Empty region",
+      "hostMappedToExistingOutsideGeometry": [
+        ":host{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font:13px Arial,\"PingFang SC\",\"Microsoft YaHei\",sans-serif;color:var(--ca-ink)}"
+      ],
+      "completeRegionRules": [
+        {
+          "sourceSelector": ".arco-empty",
+          "targetSelector": ".inventory-source-workbench .iw-empty-host .arco-empty",
+          "declarations": "{width:100%;padding:10px 0;box-sizing:border-box}"
+        },
+        {
+          "sourceSelector": ".arco-empty .arco-empty-wrapper",
+          "targetSelector": ".inventory-source-workbench .iw-empty-host .arco-empty .arco-empty-wrapper",
+          "declarations": "{width:100%;box-sizing:border-box;text-align:center;color:rgb(var(--gray-5))}"
+        },
+        {
+          "sourceSelector": ".arco-empty .arco-empty-wrapper .arco-empty-image",
+          "targetSelector": ".inventory-source-workbench .iw-empty-host .arco-empty .arco-empty-wrapper .arco-empty-image",
+          "declarations": "{font-size:48px;line-height:1;margin-bottom:4px}"
+        },
+        {
+          "sourceSelector": ".arco-empty .arco-empty-wrapper img",
+          "targetSelector": ".inventory-source-workbench .iw-empty-host .arco-empty .arco-empty-wrapper img",
+          "declarations": "{height:80px}"
+        },
+        {
+          "sourceSelector": ".arco-empty .arco-empty-description",
+          "targetSelector": ".inventory-source-workbench .iw-empty-host .arco-empty .arco-empty-description",
+          "declarations": "{color:rgb(var(--gray-5));font-size:14px}"
+        },
+        {
+          "sourceSelector": ".arco-empty",
+          "targetSelector": ".inventory-source-workbench .iw-empty-host .arco-empty",
+          "declarations": "{padding:0}"
+        },
+        {
+          "sourceSelector": ".arco-empty .arco-empty-wrapper",
+          "targetSelector": ".inventory-source-workbench .iw-empty-host .arco-empty .arco-empty-wrapper",
+          "declarations": "{color:var(--ca-ink-3)}"
+        },
+        {
+          "sourceSelector": ".arco-empty .arco-empty-image",
+          "targetSelector": ".inventory-source-workbench .iw-empty-host .arco-empty .arco-empty-image",
+          "declarations": "{font-size:56px;line-height:1;margin-bottom:12px}"
+        },
+        {
+          "sourceSelector": ".arco-empty .arco-icon",
+          "targetSelector": ".inventory-source-workbench .iw-empty-host .arco-empty .arco-icon",
+          "declarations": "{width:1em;height:1em}"
+        },
+        {
+          "sourceSelector": ".arco-empty .arco-empty-description",
+          "targetSelector": ".inventory-source-workbench .iw-empty-host .arco-empty .arco-empty-description",
+          "declarations": "{font-size:13px;color:var(--ca-ink-2)}"
+        },
+        {
+          "sourceSelector": ".inv-empty-copy",
+          "targetSelector": ".inventory-source-workbench .iw-empty-host .inv-empty-copy",
+          "declarations": "{display:flex;flex-direction:column;align-items:center;gap:6px}"
+        },
+        {
+          "sourceSelector": ".inv-empty-copy strong",
+          "targetSelector": ".inventory-source-workbench .iw-empty-host .inv-empty-copy strong",
+          "declarations": "{font-size:15px;line-height:22px;font-weight:600;color:var(--ca-ink)}"
+        },
+        {
+          "sourceSelector": ".inv-empty-copy span",
+          "targetSelector": ".inventory-source-workbench .iw-empty-host .inv-empty-copy span",
+          "declarations": "{line-height:20px;color:var(--ca-ink-2)}"
+        }
+      ],
+      "svgIsolation": "Only display:inline/vertical-align:baseline restores native Shadow defaults against current document global Icon rule; width/height/style content comes from native rules",
+      "preserved": "Original result container/seven regions/query states/reader contract; no generic Empty or product selector changed"
+    },
+    "actualCause": [
+      "Frozen native ShadowRoot style contains component Empty base .arco-empty .arco-empty-wrapper .arco-empty-image with3classes48px/margin4, followed by local2class56px/margin12. Base3classes wins, explaining final actual48/4 despite literal local56/12. Old migration omitted full base region and prefixed local rule, incorrectly changing relative specificity and raising12px margin.",
+      "Native only Empty CSS sits in ShadowRoot, so SVG retains browser inline/baseline. Document-wide Arco Icon rule entering current light DOM imposed inline-block/-2px. Width/height font48 prior fix was only partial.",
+      "Native host contains an app div as the flex child, with Empty inside. Current host directly held width100% Empty as flex child. Missing app carrier made actual wrapper1188px instead of native247px."
+    ],
+    "change": [
+      "inventory-page.tsx only adds original native app div around the existing one public Empty inside original waiting/no-results branch. No new component, state/read/write/output/ledger or alternative placeholder.",
+      "inventory.css replaces old partial Empty suffix with complete captured native13inner base/local rules in their original declaration order, one uniform scope preserving relative specificity; retains native host equivalent/existing outside fixed region geometry. Only SVG display:inline and vertical-align:baseline explicitly restore native Shadow defaults against document global Icon.",
+      "Original full seven-region CSS before old Empty suffix is byte-identical. Generic Empty/product selectors and original resultcontainer geometry untouched. No hardcoded247/107.5 coordinates or new design."
+    ],
+    "checks": [
+      "Real old214 candidate/Demo region DOM+Shadow style+matched/computed rules captured under granted original window, only two owned targets; no Demo mutation",
+      "Targeted actual React19 StrictMode InventoryPageView DOM: native app carrier→one existing public Empty; waiting text preserved; readIO0",
+      "All13 native inner declaration blocks preserved and ordered; source cascade with actual Arco global Icon input yields font48px/line1/margin4px and SVGinline/baseline",
+      "CSS parse/bundlewarnings0; original seven-region CSS prefix exact byte comparisonPASS; affected original consumer transitive strict0diagnostics",
+      "Already accepted inventory/group/output/ledger full suites reused; no new fullbuild or all-page retest"
+    ],
+    "notTested": [
+      "Actual newly fixed candidate geometry/lineboxes/wrapper width/107.5px alignment and screenshots; synthetic DOM/AST is not pixel evidence",
+      "RealHTTP/PG/performance/server/Git/production deployment not performed"
+    ],
+    "browser": "Only already acquired214 source diagnostic read; released under size retry WINDOW-CLEAN-RELEASE.json before source edits; no more browser calls. Actual font48 partialPASS retained but same task stays open until full new region actual closure.",
+    "next": "C freeze exact2 then existing QF2 independently checks original I01 full Empty region only: same resultsrect, wrapper+image/SVG+description boxes/styles/visual group; preserve native width from content, no whole inventory retest."
+  },
+  "qualification": "SOURCE_FIXED_COMPLETE_NATIVE_EMPTY_REGION_ONLY. Original app carrier restored and exact13base/local ordered relative specificity preserved, native SVG local defaults; actual newconsumer rect/style/screenshot retest pending. Notin214/217preview."
+}
