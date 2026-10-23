@@ -10,7 +10,8 @@ import type { ProductManagementCandidateKind, ProductManagementReader } from './
 const idle: ProductCandidateSnapshot = Object.freeze({ search: '', phase: 'idle', items: [], exactTotal: null, page: 0, hasMore: false, limitReached: false, completeUniverse: false });
 const empty = () => idle, none = () => () => {};
 export function ProductFilterControl(props: { readonly scope: ReadScope; readonly reader: ProductManagementReader; readonly kind: ProductManagementCandidateKind; readonly label: string;
-  readonly selected: readonly Selection[]; readonly popupHost: DemoMultiSelectPopupHost | null; readonly onChange: (selected: readonly Selection[]) => void }) {
+  readonly selected: readonly Selection[]; readonly popupHost: DemoMultiSelectPopupHost | null; readonly onChange: (selected: readonly Selection[]) => void;
+  readonly sourceHost?: { readonly id: string; readonly className: string; readonly ariaLabel: string } }) {
   const [search, setSearch] = useState(''), [state, setState] = useState<ProductCandidateSnapshot>(idle), [notice, setNotice] = useState('');
   const loadMore = useRef<(() => void) | null>(null), explicit = useRef<Selection | null>(null);
   const owner = useMemo(() => ({ reader: props.reader, kind: props.kind }), [props.reader, props.kind]);
@@ -19,7 +20,7 @@ export function ProductFilterControl(props: { readonly scope: ReadScope; readonl
   const option = (item: Selection & { readonly parentId?: string | null; readonly parentLabel?: string }): DemoMultiOption => ({ id: item.id,
     name: item.parentId && !options.has(item.parentId) && item.parentLabel ? `${item.parentLabel} / ${item.label}` : item.label,
     ...(item.parentId === undefined ? {} : { parentId: item.parentId }) });
-  return <div className="iw-field pm-filter-field"><label>{props.label}</label><DemoMultiSelect scope={props.scope} popupHost={props.popupHost} ownerKey={owner}
+  return <div id={props.sourceHost?.id} className={props.sourceHost?.className??'iw-field pm-filter-field'} aria-label={props.sourceHost?.ariaLabel}>{!props.sourceHost&&<label>{props.label}</label>}<DemoMultiSelect scope={props.scope} popupHost={props.popupHost} ownerKey={owner}
     label={props.label} allLabel={props.kind === 'category' ? '全部分类' : `全部${props.label}`} {...(props.kind === 'category' ? { hierarchy: 'category-branches' as const } : {})}
     options={current.items.map(option)} selectedOptions={props.selected.map(option)} value={props.selected.map(item => item.id)} completeUniverse={current.completeUniverse}
     onIncompleteSelection={(item, reason) => { explicit.current = options.get(item.id) ?? null; setNotice(reason === 'branch-exclusion' ? '不支持从已选整个分类分支中排除子项。' : '当前候选不是已完整核实的全部范围，不能从全部范围排除单项。'); }}

@@ -1,0 +1,54 @@
+{
+  "atUtc": "2026-10-23T13:20:09.639845+00:00",
+  "parent": "d431ae45b1752d4e69024e237eeb9ff5663a5edf",
+  "taskId": "F04_FROZEN_DEMO_COMPLETE_PRODUCT_LIST",
+  "files": [
+    {
+      "path": "apps/web/src/products/products-page.tsx",
+      "owner": "F2",
+      "bytes": 23152,
+      "sha256": "6c416c9448c8cbcfeebe1ed6ecb93e51a33d3a1aeff06c64e490b8e3bdd661ca"
+    },
+    {
+      "path": "apps/web/src/products/filter-control.tsx",
+      "owner": "F2",
+      "bytes": 7647,
+      "sha256": "07f41b8e4d918071505540239f03dec5a93e242f1ac40ae2eaef5b6c9b030c78"
+    },
+    {
+      "path": "apps/web/src/products/products.css",
+      "owner": "F2",
+      "bytes": 2294,
+      "sha256": "7238a2857b516e98349b6f5acdf8fffbc2c8e4e00a11102aad873b76eced0ae1"
+    },
+    {
+      "path": "apps/web/src/products/demo-source/product-current.css",
+      "owner": "F2",
+      "bytes": 17939,
+      "sha256": "37f3626b8031192da80c36708d2c3eca9eacaa3c307b56fcdbe7e87b22cf2d7b"
+    },
+    {
+      "path": "apps/web/src/products/demo-source/product-refinement.css",
+      "owner": "F2",
+      "bytes": 2333,
+      "sha256": "90f658d6e6d5e9f3459e37ad93d21bddf30d3abc2c343b8044565efbc9605f94"
+    },
+    {
+      "path": "apps/web/src/products/demo-source/product-inventory-unified.css",
+      "owner": "F2",
+      "bytes": 14063,
+      "sha256": "2d74f53841bfd02ebafc30d1a6c24bebd9c938b4721222e124b965fa0150dc74"
+    },
+    {
+      "path": "apps/web/src/products/demo-source/product-rework.css",
+      "owner": "F2",
+      "bytes": 22430,
+      "sha256": "3927f3d85ed2d217adb6892eb292d1938f47da7390156c965fdffa4b935383fc"
+    }
+  ],
+  "ownerReceipt": "K/reports/frontend/rapid-launch-20261022/F2/PRODUCT-NATIVE-PAGE-02-P01-delivery-v1.json",
+  "frozenDemo": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "scope": "Complete original P01 list/workspaceHead/product-arco and Empty/pager hosts, table10cols, four whole final CSS layers with minimum equivalent route scope. Formal server pagination/total/unknown/native identities retained. Shared176/177 required, six-tab followup not falsely included.",
+  "checksAdopted": "Original owner affected CSS/actual component consumer/strict checks accepted at exact scope. No independent browser/HTTP/PG/whole-page/performance acceptance inferred.",
+  "qualification": "SOURCE_FIXED_ONLY; C178 new full candidate pending C actual build and corresponding QF/QF2 independent affected review."
+}
