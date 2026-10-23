@@ -471,3 +471,8 @@
 .sale-reference-pages .erp-button{height:26px;padding:2px 6px;font-size:12px}
 .sales-proposal-editor .sale-reference-control>.demo-single-select{width:100%;min-width:0}
 .sales-proposal-editor .sale-reference-control:has(.sale-clear-reference) .demo-single-select .arco-select-view{padding-right:30px}
+
+/* Frozen mx-spec-edit is a native auto-height button. Explicitly clear Arco
+ * default32px on this technical carrier; source input/row geometry stays owned
+ * by the existing table declarations, without a guessed fixed row height. */
+.sales-proposal-editor .sale-lines-table .sale-identity-trigger{height:auto;min-height:0;padding:2px 0}

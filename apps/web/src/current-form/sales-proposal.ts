@@ -156,13 +156,18 @@ export class SalesProposalSession {
     if (this.#state.lineEdit?.key === key) this.cancelLineEdit();
     return this.#edit({ ...this.#state.draft, lines: this.#state.draft.lines.filter(row => row.key !== key) });
   }
-  async openLinePicker(key: string, kind: 'product' | 'sku' = 'sku'): Promise<void> {
+  beginLineEdit(key: string): boolean {
     const original = this.#state.draft.lines.find(row => row.key === key);
-    if (this.#state.disposed || !original || !this.#state.draft.hall) return;
-    if (this.#state.lineEdit && this.#state.lineEdit.key !== key) { this.#publish({ notice: '请先确认或取消当前行的改选。' }); return; }
-    this.#settlementTarget = null;
-    if (!this.#state.lineEdit) this.#publish({ lineEdit: { key, original, product: original.product, sku: original.sku, color: { id: original.sku.colorId, name: original.sku.colorName }, fit: { id: original.sku.fitId, name: original.sku.fitName }, skuPage: 1 } });
-    this.#entryTarget = null;
+    if (this.#state.disposed || !original || !this.#state.draft.hall) return false;
+    if (this.#state.lineEdit && this.#state.lineEdit.key !== key) { this.#publish({ notice: '请先确认或取消当前行的改选。' }); return false; }
+    if (!this.#state.lineEdit) {
+      this.closePicker(); this.#settlementTarget = null; this.#entryTarget = null;
+      this.#publish({ lineEdit: { key, original, product: original.product, sku: original.sku, color: { id: original.sku.colorId, name: original.sku.colorName }, fit: { id: original.sku.fitId, name: original.sku.fitName }, skuPage: 1 } });
+    }
+    return true;
+  }
+  async openLinePicker(key: string, kind: 'product' | 'sku' = 'sku'): Promise<void> {
+    if (!this.beginLineEdit(key)) return;
     await this.#read(kind, '', kind === 'sku' ? this.#state.lineEdit!.skuPage : 1, kind === 'sku' ? this.#state.lineEdit!.product : null, null);
   }
   confirmLineEdit(): boolean {

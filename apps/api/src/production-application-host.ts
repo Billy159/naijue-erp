@@ -88,6 +88,8 @@ export async function createProductionRequestHandler(options: ProductionApplicat
     let name: string;
     try { name = pathname === "/" ? entry : pathname.startsWith("/assets/") ? decodeURIComponent(pathname.slice(8)) : ""; }
     catch { return failure(response, 400); }
+    const buildPrefix = `${config.build.buildId}/`;
+    if (pathname.startsWith("/assets/") && name.startsWith(buildPrefix)) name = name.slice(buildPrefix.length);
     if (!safeRelative(name)) return failure(response, 404);
     const asset = assets.get(name); if (!asset) return failure(response, 404);
     response.writeHead(200, { "content-type": asset.type, "content-length": asset.bytes.byteLength, "cache-control": "no-store", "x-content-type-options": "nosniff" });

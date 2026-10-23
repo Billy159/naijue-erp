@@ -1,3 +1,4 @@
+import { parseProductionHostConfiguration, productionAssetUrl } from "../../web/src/production-host/configuration.ts";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { mkdtemp, mkdir, readFile, realpath, rm, symlink, writeFile } from "node:fs/promises";
@@ -152,4 +153,34 @@ test("production R3 media host: original API prefix and public build boundary ke
   assert.equal(p.closed(), 1);
   await assert.rejects(runProductionRuntime26R3Main([]), TypeError);
   await assert.rejects(runProductionRuntime26R3Main(["relative-config.json"]), TypeError);
+});
+
+test("production assets: configured build prefix resolves generated public URLs and relative chunks while other versions stay 404", async () => {
+  const root = await build(), p = apiDouble(), configuration = config(root), buildId = configuration.build.buildId;
+  try {
+    const publicConfiguration = parseProductionHostConfiguration({ kind: "naijue-erp-production-host",
+      http: { origin: PRODUCTION_PUBLIC_ORIGIN, basePath: "/api" }, assets: { basePath: `/assets/${buildId}/` },
+      session: { verifyOnMount: true }, routes: { inventory: true, sales: true, transfers: true } });
+    // Use the actual public configuration/URL helper consumed by build-production-host.mjs.
+    const scriptUrl = productionAssetUrl(publicConfiguration, "application.js");
+    const html = `<script id="naijue-erp-production-configuration" type="application/json">${JSON.stringify({ configuration: publicConfiguration })}</script><script type="module" src="${scriptUrl}"></script>`;
+    await writeFile(path.join(root, "index.html"), html);
+    await writeFile(path.join(root, "application.js"), 'import "./chunks/page.js";');
+    await mkdir(path.join(root, "chunks")); await writeFile(path.join(root, "chunks/page.js"), "SYNTHETIC_VERSIONED_CHUNK");
+    const handle = await createProductionRequestHandler({ api: p.api, configuration });
+    const servedHtml = invoke(handle, "/").body!;
+    const generatedScript = new URL(servedHtml.match(/type="module" src="([^"]+)"/)![1]!);
+    assert.equal(generatedScript.pathname, `/assets/${buildId}/application.js`);
+    const script = invoke(handle, generatedScript.pathname); assert.equal(script.status, 200); assert.equal(script.body, 'import "./chunks/page.js";');
+    const chunkUrl = new URL("./chunks/page.js", generatedScript);
+    assert.equal(invoke(handle, chunkUrl.pathname).body, "SYNTHETIC_VERSIONED_CHUNK");
+    assert.equal(invoke(handle, "/assets/application.js").body, script.body);
+    assert.equal(invoke(handle, "/assets/chunks/page.js").body, "SYNTHETIC_VERSIONED_CHUNK");
+    const head = invoke(handle, generatedScript.pathname, "HEAD"); assert.equal(head.status, 200); assert.equal(head.body, undefined);
+    for (const url of ["/assets/OTHER_BUILD/application.js", `/assets/${buildId}-other/application.js`, `/assets/${buildId}/%2e%2e/application.js`, `/assets/${buildId}/private.json`])
+      assert.equal(invoke(handle, url).status, 404, url);
+    assert.equal(invoke(handle, generatedScript.pathname, "GET", "attacker.invalid").status, 400);
+    assert.equal(invoke(handle, generatedScript.pathname, "POST").status, 405);
+    assert.deepEqual(p.routed, []);
+  } finally { await rm(root, { recursive: true, force: true }); }
 });

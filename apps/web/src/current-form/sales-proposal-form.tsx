@@ -23,6 +23,10 @@ function cents(value: string): bigint {
   if (!/^\d{1,100}(?:\.\d{1,2})?$/.test(value.trim())) throw Error();
   const [whole, fraction = ''] = value.trim().split('.'); return BigInt(whole!) * 100n + BigInt(fraction.padEnd(2, '0'));
 }
+function paymentAmount(raw: string, direction: 'RECEIVE' | 'REFUND'): string {
+  const sign = direction === 'REFUND' ? '-' : '';
+  try { return sign + salesInputMoney(cents(raw).toString()); } catch { return sign + raw; }
+}
 function linePrice(row: SalesProposalLine): string | null {
   try {
     if (row.isGift) return '0.00';
@@ -51,8 +55,9 @@ function quantitySummary(rows: readonly SalesProposalLine[], absolute = false): 
 type SpecKind = 'color' | 'fit' | 'size';
 /** Same guarded Portal reattachment used by the shared native Select action.
  * A replacement row may first mount already-open under StrictMode replay. */
-function SalesCandidateTrigger(props: TriggerProps) {
-  const [mounted, setMounted] = useState(false);
+function SalesCandidateTrigger({ sourceSpecAnchor, ...props }: TriggerProps & { readonly sourceSpecAnchor?: () => HTMLElement | null | undefined }) {
+  const [mounted, setMounted] = useState(false), [specNode, setSpecNode] = useState<HTMLDivElement | null>(null);
+  const [placement, setPlacement] = useState<{ node: HTMLDivElement; left: number; top: number; width: number } | null>(null);
   const [, refresh] = useReducer((value: number) => value + 1, 0);
   useEffect(() => { setMounted(true); }, []);
   useEffect(() => {
@@ -60,14 +65,36 @@ function SalesCandidateTrigger(props: TriggerProps) {
     let active = true; queueMicrotask(() => { if (active) refresh(); });
     return () => { active = false; };
   }, [mounted, props.popupVisible]);
-  return <Trigger {...props} popupVisible={mounted && !!props.popupVisible} popup={() => props.popup?.() ?? null} />;
+  useLayoutEffect(() => {
+    const box = specNode?.querySelector<HTMLElement>('.sale-spec-menu'), view = specNode?.ownerDocument.defaultView;
+    if (!box || !view || !sourceSpecAnchor || !props.popupVisible) return;
+    const place = () => {
+      const anchor = sourceSpecAnchor(); if (!anchor?.isConnected || !specNode?.isConnected) return;
+      // Frozen interaction-common.js specMenu.position: choose the side with
+      // more available space, even when the other side could fit the menu.
+      const bounds = anchor.getBoundingClientRect();
+      if (bounds.bottom < 0 || bounds.top > view.innerHeight) { props.onVisibleChange?.(false); return; }
+      const width = Math.min(250, view.innerWidth - 16), belowSpace = view.innerHeight - bounds.bottom - 8, aboveSpace = bounds.top - 8;
+      const below = belowSpace >= aboveSpace, maximum = Math.max(80, Math.min(288, Math.max(belowSpace, aboveSpace)));
+      box.style.maxHeight = `${maximum}px`;
+      const options = box.querySelector<HTMLElement>('.mx-spec-menu-options'); if (options) options.style.maxHeight = `${Math.max(44, maximum - 43)}px`;
+      const height = Math.min(box.scrollHeight, maximum), left = Math.max(8, Math.min(bounds.left, view.innerWidth - width - 8));
+      const top = below ? bounds.bottom + 4 : Math.max(8, bounds.top - height - 4);
+      setPlacement(previous => previous?.node === specNode && previous.left === left && previous.top === top && previous.width === width ? previous : { node: specNode, left, top, width });
+    };
+    place(); const frame = view.requestAnimationFrame(place), observer = typeof ResizeObserver === 'function' ? new ResizeObserver(place) : null;
+    observer?.observe(box); view.addEventListener('resize', place); specNode.ownerDocument.addEventListener('scroll', place, true);
+    return () => { view.cancelAnimationFrame(frame); observer?.disconnect(); view.removeEventListener('resize', place); specNode.ownerDocument.removeEventListener('scroll', place, true); };
+  }, [specNode, sourceSpecAnchor, props.popupVisible]);
+  const position = placement?.node === specNode ? placement : null;
+  return <Trigger {...props} {...(sourceSpecAnchor ? { autoFitPosition: false, autoAlignPopupWidth: false, style: { position: 'fixed', left: position?.left, top: position?.top, visibility: position ? 'visible' : 'hidden' }, popupStyle: { ...props.popupStyle, width: position?.width ?? 250 } } : {})} popupVisible={mounted && !!props.popupVisible} popup={() => sourceSpecAnchor ? <div ref={setSpecNode}>{props.popup?.() ?? null}</div> : props.popup?.() ?? null} />;
 }
 /** Frozen unified-single-select Choice presentation. Data/selection still belong
  * to the native proposal; only the current bounded page becomes options. */
-function SalesReferenceField({ session, picker, visible, label, value, selected, disabled, open, close }: {
+function SalesReferenceField({ session, picker, visible, label, value, selected, disabled, open, close, clear }: {
   readonly session: SalesProposalSession; readonly picker: SalesProposalSnapshot['picker']; readonly visible: boolean;
   readonly label: string; readonly value: string; readonly selected: { readonly id: string; readonly name: string } | null;
-  readonly disabled: boolean; readonly open: () => void; readonly close: () => void;
+  readonly disabled: boolean; readonly open: () => void; readonly close: () => void; readonly clear?: () => void;
 }) {
   const host = useRef<HTMLDivElement>(null), [popupWidth, setPopupWidth] = useState(300);
   useLayoutEffect(() => {
@@ -79,7 +106,7 @@ function SalesReferenceField({ session, picker, visible, label, value, selected,
   }, [visible]);
   const options: { value: string; label: string; disabled?: boolean }[] = visible && picker?.phase === 'ready' ? (picker.result?.items ?? []).map(item => ({ value: item.id as string, label: 'name' in item ? item.name : item.skuCode })) : [];
   if (selected && !options.some(option => option.value === selected.id)) options.unshift({ value: selected.id, label: selected.name, disabled: true });
-  return <div ref={host} className="sale-reference-field"><DemoSingleSelectAction presentation="flat" label={label} placeholder={value} value={selected?.id ?? ''} options={options} disabled={disabled} open={visible} popupWidth={popupWidth}
+  return <div ref={host} className="sale-reference-field"><DemoSingleSelectAction presentation="flat" label={label} placeholder={value} value={selected?.id ?? ''} options={options} disabled={disabled} open={visible} popupWidth={popupWidth} {...(clear ? { allowClear: true, onClear: clear } : {})}
     loading={visible && picker?.phase === 'loading'} onSearch={text => { if (visible && session.getSnapshot().picker === picker) void session.search(text); }}
     onOpenChange={next => {
       if (next) { if (!visible) open(); return; }
@@ -143,7 +170,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
   const [scanner, setScanner] = useState<{ controller: DocumentScanController; direction: 'IN' | 'OUT' } | null>(null);
   const [anchor, setAnchor] = useState<string | null>(null), [activeSection, setActiveSection] = useState<'IN' | 'OUT'>('OUT');
   const [quantitySections, setQuantitySections] = useState<{ readonly session: SalesProposalSession; readonly values: ReadonlyMap<string, 'IN' | 'OUT'> }>(() => ({ session, values: new Map() }));
-  const [zeroLine, setZeroLine] = useState<string | null>(null);
+  const [zeroLine, setZeroLine] = useState<string | null>(null), [focusedPayment, setFocusedPayment] = useState<string | null>(null);
   const formRef = useRef<HTMLElement>(null), triggerRef = useRef<HTMLElement | null>(null);
   const productKeys = useRef(new Map<string, CurrentProductFinderHandle>());
   const movedQuantity = useRef<{ key: string; previous: Element | null } | null>(null);
@@ -173,7 +200,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
       } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === ' ') { if (input && event.key === ' ') return; event.preventDefault(); show(event.currentTarget); }
     };
     const getAnchor = () => Array.from(formRef.current?.querySelectorAll<HTMLElement>('[data-entry-control]') ?? []).find(node => node.dataset.entryControl === id) ?? (triggerRef.current?.isConnected ? triggerRef.current : null);
-    return <SalesCandidateTrigger getPopupContainer={node => node.closest('.demo-ui') ?? formRef.current ?? node.parentElement ?? node} trigger="click" position="bl" {...(spec ? { popupStyle: { width: 250, maxWidth: 'calc(100vw - 16px)' } } : {})} popupVisible={visible} escToClose updateOnScroll autoFitPosition unmountOnExit
+    return <SalesCandidateTrigger {...(spec ? { sourceSpecAnchor: getAnchor } : {})} getPopupContainer={node => node.closest('.demo-ui') ?? formRef.current ?? node.parentElement ?? node} trigger="click" position="bl" {...(spec ? { popupStyle: { width: 250, maxWidth: 'calc(100vw - 16px)' } } : {})} popupVisible={visible} escToClose updateOnScroll autoFitPosition unmountOnExit
       onVisibleChange={next => { if (next) { if (!visible) show(); } else if (visible) dismissPicker(); }}
       popup={() => picker && visible ? <CandidatePopup getAnchor={getAnchor} session={session} picker={picker} keyboardRef={handle => { if (handle) productKeys.current.set(id, handle); else productKeys.current.delete(id); }} {...(scope ? { scope } : {})} {...(productCapability ? { capability: productCapability } : {})} {...(spec ? { spec } : {})} {...(selection ? { selection } : {})} close={restore => dismissPicker(restore ?? true)} choose={selected => {
         if (session.getSnapshot().picker !== picker) return;
@@ -185,8 +212,8 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
         : <UIButton className={`sale-select-trigger${spec ? ` mx-spec-picker${selection?.[spec === 'size' ? 'sku' : spec] ? ' has-value' : ''}` : ''}`} data-entry-control={id} aria-label={label} aria-haspopup={spec ? 'listbox' : 'dialog'} aria-expanded={visible} disabled={disabled} onKeyDown={keyboard} onClick={event => { triggerRef.current = event.currentTarget; }}><span>{value}</span>{spec ? <svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4" /></svg> : <span aria-hidden="true">⌄</span>}</UIButton>}
     </SalesCandidateTrigger>;
   };
-  const reference = (id: string, label: string, placeholder: string, selected: { readonly id: string; readonly name: string } | null, open: () => void, disabled = false) => <SalesReferenceField session={session} picker={anchor === id ? picker : null} visible={anchor === id && !!picker} label={label} value={placeholder} selected={selected} disabled={disabled}
-    open={() => { setAnchor(id); open(); }} close={() => { if (anchor === id) dismissPicker(); }} />;
+  const reference = (id: string, label: string, placeholder: string, selected: { readonly id: string; readonly name: string } | null, open: () => void, disabled = false, clear?: () => void) => <SalesReferenceField session={session} picker={anchor === id ? picker : null} visible={anchor === id && !!picker} label={label} value={placeholder} selected={selected} disabled={disabled}
+    {...(clear ? { clear } : {})} open={() => { setAnchor(id); open(); }} close={() => { if (anchor === id) dismissPicker(); }} />;
   const cancelMode = () => { modeToConfirm.current = null; setPendingMode(null); };
   const chooseMode = (mode: SalesBusinessMode) => {
     if (mode === salesBusinessMode(draft.businessType) || state.lineEdit) return;
@@ -231,10 +258,10 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
       <div className="tc-gold-field sale-due-field"><span className="sale-field-label">应结金额</span><strong className="sale-due-value">{totals ? `¥${salesInputMoney(totals.netDueMinor)}` : '待填写'}</strong></div>
       <div className="tc-gold-field sale-payment-field" aria-label="本单收退明细"><span className="sale-field-label">收款</span><div className="sale-payment-rows">
         {paymentRows.map((row, index) => <div className="sale-payment-row" key={row.key ?? 'empty'}>
-          {reference(`method-${index}`, `付款方式 ${index + 1}`, '付款方式', row.method, () => { void session.openPaymentPicker(row.key, 'paymentMethod'); }, !draft.hall || !!state.lineEdit)}
+          {reference(`method-${index}`, `付款方式 ${index + 1}`, '付款方式', row.method, () => { void session.openPaymentPicker(row.key, 'paymentMethod'); }, !draft.hall || !!state.lineEdit, row.key && paymentRows.length === 1 ? () => { dismissPicker(); session.removeSettlement(row.key!); } : undefined)}
           {reference(`account-${index}`, `资金账户 ${index + 1}`, '资金账户', row.account, () => { void session.openPaymentPicker(row.key, 'paymentAccount'); }, !row.method || !!state.lineEdit)}
-          <UIInput aria-label={`收退金额 ${index + 1}`} inputMode="decimal" placeholder="金额" disabled={!draft.hall} value={(row.direction === 'REFUND' ? '-' : '') + row.amount} onChange={value => session.updateSignedSettlement(row.key, value)} />
-          <div className="sale-payment-actions">{index === paymentRows.length - 1 && paymentRows.length < 3 && <UIButton className="sale-link" disabled={!draft.hall || !row.method || !row.account || !/^\d+(?:\.\d{1,2})?$/.test(row.amount)} onClick={() => session.addSettlement()}>添加</UIButton>}{row.key && <UIButton className="sale-link" aria-label={`删除收退 ${index + 1}`} onClick={() => session.removeSettlement(row.key!)}>删除</UIButton>}</div>
+          <UIInput aria-label={`收退金额 ${index + 1}`} inputMode="decimal" placeholder="金额" disabled={!draft.hall} value={focusedPayment === (row.key ?? 'empty') ? (row.direction === 'REFUND' ? '-' : '') + row.amount : paymentAmount(row.amount, row.direction)} onFocus={() => setFocusedPayment(row.key ?? 'empty')} onBlur={() => setFocusedPayment(null)} onChange={value => session.updateSignedSettlement(row.key, value)} />
+          <div className="sale-payment-actions">{index === paymentRows.length - 1 && paymentRows.length < 3 && <UIButton className="sale-link" disabled={!draft.hall || !row.method || !row.account || !/^\d+(?:\.\d{1,2})?$/.test(row.amount)} onClick={() => session.addSettlement()}>添加</UIButton>}{row.key && paymentRows.length > 1 && <UIButton className="sale-link" aria-label={`删除收退 ${index + 1}`} onClick={() => session.removeSettlement(row.key!)}>删除</UIButton>}</div>
         </div>)}
       </div><span className={`sale-payment-balance ${salesPaymentKind(totals?.netDueMinor ?? null, totals?.settledMinor ?? null, draft.lines.length)}`}>{salesPaymentBalance(totals?.netDueMinor ?? null, totals?.settledMinor ?? null, draft.lines.length)}</span></div>
     </div></div>
@@ -249,7 +276,11 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
       {section.rows.map(row => {
         const editing = state.lineEdit?.key === row.key ? state.lineEdit : null, product = editing?.product ?? row.product;
         const editOpen = (kind: 'product' | 'sku') => { void session.openLinePicker(row.key, kind); };
-        const identity = (part: 'product' | SpecKind, value: ReactNode) => !active ? value : <UIButton className="sale-identity-trigger mx-spec-edit" data-line-identity={row.key} aria-label={`修改${part === 'product' ? '商品' : { color: '颜色', fit: '版型', size: '尺码' }[part]} ${row.sku.skuCode}`} disabled={!active || !!state.lineEdit} onClick={event => { triggerRef.current = event.currentTarget; setAnchor(`edit-${row.key}-${part}`); editOpen(part === 'product' ? 'product' : 'sku'); if (part === 'product') requestAnimationFrame(() => { const doc = formRef.current?.ownerDocument; if (doc?.activeElement === doc?.body) formRef.current?.querySelector<HTMLInputElement>(`[data-entry-control="edit-${row.key}-product"]`)?.focus({ preventScroll: true }); }); }}><span>{value}</span><span className="sale-edit-mark mx-spec-edit-mark" aria-hidden="true">改</span></UIButton>;
+        const identity = (part: 'product' | SpecKind, value: ReactNode) => !active ? value : <UIButton className="sale-identity-trigger mx-spec-edit" data-line-identity={row.key} aria-label={`修改${part === 'product' ? '商品' : { color: '颜色', fit: '版型', size: '尺码' }[part]} ${row.sku.skuCode}`} disabled={!active || !!state.lineEdit} onClick={event => {
+          triggerRef.current = event.currentTarget;
+          if (!session.beginLineEdit(row.key)) return;
+          setAnchor(null);
+          requestAnimationFrame(() => { const doc = formRef.current?.ownerDocument; if (doc?.activeElement === doc?.body) formRef.current?.querySelector<HTMLElement>(`[data-entry-control="edit-${row.key}-${part}"]`)?.focus({ preventScroll: true }); }); }}><span>{value}</span><span className="sale-edit-mark mx-spec-edit-mark" aria-hidden="true">改</span></UIButton>;
         const rawPrice = row.isGift ? '0.00' : row.pricingRule === 'DISCOUNT' ? linePrice(row) ?? '' : row.dealPrice;
         return <tr key={row.key} className={editing ? 'sale-identity-editing sale-identity-edit mx-replacing mx-inline-replacement' : ''}>
           <td>{editing ? <>{candidate(`edit-${row.key}-product`, '修改商品款号 / 名称', `${product.code} · ${product.name}`, () => editOpen('product'), false, undefined, undefined, { value: anchor === `edit-${row.key}-product` && picker?.kind === 'product' ? picker.search : product.code, change: () => {}, placeholder: '款号 / 名称 · 条码请扫码录入' })}<small className="mx-original-hint">原：{row.sourceSnapshot?.productCode ?? row.product.code} / {row.sourceSnapshot?.colorName ?? row.sku.colorName} / {row.sourceSnapshot?.fitName ?? row.sku.fitName} / {row.sourceSnapshot?.sizeName ?? row.sku.sizeName} · {row.quantity}</small></> : <div className="sale-product-cell">{identity('product', <><strong>{row.sourceSnapshot?.productCode ?? row.product.code}</strong><span className="sale-product-name">{row.sourceSnapshot?.productName ?? row.product.name}</span></>)}{row.isGift && <span className="sale-gift">赠品</span>}</div>}</td>

@@ -16,6 +16,9 @@ interface CommonProps {
   readonly focusOnMount?: boolean;
   readonly placeholder?: string;
   readonly loading?: boolean;
+  /** Existing source clear affordance, enabled only by an explicit consumer. */
+  readonly allowClear?: boolean;
+  readonly onClear?: () => void;
   readonly dropdownRender?: (menu: ReactNode) => ReactNode;
   /** Accessibility metadata only; no native value coercion or business validation. */
   readonly required?: boolean;

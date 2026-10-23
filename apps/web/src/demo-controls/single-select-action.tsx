@@ -65,7 +65,7 @@ export function DemoSingleSelectAction(props: DemoSingleSelectActionProps) {
       {...(props.required !== undefined ? { 'aria-required': props.required } : {})}
       showSearch={!!props.onSearch}
       {...(props.onSearch ? { onSearch: props.onSearch, filterOption: false } : {})}
-      allowClear={false}
+      allowClear={props.allowClear === true}
       disabled={props.disabled}
       popupVisible={mounted && props.open && !props.disabled}
       unmountOnExit
@@ -80,6 +80,7 @@ export function DemoSingleSelectAction(props: DemoSingleSelectActionProps) {
         const value = typeof selected === 'object' ? selected.value : selected;
         return <span className="ui-single-tag">{props.options.find(item => item.value === value)?.label ?? value}</span>;
       }}
+      onClear={() => { if (props.allowClear && !props.disabled) { props.onOpenChange(false); props.onClear?.(); } }}
       onVisibleChange={visible => props.onOpenChange(visible && !props.disabled)}
       onChange={(value: string) => {
         const option = props.options.find(item => item.value === value);

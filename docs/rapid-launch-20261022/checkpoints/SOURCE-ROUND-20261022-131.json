@@ -1,0 +1,181 @@
+{
+  "atUtc": "2026-10-23T04:27:39.945581+00:00",
+  "parent": "82c284c2d8e62c0bf3497291966699453fd0412f",
+  "groups": [
+    {
+      "slice": "HOST versioned actual generated asset URL fix",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/HOST-VERSIONED-ASSETS-FIX-RESULT-v1.json",
+      "receiptSnapshot": {
+        "taskId": "D1-HOST-VERSIONED-ASSETS-FIX",
+        "atUtc": "2026-10-23T04:21:38.498462+00:00",
+        "status": "SOURCE_READY_ONE_FOCUSED_CHECK_AND_EXACT2_STRICT_TYPES_PASS",
+        "trigger": "C58 actual private stage app direct /healthz200 and WEB /healthz200 but generated versioned asset path404; C103 historical failure preserved.",
+        "change": "Original host strips only the exact current config.build.buildId plus slash from the decoded /assets/ relative name before the original safeRelative/captured asset lookup. Bare paths retain original behavior; no fallback/version search/other deployment or proxy path.",
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/production-application-host.ts",
+            "bytes": 13876,
+            "sha256": "46769b91b38ac8a94c0f7c08b4ffcfd3ba56b67d7ad886ad65b63f13b59a4bd1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/production-application-host.test.ts",
+            "bytes": 15908,
+            "sha256": "a410ce550d100d3688605b60a58533b3e048dead5906b71dc22f9efd642b903b"
+          }
+        ],
+        "verification": {
+          "newChecks": 1,
+          "skipped": 0,
+          "test": "production assets: configured build prefix resolves generated public URLs and relative chunks while other versions stay 404",
+          "fixtureSource": "Uses actual parseProductionHostConfiguration/productionAssetUrl consumed by build-production-host.mjs; public assets.basePath=/assets/<configured buildId>/; HTML entry application.js and relative chunks/page.js refer to flat captured output. No production build run.",
+          "before": {
+            "result": "FAIL404_NOT200",
+            "toolChunk": "604cf0"
+          },
+          "after": {
+            "result": "PASS",
+            "toolChunk": "a29de6",
+            "assertions": [
+              "HTML-generated version URL200 and exact script bytes",
+              "Relative chunk resolves within same current version200",
+              "Existing bare entry/chunk compatibility retained",
+              "Versioned HEAD200 with no body",
+              "Wrong version and prefix lookalike404",
+              "Traversal/private names404",
+              "Spoofed Host400 and POST405",
+              "No API routing on these asset requests"
+            ]
+          },
+          "types": "Exact2 root files strict tsc using existing project compiler flags, exit0; no new tsconfig or build.",
+          "repeatedOldSuites": false
+        },
+        "bounds": {
+          "R3AndPriorChecksAdopted": "C reports C129/QB149 source/protocol passed; not rerun or replaced by this fix.",
+          "serverOrPGInvoked": false,
+          "buildOrCompiledJsPatched": false,
+          "frontendModified": false,
+          "proxyModified": false,
+          "publicationRestrictionsRemoved": false,
+          "actualStageResourceVerification": "PENDING_C_NEW_FIXED_PACKAGE"
+        },
+        "next": "C fixes a successor source checkpoint and routes original QB this one version-path delta only; C builds/packages/installs with same approved Linux/offline lock/cache then verifies existing private stage actual generated assets. Do not patch compiled JS/proxy or weaken probe to bare URL."
+      },
+      "files": [
+        {
+          "path": "apps/api/src/production-application-host.ts",
+          "owner": "D1",
+          "bytes": 13876,
+          "sha256": "46769b91b38ac8a94c0f7c08b4ffcfd3ba56b67d7ad886ad65b63f13b59a4bd1"
+        },
+        {
+          "path": "apps/api/src/production-application-host.test.ts",
+          "owner": "D1",
+          "bytes": 15908,
+          "sha256": "a410ce550d100d3688605b60a58533b3e048dead5906b71dc22f9efd642b903b"
+        }
+      ]
+    },
+    {
+      "slice": "chunk69 source-spec-menu payment and natural rowheight",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-69/DELIVERY.json",
+      "receiptSnapshot": {
+        "chunk": 69,
+        "taskId": "F1-SALE-QF120-SPEC-PAYMENT-ROW",
+        "atUtc": "2026-10-23T04:21:34.698431+00:00",
+        "status": "READY_EXACT5_SOURCE_ONLY_QF_AFFECTED_REQUIRED",
+        "files": [
+          {
+            "path": "apps/web/src/current-form/sales-proposal.ts",
+            "beforeSha256": "5669b8be97d084543dbb2a9f8754cf871dffc3686f7ea9a2daa0eccea31787d5",
+            "sha256": "c188d342c8fbf553b148eb9829a4929d55f0ea198c34bfec4d79c82ee6f0fc16"
+          },
+          {
+            "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+            "beforeSha256": "b764515040f6a06cf4360725c1433ad9ef5a863069635fc034c36ba24c1fe9e8",
+            "sha256": "c120d5316d540dbd79c24f73c35a70045dbe86d5a423434fae68b6175ce2661f"
+          },
+          {
+            "path": "apps/web/src/sales/detail.css",
+            "beforeSha256": "1807ce09c644e11c1bb3e12e0ad46ef771d2291379ad28692c215b21dee67d1e",
+            "sha256": "482c08c1bcd6b98a2f2a0fd51157d510ee7f3f5a1d13fbc1900cc0080e5dd941"
+          },
+          {
+            "path": "apps/web/src/demo-controls/single-select-contract.ts",
+            "beforeSha256": "ab79bc3865a70f3c22a75429955772f1b3080a098efc4f2f1bfa174f6b62d52c",
+            "sha256": "3d4e78dfe50478fbf91a5367619296192dde92c934545a9e2a1c2407a0209e1b"
+          },
+          {
+            "path": "apps/web/src/demo-controls/single-select-action.tsx",
+            "beforeSha256": "9d3ff7633dc21672808ec4db7a152d755cda0eb20e30353f2ba7a8c3d3c8ce98",
+            "sha256": "695cf557b8d90b9fd6d9d9b3cc5aaa78e516bb2f51b82120bc3eee777d4ce7b6"
+          }
+        ],
+        "issues": [
+          "SALE-SPEC-POPUP-01",
+          "SALE-LINE-ROW-HEIGHT-01",
+          "SALE-PAYMENT-PRESENTATION-01"
+        ],
+        "source": [
+          "frontend/interaction-common.js specMenu",
+          "frontend/golden-consistency.css173-205",
+          "frontend/real-data-bridge.mjs197-229 inline funds",
+          "frontend/sales-detail-alignment.css"
+        ],
+        "checks": {
+          "types-1": "EXIT0",
+          "affected-1": "EXIT0_SOURCE_FLOW_SYNTHETIC_ONLY"
+        },
+        "wholePagePass": false,
+        "realBusinessPass": false,
+        "performance": "NOT_MEASURED",
+        "blockers": [],
+        "remaining": [
+          "SALE-ENTRY-PENDING-ROW-01 original full-form queue",
+          "QF actual browser geometry/row height and payment presentation",
+          "Native save/approval/roles/performance not covered"
+        ],
+        "next": "C pin exact5 and release source files; original F1 continue pending rows; next necessary integrated build and original QF affected verification",
+        "evidence": [
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-69/REPORT.md",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-69/SOURCE.diff",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-69/AFFECTED-RESULT.json",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-69/affected-1.log",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-69/types-1.log"
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/current-form/sales-proposal.ts",
+          "owner": "F1",
+          "bytes": 38591,
+          "sha256": "c188d342c8fbf553b148eb9829a4929d55f0ea198c34bfec4d79c82ee6f0fc16"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+          "owner": "F1",
+          "bytes": 44930,
+          "sha256": "c120d5316d540dbd79c24f73c35a70045dbe86d5a423434fae68b6175ce2661f"
+        },
+        {
+          "path": "apps/web/src/sales/detail.css",
+          "owner": "F1",
+          "bytes": 33742,
+          "sha256": "482c08c1bcd6b98a2f2a0fd51157d510ee7f3f5a1d13fbc1900cc0080e5dd941"
+        },
+        {
+          "path": "apps/web/src/demo-controls/single-select-contract.ts",
+          "owner": "F1",
+          "bytes": 2196,
+          "sha256": "3d4e78dfe50478fbf91a5367619296192dde92c934545a9e2a1c2407a0209e1b"
+        },
+        {
+          "path": "apps/web/src/demo-controls/single-select-action.tsx",
+          "owner": "F1",
+          "bytes": 5722,
+          "sha256": "695cf557b8d90b9fd6d9d9b3cc5aaa78e516bb2f51b82120bc3eee777d4ce7b6"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Freeze original owner READY exact7; reuse owner directly relevant checks. D1 generated asset path delta to QB; real Linux stage resource validation pending new fixed pack. F1 original QF affected browser verification pending; no whole UI, formal business or performance acceptance."
+}
