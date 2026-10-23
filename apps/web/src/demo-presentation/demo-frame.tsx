@@ -79,7 +79,7 @@ export function DemoFrame(props: DemoFrameProps) {
         </nav>
       </aside>
       <div className="main"><header className="topbar"><StandardBreadcrumb segments={documentBreadcrumb} label="当前页面路径" />{props.topbarActions && <div className="demo-topbar-actions">{props.topbarActions}</div>}</header>
-        {props.notice}{navigationBlocked && <p className="iw-inline-state" role="alert">当前有未保存输入或尚未确认的操作，请先保存、取消新增或处理原操作后再切换。</p>}
+        {props.notice}{navigationBlocked && !props.notice && <p className="iw-inline-state" role="alert">当前有未保存输入或尚未确认的操作，请先保存、取消新增或处理原操作后再切换。</p>}
         <main className={`demo-page${props.navigation.inventory?.selected ? ' demo-page-inventory' : ''}`}>{props.children}</main>{props.footer}
       </div>
     </div>
