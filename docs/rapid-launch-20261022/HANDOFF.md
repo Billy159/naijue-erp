@@ -1,3 +1,13 @@
+当前接续补充（源码231／运行229）：
+
+- C109真实TCP验证已COMPLETED0/2.874064213秒，原登记runtime凭据在原私有网络实际认证，current_user=session_user=erp_rewrite_runtime_20261022、R1 OID1027659/172.18.0.3/32:5432、原postmaster，READ ONLY COMMIT；v11/122函数和53ea114e…目录与QB192一致，非SET ROLE。原QB仅补本次TCP身份配对，尚未签用途/issuer或启动新app。107漏execute仅plan、108载体None误比空对象的prePG首错均保留，未当真实连接失败或服务变化。
+- 229正式生产build0/4.476秒，原pack解包一次逐字一致：227成员、1291649B、fbdb42d20d7f3e93accb5bf71a171809f0cbdf0c2c6fa67292c22f7326bcc569；229 Linux安装准备接续，不把214已过安装冒新版本。
+- QF2 final229限定通过Today有效/partial及原I07 carrier12区几何+X/Esc/重入focus生命周期；日历font/anchor和close文字×对SVG仍OPEN。QF2已clean/STOP，QF现在独占同229 O-S14真双侧selectedunfinished/query语义与新effects，不并抢Chrome。真实业务/正式性能仍未通过。
+- 新230=6d07f0b5：F2两页P16尺码组/P18季节此前确实仍通用Arco仿写，现从Frozen最终settings/pager整页DOM及105blocks/343declarations闭包迁入，reader/身份/只读规则保留，独立QF2 source核在途；231=5fc0227d为原日期Shadow font13Arial限定适配，anchor缺真实containing block证据未改。两者不在实际229，不倒记旧预览。
+- 原D1有限V11后继已从C106真实断点修正fixture/身份步骤，C110载体准备，五个已提交fixtures不重做，原商品key不换、八组仍未实际开始。QB197恢复限定结论采用；HREV非owner身份/host/v12与v13原待批分支保持准确。GitHub已回读3270763d，本段和230/231下一精确同步；104/55/整页0，gpt-6.1-sol/xhigh，Fast无开关未核，整体ACTIVE。
+
+以下历史保留，以本段与TASKS.currentContinuation当前字段为准。
+
 当前接续更新（固定229已运行，C106实际恢复完成）：
 
 - 可打开 http://127.0.0.1:57876/synthetic-unified.html ，source5669bd5411061818055c44789a1892574e3dfb94／ui-preview-5669bd5-01-build01，HTML3416386B/43b55c46…、identity4556B/a47b1291…、provenance51504B/6eaff6eb…；413输入/1368模块，原一次build0，PID22315/session61681，3关键HTTP字节及原版本头一致。首个检查脚本误用header名称已保留，HTML逐字结果复用、后两GET补齐，无新build。旧222保留。

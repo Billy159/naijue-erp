@@ -1,0 +1,27 @@
+{
+  "atUtc": "2026-10-23T22:47:16.998756+00:00",
+  "status": "LOCAL_PRODUCTION_BUILD_PACK_ONLY",
+  "sourceCommit": "5669bd5411061818055c44789a1892574e3dfb94",
+  "buildElapsedSeconds": 4.476,
+  "packReceipt": {
+    "format": "naijue-release-pack-receipt-v1",
+    "status": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+    "buildId": "r1-5669bd5-20261024-01",
+    "sourceCommit": "5669bd5411061818055c44789a1892574e3dfb94",
+    "archive": {
+      "file": "release.tar.gz",
+      "bytes": 1291649,
+      "sha256": "fbdb42d20d7f3e93accb5bf71a171809f0cbdf0c2c6fa67292c22f7326bcc569"
+    },
+    "manifestSha256": "b53c71df0e82f9068403a0f0907c0749b29ab49ece4141b2abcae8a16468e151",
+    "members": 227,
+    "archiveExtractions": 1,
+    "businessOrProductionValidation": false,
+    "deploymentExecuted": false
+  },
+  "buildEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-c229-production-prep-20261024-01/BUILD-ATTEMPT.json",
+  "linux229": "NOT_INSTALLED",
+  "newAppStarted": false,
+  "publicSwitched": false,
+  "prior214LinuxSuccessNotRelabeled229": true
+}

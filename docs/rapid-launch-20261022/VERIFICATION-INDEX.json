@@ -11095,7 +11095,7 @@
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-23T22:33:31.241880+00:00",
+  "updatedAt": "2026-10-23T22:47:16.998756+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -12652,6 +12652,26 @@
       "scope": "Original fixedphase scopedsource or adoptedactual only, not wholepage/PG/performance",
       "adoption": "C adopts independent conclusion without duplicate technical verification",
       "adoptedAtUtc": "2026-10-23T22:33:31.241880+00:00"
+    },
+    {
+      "id": "QB-SLICE-197",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice197-c106-original-key-account-recovery/RESULT.json",
+      "bytes": 7943,
+      "sha256": "2ba035538f493185cab094ce9308171f90f628bb71c2c321e4b93d426ad723ad",
+      "result": "PASS_LIMITED_ACTUAL_C105_ORIGINAL_KEY_AND_ACCOUNT_RECOVERY",
+      "scope": "Originalkeys/account actual recovery only, eight V11groups NOT_STARTED",
+      "adoption": "Originalindependent limitedconclusion adopted, no C duplicate technicalverification",
+      "adoptedAtUtc": "2026-10-23T22:47:16.998756+00:00"
+    },
+    {
+      "id": "QF2-C229-DATE-CARRIER-FINAL",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c229-date-carrier-affected-actual-01/RESULT.json",
+      "bytes": 1769,
+      "sha256": "1f49c7bfb63a974ab7928b5cee2bfa31e80baf342fe5c7664e8ca02e362c7b94",
+      "result": "NEED_FIX_EXISTING_PUBLIC_VISUALS",
+      "scope": "Today+carriergeometry/lifecycle named actualPASS only. Publicdatefont/anchor/closeSVG OPEN, no wholepage/business/performance",
+      "adoption": "Originalindependent limitedconclusion adopted, no C duplicate technicalverification",
+      "adoptedAtUtc": "2026-10-23T22:47:16.998756+00:00"
     }
   ],
   "coverageGroups": [
@@ -12691,10 +12711,10 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-23T22:33:31.241880+00:00",
+    "atUtc": "2026-10-23T22:47:16.998756+00:00",
     "latestSource": 220,
     "servedPreview": 217,
-    "browserOwner": "QF2_SOLE_229_DATE_CARRIER_THEN_C_CLEAN_TO_QF_O_S14",
+    "browserOwner": "QF_SOLE_229_O_S14_AFTER_QF2_CLEAN",
     "adopted": [
       {
         "id": "QF-V056",
@@ -13020,8 +13040,8 @@
       "approvedException": 1,
       "qualification": "55 known indexed logical scopes, not whole-site completed census or whole-page pass. Repeated versions/actions are not new cases. Sole QF owns104 matrix."
     },
-    "latestSourceRound": 229,
-    "latestSourceCheckpoint": "5669bd5411061818055c44789a1892574e3dfb94",
+    "latestSourceRound": 231,
+    "latestSourceCheckpoint": "5fc0227d043beabd31235afc97243ee688665e9f",
     "currentBackend": "QB191/192 accepted new v11 metadata only. C104 actual proved private/public JSON value equality and differing serialization byte hashes, strict bytepair corrected. C105 actualPG failed PRODUCT_SCHEME_REQUIRED at NORMAL_PRODUCT_FIXTURE after4COLOR+1CUSTOMER commits; original product key UNKNOWN, eightgroups NOT_STARTED. OriginalD1 precise fixture diagnosis + C106 original-key/account recovery active. No formal write/publicswitch.",
     "operationalReceipts": {
       "c03-c101-c102-result-bytepair-20261024-104": {
@@ -13084,7 +13104,7 @@
       "actualInputCount": 413,
       "actualModuleInputCountIncludingDependencies": 1368,
       "syntheticOnly": true,
-      "scope": "Contains223-229 fixedbusiness,18declaredfictiononlyoverlays. QF2SOLE actualDATE+carrier, thenQF O-S14. No business commands/PG/formalperformance acceptance.",
+      "scope": "Actual229 QF2Today+I07carriergeometry/close lifecycle namedPASS; publiccalendarfont/anchor+closeiconunclosed. QF nowSOLE O-S14. No business/PG/formalperformance acceptance.",
       "wholePageAccepted": false,
       "realBusinessAccepted": false,
       "formalPerformanceAccepted": false,
@@ -13140,6 +13160,100 @@
       "old105Replayed": false,
       "runtimePurposeMetadataOnlyReviewReused": "QB191"
     },
-    "latestGitHubVerified": "f178ace6e49456b0b27b5f2431ecbef38e1d6944"
+    "latestGitHubVerified": "f178ace6e49456b0b27b5f2431ecbef38e1d6944",
+    "actualR1TCP": {
+      "atUtc": "2026-10-23T22:47:16.998756+00:00",
+      "taskId": "C03_R1_CURRENT_V11_TCP_WITNESS",
+      "status": "PASS_CURRENT_REGISTERED_RUNTIME_TCP_V11_METADATA_WITNESS_ONLY",
+      "witness": {
+        "jobId": "c03-r1-v11-current-app-tcp-witness-20261024-109",
+        "status": "PASS_CURRENT_REGISTERED_RUNTIME_TCP_V11_METADATA_WITNESS_ONLY",
+        "outcome": "READ_ONLY_COMMIT_RETURNED_SUCCESS",
+        "identity": {
+          "database": "erp_rewrite_20261022_r1",
+          "server_addr": "172.18.0.3/32",
+          "server_port": 5432,
+          "current_user": "erp_rewrite_runtime_20261022",
+          "database_oid": "1027659",
+          "session_user": "erp_rewrite_runtime_20261022",
+          "database_owner": "erp_rewrite_owner_20261022",
+          "postmaster_start": "2026-10-04 08:16:07.895273+00",
+          "replication_role": "origin",
+          "server_version_num": "170011"
+        },
+        "canonicalSha256": "53ea114e60b5edb73985dfe1c750e95dd4edea424ad3082560116577fe8a3a35",
+        "canonicalFormat": "PG_JSONB_TEXT_MINUS_IDENTITY_UTF8_SHA256",
+        "patchLevel": "26_v11_document_specification_save",
+        "sourceRoutinesMatch": true,
+        "routineCount": 122,
+        "migrationVersions": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26
+        ],
+        "nativeProbeSha256": "0b9ac6862867d22c31b6a2972d18c7a38ad45ccde73044a691be55a828c659f3",
+        "actualRuntimeAuthentication": true,
+        "readOnlyTransactionCommitted": true,
+        "actualCurrentOriginalPrivateAppNetworkTcpWitness": true,
+        "newCandidateAppStarted": false,
+        "newCandidateAppRuntimeReady": false,
+        "businessDml": false,
+        "sourceWrites": false,
+        "setRoleUsed": false,
+        "issuerCreated": false,
+        "runtimePurposesSigned": false,
+        "fullCatalogExported": false,
+        "rights23Replayed": false
+      },
+      "receipts": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-v11-current-app-tcp-witness-20261024-109/release-submission/release-receipts/c03-r1-v11-current-app-tcp-witness-20261024-109/current-runtime-tcp-witness.json",
+          "bytes": 1619,
+          "sha256": "bf5d3d20b7593ba3272783705b50174a42bc62808857b539654a4cfd83831e5d"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-v11-current-app-tcp-witness-20261024-109/release-submission/release-receipts/c03-r1-v11-current-app-tcp-witness-20261024-109/engine-result.json",
+          "bytes": 7806,
+          "sha256": "fc76c210381c41a6fd8c1dd088346f2d03190dc93fd43ff6f12f03545ddb4f22"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-v11-current-app-tcp-witness-20261024-109/release-submission/release-receipts/c03-r1-v11-current-app-tcp-witness-20261024-109/job.json",
+          "bytes": 549,
+          "sha256": "eb1e77ac9055b80d8682bccd0ef23623d622257fc4e1621fb81f4113b79bc141"
+        }
+      ],
+      "predecessors": {
+        "107": "PLAN_ONLY C omitted --execute, no PG/TCP/exports, preserved notreplayed",
+        "108": "PRE_PG_REFUSAL carrier compared actual empty ports{} to None; exact corrected to C106bindings, other identity checks preserved"
+      },
+      "newIndependentPairing": "PENDING_ORIGINAL_QB_NEW_TCP_DELTA_ONLY",
+      "newAppReady": false,
+      "model": "gpt-6.1-sol/xhigh",
+      "fastSwitchVerified": false
+    },
+    "productionBuild": "229 actuallocalbuild0/4.476s,pack227members/1291649B/fbdb42d20d7f3e93accb5bf71a171809f0cbdf0c2c6fa67292c22f7326bcc569/onceextraction. Original214LinuxPASSpreserved,229Linuxinstallonlypreparationactive, no newapp/publicswitch."
   }
 }
