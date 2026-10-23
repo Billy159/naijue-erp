@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T06:59:16.322686+00:00",
+  "updatedAt": "2026-10-23T07:04:09.732546+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -419,6 +419,18 @@
           "path": "tests/catalogue-completeness.test.ts",
           "group": "H06_MAINTAINED_CATALOGUE_READ_PROOF_EXPLICIT26",
           "fieldGate": "READ_ONLY_EXISTING_APPROVED_AUDIT_RECEIPT_NO_WRITE_CONTRACT_CHANGE"
+        },
+        {
+          "path": "packages/application/src/import-v3-history-header-native-reference.ts",
+          "group": "USER_APPROVED_V6_BOOTSTRAP_FIELD_ENVELOPE",
+          "fieldGate": "WRITE-CONTRACT-APPROVAL-v6-BOOTSTRAP-PROVENANCE.json ONLY",
+          "scope": "Existingstandard origin/reason/raw/evidence_ref, unchanged innerstrict7; onefunction successor patch, original0026 untouched; no genericguard change"
+        },
+        {
+          "path": "adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql",
+          "group": "USER_APPROVED_V6_BOOTSTRAP_FIELD_ENVELOPE",
+          "fieldGate": "WRITE-CONTRACT-APPROVAL-v6-BOOTSTRAP-PROVENANCE.json ONLY",
+          "scope": "Existingstandard origin/reason/raw/evidence_ref, unchanged innerstrict7; onefunction successor patch, original0026 untouched; no genericguard change"
         }
       ]
     },

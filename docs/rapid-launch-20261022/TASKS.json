@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "1ae784b8683b8af29a4e7b1c24705095b00866d2",
+    "headObserved": "ade0aa60c93c18d5ef3eb57dfcb4266113615c80",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "a135cfc243809df2df1f6ee94abe5b8f05f5e354",
+    "remoteHeadVerified": "ea1c261a9425245032210ef6421853f5058df58b",
     "remoteReadbackMethod": "Exact3 original objects/nonforcedFF/independentGET",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -125,7 +125,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "OriginalChat recovered; C67 bootstrap provenance contradiction precisefix/approval assessment. H06 waits actualCREATE."
+      "currentWork": "Userv6 explicitlyapproved; originalTS/onefunction successorpatch/issuerpin implementation and necessarytargeted checks, C soleactualexecution."
     },
     "D2": {
       "title": "后端商品与基础资料维护",
@@ -140,7 +140,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "C68 zero commit adopted; originalK cannot satisfy naked7 versus generic envelope. Finite diagnosis to originalD1; no guard/DDL/replay."
+      "currentWork": "Userv6 explicitlyapproved; originalKproducer envelopeonly in coordinationD1 strictread, original literal57/keys preserved."
     },
     "D3": {
       "title": "后端库存历史与导入",
@@ -170,7 +170,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "C143fouractual closed; sourceonly newF1 range/sole totalmatrix, adopt QF2five actualclosure andnewsticky.",
+      "currentWork": "Exclusive147 native firstpager/oldSALE+TRANSFER440 affectedactual; reuse143nine andsolematrix.",
       "scope": "登录与公共壳、销货/退换、调拨列表/开单/编辑/详情/相关弹层；公共控件主验",
       "matrixOwner": true
     },
@@ -201,7 +201,7 @@
       "fastRequested": false,
       "scope": "商品列表与六页签、分类/字典/条码/图片、库存、基础设置、客户供应商、员工账号、收款配置及相关弹层",
       "reportRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2",
-      "currentWork": "C143fiveactualclosed cleanreleased; C145paired2 limitedsourcePASS adopted; waits originalF2 stickyfix candidate exact3horizontal positions.",
+      "currentWork": "147source2 limitedPASS, currentno browserlease; awaitQF nativecleanup fornewstickyactual only.",
       "authorizationSource": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "fastVerification": "Tool has no exposed switch; requested off, actual unverified"
     }
@@ -424,7 +424,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Inventory overview bounded reader sourceQB65 PASS; actual PG/SQLplan/session still pending; history current source closure per original queue.",
+      "nextAction": "C145 historyrevision ledger5+paired2 limitedsourcePASS; current approved season_ids read filter/label D3reader2+D1host1 in flight; fullledger/filter/exactcount/fullqueryoutput provider still missing. TruePG/scale/performance notaccepted.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D3",
@@ -455,7 +455,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Read/write leaves and W13/W14 accepted scoped source; W15 read sourceQB69 PASS; codec fixed275ac63 awaitingQB; private stage READY pendingC; images transaction/host still closed.",
+      "nextAction": "Actualmedia C40 scoped preserved; C67 baseline firstSTAGE failed provenance envelope conflict, C68 zero commit. D1 exactwrite-contract supplement pending; D2 originalK producer then genuine baseline/nativeCREATE required for H06, no replay67.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D2",
@@ -486,7 +486,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Staffrole79/QB121PASS + F3realclient81/QF scopedPASS adopted; closed-login classification alone waits. C40actualmedia narrowPASS.",
+      "nextAction": "Staffrole source/consumer valid evidence reused. Onlyclosed-login humanclassification waits; actual49 realaccountimport NOT_RUN.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D2",
@@ -518,7 +518,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Stockgenuine80 newQA; original D3 headerpreparer2registered next. Allocation410899 parser119PASS only preservation. Sixscheme seed waits human;49real servercapture exists notMAIN grant.",
+      "nextAction": "ActualTransfer261641/Header628282/SKU515121 andSales80918/Settlement25779 source/typed reference projections fixed; QB154/159/163 scoped adopt, PG/MAIN/PUBLISH/full11 absent. sixscheme/historicalhall specifichuman branches wait only.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D3",
@@ -541,7 +541,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Explicit26 header/source/typed projection/readback completion, preserve historical identities/signed quantities; no imported real data yet.",
+      "nextAction": "ApprovedC01 history readunion pairedC145 limitedsourcePASS; actualPG historyrelations/writes/scale and completeclosure stillunmeasured. Preserve signed quantities/history IDs.",
       "title": "基线感知历史修订（R4）",
       "owner": "D3",
       "instructions": "B07 基线感知历史修订（R4）\n路径：D3拥有history修订应用、有效投影、PG叶适配与历史命令插件；迁移由D1集中实施，过账复用D1公共端口。\n依赖：相关字段确认、B06已发布历史基线、B02受控事务/过账合同。\n历史修改按受控revision和当前有效投影实现：原始header/line/source不可变；加版本CAS、原因、操作者、前后值、原请求key；新旧有效库存效果之差记账，金额单改不动库存，已计入切换基线的旧单不得再过整单。历史修订入口、存储增补和收退配平的具体字段在C01确认后实施；不要擅自扩大为历史审核状态迁移。\n最小证据：历史数量增加/减少差额、金额单改、同key重复、权限/版本冲突；调拨两端守恒；读取看到最新有效值且原始值可追溯。复用schema19既有发布/回滚证据，真实导入不是再跑全套合成验证。",
@@ -580,7 +580,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Sales72/Transfer73/Delete78 QF fixes closed. New actualP03/P04 popupanchor originalF1 directed; no stale source69 fix claims.",
+      "nextAction": "C146 chunk76 sourceQF limitedPASS: original firstpager activation/SALE nativeleave/readonlyaxis consumer fixed; next full147 candidate exactbrowser only. C143 fouractual closed, oldP03/P04 pending text superseded effective scoped receipts.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F1",
@@ -611,7 +611,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Whole NEW sales21f2 reviewed NEED_FIX; hidden-IN-input fixed10640 QFtargeted PASS; Demo v006 three exact findings assigned originalF1; saved edit trusted prep still missing.",
+      "nextAction": "Existing native saved edit consumer implemented/sourcechecked; actualsave/approve trusted schema26 runtime/data still absent. C145transferleave1+C146SALEleave sourcePASS, next147 native440 actual. Do not reissue oldthree Demo/source findings.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F1",
@@ -734,7 +734,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Existing barcode exact source/consumer work accepted; full runtime data mapping/readback remains.",
+      "nextAction": "Existing exact barcode source/consumer valid evidence reused; runtime historical mapping/readback waits actual publishedsource/B07. No fabricated cap/identity/newtask.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F1",
@@ -859,7 +859,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "已按当前人类裁决唯一分组，QF收134后137单据/公共；QF2接137商品/设置源码新范围及浏览器串行模块交接。旧48直接采用；只复验变更/未测。",
+      "nextAction": "Two uniquegroups: QF documents+common main, QF2 data+inventory/settings. Source146F1 and147F2 scoped reviews, nextfixed147 actual serial native module lease, no trueisolation. Old48/143nine scopedactual reused;104whole0.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "QF",
@@ -894,7 +894,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "Adopt110..121; new80 consumer only and actualR1catalog when ready. No oldreference/source rescans or QAmetadata substituted forR1.",
+      "nextAction": "SingleQB source/PG independent route. 159/160/161/162/163 scopedPASS adopted; nextapproved actualprovenance fix/season source3 only when fixed. Do not re-review same metadata/ops/largeartifacts.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "QB",
@@ -962,9 +962,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T06:47:24.824247+00:00",
+  "updatedAt": "2026-10-23T07:07:31.422731+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "a135cfc243809df2df1f6ee94abe5b8f05f5e354",
+  "lastVerifiedRemoteCommit": "ea1c261a9425245032210ef6421853f5058df58b",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1423,17 +1423,17 @@
     "accountIdentityAdditional4": "QB42_IDENTITY_ONLY_ACCEPTED_FALSE_EXECUTION",
     "deploymentTools": "C63_ACTUAL_PRODUCTION_CI_NATIVE_APP_PROXY_KEY_RESOURCES_PASS_NOT_BUSINESS",
     "bootPersistence": "QB128_AND_QB130_SOURCE_PASS_NOT_INSTALLED",
-    "currentSourceCheckpoint": "1ae784b8683b8af29a4e7b1c24705095b00866d2",
+    "currentSourceCheckpoint": "97a2021fcfa0ed168031f8bd8cbb6f36f373ff72",
     "currentPreview": {
-      "url": "http://127.0.0.1:57856/synthetic-unified.html",
-      "source": "3d042517681ac1b58f98a12fa16bde8e4fb814a4",
-      "build": "ui-preview-3d04251-01-build01",
-      "pid": 84159,
-      "sessionId": 9378,
-      "htmlSha256": "492d2dc67e80a0579848ab2285061060fa9e1e20683828af1adb4b427a77944e",
-      "htmlBytes": 3119555,
-      "identitySha256": "ffc13759428eff884e088355224ab3c579bf675d76def8b8140fed1facb8d9b0",
-      "provenanceSha256": "53f80f1396675a836c2ebec2ac62e654487a856108862ec0129f1e580d1f4a7f",
+      "url": "http://127.0.0.1:57857/synthetic-unified.html",
+      "source": "ade0aa60c93c18d5ef3eb57dfcb4266113615c80",
+      "build": "ui-preview-ade0aa6-01-build01",
+      "pid": 94185,
+      "sessionId": 21001,
+      "htmlSha256": "74a01d31d32fe167d74f3dd20596e4838b1c2d903f8459b01e6af5c9dbd0c6c6",
+      "htmlBytes": 3122695,
+      "identitySha256": "2f8009ff2ba74d7c4e8a517bfba5c1f4d7e438548d72b1df8fadb18246885256",
+      "provenanceSha256": "82a4c829668aa100c584fa5109d4a12c19a4e4c61be5edea369a7419f4dd4371",
       "actualInputs": 400,
       "sourceModules": 383,
       "lockedDependencyModules": 981,
@@ -1776,7 +1776,8 @@
     "FIELD-APPROVAL-C01-v1.json",
     "FIELD-APPROVAL-SUPPLEMENT-v2-B.json",
     "FIELD-APPROVAL-SUPPLEMENT-v3-A.json",
-    "WRITE-CONTRACT-APPROVAL-v4-MEDIA-COLOR-SWAP.json"
+    "WRITE-CONTRACT-APPROVAL-v4-MEDIA-COLOR-SWAP.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v6-BOOTSTRAP-PROVENANCE.json"
   ],
   "latestAcceptedReceiptRefs": [
     {
@@ -2431,21 +2432,21 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-23T06:47:24.824247+00:00",
-    "sourceRound": 145,
-    "sourceCheckpoint": "1ae784b8683b8af29a4e7b1c24705095b00866d2",
+    "atUtc": "2026-10-23T07:07:31.422731+00:00",
+    "sourceRound": 148,
+    "sourceCheckpoint": "97a2021fcfa0ed168031f8bd8cbb6f36f373ff72",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "url": "http://127.0.0.1:57856/synthetic-unified.html",
-      "source": "3d042517681ac1b58f98a12fa16bde8e4fb814a4",
-      "build": "ui-preview-3d04251-01-build01",
-      "pid": 84159,
-      "sessionId": 9378,
-      "htmlSha256": "492d2dc67e80a0579848ab2285061060fa9e1e20683828af1adb4b427a77944e",
-      "htmlBytes": 3119555,
-      "identitySha256": "ffc13759428eff884e088355224ab3c579bf675d76def8b8140fed1facb8d9b0",
-      "provenanceSha256": "53f80f1396675a836c2ebec2ac62e654487a856108862ec0129f1e580d1f4a7f",
+      "url": "http://127.0.0.1:57857/synthetic-unified.html",
+      "source": "ade0aa60c93c18d5ef3eb57dfcb4266113615c80",
+      "build": "ui-preview-ade0aa6-01-build01",
+      "pid": 94185,
+      "sessionId": 21001,
+      "htmlSha256": "74a01d31d32fe167d74f3dd20596e4838b1c2d903f8459b01e6af5c9dbd0c6c6",
+      "htmlBytes": 3122695,
+      "identitySha256": "2f8009ff2ba74d7c4e8a517bfba5c1f4d7e438548d72b1df8fadb18246885256",
+      "provenanceSha256": "82a4c829668aa100c584fa5109d4a12c19a4e4c61be5edea369a7419f4dd4371",
       "actualInputs": 400,
       "sourceModules": 383,
       "lockedDependencyModules": 981,
@@ -2453,12 +2454,12 @@
       "syntheticOnly": true,
       "wholePageAccepted": false
     },
-    "nextPreview": "C145 transfer oldleave and paired ledger await next complete integration; F1 firstclick/SALE oldleave/readonlyaxis and F2 sticky action consumer in flight. Current fixed actual remains143.",
+    "nextPreview": "C147 fullintegration actuallybuilt/served57857; QF currentexclusive firstpager/oldSALE+TRANSFER440 only, QF2 newsticky next explicitcleanhandoff. C148 backendseason not counted as147actual.",
     "r1": "C63实际COMPLETED exit0 32.301s：固定C132/build r1-c28ea3f-20261023-02完整生产依赖安装成功，Linux x64 Node24.21 Sharp0.35.5原生加载；APP/proxy health200，HTML与真实声明current application.js 200且manifest精确。依赖根因A及实际私有安装启动B均完成；dataReady/业务验收/正式切换false。保留45/48/60/61/62失败现场，未改正式三服务/公网。",
-    "qa": "C66 all exports arrived; QB160 exactmetadata/23rights PASS. C67 failed23514 firstSTAGE; C68 READ_ONLY all relevant counts0/batches[]/originalkey receipts[]. Exact invalid versioned field provenance / guard_history_insert line22. D2 identified fields.bootstrap_accounts naked7 vs generic origin/reason/raw envelope conflict; D1 originalowner precise contract/fix assessment, no DDL/replay/weakguard. NativeCREATE/H06 NOT_RUN.",
+    "qa": "C67 firstSTAGE exact provenance conflict; C68 zero commit confirmed. User explicitlyapprovedv6 via originalasyncquestion, records fixed. D1 originalTS/independent onefunction EXACT26v8 patch/issuer and D2 originalKproducer now implementing; no SQL installed/newSTAGE yet, original0026 unchanged. C soleactualnewQA1032586 thenoldkey newjob; H06 waits genuineCREATE.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Independent remote verifieda135cfc; current144/145 plus controller records pending exact nonforce FF.",
+    "github": "Independent verified ea1c261a;146/147/148 andthisrecord queued exact nonforceFF.",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -2484,7 +2485,7 @@
     "audit": "C127 actualQF closed dualEsc/focus and same-scopefilter retention",
     "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
     "uiMigration": "Direct Frozen source/functions/finalCSS mapped into actual consumers retained. C143 QF4 document closes +QF2fivevisual closes limited, old137 settingstwoP2 adopted. C145 oldtransfer consumes existing native SourceDocumentDialog sourcePASS but notbuilt. Whole0/local48/104.",
-    "backend": "QB162 ledger5 and QF2 C145 paired2 limitedSOURCE PASS adopted; actualPG/UI stillunverified. C67 exact provenance contract mismatch originalD1 assessment, oldQA/prod preserved.",
+    "backend": "QB163 actualsourceexecution limitedPASS adopted; QF146F1source5/QF2 147sticky2 limitedsourcePASS. C148approvedseason3 originalQB review; D3fullquery output8/F2existingadapter implementing precise finalCOMMIT frame under oldpermissions, no DDL/field/writecontract. v6explicitapproved separately.",
     "productionBuild": {
       "source": "c28ea3f74d7fa2e4b1be1fb13bee99f5df70780e",
       "buildId": "r1-c28ea3f-20261023-02",
@@ -2499,7 +2500,7 @@
       "R3WriteActivation": false,
       "actualStageReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-current-private-stage-20261023-63/release-submission/release-receipts/c03-r1-current-private-stage-20261023-63/engine-result.json"
     },
-    "actualQFBrowser": "QF v029 four named actual closed and nativecleanup. QF2 C143 original5visual actual CLOSED_SCOPED, new ACTION-COLUMN-STICKY-01 routed originalF2, cleanrelease returned toC. Browser now C reserved next fixed complete module, no parallel control.",
+    "actualQFBrowser": "QF sole current147 two existing Chrome targets; QF2 offline147source2 passed after bounded capacity same-model continuation, no browserlease.",
     "frontendAcceptance": {
       "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "parentTask": "QF01",
@@ -2542,13 +2543,29 @@
           "status": "FIVE_NAMED_ACTUAL_CLOSED_CLEAN_RELEASED",
           "next": "Newsticky P2 originalF2 fix and nextfixedactual; C145 pairedledger2 offline newreview",
           "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2"
+        },
+        {
+          "owner": "QF",
+          "version": "C147 ade0aa6/ui-preview-ade0aa6-01-build01",
+          "scope": "C146 first nativepager/oldSALE+TRANSFER440 consumer only",
+          "status": "CURRENT_BROWSER_EXCLUSIVE",
+          "next": "nativecleanrelease thenC assignsQF2 newsticky",
+          "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022"
+        },
+        {
+          "owner": "QF2",
+          "version": "C147 ade0aa6/ui-preview-ade0aa6-01-build01",
+          "scope": "ACTION-COLUMN-STICKY-01 left/mid/right actionheader/body",
+          "status": "SOURCEPASS_BROWSER_WAIT_EXPLICIT_QF_HANDOFF",
+          "next": "newfixedactual only original5 not repeated",
+          "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c147-action-column-sticky-01"
         }
       ],
       "browser": {
         "trueIsolationVerified": false,
         "toolInventory": "browsers=[]; Local browser use is disabled in Work settings",
         "mode": "SHARED_CHROME_SERIAL_MODULE_HANDOFF",
-        "currentOwner": "C_RESERVED_NEXT_FIXED_CANDIDATE",
+        "currentOwner": "QF",
         "demoTab": "DB7CA658365B213EEE3EB1333946E5BA",
         "candidateTab": "3BC874911D0D2415D093603E264B0D67",
         "QF2CurrentTargets": [
@@ -2556,7 +2573,7 @@
           "DB7CA658365B213EEE3EB1333946E5BA"
         ],
         "QF2MayOperate": false,
-        "condition": "QF2 canonical C143 cleanrelease explicit. Both reviewers offline until C grants exact next module; true session isolation not established."
+        "condition": "C147 fixed complete build57857 active. C explicitly granted QF document/public shortmodule; QF2 source only. Only after nativecleanup+explicitrelease C transfers newsticky to QF2; true session isolation stillfalse."
       },
       "backendReviewers": [
         "QB"
@@ -2649,12 +2666,18 @@
         "bytes": 2555,
         "sha256": "107ba2909e041d7f1e974138b8894e2765f77585a95f6b92cdba66acbbf160ed"
       }
+    },
+    "bootstrapV6": {
+      "status": "EXPLICIT_USER_APPROVED_IMPLEMENTATION_RELEASED",
+      "answer": "确认 v6 封装修复",
+      "approval": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v6-BOOTSTRAP-PROVENANCE.json",
+      "noDatabaseExecutedYet": true
     }
   },
   "latestReadySource": {
-    "round": 145,
-    "commit": "1ae784b8683b8af29a4e7b1c24705095b00866d2",
-    "review": "QB162 D3ledger5 and QF transferleave1 sourcePASS; QF2paired2 pending; currentactual143 separate"
+    "round": 148,
+    "commit": "97a2021fcfa0ed168031f8bd8cbb6f36f373ff72",
+    "review": "Seasonexact3 originalQB pending; currentfullUI147 actualfixed; 146F1/147F2 sourceQApassed"
   },
   "pendingUserDecision": [
     {

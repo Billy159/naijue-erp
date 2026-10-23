@@ -1,0 +1,18 @@
+{
+  "status": "EXPLICITLY_APPROVED_BY_USER",
+  "id": "v6-bootstrap-field-envelope",
+  "recordedAtUtc": "2026-10-23T06:54:13.023419+00:00",
+  "document": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v6-BOOTSTRAP-PROVENANCE.md",
+  "documentSha256": "0ded951959fb24d6582f639ed9180accb23875d0222ee0a1a4ec158d8255cdcd",
+  "originalReview": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/BOOTSTRAP-PROVENANCE-C67-CHANGE-REVIEW-v1.json",
+  "originalReviewSha256": "9819421324447044ac6e633de211882dde0c06f3af9950e094df35e50a1df910",
+  "newTables": 0,
+  "newColumns": 0,
+  "changedPersistedJsonPath": true,
+  "executeBranchHeld": true,
+  "otherWorkContinues": true,
+  "detailedConfirmation": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/BOOTSTRAP-PROVENANCE-C67-CONFIRMATION-v1.json",
+  "implementationClarification": "Original migration0026 unchanged; separate single-function existingEXACT26 patch file; fresh installs same explicit successor patch",
+  "approvalRecord": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v6-BOOTSTRAP-PROVENANCE.json",
+  "branchAwaitingImplementation": true
+}

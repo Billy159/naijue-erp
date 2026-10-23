@@ -1,3 +1,13 @@
+当前接续 2026-10-23T07:07:31.422731+00:00：完整新UI候选147已一次原build及3关键HTTP实际通过，http://127.0.0.1:57857/synthetic-unified.html ，source ade0aa60c93c18d5ef3eb57dfcb4266113615c80/build ui-preview-ade0aa6-01-build01，HTML3122695B/74a01d31，400输入383源码+981锁依赖=1364，undeclared0。原16受控overlay/身份/能力/拒写不扩；146F1 five及147F2sticky2各原QF/QF2源码限定通过。QF目前独占同原Demo/候选两target实际首pager和旧SALE+TRANSFER440，nativecleanrelease后C交QF2只新sticky；没有真正并行浏览器控制。104/local48/整页整类0，143原九项实际关闭直接复用，旧预览不代表新修复。
+
+v6用户已明确确认“确认 v6 封装修复”，原问题call_98bcff5aa7b74e54a69c2e9407971f9d item0，批准原文/docSHA见WRITE-CONTRACT-APPROVAL-v6-BOOTSTRAP-PROVENANCE.json。D1原TS+独立R/adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql单函数补丁+issuer精准bodypin/26_v8_bootstrap_field_provenance及D2原Kproducer放行；原0011/0016/成功0026文件保留，raw原七键不变，49/45/4/同STAGE/事务/audit/receipt不放宽。不新表列/回填/兼容裸7/正式数据测试。C唯一后续新QA1032586 apply/readback/newjob同原key；67/68保留，尚无新SQL/真实STAGE成功。其他人类未决仅相关分支等。
+
+最新源码14897a2021是已批季节多选读取配对（D3reader2+D1host1），原QB仅新3独立核，未冒147页面/实际PG通过。D3既有B03全筛选默认矩阵/print output8已唯一登记并实施，同RR权限/summary+100产品keyset，COMMIT后明确complete帧；F2原adapter/控件接真实端口，不当前页假导出/无complete假成功/银泰缺字段造值，原字段/写规则不变。QB163已采用Sales80918+Settlement25779来源与typed实际一次245.27555s/referenceonly，0PG/MAIN/PUBLISH/all11。C63依赖安装/私有应用启动A+B通过保持，dataReady/正式切换false。
+
+GitHub已独立回读ea1c261a，146/147/148+本记录正保存下一检查点；WIP和原数据/Demo/旧QA/三正式服务保留。十角色/原22任务，显式gpt-6.1-sol/xhigh；Fast要求off工具无开关不冒核。QF2和C内部准备遇容量错误保留断点未降档；主控自行完成必要构建，QF2原模型接续源码核已通过。目标ACTIVE未完成，从本段/TASKS精确接续，不重派旧队列。
+
+以下历史保留。
+
 增量实绩 2026-10-23T06:47:24.824247+00:00：原C144有限Sales80918/Settlement25779读取一次245.27555s exit0，106697来源+106697原mappertyped投影已固定4产物SHA/0600，2reader/1payment迭代，cache释放；refonly/nativeBindingsVerified=false，0PG/MAIN/PUBLISH/all11，actualPayloadHash=null，不称正式导入。QB162历史ledger5与QF2 C145 paired2有限源码结论均采用，实际PG/页面未验。QF2 143原5actual限定关闭，Chrome已cleanrelease归C，下批只验新sticky实际受影响项。
 
 当前接续 2026-10-23T06:45:46.261088+00:00：最新固定源码C145 `1ae784b8683b8af29a4e7b1c24705095b00866d2`；实际浏览器候选仍C143 http://127.0.0.1:57856/synthetic-unified.html / ui-preview-3d04251-01-build01。C145原调拨旧单440离开层exact1已QF源码通过，D3已批HISTORY_REVISION ledger5已QB162源码协议通过，F2paired2 QF2离线核查；尚未新构建/实际页面通过。F1原首次分页事件/SALE旧leave/readonly最长轴与F2新操作列sticky继续原owner，不每CSSbuild。

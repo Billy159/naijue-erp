@@ -1,0 +1,25 @@
+{
+  "id": "v6-bootstrap-field-envelope",
+  "status": "EXPLICITLY_APPROVED",
+  "approvedAtRecordedUtc": "2026-10-23T07:04:09.732546+00:00",
+  "userAnswer": "确认 v6 封装修复",
+  "source": {
+    "kind": "direct_user_async_question_reply",
+    "questionItemId": "[\"request_user_input_async\",\"call_98bcff5aa7b74e54a69c2e9407971f9d\",0]",
+    "threadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915"
+  },
+  "document": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v6-BOOTSTRAP-PROVENANCE.md",
+  "documentSha256": "0ded951959fb24d6582f639ed9180accb23875d0222ee0a1a4ec158d8255cdcd",
+  "scope": "Same existing import_source_row.field_provenance bootstrap_accounts standard envelope/raw preserves original7 recursively; producer/TS/oneSQLfunction/issuer exactpin successor patch only",
+  "newTables": 0,
+  "newColumns": 0,
+  "preserve": [
+    "original0011/0016 generic guards",
+    "original successful0026 migration and records",
+    "49/45/4 identity/sameSTAGE transaction/audit/receipt",
+    "oldQA/production data",
+    "no backfill/no bare7 fallback/no real49 or publicswitch authority"
+  ],
+  "patchPath": "adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql",
+  "serverAndDatabaseOwner": "C"
+}
