@@ -143,6 +143,28 @@ test("product write: reference/receipt faults roll back root plus all children; 
 function commandV2(key = "v2", seasons: readonly string[] | null = [gid(850), gid(803)]) {
   const { seasonId: _scalar, ...data } = values(); return { ...command(key), values: { ...data, seasonIds: seasons } };
 }
+test("all-size seam: existing V2 EDIT appends an absent size, preserves imported SKU identity/NULL creation, and reopens with original versions", async () => {
+  const f = fixture("ready", true), productId = gid(40000), oldSku = { id: gid(40001), productId, skuCode: "SOURCE-KEEP-0001", colorId: gid(806), fitId: gid(807), sizeId: gid(808), enabled: true, version: 3, createdOperationId: null };
+  const oldBarcode = { id: gid(40002), barcode: "000001 SOURCE", skuId: oldSku.id, kind: "MAIN" as const, schemeId: gid(805), enabled: true };
+  // Explicit synthetic pre-existing imported aggregate; no runtime mutation of a creation identity.
+  f.seed({ product: { ...values(), id: productId, seasonIds: [], version: 7, deletedAt: null }, skus: [oldSku], barcodes: [oldBarcode] });
+  const c = commandV2("unused", []), added = { ...sku(), skuCode: "SYNTHETIC-NEW-SIZE-170", sizeId: gid(810) };
+  const edit = { action: "EDIT", requestKey: "all-size-append", id: productId, expectedVersion: 7, values: c.values, skus: [added], barcodes: [] };
+  const saved = await f.service.executeV2(actor, edit), state = f.state()!;
+  assert.equal(saved.version, 8); assert.deepEqual(state.skus.find(s => s.id === oldSku.id), oldSku); assert.deepEqual(state.barcodes, [oldBarcode]);
+  const fresh = state.skus.find(s => s.sizeId === added.sizeId)!;
+  assert.notEqual(fresh.id, oldSku.id); assert.equal(fresh.version, 1); assert.equal(fresh.createdOperationId, saved.operationId);
+  assert.deepEqual(f.audit[0]!.before!.skus, []); assert.equal((f.audit[0]!.after.skus as unknown[]).length, 1); assert.ok(!Object.hasOwn(f.audit[0]!.after, "barcodes"));
+  const reopened = await f.service.detailV2(actor, { productId });
+  assert.equal(reopened.version, 8); assert.equal(reopened.skus.find(s => s.id === oldSku.id)!.expectedVersion, 3);
+  assert.equal(reopened.skus.find(s => s.id === fresh.id)!.expectedVersion, 1);
+  const snapshot = f.state(), writes = f.writes();
+  await assert.rejects(f.service.executeV2(actor, { ...edit, requestKey: "stale-product", skus: [{ ...added, sizeId: gid(812), skuCode: "SYNTHETIC-NEXT-SIZE" }] }), { code: "VERSION_CONFLICT" });
+  await assert.rejects(f.service.executeV2(actor, { ...edit, requestKey: "rebind-imported", expectedVersion: 8,
+    skus: [{ ...added, id: oldSku.id, expectedVersion: 3 }] }), { code: "IMMUTABLE_SKU_IDENTITY" });
+  assert.deepEqual(f.state(), snapshot); assert.equal(f.writes(), writes);
+  assert.deepEqual(await f.service.executeV2(actor, edit), saved); assert.equal(f.writes(), writes);
+});
 function mediaFixture(options: { stage?: boolean; guard?: boolean; proof?: boolean; swap?: boolean; prepare?: "ready" | "missing" | "fail" } = {}) {
   const base = fixture(options.prepare ?? "ready", true), original = base.dependencies.unitOfWork;
   let images: readonly ProductMaintenanceImageMetadata[] = [], native = 18000, badStage = "", failImages = false;

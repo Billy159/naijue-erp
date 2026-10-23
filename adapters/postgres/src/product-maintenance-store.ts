@@ -244,13 +244,18 @@ class ProductTransaction implements ProductMaintenanceTransaction {
       seasons: simple("season", "true", "m.code"), "size-groups": simple("size_group", "true", "m.code"),
       colors: simple("color", "m.enabled AND m.deleted_at IS NULL", "m.code", "NULL::text", "m.version"),
       fits: simple("fit", "m.enabled AND m.deleted_at IS NULL", "m.code", "NULL::text", "m.version"),
-      "barcode-schemes": simple("barcode_scheme", "true"), years: distinct("year"), thicknesses: distinct("thickness"), "collar-pants-types": distinct("collar_pants_type")
+      "barcode-schemes": simple("barcode_scheme", "true"),
+      years: { ...distinct("year"), from: `(SELECT year::text AS value FROM (
+        SELECT generate_series(2015,EXTRACT(YEAR FROM CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Shanghai')::integer + 1) AS year
+        UNION SELECT year FROM naijue_erp.product WHERE deleted_at IS NULL AND year IS NOT NULL) years) m` },
+      thicknesses: distinct("thickness"), "collar-pants-types": distinct("collar_pants_type")
     };
     const d = definitions[q.kind];
+    const order = q.kind === "years" ? 'name::integer DESC,id COLLATE "C"' : 'name COLLATE "C",id COLLATE "C"';
     const rows = (await this.query(`WITH matched AS (SELECT ${d.id} AS id,${d.name} AS name,${d.code} AS code,${d.parent} AS parent_id,${d.version} AS version
       FROM ${d.from} WHERE ${d.where} AND (strpos(lower(${d.name}),lower($1::text))>0 OR strpos(lower(COALESCE(${d.code},'')),lower($1::text))>0)),
-      page AS (SELECT * FROM matched ORDER BY name COLLATE "C",id COLLATE "C" LIMIT $2 OFFSET $3)
-      SELECT (SELECT count(*)::text FROM matched) AS total,COALESCE((SELECT jsonb_agg(to_jsonb(page) ORDER BY name COLLATE "C",id COLLATE "C") FROM page),'[]'::jsonb) AS items`,
+      page AS (SELECT * FROM matched ORDER BY ${order} LIMIT $2 OFFSET $3)
+      SELECT (SELECT count(*)::text FROM matched) AS total,COALESCE((SELECT jsonb_agg(to_jsonb(page) ORDER BY ${order}) FROM page),'[]'::jsonb) AS items`,
     [q.search, q.pageSize, (q.page - 1) * q.pageSize])).rows;
     requireDomain(rows.length === 1 && typeof rows[0]!.total === "string" && /^(?:0|[1-9]\d*)$/.test(rows[0]!.total)
       && BigInt(rows[0]!.total) <= BigInt(Number.MAX_SAFE_INTEGER) && Array.isArray(rows[0]!.items), "INVALID_DATABASE_VALUE", "Invalid maintenance candidate page");

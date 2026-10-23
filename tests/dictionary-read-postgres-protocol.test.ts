@@ -36,6 +36,20 @@ test('dictionary pg one RR snapshot holds count, parameterized bounded page and 
     { sql: /^SELECT m.size_group_id/, rows: [{ size_group_id: groupId, id: size1, name: '同名', display_order: 1 }, { size_group_id: groupId, id: size2, name: '同名', display_order: 2 }], inspect(values, sql) { assert.deepEqual(values, [[groupId], DICTIONARY_MAX_GROUP_MEMBERS + 1]); assert.match(sql, /WHERE m.size_group_id = ANY\(\$1::uuid\[\]\)/); assert.match(sql, /ORDER BY m.size_group_id, m.display_order, s.id LIMIT \$2/); } }, commit()]);
   const result = await reader(client).readSizeGroups(read('size-groups')); assert.deepEqual(result.items[0]!.sizes.map(size => size.id), [size1, size2]); assert.equal(result.items[0]!.sizes[0]!.name, result.items[0]!.sizes[1]!.name); assert.equal(client.calls.length, 5); client.done();
 });
+test('all-size seam dictionary: normal and no-size groups return every native member without requiring any product/SKU occurrence', async () => {
+  const noSizeGroup = sid('sizeGroup', 810), noSize = sid('size', 811);
+  const client = new Client([begin(), count(2),
+    { sql: /^SELECT id, name FROM naijue_erp.size_group/, rows: [{ id: groupId, name: 'SYNTHETIC 上衣尺码' }, { id: noSizeGroup, name: 'SYNTHETIC 无尺码' }],
+      inspect(values) { assert.deepEqual(values, ['', 100, 0]); } },
+    { sql: /^SELECT m.size_group_id/, rows: [
+      { size_group_id: groupId, id: size1, name: '160/S', display_order: 1 }, { size_group_id: groupId, id: size2, name: '170/M', display_order: 2 },
+      { size_group_id: noSizeGroup, id: noSize, name: '无尺码', display_order: 1 }
+    ], inspect(values) { assert.deepEqual(values, [[groupId, noSizeGroup], 2 * DICTIONARY_MAX_GROUP_MEMBERS + 1]); } }, commit()]);
+  const input = read('size-groups'), result = await reader(client).readSizeGroups({ ...input,
+    intent: { kind: 'size-groups', operation: 'list', parameters: { search: '', page: 1, pageSize: 100 } } });
+  assert.equal(result.total, 2); assert.deepEqual(result.items.map(g => g.sizes.map(s => s.name)), [['160/S', '170/M'], ['无尺码']]);
+  assert.ok(client.calls.every(c => !/naijue_erp\.(?:product|sku|inventory_)/.test(c.sql))); client.done();
+});
 test('dictionary pg empty and out-of-range pages are explicit, no full catalog loading or member queries', async () => {
   for (const n of [0, 1]) { const c = new Client([begin(), count(n), { sql: /^SELECT id, name/, rows: [], inspect(values) { assert.equal(values[2], 20); } }, commit()]); const input = read('size-groups'); const value = await reader(c).readSizeGroups({ ...input, intent: { kind: 'size-groups', operation: 'list', parameters: { ...parameters, page: 2 } } }); assert.equal(value.page, 2); assert.equal(value.total, n); assert.deepEqual(value.items, []); c.done(); }
 });

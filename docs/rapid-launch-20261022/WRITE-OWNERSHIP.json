@@ -464,6 +464,11 @@
           "group": "AUDIT_SPEC02_CURRENT_TRANSFER_IDENTITY_AFFECTED_TEST_FIXTURE",
           "fieldGate": "TEST_ONLY_KEEP_EXISTING_ASSERTIONS_ACTIONS_EXPECTATIONS",
           "boundary": "D1 sole existing test; only two identified sourcepolicy positive cases seed current syntheticidentity explicitly, never auto-echo HTTP actor in support"
+        },
+        {
+          "path": "tests/native-document-size-editing.test.ts",
+          "group": "ORIGINAL_DOCUMENT_ALL_SIZE_EXISTING_REAL_SKU_REGRESSION",
+          "fieldGate": "TEST_ONLY_EXISTING_CONTRACT_NO_DDL_OR_NEW_WRITE_SEMANTICS"
         }
       ]
     },
@@ -3633,6 +3638,14 @@
         "apps/web/src/components/product-candidate-action.css"
       ],
       "reason": "Human full-site component reuse and actual performance scope; C166 original production graph proves10 library CSS input kinds repeated. F1 originalchunk83 exact5 minimal proposal, no otherrole edits. Single existing base only, no new architecture or UI redesign."
+    },
+    {
+      "atUtc": "2026-10-23T12:50:37.061372+00:00",
+      "owner": "D1",
+      "addedPaths": [
+        "tests/native-document-size-editing.test.ts"
+      ],
+      "reason": "Original owner targeted real-existing-SKU unreviewed append/replace regression under current human all-size instruction; no production change or new role."
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",

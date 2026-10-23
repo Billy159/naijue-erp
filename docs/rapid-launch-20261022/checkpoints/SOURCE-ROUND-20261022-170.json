@@ -1,0 +1,45 @@
+{
+  "atUtc": "2026-10-23T12:50:37.064193+00:00",
+  "parent": "cad188c1929764a8edf2db73d82b8a2d4f01d6cd",
+  "taskId": "B04_YEAR_CANDIDATES_AND_EXISTING_REAL_SKU_SIZE_CASES",
+  "files": [
+    {
+      "path": "adapters/postgres/src/product-maintenance-store.ts",
+      "owner": "D2",
+      "bytes": 41338,
+      "sha256": "20908267057147961602b896d3a3dbbc77890169dc1dc0e285b52d5707848b37"
+    },
+    {
+      "path": "tests/product-maintenance.test.ts",
+      "owner": "D2",
+      "bytes": 40272,
+      "sha256": "91f98e8380856bd78ad50fdd8c1499a6f7a63e3f8c63c5f2a096c37780b58224"
+    },
+    {
+      "path": "tests/product-maintenance-postgres-protocol.test.ts",
+      "owner": "D2",
+      "bytes": 38359,
+      "sha256": "dd0f5c600dfe026a8394a51c83a45bc8c1fc6888ca004d1a15f1c4bceaaccb4a"
+    },
+    {
+      "path": "tests/dictionary-read-postgres-protocol.test.ts",
+      "owner": "D2",
+      "bytes": 11879,
+      "sha256": "3a4beaf78f2d2e7f78bccbe98d85132dc6e7aff91b69660302026d5b1fcafee9"
+    },
+    {
+      "path": "tests/native-document-size-editing.test.ts",
+      "owner": "D1",
+      "bytes": 10175,
+      "sha256": "5928b902b6bf1a36d2232079d7863adabed94337354dbb170b312c3c9edf8344"
+    }
+  ],
+  "ownerDeliveries": [
+    "K/reports/backend/rapid-launch-20261022/D2/YEAR-CANDIDATES-DEMO-v1.json",
+    "K/reports/backend/rapid-launch-20261022/D2/ALL-SIZE-SKU-SEAM-v1.json",
+    "K/reports/backend/rapid-launch-20261022/D1/ALL-SIZE-BACKEND-FINDINGS-v1.json"
+  ],
+  "scope": "Restore Demo finite years plus retained history in original candidate read. Four existing-owner tests preserve current real-SKU append/replace, full dictionary and source identities. No new cross-group/missing-SKU write contract implemented.",
+  "checksAdopted": "D2 two affected years protocol cases and strict0; D2 three size/service cases and strict0; D1 two current real-SKU document cases and strict0. No rerun19/H06/full backend.",
+  "qualification": "Source/protocol only; new year SQL actual PG and independent affected review pending. Not UI/all-size end-to-end/real business/production acceptance."
+}
