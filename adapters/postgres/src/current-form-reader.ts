@@ -188,7 +188,10 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
         ORDER BY r.id LIMIT $3 OFFSET $4`, [...values, 20, offset])).rows;
       recommendationAvailability = "UNAVAILABLE";
     }
-    return Object.freeze({ ...this.decodedPage(parameters, total, rows, decode), recommendationAvailability });
+    return Object.freeze({ ...this.decodedPage(parameters, total, rows, row => {
+      const item = decode(row);
+      return recommendationAvailability === "AVAILABLE" ? Object.freeze({ ...item, isRecommended: booleanValue(row.is_recommended) }) : item;
+    }), recommendationAvailability });
   }
   readSalesReferences(actor: ActorContext, input: CurrentSalesReferenceQuery, signal: AbortSignal): Promise<CurrentFormPage<CurrentSalesReferenceItem>> {
     const parameters = parseCurrentSalesReferenceQuery(input);
@@ -301,9 +304,9 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
         NOT EXISTS (SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
           WHERE ib.status<>'IMPORTED' AND src.entity_type='PRODUCT' AND src.field_provenance->>'native_product_id'=p.id::text) AND
         (strpos(lower(p.product_code), lower($1::text)) > 0 OR strpos(lower(p.name), lower($1::text)) > 0${codes})`,
-        "p.id, p.product_code, p.name, p.retail_price::text, p.enabled, p.category_id, pc.name AS category_name", `p.product_code COLLATE "C", p.id`, [parameters.search], row => {
+        "p.id, p.product_code, p.name, p.retail_price::text, p.enabled, p.size_group_id, p.category_id, pc.name AS category_name", `p.product_code COLLATE "C", p.id`, [parameters.search], row => {
           requireDomain(row.enabled === true, "INVALID_DATABASE_VALUE", "Ineligible current product");
-          return Object.freeze({ id: id("product", row.id), code: text(row.product_code), name: text(row.name), retailPrice: price(row.retail_price), minimumPriceAvailability: "UNAVAILABLE",
+          return Object.freeze({ id: id("product", row.id), code: text(row.product_code), name: text(row.name), retailPrice: price(row.retail_price), minimumPriceAvailability: "UNAVAILABLE", sizeGroupId: id("sizeGroup", row.size_group_id),
             category: Object.freeze({ id: id("category", row.category_id), label: nullableText(row.category_name) }) });
         });
     });

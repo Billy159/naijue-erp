@@ -1,0 +1,30 @@
+{
+  "atUtc": "2026-10-23T13:34:48.876788+00:00",
+  "parent": "3ad2bb1580a1b47f39a5ca4e856cba43aaea7791",
+  "taskId": "B01_ACTUAL_PRODUCT_GROUP_AND_TRUSTED_PAYMENT_RECOMMENDATION_READ",
+  "files": [
+    {
+      "path": "packages/application/src/current-form-ports.ts",
+      "owner": "D1",
+      "bytes": 7507,
+      "sha256": "f07e3b7986822f9872b2c87e0d9e855a998799a5895ce0d4576e516e99235980"
+    },
+    {
+      "path": "adapters/postgres/src/current-form-reader.ts",
+      "owner": "D1",
+      "bytes": 34882,
+      "sha256": "c6d2dd88bf3bcbfb3bf7882341526d5bddf3059248c14971ce2bd8ab4a690459"
+    },
+    {
+      "path": "tests/current-form-reader.test.ts",
+      "owner": "D1",
+      "bytes": 62938,
+      "sha256": "9d77a3bb874df6612da99dd1e687cb587dfb9ea575652a36e26a9278860cbb89"
+    }
+  ],
+  "ownerReceipt": "K/reports/backend/rapid-launch-20261022/D1/GROUP-AND-RECOMMENDATION-READ-RESULT-v1.json",
+  "scope": "Read existing product.size_group_id directly in CurrentFormProduct including zeroSKU products, no group/membership broadening. Expose original SQL verified payment recommendation boolean only AVAILABLE pages, preserve UNAVAILABLE missing metadata. No new DB fields/permission/code/creation/SAVE changes.",
+  "checksAdopted": "Original owner new2+affected6 total8 scripted/protocolPASS0skip and exact3 strict0. One new malformedUUID expectation corrected to original INVALID_ID; only failed test rerun. No full backend repeat.",
+  "remaining": "Actual PG/HTTP/frontend UI not yet verified. Native accountcode remains absent/null because existing table has no code, not fabricated.",
+  "qualification": "SOURCE_FIXED_ONLY_NEW_READ_CONSUMER; latest human actualproduct hard-group boundary preserved, v11 new writing semantics pending."
+}

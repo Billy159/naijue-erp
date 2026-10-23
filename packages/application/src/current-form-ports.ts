@@ -24,6 +24,9 @@ export interface CurrentSalesReferenceItem {
   /** Account-only method metadata. A paymentMethod item's own canonical ID/name
    * are in id/name; these two fields and its hall/code fields remain null. */
   readonly paymentMethodId: EntityId<"paymentMethod"> | null; readonly paymentMethodName: string | null;
+  /** Account-only server hint, present only when recommendationAvailability is AVAILABLE.
+   * Absence is unknown, never an instruction to infer a group from hall identity. */
+  readonly isRecommended?: boolean;
 }
 export interface CurrentTransferWarehouseQuery extends CurrentFormSearch { readonly direction: "FROM" | "TO" }
 export interface CurrentTransferWarehouse {
@@ -33,6 +36,9 @@ export interface CurrentTransferWarehouse {
 export interface CurrentFormProductQuery extends CurrentFormSearch { readonly context: CurrentFormContext }
 export interface CurrentFormProduct {
   readonly id: EntityId<"product">; readonly code: string; readonly name: string;
+  /** Actual native hard-bound product group, independent of SKU existence.
+   * Older providers may omit it; omission is unavailable, never an all-group grant. */
+  readonly sizeGroupId?: EntityId<"sizeGroup">;
   /** Native nullable retail_price, exact yuan text at scale 2. Not a complete nine-price set. */
   readonly retailPrice: string | null; readonly minimumPriceAvailability: "UNAVAILABLE";
   /** Absent on legacy wire means not provided. New readers return the actual
