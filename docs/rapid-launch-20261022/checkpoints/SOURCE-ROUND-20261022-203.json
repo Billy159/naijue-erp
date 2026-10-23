@@ -1,0 +1,65 @@
+{
+  "atUtc": "2026-10-23T18:42:18.594142+00:00",
+  "parent": "79553bbb1f5df0b1400beea04916e1b0bf620fde",
+  "taskId": "B07_EXISTING_HISTORY_NUMERIC_SOURCE",
+  "files": [
+    {
+      "path": "adapters/postgres/src/history-revision-store.ts",
+      "bytes": 23859,
+      "sha256": "1b1193683d73efa37ab65c13245f387f4a288285d1c819f35279974dfe3d5932",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/history-revision-postgres-protocol.test.ts",
+      "bytes": 12085,
+      "sha256": "87f2ca17a3e18c53d03df7a0825a7b6b13c8b744e1341c2fab22cfa3fd3852ef",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/native-import-schema-contract.ts",
+      "bytes": 14388,
+      "sha256": "8a4fe91e76fae0cc53f1d44c11f50acc25b91b75922c29e38dfaacb2c2f1a053",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v12-history-numeric-revision.sql",
+      "bytes": 47640,
+      "sha256": "60cb26b523738347ec03d672111eaa8824795399ab9ea17d88f8da4d3d08c965",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NUMERIC-SOURCE-RESULT-v1.json",
+  "ownerReceiptSha256": "d4dffa2e96dae0e0f3bdef6afa8a676db6f5e8fe001f11e2af05fa0595cea5f7",
+  "scope": [
+    "Exact existing HISTORY numeric command only; all original rows/IDs/scope/account/direction/status/person/date preserved.",
+    "One original managed client: actual publishedmanifest/finalreceipt+audit/source locks, currentaccount/staff/hall+purpose, originalactor/key/hash replay before CAS, exact source/effective head and complete line/settlement set.",
+    "Immutable revision, current effective projections, delta ledger/key-balance, originalaudit/receipt and CAS in sameoutertx; approved sales -difference / transfer FROM-difference TO+difference, money/DRAFT noinventory.",
+    "Production factory requests HISTORY_REVISION on actualclient, checks no boolean substitution; old v11 issuer does not support this purpose and was not changed.",
+    "Unknown COMMIT discards, retainskey, no misleadingROLLBACK/retry; proper503 for missingnewwritecap."
+  ],
+  "checksAdopted": {
+    "newUniquePass": 6,
+    "skip": 0,
+    "strictAffectedExit": 0,
+    "firstFailurePreserved": "Initial newprotocol fifthcase failed because SQL failure injection matched READ COMMITTED as COMMIT; fixed only harness and retestedaffected. Fiveaffected cases rerun after currentidentity/time/publication/prove change; new6th factorypurpose/boolean/missingproof case only rerun after its followup change."
+  },
+  "qualification": "B07_NUMERIC_SOURCE_SLICE_READY_FOR_C_QB_NOT_ENGINE_NOT_HTTP_MOUNTED",
+  "limitations": [
+    "C/QB exact SQL source review; no local SQL engine/parser available, syntax and runtime are unverified.",
+    "C sole actualinstall/newcatalog of v12 isolated target with real published nonempty HISTORY baseline; reuse alreadyvalidated originalpublication evidence, do not repeat sealed18 target or stage/PUBLISH samegoal.",
+    "After v11 actual QA stable, D1 applies separatelypinned issuerdelta or C exacthandoff; currentv11issuer remainsunchanged.",
+    "C explicit new HISTORY numericwrite host selector/authorization uses samepool/session/Origin, nooldR1defaultwidening; routes alreadydefined byD3, no new endpoint invention.",
+    "C coordinate actualsales/transfer quantitydelta and moneyonly revisions, originalkeyreplay/currentrevoke/CAS/rollback/orphan closures/firstzero; followD3 currenteffective reads.",
+    "ActualSQLcompile/apply",
+    "MetadataHREVgrant",
+    "HISTORYwriteHTTPavailable",
+    "Realimportfullcomplete",
+    "AnyoldscopePASSchanged"
+  ],
+  "v11IssuerUntouched": {
+    "bytes": 62663,
+    "sha256": "fc7227b65e9869c401259740d5b9e7570cca1a722f45bb7a506ca2f4b02b3bd3"
+  },
+  "actualInstallationEnabled": false,
+  "hostOptInEnabled": false
+}

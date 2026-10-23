@@ -131,7 +131,7 @@ export function assertReviewedNativeImportSchema(versions: unknown, options: {
 export interface NativeRuntime26Capability {
   readonly profile: "EXACT26";
   readonly contract: "NATIVE_RUNTIME26_V1";
-  readonly assertReady: (client: object, purpose: "IMPORT_STAGE" | "IMPORT_PRODUCT_SEASONS" | "IMPORT_PUBLISH" | "PRODUCT_SEASONS_READ" | "PRODUCT_MAINTENANCE" | "INVENTORY_ADMISSION" | "HISTORY_READ" | "CURRENT_FORM_READ" | "CURRENT_CUSTOMER_READ_WRITE") => Promise<void>;
+  readonly assertReady: (client: object, purpose: "IMPORT_STAGE" | "IMPORT_PRODUCT_SEASONS" | "IMPORT_PUBLISH" | "PRODUCT_SEASONS_READ" | "PRODUCT_MAINTENANCE" | "INVENTORY_ADMISSION" | "HISTORY_READ" | "CURRENT_FORM_READ" | "CURRENT_CUSTOMER_READ_WRITE" | "HISTORY_REVISION") => Promise<void>;
 }
 export function checkedNativeRuntime26Capability(value: NativeRuntime26Capability | undefined): NativeRuntime26Capability | undefined {
   if (value === undefined) return undefined;
