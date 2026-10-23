@@ -1,0 +1,46 @@
+{
+  "atUtc": "2026-10-23T02:33:46.364341+00:00",
+  "status": "FIXED_K_HEADER_CAPTURE_CODE_PENDING_NEW_INDEPENDENT_REVIEW",
+  "sourceBase": "f8d563b72e022ba47d3804084fcfd0b555af3042",
+  "receiptSha256": "242b2554a7ea8d8267ec70b5f885bcc2cf1f07a2713b7dfe1f3efacc18ea52a7",
+  "snapshots": [
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/capture-once.mjs",
+      "snapshot": "docs/rapid-launch-20261022/controller-material/transfer-header-full-projection-capture1/capture-once.mjs",
+      "bytes": 28203,
+      "sha256": "ee62f1369d2995d3c277c5371e83f4568ced7db85c97b8afe61ef3cac61986f2"
+    },
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/RUNTIME-CLOSURE.json",
+      "snapshot": "docs/rapid-launch-20261022/controller-material/transfer-header-full-projection-capture1/RUNTIME-CLOSURE.json",
+      "bytes": 26811,
+      "sha256": "42402a1c7e176095d447a6cc788fd53e8cb46b981073cca6cfbae555a5478634"
+    },
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/build-closure.mjs",
+      "snapshot": "docs/rapid-launch-20261022/controller-material/transfer-header-full-projection-capture1/build-closure.mjs",
+      "bytes": 7232,
+      "sha256": "b93b06f884acd3028fd94d560caa61742f507bc87a80268161cffccabf7b53ee"
+    },
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/SYNTHETIC-RESULT.json",
+      "snapshot": "docs/rapid-launch-20261022/controller-material/transfer-header-full-projection-capture1/SYNTHETIC-RESULT.json",
+      "bytes": 2299,
+      "sha256": "6675069a504d775314f4282fe18d2fc74a912ed68f6c0a83679862abe5b8d381"
+    },
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/WINDOW-DRAFT-NOT-AUTHORIZED.json",
+      "snapshot": "docs/rapid-launch-20261022/controller-material/transfer-header-full-projection-capture1/WINDOW-DRAFT-NOT-AUTHORIZED.json",
+      "bytes": 8510,
+      "sha256": "db52f5c54825ad0813a999f53a6778d4dac49b85f7a8a3110bc532635b0ae771"
+    },
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/FINAL-LINE-HEADER-JOIN-CONTRACT.json",
+      "snapshot": "docs/rapid-launch-20261022/controller-material/transfer-header-full-projection-capture1/FINAL-LINE-HEADER-JOIN-CONTRACT.json",
+      "bytes": 24906,
+      "sha256": "bdb4ceb0a4646b52c439729d91e5089b40773d7d71cf7856a62e1a9945d2c2a5"
+    }
+  ],
+  "reviewScope": "New Header-only finite capture carrier + complete26runtimeclosure/new4 vs old22 reuse + samewritehash/EOF/caps/lifecycle/unsignedclosed. OriginalexportQB135 reused. No source session/window or PG/MAIN grant.",
+  "physicalExecuted": false
+}

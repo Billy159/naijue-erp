@@ -1,0 +1,47 @@
+{
+  "status": "SYNTHETIC_CAPTURE_CARRIER_READY_NO_PHYSICAL_GRANT",
+  "atUtc": "2026-10-23T01:59:23.053855+00:00",
+  "capture": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/capture-once.mjs",
+    "bytes": 28203,
+    "sha256": "ee62f1369d2995d3c277c5371e83f4568ced7db85c97b8afe61ef3cac61986f2"
+  },
+  "runtimeClosure": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/RUNTIME-CLOSURE.json",
+    "bytes": 26811,
+    "sha256": "42402a1c7e176095d447a6cc788fd53e8cb46b981073cca6cfbae555a5478634"
+  },
+  "exportResult": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-projection-export1/RESULT.json",
+    "bytes": 2697,
+    "sha256": "7c4b3008b85383603e988588e8d69cfcbc13f82dc277ecc79c34e11ac47233af"
+  },
+  "targetedTest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/capture-targeted.test.mjs",
+    "bytes": 9052,
+    "sha256": "0452a55639fd282a6a02c9739592f78496bc1d62f990224dfc4fc98f3a03f315"
+  },
+  "checks": {
+    "newTests": 3,
+    "pass": 3,
+    "fail": 0,
+    "exitCode": 0,
+    "node": "24.21.0",
+    "heapMiB": 1024,
+    "serial": 1,
+    "durationMs": 80.68775,
+    "scopes": [
+      "Draft/expired/missing QB/export/broadened scope or input bounds refuse before source import",
+      "Full26 AST closure and new Header source/runtime leaf drift or missing edge refusal",
+      "Complete finite source/typed/document preservation and offsets, truncation/duplicate/FK/4MiB row fail-stop"
+    ],
+    "oldSixRepeated": false,
+    "actual14279Repeated": false,
+    "actual261641Repeated": false
+  },
+  "businessReads": 0,
+  "lineCopyReads": 0,
+  "pg": 0,
+  "originalsRead": 0,
+  "qualification": "The stream-transform test uses synthetic projections; no claim of actual source capture, cleanup measurement or document join."
+}
