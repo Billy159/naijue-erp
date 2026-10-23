@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T18:44:27.952512+00:00",
+  "updatedAt": "2026-10-23T19:16:42.569891+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -730,6 +730,13 @@
           "path": "adapters/postgres/patches/0026-v12-history-numeric-revision.sql",
           "group": "C01_APPROVED_HISTORY_NUMERIC_CLOSED_GUARD_IMPLEMENTATION",
           "fieldGate": "ONLY_EXISTING_APPROVED_C01_H01_H07_NUMERIC_RULES_NO_FULL_DRAFT_EXPANSION"
+        },
+        {
+          "path": "adapters/postgres/patches/0026-v13-inventory-ledger-transition-quantities.sql",
+          "group": "I07_I08_TRANSITION_FIELDS_PROPOSAL_ONLY",
+          "fieldGate": "PENDING_EXPLICIT_USER_V13_CONFIRMATION",
+          "sourceWriteEnabled": false,
+          "scope": "Reserved exact proposal path only; no SQL source/DDL/writer change before explicit reply. No new authority from this reservation."
         }
       ]
     },
@@ -1417,7 +1424,7 @@
         },
         {
           "path": "adapters/postgres/src/inventory-ledger-query-reader.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_DATABASE_FIELD_OR_WRITE_CONTRACT_CHANGE",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
             "functionsOrTypes": [
@@ -1426,7 +1433,9 @@
             "scope": "Valid dictionary size, default group metadata, real warehouse/SKU provenance",
             "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
             "independentExistingImplementationFixesAllowed": true
-          }
+          },
+          "group": "I07_I08_ORIGINAL_LEDGER_READ_FILTER_COUNT_NATIVE_PROJECTION",
+          "scope": "Original existing ledger API only: backward compatible keyset and20 numbered page/filter, same permission+RR authoritative total/count/page, source number/operator/business type from actual facts. No source-ID nav grant, guessed0 or new DB/writes."
         },
         {
           "path": "adapters/postgres/src/inventory-cutoff-scope-reader.ts",
@@ -1442,7 +1451,9 @@
         },
         {
           "path": "tests/inventory-ledger-query-postgres-protocol.test.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_DATABASE_FIELD_OR_WRITE_CONTRACT_CHANGE",
+          "group": "I07_I08_ORIGINAL_LEDGER_READ_FILTER_COUNT_NATIVE_PROJECTION",
+          "scope": "Original existing ledger API only: backward compatible keyset and20 numbered page/filter, same permission+RR authoritative total/count/page, source number/operator/business type from actual facts. No source-ID nav grant, guessed0 or new DB/writes."
         },
         {
           "path": "tests/inventory-cutoff-postgres-protocol.test.ts",
@@ -1530,13 +1541,21 @@
         },
         {
           "path": "packages/application/src/inventory-ledger-query-contracts.ts",
-          "fieldGate": "C01_V1_A_D_APPROVED_HISTORY_REVISION_EXISTING_EVENT_AND_SOURCE_READ_ONLY",
-          "scope": "Only recognize already explicitly approved C01v1 HISTORY_REVISION and approved historical source IDs; no new schema/state/write semantics. New unlisted differences still require user confirmation."
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_DATABASE_FIELD_OR_WRITE_CONTRACT_CHANGE",
+          "scope": "Original existing ledger API only: backward compatible keyset and20 numbered page/filter, same permission+RR authoritative total/count/page, source number/operator/business type from actual facts. No source-ID nav grant, guessed0 or new DB/writes.",
+          "historicalScopes": [
+            "Only recognize already explicitly approved C01v1 HISTORY_REVISION and approved historical source IDs; no new schema/state/write semantics. New unlisted differences still require user confirmation."
+          ],
+          "group": "I07_I08_ORIGINAL_LEDGER_READ_FILTER_COUNT_NATIVE_PROJECTION"
         },
         {
           "path": "packages/application/src/inventory-ledger-query-validation.ts",
-          "fieldGate": "C01_V1_A_D_APPROVED_HISTORY_REVISION_EXISTING_EVENT_AND_SOURCE_READ_ONLY",
-          "scope": "Only recognize already explicitly approved C01v1 HISTORY_REVISION and approved historical source IDs; no new schema/state/write semantics. New unlisted differences still require user confirmation."
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_DATABASE_FIELD_OR_WRITE_CONTRACT_CHANGE",
+          "scope": "Original existing ledger API only: backward compatible keyset and20 numbered page/filter, same permission+RR authoritative total/count/page, source number/operator/business type from actual facts. No source-ID nav grant, guessed0 or new DB/writes.",
+          "historicalScopes": [
+            "Only recognize already explicitly approved C01v1 HISTORY_REVISION and approved historical source IDs; no new schema/state/write semantics. New unlisted differences still require user confirmation."
+          ],
+          "group": "I07_I08_ORIGINAL_LEDGER_READ_FILTER_COUNT_NATIVE_PROJECTION"
         },
         {
           "path": "scripts/import-v3/production-source-host.mjs",
@@ -1886,9 +1905,12 @@
         },
         {
           "path": "tests/support/synthetic-inventory-ledger-query.ts",
-          "group": "EXISTING_LEDGER_QUERY_TEST_TYPE_ALIGNMENT_ONLY",
-          "fieldGate": "NO_SCHEMA_NO_WRITE_SEMANTICS",
-          "scope": "Only ledgerEntry helper parameter excludes HISTORY_REVISION because existing helper creates only original3 variants; old behavior/assertions unchanged, newhistory cases stay original PGprotocol test."
+          "group": "I07_I08_ORIGINAL_LEDGER_READ_FILTER_COUNT_NATIVE_PROJECTION",
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_DATABASE_FIELD_OR_WRITE_CONTRACT_CHANGE",
+          "scope": "Original existing ledger API only: backward compatible keyset and20 numbered page/filter, same permission+RR authoritative total/count/page, source number/operator/business type from actual facts. No source-ID nav grant, guessed0 or new DB/writes.",
+          "historicalScopes": [
+            "Only ledgerEntry helper parameter excludes HISTORY_REVISION because existing helper creates only original3 variants; old behavior/assertions unchanged, newhistory cases stay original PGprotocol test."
+          ]
         },
         {
           "path": "packages/application/src/inventory-query-contracts.ts",
@@ -1937,6 +1959,18 @@
           "group": "B03_EXISTING_FILTERED_INVENTORY_READ_OUTPUT_PROVIDER",
           "fieldGate": "EXISTING_APPROVED_PRODUCT_FILTER_SCOPE_FIELDS_READ_ONLY_NO_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
           "scope": "Original full executed-filter output/stream/authorization/errors; no pagefake or newfields"
+        },
+        {
+          "path": "packages/application/src/inventory-ledger-query-service.ts",
+          "group": "I07_I08_ORIGINAL_LEDGER_READ_FILTER_COUNT_NATIVE_PROJECTION",
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_DATABASE_FIELD_OR_WRITE_CONTRACT_CHANGE",
+          "scope": "Original existing ledger API only: backward compatible keyset and20 numbered page/filter, same permission+RR authoritative total/count/page, source number/operator/business type from actual facts. No source-ID nav grant, guessed0 or new DB/writes."
+        },
+        {
+          "path": "tests/inventory-ledger-query.test.ts",
+          "group": "I07_I08_ORIGINAL_LEDGER_READ_FILTER_COUNT_NATIVE_PROJECTION",
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_DATABASE_FIELD_OR_WRITE_CONTRACT_CHANGE",
+          "scope": "Original existing ledger API only: backward compatible keyset and20 numbered page/filter, same permission+RR authoritative total/count/page, source number/operator/business type from actual facts. No source-ID nav grant, guessed0 or new DB/writes."
         }
       ]
     },
@@ -3672,6 +3706,18 @@
           "fieldGate": "NO_SCHEMA_OR_BUSINESS_CHANGE",
           "scope": "Original shared idle token layout only: eliminate duplicate width reservation causing C196 P01 truncation; no per-page text changes or second control implementation",
           "finding": "QF2-P01-IDLE-FILTER-SURFACE-01"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-proposal.test.ts",
+          "group": "F1_LOCAL_SPEC_LINE_KNOWN_CONSUMER_TYPE_NARROWING",
+          "fieldGate": "TEST_TYPE_ONLY_NO_BUSINESS_ASSERTION_WEAKEN",
+          "scope": "Original knownSKU .sku nonnull assertion and legacy SAVE draft discriminator only; preserve all expected quantities/hash/precision; no skips"
+        },
+        {
+          "path": "apps/web/src/current-form/sales-create.test.ts",
+          "group": "F1_LOCAL_SPEC_LINE_KNOWN_CONSUMER_TYPE_NARROWING",
+          "fieldGate": "TEST_TYPE_ONLY_NO_BUSINESS_ASSERTION_WEAKEN",
+          "scope": "Original knownSKU .sku nonnull assertion and legacy SAVE draft discriminator only; preserve all expected quantities/hash/precision; no skips"
         }
       ]
     }
@@ -4193,6 +4239,30 @@
       "owner": "F1",
       "path": "apps/web/src/demo-controls/idle-selection-tokens.css",
       "scope": "QF2 C196 actual P01 idle token truncation, original shared owner only; source read by QF, actual P01 by QF2"
+    },
+    {
+      "atUtc": "2026-10-23T18:53:24.229716+00:00",
+      "owner": "D3",
+      "paths": [
+        "packages/application/src/inventory-ledger-query-contracts.ts",
+        "packages/application/src/inventory-ledger-query-validation.ts",
+        "packages/application/src/inventory-ledger-query-service.ts",
+        "adapters/postgres/src/inventory-ledger-query-reader.ts",
+        "tests/inventory-ledger-query-postgres-protocol.test.ts",
+        "tests/inventory-ledger-query.test.ts",
+        "tests/support/synthetic-inventory-ledger-query.ts"
+      ],
+      "scope": "F2 current205 actual blocked I07/I08 existing read DTO; no B07 reimplementation/DDL/write semantic authority",
+      "authorization": "Existing task and current explicit C dispatch; user latest read integration direction"
+    },
+    {
+      "atUtc": "2026-10-23T19:08:52.853205+00:00",
+      "owner": "F1",
+      "paths": [
+        "apps/web/src/current-form/sales-proposal.test.ts",
+        "apps/web/src/current-form/sales-create.test.ts"
+      ],
+      "scope": "Original102 local spec union exposes existing known-SKU test assumptions; type narrowing only, not test removal/weaken"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",

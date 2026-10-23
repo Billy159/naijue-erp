@@ -1,0 +1,21 @@
+{
+  "version": "v13-ledger-transitions",
+  "status": "PENDING_USER_CONFIRMATION_NOT_IMPLEMENTED",
+  "source": "D3 I07/I08 missing actual recorded transitions; D1 readonly exact impact",
+  "confirmation": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/SCHEMA-SUPPLEMENT-v13-LEDGER-TRANSITIONS.md",
+  "newColumns": 2,
+  "newTables": 0,
+  "newCheckConstraints": 1,
+  "newFunctions": 1,
+  "newBeforeTriggers": 1,
+  "oldRows": "BothNULL/no backfill/no reconstruction",
+  "currentActualBase": "Both isolatedQA101 andR1C103 v11/122routines; v12 sourceonly",
+  "requiresExplicitUserReply": true,
+  "writerEnabled": false,
+  "originalD1ReadOnlyDiff": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/I07-I08-LEDGER-TRANSITION-CONFIRMATION-DIFF-v1.md",
+    "bytes": 12603,
+    "sha256": "19a243be9011901939d406ee612c3a19b196d3de1227d77f5111a243521537f4"
+  },
+  "v11C102Changed": false
+}
