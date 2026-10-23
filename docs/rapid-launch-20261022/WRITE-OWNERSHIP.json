@@ -715,6 +715,16 @@
             "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
             "independentExistingImplementationFixesAllowed": true
           }
+        },
+        {
+          "path": "adapters/postgres/src/history-revision-store.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "scope": "C01 approved numeric revision only: existing line/totals/settlement amounts, same original controlled transaction. Full header/identity/add-delete/state changes excluded pending exact approval."
+        },
+        {
+          "path": "tests/history-revision-postgres-protocol.test.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "scope": "C01 approved numeric revision only: existing line/totals/settlement amounts, same original controlled transaction. Full header/identity/add-delete/state changes excluded pending exact approval."
         }
       ]
     },
@@ -1502,19 +1512,11 @@
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
         {
-          "path": "adapters/postgres/src/history-revision-store.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
           "path": "apps/api/src/history-revision-http.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
         {
           "path": "tests/history-revision.test.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "tests/history-revision-postgres-protocol.test.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
         {
@@ -4137,6 +4139,18 @@
       "scope": "readStock26 missing branch only; legacy/overview valid evidence reused",
       "D3Released": true,
       "RNoDiffAtTransfer": true
+    },
+    {
+      "atUtc": "2026-10-23T13:44:06.023638+00:00",
+      "paths": [
+        "adapters/postgres/src/history-revision-store.ts",
+        "tests/history-revision-postgres-protocol.test.ts"
+      ],
+      "from": "D3",
+      "to": "D1",
+      "D3Released": true,
+      "source": "D3 exact explicit handoff in this C message, both paths confirmed absent/no in-flight store work",
+      "scope": "Only approved C01 numeric history transaction implementation; no second endpoint/schema or broad unapproved edit"
     }
   ]
 }
