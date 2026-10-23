@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "ec8eef1901ae55aeae789c1dbb69d24a4c440a52",
+    "headObserved": "8794aae24aa2f126b22ffa7d9d6ea11814d27155",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "722702a5ec340f2735c40bc41842423f6d4537c1",
+    "remoteHeadVerified": "aa28412f1d2bdbaad934b7096133909851232ef0",
     "remoteReadbackMethod": "Exact3 original objects/nonforcedFF/independentGET",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -963,9 +963,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T14:13:21.952049+00:00",
+  "updatedAt": "2026-10-23T18:16:26.736409+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "722702a5ec340f2735c40bc41842423f6d4537c1",
+  "lastVerifiedRemoteCommit": "aa28412f1d2bdbaad934b7096133909851232ef0",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2517,46 +2517,58 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-23T14:13:21.952049+00:00",
-    "sourceRound": 187,
-    "sourceCheckpoint": "ec8eef1901ae55aeae789c1dbb69d24a4c440a52",
+    "atUtc": "2026-10-23T18:16:26.736409+00:00",
+    "sourceRound": 197,
+    "sourceCheckpoint": "8794aae24aa2f126b22ffa7d9d6ea11814d27155",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "sourceRound": 173,
-      "sourceCommit": "10a0d007a34d030d7d368afcad8ce7d43b5622ed",
-      "buildId": "ui-preview-10a0d00-01-build01",
-      "url": "http://127.0.0.1:57865/synthetic-unified.html",
-      "htmlBytes": 3148220,
-      "htmlSha256": "0709bb6d1923d4c25e56d244f0e8e1bcafe06cbcdc87d79b3c8573232d94c658",
-      "identitySha256": "441e8324fdde6fdaa856c873a2c89bfff4ce3856815a1b7341cd1f6ae4036597",
-      "provenanceSha256": "7c92cd1d7160e7acf446c8e7d7da2e0625f43d17a272655d79c8a0fc705ee622",
-      "serverPid": 50115,
-      "serverSession": 76356,
+      "sourceRound": 189,
+      "sourceCommit": "bb89f32f2d5aa8255028734b6cbb624e330783ea",
+      "buildId": "ui-preview-bb89f32-01-build01",
+      "url": "http://127.0.0.1:57867/synthetic-unified.html",
+      "resources": [
+        {
+          "path": "synthetic-unified.html",
+          "status": 200,
+          "bytes": 3361383,
+          "sha256": "dbefa5d29005cef1151e36a65dda46b6f9fba75013ddd360dda49a880c689343"
+        },
+        {
+          "path": "candidate-identity.json",
+          "status": 200,
+          "bytes": 3106,
+          "sha256": "409828c083ce53a01c7010c5635643d4223a73d7c1bbb153ec8c7e5bde1a18ef"
+        },
+        {
+          "path": "provenance.json",
+          "status": 200,
+          "bytes": 50620,
+          "sha256": "05acf1b3d068facb5db2ef502da467c1a654116a4a30cb2b0d6843b386c21a4b"
+        }
+      ],
+      "serverPid": 74827,
+      "serverSession": 19382,
       "actualBuildInvocations": 1,
       "actualHTTPKeyResources": 3,
       "syntheticOnly": true,
-      "scope": "Fixed173 B05/B06/O-B05/O-B06. Not174/175/176/177/178/180 and not group correction UI.",
+      "scope": "186T02/187staff-account/188readonly/189inventory. Not191/192/193+195/194/196/197.",
       "wholePageAccepted": false,
       "realBusinessAccepted": false,
       "formalPerformanceAccepted": false
     },
     "nextPreview": {
-      "sourceRound": 184,
-      "sourceCommit": "75f1f4a4664491623a437ecc907eb1ed5460e121",
-      "buildId": "ui-preview-75f1f4a-01-build01",
-      "port": 57866,
-      "status": "ORIGINAL_EXPORT_EXIT0_POSTBUILD_GRAPH_CHECK_FAILED_ICONS_INPUT_REMOVED_NOT_SERVED",
-      "actualBuildInvocations": 1,
-      "postbuildExitCode": 1,
-      "identityProduced": false,
-      "next": "Prove exact fixed183 native button replacement dependency exit, preserve original failed attempt, one controlled no-recompile postbuild continuation only if actual graph justified. No WIP/186/187 mixed."
+      "sourceRound": 196,
+      "commit": "0930113199a7fe8335b10092b0d4ddf2c2050600",
+      "port": 57868,
+      "status": "HELPER_PREBUILD_IN_PROGRESS",
+      "actualBuildInvocations": 0
     },
     "r1": "C63实际COMPLETED exit0 32.301s：固定C132/build r1-c28ea3f-20261023-02完整生产依赖安装成功，Linux x64 Node24.21 Sharp0.35.5原生加载；APP/proxy health200，HTML与真实声明current application.js 200且manifest精确。依赖根因A及实际私有安装启动B均完成；dataReady/业务验收/正式切换false。保留45/48/60/61/62失败现场，未改正式三服务/公网。",
     "qa": "C75 original PUBLISH-only/nativeCREATE actualPASS + C78 H06 actual limitedsinglechain QB174 + C79 primary/ledger actual9contracts QB178 adopted. QA49account57source1product1SKU5audit5receipt protected as finalC79; stocktab/newwarehouse/race/nonemptyledger/real49/formalcutover untested.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Only original three explicit human branches wait. Narrowed v11 group-only exact22 approved and implementing; D1 parent SAVE/SQL and history numeric still WIP, actual normal sample successor driven by new evidence.",
-    "github": "Independently verified722702a5ec340f2735c40bc41842423f6d4537c1; current187+controller docs next exact nonforced sync",
+    "github": "Verifiedaa28412f1d2bdbaad934b7096133909851232ef0; source188–197 plus current records pending exact original nonforced sync",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -2581,8 +2593,8 @@
     },
     "audit": "C127 actualQF closed dualEsc/focus and same-scopefilter retention",
     "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
-    "uiMigration": "C181 group-only SALE UI source QFv041 accepted; C183 sales navigation/local numeric/saved group source QFv042 accepted. C184 product associated six-tabs and C182 payment twoP2 source QF2 PASS adopted; actual remains open. C186 T02 group complete matrix and C187 staff/account new frozen owner selfchecks, new independent scope queued. None are whole-page or real business pass.",
-    "backend": "QB185 exact v10 three-purpose pairing and QB186 read180 accepted, no repeated old source/ops/fullbackend. C94 newwarehouse and new syntheticstaff/account committed; driver wrong detailV2 {id} vs original {productId} stops before MAIN. C95 only exact state readback + original normal ACCOUNT DISABLE preparing, not executed. Original49/inventory final comparison unmeasured in failed94, not proven changed.",
+    "uiMigration": "Actual184 partialnav/group/localedit passed; disabledCLASS P2→196sourcefixed notactual; rapidqty121 P1 remainsopen, pacedtrace notclosure. Source187/189/192QF2PASS only. Recovery197 V1underV2 P2 found→originalF2repair. 104/48/whole0.",
+    "backend": "QB187/188/189/190 SOURCE scopes adopted. Fullv11 source194 ready but no actualSQL/122routine metadata/8PG groups. C96normalACCOUNTdisable andC99normalMAIN actualPASS underoldv10 only. Original transfer/auth resume D1 driver ready. B07/v12 WIP excluded.",
     "productionBuild": "167 actual build4.347s pack2.276s, one Arco CSS contributing output; static reduction not UI/HTTP performance",
     "actualQFBrowser": {
       "owner": "C",
@@ -2595,10 +2607,12 @@
       ],
       "oldCandidate8B3": "No target found, not reused",
       "login": "Human newDemo login acknowledged and QF2 actual confirmed. No credentials read.",
-      "status": "QF2_C173_RELEASED_TO_C_NO_FURTHER_BROWSER_BOTH_QF_OFFLINE_WAIT_FIXED_NEW_CANDIDATE",
+      "status": "QF184_EXACT_CLEAN_RELEASED_TO_C",
       "candidateScrollTop": 0,
-      "demoTableScrollTop": 64,
-      "cleanReceipt": "QF2/c173-payment-frozen-module-actual-01/BROWSER-RELEASE.json"
+      "demoTableScrollTop": 0,
+      "cleanReceipt": "QF/v044-qf-c184-sales-group-navigation-actual/BROWSER-CLEAN.json",
+      "candidateVersion": "C18475f1f4a/ui-preview-75f1f4a-01-build01",
+      "candidateUrl": "http://127.0.0.1:57866/synthetic-unified.html"
     },
     "frontendAcceptance": {
       "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
@@ -2757,14 +2771,14 @@
         "candidateTab": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
         "QF2CurrentTargets": [],
         "QF2MayOperate": false,
-        "condition": "Wait C184 valid actual closure+HTTP, explicit sole lease QF first documents/common/183 actual then QF2 minimal paymentP2 and new product. Same controller session serial; no true isolation verified.",
+        "condition": "Only3A913+7F93 saleslists/scroll0/noownnote/0layers/1470x668DPR2. DB7unsaved/3BCunknown protected. Wait C196 fixedcandidate and explicit QF2 grant; no implicit use of189.",
         "temporaryWorkingTarget": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
         "workingTarget": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
-        "candidateVersion": "C173 10a0d00/ui-preview-10a0d00-01-build01",
+        "candidateVersion": "C18475f1f4a/ui-preview-75f1f4a-01-build01",
         "QFMayOperate": false,
         "protectedUnknownTarget": "3BC874911D0D2415D093603E264B0D67",
         "owner": "C",
-        "status": "QF2_C173_RELEASED_TO_C_NO_FURTHER_BROWSER_BOTH_QF_OFFLINE_WAIT_FIXED_NEW_CANDIDATE",
+        "status": "QF184_EXACT_CLEAN_RELEASED_BOTH_QA_OFFLINE",
         "connection": "Existingdefaultdaemon actuallyconnected after originaldocumentedupgrade andoneactualChineseapproval. No config/profile/permissionreset or alternatebrowserdriver.",
         "cleanReceipt": "QF2/c173-payment-frozen-module-actual-01/BROWSER-RELEASE.json",
         "cleanBytes": 2327,
@@ -2797,7 +2811,7 @@
       "actingRole": "erp_qa_owner_20261022_01",
       "sourceTemplate": "Existing known QA schema-only+schema_migration26, no business or credentials copied",
       "owner": "C",
-      "status": "ACTUAL_V10_PATCH_COMMITTED_C94_TWO_NORMAL_COMMANDS_COMMITTED_FOLLOWUP_REQUIRED",
+      "status": "V10_NORMAL_WAREHOUSE_STAFF_DISABLE_MAIN_ACTUAL_TRANSFER_AUTH_PENDING",
       "businessScope": "Explicit synthetic genuine baseline thennativeCREATE/H06; not real49 import/UAT/source MAIN or production",
       "constraints": "OldQA root4/audits/receipts retained; R1/production untouched. No weakening firstSTAGE guard, no fakeIMPORTED/nativeaudit. Actual OID/catalog capture before originalissuer use.",
       "databaseOid": "1032586",
@@ -2808,11 +2822,8 @@
       "nativeCreateAttempted": true,
       "issuerIssued": true,
       "actualStageCommitted": true,
-      "lastActualError": {
-        "code": "INVALID_PRODUCT_QUERY",
-        "phase": "NORMAL_RAW_MAIN_EDIT"
-      },
-      "lastActualRequestKey": "D2_BASELINE26_NATIVE_CREATE_V1",
+      "lastActualError": null,
+      "lastActualRequestKey": "C_SPEC02_QA80_ADD_RAW_MAIN",
       "patchLevel": "26_v10_native_creation_record_scope",
       "actualWarehouseChunkCommitted": true,
       "actualCheckpoint": {
@@ -2893,8 +2904,29 @@
         "barcodes": 0,
         "rootVersion": 1
       },
-      "currentCountsVerifiedAfter94": false,
-      "actualCheckpointQualification": "OriginalC79 baseline49 remains historical; after94 warehouse andstaff receipts committed, do not use baseline to replay fullrunner. C95 readback will establish current counts."
+      "currentCountsVerifiedAfter94": true,
+      "actualCheckpointQualification": "OriginalC79 baseline49 remains historical; after94 warehouse andstaff receipts committed, do not use baseline to replay fullrunner. C95 readback will establish current counts.",
+      "actualCurrent99": {
+        "accounts": 50,
+        "staff": 50,
+        "warehouses": 2,
+        "products": 1,
+        "rootVersion": 2,
+        "skus": 1,
+        "barcodes": 1,
+        "audits": 9,
+        "receipts": 9,
+        "sourceRows": 57,
+        "importRecords": 2,
+        "claims": 2,
+        "inventoryLedger": 0,
+        "inventoryBalance": 0,
+        "accountLoginEnabled": false,
+        "accountVersion": 2,
+        "accountAuthVersion": 2,
+        "original49Unchanged": true,
+        "formal3Unchanged": true
+      }
     },
     "actualSourceProjection": {
       "status": "ACTUAL_SOURCE_TYPED_PROJECTIONS_COMPLETED_REFERENCE_ONLY",
@@ -3245,17 +3277,21 @@
       "D3": 0,
       "D2FixedSource": "6932c59606893754a85ee8b68d47dac8cc0acdd3",
       "D2Checks": "9 targeted pass + one affected shared strict rerun exit0 adopted; old diagnostics retained",
-      "D1SaveAndSql": "IN_PROGRESS_NOT_PG_NOT_DEPLOYED",
+      "D1SaveAndSql": "SOURCE194_QB190_LIMITED_PASS_NOT_PG",
       "groupBoundary": "Actual product size group hard boundary; full effective members, no crossgroup/new global option",
-      "wholeSavePassed": false
+      "wholeSavePassed": false,
+      "D1FixedSource": "47f9d307469f63da2a292555a71cb0dbb7cdac4c",
+      "requiredRuntime": "Newv11 122routines/committrigger andexactpurpose inclPRODUCT_SEASONS_READ; oldv10 121/QB1853purpose notvalid",
+      "frontendSaveConsumer": "F1chunk96transportREADY_pendingCPin_page_mappingNOTDONE"
     }
   },
   "latestReadySource": {
-    "round": 187,
-    "commit": "ec8eef1901ae55aeae789c1dbb69d24a4c440a52",
-    "actualPreviewRound": 173,
-    "actualPreviewSource": "10a0d007a34d030d7d368afcad8ce7d43b5622ed",
-    "qualification": "184 fixed UI originalbuild succeeded but postbuild graph one removedIcons input pending controlled no-recompile continuation;186/187 new source not included. Source/selfcheck/sourceQA do not prove runtime/business."
+    "round": 197,
+    "commit": "8794aae24aa2f126b22ffa7d9d6ea11814d27155",
+    "latestServedPreviewRound": 189,
+    "latestActualQFRound": 184,
+    "nextPreviewRound": 196,
+    "qualification": "Source/runtime/UI/PG/release distinct. Overall ACTIVE."
   },
   "pendingUserDecision": [
     {

@@ -10728,7 +10728,7 @@
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-23T14:14:04.804970+00:00",
+  "updatedAt": "2026-10-23T18:18:06.263385+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -11897,6 +11897,114 @@
       "wholePagePassed": false,
       "realBusinessPassed": false,
       "formalPerformancePassed": false
+    },
+    {
+      "id": "QB188",
+      "adoptedAtUtc": "2026-10-23T18:18:06.263385+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice188-c190-save-proposal-interface/RESULT.json",
+      "bytes": 11214,
+      "sha256": "3db2fb668b8aa6ac0da784b24b10d1374305948cf5a2bbfecc81ac260a6ee342",
+      "qualification": "SOURCE_API_ONLY",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
+    },
+    {
+      "id": "QB189",
+      "adoptedAtUtc": "2026-10-23T18:18:06.263385+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice189-c193-staff-name-login-search/RESULT.json",
+      "bytes": 6645,
+      "sha256": "aa7b8291a341613884980e31f6fcb1e41151764f0e09b506dd6e526ed400bea3",
+      "qualification": "SOURCE_READ_PROTOCOL_ONLY",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
+    },
+    {
+      "id": "QB190",
+      "adoptedAtUtc": "2026-10-23T18:18:06.263385+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice190-c194-group-save-adapter-sql/RESULT.json",
+      "bytes": 15560,
+      "sha256": "bdc22c5b7c89f2832dca453ee6f2ab1a50c2dd1d71112afe16e5400530aeb063",
+      "qualification": "SOURCE_SQL_PROTOCOL_ONLY_NOT_ACTUAL_PG",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
+    },
+    {
+      "id": "QFv043",
+      "adoptedAtUtc": "2026-10-23T18:18:06.263385+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v043-qf-c186-transfer-own-group-matrix-source/RESULT.json",
+      "bytes": 11510,
+      "sha256": "ac086d30da5d1e126e891aae24e11867cc4233cd17b7676625f04bc96b4031c1",
+      "qualification": "SOURCE_T02_ONLY",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
+    },
+    {
+      "id": "QFv044",
+      "adoptedAtUtc": "2026-10-23T18:18:06.263385+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v044-qf-c184-sales-group-navigation-actual/RESULT.json",
+      "bytes": 9785,
+      "sha256": "6829f5b8b786e8c1da714cfa7695b374bb152c72258551c95cfd5e0e90591777",
+      "qualification": "LIMITED_ACTUAL_NATIVE_NEW_FINDINGS_OPEN_NOT_WHOLEPAGE",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
+    },
+    {
+      "id": "QF2C187",
+      "adoptedAtUtc": "2026-10-23T18:18:06.263385+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c187-staff-account-frozen-source-01/RESULT.json",
+      "bytes": 2709,
+      "sha256": "3912ee7ff0ade8eafe681815e75ad3cdf7a5c3b40cf33bd448e71b497b76e9bd",
+      "qualification": "LIMITED_SOURCE_ONLY",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
+    },
+    {
+      "id": "QF2C189",
+      "adoptedAtUtc": "2026-10-23T18:18:06.263385+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c189-inventory-frozen-source-01/RESULT.json",
+      "bytes": 4242,
+      "sha256": "9deb0f24dbe5e01e57be2ff54013393db5708852cce05d6c46b81280c902f1f5",
+      "qualification": "LIMITED_SOURCE_ONLY",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
+    },
+    {
+      "id": "QF2C192",
+      "adoptedAtUtc": "2026-10-23T18:18:06.263385+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c192-party-frozen-source-01/RESULT.json",
+      "bytes": 2670,
+      "sha256": "2c70ee3d010b8261595de4ed3e064944baec570bc6ec5eca328a37a990ac68a4",
+      "qualification": "LIMITED_SOURCE_ONLY",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
+    },
+    {
+      "id": "QF2C197",
+      "adoptedAtUtc": "2026-10-23T18:18:06.263385+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c197-product-recovery-seam-source-01/RESULT.json",
+      "bytes": 2234,
+      "sha256": "232529bd23e136209929cbcef388c3dfc4248a90e07ad763b009f075404a33bb",
+      "qualification": "NEED_FIX_ONE_P2_V1_UNDER_V2",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
     }
   ],
   "coverageGroups": [
@@ -11936,14 +12044,12 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-23T14:14:04.804970+00:00",
-    "sourceRound": 187,
-    "sourceCommit": "ec8eef1901ae55aeae789c1dbb69d24a4c440a52",
-    "actualPreview": 173,
-    "nextPreview": 184,
-    "nextPreviewState": "ESBUILD_EXIT0_POSTBUILD_GRAPH_ONE_LEGAL_REMOVED_ICON_DEPENDENCY_REPAIR_PENDING_NO_SERVE",
-    "actualQA94": "Two normal services committed; first INVALID_PRODUCT_QUERY driver usesid notproductId; C95 onlynewQAaccountnormaldisable pending",
-    "scopeItems": 104,
+    "sourceRound": 197,
+    "latestServedRuntime": 189,
+    "latestQFActual": 184,
+    "nextRuntime": 196,
+    "actual96and99": "NormalnewQAaccountDISABLEandnormalMAINpassed,nottransferauth/v11/formal",
+    "demoItems": 104,
     "localDeduplicated": 48,
     "wholePages": 0,
     "wholeOverlayClasses": 0,

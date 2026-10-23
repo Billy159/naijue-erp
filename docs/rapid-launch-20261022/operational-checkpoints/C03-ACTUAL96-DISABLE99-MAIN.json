@@ -1,0 +1,17 @@
+{
+  "atUtc": "2026-10-23T18:16:26.736409+00:00",
+  "taskId": "C03_ORIGINAL_NORMAL_SERVICE_SUCCESSOR",
+  "actual96": "PASS normalACCOUNT DISABLE originalQA only,0/2.973802608s,disabledv2/auth2",
+  "actual99": "PASS normalPRODUCT EDIT originalMAIN,0/3.428296321s,rootv2/barcode1/auditreceipt9",
+  "original49AndStockAndFormalPreserved": true,
+  "cleanup": "release/dispose/driverend returned,background0",
+  "failuresPreserved": {
+    "94": "two normalCREATEcommits then D1driver id insteadproductId beforeMAIN",
+    "95": "JSON.stringify object keyorder wrongly rejectedzeroabsence beforeDISABLE",
+    "96": "isDeepStrictEqual directrepair,7negative tests preserved,actualdisablePASS",
+    "97": "C localrelative sourcepath typo prevented completion; disabledtransportPLAN_ONLY noPG",
+    "98": "C wrapper copiedoldQA96disable planenum,refusedbeforepoolfactory",
+    "99": "ExactMAIN enum repaired/guarddirecttested,originalD1driveractualMAIN PASS"
+  },
+  "remaining": "SameQA account transferSAVE/wait/revocation sample notrun; fullv11 source notPG orformal. No replay/reset of prior commits."
+}
