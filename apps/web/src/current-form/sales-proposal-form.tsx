@@ -10,7 +10,7 @@ import { SourceDocumentDialog } from '../components/standard-overlay.tsx';
 import { DocumentScan } from '../components/document-scan.tsx';
 import type { DocumentScanController } from '../components/document-scan-controller.ts';
 import { UIDate } from '../components/standard-controls.tsx';
-import { useEffect, useLayoutEffect, useReducer, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { forwardRef, useEffect, useLayoutEffect, useReducer, useRef, useState, useSyncExternalStore, type ButtonHTMLAttributes, type ReactNode } from 'react';
 import { SalesProposalSession, salesProposalMoney, type SalesProposalEntry, type SalesProposalLine, type SalesProposalPicker, type SalesProposalSnapshot } from './sales-proposal.ts';
 import { salesInputMoney } from '../sales/commands/form-model.ts';
 import { discountUnitPrice } from '../../../../packages/domain/src/sales-money.ts';
@@ -77,6 +77,11 @@ function SalesRowDirection({ label, quantity, disabled, change }: { readonly lab
 }
 /** Same guarded Portal reattachment used by the shared native Select action.
  * A replacement row may first mount already-open under StrictMode replay. */
+// Trigger moves a disabled native button's class onto a generated span. Keep
+// the frozen button as the actual leaf; forward Trigger's events and node ref.
+const SalesCandidateButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement>>(function SalesCandidateButton(props, ref) {
+  return <button {...props} ref={ref} />;
+});
 function SalesCandidateTrigger({ sourceSpecAnchor, ...props }: TriggerProps & { readonly sourceSpecAnchor?: () => HTMLElement | null | undefined }) {
   const [mounted, setMounted] = useState(false), [specNode, setSpecNode] = useState<HTMLDivElement | null>(null);
   const [placement, setPlacement] = useState<{ node: HTMLDivElement; left: number; top: number; width: number } | null>(null);
@@ -240,7 +245,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
       }} /> : <span />}>
       {input ? <input className="sale-product-input" data-entry-control={id} spellCheck={false} aria-label={label} role="combobox" aria-autocomplete="list" aria-expanded={visible} autoComplete="off" placeholder={input.placeholder} value={input.value} disabled={disabled}
         onKeyDown={keyboard} onClick={event => { triggerRef.current = event.currentTarget; }} onChange={event => { const value = event.currentTarget.value;  triggerRef.current = event.currentTarget; input.change(value); if (!visible) { show(); if (!input.openUsesInputValue) void session.search(value); } else void session.search(value);  }} />
-        : <button type="button" className={"btn " + (`sale-select-trigger${spec ? ` mx-spec-picker${selection?.[spec === 'size' ? 'size' : spec] ? ' has-value' : ''}` : ''}`)} data-entry-control={id} aria-label={label} aria-haspopup={spec ? 'listbox' : 'dialog'} aria-expanded={visible} disabled={disabled} onKeyDown={keyboard} onClick={event => { triggerRef.current = event.currentTarget; }}><span>{value}</span>{spec ? <svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4" /></svg> : <span aria-hidden="true">⌄</span>}</button>}
+        : <SalesCandidateButton type="button" className={"btn " + (`sale-select-trigger${spec ? ` mx-spec-picker${selection?.[spec === 'size' ? 'size' : spec] ? ' has-value' : ''}` : ''}`)} data-entry-control={id} aria-label={label} aria-haspopup={spec ? 'listbox' : 'dialog'} aria-expanded={visible} disabled={disabled} onKeyDown={keyboard} onClick={event => { triggerRef.current = event.currentTarget; }}><span>{value}</span>{spec ? <svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4" /></svg> : <span aria-hidden="true">⌄</span>}</SalesCandidateButton>}
     </SalesCandidateTrigger>;
   };
   const reference = (id: string, label: string, placeholder: string, selected: { readonly id: string; readonly name: string } | null, open: () => void, disabled = false, clear?: () => void) => <SalesReferenceField session={session} picker={anchor === id ? picker : null} visible={anchor === id && !!picker} label={label} value={placeholder} selected={selected} disabled={disabled} account={id.startsWith('account-')}
