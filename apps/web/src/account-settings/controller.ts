@@ -1,8 +1,8 @@
 import type { ReadScope } from '../loading/read-scope.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import type { SettingsErrors } from '../settings/stores/maintenance-contracts.ts';
-import { AccountClientError, type AccountCommand, type AccountCommandClient, type AccountCommandResult, type AccountIntent, type AccountReceiptIdentity,
-  type AccountSettingsDraft, type AccountSettingsReader, type AccountSettingsRecord, type AccountStaffCandidate, type StaffSettingsReader } from './contracts.ts';
+import { initialAccountSettingsQuery, AccountClientError, type AccountCommand, type AccountCommandClient, type AccountCommandResult, type AccountIntent, type AccountReceiptIdentity,
+  type AccountSettingsDraft, type AccountSettingsReader, type AccountSettingsRecord, type AccountStaffCandidate, type StaffSettingsReader, type AccountSettingsQuery } from './contracts.ts';
 import { accountStaffCandidate, accountReceiptIdentity, mayEnableLogin, safeAccountRecord, validateAccountCommand, validateAccountReadback, validateAccountReceipt, validateAccountResult, validLoginName, validPassword } from './response-validation.ts';
 
 export interface AccountWriteState {
@@ -140,13 +140,22 @@ export class AccountSettingsController {
   #accessFailure(error: AccountClientError): void { if (error.kind !== 'unauthenticated' && error.kind !== 'forbidden') return; if (error.kind === 'forbidden' && (this.hasUnresolvedWrite || this.#options?.hasOtherUnresolvedWrite?.())) return; this.scope.dispose(); try { this.#options?.onAccessFailure(error.kind); } catch { /* Identity cleared. */ } }
   #publish(snapshot: AccountEditorSnapshot): void { this.#snapshot = Object.freeze({ ...snapshot, write: Object.freeze(snapshot.write), readback: Object.freeze(snapshot.readback) }); for (const listener of [...this.#listeners]) { try { listener(); } catch { /* Continue cleanup. */ } } }
 }
+/** Same source presentation lifecycle for the existing standalone account view. */
+export interface AccountSettingsViewState {
+  draft: AccountSettingsQuery; executed: AccountSettingsQuery;
+  readonly tableScroll: { top: number; left: number };
+}
+export function createAccountSettingsViewState(): AccountSettingsViewState {
+  return { draft: { ...initialAccountSettingsQuery }, executed: { ...initialAccountSettingsQuery }, tableScroll: { top: 0, left: 0 } };
+}
 export interface AccountWorkspaceOptions extends AccountEditorOptions { readonly scope: ReadScope }
 export function createAccountSettingsWorkspace(options: AccountWorkspaceOptions) {
-  let snapshot: AccountSettingsController | null = null; const listeners = new Set<() => void>();
+  let snapshot: AccountSettingsController | null = null, viewState: AccountSettingsViewState | null = null; const listeners = new Set<() => void>();
   const notify = () => { for (const listener of [...listeners]) { try { listener(); } catch { /* Consumer only. */ } } };
   const matches = (scope: ReadScope) => options.scope.active && scope.active && ['accountId', 'sessionRevision', 'permissionRevision'].every(key => options.scope.identity[key as keyof typeof scope.identity] === scope.identity[key as keyof typeof scope.identity]);
-  options.scope.signal.addEventListener('abort', () => { snapshot?.dispose(); snapshot = null; notify(); listeners.clear(); }, { once: true });
+  options.scope.signal.addEventListener('abort', () => { snapshot?.dispose(); snapshot = null; viewState = null; notify(); listeners.clear(); }, { once: true });
   return Object.freeze({ scope: options.scope, matches, getSnapshot: () => snapshot,
+    getViewState: (): AccountSettingsViewState | null => options.scope.active ? viewState ??= createAccountSettingsViewState() : null,
     subscribe: (listener: () => void) => { listeners.add(listener); return () => { listeners.delete(listener); }; },
     open(record: AccountSettingsRecord | null, intent: AccountIntent = record ? 'EDIT' : 'CREATE'): AccountSettingsController | null {
       if (!options.scope.active) return null; if (snapshot && !snapshot.canLeave()) { snapshot.requestClose(); return null; } snapshot?.dispose(); snapshot = new AccountSettingsController(options.scope, record, intent, options); notify(); return snapshot;

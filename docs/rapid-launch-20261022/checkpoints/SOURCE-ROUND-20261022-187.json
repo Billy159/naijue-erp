@@ -1,0 +1,140 @@
+{
+  "atUtc": "2026-10-23T14:09:10.376934+00:00",
+  "parent": "ecad120cc4db005924eb3139249eede6bbb88473",
+  "taskId": "F05_DEMO_STAFF_AND_APPROVED_ACCOUNT_ASSOCIATED_PAGE",
+  "files": [
+    {
+      "path": "apps/web/src/staff-settings/staff-page.tsx",
+      "owner": "F3",
+      "bytes": 16106,
+      "sha256": "125a17f7b6dc96ae3c6b12b99ceb66d1ce37b12fdc1d4135509bc44df03c14c1"
+    },
+    {
+      "path": "apps/web/src/staff-settings/staff-form.tsx",
+      "owner": "F3",
+      "bytes": 10764,
+      "sha256": "e314bf6427582eefed6978ba06c30f4df7430e6fc0457a4bccf0e32107851496"
+    },
+    {
+      "path": "apps/web/src/staff-settings/staff-settings.css",
+      "owner": "F3",
+      "bytes": 3871,
+      "sha256": "69f663203d05eea38d0d744155100de7eb1a0a8cd6d3df9cbb3a0118f6ab6b2b"
+    },
+    {
+      "path": "apps/web/src/staff-settings/controller.ts",
+      "owner": "F3",
+      "bytes": 19518,
+      "sha256": "f76efcf0b7c82a86b80fc66c7cedf0cde08d22130e5f4da672195bab4253b8ce"
+    },
+    {
+      "path": "apps/web/src/account-settings/account-page.tsx",
+      "owner": "F3",
+      "bytes": 12814,
+      "sha256": "23745149633062a3868626c9a1527d399675bb1771b70ebf4b712803bee2e630"
+    },
+    {
+      "path": "apps/web/src/account-settings/account-form.tsx",
+      "owner": "F3",
+      "bytes": 12484,
+      "sha256": "a272d39a8abea3bf6a14ada8d35844de15b5bb640c724968bf07ad9e6853b6ec"
+    },
+    {
+      "path": "apps/web/src/account-settings/controller.ts",
+      "owner": "F3",
+      "bytes": 19708,
+      "sha256": "4dc01aeb07c7c92ea7d1695a2d98da23f453f8514047cc2ad8ffd58b04df68b9"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-account-frozen-page-v1/RESULT.json",
+  "ownerReceiptSha256": "70992f648b9e9fd8eacaf57f3dd90eb87bb08d449dcca65d86abc8815fcd343e",
+  "source": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/奈爵服饰-8877-Demo/frontend/basic-settings-v2.jsx",
+      "commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sha256": "c16e44268ac75f50784c0ce8c8b45826eb267ec85c8cee06596d24ab2a0761fa",
+      "workingFileMatchesFrozenCommit": true
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/奈爵服饰-8877-Demo/frontend/basic-settings-v2.css",
+      "commit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "sha256": "92f519c978f94fdefed31f513f3279f01a5d40705fff51b8f76cba2265f31393",
+      "workingFileMatchesFrozenCommit": true
+    }
+  ],
+  "sourceMap": [
+    {
+      "source": "basic-settings-v2.jsx App/Filters staff branch and original columns",
+      "target": "staff-settings/staff-page.tsx",
+      "adapters": [
+        "real native role filter capability and paged hall directory",
+        "unsupported loginStatus/loginNameSearch remain disabled/unavailable according to reader",
+        "existing shared Demo pager/single-select",
+        "native audit/detail/edit/employment/session/command guards and optional read states"
+      ]
+    },
+    {
+      "source": "basic-settings-v2.jsx Fields staff branch / App Modal / employment confirmation",
+      "target": "staff-settings/staff-form.tsx",
+      "adapters": [
+        "existing native role values and requiresHall",
+        "transient password input and detach lifecycle",
+        "native lock/save/readback/receipt/dirty-close",
+        "aggregate native errors in original bs-error paragraph"
+      ]
+    },
+    {
+      "source": "basic-settings-v2.jsx App/Filters/Fields/Readonly/Modal carriers",
+      "target": [
+        "account-settings/account-page.tsx",
+        "account-settings/account-form.tsx"
+      ],
+      "approvedExtension": "Existing standalone W7 account page is not a literal frozen Demo page. Its approved native staff/login/enable/disable/reset fields and operations remain; only surrounding source carriers/layout are migrated. It remains separate from F1 own-password menu."
+    },
+    {
+      "source": "basic-settings-v2.css complete applicable layout, 580px staff/520px account and responsive branch",
+      "target": "staff-settings/staff-settings.css",
+      "adapters": [
+        "only selectors narrowed",
+        "existing shared inventory/control/density CSS remains",
+        "native optional states retained"
+      ]
+    },
+    {
+      "source": "basic-settings-v2 module-level cache retains ordinary route presentation",
+      "target": [
+        "staff-settings/controller.ts",
+        "account-settings/controller.ts",
+        "staff-settings/staff-page.tsx",
+        "account-settings/account-page.tsx"
+      ],
+      "adapter": "same approved C182 bounded UI-state pattern under each existing authenticated workspace: draft/executed/hall for staff/page/size/scroll only; route reads still disposed and reissued; scope abort removes presentation state; no data/result/DOM/global cache."
+    }
+  ],
+  "checksAdopted": {
+    "DOM-CHECK.json": {
+      "status": "PASS_STAFF_AND_APPROVED_ACCOUNT_SOURCE_ADAPTER_SCOPE",
+      "sha256": "ed7f497c0b47febc0f289b32f31f3cde6a325216114ae7f2669db97cd7773c0d"
+    },
+    "TYPECHECK.json": {
+      "status": "PASS",
+      "sha256": "16ae7884a857efc01aa19e4cd96cdadeb371383e6a43c6a04e298f32a4ceb94e"
+    },
+    "CSS-CHECK.json": {
+      "status": "PASS_APPLICABLE_SOURCE_CSS_GRAPH",
+      "sha256": "00c2f80b2256f21df938e6cbfd96ef1c4001e4665f2fd3d8c4a3385e9f43a3ad"
+    }
+  },
+  "scopedDOMGroupsPassed": 6,
+  "qualification": "SOURCE_FIXED_AND_OWNER_AFFECTED_SELFCHECK_ONLY. Staff source App/Filters/Fields/Modal plus complete applicable CSS; independent W7 account is approved extension using same source carrier, not original Demo page. Current bounded workspace context, true capabilities/permissions kept. No browser/HTTP/PG/SAVE/build/release PASS. Unified184 preview does not include187.",
+  "unchangedNativeLogic": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/staff-account-frozen-page-v1/UNCHANGED-NATIVE-LOGIC.json",
+    "sha256": "e94b2c8c8db33d36de00ab5bd9440e14a71911c6be7213f48fccdb3acd310388",
+    "fact": "Both original command/controller class bodies, both mounted password detach setups and entire AccountStaffPicker are byte-identical to input baseline."
+  },
+  "typeCheckHistory": {
+    "initial": "3 diagnostics in external native-sales-preparation.ts only, preserved TYPECHECK-external-wip-before.json",
+    "resolution": "External owner changed that file after initial check; only same6 roots rechecked and now0 diagnostics. F3 did not edit external file."
+  },
+  "next": "C fixes exact7 and integrates one current candidate; QF2 compares employee page and approved standalone account extension with linked edit/create/employment/reset dialogs. No full-site or backend-capability wait."
+}

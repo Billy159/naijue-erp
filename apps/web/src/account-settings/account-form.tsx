@@ -21,28 +21,28 @@ export function AccountSettingsForm(props: AccountSettingsProps & { readonly con
   if (!draft || !props.scope.active) return null;
   const full = controller.intent === 'CREATE' || controller.intent === 'EDIT', secret = controller.intent === 'CREATE' || controller.intent === 'RESET_PASSWORD';
   const role = props.roles.find(item => item.value === draft.staff?.role)?.label ?? '未提供';
-  return <Modal className="demo-ui bs-modal demo-settings-modal iw-arco-modal iw-arco-controls" visible title={titles[controller.intent]} maskClosable={false} autoFocus={false} focusLock
-    okText="确定" cancelText={write.phase === 'committed' ? '关闭' : '取消'}
-    okButtonProps={{ disabled: !controller.writesEnabled || controller.locked || controller.intent === 'EDIT' && !state.dirty, loading: write.phase === 'checking' || write.phase === 'submitting' }}
+  // Frozen Fields/Readonly/Modal carriers with the existing approved account
+  // extension fields. The native staff selector and transient password stay intact.
+  const fields = [<SettingsField key="staff" label="所属员工" required={controller.intent === 'CREATE'}>{controller.intent === 'CREATE' ? <AccountStaffPicker {...props} selected={draft.staff} disabled={controller.locked} onChange={staff => controller.selectStaff(staff)} /> : <div className="bs-readonly">{draft.staff?.name ?? '未提供'}</div>}</SettingsField>];
+  if (draft.staff) fields.push(<SettingsField key="staffInfo" label="员工资料"><div className="bs-readonly">{role} · {draft.staff.employmentStatus || '未提供'}</div></SettingsField>);
+  fields.push(<SettingsField key="loginName" label="登录账号" required={full}>{full ? <Input className="iw-arco-input" aria-label="登录账号" value={draft.loginName} onChange={loginName => controller.update({ loginName })} autoComplete="off" disabled={controller.locked} /> : <div className="bs-readonly">{draft.loginName}</div>}</SettingsField>);
+  if (secret) fields.push(<SettingsField key="password" label={controller.intent === 'CREATE' ? '初始密码' : '新密码'} required><Input.Password className="iw-arco-input" aria-label={controller.intent === 'CREATE' ? '初始密码' : '新密码'} value={password} onChange={value => { setPassword(value); controller.setPasswordIntent(value.length > 0); }} autoComplete="new-password" disabled={controller.locked} /></SettingsField>);
+  if (full) fields.push(<SettingsField key="loginEnabled" label="登录权限"><div className="bs-switch"><Switch aria-label="登录权限" checked={draft.loginEnabled} onChange={loginEnabled => controller.update({ loginEnabled })} disabled={controller.locked} /><span>{draft.loginEnabled ? '已开通' : '已关闭'}</span></div></SettingsField>);
+  const error = Object.values(state.errors).join(' ') || (write.phase === 'rejected' ? accountRejectionMessage(write.error?.code ?? '') : '');
+  return <Modal className="demo-ui bs-modal demo-settings-modal account-settings-modal iw-arco-modal iw-arco-controls" visible title={titles[controller.intent]} maskClosable={false} autoFocus={false} focusLock
+    okText="确定" cancelText={write.phase === 'committed' ? '关闭' : '取消'} confirmLoading={write.phase === 'checking' || write.phase === 'submitting'}
+    okButtonProps={{ disabled: !controller.writesEnabled || controller.locked || controller.intent === 'EDIT' && !state.dirty }}
     onOk={() => { const transient = password; setPassword(''); void controller.submit(transient); }} onCancel={() => { if (controller.requestClose()) props.close(); }}>
-    <div className="bs-form-fields iw-form-fields">
-      <SettingsField label="所属员工" required={controller.intent === 'CREATE'} error={state.errors.staff}>
-        {controller.intent === 'CREATE' ? <AccountStaffPicker {...props} selected={draft.staff} disabled={controller.locked} onChange={staff => controller.selectStaff(staff)} /> : <div className="bs-readonly">{draft.staff?.name ?? '未提供'}</div>}
-      </SettingsField>
-      {draft.staff && <SettingsField label="员工资料"><div className="bs-readonly">{role} · {draft.staff.employmentStatus || '未提供'}</div></SettingsField>}
-      <SettingsField label="登录账号" required={full} error={state.errors.loginName}>{full ? <Input className="iw-arco-input" aria-label="登录账号" disabled={controller.locked} autoComplete="off" value={draft.loginName} onChange={loginName => controller.update({ loginName })} /> : <div className="bs-readonly">{draft.loginName}</div>}</SettingsField>
-      {secret && <SettingsField label={controller.intent === 'CREATE' ? '初始密码' : '新密码'} required error={state.errors.password}><Input.Password className="iw-arco-input" aria-label={controller.intent === 'CREATE' ? '初始密码' : '新密码'} disabled={controller.locked} value={password} autoComplete="new-password" onChange={value => { setPassword(value); controller.setPasswordIntent(value.length > 0); }} /></SettingsField>}
-      {full && <SettingsField label="登录权限" error={state.errors.loginEnabled}><div className="bs-switch"><Switch aria-label="登录权限" disabled={controller.locked} checked={draft.loginEnabled} onChange={loginEnabled => controller.update({ loginEnabled })} /><span>{draft.loginEnabled ? '已开通' : '已关闭'}</span></div></SettingsField>}
-    </div>
+    <div className="bs-form-fields iw-form-fields">{fields}</div>
+    {error && <p className="bs-error" role="alert">{error}</p>}
     {controller.intent === 'DISABLE' && <p>确定禁用此账号？员工与历史资料继续保留，原登录会话将失效。</p>}
     {controller.intent === 'RESTORE' && <p>确定启用此账号？需要员工仍在职且角色、营业厅可用。</p>}
     {controller.intent === 'RESET_PASSWORD' && <p>确定后使用新密码，原登录会话将失效。</p>}
-    {state.errors.state && <p role="alert" className="settings-note">{state.errors.state}</p>}
     {!controller.writesEnabled && !controller.hasUnresolvedWrite && write.phase !== 'committed' && <p role="status" className="settings-note">此版本暂未开放保存，填写的内容不会保存。</p>}
     {(write.phase === 'checking' || write.phase === 'submitting' || write.phase === 'recovering') && <p role="status" className="settings-note">{write.phase === 'checking' ? '正在核对员工当前账号…' : write.phase === 'submitting' ? '正在保存，请等待结果。' : '正在查询原提交的回执…'}</p>}
     {write.phase === 'committed' && <p role="status" className="settings-note">保存成功。{state.readback.phase === 'ready' ? '已读取最新账号资料。' : state.readback.phase === 'loading' ? '正在读取最新账号资料…' : ''}</p>}
     {write.phase === 'committed' && state.readback.phase === 'error' && <p role="alert" className="settings-note">最新资料读取失败，已保存的结果不受影响。<Button onClick={() => { void controller.readback(); }}>重新读取资料</Button></p>}
-    {write.phase === 'rejected' && <p role="alert" className="settings-note">{accountRejectionMessage(write.error?.code ?? '')}{state.needsPasswordReentry ? ' 本次输入的密码已清除，请重新输入。' : ''}</p>}
+    {write.phase === 'rejected' && state.needsPasswordReentry && <p role="alert" className="settings-note">本次输入的密码已清除，请重新输入。</p>}
     {write.phase === 'uncertain' && <section role="alert" className="settings-note"><p>提交结果尚未确认，请勿重复保存，请查询原提交回执。</p>
       {write.error?.code === 'RECEIPT_NOT_FOUND' && <p>暂未查到原回执，仍不能确定是否已保存。</p>}{write.error?.kind === 'forbidden' && <p>当前无权读取原回执，提交结果仍待确认。</p>}
       <Button onClick={() => { void controller.recover(); }}>查询原提交回执</Button></section>}

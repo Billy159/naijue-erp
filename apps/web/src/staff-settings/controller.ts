@@ -1,8 +1,8 @@
 import type { ReadScope } from '../loading/read-scope.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
-import type { SettingsErrors } from '../settings/stores/maintenance-contracts.ts';
-import { StaffClientError, type StaffCommand, type StaffCommandClient, type StaffCommandResult, type StaffReceiptIdentity,
-  type StaffRoleOption, type StaffSettingsDraft, type StaffSettingsReader, type StaffSettingsRecord } from './contracts.ts';
+import type { SettingsErrors, SettingsReference } from '../settings/stores/maintenance-contracts.ts';
+import { initialStaffSettingsQuery, StaffClientError, type StaffCommand, type StaffCommandClient, type StaffCommandResult, type StaffReceiptIdentity,
+  type StaffRoleOption, type StaffSettingsDraft, type StaffSettingsReader, type StaffSettingsRecord, type StaffSettingsQuery } from './contracts.ts';
 import { safeStaffEditorRecord, staffReceiptIdentity, validateStaffCommand, validateStaffReadback, validateStaffReceipt, validateStaffResult, validateStaffSettingsDraft } from './response-validation.ts';
 
 export type StaffEditorIntent = 'edit' | 'LEAVE' | 'REINSTATE';
@@ -184,14 +184,23 @@ export class StaffSettingsController {
     for (const listener of [...this.#listeners]) { try { listener(); } catch { /* Cleanup must finish. */ } }
   }
 }
+/** Frozen App keeps only presentation conditions across ordinary menu returns. */
+export interface StaffSettingsViewState {
+  draft: StaffSettingsQuery; executed: StaffSettingsQuery; hall: SettingsReference | null;
+  readonly tableScroll: { top: number; left: number };
+}
+export function createStaffSettingsViewState(): StaffSettingsViewState {
+  return { draft: { ...initialStaffSettingsQuery }, executed: { ...initialStaffSettingsQuery }, hall: null, tableScroll: { top: 0, left: 0 } };
+}
 export interface StaffWorkspaceOptions extends StaffEditorOptions { readonly scope: ReadScope; readonly roles: readonly StaffRoleOption[] }
 export function createStaffSettingsWorkspace(options: StaffWorkspaceOptions) {
-  let snapshot: StaffSettingsController | null = null;
+  let snapshot: StaffSettingsController | null = null, viewState: StaffSettingsViewState | null = null;
   const listeners = new Set<() => void>();
   const notify = () => { for (const listener of [...listeners]) { try { listener(); } catch { /* Consumer only. */ } } };
   const matches = (scope: ReadScope) => options.scope.active && scope.active && ['accountId', 'sessionRevision', 'permissionRevision'].every(key => options.scope.identity[key as keyof typeof scope.identity] === scope.identity[key as keyof typeof scope.identity]);
-  options.scope.signal.addEventListener('abort', () => { snapshot?.dispose(); snapshot = null; notify(); listeners.clear(); }, { once: true });
+  options.scope.signal.addEventListener('abort', () => { snapshot?.dispose(); snapshot = null; viewState = null; notify(); listeners.clear(); }, { once: true });
   return Object.freeze({ scope: options.scope, matches, getSnapshot: () => snapshot,
+    getViewState: (): StaffSettingsViewState | null => options.scope.active ? viewState ??= createStaffSettingsViewState() : null,
     subscribe: (listener: () => void) => { listeners.add(listener); return () => { listeners.delete(listener); }; },
     open(record: StaffSettingsRecord | null, intent: StaffEditorIntent = 'edit'): StaffSettingsController | null {
       if (!options.scope.active) return null;

@@ -1,4 +1,29 @@
-@import '../settings/stores/source-store-settings.css';
 @import '../settings/demo-settings-ui.css';
-.staff-settings-workbench .bs-row-actions{gap:6px;white-space:nowrap}
-.staff-settings-workbench .staff-empty-state{padding:12px 0;color:var(--ca-ink-2);line-height:20px}
+/* Frozen b8bcfe3 basic-settings-v2.css applicable App/Fields/Modal layout.
+ * Only scope selectors differ. Existing inventory density/controls are shared;
+ * the standalone account page retains its approved native field extension. */
+:is(.staff-settings-workbench,.account-settings-workbench).bs-page.iw-workbench{max-height:none;min-height:0;flex:1;display:flex;flex-direction:column;color:var(--text)}
+:is(.staff-settings-workbench,.account-settings-workbench) .bs-head.iw-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+:is(.staff-settings-workbench,.account-settings-workbench) .bs-head-actions{display:flex;align-items:center;gap:4px}
+:is(.staff-settings-workbench,.account-settings-workbench) .bs-toolbar{display:flex;align-items:center;gap:var(--ca-space-2);margin:0 0 var(--ca-space-2);flex:none}
+:is(.staff-settings-workbench,.account-settings-workbench) .bs-filter-fields{display:flex;align-items:center;gap:var(--ca-space-2);flex:1;min-width:0}
+:is(.staff-settings-workbench,.account-settings-workbench) .bs-filter{flex:0 1 178px;min-width:128px}
+:is(.staff-settings-workbench,.account-settings-workbench) .bs-filter.search{flex:1 1 280px;max-width:440px}
+:is(.staff-settings-workbench,.account-settings-workbench) .bs-single,:is(.staff-settings-workbench,.account-settings-workbench) .bs-multi{width:100%;min-width:0}
+:is(.staff-settings-workbench,.account-settings-workbench) .bs-toolbar-actions{display:flex;align-items:center;gap:var(--ca-space-2);margin-left:auto;flex:none}
+:is(.staff-settings-workbench,.account-settings-workbench) .bs-table-wrap{border:1px solid var(--border);overflow:auto;min-height:0;background:var(--surface);flex:0 1 auto}
+:is(.staff-settings-workbench,.account-settings-workbench) .bs-row-actions{display:flex;align-items:center;gap:6px;white-space:nowrap}
+:is(.staff-settings-workbench,.account-settings-workbench).bs-page>.bs-pager{flex:none;margin-top:auto;padding-top:var(--ca-space-2);background:var(--surface)}
+:is(.staff-settings-workbench,.account-settings-workbench) .bs-pager .iw-pagination{white-space:nowrap;flex-wrap:nowrap}
+:is(.staff-settings-workbench,.account-settings-workbench) .bs-pager .iw-pagination>span{flex:none}
+:is(.staff-settings-modal,.account-settings-modal).bs-modal{width:520px!important;max-width:calc(100vw - 32px)}
+.staff-settings-modal.bs-modal.bs-modal-staff{width:580px!important}
+.staff-settings-modal .bs-staff-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+:is(.staff-settings-modal,.account-settings-modal) .bs-readonly{min-height:var(--ui-control);display:flex;align-items:center;overflow-wrap:anywhere}
+.staff-settings-modal .bs-wide{grid-column:1/-1;padding-top:3px}
+:is(.staff-settings-modal,.account-settings-modal) .bs-switch{display:flex;align-items:center;gap:var(--ca-space-2);min-height:var(--ui-control)}
+:is(.staff-settings-modal,.account-settings-modal) .bs-error{margin:10px 0 0;color:var(--error);line-height:1.5}
+@media(max-width:1100px){:is(.staff-settings-workbench,.account-settings-workbench) .bs-toolbar{flex-wrap:wrap}:is(.staff-settings-workbench,.account-settings-workbench) .bs-filter-fields{flex-wrap:wrap}:is(.staff-settings-workbench,.account-settings-workbench) .bs-filter{flex:1 1 145px}:is(.staff-settings-workbench,.account-settings-workbench) .bs-filter.search{max-width:none}}
+@media(max-width:620px){.staff-settings-modal .bs-staff-fields{grid-template-columns:1fr}:is(.staff-settings-workbench,.account-settings-workbench) .bs-pager .iw-pagination{flex-wrap:wrap}:is(.staff-settings-workbench,.account-settings-workbench) .bs-pager .actions{margin-left:0}}
+/* Native states remain conditional additions to the source successful page. */
+:is(.staff-settings-workbench,.account-settings-workbench) .staff-empty-state{padding:12px 0;color:var(--ca-ink-2);line-height:20px}
