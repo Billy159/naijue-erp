@@ -218,8 +218,14 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
     return () => view.removeEventListener('resize', measure);
   }, [businessMenuOpen, state.disposed]);
   if (state.disposed) return <p role="status">草稿已关闭，当前身份资料已清除。</p>;
-  const { draft, picker } = state, combined = draft.businessType !== 'SALE', pricingLines = session.pricingLines, displayedLines = pricingLines ?? draft.lines;
-  const displayedType = salesBusinessType(salesBusinessMode(draft.businessType), displayedLines.map(row => row.quantity)), totals = pricingLines ? salesProposalMoney({ ...draft, businessType: displayedType, lines: pricingLines }) : null;
+  const { draft, picker } = state, combined = draft.businessType !== 'SALE', pricingLines = session.pricingLines;
+  // Frozen chooseEntry adds selected work to doc.lines; an unselected query
+  // stays outside it. SAVE readiness still uses the strict session projection.
+  const displayedLines = [...draft.lines.map(row => state.lineEdit?.original === row ? state.lineEdit : row),
+    ...Object.values(state.entries).flat().sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+      .flatMap(entry => entry.product ? [{ ...entry, product: entry.product }] : [])];
+  const displayedType = salesBusinessType(salesBusinessMode(draft.businessType), displayedLines.map(row => row.quantity)), totals = salesProposalMoney({ ...draft, businessType: displayedType, lines: displayedLines });
+  const pendingPricing = displayedLines.filter(row => linePrice(row) === null).length;
   const restorePickerFocus = () => {
     const live = triggerRef.current?.isConnected ? triggerRef.current : Array.from(formRef.current?.querySelectorAll<HTMLElement>('[data-entry-control]') ?? []).find(node => node.dataset.entryControl === anchor);
     live?.focus({ preventScroll: true });
@@ -368,7 +374,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
       })}
       </tbody></table></div></section>;
     })}
-    <SalesDocumentSummary businessType={displayedType} lines={displayedLines.map(row => ({ quantity: row.quantity, isGift: row.isGift, styleKey: row.product.id, ...(row.product.category ? { category: row.product.category } : {}) }))} grossMinor={totals?.grossMinor ?? null} discountMinor={totals?.orderDiscountMinor ?? null} netDueMinor={totals?.netDueMinor ?? null} />
+    <SalesDocumentSummary businessType={displayedType} lines={displayedLines.map(row => ({ quantity: row.quantity, isGift: row.isGift, styleKey: row.product.id, ...(row.product.category ? { category: row.product.category } : {}) }))} grossMinor={totals?.grossMinor ?? null} discountMinor={totals?.orderDiscountMinor ?? null} netDueMinor={totals?.netDueMinor ?? null} extra={!combined && pendingPricing > 0 ? <span>{pendingPricing}条待定价</span> : undefined} />
     {scanner && <DocumentScan controller={scanner.controller} title={scanner.direction === 'IN' ? '退回商品扫码录入' : combined ? '换出商品扫码录入' : '销货扫码录入'} rows={draft.lines.filter((row): row is Extract<SalesProposalLine, { readonly sku: CurrentFormSku }> => row.sku !== null && row.quantity.startsWith('-') === (scanner.direction === 'IN'))} close={() => setScanner(null)} update={(key, value) => session.updateLine(key, { quantity: value })} remove={key => session.removeLine(key)} />}
     {zero && <SourceDocumentDialog className="source-confirm-dialog" title="确认普通零价商品" label="确认普通零价商品" closeLabel="关闭弹窗" close={() => setZeroLine(null)} initialFocus="[data-erp-keep-input]" footer={<><button type="button" className="btn" data-erp-keep-input onClick={() => setZeroLine(null)}>取消</button><button type="button" className="btn primary" onClick={confirmZero}>确认零价</button></>}><div className="ui-confirm-body"><p>此行单价为0.00元，不标为赠品，审核时仍按业务类型处理商品数量。</p></div></SourceDocumentDialog>}
     {pendingMode && <SalesModeConfirmation cancel={cancelMode} confirm={() => { const next = modeToConfirm.current; if (!next) return; cancelMode(); session.setBusinessMode(next); }} />}
