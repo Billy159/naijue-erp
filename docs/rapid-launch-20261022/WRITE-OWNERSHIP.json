@@ -469,6 +469,11 @@
           "path": "tests/native-document-size-editing.test.ts",
           "group": "ORIGINAL_DOCUMENT_ALL_SIZE_EXISTING_REAL_SKU_REGRESSION",
           "fieldGate": "TEST_ONLY_EXISTING_CONTRACT_NO_DDL_OR_NEW_WRITE_SEMANTICS"
+        },
+        {
+          "path": "adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql",
+          "group": "B00_NATIVE_CREATION_TRIGGER_RECORD_SCOPE_IMPLEMENTATION_FIX",
+          "fieldGate": "EXISTING_APPROVED_SEMANTICS_NO_NEW_SCHEMA_OR_WRITE_CONTRACT"
         }
       ]
     },
@@ -3682,6 +3687,14 @@
       ],
       "reason": "Current human mandatory whole-page frozen Demo copy. F2 exact four complete page stylesheet sources and actual dependency order; no shared/global or second UI runtime ownership.",
       "source": "Current C human explicit abandon rewritten UI and copy Demo page directive 2026-10-23"
+    },
+    {
+      "atUtc": "2026-10-23T12:58:07.923929+00:00",
+      "owner": "D1",
+      "addedPaths": [
+        "adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql"
+      ],
+      "reason": "Original C80 actual42703 and source polymorphic NEW-field implementation defect; keep existing approved semantics, migrations1..26 andv9 immutable. No cross-size new write permission."
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",

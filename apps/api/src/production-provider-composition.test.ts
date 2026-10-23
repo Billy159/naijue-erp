@@ -262,7 +262,7 @@ function exact26Fixture(purposes = ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_RE
     serverAddress: null, serverPort: null, postmasterStart: "2026-10-23 00:00:00+00" };
   const receipt = JSON.stringify({ result: "PASS", notice: "SYNTHETIC_PROTOCOL_ONLY_NOT_ACTUAL_APPROVAL" }); writeFileSync(independent, receipt, { mode: 0o600 });
   const review = { version: "C_NATIVE_RUNTIME26_REVIEW_V1", decision: "ACCEPT_EXACT_RUNTIME26_TARGET_METADATA", target,
-    catalog: { format: "EXACT26_RUNTIME_CATALOG_EXPORT_V1", sha256: digest, patchLevel: "26_v9_empty_history_publication_dispatch" }, purposes, scope: "EXACT_TARGET_METADATA_ONLY",
+    catalog: { format: "EXACT26_RUNTIME_CATALOG_EXPORT_V1", sha256: digest, patchLevel: "26_v10_native_creation_record_scope" }, purposes, scope: "EXACT_TARGET_METADATA_ONLY",
     independentReview: { path: independent, sha256: hash(receipt), result: "PASS" }, realImportExecutionAuthorized: false };
   const body = JSON.stringify(review); writeFileSync(reviewFile, body, { mode: 0o600 });
   const configuration: ProductionRuntime26Configuration = { ...config(), profile: "source-confirmed-native-exact26-r1-v1", documentCommands: "DISABLED",

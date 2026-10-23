@@ -294,7 +294,7 @@ SELECT manifest->'identity' AS identity,manifest->'migration_versions' AS migrat
     ('guard_maintenance_child_write','a19def51718e008e541482dd1e6f2d2ab9257842ce7e66ad6e62aedcfa216d8a'),
     ('guard_native_catalogue_binding','7418579c0d1c3a1951696a12ad165a421d26b87f0e449d9d7d250497dc2ddc21'),
     ('guard_native_catalogue_publication','d2eaa009760d63f245d562570ca4c8fce038633da5233a8c7ab7142190a30ceb'),
-    ('guard_native_creation_identity','67cf369716b3d97c92240da48dec5d4b87fbc5df8798f05f3a369acc143fe95a'),
+    ('guard_native_creation_identity','08e70b819b36f93f853e1ad2650c51a05758a5271bb47474d931af8ee3fdfff2'),
     ('guard_native_party_import_intent','262e74a37ba12883a4978c4d99b6ecca000d245186b585a9e5b35ad31ccf8d7f'),
     ('guard_native_payment_binding','774cc9b1604a8d0948f73c7298fa67a10233962af218b89fe0b9675107148d35'),
     ('guard_native_payment_publication','993b114dfbec87428a42a9f6aa7d0a6ecbeef67fd85bc00754fa4eb80c7e6797'),
@@ -478,7 +478,7 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     || target.serverPort !== null && !(typeof target.serverPort === "number" && Number.isInteger(target.serverPort) && target.serverPort >= 1 && target.serverPort <= 65535))
     throw runtime26Error("Exact database, process, role and nullable socket identity required");
   const catalog = exactData(review.catalog, ["format", "sha256", "patchLevel"]);
-  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || catalog.patchLevel !== "26_v9_empty_history_publication_dispatch")
+  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || catalog.patchLevel !== "26_v10_native_creation_record_scope")
     throw runtime26Error("Exact reviewed v8 catalog digest required; prior catalogs do not prove the approved bootstrap envelope");
   const purposes = ownArray(review.purposes);
   if (purposes.length === 0 || purposes.length > runtime26Purposes.length || new Set(purposes).size !== purposes.length

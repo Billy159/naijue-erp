@@ -15,7 +15,7 @@ function observation() { return { identity: { database: target.database, databas
 function fixture() {
   const directory = mkdtempSync(join(tmpdir(), "d1-runtime26-synthetic-")), independent = join(directory, "independent.json"), reviewFile = join(directory, "review.json");
   const receipt = JSON.stringify({ result: "PASS", notice: "SYNTHETIC_PROTOCOL_ONLY_NOT_ACTUAL_APPROVAL" }); writeFileSync(independent, receipt, { mode: 0o600 });
-  const review = { version: "C_NATIVE_RUNTIME26_REVIEW_V1", decision: "ACCEPT_EXACT_RUNTIME26_TARGET_METADATA", target, catalog: { format: "EXACT26_RUNTIME_CATALOG_EXPORT_V1", sha256: digest, patchLevel: "26_v9_empty_history_publication_dispatch" },
+  const review = { version: "C_NATIVE_RUNTIME26_REVIEW_V1", decision: "ACCEPT_EXACT_RUNTIME26_TARGET_METADATA", target, catalog: { format: "EXACT26_RUNTIME_CATALOG_EXPORT_V1", sha256: digest, patchLevel: "26_v10_native_creation_record_scope" },
     purposes: ["IMPORT_STAGE", "PRODUCT_SEASONS_READ", "PRODUCT_MAINTENANCE", "CURRENT_CUSTOMER_READ_WRITE"], scope: "EXACT_TARGET_METADATA_ONLY", independentReview: { path: independent, sha256: hash(receipt), result: "PASS" }, realImportExecutionAuthorized: false };
   function options(value: unknown = review) { const body = JSON.stringify(value); writeFileSync(reviewFile, body, { mode: 0o600 }); return { reviewFile, trustedReviewSha256: hash(body) }; }
   return { directory, independent, review, reviewFile, options, cleanup: () => rmSync(directory, { recursive: true, force: true }) };

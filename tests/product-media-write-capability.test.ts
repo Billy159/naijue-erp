@@ -19,7 +19,7 @@ async function fixture(zeroAudit = false) {
   const directory = mkdtempSync(join(tmpdir(), "d1-media-proof-synthetic-")), receiptPath = join(directory, "receipt.json"), reviewFile = join(directory, "review.json"), digest = "a".repeat(64);
   const receipt = '{"result":"PASS","notice":"SYNTHETIC_PROTOCOL_ONLY"}'; writeFileSync(receiptPath, receipt, { mode: 0o600 });
   const target = { database: "SYNTHETIC_ONLY", databaseOid: "123", actingRole: "synthetic_owner", sessionUser: "synthetic_session", serverAddress: null, serverPort: null, postmasterStart: "2026-10-23 00:00:00+00" };
-  const review = JSON.stringify({ version: "C_NATIVE_RUNTIME26_REVIEW_V1", decision: "ACCEPT_EXACT_RUNTIME26_TARGET_METADATA", target, catalog: { format: "EXACT26_RUNTIME_CATALOG_EXPORT_V1", sha256: digest, patchLevel: "26_v9_empty_history_publication_dispatch" },
+  const review = JSON.stringify({ version: "C_NATIVE_RUNTIME26_REVIEW_V1", decision: "ACCEPT_EXACT_RUNTIME26_TARGET_METADATA", target, catalog: { format: "EXACT26_RUNTIME_CATALOG_EXPORT_V1", sha256: digest, patchLevel: "26_v10_native_creation_record_scope" },
     purposes: ["PRODUCT_MAINTENANCE"], scope: "EXACT_TARGET_METADATA_ONLY", independentReview: { path: receiptPath, sha256: hash(receipt), result: "PASS" }, realImportExecutionAuthorized: false });
   writeFileSync(reviewFile, review, { mode: 0o600 }); const calls: string[] = [], releases: unknown[] = [];
   const pool = { async connect() { return { async query(sql: string, values: unknown[] = []) { calls.push(sql);
