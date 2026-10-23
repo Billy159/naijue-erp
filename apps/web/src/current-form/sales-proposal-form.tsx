@@ -254,7 +254,9 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
   const cancelMode = () => { modeToConfirm.current = null; setPendingMode(null); };
   const chooseMode = (mode: SalesBusinessMode) => {
     if (mode === salesBusinessMode(draft.businessType) || state.lineEdit) return;
-    if (draft.lines.length) { modeToConfirm.current = mode; setPendingMode(mode); }
+    // Frozen chooseEntry already counts a selected, spec-unfinished product as
+    // a document line; this session retains that same working state in entries.
+    if (draft.lines.length || Object.values(state.entries).flat().some(entry => !!entry.product)) { modeToConfirm.current = mode; setPendingMode(mode); }
     else session.setBusinessMode(mode);
   };
   const discard = (action: 'reset' | 'cancel', confirmed = false) => { const ok = action === 'reset' ? session.reset(confirmed) : session.cancel(confirmed); if (!ok) setConfirm(action); else { setConfirm(null); if (action === 'cancel') close(); } };
