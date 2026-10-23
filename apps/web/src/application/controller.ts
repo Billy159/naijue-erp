@@ -4,6 +4,7 @@ import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import { ReadContext, type ReadIdentity, type ReadScope } from '../loading/read-scope.ts';
 import { snapshotQueryParameters } from '../loading/query-parameters.ts';
 import type { ProductMaintenanceCommand } from '../products/product-editor-contracts.ts';
+import type { InventoryLedgerEntry } from '../inventory/ledger-contracts.ts';
 import { captureProductFullPageConfiguration, ownProductFullPageConfiguration } from '../products/product-page-configuration.ts';
 import type { ApplicationConfiguration, ApplicationRoute, ApplicationSnapshot, PartySession, SalesSession, TransferSession, PreparedApplicationRoute, RoutePreparation, RouteStylesheet } from './contracts.ts';
 import type { preparePaymentSettingsSession } from './routes/payment-settings.tsx';
@@ -253,7 +254,7 @@ export class ApplicationController {
     if (this.#documentTrip?.origin.route === route && this.#state.route === 'inventory' && this.#state.scope) return this.#returnFromDocumentInventory(this.#state.scope, this.#documentTrip);
     return this.#navigate(route);
   }
-  async #navigate(route: ApplicationRoute | null, trip?: ProductInventoryTrip): Promise<boolean> {
+  async #navigate(route: ApplicationRoute | null, trip?: ProductInventoryTrip, initialDocument?: RoutePreparation['initialDocument']): Promise<boolean> {
     if (this.#disposed || !this.authentication.getSnapshot().principal || this.authentication.busy) return false;
     if (route !== null && !this.routes.includes(route)) return false;
     if (route === this.#state.route && this.#state.phase === 'ready' && this.#state.scope?.active) return true;
@@ -280,10 +281,10 @@ export class ApplicationController {
     const scope = this.#context.createScope(`application-route-${++this.#sequence}`);
     this.#publish({ phase: 'loading', route, scope, prepared: null, notice: null });
     const principal = this.authentication.getSnapshot().principal!;
-    const input: RoutePreparation = { scope, principal, configuration: this.#configuration.routes, http: this.#httpForScope(scope, route) };
+    const input: RoutePreparation = { scope, principal, configuration: this.#configuration.routes, http: this.#httpForScope(scope, route), ...(initialDocument ? { initialDocument } : {}) };
     try {
       let prepared: PreparedApplicationRoute;
-      if (route === 'inventory') prepared = (await this.#leaves.load('inventory', scope)).prepareInventoryRoute(input, error => this.#readAccessFailure(scope, error.kind), trip ? { initialProduct: trip.request.product, returnToProduct: () => this.#returnFromInventory(scope, trip) } : {});
+      if (route === 'inventory') prepared = (await this.#leaves.load('inventory', scope)).prepareInventoryRoute(input, error => this.#readAccessFailure(scope, error.kind), { ...(trip ? { initialProduct: trip.request.product, returnToProduct: () => this.#returnFromInventory(scope, trip) } : {}), onOpenSource: entry => this.#openLedgerSource(scope, entry) });
       else if (route === 'sales') {
         const module = await this.#leaves.load('sales', scope);
         if (!this.#current(scope)) return false;
@@ -417,6 +418,22 @@ export class ApplicationController {
       scope.dispose(); this.#productTrip = null; this.#publish({ phase: 'error', route, scope: null, prepared: null, notice: null }); return false;
     }
   }
+  /** A ledger ID is a target only. The original detail request authorizes it. */
+  async #openLedgerSource(scope: ReadScope, entry: InventoryLedgerEntry): Promise<boolean> {
+    if (!this.#current(scope) || this.#state.phase !== 'ready' || this.#state.route !== 'inventory' || this.authentication.busy || !this.canLeave()) return false;
+    const source = entry.source;
+    let route: DocumentRoute, target: NonNullable<RoutePreparation['initialDocument']>;
+    try {
+      if (source.kind === 'SALES' || source.kind === 'HISTORY_REVISION' && source.documentKind === 'SALES') {
+        if (!this.#configuration.routes.sales?.detailStylesheet) return false;
+        route = 'sales'; target = { kind: 'SALES', salesId: entityId('sales', source.salesId) };
+      } else if (source.kind === 'TRANSFER' || source.kind === 'HISTORY_REVISION' && source.documentKind === 'TRANSFER') {
+        route = 'transfers'; target = { kind: 'TRANSFER', transferId: entityId('transfer', source.transferId) };
+      } else return false;
+    } catch { return false; }
+    if (!this.routes.includes(route) || !await this.#navigationReady(route, scope)) return false;
+    return this.#navigate(route, undefined, target);
+  }
   /** Preload the destination's real leaf/CSS before releasing a clean source.
    * Failed preparation therefore keeps the current product page and context. */
   async #navigationReady(route: 'inventory' | 'products' | DocumentRoute, source: ReadScope): Promise<boolean> {
@@ -458,7 +475,7 @@ export class ApplicationController {
       if (!destination.active || !current() || !this.#state.prepared) { destination.dispose(); return false; }
       const origin: RetainedDocument = { ...this.#state, phase: 'ready', route, scope: source, prepared: this.#state.prepared };
       let trip: DocumentInventoryTrip;
-      const prepared = module.prepareInventoryRoute({ scope: destination, principal: this.authentication.getSnapshot().principal!, configuration: this.#configuration.routes, http: this.#httpForScope(destination, 'inventory') }, error => this.#readAccessFailure(destination, error.kind), { initialProduct: product, returnToProduct: () => this.#returnFromDocumentInventory(destination, trip) });
+      const prepared = module.prepareInventoryRoute({ scope: destination, principal: this.authentication.getSnapshot().principal!, configuration: this.#configuration.routes, http: this.#httpForScope(destination, 'inventory') }, error => this.#readAccessFailure(destination, error.kind), { initialProduct: product, returnToProduct: () => this.#returnFromDocumentInventory(destination, trip), onOpenSource: entry => this.#openLedgerSource(destination, entry) });
       if (!destination.active || !current()) { destination.dispose(); return false; }
       const invalidate = () => {
         if (this.#documentTrip !== trip) return;

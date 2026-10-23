@@ -11,7 +11,7 @@ import type { SalesHistoryCapability } from '../history-view.tsx';
 type SalesFormComponent = ComponentType<{ readonly session: SalesEditorSession; readonly close: () => void; readonly history?: SalesHistoryCapability; readonly product?: SalesProductCapability; readonly scope?: ReadScope }>;
 
 export function SalesCommandPageHost(props: { readonly scope: ReadScope; readonly reader: SalesReader; readonly references: SalesReferenceReader;
-  readonly session: SalesEditorSession; readonly manualCreate?: SalesManualCreateCapability; readonly loadDetailStyles: () => Promise<unknown>; readonly product?: SalesProductCapability }) {
+  readonly session: SalesEditorSession; readonly manualCreate?: SalesManualCreateCapability; readonly loadDetailStyles: () => Promise<unknown>; readonly product?: SalesProductCapability; readonly initialSalesId?: string }) {
   const state = useSyncExternalStore(props.session.subscribe, props.session.getSnapshot, props.session.getSnapshot);
   const [styleState, setStyles] = useState<{ readonly scope: ReadScope; readonly session: SalesEditorSession; readonly loader: () => Promise<unknown>; readonly phase: 'idle' | 'loading' | 'ready' | 'error'; readonly Form: SalesFormComponent | null }>(() => ({ scope: props.scope, session: props.session, loader: props.loadDetailStyles, phase: 'idle', Form: null }));
   const styles = styleState.scope === props.scope && styleState.session === props.session && styleState.loader === props.loadDetailStyles ? styleState.phase : 'idle';
@@ -28,7 +28,7 @@ export function SalesCommandPageHost(props: { readonly scope: ReadScope; readonl
   }, [active, manualActive, props.loadDetailStyles, props.scope, props.session, retry]);
   useEffect(() => { setDiscard(false); }, [props.scope, props.session]);
   useEffect(() => () => props.session.suspend(), [props.session]);
-  return <><SalesPageHost scope={props.scope} reader={props.reader} references={props.references} {...(props.product ? { product: props.product } : {})} loadDetailStyles={props.loadDetailStyles} write={{
+  return <><SalesPageHost scope={props.scope} reader={props.reader} references={props.references} {...(props.product ? { product: props.product } : {})} {...(props.initialSalesId ? { initialSalesId: props.initialSalesId } : {})} loadDetailStyles={props.loadDetailStyles} write={{
     // A confirmed CREATE is a saved document. Classifying it as an active new
     // draft makes the shared NEW navigation return early before opening a new session.
     active, view: state.command.write.phase !== 'committed' && (manualActive || state.command.editor?.mode === 'CREATE') ? 'new' : 'document', canCreate: props.session.canCreate || !!props.manualCreate, preparing: state.preparing, commitRevision: state.commitRevision,

@@ -15,7 +15,8 @@ export function prepareSalesRoute(input: RoutePreparation, onUnauthorized?: () =
   const reader = createSalesHttpReader(input.http), references = createSalesFilterReferenceHttpReader(input.http);
   const detailStylesheet = configuration.detailStylesheet;
   const detail = detailStylesheet ? { loadDetailStyles: () => detailStylesheet.load() } : {};
-  return { View: ({ scope }: ApplicationRouteProps) => <SalesPageHost scope={scope} reader={reader} references={references} {...detail} {...(product ? { product } : {})} /> };
+  const initialSalesId = input.initialDocument?.kind === 'SALES' ? input.initialDocument.salesId : undefined;
+  return { View: ({ scope }: ApplicationRouteProps) => <SalesPageHost scope={scope} reader={reader} references={references} {...detail} {...(product ? { product } : {})} {...(initialSalesId ? { initialSalesId } : {})} /> };
 }
 
 /** Opt-in only. Read hosts and the development host do not infer this capability. */

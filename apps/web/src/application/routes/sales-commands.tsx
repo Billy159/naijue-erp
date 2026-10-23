@@ -41,8 +41,12 @@ export function prepareSalesCommandSession(input: RoutePreparation, onAccessFail
   }) : undefined;
   const loadDetailStyles = () => configuration.detailStylesheet!.load();
   return Object.freeze({ workspace, ...(manualCreate ? { canLeave: manualCreate.canLeave } : {}), prepare: (route: RoutePreparation) => {
+    const initialSalesId = route.initialDocument?.kind === 'SALES' ? route.initialDocument.salesId : undefined;
+    // An explicit read target replaces a clean previously viewed editor, while
+    // the original session retains the list's configured command capabilities.
+    if (initialSalesId && workspace.canLeave()) workspace.discardEditor();
     const product = createSalesProductCapability(route, onAccessFailure, inventoryNavigation?.(route.scope));
     const routeReader = createSalesHttpReader(route.http), references = createSalesFilterReferenceHttpReader(route.http);
-    return { View: ({ scope }: ApplicationRouteProps) => <SalesCommandPageHost scope={scope} reader={routeReader} references={references} session={workspace} {...(manualCreate ? { manualCreate } : {})} loadDetailStyles={loadDetailStyles} {...(product ? { product } : {})} /> };
+    return { View: ({ scope }: ApplicationRouteProps) => <SalesCommandPageHost scope={scope} reader={routeReader} references={references} session={workspace} {...(manualCreate ? { manualCreate } : {})} loadDetailStyles={loadDetailStyles} {...(product ? { product } : {})} {...(initialSalesId ? { initialSalesId } : {})} /> };
   } });
 }

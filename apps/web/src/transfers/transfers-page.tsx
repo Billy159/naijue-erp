@@ -21,7 +21,7 @@ const noRevision = () => 0;
 
 export interface TransferPageProps {
   readonly controller: TransferPageController; readonly references: TransferWarehouseReader; readonly loadDetailStyles: () => Promise<unknown>;
-  readonly presentation?: TransferProposalPresentation; readonly product?: TransferProductCapability; readonly initialTransferId?: string; readonly commands?: TransferCommandCapability;
+  readonly presentation?: TransferProposalPresentation; readonly product?: TransferProductCapability; readonly initialTransferId?: string; readonly initialReadOnly?: true; readonly commands?: TransferCommandCapability;
 }
 /** An explicit route activation loads exactly one bounded first page. Editing a
  * draft never changes the executed range or triggers reads. Detail activation
@@ -33,7 +33,7 @@ export function TransferPageView(props: TransferPageProps) {
   const [listRevision, setListRevision] = useState(commandRevision);
   const [draft, setDraft] = useState<TransferFilterDraft>(emptyTransferFilter); const [initialSize, setInitialSize] = useState<TransferPageSize>(20);
   const [advanced, setAdvanced] = useState(false); const [inputError, setInputError] = useState(false);
-  const [target, setTarget] = useState<{ id: string | null; activation: number } | null>(() => props.initialTransferId ? { id: transferTarget(props.initialTransferId).transferId, activation: 1 } : null);
+  const [target, setTarget] = useState<{ id: string | null; activation: number; readOnly?: true } | null>(() => props.initialTransferId ? { id: transferTarget(props.initialTransferId).transferId, activation: 1, ...(props.initialReadOnly ? { readOnly: true as const } : {}) } : null);
   const activation = useRef(1); const didRead = useRef(false); const results = useRef<HTMLDivElement>(null); const heading = useRef<HTMLHeadingElement>(null);
   const returnContext = useRef<{ trigger: HTMLElement | null; top: number; left: number } | null>(null);
   useEffect(() => {
@@ -104,6 +104,6 @@ export function TransferPageView(props: TransferPageProps) {
     </div>
     <TransferPagination scope={scope} active={target === null} page={data?.page ?? 1} pageSize={size} total={data?.exactTotal ?? null} busy={busy} onPage={page => { if (success) run({ ...success.parameters, page }); }} onPageSize={pageSize => { if (success) run({ ...success.parameters, page: 1, pageSize }); else { setInitialSize(pageSize); run(transferParameters(draft, pageSize)); } }} />
   </section>
-  {target && (target.id === null && props.commands?.manualCreate ? <TransferManualCreateHost {...(props.presentation ? { presentation: props.presentation } : {})} key={target.activation} parentScope={scope} {...(controller.reader.readHistory ? { historyReader: { readHistory: read => controller.reader.readHistory!(read) } } : {})} capability={props.commands.manualCreate} loadStyles={props.loadDetailStyles} close={() => setTarget(null)} /> : props.commands ? <TransferCommandHost {...(props.presentation ? { presentation: props.presentation } : {})} key={`${target.id}:${target.activation}`} parentScope={scope} {...(controller.reader.readHistory ? { historyReader: { readHistory: read => controller.reader.readHistory!(read) } } : {})} transferId={target.id} capability={props.commands} loadStyles={props.loadDetailStyles} close={() => setTarget(null)} /> : target.id && <TransferDetailHost {...(props.presentation ? { presentation: props.presentation } : {})} key={`${target.id}:${target.activation}`} parentScope={scope} transferId={target.id} reader={controller.reader} loadDetailStyles={props.loadDetailStyles} close={() => setTarget(null)} {...(props.product ? { product: props.product } : {})} />)}
+  {target && (target.id === null && props.commands?.manualCreate ? <TransferManualCreateHost {...(props.presentation ? { presentation: props.presentation } : {})} key={target.activation} parentScope={scope} {...(controller.reader.readHistory ? { historyReader: { readHistory: read => controller.reader.readHistory!(read) } } : {})} capability={props.commands.manualCreate} loadStyles={props.loadDetailStyles} close={() => setTarget(null)} /> : props.commands && !target.readOnly ? <TransferCommandHost {...(props.presentation ? { presentation: props.presentation } : {})} key={`${target.id}:${target.activation}`} parentScope={scope} {...(controller.reader.readHistory ? { historyReader: { readHistory: read => controller.reader.readHistory!(read) } } : {})} transferId={target.id} capability={props.commands} loadStyles={props.loadDetailStyles} close={() => setTarget(null)} /> : target.id && <TransferDetailHost {...(props.presentation ? { presentation: props.presentation } : {})} key={`${target.id}:${target.activation}`} parentScope={scope} transferId={target.id} reader={controller.reader} loadDetailStyles={props.loadDetailStyles} close={() => setTarget(null)} {...(props.product ? { product: props.product } : {})} />)}
   </div>;
 }

@@ -6,7 +6,7 @@ import type { SalesPageController } from './controller.ts';
 import { emptySalesFilter, type SalesFilterDraft, type SalesListQuery, type SalesQueryPageSize, type SalesReferenceKind, type SalesReferenceReader, type SalesSummaryDto } from './contracts.ts';
 import { SalesDetailHost } from './detail-host.tsx';
 import { useDocumentNavigation } from '../demo-presentation/document-navigation.tsx';
-import { salesMoney, salesParameters, salesTypeGroupLabels } from './model.ts';
+import { salesMoney, salesParameters, salesTarget, salesTypeGroupLabels } from './model.ts';
 import { SalesStatusSelect, SalesBusinessTypeSelect, SalesReferenceMultiSelect } from './filter-controls.tsx';
 import { useSalesReferencePopupHost } from './reference-popup-host.ts';
 import { SalesPagination } from './sales-pagination.tsx';
@@ -16,7 +16,7 @@ export interface SalesPageWriteActions {
   readonly commitRevision: number;
   readonly openCreate: () => void; readonly canLeave?: () => boolean; readonly close?: () => void; readonly openExisting: (salesId: string) => void; readonly editor: ReactNode;
 }
-export interface SalesPageProps { readonly controller: SalesPageController; readonly references: SalesReferenceReader; readonly loadDetailStyles?: () => Promise<unknown>; readonly write?: SalesPageWriteActions; readonly product?: SalesProductCapability }
+export interface SalesPageProps { readonly controller: SalesPageController; readonly references: SalesReferenceReader; readonly loadDetailStyles?: () => Promise<unknown>; readonly write?: SalesPageWriteActions; readonly product?: SalesProductCapability; readonly initialSalesId?: string }
 const listColumns = ['日期', '销货单号', '状态', '业务类型', '营业厅', '营业员', '商品信息', '数量', '金额', '最后更新', '操作'] as const;
 const refLabels: Readonly<Record<SalesReferenceKind, string>> = { hall: '营业厅', salesperson: '营业员', customer: '客户', warehouse: '出库仓' };
 // Frozen sales-current.js:7–8. Native timestamps remain authoritative; format
@@ -26,13 +26,13 @@ function updatedMinute(timestamp: string): string {
   const parts = Object.fromEntries(updatedClock.formatToParts(new Date(timestamp)).map(({ type, value }) => [type, value]));
   return `${parts.year}-${parts.month}-${parts.day} ${parts.hour}:${parts.minute}`;
 }
-export function SalesPageView({ controller, references, loadDetailStyles, write, product }: SalesPageProps) {
+export function SalesPageView({ controller, references, loadDetailStyles, write, product, initialSalesId }: SalesPageProps) {
   const { list: query, scope, reader } = controller;
   const referencePopupHost = useSalesReferencePopupHost(scope);
   const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
   const [draft, setDraft] = useState<SalesFilterDraft>(emptySalesFilter); const [initialSize, setInitialSize] = useState<SalesQueryPageSize>(20);
   const [advanced, setAdvanced] = useState(false); const [inputError, setInputError] = useState(false);
-  const [target, setTarget] = useState<{ row: SalesSummaryDto; sequence: number } | null>(null); const sequence = useRef(0);
+  const [target, setTarget] = useState<{ salesId: string; sequence: number } | null>(() => initialSalesId ? { salesId: salesTarget(initialSalesId).salesId, sequence: 0 } : null); const sequence = useRef(0);
   const requestedWriteRevision = useRef(write?.commitRevision ?? 0), [appliedWriteRevision, setAppliedWriteRevision] = useState(write?.commitRevision ?? 0);
   const results = useRef<HTMLDivElement>(null); const heading = useRef<HTMLHeadingElement>(null); const returnContext = useRef<{ trigger: HTMLElement | null; top: number; left: number } | null>(null);
   const detailAvailable = typeof loadDetailStyles === 'function';
@@ -57,13 +57,13 @@ export function SalesPageView({ controller, references, loadDetailStyles, write,
     returnContext.current = { trigger: document.activeElement instanceof HTMLElement ? document.activeElement : null, top: results.current?.scrollTop ?? 0, left: results.current?.scrollLeft ?? 0 };
     if (query.getSnapshot().phase === 'loading') query.cancel();
     if (write) { write.openExisting(row.id); return; }
-    setTarget({ row, sequence: ++sequence.current });
+    setTarget({ salesId: row.id, sequence: ++sequence.current });
   };
   const create = (): boolean => {
     if (write?.active && write.view === 'new') return true;
     if (!write?.canCreate || write.preparing || write.canLeave?.() === false) return false;
     returnContext.current = { trigger: document.activeElement instanceof HTMLElement ? document.activeElement : null, top: results.current?.scrollTop ?? 0, left: results.current?.scrollLeft ?? 0 };
-    if (query.getSnapshot().phase === 'loading') query.cancel(); write.openCreate(); return true;
+    if (query.getSnapshot().phase === 'loading') query.cancel(); setTarget(null); write.openCreate(); return true;
   };
   useDocumentNavigation({ kind: 'sales', view: write?.active ? write.view ?? 'document' : target ? 'document' : 'list', canCreate: scope.active && !!write?.canCreate && !write.preparing,
     openCreate: create,
@@ -120,7 +120,7 @@ export function SalesPageView({ controller, references, loadDetailStyles, write,
     </div>
     <SalesPagination scope={scope} active={!detailActive} page={data?.page ?? 1} pageSize={size} total={data?.exactTotal ?? null} busy={busy} onPage={page => { if (success) run({ ...success.parameters, page }); }} onPageSize={pageSize => { if (success) run({ ...success.parameters, page: 1, pageSize }); else setInitialSize(pageSize); }} />
   </section>
-    {target && detailActive && loadDetailStyles && <SalesDetailHost key={`${target.row.id}:${target.sequence}`} parentScope={scope} salesId={target.row.id} reader={reader} {...(product ? { product } : {})} loadDetailStyles={loadDetailStyles} close={() => setTarget(null)} />}
+    {target && detailActive && loadDetailStyles && <SalesDetailHost key={`${target.salesId}:${target.sequence}`} parentScope={scope} salesId={target.salesId} reader={reader} {...(product ? { product } : {})} loadDetailStyles={loadDetailStyles} close={() => setTarget(null)} />}
     {write?.active && write.editor}
   </div>;
 }

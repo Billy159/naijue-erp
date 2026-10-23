@@ -171,6 +171,9 @@ export interface RoutePreparation {
   readonly http: HttpQueryOptions;
   readonly principal: AuthenticationPrincipal;
   readonly configuration: ApplicationConfiguration['routes'];
+  /** Explicit source-document read target. It grants no read or command access. */
+  readonly initialDocument?: { readonly kind: 'SALES'; readonly salesId: string }
+    | { readonly kind: 'TRANSFER'; readonly transferId: string };
 }
 export interface PartySession {
   readonly workspace: PartyWorkspace;

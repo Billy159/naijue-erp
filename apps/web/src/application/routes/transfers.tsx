@@ -41,7 +41,8 @@ function preparedTransferRoute(input: RoutePreparation, commands?: TransferComma
   const presentation: TransferProposalPresentation = Object.freeze({ creatorName: input.principal.loginName,
     ...(productCapability ? { productCapability } : {}),
     ...(initialGroup ? { sizeGroupCapability: Object.freeze({ ...initialGroup, ...(onUnauthorized ? { onUnauthorized } : {}) }) } : {}) });
-  return { View: ({ scope }: ApplicationRouteProps) => <TransferPageHost presentation={presentation} scope={scope} reader={reader} references={references} loadDetailStyles={loadDetailStyles} {...(commands ? { commands } : {})} {...(product ? { product } : {})} /> };
+  const initialTransferId = input.initialDocument?.kind === 'TRANSFER' ? input.initialDocument.transferId : undefined;
+  return { View: ({ scope }: ApplicationRouteProps) => <TransferPageHost presentation={presentation} scope={scope} reader={reader} references={references} loadDetailStyles={loadDetailStyles} {...(commands ? { commands } : {})} {...(product ? { product } : {})} {...(initialTransferId ? { initialTransferId, initialReadOnly: true } : {})} /> };
 }
 /** Default real read-only path. Commands are never inferred from read access. */
 export function prepareTransferRoute(input: RoutePreparation, onUnauthorized?: () => void, openInventory?: DocumentProductInventoryNavigation): PreparedApplicationRoute { return preparedTransferRoute(input, undefined, onUnauthorized, openInventory); }
