@@ -39,7 +39,8 @@
     "Self password change",
     "Product seasons multi-select",
     "Cancelled features stay cancelled",
-    "User-approved centered executed-query-range dialog"
+    "User-approved centered executed-query-range dialog",
+    "Unreviewed documents all sizes editable; new sales/transfer all valid size groups selectable including no-size"
   ],
   "existingRoutes": "Original F1/F2/F3,D1/D2/D3,QF/QB; closed Demo Chat never resumed or duplicated",
   "parallelPolicy": "Use real independence/unique files/resources; do not impose fixed three developers or create work to fill slots. Existing owners first; no new duplicate main controller/application. Tool hard limits retained.",
@@ -57,5 +58,32 @@
   "newFieldApprovalStillRequired": true,
   "wholePageAcceptanceOnlyByExistingIndependentRoute": true,
   "sourceOrBuildOrSyntheticNotBusinessAcceptance": true,
-  "goalComplete": false
+  "goalComplete": false,
+  "latestHumanDirective": {
+    "atUtc": "2026-10-23T12:56:08.660009+00:00",
+    "source": "Current C direct human message: abandon rewritten page UI and directly copy frozen Demo then wire formal business; seven sections and named installed skills",
+    "implementationBase": "Frozen complete page implementation only, including actual final override layers/resources/control interaction; current rewritten DOM/styles are not the migration base",
+    "firstBatch": {
+      "F1": "sales-current editor/entrySections/lineTable/entryRow plus actual final real-data-bridge.mjs fundsField/paymentRow; SALE and mixed, then existing edit/view and transfer",
+      "F2": "product-current list/editor and product-arco full tab/host with complete four original product stylesheets",
+      "F3": "basic-settings-v2 App/Filters/Fields; first payment method/account B05/B06"
+    },
+    "oldAcceptance": "Stop expansion of replaced old pages; retain only still-applicable effective evidence; independently accept fixed new pages via QF/QF2",
+    "skills": [
+      "anti-over-defense",
+      "arco-design",
+      "vercel-react-best-practices",
+      "vercel-composition-patterns",
+      "web-design-guidelines",
+      "nodejs-backend-patterns",
+      "supabase-postgres-best-practices"
+    ],
+    "notCompletion": [
+      "Source reference only",
+      "Copied classes or partial CSS",
+      "Unchanged rewritten DOM",
+      "Synthetic success as real business",
+      "Static bundle reduction as measured UI performance"
+    ]
+  }
 }

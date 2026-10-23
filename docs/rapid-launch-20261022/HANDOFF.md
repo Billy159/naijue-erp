@@ -1,3 +1,17 @@
+最新接续 2026-10-23T12:56:08.660009+00:00（覆盖下方旧运行状态，历史证据保留）：
+
+- 人类最新裁决：放弃仿写UI底稿，唯一页面起点为冻结Demo b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3；原F1完整销货销售/混合退换及共用编辑查看，随后调拨；原F2商品列表/六页签，原F3先收款配置B05/B06。复制完整结构/DOM/控件/实际依赖/最终CSS及交互后再作React内部接线，正式业务有效实现继续用。停止扩大待替换旧页验收。新完整模块固定构建即交原QF/QF2，不等全站。
+- 全尺码P1：未审核所有尺码可输入编辑，新增销货/调拨全部组可选含无尺码。旧“仅已有SKU/当前组、无尺码属于cap差异”免责撤回。漏检原因是把既有记录当允许域、样例只用已有规格、把功能缺口归样例限制；新验收必须覆盖缺规格、跨组、未审保存重入、完整候选及连续输入。真实SKU现有追加/替换服务可复用；缺SKU/跨组/手工无MAIN/受托创建与业务码规则由D1牵头一次具体写合同确认，未批准不实施新语义，仅该写分支等待。
+- 同类扫查QF2 source168有界完成：合法组在第101项漏候选、仅已用年份限制下一年，已原F2/D2修。C170 ee75f62固定年份原读源+定向已有服务测试（无跨组新写）；C171 9c83e2f固定原ID全分页解析。source/synthetic-only，未实际页面关闭。混合价格10→1实际观察仍OPEN，F1局部输入为10不当实际关闭。未审历史完整编辑/收款/dirty左导航及公共控件用户新截图继续新页闭环。
+- 当前可看旧候选C168 http://127.0.0.1:57864/synthetic-unified.html ，source75d2357/build ui-preview-75d2357-01-build01，1build/1serve/3HTTP200，含167CSS共享+168列表，未含169或新全尺码/整页替换；是合成预览，不是完整直接复用、真实业务或正式性能通过。C169 cad188c仅此前T02输入样式/初始焦点P2固定，后继同文件已释放原F1。
+- Chrome已由QF原生清本人candidate后交回C；Demo为非自有已保存编辑页，未宣称清场；QF/QF2当前均离线，禁止自动操作Demo或未知3BC。后继需明确原串行lease再验固定新页。104项/局部48/整页0/整类0不变。
+- C167完整生产build4.347s/pack2.276s实际PASS，20CSS outputs仅application.css含Arco正贡献，静态CSS2411884→1116045B；不是首屏实传、HTTP时延或整页性能通过。新页包尚未形成，不把167旧包记为本次新UI。
+- C89真实R1已批准v6/v7仅两函数事务提交，catalog443c04eb…，其余结构/ACL/56空库计数保持；C90实际metadata-only安装8公开件COMPLETED0/0.8699437s，旧私有配置/生产服务不变；未执行新TCP/issuer/stage/业务/切换。
+- C80实际正常新仓样例FAILED exit2/8.643562s，首42703 NORMAL_NEW_WAREHOUSE，正常112B INSERT列与原DDL吻合；原committed[]不能替代原key提交读回。实际ROLLBACK/release/dispose/driverend成功bg0；原C91只读原key/状态准备，D1独立窄v10多态trigger字段分派bug修复，不重放80，不混入全尺码新语义。原C79/QB178与QB181有效结论直接用，不重复27读/19/H06/catalog/运维。
+- 当前固定HEAD bd8cb3dde057c6754b1843f36a5b0804e31ba2e9；GitHublast independently verified780521e7702ce4f2d07b90f50883aba663945e27，随后沿原非强推精确机制保存本段。全角色gpt-6.1-sol/xhigh，Fast要求关闭但工具无开关未核。原字段/写合同确认、数据保护、独立验收、分批发布与Dot交接继续有效，目标ACTIVE未完成。
+
+下方为历史接续，旧“正在/等待”以本段及TASKS当前字段为准。
+
 Continuation 2026-10-23T11:57:50.909739+00:00: QF2C165 SPEC03 limitedactual PASS6410B/4ad6ae91 adopted andcleanreleased2327B/e08d718c; current403 reachesownererror, sameinventorymenu recoversquery/output, cancelledoldread/newpage stayshealthy. Strongignoredabortold403/401/realHTTP/PG/formalperf unmeasured. C explicitlysolegrantedQF8B3+Demo; QF initialfocusnewSALEleave now actualclosed first+two reopen, headerclose/Continue/Esc keepownnote andreturnopener, RESULT7318B/1ff72e3a. Bothviewport1470x724/DPR2scale1. QF retainslease, continuesnewlists/mixed/T02/saved; QF2stopped, unknown3BCuntouched.104/local48/whole0 unchanged.
 
 C167 195222fb97f2a41c352ae5fcd973700f63b0e760 fixedF1 exact5CSS afterC ownershipb583957. Only19duplicateArcoimports removed; remainingDemo/custombytes/order, shellbase, JS/TSX/build/locks/leases/URLs untouched. Finite8CSSexit0/no warnings/application608389B unchanged, sevenotherpositiveArco0, selectedstaticuncompressed output difference1295839B isnotHTTP/firstscreen/timing/perf. Fullproduction167PREBUILD preparing; currentUI165/builtpack166 notrelabeled167. Independent affectednewsource/actualcascade stillrequired, noold48/backendrepeat.
