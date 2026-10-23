@@ -1,0 +1,93 @@
+{
+  "atUtc": "2026-10-23T08:07:25.756252+00:00",
+  "parent": "b2f847b60a4fb9be36445476b51ebb281daba5fe",
+  "taskId": "D1_V7_EMPTY_HISTORY_PUBLICATION_DISPATCH",
+  "files": [
+    {
+      "path": "adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql",
+      "owner": "D1",
+      "bytes": 5205,
+      "sha256": "8bc9bbacafc64181a7aece848e4aac3ad565247ceb5498023e979fe2e7bf05de"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "owner": "D1",
+      "bytes": 62211,
+      "sha256": "33b182e367496148358d8107ffe83d19d1980297212705428bc7ed2709818cec"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "owner": "D1",
+      "bytes": 16971,
+      "sha256": "8b084f09bf9f63a601b8003251205f0f9d56fae00bc3654c93c241af0e6e7225"
+    },
+    {
+      "path": "tests/product-media-write-capability.test.ts",
+      "owner": "D1",
+      "bytes": 8799,
+      "sha256": "300e62b746a99ac37da6ccfbd0dde56a143716433de4c25fcc97f496febd6945"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.test.ts",
+      "owner": "D1",
+      "bytes": 52015,
+      "sha256": "c967329b92805f27f2ac8f73552edf84a833d65d401eebf6028139a3383d65c1"
+    }
+  ],
+  "approvalRecord": "WRITE-CONTRACT-APPROVAL-v7-EMPTY-HISTORY-PUBLISH.json",
+  "scope": "Single original publication guard adds approved fully declared/actual empty initial history condition; unchanged original product prefix and exact2 realpair strict fallback. Original classifier/v8 bootstrap untouched. Issuer exact guard body pin and patchLevel only; 3 private fixtures label-only.",
+  "checksAdopted": {
+    "newUniqueSourceAssertions": 3,
+    "affectedUnique": 3,
+    "totalUnique": 6,
+    "passed": 6,
+    "skipped": 0,
+    "sqlSourceOnly": 4,
+    "scriptedProtocolOnly": 2,
+    "strictRootCount": 4,
+    "strictExitCode": 0,
+    "actualPostgres": 0,
+    "results": [
+      {
+        "name": "v7-source-and-affected-v6-source",
+        "command": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node --experimental-strip-types --test --test-name-pattern='v7 publication source:|v6 SQL source:' bootstrap26-prepare-source.test.mjs",
+        "workdir": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1",
+        "chunk_id": "bcf8ef",
+        "wall_time_seconds": 0.060009584,
+        "exit_code": 0,
+        "original_token_count": 169,
+        "output": "✔ v6 SQL source: standalone patch changes one raw lookup and current issuer retains that bootstrap pin (2.259792ms)\n✔ v7 publication source: one guard adds dispatch after product readback and retains the entire strict real pair fallback (0.685667ms)\n✔ v7 publication source: empty branch requires bound manifest and explicit numeric zero maps; unknown or missing declarations cannot match (0.627458ms)\n✔ v7 publication source: nonempty facts, supplement selections and customer references are independently excluded from the empty branch (6.042292ms)\nℹ tests 4\nℹ suites 0\nℹ pass 4\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 151.562667\n"
+      },
+      {
+        "name": "affected-original-issuer-and-host",
+        "command": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node --experimental-strip-types --test --test-name-pattern='runtime26 independently pinned metadata binds original pool|production exact26: one owned original pool supplies' tests/native-runtime26-capability.test.ts apps/api/src/production-provider-composition.test.ts",
+        "workdir": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+        "chunk_id": "4e7e9d",
+        "wall_time_seconds": 0.442690334,
+        "exit_code": 0,
+        "original_token_count": 96,
+        "output": "✔ production exact26: one owned original pool supplies actual issuer leases to authentication and CURRENT reads with command routes absent (138.42475ms)\n✔ runtime26 independently pinned metadata binds original pool, exact live leases and finite views (10.932292ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 539.2205\n"
+      },
+      {
+        "name": "strict-exact4-roots",
+        "command": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node node_modules/typescript/bin/tsc --noEmit --target ES2023 --module NodeNext --moduleResolution NodeNext --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noFallthroughCasesInSwitch --noImplicitOverride --verbatimModuleSyntax --rewriteRelativeImportExtensions --skipLibCheck --types node --lib ES2023,DOM --jsx react-jsx adapters/postgres/src/native-import-accounting-capability.ts tests/native-runtime26-capability.test.ts tests/product-media-write-capability.test.ts apps/api/src/production-provider-composition.test.ts",
+        "workdir": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+        "chunk_id": "40f35b",
+        "wall_time_seconds": 1.5416e-05,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    ]
+  },
+  "delivery": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/PUBLISH-V7-EMPTY-HISTORY-IMPLEMENTATION-RESULT-v1.json",
+    "sha256": "6e2adfe809b607a6ba917256c800150128a5cb8d2077278023f0982901944710",
+    "bytes": 14346
+  },
+  "notTested": [
+    "Actual PostgreSQL v9 parsing/positive-negative branches/target install/catalogue",
+    "Original PUBLISH resume/nativeCREATE/H06/real49 import/production switch"
+  ],
+  "next": "Original QB only exact5+K3 source assertions then C singlefunc actual patch/readback/new target pairing and original D2 PUBLISH-only resume"
+}
