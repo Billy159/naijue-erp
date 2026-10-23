@@ -7,6 +7,7 @@ import { parseInventoryCandidateQuery, parseInventoryQuery } from "../packages/a
 import { DomainError } from "../packages/domain/src/errors.ts";
 import { inventoryActor, inventoryId, inventoryParameters, inventoryScope, candidateParameters } from "./support/synthetic-inventory-query.ts";
 import type { InventoryCandidateQuery, InventoryQuery, InventoryReadScope, InventoryScopedRead } from "../packages/application/src/inventory-query-contracts.ts";
+import type { NativeRuntime26Capability } from "../packages/application/src/native-import-schema-contract.ts";
 
 // Scripted protocol evidence ONLY. No PostgreSQL connection, execution, plan or isolation claim.
 const batchId = inventoryId("operation", 900);
@@ -21,6 +22,7 @@ class ScriptedPool implements PgInventoryQueryPool, PgInventoryQueryClient {
   readonly calls: Call[] = []; readonly releases: (Error | boolean | undefined)[] = []; connects = 0;
   count = 1; scope: InventoryReadScope = inventoryScope; negative = "-2";
   publication: Row[] | undefined; guards = true;
+  additionalSkus: string[] = []; newWarehouses = new Set<string>(); witnessSku: string | null = skuId(0, 0);
   flags: Row = { invalid_category_tree: false, missing_sizes: false, uncovered_sku: false, invalid_sku_size: false, invalid_balance: false };
   transform: ((stage: string, rows: Row[]) => Row[]) | undefined;
   failAt: string | undefined; failRollback = false; afterQuery: ((stage: string) => void) | undefined;
@@ -28,7 +30,7 @@ class ScriptedPool implements PgInventoryQueryPool, PgInventoryQueryClient {
   release(error?: Error | boolean) { this.releases.push(error); }
   async query(sql: string, values: unknown[] = []): Promise<PgInventoryQueryResult> {
     this.calls.push({ sql, values: structuredClone(values) });
-    const stage = /\/\* inventory:([a-z-]+) \*\//.exec(sql)?.[1] ?? sql;
+    const stage = /\/\* inventory(?:-admission)?:([a-z-]+) \*\//.exec(sql)?.[1] ?? sql;
     if (stage === this.failAt || (stage === "ROLLBACK" && this.failRollback)) throw new Error(`SYNTHETIC ${stage} failure`);
     let rows: Row[];
     switch (stage) {
@@ -37,7 +39,14 @@ class ScriptedPool implements PgInventoryQueryPool, PgInventoryQueryClient {
         rows = this.publication ?? [{ id: batchId, checkpoint: { sequence: 3, cursor: Object.values(counts).reduce((a, b) => a + b, 0), counts, expected: counts }, completed: true, final_approval: true }]; break;
       }
       case "guards": rows = [{ integrity_guards_present: this.guards }]; break;
-      case "warehouses": rows = this.scope.warehouses.filter(w => (values[0] as string[]).includes(w.id)).map(w => ({ id: w.id, hall_id: w.hallId, name: w.label, published: true })); break;
+      case "warehouses": rows = this.scope.warehouses.filter(w => (values[0] as string[]).includes(w.id)).map(w => ({ id: w.id, hall_id: w.hallId, name: w.label, published: !this.newWarehouses.has(w.id) })); break;
+      case "admission-witness": rows = this.witnessSku === null ? [] : [{ id: this.witnessSku }]; break;
+      case "additional-skus": rows = this.additionalSkus.filter(id => values.at(-1) === null || id > String(values.at(-1))).slice(0, 1000).map(id => ({ id })); break;
+      case "keys": rows = (values[0] as string[]).map((warehouseId, i) => { const skuId = (values[1] as string[])[i]!;
+        return { warehouse_id: warehouseId, sku_id: skuId, admitted: true, published_batch_id: batchId,
+          warehouse_basis: this.newWarehouses.has(warehouseId) ? "POST_CUTOFF_CREATED" : "CUTOFF_MEMBER", sku_basis: this.additionalSkus.includes(skuId) ? "POST_CUTOFF_CREATED" : "CUTOFF_MEMBER",
+          warehouse_created_operation_id: this.newWarehouses.has(warehouseId) ? inventoryId("operation", 17000) : null, sku_created_operation_id: this.additionalSkus.includes(skuId) ? inventoryId("operation", 17001) : null };
+      }); break;
       case "candidate-integrity": rows = [{ ...this.flags }]; break;
       case "catalog-status": rows = [{ ...this.flags, exact_total: String(this.count), quantity: sql.includes("'0'::text AS quantity") ? "0" : (BigInt(this.negative) * BigInt(this.count)).toString() }]; break;
       case "products":
@@ -71,7 +80,56 @@ function candidate(pool: ScriptedPool, overrides: Partial<InventoryCandidateQuer
   return { actor: inventoryActor, scope: pool.scope, parameters: parseInventoryCandidateQuery({ ...candidateParameters(), ...overrides }), signal: new AbortController().signal };
 }
 const code = (expected: string) => (error: unknown) => error instanceof DomainError && error.code === expected;
-const stages = (pool: ScriptedPool) => pool.calls.map(call => /\/\* inventory:([a-z-]+) \*\//.exec(call.sql)?.[1] ?? call.sql);
+const stages = (pool: ScriptedPool) => pool.calls.map(call => /\/\* inventory(?:-admission)?:([a-z-]+) \*\//.exec(call.sql)?.[1] ?? call.sql);
+
+function nativeKeyPool(count: number, additional: number, newWarehouse = false): ScriptedPool {
+  const pool = new ScriptedPool(); pool.count = count; pool.additionalSkus = Array.from({ length: additional }, (_, i) => skuId(Math.floor(i / 3), i % 3)); pool.flags.uncovered_sku = additional > 0;
+  const counts = { WAREHOUSE: 1, SKU: 1, INVENTORY_LEDGER: 1, IMPORT_BATCH: 1 };
+  pool.publication = [{ id: batchId, checkpoint: { sequence: 3, cursor: 4, counts, expected: counts }, completed: true, final_approval: true }];
+  if (newWarehouse) { pool.newWarehouses.add(pool.scope.warehouses[0]!.id); pool.witnessSku = skuId(count - 1, 2); }
+  return pool;
+}
+function nativeReadRuntime(pool: ScriptedPool, called: () => void = () => {}): NativeRuntime26Capability {
+  // Protocol fake only, never a real target/runtime authority.
+  return { profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", async assertReady(client, purpose) { assert.equal(client, pool); assert.equal(purpose, "INVENTORY_ADMISSION"); assert.equal(stages(pool).at(-1), "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); called(); } };
+}
+
+test("inventory primary native keys: existing dimensions witness only new bounded sets across summary, page, complete output and returned candidates", async () => {
+  const pool = nativeKeyPool(334, 1001, true); let ready = 0; const reader = new PostgresInventoryQueryReader(pool, null, nativeReadRuntime(pool, () => { ready++; }));
+  const result = await reader.readInventory(read(pool)); assert.equal(ready, 1); assert.equal(result.data.exactTotalProducts, 334); assert.equal(result.data.products.length, 100); assert.equal(result.data.allMatchesTotal.knownQuantity, "-668");
+  const cell = result.data.products[0]!.colorFits[0]!.rows[0]!.cells[sizes[0]!.id]!; assert.equal(cell.state, "known"); if (cell.state === "known") { assert.equal(cell.skuId, skuId(0, 0)); assert.notEqual(cell.skuId, pool.witnessSku); assert.equal(cell.quantity, "-2"); }
+  const keys = pool.calls.filter(c => c.sql.includes("inventory-admission:keys")); assert.deepEqual(keys.map(c => (c.values[0] as string[]).length), [1, 1000, 1]); assert.equal(pool.calls.filter(c => c.sql.includes("inventory:additional-skus")).length, 2);
+  assert.equal(pool.calls.filter(c => c.sql.includes("inventory:admission-witness")).length, 1); assert.deepEqual(keys[0]!.values[1], [pool.witnessSku]);
+  assert.ok(pool.calls.filter(c => c.sql.includes("inventory:additional-skus")).every(c => c.sql.includes("FROM filtered_skus s") && c.sql.includes("LIMIT 1000") && !c.sql.includes("OFFSET")));
+  const stream = nativeKeyPool(334, 1001, true); let streamReady = 0, products = 0, complete = false;
+  for await (const frame of new PostgresInventoryQueryReader(stream, null, nativeReadRuntime(stream, () => { streamReady++; })).readInventoryOutput(read(stream))) { if (frame.kind === "product") products++; if (frame.kind === "complete") complete = true; }
+  assert.equal(streamReady, 1); assert.equal(products, 334); assert.equal(complete, true); assert.equal(stages(stream).filter(s => s === "keys").length, 3); assert.equal(stages(stream).filter(s => s === "catalog-status").length, 1);
+  const candidates = nativeKeyPool(2, 3); candidates.flags.invalid_balance = true;
+  await new PostgresInventoryQueryReader(candidates, null, nativeReadRuntime(candidates)).readCandidates(candidate(candidates, { selectedIds: [productId(999)] }));
+  const scoped = candidates.calls.find(c => c.sql.includes("inventory:additional-skus"))!; assert.deepEqual(scoped.values[8], [productId(0)]); assert.ok(scoped.sql.includes("FROM candidate_skus s") && scoped.sql.includes("p.id = ANY($9::uuid[])"));
+  assert.equal(stages(candidates).includes("catalog-status"), false); assert.equal(stages(candidates).includes("balances"), false);
+  const old = nativeKeyPool(1, 0); await new PostgresInventoryQueryReader(old, null, nativeReadRuntime(old)).readInventory(read(old)); assert.equal(stages(old).includes("keys"), false); assert.equal(stages(old).includes("admission-witness"), false);
+});
+
+test("inventory primary native keys: missing witness, unqualified or inconsistent decisions and absent runtime never infer stock zero or output completion", async () => {
+  const missing = nativeKeyPool(1, 0, true); missing.witnessSku = null;
+  await assert.rejects(new PostgresInventoryQueryReader(missing, null, nativeReadRuntime(missing)).readInventory(read(missing)), code("INVENTORY_NOT_READY")); assert.equal(stages(missing).includes("catalog-status"), false);
+  for (const mutate of [ (rows: Row[]) => rows.map(row => ({ ...row, admitted: false })), (rows: Row[]) => rows.map(row => ({ ...row, warehouse_basis: "CUTOFF_MEMBER" })),
+    (rows: Row[]) => rows.map(row => ({ ...row, sku_basis: "POST_CUTOFF_CREATED", sku_created_operation_id: inventoryId("operation", 999) })) ]) {
+    const pool = nativeKeyPool(1, 1, true); pool.transform = (stage, rows) => stage === "keys" ? mutate(rows) : rows;
+    await assert.rejects(new PostgresInventoryQueryReader(pool, null, nativeReadRuntime(pool)).readInventory(read(pool))); assert.equal(stages(pool).includes("catalog-status"), false); assert.equal(stages(pool).at(-1), "ROLLBACK");
+  }
+  const legacy = nativeKeyPool(1, 1); await assert.rejects(new PostgresInventoryQueryReader(legacy).readInventory(read(legacy)), code("INVENTORY_NOT_READY")); assert.equal(stages(legacy).includes("additional-skus"), false);
+  const mutations: ((rows: Row[]) => Row[])[] = [rows => rows.map(r => ({ ...r, admitted: false })), rows => rows.map(r => ({ ...r, published_batch_id: inventoryId("operation", 999) })),
+    rows => rows.map(r => ({ ...r, sku_created_operation_id: null })), rows => rows.map(r => ({ ...r, sku_basis: "CUTOFF_MEMBER" })), rows => rows.map(r => ({ ...r, sku_id: inventoryId("sku", 999) })), _rows => []];
+  for (const mutate of mutations) { const pool = nativeKeyPool(1, 1); pool.transform = (stage, rows) => stage === "keys" ? mutate(rows) : rows; const seen: string[] = [];
+    await assert.rejects(async () => { for await (const frame of new PostgresInventoryQueryReader(pool, null, nativeReadRuntime(pool)).readInventoryOutput(read(pool))) seen.push(frame.kind); });
+    assert.deepEqual(seen, []); assert.equal(stages(pool).includes("output-products"), false); assert.equal(stages(pool).at(-1), "ROLLBACK"); assert.deepEqual(pool.releases, [undefined]);
+  }
+  const inconsistent = nativeKeyPool(1, 0); inconsistent.flags.uncovered_sku = true;
+  await assert.rejects(new PostgresInventoryQueryReader(inconsistent, null, nativeReadRuntime(inconsistent)).readInventory(read(inconsistent)), code("INVENTORY_INTEGRITY_FAILED"));
+  const denied = nativeKeyPool(1, 1); await assert.rejects(new PostgresInventoryQueryReader(denied, null, { profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", async assertReady() { throw Error("HOST_DENIED"); } }).readInventory(read(denied)), /HOST_DENIED/); assert.deepEqual(stages(denied), ["BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY", "ROLLBACK"]);
+});
 
 test("inventory full output PG: one RR snapshot, one full summary and bounded keyset batches produce the complete filter only after COMMIT", async () => {
   const pool = new ScriptedPool(); pool.count = 203; const reader = new PostgresInventoryQueryReader(pool), iterator = reader.readInventoryOutput(read(pool))[Symbol.asyncIterator]();
