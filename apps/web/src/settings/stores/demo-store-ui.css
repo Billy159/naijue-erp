@@ -7,7 +7,8 @@
 .demo-store-workbench .bs-head.iw-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .demo-store-workbench .bs-head-actions{display:flex;align-items:center;gap:4px}
 .demo-store-workbench .bs-tabs{display:flex;gap:20px;border-bottom:1px solid var(--border);margin:0 0 10px;flex:none}
-.demo-store-workbench .bs-tabs button{border:0;border-bottom:2px solid transparent;background:transparent;padding:7px 2px 8px;color:var(--secondary);font-size:13px;cursor:pointer}
+/* Frozen Arco normalize forms rule supplies the final Demo tab line-height. */
+.demo-store-workbench .bs-tabs button{border:0;border-bottom:2px solid transparent;background:transparent;padding:7px 2px 8px;color:var(--secondary);font-size:13px;line-height:1.15;cursor:pointer}
 .demo-store-workbench .bs-tabs button:hover{color:var(--primary)}
 .demo-store-workbench .bs-tabs button[aria-selected=true]{color:var(--primary);border-bottom-color:var(--primary-fill);font-weight:600}
 .demo-store-workbench .bs-toolbar{display:flex;align-items:center;gap:var(--ca-space-2);margin:0 0 var(--ca-space-2);flex:none}
