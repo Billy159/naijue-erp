@@ -1,7 +1,7 @@
 /* The four product management workspaces use the inventory workbench's head,
    filter controls, pagination and semantic tokens. Product-specific structures
    (tree, settings tabs and ordinary tables) only define their own geometry. */
-:is(#page,.demo-page):where(:has(.products-workspace)):has(> :where(.products-workspace) > .pc-workbench){padding:12px var(--ui-page-space) 16px}
+:where(#page,.demo-page):where(:has(.products-workspace)):has(> :where(.products-workspace) > .pc-workbench){padding:12px var(--ui-page-space) 16px}
 :where(.products-workspace,.product-source-ui) .pc-workbench,:where(.product-source-ui).pc-workbench{display:flex;flex-direction:column;min-width:0;max-height:calc(100dvh - var(--ui-topbar) - 24px);font:13px var(--ca-font-sans);color:var(--ca-ink)}
 :where(.products-workspace,.product-source-ui) .pc-workbench .pc-page-head,:where(.product-source-ui).pc-workbench .pc-page-head{flex:none;min-height:32px;margin:0 0 8px}
 :where(.products-workspace,.product-source-ui) .pc-workbench .pc-page-head h1,:where(.product-source-ui).pc-workbench .pc-page-head h1{margin:0;font-size:20px;line-height:30px}
