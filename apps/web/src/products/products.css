@@ -63,6 +63,11 @@
 .pm-products .pc-data-table td .btn.ghost{height:26px;min-height:26px;padding:2px 5px;border:0;background:transparent;color:var(--ca-primary-ink);font-size:12px;font-weight:400}
 .pm-products .pc-data-table td .btn.ghost:hover{background:var(--ca-primary-hover-soft);text-decoration:underline}
 .pm-products .iw-head-actions>.btn{box-sizing:border-box;height:30px;min-height:30px;padding:3px 8px;border:0;border-radius:var(--ca-radius-control);background:transparent;color:var(--ca-ink-2);font-size:13px;font-weight:400}
+/* Direct frozen product-inventory-unified.css12-13 primary exception, omitted
+ * from the earlier title-action transport. Existing disabled capability stays inert. */
+.pm-products .iw-head-actions>.btn.primary{height:32px;min-height:32px;padding:4px 12px;border:1px solid var(--ca-primary-fill);background:var(--ca-primary-fill);color:var(--ca-on-primary);font-weight:500}
+.pm-products .iw-head-actions>.btn.primary:hover:not(:disabled){background:var(--ca-primary-hover);border-color:var(--ca-primary-hover);color:var(--ca-on-primary)}
+.pm-products .iw-head-actions>.btn.primary:disabled{border:0;background:transparent;color:var(--ca-disabled-ink)}
 .pm-products .pm-filter-row>.pc-more-toggle{display:flex;align-items:center;justify-content:center;gap:4px;padding:0 4px;border:0;background:transparent;color:var(--ca-ink-2);font-weight:400}
 .pm-products .pm-filter-row>.iw-reset{border:1px solid var(--ca-control-border);background:var(--ca-surface);color:var(--ca-ink)}
 .pm-products .pm-filter-row>.iw-reset:hover{border-color:var(--ca-control-border-hover);background:var(--ca-surface-subtle)}

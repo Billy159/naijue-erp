@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T05:37:30.795524+00:00",
+  "updatedAt": "2026-10-23T05:44:16.857417+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -1493,6 +1493,12 @@
           "group": "B06_ORIGINAL_SETTLEMENT_FINITE_SOURCE_ENTRY",
           "fieldGate": "NO_SCHEMA_CHANGE_EXISTING_APPROVED_SOURCE_ONLY",
           "scope": "Only optional explicit materializedSource for SETTLEMENT, existing normalize/spool/verify and all legacy PAYMENT paths unchanged. Originalreader tests; no wrapper or new source authority."
+        },
+        {
+          "path": "scripts/import-v2/payment-source-fixture.test-support.mjs",
+          "group": "B06_EXISTING_FINITE_SOURCE_SYNTHETIC_TEST_SUPPORT",
+          "fieldGate": "NO_SCHEMA_CHANGE_TEST_ONLY",
+          "scope": "Only shared synthetic finite-offset/index fixture for original authorized SalesDetail/Settlement affected tests; original PAYMENT defaults unchanged. No real source, new wrapper or broad test suite."
         }
       ]
     },
