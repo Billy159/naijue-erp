@@ -1,0 +1,53 @@
+{
+  "atUtc": "2026-10-23T19:33:59.296832+00:00",
+  "parent": "28ac1e643be47aa77987743bdf467ed38f2b69ef",
+  "taskId": "QF2-P-SIZE-DROPDOWN-OPEN-01",
+  "files": [
+    {
+      "path": "apps/web/src/products/product-editor-specs.tsx",
+      "bytes": 19125,
+      "sha256": "2c312c77c5fc7a73366698e03cf57652e49f19f275ec9aa91cb8bec4235d966e",
+      "beforeSha256": "87dea207c0f1ab9220242fdd102cc7bd317e4633061deb48d61a2c12cd470f7d",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-P-SIZE-DROPDOWN-OPEN-01/RESULT.json",
+  "ownerReceiptSha256": "a9f8af429ed7a41623e876f11686b15217b7020d9dc8eec720182a6c4d4442da",
+  "ownerDelivery": {
+    "taskId": "QF2-P-SIZE-DROPDOWN-OPEN-01",
+    "owner": "F2",
+    "atUtc": "2026-10-23T19:32:44.729261+00:00",
+    "status": "SOURCE_READY_EXACT1_RELEASED_FOR_C_FREEZE; AFFECTED_BROWSER_RECHECK_PENDING",
+    "authority": "C original directed P2 after QF2 fixed196 actual; human reporting01a161f7-a5e8-7e10-9059-9537c28910c2; gpt-6.1-sol/xhigh Fast not verified",
+    "files": [
+      {
+        "path": "apps/web/src/products/product-editor-specs.tsx",
+        "bytes": 19125,
+        "sha256": "2c312c77c5fc7a73366698e03cf57652e49f19f275ec9aa91cb8bec4235d966e",
+        "beforeSha256": "87dea207c0f1ab9220242fdd102cc7bd317e4633061deb48d61a2c12cd470f7d"
+      }
+    ],
+    "change": "Replace only AddSku current-group local size UISelect consumer with original public DemoSingleSelectAction flat presentation and scoped style lease/controlled open/real placeholder. Same component already used by color/fit. Native viewport/host-width popup measure, no first-member default or new candidate lookup. Scope/unmount disposes style and ignores late readiness; failed style load can retry. Other UISelects and public components untouched.",
+    "diagnosis": {
+      "actualReference": "QF2 stable520px SYN0002: enabled size arrow no options/aria-expandedfalse while color opens. Actual dictionary request body/UUID not captured and never invented. C196 source says current group200 nonempty.",
+      "syntheticBefore": "Actual original AddSku + StandardOverlay + actual public controls (no control stubs) in React19 StrictMode, supplied exact group200 with2 valid members and same-name foreign group. Size mouse-arrow expandedtrue but zero popup/options. This reproduces visible unavailability with proven nonempty input; observed synthetic expandedtrue differs from QF actualfalse, so exact browser event-stage root cause is not claimed.",
+      "syntheticAfter": "Same fixture and actual controls now expandedtrue with165/S and175/L, excludes foreign30; mouse chooses175/L with no existingSKU; color/fit actual popup read/select then local draft confirms original group member ID301, color800/fit900 and text000-NEW-SKU. No real command or backend write."
+    },
+    "checks": [
+      "Before actual-control probe RED missing own members; after real-control probe PASS including popup width adaptation",
+      "Affected original product-editor-specs transitive strict0diagnostics",
+      "Original dictionary traversal/admission/save block byte-identical; original C1716dataflow groups reused, not rerun under input stubs",
+      "No sizes/global-size-groups candidate HTTP read introduced; only original dictionary read and color/fit candidate reads"
+    ],
+    "notTested": [
+      "Actual QF2 browser mouse/keyboard/dropdown geometry/precise original browser cause",
+      "Actual HTTP/dictionary payload/native save and production business data",
+      "Whole six-tabs/product group suite/full build/PG/Git/deployment not repeated"
+    ],
+    "blockers": [
+      "No F2 source blocker; exact actual recheck belongs QF2 after C fixed candidate"
+    ],
+    "next": "C freeze this exact1, QF2 targeted original AddSku size-arrow/current-group members/one local unsubmitted selection only; do not rerun full product/inventory suite or infer real save PASS."
+  },
+  "qualification": "SOURCE_FIXED_ONLY; actual QF2 original arrow/member/local-selection observation on a new candidate pending. Existing group/dataflow evidence reused."
+}

@@ -12,6 +12,8 @@ import type { ProductEditorCapability, ProductSkuInput } from './product-editor-
 import type { DictionarySize } from '../../../../packages/application/src/dictionary-read-ports.ts';
 import { LatestQuery } from '../loading/latest-query.ts';
 import type { ProductMaintenanceCandidatePage, ProductMaintenanceCandidateQuery } from './product-editor-contracts.ts';
+import { DemoSingleSelectAction } from '../demo-controls/single-select-action.tsx';
+import { createDemoSingleSelectStyles } from '../demo-controls/single-select-styles.ts';
 
 import type { ProductSpecSelection } from './product-editor-state.ts';
 export { actualSpecSelection, hasUnresolvedSpecSelection, type ProductSpecSelection } from './product-editor-state.ts';
@@ -101,9 +103,29 @@ function AddSku(props:Props&{readonly close:()=>void}){
   <div className="product-editor-fields"><label className="field"><span>规格编码 *</span><UIInput aria-label="规格编码" value={skuCode} onChange={setCode}/></label>
   <label className="field"><span>颜色 *</span><ProductCandidateSelect scope={props.scope} reader={props.reader} kind="colors" label="颜色" value={colorId} currentLabel={colorId?(props.labels[`colors:${colorId}`]??null):null} disabled={false} onAccessFailure={props.onAccessFailure} onChange={(id,name)=>{setColor(id);props.remember(id,name,'colors');}}/></label>
   <label className="field"><span>版型 *</span><ProductCandidateSelect scope={props.scope} reader={props.reader} kind="fits" label="版型" value={fitId} currentLabel={fitId?(props.labels[`fits:${fitId}`]??null):null} disabled={false} onAccessFailure={props.onAccessFailure} onChange={(id,name)=>{setFit(id);props.remember(id,name,'fits');}}/></label>
-  <label className="field"><span>尺码 *</span><UISelect aria-label="尺码" value={sizeId} options={(sizes??[]).map(s=>({value:s.id,label:s.name}))} disabled={!sizes} placeholder="选择尺码" onChange={value=>{if(typeof value==='string')setSize(value);}}/></label></div>
+  <label className="field"><span>尺码 *</span><NativeGroupSizeSelect scope={props.scope} sizes={sizes} value={sizeId} onChange={setSize}/></label></div>
   {error&&<p role="alert">{error}{sizes===null&&<UIButton onClick={()=>{setError('');setRetry(v=>v+1);}}>重试</UIButton>}</p>}
  </StandardOverlay>;
+}
+
+/** The exact already-read group members are local choices. Reuse the same
+ * public native Select/portal lifecycle as color and fit, with no candidate IO. */
+function NativeGroupSizeSelect(props:{readonly scope:Props['scope'];readonly sizes:readonly DictionarySize[]|null;readonly value:string;readonly onChange:(id:string)=>void}){
+ const host=useRef<HTMLDivElement>(null),[ready,setReady]=useState(false),[failed,setFailed]=useState(false),[retry,setRetry]=useState(0),[open,setOpen]=useState(false),[popupWidth,setPopupWidth]=useState(300);
+ useEffect(()=>{
+  const styles=createDemoSingleSelectStyles(host.current!.ownerDocument);let attached=true;
+  setReady(false);setFailed(false);
+  const abort=()=>{attached=false;styles.dispose();};
+  props.scope.signal.addEventListener('abort',abort,{once:true});
+  void styles.load().then(()=>{if(attached&&props.scope.active)setReady(true);},()=>{if(attached&&props.scope.active)setFailed(true);});
+  return()=>{props.scope.signal.removeEventListener('abort',abort);abort();};
+ },[props.scope,retry]);
+ const disabled=props.sizes===null||!props.scope.active,options=(props.sizes??[]).map(size=>({value:size.id,label:size.name}));
+ return <div ref={host} className="product-editor-select product-flat-candidate-select">{ready?<DemoSingleSelectAction presentation="flat" label="尺码" placeholder="选择尺码" required value={props.value} options={options} popupWidth={popupWidth}
+  disabled={disabled} open={open&&!disabled} onOpenChange={visible=>{if(visible){const element=host.current,view=element?.ownerDocument.defaultView;if(element&&view){const rect=element.getBoundingClientRect();setPopupWidth(Math.min(Math.max(rect.width,300),Math.max(180,view.innerWidth-rect.left-12)));}}setOpen(visible);}} onChange={value=>{if(props.scope.active&&props.sizes?.some(size=>size.id===value))props.onChange(value);}}/>
+  :<UISelect aria-label="尺码" disabled value={props.value} options={options} placeholder="选择尺码"/>}
+  {failed&&<p role="alert">尺码选项未加载。<UIButton disabled={!props.scope.active} onClick={()=>setRetry(value=>value+1)}>重试</UIButton></p>}
+ </div>;
 }
 
 interface ProductSpecSource {
