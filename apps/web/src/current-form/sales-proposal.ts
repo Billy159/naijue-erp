@@ -40,7 +40,7 @@ export interface SalesProposalSnapshot {
   readonly totals: { readonly grossMinor: string; readonly netDueMinor: string; readonly settledMinor: string; readonly balanced: boolean } | null;
   readonly entries: Readonly<Record<'IN' | 'OUT', readonly SalesProposalEntry[]>>;
   /** A pending identity change never mutates the original draft line. */
-  readonly lineEdit: { readonly key: string; readonly original: SalesProposalLine; readonly product: CurrentFormProduct; readonly sku: CurrentFormSku | null; readonly color: SalesSpecChoice | null; readonly fit: SalesSpecChoice | null; readonly size: SalesSpecChoice | null; readonly sizeGroup: SalesSpecChoice | null; readonly skuPage: number } | null;
+  readonly lineEdit: Pick<SalesProposalLine, 'quantity' | 'dealPrice' | 'pricingRule' | 'discount' | 'isGift' | 'zeroConfirmed'> & { readonly key: string; readonly original: SalesProposalLine; readonly product: CurrentFormProduct; readonly sku: CurrentFormSku | null; readonly color: SalesSpecChoice | null; readonly fit: SalesSpecChoice | null; readonly size: SalesSpecChoice | null; readonly sizeGroup: SalesSpecChoice | null; readonly skuPage: number } | null;
   readonly sizeGroups: { readonly phase: 'unavailable' | 'ready'; readonly groups: readonly DictionarySizeGroup[] };
   readonly picker: { readonly kind: SalesProposalPicker; readonly search: string; readonly page: number;
     readonly product: CurrentFormProduct | null; readonly method: CurrentSalesReferenceItem | null;
@@ -168,7 +168,7 @@ export class SalesProposalSession {
     if (this.#state.lineEdit && this.#state.lineEdit.key !== key) { this.#publish({ notice: '请先确认或取消当前行的改选。' }); return false; }
     if (!this.#state.lineEdit) {
       this.closePicker(); this.#settlementTarget = null; this.#entryTarget = null;
-      this.#publish({ lineEdit: { key, original, product: original.product, sku: original.sku, color: { id: original.sku.colorId, name: original.sku.colorName }, fit: { id: original.sku.fitId, name: original.sku.fitName }, size: { id: original.sku.sizeId, name: original.sku.sizeName }, sizeGroup: null, skuPage: 1 } });
+      this.#publish({ lineEdit: { key, original, quantity: original.quantity, dealPrice: original.dealPrice, pricingRule: original.pricingRule, discount: original.discount, isGift: original.isGift, zeroConfirmed: original.zeroConfirmed, product: original.product, sku: original.sku, color: { id: original.sku.colorId, name: original.sku.colorName }, fit: { id: original.sku.fitId, name: original.sku.fitName }, size: { id: original.sku.sizeId, name: original.sku.sizeName }, sizeGroup: null, skuPage: 1 } });
     }
     return true;
   }
@@ -189,10 +189,14 @@ export class SalesProposalSession {
       // no current price read; do not relabel the old reference as a new fact.
       const product = restored ? { ...currentProduct, retailPrice: original.product.retailPrice, ...(original.product.category ? { category: original.product.category } : {}) }
         : sourceSnapshot && edit.product === row.product ? { ...edit.product, retailPrice: null } : edit.product;
-      return { ...retained, ...(restored ? { sourceSnapshot: original.snapshot } : {}), product, sku: edit.sku! };
+      return { ...retained, quantity: edit.quantity, dealPrice: edit.dealPrice, pricingRule: edit.pricingRule, discount: edit.discount, isGift: edit.isGift, zeroConfirmed: edit.zeroConfirmed, ...(restored ? { sourceSnapshot: original.snapshot } : {}), product, sku: edit.sku! };
     }) });
     if (changed) this.#publish({ lineEdit: null, ...(this.#state.draft.lines.find(row => row.key === edit.key)?.product.retailPrice === null ? { notice: '新规格参考价尚未读到。可重新选择商品核对参考价，或明确填写成交单价；未确认价格不会保存。' } : {}) });
     return changed;
+  }
+  updateLineEdit(patch: Partial<Pick<SalesProposalLine, 'quantity' | 'dealPrice' | 'pricingRule' | 'discount' | 'isGift' | 'zeroConfirmed'>>): boolean {
+    const edit = this.#state.lineEdit; if (!edit || this.#state.disposed) return false;
+    this.#publish({ lineEdit: { ...edit, ...patch }, errors: [], notice: null }); return true;
   }
   cancelLineEdit(): void { this.closePicker(); if (!this.#state.disposed) this.#publish({ lineEdit: null }); }
   #entry(direction: 'IN' | 'OUT', key?: string): SalesProposalEntry | undefined {

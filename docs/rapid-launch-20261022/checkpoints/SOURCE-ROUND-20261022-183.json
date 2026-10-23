@@ -1,0 +1,49 @@
+{
+  "atUtc": "2026-10-23T13:55:14.028857+00:00",
+  "parent": "a917256000643f0dee71bde15245e015cbc775ab",
+  "taskId": "F01_DEMO_DIRTY_NAV_CONTINUATION_AND_UNREVIEWED_LOCAL_EDIT",
+  "files": [
+    {
+      "path": "apps/web/src/demo-presentation/document-navigation.tsx",
+      "owner": "F1",
+      "bytes": 2148,
+      "sha256": "7b4c7ddf7ffe34736011605c08aab6c72f806d5d134da9eb43a0e7a311d369a0"
+    },
+    {
+      "path": "apps/web/src/demo-presentation/demo-frame.tsx",
+      "owner": "F1",
+      "bytes": 8144,
+      "sha256": "883edb7c1f4563ac412bac492ef11a494a59c472b5c02f251773141be3efafc8"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal.ts",
+      "owner": "F1",
+      "bytes": 47893,
+      "sha256": "c62199f04eb809511b05351e6e8e23a39ebe0b448ac929adcb46f9a712d9faed"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "owner": "F1",
+      "bytes": 53084,
+      "sha256": "05bba4072b95038a94dabe73eeda4458166aa4676693471d244f772927aeaec8"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-existing-document.ts",
+      "owner": "F1",
+      "bytes": 19711,
+      "sha256": "3d2ed1cc2b312d28a0714eb82c135d8ccabeef142f407961d17de640905ad3ca"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-existing-document-form.tsx",
+      "owner": "F1",
+      "bytes": 5655,
+      "sha256": "43e4b30d9491b564ec4914881047357565dedebb4a573274796179d9761c6d2b"
+    }
+  ],
+  "ownerReceipt": "K/reports/frontend/rapid-launch-20261022/F1/chunk-90/DELIVERY.json",
+  "ownerReceiptSha256": "1b34f89da3a73b23a824e692f0fa36554d91281006cae769c28a30ca839baff7",
+  "scope": "Original leave(fn) retains intended navigation; source cancel/close keep draft, successful explicit discard then continues once via original route/session. identityRow quantity/price/discount raw draft confirms realSKU locally, cancel preserves oldline. Saved editor gets actual product group by exact product read, retains snapshot pricing.",
+  "checksAdopted": "Original owner after1 native page consumer, saved1 real public consumer (0writes/keys), exact6 strict1 exit0. Newactual browser/race/save not accepted.",
+  "remaining": "Same SALE page remaining regions/states accurately in original PAGE-COVERAGE; native full draft/real save/PG/wholepage not complete. Transfer matrix next originalowner, no fake SKU/expanded history permissions.",
+  "qualification": "SOURCE_FIXED_ONLY, currentgroup181 retained. New immutable combined runtime and QF affected independent source/actual needed; no old48/fullbackend replay."
+}
