@@ -1,0 +1,90 @@
+{
+  "atUtc": "2026-10-23T23:29:23.495916+00:00",
+  "parent": "5315f5d5167ad8864d7db516c1cb56e85ffaac01",
+  "taskId": "F2_I07_NATIVE_CLOSE_SLOT_CONSUMER",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/ledger-drawer.tsx",
+      "bytes": 14167,
+      "sha256": "b4c10d0ad01d24b5be068f73bfc0dc0151d49ef9ef97c051d725d9ee2a73f18c",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "643b7bc81973d4656dfcce43a7dee62e350f583ac5a0445637cfad5053e5f741",
+  "ownerDelivery": {
+    "taskId": "QF2-I07-CARRIER-INSET-01",
+    "subscope": "EXISTING_CLOSE_INNER_GLYPH",
+    "owner": "F2",
+    "status": "SOURCE_READY_EXACT1_SHARED_GLYPH_OPTIN_LOCAL_CONSUMER_PASS_ACTUAL_PENDING",
+    "authority": {
+      "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "model": "gpt-6.1-sol/xhigh; Fast not verified"
+    },
+    "completedScope": "Only add existing public SourceCloseIcon named import and explicit closeIcon={<SourceCloseIcon />} to existing ledger StandardOverlay. Same header closePlacement, button/label/close/ready, data/read/filter and all other source bytes preserved; no local SVG copy or shared edits.",
+    "files": [
+      {
+        "path": "apps/web/src/inventory/ledger-drawer.tsx",
+        "bytes": 14167,
+        "sha256": "b4c10d0ad01d24b5be068f73bfc0dc0151d49ef9ef97c051d725d9ee2a73f18c",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/source/apps/web/src/inventory/ledger-drawer.tsx",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/before/apps/web/src/inventory/ledger-drawer.tsx",
+          "bytes": 14118,
+          "sha256": "61ba9e3071c0ef4327c36b3159983fdf630233aee0533cdbe19f50b6f7e289d4"
+        }
+      }
+    ],
+    "public234ReadOnly": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-overlay.tsx",
+      "bytes": 9353,
+      "sha256": "ab1affb883f4b75bfc64e288ad62ea3edebff409d2a5e1aa78ddff465b0882e5"
+    },
+    "ledgerCssUnchanged": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/inventory/ledger.css",
+      "bytes": 8508,
+      "sha256": "00bdd3de934ee55835b0f7756ada0b9a2f5fa2055a660f3a5433392164223036"
+    },
+    "checks": {
+      "oneConsumer": "PASS actual InventoryLedgerDrawer + public234 + installed React19/Arco StrictMode: one same header close/direct16SVG/no span or text x, original aria/initial focus/one ready read, click actual SVG path closes once and restores opener, parent remains active.",
+      "sourceDelta": "Exact import+one explicit prop only; all other TSX bytes unchanged; ledger CSS hash unchanged so original30px hit/cascade/layout/hover rules reused.",
+      "warnings": "2 existing installed Arco React19 element.ref deprecation warnings retained in log.",
+      "notRerun": "No generic/default/cataloque/Tab/Esc/12regions/20+4 suite, no new broad typecheck; new public typed slot/export independently accepted234. One actual consumer bundle+DOM check only."
+    },
+    "untested": [
+      "Normal/hover glyph actual pixels and one X opener return on new containing fixed candidate",
+      "No Chrome/full candidate build/realHTTP/PG/production/deployment"
+    ],
+    "blocker": "None in source; explicit public seam234 is available and unchanged. F2 NO_CHROME.",
+    "next": "C pin exact1 -> successor containing candidate -> original QF2 only normal/hover inner glyph and one X focus return; reuse previous carrier/hit/read and accepted public/default scopes.",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/SOURCE-MANIFEST.json",
+        "bytes": 1868,
+        "sha256": "2f6636a57361a95d970d95e5755f2a64e044c232b0e7b1ddd76a97240bfe37f0"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/source.diff",
+        "bytes": 2010,
+        "sha256": "82860303a358fd84fd064ab052cb3cf352b4b13ccd5a725bcb599fb9677128cb"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/checks.log",
+        "bytes": 559,
+        "sha256": "2e896096a1e3ad66044e7d4f1889305f6ebc36a4ceaaf9e8f2eb2d70062ab3bb"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/verify-consumer.cjs",
+        "bytes": 7204,
+        "sha256": "41729f061f9af8aba37a3ed8a95366505e4b77062d67bf981cd612f159e17451"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-I07-CARRIER-INSET-01/close-inner-01/actual-consumer-dom.html",
+        "bytes": 8743,
+        "sha256": "bdefaeb4d59567db21d72f78e7f9a1bff71f65b3f9dd9e6bb9952506189a0f70"
+      }
+    ]
+  },
+  "qualification": "Originalmodule owner necessary targeted source checks adopted; independent source/newfixed browser actual pending, not current233. No shareddefault glyph change/backendsave/schema/wholepage or formalperformance acceptance."
+}
