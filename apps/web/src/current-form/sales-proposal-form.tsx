@@ -1,19 +1,21 @@
 import { CurrentProductFinder, type CurrentProductFinderHandle } from './product-finder.tsx';
 import { SalesDocumentColumns, SalesDocumentColumnHead, SalesDocumentSummary, SalesProductPresentation, salesPaymentBalance, salesPaymentKind, salesDisplayedDiscount, type SalesProductCapability } from '../sales/document-presentation.tsx';
 import type { ReadScope } from '../loading/read-scope.ts';
-import { Trigger } from '@arco-design/web-react';
+import { Trigger, type TriggerProps } from '@arco-design/web-react';
 import { SalesStatusTag } from '../sales/sales-status-tag.tsx';
 import { StandardOverlay } from '../components/standard-overlay.tsx';
 import { DocumentScan } from '../components/document-scan.tsx';
 import type { DocumentScanController } from '../components/document-scan-controller.ts';
 import { UIButton, UIDate, UIInput, UISelect } from '../components/standard-controls.tsx';
-import { useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useReducer, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { SalesProposalSession, salesProposalMoney, type SalesProposalLine, type SalesProposalPicker, type SalesProposalSnapshot } from './sales-proposal.ts';
 import { salesInputMoney } from '../sales/commands/form-model.ts';
 import { discountUnitPrice } from '../../../../packages/domain/src/sales-money.ts';
 import { minorAmount } from '../../../../packages/domain/src/values.ts';
 import type { CurrentFormProduct, CurrentFormSku } from '../../../../packages/application/src/current-form-ports.ts';
 import { salesBusinessMode, type SalesBusinessMode } from './sales-business-mode.ts';
+import { DemoSingleSelectAction } from '../demo-controls/single-select-action.tsx';
+import '../demo-controls/single-select.css';
 import './sales-proposal.css';
 import '../sales/detail.css';
 const labels: Record<SalesProposalPicker, string> = { hall: '营业厅', customer: '客户', salesperson: '营业员', warehouse: '出库仓', paymentMethod: '付款方式', paymentAccount: '资金账户', product: '商品', sku: '实际规格' };
@@ -47,11 +49,53 @@ function quantitySummary(rows: readonly SalesProposalLine[], absolute = false): 
   return rows.reduce((sum, row) => { const n = BigInt(row.quantity); return sum + (absolute && n < 0n ? -n : n); }, 0n).toString();
 }
 type SpecKind = 'color' | 'fit' | 'size';
+/** Same guarded Portal reattachment used by the shared native Select action.
+ * A replacement row may first mount already-open under StrictMode replay. */
+function SalesCandidateTrigger(props: TriggerProps) {
+  const [mounted, setMounted] = useState(false);
+  const [, refresh] = useReducer((value: number) => value + 1, 0);
+  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    if (!mounted || !props.popupVisible) return;
+    let active = true; queueMicrotask(() => { if (active) refresh(); });
+    return () => { active = false; };
+  }, [mounted, props.popupVisible]);
+  return <Trigger {...props} popupVisible={mounted && !!props.popupVisible} popup={() => props.popup?.() ?? null} />;
+}
+/** Frozen unified-single-select Choice presentation. Data/selection still belong
+ * to the native proposal; only the current bounded page becomes options. */
+function SalesReferenceField({ session, picker, visible, label, value, selected, disabled, open, close }: {
+  readonly session: SalesProposalSession; readonly picker: SalesProposalSnapshot['picker']; readonly visible: boolean;
+  readonly label: string; readonly value: string; readonly selected: { readonly id: string; readonly name: string } | null;
+  readonly disabled: boolean; readonly open: () => void; readonly close: () => void;
+}) {
+  const host = useRef<HTMLDivElement>(null), [popupWidth, setPopupWidth] = useState(300);
+  useLayoutEffect(() => {
+    const element = host.current, view = element?.ownerDocument.defaultView;
+    if (!element || !view || !visible) return;
+    const measure = () => { const bounds = element.getBoundingClientRect(); setPopupWidth(Math.min(Math.max(bounds.width, 300), Math.max(180, view.innerWidth - bounds.left - 12))); };
+    measure(); view.addEventListener('resize', measure);
+    return () => view.removeEventListener('resize', measure);
+  }, [visible]);
+  const options: { value: string; label: string; disabled?: boolean }[] = visible && picker?.phase === 'ready' ? (picker.result?.items ?? []).map(item => ({ value: item.id as string, label: 'name' in item ? item.name : item.skuCode })) : [];
+  if (selected && !options.some(option => option.value === selected.id)) options.unshift({ value: selected.id, label: selected.name, disabled: true });
+  return <div ref={host} className="sale-reference-field"><DemoSingleSelectAction presentation="flat" label={label} placeholder={value} value={selected?.id ?? ''} options={options} disabled={disabled} open={visible} popupWidth={popupWidth}
+    loading={visible && picker?.phase === 'loading'} onSearch={text => { if (visible && session.getSnapshot().picker === picker) void session.search(text); }}
+    onOpenChange={next => {
+      if (next) { if (!visible) open(); return; }
+      // The source Select notifies close before onChange. Let the native
+      // selection consume this exact candidate snapshot before dismissing it.
+      const current = picker; queueMicrotask(() => { if (current && !session.getSnapshot().disposed && session.getSnapshot().picker === current) close(); });
+    }}
+    onChange={id => { if (visible && session.getSnapshot().picker === picker) void session.select(id); }}
+    dropdownRender={menu => <>{picker?.phase === 'error' ? <div className="sale-reference-state" role="alert">读取失败。<UIButton onClick={() => { void session.retry(); }}>重试</UIButton></div> : menu}
+      {visible && picker?.phase === 'ready' && picker.result && picker.result.exactTotal > 20n && <div className="sale-reference-pages"><span>第 {picker.page} 页</span><UIButton disabled={picker.page <= 1} onClick={() => { void session.page(picker.page - 1); }}>上一页</UIButton><UIButton disabled={BigInt(picker.page) * 20n >= picker.result.exactTotal} onClick={() => { void session.page(picker.page + 1); }}>下一页</UIButton></div>}</>} /></div>;
+}
 /** One anchored Arco popup for native paged candidates. No second modal picker,
  * no all-catalog fetch and no derived SKU identity. */
 function CandidatePopup({ session, picker, spec, selection, choose, close, keyboardRef, scope, capability, getAnchor }: { readonly getAnchor: () => HTMLElement | null | undefined; readonly keyboardRef: React.Ref<CurrentProductFinderHandle>; readonly scope?: ReadScope; readonly capability?: SalesProductCapability;
   session: SalesProposalSession; picker: NonNullable<SalesProposalSnapshot['picker']>;
-  spec?: SpecKind; selection?: { color: { id: string } | null; fit: { id: string } | null };
+  spec?: SpecKind; selection?: { color: { id: string } | null; fit: { id: string } | null; sku?: { id: string } | null };
   choose: (id: string) => void; close: (restoreFocus?: boolean) => void;
 }) {
   const host = useRef<HTMLDivElement>(null);
@@ -64,7 +108,7 @@ function CandidatePopup({ session, picker, spec, selection, choose, close, keybo
     const frame = requestAnimationFrame(() => {
       const active = doc.activeElement;
       if (!element.isConnected || element.contains(active) || active !== previous && active !== doc.body && active?.isConnected) return;
-      (element.querySelector<HTMLElement>('input,button:not(:disabled)') ?? element).focus({ preventScroll: true });
+      (element.querySelector<HTMLElement>('[aria-selected="true"]') ?? element.querySelector<HTMLElement>('input,button:not(:disabled)') ?? element).focus({ preventScroll: true });
     });
     return () => cancelAnimationFrame(frame);
   }, [picker.kind, picker.phase, picker.page]);
@@ -73,19 +117,20 @@ function CandidatePopup({ session, picker, spec, selection, choose, close, keybo
   if (spec) {
     const rows = (picker.result?.items ?? []) as readonly CurrentFormSku[];
     const matching = rows.filter(row => spec === 'color' || row.colorId === selection?.color?.id && (spec === 'fit' || row.fitId === selection?.fit?.id));
-    options = matching.map(row => ({ id: spec === 'color' ? row.colorId : spec === 'fit' ? row.fitId : row.id, text: spec === 'color' ? row.colorName : spec === 'fit' ? row.fitName : `${row.sizeName} · ${row.skuCode}` }));
+    options = matching.map(row => ({ id: spec === 'color' ? row.colorId : spec === 'fit' ? row.fitId : row.id, text: spec === 'color' ? row.colorName : spec === 'fit' ? row.fitName : row.sizeName }));
     options = options.filter((item, index) => options.findIndex(other => other.id === item.id) === index);
   }
-  return <div ref={host} className="sales-inline-candidates" role="dialog" aria-label={`${spec ? { color: '颜色', fit: '版型', size: '尺码' }[spec] : labels[picker.kind]}候选`} tabIndex={-1} onKeyDown={event => {
+  const selected = spec === 'color' ? selection?.color?.id : spec === 'fit' ? selection?.fit?.id : selection?.sku?.id;
+  return <div ref={host} className={`sales-inline-candidates${spec ? ' sale-spec-menu mx-spec-menu' : ''}`} role="dialog" aria-label={`${spec ? { color: '颜色', fit: '版型', size: '尺码' }[spec] : labels[picker.kind]}候选`} tabIndex={-1} onKeyDown={event => {
     if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); close(); }
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       const nodes = Array.from(host.current?.querySelectorAll<HTMLElement>('[data-candidate-option]') ?? []), current = nodes.indexOf(event.target as HTMLElement);
       if (nodes.length) { event.preventDefault(); nodes[(current + (event.key === 'ArrowDown' ? 1 : nodes.length - 1) + nodes.length) % nodes.length]?.focus(); }
     }
   }}>
-    {picker.kind !== 'sku' && <UIInput aria-label={`搜索${labels[picker.kind]}候选`} placeholder={`搜索${labels[picker.kind]}名称或编码`} value={picker.search} onChange={value => { void session.search(value); }} />}
-    <div className="sales-inline-options">{picker.phase === 'loading' ? <p role="status">正在读取…</p> : picker.phase === 'error' ? <p role="alert">读取失败。<UIButton onClick={() => { void session.retry(); }}>重试</UIButton></p> : <>
-      {options.map(option => <UIButton key={option.id} data-candidate-option type="button" onClick={() => choose(option.id)}>{option.text}</UIButton>)}
+    {spec && <div className="mx-spec-menu-head">选择{{ color: '颜色', fit: '版型', size: '尺码' }[spec]}<span>{options.length} 项</span></div>}
+    <div className={`sales-inline-options${spec ? ' mx-spec-menu-options' : ''}`} {...(spec ? { role: 'listbox', 'aria-label': `可选${{ color: '颜色', fit: '版型', size: '尺码' }[spec]}` } : {})}>{picker.phase === 'loading' ? <p role="status">正在读取…</p> : picker.phase === 'error' ? <p role="alert">读取失败。<UIButton onClick={() => { void session.retry(); }}>重试</UIButton></p> : <>
+      {options.map(option => <UIButton key={option.id} data-candidate-option {...(spec ? { 'data-mx-spec-option': option.id } : {})} {...(spec ? { role: 'option', 'aria-selected': option.id === selected } : {})} type="button" onClick={() => choose(option.id)}><span>{option.text}</span>{spec && option.id === selected && <span aria-hidden="true">✓</span>}</UIButton>)}
       {!options.length && <p>本页无匹配项{picker.result && picker.result.exactTotal > 20n ? '，可翻页继续选择' : ''}</p>}
     </>}</div>
     {picker.phase === 'ready' && picker.result && picker.result.exactTotal > 20n && <footer><span>第 {picker.page} 页 / 共 {picker.result?.exactTotal.toString()} 个{spec ? '实际规格' : '候选'}</span><UIButton disabled={picker.page <= 1} onClick={() => { void session.page(picker.page - 1); }}>上一页</UIButton><UIButton disabled={!picker.result || BigInt(picker.page) * 20n >= picker.result.exactTotal} onClick={() => { void session.page(picker.page + 1); }}>下一页</UIButton></footer>}
@@ -116,7 +161,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
     live?.focus({ preventScroll: true });
   };
   const dismissPicker = (restore = false) => { session.closePicker(); setAnchor(null); if (restore) restorePickerFocus(); };
-  const candidate = (id: string, label: string, value: ReactNode, open: () => void, disabled = false, spec?: SpecKind, selection?: { color: { id: string } | null; fit: { id: string } | null }, input?: { value: string; change: (value: string) => void; placeholder: string; openUsesInputValue?: boolean }) => {
+  const candidate = (id: string, label: string, value: ReactNode, open: () => void, disabled = false, spec?: SpecKind, selection?: { color: { id: string } | null; fit: { id: string } | null; sku?: { id: string } | null }, input?: { value: string; change: (value: string) => void; placeholder: string; openUsesInputValue?: boolean }) => {
     const visible = anchor === id && !!picker;
     const show = (target?: HTMLElement) => { if (disabled) return; if (target) triggerRef.current = target; setAnchor(id); open(); };
     const keyboard = (event: React.KeyboardEvent<HTMLElement>) => {
@@ -125,20 +170,23 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
         if (event.key !== 'Tab') event.preventDefault(); event.stopPropagation();
         const handler = productKeys.current.get(id);
         if (handler) handler.key(event.key); else if (event.key === 'Escape') dismissPicker(true);
-      } else if (event.key === 'ArrowDown' || event.key === 'Enter' && input) { event.preventDefault(); show(event.currentTarget); }
+      } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === ' ') { if (input && event.key === ' ') return; event.preventDefault(); show(event.currentTarget); }
     };
     const getAnchor = () => Array.from(formRef.current?.querySelectorAll<HTMLElement>('[data-entry-control]') ?? []).find(node => node.dataset.entryControl === id) ?? (triggerRef.current?.isConnected ? triggerRef.current : null);
-    return <Trigger getPopupContainer={node => node.closest('.demo-ui') ?? formRef.current ?? node.parentElement ?? node} trigger="click" position="bl" popupVisible={visible} escToClose updateOnScroll autoFitPosition unmountOnExit
+    return <SalesCandidateTrigger getPopupContainer={node => node.closest('.demo-ui') ?? formRef.current ?? node.parentElement ?? node} trigger="click" position="bl" {...(spec ? { popupStyle: { width: 250, maxWidth: 'calc(100vw - 16px)' } } : {})} popupVisible={visible} escToClose updateOnScroll autoFitPosition unmountOnExit
       onVisibleChange={next => { if (next) { if (!visible) show(); } else if (visible) dismissPicker(); }}
       popup={() => picker && visible ? <CandidatePopup getAnchor={getAnchor} session={session} picker={picker} keyboardRef={handle => { if (handle) productKeys.current.set(id, handle); else productKeys.current.delete(id); }} {...(scope ? { scope } : {})} {...(productCapability ? { capability: productCapability } : {})} {...(spec ? { spec } : {})} {...(selection ? { selection } : {})} close={restore => dismissPicker(restore ?? true)} choose={selected => {
+        if (session.getSnapshot().picker !== picker) return;
         if (spec) { session.selectSpec(spec, selected); setAnchor(null); restorePickerFocus(); }
         else { void session.select(selected).then(() => { if (!session.getSnapshot().picker) { setAnchor(null); restorePickerFocus(); } }); }
       }} /> : <span />}>
-      {input ? <UIInput className="sale-product-input" data-entry-control={id} aria-label={label} role="combobox" aria-expanded={visible} autoComplete="off" placeholder={input.placeholder} value={input.value} disabled={disabled}
+      {input ? <UIInput className="sale-product-input" data-entry-control={id} spellCheck={false} aria-label={label} role="combobox" aria-autocomplete="list" aria-expanded={visible} autoComplete="off" placeholder={input.placeholder} value={input.value} disabled={disabled}
         onKeyDown={keyboard} onClick={event => { triggerRef.current = event.currentTarget; }} onChange={(value, event) => { triggerRef.current = event.currentTarget; input.change(value); if (!visible) { show(); if (!input.openUsesInputValue) void session.search(value); } else void session.search(value); }} />
-        : <UIButton className="sale-select-trigger" data-entry-control={id} aria-label={label} aria-haspopup="dialog" aria-expanded={visible} disabled={disabled} onKeyDown={keyboard} onClick={event => { triggerRef.current = event.currentTarget; }}><span>{value}</span><span aria-hidden="true">⌄</span></UIButton>}
-    </Trigger>;
+        : <UIButton className={`sale-select-trigger${spec ? ` mx-spec-picker${selection?.[spec === 'size' ? 'sku' : spec] ? ' has-value' : ''}` : ''}`} data-entry-control={id} aria-label={label} aria-haspopup={spec ? 'listbox' : 'dialog'} aria-expanded={visible} disabled={disabled} onKeyDown={keyboard} onClick={event => { triggerRef.current = event.currentTarget; }}><span>{value}</span>{spec ? <svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4" /></svg> : <span aria-hidden="true">⌄</span>}</UIButton>}
+    </SalesCandidateTrigger>;
   };
+  const reference = (id: string, label: string, placeholder: string, selected: { readonly id: string; readonly name: string } | null, open: () => void, disabled = false) => <SalesReferenceField session={session} picker={anchor === id ? picker : null} visible={anchor === id && !!picker} label={label} value={placeholder} selected={selected} disabled={disabled}
+    open={() => { setAnchor(id); open(); }} close={() => { if (anchor === id) dismissPicker(); }} />;
   const cancelMode = () => { modeToConfirm.current = null; setPendingMode(null); };
   const chooseMode = (mode: SalesBusinessMode) => {
     if (mode === salesBusinessMode(draft.businessType) || state.lineEdit) return;
@@ -147,10 +195,12 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
   };
   const discard = (action: 'reset' | 'cancel', confirmed = false) => { const ok = action === 'reset' ? session.reset(confirmed) : session.cancel(confirmed); if (!ok) setConfirm(action); else { setConfirm(null); if (action === 'cancel') close(); } };
   const completeEntry = (direction: 'IN' | 'OUT') => {
-    if (session.appendEntry(direction)) requestAnimationFrame(() => {
+    const appended = session.appendEntry(direction);
+    if (appended) requestAnimationFrame(() => {
       const input = formRef.current?.querySelector<HTMLInputElement>(`[data-entry-control="entry-${direction}-product"]`);
       input?.focus({ preventScroll: true }); input?.select();
     });
+    return appended;
   };
   const finishIdentity = (key: string, confirmChange: boolean) => {
     if (confirmChange && !session.confirmLineEdit()) return;
@@ -175,14 +225,14 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
     <div className="tc-doc-header sale-doc-header"><div className="tc-gold-doc-fields sale-doc-fields">
       <div className="tc-gold-field sale-date-field"><span className="sale-field-label">单据日期 <em>*</em></span><UIDate aria-label="单据日期" value={draft.businessDate} onChange={value => session.setHeader({ businessDate: value })} /></div>
       <div className="tc-gold-field"><span className="sale-field-label">业务类型 <em>*</em></span><UISelect aria-label="业务类型" disabled={!!state.lineEdit} value={salesBusinessMode(draft.businessType)} onChange={value => chooseMode(value as SalesBusinessMode)}><UISelect.Option value="SALE">销售</UISelect.Option><UISelect.Option value="RETURN_EXCHANGE">退货/换货</UISelect.Option></UISelect></div>
-      {(['hall', 'salesperson', 'customer', 'warehouse'] as const).map(kind => <div className="tc-gold-field" key={kind}><span className="sale-field-label">{labels[kind]}{kind !== 'salesperson' && <em> *</em>}</span><div className="sale-reference-control">{candidate(kind, `选择${labels[kind]}`, draft[kind]?.name ?? `请选择${labels[kind]}`, () => { void session.openPicker(kind); }, !!state.lineEdit || kind !== 'hall' && !draft.hall)}{kind === 'salesperson' && draft.salesperson && <UIButton className="sale-clear-reference" aria-label="清除营业员" onClick={() => session.clearSalesperson()}>×</UIButton>}</div></div>)}
+      {(['hall', 'salesperson', 'customer', 'warehouse'] as const).map(kind => <div className="tc-gold-field" key={kind}><span className="sale-field-label">{labels[kind]}{kind !== 'salesperson' && <em> *</em>}</span><div className="sale-reference-control">{reference(kind, `选择${labels[kind]}`, `请选择${labels[kind]}`, draft[kind], () => { void session.openPicker(kind); }, !!state.lineEdit || kind !== 'hall' && !draft.hall)}{kind === 'salesperson' && draft.salesperson && <UIButton className="sale-clear-reference" aria-label="清除营业员" onClick={() => session.clearSalesperson()}>×</UIButton>}</div></div>)}
       <div className="tc-gold-field sale-number-field"><span className="sale-field-label">单号</span><strong className="sale-number-value">{saved?.number ?? '保存后生成'}</strong></div>
       <div className="tc-gold-field sale-discount-field"><span className="sale-field-label">整单优惠 / 抹零</span>{combined ? <span className="sale-read-value" /> : <UIInput aria-label="整单优惠" inputMode="decimal" value={draft.orderDiscount} onChange={value => session.setHeader({ orderDiscount: value })} />}</div>
       <div className="tc-gold-field sale-due-field"><span className="sale-field-label">应结金额</span><strong className="sale-due-value">{totals ? `¥${salesInputMoney(totals.netDueMinor)}` : '待填写'}</strong></div>
       <div className="tc-gold-field sale-payment-field" aria-label="本单收退明细"><span className="sale-field-label">收款</span><div className="sale-payment-rows">
         {paymentRows.map((row, index) => <div className="sale-payment-row" key={row.key ?? 'empty'}>
-          {candidate(`method-${index}`, `付款方式 ${index + 1}`, row.method?.name ?? '付款方式', () => { void session.openPaymentPicker(row.key, 'paymentMethod'); }, !draft.hall || !!state.lineEdit)}
-          {candidate(`account-${index}`, `资金账户 ${index + 1}`, row.account?.name ?? '资金账户', () => { void session.openPaymentPicker(row.key, 'paymentAccount'); }, !row.method || !!state.lineEdit)}
+          {reference(`method-${index}`, `付款方式 ${index + 1}`, '付款方式', row.method, () => { void session.openPaymentPicker(row.key, 'paymentMethod'); }, !draft.hall || !!state.lineEdit)}
+          {reference(`account-${index}`, `资金账户 ${index + 1}`, '资金账户', row.account, () => { void session.openPaymentPicker(row.key, 'paymentAccount'); }, !row.method || !!state.lineEdit)}
           <UIInput aria-label={`收退金额 ${index + 1}`} inputMode="decimal" placeholder="金额" disabled={!draft.hall} value={(row.direction === 'REFUND' ? '-' : '') + row.amount} onChange={value => session.updateSignedSettlement(row.key, value)} />
           <div className="sale-payment-actions">{index === paymentRows.length - 1 && paymentRows.length < 3 && <UIButton className="sale-link" disabled={!draft.hall || !row.method || !row.account || !/^\d+(?:\.\d{1,2})?$/.test(row.amount)} onClick={() => session.addSettlement()}>添加</UIButton>}{row.key && <UIButton className="sale-link" aria-label={`删除收退 ${index + 1}`} onClick={() => session.removeSettlement(row.key!)}>删除</UIButton>}</div>
         </div>)}
@@ -199,9 +249,9 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
       {section.rows.map(row => {
         const editing = state.lineEdit?.key === row.key ? state.lineEdit : null, product = editing?.product ?? row.product;
         const editOpen = (kind: 'product' | 'sku') => { void session.openLinePicker(row.key, kind); };
-        const identity = (part: 'product' | SpecKind, value: ReactNode) => <UIButton className="sale-identity-trigger" data-line-identity={row.key} aria-label={`修改${part === 'product' ? '商品' : { color: '颜色', fit: '版型', size: '尺码' }[part]} ${row.sku.skuCode}`} disabled={!active || !!state.lineEdit} onClick={event => { triggerRef.current = event.currentTarget; setAnchor(`edit-${row.key}-${part}`); editOpen(part === 'product' ? 'product' : 'sku'); if (part === 'product') requestAnimationFrame(() => { const doc = formRef.current?.ownerDocument; if (doc?.activeElement === doc?.body) formRef.current?.querySelector<HTMLInputElement>(`[data-entry-control="edit-${row.key}-product"]`)?.focus({ preventScroll: true }); }); }}><span>{value}</span><span className="sale-edit-mark">改</span></UIButton>;
+        const identity = (part: 'product' | SpecKind, value: ReactNode) => <UIButton className="sale-identity-trigger mx-spec-edit" data-line-identity={row.key} aria-label={`修改${part === 'product' ? '商品' : { color: '颜色', fit: '版型', size: '尺码' }[part]} ${row.sku.skuCode}`} disabled={!active || !!state.lineEdit} onClick={event => { triggerRef.current = event.currentTarget; setAnchor(`edit-${row.key}-${part}`); editOpen(part === 'product' ? 'product' : 'sku'); if (part === 'product') requestAnimationFrame(() => { const doc = formRef.current?.ownerDocument; if (doc?.activeElement === doc?.body) formRef.current?.querySelector<HTMLInputElement>(`[data-entry-control="edit-${row.key}-product"]`)?.focus({ preventScroll: true }); }); }}><span>{value}</span><span className="sale-edit-mark mx-spec-edit-mark" aria-hidden="true">改</span></UIButton>;
         const rawPrice = row.isGift ? '0.00' : row.pricingRule === 'DISCOUNT' ? linePrice(row) ?? '' : row.dealPrice;
-        return <tr key={row.key} className={editing ? 'sale-identity-editing' : ''}>
+        return <tr key={row.key} className={editing ? 'sale-identity-editing sale-identity-edit mx-replacing mx-inline-replacement' : ''}>
           <td>{editing ? <>{candidate(`edit-${row.key}-product`, '修改商品款号 / 名称', `${product.code} · ${product.name}`, () => editOpen('product'), false, undefined, undefined, { value: anchor === `edit-${row.key}-product` && picker?.kind === 'product' ? picker.search : product.code, change: () => {}, placeholder: '款号 / 名称 · 条码请扫码录入' })}<small className="mx-original-hint">原：{row.sourceSnapshot?.productCode ?? row.product.code} / {row.sourceSnapshot?.colorName ?? row.sku.colorName} / {row.sourceSnapshot?.fitName ?? row.sku.fitName} / {row.sourceSnapshot?.sizeName ?? row.sku.sizeName} · {row.quantity}</small></> : <div className="sale-product-cell">{identity('product', <><strong>{row.sourceSnapshot?.productCode ?? row.product.code}</strong><span className="sale-product-name">{row.sourceSnapshot?.productName ?? row.product.name}</span></>)}{row.isGift && <span className="sale-gift">赠品</span>}</div>}</td>
           {(['color', 'fit', 'size'] as const).map(kind => <td key={kind}>{editing ? candidate(`edit-${row.key}-${kind}`, `修改${{ color: '颜色', fit: '版型', size: '尺码' }[kind]}`, kind === 'color' ? editing.color?.name ?? '颜色' : kind === 'fit' ? editing.fit?.name ?? '版型' : editing.sku?.sizeName ?? '尺码', () => editOpen('sku'), kind === 'fit' && !editing.color || kind === 'size' && (!editing.color || !editing.fit), kind, editing) : identity(kind, kind === 'color' ? row.sourceSnapshot?.colorName ?? row.sku.colorName : kind === 'fit' ? row.sourceSnapshot?.fitName ?? row.sku.fitName : row.sourceSnapshot?.sizeName ?? row.sku.sizeName)}</td>)}
           <td><UIInput data-proposal-quantity={row.key} aria-label={`${row.sku.skuCode} 数量`} className={row.quantity.startsWith('-') ? 'negative' : ''} inputMode="numeric" value={row.quantity} disabled={!active || !!editing} onChange={value => {
@@ -218,15 +268,15 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
           <td className="sale-num sale-muted">{product.retailPrice ?? '未记录'}</td>
           <td>{product.retailPrice !== null && !row.isGift && <span className="sale-discount-control"><UIInput aria-label={`${row.sku.skuCode} 折扣`} inputMode="decimal" value={displayedDiscount(row)} placeholder="折扣" disabled={!active || !!editing} onChange={value => session.updateLine(row.key, { pricingRule: 'DISCOUNT', discount: value, zeroConfirmed: false })} /><span>折</span></span>}</td>
           <td><UIInput aria-label={`${row.sku.skuCode} 单价`} placeholder="待填写" inputMode="decimal" value={rawPrice} disabled={!active || row.isGift || !!editing} onChange={value => session.updateLine(row.key, { pricingRule: 'UNIT_PRICE', dealPrice: value, zeroConfirmed: false })} onBlur={() => { if (!row.isGift && !row.zeroConfirmed && linePrice(row) === '0.00') setZeroLine(row.key); }} /></td>
-          <td className="sale-num">{previewAmount(row)}</td><td className="ui-action-cell"><div className="sale-row-actions">{editing ? <><UIButton className="sale-link" disabled={!editing.sku || !!picker} onClick={() => finishIdentity(row.key, true)}>确认改选</UIButton><UIButton className="sale-link" onClick={() => finishIdentity(row.key, false)}>取消改选</UIButton></> : <><UIButton className="sale-link" disabled={!openProduct || !draft.hall} title={openProduct ? undefined : '商品只读页尚未接入'} onClick={() => { if (draft.hall) openProduct?.(row.sku.id, draft.hall.id, { id: row.product.id, label: `${row.product.code} · ${row.product.name}` }); }}>查看</UIButton>{active && <><UIButton className="sale-link" onClick={() => session.updateLine(row.key, { isGift: !row.isGift })}>{row.isGift ? '取消赠品' : '赠品'}</UIButton><UIButton className="sale-link" aria-label={`删除 ${row.sku.skuCode}`} onClick={() => session.removeLine(row.key)}>删除</UIButton></>}</>}</div></td>
+          <td className="sale-num">{previewAmount(row)}</td><td className="ui-action-cell"><div className="sale-row-actions">{editing ? <><UIButton className="sale-link" disabled={!editing.sku || !!picker} onClick={() => finishIdentity(row.key, true)}>确认</UIButton><UIButton className="sale-link" onClick={() => finishIdentity(row.key, false)}>取消</UIButton></> : <><UIButton className="sale-link" disabled={!openProduct || !draft.hall} title={openProduct ? undefined : '商品只读页尚未接入'} onClick={() => { if (draft.hall) openProduct?.(row.sku.id, draft.hall.id, { id: row.product.id, label: `${row.product.code} · ${row.product.name}` }); }}>查看</UIButton>{active && <><UIButton className="sale-link" onClick={() => session.updateLine(row.key, { isGift: !row.isGift })}>{row.isGift ? '取消赠品' : '赠品'}</UIButton><UIButton className="sale-link sale-remove-line" aria-label={`删除 ${row.sku.skuCode}`} onClick={() => session.removeLine(row.key)}>删除</UIButton></>}</>}</div></td>
         </tr>;
       })}
       {active && <tr className="sale-entry-row" data-entry-direction={section.key}>
-        <td>{candidate(`entry-${section.key}-product`, `${section.title}款号 / 名称`, entry.product ? `${entry.product.code} · ${entry.product.name}` : '商品款号 / 名称', () => entryOpen('product'), !draft.hall || !!state.lineEdit, undefined, undefined, { value: entry.query, openUsesInputValue: true, change: value => session.updateEntry(section.key, { query: value }), placeholder: '款号 / 名称 · 条码请扫码录入' })}{entry.product && <small>{entry.product.name}</small>}</td>
+        <td>{candidate(`entry-${section.key}-product`, `${section.title}款号 / 名称`, entry.product ? `${entry.product.code} · ${entry.product.name}` : '商品款号 / 名称', () => entryOpen('product'), !draft.hall || !!state.lineEdit, undefined, undefined, { value: entry.query, openUsesInputValue: true, change: value => session.updateEntry(section.key, { query: value }), placeholder: '款号 / 名称 · 条码请扫码录入' })}{entry.product && <span className="sale-entry-name" title={entry.product.name}>{entry.product.name}</span>}</td>
         {(['color', 'fit', 'size'] as const).map(kind => <td key={kind}>{candidate(`entry-${section.key}-${kind}`, `${section.title}${{ color: '颜色', fit: '版型', size: '尺码' }[kind]}`, kind === 'color' ? entry.color?.name ?? '颜色' : kind === 'fit' ? entry.fit?.name ?? '版型' : entry.sku?.sizeName ?? '尺码', () => entryOpen('sku'), !entry.product || !!state.lineEdit || kind === 'fit' && !entry.color || kind === 'size' && (!entry.color || !entry.fit), kind, entry)}</td>)}
         <td><UIInput aria-label={`${section.title}本行数量`} className={entry.quantity.startsWith('-') ? 'negative' : ''} inputMode="numeric" value={entry.product ? entry.quantity : ''} disabled={!entry.product || !!state.lineEdit} onChange={value => session.updateEntry(section.key, { quantity: value })} onKeyDown={event => { if (event.key === 'Enter') { event.preventDefault(); completeEntry(section.key); } }} /></td>
         <td className="sale-num sale-muted">{entry.product?.retailPrice ?? ''}</td><td />
-        <td><UIInput aria-label={`${section.title}本行成交单价`} placeholder="待填写" inputMode="decimal" value={entry.dealPrice} disabled={!entry.product || !!state.lineEdit} onChange={value => session.updateEntry(section.key, { dealPrice: value })} onKeyDown={event => { if (event.key === 'Enter') { event.preventDefault(); completeEntry(section.key); } }} /></td><td />
+        <td><UIInput aria-label={`${section.title}本行成交单价`} placeholder="待填写" inputMode="decimal" value={entry.dealPrice} disabled={!entry.product || !!state.lineEdit} onChange={value => session.updateEntry(section.key, { dealPrice: value })} onKeyDown={event => { if (!event.nativeEvent.isComposing && event.key === 'Enter') { event.preventDefault(); completeEntry(section.key); } else if (!event.nativeEvent.isComposing && event.key === 'Tab' && !event.shiftKey && completeEntry(section.key)) event.preventDefault(); }} /></td><td className="sale-num">{entry.product && /^-?[1-9]\d{0,18}$/.test(entry.quantity) && /^\d{1,100}(?:\.\d{1,2})?$/.test(entry.dealPrice) ? salesInputMoney((BigInt(entry.quantity) * cents(entry.dealPrice)).toString()) : ''}</td>
         <td className="ui-action-cell">{entry.product || entry.query ? <div className="sale-row-actions"><UIButton className="sale-link" disabled={!entry.sku || !!state.lineEdit} onClick={() => completeEntry(section.key)}>完成</UIButton><UIButton className="sale-link" onClick={() => session.clearEntry(section.key)}>清除</UIButton></div> : null}</td>
       </tr>}
       </tbody></table></div></section>;

@@ -432,3 +432,42 @@
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-entry-row :is(.sale-select-trigger,.erp-input):focus{border-color:var(--ca-primary,#165dff);background-color:#fff}
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-lines-table .sale-product-input{padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23667284' stroke-width='1.5'%3E%3Ccircle cx='7' cy='7' r='4.5'/%3E%3Cpath d='m10.4 10.4 3.3 3.3'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-size:14px 14px}
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-payment-balance:empty{display:none;margin:0;min-height:0}
+
+/* Full SALE UI adapters: frozen golden-consistency.css183-188,198-205,
+ * sales-current.css15 and sales-golden.css208-224. Source chrome stays intact;
+ * React/Arco owns local portal placement and session-bound native option IDs. */
+
+.sales-proposal-editor .sale-lines-table .mx-spec-picker{box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:2px;width:100%;height:30px;min-height:30px;padding:0 4px;border:1px solid var(--ca-line);border-radius:4px;background:#fff;color:var(--ca-ink-2);font:inherit;font-size:12px;text-align:left;cursor:pointer}
+.sales-proposal-editor .sale-lines-table .mx-spec-picker.has-value{color:var(--ca-ink)}
+.sales-proposal-editor .sale-lines-table .mx-spec-picker>span{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sales-proposal-editor .sale-lines-table .mx-spec-picker>svg{flex:none;width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:1.5}
+.sales-proposal-editor .sale-lines-table .mx-spec-picker:disabled{background:var(--ca-surface-muted);color:var(--ca-ink-3);cursor:not-allowed}
+.sales-proposal-editor .sale-lines-table .mx-spec-picker:focus-visible{outline:2px solid var(--ca-primary);outline-offset:1px}
+.sales-proposal-editor .sale-entry-row td:has(.sale-entry-name){white-space:nowrap}
+.sales-proposal-editor .sale-entry-row td:has(.sale-entry-name) .sale-product-input{width:58%;min-width:165px}
+.sales-proposal-editor .sale-entry-name{display:inline-block;max-width:38%;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;margin-left:6px}
+
+.sale-spec-menu{position:relative;margin:0;padding:0;box-sizing:border-box;max-height:288px;overflow:hidden;border:1px solid var(--ca-popover-border);border-radius:5px;background:#fff;color:var(--ca-ink);box-shadow:var(--ca-shadow-float);font-size:13px}
+.sale-spec-menu[hidden]{display:none}
+.sale-spec-menu .mx-spec-menu-head{display:flex;justify-content:space-between;padding:8px 10px;border-bottom:1px solid var(--ca-line);font-weight:600}
+.sale-spec-menu .mx-spec-menu-head span{color:var(--ca-ink-3);font-weight:400}
+.sale-spec-menu .mx-spec-menu-options{max-height:244px;overflow-y:auto;overscroll-behavior:contain}
+.sale-spec-menu [data-mx-spec-option]{box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;width:100%;min-height:33px;padding:6px 10px;border:0;background:#fff;color:inherit;text-align:left;font:inherit;cursor:pointer}
+.sale-spec-menu [data-mx-spec-option]:hover,.sale-spec-menu [data-mx-spec-option]:focus-visible{background:var(--ca-table-row-hover);outline:0}
+.sale-spec-menu [data-mx-spec-option][aria-selected=true]{color:var(--ca-primary-ink);background:var(--ca-primary-soft,#e8f2ff)}
+
+:is(.sales-proposal-editor,.sales-detail-facts) .sale-head .actions>.erp-button{height:var(--ui-control,32px);min-height:var(--ui-control,32px);padding:3px 8px;border:0;border-radius:4px;background:transparent;color:var(--ca-ink-2);font-size:13px}
+:is(.sales-proposal-editor,.sales-detail-facts) .sale-head .actions>.erp-button.arco-btn-primary{color:var(--ca-primary-ink)}
+:is(.sales-proposal-editor,.sales-detail-facts) .sale-head .actions>.erp-button:hover:not(:disabled){background:var(--ca-primary-hover-soft);color:var(--ca-primary-ink)}
+:is(.sales-proposal-editor,.sales-detail-facts) .sale-head .actions>.erp-button:disabled{background:transparent}
+:is(.sales-proposal-editor,.sales-detail-facts) .sale-lines-table .sale-row-actions .sale-remove-line{color:var(--ca-ink-2)}
+
+.sale-spec-menu{font-family:Inter,-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','noto sans','Microsoft YaHei','Helvetica Neue',Helvetica,Arial,sans-serif;line-height:19.5px;min-width:0;max-width:calc(100vw - 16px)}
+.sale-spec-menu .sales-inline-options{margin:0}
+.sale-spec-menu .mx-spec-menu-options>.erp-button{height:auto;border-radius:0;white-space:normal;font-size:13px;line-height:19.5px}
+.sale-reference-state,.sale-reference-pages{display:flex;align-items:center;gap:6px;padding:6px 8px;font-size:12px}
+.sale-reference-pages{border-top:1px solid var(--ca-line)}
+.sale-reference-pages>span{margin-right:auto}
+.sale-reference-pages .erp-button{height:26px;padding:2px 6px;font-size:12px}
+.sales-proposal-editor .sale-reference-control>.demo-single-select{width:100%;min-width:0}
+.sales-proposal-editor .sale-reference-control:has(.sale-clear-reference) .demo-single-select .arco-select-view{padding-right:30px}

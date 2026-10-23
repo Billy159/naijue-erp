@@ -3,13 +3,17 @@ import { cloneElement, useLayoutEffect, useRef, type ReactElement, type ReactNod
 import './standard-tabs.css';
 
 export interface StandardTab<Key extends string> { readonly key: Key; readonly label: string; readonly disabled?: boolean }
+/** Pure render adapter. Inactive owners must cancel reads/layers/listeners in
+ * their own active lifecycle; retaining DOM does not perform domain cleanup. */
+export type StandardTabPanels<Key extends string> = Readonly<Partial<Record<Key, (state: { readonly active: boolean }) => ReactNode>>>;
+export type StandardTabsProps<Key extends string> = {
+  readonly label: string; readonly value: Key; readonly items: readonly StandardTab<Key>[];
+  readonly onChange: (key: Key) => void;
+  readonly className?: string; readonly restoreFocus?: boolean;
+} & ({ readonly children: ReactNode; readonly panels?: never } | { readonly panels: StandardTabPanels<Key>; readonly children?: never });
 /** Real Arco Tabs/TabPane owns header/panel IDs and the active panel. Domain
  * owners keep their read scopes, allowed destinations and cancellation rules. */
-export function StandardTabs<Key extends string>(props: {
-  readonly label: string; readonly value: Key; readonly items: readonly StandardTab<Key>[];
-  readonly onChange: (key: Key) => void; readonly children: ReactNode;
-  readonly className?: string; readonly restoreFocus?: boolean;
-}) {
+export function StandardTabs<Key extends string>(props: StandardTabsProps<Key>) {
   const host = useRef<HTMLDivElement>(null);
   const focusActive = () => {
     const element = host.current;
@@ -33,7 +37,7 @@ export function StandardTabs<Key extends string>(props: {
     if (keyboard) requestAnimationFrame(focusActive);
   };
   return <div ref={host} className={`erp-tabs-host ${props.className ?? ''}`}>
-    <Tabs activeTab={props.value} type="line" size="small" animation={false} destroyOnHide lazyload onChange={key => choose(key)}
+    <Tabs activeTab={props.value} type="line" size="small" animation={false} destroyOnHide={!props.panels} lazyload onChange={key => choose(key)}
       renderTabHeader={(tabProps, Header) => <div role="tablist" aria-label={props.label}><Header {...tabProps} /></div>}
       renderTabTitle={(node, info) => cloneElement(node as ReactElement<HTMLAttributes<HTMLElement>>, {
         tabIndex: info.isActive ? 0 : -1,
@@ -47,7 +51,8 @@ export function StandardTabs<Key extends string>(props: {
         },
       })}>
       {props.items.map(item => <Tabs.TabPane key={item.key} title={item.label} disabled={!!item.disabled}>
-        {item.key === props.value ? props.children : null}
+        {props.panels ? <div hidden={item.key !== props.value} inert={item.key !== props.value} style={{ display: item.key === props.value ? 'contents' : 'none' }}>{props.panels[item.key]?.({ active: item.key === props.value })}</div>
+          : item.key === props.value ? props.children : null}
       </Tabs.TabPane>)}
     </Tabs>
   </div>;
