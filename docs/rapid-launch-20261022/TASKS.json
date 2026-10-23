@@ -3108,7 +3108,8 @@
         "SKU code rule",
         "Document-purpose delegated append and exact SAVE/proof/SQL contract"
       ],
-      "allSystemGroupsAllowed": false
+      "allSystemGroupsAllowed": false,
+      "pendingProposal": "WRITE-CONTRACT-SUPPLEMENT-v11-ALL-SIZE-SAVE.md, v2 exact22files notold29"
     },
     "qa80": {
       "job": "c03-native-qa-new-warehouse-transfer-auth-20261023-80",
@@ -3202,10 +3203,11 @@
     },
     {
       "id": "ALL_SIZE_SAVE_V11",
-      "status": "EXACT_GROUP_ONLY_SAVE_CONTRACT_REVISION_REQUIRED_BEFORE_QUESTION",
+      "status": "WAIT_EXPLICIT_CONFIRMATION_ONLY_NARROWED_MISSING_SKU_SAVE",
       "groupDirectionAlreadyConfirmed": true,
       "onlyDependentBranchWaits": true,
-      "confirmationFile": "WRITE-CONTRACT-SUPPLEMENT-v11-ALL-SIZE-SAVE.md"
+      "confirmationFile": "WRITE-CONTRACT-SUPPLEMENT-v11-ALL-SIZE-SAVE.md",
+      "scope": "Only missing same-group SKU SAVE/code/delegation/no-MAIN concretev2"
     }
   ],
   "currentAcceptedReceiptBatch": [

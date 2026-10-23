@@ -1,49 +1,681 @@
 {
-  "version": "V11_GROUP_ONLY_REVISION",
-  "status": "HUMAN_GROUP_BOUNDARY_CONFIRMED_NEW_WRITE_DETAILS_PENDING",
-  "updatedAtUtc": "2026-10-23T13:24:26.875141+00:00",
-  "source": "Current direct human correction of v11 business scope",
-  "priorBroadProposalGitCommit": "a8ebd029a3b793e33b49082e6c245a90c0ff8226",
-  "selection": {
-    "authoritativeGroup": "Current actual product.size_group_id",
-    "members": "Complete effective members of that group; not existing SKU enumeration",
-    "otherSystemGroupsAllowed": false,
-    "noSizeAllowed": "Only when actual product group contains it",
-    "serverMustRecheckProductGroupAndMembership": true,
-    "missingOrFailedGroup": "Explicit error, never global fallback",
-    "lateResponses": "Cancel/generation ownership on product change"
+  "role": "D1",
+  "atUtc": "2026-10-23T13:46:09.733023+00:00",
+  "status": "CURRENT_PRODUCT_GROUP_HARD_BOUNDARY_CONFIRMED_REMAINING_WRITE_RULES_PROPOSED_ONLY",
+  "currentScope": "Complete effective members of current native product.size_group_id, independent of existing SKU count. No other groups/no-size unless an actual member.",
+  "humanDirectionAlreadyConfirmed": true,
+  "directionQuestionRequired": false,
+  "sourceAuthority": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+  "priorBroadStatus": "SUPERSEDED_BY_LATEST_HUMAN_GROUP_ONLY_CORRECTION",
+  "historicalExactSnapshots": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/ALL-SIZE-SAVE-RECOMMENDATION-v1-BROAD-HISTORY.md",
+      "bytes": 4153,
+      "sha256": "0bbb51f75185a2ca0aff2c2e09ce68c98486219b871bf94f228b937521ab70d1"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/ALL-SIZE-SAVE-RECOMMENDATION-v1-BROAD-HISTORY.json",
+      "bytes": 25537,
+      "sha256": "9fff2cdb571fb41dbd362281e0140f577adca394821b5f2849fb5527812ff820"
+    }
+  ],
+  "humanText": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/ALL-SIZE-SAVE-RECOMMENDATION-v2-GROUP-ONLY.md",
+    "bytes": 4408,
+    "sha256": "132cfc4ab99209cf50d569619c40ff8009d25aad14f2ae15edf44c214d41054b"
   },
-  "identity": {
+  "productionState": {
+    "v11D1Changed": 0,
+    "v11D2Changed": 0,
+    "v11D3Changed": 0,
+    "newSelectionFileExists": false,
+    "newResolverExists": false,
+    "v11SqlExists": false,
+    "membershipRemoved": false,
+    "authorityBroadened": false,
+    "newSkuCodeRuleImplemented": false,
+    "saveProposalImplemented": false,
+    "databaseInvoked": false,
+    "rollbackOrResetNeeded": false,
+    "preservedWip": "D2 tests/product-query-postgres-protocol.test.ts cross-group draft kept, explicitly superseded/skip; independent D3 B07 source2 is unrelated."
+  },
+  "continueNow": [
+    "Native product actual sizeGroupId/read failure semantics from C180",
+    "Full dictionary only actual product group; existing valid SKU original commands/hash",
+    "Original UI/Demo page migration",
+    "v10 C172/QB183/C93 original bug fix independent",
+    "B07 numeric already-approved fields after C exact2 ownership handoff"
+  ],
+  "remainingSingleRecommendation": {
+    "selection": {
+      "skuId": "Existing actual id",
+      "spec": {
+        "productId": "Actual selected product",
+        "colorId": "Actual valid color",
+        "fitId": "Actual valid fit",
+        "sizeId": "Actual size member of CURRENT SERVER-READ product group"
+      }
+    },
+    "clientGroupField": "Not needed; never authority",
+    "scopeValidation": "Lock native product current group and exact member, preserve all original identity/reference checks",
     "tuple": [
       "productId",
       "colorId",
       "fitId",
       "sizeId"
     ],
-    "groupCreatesDuplicateSku": false,
-    "displayNameMerge": false,
-    "oldIdCodeBarcodeHistoryPreserved": true,
-    "legacyCompatibilityIsNewCrossGroupInput": false
+    "code": "PROPOSED only NJNEW-<new actual SKU UUID32>,38 chars. Explicit new-system identifier; original/import/manual codes immutable and historical missing codes not repaired.",
+    "writeAuthority": "PROPOSED only narrow current approved-document-purpose same-client append; no generic employee product EDIT/admin actor substitution.",
+    "atomicity": "PROPOSED same outer SAVE transaction, real per-product PRODUCT EDIT rootv+1/newSKU9/v1/originalaudit/receipt; any failure all rollback.",
+    "noMain": "PROPOSED only verified genuine zero enabled MAIN may be actual null for manual rows; scan exact valid code stays.",
+    "legacy": "Original draft hashes/results/commands and original code identity unchanged",
+    "committedBaseline": "Original full committed baseline first; exact registered current-parent append overlay only, all unrelated committed-before/STAGED rules stay.",
+    "deferredPurpose": "Same actor/current transaction/original parent SAVE+audit+DRAFT version+newSKUs actually used by nonzero lines. Prefix alone never authority."
   },
-  "missingSku": {
-    "createOnly": "Only actually used missing same-group specifications, under final approved SAVE contract",
-    "readPrepareCancelWrites": false,
-    "preGenerateAllCombinations": false,
-    "restoreDisabledSku": false,
-    "failureRollsBackWithDocument": true
-  },
-  "unapprovedRemaining": [
-    "New SAVE proposal/resolver and same-transaction append contract",
-    "New business SKU code rule; NJNEW proposal not authorized now",
-    "Delegated document-purpose append rights and current-transaction PRODUCT proof/audit/receipt",
-    "No-MAIN manual snapshot write semantics",
-    "Exact narrowed SQL/functions/trigger and original-owner files; no mechanical old29-file changes"
+  "old29Disposition": [
+    {
+      "owner": "D1",
+      "path": "packages/application/src/document-specification.ts",
+      "functionsOrTypes": [
+        "DocumentSkuSelection",
+        "parseDocumentSkuSelection",
+        "documentCreatedSkuCode"
+      ],
+      "proposedChange": "NEW shared internal selection parsing and explicit NJNEW rule only",
+      "newFile": true,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "packages/application/src/ports.ts",
+      "functionsOrTypes": [
+        "SalesCommand",
+        "SalesTransaction.resolveDocumentSkus"
+      ],
+      "proposedChange": "Keep legacy draft envelope; add SAVE proposal variant and internal same-transaction port",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "packages/application/src/transfer-ports.ts",
+      "functionsOrTypes": [
+        "TransferCommand",
+        "TransferTransaction.resolveDocumentSkus"
+      ],
+      "proposedChange": "Same independent transfer SAVE variant/port",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "packages/application/src/sales-service.ts",
+      "functionsOrTypes": [
+        "createSalesService.execute"
+      ],
+      "proposedChange": "Original key/current authority/CAS; proposal hash before generated IDs, resolve+prepare+SAVE on original transaction",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "packages/application/src/transfer-service.ts",
+      "functionsOrTypes": [
+        "createTransferService.execute"
+      ],
+      "proposedChange": "Same transfer command transaction; original two-ended posting unchanged",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "packages/application/src/native-sales-preparation.ts",
+      "functionsOrTypes": [
+        "NativeSalesSaveProposal",
+        "prepareNativeSalesOnTransaction",
+        "createNativeSalesPreparation",
+        "createNativeSalesExistingPreparation"
+      ],
+      "proposedChange": "Reuse current pricing/pointers/snapshot preparation inside outer SAVE; public prepares remain zero business writes",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "packages/application/src/native-transfer-preparation.ts",
+      "functionsOrTypes": [
+        "NativeTransferSaveProposal",
+        "prepareNativeTransferOnTransaction",
+        "createNativeTransferPreparation",
+        "createNativeTransferExistingPreparation"
+      ],
+      "proposedChange": "Reuse original create/existing preparation without nested transaction; readonly views unchanged",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "apps/api/src/input.ts",
+      "functionsOrTypes": [
+        "parseSalesCommand"
+      ],
+      "proposedChange": "Accept mutually exclusive proposal or legacy draft for SAVE only",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "apps/api/src/transfer-input.ts",
+      "functionsOrTypes": [
+        "parseTransferCommand"
+      ],
+      "proposedChange": "Same transfer wire variant",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "apps/api/src/sales-http.ts",
+      "functionsOrTypes": [
+        "createSalesHttpPlugin"
+      ],
+      "proposedChange": "Original URL/error mapping/result shape; no new public route",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "apps/api/src/transfer-http.ts",
+      "functionsOrTypes": [
+        "createTransferHttpPlugin"
+      ],
+      "proposedChange": "Same original transfer URL/result",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/sales-unit-of-work.ts",
+      "functionsOrTypes": [
+        "PostgresSalesTransaction.resolveDocumentSkus"
+      ],
+      "proposedChange": "Bind original actor/key/document/runtime/client to resolver",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/transfer-unit-of-work.ts",
+      "functionsOrTypes": [
+        "PostgresTransferTransaction.resolveDocumentSkus",
+        "getSkuFact"
+      ],
+      "proposedChange": "Bind same scope; valid global size criterion",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/native-document-specification.ts",
+      "functionsOrTypes": [
+        "resolveDocumentSpecificationSelections"
+      ],
+      "proposedChange": "NEW exact-tuple resolution, product order locks, baseline proof, append-only normal PRODUCT context; no pool/BEGIN/COMMIT",
+      "newFile": true,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "functionsOrTypes": [
+        "withDocumentSpecificationMaintenanceContext",
+        "Evidence"
+      ],
+      "proposedChange": "Narrow internal same-client append context, never ordinary general EDIT delegation",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/native-transfer-snapshots.ts",
+      "functionsOrTypes": [
+        "loadNativeTransferSnapshots"
+      ],
+      "proposedChange": "If confirmed, manual verified genuine no-MAIN may be null. Keep actual product-group membership, scanner and native identity requirements.",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/sales-native-facts.ts",
+      "functionsOrTypes": [
+        "PostgresNativeSalesFacts.load"
+      ],
+      "proposedChange": "Global valid size identities and original current facts",
+      "newFile": false,
+      "currentDisposition": "NO_V11_WRITE_CHANGE",
+      "currentReason": "Original product-group membership stays; no global-size change needed."
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/current-form-reader.ts",
+      "functionsOrTypes": [
+        "SKU_JOINS",
+        "sku",
+        "readProducts",
+        "readProductSkus",
+        "readSkuBatch",
+        "readBarcode"
+      ],
+      "proposedChange": "Actual-SKU candidates/scan no default-group pruning; no dictionary/SKU Cartesian invention",
+      "newFile": false,
+      "currentDisposition": "NO_V11_WRITE_CHANGE",
+      "currentReason": "Original membership stays; independent approved sizeGroupId/isRecommended exact3 already fixed C180, not a dependent v11 write change."
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/catalogue-completeness.ts",
+      "functionsOrTypes": [
+        "currentReferences",
+        "createMaintainedCatalogue26TransactionProof"
+      ],
+      "proposedChange": "Only same-SAVE append on previously fully proven committed baseline; retain currentReferences product-group membership without any global criterion.",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "functionsOrTypes": [
+        "NATIVE_RUNTIME26_METADATA_PROBE",
+        "createNativeRuntime26Issuer"
+      ],
+      "proposedChange": "Exact v11 function/trigger catalog pins, no new purposes/grants/legacy fallback",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+      "functionsOrTypes": [
+        "guard_maintenance_audit_actor",
+        "guard_native_creation_identity",
+        "inventory_key_admission",
+        "validate_document_specification_commit"
+      ],
+      "proposedChange": "Proposed successor only: replace two exact actor/native-creation functions and add one parent-purpose deferred helper/trigger; inventory_key_admission unchanged.",
+      "newFile": true,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D2",
+      "path": "packages/application/src/product-maintenance-service.ts",
+      "functionsOrTypes": [
+        "productFacts",
+        "skuFacts",
+        "appendDocumentSkusOnTransaction"
+      ],
+      "proposedChange": "Extract/reuse original immutable record/sparse audit/append order; no public delegate",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D2",
+      "path": "packages/application/src/product-maintenance-ports.ts",
+      "functionsOrTypes": [
+        "ProductMaintenanceTransaction",
+        "internal document append types"
+      ],
+      "proposedChange": "Internal same-tx type only; normal public product DTO unchanged",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D2",
+      "path": "adapters/postgres/src/product-maintenance-store.ts",
+      "functionsOrTypes": [
+        "validateReferences"
+      ],
+      "proposedChange": "Expose an internal borrowed-client ProductTransaction constructor/work scope for D1 resolver; keep validateReferences current group membership/role rules intact. No standalone commit or public general delegation.",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D2",
+      "path": "adapters/postgres/src/product-management-query-reader.ts",
+      "functionsOrTypes": [
+        "stockReadiness"
+      ],
+      "proposedChange": "Actual-size validity instead of default membership",
+      "newFile": false,
+      "currentDisposition": "NO_V11_WRITE_CHANGE",
+      "currentReason": "No default-group validity change or cross-group projection."
+    },
+    {
+      "owner": "D2",
+      "path": "adapters/postgres/src/product-warehouse-stock-reader.ts",
+      "functionsOrTypes": [
+        "readStock",
+        "readOverview"
+      ],
+      "proposedChange": "Both same-file methods consume exact valid-size/key semantics",
+      "newFile": false,
+      "currentDisposition": "NO_V11_WRITE_CHANGE",
+      "currentReason": "No global validity or union projection."
+    },
+    {
+      "owner": "D2",
+      "path": "adapters/postgres/src/product-query-reader.ts",
+      "functionsOrTypes": [
+        "readSpecifications"
+      ],
+      "proposedChange": "Default member union actual native SKU size IDs, no dropped foreign-group SKU",
+      "newFile": false,
+      "currentDisposition": "NO_V11_WRITE_CHANGE",
+      "currentReason": "Original complete product-group members remain; cross-group draft test is superseded and preserved."
+    },
+    {
+      "owner": "D3",
+      "path": "adapters/postgres/src/inventory-query-reader.ts",
+      "functionsOrTypes": [
+        "catalogStatus",
+        "verifyCandidateMembership",
+        "pageProducts",
+        "productMatrices"
+      ],
+      "proposedChange": "Couple validity flags, size projection and matrix; default members union actual SKU sizes",
+      "newFile": false,
+      "currentDisposition": "NO_V11_WRITE_CHANGE",
+      "currentReason": "No cross-group matrix/validity/union changes."
+    },
+    {
+      "owner": "D3",
+      "path": "adapters/postgres/src/inventory-ledger-query-reader.ts",
+      "functionsOrTypes": [
+        "readLedger"
+      ],
+      "proposedChange": "Valid dictionary size, default group metadata, real warehouse/SKU provenance",
+      "newFile": false,
+      "currentDisposition": "NO_V11_WRITE_CHANGE",
+      "currentReason": "Original actual product-group member verification stays."
+    }
   ],
-  "authorizations": {
-    "groupOnlyDirectionRequiresAnotherQuestion": false,
-    "previousBroadV11ImplementationReleaseStillValid": false,
-    "independentExistingBusinessAndUIContinues": true,
-    "v10ImplementationBugFixContinues": true
+  "candidateProductionFiles": [
+    {
+      "owner": "D1",
+      "path": "packages/application/src/document-specification.ts",
+      "functionsOrTypes": [
+        "DocumentSkuSelection",
+        "parseDocumentSkuSelection",
+        "documentCreatedSkuCode"
+      ],
+      "proposedChange": "NEW shared internal selection parsing and explicit NJNEW rule only",
+      "newFile": true,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "packages/application/src/ports.ts",
+      "functionsOrTypes": [
+        "SalesCommand",
+        "SalesTransaction.resolveDocumentSkus"
+      ],
+      "proposedChange": "Keep legacy draft envelope; add SAVE proposal variant and internal same-transaction port",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "packages/application/src/transfer-ports.ts",
+      "functionsOrTypes": [
+        "TransferCommand",
+        "TransferTransaction.resolveDocumentSkus"
+      ],
+      "proposedChange": "Same independent transfer SAVE variant/port",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "packages/application/src/sales-service.ts",
+      "functionsOrTypes": [
+        "createSalesService.execute"
+      ],
+      "proposedChange": "Original key/current authority/CAS; proposal hash before generated IDs, resolve+prepare+SAVE on original transaction",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "packages/application/src/transfer-service.ts",
+      "functionsOrTypes": [
+        "createTransferService.execute"
+      ],
+      "proposedChange": "Same transfer command transaction; original two-ended posting unchanged",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "packages/application/src/native-sales-preparation.ts",
+      "functionsOrTypes": [
+        "NativeSalesSaveProposal",
+        "prepareNativeSalesOnTransaction",
+        "createNativeSalesPreparation",
+        "createNativeSalesExistingPreparation"
+      ],
+      "proposedChange": "Reuse current pricing/pointers/snapshot preparation inside outer SAVE; public prepares remain zero business writes",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "packages/application/src/native-transfer-preparation.ts",
+      "functionsOrTypes": [
+        "NativeTransferSaveProposal",
+        "prepareNativeTransferOnTransaction",
+        "createNativeTransferPreparation",
+        "createNativeTransferExistingPreparation"
+      ],
+      "proposedChange": "Reuse original create/existing preparation without nested transaction; readonly views unchanged",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "apps/api/src/input.ts",
+      "functionsOrTypes": [
+        "parseSalesCommand"
+      ],
+      "proposedChange": "Accept mutually exclusive proposal or legacy draft for SAVE only",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "apps/api/src/transfer-input.ts",
+      "functionsOrTypes": [
+        "parseTransferCommand"
+      ],
+      "proposedChange": "Same transfer wire variant",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "apps/api/src/sales-http.ts",
+      "functionsOrTypes": [
+        "createSalesHttpPlugin"
+      ],
+      "proposedChange": "Original URL/error mapping/result shape; no new public route",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "apps/api/src/transfer-http.ts",
+      "functionsOrTypes": [
+        "createTransferHttpPlugin"
+      ],
+      "proposedChange": "Same original transfer URL/result",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/sales-unit-of-work.ts",
+      "functionsOrTypes": [
+        "PostgresSalesTransaction.resolveDocumentSkus"
+      ],
+      "proposedChange": "Bind original actor/key/document/runtime/client to resolver",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/transfer-unit-of-work.ts",
+      "functionsOrTypes": [
+        "PostgresTransferTransaction.resolveDocumentSkus",
+        "getSkuFact"
+      ],
+      "proposedChange": "Bind same scope; valid global size criterion",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/native-document-specification.ts",
+      "functionsOrTypes": [
+        "resolveDocumentSpecificationSelections"
+      ],
+      "proposedChange": "NEW exact-tuple resolution, product order locks, baseline proof, append-only normal PRODUCT context; no pool/BEGIN/COMMIT",
+      "newFile": true,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "functionsOrTypes": [
+        "withDocumentSpecificationMaintenanceContext",
+        "Evidence"
+      ],
+      "proposedChange": "Narrow internal same-client append context, never ordinary general EDIT delegation",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/native-transfer-snapshots.ts",
+      "functionsOrTypes": [
+        "loadNativeTransferSnapshots"
+      ],
+      "proposedChange": "If confirmed, manual verified genuine no-MAIN may be null. Keep actual product-group membership, scanner and native identity requirements.",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/catalogue-completeness.ts",
+      "functionsOrTypes": [
+        "currentReferences",
+        "createMaintainedCatalogue26TransactionProof"
+      ],
+      "proposedChange": "Only same-SAVE append on previously fully proven committed baseline; retain currentReferences product-group membership without any global criterion.",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "functionsOrTypes": [
+        "NATIVE_RUNTIME26_METADATA_PROBE",
+        "createNativeRuntime26Issuer"
+      ],
+      "proposedChange": "Exact v11 function/trigger catalog pins, no new purposes/grants/legacy fallback",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D1",
+      "path": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+      "functionsOrTypes": [
+        "guard_maintenance_audit_actor",
+        "guard_native_creation_identity",
+        "inventory_key_admission",
+        "validate_document_specification_commit"
+      ],
+      "proposedChange": "Proposed successor only: replace two exact actor/native-creation functions and add one parent-purpose deferred helper/trigger; inventory_key_admission unchanged.",
+      "newFile": true,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D2",
+      "path": "packages/application/src/product-maintenance-service.ts",
+      "functionsOrTypes": [
+        "productFacts",
+        "skuFacts",
+        "appendDocumentSkusOnTransaction"
+      ],
+      "proposedChange": "Extract/reuse original immutable record/sparse audit/append order; no public delegate",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D2",
+      "path": "packages/application/src/product-maintenance-ports.ts",
+      "functionsOrTypes": [
+        "ProductMaintenanceTransaction",
+        "internal document append types"
+      ],
+      "proposedChange": "Internal same-tx type only; normal public product DTO unchanged",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    },
+    {
+      "owner": "D2",
+      "path": "adapters/postgres/src/product-maintenance-store.ts",
+      "functionsOrTypes": [
+        "validateReferences"
+      ],
+      "proposedChange": "Expose an internal borrowed-client ProductTransaction constructor/work scope for D1 resolver; keep validateReferences current group membership/role rules intact. No standalone commit or public general delegation.",
+      "newFile": false,
+      "currentDisposition": "PROPOSED_ONLY_PENDING_NEW_DEPENDENT_WRITE_CONFIRMATION"
+    }
+  ],
+  "candidateCounts": {
+    "D1": 19,
+    "D2": 3,
+    "D3": 0,
+    "total": 22,
+    "removedFromOld29": 7,
+    "newFiles": 3
   },
-  "productionFiles": "Await exact narrowed D1/D2/D3 difference. Preserve WIP; do not apply former global-size-membership removals or new writing semantics."
+  "sqlCandidate": {
+    "replacements": 2,
+    "replaceNames": [
+      "guard_maintenance_audit_actor",
+      "guard_native_creation_identity"
+    ],
+    "newFunctions": 1,
+    "newFunctionName": "validate_document_specification_commit",
+    "newDeferredTriggers": 1,
+    "newTables": 0,
+    "newColumns": 0,
+    "newSequences": 0,
+    "newFKs": 0,
+    "newActions": 0,
+    "newTargets": 0,
+    "newPublicUrls": 0,
+    "inventoryKeyAdmissionChanged": false,
+    "originalMigrationsRewritten": false,
+    "status": "PROPOSED_NOT_IMPLEMENTED"
+  },
+  "newVerificationAfterConfirmation": [
+    "Only current product group complete members, missing XS/XL save; foreigngroup/no-size rejected from server facts, client stale/forged group irrelevant",
+    "Same tuple concurrent reuse, key replay/CAS and full transaction rollback across SKU/product/document events",
+    "Original imported code/NULL-op identity/history snapshots preserved",
+    "Only authorized current doc purpose may append, no standalone/general product grant",
+    "Genuine no-MAIN manual case versus unknown/missing/failed facts and exact scanning"
+  ],
+  "B07Boundary": "Separate already-approved numeric existing-row changes only; no duplicate request for approved fields, extra fullDemo edits not included."
 }
