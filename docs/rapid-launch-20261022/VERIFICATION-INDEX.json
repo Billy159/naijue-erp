@@ -10180,10 +10180,100 @@
       "notTested": [
         "Newappbusiness/realaccounts/PGimport/publicswitch/freshrestore"
       ]
+    },
+    {
+      "id": "QF-C110",
+      "result": "PASS_SOURCE_PROTOCOL_ONLY",
+      "scope": "Source/protocol nav only; actual dirty/uncertain business/browser untested",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-6241fc07/F1-DOCUMENT-INVENTORY-NAVIGATION-REVIEW.json",
+      "evidenceBytes": 6225,
+      "evidenceSha256": "7ea298baa1ee2538e6cc9d49c9be22657528c479305b42f447a879edf17dc679",
+      "adoption": "C adopts effective scoped receipt; no duplicate technical review"
+    },
+    {
+      "id": "QF-C111",
+      "result": "PASS_SOURCE_CASCADE_ONLY",
+      "scope": "Source cascade only; actual geometry pending113",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-320a7ae0/F2-P13-READONLY-OVERVIEW-REVIEW.json",
+      "evidenceBytes": 1622,
+      "evidenceSha256": "d356598d60a724228315a8132187bd6ab78f0cf737b9af08c475d4c1576991d4",
+      "adoption": "C adopts effective scoped receipt; no duplicate technical review"
+    },
+    {
+      "id": "QF-C112",
+      "result": "PASS_SOURCE_CASCADE_ONLY",
+      "scope": "Control font cascade only; actualpending113",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-3a938141/F1-TRANSFER-CONTROL-FONT-CORRECTION-REVIEW.json",
+      "evidenceBytes": 1763,
+      "evidenceSha256": "0ed9fb102a48ee2b6e1157d84b6995f0583015e0298bcc2d563d5b9487aae551",
+      "adoption": "C adopts effective scoped receipt; no duplicate technical review"
+    },
+    {
+      "id": "QF-C113",
+      "result": "PASS_TARGETED_FIX_SOURCE_ONLY",
+      "scope": "Audit callback before oldparentdispose only; 10new cases adopted, hostpending fixture not actualwrite/DOM",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-1578a5b0/F3-AUDIT-AUTH-TIMING-REVIEW.json",
+      "evidenceBytes": 2280,
+      "evidenceSha256": "f0079face61fac7437c49d3f82c3de202b03fd209e5e83eb23231f78a4f3604d",
+      "adoption": "C adopts effective scoped receipt; no duplicate technical review"
+    },
+    {
+      "id": "QB134",
+      "result": "PASS_NEW_ACTUAL_SOURCE_NATIVE_JOIN_COUNTS_RECEIPT_CHAIN_ONLY",
+      "scope": "Actual source/native join counts receipt-chain only; no genuine newcopy consumer or largebody reread",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice134-transfer-lines26-actual-source-native-join/RESULT.json",
+      "evidenceBytes": 15517,
+      "evidenceSha256": "7edf0a8415c90761f06911b8ca92e627a945d942c59611c92ce6429cd9fd513f",
+      "adoption": "C adopts effective scoped receipt; no duplicate technical review"
+    },
+    {
+      "id": "QB135",
+      "result": "PASS_C114_PURE_HEADER_PROJECTION_EXPORT_ONLY",
+      "scope": "C114 exact2 pure Header source12 typed22 doc4 export; original1 equivalence reused, old6/actual14279 not rerun",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice135-header-pure-projection-export-f8d563b7/RESULT.json",
+      "evidenceBytes": 6248,
+      "evidenceSha256": "d322db08282e0470fe9aa80d85ef3cd5c6ffd3978cb6007f8e078876b1d9e912",
+      "adoption": "C adopts effective scoped receipt; no duplicate technical review"
+    },
+    {
+      "id": "C45",
+      "result": "FAILED_FIRST_ERROR_NO_REPLAY",
+      "scope": "Original npm timeout905.854s before candidateapp/web; failedrelease retained, no replay",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-c103-stage-20261023-45/release-receipts/c03-r1-c103-stage-20261023-45/engine-result.json",
+      "evidenceBytes": 213,
+      "evidenceSha256": "14238029271ba0928dc9a828581eae5505047d77c95f47f3f137ee0040cd2fb3",
+      "adoption": "C adopts effective scoped receipt; no duplicate technical review"
+    },
+    {
+      "id": "C46",
+      "result": "FAILED_FIRST_ERROR_PRESERVED_NO_REPLAY",
+      "scope": "5.533s beforePG stop: exactt15 ENV has no nonempty input; no blank/owner/R1 fallback",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-h06-qa-purpose-metadata-20261023-46/release-receipts/c03-h06-qa-purpose-metadata-20261023-46/engine-result.json",
+      "evidenceBytes": 7838,
+      "evidenceSha256": "3473fda70c8ffa5c1f57d16974f81c16808b7dca556b31f77e35afdd98668dd5",
+      "adoption": "C adopts effective scoped receipt; no duplicate technical review"
+    },
+    {
+      "id": "C47",
+      "result": "PASS_FAILED_INSTALLER_DIAGNOSTIC_AND_OWNED_SAFE_STOP_ONLY",
+      "scope": "120 ETIMEDOUT mentions in own boundednpm logs; exactowned installer safely stopped, old3 unchanged, PG/publicchange0",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-stage45-installer-diagnostic-20261023-47/release-receipts/c03-stage45-installer-diagnostic-20261023-47/engine-result.json",
+      "evidenceBytes": 3627,
+      "evidenceSha256": "250c46b10a0d5194da714e58354a61097381744111a44137d3d3922ba241aed8",
+      "adoption": "C adopts effective scoped receipt; no duplicate technical review"
+    },
+    {
+      "id": "DEMO-C105-S01-NEW-DIFFS",
+      "result": "UI_DIFFERENCE_WHOLE_PAGE_NOT_ACCEPTED",
+      "scope": "S01 plus actualT01 shared table differences; original F1chunk62/63 routed. Preview1row gap separate; newpass0,total48,whole0",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v020-sales-list-9a52d0f/RESULT.json",
+      "evidenceBytes": 3195,
+      "evidenceSha256": "e305721c5e77ebe3661a3710ee6506fc28e941a0489d18667a61b068f3b8e09f",
+      "adoption": "C adopts effective scoped receipt; no duplicate technical review"
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-22T23:50:13.913951+00:00",
+  "updatedAt": "2026-10-23T01:50:23.018198+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -11234,9 +11324,9 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-22T23:50:13.913951+00:00",
-    "sourceRound": 112,
-    "sourceCheckpoint": "3a938141cb92bc90aea201480938fdb20b85ff41",
+    "atUtc": "2026-10-23T01:50:23.018198+00:00",
+    "sourceRound": 114,
+    "sourceCheckpoint": "f8d563b72e022ba47d3804084fcfd0b555af3042",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -11252,24 +11342,24 @@
       "sourceModules": 383,
       "wholePageAccepted": false
     },
-    "nextPreview": "Current105 delivered Demo only newaffected actual;106/107/108 not included. More108 isolatedPREBUILD preparing, no build before scopedQF.",
-    "r1": "C43actualfullbackupPASS567.3039s,3509DBfiles/1WAL/663media; C44privateconfig+7metadata/originalpreflightPASS2.7246s. C45 originalstage RUNNING (oneLinuxnpmci), no known apphealth yet/no publicswitch",
-    "qa": "C40 actual Sharp upload/ADD/replay/controlled original+thumbnail PASS; QA11audits11receipts3images/root4. No HTTP/realrole/business acceptance",
-    "import": "V2F01 independently QB133closed. C signed83a0 window once spent; D3 actual261641/14279 candidatecomplete597846521B,100.854s, QBnewsourcejoinreview pending. No newcopy genuineconsumer yet, Headerfullsource/docSHA gap Kprep. No PG/49/MAIN.",
+    "nextPreview": "Fixed1131578a5b0 once originalbuildPASS,57850 not yetserved;106-113+paymentaudit0, excludes futurecoldpointerfix",
+    "r1": "C43/C44PASS; C45npm TIMEOUT905.854s beforeapp/web. C47 exactinstaller stopped, old3unchanged. C48 lockedoffline recovery Kprep, no replay/publicswitch",
+    "qa": "C46beforePG STOP missingnonemptyENV. C49 explicitregistered PASSWORD_FILE-only Kprep/no fallback. H06notrun; priorC40Sharp subset preserved",
+    "import": "QB134 actual261641/14279 receipt-chainPASS; C outside48238f/c8016d signed realImportfalse; newcopiesgenuineNOTRUN. C114pureexport QB135sourcePASS. FullHeader/onceLinejoin Kprep",
     "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Normal branch6b1158a verified; following source109-112/docs pending next exact sync",
+    "github": "Lastremote6b1158a verified;109-114/newdocs pending exactobjects sync",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
       "localDeduplicated": 48,
       "wholePagesAccepted": 0,
       "wholeOverlayClassesAccepted": 0,
-      "notRun": 59,
-      "uiDifference": 28,
+      "notRun": 57,
+      "uiDifference": 30,
       "partial": 6,
       "waitingIntegration": 10,
       "approvedException": 1,
-      "latestReceipt": "DEMO-C105-LOCAL48"
+      "latestReceipt": "DEMO-C105-S01-NEW-DIFFS"
     },
     "isolatedMorePreview": {
       "url": "http://127.0.0.1:57849/component-more.html",
@@ -11280,6 +11370,7 @@
       "mainNativeAuthorExpanded": false,
       "actualConclusion": "DEMO108 component density/font/clamp/window-scroll residuals pass; native48 not incremented, nativeancestor and>=4native categories untested"
     },
-    "audit": "F3 W0 complete; C Kpaymentaudit0 overlay prep and F3 newroot-scope authfailure probe in progress, source-only notactualentryPASS"
+    "audit": "QF113timingPASS; twoapprovedpaymentaudit0 overlays in113synthetic only, actualentrypending",
+    "demoSession": "Human Demo已登录; dedicatedChat notified"
   }
 }

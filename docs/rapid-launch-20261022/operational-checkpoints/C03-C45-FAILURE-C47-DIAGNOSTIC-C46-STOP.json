@@ -1,0 +1,35 @@
+{
+  "atUtc": "2026-10-23T01:50:23.018198+00:00",
+  "operations": [
+    {
+      "id": "C45",
+      "result": "FAILED_FIRST_ERROR_NO_REPLAY",
+      "scope": "Original npm timeout905.854s before candidateapp/web; failedrelease retained, no replay",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-c103-stage-20261023-45/release-receipts/c03-r1-c103-stage-20261023-45/engine-result.json",
+      "evidenceBytes": 213,
+      "evidenceSha256": "14238029271ba0928dc9a828581eae5505047d77c95f47f3f137ee0040cd2fb3",
+      "adoption": "C adopts effective scoped receipt; no duplicate technical review"
+    },
+    {
+      "id": "C46",
+      "result": "FAILED_FIRST_ERROR_PRESERVED_NO_REPLAY",
+      "scope": "5.533s beforePG stop: exactt15 ENV has no nonempty input; no blank/owner/R1 fallback",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-h06-qa-purpose-metadata-20261023-46/release-receipts/c03-h06-qa-purpose-metadata-20261023-46/engine-result.json",
+      "evidenceBytes": 7838,
+      "evidenceSha256": "3473fda70c8ffa5c1f57d16974f81c16808b7dca556b31f77e35afdd98668dd5",
+      "adoption": "C adopts effective scoped receipt; no duplicate technical review"
+    },
+    {
+      "id": "C47",
+      "result": "PASS_FAILED_INSTALLER_DIAGNOSTIC_AND_OWNED_SAFE_STOP_ONLY",
+      "scope": "120 ETIMEDOUT mentions in own boundednpm logs; exactowned installer safely stopped, old3 unchanged, PG/publicchange0",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-stage45-installer-diagnostic-20261023-47/release-receipts/c03-stage45-installer-diagnostic-20261023-47/engine-result.json",
+      "evidenceBytes": 3627,
+      "evidenceSha256": "250c46b10a0d5194da714e58354a61097381744111a44137d3d3922ba241aed8",
+      "adoption": "C adopts effective scoped receipt; no duplicate technical review"
+    }
+  ],
+  "next": "C48lockedoffline/C49explicitregisteredFILE candidates only;failed45/46 retained,no replay/no values or their digests",
+  "publicEntryChanged": false,
+  "overallComplete": false
+}

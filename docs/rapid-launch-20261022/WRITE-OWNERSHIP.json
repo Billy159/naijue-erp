@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T01:40:08.600758+00:00",
+  "updatedAt": "2026-10-23T01:46:47.563018+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -2528,6 +2528,12 @@
           "path": "apps/web/src/current-form/transfer-existing-document-form.tsx",
           "group": "EXISTING_DOCUMENT_FULL_FORM_AND_ORIGINAL_NATIVE_OWNER_BRIDGE",
           "fieldGate": "EXISTING_FROZEN_READ_DTO_AND_SAVE_UNCHANGED"
+        },
+        {
+          "path": "apps/web/src/demo-controls/multi-select.tsx",
+          "group": "SHARED_MULTI_FIRST_POINTER_01",
+          "fieldGate": "UI_ONLY_EXISTING_CONTRACT_UNCHANGED",
+          "boundary": "F1 sole owner idle-shell first actual pointer/focus handoff only; preserve Arco native action/Portal/current scope guards. K tests no new R test path."
         }
       ]
     }
@@ -2711,6 +2717,16 @@
       "sourcePlan": "K/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-plan1/PLAN.json",
       "planSha256": "610a059b0a78e8690a40e2209350b26111948c6a1fbcbe4c9d43293cdc7cbbae",
       "noOriginalDataReadGrant": true,
+      "humanAuthorizationMessage": "01a161f7-a5e8-7e10-9059-9537c28910c2"
+    },
+    {
+      "atUtc": "2026-10-23T01:46:47.563018+00:00",
+      "owner": "F1",
+      "addedPaths": [
+        "apps/web/src/demo-controls/multi-select.tsx"
+      ],
+      "reason": "Actual Demo v020 cold first pointer swallowed by idle-to-native focus preparation; original F1 located exact shell and requested registration before write",
+      "evidenceSha256": "856d930aad96d7b296cd1c145fb351b198e10d16356dfaf662ef4e2254200fb7",
       "humanAuthorizationMessage": "01a161f7-a5e8-7e10-9059-9537c28910c2"
     }
   ],
