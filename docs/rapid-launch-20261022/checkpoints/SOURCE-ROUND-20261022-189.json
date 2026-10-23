@@ -1,0 +1,64 @@
+{
+  "atUtc": "2026-10-23T14:17:16.071905+00:00",
+  "parent": "fa797fd4303ab48f3292ab2826bd92bb58a58d0d",
+  "taskId": "F03_DEMO_WHOLE_INVENTORY_SOURCE_PAGE",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/inventory-page.tsx",
+      "bytes": 21218,
+      "sha256": "b8edd8c12a962e2d825eea2cd95e701540cb8bd6e3e1ba25aa63a01b6ff39c53",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory.css",
+      "bytes": 111473,
+      "sha256": "928971974247cad464cc54e0e6c402b7be7dc20e3f741209b990bf034fd85943",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/INVENTORY-NATIVE-PAGE-04/RESULT.json",
+  "ownerReceiptSha256": "833b545cb1db752898dd1bb480ae6e56f4e2cd621e760edb84a94866762e7067",
+  "scope": null,
+  "checksAdopted": [
+    {
+      "name": "Actual inventory-page affected transitive strict TypeScript graph",
+      "result": "PASS_DIAGNOSTICS_0",
+      "log": "strict.log"
+    },
+    {
+      "name": "Actual InventoryPage/public controls StrictMode: native source host/action/Empty/settings DOM; idle0, one bounded synthetic matrix query, no detail prefetch",
+      "result": "PASS",
+      "log": "native.log",
+      "capture": "native-dom.html"
+    },
+    {
+      "name": "Existing affected inventory query/candidate lifecycle checks; cancellation/retry/identity/debounce/all-branch/filter semantics",
+      "result": "PASS",
+      "log": "query-lifecycle.log"
+    },
+    {
+      "name": "Existing popup focus/inside/outside/reset/Escape/StrictMode/identity/unmount assertions through native carrier",
+      "result": "PASS",
+      "log": "settings.log",
+      "harnessNote": "K copy changes only popup query from old reconstructed .iw-settings outer to .inventory-source-settings[data-kind=settings]; all assertions unchanged; no R test source modification"
+    },
+    {
+      "name": "Complete CSS source declaration/order and native declared specificity resolution; dependency bundle warning0",
+      "result": "PASS",
+      "log": "css.log"
+    }
+  ],
+  "qualification": "SOURCE_FIXED_OWNER_AFFECTED_SELFCHECK_ONLY. New immutable runtime and independent affected QA needed. No browser/HTTP/PG/SAVE/wholepage/formalperformance/deployment accepted. Original173 and current184 candidate do not include this source.",
+  "remaining": [
+    "No Chrome/browser computed layout/pixel/representative viewport or timing check",
+    "No real HTTP/PG/business mutations/production inventory or output run; previous accepted output/ledger implementation evidence retained",
+    "No complete preview build/Git/server/deploy/independent QF/whole104 acceptance",
+    "Inventory ledger/drawer implementation unchanged; no new claim of complete ledger business evidence I07/I08"
+  ],
+  "ownerFormatFollowup": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/INVENTORY-NATIVE-PAGE-04/EOF-FORMAT-01.json",
+    "bytes": 1915,
+    "sha256": "441a809b004f3d328d06e309e18e9089dca16eb5bf0f4283fe723e150b99d7e4",
+    "scope": "Only2 trailingLF removed; originalreceipt/source retained; no functional source delta or test rerun"
+  }
+}
