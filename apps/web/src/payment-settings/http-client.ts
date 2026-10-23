@@ -9,9 +9,12 @@ function nativeKind(kind: PaymentSettingsKind) {
 export function createPaymentSettingsHttpReader(options: HttpQueryOptions): PaymentSettingsReader {
   const client = createOrganizationMaintenanceReadClient(options);
   return Object.freeze<PaymentSettingsReader>({
+    supportsPaymentMethodFilter: true,
     async readList(kind, read) {
-      if (read.parameters.paymentMethodId !== null) throw new HttpQueryError('not-implemented', 'PAYMENT_METHOD_FILTER_NOT_AVAILABLE');
-      const result = await client.readList(nativeKind(kind), { search: read.parameters.search, status: read.parameters.status, hallId: null, page: read.parameters.page, pageSize: read.parameters.pageSize }, read.signal);
+      const native = nativeKind(kind), query = read.parameters;
+      if (kind === 'methods' && query.paymentMethodId !== null) throw new HttpQueryError('not-implemented', 'PAYMENT_METHOD_FILTER_NOT_AVAILABLE');
+      const parameters = { search: query.search, status: query.status, hallId: null, page: query.page, pageSize: query.pageSize };
+      const result = await client.readList(native, kind === 'accounts' ? { ...parameters, paymentMethodId: query.paymentMethodId } : parameters, read.signal);
       return { page: result.page, pageSize: result.pageSize, total: result.total, items: result.items.map(projectPaymentSettingsRecord) };
     },
     async readDetail(kind, read) {
