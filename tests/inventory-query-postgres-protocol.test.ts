@@ -71,6 +71,32 @@ function candidate(pool: ScriptedPool, overrides: Partial<InventoryCandidateQuer
 const code = (expected: string) => (error: unknown) => error instanceof DomainError && error.code === expected;
 const stages = (pool: ScriptedPool) => pool.calls.map(call => /\/\* inventory:([a-z-]+) \*\//.exec(call.sql)?.[1] ?? call.sql);
 
+test("inventory season array: verified current selection drives full-filter summary, bounded page and labels without scalar fallback or multiplied stock", async () => {
+  const pool = new ScriptedPool(); pool.count = 102; let proofs = 0;
+  const reader = new PostgresInventoryQueryReader(pool, { profile: "product-season-array-v1", assertVerified(target) { assert.equal(target, pool); proofs++; } });
+  assert.equal(pool.connects, 0); assert.equal(proofs, 1);
+  pool.transform = (stage, rows) => stage === "products" ? rows.map(row => ({ ...row, season_name: "夏、秋" })) : rows;
+  const p = inventoryParameters(), selected = [inventoryId("season", 42), inventoryId("season", 43)],parameters = parseInventoryQuery({ ...p, page: 2, filter: { ...p.filter, seasons: selected.map(id => ({ id, label: "untrusted label" })) } });
+  const result = await reader.readInventory(read(pool, parameters)); assert.equal(result.data.products.length, 2); assert.equal(result.data.exactTotalProducts, 102); assert.equal(result.data.allMatchesTotal.knownQuantity, "-204"); assert.equal(result.data.products[0]!.seasonLabel, "夏、秋");
+  for (const stage of ["catalog-status", "products", "balances"]) {
+    const call = pool.calls.find(c => c.sql.includes(`inventory:${stage}`))!; assert.deepEqual(call.values[6], selected); assert.ok(call.sql.includes("p.season_ids && $7::uuid[]")); assert.equal(/p\.season_id\s*=|coalesce\([^)]*season_ids/i.test(call.sql), false);
+  }
+  const page = pool.calls.find(c => c.sql.includes("inventory:products"))!; assert.ok(page.sql.includes("string_agg(d.name,'、' ORDER BY d.display_order,d.id)") && page.sql.includes("WHERE d.id=ANY(p.season_ids)"));
+  assert.deepEqual(stages(pool), ["BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY", "publication", "guards", "warehouses", "catalog-status", "products", "sizes", "skus", "balances", "COMMIT"]);
+});
+
+test("inventory season array: exact candidate count/page/membership use only current arrays and legacy SQL remains explicit without a verified host", async () => {
+  const pool = new ScriptedPool(), seasonId = inventoryId("season", 42);
+  pool.transform = (stage, rows) => stage === "candidates" ? [{ id: seasonId, label: "秋", disabled: null, parent_label: null }] : rows;
+  const reader = new PostgresInventoryQueryReader(pool, { profile: "product-season-array-v1", assertVerified(target) { assert.equal(target, pool); } });
+  const result = await reader.readCandidates(candidate(pool, { kind: "season", selectedIds: [inventoryId("season", 99)] })); assert.deepEqual(result.data.items, [{ id: seasonId, label: "秋" }]);
+  const count = pool.calls.find(c => c.sql.includes("inventory:candidate-count"))!,page = pool.calls.find(c => c.sql.includes("inventory:candidates"))!,membership = pool.calls.find(c => c.sql.includes("inventory:candidate-integrity"))!;
+  assert.ok(count.sql.includes("r.id = ANY(native.season_ids)") && page.sql.includes("r.id = ANY(native.season_ids)")); assert.ok(membership.sql.includes("native.season_ids && $9::uuid[]")); assert.deepEqual(membership.values[8], [seasonId]);
+  assert.equal(pool.calls.some(c => /native\.season_id\s*=|coalesce\([^)]*season_ids/i.test(c.sql)), false); assert.equal(stages(pool).includes("catalog-status"), false);
+  const legacy = new ScriptedPool(); await new PostgresInventoryQueryReader(legacy).readInventory(read(legacy));
+  assert.ok(legacy.calls.find(c => c.sql.includes("inventory:products"))!.sql.includes("se.id = p.season_id")); assert.equal(legacy.calls.some(c => c.sql.includes("season_ids")), false);
+});
+
 test("D3 read outcome: inventory and candidates never roll back an attempted COMMIT", async () => {
   for (const candidates of [false, true]) {
     const pool = new ScriptedPool(); pool.failAt = "COMMIT";

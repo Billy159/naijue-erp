@@ -11,6 +11,7 @@ import type { EntityKind } from "../../../packages/domain/src/values.ts";
 import { booleanValue, integerValue, quantityFromSql, stringValue, versionFromSql } from "./codec.ts";
 import { decodeImportCheckpoint } from "./inventory-cutoff-import-store.ts";
 import { GUARD_CAPABILITY } from "./inventory-publication-guards.ts";
+import { productSeasonArrayEnabled, productSeasonLabelJoin, type ProductSeasonArrayCapability } from "./product-query-reader.ts";
 
 export interface PgInventoryQueryResult { readonly rows: Record<string, unknown>[]; readonly rowCount: number | null }
 export interface PgInventoryQueryClient {
@@ -115,7 +116,7 @@ async function verifyWarehouses(query: Query, scope: InventoryReadScope, batchId
 /** Fixed positions keep every warehouse/hall/filter/batch value parameterized across all set queries.
  * Catalogues have no hall ownership column: warehouse/hall intersection bounds the stock relation,
  * while the native product catalogue is shared. No stock-presence predicate hides zero-stock products. */
-const CATALOG = `WITH published_scope AS (
+const catalog = (seasonArray: boolean) => `WITH published_scope AS (
   SELECT id FROM naijue_erp.import_batch WHERE id = $8::uuid AND status = 'IMPORTED' AND inventory_mode = 'CUTOFF_STOCK_BASELINE'
 ), authorized_warehouses AS (
   SELECT w.id FROM naijue_erp.warehouse w WHERE w.id = ANY($1::uuid[]) AND w.hall_id = ANY($2::uuid[]) AND EXISTS (SELECT 1 FROM published_scope)
@@ -124,7 +125,7 @@ const CATALOG = `WITH published_scope AS (
     AND (cardinality($3::uuid[]) = 0 OR p.id = ANY($3::uuid[])) AND (cardinality($4::uuid[]) = 0 OR p.category_id = ANY($4::uuid[]) OR EXISTS (
       SELECT 1 FROM naijue_erp.product_category category WHERE category.id = p.category_id AND category.parent_id = ANY($4::uuid[])))
     AND (cardinality($5::uuid[]) = 0 OR p.supplier_id = ANY($5::uuid[]))
-    AND (cardinality($7::uuid[]) = 0 OR p.season_id = ANY($7::uuid[]))
+    AND (cardinality($7::uuid[]) = 0 OR ${seasonArray ? "p.season_ids && $7::uuid[]" : "p.season_id = ANY($7::uuid[])"})
     AND (cardinality($6::uuid[]) = 0 OR EXISTS (SELECT 1 FROM naijue_erp.sku sf WHERE sf.product_id = p.id AND sf.fit_id = ANY($6::uuid[])))
 ), filtered_skus AS (
   SELECT s.id, s.product_id, s.color_id, s.fit_id, s.size_id, p.size_group_id FROM naijue_erp.sku s JOIN matched_products p ON p.id = s.product_id
@@ -133,8 +134,8 @@ const CATALOG = `WITH published_scope AS (
 function parameters(scope: InventoryReadScope, filter: InventoryQuery["filter"], batchId: string): unknown[] {
   return [scope.warehouses.map(row => row.id), scope.hallIds, filter.productIds, filter.categoryIds, filter.supplierIds, filter.fitIds, filter.seasonIds, batchId];
 }
-async function catalogStatus(query: Query, values: unknown[]): Promise<{ exactTotal: number; allMatchesTotal: InventoryStockTotal }> {
-  const row = one(await query(`/* inventory:catalog-status */ ${CATALOG}
+async function catalogStatus(query: Query, values: unknown[], seasonArray: boolean): Promise<{ exactTotal: number; allMatchesTotal: InventoryStockTotal }> {
+  const row = one(await query(`/* inventory:catalog-status */ ${catalog(seasonArray)}
     SELECT (SELECT count(*)::text FROM matched_products) AS exact_total,
     EXISTS (SELECT 1 FROM naijue_erp.product_category child JOIN naijue_erp.product_category parent ON parent.id = child.parent_id
       WHERE parent.parent_id IS NOT NULL) AS invalid_category_tree,
@@ -154,13 +155,13 @@ async function catalogStatus(query: Query, values: unknown[]): Promise<{ exactTo
 }
 /** Candidate options do not return stock or infer any absent balance. Validate only the returned
  * native IDs and the catalogue relationships they denote, never broad off-search stock readiness. */
-async function verifyCandidateMembership(query: Query, values: unknown[], kind: InventoryCandidateQuery["kind"], ids: readonly string[]): Promise<void> {
+async function verifyCandidateMembership(query: Query, values: unknown[], kind: InventoryCandidateQuery["kind"], ids: readonly string[], seasonArray: boolean): Promise<void> {
   if (ids.length === 0 || kind === "warehouse" || kind === "category") return;
   const target = { product: "p.id = ANY($9::uuid[])",
-    supplier: "native.supplier_id = ANY($9::uuid[])", season: "native.season_id = ANY($9::uuid[])",
+    supplier: "native.supplier_id = ANY($9::uuid[])", season: seasonArray ? "native.season_ids && $9::uuid[]" : "native.season_id = ANY($9::uuid[])",
     fit: "EXISTS (SELECT 1 FROM naijue_erp.sku actual WHERE actual.product_id = p.id AND actual.fit_id = ANY($9::uuid[]))" }[kind];
   const fit = kind === "fit" ? "WHERE s.fit_id = ANY($9::uuid[])" : "";
-  const row = one(await query(`/* inventory:candidate-integrity */ ${CATALOG}, candidate_products AS (
+  const row = one(await query(`/* inventory:candidate-integrity */ ${catalog(seasonArray)}, candidate_products AS (
     SELECT p.id, p.size_group_id FROM matched_products p JOIN naijue_erp.product native ON native.id = p.id WHERE ${target}
   ), candidate_skus AS (
     SELECT s.id, s.product_id, s.size_id FROM naijue_erp.sku s JOIN candidate_products p ON p.id = s.product_id ${fit}
@@ -251,9 +252,10 @@ function pageProducts(productRows: readonly Row[], sizeRows: readonly Row[], sku
  * Signals stop subsequent work, not an already-running SQL query or pool acquisition; host timeouts remain required. */
 export class PostgresInventoryQueryReader implements TrustedInventorySnapshotReader {
   private readonly pool: PgInventoryQueryPool;
-  constructor(pool: PgInventoryQueryPool) {
+  private readonly seasonArray: boolean;
+  constructor(pool: PgInventoryQueryPool, seasonArray: ProductSeasonArrayCapability | null = null) {
     if (typeof pool?.connect !== "function") throw new TypeError("Inventory query reader requires an explicit PostgreSQL pool");
-    this.pool = pool;
+    this.pool = pool; this.seasonArray = productSeasonArrayEnabled(pool, seasonArray);
   }
   private async snapshot<T>(signal: AbortSignal, work: (query: Query) => Promise<T>): Promise<T> {
     active(signal); const client = await this.pool.connect(); let began = false; let committing = false; let committed = false; let discard: Error | undefined;
@@ -276,12 +278,12 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
     checkedInventoryActor(read.actor); const input = checkedParameters(read.parameters); const scope = inventoryScope(read.scope, input);
     return this.snapshot(read.signal, async query => {
       const batchId = await publishedBatch(query); await verifyWarehouses(query, scope, batchId);
-      const values = parameters(scope, input.filter, batchId); const status = await catalogStatus(query, values);
-      const products = (await query(`/* inventory:products */ ${CATALOG}
+      const values = parameters(scope, input.filter, batchId); const status = await catalogStatus(query, values, this.seasonArray);
+      const products = (await query(`/* inventory:products */ ${catalog(this.seasonArray)}
         SELECT p.id, p.product_code, p.name, p.size_group_id, g.name AS size_group_name, c.name AS category_name,
           su.name AS supplier_name, se.name AS season_name FROM matched_products mp JOIN naijue_erp.product p ON p.id = mp.id
         JOIN naijue_erp.product_category c ON c.id = p.category_id JOIN naijue_erp.size_group g ON g.id = p.size_group_id
-        LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id LEFT JOIN naijue_erp.season se ON se.id = p.season_id
+        LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id ${productSeasonLabelJoin(this.seasonArray)}
         ORDER BY p.product_code COLLATE "C", p.id LIMIT $9 OFFSET $10::bigint`, [...values, input.pageSize, String((input.page - 1) * input.pageSize)])).rows;
       bounded(products, input.pageSize); const pageIds = products.map(row => id("product", row.id));
       let sizes: Row[] = []; let skus: Row[] = []; let balances: Row[] = [];
@@ -298,7 +300,7 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
           ORDER BY p.id, c.code COLLATE "C", c.id, f.code COLLATE "C", f.id, m.display_order, s.size_id, s.id LIMIT $3`,
         [pageIds, input.filter.fitIds, INVENTORY_READ_MAX_PAGE_SKUS + 1])).rows;
         bounded(skus, INVENTORY_READ_MAX_PAGE_SKUS);
-        balances = (await query(`/* inventory:balances */ ${CATALOG}
+        balances = (await query(`/* inventory:balances */ ${catalog(this.seasonArray)}
           SELECT b.warehouse_id, b.sku_id, b.quantity::text, b.version, b.last_operation_id FROM naijue_erp.inventory_balance b
           JOIN filtered_skus s ON s.id = b.sku_id JOIN authorized_warehouses w ON w.id = b.warehouse_id
           WHERE s.product_id = ANY($9::uuid[]) ORDER BY b.warehouse_id, b.sku_id LIMIT $10`,
@@ -318,9 +320,9 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
       const filter: InventoryQuery["filter"] = { productIds: [], categoryIds: input.kind === "category" || input.kind === "warehouse" ? [] : input.categoryIds,
         warehouseIds: [], supplierIds: [], fitIds: [], seasonIds: [] };
       const values = parameters(scope, filter, batchId);
-      const source = candidateSource(input.kind); values.push(input.search);
-      const exactTotal = count(one(await query(`/* inventory:candidate-count */ ${CATALOG} SELECT count(*)::text AS exact_total ${source.from} WHERE ${source.where}`, [...values])).exact_total);
-      const rows = (await query(`/* inventory:candidates */ ${CATALOG} SELECT ${source.columns} ${source.from} WHERE ${source.where}
+      const source = candidateSource(input.kind, this.seasonArray); values.push(input.search);
+      const exactTotal = count(one(await query(`/* inventory:candidate-count */ ${catalog(this.seasonArray)} SELECT count(*)::text AS exact_total ${source.from} WHERE ${source.where}`, [...values])).exact_total);
+      const rows = (await query(`/* inventory:candidates */ ${catalog(this.seasonArray)} SELECT ${source.columns} ${source.from} WHERE ${source.where}
         ORDER BY ${source.order} LIMIT $10 OFFSET $11::bigint`, [...values, 20, String((input.page - 1) * 20)])).rows;
       bounded(rows, 20);
       if (input.kind === "category") for (const row of rows) integrity(booleanValue(row.category_valid), "Returned native category is outside the supported two-level hierarchy");
@@ -330,13 +332,13 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
         ...(row.depth === undefined ? {} : { depth: integerValue(row.depth) as 0 | 1 }),
         ...(input.kind === "product" ? { code: label(row.code), name: label(row.name) } : {}),
         ...(input.kind === "category" ? { parentId: row.parent_id === null ? null : id("category", row.parent_id) } : {}) }));
-      await verifyCandidateMembership(query, values.slice(0, 8), input.kind, items.map(item => item.id));
+      await verifyCandidateMembership(query, values.slice(0, 8), input.kind, items.map(item => item.id), this.seasonArray);
       return checkedCandidateSnapshot({ readReference: `inventory:${randomUUID()}`, readiness: "ready", data: { items, exactTotal, page: input.page } }, input, scope);
     });
   }
 }
 interface CandidateSource { readonly columns: string; readonly from: string; readonly where: string; readonly order: string }
-function candidateSource(kind: InventoryCandidateQuery["kind"]): CandidateSource {
+function candidateSource(kind: InventoryCandidateQuery["kind"], seasonArray: boolean): CandidateSource {
   switch (kind) {
     case "warehouse": return { columns: "r.id, r.name AS label, NOT r.enabled AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.warehouse r JOIN authorized_warehouses w ON w.id = r.id",
       where: "strpos(r.name, $9::text) > 0", order: "array_position($1::uuid[], r.id), r.id" };
@@ -349,7 +351,7 @@ function candidateSource(kind: InventoryCandidateQuery["kind"]): CandidateSource
     case "supplier": return { columns: "r.id, r.name AS label, NOT r.enabled AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.supplier r",
       where: "EXISTS (SELECT 1 FROM matched_products p JOIN naijue_erp.product native ON native.id = p.id WHERE native.supplier_id = r.id) AND (strpos(r.code, $9::text) > 0 OR strpos(r.name, $9::text) > 0)", order: 'r.code COLLATE "C", r.id' };
     case "season": return { columns: "r.id, r.name AS label, NULL::boolean AS disabled, NULL::text AS parent_label", from: "FROM naijue_erp.season r",
-      where: "EXISTS (SELECT 1 FROM matched_products p JOIN naijue_erp.product native ON native.id = p.id WHERE native.season_id = r.id) AND (strpos(r.code, $9::text) > 0 OR strpos(r.name, $9::text) > 0)", order: 'r.display_order, r.code COLLATE "C", r.id' };
+      where: `EXISTS (SELECT 1 FROM matched_products p JOIN naijue_erp.product native ON native.id = p.id WHERE ${seasonArray ? "r.id = ANY(native.season_ids)" : "native.season_id = r.id"}) AND (strpos(r.code, $9::text) > 0 OR strpos(r.name, $9::text) > 0)`, order: 'r.display_order, r.code COLLATE "C", r.id' };
     default: throw new DomainError("INVALID_INVENTORY_INPUT", "Unsupported inventory candidate kind");
   }
 }

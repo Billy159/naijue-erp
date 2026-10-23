@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T06:40:30.436982+00:00",
+  "updatedAt": "2026-10-23T06:59:16.322686+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -1507,6 +1507,54 @@
           "group": "EXISTING_LEDGER_QUERY_TEST_TYPE_ALIGNMENT_ONLY",
           "fieldGate": "NO_SCHEMA_NO_WRITE_SEMANTICS",
           "scope": "Only ledgerEntry helper parameter excludes HISTORY_REVISION because existing helper creates only original3 variants; old behavior/assertions unchanged, newhistory cases stay original PGprotocol test."
+        },
+        {
+          "path": "packages/application/src/inventory-query-contracts.ts",
+          "group": "B03_EXISTING_FILTERED_INVENTORY_READ_OUTPUT_PROVIDER",
+          "fieldGate": "EXISTING_APPROVED_PRODUCT_FILTER_SCOPE_FIELDS_READ_ONLY_NO_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
+          "scope": "Original full executed-filter output/stream/authorization/errors; no pagefake or newfields"
+        },
+        {
+          "path": "packages/application/src/inventory-query-service.ts",
+          "group": "B03_EXISTING_FILTERED_INVENTORY_READ_OUTPUT_PROVIDER",
+          "fieldGate": "EXISTING_APPROVED_PRODUCT_FILTER_SCOPE_FIELDS_READ_ONLY_NO_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
+          "scope": "Original full executed-filter output/stream/authorization/errors; no pagefake or newfields"
+        },
+        {
+          "path": "packages/application/src/inventory-query-validation.ts",
+          "group": "B03_EXISTING_FILTERED_INVENTORY_READ_OUTPUT_PROVIDER",
+          "fieldGate": "EXISTING_APPROVED_PRODUCT_FILTER_SCOPE_FIELDS_READ_ONLY_NO_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
+          "scope": "Original full executed-filter output/stream/authorization/errors; no pagefake or newfields"
+        },
+        {
+          "path": "packages/application/src/inventory-query-response.ts",
+          "group": "B03_EXISTING_FILTERED_INVENTORY_READ_OUTPUT_PROVIDER",
+          "fieldGate": "EXISTING_APPROVED_PRODUCT_FILTER_SCOPE_FIELDS_READ_ONLY_NO_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
+          "scope": "Original full executed-filter output/stream/authorization/errors; no pagefake or newfields"
+        },
+        {
+          "path": "apps/api/src/inventory-http.ts",
+          "group": "B03_EXISTING_FILTERED_INVENTORY_READ_OUTPUT_PROVIDER",
+          "fieldGate": "EXISTING_APPROVED_PRODUCT_FILTER_SCOPE_FIELDS_READ_ONLY_NO_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
+          "scope": "Original full executed-filter output/stream/authorization/errors; no pagefake or newfields"
+        },
+        {
+          "path": "apps/api/src/inventory-http.test.ts",
+          "group": "B03_EXISTING_FILTERED_INVENTORY_READ_OUTPUT_PROVIDER",
+          "fieldGate": "EXISTING_APPROVED_PRODUCT_FILTER_SCOPE_FIELDS_READ_ONLY_NO_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
+          "scope": "Original full executed-filter output/stream/authorization/errors; no pagefake or newfields"
+        },
+        {
+          "path": "tests/inventory-query.test.ts",
+          "group": "B03_EXISTING_FILTERED_INVENTORY_READ_OUTPUT_PROVIDER",
+          "fieldGate": "EXISTING_APPROVED_PRODUCT_FILTER_SCOPE_FIELDS_READ_ONLY_NO_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
+          "scope": "Original full executed-filter output/stream/authorization/errors; no pagefake or newfields"
+        },
+        {
+          "path": "tests/support/synthetic-inventory-query.ts",
+          "group": "B03_EXISTING_FILTERED_INVENTORY_READ_OUTPUT_PROVIDER",
+          "fieldGate": "EXISTING_APPROVED_PRODUCT_FILTER_SCOPE_FIELDS_READ_ONLY_NO_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
+          "scope": "Original full executed-filter output/stream/authorization/errors; no pagefake or newfields"
         }
       ]
     },
