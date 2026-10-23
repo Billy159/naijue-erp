@@ -11095,7 +11095,7 @@
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-23T20:55:14.455261+00:00",
+  "updatedAt": "2026-10-23T20:57:32.108441+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -12392,6 +12392,26 @@
       "scope": "CLOSED_ONLY_ORIGINAL_NATIVE_SIZE_DROPDOWN_OPEN_FAILURE_ACTUAL220; unused/foreign positive stilluntested",
       "adoption": "C adopts original independent reviewer conclusion, no duplicate technical review",
       "adoptedAtUtc": "2026-10-23T20:53:56.917498+00:00"
+    },
+    {
+      "id": "QF2-C220-EMPTY-ACTUAL",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-empty-region-fix-actual-01/RESULT.json",
+      "bytes": 756,
+      "sha256": "ab4043f4ebe7ff6ebbe86321d33160caef8efcca1fa2016d7cefe5c3d2ec2c38",
+      "result": "PASS_COMPLETE_EMPTY_REGION_ACTUAL_C220",
+      "scope": "CLOSED_ONLY_ORIGINAL_COMPLETE_NATIVE_EMPTY_REGION_GEOMETRY_AT220",
+      "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance",
+      "adoptedAtUtc": "2026-10-23T20:57:32.108441+00:00"
+    },
+    {
+      "id": "QF2-C220-P01-RESIDUAL-ACTUAL",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-P01-idle-residuals-actual-01/RESULT.json",
+      "bytes": 672,
+      "sha256": "6c6c984b4ce64cfd89eb9c838269fd4a372acfcbce9131fcdbeccc4c235c95d7",
+      "result": "PASS_ORIGINAL_TWO_P01_IDLE_RESIDUALS_ACTUAL_C220",
+      "scope": "CLOSED_ONLY_P01_TOKEN_X_AND_SEARCH_FONT_RESIDUAL_AT220",
+      "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance",
+      "adoptedAtUtc": "2026-10-23T20:57:32.108441+00:00"
     }
   ],
   "coverageGroups": [
@@ -12431,7 +12451,7 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-23T20:53:56.917498+00:00",
+    "atUtc": "2026-10-23T20:57:32.108441+00:00",
     "latestSource": 220,
     "servedPreview": 217,
     "browserOwner": "QF sole217 documents; QF2 next distinctI07/P01 consumer scope",
@@ -12504,7 +12524,7 @@
     "countsUnchanged": "104total/48partial/0wholepage/0wholeoverlay",
     "notAccepted": "218actual/219fullregionactual/I07realbusiness/formalperformance",
     "nextCandidate": "220 PREPARING_NOT_BUILT",
-    "sourceRound": 220,
+    "sourceRound": 221,
     "currentRuntime": {
       "sourceRound": 220,
       "sourceCommit": "1b46a5d975d1e9c1b25bb695dd666c04cc342740",
@@ -12655,6 +12675,32 @@
         "sha256": "4e56543fd896078c5fa36096bcb6ca3a3a38a9865708020cf5700c0d4316e910"
       },
       "qualification": "Actual fixed214 target Linux ci and native load only. Current220 browser candidate not installed, no app start, no metadata/issuer/PG, no public switch. OldC54actual dependency cache method reused; no current failure replay/rootcause claim based only on package count."
-    }
+    },
+    "latestReadySource": {
+      "round": 221,
+      "commit": "601fde4a1ea65cbf3738d7eb4ee4798823341913",
+      "latestServedPreviewRound": 220,
+      "qualification": "OriginalF1 exact5 T02 oldLEFTNAV hook source fixed with owner targeted checks; originalQF independent source inprogress; notinserved220/no actualnewfix accepted."
+    },
+    "newActual220Adoptions": [
+      {
+        "id": "QF2-C220-EMPTY-ACTUAL",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-empty-region-fix-actual-01/RESULT.json",
+        "bytes": 756,
+        "sha256": "ab4043f4ebe7ff6ebbe86321d33160caef8efcca1fa2016d7cefe5c3d2ec2c38",
+        "result": "PASS_COMPLETE_EMPTY_REGION_ACTUAL_C220",
+        "scope": "CLOSED_ONLY_ORIGINAL_COMPLETE_NATIVE_EMPTY_REGION_GEOMETRY_AT220",
+        "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance"
+      },
+      {
+        "id": "QF2-C220-P01-RESIDUAL-ACTUAL",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-P01-idle-residuals-actual-01/RESULT.json",
+        "bytes": 672,
+        "sha256": "6c6c984b4ce64cfd89eb9c838269fd4a372acfcbce9131fcdbeccc4c235c95d7",
+        "result": "PASS_ORIGINAL_TWO_P01_IDLE_RESIDUALS_ACTUAL_C220",
+        "scope": "CLOSED_ONLY_P01_TOKEN_X_AND_SEARCH_FONT_RESIDUAL_AT220",
+        "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance"
+      }
+    ]
   }
 }

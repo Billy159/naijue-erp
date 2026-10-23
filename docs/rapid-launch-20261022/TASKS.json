@@ -964,7 +964,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T20:55:14.455261+00:00",
+  "updatedAt": "2026-10-23T20:57:32.108441+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
   "lastVerifiedRemoteCommit": "733f560ae99d27f5120977f91e2746ad8ecb5a4d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -2500,12 +2500,30 @@
       "result": "PASS_ORIGINAL_SIZE_POPUP_NATIVE_OPEN_CLOSE_FIX_C220_LIMITED",
       "scope": "CLOSED_ONLY_ORIGINAL_NATIVE_SIZE_DROPDOWN_OPEN_FAILURE_ACTUAL220; unused/foreign positive stilluntested",
       "adoption": "C adopts original independent reviewer conclusion, no duplicate technical review"
+    },
+    {
+      "id": "QF2-C220-EMPTY-ACTUAL",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-empty-region-fix-actual-01/RESULT.json",
+      "bytes": 756,
+      "sha256": "ab4043f4ebe7ff6ebbe86321d33160caef8efcca1fa2016d7cefe5c3d2ec2c38",
+      "result": "PASS_COMPLETE_EMPTY_REGION_ACTUAL_C220",
+      "scope": "CLOSED_ONLY_ORIGINAL_COMPLETE_NATIVE_EMPTY_REGION_GEOMETRY_AT220",
+      "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance"
+    },
+    {
+      "id": "QF2-C220-P01-RESIDUAL-ACTUAL",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-P01-idle-residuals-actual-01/RESULT.json",
+      "bytes": 672,
+      "sha256": "6c6c984b4ce64cfd89eb9c838269fd4a372acfcbce9131fcdbeccc4c235c95d7",
+      "result": "PASS_ORIGINAL_TWO_P01_IDLE_RESIDUALS_ACTUAL_C220",
+      "scope": "CLOSED_ONLY_P01_TOKEN_X_AND_SEARCH_FONT_RESIDUAL_AT220",
+      "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance"
     }
   ],
   "newPendingReviews": [
     "QF offline sole104 matrix receives QF2new220 moduleconclusions andsource221whenready; no Chrome or technicalrepeat",
-    "QF2 sole220 fullEmpty219/P01residual217/newI07UI; nativeSize failureclosed scoped220, unused/foreign nottested",
-    "OriginalF1 T02 originalLEFTNAV targetedfix chunk109; samefinding no duplicatetask",
+    "QF2 sole220 newI07UI finalmodule; named size/fullEmpty/P01 residuals actualclosed scoped, unused/foreign stilluntested",
+    "OriginalQF source221 exact5 LEFTNAV independentreview; C nextfixedcandidate PREBUILD only, actualafterQF2clean",
     "OriginalQB human/toolresume actualQA101fourpurpose/R1C103; C102disabled,noissuer/nobusinessrunner",
     "V13 humanconfirmation onlyrelatedDDL/writer waits",
     "B07 retainedactualDRAFT inputs captured, APPROVED/NULLdate/v12/currentWRITE missing",
@@ -2748,9 +2766,10 @@
     {
       "id": "QF2-I01-EMPTY-ICON-SIZE-01",
       "owner": "F2",
-      "status": "SOURCE219_QF2_LIMITED_PASS_FULL_NEW_ACTUAL_GEOMETRY_STILL_OPEN",
-      "version": "219",
-      "actualBrowserReproduced": true
+      "status": "CLOSED_COMPLETE_NATIVE_EMPTY_REGION_LIMITED_ACTUAL220_QF2",
+      "version": "220",
+      "actualBrowserReproduced": true,
+      "next": "Only defaultbasic waiting region; otherInventory/fullpage/realbusiness notaccepted"
     },
     {
       "id": "QF2-P-RECOVERY-HOST-DISPOSE-CALLBACK-01",
@@ -2762,8 +2781,8 @@
     {
       "id": "QF2-P01-IDLE-FILTER-RESIDUAL-01",
       "owner": "F1",
-      "status": "SOURCE217_QFV057_LIMITED_PASS_NEW_CONSUMER_ACTUAL_PENDING",
-      "version": "217"
+      "status": "CLOSED_TOKEN_X_SEARCH_FONT_NAMED_ACTUAL220_QF2",
+      "version": "220"
     },
     {
       "id": "DOC-215-T02-MATRIX-ENTRY-COORDINATE-01",
@@ -2777,9 +2796,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-23T20:55:14.455261+00:00",
-    "sourceRound": 220,
-    "sourceCheckpoint": "1b46a5d975d1e9c1b25bb695dd666c04cc342740",
+    "atUtc": "2026-10-23T20:57:32.108441+00:00",
+    "sourceRound": 221,
+    "sourceCheckpoint": "601fde4a1ea65cbf3738d7eb4ee4798823341913",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -2823,7 +2842,13 @@
       "realBusinessAccepted": false,
       "formalPerformanceAccepted": false
     },
-    "nextPreview": null,
+    "nextPreview": {
+      "sourceRound": 221,
+      "sourceCommit": "601fde4a1ea65cbf3738d7eb4ee4798823341913",
+      "owner": "C",
+      "status": "PREBUILD_ONLY_IN_PROGRESS_NO_BUILD_SERVE_HTTP",
+      "sourceReview": "OriginalQF pending; QF2sole220 actual continues"
+    },
     "r1": "C103 actualCOMPLETED0/3.224639846s/v11 approved schema COMMIT+readback; R1 runtime-role canonical53ea114e/122routines/newdeferred trigger. All56business/source counts0 except schema26 unchanged. No newmetadata/issuer/app/data/publicswitch.",
     "qa": "C101 actual v11 COMMIT0/3.575635193s/newcanonical5717b1be/122routines/newdeferred trigger; current50/original49/productv2/12auditreceipt/stock0 preserved. Business SAVE8groups NOT_TESTED.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
@@ -2853,7 +2878,7 @@
     },
     "audit": "C127 actualQF closed dualEsc/focus and same-scopefilter retention",
     "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
-    "uiMigration": "QFv059 final actual217 limitedSALE andT02coordinate/row flows accepted; oldT02LEFTNAV open alreadyoriginalF1 fixing109, actualblue9notavailable. QF2nativeSize220 originalimmediateclose defectclosed, own complete3groupmembers observed; unused/foreign actualcases remainuntested. QF2stillsole220 nowfullEmpty/I07/P01, no otherChrome.",
+    "uiMigration": "QFv059 original217SALE/T02local flow namedactual adopted. QF2 actual220 originalsize immediateclose/fullEmpty5regions/P01tokenx+font allclosed scoped. Groupunused/foreignactual/realSave remainuntested. OriginalT02LEFTNAV fixedsource221 exact5 inQFindependent source; newactualonlyaftercontainingfixedcandidate. QF2stillsole220 newI07 fictionUI.",
     "backend": "C102 original normalSAVE inputcomplete, actual101 bound to newQA5717b1be and42274B983c47cc; independentreviewPENDING/PLANdisabled/issuer0/PG0. OriginalQB Chat read/list valid but3 sends notfound; human originalQB resume requested, noQB2. New208D3 numberedledger readonlysource ready originalQB pending; F2 native consumer inprogress. BeforeAfter2columns v13 proposal exactuserconfirmationpending, noDDL/writer changes. B07source203 noissuer/host/actual.",
     "productionBuild": "C214fixed1eef32a actual localbuild/pack plus targetLinux originaloffline npmci0/native Sharp loaded0/dispatcher31.3484s;111installedrecords/payload3121be15d58f. Protected5containers unchanged, owned3stopped networknone. No newapp/metadata/issuer/PG/data/publicswitch. Source220 remains localUI only.",
     "actualQFBrowser": {
@@ -3852,22 +3877,22 @@
     },
     "latestActualAdoptions": [
       {
-        "id": "QF-V059",
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v059-qf-c217-doc-local-spec-actual/RESULT.json",
-        "bytes": 7987,
-        "sha256": "37e2a89bdc985fdd1a3384b39923ef9eacb5a84717753a3c78a24cd6623107f5",
-        "result": "C217_NAMED_DOCUMENT_LOCAL_SPEC_ACTUAL_PASSED_T02_LEFTNAV_STILL_OPEN_BLUE9_UNTESTED",
-        "scope": "NAMED_ACTUAL217_SALE_LOCAL_AND_T02_QUANTITY_ONLY; oldLEFTNAVopen/blue9untested; no realbusiness/performance",
-        "adoption": "C adopts original independent reviewer conclusion, no duplicate technical review"
+        "id": "QF2-C220-EMPTY-ACTUAL",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-empty-region-fix-actual-01/RESULT.json",
+        "bytes": 756,
+        "sha256": "ab4043f4ebe7ff6ebbe86321d33160caef8efcca1fa2016d7cefe5c3d2ec2c38",
+        "result": "PASS_COMPLETE_EMPTY_REGION_ACTUAL_C220",
+        "scope": "CLOSED_ONLY_ORIGINAL_COMPLETE_NATIVE_EMPTY_REGION_GEOMETRY_AT220",
+        "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance"
       },
       {
-        "id": "QF2-C220-SIZE-ACTUAL",
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-size-dropdown-fix-actual-01/RESULT.json",
-        "bytes": 1741,
-        "sha256": "0522c78d16a3b2ea29661d72e173e64372dbbc551798387e385d72fac6694a20",
-        "result": "PASS_ORIGINAL_SIZE_POPUP_NATIVE_OPEN_CLOSE_FIX_C220_LIMITED",
-        "scope": "CLOSED_ONLY_ORIGINAL_NATIVE_SIZE_DROPDOWN_OPEN_FAILURE_ACTUAL220; unused/foreign positive stilluntested",
-        "adoption": "C adopts original independent reviewer conclusion, no duplicate technical review"
+        "id": "QF2-C220-P01-RESIDUAL-ACTUAL",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-P01-idle-residuals-actual-01/RESULT.json",
+        "bytes": 672,
+        "sha256": "6c6c984b4ce64cfd89eb9c838269fd4a372acfcbce9131fcdbeccc4c235c95d7",
+        "result": "PASS_ORIGINAL_TWO_P01_IDLE_RESIDUALS_ACTUAL_C220",
+        "scope": "CLOSED_ONLY_P01_TOKEN_X_AND_SEARCH_FONT_RESIDUAL_AT220",
+        "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance"
       }
     ],
     "actualLinux214": {
@@ -3934,13 +3959,47 @@
         "sha256": "4e56543fd896078c5fa36096bcb6ca3a3a38a9865708020cf5700c0d4316e910"
       },
       "qualification": "Actual fixed214 target Linux ci and native load only. Current220 browser candidate not installed, no app start, no metadata/issuer/PG, no public switch. OldC54actual dependency cache method reused; no current failure replay/rootcause claim based only on package count."
+    },
+    "latestRound221": {
+      "atUtc": "2026-10-23T20:57:32.108441+00:00",
+      "source": {
+        "round": 221,
+        "commit": "601fde4a1ea65cbf3738d7eb4ee4798823341913",
+        "latestServedPreviewRound": 220,
+        "qualification": "OriginalF1 exact5 T02 oldLEFTNAV hook source fixed with owner targeted checks; originalQF independent source inprogress; notinserved220/no actualnewfix accepted."
+      },
+      "scope": "OriginalT02 LEFTNAV existingDocumentLeave hook, sameowner guards and existingdocumentName; no contracts/navigation/platform/geometry rewrite",
+      "independentSource": "QF_IN_PROGRESS",
+      "actualFix": "NOT_TESTED_NOTIN220",
+      "newActual220Adoptions": [
+        {
+          "id": "QF2-C220-EMPTY-ACTUAL",
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-empty-region-fix-actual-01/RESULT.json",
+          "bytes": 756,
+          "sha256": "ab4043f4ebe7ff6ebbe86321d33160caef8efcca1fa2016d7cefe5c3d2ec2c38",
+          "result": "PASS_COMPLETE_EMPTY_REGION_ACTUAL_C220",
+          "scope": "CLOSED_ONLY_ORIGINAL_COMPLETE_NATIVE_EMPTY_REGION_GEOMETRY_AT220",
+          "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance"
+        },
+        {
+          "id": "QF2-C220-P01-RESIDUAL-ACTUAL",
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-P01-idle-residuals-actual-01/RESULT.json",
+          "bytes": 672,
+          "sha256": "6c6c984b4ce64cfd89eb9c838269fd4a372acfcbce9131fcdbeccc4c235c95d7",
+          "result": "PASS_ORIGINAL_TWO_P01_IDLE_RESIDUALS_ACTUAL_C220",
+          "scope": "CLOSED_ONLY_P01_TOKEN_X_AND_SEARCH_FONT_RESIDUAL_AT220",
+          "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance"
+        }
+      ],
+      "served": "220still QF2soleI07; size/Empty/P01 namedfixesaccepted;104/48/whole0 unchanged",
+      "production": "Actual214Linuxci/nativePASS, no app/metadata/issuer/PG orpublicswitch"
     }
   },
   "latestReadySource": {
-    "round": 220,
-    "commit": "1b46a5d975d1e9c1b25bb695dd666c04cc342740",
+    "round": 221,
+    "commit": "601fde4a1ea65cbf3738d7eb4ee4798823341913",
     "latestServedPreviewRound": 220,
-    "qualification": "Fixed220 actually built/served/threeHTTP matched. 218/219/220source limitedQA adopted; new220browser QF2inprogress. no realbusiness/wholepage acceptance."
+    "qualification": "OriginalF1 exact5 T02 oldLEFTNAV hook source fixed with owner targeted checks; originalQF independent source inprogress; notinserved220/no actualnewfix accepted."
   },
   "pendingUserDecision": [
     {
