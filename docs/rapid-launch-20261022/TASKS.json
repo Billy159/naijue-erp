@@ -126,7 +126,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Narrow originalv11 to hard product-group members; preserve WIP/hold new writing semantics pending exact confirmation. v10 approved bugfix and ordinary interfaces continue."
+      "currentWork": "Implement exact22 narrowed missing same-group SAVE core/guard scope with D2 helper; B07 independent approved numeric implementation continues. v10/C94 independent."
     },
     "D2": {
       "title": "后端商品与基础资料维护",
@@ -141,7 +141,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Preserve product-group membership hard boundary; hold new SKU code/delegate writes, existing normal same-group maintenance/years and actual consumers continue."
+      "currentWork": "Implement only approvedv2 exact3 same-tx append helper and borrowed-client normal store, preserve currentproduct hard-group validateReferences; no crossgroup projection/read changes."
     },
     "D3": {
       "title": "后端库存历史与导入",
@@ -157,7 +157,7 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Hold old cross-group v11 reader expansion; retain historic display without new cross-group input. B07 approved scope and stock read inputs continue."
+      "currentWork": "No v11 production changes; original stock-provider/read/B07 effective179 facts adopted, original main/ledger group semantics preserved."
     },
     "QF": {
       "title": "前端独立验收：单据与公共界面",
@@ -963,7 +963,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T13:47:28.032694+00:00",
+  "updatedAt": "2026-10-23T13:53:53.579385+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
   "lastVerifiedRemoteCommit": "9597624747385dfafc88615a7141440db8a54f00",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -3085,7 +3085,7 @@
       ]
     },
     "allSizeP1": {
-      "status": "GROUP_ONLY_CONFIRMED_UI_KNOWN_SKU_CONTINUES_NEW_WRITES_HELD",
+      "status": "NARROWED_GROUP_ONLY_SAVE_DETAILS_EXPLICITLY_APPROVED_ORIGINAL_OWNERS_IMPLEMENT",
       "owner": [
         "F1",
         "D1",
@@ -3101,9 +3101,9 @@
         "continuous multi-character input"
       ],
       "lesson": "Existing records are not the permitted input domain; small existing-SKU fixtures and source checks cannot close real page/business gaps.",
-      "approval": "Latest direct human group-only correction supersedes prior broad v11",
-      "answer": "确认 v11 全尺码保存方案",
-      "scope": "Complete valid members of actual product group, not global groups",
+      "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+      "answer": "确认修订 v11 组内保存细节",
+      "scope": "Exact22 D1=19 D2=3 D3=0; hard currentproduct group; newSKU only nonzero actualSAVE use",
       "pending": [
         "SKU code rule",
         "Document-purpose delegated append and exact SAVE/proof/SQL contract"
@@ -3200,14 +3200,6 @@
       "status": "FULL_V5_SENT_WAIT_EXPLICIT_HUMAN_APPROVAL",
       "confirmationFile": "SCHEMA-SUPPLEMENT-v5-HISTORY-HALL-NULLABLE.md",
       "confirmationSha256": "2b3fe399061713462f16270e88f9f925e48249810e84aa5af6bd261658127972"
-    },
-    {
-      "id": "ALL_SIZE_SAVE_V11",
-      "status": "WAIT_EXPLICIT_CONFIRMATION_ONLY_NARROWED_MISSING_SKU_SAVE",
-      "groupDirectionAlreadyConfirmed": true,
-      "onlyDependentBranchWaits": true,
-      "confirmationFile": "WRITE-CONTRACT-SUPPLEMENT-v11-ALL-SIZE-SAVE.md",
-      "scope": "Only missing same-group SKU SAVE/code/delegation/no-MAIN concretev2"
     }
   ],
   "currentAcceptedReceiptBatch": [

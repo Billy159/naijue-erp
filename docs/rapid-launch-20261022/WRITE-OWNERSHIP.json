@@ -47,12 +47,12 @@
           "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "PostgresSalesTransaction.resolveDocumentSkus"
             ],
             "scope": "Bind original actor/key/document/runtime/client to resolver",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -61,13 +61,13 @@
           "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "PostgresTransferTransaction.resolveDocumentSkus",
               "getSkuFact"
             ],
             "scope": "Bind same scope; valid global size criterion",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -81,12 +81,12 @@
           "fieldGate": "AFTER_USER_APPROVAL",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "createSalesService.execute"
             ],
             "scope": "Original key/current authority/CAS; proposal hash before generated IDs, resolve+prepare+SAVE on original transaction",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -95,12 +95,12 @@
           "fieldGate": "AFTER_USER_APPROVAL",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "createTransferService.execute"
             ],
             "scope": "Same transfer command transaction; original two-ended posting unchanged",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -109,6 +109,7 @@
           "fieldGate": "AFTER_USER_APPROVAL",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "NativeSalesSaveProposal",
               "prepareNativeSalesOnTransaction",
@@ -116,8 +117,7 @@
               "createNativeSalesExistingPreparation"
             ],
             "scope": "Reuse current pricing/pointers/snapshot preparation inside outer SAVE; public prepares remain zero business writes",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -126,6 +126,7 @@
           "fieldGate": "AFTER_USER_APPROVAL",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "NativeTransferSaveProposal",
               "prepareNativeTransferOnTransaction",
@@ -133,8 +134,7 @@
               "createNativeTransferExistingPreparation"
             ],
             "scope": "Reuse original create/existing preparation without nested transaction; readonly views unchanged",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -143,13 +143,13 @@
           "fieldGate": "AFTER_USER_APPROVAL",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "SalesCommand",
               "SalesTransaction.resolveDocumentSkus"
             ],
             "scope": "Keep legacy draft envelope; add SAVE proposal variant and internal same-transaction port",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -158,13 +158,13 @@
           "fieldGate": "AFTER_USER_APPROVAL",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "TransferCommand",
               "TransferTransaction.resolveDocumentSkus"
             ],
             "scope": "Same independent transfer SAVE variant/port",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -198,13 +198,13 @@
           "fieldGate": "AFTER_USER_APPROVAL",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "NATIVE_RUNTIME26_METADATA_PROBE",
               "createNativeRuntime26Issuer"
             ],
             "scope": "Exact v11 function/trigger catalog pins, no new purposes/grants/legacy fallback",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -307,13 +307,13 @@
           "fieldGate": "C01_20261022_V1_APPROVED_ONLY",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "withDocumentSpecificationMaintenanceContext",
               "Evidence"
             ],
             "scope": "Narrow internal same-client append context, never ordinary general EDIT delegation",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -503,12 +503,12 @@
           "fieldGate": "NO_SAVE_CONTRACT_SCHEMA_CHANGE",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "createSalesHttpPlugin"
             ],
             "scope": "Original URL/error mapping/result shape; no new public route",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -532,12 +532,12 @@
           "fieldGate": "NO_NEW_SCHEMA_OR_WRITE_CONTRACT",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "createTransferHttpPlugin"
             ],
             "scope": "Same original transfer URL/result",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -561,13 +561,13 @@
           "fieldGate": "READ_ONLY_EXISTING_APPROVED_AUDIT_RECEIPT_NO_WRITE_CONTRACT_CHANGE",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "currentReferences",
               "createMaintainedCatalogue26TransactionProof"
             ],
-            "scope": "Global valid size references plus exact same-SAVE append overlay on proven committed baseline; other committed-before stays",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "scope": "Only same-SAVE append on previously fully proven committed baseline; retain currentReferences product-group membership without any global criterion.",
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -633,14 +633,14 @@
           "fieldGate": "ONLY_EXACT_APPROVED_V11_WRITE_CONTRACT",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "DocumentSkuSelection",
               "parseDocumentSkuSelection",
               "documentCreatedSkuCode"
             ],
             "scope": "NEW shared internal selection parsing and explicit NJNEW rule only",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -649,12 +649,12 @@
           "fieldGate": "ONLY_EXACT_APPROVED_V11_WRITE_CONTRACT",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "parseSalesCommand"
             ],
             "scope": "Accept mutually exclusive proposal or legacy draft for SAVE only",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -663,12 +663,12 @@
           "fieldGate": "ONLY_EXACT_APPROVED_V11_WRITE_CONTRACT",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "parseTransferCommand"
             ],
             "scope": "Same transfer wire variant",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -677,12 +677,12 @@
           "fieldGate": "ONLY_EXACT_APPROVED_V11_WRITE_CONTRACT",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "resolveDocumentSpecificationSelections"
             ],
             "scope": "NEW exact-tuple resolution, product order locks, baseline proof, append-only normal PRODUCT context; no pool/BEGIN/COMMIT",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -691,12 +691,12 @@
           "fieldGate": "ONLY_EXACT_APPROVED_V11_WRITE_CONTRACT",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "loadNativeTransferSnapshots"
             ],
-            "scope": "Real SKU facts + separate locked enabled MAIN read; verified genuine absence only, any valid dictionary size",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "scope": "If confirmed, manual verified genuine no-MAIN may be null. Keep actual product-group membership, scanner and native identity requirements.",
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -705,15 +705,15 @@
           "fieldGate": "ONLY_EXACT_APPROVED_V11_WRITE_CONTRACT",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "guard_maintenance_audit_actor",
               "guard_native_creation_identity",
               "inventory_key_admission",
               "validate_document_specification_commit"
             ],
-            "scope": "NEW proposed SQL successor of frozenv10 only; original migrations unchanged",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "scope": "Proposed successor only: replace two exact actor/native-creation functions and add one parent-purpose deferred helper/trigger; inventory_key_admission unchanged.",
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -1028,12 +1028,12 @@
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "validateReferences"
             ],
-            "scope": "Default group is display; real size exists/valid membership; preserve other reference checks",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "scope": "Expose an internal borrowed-client ProductTransaction constructor/work scope for D1 resolver; keep validateReferences current group membership/role rules intact. No standalone commit or public general delegation.",
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -1197,13 +1197,13 @@
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "ProductMaintenanceTransaction",
               "internal document append types"
             ],
             "scope": "Internal same-tx type only; normal public product DTO unchanged",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -1211,14 +1211,14 @@
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
           "approvedV11Scope": {
             "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+            "status": "APPROVED_NARROWED_GROUP_ONLY_EXACT_SCOPE",
             "functionsOrTypes": [
               "productFacts",
               "skuFacts",
               "appendDocumentSkusOnTransaction"
             ],
             "scope": "Extract/reuse original immutable record/sparse audit/append order; no public delegate",
-            "status": "SUPERSEDED_SCOPE_HOLD_NEW_WRITES_PENDING_NARROWED_CONTRACT",
-            "independentExistingImplementationFixesAllowed": true
+            "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
           }
         },
         {
@@ -4118,6 +4118,44 @@
       ],
       "reason": "Implement already explicitly approved C01 history numeric guard/receipt/audit/delta rules replacing foundation closed guards, no new fields or expanded edit rules. Original1..26 preserved, C sole actual installation.",
       "existingSharedContract": "packages/application/src/native-import-schema-contract.ts alreadyD1, only exact HISTORY_REVISION application purpose scoped to existing approved business; no GRANT broadening"
+    },
+    {
+      "atUtc": "2026-10-23T13:53:53.579385+00:00",
+      "source": "Direct human: 确认修订 v11 组内保存细节",
+      "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+      "candidateCounts": {
+        "D1": 19,
+        "D2": 3,
+        "D3": 0,
+        "total": 22,
+        "removedFromOld29": 7,
+        "newFiles": 3
+      },
+      "onlyApprovedPaths": [
+        "packages/application/src/document-specification.ts",
+        "packages/application/src/ports.ts",
+        "packages/application/src/transfer-ports.ts",
+        "packages/application/src/sales-service.ts",
+        "packages/application/src/transfer-service.ts",
+        "packages/application/src/native-sales-preparation.ts",
+        "packages/application/src/native-transfer-preparation.ts",
+        "apps/api/src/input.ts",
+        "apps/api/src/transfer-input.ts",
+        "apps/api/src/sales-http.ts",
+        "apps/api/src/transfer-http.ts",
+        "adapters/postgres/src/sales-unit-of-work.ts",
+        "adapters/postgres/src/transfer-unit-of-work.ts",
+        "adapters/postgres/src/native-document-specification.ts",
+        "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+        "adapters/postgres/src/native-transfer-snapshots.ts",
+        "adapters/postgres/src/catalogue-completeness.ts",
+        "adapters/postgres/src/native-import-accounting-capability.ts",
+        "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+        "packages/application/src/product-maintenance-service.ts",
+        "packages/application/src/product-maintenance-ports.ts",
+        "adapters/postgres/src/product-maintenance-store.ts"
+      ],
+      "explicitlyExcluded": "Prior7 global membership/projection changes remain superseded, D3zero. C alone actual SQL/metadata/build/release."
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
@@ -4133,7 +4171,7 @@
     "maintenanceSupplement": "FIELD-APPROVAL-SUPPLEMENT-v2-B.json",
     "seasonSupplement": "FIELD-APPROVAL-SUPPLEMENT-v3-A.json",
     "rejected": "product_season relation table",
-    "allSizeWriteContract": "V11_SCOPE_SUPERSEDED_GROUP_ONLY_CONFIRMED_NEW_WRITES_PENDING"
+    "allSizeWriteContract": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json"
   },
   "ownershipTransfers": [
     {
