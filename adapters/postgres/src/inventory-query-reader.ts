@@ -118,14 +118,25 @@ async function verifyWarehouses(query: Query, scope: InventoryReadScope, batchId
     seen.add(warehouseId);
   }
   if (additional.length) {
-    // A real retained cutoff member is only a qualification witness. It never
-    // replaces a selected business SKU or supplies stock/identity to the DTO.
-    const witness = (await query(`/* inventory:admission-witness */ SELECT s.id FROM naijue_erp.import_record r
+    // A real retained SKU is only a qualification witness. It never replaces
+    // a selected business SKU or supplies stock/identity to the DTO. Prefer the
+    // cutoff member; an empty cutoff may instead have a native creation to prove.
+    let witness = (await query(`/* inventory:admission-witness */ SELECT s.id FROM naijue_erp.import_record r
       JOIN naijue_erp.sku s ON s.id=r.target_id WHERE r.import_batch_id=$1::uuid AND r.status='IMPORTED' AND r.target_type='SKU'
       ORDER BY s.id LIMIT 1`, [batchId])).rows;
+    let skuBasis: "CUTOFF_MEMBER" | "POST_CUTOFF_CREATED" = "CUTOFF_MEMBER", skuOperationId: string | null = null;
+    if (witness.length === 0) {
+      // This only locates a native candidate. The original public helper below
+      // must prove its exact key, batch, basis and the same creation operation.
+      witness = (await query(`/* inventory:native-admission-witness */ SELECT s.id,s.created_operation_id
+        FROM naijue_erp.sku s WHERE s.created_operation_id IS NOT NULL ORDER BY s.id LIMIT 1`)).rows;
+      skuBasis = "POST_CUTOFF_CREATED";
+    }
     requireDomain(witness.length > 0, "INVENTORY_NOT_READY", "No retained native SKU witness is available for warehouse qualification"); integrity(witness.length === 1, "Invalid warehouse qualification witness");
+    if (skuBasis === "POST_CUTOFF_CREATED") skuOperationId = id("operation", witness[0]!.created_operation_id);
     const skuId = id("sku", witness[0]!.id), decisions = await readInventoryKeyAdmissions({ query }, additional.map(warehouseId => ({ warehouseId, skuId })));
-    for (const decision of decisions) { requireDomain(decision.admitted, "INVENTORY_NOT_READY", "New warehouse creation is not qualified"); integrity(decision.publishedBatchId === batchId && decision.warehouseBasis === "POST_CUTOFF_CREATED" && decision.skuBasis === "CUTOFF_MEMBER", "New warehouse admission differs from its cutoff/creation witness"); }
+    for (const decision of decisions) { requireDomain(decision.admitted, "INVENTORY_NOT_READY", "New warehouse creation is not qualified"); integrity(decision.publishedBatchId === batchId && decision.warehouseBasis === "POST_CUTOFF_CREATED" && decision.skuBasis === skuBasis
+      && (skuBasis === "CUTOFF_MEMBER" || decision.skuCreatedOperationId === skuOperationId), "New warehouse admission differs from its cutoff/creation witness"); }
   }
 }
 

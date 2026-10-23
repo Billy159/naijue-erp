@@ -23,6 +23,7 @@ class ScriptedPool implements PgInventoryQueryPool, PgInventoryQueryClient {
   count = 1; scope: InventoryReadScope = inventoryScope; negative = "-2";
   publication: Row[] | undefined; guards = true;
   additionalSkus: string[] = []; newWarehouses = new Set<string>(); witnessSku: string | null = skuId(0, 0);
+  nativeWitness: { id: string; created_operation_id: string } | null = null;
   flags: Row = { invalid_category_tree: false, missing_sizes: false, uncovered_sku: false, invalid_sku_size: false, invalid_balance: false };
   transform: ((stage: string, rows: Row[]) => Row[]) | undefined;
   failAt: string | undefined; failRollback = false; afterQuery: ((stage: string) => void) | undefined;
@@ -41,11 +42,12 @@ class ScriptedPool implements PgInventoryQueryPool, PgInventoryQueryClient {
       case "guards": rows = [{ integrity_guards_present: this.guards }]; break;
       case "warehouses": rows = this.scope.warehouses.filter(w => (values[0] as string[]).includes(w.id)).map(w => ({ id: w.id, hall_id: w.hallId, name: w.label, published: !this.newWarehouses.has(w.id) })); break;
       case "admission-witness": rows = this.witnessSku === null ? [] : [{ id: this.witnessSku }]; break;
+      case "native-admission-witness": rows = this.nativeWitness === null ? [] : [{ ...this.nativeWitness }]; break;
       case "additional-skus": rows = this.additionalSkus.filter(id => values.at(-1) === null || id > String(values.at(-1))).slice(0, 1000).map(id => ({ id })); break;
       case "keys": rows = (values[0] as string[]).map((warehouseId, i) => { const skuId = (values[1] as string[])[i]!;
         return { warehouse_id: warehouseId, sku_id: skuId, admitted: true, published_batch_id: batchId,
-          warehouse_basis: this.newWarehouses.has(warehouseId) ? "POST_CUTOFF_CREATED" : "CUTOFF_MEMBER", sku_basis: this.additionalSkus.includes(skuId) ? "POST_CUTOFF_CREATED" : "CUTOFF_MEMBER",
-          warehouse_created_operation_id: this.newWarehouses.has(warehouseId) ? inventoryId("operation", 17000) : null, sku_created_operation_id: this.additionalSkus.includes(skuId) ? inventoryId("operation", 17001) : null };
+          warehouse_basis: this.newWarehouses.has(warehouseId) ? "POST_CUTOFF_CREATED" : "CUTOFF_MEMBER", sku_basis: this.additionalSkus.includes(skuId) || this.nativeWitness?.id === skuId ? "POST_CUTOFF_CREATED" : "CUTOFF_MEMBER",
+          warehouse_created_operation_id: this.newWarehouses.has(warehouseId) ? inventoryId("operation", 17000) : null, sku_created_operation_id: this.nativeWitness?.id === skuId ? this.nativeWitness.created_operation_id : this.additionalSkus.includes(skuId) ? inventoryId("operation", 17001) : null };
       }); break;
       case "candidate-integrity": rows = [{ ...this.flags }]; break;
       case "catalog-status": rows = [{ ...this.flags, exact_total: String(this.count), quantity: sql.includes("'0'::text AS quantity") ? "0" : (BigInt(this.negative) * BigInt(this.count)).toString() }]; break;
@@ -93,6 +95,68 @@ function nativeReadRuntime(pool: ScriptedPool, called: () => void = () => {}): N
   // Protocol fake only, never a real target/runtime authority.
   return { profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", async assertReady(client, purpose) { assert.equal(client, pool); assert.equal(purpose, "INVENTORY_ADMISSION"); assert.equal(stages(pool).at(-1), "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); called(); } };
 }
+
+function zeroCutoffNativeWitnessPool(witnessId = skuId(0, 0)): ScriptedPool {
+  // QB172's minimal boundary: a complete cutoff with SKU/ledger=0, then a real
+  // scripted native SKU and authorized native warehouse with independent operations.
+  const pool = nativeKeyPool(1, 1, true); pool.witnessSku = null; pool.negative = "0";
+  const counts = { WAREHOUSE: 1, SKU: 0, INVENTORY_LEDGER: 0, IMPORT_BATCH: 1 };
+  pool.publication = [{ id: batchId, checkpoint: { sequence: 2, cursor: 2, counts, expected: counts }, completed: true, final_approval: true }];
+  pool.nativeWitness = { id: witnessId, created_operation_id: inventoryId("operation", 17001) };
+  pool.transform = (stage, rows) => stage === "skus" ? rows.filter(row => row.id === skuId(0, 0)) : stage === "balances" ? [] : rows;
+  return pool;
+}
+
+test("inventory primary native keys QB172-F01: zero-cutoff SKU admits the real both-new pair for page, output and candidates without rebinding business IDs", async () => {
+  for (const mode of ["page", "output", "candidates"] as const) {
+    const pool = zeroCutoffNativeWitnessPool(), reader = new PostgresInventoryQueryReader(pool, null, nativeReadRuntime(pool));
+    if (mode === "page") {
+      const snapshot = await reader.readInventory(read(pool)); assert.equal(snapshot.data.exactTotalProducts, 1);
+      const cell = snapshot.data.products[0]!.colorFits[0]!.rows[0]!.cells[sizes[0]!.id]!;
+      assert.equal(cell.state, "known"); if (cell.state === "known") { assert.equal(cell.skuId, skuId(0, 0)); assert.equal(cell.quantity, "0"); }
+    } else if (mode === "output") {
+      const kinds = []; for await (const frame of reader.readInventoryOutput(read(pool))) kinds.push(frame.kind);
+      assert.deepEqual(kinds, ["summary", "product", "complete"]);
+    } else {
+      const snapshot = await reader.readCandidates(candidate(pool)); assert.deepEqual(snapshot.data.items.map(row => row.id), [productId(0)]);
+      assert.equal(stages(pool).includes("balances"), false);
+    }
+    const calls = pool.calls.filter(call => call.sql.includes("inventory-admission:keys"));
+    assert.deepEqual(calls[0]!.values, [[pool.scope.warehouses[0]!.id], [pool.nativeWitness!.id]]);
+    assert.equal(stages(pool).filter(stage => stage === "native-admission-witness").length, 1);
+    assert.equal(stages(pool).at(-1), "COMMIT"); assert.deepEqual(pool.releases, [undefined]);
+  }
+  const separate = zeroCutoffNativeWitnessPool(skuId(999, 0));
+  const page = await new PostgresInventoryQueryReader(separate, null, nativeReadRuntime(separate)).readInventory(read(separate));
+  const cell = page.data.products[0]!.colorFits[0]!.rows[0]!.cells[sizes[0]!.id]!;
+  assert.equal(cell.state, "known"); if (cell.state === "known") { assert.equal(cell.skuId, skuId(0, 0)); assert.notEqual(cell.skuId, separate.nativeWitness!.id); }
+  const member = nativeKeyPool(1, 0, true);
+  await new PostgresInventoryQueryReader(member, null, nativeReadRuntime(member)).readInventory(read(member));
+  assert.equal(stages(member).includes("native-admission-witness"), false);
+});
+
+test("inventory primary native keys QB172-F01: absent or contradictory native witness, exact pair, cutoff, operation or basis still fails before result publication", async () => {
+  const none = zeroCutoffNativeWitnessPool(); none.nativeWitness = null; none.count = 0; none.additionalSkus = []; none.flags.uncovered_sku = false;
+  await assert.rejects(new PostgresInventoryQueryReader(none, null, nativeReadRuntime(none)).readInventory(read(none)), code("INVENTORY_NOT_READY"));
+  assert.equal(stages(none).includes("keys"), false); assert.equal(stages(none).includes("catalog-status"), false);
+  const mutations: { stage: string; mutate: (rows: Row[]) => Row[] }[] = [
+    { stage: "native-admission-witness", mutate: rows => rows.map(row => ({ ...row, created_operation_id: null })) },
+    { stage: "native-admission-witness", mutate: rows => rows.map(row => ({ ...row, id: "not-a-native-id" })) },
+    ...[
+      { admitted: false }, { warehouse_id: inventoryId("warehouse", 999) }, { sku_id: inventoryId("sku", 999) },
+      { published_batch_id: inventoryId("operation", 999) }, { warehouse_basis: "CUTOFF_MEMBER" }, { sku_basis: "CUTOFF_MEMBER" },
+      { warehouse_created_operation_id: null }, { sku_created_operation_id: null }, { sku_created_operation_id: inventoryId("operation", 999) }
+    ].map(change => ({ stage: "keys", mutate: (rows: Row[]) => rows.map(row => ({ ...row, ...change })) }))
+  ];
+  for (const { stage: changedStage, mutate } of mutations) {
+    const pool = zeroCutoffNativeWitnessPool(), original = pool.transform!; pool.transform = (stage, rows) => stage === changedStage ? mutate(rows) : original(stage, rows);
+    const kinds: string[] = [];
+    await assert.rejects(async () => { for await (const frame of new PostgresInventoryQueryReader(pool, null, nativeReadRuntime(pool)).readInventoryOutput(read(pool))) kinds.push(frame.kind); });
+    assert.deepEqual(kinds, []); assert.equal(stages(pool).includes("catalog-status"), false); assert.equal(stages(pool).at(-1), "ROLLBACK"); assert.deepEqual(pool.releases, [undefined]);
+  }
+  const member = nativeKeyPool(1, 0, true); member.transform = (stage, rows) => stage === "keys" ? rows.map(row => ({ ...row, sku_basis: "POST_CUTOFF_CREATED", sku_created_operation_id: inventoryId("operation", 17001) })) : rows;
+  await assert.rejects(new PostgresInventoryQueryReader(member, null, nativeReadRuntime(member)).readInventory(read(member)), code("INVENTORY_INTEGRITY_FAILED"));
+});
 
 test("inventory primary native keys: existing dimensions witness only new bounded sets across summary, page, complete output and returned candidates", async () => {
   const pool = nativeKeyPool(334, 1001, true); let ready = 0; const reader = new PostgresInventoryQueryReader(pool, null, nativeReadRuntime(pool, () => { ready++; }));
