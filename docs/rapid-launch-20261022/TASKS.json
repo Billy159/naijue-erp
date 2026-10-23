@@ -963,7 +963,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T18:52:05.479233+00:00",
+  "updatedAt": "2026-10-23T19:18:24.117273+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
   "lastVerifiedRemoteCommit": "8de984455c5d7e74f5ceff837700c6e98d8af3a9",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -2331,14 +2331,38 @@
       "bytes": 1797,
       "sha256": "af5af7d42f15d2b2ef0998ea4b6a4e919e7f8e4bd9295e81ae0ad54b68169251",
       "result": "PASS_LIMITED_C196_PAYMENT_2P2_ACTUAL_RETEST"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v049-qf-c204-sales-page-save-source/RESULT.json",
+      "bytes": 11627,
+      "sha256": "ff81ecbeef59efd66ffb84738e492fb2eca14b77568fbd95955c2319e8d1fedd",
+      "result": "BOUNDED_C204_SALES_PAGE_SAVE_SOURCE_CHECKED_SHARED_CANCELLATION_PATH_OPEN"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v050-qf-c206-handoff-cancel-source-retest/RESULT.json",
+      "bytes": 10994,
+      "sha256": "c959b8ab516dcefb71b6134ee3e14a62bfb724c0743f651758e6a931e3ead322",
+      "result": "PASS_BOUNDED_C206_ORIGINAL_HANDOFF_CANCEL_SOURCE_RETEST_OWNER_PORTS_ADOPTED"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v051-qf-c207-idle-filter-source/RESULT.json",
+      "bytes": 10713,
+      "sha256": "6f7e2e79ba99f5d3ce712d5babf2974d85d89392797e47df39e0766c1212cc5b",
+      "result": "PASS_BOUNDED_C207_ORIGINAL_IDLE_FILTER_CSS_SOURCE_PENDING_ACTUAL"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c198-product-recovery-v1-fix-source-01/RESULT.json",
+      "bytes": 1015,
+      "sha256": "dcbfafac485576d3f821033d752d326020b7e9b8d8482dad37ef1223a8de55c6",
+      "result": "PASS_LIMITED_C198_ORIGINAL_P2_SOURCE_RETEST"
     }
   ],
   "newPendingReviews": [
-    "OriginalQB exactC101 actualcatalog+fourpurpose then B07source203; runtime tool cannot currently dispatch originalQB, user notified",
-    "QF new204source plus originalF1 DOC201 cancellation repair only",
-    "QF2 continue196 new P01/six-tab actual;198parser+200stableowner source in modulegap",
-    "C102 v11 normalrunner preparation then actual authorized isolated SAVE/rollback; nooldops rerun",
-    "C103 R1 schema preparation then exactactual/metadata and202 privateStage; noformalautoapproval"
+    "Original QB runtime toolhumanresume: actualQA101fourpurpose andR1C103 exactmetadata; source203B07/208ledger queued next, no repeatedoldops",
+    "C102 actualv11 normalSAVE prepared and101bound, independentreview stillpending; noissuer/PG executed",
+    "QF sole207 actualCLASS andoriginalfast evidence; offline209limitedsource. QF2 offline200stableowner source and196 reports, then new207P01 affected only afterexactclean",
+    "F1 originalT02localEnter/source docnavhost followups; F2 originalI07/I08 fullnative ledgerconsumer plusnewsizeDropdown/empty targetedfixes",
+    "V13 exact2nullableledger transitioncolumns pluscheck/beforeguard requires original humanconfirmation; noDDL/writer untilreply"
   ],
   "openFindingsCurrent": [
     {
@@ -2547,7 +2571,7 @@
     {
       "id": "DOC-201-TRANSFER-HANDOFF-CANCEL-01",
       "owner": "F1",
-      "status": "QF_SOURCE_CONDITION_NEED_FIX_TRANSFER_AND_SALES",
+      "status": "CLOSED_LIMITED_C206_SOURCE_RETEST_QFV050",
       "version": "201/204",
       "actualBrowserReproduced": false,
       "next": "OriginalF1 two creation sessions cancellation/unknown guard only"
@@ -2562,59 +2586,77 @@
     {
       "id": "QF2-P01-IDLE-FILTER-SURFACE-01",
       "owner": "F1",
-      "status": "ORIGINAL_PUBLIC_OWNER_TARGETED_REPAIR_IN_PROGRESS",
+      "status": "C207_FIXED_QFV051_SOURCE_PASS_ACTUAL_RETEST_PENDING",
       "version": "actual196",
       "next": "Exactshared idle inputs/tokens, QF source then QF2 P01 consumers"
+    },
+    {
+      "id": "QF2-P-SIZE-DROPDOWN-OPEN-01",
+      "owner": "F2",
+      "status": "NEW_C196_ACTUAL_P2_ORIGINAL_OWNER_DIRECTED_REPAIR",
+      "version": "C196",
+      "actualBrowserReproduced": true
+    },
+    {
+      "id": "QF2-I01-EMPTY-ICON-SIZE-01",
+      "owner": "F2",
+      "status": "NEW_C196_ACTUAL_P2_ORIGINAL_OWNER_DIRECTED_REPAIR",
+      "version": "C196",
+      "actualBrowserReproduced": true
     }
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-23T18:52:05.479233+00:00",
-    "sourceRound": 205,
-    "sourceCheckpoint": "f76627add06753bb8762f0c7de6598218e1cd9df",
+    "atUtc": "2026-10-23T19:18:24.117273+00:00",
+    "sourceRound": 209,
+    "sourceCheckpoint": "dfe348acbaf4597434eff2add5dc52f4d1b2600b",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "sourceRound": 196,
-      "sourceCommit": "0930113199a7fe8335b10092b0d4ddf2c2050600",
-      "buildId": "ui-preview-0930113-01-build01",
-      "url": "http://127.0.0.1:57868/synthetic-unified.html",
+      "sourceRound": 207,
+      "sourceCommit": "fa9dc429b62a317062dc98dc5dc8df5c79d0ada3",
+      "buildId": "ui-preview-fa9dc42-01-build01",
+      "url": "http://127.0.0.1:57869/synthetic-unified.html",
       "resources": [
         {
           "path": "synthetic-unified.html",
           "status": 200,
-          "bytes": 3362641,
-          "sha256": "2a6ceab7d69b794ff6040330f92de0a7c483fa77bc1d33c00cda763b03e39b42"
+          "bytes": 3387809,
+          "sha256": "dbea0f5f94afda0d504e0df1444544aad186940c2d917d7bcf2a4979f5af4f1a",
+          "sameImmutableBuild": true
         },
         {
           "path": "candidate-identity.json",
           "status": 200,
-          "bytes": 3306,
-          "sha256": "f9238c4fa9326900d93bfcea78fcecc4a9f63b1147067f8aa7934fab887ee13b"
+          "bytes": 2894,
+          "sha256": "2729d487907638d92a1bc3e5044d24ecd3ddccd33ccd4ff797f9befc2144ba62",
+          "sameImmutableBuild": true
         },
         {
           "path": "provenance.json",
           "status": 200,
-          "bytes": 50620,
-          "sha256": "374a82e8b7a71f8d547601d9d5baf239278028c110f9854eb2c34671dc95867d"
+          "bytes": 51370,
+          "sha256": "afef66c94a57b133f471d3f96b3bc971714492152b77ffee25f5ff1b8f753d09",
+          "sameImmutableBuild": true
         }
       ],
-      "serverPid": 80463,
-      "serverSession": 7822,
+      "serverPid": 90719,
+      "serverSession": 10167,
       "actualBuildInvocations": 1,
+      "postbuildAdditionalBuildInvocations": 0,
       "actualHTTPKeyResources": 3,
       "syntheticOnly": true,
-      "scope": "Latestfixed196 includesnewhost191/party192/193+195STAFFsearch/classfix196 plus189fullinventory. Not197recovery/198fix/199transport/200stableowner. Backend194source present but notPG orsuccessfulSAVE.",
+      "scope": "198 product recovery plus200 stableowner/201 transfer and204sales page topSAVE/205inset/206cancel/207publicidle. Not208newledger/209SALElocalEnter ornewF2fixes. Commands/receipts refused, no PG.",
       "wholePageAccepted": false,
       "realBusinessAccepted": false,
       "formalPerformanceAccepted": false
     },
     "nextPreview": null,
-    "r1": "C63实际COMPLETED exit0 32.301s：固定C132/build r1-c28ea3f-20261023-02完整生产依赖安装成功，Linux x64 Node24.21 Sharp0.35.5原生加载；APP/proxy health200，HTML与真实声明current application.js 200且manifest精确。依赖根因A及实际私有安装启动B均完成；dataReady/业务验收/正式切换false。保留45/48/60/61/62失败现场，未改正式三服务/公网。",
+    "r1": "C103 actualCOMPLETED0/3.224639846s/v11 approved schema COMMIT+readback; R1 runtime-role canonical53ea114e/122routines/newdeferred trigger. All56business/source counts0 except schema26 unchanged. No newmetadata/issuer/app/data/publicswitch.",
     "qa": "C101 actual v11 COMMIT0/3.575635193s/newcanonical5717b1be/122routines/newdeferred trigger; current50/original49/productv2/12auditreceipt/stock0 preserved. Business SAVE8groups NOT_TESTED.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
-    "waiting": "Original3 human field/business branches remain waiting; narrowedv11 exact22 alreadyapproved no reask. Additional tool-block only originalQB runtime resume requested, otherwork continues.",
-    "github": "Verified7f24890c9977892f143cb061bae287aad371ad33; current201–205+receipts next exact nonforced sync",
+    "waiting": "Original3 business decisions remain; narrowedv11 alreadyapproved. OriginalQB runtime toolresume action requested. Newv13 exact2columns/guard concreteconfirmation requested; only itswritebranch waits.",
+    "github": "Verified5bb47b923613b8440980c1889e5f9e5732e2ef05; current206-209 andcontinuation next exact sync",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -2639,11 +2681,11 @@
     },
     "audit": "C127 actualQF closed dualEsc/focus and same-scopefilter retention",
     "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
-    "uiMigration": "C201 T02 and204SALE newpage own-group topSAVEsource ready; QF201 identified pre-dispatch cancel nativeHandoff sourceP2 extendedSALE; originalF1 targetedtwofamily repair. Rapidqty/mixedprice/rowEnter remainOPEN. QF2C196 payment2P2 actualCLOSEDlimited; newP01inset205sourcefixed, publicidleF1 sourceinprogress, newactualpending.",
-    "backend": "C101 shape actualPASS only. C102 original D1 normalSAVE runner inputs preparing against fixed202/194 with accurate4purpose; QB send fails threadnotfound3times while read/list valid; human asynchronous originalQB resume requested. C103 R1 v11 shape preparation only, noactual. B07 source203 frozen, v12 issuer/host/actual not enabled.",
+    "uiMigration": "QFv050 source cancelfinding closed at206; QFv051207public sourcePASS actualP01pending. QF2source198 recoveryP2closedlimited. QF2actual196 clean released, newsizeDropdown/emptyP2 originalF2 repair. Current207 actualcompile0 with0compile graphpostresume exact6unchangednewlytraversedinputs; threeHTTPpassed, QFexplicitsolelease same2targets CLASS+originalfast evidence. Source209SALElocal-spec rowEnter/view actualproductID ready, no actual/PGclaim; notin207. Rapidqty/mixedprice causeUNKNOWN open.",
+    "backend": "C102 original normalSAVE inputcomplete, actual101 bound to newQA5717b1be and42274B983c47cc; independentreviewPENDING/PLANdisabled/issuer0/PG0. OriginalQB Chat read/list valid but3 sends notfound; human originalQB resume requested, noQB2. New208D3 numberedledger readonlysource ready originalQB pending; F2 native consumer inprogress. BeforeAfter2columns v13 proposal exactuserconfirmationpending, noDDL/writer changes. B07source203 noissuer/host/actual.",
     "productionBuild": "C202 fixed79553bb build actualexit0/4.535s, pack0/225members/1282380B6dadf748/oneextract. Exactapproved v8-v11 patches now packaged by originalclosure;33release testsPASS. NotprivateStage/business/formal.",
     "actualQFBrowser": {
-      "owner": "QF2",
+      "owner": "QF",
       "candidateTarget": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
       "demoTarget": "7F93D5A61A99F1C00FB3C0F089081F1F",
       "viewport": "1470x668/DPR2",
@@ -2653,12 +2695,12 @@
       ],
       "oldCandidate8B3": "No target found, not reused",
       "login": "Human newDemo login acknowledged and QF2 actual confirmed. No credentials read.",
-      "status": "C_EXPLICIT_SOLE_QF2_C196_ACTUAL_GRANTED",
+      "status": "C_EXPLICIT_SOLE_QF_C207_ACTUAL_GRANTED",
       "candidateScrollTop": 0,
       "demoTableScrollTop": 0,
-      "cleanReceipt": "QF/v044-qf-c184-sales-group-navigation-actual/BROWSER-CLEAN.json",
-      "candidateVersion": "C1960930113/ui-preview-0930113-01-build01",
-      "candidateUrl": "http://127.0.0.1:57868/synthetic-unified.html"
+      "cleanReceipt": "QF2/c196-inventory-native-actual-01/BROWSER-RELEASE.json",
+      "candidateVersion": "C207fa9dc42/ui-preview-fa9dc42-01-build01",
+      "candidateUrl": "http://127.0.0.1:57869/synthetic-unified.html"
     },
     "frontendAcceptance": {
       "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
@@ -3355,11 +3397,10 @@
     }
   },
   "latestReadySource": {
-    "round": 205,
-    "commit": "f76627add06753bb8762f0c7de6598218e1cd9df",
-    "latestServedPreviewRound": 196,
-    "currentQF2CandidateRound": 196,
-    "qualification": "205source not on196;202 builtpack notlatest204/205. v11 QA schema installed notbusinesspassed."
+    "round": 209,
+    "commit": "dfe348acbaf4597434eff2add5dc52f4d1b2600b",
+    "latestServedPreviewRound": 207,
+    "qualification": "209localSALEspecrows notin207;208ledger andF2freshrepairs notin207; whole/business/performance incomplete"
   },
   "pendingUserDecision": [
     {

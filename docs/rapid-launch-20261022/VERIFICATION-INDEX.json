@@ -10811,10 +10811,67 @@
         "New UI browser/real business/performance",
         "Formal URL switch"
       ]
+    },
+    {
+      "id": "QFv049",
+      "scope": "Only exact receipt new source and affected finding; no C technical rerun",
+      "result": "BOUNDED_C204_SALES_PAGE_SAVE_SOURCE_CHECKED_SHARED_CANCELLATION_PATH_OPEN",
+      "reviewer": "QF",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v049-qf-c204-sales-page-save-source/RESULT.json",
+      "sha256": "ff81ecbeef59efd66ffb84738e492fb2eca14b77568fbd95955c2319e8d1fedd",
+      "notTested": [
+        "Actual HTTP/PG/browser/performance/wholepage except explicitly evidenced range"
+      ]
+    },
+    {
+      "id": "QFv050",
+      "scope": "Only exact receipt new source and affected finding; no C technical rerun",
+      "result": "PASS_BOUNDED_C206_ORIGINAL_HANDOFF_CANCEL_SOURCE_RETEST_OWNER_PORTS_ADOPTED",
+      "reviewer": "QF",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v050-qf-c206-handoff-cancel-source-retest/RESULT.json",
+      "sha256": "c959b8ab516dcefb71b6134ee3e14a62bfb724c0743f651758e6a931e3ead322",
+      "notTested": [
+        "Actual HTTP/PG/browser/performance/wholepage except explicitly evidenced range"
+      ]
+    },
+    {
+      "id": "QFv051",
+      "scope": "Only exact receipt new source and affected finding; no C technical rerun",
+      "result": "PASS_BOUNDED_C207_ORIGINAL_IDLE_FILTER_CSS_SOURCE_PENDING_ACTUAL",
+      "reviewer": "QF",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v051-qf-c207-idle-filter-source/RESULT.json",
+      "sha256": "6f7e2e79ba99f5d3ce712d5babf2974d85d89392797e47df39e0766c1212cc5b",
+      "notTested": [
+        "Actual HTTP/PG/browser/performance/wholepage except explicitly evidenced range"
+      ]
+    },
+    {
+      "id": "QF2-C198",
+      "scope": "Only exact receipt new source and affected finding; no C technical rerun",
+      "result": "PASS_LIMITED_C198_ORIGINAL_P2_SOURCE_RETEST",
+      "reviewer": "QF2",
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c198-product-recovery-v1-fix-source-01/RESULT.json",
+      "sha256": "dcbfafac485576d3f821033d752d326020b7e9b8d8482dad37ef1223a8de55c6",
+      "notTested": [
+        "Actual HTTP/PG/browser/performance/wholepage except explicitly evidenced range"
+      ]
+    },
+    {
+      "id": "C103-ACTUAL-R1-V11-SHAPE",
+      "scope": "Original R1 target approved schema-only delta and readback; zero business DML",
+      "result": "PASS_ACTUAL_R1_V11_SHAPE_PATCH_AND_CATALOG_ONLY",
+      "sourceCommit": "79553bbb1f5df0b1400beea04916e1b0bf620fde",
+      "reviewer": "C original ops owner",
+      "evidence": "docs/rapid-launch-20261022/operational-checkpoints/C03-ACTUAL103-R1-V11-SHAPE.json",
+      "notTested": [
+        "NewR1 metadata review/issuer/runtime proof",
+        "Newest private candidate app start",
+        "Real initialdata/business/formal switch"
+      ]
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-23T18:52:05.479233+00:00",
+  "updatedAt": "2026-10-23T19:18:24.117273+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",

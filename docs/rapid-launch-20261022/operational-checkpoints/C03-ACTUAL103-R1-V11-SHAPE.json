@@ -1,0 +1,178 @@
+{
+  "taskId": "C03_ACTUAL103_R1_V11_SHAPE_ONLY",
+  "atUtc": "2026-10-23T19:18:24.117273+00:00",
+  "status": "PASS_ACTUAL_R1_V11_SHAPE_PATCH_AND_CATALOG_ONLY",
+  "jobId": "c03-r1-v11-shape-20261024-103",
+  "exitCode": 0,
+  "elapsedSeconds": 3.2246398460119963,
+  "sourceCommit": "79553bbb1f5df0b1400beea04916e1b0bf620fde",
+  "patchOutcome": "COMMIT_RETURNED_SUCCESS",
+  "catalogue": {
+    "file": "runtime-catalog-canonical.json",
+    "bytes": 1143470,
+    "serverRawSha256": "e101ebbcb6f78d1c04f4581a9dec8a57523079775530b70dde370f0168422ebd",
+    "canonicalSha256": "53ea114e60b5edb73985dfe1c750e95dd4edea424ad3082560116577fe8a3a35",
+    "identity": {
+      "database": "erp_rewrite_20261022_r1",
+      "server_addr": null,
+      "server_port": null,
+      "current_user": "erp_rewrite_runtime_20261022",
+      "database_oid": "1027659",
+      "session_user": "t15_prod_bootstrap",
+      "database_owner": "erp_rewrite_owner_20261022",
+      "postmaster_start": "2026-10-04 08:16:07.895273+00",
+      "replication_role": "origin",
+      "server_version_num": "170011"
+    },
+    "patchLevel": "26_v11_document_specification_save"
+  },
+  "catalogueDelta": [
+    {
+      "kind": "REPLACED_ROUTINE_BODY",
+      "name": "guard_maintenance_audit_actor",
+      "changedFields": [
+        "body_md5",
+        "body_sha256",
+        "definition_sha256",
+        "source"
+      ],
+      "bodySha256": "ac0ce9c91f34b9d8d34eb5e7d26f595319bfa6ad3dfe3ae33a4f2f5edf1eb217"
+    },
+    {
+      "kind": "REPLACED_ROUTINE_BODY",
+      "name": "guard_native_creation_identity",
+      "changedFields": [
+        "body_md5",
+        "body_sha256",
+        "definition_sha256",
+        "source"
+      ],
+      "bodySha256": "4827b76ff4df9beae18411033d2e6e13a04eea2d648aa58bb67d179145d107dc"
+    },
+    {
+      "kind": "NEW_ROUTINE",
+      "name": "validate_document_specification_commit",
+      "bodySha256": "b02bff6115bcf2c87758f8313a57a1a693733ba3ea192fcb1657bd176c587c06",
+      "owner": "erp_rewrite_owner_20261022",
+      "acl": "{erp_rewrite_owner_20261022=X/erp_rewrite_owner_20261022}"
+    },
+    {
+      "kind": "NEW_TRIGGERS",
+      "table": "audit_change",
+      "name": "document_specification_commit",
+      "actualRow": {
+        "name": "document_specification_commit",
+        "type": 5,
+        "table": "audit_change",
+        "enabled": "O",
+        "routine": "naijue_erp.validate_document_specification_commit()",
+        "internal": false,
+        "deferrable": true,
+        "definition": "CREATE CONSTRAINT TRIGGER document_specification_commit AFTER INSERT ON naijue_erp.audit_change DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION naijue_erp.validate_document_specification_commit()",
+        "initially_deferred": true
+      }
+    },
+    {
+      "kind": "NEW_CONSTRAINTS",
+      "table": "audit_change",
+      "name": "document_specification_commit",
+      "actualRow": {
+        "name": "document_specification_commit",
+        "type": "t",
+        "table": "audit_change",
+        "reference": null,
+        "validated": true,
+        "deferrable": true,
+        "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+        "delete_action": " ",
+        "update_action": " ",
+        "initially_deferred": true
+      }
+    }
+  ],
+  "countsReadback": {
+    "fit": 0,
+    "sku": 0,
+    "hall": 0,
+    "size": 0,
+    "color": 0,
+    "staff": 0,
+    "season": 0,
+    "product": 0,
+    "customer": 0,
+    "supplier": 0,
+    "warehouse": 0,
+    "sales_line": 0,
+    "size_group": 0,
+    "sku_barcode": 0,
+    "audit_change": 0,
+    "auth_session": 0,
+    "import_batch": 0,
+    "sales_header": 0,
+    "user_account": 0,
+    "import_record": 0,
+    "product_image": 0,
+    "transfer_line": 0,
+    "barcode_scheme": 0,
+    "payment_method": 0,
+    "payment_account": 0,
+    "transfer_header": 0,
+    "history_revision": 0,
+    "import_sku_alias": 0,
+    "inventory_ledger": 0,
+    "product_category": 0,
+    "sales_settlement": 0,
+    "schema_migration": 26,
+    "import_source_row": 0,
+    "inventory_balance": 0,
+    "operation_receipt": 0,
+    "size_group_member": 0,
+    "history_sales_line": 0,
+    "history_sales_header": 0,
+    "payment_account_hall": 0,
+    "history_transfer_line": 0,
+    "history_sales_effective": 0,
+    "history_transfer_header": 0,
+    "history_sales_settlement": 0,
+    "import_stock_contributor": 0,
+    "history_transfer_effective": 0,
+    "history_sales_line_effective": 0,
+    "native_party_import_evidence": 0,
+    "import_native_payment_binding": 0,
+    "import_header_native_reference": 0,
+    "import_record_accounting_claim": 0,
+    "history_transfer_line_effective": 0,
+    "import_history_closure_manifest": 0,
+    "import_native_catalogue_binding": 0,
+    "import_history_document_manifest": 0,
+    "history_sales_settlement_effective": 0,
+    "runtime_document_number_allocation": 0
+  },
+  "formalServicesPreserved": true,
+  "otherDatabaseMetadataPreserved": true,
+  "businessDml": false,
+  "runtimePurposesSigned": false,
+  "independentSourceReview": "QB190 original source adopted; actual C101 same SQL engine preserved",
+  "receipts": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-v11-shape-20261024-103/release-submission/release-receipts/c03-r1-v11-shape-20261024-103/job.json",
+      "bytes": 588,
+      "sha256": "88c1b3a8ee983d271ba79d6c831903876a864d032f8d22b7ceae8eeb339fc5f0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-v11-shape-20261024-103/release-submission/release-receipts/c03-r1-v11-shape-20261024-103/engine-result.json",
+      "bytes": 16272,
+      "sha256": "008900b4ed0ec00dd79e0b033ef19c483a23796dd690519709de6cd6fbedc923"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-v11-shape-20261024-103/release-submission/release-receipts/c03-r1-v11-shape-20261024-103/runtime-catalog-canonical.json",
+      "bytes": 1362892,
+      "sha256": "4729c732d18e64b3cfe63bed623b0c0e1ab870bef74829cd76ca3a9e88ad3068"
+    }
+  ],
+  "notTested": [
+    "NewR1 metadata review/issuer/runtime proof",
+    "Newest private candidate app start",
+    "Real initialdata/business/formal switch"
+  ]
+}
