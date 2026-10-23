@@ -407,9 +407,9 @@
 .inventory-source-workbench .mx-table th:last-child,.inventory-source-workbench .mx-table td:last-child{width:70px;min-width:70px;max-width:70px}
 .inventory-source-workbench .mx-table thead th.ui-action-cell{background:var(--ca-table-head)!important}
 .inventory-source-workbench .mx-table .mx-total-cell{right:70px}
-.inventory-source-workbench .mx-table .mx-total td{background:var(--ca-surface-subtle)!important}
+.inventory-source-workbench .mx-table .mx-total td,.inventory-source-workbench .mx-table .mx-total td.ui-action-cell{background:var(--ca-surface-subtle)!important}
 .inventory-source-workbench .mx-table .mx-subtotal td{background:var(--ca-table-subtotal)!important}
-.inventory-source-workbench .mx-table .mx-folded td{background:var(--ca-surface)!important;font-weight:400}
+.inventory-source-workbench .mx-table .mx-folded td,.inventory-source-workbench .mx-table .mx-folded td.ui-action-cell{background:var(--ca-surface)!important;font-weight:400}
 .inventory-source-workbench .mx-table tbody tr.mx-folded:hover td{background:var(--ca-table-row-hover)!important}
 .inventory-source-workbench .mx-product-identity{display:flex;align-items:baseline;gap:5px;min-width:0;line-height:19px}
 .inventory-source-workbench .mx-product-identity strong{flex:none;font-weight:600}
@@ -458,3 +458,18 @@
 .inventory-source-workbench .inv-empty-copy{display:flex;flex-direction:column;align-items:center;gap:6px}
 .inventory-source-workbench .inv-empty-copy strong{font-size:15px;line-height:22px;font-weight:600;color:var(--ca-ink)}
 .inventory-source-workbench .inv-empty-copy span{line-height:20px;color:var(--ca-ink-2)}
+
+/* Direct frozen inventory-workbench.css18,57-67 output carriers. */
+.inventory-source-workbench .iw-print-dialog{position:fixed;inset:4vh 3vw;margin:0;width:94vw;max-width:94vw;height:92vh;max-height:92vh;border:1px solid var(--border);padding:0;background:var(--surface);border-radius:4px}.inventory-source-workbench .iw-print-dialog header{display:flex;align-items:center;gap:20px;padding:10px 16px;height:48px}.inventory-source-workbench .iw-print-dialog header .actions{margin-left:auto}.inventory-source-workbench .iw-print-dialog iframe{border:0;width:100%;height:calc(100% - 48px)}
+.inventory-source-workbench .iw-export-dialog{box-sizing:border-box;width:min(560px,calc(100vw - 32px));max-height:calc(100vh - 48px);margin:auto;padding:0;border:1px solid var(--border);border-radius:8px;background:var(--ca-popover-bg);color:var(--text);overflow:auto;box-shadow:var(--ca-shadow-dialog)}
+.inventory-source-workbench .iw-export-dialog header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 24px;border-bottom:1px solid var(--border)}
+.inventory-source-workbench .iw-export-dialog h2{font-size:20px;line-height:28px;margin:0}.inventory-source-workbench .iw-export-dialog header .btn{width:32px;height:32px;min-height:32px;padding:0;font-size:22px}
+.inventory-source-workbench .iw-export-body{padding:24px}.inventory-source-workbench .iw-export-body fieldset{border:0;padding:0;margin:0;min-width:0}.inventory-source-workbench .iw-export-body legend{padding:0;margin:0 0 12px;font-weight:600}
+.inventory-source-workbench .iw-export-dialog .iw-export-option{display:flex;align-items:flex-start;gap:12px;margin:0 0 12px;padding:16px;border:1px solid var(--border);border-radius:6px;cursor:pointer}
+.inventory-source-workbench .iw-export-option:has(input:checked){border-color:var(--primary);background:var(--primary-light)}.inventory-source-workbench .iw-export-option:focus-within{outline:2px solid var(--primary);outline-offset:2px}
+.inventory-source-workbench .iw-export-dialog .iw-export-option input{flex:0 0 auto;width:16px;height:16px;min-height:0;margin:3px 0 0;accent-color:var(--primary-fill)}
+.inventory-source-workbench .iw-export-option>span{display:block;min-width:0}.inventory-source-workbench .iw-export-option strong{display:block;line-height:24px}.inventory-source-workbench .iw-export-option small{display:block;margin-top:4px;line-height:22px;color:var(--ca-ink-2)}
+.inventory-source-workbench .iw-export-scope{margin:16px 0 0;font-size:13px;line-height:22px;color:var(--ca-ink-2)}.inventory-source-workbench .iw-export-error{margin:12px 0 0;color:var(--ca-critical);line-height:22px}
+.inventory-source-workbench .iw-export-dialog footer{display:flex;justify-content:flex-end;gap:12px;padding:16px 24px;border-top:1px solid var(--border)}
+@media(max-width:600px){.inventory-source-workbench .iw-export-dialog header,.inventory-source-workbench .iw-export-body,.inventory-source-workbench .iw-export-dialog footer{padding:16px}}
+.inventory-source-workbench .iw-output-state{padding:20px 24px}

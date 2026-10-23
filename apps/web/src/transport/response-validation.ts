@@ -1,5 +1,5 @@
 import { quantity } from '../../../../packages/domain/src/values.ts';
-import type { CandidatePage, CandidateParameters, InventoryPage, InventoryParameters } from '../inventory/contracts.ts';
+import type { CandidatePage, CandidateParameters, InventoryFilter, InventoryPage, InventoryParameters, InventoryProduct } from '../inventory/contracts.ts';
 import { assertInventoryPage } from '../inventory/model.ts';
 import type { ProductBasics, ProductImage, ProductImageParameters, ProductImages, ProductParameters, ProductSpecifications } from '../inventory/product-contracts.ts';
 import { assertProductBasics, assertProductImage, assertProductImages, assertProductSpecifications } from '../inventory/product-model.ts';
@@ -43,29 +43,37 @@ export function inventoryResponse(value: unknown, parameters: Readonly<Inventory
   text(page.readReference);
   if (!/^[A-Za-z0-9._:-]{1,200}$/.test(page.readReference)) reject();
   array(page.warehouseLabels).forEach(text); total(page.allMatchesTotal);
-  for (const item of array(page.products)) {
-    const product = record(item, ['id', 'code', 'name', 'categoryLabel', 'supplierLabel', 'seasonLabel', 'sizeGroup', 'sizes', 'colorFits', 'sizeTotals', 'total']);
-    [product.id, product.code, product.name].forEach(text);
-    [product.categoryLabel, product.supplierLabel, product.seasonLabel].forEach(string);
-    selection(product.sizeGroup); total(product.total);
-    const sizes = array(product.sizes);
-    sizes.forEach(selection);
-    const ids = sizes.map(item => (item as { id: string }).id);
-    sizeTotals(product.sizeTotals, ids);
-    for (const item of array(product.colorFits)) {
-      const group = record(item, ['color', 'fit', 'rows', 'sizeTotals', 'total']);
-      selection(group.color); selection(group.fit); sizeTotals(group.sizeTotals, ids); total(group.total);
-      for (const item of array(group.rows)) {
-        const row = record(item, ['warehouse', 'cells', 'total']);
-        selection(row.warehouse); total(row.total);
-        Object.values(record(row.cells, ids)).forEach(cell);
-      }
-    }
-  }
+  for (const item of array(page.products)) inventoryProductResponse(item, parameters.filter, page.warehouseLabels as readonly string[]);
   const data = value as InventoryPage;
   assertInventoryPage(data, parameters);
   inventoryCoordinates(data, parameters);
   return data;
+}
+/** The original product DTO and native-coordinate checks, also used per output frame.
+ * This local one-product envelope is validation only; it makes no paginated read. */
+export function inventoryProductResponse(value: unknown, filter: InventoryFilter, warehouseLabels: readonly string[]): InventoryProduct {
+  const product = record(value, ['id', 'code', 'name', 'categoryLabel', 'supplierLabel', 'seasonLabel', 'sizeGroup', 'sizes', 'colorFits', 'sizeTotals', 'total']);
+  [product.id, product.code, product.name].forEach(text);
+  [product.categoryLabel, product.supplierLabel, product.seasonLabel].forEach(string);
+  selection(product.sizeGroup); total(product.total);
+  const sizes = array(product.sizes);
+  sizes.forEach(selection);
+  const ids = sizes.map(item => (item as { id: string }).id);
+  sizeTotals(product.sizeTotals, ids);
+  for (const item of array(product.colorFits)) {
+    const group = record(item, ['color', 'fit', 'rows', 'sizeTotals', 'total']);
+    selection(group.color); selection(group.fit); sizeTotals(group.sizeTotals, ids); total(group.total);
+    for (const item of array(group.rows)) {
+      const row = record(item, ['warehouse', 'cells', 'total']);
+      selection(row.warehouse); total(row.total);
+      Object.values(record(row.cells, ids)).forEach(cell);
+    }
+  }
+  const data: InventoryPage = { page: 1, pageSize: 100, exactTotalProducts: 1, products: [value as InventoryProduct], warehouseLabels, allMatchesTotal: (value as InventoryProduct).total, readReference: 'product-validation' };
+  const parameters: InventoryParameters = { filter, page: 1, pageSize: 100 };
+  assertInventoryPage(data, parameters);
+  inventoryCoordinates(data, parameters);
+  return value as InventoryProduct;
 }
 /** These cross-row/page facts are checked server-side too, but a malformed HTTP 200
  * must not bypass them merely because row totals happen to add up. This verifies

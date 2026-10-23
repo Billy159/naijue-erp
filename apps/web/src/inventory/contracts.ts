@@ -1,4 +1,5 @@
 import type { QueryRead } from '../loading/latest-query.ts';
+import type { HttpQueryError } from '../transport/http-query.ts';
 
 /** Complete published read DTO only. Readiness is established by the trusted server reader, never inferred here.
  * Existing SKU + no stock in that complete scope is server-supplied zero; holes/errors are rejected.
@@ -91,6 +92,21 @@ export interface InventoryPage {
 export interface InventoryReader {
   readInventory(read: QueryRead<InventoryParameters>): Promise<InventoryPage>;
   readCandidates(read: QueryRead<CandidateParameters>): Promise<CandidatePage>;
+}
+/** Released only after the output stream's matching committed complete frame. */
+export interface InventoryOutputData {
+  readonly readReference: string;
+  readonly exactTotalProducts: number;
+  readonly warehouseLabels: readonly string[];
+  readonly allMatchesTotal: StockTotal;
+  readonly products: readonly InventoryProduct[];
+}
+export interface InventoryOutputReader {
+  readOutput(read: QueryRead<InventoryFilter>): Promise<InventoryOutputData>;
+}
+export interface InventoryOutputCapability {
+  readonly reader: InventoryOutputReader;
+  readonly onAccessFailure: (error: HttpQueryError) => void;
 }
 export interface InventoryCellTarget {
   readonly productId: string;

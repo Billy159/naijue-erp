@@ -1,7 +1,9 @@
 import { StandardOverlay } from '../components/standard-overlay.tsx';
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useId, useRef, useState, useSyncExternalStore, type ComponentType } from 'react';
 import type { ReadScope } from '../loading/read-scope.ts';
-import type { Selection } from './contracts.ts';
+import type { InventoryOutputCapability, Selection } from './contracts.ts';
+import type { InventoryOutputContentProps } from './inventory-output.tsx';
+import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import type { ProductReadOnlyReader } from './product-contracts.ts';
 import { ProductDrawerHost } from './product-drawer-host.tsx';
 import { Empty } from '@arco-design/web-react';
@@ -24,7 +26,9 @@ export interface InventoryPageProps {
   readonly productReader: ProductReadOnlyReader;
   readonly actions?: Pick<InventoryActions, 'onOpenCell'>;
   readonly ledger?: InventoryLedgerCapability;
+  readonly output?: InventoryOutputCapability;
 }
+const outputLeaves = new AsyncLeafRegistry({ output: { load: () => import('./inventory-output.tsx') } }, { maxRetainedEntries: 1 });
 const names = { products: '商品', categories: '商品分类', warehouses: '仓库', suppliers: '供应商', fits: '版型', seasons: '季节' };
 function scopeLines(filter: InventoryFilter): string[] {
   return (Object.keys(names) as (keyof typeof names)[]).map(key => {
@@ -50,7 +54,7 @@ export function InventoryPageView(props: InventoryPageProps) {
     ? <InventoryPageContent key={props.scope.routeInstanceId} {...props} query={owner.query} /> : null;
 }
 
-function InventoryPageContent({ scope, reader, productReader, actions = {}, ledger, query, initialProduct, returnToProduct }: InventoryPageProps & { readonly query: ReturnType<typeof createInventoryQuery> }) {
+function InventoryPageContent({ scope, reader, productReader, actions = {}, ledger, output, query, initialProduct, returnToProduct }: InventoryPageProps & { readonly query: ReturnType<typeof createInventoryQuery> }) {
   const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
   const [draft, setDraft] = useState<InventoryFilter>(()=>({...emptyInventoryFilter(),products:initialProduct?[initialProduct]:[]}));
   const [returning,setReturning]=useState(false),[returnError,setReturnError]=useState('');
@@ -69,6 +73,8 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, ledg
   const settingsOpen = settingsPopup.open;
   const [scopeOpen, setScopeOpen] = useState(false);
   const [settings, setSettings] = useState<InventoryDisplaySettings>(defaultDisplaySettings);
+  const [outputRequest, setOutputRequest] = useState<{ kind: 'export' | 'print'; filter: InventoryFilter; settings: InventoryDisplaySettings } | null>(null);
+  const outputTrigger = useRef<HTMLButtonElement>(null);
   const [collapsedProducts, setCollapsedProducts] = useState<ReadonlySet<string>>(new Set());
   const [collapsedColors, setCollapsedColors] = useState<ReadonlySet<string>>(new Set());
   const scopeTrigger = useRef<HTMLButtonElement>(null);
@@ -105,7 +111,7 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, ledg
   const emptyDescription=result?'调整筛选条件后重新查询。':busy?'请稍候，正在整理商品与仓库数据…':snapshot.phase==='error'?'请重试，或调整条件后重新查询。':'设置筛选条件后，点击「查询」查看库存。';
   return <div className="iw-workbench inventory-source-workbench">
     {returnError&&<p role="alert">{returnError}</p>}
-    <div className="gold-head iw-head"><h1>库存状况表</h1>{returnToProduct&&<button type="button" className="btn ghost" disabled={returning} onClick={()=>void returnProduct()}>返回商品</button>}<div className="actions iw-head-actions"><button type="button" className="btn iw-head-action" disabled title="完整查询结果导出尚未接入">导出</button><button type="button" className="btn iw-head-action" disabled={!result||busy} onClick={refresh}>刷新</button><button type="button" className="btn iw-head-action" disabled title="完整查询结果打印尚未接入">打印</button></div></div>
+    <div className="gold-head iw-head"><h1>库存状况表</h1>{returnToProduct&&<button type="button" className="btn ghost" disabled={returning} onClick={()=>void returnProduct()}>返回商品</button>}<div className="actions iw-head-actions"><button type="button" className="btn iw-head-action" disabled={!output||!success||busy||!!outputRequest} title={!output?'完整查询结果导出尚未接入':undefined} onClick={event=>{if(success&&output){outputTrigger.current=event.currentTarget;setOutputRequest({kind:'export',filter:success.parameters.filter,settings:{...settings}});}}}>导出</button><button type="button" className="btn iw-head-action" disabled={!result||busy} onClick={refresh}>刷新</button><button type="button" className="btn iw-head-action" disabled={!output||!success||busy||!!outputRequest} title={!output?'完整查询结果打印尚未接入':undefined} onClick={event=>{if(success&&output){outputTrigger.current=event.currentTarget;setOutputRequest({kind:'print',filter:success.parameters.filter,settings:{...settings}});}}}>打印</button></div></div>
     <form className="iw-query" aria-label="库存筛选" onSubmit={event=>{event.preventDefault();run({filter:draft,page:1,pageSize:displayedPageSize});}}>
       <div className="iw-query-row">
         <CandidateSelector {...fields} kind="product" label="商品" selected={draft.products} multiple placeholder="商品款号 / 名称 / 系统货号" onChange={products=>setDraft(value=>({...value,products}))}/>
@@ -125,6 +131,22 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, ledg
     <InventoryPagination scope={scope} page={result?.page??1} pageSize={displayedPageSize} total={result?.exactTotalProducts??null} busy={busy} onPage={page=>{if(success)run({...success.parameters,page});}} onPageSize={setSize}/>
     {ledger&&ledgerTarget&&<InventoryLedgerDrawer key={`${ledgerTarget.warehouse.id}:${ledgerTarget.skuId}`} parent={scope} target={ledgerTarget} currentQuantity={ledgerQuantity} capability={ledger} close={()=>setLedgerTarget(null)}/>}
     {product&&<ProductDrawerHost key={`${product.id}:${productSequence.current}`} parentScope={scope} product={product} reader={productReader} close={closeProduct}/>}
+    {output&&outputRequest&&<InventoryOutputHost {...outputRequest} scope={scope} capability={output} close={()=>{setOutputRequest(null);outputTrigger.current?.focus();}}/>}
     {scopeOpen&&success&&<StandardOverlay className="iw-scope-dialog" title="已执行查询范围" label="本次查询使用的条件" closeLabel="关闭查询范围" close={()=>{setScopeOpen(false);scopeTrigger.current?.focus();}} width={480}><ul>{scopeLines(success.parameters.filter).map(line=><li key={line}>{line}</li>)}</ul><p className="muted">每页 {success.parameters.pageSize} 款 · 第 {success.parameters.page} 页。当前编辑条件不改变此结果。</p></StandardOverlay>}
   </div>;
+}
+
+/** First click opens the native carrier immediately; importing code never fetches inventory. */
+function InventoryOutputHost(props: Omit<InventoryOutputContentProps, 'titleId'>) {
+  const dialog = useRef<HTMLDialogElement>(null), titleId = useId();
+  const [View, setView] = useState<ComponentType<InventoryOutputContentProps> | null>(null), [failed, setFailed] = useState(false), [attempt, setAttempt] = useState(0);
+  useEffect(() => { const element = dialog.current; if (element && !element.open) element.showModal(); return () => { if (element?.open) element.close(); }; }, []);
+  useEffect(() => {
+    let attached = true; setFailed(false);
+    void outputLeaves.load('output', props.scope).then(module => { if (attached && props.scope.active) setView(() => module.InventoryOutputContent); }, () => { if (attached && props.scope.active) setFailed(true); });
+    return () => { attached = false; };
+  }, [props.scope, attempt]);
+  return <dialog ref={dialog} className={props.kind==='export'?'iw-export-dialog':'iw-print-dialog'} aria-labelledby={titleId} onCancel={event=>{event.preventDefault();props.close();}}>
+    {View ? <View {...props} titleId={titleId}/> : <><header><h2 id={titleId}>{props.kind==='export'?'导出库存':'库存打印预览'}</h2></header><div className="iw-output-state" role={failed?'alert':'status'}>{failed?'输出组件未加载。':'正在准备库存输出…'}{failed&&<button type="button" className="btn" onClick={()=>setAttempt(value=>value+1)}>重试</button>}</div><footer><button type="button" className="btn" onClick={props.close}>取消</button></footer></>}
+  </dialog>;
 }
