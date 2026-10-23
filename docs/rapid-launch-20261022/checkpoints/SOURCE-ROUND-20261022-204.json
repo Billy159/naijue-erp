@@ -1,0 +1,66 @@
+{
+  "atUtc": "2026-10-23T18:44:27.952512+00:00",
+  "parent": "31a91dc4f8eff857691c023234b39ba3dcd4d6a1",
+  "taskId": "F03_SALES_GROUP_COORDINATE_PAGE_SAVE",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-proposal.ts",
+      "bytes": 53848,
+      "sha256": "f7c16e419df48ea884a97795ccc6c6e1c40b782a2a64afbf379e5d81d3928d8a",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "bytes": 54267,
+      "sha256": "24455207893c0218f3baee76db9b741058fb435e057a18d683c3b124b5a54078",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-create.ts",
+      "bytes": 14902,
+      "sha256": "e937577b56850812dc75cd60beb3285541d7f74f1902b32b617c0d3f0a9d9dcf",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-existing-document.ts",
+      "bytes": 20947,
+      "sha256": "dba2e6741811c40e8d0aca39ad6b98dcec7f4cda635df887ec17a57fdf5f54c3",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-new-document-form.tsx",
+      "bytes": 1583,
+      "sha256": "4d664ae36441dcbea9de64d89849a2ac8697ff35baa527d20f78753a77eabaaf",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/sales-commands.tsx",
+      "bytes": 4725,
+      "sha256": "fdcd2d75c85742eb7bba488da9febedcc4a73ce6d539114ed1406090f13344df",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-99/DELIVERY.json",
+  "ownerReceiptSha256": "cb7ce2eace79c4d275eaa5fa4fb3f53d093426bd8050883a5ed365e72ccf28b7",
+  "scope": [
+    "Original SalesProposalSession captures formal same-SAVE skuId XOR product/color/fit/size with actual product group/cache membership, signed quantities, price/gift/zero and actual saved line/settlement pointer sets; no invented native IDs/snapshots",
+    "Native price syntax/parser reused; visible raw pending/replacement pricing projection participates in due/summary/balance count with no fake SKU; mixed signs derive native RETURN/EXCHANGE",
+    "Original native zero-price dialog reused for pending/edited local coordinate rows; cancel retains, confirm sets explicit intent but never automatically saves",
+    "Original new/existing sessions route coordinate SAVE through96 same command/key/CAS/receipt/replay; captured inputs verified just before dispatch; read-only known-SKU preparation unchanged",
+    "Saved original line remains immutable until confirmed SAVE/readback; new unknown has no native editor but original recovery UI remains visible; original route leave guard rejects unresolved no-ID SAVE"
+  ],
+  "checksAdopted": {
+    "before-1": "RED original actual page top SAVE sends0 with a selected missing-SKU actual group member",
+    "after-1": "PASS actual new/existing original React topSAVE, pricing20.00, replyloss/receipt/no-ID, actual persisted SKU/snapshot read/adopt, signed-3 price12.00/original line+settlement pointers/CAS2, zero reject/raw retention, gift/mixed, actual native session route guard; synthetic native ports only. Harness act warnings retained",
+    "zero-followup-1": "PASS only affected zero/gift/mixed cases after wrapping harness mutations in act; no repeat passed main new/existing. Original Arco React19 ref warnings retained",
+    "types-1": "PASS exact6 complete imported source closure",
+    "types-2": "PASS latest exact6 complete imported source closure0"
+  },
+  "qualification": "SOURCE_READY_SALES_GROUP_COORDINATE_PAGE_SAVE_NOT_FULL_PAGE_ACCEPTANCE",
+  "limitations": [
+    "Actual current server pricing/spec/catalogue/minimum/snapshot/permission authority and PG transaction not verified here; same SAVE remains DRAFT and original saved readback must be reviewed before approval",
+    "No actual Chrome rapidqty12-to121/mixedprice10-to1 or whole Demo page pass",
+    "Missing-SKU row Enter/confirm remains separate interaction completion; page topSAVE now connected",
+    "No deployed metadata or production business claim"
+  ]
+}

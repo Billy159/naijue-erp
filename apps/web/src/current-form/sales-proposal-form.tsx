@@ -16,7 +16,7 @@ import { salesInputMoney } from '../sales/commands/form-model.ts';
 import { discountUnitPrice } from '../../../../packages/domain/src/sales-money.ts';
 import { minorAmount } from '../../../../packages/domain/src/values.ts';
 import type { CurrentFormProduct, CurrentFormSku } from '../../../../packages/application/src/current-form-ports.ts';
-import { salesBusinessMode, type SalesBusinessMode } from './sales-business-mode.ts';
+import { salesBusinessMode, salesBusinessType, type SalesBusinessMode } from './sales-business-mode.ts';
 import { DemoSingleSelectAction } from '../demo-controls/single-select-action.tsx';
 import '../demo-controls/single-select.css';
 import '../sales/detail.css';
@@ -218,7 +218,8 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
     return () => view.removeEventListener('resize', measure);
   }, [businessMenuOpen, state.disposed]);
   if (state.disposed) return <p role="status">草稿已关闭，当前身份资料已清除。</p>;
-  const { draft, picker } = state, combined = draft.businessType !== 'SALE', totals = salesProposalMoney(draft);
+  const { draft, picker } = state, combined = draft.businessType !== 'SALE', pricingLines = session.pricingLines, displayedLines = pricingLines ?? draft.lines;
+  const displayedType = salesBusinessType(salesBusinessMode(draft.businessType), displayedLines.map(row => row.quantity)), totals = pricingLines ? salesProposalMoney({ ...draft, businessType: displayedType, lines: pricingLines }) : null;
   const restorePickerFocus = () => {
     const live = triggerRef.current?.isConnected ? triggerRef.current : Array.from(formRef.current?.querySelectorAll<HTMLElement>('[data-entry-control]') ?? []).find(node => node.dataset.entryControl === anchor);
     live?.focus({ preventScroll: true });
@@ -270,7 +271,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
     if (!confirmChange) { dismissPicker(); session.cancelLineEdit(); }
     requestAnimationFrame(() => Array.from(formRef.current?.querySelectorAll<HTMLElement>('[data-line-identity]') ?? []).find(node => node.dataset.lineIdentity === key)?.focus({ preventScroll: true }));
   };
-  const save = () => { if (!session.flushEntries()) return; const row = session.getSnapshot().draft.lines.find(row => !row.isGift && !row.zeroConfirmed && linePrice(row) === '0.00'); if (row) setZeroLine(row.key); else preparation?.save(); };
+  const save = () => { if (!session.hasSpecificationInputs && !session.flushEntries()) return; const row = session.pricingLines?.find(row => !row.isGift && !row.zeroConfirmed && linePrice(row) === '0.00'); if (row) setZeroLine(row.key); else preparation?.save(); };
   // Frozen businessType='退货/换货' uses entrySections' one-table path.
   // Native RETURN/EXCHANGE stay internal; row controls edit explicit signs.
   const sections = [{ key: 'OUT' as const, title: '商品明细', rows: draft.lines }];
@@ -278,12 +279,19 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
   const pendingRows = (['IN', 'OUT'] as const).flatMap(direction => state.entries[direction].filter(entry => entry.product || entry.query.trim()).map(entry => ({ direction, entry }))).sort((a, b) => a.entry.order! - b.entry.order!);
   const entryRows: { readonly direction: 'IN' | 'OUT'; readonly entry: SalesProposalEntry }[] = [...pendingRows, { direction: entryDirection, entry: state.entries[entryDirection].find(entry => !entry.product && !entry.query.trim())! }];
   const paymentRows = draft.settlements.length ? draft.settlements : [{ key: null, method: null, account: null, direction: 'RECEIVE' as const, amount: '' }];
-  const zero = draft.lines.find(row => row.key === zeroLine);
+  const zero = pricingLines?.find(row => row.key === zeroLine);
+  const confirmZero = () => {
+    if (!zero) return;
+    if (state.lineEdit?.key === zero.key) session.updateLineEdit({ zeroConfirmed: true });
+    else if (draft.lines.some(row => row.key === zero.key)) session.updateLine(zero.key, { zeroConfirmed: true });
+    else for (const direction of ['IN', 'OUT'] as const) if (state.entries[direction].some(row => row.key === zero.key)) session.updateEntry(direction, { zeroConfirmed: true }, zero.key);
+    setZeroLine(null);
+  };
   return <SalesProductPresentation {...(scope ? { scope } : {})} {...(productCapability ? { capability: productCapability } : {})}>{openProduct => <section ref={formRef} aria-label={saved ? '销货单编辑' : '新增销售草稿'} className="tc-workbench tc-editor sale-workbench sale-editor sales-proposal-editor" onKeyDown={event => {
     if (event.key === 'Escape' && state.lineEdit && !picker) { event.preventDefault(); finishIdentity(state.lineEdit.key, false); }
   }}>
     <div className="tc-head sale-head"><h1>{saved ? '编辑销货单' : '新增销货单'}</h1><span className="tc-status doc-pending">未审核</span><span id="sale-save-state" className="sale-muted">· {state.dirty ? '有未保存修改' : saved ? '已保存' : '未保存'}</span><div className="actions">
-      <button type="button" className="btn" data-sale="list" onClick={() => saved ? close() : discard('cancel')}>返回列表</button><button type="button" className="btn" data-sale="save" disabled={!preparation || preparation.preparing || !!state.lineEdit || !!pendingMode} onClick={save}>保存</button>
+      <button type="button" className="btn" data-sale="list" onClick={() => saved ? close() : discard('cancel')}>返回列表</button><button type="button" className="btn" data-sale="save" disabled={!preparation || preparation.preparing || !!state.lineEdit && !session.hasSpecificationInputs || !!pendingMode} onClick={save}>保存</button>
       {saved ? saved.actions : ['审核', '导出', '打印'].map(label => <button type="button" className="btn" disabled key={label} title="请先保存单据">{label}</button>)}
     </div></div>
     {saved?.feedback}
@@ -301,7 +309,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
           <input data-rf="amount" aria-label={`第${index + 1}笔收款金额`} inputMode="decimal" placeholder="金额" disabled={!draft.hall} value={row.key === null ? salesInputMoney(totals?.netDueMinor ?? '0') : focusedPayment === index ? (row.direction === 'REFUND' ? '-' : '') + row.amount : paymentAmount(row.amount, row.direction)} onFocus={() => setFocusedPayment(index)} onBlur={() => setFocusedPayment(null)} onChange={event => { const value = event.currentTarget.value; return session.updateSignedSettlement(row.key, value); }} />
           <span className="sale-payment-actions">{index === paymentRows.length - 1 && paymentRows.length < 3 && <button type="button" className="btn sale-link" data-rf-add disabled={!draft.hall || !row.method || !row.account || !/^\d+(?:\.\d{1,2})?$/.test(row.amount)} onClick={() => session.addSettlement()}>添加</button>}{row.key && paymentRows.length > 1 && <button type="button" className="btn sale-link" data-rf-remove={index} aria-label={`删除收退 ${index + 1}`} onClick={() => session.removeSettlement(row.key!)}>删除</button>}</span>
         </div>)}
-      </div><small data-funds-balance className={`sale-payment-balance ${salesPaymentKind(totals?.netDueMinor ?? null, totals?.settledMinor ?? null, draft.lines.length)}`}>{salesPaymentBalance(totals?.netDueMinor ?? null, totals?.settledMinor ?? null, draft.lines.length)}</small></div>
+      </div><small data-funds-balance className={`sale-payment-balance ${salesPaymentKind(totals?.netDueMinor ?? null, totals?.settledMinor ?? null, displayedLines.length)}`}>{salesPaymentBalance(totals?.netDueMinor ?? null, totals?.settledMinor ?? null, displayedLines.length)}</small></div>
     </div></div>
     <label className="sale-note-row"><span className="sale-field-label">备注</span><input data-sale-field="note" aria-label="备注" placeholder="输入本单备注（可选）" maxLength={10000} value={draft.note} onChange={event => { const value = event.currentTarget.value; return session.setHeader({ note: value }); }} /></label>
     <div id="sale-error" className="sales-proposal-feedback">{state.notice && <p role="status">{state.notice}</p>}{state.errors.map(error => <p role="alert" key={error}>{error}</p>)}{preparation?.notice && <p role="status">{preparation.notice}</p>}{preparation?.preparing && <button type="button" className="btn" onClick={preparation.cancel}>{saved ? '取消准备' : '取消新单准备'}</button>}</div>
@@ -357,9 +365,9 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
       })}
       </tbody></table></div></section>;
     })}
-    <SalesDocumentSummary businessType={draft.businessType} lines={draft.lines.map(row => ({ quantity: row.quantity, isGift: row.isGift, styleKey: row.sku.productId, ...(row.product.category ? { category: row.product.category } : {}) }))} grossMinor={totals?.grossMinor ?? null} discountMinor={totals?.orderDiscountMinor ?? null} netDueMinor={totals?.netDueMinor ?? null} />
+    <SalesDocumentSummary businessType={displayedType} lines={displayedLines.map(row => ({ quantity: row.quantity, isGift: row.isGift, styleKey: row.product.id, ...(row.product.category ? { category: row.product.category } : {}) }))} grossMinor={totals?.grossMinor ?? null} discountMinor={totals?.orderDiscountMinor ?? null} netDueMinor={totals?.netDueMinor ?? null} />
     {scanner && <DocumentScan controller={scanner.controller} title={scanner.direction === 'IN' ? '退回商品扫码录入' : combined ? '换出商品扫码录入' : '销货扫码录入'} rows={draft.lines.filter(row => row.quantity.startsWith('-') === (scanner.direction === 'IN'))} close={() => setScanner(null)} update={(key, value) => session.updateLine(key, { quantity: value })} remove={key => session.removeLine(key)} />}
-    {zero && <SourceDocumentDialog className="source-confirm-dialog" title="确认普通零价商品" label="确认普通零价商品" closeLabel="关闭弹窗" close={() => setZeroLine(null)} initialFocus="[data-erp-keep-input]" footer={<><button type="button" className="btn" data-erp-keep-input onClick={() => setZeroLine(null)}>取消</button><button type="button" className="btn primary" onClick={() => { session.updateLine(zero.key, { zeroConfirmed: true }); setZeroLine(null); }}>确认零价</button></>}><div className="ui-confirm-body"><p>此行单价为0.00元，不标为赠品，审核时仍按业务类型处理商品数量。</p></div></SourceDocumentDialog>}
+    {zero && <SourceDocumentDialog className="source-confirm-dialog" title="确认普通零价商品" label="确认普通零价商品" closeLabel="关闭弹窗" close={() => setZeroLine(null)} initialFocus="[data-erp-keep-input]" footer={<><button type="button" className="btn" data-erp-keep-input onClick={() => setZeroLine(null)}>取消</button><button type="button" className="btn primary" onClick={confirmZero}>确认零价</button></>}><div className="ui-confirm-body"><p>此行单价为0.00元，不标为赠品，审核时仍按业务类型处理商品数量。</p></div></SourceDocumentDialog>}
     {pendingMode && <SalesModeConfirmation mode={pendingMode} cancel={cancelMode} confirm={() => { const next = modeToConfirm.current; if (!next) return; cancelMode(); session.setBusinessMode(next); }} />}
     {confirm && <SourceDocumentDialog className="source-discard-dialog" title="有未保存的修改" label="有未保存的修改" closeLabel="关闭弹窗" close={() => setConfirm(null)} footer={<><button type="button" className="btn" data-erp-keep-input onClick={() => setConfirm(null)}>继续录单</button><button type="button" className="btn primary" onClick={() => discard(confirm, true)}>放弃修改并离开</button></>}><div className="ui-confirm-body"><p>此新单尚未保存。离开将放弃本次录入，不会产生销货单或库存变动。</p></div></SourceDocumentDialog>}
   </section>}</SalesProductPresentation>;

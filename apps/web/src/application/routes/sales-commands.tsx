@@ -21,7 +21,7 @@ export function prepareSalesCommandSession(input: RoutePreparation, onAccessFail
     ...(commands.existingPreparation ? { existingPreparation: commands.existingPreparation, existingReader: createCurrentFormHttpReader(input.http) } : {}) });
   let currentNewDocument: SalesNewDocumentSession | null = null;
   const manualCreate = commands.manualCreate ? Object.freeze({
-    canLeave: () => workspace.getSnapshot().command.editor ? workspace.canLeave() : !currentNewDocument || currentNewDocument.getSnapshot().disposed || currentNewDocument.getSnapshot().nativeHandoff || (!currentNewDocument.getSnapshot().preparing && !currentNewDocument.proposal.getSnapshot().dirty),
+    canLeave: () => !workspace.commands.hasUnresolvedWrite && (workspace.getSnapshot().command.editor ? workspace.canLeave() : !currentNewDocument || currentNewDocument.getSnapshot().disposed || currentNewDocument.getSnapshot().nativeHandoff || (!currentNewDocument.getSnapshot().preparing && !currentNewDocument.proposal.getSnapshot().dirty)),
     open: async () => {
       if (currentNewDocument && !currentNewDocument.getSnapshot().disposed) {
         if (!workspace.getSnapshot().command.editor && !currentNewDocument.getSnapshot().nativeHandoff) return currentNewDocument;

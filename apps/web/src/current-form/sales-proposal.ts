@@ -9,6 +9,7 @@ import type { createCurrentFormHttpReader } from './http-reader.ts';
 import { currentBusinessDate } from './business-date.ts';
 import { DocumentScanController } from '../components/document-scan-controller.ts';
 import { salesBusinessMode, salesBusinessType, type SalesBusinessMode } from './sales-business-mode.ts';
+import { parseNativeSalesSaveProposal, type NativeSalesSaveProposal } from '../../../../packages/application/src/native-sales-preparation.ts';
 export type SalesProposalReader = Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readSalesReferences' | 'readProducts' | 'readProductSkus'>
   & Partial<Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readBarcode' | 'readSizeGroups'>>;
 export type SalesProposalPicker = CurrentSalesReferenceQuery['kind'] | 'product' | 'sku';
@@ -18,6 +19,7 @@ export interface SalesProposalLine {
   readonly sourceSnapshot?: SalesDraftDto['lines'][number]['snapshot'];
   readonly pricingRule: 'UNIT_PRICE' | 'DISCOUNT'; readonly discount: string; readonly isGift: boolean; readonly zeroConfirmed: boolean;
 }
+export type SalesProposalPricingLine = Omit<SalesProposalLine, 'sku' | 'sourceSnapshot'>;
 export interface SalesSpecChoice { readonly id: string; readonly name: string }
 export interface SalesProposalEntry {
   readonly key: string; readonly order: number | null; readonly pricingRule: SalesProposalLine['pricingRule']; readonly discount: string; readonly isGift: boolean; readonly zeroConfirmed: boolean;
@@ -55,7 +57,7 @@ function amount(raw: string): bigint {
 }
 /** Display projection only. Missing/invalid input stays unknown, never a saved
  * zero, price authority or an approval decision. Uses the same integer money rules. */
-export function salesProposalMoney(draft: SalesProposal): { readonly grossMinor: string; readonly netDueMinor: string; readonly orderDiscountMinor: string;
+export function salesProposalMoney(draft: Omit<SalesProposal, 'lines'> & { readonly lines: readonly SalesProposalPricingLine[] }): { readonly grossMinor: string; readonly netDueMinor: string; readonly orderDiscountMinor: string;
   readonly settledMinor: string | null; readonly differenceMinor: string | null; readonly balanced: boolean } | null {
   try {
     const amounts = draft.lines.map(row => {
@@ -472,6 +474,59 @@ export class SalesProposalSession {
       this.#publish({ notice: '切换营业厅会改变候选范围。请先确认重置草稿，再选择新厅。' }); return false;
     }
     this.closePicker(); return this.#edit({ ...draft, [p.kind]: item });
+  }
+  get hasSpecificationInputs(): boolean {
+    return !!this.#state.lineEdit && !this.#state.lineEdit.sku || Object.values(this.#state.entries).flat().some(entry => (entry.product || entry.query.trim()) && !entry.sku);
+  }
+  /** Visible money/quantity intent includes pending coordinates without making a SKU. */
+  get pricingLines(): readonly SalesProposalPricingLine[] | null {
+    const { draft, lineEdit, entries } = this.#state;
+    if (lineEdit && !draft.lines.includes(lineEdit.original)) return null;
+    const lines: SalesProposalPricingLine[] = draft.lines.map(row => lineEdit?.key === row.key ? lineEdit : row);
+    for (const entry of Object.values(entries).flat().filter(entry => entry.product || entry.query.trim()).sort((a, b) => (a.order ?? 0) - (b.order ?? 0))) {
+      if (!entry.product) return null;
+      lines.push({ ...entry, product: entry.product });
+    }
+    return lines;
+  }
+  /** Capture the approved original SAVE body, retaining actual saved pointers only. */
+  saveProposal(salesId: string | null, originalLines: ReadonlySet<string> = new Set(), originalSettlements: ReadonlySet<string> = new Set()): NativeSalesSaveProposal | null {
+    const { draft, lineEdit, entries } = this.#state;
+    if (this.#state.disposed || !this.#scope.active) return null;
+    try {
+      if (!draft.hall || !draft.customer || !draft.warehouse || draft.warehouse.hallId !== draft.hall.id && !(this.#savedWarehouse?.hallId === draft.hall.id && this.#savedWarehouse.warehouseId === draft.warehouse.id)) throw Error();
+      const pricing = this.pricingLines; if (!pricing) throw Error();
+      const yuan = (raw: string) => { const value = amount(raw); return `${value / 100n}.${(value % 100n).toString().padStart(2, '0')}`; };
+      const tenths = (raw: string) => { if (!/^\d{1,2}(?:\.\d)?$/.test(raw.trim())) throw Error(); const [whole, fraction = '0'] = raw.trim().split('.'), value = Number(whole) * 10 + Number(fraction); if (value > 100) throw Error(); return value; };
+      const selection = (row: { readonly product: CurrentFormProduct; readonly sku: CurrentFormSku | null; readonly color: SalesSpecChoice | null; readonly fit: SalesSpecChoice | null; readonly size: SalesSpecChoice | null; readonly sizeGroup: SalesSpecChoice | null }) => {
+        if (!row.color || !row.fit || !row.size) throw Error();
+        if (row.sku) { if (row.sku.productId !== row.product.id || row.sku.colorId !== row.color.id || row.sku.fitId !== row.fit.id || row.sku.sizeId !== row.size.id) throw Error(); return { skuId: row.sku.id }; }
+        if (!row.product.sizeGroupId || row.sizeGroup?.id !== row.product.sizeGroupId || !this.#dictionaryGroups.get(row.product.sizeGroupId)?.sizes.some(size => size.id === row.size!.id)) throw Error();
+        return { spec: { productId: row.product.id, colorId: row.color.id, fitId: row.fit.id, sizeId: row.size.id } };
+      };
+      const price = (row: SalesProposalPricingLine) => {
+        const value = row.isGift ? 0n : row.pricingRule === 'UNIT_PRICE' ? amount(row.dealPrice) : row.product.retailPrice === null ? null : discountUnitPrice(minorAmount(amount(row.product.retailPrice).toString()), tenths(row.discount));
+        if (value === null || value === 0n && !row.isGift && !row.zeroConfirmed) throw Error();
+        return { quantity: row.quantity, dealPrice: row.pricingRule === 'DISCOUNT' ? null : row.isGift ? '0.00' : yuan(row.dealPrice), pricingRule: row.pricingRule,
+          discountTenths: row.pricingRule === 'DISCOUNT' ? tenths(row.discount) : null, isGift: row.isGift, zeroConfirmed: row.zeroConfirmed };
+      };
+      const lines: NativeSalesSaveProposal['lines'][number][] = draft.lines.map(row => {
+        const edited = lineEdit?.key === row.key ? lineEdit : null;
+        if (edited && edited.original !== row) throw Error();
+        return { existingLineId: originalLines.has(row.key) ? row.key : null, ...(edited ? selection(edited) : { skuId: row.sku.id }), ...price(edited ?? row) };
+      });
+      for (const direction of ['IN', 'OUT'] as const) for (const entry of entries[direction]) if (entry.product || entry.query.trim()) {
+        if (!entry.product || entry.query !== entry.product.code || entry.quantity.startsWith('-') !== (direction === 'IN')) throw Error();
+        lines.push({ existingLineId: null, ...selection({ ...entry, product: entry.product }), ...price({ ...entry, product: entry.product }) });
+      }
+      const businessType = salesBusinessType(salesBusinessMode(draft.businessType), lines.map(row => row.quantity));
+      if (!salesProposalMoney({ ...draft, businessType, lines: pricing })) throw Error();
+      const proposal = parseNativeSalesSaveProposal({ salesId, businessType, businessDate: draft.businessDate, note: draft.note === '' ? null : draft.note,
+        hallId: draft.hall.id, customerId: draft.customer.id, salespersonId: draft.salesperson?.id ?? null, warehouseId: draft.warehouse.id, orderDiscount: yuan(draft.orderDiscount), lines,
+        settlements: draft.settlements.map(row => { if (!row.method || !row.account || row.account.paymentMethodId !== row.method.id) throw Error(); return { existingSettlementId: originalSettlements.has(row.key) ? row.key : null,
+          paymentAccountId: row.account.id, paymentMethodId: row.method.id, direction: row.direction, amount: yuan(row.amount) }; }) });
+      this.#publish({ errors: [], notice: null }); return freeze(proposal);
+    } catch { this.#publish({ errors: ['请完成当前商品组内的规格、数量、价格及收退款资料；普通零价须确认。'], notice: '保存资料未通过校验，原输入已保留，未发送保存。' }); return null; }
   }
   validate(): SalesProposal | null {
     if (this.#state.disposed) return null;

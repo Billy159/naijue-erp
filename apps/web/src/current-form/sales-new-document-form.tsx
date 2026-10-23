@@ -9,6 +9,6 @@ export function SalesNewDocumentForm({ session, scope, close, historyReader, pro
   const state = useSyncExternalStore(session.subscribe, session.getSnapshot, session.getSnapshot);
   const editor = useSyncExternalStore(session.editor.subscribe, session.editor.getSnapshot, session.editor.getSnapshot);
   if (!scope.active || state.disposed) return <p role="status">新单会话已关闭。</p>;
-  if (editor.command.editor) return <SalesCommandForm session={session.editor} scope={scope} close={close} {...(product ? { product } : {})} {...(historyReader ? { history: { scope, reader: historyReader } } : {})} />;
+  if (editor.command.editor || session.editor.commands.hasUnresolvedWrite) return <SalesCommandForm session={session.editor} scope={scope} close={close} {...(product ? { product } : {})} {...(historyReader ? { history: { scope, reader: historyReader } } : {})} />;
   return <SalesProposalForm session={session.proposal} scope={scope} close={close} {...(product ? { product } : {})} preparation={{ save: () => { void session.save(); }, preparing: state.preparing, notice: state.notice, cancel: () => session.cancelPreparation() }} />;
 }

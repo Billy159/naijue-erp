@@ -86,7 +86,17 @@ export class SalesExistingDocumentSession {
   async save(): Promise<boolean> {
     const proposal = this.#state.proposal;
     if (this.#state.disposed || this.#state.phase !== 'ready' || this.#state.preparing || !proposal || !this.owner.editable) return false;
-    if (!proposal.getSnapshot().dirty && !this.owner.commands.hasDirtyDraft) { this.#publish({ notice: '内容未改变，无需保存。' }); return false; }
+    if (!this.hasDirtyDraft && !this.owner.commands.hasDirtyDraft) { this.#publish({ notice: '内容未改变，无需保存。' }); return false; }
+    if (proposal.hasSpecificationInputs && this.#original) {
+      const intent = proposal.saveProposal(this.#original.document.header.id, new Set(this.#original.document.lines.map(row => row.id as string)), new Set(this.#original.document.settlements.map(row => row.id as string))); if (!intent) return false;
+      const captured = proposal.getSnapshot(), ownerInput = this.owner.getSnapshot().input, request = new AbortController(), sequence = ++this.#sequence; this.#request = request;
+      this.#publish({ preparing: true, notice: null });
+      try {
+        return await this.owner.commands.submitProposal({ ...intent, note: captured.draft.note === (this.#original.document.header.note ?? '') ? this.#original.document.header.note : intent.note }, () => this.#current(sequence, request)
+          && this.owner.getSnapshot().input === ownerInput && this.owner.getSnapshot().command.editor?.detail === this.#original && proposal.getSnapshot().draft === captured.draft
+          && proposal.getSnapshot().entries === captured.entries && proposal.getSnapshot().lineEdit === captured.lineEdit);
+      } finally { if (this.#request === request) { this.#request = null; if (!this.#state.disposed) this.#publish({ preparing: false }); } }
+    }
     const value = proposal.validate(); if (!value) return false;
     let intent: NativeSalesExistingProposal;
     try {
