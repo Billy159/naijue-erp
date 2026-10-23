@@ -11095,7 +11095,7 @@
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-23T20:57:32.108441+00:00",
+  "updatedAt": "2026-10-23T21:06:48.564690+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -12412,6 +12412,16 @@
       "scope": "CLOSED_ONLY_P01_TOKEN_X_AND_SEARCH_FONT_RESIDUAL_AT220",
       "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance",
       "adoptedAtUtc": "2026-10-23T20:57:32.108441+00:00"
+    },
+    {
+      "id": "QF-V060",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v060-qf-c221-transfer-leftnav-source/RESULT.json",
+      "bytes": 7379,
+      "sha256": "a6d9431b151e7fba82bfb729a07821b0b6c98be509d1af2d506b2b12aa108053",
+      "result": "BOUNDED_C221_T02_LEFT_NAV_SOURCE_REMEDIATED_ACTUAL_PENDING",
+      "scope": "ONLY_ORIGINAL_T02_LEFTNAV_SOURCE221_REMEDIATED_ACTUAL_PENDING",
+      "adoption": "C adopts independent QF boundedsource conclusion; actual217 OPEN retained until successor retest",
+      "adoptedAtUtc": "2026-10-23T21:03:57.270085+00:00"
     }
   ],
   "coverageGroups": [
@@ -12451,7 +12461,7 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-23T20:57:32.108441+00:00",
+    "atUtc": "2026-10-23T21:03:57.270085+00:00",
     "latestSource": 220,
     "servedPreview": 217,
     "browserOwner": "QF sole217 documents; QF2 next distinctI07/P01 consumer scope",
@@ -12588,7 +12598,7 @@
       "cleanReceiptSha256": "edd42c835d159d26d8169635cda6e8f700d215ef99e1c9748769533049dcc357",
       "isolation": "Not proven independent contexts; serialized exclusive same two owned targets. QF/F1/F2/C no Chrome."
     },
-    "githubVerified": "733f560ae99d27f5120977f91e2746ad8ecb5a4d",
+    "githubVerified": "280360770cd1a76255c10e60d2da9f425d5bce8d",
     "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/operational-checkpoints/C03-UI220-HTTP.json",
     "qualification": "Actual build/serve identity only; original independent actual UI acceptance is pending and not substituted by C.",
     "latestActualAdoptions": [
@@ -12701,6 +12711,39 @@
         "scope": "CLOSED_ONLY_P01_TOKEN_X_AND_SEARCH_FONT_RESIDUAL_AT220",
         "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance"
       }
-    ]
+    ],
+    "source221Review": {
+      "id": "QF-V060",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v060-qf-c221-transfer-leftnav-source/RESULT.json",
+      "bytes": 7379,
+      "sha256": "a6d9431b151e7fba82bfb729a07821b0b6c98be509d1af2d506b2b12aa108053",
+      "result": "BOUNDED_C221_T02_LEFT_NAV_SOURCE_REMEDIATED_ACTUAL_PENDING",
+      "scope": "ONLY_ORIGINAL_T02_LEFTNAV_SOURCE221_REMEDIATED_ACTUAL_PENDING",
+      "adoption": "C adopts independent QF boundedsource conclusion; actual217 OPEN retained until successor retest"
+    },
+    "production214Graph": {
+      "sourceCommit": "1eef32a45da5f422415077b2c4074d0d83b6aeee",
+      "buildId": "r1-1eef32a-20261024-01",
+      "status": "ACTUAL_EXISTING_C214_BUILD_GRAPH_ONLY_NOT_NETWORK_OR_UI_PERFORMANCE_PASS",
+      "frontendInputs": 1346,
+      "javascriptOutputs": 169,
+      "allJavascriptOutputBytes": 2173466,
+      "staticEntryJavascriptFiles": 38,
+      "staticEntryJavascriptBytes": 1124089,
+      "dynamicImportEdges": 65,
+      "runtimeArcoJsModulePositiveOutputDuplicates": 0,
+      "fullArcoCssOutputConsumers": 1,
+      "allStaticCssArtifactBytes": 1492166,
+      "duplicatedCssModuleKinds": 17,
+      "uniquePackageSourceRoots": true,
+      "normalizedModuleMultipleSourceAliases": {},
+      "newBuilds": 0,
+      "browserNetworkMeasurements": 0,
+      "comparisonQualification": "Same calculation as prior source159 baseline; raw uncompressed graph closure is not actual firstscreen transfer, parse/render/interactive time or improvement. Actual served220 is synthetic and not this production graph. Do not infer mount/data-request behavior from dynamic edges alone.",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-c214-production-prep-20261024-01/BUILD-GRAPH-OBSERVATION.json",
+      "bytes": 4405,
+      "sha256": "b5557577d2ffe0fecdb1db47faecb40455fef1fc41f89e3d56ff8580464dca6c"
+    },
+    "newCalendarIssue": "QF2-I07-DATE-MOUSE-OPEN-01 actual220 iconclick twice fails/ArrowDown works; nativeDemo firstmouseopens paired. OriginalF1 offline diagnosis, originalQFdedup. QF2 I07 remainingmodule/accurateclean stillinprogress."
   }
 }

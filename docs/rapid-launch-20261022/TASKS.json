@@ -964,9 +964,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T20:57:32.108441+00:00",
+  "updatedAt": "2026-10-23T21:06:48.564690+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "733f560ae99d27f5120977f91e2746ad8ecb5a4d",
+  "lastVerifiedRemoteCommit": "280360770cd1a76255c10e60d2da9f425d5bce8d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2518,16 +2518,26 @@
       "result": "PASS_ORIGINAL_TWO_P01_IDLE_RESIDUALS_ACTUAL_C220",
       "scope": "CLOSED_ONLY_P01_TOKEN_X_AND_SEARCH_FONT_RESIDUAL_AT220",
       "adoption": "C adopts independent QF2 actual conclusion; no repeat technical acceptance"
+    },
+    {
+      "id": "QF-V060",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v060-qf-c221-transfer-leftnav-source/RESULT.json",
+      "bytes": 7379,
+      "sha256": "a6d9431b151e7fba82bfb729a07821b0b6c98be509d1af2d506b2b12aa108053",
+      "result": "BOUNDED_C221_T02_LEFT_NAV_SOURCE_REMEDIATED_ACTUAL_PENDING",
+      "scope": "ONLY_ORIGINAL_T02_LEFTNAV_SOURCE221_REMEDIATED_ACTUAL_PENDING",
+      "adoption": "C adopts independent QF boundedsource conclusion; actual217 OPEN retained until successor retest"
     }
   ],
   "newPendingReviews": [
-    "QF offline sole104 matrix receives QF2new220 moduleconclusions andsource221whenready; no Chrome or technicalrepeat",
+    "QF unique104 matrix adoption offline; newDATEdedup, fixedF1 newsource only whenready",
     "QF2 sole220 newI07UI finalmodule; named size/fullEmpty/P01 residuals actualclosed scoped, unused/foreign stilluntested",
-    "OriginalQF source221 exact5 LEFTNAV independentreview; C nextfixedcandidate PREBUILD only, actualafterQF2clean",
+    "QFv060221 boundedsourcePASS; C221 PREBUILDready, successoractualafterQF2clean/newDATEnecessaryintegration",
     "OriginalQB human/toolresume actualQA101fourpurpose/R1C103; C102disabled,noissuer/nobusinessrunner",
     "V13 humanconfirmation onlyrelatedDDL/writer waits",
     "B07 retainedactualDRAFT inputs captured, APPROVED/NULLdate/v12/currentWRITE missing",
-    "C214 actualLinux install/native complete; newapp metadata review/issuer awaits originalQB toolhumanresume. Do not repeatinstall as unchanged queued."
+    "C214 actualLinux install/native complete; newapp metadata review/issuer awaits originalQB toolhumanresume. Do not repeatinstall as unchanged queued.",
+    "F1 only newI07DATE actual220 mouseentrydiagnosis; QF2 supplies pairedDemo, no duplicatetask/publicfullrerun"
   ],
   "openFindingsCurrent": [
     {
@@ -2792,11 +2802,22 @@
       "severity": "P2",
       "actualBrowserReproduced": true,
       "next": "Anothercolor9actualunavailable, source216model adopted separately. T02LEFTNAV originalissue remainsopen"
+    },
+    {
+      "id": "QF2-I07-DATE-MOUSE-OPEN-01",
+      "owner": "F1",
+      "severity": "P2_PENDING_ORIGINAL_QF_DUPLICATE_ID_MERGE",
+      "status": "ACTUAL220_MOUSE_FAILURE_WITH_NATIVE_DEMO_FIRSTCLICK_SUCCESS_PAIRED_ORIGINAL_F1_DIAGNOSIS_INPROGRESS",
+      "version": "220",
+      "actualBrowserReproduced": true,
+      "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-ledger-ui-first-actual-01/browser",
+      "next": "UniqueoriginalF1 commonUIDate diagnosis; no newcomponent/rule or parallelF2writes. QF2 continues remainingI07actual.",
+      "demoPair": "QF2 c220-ledger-ui-first-actual-01/browser/DATE-FIRST-MOUSE.json anddemo-calendar-first-mouse.png. Demo cleanup not yetconfirmed; QF2stillsole, noClease granted."
     }
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-23T20:57:32.108441+00:00",
+    "atUtc": "2026-10-23T21:03:57.270085+00:00",
     "sourceRound": 221,
     "sourceCheckpoint": "601fde4a1ea65cbf3738d7eb4ee4798823341913",
     "allModels": "gpt-6.1-sol/xhigh",
@@ -2846,14 +2867,16 @@
       "sourceRound": 221,
       "sourceCommit": "601fde4a1ea65cbf3738d7eb4ee4798823341913",
       "owner": "C",
-      "status": "PREBUILD_ONLY_IN_PROGRESS_NO_BUILD_SERVE_HTTP",
-      "sourceReview": "OriginalQF pending; QF2sole220 actual continues"
+      "status": "PREBUILD_READY_RELEASED_BUILD0_SERVE0_HTTP0",
+      "sourceReview": "QF_V060_LIMITED_SOURCE_PASS_ACTUAL_PENDING",
+      "outputRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-601fde4-01",
+      "candidateId": "ui-preview-601fde4-01"
     },
     "r1": "C103 actualCOMPLETED0/3.224639846s/v11 approved schema COMMIT+readback; R1 runtime-role canonical53ea114e/122routines/newdeferred trigger. All56business/source counts0 except schema26 unchanged. No newmetadata/issuer/app/data/publicswitch.",
     "qa": "C101 actual v11 COMMIT0/3.575635193s/newcanonical5717b1be/122routines/newdeferred trigger; current50/original49/productv2/12auditreceipt/stock0 preserved. Business SAVE8groups NOT_TESTED.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Original3 business decisions remain; narrowedv11 alreadyapproved. OriginalQB runtime toolresume action requested. Newv13 exact2columns/guard concreteconfirmation requested; only itswritebranch waits.",
-    "github": "Verified733f560ae99d27f5120977f91e2746ad8ecb5a4d; newscope adoption pending next exact checkpoint",
+    "github": "Verified280360770cd1a76255c10e60d2da9f425d5bce8d; current source221 review andnewDATE queue next checkpoint",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -3427,6 +3450,29 @@
         "allStaticCSSBytesAfter": 1116045,
         "ArcoPositiveCSSOutputs": 1,
         "isNetworkOrFirstscreenTiming": false
+      },
+      "production214Graph": {
+        "sourceCommit": "1eef32a45da5f422415077b2c4074d0d83b6aeee",
+        "buildId": "r1-1eef32a-20261024-01",
+        "status": "ACTUAL_EXISTING_C214_BUILD_GRAPH_ONLY_NOT_NETWORK_OR_UI_PERFORMANCE_PASS",
+        "frontendInputs": 1346,
+        "javascriptOutputs": 169,
+        "allJavascriptOutputBytes": 2173466,
+        "staticEntryJavascriptFiles": 38,
+        "staticEntryJavascriptBytes": 1124089,
+        "dynamicImportEdges": 65,
+        "runtimeArcoJsModulePositiveOutputDuplicates": 0,
+        "fullArcoCssOutputConsumers": 1,
+        "allStaticCssArtifactBytes": 1492166,
+        "duplicatedCssModuleKinds": 17,
+        "uniquePackageSourceRoots": true,
+        "normalizedModuleMultipleSourceAliases": {},
+        "newBuilds": 0,
+        "browserNetworkMeasurements": 0,
+        "comparisonQualification": "Same calculation as prior source159 baseline; raw uncompressed graph closure is not actual firstscreen transfer, parse/render/interactive time or improvement. Actual served220 is synthetic and not this production graph. Do not infer mount/data-request behavior from dynamic edges alone.",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-c214-production-prep-20261024-01/BUILD-GRAPH-OBSERVATION.json",
+        "bytes": 4405,
+        "sha256": "b5557577d2ffe0fecdb1db47faecb40455fef1fc41f89e3d56ff8580464dca6c"
       }
     },
     "freshBackup": {
@@ -3969,7 +4015,7 @@
         "qualification": "OriginalF1 exact5 T02 oldLEFTNAV hook source fixed with owner targeted checks; originalQF independent source inprogress; notinserved220/no actualnewfix accepted."
       },
       "scope": "OriginalT02 LEFTNAV existingDocumentLeave hook, sameowner guards and existingdocumentName; no contracts/navigation/platform/geometry rewrite",
-      "independentSource": "QF_IN_PROGRESS",
+      "independentSource": "QF_V060_LIMITED_SOURCE_PASS_ACTUAL_PENDING",
       "actualFix": "NOT_TESTED_NOTIN220",
       "newActual220Adoptions": [
         {
@@ -3992,14 +4038,24 @@
         }
       ],
       "served": "220still QF2soleI07; size/Empty/P01 namedfixesaccepted;104/48/whole0 unchanged",
-      "production": "Actual214Linuxci/nativePASS, no app/metadata/issuer/PG orpublicswitch"
+      "production": "Actual214Linuxci/nativePASS, no app/metadata/issuer/PG orpublicswitch",
+      "sourceReview": {
+        "id": "QF-V060",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v060-qf-c221-transfer-leftnav-source/RESULT.json",
+        "bytes": 7379,
+        "sha256": "a6d9431b151e7fba82bfb729a07821b0b6c98be509d1af2d506b2b12aa108053",
+        "result": "BOUNDED_C221_T02_LEFT_NAV_SOURCE_REMEDIATED_ACTUAL_PENDING",
+        "scope": "ONLY_ORIGINAL_T02_LEFTNAV_SOURCE221_REMEDIATED_ACTUAL_PENDING",
+        "adoption": "C adopts independent QF boundedsource conclusion; actual217 OPEN retained until successor retest"
+      },
+      "newCalendarIssue": "QF2-I07-DATE-MOUSE-OPEN-01 actual220 iconclick twice fails/ArrowDown works; nativeDemo firstmouseopens paired. OriginalF1 offline diagnosis, originalQFdedup. QF2 I07 remainingmodule/accurateclean stillinprogress."
     }
   },
   "latestReadySource": {
     "round": 221,
     "commit": "601fde4a1ea65cbf3738d7eb4ee4798823341913",
     "latestServedPreviewRound": 220,
-    "qualification": "OriginalF1 exact5 T02 oldLEFTNAV hook source fixed with owner targeted checks; originalQF independent source inprogress; notinserved220/no actualnewfix accepted."
+    "qualification": "OriginalF1 exact5 T02 LEFTNAV fixedsource221; QFv060 independent boundedsourcePASS, notinserved220/actualsuccessorpending."
   },
   "pendingUserDecision": [
     {

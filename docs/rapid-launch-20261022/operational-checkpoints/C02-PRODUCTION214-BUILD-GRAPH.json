@@ -1,0 +1,23 @@
+{
+  "sourceCommit": "1eef32a45da5f422415077b2c4074d0d83b6aeee",
+  "buildId": "r1-1eef32a-20261024-01",
+  "status": "ACTUAL_EXISTING_C214_BUILD_GRAPH_ONLY_NOT_NETWORK_OR_UI_PERFORMANCE_PASS",
+  "frontendInputs": 1346,
+  "javascriptOutputs": 169,
+  "allJavascriptOutputBytes": 2173466,
+  "staticEntryJavascriptFiles": 38,
+  "staticEntryJavascriptBytes": 1124089,
+  "dynamicImportEdges": 65,
+  "runtimeArcoJsModulePositiveOutputDuplicates": 0,
+  "fullArcoCssOutputConsumers": 1,
+  "allStaticCssArtifactBytes": 1492166,
+  "duplicatedCssModuleKinds": 17,
+  "uniquePackageSourceRoots": true,
+  "normalizedModuleMultipleSourceAliases": {},
+  "newBuilds": 0,
+  "browserNetworkMeasurements": 0,
+  "comparisonQualification": "Same calculation as prior source159 baseline; raw uncompressed graph closure is not actual firstscreen transfer, parse/render/interactive time or improvement. Actual served220 is synthetic and not this production graph. Do not infer mount/data-request behavior from dynamic edges alone.",
+  "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-c214-production-prep-20261024-01/BUILD-GRAPH-OBSERVATION.json",
+  "bytes": 4405,
+  "sha256": "b5557577d2ffe0fecdb1db47faecb40455fef1fc41f89e3d56ff8580464dca6c"
+}

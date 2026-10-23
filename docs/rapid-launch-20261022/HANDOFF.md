@@ -1,4 +1,6 @@
-最新固定源码221=601fde4a1ea65cbf3738d7eb4ee4798823341913：原F1将调拨草稿接入既有离开确认，精确5文件/原真实组件RED→GREEN/strict0已保全，原QF离线独立源验中；221不在当前220，后继候选只PREBUILD不冒已运行。当前QF2独占220继续I07；220尺码下拉立即关闭、完整库存Empty五区、P01 token位置与search14两个残差已分别实操关闭限定范围，不扩为整页或真实业务通过。当前整体104/48/整页0/整类0。实际214Linux安装/native PASS与最新UI源码版本继续分开。
+新增I07日期鼠标入口问题已沿原F1公共owner诊断，原QF去重/主验、QF2补Demo实际并继续该模块；没有重复派工或改日期规则。214实际构建图已记录单套React/ReactDOM/Arco来源与0公共JS重复输出/65动态边，但静态入口闭包1124089未压缩字节不是实际首屏传输，不能当性能PASS。GitHub最近准确28036077。
+
+最新固定源码221=601fde4a1ea65cbf3738d7eb4ee4798823341913：原F1将调拨草稿接入既有离开确认，精确5文件/原真实组件RED→GREEN/strict0已保全，原QFv060限定源码已通过；221不在当前220，后继PREBUILD已就绪，未build/serve/actual。当前QF2独占220继续I07；220尺码下拉立即关闭、完整库存Empty五区、P01 token位置与search14两个残差已分别实操关闭限定范围，不扩为整页或真实业务通过。当前整体104/48/整页0/整类0。实际214Linux安装/native PASS与最新UI源码版本继续分开。
 
 实际部署依赖进展：固定214=1eef32a／包9d9b8b96…已沿原T45完成目标Linux离线npm ci及Sharp0.35.5/vips8.18.7加载，exit0／31.3484秒，安装payload3121be15…、111条依赖记录；原5个正式/旧私有容器前后身份启动信息一致，3个本工单network-none容器已停。原缓存只读复制，无PG/metadata/issuer/app启动/公网切换。此证据只属214，不能冒220最新前端已部署。具体回执见 operational-checkpoints/C03-C214-LINUX-INSTALL.json；新应用仍待原QB新实际review及原stage依赖，不重跑已成功安装。
 
