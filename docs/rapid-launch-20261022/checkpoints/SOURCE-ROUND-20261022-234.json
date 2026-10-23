@@ -1,0 +1,78 @@
+{
+  "atUtc": "2026-10-23T23:23:28.733576+00:00",
+  "parent": "24d26720c0b4aa75a473db5c10a6edb72166d9a5",
+  "taskId": "F1_I07_SHARED_NATIVE_CLOSE_GLYPH_SLOT",
+  "files": [
+    {
+      "path": "apps/web/src/components/standard-overlay.tsx",
+      "bytes": 9353,
+      "sha256": "ab1affb883f4b75bfc64e288ad62ea3edebff409d2a5e1aa78ddff465b0882e5",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-120/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "0564f887d47eafdfcd3e666c0c693ec5226211536854abbe3277309390c3503a",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh; Fast not verified",
+    "finding": "QF2-I07-CARRIER-INSET-01 original close-inner visual subitem",
+    "status": "SOURCE_READY_EXPLICIT_SHARED_CLOSE_GLYPH_SLOT_CONSUMER_OPTIN_PENDING",
+    "files": [
+      {
+        "path": "apps/web/src/components/standard-overlay.tsx",
+        "bytes": 9353,
+        "sha256": "ab1affb883f4b75bfc64e288ad62ea3edebff409d2a5e1aa78ddff465b0882e5"
+      }
+    ],
+    "api": {
+      "component": "StandardOverlay",
+      "slot": "closeIcon?: ReactNode",
+      "sourceGlyph": "export function SourceCloseIcon() in same standard-overlay.tsx",
+      "consumer": "import { StandardOverlay, SourceCloseIcon } ...; <StandardOverlay closePlacement=\"header\" closeIcon={<SourceCloseIcon />} ... />",
+      "default": "Omitted closeIcon leaves original x text or catalogue IconClose/12glyph styling. closePlacement never selects a different glyph implicitly.",
+      "sameControl": "Original UIButton[data-erp-overlay-close], closeLabel, hit target, focus/ready/wrapped close/Tab/Escape stay unchanged; the slot is visual content only.",
+      "sourceReuse": "Existing SourceDocumentDialog SVG extracted to SourceCloseIcon and re-rendered by that same native dialog without wrapper or asset change.",
+      "consumerOwnership": "F2 must explicitly opt in at original ledger consumer; F1 did not write its file or geometry."
+    },
+    "checks": {
+      "existingActual": "Original QF2 matched229 button1423/13/30/30 already accepted; only candidate span x13.3125x22 vs Demo native SVG16x16/path8x8/stroke1.7round remains. Not reclassified as closed SCHEME-UI-01.",
+      "after-1": "PASS one original StandardOverlay Drawer/header consumer configured with existing ledgerCSS and explicit shared SourceCloseIcon. SVG outerHTML exactly equals original independent actual Demo capture, no Arco text-span wrapper. Original same button aria/width30/minHeight30/padding5, original ready focus; hover keeps currentColor, path native click invokes original close once and restores opener. Geometry pixels not measured in JSDOM.",
+      "types-1": "PASS one changed shared module complete strict imported closure, include=[] no exclusions.",
+      "notRerun": "No default overlay/Tab/Esc/carrier cold-warm12regions suite; original behaviors unchanged, not re-accepted by this local check."
+    },
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-120/REPORT.md",
+        "bytes": 1125,
+        "sha256": "235ef55594fc51db042640113be0b64bcae2f50d0e7860243cbb310318567217"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-120/API.json",
+        "bytes": 911,
+        "sha256": "c8319f54621615e081934b925296978899893999c0074f7aec14e209ebfff9d8"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-120/PROOF.json",
+        "bytes": 1986,
+        "sha256": "512ad1d313383fe31c957cac4c9ee1d09bd5fb842ee5e58a4eec8a3544c6ec00"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-120/RESULT.json",
+        "bytes": 833,
+        "sha256": "c584ed7d75aafbe8979ea16dc3657465369773702f4b3ee6ffa4ecac90e1f571"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-120/SOURCE.diff",
+        "bytes": 3209,
+        "sha256": "89033e0bd5f3205450e7331df15bba4de01716e060c185da797ec2674fb2b5b8"
+      }
+    ],
+    "limitations": [
+      "F2 actual ledger optin not written by F1; actual normal/hover16pxSVG8pxpath and one X/return-focus pending containing candidate.",
+      "No glyph-position boolean coupling or global/default/catalogue12 appearance change.",
+      "No Chrome since119 STOP; no new source117/118/anchor mutation, F2/C/HTTP/PG/build/service/Git writes."
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "Necessary targeted owner source checks adopted; publicslot requires explicitF2consumer, nativeblockflow actualscroll/hitTest pending containing successor. No priorfixedgeometry/SQL or commonfullsuite rerun and no wholepage/performance acceptance; notinrunning233."
+}

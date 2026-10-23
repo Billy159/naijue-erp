@@ -13,6 +13,8 @@ export interface StandardOverlayProps {
   readonly className?: string; readonly width?: number | string;
   /** Opt in to the same close button participating in the title row's flow. */
   readonly closePlacement?: 'content' | 'header';
+  /** Explicit visual content only; the existing close button owns behaviour. */
+  readonly closeIcon?: ReactNode;
   /** Opt-in frozen catalogue Modal spacing and secondary-button appearance. */
   readonly presentation?: 'catalogue';
   readonly maskClosable?: boolean; readonly initialFocus?: string;
@@ -82,7 +84,7 @@ export function StandardOverlay(props: StandardOverlayProps) {
     const frame = requestAnimationFrame(focus);
     return () => cancelAnimationFrame(frame);
   }, [ready]);
-  const closeButton = <UIButton data-erp-overlay-close className="erp-overlay-close" aria-label={props.closeLabel} onClick={close}>{props.presentation === 'catalogue' ? <IconClose aria-hidden /> : '×'}</UIButton>;
+  const closeButton = <UIButton data-erp-overlay-close className="erp-overlay-close" aria-label={props.closeLabel} onClick={close}>{props.closeIcon ?? (props.presentation === 'catalogue' ? <IconClose aria-hidden /> : '×')}</UIButton>;
   const headerClose = props.closePlacement === 'header';
   const children = <>{!headerClose && closeButton}{typeof props.children === 'function' ? props.children(close) : props.children}</>;
   const common = { visible: true, title: headerClose ? <div className="erp-overlay-title-row">{props.title}{closeButton}</div> : props.title, onCancel: close, getPopupContainer: container, closable: false,
@@ -108,6 +110,11 @@ export function StandardOverlay(props: StandardOverlayProps) {
       style={{ width: props.width ?? 480, maxWidth: 'calc(100vw - 32px)' }}>{children}</Modal>)}</div>;
 }
 
+/** Frozen interaction-common close glyph, shared without a new hit target. */
+export function SourceCloseIcon() {
+  return <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>;
+}
+
 /** Frozen document dialogs share this native carrier; consumers retain their
  * source header/body/footer geometry and native business action callbacks. */
 export function SourceDocumentDialog({ title, label, closeLabel, close, children, footer, className, initialFocus }: {
@@ -121,7 +128,7 @@ export function SourceDocumentDialog({ title, label, closeLabel, close, children
     return () => { if (element.open) element.close(); };
   }, []);
   return <dialog ref={dialog} className={`erp-source-dialog ${className}`} role="alertdialog" aria-label={label} aria-labelledby={id} onCancel={event => { event.preventDefault(); close(); }}>
-    <header><h2 id={id}>{title}</h2><button type="button" className="btn ui-icon" aria-label={closeLabel} onClick={close}><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button></header>
+    <header><h2 id={id}>{title}</h2><button type="button" className="btn ui-icon" aria-label={closeLabel} onClick={close}><SourceCloseIcon /></button></header>
     {children}<footer>{footer}</footer>
   </dialog>;
 }
