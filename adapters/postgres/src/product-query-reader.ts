@@ -81,15 +81,23 @@ function oneOrMissing(rows: readonly Record<string, unknown>[]): Record<string, 
 function bounded(rows: readonly unknown[], maximum: number): void {
   requireDomain(rows.length <= maximum, "PRODUCT_READ_TOO_LARGE", "Product target exceeds technical response bound");
 }
-function metadata(row: Record<string, unknown>, productId: string): ProductImageMetadata {
+function metadata(row: Record<string, unknown>, productId: string, classified = false): ProductImageMetadata {
   const mime = stringValue(row.mime);
   requireDomain(["image/png", "image/jpeg", "image/webp"].includes(mime), "INVALID_DATABASE_VALUE", "Invalid persisted image MIME");
   const bytes = stringValue(row.byte_size);
   requireDomain(/^[1-9]\d*$/.test(bytes) && BigInt(bytes) <= 8388608n, "INVALID_DATABASE_VALUE", "Invalid persisted image byte size");
   const target = id("product", row.product_id);
   requireDomain(target === productId, "INVALID_DATABASE_VALUE", "Image belongs to another product");
+  let classification: ProductImageMetadata["classification"];
+  if (classified) {
+    const role = row.image_role;
+    requireDomain(role === null || role === "MAIN" || role === "WHITE_BACKGROUND" || role === "HANG_TAG" || role === "DETAIL" || role === "COLOR", "INVALID_DATABASE_VALUE", "Invalid persisted image role");
+    const colorId = row.color_id === null ? null : id("color", row.color_id);
+    requireDomain((role === "COLOR") === (colorId !== null), "INVALID_DATABASE_VALUE", "Persisted image role/color differs");
+    classification = Object.freeze({ role, colorId });
+  }
   return Object.freeze({ id: id("product", row.id), productId: target, fileRef: text(row.file_ref), mime: mime as ProductImageMime,
-    byteSize: BigInt(bytes), displayOrder: integerValue(row.display_order) });
+    byteSize: BigInt(bytes), displayOrder: integerValue(row.display_order), ...(classification === undefined ? {} : { classification }) });
 }
 const IMAGE_COLUMNS = "i.id, i.product_id, i.file_ref, i.mime, i.byte_size::text, i.display_order";
 /** Actual parameterized PostgreSQL read SQL, using an injected existing pool. Construction does not
@@ -129,7 +137,7 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
   async readBasics(read: ProductScopedRead<ProductQuery>): Promise<ProductBasicsDto | null> {
     const parameters = parseProductQuery(read.parameters); this.validate(read, parameters);
     return this.snapshot(read.signal, async query => {
-      const row = oneOrMissing((await query(`SELECT p.id, p.product_code, p.name, p.year, p.system_item_code, p.retail_price::text,
+      const row = oneOrMissing((await query(`SELECT p.id, p.product_code, p.name, p.year, p.system_item_code, p.retail_price::text${this.retainedDelete ? ", p.thickness, p.collar_pants_type" : ""},
         c.name AS category_name, se.name AS season_name, su.name AS supplier_name
         FROM naijue_erp.product p JOIN naijue_erp.product_category c ON c.id = p.category_id
         ${productSeasonLabelJoin(this.seasonArray)} LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id
@@ -138,7 +146,8 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
       requireDomain(id("product", row.id) === parameters.productId, "INVALID_DATABASE_VALUE", "Mismatched product target");
       return { productId: parameters.productId, code: text(row.product_code), name: text(row.name), categoryLabel: text(row.category_name),
         yearLabel: row.year === null ? null : String(integerValue(row.year)), systemCode: optionalText(row.system_item_code),
-        seasonLabel: optionalText(row.season_name), supplierLabel: optionalText(row.supplier_name), retailPrice: retailPrice(row.retail_price) };
+        seasonLabel: optionalText(row.season_name), supplierLabel: optionalText(row.supplier_name), retailPrice: retailPrice(row.retail_price),
+        ...(this.retainedDelete ? { thickness: optionalText(row.thickness), collarPantsType: optionalText(row.collar_pants_type) } : {}) };
     });
   }
   async readSpecifications(read: ProductScopedRead<ProductQuery>): Promise<ProductSpecificationsDto | null> {
@@ -188,10 +197,10 @@ export class PostgresProductQueryReader implements TrustedProductSnapshotReader 
       const product = oneOrMissing((await query(`SELECT p.id, p.name FROM naijue_erp.product p WHERE p.id = $1::uuid${this.retainedDelete ? " AND p.deleted_at IS NULL" : ""}`, [parameters.productId])).rows);
       if (product === null) return null;
       requireDomain(id("product", product.id) === parameters.productId, "INVALID_DATABASE_VALUE", "Mismatched product target");
-      const rows = (await query(`SELECT ${IMAGE_COLUMNS} FROM naijue_erp.product_image i WHERE i.product_id = $1::uuid
+      const rows = (await query(`SELECT ${IMAGE_COLUMNS}${this.retainedDelete ? ", i.image_role, i.color_id" : ""} FROM naijue_erp.product_image i WHERE i.product_id = $1::uuid
         ORDER BY i.display_order, i.id LIMIT $2`, [parameters.productId, PRODUCT_READ_MAX_IMAGES + 1])).rows;
       bounded(rows, PRODUCT_READ_MAX_IMAGES);
-      const images = rows.map(row => metadata(row, parameters.productId));
+      const images = rows.map(row => metadata(row, parameters.productId, this.retainedDelete));
       requireDomain(new Set(images.map(image => image.id)).size === images.length, "INVALID_DATABASE_VALUE", "Repeated image relation identity");
       return { productId: parameters.productId, productName: text(product.name), images };
     });

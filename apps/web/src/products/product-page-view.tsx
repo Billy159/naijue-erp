@@ -1,5 +1,5 @@
-import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type ComponentType, type ReactNode } from 'react';
-import { StandardTabs } from '../components/standard-tabs.tsx';
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type ComponentType, type ReactNode, type Ref } from 'react';
+import { ProductDetailTabs } from '../components/standard-tabs.tsx';
 import { UIButton } from '../components/standard-controls.tsx';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import { ReadScope } from '../loading/read-scope.ts';
@@ -14,14 +14,14 @@ export interface ProductPageTabProps { readonly scope: ReadScope; readonly reade
 const labels = { base: '基础资料', specs: '规格', barcodes: '条码', prices: '价格', images: '图片', stock: '库存' } as const;
 type AvailableTab = ProductReadOnlyPageTab;
 const leaves = new AsyncLeafRegistry({ base: { load: () => import('./product-page-base.tsx') }, specs: { load: () => import('./product-page-specs.tsx') }, images: { load: () => import('./product-page-images.tsx') }, barcodes: { load: () => import('./product-page-barcodes.tsx') }, prices: { load: () => import('./product-page-prices.tsx') }, stock: { load: () => import('./product-page-stock.tsx') } }, { maxRetainedEntries: 6 });
-export function ProductFullPageView(props: ProductPageTabProps & { readonly configuration: ProductFullPageConfiguration }) {
+export function ProductFullPageView(props: ProductPageTabProps & { readonly configuration: ProductFullPageConfiguration;readonly heading:ReactNode;readonly actions:ReactNode;readonly headerRef:Ref<HTMLDivElement> }) {
   const [tab, setTab] = useState<ProductReadOnlyPageTab>(props.configuration.initialTab);
   const available = (value: ProductReadOnlyPageTab) => props.configuration.allowedTabs.includes(value) && productPageTabAvailable(props.reader, value);
   const bodies=useRef<Partial<Record<ProductReadOnlyPageTab,HTMLElement>>>({}),positions=useRef<Partial<Record<ProductReadOnlyPageTab,{top:number;left:number}>>>({});
   const select=(value:ProductReadOnlyPageTab)=>{if(!props.scope.active||!available(value))return;const scroll=bodies.current[tab]?.closest<HTMLElement>('.demo-page');if(scroll)positions.current[tab]={top:scroll.scrollTop,left:scroll.scrollLeft};setTab(value);};
   useLayoutEffect(()=>{const scroll=bodies.current[tab]?.closest<HTMLElement>('.demo-page');if(scroll){const position=positions.current[tab];scroll.scrollTop=position?.top??0;scroll.scrollLeft=position?.left??0;}},[tab]);
-  return <><StandardTabs className="product-readonly-tabs" label="商品只读整页页签" value={tab} items={productReadOnlyPageTabs.map(key => ({ key, label: `${labels[key]}${available(key) ? '' : '（未接入）'}`, disabled: !available(key) }))} onChange={select}
-    panels={Object.fromEntries(productReadOnlyPageTabs.map(key=>[key,({active}:{readonly active:boolean})=><ProductPanelActivity value={active}><section className="product-page-tab-body" ref={element=>{if(element)bodies.current[key]=element;else delete bodies.current[key];}}>{available(key)&&<ProductPageTab {...props} tab={key}/>}</section></ProductPanelActivity>]))}/>
+  return <><ProductDetailTabs heading={props.heading} actions={props.actions} headerRef={props.headerRef} className="product-readonly-tabs" label="商品只读整页页签" value={tab} items={productReadOnlyPageTabs.map(key => ({ key, label: `${labels[key]}${available(key) ? '' : '（未接入）'}`, disabled: !available(key) }))} onChange={select}
+    panels={Object.fromEntries(productReadOnlyPageTabs.map(key=>[key,({active}:{readonly active:boolean})=><ProductPanelActivity value={active}><div style={{display:'contents'}} ref={element=>{if(element)bodies.current[key]=element;else delete bodies.current[key];}}>{available(key)&&<ProductPageTab {...props} tab={key}/>}</div></ProductPanelActivity>]))}/>
     {productReadOnlyPageTabs.some(key => !available(key)) && <p className="product-page-availability" role="status">部分商品资料暂不可查看。</p>}</>;
 }
 

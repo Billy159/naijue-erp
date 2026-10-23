@@ -41,6 +41,7 @@ function DetailFacts(props: { readonly presentation?: TransferProposalPresentati
   const [product, setProduct] = useState<{ id: string; label: string; activation: number } | null>(null); const activation = useRef(0); const productTrigger = useRef<HTMLElement | null>(null);
   const heading = useRef<HTMLHeadingElement>(null); useEffect(() => heading.current?.focus(), []);
   const display = transferMatrixDisplay(sections);
+  const columnCount = Math.max(0, ...sections.map(section => section.group.members.length));
   const closeProduct = () => { setProduct(null); if (productTrigger.current?.isConnected) productTrigger.current.focus({ preventScroll: true }); productTrigger.current = null; };
   const openProduct = (id: string, label: string) => { productTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; setProduct({ id, label, activation: ++activation.current }); };
   const actions = header.status === 'DRAFT' ? ['作废', '保存', '审核'] : header.status === 'APPROVED' ? ['弃审'] : [];
@@ -54,9 +55,9 @@ function DetailFacts(props: { readonly presentation?: TransferProposalPresentati
     <div className="tc-note-row"><span>备注</span><span className="tc-note-read">{header.note || '—'}</span></div>
     {(header.status === 'VOID' || header.status === 'APPROVED') && <p className="transfer-readonly-note">{header.status === 'VOID' ? '此单已作废，仅可查看历史。' : '已审核，单据只读。'}</p>}
     {display.mode === 'paged-lines' ? <TransferSparseLines data={data} {...(props.product || openFullProduct ? { onOpenProduct: viewProduct } : {})} /> : <div className="transfer-matrix-scroll" role="region" aria-label="调拨数量矩阵" tabIndex={0}>
-      {sections.map(section => <TransferMatrixTable key={section.group.sizeGroupId} sizes={section.group.members.map(size => ({ id: size.sizeId, label: size.name }))} label={`${section.group.name} · 当前规范规格 · 本单数量`}>
+      {sections.map(section => <TransferMatrixTable key={section.group.sizeGroupId} sizes={section.group.members.map(size => ({ id: size.sizeId, label: size.name }))} columnCount={columnCount} label={`${section.group.name} · 当前规范规格 · 本单数量`}>
         {sizes => section.rows.map(row => <tr key={row.key}><td className="mx-product"><span className="mx-product-line"><strong title={row.current.productCode}>{row.current.productCode}</strong><span title={row.current.productName}>{row.current.productName}</span></span></td><td className="mx-color" title={row.current.colorName}>{row.current.colorName}</td><td className="mx-fit-col" title={row.current.fitName}>{row.current.fitName}</td>
-          {sizes.map(size => { const sku = row.skus.get(size.id), value = sku ? row.quantities.get(sku.skuId) : undefined, label = `${row.current.productCode} ${row.current.colorName} ${row.current.fitName} ${size.label}`;
+          {sizes.map(size => { if (size.empty) return <td key={size.id} className="mx-size-gap" aria-hidden="true" />; const sku = row.skus.get(size.id), value = sku ? row.quantities.get(sku.skuId) : undefined, label = `${row.current.productCode} ${row.current.colorName} ${row.current.fitName} ${size.label}`;
             return <td className={sku ? 'transfer-quantity' : 'mx-size-blank'} key={size.id} aria-label={`${label} ${!sku ? '无此规格' : value === undefined ? '无单据明细' : `本单数量 ${value}`}`}>{!sku ? '—' : value === undefined ? '' : transferCount(value.toString())}</td>; })}<td className="tc-subtotal">{transferCount(row.total.toString())}</td><td className="ui-action-cell"><div className="mx-actions"><UIButton className="iw-link" disabled={!props.product && !openFullProduct} onClick={() => viewProduct(row.current.productId, `${row.current.productCode} · ${row.current.productName}`)}>查看</UIButton></div></td></tr>)}
       </TransferMatrixTable>)}
       {sections.length === 0 && <p className="tc-empty">本单没有实际明细行</p>}

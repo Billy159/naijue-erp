@@ -1,11 +1,11 @@
-import { useEffect, useLayoutEffect, useRef, useState, type ComponentType } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type ComponentType, type ReactNode, type Ref } from 'react';
 import { UIButton } from '../components/standard-controls.tsx';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import { ReadScope } from '../loading/read-scope.ts';
 import type { Selection } from '../inventory/contracts.ts';
 import type { ProductFullPageConfiguration, ProductFullPageReadOnlyReader } from './product-page-contracts.ts';
 const leaves = new AsyncLeafRegistry({ page: { load: () => import('./product-page-view.tsx') } }, { maxRetainedEntries: 1 });
-interface ViewProps { readonly scope: ReadScope; readonly configuration: ProductFullPageConfiguration; readonly reader: ProductFullPageReadOnlyReader; readonly openInventory?: () => Promise<boolean> }
+interface ViewProps { readonly heading:ReactNode;readonly actions:ReactNode;readonly headerRef:Ref<HTMLDivElement>; readonly scope: ReadScope; readonly configuration: ProductFullPageConfiguration; readonly reader: ProductFullPageReadOnlyReader; readonly openInventory?: () => Promise<boolean> }
 export interface ProductFullPageHostProps {
   readonly parent: ReadScope; readonly target: Selection;
   readonly configuration: ProductFullPageConfiguration; readonly reader: ProductFullPageReadOnlyReader;
@@ -28,9 +28,10 @@ export function ProductFullPageHost(props: ProductFullPageHostProps) {
     return () => { attached = false; props.parent.signal.removeEventListener('abort', dispose); scope.dispose(); };
   }, [props.parent, props.target.id, props.configuration, attempt]);
   const current = attachment?.parent === props.parent && attachment.scope.entityId === props.target.id && attachment.scope.active ? attachment : null;
+  useLayoutEffect(()=>{if(!current?.View||!props.parent.active)return;const active=document.activeElement;if(!active||active===document.body||!active.isConnected)heading.current?.focus({preventScroll:true});},[current?.View]);
   if (!props.parent.active) return null;
-  return <section ref={host} className="product-full-page product-readonly-page" aria-label="商品只读整页"><div ref={header} className="product-page-header">
-    <div className="product-page-title"><h1 ref={heading} tabIndex={-1}>{props.target.label}</h1><UIButton onClick={props.close}>{props.returnLabel??'返回商品信息'}</UIButton></div></div>
-    {current?.View ? <current.View scope={current.scope} configuration={props.configuration} reader={props.reader} {...(props.openInventory?{openInventory:props.openInventory}: {})} /> : current?.error ? <p role="alert">商品整页组件或样式未准备完成，尚未读取商品资料。<UIButton onClick={() => setAttempt(value => value + 1)}>重试商品整页</UIButton></p> : <p role="status">正在准备商品只读整页…</p>}
+  const title=<h1 ref={heading} tabIndex={-1}>{props.target.label}</h1>,actions=<button type="button" className="btn" onClick={props.close}>{props.returnLabel??'返回商品信息'}</button>;
+  return <section ref={host} className="pc-detail-workbench product-full-page product-readonly-page product-source-ui" aria-label="商品只读整页">
+    {current?.View ? <current.View heading={title} actions={actions} headerRef={header} scope={current.scope} configuration={props.configuration} reader={props.reader} {...(props.openInventory?{openInventory:props.openInventory}: {})} /> : current?.error ? <><div ref={header} className="product-page-header"><div className="gold-head iw-head pc-page-head">{title}<div className="actions iw-head-actions">{actions}</div></div></div><p role="alert">商品整页组件或样式未准备完成，尚未读取商品资料。<UIButton onClick={() => setAttempt(value => value + 1)}>重试商品整页</UIButton></p></> : <><div ref={header} className="product-page-header"><div className="gold-head iw-head pc-page-head">{title}<div className="actions iw-head-actions">{actions}</div></div></div><p role="status">正在准备商品只读整页…</p></>}
   </section>;
 }

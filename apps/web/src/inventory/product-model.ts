@@ -22,6 +22,7 @@ export function assertProductBasics(value: ProductBasics | null, parameters: Rea
   if (value === null) return;
   target(value.productId, parameters); text(value.code); text(value.name);
   if (value.retailPrice !== null && (typeof value.retailPrice !== 'string' || !/^(?:0|[1-9]\d{0,15})\.\d{2}$/.test(value.retailPrice))) throw new TypeError('商品零售价必须是精确的非负金额文本。');
+  for (const label of [value.thickness,value.collarPantsType]) if(label!==undefined&&label!==null&&typeof label!=='string') throw new TypeError('商品基础资料显示值无效。');
   for (const label of [value.categoryLabel, value.yearLabel, value.seasonLabel, value.supplierLabel, value.systemCode]) if (label !== null) text(label);
 }
 export function assertProductSpecifications(value: ProductSpecifications | null, parameters: Readonly<ProductParameters>): void {
@@ -51,6 +52,8 @@ export function assertProductImages(value: ProductImages | null, parameters: Rea
   const ids = new Set<string>();
   for (const image of value.images) {
     text(image.id); text(image.label); assertProductImageUrl(image.thumbnailUrl);
+    if(image.role!==undefined&&image.role!==null&&!['MAIN','WHITE_BACKGROUND','HANG_TAG','DETAIL','COLOR'].includes(image.role)) throw new TypeError('商品图片分类无效。');
+    if(image.colorId!==undefined&&image.colorId!==null)text(image.colorId);
     if (ids.has(image.id)) throw new TypeError('商品图片身份重复。');
     ids.add(image.id);
   }

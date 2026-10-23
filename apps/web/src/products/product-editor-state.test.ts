@@ -79,3 +79,44 @@ test('new maintenance read uses only the exact detail/candidate POST routes and 
  await reader.readDetail(input);assert.deepEqual(calls[0],{path:'https://erp.example/api/products/maintenance/detail/query',body:{productId:id(2)}});
  const data=await reader.readCandidates({...input,parameters:{kind:'colors',search:'蓝',page:1,pageSize:50}});assert.equal(data.items[0]!.name,'蓝');assert.equal(calls[1]!.path,'https://erp.example/api/products/maintenance/candidates/query');ctx.clear();
 });
+
+test('media stages raw File bytes under one reserved root key; uncertain V2 replay retains the exact media body',async()=>{
+ const {createProductMaintenanceHttpClientV2,createProductMediaUploadHttpClient}=await import('./product-maintenance-http-client.ts');
+ const ctx=context(),scope=ctx.createScope('product-media',id(2)),calls:{path:string;init:RequestInit}[]=[];let allocated=0,posts=0;
+ const file=new File([new Uint8Array([137,80,78,71])],'transport-only.png',{type:'image/png'});
+ const options={origin:'https://erp.example',basePath:'/api',fetch:async(path:string,init:RequestInit)=>{calls.push({path,init});
+  if(path.endsWith('/products/media/uploads'))return json({uploadId:id(14),mime:'image/png',byteSize:String(file.size),expiresAt:'2026-10-24T06:00:00Z'});
+  if(init.method==='GET')return json({error:{code:'RECEIPT_NOT_FOUND',message:'absent'}},404);
+  posts++;if(posts===1)throw Error('explicit synthetic lost reply');return json(result);
+ }};
+ const client=createProductMaintenanceHttpClientV2(options),editor=new ProductEditorController({scope,client,newRequestKey:()=>`product-media-${++allocated}`,onRecoveryRequired:()=>assert.fail('still mounted'),onAccessFailure:()=>assert.fail('synthetic authenticated request')});
+ const key=editor.reserveRequestKey();assert.equal(editor.reserveRequestKey(),key);assert.equal(allocated,1);
+ const staged=await createProductMediaUploadHttpClient(options)({file,productId:id(2),commandKey:key,uploadKey:'file-one',signal:scope.signal});
+ assert.equal(calls[0]!.path,'https://erp.example/api/products/media/uploads');assert.equal(calls[0]!.init.body,file);assert.equal(calls[0]!.init.credentials,'same-origin');assert.deepEqual(calls[0]!.init.headers,{Accept:'application/json','Content-Type':'image/png','x-command-key':key,'x-upload-key':'file-one','x-product-id':id(2)});
+ const detail=maintenanceDetail(),{seasonId:_,...values}=detail.values;
+ await editor.submit({action:'EDIT',id:id(2),expectedVersion:1,values:{...values,seasonIds:null},skus:detail.skus,barcodes:detail.barcodes,imageChanges:[{action:'ADD',uploadId:staged.uploadId,role:'MAIN',colorId:null,displayOrder:0}]});
+ assert.equal(editor.getSnapshot().phase,'uncertain');assert.throws(()=>editor.reserveRequestKey());const original=editor.getSnapshot().command!;
+ assert.equal(original.requestKey,key);assert.equal(calls[1]!.path,'https://erp.example/api/products/v2/commands');assert.equal('file' in JSON.parse(calls[1]!.init.body as string),false);
+ await editor.recover();assert.equal(editor.getSnapshot().recovery,'absent');assert.equal(calls[2]!.path,`https://erp.example/api/products/receipts/${key}`);
+ await editor.retryOriginal();assert.equal(editor.getSnapshot().phase,'committed');assert.equal(editor.getSnapshot().command,original);assert.equal(calls[3]!.init.body,calls[1]!.init.body);assert.equal(allocated,1);editor.resetAfterReload(id(2),2);assert.equal(editor.reserveRequestKey(),'product-media-2');assert.equal(allocated,2);ctx.clear();
+});
+
+test('upload CREATE omits product header and preserves actual missing/deleted server errors',async()=>{
+ const {createProductMediaUploadHttpClient}=await import('./product-maintenance-http-client.ts');const calls:RequestInit[]=[];let status=200;
+ const file=new File(['transport fixture only'],'transport-only.webp',{type:'image/webp'}),signal=new AbortController().signal;
+ const upload=createProductMediaUploadHttpClient({origin:'https://erp.example',basePath:'/api',fetch:async(_path,init)=>{calls.push(init);return status===200?json({uploadId:id(15),mime:'image/webp',byteSize:String(file.size),expiresAt:'2026-10-24T06:00:00Z'}):json({error:{code:status===404?'PRODUCT_NOT_FOUND':'PRODUCT_DELETED',message:'explicit synthetic rejection'}},status);}});
+ const input={file,productId:null,commandKey:'create-media-key',uploadKey:'create-file-key',signal};await upload(input);assert.equal(Object.hasOwn(calls[0]!.headers!,'x-product-id'),false);assert.equal(calls[0]!.body,file);
+ status=404;await assert.rejects(()=>upload({...input,productId:id(2)}),e=>e instanceof ProductMaintenanceError&&e.kind==='not-found'&&e.code==='PRODUCT_NOT_FOUND');
+ status=409;await assert.rejects(()=>upload({...input,productId:id(2)}),e=>e instanceof ProductMaintenanceError&&e.kind==='conflict'&&e.code==='PRODUCT_DELETED');
+});
+
+
+test('ordinary readonly product projection carries optional native fields without maintenance authority',async()=>{
+ const {createProductHttpReader}=await import('../transport/product-http-reader.ts');const ctx=context(),scope=ctx.createScope('product-ordinary-read',id(2));let legacy=false;const paths:string[]=[];
+ const base={productId:id(2),code:'000-P02',name:'来源商品',categoryLabel:null,yearLabel:null,seasonLabel:null,supplierLabel:null,systemCode:null,retailPrice:'0.00'};
+ const sourceImage={id:id(16),label:'来源配图',thumbnailUrl:'https://erp.example/api/products/media/controlled-thumb'};
+ const reader=createProductHttpReader({origin:'https://erp.example',basePath:'/api',fetch:async path=>{paths.push(path);return json(path.endsWith('/basics/query')?{...base,...(!legacy?{thickness:'薄',collarPantsType:'圆领'}:{})}:{productId:id(2),images:[{...sourceImage,...(!legacy?{role:'COLOR',colorId:id(10)}:{})}]});}});
+ const read={parameters:{productId:id(2)},signal:scope.signal,identity:scope.identity,routeInstanceId:scope.routeInstanceId,entityId:scope.entityId};
+ const details=await reader.readProductBasics(read),images=await reader.readProductImages(read);assert.equal(details!.thickness,'薄');assert.equal(details!.collarPantsType,'圆领');assert.equal(details!.retailPrice,'0.00');assert.equal(images!.images[0]!.role,'COLOR');assert.equal(images!.images[0]!.colorId,id(10));
+ legacy=true;const oldBase=await reader.readProductBasics(read),oldImages=await reader.readProductImages(read);assert.equal(Object.hasOwn(oldBase!,'thickness'),false);assert.equal(Object.hasOwn(oldBase!,'collarPantsType'),false);assert.equal(Object.hasOwn(oldImages!.images[0]!,'role'),false);assert.equal(Object.hasOwn(oldImages!.images[0]!,'colorId'),false);assert.ok(paths.every(path=>!path.includes('/maintenance/')));ctx.clear();
+});

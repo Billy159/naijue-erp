@@ -38,3 +38,30 @@
 .transfer-proposal-editor .mx-section .mx-spec-edit:hover:not(:disabled){color:var(--ca-primary-ink)}
 .transfer-reference-field{width:100%;min-width:0}
 .transfer-reference-state,.transfer-reference-pages{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px;font-size:12px}
+
+/* Frozen golden-consistency.css149–160/177: product text and conditional dock. */
+.transfer-proposal-editor .mx-draft-dock{position:static;z-index:auto;margin:0;background:#fff;border-top:0;box-shadow:none}
+.transfer-proposal-editor .mx-draft-dock.mx-draft-pinned{position:sticky;bottom:0;z-index:9;border-top:1px solid var(--ca-line);box-shadow:0 -3px 8px rgba(32,51,73,.08)}
+.transfer-proposal-editor .mx-draft-dock .mx-table{margin:0}
+.transfer-proposal-editor .mx-replace-warning{display:block;margin-top:4px;color:var(--ca-danger,#b42318);font-size:11px;line-height:1.35;white-space:normal}
+/* Frozen matrix-experiments.css .mx-dialog and transfer-matrix-experiment dialog(). */
+.erp-source-dialog.transfer-source-matrix{width:min(960px,calc(100vw - 32px));border:1px solid var(--ca-line);border-radius:6px;padding:16px;color:var(--ca-ink);background:var(--ca-surface);font:inherit}
+.erp-source-dialog.transfer-source-matrix header,.erp-source-dialog.transfer-source-matrix footer{display:flex;gap:12px;align-items:center;justify-content:flex-end}
+.erp-source-dialog.transfer-source-matrix header{position:sticky;top:0;background:var(--ca-surface);z-index:3}
+.erp-source-dialog.transfer-source-matrix header h2{font-size:16px;margin:0 auto 0 0;font-weight:600}
+.erp-source-dialog.transfer-source-matrix footer{position:sticky;bottom:0;background:var(--ca-surface);z-index:3;margin-top:14px}
+/* Frozen confirmation-dialogs.css compact tc-confirm tc-danger leave layer. */
+.erp-source-dialog.transfer-source-discard{width:min(440px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;overflow:hidden;border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);background:var(--ca-surface);color:var(--ca-ink);font-family:var(--ca-font-sans);font-size:14px}
+.erp-source-dialog.transfer-source-discard>header{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:0;padding:20px 24px 0;border:0;background:var(--ca-surface);position:static}
+.erp-source-dialog.transfer-source-discard>header h2{margin:0;color:var(--ca-ink);font-size:17px;font-weight:600;line-height:26px}
+.erp-source-dialog.transfer-source-discard>header .ui-icon{flex:0 0 auto;width:28px;height:28px;min-width:28px!important;min-height:28px!important;padding:4px!important;border:0;background:transparent;color:var(--ca-ink-3);font-size:0}
+.erp-source-dialog.transfer-source-discard>header .ui-icon:hover{background:var(--ca-surface-muted)!important;color:var(--ca-ink)}
+.erp-source-dialog.transfer-source-discard>.ui-confirm-body{padding:10px 24px 18px;max-height:calc(100dvh - 148px);overflow:auto;color:var(--ca-ink-2);line-height:1.65}
+.erp-source-dialog.transfer-source-discard>.ui-confirm-body p{margin:0 0 8px;overflow-wrap:anywhere}
+.erp-source-dialog.transfer-source-discard>.ui-confirm-body p:last-child{margin-bottom:0}
+.erp-source-dialog.transfer-source-discard>footer{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:0;padding:0 24px 20px;border:0;background:var(--ca-surface)}
+.erp-source-dialog.transfer-source-discard>footer .btn{min-height:32px;height:32px;padding:0 14px;font-size:14px;white-space:nowrap}
+.erp-source-dialog.transfer-source-discard>footer .primary{background:var(--ca-critical);border-color:var(--ca-critical);color:var(--ca-on-primary)}
+.erp-source-dialog.transfer-source-discard>footer .primary:hover{filter:brightness(.94)}
+.erp-source-dialog.transfer-source-discard :focus-visible{outline:2px solid var(--ca-primary);outline-offset:2px}
+@media(max-width:480px){.erp-source-dialog.transfer-source-discard>header{padding:16px 16px 0}.erp-source-dialog.transfer-source-discard>.ui-confirm-body{padding:8px 16px 16px}.erp-source-dialog.transfer-source-discard>footer{padding:0 16px 16px}}

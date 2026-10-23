@@ -23,6 +23,8 @@ export interface ProductBasicsDto {
   readonly supplierLabel: string | null; readonly systemCode: string | null;
   /** Nullable native product retail_price; exact nonnegative decimal(18,2) text, not minor units. */
   readonly retailPrice: string | null;
+  /** Present on the existing verified retained-catalogue read; null preserves unknown history. */
+  readonly thickness?: string | null; readonly collarPantsType?: string | null;
 }
 export interface ProductSpecificationsDto {
   readonly productId: string; readonly sizeGroup: ProductSelection | null;
@@ -34,12 +36,14 @@ export type ProductImageMime = "image/png" | "image/jpeg" | "image/webp";
 export interface ProductImageMetadata {
   readonly id: string; readonly productId: string; readonly fileRef: string; readonly mime: ProductImageMime;
   readonly byteSize: bigint; readonly displayOrder: number;
+  readonly classification?: { readonly role: "MAIN" | "WHITE_BACKGROUND" | "HANG_TAG" | "DETAIL" | "COLOR" | null; readonly colorId: string | null };
 }
 export interface ProductImageMetadataSet {
   readonly productId: string; readonly productName: string; readonly images: readonly ProductImageMetadata[];
 }
 export interface ProductImagesDto {
-  readonly productId: string; readonly images: readonly { readonly id: string; readonly label: string; readonly thumbnailUrl: string }[];
+  readonly productId: string; readonly images: readonly { readonly id: string; readonly label: string; readonly thumbnailUrl: string;
+    readonly role?: NonNullable<ProductImageMetadata["classification"]>["role"]; readonly colorId?: string | null }[];
 }
 export interface ProductImageDto { readonly productId: string; readonly imageId: string; readonly url: string }
 /** Each method reads one target using a bounded, read-only consistent snapshot. */

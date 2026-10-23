@@ -162,3 +162,29 @@ test("season v2 capability: static flags, getters, async/thenable proofs and wro
     { profile: "product-season-array-v1", assertVerified() { throw Error("Different target"); } }];
   for (const proof of invalid) assert.throws(() => new PostgresProductQueryReader(pool, null, proof as never)); assert.equal(invoked, false);
 });
+
+test("approved product read projection: verified existing basics query returns actual thickness/collar and preserves nulls", async () => {
+  for (const [thickness, collarPantsType] of [["厚款", "翻领"], [null, null]] as const) {
+    const client = new Client([begin(), { sql: /^SELECT p.id/, rows: [{ ...basic(), thickness, collar_pants_type: collarPantsType }], inspect(values, sql) {
+      target(values, sql); assert.match(sql, /p.thickness, p.collar_pants_type/); assert.match(sql, /AND p.deleted_at IS NULL/);
+    } }, commit()]);
+    const pool = { async connect() { return client; } }, current = new PostgresProductQueryReader(pool,
+      { profile: "catalogue-retained-delete-v22", assertVerified(value) { assert.equal(value, pool); } });
+    const result = await current.readBasics(read(parameters));
+    assert.equal(result!.thickness, thickness); assert.equal(result!.collarPantsType, collarPantsType);
+    assert.equal(client.calls.length, 3); client.done();
+  }
+});
+test("approved product read projection: image classification comes from native role/color in the same bounded list query", async () => {
+  const client = new Client([begin(), { sql: /^SELECT p.id/, rows: [{ id: productId, name: "SYNTHETIC PRODUCT" }] },
+    { sql: /^SELECT i.id/, rows: [{ ...image(), image_role: "COLOR", color_id: colorId },
+      { ...image(), id: sid("product", 709), image_role: null, color_id: null }], inspect(values, sql) {
+      assert.deepEqual(values, [productId, PRODUCT_READ_MAX_IMAGES + 1]); assert.match(sql, /i.image_role, i.color_id/);
+      assert.doesNotMatch(sql, /bytea|pg_read|lo_get/i);
+    } }, commit()]);
+  const pool = { async connect() { return client; } }, current = new PostgresProductQueryReader(pool,
+    { profile: "catalogue-retained-delete-v22", assertVerified(value) { assert.equal(value, pool); } });
+  const result = await current.readImages(read(parameters));
+  assert.deepEqual(result!.images.map(i => i.classification), [{ role: "COLOR", colorId }, { role: null, colorId: null }]);
+  assert.equal(client.calls.length, 4); client.done();
+});

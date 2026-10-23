@@ -1,4 +1,4 @@
-import { StandardReadTable } from '../components/standard-read-table.tsx';
+import type { ReactNode } from 'react';
 import { UIButton } from '../components/standard-controls.tsx';
 import type { ProductBarcodeDetails, ProductBarcodePage } from '../../../../packages/application/src/product-details-query-ports.ts';
 import type { ProductSpecifications } from '../inventory/product-contracts.ts';
@@ -9,8 +9,7 @@ import { ProductPagedRead, type ProductPageTabProps } from './product-page-view.
 
 export function View({ scope, reader }: ProductPageTabProps) {
   return <ProductPagedRead<ProductBarcodePage> scope={scope} read={reader.barcodes!.read} validate={productBarcodesResponse} label="商品条码分页">{data => <>
-    <div className="product-barcode-tools"><span>主条码默认方案</span><span>未提供</span></div>
-    <h3 className="product-barcode-heading">当前规格条码</h3>
+    <div className="pc-barcode-tools product-barcode-tools"><div className="field"><span className="pc-field-caption">主条码默认方案</span><div className="pc-arco-host"><span className="pc-read-value">未提供</span></div></div><button type="button" className="btn ghost" disabled>查看方案</button></div>
     {data.items.length && reader.specs ? <LabeledPage key={`${data.productId}:${data.version}:${data.page}:${data.pageSize}`} scope={scope} reader={reader} data={data} />
       : <BarcodeGroups data={data} specifications={null} />}
   </>}</ProductPagedRead>;
@@ -64,12 +63,13 @@ function BarcodeGroups({ data, specifications }: { readonly data: ProductBarcode
   };
   return <>
     <p className="product-field-hint product-barcode-page-note">当前第{data.page}页，本页{data.items.length}条／共{data.total}条条码记录；按本页规格坐标展示，其他页可能包含同一规格的条码。</p>
-    <div className="product-readonly-barcode-table" tabIndex={0} aria-label="当前页规格条码，可横向滚动"><StandardReadTable<BarcodeGroup> label="当前页商品规格条码" rows={rows}
-      onRow={group => ({ 'data-sku-id': group.skuId, 'data-color-id': group.colorId, 'data-fit-id': group.fitId, 'data-size-id': group.sizeId })} columns={[
-        { title: '颜色', render: (_, group) => label(group, 'colors') }, { title: '版型', render: (_, group) => label(group, 'fits') },
-        { title: '尺码', render: (_, group) => label(group, 'sizes') },
-        { title: '主条码（当前页）', render: (_, group) => <Codes records={group.records.filter(record => record.kind === 'MAIN')} /> },
-        { title: '已确认旧码（当前页）', render: (_, group) => <Codes records={group.records.filter(record => record.kind === 'CONFIRMED_OLD')} /> },
-      ]} />{!rows.length && <p className="product-field-hint">{data.total === 0 ? '当前商品没有已绑定的规格条码。' : '此页没有条码记录，请重新进入查看。'}</p>}</div>
+    <ProductBarcodeSourceBody className="product-readonly-barcode-table" rows={rows.map(group=>({key:group.id,skuId:group.skuId,color:label(group,'colors'),fit:label(group,'fits'),size:label(group,'sizes'),current:<Codes records={group.records.filter(record=>record.kind==='MAIN')}/>,extras:<Codes records={group.records.filter(record=>record.kind==='CONFIRMED_OLD')}/>,actions:<button type="button" className="btn ghost" disabled>查看</button>}))}/>
   </>;
+}
+
+export interface ProductBarcodeSourceRow {readonly key:string;readonly skuId?:string;readonly color:ReactNode;readonly fit:ReactNode;readonly size:ReactNode;readonly current:ReactNode;readonly extras:ReactNode;readonly actions:ReactNode}
+/** Frozen barcodeBody table UI; rows are supplied solely from native SKU/barcode
+ * facts. The original Demo cartesian derivation/storage never enters this layer. */
+export function ProductBarcodeSourceBody(p:{readonly rows:readonly ProductBarcodeSourceRow[];readonly className:string}){
+ return <div className="product-source-ui"><div className="pc-section-line"><h3>当前规格条码</h3></div><div className={`pc-detail-table pc-barcode-table ${p.className}`} tabIndex={0} aria-label="商品规格条码，可横向滚动"><table><thead><tr>{['颜色','版型','尺码','当前主条码','历史 / 兼容条码','操作'].map(label=><th key={label}>{label}</th>)}</tr></thead><tbody>{p.rows.map(row=><tr key={row.key} data-barcode-sku={row.key} data-sku-id={row.skuId}><td>{row.color}</td><td>{row.fit}</td><td>{row.size}</td><td className="pc-barcode-code">{row.current}</td><td className="pc-barcode-code">{row.extras}</td><td>{row.actions}</td></tr>)}</tbody></table>{!p.rows.length&&<div className="empty">当前没有可展示的 SKU 条码</div>}</div></div>;
 }

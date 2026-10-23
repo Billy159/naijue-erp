@@ -1,4 +1,4 @@
-import { parseProductMaintenanceCommand, parseProductMaintenanceCommandV2 } from '../../../../packages/application/src/product-maintenance-validation.ts';
+import { parseProductMaintenanceCommand, parseProductMaintenanceCommandV2, parseProductMaintenanceMediaCommandV2 } from '../../../../packages/application/src/product-maintenance-validation.ts';
 import { snapshotQueryParameters } from '../loading/query-parameters.ts';
 import { ProductMaintenanceError, type ProductEditorDraft, type ProductEditorOptions, type ProductEditorWriteState, type ProductMaintenanceCommand, type ProductMaintenanceResult, type ProductWriteValues, type ProductSkuInput, type ProductBarcodeInput } from './product-editor-contracts.ts';
 
@@ -9,6 +9,7 @@ export class ProductEditorController {
   readonly #listeners = new Set<() => void>();
   #state = initial();
   #sequence = 0;
+  #preparedKey:string|null=null;
   readonly #abort = () => this.dispose();
   constructor(options: ProductEditorOptions) {
     if (typeof options.newRequestKey !== 'function' || typeof options.onRecoveryRequired !== 'function' || typeof options.onAccessFailure !== 'function') throw new TypeError('Explicit product editor session owners are required.');
@@ -22,10 +23,15 @@ export class ProductEditorController {
     for (const listener of [...this.#listeners]) { try { listener(); } catch { /* A view notification cannot change a command outcome or prevent identity cleanup. */ } }
   }
   #active(sequence: number) { return this.#options.scope.active && this.#state.phase !== 'disposed' && sequence === this.#sequence; }
+  /** Stage and the eventual media command share one unsubmitted draft key. */
+  reserveRequestKey():string{
+    if(!this.#options.scope.active||!['idle','rejected'].includes(this.#state.phase))throw new Error('当前商品操作尚未完成。');
+    return this.#preparedKey??=this.#options.newRequestKey();
+  }
   async submit(draft: ProductEditorDraft): Promise<void> {
     if (!this.#options.scope.active || !['idle', 'rejected'].includes(this.#state.phase)) throw new Error('当前商品操作尚未完成，请先查回原请求结果。');
-    const parse = this.#options.client.contractVersion === 2 ? parseProductMaintenanceCommandV2 : parseProductMaintenanceCommand;
-    const command = snapshotQueryParameters(parse({ ...draft, requestKey: this.#options.newRequestKey() }));
+    const parse = this.#options.client.contractVersion === 2 ? (Object.hasOwn(draft,'imageChanges')?parseProductMaintenanceMediaCommandV2:parseProductMaintenanceCommandV2) : parseProductMaintenanceCommand;
+    const command = snapshotQueryParameters(parse({ ...draft, requestKey: Object.hasOwn(draft,'imageChanges')?(this.#preparedKey??this.#options.newRequestKey()):this.#options.newRequestKey() }));
     await this.#execute(command);
   }
   async retryOriginal(): Promise<void> {
@@ -68,6 +74,7 @@ export class ProductEditorController {
   /** Caller must reload the authoritative aggregate before editing a committed version. */
   resetAfterReload(productId: string, version: number) {
     if (this.#state.phase !== 'committed' || !this.#state.result || productId !== this.#state.result.targetId || !Number.isSafeInteger(version) || version > 2147483647 || version < this.#state.result.version) throw new Error('请先读取已保存的商品版本。');
+    this.#preparedKey=null;
     this.#publish(initial());
   }
   dispose() {

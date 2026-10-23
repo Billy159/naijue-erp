@@ -107,3 +107,15 @@ test("SYNTHETIC product service: wrong-target trusted metadata and aborted media
   const aborted = createProductQueryService({ ...f.dependencies, media: { ...f.media, async resolveThumbnails() { controller.abort(); return [{ imageId, variant: "thumbnail", url: "https://synthetic.example/opaque" }]; } } });
   await assert.rejects(() => aborted.readImages(actor, parameters, controller.signal), { code: "PRODUCT_READ_ABORTED" });
 });
+
+test("approved product read projection: existing ordinary image response carries native classification without private facts or default roles", async () => {
+  const f = fixture();
+  for (const classification of [{ role: "COLOR" as const, colorId: sid("color", 604) }, { role: null, colorId: null }]) {
+    const service = createProductQueryService({ ...f.dependencies,
+      reader: { ...f.reader, async readImages() { return { productId, productName: "SYNTHETIC PRODUCT", images: [{ ...image, classification: { ...classification, privateRef: image.fileRef } }] }; } } });
+    const result = await service.readImages(actor, parameters, signal());
+    assert.deepEqual(result, { productId, images: [{ id: imageId, label: "SYNTHETIC PRODUCT", thumbnailUrl: "https://synthetic.example/opaque-thumbnail", ...classification }] });
+    assert.ok(!JSON.stringify(result).includes(image.fileRef)); assert.ok(!Object.hasOwn(result!.images[0]!, "classification"));
+  }
+  assert.equal(f.counts().originals, 0);
+});

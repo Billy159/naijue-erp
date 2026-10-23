@@ -60,7 +60,8 @@ export function createProductQueryService(dependencies: ProductQueryDependencies
         return { productId: result.productId, images: result.images.map(image => {
           const resolved = byId.get(image.id); if (!resolved) throw new Error("Missing trusted thumbnail link");
           // Accessible label comes from the stored product name, not an invented image filename.
-          return { id: image.id, label: result.productName, thumbnailUrl: link(resolved, image, "thumbnail", origin) };
+          return { id: image.id, label: result.productName, thumbnailUrl: link(resolved, image, "thumbnail", origin),
+            ...(image.classification === undefined ? {} : { role: image.classification.role, colorId: image.classification.colorId }) };
         }) };
       });
     },

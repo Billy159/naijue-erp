@@ -50,18 +50,17 @@ export function useTransferSizeGroups(parent: ReadScope | undefined, capability:
   const current = state && state.parent === parent && state.capability === capability && parent?.active ? state : null;
   return { phase: current?.phase ?? 'unavailable', groups: current?.groups ?? [], retry: () => { cache.current = null; setAttempt(value => value + 1); } };
 }
-export interface TransferDisplaySize { readonly id: string; readonly label: string }
-export function TransferMatrixTable({ sizes, children, showHeader = true, className = '', label }: {
+export interface TransferDisplaySize { readonly id: string; readonly label: string; readonly empty?: boolean }
+export function TransferMatrixTable({ sizes, children, showHeader = true, className = '', label, columnCount = sizes.length }: {
   readonly sizes: readonly TransferDisplaySize[]; readonly children: (visible: readonly TransferDisplaySize[]) => ReactNode;
-  readonly showHeader?: boolean; readonly className?: string; readonly label: string;
+  readonly showHeader?: boolean; readonly className?: string; readonly label: string; readonly columnCount?: number;
 }) {
-  const [page, setPage] = useState(0), key = sizes.map(size => size.id).join('|');
-  useEffect(() => { setPage(0); }, [key]);
-  const maximum = Math.max(0, Math.ceil(sizes.length / 40) - 1), current = Math.min(page, maximum), visible = sizes.slice(current * 40, (current + 1) * 40);
+  // Frozen alignedGroup/tableSection: full horizontal size axis, equal group
+  // widths. Padding is presentation only and never an actual size/SKU identity.
+  const visible: readonly TransferDisplaySize[] = [...sizes, ...Array.from({ length: Math.max(0, columnCount - sizes.length) }, (_, index) => ({ id: `display-gap-${index}`, label: '', empty: true }))];
   return <section className={`mx-section ${className}`} style={{ '--mx-table-width': `${592 + visible.length * 56}px` } as React.CSSProperties}>
-    {maximum > 0 && <nav aria-label="尺码列范围" className="mx-column-paging"><span>尺码 {current * 40 + 1}–{Math.min(sizes.length, (current + 1) * 40)} / {sizes.length}</span><UIButton disabled={current === 0} onClick={() => setPage(value => Math.max(0, value - 1))}>上一组尺码</UIButton><UIButton disabled={current === maximum} onClick={() => setPage(value => Math.min(maximum, value + 1))}>下一组尺码</UIButton></nav>}
     <table className="mx-table"><caption className="sr-only">{label}</caption><colgroup><col style={{ width: 280 }} /><col style={{ width: 76 }} /><col style={{ width: 88 }} />{visible.map(size => <col key={size.id} style={{ width: 56 }} />)}<col style={{ width: 52 }} /><col style={{ width: 96 }} /></colgroup>
-      {showHeader && <thead><tr><th className="mx-product" scope="col">款号／商品名称</th><th className="mx-color" scope="col">颜色</th><th className="mx-fit-col" scope="col">版型</th>{visible.map(size => <th key={size.id} data-size-id={size.id} scope="col" title={size.label}>{size.label}</th>)}<th className="tc-subtotal" scope="col">小计</th><th className="ui-action-cell" scope="col">操作</th></tr></thead>}
+      {showHeader && <thead><tr><th className="mx-product" scope="col">款号／商品名称</th><th className="mx-color" scope="col">颜色</th><th className="mx-fit-col" scope="col">版型</th>{visible.map(size => size.empty ? <th key={size.id} className="mx-size-gap" aria-hidden="true" /> : <th key={size.id} data-size-id={size.id} scope="col" title={size.label}>{size.label}</th>)}<th className="tc-subtotal" scope="col">小计</th><th className="ui-action-cell" scope="col">操作</th></tr></thead>}
       <tbody>{children(visible)}</tbody>
     </table>
   </section>;

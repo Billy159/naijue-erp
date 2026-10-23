@@ -1,4 +1,4 @@
-import { cloneElement, useCallback, useLayoutEffect, useRef, useState, type ReactElement, type ReactNode } from 'react';
+import { cloneElement, useCallback, useId, useLayoutEffect, useRef, useState, type ReactElement, type ReactNode } from 'react';
 import { flushSync } from 'react-dom';
 import { Drawer, Modal } from '@arco-design/web-react';
 import { IconClose } from '@arco-design/web-react/icon';
@@ -102,4 +102,22 @@ export function StandardOverlay(props: StandardOverlayProps) {
         role: props.role ?? 'dialog', ...(props.label ? { 'aria-label': props.label, 'aria-labelledby': undefined } : {}),
       })}
       style={{ width: props.width ?? 480, maxWidth: 'calc(100vw - 32px)' }}>{children}</Modal>)}</div>;
+}
+
+/** Frozen document dialogs share this native carrier; consumers retain their
+ * source header/body/footer geometry and native business action callbacks. */
+export function SourceDocumentDialog({ title, label, closeLabel, close, children, footer, className, initialFocus }: {
+  readonly title: ReactNode; readonly label: string; readonly closeLabel: string; readonly close: () => void;
+  readonly children: ReactNode; readonly footer: ReactNode; readonly className: string; readonly initialFocus?: string;
+}) {
+  const dialog = useRef<HTMLDialogElement>(null), id = useId();
+  useLayoutEffect(() => {
+    const element = dialog.current!; element.showModal();
+    if (initialFocus) element.querySelector<HTMLElement>(initialFocus)?.focus();
+    return () => { if (element.open) element.close(); };
+  }, []);
+  return <dialog ref={dialog} className={`erp-source-dialog ${className}`} role="alertdialog" aria-label={label} aria-labelledby={id} onCancel={event => { event.preventDefault(); close(); }}>
+    <header><h2 id={id}>{title}</h2><button type="button" className="btn ui-icon" aria-label={closeLabel} onClick={close}><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button></header>
+    {children}<footer>{footer}</footer>
+  </dialog>;
 }

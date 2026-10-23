@@ -62,3 +62,19 @@
 /* Late Arco small-table padding otherwise forces the 36px header to 37px. */
 .catalogue-workbench .pc-settings-body .erp-read-table .arco-table-th-item{padding:0}
 .catalogue-workbench .pc-settings-body .erp-read-table :is(.arco-table-th,.arco-table-td):last-child{width:100px}
+
+/* Direct openDict/TextInput modal body and original native footer controls. */
+.catalogue-entry-modal .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control);height:var(--ui-control);padding:0 11px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font);font-weight:500;white-space:nowrap}
+.catalogue-entry-modal .btn:hover{background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
+.catalogue-entry-modal .btn.primary{background:var(--ca-primary-fill);color:var(--ca-on-primary);border-color:var(--ca-primary-fill)}
+.catalogue-entry-modal .btn.primary:hover{background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}
+.catalogue-entry-modal .btn.primary:active{background:var(--ca-primary-active);border-color:var(--ca-primary-active)}
+.catalogue-entry-modal .btn.ghost{background:transparent;border-color:transparent;color:var(--ca-button-text)}
+.catalogue-entry-modal .btn.ghost:hover{background:var(--ca-primary-hover-soft);color:var(--ca-button-text-hover)}
+.catalogue-entry-modal .btn.danger{color:var(--error);border-color:var(--error);background:var(--error-light)}
+.catalogue-entry-modal .btn:disabled{background:var(--ca-control-disabled-bg);color:var(--ca-control-disabled-text);border-color:var(--ca-control-disabled-border)}
+.catalogue-entry-modal .pc-modal-foot{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.catalogue-entry-modal .pc-delete-left{margin-right:auto;color:var(--ca-critical)}
+.catalogue-entry-modal .pc-modal-body .field{display:flex;flex-direction:column;gap:4px;margin:0 0 9px;color:var(--ca-ink-2);font-size:12px}
+.catalogue-entry-modal .pc-modal-body input{box-sizing:border-box;height:32px;font-size:13px}
+.catalogue-entry-modal .pc-modal-body .pc-arco-host{margin:4px 0 12px}

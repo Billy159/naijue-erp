@@ -27,3 +27,18 @@
 .erp-overlay.erp-overlay-catalogue.arco-modal .erp-overlay-close::before{content:'';position:absolute;display:block;top:50%;left:50%;width:20px;height:20px;transform:translate(-50%,-50%);box-sizing:border-box;border-radius:50%;background-color:transparent;pointer-events:none;transition:background-color .1s cubic-bezier(0,0,1,1)}
 .erp-overlay.erp-overlay-catalogue.arco-modal .erp-overlay-close.arco-btn:is(:hover,:active){border:0;background:transparent;color:var(--ca-ink,#232a36)}
 .erp-overlay.erp-overlay-catalogue.arco-modal .erp-overlay-close:hover::before{background-color:var(--color-fill-2)}
+
+/* Frozen styles.css44–48/139–140 and interaction-common close icon, native
+ * document layer only. Existing Arco overlays above keep their implementation. */
+.erp-source-dialog{box-sizing:border-box;color:var(--ca-ink);border:1px solid var(--ca-popover-border);padding:0;box-shadow:var(--ca-shadow-dialog);background:var(--ca-popover-bg);font:var(--ui-font,13px)/1.5 var(--ca-font-sans)}
+.erp-source-dialog::backdrop{background:rgb(22 34 52 / 30%)}
+.erp-source-dialog p{margin:0}
+.erp-source-dialog .btn{font:inherit;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control,32px);height:var(--ui-control,32px);padding:0 11px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font,13px);font-weight:500;white-space:nowrap;cursor:pointer}
+.erp-source-dialog .btn:hover{background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
+.erp-source-dialog .btn.primary{background:var(--ca-primary-fill);color:var(--ca-on-primary);border-color:var(--ca-primary-fill)}
+.erp-source-dialog .btn.primary:hover{background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}
+.erp-source-dialog .btn.primary:active{background:var(--ca-primary-active);border-color:var(--ca-primary-active)}
+.erp-source-dialog .ui-icon{display:inline-flex!important;align-items:center;justify-content:center;min-width:30px!important;min-height:30px!important;width:30px;padding:5px!important;border:0!important;background:transparent!important;color:var(--ca-primary-ink);vertical-align:middle}
+.erp-source-dialog .ui-icon svg{flex-shrink:0;pointer-events:none}
+.erp-source-dialog .ui-icon:hover{background:var(--ca-primary-hover-soft)!important}
+.erp-source-dialog .ui-icon:focus-visible{outline:2px solid var(--ca-primary);outline-offset:-2px}

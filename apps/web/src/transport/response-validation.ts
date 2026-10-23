@@ -131,7 +131,7 @@ export function candidatesResponse(value: unknown, parameters: Readonly<Candidat
 }
 export function productBasicsResponse(value: unknown, parameters: Readonly<ProductParameters>): ProductBasics | null {
   if (value === null) return null;
-  const row = record(value, ['productId', 'code', 'name', 'categoryLabel', 'yearLabel', 'seasonLabel', 'supplierLabel', 'systemCode', 'retailPrice']);
+  const row = record(value, ['productId', 'code', 'name', 'categoryLabel', 'yearLabel', 'seasonLabel', 'supplierLabel', 'systemCode', 'retailPrice'], ['thickness','collarPantsType']);
   [row.productId, row.code, row.name].forEach(text);
   for (const label of [row.categoryLabel, row.yearLabel, row.seasonLabel, row.supplierLabel, row.systemCode]) if (label !== null) text(label);
   const data = value as ProductBasics; assertProductBasics(data, parameters); return data;
@@ -151,7 +151,7 @@ export function productImagesResponse(value: unknown, parameters: Readonly<Produ
   if (value === null) return null;
   const row = record(value, ['productId', 'images']); text(row.productId);
   for (const item of array(row.images)) {
-    const image = record(item, ['id', 'label', 'thumbnailUrl']);
+    const image = record(item, ['id', 'label', 'thumbnailUrl'], ['role','colorId']);
     [image.id, image.label, image.thumbnailUrl].forEach(text);
   }
   const data = value as ProductImages; assertProductImages(data, parameters); return data;

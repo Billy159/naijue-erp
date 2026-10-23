@@ -3,11 +3,11 @@ import { SalesDocumentColumns, SalesDocumentColumnHead, SalesDocumentSummary, Sa
 import type { ReadScope } from '../loading/read-scope.ts';
 import { Trigger, type TriggerProps } from '@arco-design/web-react';
 import { SalesStatusTag } from '../sales/sales-status-tag.tsx';
-import { StandardOverlay } from '../components/standard-overlay.tsx';
+import { SourceDocumentDialog, StandardOverlay } from '../components/standard-overlay.tsx';
 import { DocumentScan } from '../components/document-scan.tsx';
 import type { DocumentScanController } from '../components/document-scan-controller.ts';
 import { UIButton, UIDate, UIInput, UISelect } from '../components/standard-controls.tsx';
-import { useEffect, useId, useLayoutEffect, useReducer, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useReducer, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { SalesProposalSession, salesProposalMoney, type SalesProposalEntry, type SalesProposalLine, type SalesProposalPicker, type SalesProposalSnapshot } from './sales-proposal.ts';
 import { salesInputMoney } from '../sales/commands/form-model.ts';
 import { discountUnitPrice } from '../../../../packages/domain/src/sales-money.ts';
@@ -56,16 +56,9 @@ function quantitySummary(rows: readonly SalesProposalLine[], absolute = false): 
 type SpecKind = 'color' | 'fit' | 'size';
 /** Frozen sales-current.js modal()/close(): route-owned native top layer. */
 function SalesModeConfirmation({ mode, cancel, confirm }: { readonly mode: SalesBusinessMode; readonly cancel: () => void; readonly confirm: () => void }) {
-  const dialog = useRef<HTMLDialogElement>(null), title = useId();
-  useLayoutEffect(() => {
-    const element = dialog.current!; element.showModal();
-    return () => { if (element.open) element.close(); };
-  }, []);
-  return <dialog ref={dialog} className="sale-source-dialog" role="alertdialog" aria-labelledby={title} onCancel={event => { event.preventDefault(); cancel(); }}>
-    <header><h2 id={title}>切换业务类型</h2><button type="button" className="btn ui-icon" aria-label="关闭业务类型确认" onClick={cancel}><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button></header>
+  return <SourceDocumentDialog className="sale-source-dialog" title="切换业务类型" label="切换业务类型" closeLabel="关闭业务类型确认" close={cancel} footer={<><button type="button" className="btn" onClick={cancel}>取消</button><button type="button" className="btn primary" onClick={confirm}>确定</button></>}>
     <div className="sale-dialog-body"><p>切换为{mode === 'SALE' ? '销售' : '退货/换货'}后，整单优惠将归零。商品数量、单价和收退记录将保留，请核对商品方向与应结金额。</p></div>
-    <footer><button type="button" className="btn" onClick={cancel}>取消</button><button type="button" className="btn primary" onClick={confirm}>确定</button></footer>
-  </dialog>;
+  </SourceDocumentDialog>;
 }
 function signedQuantity(raw: string, direction: string): string { return (direction === 'IN' ? '-' : '') + raw.replace(/^[+-]/, ''); }
 /** Frozen direction(select) rendered by unified-single-select nativeData. */

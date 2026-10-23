@@ -15,11 +15,11 @@ export function View({ scope, reader, openInventory, navigationDisabled }: Produ
   const active=useProductPanelActive();
   const [navigating,setNavigating]=useState(false),[navigationError,setNavigationError]=useState('');
   const navigate=async()=>{if(!active||!scope.active||navigationDisabled||navigating||!openInventory)return;setNavigating(true);setNavigationError('');try{const moved=await openInventory();if(scope.active&&!moved)setNavigationError('暂未离开商品页，请确认未保存资料后重试。');}catch{if(scope.active)setNavigationError('库存详情暂不可打开，请重试。');}finally{if(scope.active)setNavigating(false);}};
-  const navigation=<UIButton variant="text" disabled={!openInventory||navigationDisabled||navigating} onClick={()=>void navigate()}>查看详细库存</UIButton>;
+  const navigation=<button type="button" className="btn ghost" disabled={!openInventory||navigationDisabled||navigating} onClick={()=>void navigate()}>查看详细库存</button>;
   return <>{navigationError&&<p role="alert">{navigationError}</p>}{reader.stock?.readOverview?<StockOverview scope={scope} read={reader.stock.readOverview} navigation={navigation}/>:<LegacyStock scope={scope} reader={reader} navigation={navigation}/>}</>;
 }
 function LegacyStock({scope,reader,navigation}:ProductPageTabProps&{readonly navigation:ReactNode}){
-  return <><div className="product-stock-head"><strong>总库存：未提供</strong>{navigation}</div><ProductPagedRead<ProductWarehouseStockPage> scope={scope} read={reader.stock!.read} validate={productStockResponse} label="商品逐仓库存分页">{data => <>
+  return <><div className="pc-stock-head product-stock-head"><strong>总库存：未提供</strong>{navigation}</div><ProductPagedRead<ProductWarehouseStockPage> scope={scope} read={reader.stock!.read} validate={productStockResponse} label="商品逐仓库存分页">{data => <>
     <StandardReadTable<StockRow> label="商品仓库规格库存" rows={data.items.map(item => ({ ...item, id: JSON.stringify([item.warehouseId, item.skuId]) }))} columns={[
       { title: '仓库', dataIndex: 'warehouseName' },
       { title: '规格', render: (_, item) => <span data-sku-id={item.skuId}>未提供</span> },
@@ -45,10 +45,10 @@ function StockOverviewResults(props:{readonly scope:ProductPageTabProps['scope']
   const data=snapshot.phase==='success'&&snapshot.success?.parameters.warehouseMode===mode?snapshot.success.data:null;
   const phase=snapshot.phase==='success'&&snapshot.success?.parameters.warehouseMode!==mode?'idle':snapshot.phase;
   const label=data?.coverage==='AUTHORIZED_SUBSET'?'授权范围合计':'总库存';
-  return <><div className="product-stock-head"><strong>{label}：{data?(data.total.state==='KNOWN'?formatQuantity(data.total.quantity!):'未知'):'未提供'}</strong><div><UIButton variant="text" aria-pressed={mode==='ALL'} onClick={()=>{if(!active||!props.scope.active)return;const next=mode==='ALL'?'NON_ZERO':'ALL';setMode(next);run(next);}}>{mode==='ALL'?'仅看有库存':'查看全部仓库'}</UIButton>{props.navigation}</div></div>
+  return <><div className="pc-stock-head product-stock-head"><strong>{label}：{data?(data.total.state==='KNOWN'?formatQuantity(data.total.quantity!):'未知'):'未提供'}</strong><div><button type="button" className="btn ghost" aria-pressed={mode==='ALL'} onClick={()=>{if(!active||!props.scope.active)return;const next=mode==='ALL'?'NON_ZERO':'ALL';setMode(next);run(next);}}>{mode==='ALL'?'仅看有库存':'查看全部仓库'}</button>{props.navigation}</div></div>
    <ProductReadState phase={phase} retry={()=>run()} cancel={()=>{setCancelled(true);props.query.cancel();}} cancelled={cancelled} empty={!data}>
-    {data&&<><table className="product-stock-overview" aria-label="商品逐仓库存概览"><thead><tr><th>仓库</th><th className="num">现存量</th></tr></thead><tbody>{data.items.map(item=><tr key={item.warehouseId}><td>{item.warehouseName}</td><td className="num">{item.state==='KNOWN'?formatQuantity(item.quantity!):'未知'}</td></tr>)}</tbody></table>
-     {!data.items.length&&<div className="product-stock-empty">{data.coverage==='AUTHORIZED_SUBSET'?'当前授权仓库库存均为 0。':'各仓库当前库存为 0'}</div>}
+    {data&&<><table className="pc-stock-overview product-stock-overview" aria-label="商品逐仓库存概览"><thead><tr><th>仓库</th><th className="num">现存量</th></tr></thead><tbody>{data.items.map(item=><tr key={item.warehouseId}><td>{item.warehouseName}</td><td className="num">{item.state==='KNOWN'?formatQuantity(item.quantity!):'未知'}</td></tr>)}</tbody></table>
+     {!data.items.length&&<div className="empty product-stock-empty">{data.coverage==='AUTHORIZED_SUBSET'?'当前授权仓库库存均为 0。':'各仓库当前库存为 0'}</div>}
      {data.coverage==='AUTHORIZED_SUBSET'&&<p className="product-field-hint">仅包含当前授权仓库，合计不代表全部业务仓库。</p>}
      {data.total.state==='UNKNOWN'&&<p className="product-field-hint">部分规格库存尚未确认，合计保持未知。</p>}
     </>}

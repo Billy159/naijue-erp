@@ -216,3 +216,114 @@
 .product-readonly-page .product-barcode-read-codes small{color:var(--ca-ink-3);font-size:12px}
 @media(max-width:800px){.product-readonly-page .product-readonly-base-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.product-readonly-page .product-readonly-base-grid{grid-template-columns:1fr}}
+
+/* Direct frozen product-rework.css:25; pc-* markup is shared by both price variants. Scope prefix only. */
+:is(.product-editor,.product-readonly-page) .pc-price-wrap{max-width:760px}
+:is(.product-editor,.product-readonly-page) .pc-price-paste{display:flex;align-items:baseline;gap:12px;margin:0 0 7px}
+:is(.product-editor,.product-readonly-page) .pc-price-paste small,:is(.product-editor,.product-readonly-page) .pc-price-wrap>.hint{color:var(--ca-ink-3);font-size:12px}
+:is(.product-editor,.product-readonly-page) .pc-price-table{width:100%;border:1px solid var(--ca-line);border-collapse:collapse}
+:is(.product-editor,.product-readonly-page) .pc-price-table th,:is(.product-editor,.product-readonly-page) .pc-price-table td{box-sizing:border-box;height:38px;padding:3px 10px;border-bottom:1px solid var(--ca-table-grid);font-size:13px}
+:is(.product-editor,.product-readonly-page) .pc-price-table thead th{height:34px;background:var(--ca-table-head);color:var(--ca-ink-2);font-size:12px;text-align:left}
+:is(.product-editor,.product-readonly-page) .pc-price-table tbody th{width:60%;color:var(--ca-ink);font-weight:400;text-align:left}
+:is(.product-editor,.product-readonly-page) .pc-price-table input{box-sizing:border-box;width:100%;height:29px!important;min-height:29px!important;padding:3px 8px!important;border:1px solid var(--ca-control-border)!important;background:var(--ca-surface)!important;text-align:right;font-variant-numeric:tabular-nums}
+:is(.product-editor,.product-readonly-page) .pc-price-table input:hover{border-color:var(--ca-control-border-hover)!important}
+:is(.product-editor,.product-readonly-page) .pc-price-table input:focus{outline:0;border-color:var(--ca-control-focus-border)!important}
+:is(.product-editor,.product-readonly-page) .pc-price-wrap>.hint{display:block;margin-top:6px}
+
+/* Direct product-arco.jsx modalCss:56-60, modal root prefix only. */
+.product-spec-transfer-modal .pc-spec-transfer{min-height:320px;height:auto;margin:0 0 8px}
+.product-spec-transfer-modal .pc-spec-transfer .arco-transfer{width:100%;min-height:296px;font-size:13px}
+.product-spec-transfer-modal .pc-spec-transfer .arco-transfer-view{min-width:0;flex:1;height:296px;border-color:var(--ca-line)}
+.product-spec-transfer-modal .pc-spec-transfer .arco-transfer-view-content-item{min-height:31px}
+.product-spec-transfer-modal .pc-spec-transfer .arco-transfer-view-header{background:var(--ca-table-head)}
+
+/* Direct frozen product-rework.css:14-19, scope prefix only. */
+:is(.product-editor,.product-readonly-page) .pc-detail-body .pc-form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 14px;max-width:none;margin:0}
+:is(.product-editor,.product-readonly-page) .pc-detail-body .pc-form-grid .field{display:flex;flex-direction:column;gap:4px;margin:0;min-width:0;color:var(--ca-ink-2);font-size:12px;line-height:16px}
+:is(.product-editor,.product-readonly-page) .pc-detail-body .pc-form-grid .field>input{box-sizing:border-box;width:100%;height:32px;min-height:32px;padding:5px 9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);color:var(--ca-ink);font:13px var(--ca-font-sans)}
+:is(.product-editor,.product-readonly-page) .pc-detail-body .pc-form-grid .field>input:hover{border-color:var(--ca-control-border-hover)}
+:is(.product-editor,.product-readonly-page) .pc-detail-body .pc-form-grid .field>input:focus{outline:0;border-color:var(--ca-control-focus-border)}
+:is(.product-editor,.product-readonly-page) .pc-arco-host{min-width:0;height:32px}
+
+/* Direct styles.css:44-52, product-current.css pc-section-line, product-rework.css:20-24,26-27; bounded selector prefix only. */
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-section-line{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:12px 0}
+:is(.product-source-ui,.product-stock-head) .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control);height:var(--ui-control);padding:0 11px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font);font-weight:500;white-space:nowrap}
+:is(.product-source-ui,.product-stock-head) .btn:hover{background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
+:is(.product-source-ui,.product-stock-head) .btn.primary{background:var(--ca-primary-fill);color:var(--ca-on-primary);border-color:var(--ca-primary-fill)}
+:is(.product-source-ui,.product-stock-head) .btn.primary:hover{background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}
+:is(.product-source-ui,.product-stock-head) .btn.primary:active{background:var(--ca-primary-active);border-color:var(--ca-primary-active)}
+:is(.product-source-ui,.product-stock-head) .btn.ghost{background:transparent;border-color:transparent;color:var(--ca-button-text)}
+:is(.product-source-ui,.product-stock-head) .btn.ghost:hover{background:var(--ca-primary-hover-soft);color:var(--ca-button-text-hover)}
+:is(.product-source-ui,.product-stock-head) .btn.danger{color:var(--error);border-color:var(--error);background:var(--error-light)}
+:is(.product-source-ui,.product-stock-head) .btn:disabled{background:var(--ca-control-disabled-bg);color:var(--ca-control-disabled-text);border-color:var(--ca-control-disabled-border)}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-spec-stack{max-width:1000px}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-spec-section{padding:7px 0 10px;border-bottom:1px solid var(--ca-line)}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-spec-section .pc-section-line{min-height:30px;margin:0 0 5px}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-spec-section h3,:is(.product-editor,.product-readonly-page,.pd-body) .pc-price-paste>span,:is(.product-editor,.product-readonly-page,.pd-body) .pc-stock-head strong{margin:0;color:var(--ca-ink);font-size:14px;font-weight:600}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-spec-section .btn,:is(.product-editor,.product-readonly-page,.pd-body) .pc-stock-head .btn,:is(.product-editor,.product-readonly-page,.pd-body) .pc-barcode-tools>.btn,:is(.product-editor,.product-readonly-page,.pd-body) .pc-detail-body .pc-detail-table .btn{min-height:28px;height:28px;padding:2px 7px;border:0;background:transparent;color:var(--ca-primary-ink);font-size:13px;font-weight:400}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-spec-section .btn:hover,:is(.product-editor,.product-readonly-page,.pd-body) .pc-stock-head .btn:hover,:is(.product-editor,.product-readonly-page,.pd-body) .pc-barcode-tools>.btn:hover,:is(.product-editor,.product-readonly-page,.pd-body) .pc-detail-body .pc-detail-table .btn:hover{background:var(--ca-primary-hover-soft)}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-spec-values{display:flex;gap:6px;flex-wrap:wrap;min-height:27px;align-items:center}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-spec-value{padding:3px 7px;background:var(--ca-surface-muted);border-radius:2px;line-height:20px}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-spec-group{display:flex;align-items:center;gap:10px;margin:3px 0 8px;color:var(--ca-ink-2)}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-spec-group .pc-arco-host{width:min(320px,70%)}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-barcode-tools{display:flex;align-items:flex-end;gap:8px;margin-bottom:5px}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-barcode-tools .field{width:min(360px,65%);margin:0;display:flex;flex-direction:column;gap:4px;color:var(--ca-ink-2);font-size:12px}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-detail-body>.hint{display:block;margin:4px 0 8px;color:var(--ca-ink-3);font-size:12px}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-detail-body .pc-detail-table{max-height:none;overflow:auto;border:1px solid var(--ca-line)}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-detail-body .pc-detail-table table{width:100%;border-collapse:collapse}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-detail-body .pc-detail-table th,:is(.product-editor,.product-readonly-page,.pd-body) .pc-detail-body .pc-detail-table td{height:35px;padding:4px 8px;border-bottom:1px solid var(--ca-table-grid);font-size:12px;text-align:left}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-detail-body .pc-detail-table th{position:sticky;top:0;background:var(--ca-table-head);color:var(--ca-ink-2);font-weight:600}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-stock-head{display:flex;align-items:center;justify-content:space-between;max-width:760px;margin:0 0 8px}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-stock-head>div{display:flex;gap:4px}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-stock-overview{width:min(760px,100%);border-collapse:collapse}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-stock-overview th,:is(.product-editor,.product-readonly-page,.pd-body) .pc-stock-overview td{height:34px;padding:4px 8px;border-bottom:1px solid var(--ca-table-grid);font-size:13px;text-align:left}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-stock-overview th{background:var(--ca-table-head);color:var(--ca-ink-2);font-size:12px}
+:is(.product-editor,.product-readonly-page,.pd-body) .pc-stock-overview .num{text-align:right}
+
+/* Direct product-arco.jsx Choice shadow css:22-31, only moved into owned multiple-choice scope. */
+.product-source-choice .arco-select,.product-source-choice .arco-cascader,.product-source-choice .arco-input-wrapper{width:100%;font-size:13px}
+.product-source-choice .arco-select-view,.product-source-choice .arco-cascader-view,.product-source-choice .arco-input-wrapper{box-sizing:border-box;min-height:32px;height:32px;border:1px solid transparent!important;border-radius:var(--ca-radius-control)!important;background:var(--ca-surface-muted)!important;box-shadow:none!important}
+.product-source-choice .arco-select:hover .arco-select-view,.product-source-choice .arco-cascader:hover .arco-cascader-view,.product-source-choice .arco-input-wrapper:hover{border-color:var(--ca-control-border-hover)!important}
+.product-source-choice .arco-select.arco-select-focused .arco-select-view,.product-source-choice .arco-cascader.arco-cascader-focused .arco-cascader-view,.product-source-choice .arco-input-wrapper:focus-within{border-color:var(--ca-control-focus-border)!important;box-shadow:none!important}
+.product-source-choice .arco-select-view-input,.product-source-choice .arco-cascader-view-input,.product-source-choice .arco-input-inner{font-size:13px!important}
+.product-source-choice .arco-select-view-tag,.product-source-choice .arco-input-tag-tag{height:23px;line-height:23px;background:var(--ca-surface)!important;color:var(--ca-ink)!important;border:0!important}
+.product-source-choice .arco-trigger-popup{z-index:1600;max-width:calc(100vw - 24px)}
+.product-source-choice .arco-select-popup,.product-source-choice .arco-cascader-popup{border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);box-shadow:var(--ca-shadow-float);background:var(--ca-popover-bg)}
+.product-source-choice .arco-select-option,.product-source-choice .arco-cascader-option{min-height:30px;font-size:13px}
+.product-source-choice .arco-select-option:hover,.product-source-choice .arco-cascader-option:hover{background:var(--ca-popover-hover)}
+
+/* Native source table carrier uses its original pc-* selectors; no Arco table reconstruction. */
+:is(.product-editor,.product-readonly-page) .pc-barcode-table table{min-width:850px}
+
+/* Direct product-arco.jsx modalCss:45-60; existing catalogue lifecycle, additional scope prefix only. */
+.erp-overlay.product-source-modal.pc-arco-modal,.erp-overlay.product-source-modal.pc-arco-modal .arco-modal{width:min(480px,94vw)!important;border-radius:4px;padding:0;color:var(--ca-ink);font:13px var(--ca-font-sans)}
+.erp-overlay.product-source-modal.pc-arco-modal.pc-wide,.erp-overlay.product-source-modal.pc-arco-modal.pc-wide .arco-modal{width:min(780px,94vw)!important}
+.erp-overlay.product-source-modal.pc-arco-modal .arco-modal-header{height:auto;min-height:43px;padding:11px 14px;border-bottom:1px solid var(--ca-line)}
+.erp-overlay.product-source-modal.pc-arco-modal .arco-modal-title{font-size:16px;font-weight:600}
+.erp-overlay.product-source-modal.pc-arco-modal .arco-modal-content{padding:12px 14px;max-height:min(65vh,650px);overflow:auto;border-bottom:0}
+.erp-overlay.product-source-modal.pc-arco-modal .arco-modal-footer{padding:9px 14px;border-top:1px solid var(--ca-line)}
+.erp-overlay.product-source-modal.pc-arco-modal .pc-modal-foot{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.erp-overlay.product-source-modal.pc-arco-modal .pc-delete-left{margin-right:auto;color:var(--ca-critical)}
+.erp-overlay.product-source-modal.pc-arco-modal .pc-modal-body .field{display:flex;flex-direction:column;gap:4px;margin:0 0 9px;color:var(--ca-ink-2);font-size:12px}
+.erp-overlay.product-source-modal.pc-arco-modal .pc-modal-body input{box-sizing:border-box;height:32px;font-size:13px}
+.erp-overlay.product-source-modal.pc-arco-modal .pc-modal-body .pc-arco-host{margin:4px 0 12px}
+.erp-overlay.product-source-modal.pc-arco-modal .pc-spec-transfer{min-height:320px;height:auto;margin:0 0 8px}
+.erp-overlay.product-source-modal.pc-arco-modal .pc-spec-transfer .arco-transfer{width:100%;min-height:296px;font-size:13px}
+.erp-overlay.product-source-modal.pc-arco-modal .pc-spec-transfer .arco-transfer-view{min-width:0;flex:1;height:296px;border-color:var(--ca-line)}
+.erp-overlay.product-source-modal.pc-arco-modal .pc-spec-transfer .arco-transfer-view-content-item{min-height:31px}
+.erp-overlay.product-source-modal.pc-arco-modal .pc-spec-transfer .arco-transfer-view-header{background:var(--ca-table-head)}
+
+/* Direct product-current.css pc-rule and styles.css native modal table carrier. */
+.product-source-modal .pc-rule{display:grid;grid-template-columns:100px 1fr;gap:18px 16px}
+.product-source-modal .pc-rule dt{color:var(--secondary)}
+.product-source-modal .pc-rule dd{margin:0;line-height:1.8;white-space:pre-line}
+.product-source-modal .pc-barcode-view-table{border-collapse:separate;border-spacing:0;width:100%;font-variant-numeric:tabular-nums;font-size:var(--ui-font);--table-row:var(--ui-row)}
+.product-source-modal .pc-barcode-view-table :is(th,td){padding:4px 10px;height:var(--table-row);text-align:left;border-bottom:1px solid var(--ca-table-grid);vertical-align:middle;white-space:nowrap}
+.product-source-modal .pc-barcode-view-table th{font-size:12px;font-weight:600;background:var(--ca-table-head);color:var(--ca-ink-2)}
+.product-source-modal .pc-modal-body input:not([type=checkbox]){min-height:var(--ui-control);height:var(--ui-control);padding:5px 8px;border:1px solid var(--strong);background:var(--surface);border-radius:var(--ca-radius-control);font-size:var(--ui-font);color:var(--text)}
+.product-source-modal .pc-create-left{margin-right:auto;padding:2px 6px;border:0;background:transparent;color:var(--ca-primary-ink)}
+.product-source-modal .pc-modal-foot{border:0;padding:0}
+
+/* Direct sales-current.css33 shared pc-read-value, consumed by readonlyEditor.
+ * Drawer keeps its later product-rework.css106 override in the shared drawer sheet. */
+.product-readonly-page .pc-read-value{padding:8px 0;white-space:pre-wrap}

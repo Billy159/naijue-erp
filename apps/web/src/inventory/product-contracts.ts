@@ -12,6 +12,9 @@ export interface ProductBasics {
   readonly seasonLabel: string | null;
   readonly supplierLabel: string | null;
   readonly systemCode: string | null;
+  /** Existing product fields; legacy read projections may omit them. */
+  readonly thickness?: string | null;
+  readonly collarPantsType?: string | null;
   /** Exact decimal(18,2) source text. Null means unavailable, never zero. */
   readonly retailPrice: string | null;
 }
@@ -36,6 +39,9 @@ export interface ProductImageSummary {
   readonly label: string;
   /** Thumbnail only. The reader must not return an original in this field. */
   readonly thumbnailUrl: string;
+  /** Ordinary readonly projection; absence does not imply a role or color. */
+  readonly role?: 'MAIN' | 'WHITE_BACKGROUND' | 'HANG_TAG' | 'DETAIL' | 'COLOR' | null;
+  readonly colorId?: string | null;
 }
 export interface ProductImages {
   readonly productId: string;

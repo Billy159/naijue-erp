@@ -10,7 +10,7 @@
 .pm-products .pm-head h1{margin:0;font-size:20px;line-height:30px}
 .pm-products .pm-head .iw-button{height:32px;min-height:32px;padding:4px 12px;font-weight:500}
 .pm-products .pm-head .iw-button:disabled{border-color:var(--ca-control-disabled-border);background:var(--ca-control-disabled-bg);color:var(--ca-disabled-ink);cursor:not-allowed}
-.pm-products .pm-filters{box-sizing:border-box;display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;min-width:0;margin:0 0 4px;padding:0 0 8px;border:0;background:transparent;overflow-x:auto;overflow-y:visible}
+.pm-products .pm-filters{box-sizing:border-box;display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;min-width:0;margin:0 0 4px;padding:0;border:0;background:transparent;overflow-x:auto;overflow-y:visible}
 .pm-products .pm-filter-row{box-sizing:border-box;display:grid;grid-template-columns:minmax(300px,1fr) 190px 160px 160px 112px 72px 72px;align-items:center;gap:8px;width:100%;min-width:1114px}
 .pm-products .pm-filter-row>*{min-width:0}
 .pm-products .pm-filter-row>button{box-sizing:border-box;width:100%;height:32px;min-height:32px;margin:0;padding:4px 8px;font-size:13px;white-space:nowrap}
@@ -47,3 +47,27 @@
  * The host already reserves its suffix; a lone token needs no second 42px.
  * Multi-token/count geometry and active Arco/input (32px, visible) stay unchanged. */
 .pm-products .demo-idle-reference .demo-idle-token:only-child{max-width:100%}
+
+/* Frozen native list controls and table: styles.css44-52, product-current list(),
+ * product-inventory-unified28-33. Native cells retain the original row structure. */
+.pm-products .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control);height:var(--ui-control);padding:0 11px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font);font-weight:500;white-space:nowrap}
+.pm-products .btn:hover{background:var(--ca-button-secondary-hover-bg);border-color:var(--ca-button-secondary-hover-border)}
+.pm-products .btn.primary{background:var(--ca-primary-fill);color:var(--ca-on-primary);border-color:var(--ca-primary-fill)}
+.pm-products .btn.primary:hover{background:var(--ca-primary-hover);border-color:var(--ca-primary-hover)}
+.pm-products .btn.primary:active{background:var(--ca-primary-active);border-color:var(--ca-primary-active)}
+.pm-products .btn.ghost{background:transparent;border-color:transparent;color:var(--ca-button-text)}
+.pm-products .btn.ghost:hover{background:var(--ca-primary-hover-soft);color:var(--ca-button-text-hover)}
+.pm-products .btn.danger{color:var(--error);border-color:var(--error);background:var(--error-light)}
+.pm-products .btn:disabled{background:var(--ca-control-disabled-bg);color:var(--ca-control-disabled-text);border-color:var(--ca-control-disabled-border)}
+.pm-products .pc-data-table th{height:36px}.pm-products .pc-data-table td{height:34px;min-height:34px}
+.pm-products .pc-data-table td .btn.ghost{height:26px;min-height:26px;padding:2px 5px;border:0;background:transparent;color:var(--ca-primary-ink);font-size:12px;font-weight:400}
+.pm-products .pc-data-table td .btn.ghost:hover{background:var(--ca-primary-hover-soft);text-decoration:underline}
+.pm-products .iw-head-actions>.btn{box-sizing:border-box;height:30px;min-height:30px;padding:3px 8px;border:0;border-radius:var(--ca-radius-control);background:transparent;color:var(--ca-ink-2);font-size:13px;font-weight:400}
+.pm-products .pm-filter-row>.pc-more-toggle{display:flex;align-items:center;justify-content:center;gap:4px;padding:0 4px;border:0;background:transparent;color:var(--ca-ink-2);font-weight:400}
+.pm-products .pm-filter-row>.iw-reset{border:1px solid var(--ca-control-border);background:var(--ca-surface);color:var(--ca-ink)}
+.pm-products .pm-filter-row>.iw-reset:hover{border-color:var(--ca-control-border-hover);background:var(--ca-surface-subtle)}
+/* QF v025 source consumer: list16/20; the independently aligned editor12/16 stays owned by its existing rule. */
+.demo-ui .demo-page:has(>.products-workspace>.pm-products:not([hidden])){padding:16px 20px 64px}
+
+/* Direct ui-review.js numeric-header/cell enhancement and ui-review.css32. */
+.pm-products .ui-number{font-variant-numeric:tabular-nums;text-align:right!important}

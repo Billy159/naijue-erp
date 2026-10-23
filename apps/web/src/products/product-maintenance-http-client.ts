@@ -1,10 +1,10 @@
 import type { ProductMaintenanceDetail as ProductMaintenanceDetailV1, ProductMaintenanceDetailV2 } from '../../../../packages/application/src/product-maintenance-ports.ts';
-import { parseProductMaintenanceCommand, parseProductMaintenanceCommandV2 } from '../../../../packages/application/src/product-maintenance-validation.ts';
+import { parseProductMaintenanceCommand, parseProductMaintenanceCommandV2, parseProductMaintenanceMediaCommandV2 } from '../../../../packages/application/src/product-maintenance-validation.ts';
 import { entityId } from '../../../../packages/domain/src/values.ts';
 import { createHttpJsonQuery, HttpQueryError, type HttpQueryOptions } from '../transport/http-query.ts';
 import type { ProductEditorMediaReader, ProductEditorImages, ProductMaintenanceReader, ProductMaintenanceDetail, ProductMaintenanceCandidatePage, ProductMaintenanceCandidateQuery } from './product-editor-contracts.ts';
 import { parseProductMaintenanceCandidates } from '../../../../packages/application/src/product-maintenance-validation.ts';
-import { ProductMaintenanceError, type ProductMaintenanceClient, type ProductMaintenanceCommand, type ProductMaintenanceResult, type ProductMaintenanceReceipt } from './product-editor-contracts.ts';
+import { ProductMaintenanceError, type ProductMaintenanceClient, type ProductMaintenanceCommand, type ProductMaintenanceResult, type ProductMaintenanceReceipt, type ProductMediaUploader } from './product-editor-contracts.ts';
 /** Same bounded command/outcome protocol as the existing sales/transfer clients; target validation stays product-specific. */
 const PRODUCT_COMMAND_MAX_REQUEST_BYTES = 1_048_576;
 function record(value: unknown, keys: readonly string[]): Record<string, unknown> {
@@ -27,12 +27,14 @@ export function validateProductReceipt(value: unknown, command: ProductMaintenan
 }
 const MAX_RESPONSE_CHUNKS = 65_536;
 const commandCodes: Readonly<Record<number, readonly string[]>> = {
-  400: ['INVALID_PRODUCT_MAINTENANCE','INVALID_PARTY_INPUT','INVALID_ID','INVALID_HTTP_INPUT','INVALID_REQUEST','INCOMPLETE_CATALOGUE_PRICE_INPUT','INVALID_CATALOGUE_PRICE_INPUT','MONEY_PRECISION','MONEY_OVERFLOW','PRODUCT_SCHEME_REQUIRED','PRODUCT_REQUIRED_FIELDS','PRODUCT_SPEC_REQUIRED','INVALID_JSON'],
-  401: ['UNAUTHENTICATED'], 403: ['FORBIDDEN'], 404: ['PRODUCT_NOT_FOUND'],
-  409: ['PRODUCT_EDIT_CONTRACT_UPGRADE_REQUIRED','PRODUCT_SEASON_UNKNOWN_RESET','VERSION_CONFLICT','IDEMPOTENCY_CONFLICT','PRODUCT_DELETED','VERSION_STORAGE_OVERFLOW','INVALID_PRODUCT_STATE','IMMUTABLE_PRODUCT_CODE','IMMUTABLE_SKU_IDENTITY','IMMUTABLE_BARCODE_IDENTITY','PRODUCT_SPEC_CONFLICT','PRODUCT_CODE_CONFLICT','BARCODE_CONFLICT','PRODUCT_REFERENCE_UNAVAILABLE','PRODUCT_SIZE_GROUP_MISMATCH','PRODUCT_IN_USE','NO_PRODUCT_CHANGE','PRODUCT_SPEC_NOT_FOUND'],
-  413: ['BODY_TOO_LARGE','PRODUCT_MAINTENANCE_TOO_LARGE'], 415: ['UNSUPPORTED_MEDIA_TYPE'],
-  500: ['INTERNAL_ERROR'], 503: ['PRODUCT_DELETE_NOT_READY','PRODUCT_SEASON_NOT_READY','MAINTENANCE_PREPARE_NOT_READY'],
+  400: ['INVALID_PRODUCT_MEDIA_COMMAND','INVALID_UPLOAD','INVALID_MEDIA_TYPE','INVALID_MEDIA_DIMENSIONS','INVALID_PRODUCT_MAINTENANCE','INVALID_PARTY_INPUT','INVALID_ID','INVALID_HTTP_INPUT','INVALID_REQUEST','INCOMPLETE_CATALOGUE_PRICE_INPUT','INVALID_CATALOGUE_PRICE_INPUT','MONEY_PRECISION','MONEY_OVERFLOW','PRODUCT_SCHEME_REQUIRED','PRODUCT_REQUIRED_FIELDS','PRODUCT_SPEC_REQUIRED','INVALID_JSON'],
+  401: ['UNAUTHENTICATED'], 403: ['FORBIDDEN'], 404: ['PRODUCT_NOT_FOUND','PRODUCT_IMAGE_NOT_FOUND'],
+  408:['PRODUCT_READ_ABORTED'],
+  409: ['MEDIA_SCOPE_MISMATCH','UPLOAD_EXPIRED','COLOR_IMAGE_CONFLICT','PRODUCT_EDIT_CONTRACT_UPGRADE_REQUIRED','PRODUCT_SEASON_UNKNOWN_RESET','VERSION_CONFLICT','IDEMPOTENCY_CONFLICT','PRODUCT_DELETED','VERSION_STORAGE_OVERFLOW','INVALID_PRODUCT_STATE','IMMUTABLE_PRODUCT_CODE','IMMUTABLE_SKU_IDENTITY','IMMUTABLE_BARCODE_IDENTITY','PRODUCT_SPEC_CONFLICT','PRODUCT_CODE_CONFLICT','BARCODE_CONFLICT','PRODUCT_REFERENCE_UNAVAILABLE','PRODUCT_SIZE_GROUP_MISMATCH','PRODUCT_IN_USE','NO_PRODUCT_CHANGE','PRODUCT_SPEC_NOT_FOUND'],
+  413: ['BODY_TOO_LARGE','MEDIA_TOO_LARGE','PRODUCT_MAINTENANCE_TOO_LARGE'], 415: ['UNSUPPORTED_MEDIA_TYPE'],
+  500: ['INTERNAL_ERROR'], 503: ['PRODUCT_MEDIA_NOT_READY','PRODUCT_DELETE_NOT_READY','PRODUCT_SEASON_NOT_READY','MAINTENANCE_PREPARE_NOT_READY'],
 };
+const uploadCodes:Readonly<Record<number,readonly string[]>>={400:['INVALID_HTTP_INPUT','INVALID_ID','INVALID_UPLOAD','INVALID_MEDIA_TYPE','INVALID_MEDIA_DIMENSIONS'],401:['UNAUTHENTICATED'],403:['FORBIDDEN'],404:['PRODUCT_NOT_FOUND'],408:['PRODUCT_READ_ABORTED'],409:['PRODUCT_DELETED','IDEMPOTENCY_CONFLICT','MEDIA_SCOPE_MISMATCH','UPLOAD_EXPIRED'],413:['BODY_TOO_LARGE','MEDIA_TOO_LARGE'],415:['UNSUPPORTED_MEDIA_TYPE'],500:['INTERNAL_ERROR'],503:['PRODUCT_MEDIA_NOT_READY']};
 const receiptCodes: Readonly<Record<number, readonly string[]>> = {
   400: ['INVALID_HTTP_INPUT','INVALID_PARTY_INPUT'], 401: ['UNAUTHENTICATED'], 403: ['FORBIDDEN'], 404: ['RECEIPT_NOT_FOUND'], 500: ['INTERNAL_ERROR'],
 };
@@ -64,19 +66,20 @@ function waitFor<T>(pending: Promise<T>, signal: AbortSignal, interrupted: () =>
     if (signal.aborted) abort();
   });
 }
-function knownError(status: number, value: unknown, write: boolean): string | undefined {
+function knownError(status: number, value: unknown, write: boolean,upload=false): string | undefined {
   if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).length !== 1 || !Object.hasOwn(value, 'error')) return;
   const error = (value as { error: unknown }).error;
   if (!error || typeof error !== 'object' || Array.isArray(error) || Object.keys(error).length !== 2
     || !Object.hasOwn(error, 'code') || !Object.hasOwn(error, 'message')) return;
   const row = error as { code: unknown; message: unknown };
-  if (typeof row.code === 'string' && typeof row.message === 'string' && (write ? commandCodes : receiptCodes)[status]?.includes(row.code)) return row.code;
+  if (typeof row.code === 'string' && typeof row.message === 'string' && (upload?uploadCodes:write ? commandCodes : receiptCodes)[status]?.includes(row.code)) return row.code;
 }
 function statusKind(status: number): ProductMaintenanceError['kind'] {
   if (status === 401) return 'unauthenticated';
   if (status === 403) return 'forbidden';
   if (status === 404) return 'not-found';
   if (status === 409) return 'conflict';
+  if(status===408)return 'aborted';
   if ([400, 413, 415, 422].includes(status)) return 'invalid-request';
   return 'server';
 }
@@ -84,9 +87,10 @@ function statusKind(status: number): ProductMaintenanceError['kind'] {
 /** Inert, exact two-operation command boundary. Same-origin credentials, bounded
  * streaming/timeout and no automatic retry. The existing read-only POST primitive
  * cannot represent GET receipts or distinguish uncertain command outcomes. */
-export function createProductMaintenanceHttpClient(options: HttpQueryOptions): ProductMaintenanceClient { return productMaintenanceHttpClient(options, 1); }
-export function createProductMaintenanceHttpClientV2(options: HttpQueryOptions): ProductMaintenanceClient { return productMaintenanceHttpClient(options, 2); }
-function productMaintenanceHttpClient(options: HttpQueryOptions, contractVersion: 1 | 2): ProductMaintenanceClient {
+export function createProductMaintenanceHttpClient(options: HttpQueryOptions): ProductMaintenanceClient { return productMaintenanceHttpClient(options, 1).client; }
+export function createProductMaintenanceHttpClientV2(options: HttpQueryOptions): ProductMaintenanceClient { return productMaintenanceHttpClient(options, 2).client; }
+export function createProductMediaUploadHttpClient(options:HttpQueryOptions):ProductMediaUploader{return productMaintenanceHttpClient(options,2).upload;}
+function productMaintenanceHttpClient(options: HttpQueryOptions, contractVersion: 1 | 2): {readonly client:ProductMaintenanceClient;readonly upload:ProductMediaUploader} {
   const base = endpointBase(options), fetch = options.fetch;
   const limit = resourceLimit(options.maxResponseBytes, 512 * 1024, 2 * 1024 * 1024);
   const timeoutMs = resourceLimit(options.timeoutMs, 30_000, 120_000);
@@ -94,16 +98,17 @@ function productMaintenanceHttpClient(options: HttpQueryOptions, contractVersion
     try { return read(); }
     catch { throw new ProductMaintenanceError('invalid-request', 'INVALID_PRODUCT_COMMAND_INPUT', write ? 'not-sent' : 'read'); }
   }
-  async function request<T>(path: string, callerSignal: AbortSignal, validate: (value: unknown) => T, body?: unknown): Promise<T> {
-    const write = body !== undefined;
+  async function request<T>(path: string, callerSignal: AbortSignal, validate: (value: unknown) => T, body?: unknown, upload?:Parameters<ProductMediaUploader>[0]): Promise<T> {
+    const write = body !== undefined||upload!==undefined;
     let dispatched = false, status: number | null = null;
     const outcome = () => write ? (dispatched ? 'uncertain' : 'not-sent') : 'read';
     const fail = (kind: ProductMaintenanceError['kind'], code: string) => new ProductMaintenanceError(
       status === 401 ? 'unauthenticated' : status === 403 ? 'forbidden' : kind,
       status === 401 ? 'UNAUTHENTICATED' : status === 403 ? 'FORBIDDEN' : code, outcome(), status);
     if (callerSignal.aborted) throw fail('aborted', 'PRODUCT_COMMAND_ABORTED');
-    let payload: string | undefined;
-    if (write) {
+    let payload: string|Blob|undefined;
+    if(upload)payload=upload.file;
+    else if (write) {
       try { payload = JSON.stringify(body); if (typeof payload !== 'string') throw new Error(); }
       catch { throw fail('invalid-request', 'INVALID_PRODUCT_COMMAND_INPUT'); }
       if (new TextEncoder().encode(payload).byteLength > PRODUCT_COMMAND_MAX_REQUEST_BYTES) throw fail('invalid-request', 'REQUEST_TOO_LARGE');
@@ -163,7 +168,7 @@ function productMaintenanceHttpClient(options: HttpQueryOptions, contractVersion
     const url = `${base}${path}`;
     try {
       const init: RequestInit = { method: write ? 'POST' : 'GET', mode: 'same-origin', credentials: 'same-origin', cache: 'no-store',
-        redirect: 'error', headers: write ? { Accept: 'application/json', 'Content-Type': 'application/json' } : { Accept: 'application/json' }, signal };
+        redirect: 'error', headers: upload?{Accept:'application/json','Content-Type':upload.file.type,'x-command-key':upload.commandKey,'x-upload-key':upload.uploadKey,...(upload.productId?{'x-product-id':upload.productId}:{})}:write ? { Accept: 'application/json', 'Content-Type': 'application/json' } : { Accept: 'application/json' }, signal };
       if (payload !== undefined) init.body = payload;
       const pending = Promise.resolve().then(() => {
         checkpoint();
@@ -184,7 +189,7 @@ function productMaintenanceHttpClient(options: HttpQueryOptions, contractVersion
       }
       if (!response.ok) {
         let code: string | undefined;
-        try { code = knownError(response.status, await json(response, Math.min(limit, 16_384)), write); }
+        try { code = knownError(response.status, await json(response, Math.min(limit, 16_384)), write,!!upload); }
         catch { checkpoint(); }
         checkpoint();
         if (!code) {
@@ -211,8 +216,8 @@ function productMaintenanceHttpClient(options: HttpQueryOptions, contractVersion
     } finally { clearTimeout(timer); }
   }
   const commandVersion = (command: ProductMaintenanceCommand) => 'values' in command ? (Object.hasOwn(command.values, 'seasonIds') ? 2 : 1) : contractVersion;
-  const parseOriginal = (command: ProductMaintenanceCommand) => commandVersion(command) === 2 ? parseProductMaintenanceCommandV2(command) : parseProductMaintenanceCommand(command);
-  return Object.freeze({
+  const parseOriginal = (command: ProductMaintenanceCommand) => commandVersion(command) === 2 ? (Object.hasOwn(command,'imageChanges')?parseProductMaintenanceMediaCommandV2(command):parseProductMaintenanceCommandV2(command)) : parseProductMaintenanceCommand(command);
+  const client=Object.freeze({
     contractVersion,
     async execute(command, signal) {
       const input = checked(() => { if (contractVersion === 1 && commandVersion(command) === 2) throw new TypeError('V2 capability required'); return parseOriginal(command); }, true);
@@ -225,6 +230,16 @@ function productMaintenanceHttpClient(options: HttpQueryOptions, contractVersion
       return request(`/products/receipts/${encodeURIComponent(input.requestKey)}`, signal, value => validateProductReceipt(value, input));
     },
   } satisfies ProductMaintenanceClient);
+  const upload:ProductMediaUploader=async input=>{
+    if(!['image/png','image/jpeg','image/webp'].includes(input.file.type)||input.file.size===0||input.file.size>8*1024*1024)throw new ProductMaintenanceError('invalid-request','INVALID_PRODUCT_MEDIA_FILE','not-sent');
+    return request('/products/media/uploads',input.signal,value=>{
+      const row=record(value,['uploadId','mime','byteSize','expiresAt']);
+      if(typeof row.uploadId!=='string'||!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(row.uploadId)||typeof row.byteSize!=='string'||!/^\d+$/.test(row.byteSize)||!['image/png','image/jpeg','image/webp'].includes(row.mime as string)||typeof row.expiresAt!=='string'||!Number.isFinite(Date.parse(row.expiresAt)))throw new TypeError('Invalid media upload response');
+      return {uploadId:row.uploadId,mime:row.mime as 'image/png'|'image/jpeg'|'image/webp',byteSize:row.byteSize,expiresAt:row.expiresAt};
+    },undefined,input);
+  };
+  return {client,upload};
+
 }
 
 function detailFailure(): never { throw new HttpQueryError('malformed-response','INVALID_PRODUCT_MAINTENANCE_RESPONSE'); }

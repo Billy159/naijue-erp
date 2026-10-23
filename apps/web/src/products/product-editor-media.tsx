@@ -1,101 +1,39 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { ReadScope } from '../loading/read-scope.ts';
 import type { ProductReadOnlyReader } from '../inventory/product-contracts.ts';
-import { ProductTab } from '../inventory/product-tab-images.tsx';
-import { useProductPanelActive, ProductReadState, useProductRead } from '../inventory/product-tab-state.tsx';
+import { ProductTab, ProductPhotosSource, ProductPhotoSourcePreview, type ProductPhotoSourceItem } from '../inventory/product-tab-images.tsx';
+import { ProductReadState, useProductRead } from '../inventory/product-tab-state.tsx';
 import { assertProductSpecifications } from '../inventory/product-model.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import { UIButton } from '../components/standard-controls.tsx';
-import { StandardOverlay } from '../components/standard-overlay.tsx';
 import type { ProductEditorImage, ProductEditorMediaReader, ProductImageRole } from './product-editor-contracts.ts';
 
-interface MediaContext {
-  readonly scope:ReadScope; readonly reader:Pick<ProductReadOnlyReader,'readProductSpecifications'|'readProductImages'|'readProductImage'>;
-  readonly onAccessFailure:(error:HttpQueryError)=>void;
+export interface ProductMediaUploadDraft {readonly uploadKey:string;readonly file:File;readonly url:string;readonly role:ProductImageRole|null;readonly colorId:string|null;readonly displayOrder:number;readonly replace:ProductEditorImage|null;readonly phase:'uploading'|'error'|'staged';readonly uploadId?:string;readonly error?:string}
+export interface ProductMediaDraft {readonly uploads:readonly ProductMediaUploadDraft[];readonly removed:readonly ProductEditorImage[];readonly disabled:boolean;readonly colors:readonly {readonly id:string;readonly label:string|null}[];readonly add:(files:readonly File[],role:ProductImageRole,colorId:string|null,replace:ProductEditorImage|null,displayOrder:number)=>void;readonly removeNative:(image:ProductEditorImage)=>void;readonly removeUpload:(uploadKey:string)=>void;readonly retry:(uploadKey:string)=>void;readonly replaceUpload:(uploadKey:string,files:readonly File[])=>void}
+interface MediaContext {readonly scope:ReadScope;readonly reader:Pick<ProductReadOnlyReader,'readProductSpecifications'|'readProductImages'|'readProductImage'>;readonly onAccessFailure:(error:HttpQueryError)=>void}
+interface Props extends MediaContext {readonly productId:string|null;readonly media?:ProductEditorMediaReader;readonly expectedVersion:number|null;readonly onReloadRequest:()=>void;readonly reloadBlocked?:boolean;readonly draft?:ProductMediaDraft}
+const roleNames={MAIN:'主图',WHITE_BACKGROUND:'白底图',HANG_TAG:'吊牌图',DETAIL:'详情图',COLOR:'颜色配图'} as const;
+function accessFailure(props:MediaContext,error:unknown,signal:AbortSignal){if(props.scope.active&&!signal.aborted&&error instanceof HttpQueryError&&(error.kind==='unauthenticated'||error.kind==='forbidden'))props.onAccessFailure(error);}
+export function ProductEditorMedia(p:Props){if(!p.productId)return <PhotoPresentation scope={p.scope} native={[]} colors={[]} {...(p.draft?{draft:p.draft}:{})}/>;if(!p.media)return <><p className="product-field-hint">图片分类和维护服务尚未就绪，当前仅可查看已有图片。</p><ProductTab scope={p.scope} reader={p.reader} fullPage/></>;return <MediaGallery {...p} productId={p.productId} media={p.media}/>;}
+type GalleryProps=MediaContext&{readonly productId:string;readonly media:ProductEditorMediaReader;readonly draft?:ProductMediaDraft}&({readonly readOnly:true}|{readonly readOnly?:false;readonly expectedVersion:number|null;readonly onReloadRequest:()=>void;readonly reloadBlocked?:boolean});
+export function ProductReadOnlyMedia(p:MediaContext&{readonly productId:string;readonly media:ProductEditorMediaReader}){return <MediaGallery {...p} readOnly/>;}
+function MediaGallery(p:GalleryProps){
+ const metadata=useProductRead(p.scope,async input=>{try{return await p.media.readImages(input);}catch(error){accessFailure(p,error,input.signal);throw error;}},(data,target)=>{if(data.productId!==target.productId)throw new HttpQueryError('malformed-response','PRODUCT_MEDIA_TARGET_MISMATCH');if(!p.readOnly&&data.version!==p.expectedVersion)throw new HttpQueryError('conflict','PRODUCT_MEDIA_VERSION_MISMATCH');});
+ const specifications=useProductRead(p.scope,async input=>{try{return await p.reader.readProductSpecifications(input);}catch(error){accessFailure(p,error,input.signal);throw error;}},assertProductSpecifications);
+ const data=metadata.snapshot.phase==='success'?metadata.snapshot.success?.data:null,colors=specifications.snapshot.phase==='success'?specifications.snapshot.success?.data?.colors??[]:[];
+ if(!p.readOnly&&metadata.snapshot.phase==='error'&&metadata.snapshot.error instanceof HttpQueryError&&metadata.snapshot.error.code==='PRODUCT_MEDIA_VERSION_MISMATCH')return <p role="alert">商品图片版本已变化。<UIButton disabled={!!p.reloadBlocked} onClick={p.onReloadRequest}>重新读取商品</UIButton></p>;
+ return <ProductReadState phase={metadata.snapshot.phase} retry={metadata.read} cancel={metadata.cancel} cancelled={metadata.cancelled} empty={!data}>{data&&<PhotoPresentation scope={p.scope} native={data.images} colors={colors} colorsKnown={specifications.snapshot.phase==='success'&&!!specifications.snapshot.success?.data} {...(p.readOnly?{readOnly:true}:{})} {...(!p.readOnly&&p.draft?{draft:p.draft}:{})} media={p.media} onAccessFailure={p.onAccessFailure} beforeColors={specifications.snapshot.phase!=='success'?<ProductReadState phase={specifications.snapshot.phase} retry={specifications.read} cancel={specifications.cancel} cancelled={specifications.cancelled} empty={!specifications.snapshot.success}>{null}</ProductReadState>:null}/>}</ProductReadState>;
 }
-interface Props extends MediaContext {
-  readonly productId: string | null;
-  readonly media?: ProductEditorMediaReader; readonly expectedVersion: number | null;
-  readonly onReloadRequest: () => void;
-  readonly reloadBlocked?: boolean;
+function PhotoPresentation(p:{readonly scope:ReadScope;readonly native:readonly ProductEditorImage[];readonly colors:readonly {readonly id:string;readonly label:string}[];readonly draft?:ProductMediaDraft;readonly readOnly?:boolean;readonly media?:ProductEditorMediaReader;readonly onAccessFailure?:(error:HttpQueryError)=>void;readonly colorsKnown?:boolean;readonly beforeColors?:React.ReactNode}){
+ const draft=p.readOnly?undefined:p.draft,uploads=draft?.uploads??[],native=p.native.filter(image=>!draft?.removed.some(row=>row.id===image.id)&&!uploads.some(row=>row.replace?.id===image.id));
+ const nativeByKey=new Map(native.map(image=>[`image:${image.id}:${image.version}`,image])),uploadsByKey=new Map(uploads.map(row=>[`upload:${row.uploadKey}`,row]));
+ const items:ProductPhotoSourceItem[]=[...native.map((image,index)=>({key:`image:${image.id}:${image.version}`,name:`${image.role?roleNames[image.role]:'未分类图片'} ${index+1}`,role:image.role?roleNames[image.role]:null,colorId:image.colorId,thumbnailUrl:image.thumbnailState==='READY'?image.thumbnailUrl:null,draft:false})),...uploads.map(row=>({key:`upload:${row.uploadKey}`,name:row.file.name,role:row.role?roleNames[row.role]:null,colorId:row.colorId,thumbnailUrl:row.url,draft:true}))];
+ const colors=draft?draft.colors.map(color=>({id:color.id,name:color.label??p.colors.find(row=>row.id===color.id)?.label??'颜色资料未提供'})):p.colors.map(color=>({id:color.id,name:color.label}));for(const image of native)if(image.colorId&&!colors.some(color=>color.id===image.colorId))colors.push({id:image.colorId,name:'颜色资料未提供'});
+ const nextOrder=Math.max(-1,...p.native.map(image=>image.displayOrder),...uploads.map(row=>row.displayOrder))+1;
+ return <ProductPhotosSource items={items} colors={colors} {...(p.colorsKnown!==undefined?{colorsKnown:p.colorsKnown}:{})} readOnly={!!p.readOnly} disabled={!draft||draft.disabled} beforeColors={p.beforeColors} upload={draft?(files,role,colorId,replace)=>{const upload=replace?uploadsByKey.get(replace.key):null;if(upload){draft.replaceUpload(upload.uploadKey,files);return;}const image=replace?nativeByKey.get(replace.key)??null:null;const kind=(Object.entries(roleNames).find(([,label])=>label===role)?.[0]??(image?'MAIN':null))as ProductImageRole|null;if(kind)draft.add(files,kind,colorId,image,image?.displayOrder??nextOrder);}:undefined} remove={draft?item=>{const image=nativeByKey.get(item.key),upload=uploadsByKey.get(item.key);if(image)draft.removeNative(image);else if(upload)draft.removeUpload(upload.uploadKey);}:undefined} status={item=>{const upload=uploadsByKey.get(item.key);return upload?.phase==='uploading'?<span role="status">准备中</span>:upload?.phase==='error'?<p role="alert">{upload.error}<button type="button" className="btn ghost" disabled={draft?.disabled} onClick={()=>draft?.retry(upload.uploadKey)}>重试上传</button></p>:null;}} preview={(item,close)=>{const upload=uploadsByKey.get(item.key),image=nativeByKey.get(item.key);return upload?<ProductPhotoSourcePreview src={upload.url} label={upload.file.name} close={close}/>:image&&p.media?<MediaOriginalPreview key={`${image.id}:${image.version}`} scope={p.scope} media={p.media} image={image} label={item.name} close={close} {...(p.onAccessFailure?{onAccessFailure:p.onAccessFailure}:{})}/>:null;}}/>;
 }
-const roles: readonly (readonly [ProductImageRole, string])[] = [
-  ['MAIN', '主图'], ['WHITE_BACKGROUND', '白底图'], ['HANG_TAG', '吊牌图'], ['DETAIL', '详情图'],
-];
-function accessFailure(props: MediaContext, error: unknown, signal: AbortSignal) {
-  if (props.scope.active && !signal.aborted && error instanceof HttpQueryError
-    && (error.kind === 'unauthenticated' || error.kind === 'forbidden')) props.onAccessFailure(error);
-}
-export function ProductEditorMedia(props: Props) {
-  if (!props.productId) return <p className="product-field-hint">图片上传服务尚未就绪；保存商品后可查看已有图片。</p>;
-  if (!props.media) return <><p className="product-field-hint">图片分类和维护服务尚未就绪，当前仅可查看已有图片。</p><ProductTab scope={props.scope} reader={props.reader}/></>;
-  return <MediaGallery {...props} productId={props.productId} media={props.media}/>;
-}
-type GalleryProps=MediaContext&{readonly productId:string;readonly media:ProductEditorMediaReader}&({readonly readOnly:true}|{readonly readOnly?:false;readonly expectedVersion:number|null;readonly onReloadRequest:()=>void;readonly reloadBlocked?:boolean});
-/** Readonly metadata owns its current version; never lends editor maintenance/reload authority. */
-export function ProductReadOnlyMedia(props:MediaContext&{readonly productId:string;readonly media:ProductEditorMediaReader}){return <MediaGallery {...props} readOnly/>;}
-function MediaGallery(props: GalleryProps) {
-  const active=useProductPanelActive();
-  const { snapshot, read, cancel, cancelled } = useProductRead(props.scope, async input => {
-    try { return await props.media.readImages(input); }
-    catch (error) { accessFailure(props, error, input.signal); throw error; }
-  }, (data, target) => {
-    if (data.productId !== target.productId) throw new HttpQueryError('malformed-response', 'PRODUCT_MEDIA_TARGET_MISMATCH');
-    if (!props.readOnly && data.version !== props.expectedVersion) throw new HttpQueryError('conflict', 'PRODUCT_MEDIA_VERSION_MISMATCH');
-  });
-  const [preview, setPreview] = useState<{ image: ProductEditorImage; label: string } | null>(null);
-  useEffect(()=>{if(!active)setPreview(null);},[active]);
-  const data = snapshot.phase === 'success' ? snapshot.success?.data : null;
-  const item = (image: ProductEditorImage, label: string) => <MediaThumbnail key={`${image.id}:${image.version}`} image={image} label={label} open={() => setPreview({ image, label })}/>;
-  if (!props.readOnly && snapshot.phase === 'error' && snapshot.error instanceof HttpQueryError && snapshot.error.code === 'PRODUCT_MEDIA_VERSION_MISMATCH')
-    return <p role="alert" className="product-field-hint">商品图片版本已变化。<UIButton disabled={!!props.reloadBlocked} onClick={props.onReloadRequest}>重新读取商品</UIButton></p>;
-  if (snapshot.phase === 'error' && snapshot.error instanceof HttpQueryError && ['not-implemented','unavailable'].includes(snapshot.error.kind))
-    return <p role="alert" className="product-field-hint">图片服务尚未就绪。<UIButton onClick={read}>重试读取图片</UIButton></p>;
-  return <ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!data}>{data && <div className={`product-editor-photos${props.readOnly ? ' product-readonly-photos' : ''}`}>
-    <p className="product-field-hint">{props.readOnly?'支持 PNG、JPEG、WebP，单张不超过 8 MB；图片随商品保存。':'点击图片查看原图。图片上传、替换和删除服务尚未就绪。'}</p>
-    {roles.map(([role, label]) => <section className="product-photo-section" key={role} aria-label={label}><h3>{label}</h3><div className="product-photo-row">
-      {data.images.filter(image => image.role === role).map((image, index) => item(image, `${label} ${index + 1}`))}
-      {!props.readOnly && !data.images.some(image => image.role === role) && <span className="product-field-hint">暂无图片</span>}
-    </div></section>)}
-    <MediaColors {...props} images={data.images.filter(image => image.role === 'COLOR')} item={item}/>
-    {data.images.some(image => image.role === null) && <section className="product-photo-section" aria-label="未分类"><h3>未分类</h3><div className="product-photo-row">{data.images.filter(image => image.role === null).map((image, index) => item(image, `未分类图片 ${index + 1}`))}</div></section>}
-    {active && preview && <MediaOriginalPreview key={`${preview.image.id}:${preview.image.version}`} {...props} media={props.media} image={preview.image} label={preview.label} close={() => setPreview(null)}/>}
-  </div>}</ProductReadState>;
-}
-function MediaColors(props: MediaContext & { readonly readOnly?: boolean; readonly images: readonly ProductEditorImage[]; readonly item: (image: ProductEditorImage, label: string) => React.ReactNode }) {
-  const { snapshot, read, cancel, cancelled } = useProductRead(props.scope, async input => {
-    try { return await props.reader.readProductSpecifications(input); }
-    catch (error) { accessFailure(props, error, input.signal); throw error; }
-  }, assertProductSpecifications);
-  const data = snapshot.phase === 'success' ? snapshot.success?.data : null;
-  // A missing label never discards an actual image or turns its identity into a displayed name.
-  const rows = [...(data?.colors ?? [])];
-  for (const image of props.images) if (!rows.some(color => color.id === image.colorId)) rows.push({ id: image.colorId!, label: '颜色资料未提供' });
-  return <section className="product-photo-section" aria-label="颜色图"><h3>颜色图</h3>
-    {snapshot.phase !== 'success' && <ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!data}>{null}</ProductReadState>}
-    <div className="product-photo-row product-color-photos">{rows.map(color => {
-      const image = props.images.find(image => image.colorId === color.id);
-      return <div key={color.id} className="product-color-photo"><div className="product-color-photo-name" title={color.label}>{color.label}</div>{image ? props.item(image, `${color.label}配图`) : !props.readOnly && <span className="product-color-photo-empty">暂无图片</span>}</div>;
-    })}</div>
-    {snapshot.phase === 'success' && !rows.length && <p className="product-field-hint">{props.readOnly ? '先在规格页选择当前颜色。' : '暂无当前颜色'}</p>}
-  </section>;
-}
-function MediaThumbnail(props: { readonly image: ProductEditorImage; readonly label: string; readonly open: () => void }) {
-  const [failed, setFailed] = useState(false), [attempt, setAttempt] = useState(0);
-  const missing = props.image.thumbnailState === 'UNAVAILABLE' || failed;
-  return <div className="product-photo-tile"><button type="button" className="product-photo-preview" aria-label={`查看原图 ${props.label}`} title={missing ? '缩略图不可用，点击读取原图' : `查看原图 ${props.label}`} onClick={props.open}>
-    {missing ? <span>缩略图不可用</span> : <img key={attempt} src={props.image.thumbnailUrl!} alt={props.label} loading="lazy" decoding="async" onError={() => setFailed(true)}/>}
-  </button>{failed && <UIButton className="product-photo-retry" aria-label={`重试缩略图 ${props.label}`} onClick={() => { setAttempt(value => value + 1); setFailed(false); }}>重试</UIButton>}</div>;
-}
-function MediaOriginalPreview(props: MediaContext & { readonly media: ProductEditorMediaReader; readonly image: ProductEditorImage; readonly label: string; readonly close: () => void }) {
-  const [decodeFailed, setDecodeFailed] = useState(false);
-  const { snapshot, read, cancel, cancelled } = useProductRead(props.scope, async input => {
-    try { return await props.media.readOriginal({ ...input, parameters: { productId: input.parameters.productId, imageId: props.image.id } }); }
-    catch (error) { accessFailure(props, error, input.signal); throw error; }
-  }, (data, target) => { if (data.productId !== target.productId || data.imageId !== props.image.id) throw new HttpQueryError('malformed-response', 'PRODUCT_MEDIA_TARGET_MISMATCH'); });
-  return <StandardOverlay className="pd-image-preview" title={props.label} label={`图片预览 ${props.label}`} closeLabel="关闭图片预览" close={props.close} maskClosable width={860}>
-    {decodeFailed ? <p role="alert">原图暂不可读取。<UIButton onClick={() => { setDecodeFailed(false); read(); }}>重试原图</UIButton></p> : <ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!snapshot.success}>
-      {snapshot.success && <img src={snapshot.success.data.url} alt={props.label} onError={() => setDecodeFailed(true)}/>}
-    </ProductReadState>}
-  </StandardOverlay>;
+function MediaOriginalPreview(p:{readonly scope:ReadScope;readonly media:ProductEditorMediaReader;readonly image:ProductEditorImage;readonly label:string;readonly close:()=>void;readonly onAccessFailure?:(error:HttpQueryError)=>void}){
+ const [decodeFailed,setDecodeFailed]=useState(false),state=useProductRead(p.scope,async input=>{try{return await p.media.readOriginal({...input,parameters:{productId:input.parameters.productId,imageId:p.image.id}});}catch(error){if(p.scope.active&&!input.signal.aborted&&error instanceof HttpQueryError&&(error.kind==='unauthenticated'||error.kind==='forbidden'))p.onAccessFailure?.(error);throw error;}},(data,target)=>{if(data.productId!==target.productId||data.imageId!==p.image.id)throw new HttpQueryError('malformed-response','PRODUCT_MEDIA_TARGET_MISMATCH');});
+ const data=state.snapshot.phase==='success'?state.snapshot.success?.data:null;
+ return <ProductPhotoSourcePreview src={data?.url??''} label={p.label} close={p.close} onError={()=>setDecodeFailed(true)} extra={decodeFailed?<p role="alert">原图暂不可读取。<UIButton onClick={()=>{setDecodeFailed(false);state.read();}}>重试原图</UIButton></p>:state.snapshot.phase!=='success'?<ProductReadState phase={state.snapshot.phase} retry={state.read} cancel={state.cancel} cancelled={state.cancelled} empty={!data}>{null}</ProductReadState>:null}/>;
 }
