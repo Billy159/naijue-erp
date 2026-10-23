@@ -42,13 +42,13 @@ export function StandardPagination(props: StandardPaginationProps) {
   const go = (page: bigint) => { if (!unavailable() && canPage(page)) props.onPage(Number(page)); };
   const target = /^[1-9]\d{0,15}$/.test(jump) ? BigInt(jump) : 0n;
   if (total === null || pages === null || (props.simple && total === 0n) || (props.hideOnSinglePage !== false && pages <= 1n)) return null;
-  const exactFallback = total > MAX_SAFE;
+  const exactFallback = total > MAX_SAFE, emptyPage = total === 0n && current === 1n;
   const numbers = [...new Set([1n, current - 1n, current, current + 1n, pages].filter(page => page >= 1n && page <= pages))].sort((left, right) => left < right ? -1 : left > right ? 1 : 0);
-  return <nav className="erp-pagination iw-actions iw-pager-actions" aria-label={props.label} data-pagination-mode={exactFallback ? 'exact-bigint' : 'arco-safe-total'}>
-    {exactFallback ? <div className="erp-exact-pagination" aria-label="精确大计数分页">
-      <UIButton type="button" className="iw-page-button" aria-label="上一页" disabled={unavailable() || !canPage(current - 1n)} onClick={() => go(current - 1n)}>‹</UIButton>
-      {numbers.map((page, index) => <span className="erp-pagination-slot" key={page.toString()}>{index > 0 && page - numbers[index - 1]! > 1n && <span>…</span>}<UIButton type="button" className="iw-page-button" aria-label={`第${page}页`} aria-current={page === current ? 'page' : undefined} disabled={unavailable() || !canPage(page)} onClick={() => go(page)}>{page.toString()}</UIButton></span>)}
-      <UIButton type="button" className="iw-page-button" aria-label="下一页" disabled={unavailable() || !canPage(current + 1n)} onClick={() => go(current + 1n)}>›</UIButton>
+  return <nav className="erp-pagination iw-actions iw-pager-actions" aria-label={props.label} data-pagination-mode={exactFallback ? 'exact-bigint' : emptyPage ? 'empty-current-page' : 'arco-safe-total'}>
+    {exactFallback || emptyPage ? <div className="erp-exact-pagination" aria-label={emptyPage ? props.label : '精确大计数分页'}>
+      <UIButton type="button" className={emptyPage && props.stepText ? 'iw-text-button' : 'iw-page-button'} aria-label="上一页" disabled={unavailable() || !canPage(current - 1n)} onClick={() => go(current - 1n)}>{emptyPage && props.stepText ? '上一页' : '‹'}</UIButton>
+      {numbers.map((page, index) => <span className="erp-pagination-slot" key={page.toString()}>{index > 0 && page - numbers[index - 1]! > 1n && <span>…</span>}<UIButton type="button" className="iw-page-button" aria-label={`第${page}页`} aria-current={page === current ? 'page' : undefined} disabled={unavailable() || !canPage(page)} onClick={() => { if (!emptyPage) go(page); }}>{page.toString()}</UIButton></span>)}
+      <UIButton type="button" className={emptyPage && props.stepText ? 'iw-text-button' : 'iw-page-button'} aria-label="下一页" disabled={unavailable() || !canPage(current + 1n)} onClick={() => go(current + 1n)}>{emptyPage && props.stepText ? '下一页' : '›'}</UIButton>
     </div> : <Pagination current={props.page} pageSize={props.pageSize} total={Number(total)} disabled={unavailable()} size="small" bufferSize={1} simple={props.simple === true} showJumper={false} sizeCanChange={false}
       onChange={page => { if (Number.isSafeInteger(page)) go(BigInt(page)); }}
       itemRender={(_page, type, original) => props.stepText && (type === 'prev' || type === 'next') ? <span>{type === 'prev' ? '上一页' : '下一页'}</span> : original} />}
