@@ -1,5 +1,4 @@
-import { UIButton } from '../components/standard-controls.tsx';
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, useId, useSyncExternalStore, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
 import type { InventoryActions, InventoryCellTarget, InventoryColorFit, InventoryPage, InventoryProduct, InventoryRow, InventorySize, StockTotal } from './contracts.ts';
 import { formatQuantity, totalLabel } from './model.ts';
 import { knownDisplaySources, projectInventoryColors, type InventoryDisplayColor, type InventoryDisplayRow } from './display-projection.ts';
@@ -38,6 +37,8 @@ type MatrixProps = {
   readonly toggleColor: (id: string) => void;
   readonly actions: InventoryActions;
   readonly windowing?: InventoryMatrixWindowing;
+  /** Internal source choose() callback; carries only existing native cell targets. */
+  readonly chooseSources?:(targets:readonly InventoryCellTarget[])=>void;
 };
 /** Column-first geometry follows frozen inventory-matrix-experiment.js, not
  * standalone product-heading rows. Canonical FIT/SKU identities stay separate. */
@@ -47,11 +48,24 @@ export function InventoryMatrix(props: MatrixProps) {
     signal?.addEventListener('abort', callback);
     return () => signal?.removeEventListener('abort', callback);
   }, () => signal?.aborted ?? false, () => signal?.aborted ?? false);
+  const [choices,setChoices]=useState<readonly InventoryCellTarget[]|null>(null);
+  useEffect(()=>setChoices(null),[props.data]);
   if (aborted) return null;
   // The opt-in window model addresses canonical single-SKU cells. Until it has
   // measured projection geometry, hidden-FIT views retain the safe eager path.
-  return props.windowing && props.settings.fit ? <WindowedInventoryMatrix {...props} windowing={props.windowing} /> : <EagerInventoryMatrix {...props} />;
+  const sourceProps={...props,chooseSources:setChoices};
+  return <div className="inventory-source-matrix">{props.windowing&&props.settings.fit?<WindowedInventoryMatrix {...sourceProps} windowing={props.windowing}/>:<EagerInventoryMatrix {...sourceProps}/>}
+  {choices&&<InventorySourceChoice choices={choices} products={props.data.products} close={()=>setChoices(null)} select={target=>props.actions.onOpenCell?.(target)}/>}</div>;
 }
+/** Direct inventory-fit-projection.js choose(): original dialog/head/buttons.
+ * Native source identities are already supplied by the retained formal projection. */
+function InventorySourceChoice(p:{readonly choices:readonly InventoryCellTarget[];readonly products:readonly InventoryProduct[];readonly close:()=>void;readonly select:(target:InventoryCellTarget)=>void}){
+ const dialog=useRef<HTMLDialogElement>(null),title=useId();
+ useEffect(()=>{const element=dialog.current;if(element&&!element.open)element.showModal();return()=>{if(element?.open)element.close();};},[]);
+ const close=()=>{dialog.current?.close();p.close();};
+ return <dialog ref={dialog} className="inventory-source-choice" aria-labelledby={title} onCancel={p.close}><h3 id={title}>选择要查看的版型资料</h3>{p.choices.map(target=><button type="button" className="btn" key={target.skuId} onClick={()=>{close();p.select(target);}}>{target.fit.label} · {p.products.find(product=>product.id===target.productId)?.code??target.productId}</button>)}<button type="button" className="btn" onClick={close}>关闭</button></dialog>;
+}
+
 function EagerInventoryMatrix(props: MatrixProps) {
   const sections = new Map<string, InventoryProduct[]>();
   for (const product of props.data.products) {
@@ -63,10 +77,10 @@ function EagerInventoryMatrix(props: MatrixProps) {
     const first = products[0]!;
     const width = 300 + 116 + 152 + first.sizes.length * 76 + 76 + 70;
     return <section key={key} className="mx-section" data-size-system={first.sizeGroup.id} style={{ '--mx-table-width': `${width}px` } as CSSProperties} aria-label={`${first.sizeGroup.label}库存矩阵`}>
-      {props.settings.sizeDescription && <h3>{first.sizeGroup.label}<small>{first.sizes.map(size => size.label).join(' / ')}</small></h3>}
+      <h3 hidden={!props.settings.sizeDescription}>{first.sizeGroup.label} <small>{first.sizes.map(size=>size.label).join(' / ')}</small></h3>
       <table className="mx-table"><caption className="sr-only">{first.sizeGroup.label}，商品、颜色、版型、仓库及尺码库存；— 表示不存在此规格，合法规格无库存显示 0。</caption>
         <colgroup><col style={{ width: 300 }} /><col style={{ width: 116 }} /><col style={{ width: 152 }} />{first.sizes.map(size => <col key={size.id} style={{ width: 76 }} />)}<col style={{ width: 76 }} /><col style={{ width: 70 }} /></colgroup>
-        <thead><tr><th scope="col" className="mx-product">款号／商品名称</th><th scope="col" className="mx-color">颜色</th><th scope="col" className="mx-warehouse">仓库</th>{first.sizes.map(size => <th scope="col" key={size.id} className="mx-size" data-size-id={size.id}>{size.label}</th>)}<th scope="col" className="mx-total-cell">合计</th><th scope="col" className="mx-operation">操作</th></tr></thead>
+        <thead><tr><th scope="col" className="mx-product">款号／商品名称</th><th scope="col" className="mx-color">颜色</th><th scope="col" className="mx-warehouse">仓库</th>{first.sizes.map(size => <th scope="col" key={size.id} className="mx-size" data-size-id={size.id}>{size.label}</th>)}<th scope="col" className="mx-total-cell">合计</th><th scope="col">操作</th></tr></thead>
         <tbody>{products.map(product => <ProductRows key={product.id} product={product} {...props} />)}</tbody>
       </table>
     </section>;
@@ -74,19 +88,21 @@ function EagerInventoryMatrix(props: MatrixProps) {
 }
 const spacer = <span className="mx-fold-spacer" aria-hidden="true" />;
 function Fold(props: { readonly expanded: boolean; readonly label: string; readonly toggle: () => void }) {
-  return <UIButton type="button" className="mx-fold" aria-expanded={props.expanded} aria-label={`${props.expanded ? '折叠' : '展开'}${props.label}`} onClick={props.toggle}>{props.expanded ? '▾' : '▸'}</UIButton>;
+  return <button type="button" className="mx-fold" aria-expanded={props.expanded} aria-label={`${props.expanded ? '折叠' : '展开'}${props.label}`} onClick={props.toggle}>{props.expanded ? '▾' : '▸'}</button>;
 }
 function Indent(props: { readonly control: ReactNode; readonly children: ReactNode }) {
-  return <div className="mx-indent">{props.control}<span>{props.children}</span></div>;
+  return <div className="mx-indent">{props.control}{props.children}</div>;
 }
-function ProductIdentity(props: { readonly product: InventoryProduct; readonly settings: InventoryDisplaySettings; readonly showMeta: boolean; readonly fit?: string }) {
-  const { product, settings } = props;
-  return <><div className="mx-product-identity"><strong>{product.code}</strong><span title={product.name}>{product.name}</span></div>{props.showMeta && <div className="mx-meta">
-    {settings.category && <span><em>分类</em> {product.categoryLabel}</span>}{settings.supplier && <span><em>供应商</em> {product.supplierLabel}</span>}{settings.fit && props.fit && <span><em>版型</em> {props.fit}</span>}{settings.sizeGroup && <span><em>尺码组</em> {product.sizeGroup.label}</span>}{settings.season && <span><em>季节</em> {product.seasonLabel}</span>}
-  </div>}</>;
+/** Direct inventory-matrix-experiment.js productCell; native DTO slots only. */
+function ProductIdentity(props:{readonly product:InventoryProduct;readonly settings:InventoryDisplaySettings;readonly showMeta:boolean;readonly fit?:string}){
+ const {product,settings}=props;
+ const fields=[['category','分类',product.categoryLabel],['supplier','供应商',product.supplierLabel],['fit','版型',props.fit],['sizeGroup','尺码组',product.sizeGroup.label],['season','季节',product.seasonLabel]]as const;
+ const extras=fields.filter(([key])=>settings[key]&&(key!=='fit'||props.fit!==undefined));
+ return <><div className="mx-product-identity"><strong>{product.code}</strong><span title={product.name}>{product.name}</span></div>{props.showMeta&&extras.length>0&&<div className="mx-meta">{extras.map(([key,label,value])=><span key={key}><em>{label}</em> {value??'未提供'}</span>)}</div>}</>;
 }
+
 function ViewProduct(props: { readonly product: InventoryProduct; readonly actions: InventoryActions }) {
-  return <UIButton type="button" className="mx-view" disabled={!props.actions.onViewProduct} title={props.actions.onViewProduct ? '查看当前商品' : '商品只读抽屉尚未接入'} aria-label={`打开${props.product.code}商品资料`} onClick={event => { event.currentTarget.focus(); props.actions.onViewProduct?.({ id: props.product.id, label: `${props.product.code} ${props.product.name}` }); }}>查看</UIButton>;
+  return <button type="button" className="mx-view" disabled={!props.actions.onViewProduct} title={props.actions.onViewProduct ? '查看当前商品' : '商品只读抽屉尚未接入'} aria-label={`打开${props.product.code}商品资料`} onClick={event => { event.currentTarget.focus(); props.actions.onViewProduct?.({ id: props.product.id, label: `${props.product.code} ${props.product.name}` }); }}>查看</button>;
 }
 function ProductRows(props: MatrixProps & { readonly product: InventoryProduct }) {
   const { product } = props;
@@ -116,9 +132,9 @@ type RowWindow = {
   readonly row: InventoryWindowRow;
   readonly sectionStart: number;
   readonly bindCell: (address: InventoryLogicalCell) => {
-    readonly ref: (element: HTMLButtonElement | null) => void;
+    readonly ref: (element: HTMLSpanElement | null) => void;
     readonly onFocus: () => void;
-    readonly onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => void;
+    readonly onKeyDown: (event: KeyboardEvent<HTMLSpanElement>) => void;
   };
 };
 function ColumnCells(props: { readonly product: InventoryProduct; readonly window?: RowWindow; readonly render: (size: InventorySize, index: number) => ReactNode }) {
@@ -144,16 +160,21 @@ function WarehouseRow(props: MatrixProps & { readonly product: InventoryProduct;
       const target: InventoryCellTarget | null = sources
         ? source ? { productId: source.productId, productLabel: `${product.code} ${product.name}`, color: source.color, fit: source.fit, size: source.size, warehouse: source.warehouse, skuId: source.cell.skuId, readReference: props.data.readReference } : null
         : group.fit && 'skuId' in cell ? { productId: product.id, productLabel: `${product.code} ${product.name}`, color: group.color, fit: group.fit, size, warehouse: row.warehouse, skuId: cell.skuId, readReference: props.data.readReference } : null;
-      const multipleSources = !!sources && sources.length > 1;
-      const explanation = multipleSources ? '跨版型汇总包含多个 SKU，请在显示设置中显示版型后查看各自库存流水' : props.actions.onOpenCell ? `查看该仓库 / SKU 库存流水${target ? ` · ${target.fit.label}` : ''}` : '库存流水尚未接入';
-      return <td key={size.id} className="mx-number" aria-colindex={props.window ? index + 4 : undefined}><UIButton type="button" className={`mx-stock${cell.quantity.startsWith('-') ? ' mx-negative' : cell.quantity === '0' ? ' mx-zero' : ''}`} {...(address ? props.window?.bindCell(address) : {})} data-stock-address={props.window ? JSON.stringify(address) : undefined} data-inventory-source-count={sources?.length ?? 1} disabled={!props.actions.onOpenCell || !target} title={explanation} aria-label={`${product.code} ${group.color.label} ${fitLabel} ${row.warehouse.label} ${size.label} 库存${cell.quantity}${multipleSources ? `，${explanation}` : ''}`} onClick={() => { if (target) props.actions.onOpenCell?.(target); }}>{formatQuantity(cell.quantity)}</UIButton></td>;
-    }} /><td className="mx-total-cell" aria-colindex={props.window ? product.sizes.length + 4 : undefined} title={totalLabel(row.total)}>{totalLabel(row.total)}</td><td className="mx-operation" aria-colindex={props.window ? product.sizes.length + 5 : undefined}><ViewProduct product={product} actions={props.actions} /></td>
+      const multipleSources=!!sources&&sources.length>1;
+      const available=!!props.actions.onOpenCell&&(!!target||multipleSources&&!!props.chooseSources);
+      const explanation=multipleSources?'选择要查看的版型资料':available?`查看该仓库 / SKU 库存流水${target?` · ${target.fit.label}`:''}`:'库存流水尚未接入';
+      const open=()=>{if(!available)return;if(multipleSources){props.chooseSources?.(sources!.map(source=>({productId:source.productId,productLabel:`${product.code} ${product.name}`,color:source.color,fit:source.fit,size:source.size,warehouse:source.warehouse,skuId:source.cell.skuId,readReference:props.data.readReference})));}else if(target)props.actions.onOpenCell?.(target);};
+      const binding=address?props.window?.bindCell(address):undefined;
+      return <td key={size.id} data-mx-stock="" data-product={product.id} data-color={group.color.id} data-size={size.id} data-warehouse={row.warehouse.id} className={`mx-number${cell.quantity.startsWith('-')?' minus':cell.quantity==='0'?' mx-zero':''}`} aria-colindex={props.window?index+4:undefined}>
+       <span className={`iw-number mx-stock${cell.quantity.startsWith('-')?' mx-negative':''}`} role="button" tabIndex={available?0:-1} {...(binding?{ref:binding.ref,onFocus:binding.onFocus}:{})} data-stock-address={props.window?JSON.stringify(address):undefined} data-inventory-source-count={sources?.length??1} aria-disabled={!available} title={explanation} aria-label={`${product.code} ${group.color.label} ${fitLabel} ${row.warehouse.label} ${size.label} 库存${cell.quantity}${multipleSources?`，${explanation}`:''}`} onClick={open} onKeyDown={event=>{if(event.key==='Enter'||event.key===' '){if(available){event.preventDefault();open();}}else binding?.onKeyDown(event);}}>{formatQuantity(cell.quantity)}</span>
+      </td>;
+    }} /><td className="mx-total-cell" aria-colindex={props.window ? product.sizes.length + 4 : undefined} title={totalLabel(row.total)}>{totalLabel(row.total)}</td><td aria-colindex={props.window ? product.sizes.length + 5 : undefined}><ViewProduct product={product} actions={props.actions} /></td>
   </tr>;
 }
 function TotalRow(props: MatrixProps & { readonly product: InventoryProduct; readonly label?: string; readonly fit?: string; readonly color?: ReactNode; readonly warehouse?: ReactNode; readonly totals: Readonly<Record<string, StockTotal>>; readonly total: StockTotal; readonly kind: 'product' | 'color'; readonly folded?: boolean; readonly first?: boolean; readonly identity?: boolean; readonly window?: RowWindow }) {
   return <tr {...rowAttributes(props.window)} data-inventory-product={props.product.id} className={`mx-${props.kind === 'product' ? 'total mx-product-total' : 'subtotal mx-color-total'}${props.folded ? ' mx-folded' : ''}${props.first ? ' mx-product-row' : ''}`}>
     <td className="mx-product">{props.identity ? <ProductIdentity product={props.product} settings={props.settings} showMeta={!!props.first || props.settings.fit} {...(props.fit ? { fit: props.fit } : {})} /> : props.label}{props.fit && <span className="sr-only">{props.fit}</span>}</td><td className="mx-color">{props.color}</td><td className="mx-warehouse">{props.warehouse}</td>
-    <ColumnCells product={props.product} {...(props.window ? { window: props.window } : {})} render={(size, index) => <td key={size.id} className="mx-number" aria-colindex={props.window ? index + 4 : undefined} title={totalLabel(props.totals[size.id]!)}>{formatQuantity(props.totals[size.id]!.knownQuantity)}</td>} /><td className="mx-total-cell" title={totalLabel(props.total)}>{totalLabel(props.total)}</td><td className="mx-operation">{props.identity && <ViewProduct product={props.product} actions={props.actions} />}</td>
+    <ColumnCells product={props.product} {...(props.window ? { window: props.window } : {})} render={(size, index) => <td key={size.id} className="mx-number" aria-colindex={props.window ? index + 4 : undefined} title={totalLabel(props.totals[size.id]!)}>{formatQuantity(props.totals[size.id]!.knownQuantity)}</td>} /><td className="mx-total-cell" title={totalLabel(props.total)}>{totalLabel(props.total)}</td><td className="mx-summary-operation">{props.identity && <ViewProduct product={props.product} actions={props.actions} />}</td>
   </tr>;
 }
 
@@ -181,7 +202,7 @@ function WindowedInventoryMatrix(props: MatrixProps & { readonly windowing: Inve
   const [focus, setFocus] = useState<{ readonly data: InventoryPage; readonly signal: AbortSignal; readonly address: InventoryLogicalCell } | null>(null);
   const [failure, setFailure] = useState<{ readonly model: InventoryWindowModel; readonly error: Error } | null>(null);
   const host = useRef<HTMLDivElement>(null);
-  const elements = useRef(new Map<string, HTMLButtonElement>());
+  const elements = useRef(new Map<string, HTMLSpanElement>());
   const pending = useRef<{ readonly model: InventoryWindowModel; readonly address: InventoryLogicalCell; readonly scrollTop: number; readonly scrollLeft: number } | null>(null);
   const planResult = useMemo(() => {
     if (!model) return { plan: null, error: null };
@@ -221,12 +242,12 @@ function WindowedInventoryMatrix(props: MatrixProps & { readonly windowing: Inve
   if (!model || !planResult.plan || error) return <EagerInventoryMatrix {...props} />;
   const plan = planResult.plan;
   const bindCell = (address: InventoryLogicalCell) => ({
-    ref: (element: HTMLButtonElement | null) => { const key = JSON.stringify(address); if (element) elements.current.set(key, element); else elements.current.delete(key); },
+    ref: (element: HTMLSpanElement | null) => { const key = JSON.stringify(address); if (element) elements.current.set(key, element); else elements.current.delete(key); },
     onFocus: () => {
       pending.current = null;
       setFocus(current => current?.data === props.data && current.signal === windowing.scope.signal && JSON.stringify(current.address) === JSON.stringify(address) ? current : { data: props.data, signal: windowing.scope.signal, address });
     },
-    onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => {
+    onKeyDown: (event: KeyboardEvent<HTMLSpanElement>) => {
       if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
       const directions = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down', Home: 'row-start', End: 'row-end' } as const;
       const direction = directions[event.key as keyof typeof directions];
@@ -256,7 +277,7 @@ function WindowedInventoryMatrix(props: MatrixProps & { readonly windowing: Inve
         {props.settings.sizeDescription && <h3 data-window-row-height={entry.section.headerTop - entry.section.top}>{first.sizeGroup.label}<small>{first.sizes.map(size => size.label).join(' / ')}</small></h3>}
         <table className="mx-table" aria-rowcount={entry.section.endRow - entry.section.headerRow} aria-colcount={first.sizes.length + 5}><caption className="sr-only">{first.sizeGroup.label}，商品、颜色、版型、仓库及尺码库存；— 表示不存在此规格，合法规格无库存显示 0。</caption>
           <colgroup><col style={{ width: 300 }} /><col style={{ width: 116 }} /><col style={{ width: 152 }} />{entry.columns.map(part => part.kind === 'gap' ? <col key={`gap-${part.start}`} span={part.count} style={{ width: part.width / part.count }} /> : <col key={part.column.size.id} style={{ width: part.column.width }} />)}<col style={{ width: 76 }} /><col style={{ width: 70 }} /></colgroup>
-          <thead><tr aria-rowindex={1} data-window-row-height={entry.section.headerHeight}><th scope="col" aria-colindex={1} className="mx-product" data-window-column-width={300} style={{ top: windowing.viewport.stickyHeaderOffset }}>款号／商品名称</th><th scope="col" aria-colindex={2} className="mx-color" data-window-column-width={116} style={{ top: windowing.viewport.stickyHeaderOffset }}>颜色</th><th scope="col" aria-colindex={3} className="mx-warehouse" data-window-column-width={152} style={{ top: windowing.viewport.stickyHeaderOffset }}>仓库</th>{entry.columns.map(part => part.kind === 'gap' ? <th key={`gap-${part.start}`} colSpan={part.count} aria-hidden="true" style={{ width: part.width, minWidth: 0, padding: 0, border: 0, top: windowing.viewport.stickyHeaderOffset }} /> : <th scope="col" key={part.column.size.id} aria-colindex={part.column.index + 4} className="mx-size" data-size-id={part.column.size.id} data-window-column-width={part.column.width} style={{ top: windowing.viewport.stickyHeaderOffset }}>{part.column.size.label}</th>)}<th scope="col" aria-colindex={first.sizes.length + 4} className="mx-total-cell" data-window-column-width={76} style={{ top: windowing.viewport.stickyHeaderOffset }}>合计</th><th scope="col" aria-colindex={first.sizes.length + 5} className="mx-operation" data-window-column-width={70} style={{ top: windowing.viewport.stickyHeaderOffset }}>操作</th></tr></thead>
+          <thead><tr aria-rowindex={1} data-window-row-height={entry.section.headerHeight}><th scope="col" aria-colindex={1} className="mx-product" data-window-column-width={300} style={{ top: windowing.viewport.stickyHeaderOffset }}>款号／商品名称</th><th scope="col" aria-colindex={2} className="mx-color" data-window-column-width={116} style={{ top: windowing.viewport.stickyHeaderOffset }}>颜色</th><th scope="col" aria-colindex={3} className="mx-warehouse" data-window-column-width={152} style={{ top: windowing.viewport.stickyHeaderOffset }}>仓库</th>{entry.columns.map(part => part.kind === 'gap' ? <th key={`gap-${part.start}`} colSpan={part.count} aria-hidden="true" style={{ width: part.width, minWidth: 0, padding: 0, border: 0, top: windowing.viewport.stickyHeaderOffset }} /> : <th scope="col" key={part.column.size.id} aria-colindex={part.column.index + 4} className="mx-size" data-size-id={part.column.size.id} data-window-column-width={part.column.width} style={{ top: windowing.viewport.stickyHeaderOffset }}>{part.column.size.label}</th>)}<th scope="col" aria-colindex={first.sizes.length + 4} className="mx-total-cell" data-window-column-width={76} style={{ top: windowing.viewport.stickyHeaderOffset }}>合计</th><th scope="col" aria-colindex={first.sizes.length + 5} data-window-column-width={70} style={{ top: windowing.viewport.stickyHeaderOffset }}>操作</th></tr></thead>
           <tbody>{entry.body.map(part => {
             if (part.kind === 'gap') return <tr key={`gap-${part.start}`} aria-hidden="true"><td colSpan={first.sizes.length + 5} style={{ height: part.height, minWidth: 0, padding: 0, border: 0 }} /></tr>;
             return <WindowRow key={part.row.key} {...props} row={part.row} window={rowWindow(part.row)} />;

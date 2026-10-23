@@ -1,3 +1,13 @@
+当前接续 2026-10-23T05:30:04.190236+00:00：按本主控最新人类裁决只新增一个前端验收位QF2（01a1673a-53e8-7923-8fb3-a97c8143d37d），原22项任务不增加，最多十角色。QF收尾C134 SALE/混合/readonly/配对行高后，接C137单据/调拨/公共控件；QF2已接同一固定C137 ad339df588d301dfab717ef09492a9c0f7bc500b / ui-preview-ad339df-01-build01 / http://127.0.0.1:57854/synthetic-unified.html 的商品C135与设置C136新范围，先源码核查。原48有效局部直接采用；总矩阵仍QF唯一汇总，C唯一维护本进度/TASKS/HANDOFF，QF2仅写自己的qa-frontend/.../QF2目录。关闭Demo Chat不恢复，QB不增人。
+
+浏览器现未证明真正隔离：主控工具inventory为空并提示Local browser use disabled，未改权限/未认领QF标签。原QF继续独占，清理自身草稿后按模块明确释放、C一次交接QF2；QF2先独立源码和实操准备，不以多标签冒隔离。每组结论绑定准确固定候选和实际范围；全部派工显式Sol61/xhigh，Fast请求关闭但工具无实际开关，不冒验证。
+
+部署实际新结果：C63原任务在32.301秒COMPLETED/exit0，固定C132 c28ea3f / r1-c28ea3f-20261023-02 生产依赖真实离线安装通过，Linux x64 Node24.21.0 Sharp0.35.5/vips8.18.7可加载，私有APP与代理health均200，HTML及其真实声明版本application.js均200且匹配原manifest。首个xtend4.0.2失败根因_cacache路径已修，A根因修复与B完整安装/私有启动两项现同时完成。不是最新C137整套前端上线；R1数据未就绪、正式地址未切换、业务验收false。旧45/48/60/61/62失败及原正式三服务保留，无正式数据写。下一项原D2合成QA原生CREATE真实前提读取/必要执行，释放D1后续H06实际验证，不误记QB积压。
+
+前端继续：QF134实际新direction popup错锚点、mixed Tab失焦及readonly RETURN旧双表已交原F1定向修，SALE0.5px保持OPEN等配对computed；F2原F03库存整页exact4已交付，待C固定合入新必要候选，C137不含该修复。104总项/局部48/整页整类0保持，未接入ledger/output及真实业务性能不冒通过。GitHub已独立核62730b59715e240b24d3bf19d68146a7ef3cc3d1，本次记录下一检查点同步。全部既有直接复用Demo、组件/按需渲染、业务/性能、字段确认、数据保护和分批发布裁决继续有效；目标ACTIVE未完成。
+
+以下历史保留；从本段和TASKS/currentContinuation接续，不恢复旧队列或重做已通过范围。
+
 当前接续 2026-10-23T05:15:17.802350+00:00：开发最新C138 `f0a0deda3e03b2a53b5f4177c5651f5219b3220d`；当前可打开完整合成候选C137 http://127.0.0.1:57854/synthetic-unified.html ，原QF仍先收C134同标签SALE模块，再接137，不把新源码当已浏览器通过。
 
 部署优先继续：根因A已实证解决（xtend4.0.2/CLI cache下一级_cacache接错，54真实Linux离线ci、56原生Sharp成功）。61进入最终HTML声明版本核对失败：旧PUBLIC-CONFIG仍引用C103asset目录；已修本轮实际构建输入，源码仍C132，新build r1-c28ea3f-20261023-02，HTML css/js均新版本，4.122秒原build/208成员1303210B包5ea76a5c通过。没有patchHTML/代理或弱化版本核对。62传输仍40s超时，C只读核无request/.tmp/result、dispatcherREADY、8已传文件完整，未执行/安装，保留partial不重放。138只修原client同CLI一次认证连接复用，原认证/主机校验/40s和job边界不变；QB新delta后用新63同02包。A通过/B尚待实际完整成功，不能称部署解除或正式已上线。

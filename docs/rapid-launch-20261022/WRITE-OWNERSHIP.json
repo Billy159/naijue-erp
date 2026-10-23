@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T05:13:31.512037+00:00",
+  "updatedAt": "2026-10-23T05:30:04.190236+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -3139,11 +3139,24 @@
   "reviewers": {
     "QF": {
       "sourceWriteEnabled": false,
-      "reports": "K/reports/qa-frontend/rapid-launch-20261022/QF/**"
+      "reports": "K/reports/qa-frontend/rapid-launch-20261022/QF/**",
+      "scope": "登录与公共壳、销货/退换、调拨列表/开单/编辑/详情/相关弹层；公共控件主验",
+      "matrixOwner": true,
+      "browser": "Exclusive until explicit module handoff to QF2; no concurrent shared Chrome control"
     },
     "QB": {
       "sourceWriteEnabled": false,
       "reports": "K/reports/qa-backend/rapid-launch-20261022/QB/**"
+    },
+    "QF2": {
+      "sourceWriteEnabled": false,
+      "reports": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/**",
+      "scope": "商品列表与六页签、分类/字典/条码/图片、库存、基础设置、客户供应商、员工账号、收款配置及相关弹层",
+      "parentTask": "QF01",
+      "matrixOwner": false,
+      "browser": "Source/preparation only until C/QF explicit serial handoff; independent sessions not established",
+      "threadId": "01a1673a-53e8-7923-8fb3-a97c8143d37d",
+      "authorizationSource": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排"
     }
   },
   "resourcePolicy": "No new PG, browser or integrated build before C assigns a bounded window. Light focused checks after source opening require result recording; no default full regression.",
@@ -3428,6 +3441,13 @@
       ],
       "reason": "Original F2 requested current editor static-import and destroy-on-hide lifecycle fix. Sharedtabs single F1 owner; 2 precise newF2 dynamic leaves. No other writer or architecture replacement.",
       "humanAuthorization": "Direct current C UI migration/on-demand/rendering request 2026-10-23"
+    },
+    {
+      "atUtc": "2026-10-23T05:30:04.190236+00:00",
+      "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
+      "change": "Only added QF2 report-only independent frontend scope, max10roles/original22tasks. QF primary documents/common/matrix, QF2 data/inventory. Backend QB unchanged. No developer/source/build/server/DB ownership transfer.",
+      "model": "gpt-6.1-sol/xhigh",
+      "fast": "Requested off; actual tool switch unavailable"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",

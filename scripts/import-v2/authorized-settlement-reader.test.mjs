@@ -5,11 +5,15 @@ import {readFile,readdir} from 'node:fs/promises';
 import {join} from 'node:path';
 import {paymentSourceFixture,id} from './payment-source-fixture.test-support.mjs';
 import {prepareHistorySettlementChunk} from '../../packages/application/src/import-v3-history-settlement.ts';
-import {openAuthorizedSettlementReader} from './authorized-settlement-reader.mjs';
+import {openAuthorizedSettlementReader,resolveSettlementSourceBinding} from './authorized-settlement-reader.mjs';
 const binding=q=>({header:{sourceKey:'sale-header',nativeId:id(100),sourceRowId:id(101),sourceFileSha256:'d'.repeat(64),rowSha256:'e'.repeat(64),version:1},
  account:{entity:'PAYMENT_ACCOUNT',sourceKey:'account',nativeId:id(20),sourceRowId:id(102),sourceFileSha256:'d'.repeat(64),rowSha256:'e'.repeat(64),fingerprint:'f'.repeat(64),nativeSnapshot:{id:id(20),name:'original account',payment_method_id:id(10),enabled:true,version:1}},
  method:q.rawFields.原收款方式来源编号?{entity:'PAYMENT_METHOD',sourceKey:'method-B',nativeId:id(11),sourceRowId:id(103),sourceFileSha256:'d'.repeat(64),rowSha256:'e'.repeat(64),fingerprint:'f'.repeat(64),nativeSnapshot:{id:id(11),name:'original methodB',enabled:true,version:1}}:null});
 const input=(o,r)=>({batchId:o.batchId,fixedSourceNamespace:o.fixedSourceNamespace,selection:r.selection,moneyApprovals:r.moneyApprovals,rows:[{source:r.source,...binding({rawFields:r.source.rawFields})}]});
+test('settlement adopted source bindings: original methodB or absent NULL feeds existing reader authorization independently of account methodA',async t=>{
+ const options=await paymentSourceFixture(t),headers=new Map(),accounts=new Map(),methods=new Map(),reader=await openAuthorizedSettlementReader({...options,resolveNativeBinding:q=>resolveSettlementSourceBinding(q,headers,accounts,methods)});t.after(()=>reader.close());let count=0;
+ for await(const record of reader.rows()){const q={rawFields:record.source.rawFields,normalizedFields:record.source.normalizedFields},b=binding(q);headers.set(b.header.sourceKey,b.header);accounts.set(b.account.sourceKey,b.account);if(b.method)methods.set(b.method.sourceKey,b.method);const resolved=resolveSettlementSourceBinding(q,headers,accounts,methods),chunk=prepareHistorySettlementChunk({...input(options,record),rows:[{source:record.source,...resolved}]});await reader.authorize(chunk);assert.equal(Object.hasOwn(resolved.header,'hallId'),false);assert.equal(chunk.rows[0].settlement.payment_method_id_snapshot,b.method?.nativeId??null);assert.equal(resolved.account.nativeSnapshot.payment_method_id,id(10));if(b.method){assert.equal(resolved.method.nativeId,id(11));assert.throws(()=>resolveSettlementSourceBinding(q,headers,accounts,new Map()),/BINDING_MISMATCH/);}else assert.equal(resolved.method,null);resolved.header.nativeId=id(99);assert.equal(headers.get(b.header.sourceKey).nativeId,id(100));count++;}assert.equal(count,2);
+});
 test('sealed settlement source authenticates original JSONL bytes including CR, whole32, independent methodB and absent optional method NULL',async t=>{
  const options=await paymentSourceFixture(t),reader=await openAuthorizedSettlementReader({...options,resolveNativeBinding:async q=>binding(q)});t.after(()=>reader.close());
  assert.equal(reader.report.selectedRows,2);assert.equal(reader.report.preflight.originalSourceMoneyVerification.approvedCellsMatched,32);

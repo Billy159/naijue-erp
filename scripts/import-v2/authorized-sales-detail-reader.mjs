@@ -15,6 +15,13 @@ const hash=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v),uuid=v=>typeof v==='
 const text=v=>typeof v==='string'&&v.length>0&&v.length<=65536&&!v.includes('\0');
 const ALIAS='mappings/old-to-canonical-sku-15121.csv',MONEY='provenance/approved-money-tail-overlay.csv';
 const MONEY_COLUMNS=['file','sheet','row','sourceId','entity','documentSourceId','field','rawValue','excessFromNearestCent','candidateExactCentValue','sourceFileSha256','decision','provenance','toleranceCurrencyUnits','corroboratingDocumentSourceId'];
+/** Existing reader callback using C-adopted same-batch source identities and
+ * approved five-field SKU alias bindings. No database/existence assertion. */
+export function resolveSalesDetailSourceBinding(query,headers,skus){
+ const oldKey=query.rawFields['SKU来源编号'],header=headers.get(query.normalizedFields['单据来源编号']),sku=skus.get(oldKey);
+ if(!header||!sku||header.sourceKey!==query.normalizedFields['单据来源编号']||sku.oldSourceSkuKey!==oldKey||sku.canonicalSourceKey!==query.normalizedFields['SKU来源编号'])fail('SALES_DETAIL_READER_NATIVE_BINDING_MISMATCH');
+ return structuredClone({header,sku});
+}
 const MAX_SPOOL=512*1024*1024,MAX_INDEX=256*1024*1024;
 const approvals=map=>{if(!(map instanceof Map))fail('SALES_DETAIL_READER_APPROVAL_MAP');return [...map.entries()].sort(([a],[b])=>a<b?-1:a>b?1:0);};
 async function* lines(chunks){let pending='',rows=0;for await(const chunk of chunks){let at=0;for(;;){const i=chunk.indexOf('\n',at),part=chunk.slice(at,i<0?undefined:i);if(pending.length+part.length>4*1024*1024)fail('SALES_DETAIL_READER_LINE_LIMIT');pending+=part;if(i<0)break;if(!pending||++rows>1_000_000)fail('SALES_DETAIL_READER_LINE_COUNT');yield pending;pending='';at=i+1;}}if(pending){if(++rows>1_000_000)fail('SALES_DETAIL_READER_LINE_COUNT');yield pending;}}

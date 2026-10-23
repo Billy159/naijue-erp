@@ -104,6 +104,12 @@ async function salesFixture(t,change=()=>{}){
 }
 const bindingFor=q=>({header:{sourceKey:q.normalizedFields['单据来源编号'],nativeId:id(2),sourceRowId:id(3),sourceFileSha256:'d'.repeat(64),rowSha256:'e'.repeat(64),version:1},
  sku:{oldSourceSkuKey:q.rawFields['SKU来源编号'],canonicalSourceKey:q.normalizedFields['SKU来源编号'],nativeId:id(4),aliasSourceRowId:id(5),importRecordId:id(6)}});
+test('sales adopted source bindings: six-field header and original SKU alias feed existing reader authorization without a PG resolver',async t=>{
+ const {openAuthorizedSalesDetailReader,resolveSalesDetailSourceBinding}=await import('./authorized-sales-detail-reader.mjs'),{prepareHistorySalesDetailChunk}=await import('../../packages/application/src/import-v3-history-sales-detail.ts'),options=await salesFixture(t),headers=new Map(),skus=new Map();
+ const reader=await openAuthorizedSalesDetailReader({...options,resolveNativeBinding:q=>resolveSalesDetailSourceBinding(q,headers,skus)});t.after(()=>reader.close());let count=0;
+ for await(const record of reader.rows()){const q={rawFields:record.source.rawFields,normalizedFields:record.source.normalizedFields},b=bindingFor(q);headers.set(b.header.sourceKey,b.header);skus.set(b.sku.oldSourceSkuKey,b.sku);const resolved=resolveSalesDetailSourceBinding(q,headers,skus),chunk=prepareHistorySalesDetailChunk({batchId:options.batchId,fixedSourceNamespace:options.fixedSourceNamespace,selection:record.selection,moneyApprovals:record.moneyApprovals,rows:[{source:record.source,...resolved}]});await reader.authorize(chunk);assert.equal(chunk.rows[0].line.header_id,b.header.nativeId);assert.equal(chunk.rows[0].sku.aliasSourceRowId,b.sku.aliasSourceRowId);assert.equal(Object.hasOwn(chunk.rows[0].header,'hallId'),false);resolved.header.nativeId=id(99);assert.equal(headers.get(b.header.sourceKey).nativeId,id(2));assert.throws(()=>resolveSalesDetailSourceBinding(q,new Map(),skus),/BINDING_MISMATCH/);const wrong=new Map(skus);wrong.set(b.sku.oldSourceSkuKey,{...b.sku,canonicalSourceKey:'WRONG'});assert.throws(()=>resolveSalesDetailSourceBinding(q,headers,wrong),/BINDING_MISMATCH/);count++;}
+ assert.equal(count,32);
+});
 test('SALES_LINE reader authenticates all32 approved cells, original raw snapshots and canonical aliases before independent native binding',async t=>{
  const {openAuthorizedSalesDetailReader}=await import('./authorized-sales-detail-reader.mjs');
  const {prepareHistorySalesDetailChunk}=await import('../../packages/application/src/import-v3-history-sales-detail.ts');
