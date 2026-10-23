@@ -10728,7 +10728,7 @@
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-23T07:29:50.301664+00:00",
+  "updatedAt": "2026-10-23T14:14:04.804970+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -11825,6 +11825,78 @@
         "C70-ACTUAL-V8-PATCH"
       ],
       "controllerTechnicalRetests": 0
+    },
+    {
+      "id": "QB185",
+      "adoptedAtUtc": "2026-10-23T14:14:04.804970+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice185-c93-actual-v10-three-purpose-pairing/RESULT.json",
+      "bytes": 12737,
+      "sha256": "d14ede1b67ad80318fb848af913a84b4a90fc96ac631b40779e0d677f88702a8",
+      "qualification": "PASS_EXACT_V10_THREE_PURPOSE_PAIRING_ONLY",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
+    },
+    {
+      "id": "QB186",
+      "adoptedAtUtc": "2026-10-23T14:14:04.804970+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice186-c180-group-recommendation-read/RESULT.json",
+      "bytes": 8415,
+      "sha256": "c33493a63d09fafadffccf43bf298967f23e710d66a4528f9dbe0defb6663c75",
+      "qualification": "PASS_C180_READ_SOURCE_PROTOCOL_ONLY",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
+    },
+    {
+      "id": "QB187",
+      "adoptedAtUtc": "2026-10-23T14:14:04.804970+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice187-c185-group-internal-append/RESULT.json",
+      "bytes": 10716,
+      "sha256": "569073b272f9cbd1fa1413b41083571186424441df3ab1ff87d50baa08301366",
+      "qualification": "PASS_D2_INTERNAL_MODULE_SOURCE_ONLY",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
+    },
+    {
+      "id": "QFv041",
+      "adoptedAtUtc": "2026-10-23T14:14:04.804970+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v041-qf-c181-group-payment-c177-base-source/RESULT.json",
+      "bytes": 14070,
+      "sha256": "8b0a6dee3f18e5eb61261ac6980903ec8f6c9b6e5145442edd55e2bb47764ce5",
+      "qualification": "PASS_BOUNDED_C181_C177_SOURCE_NOT_RUNTIME",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
+    },
+    {
+      "id": "QFv042",
+      "adoptedAtUtc": "2026-10-23T14:14:04.804970+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v042-qf-c183-sales-navigation-identity-source/RESULT.json",
+      "bytes": 11250,
+      "sha256": "76f5e9d61a22724f65bdd001ff56cc83353a83b8f61a2d9be3d48e58bd727b21",
+      "qualification": "PASS_BOUNDED_C183_SOURCE_NOT_RUNTIME",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
+    },
+    {
+      "id": "QF2C184",
+      "adoptedAtUtc": "2026-10-23T14:14:04.804970+00:00",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c184-payment-fixes-six-tabs-source-01/RESULT.json",
+      "bytes": 1496,
+      "sha256": "a4fcb4d665c4903dd437ddb0b321cbf02c1476999d6ce7a8f1438dbb88b522e4",
+      "qualification": "PASS_LIMITED_SOURCE_ONLY_TWO_P2_ACTUAL_OPEN",
+      "controllerRepeatedTechnicalReview": false,
+      "wholePagePassed": false,
+      "realBusinessPassed": false,
+      "formalPerformancePassed": false
     }
   ],
   "coverageGroups": [
@@ -11864,251 +11936,17 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-23T07:29:50.301664+00:00",
-    "sourceRound": 149,
-    "sourceCheckpoint": "ef60d3220ce0cb668e3a6bafb9e42539dd2d7f62",
-    "allModels": "gpt-6.1-sol/xhigh",
-    "fast": "Requested off; actual switch not exposed by tool",
-    "currentPreview": {
-      "url": "http://127.0.0.1:57857/synthetic-unified.html",
-      "source": "ade0aa60c93c18d5ef3eb57dfcb4266113615c80",
-      "build": "ui-preview-ade0aa6-01-build01",
-      "pid": 94185,
-      "sessionId": 21001,
-      "htmlSha256": "74a01d31d32fe167d74f3dd20596e4838b1c2d903f8459b01e6af5c9dbd0c6c6",
-      "htmlBytes": 3122695,
-      "identitySha256": "2f8009ff2ba74d7c4e8a517bfba5c1f4d7e438548d72b1df8fadb18246885256",
-      "provenanceSha256": "82a4c829668aa100c584fa5109d4a12c19a4e4c61be5edea369a7419f4dd4371",
-      "actualInputs": 400,
-      "sourceModules": 383,
-      "lockedDependencyModules": 981,
-      "totalModules": 1364,
-      "syntheticOnly": true,
-      "wholePageAccepted": false
-    },
-    "nextPreview": "C147 fullintegration actuallybuilt/served57857; QF currentexclusive firstpager/oldSALE+TRANSFER440 only, QF2 newsticky next explicitcleanhandoff. C148 backendseason not counted as147actual.",
-    "r1": "C63实际COMPLETED exit0 32.301s：固定C132/build r1-c28ea3f-20261023-02完整生产依赖安装成功，Linux x64 Node24.21 Sharp0.35.5原生加载；APP/proxy health200，HTML与真实声明current application.js 200且manifest精确。依赖根因A及实际私有安装启动B均完成；dataReady/业务验收/正式切换false。保留45/48/60/61/62失败现场，未改正式三服务/公网。",
-    "qa": "C70 actualv8 onefunction COMMIT_RETURNED_SUCCESS/newbody69b87 andcanonical35f7f772, newQA1032586, registry1..26/all8businesscounts0/role-owner-ACL preserved. C69 SQL NOT_ATTEMPTED public/privateJSON serialization bytepin mismatch; revised70 exacttypedsemantic proves samecatalogcontent thenpatch; failed69/67/68 retained. QB165 sourceSQLPASS, newoutsideactualdelta review pendingoriginalQB; C71 same149+newD2Kc7d32 compiled752469B/92inputs, originalkey actualrunner notexecuted, nativeCREATE/H06 notpass.",
-    "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
-    "waiting": "Closed-login classification and six-scheme initialization pending human; completev5 historicalhall NULL confirmation sent now, only NULL27 branch waits; H06 independent exact4 and Transfer genuineconsumer exact2 continue",
-    "github": "Independentremote6adf9c1a verified;149andthisactualrecord next nonforceFF.",
-    "goalComplete": false,
-    "demoCoverage": {
-      "scopeItems": 104,
-      "localDeduplicated": 48,
-      "wholePagesAccepted": 0,
-      "wholeOverlayClassesAccepted": 0,
-      "notRun": 57,
-      "uiDifference": 30,
-      "partial": 7,
-      "waitingIntegration": 9,
-      "approvedException": 1,
-      "latestReceipt": "QF v0294 +QF2 C1435 scopedclosures; no logical coverage expansion,104/local48/whole0"
-    },
-    "isolatedMorePreview": {
-      "url": "http://127.0.0.1:57849/component-more.html",
-      "source": "f4feb43ad4b50397817aa652428e5911232c9fe7",
-      "build": "ui-component-more-f4feb43-01-build01",
-      "htmlSha256": "fc8f6874f7b3bbcf1455bdff2d34e9fb7cbd6224c17a8b4808e461120e3d49ea",
-      "syntheticComponentOnly": true,
-      "mainNativeAuthorExpanded": false,
-      "actualConclusion": "DEMO108 component density/font/clamp/window-scroll residuals pass; native48 not incremented, nativeancestor and>=4native categories untested"
-    },
-    "audit": "C127 actualQF closed dualEsc/focus and same-scopefilter retention",
-    "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
-    "uiMigration": "Direct Frozen source/functions/finalCSS mapped into actual consumers retained. C143 QF4 document closes +QF2fivevisual closes limited, old137 settingstwoP2 adopted. C145 oldtransfer consumes existing native SourceDocumentDialog sourcePASS but notbuilt. Whole0/local48/104.",
-    "backend": "QB164 approvedseason3 sourceprotocolPASS adopted; QB165 v6fixed6/Kseam sourceSQLPASS adopted. C70 actualonefuncnewQA done, notSTAGE/nativeCREATE. D3 fullquery originalB03 output+F2 adapter/lazyUI/targetedtests in flight, F1 exactroute waits actualadapter/Page props proof; no fakeports/wholepage.",
-    "productionBuild": {
-      "source": "c28ea3f74d7fa2e4b1be1fb13bee99f5df70780e",
-      "buildId": "r1-c28ea3f-20261023-02",
-      "buildElapsedSeconds": 4.122,
-      "archiveBytes": 1303210,
-      "archiveSha256": "5ea76a5c6f3319175613cb9955c342457289acb20fecadcb8fe78702a1d5b030",
-      "members": 208,
-      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-production-build132-20261023-02/pack01/pack-receipt.json",
-      "assetBasePath": "/assets/r1-c28ea3f-20261023-02/",
-      "actualHTMLCSSAndJSPointToCurrentBuild": true,
-      "stage": "C63_ACTUAL_PRIVATE_STAGE_INSTALL_NATIVE_HEALTH_RESOURCES_PASS_NOT_BUSINESS",
-      "R3WriteActivation": false,
-      "actualStageReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-current-private-stage-20261023-63/release-submission/release-receipts/c03-r1-current-private-stage-20261023-63/engine-result.json"
-    },
-    "actualQFBrowser": "C147 QF firstpager/oldSALE+TRANSFER native440 actuallimited closed; QF2 sticky left/mid/right actuallimited closed, newsummary backgroundP2 originalF2 repair. Both explicitnativecleanrelease; browsercurrentlyC awaitingnextcompletecandidate, no trueisolation.",
-    "frontendAcceptance": {
-      "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
-      "parentTask": "QF01",
-      "originalTaskCount": 22,
-      "maxRoles": 10,
-      "matrixOwner": "QF",
-      "controllerRecordsOwner": "C",
-      "dedup": "taskId+action+page_or_issue+candidate+inputBatch",
-      "reuseLogicalPartial": 48,
-      "wholePagesPassed": 0,
-      "queue": [
-        {
-          "owner": "QF",
-          "version": "C134 934f981/ui-preview-934f981-01-build01",
-          "scope": "现有SALE/混合/readOnly/SALE配对行高",
-          "status": "MODULE_CLOSED_FINDINGS_ROUTED_ORIGINAL_F1",
-          "next": "原生清草稿后C137单据/公共范围",
-          "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v026-qf-934f981-sale"
-        },
-        {
-          "owner": "QF",
-          "version": "C143 3d04251/ui-preview-3d04251-01-build01",
-          "scope": "登录与公共壳、销货/退换、调拨列表/开单/编辑/详情/相关弹层；公共控件主验",
-          "status": "ACTUAL_FOUR_NAMED_CLOSED_BROWSER_RELEASED",
-          "next": "F1 new firstopen/oldleave/readonlyaxis source, nextfixedactual only",
-          "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF"
-        },
-        {
-          "owner": "QF2",
-          "version": "C137 ad339df/ui-preview-ad339df-01-build01",
-          "scope": "C135商品28/D2同批普通读取配对及C136设置focus/portal4",
-          "status": "C137_SOURCE_AND_LIMITED_ACTUAL_RESULTS_ADOPTED",
-          "next": "P01 nativegeometry and F3twoP2 fivefocus/warehouse-account clips scoped passed, primarysource141 waitsactual143",
-          "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2"
-        },
-        {
-          "owner": "QF2",
-          "version": "C143 3d04251/ui-preview-3d04251-01-build01",
-          "scope": "库存主体/设置/原生来源选择；ledger/output缺口单列",
-          "status": "FIVE_NAMED_ACTUAL_CLOSED_CLEAN_RELEASED",
-          "next": "Newsticky P2 originalF2 fix and nextfixedactual; C145 pairedledger2 offline newreview",
-          "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2"
-        },
-        {
-          "owner": "QF",
-          "version": "C147 ade0aa6/ui-preview-ade0aa6-01-build01",
-          "scope": "C146 first nativepager/oldSALE+TRANSFER440 consumer only",
-          "status": "LIMITED_ACTUAL_MODULE_CLOSED_CLEAN_RELEASED",
-          "next": "F2newsummarysurface exactfix nextcompletecandidate, oldgeometry/firstpager/leave scopes reused",
-          "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022"
-        },
-        {
-          "owner": "QF2",
-          "version": "C147 ade0aa6/ui-preview-ade0aa6-01-build01",
-          "scope": "ACTION-COLUMN-STICKY-01 left/mid/right actionheader/body",
-          "status": "LIMITED_ACTUAL_MODULE_CLOSED_CLEAN_RELEASED",
-          "next": "F2newsummarysurface exactfix nextcompletecandidate, oldgeometry/firstpager/leave scopes reused",
-          "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c147-action-column-sticky-01"
-        }
-      ],
-      "browser": {
-        "trueIsolationVerified": false,
-        "toolInventory": "browsers=[]; Local browser use is disabled in Work settings",
-        "mode": "SHARED_CHROME_SERIAL_MODULE_HANDOFF",
-        "currentOwner": "C_RESERVED_NEXT_COMPLETE_CANDIDATE",
-        "demoTab": "DB7CA658365B213EEE3EB1333946E5BA",
-        "candidateTab": "3BC874911D0D2415D093603E264B0D67",
-        "QF2CurrentTargets": [
-          "3BC874911D0D2415D093603E264B0D67",
-          "DB7CA658365B213EEE3EB1333946E5BA"
-        ],
-        "QF2MayOperate": false,
-        "condition": "QF147v031 andQF2stickyactual both nativecleanrelease explicit. Summarysurface newP2 originalF2, nextfixedactual onlyaffectedcolors; no concurrentChrome."
-      },
-      "backendReviewers": [
-        "QB"
-      ],
-      "QB2Created": false,
-      "authorization": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排"
-    },
-    "qaEmptyTargetRegistration": {
-      "database": "erp_qa_rapid26_native_20261023_01",
-      "actingRole": "erp_qa_owner_20261022_01",
-      "sourceTemplate": "Existing known QA schema-only+schema_migration26, no business or credentials copied",
-      "owner": "C",
-      "status": "ACTUAL_V8_ONE_FUNCTION_READBACK_WAIT_ORIGINAL_ISSUER_NEW_BASELINE",
-      "businessScope": "Explicit synthetic genuine baseline thennativeCREATE/H06; not real49 import/UAT/source MAIN or production",
-      "constraints": "OldQA root4/audits/receipts retained; R1/production untouched. No weakening firstSTAGE guard, no fakeIMPORTED/nativeaudit. Actual OID/catalog capture before originalissuer use.",
-      "databaseOid": "1032586",
-      "catalogSha256": "35f7f77227c5962e54b507b7253046f139bc3d69bdc36910b12202ef6ec8c3a1",
-      "businessTablesEmpty": 55,
-      "oldQaPreserved": true,
-      "baselinePublished": false,
-      "nativeCreateAttempted": false,
-      "issuerIssued": true,
-      "actualStageCommitted": false,
-      "lastActualError": "23514 invalid versioned field provenance / guard_history_insert line22",
-      "lastActualRequestKey": "D2_BASELINE26_STAGE_V1",
-      "patchLevel": "26_v8_bootstrap_field_provenance"
-    },
-    "actualSourceProjection": {
-      "status": "ACTUAL_SOURCE_TYPED_PROJECTIONS_COMPLETED_REFERENCE_ONLY",
-      "sourceCommit": "04e937f08e7604c6caf7947ac95aeea1a973a544",
-      "carrierSha256": "30f574f01fac39b34e29827d6c6163a648aba70bea8b967866cb97fd9a18d7e6",
-      "elapsedSeconds": 245.27555,
-      "exitCode": 0,
-      "artifacts": [
-        {
-          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/SALES_LINE-source12.jsonl",
-          "rows": 80918,
-          "bytes": 494092156,
-          "sha256": "fc93c67fff5da7475c4cd5ab53522621e63093023b1e0518c4a97963605a36e4",
-          "mode": "0600",
-          "entity": "SALES_LINE",
-          "actualColumns": 12
-        },
-        {
-          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/SALES_LINE-typed21.jsonl",
-          "rows": 80918,
-          "bytes": 61226343,
-          "sha256": "7a0a5b32247325e781d975b0907134a23477c3e70fc191af05b1b4daa73dfcfa",
-          "mode": "0600",
-          "entity": "SALES_LINE",
-          "actualColumns": 21
-        },
-        {
-          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/SETTLEMENT-source12.jsonl",
-          "rows": 25779,
-          "bytes": 141685172,
-          "sha256": "8839426a8fc8395f24888edf9e7f6bdc3bc36bdff220142e3737502725f59b59",
-          "mode": "0600",
-          "entity": "SETTLEMENT",
-          "actualColumns": 12
-        },
-        {
-          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/SETTLEMENT-typed12.jsonl",
-          "rows": 25779,
-          "bytes": 14662507,
-          "sha256": "1e3d94615487f00da2b47bf7d04de626680ed6bca97154d039dabf42afc79c99",
-          "mode": "0600",
-          "entity": "SETTLEMENT",
-          "actualColumns": 11
-        }
-      ],
-      "sourceRows": 106697,
-      "typedRows": 106697,
-      "readersOpened": 2,
-      "paymentConstructors": 1,
-      "paymentChunksIterations": 1,
-      "cacheRemoved": true,
-      "privatePermissions": "0700 dir / 0600 output",
-      "fullSnapshotScans": 0,
-      "headerGzipReads": 0,
-      "PG": false,
-      "MAIN": false,
-      "PUBLISH": false,
-      "all11": false,
-      "actualPayloadHash": null,
-      "referenceOnly": true,
-      "nativeBindingsVerified": false,
-      "settlementLabelQualification": "Existing SETTLEMENT-typed12 filename retained; actual original complete mapper/schema has11 columns as QB161 confirmed, no data rewritten for label.",
-      "privateManifest": {
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/MANIFEST.json",
-        "bytes": 2555,
-        "sha256": "107ba2909e041d7f1e974138b8894e2765f77585a95f6b92cdba66acbbf160ed"
-      }
-    },
-    "bootstrapV6": {
-      "status": "ACTUAL_C70_ONE_FUNCTION_INSTALLED_READBACK_PASS_NOT_BASELINE",
-      "answer": "确认 v6 封装修复",
-      "approval": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v6-BOOTSTRAP-PROVENANCE.json",
-      "noDatabaseExecutedYet": false,
-      "actualJob": "c03-native-qa-v8-provenance-20261023-70",
-      "newCatalogCanonicalSha256": "35f7f77227c5962e54b507b7253046f139bc3d69bdc36910b12202ef6ec8c3a1",
-      "newFunctionBodySha256": "69b87a72c52a81aba7f9fd380f3acbcb8df8fbcaa6ca72ccca4ac20e26ab42c7",
-      "businessDataWritten": false
-    }
+    "atUtc": "2026-10-23T14:14:04.804970+00:00",
+    "sourceRound": 187,
+    "sourceCommit": "ec8eef1901ae55aeae789c1dbb69d24a4c440a52",
+    "actualPreview": 173,
+    "nextPreview": 184,
+    "nextPreviewState": "ESBUILD_EXIT0_POSTBUILD_GRAPH_ONE_LEGAL_REMOVED_ICON_DEPENDENCY_REPAIR_PENDING_NO_SERVE",
+    "actualQA94": "Two normal services committed; first INVALID_PRODUCT_QUERY driver usesid notproductId; C95 onlynewQAaccountnormaldisable pending",
+    "scopeItems": 104,
+    "localDeduplicated": 48,
+    "wholePages": 0,
+    "wholeOverlayClasses": 0,
+    "goalComplete": false
   }
 }
