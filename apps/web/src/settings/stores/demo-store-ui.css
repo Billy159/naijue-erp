@@ -14,7 +14,7 @@
 .demo-store-workbench .bs-filter-fields{display:flex;align-items:center;gap:var(--ca-space-2);flex:1;min-width:0}
 .demo-store-workbench .bs-filter{flex:0 1 178px;min-width:128px}
 .demo-store-workbench .bs-filter.search{flex:1 1 280px;max-width:440px}
-.demo-store-workbench .bs-single{width:100%;min-width:0}
+.demo-store-workbench .bs-single,.demo-store-workbench .bs-multi{width:100%;min-width:0}
 .demo-store-workbench .bs-toolbar-actions{display:flex;align-items:center;gap:var(--ca-space-2);margin-left:auto;flex:none}
 .demo-store-workbench .bs-table-wrap{border:1px solid var(--border);overflow:auto;min-height:0;background:var(--surface);flex:0 1 auto}
 .demo-store-workbench .bs-row-actions{display:flex;align-items:center;gap:6px;white-space:nowrap}
@@ -22,6 +22,7 @@
 .demo-store-workbench .bs-pager .iw-pagination{white-space:nowrap;flex-wrap:nowrap}
 .demo-store-workbench .bs-pager .iw-pagination>span{flex:none}
 .demo-store-modal.bs-modal{width:520px!important;max-width:calc(100vw - 32px)}
+.demo-store-modal .bs-readonly{min-height:var(--ui-control);display:flex;align-items:center;overflow-wrap:anywhere}
 .demo-store-modal .bs-switch{display:flex;align-items:center;gap:var(--ca-space-2);min-height:var(--ui-control)}
 .demo-store-modal .bs-error{margin:10px 0 0;color:var(--error);line-height:1.5}
 /* Inventory base, density, table, form and modal adapters. */
@@ -137,7 +138,6 @@
 .demo-store-modal .settings-note{display:block;margin:12px 0 0}
 .demo-store-modal .settings-close-prompt{margin-top:12px;padding:12px;border:1px solid var(--ca-line);border-radius:var(--ca-radius-control)}
 .demo-store-modal .bs-row-actions{display:flex;align-items:center;gap:6px}
-.demo-store-modal .bs-field small.bs-error{margin:0;font-size:12px}
 :is(.demo-store-workbench,.demo-store-modal) :is(button,input):focus-visible{outline:2px solid var(--ca-control-focus-border);outline-offset:1px}
 :is(.demo-store-workbench,.demo-store-modal) button:disabled{cursor:not-allowed}
 .demo-store-workbench .bs-tabs button:disabled{color:var(--ca-disabled-ink)}
