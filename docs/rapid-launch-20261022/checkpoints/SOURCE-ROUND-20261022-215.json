@@ -1,0 +1,99 @@
+{
+  "atUtc": "2026-10-23T19:50:52.179537+00:00",
+  "parent": "1eef32a45da5f422415077b2c4074d0d83b6aeee",
+  "taskId": "F1_T02_LOCAL_GROUP_SPEC_LINE_ENTER_CONFIRM",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/transfer-proposal.ts",
+      "bytes": 44461,
+      "sha256": "64344d650f23a3728bb35781a1a31f02191562a0f7fba5e75a417e11dec6dd5d",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+      "bytes": 34861,
+      "sha256": "d2da4e3e6a7ca9407885a3a273a87d438aa2b8c964ba4dffcfafcbb5cafc3284",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-create.ts",
+      "bytes": 10582,
+      "sha256": "1bf7add6e2629444b56998e357413b53ff231c7e6eb65f2da7dcdf07c4efb528",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-existing-document.ts",
+      "bytes": 14829,
+      "sha256": "e0f894dfd7e779bcd5c3d5453a6c1b600e59429c252f03e20c7ac673f569712c",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-proposal.test.ts",
+      "bytes": 8878,
+      "sha256": "8402a626105e3dd9cab1c4bce25cead75959000f5a40390998516b0f42adb47b",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-create.test.ts",
+      "bytes": 12572,
+      "sha256": "6fea29533327794805c2b213f85a8a8811e5d4769906a59b56e0ef4659bd8d77",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-105/DELIVERY.json",
+  "ownerReceiptSha256": "e6171a337503c950d151dd46c3d71ab497778216292777adb82c2b794391e806",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh",
+    "status": "SOURCE_READY_T02_LOCAL_SPEC_ENTER_ROW_CONFIRM_ACTUAL_OPEN",
+    "files": [
+      {
+        "path": "apps/web/src/current-form/transfer-proposal.ts",
+        "bytes": 44461,
+        "sha256": "64344d650f23a3728bb35781a1a31f02191562a0f7fba5e75a417e11dec6dd5d"
+      },
+      {
+        "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+        "bytes": 34861,
+        "sha256": "d2da4e3e6a7ca9407885a3a273a87d438aa2b8c964ba4dffcfafcbb5cafc3284"
+      },
+      {
+        "path": "apps/web/src/current-form/transfer-create.ts",
+        "bytes": 10582,
+        "sha256": "1bf7add6e2629444b56998e357413b53ff231c7e6eb65f2da7dcdf07c4efb528"
+      },
+      {
+        "path": "apps/web/src/current-form/transfer-existing-document.ts",
+        "bytes": 14829,
+        "sha256": "e0f894dfd7e779bcd5c3d5453a6c1b600e59429c252f03e20c7ac673f569712c"
+      },
+      {
+        "path": "apps/web/src/current-form/transfer-proposal.test.ts",
+        "bytes": 8878,
+        "sha256": "8402a626105e3dd9cab1c4bce25cead75959000f5a40390998516b0f42adb47b"
+      },
+      {
+        "path": "apps/web/src/current-form/transfer-create.test.ts",
+        "bytes": 12572,
+        "sha256": "6fea29533327794805c2b213f85a8a8811e5d4769906a59b56e0ef4659bd8d77"
+      }
+    ],
+    "checks": {
+      "before-1": "RED original actual React missing-SKU Enter produces0 completed draft rows",
+      "after-1": "PASS original full new TransferNewDocumentForm missing-SKU Enter/local row/matrix quantity+Tab/edit cancel/duplicate append native confirm+cancel; sameSAVE exact coordinate proposal/no prepare and original found receipt actual SKU readback. Original saved TransferCommandForm row confirm completes missing target locally, preserves2actual line IDs/quantities/CAS2 and sameSAVE native readback. Arco React19 ref notices and harness act warnings retained",
+      "types-1": "Own coordinate helper initially branded as CurrentFormSku Pick incorrectly; concrete local compile failures retained, type changed to explicit display-coordinate string fields, no invented branded identities",
+      "types-2": "Own existing known-SKU product fallback still typed via display-coordinate helper; corrected to original actualSKU fields, runtime values unchanged",
+      "types-3": "PASS exact4 production complete strict imported closure0",
+      "known-consumers-1": "Concrete2oldtest nullable/legacySAVE assumptions exposed, C registered exact2; also records prior fallback compile diagnostic",
+      "known-consumers-2": "PASS exact4production+registered2oldtest roots complete strict imported closure0"
+    },
+    "limitations": [
+      "Source/React JSDOM with synthetic native ports; no actual Chrome Enter/Tab/focus/pixels, rapid-input or full T02 acceptance",
+      "Real native transactions/SKU allocation/permissions/server/PG not tested by F1",
+      "Existing98 sameSAVE/recovery and102 shared product target mechanisms reused; no unrelated whole suite rerun",
+      "C214 existing integrated candidate is not automatically relabeled as including105; C only owns next build/QA/version binding"
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "SOURCE_FIXED_ONLY; original React/source checks adopted. Actual browser/current215build/PG/performance untested;214 candidate does not contain215. This run tested found receipt only; old absent evidence not relabeled new."
+}

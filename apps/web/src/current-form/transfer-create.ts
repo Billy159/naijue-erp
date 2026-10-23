@@ -12,7 +12,7 @@ export function transferPreparationIntent(proposal: TransferProposal): NativeTra
   if (!proposal.from || !proposal.to) throw new TypeError('Select both warehouses.');
   return frozenSnapshot({ businessDate: proposal.businessDate, note: proposal.note === '' ? null : proposal.note,
     fromWarehouseId: proposal.from.id, toWarehouseId: proposal.to.id,
-    lines: proposal.lines.map(row => ({ skuId: row.sku.id, quantity: row.quantity })) });
+    lines: proposal.lines.map(row => { if (!row.sku) throw new TypeError('Local specifications require native SAVE.'); return { skuId: row.sku.id, quantity: row.quantity }; }) });
 }
 function checkedIntent(input: NativeTransferCreateProposal): NativeTransferCreateProposal {
   const value = structuredClone(input);

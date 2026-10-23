@@ -14,18 +14,29 @@ export type TransferProposalReader = Pick<ReturnType<typeof createCurrentFormHtt
   & Partial<Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readBarcode' | 'readSizeGroups'>>;
 export type TransferProposalPicker = 'FROM' | 'TO' | 'PRODUCT' | 'SKU';
 type Candidate = CurrentTransferWarehouse | CurrentFormProduct | CurrentFormSku;
-export interface TransferProposalLine { readonly sku: CurrentFormSku; readonly quantity: string; readonly product?: CurrentFormProduct; readonly existingLineId?: string; readonly sourceSnapshot?: TransferDraftDto['lines'][number]['snapshot'] }
+interface TransferProposalLineFields { readonly quantity: string; readonly product?: CurrentFormProduct; readonly existingLineId?: string }
+export type TransferProposalLine = TransferProposalLineFields & (
+  { readonly sku: CurrentFormSku; readonly specification?: never; readonly sourceSnapshot?: TransferDraftDto['lines'][number]['snapshot'] }
+  | { readonly sku: null; readonly product: CurrentFormProduct; readonly specification: { readonly color: { readonly id: string; readonly name: string }; readonly fit: { readonly id: string; readonly name: string }; readonly size: { readonly id: string; readonly name: string }; readonly sizeGroup: { readonly id: string; readonly name: string } }; readonly sourceSnapshot?: never }
+);
+/** Display/coordinate facts only. A local selection has no native SKU identity. */
+export function transferProposalLineIdentity(line: TransferProposalLine): { readonly [K in 'productId' | 'productCode' | 'productName' | 'colorId' | 'colorName' | 'fitId' | 'fitName' | 'sizeId' | 'sizeName' | 'sizeGroupId']: string } {
+  if (line.sku) return line.sku;
+  const { product, specification: spec } = line;
+  return { productId: product.id, productCode: product.code, productName: product.name, colorId: spec.color.id, colorName: spec.color.name, fitId: spec.fit.id, fitName: spec.fit.name, sizeId: spec.size.id, sizeName: spec.size.name, sizeGroupId: spec.sizeGroup.id };
+}
+const lineCoordinate = (line: TransferProposalLine) => { const item = transferProposalLineIdentity(line); return JSON.stringify([item.productId, item.colorId, item.fitId, item.sizeId]); };
 /** A saved header supplies the original ID/name only. Enabled/hall facts must
  * come from current candidate reads and are never filled from the header. */
 export type TransferWarehouseSelection = Pick<CurrentTransferWarehouse, 'id' | 'name'>;
-export function transferProposalRowKey(sku: CurrentFormSku): string { return JSON.stringify([sku.productId, sku.colorId, sku.fitId, sku.sizeGroupId]); }
+export function transferProposalRowKey(sku: { readonly productId: string; readonly colorId: string; readonly fitId: string; readonly sizeGroupId: string }): string { return JSON.stringify([sku.productId, sku.colorId, sku.fitId, sku.sizeGroupId]); }
 export interface TransferPendingEntry {
   readonly query: string; readonly product: CurrentFormProduct | null;
   readonly color: { readonly id: string; readonly name: string } | null; readonly fit: { readonly id: string; readonly name: string } | null;
   readonly skus: readonly CurrentFormSku[]; readonly page: number; readonly exactTotal: bigint | null;
   readonly sizeQuantities: Readonly<Record<string, string>>;
   readonly phase: 'idle' | 'loading' | 'ready' | 'error'; readonly quantities: Readonly<Record<string, string>>;
-  readonly userEdited: boolean; readonly unmapped: readonly { readonly skuId: string; readonly sizeName: string; readonly quantity: string }[];
+  readonly userEdited: boolean; readonly unmapped: readonly { readonly skuId: string | null; readonly sizeName: string; readonly quantity: string }[];
 }
 const emptyPending = (): TransferPendingEntry => ({ query: '', product: null, color: null, fit: null, skus: [], page: 1, exactTotal: null, phase: 'idle', quantities: {}, sizeQuantities: {}, userEdited: false, unmapped: [] });
 export interface TransferProposal {
@@ -90,12 +101,12 @@ export class TransferProposalSession {
     let draft: TransferProposal;
     try {
       draft = structuredClone(value);
-      if (typeof draft.businessDate !== 'string' || typeof draft.note !== 'string' || !draft.from || !draft.to || !Array.isArray(draft.lines) || !draft.lines.length || draft.lines.length > TRANSFER_PREPARE_MAX_LINES || draft.lines.some(row => typeof row.quantity !== 'string' || !row.existingLineId)) return false;
-      if (new Set(draft.lines.map(row => row.existingLineId)).size !== draft.lines.length || new Set(draft.lines.map(row => row.sku.id)).size !== draft.lines.length || new Set(draft.lines.map(row => JSON.stringify([transferProposalRowKey(row.sku), row.sku.sizeId]))).size !== draft.lines.length) return false;
+      if (typeof draft.businessDate !== 'string' || typeof draft.note !== 'string' || !draft.from || !draft.to || !Array.isArray(draft.lines) || !draft.lines.length || draft.lines.length > TRANSFER_PREPARE_MAX_LINES || draft.lines.some(row => typeof row.quantity !== 'string' || !row.sku || !row.existingLineId)) return false;
+      if (new Set(draft.lines.map(row => row.existingLineId)).size !== draft.lines.length || new Set(draft.lines.map(row => row.sku?.id)).size !== draft.lines.length || new Set(draft.lines.map(row => JSON.stringify([transferProposalRowKey(transferProposalLineIdentity(row)), transferProposalLineIdentity(row).sizeId]))).size !== draft.lines.length) return false;
       const labels = new Map<string, string>();
-      for (const row of draft.lines) { const key = transferProposalRowKey(row.sku), snapshot = row.sourceSnapshot, label = JSON.stringify(snapshot ? [snapshot.productCode, snapshot.productName, snapshot.colorName, snapshot.fitName] : [row.sku.productCode, row.sku.productName, row.sku.colorName, row.sku.fitName]); if (labels.has(key) && labels.get(key) !== label) return false; labels.set(key, label); }
+      for (const row of draft.lines) { const key = transferProposalRowKey(transferProposalLineIdentity(row)), snapshot = row.sourceSnapshot, label = JSON.stringify(snapshot ? [snapshot.productCode, snapshot.productName, snapshot.colorName, snapshot.fitName] : [transferProposalLineIdentity(row).productCode, transferProposalLineIdentity(row).productName, transferProposalLineIdentity(row).colorName, transferProposalLineIdentity(row).fitName]); if (labels.has(key) && labels.get(key) !== label) return false; labels.set(key, label); }
     } catch { return false; }
-    for (const row of draft.lines) if (row.existingLineId && row.sourceSnapshot) this.#savedLines.set(row.existingLineId, Object.freeze({ skuId: row.sku.id, snapshot: row.sourceSnapshot }));
+    for (const row of draft.lines) if (row.existingLineId && row.sourceSnapshot) this.#savedLines.set(row.existingLineId, Object.freeze({ skuId: row.sku!.id, snapshot: row.sourceSnapshot }));
     this.#seeded = true; this.#revision++; this.#publish({ draft, dirty, errors: [], notice: null }); return true;
   }
   markUnchanged(reference: TransferProposal): boolean {
@@ -116,11 +127,11 @@ export class TransferProposalSession {
     return this.#edit({ ...this.#state.draft, ...patch });
   }
   setQuantity(skuId: string, value: string): boolean {
-    if (!this.#state.draft.lines.some(row => row.sku.id === skuId)) return false;
-    return this.#edit({ ...this.#state.draft, lines: this.#state.draft.lines.map(row => row.sku.id === skuId ? { ...row, quantity: value } : row) });
+    if (!this.#state.draft.lines.some(row => row.sku?.id === skuId)) return false;
+    return this.#edit({ ...this.#state.draft, lines: this.#state.draft.lines.map(row => row.sku?.id === skuId ? { ...row, quantity: value } : row) });
   }
   setMatrixQuantity(skuId: string, value: string): boolean {
-    if (this.#state.draft.lines.some(row => row.sku.id === skuId)) return this.setQuantity(skuId, value);
+    if (this.#state.draft.lines.some(row => row.sku?.id === skuId)) return this.setQuantity(skuId, value);
     const sku = this.#state.entry?.skus.find(row => row.id === skuId);
     if (!sku || value === '') return false;
     if (this.#state.draft.lines.length >= TRANSFER_PREPARE_MAX_LINES) { this.#publish({ notice: '本草稿最多选择 200 个实际规格。' }); return false; }
@@ -129,14 +140,16 @@ export class TransferProposalSession {
   /** Validated dictionary coordinates stay local; native lines always retain
    * real SKU IDs. The approved formal preparation must resolve new specs. */
   setMatrixSizeQuantity(rowKey: string, group: DictionarySizeGroup, sizeId: string, raw: string): boolean {
-    const anchor = this.#state.draft.lines.find(row => transferProposalRowKey(row.sku) === rowKey), size = group.sizes.find(size => size.id === sizeId);
+    const anchor = this.#state.draft.lines.find(row => transferProposalRowKey(transferProposalLineIdentity(row)) === rowKey), size = group.sizes.find(size => size.id === sizeId);
     if (this.#state.disposed || !anchor?.product?.sizeGroupId || anchor.product.sizeGroupId !== group.id || !size) return false;
     this.#sizeGroups.set(group.id, freeze(structuredClone(group)));
-    const known = [...this.#state.draft.lines.map(row => row.sku), ...(this.#state.entry?.skus ?? [])].find(sku => transferProposalRowKey(sku) === rowKey && sku.sizeId === sizeId);
+    const local = this.#state.draft.lines.find(row => row.sku === null && transferProposalRowKey(transferProposalLineIdentity(row)) === rowKey && transferProposalLineIdentity(row).sizeId === sizeId);
+    if (local) return this.#edit({ ...this.#state.draft, lines: this.#state.draft.lines.map(row => row === local ? { ...row, quantity: raw } : row) });
+    const known = [...this.#state.draft.lines.flatMap(row => row.sku ? [row.sku] : []), ...(this.#state.entry?.skus ?? [])].find(sku => transferProposalRowKey(sku) === rowKey && sku.sizeId === sizeId);
     if (known) return this.setMatrixQuantity(known.id, raw);
     const key = JSON.stringify([rowKey, sizeId]), values = { ...this.#state.matrixQuantities };
     if (raw === '') delete values[key];
-    else values[key] = { rowKey, product: anchor.product, colorId: anchor.sku.colorId, fitId: anchor.sku.fitId, sizeId, sizeName: size.name, quantity: raw };
+    else values[key] = { rowKey, product: anchor.product, colorId: transferProposalLineIdentity(anchor).colorId, fitId: transferProposalLineIdentity(anchor).fitId, sizeId, sizeName: size.name, quantity: raw };
     this.#edit({ ...this.#state.draft }); this.#publish({ matrixQuantities: values }); return true;
   }
   setPendingSizeQuantity(group: DictionarySizeGroup, sizeId: string, raw: string): boolean {
@@ -149,14 +162,14 @@ export class TransferProposalSession {
     this.#pending({ ...mapped, sizeQuantities: { ...mapped.sizeQuantities, [sizeId]: raw }, userEdited: true }); return true;
   }
   removeLine(skuId: string): boolean {
-    const original = this.#state.draft.lines.find(row => row.sku.id === skuId); if (!original) return false;
-    const key = transferProposalRowKey(original.sku), lines = this.#state.draft.lines.filter(row => row.sku.id !== skuId), ok = this.#edit({ ...this.#state.draft, lines });
-    if (ok && !lines.some(row => transferProposalRowKey(row.sku) === key)) this.#publish({ matrixQuantities: Object.fromEntries(Object.entries(this.#state.matrixQuantities).filter(([, cell]) => cell.rowKey !== key)) });
+    const original = this.#state.draft.lines.find(row => row.sku?.id === skuId); if (!original) return false;
+    const key = transferProposalRowKey(transferProposalLineIdentity(original)), lines = this.#state.draft.lines.filter(row => row.sku?.id !== skuId), ok = this.#edit({ ...this.#state.draft, lines });
+    if (ok && !lines.some(row => transferProposalRowKey(transferProposalLineIdentity(row)) === key)) this.#publish({ matrixQuantities: Object.fromEntries(Object.entries(this.#state.matrixQuantities).filter(([, cell]) => cell.rowKey !== key)) });
     return ok;
   }
   removeGroup(key: string): boolean {
-    if (!this.#state.draft.lines.some(row => transferProposalRowKey(row.sku) === key)) return false;
-    const ok = this.#edit({ ...this.#state.draft, lines: this.#state.draft.lines.filter(row => transferProposalRowKey(row.sku) !== key) });
+    if (!this.#state.draft.lines.some(row => transferProposalRowKey(transferProposalLineIdentity(row)) === key)) return false;
+    const ok = this.#edit({ ...this.#state.draft, lines: this.#state.draft.lines.filter(row => transferProposalRowKey(transferProposalLineIdentity(row)) !== key) });
     if (ok) this.#publish({ matrixQuantities: Object.fromEntries(Object.entries(this.#state.matrixQuantities).filter(([, cell]) => cell.rowKey !== key)) }); return ok;
   }
   #cancelSkuRead(): void { this.#skuSequence++; this.#skuRead?.abort(); this.#skuRead = null; }
@@ -197,7 +210,7 @@ export class TransferProposalSession {
       }
       if (all.some(sku => sku.productId !== product.id || sku.sizeGroupId !== product.sizeGroupId)) throw new Error('CURRENT_PRODUCT_SIZE_GROUP_CONFLICT');
       const now = this.#state.pending, known = new Map<string, CurrentFormSku>();
-      for (const sku of now.skus) if (now.quantities[sku.id] || this.#state.draft.lines.some(row => row.sku.id === sku.id)) known.set(sku.id, sku);
+      for (const sku of now.skus) if (now.quantities[sku.id] || this.#state.draft.lines.some(row => row.sku?.id === sku.id)) known.set(sku.id, sku);
       for (const sku of all) { if (sku.productId !== product.id) throw new TypeError('Foreign product SKU.'); known.set(sku.id, sku); }
       for (const sku of now.skus) if (known.size < TRANSFER_PREPARE_MAX_LINES) known.set(sku.id, sku);
       const next = { ...now, phase: 'ready' as const, skus: [...known.values()], page, exactTotal: result.exactTotal };
@@ -211,12 +224,12 @@ export class TransferProposalSession {
   #mapReplacement(pending: TransferPendingEntry): TransferPendingEntry {
     const replacement = this.#state.replacement;
     if (!replacement || pending.userEdited) return pending;
-    const quantities: Record<string, string> = {}, sizeQuantities: Record<string, string> = {}, unmapped: { skuId: string; sizeName: string; quantity: string }[] = [];
+    const quantities: Record<string, string> = {}, sizeQuantities: Record<string, string> = {}, unmapped: { skuId: string | null; sizeName: string; quantity: string }[] = [];
     for (const original of replacement.originals) {
-      const matches = pending.skus.filter(sku => sku.productId === pending.product?.id && sku.colorId === pending.color?.id && sku.fitId === pending.fit?.id && sku.sizeId === original.sku.sizeId && sku.sizeGroupId === original.sku.sizeGroupId);
+      const matches = pending.skus.filter(sku => sku.productId === pending.product?.id && sku.colorId === pending.color?.id && sku.fitId === pending.fit?.id && sku.sizeId === transferProposalLineIdentity(original).sizeId && sku.sizeGroupId === transferProposalLineIdentity(original).sizeGroupId);
       const group = pending.product?.sizeGroupId ? this.#sizeGroups.get(pending.product.sizeGroupId) : undefined;
-      if (matches.length === 0 && pending.color && pending.fit && group?.id === original.sku.sizeGroupId && group.sizes.some(size => size.id === original.sku.sizeId) && !Object.hasOwn(sizeQuantities, original.sku.sizeId)) sizeQuantities[original.sku.sizeId] = original.quantity;
-      else if (matches.length !== 1 || Object.hasOwn(quantities, matches[0]!.id)) unmapped.push({ skuId: original.sku.id, sizeName: original.sku.sizeName, quantity: original.quantity });
+      if (matches.length === 0 && pending.color && pending.fit && group?.id === transferProposalLineIdentity(original).sizeGroupId && group.sizes.some(size => size.id === transferProposalLineIdentity(original).sizeId) && !Object.hasOwn(sizeQuantities, transferProposalLineIdentity(original).sizeId)) sizeQuantities[transferProposalLineIdentity(original).sizeId] = original.quantity;
+      else if (matches.length !== 1 || Object.hasOwn(quantities, matches[0]!.id)) unmapped.push({ skuId: original.sku?.id ?? null, sizeName: transferProposalLineIdentity(original).sizeName, quantity: original.quantity });
       else quantities[matches[0]!.id] = original.quantity;
     }
     return { ...pending, quantities, sizeQuantities, unmapped };
@@ -238,14 +251,15 @@ export class TransferProposalSession {
   }
   beginReplacement(key: string): boolean {
     if (this.#state.disposed || this.#state.replacement) return false;
-    const originals = this.#state.draft.lines.filter(row => transferProposalRowKey(row.sku) === key), first = originals[0];
+    const originals = this.#state.draft.lines.filter(row => transferProposalRowKey(transferProposalLineIdentity(row)) === key), first = originals[0];
     if (!first) return false;
     if (Object.values(this.#state.matrixQuantities).some(cell => cell.rowKey === key && cell.quantity !== '' && cell.quantity !== '0')) { this.#publish({ notice: '本行还有尚未解析的新尺码数量，请先保存或清除该输入后再改选；原输入已保留。' }); return false; }
     this.closePicker(); this.#cancelSkuRead();
-    const product: CurrentFormProduct = first.product ?? { id: first.sku.productId, code: first.sku.productCode, name: first.sku.productName, retailPrice: null, minimumPriceAvailability: 'UNAVAILABLE' };
+    if (!first.product && !first.sku) return false;
+    const product: CurrentFormProduct = first.product ?? { id: first.sku!.productId, code: first.sku!.productCode, name: first.sku!.productName, retailPrice: null, minimumPriceAvailability: 'UNAVAILABLE' };
     const previousPending = this.#state.pending;
     this.#publish({ replacement: { key, originals, previousPending } });
-    this.#pending({ ...emptyPending(), product, query: product.code, color: { id: first.sku.colorId, name: first.sku.colorName }, fit: { id: first.sku.fitId, name: first.sku.fitName } });
+    this.#pending({ ...emptyPending(), product, query: product.code, color: { id: transferProposalLineIdentity(first).colorId, name: transferProposalLineIdentity(first).colorName }, fit: { id: transferProposalLineIdentity(first).fitId, name: transferProposalLineIdentity(first).fitName } });
     void this.readPendingSkus(1); return true;
   }
   cancelReplacement(): void {
@@ -256,33 +270,42 @@ export class TransferProposalSession {
   commitPending(confirmAppend = false): boolean {
     const { pending, replacement, draft } = this.#state;
     if (this.#state.disposed || !pending.product || pending.query !== pending.product.code || !pending.color || !pending.fit || pending.phase !== 'ready' || pending.exactTotal === null) return false;
-    if (Object.values(pending.sizeQuantities).some(raw => raw !== '' && raw !== '0')) { this.#publish({ notice: '本行包含新尺码，数量已保留；点击顶部保存完成本行和单据。' }); return false; }
     if (replacement && replacement.originals.some(original => !draft.lines.includes(original))) { this.#publish({ notice: '原行数量已变化，请取消后重新改选。' }); return false; }
     if (replacement && pending.unmapped.length) { this.#publish({ notice: '原规格数量尚未对应到唯一实际规格；请继续读取其他页、调整原行或更换规格。' }); return false; }
-    const changes: { sku: CurrentFormSku; quantity: bigint }[] = [];
+    const changes: TransferProposalLine[] = [];
     try {
+      const count = (raw: string) => { if (!/^(?:0|[1-9]\d{0,18})$/.test(raw)) throw Error(); const value = quantity(raw); if (value < 0n) throw Error(); return value; };
       for (const [id, raw] of Object.entries(pending.quantities)) {
         if (raw === '') continue;
         const sku = pending.skus.find(row => row.id === id);
-        if (!sku || sku.productId !== pending.product.id || sku.colorId !== pending.color.id || sku.fitId !== pending.fit.id || !/^(?:0|[1-9]\d{0,18})$/.test(raw)) throw Error();
-        const count = quantity(raw); if (count < 0n) throw Error(); if (count > 0n) changes.push({ sku, quantity: count });
+        if (!sku || sku.productId !== pending.product.id || sku.colorId !== pending.color.id || sku.fitId !== pending.fit.id || sku.sizeGroupId !== pending.product.sizeGroupId) throw Error();
+        const value = count(raw); if (value > 0n) changes.push({ sku, product: pending.product, quantity: value.toString() });
       }
-      if (!changes.length && !replacement) throw Error();
-    } catch { this.#publish({ notice: '数量须为范围内的非负整数；至少填写一个正数量，原始输入已保留。' }); return false; }
-    const retained = draft.lines.filter(row => !replacement?.originals.includes(row)), duplicates = retained.filter(row => changes.some(change => change.sku.id === row.sku.id));
+      const group = pending.product.sizeGroupId ? this.#sizeGroups.get(pending.product.sizeGroupId) : undefined;
+      for (const [sizeId, raw] of Object.entries(pending.sizeQuantities)) {
+        if (raw === '') continue;
+        const size = group?.sizes.find(size => size.id === sizeId);
+        if (!group || !size || pending.skus.some(sku => sku.productId === pending.product!.id && sku.colorId === pending.color!.id && sku.fitId === pending.fit!.id && sku.sizeId === sizeId)) throw Error();
+        const value = count(raw);
+        if (value > 0n) changes.push({ sku: null, product: pending.product, quantity: value.toString(), specification: { color: pending.color, fit: pending.fit, size: { id: size.id, name: size.name }, sizeGroup: { id: group.id, name: group.name } } });
+      }
+      if (!changes.length && !replacement || new Set(changes.map(lineCoordinate)).size !== changes.length) throw Error();
+    } catch { this.#publish({ notice: '数量或商品实际尺码组无效；请核对，原始输入已保留。' }); return false; }
+    const retained = draft.lines.filter(row => !replacement?.originals.includes(row)), duplicates = retained.filter(row => changes.some(change => lineCoordinate(change) === lineCoordinate(row)));
     if (duplicates.length) {
-      if (!confirmAppend) { this.#appendBasis = { draft, pending, replacement }; this.#publish({ appendRequest: { kind: replacement ? 'replace' : 'entry', quantity: changes.reduce((sum, change) => sum + change.quantity, 0n).toString() } }); return false; }
+      if (!confirmAppend) { this.#appendBasis = { draft, pending, replacement }; this.#publish({ appendRequest: { kind: replacement ? 'replace' : 'entry', quantity: changes.reduce((sum, change) => sum + BigInt(change.quantity), 0n).toString() } }); return false; }
       if (!this.#appendBasis || this.#appendBasis.draft !== draft || this.#appendBasis.pending !== pending || this.#appendBasis.replacement !== replacement) { this.cancelAppend(); this.#publish({ notice: '数量或录入已变化，请重新确认追加。' }); return false; }
     }
     let next = [...retained];
     try {
       for (const change of changes) {
-        const previous = next.find(row => row.sku.id === change.sku.id);
-        if (previous) { if (!/^[1-9]\d{0,18}$/.test(previous.quantity)) throw Error(); const count = quantity((BigInt(previous.quantity) + change.quantity).toString()); next = next.map(row => row === previous ? { ...row, quantity: count.toString() } : row); }
+        const selected = transferProposalLineIdentity(change), previous = next.find(row => lineCoordinate(row) === lineCoordinate(change));
+        if (previous) { if (!/^[1-9]\d{0,18}$/.test(previous.quantity)) throw Error(); const value = quantity((BigInt(previous.quantity) + BigInt(change.quantity)).toString()); next = next.map(row => row === previous ? { ...row, quantity: value.toString() } : row); }
         else {
-          const originals = replacement?.originals.filter(row => row.sku.sizeId === change.sku.sizeId && row.sku.sizeGroupId === change.sku.sizeGroupId) ?? [], original = originals.length === 1 ? originals[0] : undefined;
+          const originals = replacement?.originals.filter(row => { const identity = transferProposalLineIdentity(row); return identity.sizeId === selected.sizeId && identity.sizeGroupId === selected.sizeGroupId; }) ?? [], original = originals.length === 1 ? originals[0] : undefined;
           const provenance = original?.existingLineId ? this.#savedLines.get(original.existingLineId) : undefined;
-          next.push({ sku: change.sku, quantity: change.quantity.toString(), product: pending.product, ...(original?.existingLineId ? { existingLineId: original.existingLineId } : {}), ...(provenance?.skuId === change.sku.id ? { sourceSnapshot: provenance.snapshot } : {}) });
+          const pointer = original?.existingLineId ? { existingLineId: original.existingLineId } : {};
+          next.push(change.sku ? { ...change, ...pointer, ...(provenance?.skuId === change.sku.id ? { sourceSnapshot: provenance.snapshot } : {}) } : { ...change, ...pointer });
         }
       }
       if (next.length > TRANSFER_PREPARE_MAX_LINES) throw Error();
@@ -300,7 +323,7 @@ export class TransferProposalSession {
       },
       resolve: (query, signal) => this.#reader.readBarcode!(query, signal),
       apply: result => {
-        const draft = this.#state.draft, existing = draft.lines.find(row => row.sku.id === result.sku.id);
+        const draft = this.#state.draft, existing = draft.lines.find(row => row.sku?.id === result.sku.id);
         if (!existing && draft.lines.length >= TRANSFER_PREPARE_MAX_LINES) return { ok: false, message: '本草稿最多 200 个实际规格，未新增明细。' };
         try {
           if (existing && !/^[1-9]\d{0,18}$/.test(existing.quantity)) throw Error();
@@ -353,7 +376,7 @@ export class TransferProposalSession {
     if (picker.kind === 'PRODUCT') { await this.#read('SKU', '', 1, item as CurrentFormProduct); return true; }
     const draft = this.#state.draft;
     if (picker.kind === 'SKU') {
-      if (draft.lines.some(row => row.sku.id === id)) { this.#publish({ notice: '该实际规格已在明细中，请修改原行数量。' }); return false; }
+      if (draft.lines.some(row => row.sku?.id === id)) { this.#publish({ notice: '该实际规格已在明细中，请修改原行数量。' }); return false; }
       if (draft.lines.length >= TRANSFER_PREPARE_MAX_LINES) { this.#publish({ notice: '本草稿最多选择 200 个实际规格。' }); return false; }
       return this.#edit({ ...draft, lines: [...draft.lines, { sku: item as CurrentFormSku, quantity: '1', ...(picker.product ? { product: picker.product } : {}) }] });
     }
@@ -362,7 +385,7 @@ export class TransferProposalSession {
     this.closePicker(); return this.#edit({ ...draft, ...(picker.kind === 'FROM' ? { from: selected } : { to: selected }) });
   }
   get hasSpecificationInputs(): boolean {
-    return !!this.#state.pending.product || !!this.#state.pending.query.trim() || Object.values(this.#state.matrixQuantities).some(cell => cell.quantity !== '' && cell.quantity !== '0');
+    return this.#state.draft.lines.some(row => row.sku === null) || !!this.#state.pending.product || !!this.#state.pending.query.trim() || Object.values(this.#state.matrixQuantities).some(cell => cell.quantity !== '' && cell.quantity !== '0');
   }
   /** Capture coordinates for the approved original SAVE, never a prepared SKU. */
   saveProposal(transferId: string | null): NativeTransferSaveProposal | null {
@@ -376,16 +399,24 @@ export class TransferProposalSession {
         if (coordinates.has(key) || line.existingLineId !== null && pointers.has(line.existingLineId)) throw Error();
         coordinates.add(key); if (line.existingLineId !== null) pointers.add(line.existingLineId); lines.push(line);
       };
-      for (const row of draft.lines.filter(row => !replacement?.originals.includes(row))) append({ existingLineId: row.existingLineId ?? null, skuId: row.sku.id, quantity: row.quantity }, [row.sku.productId, row.sku.colorId, row.sku.fitId, row.sku.sizeId]);
+      for (const row of draft.lines.filter(row => !replacement?.originals.includes(row))) {
+        const selected = transferProposalLineIdentity(row), coordinate = [selected.productId, selected.colorId, selected.fitId, selected.sizeId];
+        if (row.sku) append({ existingLineId: row.existingLineId ?? null, skuId: row.sku.id, quantity: row.quantity }, coordinate);
+        else {
+          const group = row.product.sizeGroupId ? this.#sizeGroups.get(row.product.sizeGroupId) : undefined;
+          if (!group || group.id !== row.specification.sizeGroup.id || !group.sizes.some(size => size.id === selected.sizeId)) throw Error();
+          append({ existingLineId: row.existingLineId ?? null, spec: { productId: selected.productId, colorId: selected.colorId, fitId: selected.fitId, sizeId: selected.sizeId }, quantity: row.quantity }, coordinate);
+        }
+      }
       for (const cell of Object.values(matrixQuantities)) if (cell.quantity !== '' && cell.quantity !== '0') {
-        if (!cell.product.sizeGroupId || !draft.lines.some(row => transferProposalRowKey(row.sku) === cell.rowKey && row.product?.id === cell.product.id)) throw Error();
+        if (!cell.product.sizeGroupId || !draft.lines.some(row => transferProposalRowKey(transferProposalLineIdentity(row)) === cell.rowKey && row.product?.id === cell.product.id)) throw Error();
         const spec = { productId: cell.product.id, colorId: cell.colorId, fitId: cell.fitId, sizeId: cell.sizeId };
         append({ existingLineId: null, spec, quantity: cell.quantity }, Object.values(spec));
       }
       if (pending.product || pending.query.trim() || replacement) {
         if (!pending.product?.sizeGroupId || pending.query !== pending.product.code || !pending.color || !pending.fit || pending.phase !== 'ready' || pending.unmapped.length) throw Error();
         const pointer = (sizeId: string): string | null => {
-          const matches = replacement?.originals.filter(row => row.sku.sizeId === sizeId && row.sku.sizeGroupId === pending.product!.sizeGroupId) ?? [];
+          const matches = replacement?.originals.filter(row => transferProposalLineIdentity(row).sizeId === sizeId && transferProposalLineIdentity(row).sizeGroupId === pending.product!.sizeGroupId) ?? [];
           if (matches.length > 1) throw Error(); return matches[0]?.existingLineId ?? null;
         };
         let filled = false;
@@ -407,6 +438,7 @@ export class TransferProposalSession {
   validate(): TransferProposal | null {
     if (Object.values(this.#state.matrixQuantities).some(cell => cell.quantity !== '' && cell.quantity !== '0')) { this.#publish({ notice: '组内新尺码尚无真实 SKU，矩阵数量草稿已保留；未发送保存。' }); return null; }
     if (this.#state.disposed) return null;
+    if (this.#state.draft.lines.some(row => row.sku === null)) { this.#publish({ notice: '本地规格尚无真实 SKU，请用顶部保存提交实际规格坐标。' }); return null; }
     if (this.#state.replacement) { this.#publish({ errors: ['请先确认或取消当前行改选。'] }); return null; }
     if (this.#state.pending.product || this.#state.pending.query.trim() || Object.values(this.#state.pending.quantities).some(raw => raw !== '')) { this.#publish({ errors: ['请完成或清除底部尚未完成的录入。'] }); return null; }
     const draft = this.#state.draft, errors: string[] = [];
@@ -417,7 +449,7 @@ export class TransferProposalSession {
     if (!draft.lines.length) errors.push('请至少添加一个实际规格。');
     for (const row of draft.lines) {
       try { if (!/^[1-9]\d{0,18}$/.test(row.quantity) || quantity(row.quantity) <= 0n) throw Error(); }
-      catch { errors.push(`${row.sku.productCode} / ${row.sku.colorName} / ${row.sku.fitName} / ${row.sku.sizeName}：数量须为范围内的正整数。`); }
+      catch { errors.push(`${transferProposalLineIdentity(row).productCode} / ${transferProposalLineIdentity(row).colorName} / ${transferProposalLineIdentity(row).fitName} / ${transferProposalLineIdentity(row).sizeName}：数量须为范围内的正整数。`); }
     }
     this.#publish({ errors, notice: errors.length ? '草稿未通过校验，未发送业务命令。' : '本地草稿校验通过；尚未保存。仍需可信准备服务提供已批准编号及原生快照事实。' });
     return errors.length ? null : draft;

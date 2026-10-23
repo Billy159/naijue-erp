@@ -27,7 +27,7 @@ async function fill(session: TransferProposalSession) {
 }
 test('proposal is inert; real candidate selections preserve full SKU and unavailable facts, never create a command', async () => {
   const { session, calls } = setup(); assert.deepEqual(calls, []); await fill(session);
-  const draft = session.validate()!; assert.ok(draft); assert.equal(draft.lines[0]!.sku.sizeName, '165/S');
+  const draft = session.validate()!; assert.ok(draft); assert.ok(draft.lines[0]!.sku); assert.equal(draft.lines[0]!.sku.sizeName, '165/S');
   assert.equal(draft.lines[0]!.sku.barcodeAvailability, 'UNAVAILABLE'); assert.equal('barcode' in draft.lines[0]!.sku, false);
   assert.equal('number' in draft, false); assert.equal('id' in draft, false); assert.ok(Object.isFrozen(draft.lines));
   assert.match(session.getSnapshot().notice!, /尚未保存/); assert.equal(session.getSnapshot().dirty, true);

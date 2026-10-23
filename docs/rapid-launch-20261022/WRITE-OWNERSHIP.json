@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T19:38:52.093634+00:00",
+  "updatedAt": "2026-10-23T19:46:19.026969+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -3718,6 +3718,18 @@
           "group": "F1_LOCAL_SPEC_LINE_KNOWN_CONSUMER_TYPE_NARROWING",
           "fieldGate": "TEST_TYPE_ONLY_NO_BUSINESS_ASSERTION_WEAKEN",
           "scope": "Original knownSKU .sku nonnull assertion and legacy SAVE draft discriminator only; preserve all expected quantities/hash/precision; no skips"
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-proposal.test.ts",
+          "group": "F1_T02_LOCAL_SPEC_LINE_KNOWN_CONSUMER_TYPE_NARROWING",
+          "fieldGate": "TEST_TYPE_ONLY_NO_BUSINESS_ASSERTION_WEAKEN",
+          "scope": "Only original knownSKU assert.ok nonnull or legacy SAVE assert.ok draft discriminator. Preserve original expected identities/hash/quantities, no skipped or expanded tests."
+        },
+        {
+          "path": "apps/web/src/current-form/transfer-create.test.ts",
+          "group": "F1_T02_LOCAL_SPEC_LINE_KNOWN_CONSUMER_TYPE_NARROWING",
+          "fieldGate": "TEST_TYPE_ONLY_NO_BUSINESS_ASSERTION_WEAKEN",
+          "scope": "Only original knownSKU assert.ok nonnull or legacy SAVE assert.ok draft discriminator. Preserve original expected identities/hash/quantities, no skipped or expanded tests."
         }
       ]
     }
@@ -4263,6 +4275,11 @@
         "apps/web/src/current-form/sales-create.test.ts"
       ],
       "scope": "Original102 local spec union exposes existing known-SKU test assumptions; type narrowing only, not test removal/weaken"
+    },
+    {
+      "atUtc": "2026-10-23T19:46:19.026969+00:00",
+      "id": "C_F1_CHUNK105_KNOWN_CONSUMER_EXACT2",
+      "scope": "Two concrete original T02 test paths reported by F1 strict closure, same narrowly authorized source209 pattern; no other test/production source ownership changed."
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",

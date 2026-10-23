@@ -35,7 +35,7 @@ test('validated proposal→native preparation→one actual SAVE with null CAS; b
   assert.equal(h.intents.length, 1); assert.deepEqual(Object.keys(h.intents[0]!).sort(), ['businessDate', 'fromWarehouseId', 'lines', 'note', 'toWarehouseId']);
   assert.deepEqual(h.intents[0]!.lines, [{ skuId: sku.id, quantity: '1' }]);
   assert.equal(h.commands.length, 1); const command = h.commands[0]!; assert.equal(command.action, 'SAVE'); assert.equal(command.expectedVersion, null);
-  if (command.action !== 'SAVE') throw Error(); assert.equal(command.draft.lines[0]!.snapshot.barcode, '001234567890123'); assert.equal(command.draft.header.number, native.header.number);
+  if (command.action !== 'SAVE') throw Error(); assert.ok('draft' in command); assert.equal(command.draft.lines[0]!.snapshot.barcode, '001234567890123'); assert.equal(command.draft.header.number, native.header.number);
   assert.equal(h.workspace.getSnapshot().write.phase, 'committed'); assert.equal(await h.session.save(), false); assert.equal(h.commands.length, 1);
 });
 test('duplicate save while preparation pending rejected; any raw edit cancels and stale response never writes', async () => {
