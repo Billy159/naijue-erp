@@ -4,14 +4,19 @@ import type { RuntimeDocumentNumberTransaction } from "./runtime-document-number
 import type { SalesDocument, SalesDraft, SalesLineRow, DocumentStatus } from "../../domain/src/documents.ts";
 import type { InventoryBalanceRow, InventoryLedgerRow } from "../../domain/src/inventory.ts";
 import type { EntityId, EntityKind, Quantity, Version } from "../../domain/src/values.ts";
+import type { NativeSalesSaveProposal } from './native-sales-preparation.ts';
+import type { DocumentSpecificationResolution } from './document-specification.ts';
 
 export type SalesAction = "SAVE" | "APPROVE" | "UNAPPROVE" | "VOID";
 export interface ActorContext { readonly accountId: EntityId<"account">; readonly hallId: EntityId<"hall"> | null }
 export interface CommandEnvelope { readonly actor: ActorContext; readonly requestKey: string }
-export type SalesCommand = CommandEnvelope & (
+export type LegacySalesCommand = CommandEnvelope & (
   { readonly action: "SAVE"; readonly expectedVersion: Version | null; readonly draft: SalesDraft }
   | { readonly action: "APPROVE" | "UNAPPROVE" | "VOID"; readonly salesId: EntityId<"sales">; readonly expectedVersion: Version }
 );
+export type SalesCommand = LegacySalesCommand | (CommandEnvelope & {
+  readonly action: 'SAVE'; readonly expectedVersion: Version | null; readonly proposal: NativeSalesSaveProposal;
+});
 export interface SalesResult {
   readonly operationId: EntityId<"operation">; readonly salesId: EntityId<"sales">;
   readonly version: Version; readonly status: DocumentStatus; readonly ledgerEntryIds: readonly EntityId<"ledger">[];
@@ -45,6 +50,7 @@ export interface SalesCurrentIdentity {
   readonly hallId: EntityId<"hall"> | null; readonly hallEnabled: boolean | null;
 }
 export interface SalesTransaction extends InventoryPostingTransaction, RuntimeDocumentNumberTransaction {
+  resolveDocumentSkus?(input: DocumentSpecificationResolution): Promise<readonly EntityId<'sku'>[]>;
   /** Requires the receipt actor/key and single sales target to have been bound first.
    * Implementations must not open another transaction or expose credentials/session material. */
   getCurrentSalesIdentity(accountId: EntityId<"account">): Promise<SalesCurrentIdentity | undefined>;

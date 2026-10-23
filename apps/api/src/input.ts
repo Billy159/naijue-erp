@@ -3,6 +3,7 @@ import type { SalesDraft, SalesLineRow, SalesSettlementRow, SkuSnapshot } from "
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { businessDate, entityId, minorAmount, quantity, version } from "../../../packages/domain/src/values.ts";
 import type { EntityKind, EntityId } from "../../../packages/domain/src/values.ts";
+import { parseNativeSalesSaveProposal } from '../../../packages/application/src/native-sales-preparation.ts';
 
 /** Transport validation only. Reference existence/scope and economics remain trusted server policy. */
 function invalid(): never { throw new DomainError("INVALID_HTTP_INPUT", "Request does not match the sales HTTP contract"); }
@@ -66,6 +67,12 @@ export function parseSalesCommand(body: unknown, actor: ActorContext): SalesComm
   // Select the exact key set before constructing any trusted command. No stripping/coercion/defaults.
   if (body === null || typeof body !== "object" || Array.isArray(body)) invalid();
   const action = choice((body as Record<string, unknown>).action, ["SAVE", "APPROVE", "UNAPPROVE", "VOID"]);
+  if(action==='SAVE'&&Object.hasOwn(body,'proposal')){
+    const row=object(body,['action','requestKey','expectedVersion','proposal']),proposal=parseNativeSalesSaveProposal(row.proposal);
+    const expectedVersion=row.expectedVersion===null?null:version(integer(row.expectedVersion));
+    if((proposal.salesId===null)!==(expectedVersion===null))invalid();
+    return {actor,action,requestKey:parseRequestKey(row.requestKey),expectedVersion,proposal};
+  }
   const row = object(body, ["action", "requestKey", "expectedVersion", action === "SAVE" ? "draft" : "salesId"]);
   const requestKey = parseRequestKey(row.requestKey);
   if (action === "SAVE") return { actor, action, requestKey, expectedVersion: row.expectedVersion === null ? null : version(integer(row.expectedVersion)), draft: draft(row.draft) };

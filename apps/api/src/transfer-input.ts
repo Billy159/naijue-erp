@@ -4,6 +4,7 @@ import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { businessDate, entityId, quantity, version } from "../../../packages/domain/src/values.ts";
 import type { EntityId, EntityKind } from "../../../packages/domain/src/values.ts";
 import { parseRequestKey } from "./input.ts";
+import { parseNativeTransferSaveProposal } from '../../../packages/application/src/native-transfer-preparation.ts';
 
 /** Transport validation only. Warehouse/SKU existence, scope and enablement are trusted server policy. */
 function invalid(): never { throw new DomainError("INVALID_HTTP_INPUT", "Request does not match the transfer HTTP contract"); }
@@ -45,6 +46,12 @@ export function parseTransferCommand(body: unknown, actor: TransferActor): Trans
   // Select the complete key set first. No caller-provided actor, creation facts, defaults or coercion.
   if (body === null || typeof body !== "object" || Array.isArray(body)) invalid();
   const action = choice((body as Record<string, unknown>).action, ["SAVE", "APPROVE", "UNAPPROVE", "VOID"]);
+  if(action==='SAVE'&&Object.hasOwn(body,'proposal')){
+    const row=object(body,['action','requestKey','expectedVersion','proposal']),proposal=parseNativeTransferSaveProposal(row.proposal);
+    const expectedVersion=row.expectedVersion===null?null:version(integer(row.expectedVersion));
+    if((proposal.transferId===null)!==(expectedVersion===null))invalid();
+    return {actor,action,requestKey:parseRequestKey(row.requestKey),expectedVersion,proposal};
+  }
   const row = object(body, ["action", "requestKey", "expectedVersion", action === "SAVE" ? "draft" : "transferId"]);
   const requestKey = parseRequestKey(row.requestKey);
   if (action === "SAVE") return { actor, action, requestKey, expectedVersion: row.expectedVersion === null ? null : version(integer(row.expectedVersion)), draft: draft(row.draft) };

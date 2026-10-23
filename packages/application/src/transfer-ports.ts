@@ -4,6 +4,8 @@ import type { DocumentStatus, TransferHeaderRow, TransferLineRow } from "../../d
 import type { InventoryBalanceRow, InventoryLedgerRow } from "../../domain/src/inventory.ts";
 import type { EntityId, EntityKind, Version } from "../../domain/src/values.ts";
 import type { ActorContext } from "./ports.ts";
+import type { NativeTransferSaveProposal } from './native-transfer-preparation.ts';
+import type { DocumentSpecificationResolution } from './document-specification.ts';
 
 export type TransferAction = "SAVE" | "APPROVE" | "UNAPPROVE" | "VOID";
 /** These normalized, source-confirmed roles must be supplied by trusted authentication, never request JSON. */
@@ -18,10 +20,12 @@ export interface RuntimeTransferHeader extends TransferHeaderRow {
 export interface TransferDocument { readonly header: RuntimeTransferHeader; readonly lines: readonly TransferLineRow[] }
 export type TransferDraftHeader = Pick<RuntimeTransferHeader, "id" | "number" | "businessDate" | "fromWarehouseId" | "toWarehouseId" | "note">;
 export interface TransferDraft { readonly header: TransferDraftHeader; readonly lines: readonly TransferLineRow[] }
-export type TransferCommand = { readonly actor: TransferActor; readonly requestKey: string } & (
+export type LegacyTransferCommand = { readonly actor: TransferActor; readonly requestKey: string } & (
   { readonly action: "SAVE"; readonly expectedVersion: Version | null; readonly draft: TransferDraft }
   | { readonly action: "APPROVE" | "UNAPPROVE" | "VOID"; readonly transferId: EntityId<"transfer">; readonly expectedVersion: Version }
 );
+export type TransferCommand = LegacyTransferCommand | { readonly actor: TransferActor; readonly requestKey: string;
+  readonly action: 'SAVE'; readonly expectedVersion: Version | null; readonly proposal: NativeTransferSaveProposal };
 export interface TransferResult {
   readonly operationId: EntityId<"operation">; readonly transferId: EntityId<"transfer">;
   readonly version: Version; readonly status: DocumentStatus; readonly ledgerEntryIds: readonly EntityId<"ledger">[];
@@ -55,6 +59,7 @@ export interface TransferCurrentIdentity {
   readonly hallId: EntityId<"hall"> | null; readonly hallEnabled: boolean | null;
 }
 export interface TransferTransaction extends InventoryPostingTransaction, RuntimeDocumentNumberTransaction {
+  resolveDocumentSkus?(input: DocumentSpecificationResolution): Promise<readonly EntityId<'sku'>[]>;
   /** Native action policy requires this port. Bind the receipt actor and target
    * first; retain account/staff/hall locks until this transaction completes. */
   getCurrentTransferIdentity?(accountId: EntityId<"account">): Promise<TransferCurrentIdentity | undefined>;

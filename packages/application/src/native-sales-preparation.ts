@@ -6,6 +6,10 @@ import { businessDate, decimalToMinor, entityId, minorAmount, multiplyMoney, qua
 import type { ActorContext, SalesDependencies, SalesBusinessRules, SalesTransaction } from "./ports.ts";
 import { createNativeTransactionSalesBusinessRules } from "./sales-native-facts.ts";
 import { sourceConfirmedCreateDocumentNumber } from "./source-confirmed-document-number.ts";
+import { parseDocumentSkuSelection } from './document-specification.ts';
+import type { DocumentSkuSelection } from './document-specification.ts';
+import type { StoredSales } from './ports.ts';
+import type { EntityId } from '../../domain/src/values.ts';
 
 /** Manual sales/independent-return/exchange proposal: IDs and explicit pricing intent, never labels,
  * barcode, reference/minimum-price authority, calculated totals or document IDs.
@@ -27,6 +31,11 @@ export interface NativeSalesExistingProposal extends Omit<NativeSalesCreatePropo
   readonly settlements: readonly (NativeSalesCreateProposal["settlements"][number] & { readonly existingSettlementId: string | null })[];
 }
 export interface NativeSalesExistingPrepared { readonly expectedVersion: number; readonly draft: SalesDraft }
+export interface NativeSalesSaveProposal extends Omit<NativeSalesCreateProposal,'lines'|'settlements'> {
+  readonly salesId:string|null;
+  readonly lines:readonly (DocumentSkuSelection & Omit<NativeSalesExistingProposal['lines'][number],'skuId'>)[];
+  readonly settlements:NativeSalesExistingProposal['settlements'];
+}
 export const NATIVE_SALES_PREPARE_MAX_LINES = SALES_PREPARE_MAX_LINES;
 function money(value: unknown) {
   requireDomain(typeof value === "string" && value.length <= 19 && /^(?:0|[1-9]\d*)(?:\.\d{1,2})?$/.test(value), "INVALID_MONEY", "Exact nonnegative yuan text required");
@@ -203,6 +212,87 @@ export function parseNativeSalesExistingProposal(input: unknown): NativeSalesExi
   money(proposal.orderDiscount);
   requireDomain(proposal.businessType === "SALE" || money(proposal.orderDiscount) === 0n, "INDEPENDENT_RETURN_DISCOUNT", "Independent return/exchange whole discount must be zero");
   requireDomain(salesJsonByteLength(proposal) <= SALES_PREPARE_MAX_REQUEST_BYTES, "SALES_PAYLOAD_TOO_LARGE", "Preparation exceeds request budget"); return proposal;
+}
+
+export function parseNativeSalesSaveProposal(input:unknown):NativeSalesSaveProposal {
+  const p=existingData(input,['salesId','businessType','businessDate','note','hallId','customerId','salespersonId','warehouseId','orderDiscount','lines','settlements']);
+  requireDomain(p.businessType==='SALE'||p.businessType==='RETURN'||p.businessType==='EXCHANGE','INVALID_HTTP_INPUT','Explicit sales type required');
+  requireDomain(p.salesId===null||typeof p.salesId==='string','INVALID_HTTP_INPUT','Actual target or explicit new target required');
+  requireDomain(p.note===null||typeof p.note==='string'&&p.note.length<=SALES_PREPARE_MAX_NOTE_LENGTH,'INVALID_HTTP_INPUT','Bounded note required');
+  const lines=existingArray(p.lines,1,SALES_PREPARE_MAX_LINES).map(value=>{
+    requireDomain(value!==null&&typeof value==='object','INVALID_HTTP_INPUT','Actual line required');
+    const which=Object.hasOwn(value,'skuId')?'skuId':'spec';
+    const l=existingData(value,['existingLineId',which,'quantity','dealPrice','pricingRule','discountTenths','isGift','zeroConfirmed']);
+    requireDomain(typeof l.quantity==='string'&&quantity(l.quantity)!==0n&&(p.businessType!=='SALE'||quantity(l.quantity)>0n),'INVALID_SALES_QUANTITY','Actual signed quantity required');
+    requireDomain(typeof l.isGift==='boolean'&&typeof l.zeroConfirmed==='boolean','UNKNOWN_PRICING_FACTS','Actual pricing intent required');
+    requireDomain(l.pricingRule==='UNIT_PRICE'?l.discountTenths===null&&(l.isGift||typeof l.dealPrice==='string'):
+      l.pricingRule==='DISCOUNT'&&l.dealPrice===null&&typeof l.discountTenths==='number'&&Number.isInteger(l.discountTenths)&&l.discountTenths>=0&&l.discountTenths<=100,'INVALID_LINE_DISCOUNT','Unambiguous pricing intent required');
+    if(l.dealPrice!==null)money(l.dealPrice);
+    return {...parseDocumentSkuSelection({[which]:l[which]}),existingLineId:l.existingLineId===null?null:entityId('salesLine',l.existingLineId as string),
+      quantity:l.quantity,dealPrice:l.dealPrice as string|null,pricingRule:l.pricingRule as 'UNIT_PRICE'|'DISCOUNT',discountTenths:l.discountTenths as number|null,isGift:l.isGift,zeroConfirmed:l.zeroConfirmed};
+  });
+  const settlements=existingArray(p.settlements,0,3).map(value=>{
+    const s=existingData(value,['existingSettlementId','paymentAccountId','paymentMethodId','direction','amount']);
+    requireDomain(s.direction==='RECEIVE'||s.direction==='REFUND','INVALID_SETTLEMENT','Actual settlement direction required');
+    return {existingSettlementId:s.existingSettlementId===null?null:entityId('settlement',s.existingSettlementId as string),paymentAccountId:entityId('paymentAccount',s.paymentAccountId as string),
+      paymentMethodId:entityId('paymentMethod',s.paymentMethodId as string),direction:s.direction as 'RECEIVE'|'REFUND',amount:(money(s.amount),s.amount as string)};
+  });
+  const proposal:NativeSalesSaveProposal={salesId:p.salesId===null?null:entityId('sales',p.salesId as string),businessType:p.businessType,businessDate:businessDate(p.businessDate as string),
+    note:p.note as string|null,hallId:entityId('hall',p.hallId as string),customerId:entityId('customer',p.customerId as string),salespersonId:p.salespersonId===null?null:entityId('staff',p.salespersonId as string),
+    warehouseId:entityId('warehouse',p.warehouseId as string),orderDiscount:(money(p.orderDiscount),p.orderDiscount as string),lines,settlements};
+  requireDomain(proposal.salesId!==null||lines.every(l=>l.existingLineId===null)&&settlements.every(s=>s.existingSettlementId===null),'INVALID_HTTP_INPUT','New document cannot adopt old rows');
+  requireDomain(proposal.businessType==='SALE'||money(proposal.orderDiscount)===0n,'INDEPENDENT_RETURN_DISCOUNT','Independent return/exchange whole discount must be zero');
+  requireDomain(salesJsonByteLength(proposal)<=SALES_PREPARE_MAX_REQUEST_BYTES,'SALES_PAYLOAD_TOO_LARGE','Bounded proposal required');return proposal;
+}
+
+/** Original pure money rules/current facts on the already-bound outer SAVE transaction. */
+export async function prepareNativeSalesOnTransaction(dependencies:SalesDependencies,tx:SalesTransaction,actor:ActorContext,
+  proposal:NativeSalesSaveProposal,documentId:string,stored:StoredSales|undefined,skuIds:readonly string[]):Promise<SalesDraft>{
+  const previous=stored?.document,zero=minorAmount('0');
+  requireDomain(!previous||previous.header.status==='DRAFT','INVALID_STATE','Only actual drafts can be edited');
+  requireDomain(skuIds.length===proposal.lines.length,'INVALID_LINES','Resolved selections must retain current rows');
+  const header={id:entityId('sales',documentId),number:previous?.header.number??sourceConfirmedCreateDocumentNumber('SALE',entityId('sales',documentId)),
+    businessType:proposal.businessType,businessDate:businessDate(proposal.businessDate),hallId:entityId('hall',proposal.hallId),customerId:entityId('customer',proposal.customerId),
+    salespersonId:proposal.salespersonId===null?null:entityId('staff',proposal.salespersonId),warehouseId:entityId('warehouse',proposal.warehouseId),note:proposal.note,orderDiscount:money(proposal.orderDiscount),grossAmount:zero,netDue:zero};
+  const used=new Set<string>([documentId,...(previous?.lines.map(l=>l.id)??[]),...(previous?.settlements.map(s=>s.id)??[])]),pointers=new Set<string>(),fresh=new Set<string>();
+  const nextId=<K extends 'salesLine'|'settlement'>(kind:K):EntityId<K>=>{const id=entityId(kind,dependencies.newId(kind));requireDomain(!used.has(id),'INVALID_ID','Distinct generated row identity required');used.add(id);return id;};
+  const lines:SalesLineRow[]=proposal.lines.map((row,i)=>{
+    const old=row.existingLineId===null?undefined:previous?.lines.find(l=>l.id===row.existingLineId);
+    requireDomain(row.existingLineId===null||old?.isCurrent&&!pointers.has(row.existingLineId),'INVALID_HTTP_INPUT','Unique current owned line pointer required');
+    if(row.existingLineId!==null)pointers.add(row.existingLineId);
+    const skuId=entityId('sku',skuIds[i]!),retain=old?.skuId===skuId,id=retain?old.id:nextId('salesLine');if(!retain)fresh.add(id);
+    return {id,salesId:header.id,lineNo:i+1,skuId,quantity:quantity(row.quantity),referencePrice:retain?old.referencePrice:null,
+      dealPrice:row.dealPrice===null?zero:money(row.dealPrice),pricingRule:row.pricingRule,discountTenths:row.discountTenths,zeroConfirmed:row.zeroConfirmed,isGift:row.isGift,
+      lineAmount:zero,allocatedDiscount:zero,isCurrent:true,snapshot:retain?{...old.snapshot}:{productCode:'',productName:'',colorName:'',fitName:'',sizeName:'',barcode:null}};
+  });
+  pointers.clear();
+  const settlements=proposal.settlements.map((row,i)=>{
+    const old=row.existingSettlementId===null?undefined:previous?.settlements.find(s=>s.id===row.existingSettlementId);
+    requireDomain(row.existingSettlementId===null||old!==undefined&&!pointers.has(row.existingSettlementId),'INVALID_HTTP_INPUT','Unique owned settlement pointer required');
+    if(row.existingSettlementId!==null)pointers.add(row.existingSettlementId);
+    const retain=old?.paymentAccountId===row.paymentAccountId;
+    if(retain)requireDomain(old.paymentMethodId===row.paymentMethodId,'IMMUTABLE_SETTLEMENT_METHOD','Retained method cannot change');
+    return {id:retain?old.id:nextId('settlement'),salesId:header.id,lineNo:i+1,paymentAccountId:entityId('paymentAccount',row.paymentAccountId),paymentMethodId:entityId('paymentMethod',row.paymentMethodId),direction:row.direction,amount:money(row.amount)};
+  });
+  requireDomain(tx.getCurrentSalesSnapshots&&tx.getCurrentSalesReferenceFacts,'NATIVE_CATALOGUE_FACTS_UNAVAILABLE','Original current native facts required');
+  const wanted=lines.filter(l=>fresh.has(l.id)),snapshots=wanted.length?await tx.getCurrentSalesSnapshots(wanted.map(l=>l.skuId)):new Map();
+  const selected:SalesDraft={header,settlements,lines:lines.map(l=>{if(!fresh.has(l.id))return l;const snapshot=snapshots.get(l.skuId);requireDomain(snapshot,'SKU_UNAVAILABLE','Actual native snapshot required');return {...l,snapshot:{...snapshot}};})};
+  const facts=await tx.getCurrentSalesReferenceFacts(selected);
+  const priced=selected.lines.map(l=>{
+    const sku=facts.skus.find(s=>s.id===l.skuId),product=sku&&facts.products.find(p=>p.id===sku.productId);
+    requireDomain(product&&product.referencePrice!==undefined,'PRODUCT_PRICING_UNAVAILABLE','Complete current pricing required');
+    const referencePrice=fresh.has(l.id)?product.referencePrice:l.referencePrice;let dealPrice=l.dealPrice;
+    if(l.isGift){requireDomain(dealPrice===0n,'INVALID_GIFT_PRICE','Gift price must be zero');dealPrice=zero;}
+    else if(l.pricingRule==='DISCOUNT'){requireDomain(referencePrice!==null,'PRODUCT_PRICING_UNAVAILABLE','Discount needs actual reference');dealPrice=discountUnitPrice(referencePrice,l.discountTenths!);}
+    return {...l,referencePrice,dealPrice,lineAmount:multiplyMoney(dealPrice,l.quantity)};
+  });
+  const allocations=header.businessType==='SALE'?allocateSalesDiscount(priced.map(l=>l.lineAmount),header.orderDiscount):priced.map(()=>zero);
+  const grossAmount=minorAmount(priced.reduce((s,l)=>s+l.lineAmount,0n).toString());
+  requireDomain(grossAmount>=-999999999999999999n&&grossAmount<=999999999999999999n&&priced.every(l=>l.lineAmount>=-999999999999999999n&&l.lineAmount<=999999999999999999n),'MONEY_STORAGE_OVERFLOW','Actual amounts must fit storage');
+  const draft:SalesDraft={header:{...header,grossAmount,netDue:minorAmount((grossAmount-header.orderDiscount).toString())},settlements,lines:priced.map((l,i)=>({...l,allocatedDiscount:allocations[i]!}))};
+  await createNativeManualSalesBusinessRules().assertDraftChange(previous,draft,tx);await dependencies.rules.assertDraftChange(previous,draft,tx);
+  const result=!previous&&tx.reserveRuntimeDocumentNumber?{...draft,header:{...draft.header,number:await tx.reserveRuntimeDocumentNumber({kind:'SALES',documentId:header.id,actorAccountId:actor.accountId})}}:draft;
+  requireDomain(salesPreparedDraftFitsSaveBudget(result),'SALES_PAYLOAD_TOO_LARGE','Prepared SAVE exceeds original budget');return result;
 }
 
 /** No write or number-allocation port reaches either policy through this view.

@@ -5,6 +5,9 @@ import { businessDate, entityId, quantity } from "../../domain/src/values.ts";
 import type { TransferActor, TransferDependencies, TransferDraft, TransferReferences, TransferTransaction } from "./transfer-ports.ts";
 import { createSourceConfirmedTransferReferences } from "./transfer-policy.ts";
 import { sourceConfirmedCreateDocumentNumber } from "./source-confirmed-document-number.ts";
+import { parseDocumentSkuSelection } from './document-specification.ts';
+import type { DocumentSkuSelection } from './document-specification.ts';
+import type { StoredTransfer } from './transfer-ports.ts';
 
 /** Manual current SKU selection only. No caller-supplied labels, barcode or number. */
 export interface NativeTransferCreateProposal {
@@ -17,6 +20,60 @@ export interface NativeTransferExistingProposal extends Omit<NativeTransferCreat
   readonly lines: readonly { readonly existingLineId: string | null; readonly skuId: string; readonly quantity: string }[];
 }
 export interface NativeTransferExistingPrepared { readonly expectedVersion: number; readonly draft: TransferDraft }
+export interface NativeTransferSaveProposal extends Omit<NativeTransferCreateProposal,'lines'> {
+  readonly transferId:string|null;
+  readonly lines:readonly (DocumentSkuSelection & {readonly existingLineId:string|null;readonly quantity:string})[];
+}
+export function parseNativeTransferSaveProposal(input:unknown):NativeTransferSaveProposal {
+  const p=proposalObject(input,['transferId','businessDate','note','fromWarehouseId','toWarehouseId','lines']);
+  requireDomain(p.transferId===null||typeof p.transferId==='string','INVALID_HTTP_INPUT','Actual target or explicit new target required');
+  requireDomain(p.note===null||typeof p.note==='string'&&p.note.length<=TRANSFER_PREPARE_MAX_NOTE_LENGTH,'INVALID_HTTP_INPUT','Bounded note required');
+  requireDomain(Array.isArray(p.lines)&&p.lines.length>0&&p.lines.length<=TRANSFER_PREPARE_MAX_LINES,'INVALID_LINES','Bounded current lines required');
+  const lines=p.lines.map(value=>{
+    requireDomain(value!==null&&typeof value==='object','INVALID_HTTP_INPUT','Actual line required');
+    const which=Object.hasOwn(value,'skuId')?'skuId':'spec';
+    const line=proposalObject(value,['existingLineId',which,'quantity']);
+    requireDomain(typeof line.quantity==='string'&&quantity(line.quantity)>0n,'INVALID_TRANSFER_LINE','Positive actual quantity required');
+    const pointer=line.existingLineId===null?null:entityId('transferLine',line.existingLineId as string);
+    return {...parseDocumentSkuSelection({[which]:line[which]}),existingLineId:pointer,quantity:line.quantity};
+  });
+  const result={transferId:p.transferId===null?null:entityId('transfer',p.transferId as string),businessDate:businessDate(p.businessDate as string),
+    note:p.note as string|null,fromWarehouseId:entityId('warehouse',p.fromWarehouseId as string),toWarehouseId:entityId('warehouse',p.toWarehouseId as string),lines};
+  requireDomain(result.transferId!==null||lines.every(l=>l.existingLineId===null),'INVALID_HTTP_INPUT','New target cannot adopt old rows');
+  requireDomain(transferJsonByteLength(result)<=TRANSFER_PREPARE_MAX_REQUEST_BYTES,'TRANSFER_PAYLOAD_TOO_LARGE','Bounded proposal required');return result;
+}
+function proposalObject(value:unknown,keys:readonly string[]):Record<string,unknown>{
+  requireDomain(value!==null&&typeof value==='object'&&Object.getPrototypeOf(value)===Object.prototype&&Reflect.ownKeys(value).length===keys.length,'INVALID_HTTP_INPUT','Exact own proposal required');
+  const out:Record<string,unknown>={};for(const key of keys){const d=Object.getOwnPropertyDescriptor(value,key);requireDomain(d?.enumerable&&Object.hasOwn(d,'value'),'INVALID_HTTP_INPUT','Own proposal fields required');out[key]=d.value;}return out;
+}
+
+/** Called only after original SAVE key/document/current-purpose/CAS have been bound.
+ * It neither starts another transaction nor changes private preparation nonce scope. */
+export async function prepareNativeTransferOnTransaction(dependencies:TransferDependencies,tx:TransferTransaction,actor:TransferActor,
+  proposal:NativeTransferSaveProposal,documentId:string,stored:StoredTransfer|undefined,skuIds:readonly string[]):Promise<TransferDraft>{
+  const previous=stored?.document;
+  requireDomain(!previous||previous.header.status==='DRAFT','INVALID_STATE','Only actual draft edits permitted');
+  requireDomain(skuIds.length===proposal.lines.length,'INVALID_LINES','Resolved selection must retain all actual lines');
+  const header={id:entityId('transfer',documentId),number:previous?.header.number??sourceConfirmedCreateDocumentNumber('TRANSFER',entityId('transfer',documentId)),
+    businessDate:businessDate(proposal.businessDate),fromWarehouseId:entityId('warehouse',proposal.fromWarehouseId),toWarehouseId:entityId('warehouse',proposal.toWarehouseId),note:proposal.note};
+  const used=new Set<string>([documentId,...(previous?.lines.map(l=>l.id)??[])]),pointers=new Set<string>(),fresh=new Set<string>();
+  const lines=proposal.lines.map((row,i)=>{
+    const old=row.existingLineId===null?undefined:previous?.lines.find(l=>l.id===row.existingLineId);
+    requireDomain(row.existingLineId===null||old?.isCurrent&&!pointers.has(row.existingLineId),'INVALID_HTTP_INPUT','Unique current owned line pointer required');
+    if(row.existingLineId!==null)pointers.add(row.existingLineId);
+    const skuId=entityId('sku',skuIds[i]!),retain=old?.skuId===skuId;
+    const id=retain?old.id:entityId('transferLine',dependencies.newId('transferLine'));
+    if(!retain){requireDomain(!used.has(id),'INVALID_ID','Distinct server line identity required');used.add(id);fresh.add(id);}
+    return {id,transferId:header.id,lineNo:i+1,skuId,quantity:quantity(row.quantity),isCurrent:true as const,
+      snapshot:retain?{...old.snapshot}:{productCode:'',productName:'',colorName:'',fitName:'',sizeName:'',barcode:null}};
+  });
+  requireDomain(tx.getCurrentTransferSnapshots,'NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE','Original current native snapshots required');
+  const freshLines=lines.filter(l=>fresh.has(l.id));const snapshots=freshLines.length?await tx.getCurrentTransferSnapshots(freshLines.map(l=>l.skuId)):new Map();
+  const draft={header,lines:lines.map(l=>{if(!fresh.has(l.id))return l;const snapshot=snapshots.get(l.skuId);requireDomain(snapshot,'NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE','Actual selected snapshot required');return {...l,snapshot:{...snapshot}};})};
+  await dependencies.references.assertValid(tx,actor,'SAVE',previous,draft);
+  const result=!previous&&tx.reserveRuntimeDocumentNumber?{...draft,header:{...header,number:await tx.reserveRuntimeDocumentNumber({kind:'TRANSFER',documentId:header.id,actorAccountId:actor.accountId})}}:draft;
+  requireDomain(transferPreparedDraftFitsSaveBudget(result),'TRANSFER_PAYLOAD_TOO_LARGE','Prepared SAVE exceeds original budget');return result;
+}
 const snapshotFields = ["productCode", "productName", "colorName", "fitName", "sizeName", "barcode"] as const;
 function sameSnapshot(a: SkuSnapshot, b: SkuSnapshot): boolean { return snapshotFields.every(key => a[key] === b[key]); }
 

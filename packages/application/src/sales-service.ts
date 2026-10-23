@@ -1,10 +1,13 @@
+import { parseNativeSalesSaveProposal, prepareNativeSalesOnTransaction } from './native-sales-preparation.ts';
+import { sourceConfirmedCreateDocumentNumber } from './source-confirmed-document-number.ts';
+import { businessDate } from '../../domain/src/values.ts';
 import { applyInventoryEntry, assertPostingCoverage } from "./inventory-posting.ts";
 import type { SalesDocument, SalesDraft, SalesLineRow } from "../../domain/src/documents.ts";
 import { requireDomain } from "../../domain/src/errors.ts";
 import type { InventoryLedgerRow } from "../../domain/src/inventory.ts";
 import { addMoney, entityId, minorAmount, negateMoney, negateQuantity, nextVersion, version } from "../../domain/src/values.ts";
 import type { EntityId } from "../../domain/src/values.ts";
-import type { SalesCommand, SalesDependencies, SalesResult } from "./ports.ts";
+import type { SalesCommand, LegacySalesCommand, StoredSales, SalesDependencies, SalesResult } from "./ports.ts";
 import { requestHash } from "./request-hash.ts";
 import { salesChangeEvidence } from "./sales-change-evidence.ts";
 
@@ -49,23 +52,49 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
     async execute(input) {
       // TypeScript readonly does not freeze caller-owned aliases. Hash and execute
       // the same isolated value snapshot before the first asynchronous boundary.
-      const command = structuredClone(input);
-      requireDomain(command.requestKey.length > 0, "INVALID_REQUEST_KEY", "An original operation key is required");
+      const submitted = structuredClone(input);
+      if(submitted.action==='SAVE'&&'proposal' in submitted){
+        const proposal=parseNativeSalesSaveProposal(submitted.proposal);
+        requireDomain((proposal.salesId===null)===(submitted.expectedVersion===null),'INVALID_VERSION','Target and expected version must agree');
+      }
+      requireDomain(submitted.requestKey.length > 0, "INVALID_REQUEST_KEY", "An original operation key is required");
       // The stable account and exact business command identify a retry. Trusted
       // authorization context can change, but is still rechecked before replay.
-      const fingerprint = requestHash({ ...command, actor: { accountId: command.actor.accountId } });
+      const fingerprint = requestHash({ ...submitted, actor: { accountId: submitted.actor.accountId } });
       return unitOfWork.transaction(async tx => {
-        const prior = await tx.getReceipt(command.actor.accountId, command.requestKey);
+        const prior = await tx.getReceipt(submitted.actor.accountId, submitted.requestKey);
         if (prior) {
           requireDomain(prior.requestHash === fingerprint, "IDEMPOTENCY_CONFLICT", "The original key cannot be reused with different content");
           // Recheck access before disclosing a committed result to a now-revoked actor.
           const current = await tx.getSales(prior.targetSalesId);
           requireDomain(current, "DOCUMENT_NOT_FOUND", "Committed operation target is unavailable");
-          await authorization.assertAllowed(command.actor, command.action, current.document, tx);
+          await authorization.assertAllowed(submitted.actor, submitted.action, current.document, tx);
           return prior.result;
         }
+        let command:LegacySalesCommand,proposalHandled=false,resolvedStored:StoredSales|undefined,preparedAt:string|undefined,preparedOperationId:EntityId<'operation'>|undefined;
+        if(submitted.action==='SAVE'&&'proposal' in submitted){
+          const proposal=parseNativeSalesSaveProposal(submitted.proposal),id=proposal.salesId===null?newId('sales'):entityId('sales',proposal.salesId);
+          resolvedStored=await tx.getSales(id);proposalHandled=true;
+          requireDomain(!resolvedStored||resolvedStored.stockBasis==='RUNTIME_LEDGER','HISTORICAL_POSTING_NOT_IMPLEMENTED','Historical editing is separate');
+          const previous=resolvedStored?.document;
+          requireDomain(submitted.expectedVersion===(previous?.header.version??null),'VERSION_CONFLICT','Expected document version differs');
+          requireDomain(!previous||previous.header.status==='DRAFT','INVALID_STATE','Only an actual draft may be edited');
+          const proposed:SalesDraft={header:{id,number:previous?.header.number??sourceConfirmedCreateDocumentNumber('SALE',id),businessType:proposal.businessType,
+            businessDate:businessDate(proposal.businessDate),hallId:entityId('hall',proposal.hallId),customerId:entityId('customer',proposal.customerId),
+            salespersonId:proposal.salespersonId===null?null:entityId('staff',proposal.salespersonId),warehouseId:entityId('warehouse',proposal.warehouseId),
+            note:proposal.note,orderDiscount:minorAmount('0'),grossAmount:minorAmount('0'),netDue:minorAmount('0')},lines:[],settlements:[]};
+          await authorization.assertAllowed(submitted.actor,'SAVE',previous??proposed,tx);
+          if(previous)await authorization.assertAllowed(submitted.actor,'SAVE',proposed,tx);
+          preparedAt=now();requireDomain(Number.isFinite(Date.parse(preparedAt))&&/(?:Z|[+-]\d{2}:\d{2})$/.test(preparedAt),'INVALID_ACTION_TIME','Actual trusted time required');
+          preparedOperationId=newId('operation');
+          const selections=proposal.lines.map(l=>'spec' in l?{spec:l.spec!}:{skuId:l.skuId!});
+          requireDomain(tx.resolveDocumentSkus,'NATIVE_CATALOGUE_FACTS_UNAVAILABLE','Original document specification resolver required');
+          const ids=await tx.resolveDocumentSkus({scope:{kind:'SALES',documentId:id,operationId:preparedOperationId,actor:submitted.actor,completedAt:preparedAt},selections,newId:kind=>newId(kind)});
+          const draft=await prepareNativeSalesOnTransaction(dependencies,tx,submitted.actor,proposal,id,resolvedStored,ids);
+          command={actor:submitted.actor,action:'SAVE',requestKey:submitted.requestKey,expectedVersion:submitted.expectedVersion,draft};
+        }else command=submitted;
         const salesId = command.action === "SAVE" ? command.draft.header.id : command.salesId;
-        const stored = await tx.getSales(salesId);
+        const stored = proposalHandled ? resolvedStored : await tx.getSales(salesId);
         requireDomain(!stored || stored.stockBasis === "RUNTIME_LEDGER", "HISTORICAL_POSTING_NOT_IMPLEMENTED", "Cutoff history is queryable but baseline-aware historical editing is not enabled in this foundation");
         const previous = stored?.document;
         requireDomain(previous || command.action === "SAVE", "DOCUMENT_NOT_FOUND", "Document does not exist");
@@ -74,9 +103,9 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
         // Updating an accessible source does not authorize moving its proposed data
         // into a different hall/warehouse/customer/payment-account scope.
         if (previous && command.action === "SAVE") await authorization.assertAllowed(command.actor, "SAVE", command.draft, tx);
-        const timestamp = now();
+        const timestamp = preparedAt ?? now();
         requireDomain(!Number.isNaN(Date.parse(timestamp)) && /(?:Z|[+-]\d{2}:\d{2})$/.test(timestamp), "INVALID_ACTION_TIME", "A real time with timezone is required");
-        const operationId = newId("operation");
+        const operationId = preparedOperationId ?? newId("operation");
         let next: SalesDocument;
         const entryIds: EntityId<"ledger">[] = [];
         if (command.action === "SAVE") {

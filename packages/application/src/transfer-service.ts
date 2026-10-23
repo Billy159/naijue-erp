@@ -1,3 +1,6 @@
+import { parseNativeTransferSaveProposal, prepareNativeTransferOnTransaction } from './native-transfer-preparation.ts';
+import { sourceConfirmedCreateDocumentNumber } from './source-confirmed-document-number.ts';
+import { businessDate, entityId } from '../../domain/src/values.ts';
 import { applyInventoryEntry, assertPostingCoverage } from "./inventory-posting.ts";
 import { requireDomain } from "../../domain/src/errors.ts";
 import { planTransferEffects } from "../../domain/src/inventory.ts";
@@ -5,7 +8,7 @@ import type { InventoryLedgerRow } from "../../domain/src/inventory.ts";
 import { negateQuantity, nextVersion, version } from "../../domain/src/values.ts";
 import type { EntityId } from "../../domain/src/values.ts";
 import { requestHash } from "./request-hash.ts";
-import type { TransferAuditValues, TransferCommand, TransferDependencies, TransferDocument, TransferDraft, TransferResult } from "./transfer-ports.ts";
+import type { TransferAuditValues, LegacyTransferCommand, StoredTransfer, TransferCommand, TransferDependencies, TransferDocument, TransferDraft, TransferResult } from "./transfer-ports.ts";
 
 function auditValues(document: TransferDocument, changedLineIds: ReadonlySet<string>): TransferAuditValues {
   const { number, businessDate, fromWarehouseId, toWarehouseId, status, version, note } = document.header;
@@ -40,22 +43,43 @@ export function createTransferService(dependencies: TransferDependencies): { exe
     || typeof now !== "function" || typeof newId !== "function") throw new TypeError("Transfer requires explicit trusted policy, references and storage");
   return { async execute(input) {
     // Hash and execute the identical isolated snapshot before the first await.
-    const command = structuredClone(input);
-    requireDomain(command.requestKey.length > 0, "INVALID_REQUEST_KEY", "An original operation key is required");
+    const submitted = structuredClone(input);
+    if(submitted.action==='SAVE'&&'proposal' in submitted){const proposal=parseNativeTransferSaveProposal(submitted.proposal);requireDomain((proposal.transferId===null)===(submitted.expectedVersion===null),'INVALID_VERSION','Target and expected version must agree');}
+    requireDomain(submitted.requestKey.length > 0, "INVALID_REQUEST_KEY", "An original operation key is required");
     // Authorization context may legitimately change between retries. Original content
     // is bound to the authenticated account, not its transient role/hall.
-    const fingerprint = requestHash({ ...command, actor: { accountId: command.actor.accountId } });
+    const fingerprint = requestHash({ ...submitted, actor: { accountId: submitted.actor.accountId } });
     return unitOfWork.transaction(async tx => {
-      const receipt = await tx.getReceipt(command.actor.accountId, command.requestKey);
+      const receipt = await tx.getReceipt(submitted.actor.accountId, submitted.requestKey);
       if (receipt) {
         requireDomain(receipt.requestHash === fingerprint, "IDEMPOTENCY_CONFLICT", "The original key has different content");
         const current = await tx.getTransfer(receipt.targetTransferId);
         requireDomain(current, "DOCUMENT_NOT_FOUND", "Committed target is unavailable");
-        await authorization.assertAllowed(command.actor, command.action, current.document, undefined, tx);
+        await authorization.assertAllowed(submitted.actor, submitted.action, current.document, undefined, tx);
         return receipt.result;
       }
+      let command:LegacyTransferCommand,proposalHandled=false,resolvedStored:StoredTransfer|undefined,preparedAt:string|undefined,preparedOperationId:EntityId<'operation'>|undefined;
+      if(submitted.action==='SAVE'&&'proposal' in submitted){
+        const proposal=parseNativeTransferSaveProposal(submitted.proposal),id=proposal.transferId===null?newId('transfer'):entityId('transfer',proposal.transferId);
+        resolvedStored=await tx.getTransfer(id);proposalHandled=true;
+        requireDomain(!resolvedStored||resolvedStored.stockBasis==='RUNTIME_LEDGER','HISTORICAL_POSTING_NOT_IMPLEMENTED','Historical editing remains separate');
+        const previous=resolvedStored?.document;
+        requireDomain(submitted.expectedVersion===(previous?.header.version??null),'VERSION_CONFLICT','Expected document version differs');
+        requireDomain(!previous||previous.header.status==='DRAFT','INVALID_STATE','Only an actual draft may be edited');
+        const proposed:TransferDraft={header:{id,number:previous?.header.number??sourceConfirmedCreateDocumentNumber('TRANSFER',id),businessDate:businessDate(proposal.businessDate),
+          fromWarehouseId:entityId('warehouse',proposal.fromWarehouseId),toWarehouseId:entityId('warehouse',proposal.toWarehouseId),note:proposal.note},lines:[]};
+        await authorization.assertAllowed(submitted.actor,'SAVE',previous??proposed,undefined,tx);
+        if(previous)await authorization.assertAllowed(submitted.actor,'SAVE',proposed,previous,tx);
+        preparedAt=now();requireDomain(Number.isFinite(Date.parse(preparedAt))&&/(?:Z|[+-]\d{2}:\d{2})$/.test(preparedAt),'INVALID_ACTION_TIME','Actual trusted time required');
+        preparedOperationId=newId('operation');
+        const selections=proposal.lines.map(l=>'spec' in l?{spec:l.spec!}:{skuId:l.skuId!});
+        requireDomain(tx.resolveDocumentSkus,'NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE','Original document specification resolver required');
+        const ids=await tx.resolveDocumentSkus({scope:{kind:'TRANSFER',documentId:id,operationId:preparedOperationId,actor:submitted.actor,completedAt:preparedAt},selections,newId:kind=>newId(kind)});
+        const draft=await prepareNativeTransferOnTransaction(dependencies,tx,submitted.actor,proposal,id,resolvedStored,ids);
+        command={actor:submitted.actor,action:'SAVE',requestKey:submitted.requestKey,expectedVersion:submitted.expectedVersion,draft};
+      }else command=submitted;
       const transferId = command.action === "SAVE" ? command.draft.header.id : command.transferId;
-      const stored = await tx.getTransfer(transferId);
+      const stored = proposalHandled ? resolvedStored : await tx.getTransfer(transferId);
       requireDomain(!stored || stored.stockBasis === "RUNTIME_LEDGER", "HISTORICAL_POSTING_NOT_IMPLEMENTED", "Historical baseline contribution reversal is not enabled by runtime transfer commands");
       const previous = stored?.document;
       requireDomain(previous || command.action === "SAVE", "DOCUMENT_NOT_FOUND", "Transfer does not exist");
@@ -66,9 +90,9 @@ export function createTransferService(dependencies: TransferDependencies): { exe
       if (previous && command.action === "SAVE") await authorization.assertAllowed(command.actor, "SAVE", command.draft, previous, tx);
       const proposed = command.action === "SAVE" ? command.draft : target;
       await references.assertValid(tx, command.actor, command.action, previous, proposed);
-      const timestamp = now();
+      const timestamp = preparedAt ?? now();
       requireDomain(!Number.isNaN(Date.parse(timestamp)) && /(?:Z|[+-]\d{2}:\d{2})$/.test(timestamp), "INVALID_ACTION_TIME", "A real action time with timezone is required");
-      const operationId = newId("operation");
+      const operationId = preparedOperationId ?? newId("operation");
       const ledgerEntryIds: EntityId<"ledger">[] = [];
       let next: TransferDocument;
       if (command.action === "SAVE") {
